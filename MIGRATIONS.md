@@ -2,10 +2,9 @@
 
 | Migration                                                                                                                                             | Summary                                                                                                   |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| [v0.18.0 Better Neighbors (2021/09/28)](https://github.com/TrueBlocks/trueblocks-core/blob/develop/src/other/migrations/README-v0.18.0.md)            | - Cleans up `chifra export --neighbors` output<br />- Corrects incorrect headers in .txt and .csv export. |
+| [v0.18.0 Better Neighbors (2021/12/10)](https://github.com/TrueBlocks/trueblocks-core/blob/develop/src/other/migrations/README-v0.18.0.md)            | - Cleans up `chifra export --neighbors` output<br />- Corrects incorrect headers in .txt and .csv export. |
 | [v0.17.0 Updated API and SDK (2021/11/23)](https://github.com/TrueBlocks/trueblocks-core/blob/develop/src/other/migrations/README-v0.17.0.md)         | - Creates TypeScript SDK and forces all API endpoint options to camelCase.                                |
 | [v0.14.0 Go Version of Chifra (2021/10/03)](https://github.com/TrueBlocks/trueblocks-core/blob/develop/src/other/migrations/README-v0.14.0.md)        | - Ports chifra command line to golang<br />- Breaking change to --verbose flag.                           |
 | [v0.12.1 New Folder Structure (2021/09/01)](https://github.com/TrueBlocks/trueblocks-core/blob/develop/src/other/migrations/README-v0.12.1.md)        | - Adds support for Erigon<br />- Moves most executables to private path.                                  |
 | [v0.11.3 London Hard Fork Migration (2021/08/20)](https://github.com/TrueBlocks/trueblocks-core/blob/develop/src/other/migrations/README-v0.11.3.md)  | - Support for cache file format change due to London hard fork.                                           |
 | [v0.9.0 Configuration File Migration (2021/06/02)](https://github.com/TrueBlocks/trueblocks-core/blob/develop/src/other/migrations/README-v0.09.0.md) | - Moves configuration file locations.                                                                     |
-

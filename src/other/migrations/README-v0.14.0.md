@@ -38,4 +38,4 @@ Please report any problems by creating an issue.
 
 ## Previous Migration
 
-[Click here](https://github.com/TrueBlocks/trueblocks-core/blob/develop/src/other/migrations/README-v0.12.1.md) for the previous migration.
+[Click here](./README-v0.12.1.md) for the previous migration.

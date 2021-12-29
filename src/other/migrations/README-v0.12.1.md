@@ -96,3 +96,7 @@ You should now be able to use `chifra` identically as you did before.
 ## You're Finished
 
 Please report any problems by creating an issue.
+
+## Previous Migration
+
+[Click here](./README-v0.11.3.md) for the previous migration.
