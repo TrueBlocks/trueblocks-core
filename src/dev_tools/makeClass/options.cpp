@@ -249,8 +249,8 @@ void COptions::Init(void) {
     counter = CCounter();
 
     CToml toml(getConfigPath("makeClass.toml"));
-    lastFormat = static_cast<timestamp_t>(toml.getConfigInt("settings", "lastFormat", 0));
-    lastLint = static_cast<timestamp_t>(toml.getConfigInt("settings", "lastLint", 0));
+    lastFormat = static_cast<timestamp_t>(toml.getConfigInt("settings", "last_format", 0));
+    lastLint = static_cast<timestamp_t>(toml.getConfigInt("settings", "last_lint", 0));
     toml.Release();
 }
 

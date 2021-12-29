@@ -31,7 +31,7 @@ bool COptions::handle_lint(void) {
     forEveryFileInFolder("./", lintFiles, this);
     counter.is_counting = false;
     forEveryFileInFolder("./", lintFiles, this);
-    config.setConfigStr("settings", "lastLint", uint_2_Str(static_cast<uint64_t>(date_2_Ts(Now()))));
+    config.setConfigStr("settings", "last_lint", uint_2_Str(static_cast<uint64_t>(date_2_Ts(Now()))));
     config.writeFile();
     config.Release();
     LOG_INFO(cYellow, "makeClass --lint", cOff, " processed ", counter.nVisited, " files (", counter.nProcessed,

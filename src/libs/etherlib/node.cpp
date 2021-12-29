@@ -989,8 +989,8 @@ void guardLiveTest(const string_q& path) {
 
 //-------------------------------------------------------------------------
 string_q getIndexPath(const string_q& _part) {
-    string_q indexPath = getGlobalConfig()->getConfigStr("settings", "indexPath", "<not-set>");
-    if (indexPath == "<not-set>") {
+    string_q indexPath = getGlobalConfig()->getConfigStr("settings", "indexPath", "<not_set>");
+    if (indexPath == "<not_set>") {
         guardLiveTest(indexPath + _part);
         return getConfigPath("unchained/" + _part);
     }

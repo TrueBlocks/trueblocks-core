@@ -34,7 +34,7 @@ int main(int argc, const char* argv[]) {
     if (!options.prepareArguments(argc, argv))
         return EXIT_FAILURE;
 
-    bool runLocal = getGlobalConfig("testRunner")->getConfigBool("settings", "runLocal", false);
+    bool runLocal = getGlobalConfig("testRunner")->getConfigBool("settings", "run_local", false);
     if (runLocal) {
         cerr << "Running local tests. Hit enter to continue." << endl;
         getchar();
@@ -156,7 +156,7 @@ int main(int argc, const char* argv[]) {
     }
 
     // If configured, copy the data out to the folder our performance measurement tool knows about
-    string_q copyPath = getGlobalConfig("testRunner")->getConfigStr("settings", "copyPath", "<NOT_SET>");
+    string_q copyPath = getGlobalConfig("testRunner")->getConfigStr("settings", "copy_path", "<not_set>");
     if (folderExists(copyPath)) {
         CStringArray files = {"performance.csv", "performance_failed.csv", "performance_slow.csv",
                               "performance_scraper.csv"};
