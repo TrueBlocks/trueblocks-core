@@ -123,7 +123,7 @@ bool COptions::handle_config_get(ostream& os) {
             f.sections.push_back(g2);
 
         CConfigSection g3("APIs", "settings");
-        string_q v3 = (isTestMode() ? "--api_key--" : cc->getConfigStr(g3.name, "etherscan_key", "<not-set>"));
+        string_q v3 = (isTestMode() ? "--api_key--" : cc->getConfigStr(g3.name, "etherscan_key", "<not_set>"));
         CConfigItem i3("etherscan_key", v3, "string", "api key for the EtherScan apis -- private data -- not shared",
                        false, false);
         g3.keys.push_back(i3);
