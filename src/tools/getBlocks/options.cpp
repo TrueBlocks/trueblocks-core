@@ -169,9 +169,6 @@ bool COptions::parseArguments(string_q& command) {
     if (trace && !isTracingNode())
         return usage(usageErrs[ERR_TRACINGREQUIRED]);
 
-    secsFinal =
-        (timestamp_t)getGlobalConfig("getBlocks")->getConfigInt("settings", "secs_when_final", (uint64_t)secsFinal);
-
     if (hashes) {
         manageFields("CTransaction:all", FLD_HIDE);
         manageFields("CBlock:all", FLD_HIDE);
@@ -260,7 +257,7 @@ void COptions::Init(void) {
     // END_CODE_INIT
 
     filterType = "";
-    secsFinal = (60 * 5);
+    secsFinal = (60 * 5);  // Used to be configurable, but no longer
     addrCounter = 0;
     listOffset = NOPOS;
     blocks.Init();

@@ -102,7 +102,7 @@ bool visitBlock(uint64_t blockNum, void* data) {
             opt->prevBal = balance;
         }
 
-        if (opt->no_zero && balance <= opt->deminimus)
+        if (opt->no_zero && balance == 0)
             return !shouldQuit();
 
         state.blockNumber = blockNum;

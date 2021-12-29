@@ -113,13 +113,13 @@ bool COptions::finishClean(CAccountName& account) {
 //--------------------------------------------------------------------
 bool COptions::cleanNames(const string_q& sourceIn, const string_q& destIn) {
     string_q source = sourceIn;
-    string_q dest = destIn;
-
     replace(source, "~", getHomeFolder());
     replace(source, "$HOME", getHomeFolder());
     replaceAll(source, "//", "/");
     if (!fileExists(source))
         return false;
+
+    string_q dest = destIn;
 
     cerr << "Processing names file (" << source << ") into " << dest << endl;
 

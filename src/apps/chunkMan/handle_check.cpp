@@ -15,7 +15,7 @@
 //----------------------------------------------------------------
 bool COptions::handle_check() {
     CToml config(getConfigPath("chunkMan.toml"));
-    bool enabled = config.getConfigBool("enabled", "downloadManifest", true);
+    bool enabled = config.getConfigBool("enabled", "download_manifest", true);
     if (!enabled) {
         LOG_INFO("Manifest not downloaded. Not initializing.");
         return true;

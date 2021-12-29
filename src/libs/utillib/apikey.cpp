@@ -286,8 +286,8 @@ const char* STR_DISPLAY_APIKEY =
 // EXISTING_CODE
 //--------------------------------------------------------------------------------
 string_q getApiKey(const string_q& apiName, const string_q& signup) {
-    string_q key = getGlobalConfig("")->getConfigStr("settings", toLower(apiName) + "_key", "<NOT_SET>");
-    if (!key.empty() && key != "<NOT_SET>")
+    string_q key = getGlobalConfig("")->getConfigStr("settings", toLower(apiName) + "_key", "<not_set>");
+    if (!key.empty() && key != "<not_set>")
         return key;
 
     char buffer[256];
@@ -302,11 +302,11 @@ string_q getApiKey(const string_q& apiName, const string_q& signup) {
 
 //--------------------------------------------------------------------------------
 bool getApiKey(CApiKey& lic) {
-    lic.key = getGlobalConfig("blockScrape")->getConfigStr("settings", "pinata_api_key", "<notset>");
-    lic.secret = getGlobalConfig("blockScrape")->getConfigStr("settings", "pinata_secret_api_key", "<notset>");
+    lic.key = getGlobalConfig("blockScrape")->getConfigStr("settings", "pinata_api_key", "<not_set>");
+    lic.secret = getGlobalConfig("blockScrape")->getConfigStr("settings", "pinata_secret_api_key", "<not_set>");
     if (isTestMode())
         lic.key = lic.secret = "--license_codes--";
-    return (lic.key != "<notset>" && lic.secret != "<notset>");
+    return (lic.key != "<not_set>" && lic.secret != "<not_set>");
 }
 // EXISTING_CODE
 }  // namespace qblocks

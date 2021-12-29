@@ -151,8 +151,7 @@ bool COptions::parseArguments(string_q& command) {
             break;
         case TXT1:
         case CSV1:
-            format = getGlobalConfig("getTraces")
-                         ->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_TRACE : format);
+            format = getGlobalConfig("getTraces")->getConfigStr("display", "format", STR_DISPLAY_TRACE);
             manageFields("CTransaction:" + cleanFmt(format));
             manageFields("CTrace:" + cleanFmt(format));
             manageFields("CTraceAction:" + substitute(cleanFmt(format), "ACTION::", ""));

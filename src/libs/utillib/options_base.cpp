@@ -465,8 +465,8 @@ void COptionsBase::configureDisplay(const string_q& tool, const string_q& dataTy
         case CSV1:
             if (isTestMode()) {
                 // Just warning the user as if this is set it may break test cases
-                string test = getGlobalConfig(tool)->getConfigStr("display", "format", "<not-set>");
-                if (test != "<not-set>")
+                string test = getGlobalConfig(tool)->getConfigStr("display", "format", "<not_set>");
+                if (test != "<not_set>")
                     LOG_WARN("Tests will fail. Custom display string set to: ", test);
             }
             format = getGlobalConfig(tool)->getConfigStr("display", "format", format.empty() ? defFormat : format);
