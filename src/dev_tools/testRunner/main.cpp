@@ -17,7 +17,6 @@
 
 ostringstream perf;
 ostringstream slow;
-CMeasure total("all", "all", "all");
 CStringArray fails;
 extern const char* STR_SCREEN_REPORT;
 string_q perf_fmt;
@@ -27,6 +26,8 @@ int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
     CTestCase::registerClass();
 
+    establishFolder(getCachePath("tmp/"));
+    CMeasure total("all", "all", "all");
     cerr.rdbuf(cout.rdbuf());
 
     // Parse command line, allowing for command files
@@ -127,8 +128,8 @@ int main(int argc, const char* argv[]) {
 
             expContext().exportFmt = CSV1;
             perf_fmt = substitute(cleanFmt(STR_DISPLAY_MEASURE), "\"", "");
-            options.doTests(testArray, path, testName, API);
-            options.doTests(testArray, path, testName, CMD);
+            options.doTests(total, testArray, path, testName, API);
+            options.doTests(total, testArray, path, testName, CMD);
             if (shouldQuit())
                 break;
 
@@ -183,7 +184,8 @@ int main(int argc, const char* argv[]) {
 }
 
 //-----------------------------------------------------------------------
-void COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, const string_q& testName, int whichTest) {
+void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_q& testPath, const string_q& testName,
+                       int whichTest) {
     if (!(modes & whichTest))
         return;
 
