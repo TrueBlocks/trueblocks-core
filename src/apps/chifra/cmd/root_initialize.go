@@ -11,6 +11,7 @@ import (
 	"path"
 	"runtime"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
 
@@ -18,14 +19,10 @@ import (
 func Initialize() bool {
 	VerifyOs()
 	VerifyMigrations()
-	EstablishCaches()
+	cache.EstablishCaches()
 
 	return true
 }
-
-var errCustomFolderMissing = `Attempt to create customized indexPath (%s) failed.
-Please create the folder or adjust the setting by editing $CONFIG/trueBlocks.toml.
-`
 
 // VerifyOs will panic if the operating system isn't cooperating
 func VerifyOs() {
@@ -64,64 +61,4 @@ func VerifyMigrations() {
 	//     msg += "\n";
 	// 	log.Fatalf(msg)
 	//}
-}
-
-// EstablishCaches sets up the cache folders and subfolders
-func EstablishCaches() {
-	cachePath := config.ReadTrueBlocks().Settings.CachePath
-	cacheFolders := []string{
-		"abis", "blocks", "monitors", "names", "objs", "prices",
-		"recons", "slurps", "tmp", "traces", "txs",
-	}
-	if err := establishFolders(cachePath, cacheFolders); err != nil {
-		log.Fatal(err)
-	}
-
-	indexPath := config.ReadTrueBlocks().Settings.IndexPath
-	indexFolders := []string{
-		"blooms", "finalized", "ripe", "staging", "unripe",
-	}
-	if err := establishFolders(indexPath, indexFolders); err != nil {
-		log.Fatal(err)
-	}
-}
-
-// establishFolders creates the rootPath and any subfolders
-func establishFolders(rootPath string, folders []string) error {
-	_, err := os.Stat(rootPath)
-	if err != nil {
-		if os.IsNotExist(err) {
-			// Create the rootPath if it doesn't exist
-			err = os.Mkdir(rootPath, 0755)
-			if err != nil {
-				return err
-			}
-
-			createSubfolders(rootPath, folders)
-
-		} else {
-			// If there's an error other than not exist...we fail
-			return err
-		}
-	}
-	return nil
-}
-
-// createSubfolders creates folders given a list of folders
-func createSubfolders(rootPath string, folders []string) error {
-	for _, folder := range folders {
-		subdirPath := path.Join(rootPath, folder)
-		_, err := os.Stat(subdirPath)
-		if err != nil {
-			if os.IsNotExist(err) {
-				err = os.Mkdir(subdirPath, 0755)
-				if err != nil {
-					return err
-				}
-			} else {
-				return err
-			}
-		}
-	}
-	return nil
 }

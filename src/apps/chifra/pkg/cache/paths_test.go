@@ -15,6 +15,9 @@ func TestCacheLayout(t *testing.T) {
 	indexPath := config.ReadTrueBlocks().Settings.IndexPath
 	cachePath := config.ReadTrueBlocks().Settings.CachePath
 
+	// we need this to make the cache folders
+	EstablishCaches()
+
 	tests := []struct {
 		on        bool
 		name      string
