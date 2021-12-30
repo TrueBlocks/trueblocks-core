@@ -26,6 +26,7 @@ int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
     CTestCase::registerClass();
 
+    establishFolder(getCachePath("tmp/"));
     CMeasure total("all", "all", "all");
     cerr.rdbuf(cout.rdbuf());
 
