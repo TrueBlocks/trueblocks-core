@@ -200,18 +200,6 @@ void CToml::mergeFile(CToml* tomlIn) {
 }
 
 //---------------------------------------------------------------------------------------
-biguint_t CToml::getConfigBigInt(const string_q& section, const string_q& key, biguint_t def) const {
-    string_q ret = getConfigStr(section, key, bnu_2_Str(def));
-    string_q check = ret;
-    replaceAny(check, "0123456789abcdefABCDEF", "");
-    if (!check.empty()) {
-        LOG_WARN("Big int config item ", section, "::", key, " is not an integer...returning zero.");
-        return 0;
-    }
-    return str_2_BigUint(ret);
-}
-
-//---------------------------------------------------------------------------------------
 string_q CToml::getConfigStr(const string_q& section, const string_q& key, const string_q& def) const {
     string_q env = getEnvStr(toUpper(section + "_" + key));
     if (!env.empty())
@@ -220,11 +208,6 @@ string_q CToml::getConfigStr(const string_q& section, const string_q& key, const
     if (found)
         return found->getValue();
     return def;
-}
-
-//---------------------------------------------------------------------------------------
-string_q CToml::getConfigJson(const string_q& section, const string_q& key, const string_q& def) const {
-    return getConfigStr(section, key, def);
 }
 
 //-------------------------------------------------------------------------
