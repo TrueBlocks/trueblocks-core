@@ -331,7 +331,6 @@ void COptions::Init(void) {
     to_custom = false;
     // END_CODE_INIT
 
-    outArray.clear();
     terms.clear();
     items.clear();
     searches.clear();

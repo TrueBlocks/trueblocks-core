@@ -17,7 +17,31 @@
 namespace qblocks {
 
 //-----------------------------------------------------------------------
-class NameOnDisc;
+enum {
+    IS_NONE = (0),
+    IS_CUSTOM = (1 << 0),
+    IS_PREFUND = (1 << 1),
+    IS_CONTRACT = (1 << 2),
+    IS_ERC20 = (1 << 3),
+    IS_ERC721 = (1 << 4),
+    IS_DELETED = (1 << 5),
+};
+
+//-----------------------------------------------------------------------
+class NameOnDisc {
+  public:
+    char tags[30 + 1];
+    char address[42 + 1];
+    char name[120 + 1];
+    char symbol[30 + 1];
+    char source[180 + 1];
+    char description[255 + 1];
+    uint16_t decimals;
+    uint16_t flags;
+    bool disc_2_Name(CAccountName& nm) const;
+    bool name_2_Disc(const CAccountName& nm);
+    string_q Format(void) const;
+};
 
 //-----------------------------------------------------------------------
 typedef bool (*NAMEFUNC)(CAccountName& name, void* data);
@@ -31,6 +55,7 @@ extern bool clearNames(void);
 extern bool findName(const address_t& addr, CAccountName& acct);
 extern bool findToken(const address_t& addr, CAccountName& acct);
 extern void addPrefundToNamesMap(CAccountName& account, uint64_t cnt);
+extern bool updateName(const CAccountName& target, const string_q& crud);
 extern bool hasName(const address_t& addr);
 extern size_t nNames(void);
 
