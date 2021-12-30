@@ -469,7 +469,7 @@ void COptionsBase::configureDisplay(const string_q& tool, const string_q& dataTy
                 if (test != "<not_set>")
                     LOG_WARN("Tests will fail. Custom display string set to: ", test);
             }
-            format = getGlobalConfig(tool)->getConfigStr("display", "format", format.empty() ? defFormat : format);
+            format = getGlobalConfig(tool)->getConfigStr("display", "format", defFormat);
             manageFields(dataType + ":" + cleanFmt((format.empty() ? defFormat : format)));
             break;
         case YAML1:
@@ -712,11 +712,6 @@ string_q getConfigPath(const string_q& part) {
 #elif defined(_WIN32) || defined(__WIN32__) || defined(WIN32) || defined(_WIN64)
 #error-- This source code does not compile on Windows
 #endif
-}
-
-//---------------------------------------------------------------------------------------------------
-string_q getConfigPathRel(const string_q& part) {
-    return substitute(getConfigPath(part), getHomeFolder(), "~/");
 }
 
 //-------------------------------------------------------------------------

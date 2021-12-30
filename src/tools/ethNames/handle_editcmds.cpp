@@ -109,7 +109,7 @@ bool COptions::handle_editcmds(bool autoname) {
         // Bin files will get rebuilt if the ascii file changed
         LOG4("Finished writing...");
 
-        string_q copyBack = getGlobalConfig("ethNames")->getConfigStr("settings", "source", "<NOTSET>");
+        string_q copyBack = getGlobalConfig("ethNames")->getConfigStr("settings", "source", "<not_set>");
         if (!isTestMode() && !to_custom && fileExists(copyBack)) {
             copyFile(dest, copyBack);
         }

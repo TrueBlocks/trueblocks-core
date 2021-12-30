@@ -129,6 +129,13 @@ func extractAddressesFromTraces(addressMap map[string]bool, traces *Trace, block
 					}
 				}
 
+			} else if traces.Result[i].Action.RewardType == "external" {
+				// This only happens in xDai as far as we know...
+				author := traces.Result[i].Action.Author
+				if goodAddr(author) {
+					addressMap[author+"\t"+blockNum+"\t"+"99996"] = true
+				}
+
 			} else {
 				fmt.Println("New type of reward", traces.Result[i].Action.RewardType)
 			}

@@ -811,7 +811,7 @@ string_q wei_2_Export(const blknum_t& bn, const wei_t& weiIn, uint64_t decimals)
 string_q bni_2_Export(const timestamp_t& ts, const bigint_t& numIn, uint64_t decimals) {
     string_q quote = "\"";
     if (expContext().exportFmt == CSV1)
-        quote = ""; // will be quoted automatically
+        quote = "";  // will be quoted automatically
 
     if (numIn == 0)
         return quote + quote;

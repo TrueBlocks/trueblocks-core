@@ -156,11 +156,8 @@ bool COptions::parseArguments(string_q& command) {
             "this restriction off.");
     }
 
-    // Balances are needed to make reconcilations. The user may not need that, so we allow it
-    bool needsBalances = config->getConfigBool("requires", "balances", false);
-    if (needsBalances && !isArchiveNode()) {
-        return usage("This tool requires an --archive node with historical balances.");
-    }
+    if (!isArchiveNode())
+        return usage("This tool requires an --archive node with historical transactions.");
 
     // This may be the first time we've ever run. In that case, we need to build the zero block index file...
     string chunkId = padNum9(0) + "-" + padNum9(0);
