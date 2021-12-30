@@ -775,13 +775,6 @@ extern const char* STR_PATH_YAML;
 extern const char* STR_PARAM_YAML;
 
 //---------------------------------------------------------------------------------------------------
-bool isApiRoute(const string_q& route) {
-    if (route == "serve" || route == "explore")
-        return false;
-    return !route.empty();
-}
-
-//---------------------------------------------------------------------------------------------------
 bool CCommandOption::isChifraRoute(bool depOk) const {
     if (depOk && option_type == "deprecated")
         return true;
@@ -823,6 +816,13 @@ string_q CCommandOption::toPairMap(void) const {
     }
 
     return "";
+}
+
+//---------------------------------------------------------------------------------------------------
+bool isApiRoute(const string_q& route) {
+    if (route == "serve" || route == "explore")
+        return false;
+    return !route.empty();
 }
 
 //---------------------------------------------------------------------------------------------------

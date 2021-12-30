@@ -24,6 +24,7 @@ bool COptions::writeOpenApiFile(void) {
     LOG_INFO(cYellow, "handling openapi file...", cOff);
     counter = CCounter();  // reset
 
+    map<string_q, string_q> converts;
     for (auto ep : endpointArray) {
         CCommandOptionArray params;
         for (auto option : routeOptionArray)
@@ -42,12 +43,28 @@ bool COptions::writeOpenApiFile(void) {
         goRouteStream << ep.toGoRoute();
         apiPathStream << ep.toApiPath(productions, exampleFn);
 
+        if (isApiRoute(ep.api_route) && ep.params) {
+            for (auto p : *((CCommandOptionArray*)ep.params))
+                if (contains(p.longName, "_"))
+                    converts[toCamelCase(p.longName)] = p.longName;
+        }
+
         counter.cmdCount += params.size();
         counter.routeCount++;
     }
 
+    converts["logLevel"] = "log_level";
+    converts["noHeader"] = "no_header";
+    converts["toFile"] = "to_file";
+    goConvertStream << "\tswitch in {" << endl;
+    for (auto item : converts) {
+        goConvertStream << "\tcase \"" << item.first << "\":\n\t\treturn \"" << item.second << "\"" << endl;
+    }
+    goConvertStream << "\t}" << endl;
+
     // writeCodeOut(this, getDocsPathContent("api/openapi.yaml"));
     writeCodeOut(this, getSourcePath("apps/chifra/server/routes.go"));
+    writeCodeOut(this, getSourcePath("apps/chifra/server/convert_params.go"));
     // writeCodeOut(this, getSourcePath("apps/chifra/options.cpp"));
     // writeCodeOut(this, getSourcePath("libs/utillib/options_base.cpp"));
 

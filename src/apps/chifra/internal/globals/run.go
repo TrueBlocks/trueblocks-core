@@ -23,7 +23,7 @@ func (opts *GlobalOptions) PassItOn(path string, flags string) error {
 	wg.Add(2)
 
 	// fmt.Fprintf(os.Stderr, "Calling: %s %s\n", path, options)
-	cmd := exec.Command(getCommandPath2(path), options)
+	cmd := exec.Command(getCommandPath(path), options)
 	if os.Getenv("TEST_MODE") == "true" {
 		cmd.Env = append(os.Environ(), "TEST_MODE=true")
 	}
@@ -96,8 +96,8 @@ func ScanForProgress2(stderrPipe io.Reader, fn func(string)) {
 	}
 }
 
-// getCommandPath2 returns full path the the given tool
-func getCommandPath2(cmd string) string {
+// getCommandPath returns full path the the given tool
+func getCommandPath(cmd string) string {
 	usr, _ := user.Current()
 	dir := usr.HomeDir
 	return dir + "/.local/bin/chifra/" + cmd
