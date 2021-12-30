@@ -607,7 +607,9 @@ void getTracesByFilter(CTraceArray& traces, const CTraceFilter& filter) {
 //-------------------------------------------------------------------------
 string_q getVersionFromClient(void) {
     string_q clientVersionFn = getCachePath("tmp/clientVersion.txt");
-    string_q contents = asciiFileToString(clientVersionFn);
+    string_q contents;
+    if (fileExists(clientVersionFn))
+        contents = asciiFileToString(clientVersionFn);
 
     timestamp_t lastUpdate = date_2_Ts(fileLastModifyDate(clientVersionFn));
     timestamp_t now = date_2_Ts(Now());
@@ -617,7 +619,8 @@ string_q getVersionFromClient(void) {
         // If the rpcProvider changed or we haven't checked in 20 seconds, check again.
         string_q clientVersion = callRPC("web3_clientVersion", "[]", false);
         if (!clientVersion.empty()) {
-            stringToAsciiFile(clientVersionFn, getCurlContext()->baseURL + "\t" + clientVersion);
+            if (folderExists(getCachePath("tmp/")))
+                stringToAsciiFile(clientVersionFn, getCurlContext()->baseURL + "\t" + clientVersion);
             return clientVersion;
         }
     }
