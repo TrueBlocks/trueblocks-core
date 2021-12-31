@@ -1,6 +1,6 @@
 module github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze
 
-go 1.15
+go 1.16.3
 
 require (
 	github.com/mitchellh/go-homedir v1.1.0
