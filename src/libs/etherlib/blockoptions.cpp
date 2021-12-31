@@ -55,7 +55,7 @@ string_q CBlockOptions::getBlockNumList(void) {
 }
 
 //--------------------------------------------------------------------------------
-bool CHistoryOptions::requestsHistory(void) const {
+bool CHistoryOptions::needsHistory(void) const {
     blknum_t history_cnt = 250;  // used to be configurable, no longer
     return ((newestBlock - oldestBlock) >= history_cnt);
 }

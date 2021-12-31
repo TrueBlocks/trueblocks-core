@@ -4,6 +4,7 @@ TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] MaxRecords:  5
 TEST[DATE|TIME] LogLevel:  10
 TEST[DATE|TIME] Format:  api
+TIME ~ CLOCK - <INFO>  : Loading prefund balances
 TIME ~ CLOCK - <INFO>  : Loading names
 TIME ~ CLOCK - : 4-----0x001d14804b399c6ef80e64576f657660804fec0b freshened to 11854827
 TIME ~ CLOCK - <INFO>  : Loading prefunds accounts

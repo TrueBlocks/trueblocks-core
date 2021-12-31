@@ -16,14 +16,6 @@ status?getConfig
               "tip": "the Ethereum node's RPC endpoint",
               "required": true,
               "read_only": false
-            },
-            {
-              "name": "balanceProvider",
-              "value": "--balance Prov--",
-              "type": "url",
-              "tip": "alternative node endpoint for account balances",
-              "required": false,
-              "read_only": false
             }
           ]
         },

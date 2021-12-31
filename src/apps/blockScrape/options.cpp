@@ -32,7 +32,7 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-extern bool visitPrefund(const address_t& prefund, void* data);
+extern bool visitPrefund(const Allocation& prefund, void* data);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
     ENTER("parseArguments");
@@ -157,7 +157,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (!isArchiveNode())
-        return usage("This tool requires an --archive node with historical transactions.");
+        return usage("This tool requires historical balances which your RPC server does not provide.");
 
     // This may be the first time we've ever run. In that case, we need to build the zero block index file...
     string chunkId = padNum9(0) + "-" + padNum9(0);
@@ -244,11 +244,11 @@ COptions::~COptions(void) {
 }
 
 //-----------------------------------------------------------------------
-bool visitPrefund(const address_t& prefund, void* data) {
+bool visitPrefund(const Allocation& prefund, void* data) {
     ostringstream os;
 
     CStringArray* appearances = (CStringArray*)data;
-    os << prefund << "\t" << padNum9(0) << "\t" << padNum5((uint32_t)appearances->size()) << endl;
+    os << prefund.address << "\t" << padNum9(0) << "\t" << padNum5((uint32_t)appearances->size()) << endl;
     appearances->push_back(os.str());
 
     return true;

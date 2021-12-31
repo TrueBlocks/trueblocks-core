@@ -31,7 +31,6 @@ class CStatus : public CBaseNode {
     string_q clientIds;
     string_q trueblocksVersion;
     string_q rpcProvider;
-    string_q balanceProvider;
     string_q configPath;
     string_q cachePath;
     string_q indexPath;
@@ -114,7 +113,6 @@ inline void CStatus::initialize(void) {
     clientIds = "";
     trueblocksVersion = "";
     rpcProvider = "";
-    balanceProvider = "";
     configPath = "";
     cachePath = "";
     indexPath = "";
@@ -149,7 +147,6 @@ inline void CStatus::duplicate(const CStatus& st) {
     clientIds = st.clientIds;
     trueblocksVersion = st.trueblocksVersion;
     rpcProvider = st.rpcProvider;
-    balanceProvider = st.balanceProvider;
     configPath = st.configPath;
     cachePath = st.cachePath;
     indexPath = st.indexPath;

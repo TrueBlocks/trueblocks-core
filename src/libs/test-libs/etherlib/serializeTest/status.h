@@ -30,7 +30,7 @@ class CStatus : public CBaseNode {
     string_q clientVersion;
     string_q trueblocksVersion;
     string_q rpcProvider;
-    string_q balanceProvider;
+    string_q malanceProvider;
     string_q host;
     bool isScraping;
     CCachePtrArray caches;
@@ -101,7 +101,7 @@ inline void CStatus::initialize(void) {
     clientVersion = "";
     trueblocksVersion = "";
     rpcProvider = "";
-    balanceProvider = "";
+    malanceProvider = "";
     host = "";
     isScraping = false;
     caches.clear();
@@ -118,7 +118,7 @@ inline void CStatus::duplicate(const CStatus& st) {
     clientVersion = st.clientVersion;
     trueblocksVersion = st.trueblocksVersion;
     rpcProvider = st.rpcProvider;
-    balanceProvider = st.balanceProvider;
+    malanceProvider = st.malanceProvider;
     host = st.host;
     isScraping = st.isScraping;
     caches = st.caches;

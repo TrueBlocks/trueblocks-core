@@ -222,14 +222,17 @@ bool loadPrefundBals(void) {
 }
 
 //-----------------------------------------------------------------------
-bool forEveryPrefund(ADDRESSFUNC func, void* data) {
+bool forEveryPrefund(ALLOCFUNC func, void* data) {
     if (!func)
         return false;
 
-    // loadPrefundBals();
-    for (auto prefund : prefundBalMap)
-        if (!(*func)(prefund.first, data))
+    for (auto prefund : prefundBalMap) {
+        Allocation alloc;
+        alloc.address = prefund.first;
+        alloc.amount = prefund.second;
+        if (!(*func)(alloc, data))
             return false;
+    }
     return true;
 }
 
@@ -237,6 +240,25 @@ bool forEveryPrefund(ADDRESSFUNC func, void* data) {
 wei_t prefundAt(const address_t& addr) {
     // loadPrefundBals();
     return prefundBalMap[addr];
+}
+
+//-----------------------------------------------------------------------
+bool findLargest(const Allocation& prefund, void* data) {
+    Allocation* largest = (Allocation*)data;
+    if (prefund.amount > largest->amount) {
+        largest->address = prefund.address;
+        largest->amount = prefund.amount;
+    }
+    return true;
+}
+
+//-----------------------------------------------------------------------
+Allocation largestPrefund(void) {
+    if (prefundBalMap.size() == 0)
+        loadPrefundBals();
+    Allocation largest;
+    forEveryPrefund(findLargest, &largest);
+    return largest;
 }
 
 }  // namespace qblocks
