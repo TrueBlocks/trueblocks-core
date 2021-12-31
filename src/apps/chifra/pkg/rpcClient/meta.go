@@ -13,7 +13,6 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
-	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
@@ -55,13 +54,11 @@ func GetMeta(testmode bool) *Meta {
 
 	valueChan := make(chan MetaValue)
 
-	var wg sync.WaitGroup
 	var nRoutines int = 4
-	wg.Add(nRoutines)
-	go walkIndexFolder(&wg, "finalized", valueChan)
-	go walkIndexFolder(&wg, "staging", valueChan)
-	go walkIndexFolder(&wg, "ripe", valueChan)
-	go walkIndexFolder(&wg, "unripe", valueChan)
+	go walkIndexFolder("finalized", valueChan)
+	go walkIndexFolder("staging", valueChan)
+	go walkIndexFolder("ripe", valueChan)
+	go walkIndexFolder("unripe", valueChan)
 
 	for result := range valueChan {
 		if strings.Contains(result.folder, "done-") {
@@ -85,8 +82,6 @@ func GetMeta(testmode bool) *Meta {
 		}
 	}
 
-	wg.Wait()
-
 	if meta.Staging == 0 {
 		meta.Staging = meta.Finalized
 	}
@@ -96,10 +91,9 @@ func GetMeta(testmode bool) *Meta {
 	return &meta
 }
 
-func walkIndexFolder(wg *sync.WaitGroup, folder string, valueChan chan<- MetaValue) {
+func walkIndexFolder(folder string, valueChan chan<- MetaValue) {
 	defer func() {
 		valueChan <- MetaValue{folder: "done"}
-		wg.Done()
 	}()
 
 	filepath.Walk(config.ReadTrueBlocks().Settings.IndexPath+folder, func(path string, info fs.FileInfo, err error) error {
