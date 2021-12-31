@@ -24,30 +24,6 @@ namespace qblocks {
 //-----------------------------------------------------------------------
 extern string_q getConfigPath(const string_q& part);
 
-class NameOnDisc {
-  public:
-    char tags[30 + 1];
-    char address[42 + 1];
-    char name[120 + 1];
-    char symbol[30 + 1];
-    char source[180 + 1];
-    char description[255 + 1];
-    uint16_t decimals;
-    uint16_t flags;
-    bool disc_2_Name(CAccountName& nm) const;
-    bool name_2_Disc(const CAccountName& nm);
-    string_q Format(void) const;
-};
-
-//-----------------------------------------------------------------------
-// TODO: These singletons are used throughout - it doesn't appear to have any downsides.
-// TODO: Assuming this is true, eventually we can remove this comment.
-static map<address_t, NameOnDisc*> namePtrMap;
-static CAddressNameMap names2025Map;
-static NameOnDisc* names = nullptr;
-static uint64_t nRecords = 0;
-const char* STR_BIN_LOC2025 = "names/names2025.bin";
-
 //-----------------------------------------------------------------------
 struct NameOnDiscHeader {
   public:
@@ -57,11 +33,30 @@ struct NameOnDiscHeader {
 };
 
 //-----------------------------------------------------------------------
+// TODO: These singletons are used throughout - as long as this code
+// TODO: is not inside a server, it doesn't appear to have any downsides.
+// TODO: Assuming this is true, we can remove this comment.
+static CAddressNameMap namesMap;
+static map<address_t, NameOnDisc*> namePtrMap;
+static NameOnDisc* namesAllocated = nullptr;
+static uint64_t nNameRecords = 0;
+static uint64_t allocSize = 0;
+
+//-----------------------------------------------------------------------
+const char* STR_BIN_LOC = "names/names.bin";
+const char* STR_LOG_LOC = "names/edit_log.txt";
+
+//-----------------------------------------------------------------------
 static bool readNamesFromBinary(void) {
-    string_q binFile = getCachePath(STR_BIN_LOC2025);
-    nRecords = (fileSize(binFile) / sizeof(NameOnDisc));  // may be one too large, but we'll adjust below
-    names = new NameOnDisc[nRecords];
-    memset(names, 0, sizeof(NameOnDisc) * nRecords);
+    string_q binFile = getCachePath(STR_BIN_LOC);
+    nNameRecords = (fileSize(binFile) / sizeof(NameOnDisc));  // This number may be too large, but we adjust it below
+    namesAllocated = new NameOnDisc[nNameRecords + 100];
+    if (!namesAllocated) {
+        LOG_ERR("Could not allocation memory for names");
+        return false;
+    }
+    memset(namesAllocated, 0, sizeof(NameOnDisc) * nNameRecords);
+    allocSize = nNameRecords + 100;
 
     NameOnDisc fake;
     CArchive archive(READING_ARCHIVE);
@@ -83,12 +78,18 @@ static bool readNamesFromBinary(void) {
 
     archive.Read(&fake, sizeof(NameOnDisc), 1);
     ASSERT(header.version >= getVersionNum(0, 18, 0));
-    nRecords = header->count;
-    archive.Read(names, sizeof(NameOnDisc), nRecords);
+    nNameRecords = header->count;
+    archive.Read(namesAllocated, sizeof(NameOnDisc), nNameRecords);
     archive.Release();
 
-    for (size_t i = 0; i < nRecords; i++)
-        namePtrMap[names[i].address] = &names[i];
+    // We want to read the entire file into memory with one read, thus
+    // the above code, but we need to access the records by address
+    // which means we need a map, however, we don't want to copy the
+    // memory, so we make a map that points from address to the memory
+    // location of the record in the array. Note, this also sorts the
+    // records without sorting anything.
+    for (size_t i = 0; i < nNameRecords; i++)
+        namePtrMap[namesAllocated[i].address] = &namesAllocated[i];
 
     return true;
 }
@@ -103,9 +104,14 @@ static bool readNamesFromAscii(void) {
     asciiFileToLines(customFile, lines);
 
     clearNames();
-    names = new NameOnDisc[lines.size()];
-    memset(names, 0, sizeof(NameOnDisc) * lines.size());
-    nRecords = 0;
+    namesAllocated = new NameOnDisc[lines.size() + 100];
+    if (!namesAllocated) {
+        LOG_ERR("Could not allocation memory for names");
+        return false;
+    }
+    memset(namesAllocated, 0, sizeof(NameOnDisc) * lines.size());
+    allocSize = lines.size() + 100;
+    nNameRecords = 0;
 
     CStringArray fields;
     for (auto line : lines) {
@@ -116,33 +122,41 @@ static bool readNamesFromAscii(void) {
                 CAccountName account;
                 account.parseText(fields, line);
                 if (!hasName(account.address))
-                    names[nRecords++].name_2_Disc(account);
+                    namesAllocated[nNameRecords++].name_2_Disc(account);
             }
         }
     }
 
-    for (size_t i = 0; i < nRecords; i++)
-        namePtrMap[names[i].address] = &names[i];
+    // See the above comment about the map
+    for (size_t i = 0; i < nNameRecords; i++)
+        namePtrMap[namesAllocated[i].address] = &namesAllocated[i];
 
     return true;
 }
 
 //-----------------------------------------------------------------------
-static bool writeNamesBinary(void) {
-    string_q binFile = getCachePath(STR_BIN_LOC2025);
+static bool writeNamesToBinary(void) {
+    string_q binFile = getCachePath(STR_BIN_LOC);
     CArchive out(WRITING_ARCHIVE);
     if (out.Lock(binFile, modeWriteCreate, LOCK_WAIT)) {
+        // We treat one whole record (the first) as the header. Yes,
+        // there's a bit of wasted space, but it's easier to figure
+        // out the number of records in the file without opening it
+        // nNameRecords = (sizeOfFileInBytes / sizeOfRecord) - 1
         NameOnDisc fake;
         memset(&fake, 0, sizeof(NameOnDisc) * 1);
         NameOnDiscHeader* header = (NameOnDiscHeader*)&fake;
         header->magic = 0xdeadbeef;
         header->version = getVersionNum();
-        header->count = nRecords;
+        header->count = nNameRecords;
         out.Write(&fake, sizeof(NameOnDisc), 1);
-        out.Write(names, sizeof(NameOnDisc), nRecords);
+
+        out.Write(namesAllocated, sizeof(NameOnDisc), nNameRecords);
+
         out.Release();
         return true;
     }
+
     return false;
 }
 
@@ -154,7 +168,7 @@ bool loadNames(void) {
         return true;
     }
 
-    time_q binDate = fileLastModifyDate(getCachePath(STR_BIN_LOC2025));
+    time_q binDate = fileLastModifyDate(getCachePath(STR_BIN_LOC));
     time_q txtDate = laterOf(fileLastModifyDate(getConfigPath("names/names.tab")),
                              fileLastModifyDate(getConfigPath("names/names_custom.tab")));
 
@@ -166,7 +180,7 @@ bool loadNames(void) {
         if (!readNamesFromAscii())
             return false;
 
-        if (!writeNamesBinary())
+        if (!writeNamesToBinary())
             return false;
     }
 
@@ -175,26 +189,33 @@ bool loadNames(void) {
 
 //-----------------------------------------------------------------------
 bool clearNames(void) {
+    namesMap.clear();
     namePtrMap.clear();
-    names2025Map.clear();
-    if (names) {
-        delete[] names;
-        names = nullptr;
+    if (namesAllocated) {
+        delete[] namesAllocated;
+        namesAllocated = nullptr;
     }
     return true;
 }
 
 //-----------------------------------------------------------------------
 bool findName(const address_t& addr, CAccountName& acct) {
-    if (names2025Map[addr].address == addr) {
-        acct = names2025Map[addr];
+    // When the caller ask for an account name, we conver the in-memory record
+    // into that data structure. This takes time, so we cache it in the namesMap
+    // for speed. If it's there, we use it.
+    if (namesMap[addr].address == addr) {
+        acct = namesMap[addr];
         return true;
     }
+
+    // If this is the first time the caller has asked for this address, convert
+    // the in-memory record and cache it.
     if (hasName(addr)) {
         namePtrMap[addr]->disc_2_Name(acct);
-        names2025Map[addr] = acct;
+        namesMap[addr] = acct;
         return true;
     }
+
     return false;
 }
 
@@ -209,34 +230,28 @@ bool findToken(const address_t& addr, CAccountName& acct) {
             return true;
         }
     }
+
     return false;
 }
 
 //-----------------------------------------------------------------------
 void addPrefundToNamesMap(CAccountName& account, uint64_t cnt) {
-    if (names2025Map[account.address].address == account.address)
+    if (namesMap[account.address].address == account.address)
         return;
     if (hasName(account.address))
         return;
 
     address_t addr = account.address;
-    account = names2025Map[addr];
+    account = namesMap[addr];
     account.address = addr;
-    account.tags = account.tags.empty() ? "80-Prefund" : account.tags;
-    account.source = account.source.empty() ? "Genesis" : account.source;
-    account.isPrefund = account.name.empty();
+    account.tags = "80-Prefund";
+    account.source = "Genesis";
+    account.isPrefund = true;
+    account.name = "Prefund_" + padNum4(cnt);
 
-    string_q prefundName = "Prefund_" + padNum4(cnt);
-    if (account.name.empty()) {
-        account.name = prefundName;
-    } else if (!contains(account.name, "Prefund_")) {
-        account.name += " (" + prefundName + ")";
-    } else {
-        // do nothing
-    }
-
-    // TODO: This does not add the name to the pointer map, therefore prefunds won't be processed by forEveryName
-    names2025Map[account.address] = account;
+    // TODO: This does not add the name to the pointer map, therefore prefunds
+    // TODO: are not processed by a call to forEveryName
+    namesMap[account.address] = account;
 }
 
 //-----------------------------------------------------------------------
@@ -278,17 +293,6 @@ bool forEveryNameNew(NAMEODFUNC func, void* data) {
 
     return true;
 }
-
-//-----------------------------------------------------------------------
-enum {
-    IS_NONE = (0),
-    IS_CUSTOM = (1 << 0),
-    IS_PREFUND = (1 << 1),
-    IS_CONTRACT = (1 << 2),
-    IS_ERC20 = (1 << 3),
-    IS_ERC721 = (1 << 4),
-    IS_DELETED = (1 << 5),
-};
 
 //-----------------------------------------------------------------------
 bool NameOnDisc::name_2_Disc(const CAccountName& nm) {
@@ -339,5 +343,75 @@ string_q NameOnDisc::Format(void) const {
     os << (flags & IS_ERC721 ? "true" : "false");
     return os.str();
 }
+
+//-----------------------------------------------------------------------
+bool updateName(const CAccountName& target, const string_q& crud) {
+    if (!hasName(target.address)) {
+        if (nNameRecords == allocSize) {
+            LOG4("Growing names array");
+            // TODO: This has to grow the array or we will crash. It's a simple
+            // TODO: realloc, but then a clearing of the array and reloading
+            // growNames(100);
+        }
+        namesAllocated[nNameRecords].name_2_Disc(target);
+        namePtrMap[namesAllocated[nNameRecords].address] = &namesAllocated[nNameRecords];
+        nNameRecords++;
+    }
+    NameOnDisc* nod = namePtrMap[target.address];
+    if (crud == "create" || crud == "update") {
+        LOG4((crud == "create" ? "Adding " : "Editing "), nod->address);
+        // TODO: we could resort here, but it doesn't appear to matter. When we write
+        // TODO: the file out, we should sort it
+        nod->name_2_Disc(target);
+
+    } else if (crud == "delete") {
+        LOG4("Deleting ", nod->address);
+        nod->flags |= IS_DELETED;
+
+    } else if (crud == "undelete") {
+        LOG4("Undeleting ", nod->address);
+        nod->flags &= ~(IS_DELETED);
+
+    } else if (crud == "remove") {
+        LOG4("Removing ", nod->address);
+        // We can copy the memory from the position one past this record to the
+        // end of the array on top of this record to remove it. If this is the
+        // last record, just decrement the number of records
+        size_t sz = sizeof(NameOnDisc);
+        NameOnDisc* start = namesAllocated;
+        size_t nodRecord = size_t(nod - start) / sz;
+        if (nodRecord < (nNameRecords - 1)) {
+            memcpy(nod, nod + sizeof(NameOnDisc), (nNameRecords - nodRecord - 1) * sz);
+        }
+        nNameRecords--;
+        writeNamesToBinary();
+
+        // Reset the pointers
+        clearNames();
+        readNamesFromBinary();
+
+    } else {
+        // Don't know what this is, quit out
+        return false;
+    }
+
+    writeNamesToBinary();
+
+    if (!isTestMode()) {
+        ostringstream editRecord;
+        editRecord << Now().Format(FMT_JSON) << crud << "\t" << target.Format(STR_DISPLAY_ACCOUNTNAME) << endl;
+        stringToAsciiFile(getCachePath(STR_LOG_LOC), editRecord.str());
+    }
+
+    return true;
+}
+
+// TODO: When writing out the data to the .csv file
+// TODO:    sort it
+// TODO:    do not export zero addresses or prefunds or customs
+// TODO:    turn off TEST_MODE while writing otherwise we lose the names
+// TODO:    for autoname, do not write records that assign address to name
+// TODO:    for autoname, do not write records that assign address to name
+// TODO:    string_q copyBack = getGlobalConfig("ethNames")->getConfigStr("settings", "source", "<not_set>");
 
 }  // namespace qblocks

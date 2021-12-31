@@ -60,8 +60,5 @@ class COptions : public CAbiOptions {
 
     // Crud command handling
     CAccountName target;
-    CAccountNameArray outArray;
-    bool wasEdited{false};
-    void pushToOutput(const CAccountName& name, bool to_custom);
     bool handle_editcmds(bool autoname);
 };

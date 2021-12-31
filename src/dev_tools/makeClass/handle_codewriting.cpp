@@ -130,6 +130,7 @@ bool writeCodeOut(COptions* opts, const string_q& fn) {
         converted = replaceCode(converted, "ROUTE_PKGS", opts->goPkgStream.str());
         converted = replaceCode(converted, "ROUTE_CODE", opts->goCallStream.str());
         converted = replaceCode(converted, "ROUTE_ITEMS", opts->goRouteStream.str());
+        converted = replaceCode(converted, "CONVERT_CODE", opts->goConvertStream.str());
 
     } else if (endsWith(fn, ".yaml")) {
         string_q components = trim(asciiFileToString(getDocsPathTemplates("api/components.txt")), '\n');
