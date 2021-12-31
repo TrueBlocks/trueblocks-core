@@ -106,7 +106,6 @@ func walkIndexFolder(folder string, valueChan chan<- MetaValue) {
 		}
 		if !info.IsDir() {
 			_, last, _ := fn_2_Vals(path)
-			// fmt.Println(" <-- ", folder, last)
 			valueChan <- MetaValue{folder: folder, value: last}
 		}
 		return nil
