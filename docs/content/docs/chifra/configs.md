@@ -52,18 +52,17 @@ If you're running against mutliple chains, you may place any of these files in t
 
 <div style="padding:2px;padding-left:10px;background-color:green;color:white">trueBlocks.toml (all tools)</div>
 
-| Item            | Description / Default                                              |
-| --------------- | ------------------------------------------------------------------ |
-|                 |                                                                    |
-| [settings]      |                                                                    |
-| rpcProvider     | The RPC endpoint (required)<br />http://localhost:8545             |
-| balanceProvider | Alternative RPC for historical balances<br />http://localhost:8545 |
-| cachePath       | Location of binary cache<br />$CONFIG/cache/                       |
-| indexPath       | Location of unchained index<br />$CONFIG/unchained/                |
-| etherscan_key   | API key for EtherScan (optional)<br/>empty                         |
-|                 |                                                                    |
-| [dev]           |                                                                    |
-| debug_curl      | Increases log level for curl commands<br />false                   |
+| Item          | Description / Default                                  |
+| ------------- | ------------------------------------------------------ |
+|               |                                                        |
+| [settings]    |                                                        |
+| rpcProvider   | The RPC endpoint (required)<br />http://localhost:8545 |
+| cachePath     | Location of binary cache<br />$CONFIG/cache/           |
+| indexPath     | Location of unchained index<br />$CONFIG/unchained/    |
+| etherscan_key | API key for EtherScan (optional)<br/>empty             |
+|               |                                                        |
+| [dev]         |                                                        |
+| debug_curl    | Increases log level for curl commands<br />false       |
 
 <div style="padding:2px;padding-left:10px;background-color:green;color:white">All tools (in each file)</div>
 
