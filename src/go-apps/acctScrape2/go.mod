@@ -1,6 +1,6 @@
 module github.com/TrueBlocks/trueblocks-core/src/go-apps/acctScrape2
 
-go 1.16.3
+go 1.16
 
 require (
 	github.com/gookit/color v1.3.6

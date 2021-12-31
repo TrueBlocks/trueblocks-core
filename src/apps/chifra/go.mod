@@ -1,6 +1,6 @@
 module github.com/TrueBlocks/trueblocks-core/src/apps/chifra
 
-go 1.16.3
+go 1.16
 
 require (
 	github.com/alecthomas/participle/v2 v2.0.0-alpha7
