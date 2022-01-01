@@ -3,7 +3,6 @@ clientVersion     ,string    ,                 ,       ,      ,        ,        
 clientIds         ,string    ,                 ,       ,      ,        ,          ,        ,      ,         ,2   ,     ,        ,netword_id and chain_id from the rpcProvider
 trueblocksVersion ,string    ,                 ,       ,      ,        ,          ,        ,      ,         ,3   ,     ,        ,the TrueBlocks version string
 rpcProvider       ,string    ,                 ,       ,      ,        ,          ,        ,      ,         ,4   ,     ,        ,the current rpcProvider
-balanceProvider   ,string    ,                 ,       ,      ,        ,          ,        ,      ,         ,5   ,     ,        ,the current archive node balance provider (defaults to rpcProvider)
 configPath        ,string    ,                 ,       ,      ,true    ,          ,        ,      ,         ,6   ,     ,        ,the path to config files
 cachePath         ,string    ,                 ,       ,      ,        ,          ,        ,      ,         ,7   ,     ,        ,the path to the local binary caches
 indexPath         ,string    ,                 ,       ,      ,        ,          ,        ,      ,         ,8   ,     ,        ,the path to the local binary indexes

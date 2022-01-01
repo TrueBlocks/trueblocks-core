@@ -39,11 +39,6 @@ bool COptions::handle_config_get(ostream& os) {
             prov = "--rpc Provider--";
         values.push_back(prov);
 
-        string_q bal = cc->getConfigStr(g1_1.name, "balanceProvider", "http://localhost:8545");
-        if (isTestMode())
-            bal = "--balance Prov--";
-        values.push_back(bal);
-
         string_q defFolder = substitute(getConfigPath(""), getHomeFolder(), "~/");
         string_q conf = defFolder;
         if (isTestMode())
@@ -65,8 +60,6 @@ bool COptions::handle_config_get(ostream& os) {
 
         items.push_back(CConfigItem("rpcProvider", substitute(values[cnt++], "\t", "\\t"), "url",
                                     "the Ethereum node's RPC endpoint", true, false));
-        items.push_back(CConfigItem("balanceProvider", substitute(values[cnt++], "\t", "\\t"), "url",
-                                    "alternative node endpoint for account balances", false, false));
         for (auto item : items)
             g1_1.keys.push_back(item);
         f.sections.push_back(g1_1);

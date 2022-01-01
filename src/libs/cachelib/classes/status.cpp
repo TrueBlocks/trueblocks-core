@@ -73,11 +73,6 @@ string_q CStatus::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
-        case 'b':
-            if (fieldName % "balanceProvider") {
-                return balanceProvider;
-            }
-            break;
         case 'c':
             if (fieldName % "clientVersion") {
                 return clientVersion;
@@ -172,12 +167,6 @@ bool CStatus::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
-        case 'b':
-            if (fieldName % "balanceProvider") {
-                balanceProvider = fieldValue;
-                return true;
-            }
-            break;
         case 'c':
             if (fieldName % "clientVersion") {
                 clientVersion = fieldValue;
@@ -295,7 +284,6 @@ bool CStatus::Serialize(CArchive& archive) {
     archive >> clientIds;
     archive >> trueblocksVersion;
     archive >> rpcProvider;
-    archive >> balanceProvider;
     // archive >> configPath;
     archive >> cachePath;
     archive >> indexPath;
@@ -340,7 +328,6 @@ bool CStatus::SerializeC(CArchive& archive) const {
     archive << clientIds;
     archive << trueblocksVersion;
     archive << rpcProvider;
-    archive << balanceProvider;
     // archive << configPath;
     archive << cachePath;
     archive << indexPath;
@@ -413,7 +400,6 @@ void CStatus::registerClass(void) {
     ADD_FIELD(CStatus, "clientIds", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CStatus, "trueblocksVersion", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CStatus, "rpcProvider", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CStatus, "balanceProvider", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CStatus, "configPath", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CStatus, "configPath");
     ADD_FIELD(CStatus, "cachePath", T_TEXT | TS_OMITEMPTY, ++fieldNum);

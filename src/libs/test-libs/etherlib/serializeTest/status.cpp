@@ -74,8 +74,8 @@ string_q CStatus::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'b':
-            if (fieldName % "balanceProvider") {
-                return balanceProvider;
+            if (fieldName % "malanceProvider") {
+                return malanceProvider;
             }
             break;
         case 'c':
@@ -137,8 +137,8 @@ bool CStatus::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
 
     switch (tolower(fieldName[0])) {
         case 'b':
-            if (fieldName % "balanceProvider") {
-                balanceProvider = fieldValue;
+            if (fieldName % "malanceProvider") {
+                malanceProvider = fieldValue;
                 return true;
             }
             break;
@@ -210,7 +210,7 @@ bool CStatus::Serialize(CArchive& archive) {
     archive >> clientVersion;
     archive >> trueblocksVersion;
     archive >> rpcProvider;
-    archive >> balanceProvider;
+    archive >> malanceProvider;
     archive >> host;
     archive >> isScraping;
     // archive >> caches;
@@ -230,7 +230,7 @@ bool CStatus::SerializeC(CArchive& archive) const {
     archive << clientVersion;
     archive << trueblocksVersion;
     archive << rpcProvider;
-    archive << balanceProvider;
+    archive << malanceProvider;
     archive << host;
     archive << isScraping;
     // archive << caches;
@@ -286,7 +286,7 @@ void CStatus::registerClass(void) {
     ADD_FIELD(CStatus, "clientVersion", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CStatus, "trueblocksVersion", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CStatus, "rpcProvider", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CStatus, "balanceProvider", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "malanceProvider", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CStatus, "host", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CStatus, "isScraping", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CStatus, "caches", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);

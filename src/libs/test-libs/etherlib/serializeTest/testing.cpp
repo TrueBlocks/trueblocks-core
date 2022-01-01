@@ -119,7 +119,7 @@ int main(int argc, const char* argv[]) {
         status.clientVersion = "clientVersion";
         status.trueblocksVersion = "trueblocksVersion";
         status.rpcProvider = "rpcProvider";
-        status.balanceProvider = "balanceProvider";
+        status.malanceProvider = "malanceProvider";
         status.host = "host";
         status.caches.push_back(&cache);
         cout << status << endl;

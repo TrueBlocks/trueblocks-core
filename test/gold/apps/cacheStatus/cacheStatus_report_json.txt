@@ -1,6 +1,7 @@
 chifra status  --report --fmt json
 TEST[DATE|TIME] Depth:  0
 TEST[DATE|TIME] Format:  json
+TIME ~ CLOCK - [0m[0;32m[1m<INFO>  [0m: Loading prefund balances
 TIME ~ CLOCK - <INFO>  : Loading names
 { "data": [
 {
@@ -8,7 +9,6 @@ TIME ~ CLOCK - <INFO>  : Loading names
   "clientIds": "chainId: 1 networkId: 1",
   "trueblocksVersion": "GHC-TrueBlocks//vers-alpha--git-hash---git-ts-",
   "rpcProvider": "--providers--",
-  "balanceProvider": "--providers--",
   "configPath": "--paths--",
   "cachePath": "--paths--",
   "indexPath": "--paths--",

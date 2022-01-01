@@ -1,6 +1,7 @@
 chifra status  --get_config
 TEST[DATE|TIME] Depth:  0
 TEST[DATE|TIME] GetConfig:  true
+TIME ~ CLOCK - [0m[0;32m[1m<INFO>  [0m: Loading prefund balances
 TIME ~ CLOCK - <INFO>  : Loading names
 {
   "files": [
@@ -17,12 +18,6 @@ TIME ~ CLOCK - <INFO>  : Loading names
               "type": "url",
               "tip": "the Ethereum node's RPC endpoint",
               "required": true
-            },
-            {
-              "name": "balanceProvider",
-              "value": "--balance Prov--",
-              "type": "url",
-              "tip": "alternative node endpoint for account balances"
             }
           ]
         },

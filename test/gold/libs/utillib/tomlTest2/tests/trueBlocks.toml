@@ -1,5 +1,5 @@
 [version]
-current="0.5.5-alpha"
+current = "0.5.5-alpha"
 
 [settings]
 # rpcProvider = "http://my.ethchain.dnp.dappnode.eth:8545/"
@@ -7,7 +7,6 @@ current="0.5.5-alpha"
 rpcProvider = "http://localhost:36963/"
 # rpcProvider = "http://localhost:23456/"
 # rpcProvider = "http://localhost:8515"
-balanceProvider = "http://localhost:36963/"
 cachePath = "$CONFIG/cache/"
 indexPath = "$CONFIG/unchained/"
 

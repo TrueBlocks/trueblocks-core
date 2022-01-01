@@ -266,12 +266,11 @@ void COptions::Init(void) {
 
     if (isTestMode()) {
         status.host = "--hostname-- (--username--)";
-        status.rpcProvider = status.balanceProvider = "--providers--";
+        status.rpcProvider = "--providers--";
         status.configPath = status.cachePath = status.indexPath = "--paths--";
     } else {
         status.host = string_q(hostname) + " (" + username + ")";
         status.rpcProvider = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
-        status.balanceProvider = getGlobalConfig()->getConfigStr("settings", "balanceProvider", status.rpcProvider);
         status.configPath = getConfigPath("");
         status.cachePath = getGlobalConfig()->getConfigStr("settings", "cachePath", getCachePath(""));
         status.indexPath = getGlobalConfig()->getConfigStr("settings", "indexPath", getIndexPath(""));

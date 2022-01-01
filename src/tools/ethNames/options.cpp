@@ -445,15 +445,15 @@ bool addPrefund(CAccountName& item, void* data) {
 }
 
 //-----------------------------------------------------------------------
-bool addPrefundNew(const address_t& addr, void* data) {
+bool addPrefundNew(const Allocation& prefund, void* data) {
     COptions* opts = (COptions*)data;
-    if (hasName(addr)) {
+    if (hasName(prefund.address)) {
         opts->nPrefunds++;
         return true;
     }
 
     CAccountName account;
-    account.address = addr;
+    account.address = prefund.address;
     account.tags = "80-Prefund";
     account.source = "Genesis";
     account.isPrefund = true;
