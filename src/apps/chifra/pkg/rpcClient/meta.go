@@ -8,13 +8,13 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-//	"io/fs"
+	"io/fs"
 	"math"
 	"path/filepath"
 	"strconv"
 	"strings"
 
-//	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
 
 type Meta struct {
@@ -96,20 +96,20 @@ func walkIndexFolder(folder string, valueChan chan<- MetaValue) {
 		valueChan <- MetaValue{folder: "done"}
 	}()
 
-//	filepath.Walk(config.ReadTrueBlocks().Settings.IndexPath+folder, func(path string, info fs.FileInfo, err error) error {
-//		if err != nil {
-//			// If the scraper is running, this will sometimes send an error for a file, for example, that existed
-//			// when it was first seen, but the scraper deletes before this call. We ignore any file system errors
-//			// this routine, but if we expect problems, we can uncomment this line
-//			// fmt.Printf("prevent panic by handling failure accessing a path %q: %v\n", path, err)
-//			return err
-//		}
-//		if !info.IsDir() {
-//			_, last, _ := fn_2_Vals(path)
-//			valueChan <- MetaValue{folder: folder, value: last}
-//		}
-//		return nil
-//	})
+	filepath.Walk(config.ReadTrueBlocks().Settings.IndexPath+folder, func(path string, info fs.FileInfo, err error) error {
+		if err != nil {
+			// If the scraper is running, this will sometimes send an error for a file, for example, that existed
+			// when it was first seen, but the scraper deletes before this call. We ignore any file system errors
+			// this routine, but if we expect problems, we can uncomment this line
+			// fmt.Printf("prevent panic by handling failure accessing a path %q: %v\n", path, err)
+			return err
+		}
+		if !info.IsDir() {
+			_, last, _ := fn_2_Vals(path)
+			valueChan <- MetaValue{folder: folder, value: last}
+		}
+		return nil
+	})
 }
 
 func fn_2_Vals(path string) (uint64, uint64, error) {

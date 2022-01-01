@@ -43,6 +43,8 @@ jobs:
           command_timeout: 40m
           script_stop: true
           script: |
+            cat ~/.profile
+            source ~/.profile
             rm -rf testing/${{ github.sha }}
             mkdir -p testing/${{ github.sha }}
             mkdir -p test_results/${{ github.sha }}
