@@ -147,6 +147,6 @@ file(COPY "${SOURCE_PATH}/prices/ts.bin.gz" DESTINATION "${DEST_PATH}" FILE_PERM
 # Clear a few bin files, so they get regenerated for each build
 #---------------------------------------------------------------
 message(STATUS "Removing file: ${DEST_PATH}/cache/names/names.bin")
-file(REMOVE "${DEST_PATH}/cache/names/*.bin")
+file(REMOVE "${DEST_PATH}/cache/names/names.bin")
 message(STATUS "Removing file: ${DEST_PATH}/cache/abis/known.bin")
 file(REMOVE "${DEST_PATH}/cache/abis/known.bin")
