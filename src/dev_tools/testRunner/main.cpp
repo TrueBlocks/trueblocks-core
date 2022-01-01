@@ -285,7 +285,8 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
             if (folderExists(customized))
                 forEveryFileInFolder(customized + "/*", saveAndCopy, NULL);
             if (test.mode == "both" || contains(test.tool, "lib"))
-                measure.nTests++;
+                if (test.tool != "getQuotes")
+                    measure.nTests++;
             // clang-format off
             if (system(theCmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
             // clang-format on
@@ -301,7 +302,8 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
 
             if (test.builtin) {
                 if (test.mode == "both" || contains(test.tool, "lib"))
-                    measure.nPassed++;
+                    if (test.tool != "getQuotes")
+                        measure.nPassed++;
                 continue;
             }
 
@@ -380,7 +382,8 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
             string_q result = greenCheck;
             if (!newText.empty() && newText == oldText) {
                 if (test.mode == "both" || contains(test.tool, "lib"))
-                    measure.nPassed++;
+                    if (test.tool != "getQuotes")
+                        measure.nPassed++;
 
             } else {
                 ostringstream os;
