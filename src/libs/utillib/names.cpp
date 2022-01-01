@@ -358,6 +358,11 @@ bool updateName(const CAccountName& target, const string_q& crud) {
         nNameRecords++;
     }
     NameOnDisc* nod = namePtrMap[target.address];
+    if (!nod || nod->address != target.address) {
+        LOG_WARN("Address not found: ", target.address);
+        return false;
+    }
+
     if (crud == "create" || crud == "update") {
         LOG4((crud == "create" ? "Adding " : "Editing "), nod->address);
         // TODO: we could resort here, but it doesn't appear to matter. When we write
@@ -380,10 +385,11 @@ bool updateName(const CAccountName& target, const string_q& crud) {
         size_t sz = sizeof(NameOnDisc);
         NameOnDisc* start = namesAllocated;
         size_t nodRecord = size_t(nod - start) / sz;
-        if (nodRecord < (nNameRecords - 1)) {
-            memcpy(nod, nod + sizeof(NameOnDisc), (nNameRecords - nodRecord - 1) * sz);
-        }
+        for (size_t i = nodRecord + 1; i < nNameRecords; i++)
+            memcpy(nod, &namesAllocated[i], sizeof(NameOnDisc));
         nNameRecords--;
+        for (size_t i = 0; i < nNameRecords; i++)
+            namePtrMap[namesAllocated[i].address] = &namesAllocated[i];
         writeNamesToBinary();
 
         // Reset the pointers
