@@ -11,9 +11,6 @@ SRV_PORT=`shuf -n 1 -i 8091-10000`
 
 echo "Will perform $MAKE_TARGET"
 
-export PATH=/usr/local/go/bin:$PATH
-export GOROOT=/usr/local/go/
-
 if [ "$MAKE_TARGET" == "test-all" ]
 then
     RUN_SERVER=true
