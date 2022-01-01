@@ -6,14 +6,15 @@ jobs:
     steps:
       - name: Checkout TrueBlocks repo
         uses: actions/checkout@v2
+      - name: Use a certain version of go
+        uses: actions/setup-go@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          go-version: "^1.16"
       - name: Install prerequistes
-        run: |
-          sudo apt-get install build-essential git cmake python python-dev libcurl3-dev clang-format jq tree
+        run: sudo apt-get install build-essential git cmake python python-dev libcurl3-dev clang-format jq tree
       - name: Build TrueBlocks
-        run: |
-          mkdir -p build && cd build
-          cmake ../src
-          make -j 4
+        run: mkdir -p build && cd build && cmake ../src && make -j 4
   GoUnitTests:
     runs-on: ubuntu-latest
     needs: Build
@@ -22,7 +23,7 @@ jobs:
       - uses: actions/setup-go@v2
         with:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          go-version: '^1.16.3' # The Go version to download (if necessary) and use.
+          go-version: "^1.16"
       - run: cd src/apps/chifra && go test ./...
   RemoteTests:
     needs: GoUnitTests
