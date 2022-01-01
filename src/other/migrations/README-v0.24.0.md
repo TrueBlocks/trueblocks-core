@@ -4,6 +4,10 @@
 
 (January 2, 2022)
 
+## WORK IN PROGRESS
+
+Do not complete this migration until you are told to do so.
+
 ## Why the Change?
 
 With this chain we enter into the world of multi-chain. While the changes here are pretty simple, they are delicate in the sense that you must edit files and folders on your hard drive. It is possible to damage not only your installation of TrueBlocks, but your computer as a whole if you are not careful. Please don't say we didn' warn you.
