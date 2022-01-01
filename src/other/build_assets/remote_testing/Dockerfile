@@ -16,6 +16,12 @@ WORKDIR /root
 RUN git clone --progress \
         https://github.com/$repo.git \
         /root/trueblocks-core && \
+        go version \
+        echo "Jay" \
+        echo $PATH \
+        export PATH=/usr/local/go/bin:$PATH \
+        echo $PATH \
+        go version \
         cd /root/trueblocks-core && \
         git checkout $branch && \
         mkdir -v build && \
