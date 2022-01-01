@@ -29,11 +29,6 @@ jobs:
     needs: GoUnitTests
     runs-on: ubuntu-latest
     steps:
-      - name: Use a certain version of go
-        uses: actions/setup-go@v2
-        with:
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          go-version: "^1.16"
       - name: Run tests remotely
         uses: appleboy/ssh-action@master
         with:

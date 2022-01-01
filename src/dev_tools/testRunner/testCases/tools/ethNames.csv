@@ -35,7 +35,7 @@ on      ,both ,fast  ,names ,tools/ethNames ,prefund_custom_search  ,y    ,prefu
 on      ,both ,fast  ,names ,tools/ethNames ,prefund_custom_search2 ,y    ,prefund & custom & terms = 0001 & terms = Genesis & expand
 on      ,both ,fast  ,names ,tools/ethNames ,named                  ,y    ,
 on      ,both ,fast  ,names ,tools/ethNames ,prefund_custom_named   ,y    ,prefund & custom & named
-on      ,both ,fast  ,names ,tools/ethNames ,all                    ,y    ,all
+local   ,both ,fast  ,names ,tools/ethNames ,all                    ,y    ,all
 on      ,both ,medi  ,names ,tools/ethNames ,upgrade_fail           ,y    ,fmt = json
 on      ,both ,medi  ,names ,tools/ethNames ,duplicated_option_1    ,n    ,terms = 0xb6 & terms = torj & addr & addr & addr & addr
 on      ,both ,medi  ,names ,tools/ethNames ,name_match             ,n    ,noop & terms = torj & fmt = csv
