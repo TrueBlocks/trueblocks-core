@@ -58,12 +58,12 @@ func ReadTrueBlocks() *TrueBlocksConfig {
 	return &cachedTrueBlocksConfig
 }
 
-// GetCachePath returns the one and only cachePath
-func GetCachePath() string {
+// GetPathToCache returns the one and only cachePath
+func GetPathToCache() string {
 	return ReadTrueBlocks().Settings.CachePath
 }
 
-// GetIndexPath returns the one and only cachePath
-func GetIndexPath() string {
+// GetPathToIndex returns the one and only cachePath
+func GetPathToIndex() string {
 	return ReadTrueBlocks().Settings.IndexPath
 }

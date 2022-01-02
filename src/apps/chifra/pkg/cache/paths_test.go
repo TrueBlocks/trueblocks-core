@@ -12,8 +12,8 @@ import (
 )
 
 func TestCacheLayout(t *testing.T) {
-	indexPath := config.GetIndexPath()
-	cachePath := config.GetCachePath()
+	indexPath := config.GetPathToIndex()
+	cachePath := config.GetPathToCache()
 
 	// we need this to make the cache folders
 	// EstablishCaches()

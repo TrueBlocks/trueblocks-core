@@ -28,7 +28,7 @@ func nRecords() (uint64, error) {
 		return recordCount, nil
 	}
 
-	tsPath := config.GetIndexPath() + "ts.bin"
+	tsPath := config.GetPathToIndex() + "ts.bin"
 
 	fileStat, err := os.Stat(tsPath)
 	if err != nil {
@@ -52,7 +52,7 @@ func loadTimestamps() error {
 		return err
 	}
 
-	tsPath := config.GetIndexPath() + "ts.bin"
+	tsPath := config.GetPathToIndex() + "ts.bin"
 
 	tsFile, err := os.Open(tsPath)
 	if err != nil {

@@ -108,8 +108,8 @@ We want the only configuration to be ${BASE_PATH}. All other paths are calculate
 | Name              | Description                                                                                                      |
 | ----------------- | ---------------------------------------------------------------------------------------------------------------- |
 | GetPathToConfig   | Hard coded in utils.go<br>`~/local/share/trueblocks` (Linux)<br>`~/Library/Application Support/TrueBlocks` (Mac) |
-| GetCachePath      | Found in config file<br>defaults to `GetPathToConfig("cache")`                                                   |
-| GetIndexPath      | Found in config file<br>defaults to `GetPathToConfig("unchained")`                                               |
+| GetPathToCache    | Found in config file<br>defaults to `GetPathToConfig("cache")`                                                   |
+| GetPathToIndex    | Found in config file<br>defaults to `GetPathToConfig("unchained")`                                               |
 | GetPathToCommands | Hard coded to $HOME/.local/bin/chifra on both platforms in GetPathToCommands                                     |
 
 <br>

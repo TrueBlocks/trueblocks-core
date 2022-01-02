@@ -31,8 +31,8 @@ func PrintServeSettings(testMode bool) {
 	meta := rpcClient.GetMeta(testMode)
 	log.Print("\n")
 	log.Println(colors.Green, "Starting API server on port "+Options.Port, colors.Off)
-	log.Println(colors.Green, "Cache Path:   ", colors.Off, config.GetCachePath())
-	log.Println(colors.Green, "Index Path:   ", colors.Off, config.GetIndexPath())
+	log.Println(colors.Green, "Cache Path:   ", colors.Off, config.GetPathToCache())
+	log.Println(colors.Green, "Index Path:   ", colors.Off, config.GetPathToIndex())
 	log.Println(colors.Green, "Rpc Provider: ", colors.Off, config.ReadTrueBlocks().Settings.RpcProvider)
 	log.Printf(" %s%s%s%d, %d, %d, %d\n", colors.Green, "Progress:       ", colors.Green, meta.Latest, meta.Finalized, meta.Staging, meta.Unripe)
 }
@@ -67,8 +67,8 @@ func PrintServeSettings(testMode bool) {
 // 	log.Print(utils.Green, "Starting API server on port "+Options.Port, utils.Off, "\n")
 // 	log.Print(utils.Green, "Client:       ", utils.Off, Options.Status.Latest)
 // 	log.Print(utils.Green, "TrueBlocks:   ", utils.Off, Options.Status.TrueBlocks)
-// 	log.Print(utils.Green, "Cache Path:   ", utils.Off, config.GetCachePath())
-// 	log.Print(utils.Green, "Index Path:   ", utils.Off, config.GetIndexPath())
+// 	log.Print(utils.Green, "Cache Path:   ", utils.Off, config.GetPathToCache())
+// 	log.Print(utils.Green, "Index Path:   ", utils.Off, config.GetPathToIndex())
 // 	log.Print(utils.Green, "Rpc Provider: ", utils.Off, Options.Status.RPC)
 // 	log.Print(utils.Green, "Progress:     ", utils.Off, Options.Meta.Latest, ", ", Options.Meta.Finalized, ", ", Options.Meta.Staging, ", ", Options.Meta.Unripe)
 

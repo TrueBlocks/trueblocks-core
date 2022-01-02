@@ -132,7 +132,7 @@ func RunMonitorScraper(wg sync.WaitGroup, initialState bool) {
 
 			/* -------------- */
 			var addresses []string
-			// root := config.GetCachePath() + "monitors/"
+			// root := config.GetPathToCache() + "monitors/"
 			// err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
 			// 	if strings.Contains(path, ".acct.bin") {
 			// 		path = strings.Replace(path, ".acct.bin", "", -1)
@@ -324,8 +324,8 @@ func (scraper *Scraper) Pause() {
 // 	log.Print("\n")
 // 	log.Print(colors.Green, "Client:       ", colors.Off, Options.Status.Latest)
 // 	log.Print(colors.Green, "TrueBlocks:   ", colors.Off, Options.Status.TrueBlocks)
-// 	log.Print(colors.Green, "Cache Path:   ", colors.Off, config.GetCachePath())
-// 	log.Print(colors.Green, "Index Path:   ", colors.Off, config.GetIndexPath())
+// 	log.Print(colors.Green, "Cache Path:   ", colors.Off, config.GetPathToCache())
+// 	log.Print(colors.Green, "Index Path:   ", colors.Off, config.GetPathToIndex())
 // 	log.Print(colors.Green, "Rpc Provider: ", colors.Off, Options.Status.RPC)
 // 	log.Print(colors.Green, "Progress:     ", colors.Off, Options.Meta.Latest, ", ", Options.Meta.Finalized, ", ", Options.Meta.Staging, ", ", Options.Meta.Unripe)
 
