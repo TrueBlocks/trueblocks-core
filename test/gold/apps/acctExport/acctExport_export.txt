@@ -3,7 +3,6 @@ TEST[DATE|TIME] Addrs:  [0x001d14804b399c6ef80e64576f657660804fec0b]
 TEST[DATE|TIME] MaxRecords:  2
 TEST[DATE|TIME] Format:  txt
 TIME ~ CLOCK - <INFO>  : Loading names
-TIME ~ CLOCK - <INFO>  : Loading prefunds accounts
 TIME ~ CLOCK - <INFO>  : Loading names
 TIME ~ CLOCK - <INFO>  : Loading prefund balances
 blockNumber	transactionIndex	date	timestamp	from	to	ether	ethGasPrice	gasUsed	hash	isError	encoding	compressedTx

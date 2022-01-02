@@ -49,7 +49,7 @@ class COptions : public CAbiOptions {
     bool parseArguments(string_q& command) override;
     void Init(void) override;
 
-    void applyFilter(void);
+    void filterNames(void);
     bool addIfUnique(const CAccountName& item);
 
     void handle_collections(const CStringArray& terms);

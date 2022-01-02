@@ -1,6 +1,6 @@
 ## NOTICE
 
-This document is out of date. Please see our [website](http://trueblocks.io).
+This document is out of date. Please see the [website](http://trueblocks.io).
 
 -----------
 

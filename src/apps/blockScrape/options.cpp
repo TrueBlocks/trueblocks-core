@@ -165,7 +165,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!fileExists(bloomPath)) {
         LOG_INFO("Index for block zero not found. Building from prefund file.");
 
-        if (!loadPrefundBals())
+        if (!loadPrefundBalances())
             return usage("Could not load names database.");
 
         // Each chain must have it's own prefund addresses. Here, we scan the prefund list

@@ -18,11 +18,9 @@
 #include "names.h"
 #include "prefunds.h"
 #include "logging.h"
+#include "options_base.h"
 
 namespace qblocks {
-
-//-----------------------------------------------------------------------
-extern string_q getConfigPath(const string_q& part);
 
 //-----------------------------------------------------------------------
 struct NameOnDiscHeader {
@@ -47,16 +45,21 @@ const char* STR_BIN_LOC = "names/names.bin";
 const char* STR_LOG_LOC = "names/edit_log.txt";
 
 //-----------------------------------------------------------------------
+// This is a little bit strange, but it allows us to add 8893 for prefunds
+// and the rest for editing with --file option without reallocating. (About 6MB.)
+const uint64_t nExtra = 10000;
+
+//-----------------------------------------------------------------------
 static bool readNamesFromBinary(void) {
     string_q binFile = getCachePath(STR_BIN_LOC);
     nNameRecords = (fileSize(binFile) / sizeof(NameOnDisc));  // This number may be too large, but we adjust it below
-    namesAllocated = new NameOnDisc[nNameRecords + 100];
+    namesAllocated = new NameOnDisc[nNameRecords + nExtra];
     if (!namesAllocated) {
         LOG_ERR("Could not allocation memory for names");
         return false;
     }
     memset(namesAllocated, 0, sizeof(NameOnDisc) * nNameRecords);
-    allocSize = nNameRecords + 100;
+    allocSize = nNameRecords + nExtra;
 
     NameOnDisc fake;
     CArchive archive(READING_ARCHIVE);
@@ -104,13 +107,13 @@ static bool readNamesFromAscii(void) {
     asciiFileToLines(customFile, lines);
 
     clearNames();
-    namesAllocated = new NameOnDisc[lines.size() + 100];
+    namesAllocated = new NameOnDisc[lines.size() + nExtra];
     if (!namesAllocated) {
         LOG_ERR("Could not allocation memory for names");
         return false;
     }
     memset(namesAllocated, 0, sizeof(NameOnDisc) * lines.size());
-    allocSize = lines.size() + 100;
+    allocSize = lines.size() + nExtra;
     nNameRecords = 0;
 
     CStringArray fields;
@@ -188,6 +191,43 @@ bool loadNames(void) {
 }
 
 //-----------------------------------------------------------------------
+static bool addPrefund(const Allocation& prefund, void* data) {
+    uint64_t* count = (uint64_t*)data;
+    if (hasName(prefund.address)) {
+        (*count)++;
+        return true;
+    }
+
+    CAccountName account;
+    account.address = prefund.address;
+    account.tags = "80-Prefund";
+    account.source = "Genesis";
+    account.isPrefund = true;
+    account.name = "Prefund_" + padNum4(*count);
+    (*count)++;
+
+    namesAllocated[nNameRecords].name_2_Disc(account);
+    namePtrMap[namesAllocated[nNameRecords].address] = &namesAllocated[nNameRecords];
+    nNameRecords++;
+
+    return true;
+}
+
+//-----------------------------------------------------------------------
+bool loadNamesWithPrefunds(void) {
+    if (!loadNames())
+        return false;
+
+    if (!loadPrefundBalances())
+        return false;
+
+    uint64_t count = 0;
+    forEveryPrefund(addPrefund, &count);
+
+    return true;
+}
+
+//-----------------------------------------------------------------------
 bool clearNames(void) {
     namesMap.clear();
     namePtrMap.clear();
@@ -200,7 +240,7 @@ bool clearNames(void) {
 
 //-----------------------------------------------------------------------
 bool findName(const address_t& addr, CAccountName& acct) {
-    // When the caller ask for an account name, we conver the in-memory record
+    // When the caller ask for an account name, we convert the in-memory record
     // into that data structure. This takes time, so we cache it in the namesMap
     // for speed. If it's there, we use it.
     if (namesMap[addr].address == addr) {
@@ -235,26 +275,6 @@ bool findToken(const address_t& addr, CAccountName& acct) {
 }
 
 //-----------------------------------------------------------------------
-void addPrefundToNamesMap(CAccountName& account, uint64_t cnt) {
-    if (namesMap[account.address].address == account.address)
-        return;
-    if (hasName(account.address))
-        return;
-
-    address_t addr = account.address;
-    account = namesMap[addr];
-    account.address = addr;
-    account.tags = "80-Prefund";
-    account.source = "Genesis";
-    account.isPrefund = true;
-    account.name = "Prefund_" + padNum4(cnt);
-
-    // TODO: This does not add the name to the pointer map, therefore prefunds
-    // TODO: are not processed by a call to forEveryName
-    namesMap[account.address] = account;
-}
-
-//-----------------------------------------------------------------------
 bool hasName(const address_t& addr) {
     return namePtrMap[addr] != nullptr;
 }
@@ -282,7 +302,7 @@ bool forEveryNameOld(NAMEFUNC func, void* data) {
 }
 
 //-----------------------------------------------------------------------
-bool forEveryNameNew(NAMEODFUNC func, void* data) {
+bool forEveryName(NAMEODFUNC func, void* data) {
     if (!func)
         return false;
 

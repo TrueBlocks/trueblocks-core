@@ -4,7 +4,6 @@ TEST[DATE|TIME] Appearances:  true
 TEST[DATE|TIME] MaxRecords:  1
 TEST[DATE|TIME] Format:  json
 TIME ~ CLOCK - <INFO>  : Loading names
-TIME ~ CLOCK - <INFO>  : Loading prefunds accounts
 TIME ~ CLOCK - <INFO>  : Loading names
 TIME ~ CLOCK - <INFO>  : Loading prefund balances
 { "data": [
