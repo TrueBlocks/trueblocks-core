@@ -12,19 +12,19 @@ import (
 )
 
 func TestCacheLayout(t *testing.T) {
-	indexPath := config.ReadTrueBlocks().Settings.IndexPath
-	cachePath := config.ReadTrueBlocks().Settings.CachePath
+	indexPath := config.GetIndexPath()
+	cachePath := config.GetCachePath()
 
 	// we need this to make the cache folders
 	// EstablishCaches()
 
-    // TODO: turn these back on
+	// TODO: turn these back on
 	tests := []struct {
 		on        bool
 		name      string
 		cacheType CacheType
 		param     string
-		expected  CachePath
+		expected  Path
 		path      string
 		wantErr   bool
 	}{
@@ -32,7 +32,7 @@ func TestCacheLayout(t *testing.T) {
 			on:    false,
 			name:  "index chunk path",
 			param: "0010000000-0010200000",
-			expected: CachePath{
+			expected: Path{
 				Type:      IndexChunk,
 				RootPath:  indexPath,
 				Subdir:    "finalized/",
@@ -45,7 +45,7 @@ func TestCacheLayout(t *testing.T) {
 			on:    false,
 			name:  "Bloom filter path",
 			param: "0010000000-0010200000",
-			expected: CachePath{
+			expected: Path{
 				Type:      BloomChunk,
 				RootPath:  indexPath,
 				Subdir:    "blooms/",
@@ -58,7 +58,7 @@ func TestCacheLayout(t *testing.T) {
 			on:    false,
 			name:  "Block cache path",
 			param: "001001001",
-			expected: CachePath{
+			expected: Path{
 				Type:      BlockCache,
 				RootPath:  cachePath,
 				Subdir:    "blocks/",
@@ -71,7 +71,7 @@ func TestCacheLayout(t *testing.T) {
 			on:    false,
 			name:  "Transaction cache path",
 			param: "1001001.20",
-			expected: CachePath{
+			expected: Path{
 				Type:      TxCache,
 				RootPath:  cachePath,
 				Subdir:    "txs/",
@@ -91,7 +91,7 @@ func TestCacheLayout(t *testing.T) {
 		}
 
 		t.Run(tt.name, func(t *testing.T) {
-			cachePath := &CachePath{}
+			cachePath := &Path{}
 			cachePath.New(tt.expected.Type)
 
 			if cachePath.Extension != tt.expected.Extension {

@@ -132,7 +132,7 @@ func RunMonitorScraper(wg sync.WaitGroup, initialState bool) {
 
 			/* -------------- */
 			var addresses []string
-			// root := Options.Status.CachePath + "monitors/"
+			// root := config.GetCachePath() + "monitors/"
 			// err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
 			// 	if strings.Contains(path, ".acct.bin") {
 			// 		path = strings.Replace(path, ".acct.bin", "", -1)
@@ -231,7 +231,7 @@ func (scraper *Scraper) Pause() {
 // 	TrueBlocks string `json:"trueblocksVersion"`
 // 	RPC        string `json:"rpcProvider"`
 // 	ConfigPath string `json:"configPath"`
-// 	CachePath  string `json:"cachePath"`
+// 	Cache Path  string `json:"cachePath"`
 // 	IndexPath  string `json:"indexPath"`
 // 	IsTesting  bool   `json:"isTesting"`
 // 	IsDocker   bool   `json:"isDocker"`
@@ -258,7 +258,7 @@ func (scraper *Scraper) Pause() {
 // }
 
 // func GetChifraResponse() (ChifraResponse, error) {
-// 	cmd := exec.Command(utils.GetCommandPath("cacheStatus"), "--terse")
+// 	cmd := exec.Command(utils.GetPathToCommands("cacheStatus"), "--terse")
 // 	cmd.Env = append(os.Environ(), "API_MODE=true")
 // 	out, err := cmd.Out put()
 // 	if err != nil {
@@ -324,8 +324,8 @@ func (scraper *Scraper) Pause() {
 // 	log.Print("\n")
 // 	log.Print(colors.Green, "Client:       ", colors.Off, Options.Status.Latest)
 // 	log.Print(colors.Green, "TrueBlocks:   ", colors.Off, Options.Status.TrueBlocks)
-// 	log.Print(colors.Green, "Cache Path:   ", colors.Off, Options.Status.CachePath)
-// 	log.Print(colors.Green, "Index Path:   ", colors.Off, Options.Status.IndexPath)
+// 	log.Print(colors.Green, "Cache Path:   ", colors.Off, config.GetCachePath())
+// 	log.Print(colors.Green, "Index Path:   ", colors.Off, config.GetIndexPath())
 // 	log.Print(colors.Green, "Rpc Provider: ", colors.Off, Options.Status.RPC)
 // 	log.Print(colors.Green, "Progress:     ", colors.Off, Options.Meta.Latest, ", ", Options.Meta.Finalized, ", ", Options.Meta.Staging, ", ", Options.Meta.Unripe)
 

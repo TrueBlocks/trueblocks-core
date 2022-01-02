@@ -46,7 +46,7 @@ func (opts *AbisOptions) FindInternal() error {
 	})
 	defer checkOne.Release()
 
-	sigsFile, err := os.Open(config.GetConfigPath("abis/known-000/uniq_sigs.tab"))
+	sigsFile, err := os.Open(config.GetPathToConfig("abis/known-000/uniq_sigs.tab"))
 	if err != nil {
 		return err
 	}
@@ -57,7 +57,7 @@ func (opts *AbisOptions) FindInternal() error {
 	sigsScanner := bufio.NewScanner(sigsFile)
 	sigsScanner.Split(bufio.ScanLines)
 
-	funcsFile, _ := os.Open(config.GetConfigPath("abis/known-000/uniq_funcs.tab"))
+	funcsFile, _ := os.Open(config.GetPathToConfig("abis/known-000/uniq_funcs.tab"))
 	defer func() {
 		funcsFile.Close()
 	}()

@@ -14,7 +14,7 @@ import (
 
 // EstablishCaches sets up the cache folders and subfolders
 func EstablishCaches() {
-	cachePath := config.ReadTrueBlocks().Settings.CachePath
+	cachePath := config.GetCachePath()
 	cacheFolders := []string{
 		"abis", "blocks", "monitors", "names", "objs", "prices",
 		"recons", "slurps", "tmp", "traces", "txs",
@@ -23,7 +23,7 @@ func EstablishCaches() {
 		log.Fatal(err)
 	}
 
-	indexPath := config.ReadTrueBlocks().Settings.IndexPath
+	indexPath := config.GetIndexPath()
 	indexFolders := []string{
 		"blooms", "finalized", "ripe", "staging", "unripe",
 	}

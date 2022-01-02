@@ -19,8 +19,8 @@ var OsToPath = map[string]string{
 	"darwin": "Library/Application Support/TrueBlocks",
 }
 
-// GetConfigPath returns the path to the directory where the configuration files are
-func GetConfigPath(fileName string) string {
+// GetPathToConfig returns the path to the directory where the configuration files are
+func GetPathToConfig(fileName string) string {
 	// These values are checked in CheckMigrations and will not proceed if not valid
 	userOs := runtime.GOOS
 	user, _ := user.Current()
@@ -30,7 +30,7 @@ func GetConfigPath(fileName string) string {
 // MustReadConfig calls v's ReadInConfig and fills values in the
 // given targetStruct. Any error will result in a call to logger.Fatal
 func MustReadConfig(v *viper.Viper, targetStruct interface{}, fileRequired bool) {
-	v.AddConfigPath(GetConfigPath(""))
+	v.AddConfigPath(GetPathToConfig(""))
 	v.SetEnvPrefix("TB")
 	v.AutomaticEnv()
 	v.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))

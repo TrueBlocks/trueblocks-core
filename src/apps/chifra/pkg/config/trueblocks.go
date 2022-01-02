@@ -11,7 +11,6 @@ import (
 var trueBlocksViper = viper.New()
 var trueBlocksRead = false
 var cachedTrueBlocksConfig TrueBlocksConfig
-var DefaultIndexPath = GetConfigPath("unchained")
 
 type trueBlocksVersion struct {
 	Current string
@@ -33,8 +32,8 @@ type TrueBlocksConfig struct {
 func init() {
 	trueBlocksViper.SetConfigName("trueBlocks")
 	trueBlocksViper.SetDefault("Settings.RpcProvider", "http://localhost:8545")
-	trueBlocksViper.SetDefault("Settings.CachePath", GetConfigPath("cache"))
-	trueBlocksViper.SetDefault("Settings.IndexPath", DefaultIndexPath)
+	trueBlocksViper.SetDefault("Settings.CachePath", GetPathToConfig("cache"))
+	trueBlocksViper.SetDefault("Settings.IndexPath", GetPathToConfig("unchained"))
 }
 
 // ReadGlobal reads and the configuration located in trueBlocks.toml file
@@ -57,4 +56,14 @@ func ReadTrueBlocks() *TrueBlocksConfig {
 	}
 
 	return &cachedTrueBlocksConfig
+}
+
+// GetCachePath returns the one and only cachePath
+func GetCachePath() string {
+	return ReadTrueBlocks().Settings.CachePath
+}
+
+// GetIndexPath returns the one and only cachePath
+func GetIndexPath() string {
+	return ReadTrueBlocks().Settings.IndexPath
 }

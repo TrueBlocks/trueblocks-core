@@ -53,7 +53,7 @@ func VerifyMigrations() {
 		log.Fatalf(msg)
 	}
 
-	// configPath := config.GetConfigPath("chains")
+	// configPath := config.GetPathToConfig("chains")
 	// if _, err := os.Stat(configPath); err != nil {
 	// 	msg := "\n\n"
 	//     msg += "\tThe multi-chain folder ($CONFIG/chains) was not found. Please complete migration v0.23.0.\n"

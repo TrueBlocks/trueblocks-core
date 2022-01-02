@@ -19,8 +19,9 @@ import (
 	"golang.org/x/crypto/ssh/terminal"
 )
 
-// GetCommandPath returns full path the the given tool
-func GetCommandPath(cmd string) string {
+// TODO: Is this duplicated?
+// GetPathToCommands returns full path the the given tool
+func GetPathToCommands(cmd string) string {
 	usr, _ := user.Current()
 	dir := usr.HomeDir
 	return dir + "/.local/bin/chifra/" + cmd

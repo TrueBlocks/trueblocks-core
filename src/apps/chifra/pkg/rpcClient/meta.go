@@ -96,7 +96,7 @@ func walkIndexFolder(folder string, valueChan chan<- MetaValue) {
 		valueChan <- MetaValue{folder: "done"}
 	}()
 
-	filepath.Walk(config.ReadTrueBlocks().Settings.IndexPath+folder, func(path string, info fs.FileInfo, err error) error {
+	filepath.Walk(config.GetIndexPath()+folder, func(path string, info fs.FileInfo, err error) error {
 		if err != nil {
 			// If the scraper is running, this will sometimes send an error for a file, for example, that existed
 			// when it was first seen, but the scraper deletes before this call. We ignore any file system errors
