@@ -871,10 +871,10 @@ string_q CCommandOption::toGoCall(void) const {
         }
         bool redirect = tool.empty() || contains(tool, " ");
         if ((!redirect && !goPortNewCode(api_route)) && api_route != "abis") {
-            const char* STR_CALLONE = "\t\tCallOne(w, r, GetCommandPath(\"[{TOOL}]\"), \"\", \"[{API_ROUTE}]\")";
+            const char* STR_CALLONE = "\t\tCallOne(w, r, GetPathToCommands(\"[{TOOL}]\"), \"\", \"[{API_ROUTE}]\")";
             os << Format(STR_CALLONE) << endl;
         } else if ((api_route == "tags" || api_route == "collections")) {
-            const char* STR_CALLONE = "\t\tCallOne(w, r, GetCommandPath(\"ethNames\"), \"\", \"[{API_ROUTE}]\")";
+            const char* STR_CALLONE = "\t\tCallOne(w, r, GetPathToCommands(\"ethNames\"), \"\", \"[{API_ROUTE}]\")";
             os << Format(STR_CALLONE) << endl;
         } else {
             const char* STR_CALLONEEXTRA = "\t\tCallOne(w, r, \"chifra\", \"[{API_ROUTE}]\", \"[{API_ROUTE}]\")";
