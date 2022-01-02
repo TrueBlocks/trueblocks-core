@@ -62,7 +62,7 @@ bool COptions::loadAllAppearances(void) {
                 if (!reloaded) {
                     clearNames();
                     clearPrefundBals();
-                    loadNamesPrefunds();
+                    loadNamesWithPrefunds();
                     reloaded = true;
                 }
                 findName(mon.address, accountedFor);

@@ -23,8 +23,7 @@ struct Allocation {
 };
 typedef bool (*ALLOCFUNC)(const Allocation& alloc, void* data);
 
-extern bool loadNamesPrefunds(void);
-extern bool loadPrefundBals(void);
+extern bool loadPrefundBalances(void);
 extern void clearPrefundBals(void);
 extern bool forEveryPrefund(ALLOCFUNC func, void* data);
 extern wei_t prefundAt(const address_t& addr);

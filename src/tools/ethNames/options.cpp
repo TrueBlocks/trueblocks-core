@@ -167,7 +167,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     if (prefund) {
-        if (!loadNamesPrefunds())
+        if (!loadNamesWithPrefunds())
             return usage("Could not load names database.");
     } else {
         if (!loadNames())
@@ -296,7 +296,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // Collect results for later display
-    applyFilter();
+    filterNames();
 
     // Data wrangling
     if (addr_only) {
@@ -421,10 +421,13 @@ bool COptions::addIfUnique(const CAccountName& item) {
 }
 
 //-----------------------------------------------------------------------
-bool addCustom(CAccountName& item, void* data) {
+bool addCustom(NameOnDisc* item, void* data) {
     COptions* opts = (COptions*)data;
-    if (item.isCustom)
-        opts->addIfUnique(item);
+    if (item->flags & IS_CUSTOM) {
+        CAccountName name;
+        item->disc_2_Name(name);
+        opts->addIfUnique(name);
+    }
     return true;
 }
 
@@ -437,34 +440,19 @@ bool addRegular(CAccountName& item, void* data) {
 }
 
 //-----------------------------------------------------------------------
-bool addPrefund(CAccountName& item, void* data) {
+bool addPrefund(NameOnDisc* item, void* data) {
     COptions* opts = (COptions*)data;
-    if (item.isPrefund)
-        opts->addIfUnique(item);
-    return true;
-}
-
-//-----------------------------------------------------------------------
-bool addPrefundNew(const Allocation& prefund, void* data) {
-    COptions* opts = (COptions*)data;
-    if (hasName(prefund.address)) {
-        opts->nPrefunds++;
-        return true;
+    if (item->flags & IS_PREFUND) {
+        CAccountName name;
+        item->disc_2_Name(name);
+        opts->addIfUnique(name);
     }
-
-    CAccountName account;
-    account.address = prefund.address;
-    account.tags = "80-Prefund";
-    account.source = "Genesis";
-    account.isPrefund = true;
-    account.name = "Prefund_" + padNum4(opts->nPrefunds++);
-    opts->addIfUnique(account);
-
     return true;
 }
 
 //-----------------------------------------------------------------------
-void COptions::applyFilter() {
+// order matters...first in wins...
+void COptions::filterNames() {
     if (types & CUSTOM) {
         if (isTestMode() && !isCrudCommand()) {
             for (uint32_t i = 1; i < 5; i++) {
@@ -480,20 +468,16 @@ void COptions::applyFilter() {
                 addIfUnique(item);
             }
         } else {
-            forEveryNameOld(addCustom, this);
+            forEveryName(addCustom, this);
         }
     }
 
-    if (types & NAMED)
+    if (types & NAMED) {
         forEveryNameOld(addRegular, this);
+    }
 
     if (types & PREFUND) {
-        if (!loadNamesPrefunds()) {
-            LOG_WARN("Could not load names database.");
-            return;
-        }
-        nPrefunds = 0;
-        forEveryPrefund(addPrefundNew, this);
+        forEveryName(addPrefund, this);
     }
 }
 

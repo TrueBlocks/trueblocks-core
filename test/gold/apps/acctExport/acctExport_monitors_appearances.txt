@@ -4,7 +4,6 @@ TEST[DATE|TIME] Appearances:  true
 TEST[DATE|TIME] LastBlock:  3375495
 TEST[DATE|TIME] Format:  csv
 TIME ~ CLOCK - <INFO>  : Loading names
-TIME ~ CLOCK - <INFO>  : Loading prefunds accounts
 TIME ~ CLOCK - <INFO>  : Loading names
 TIME ~ CLOCK - <INFO>  : Loading prefund balances
 "address","blockNumber","transactionIndex"
