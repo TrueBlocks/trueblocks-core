@@ -8,6 +8,7 @@ import (
 	"net/url"
 	"path"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib"
@@ -57,7 +58,7 @@ func (opts *PinsOptions) InitInternal() error {
 	indexDoneChannel := make(chan bool)
 	defer close(indexDoneChannel)
 
-	getChunks := func(chunkType chunk.ChunkType) {
+	getChunks := func(chunkType cache.CacheType) {
 		failedChunks := downloadAndReportProgress(downloadedManifest.NewPins, chunkType)
 
 		if len(failedChunks) > 0 {
@@ -69,14 +70,14 @@ func (opts *PinsOptions) InitInternal() error {
 	}
 
 	go func() {
-		getChunks(chunk.BloomChunk)
+		getChunks(cache.BloomChunk)
 
 		bloomsDoneChannel <- true
 	}()
 
 	if opts.All {
 		go func() {
-			getChunks(chunk.IndexChunk)
+			getChunks(cache.IndexChunk)
 
 			indexDoneChannel <- true
 		}()
@@ -90,10 +91,10 @@ func (opts *PinsOptions) InitInternal() error {
 type downloadFunc func(pins []manifest.PinDescriptor) (failed []manifest.PinDescriptor)
 
 // Downloads chunks and report progress
-func downloadAndReportProgress(pins []manifest.PinDescriptor, chunkType chunk.ChunkType) []manifest.PinDescriptor {
-	chunkTypeToDescription := map[chunk.ChunkType]string{
-		chunk.BloomChunk: "bloom",
-		chunk.IndexChunk: "index",
+func downloadAndReportProgress(pins []manifest.PinDescriptor, chunkType cache.CacheType) []manifest.PinDescriptor {
+	chunkTypeToDescription := map[cache.CacheType]string{
+		cache.BloomChunk: "bloom",
+		cache.IndexChunk: "index",
 	}
 	failed := []manifest.PinDescriptor{}
 	progressChannel := progress.MakeChan()

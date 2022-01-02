@@ -285,8 +285,8 @@ bool pinlib_getChunkFromRemote(CPinnedChunk& pin, double sleep) {
             // download from ipfs gateway
             static string_q gatewayUrl;
             if (gatewayUrl.empty()) {
-                gatewayUrl =
-                    getGlobalConfig("blockScrape")->getConfigStr("dev", "ipfs_gateway", "http://gateway.ipfs.io/ipfs/");
+                gatewayUrl = getGlobalConfig("blockScrape")
+                                 ->getConfigStr("dev", "ipfs_gateway", "https://ipfs.unchainedindex.io/ipfs/");
                 if (!endsWith(gatewayUrl, "/"))
                     gatewayUrl += "/";
             }

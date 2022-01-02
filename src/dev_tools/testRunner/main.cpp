@@ -17,7 +17,6 @@
 
 ostringstream perf;
 ostringstream slow;
-CMeasure total("all", "all", "all");
 CStringArray fails;
 extern const char* STR_SCREEN_REPORT;
 string_q perf_fmt;
@@ -27,6 +26,8 @@ int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
     CTestCase::registerClass();
 
+    establishFolder(getCachePath("tmp/"));
+    CMeasure total("all", "all", "all");
     cerr.rdbuf(cout.rdbuf());
 
     // Parse command line, allowing for command files
@@ -34,7 +35,7 @@ int main(int argc, const char* argv[]) {
     if (!options.prepareArguments(argc, argv))
         return EXIT_FAILURE;
 
-    bool runLocal = getGlobalConfig("testRunner")->getConfigBool("settings", "runLocal", false);
+    bool runLocal = getGlobalConfig("testRunner")->getConfigBool("settings", "run_local", false);
     if (runLocal) {
         cerr << "Running local tests. Hit enter to continue." << endl;
         getchar();
@@ -127,8 +128,8 @@ int main(int argc, const char* argv[]) {
 
             expContext().exportFmt = CSV1;
             perf_fmt = substitute(cleanFmt(STR_DISPLAY_MEASURE), "\"", "");
-            options.doTests(testArray, path, testName, API);
-            options.doTests(testArray, path, testName, CMD);
+            options.doTests(total, testArray, path, testName, API);
+            options.doTests(total, testArray, path, testName, CMD);
             if (shouldQuit())
                 break;
 
@@ -156,7 +157,7 @@ int main(int argc, const char* argv[]) {
     }
 
     // If configured, copy the data out to the folder our performance measurement tool knows about
-    string_q copyPath = getGlobalConfig("testRunner")->getConfigStr("settings", "copyPath", "<NOT_SET>");
+    string_q copyPath = getGlobalConfig("testRunner")->getConfigStr("settings", "copy_path", "<not_set>");
     if (folderExists(copyPath)) {
         CStringArray files = {"performance.csv", "performance_failed.csv", "performance_slow.csv",
                               "performance_scraper.csv"};
@@ -183,7 +184,8 @@ int main(int argc, const char* argv[]) {
 }
 
 //-----------------------------------------------------------------------
-void COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, const string_q& testName, int whichTest) {
+void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_q& testPath, const string_q& testName,
+                       int whichTest) {
     if (!(modes & whichTest))
         return;
 
@@ -283,7 +285,8 @@ void COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
             if (folderExists(customized))
                 forEveryFileInFolder(customized + "/*", saveAndCopy, NULL);
             if (test.mode == "both" || contains(test.tool, "lib"))
-                measure.nTests++;
+                if (test.tool != "getQuotes")
+                    measure.nTests++;
             // clang-format off
             if (system(theCmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
             // clang-format on
@@ -299,7 +302,8 @@ void COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
 
             if (test.builtin) {
                 if (test.mode == "both" || contains(test.tool, "lib"))
-                    measure.nPassed++;
+                    if (test.tool != "getQuotes")
+                        measure.nPassed++;
                 continue;
             }
 
@@ -378,7 +382,8 @@ void COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
             string_q result = greenCheck;
             if (!newText.empty() && newText == oldText) {
                 if (test.mode == "both" || contains(test.tool, "lib"))
-                    measure.nPassed++;
+                    if (test.tool != "getQuotes")
+                        measure.nPassed++;
 
             } else {
                 ostringstream os;

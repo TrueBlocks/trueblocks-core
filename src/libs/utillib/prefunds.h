@@ -16,11 +16,17 @@
 
 namespace qblocks {
 
-extern bool loadNamesPrefunds(void);
-extern bool loadPrefundBals(void);
+struct Allocation {
+  public:
+    address_t address;
+    wei_t amount{0};
+};
+typedef bool (*ALLOCFUNC)(const Allocation& alloc, void* data);
+
+extern bool loadPrefundBalances(void);
 extern void clearPrefundBals(void);
-typedef bool (*ADDRESSFUNC)(const address_t& addr, void* data);
-extern bool forEveryPrefund(ADDRESSFUNC func, void* data);
+extern bool forEveryPrefund(ALLOCFUNC func, void* data);
 extern wei_t prefundAt(const address_t& addr);
+extern Allocation largestPrefund(void);
 
 }  // namespace qblocks

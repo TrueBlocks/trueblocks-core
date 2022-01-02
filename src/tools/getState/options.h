@@ -34,7 +34,6 @@ class COptions : public CHistoryOptions {
     address_t current;
     ethstate_t modeBits;
     biguint_t prevBal;
-    wei_t deminimus;
     blknum_t latestBlock;
     CEthCall theCall;
 

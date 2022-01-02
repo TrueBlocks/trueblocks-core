@@ -17,6 +17,7 @@
  */
 #include "etherlib.h"
 #include "testcase.h"
+#include "measure.h"
 
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
@@ -48,7 +49,8 @@ class COptions : public COptionsBase {
     bool parseArguments(string_q& command) override;
     void Init(void) override;
 
-    void doTests(CTestCaseArray& testArray, const string_q& testPath, const string_q& testName, int which);
+    void doTests(CMeasure& total, CTestCaseArray& testArray, const string_q& testPath, const string_q& testName,
+                 int which);
     bool cleanTest(const string_q& path, const string_q& testName);
 };
 

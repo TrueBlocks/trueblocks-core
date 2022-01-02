@@ -31,7 +31,7 @@ bool COptions::handle_lint(void) {
     forEveryFileInFolder("./", lintFiles, this);
     counter.is_counting = false;
     forEveryFileInFolder("./", lintFiles, this);
-    config.setConfigStr("settings", "lastLint", uint_2_Str(static_cast<uint64_t>(date_2_Ts(Now()))));
+    config.setConfigStr("settings", "last_lint", uint_2_Str(static_cast<uint64_t>(date_2_Ts(Now()))));
     config.writeFile();
     config.Release();
     LOG_INFO(cYellow, "makeClass --lint", cOff, " processed ", counter.nVisited, " files (", counter.nProcessed,
@@ -48,7 +48,7 @@ bool lintFiles(const string_q& path, void* data) {
         forEveryFileInFolder(path + "*", lintFiles, data);
 
     } else {
-        CStringArray skips = {"/other/", "/blank", "utillib/json_"};
+        CStringArray skips = {"/other/", "/blank", "sqlite3", "utillib/json_"};
         for (auto skip : skips)
             if (contains(path, skip))
                 return !shouldQuit();

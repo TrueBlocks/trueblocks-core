@@ -10,7 +10,6 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"os/user"
 
 	"github.com/spf13/cobra"
 
@@ -125,13 +124,6 @@ func ScanForProgress(stderrPipe io.Reader, fn func(string)) {
 	if err := scanner.Err(); err != nil {
 		fmt.Println("TB: Error while reading stderr -- ", err)
 	}
-}
-
-// getCommandPath returns full path the the given tool
-func getCommandPath(cmd string) string {
-	usr, _ := user.Current()
-	dir := usr.HomeDir
-	return dir + "/.local/bin/chifra/" + cmd
 }
 
 func UsageWithNotes(notes string) string {

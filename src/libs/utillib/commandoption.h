@@ -278,5 +278,6 @@ extern string_q clean_positionals(const string& progName, const string_q& strIn)
 extern bool forEveryEnum(APPLYFUNC func, const string_q& enumStr, void* data);
 // TODO: search for go-port
 extern bool goPortNewCode(const string_q& a);
+extern bool isApiRoute(const string_q& route);
 // EXISTING_CODE
 }  // namespace qblocks

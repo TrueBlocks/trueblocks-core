@@ -54,3 +54,7 @@ Be careful. Make sure you know what you're doing. Do not remove the wrong files.
 ## You're Finished
 
 TrueBlocks version 0.11.3 should now work. Please report any problems by creating an issue.
+
+## Previous Migration
+
+[Click here](./README-v0.09.0.md) for the previous migration.

@@ -90,6 +90,6 @@ Open it with any editor and change any references to the old path (`~/.quickBloc
 
 The new configuration folder should look something like this (the `cache` and `unchained` folders may be slightly different):
 
-<img alt="Folders" src="https://github.com/TrueBlocks/trueblocks-core/blob/new-default-dir/src/other/migrations/folders.png" width="250px" />
+<img alt="Folders" src="./folders.png" width="250px" />
 
 TrueBlocks version 0.9.0 should now work. Please report any problems by creating an issue.

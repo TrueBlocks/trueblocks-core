@@ -2,4 +2,5 @@ chifra state  0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 stateclear
 TEST[DATE|TIME] Addrs:  [0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359]
 TEST[DATE|TIME] Blocks:  [stateclear]
 blockNumber	address	balance
+TIME ~ CLOCK - <INFO>  : Loading prefund balances
 2717576	0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359	3928489490687974756789

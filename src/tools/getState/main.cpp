@@ -60,8 +60,9 @@ bool visitBlock(uint64_t blockNum, void* data) {
     if (blockNum < opt->oldestBlock)
         opt->oldestBlock = blockNum;
 
-    if (opt->requestsHistory() && !isArchiveNode())
-        opt->errors.push_back("Request for historical state at block " + uint_2_Str(blockNum) + " not available.");
+    if (opt->needsHistory() && !isArchiveNode())
+        opt->errors.push_back("The request for historical state at block " + uint_2_Str(blockNum) +
+                              " is not available.");
 
     if (!opt->theCall.address.empty()) {
         // TODO: Is opt->theCall.address a smart contract at this block?
@@ -102,7 +103,7 @@ bool visitBlock(uint64_t blockNum, void* data) {
             opt->prevBal = balance;
         }
 
-        if (opt->no_zero && balance <= opt->deminimus)
+        if (opt->no_zero && balance == 0)
             return !shouldQuit();
 
         state.blockNumber = blockNum;

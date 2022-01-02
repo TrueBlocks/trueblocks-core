@@ -31,7 +31,7 @@ bool COptions::handle_format(void) {
     counter.is_counting = false;
     forEveryFileInFolder("./", formatCppFiles, this);
 
-    config.setConfigStr("settings", "lastFormat", uint_2_Str(static_cast<uint64_t>(date_2_Ts(Now()))));
+    config.setConfigStr("settings", "last_format", uint_2_Str(static_cast<uint64_t>(date_2_Ts(Now()))));
     config.writeFile();
     config.Release();
 

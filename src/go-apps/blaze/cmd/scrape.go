@@ -129,6 +129,13 @@ func extractAddressesFromTraces(addressMap map[string]bool, traces *Trace, block
 					}
 				}
 
+			} else if traces.Result[i].Action.RewardType == "external" {
+				// This only happens in xDai as far as we know...
+				author := traces.Result[i].Action.Author
+				if goodAddr(author) {
+					addressMap[author+"\t"+blockNum+"\t"+"99996"] = true
+				}
+
 			} else {
 				fmt.Println("New type of reward", traces.Result[i].Action.RewardType)
 			}
@@ -377,3 +384,33 @@ func init() {
 	scrapeCmd.PersistentFlags().StringVarP(&scrapeOptions.columns2, "columns", "l", "block.timestamp", "retrieve the timestamp of the block's data")
 	blazeCmd.AddCommand(scrapeCmd)
 }
+
+// TODO: This "baddress"
+// TODO:
+// TODO: 0x00000000000004ee2d6d415371e298f092cc0000
+// TODO:
+// TODO: appears in the index but it is clearly not a real address. We know this because it appears only four
+// TODO: times in the entire index and for each of those four times it appears in an event's data' section.
+// TODO: Each of those events are either Transfer or Approval`.
+// TODO:
+// TODO: We could, if we wished, allow a tiny bit of non-chain knowledge leak into the scrape to avoid adding these
+// TODO: 'false' badresses to the index. I'm not sure how many records this would remove, but it may be significant
+// TODO: and it is very clearly true that these are not addresses.
+// TODO:
+// TODO: So, the rule:
+// TODO:
+// TODO: When looking at logs
+// TODO:
+// TODO: For some set of topics, (that is, topic[0] is one of Transfer, etc which are well known,
+// TODO: Do not include the value even if it looks like an address
+// TODO: This, of course, a very slippery slope as who's to say which topics are 'well known'?
+// TODO:
+// TODO: blockScrape: Easy way to eliminate false positive addresses during scrape hasno dependencies
+// TODO:
+// TODO: I will add this comment to the appropriate place in the code, but leave it commented out. Implementing this
+// TODO: would require a full re-generation of the index and would change the hashes and the underlying files.
+// TODO: In order to do this, we would require a migration that removes the 'old' index from the end user's
+// TODO: machine and then downloads the new index. We can do this, but it feels quite precarious.
+// TODO:
+// TODO: My expectation is that we will eventually have to re-generate the index. We'll fix this then.
+// TODO:

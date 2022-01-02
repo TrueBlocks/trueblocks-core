@@ -3,6 +3,7 @@ TEST[DATE|TIME] Blocks:  [10092000]
 TEST[DATE|TIME] Call:  0x2260fac5e5542a773aa44fbcfedf7c193bc2c599!0x06fdde03
 TEST[DATE|TIME] Format:  txt
 blockNumber	address	signature	encoding	bytes	compressedResult
+TIME ~ CLOCK - <INFO>  : Loading prefund balances
 
 level: 1
 readOffset: 0

@@ -1,4 +1,5 @@
-names
+go-test*
+names/*
 addresses
 addrs2
 callsPerDay

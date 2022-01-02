@@ -28,7 +28,7 @@ bool COptions::handle_status(ostream& os) {
         if (!isText) {
             fmt = "";
             manageFields("CStatusTerse:modes1,modes2", FLD_HIDE);
-            manageFields("CStatus:clientIds,balanceProvider,host,isApi,isScraping,caches", FLD_HIDE);
+            manageFields("CStatus:clientIds,host,isApi,isScraping,caches", FLD_HIDE);
         }
         os << st.Format(fmt) << endl;
         return true;
@@ -486,9 +486,9 @@ string_q pathName(const string_q& str, const string_q& path) {
 
 //--------------------------------------------------------------------------------
 const char* STR_TERSE_REPORT =
-    "client: [{CLIENTVERSION}][{MODES1}]\n"
-    "[{TIME}] trueblocks: [{TRUEBLOCKSVERSION}][{MODES2}]\n"
-    "[{TIME}] configPath: [{CONFIGPATH}]\n"
-    "[{TIME}] cachePath: [{CACHEPATH}]\n"
-    "[{TIME}] indexPath: [{INDEXPATH}]\n"
+    "[{TIME}] client:      [{CLIENTVERSION}][{MODES1}]\n"
+    "[{TIME}] trueblocks:  [{TRUEBLOCKSVERSION}][{MODES2}]\n"
+    "[{TIME}] configPath:  [{CONFIGPATH}]\n"
+    "[{TIME}] cachePath:   [{CACHEPATH}]\n"
+    "[{TIME}] indexPath:   [{INDEXPATH}]\n"
     "[{TIME}] rpcProvider: [{RPCPROVIDER}]";

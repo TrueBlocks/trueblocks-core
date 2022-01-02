@@ -1,6 +1,6 @@
 # Recent Migrations
 
-Please see this [Migration](https://github.com/TrueBlocks/trueblocks-core/blob/develop/src/other/migrations/README-v0.18.0.md) which contains important information.
+Please complete any applicable [Migrations](https://github.com/TrueBlocks/trueblocks-core/blob/develop/MIGRATIONS.md) which contains important information.
 
 # TrueBlocks Core
 

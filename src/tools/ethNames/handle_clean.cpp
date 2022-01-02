@@ -19,8 +19,14 @@ inline bool isErc721(const address_t& addr, const CAbi& abi_spec, blknum_t lates
 }
 
 //--------------------------------------------------------------------
+bool startsWithNumber(const string_q& str) {
+    return str_2_Uint(str) > 0 || startsWith(str, "0");
+}
+
+//--------------------------------------------------------------------
 bool COptions::finishClean(CAccountName& account) {
-    if (account.tags > "799999")  // tags named higher than or equal to 80 are hand edited
+    if (startsWithNumber(account.tags) &&
+        account.tags > "799999")  // tags named higher than or equal to 80 are hand edited
         return true;
 
     // Clean up source
@@ -113,13 +119,13 @@ bool COptions::finishClean(CAccountName& account) {
 //--------------------------------------------------------------------
 bool COptions::cleanNames(const string_q& sourceIn, const string_q& destIn) {
     string_q source = sourceIn;
-    string_q dest = destIn;
-
     replace(source, "~", getHomeFolder());
     replace(source, "$HOME", getHomeFolder());
     replaceAll(source, "//", "/");
     if (!fileExists(source))
         return false;
+
+    string_q dest = destIn;
 
     cerr << "Processing names file (" << source << ") into " << dest << endl;
 
@@ -161,13 +167,13 @@ bool COptions::cleanNames(const string_q& sourceIn, const string_q& destIn) {
 
 //--------------------------------------------------------------------
 bool COptions::handle_clean(void) {
-    string_q mainSource = getGlobalConfig("ethNames")->getConfigStr("settings", "source", "<UNSET>");
+    string_q mainSource = getGlobalConfig("ethNames")->getConfigStr("settings", "source", "<not_set>");
     string_q mainDest = getConfigPath("names/names.tab");
     if (!cleanNames(mainSource, mainDest))
         return usage("This installation of TrueBlocks may not clean the names file.");
     LOG_WARN("The primary names file was cleaned.", string_q(50, ' '));
 
-    //    string_q customSource = getGlobalConfig("ethNames")->getConfigStr("settings", "custom", "<UNSET>");
+    //    string_q customSource = getGlobalConfig("ethNames")->getConfigStr("settings", "custom", "<not_set>");
     //    string_q customDest = getConfigPath("names/names_custom.tab");
     //    if (!cleanNames(customSource, customDest))
     //        return usage("This installation of TrueBlocks may not clean the names file. Customized names file was not

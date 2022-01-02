@@ -42,7 +42,7 @@ class CHistoryOptions : public CBlockOptions {
         CBlockOptions::Init();
         newestBlock = oldestBlock = NOPOS;
     }
-    bool requestsHistory(void) const;
+    bool needsHistory(void) const;
 };
 
 //-----------------------------------------------------------------------------
