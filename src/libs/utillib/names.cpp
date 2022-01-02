@@ -18,11 +18,9 @@
 #include "names.h"
 #include "prefunds.h"
 #include "logging.h"
+#include "options_base.h"
 
 namespace qblocks {
-
-//-----------------------------------------------------------------------
-extern string_q getConfigPath(const string_q& part);
 
 //-----------------------------------------------------------------------
 struct NameOnDiscHeader {
