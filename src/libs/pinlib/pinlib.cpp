@@ -325,7 +325,7 @@ bool pinlib_getChunkFromRemote(CPinnedChunk& pin, double sleep) {
                 err << "Could not download file " << outFile;
                 LOG_WARN(err.str());
                 err << endl;
-                appendToAsciiFile(getConfigPath("manifest/failed_downloads.log"), err.str());
+                appendToAsciiFile(getCachePath("tmp/failed_downloads.log"), err.str());
                 ::remove(getIndexPath(zipFile).c_str());
                 ::remove(getIndexPath(outFile).c_str());
             }

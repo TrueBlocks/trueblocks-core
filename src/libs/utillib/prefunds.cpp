@@ -32,13 +32,15 @@ string_q getChain(void) {
 
 //---------------------------------------------------------------------------
 string_q getChainConfigPath(const string_q& part) {
-    // cerr << "getChainConfigPath: " << (getConfigPath(getChain() + "config/") + part) << endl;
+    // cerr << "getChainConfigPath: " << bGreen << (getConfigPath(getChain() + "config/") + part) << cOff << endl;
     return getConfigPath(part);
 }
 
 //---------------------------------------------------------------------------
 string_q getChainCachePath(const string_q& part) {
-    // cerr << "getChainCachePath: " << substitute(getCachePath(part), "cache/", getChain() + "cache/") << endl;
+    // cerr << "getChainCachePath: " << bGreen << substitute(getCachePath(part), "cache/", getChain() + "cache/") <<
+    // cOff
+    //      << endl;
     return getCachePath(part);
 }
 

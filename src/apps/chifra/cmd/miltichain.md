@@ -12,6 +12,8 @@
    - If there is no mainnet/config/allocs.tab, fail
 4. What about bytzantium and the 'status' value for non-mainnet chains?
 5. What about xDai?
+6. The installation folders will need to be re-worked
+7. The testing build assets / scripts may have to be re-worked
 
 ### Config Files
 

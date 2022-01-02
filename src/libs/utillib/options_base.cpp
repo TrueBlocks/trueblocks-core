@@ -62,7 +62,7 @@ bool COptionsBase::prePrepareArguments(CStringArray& separatedArgs_, int argCoun
         COptionsBase::g_progName = getEnvStr("PROG_NAME");
 
     bool noColor = getEnvStr("NO_COLOR") == "true";
-    bool isTerminal = isatty(STDOUT_FILENO);
+    bool isTerminal = isatty(STDOUT_FILENO) || getEnvStr("FROM_CHIFRA") == "true";
     bool isTestRunner = getProgName() == "testRunner";
     if (isApiMode() || noColor || (!isTestRunner && !isTerminal))
         colorsOff();

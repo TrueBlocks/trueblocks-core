@@ -24,8 +24,9 @@ func (opts *GlobalOptions) PassItOn(path string, flags string) error {
 
 	// fmt.Fprintf(os.Stderr, "Calling: %s %s\n", path, options)
 	cmd := exec.Command(getCommandPath(path), options)
+	cmd.Env = append(os.Environ(), "FROM_CHIFRA=true")
 	if os.Getenv("TEST_MODE") == "true" {
-		cmd.Env = append(os.Environ(), "TEST_MODE=true")
+		cmd.Env = append(cmd.Env, "TEST_MODE=true")
 	}
 
 	stderrPipe, err := cmd.StderrPipe()
