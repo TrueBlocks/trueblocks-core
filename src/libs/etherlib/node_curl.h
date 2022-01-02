@@ -48,12 +48,6 @@ class CCurlContext {
 };
 
 extern CCurlContext* getCurlContext(void);
-inline void setRpcProvider(const string_q& rpc) {
-    getCurlContext()->baseURL = rpc;
-    getCurlContext()->releaseCurl();
-    getCurlContext()->getCurl();
-}
-
 extern void nodeRequired(void);
 extern void nodeNotRequired(void);
 extern void checkNodeRequired(void);

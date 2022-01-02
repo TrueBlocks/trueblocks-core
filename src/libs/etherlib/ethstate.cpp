@@ -407,22 +407,11 @@ bool isArchiveNode(void) {
     if (!config->getConfigBool("requires", "archive", true))
         return true;
 
-    // Account 0xa1e4380a3b1f749673e270229993ee55f35663b4 owned 2000000000000000000000 (2000 ether)
-    // at block zero. If the node is holding balances (i.e. its an archive node), then it will
-    // return that value for block 1 as well. Otherwise, it will return a zero balance.
-    // NOTE: Unimportantly, account 0xa1e4380a3b1f749673e270229993ee55f35663b4 transacted in the first ever transaction.
-
-    // Silence warnings since we know this may fail
-    uint64_t saveVerbose = verbose;
-    bool saveErrors = getCurlContext()->reportErrors;
-
-    verbose = false;
-    getCurlContext()->reportErrors = false;
-    bool ret = getBalanceAt("0xa1e4380a3b1f749673e270229993ee55f35663b4", 1) == str_2_Wei("2000000000000000000000");
-    getCurlContext()->reportErrors = saveErrors;
-    verbose = saveVerbose;
-
-    return ret;
+    // An archive node better have a balance at the end of block zero the same as
+    // the allocation amount for that account. We use the largest allocation so as
+    // to ensure we get an actual balance
+    Allocation largest = largestPrefund();
+    return getBalanceAt(largest.address, 0) == largest.amount;
 }
 
 //-------------------------------------------------------------------------

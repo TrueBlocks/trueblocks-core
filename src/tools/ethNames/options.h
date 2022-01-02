@@ -49,7 +49,7 @@ class COptions : public CAbiOptions {
     bool parseArguments(string_q& command) override;
     void Init(void) override;
 
-    void applyFilter(void);
+    void filterNames(void);
     bool addIfUnique(const CAccountName& item);
 
     void handle_collections(const CStringArray& terms);
@@ -60,8 +60,5 @@ class COptions : public CAbiOptions {
 
     // Crud command handling
     CAccountName target;
-    CAccountNameArray outArray;
-    bool wasEdited{false};
-    void pushToOutput(const CAccountName& name, bool to_custom);
     bool handle_editcmds(bool autoname);
 };

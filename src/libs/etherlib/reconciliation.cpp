@@ -809,14 +809,18 @@ string_q wei_2_Export(const blknum_t& bn, const wei_t& weiIn, uint64_t decimals)
 
 //---------------------------------------------------------------------------
 string_q bni_2_Export(const timestamp_t& ts, const bigint_t& numIn, uint64_t decimals) {
+    string_q quote = "\"";
+    if (expContext().exportFmt == CSV1)
+        quote = "";  // will be quoted automatically
+
     if (numIn == 0)
-        return "\"\"";
+        return quote + quote;
     if (expContext().asEther) {
-        return "\"" + bni_2_Ether(numIn, decimals) + "\"";
+        return quote + bni_2_Ether(numIn, decimals) + quote;
     } else if (expContext().asDollars) {
-        return "\"" + bni_2_Dollars(ts, numIn, decimals) + "\"";
+        return quote + bni_2_Dollars(ts, numIn, decimals) + quote;
     } else {
-        return "\"" + bni_2_Str(numIn) + "\"";
+        return quote + bni_2_Str(numIn) + quote;
     }
 }
 

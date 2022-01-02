@@ -39,13 +39,8 @@ bool COptions::handle_config_get(ostream& os) {
             prov = "--rpc Provider--";
         values.push_back(prov);
 
-        string_q bal = cc->getConfigStr(g1_1.name, "balanceProvider", "http://localhost:8545");
-        if (isTestMode())
-            bal = "--balance Prov--";
-        values.push_back(bal);
-
-        string_q defFolder = getConfigPathRel("");
-        string_q conf = cc->getConfigStr(g1_2.name, "configPath", defFolder);
+        string_q defFolder = substitute(getConfigPath(""), getHomeFolder(), "~/");
+        string_q conf = defFolder;
         if (isTestMode())
             conf = "--config Path--";
         values.push_back(conf);
@@ -65,8 +60,6 @@ bool COptions::handle_config_get(ostream& os) {
 
         items.push_back(CConfigItem("rpcProvider", substitute(values[cnt++], "\t", "\\t"), "url",
                                     "the Ethereum node's RPC endpoint", true, false));
-        items.push_back(CConfigItem("balanceProvider", substitute(values[cnt++], "\t", "\\t"), "url",
-                                    "alternative node endpoint for account balances", false, false));
         for (auto item : items)
             g1_1.keys.push_back(item);
         f.sections.push_back(g1_1);
@@ -123,7 +116,7 @@ bool COptions::handle_config_get(ostream& os) {
             f.sections.push_back(g2);
 
         CConfigSection g3("APIs", "settings");
-        string_q v3 = (isTestMode() ? "--api_key--" : cc->getConfigStr(g3.name, "etherscan_key", "<not-set>"));
+        string_q v3 = (isTestMode() ? "--api_key--" : cc->getConfigStr(g3.name, "etherscan_key", "<not_set>"));
         CConfigItem i3("etherscan_key", v3, "string", "api key for the EtherScan apis -- private data -- not shared",
                        false, false);
         g3.keys.push_back(i3);

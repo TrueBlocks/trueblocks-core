@@ -2501,9 +2501,6 @@ components:
         rpcProvider:
           type: string
           description: "the current rpcProvider"
-        balanceProvider:
-          type: string
-          description: "the current archive node balance provider (defaults to rpcProvider)"
         configPath:
           type: string
           description: "the path to config files"

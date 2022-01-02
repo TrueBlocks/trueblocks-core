@@ -12,8 +12,13 @@ package statusPkg
 import (
 	"net/http"
 
+	// "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/spf13/cobra"
 )
+
+// func GreenTxt(txt string) string {
+// 	return colors.Green + txt + colors.Off
+// }
 
 // EXISTING_CODE
 
@@ -26,6 +31,18 @@ func RunStatus(cmd *cobra.Command, args []string) error {
 	}
 
 	// EXISTING_CODE
+	// meta := rpcClient.GetMeta(false)
+	// log.Println(GreenTxt("Config Path:  "), config.GetConfigPath(""))
+	// log.Println(GreenTxt("Cache Path:   "), config.ReadTrueBlocks().Settings.CachePath)
+	// log.Println(GreenTxt("Index Path:   "), config.ReadTrueBlocks().Settings.IndexPath)
+	// log.Println(GreenTxt("Rpc Provider: "), config.ReadTrueBlocks().Settings.RpcProvider)
+	// log.Printf("%s%d, %d (%d), %d (%d), %d (%d), %d (%d)\n", GreenTxt("Progress:      "),
+	//	meta.Latest,
+	//	meta.Finalized, (meta.Latest - meta.Finalized),
+	//	meta.Staging, (meta.Staging - meta.Finalized),
+	//	meta.Ripe, (meta.Ripe - meta.Staging),
+	//	meta.Unripe, (meta.Unripe - meta.Ripe))
+	// return nil
 	return opts.Globals.PassItOn("cacheStatus", opts.ToCmdLine())
 	// EXISTING_CODE
 }

@@ -22,18 +22,12 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
-	"github.com/panjf2000/ants/v2"
-)
-
-type ChunkType uint
-
-const (
-	BloomChunk ChunkType = iota
-	IndexChunk
+	ants "github.com/panjf2000/ants/v2"
 )
 
 // jobResult type is used to carry both downloaded data and some
@@ -76,14 +70,14 @@ func fetchChunk(url string) (*fetchResult, error) {
 
 // GetChunksFromRemote downloads, unzips and saves the chunk of type indicated by chunkType
 // for each pin in pins. Progress is reported to progressChannel.
-func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, progressChannel chan<- *progress.Progress) {
+func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType cache.CacheType, progressChannel chan<- *progress.Progress) {
 	poolSize := config.ReadBlockScrape().Dev.MaxPoolSize
 	// Downloaded content will wait for saving in this channel
 	writeChannel := make(chan *jobResult, poolSize)
 	// Context lets us handle Ctrl-C easily
 	ctx, cancel := context.WithCancel(context.Background())
-	cacheLayout := &CacheLayout{}
-	cacheLayout.New(chunkType)
+	cachePath := &cache.CachePath{}
+	cachePath.New(chunkType)
 	var downloadWg sync.WaitGroup
 	var writeWg sync.WaitGroup
 
@@ -108,7 +102,7 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 			// Perform download => unzip-and-save
 			hash := pin.BloomHash
 
-			if chunkType == IndexChunk {
+			if chunkType == cache.IndexChunk {
 				hash = pin.IndexHash
 			}
 
@@ -169,7 +163,7 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 				Message: "Unzipping",
 			}
 
-			err := saveFileContents(res, cacheLayout)
+			err := saveFileContents(res, cachePath)
 			if err != nil && err != sigintTrap.ErrInterrupted {
 				progressChannel <- &progress.Progress{
 					Payload: res.Pin,
@@ -208,7 +202,7 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 		writeWg.Done()
 	}()
 
-	pinsToDownload := FilterDownloadedChunks(pins, cacheLayout)
+	pinsToDownload := FilterDownloadedChunks(pins, cachePath)
 	for _, pin := range pinsToDownload {
 		downloadWg.Add(1)
 		downloadPool.Invoke(pin)
@@ -224,7 +218,7 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 }
 
 // saveFileContents decompresses the downloaded data and saves it to files
-func saveFileContents(res *jobResult, cacheLayout *CacheLayout) error {
+func saveFileContents(res *jobResult, cachePath *cache.CachePath) error {
 	// Postpone Ctrl-C
 	trapChannel := sigintTrap.Enable()
 	defer sigintTrap.Disable(trapChannel)
@@ -244,7 +238,7 @@ func saveFileContents(res *jobResult, cacheLayout *CacheLayout) error {
 	}
 	defer archive.Close()
 
-	outputFile, err := os.Create(cacheLayout.GetPathTo(res.fileName))
+	outputFile, err := os.Create(cachePath.GetFullPath(res.fileName))
 	if err != nil {
 		return &ErrSavingCreateFile{res.fileName, err}
 	}
@@ -264,17 +258,17 @@ func saveFileContents(res *jobResult, cacheLayout *CacheLayout) error {
 	}
 }
 
-// FilterDownloadedChunks returns new []manifest.PinDescriptor slice with all pins from outputDir removed
-func FilterDownloadedChunks(pins []manifest.PinDescriptor, cacheLayout *CacheLayout) []manifest.PinDescriptor {
+// FilterDownloadedChunks returns new []manifest.PinDescriptor slice with all pins from RootPath removed
+func FilterDownloadedChunks(pins []manifest.PinDescriptor, cachePath *cache.CachePath) []manifest.PinDescriptor {
 	fileMap := make(map[string]bool)
 
-	files, err := ioutil.ReadDir(cacheLayout.String())
+	files, err := ioutil.ReadDir(cachePath.String())
 	if err != nil {
 		return pins
 	}
 
 	for _, file := range files {
-		pinFileName := strings.Replace(file.Name(), cacheLayout.extension, "", -1)
+		pinFileName := strings.Replace(file.Name(), cachePath.Extension, "", -1)
 		fileMap[pinFileName] = true
 	}
 

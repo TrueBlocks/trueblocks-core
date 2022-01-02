@@ -1,4 +1,4 @@
-FROM golang:1.14-buster as builder
+FROM golang:1.16-buster as builder
 
 ARG repo
 ARG commit_sha
@@ -13,9 +13,7 @@ RUN apt install -y g++ gcc make cmake git nano libcurl3-dev python3 python3-dev 
 
 WORKDIR /root
 
-RUN git clone --progress \
-        https://github.com/$repo.git \
-        /root/trueblocks-core && \
+RUN git clone --progress https://github.com/$repo.git /root/trueblocks-core && \
         cd /root/trueblocks-core && \
         git checkout $branch && \
         mkdir -v build && \

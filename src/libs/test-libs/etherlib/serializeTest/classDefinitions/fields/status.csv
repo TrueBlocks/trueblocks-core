@@ -2,7 +2,7 @@ name              ,type     ,strDefault ,object ,array ,nowrite ,omitempty ,mini
 clientVersion     ,string   ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
 trueblocksVersion ,string   ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
 rpcProvider       ,string   ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
-balanceProvider   ,string   ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+malanceProvider   ,string   ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
 host              ,string   ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
 isScraping        ,bool     ,           ,       ,      ,        ,true      ,        ,      ,         ,    ,     ,        ,
 caches            ,cachePtr ,           ,true   ,true  ,true    ,          ,        ,      ,         ,    ,     ,        ,

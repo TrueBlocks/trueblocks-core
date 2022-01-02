@@ -12,7 +12,7 @@
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
 
-extern bool visitPrefund(const address_t& prefund, void* data);
+extern bool visitPrefund(const Allocation& prefund, void* data);
 //---------------------------------------------------------------------------
 bool COptions::handle_appearances(blknum_t num) {
     CBlock block;
@@ -101,11 +101,11 @@ bool transFilter(const CTransaction* trans, void* data) {
 }
 
 //-----------------------------------------------------------------------
-bool visitPrefund(const address_t& prefund, void* data) {
+bool visitPrefund(const Allocation& prefund, void* data) {
     CAppearance item;
     item.bn = 0;
     item.tx = ((COptions*)data)->nPrefunds++;
-    item.addr = prefund;
+    item.addr = prefund.address;
     item.reason = "genesis";
     oneAppearance(item, data);
     return true;

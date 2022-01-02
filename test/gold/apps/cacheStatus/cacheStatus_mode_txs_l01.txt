@@ -3,13 +3,13 @@ TEST[DATE|TIME] Modes:  [caches]
 TEST[DATE|TIME] Details:  true
 TEST[DATE|TIME] Types:  [txs]
 TEST[DATE|TIME] Depth:  0
+TIME ~ CLOCK - [0m[0;32m[1m<INFO>  [0m: Loading prefund balances
 TIME ~ CLOCK - <INFO>  : Loading names
 {
   "clientVersion": "Client version",
   "clientIds": "chainId: 1 networkId: 1",
   "trueblocksVersion": "GHC-TrueBlocks//vers-alpha--git-hash---git-ts-",
   "rpcProvider": "--providers--",
-  "balanceProvider": "--providers--",
   "configPath": "--paths--",
   "cachePath": "--paths--",
   "indexPath": "--paths--",

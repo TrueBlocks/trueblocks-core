@@ -127,8 +127,6 @@ bool COptions::parseArguments(string_q& command) {
             modeBits = ethstate_t(modeBits | ST_ALL);
     }
 
-    deminimus = str_2_Wei(getGlobalConfig("getState")->getConfigStr("settings", "deminimus", "0"));
-
     UNHIDE_FIELD(CEthState, "address");
     string_q format = STR_DISPLAY_ETHSTATE;
     if (!(modeBits & ST_BALANCE)) {
@@ -166,20 +164,8 @@ bool COptions::parseArguments(string_q& command) {
     // Display formatting
     configureDisplay("getState", "CEthState", format.empty() ? STR_DISPLAY_ETHSTATE : format);
 
-    if (!requestsHistory())  // if the user did not request historical state, we can return safely
-        return true;
-
-    if (!isArchiveNode()) {
-        // User requested history, but we have none. Try something else if available
-        string_q rpcProvider = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
-        string_q balanceProvider = getGlobalConfig()->getConfigStr("settings", "balanceProvider", rpcProvider);
-        if (rpcProvider == balanceProvider || balanceProvider.empty())
-            return usage("The RPC server does not have historical state.");
-
-        setRpcProvider(balanceProvider);
-        if (!isArchiveNode())
-            return usage("balanceServer set but it does not have historical state.");
-    }
+    if (needsHistory() && !isArchiveNode())
+        return usage("This request requires historical balances which your RPC server does not provide.");
 
     return true;
 }

@@ -150,7 +150,6 @@ extern uint64_t verbose;
 
 //--------------------------------------------------------------------------------
 extern string_q getConfigPath(const string_q& part);
-extern string_q getConfigPathRel(const string_q& part);
 
 //--------------------------------------------------------------------------------
 class CToml;

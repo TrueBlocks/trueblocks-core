@@ -248,9 +248,12 @@ bool visitBloom(const string_q& path, void* data) {
     if (endsWith(path, "/")) {
         return forEveryFileInFolder(path + "*", visitBloom, data);
     } else {
-        size_t* counter = (size_t*)data;  // NOLINT
-        (*counter)++;
-        return (*counter <= 100);
+        if (endsWith(path, ".bloom")) {
+            size_t* counter = (size_t*)data;  // NOLINT
+            (*counter)++;
+            // we don't have to count them all, just make sure there are some
+            return (*counter < 2);
+        }
     }
     return true;
 }
@@ -259,7 +262,7 @@ bool visitBloom(const string_q& path, void* data) {
 bool bloomsAreInitalized(void) {
     size_t counter = 0;
     forEveryFileInFolder(indexFolder_blooms, visitBloom, &counter);
-    return counter > 100;
+    return counter > 1;
 }
 
 //--------------------------------------------------------------

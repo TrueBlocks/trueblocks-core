@@ -146,5 +146,6 @@ file(COPY "${SOURCE_PATH}/prices/ts.bin.gz" DESTINATION "${DEST_PATH}" FILE_PERM
 #---------------------------------------------------------------
 message(STATUS "Removing file: ${DEST_PATH}/cache/names/names.bin")
 file(REMOVE "${DEST_PATH}/cache/names/names.bin")
+file(REMOVE "${DEST_PATH}/cache/names/names2025.bin") # old file
 message(STATUS "Removing file: ${DEST_PATH}/cache/abis/known.bin")
 file(REMOVE "${DEST_PATH}/cache/abis/known.bin")

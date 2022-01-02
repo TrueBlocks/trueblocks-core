@@ -10,17 +10,11 @@ package pinsPkg
 
 // EXISTING_CODE
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib"
 	"github.com/spf13/cobra"
 )
-
-var errCustomFolderMissing = `Attempt to create customized indexPath (%s) failed.
-Please create the folder or adjust the setting by editing $CONFIG/trueBlocks.toml.
-`
 
 // EXISTING_CODE
 
@@ -33,15 +27,6 @@ func RunPins(cmd *cobra.Command, args []string) error {
 	}
 
 	// EXISTING_CODE
-	err = pinlib.EstablishIndexFolders()
-	if err != nil {
-		if err1, ok := err.(*pinlib.ErrCustomizedPath); ok {
-			fmt.Printf(errCustomFolderMissing, err1.GetIndexPath())
-			return nil
-		}
-		logger.Fatal(err)
-	}
-
 	if opts.List {
 		err := opts.ListInternal()
 		if err != nil {
@@ -80,12 +65,6 @@ func ServePins(w http.ResponseWriter, r *http.Request) bool {
 	}
 
 	// EXISTING_CODE
-	err = pinlib.EstablishIndexFolders()
-	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return true
-	}
-
 	if opts.List {
 		err := opts.ListInternal()
 		if err != nil {

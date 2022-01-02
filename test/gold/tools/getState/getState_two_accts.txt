@@ -3,6 +3,7 @@ TEST[DATE|TIME] Addrs:  [0xbb9bc244d798123fde783fcc1c72d3bb8c189413 0xfb6916095c
 TEST[DATE|TIME] Blocks:  [1500000]
 TEST[DATE|TIME] Format:  api
 {"data": [
+TIME ~ CLOCK - <INFO>  : Loading prefund balances
   {
     "blockNumber": 1500000,
     "balance": 4420466920675732108465682,

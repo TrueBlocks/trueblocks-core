@@ -214,19 +214,12 @@ bool COptions::parseArguments(string_q& command) {
     if (!getTimestampAt(1))  // loads the timestamp file and returns non-zero on success
         return usage("Could not open timestamp file.");
 
-    if ((!isTestMode() && !requestsHistory()) || isArchiveNode())
-        return true;
-    // fall through...
-
-    // We need history, we don't have it, so try a different server. Fail silently.
-    // The user will be warned in the response
-    string_q rpcProvider = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
-    string_q balanceProvider = getGlobalConfig()->getConfigStr("settings", "balanceProvider", rpcProvider);
-    if (rpcProvider == balanceProvider || balanceProvider.empty())
+    if (isTestMode())
         return true;
 
-    // We release the curl context so we can set it to the new context.
-    setRpcProvider(balanceProvider);
+    if (needsHistory() && !isArchiveNode())
+        return usage("This request requires historical balances which your RPC server does not provide.");
+
     return true;
 }
 

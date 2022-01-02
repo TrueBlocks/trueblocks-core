@@ -34,8 +34,7 @@ func PrintServeSettings(testMode bool) {
 	log.Println(colors.Green, "Cache Path:   ", colors.Off, config.ReadTrueBlocks().Settings.CachePath)
 	log.Println(colors.Green, "Index Path:   ", colors.Off, config.ReadTrueBlocks().Settings.IndexPath)
 	log.Println(colors.Green, "Rpc Provider: ", colors.Off, config.ReadTrueBlocks().Settings.RpcProvider)
-	log.Println(colors.Green, "Progress:     ", colors.Off, meta.Latest, ", ", meta.Finalized, ", ", meta.Staging, ", ", meta.Unripe)
-
+	log.Printf(" %s%s%s%d, %d, %d, %d\n", colors.Green, "Progress:       ", colors.Green, meta.Latest, meta.Finalized, meta.Staging, meta.Unripe)
 }
 
 // func ParseOptions() error {

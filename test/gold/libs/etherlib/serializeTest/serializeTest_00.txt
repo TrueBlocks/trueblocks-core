@@ -160,7 +160,6 @@ Show a status
   "clientVersion": "clientVersion",
   "trueblocksVersion": "trueblocksVersion",
   "rpcProvider": "rpcProvider",
-  "balanceProvider": "balanceProvider",
   "host": "host",
   "caches": [
     {

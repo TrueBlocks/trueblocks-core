@@ -3,4 +3,5 @@ TEST[DATE|TIME] Blocks:  [10092000]
 TEST[DATE|TIME] Call:  0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B!0xbb82aa5e
 TEST[DATE|TIME] Format:  csv
 "blockNumber","address","signature","encoding","bytes","compressedResult"
+TIME ~ CLOCK - <INFO>  : Loading prefund balances
 "10092000","0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B","comptrollerImplementation()","0xbb82aa5e","","0x97bd4cc841fc999194174cd1803c543247a014fe"

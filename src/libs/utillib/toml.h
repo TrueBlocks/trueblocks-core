@@ -110,9 +110,7 @@ class CToml : public CSharedResource {
     ~CToml(void);
 
     string_q getConfigStr(const string_q& section, const string_q& key, const string_q& def) const;
-    string_q getConfigJson(const string_q& section, const string_q& key, const string_q& def) const;
     uint64_t getConfigInt(const string_q& section, const string_q& key, uint64_t def) const;
-    biguint_t getConfigBigInt(const string_q& section, const string_q& key, biguint_t def) const;
     uint64_t getVersion(void) const;
     bool getConfigBool(const string_q& section, const string_q& key, bool def) const;
 

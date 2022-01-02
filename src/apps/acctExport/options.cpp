@@ -293,6 +293,9 @@ bool COptions::parseArguments(string_q& command) {
     if (isCrudCommand())
         return process_rm(addrs);
 
+    if (accounting && !isArchiveNode())
+        return usage("The --accounting option requires historical balances which your RPC server does not provide.");
+
     // We need at least one address to scrape...
     if (addrs.size() == 0)
         return usage("You must provide at least one Ethereum address.");
@@ -530,6 +533,7 @@ void COptions::Init(void) {
     allMonitors.clear();
     possibles.clear();
     slowQueries = 0;
+    maxSlowQueries = getGlobalConfig("acctExport")->getConfigInt("settings", "max_slow_queries", 13);
 
     // Establish folders. This may be redundant, but it's cheap.
     establishMonitorFolders();
@@ -683,16 +687,6 @@ bool COptions::setDisplayFormatting(void) {
         if (accounting) {
             articulate = true;
             manageFields("CTransaction:statements", true);
-            bool isArchive = isArchiveNode();
-            string_q rpcProvider = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
-            if (!isArchive) {
-                string_q balanceProvider = getGlobalConfig()->getConfigStr("settings", "balanceProvider", rpcProvider);
-                if (rpcProvider == balanceProvider || balanceProvider.empty())
-                    return usage("--accounting requires historical balances. The RPC server does not have them.");
-                setRpcProvider(balanceProvider);
-                if (!isArchiveNode())
-                    return usage("balanceServer is set, but it does not have historical state.");
-            }
             if (statements) {
                 string_q format =
                     getGlobalConfig("acctExport")->getConfigStr("display", "statement", STR_DISPLAY_RECONCILIATION);

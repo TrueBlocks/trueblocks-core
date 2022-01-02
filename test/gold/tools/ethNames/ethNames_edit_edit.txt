@@ -4,21 +4,7 @@ TEST[DATE|TIME] Update:  true
 TEST[DATE|TIME] LogLevel:  10
 TEST[DATE|TIME] Format:  api
 TIME ~ CLOCK - <INFO>  : Loading names
-TIME ~ CLOCK - <INFO>  : ---------------------------------------------
-TIME ~ CLOCK - <INFO>  : {
-  "tags": "TAGS_CHANGED",
-  "address": "0x0000000000000000000000000000000010101010",
-  "name": "NAME_CHANGED",
-  "symbol": "SYMBOL_CHANGED",
-  "source": "SOURCE_CHANGED",
-  "decimals": 13,
-  "description": "DESCRIPTION_CHANGED"
-}
-TIME ~ CLOCK - <INFO>  : ---------------------------------------------
 TIME ~ CLOCK - : 4-----Editing 0x0000000000000000000000000000000010101010
-TIME ~ CLOCK - : 4-----Finished sorting...
-TIME ~ CLOCK - : 4-----Finished writing...
-TIME ~ CLOCK - <INFO>  : Loading names
 {"data": [
   {
     "deleted": false,

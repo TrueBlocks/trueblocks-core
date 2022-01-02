@@ -91,6 +91,7 @@ class COptions : public CAbiOptions {
     string_q className;
     CMetaData meta;
     size_t slowQueries;
+    size_t maxSlowQueries{13};
 
     COptions(void);
     ~COptions(void);

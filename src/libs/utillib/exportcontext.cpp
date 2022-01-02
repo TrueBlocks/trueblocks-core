@@ -15,10 +15,9 @@
 
 #include "exportcontext.h"
 #include "logging.h"
+#include "options_base.h"
 
 namespace qblocks {
-
-extern string_q getConfigPath(const string_q& part);
 
 //---------------------------------------------------------------------------
 // TODO: These singletons are used throughout - it doesn't appear to have any downsides.
