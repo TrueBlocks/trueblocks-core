@@ -11,6 +11,7 @@
 - We need to document this in the README (search for XDG to find out where)
 - Add `chain` to the `status` endpoints
 - Add testing to utillib tests to set XDG folders, and try to create non-existant folders
+- Finish the migrations-0.24.0.md file
 - Re-write the `trueBlocks.toml` file with version `0.24.0`
 
 ### What We Need to Control
