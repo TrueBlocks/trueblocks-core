@@ -2,6 +2,7 @@
 ---
 - <div style="text-decoration:line-through">Rename all path routines from `getXXXPath` to `getPathToXXX` so we can find them more easily</div>
 - <div style="text-decoration:line-through">Put all the PathAccessor functions in a single file to better control them (one for .go, one for .cpp)</div>
+- Add `[settings]chain=` option to trueBlocks.toml
 - We need to add global command line option `--chain` availble to all tools and overriding any configuration settings.
 - Use XDG spec for environment variables
 - Expand performance testing to include chain (set to `mainnet` for all records)

@@ -316,6 +316,7 @@ bool forEveryName(NAMEODFUNC func, void* data) {
 
 //-----------------------------------------------------------------------
 bool NameOnDisc::name_2_Disc(const CAccountName& nm) {
+    memset(this, 0, sizeof(NameOnDisc));
     strncpy(tags, nm.tags.c_str(), nm.tags.length());
     strncpy(address, nm.address.c_str(), nm.address.length());
     strncpy(name, nm.name.c_str(), nm.name.length());
