@@ -29,7 +29,7 @@ extern const char* STR_REQUEST_CASE2;
 extern const char* STR_CHIFRA_HELP_END;
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
-    string_q source = asciiFileToString(getTemplatePath("blank.go"));
+    string_q source = asciiFileToString(getPathToTemplates("blank.go"));
     replaceAll(source, "[{LONG}]", "Purpose:\n  " + p.description);
     replaceAll(source, "[{OPT_DEF}]", "");
     replaceAll(source, "validate[{PROPER}]Args", "[{ROUTE}]Pkg.Validate");
@@ -46,7 +46,7 @@ bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
         replaceReverse(descr, ".", "");
     replaceAll(source, "[{SHORT}]", descr);
 
-    string_q fn = getSourcePath("apps/chifra/cmd/" + p.api_route + ".go");
+    string_q fn = getPathToSource("apps/chifra/cmd/" + p.api_route + ".go");
     codewrite_t cw(fn, source);
     cw.nSpaces = 0;
     cw.stripEOFNL = false;
@@ -57,7 +57,7 @@ bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_gocmds_options(const CCommandOption& p) {
-    string_q source = asciiFileToString(getTemplatePath("blank_options.go"));
+    string_q source = asciiFileToString(getPathToTemplates("blank_options.go"));
     replaceAll(source, "[{ROUTE}]", p.api_route);
     replaceAll(source, "[{PROPER}]", toProper(p.api_route));
     replaceAll(source, "[{OPT_FIELDS}]", get_optfields(p));
@@ -73,7 +73,7 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     replaceAll(source, "opts.LastBlock != utils.NOPOS", "opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS");
     source = clean_positionals(source);
 
-    string_q fn = getSourcePath("apps/chifra/internal/" + p.api_route + "/options.go");
+    string_q fn = getPathToSource("apps/chifra/internal/" + p.api_route + "/options.go");
     replaceAll(fn, "/internal/serve", "/server");
     establishFolder(fn);
     codewrite_t cw(fn, source);
@@ -87,7 +87,7 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_gocmds_output(const CCommandOption& p) {
-    string_q source = asciiFileToString(getTemplatePath("blank_output.go"));
+    string_q source = asciiFileToString(getPathToTemplates("blank_output.go"));
     source = substitute(source, "[]string", "++SAVED++");
     source = p.Format(source);
     replaceAll(source, "++SAVED++", "[]string");
@@ -98,7 +98,7 @@ bool COptions::handle_gocmds_output(const CCommandOption& p) {
                    "");
     }
 
-    string_q fn = getSourcePath("apps/chifra/internal/" + p.api_route + "/output.go");
+    string_q fn = getPathToSource("apps/chifra/internal/" + p.api_route + "/output.go");
     if (contains(fn, "/serve"))
         return true;
 
@@ -143,10 +143,10 @@ bool COptions::handle_gocmds(void) {
     }
     chifraHelpStream << STR_CHIFRA_HELP_END;
 
-    string_q contents = asciiFileToString(getTemplatePath("help_text.go"));
+    string_q contents = asciiFileToString(getPathToTemplates("help_text.go"));
     replace(contents, "[{HELP_TEXT}]", chifraHelpStream.str());
     replace(contents, "[{VERSION}]", getVersionStr(true, false));
-    stringToAsciiFile(getSourcePath("apps/chifra/cmd/help_text.go"), contents);
+    stringToAsciiFile(getPathToSource("apps/chifra/cmd/help_text.go"), contents);
 
     LOG_INFO(cYellow, "makeClass --gocmds", cOff, " processed ", counter.nVisited, " files (changed ",
              counter.nProcessed, ").", string_q(40, ' '));

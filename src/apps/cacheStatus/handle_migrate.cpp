@@ -20,9 +20,9 @@ bool migrateOne(const string_q& path, void* data) {
         return forEveryFileInFolder(path + "*", migrateOne, data);
 
     } else {
-        string_q tempFn = getCachePath("tmp/migrate");
-        string_q pRelative = substitute(path, getCachePath(""), "$CACHE/");
-        string_q tRelative = substitute(tempFn, getCachePath(""), "$CACHE/");
+        string_q tempFn = getPathToCache("tmp/migrate");
+        string_q pRelative = substitute(path, getPathToCache(""), "$CACHE/");
+        string_q tRelative = substitute(tempFn, getPathToCache(""), "$CACHE/");
 
         if (endsWith(path, ".bin") && !contains(path, "/ts.bin")) {
             checker->nSeen++;
@@ -117,7 +117,7 @@ bool migrateOne(const string_q& path, void* data) {
 bool COptions::handle_migrate(void) {
     CMigrationChecker totals("", "");
     for (auto cache : cachePaths) {
-        string_q path = getCachePath(cache);
+        string_q path = getPathToCache(cache);
         LOG_INFO(cGreen, "Checking '$CACHES/", cache, "'", string_q(50, ' '), cOff);
         CMigrationChecker checker(path, cache);
         forEveryFileInFolder(path, migrateOne, &checker);  // will quit early if it finds a migrate

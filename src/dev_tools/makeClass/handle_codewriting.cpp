@@ -137,7 +137,7 @@ bool writeCodeOut(COptions* opts, const string_q& fn) {
         string_q descr = asciiFileToString(getDocsPathTemplates("api/description.txt"));
         replaceAll(descr, "~~~~", "    ");
 
-        converted = asciiFileToString(getTemplatePath("blank.yaml"));
+        converted = asciiFileToString(getPathToTemplates("blank.yaml"));
         replace(converted, "[{TAGS}]", opts->apiTagStream.str());
         replace(converted, "[{PATHS}]", opts->apiPathStream.str());
         replace(converted, "[{DESCRIPTION}]", descr);

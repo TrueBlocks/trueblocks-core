@@ -84,7 +84,7 @@ bool acct_Display(CTraverser* trav, void* data) {
 //-----------------------------------------------------------------------
 bool COptions::process_reconciliation(CTraverser* trav) {
     string_q path =
-        getBinaryCachePath(CT_RECONS, accountedFor.address, trav->trans.blockNumber, trav->trans.transactionIndex);
+        getPathToBinaryCache(CT_RECONS, accountedFor.address, trav->trans.blockNumber, trav->trans.transactionIndex);
     establishFolder(path);
 
     trav->trans.statements.clear();
@@ -221,7 +221,7 @@ void COptions::cacheIfReconciled(CTraverser* trav, bool isNew) const {
     lockSection();
     CArchive archive(WRITING_ARCHIVE);
     string_q path =
-        getBinaryCachePath(CT_RECONS, accountedFor.address, trav->trans.blockNumber, trav->trans.transactionIndex);
+        getPathToBinaryCache(CT_RECONS, accountedFor.address, trav->trans.blockNumber, trav->trans.transactionIndex);
     if (archive.Lock(path, modeWriteCreate, LOCK_WAIT)) {
         LOG4("Writing to cache for ", path);
         archive << trav->trans.statements;

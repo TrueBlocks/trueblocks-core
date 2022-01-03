@@ -193,19 +193,19 @@ extern const char* STR_YAML_FRONTMATTER;
 #define makeError(a, b) usage(substitute(usageErrs[(a)], "{0}", (b)))
 
 //---------------------------------------------------------------------------------------------------
-extern string_q getSourcePath(const string_q& part);
-inline string_q getDocsPath(const string_q& _part) {
+extern string_q getPathToSource(const string_q& part);
+inline string_q getPathToDocs(const string_q& _part) {
     return "../docs/" + _part;
 }
 inline string_q getDocsPathContent(const string_q& _part) {
-    return getDocsPath("content/" + _part);
+    return getPathToDocs("content/" + _part);
 }
 inline string_q getDocsPathTemplates(const string_q& _part) {
-    return getDocsPath("templates/" + _part);
+    return getPathToDocs("templates/" + _part);
 }
 inline string_q getDocsPathReadmes(const string_q& _part) {
-    return getDocsPath("readmes/" + _part);
+    return getPathToDocs("readmes/" + _part);
 }
-extern string_q getTemplatePath(const string_q& part);
+extern string_q getPathToTemplates(const string_q& part);
 extern bool parseEndpointsFile(const char* str, void* data);
 extern bool parseOptionsFile(const char* str, void* data);

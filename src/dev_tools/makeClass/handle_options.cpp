@@ -181,7 +181,7 @@ bool COptions::handle_options(void) {
             return false;
 
         } else {
-            string_q fn = getSourcePath(tool.first + "/options.cpp");
+            string_q fn = getPathToSource(tool.first + "/options.cpp");
             if (tool.first == "/./")
                 fn = "./options.cpp";
             writeCodeOut(this, substitute(fn, ".cpp", ".h"));

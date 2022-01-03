@@ -23,7 +23,7 @@ func (opts *GlobalOptions) PassItOn(path string, flags string) error {
 	wg.Add(2)
 
 	// fmt.Fprintf(os.Stderr, "Calling: %s %s\n", path, options)
-	cmd := exec.Command(getCommandPath(path), options)
+	cmd := exec.Command(getPathToCommands(path), options)
 	cmd.Env = append(os.Environ(), "FROM_CHIFRA=true")
 	if os.Getenv("TEST_MODE") == "true" {
 		cmd.Env = append(cmd.Env, "TEST_MODE=true")
@@ -97,8 +97,9 @@ func ScanForProgress2(stderrPipe io.Reader, fn func(string)) {
 	}
 }
 
-// getCommandPath returns full path the the given tool
-func getCommandPath(cmd string) string {
+// TODO: This is a duplicate function
+// getPathToCommands returns full path the the given tool
+func getPathToCommands(cmd string) string {
 	usr, _ := user.Current()
 	dir := usr.HomeDir
 	return dir + "/.local/bin/chifra/" + cmd

@@ -357,7 +357,7 @@ bool COptions::parseArguments(string_q& command) {
         monitor.setValueByName("name", toLower(addr));
         monitor.clearMonitorLocks();
         monitor.finishParse();
-        monitor.isStaging = !fileExists(monitor.getMonitorPath(monitor.address, false));
+        monitor.isStaging = !fileExists(monitor.getPathToMonitor(monitor.address, false));
         if (monitor.monitorExists()) {
             string_q unused;
             if (monitor.isMonitorLocked(unused))
@@ -366,7 +366,7 @@ bool COptions::parseArguments(string_q& command) {
                     "running or it did not end cleanly the\n\tlast time it ran. "
                     "Quit the already running program or, if it is not running, "
                     "remove the lock\n\tfile: " +
-                    monitor.getMonitorPath(addr, false) + ".lck'. Proceeding anyway...");
+                    monitor.getPathToMonitor(addr, false) + ".lck'. Proceeding anyway...");
             string_q msg;
             if (monitor.isMonitorLocked(msg))  // If locked, we fail
                 return usage(msg);
@@ -428,8 +428,8 @@ bool COptions::parseArguments(string_q& command) {
         for (auto monitor : allMonitors) {
             CMonitorCount monCount;
             monCount.address = monitor.address;
-            monCount.fileSize = monitor.getFileSize(monitor.getMonitorPath(monitor.address, false));
-            monCount.nRecords = monitor.getRecordCnt(monitor.getMonitorPath(monitor.address, false));
+            monCount.fileSize = monitor.getFileSize(monitor.getPathToMonitor(monitor.address, false));
+            monCount.nRecords = monitor.getRecordCnt(monitor.getPathToMonitor(monitor.address, false));
             cout << ((isJson() && !firstOut) ? ", " : "");
             cout << monCount;
             firstOut = false;
@@ -445,7 +445,7 @@ bool COptions::parseArguments(string_q& command) {
                 return false;
 
         } else {
-            string_q fileName = getCachePath("objs/" + load);
+            string_q fileName = getPathToCache("objs/" + load);
             LOG_INFO("Trying to load dynamic library ", fileName);
 
             if (!fileExists(fileName)) {
@@ -543,8 +543,8 @@ void COptions::Init(void) {
     establishFolder(indexFolder_staging);
     establishFolder(indexFolder_unripe);
     establishFolder(indexFolder_ripe);
-    establishFolder(getCachePath("tmp/"));
-    establishFolder(getCachePath("apps/"));
+    establishFolder(getPathToCache("tmp/"));
+    establishFolder(getPathToCache("apps/"));
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -750,7 +750,7 @@ bool COptions::setDisplayFormatting(void) {
 //         }
 //     }
 //     uint64_t nMocked = getGlobalConfig("")->getConfigInt("dev", "n_mocked", 100);
-//     string_q path = getConfigPath("mocked/" + origMode + ".json");
+//     string_q path = getPathToConfig("mocked/" + origMode + ".json");
 //     if (fileExists(path)) {
 //         if (origMode == "export") {
 //             for (size_t i = 0; i < nMocked; i++) {
@@ -818,7 +818,7 @@ void COptions::writePerformanceData(void) {
     if (stats.nFiles == stats.nSkipped)
         return;
 
-    string_q statsFile = getConfigPath("performance_scraper.csv");
+    string_q statsFile = getPathToConfig("performance_scraper.csv");
 
     string_q fmt = substitute(STR_DISPLAY_SCRAPESTATISTICS, "\t", ",");
     if (!fileExists(statsFile)) {

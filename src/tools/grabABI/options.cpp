@@ -106,7 +106,7 @@ bool COptions::parseArguments(string_q& command) {
 
     for (auto addr : addrs) {
         bool testing = isTestMode() && addr == "0xeeeeeeeeddddddddeeeeeeeeddddddddeeeeeeee";
-        string_q fileName = getCachePath("abis/" + addr + ".json");
+        string_q fileName = getPathToCache("abis/" + addr + ".json");
         if (!testing && !isContractAt(addr, latest) && !fileExists(fileName)) {
             cerr << "Address " << addr << " is not a smart contract. Skipping..." << endl;
         } else {

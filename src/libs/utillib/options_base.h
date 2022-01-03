@@ -149,7 +149,7 @@ extern int sortParams(const void* c1, const void* c2);
 extern uint64_t verbose;
 
 //--------------------------------------------------------------------------------
-extern string_q getConfigPath(const string_q& part);
+extern string_q getPathToConfig(const string_q& part);
 
 //--------------------------------------------------------------------------------
 class CToml;

@@ -23,39 +23,9 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-string_q getChain(void) {
-    string_q ret = getGlobalConfig()->getConfigStr("settings", "chain", "mainnet");
-    if (!endsWith(ret, "/"))
-        ret += "/";
-    return ret;
-}
-
-//---------------------------------------------------------------------------
-string_q getChainConfigPath(const string_q& part) {
-    //    static bool been_here = false;
-    //    if (!been_here) {
-    //        been_here = true;
-    //        cerr << "getChainConfigPath: " << bGreen << (getConfigPath("config/" + getChain()) + part) << cOff <<
-    //        endl;
-    //    }
-    return getConfigPath(part);
-}
-
-//---------------------------------------------------------------------------
-string_q getChainCachePath(const string_q& part) {
-    //    static bool been_here = false;
-    //    if (!been_here) {
-    //        been_here = true;
-    //        string_q newPath = substitute(getCachePath(part), "cache/", "cache/" + getChain());
-    //        cerr << "getChainCachePath:  " << bGreen << newPath << cOff << endl;
-    //    }
-    return getCachePath(part);
-}
-
-//---------------------------------------------------------------------------
 // We define these so they don't run until they are called...
-#define STR_PREFUND_BALANCES_TAB1 getChainConfigPath("names/names_prefunds.tab")
-#define STR_PREFUND_BALANCES_BIN1 getChainCachePath("names/names_prefunds_bals.bin")
+#define STR_PREFUND_BALANCES_TAB1 getPathToConfig("names/names_prefunds.tab")
+#define STR_PREFUND_BALANCES_BIN1 getPathToCache("names/names_prefunds_bals.bin")
 
 //---------------------------------------------------------------------------
 // TODO: These singletons are used throughout - it doesn't appear to have any downsides.

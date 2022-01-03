@@ -25,8 +25,8 @@ bool parsePoloniex(CPriceQuote& quote, string_q& str) {
 
 //-----------------------------------------------------------------------
 bool establishPriceFile(void) {
-    string_q pricesFolder = getCachePath("prices/");
-    string_q zipFile = getConfigPath("poloniex_USDT_ETH.bin.gz");
+    string_q pricesFolder = getPathToCache("prices/");
+    string_q zipFile = getPathToConfig("poloniex_USDT_ETH.bin.gz");
     string_q binFile = pricesFolder + "poloniex_USDT_ETH.bin";
 
     if (fileExists(binFile))
@@ -58,7 +58,7 @@ bool establishPriceFile(void) {
 string_q CPriceSource::getPathToPriceDb(string_q& source) const {
     source = substitute(substitute(url, "http://", ""), "https://", "");
     source = nextTokenClear(source, '.');
-    string_q ret = getCachePath("prices/" + source + "_" + pair + ".bin");
+    string_q ret = getPathToCache("prices/" + source + "_" + pair + ".bin");
     establishPriceFile();
     return ret;
 }

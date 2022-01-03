@@ -117,9 +117,9 @@ uint64_t addFilter(address_t addr, const CTopicArray& topics, blknum_t block);
 
 //-------------------------------------------------------------------------
 extern string_q getBinaryCacheFilename(cache_t ct, blknum_t bn, txnum_t txid = NOPOS, const string_q& trc_id = "");
-extern string_q getBinaryCachePath(cache_t ct, blknum_t bn, txnum_t txid = NOPOS, const string_q& trc_id = "");
+extern string_q getPathToBinaryCache(cache_t ct, blknum_t bn, txnum_t txid = NOPOS, const string_q& trc_id = "");
 extern string_q getBinaryCacheFilename(cache_t ct, const address_t& addr, blknum_t bn = NOPOS, txnum_t txid = NOPOS);
-extern string_q getBinaryCachePath(cache_t ct, const address_t& addr, blknum_t bn = NOPOS, txnum_t txid = NOPOS);
+extern string_q getPathToBinaryCache(cache_t ct, const address_t& addr, blknum_t bn = NOPOS, txnum_t txid = NOPOS);
 
 //-------------------------------------------------------------------------
 // function pointer types for forEvery functions
@@ -140,21 +140,21 @@ extern bool forEveryTransaction(TRANSVISITFUNC func, void* data, const string_q&
 extern bool forEveryTimestamp(BLOCKVISITFUNC func, void* data);
 
 //-------------------------------------------------------------------------
-extern string_q getIndexPath(const string_q& _part);
-inline string_q getCommandPath(const string_q& _part) {
+extern string_q getPathToIndex(const string_q& _part);
+inline string_q getPathToCommands(const string_q& _part) {
     return "~/.local/bin/chifra/" + _part;
 }
 
 //-------------------------------------------------------------------------
-#define blockFolder (getCachePath("blocks/"))
+#define blockFolder (getPathToCache("blocks/"))
 
-#define indexFolder (getIndexPath(""))
-#define indexFolder_staging (getIndexPath("staging/"))
-#define indexFolder_unripe (getIndexPath("unripe/"))
-#define indexFolder_ripe (getIndexPath("ripe/"))
-#define indexFolder_finalized (getIndexPath("finalized/"))
-#define indexFolder_blooms (getIndexPath("blooms/"))
-#define tsIndex getIndexPath("ts.bin")
+#define indexFolder (getPathToIndex(""))
+#define indexFolder_staging (getPathToIndex("staging/"))
+#define indexFolder_unripe (getPathToIndex("unripe/"))
+#define indexFolder_ripe (getPathToIndex("ripe/"))
+#define indexFolder_finalized (getPathToIndex("finalized/"))
+#define indexFolder_blooms (getPathToIndex("blooms/"))
+#define tsIndex getPathToIndex("ts.bin")
 
 //-------------------------------------------------------------------------
 extern biguint_t weiPerEther(void);
@@ -179,9 +179,9 @@ extern wei_t getBalanceAt(const address_t& addr, blknum_t blockNum);
 //--------------------------------------------------------------------------
 inline string_q relativize(const string_q& path) {
     string_q ret = path;
-    replace(ret, getIndexPath(""), "$INDEX/");
-    replace(ret, getCachePath(""), "$CACHE/");
-    replace(ret, getConfigPath(""), "$CONFIG/");
+    replace(ret, getPathToIndex(""), "$INDEX/");
+    replace(ret, getPathToCache(""), "$CACHE/");
+    replace(ret, getPathToConfig(""), "$CONFIG/");
     replace(ret, getHomeFolder(), "$HOME/");
     return ret;
 }

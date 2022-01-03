@@ -63,10 +63,10 @@ bool COptions::writeOpenApiFile(void) {
     goConvertStream << "\t}" << endl;
 
     // writeCodeOut(this, getDocsPathContent("api/openapi.yaml"));
-    writeCodeOut(this, getSourcePath("apps/chifra/server/routes.go"));
-    writeCodeOut(this, getSourcePath("apps/chifra/server/convert_params.go"));
-    // writeCodeOut(this, getSourcePath("apps/chifra/options.cpp"));
-    // writeCodeOut(this, getSourcePath("libs/utillib/options_base.cpp"));
+    writeCodeOut(this, getPathToSource("apps/chifra/server/routes.go"));
+    writeCodeOut(this, getPathToSource("apps/chifra/server/convert_params.go"));
+    // writeCodeOut(this, getPathToSource("apps/chifra/options.cpp"));
+    // writeCodeOut(this, getPathToSource("libs/utillib/options_base.cpp"));
 
     LOG_INFO(cYellow, "makeClass --openapi", cOff, " processed ", counter.routeCount, "/", counter.cmdCount,
              " routes/cmds ", " (changed ", counter.nProcessed, ").", string_q(40, ' '));

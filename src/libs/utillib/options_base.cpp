@@ -704,7 +704,7 @@ int sortParams(const void* c1, const void* c2) {
 uint64_t verbose = false;
 
 //---------------------------------------------------------------------------------------------------
-string_q getConfigPath(const string_q& part) {
+string_q getPathToConfig(const string_q& part) {
 #if defined(__linux) || defined(__linux__) || defined(linux)
     return getHomeFolder() + ".local/share/trueblocks/" + part;
 #elif defined(__APPLE__)
@@ -752,9 +752,9 @@ const CToml* getGlobalConfig(const string_q& name) {
     static string_q components = "trueBlocks|";
 
     if (!toml) {
-        static CToml theToml(getConfigPath("trueBlocks.toml"));
+        static CToml theToml(getPathToConfig("trueBlocks.toml"));
         toml = &theToml;
-        string_q fileName = getConfigPath(COptionsBase::g_progName + ".toml");
+        string_q fileName = getPathToConfig(COptionsBase::g_progName + ".toml");
         if (fileExists(fileName) && !contains(components, COptionsBase::g_progName + "|")) {
             components += COptionsBase::g_progName + "|";
             CToml custom(fileName);
@@ -764,7 +764,7 @@ const CToml* getGlobalConfig(const string_q& name) {
 
     // If we're told explicitly to load another config, do that as well
     if (!name.empty()) {
-        string_q fileName = getConfigPath(name + ".toml");
+        string_q fileName = getPathToConfig(name + ".toml");
         if (fileExists(fileName) && !contains(components, name + "|")) {
             components += name + "|";
             CToml custom(fileName);
@@ -779,7 +779,7 @@ const CToml* getGlobalConfig(const string_q& name) {
 bool COptionsBase::Mocked(const string_q& which) {
     if (!mocked)
         return false;
-    string_q path = getConfigPath("mocked/mocks/" + which + ".json");
+    string_q path = getPathToConfig("mocked/mocks/" + which + ".json");
     if (!fileExists(path))
         return false;
     cout << asciiFileToString(path);
@@ -846,7 +846,7 @@ bool COptionsBase::findSpecial(CNameValue& pair, const string_q& arg) {
 }
 
 //-------------------------------------------------------------------------
-string_q getCachePath(const string_q& _part) {
+string_q getPathToCache(const string_q& _part) {
     // TODO(tjayrush): global data
     static string_q g_cachePath;
     if (!g_cachePath.empty())  // leave early if we can
@@ -862,10 +862,10 @@ string_q getCachePath(const string_q& _part) {
             return substitute((g_cachePath + _part), "//", "/");
 
         // Otherwise, fill the value
-        CToml toml(getConfigPath("trueBlocks.toml"));
+        CToml toml(getPathToConfig("trueBlocks.toml"));
         string_q path = toml.getConfigStr("settings", "cachePath", "<not_set>");
         if (path == "<not_set>") {
-            path = getConfigPath("cache/");
+            path = getPathToConfig("cache/");
             toml.setConfigStr("settings", "cachePath", path);
             toml.writeFile();
         }
@@ -877,7 +877,7 @@ string_q getCachePath(const string_q& _part) {
         g_cachePath = folder.getFullPath();
         if (!folder.isValid()) {
             errorMessage("Invalid cachePath (" + folder.getFullPath() + ") in config file.");
-            path = getConfigPath("cache/");
+            path = getPathToConfig("cache/");
             CFilename fallback(path);
             g_cachePath = fallback.getFullPath();
         }

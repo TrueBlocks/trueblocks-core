@@ -1,3 +1,44 @@
+### Existing Paths
+
+<br>
+
+#### Go Lang Paths
+----
+| Name              | Description                                                                                                      |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------- |
+| GetPathToConfig   | Hard coded in utils.go<br>`~/local/share/trueblocks` (Linux)<br>`~/Library/Application Support/TrueBlocks` (Mac) |
+| GetPathToCache    | Found in config file<br>defaults to `GetPathToConfig("cache")`                                                   |
+| GetPathToIndex    | Found in config file<br>defaults to `GetPathToConfig("unchained")`                                               |
+| GetPathToCommands | Hard coded to $HOME/.local/bin/chifra on both platforms in GetPathToCommands                                     |
+
+<br>
+
+#### C++ Paths
+----
+| Name              | Description                                                                                              |
+| ----------------- | -------------------------------------------------------------------------------------------------------- |
+| getPathToConfig   |                                                                                                          |
+|                   | getPathToIndex, getPathToCache                                                                           |
+| getPathToCache    | `cachePath` from trueBlocks.toml                                                                         |
+|                   | getPathToBinaryCache, getPathToPriceDb, getPathToMonitor,<br/>getPathToMonitorDels, getPathToMonitorLast |
+| getPathToIndex    | `indexPath` from trueBlocks.toml                                                                         |
+| getPathToCommands |                                                                                                          |
+
+
+
+<br>
+
+#### Local Tooling Only
+----
+| Name               | Description                                             |
+| ------------------ | ------------------------------------------------------- |
+| getPathToDocs      | For internal tooling only - works from `./build` folder |
+| getPathToTemplates | For internal tooling only - works from `./build` folder |
+| getPathToSource    | For internal tooling only - works from `./build` folder |
+
+Search for IndexPath, CachePath in golang code
+Blaze has command line options to explicitly take the paths
+
 ### Steps to Migrate
 ---
 - Rename all path routines from `getXXXPath` to `getPathToXXX` so we can find them easier
@@ -98,45 +139,6 @@ We want the only configuration to be ${BASE_PATH}. All other paths are calculate
 |          | xdai      |                              |             | 0x4f1dd23188aab3a76b463e4af801b52b1248ef073c648cbdc4c9333d3da79756 |
 |          | polkadot? |                              |             | ???                                                                |
 |          | filecoin? |                              |             | ???                                                                |
-
-### Existing Paths
-
-<br>
-
-#### Go Lang Paths
-----
-| Name              | Description                                                                                                      |
-| ----------------- | ---------------------------------------------------------------------------------------------------------------- |
-| GetPathToConfig   | Hard coded in utils.go<br>`~/local/share/trueblocks` (Linux)<br>`~/Library/Application Support/TrueBlocks` (Mac) |
-| GetPathToCache    | Found in config file<br>defaults to `GetPathToConfig("cache")`                                                   |
-| GetPathToIndex    | Found in config file<br>defaults to `GetPathToConfig("unchained")`                                               |
-| GetPathToCommands | Hard coded to $HOME/.local/bin/chifra on both platforms in GetPathToCommands                                     |
-
-<br>
-
-#### C++ Paths
-----
-| Name           | sub                               | Description                                                   |
-| -------------- | --------------------------------- | ------------------------------------------------------------- |
-| getConfigPath  |                                   |                                                               |
-|                | getChainConfigPath                | getConfigPath + "chain/" + part                               |
-| getCachePath   |                                   | cachePath from trueBlocks.toml                                |
-|                | getBinaryCachePath                | getFilename_local --> getCachePath + part (blocks, txs, etc.) |
-|                | getChainCachePath                 | getCachePath + "chain/" + part                                |
-|                | getPathToPriceDb                  | getCachePath("prices/{source}_{pair}.bin")                    |
-|                | getMonitorPath                    | getCachePath("monitors/") + path (mocked if isTestMode)       |
-| getIndexPath   |                                   | indexPath from trueBlocks.toml                                |
-| getCommandPath | "$HOME/.local/bin/chifra/" + part |
-
-<br>
-
-#### Local Tooling Only
-----
-| Name            | Description                                             |
-| --------------- | ------------------------------------------------------- |
-| getDocsPath     | For internal tooling only - works from `./build` folder |
-| getTemplatePath | For internal tooling only - works from `./build` folder |
-| getSourcePath   | For internal tooling only - works from `./build` folder |
 
 ### Open Questions
 ----

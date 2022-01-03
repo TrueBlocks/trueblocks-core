@@ -70,7 +70,7 @@ bool loadNamesDatabaseFromSQL(void) {
     CAccountName::registerClass();
 
     int rc = SQLITE_OK;
-    string_q dbPath = getCachePath("names/names.db");
+    string_q dbPath = getPathToCache("names/names.db");
 
     sqlite3* db = NULL;
     char* zErrMsg = 0;
@@ -90,11 +90,11 @@ bool loadNamesDatabaseFromSQL(void) {
             return false;
         }
 
-        if (!insertNameRecords(db, getConfigPath("names/names.tab"))) {
+        if (!insertNameRecords(db, getPathToConfig("names/names.tab"))) {
             sqlite3_close(db);
             return false;
         }
-        if (!insertNameRecords(db, getConfigPath("names/names_custom.tab"))) {
+        if (!insertNameRecords(db, getPathToConfig("names/names_custom.tab"))) {
             sqlite3_close(db);
             return false;
         }

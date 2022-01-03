@@ -56,9 +56,9 @@ class CMonitor : public CAccountName {
     bool openForWriting(bool staging);
     void writeMonitorArray(const CAppearanceArray_mon& array);
 
-    string_q getMonitorPath(const address_t& addr, bool staging) const;
-    string_q getMonitorPathLast(const address_t& addr, bool staging) const;
-    string_q getMonitorPathDels(const address_t& addr) const;
+    string_q getPathToMonitor(const address_t& addr, bool staging) const;
+    string_q getPathToMonitorLast(const address_t& addr, bool staging) const;
+    string_q getPathToMonitorDels(const address_t& addr) const;
 
     blknum_t loadAppearances(MONAPPFUNC func, void* data);
     blknum_t getNextBlockToVisit(bool fresh = false) const;

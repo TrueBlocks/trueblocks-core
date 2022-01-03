@@ -20,7 +20,7 @@ string_q get_usage(const string_q& route) {
 
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_readmes(void) {
-    CToml config(getConfigPath("makeClass.toml"));
+    CToml config(getPathToConfig("makeClass.toml"));
     bool enabled = config.getConfigBool("enabled", "readmes", false);
     if (!enabled) {
         LOG_WARN("Skipping readmes...");
@@ -56,7 +56,7 @@ bool COptions::handle_readmes(void) {
             sFooter = "\n" + trim(asciiFileToString(getDocsPathTemplates("readme-intros/README.footer.md")), '\n');
             if (ep.is_visible_docs) {
                 string_q sContents = substitute(contents, "[{FOOTER}]", sFooter);
-                string_q tReadme = getSourcePath("apps/chifra/internal/" + ep.api_route + "/README.md");
+                string_q tReadme = getPathToSource("apps/chifra/internal/" + ep.api_route + "/README.md");
                 replaceAll(tReadme, "//", "/");
                 replaceAll(tReadme, "internal/serve", "server");
                 writeIfDifferent(tReadme, sContents);

@@ -41,8 +41,8 @@ bool pinlib_readManifest(CPinnedChunkArray& pinArray) {
     if (!pinArray.empty())
         return true;
 
-    string_q binFile = getCachePath("tmp/pins.bin");
-    string_q textFile = getConfigPath("manifest/manifest.txt");
+    string_q binFile = getPathToCache("tmp/pins.bin");
+    string_q textFile = getPathToConfig("manifest/manifest.txt");
 
     time_q binDate = fileLastModifyDate(binFile);
     time_q textDate = fileLastModifyDate(textFile);
@@ -73,7 +73,7 @@ bool pinlib_readManifest(CPinnedChunkArray& pinArray) {
 
 //---------------------------------------------------------------------------
 bool pinlib_updateManifest(CPinnedChunkArray& pList) {
-    string_q binFile = getCachePath("tmp/pins.bin");
+    string_q binFile = getPathToCache("tmp/pins.bin");
     establishFolder(binFile);
 
     lockSection();  // disallow control+C until we write both files
@@ -279,9 +279,9 @@ bool pinlib_getChunkFromRemote(CPinnedChunk& pin, double sleep) {
     string_q outFile = "finalized/" + pin.fileName + ".bin";
     ipfshash_t ipfshash = pin.indexHash;
 
-    if (!fileExists(getIndexPath(outFile))) {
+    if (!fileExists(getPathToIndex(outFile))) {
         string_q zipFile = outFile + ".gz";
-        if (!fileExists(getIndexPath(zipFile))) {
+        if (!fileExists(getPathToIndex(zipFile))) {
             // download from ipfs gateway
             static string_q gatewayUrl;
             if (gatewayUrl.empty()) {
@@ -293,7 +293,7 @@ bool pinlib_getChunkFromRemote(CPinnedChunk& pin, double sleep) {
 
             ostringstream cmd;
             cmd << "curl --silent -o ";
-            cmd << "\"" << getIndexPath(zipFile) << "\" ";
+            cmd << "\"" << getPathToIndex(zipFile) << "\" ";
             cmd << "\"" << gatewayUrl << ipfshash << "\"";
             LOG_INFO(bBlue, "Unchaining ", (contains(outFile, "bloom") ? "bloom" : "index"), " ", ipfshash, " to ",
                      pin.fileName, cOff);
@@ -305,15 +305,15 @@ bool pinlib_getChunkFromRemote(CPinnedChunk& pin, double sleep) {
                 if (ret == 2)
                     defaultQuitHandler(-1);  // user hit control+c, let ourselves know
                 LOG_WARN("Could not download zip file ", zipFile);
-                ::remove(getIndexPath(zipFile).c_str());
+                ::remove(getPathToIndex(zipFile).c_str());
             } else {
                 usleep((useconds_t)(sleep * 1000000));  // do not remove cruft - stays responsive to control+C
             }
         }
 
-        if (fileExists(getIndexPath(zipFile))) {
+        if (fileExists(getPathToIndex(zipFile))) {
             ostringstream cmd;
-            cmd << "cd \"" << getIndexPath("") << "\" && gunzip -k " << zipFile;
+            cmd << "cd \"" << getPathToIndex("") << "\" && gunzip -k " << zipFile;
             lockSection();
             int ret = system(cmd.str().c_str());
             unlockSection();
@@ -325,9 +325,9 @@ bool pinlib_getChunkFromRemote(CPinnedChunk& pin, double sleep) {
                 err << "Could not download file " << outFile;
                 LOG_WARN(err.str());
                 err << endl;
-                appendToAsciiFile(getCachePath("tmp/failed_downloads.log"), err.str());
-                ::remove(getIndexPath(zipFile).c_str());
-                ::remove(getIndexPath(outFile).c_str());
+                appendToAsciiFile(getPathToCache("tmp/failed_downloads.log"), err.str());
+                ::remove(getPathToIndex(zipFile).c_str());
+                ::remove(getPathToIndex(outFile).c_str());
             }
         } else {
             LOG_INFO("File ", outFile, " does not exist.");

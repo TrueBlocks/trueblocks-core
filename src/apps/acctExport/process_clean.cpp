@@ -60,7 +60,7 @@ bool cleanMonitorFile(const string_q& path, void* data) {
             first = false;
             size_t sizeNow = m.getRecordCnt(path);
             cout << "{ ";
-            cout << "\"path\": \"" << substitute(path, m.getMonitorPath("", false), "$CACHE/") << "\", ";
+            cout << "\"path\": \"" << substitute(path, m.getPathToMonitor("", false), "$CACHE/") << "\", ";
             cout << "\"sizeThen\": " << sizeThen << ", ";
             cout << "\"sizeNow\": " << sizeNow;
             if (sizeThen > sizeNow)
@@ -76,7 +76,7 @@ bool cleanMonitorFile(const string_q& path, void* data) {
 bool COptions::process_clean(void) {
     CMonitor m;
     cout << "[";
-    bool ret = forEveryFileInFolder(m.getMonitorPath(m.address, false), cleanMonitorFile, NULL);
+    bool ret = forEveryFileInFolder(m.getPathToMonitor(m.address, false), cleanMonitorFile, NULL);
     cout << "]";
     return ret;
 }
