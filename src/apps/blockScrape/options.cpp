@@ -161,7 +161,7 @@ bool COptions::parseArguments(string_q& command) {
 
     // This may be the first time we've ever run. In that case, we need to build the zero block index file...
     string chunkId = padNum9(0) + "-" + padNum9(0);
-    string_q bloomPath = getIndexPath("blooms/" + chunkId + ".bloom");
+    string_q bloomPath = getPathToIndex("blooms/" + chunkId + ".bloom");
     if (!fileExists(bloomPath)) {
         LOG_INFO("Index for block zero not found. Building from prefund file.");
 
@@ -175,7 +175,7 @@ bool COptions::parseArguments(string_q& command) {
         forEveryPrefund(visitPrefund, &appearances);
 
         // Write the chunk and the bloom to the binary cache
-        string_q chunkPath = getIndexPath("finalized/" + chunkId + ".bin");
+        string_q chunkPath = getPathToIndex("finalized/" + chunkId + ".bin");
         writeIndexAsBinary(chunkPath, appearances, (pin ? visitToPin : nullptr), &pinList);
         LOG_INFO("Done...");
     }
@@ -236,7 +236,7 @@ COptions::COptions(void) {
     establishFolder(indexFolder_staging);
     establishFolder(indexFolder_unripe);
     establishFolder(indexFolder_ripe);
-    establishFolder(getCachePath("tmp/"));
+    establishFolder(getPathToCache("tmp/"));
 }
 
 //--------------------------------------------------------------------------------

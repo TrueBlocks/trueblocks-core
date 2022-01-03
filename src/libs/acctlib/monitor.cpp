@@ -395,7 +395,7 @@ bool CMonitor::openForWriting(bool staging) {
     tx_cache = new CArchive(WRITING_ARCHIVE);
     if (tx_cache == NULL)
         return false;
-    return tx_cache->Lock(getMonitorPath(address, staging), modeWriteAppend, LOCK_WAIT);
+    return tx_cache->Lock(getPathToMonitor(address, staging), modeWriteAppend, LOCK_WAIT);
 }
 
 //-------------------------------------------------------------------------
@@ -408,42 +408,42 @@ void CMonitor::writeMonitorArray(const CAppearanceArray_mon& items) {
 }
 
 //---------------------------------------------------------------------------
-string_q CMonitor::getMonitorPath(const address_t& addr, bool staging) const {
+string_q CMonitor::getPathToMonitor(const address_t& addr, bool staging) const {
     string_q fn = isAddress(addr) ? addr + ".acct.bin" : addr;
-    string_q base = getCachePath("monitors/") + (staging ? "staging/" : "");
+    string_q base = getPathToCache("monitors/") + (staging ? "staging/" : "");
     if (isTestMode())
-        base = getConfigPath("mocked/monitors/") + (staging ? "staging/" : "");
+        base = getPathToConfig("mocked/monitors/") + (staging ? "staging/" : "");
     return base + fn;
 }
 
 //---------------------------------------------------------------------------
-string_q CMonitor::getMonitorPathDels(const address_t& addr) const {
-    return getMonitorPath(addr, false) + ".deleted";
+string_q CMonitor::getPathToMonitorDels(const address_t& addr) const {
+    return getPathToMonitor(addr, false) + ".deleted";
 }
 
 //---------------------------------------------------------------------------
-string_q CMonitor::getMonitorPathLast(const address_t& addr, bool staging) const {
-    return substitute(getMonitorPath(addr, staging), ".acct.bin", ".last.txt");
+string_q CMonitor::getPathToMonitorLast(const address_t& addr, bool staging) const {
+    return substitute(getPathToMonitor(addr, staging), ".acct.bin", ".last.txt");
 }
 
 //-------------------------------------------------------------------------
 void CMonitor::writeLastBlockInMonitor(blknum_t bn, bool staging) {
     lastVisitedBlock = bn;
-    stringToAsciiFile(getMonitorPathLast(address, staging), uint_2_Str(bn) + "\n");
+    stringToAsciiFile(getPathToMonitorLast(address, staging), uint_2_Str(bn) + "\n");
 }
 
 //-----------------------------------------------------------------------
 blknum_t CMonitor::getLastBlockInMonitorPlusOne(void) const {
-    return str_2_Uint(asciiFileToString(getMonitorPathLast(address, false)));
+    return str_2_Uint(asciiFileToString(getPathToMonitorLast(address, false)));
 }
 
 //--------------------------------------------------------------------------------
 blknum_t CMonitor::getNextBlockToVisit(bool fresh) const {
     if (lastVisitedBlock == NOPOS || fresh) {
         // If the monitor exists, the next block is stored in the database...
-        if (fileExists(getMonitorPathLast(address, false))) {
+        if (fileExists(getPathToMonitorLast(address, false))) {
             ((CMonitor*)this)->lastVisitedBlock =
-                str_2_Uint(asciiFileToString(getMonitorPathLast(address, false)));  // NOLINT
+                str_2_Uint(asciiFileToString(getPathToMonitorLast(address, false)));  // NOLINT
 
         } else {
             // Accounts can receive ETH counter-factually. By default, we ignore
@@ -467,34 +467,34 @@ blknum_t CMonitor::getNextBlockToVisit(bool fresh) const {
 
 //-----------------------------------------------------------------------
 bool CMonitor::monitorExists(void) const {
-    if (fileExists(getMonitorPath(address, false)))
+    if (fileExists(getPathToMonitor(address, false)))
         return true;
-    if (fileExists(getMonitorPathLast(address, false)))
+    if (fileExists(getPathToMonitorLast(address, false)))
         return true;
-    if (fileExists(getMonitorPathDels(address)))
+    if (fileExists(getPathToMonitorDels(address)))
         return true;
     return false;
 }
 
 //--------------------------------------------------------------------------------
 bool CMonitor::isMonitorLocked(string_q& msg) const {
-    checkLock(getMonitorPath(address, false), "cache");
-    checkLock(getMonitorPathLast(address, false), "last block");
-    checkLock(getMonitorPathDels(address), "marker");
+    checkLock(getPathToMonitor(address, false), "cache");
+    checkLock(getPathToMonitorLast(address, false), "last block");
+    checkLock(getPathToMonitorDels(address), "marker");
     return false;
 }
 
 //--------------------------------------------------------------------------------
 bool CMonitor::clearMonitorLocks(void) {
-    ::remove((getMonitorPath(address, false) + ".lck").c_str());
-    ::remove((getMonitorPathLast(address, false) + ".lck").c_str());
-    ::remove((getMonitorPathDels(address) + ".lck").c_str());
+    ::remove((getPathToMonitor(address, false) + ".lck").c_str());
+    ::remove((getPathToMonitorLast(address, false) + ".lck").c_str());
+    ::remove((getPathToMonitorDels(address) + ".lck").c_str());
     return true;
 }
 
 //--------------------------------------------------------------------------------
 void doMoveFile(const string_q& from, const string_q& to) {
-#define CLEAN(a) (cTeal + (isTestMode() ? substitute((a), getCachePath(""), "$CACHE/") : (a)) + cOff)
+#define CLEAN(a) (cTeal + (isTestMode() ? substitute((a), getPathToCache(""), "$CACHE/") : (a)) + cOff)
     LOG4("Moving ", CLEAN(from), " to ", CLEAN(to));
     if (fileExists(from))
         moveFile(from, to);
@@ -512,34 +512,34 @@ void CMonitor::moveToProduction(bool staging) {
         delete tx_cache;
         tx_cache = NULL;
     }
-    bool binExists = fileExists(getMonitorPath(address, true));
-    bool lastExists = fileExists(getMonitorPathLast(address, true));
+    bool binExists = fileExists(getPathToMonitor(address, true));
+    bool lastExists = fileExists(getPathToMonitorLast(address, true));
     lockSection();
     if (binExists || lastExists) {
-        doMoveFile(getMonitorPath(address, true), getMonitorPath(address, false));
-        doMoveFile(getMonitorPathLast(address, true), getMonitorPathLast(address, false));
+        doMoveFile(getPathToMonitor(address, true), getPathToMonitor(address, false));
+        doMoveFile(getPathToMonitorLast(address, true), getPathToMonitorLast(address, false));
     } else {
         // For some reason (user quit, UI switched to adding a different address to monitor, something went
         // wrong...) the binary cache was not created. Cleanup everything. The user will have to start over.
-        ::remove(getMonitorPath(address, true).c_str());
-        ::remove(getMonitorPathLast(address, true).c_str());
+        ::remove(getPathToMonitor(address, true).c_str());
+        ::remove(getPathToMonitorLast(address, true).c_str());
     }
     unlockSection();
 }
 
 //-----------------------------------------------------------------------
 bool CMonitor::isDeleted(void) const {
-    return fileExists(getMonitorPathDels(address));
+    return fileExists(getPathToMonitorDels(address));
 }
 
 //-----------------------------------------------------------------------
 void CMonitor::deleteMonitor(void) {
-    stringToAsciiFile(getMonitorPathDels(address), Now().Format(FMT_EXPORT));
+    stringToAsciiFile(getPathToMonitorDels(address), Now().Format(FMT_EXPORT));
 }
 
 //-----------------------------------------------------------------------
 void CMonitor::undeleteMonitor(void) {
-    ::remove(getMonitorPathDels(address).c_str());
+    ::remove(getPathToMonitorDels(address).c_str());
 }
 
 //---------------------------------------------------------------------------
@@ -550,9 +550,9 @@ void removeFile(const string_q& fn) {
 
 //-----------------------------------------------------------------------
 void CMonitor::removeMonitor(void) {
-    removeFile(getMonitorPath(address, false));
-    removeFile(getMonitorPathLast(address, false));
-    removeFile(getMonitorPathDels(address));
+    removeFile(getPathToMonitor(address, false));
+    removeFile(getPathToMonitorLast(address, false));
+    removeFile(getPathToMonitorDels(address));
     // TODO(tjayrush): remove reconciliations
 }
 
@@ -567,7 +567,7 @@ bloom_t CMonitor::getBloom(void) {
 
 //----------------------------------------------------------------
 blknum_t CMonitor::loadAppearances(MONAPPFUNC func, void* data) {
-    string_q path = getMonitorPath(address, false);
+    string_q path = getPathToMonitor(address, false);
     blknum_t nRecs = this->getRecordCnt(path);
     if (!nRecs)
         return false;
@@ -600,14 +600,14 @@ blknum_t CMonitor::loadAppearances(MONAPPFUNC func, void* data) {
 //----------------------------------------------------------------
 void establishMonitorFolders(void) {
     CMonitor m;
-    establishFolder(m.getMonitorPath("", false));
-    establishFolder(m.getMonitorPath("", true));
+    establishFolder(m.getPathToMonitor("", false));
+    establishFolder(m.getPathToMonitor("", true));
 }
 
 //----------------------------------------------------------------
 void cleanMonitorStage(void) {
     CMonitor m;
-    cleanFolder(m.getMonitorPath("", true));
+    cleanFolder(m.getPathToMonitor("", true));
 }
 
 //----------------------------------------------------------------

@@ -43,7 +43,7 @@ bool COptions::parseArguments(string_q& command) {
     // END_CODE_LOCAL_INIT
     string_q path;
 
-    CToml config(getConfigPath("makeClass.toml"));
+    CToml config(getPathToConfig("makeClass.toml"));
     bool makeClassOn = config.getConfigBool("enabled", "generate", false);
 
     Init();
@@ -247,8 +247,8 @@ bool COptions::cleanTest(const string_q& path, const string_q& testName) {
 
 //---------------------------------------------------------------------------------------------------
 void establishTestData(void) {
-    cleanFolder(getCachePath("tmp/"));
-    cleanFolder(getConfigPath("mocked/unchained"));
+    cleanFolder(getPathToCache("tmp/"));
+    cleanFolder(getPathToConfig("mocked/unchained"));
 
     // TODO(tjayrush): This code is a hack to make test cases pass. We should fix the underlyign reason
     // TODO(tjayrush): these tests fail. To reproduce, delete the entire cache, comment the lines below

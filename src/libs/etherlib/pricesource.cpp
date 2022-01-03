@@ -25,8 +25,8 @@ bool parsePoloniex(CPriceQuote& quote, string_q& str) {
 
 //-----------------------------------------------------------------------
 bool establishPriceFile(void) {
-    string_q pricesFolder = getCachePath("prices/");
-    string_q zipFile = getConfigPath("poloniex_USDT_ETH.bin.gz");
+    string_q pricesFolder = getPathToCache("prices/");
+    string_q zipFile = getPathToConfig("poloniex_USDT_ETH.bin.gz");
     string_q binFile = pricesFolder + "poloniex_USDT_ETH.bin";
 
     if (fileExists(binFile))
@@ -55,10 +55,10 @@ bool establishPriceFile(void) {
 }
 
 //---------------------------------------------------------------------------
-string_q CPriceSource::getDatabasePath(string_q& source) const {
+string_q CPriceSource::getPathToPriceDb(string_q& source) const {
     source = substitute(substitute(url, "http://", ""), "https://", "");
     source = nextTokenClear(source, '.');
-    string_q ret = getCachePath("prices/" + source + "_" + pair + ".bin");
+    string_q ret = getPathToCache("prices/" + source + "_" + pair + ".bin");
     establishPriceFile();
     return ret;
 }
@@ -67,7 +67,7 @@ extern size_t dotDot(char* ptr, size_t size, size_t nmemb, void* userdata);
 //---------------------------------------------------------------------------
 bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes, bool freshen, string_q& message) {
     string_q theSource;
-    string_q cacheFile = source.getDatabasePath(theSource);
+    string_q cacheFile = source.getPathToPriceDb(theSource);
 
     // Load and possibly refresh the price database
     time_q lastRead = time_q(2015, 1, 1, 0, 0, 0);

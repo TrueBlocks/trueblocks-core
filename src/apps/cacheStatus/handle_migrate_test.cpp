@@ -19,7 +19,7 @@ bool needsMigrate(const string_q& path, void* data) {
         return forEveryFileInFolder(path + "*", needsMigrate, data);
 
     } else {
-        string_q relative = substitute(path, getCachePath(""), "$CACHE/");
+        string_q relative = substitute(path, getPathToCache(""), "$CACHE/");
         if (endsWith(path, ".bin") && !contains(path, "/ts.bin")) {
             CArchive readArchive(READING_ARCHIVE);
             if (readArchive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
@@ -40,7 +40,7 @@ bool needsMigrate(const string_q& path, void* data) {
 //--------------------------------------------------------------------------------
 bool COptions::handle_migrate_test(void) {
     for (auto cache : cachePaths) {
-        string_q path = getCachePath(cache);
+        string_q path = getPathToCache(cache);
         LOG_INFO(cGreen, "Checking '$CACHES/", cache, "'", string_q(50, ' '), cOff);
         CMigrationChecker checker(path, cache);
         forEveryFileInFolder(path, needsMigrate, &checker);  // will quit early if it finds a migrate

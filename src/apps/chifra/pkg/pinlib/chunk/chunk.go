@@ -76,7 +76,7 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType cache.CacheTyp
 	writeChannel := make(chan *jobResult, poolSize)
 	// Context lets us handle Ctrl-C easily
 	ctx, cancel := context.WithCancel(context.Background())
-	cachePath := &cache.CachePath{}
+	cachePath := &cache.Path{}
 	cachePath.New(chunkType)
 	var downloadWg sync.WaitGroup
 	var writeWg sync.WaitGroup
@@ -218,7 +218,7 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType cache.CacheTyp
 }
 
 // saveFileContents decompresses the downloaded data and saves it to files
-func saveFileContents(res *jobResult, cachePath *cache.CachePath) error {
+func saveFileContents(res *jobResult, cachePath *cache.Path) error {
 	// Postpone Ctrl-C
 	trapChannel := sigintTrap.Enable()
 	defer sigintTrap.Disable(trapChannel)
@@ -259,7 +259,7 @@ func saveFileContents(res *jobResult, cachePath *cache.CachePath) error {
 }
 
 // FilterDownloadedChunks returns new []manifest.PinDescriptor slice with all pins from RootPath removed
-func FilterDownloadedChunks(pins []manifest.PinDescriptor, cachePath *cache.CachePath) []manifest.PinDescriptor {
+func FilterDownloadedChunks(pins []manifest.PinDescriptor, cachePath *cache.Path) []manifest.PinDescriptor {
 	fileMap := make(map[string]bool)
 
 	files, err := ioutil.ReadDir(cachePath.String())

@@ -46,7 +46,7 @@ func (opts *PinsOptions) InitInternal() error {
 	}
 
 	// Save manifest
-	err = pinlib.SaveManifest(config.GetConfigPath("manifest/manifest.txt"), downloadedManifest)
+	err = pinlib.SaveManifest(config.GetPathToConfig("manifest/manifest.txt"), downloadedManifest)
 	if err != nil {
 		return err
 	}

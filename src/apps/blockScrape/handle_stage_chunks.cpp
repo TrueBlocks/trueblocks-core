@@ -51,7 +51,7 @@ bool CConsolidator::stage_chunks(void) {
     // We always want the stage to contain a file with perfectly valid data. We do this by working in
     // a temporary file. Once we're ready, we move the temp file to newStage and only then delete oldStage.
     // The next time we run, if we didn't create a newStage file, it will start at oldStage
-    tmpFile = getIndexPath("temp.txt");
+    tmpFile = getPathToIndex("temp.txt");
     LOG_FN8(tmpFile);
 
     LOG_FN8(tmp_fn);

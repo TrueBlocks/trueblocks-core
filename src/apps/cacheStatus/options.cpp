@@ -167,14 +167,14 @@ bool COptions::parseArguments(string_q& command) {
     if (!loadNames())
         return usage("Could not load names database.");
 
-    establishFolder(getCachePath("tmp/"));
+    establishFolder(getPathToCache("tmp/"));
     establishFolder(indexFolder_finalized);
     establishFolder(indexFolder_blooms);
-    establishFolder(getCachePath("slurps/"));
-    establishFolder(getCachePath("blocks/"));
-    establishFolder(getCachePath("txs/"));
-    establishFolder(getCachePath("traces/"));
-    establishFolder(getCachePath("monitors/"));
+    establishFolder(getPathToCache("slurps/"));
+    establishFolder(getPathToCache("blocks/"));
+    establishFolder(getPathToCache("txs/"));
+    establishFolder(getPathToCache("traces/"));
+    establishFolder(getPathToCache("monitors/"));
 
     for (auto m : modes)
         mode += (m + "|");
@@ -271,9 +271,9 @@ void COptions::Init(void) {
     } else {
         status.host = string_q(hostname) + " (" + username + ")";
         status.rpcProvider = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
-        status.configPath = getConfigPath("");
-        status.cachePath = getGlobalConfig()->getConfigStr("settings", "cachePath", getCachePath(""));
-        status.indexPath = getGlobalConfig()->getConfigStr("settings", "indexPath", getIndexPath(""));
+        status.configPath = getPathToConfig("");
+        status.cachePath = getGlobalConfig()->getConfigStr("settings", "cachePath", getPathToCache(""));
+        status.indexPath = getGlobalConfig()->getConfigStr("settings", "indexPath", getPathToIndex(""));
     }
     if (!isNodeRunning()) {
         status.clientVersion = "Not running";

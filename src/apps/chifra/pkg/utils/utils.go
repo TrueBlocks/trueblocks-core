@@ -11,20 +11,12 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
-	"os/user"
 	"runtime"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"golang.org/x/crypto/ssh/terminal"
 )
-
-// GetCommandPath returns full path the the given tool
-func GetCommandPath(cmd string) string {
-	usr, _ := user.Current()
-	dir := usr.HomeDir
-	return dir + "/.local/bin/chifra/" + cmd
-}
 
 // IsTestModeServer return true if we are running from the testing harness
 func IsTestModeServer(r *http.Request) bool {

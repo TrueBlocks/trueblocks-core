@@ -107,7 +107,7 @@ bool COptions::parseArguments(string_q& command) {
         establishFolder(getDocsPathContent("docs/chifra/"));
     }
 
-    string_q endpointsFile = getSourcePath("cmd-line-endpoints.csv");
+    string_q endpointsFile = getPathToSource("cmd-line-endpoints.csv");
     if (!fileExists(endpointsFile)) {
         endpointsFile = "./cmd-line-endpoints.csv";
         if (!fileExists(endpointsFile)) {
@@ -116,7 +116,7 @@ bool COptions::parseArguments(string_q& command) {
     }
     forEveryLineInAsciiFile(endpointsFile, parseEndpointsFile, this);
 
-    string_q optionsFile = getSourcePath("cmd-line-options.csv");
+    string_q optionsFile = getPathToSource("cmd-line-options.csv");
     if (!fileExists(optionsFile)) {
         optionsFile = "./cmd-line-options.csv";
         if (!fileExists(optionsFile)) {
@@ -125,7 +125,7 @@ bool COptions::parseArguments(string_q& command) {
     }
     forEveryLineInAsciiFile(optionsFile, parseOptionsFile, this);
 
-    CToml config(getConfigPath("makeClass.toml"));
+    CToml config(getPathToConfig("makeClass.toml"));
     bool enabled = config.getConfigBool("enabled", "generate", false);
     if (!enabled) {
         LOG_WARN("Skipping code generation...");
@@ -225,8 +225,8 @@ bool COptions::parseArguments(string_q& command) {
     // We need the template files
     CStringArray templs = {"", "blank.yaml", "blank.cpp", "blank.h", "blank.go", "blank_options.go"};
     for (auto temp : templs) {
-        if (!fileExists(getTemplatePath(temp))) {
-            return makeError(ERR_CONFIGMISSING, getTemplatePath(temp));
+        if (!fileExists(getPathToTemplates(temp))) {
+            return makeError(ERR_CONFIGMISSING, getPathToTemplates(temp));
         }
     }
 
@@ -248,7 +248,7 @@ void COptions::Init(void) {
     classDefs.clear();
     counter = CCounter();
 
-    CToml toml(getConfigPath("makeClass.toml"));
+    CToml toml(getPathToConfig("makeClass.toml"));
     lastFormat = static_cast<timestamp_t>(toml.getConfigInt("settings", "last_format", 0));
     lastLint = static_cast<timestamp_t>(toml.getConfigInt("settings", "last_lint", 0));
     toml.Release();
@@ -313,8 +313,28 @@ bool listClasses(const string_q& path, void* data) {
 }
 
 //--------------------------------------------------------------------------------
+string_q getPathToDocs(const string_q& _part) {
+    return "../docs/" + _part;
+}
+
+//--------------------------------------------------------------------------------
+string_q getDocsPathContent(const string_q& _part) {
+    return getPathToDocs("content/" + _part);
+}
+
+//--------------------------------------------------------------------------------
+string_q getDocsPathTemplates(const string_q& _part) {
+    return getPathToDocs("templates/" + _part);
+}
+
+//--------------------------------------------------------------------------------
+string_q getDocsPathReadmes(const string_q& _part) {
+    return getPathToDocs("readmes/" + _part);
+}
+
+//--------------------------------------------------------------------------------
 #define getSourcePathA(a) (string_q("../src/") + (a))
-string_q getSourcePath(const string_q& rest) {
+string_q getPathToSource(const string_q& rest) {
     string_q cwd = getCWD();
     CStringArray parts;
     explode(parts, cwd, '/');
@@ -328,8 +348,8 @@ string_q getSourcePath(const string_q& rest) {
     return getSourcePathA(rest);
 }
 
-string_q getTemplatePath(const string_q& part) {
-    string_q ret = getSourcePath("dev_tools/makeClass/templates/" + part);
+string_q getPathToTemplates(const string_q& part) {
+    string_q ret = getPathToSource("dev_tools/makeClass/templates/" + part);
     if (!fileExists(ret)) {
         ret = getHomeFolder() + "Development/trueblocks-core/src/dev_tools/makeClass/templates/" + part;
     }

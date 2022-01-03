@@ -101,7 +101,7 @@ bool COptions::scrape_blocks(void) {
     // We're ready to scrape, so build the blaze command line...
     os.clear();
     os.str("");
-    os << getCommandPath("blaze") + " scrape ";
+    os << getPathToCommands("blaze") + " scrape ";
     os << "--startBlock " << cons.blazeStart << " ";
     os << "--block_cnt " << cons.blazeCnt << " ";
     os << "--ripeBlock " << cons.blazeRipe << " ";
@@ -109,7 +109,7 @@ bool COptions::scrape_blocks(void) {
     LOG_TEST_CALL(os.str());
 
     ostringstream cmd;
-    cmd << "env TB_INDEXPATH=\"" << getIndexPath("")
+    cmd << "env TB_INDEXPATH=\"" << getPathToIndex("")
         << "\" ";  // note--cobra/viper will pick this up even though you won't find it
     cmd << os.str() << " ";
     cmd << "--block_chan_cnt " << block_chan_cnt << " ";

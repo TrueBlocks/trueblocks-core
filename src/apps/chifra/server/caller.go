@@ -11,20 +11,12 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
-	"os/user"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
-
-// GetCommandPath returns full path the the given tool
-func GetCommandPath(cmd string) string {
-	usr, _ := user.Current()
-	dir := usr.HomeDir
-	return dir + "/.local/bin/chifra/" + cmd
-}
 
 // CallOne handles a route by calling into chifra
 func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string) {

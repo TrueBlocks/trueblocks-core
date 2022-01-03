@@ -315,7 +315,7 @@ const char* STR_DISPLAY_INDEXCACHE = "";
 bool CIndexCache::readBinaryCache(const string_q& cacheType, bool details, bool ignore) {
     if (ignore || needsRefresh(cacheType, details))
         return false;
-    string_q fn = getCachePath("tmp/" + cacheType + (details ? "_det" : "") + ".bin");
+    string_q fn = getPathToCache("tmp/" + cacheType + (details ? "_det" : "") + ".bin");
     if (!fileExists(fn))
         return false;
     LOG4("\tReading from cache ", fn);
@@ -335,7 +335,7 @@ bool CIndexCache::writeBinaryCache(const string_q& cacheType, bool details) {
     if (isTestMode())
         return true;
 
-    string_q fn = getCachePath("tmp/" + cacheType + (details ? "_det" : "") + ".bin");
+    string_q fn = getPathToCache("tmp/" + cacheType + (details ? "_det" : "") + ".bin");
     CArchive archive(WRITING_ARCHIVE);
     if (archive.Lock(fn, modeWriteCreate, LOCK_WAIT)) {
         SerializeC(archive);

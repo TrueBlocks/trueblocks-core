@@ -11,24 +11,15 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "pricequote.h"
+#include "basetypes.h"
 
+//-----------------------------------------------------------------------------
 namespace qblocks {
 
-typedef bool (*PRICEPARSEFUNC)(CPriceQuote& quote, string_q& str);
-extern bool parsePoloniex(CPriceQuote& quote, string_q& str);
-extern const char* STR_PRICE_URL;
-
-class CPriceSource {
-  public:
-    string_q url;
-    string_q pair;
-    PRICEPARSEFUNC func;
-    CPriceSource(const string_q& u, const string_q& p, PRICEPARSEFUNC f) : url(u), pair(p), func(f) {
-    }
-    string_q getPathToPriceDb(string& source) const;
-};
-
-extern bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes, bool freshen, string_q& message);
+//--------------------------------------------------------------------------------
+extern string_q getPathToConfig(const string_q& part);
+extern string_q getPathToCache(const string_q& _part);
+extern string_q getPathToIndex(const string_q& _part);
+extern string_q getPathToCommands(const string_q& _part);
 
 }  // namespace qblocks

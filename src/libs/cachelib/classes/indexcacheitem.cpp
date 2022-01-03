@@ -355,7 +355,7 @@ string_q nextIndexcacheitemChunk_custom(const string_q& fieldIn, const void* dat
             // EXISTING_CODE
             case 'f':
                 if (fieldIn % "fileDate") {
-                    return fileLastModifyDate(getIndexPath("finalized/" + ind->filename)).Format(FMT_JSON);
+                    return fileLastModifyDate(getPathToIndex("finalized/" + ind->filename)).Format(FMT_JSON);
                 }
                 break;
             // EXISTING_CODE
@@ -391,7 +391,7 @@ bool CIndexCacheItem::readBackLevel(CArchive& archive) {
         archive >> firstTs;
         archive >> latestTs;
         archive >> filename;
-        fileDate = fileLastModifyDate(getIndexPath("finalized/" + filename));
+        fileDate = fileLastModifyDate(getPathToIndex("finalized/" + filename));
         archive >> indexSizeBytes;
         archive >> indexHash;
         archive >> bloomSizeBytes;

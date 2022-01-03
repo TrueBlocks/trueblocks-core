@@ -14,24 +14,24 @@
 
 //----------------------------------------------------------------
 bool COptions::handle_check() {
-    CToml config(getConfigPath("chunkMan.toml"));
+    CToml config(getPathToConfig("chunkMan.toml"));
     bool enabled = config.getConfigBool("enabled", "download_manifest", true);
     if (!enabled) {
         LOG_INFO("Manifest not downloaded. Not initializing.");
         return true;
     }
 
-    if (!folderExists(getIndexPath("")))
+    if (!folderExists(getPathToIndex("")))
         return false;
 
-    establishFolder(getIndexPath("blooms/"));
-    establishFolder(getIndexPath("finalized/"));
+    establishFolder(getPathToIndex("blooms/"));
+    establishFolder(getPathToIndex("finalized/"));
 
     // If the user is calling here, she wants a fresh read even if we've not just freshened.
     pins.clear();
     pinlib_readManifest(pins);
     for (auto pin : pins) {
-        string_q source = getIndexPath("blooms/" + pin.fileName + ".bloom");
+        string_q source = getPathToIndex("blooms/" + pin.fileName + ".bloom");
         copyFile(source, "./thisFile");
         source = "./thisFile";
         string_q cmd1 = "rm -f ./thisFile.gz";  // + " 2>/dev/null";

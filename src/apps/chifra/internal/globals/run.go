@@ -11,8 +11,9 @@ import (
 	"io"
 	"os"
 	"os/exec"
-	"os/user"
 	"sync"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
 
 func (opts *GlobalOptions) PassItOn(path string, flags string) error {
@@ -23,9 +24,10 @@ func (opts *GlobalOptions) PassItOn(path string, flags string) error {
 	wg.Add(2)
 
 	// fmt.Fprintf(os.Stderr, "Calling: %s %s\n", path, options)
-	cmd := exec.Command(getCommandPath(path), options)
+	cmd := exec.Command(config.GetPathToCommands(path), options)
+	cmd.Env = append(os.Environ(), "FROM_CHIFRA=true")
 	if os.Getenv("TEST_MODE") == "true" {
-		cmd.Env = append(os.Environ(), "TEST_MODE=true")
+		cmd.Env = append(cmd.Env, "TEST_MODE=true")
 	}
 
 	stderrPipe, err := cmd.StderrPipe()
@@ -94,11 +96,4 @@ func ScanForProgress2(stderrPipe io.Reader, fn func(string)) {
 	if err := scanner.Err(); err != nil {
 		fmt.Println("TB: Error while reading stderr -- ", err)
 	}
-}
-
-// getCommandPath returns full path the the given tool
-func getCommandPath(cmd string) string {
-	usr, _ := user.Current()
-	dir := usr.HomeDir
-	return dir + "/.local/bin/chifra/" + cmd
 }

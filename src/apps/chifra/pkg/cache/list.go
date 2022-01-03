@@ -14,7 +14,7 @@ import (
 // ListByCacheType returns a slice of file names (strings) of all chunks of
 // the given type in UnchainedIndex directory
 func ListByCacheType(chunkType CacheType) ([]string, error) {
-	cachePath := &CachePath{}
+	cachePath := &Path{}
 	cachePath.New(chunkType)
 
 	files, err := ioutil.ReadDir(cachePath.String())
