@@ -14,26 +14,28 @@ import (
 	"os"
 
 	// BEG_ROUTE_PKGS
-	listPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/list"
-	exportPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
-	monitorsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/monitors"
-	namesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/names"
+ 
 	abisPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/abis"
 	blocksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/blocks"
-	transactionsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/transactions"
-	receiptsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/receipts"
-	logsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/logs"
-	tracesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/traces"
-	whenPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/when"
-	statePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/state"
-	tokensPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/tokens"
-	statusPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/status"
-	scrapePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/scrape"
 	chunksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/chunks"
+	exportPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
 	initPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/init"
+	listPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/list"
+	logsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/logs"
+	monitorsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/monitors"
+	namesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/names"
 	pinsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/pins"
 	quotesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/quotes"
+	receiptsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/receipts"
+	scrapePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/scrape"
 	slurpPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/slurp"
+	statePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/state"
+	statusPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/status"
+	tokensPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/tokens"
+	tracesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/traces"
+	transactionsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/transactions"
+	whenPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/when"
+	config "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	// END_ROUTE_PKGS
 )
 
@@ -49,7 +51,7 @@ func RouteList(w http.ResponseWriter, r *http.Request) {
 // RouteExport Export full detail of transactions for one or more addresses.
 func RouteExport(w http.ResponseWriter, r *http.Request) {
 	if !exportPkg.ServeExport(w, r) {
-		CallOne(w, r, GetPathToCommands("acctExport"), "", "export")
+		CallOne(w, r, config.GetPathToCommands("acctExport"), "", "export")
 	}
 }
 
@@ -63,7 +65,7 @@ func RouteMonitors(w http.ResponseWriter, r *http.Request) {
 // RouteNames Query addresses or names of well known accounts.
 func RouteNames(w http.ResponseWriter, r *http.Request) {
 	if !namesPkg.ServeNames(w, r) {
-		CallOne(w, r, GetPathToCommands("ethNames"), "", "names")
+		CallOne(w, r, config.GetPathToCommands("ethNames"), "", "names")
 	}
 }
 
@@ -81,35 +83,35 @@ func RouteAbis(w http.ResponseWriter, r *http.Request) {
 // RouteBlocks Retrieve one or more blocks from the chain or local cache.
 func RouteBlocks(w http.ResponseWriter, r *http.Request) {
 	if !blocksPkg.ServeBlocks(w, r) {
-		CallOne(w, r, GetPathToCommands("getBlocks"), "", "blocks")
+		CallOne(w, r, config.GetPathToCommands("getBlocks"), "", "blocks")
 	}
 }
 
 // RouteTransactions Retrieve one or more transactions from the chain or local cache.
 func RouteTransactions(w http.ResponseWriter, r *http.Request) {
 	if !transactionsPkg.ServeTransactions(w, r) {
-		CallOne(w, r, GetPathToCommands("getTrans"), "", "transactions")
+		CallOne(w, r, config.GetPathToCommands("getTrans"), "", "transactions")
 	}
 }
 
 // RouteReceipts Retrieve receipts for the given transaction(s).
 func RouteReceipts(w http.ResponseWriter, r *http.Request) {
 	if !receiptsPkg.ServeReceipts(w, r) {
-		CallOne(w, r, GetPathToCommands("getReceipts"), "", "receipts")
+		CallOne(w, r, config.GetPathToCommands("getReceipts"), "", "receipts")
 	}
 }
 
 // RouteLogs Retrieve logs for the given transaction(s).
 func RouteLogs(w http.ResponseWriter, r *http.Request) {
 	if !logsPkg.ServeLogs(w, r) {
-		CallOne(w, r, GetPathToCommands("getLogs"), "", "logs")
+		CallOne(w, r, config.GetPathToCommands("getLogs"), "", "logs")
 	}
 }
 
 // RouteTraces Retrieve traces for the given transaction(s).
 func RouteTraces(w http.ResponseWriter, r *http.Request) {
 	if !tracesPkg.ServeTraces(w, r) {
-		CallOne(w, r, GetPathToCommands("getTraces"), "", "traces")
+		CallOne(w, r, config.GetPathToCommands("getTraces"), "", "traces")
 	}
 }
 
@@ -118,7 +120,7 @@ func RouteWhen(w http.ResponseWriter, r *http.Request) {
 	if !whenPkg.ServeWhen(w, r) {
 		os.Setenv("NO_SCHEMAS", "true") // temporary while porting to go
 		os.Setenv("GO_PORT", "true")    // temporary while porting to go
-		CallOne(w, r, GetPathToCommands("whenBlock"), "", "when")
+		CallOne(w, r, config.GetPathToCommands("whenBlock"), "", "when")
 		os.Setenv("NO_SCHEMAS", "") // temporary while porting to go
 		os.Setenv("GO_PORT", "")    // temporary while porting to go
 	}
@@ -127,35 +129,35 @@ func RouteWhen(w http.ResponseWriter, r *http.Request) {
 // RouteState Retrieve account balance(s) for one or more addresses at given block(s).
 func RouteState(w http.ResponseWriter, r *http.Request) {
 	if !statePkg.ServeState(w, r) {
-		CallOne(w, r, GetPathToCommands("getState"), "", "state")
+		CallOne(w, r, config.GetPathToCommands("getState"), "", "state")
 	}
 }
 
 // RouteTokens Retrieve token balance(s) for one or more addresses at given block(s).
 func RouteTokens(w http.ResponseWriter, r *http.Request) {
 	if !tokensPkg.ServeTokens(w, r) {
-		CallOne(w, r, GetPathToCommands("getTokens"), "", "tokens")
+		CallOne(w, r, config.GetPathToCommands("getTokens"), "", "tokens")
 	}
 }
 
 // RouteStatus Report on the status of the TrueBlocks system.
 func RouteStatus(w http.ResponseWriter, r *http.Request) {
 	if !statusPkg.ServeStatus(w, r) {
-		CallOne(w, r, GetPathToCommands("cacheStatus"), "", "status")
+		CallOne(w, r, config.GetPathToCommands("cacheStatus"), "", "status")
 	}
 }
 
 // RouteScrape Scan the chain and update (and optionally pin) the TrueBlocks index of appearances.
 func RouteScrape(w http.ResponseWriter, r *http.Request) {
 	if !scrapePkg.ServeScrape(w, r) {
-		CallOne(w, r, GetPathToCommands("blockScrape"), "", "scrape")
+		CallOne(w, r, config.GetPathToCommands("blockScrape"), "", "scrape")
 	}
 }
 
 // RouteChunks Manage and investigate chunks and bloom filters.
 func RouteChunks(w http.ResponseWriter, r *http.Request) {
 	if !chunksPkg.ServeChunks(w, r) {
-		CallOne(w, r, GetPathToCommands("chunkMan"), "", "chunks")
+		CallOne(w, r, config.GetPathToCommands("chunkMan"), "", "chunks")
 	}
 }
 
@@ -174,14 +176,14 @@ func RoutePins(w http.ResponseWriter, r *http.Request) {
 // RouteQuotes Update or display Ethereum price data, this tool has been deprecated.
 func RouteQuotes(w http.ResponseWriter, r *http.Request) {
 	if !quotesPkg.ServeQuotes(w, r) {
-		CallOne(w, r, GetPathToCommands("getQuotes"), "", "quotes")
+		CallOne(w, r, config.GetPathToCommands("getQuotes"), "", "quotes")
 	}
 }
 
 // RouteSlurp Fetch data from EtherScan for any address.
 func RouteSlurp(w http.ResponseWriter, r *http.Request) {
 	if !slurpPkg.ServeSlurp(w, r) {
-		CallOne(w, r, GetPathToCommands("ethslurp"), "", "slurp")
+		CallOne(w, r, config.GetPathToCommands("ethslurp"), "", "slurp")
 	}
 }
 // END_ROUTE_CODE

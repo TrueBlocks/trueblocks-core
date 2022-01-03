@@ -140,12 +140,6 @@ extern bool forEveryTransaction(TRANSVISITFUNC func, void* data, const string_q&
 extern bool forEveryTimestamp(BLOCKVISITFUNC func, void* data);
 
 //-------------------------------------------------------------------------
-extern string_q getPathToIndex(const string_q& _part);
-inline string_q getPathToCommands(const string_q& _part) {
-    return "~/.local/bin/chifra/" + _part;
-}
-
-//-------------------------------------------------------------------------
 #define blockFolder (getPathToCache("blocks/"))
 
 #define indexFolder (getPathToIndex(""))

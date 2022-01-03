@@ -703,17 +703,6 @@ int sortParams(const void* c1, const void* c2) {
 //--------------------------------------------------------------------------------
 uint64_t verbose = false;
 
-//---------------------------------------------------------------------------------------------------
-string_q getPathToConfig(const string_q& part) {
-#if defined(__linux) || defined(__linux__) || defined(linux)
-    return getHomeFolder() + ".local/share/trueblocks/" + part;
-#elif defined(__APPLE__)
-    return getHomeFolder() + "Library/Application Support/TrueBlocks/" + part;
-#elif defined(_WIN32) || defined(__WIN32__) || defined(WIN32) || defined(_WIN64)
-#error-- This source code does not compile on Windows
-#endif
-}
-
 //-------------------------------------------------------------------------
 bool COptionsBase::isEnabled(uint32_t q) const {
     return (enableBits & q);
@@ -843,49 +832,6 @@ bool COptionsBase::findSpecial(CNameValue& pair, const string_q& arg) {
         }
     }
     return false;
-}
-
-//-------------------------------------------------------------------------
-string_q getPathToCache(const string_q& _part) {
-    // TODO(tjayrush): global data
-    static string_q g_cachePath;
-    if (!g_cachePath.empty())  // leave early if we can
-        return substitute((g_cachePath + _part), "//", "/");
-
-    {  // give ourselves a frame - always enters - forces creation in the frame
-       // Wait until any other thread is finished filling the value.
-        mutex aMutex;
-        lock_guard<mutex> lock(aMutex);
-
-        // Another thread may have filled the data while we were waiting
-        if (!g_cachePath.empty())
-            return substitute((g_cachePath + _part), "//", "/");
-
-        // Otherwise, fill the value
-        CToml toml(getPathToConfig("trueBlocks.toml"));
-        string_q path = toml.getConfigStr("settings", "cachePath", "<not_set>");
-        if (path == "<not_set>") {
-            path = getPathToConfig("cache/");
-            toml.setConfigStr("settings", "cachePath", path);
-            toml.writeFile();
-        }
-
-        CFilename folder(path);
-        if (!folderExists(folder.getFullPath()))
-            establishFolder(folder.getFullPath());
-
-        g_cachePath = folder.getFullPath();
-        if (!folder.isValid()) {
-            errorMessage("Invalid cachePath (" + folder.getFullPath() + ") in config file.");
-            path = getPathToConfig("cache/");
-            CFilename fallback(path);
-            g_cachePath = fallback.getFullPath();
-        }
-        if (!endsWith(g_cachePath, "/"))
-            g_cachePath += "/";
-    }
-
-    return substitute((g_cachePath + _part), "//", "/");
 }
 
 //---------------------------------------------------------------------------------------------------

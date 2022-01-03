@@ -25,6 +25,7 @@ bool COptions::writeOpenApiFile(void) {
     counter = CCounter();  // reset
 
     map<string_q, string_q> converts;
+    map<string_q, string_q> pkgs;
     for (auto ep : endpointArray) {
         CCommandOptionArray params;
         for (auto option : routeOptionArray)
@@ -39,9 +40,12 @@ bool COptions::writeOpenApiFile(void) {
         pairMapStream << ep.toPairMap() << endl;
         apiTagStream << ep.toApiTag();
         goCallStream << ep.toGoCall();
-        goPkgStream << ep.toGoPackage();
         goRouteStream << ep.toGoRoute();
         apiPathStream << ep.toApiPath(productions, exampleFn);
+
+        string_q pkg = ep.toGoPackage();
+        string_q nick = nextTokenClear(pkg, ' ');
+        pkgs[nick] = substitute(pkg, "\n", "");
 
         if (isApiRoute(ep.api_route) && ep.params) {
             for (auto p : *((CCommandOptionArray*)ep.params))
@@ -52,6 +56,9 @@ bool COptions::writeOpenApiFile(void) {
         counter.cmdCount += params.size();
         counter.routeCount++;
     }
+    for (auto pkg : pkgs)
+        goPkgStream << pkg.first << " " << pkg.second << endl;
+    goPkgStream << "\tconfig \"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config\"" << endl;
 
     converts["logLevel"] = "log_level";
     converts["noHeader"] = "no_header";

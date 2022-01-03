@@ -313,6 +313,26 @@ bool listClasses(const string_q& path, void* data) {
 }
 
 //--------------------------------------------------------------------------------
+string_q getPathToDocs(const string_q& _part) {
+    return "../docs/" + _part;
+}
+
+//--------------------------------------------------------------------------------
+string_q getDocsPathContent(const string_q& _part) {
+    return getPathToDocs("content/" + _part);
+}
+
+//--------------------------------------------------------------------------------
+string_q getDocsPathTemplates(const string_q& _part) {
+    return getPathToDocs("templates/" + _part);
+}
+
+//--------------------------------------------------------------------------------
+string_q getDocsPathReadmes(const string_q& _part) {
+    return getPathToDocs("readmes/" + _part);
+}
+
+//--------------------------------------------------------------------------------
 #define getSourcePathA(a) (string_q("../src/") + (a))
 string_q getPathToSource(const string_q& rest) {
     string_q cwd = getCWD();

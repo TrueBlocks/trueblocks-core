@@ -258,7 +258,7 @@ func (scraper *Scraper) Pause() {
 // }
 
 // func GetChifraResponse() (ChifraResponse, error) {
-// 	cmd := exec.Command(utils.GetPathToCommands("cacheStatus"), "--terse")
+// 	cmd := exec.Command(config.Get PathToCommands("cacheStatus"), "--terse")
 // 	cmd.Env = append(os.Environ(), "API_MODE=true")
 // 	out, err := cmd.Out put()
 // 	if err != nil {

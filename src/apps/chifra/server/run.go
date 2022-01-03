@@ -108,7 +108,7 @@ func PrintServeSettings(testMode bool) {
 // }
 
 // func GetChifraResponse() (ChifraResponse, error) {
-// 	cmd := exec.Command(GetPathToCommands("cacheStatus"), "--terse")
+// 	cmd := exec.Command(config.GetPathToCommands("cacheStatus"), "--terse")
 // 	cmd.Env = append(os.Environ(), "API_MODE=true")
 // 	out, err := cmd.Out put()
 // 	if err != nil {

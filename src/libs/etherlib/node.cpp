@@ -972,46 +972,6 @@ bool forEveryTransaction(TRANSVISITFUNC func, void* data, const string_q& trans_
     return true;
 }
 
-//-------------------------------------------------------------------------
-void guardLiveTest(const string_q& path) {
-    static bool been_here = false;
-    if (!isLiveTest() || been_here)
-        return;
-    if (!contains(path, "mocked")) {
-        cerr << "You may only do a live test if your indexPath (" << path << ") contains the word 'mocked'." << endl;
-        cerr << "Quitting..." << endl;
-        quickQuitHandler(1);
-    }
-    been_here = true;
-    cerr << "Completing a live test using indexFolder: " << path << endl;
-    cerr << "Continue?";
-    getchar();
-    if (shouldQuit())
-        quickQuitHandler(1);
-}
-
-//-------------------------------------------------------------------------
-string_q getPathToIndex(const string_q& _part) {
-    string_q indexPath = getGlobalConfig()->getConfigStr("settings", "indexPath", "<not_set>");
-    if (indexPath == "<not_set>") {
-        guardLiveTest(indexPath + _part);
-        return getPathToConfig("unchained/" + _part);
-    }
-    if (!folderExists(indexPath)) {
-        cerr << "Attempt to create customized indexPath (" << indexPath << ") failed." << endl;
-        cerr << "Please create the folder or adjust the setting by editing $CONFIG/trueBlocks.toml." << endl;
-        cerr << "Quitting...";
-        quickQuitHandler(1);
-    }
-
-    indexPath += (!endsWith(indexPath, '/') ? "/" : "");
-    if (!folderExists(indexPath)) {
-        LOG_WARN("Index path '" + indexPath + "' not found.");
-    }
-    guardLiveTest(indexPath + _part);
-    return indexPath + _part;
-}
-
 //--------------------------------------------------------------------------
 biguint_t weiPerEther(void) {
     return (modexp(10, 9, uint64_t(10000000000)) * modexp(10, 9, uint64_t(10000000000)));
