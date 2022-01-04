@@ -5,6 +5,7 @@
 package config
 
 import (
+	"fmt"
 	"os"
 	"os/user"
 	"path"
@@ -21,10 +22,15 @@ var OsToPath = map[string]string{
 func GetPathToConfig(withChain bool) string {
 	chain := ""
 	if withChain {
-		chain = GetChain()
+		fmt.Println(os.Getenv("TEST_CHAIN"))
+		chain = GetChain("mainnet")
+		if len(os.Getenv("TEST_CHAIN")) > 0 {
+			chain = os.Getenv("TEST_CHAIN") + "/"
+		}
+		chain = "config/" + chain
 	}
 
-	xdg := os.Getenv("XDG_DATA_HOME")
+	xdg := os.Getenv("XDG_CONFIG_HOME")
 	if len(xdg) > 0 && xdg[0] == '/' {
 		return path.Join(xdg, chain) + "/"
 	}
@@ -49,12 +55,12 @@ func GetPathToIndex() string {
 	return path.Join(ReadTrueBlocks().Settings.IndexPath) + "/"
 }
 
-// GetChain returns the value of the chain parameter
-func GetChain() string {
-	// if len(os.Getenv("TEST_CHAIN")) > 0 {
-	// 	return os.Getenv("TEST_CHAIN")
-	// }
-	return "/" // path.Join(ReadTrueBlocks().Settings.Chain) + "/"
+// GetChain returns the value of the chain parameter or the default
+func GetChain(def string) string {
+	if len(def) == 0 {
+		def = "mainnet"
+	}
+	return def + "/" // path.Join(ReadTrueBlocks().Settings.Chain) + "/"
 }
 
 // GetPathToCommands returns full path the the given tool
