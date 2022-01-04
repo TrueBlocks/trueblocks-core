@@ -6,67 +6,119 @@ package config
 
 import (
 	"fmt"
-	"path"
+	"os"
+	"os/user"
+	"strings"
 	"testing"
 )
 
 type PathTest struct {
 	xdg      string
 	os       string
+	chain    string
 	part     string
 	expected string
 }
 
-func Test_CetConfigPath(t *testing.T) {
-	xdgs := []string{"", "~/should_fail", "/Users/user/.customized"}
-	oses := []string{"", "linux", "darwin", "windows"}
-	configs := []string{""}
-
-	tests := []PathTest{}
-	for _, config := range configs {
-		for _, xdg := range xdgs {
-			for _, os := range oses {
-				test := PathTest{xdg: xdg, os: os, part: "part"}
-				if len(config) > 0 {
-					test.expected = path.Join(config, "part")
-				} else {
-					if len(xdg) > 0 {
-						test.expected = path.Join(xdg, "part")
-					} else {
-						test.expected = path.Join(OsToPath[os], "part")
-					}
-				}
-				tests = append(tests, test)
-			}
+func Test_GetConfigPath(t *testing.T) {
+	for _, test := range testSet1 {
+		os.Setenv("XDG_DATA_HOME", test.xdg)
+		os.Setenv("TEST_OS", test.os)
+		os.Setenv("TEST_CHAIN", test.chain)
+		user, _ := user.Current()
+		path := strings.Replace(GetPathToChainConfig(test.part), user.HomeDir, "$HOME", -1)
+		if path != test.expected {
+			fmt.Println("returned: ", path, " expected: ", test.expected)
+			t.Error("Paths don't match (", path, ", ", test.expected, ")")
+		} else {
+			fmt.Println("Pass: ", path)
 		}
 	}
-	for _, test := range tests {
-		os.SetEnv("XDG_DATA_HOME=")
-		if test.
-		os.SetEnv("XDG_DATA_HOME=")
-		fmt.Println(test)
-	}
-	// tests := {
-	// 	PathTest{
-	// 		xdf_data_home: "",
-	// 	}
-	// }
-	// var expectedDir string
+}
 
-	// switch runtime.GOOS {
-	// case "linux":
-	// 	expectedDir = ".local/share/trueblocks"
-	// case "darwin":
-	// 	expectedDir = "Library/Application Support/TrueBlocks"
-	// }
-
-	// result := GetPathToConfig("some_file.toml")
-
-	// if !strings.Contains(result, expectedDir) {
-	// 	t.Error("Expected directory not present", result)
-	// }
-
-	// if !strings.Contains(result, "some_file.toml") {
-	// 	t.Error("Expected filename not present", result)
-	// }
+var testSet1 = []PathTest{
+	{
+		xdg:      "",
+		os:       "linux",
+		chain:    "",
+		part:     "trueBlocks.toml",
+		expected: "$HOME/.local/share/trueblocks/trueBlocks.toml",
+	},
+	{
+		xdg:      "xdg",
+		os:       "linux",
+		chain:    "",
+		part:     "blockScrape.toml",
+		expected: "$HOME/.local/share/trueblocks/blockScrape.toml",
+	},
+	{
+		xdg:      "/xdg",
+		os:       "linux",
+		chain:    "",
+		part:     "trueBlocks.toml",
+		expected: "/xdg/trueBlocks.toml",
+	},
+	{
+		xdg:      "",
+		os:       "linux",
+		chain:    "mainnet",
+		part:     "trueBlocks.toml",
+		expected: "$HOME/.local/share/trueblocks/trueBlocks.toml",
+	},
+	{
+		xdg:      "xdg",
+		os:       "linux",
+		chain:    "mainnet",
+		part:     "blockScrape.toml",
+		expected: "$HOME/.local/share/trueblocks/blockScrape.toml",
+	},
+	{
+		xdg:      "/xdg",
+		os:       "linux",
+		chain:    "mainnet",
+		part:     "trueBlocks.toml",
+		expected: "/xdg/trueBlocks.toml",
+	},
+	{
+		xdg:      "",
+		os:       "darwin",
+		chain:    "",
+		part:     "trueBlocks.toml",
+		expected: "$HOME/Library/Application Support/TrueBlocks/trueBlocks.toml",
+	},
+	{
+		xdg:      "xdg",
+		os:       "darwin",
+		chain:    "",
+		part:     "blockScrape.toml",
+		expected: "$HOME/Library/Application Support/TrueBlocks/blockScrape.toml",
+	},
+	{
+		xdg:      "/xdg",
+		os:       "darwin",
+		chain:    "",
+		part:     "trueBlocks.toml",
+		expected: "/xdg/trueBlocks.toml",
+	},
+	{
+		xdg:      "",
+		os:       "darwin",
+		chain:    "mainnet",
+		part:     "trueBlocks.toml",
+		expected: "$HOME/Library/Application Support/TrueBlocks/trueBlocks.toml",
+	},
+	{
+		xdg:      "xdg",
+		os:       "darwin",
+		chain:    "mainnet",
+		part:     "blockScrape.toml",
+		expected: "$HOME/Library/Application Support/TrueBlocks/blockScrape.toml",
+	},
+	{
+		xdg:      "/xdg",
+		os:       "darwin",
+		chain:    "mainnet",
+		part:     "trueBlocks.toml",
+		expected: "/xdg/trueBlocks.toml",
+	},
 }

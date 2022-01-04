@@ -13,8 +13,8 @@ import (
 
 // MustReadConfig calls v's ReadInConfig and fills values in the
 // given targetStruct. Any error will result in a call to logger.Fatal
-func MustReadConfig(v *viper.Viper, targetStruct interface{}, fileRequired bool) {
-	v.AddConfigPath(GetPathToConfig(""))
+func MustReadConfig(v *viper.Viper, targetStruct interface{}, path string, fileRequired bool) {
+	v.AddConfigPath(path)
 	v.SetEnvPrefix("TB")
 	v.AutomaticEnv()
 	v.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
