@@ -11,30 +11,22 @@ import (
 	"runtime"
 )
 
-// TODO: This should not be hard coded
 var OsToPath = map[string]string{
 	"linux":  ".local/share/trueblocks",
 	"darwin": "Library/Application Support/TrueBlocks",
 }
 
 // TODO: Search for PathAccessor
-// GetPathToConfig returns the path to the directory where the configuration files are
-func GetPathToConfig(part string) string {
+// GetPathToConfig returns the path where to find configuration files (appends chain if told to do so)
+func GetPathToConfig(withChain bool) string {
 	chain := ""
-	// order matters
-	if len(part) == 0 || part[0] != '/' {
-		part = "/" + part
-	} else {
-		chain := GetChain()
-		if chain == "/" {
-			chain = "mainnet/"
-		}
-		// fmt.Println("Chain: ", chain)
+	if withChain {
+		chain = GetChain()
 	}
 
 	xdg := os.Getenv("XDG_DATA_HOME")
 	if len(xdg) > 0 && xdg[0] == '/' {
-		return path.Join(xdg, chain) + part
+		return path.Join(xdg, chain) + "/"
 	}
 
 	// The migration code will have already checked for invalid operating systems (i.e. Windows)
@@ -44,7 +36,7 @@ func GetPathToConfig(part string) string {
 	}
 
 	user, _ := user.Current()
-	return path.Join(user.HomeDir, OsToPath[userOs], chain) + part
+	return path.Join(user.HomeDir, OsToPath[userOs], chain) + "/"
 }
 
 // GetPathToCache returns the one and only cachePath
@@ -63,13 +55,6 @@ func GetChain() string {
 	// 	return os.Getenv("TEST_CHAIN")
 	// }
 	return "/" // path.Join(ReadTrueBlocks().Settings.Chain) + "/"
-}
-
-// GetPathToChainConfig returns the path to the chain-specific configuration file
-func GetPathToChainConfig(part string) string {
-	ret := GetPathToConfig("")
-	// fmt.Println("Chain config would be: ", path.Join(ret, GetChain())+"/")
-	return ret + part
 }
 
 // GetPathToCommands returns full path the the given tool

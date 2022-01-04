@@ -54,7 +54,7 @@ func init() {
 // ReadBlockScrape reads the configuration located in blockScrape.toml file
 func ReadBlockScrape() *BlockScrape {
 	if !blockScrapeRead {
-		MustReadConfig(blockScrapeViper, &cachedBlockScrape, GetPathToChainConfig(""), false)
+		MustReadConfig(blockScrapeViper, &cachedBlockScrape, GetPathToConfig(true /* withChain */), false)
 
 		// Validate the URL to ensure we have it in the correct format, so that ethClient.Dial
 		// will not panic

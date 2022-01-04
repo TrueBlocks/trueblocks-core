@@ -12,6 +12,7 @@
 - Add `chain` to the `status` endpoints
 - Add testing to utillib tests to set XDG folders, and try to create non-existant folders
 - Finish the migrations-0.24.0.md file
+- Make sure all routines that return paths return paths ending with '/'
 - Re-write the `trueBlocks.toml` file with version `0.24.0`
 
 ### What We Need to Control
@@ -118,8 +119,8 @@ We want the only configuration to be ${BASE_PATH}. All other paths are calculate
 | Name              | Description                                                                                                      |
 | ----------------- | ---------------------------------------------------------------------------------------------------------------- |
 | GetPathToConfig   | Hard coded in utils.go<br>`~/local/share/trueblocks` (Linux)<br>`~/Library/Application Support/TrueBlocks` (Mac) |
-| GetPathToCache    | Found in config file<br>defaults to `GetPathToConfig("cache")`                                                   |
-| GetPathToIndex    | Found in config file<br>defaults to `GetPathToConfig("unchained")`                                               |
+| GetPathToCache    | Found in config file<br>defaults to `GetPathToConfig() + "cache"`                                                |
+| GetPathToIndex    | Found in config file<br>defaults to `GetPathToConfig() + "unchained"`                                            |
 | GetPathToCommands | Hard coded to $HOME/.local/bin/chifra on both platforms in GetPathToCommands                                     |
 
 <br>

@@ -33,15 +33,15 @@ type TrueBlocksConfig struct {
 func init() {
 	trueBlocksViper.SetConfigName("trueBlocks")
 	trueBlocksViper.SetDefault("Settings.RpcProvider", "http://localhost:8545")
-	trueBlocksViper.SetDefault("Settings.CachePath", GetPathToConfig("cache"))
-	trueBlocksViper.SetDefault("Settings.IndexPath", GetPathToConfig("unchained"))
+	trueBlocksViper.SetDefault("Settings.CachePath", GetPathToConfig(true /* withChain */)+"cache")
+	trueBlocksViper.SetDefault("Settings.IndexPath", GetPathToConfig(true /* withChain */)+"unchained")
 	trueBlocksViper.SetDefault("Settings.Chain", "mainnet")
 }
 
 // ReadGlobal reads and the configuration located in trueBlocks.toml file
 func ReadTrueBlocks() *TrueBlocksConfig {
 	if !trueBlocksRead {
-		MustReadConfig(trueBlocksViper, &cachedTrueBlocksConfig, GetPathToConfig(""), false)
+		MustReadConfig(trueBlocksViper, &cachedTrueBlocksConfig, GetPathToConfig(false /* withChain */), false)
 		trueBlocksRead = true
 	}
 

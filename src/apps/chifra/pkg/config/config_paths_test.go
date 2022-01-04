@@ -26,7 +26,8 @@ func Test_GetConfigPath(t *testing.T) {
 		os.Setenv("TEST_OS", test.os)
 		os.Setenv("TEST_CHAIN", test.chain)
 		user, _ := user.Current()
-		path := strings.Replace(GetPathToChainConfig(test.part), user.HomeDir, "$HOME", -1)
+		withChain := test.part == "trueBlocks.toml"
+		path := strings.Replace(GetPathToConfig(withChain)+test.part, user.HomeDir, "$HOME", -1)
 		if path != test.expected {
 			fmt.Println("returned: ", path, " expected: ", test.expected)
 			t.Error("Paths don't match (", path, ", ", test.expected, ")")

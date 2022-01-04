@@ -49,7 +49,7 @@ func GetManifestCidFromContract() (string, error) {
 	}
 
 	abiSource, err := os.Open(
-		config.GetPathToConfig("abis/known-000/unchained.json"),
+		config.GetPathToConfig(false /* withChain */) + "abis/known-000/unchained.json",
 	)
 	if err != nil {
 		return "", fmt.Errorf("while reading contract ABI: %w", err)
