@@ -13,17 +13,18 @@ import (
 )
 
 type PathTest struct {
-	disabled bool
-	f        string
+	group    string
 	xdg      string
 	os       string
 	chain    string
 	part     string
 	expected string
+	disabled bool
 }
 
-func (p *PathTest) Report(got string) {
-	fmt.Printf("\"%-10.10s", p.f+"\",")
+func (p *PathTest) Report(index int, got string) {
+	fmt.Printf("%-d,", index)
+	fmt.Printf("\"%-10.10s", p.group+"\",")
 	fmt.Printf("\"%-10.10s", p.xdg+"\",")
 	fmt.Printf("\"%-10.10s", p.os+"\",")
 	fmt.Printf("\"%-10.10s", p.chain+"\",")
@@ -41,25 +42,25 @@ func Test_GetPathTo(t *testing.T) {
 		os.Setenv("XDG_CONFIG_HOME", test.xdg)
 		os.Setenv("TEST_OS", test.os)
 		os.Setenv("TEST_CHAIN", test.chain)
-		// fmt.Println("x: ", os.Getenv("TEST_CHAIN"))
 		user, _ := user.Current()
+		testPath := ""
 		withChain := true
-		path := ""
-		if test.f == "Config" {
+		if test.group == "Config" {
 			withChain = test.part != "trueBlocks.toml" && !strings.HasPrefix(test.part, "abis")
-			path = GetPathToConfig(withChain) + test.part
-		} else if test.f == "Cache" {
-			path = GetPathToCache() + test.part
+			testPath = GetPathToConfig(withChain) + test.part
+		} else if test.group == "Cache" {
+			testPath = GetPathToCache() + test.part
 		}
-		path = strings.Replace(path, user.HomeDir, "$HOME", -1)
+		testPath = strings.Replace(testPath, user.HomeDir, "$HOME", -1)
 		if test.expected == "" {
 			fmt.Println("")
 		} else {
 			test.expected = strings.Replace(test.expected, "{CHAIN}/", GetChain(test.chain), -1)
-			if path != test.expected {
-				t.Error(index, "Paths don't match (", test.expected, path, ")")
+			if testPath != test.expected {
+				test.Report(index, testPath)
+				t.Error(index, "Paths don't match (", test.expected, testPath, ")")
 			} else {
-				test.Report(path)
+				test.Report(index, testPath)
 			}
 		}
 	}
@@ -67,7 +68,7 @@ func Test_GetPathTo(t *testing.T) {
 
 var testSet1 = []PathTest{
 	{
-		f:        "Config",
+		group:    "Config",
 		xdg:      "",
 		os:       "linux",
 		chain:    "",
@@ -75,7 +76,7 @@ var testSet1 = []PathTest{
 		expected: "$HOME/.local/share/trueblocks/trueBlocks.toml",
 	},
 	{
-		f:        "Config",
+		group:    "Config",
 		xdg:      "xdg",
 		os:       "linux",
 		chain:    "",
@@ -83,7 +84,7 @@ var testSet1 = []PathTest{
 		expected: "$HOME/.local/share/trueblocks/config/{CHAIN}/blockScrape.toml",
 	},
 	{
-		f:        "Config",
+		group:    "Config",
 		xdg:      "xdg",
 		os:       "linux",
 		chain:    "",
@@ -91,7 +92,7 @@ var testSet1 = []PathTest{
 		expected: "$HOME/.local/share/trueblocks/config/{CHAIN}/blockScrape.toml",
 	},
 	{
-		f:        "Config",
+		group:    "Config",
 		xdg:      "/xdg",
 		os:       "linux",
 		chain:    "",
@@ -99,7 +100,7 @@ var testSet1 = []PathTest{
 		expected: "/xdg/trueBlocks.toml",
 	},
 	{
-		f:        "Config",
+		group:    "Config",
 		xdg:      "/xdg",
 		os:       "linux",
 		chain:    "",
@@ -110,7 +111,7 @@ var testSet1 = []PathTest{
 		expected: "",
 	},
 	{
-		f:        "Config",
+		group:    "Config",
 		xdg:      "",
 		os:       "linux",
 		chain:    "mainnet",
@@ -118,7 +119,7 @@ var testSet1 = []PathTest{
 		expected: "$HOME/.local/share/trueblocks/trueBlocks.toml",
 	},
 	{
-		f:        "Config",
+		group:    "Config",
 		xdg:      "xdg",
 		os:       "linux",
 		chain:    "mainnet",
@@ -126,7 +127,7 @@ var testSet1 = []PathTest{
 		expected: "$HOME/.local/share/trueblocks/config/{CHAIN}/blockScrape.toml",
 	},
 	{
-		f:        "Config",
+		group:    "Config",
 		xdg:      "/xdg",
 		os:       "linux",
 		chain:    "xdai",
@@ -137,7 +138,7 @@ var testSet1 = []PathTest{
 		expected: "",
 	},
 	{
-		f:        "Config",
+		group:    "Config",
 		xdg:      "",
 		os:       "darwin",
 		chain:    "",
@@ -145,7 +146,7 @@ var testSet1 = []PathTest{
 		expected: "$HOME/Library/Application Support/TrueBlocks/config/mainnet/blockScrape.toml",
 	},
 	{
-		f:        "Config",
+		group:    "Config",
 		xdg:      "xdg",
 		os:       "darwin",
 		chain:    "",
@@ -153,7 +154,7 @@ var testSet1 = []PathTest{
 		expected: "$HOME/Library/Application Support/TrueBlocks/config/{CHAIN}/blockScrape.toml",
 	},
 	{
-		f:        "Config",
+		group:    "Config",
 		xdg:      "/xdg",
 		os:       "darwin",
 		chain:    "",
@@ -164,7 +165,7 @@ var testSet1 = []PathTest{
 		expected: "",
 	},
 	{
-		f:        "Config",
+		group:    "Config",
 		xdg:      "",
 		os:       "darwin",
 		chain:    "xdai",
@@ -172,7 +173,7 @@ var testSet1 = []PathTest{
 		expected: "$HOME/Library/Application Support/TrueBlocks/trueBlocks.toml",
 	},
 	{
-		f:        "Config",
+		group:    "Config",
 		xdg:      "xdg",
 		os:       "darwin",
 		chain:    "xdai",
@@ -180,7 +181,7 @@ var testSet1 = []PathTest{
 		expected: "$HOME/Library/Application Support/TrueBlocks/trueBlocks.toml",
 	},
 	{
-		f:        "Config",
+		group:    "Config",
 		xdg:      "/xdg",
 		os:       "darwin",
 		chain:    "mainnet",
@@ -191,21 +192,21 @@ var testSet1 = []PathTest{
 		expected: "",
 	},
 	{
-		disabled: true,
-		f:        "Cache",
+		group:    "Cache",
 		xdg:      "",
 		os:       "linux",
 		chain:    "polygon",
 		part:     "tx/00/00/",
 		expected: "$HOME/.local/share/trueblocks/cache/{CHAIN}/tx/00/00/",
+		disabled: true,
 	},
 	{
-		disabled: true,
-		f:        "Cache",
+		group:    "Cache",
 		xdg:      "",
 		os:       "darwin",
 		chain:    "",
 		part:     "abis/0x12.json",
 		expected: "$HOME/Library/Application Support/TrueBlocks/cache/{CHAIN}/abis/0x12.json",
+		disabled: true,
 	},
 }
