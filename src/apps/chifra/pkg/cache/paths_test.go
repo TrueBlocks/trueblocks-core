@@ -15,9 +15,6 @@ func TestCacheLayout(t *testing.T) {
 	indexPath := config.GetPathToIndex()
 	cachePath := config.GetPathToCache()
 
-	// we need this to make the cache folders
-	// EstablishCaches()
-
 	// TODO: turn these back on
 	tests := []struct {
 		on        bool

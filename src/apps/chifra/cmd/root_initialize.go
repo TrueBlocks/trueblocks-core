@@ -11,7 +11,6 @@ import (
 	"path"
 	"runtime"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
 
@@ -19,7 +18,6 @@ import (
 func Initialize() bool {
 	VerifyOs()
 	VerifyMigrations()
-	cache.EstablishCaches()
 
 	return true
 }

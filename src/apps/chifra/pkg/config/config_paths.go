@@ -5,10 +5,13 @@
 package config
 
 import (
+	"log"
 	"os"
 	"os/user"
 	"path"
 	"runtime"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
 
 var OsToPath = map[string]string{
@@ -46,13 +49,16 @@ func GetPathToConfig(withChain bool) string {
 
 // GetPathToCache returns the one and only cachePath
 func GetPathToCache() string {
-	cachePath := ReadTrueBlocks().Settings.CachePath
-	return path.Join(cachePath) + "/"
+	cachePath := path.Join(ReadTrueBlocks().Settings.CachePath) + "/"
+	EstablishCachePaths(cachePath) // won't return if it fails
+	return cachePath
 }
 
 // GetPathToIndex returns the one and only cachePath
 func GetPathToIndex() string {
-	return path.Join(ReadTrueBlocks().Settings.IndexPath) + "/"
+	indexPath := path.Join(ReadTrueBlocks().Settings.IndexPath) + "/"
+	EstablishIndexPaths(indexPath) // won't return if it fails
+	return indexPath
 }
 
 // GetChain returns the value of the chain parameter or the default
@@ -68,4 +74,37 @@ func GetPathToCommands(part string) string {
 	usr, _ := user.Current()
 	dir := usr.HomeDir
 	return dir + "/.local/bin/chifra/" + part
+}
+
+// EstablishCachePaths sets up the cache folders and subfolders. It only returns if it succeeds.
+func EstablishCachePaths(cachePath string) {
+	cacheFolders := []string{
+		"abis", "blocks", "monitors", "names", "objs", "prices",
+		"recons", "slurps", "tmp", "traces", "txs",
+	}
+	_, err := os.Stat(path.Join(cachePath, cacheFolders[len(cacheFolders)-1]))
+	if err == nil {
+		// If the last path in the list already exists, assume we've been
+		// here before and don't re-create. In other words, it's already established
+		return
+	}
+	if err := file.EstablishFolders(cachePath, cacheFolders); err != nil {
+		log.Fatal(err)
+	}
+}
+
+// EstablishCachePaths sets up the cache index and subfolders. It only returns if it succeeds.
+func EstablishIndexPaths(indexPath string) {
+	indexFolders := []string{
+		"blooms", "finalized", "ripe", "staging", "unripe",
+	}
+	_, err := os.Stat(path.Join(indexPath, indexFolders[len(indexFolders)-1]))
+	if err == nil {
+		// If the last path in the list already exists, assume we've been
+		// here before and don't re-create. In other words, it's already established
+		return
+	}
+	if err := file.EstablishFolders(indexPath, indexFolders); err != nil {
+		log.Fatal(err)
+	}
 }

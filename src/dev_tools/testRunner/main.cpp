@@ -385,7 +385,7 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
                     if (test.tool != "getQuotes")
                         measure.nPassed++;
 
-            } else {
+            } else if (test.tool != "getQuotes") {
                 ostringstream os;
                 os << cRed << "\tFailed: " << cTeal << (endsWith(test.path, "lib") ? test.tool : measure.cmd) << " ";
                 os << test.name << ".txt " << cOff << "(" << (test.builtin ? "" : measure.cmd) << " "
@@ -421,6 +421,8 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
                          << (endsWith(test.path, "lib") ? padRight(test.tool, 16) : measure.cmd) << " ";
                     slow << trim(test.name) << " " << trim(test.options).substr(0, 90) << endl;
                 }
+            } else {
+                // we ignore ethQuote testing since it deprecated
             }
             usleep(1000);
             if (shouldQuit()) {
