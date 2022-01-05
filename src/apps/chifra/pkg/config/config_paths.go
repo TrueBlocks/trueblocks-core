@@ -5,7 +5,6 @@
 package config
 
 import (
-	"fmt"
 	"os"
 	"os/user"
 	"path"
@@ -22,7 +21,7 @@ var OsToPath = map[string]string{
 func GetPathToConfig(withChain bool) string {
 	chain := ""
 	if withChain {
-		fmt.Println(os.Getenv("TEST_CHAIN"))
+		// fmt.Println(os.Getenv("TEST_CHAIN"))
 		chain = GetChain("mainnet")
 		if len(os.Getenv("TEST_CHAIN")) > 0 {
 			chain = os.Getenv("TEST_CHAIN") + "/"
@@ -47,7 +46,8 @@ func GetPathToConfig(withChain bool) string {
 
 // GetPathToCache returns the one and only cachePath
 func GetPathToCache() string {
-	return path.Join(ReadTrueBlocks().Settings.CachePath) + "/"
+	cachePath := ReadTrueBlocks().Settings.CachePath
+	return path.Join(cachePath) + "/"
 }
 
 // GetPathToIndex returns the one and only cachePath
