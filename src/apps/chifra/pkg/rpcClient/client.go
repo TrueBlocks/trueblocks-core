@@ -18,7 +18,7 @@ import (
 // Get sets up a client instance and returns it
 func Get() ethclient.Client {
 	// TODO: I don't like the fact that we Dail In every time we want to us this
-	client, err := ethclient.Dial(config.ReadTrueBlocks().Settings.RpcProvider)
+	client, err := ethclient.Dial(config.GetRpcProvider())
 	if err != nil {
 		log.Fatalln(err)
 	}

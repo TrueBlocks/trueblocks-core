@@ -11,7 +11,7 @@ import (
 	"path"
 	"runtime"
 
-    "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
 
 var OsToPath = map[string]string{
@@ -55,6 +55,11 @@ func GetPathToCache() string {
 // GetPathToIndex returns the one and only cachePath
 func GetPathToIndex() string {
 	return path.Join(ReadTrueBlocks().Settings.IndexPath) + "/"
+}
+
+// GetRpcProvider returns the RPC provider for a chain
+func GetRpcProvider() string {
+	return ReadTrueBlocks().Settings.RpcProvider
 }
 
 // GetChain returns the value of the chain parameter or the default

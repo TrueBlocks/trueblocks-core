@@ -33,7 +33,7 @@ func PrintServeSettings(testMode bool) {
 	log.Println(colors.Green, "Starting API server on port "+Options.Port, colors.Off)
 	log.Println(colors.Green, "Cache Path:   ", colors.Off, config.GetPathToCache())
 	log.Println(colors.Green, "Index Path:   ", colors.Off, config.GetPathToIndex())
-	log.Println(colors.Green, "Rpc Provider: ", colors.Off, config.ReadTrueBlocks().Settings.RpcProvider)
+	log.Println(colors.Green, "Rpc Provider: ", colors.Off, config.GetRpcProvider())
 	log.Printf(" %s%s%s%d, %d, %d, %d\n", colors.Green, "Progress:       ", colors.Green, meta.Latest, meta.Finalized, meta.Staging, meta.Unripe)
 }
 
