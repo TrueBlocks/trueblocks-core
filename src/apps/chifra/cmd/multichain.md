@@ -13,6 +13,7 @@
 - Add testing to utillib tests to set XDG folders, and try to create non-existant folders
 - Finish the migrations-0.24.0.md file
 - Make sure all routines that return paths return paths ending with '/'
+- When block special blocks are mainnet centric
 - Re-write the `trueBlocks.toml` file with version `0.24.0`
 
 ### What We Need to Control

@@ -5750,7 +5750,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0x7f4df791b9c5e7973afbf457842b5d241e376a13	Elons Musketeers	MUSKS	On chain	18		false	false	false	true	true	false
 90-Individuals:Kickback	0x7f58a56e9836231ce516153825fb75535f99fe86	auryn		https://kickback.events/			false	false	false	false	false	false
 90-Individuals:Kickback	0x7f66828fccd12dac4d88a440b0e306d9d16e45e4	pertsa		https://kickback.events/			false	false	false	false	false	false
-50-Tokens:ERC20	0x7f6a47b85a9425c813b1cd191d730054bdf6235d	dfw.vc8000eth+Profit	www.dfw.vc￯﾿ﾯ￯ﾾ﾿￯ﾾﾩ￯﾿ﾯ￯ﾾﾾ￯ﾾﾛ￯﾿	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC20	0x7f6a47b85a9425c813b1cd191d730054bdf6235d	dfw.vc8000eth+Profit	www.dfw.vc￯﾿ﾯ￯ﾾ﾿�	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x7f6e5d07f7e90f3ede0a5986671ef7734fbe04a9	BitEth Set	BTCETH	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x7f77d4d26620974f0b0ad3de05d4fb2fd78e94c1	WOWB INU	WOWB	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x7f95390927a69803e38e296eb30d619f5a7593da	Nekocoin	NEKO	On chain	18		false	false	false	true	true	false
@@ -7792,6 +7792,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0xae9eb07de048d69e588fce2acdbd927f31eb8a08	Muttley Inu	MUTTLEY	On chain	9		false	false	false	true	true	false
 31-Gitcoin:Grants	0xae9efc24048df278fa5a191911e4f47915264924	Grant 1546 Rubic		https://gitcoin.co/grants/1546/rubic			false	false	false	false	false	false
 50-Tokens:ERC20	0xaea46a60368a7bd060eec7df8cba43b7ef41ad85	Fetch	FET	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC20	0xaea5e11e22e447fa9837738a0cd2848857748adf	SocialFinance	SOFI	On chain	18		false	false	false	true	true	false
 31-Gitcoin:Grants	0xaeaf140b72aef87a097b67797b711863833534ea	Grant 1779 Selectfund		https://gitcoin.co/grants/1779/selectfund			false	false	false	false	false	false
 50-Tokens:ERC20	0xaeb7c9a5b5717c235e4ae88ab2ae8fa4893ca233	Superior Inu	SUPIN	On chain	18		false	false	false	true	true	false
 30-Contracts:Humanity DAO	0xaeb7ddbfafba1cf33142bc06bf11f1b327a6053e	Chowsp1		https://www.humanitydao.org/humans			false	false	false	false	false	false
