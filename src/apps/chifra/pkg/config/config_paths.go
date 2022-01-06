@@ -11,7 +11,7 @@ import (
 	"path"
 	"runtime"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+    "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
 
 var OsToPath = map[string]string{
@@ -49,16 +49,12 @@ func GetPathToConfig(withChain bool) string {
 
 // GetPathToCache returns the one and only cachePath
 func GetPathToCache() string {
-	cachePath := path.Join(ReadTrueBlocks().Settings.CachePath) + "/"
-	EstablishCachePaths(cachePath) // won't return if it fails
-	return cachePath
+	return path.Join(ReadTrueBlocks().Settings.CachePath) + "/"
 }
 
 // GetPathToIndex returns the one and only cachePath
 func GetPathToIndex() string {
-	indexPath := path.Join(ReadTrueBlocks().Settings.IndexPath) + "/"
-	EstablishIndexPaths(indexPath) // won't return if it fails
-	return indexPath
+	return path.Join(ReadTrueBlocks().Settings.IndexPath) + "/"
 }
 
 // GetChain returns the value of the chain parameter or the default
@@ -84,8 +80,7 @@ func EstablishCachePaths(cachePath string) {
 	}
 	_, err := os.Stat(path.Join(cachePath, cacheFolders[len(cacheFolders)-1]))
 	if err == nil {
-		// If the last path in the list already exists, assume we've been
-		// here before and don't re-create. In other words, it's already established
+		// If the last path already exists, assume we've been here before
 		return
 	}
 	if err := file.EstablishFolders(cachePath, cacheFolders); err != nil {
@@ -100,8 +95,7 @@ func EstablishIndexPaths(indexPath string) {
 	}
 	_, err := os.Stat(path.Join(indexPath, indexFolders[len(indexFolders)-1]))
 	if err == nil {
-		// If the last path in the list already exists, assume we've been
-		// here before and don't re-create. In other words, it's already established
+		// If the last path already exists, assume we've been here before
 		return
 	}
 	if err := file.EstablishFolders(indexPath, indexFolders); err != nil {

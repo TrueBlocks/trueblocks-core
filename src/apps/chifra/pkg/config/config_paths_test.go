@@ -39,18 +39,20 @@ func Test_GetPathTo(t *testing.T) {
 			continue
 		}
 
-		os.Setenv("XDG_CONFIG_HOME", test.xdg)
-		os.Setenv("TEST_OS", test.os)
-		os.Setenv("TEST_CHAIN", test.chain)
 		user, _ := user.Current()
 		testPath := ""
 		withChain := true
+
+		os.Setenv("XDG_CONFIG_HOME", test.xdg)
+		os.Setenv("TEST_CHAIN", test.chain)
 		if test.group == "Config" {
+			os.Setenv("TEST_OS", test.os)
 			withChain = test.part != "trueBlocks.toml" && !strings.HasPrefix(test.part, "abis")
 			testPath = GetPathToConfig(withChain) + test.part
 		} else if test.group == "Cache" {
 			testPath = GetPathToCache() + test.part
 		}
+
 		testPath = strings.Replace(testPath, user.HomeDir, "$HOME", -1)
 		if test.expected == "" {
 			fmt.Println("")

@@ -5,6 +5,10 @@
 package config
 
 import (
+	"os/user"
+	"strings"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/spf13/viper"
 )
 
@@ -33,15 +37,38 @@ type TrueBlocksConfig struct {
 func init() {
 	trueBlocksViper.SetConfigName("trueBlocks")
 	trueBlocksViper.SetDefault("Settings.RpcProvider", "http://localhost:8545")
-	trueBlocksViper.SetDefault("Settings.CachePath", GetPathToConfig(true /* withChain */)+"cache")
-	trueBlocksViper.SetDefault("Settings.IndexPath", GetPathToConfig(true /* withChain */)+"unchained")
+	trueBlocksViper.SetDefault("Settings.CachePath", GetPathToConfig(false /* withChain */)+"cache")
+	trueBlocksViper.SetDefault("Settings.IndexPath", GetPathToConfig(false /* withChain */)+"unchained")
 	trueBlocksViper.SetDefault("Settings.Chain", "mainnet")
 }
 
 // ReadGlobal reads and the configuration located in trueBlocks.toml file
 func ReadTrueBlocks() *TrueBlocksConfig {
 	if !trueBlocksRead {
-		MustReadConfig(trueBlocksViper, &cachedTrueBlocksConfig, GetPathToConfig(false /* withChain */), false)
+		path := GetPathToConfig(false /* withChain */)
+		MustReadConfig(trueBlocksViper, &cachedTrueBlocksConfig, path, false)
+
+		user, _ := user.Current()
+
+		cachePath := cachedTrueBlocksConfig.Settings.CachePath
+		cachePath = strings.Replace(cachePath, "$HOME", user.HomeDir, -1)
+		cachePath = strings.Replace(cachePath, "~", user.HomeDir, -1)
+		cachedTrueBlocksConfig.Settings.CachePath = cachePath
+
+		indexPath := cachedTrueBlocksConfig.Settings.IndexPath
+		indexPath = strings.Replace(indexPath, "$HOME", user.HomeDir, -1)
+		indexPath = strings.Replace(indexPath, "~", user.HomeDir, -1)
+		cachedTrueBlocksConfig.Settings.IndexPath = indexPath
+
+		// We want to establish that these two folders exist. Note, however,
+		// that these two paths are just the base paths. When we actually
+		// query a value, we will append 'chain'. The trouble is we don't know
+		// chain until the command line is parsed. Also note that these two
+		// routines do not return if they fail
+		var none []string
+		file.EstablishFolders(cachedTrueBlocksConfig.Settings.CachePath, none /* folders */)
+		file.EstablishFolders(cachedTrueBlocksConfig.Settings.IndexPath, none /* folders */)
+
 		trueBlocksRead = true
 	}
 
