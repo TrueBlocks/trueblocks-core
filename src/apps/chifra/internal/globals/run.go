@@ -26,6 +26,12 @@ func (opts *GlobalOptions) PassItOn(path string, flags string) error {
 	// fmt.Fprintf(os.Stderr, "Calling: %s %s\n", path, options)
 	cmd := exec.Command(config.GetPathToCommands(path), options)
 	cmd.Env = append(os.Environ(), "FROM_CHIFRA=true")
+	// fmt.Fprintln(os.Stderr, colors.Blue, colors.Bright, "TB_CONFIG_PATH: ", config.GetPathToConfig(false), colors.Off)
+	// fmt.Fprintln(os.Stderr, colors.Blue, colors.Bright, "TB_CACHE_PATH: ", config.GetPathToCache1(opts.Chain), colors.Off)
+	// fmt.Fprintln(os.Stderr, colors.Blue, colors.Bright, "TB_INDEX_PATH: ", config.GetPathToIndex1(opts.Chain), colors.Off)
+	cmd.Env = append(cmd.Env, "TB_CONFIG_PATH="+config.GetPathToConfig(false))
+	cmd.Env = append(cmd.Env, "TB_CACHE_PATH="+config.GetPathToCache1(opts.Chain))
+	cmd.Env = append(cmd.Env, "TB_INDEX_PATH="+config.GetPathToIndex1(opts.Chain))
 	if os.Getenv("TEST_MODE") == "true" {
 		cmd.Env = append(cmd.Env, "TEST_MODE=true")
 	}

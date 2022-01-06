@@ -6,6 +6,7 @@ package config
 
 import (
 	"os/user"
+	"path"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -45,26 +46,33 @@ func init() {
 // ReadGlobal reads and the configuration located in trueBlocks.toml file
 func ReadTrueBlocks() *TrueBlocksConfig {
 	if !trueBlocksRead {
-		path := GetPathToConfig(false /* withChain */)
-		MustReadConfig(trueBlocksViper, &cachedTrueBlocksConfig, path, false)
+		configPath := GetPathToConfig(false /* withChain */)
+		// log.Println(configPath)
+		MustReadConfig(trueBlocksViper, &cachedTrueBlocksConfig, configPath, false)
 
 		user, _ := user.Current()
 
 		cachePath := cachedTrueBlocksConfig.Settings.CachePath
+		if len(cachePath) == 0 {
+			cachePath = path.Join(configPath, "cache")
+		}
 		cachePath = strings.Replace(cachePath, "$HOME", user.HomeDir, -1)
 		cachePath = strings.Replace(cachePath, "~", user.HomeDir, -1)
 		cachedTrueBlocksConfig.Settings.CachePath = cachePath
 
 		indexPath := cachedTrueBlocksConfig.Settings.IndexPath
+		if len(indexPath) == 0 {
+			indexPath = path.Join(configPath, "unchained")
+		}
 		indexPath = strings.Replace(indexPath, "$HOME", user.HomeDir, -1)
 		indexPath = strings.Replace(indexPath, "~", user.HomeDir, -1)
 		cachedTrueBlocksConfig.Settings.IndexPath = indexPath
 
-		// We want to establish that these two folders exist. Note, however,
-		// that these two paths are just the base paths. When we actually
-		// query a value, we will append 'chain'. The trouble is we don't know
-		// chain until the command line is parsed. Also note that these two
-		// routines do not return if they fail
+		// We establish only the top-level functions here. When we figure out
+		// which chain we're on (not until the user tells us on the command line)
+		// only then can we complete this path. At this point it only points
+		// to the top-levl of the cache. Also note that these two routines do
+		// not return if they fail, so no need to handle errors
 		var none []string
 		file.EstablishFolders(cachedTrueBlocksConfig.Settings.CachePath, none /* folders */)
 		file.EstablishFolders(cachedTrueBlocksConfig.Settings.IndexPath, none /* folders */)

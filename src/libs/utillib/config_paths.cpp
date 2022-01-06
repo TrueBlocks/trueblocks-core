@@ -31,6 +31,9 @@ string_q getPathToConfig(const string_q& part) {
     if (!g_configPath.empty())
         return g_configPath + part;
 
+        // if (!getEnvStr("TB_CONFIG_PATH").empty())
+        //     cerr << bGreen << "TB_CONFIG_PATH (cpp): " << getEnvStr("TB_CONFIG_PATH") << cOff << endl;
+
 #if defined(__linux) || defined(__linux__) || defined(linux) || defined(__unix) || defined(__unix__)
     g_configPath = getHomeFolder() + ".local/share/trueblocks/";
 #elif defined(__APPLE__) || defined(__MACH__)
@@ -53,6 +56,9 @@ string_q getPathToCache(const string_q& _part) {
     static string_q g_cachePath;
     if (!g_cachePath.empty())
         return g_cachePath + _part;
+
+    // if (!getEnvStr("TB_CACHE_PATH").empty())
+    //     cerr << bGreen << "TB_CACHE_PATH (cpp): " << getEnvStr("TB_CACHE_PATH") << cOff << endl;
 
     CToml toml(getPathToConfig("trueBlocks.toml"));
     string_q path = toml.getConfigStr("settings", "cachePath", "<not_set>");
@@ -85,6 +91,9 @@ string_q getPathToIndex(const string_q& _part) {
     static string_q g_indexPath;
     if (!g_indexPath.empty())
         return g_indexPath + _part;
+
+    // if (!getEnvStr("TB_INDEX_PATH").empty())
+    //     cerr << bGreen << "TB_INDEX_PATH (cpp): " << getEnvStr("TB_INDEX_PATH") << cOff << endl;
 
     CToml toml(getPathToConfig("trueBlocks.toml"));
     string_q path = toml.getConfigStr("settings", "indexPath", "<not_set>");

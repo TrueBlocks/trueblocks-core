@@ -22,17 +22,6 @@ type PathTest struct {
 	disabled bool
 }
 
-func (p *PathTest) Report(index int, got string) {
-	fmt.Printf("%-d,", index)
-	fmt.Printf("\"%-10.10s", p.group+"\",")
-	fmt.Printf("\"%-10.10s", p.xdg+"\",")
-	fmt.Printf("\"%-10.10s", p.os+"\",")
-	fmt.Printf("\"%-10.10s", p.chain+"\",")
-	fmt.Printf("\"%-20.20s", p.part+"\",")
-	fmt.Printf("\"%-40.40s    ", p.expected+"\",")
-	fmt.Printf("\"%s\"\n", got)
-}
-
 func Test_GetPathTo(t *testing.T) {
 	for index, test := range testSet1 {
 		if test.disabled {
@@ -43,14 +32,23 @@ func Test_GetPathTo(t *testing.T) {
 		testPath := ""
 		withChain := true
 
-		os.Setenv("XDG_CONFIG_HOME", test.xdg)
 		os.Setenv("TEST_CHAIN", test.chain)
 		if test.group == "Config" {
+			os.Setenv("XDG_CONFIG_HOME", test.xdg)
 			os.Setenv("TEST_OS", test.os)
-			withChain = test.part != "trueBlocks.toml" && !strings.HasPrefix(test.part, "abis")
+			globals := []string{"trueBlocks.toml", "makeClass.toml", "testRunner.toml", "abis/"}
+			for _, g := range globals {
+				if strings.HasPrefix(test.part, g) {
+					withChain = false
+				}
+			}
 			testPath = GetPathToConfig(withChain) + test.part
 		} else if test.group == "Cache" {
-			testPath = GetPathToCache() + test.part
+			os.Setenv("XDG_CACHE_HOME", test.xdg)
+			testPath = GetPathToCache1(test.chain) + test.part
+		} else if test.group == "Index" {
+			os.Setenv("XDG_CACHE_HOME", test.xdg)
+			testPath = GetPathToIndex1(test.chain) + test.part
 		}
 
 		testPath = strings.Replace(testPath, user.HomeDir, "$HOME", -1)
@@ -66,6 +64,17 @@ func Test_GetPathTo(t *testing.T) {
 			}
 		}
 	}
+}
+
+func (p *PathTest) Report(index int, got string) {
+	fmt.Printf("%2d ", index)
+	fmt.Printf("%-7.7s", p.group)
+	fmt.Printf("%-5.5s", p.xdg)
+	fmt.Printf("%-6.6s", p.os)
+	fmt.Printf("%-8.8s", p.chain)
+	fmt.Printf("%-12.10s", p.part)
+	fmt.Printf("%-50.48s", p.expected)
+	fmt.Printf("%s\n", got)
 }
 
 var testSet1 = []PathTest{
@@ -110,9 +119,6 @@ var testSet1 = []PathTest{
 		expected: "/xdg/abis/known-000/uniq_funcs.tab",
 	},
 	{
-		expected: "",
-	},
-	{
 		group:    "Config",
 		xdg:      "",
 		os:       "linux",
@@ -135,9 +141,6 @@ var testSet1 = []PathTest{
 		chain:    "xdai",
 		part:     "blockScrape.toml",
 		expected: "/xdg/config/xdai/blockScrape.toml",
-	},
-	{
-		expected: "",
 	},
 	{
 		group:    "Config",
@@ -164,9 +167,6 @@ var testSet1 = []PathTest{
 		expected: "/xdg/trueBlocks.toml",
 	},
 	{
-		expected: "",
-	},
-	{
 		group:    "Config",
 		xdg:      "",
 		os:       "darwin",
@@ -191,16 +191,12 @@ var testSet1 = []PathTest{
 		expected: "/xdg/trueBlocks.toml",
 	},
 	{
-		expected: "",
-	},
-	{
 		group:    "Cache",
-		xdg:      "",
+		xdg:      "/xdg",
 		os:       "linux",
 		chain:    "polygon",
 		part:     "tx/00/00/",
-		expected: "$HOME/.local/share/trueblocks/cache/{CHAIN}/tx/00/00/",
-		disabled: true,
+		expected: "/xdg/cache/{CHAIN}/tx/00/00/",
 	},
 	{
 		group:    "Cache",
@@ -209,6 +205,29 @@ var testSet1 = []PathTest{
 		chain:    "",
 		part:     "abis/0x12.json",
 		expected: "$HOME/Library/Application Support/TrueBlocks/cache/{CHAIN}/abis/0x12.json",
-		disabled: true,
+	},
+	{
+		group:    "Cache",
+		xdg:      "",
+		os:       "windows",
+		chain:    "",
+		part:     "abis/0x12.json",
+		expected: "$HOME/Library/Application Support/TrueBlocks/cache/{CHAIN}/abis/0x12.json",
+	},
+	{
+		group:    "Index",
+		xdg:      "/xdg",
+		os:       "linux",
+		chain:    "polygon",
+		part:     "tx/00/00/",
+		expected: "/xdg/unchained/{CHAIN}/tx/00/00/",
+	},
+	{
+		group:    "Index",
+		xdg:      "",
+		os:       "darwin",
+		chain:    "",
+		part:     "names/names.bin",
+		expected: "$HOME/Library/Application Support/TrueBlocks/unchained/{CHAIN}/names/names.bin",
 	},
 }

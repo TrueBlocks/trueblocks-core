@@ -125,6 +125,7 @@ func (opts *GlobalOptions) ToCmdLine() string {
 		options += " --no_header"
 	}
 	if len(opts.Chain) > 0 {
+		// TODO: Do we need --chain in the c++ code?
 		// fmt.Fprintf(os.Stderr, "chain: %s\n", opts.Chain)
 		// options += " --chain" + opts.Chain
 	}
