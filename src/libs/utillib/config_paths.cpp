@@ -31,8 +31,8 @@ string_q getPathToConfig(const string_q& _part) {
     if (!g_configPath.empty())
         return g_configPath + _part;
 
-    // if (!isTestMode())
-    //     cerr << bGreen << "TB_CONFIG_PATH: " << getEnvStr("TB_CONFIG_PATH") << cOff << endl;
+    if (!isTestMode())
+        cerr << bGreen << "TB_CONFIG_PATH: " << getEnvStr("TB_CONFIG_PATH") << cOff << endl;
 
     g_configPath = substitute(getEnvStr("TB_CONFIG_PATH"), "mainnet/", "");
     return g_configPath + _part;
@@ -45,8 +45,8 @@ string_q getPathToCache(const string_q& _part) {
     if (!g_cachePath.empty())
         return g_cachePath + _part;
 
-    // if (!isTestMode())
-    //     cerr << bGreen << "TB_CACHE_PATH: " << getEnvStr("TB_CACHE_PATH") << cOff << endl;
+    if (!isTestMode())
+        cerr << bGreen << "TB_CACHE_PATH: " << getEnvStr("TB_CACHE_PATH") << cOff << endl;
 
     g_cachePath = substitute(getEnvStr("TB_CACHE_PATH"), "mainnet/", "");
     return g_cachePath + _part;
@@ -59,8 +59,8 @@ string_q getPathToIndex(const string_q& _part) {
     if (!g_indexPath.empty())
         return g_indexPath + _part;
 
-    // if (!isTestMode())
-    //     cerr << bGreen << "TB_INDEX_PATH: " << getEnvStr("TB_INDEX_PATH") << cOff << endl;
+    if (!isTestMode())
+        cerr << bGreen << "TB_INDEX_PATH: " << getEnvStr("TB_INDEX_PATH") << cOff << endl;
 
     g_indexPath = substitute(getEnvStr("TB_INDEX_PATH"), "mainnet/", "");
     return g_indexPath + _part;

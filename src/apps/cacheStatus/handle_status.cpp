@@ -30,7 +30,16 @@ bool COptions::handle_status(ostream& os) {
             manageFields("CStatusTerse:modes1,modes2", FLD_HIDE);
             manageFields("CStatus:clientIds,host,isApi,isScraping,caches", FLD_HIDE);
         }
-        os << st.Format(fmt) << endl;
+        CMetaData meta = getMetaData();
+        ostringstream m;
+        m << meta.client << ", " << meta.finalized << ", " << meta.staging << ", " << meta.unripe;
+        replace(fmt, "[{PROGRESS}]", m.str());
+
+        string_q res = st.Format(fmt);
+        replaceAll(res, "++C1++", cGreen);
+        replaceAll(res, "++C2++", cOff);
+        os << res << endl;
+
         return true;
     }
 
@@ -486,9 +495,10 @@ string_q pathName(const string_q& str, const string_q& path) {
 
 //--------------------------------------------------------------------------------
 const char* STR_TERSE_REPORT =
-    "[{TIME}] client:      [{CLIENTVERSION}][{MODES1}]\n"
-    "[{TIME}] trueblocks:  [{TRUEBLOCKSVERSION}][{MODES2}]\n"
-    "[{TIME}] configPath:  [{CONFIGPATH}]\n"
-    "[{TIME}] cachePath:   [{CACHEPATH}]\n"
-    "[{TIME}] indexPath:   [{INDEXPATH}]\n"
-    "[{TIME}] rpcProvider: [{RPCPROVIDER}]";
+    "[{TIME}] ++C1++Client:++C2++       [{CLIENTVERSION}][{MODES1}]\n"
+    "[{TIME}] ++C1++TrueBlocks:++C2++   [{TRUEBLOCKSVERSION}][{MODES2}]\n"
+    "[{TIME}] ++C1++Config Path:++C2++  [{CONFIGPATH}]\n"
+    "[{TIME}] ++C1++Cache Path:++C2++   [{CACHEPATH}]\n"
+    "[{TIME}] ++C1++Index Path:++C2++   [{INDEXPATH}]\n"
+    "[{TIME}] ++C1++RPC Provider:++C2++ [{RPCPROVIDER}]\n"
+    "[{TIME}] ++C1++Progress:++C2++     [{PROGRESS}]";

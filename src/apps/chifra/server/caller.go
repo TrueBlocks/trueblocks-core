@@ -87,9 +87,9 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 		vars := strings.Split(r.Header.Get("X-TestRunner-Env"), "|")
 		cmd.Env = append(cmd.Env, vars...)
 	} else {
-		// fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "TB_CONFIG_PATH: ", config.GetPathToConfig(false), colors.Off)
-		// fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "TB_CACHE_PATH:  ", config.GetPathToCache1(Options.Globals.Chain), colors.Off)
-		// fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "TB_INDEX_PATH:  ", config.GetPathToIndex1(Options.Globals.Chain), colors.Off)
+		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "TB_CONFIG_PATH: ", config.GetPathToConfig(false), colors.Off)
+		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "TB_CACHE_PATH:  ", config.GetPathToCache1(Options.Globals.Chain), colors.Off)
+		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "TB_INDEX_PATH:  ", config.GetPathToIndex1(Options.Globals.Chain), colors.Off)
 		cmd.Env = append(os.Environ(), "API_MODE=true")
 	}
 	cmd.Env = append(cmd.Env, "TB_CONFIG_PATH="+config.GetPathToConfig(false))
