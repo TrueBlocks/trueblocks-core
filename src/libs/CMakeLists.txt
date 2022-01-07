@@ -13,7 +13,7 @@ add_subdirectory(etherlib)
 add_subdirectory(acctlib)
 add_subdirectory(pinlib)
 add_subdirectory(cachelib)
-add_subdirectory(sqlite3lib)
+#add_subdirectory(sqlite3lib)
 add_subdirectory(test-libs)
 
 file(GLOB A_HEADER_FILES "acctlib/*.h")
@@ -31,6 +31,6 @@ install (FILES ${P_HEADER_FILES} DESTINATION include/tb/pinlib)
 file(GLOB U_HEADER_FILES "utillib/*.h")
 install (FILES ${U_HEADER_FILES} DESTINATION include/tb/utillib)
 
-file(GLOB LIB_FILES "acctlib.a cachelib.a etherlib.a pinlib.a utillib.a")
+file(GLOB LIB_FILES "*.a")
 install (FILES ${LIB_FILES} DESTINATION lib/tb)
 
