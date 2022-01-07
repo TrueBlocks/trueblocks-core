@@ -171,3 +171,4 @@ Private networks have a real problem with 'front of chain' because almost all of
 Uniswap pricing of reconciliations obviously doesn't work on non-mainnet.
 Test ABI generation for non-mainnet chains
 Check out https://github.com/symblox/hardhat-abi-gen for ABI generation from Solidity code
+The server wants to run against the base configuration (i.e. mainnet). This is another reason why --chain must be a global option. Otherwise, we would have to run multiple servers. As a result -- we want to disable the `--chain` option for `chifra serve` (probably other things as well)

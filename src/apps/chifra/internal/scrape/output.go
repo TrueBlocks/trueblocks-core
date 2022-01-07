@@ -164,7 +164,7 @@ func RunMonitorScraper(wg sync.WaitGroup, initialState bool) {
 	}
 }
 
-var cachePath string = "/tmp/"
+var statusPath string = "/tmp/"
 
 type Scraper struct {
 	Counter    uint64 `json:"Counter"`
@@ -206,7 +206,7 @@ func (scraper *Scraper) ChangeState(onOff bool) bool {
 	if onOff {
 		str = "true"
 	}
-	fileName := cachePath + scraper.Name + ".txt"
+	fileName := statusPath + scraper.Name + ".txt"
 	err := ioutil.WriteFile(fileName, []byte(str), 0644)
 	if err != nil {
 		log.Fatal(err)
@@ -231,7 +231,7 @@ func (scraper *Scraper) Pause() {
 // 	TrueBlocks string `json:"trueblocksVersion"`
 // 	RPC        string `json:"rpcProvider"`
 // 	ConfigPath string `json:"configPath"`
-// 	Cache Path  string `json:"cachePath"`
+// 	Cache Path  string `json:"cache Path"`
 // 	IndexPath  string `json:"indexPath"`
 // 	IsTesting  bool   `json:"isTesting"`
 // 	IsDocker   bool   `json:"isDocker"`
