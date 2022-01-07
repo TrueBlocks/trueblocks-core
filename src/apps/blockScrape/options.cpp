@@ -205,8 +205,6 @@ void COptions::Init(void) {
     // clang-format on
     // END_CODE_INIT
 
-    chain = getGlobalConfig()->getConfigStr("settings", "chain", "mainnet");
-
     minArgs = 0;
 }
 

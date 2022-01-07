@@ -38,7 +38,6 @@ class COptions : public COptionsBase {
     blknum_t latestBlockNum;
     CPinnedChunkArray pinList;
     CApiKey lic;
-    string_q chain;
 
     COptions(void);
     ~COptions(void);
