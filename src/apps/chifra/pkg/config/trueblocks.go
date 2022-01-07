@@ -47,7 +47,6 @@ func init() {
 func ReadTrueBlocks() *TrueBlocksConfig {
 	if !trueBlocksRead {
 		configPath := GetPathToConfig(false /* withChain */)
-		// log.Println(configPath)
 		MustReadConfig(trueBlocksViper, &cachedTrueBlocksConfig, configPath, false)
 
 		user, _ := user.Current()

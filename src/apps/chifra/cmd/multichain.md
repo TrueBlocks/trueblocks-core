@@ -151,4 +151,5 @@ We want the only configuration to be ${BASE_PATH}. All other paths are calculate
 
 Search for IndexPath, CachePath in golang code
 Blaze has command line options to explicitly take the paths
-
+We used to preclude the user from customizing an indexPath if it doesn't exist
+Should be fail if the XDG paths do not exist?

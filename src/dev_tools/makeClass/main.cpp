@@ -15,6 +15,7 @@
 
 //-----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
+    loadEnvironmentPaths();
     nodeNotRequired();
     acctlib_init(quickQuitHandler);
 

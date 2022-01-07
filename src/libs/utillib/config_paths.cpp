@@ -26,28 +26,16 @@ namespace qblocks {
 
 //---------------------------------------------------------------------------------------------------
 // TODO(tjayrush): global data
-string_q getPathToConfig(const string_q& part) {
+string_q getPathToConfig(const string_q& _part) {
     static string_q g_configPath;
     if (!g_configPath.empty())
-        return g_configPath + part;
+        return g_configPath + _part;
 
-        // if (!getEnvStr("TB_CONFIG_PATH").empty())
-        //     cerr << bGreen << "TB_CONFIG_PATH (cpp): " << getEnvStr("TB_CONFIG_PATH") << cOff << endl;
+    if (!isTestMode())
+        cerr << bGreen << "TB_CONFIG_PATH: " << getEnvStr("TB_CONFIG_PATH") << cOff << endl;
 
-#if defined(__linux) || defined(__linux__) || defined(linux) || defined(__unix) || defined(__unix__)
-    g_configPath = getHomeFolder() + ".local/share/trueblocks/";
-#elif defined(__APPLE__) || defined(__MACH__)
-    g_configPath = getHomeFolder() + "Library/Application Support/TrueBlocks/";
-#elif defined(_WIN32) || defined(__WIN32__) || defined(WIN32) || defined(_WIN64)
-#error-- This source code does not compile on Windows
-#else
-#error-- unknown operating system not supported
-#endif
-
-    if (!endsWith(g_configPath, "/"))
-        g_configPath += "/";
-    replaceAll(g_configPath, "//", "/");
-    return g_configPath + part;
+    g_configPath = substitute(getEnvStr("TB_CONFIG_PATH"), "mainnet/", "");
+    return g_configPath + _part;
 }
 
 //-------------------------------------------------------------------------
@@ -57,31 +45,10 @@ string_q getPathToCache(const string_q& _part) {
     if (!g_cachePath.empty())
         return g_cachePath + _part;
 
-    // if (!getEnvStr("TB_CACHE_PATH").empty())
-    //     cerr << bGreen << "TB_CACHE_PATH (cpp): " << getEnvStr("TB_CACHE_PATH") << cOff << endl;
+    if (!isTestMode())
+        cerr << bGreen << "TB_CACHE_PATH: " << getEnvStr("TB_CACHE_PATH") << cOff << endl;
 
-    CToml toml(getPathToConfig("trueBlocks.toml"));
-    string_q path = toml.getConfigStr("settings", "cachePath", "<not_set>");
-    if (path == "<not_set>") {
-        path = getPathToConfig("cache/");
-        toml.setConfigStr("settings", "cachePath", path);
-        toml.writeFile();
-    }
-
-    CFilename folder(path);
-    if (!folderExists(folder.getFullPath()))
-        establishFolder(folder.getFullPath());
-    g_cachePath = folder.getFullPath();
-
-    if (!folderExists(g_cachePath)) {
-        cerr << "You've customized the cache path (" << g_cachePath << ")" << endl;
-        cerr << "but it does not exist. Please create it first." << endl;
-        quickQuitHandler(1);
-    }
-
-    if (!endsWith(g_cachePath, "/"))
-        g_cachePath += "/";
-    replaceAll(g_cachePath, "//", "/");
+    g_cachePath = substitute(getEnvStr("TB_CACHE_PATH"), "mainnet/", "");
     return g_cachePath + _part;
 }
 
@@ -92,37 +59,32 @@ string_q getPathToIndex(const string_q& _part) {
     if (!g_indexPath.empty())
         return g_indexPath + _part;
 
-    // if (!getEnvStr("TB_INDEX_PATH").empty())
-    //     cerr << bGreen << "TB_INDEX_PATH (cpp): " << getEnvStr("TB_INDEX_PATH") << cOff << endl;
+    if (!isTestMode())
+        cerr << bGreen << "TB_INDEX_PATH: " << getEnvStr("TB_INDEX_PATH") << cOff << endl;
 
-    CToml toml(getPathToConfig("trueBlocks.toml"));
-    string_q path = toml.getConfigStr("settings", "indexPath", "<not_set>");
-    if (path == "<not_set>") {
-        path = getPathToConfig("unchained/");
-        toml.setConfigStr("settings", "indexPath", path);
-        toml.writeFile();
-    }
-
-    CFilename folder(path);
-    if (!folderExists(folder.getFullPath()))
-        establishFolder(folder.getFullPath());
-    g_indexPath = folder.getFullPath();
-
-    if (!folderExists(g_indexPath)) {
-        cerr << "You've customized the index path (" << g_indexPath << ")" << endl;
-        cerr << "but it does not exist. Please create it first." << endl;
-        quickQuitHandler(1);
-    }
-
-    if (!endsWith(g_indexPath, "/"))
-        g_indexPath += "/";
-    replaceAll(g_indexPath, "//", "/");
+    g_indexPath = substitute(getEnvStr("TB_INDEX_PATH"), "mainnet/", "");
     return g_indexPath + _part;
 }
 
 //-------------------------------------------------------------------------
 string_q getPathToCommands(const string_q& _part) {
     return getHomeFolder() + ".local/bin/chifra/" + _part;
+}
+
+//-------------------------------------------------------------------------
+void loadEnvironmentPaths(void) {
+    // This is only called by makeClass and testRunner (the only two tools that do not run through chifra). It
+    // mimics the way chifra works to build the configPath so these two tools will run
+#if defined(__linux) || defined(__linux__) || defined(linux) || defined(__unix) || defined(__unix__)
+    string_q configPath = getHomeFolder() + ".local/share/trueblocks/";
+#elif defined(__APPLE__) || defined(__MACH__)
+    string_q configPath = getHomeFolder() + "Library/Application Support/TrueBlocks/";
+#else
+#error-- unknown operating system not supported
+#endif
+    ::setenv("TB_CONFIG_PATH", configPath.c_str(), true);
+    ::setenv("TB_CACHE_PATH", (configPath + "cache/").c_str(), true);
+    ::setenv("TB_INDEX_PATH", (configPath + "unchained/").c_str(), true);
 }
 
 }  // namespace qblocks

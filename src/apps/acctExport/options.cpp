@@ -281,7 +281,8 @@ bool COptions::parseArguments(string_q& command) {
         return usage("You may use --summarized_by only with the --accounting option.");
 
     if (!bloomsAreInitalized())
-        return usage("Bloom filters not found. You must run 'chifra init' before running this command.");
+        return usage("Bloom filters not found in " + indexFolder_blooms +
+                     ". You must run 'chifra init' before running this command.");
 
     if (clean) {
         if (!process_clean())

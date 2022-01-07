@@ -23,6 +23,7 @@ string_q perf_fmt;
 
 //-----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
+    loadEnvironmentPaths();
     etherlib_init(quickQuitHandler);
     CTestCase::registerClass();
 

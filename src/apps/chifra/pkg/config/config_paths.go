@@ -25,8 +25,7 @@ var OsToPath = map[string]string{
 func GetPathToConfig(withChain bool) string {
 	chain := ""
 	if withChain {
-		// fmt.Println(os.Getenv("TEST_CHAIN"))
-		chain = GetChain("mainnet")
+		chain = "mainnet/"
 		if len(os.Getenv("TEST_CHAIN")) > 0 {
 			chain = os.Getenv("TEST_CHAIN") + "/"
 		}
@@ -55,7 +54,29 @@ func GetPathToCache() string {
 		chain := "mainnet"
 		return path.Join(xdg, chain) + "/"
 	}
-	return path.Join(ReadTrueBlocks().Settings.CachePath) + "/"
+	cachePath := ReadTrueBlocks().Settings.CachePath
+	if len(cachePath) == 0 {
+		userOs := runtime.GOOS
+		user, _ := user.Current()
+		return path.Join(user.HomeDir, OsToPath[userOs]) + "cache/"
+	}
+	return path.Join(cachePath) + "/"
+}
+
+// GetPathToIndex returns the one and only cachePath
+func GetPathToIndex() string {
+	xdg := os.Getenv("XDG_CACHE_HOME")
+	if len(xdg) > 0 && xdg[0] == '/' {
+		chain := "mainnet"
+		return path.Join(xdg, chain) + "/"
+	}
+	indexPath := ReadTrueBlocks().Settings.IndexPath
+	if len(indexPath) == 0 {
+		userOs := runtime.GOOS
+		user, _ := user.Current()
+		return path.Join(user.HomeDir, OsToPath[userOs]) + "unchained/"
+	}
+	return path.Join(indexPath) + "/"
 }
 
 // GetPathToCache1 returns the one and only cachePath
@@ -73,20 +94,21 @@ func GetPathToCache1(chain string) string {
 	return path.Join(ReadTrueBlocks().Settings.CachePath, chain) + "/"
 }
 
-// GetPathToIndex returns the one and only cachePath
-func GetPathToIndex() string {
-	xdg := os.Getenv("XDG_CACHE_HOME")
-	if len(xdg) > 0 && xdg[0] == '/' {
-		chain := "mainnet"
-		return path.Join(xdg, chain) + "/"
-	}
-	return path.Join(ReadTrueBlocks().Settings.IndexPath) + "/"
-}
-
 // GetPathToIndex1 returns the one and only cachePath
 func GetPathToIndex1(chain string) string {
-	cachePath := GetPathToCache1(chain)
-	return strings.Replace(cachePath, "/cache/", "/unchained/", -1)
+	if len(chain) == 0 {
+		chain = "mainnet"
+	}
+	xdg := os.Getenv("XDG_CACHE_HOME")
+	if len(xdg) > 0 && xdg[0] == '/' {
+		if !strings.Contains(xdg, "/unchained") {
+			xdg = path.Join(xdg, "unchained")
+		}
+		return path.Join(xdg, chain) + "/"
+	}
+	return path.Join(ReadTrueBlocks().Settings.IndexPath, chain) + "/"
+//	cachePath := GetPathToCache1(chain)
+//	return strings.Replace(cachePath, "/cache/", "/unchained/", -1)
 }
 
 // GetRpcProvider returns the RPC provider for a chain
