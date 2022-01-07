@@ -16,6 +16,7 @@
 - When block special blocks are mainnet centric
 - Re-write the `trueBlocks.toml` file with version `0.24.0`
 - chifra --chain xdai explore should go to a different server
+- chifra slurp won't work with --chain
 
 ### What We Need to Control
 ---
