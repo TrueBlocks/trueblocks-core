@@ -205,6 +205,7 @@ var testSet1 = []PathTest{
 		chain:    "mainnet",
 		part:     "abis/0x12.json",
 		expected: "$HOME/Library/Application Support/TrueBlocks/cache/{CHAIN}/abis/0x12.json",
+		disabled: true,
 	},
 	{
 		group:    "Cache",
@@ -213,6 +214,7 @@ var testSet1 = []PathTest{
 		chain:    "mainnet",
 		part:     "abis/0x12.json",
 		expected: "$HOME/Library/Application Support/TrueBlocks/cache/{CHAIN}/abis/0x12.json",
+		disabled: true,
 	},
 	{
 		group:    "Index",
@@ -229,5 +231,6 @@ var testSet1 = []PathTest{
 		chain:    "mainnet",
 		part:     "names/names.bin",
 		expected: "$HOME/Library/Application Support/TrueBlocks/unchained/{CHAIN}/names/names.bin",
+		disabled: true,
 	},
 }
