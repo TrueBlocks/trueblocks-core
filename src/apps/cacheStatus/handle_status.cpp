@@ -32,7 +32,10 @@ bool COptions::handle_status(ostream& os) {
         }
         CMetaData meta = getMetaData();
         ostringstream m;
-        m << meta.client << ", " << meta.finalized << ", " << meta.staging << ", " << meta.unripe;
+        if (isTestMode())
+            m << "--client--, --final--, --staging--, --unripe";
+        else
+            m << meta.client << ", " << meta.finalized << ", " << meta.staging << ", " << meta.unripe;
         replace(fmt, "[{PROGRESS}]", m.str());
 
         string_q res = st.Format(fmt);

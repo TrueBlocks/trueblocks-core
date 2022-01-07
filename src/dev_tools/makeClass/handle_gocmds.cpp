@@ -36,7 +36,6 @@ bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
     replaceAll(source, "/internal/[{ROUTE}]", (p.api_route == "serve" ? "/server" : "/internal/[{ROUTE}]"));
     replaceAll(source, "[{SET_OPTS}]", get_setopts(p));
     replaceAll(source, "[{HIDDEN}]", get_hidden(p));
-    // replaceAll(source, "[{VERSION}]", getVersionStr(true, false));
     replaceAll(source, "[{USE}]", get_use(p));
     replaceAll(source, "[{ROUTE}]", toLower(p.api_route));
     replaceAll(source, "[{PROPER}]", toProper(p.api_route));

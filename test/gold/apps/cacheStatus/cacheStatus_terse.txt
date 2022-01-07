@@ -9,4 +9,4 @@ TIME ~ CLOCK - <INFO>  : Loading names
 --TIME-- Cache Path:   --paths--
 --TIME-- Index Path:   --paths--
 --TIME-- RPC Provider: --providers--
---TIME-- Progress:     13959767, 13943018, 13943018, 13943018
+--TIME-- Progress:     --client--, --final--, --staging--, --unripe
