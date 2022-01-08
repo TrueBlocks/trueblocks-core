@@ -25,6 +25,5 @@ bool statements_Display(CTraverser* trav, void* data) {
         }
     }
 
-    prog_Log(trav, data);
-    return !shouldQuit();
+    return prog_Log(trav, data);
 }

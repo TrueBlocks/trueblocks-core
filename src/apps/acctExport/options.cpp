@@ -533,8 +533,10 @@ void COptions::Init(void) {
     fileRange = make_pair(NOPOS, NOPOS);
     allMonitors.clear();
     possibles.clear();
+    reportFreq = reportDef = 7;
     slowQueries = 0;
-    maxSlowQueries = getGlobalConfig("acctExport")->getConfigInt("settings", "max_slow_queries", 13);
+    maxSlowQueries =
+        isApiMode() ? getGlobalConfig("acctExport")->getConfigInt("settings", "max_slow_queries", 13) : NOPOS;
 
     // Establish folders. This may be redundant, but it's cheap.
     establishMonitorFolders();
@@ -831,12 +833,4 @@ void COptions::writePerformanceData(void) {
     ostringstream data;
     data << stats.Format(fmt) << endl;
     appendToAsciiFile(statsFile, data.str());
-}
-
-//-----------------------------------------------------------------------
-size_t freqOverride = NOPOS;
-size_t COptions::reportFreq(void) const {
-    if (freqOverride != NOPOS)
-        return freqOverride;
-    return slowQueries > 0 ? 1 : 7;
 }

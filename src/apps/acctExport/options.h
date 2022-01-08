@@ -90,8 +90,6 @@ class COptions : public CAbiOptions {
 
     string_q className;
     CMetaData meta;
-    size_t slowQueries;
-    size_t maxSlowQueries{13};
 
     COptions(void);
     ~COptions(void);
@@ -127,7 +125,10 @@ class COptions : public CAbiOptions {
     void cacheIfReconciled(CTraverser* trav, bool isNew) const;
     bool token_list_from_logs(CAccountNameMap& tokenList, const CTraverser* trav);
 
-    size_t reportFreq(void) const;
+    size_t reportFreq{7};
+    size_t reportDef{7};
+    size_t slowQueries{0};
+    size_t maxSlowQueries{13};
 
     // Used as temporary data to count neighbor traversals
     size_t neighborCount{0};
