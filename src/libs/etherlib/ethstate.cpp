@@ -523,12 +523,20 @@ static blknum_t findCodeAt_binarySearch(const address_t& addr, blknum_t first, b
     return first;
 }
 
+static map<address_t, blknum_t> deployMap;
 //-------------------------------------------------------------------------------------
 blknum_t getDeployBlock(const address_t& addr) {
+    if (deployMap[addr] > 0) {
+        return deployMap[addr];
+    }
+
     blknum_t latest = getBlockProgress(BP_CLIENT).client;
     if (!isContractAt(addr, latest))
         return NOPOS;
     blknum_t num = findCodeAt_binarySearch(addr, 0, latest);
+    if (num) {
+        deployMap[addr] = (num + 1);
+    }
     return (num ? num + 1 : NOPOS);
 }
 // EXISTING_CODE
