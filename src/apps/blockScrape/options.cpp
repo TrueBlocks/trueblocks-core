@@ -205,6 +205,20 @@ void COptions::Init(void) {
     // clang-format on
     // END_CODE_INIT
 
+    if (isLiveTest()) {
+        n_test_runs = 10;
+        first_snap_to_grid = 0;
+        snap_to_grid_blks = 30;
+        apps_per_chunk = 6000;
+        unripe_dist = 28;  // doesn't change
+    } else {
+        n_test_runs = NOPOS;
+        first_snap_to_grid = 2250000;
+        snap_to_grid_blks = 100000;
+        apps_per_chunk = 2000000;
+        unripe_dist = 28;
+    }
+
     minArgs = 0;
 }
 
