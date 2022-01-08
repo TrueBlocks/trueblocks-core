@@ -19,6 +19,7 @@
 #include "accountname.h"
 #include "rpcresult.h"
 #include "exportcontext.h"
+#include "logging.h"
 
 namespace qblocks {
 
@@ -31,10 +32,22 @@ string_q getPathToConfig(const string_q& _part) {
     if (!g_configPath.empty())
         return g_configPath + _part;
 
-    if (!isTestMode())
-        cerr << bGreen << "TB_CONFIG_PATH: " << getEnvStr("TB_CONFIG_PATH") << cOff << endl;
+    // We go through here once per invocation, so we can spend some time verifying (even
+    // though we've already done this in chifra. This guards against calling the
+    // tool from the command line).
+    g_configPath = getEnvStr("TB_CONFIG_PATH");
 
-    g_configPath = substitute(getEnvStr("TB_CONFIG_PATH"), "mainnet/", "");
+    // Invariants
+    if (!folderExists(g_configPath)) {
+        LOG_ERR("Configuration folder must exist: ", g_configPath);
+        quickQuitHandler(1);
+    }
+    if (!endsWith(g_configPath, "/")) {
+        LOG_ERR("Configuration folder must end with '/': ", g_configPath);
+        quickQuitHandler(1);
+    }
+    LOG4(bGreen, "TB_CONFIG_PATH: ", g_configPath, cOff);
+
     return g_configPath + _part;
 }
 

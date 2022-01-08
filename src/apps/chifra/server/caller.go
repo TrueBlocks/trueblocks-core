@@ -82,17 +82,20 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 	// testing (the test harness sends a special header) we also set the
 	// TEST_MODE=true environment variable and any other vars for this
 	// particular test
+	configPath := strings.Replace(config.GetPathToConfig(false), "mainnet/", "", -1)
 	if utils.IsTestModeServer(r) {
 		cmd.Env = append(append(os.Environ(), "TEST_MODE=true"), "API_MODE=true")
 		vars := strings.Split(r.Header.Get("X-TestRunner-Env"), "|")
 		cmd.Env = append(cmd.Env, vars...)
 	} else {
-		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "TB_CONFIG_PATH: ", config.GetPathToConfig(false), colors.Off)
-		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "TB_CACHE_PATH:  ", config.GetPathToCache1(Options.Globals.Chain), colors.Off)
-		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "TB_INDEX_PATH:  ", config.GetPathToIndex1(Options.Globals.Chain), colors.Off)
+		if Options.Globals.LogLevel > 3 {
+			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "TB_CONFIG_PATH: ", configPath, colors.Off)
+			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "TB_CACHE_PATH:  ", config.GetPathToCache1(Options.Globals.Chain), colors.Off)
+			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "TB_INDEX_PATH:  ", config.GetPathToIndex1(Options.Globals.Chain), colors.Off)
+		}
 		cmd.Env = append(os.Environ(), "API_MODE=true")
 	}
-	cmd.Env = append(cmd.Env, "TB_CONFIG_PATH="+config.GetPathToConfig(false))
+	cmd.Env = append(cmd.Env, "TB_CONFIG_PATH="+configPath)
 	cmd.Env = append(cmd.Env, "TB_CACHE_PATH="+config.GetPathToCache1(Options.Globals.Chain))
 	cmd.Env = append(cmd.Env, "TB_INDEX_PATH="+config.GetPathToIndex1(Options.Globals.Chain))
 	cmd.Env = append(cmd.Env, "PROG_NAME=chifra "+apiCmd)
