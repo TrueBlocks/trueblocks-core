@@ -35,11 +35,13 @@ func getTracesAndLogs(blockChannel chan int, addressChannel chan tracesAndLogs, 
 			fmt.Println(err)
 			os.Exit(1) // caller will start over if this process exits with non-zero value
 		}
+
 		logs, err := getLogsFromBlock(blockNum)
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1) // caller will start over if this process exits with non-zero value
 		}
+
 		addressChannel <- tracesAndLogs{blockNum, traces, logs}
 	}
 	blockWG.Done()
@@ -59,9 +61,7 @@ func extractAddresses(addressChannel chan tracesAndLogs, addressWG *sync.WaitGro
 			fmt.Println(err)
 			os.Exit(1) // caller will start over if this process exits with non-zero value
 		}
-		if traces.Result != nil && len(traces.Result) > 0 {
-			extractAddressesFromTraces(addressMap, &traces, blockNumStr)
-		}
+		extractAddressesFromTraces(addressMap, &traces, blockNumStr)
 
 		// Now, parse log data
 		var logs Log
@@ -70,17 +70,19 @@ func extractAddresses(addressChannel chan tracesAndLogs, addressWG *sync.WaitGro
 			fmt.Println(err)
 			os.Exit(1) // caller will start over if this process exits with non-zero value
 		}
+		extractAddressesFromLogs(addressMap, &logs, blockNumStr)
 
-		if len(addressMap) > 0 {
-			extractAddressesFromLogs(addressMap, &logs, blockNumStr)
-			writeAddresses(blockNumStr, addressMap)
-		}
+		// We still may have no addresses here, but we deal with that elsewhere
+		writeAddresses(blockNumStr, addressMap)
 	}
 
 	addressWG.Done()
 }
 
 func extractAddressesFromTraces(addressMap map[string]bool, traces *Trace, blockNum string) {
+	if traces.Result == nil || len(traces.Result) == 0 {
+		return
+	}
 
 	for i := 0; i < len(traces.Result); i++ {
 
@@ -241,6 +243,9 @@ func extractAddressesFromTraces(addressMap map[string]bool, traces *Trace, block
 
 // extractAddressesFromLogs Extracts addresses from any part of the log data.
 func extractAddressesFromLogs(addressMap map[string]bool, logs *Log, blockNum string) {
+	if logs.Result == nil || len(logs.Result) == 0 {
+		return
+	}
 
 	for i := 0; i < len(logs.Result); i++ {
 		idxInt, err := strconv.ParseInt(logs.Result[i].TransactionIndex, 0, 32)
@@ -280,6 +285,9 @@ func extractAddressesFromLogs(addressMap map[string]bool, logs *Log, blockNum st
 var counter = 0
 
 func writeAddresses(blockNum string, addressMap map[string]bool) {
+	if len(addressMap) == 0 {
+		return
+	}
 
 	addressArray := make([]string, len(addressMap))
 	idx := 0
