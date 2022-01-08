@@ -44,7 +44,7 @@ class CConsolidator : public CMetaData {
 };
 
 //--------------------------------------------------------------------------
-// These defines give us control over blockScrape while testing. This is  VERY
+// These defines give us control over blockScrape while testing. This is VERY
 // hacky. Snap-to-grid allows for corrections to the data without repbulishing
 // the entire index (we can the broken files between snaps). We don't start until
 // the Sept. 2016 dDos attacks and the continue to end of chain

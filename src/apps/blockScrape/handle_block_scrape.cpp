@@ -22,10 +22,10 @@ bool COptions::scrape_blocks(void) {
     if (isLiveTest() && runs++ > TEST_RUNS)
         defaultQuitHandler(0);
 
-    // First, we need to know how far along in the scrape we are. We get the progress (i.e. highest
+    // We need to know how far along in the scrape we are. We get the progress (i.e. highest
     // block) of the client and the each of index caches. From there, we can determine where to
     // start the scraper (one more than the largest cache). Note that the first chunk for block
-    // zero is special and already created
+    // zero is special and has already been created.
     CConsolidator cons;
 
     // This peice of data will be needed later when we create a new chunk, so we save it off here.
