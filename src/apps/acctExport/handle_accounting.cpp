@@ -91,7 +91,7 @@ bool COptions::process_reconciliation(CTraverser* trav) {
         if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
             archive >> trav->trans.statements;
             archive.Release();
-            if (true) {  // isReconciled(trav)) {
+            if (true) {
                 bool backLevel = false;
                 for (auto& statement : trav->trans.statements) {
                     // At version 0.11.8, we finally got pricing of reconcilations correct. We didn't
@@ -215,8 +215,6 @@ void COptions::cacheIfReconciled(CTraverser* trav, bool isNew) const {
         return;
     if (!isReconciled(trav)) {
         LOG_WARN("Transaction ", trav->trans.hash, " did not reconcile.");
-        // return;
-        // TODO: The name of this function is a lie. We always cache even if unreconciled
     }
 
     lockSection();

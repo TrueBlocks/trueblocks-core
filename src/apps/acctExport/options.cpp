@@ -536,7 +536,7 @@ void COptions::Init(void) {
     reportFreq = reportDef = 7;
     slowQueries = 0;
     maxSlowQueries =
-        isApiMode() ? getGlobalConfig("acctExport")->getConfigInt("settings", "max_slow_queries", 13) : NOPOS;
+        isApiMode() ? getGlobalConfig("acctExport")->getConfigInt("settings", "max_slow_queries", 50) : NOPOS;
 
     // Establish folders. This may be redundant, but it's cheap.
     establishMonitorFolders();

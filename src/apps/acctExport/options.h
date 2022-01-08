@@ -128,7 +128,7 @@ class COptions : public CAbiOptions {
     size_t reportFreq{7};
     size_t reportDef{7};
     size_t slowQueries{0};
-    size_t maxSlowQueries{13};
+    size_t maxSlowQueries{50};
 
     // Used as temporary data to count neighbor traversals
     size_t neighborCount{0};
