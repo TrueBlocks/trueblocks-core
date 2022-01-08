@@ -140,6 +140,7 @@ static bool readNamesFromAscii(void) {
 //-----------------------------------------------------------------------
 static bool writeNamesToBinary(void) {
     string_q binFile = getPathToCache(STR_BIN_LOC);
+    establishFolder(binFile);
     CArchive out(WRITING_ARCHIVE);
     if (out.Lock(binFile, modeWriteCreate, LOCK_WAIT)) {
         // We treat one whole record (the first) as the header. Yes,
