@@ -107,21 +107,11 @@ func GetPathToIndex1(chain string) string {
 		return path.Join(xdg, chain) + "/"
 	}
 	return path.Join(ReadTrueBlocks().Settings.IndexPath, chain) + "/"
-//	cachePath := GetPathToCache1(chain)
-//	return strings.Replace(cachePath, "/cache/", "/unchained/", -1)
 }
 
 // GetRpcProvider returns the RPC provider for a chain
 func GetRpcProvider() string {
 	return ReadTrueBlocks().Settings.RpcProvider
-}
-
-// GetChain returns the value of the chain parameter or the default
-func GetChain(def string) string {
-	if len(def) == 0 {
-		def = "mainnet"
-	}
-	return def + "/" // path.Join(ReadTrueBlocks().Settings.Chain) + "/"
 }
 
 // GetPathToCommands returns full path the the given tool
@@ -147,7 +137,7 @@ func EstablishCachePaths(cachePath string) {
 	}
 }
 
-// EstablishCachePaths sets up the cache index and subfolders. It only returns if it succeeds.
+// EstablishIndexPaths sets up the index path and subfolders. It only returns if it succeeds.
 func EstablishIndexPaths(indexPath string) {
 	indexFolders := []string{
 		"blooms", "finalized", "ripe", "staging", "unripe",

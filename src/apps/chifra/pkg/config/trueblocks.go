@@ -40,7 +40,6 @@ func init() {
 	trueBlocksViper.SetDefault("Settings.RpcProvider", "http://localhost:8545")
 	trueBlocksViper.SetDefault("Settings.CachePath", GetPathToConfig(false /* withChain */)+"cache")
 	trueBlocksViper.SetDefault("Settings.IndexPath", GetPathToConfig(false /* withChain */)+"unchained")
-	trueBlocksViper.SetDefault("Settings.Chain", "mainnet")
 }
 
 // ReadGlobal reads and the configuration located in trueBlocks.toml file
