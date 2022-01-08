@@ -1,4 +1,4 @@
-# Deploy basic configuration and directories structure for trueblocks
+# Deploy basic configuration and directories structure for trueblocks.
 
 #---------------------------------------------------------------
 # setup some paths
