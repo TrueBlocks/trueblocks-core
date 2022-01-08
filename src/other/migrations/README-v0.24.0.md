@@ -10,11 +10,15 @@ Do not complete this migration until you are told to do so.
 
 ## Why the Change?
 
-With this chain we enter into the world of multi-chain. While the changes here are pretty simple, they are delicate in the sense that you must edit files and folders on your hard drive. It is possible to damage not only your installation of TrueBlocks, but your computer as a whole if you are not careful. Please don't say we didn' warn you.
+With this migration we enter into the world of multi-chain.
+
+While the changes here are pretty simple, they are delicate in the sense that you must edit files and folders on your hard drive. It is possible to damage not only your installation of TrueBlocks, but your computer as a whole if you are not careful. Please don't say we didn't warn you.
 
 ### What's Changed
 
-This image shows the process your will follow in the "Instructions" section below. It is a four step process. The folders you will be moving are in TrueBlocks' $CONFIG folder (`~/.local/share/trueblocks/` on Linux, `~/Library/Application Support/TrueBlocks/` on Mac).
+The image below shows the changes you will be making.
+
+It shows a step-by-step process that you will follow in the "Instructions" section below. This is a four step process. The folders you will be moving are in TrueBlocks' $CONFIG folder (`~/.local/share/trueblocks/` on Linux, `~/Library/Application Support/TrueBlocks/` on Mac). If you've already customized these locations in your installation, see the Already Customized section below.
 
 ![Instructions](./migration.24.png)
 
@@ -42,7 +46,7 @@ After this step, your folder structure should look like the middle image above.
 
 - Edit the `trueBlocks.toml` file
 - Either add or edit a value under `[settings]chain = mainnet` to reference one of these supported chains:
-  - `mainnet`, `xdai`, `polygon`, `rinkeby`, `georli`
+  - `mainnet`, `gnosis`, `polygon`, `rinkeby`, `georli`
 - You may add your own chain, but if you do, you must supply your own genesis files. Please contact us in our discord for more information.
 
 ### Other slight changes
