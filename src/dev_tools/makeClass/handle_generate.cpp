@@ -172,7 +172,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
         }
 
         replace(setFmt, "[{DEFB}]", fld.strDefault.empty() ? "false" : fld.strDefault);
-        replace(setFmt, "[{DEFS}]", fld.strDefault.empty() ? "\"\"" : fld.strDefault);
+        replace(setFmt, "[{DEFS}]", fld.strDefault.empty() ? "\"\"" : "\"" + fld.strDefault + "\"");
         replace(setFmt, "[{DEF}]", fld.strDefault.empty() ? "0" : fld.strDefault);
         replace(setFmt, "[{DEFF}]", fld.strDefault.empty() ? "0.0" : fld.strDefault);
         replace(setFmt, "[{DEFT}]", fld.strDefault.empty() ? "earliestDate" : fld.strDefault);
