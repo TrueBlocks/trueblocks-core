@@ -39,7 +39,7 @@ bool CConsolidator::write_chunks(blknum_t chunkSize, bool atLeastOnce) {
         LOG4((lines.size() == 0 ? "newStage file has zero lines" : ""));
 
         // We're looking for the location where the last complete block ends and the number
-        // of records overtops chunkSize (note that chunkSize may be less than MAX_ROWS due
+        // of records overtops chunkSize (note that chunkSize may be less than apps_per_chunk due
         // to snap_to_grid)
         string_q prvBlock;
         size_t loc = NOPOS;
@@ -139,7 +139,7 @@ bool CConsolidator::write_chunks(blknum_t chunkSize, bool atLeastOnce) {
         unlockSection();
         if (atLeastOnce)
             atLeastOnce = nRecords > 0;
-        chunkSize = min(MAX_ROWS, nRecords);
+        chunkSize = min(opts->apps_per_chunk, nRecords);
     }
 
     LOG_FN8(newStage);

@@ -14,7 +14,7 @@
 #include "consolidator.h"
 
 //--------------------------------------------------------------------------
-CConsolidator::CConsolidator(void) : pin(false), distFromHead(0), prevBlock(0) {
+CConsolidator::CConsolidator(const COptions* o) : pin(false), distFromHead(0), prevBlock(0), opts(o) {
     blazeStart = 0;
     blazeRipe = 0;
     blazeCnt = 0;
@@ -86,8 +86,12 @@ bool copyRipeToStage(const string_q& path, void* data) {
 
         // If we're not one behind, we have a problem
         CConsolidator* con = reinterpret_cast<CConsolidator*>(data);
-        if ((con->prevBlock + 1) != bn) {
-            // For some reason, we're missing a file. Quit and try again next time
+
+        bool allow = con->opts->allow_missing;
+        bool sequential = (con->prevBlock + 1) == bn;
+        bool less_than = (con->prevBlock < bn);
+        if ((!allow && !sequential) || (allow && !less_than)) {
+            // Something went wrong. We quit here but we will try again next time
             LOG_WARN("Current file (", path, ") does not sequentially follow previous file ", con->prevBlock, ".");
             return false;
         }
@@ -107,7 +111,7 @@ bool copyRipeToStage(const string_q& path, void* data) {
         con->prevBlock = bn;
         unlockSection();
 
-        if (bn > FIRST_SNAP_TO_GRID && !(bn % SNAP_TO_GRID_BLKS)) {
+        if (bn > con->opts->first_snap && !(bn % con->opts->snap_to_grid)) {
             LOG4("  Snapping to block number ", bn);
 
             // We've been copying each block's data into a temporary file. At this point, we've
@@ -136,7 +140,7 @@ bool copyRipeToStage(const string_q& path, void* data) {
             blknum_t nRecords = fileSize(con->newStage) / 59;
 
             // How big are we going to make this chunk?
-            blknum_t chunkSize = min(nRecords, MAX_ROWS);
+            blknum_t chunkSize = min(nRecords, con->opts->apps_per_chunk);
 
             // Now we try to write the chunk. We will write at least one chunk no matter how many records there are
             con->write_chunks(chunkSize, true /* atLeastOnce */);

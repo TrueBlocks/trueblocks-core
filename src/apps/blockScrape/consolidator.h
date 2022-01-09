@@ -14,6 +14,7 @@
 #include "pinlib.h"
 #include "acctlib.h"
 
+class COptions;
 //--------------------------------------------------------------------------
 class CConsolidator : public CMetaData {
   public:
@@ -29,8 +30,9 @@ class CConsolidator : public CMetaData {
     string_q tmp_fn;
     ofstream tmp_stream;
     CPinnedChunkArray pinList;
+    const COptions* opts;
 
-    explicit CConsolidator(void);
+    CConsolidator(const COptions* opts);
     bool stage_chunks(void);
     bool consolidate_chunks(void);
     bool write_chunks(blknum_t chunkSize, bool atLeastOnce);
@@ -42,16 +44,6 @@ class CConsolidator : public CMetaData {
     }
     friend ostream& operator<<(ostream& os, const CConsolidator& it);
 };
-
-//--------------------------------------------------------------------------
-// These defines give us control over blockScrape while testing. This is  VERY
-// hacky. Snap-to-grid allows for corrections to the data without repbulishing
-// the entire index (we can the broken files between snaps). We don't start until
-// the Sept. 2016 dDos attacks and the continue to end of chain
-#define MAX_ROWS blknum_t(isLiveTest() ? 6000 : 2000000)
-#define SNAP_TO_GRID_BLKS blknum_t(isLiveTest() ? 30 : 100000)
-#define FIRST_SNAP_TO_GRID blknum_t(isLiveTest() ? 0 : 2250000)
-#define TEST_RUNS blknum_t(isLiveTest() ? 10 : NOPOS)
 
 //-------------------------------------------------------------------------
 inline ostream& operator<<(ostream& os, const CConsolidator& it) {

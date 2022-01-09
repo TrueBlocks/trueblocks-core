@@ -10,8 +10,9 @@ import (
 	"os/user"
 	"path"
 	"runtime"
+	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
 
@@ -19,7 +20,6 @@ import (
 func Initialize() bool {
 	VerifyOs()
 	VerifyMigrations()
-	cache.EstablishCaches()
 
 	return true
 }
@@ -53,7 +53,18 @@ func VerifyMigrations() {
 		log.Fatalf(msg)
 	}
 
-	// configPath := config.GetPathToConfig("chains")
+	configFile := config.GetPathToConfig(false /* wantsChain */) + "trueBlocks.toml"
+	if _, err := os.Stat(configFile); err != nil {
+		msg := "\n\n"
+		msg += "\tCould not find configuration file: [{FILE}].\n"
+		msg += "\tYou need to re-install TrueBlocks. See https://trueblocks.io/docs/install/install-trueblocks/\n"
+		msg += "\n"
+		msg = strings.Replace(msg, "[{FILE}]", colors.Green+configFile+colors.Off, -1)
+		log.Fatalf(msg)
+	}
+	// fmt.Fprintln(os.Stderr, configPath)
+	// Search for MultiChain
+	// configPath := config.GetPath ToConfig("chains")
 	// if _, err := os.Stat(configPath); err != nil {
 	// 	msg := "\n\n"
 	//     msg += "\tThe multi-chain folder ($CONFIG/chains) was not found. Please complete migration v0.23.0.\n"
