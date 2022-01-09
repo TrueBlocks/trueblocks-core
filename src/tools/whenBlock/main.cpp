@@ -40,7 +40,8 @@ int main(int argc, const char* argv[]) {
                     cout << (options.isText ? uint_2_Str(nTimestamps())
                                             : "{ \"nTimestamps\": " + uint_2_Str(nTimestamps()) + "}");
                 } else {
-                    getTimestampAt(options.latest.blockNumber);  // freshens timestamp file but otherwise ignored
+                    if (!options.no_update)
+                        getTimestampAt(options.latest.blockNumber);  // freshens timestamp file but otherwise ignored
                     forEveryTimestamp(visitBlock, &options);
                     if (options.corrections.size() > 0) {
                         options.applyCorrections();

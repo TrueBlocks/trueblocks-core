@@ -50,10 +50,12 @@ func init() {
 	whenCmd.Flags().BoolVarP(&whenPkg.Options.Check, "check", "c", false, "available only with --timestamps, checks the validity of the timestamp data (hidden)")
 	whenCmd.Flags().BoolVarP(&whenPkg.Options.Fix, "fix", "f", false, "available only with --timestamps, fixes incorrect timestamps if any (hidden)")
 	whenCmd.Flags().BoolVarP(&whenPkg.Options.Count, "count", "u", false, "available only with --timestamps, returns the number of timestamps in the cache (hidden)")
+	whenCmd.Flags().BoolVarP(&whenPkg.Options.NoUpdate, "no_update", "n", false, "do not update timestamps database prior to completing the task at hand (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {
 		whenCmd.Flags().MarkHidden("check")
 		whenCmd.Flags().MarkHidden("fix")
 		whenCmd.Flags().MarkHidden("count")
+		whenCmd.Flags().MarkHidden("no_update")
 	}
 	globals.InitGlobals(whenCmd, &whenPkg.Options.Globals)
 
