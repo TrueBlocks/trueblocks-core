@@ -7,8 +7,9 @@ package config
 import (
 	"os/user"
 	"path"
-	"runtime"
+	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/spf13/viper"
 )
 
@@ -24,6 +25,7 @@ type trueBlocksSettings struct {
 	RpcProvider  string
 	CachePath    string
 	IndexPath    string
+	Chain        string
 	EtherscanKey string `toml:"etherscan_key"`
 }
 
@@ -36,62 +38,45 @@ type TrueBlocksConfig struct {
 func init() {
 	trueBlocksViper.SetConfigName("trueBlocks")
 	trueBlocksViper.SetDefault("Settings.RpcProvider", "http://localhost:8545")
-	trueBlocksViper.SetDefault("Settings.CachePath", GetPathToConfig("cache"))
-	trueBlocksViper.SetDefault("Settings.IndexPath", GetPathToConfig("unchained"))
+	trueBlocksViper.SetDefault("Settings.CachePath", GetPathToConfig(false /* withChain */)+"cache")
+	trueBlocksViper.SetDefault("Settings.IndexPath", GetPathToConfig(false /* withChain */)+"unchained")
 }
 
 // ReadGlobal reads and the configuration located in trueBlocks.toml file
 func ReadTrueBlocks() *TrueBlocksConfig {
 	if !trueBlocksRead {
-		MustReadConfig(trueBlocksViper, &cachedTrueBlocksConfig, false)
-		l := len(cachedTrueBlocksConfig.Settings.CachePath)
-		if l > 0 {
-			if cachedTrueBlocksConfig.Settings.CachePath[l-1] != '/' {
-				cachedTrueBlocksConfig.Settings.CachePath = cachedTrueBlocksConfig.Settings.CachePath + "/"
-			}
+		configPath := GetPathToConfig(false /* withChain */)
+		MustReadConfig(trueBlocksViper, &cachedTrueBlocksConfig, configPath, false)
+
+		user, _ := user.Current()
+
+		cachePath := cachedTrueBlocksConfig.Settings.CachePath
+		if len(cachePath) == 0 {
+			cachePath = path.Join(configPath, "cache")
 		}
-		l = len(cachedTrueBlocksConfig.Settings.IndexPath)
-		if l > 0 {
-			if cachedTrueBlocksConfig.Settings.IndexPath[l-1] != '/' {
-				cachedTrueBlocksConfig.Settings.IndexPath = cachedTrueBlocksConfig.Settings.IndexPath + "/"
-			}
+		cachePath = strings.Replace(cachePath, "$HOME", user.HomeDir, -1)
+		cachePath = strings.Replace(cachePath, "~", user.HomeDir, -1)
+		cachedTrueBlocksConfig.Settings.CachePath = cachePath
+
+		indexPath := cachedTrueBlocksConfig.Settings.IndexPath
+		if len(indexPath) == 0 {
+			indexPath = path.Join(configPath, "unchained")
 		}
+		indexPath = strings.Replace(indexPath, "$HOME", user.HomeDir, -1)
+		indexPath = strings.Replace(indexPath, "~", user.HomeDir, -1)
+		cachedTrueBlocksConfig.Settings.IndexPath = indexPath
+
+		// We establish only the top-level functions here. When we figure out
+		// which chain we're on (not until the user tells us on the command line)
+		// only then can we complete this path. At this point it only points
+		// to the top-levl of the cache. Also note that these two routines do
+		// not return if they fail, so no need to handle errors
+		var none []string
+		file.EstablishFolders(cachedTrueBlocksConfig.Settings.CachePath, none /* folders */)
+		file.EstablishFolders(cachedTrueBlocksConfig.Settings.IndexPath, none /* folders */)
+
 		trueBlocksRead = true
 	}
 
 	return &cachedTrueBlocksConfig
-}
-
-var OsToPath = map[string]string{
-	"linux":  ".local/share/trueblocks",
-	"darwin": "Library/Application Support/TrueBlocks",
-}
-
-// TODO: Search for PathAccessor
-// GetPathToConfig returns the path to the directory where the configuration files are
-func GetPathToConfig(fileName string) string {
-	// These values are checked in CheckMigrations and will not proceed if not valid
-	userOs := runtime.GOOS
-	user, _ := user.Current()
-	return path.Join(user.HomeDir, OsToPath[userOs], fileName)
-}
-
-// TODO: Search for PathAccessor
-// GetPathToCache returns the one and only cachePath
-func GetPathToCache() string {
-	return ReadTrueBlocks().Settings.CachePath
-}
-
-// TODO: Search for PathAccessor
-// GetPathToIndex returns the one and only cachePath
-func GetPathToIndex() string {
-	return ReadTrueBlocks().Settings.IndexPath
-}
-
-// TODO: Search for PathAccessor
-// GetPathToCommands returns full path the the given tool
-func GetPathToCommands(part string) string {
-	usr, _ := user.Current()
-	dir := usr.HomeDir
-	return dir + "/.local/bin/chifra/" + part
 }

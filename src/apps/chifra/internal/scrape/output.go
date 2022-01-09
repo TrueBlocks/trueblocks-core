@@ -164,7 +164,7 @@ func RunMonitorScraper(wg sync.WaitGroup, initialState bool) {
 	}
 }
 
-var cachePath string = "/tmp/"
+var statusPath string = "/tmp/"
 
 type Scraper struct {
 	Counter    uint64 `json:"Counter"`
@@ -206,7 +206,7 @@ func (scraper *Scraper) ChangeState(onOff bool) bool {
 	if onOff {
 		str = "true"
 	}
-	fileName := cachePath + scraper.Name + ".txt"
+	fileName := statusPath + scraper.Name + ".txt"
 	err := ioutil.WriteFile(fileName, []byte(str), 0644)
 	if err != nil {
 		log.Fatal(err)
@@ -231,7 +231,7 @@ func (scraper *Scraper) Pause() {
 // 	TrueBlocks string `json:"trueblocksVersion"`
 // 	RPC        string `json:"rpcProvider"`
 // 	ConfigPath string `json:"configPath"`
-// 	Cache Path  string `json:"cachePath"`
+// 	Cache Path  string `json:"cache Path"`
 // 	IndexPath  string `json:"indexPath"`
 // 	IsTesting  bool   `json:"isTesting"`
 // 	IsDocker   bool   `json:"isDocker"`
@@ -290,16 +290,6 @@ func (scraper *Scraper) Pause() {
 // 	return response.Status[0], nil
 // }
 
-// func GetChifraMeta() (ChifraMeta, error) {
-// 	response, err := GetChifraResponse()
-// 	if err != nil {
-// 		fmt.Printf("GetChifraMeta.GetChifraResponse failed with: %s", err)
-// 		var junk ChifraMeta
-// 		return junk, err
-// 	}
-// 	return response.Meta, nil
-// }
-
 // func ParseOptions() error {
 // 		// Establish and parse the command line input...
 // 		flag.BoolVar(&Options.Scrape, "scrape", false, "enable block scraper mode")
@@ -316,19 +306,6 @@ func (scraper *Scraper) Pause() {
 
 // Options.Status, _ = GetChifraData()
 // Options.Meta, _ = GetChifraMeta()
-
-// 	if Options.Verbose > 0 {
-// 		log.Print(colors.Green, "verbose:     ", colors.Off, Options.Verbose, "\n")
-// 	}
-
-// 	log.Print("\n")
-// 	log.Print(colors.Green, "Client:       ", colors.Off, Options.Status.Latest)
-// 	log.Print(colors.Green, "TrueBlocks:   ", colors.Off, Options.Status.TrueBlocks)
-// 	log.Print(colors.Green, "Cache Path:   ", colors.Off, config.GetPathToCache())
-// 	log.Print(colors.Green, "Index Path:   ", colors.Off, config.GetPathToIndex())
-// 	log.Print(colors.Green, "Rpc Provider: ", colors.Off, Options.Status.RPC)
-// 	log.Print(colors.Green, "Progress:     ", colors.Off, Options.Meta.Latest, ", ", Options.Meta.Finalized, ", ", Options.Meta.Staging, ", ", Options.Meta.Unripe)
-
 // 	return nil
 // }
 

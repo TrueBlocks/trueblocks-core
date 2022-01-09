@@ -17,6 +17,7 @@ type GlobalOptions struct {
 	Verbose  bool
 	LogLevel uint64
 	NoHeader bool
+	Chain    string
 	Wei      bool
 	Ether    bool
 	Dollars  bool
@@ -39,6 +40,7 @@ func (opts *GlobalOptions) TestLog() {
 	logger.TestLog(opts.Verbose, "Verbose: ", opts.Verbose)
 	logger.TestLog(opts.LogLevel > 0, "LogLevel: ", opts.LogLevel)
 	logger.TestLog(opts.NoHeader, "NoHeader: ", opts.NoHeader)
+	logger.TestLog(len(opts.Chain) > 0 && opts.Chain != "mainnet", "Chain: ", opts.Chain)
 	logger.TestLog(opts.Wei, "Wei: ", opts.Wei)
 	logger.TestLog(opts.Ether, "Ether: ", opts.Ether)
 	logger.TestLog(opts.Dollars, "Dollars: ", opts.Dollars)
@@ -64,6 +66,7 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions) {
 	cmd.Flags().BoolVarP(&opts.Verbose, "verbose", "v", false, "enable verbose (increase detail with --log_level)")
 	cmd.Flags().BoolVarP(&opts.Help, "help", "h", false, "display this help screen")
 
+	cmd.Flags().StringVarP(&opts.Chain, "chain", "", "mainnet", "EVM compatible chain you're running against")
 	cmd.Flags().BoolVarP(&opts.Raw, "raw", "", false, "report JSON data from the node with minimal processing")
 	cmd.Flags().BoolVarP(&opts.Version, "version", "", false, "display the current version of the tool")
 	cmd.Flags().BoolVarP(&opts.Noop, "noop", "", false, "")
@@ -78,6 +81,7 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions) {
 	cmd.Flags().StringVarP(&opts.File, "file", "", "", "specify multiple sets of command line options in a file")
 	cmd.Flags().StringVarP(&opts.OutputFn, "output", "", "", "write the results to file 'fn' and return the filename")
 
+	cmd.Flags().MarkHidden("chain")
 	cmd.Flags().MarkHidden("raw")
 	cmd.Flags().MarkHidden("version")
 	cmd.Flags().MarkHidden("noop")
@@ -119,6 +123,11 @@ func (opts *GlobalOptions) ToCmdLine() string {
 	}
 	if opts.NoHeader {
 		options += " --no_header"
+	}
+	if len(opts.Chain) > 0 {
+		// TODO: Do we need --chain in the c++ code?
+		// fmt.Fprintf(os.Stderr, "chain: %s\n", opts.Chain)
+		// options += " --chain" + opts.Chain
 	}
 	if opts.Wei {
 		options += " --wei"
@@ -171,6 +180,8 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *GlobalOptions {
 			opts.LogLevel = ToUint64(value[0])
 		case "noHeader":
 			opts.NoHeader = true
+		case "chain":
+			opts.Chain = value[0]
 		case "wei":
 			opts.Wei = true
 		case "ether":
@@ -202,6 +213,7 @@ func IsGlobalOption(key string) bool {
 		"nocolor",
 		"logLevel",
 		"noHeader",
+		"chain",
 		"wei",
 		"ether",
 		"dollars",

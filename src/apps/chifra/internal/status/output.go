@@ -35,7 +35,7 @@ func RunStatus(cmd *cobra.Command, args []string) error {
 	// log.Println(GreenTxt("Config Path:  "), config.GetPathToConfig(""))
 	// log.Println(GreenTxt("Cache Path:   "), config.GetPathToCache())
 	// log.Println(GreenTxt("Index Path:   "), config.GetPathToIndex())
-	// log.Println(GreenTxt("Rpc Provider: "), config.ReadTrueBlocks().Settings.RpcProvider)
+	// log.Println(GreenTxt("Rpc Provider: "), config.GetRpcProvider())
 	// log.Printf("%s%d, %d (%d), %d (%d), %d (%d), %d (%d)\n", GreenTxt("Progress:      "),
 	//	meta.Latest,
 	//	meta.Finalized, (meta.Latest - meta.Finalized),
