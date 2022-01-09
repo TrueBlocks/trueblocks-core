@@ -50,7 +50,7 @@ lastVisitedBlock    	1009	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 sizeInBytes         	1010	0	12582939	T_UNUMBER TS_NUMERAL TS_OMITEMPTY
 apps                	1011	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
 {
-  "schema": 23000,
+  "schema": 23005,
   "deleted": false,
   "showing": true,
   "cname": "Monitor",
