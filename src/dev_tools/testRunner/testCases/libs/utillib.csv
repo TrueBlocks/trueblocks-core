@@ -27,7 +27,7 @@ on      ,cmd  ,fast  ,null  ,utillib/fileTest    ,test08       ,n    ,val = newe
 on      ,cmd  ,fast  ,null  ,utillib/fileTest    ,test07       ,n    ,val = rm
 
 on      ,cmd  ,fast  ,null  ,utillib/jsonTest    ,nothing      ,n    ,
-on      ,cmd  ,fast  ,null  ,utillib/jsonTest    ,test_blocks  ,n    ,val = blocks
+local   ,cmd  ,fast  ,null  ,utillib/jsonTest    ,test_blocks  ,n    ,val = blocks
 on      ,cmd  ,fast  ,null  ,utillib/jsonTest    ,test_escaped ,n    ,val = escaped
 on      ,cmd  ,fast  ,null  ,utillib/jsonTest    ,test_spaces  ,n    ,val = spaces
 on      ,cmd  ,fast  ,null  ,utillib/jsonTest    ,test_traces  ,n    ,val = traces
