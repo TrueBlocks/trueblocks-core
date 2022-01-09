@@ -87,6 +87,7 @@ paths:
       description: List every appearance of an address anywhere on the chain.
       operationId: accounts-list
       parameters:
+        - $ref: "#/components/parameters/fmt"
         - name: addrs
           description: one or more addresses (0x...) to list
           required: true
@@ -125,7 +126,9 @@ paths:
                     description: a single appearance of an address anywhere in the chain in the form of blockNumber.transactionIndex
                     type: array
                     items:
-                      $ref: "#/components/schemas/appearance"
+                      oneOf:
+                      - $ref: "#/components/schemas/appearance"
+                      - $ref: "#/components/schemas/listStats"
                 example:
                   {
                     "data": [
@@ -156,6 +159,7 @@ paths:
       description: Export full detail of transactions for one or more addresses.
       operationId: accounts-export
       parameters:
+        - $ref: '#/components/parameters/fmt'
         - name: addrs
           description: one or more addresses (0x...) to export
           required: true
@@ -288,7 +292,7 @@ paths:
           in: query
           explode: true
           schema:
-            type: string
+            type: number
         - name: maxRecords
           description: the maximum number of records to process before reporting
           required: false
@@ -331,6 +335,13 @@ paths:
               format: topic
         - name: clean
           description: clean (i.e. remove duplicate appearances) from all existing monitors
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: ether
           required: false
           style: form
           in: query
@@ -399,6 +410,7 @@ paths:
       description: Add, remove, clean, and list address monitors.
       operationId: accounts-monitors
       parameters:
+        - $ref: '#/components/parameters/fmt'
         - name: addrs
           description: one or more addresses (0x...) to process
           required: true
@@ -446,6 +458,8 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/monitor"
+                  name:
+                    type: string
         "400":
           description: bad input parameter
   /names:
@@ -456,6 +470,7 @@ paths:
       description: Query addresses or names of well known accounts.
       operationId: accounts-names
       parameters:
+        - $ref: '#/components/parameters/fmt'
         - name: terms
           description: a space separated list of one or more search terms
           required: true
@@ -574,6 +589,7 @@ paths:
       description: Fetches the ABI for a smart contract.
       operationId: accounts-abis
       parameters:
+        - $ref: '#/components/parameters/fmt'
         - name: addrs
           description: a list of one or more smart contracts whose ABIs to display
           required: true
@@ -604,6 +620,29 @@ paths:
             items:
               type: string
               format: string
+        - name: known
+          description: load common 'known' ABIs from cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: source
+          description: show the source of the ABI information
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: logLevel
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
       responses:
         "200":
           description: returns the requested data
@@ -615,7 +654,7 @@ paths:
                     description: a collection of function and event definitions as described elsewhere in the Ethereum system
                     type: array
                     items:
-                      $ref: "#/components/schemas/abi"
+                      $ref: "#/components/schemas/function"
                 example:
                   {
                     "data": [
@@ -662,6 +701,7 @@ paths:
       description: Retrieve one or more blocks from the chain or local cache.
       operationId: chaindata-blocks
       parameters:
+        - $ref: '#/components/parameters/fmt'
         - name: blocks
           description: a space-separated list of one or more block identifiers
           required: true
@@ -762,6 +802,22 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: list
+          description: summary list of blocks running backwards from latest block minus num
+          required: false
+          style: form
+          in: query
+          schema:
+            type: string
+            format: blknum
+        - name: listCount
+          description: the number of blocks to report for list option
+          required: false
+          style: form
+          in: query
+          schema:
+            type: string
+            format: blknum
       responses:
         "200":
           description: returns the requested data
@@ -791,6 +847,7 @@ paths:
       description: Retrieve one or more transactions from the chain or local cache.
       operationId: chaindata-transactions
       parameters:
+        - $ref: '#/components/parameters/fmt'
         - name: transactions
           description: a space-separated list of one or more transaction identifiers
           required: true
@@ -865,6 +922,7 @@ paths:
       description: Retrieve receipts for the given transaction(s).
       operationId: chaindata-receipts
       parameters:
+        - $ref: '#/components/parameters/fmt'
         - name: transactions
           description: a space-separated list of one or more transaction identifiers
           required: true
@@ -906,6 +964,7 @@ paths:
       description: Retrieve logs for the given transaction(s).
       operationId: chaindata-logs
       parameters:
+        - $ref: '#/components/parameters/fmt'
         - name: transactions
           description: a space-separated list of one or more transaction identifiers
           required: true
@@ -947,6 +1006,7 @@ paths:
       description: Retrieve traces for the given transaction(s).
       operationId: chaindata-traces
       parameters:
+        - $ref: '#/components/parameters/fmt'
         - name: transactions
           description: a space-separated list of one or more transaction identifiers
           required: true
@@ -1012,12 +1072,20 @@ paths:
       description: Find block(s) based on date, blockNum, timestamp, or 'special'.
       operationId: chaindata-when
       parameters:
+        - $ref: '#/components/parameters/fmt'
         - name: timestamps
           description: ignore other options and generate timestamps only
           required: false
           style: form
           in: query
           explode: true
+          schema:
+            type: boolean
+        - name: list
+          description: "export a list of the 'special' blocks"
+          required: false
+          style: form
+          in: query
           schema:
             type: boolean
       responses:
@@ -1042,6 +1110,7 @@ paths:
       description: Retrieve account balance(s) for one or more addresses at given block(s).
       operationId: chainstate-state
       parameters:
+        - $ref: '#/components/parameters/fmt'
         - name: addrs
           description: one or more addresses (0x...) from which to retrieve balances
           required: true
@@ -1157,6 +1226,7 @@ paths:
       description: Retrieve token balance(s) for one or more addresses at given block(s).
       operationId: chainstate-tokens
       parameters:
+        - $ref: '#/components/parameters/fmt'
         - name: addrs2
           description: >
             two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported
@@ -1253,6 +1323,7 @@ paths:
       description: Report on the status of the TrueBlocks system.
       operationId: admin-status
       parameters:
+        - $ref: '#/components/parameters/fmt'
         - name: modes
           description: the type of status info to retrieve
           required: false
@@ -1450,6 +1521,7 @@ paths:
       description: Manage pinned index of appearances and associated blooms.
       operationId: admin-pins
       parameters:
+        - $ref: '#/components/parameters/fmt'
         - name: list
           description: list the bloom and index hashes from local cache or IPFS
           required: false
@@ -1607,6 +1679,7 @@ paths:
       description: Update or display Ethereum price data. This tool has been deprecated.
       operationId: other-quotes
       parameters:
+        - $ref: '#/components/parameters/fmt'
         - name: period
           description: increment of display
           required: false
@@ -1771,6 +1844,17 @@ paths:
         "400":
           description: bad input parameter
 components:
+  parameters:
+    fmt:
+      in: query
+      name: fmt
+      schema:
+        type: string
+        enum:
+          - json
+          - csv
+          - txt
+          - api
   schemas:
     monitor:
       description: "A local file indicating a user's interest in an address. Includes caches for reconicilations, transactions and appearances as well as an optional association to named account"
@@ -1802,6 +1886,18 @@ components:
         isCustom:
           type: boolean
           description: "`true` if this address is customized"
+        name:
+          type: string
+        symbol:
+          type: string
+        source:
+          type: string
+        decimals:
+          type: number
+        isContract:
+          type: boolean
+        isValid:
+          type: boolean
     appearance:
       description: "a single appearance of an address anywhere in the chain in the form of blockNumber.transactionIndex"
       type: object
@@ -2018,19 +2114,6 @@ components:
         isErc721:
           type: boolean
           description: "`true` if the address is an ERC720, `false` otherwise"
-    abi:
-      description: "a collection of function and event definitions as described elsewhere in the Ethereum system"
-      type: object
-      properties:
-        address:
-          type: string
-          format: address
-          description: "the smart contract that implements this abi"
-        interfaces:
-          type: array
-          items:
-            $ref: "#/components/schemas/function"
-          description: "the list of events and functions on this abi"
     block:
       description: "block data directly from the blockchain"
       type: object
@@ -2084,6 +2167,8 @@ components:
           type: boolean
           example: true
           description: "flag indicating the system considers this data final"
+        unclesCnt:
+          type: number
     transaction:
       description: "the transaction data for a given transaction directly from the blockchain"
       type: object
@@ -2170,6 +2255,12 @@ components:
           type: boolean
           example: true
           description: "flag indicating the system considers this data final"
+        extraData:
+          type: string
+        isError:
+          type: boolean
+        date:
+          type: string
     receipt:
       description: "receipt data for a given transaction directly from the blockchain"
       type: object
@@ -2230,10 +2321,15 @@ components:
           example: "0x0000...3ff6"
           description: "any remaining un-indexed parameters to the event"
         articulatedLog:
+          description: "data used when articulating log which is different than Function"
           type: object
-          items:
-            $ref: "#/components/schemas/function"
-          description: "a human-readable version of the topic and data fields"
+          properties:
+            name:
+              type: string
+            inputs:
+              type: object
+              additionalProperties:
+                type: string
         compressedLog:
           type: string
           example: "Transfer(0xcfa...9f54..."
@@ -2541,6 +2637,10 @@ components:
           type: number
           format: timestamp
           description: "the timestamp when this status data was produced"
+        caches:
+          type: array
+          items:
+            $ref: "#/components/schemas/cache"
     cache:
       description: "The cache data model carries information about the various local binary caches"
       type: object
@@ -2563,6 +2663,19 @@ components:
           type: number
           format: uint64
           description: "the size of the cache in bytes"
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/cacheItem"
+    cacheItem:
+      description: "Cache content"
+      type: object
+      properties:
+        address:
+          type: string
+          format: address
+        name:
+          type: string
     pinnedChunk:
       description: "the IPFS hashes of the index chunk and its associated Bloom filter for the given block range"
       type: object
@@ -2579,6 +2692,12 @@ components:
           type: ipfshash
           example: "QmTbYpR...qWLj44"
           description: "the IPFS hash of the index chunk at that range"
+        firstApp:
+          type: string
+          format: blknum
+        latestApp:
+          type: string
+          format: blknum
     manifest:
       description: "a manifest of the IPFS hashes created for the unchained index"
       type: object
@@ -2675,6 +2794,17 @@ components:
           type: string
           example: "Byzantium"
           description: "the name of the block for some named 'special' blocks"
+    listStats:
+      description: "`list` statistics"
+      type: object
+      properties:
+        address:
+          type: string
+          format: address
+        nRecords:
+          type: number
+        fileSize:
+          type: number
     response:
       required:
         - result
