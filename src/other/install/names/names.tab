@@ -2927,6 +2927,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC721	0x3b3bc9b1dd9f3c8716fff083947b8769e2ff9781	Arabian Camels	CAMELS	On chain	18		false	false	false	true	true	true
 50-Tokens:ERC721	0x3b3ee1931dc30c1957379fac9aba94d1c48a5405	Foundation	FND	On chain	18		false	false	false	true	true	true
 50-Tokens:ERC20	0x3b45a702763c02c65ace21e84adc4c224a794323	Ethereum Professional	EPRO	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC20	0x3b484b82567a09e2588a13d54d032153f0c0aee0	SOS	SOS	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x3b4f31b8613ecf4371385692b294a22be4168fce	Kiyoshi Shiba Inu	KIYOSHI	On chain	18		false	false	false	true	true	false
 31-Contracts:Giveth Project	0x3b56c96e11fd90d85cbb2bc5ed17eb83615c0c6c	Partners In Health		Giveth Website			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x3b6a7ed85f7259861815194d5b228b9d9ad28fd0	Retrograde3		https://www.humanitydao.org/humans			false	false	false	false	false	false
@@ -6233,7 +6234,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 90-Individuals:Kickback	0x7f58a56e9836231ce516153825fb75535f99fe86	auryn		https://kickback.events/			false	false	false	false	false	false
 90-Individuals:Kickback	0x7f66828fccd12dac4d88a440b0e306d9d16e45e4	pertsa		https://kickback.events/			false	false	false	false	false	false
 31-Contracts:Giveth Project	0x7f698f6dc743ada6f899a0eb30fcd73fc1de3447	Property and Environment Research Center (PERC)		Giveth Website			false	false	false	false	false	false
-50-Tokens:ERC20	0x7f6a47b85a9425c813b1cd191d730054bdf6235d	dfw.vc8000eth+Profit	www.dfw.vc￯﾿ﾯ￯ﾾ﾿�	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC20	0x7f6a47b85a9425c813b1cd191d730054bdf6235d	dfw.vc8000eth+Profit	www.dfw.vc￯﾿ﾯ￯ﾾ﾿￯ﾾﾯ￯﾿ﾯ￯ﾾﾾ￯ﾾ﾿￯﾿	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x7f6e5d07f7e90f3ede0a5986671ef7734fbe04a9	BitEth Set	BTCETH	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x7f77d4d26620974f0b0ad3de05d4fb2fd78e94c1	WOWB INU	WOWB	On chain	18		false	false	false	true	true	false
 31-Contracts:Giveth Project	0x7f8027e7763f029517781d0788a67ea2182954c7	El Paso Community Foundation		Giveth Website			false	false	false	false	false	false
@@ -9276,6 +9277,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0xbf52f2ab39e26e0951d2a02b49b7702abe30406a	ODEM Token	ODEM	On chain	18	Unlocking human potential. Powering your education and certifications on the blockchain	false	false	false	true	true	false
 50-Tokens:ERC20	0xbf5496122cf1bb778e0cbe5eab936f2be5fc0940	FundToken	FUNDZ	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC721	0xbf55729990aa5fa9d14fda311a4362881cbce846	Honorary Baddies	HB	On chain	18		false	false	false	true	true	true
+50-Tokens:ERC20	0xbf57539473913685688d224ad4e262684b23dd4c	0xbf57539473913685688d224ad4e262684b23dd4c		TrueBlocks.io	18		false	false	false	true	false	false
 50-Tokens:ERC20	0xbf620235d3a402b2b42e28cd299c448da396cc5e	Hishu Inu Finance	Hishu	On chain	18		false	false	false	true	true	false
 30-Contracts:Humanity DAO	0xbf636cc7531c92b5283eb61bbf706a841ae4ad76	jona_s_c		https://www.humanitydao.org/humans			false	false	false	false	false	false
 91-Early:Miners	0xbf71642d7cbae8faf1cfdc6c1c48fcb45b15ed22	Miner_0080_68		OnChain			false	false	false	false	false	false
@@ -11794,7 +11796,6 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0xf4eda77f0b455a12f3eb44f8653835f377e36b76	TIKTOK COIN	TIKTOK	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0xf4faea455575354d2699bc209b0a65ca99f69982	No BS Crypto	NOBS	On chain	18		false	false	false	true	true	false
 91-Early:Addresses	0xf4fe90e63f2a90710bcc0c00f38812c4a882f2ff	BitcoinToYou Exchange		CarbonVote			false	false	false	false	false	false
-31-Contracts:Giveth Project	0xf503017d7baf7fbc0fff7492b751025c6a78179b	TrueBlocks Indexer		Giveth Website			false	false	false	false	false	false
 31-Contracts:Giveth Project	0xf50ab2136921aaaa01cedf443d174a04159e95d0	Susan G. Komen		Giveth Website			false	false	false	false	false	false
 31-Gitcoin:Grants	0xf50f3412c1e28598597f04db635b0b0b01a38737	Grant 2165 - Illuminate Finance		https://gitcoin.co/grants/2165/illuminate-finance			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0xf522dd5f2f5abbd14b58142ea5bf22c342f572ad	geniusboy91		https://www.humanitydao.org/humans			false	false	false	false	false	false
