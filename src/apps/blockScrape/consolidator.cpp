@@ -86,8 +86,12 @@ bool copyRipeToStage(const string_q& path, void* data) {
 
         // If we're not one behind, we have a problem
         CConsolidator* con = reinterpret_cast<CConsolidator*>(data);
-        if ((con->prevBlock + 1) != bn) {
-            // For some reason, we're missing a file. Quit and try again next time
+
+        bool allow = con->opts->allow_missing;
+        bool sequential = (con->prevBlock + 1) == bn;
+        bool less_than = (con->prevBlock < bn);
+        if ((!allow && !sequential) || (allow && !less_than)) {
+            // Something went wrong. We quit here but we will try again next time
             LOG_WARN("Current file (", path, ") does not sequentially follow previous file ", con->prevBlock, ".");
             return false;
         }

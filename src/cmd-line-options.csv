@@ -223,8 +223,9 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 11120,apps,Admin,,blockScrape,unripe_dist,,28,false,true,false,false,config,flag,<uint64>,the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe
 11121,apps,Admin,,blockScrape,snap_to_grid,,100000,false,true,false,false,config,flag,<uint64>,an override to apps_per_chunk to snap-to-grid at every modulo of this value&#44; this allows easier corrections to the index
 11122,apps,Admin,,blockScrape,first_snap,,2250000,false,true,false,false,config,flag,<uint64>,the first block at which snap_to_grid is enabled
-11123,apps,Admin,,blockScrape,n_test_runs,,0,false,true,false,false,config,flag,<uint64>,in live testing mode&#44; the number of test runs to process before quitting
-11124,apps,Admin,,blockScrape,,,,false,false,true,true,--,description,,Scan the chain and update (and optionally pin) the TrueBlocks index of appearances.
+11123,apps,Admin,,blockScrape,allow_missing,,,false,true,false,false,config,flag,<boolean>,do not report errors for blockchain that contain blocks with zero addresses
+11124,apps,Admin,,blockScrape,n_test_runs,,0,false,true,false,false,config,flag,<uint64>,in live testing mode&#44; the number of test runs to process before quitting
+11125,apps,Admin,,blockScrape,,,,false,false,true,true,--,description,,Scan the chain and update (and optionally pin) the TrueBlocks index of appearances.
 
 12110,apps,Admin,scrape,flame-scrape,modes,,,true,false,true,true,local,positional,list<enum[indexer|monitors|both]>,which scraper(s) to control
 12113,apps,Admin,scrape,flame-scrape,action,a,,false,true,true,true,local,flag,enum[toggle|run|restart|pause|quit],command to apply to the specified scrape

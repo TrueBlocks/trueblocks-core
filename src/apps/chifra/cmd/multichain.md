@@ -185,3 +185,4 @@ remoteExplorer = ""
 - We used to preclude the user from customizing an indexPath if it doesn't exist
 - Should be fail if the XDG paths do not exist?
 - This function: func initConfig() in blaze needs attention for paths
+- ./docs/content/chifra/configs.md needs work

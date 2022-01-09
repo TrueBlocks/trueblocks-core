@@ -36,6 +36,7 @@ class COptions : public COptionsBase {
     uint64_t unripe_dist;
     uint64_t snap_to_grid;
     uint64_t first_snap;
+    bool allow_missing;
     uint64_t n_test_runs;
     // END_CODE_DECLARE
 
