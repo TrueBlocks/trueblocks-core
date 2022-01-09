@@ -1,9 +1,9 @@
-# Deploy basic configuration and directories structure for trueblocks
+# Deploy basic configuration and directories structure for trueblocks.
 
 #---------------------------------------------------------------
 # setup some paths
 #---------------------------------------------------------------
-set(TB_INSTALL_FOLDER "$ENV{XDG_DATA_HOME}")
+set(TB_INSTALL_FOLDER "$ENV{XDG_CONFIG_HOME}")
 if(WIN32)
     message(STATUS "Windows build is not supported yet")
 elseif(APPLE)

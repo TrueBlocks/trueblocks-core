@@ -73,6 +73,8 @@ bool loadPrefundBalances(void) {
         }
     }
 
+    establishFolder(STR_PREFUND_BALANCES_BIN1);
+
     CArchive archive(WRITING_ARCHIVE);
     if (archive.Lock(STR_PREFUND_BALANCES_BIN1, modeWriteCreate, LOCK_NOWAIT)) {
         archive << uint64_t(prefundBalMap.size());

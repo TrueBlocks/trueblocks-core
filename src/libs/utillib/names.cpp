@@ -140,6 +140,7 @@ static bool readNamesFromAscii(void) {
 //-----------------------------------------------------------------------
 static bool writeNamesToBinary(void) {
     string_q binFile = getPathToCache(STR_BIN_LOC);
+    establishFolder(binFile);
     CArchive out(WRITING_ARCHIVE);
     if (out.Lock(binFile, modeWriteCreate, LOCK_WAIT)) {
         // We treat one whole record (the first) as the header. Yes,
@@ -316,6 +317,7 @@ bool forEveryName(NAMEODFUNC func, void* data) {
 
 //-----------------------------------------------------------------------
 bool NameOnDisc::name_2_Disc(const CAccountName& nm) {
+    memset(this, 0, sizeof(NameOnDisc));
     strncpy(tags, nm.tags.c_str(), nm.tags.length());
     strncpy(address, nm.address.c_str(), nm.address.length());
     strncpy(name, nm.name.c_str(), nm.name.length());
