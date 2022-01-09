@@ -20,6 +20,5 @@ bool receipts_Display(CTraverser* trav, void* data) {
     cout << trav->trans.receipt;
     opt->firstOut = false;
 
-    prog_Log(trav, data);
-    return !shouldQuit();
+    return prog_Log(trav, data);
 }

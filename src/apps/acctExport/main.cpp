@@ -113,9 +113,6 @@ int main(int argc, const char* argv[]) {
         }
         os << ", \"accountedFor\": " << options.allMonitors[0] << endl;
     }
-    if (!isTestMode() && options.slowQueries) {
-        os << ", \"slowQueries\": true" << endl;
-    }
     expContext().fmtMap["meta"] += os.str();
 
     cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
@@ -161,13 +158,16 @@ void start_Log(CTraverser* trav, void* data) {
 }
 
 //-----------------------------------------------------------------------
-void prog_Log(CTraverser* trav, void* data) {
-    const COptions* opt = (const COptions*)data;
+// Returns false if the loop shouldQuit
+bool prog_Log(CTraverser* trav, void* data) {
+    COptions* opt = (COptions*)data;
     if (!trav->logging)
-        return;
+        return !shouldQuit();
 
-    if (trav->nProcessed % opt->reportFreq())
-        return;
+    size_t freq = opt->reportFreq;
+    opt->reportFreq = opt->reportDef;  // reset
+    if (trav->nProcessed % freq)
+        return !shouldQuit();
 
     blknum_t prog = opt->first_record + trav->nProcessed;
     blknum_t nApps = opt->stats.nFileRecords;
@@ -184,7 +184,7 @@ void prog_Log(CTraverser* trav, void* data) {
     }
     LOG_PROGRESS(padRight(trav->searchOp, 11), blknum_t(opt->first_record + trav->index), nApps, post.str() + "\r");
 
-    return;
+    return (opt->slowQueries <= opt->maxSlowQueries && !shouldQuit());
 }
 
 //-----------------------------------------------------------------------
@@ -230,6 +230,7 @@ bool loadTx_Func(CTraverser* trav, void* data) {
     } else {
         trav->searchOp = "Extracting";
         opt->slowQueries++;
+        opt->reportFreq = 1;
         dirty = true;
         if (trav->app->blk == 0) {
             address_t addr = opt->prefundAddrMap[trav->app->txid];

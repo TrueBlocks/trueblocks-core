@@ -243,7 +243,8 @@ bool COptions::showAddrsInTx(CTraverser* trav, const blkrange_t& range, const CA
                     app.addr = bytes_2_Addr(theIndex->addresses[i].bytes);
                     if (assignReason(accountedFor, app, trav->trans)) {
                         trav->nProcessed++;
-                        prog_Log(trav, this);
+                        if (!prog_Log(trav, this))
+                            return false;
                         showApp(app, this);
                     }
                     start = i;
@@ -257,7 +258,7 @@ bool COptions::showAddrsInTx(CTraverser* trav, const blkrange_t& range, const CA
                 chunkPath);
     }
 
-    return !shouldQuit();
+    return prog_Log(trav, this);
 }
 
 //-----------------------------------------------------------------------
@@ -265,8 +266,7 @@ bool COptions::showAddrsInTx(CTraverser* trav, const blkrange_t& range, const CA
 // because what we actually want to do is scan across the index chunks
 bool neighbors_Pre(CTraverser* trav, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
-    extern size_t freqOverride;
-    freqOverride = 43;  // random prime
+    opt->reportDef = 43;  // random prime
 
     // LOG_INFO("Processing address ", opt->accountedFor.address);
 
