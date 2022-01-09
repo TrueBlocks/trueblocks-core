@@ -20,23 +20,34 @@ Many of the `chifra` commands allow you to customize their behaviour through con
 
 ### Environment Variables
 
-Each option can be overridden by exporting an environment variable in your shell prior to `chifra`. The name of the environment variable is as follows:
+Each command-line option may be overridden by exporting an environment variable in your shell prior to running a `chifra` command.
 
-1. The environment variable name is ALL_UPPER_CASE
-2. The name preserves underbars in the config item's name
-3. The name starts with the item's `[group]`. So, 
+The name of those environment variables is as follows:
+
+1. The environment variable is `ALL_UPPER_CASE`
+2. The environment variable name preserves underbars in the `item_name`
+3. The name of the variable starts with the `group` the item belongs to
+
+For example: `GROUP_ITEM_NAME`.
+
+A more concrete example might be:
 
 ```
-# Example
 export SETTINGS_RPCPROVIDER=http://localhost:9876
-chifra blocks 100 # uses alternate rpcProvider
+chifra blocks 100
 ```
+
+which would cause `chifra` to use an alternate rpcProvider without having to edit the configuration file.
 
 This feature comes in handy when build shell scripts to automate various tasks with `chifra`.
 
+### Where Are Configuration Files Stored?
+
+Please see [TODO: PLACE_HODLER](#) for more information.
+
 ### Separate Files
 
-The primary configuration is stored in `trueBlocks.toml`. This file exists in the root of a chain's configuration folder.
+A single global configuration, called `trueBlocks.toml`, is stored at the root of the configuration folder.
 
 In addition, each individual tool has its own configuration file with items peculuar to that tool. If a configuration item is found in a particular file, it applies only to that tool.
 
@@ -101,24 +112,30 @@ If you're running against mutliple chains, you may place any of these files in t
 <a href="#C4"></a>
 <div style="padding:2px;padding-left:10px;background-color:green;color:white">blockScrape.toml for chifra scrape</div>
 
-| Item/Default          | Description                                                                                   |
-| --------------------- | --------------------------------------------------------------------------------------------- |
-|                       |                                                                                               |
-| [settings]            |                                                                                               |
-| block_cnt             | The number of blocks to process with each round of the scraper<br />2000                      |
-| block_chan_cnt        | The number of go routines to devote to block processors<br />10                               |
-| addr_chan_cnt         | The number of go routines to devote to address processors<br />20                             |
-| n_blocks_fallback     | The number of blocks to process during dDos or other busy block ranges<br />500               |
-| pinata_api_key        | If --pin is on, the key to Pinata at which to pin                                             |
-| pinata_secret_api_key | If --pin is on, the secret key to Pinata at which to pin                                      |
-|                       |                                                                                               |
-| [requires]            |                                                                                               |
-| tracing               | If true, require the node to be able to produce traces<br />true                              |
-| archive               | If true, require the node to be an archive node<br />true                                     |
-| parity                | If true, require the node to be parity (deprecated)<br />true                                 |
-|                       |                                                                                               |
-| [dev]                 |                                                                                               |
-| ipfs_gateway          | The default IPFS gateway endpoint for `chifra init`<br />https://ipfs.unchainedindex.io/ipfs/ |
+| Item/Default          | Description                                                                                                                  |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+|                       |                                                                                                                              |
+| [settings]            |                                                                                                                              |
+| block_cnt             | The number of blocks to process with each round of the scraper<br />2000                                                     |
+| block_chan_cnt        | The number of go routines to devote to block processors<br />10                                                              |
+| addr_chan_cnt         | The number of go routines to devote to address processors<br />20                                                            |
+| n_blocks_fallback     | The number of blocks to process during dDos or other busy block ranges<br />500                                              |
+| apps_per_chunk        | the number of appearances to build into a chunk before consolidating it                                                      |
+| unripe_dist           | The distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe                    |
+| snap_to_grid          | An override to apps_per_chunk to snap-to-grid at every modulo of this value&#44; this allows easier corrections to the index |
+| first_snap            | The first block at which snap_to_grid is enabled                                                                             |
+| allow_missing         | Do not report errors for blockchain that contain blocks with zero addresses                                                  |
+| n_test_runs           | In live testing mode&#44; the number of test runs to process before quitting                                                 |
+| pinata_api_key        | If --pin is on, the key to Pinata at which to pin                                                                            |
+| pinata_secret_api_key | If --pin is on, the secret key to Pinata at which to pin                                                                     |
+|                       |                                                                                                                              |
+| [requires]            | (this section will be removed when full multi-chain support is finished)                                                     |
+| tracing               | If true, require the node to be able to produce traces<br />true                                                             |
+| archive               | If true, require the node to be an archive node<br />true                                                                    |
+| parity                | If true, require the node to be parity (deprecated)<br />true                                                                |
+|                       |                                                                                                                              |
+| [dev]                 | (this section will be removed when full multi-chain support is finished)                                                     |
+| ipfs_gateway          | The default IPFS gateway endpoint for `chifra init`<br />https://ipfs.unchainedindex.io/ipfs/                                |
 
 <div style="padding:2px;padding-left:10px;background-color:green;color:white">chunkMan.toml for chifra chunks</div>
 
