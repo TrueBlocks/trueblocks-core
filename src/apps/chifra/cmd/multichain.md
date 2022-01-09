@@ -186,3 +186,4 @@ remoteExplorer = ""
 - Should be fail if the XDG paths do not exist?
 - This function: func initConfig() in blaze needs attention for paths
 - ./docs/content/chifra/configs.md needs work
+- I feel like I need a different pinata account for each chain. Not a problem. Easier to remove a chain
