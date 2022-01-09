@@ -3,9 +3,10 @@ TEST[DATE|TIME] Depth:  0
 TEST[DATE|TIME] Terse:  true
 TIME ~ CLOCK - [0m[0;32m[1m<INFO>  [0m: Loading prefund balances
 TIME ~ CLOCK - <INFO>  : Loading names
---TIME-- client:      Client version (testing, archive, tracing)
---TIME-- trueblocks:  GHC-TrueBlocks//vers-alpha--git-hash---git-ts- (eskey, no pinkey)
---TIME-- configPath:  --paths--
---TIME-- cachePath:   --paths--
---TIME-- indexPath:   --paths--
---TIME-- rpcProvider: --providers--
+--TIME-- Client:       Client version (testing, archive, tracing)
+--TIME-- TrueBlocks:   GHC-TrueBlocks//vers-alpha--git-hash---git-ts- (eskey, no pinkey)
+--TIME-- Config Path:  --paths--
+--TIME-- Cache Path:   --paths--
+--TIME-- Index Path:   --paths--
+--TIME-- RPC Provider: --providers--
+--TIME-- Progress:     --client--, --final--, --staging--, --unripe
