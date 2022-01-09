@@ -20,6 +20,15 @@ names?terms=tip&fmt=json
       "description": ""
     },
     {
+      "tags": "31-Contracts:Giveth Project",
+      "address": "0x1e1dee1a47b6d4dd5122c6cd7483ddbb1f42bdce",
+      "name": "Sammy Tippit Ministries",
+      "symbol": "",
+      "source": "Giveth Website",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "31-Gitcoin:Grants",
       "address": "0x893d80144d0a439bbe29bc74024a29f361560c64",
       "name": "Grant 3504 - Web3 Kotlin Multiplatform",

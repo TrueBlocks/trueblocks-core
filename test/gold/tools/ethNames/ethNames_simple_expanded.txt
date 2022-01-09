@@ -26,6 +26,7 @@ TIME ~ CLOCK - <INFO>  : Loading names
 50-Tokens:ERC20	0x1966d718a565566e8e202792658d7b5ff4ece469	nDEX	NDX	On chain	18	nDEX Network is a next generation decentralized ethereum token exchange. Our primary goal is to provide a clean, fast and secure trading environment with lowest service charge.	false	false	false	true	true	false
 50-Tokens:ERC20	0x1985365e9f78359a9b6ad760e32412f4a445e862	Reputation	REP	On chain	18	Augur combines the magic of prediction markets with the power of a decentralized network to create a stunningly accurate forecasting tool	false	false	false	true	true	false
 50-Tokens:ERC20	0x1a66e09f7dccc10eae46e27cfa6b8d44a50df1e7	PRASM	PSM	On chain	18	AI-Based Decentralized Bioinformatic Network	false	false	false	true	true	false
+31-Contracts:Giveth Project	0x1b415ec11276f385db867e631c5c9692f3088112	Austin Disaster Relief Network		Giveth Website			false	false	false	false	false	false
 50-Tokens:ERC20	0x1ccaa0f2a7210d76e1fdec740d5f323e2e1b1672	Faceter Token	FACE	On chain	18	A computer vision surveillance technology powered by fog network of miners.	false	false	false	true	true	false
 50-Tokens:ERC20	0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c	Bancor Network Token	BNT	On chain	18	Bancor Protocol is a standard for a new generation of cryptocurrencies called Smart Tokens	false	false	false	true	true	false
 31-Gitcoin:Grants	0x1fb3e449448faf1330dba45d945554c1bedcab5a	Grant 2250 - Cura Network - the decentralized healthcare system that super-charges healthcare delivery		https://gitcoin.co/grants/2250/cura-network-the-decentralized-healthcare-system-			false	false	false	false	false	false
@@ -41,6 +42,7 @@ TIME ~ CLOCK - <INFO>  : Loading names
 50-Tokens:ERC20	0x3543638ed4a9006e4840b105944271bcea15605d	UNetworkToken	UUU	On chain	18	A Decentralized Protocol for Publishing and Valuing Online Content	false	false	false	true	true	false
 50-Tokens:ERC20	0x35a69642857083ba2f30bfab735dacc7f0bac969	BBNToken	BBN	On chain	18	Banyan Network is a fusion of big data network based on blockchain technology called Data Fusion Value Chain Network DVN.	false	false	false	true	true	false
 30-Contracts:Set Protocol	0x3700414bb6716fcd8b14344fb10ddd91fdea59ec	Kyber Network Wrapper		TrueBlocks.io			false	false	false	true	false	false
+31-Contracts:Giveth Project	0x373483a546e5212b0d009db1dbf0d14daff80f9a	Luminus Network for New Americans		Giveth Website			false	false	false	false	false	false
 50-Tokens:ERC20	0x3883f5e181fccaf8410fa61e12b59bad963fb645	Theta Token	THETA	On chain	18	A decentralized peer-to-peer network that aims to offer improved video delivery at lower costs.	false	false	false	true	true	false
 50-Tokens:ERC20	0x3a1237d38d0fb94513f85d61679cad7f38507242	Mindexcoin	MIC	On chain	18	Mindexcoin MIC is a token that enables data operations in the Ethereum Decentralized Network.	false	false	false	true	true	false
 50-Tokens:ERC20	0x3adfc4999f77d04c8341bac5f3a76f58dff5b37a	Privatix	PRIX	On chain	8	Internet Broadband Marketplace powered by P2P VPN Network on Blockchain.	false	false	false	true	true	false
@@ -63,9 +65,11 @@ TIME ~ CLOCK - <INFO>  : Loading names
 50-Tokens:ERC20	0x4ceda7906a5ed2179785cd3a40a69ee8bc99c466	AION	AION	On chain	8	A multi-tier blockchain system designed to address unsolved questions of scalability, privacy, and interoperability in blockchain networks	false	false	false	true	true	false
 50-Tokens:ERC20	0x501262281b2ba043e2fbf14904980689cddb0c78	Mithril Ore	MORE	On chain	2	Mithril Ore is a Casper Ethereum Staking Pool. Participation in Casper may be limited due to complexity, network-congestion, and/or lack of funds. This token allows participation by resolving these variables.	false	false	false	true	true	false
 30-Contracts:Kyber Network	0x52166528fcc12681af996e409ee3a421a4e128a3	Kyber Fee Burner		TrueBlocks.io			false	false	false	true	false	false
+31-Contracts:Giveth Project	0x5219ffb88175588510e9752a1ecaa3cd217ca783	Bloom Network		Giveth Website			false	false	false	false	false	false
 30-Contracts	0x521d32f3d23f1fc82b1dbe306edc3ef668e5d973	Clovers Network Related		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x53066cddbc0099eb6c96785d9b3df2aaeede5da3	Penta Network Token	PNT	On chain	18		false	false	false	true	true	false
 30-Contracts	0x5346d0f80e2816fad329f2c140c870ffc3c3e2ef	EtherRouter: Colony Network		EtherScan.io			false	false	false	true	false	false
+31-Contracts:Giveth Project	0x538f022f50038994f7a04a58f5004c1b98ed41a4	Alexander Youth Network		Giveth Website			false	false	false	false	false	false
 50-Tokens:ERC20	0x55296f69f40ea6d20e478533c15a6b08b654e758	XY Oracle	XYO	On chain	18	Blockchain's crypto-location oracle network	false	false	false	true	true	false
 31-Gitcoin:Grants	0x55b23ed53fe13060183b92979c737a8ef9a73b73	Grant 4201 - Spect Network		https://gitcoin.co/grants/4201/spect-network			false	false	false	false	false	false
 50-Tokens:ERC20	0x57ab1e02fee23774580c119740129eac7081e9d3	Synth sUSD	sUSD	On chain	18	sUSD is part of the Synethix network.	false	false	false	true	false	false
@@ -74,6 +78,7 @@ TIME ~ CLOCK - <INFO>  : Loading names
 50-Tokens:ERC20	0x5cf04716ba20127f1e2297addcf4b5035000c9eb	NKN	NKN	On chain	18	NKN is the new kind of P2P network connectivity protocol ecosystem powered by a novel public blockchain.	false	false	false	true	true	false
 50-Tokens:ERC20	0x5f3789907b35dce5605b00c0be0a7ecdbfa8a841	Content and Ad Network	CAN	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x607f4c5bb672230e8672085532f7e901544a7375	iEx.ec Network Token	RLC	On chain	9	Blockchain Based distributed cloud computing	false	false	false	true	true	false
+31-Contracts:Giveth Project	0x629224fc7ce36163040454cd51b37acc550b77cb	Rainforest Action Network		Giveth Website			false	false	false	false	false	false
 50-Tokens:ERC20	0x62a8aa7a0b58b6f2e275796f84ba5ad48c65d36d	CovidFree Network	COVIDFREE	On chain	18		false	false	false	true	true	false
 30-Contracts:Kyber Network	0x63825c174ab367968ec60f061753d3bbd36a0d8f	Kyber Reserve		0xTracker			false	false	false	true	false	false
 50-Tokens:ERC20	0x63e634330a20150dbb61b15648bc73855d6ccf07	Lancer Token	LNC	On chain	18	Collection of the systems which facilitate the inter-transaction between Linker Coin and various economic networks built on crypto-currency market, financial market, e-commerce market, etc.	false	false	false	true	true	false
@@ -92,6 +97,7 @@ TIME ~ CLOCK - <INFO>  : Loading names
 50-Tokens:ERC20	0x6fb3e0a217407efff7ca062d46c26e5d60a14d69	IoTeX Network	IOTX	On chain	18	IoTeX is the next generation of the IoT-oriented blockchain platform with vast scalability, privacy, isolatability, and developability. IoTeX connects the physical world, block by block.	false	false	false	true	true	false
 50-Tokens:ERC20	0x6fff3806bbac52a20e0d79bc538d527f6a22c96b	Network		On chain	18	Aims to be a disruptive ad network of creative minds who speak out against the powers that be.	false	false	false	true	true	false
 50-Tokens:ERC20	0x70861e862e1ac0c96f853c8231826e469ead37b1	DOS Network Token	DOS	On chain	18		false	false	false	true	true	false
+31-Contracts:Giveth Project	0x70a68a29bac0b3c85bed4b47bb3a639f0f245e70	Allergy & Asthma Network		Giveth Website			false	false	false	false	false	false
 50-Tokens:ERC20	0x70c621f949b6556c4545707a2d5d73a776b98359	Skychain Global Token	SKCH	On chain	6	Skychain is an open infrastructure, based on blockchain, which provides the possibility to create, train and use high-quality medical neural networks.	false	false	false	true	true	false
 50-Tokens:ERC20	0x71d01db8d6a2fbea7f8d434599c237980c234e4c	Gladius Token	GLA	On chain	8	DDoS protection network and DCN.	false	false	false	true	true	false
 31-Gitcoin:Grants	0x7293edfbe890854cb698119cc31441b063f44878	Grant 0822 Lukso: the Blockchain for New Digital Lifestyle		https://gitcoin.co/grants/822/lukso-the-blockchain-for-new-digital-lifestyle		https://www.lukso.network/	false	false	false	false	false	false
@@ -100,6 +106,7 @@ TIME ~ CLOCK - <INFO>  : Loading names
 30-Contracts:Kyber Network	0x798abda6cc246d0edba912092a2a3dbd3d11191b	Kyber Conversion Rates		TrueBlocks.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x7b0c06043468469967dba22d1af33d77d44056c8	Morpheus.Network	MRPH	On chain	4	Morpheus.Network was designed with some of the world's largest shipping, customs banking firms to create a full-service, global, automated, supply chain platform with an integrated cryptocurrency payment system	false	false	false	true	true	false
 50-Tokens:ERC20	0x7b2df125567815ac9b57da04b620f50bc93b320c	Archetypal Network	ACTP	On chain	8	Archetypal Network is an Ethereum based cloudmining smart contract miner to support real-time mining and high transaction throughput.	false	false	false	true	true	false
+31-Contracts:Giveth Project	0x7bc1f30ffeaeee36baf17ea421830281b148b397	Trustlines Network		Giveth Website			false	false	false	false	false	false
 50-Tokens:ERC20	0x7c5a0ce9267ed19b22f8cae653f198e3e8daf098	SANtiment network token	SAN	On chain	18	A Better Way to Trade Crypto-Markets - Market Datafeeds, Newswires, and Crowd Sentiment Insights for the Blockchain World	false	false	false	true	true	false
 50-Tokens:ERC20	0x7c5d5100b339fe7d995a893af6cb496b9474373c	Loon Network	LOON	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x7c6c3b4e91923f080d6cc847a68d7330400a95d7	Union Network Dollar Token	UNDT	On chain	18		false	false	false	true	true	false
@@ -197,10 +204,3 @@ TIME ~ CLOCK - <INFO>  : Loading names
 50-Tokens:ERC20	0xec491c1088eae992b7a214efb0a266ad0927a72a	AB-CHAIN RTB token	RTB	On chain	18	ADS IN BLOCKCHAIN ADVERTISING NETWORK. Online advertising enhanced by blockchain and AI technologies.	false	false	false	true	true	false
 50-Tokens:ERC20	0xeef9f339514298c6a857efcfc1a762af84438dee	Hermez Network Token	HEZ	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0xef88808d0fbb5c0c2c89f6d9b45eda53c0150993	iBuildApp Network Token	IBA	On chain	4		false	false	false	true	true	false
-50-Tokens:ERC20	0xf330d59f6755bd3088a6513fcdf2a4b97f802856	Future Network	FUNE	On chain	18		false	false	false	true	true	false
-31-Gitcoin:Grants	0xf458533d1ac15af5237a16252eb317bbc7981f19	Grant 2039 - Decentralized Anonymous Messaging Network [DAMN]		https://gitcoin.co/grants/2039/decentralized-anonymous-messaging-network-damn			false	false	false	false	false	false
-31-Gitcoin:Grants	0xf64bbc221f89cc882fba507908bbe4ae3ad2f470	Grant 1595 Bloom Network - Panvala League		https://gitcoin.co/grants/1595/bloom-network-panvala-league			false	false	false	true	false	false
-31-Gitcoin:Grants	0xf6c1eb87f4ee1330f061a14ca245d70c1f79c5a4	Grant 3058 - Open Social Network		https://gitcoin.co/grants/3058/open-social-network			false	false	false	false	false	false
-50-Tokens:ERC20	0xf8e386eda857484f5a12e4b5daa9984e06e73705	Indorse Token	IND	On chain	18	Decentralized Professional Network powered by blockchain technology	false	false	false	true	true	false
-50-Tokens:ERC20	0xf970b8e36e23f7fc3fd752eea86f8be8d83375a6	Ripio Credit Network Token	RCN	On chain	18	Ripio Credit Network is a global credit network based on cosigned smart contracts and blockchain technology that connects lenders and borrowers located anywhere in the world and on any currency	false	false	false	true	true	false
-30-Contracts:Kyber Network	0xfa71b63935cf9878e009ba6595da08f6d75c4aa1	Kyber Pay Wrapper		EtherScan.io			false	false	false	true	false	false

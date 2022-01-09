@@ -16,6 +16,7 @@ tags
 30-Contracts:Set Protocol
 30-Contracts:dAppNode
 30-Contracts:theGraph
+31-Contracts:Giveth Project
 31-Gitcoin:Admin
 31-Gitcoin:Contracts
 31-Gitcoin:Core

@@ -110,6 +110,15 @@ names?terms=etwork&verbose
       "description": ""
     },
     {
+      "tags": "31-Contracts:Giveth Project",
+      "address": "0x1b415ec11276f385db867e631c5c9692f3088112",
+      "name": "Austin Disaster Relief Network",
+      "symbol": "",
+      "source": "Giveth Website",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "50-Tokens:ERC20",
       "address": "0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c",
       "name": "Bancor Network Token",
@@ -209,6 +218,15 @@ names?terms=etwork&verbose
       "description": ""
     },
     {
+      "tags": "31-Contracts:Giveth Project",
+      "address": "0x373483a546e5212b0d009db1dbf0d14daff80f9a",
+      "name": "Luminus Network for New Americans",
+      "symbol": "",
+      "source": "Giveth Website",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "50-Tokens:ERC20",
       "address": "0x3cc83c2400e00a54fa1e588d62bc28bf15d5def5",
       "name": "OPTICAL NETWORK",
@@ -290,6 +308,15 @@ names?terms=etwork&verbose
       "description": ""
     },
     {
+      "tags": "31-Contracts:Giveth Project",
+      "address": "0x5219ffb88175588510e9752a1ecaa3cd217ca783",
+      "name": "Bloom Network",
+      "symbol": "",
+      "source": "Giveth Website",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "30-Contracts",
       "address": "0x521d32f3d23f1fc82b1dbe306edc3ef668e5d973",
       "name": "Clovers Network Related",
@@ -313,6 +340,15 @@ names?terms=etwork&verbose
       "name": "EtherRouter: Colony Network",
       "symbol": "",
       "source": "EtherScan.io",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Contracts:Giveth Project",
+      "address": "0x538f022f50038994f7a04a58f5004c1b98ed41a4",
+      "name": "Alexander Youth Network",
+      "symbol": "",
+      "source": "Giveth Website",
       "decimals": 0,
       "description": ""
     },
@@ -351,6 +387,15 @@ names?terms=etwork&verbose
       "source": "On chain",
       "decimals": 9,
       "description": "Blockchain Based distributed cloud computing"
+    },
+    {
+      "tags": "31-Contracts:Giveth Project",
+      "address": "0x629224fc7ce36163040454cd51b37acc550b77cb",
+      "name": "Rainforest Action Network",
+      "symbol": "",
+      "source": "Giveth Website",
+      "decimals": 0,
+      "description": ""
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -461,6 +506,15 @@ names?terms=etwork&verbose
       "description": ""
     },
     {
+      "tags": "31-Contracts:Giveth Project",
+      "address": "0x70a68a29bac0b3c85bed4b47bb3a639f0f245e70",
+      "name": "Allergy & Asthma Network",
+      "symbol": "",
+      "source": "Giveth Website",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "50-Tokens:ERC20",
       "address": "0x744d70fdbe2ba4cf95131626614a1763df805b9e",
       "name": "Status Network Token",
@@ -495,6 +549,15 @@ names?terms=etwork&verbose
       "source": "On chain",
       "decimals": 8,
       "description": "Archetypal Network is an Ethereum based cloudmining smart contract miner to support real-time mining and high transaction throughput."
+    },
+    {
+      "tags": "31-Contracts:Giveth Project",
+      "address": "0x7bc1f30ffeaeee36baf17ea421830281b148b397",
+      "name": "Trustlines Network",
+      "symbol": "",
+      "source": "Giveth Website",
+      "decimals": 0,
+      "description": ""
     },
     {
       "tags": "50-Tokens:ERC20",

@@ -21,8 +21,8 @@ status?modes=caches&types=txs&details
       "caches": [
         {
           "items": [
-            "CachePath/00/00/00",
-            "CachePath/00/01/00"
+            "Testing/00/00/00",
+            "Testing/00/01/00"
           ],
           "type": "CChainCache",
           "path": "txsPath",

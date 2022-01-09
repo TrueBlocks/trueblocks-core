@@ -21,8 +21,8 @@ TIME ~ CLOCK - <INFO>  : Loading names
   "caches": [
     {
       "items": [
-        "CachePath/00/00/00/file1.bin",
-        "CachePath/00/01/00/file2.bin"
+        "Testing/00/00/00/file1.bin",
+        "Testing/00/01/00/file2.bin"
       ],
       "type": "CChainCache",
       "path": "txsPath",
