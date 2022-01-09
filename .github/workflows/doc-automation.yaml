@@ -14,5 +14,4 @@ jobs:
         source_file: 'docs/content'
         destination_repo: 'trueblocks/trueblocks-docs'
         destination_branch: 'master'
-        user_email: 'info@trueblocks.io'
-        user_name: 'TrueBlocks Authors'
+        user_name: ${{ env.GITHUB_ACTOR }}
