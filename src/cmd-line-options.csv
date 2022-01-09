@@ -219,7 +219,12 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 11116,apps,Admin,,blockScrape,block_cnt,n,2000,false,true,true,true,header,flag,<uint64>,maximum number of blocks to process per pass
 11117,apps,Admin,,blockScrape,block_chan_cnt,b,10,false,true,false,false,config,flag,<uint64>,number of concurrent block processing channels
 11118,apps,Admin,,blockScrape,addr_chan_cnt,d,20,false,true,false,false,config,flag,<uint64>,number of concurrent address processing channels
-11119,apps,Admin,,blockScrape,,,,false,false,true,true,--,description,,Scan the chain and update (and optionally pin) the TrueBlocks index of appearances.
+11119,apps,Admin,,blockScrape,apps_per_chunk,,2000000,false,true,false,false,config,flag,<uint64>,the number of appearances to build into a chunk before consolidating it
+11120,apps,Admin,,blockScrape,unripe_dist,,28,false,true,false,false,config,flag,<uint64>,the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe
+11121,apps,Admin,,blockScrape,snap_to_grid,,100000,false,true,false,false,config,flag,<uint64>,an override to apps_per_chunk to snap-to-grid at every modulo of this value&#44; this allows easier corrections to the index
+11122,apps,Admin,,blockScrape,first_snap,,2250000,false,true,false,false,config,flag,<uint64>,the first block at which snap_to_grid is enabled
+11123,apps,Admin,,blockScrape,n_test_runs,,NOPOS,false,true,false,false,config,flag,<uint64>,in live testing mode&#44; the number of test runs to process before quitting
+11124,apps,Admin,,blockScrape,,,,false,false,true,true,--,description,,Scan the chain and update (and optionally pin) the TrueBlocks index of appearances.
 
 12110,apps,Admin,scrape,flame-scrape,modes,,,true,false,true,true,local,positional,list<enum[indexer|monitors|both]>,which scraper(s) to control
 12113,apps,Admin,scrape,flame-scrape,action,a,,false,true,true,true,local,flag,enum[toggle|run|restart|pause|quit],command to apply to the specified scrape
@@ -229,10 +234,15 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12121,apps,Admin,scrape,flame-scrape,block_cnt,n,2000,false,true,true,true,header,flag,<uint64>,maximum number of blocks to process per pass
 12125,apps,Admin,scrape,flame-scrape,block_chan_cnt,b,10,false,true,false,false,config,flag,<uint64>,number of concurrent block processing channels
 12127,apps,Admin,scrape,flame-scrape,addr_chan_cnt,d,20,false,true,false,false,config,flag,<uint64>,number of concurrent address processing channels
-12129,apps,Admin,scrape,flame-scrape,,,,false,false,true,true,--,description,,Scan the chain and update (and optionally pin) the TrueBlocks index of appearances.
-12131,apps,Admin,scrape,flame-scrape,n1,,,false,false,false,false,--,note,,if no mode is presented&#44; chifra scrape indexer --action run is assumed.
-12133,apps,Admin,scrape,flame-scrape,n2,,,false,false,false,false,--,note,,the --pin and --publish options require an API to the pinning service.
-12135,apps,Admin,scrape,flame-scrape,n3,,,false,false,false,false,--,note,,the --n_* related options allow you to tune the scrapers.
+12136,apps,Admin,scrape,flame-scrape,apps_per_chunk,,2000000,false,true,false,false,config,flag,<uint64>,the number of appearances to build into a chunk before consolidating it
+12138,apps,Admin,scrape,flame-scrape,unripe_dist,,28,false,true,false,false,config,flag,<uint64>,the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe
+12134,apps,Admin,scrape,flame-scrape,snap_to_grid,,100000,false,true,false,false,config,flag,<uint64>,an override to apps_per_chunk to snap-to-grid at every modulo of this value&#44; this allows easier corrections to the index
+12132,apps,Admin,scrape,flame-scrape,first_snap,,2250000,false,true,false,false,config,flag,<uint64>,the first block at which snap_to_grid is enabled
+12130,apps,Admin,scrape,flame-scrape,n_test_runs,,NOPOS,false,true,false,false,config,flag,<uint64>,in live testing mode&#44; the number of test runs to process before quitting
+12152,apps,Admin,scrape,flame-scrape,,,,false,false,true,true,--,description,,Scan the chain and update (and optionally pin) the TrueBlocks index of appearances.
+12153,apps,Admin,scrape,flame-scrape,n1,,,false,false,false,false,--,note,,if no mode is presented&#44; chifra scrape indexer --action run is assumed.
+12154,apps,Admin,scrape,flame-scrape,n2,,,false,false,false,false,--,note,,the --pin and --publish options require an API to the pinning service.
+12155,apps,Admin,scrape,flame-scrape,n3,,,false,false,false,false,--,note,,the --n_* related options allow you to tune the scrapers.
 
 13111,apps,Admin,serve,flame,port,p,:8080,false,false,true,true,header,flag,<string>,specify the server's port
 13112,apps,Admin,serve,flame,,,,false,false,true,true,--,description,,Serve the TrueBlocks API using the flame server.

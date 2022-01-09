@@ -202,21 +202,20 @@ void COptions::Init(void) {
     block_cnt = getGlobalConfig("blockScrape")->getConfigInt("settings", "block_cnt", 2000);
     block_chan_cnt = getGlobalConfig("blockScrape")->getConfigInt("settings", "block_chan_cnt", 10);
     addr_chan_cnt = getGlobalConfig("blockScrape")->getConfigInt("settings", "addr_chan_cnt", 20);
+    apps_per_chunk = getGlobalConfig("blockScrape")->getConfigInt("settings", "apps_per_chunk", 2000000);
+    unripe_dist = getGlobalConfig("blockScrape")->getConfigInt("settings", "unripe_dist", 28);
+    snap_to_grid = getGlobalConfig("blockScrape")->getConfigInt("settings", "snap_to_grid", 100000);
+    first_snap = getGlobalConfig("blockScrape")->getConfigInt("settings", "first_snap", 2250000);
+    n_test_runs = getGlobalConfig("blockScrape")->getConfigInt("settings", "n_test_runs", NOPOS);
     // clang-format on
     // END_CODE_INIT
 
     if (isLiveTest()) {
         n_test_runs = 10;
-        first_snap_to_grid = 0;
-        snap_to_grid_blks = 30;
+        first_snap = 0;
+        snap_to_grid = 30;
         apps_per_chunk = 6000;
         unripe_dist = 28;  // doesn't change
-    } else {
-        n_test_runs = NOPOS;
-        first_snap_to_grid = 2250000;
-        snap_to_grid_blks = 100000;
-        apps_per_chunk = 2000000;
-        unripe_dist = 28;
     }
 
     minArgs = 0;

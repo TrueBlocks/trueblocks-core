@@ -107,7 +107,7 @@ bool copyRipeToStage(const string_q& path, void* data) {
         con->prevBlock = bn;
         unlockSection();
 
-        if (bn > con->opts->first_snap_to_grid && !(bn % con->opts->snap_to_grid_blks)) {
+        if (bn > con->opts->first_snap && !(bn % con->opts->snap_to_grid)) {
             LOG4("  Snapping to block number ", bn);
 
             // We've been copying each block's data into a temporary file. At this point, we've

@@ -32,23 +32,17 @@ class COptions : public COptionsBase {
     uint64_t block_cnt;
     uint64_t block_chan_cnt;
     uint64_t addr_chan_cnt;
+    uint64_t apps_per_chunk;
+    uint64_t unripe_dist;
+    uint64_t snap_to_grid;
+    uint64_t first_snap;
+    uint64_t n_test_runs;
     // END_CODE_DECLARE
 
     timestamp_t latestBlockTs;
     blknum_t latestBlockNum;
     CPinnedChunkArray pinList;
     CApiKey lic;
-
-    //--------------------------------------------------------------------------
-    // These values give us control over blockScrape. Snap-to-grid allows for
-    // corrections to the data without repbulishing the entire index (we can
-    // the broken files between snaps). On mainnet, we don't start until the
-    // Sept. 2016 dDos attacks and the continue to end of chain.
-    uint64_t n_test_runs;
-    uint64_t first_snap_to_grid;
-    uint64_t snap_to_grid_blks;
-    uint64_t apps_per_chunk;
-    uint64_t unripe_dist;
 
     COptions(void);
     ~COptions(void);
