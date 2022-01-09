@@ -15,8 +15,6 @@ func convertToCommandLine(in string) string {
 	switch in {
 	case "addrChanCnt":
 		return "addr_chan_cnt"
-	case "appsPerChunk":
-		return "apps_per_chunk"
 	case "bigRange":
 		return "big_range"
 	case "blockChanCnt":
@@ -33,8 +31,6 @@ func convertToCommandLine(in string) string {
 		return "first_block"
 	case "firstRecord":
 		return "first_record"
-	case "firstSnap":
-		return "first_snap"
 	case "getConfig":
 		return "get_config"
 	case "lastBlock":
@@ -49,8 +45,6 @@ func convertToCommandLine(in string) string {
 		return "max_records"
 	case "maxTraces":
 		return "max_traces"
-	case "nTestRuns":
-		return "n_test_runs"
 	case "noHeader":
 		return "no_header"
 	case "noZero":
@@ -61,16 +55,12 @@ func convertToCommandLine(in string) string {
 		return "set_config"
 	case "skipDdos":
 		return "skip_ddos"
-	case "snapToGrid":
-		return "snap_to_grid"
 	case "summarizeBy":
 		return "summarize_by"
 	case "toCustom":
 		return "to_custom"
 	case "toFile":
 		return "to_file"
-	case "unripeDist":
-		return "unripe_dist"
 	}
 	// END_CONVERT_CODE
 	return in
