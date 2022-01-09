@@ -74,6 +74,9 @@ string_q CMeasure::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'c':
+            if (fieldName % "chain") {
+                return chain;
+            }
             if (fieldName % "cmd") {
                 return cmd;
             }
@@ -141,6 +144,10 @@ bool CMeasure::setValueByName(const string_q& fieldNameIn, const string_q& field
 
     switch (tolower(fieldName[0])) {
         case 'c':
+            if (fieldName % "chain") {
+                chain = fieldValue;
+                return true;
+            }
             if (fieldName % "cmd") {
                 cmd = fieldValue;
                 return true;
@@ -227,6 +234,7 @@ bool CMeasure::Serialize(CArchive& archive) {
     archive >> date;
     archive >> machine;
     archive >> node;
+    archive >> chain;
     archive >> epoch;
     archive >> group;
     archive >> cmd;
@@ -251,6 +259,7 @@ bool CMeasure::SerializeC(CArchive& archive) const {
     archive << date;
     archive << machine;
     archive << node;
+    archive << chain;
     archive << epoch;
     archive << group;
     archive << cmd;
@@ -311,6 +320,7 @@ void CMeasure::registerClass(void) {
     ADD_FIELD(CMeasure, "date", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CMeasure, "machine", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CMeasure, "node", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CMeasure, "chain", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CMeasure, "epoch", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CMeasure, "group", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CMeasure, "cmd", T_TEXT | TS_OMITEMPTY, ++fieldNum);
@@ -412,6 +422,7 @@ const char* STR_DISPLAY_MEASURE =
     "[{DATE}]\t"
     "[{MACHINE}]\t"
     "[{NODE}]\t"
+    "[{CHAIN}]\t"
     "[{EPOCH}]\t"
     "[{GROUP}]\t"
     "[{CMD}]\t"

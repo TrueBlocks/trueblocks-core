@@ -147,9 +147,6 @@ bool COptions::parseArguments(string_q& command) {
     if (!isNodeRunning())
         return usage("Ethereum at " + getCurlContext()->baseURL + " was not found. All tests will fail.");
 
-    if (nFilesInFolder(indexFolder_blooms) < 3)
-        return usage("The trueblocks index is not present. Run 'chifra init' prior to running tests.");
-
     if (filter.empty())
         filter = "fast";
     else if (filter == "all")

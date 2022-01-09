@@ -116,4 +116,20 @@ string_q getPathToCommands(const string_q& _part) {
     return getHomeFolder() + ".local/bin/chifra/" + _part;
 }
 
+//-------------------------------------------------------------------------
+void loadEnvironmentPaths(void) {
+    // This is only called by makeClass and testRunner (the only two tools that do not run through chifra). It
+    // mimics the way chifra works to build the configPath so these two tools will run
+#if defined(__linux) || defined(__linux__) || defined(linux) || defined(__unix) || defined(__unix__)
+    string_q configPath = getHomeFolder() + ".local/share/trueblocks/";
+#elif defined(__APPLE__) || defined(__MACH__)
+    string_q configPath = getHomeFolder() + "Library/Application Support/TrueBlocks/";
+#else
+#error-- unknown operating system not supported
+#endif
+    ::setenv("TB_CONFIG_PATH", configPath.c_str(), true);
+    ::setenv("TB_CACHE_PATH", (configPath + "cache/").c_str(), true);
+    ::setenv("TB_INDEX_PATH", (configPath + "unchained/").c_str(), true);
+}
+
 }  // namespace qblocks

@@ -29,6 +29,7 @@ class CMeasure : public CBaseNode {
     string_q date;
     string_q machine;
     string_q node;
+    string_q chain;
     string_q epoch;
     string_q group;
     string_q cmd;
@@ -113,6 +114,7 @@ inline void CMeasure::initialize(void) {
     date = "";
     machine = "";
     node = "";
+    chain = "mainnet";
     epoch = "";
     group = "";
     cmd = "";
@@ -135,6 +137,7 @@ inline void CMeasure::duplicate(const CMeasure& me) {
     date = me.date;
     machine = me.machine;
     node = me.node;
+    chain = me.chain;
     epoch = me.epoch;
     group = me.group;
     cmd = me.cmd;
