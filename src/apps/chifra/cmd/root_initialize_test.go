@@ -11,3 +11,7 @@ package cmd
 //func TestInitialize(t *testing.T) {
 //	Initialize()
 //}
+
+// func TestMigrations(t *testing.T) {
+// 	VerifyMigrations()
+// }
