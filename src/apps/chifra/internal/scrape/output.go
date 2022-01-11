@@ -231,7 +231,7 @@ func (scraper *Scraper) Pause() {
 // 	TrueBlocks string `json:"trueblocksVersion"`
 // 	RPC        string `json:"rpcProvider"`
 // 	ConfigPath string `json:"configPath"`
-// 	Cache Path  string `json:"cache Path"`
+// 	Cache Path  string `json:"cachePath"`
 // 	IndexPath  string `json:"indexPath"`
 // 	IsTesting  bool   `json:"isTesting"`
 // 	IsDocker   bool   `json:"isDocker"`

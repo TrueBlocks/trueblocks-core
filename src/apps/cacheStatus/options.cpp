@@ -272,8 +272,8 @@ void COptions::Init(void) {
         status.host = string_q(hostname) + " (" + username + ")";
         status.rpcProvider = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
         status.configPath = getPathToConfig("");
-        status.cachePath = getGlobalConfig()->getConfigStr("settings", "cachePath", getPathToCache(""));
-        status.indexPath = getGlobalConfig()->getConfigStr("settings", "indexPath", getPathToIndex(""));
+        status.cachePath = getPathToCache("");
+        status.indexPath = getPathToIndex("");
     }
     if (!isNodeRunning()) {
         status.clientVersion = "Not running";
