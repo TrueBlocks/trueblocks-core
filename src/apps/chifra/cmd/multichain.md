@@ -8,8 +8,8 @@
 - [ ] Add `chain` to the `status` endpoints including `--terse`
 - [ ] Add testing to utillib tests to set XDG folders using test case .env files
 - [ ] Add testing that specifies non-existant folders
-- [ ] Finish the migrations-0.24.0.md file
-- [ ] Re-write the `trueBlocks.toml` file with version `0.24.0`. Use this as a marker that the installation is migrated. Alternate: write migrations to the file [migrations]0.24.0=true, etc. (this is the same thing - it's easier to write the version)
+- [ ] Finish the migrations-0.25.0.md file
+- [ ] Re-write the `trueBlocks.toml` file with version `0.25.0`. Use this as a marker that the installation is migrated. Alternate: write migrations to the file [migrations]0.25.0=true, etc. (this is the same thing - it's easier to write the version)
 
 ### Steps to Migrate (completed)
 ---
@@ -69,7 +69,7 @@ There are three values we need to control:
 
 ### Rules for checking proper migration in GoLang code
 ---
-- If the version of `trueBlocks.toml` is `0.24.0` or later, we don't need to check any previous migrations
+- If the version of `trueBlocks.toml` is `0.25.0` or later, we don't need to check any previous migrations
 - If the `$TB_HOME` contains any of the following folders, fail.
   - `cache`, `mocked`, `manifest`, `unchained`, `ts.bin.gz`, `poloniex.tar.gz`
   - Tell the user to complete the migration and quit

@@ -1,4 +1,4 @@
-# v0.24.0 Multi-chain
+# v0.25.0 Multi-chain
 
 ---
 

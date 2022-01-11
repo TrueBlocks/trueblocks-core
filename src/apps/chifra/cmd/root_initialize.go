@@ -106,7 +106,7 @@ func VerifyMigrations() {
 	// 	itemPath := path.Join(configFolder + item)
 	// 	if _, err := os.Stat(itemPath); err == nil {
 	// 		msg := strings.Replace(shouldNotExist, "{0}", "{./"+item+"}", -1)
-	// 		msg = strings.Replace(msg, "{1}", "{v0.24.0}", -1)
+	// 		msg = strings.Replace(msg, "{1}", "{v0.25.0}", -1)
 	// 		msg = strings.Replace(msg, "{", colors.Green, -1)
 	// 		msg = strings.Replace(msg, "}", colors.Off, -1)
 	// 		log.Fatalf(msg)
