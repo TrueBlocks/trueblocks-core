@@ -44,6 +44,9 @@ names?tags
       "tags": "30-Contracts:theGraph"
     },
     {
+      "tags": "31-Contracts:Giveth Project"
+    },
+    {
       "tags": "31-Gitcoin:Admin"
     },
     {

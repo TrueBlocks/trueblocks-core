@@ -75,8 +75,8 @@ void etherlib_init(QUITHANDLER qh) {
     CCollection::registerClass();
     CCacheEntry::registerClass();
 
-    establishFolder(getConfigPath(""));
-    establishFolder(getCachePath(""));
+    establishFolder(getPathToConfig(""));
+    establishFolder(getPathToCache(""));
 }
 
 //-------------------------------------------------------------------------
@@ -606,7 +606,7 @@ void getTracesByFilter(CTraceArray& traces, const CTraceFilter& filter) {
 
 //-------------------------------------------------------------------------
 string_q getVersionFromClient(void) {
-    string_q clientVersionFn = getCachePath("tmp/clientVersion.txt");
+    string_q clientVersionFn = getPathToCache("tmp/clientVersion.txt");
     string_q contents;
     if (fileExists(clientVersionFn))
         contents = asciiFileToString(clientVersionFn);
@@ -619,7 +619,7 @@ string_q getVersionFromClient(void) {
         // If the rpcProvider changed or we haven't checked in 20 seconds, check again.
         string_q clientVersion = callRPC("web3_clientVersion", "[]", false);
         if (!clientVersion.empty()) {
-            if (folderExists(getCachePath("tmp/")))
+            if (folderExists(getPathToCache("tmp/")))
                 stringToAsciiFile(clientVersionFn, getCurlContext()->baseURL + "\t" + clientVersion);
             return clientVersion;
         }
@@ -844,11 +844,11 @@ static string_q getFilename_local(cache_t type, const string_q& item1, const str
             os << ".bin";
         }
     }
-    return getCachePath(os.str());
+    return getPathToCache(os.str());
 }
 
 //-------------------------------------------------------------------------
-string_q getBinaryCachePath(cache_t type, blknum_t bn, txnum_t txid, const string_q& trc_id) {
+string_q getPathToBinaryCache(cache_t type, blknum_t bn, txnum_t txid, const string_q& trc_id) {
     return getFilename_local(type, padNum9(bn), padNum5(txid), trc_id, true);
 }
 
@@ -858,7 +858,7 @@ string_q getBinaryCacheFilename(cache_t type, blknum_t bn, txnum_t txid, const s
 }
 
 //-------------------------------------------------------------------------
-string_q getBinaryCachePath(cache_t type, const address_t& addr, blknum_t bn, txnum_t txid) {
+string_q getPathToBinaryCache(cache_t type, const address_t& addr, blknum_t bn, txnum_t txid) {
     return getFilename_local(type, addr, padNum9(bn), padNum5(txid), true);
 }
 
@@ -970,46 +970,6 @@ bool forEveryTransaction(TRANSVISITFUNC func, void* data, const string_q& trans_
             return false;
     }
     return true;
-}
-
-//-------------------------------------------------------------------------
-void guardLiveTest(const string_q& path) {
-    static bool been_here = false;
-    if (!isLiveTest() || been_here)
-        return;
-    if (!contains(path, "mocked")) {
-        cerr << "You may only do a live test if your indexPath (" << path << ") contains the word 'mocked'." << endl;
-        cerr << "Quitting..." << endl;
-        quickQuitHandler(1);
-    }
-    been_here = true;
-    cerr << "Completing a live test using indexFolder: " << path << endl;
-    cerr << "Continue?";
-    getchar();
-    if (shouldQuit())
-        quickQuitHandler(1);
-}
-
-//-------------------------------------------------------------------------
-string_q getIndexPath(const string_q& _part) {
-    string_q indexPath = getGlobalConfig()->getConfigStr("settings", "indexPath", "<not_set>");
-    if (indexPath == "<not_set>") {
-        guardLiveTest(indexPath + _part);
-        return getConfigPath("unchained/" + _part);
-    }
-    if (!folderExists(indexPath)) {
-        cerr << "Attempt to create customized indexPath (" << indexPath << ") failed." << endl;
-        cerr << "Please create the folder or adjust the setting by editing $CONFIG/trueBlocks.toml." << endl;
-        cerr << "Quitting...";
-        quickQuitHandler(1);
-    }
-
-    indexPath += (!endsWith(indexPath, '/') ? "/" : "");
-    if (!folderExists(indexPath)) {
-        LOG_WARN("Index path '" + indexPath + "' not found.");
-    }
-    guardLiveTest(indexPath + _part);
-    return indexPath + _part;
 }
 
 //--------------------------------------------------------------------------

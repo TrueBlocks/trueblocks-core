@@ -127,7 +127,7 @@ bool writeCodeOut(COptions* opts, const string_q& fn) {
         replaceAll(converted, "    // clang-format on\n    // clang-format off\n", "");
 
     } else if (endsWith(fn, ".go")) {
-        converted = replaceCode(converted, "ROUTE_PKGS", opts->goPkgStream.str());
+        converted = replaceCode(converted, "ROUTE_PKGS", trim(opts->goPkgStream.str(), '\n') + "\n");
         converted = replaceCode(converted, "ROUTE_CODE", opts->goCallStream.str());
         converted = replaceCode(converted, "ROUTE_ITEMS", opts->goRouteStream.str());
         converted = replaceCode(converted, "CONVERT_CODE", opts->goConvertStream.str());
@@ -137,7 +137,7 @@ bool writeCodeOut(COptions* opts, const string_q& fn) {
         string_q descr = asciiFileToString(getDocsPathTemplates("api/description.txt"));
         replaceAll(descr, "~~~~", "    ");
 
-        converted = asciiFileToString(getTemplatePath("blank.yaml"));
+        converted = asciiFileToString(getPathToTemplates("blank.yaml"));
         replace(converted, "[{TAGS}]", opts->apiTagStream.str());
         replace(converted, "[{PATHS}]", opts->apiPathStream.str());
         replace(converted, "[{DESCRIPTION}]", descr);

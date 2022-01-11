@@ -16,12 +16,12 @@
 
 //-----------------------------------------------------------------------
 extern bool tsRangeFunc(CTraverser* trav, void* data);
-extern void start_Log(CTraverser* trav, void* data);
-extern void prog_Log(CTraverser* trav, void* data);
-extern void end_Log(CTraverser* trav, void* data);
 extern bool loadTx_Func(CTraverser* trav, void* data);
 extern bool pre_Func(CTraverser* trav, void* data);
 extern bool post_Func(CTraverser* trav, void* data);
+extern void start_Log(CTraverser* trav, void* data);
+extern bool prog_Log(CTraverser* trav, void* data);
+extern void end_Log(CTraverser* trav, void* data);
 
 extern bool app_Post(CTraverser* trav, void* data);
 extern bool app_Display(CTraverser* trav, void* data);

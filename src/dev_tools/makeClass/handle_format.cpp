@@ -15,7 +15,7 @@
 
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_format(void) {
-    CToml config(getConfigPath("makeClass.toml"));
+    CToml config(getPathToConfig("makeClass.toml"));
     bool enabled = config.getConfigBool("enabled", "auto_format", false);
     string_q res = doCommand("which clang-format");
     if (!enabled || res.empty()) {
@@ -68,8 +68,8 @@ bool formatCppFiles(const string_q& path, void* data) {
                 return true;
 
             string_q fullPath = substitute(path, "./", getCWD());
-            establishFolder(getCachePath("tmp/"));
-            string_q resPath = getCachePath("tmp/" + CFilename(path).getFilename());
+            establishFolder(getPathToCache("tmp/"));
+            string_q resPath = getPathToCache("tmp/" + CFilename(path).getFilename());
             string_q cmd = "clang-format \"" + fullPath + "\" >\"" + resPath + "\" ";
             // clang-format off
             if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
@@ -129,8 +129,8 @@ bool formatGoFiles(const string_q& path, void* data) {
                 return true;
 
             string_q fullPath = substitute(path, "./", getCWD());
-            establishFolder(getCachePath("tmp/"));
-            string_q resPath = getCachePath("tmp/" + CFilename(path).getFilename());
+            establishFolder(getPathToCache("tmp/"));
+            string_q resPath = getPathToCache("tmp/" + CFilename(path).getFilename());
             cerr << fullPath << endl;
             cerr << resPath << endl;
             // string_q cmd = "clang-format \"" + fullPath + "\" >\"" + resPath + "\" ";

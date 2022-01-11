@@ -8,7 +8,7 @@
 
 package servePkg
 
-// TODO: Once we're fully ported to Go, this can go away when CallOne goes away
+// TODO: Once we're fully ported to Go, this can go away when CallOne and PassItOn goes away
 // TODO: camelCase vs. snake_case - issue #1974
 func convertToCommandLine(in string) string {
 	// BEG_CONVERT_CODE
@@ -47,6 +47,8 @@ func convertToCommandLine(in string) string {
 		return "max_traces"
 	case "noHeader":
 		return "no_header"
+	case "noUpdate":
+		return "no_update"
 	case "noZero":
 		return "no_zero"
 	case "proxyFor":

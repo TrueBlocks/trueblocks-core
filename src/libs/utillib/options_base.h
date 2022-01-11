@@ -17,6 +17,7 @@
 #include "toml.h"
 #include "exportcontext.h"
 #include "option.h"
+#include "config_paths.h"
 
 #define ERR_NOERROR 0
 
@@ -147,9 +148,6 @@ extern int sortParams(const void* c1, const void* c2);
 
 //--------------------------------------------------------------------------------
 extern uint64_t verbose;
-
-//--------------------------------------------------------------------------------
-extern string_q getConfigPath(const string_q& part);
 
 //--------------------------------------------------------------------------------
 class CToml;

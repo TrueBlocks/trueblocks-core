@@ -59,7 +59,7 @@ If you need help with a step, see the [installation's troubleshooting section](h
 
     * On linux at `~/.local/share/trueblocks`
     * On mac at `~/Library/Application Support/TrueBlocks`
-    * If you've configured it, wherever the location of `$XDG_DATA_HOME` is
+    * If you've configured it, wherever the location of `$XDG_CONFIG_HOME` is
 
 4. In the configuration directory, edit `trueblocks.toml` to add your RPC and API keys. It should look something like this:
 ```toml

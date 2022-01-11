@@ -26,7 +26,7 @@ class CPriceSource {
     PRICEPARSEFUNC func;
     CPriceSource(const string_q& u, const string_q& p, PRICEPARSEFUNC f) : url(u), pair(p), func(f) {
     }
-    string_q getDatabasePath(string& source) const;
+    string_q getPathToPriceDb(string& source) const;
 };
 
 extern bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes, bool freshen, string_q& message);

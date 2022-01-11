@@ -1,5 +1,5 @@
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
-// Use of this source code is governed by a license that can 
+// Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
 package cmd
@@ -86,7 +86,7 @@ func initConfig() {
 	}
 
 	configPath := "<unset>"
-	// TODO(tjayrush): This should read XDG_DATA_HOME and if the folder exists, use it
+	// TODO(tjayrush): This should read XDG_CONFIG_HOME and if the folder exists, use it
 	if runtime.GOOS == "darwin" {
 		configPath = home + "/Library/Application Support/TrueBlocks"
 	} else if runtime.GOOS == "linux" {

@@ -43,7 +43,7 @@ bool COptions::parseArguments(string_q& command) {
     // END_CODE_LOCAL_INIT
     string_q path;
 
-    CToml config(getConfigPath("makeClass.toml"));
+    CToml config(getPathToConfig("makeClass.toml"));
     bool makeClassOn = config.getConfigBool("enabled", "generate", false);
 
     Init();
@@ -147,9 +147,6 @@ bool COptions::parseArguments(string_q& command) {
     if (!isNodeRunning())
         return usage("Ethereum at " + getCurlContext()->baseURL + " was not found. All tests will fail.");
 
-    if (nFilesInFolder(indexFolder_blooms) < 3)
-        return usage("The trueblocks index is not present. Run 'chifra init' prior to running tests.");
-
     if (filter.empty())
         filter = "fast";
     else if (filter == "all")
@@ -247,8 +244,8 @@ bool COptions::cleanTest(const string_q& path, const string_q& testName) {
 
 //---------------------------------------------------------------------------------------------------
 void establishTestData(void) {
-    cleanFolder(getCachePath("tmp/"));
-    cleanFolder(getConfigPath("mocked/unchained"));
+    cleanFolder(getPathToCache("tmp/"));
+    cleanFolder(getPathToConfig("mocked/unchained"));
 
     // TODO(tjayrush): This code is a hack to make test cases pass. We should fix the underlyign reason
     // TODO(tjayrush): these tests fail. To reproduce, delete the entire cache, comment the lines below

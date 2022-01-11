@@ -3,7 +3,7 @@
 #---------------------------------------------------------------
 # setup some paths
 #---------------------------------------------------------------
-set(TB_INSTALL_FOLDER "$ENV{XDG_DATA_HOME}")
+set(TB_INSTALL_FOLDER "$ENV{XDG_CONFIG_HOME}")
 if(WIN32)
     message(STATUS "Windows build is not supported yet")
 elseif(APPLE)
@@ -125,7 +125,6 @@ endforeach( FILE )
 set(MANIFEST "${DEST_PATH}/manifest/manifest.txt")
 if (NOT EXISTS "${MANIFEST}")
 	message(STATUS "Seeding initial manifest ${DEST_PATH}/manifest/")
-	file(COPY "${SOURCE_PATH}/manifest/empty-manifest.json" DESTINATION "${DEST_PATH}/manifest/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 	file(COPY "${SOURCE_PATH}/manifest/manifest.txt" DESTINATION "${DEST_PATH}/manifest/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 endif()
 

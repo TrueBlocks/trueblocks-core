@@ -28,6 +28,7 @@ static const COption params[] = {
     COption("check", "c", "", OPT_HIDDEN | OPT_SWITCH, "available only with --timestamps, checks the validity of the timestamp data"),  // NOLINT
     COption("fix", "f", "", OPT_HIDDEN | OPT_SWITCH, "available only with --timestamps, fixes incorrect timestamps if any"),  // NOLINT
     COption("count", "u", "", OPT_HIDDEN | OPT_SWITCH, "available only with --timestamps, returns the number of timestamps in the cache"),  // NOLINT
+    COption("no_update", "n", "", OPT_HIDDEN | OPT_SWITCH, "do not update timestamps database prior to completing the task at hand"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Find block(s) based on date, blockNum, timestamp, or 'special'."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -69,6 +70,9 @@ bool COptions::parseArguments(string_q& commandIn) {
         } else if (arg == "-u" || arg == "--count") {
             count = true;
 
+        } else if (arg == "-n" || arg == "--no_update") {
+            no_update = true;
+
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -85,6 +89,12 @@ bool COptions::parseArguments(string_q& commandIn) {
 
     if (Mocked("when"))
         return false;
+
+    if (!timestamps && (check || fix))
+        return usage("The --check and --fix options are available only with --timestamps.");
+
+    if (timestamps && (check + fix > 1))
+        return usage("Please choose only one of --check or --fix.");
 
     for (auto item : blocks) {
         if (isDate(item)) {
@@ -126,6 +136,7 @@ bool COptions::parseArguments(string_q& commandIn) {
         format = "[{nTimestamps}]";
     configureDisplay("whenBlock", "CBlock", format);
     manageFields("CBlock:" + string_q(format));
+
     return true;
 }
 
@@ -141,6 +152,7 @@ void COptions::Init(void) {
     check = false;
     fix = false;
     count = false;
+    no_update = false;
     // END_CODE_INIT
 
     stop = 0;

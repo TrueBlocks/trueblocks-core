@@ -51,7 +51,7 @@ const uint64_t nExtra = 10000;
 
 //-----------------------------------------------------------------------
 static bool readNamesFromBinary(void) {
-    string_q binFile = getCachePath(STR_BIN_LOC);
+    string_q binFile = getPathToCache(STR_BIN_LOC);
     nNameRecords = (fileSize(binFile) / sizeof(NameOnDisc));  // This number may be too large, but we adjust it below
     namesAllocated = new NameOnDisc[nNameRecords + nExtra];
     if (!namesAllocated) {
@@ -99,8 +99,8 @@ static bool readNamesFromBinary(void) {
 
 //-----------------------------------------------------------------------
 static bool readNamesFromAscii(void) {
-    string_q txtFile = getConfigPath("names/names.tab");
-    string_q customFile = getConfigPath("names/names_custom.tab");
+    string_q txtFile = getPathToConfig("names/names.tab");
+    string_q customFile = getPathToConfig("names/names_custom.tab");
 
     CStringArray lines;
     asciiFileToLines(txtFile, lines);
@@ -139,7 +139,8 @@ static bool readNamesFromAscii(void) {
 
 //-----------------------------------------------------------------------
 static bool writeNamesToBinary(void) {
-    string_q binFile = getCachePath(STR_BIN_LOC);
+    string_q binFile = getPathToCache(STR_BIN_LOC);
+    establishFolder(binFile);
     CArchive out(WRITING_ARCHIVE);
     if (out.Lock(binFile, modeWriteCreate, LOCK_WAIT)) {
         // We treat one whole record (the first) as the header. Yes,
@@ -171,9 +172,9 @@ bool loadNames(void) {
         return true;
     }
 
-    time_q binDate = fileLastModifyDate(getCachePath(STR_BIN_LOC));
-    time_q txtDate = laterOf(fileLastModifyDate(getConfigPath("names/names.tab")),
-                             fileLastModifyDate(getConfigPath("names/names_custom.tab")));
+    time_q binDate = fileLastModifyDate(getPathToCache(STR_BIN_LOC));
+    time_q txtDate = laterOf(fileLastModifyDate(getPathToConfig("names/names.tab")),
+                             fileLastModifyDate(getPathToConfig("names/names_custom.tab")));
 
     if (txtDate < binDate) {
         if (!readNamesFromBinary())
@@ -316,6 +317,7 @@ bool forEveryName(NAMEODFUNC func, void* data) {
 
 //-----------------------------------------------------------------------
 bool NameOnDisc::name_2_Disc(const CAccountName& nm) {
+    memset(this, 0, sizeof(NameOnDisc));
     strncpy(tags, nm.tags.c_str(), nm.tags.length());
     strncpy(address, nm.address.c_str(), nm.address.length());
     strncpy(name, nm.name.c_str(), nm.name.length());
@@ -426,7 +428,7 @@ bool updateName(const CAccountName& target, const string_q& crud) {
     if (!isTestMode()) {
         ostringstream editRecord;
         editRecord << Now().Format(FMT_JSON) << crud << "\t" << target.Format(STR_DISPLAY_ACCOUNTNAME) << endl;
-        stringToAsciiFile(getCachePath(STR_LOG_LOC), editRecord.str());
+        stringToAsciiFile(getPathToCache(STR_LOG_LOC), editRecord.str());
     }
 
     return true;

@@ -16,7 +16,7 @@
 //----------------------------------------------------------------
 int main(int argc, const char *argv[]) {
     etherlib_init(quickQuitHandler);
-    forEveryFileInFolder(getCachePath("addr_output/sorted/"), visitFile, NULL);
+    forEveryFileInFolder(getPathToCache("addr_output/sorted/"), visitFile, NULL);
     etherlib_cleanup();
     return 1;
 }

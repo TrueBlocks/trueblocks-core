@@ -46,7 +46,7 @@ func (opts *PinsOptions) InitInternal() error {
 	}
 
 	// Save manifest
-	err = pinlib.SaveManifest(config.GetConfigPath("manifest/manifest.txt"), downloadedManifest)
+	err = pinlib.SaveManifest(config.GetPathToConfig(false /* withChain */)+"manifest/manifest.txt", downloadedManifest)
 	if err != nil {
 		return err
 	}
@@ -59,12 +59,14 @@ func (opts *PinsOptions) InitInternal() error {
 	defer close(indexDoneChannel)
 
 	getChunks := func(chunkType cache.CacheType) {
-		failedChunks := downloadAndReportProgress(downloadedManifest.NewPins, chunkType)
+		chunkPath := &cache.Path{}
+		chunkPath.New(chunkType)
+		failedChunks := downloadAndReportProgress(downloadedManifest.NewPins, chunkPath)
 
 		if len(failedChunks) > 0 {
 			retry(failedChunks, 3, func(pins []manifest.PinDescriptor) []manifest.PinDescriptor {
 				logger.Log(logger.Info, "Retrying", len(pins), "bloom(s)")
-				return downloadAndReportProgress(pins, chunkType)
+				return downloadAndReportProgress(pins, chunkPath)
 			})
 		}
 	}
@@ -91,7 +93,7 @@ func (opts *PinsOptions) InitInternal() error {
 type downloadFunc func(pins []manifest.PinDescriptor) (failed []manifest.PinDescriptor)
 
 // Downloads chunks and report progress
-func downloadAndReportProgress(pins []manifest.PinDescriptor, chunkType cache.CacheType) []manifest.PinDescriptor {
+func downloadAndReportProgress(pins []manifest.PinDescriptor, chunkPath *cache.Path) []manifest.PinDescriptor {
 	chunkTypeToDescription := map[cache.CacheType]string{
 		cache.BloomChunk: "bloom",
 		cache.IndexChunk: "index",
@@ -100,7 +102,7 @@ func downloadAndReportProgress(pins []manifest.PinDescriptor, chunkType cache.Ca
 	progressChannel := progress.MakeChan()
 	defer close(progressChannel)
 
-	go chunk.GetChunksFromRemote(pins, chunkType, progressChannel)
+	go chunk.GetChunksFromRemote(pins, chunkPath, progressChannel)
 
 	var pinsDone uint
 
@@ -123,7 +125,7 @@ func downloadAndReportProgress(pins []manifest.PinDescriptor, chunkType cache.Ca
 				failed = append(failed, *pin)
 			}
 		case progress.Start:
-			logger.Log(logger.Info, "Unchaining", chunkTypeToDescription[chunkType], event.Message, "to", fileName)
+			logger.Log(logger.Info, "Unchaining", chunkTypeToDescription[chunkPath.Type], event.Message, "to", fileName)
 		case progress.Update:
 			logger.Log(logger.Info, event.Message, fileName)
 		case progress.Done:

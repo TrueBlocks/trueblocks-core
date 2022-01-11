@@ -25,6 +25,7 @@ bool COptions::writeOpenApiFile(void) {
     counter = CCounter();  // reset
 
     map<string_q, string_q> converts;
+    map<string_q, string_q> pkgs;
     for (auto ep : endpointArray) {
         CCommandOptionArray params;
         for (auto option : routeOptionArray)
@@ -39,9 +40,12 @@ bool COptions::writeOpenApiFile(void) {
         pairMapStream << ep.toPairMap() << endl;
         apiTagStream << ep.toApiTag();
         goCallStream << ep.toGoCall();
-        goPkgStream << ep.toGoPackage();
         goRouteStream << ep.toGoRoute();
         apiPathStream << ep.toApiPath(productions, exampleFn);
+
+        string_q pkg = ep.toGoPackage();
+        string_q nick = nextTokenClear(pkg, ' ');
+        pkgs[nick] = substitute(pkg, "\n", "");
 
         if (isApiRoute(ep.api_route) && ep.params) {
             for (auto p : *((CCommandOptionArray*)ep.params))
@@ -52,6 +56,9 @@ bool COptions::writeOpenApiFile(void) {
         counter.cmdCount += params.size();
         counter.routeCount++;
     }
+    for (auto pkg : pkgs)
+        goPkgStream << pkg.first << " " << pkg.second << endl;
+    goPkgStream << "\tconfig \"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config\"" << endl;
 
     converts["logLevel"] = "log_level";
     converts["noHeader"] = "no_header";
@@ -63,10 +70,10 @@ bool COptions::writeOpenApiFile(void) {
     goConvertStream << "\t}" << endl;
 
     // writeCodeOut(this, getDocsPathContent("api/openapi.yaml"));
-    writeCodeOut(this, getSourcePath("apps/chifra/server/routes.go"));
-    writeCodeOut(this, getSourcePath("apps/chifra/server/convert_params.go"));
-    // writeCodeOut(this, getSourcePath("apps/chifra/options.cpp"));
-    // writeCodeOut(this, getSourcePath("libs/utillib/options_base.cpp"));
+    writeCodeOut(this, getPathToSource("apps/chifra/server/routes.go"));
+    writeCodeOut(this, getPathToSource("apps/chifra/server/convert_params.go"));
+    // writeCodeOut(this, getPathToSource("apps/chifra/options.cpp"));
+    // writeCodeOut(this, getPathToSource("libs/utillib/options_base.cpp"));
 
     LOG_INFO(cYellow, "makeClass --openapi", cOff, " processed ", counter.routeCount, "/", counter.cmdCount,
              " routes/cmds ", " (changed ", counter.nProcessed, ").", string_q(40, ' '));

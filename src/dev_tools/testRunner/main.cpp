@@ -23,10 +23,11 @@ string_q perf_fmt;
 
 //-----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
+    loadEnvironmentPaths();
     etherlib_init(quickQuitHandler);
     CTestCase::registerClass();
 
-    establishFolder(getCachePath("tmp/"));
+    establishFolder(getPathToCache("tmp/"));
     CMeasure total("all", "all", "all");
     cerr.rdbuf(cout.rdbuf());
 
@@ -148,9 +149,9 @@ int main(int argc, const char* argv[]) {
         perf << total.Format(perf_fmt) << endl;
         cerr << "    " << substitute(perf.str(), "\n", "\n    ") << endl;
         if (options.full_test && options.report) {
-            string_q perfFile = getConfigPath(string_q("performance") + (total.allPassed ? "" : "_failed") + ".csv");
+            string_q perfFile = getPathToConfig(string_q("performance") + (total.allPassed ? "" : "_failed") + ".csv");
             appendToAsciiFile(perfFile, perf.str());
-            appendToAsciiFile(getConfigPath("performance_slow.csv"), slow.str());
+            appendToAsciiFile(getPathToConfig("performance_slow.csv"), slow.str());
         } else {
             LOG_WARN(cRed, "Performance results not written because not full test", cOff);
         }
@@ -162,11 +163,11 @@ int main(int argc, const char* argv[]) {
         CStringArray files = {"performance.csv", "performance_failed.csv", "performance_slow.csv",
                               "performance_scraper.csv"};
         for (auto file : files) {
-            if (fileExists(getConfigPath(file))) {
-                if (fileExists(getConfigPath(file))) {
+            if (fileExists(getPathToConfig(file))) {
+                if (fileExists(getPathToConfig(file))) {
                     ostringstream copyCmd;
                     copyCmd << "cp -f \"";
-                    copyCmd << getConfigPath(file) << "\" \"" << copyPath << "\"";
+                    copyCmd << getPathToConfig(file) << "\" \"" << copyPath << "\"";
                     // clang-format off
                     if (system(copyCmd.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
                     // clang-format on
@@ -238,7 +239,7 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
                 if (contains(test.path, "libs")) {
                     exe = "test/" + test.tool;
                     if (test.isCmd)
-                        exe = getCommandPath(exe);
+                        exe = getPathToCommands(exe);
 
                 } else {
                     exe = test.tool;
@@ -248,7 +249,7 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
 
                 string_q fullCmd = exe + " " + test.options;
                 string_q debugCmd =
-                    substitute(substitute(fullCmd, getCommandPath("test/"), ""), getCommandPath(""), "");
+                    substitute(substitute(fullCmd, getPathToCommands("test/"), ""), getPathToCommands(""), "");
                 string_q redir = test.workPath + test.fileName;
                 cmd << "echo \"" << debugCmd << "\" >" << redir + " && ";
                 cmd << env << fullCmd << " >>" << redir << " 2>&1";
@@ -385,7 +386,7 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
                     if (test.tool != "getQuotes")
                         measure.nPassed++;
 
-            } else {
+            } else if (test.tool != "getQuotes") {
                 ostringstream os;
                 os << cRed << "\tFailed: " << cTeal << (endsWith(test.path, "lib") ? test.tool : measure.cmd) << " ";
                 os << test.name << ".txt " << cOff << "(" << (test.builtin ? "" : measure.cmd) << " "
@@ -421,6 +422,8 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
                          << (endsWith(test.path, "lib") ? padRight(test.tool, 16) : measure.cmd) << " ";
                     slow << trim(test.name) << " " << trim(test.options).substr(0, 90) << endl;
                 }
+            } else {
+                // we ignore ethQuote testing since it deprecated
             }
             usleep(1000);
             if (shouldQuit()) {
@@ -445,8 +448,8 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
 bool saveAndCopy(const string_q& customFile, void* data) {
     CStringArray parts;
     explode(parts, customFile, '/');
-    string_q destFile = getConfigPath(parts[parts.size() - 1]);
-    string_q saveFile = getCachePath("tmp/" + parts[parts.size() - 1] + ".save");
+    string_q destFile = getPathToConfig(parts[parts.size() - 1]);
+    string_q saveFile = getPathToCache("tmp/" + parts[parts.size() - 1] + ".save");
     copyFile(destFile, saveFile);
     copyFile(customFile, destFile);
     return true;
@@ -456,8 +459,8 @@ bool saveAndCopy(const string_q& customFile, void* data) {
 bool replaceFile(const string_q& customFile, void* data) {
     CStringArray parts;
     explode(parts, customFile, '/');
-    string_q destFile = getConfigPath(parts[parts.size() - 1]);
-    string_q saveFile = getCachePath("tmp/" + parts[parts.size() - 1] + ".save");
+    string_q destFile = getPathToConfig(parts[parts.size() - 1]);
+    string_q saveFile = getPathToCache("tmp/" + parts[parts.size() - 1] + ".save");
     copyFile(saveFile, destFile);
     ::remove(saveFile.c_str());
     return true;

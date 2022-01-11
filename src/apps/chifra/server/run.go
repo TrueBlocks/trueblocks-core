@@ -28,22 +28,20 @@ func RunServe(cmd *cobra.Command, args []string) error {
 }
 
 func PrintServeSettings(testMode bool) {
+	// 	log.Print(utils.Green, "Starting API server on port "+Options.Port, utils.Off, "\n")
+	// 	log.Print(utils.Green, "Client:       ", utils.Off, Options.Status.Latest)
+	// 	log.Print(utils.Green, "TrueBlocks:   ", utils.Off, Options.Status.TrueBlocks)
+
 	meta := rpcClient.GetMeta(testMode)
-	log.Print("\n")
-	log.Println(colors.Green, "Starting API server on port "+Options.Port, colors.Off)
-	log.Println(colors.Green, "Cache Path:   ", colors.Off, config.ReadTrueBlocks().Settings.CachePath)
-	log.Println(colors.Green, "Index Path:   ", colors.Off, config.ReadTrueBlocks().Settings.IndexPath)
-	log.Println(colors.Green, "Rpc Provider: ", colors.Off, config.ReadTrueBlocks().Settings.RpcProvider)
-	log.Printf(" %s%s%s%d, %d, %d, %d\n", colors.Green, "Progress:       ", colors.Green, meta.Latest, meta.Finalized, meta.Staging, meta.Unripe)
+	log.Printf("%s%-15.15s%s%s\n", colors.Green, "Server URL:", colors.Off, "http://localhost"+Options.Port)
+	log.Printf("%s%-15.15s%s%s\n", colors.Green, "Config Path:", colors.Off, config.GetPathToConfig(false))
+	log.Printf("%s%-15.15s%s%s\n", colors.Green, "Cache Path:", colors.Off, config.GetPathToCache())
+	log.Printf("%s%-15.15s%s%s\n", colors.Green, "Index Path:", colors.Off, config.GetPathToIndex())
+	log.Printf("%s%-15.15s%s%s\n", colors.Green, "RPC Provider:", colors.Off, config.GetRpcProvider())
+	log.Printf("%s%-15.15s%s%d, %d, %d, %d\n", colors.Green, "Progress:", colors.Off, meta.Latest, meta.Finalized, meta.Staging, meta.Unripe)
 }
 
 // func ParseOptions() error {
-// 	// Establish and parse the command line input...
-// 	flag.StringVar(&Options.Port, "port", ":8080", "specify the server's port")
-// 	if !strings.HasPrefix(Options.Port, ":") {
-// 		Options.Port = ":" + Options.Port
-// 	}
-
 // 	flag.IntVar(&Options.Verbose, "verbose", 0, "verbose level (between 0 and 10 inclusive)")
 // 	flag.BoolVar(&Options.Pin, "pin", false, "pins Bloom filters and chunks to pinning service (requires API key)")
 // 	flag.IntVar(&Options.Sleep, "sleep", 14, "specifies sleep interval between scrapes")
@@ -63,16 +61,6 @@ func PrintServeSettings(testMode bool) {
 // 		log.Print(utils.Green, "verbose:     ", utils.Off, Options.Verbose, "\n")
 // 	}
 
-// 	log.Print("\n")
-// 	log.Print(utils.Green, "Starting API server on port "+Options.Port, utils.Off, "\n")
-// 	log.Print(utils.Green, "Client:       ", utils.Off, Options.Status.Latest)
-// 	log.Print(utils.Green, "TrueBlocks:   ", utils.Off, Options.Status.TrueBlocks)
-// 	log.Print(utils.Green, "Cache Path:   ", utils.Off, Options.Status.CachePath)
-// 	log.Print(utils.Green, "Index Path:   ", utils.Off, Options.Status.IndexPath)
-// 	log.Print(utils.Green, "Rpc Provider: ", utils.Off, Options.Status.RPC)
-// 	log.Print(utils.Green, "Progress:     ", utils.Off, Options.Meta.Latest, ", ", Options.Meta.Finalized, ", ", Options.Meta.Staging, ", ", Options.Meta.Unripe)
-
-// 	return nil
 // }
 
 // // ChifraStatus
@@ -80,9 +68,9 @@ func PrintServeSettings(testMode bool) {
 // 	Client     string `json:"clientVersion"`
 // 	TrueBlocks string `json:"trueblocksVersion"`
 // 	RPC        string `json:"rpcProvider"`
-// 	ConfigPath string `json:"configPath"`
-// 	CachePath  string `json:"cachePath"`
-// 	IndexPath  string `json:"indexPath"`
+// 	ConfigPath string `json:"config Path"`
+// 	CachePath  string `json:"cache Path"`
+// 	IndexPath  string `json:"index Path"`
 // 	IsTesting  bool   `json:"isTesting"`
 // 	IsDocker   bool   `json:"isDocker"`
 // 	IsArchive  bool   `json:"isArchive"`
@@ -108,7 +96,7 @@ func PrintServeSettings(testMode bool) {
 // }
 
 // func GetChifraResponse() (ChifraResponse, error) {
-// 	cmd := exec.Command(GetCommandPath("cacheStatus"), "--terse")
+// 	cmd := exec.Command(config.GetPathToCommands("cacheStatus"), "--terse")
 // 	cmd.Env = append(os.Environ(), "API_MODE=true")
 // 	out, err := cmd.Out put()
 // 	if err != nil {

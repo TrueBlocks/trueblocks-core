@@ -281,7 +281,8 @@ bool COptions::parseArguments(string_q& command) {
         return usage("You may use --summarized_by only with the --accounting option.");
 
     if (!bloomsAreInitalized())
-        return usage("Bloom filters not found. You must run 'chifra init' before running this command.");
+        return usage("Bloom filters not found in " + indexFolder_blooms +
+                     ". You must run 'chifra init' before running this command.");
 
     if (clean) {
         if (!process_clean())
@@ -357,7 +358,7 @@ bool COptions::parseArguments(string_q& command) {
         monitor.setValueByName("name", toLower(addr));
         monitor.clearMonitorLocks();
         monitor.finishParse();
-        monitor.isStaging = !fileExists(monitor.getMonitorPath(monitor.address, false));
+        monitor.isStaging = !fileExists(monitor.getPathToMonitor(monitor.address, false));
         if (monitor.monitorExists()) {
             string_q unused;
             if (monitor.isMonitorLocked(unused))
@@ -366,7 +367,7 @@ bool COptions::parseArguments(string_q& command) {
                     "running or it did not end cleanly the\n\tlast time it ran. "
                     "Quit the already running program or, if it is not running, "
                     "remove the lock\n\tfile: " +
-                    monitor.getMonitorPath(addr, false) + ".lck'. Proceeding anyway...");
+                    monitor.getPathToMonitor(addr, false) + ".lck'. Proceeding anyway...");
             string_q msg;
             if (monitor.isMonitorLocked(msg))  // If locked, we fail
                 return usage(msg);
@@ -428,8 +429,8 @@ bool COptions::parseArguments(string_q& command) {
         for (auto monitor : allMonitors) {
             CMonitorCount monCount;
             monCount.address = monitor.address;
-            monCount.fileSize = monitor.getFileSize(monitor.getMonitorPath(monitor.address, false));
-            monCount.nRecords = monitor.getRecordCnt(monitor.getMonitorPath(monitor.address, false));
+            monCount.fileSize = monitor.getFileSize(monitor.getPathToMonitor(monitor.address, false));
+            monCount.nRecords = monitor.getRecordCnt(monitor.getPathToMonitor(monitor.address, false));
             cout << ((isJson() && !firstOut) ? ", " : "");
             cout << monCount;
             firstOut = false;
@@ -445,7 +446,7 @@ bool COptions::parseArguments(string_q& command) {
                 return false;
 
         } else {
-            string_q fileName = getCachePath("objs/" + load);
+            string_q fileName = getPathToCache("objs/" + load);
             LOG_INFO("Trying to load dynamic library ", fileName);
 
             if (!fileExists(fileName)) {
@@ -532,8 +533,10 @@ void COptions::Init(void) {
     fileRange = make_pair(NOPOS, NOPOS);
     allMonitors.clear();
     possibles.clear();
+    reportFreq = reportDef = 7;
     slowQueries = 0;
-    maxSlowQueries = getGlobalConfig("acctExport")->getConfigInt("settings", "max_slow_queries", 13);
+    maxSlowQueries =
+        isApiMode() ? getGlobalConfig("acctExport")->getConfigInt("settings", "max_slow_queries", 50) : NOPOS;
 
     // Establish folders. This may be redundant, but it's cheap.
     establishMonitorFolders();
@@ -543,8 +546,8 @@ void COptions::Init(void) {
     establishFolder(indexFolder_staging);
     establishFolder(indexFolder_unripe);
     establishFolder(indexFolder_ripe);
-    establishFolder(getCachePath("tmp/"));
-    establishFolder(getCachePath("apps/"));
+    establishFolder(getPathToCache("tmp/"));
+    establishFolder(getPathToCache("apps/"));
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -750,7 +753,7 @@ bool COptions::setDisplayFormatting(void) {
 //         }
 //     }
 //     uint64_t nMocked = getGlobalConfig("")->getConfigInt("dev", "n_mocked", 100);
-//     string_q path = getConfigPath("mocked/" + origMode + ".json");
+//     string_q path = getPathToConfig("mocked/" + origMode + ".json");
 //     if (fileExists(path)) {
 //         if (origMode == "export") {
 //             for (size_t i = 0; i < nMocked; i++) {
@@ -818,7 +821,7 @@ void COptions::writePerformanceData(void) {
     if (stats.nFiles == stats.nSkipped)
         return;
 
-    string_q statsFile = getConfigPath("performance_scraper.csv");
+    string_q statsFile = getPathToConfig("performance_scraper.csv");
 
     string_q fmt = substitute(STR_DISPLAY_SCRAPESTATISTICS, "\t", ",");
     if (!fileExists(statsFile)) {
@@ -830,12 +833,4 @@ void COptions::writePerformanceData(void) {
     ostringstream data;
     data << stats.Format(fmt) << endl;
     appendToAsciiFile(statsFile, data.str());
-}
-
-//-----------------------------------------------------------------------
-size_t freqOverride = NOPOS;
-size_t COptions::reportFreq(void) const {
-    if (freqOverride != NOPOS)
-        return freqOverride;
-    return slowQueries > 0 ? 1 : 7;
 }

@@ -113,8 +113,8 @@ bool display(CTraverser* trav, void* data) {
             double price = reserve1 / reserve2;
 
             CArchive archive(READING_ARCHIVE);
-            string_q path = getBinaryCachePath(CT_RECONS, trav->curMonitor->address, trav->trans.blockNumber,
-                                               trav->trans.transactionIndex);
+            string_q path = getPathToBinaryCache(CT_RECONS, trav->curMonitor->address, trav->trans.blockNumber,
+                                                 trav->trans.transactionIndex);
             if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
                 archive >> trav->trans.statements;
                 for (CReconciliation& statement : trav->trans.statements) {

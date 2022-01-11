@@ -515,6 +515,15 @@ names?prefund&custom&named
       "description": "Blockchain Prediction Markets Platform."
     },
     {
+      "tags": "31-Contracts:Giveth Project",
+      "address": "0x006cfc89e7f521ce3290b200df9530dce911b896",
+      "name": "St. Ignatius Martyr Catholic Church",
+      "symbol": "",
+      "source": "Giveth Website",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "80-Malicious:Shanghai",
       "address": "0x006e61aa7e7ce25b8dad331d5181f2fbe5c23a54",
       "name": "Shanghai Cleaner Contract",
@@ -610,6 +619,15 @@ names?prefund&custom&named
       "name": "Name 0x00995ae7",
       "symbol": "",
       "source": "WhaleWatch.io",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Contracts:Giveth Project",
+      "address": "0x009a82e5762189384bf2880a2d21f75e209eee12",
+      "name": "UNRWA USA",
+      "symbol": "",
+      "source": "Giveth Website",
       "decimals": 0,
       "description": ""
     },
@@ -821,11 +839,29 @@ names?prefund&custom&named
       "description": ""
     },
     {
+      "tags": "31-Contracts:Giveth Project",
+      "address": "0x0109c0faae3f358bce232dff482e2d6eca1f4dab",
+      "name": "FARE - Food Allergy Research & Education",
+      "symbol": "",
+      "source": "Giveth Website",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "90-Individuals:Gitcoin Grants",
       "address": "0x010afb8548a5d1a3a3d62f58ca0a5a1329974206",
       "name": "Name 0x010afb85",
       "symbol": "",
       "source": "Gitcoin Website",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Contracts:Giveth Project",
+      "address": "0x010f0c8b31ba0cefe2764c373fa23e8635becb60",
+      "name": "Lutheran World Relief",
+      "symbol": "",
+      "source": "Giveth Website",
       "decimals": 0,
       "description": ""
     },
@@ -891,6 +927,15 @@ names?prefund&custom&named
       "source": "On chain",
       "decimals": 18,
       "description": "Paycent is a hybrid mobile app that lets users convert digital assets to fiat and vice versa in real time."
+    },
+    {
+      "tags": "31-Contracts:Giveth Project",
+      "address": "0x014797cc3d15f6ea6bb220a32a465ac8f7a5e3b8",
+      "name": "FUTURO NATIVO",
+      "symbol": "",
+      "source": "Giveth Website",
+      "decimals": 0,
+      "description": ""
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -1091,6 +1136,15 @@ names?prefund&custom&named
       "description": ""
     },
     {
+      "tags": "31-Contracts:Giveth Project",
+      "address": "0x01ca185fdcf1c2001c24e7e2362d3fc1b570ead3",
+      "name": "National Association of Free and Charitable Clinics",
+      "symbol": "",
+      "source": "Giveth Website",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "50-Tokens:ERC20",
       "address": "0x01cc47d73e69d00b7d8f54f2ae6ddbfa3c2e82e3",
       "name": "Ethereum Developers Night",
@@ -1115,6 +1169,24 @@ names?prefund&custom&named
       "symbol": "ECHERRY 🍒",
       "source": "On chain",
       "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "31-Contracts:Giveth Project",
+      "address": "0x01d6c3db752551baf985f5fc7d47db6f5c9b3a7b",
+      "name": "The Jerusalem Hills Therapeutic Centers",
+      "symbol": "",
+      "source": "Giveth Website",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Contracts:Giveth Project",
+      "address": "0x01da64059bc5a81ec78362505faf7bb459c575e4",
+      "name": "CARITAS Aotearoa New Zealand",
+      "symbol": "",
+      "source": "Giveth Website",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1298,6 +1370,15 @@ names?prefund&custom&named
       "description": ""
     },
     {
+      "tags": "31-Contracts:Giveth Project",
+      "address": "0x024bd890b037adbbfe1545d595490f65361c4a66",
+      "name": "Clearway Clinic",
+      "symbol": "",
+      "source": "Giveth Website",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "50-Tokens:ERC20",
       "address": "0x02585e4a14da274d02df09b222d4606b10a4e940",
       "name": "Hero Origen Token",
@@ -1424,6 +1505,15 @@ names?prefund&custom&named
       "description": ""
     },
     {
+      "tags": "31-Contracts:Giveth Project",
+      "address": "0x02c2ec416601daf7eb2c69c8ed3000457945fa20",
+      "name": "Merijaan — for a plastic free world",
+      "symbol": "",
+      "source": "Giveth Website",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "50-Tokens:ERC20",
       "address": "0x02c4c78c462e32cca4a90bc499bf411fb7bc6afb",
       "name": "InvestDigital Token",
@@ -1492,6 +1582,15 @@ names?prefund&custom&named
       "name": "Raceftw",
       "symbol": "",
       "source": "EtherScan.io",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Contracts:Giveth Project",
+      "address": "0x02e0ea1bd6bbd1f5a30b51903b5987f187a2dfcc",
+      "name": "Childrens Cancer Association",
+      "symbol": "",
+      "source": "Giveth Website",
       "decimals": 0,
       "description": ""
     },
@@ -1640,6 +1739,15 @@ names?prefund&custom&named
       "description": "The ICO market is becoming more regulated, but this isn‚Äö√Ñ√¥t stopping scams from penetrating the cryptocurrency community. That is why we created the Founding Community Bitdepositary with integrated payment systems."
     },
     {
+      "tags": "31-Contracts:Giveth Project",
+      "address": "0x033618a08649300184ec221c6d825416dbee8f92",
+      "name": "World Vision",
+      "symbol": "",
+      "source": "Giveth Website",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "31-Gitcoin:Grants",
       "address": "0x035032655b5b3784d359b56eb82c803bd971c582",
       "name": "Grant 2800 - LogicBeach Explainer Series",
@@ -1701,114 +1809,6 @@ names?prefund&custom&named
       "source": "On chain",
       "decimals": 18,
       "description": "Student jobs marketplace."
-    },
-    {
-      "tags": "31-Gitcoin:Grants",
-      "address": "0x03798c0d62e6a0b0548114fb6241efa07ca4122d",
-      "name": "Grant 4257 - Reputable DAO",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/4257/reputable-dao",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "31-Gitcoin:Grants",
-      "address": "0x037e414abacc799a598314153509b6b967608bf9",
-      "name": "Grant 3059 - CO2KEN — Carbon as a money lego",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/3059/co2ken-carbon-as-a-money-lego",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "37-SelfDestructed",
-      "address": "0x037e8f2125bf532f3e228991e051c8a7253b642c",
-      "name": "Chainlink DAI-ETH Aggregator",
-      "symbol": "",
-      "source": "EtherScan.io",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "31-Gitcoin:Grants",
-      "address": "0x0384610bf8e9292ec499145cb126e32a17e7ccd6",
-      "name": "Grant 3475 - Nectar: L2 + Healthcare",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/3475/nectar-l2-healthcare",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "90-Individuals:Other",
-      "address": "0x0385b3f162a0e001b60ecb84d3cb06199d78f666",
-      "name": "Name 0x0385b3f1",
-      "symbol": "",
-      "source": "EtherScan.io",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "31-Gitcoin:Grants",
-      "address": "0x0389836416d1d46724f0913eeee42622950b20c1",
-      "name": "Grant 1488 Ercgraph",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/1488/ercgraph",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "91-Early:Addresses",
-      "address": "0x0389a06b028526b05966c287370bebefa0082176",
-      "name": "Dividend",
-      "symbol": "",
-      "source": "EtherScan.io",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "31-Gitcoin:Grants",
-      "address": "0x039ae2898d257f4c9d7e381d478ee1ed042fe2f4",
-      "name": "Grant 0284 My DAO Dashboard",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/284/my-dao-dashboard",
-      "decimals": 0,
-      "description": "http://mydaodashboard.com/"
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x039b5649a59967e3e936d7471f9c3700100ee1ab",
-      "name": "Kucoin Shares",
-      "symbol": "KCS",
-      "source": "On chain",
-      "decimals": 6,
-      "description": ""
-    },
-    {
-      "tags": "30-Contracts",
-      "address": "0x039b739a1e7353878bfb2f2a4ec23502f4885baa",
-      "name": "Maker: Oasis",
-      "symbol": "",
-      "source": "EtherScan.io",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "30-Contracts",
-      "address": "0x03a99d9235732d94a300bf7013acb11020484bf1",
-      "name": "Arbitrage Bot",
-      "symbol": "",
-      "source": "0xTracker",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x03ab458634910aad20ef5f1c8ee96f1d6ac54919",
-      "name": "Rai Reflex Index",
-      "symbol": "RAI",
-      "source": "On chain",
-      "decimals": 18,
-      "description": ""
     }
   ],
   "meta": {

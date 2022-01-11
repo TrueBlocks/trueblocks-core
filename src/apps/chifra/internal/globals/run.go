@@ -11,8 +11,11 @@ import (
 	"io"
 	"os"
 	"os/exec"
-	"os/user"
+	"strings"
 	"sync"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
 
 func (opts *GlobalOptions) PassItOn(path string, flags string) error {
@@ -23,9 +26,19 @@ func (opts *GlobalOptions) PassItOn(path string, flags string) error {
 	wg.Add(2)
 
 	// fmt.Fprintf(os.Stderr, "Calling: %s %s\n", path, options)
-	cmd := exec.Command(getCommandPath(path), options)
+	cmd := exec.Command(config.GetPathToCommands(path), options)
+	cmd.Env = append(os.Environ(), "FROM_CHIFRA=true")
+	configPath := strings.Replace(config.GetPathToConfig(false), "mainnet/", "", -1)
+	if !opts.TestMode {
+		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "TB_CONFIG_PATH: ", configPath, colors.Off)
+		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "TB_CACHE_PATH:  ", config.GetPathToCache1(opts.Chain), colors.Off)
+		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "TB_INDEX_PATH:  ", config.GetPathToIndex1(opts.Chain), colors.Off)
+	}
+	cmd.Env = append(cmd.Env, "TB_CONFIG_PATH="+configPath)
+	cmd.Env = append(cmd.Env, "TB_CACHE_PATH="+config.GetPathToCache1(opts.Chain))
+	cmd.Env = append(cmd.Env, "TB_INDEX_PATH="+config.GetPathToIndex1(opts.Chain))
 	if os.Getenv("TEST_MODE") == "true" {
-		cmd.Env = append(os.Environ(), "TEST_MODE=true")
+		cmd.Env = append(cmd.Env, "TEST_MODE=true")
 	}
 
 	stderrPipe, err := cmd.StderrPipe()
@@ -94,11 +107,4 @@ func ScanForProgress2(stderrPipe io.Reader, fn func(string)) {
 	if err := scanner.Err(); err != nil {
 		fmt.Println("TB: Error while reading stderr -- ", err)
 	}
-}
-
-// getCommandPath returns full path the the given tool
-func getCommandPath(cmd string) string {
-	usr, _ := user.Current()
-	dir := usr.HomeDir
-	return dir + "/.local/bin/chifra/" + cmd
 }

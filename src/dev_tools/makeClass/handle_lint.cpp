@@ -15,11 +15,11 @@
 
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_lint(void) {
-    CToml config(getConfigPath("makeClass.toml"));
+    CToml config(getPathToConfig("makeClass.toml"));
 
     bool enabled = config.getConfigBool("enabled", "lint_all", false);
     // TODO: There's a misspelling with pylin!!!
-    string_q res = doCommand("which pylin.py");  // getCommandPath("test/pylint.py"));
+    string_q res = doCommand("which pylin.py");  // getPathToCommands("test/pylint.py"));
     if (!enabled || res.empty()) {
         LOG_WARN("Skipping linting...");
         return true;
@@ -65,7 +65,7 @@ bool lintFiles(const string_q& path, void* data) {
                 return !shouldQuit();
 
             string_q fullPath = substitute(path, "./", getCWD());
-            string_q resPath = getCachePath("tmp/" + CFilename(path).getFilename());
+            string_q resPath = getPathToCache("tmp/" + CFilename(path).getFilename());
             string_q cmd = "pylint.py \"" + fullPath + "\" >\"" + resPath + "\" 2>&1";
             // clang-format off
             if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings

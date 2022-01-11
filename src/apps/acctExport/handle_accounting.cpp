@@ -76,15 +76,13 @@ bool acct_Display(CTraverser* trav, void* data) {
         }
     }
 
-    prog_Log(trav, data);
-    bool tooSlow = (isApiMode() && opt->slowQueries > opt->maxSlowQueries);
-    return !tooSlow && !shouldQuit();
+    return prog_Log(trav, data);
 }
 
 //-----------------------------------------------------------------------
 bool COptions::process_reconciliation(CTraverser* trav) {
     string_q path =
-        getBinaryCachePath(CT_RECONS, accountedFor.address, trav->trans.blockNumber, trav->trans.transactionIndex);
+        getPathToBinaryCache(CT_RECONS, accountedFor.address, trav->trans.blockNumber, trav->trans.transactionIndex);
     establishFolder(path);
 
     trav->trans.statements.clear();
@@ -93,7 +91,7 @@ bool COptions::process_reconciliation(CTraverser* trav) {
         if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
             archive >> trav->trans.statements;
             archive.Release();
-            if (isReconciled(trav)) {
+            if (true) {
                 bool backLevel = false;
                 for (auto& statement : trav->trans.statements) {
                     // At version 0.11.8, we finally got pricing of reconcilations correct. We didn't
@@ -116,6 +114,7 @@ bool COptions::process_reconciliation(CTraverser* trav) {
                     trav->searchOp = "Updating";
                     cacheIfReconciled(trav, true /* isNew */);
                     slowQueries++;
+                    reportFreq = 1;
                 }
                 return !shouldQuit();
             } else {
@@ -126,6 +125,7 @@ bool COptions::process_reconciliation(CTraverser* trav) {
 
     trav->searchOp = "Reconciling";
     slowQueries++;
+    reportFreq = 1;
 
     blknum_t nextAppBlk = trav->index < monApps.size() - 1 ? monApps[trav->index + 1].blk : NOPOS;
     blknum_t prevAppBlk = trav->index > 0 ? monApps[trav->index - 1].blk : 0;
@@ -214,14 +214,13 @@ void COptions::cacheIfReconciled(CTraverser* trav, bool isNew) const {
     if (isTestMode())
         return;
     if (!isReconciled(trav)) {
-        LOG_WARN("Transaction ", trav->trans.hash, " did not reconciled.");
-        return;
+        LOG_WARN("Transaction ", trav->trans.hash, " did not reconcile.");
     }
 
     lockSection();
     CArchive archive(WRITING_ARCHIVE);
     string_q path =
-        getBinaryCachePath(CT_RECONS, accountedFor.address, trav->trans.blockNumber, trav->trans.transactionIndex);
+        getPathToBinaryCache(CT_RECONS, accountedFor.address, trav->trans.blockNumber, trav->trans.transactionIndex);
     if (archive.Lock(path, modeWriteCreate, LOCK_WAIT)) {
         LOG4("Writing to cache for ", path);
         archive << trav->trans.statements;

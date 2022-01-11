@@ -484,10 +484,10 @@ const char* STR_DISPLAY_TESTCASE = "";
 // EXISTING_CODE
 //---------------------------------------------------------------------------------------------
 void establishTestMonitors(void) {
-    if (folderExists(getConfigPath("mocked/monitors/")))
+    if (folderExists(getPathToConfig("mocked/monitors/")))
         return;
 
-    string_q gzipFile = getConfigPath("mocked/monitors.tar.gz");
+    string_q gzipFile = getPathToConfig("mocked/monitors.tar.gz");
     if (!fileExists(gzipFile)) {
         LOG_WARN("Cannot find test monitors file: ", gzipFile);
         return;
@@ -501,7 +501,7 @@ void establishTestMonitors(void) {
         "tar -xvf monitors.tar 2>/dev/null && rm -f monitors.tar && "
         "tar -xvf mocks.tar 2>/dev/null && rm -f mocks.tar";
 
-    string_q cmd = substitute(STR_UNZIP_CMD, "[{PATH}]", getConfigPath("mocked/"));
+    string_q cmd = substitute(STR_UNZIP_CMD, "[{PATH}]", getPathToConfig("mocked/"));
     // LOG_INFO(cmd);
     // clang-format off
     if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
@@ -518,8 +518,8 @@ bool prepareBuiltIn(string_q& options) {
             ostringstream os;
             if (match == "RESET") {
                 establishTestMonitors();
-                cleanFolder(getCachePath("tmp/"));
-                cleanFolder(getConfigPath("mocked/unchained"));
+                cleanFolder(getPathToCache("tmp/"));
+                cleanFolder(getPathToConfig("mocked/unchained"));
                 options = "";
                 if (debug)
                     os << "Cleanup" << endl;
@@ -531,7 +531,7 @@ bool prepareBuiltIn(string_q& options) {
                 os << options;
                 if (debug)
                     os << " ; find ./testing_data/ -exec ls -l {} ';' ; ";
-                options = substitute(os.str(), "$CONFIG/", getConfigPath(""));
+                options = substitute(os.str(), "$CONFIG/", getPathToConfig(""));
                 replaceAll(options, match, cmd);
             }
             if (debug)

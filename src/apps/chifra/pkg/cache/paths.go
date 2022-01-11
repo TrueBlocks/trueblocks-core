@@ -11,9 +11,9 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
 
-// CachePath helps to keep track of cache paths and extensions depending on
+// Path helps to keep track of cache paths and extensions depending on
 // chunk type
-type CachePath struct {
+type Path struct {
 	Type      CacheType
 	RootPath  string
 	Subdir    string
@@ -32,9 +32,9 @@ var cacheFolders = map[CacheType]string{
 }
 
 // New sets correct values of Subdir and Extension properties based on cacheType
-func (cl *CachePath) New(cacheType CacheType) {
-	indexPath := config.ReadTrueBlocks().Settings.IndexPath
-	cachePath := config.ReadTrueBlocks().Settings.CachePath
+func (cl *Path) New(cacheType CacheType) {
+	indexPath := config.GetPathToIndex()
+	cachePath := config.GetPathToCache()
 
 	if cacheType == BloomChunk || cacheType == IndexChunk {
 		cl.RootPath = indexPath
@@ -49,8 +49,8 @@ func (cl *CachePath) New(cacheType CacheType) {
 	cl.Subdir = cacheFolders[cacheType]
 }
 
-// GetFullPath builds a full path from the CachePath type
-func (cl *CachePath) GetFullPath(name string) string {
+// GetFullPath builds a full path from the Path type
+func (cl *Path) GetFullPath(name string) string {
 	switch cl.Type {
 	case IndexChunk:
 		fallthrough
@@ -64,12 +64,12 @@ func (cl *CachePath) GetFullPath(name string) string {
 }
 
 // RemoveExtension removes Extension (".bloom" or ".bin") from fileName
-func (cl *CachePath) RemoveExtension(fileName string) string {
+func (cl *Path) RemoveExtension(fileName string) string {
 	return strings.Replace(fileName, cl.Extension, "", 1)
 }
 
 // String turns cachePath data (RootPath and Subdir) into a path
 // and returns it as a string
-func (cl *CachePath) String() string {
+func (cl *Path) String() string {
 	return path.Join(cl.RootPath, cl.Subdir)
 }

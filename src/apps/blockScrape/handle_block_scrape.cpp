@@ -19,14 +19,14 @@ bool COptions::scrape_blocks(void) {
     ENTER("scrape_blocks");
 
     static blknum_t runs = 0;  // this counter is used for texting purposes only
-    if (isLiveTest() && runs++ > TEST_RUNS)
+    if (isLiveTest() && runs++ > n_test_runs)
         defaultQuitHandler(0);
 
-    // First, we need to know how far along in the scrape we are. We get the progress (i.e. highest
+    // We need to know how far along in the scrape we are. We get the progress (i.e. highest
     // block) of the client and the each of index caches. From there, we can determine where to
     // start the scraper (one more than the largest cache). Note that the first chunk for block
-    // zero is special and already created
-    CConsolidator cons;
+    // zero is special and has already been created.
+    CConsolidator cons(this);
 
     // This peice of data will be needed later when we create a new chunk, so we save it off here.
     cons.pin = pin;
@@ -40,7 +40,7 @@ bool COptions::scrape_blocks(void) {
     // ...but we may make some adjustments to speed things up. When not running in docker mode,
     // we can do more blocks. In docker mode, we stick with the defaults otherwise, docker
     // may kill us for using too many resources.
-    if (!isDockerMode() && chain == "mainnet") {
+    if (!isDockerMode()) {
         if (cons.blazeStart < 450000) {
             // We can speed things up on the early chain...
             cons.blazeCnt = max(blknum_t(4000), cons.blazeCnt);
@@ -51,16 +51,16 @@ bool COptions::scrape_blocks(void) {
         }
     }
 
-    // If a block is more than 28 blocks from the head we consider it 'ripe.' We want to tell
-    // the blaze scraper when 'ripe' is, so it can ignore those blocks. Once a block goes ripe,
-    // we no longer scrape it. We move it to staging instead. Staging means the block is ready to
-    // be consolidated (or finalized) and put into a chunk.
+    // If a block is more than 28 (unripe_dist) blocks from the head we consider it 'ripe.' We
+    // want to tell the blaze scraper when 'ripe' is, so it can ignore those blocks. Once a block
+    // goes ripe, we no longer scrape it. We move it to staging instead. Staging means the block
+    // is ready to be consolidated (or finalized) and put into a chunk.
     //
     // Note that 28 blocks is an arbitrarily chosen value, but is a bit more than six minutes under
     // normal operation ((14 * 28) / 60 == 6.5). If the index is near the head of the chain and the
     // difficulty level is high (the time bomb is exploding), the time will extend, but the
     // nature of the operation is the same.
-    cons.blazeRipe = (cons.client < 28 ? 0 : cons.client - 28);
+    cons.blazeRipe = (cons.client < unripe_dist ? 0 : cons.client - unripe_dist);
 
     // One final adjustment to blazeCnt so we don't run past the tip of the chain...
     if ((cons.blazeStart + cons.blazeCnt) > cons.client) {
@@ -101,7 +101,7 @@ bool COptions::scrape_blocks(void) {
     // We're ready to scrape, so build the blaze command line...
     os.clear();
     os.str("");
-    os << getCommandPath("blaze") + " scrape ";
+    os << getPathToCommands("blaze") + " scrape ";
     os << "--startBlock " << cons.blazeStart << " ";
     os << "--block_cnt " << cons.blazeCnt << " ";
     os << "--ripeBlock " << cons.blazeRipe << " ";
@@ -109,7 +109,7 @@ bool COptions::scrape_blocks(void) {
     LOG_TEST_CALL(os.str());
 
     ostringstream cmd;
-    cmd << "env TB_INDEXPATH=\"" << getIndexPath("")
+    cmd << "env TB_INDEXPATH=\"" << getPathToIndex("")
         << "\" ";  // note--cobra/viper will pick this up even though you won't find it
     cmd << os.str() << " ";
     cmd << "--block_chan_cnt " << block_chan_cnt << " ";
@@ -141,8 +141,8 @@ bool COptions::scrape_blocks(void) {
 
     // Blaze has sucessfullly created an individual file for each block between 'blazeStart' and
     // 'blazeStart + block_cnt'. Each file is a fixed-width list of addresses that appear in that block.
-    // The unripe folder holds blocks that are less than 28 blocks old. We do nothing further with them,
-    // although acctExport may use them if it wishes to.
+    // The unripe folder holds blocks that are less than 28 (unripe_dist) blocks old. We do nothing
+    // further with them, although acctExport may use them if it wishes to.
 
     // From this point until the end of this invocation (scrape), the processing must be able to stop abruptly
     // without resulting in corrupted data (Control+C for example). This means we must process a single file at

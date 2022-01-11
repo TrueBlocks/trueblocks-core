@@ -21,7 +21,7 @@ bool showApp(const CAppearance& item, void* data) {
     return !shouldQuit();
 }
 
-#define indexFolder_map (getIndexPath("maps/"))
+#define indexFolder_map (getPathToIndex("maps/"))
 extern bool getChunkRanges(CBlockRangeArray& ranges);
 
 //-----------------------------------------------------------------------
@@ -243,7 +243,8 @@ bool COptions::showAddrsInTx(CTraverser* trav, const blkrange_t& range, const CA
                     app.addr = bytes_2_Addr(theIndex->addresses[i].bytes);
                     if (assignReason(accountedFor, app, trav->trans)) {
                         trav->nProcessed++;
-                        prog_Log(trav, this);
+                        if (!prog_Log(trav, this))
+                            return false;
                         showApp(app, this);
                     }
                     start = i;
@@ -257,7 +258,7 @@ bool COptions::showAddrsInTx(CTraverser* trav, const blkrange_t& range, const CA
                 chunkPath);
     }
 
-    return !shouldQuit();
+    return prog_Log(trav, this);
 }
 
 //-----------------------------------------------------------------------
@@ -265,8 +266,7 @@ bool COptions::showAddrsInTx(CTraverser* trav, const blkrange_t& range, const CA
 // because what we actually want to do is scan across the index chunks
 bool neighbors_Pre(CTraverser* trav, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
-    extern size_t freqOverride;
-    freqOverride = 43;  // random prime
+    opt->reportDef = 43;  // random prime
 
     // LOG_INFO("Processing address ", opt->accountedFor.address);
 
@@ -316,7 +316,7 @@ size_t neighbors_Count(CTraverser* trav, void* data) {
 extern bool visitBloom(const string_q& path, void* data);
 //-----------------------------------------------------------------------
 bool getChunkRanges(CBlockRangeArray& ranges) {
-    forEveryFileInFolder(getIndexPath("blooms/*"), visitBloom, &ranges);
+    forEveryFileInFolder(getPathToIndex("blooms/*"), visitBloom, &ranges);
     // LOG_INFO("Found ", ranges.size(), " chunks");
     return true;
 }
@@ -325,7 +325,7 @@ bool getChunkRanges(CBlockRangeArray& ranges) {
 bool visitBloom(const string_q& path, void* data) {
     if (endsWith(path, ".bloom")) {
         CBlockRangeArray* ranges = (CBlockRangeArray*)data;
-        blkrange_t range = str_2_Range(substitute(path, getIndexPath("blooms/"), ""));
+        blkrange_t range = str_2_Range(substitute(path, getPathToIndex("blooms/"), ""));
         ranges->push_back(range);
     }
     return true;

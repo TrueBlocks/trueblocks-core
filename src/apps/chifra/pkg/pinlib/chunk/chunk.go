@@ -70,14 +70,12 @@ func fetchChunk(url string) (*fetchResult, error) {
 
 // GetChunksFromRemote downloads, unzips and saves the chunk of type indicated by chunkType
 // for each pin in pins. Progress is reported to progressChannel.
-func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType cache.CacheType, progressChannel chan<- *progress.Progress) {
+func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkPath *cache.Path, progressChannel chan<- *progress.Progress) {
 	poolSize := config.ReadBlockScrape().Dev.MaxPoolSize
 	// Downloaded content will wait for saving in this channel
 	writeChannel := make(chan *jobResult, poolSize)
 	// Context lets us handle Ctrl-C easily
 	ctx, cancel := context.WithCancel(context.Background())
-	cachePath := &cache.CachePath{}
-	cachePath.New(chunkType)
 	var downloadWg sync.WaitGroup
 	var writeWg sync.WaitGroup
 
@@ -101,8 +99,7 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType cache.CacheTyp
 		default:
 			// Perform download => unzip-and-save
 			hash := pin.BloomHash
-
-			if chunkType == cache.IndexChunk {
+			if chunkPath.Type == cache.IndexChunk {
 				hash = pin.IndexHash
 			}
 
@@ -163,7 +160,7 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType cache.CacheTyp
 				Message: "Unzipping",
 			}
 
-			err := saveFileContents(res, cachePath)
+			err := saveFileContents(res, chunkPath)
 			if err != nil && err != sigintTrap.ErrInterrupted {
 				progressChannel <- &progress.Progress{
 					Payload: res.Pin,
@@ -202,7 +199,7 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType cache.CacheTyp
 		writeWg.Done()
 	}()
 
-	pinsToDownload := FilterDownloadedChunks(pins, cachePath)
+	pinsToDownload := FilterDownloadedChunks(pins, chunkPath)
 	for _, pin := range pinsToDownload {
 		downloadWg.Add(1)
 		downloadPool.Invoke(pin)
@@ -218,7 +215,7 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType cache.CacheTyp
 }
 
 // saveFileContents decompresses the downloaded data and saves it to files
-func saveFileContents(res *jobResult, cachePath *cache.CachePath) error {
+func saveFileContents(res *jobResult, chunkPath *cache.Path) error {
 	// Postpone Ctrl-C
 	trapChannel := sigintTrap.Enable()
 	defer sigintTrap.Disable(trapChannel)
@@ -238,7 +235,7 @@ func saveFileContents(res *jobResult, cachePath *cache.CachePath) error {
 	}
 	defer archive.Close()
 
-	outputFile, err := os.Create(cachePath.GetFullPath(res.fileName))
+	outputFile, err := os.Create(chunkPath.GetFullPath(res.fileName))
 	if err != nil {
 		return &ErrSavingCreateFile{res.fileName, err}
 	}
@@ -259,16 +256,16 @@ func saveFileContents(res *jobResult, cachePath *cache.CachePath) error {
 }
 
 // FilterDownloadedChunks returns new []manifest.PinDescriptor slice with all pins from RootPath removed
-func FilterDownloadedChunks(pins []manifest.PinDescriptor, cachePath *cache.CachePath) []manifest.PinDescriptor {
+func FilterDownloadedChunks(pins []manifest.PinDescriptor, chunkPath *cache.Path) []manifest.PinDescriptor {
 	fileMap := make(map[string]bool)
 
-	files, err := ioutil.ReadDir(cachePath.String())
+	files, err := ioutil.ReadDir(chunkPath.String())
 	if err != nil {
 		return pins
 	}
 
 	for _, file := range files {
-		pinFileName := strings.Replace(file.Name(), cachePath.Extension, "", -1)
+		pinFileName := strings.Replace(file.Name(), chunkPath.Extension, "", -1)
 		fileMap[pinFileName] = true
 	}
 

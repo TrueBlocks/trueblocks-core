@@ -70,7 +70,7 @@ bool Slurp(CCachedAccount& theAccount, COptions& options) {
     bool first = true;
     for (auto type : options.typesList) {
         string_q cacheFilename =
-            getCachePath("slurps/" + theAccount.addr + (type == "ext" || type.empty() ? "" : "." + type) + ".bin");
+            getPathToCache("slurps/" + theAccount.addr + (type == "ext" || type.empty() ? "" : "." + type) + ".bin");
         if (fileExists(cacheFilename)) {
             CArchive inArchive(READING_ARCHIVE);
             if (inArchive.Lock(cacheFilename, modeReadOnly, LOCK_NOWAIT)) {

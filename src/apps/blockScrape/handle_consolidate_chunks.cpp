@@ -20,7 +20,7 @@ bool CConsolidator::consolidate_chunks(void) {
     // We are now in a valid state. All records that have not yet been consolidated
     // are in newStage. Count how many lines we have...
     blknum_t nRecords = fileSize(newStage) / 59;
-    blknum_t chunkSize = MAX_ROWS;
+    blknum_t chunkSize = opts->apps_per_chunk;
     int64_t distToHead = (int64_t(chunkSize) - int64_t(nRecords));
 
     LOG_FN8(tmpFile);
@@ -56,7 +56,7 @@ bool visitToPin(const string_q& chunkId, void* data) {
     ci = substitute(ci, ".bin", "");
     ostringstream os;
     os << ci << "\t" << pinRecord.bloomHash << "\t" << pinRecord.indexHash << endl;
-    os << asciiFileToString(getConfigPath("manifest/manifest.txt"));
-    stringToAsciiFile(getConfigPath("manifest/manifest.txt"), os.str());
+    os << asciiFileToString(getPathToConfig("manifest/manifest.txt"));
+    stringToAsciiFile(getPathToConfig("manifest/manifest.txt"), os.str());
     return !shouldQuit();
 }

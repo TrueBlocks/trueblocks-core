@@ -17,10 +17,9 @@ var blockScrapeRead = false
 var cachedBlockScrape BlockScrape
 
 type blockScrapeRequires struct {
-	Tracing  bool
-	Parity   bool
-	Balances bool
-	Archive  bool
+	Tracing bool
+	Parity  bool
+	Archive bool
 }
 
 type blockScrapeDev struct {
@@ -48,13 +47,12 @@ func init() {
 	blockScrapeViper.SetDefault("UnchainedIndex.ManifestHashEncoding", "0x337f3f32")
 	blockScrapeViper.SetDefault("Requires.Tracing", true)
 	blockScrapeViper.SetDefault("Requires.Parity", true)
-	blockScrapeViper.SetDefault("Requires.Balances", false)
 }
 
 // ReadBlockScrape reads the configuration located in blockScrape.toml file
 func ReadBlockScrape() *BlockScrape {
 	if !blockScrapeRead {
-		MustReadConfig(blockScrapeViper, &cachedBlockScrape, false)
+		MustReadConfig(blockScrapeViper, &cachedBlockScrape, GetPathToConfig(true /* withChain */), false)
 
 		// Validate the URL to ensure we have it in the correct format, so that ethClient.Dial
 		// will not panic

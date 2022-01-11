@@ -44,14 +44,15 @@ bool CConsolidator::stage_chunks(void) {
         // TODO(tjayrush): the number 59 here is obviously not a good thing...
         blknum_t curSize = fileSize(oldStage) / 59;
         LOG_INFO(bBlue, "Consolidation not ready...", cOff);
-        LOG_PROGRESS("No new blocks ", curSize, MAX_ROWS, ". Need " + uint_2_Str(MAX_ROWS - curSize) + " more.");
+        LOG_PROGRESS("No new blocks ", curSize, opts->apps_per_chunk,
+                     ". Need " + uint_2_Str(opts->apps_per_chunk - curSize) + " more.");
         EXIT_NOMSG(true);
     }
 
     // We always want the stage to contain a file with perfectly valid data. We do this by working in
     // a temporary file. Once we're ready, we move the temp file to newStage and only then delete oldStage.
     // The next time we run, if we didn't create a newStage file, it will start at oldStage
-    tmpFile = getIndexPath("temp.txt");
+    tmpFile = getPathToIndex("temp.txt");
     LOG_FN8(tmpFile);
 
     LOG_FN8(tmp_fn);
