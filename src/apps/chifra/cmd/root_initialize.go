@@ -41,27 +41,78 @@ func VerifyOs() {
 	}
 }
 
+const shouldNotExist string = `
+
+	A configuration file or folder ({0}) exists in an old location. Please follow
+	migration {1} to continue.
+
+	See https://github.com/TrueBlocks/trueblocks-core/blob/develop/MIGRATIONS.md
+
+`
+
+const notExist string = `
+
+	The configuration file or folder ({0})
+	does not exist. See https://trueblocks.io/docs/install/install-trueblocks/.
+
+`
+
 // VerifyMigrations will panic if the installation is not properly migrated
 func VerifyMigrations() {
 	user, _ := user.Current()
 
 	if _, err := os.Stat(path.Join(user.HomeDir, ".quickBlocks")); err == nil {
-		msg := "\n\n"
-		msg += "\tAn old configuration folder (~/.quickBlocks) exists. Please complete migration v0.09.0.\n"
-		msg += "\tSee https://github.com/TrueBlocks/trueblocks-core/blob/develop/MIGRATIONS.md\n"
-		msg += "\n"
+		msg := strings.Replace(shouldNotExist, "{0}", "{~/.quickBlocks}", -1)
+		msg = strings.Replace(msg, "{1}", "{v0.09.0}", -1)
+		msg = strings.Replace(msg, "{", colors.Green, -1)
+		msg = strings.Replace(msg, "}", colors.Off, -1)
 		log.Fatalf(msg)
 	}
 
-	configFile := config.GetPathToConfig(false /* wantsChain */) + "trueBlocks.toml"
-	if _, err := os.Stat(configFile); err != nil {
-		msg := "\n\n"
-		msg += "\tCould not find configuration file: [{FILE}].\n"
-		msg += "\tYou need to re-install TrueBlocks. See https://trueblocks.io/docs/install/install-trueblocks/\n"
-		msg += "\n"
-		msg = strings.Replace(msg, "[{FILE}]", colors.Green+configFile+colors.Off, -1)
+	configFolder := config.GetPathToConfig(false /* wantsChain */)
+	if _, err := os.Stat(configFolder); err != nil {
+		msg := strings.Replace(notExist, "{0}", "{"+configFolder+"}", -1)
+		msg = strings.Replace(msg, "{", colors.Green, -1)
+		msg = strings.Replace(msg, "}", colors.Off, -1)
 		log.Fatalf(msg)
 	}
+
+	configFile := path.Join(configFolder + "trueBlocks.toml")
+	if _, err := os.Stat(configFile); err != nil {
+		msg := strings.Replace(notExist, "{0}", "{"+configFile+"}", -1)
+		msg = strings.Replace(msg, "{", colors.Green, -1)
+		msg = strings.Replace(msg, "}", colors.Off, -1)
+		log.Fatalf(msg)
+	}
+
+	// // If any of the following folders or files exist, the user has not completed
+	// // the migration. Tell the user and quit.
+	// items := []string{
+	// 	"manifest",
+	// 	"mocked",
+	// 	"names",
+	// 	"blockScrape.toml",
+	// 	"ethNames.toml",
+	// 	"ethslurp.toml",
+	// 	"fireStorm.toml",
+	// 	"makeClass.toml",
+	// 	"testRunner.toml",
+	// 	"whenBlock.toml",
+	// 	"poloniex_USDT_ETH.bin.gz",
+	// 	"ts.bin.gz",
+	// }
+
+	// for _, item := range items {
+	// 	itemPath := path.Join(configFolder + item)
+	// 	if _, err := os.Stat(itemPath); err == nil {
+	// 		msg := strings.Replace(shouldNotExist, "{0}", "{./"+item+"}", -1)
+	// 		msg = strings.Replace(msg, "{1}", "{v0.24.0}", -1)
+	// 		msg = strings.Replace(msg, "{", colors.Green, -1)
+	// 		msg = strings.Replace(msg, "}", colors.Off, -1)
+	// 		log.Fatalf(msg)
+	// 	}
+	// }
+
 	// fmt.Fprintln(os.Stderr, configPath)
 	// Search for MultiChain
 	// configPath := config.GetPath ToConfig("chains")

@@ -23,16 +23,15 @@ rpcProvider = "http://localhost:8545"
 # (such as blocks, transactions, and traces) are only cached if you specify 
 # so via the command line.
 #
-# This value defaults to "$(configPath)/cache/". If the value is empty or 
-# "<not_set>", it will default to the above.
-cachePath = "<not_set>"
+# This value defaults to "$(configPath)/cache/" if the value is empty.
+cachePath = ""
 
 # The 'indexPath' value defaults to "$(configPath)/unchained/". If you wish
 # to modify it, uncomment the line below and set it to your own path. By default,
 # the unchained index (which is what we call the index of appearances) takes up
 # about 2 GB on of disc space, however if you build the entire index, it may take
 # up to 80 GB. You may wish to point this value to an external drive in that case.
-# indexPath = "<not_set>"
+indexPath = ""
 
 # The 'etherscan_key' value is optional but if not provided will disable your
 # ability to use the articulate feature in various places. We apologize profusely
