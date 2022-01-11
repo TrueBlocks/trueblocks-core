@@ -59,7 +59,7 @@ func ReadTrueBlocks() *TrueBlocksConfig {
 		cachedTrueBlocksConfig.Settings.CachePath = cachePath
 
 		indexPath := cachedTrueBlocksConfig.Settings.IndexPath
-		if len(indexPath) == 0 || cachePath == "<not_set>" {
+		if len(indexPath) == 0 || indexPath == "<not_set>" {
 			indexPath = path.Join(configPath, "unchained")
 		}
 		indexPath = strings.Replace(indexPath, "$HOME", user.HomeDir, -1)
