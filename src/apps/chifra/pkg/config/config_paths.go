@@ -54,7 +54,7 @@ func GetPathToCache() string {
 		chain := "mainnet"
 		return path.Join(xdg, chain) + "/"
 	}
-	cachePath := ReadTrueBlocks().Settings.CachePath
+	cachePath := readTrueBlocks().Settings.CachePath
 	if len(cachePath) == 0 {
 		userOs := runtime.GOOS
 		user, _ := user.Current()
@@ -70,7 +70,7 @@ func GetPathToIndex() string {
 		chain := "mainnet"
 		return path.Join(xdg, chain) + "/"
 	}
-	indexPath := ReadTrueBlocks().Settings.IndexPath
+	indexPath := readTrueBlocks().Settings.IndexPath
 	if len(indexPath) == 0 {
 		userOs := runtime.GOOS
 		user, _ := user.Current()
@@ -91,7 +91,7 @@ func GetPathToCache1(chain string) string {
 		}
 		return path.Join(xdg, chain) + "/"
 	}
-	return path.Join(ReadTrueBlocks().Settings.CachePath, chain) + "/"
+	return path.Join(readTrueBlocks().Settings.CachePath, chain) + "/"
 }
 
 // GetPathToIndex1 returns the one and only cachePath
@@ -106,12 +106,12 @@ func GetPathToIndex1(chain string) string {
 		}
 		return path.Join(xdg, chain) + "/"
 	}
-	return path.Join(ReadTrueBlocks().Settings.IndexPath, chain) + "/"
+	return path.Join(readTrueBlocks().Settings.IndexPath, chain) + "/"
 }
 
 // GetRpcProvider returns the RPC provider for a chain
 func GetRpcProvider() string {
-	return ReadTrueBlocks().Settings.RpcProvider
+	return readTrueBlocks().Settings.RpcProvider
 }
 
 // GetPathToCommands returns full path the the given tool

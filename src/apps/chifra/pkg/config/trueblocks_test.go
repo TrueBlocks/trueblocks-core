@@ -9,7 +9,7 @@ import (
 )
 
 func Test_ReadTrueBlocks(t *testing.T) {
-	values := ReadTrueBlocks()
+	values := readTrueBlocks()
 	if len(values.Settings.RpcProvider) == 0 {
 		t.Error("RpcProvider is empty")
 	}

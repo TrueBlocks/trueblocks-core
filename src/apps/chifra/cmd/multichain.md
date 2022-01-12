@@ -127,25 +127,26 @@ remoteExplorer = ""
 
 #### GoLang
 ----
-| Name              | Description                                                                                                      |
-| ----------------- | ---------------------------------------------------------------------------------------------------------------- |
-| GetPathToConfig   | Hard coded in utils.go<br>`~/local/share/trueblocks` (Linux)<br>`~/Library/Application Support/TrueBlocks` (Mac) |
-| GetPathToCache    | Found in config file<br>defaults to `GetPathToConfig() + "cache"`                                                |
-| GetPathToIndex    | Found in config file<br>defaults to `GetPathToConfig() + "unchained"`                                            |
-| GetPathToCommands | Hard coded to $HOME/.local/bin/chifra on both platforms in GetPathToCommands                                     |
+| Name                 | Description                                                                  |
+| -------------------- | ---------------------------------------------------------------------------- |
+| GetPathToRootConfig  | Where to find the trueBlocks.toml                                            |
+| GetPathToCHainConfig | Where to find the per-chain config files                                     |
+| GetPathToCache       | Found in config file<br>defaults to `GetPathToChainConfig() + "cache"`       |
+| GetPathToIndex       | Found in config file<br>defaults to `GetPathToChainConfig() + "unchained"`   |
+| GetPathToCommands    | Hard coded to $HOME/.local/bin/chifra on both platforms in GetPathToCommands |
 
 <br>
 
 #### C++
 ----
-| Name              | Description                                                                                              |
-| ----------------- | -------------------------------------------------------------------------------------------------------- |
-| getPathToConfig   |                                                                                                          |
-|                   | getPathToIndex, getPathToCache                                                                           |
-| getPathToCache    | `cachePath` from trueBlocks.toml                                                                         |
-|                   | getPathToBinaryCache, getPathToPriceDb, getPathToMonitor,<br/>getPathToMonitorDels, getPathToMonitorLast |
-| getPathToIndex    | `indexPath` from trueBlocks.toml                                                                         |
-| getPathToCommands |                                                                                                          |
+| Name                | Description                                                                                              |
+| ------------------- | -------------------------------------------------------------------------------------------------------- |
+| getPathToRootConfig |                                                                                                          |
+|                     | getPathToIndex, getPathToCache                                                                           |
+| getPathToCache      | `cachePath` from trueBlocks.toml                                                                         |
+|                     | getPathToBinaryCache, getPathToPriceDb, getPathToMonitor,<br/>getPathToMonitorDels, getPathToMonitorLast |
+| getPathToIndex      | `indexPath` from trueBlocks.toml                                                                         |
+| getPathToCommands   |                                                                                                          |
 
 #### Local Tooling Only
 ----

@@ -43,7 +43,7 @@ func init() {
 }
 
 // ReadGlobal reads and the configuration located in trueBlocks.toml file
-func ReadTrueBlocks() *TrueBlocksConfig {
+func readTrueBlocks() *TrueBlocksConfig {
 	if !trueBlocksRead {
 		configPath := GetPathToConfig(false /* withChain */)
 		MustReadConfig(trueBlocksViper, &cachedTrueBlocksConfig, configPath, false)
