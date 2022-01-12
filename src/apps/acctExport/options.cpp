@@ -547,7 +547,6 @@ void COptions::Init(void) {
     establishFolder(indexFolder_unripe);
     establishFolder(indexFolder_ripe);
     establishFolder(getPathToCache("tmp/"));
-    establishFolder(getPathToCache("apps/"));
 }
 
 //---------------------------------------------------------------------------------------------------

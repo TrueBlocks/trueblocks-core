@@ -171,15 +171,6 @@ extern wei_t getBalanceAt(const address_t& addr, blknum_t blockNum);
 
 #ifdef LOGGING_LEVEL
 //--------------------------------------------------------------------------
-inline string_q relativize(const string_q& path) {
-    string_q ret = path;
-    replace(ret, getPathToIndex(""), "$INDEX/");
-    replace(ret, getPathToCache(""), "$CACHE/");
-    replace(ret, getPathToConfig(""), "$CONFIG/");
-    replace(ret, getHomeFolder(), "$HOME/");
-    return ret;
-}
-//--------------------------------------------------------------------------
 #define LOG_FN3(fn)                                                                                                    \
     {                                                                                                                  \
         string_q lfn8 = relativize((fn));                                                                              \
