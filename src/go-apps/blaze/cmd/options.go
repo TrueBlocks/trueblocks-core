@@ -78,6 +78,8 @@ func init() {
 
 // initConfig reads in config file and ENV variables if set.
 func initConfig() {
+	fmt.Println("Initializing scraper...")
+
 	// Find home directory.
 	home, err := homedir.Dir()
 	if err != nil {
