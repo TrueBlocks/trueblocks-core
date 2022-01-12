@@ -9,12 +9,12 @@ import (
 	"encoding/json"
 	"errors"
 	"io/fs"
-	"math"
 	"path/filepath"
 	"strconv"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 type Meta struct {
@@ -66,13 +66,13 @@ func GetMeta(testmode bool) *Meta {
 		} else {
 			switch result.folder {
 			case "finalized":
-				meta.Finalized = uint64(math.Max(float64(meta.Finalized), float64(result.value)))
+				meta.Finalized = utils.Max(meta.Finalized, result.value)
 			case "staging":
-				meta.Staging = uint64(math.Max(float64(meta.Staging), float64(result.value)))
+				meta.Staging = utils.Max(meta.Staging, result.value)
 			case "ripe":
-				meta.Ripe = uint64(math.Max(float64(meta.Ripe), float64(result.value)))
+				meta.Ripe = utils.Max(meta.Ripe, result.value)
 			case "unripe":
-				meta.Unripe = uint64(math.Max(float64(meta.Unripe), float64(result.value)))
+				meta.Unripe = utils.Max(meta.Unripe, result.value)
 			case "done":
 				nRoutines--
 				if nRoutines == 0 {
@@ -85,8 +85,8 @@ func GetMeta(testmode bool) *Meta {
 	if meta.Staging == 0 {
 		meta.Staging = meta.Finalized
 	}
-	meta.Ripe = uint64(math.Max(float64(meta.Staging), float64(meta.Ripe)))
-	meta.Unripe = uint64(math.Max(float64(meta.Ripe), float64(meta.Unripe)))
+	meta.Ripe = utils.Max(meta.Staging, meta.Ripe)
+	meta.Unripe = utils.Max(meta.Ripe, meta.Unripe)
 
 	return &meta
 }
