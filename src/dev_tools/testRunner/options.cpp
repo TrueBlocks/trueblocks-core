@@ -140,7 +140,7 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (getGlobalConfig()->getConfigBool("dev", "debug_curl", false))
+    if (getGlobalConfig("")->getConfigBool("dev", "debug_curl", false))
         return usage("[dev]debug_curl is set in config file. All tests will fail.");
 
     modes = (mode == "both" ? BOTH : (mode == "api" ? API : CMD));

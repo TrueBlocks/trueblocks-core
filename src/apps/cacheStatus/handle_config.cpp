@@ -26,7 +26,7 @@ bool COptions::handle_config_get(ostream& os) {
 
     CConfiguration config;
     {
-        const CToml* cc = getGlobalConfig();
+        const CToml* cc = getGlobalConfig("");
         CConfigFile f("trueBlocks.toml");
 
         CConfigSection g1_1("Providers", "settings");

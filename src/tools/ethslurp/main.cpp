@@ -92,7 +92,7 @@ bool Slurp(CCachedAccount& theAccount, COptions& options) {
                                      "/api.etherscan.io/apis");
 
             string_q responseStr = urlToString(url);
-            if (getGlobalConfig()->getConfigBool("dev", "debug_curl", false)) {
+            if (getGlobalConfig("")->getConfigBool("dev", "debug_curl", false)) {
                 cerr << "[calling EtherScan: " << url << endl;
                 cerr << "[result: " << url << responseStr << endl;
             }

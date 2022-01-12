@@ -23,8 +23,8 @@ extern size_t nullCallback(char* ptr, size_t size, size_t nmemb, void* userdata)
 
 //-------------------------------------------------------------------------
 CCurlContext::CCurlContext(void) {
-    baseURL = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
-    debugging = getGlobalConfig()->getConfigBool("dev", "debug_curl", false);
+    baseURL = getGlobalConfig("")->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
+    debugging = getGlobalConfig("")->getConfigBool("dev", "debug_curl", false);
     callBackFunc = writeCallback;
     curlNoteFunc = NULL;
     theID = 1;
