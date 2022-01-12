@@ -24,4 +24,5 @@ extern string_q getPathToCommands(const string_q& _part);
 extern void loadEnvironmentPaths(void);
 extern string_q relativize(const string_q& path);
 
+extern string_q getPathToRootConfig(const string_q& part);
 }  // namespace qblocks

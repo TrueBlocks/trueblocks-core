@@ -46,6 +46,11 @@ bool loadPrefundBalances(void) {
     }
 
     if (fileExists(STR_PREFUND_BALANCES_BIN1)) {
+        // TODO: Clean this up
+        string_q junk = STR_PREFUND_BALANCES_BIN1;
+        if (isTestMode())
+            junk = relativize(junk);
+        LOG4("Reading binary cache ", junk);
         CArchive archive(READING_ARCHIVE);
         if (archive.Lock(STR_PREFUND_BALANCES_BIN1, modeReadOnly, LOCK_NOWAIT)) {
             uint64_t count;
@@ -61,6 +66,11 @@ bool loadPrefundBalances(void) {
         }
     }
 
+    // TODO: Clean this up
+    string_q junk = STR_PREFUND_BALANCES_TAB1;
+    if (isTestMode())
+        junk = relativize(junk);
+    LOG4("Reading CSV file ", junk);
     CStringArray lines;
     asciiFileToLines(STR_PREFUND_BALANCES_TAB1, lines);
     for (auto line : lines) {
@@ -77,11 +87,18 @@ bool loadPrefundBalances(void) {
 
     CArchive archive(WRITING_ARCHIVE);
     if (archive.Lock(STR_PREFUND_BALANCES_BIN1, modeWriteCreate, LOCK_NOWAIT)) {
+        // TODO: Clean this up
+        string_q junk = STR_PREFUND_BALANCES_BIN1;
+        if (isTestMode())
+            junk = relativize(junk);
+        LOG4("Writing binary cache ", junk);
         archive << uint64_t(prefundBalMap.size());
         for (const auto& item : prefundBalMap)
             archive << item.first << item.second;
         archive.Release();
         return true;
+    } else {
+        LOG_ERR("Could not open prefunds cache for writing", STR_PREFUND_BALANCES_BIN1);
     }
 
     LOG_WARN("Could not lock prefund cache at: ", STR_PREFUND_BALANCES_BIN1);

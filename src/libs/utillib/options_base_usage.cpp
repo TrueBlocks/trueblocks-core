@@ -296,14 +296,14 @@ string_q COptionsBase::format_notes(const CStringArray& noteList) const {
 void errorMessage(const string_q& msg) {
     if (isApiMode()) {
         const char* STR_ERROR_JSON = "{ \"errors\": [ \"[ERRORS]\" ] }\n";
-        string_q message = substitute(msg, "$CONFIG", getPathToConfig("trueBlocks.toml"));
+        string_q message = substitute(msg, "$CONFIG", getPathToRootConfig("trueBlocks.toml"));
         if (!contains(message, "[")) {
             message = substitute(message, "|", " ");
         }
         string_q errMsg = substitute(STR_ERROR_JSON, "[ERRORS]", message);
         cout << substitute(errMsg, "`", "");
     } else {
-        string_q message = substitute(substitute(msg, "|", "\n  "), "$CONFIG", getPathToConfig("trueBlocks.toml"));
+        string_q message = substitute(substitute(msg, "|", "\n  "), "$CONFIG", getPathToRootConfig("trueBlocks.toml"));
         message = colorize(message);
         out << endl
             << cRed << "  Warning: " << cOff << message << (endsWith(msg, '.') ? "" : ".") << " Quitting..." << endl

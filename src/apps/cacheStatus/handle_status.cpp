@@ -59,6 +59,7 @@ bool COptions::handle_status(ostream& os) {
     CIndexCache index;
     if (contains(mode, "|index|")) {
         LOG8("Reporting on index");
+        // FIXME: NOT SURE THIS IS WRONG, BUT IT LOOKS WEIRD
         if (!index.readBinaryCache("index", details)) {
             string_q thePath = getPathToIndex("");
             LOG8("Regenerating cache");

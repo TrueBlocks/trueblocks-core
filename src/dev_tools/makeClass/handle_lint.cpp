@@ -15,7 +15,7 @@
 
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_lint(void) {
-    CToml config(getPathToConfig("makeClass.toml"));
+    CToml config(getPathToRootConfig("makeClass.toml"));
 
     bool enabled = config.getConfigBool("enabled", "lint_all", false);
     // TODO: There's a misspelling with pylin!!!

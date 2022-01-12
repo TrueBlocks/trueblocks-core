@@ -741,7 +741,9 @@ const CToml* getGlobalConfig(const string_q& name) {
     static string_q components = "trueBlocks|";
 
     if (!toml) {
-        static CToml theToml(getPathToConfig("trueBlocks.toml"));
+        string_q configFile = getPathToRootConfig("trueBlocks.toml");
+        LOG4(bGreen, "configFile: ", configFile, cOff);
+        static CToml theToml(configFile);
         toml = &theToml;
         string_q fileName = getPathToConfig(COptionsBase::g_progName + ".toml");
         if (fileExists(fileName) && !contains(components, COptionsBase::g_progName + "|")) {
@@ -768,7 +770,7 @@ const CToml* getGlobalConfig(const string_q& name) {
 bool COptionsBase::Mocked(const string_q& which) {
     if (!mocked)
         return false;
-    string_q path = getPathToConfig("mocked/mocks/" + which + ".json");
+    string_q path = getPathToRootConfig("mocked/mocks/" + which + ".json");
     if (!fileExists(path))
         return false;
     cout << asciiFileToString(path);

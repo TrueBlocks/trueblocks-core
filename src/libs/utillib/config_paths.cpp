@@ -28,6 +28,12 @@ namespace qblocks {
 //---------------------------------------------------------------------------------------------------
 // TODO(tjayrush): global data
 string_q getPathToConfig(const string_q& _part) {
+    return getPathToRootConfig(_part);
+}
+
+//---------------------------------------------------------------------------------------------------
+// TODO(tjayrush): Remove this comment once multi-path works - PathAccessor
+string_q getPathToRootConfig(const string_q& _part) {
     static string_q g_configPath;
     if (!g_configPath.empty())
         return g_configPath + _part;
@@ -105,7 +111,7 @@ string_q relativize(const string_q& path) {
     string_q ret = path;
     replace(ret, getPathToIndex(""), "$INDEX/");
     replace(ret, getPathToCache(""), "$CACHE/");
-    replace(ret, getPathToConfig(""), "$CONFIG/");
+    replace(ret, getPathToRootConfig(""), "$CONFIG/");
     // replace(ret, getPathToChainConfig(""), "$CHAIN/");
     replace(ret, getHomeFolder(), "$HOME/");
     return ret;

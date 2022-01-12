@@ -75,7 +75,7 @@ void etherlib_init(QUITHANDLER qh) {
     CCollection::registerClass();
     CCacheEntry::registerClass();
 
-    establishFolder(getPathToConfig(""));
+    establishFolder(getPathToRootConfig(""));
     establishFolder(getPathToCache(""));
 }
 
