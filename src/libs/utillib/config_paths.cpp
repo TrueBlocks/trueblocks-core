@@ -100,4 +100,15 @@ void loadEnvironmentPaths(void) {
     ::setenv("TB_INDEX_PATH", (configPath + "unchained/").c_str(), true);
 }
 
+//-------------------------------------------------------------------------
+string_q relativize(const string_q& path) {
+    string_q ret = path;
+    replace(ret, getPathToIndex(""), "$INDEX/");
+    replace(ret, getPathToCache(""), "$CACHE/");
+    replace(ret, getPathToConfig(""), "$CONFIG/");
+    // replace(ret, getPathToChainConfig(""), "$CHAIN/");
+    replace(ret, getHomeFolder(), "$HOME/");
+    return ret;
+}
+
 }  // namespace qblocks

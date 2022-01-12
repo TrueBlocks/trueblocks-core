@@ -22,5 +22,6 @@ extern string_q getPathToCache(const string_q& _part);
 extern string_q getPathToIndex(const string_q& _part);
 extern string_q getPathToCommands(const string_q& _part);
 extern void loadEnvironmentPaths(void);
+extern string_q relativize(const string_q& path);
 
 }  // namespace qblocks
