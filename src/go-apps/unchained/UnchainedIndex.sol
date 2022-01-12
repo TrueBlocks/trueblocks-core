@@ -1,7 +1,24 @@
 /*
-NOTE -- ADD THE ABILITY TO TELL WHERE THE NEW CONTACT IS AFTER AN UPGRADE
-*/
 
+See the other file also -- UnchainedIndexv2.sol
+
+Version 2
+    (Required):
+    -- needs to accept chain (string) for any publication
+    -- needs to store the hashes per chain
+    -- our manifest needs to change to reference two additional peices of
+       data. The timestamp file and the names database (in csv format).
+    
+    (Would be nice)
+    -- A value called 'upgradedTo' that accepts an address and stays empty
+        until the owner sets it. If non-empty, all functions are disabled 
+        (through a require) and the value points to the upgraded contract
+
+    -- Marketing material surrounding the idea that this hash is the cheapest
+        possible way to publish access to the entire chain's index
+        
+    -- Allow others to submit names files for possible inclusion in the names database
+*/
 
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.6.0 <0.7.0;
@@ -28,8 +45,8 @@ contract UnchainedIndex {
         return oldOwner;
     }
 
-    function () payable {
-        require(owner != 0x0, "msg.sender is not set");
+    function() payable {
+        require(owner != 0x0, "owner is not set");
         emit DonationSent(owner, value, timestamp);
         send(owner, balance);
     }
