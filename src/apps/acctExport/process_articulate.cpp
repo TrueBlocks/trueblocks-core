@@ -67,7 +67,7 @@ bool COptions::articulateAll(CTransaction& trans) {
             return false;
         }
         abiMap[trans.to]++;
-        if (abiMap[trans.to] == 1 || fileExists(getPathToCache("abis/" + trans.to))) {
+        if (abiMap[trans.to] == 1 || fileExists(getPathToCache("abis/" + trans.to + ".json"))) {
             abi_spec.loadAbiFromEtherscan(trans.to);
         }
         abi_spec.articulateTransaction(&trans);
@@ -80,7 +80,7 @@ bool COptions::articulateAll(CTransaction& trans) {
             string_q str = log->Format();
             if (contains(str, bytesOnly)) {
                 abiMap[log->address]++;
-                if (abiMap[log->address] == 1 || fileExists(getPathToCache("abis/" + log->address))) {
+                if (abiMap[log->address] == 1 || fileExists(getPathToCache("abis/" + log->address + ".json"))) {
                     abi_spec.loadAbiFromEtherscan(log->address);
                 }
                 abi_spec.articulateLog(log);
@@ -91,7 +91,7 @@ bool COptions::articulateAll(CTransaction& trans) {
             CTrace* trace = (CTrace*)&trans.traces[j];  // NOLINT
             trans.hasToken |= isTokenFunc(trace->action.input);
             abiMap[trace->action.to]++;
-            if (abiMap[trace->action.to] == 1 || fileExists(getPathToCache("abis/" + trace->action.to))) {
+            if (abiMap[trace->action.to] == 1 || fileExists(getPathToCache("abis/" + trace->action.to + ".json"))) {
                 abi_spec.loadAbiFromEtherscan(trace->action.to);
             }
             abi_spec.articulateTrace(trace);
