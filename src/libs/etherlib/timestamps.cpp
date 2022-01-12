@@ -58,7 +58,7 @@ bool establishTsFile(void) {
 
     establishFolder(indexFolder);
 
-    string_q zipFile = getPathToConfig("ts.bin.gz");
+    string_q zipFile = getPathToChainConfigPure_old("ts.bin.gz");
     time_q zipDate = fileLastModifyDate(zipFile);
     time_q tsDate = fileLastModifyDate(tsIndex);
 

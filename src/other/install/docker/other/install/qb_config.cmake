@@ -70,8 +70,14 @@ file(COPY "${SOURCE_PATH}/names/verified.tab" DESTINATION "${DEST_PATH}/names" F
 #---------------------------------------------------------------
 # Copy the prefunds even if it already exists (this one is ours - it never changes)
 #---------------------------------------------------------------
-message(STATUS "Copying prefunds file to ${DEST_PATH}/names")
-file(COPY "${SOURCE_PATH}/names/names_prefunds.tab" DESTINATION "${DEST_PATH}/names" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+message(STATUS "Copying allocations file to ${DEST_PATH}/config")
+file(COPY "${SOURCE_PATH}/allocs/fermion/allocs.csv" DESTINATION "${DEST_PATH}/config/fermion/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+file(COPY "${SOURCE_PATH}/allocs/gnosis/allocs.csv" DESTINATION "${DEST_PATH}/config/gnosis/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+file(COPY "${SOURCE_PATH}/allocs/goerli/allocs.csv" DESTINATION "${DEST_PATH}/config/goerli/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+file(COPY "${SOURCE_PATH}/allocs/kovan/allocs.csv" DESTINATION "${DEST_PATH}/config/kovan/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+file(COPY "${SOURCE_PATH}/allocs/mainnet/allocs.csv" DESTINATION "${DEST_PATH}/config/mainnet/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+file(COPY "${SOURCE_PATH}/allocs/rinkeby/allocs.csv" DESTINATION "${DEST_PATH}/config/rinkeby/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+file(COPY "${SOURCE_PATH}/allocs/ropsten/allocs.csv" DESTINATION "${DEST_PATH}/config/ropsten/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 
 #---------------------------------------------------------------
 # Copy the custom names file (empty), unless it already exists  (this one is the user's)
@@ -145,6 +151,8 @@ file(COPY "${SOURCE_PATH}/prices/ts.bin.gz" DESTINATION "${DEST_PATH}" FILE_PERM
 #---------------------------------------------------------------
 message(STATUS "Removing file: ${DEST_PATH}/cache/names/names.bin")
 file(REMOVE "${DEST_PATH}/cache/names/names.bin")
-file(REMOVE "${DEST_PATH}/cache/names/names2025.bin") # old file
+file(REMOVE "${DEST_PATH}/cache/names/names_prefunds_bals.bin")
+file(REMOVE "${DEST_PATH}/cache/allocs.bin")
+
 message(STATUS "Removing file: ${DEST_PATH}/cache/abis/known.bin")
 file(REMOVE "${DEST_PATH}/cache/abis/known.bin")

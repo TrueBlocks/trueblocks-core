@@ -745,7 +745,7 @@ const CToml* getGlobalConfig(const string_q& name) {
         LOG4(bGreen, "configFile: ", configFile, cOff);
         static CToml theToml(configFile);
         toml = &theToml;
-        string_q fileName = getPathToConfig(COptionsBase::g_progName + ".toml");
+        string_q fileName = getPathToChainConfigGlobal_old(COptionsBase::g_progName + ".toml");
         if (fileExists(fileName) && !contains(components, COptionsBase::g_progName + "|")) {
             components += COptionsBase::g_progName + "|";
             CToml custom(fileName);
@@ -755,7 +755,7 @@ const CToml* getGlobalConfig(const string_q& name) {
 
     // If we're told explicitly to load another config, do that as well
     if (!name.empty()) {
-        string_q fileName = getPathToConfig(name + ".toml");
+        string_q fileName = getPathToChainConfigGlobal_old(name + ".toml");
         if (fileExists(fileName) && !contains(components, name + "|")) {
             components += name + "|";
             CToml custom(fileName);

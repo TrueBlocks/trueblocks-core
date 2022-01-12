@@ -76,6 +76,7 @@ void etherlib_init(QUITHANDLER qh) {
     CCacheEntry::registerClass();
 
     establishFolder(getPathToRootConfig(""));
+    establishFolder(getPathToChainConfigPure_old(""));
     establishFolder(getPathToCache(""));
 }
 

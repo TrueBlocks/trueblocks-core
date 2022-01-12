@@ -25,8 +25,30 @@ namespace qblocks {
 
 // TODO: Search for PathAccessor
 
+// TODO: This can be removed once multi-chain works
 //---------------------------------------------------------------------------------------------------
-// TODO(tjayrush): global data
+
+//--------------------------------------------------------------------------------------
+string_q getPathToChainConfigPure_old(const string_q& _part) {
+    return getPathToConfig(_part);
+}
+
+//--------------------------------------------------------------------------------------
+string_q getPathToChainConfigPure_new(const string_q& _part) {
+    return getPathToConfig(_part);
+}
+
+//---------------------------------------------------------------------------------------------------
+string_q getPathToChainConfigGlobal_old(const string_q& _part) {
+    return getPathToConfig(_part);
+}
+
+//---------------------------------------------------------------------------------------------------
+string_q getPathToChainConfigGlobal_new(const string_q& _part) {
+    return getPathToConfig(_part);
+}
+
+//---------------------------------------------------------------------------------------------------
 string_q getPathToConfig(const string_q& _part) {
     return getPathToRootConfig(_part);
 }
