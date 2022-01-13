@@ -24,8 +24,8 @@ namespace qblocks {
 
 //---------------------------------------------------------------------------
 // We define these so they don't run until they are called...
-#define STR_PREFUND_BALANCES_TAB1 getPathToChainConfig_new("names/names_prefunds.tab")
-#define STR_PREFUND_BALANCES_BIN1 getPathToCache("names/names_prefunds_bals.bin")
+#define STR_PREFUND_BALANCES_TAB1 getPathToChainConfig_new("allocs.csv")
+#define STR_PREFUND_BALANCES_BIN1 getPathToCache("allocs.bin")
 
 //---------------------------------------------------------------------------
 // TODO: These singletons are used throughout - it doesn't appear to have any downsides.
@@ -76,7 +76,7 @@ bool loadPrefundBalances(void) {
     for (auto line : lines) {
         if (startsWith(line, "0x")) {
             CStringArray parts;
-            explode(parts, line, '\t');
+            explode(parts, substitute(line, "\"", ""), ',');
             string_q address = toLower(parts[0]);
             wei_t amount = str_2_Wei(parts[1]);
             prefundBalMap[address] = amount;

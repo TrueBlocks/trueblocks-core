@@ -46,7 +46,14 @@ string_q getPathToChainConfig_newOff(const string_q& _part) {
 
 //--------------------------------------------------------------------------------------
 string_q getPathToChainConfig_new(const string_q& _part) {
-    return getPathToRootConfig(_part);
+    static string_q g_ChainConfigPath;
+    if (!g_ChainConfigPath.empty())
+        return g_ChainConfigPath + _part;
+    g_ChainConfigPath = getEnvStr("TB_CHAIN_CONFIG_PATH");
+    TEST_PATH(g_ChainConfigPath, "Chain Configuration");
+    if (!isTestMode())
+        LOG4(bGreen, "CHAIN_CONFIG_PATH: ", g_ChainConfigPath, cOff);
+    return g_ChainConfigPath + _part;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -115,6 +122,7 @@ void loadEnvironmentPaths(void) {
 #error-- unknown operating system not supported
 #endif
     ::setenv("TB_CONFIG_PATH", configPath.c_str(), true);
+    ::setenv("TB_CHAIN_CONFIG_PATH", configPath.c_str(), true);
     ::setenv("TB_CACHE_PATH", (configPath + "cache/").c_str(), true);
     ::setenv("TB_INDEX_PATH", (configPath + "unchained/").c_str(), true);
 }
@@ -125,7 +133,7 @@ string_q relativize(const string_q& path) {
     replace(ret, getPathToIndex(""), "$INDEX/");
     replace(ret, getPathToCache(""), "$CACHE/");
     replace(ret, getPathToRootConfig(""), "$CONFIG/");
-    // replace(ret, getPathToChainConfig(""), "$CHAIN/");
+    replace(ret, getPathToChainConfig_new(""), "$CHAIN/");
     replace(ret, getHomeFolder(), "$HOME/");
     return ret;
 }

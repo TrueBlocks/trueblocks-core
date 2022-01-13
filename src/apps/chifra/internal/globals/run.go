@@ -31,7 +31,7 @@ func (opts *GlobalOptions) PassItOn(path string, flags string) error {
 	indexPath := config.GetPathToIndex1(opts.Chain)
 
 	configPath = strings.Replace(configPath, "mainnet/", "", -1)
-	chainConfigPath = strings.Replace(chainConfigPath, "mainnet/", "", -1)
+	chainConfigPath = strings.Replace(chainConfigPath, "config/mainnet/", "", -1)
 	cachePath = strings.Replace(cachePath, "mainnet/", "", -1)
 	indexPath = strings.Replace(indexPath, "mainnet/", "", -1)
 

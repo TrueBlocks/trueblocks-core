@@ -84,7 +84,7 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 	indexPath := config.GetPathToIndex1(Options.Globals.Chain)
 
 	configPath = strings.Replace(configPath, "mainnet/", "", -1)
-	chainConfigPath = strings.Replace(chainConfigPath, "mainnet/", "", -1)
+	chainConfigPath = strings.Replace(chainConfigPath, "config/mainnet/", "", -1)
 	cachePath = strings.Replace(cachePath, "mainnet/", "", -1)
 	indexPath = strings.Replace(indexPath, "mainnet/", "", -1)
 
