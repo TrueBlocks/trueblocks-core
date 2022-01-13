@@ -76,7 +76,6 @@ string_q getPathToCache(const string_q& _part) {
         return g_cachePath + _part;
 
     g_cachePath = getEnvStr("TB_CACHE_PATH");
-    g_cachePath = substitute(g_cachePath, "mainnet/", "");
     TEST_PATH(g_cachePath, "Cache");
     if (!isTestMode())
         LOG4(bGreen, "CACHE_PATH: ", g_cachePath, cOff);
@@ -91,7 +90,6 @@ string_q getPathToIndex(const string_q& _part) {
         return g_indexPath + _part;
 
     g_indexPath = getEnvStr("TB_INDEX_PATH");
-    g_indexPath = substitute(g_indexPath, "mainnet/", "");
     TEST_PATH(g_indexPath, "Index");
     if (!isTestMode())
         LOG4(bGreen, "INDEX_PATH: ", g_indexPath, cOff);
