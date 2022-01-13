@@ -22,24 +22,23 @@ var OsToPath = map[string]string{
 
 // GetPathToChainConfig_newOff returns the chain-specific config folder
 func GetPathToChainConfig_newOff() string {
-	ret := GetPathToConfig(true)
+	ret := internalPathTo(true)
 	ret = strings.Replace(ret, "config/mainnet/", "", -1)
 	return ret
 }
 
 // GetPathToChainConfig_new returns the chain-specific config folder
 func GetPathToChainConfig_new() string {
-	return GetPathToConfig(true)
+	return internalPathTo(true)
 }
 
 // GetPathToRootConfig returns the path where to find configuration files
 func GetPathToRootConfig() string {
-	return GetPathToConfig(false)
+	return internalPathTo(false)
 }
 
 // TODO: Search for PathAccessor
-// GetPathToConfig returns the path where to find configuration files (appends chain if told to do so)
-func GetPathToConfig(withChain bool) string {
+func internalPathTo(withChain bool) string {
 	chain := ""
 	if withChain {
 		chain = "mainnet/"

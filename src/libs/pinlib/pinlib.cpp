@@ -42,7 +42,7 @@ bool pinlib_readManifest(CPinnedChunkArray& pinArray) {
         return true;
 
     string_q binFile = getPathToCache("tmp/pins.bin");
-    string_q textFile = getPathToChainConfigPure_old("manifest/manifest.txt");
+    string_q textFile = getPathToChainConfig_newOff("manifest/manifest.txt");
 
     time_q binDate = fileLastModifyDate(binFile);
     time_q textDate = fileLastModifyDate(textFile);

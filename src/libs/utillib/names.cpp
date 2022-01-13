@@ -99,8 +99,8 @@ static bool readNamesFromBinary(void) {
 
 //-----------------------------------------------------------------------
 static bool readNamesFromAscii(void) {
-    string_q txtFile = getPathToChainConfigGlobal_old("names/names.tab");
-    string_q customFile = getPathToChainConfigGlobal_old("names/names_custom.tab");
+    string_q txtFile = getPathToChainConfig_newOff("names/names.tab");
+    string_q customFile = getPathToChainConfig_newOff("names/names_custom.tab");
 
     CStringArray lines;
     asciiFileToLines(txtFile, lines);
@@ -173,8 +173,8 @@ bool loadNames(void) {
     }
 
     time_q binDate = fileLastModifyDate(getPathToCache(STR_BIN_LOC));
-    time_q txtDate = laterOf(fileLastModifyDate(getPathToChainConfigGlobal_old("names/names.tab")),
-                             fileLastModifyDate(getPathToChainConfigGlobal_old("names/names_custom.tab")));
+    time_q txtDate = laterOf(fileLastModifyDate(getPathToChainConfig_newOff("names/names.tab")),
+                             fileLastModifyDate(getPathToChainConfig_newOff("names/names_custom.tab")));
 
     if (txtDate < binDate) {
         if (!readNamesFromBinary())

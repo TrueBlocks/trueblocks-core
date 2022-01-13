@@ -14,7 +14,7 @@
 
 //----------------------------------------------------------------
 bool COptions::handle_check() {
-    string_q chunkConfig = getPathToChainConfigGlobal_old("chunkMan.toml");
+    string_q chunkConfig = getPathToChainConfig_newOff("chunkMan.toml");
     CToml config(chunkConfig);
     bool enabled = config.getConfigBool("enabled", "download_manifest", true);
     if (!enabled) {

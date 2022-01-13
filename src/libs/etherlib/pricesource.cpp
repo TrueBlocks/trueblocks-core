@@ -26,7 +26,7 @@ bool parsePoloniex(CPriceQuote& quote, string_q& str) {
 //-----------------------------------------------------------------------
 bool establishPriceFile(void) {
     string_q pricesFolder = getPathToCache("prices/");
-    string_q zipFile = getPathToChainConfigPure_old("poloniex_USDT_ETH.bin.gz");
+    string_q zipFile = getPathToChainConfig_newOff("poloniex_USDT_ETH.bin.gz");
     string_q binFile = pricesFolder + "poloniex_USDT_ETH.bin";
 
     if (fileExists(binFile))

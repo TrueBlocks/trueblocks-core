@@ -24,7 +24,7 @@ namespace qblocks {
 
 //---------------------------------------------------------------------------
 // We define these so they don't run until they are called...
-#define STR_PREFUND_BALANCES_TAB1 getPathToChainConfigPure_new("names/names_prefunds.tab")
+#define STR_PREFUND_BALANCES_TAB1 getPathToChainConfig_new("names/names_prefunds.tab")
 #define STR_PREFUND_BALANCES_BIN1 getPathToCache("names/names_prefunds_bals.bin")
 
 //---------------------------------------------------------------------------

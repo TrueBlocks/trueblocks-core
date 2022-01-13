@@ -90,11 +90,11 @@ bool loadNamesDatabaseFromSQL(void) {
             return false;
         }
 
-        if (!insertNameRecords(db, getPathToChainConfigGlobal_old("names/names.tab"))) {
+        if (!insertNameRecords(db, getPathToChainConfig_newOff("names/names.tab"))) {
             sqlite3_close(db);
             return false;
         }
-        if (!insertNameRecords(db, getPathToChainConfigGlobal_old("names/names_custom.tab"))) {
+        if (!insertNameRecords(db, getPathToChainConfig_newOff("names/names_custom.tab"))) {
             sqlite3_close(db);
             return false;
         }

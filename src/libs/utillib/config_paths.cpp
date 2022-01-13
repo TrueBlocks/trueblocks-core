@@ -39,28 +39,13 @@ namespace qblocks {
         }                                                                                                              \
     }
 
+//---------------------------------------------------------------------------------------------------
+string_q getPathToChainConfig_newOff(const string_q& _part) {
+    return getPathToRootConfig(_part);
+}
+
 //--------------------------------------------------------------------------------------
-string_q getPathToChainConfigPure_old(const string_q& _part) {
-    return getPathToConfig(_part);
-}
-
-//--------------------------------------------------------------------------------------
-string_q getPathToChainConfigPure_new(const string_q& _part) {
-    return getPathToConfig(_part);
-}
-
-//---------------------------------------------------------------------------------------------------
-string_q getPathToChainConfigGlobal_old(const string_q& _part) {
-    return getPathToConfig(_part);
-}
-
-//---------------------------------------------------------------------------------------------------
-string_q getPathToChainConfigGlobal_new(const string_q& _part) {
-    return getPathToConfig(_part);
-}
-
-//---------------------------------------------------------------------------------------------------
-string_q getPathToConfig(const string_q& _part) {
+string_q getPathToChainConfig_new(const string_q& _part) {
     return getPathToRootConfig(_part);
 }
 
@@ -76,36 +61,40 @@ string_q getPathToRootConfig(const string_q& _part) {
     // tool from the command line).
     g_configPath = getEnvStr("TB_CONFIG_PATH");
 
-    LOG4(bGreen, "TB_CONFIG_PATH: ", g_configPath, cOff);
+    TEST_PATH(g_configPath, "Configuration");
+    if (!isTestMode())
+        LOG4(bGreen, "CONFIG_PATH: ", g_configPath, cOff);
 
     return g_configPath + _part;
 }
 
 //-------------------------------------------------------------------------
-// TODO(tjayrush): global data
+// TODO(tjayrush): Remove this comment once multi-path works - PathAccessor
 string_q getPathToCache(const string_q& _part) {
     static string_q g_cachePath;
     if (!g_cachePath.empty())
         return g_cachePath + _part;
 
+    g_cachePath = getEnvStr("TB_CACHE_PATH");
+    g_cachePath = substitute(g_cachePath, "mainnet/", "");
+    TEST_PATH(g_cachePath, "Cache");
     if (!isTestMode())
-        cerr << bGreen << "TB_CACHE_PATH: " << getEnvStr("TB_CACHE_PATH") << cOff << endl;
-
-    g_cachePath = substitute(getEnvStr("TB_CACHE_PATH"), "mainnet/", "");
+        LOG4(bGreen, "CACHE_PATH: ", g_cachePath, cOff);
     return g_cachePath + _part;
 }
 
-extern void guardLiveTest(const string_q& path);
 //-------------------------------------------------------------------------
+// TODO(tjayrush): Remove this comment once multi-path works - PathAccessor
 string_q getPathToIndex(const string_q& _part) {
     static string_q g_indexPath;
     if (!g_indexPath.empty())
         return g_indexPath + _part;
 
+    g_indexPath = getEnvStr("TB_INDEX_PATH");
+    g_indexPath = substitute(g_indexPath, "mainnet/", "");
+    TEST_PATH(g_indexPath, "Index");
     if (!isTestMode())
-        cerr << bGreen << "TB_INDEX_PATH: " << getEnvStr("TB_INDEX_PATH") << cOff << endl;
-
-    g_indexPath = substitute(getEnvStr("TB_INDEX_PATH"), "mainnet/", "");
+        LOG4(bGreen, "INDEX_PATH: ", g_indexPath, cOff);
     return g_indexPath + _part;
 }
 
@@ -115,9 +104,11 @@ string_q getPathToCommands(const string_q& _part) {
 }
 
 //-------------------------------------------------------------------------
+// TODO(tjayrush): Remove this comment once multi-path works - PathAccessor
 void loadEnvironmentPaths(void) {
     // This is only called by makeClass and testRunner (the only two tools that do not run through chifra). It
-    // mimics the way chifra works to build the configPath so these two tools will run
+    // mimics the way chifra works to build the configPath so these two tools will run. It ignore the
+    // `chain` parameter that is used to build these paths in `chifra` as these two tools don't need them.
 #if defined(__linux) || defined(__linux__) || defined(linux) || defined(__unix) || defined(__unix__)
     string_q configPath = getHomeFolder() + ".local/share/trueblocks/";
 #elif defined(__APPLE__) || defined(__MACH__)

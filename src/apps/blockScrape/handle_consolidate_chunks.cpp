@@ -56,7 +56,7 @@ bool visitToPin(const string_q& chunkId, void* data) {
     ci = substitute(ci, ".bin", "");
     ostringstream os;
     os << ci << "\t" << pinRecord.bloomHash << "\t" << pinRecord.indexHash << endl;
-    string_q manifestFile = getPathToChainConfigPure_old("manifest/manifest.txt");
+    string_q manifestFile = getPathToChainConfig_newOff("manifest/manifest.txt");
     os << asciiFileToString(manifestFile);
     stringToAsciiFile(manifestFile, os.str());
     return !shouldQuit();
