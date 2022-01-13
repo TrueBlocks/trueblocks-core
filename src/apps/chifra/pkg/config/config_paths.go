@@ -20,6 +20,11 @@ var OsToPath = map[string]string{
 	"darwin": "Library/Application Support/TrueBlocks",
 }
 
+// GetPathToRootConfig returns the path where to find configuration files
+func GetPathToRootConfig() string {
+	return GetPathToConfig(false)
+}
+
 // TODO: Search for PathAccessor
 // GetPathToConfig returns the path where to find configuration files (appends chain if told to do so)
 func GetPathToConfig(withChain bool) string {

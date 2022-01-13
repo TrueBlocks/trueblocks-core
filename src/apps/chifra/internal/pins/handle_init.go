@@ -21,14 +21,14 @@ import (
 func (opts *PinsOptions) InitInternal() error {
 	opts.PrintManifestHeader()
 
-	logger.Log(logger.Info, "Calling unchained index smart contract...")
+	logger.Log(logger.Info, "Calling unchained index smart contract")
 
 	// Fetch manifest's CID
 	cid, err := pinlib.GetManifestCidFromContract()
 	if err != nil {
 		return err
 	}
-	logger.Log(logger.Info, "Found manifest hash at", cid)
+	logger.Log(logger.Info, "Unchained index returned CID", cid)
 
 	// Download the manifest
 	gatewayUrl := config.ReadBlockScrape().Dev.IpfsGateway
@@ -46,7 +46,8 @@ func (opts *PinsOptions) InitInternal() error {
 	}
 
 	// Save manifest
-	err = pinlib.SaveManifest(config.GetPathToConfig(false /* withChain */)+"manifest/manifest.txt", downloadedManifest)
+	manifestPath := config.GetPathToRootConfig()+"manifest/manifest.txt"
+	err = pinlib.SaveManifest(manifestPath, downloadedManifest)
 	if err != nil {
 		return err
 	}

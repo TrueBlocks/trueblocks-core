@@ -69,7 +69,7 @@ func VerifyMigrations() {
 		log.Fatalf(msg)
 	}
 
-	configFolder := config.GetPathToConfig(false /* wantsChain */)
+	configFolder := config.GetPathToRootConfig()
 	if _, err := os.Stat(configFolder); err != nil {
 		msg := strings.Replace(notExist, "{0}", "{"+configFolder+"}", -1)
 		msg = strings.Replace(msg, "{", colors.Green, -1)

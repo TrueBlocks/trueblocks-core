@@ -34,7 +34,7 @@ func PrintServeSettings(testMode bool) {
 
 	meta := rpcClient.GetMeta(testMode)
 	log.Printf("%s%-15.15s%s%s\n", colors.Green, "Server URL:", colors.Off, "http://localhost"+Options.Port)
-	log.Printf("%s%-15.15s%s%s\n", colors.Green, "Config Path:", colors.Off, config.GetPathToConfig(false))
+	log.Printf("%s%-15.15s%s%s\n", colors.Green, "Config Path:", colors.Off, config.GetPathToRootConfig())
 	log.Printf("%s%-15.15s%s%s\n", colors.Green, "Cache Path:", colors.Off, config.GetPathToCache())
 	log.Printf("%s%-15.15s%s%s\n", colors.Green, "Index Path:", colors.Off, config.GetPathToIndex())
 	log.Printf("%s%-15.15s%s%s\n", colors.Green, "RPC Provider:", colors.Off, config.GetRpcProvider())

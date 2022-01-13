@@ -82,7 +82,7 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 	// testing (the test harness sends a special header) we also set the
 	// TEST_MODE=true environment variable and any other vars for this
 	// particular test
-	configPath := strings.Replace(config.GetPathToConfig(false), "mainnet/", "", -1)
+	configPath := strings.Replace(config.GetPathToRootConfig(), "mainnet/", "", -1)
 	if utils.IsTestModeServer(r) {
 		cmd.Env = append(append(os.Environ(), "TEST_MODE=true"), "API_MODE=true")
 		vars := strings.Split(r.Header.Get("X-TestRunner-Env"), "|")
