@@ -42,7 +42,11 @@ func Test_GetPathTo(t *testing.T) {
 					withChain = false
 				}
 			}
-			testPath = GetPathToConfig(withChain) + test.part
+			if withChain {
+				testPath = GetPathToChainConfig_new() + test.part
+			} else {
+				testPath = GetPathToRootConfig() + test.part
+			}
 		} else if test.group == "Cache" {
 			os.Setenv("XDG_CACHE_HOME", test.xdg)
 			testPath = GetPathToCache1(test.chain) + test.part

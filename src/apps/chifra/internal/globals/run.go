@@ -26,19 +26,22 @@ func (opts *GlobalOptions) PassItOn(path string, flags string) error {
 	wg.Add(2)
 
 	configPath := config.GetPathToRootConfig()
+	cachePath := config.GetPathToCache1(opts.Chain)
+	indexPath := config.GetPathToIndex1(opts.Chain)
+
 	configPath = strings.Replace(configPath, "mainnet/", "", -1)
 
 	// fmt.Fprintf(os.Stderr, "Calling: %s %s\n", path, options)
 	cmd := exec.Command(config.GetPathToCommands(path), options)
 	cmd.Env = append(os.Environ(), "FROM_CHIFRA=true")
-	if !opts.TestMode {
-		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "TB_CONFIG_PATH: ", configPath, colors.Off)
-		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "TB_CACHE_PATH:  ", config.GetPathToCache1(opts.Chain), colors.Off)
-		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "TB_INDEX_PATH:  ", config.GetPathToIndex1(opts.Chain), colors.Off)
+	if !opts.TestMode && opts.LogLevel > 3 {
+		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "CONFIG_PATH: ", configPath, colors.Off)
+		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "CACHE_PATH:  ", config.GetPathToCache1(opts.Chain), colors.Off)
+		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "INDEX_PATH:  ", config.GetPathToIndex1(opts.Chain), colors.Off)
 	}
 	cmd.Env = append(cmd.Env, "TB_CONFIG_PATH="+configPath)
-	cmd.Env = append(cmd.Env, "TB_CACHE_PATH="+config.GetPathToCache1(opts.Chain))
-	cmd.Env = append(cmd.Env, "TB_INDEX_PATH="+config.GetPathToIndex1(opts.Chain))
+	cmd.Env = append(cmd.Env, "TB_CACHE_PATH="+cachePath)
+	cmd.Env = append(cmd.Env, "TB_INDEX_PATH="+indexPath)
 	if os.Getenv("TEST_MODE") == "true" {
 		cmd.Env = append(cmd.Env, "TEST_MODE=true")
 	}

@@ -27,6 +27,17 @@ namespace qblocks {
 
 // TODO: This can be removed once multi-chain works
 //---------------------------------------------------------------------------------------------------
+#define TEST_PATH(path, type)                                                                                          \
+    {                                                                                                                  \
+        if (!folderExists((path))) {                                                                                   \
+            LOG_ERR(string_q(type) + " folder must exist: ", (path));                                                  \
+            quickQuitHandler(1);                                                                                       \
+        }                                                                                                              \
+        if (!endsWith((path), "/")) {                                                                                  \
+            LOG_ERR(string_q(type) + " folder must end with '/': ", (path));                                           \
+            quickQuitHandler(1);                                                                                       \
+        }                                                                                                              \
+    }
 
 //--------------------------------------------------------------------------------------
 string_q getPathToChainConfigPure_old(const string_q& _part) {
@@ -65,15 +76,6 @@ string_q getPathToRootConfig(const string_q& _part) {
     // tool from the command line).
     g_configPath = getEnvStr("TB_CONFIG_PATH");
 
-    // Invariants
-    if (!folderExists(g_configPath)) {
-        LOG_ERR("Configuration folder must exist: ", g_configPath);
-        quickQuitHandler(1);
-    }
-    if (!endsWith(g_configPath, "/")) {
-        LOG_ERR("Configuration folder must end with '/': ", g_configPath);
-        quickQuitHandler(1);
-    }
     LOG4(bGreen, "TB_CONFIG_PATH: ", g_configPath, cOff);
 
     return g_configPath + _part;

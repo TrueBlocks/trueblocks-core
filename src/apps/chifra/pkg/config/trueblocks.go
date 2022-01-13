@@ -42,7 +42,8 @@ func init() {
 	trueBlocksViper.SetDefault("Settings.IndexPath", GetPathToRootConfig()+"unchained")
 }
 
-// ReadGlobal reads and the configuration located in trueBlocks.toml file
+// readTrueBlocks reads and the configuration located in trueBlocks.toml file. Note
+// that this routine is local to the package
 func readTrueBlocks() *TrueBlocksConfig {
 	if !trueBlocksRead {
 		configPath := GetPathToRootConfig()
@@ -66,10 +67,10 @@ func readTrueBlocks() *TrueBlocksConfig {
 		indexPath = strings.Replace(indexPath, "~", user.HomeDir, -1)
 		cachedTrueBlocksConfig.Settings.IndexPath = indexPath
 
-		// We establish only the top-level functions here. When we figure out
+		// We establish only the top-level folders here. When we figure out
 		// which chain we're on (not until the user tells us on the command line)
 		// only then can we complete this path. At this point it only points
-		// to the top-levl of the cache. Also note that these two routines do
+		// to the top-levl of the cache. Also note that these two calls do
 		// not return if they fail, so no need to handle errors
 		var none []string
 		file.EstablishFolders(cachedTrueBlocksConfig.Settings.CachePath, none /* folders */)

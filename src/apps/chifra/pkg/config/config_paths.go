@@ -20,6 +20,11 @@ var OsToPath = map[string]string{
 	"darwin": "Library/Application Support/TrueBlocks",
 }
 
+// GetPathToChainConfig_new returns the multi-chain chain config file
+func GetPathToChainConfig_new() string {
+	return GetPathToConfig(true)
+}
+
 // GetPathToRootConfig returns the path where to find configuration files
 func GetPathToRootConfig() string {
 	return GetPathToConfig(false)
