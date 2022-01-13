@@ -28,7 +28,7 @@ namespace qblocks {
 // TODO: This can be removed once multi-chain works
 //---------------------------------------------------------------------------------------------------
 #define TEST_PATH(path, part, type)                                                                                    \
-    {                                                                                                                  \
+    if (!isTestMode()) {                                                                                               \
         if (!folderExists((path))) {                                                                                   \
             LOG_ERR(string_q(type) + " folder must exist: ", (path));                                                  \
             quickQuitHandler(1);                                                                                       \

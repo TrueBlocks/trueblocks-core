@@ -92,7 +92,7 @@ bool loadPrefundBalances(void) {
     CArchive archive(WRITING_ARCHIVE);
     if (archive.Lock(STR_PREFUND_BALANCES_BIN1, modeWriteCreate, LOCK_NOWAIT)) {
         // TODO: Clean this up
-        string_q junk = STR_PREFUND_BALANCES_BIN1;
+        junk = STR_PREFUND_BALANCES_BIN1;
         if (isTestMode())
             junk = relativize(junk);
         LOG4("Writing binary cache ", junk);

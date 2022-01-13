@@ -19,6 +19,11 @@ int main(int argc, const char* argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
+    cerr << "TB_CONFIG_PATH: " << relativize(getEnvStr("TB_CONFIG_PATH")) << endl;
+    cerr << "TB_CHAIN_CONFIG_PATH: " << relativize(getEnvStr("TB_CHAIN_CONFIG_PATH")) << endl;
+    cerr << "TB_CACHE_PATH: " << relativize(getEnvStr("TB_CACHE_PATH")) << endl;
+    cerr << "TB_INDEX_PATH: " << relativize(getEnvStr("TB_INDEX_PATH")) << endl;
+
     ostringstream os;
     os << getBinaryCacheFilename(CT_BLOCKS, 1001001) << endl;
     os << getBinaryCacheFilename(CT_BLOOMS, 1001001) << endl;
