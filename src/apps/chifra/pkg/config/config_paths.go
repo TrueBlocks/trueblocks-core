@@ -20,7 +20,14 @@ var OsToPath = map[string]string{
 	"darwin": "Library/Application Support/TrueBlocks",
 }
 
-// GetPathToChainConfig_new returns the multi-chain chain config file
+// GetPathToChainConfig_newOff returns the chain-specific config folder
+func GetPathToChainConfig_newOff() string {
+	ret := GetPathToConfig(true)
+	ret = strings.Replace(ret, "config/mainnet/", "", -1)
+	return ret
+}
+
+// GetPathToChainConfig_new returns the chain-specific config folder
 func GetPathToChainConfig_new() string {
 	return GetPathToConfig(true)
 }

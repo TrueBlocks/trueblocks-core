@@ -92,7 +92,7 @@ func ReadTabManifest(r io.Reader) (*Manifest, error) {
 
 // FromLocalFile loads the manifest saved in ConfigPath
 func FromLocalFile() (*Manifest, error) {
-	manifestPath := config.GetPathToRootConfig() + "manifest/manifest.txt"
+	manifestPath := config.GetPathToChainConfig_newOff() + "manifest/manifest.txt"
 	file, err := os.Open(manifestPath)
 	if err != nil {
 		return nil, err
