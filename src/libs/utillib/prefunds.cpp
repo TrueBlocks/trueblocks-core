@@ -73,14 +73,18 @@ bool loadPrefundBalances(void) {
     LOG4("Reading CSV file ", junk);
     CStringArray lines;
     asciiFileToLines(STR_PREFUND_BALANCES_TAB1, lines);
-    for (auto line : lines) {
-        if (startsWith(line, "0x")) {
-            CStringArray parts;
-            explode(parts, substitute(line, "\"", ""), ',');
-            string_q address = toLower(parts[0]);
-            wei_t amount = str_2_Wei(parts[1]);
-            prefundBalMap[address] = amount;
-        }
+    if (lines.size() > 0) {
+        for (auto line : lines) {
+            if (startsWith(line, "0x")) {
+                CStringArray parts;
+                explode(parts, substitute(line, "\"", ""), ',');
+                string_q address = toLower(parts[0]);
+                wei_t amount = str_2_Wei(parts[1]);
+                prefundBalMap[address] = amount;
+            }
+         }
+    } else {
+        LOG_ERR("Got zero records from ", STR_PREFUND_BALANCES_TAB1);
     }
 
     establishFolder(STR_PREFUND_BALANCES_BIN1);
