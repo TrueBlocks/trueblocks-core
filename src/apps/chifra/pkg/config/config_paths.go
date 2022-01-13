@@ -22,35 +22,22 @@ var OsToPath = map[string]string{
 
 // GetPathToChainConfig_newOff returns the chain-specific config folder
 func GetPathToChainConfig_newOff() string {
-	ret := internalPathTo(true)
-	ret = strings.Replace(ret, "config/mainnet/", "", -1)
+	ret := GetPathToRootConfig()
 	return ret
 }
 
-// GetPathToChainConfig_new returns the chain-specific config folder
-func GetPathToChainConfig_new() string {
-	return internalPathTo(true)
-}
-
-// GetPathToRootConfig returns the path where to find configuration files
-func GetPathToRootConfig() string {
-	return internalPathTo(false)
+// GetPathToChainConfig1 returns the chain-specific config folder
+func GetPathToChainConfig1(chain string) string {
+	ret := GetPathToRootConfig()
+	return path.Join(ret, "config/", chain) + "/"
 }
 
 // TODO: Search for PathAccessor
-func internalPathTo(withChain bool) string {
-	chain := ""
-	if withChain {
-		chain = "mainnet/"
-		if len(os.Getenv("TEST_CHAIN")) > 0 {
-			chain = os.Getenv("TEST_CHAIN") + "/"
-		}
-		chain = "config/" + chain
-	}
-
+// GetPathToRootConfig returns the path where to find configuration files
+func GetPathToRootConfig() string {
 	xdg := os.Getenv("XDG_CONFIG_HOME")
 	if len(xdg) > 0 && xdg[0] == '/' {
-		return path.Join(xdg, chain) + "/"
+		return path.Join(xdg, "") + "/"
 	}
 
 	// The migration code will have already checked for invalid operating systems (i.e. Windows)
@@ -60,7 +47,7 @@ func internalPathTo(withChain bool) string {
 	}
 
 	user, _ := user.Current()
-	return path.Join(user.HomeDir, OsToPath[userOs], chain) + "/"
+	return path.Join(user.HomeDir, OsToPath[userOs]) + "/"
 }
 
 // GetPathToCache returns the one and only cachePath

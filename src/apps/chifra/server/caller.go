@@ -79,12 +79,12 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 	}
 
 	configPath := config.GetPathToRootConfig()
-	chainConfigPath := config.GetPathToChainConfig_new()
+	chainConfigPath := config.GetPathToChainConfig1(Options.Globals.Chain)
 	cachePath := config.GetPathToCache1(Options.Globals.Chain)
 	indexPath := config.GetPathToIndex1(Options.Globals.Chain)
 
 	configPath = strings.Replace(configPath, "mainnet/", "", -1)
-	chainConfigPath = strings.Replace(chainConfigPath, "config/mainnet/", "", -1)
+	// chainConfigPath = strings.Replace(chainConfigPath, "config/mainnet/", "", -1)
 	cachePath = strings.Replace(cachePath, "mainnet/", "", -1)
 	indexPath = strings.Replace(indexPath, "mainnet/", "", -1)
 
@@ -98,10 +98,10 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 		cmd.Env = append(cmd.Env, vars...)
 	} else {
 		if !Options.Globals.TestMode && Options.Globals.LogLevel > 3 {
-			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "CONFIG_PATH: ", configPath, colors.Off)
-			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "CHAIN_CONFIG_PATH: ", chainConfigPath, colors.Off)
-			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "CACHE_PATH:  ", config.GetPathToCache1(Options.Globals.Chain), colors.Off)
-			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "INDEX_PATH:  ", config.GetPathToIndex1(Options.Globals.Chain), colors.Off)
+			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "s-CONFIG_PATH: ", configPath, colors.Off)
+			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "s-CHAIN_CONFIG_PATH: ", chainConfigPath, colors.Off)
+			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "s-CACHE_PATH:  ", config.GetPathToCache1(Options.Globals.Chain), colors.Off)
+			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "s-INDEX_PATH:  ", config.GetPathToIndex1(Options.Globals.Chain), colors.Off)
 		}
 		cmd.Env = append(os.Environ(), "API_MODE=true")
 	}

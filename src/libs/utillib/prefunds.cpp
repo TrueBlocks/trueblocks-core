@@ -82,7 +82,7 @@ bool loadPrefundBalances(void) {
                 wei_t amount = str_2_Wei(parts[1]);
                 prefundBalMap[address] = amount;
             }
-         }
+        }
     } else {
         LOG_ERR("Got zero records from ", STR_PREFUND_BALANCES_TAB1);
     }

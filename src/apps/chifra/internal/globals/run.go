@@ -26,12 +26,12 @@ func (opts *GlobalOptions) PassItOn(path string, flags string) error {
 	wg.Add(2)
 
 	configPath := config.GetPathToRootConfig()
-	chainConfigPath := config.GetPathToChainConfig_new()
+	chainConfigPath := config.GetPathToChainConfig1(opts.Chain)
 	cachePath := config.GetPathToCache1(opts.Chain)
 	indexPath := config.GetPathToIndex1(opts.Chain)
 
 	configPath = strings.Replace(configPath, "mainnet/", "", -1)
-	chainConfigPath = strings.Replace(chainConfigPath, "config/mainnet/", "", -1)
+	// chainConfigPath = strings.Replace(chainConfigPath, "config/mainnet/", "", -1)
 	cachePath = strings.Replace(cachePath, "mainnet/", "", -1)
 	indexPath = strings.Replace(indexPath, "mainnet/", "", -1)
 
@@ -39,10 +39,10 @@ func (opts *GlobalOptions) PassItOn(path string, flags string) error {
 	cmd := exec.Command(config.GetPathToCommands(path), options)
 	cmd.Env = append(os.Environ(), "FROM_CHIFRA=true")
 	if !opts.TestMode && opts.LogLevel > 3 {
-		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "CONFIG_PATH: ", configPath, colors.Off)
-		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "CHAIN_CONFIG_PATH: ", chainConfigPath, colors.Off)
-		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "CACHE_PATH:  ", cachePath, colors.Off)
-		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "INDEX_PATH:  ", indexPath, colors.Off)
+		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "g-CONFIG_PATH: ", configPath, colors.Off)
+		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "g-CHAIN_CONFIG_PATH: ", chainConfigPath, colors.Off)
+		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "g-CACHE_PATH:  ", cachePath, colors.Off)
+		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "g-INDEX_PATH:  ", indexPath, colors.Off)
 	}
 	cmd.Env = append(cmd.Env, "TB_CONFIG_PATH="+configPath)
 	cmd.Env = append(cmd.Env, "TB_CHAIN_CONFIG_PATH="+chainConfigPath)

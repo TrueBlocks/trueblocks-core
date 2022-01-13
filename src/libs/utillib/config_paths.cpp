@@ -33,7 +33,7 @@ namespace qblocks {
             LOG_ERR(string_q(type) + " folder must exist: ", (path));                                                  \
             quickQuitHandler(1);                                                                                       \
         }                                                                                                              \
-        if (!(part).empty() && !fileExists((path) + (part))) {                                                           \
+        if (!(part).empty() && !fileExists((path) + (part))) {                                                         \
             LOG_ERR(string_q(type) + " part is missing: ", (path) + (part));                                           \
             quickQuitHandler(1);                                                                                       \
         }                                                                                                              \
@@ -50,14 +50,13 @@ string_q getPathToChainConfig_newOff(const string_q& _part) {
 
 //--------------------------------------------------------------------------------------
 string_q getPathToChainConfig_new(const string_q& _part) {
-    static string_q g_ChainConfigPath;
-    if (!g_ChainConfigPath.empty())
-        return g_ChainConfigPath + _part;
-    g_ChainConfigPath = getEnvStr("TB_CHAIN_CONFIG_PATH");
-    if (!isTestMode())
-        LOG4(bGreen, "CHAIN_CONFIG_PATH: ", g_ChainConfigPath, cOff);
-    TEST_PATH(g_ChainConfigPath, _part, "Chain Configuration");
-    return g_ChainConfigPath + _part;
+    static string_q g_chainConfigPath;
+    if (!g_chainConfigPath.empty())
+        return g_chainConfigPath + _part;
+    g_chainConfigPath = getEnvStr("TB_CHAIN_CONFIG_PATH");
+    LOG4(bGreen, "c-CHAIN_CONFIG_PATH: ", isTestMode() ? relativize(g_chainConfigPath) : g_chainConfigPath, cOff);
+    TEST_PATH(g_chainConfigPath, _part, "Chain Configuration");
+    return g_chainConfigPath + _part;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -72,8 +71,9 @@ string_q getPathToRootConfig(const string_q& _part) {
     // tool from the command line).
     g_configPath = getEnvStr("TB_CONFIG_PATH");
 
+    LOG4(bGreen, "c-CONFIG_PATH: ", isTestMode() ? relativize(g_configPath) : g_configPath, cOff);
     if (!isTestMode())
-        LOG4(bGreen, "CONFIG_PATH: ", g_configPath, cOff);
+        LOG4(bGreen, "c-CONFIG_PATH: ", g_configPath, cOff);
     TEST_PATH(g_configPath, _part, "Configuration");
 
     return g_configPath + _part;
@@ -87,8 +87,7 @@ string_q getPathToCache(const string_q& _part) {
         return g_cachePath + _part;
 
     g_cachePath = getEnvStr("TB_CACHE_PATH");
-    if (!isTestMode())
-        LOG4(bGreen, "CACHE_PATH: ", g_cachePath, cOff);
+    LOG4(bGreen, "c-CACHE_PATH: ", isTestMode() ? relativize(g_cachePath) : g_cachePath, cOff);
     TEST_PATH(g_cachePath, _part, "Cache");
     return g_cachePath + _part;
 }
@@ -101,8 +100,7 @@ string_q getPathToIndex(const string_q& _part) {
         return g_indexPath + _part;
 
     g_indexPath = getEnvStr("TB_INDEX_PATH");
-    if (!isTestMode())
-        LOG4(bGreen, "INDEX_PATH: ", g_indexPath, cOff);
+    LOG4(bGreen, "c-INDEX_PATH: ", isTestMode() ? relativize(g_indexPath) : g_indexPath, cOff);
     TEST_PATH(g_indexPath, _part, "Index");
     return g_indexPath + _part;
 }
@@ -126,7 +124,7 @@ void loadEnvironmentPaths(void) {
 #error-- unknown operating system not supported
 #endif
     ::setenv("TB_CONFIG_PATH", configPath.c_str(), true);
-    ::setenv("TB_CHAIN_CONFIG_PATH", (configPath + "config/mainnet").c_str(), true);
+    ::setenv("TB_CHAIN_CONFIG_PATH", (configPath + "config/mainnet/").c_str(), true);
     ::setenv("TB_CACHE_PATH", (configPath + "cache/").c_str(), true);
     ::setenv("TB_INDEX_PATH", (configPath + "unchained/").c_str(), true);
 }

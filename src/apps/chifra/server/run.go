@@ -7,6 +7,7 @@ package servePkg
 import (
 	"log"
 	"os"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -28,17 +29,27 @@ func RunServe(cmd *cobra.Command, args []string) error {
 }
 
 func PrintServeSettings(testMode bool) {
-	// 	log.Print(utils.Green, "Starting API server on port "+Options.Port, utils.Off, "\n")
 	// 	log.Print(utils.Green, "Client:       ", utils.Off, Options.Status.Latest)
 	// 	log.Print(utils.Green, "TrueBlocks:   ", utils.Off, Options.Status.TrueBlocks)
 
+	apiUrl := Options.Port
+	if !strings.Contains(apiUrl, "http") {
+		apiUrl = "http://localhost" + apiUrl
+	}
+	configPath := config.GetPathToRootConfig()
+	chainConfigPath := config.GetPathToChainConfig1(Options.Globals.Chain)
+	cachePath := config.GetPathToCache1(Options.Globals.Chain)
+	indexPath := config.GetPathToIndex1(Options.Globals.Chain)
+	rpcProvider := config.GetRpcProvider()
+
+	log.Printf("%s%-15.15s%s%s\n", colors.Green, "Server URL:", colors.Off, apiUrl)
+	log.Printf("%s%-15.15s%s%s\n", colors.Green, "RootConfig Path:", colors.Off, configPath)
+	log.Printf("%s%-15.15s%s%s\n", colors.Green, "ChainConfig Path:", colors.Off, chainConfigPath)
+	log.Printf("%s%-15.15s%s%s\n", colors.Green, "Cache Path:", colors.Off, cachePath)
+	log.Printf("%s%-15.15s%s%s\n", colors.Green, "Index Path:", colors.Off, indexPath)
+	log.Printf("%s%-15.15s%s%s\n", colors.Green, "RPC Provider:", colors.Off, rpcProvider)
+
 	meta := rpcClient.GetMeta(testMode)
-	log.Printf("%s%-15.15s%s%s\n", colors.Green, "Server URL:", colors.Off, "http://localhost"+Options.Port)
-	log.Printf("%s%-15.15s%s%s\n", colors.Green, "RootConfig Path:", colors.Off, config.GetPathToRootConfig())
-	log.Printf("%s%-15.15s%s%s\n", colors.Green, "ChainConfig Path:", colors.Off, config.GetPathToChainConfig_new())
-	log.Printf("%s%-15.15s%s%s\n", colors.Green, "Cache Path:", colors.Off, config.GetPathToCache())
-	log.Printf("%s%-15.15s%s%s\n", colors.Green, "Index Path:", colors.Off, config.GetPathToIndex())
-	log.Printf("%s%-15.15s%s%s\n", colors.Green, "RPC Provider:", colors.Off, config.GetRpcProvider())
 	log.Printf("%s%-15.15s%s%d, %d, %d, %d\n", colors.Green, "Progress:", colors.Off, meta.Latest, meta.Finalized, meta.Staging, meta.Unripe)
 }
 

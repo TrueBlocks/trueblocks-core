@@ -32,7 +32,6 @@ func Test_GetPathTo(t *testing.T) {
 		testPath := ""
 		withChain := true
 
-		os.Setenv("TEST_CHAIN", test.chain)
 		if test.group == "Config" {
 			os.Setenv("XDG_CONFIG_HOME", test.xdg)
 			os.Setenv("TEST_OS", test.os)
@@ -43,7 +42,7 @@ func Test_GetPathTo(t *testing.T) {
 				}
 			}
 			if withChain {
-				testPath = GetPathToChainConfig_new() + test.part
+				testPath = GetPathToChainConfig1(test.chain) + test.part
 			} else {
 				testPath = GetPathToRootConfig() + test.part
 			}
