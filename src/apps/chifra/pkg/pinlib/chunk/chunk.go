@@ -47,15 +47,19 @@ type fetchResult struct {
 }
 
 // fetchChunk downloads a chunk using HTTP
-func fetchChunk(url string) (*fetchResult, error) {
-	response, err := http.Get(url)
-	body := response.Body
-	if response.StatusCode != 200 {
-		return nil, fmt.Errorf("wrong status code: %d", response.StatusCode)
-	}
+func fetchChunk(ctx context.Context, url string) (*fetchResult, error) {
+	request, err := http.NewRequestWithContext(ctx, "GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
+	response, err := http.DefaultClient.Do(request)
+	if err != nil {
+		return nil, err
+	}
+	if response.StatusCode != 200 {
+		return nil, fmt.Errorf("wrong status code: %d", response.StatusCode)
+	}
+	body := response.Body
 
 	fileSize, err := strconv.ParseInt(response.Header.Get("Content-Length"), 10, 64)
 	if err != nil {
@@ -94,7 +98,6 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkPath *cache.Path, p
 		select {
 		case <-ctx.Done():
 			// Cancel
-			ants.Reboot()
 			return
 		default:
 			// Perform download => unzip-and-save
@@ -111,8 +114,10 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkPath *cache.Path, p
 				Message: hash,
 			}
 
-			download, err := fetchChunk(url.String())
+			download, err := fetchChunk(ctx, url.String())
 			if errors.Is(ctx.Err(), context.Canceled) {
+				// The request to fetch the chunk was cancelled, because user has
+				// pressed Ctrl-C
 				return
 			}
 			if ctx.Err() != nil {
@@ -160,18 +165,22 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkPath *cache.Path, p
 				Message: "Unzipping",
 			}
 
+			trapChannel := sigintTrap.Enable(ctx, cancel)
 			err := saveFileContents(res, chunkPath)
-			if err != nil && err != sigintTrap.ErrInterrupted {
+			sigintTrap.Disable(trapChannel)
+
+			if errors.Is(ctx.Err(), context.Canceled) {
+				// Ctrl-C was pressed, cancel
+				return
+			}
+
+			if err != nil {
 				progressChannel <- &progress.Progress{
 					Payload: res.Pin,
 					Event:   progress.Error,
 					Message: err.Error(),
 				}
 				return
-			}
-			if err == sigintTrap.ErrInterrupted {
-				// User pressed Ctrl-C
-				cancel()
 			}
 
 			progressChannel <- &progress.Progress{
@@ -189,6 +198,11 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkPath *cache.Path, p
 	writeWg.Add(1)
 	go func() {
 		for result := range writeChannel {
+			if ctx.Err() != nil {
+				// If the user has pressed Ctrl-C while it was disabled by sigintTrap,
+				// we have to drain the channel. Otherwise, we will find ourselves in a deadlock
+				continue
+			}
 			// It would be simpler to call Add where we start downloads, but we have no guarantee that
 			// we will be saving the same number of pins (e.g. if download failed)
 			writeWg.Add(1)
@@ -209,6 +223,14 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkPath *cache.Path, p
 	close(writeChannel)
 
 	writeWg.Wait()
+
+	if errors.Is(ctx.Err(), context.Canceled) {
+		progressChannel <- &progress.Progress{
+			Event: progress.Cancelled,
+		}
+		return
+	}
+
 	progressChannel <- &progress.Progress{
 		Event: progress.AllDone,
 	}
@@ -216,9 +238,6 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkPath *cache.Path, p
 
 // saveFileContents decompresses the downloaded data and saves it to files
 func saveFileContents(res *jobResult, chunkPath *cache.Path) error {
-	// Postpone Ctrl-C
-	trapChannel := sigintTrap.Enable()
-	defer sigintTrap.Disable(trapChannel)
 	// We load content to the buffer first to check its size
 	buffer := &bytes.Buffer{}
 	read, err := buffer.ReadFrom(res.contents)
@@ -247,12 +266,7 @@ func saveFileContents(res *jobResult, chunkPath *cache.Path) error {
 		return &ErrSavingCopy{res.fileName, werr}
 	}
 
-	select {
-	case <-trapChannel:
-		return sigintTrap.ErrInterrupted
-	default:
-		return nil
-	}
+	return nil
 }
 
 // FilterDownloadedChunks returns new []manifest.PinDescriptor slice with all pins from RootPath removed
