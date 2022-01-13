@@ -46,16 +46,43 @@ type fetchResult struct {
 	totalSize int64
 }
 
+// WorkerArguments are types meant to hold worker function arguments. We cannot
+// pass the arguments directly, because a worker function is expected to take one
+// parameter of type interface{}.
+type DownloadWorkerArguments struct {
+	chunkPath       *cache.Path
+	ctx             context.Context
+	downloadWg      *sync.WaitGroup
+	gatewayUrl      string
+	progressChannel chan<- *progress.Progress
+	writeChannel    chan *jobResult
+}
+
+type WriteWorkerArguments struct {
+	cancel          context.CancelFunc
+	chunkPath       *cache.Path
+	ctx             context.Context
+	progressChannel chan<- *progress.Progress
+	writeWg         *sync.WaitGroup
+}
+
+// worker function type as accepted by Ants
+type WorkerFunction func(interface{})
+
 // fetchChunk downloads a chunk using HTTP
-func fetchChunk(url string) (*fetchResult, error) {
-	response, err := http.Get(url)
-	body := response.Body
-	if response.StatusCode != 200 {
-		return nil, fmt.Errorf("wrong status code: %d", response.StatusCode)
-	}
+func fetchChunk(ctx context.Context, url string) (*fetchResult, error) {
+	request, err := http.NewRequestWithContext(ctx, "GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
+	response, err := http.DefaultClient.Do(request)
+	if err != nil {
+		return nil, err
+	}
+	if response.StatusCode != 200 {
+		return nil, fmt.Errorf("wrong status code: %d", response.StatusCode)
+	}
+	body := response.Body
 
 	fileSize, err := strconv.ParseInt(response.Header.Get("Content-Length"), 10, 64)
 	if err != nil {
@@ -66,6 +93,115 @@ func fetchChunk(url string) (*fetchResult, error) {
 		body:      body,
 		totalSize: fileSize,
 	}, nil
+}
+
+// getDownloadWorker returns a worker function that downloads a chunk
+func getDownloadWorker(arguments DownloadWorkerArguments) WorkerFunction {
+	progressChannel := arguments.progressChannel
+	ctx := arguments.ctx
+
+	return func(param interface{}) {
+		url, _ := url.Parse(arguments.gatewayUrl)
+		pin := param.(manifest.PinDescriptor)
+
+		defer arguments.downloadWg.Done()
+
+		select {
+		case <-ctx.Done():
+			// Cancel
+			return
+		default:
+			// Perform download => unzip-and-save
+			hash := pin.BloomHash
+			if arguments.chunkPath.Type == cache.IndexChunk {
+				hash = pin.IndexHash
+			}
+
+			url.Path = path.Join(url.Path, hash)
+
+			progressChannel <- &progress.Progress{
+				Payload: &pin,
+				Event:   progress.Start,
+				Message: hash,
+			}
+
+			download, err := fetchChunk(ctx, url.String())
+			if errors.Is(ctx.Err(), context.Canceled) {
+				// The request to fetch the chunk was cancelled, because user has
+				// pressed Ctrl-C
+				return
+			}
+			if ctx.Err() != nil {
+				progressChannel <- &progress.Progress{
+					Payload: &pin,
+					Event:   progress.Error,
+					Message: ctx.Err().Error(),
+				}
+				return
+			}
+			if err == nil {
+				arguments.writeChannel <- &jobResult{
+					fileName: pin.FileName,
+					fileSize: download.totalSize,
+					contents: download.body,
+					Pin:      &pin,
+				}
+			} else {
+				progressChannel <- &progress.Progress{
+					Payload: &pin,
+					Event:   progress.Error,
+					Message: err.Error(),
+				}
+			}
+		}
+	}
+}
+
+// getWriteWorker returns a worker function that writes chunk to disk
+func getWriteWorker(arguments WriteWorkerArguments) WorkerFunction {
+	progressChannel := arguments.progressChannel
+	ctx := arguments.ctx
+
+	return func(resParam interface{}) {
+		// Take download data from the channel and save it
+		res := resParam.(*jobResult)
+
+		defer arguments.writeWg.Done()
+
+		select {
+		case <-ctx.Done():
+			return
+		default:
+			progressChannel <- &progress.Progress{
+				Payload: res.Pin,
+				Event:   progress.Update,
+				Message: "Unzipping",
+			}
+
+			trapChannel := sigintTrap.Enable(ctx, arguments.cancel)
+			err := saveFileContents(res, arguments.chunkPath)
+			sigintTrap.Disable(trapChannel)
+
+			if errors.Is(ctx.Err(), context.Canceled) {
+				// Ctrl-C was pressed, cancel
+				return
+			}
+
+			if err != nil {
+				progressChannel <- &progress.Progress{
+					Payload: res.Pin,
+					Event:   progress.Error,
+					Message: err.Error(),
+				}
+				return
+			}
+
+			progressChannel <- &progress.Progress{
+				Payload: res.Pin,
+				Event:   progress.Done,
+			}
+		}
+	}
 }
 
 // GetChunksFromRemote downloads, unzips and saves the chunk of type indicated by chunkType
@@ -83,103 +219,28 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkPath *cache.Path, p
 		cancel()
 	}()
 
-	gatewayUrl := config.ReadBlockScrape().Dev.IpfsGateway
-
-	downloadPool, err := ants.NewPoolWithFunc(poolSize, func(param interface{}) {
-		url, _ := url.Parse(gatewayUrl)
-		pin := param.(manifest.PinDescriptor)
-
-		defer downloadWg.Done()
-
-		select {
-		case <-ctx.Done():
-			// Cancel
-			ants.Reboot()
-			return
-		default:
-			// Perform download => unzip-and-save
-			hash := pin.BloomHash
-			if chunkPath.Type == cache.IndexChunk {
-				hash = pin.IndexHash
-			}
-
-			url.Path = path.Join(url.Path, hash)
-
-			progressChannel <- &progress.Progress{
-				Payload: &pin,
-				Event:   progress.Start,
-				Message: hash,
-			}
-
-			download, err := fetchChunk(url.String())
-			if errors.Is(ctx.Err(), context.Canceled) {
-				return
-			}
-			if ctx.Err() != nil {
-				progressChannel <- &progress.Progress{
-					Payload: &pin,
-					Event:   progress.Error,
-					Message: ctx.Err().Error(),
-				}
-				return
-			}
-			if err == nil {
-				writeChannel <- &jobResult{
-					fileName: pin.FileName,
-					fileSize: download.totalSize,
-					contents: download.body,
-					Pin:      &pin,
-				}
-			} else {
-				progressChannel <- &progress.Progress{
-					Payload: &pin,
-					Event:   progress.Error,
-					Message: err.Error(),
-				}
-			}
-		}
-	})
+	downloadWorkerArgs := DownloadWorkerArguments{
+		chunkPath:       chunkPath,
+		ctx:             ctx,
+		downloadWg:      &downloadWg,
+		gatewayUrl:      config.ReadBlockScrape().Dev.IpfsGateway,
+		progressChannel: progressChannel,
+		writeChannel:    writeChannel,
+	}
+	downloadPool, err := ants.NewPoolWithFunc(poolSize, getDownloadWorker(downloadWorkerArgs))
 	defer downloadPool.Release()
 	if err != nil {
 		panic(err)
 	}
 
-	writePool, err := ants.NewPoolWithFunc(poolSize, func(resParam interface{}) {
-		// Take download data from the channel and save it
-		res := resParam.(*jobResult)
-
-		defer writeWg.Done()
-
-		select {
-		case <-ctx.Done():
-			return
-		default:
-			progressChannel <- &progress.Progress{
-				Payload: res.Pin,
-				Event:   progress.Update,
-				Message: "Unzipping",
-			}
-
-			err := saveFileContents(res, chunkPath)
-			if err != nil && err != sigintTrap.ErrInterrupted {
-				progressChannel <- &progress.Progress{
-					Payload: res.Pin,
-					Event:   progress.Error,
-					Message: err.Error(),
-				}
-				return
-			}
-			if err == sigintTrap.ErrInterrupted {
-				// User pressed Ctrl-C
-				cancel()
-			}
-
-			progressChannel <- &progress.Progress{
-				Payload: res.Pin,
-				Event:   progress.Done,
-			}
-		}
-	})
+	writeWorkerArgs := WriteWorkerArguments{
+		cancel:          cancel,
+		chunkPath:       chunkPath,
+		ctx:             ctx,
+		progressChannel: progressChannel,
+		writeWg:         &writeWg,
+	}
+	writePool, err := ants.NewPoolWithFunc(poolSize, getWriteWorker(writeWorkerArgs))
 	defer writePool.Release()
 	if err != nil {
 		panic(err)
@@ -189,6 +250,11 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkPath *cache.Path, p
 	writeWg.Add(1)
 	go func() {
 		for result := range writeChannel {
+			if ctx.Err() != nil {
+				// If the user has pressed Ctrl-C while it was disabled by sigintTrap,
+				// we have to drain the channel. Otherwise, we will find ourselves in a deadlock
+				continue
+			}
 			// It would be simpler to call Add where we start downloads, but we have no guarantee that
 			// we will be saving the same number of pins (e.g. if download failed)
 			writeWg.Add(1)
@@ -209,6 +275,14 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkPath *cache.Path, p
 	close(writeChannel)
 
 	writeWg.Wait()
+
+	if errors.Is(ctx.Err(), context.Canceled) {
+		progressChannel <- &progress.Progress{
+			Event: progress.Cancelled,
+		}
+		return
+	}
+
 	progressChannel <- &progress.Progress{
 		Event: progress.AllDone,
 	}
@@ -216,9 +290,6 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkPath *cache.Path, p
 
 // saveFileContents decompresses the downloaded data and saves it to files
 func saveFileContents(res *jobResult, chunkPath *cache.Path) error {
-	// Postpone Ctrl-C
-	trapChannel := sigintTrap.Enable()
-	defer sigintTrap.Disable(trapChannel)
 	// We load content to the buffer first to check its size
 	buffer := &bytes.Buffer{}
 	read, err := buffer.ReadFrom(res.contents)
@@ -247,12 +318,7 @@ func saveFileContents(res *jobResult, chunkPath *cache.Path) error {
 		return &ErrSavingCopy{res.fileName, werr}
 	}
 
-	select {
-	case <-trapChannel:
-		return sigintTrap.ErrInterrupted
-	default:
-		return nil
-	}
+	return nil
 }
 
 // FilterDownloadedChunks returns new []manifest.PinDescriptor slice with all pins from RootPath removed
