@@ -531,7 +531,7 @@ bool prepareBuiltIn(string_q& options) {
                 os << options;
                 if (debug)
                     os << " ; find ./testing_data/ -exec ls -l {} ';' ; ";
-                options = substitute(os.str(), "$CONFIG/", getPathToRootConfig(""));
+                options = substitute(os.str(), "$CONFIG/", rootConfigs);
                 replaceAll(options, match, cmd);
             }
             if (debug)

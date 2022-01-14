@@ -262,7 +262,7 @@ void COptions::Init(void) {
         status.host = string_q(hostname) + " (" + username + ")";
         // FIXME: THIS IS BROKEN
         status.rpcProvider = getGlobalConfig("")->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
-        status.configPath = getPathToRootConfig("");
+        status.configPath = rootConfigs;
         status.cachePath = cacheFolder;
         status.indexPath = indexFolder;
     }

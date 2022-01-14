@@ -232,8 +232,8 @@ var testSet1 = []PathTest{
 		xdg:      "",
 		os:       "darwin",
 		chain:    "mainnet",
-		part:     "names/names.bin",
-		expected: "$HOME/Library/Application Support/TrueBlocks/unchained/{CHAIN}/names/names.bin",
+		part:     "names.bin",
+		expected: "$HOME/Library/Application Support/TrueBlocks/unchained/{CHAIN}/names.bin",
 		disabled: true,
 	},
 }

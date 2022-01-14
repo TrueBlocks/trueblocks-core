@@ -741,11 +741,11 @@ const CToml* getGlobalConfig(const string_q& name) {
     static string_q components = "trueBlocks|";
 
     if (!toml) {
-        string_q configFile = getPathToRootConfig("trueBlocks.toml");
+        string_q configFile = rootConfigToml_trueBlocks;
         LOG4(bGreen, "configFile: ", configFile, cOff);
         static CToml theToml(configFile);
         toml = &theToml;
-        string_q fileName = getPathToChainConfig_newOff(COptionsBase::g_progName + ".toml");
+        string_q fileName = chainConfigs_old + COptionsBase::g_progName + ".toml";
         if (fileExists(fileName) && !contains(components, COptionsBase::g_progName + "|")) {
             components += COptionsBase::g_progName + "|";
             CToml custom(fileName);
@@ -755,7 +755,7 @@ const CToml* getGlobalConfig(const string_q& name) {
 
     // If we're told explicitly to load another config, do that as well
     if (!name.empty()) {
-        string_q fileName = getPathToChainConfig_newOff(name + ".toml");
+        string_q fileName = chainConfigs_old + name + ".toml";
         if (fileExists(fileName) && !contains(components, name + "|")) {
             components += name + "|";
             CToml custom(fileName);

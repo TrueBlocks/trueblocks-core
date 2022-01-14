@@ -15,7 +15,7 @@
 
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_lint(void) {
-    CToml config(getPathToRootConfig("makeClass.toml"));
+    CToml config(rootConfigToml_makeClass);
 
     bool enabled = config.getConfigBool("enabled", "lint_all", false);
     string_q exe = getPathToCommands("test/pylint.py");

@@ -43,7 +43,7 @@ bool COptions::parseArguments(string_q& command) {
     // END_CODE_LOCAL_INIT
     string_q path;
 
-    CToml config(getPathToRootConfig("makeClass.toml"));
+    CToml config(rootConfigToml_makeClass);
     bool makeClassOn = config.getConfigBool("enabled", "generate", false);
 
     Init();

@@ -14,7 +14,7 @@
 
 //--------------------------------------------------------------------
 void COptions::handle_collections(const CStringArray& terms) {
-    string_q collectionFile = getPathToChainConfig_newOff("names/collections.csv");
+    string_q collectionFile = chainFolderTxt_collections;
     string_q contents = asciiFileToString(collectionFile);
     CStringArray lines;
     explode(lines, contents, '\n');

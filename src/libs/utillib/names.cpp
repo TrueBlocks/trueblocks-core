@@ -47,7 +47,7 @@ const uint64_t nExtra = 10000;
 
 //-----------------------------------------------------------------------
 static bool readNamesFromBinary(void) {
-    string_q binFile = cacheFolder_names + "names.bin";
+    string_q binFile = cacheFolderBin_names;
     nNameRecords = (fileSize(binFile) / sizeof(NameOnDisc));  // This number may be too large, but we adjust it below
     namesAllocated = new NameOnDisc[nNameRecords + nExtra];
     if (!namesAllocated) {
@@ -95,8 +95,8 @@ static bool readNamesFromBinary(void) {
 
 //-----------------------------------------------------------------------
 static bool readNamesFromAscii(void) {
-    string_q txtFile = getPathToChainConfig_newOff("names/names.tab");
-    string_q customFile = getPathToChainConfig_newOff("names/names_custom.tab");
+    string_q txtFile = chainFolderTxt_names;
+    string_q customFile = chainFolderTxt_namesCustom;
 
     CStringArray lines;
     asciiFileToLines(txtFile, lines);
@@ -135,7 +135,7 @@ static bool readNamesFromAscii(void) {
 
 //-----------------------------------------------------------------------
 static bool writeNamesToBinary(void) {
-    string_q binFile = cacheFolder_names + "names.bin";
+    string_q binFile = cacheFolderBin_names;
     establishFolder(binFile);
     CArchive out(WRITING_ARCHIVE);
     if (out.Lock(binFile, modeWriteCreate, LOCK_WAIT)) {
@@ -168,9 +168,8 @@ bool loadNames(void) {
         return true;
     }
 
-    time_q binDate = fileLastModifyDate(cacheFolder_names + "names.bin");
-    time_q txtDate = laterOf(fileLastModifyDate(getPathToChainConfig_newOff("names/names.tab")),
-                             fileLastModifyDate(getPathToChainConfig_newOff("names/names_custom.tab")));
+    time_q binDate = fileLastModifyDate(cacheFolderBin_names);
+    time_q txtDate = laterOf(fileLastModifyDate(chainFolderTxt_names), fileLastModifyDate(chainFolderTxt_namesCustom));
 
     if (txtDate < binDate) {
         if (!readNamesFromBinary())

@@ -48,34 +48,33 @@ timestamp_t getTimestampAt(blknum_t blk) {
 
 //-------------------------------------------------------------------------
 size_t nTimestamps(void) {
-    return ((fileSize(indexFolder_ts) / sizeof(uint32_t)) / 2);
+    return ((fileSize(indexFolderBin_ts) / sizeof(uint32_t)) / 2);
 }
 
 //-----------------------------------------------------------------------
 bool establishTsFile(void) {
-    if (fileExists(indexFolder_ts))
+    if (fileExists(indexFolderBin_ts))
         return true;
 
     establishFolder(indexFolder);
 
-    string_q zipFile = getPathToChainConfig_newOff("ts.bin.gz");
-    time_q zipDate = fileLastModifyDate(zipFile);
-    time_q tsDate = fileLastModifyDate(indexFolder_ts);
+    time_q zipDate = fileLastModifyDate(chainFolderZip_ts);
+    time_q tsDate = fileLastModifyDate(indexFolderBin_ts);
 
     if (zipDate > tsDate) {
         ostringstream cmd;
         cmd << "cd \"" << indexFolder << "\" ; ";
-        cmd << "cp \"" << zipFile << "\" . ; ";
+        cmd << "cp \"" << chainFolderZip_ts << "\" . ; ";
         cmd << "gunzip ts.bin.gz";
         string_q result = doCommand(cmd.str());
         LOG_INFO(result);
         // The original zip file still exists
-        ASSERT(fileExists(zipFile));
+        ASSERT(fileExists(chainFolderZip_ts));
         // The new timestamp file exists
-        ASSERT(fileExists(indexFolder_ts));
+        ASSERT(fileExists(indexFolderBin_ts));
         // The copy of the zip file does not exist
-        ASSERT(!fileExists(indexFolder_ts + ".gz"));
-        return fileExists(indexFolder_ts);
+        ASSERT(!fileExists(indexFolderBin_ts + ".gz"));
+        return fileExists(indexFolderBin_ts);
     }
 
     // starts at zero...
@@ -92,13 +91,13 @@ bool freshenTimestamps(blknum_t minBlock) {
         return false;
 
     // LOG_INFO("Established ts file");
-    size_t nRecords = ((fileSize(indexFolder_ts) / sizeof(uint32_t)) / 2);
+    size_t nRecords = ((fileSize(indexFolderBin_ts) / sizeof(uint32_t)) / 2);
     if (nRecords >= minBlock)
         return true;
 
     // LOG_INFO("Found ", nRecords, " records");
-    if (fileExists(indexFolder_ts + ".lck")) {  // it's being updated elsewhere
-        LOG_ERR("Timestamp file ", indexFolder_ts, " is locked. Cannot update.");
+    if (fileExists(indexFolderBin_ts + ".lck")) {  // it's being updated elsewhere
+        LOG_ERR("Timestamp file ", indexFolderBin_ts, " is locked. Cannot update.");
         return false;
     }
 
@@ -106,8 +105,8 @@ bool freshenTimestamps(blknum_t minBlock) {
 
     // LOG_INFO("Updating");
     CArchive file(WRITING_ARCHIVE);
-    if (!file.Lock(indexFolder_ts, modeWriteAppend, LOCK_NOWAIT)) {
-        LOG_ERR("Failed to open ", indexFolder_ts);
+    if (!file.Lock(indexFolderBin_ts, modeWriteAppend, LOCK_NOWAIT)) {
+        LOG_ERR("Failed to open ", indexFolderBin_ts);
         unlockSection();
         return false;
     }
@@ -162,11 +161,11 @@ bool loadTimestamps(uint32_t** theArray, size_t& cnt) {
 
     // Order matters.
     // User may call us with a NULL array pointer, but we still want to file 'cnt'
-    cnt = ((fileSize(indexFolder_ts) / sizeof(uint32_t)) / 2);
+    cnt = ((fileSize(indexFolderBin_ts) / sizeof(uint32_t)) / 2);
     if (theArray == NULL)
         return cnt;
 
-    file.open(indexFolder_ts);
+    file.open(indexFolderBin_ts);
     if (file.isValid())
         *theArray = (uint32_t*)file.getData();  // NOLINT
 
@@ -175,18 +174,18 @@ bool loadTimestamps(uint32_t** theArray, size_t& cnt) {
 
 //-------------------------------------------------------------------------
 bool correctTimestamp(blknum_t blk, timestamp_t ts) {
-    size_t nRecords = ((fileSize(indexFolder_ts) / sizeof(uint32_t)) / 2);
+    size_t nRecords = ((fileSize(indexFolderBin_ts) / sizeof(uint32_t)) / 2);
 
     // If we're in test mode, the timestamps file doesn't exist, or the block number is too damn high, quit
-    if (isTestMode() || !fileExists(indexFolder_ts) || blk >= nRecords)
+    if (isTestMode() || !fileExists(indexFolderBin_ts) || blk >= nRecords)
         return true;
 
     expContext().tsCnt = size_t(NOPOS);
     loadTimestamps(&expContext().tsMemMap, expContext().tsCnt);
 
     CArchive file(WRITING_ARCHIVE);
-    if (!file.Lock(indexFolder_ts, modeReadWrite, LOCK_WAIT)) {
-        LOG_ERR("Failed to open ", indexFolder_ts);
+    if (!file.Lock(indexFolderBin_ts, modeReadWrite, LOCK_WAIT)) {
+        LOG_ERR("Failed to open ", indexFolderBin_ts);
         return false;
     }
 
@@ -198,7 +197,7 @@ bool correctTimestamp(blknum_t blk, timestamp_t ts) {
     }
 
     if (!file.Read(buffer, sizeof(uint32_t), nRecords * 2)) {
-        LOG_ERR("Could not read timestamp file ", indexFolder_ts);
+        LOG_ERR("Could not read timestamp file ", indexFolderBin_ts);
         delete[] buffer;
         file.Release();
         return false;

@@ -398,7 +398,7 @@ bool CCache::needsRefresh(const string_q& cachePath, const string_q& cacheType, 
 
     bool nR = fileLastModifyDate(tmpFn) < cacheInfo.fileTime;
     if (!nR) {
-        string_q configFn = getPathToRootConfig("trueblocks.toml");
+        string_q configFn = rootConfigToml_trueBlocks;
         nR = fileLastModifyDate(tmpFn) < fileLastModifyDate(configFn);
     }
     LOG4("needsRefresh:", nR);

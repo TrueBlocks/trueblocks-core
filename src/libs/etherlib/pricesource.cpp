@@ -25,31 +25,27 @@ bool parsePoloniex(CPriceQuote& quote, string_q& str) {
 
 //-----------------------------------------------------------------------
 bool establishPriceFile(void) {
-    string_q pricesFolder = cacheFolder_prices;
-    string_q zipFile = getPathToChainConfig_newOff("poloniex_USDT_ETH.bin.gz");
-    string_q binFile = pricesFolder + "poloniex_USDT_ETH.bin";
-
-    if (fileExists(binFile))
+    if (fileExists(cacheFolderBin_prices))
         return true;
-    establishFolder(pricesFolder);
+    establishFolder(cacheFolder_prices);
 
-    time_q zipDate = fileLastModifyDate(zipFile);
-    time_q binDate = fileLastModifyDate(binFile);
+    time_q zipDate = fileLastModifyDate(chainFolderZip_prices);
+    time_q binDate = fileLastModifyDate(cacheFolderBin_prices);
 
     if (zipDate > binDate) {
         ostringstream cmd;
-        cmd << "cd \"" << pricesFolder << "\" ; ";
-        cmd << "cp \"" << zipFile << "\" . ; ";
+        cmd << "cd \"" << cacheFolder_prices << "\" ; ";
+        cmd << "cp \"" << chainFolderZip_prices << "\" . ; ";
         cmd << "gunzip poloniex_USDT_ETH.bin.gz";
         string_q result = doCommand(cmd.str());
         LOG_INFO(result);
         // The original zip file still exists
         ASSERT(fileExists(zipFile));
         // The new timestamp file exists
-        ASSERT(fileExists(binFile));
+        ASSERT(fileExists(cacheFolderBin_prices));
         // The copy of the zip file does not exist any more
-        ASSERT(!fileExists(binFile + ".gz"));
-        return fileExists(binFile);
+        ASSERT(!fileExists(chainFolderZip_prices));
+        return fileExists(cacheFolderBin_prices);
     }
     return true;
 }

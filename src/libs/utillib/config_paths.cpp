@@ -124,8 +124,8 @@ string_q relativize(const string_q& path) {
     string_q ret = path;
     replace(ret, indexFolder, "$INDEX/");
     replace(ret, cacheFolder, "$CACHE/");
-    replace(ret, getPathToChainConfig_new(""), "$CHAIN/");
-    replace(ret, getPathToRootConfig(""), "$CONFIG/");
+    replace(ret, chainConfigs_new, "$CHAIN/");
+    replace(ret, rootConfigs, "$CONFIG/");
     replace(ret, getPathToCommands("test/"), "");
     replace(ret, getPathToCommands(""), "");
     replace(ret, getHomeFolder(), "$HOME/");

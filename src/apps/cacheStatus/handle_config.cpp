@@ -39,7 +39,7 @@ bool COptions::handle_config_get(ostream& os) {
             prov = "--rpc Provider--";
         values.push_back(prov);
 
-        string_q defFolder = substitute(getPathToRootConfig(""), getHomeFolder(), "~/");
+        string_q defFolder = substitute(rootConfigs, getHomeFolder(), "~/");
         string_q conf = defFolder;
         if (isTestMode())
             conf = "--config Path--";
