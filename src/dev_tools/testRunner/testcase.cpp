@@ -484,10 +484,10 @@ const char* STR_DISPLAY_TESTCASE = "";
 // EXISTING_CODE
 //---------------------------------------------------------------------------------------------
 void establishTestMonitors(void) {
-    if (folderExists(getPathToRootConfig("mocked/monitors/")))
+    if (folderExists(rootConfigs_mocked + "monitors/"))
         return;
 
-    string_q gzipFile = getPathToRootConfig("mocked/monitors.tar.gz");
+    string_q gzipFile = rootConfigs_mocked + "monitors.tar.gz";
     if (!fileExists(gzipFile)) {
         LOG_WARN("Cannot find test monitors file: ", gzipFile);
         return;
@@ -501,7 +501,7 @@ void establishTestMonitors(void) {
         "tar -xvf monitors.tar 2>/dev/null && rm -f monitors.tar && "
         "tar -xvf mocks.tar 2>/dev/null && rm -f mocks.tar";
 
-    string_q cmd = substitute(STR_UNZIP_CMD, "[{PATH}]", getPathToRootConfig("mocked/"));
+    string_q cmd = substitute(STR_UNZIP_CMD, "[{PATH}]", rootConfigs_mocked);
     // LOG_INFO(cmd);
     // clang-format off
     if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
@@ -519,7 +519,7 @@ bool prepareBuiltIn(string_q& options) {
             if (match == "RESET") {
                 establishTestMonitors();
                 cleanFolder(cacheFolder_tmp);
-                cleanFolder(getPathToRootConfig("mocked/unchained"));
+                cleanFolder(rootConfigs_mocked + "unchained");
                 options = "";
                 if (debug)
                     os << "Cleanup" << endl;
@@ -531,7 +531,7 @@ bool prepareBuiltIn(string_q& options) {
                 os << options;
                 if (debug)
                     os << " ; find ./testing_data/ -exec ls -l {} ';' ; ";
-                options = substitute(os.str(), "$CONFIG/", rootConfigs);
+                options = substitute(os.str(), "$CACHE/", cacheFolder);
                 replaceAll(options, match, cmd);
             }
             if (debug)

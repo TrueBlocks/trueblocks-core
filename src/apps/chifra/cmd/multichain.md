@@ -139,14 +139,14 @@ remoteExplorer = ""
 
 #### C++
 ----
-| Name                | Description                                                                                              |
-| ------------------- | -------------------------------------------------------------------------------------------------------- |
-| getPathToRootConfig |                                                                                                          |
-|                     | get PathToIndex, getPath ToCache                                                                         |
-| getPath ToCache     | `cachePath` from trueBlocks.toml                                                                         |
-|                     | getPathToBinaryCache, getPathToPriceDb, getPathToMonitor,<br/>getPathToMonitorDels, getPathToMonitorLast |
-| get PathToIndex     | `indexPath` from trueBlocks.toml                                                                         |
-| getPat hToCommands  |                                                                                                          |
+| Name                 | Description                                                                                              |
+| -------------------- | -------------------------------------------------------------------------------------------------------- |
+| getPath ToRootConfig |                                                                                                          |
+|                      | get PathToIndex, getPath ToCache                                                                         |
+| getPath ToCache      | `cachePath` from trueBlocks.toml                                                                         |
+|                      | getPathToBinaryCache, getPathToPriceDb, getPathToMonitor,<br/>getPathToMonitorDels, getPathToMonitorLast |
+| get PathToIndex      | `indexPath` from trueBlocks.toml                                                                         |
+| getPat hToCommands   |                                                                                                          |
 
 #### Local Tooling Only
 ----

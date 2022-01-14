@@ -412,7 +412,7 @@ string_q CMonitor::getPathToMonitor(const address_t& addr, bool staging) const {
     string_q fn = isAddress(addr) ? addr + ".acct.bin" : addr;
     string_q base = cacheFolder_monitors + (staging ? "staging/" : "");
     if (isTestMode())
-        base = getPathToRootConfig("mocked/monitors/") + (staging ? "staging/" : "");
+        base = rootConfigs_mocked + "monitors/" + (staging ? "staging/" : "");
     return base + fn;
 }
 

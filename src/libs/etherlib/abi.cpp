@@ -407,12 +407,12 @@ void CAbi::clearInterfaceMap(void) {
 //---------------------------------------------------------------------------
 bool CAbi::loadAbisFromKnown(bool tokensOnly) {
     if (tokensOnly) {
-        bool ret1 = loadAbiFromFile(getPathToRootConfig("abis/known-000/erc_00020.json"));
-        bool ret2 = loadAbiFromFile(getPathToRootConfig("abis/known-000/erc_00721.json"));
+        bool ret1 = loadAbiFromFile(rootConfigs_abis + "known-000/erc_00020.json");
+        bool ret2 = loadAbiFromFile(rootConfigs_abis + "known-000/erc_00721.json");
         return (ret1 && ret2);
     }
 
-    string_q srcPath = getPathToRootConfig("abis/");
+    string_q srcPath = rootConfigs_abis;
     if (abiSourcesMap[srcPath])
         return true;
 
@@ -495,7 +495,7 @@ bool CAbi::loadAbiFromFile(const string_q& fileName) {
     if (loadAbiFromJson(asciiFileToString(fileName))) {
         for (auto& item : interfaceMap)
             if (item.second.abi_source.empty()) {
-                string_q str = substitute(substitute(fileName, cacheFolder_abis, ""), getPathToRootConfig("abis/"), "");
+                string_q str = substitute(substitute(fileName, cacheFolder_abis, ""), rootConfigs_abis, "");
                 nextTokenClear(str, '/');
                 item.second.abi_source = str;
             }
@@ -635,7 +635,7 @@ bool sortByFuncName(const CFunction& f1, const CFunction& f2) {
 bool isKnownAbi(const string_q& addr, string_q& path) {
     CStringArray paths = {"000", "005", "010", "015"};
     for (auto p : paths) {
-        path = getPathToRootConfig("abis/known-" + p + "/" + addr + ".json");
+        path = rootConfigs_abis + "known-" + p + "/" + addr + ".json";
         if (fileExists(path))
             return true;
     }

@@ -44,8 +44,8 @@ namespace qblocks {
     }
 
 //---------------------------------------------------------------------------------------------------
-string_q getPathToChainConfig_newOff(const string_q& _part) {
-    return getPathToRootConfig(_part);
+string_q getPathToChainConfig_old(const string_q& _part) {
+    return rootConfigs + _part;
 }
 
 //--------------------------------------------------------------------------------------

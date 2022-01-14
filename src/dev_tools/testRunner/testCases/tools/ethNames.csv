@@ -55,12 +55,12 @@ on      ,both ,fast  ,names ,tools/ethNames ,show_undelete          ,y    ,terms
 on      ,both ,fast  ,names ,tools/ethNames ,edit_remove            ,y    ,remove & terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = api & expand
 on      ,both ,fast  ,names ,tools/ethNames ,show_remove            ,y    ,terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = api & expand
 
-off     ,cmd  ,fast  ,null  ,tools/ethNames ,nosave_backup          ,n    ,MOVEFILE -f $CONFIG/names.bin ./testing_data/backup/
-off     ,cmd  ,fast  ,null  ,tools/ethNames ,nosave_copy            ,n    ,COPYFILE -f ./testing_data/ethNames_upgrade_to_067/names.bin $CONFIG/
-off     ,cmd  ,fast  ,null  ,tools/ethNames ,nosave_touch           ,n    ,TOUCHFILE $CONFIG/names.bin
+off     ,cmd  ,fast  ,null  ,tools/ethNames ,nosave_backup          ,n    ,MOVEFILE -f $CACHE/names/names.bin ./testing_data/backup/
+off     ,cmd  ,fast  ,null  ,tools/ethNames ,nosave_copy            ,n    ,COPYFILE -f ./testing_data/ethNames_upgrade_to_067/names.bin $CACHE/names/
+off     ,cmd  ,fast  ,null  ,tools/ethNames ,nosave_touch           ,n    ,TOUCHFILE $CACHE/names/names.bin
 off     ,both ,medi  ,names ,tools/ethNames ,upgrade_to_067         ,y    ,fmt = json
-off     ,cmd  ,fast  ,null  ,tools/ethNames ,nosave_remove          ,n    ,RMFILE -f $CONFIG/names.bin
-off     ,cmd  ,fast  ,null  ,tools/ethNames ,nosave_restore         ,n    ,MOVEFILE -f ./testing_data/backup/names.bin $CONFIG/
+off     ,cmd  ,fast  ,null  ,tools/ethNames ,nosave_remove          ,n    ,RMFILE -f $CACHE/names/names.bin
+off     ,cmd  ,fast  ,null  ,tools/ethNames ,nosave_restore         ,n    ,MOVEFILE -f ./testing_data/backup/names.bin $CACHE/names/
 
 local   ,both ,medi  ,names ,tools/ethNames ,to_file                ,n    ,named & custom & fmt = json & to_file
 local   ,both ,fast  ,names ,tools/ethNames ,edit_custom_delete     ,y    ,delete & terms = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & log_level = 10 & to_custom & all & expand

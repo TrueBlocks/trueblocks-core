@@ -19,43 +19,47 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------------
 extern string_q getPathToRootConfig(const string_q& _part);
-#define rootConfigs (getPathToRootConfig(""))
-
-//-------------------------------------------------------------------------
-extern string_q getPathToChainConfig_newOff(const string_q& _part);
-#define chainConfigs_old (getPathToChainConfig_newOff(""))
-#define chainConfigs_names (getPathToChainConfig_newOff("names/"))
-#define chainConfigs_manifest (getPathToChainConfig_newOff("manifest/"))
-#define chainConfigs_prices (getPathToChainConfig_newOff(""))
-
-//-------------------------------------------------------------------------
+extern string_q getPathToChainConfig_old(const string_q& _part);
 extern string_q getPathToChainConfig_new(const string_q& _part);
+extern string_q getPathToCache(const string_q& _part);
+extern string_q getPathToIndex(const string_q& _part);
+
+//--------------------------------------------------------------------------------
+#define rootConfigs (getPathToRootConfig(""))
+#define rootConfigs_abis (rootConfigs + "abis/")
+#define rootConfigs_mocked (rootConfigs + "mocked/")
+
+//-------------------------------------------------------------------------
+#define chainConfigs_old (getPathToChainConfig_old(""))
+#define chainConfigs_names (chainConfigs_old + "names/")
+#define chainConfigs_manifest (chainConfigs_old + "manifest/")
+#define chainConfigs_prices (chainConfigs_old + "")
+
+//-------------------------------------------------------------------------
 #define chainConfigs_new (getPathToChainConfig_new(""))
 
 //-------------------------------------------------------------------------
-extern string_q getPathToCache(const string_q& _part);
 #define cacheFolder (getPathToCache(""))
-#define cacheFolder_abis (getPathToCache("abis/"))
-#define cacheFolder_blocks (getPathToCache("blocks/"))
-#define cacheFolder_monitors (getPathToCache("monitors/"))
-#define cacheFolder_names (getPathToCache("names/"))
-#define cacheFolder_objs (getPathToCache("objs/"))
-#define cacheFolder_prices (getPathToCache("prices/"))
-#define cacheFolder_recons (getPathToCache("recons/"))
-#define cacheFolder_slurps (getPathToCache("slurps/"))
-#define cacheFolder_tmp (getPathToCache("tmp/"))
-#define cacheFolder_traces (getPathToCache("traces/"))
-#define cacheFolder_txs (getPathToCache("txs/"))
+#define cacheFolder_abis (cacheFolder + "abis/")
+#define cacheFolder_blocks (cacheFolder + "blocks/")
+#define cacheFolder_monitors (cacheFolder + "monitors/")
+#define cacheFolder_names (cacheFolder + "names/")
+#define cacheFolder_objs (cacheFolder + "objs/")
+#define cacheFolder_prices (cacheFolder + "prices/")
+#define cacheFolder_recons (cacheFolder + "recons/")
+#define cacheFolder_slurps (cacheFolder + "slurps/")
+#define cacheFolder_tmp (cacheFolder + "tmp/")
+#define cacheFolder_traces (cacheFolder + "traces/")
+#define cacheFolder_txs (cacheFolder + "txs/")
 
 //-------------------------------------------------------------------------
-extern string_q getPathToIndex(const string_q& _part);
 #define indexFolder (getPathToIndex(""))
-#define indexFolder_staging (getPathToIndex("staging/"))
-#define indexFolder_unripe (getPathToIndex("unripe/"))
-#define indexFolder_ripe (getPathToIndex("ripe/"))
-#define indexFolder_finalized (getPathToIndex("finalized/"))
-#define indexFolder_blooms (getPathToIndex("blooms/"))
-#define indexFolder_map (getPathToIndex("maps/"))
+#define indexFolder_staging (indexFolder + "staging/")
+#define indexFolder_unripe (indexFolder + "unripe/")
+#define indexFolder_ripe (indexFolder + "ripe/")
+#define indexFolder_finalized (indexFolder + "finalized/")
+#define indexFolder_blooms (indexFolder + "blooms/")
+#define indexFolder_map (indexFolder + "maps/")
 
 //---------------------------------------------------------------------------
 #define chainFolderTxt_allocs (chainConfigs_new + "allocs.csv")
