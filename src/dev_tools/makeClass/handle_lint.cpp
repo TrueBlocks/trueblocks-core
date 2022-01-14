@@ -65,7 +65,7 @@ bool lintFiles(const string_q& path, void* data) {
                 return !shouldQuit();
 
             string_q fullPath = substitute(path, "./", getCWD());
-            string_q resPath = getPathToCache("tmp/" + CFilename(path).getFilename());
+            string_q resPath = cacheFolder_tmp + CFilename(path).getFilename();
             string_q cmd = "pylint.py \"" + fullPath + "\" >\"" + resPath + "\" 2>&1";
             // clang-format off
             if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings

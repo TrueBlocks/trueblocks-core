@@ -22,17 +22,16 @@ bool COptions::handle_check() {
         return true;
     }
 
-    if (!folderExists(getPathToIndex("")))
+    if (!folderExists(indexFolder))
         return false;
-
-    establishFolder(getPathToIndex("blooms/"));
-    establishFolder(getPathToIndex("finalized/"));
+    establishFolder(indexFolder_blooms);
+    establishFolder(indexFolder_finalized);
 
     // If the user is calling here, she wants a fresh read even if we've not just freshened.
     pins.clear();
     pinlib_readManifest(pins);
     for (auto pin : pins) {
-        string_q source = getPathToIndex("blooms/" + pin.fileName + ".bloom");
+        string_q source = indexFolder_blooms + pin.fileName + ".bloom";
         copyFile(source, "./thisFile");
         source = "./thisFile";
         string_q cmd1 = "rm -f ./thisFile.gz";  // + " 2>/dev/null";

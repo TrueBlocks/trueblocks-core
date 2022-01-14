@@ -167,14 +167,14 @@ bool COptions::parseArguments(string_q& command) {
     if (!loadNames())
         return usage("Could not load names database.");
 
-    establishFolder(getPathToCache("tmp/"));
+    establishFolder(cacheFolder_tmp);
     establishFolder(indexFolder_finalized);
     establishFolder(indexFolder_blooms);
-    establishFolder(getPathToCache("slurps/"));
-    establishFolder(getPathToCache("blocks/"));
-    establishFolder(getPathToCache("txs/"));
-    establishFolder(getPathToCache("traces/"));
-    establishFolder(getPathToCache("monitors/"));
+    establishFolder(cacheFolder_slurps);
+    establishFolder(cacheFolder_blocks);
+    establishFolder(cacheFolder_txs);
+    establishFolder(cacheFolder_traces);
+    establishFolder(cacheFolder_monitors);
 
     for (auto m : modes)
         mode += (m + "|");
@@ -273,8 +273,8 @@ void COptions::Init(void) {
         // FIXME: THIS IS BROKEN
         status.rpcProvider = getGlobalConfig("")->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
         status.configPath = getPathToRootConfig("");
-        status.cachePath = getPathToCache("");
-        status.indexPath = getPathToIndex("");
+        status.cachePath = cacheFolder;
+        status.indexPath = indexFolder;
     }
     if (!isNodeRunning()) {
         status.clientVersion = "Not running";

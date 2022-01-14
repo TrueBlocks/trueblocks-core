@@ -25,7 +25,6 @@ namespace qblocks {
 //---------------------------------------------------------------------------
 // We define these so they don't run until they are called...
 #define STR_PREFUND_BALANCES_TAB1 getPathToChainConfig_new("allocs.csv")
-#define STR_PREFUND_BALANCES_BIN1 getPathToCache("allocs.bin")
 
 //---------------------------------------------------------------------------
 // TODO: These singletons are used throughout - it doesn't appear to have any downsides.
@@ -45,14 +44,14 @@ bool loadPrefundBalances(void) {
         return true;
     }
 
-    if (fileExists(STR_PREFUND_BALANCES_BIN1)) {
+    if (fileExists(cacheFolder_allocs)) {
         // TODO: Clean this up
-        string_q junk = STR_PREFUND_BALANCES_BIN1;
+        string_q junk = cacheFolder_allocs;
         if (isTestMode())
             junk = relativize(junk);
-        LOG4("Reading binary cache ", junk);
+        LOG4("Reading binary cache ", junk, " (", fileSize(junk), ")");
         CArchive archive(READING_ARCHIVE);
-        if (archive.Lock(STR_PREFUND_BALANCES_BIN1, modeReadOnly, LOCK_NOWAIT)) {
+        if (archive.Lock(cacheFolder_allocs, modeReadOnly, LOCK_NOWAIT)) {
             uint64_t count;
             archive >> count;
             for (size_t i = 0; i < count; i++) {
@@ -87,12 +86,12 @@ bool loadPrefundBalances(void) {
         LOG_ERR("Got zero records from ", STR_PREFUND_BALANCES_TAB1);
     }
 
-    establishFolder(STR_PREFUND_BALANCES_BIN1);
+    establishFolder(cacheFolder_allocs);
 
     CArchive archive(WRITING_ARCHIVE);
-    if (archive.Lock(STR_PREFUND_BALANCES_BIN1, modeWriteCreate, LOCK_NOWAIT)) {
+    if (archive.Lock(cacheFolder_allocs, modeWriteCreate, LOCK_NOWAIT)) {
         // TODO: Clean this up
-        junk = STR_PREFUND_BALANCES_BIN1;
+        junk = cacheFolder_allocs;
         if (isTestMode())
             junk = relativize(junk);
         LOG4("Writing binary cache ", junk);
@@ -102,10 +101,10 @@ bool loadPrefundBalances(void) {
         archive.Release();
         return true;
     } else {
-        LOG_ERR("Could not open prefunds cache for writing", STR_PREFUND_BALANCES_BIN1);
+        LOG_ERR("Could not open prefunds cache for writing", cacheFolder_allocs);
     }
 
-    LOG_WARN("Could not lock prefund cache at: ", STR_PREFUND_BALANCES_BIN1);
+    LOG_WARN("Could not lock prefund cache at: ", cacheFolder_allocs);
     return false;
 }
 
@@ -153,11 +152,11 @@ Allocation largestPrefund(void) {
 #if 0
 //-----------------------------------------------------------------------
 bool readPrefundBals(void) {
-    if (!fileExists(STR_PREFUND_BALANCES_BIN1))
+    if (!fileExists(cacheFolder_allocs))
         return false;
 
     CArchive archive(READING_ARCHIVE);
-    if (!archive.Lock(STR_PREFUND_BALANCES_BIN1, modeReadOnly, LOCK_NOWAIT))
+    if (!archive.Lock(cacheFolder_allocs, modeReadOnly, LOCK_NOWAIT))
         return false;
 
     uint64_t count;
@@ -195,8 +194,8 @@ bool readPrefundAscii(void) {
 //-----------------------------------------------------------------------
 bool writePrefundBin(void) {
     CArchive archive(WRITING_ARCHIVE);
-    if (!archive.Lock(STR_PREFUND_BALANCES_BIN1, modeWriteCreate, LOCK_NOWAIT)) {
-        LOG_WARN("Could not lock prefund cache at: ", STR_PREFUND_BALANCES_BIN1);
+    if (!archive.Lock(cacheFolder_allocs, modeWriteCreate, LOCK_NOWAIT)) {
+        LOG_WARN("Could not lock prefund cache at: ", cacheFolder_allocs);
         return false;
     }
 

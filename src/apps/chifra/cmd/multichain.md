@@ -142,10 +142,10 @@ remoteExplorer = ""
 | Name                | Description                                                                                              |
 | ------------------- | -------------------------------------------------------------------------------------------------------- |
 | getPathToRootConfig |                                                                                                          |
-|                     | getPathToIndex, getPathToCache                                                                           |
-| getPathToCache      | `cachePath` from trueBlocks.toml                                                                         |
+|                     | get PathToIndex, getPath ToCache                                                                         |
+| getPath ToCache     | `cachePath` from trueBlocks.toml                                                                         |
 |                     | getPathToBinaryCache, getPathToPriceDb, getPathToMonitor,<br/>getPathToMonitorDels, getPathToMonitorLast |
-| getPathToIndex      | `indexPath` from trueBlocks.toml                                                                         |
+| get PathToIndex     | `indexPath` from trueBlocks.toml                                                                         |
 | getPathToCommands   |                                                                                                          |
 
 #### Local Tooling Only

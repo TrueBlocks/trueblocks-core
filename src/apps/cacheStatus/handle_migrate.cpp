@@ -20,9 +20,9 @@ bool migrateOne(const string_q& path, void* data) {
         return forEveryFileInFolder(path + "*", migrateOne, data);
 
     } else {
-        string_q tempFn = getPathToCache("tmp/migrate");
-        string_q pRelative = substitute(path, getPathToCache(""), "$CACHE/");
-        string_q tRelative = substitute(tempFn, getPathToCache(""), "$CACHE/");
+        string_q tempFn = cacheFolder_tmp + "migrate";
+        string_q pRelative = substitute(path, cacheFolder, "$CACHE/");
+        string_q tRelative = substitute(tempFn, cacheFolder, "$CACHE/");
 
         if (endsWith(path, ".bin") && !contains(path, "/ts.bin")) {
             checker->nSeen++;

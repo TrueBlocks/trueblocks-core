@@ -280,7 +280,7 @@ bool COptions::parseArguments(string_q& command) {
     string_q str = (format.empty() ? shortenFormat(STR_DISPLAY_ACCOUNTNAME) : format);
     if (verbose && !contains(format, "{SOURCE}"))
         str += "\t[{SOURCE}]";
-    string_q meta = ", \"namePath\": \"" + (isTestMode() ? "--" : getPathToCache("names/")) + "\"";
+    string_q meta = ", \"namePath\": \"" + (isTestMode() ? "--" : cacheFolder_names) + "\"";
 
     // Display formatting
     configureDisplay("ethNames", "CAccountName", str, meta);
@@ -341,7 +341,7 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
-    establishFolder(getPathToCache("names/"));
+    establishFolder(cacheFolder_names);
 
     Init();
 

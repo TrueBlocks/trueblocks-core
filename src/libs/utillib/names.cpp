@@ -41,17 +41,13 @@ static uint64_t nNameRecords = 0;
 static uint64_t allocSize = 0;
 
 //-----------------------------------------------------------------------
-const char* STR_BIN_LOC = "names/names.bin";
-const char* STR_LOG_LOC = "names/edit_log.txt";
-
-//-----------------------------------------------------------------------
 // This is a little bit strange, but it allows us to add 8893 for prefunds
 // and the rest for editing with --file option without reallocating. (About 6MB.)
 const uint64_t nExtra = 10000;
 
 //-----------------------------------------------------------------------
 static bool readNamesFromBinary(void) {
-    string_q binFile = getPathToCache(STR_BIN_LOC);
+    string_q binFile = cacheFolder_names + "names.bin";
     nNameRecords = (fileSize(binFile) / sizeof(NameOnDisc));  // This number may be too large, but we adjust it below
     namesAllocated = new NameOnDisc[nNameRecords + nExtra];
     if (!namesAllocated) {
@@ -139,7 +135,7 @@ static bool readNamesFromAscii(void) {
 
 //-----------------------------------------------------------------------
 static bool writeNamesToBinary(void) {
-    string_q binFile = getPathToCache(STR_BIN_LOC);
+    string_q binFile = cacheFolder_names + "names.bin";
     establishFolder(binFile);
     CArchive out(WRITING_ARCHIVE);
     if (out.Lock(binFile, modeWriteCreate, LOCK_WAIT)) {
@@ -172,7 +168,7 @@ bool loadNames(void) {
         return true;
     }
 
-    time_q binDate = fileLastModifyDate(getPathToCache(STR_BIN_LOC));
+    time_q binDate = fileLastModifyDate(cacheFolder_names + "names.bin");
     time_q txtDate = laterOf(fileLastModifyDate(getPathToChainConfig_newOff("names/names.tab")),
                              fileLastModifyDate(getPathToChainConfig_newOff("names/names_custom.tab")));
 
@@ -428,7 +424,7 @@ bool updateName(const CAccountName& target, const string_q& crud) {
     if (!isTestMode()) {
         ostringstream editRecord;
         editRecord << Now().Format(FMT_JSON) << crud << "\t" << target.Format(STR_DISPLAY_ACCOUNTNAME) << endl;
-        stringToAsciiFile(getPathToCache(STR_LOG_LOC), editRecord.str());
+        stringToAsciiFile(cacheFolder_names + "edit_log.txt", editRecord.str());
     }
 
     return true;

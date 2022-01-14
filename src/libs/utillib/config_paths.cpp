@@ -49,8 +49,8 @@ string_q getPathToChainConfig_newOff(const string_q& _part) {
 }
 
 //--------------------------------------------------------------------------------------
+static string_q g_chainConfigPath;
 string_q getPathToChainConfig_new(const string_q& _part) {
-    static string_q g_chainConfigPath;
     if (!g_chainConfigPath.empty())
         return g_chainConfigPath + _part;
     g_chainConfigPath = getEnvStr("TB_CHAIN_CONFIG_PATH");
@@ -61,8 +61,8 @@ string_q getPathToChainConfig_new(const string_q& _part) {
 
 //---------------------------------------------------------------------------------------------------
 // TODO(tjayrush): Remove this comment once multi-path works - PathAccessor
+static string_q g_configPath;
 string_q getPathToRootConfig(const string_q& _part) {
-    static string_q g_configPath;
     if (!g_configPath.empty())
         return g_configPath + _part;
 
@@ -70,19 +70,15 @@ string_q getPathToRootConfig(const string_q& _part) {
     // though we've already done this in chifra. This guards against calling the
     // tool from the command line).
     g_configPath = getEnvStr("TB_CONFIG_PATH");
-
     LOG4(bGreen, "c-CONFIG_PATH: ", isTestMode() ? relativize(g_configPath) : g_configPath, cOff);
-    if (!isTestMode())
-        LOG4(bGreen, "c-CONFIG_PATH: ", g_configPath, cOff);
     TEST_PATH(g_configPath, _part, "Configuration");
-
     return g_configPath + _part;
 }
 
 //-------------------------------------------------------------------------
 // TODO(tjayrush): Remove this comment once multi-path works - PathAccessor
+static string_q g_cachePath;
 string_q getPathToCache(const string_q& _part) {
-    static string_q g_cachePath;
     if (!g_cachePath.empty())
         return g_cachePath + _part;
 
@@ -94,8 +90,8 @@ string_q getPathToCache(const string_q& _part) {
 
 //-------------------------------------------------------------------------
 // TODO(tjayrush): Remove this comment once multi-path works - PathAccessor
+static string_q g_indexPath;
 string_q getPathToIndex(const string_q& _part) {
-    static string_q g_indexPath;
     if (!g_indexPath.empty())
         return g_indexPath + _part;
 
@@ -133,9 +129,9 @@ void loadEnvironmentPaths(void) {
 string_q relativize(const string_q& path) {
     string_q ret = path;
     replace(ret, getPathToIndex(""), "$INDEX/");
-    replace(ret, getPathToCache(""), "$CACHE/");
-    replace(ret, getPathToRootConfig(""), "$CONFIG/");
+    replace(ret, cacheFolder, "$CACHE/");
     replace(ret, getPathToChainConfig_new(""), "$CHAIN/");
+    replace(ret, getPathToRootConfig(""), "$CONFIG/");
     replace(ret, getHomeFolder(), "$HOME/");
     return ret;
 }

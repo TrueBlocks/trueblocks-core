@@ -244,7 +244,7 @@ bool COptions::cleanTest(const string_q& path, const string_q& testName) {
 
 //---------------------------------------------------------------------------------------------------
 void establishTestData(void) {
-    cleanFolder(getPathToCache("tmp/"));
+    cleanFolder(cacheFolder_tmp);
     cleanFolder(getPathToRootConfig("mocked/unchained"));
 
     // TODO(tjayrush): This code is a hack to make test cases pass. We should fix the underlyign reason

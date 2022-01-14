@@ -140,17 +140,6 @@ extern bool forEveryTransaction(TRANSVISITFUNC func, void* data, const string_q&
 extern bool forEveryTimestamp(BLOCKVISITFUNC func, void* data);
 
 //-------------------------------------------------------------------------
-#define blockFolder (getPathToCache("blocks/"))
-
-#define indexFolder (getPathToIndex(""))
-#define indexFolder_staging (getPathToIndex("staging/"))
-#define indexFolder_unripe (getPathToIndex("unripe/"))
-#define indexFolder_ripe (getPathToIndex("ripe/"))
-#define indexFolder_finalized (getPathToIndex("finalized/"))
-#define indexFolder_blooms (getPathToIndex("blooms/"))
-#define tsIndex getPathToIndex("ts.bin")
-
-//-------------------------------------------------------------------------
 extern biguint_t weiPerEther(void);
 
 //-------------------------------------------------------------------------

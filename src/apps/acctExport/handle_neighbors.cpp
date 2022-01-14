@@ -21,7 +21,6 @@ bool showApp(const CAppearance& item, void* data) {
     return !shouldQuit();
 }
 
-#define indexFolder_map (getPathToIndex("maps/"))
 extern bool getChunkRanges(CBlockRangeArray& ranges);
 
 //-----------------------------------------------------------------------
@@ -316,7 +315,7 @@ size_t neighbors_Count(CTraverser* trav, void* data) {
 extern bool visitBloom(const string_q& path, void* data);
 //-----------------------------------------------------------------------
 bool getChunkRanges(CBlockRangeArray& ranges) {
-    forEveryFileInFolder(getPathToIndex("blooms/*"), visitBloom, &ranges);
+    forEveryFileInFolder(indexFolder_blooms + "*", visitBloom, &ranges);
     // LOG_INFO("Found ", ranges.size(), " chunks");
     return true;
 }
@@ -325,7 +324,7 @@ bool getChunkRanges(CBlockRangeArray& ranges) {
 bool visitBloom(const string_q& path, void* data) {
     if (endsWith(path, ".bloom")) {
         CBlockRangeArray* ranges = (CBlockRangeArray*)data;
-        blkrange_t range = str_2_Range(substitute(path, getPathToIndex("blooms/"), ""));
+        blkrange_t range = str_2_Range(substitute(path, indexFolder_blooms, ""));
         ranges->push_back(range);
     }
     return true;

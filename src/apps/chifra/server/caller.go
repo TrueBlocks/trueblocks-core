@@ -22,6 +22,8 @@ import (
 // CallOne handles a route by calling into chifra
 func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string) {
 
+	chain := Options.Globals.Chain
+
 	// We build an array of options that we send along with the call...
 	allDogs := []string{}
 	if extra != "" {
@@ -29,27 +31,31 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 	}
 	hasVerbose := false
 	for key, value := range r.URL.Query() {
-		if len(value) > 0 && value[0] != "false" {
-			// These keys exist only in the API. We strip them here since the command line
-			// tools will report them as invalid options.
-			if key != "addrs" &&
-				key != "terms" &&
-				key != "modes" &&
-				key != "blocks" &&
-				key != "transactions" &&
-				key != "mode" &&
-				key != "topics" &&
-				key != "fourbytes" &&
-				key != "names" &&
-				key != "addrs2" {
-				key = convertToCommandLine(key)
-				allDogs = append(allDogs, "--"+key)
-			}
-			if key == "verbose" {
-				hasVerbose = true
-			}
-			if len(value) > 1 || value[0] != "true" {
-				allDogs = append(allDogs, value...)
+		if key == "chain" {
+			chain = value[0]
+		} else {
+			if len(value) > 0 && value[0] != "false" {
+				// These keys exist only in the API. We strip them here since
+				// the command line tools will report them as invalid options.
+				if key != "addrs" &&
+					key != "terms" &&
+					key != "modes" &&
+					key != "blocks" &&
+					key != "transactions" &&
+					key != "mode" &&
+					key != "topics" &&
+					key != "fourbytes" &&
+					key != "names" &&
+					key != "addrs2" {
+					key = convertToCommandLine(key)
+					allDogs = append(allDogs, "--"+key)
+				}
+				if key == "verbose" {
+					hasVerbose = true
+				}
+				if len(value) > 1 || value[0] != "true" {
+					allDogs = append(allDogs, value...)
+				}
 			}
 		}
 	}
@@ -79,9 +85,9 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 	}
 
 	configPath := config.GetPathToRootConfig()
-	chainConfigPath := config.GetPathToChainConfig1(Options.Globals.Chain)
-	cachePath := config.GetPathToCache1(Options.Globals.Chain)
-	indexPath := config.GetPathToIndex1(Options.Globals.Chain)
+	chainConfigPath := config.GetPathToChainConfig1(chain)
+	cachePath := config.GetPathToCache1(chain)
+	indexPath := config.GetPathToIndex1(chain)
 
 	configPath = strings.Replace(configPath, "mainnet/", "", -1)
 	// chainConfigPath = strings.Replace(chainConfigPath, "config/mainnet/", "", -1)
@@ -97,11 +103,11 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 		vars := strings.Split(r.Header.Get("X-TestRunner-Env"), "|")
 		cmd.Env = append(cmd.Env, vars...)
 	} else {
-		if !Options.Globals.TestMode && Options.Globals.LogLevel > 3 {
+		if Options.Globals.LogLevel > 3 {
 			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "s-CONFIG_PATH: ", configPath, colors.Off)
 			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "s-CHAIN_CONFIG_PATH: ", chainConfigPath, colors.Off)
-			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "s-CACHE_PATH:  ", config.GetPathToCache1(Options.Globals.Chain), colors.Off)
-			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "s-INDEX_PATH:  ", config.GetPathToIndex1(Options.Globals.Chain), colors.Off)
+			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "s-CACHE_PATH:  ", cachePath, colors.Off)
+			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "s-INDEX_PATH:  ", indexPath, colors.Off)
 		}
 		cmd.Env = append(os.Environ(), "API_MODE=true")
 	}

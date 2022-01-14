@@ -77,7 +77,7 @@ void etherlib_init(QUITHANDLER qh) {
 
     establishFolder(getPathToRootConfig(""));
     establishFolder(getPathToChainConfig_newOff(""));
-    establishFolder(getPathToCache(""));
+    establishFolder(cacheFolder);
 }
 
 //-------------------------------------------------------------------------
@@ -607,7 +607,7 @@ void getTracesByFilter(CTraceArray& traces, const CTraceFilter& filter) {
 
 //-------------------------------------------------------------------------
 string_q getVersionFromClient(void) {
-    string_q clientVersionFn = getPathToCache("tmp/clientVersion.txt");
+    string_q clientVersionFn = cacheFolder_tmp + "clientVersion.txt";
     string_q contents;
     if (fileExists(clientVersionFn))
         contents = asciiFileToString(clientVersionFn);
@@ -620,7 +620,7 @@ string_q getVersionFromClient(void) {
         // If the rpcProvider changed or we haven't checked in 20 seconds, check again.
         string_q clientVersion = callRPC("web3_clientVersion", "[]", false);
         if (!clientVersion.empty()) {
-            if (folderExists(getPathToCache("tmp/")))
+            if (folderExists(cacheFolder_tmp))
                 stringToAsciiFile(clientVersionFn, getCurlContext()->baseURL + "\t" + clientVersion);
             return clientVersion;
         }
@@ -794,32 +794,22 @@ static string_q getFilename_local(cache_t type, const string_q& item1, const str
     ostringstream os;
     switch (type) {
         case CT_BLOCKS:
-            os << "blocks/";
-            break;
-        case CT_BLOOMS:
-            os << "blooms/";
+            os << cacheFolder_blocks;
             break;
         case CT_TXS:
-            os << "txs/";
+            os << cacheFolder_txs;
             break;
         case CT_TRACES:
-            os << "traces/";
-            break;
-        case CT_MONITORS:
-            os << "monitors/";
+            os << cacheFolder_traces;
             break;
         case CT_RECONS:
-            os << "recons/";
+            os << cacheFolder_recons;
             break;
         default:
             ASSERT(0);  // should not happen
     }
 
-    if (type == CT_MONITORS) {
-        string_q addr = toLower(substitute(item1, "0x", ""));
-        os << extract(addr, 0, 4) << "/" << extract(addr, 4, 4) << "/" << addr << ".bin";
-
-    } else if (type == CT_RECONS) {
+    if (type == CT_RECONS) {
         string_q addr = toLower(substitute(item1, "0x", ""));
         string_q part1 = extract(addr, 0, 4);
         string_q part2 = extract(addr, 4, 4);
@@ -839,7 +829,7 @@ static string_q getFilename_local(cache_t type, const string_q& item1, const str
             os << ".bin";
         }
     }
-    return getPathToCache(os.str());
+    return os.str();
 }
 
 //-------------------------------------------------------------------------

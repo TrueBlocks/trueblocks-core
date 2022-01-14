@@ -27,7 +27,7 @@ int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
     CTestCase::registerClass();
 
-    establishFolder(getPathToCache("tmp/"));
+    establishFolder(cacheFolder_tmp);
     CMeasure total("all", "all", "all");
     cerr.rdbuf(cout.rdbuf());
 
@@ -448,7 +448,7 @@ bool saveAndCopy(const string_q& customFile, void* data) {
     CStringArray parts;
     explode(parts, customFile, '/');
     string_q destFile = getPathToRootConfig(parts[parts.size() - 1]);
-    string_q saveFile = getPathToCache("tmp/" + parts[parts.size() - 1] + ".save");
+    string_q saveFile = cacheFolder_tmp + parts[parts.size() - 1] + ".save";
     copyFile(destFile, saveFile);
     copyFile(customFile, destFile);
     return true;
@@ -459,7 +459,7 @@ bool replaceFile(const string_q& customFile, void* data) {
     CStringArray parts;
     explode(parts, customFile, '/');
     string_q destFile = getPathToRootConfig(parts[parts.size() - 1]);
-    string_q saveFile = getPathToCache("tmp/" + parts[parts.size() - 1] + ".save");
+    string_q saveFile = cacheFolder_tmp + parts[parts.size() - 1] + ".save";
     copyFile(saveFile, destFile);
     ::remove(saveFile.c_str());
     return true;

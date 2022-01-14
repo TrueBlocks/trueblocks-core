@@ -24,11 +24,8 @@ namespace qblocks {
 // EXISTING_CODE
 typedef uint32_t cache_t;
 #define CT_BLOCKS uint32_t(1 << 0)
-#define CT_BLOOMS uint32_t(1 << 1)
 #define CT_TXS uint32_t(1 << 2)
 #define CT_TRACES uint32_t(1 << 3)
-#define CT_MONITORS uint32_t(1 << 5)
-#define CT_INDEX uint32_t(1 << 6)
 #define CT_RECONS uint32_t(1 << 7)
 // EXISTING_CODE
 

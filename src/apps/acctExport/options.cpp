@@ -446,7 +446,7 @@ bool COptions::parseArguments(string_q& command) {
                 return false;
 
         } else {
-            string_q fileName = getPathToCache("objs/" + load);
+            string_q fileName = cacheFolder_objs + load;
             LOG_INFO("Trying to load dynamic library ", fileName);
 
             if (!fileExists(fileName)) {
@@ -546,7 +546,7 @@ void COptions::Init(void) {
     establishFolder(indexFolder_staging);
     establishFolder(indexFolder_unripe);
     establishFolder(indexFolder_ripe);
-    establishFolder(getPathToCache("tmp/"));
+    establishFolder(cacheFolder_tmp);
 }
 
 //---------------------------------------------------------------------------------------------------

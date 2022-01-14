@@ -68,8 +68,8 @@ bool formatCppFiles(const string_q& path, void* data) {
                 return true;
 
             string_q fullPath = substitute(path, "./", getCWD());
-            establishFolder(getPathToCache("tmp/"));
-            string_q resPath = getPathToCache("tmp/" + CFilename(path).getFilename());
+            establishFolder(cacheFolder_tmp);
+            string_q resPath = cacheFolder_tmp + CFilename(path).getFilename();
             string_q cmd = "clang-format \"" + fullPath + "\" >\"" + resPath + "\" ";
             // clang-format off
             if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
@@ -129,8 +129,8 @@ bool formatGoFiles(const string_q& path, void* data) {
                 return true;
 
             string_q fullPath = substitute(path, "./", getCWD());
-            establishFolder(getPathToCache("tmp/"));
-            string_q resPath = getPathToCache("tmp/" + CFilename(path).getFilename());
+            establishFolder(cacheFolder_tmp);
+            string_q resPath = cacheFolder_tmp + CFilename(path).getFilename();
             cerr << fullPath << endl;
             cerr << resPath << endl;
             // string_q cmd = "clang-format \"" + fullPath + "\" >\"" + resPath + "\" ";

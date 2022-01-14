@@ -108,8 +108,8 @@ bool COptions::parseArguments(string_q& command) {
     if (addrs.empty())
         return usage("You must supply an Ethereum account or contract address. ");
 
-    if (!establishFolder(getPathToCache("slurps/")))
-        return usage("Unable to create data folders at " + getPathToCache("slurps/"));
+    if (!establishFolder(cacheFolder_slurps))
+        return usage("Unable to create data folders at " + cacheFolder_slurps);
 
     if (blocks.start == 0 && blocks.stop == 0)
         blocks.stop = INT_MAX;

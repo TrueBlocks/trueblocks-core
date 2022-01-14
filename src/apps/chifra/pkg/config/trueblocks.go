@@ -25,7 +25,6 @@ type trueBlocksSettings struct {
 	RpcProvider  string
 	CachePath    string
 	IndexPath    string
-	Chain        string
 	EtherscanKey string `toml:"etherscan_key"`
 }
 

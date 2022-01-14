@@ -46,22 +46,22 @@ bool COptions::handle_status(ostream& os) {
         return true;
     }
 
-    establishFolder(getPathToCache("abis/"));
-    establishFolder(getPathToCache("blocks/"));
-    establishFolder(getPathToCache("monitors/"));
-    establishFolder(getPathToCache("names/"));
-    establishFolder(getPathToCache("prices/"));
-    establishFolder(getPathToCache("slurps/"));
-    establishFolder(getPathToCache("tmp/"));
-    establishFolder(getPathToCache("traces/"));
-    establishFolder(getPathToCache("txs/"));
+    establishFolder(cacheFolder_abis);
+    establishFolder(cacheFolder_blocks);
+    establishFolder(cacheFolder_monitors);
+    establishFolder(cacheFolder_names);
+    establishFolder(cacheFolder_prices);
+    establishFolder(cacheFolder_slurps);
+    establishFolder(cacheFolder_tmp);
+    establishFolder(cacheFolder_traces);
+    establishFolder(cacheFolder_txs);
 
     CIndexCache index;
     if (contains(mode, "|index|")) {
         LOG8("Reporting on index");
         // FIXME: NOT SURE THIS IS WRONG, BUT IT LOOKS WEIRD
         if (!index.readBinaryCache("index", details)) {
-            string_q thePath = getPathToIndex("");
+            string_q thePath = indexFolder;
             LOG8("Regenerating cache");
             index.type = index.getRuntimeClass()->m_ClassName;
             index.path = pathName("index", thePath);
@@ -119,7 +119,7 @@ bool COptions::handle_status(ostream& os) {
     if (contains(mode, "|names|")) {
         LOG8("Reporting on names");
         if (!names.readBinaryCache("names", details)) {
-            string_q thePath = getPathToCache("names/");
+            string_q thePath = cacheFolder_names;
             names.type = names.getRuntimeClass()->m_ClassName;
             names.path = pathName("names");
             forEveryFileInFolder(thePath, countFiles, &names);
@@ -142,7 +142,7 @@ bool COptions::handle_status(ostream& os) {
     if (contains(mode, "|abis|")) {
         LOG8("Reporting on abis");
         if (!abi_cache.readBinaryCache("abis", details)) {
-            string_q thePath = getPathToCache("abis/");
+            string_q thePath = cacheFolder_abis;
             abi_cache.type = abi_cache.getRuntimeClass()->m_ClassName;
             abi_cache.path = pathName("abis");
             forEveryFileInFolder(thePath, countFiles, &abi_cache);
@@ -162,7 +162,7 @@ bool COptions::handle_status(ostream& os) {
     if (contains(mode, "|blocks|") || contains(mode, "|data|")) {
         LOG8("Reporting on blocks");
         if (!blocks.readBinaryCache("blocks", details)) {
-            string_q thePath = getPathToCache("blocks/");
+            string_q thePath = cacheFolder_blocks;
             blocks.type = blocks.getRuntimeClass()->m_ClassName;
             blocks.path = pathName("blocks");
             blocks.max_depth = countOf(thePath, '/') + depth;
@@ -178,7 +178,7 @@ bool COptions::handle_status(ostream& os) {
     if (contains(mode, "|txs|") || contains(mode, "|data|")) {
         LOG8("Reporting on txs");
         if (!txs.readBinaryCache("txs", details)) {
-            string_q thePath = getPathToCache("txs/");
+            string_q thePath = cacheFolder_txs;
             txs.type = txs.getRuntimeClass()->m_ClassName;
             txs.path = pathName("txs");
             txs.max_depth = countOf(thePath, '/') + depth;
@@ -194,7 +194,7 @@ bool COptions::handle_status(ostream& os) {
     if (contains(mode, "|traces|") || contains(mode, "|data|")) {
         LOG8("Reporting on traces");
         if (!traces.readBinaryCache("traces", details)) {
-            string_q thePath = getPathToCache("traces/");
+            string_q thePath = cacheFolder_traces;
             traces.type = traces.getRuntimeClass()->m_ClassName;
             traces.path = pathName("traces");
             traces.max_depth = countOf(thePath, '/') + depth;
@@ -210,7 +210,7 @@ bool COptions::handle_status(ostream& os) {
     if (contains(mode, "|slurps|")) {
         LOG8("Reporting on slurps");
         if (!slurps.readBinaryCache("slurps", details)) {
-            string_q thePath = getPathToCache("slurps/");
+            string_q thePath = cacheFolder_slurps;
             slurps.type = slurps.getRuntimeClass()->m_ClassName;
             slurps.path = pathName("slurps");
             forEveryFileInFolder(thePath, countFiles, &slurps);
@@ -234,7 +234,7 @@ bool COptions::handle_status(ostream& os) {
     if (contains(mode, "|prices|")) {
         LOG8("Reporting on prices");
         if (!prices.readBinaryCache("prices", details)) {
-            string_q thePath = getPathToCache("prices/");
+            string_q thePath = cacheFolder_prices;
             prices.type = prices.getRuntimeClass()->m_ClassName;
             prices.path = pathName("prices");
             forEveryFileInFolder(thePath, countFiles, &prices);

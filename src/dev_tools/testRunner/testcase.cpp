@@ -518,7 +518,7 @@ bool prepareBuiltIn(string_q& options) {
             ostringstream os;
             if (match == "RESET") {
                 establishTestMonitors();
-                cleanFolder(getPathToCache("tmp/"));
+                cleanFolder(cacheFolder_tmp);
                 cleanFolder(getPathToRootConfig("mocked/unchained"));
                 options = "";
                 if (debug)

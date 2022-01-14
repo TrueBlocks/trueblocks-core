@@ -416,7 +416,7 @@ bool CAbi::loadAbisFromKnown(bool tokensOnly) {
     if (abiSourcesMap[srcPath])
         return true;
 
-    string_q binPath = getPathToCache("abis/known.bin");
+    string_q binPath = cacheFolder_abis + "known.bin";
     if (fileExists(binPath)) {
         // If any file is newer, don't use binary cache
         fileInfo info = getNewestFileInFolder(srcPath);
@@ -454,7 +454,7 @@ bool CAbi::loadAbisFromKnown(bool tokensOnly) {
 bool CAbi::loadAbiFromAddress(const address_t& addr, bool recurse) {
     ASSERT(!isZeroAddr(addr));
 
-    string_q fileName = getPathToCache("abis/" + addr + ".json");
+    string_q fileName = cacheFolder_abis + addr + ".json";
     string_q localFile = (getCWD() + addr + ".json");
     if (fileExists(localFile) && localFile != fileName) {
         LOG_TEST("Local file copied to cache", "./" + addr + ".json");
@@ -495,8 +495,7 @@ bool CAbi::loadAbiFromFile(const string_q& fileName) {
     if (loadAbiFromJson(asciiFileToString(fileName))) {
         for (auto& item : interfaceMap)
             if (item.second.abi_source.empty()) {
-                string_q str =
-                    substitute(substitute(fileName, getPathToCache("abis/"), ""), getPathToRootConfig("abis/"), "");
+                string_q str = substitute(substitute(fileName, cacheFolder_abis, ""), getPathToRootConfig("abis/"), "");
                 nextTokenClear(str, '/');
                 item.second.abi_source = str;
             }
@@ -553,7 +552,7 @@ bool CAbi::loadAbiFromEtherscan(const address_t& addr) {
     replaceAll(fromES, "\\r", "\r");
     replaceAll(fromES, "\\n", "\n");
 
-    string_q fileName = getPathToCache("abis/" + addr + ".json");
+    string_q fileName = cacheFolder_abis + addr + ".json";
     establishFolder(fileName);
 
     string_q results = substitute(fromES, "\\", "");

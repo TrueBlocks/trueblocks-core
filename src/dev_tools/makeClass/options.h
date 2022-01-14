@@ -202,3 +202,7 @@ extern string_q getPathToTemplates(const string_q& part);
 
 extern bool parseEndpointsFile(const char* str, void* data);
 extern bool parseOptionsFile(const char* str, void* data);
+
+namespace qblocks {
+extern void loadEnvironmentPaths(void);
+}

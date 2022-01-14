@@ -12,18 +12,43 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "basetypes.h"
+#include "filenames.h"
 
 //-----------------------------------------------------------------------------
 namespace qblocks {
 
 //--------------------------------------------------------------------------------
 extern string_q getPathToRootConfig(const string_q& _part);
+extern string_q getPathToChainConfig_newOff(const string_q& _part);
+extern string_q getPathToChainConfig_new(const string_q& _part);
 extern string_q getPathToCache(const string_q& _part);
 extern string_q getPathToIndex(const string_q& _part);
 extern string_q getPathToCommands(const string_q& _part);
-extern void loadEnvironmentPaths(void);
-extern string_q relativize(const string_q& path);
 
-extern string_q getPathToChainConfig_newOff(const string_q& _part);
-extern string_q getPathToChainConfig_new(const string_q& _part);
+//-------------------------------------------------------------------------
+#define indexFolder (getPathToIndex(""))
+#define indexFolder_staging (getPathToIndex("staging/"))
+#define indexFolder_unripe (getPathToIndex("unripe/"))
+#define indexFolder_ripe (getPathToIndex("ripe/"))
+#define indexFolder_finalized (getPathToIndex("finalized/"))
+#define indexFolder_blooms (getPathToIndex("blooms/"))
+#define indexFolder_map (getPathToIndex("maps/"))
+
+#define indexFolder_ts (getPathToIndex("ts.bin"))
+
+#define cacheFolder (getPathToCache(""))
+#define cacheFolder_abis (getPathToCache("abis/"))
+#define cacheFolder_blocks (getPathToCache("blocks/"))
+#define cacheFolder_monitors (getPathToCache("monitors/"))
+#define cacheFolder_names (getPathToCache("names"))
+#define cacheFolder_objs (getPathToCache("objs/"))
+#define cacheFolder_prices (getPathToCache("prices/"))
+#define cacheFolder_recons (getPathToCache("recons/"))
+#define cacheFolder_slurps (getPathToCache("slurps/"))
+#define cacheFolder_tmp (getPathToCache("tmp/"))
+#define cacheFolder_traces (getPathToCache("traces/"))
+#define cacheFolder_txs (getPathToCache("txs/"))
+
+#define cacheFolder_allocs (getPathToCache("allocs.bin"))
+
 }  // namespace qblocks

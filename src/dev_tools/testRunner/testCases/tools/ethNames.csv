@@ -23,6 +23,7 @@ on      ,both ,fast  ,names ,tools/ethNames ,simple_two_terms       ,y    ,terms
 on      ,both ,fast  ,names ,tools/ethNames ,simple_four_terms      ,y    ,terms = etwork & terms = one & terms = 88897 & terms = torj
 on      ,both ,fast  ,names ,tools/ethNames ,simple_addr_only       ,y    ,terms = 0xb6 & addr
 on      ,both ,fast  ,names ,tools/ethNames ,prefund                ,y    ,prefund
+on      ,both ,fast  ,names ,tools/ethNames ,prefund_gnosis         ,y    ,prefund & chain = gnosis
 on      ,both ,fast  ,names ,tools/ethNames ,prefund_search1        ,y    ,prefund & terms = 004
 on      ,both ,fast  ,names ,tools/ethNames ,prefund_search2        ,y    ,prefund & terms = _004
 on      ,both ,fast  ,names ,tools/ethNames ,prefund_search3        ,y    ,prefund & terms = etwork

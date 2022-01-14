@@ -109,8 +109,8 @@ bool COptions::scrape_blocks(void) {
     LOG_TEST_CALL(os.str());
 
     ostringstream cmd;
-    cmd << "env TB_INDEXPATH=\"" << getPathToIndex("")
-        << "\" ";  // note--cobra/viper will pick this up even though you won't find it
+    // Note: Blaze's Cobra/Viper code will use this even though if you search, you won't find it#pragma endregion
+    cmd << "env TB_INDEXPATH=\"" << indexFolder << "\" ";
     cmd << os.str() << " ";
     cmd << "--block_chan_cnt " << block_chan_cnt << " ";
     cmd << "--addr_chan_cnt " << addr_chan_cnt << " ";

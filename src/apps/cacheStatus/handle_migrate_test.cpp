@@ -19,7 +19,7 @@ bool needsMigrate(const string_q& path, void* data) {
         return forEveryFileInFolder(path + "*", needsMigrate, data);
 
     } else {
-        string_q relative = substitute(path, getPathToCache(""), "$CACHE/");
+        string_q relative = substitute(path, cacheFolder, "$CACHE/");
         if (endsWith(path, ".bin") && !contains(path, "/ts.bin")) {
             CArchive readArchive(READING_ARCHIVE);
             if (readArchive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
