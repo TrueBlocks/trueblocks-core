@@ -25,7 +25,7 @@ type StatusOptions struct {
 	Depth      uint64
 	Report     bool
 	Terse      bool
-	Migrate    []string
+	Migrate    string
 	GetConfig  bool
 	SetConfig  bool
 	FirstBlock uint64
@@ -62,8 +62,8 @@ func (opts *StatusOptions) ToCmdLine() string {
 	if opts.Terse {
 		options += " --terse"
 	}
-	for _, migrate := range opts.Migrate {
-		options += " --migrate " + migrate
+	if len(opts.Migrate) > 0 {
+		options += " --migrate " + opts.Migrate
 	}
 	if opts.GetConfig {
 		options += " --get_config"
@@ -108,10 +108,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *StatusOptions {
 		case "terse":
 			opts.Terse = true
 		case "migrate":
-			for _, val := range value {
-				s := strings.Split(val, " ") // may contain space separated items
-				opts.Migrate = append(opts.Migrate, s...)
-			}
+			opts.Migrate = value[0]
 		case "getConfig":
 			opts.GetConfig = true
 		case "setConfig":

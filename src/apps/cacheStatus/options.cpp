@@ -25,7 +25,7 @@ static const COption params[] = {
     COption("types", "t", "list<enum[blocks|txs|traces|slurps|prices|all*]>", OPT_FLAG, "for caches mode only, which type(s) of cache to report"),  // NOLINT
     COption("depth", "p", "<uint64>", OPT_HIDDEN | OPT_FLAG, "for cache mode only, number of levels deep to report"),
     COption("terse", "e", "", OPT_HIDDEN | OPT_SWITCH, "show a terse summary report"),
-    COption("migrate", "m", "list<enum[test|all]>", OPT_HIDDEN | OPT_FLAG, "either effectuate or test to see if a migration is necessary"),  // NOLINT
+    COption("migrate", "m", "enum[test|all]", OPT_HIDDEN | OPT_FLAG, "either effectuate or test to see if a migration is necessary"),  // NOLINT
     COption("get_config", "g", "", OPT_HIDDEN | OPT_SWITCH, "returns JSON data of the editable configuration file items"),  // NOLINT
     COption("set_config", "s", "", OPT_HIDDEN | OPT_SWITCH, "accepts JSON in an env variable and writes it to configuration files"),  // NOLINT
     COption("first_block", "F", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive -- testing only)"),  // NOLINT
@@ -47,7 +47,7 @@ bool COptions::parseArguments(string_q& command) {
     // BEG_CODE_LOCAL_INIT
     CStringArray modes;
     CStringArray types;
-    CStringArray migrate;
+    string_q migrate = "";
     bool get_config = false;
     bool set_config = false;
     blknum_t first_block = 0;
@@ -88,10 +88,8 @@ bool COptions::parseArguments(string_q& command) {
             terse = true;
 
         } else if (startsWith(arg, "-m:") || startsWith(arg, "--migrate:")) {
-            string_q migrate_tmp;
-            if (!confirmEnum("migrate", migrate_tmp, arg))
+            if (!confirmEnum("migrate", migrate, arg))
                 return false;
-            migrate.push_back(migrate_tmp);
         } else if (arg == "-m" || arg == "--migrate") {
             return flag_required("migrate");
 
@@ -129,33 +127,25 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (!migrate.empty()) {
-        bool hasAll = false;
-        bool hasTest = false;
-        for (auto m : migrate) {
-            if (m == "test") {
-                if (migrate.size() > 1)
-                    return usage("The `test` option tests all caches, do not add specific cache names.");
-                hasTest = true;
-            } else if (m == "all") {
-                if (migrate.size() > 1)
-                    return usage("The `all` option migrates all caches, do not add specific cache names.");
-                hasAll = true;
-            } else {
-                cachePaths.push_back(substitute(m, "_cache", "s"));
-            }
-        }
-
-        if (hasTest || hasAll) {
-            CStringArray caches = {"abis",  "blocks", "traces",
-                                   "names", "txs",    "slurps"};  // "recons", "monitors", "prices"
-            cachePaths.clear();
-            cachePaths = caches;
-        }
-
-        if (hasTest)
-            return handle_migrate_test();
-        return handle_migrate();
+    CStringArray cachePaths = {
+        cacheFolder_abis,
+        cacheFolder_blocks,
+        cacheFolder_monitors,
+        cacheFolder_names,
+        /* cacheFolder_objs, */
+        cacheFolder_prices,
+        cacheFolder_recons,
+        cacheFolder_slurps,
+        /* cacheFolder_tmp, */
+        cacheFolder_traces,
+        cacheFolder_txs,
+    };
+    if (migrate == "test") {
+        return handle_migrate_test(cachePaths);
+    } else if (migrate == "all") {
+        return handle_migrate(cachePaths);
+    } else if (!migrate.empty()) {
+        return usage("Invalid migration: " + migrate);
     }
 
     bool cs = false;

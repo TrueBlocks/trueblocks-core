@@ -21,21 +21,10 @@ namespace qblocks {
 extern string_q getPathToRootConfig(const string_q& _part);
 extern string_q getPathToChainConfig_newOff(const string_q& _part);
 extern string_q getPathToChainConfig_new(const string_q& _part);
-extern string_q getPathToCache(const string_q& _part);
-extern string_q getPathToIndex(const string_q& _part);
 extern string_q getPathToCommands(const string_q& _part);
 
 //-------------------------------------------------------------------------
-#define indexFolder (getPathToIndex(""))
-#define indexFolder_staging (getPathToIndex("staging/"))
-#define indexFolder_unripe (getPathToIndex("unripe/"))
-#define indexFolder_ripe (getPathToIndex("ripe/"))
-#define indexFolder_finalized (getPathToIndex("finalized/"))
-#define indexFolder_blooms (getPathToIndex("blooms/"))
-#define indexFolder_map (getPathToIndex("maps/"))
-
-#define indexFolder_ts (getPathToIndex("ts.bin"))
-
+extern string_q getPathToCache(const string_q& _part);
 #define cacheFolder (getPathToCache(""))
 #define cacheFolder_abis (getPathToCache("abis/"))
 #define cacheFolder_blocks (getPathToCache("blocks/"))
@@ -48,7 +37,17 @@ extern string_q getPathToCommands(const string_q& _part);
 #define cacheFolder_tmp (getPathToCache("tmp/"))
 #define cacheFolder_traces (getPathToCache("traces/"))
 #define cacheFolder_txs (getPathToCache("txs/"))
-
 #define cacheFolder_allocs (getPathToCache("allocs.bin"))
+
+//-------------------------------------------------------------------------
+extern string_q getPathToIndex(const string_q& _part);
+#define indexFolder (getPathToIndex(""))
+#define indexFolder_staging (getPathToIndex("staging/"))
+#define indexFolder_unripe (getPathToIndex("unripe/"))
+#define indexFolder_ripe (getPathToIndex("ripe/"))
+#define indexFolder_finalized (getPathToIndex("finalized/"))
+#define indexFolder_blooms (getPathToIndex("blooms/"))
+#define indexFolder_map (getPathToIndex("maps/"))
+#define indexFolder_ts (getPathToIndex("ts.bin"))
 
 }  // namespace qblocks

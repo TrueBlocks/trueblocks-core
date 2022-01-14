@@ -21,8 +21,8 @@ bool migrateOne(const string_q& path, void* data) {
 
     } else {
         string_q tempFn = cacheFolder_tmp + "migrate";
-        string_q pRelative = substitute(path, cacheFolder, "$CACHE/");
-        string_q tRelative = substitute(tempFn, cacheFolder, "$CACHE/");
+        string_q pRelative = relativize(path);
+        string_q tRelative = relativize(tempFn);
 
         if (endsWith(path, ".bin") && !contains(path, "/ts.bin")) {
             checker->nSeen++;
@@ -31,7 +31,7 @@ bool migrateOne(const string_q& path, void* data) {
                 return true;
             }
 
-            if (checker->type == "names") {
+            if (checker->path == cacheFolder_names) {
                 if (endsWith(path, ".bin")) {
                     checker->nMigrated++;
                     ::remove(path.c_str());
@@ -39,7 +39,7 @@ bool migrateOne(const string_q& path, void* data) {
                 return true;
             }
 
-            if (checker->type == "recons") {
+            if (checker->path == cacheFolder_recons) {
                 LOG_INFO("  Skipping '", pRelative, "'", "\r");
                 checker->nMigrated++;
                 return true;
@@ -67,28 +67,28 @@ bool migrateOne(const string_q& path, void* data) {
                     return false;
                 }
 
-                if (checker->type == "abis") {
+                if (checker->path == cacheFolder_abis) {
                     CAbi item;
                     item.Migrate(readArchive, writeArchive);
 
-                } else if (checker->type == "slurps") {
+                } else if (checker->path == cacheFolder_slurps) {
                     CCachedAccount item;
                     item.Migrate(readArchive, writeArchive);
 
-                } else if (checker->type == "txs") {
+                } else if (checker->path == cacheFolder_txs) {
                     CTransaction item;
                     item.Migrate(readArchive, writeArchive);
 
-                } else if (checker->type == "blocks") {
+                } else if (checker->path == cacheFolder_blocks) {
                     CBlock item;
                     item.Migrate(readArchive, writeArchive);
 
-                } else if (checker->type == "recons") {
+                } else if (checker->path == cacheFolder_recons) {
                     CReconciliationArray items;
                     readArchive >> items;
                     writeArchive << items;
 
-                } else if (checker->type == "traces") {
+                } else if (checker->path == cacheFolder_traces) {
                     CTraceArray items;
                     readArchive >> items;
                     writeArchive << items;
@@ -114,13 +114,13 @@ bool migrateOne(const string_q& path, void* data) {
 }
 
 //--------------------------------------------------------------------------------
-bool COptions::handle_migrate(void) {
-    CMigrationChecker totals("", "");
+bool COptions::handle_migrate(const CStringArray& cachePaths) {
+    CMigrationChecker totals("");
     for (auto cache : cachePaths) {
-        string_q path = getPathToCache(cache);
-        LOG_INFO(cGreen, "Checking '$CACHES/", cache, "'", string_q(50, ' '), cOff);
-        CMigrationChecker checker(path, cache);
-        forEveryFileInFolder(path, migrateOne, &checker);  // will quit early if it finds a migrate
+        LOG_INFO(cGreen, "Checking '", relativize(cache), "'", string_q(50, ' '), cOff);
+
+        CMigrationChecker checker(cache);
+        forEveryFileInFolder(cache, migrateOne, &checker);  // will quit early if it finds a migrate
         LOG_INFO("  ", checker.Report() + string_q(30, ' '));
         totals += checker;
     }

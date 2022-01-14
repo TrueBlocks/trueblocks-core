@@ -146,7 +146,7 @@ remoteExplorer = ""
 | getPath ToCache     | `cachePath` from trueBlocks.toml                                                                         |
 |                     | getPathToBinaryCache, getPathToPriceDb, getPathToMonitor,<br/>getPathToMonitorDels, getPathToMonitorLast |
 | get PathToIndex     | `indexPath` from trueBlocks.toml                                                                         |
-| getPathToCommands   |                                                                                                          |
+| getPat hToCommands  |                                                                                                          |
 
 #### Local Tooling Only
 ----

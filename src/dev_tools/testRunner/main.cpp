@@ -247,8 +247,7 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
                 }
 
                 string_q fullCmd = exe + " " + test.options;
-                string_q debugCmd =
-                    substitute(substitute(fullCmd, getPathToCommands("test/"), ""), getPathToCommands(""), "");
+                string_q debugCmd = relativize(fullCmd);
                 string_q redir = test.workPath + test.fileName;
                 cmd << "echo \"" << debugCmd << "\" >" << redir + " && ";
                 cmd << env << fullCmd << " >>" << redir << " 2>&1";

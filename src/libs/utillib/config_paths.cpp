@@ -65,10 +65,6 @@ static string_q g_configPath;
 string_q getPathToRootConfig(const string_q& _part) {
     if (!g_configPath.empty())
         return g_configPath + _part;
-
-    // We go through here once per invocation, so we can spend some time verifying (even
-    // though we've already done this in chifra. This guards against calling the
-    // tool from the command line).
     g_configPath = getEnvStr("TB_CONFIG_PATH");
     LOG4(bGreen, "c-CONFIG_PATH: ", isTestMode() ? relativize(g_configPath) : g_configPath, cOff);
     TEST_PATH(g_configPath, _part, "Configuration");
@@ -81,7 +77,6 @@ static string_q g_cachePath;
 string_q getPathToCache(const string_q& _part) {
     if (!g_cachePath.empty())
         return g_cachePath + _part;
-
     g_cachePath = getEnvStr("TB_CACHE_PATH");
     LOG4(bGreen, "c-CACHE_PATH: ", isTestMode() ? relativize(g_cachePath) : g_cachePath, cOff);
     TEST_PATH(g_cachePath, _part, "Cache");
@@ -94,7 +89,6 @@ static string_q g_indexPath;
 string_q getPathToIndex(const string_q& _part) {
     if (!g_indexPath.empty())
         return g_indexPath + _part;
-
     g_indexPath = getEnvStr("TB_INDEX_PATH");
     LOG4(bGreen, "c-INDEX_PATH: ", isTestMode() ? relativize(g_indexPath) : g_indexPath, cOff);
     TEST_PATH(g_indexPath, _part, "Index");
@@ -128,10 +122,12 @@ void loadEnvironmentPaths(void) {
 //-------------------------------------------------------------------------
 string_q relativize(const string_q& path) {
     string_q ret = path;
-    replace(ret, getPathToIndex(""), "$INDEX/");
+    replace(ret, indexFolder, "$INDEX/");
     replace(ret, cacheFolder, "$CACHE/");
     replace(ret, getPathToChainConfig_new(""), "$CHAIN/");
     replace(ret, getPathToRootConfig(""), "$CONFIG/");
+    replace(ret, getPathToCommands("test/"), "");
+    replace(ret, getPathToCommands(""), "");
     replace(ret, getHomeFolder(), "$HOME/");
     return ret;
 }

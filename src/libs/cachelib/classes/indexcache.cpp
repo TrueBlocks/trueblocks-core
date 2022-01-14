@@ -312,8 +312,8 @@ const char* STR_DISPLAY_INDEXCACHE = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-bool CIndexCache::readBinaryCache(const string_q& cacheType, bool details, bool ignore) {
-    if (ignore || needsRefresh(cacheType, details))
+bool CIndexCache::readBinaryCache(const string_q& cachePath, const string_q& cacheType, bool details, bool ignore) {
+    if (ignore || needsRefresh(cachePath, cacheType, details))
         return false;
     string_q fn = cacheFolder_tmp + cacheType + (details ? "_det" : "") + ".bin";
     if (!fileExists(fn))

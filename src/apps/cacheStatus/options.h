@@ -36,7 +36,6 @@ class COptions : public CAbiOptions {
     CIndexHashMap bloomHashes;
     CIndexHashMap indexHashes;
     blkrange_t scanRange;
-    CStringArray cachePaths;
 
     COptions(void);
     ~COptions(void);
@@ -47,8 +46,8 @@ class COptions : public CAbiOptions {
     bool handle_status(ostream& os);
     bool handle_config(ostream& os);
     bool handle_config_get(ostream& os);
-    bool handle_migrate(void);
-    bool handle_migrate_test(void);
+    bool handle_migrate(const CStringArray& cachePaths);
+    bool handle_migrate_test(const CStringArray& cachePaths);
 };
 
 //-------------------------------------------------------------------------
@@ -87,21 +86,20 @@ class CMigrationChecker {
   public:
     bool needs;
     string_q path;
-    string_q type;
+    string_q msg;
     size_t nSeen;
     size_t nMigrated;
     size_t nSkipped;
 
-    CMigrationChecker(const string_q& p, const string_q& t)
-        : needs(false), path(p), type(t), nSeen(0), nMigrated(0), nSkipped(0) {
+    CMigrationChecker(const string_q& p) : needs(false), path(p), msg(""), nSeen(0), nMigrated(0), nSkipped(0) {
     }
 
     CMigrationChecker(const CMigrationChecker& mig) {
         nSeen = mig.nSeen;
         nMigrated = mig.nMigrated;
         nSkipped = mig.nSkipped;
-        type = mig.type;
         path = mig.path;
+        msg = mig.msg;
     }
 
     CMigrationChecker& operator+=(const CMigrationChecker& mig) {
@@ -113,7 +111,7 @@ class CMigrationChecker {
 
     string_q Report(void) const {
         ostringstream os;
-        os << type << ": ";
+        os << relativize(path) << ": ";
         os << nSeen << " files seen. ";
         os << nMigrated << " files migrated. ";
         os << (nSeen - nMigrated) << " files up to date. ";

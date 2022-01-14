@@ -335,8 +335,8 @@ const char* STR_DISPLAY_CACHE = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-bool CCache::readBinaryCache(const string_q& cacheType, bool details, bool ignore) {
-    if (ignore || needsRefresh(cacheType, details))
+bool CCache::readBinaryCache(const string& cachePath, const string_q& cacheType, bool details, bool ignore) {
+    if (ignore || needsRefresh(cachePath, cacheType, details))
         return false;
     string_q fn = cacheFolder_tmp + cacheType + (details ? "_det" : "") + ".bin";
     if (!fileExists(fn))
@@ -386,13 +386,9 @@ bool CCache::writeBinaryCache(const string_q& cacheType, bool details) {
 }
 
 //---------------------------------------------------------------------------
-bool CCache::needsRefresh(const string_q& cacheType, bool details) {
+bool CCache::needsRefresh(const string_q& cachePath, const string_q& cacheType, bool details) {
     if (isTestMode())
         return true;
-
-    string_q cachePath = getPathToCache(cacheType) + "/";
-    if (cacheType == "index")
-        cachePath = indexFolder_finalized;
 
     string_q tmpFn = cacheFolder_tmp + cacheType + (details ? "_det" : "") + ".bin";
     LOG4("cache date:  ", fileLastModifyDate(tmpFn).Format(FMT_EXPORT), " - ", tmpFn);
