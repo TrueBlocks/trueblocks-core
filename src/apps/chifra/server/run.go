@@ -41,16 +41,15 @@ func PrintServeSettings(testMode bool) {
 	cachePath := config.GetPathToCache1(Options.Globals.Chain)
 	indexPath := config.GetPathToIndex1(Options.Globals.Chain)
 	rpcProvider := config.GetRpcProvider()
-
-	log.Printf("%s%-15.15s%s%s\n", colors.Green, "Server URL:", colors.Off, apiUrl)
-	log.Printf("%s%-15.15s%s%s\n", colors.Green, "RootConfig Path:", colors.Off, configPath)
-	log.Printf("%s%-15.15s%s%s\n", colors.Green, "ChainConfig Path:", colors.Off, chainConfigPath)
-	log.Printf("%s%-15.15s%s%s\n", colors.Green, "Cache Path:", colors.Off, cachePath)
-	log.Printf("%s%-15.15s%s%s\n", colors.Green, "Index Path:", colors.Off, indexPath)
-	log.Printf("%s%-15.15s%s%s\n", colors.Green, "RPC Provider:", colors.Off, rpcProvider)
-
 	meta := rpcClient.GetMeta(testMode)
-	log.Printf("%s%-15.15s%s%d, %d, %d, %d\n", colors.Green, "Progress:", colors.Off, meta.Latest, meta.Finalized, meta.Staging, meta.Unripe)
+
+	log.Printf("%s%-18.18s%s%s\n", colors.Green, "Server URL:", colors.Off, apiUrl)
+	log.Printf("%s%-18.18s%s%s\n", colors.Green, "RootConfig Path:", colors.Off, configPath)
+	log.Printf("%s%-18.18s%s%s\n", colors.Green, "ChainConfig Path:", colors.Off, chainConfigPath)
+	log.Printf("%s%-18.18s%s%s\n", colors.Green, "Cache Path:", colors.Off, cachePath)
+	log.Printf("%s%-18.18s%s%s\n", colors.Green, "Index Path:", colors.Off, indexPath)
+	log.Printf("%s%-18.18s%s%s\n", colors.Green, "RPC Provider:", colors.Off, rpcProvider)
+	log.Printf("%s%-18.18s%s%d, %d, %d, %d\n", colors.Green, "Progress:", colors.Off, meta.Latest, meta.Finalized, meta.Staging, meta.Unripe)
 }
 
 // func ParseOptions() error {
