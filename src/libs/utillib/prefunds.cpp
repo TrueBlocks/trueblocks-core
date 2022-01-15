@@ -45,7 +45,7 @@ bool loadPrefundBalances(void) {
         string_q junk = cacheFolderBin_allocs;
         if (isTestMode())
             junk = relativize(junk);
-        LOG4("Reading binary cache ", junk, " (", fileSize(junk), ")");
+        // LOG4("Reading binary cache ", junk, " (", fileSize(junk), ")");
         CArchive archive(READING_ARCHIVE);
         if (archive.Lock(cacheFolderBin_allocs, modeReadOnly, LOCK_NOWAIT)) {
             uint64_t count;
