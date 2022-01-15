@@ -1,8 +1,6 @@
 chifra names  --prefund --chain gnosis
 TEST[DATE|TIME] Prefund:  true
 TEST[DATE|TIME] Chain:  gnosis
-TIME ~ CLOCK - <INFO>  : Loading names
-TIME ~ CLOCK - <INFO>  : Loading prefund balances
 tags	address	name	symbol	decimals
 80-Prefund	0x0000000000000000000000000000000000000001	Prefund_0000
 80-Prefund	0x0000000000000000000000000000000000000002	Prefund_0001

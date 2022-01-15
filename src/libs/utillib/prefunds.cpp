@@ -13,7 +13,7 @@
 // NOTE: This file has a lot of NOLINT's in it. Because it's someone else's code, I wanted
 // to be conservitive in changing it. It's easier to hide the lint than modify the code
 
-#define LOGGING_LEVEL_TEST
+// #define LOGGING_LEVEL_TEST
 #include "exportcontext.h"
 #include "prefunds.h"
 #include "names.h"

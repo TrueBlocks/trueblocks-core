@@ -1,5 +1,4 @@
 chifra names  
-TIME ~ CLOCK - <INFO>  : Loading names
 tags	address	name	symbol	decimals
 55-Defi	0x000000000000000000000000000000000000dead	ENS: Burn Address
 50-Tokens:ERC721	0x0000000000001b84b1cb32787b0d64758d019317	HomeWork 🏠🛠️	HWK		18
