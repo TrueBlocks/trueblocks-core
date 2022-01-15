@@ -31,7 +31,6 @@ extern string_q getPathToIndex(const string_q& _part);
 
 //-------------------------------------------------------------------------
 #define chainConfigs_old (getPathToChainConfig_old(""))
-#define chainConfigs_names (chainConfigs_old + "names/")
 #define chainConfigs_manifest (chainConfigs_old + "manifest/")
 #define chainConfigs_prices (chainConfigs_old + "")
 
@@ -63,9 +62,9 @@ extern string_q getPathToIndex(const string_q& _part);
 
 //---------------------------------------------------------------------------
 #define chainFolderTxt_allocs (chainConfigs_new + "allocs.csv")
-#define chainFolderTxt_names (chainConfigs_names + "names.tab")
-#define chainFolderTxt_namesCustom (chainConfigs_names + "names_custom.tab")
-#define chainFolderTxt_collections (chainConfigs_names + "collections.csv")
+#define chainFolderTxt_names (chainConfigs_new + "names.tab")
+#define chainFolderTxt_namesCustom (chainConfigs_new + "names_custom.tab")
+#define chainFolderTxt_collections (chainConfigs_new + "collections.csv")
 #define chainFolderTxt_manifest (chainConfigs_manifest + "manifest.txt")
 
 //---------------------------------------------------------------------------

@@ -29,7 +29,6 @@ file(MAKE_DIRECTORY "${DEST_PATH}/cache/abis")
 file(MAKE_DIRECTORY "${DEST_PATH}/cache/prices")
 file(MAKE_DIRECTORY "${DEST_PATH}/cache/tmp")
 file(MAKE_DIRECTORY "${DEST_PATH}/cache/objs")
-file(MAKE_DIRECTORY "${DEST_PATH}/names")
 file(MAKE_DIRECTORY "${DEST_PATH}/abis")
 file(MAKE_DIRECTORY "${DEST_PATH}/abis/known-000")
 file(MAKE_DIRECTORY "${DEST_PATH}/abis/known-005")
@@ -58,18 +57,6 @@ if (NOT EXISTS "${ETHSLURP_CONFIG}")
 endif()
 
 #---------------------------------------------------------------
-# Always copy the names.txt file (this one is ours, so we can overwrite)
-#---------------------------------------------------------------
-message(STATUS "Copying names file to ${DEST_PATH}/names")
-file(COPY "${SOURCE_PATH}/names/names.tab" DESTINATION "${DEST_PATH}/names" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
-
-#---------------------------------------------------------------
-# Always copy the verified.txt file (this one is ours, so we can overwrite)
-#---------------------------------------------------------------
-message(STATUS "Copying verified file to ${DEST_PATH}/names")
-file(COPY "${SOURCE_PATH}/names/verified.tab" DESTINATION "${DEST_PATH}/names" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
-
-#---------------------------------------------------------------
 # Copy the prefunds even if it already exists (this one is ours - it never changes)
 #---------------------------------------------------------------
 message(STATUS "Copying allocations file to ${DEST_PATH}/config")
@@ -82,21 +69,42 @@ file(COPY "${SOURCE_PATH}/allocs/rinkeby/allocs.csv" DESTINATION "${DEST_PATH}/c
 file(COPY "${SOURCE_PATH}/allocs/ropsten/allocs.csv" DESTINATION "${DEST_PATH}/config/ropsten/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 
 #---------------------------------------------------------------
+# Always copy the names.txt file (this one is ours, so we can overwrite)
+#---------------------------------------------------------------
+message(STATUS "Copying names file to ${DEST_PATH}/config/mainnet/")
+file(COPY "${SOURCE_PATH}/names/names.tab" DESTINATION "${DEST_PATH}/config/mainnet/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+
+#---------------------------------------------------------------
 # Copy the custom names file (empty), unless it already exists  (this one is the user's)
 #---------------------------------------------------------------
-set(CUSTOM_NAMES "${DEST_PATH}/names/names_custom.tab")
+set(CUSTOM_NAMES "${DEST_PATH}/config/mainnet/names_custom.tab")
 if (NOT EXISTS "${CUSTOM_NAMES}")
-	message(STATUS "Copying custom names file to ${DEST_PATH}/names")
-	file(COPY "${SOURCE_PATH}/names/names_custom.tab" DESTINATION "${DEST_PATH}/names" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+	message(STATUS "Copying custom names file to ${DEST_PATH}/config/mainnet/")
+	file(COPY "${SOURCE_PATH}/names/names_custom.tab" DESTINATION "${DEST_PATH}/config/mainnet/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 endif()
 
 #---------------------------------------------------------------
 # Copy the sample collections if it does not already exist
 #---------------------------------------------------------------
-set(CUSTOM_ENTS "${DEST_PATH}/names/collections.csv")
+set(CUSTOM_ENTS "${DEST_PATH}/config/mainnet/collections.csv")
 if (NOT EXISTS "${CUSTOM_ENTS}")
-	message(STATUS "Copying sample collections file${DEST_PATH}/names")
-	file(COPY "${SOURCE_PATH}/names/collections.csv" DESTINATION "${DEST_PATH}/names" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+	message(STATUS "Copying sample collections file${DEST_PATH}/config/mainnet/")
+	file(COPY "${SOURCE_PATH}/names/collections.csv" DESTINATION "${DEST_PATH}/config/mainnet/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+endif()
+
+#---------------------------------------------------------------
+# Always copy the verified.txt file (this one is ours, so we can overwrite)
+#---------------------------------------------------------------
+message(STATUS "Copying verified file to ${DEST_PATH}/config/mainnet/")
+file(COPY "${SOURCE_PATH}/names/verified.tab" DESTINATION "${DEST_PATH}/config/mainnet/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+
+#---------------------------------------------------------------
+# Copy the ipfs hash files (if they don't exist -- user may be building them)
+#---------------------------------------------------------------
+set(MANIFEST "${DEST_PATH}/manifest/manifest.txt")
+if (NOT EXISTS "${MANIFEST}")
+	message(STATUS "Seeding initial manifest ${DEST_PATH}/manifest/")
+	file(COPY "${SOURCE_PATH}/manifest/manifest.txt" DESTINATION "${DEST_PATH}/manifest/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 endif()
 
 #---------------------------------------------------------------
@@ -126,15 +134,6 @@ file(GLOB TARGET_FILES "${SOURCE_PATH}/abis/known-015/*.json")
 foreach(FILE ${TARGET_FILES} )
 	file(COPY "${FILE}" DESTINATION "${DEST_PATH}/abis/known-015/")
 endforeach( FILE )
-
-#---------------------------------------------------------------
-# Copy the ipfs hash files (if they don't exist -- user may be building them)
-#---------------------------------------------------------------
-set(MANIFEST "${DEST_PATH}/manifest/manifest.txt")
-if (NOT EXISTS "${MANIFEST}")
-	message(STATUS "Seeding initial manifest ${DEST_PATH}/manifest/")
-	file(COPY "${SOURCE_PATH}/manifest/manifest.txt" DESTINATION "${DEST_PATH}/manifest/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
-endif()
 
 #---------------------------------------------------------------
 # Copy the prices files

@@ -1,6 +1,6 @@
 ## Steps to Update
 
-1. Copy the manifest.txt file from the computer running the scraper and pinning (in our case `linux`)
+1. Copy the manifest file from the computer running the scraper and pinning (in our case `linux`)
 
 2. Upload that file to Pinata
 3. Copy the IPFS hash produced by Pinata

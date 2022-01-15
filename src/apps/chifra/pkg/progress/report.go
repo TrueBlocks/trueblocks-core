@@ -13,6 +13,7 @@ const (
 	Done
 	Error
 	AllDone
+	Cancelled
 )
 
 type Progress struct {

@@ -19,6 +19,9 @@ import (
 
 // InitInternal initializes local copy of UnchainedIndex by downloading manifests and chunks
 func (opts *PinsOptions) InitInternal() error {
+
+	config.EstablishIndexPaths(config.GetPathToIndex())
+
 	opts.PrintManifestHeader()
 
 	logger.Log(logger.Info, "Calling unchained index smart contract")
@@ -62,10 +65,15 @@ func (opts *PinsOptions) InitInternal() error {
 	getChunks := func(chunkType cache.CacheType) {
 		chunkPath := &cache.Path{}
 		chunkPath.New(chunkType)
-		failedChunks := downloadAndReportProgress(downloadedManifest.NewPins, chunkPath)
+		failedChunks, cancelled := downloadAndReportProgress(downloadedManifest.NewPins, chunkPath)
+
+		if cancelled {
+			// We don't want to retry if the user has cancelled
+			return
+		}
 
 		if len(failedChunks) > 0 {
-			retry(failedChunks, 3, func(pins []manifest.PinDescriptor) []manifest.PinDescriptor {
+			retry(failedChunks, 3, func(pins []manifest.PinDescriptor) ([]manifest.PinDescriptor, bool) {
 				logger.Log(logger.Info, "Retrying", len(pins), "bloom(s)")
 				return downloadAndReportProgress(pins, chunkPath)
 			})
@@ -91,15 +99,16 @@ func (opts *PinsOptions) InitInternal() error {
 	return nil
 }
 
-type downloadFunc func(pins []manifest.PinDescriptor) (failed []manifest.PinDescriptor)
+type downloadFunc func(pins []manifest.PinDescriptor) (failed []manifest.PinDescriptor, cancelled bool)
 
 // Downloads chunks and report progress
-func downloadAndReportProgress(pins []manifest.PinDescriptor, chunkPath *cache.Path) []manifest.PinDescriptor {
+func downloadAndReportProgress(pins []manifest.PinDescriptor, chunkPath *cache.Path) ([]manifest.PinDescriptor, bool) {
 	chunkTypeToDescription := map[cache.CacheType]string{
 		cache.BloomChunk: "bloom",
 		cache.IndexChunk: "index",
 	}
 	failed := []manifest.PinDescriptor{}
+	cancelled := false
 	progressChannel := progress.MakeChan()
 	defer close(progressChannel)
 
@@ -116,6 +125,11 @@ func downloadAndReportProgress(pins []manifest.PinDescriptor, chunkPath *cache.P
 
 		if event.Event == progress.AllDone {
 			logger.Log(logger.Info, pinsDone, "pin(s) were (re)initialized")
+			break
+		}
+
+		if event.Event == progress.Cancelled {
+			cancelled = true
 			break
 		}
 
@@ -136,7 +150,7 @@ func downloadAndReportProgress(pins []manifest.PinDescriptor, chunkPath *cache.P
 		}
 	}
 
-	return failed
+	return failed, cancelled
 }
 
 // Retries downloading `failedPins` for `times` times by calling `downloadChunks` function.
@@ -148,6 +162,7 @@ func retry(failedPins []manifest.PinDescriptor, times uint, downloadChunks downl
 	retryCount := uint(0)
 
 	pinsToRetry := failedPins
+	cancelled := false
 
 	for {
 		if len(pinsToRetry) == 0 {
@@ -158,7 +173,10 @@ func retry(failedPins []manifest.PinDescriptor, times uint, downloadChunks downl
 			break
 		}
 
-		pinsToRetry = downloadChunks(pinsToRetry)
+		pinsToRetry, cancelled = downloadChunks(pinsToRetry)
+		if cancelled {
+			break
+		}
 
 		retryCount++
 	}
@@ -167,8 +185,8 @@ func retry(failedPins []manifest.PinDescriptor, times uint, downloadChunks downl
 }
 
 func (opts *PinsOptions) PrintManifestHeader() {
-	// The following two values should be read from manifest.txt, however right now only TSV format
-	// is available for download and it lacks this information
+	// The following two values should be read the manifest, however right now only
+	// TSV format is available for download and it lacks this information
 	// TODO: These values should be in a config file
 	// TODO: We can add the "loaded" configuration file to Options
 	// TODO: This needs to be per chain data
