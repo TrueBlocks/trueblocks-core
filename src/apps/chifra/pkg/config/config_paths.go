@@ -50,22 +50,6 @@ func GetPathToRootConfig() string {
 	return path.Join(user.HomeDir, OsToPath[userOs]) + "/"
 }
 
-// GetPathToCache returns the one and only cachePath
-func GetPathToCache() string {
-	xdg := os.Getenv("XDG_CACHE_HOME")
-	if len(xdg) > 0 && xdg[0] == '/' {
-		chain := "mainnet"
-		return path.Join(xdg, chain) + "/"
-	}
-	cachePath := readTrueBlocks().Settings.CachePath
-	if len(cachePath) == 0 {
-		userOs := runtime.GOOS
-		user, _ := user.Current()
-		return path.Join(user.HomeDir, OsToPath[userOs]) + "cache/"
-	}
-	return path.Join(cachePath) + "/"
-}
-
 // GetPathToIndex returns the one and only cachePath
 func GetPathToIndex() string {
 	xdg := os.Getenv("XDG_CACHE_HOME")
@@ -82,19 +66,24 @@ func GetPathToIndex() string {
 	return path.Join(indexPath) + "/"
 }
 
-// GetPathToCache1 returns the one and only cachePath
-func GetPathToCache1(chain string) string {
+// GetPathToCache returns the one and only cachePath
+func GetPathToCache(chain string) string {
 	if len(chain) == 0 {
 		chain = "mainnet"
 	}
+	newPath := ""
 	xdg := os.Getenv("XDG_CACHE_HOME")
 	if len(xdg) > 0 && xdg[0] == '/' {
 		if !strings.Contains(xdg, "/cache") {
 			xdg = path.Join(xdg, "cache")
 		}
-		return path.Join(xdg, chain) + "/"
+		newPath = path.Join(xdg, chain) + "/"
+	} else {
+		cachePath := readTrueBlocks().Settings.CachePath
+		newPath = path.Join(cachePath, chain) + "/"
 	}
-	return path.Join(readTrueBlocks().Settings.CachePath, chain) + "/"
+	EstablishCachePaths(newPath)
+	return newPath
 }
 
 // GetPathToIndex1 returns the one and only cachePath

@@ -132,7 +132,7 @@ func RunMonitorScraper(wg sync.WaitGroup, initialState bool) {
 
 			/* -------------- */
 			var addresses []string
-			// root := config.GetPathToCache() + "monitors/"
+			// root := config.Get PathToCache() + "monitors/"
 			// err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
 			// 	if strings.Contains(path, ".acct.bin") {
 			// 		path = strings.Replace(path, ".acct.bin", "", -1)

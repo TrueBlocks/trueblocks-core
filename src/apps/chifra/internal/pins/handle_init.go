@@ -64,7 +64,7 @@ func (opts *PinsOptions) InitInternal() error {
 
 	getChunks := func(chunkType cache.CacheType) {
 		chunkPath := &cache.Path{}
-		chunkPath.New(chunkType)
+		chunkPath.New(opts.Globals.Chain, chunkType)
 		failedChunks, cancelled := downloadAndReportProgress(downloadedManifest.NewPins, chunkPath)
 
 		if cancelled {

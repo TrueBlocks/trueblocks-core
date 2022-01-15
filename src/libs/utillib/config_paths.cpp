@@ -115,7 +115,7 @@ void loadEnvironmentPaths(void) {
 #endif
     ::setenv("TB_CONFIG_PATH", configPath.c_str(), true);
     ::setenv("TB_CHAIN_CONFIG_PATH", (configPath + "config/mainnet/").c_str(), true);
-    ::setenv("TB_CACHE_PATH", (configPath + "cache/").c_str(), true);
+    ::setenv("TB_CACHE_PATH", (configPath + "cache/mainnet/").c_str(), true);
     ::setenv("TB_INDEX_PATH", (configPath + "unchained/").c_str(), true);
 }
 

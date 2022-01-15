@@ -86,12 +86,10 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 
 	configPath := config.GetPathToRootConfig()
 	chainConfigPath := config.GetPathToChainConfig1(chain)
-	cachePath := config.GetPathToCache1(chain)
+	cachePath := config.GetPathToCache(chain)
 	indexPath := config.GetPathToIndex1(chain)
 
 	configPath = strings.Replace(configPath, "mainnet/", "", -1)
-	// chainConfigPath = strings.Replace(chainConfigPath, "config/mainnet/", "", -1)
-	cachePath = strings.Replace(cachePath, "mainnet/", "", -1)
 	indexPath = strings.Replace(indexPath, "mainnet/", "", -1)
 
 	// In regular operation, we set an environment variable API_MODE=true. When

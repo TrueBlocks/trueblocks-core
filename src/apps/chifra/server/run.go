@@ -38,7 +38,7 @@ func PrintServeSettings(testMode bool) {
 	}
 	configPath := config.GetPathToRootConfig()
 	chainConfigPath := config.GetPathToChainConfig1(Options.Globals.Chain)
-	cachePath := config.GetPathToCache1(Options.Globals.Chain)
+	cachePath := config.GetPathToCache(Options.Globals.Chain)
 	indexPath := config.GetPathToIndex1(Options.Globals.Chain)
 	rpcProvider := config.GetRpcProvider()
 	meta := rpcClient.GetMeta(testMode)
@@ -52,6 +52,7 @@ func PrintServeSettings(testMode bool) {
 	log.Printf("%s%-18.18s%s%d, %d, %d, %d\n", colors.Green, "Progress:", colors.Off, meta.Latest, meta.Finalized, meta.Staging, meta.Unripe)
 }
 
+// TODO: Can probably remove this
 // func ParseOptions() error {
 // 	flag.IntVar(&Options.Verbose, "verbose", 0, "verbose level (between 0 and 10 inclusive)")
 // 	flag.BoolVar(&Options.Pin, "pin", false, "pins Bloom filters and chunks to pinning service (requires API key)")

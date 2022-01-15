@@ -131,7 +131,7 @@ remoteExplorer = ""
 | -------------------- | ---------------------------------------------------------------------------- |
 | GetPathToRootConfig  | Where to find the trueBlocks.toml                                            |
 | GetPathToCHainConfig | Where to find the per-chain config files                                     |
-| GetPathToCache       | Found in config file<br>defaults to `GetPathToChainConfig() + "cache"`       |
+| GetPathTo Cache      | Found in config file<br>defaults to `GetPathToChainConfig() + "cache"`       |
 | GetPathToIndex       | Found in config file<br>defaults to `GetPathToChainConfig() + "unchained"`   |
 | GetPathToCommands    | Hard coded to $HOME/.local/bin/chifra on both platforms in GetPathToCommands |
 

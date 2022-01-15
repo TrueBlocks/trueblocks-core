@@ -18,7 +18,7 @@ func Test_ReadTrueBlocks(t *testing.T) {
 	}
 	if values.Settings.CachePath[len(values.Settings.CachePath)-1] != '/' {
 		// the raw path may not end with a slash, but the returned path better
-		ret := GetPathToCache()
+		ret := GetPathToCache("mainnet/")
 		if len(ret) > 0 && ret[len(ret)-1] != '/' {
 			t.Error("CachePath does not end with a '/'")
 		}

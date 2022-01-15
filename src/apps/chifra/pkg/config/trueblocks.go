@@ -37,8 +37,8 @@ type TrueBlocksConfig struct {
 func init() {
 	trueBlocksViper.SetConfigName("trueBlocks")
 	trueBlocksViper.SetDefault("Settings.RpcProvider", "http://localhost:8545")
-	trueBlocksViper.SetDefault("Settings.CachePath", GetPathToRootConfig()+"cache")
-	trueBlocksViper.SetDefault("Settings.IndexPath", GetPathToRootConfig()+"unchained")
+	trueBlocksViper.SetDefault("Settings.CachePath", GetPathToRootConfig()+"cache/")
+	trueBlocksViper.SetDefault("Settings.IndexPath", GetPathToRootConfig()+"unchained/")
 }
 
 // readTrueBlocks reads and the configuration located in trueBlocks.toml file. Note
@@ -52,7 +52,7 @@ func readTrueBlocks() *TrueBlocksConfig {
 
 		cachePath := cachedTrueBlocksConfig.Settings.CachePath
 		if len(cachePath) == 0 || cachePath == "<not_set>" {
-			cachePath = path.Join(configPath, "cache")
+			cachePath = path.Join(configPath, "cache") + "/"
 		}
 		cachePath = strings.Replace(cachePath, "$HOME", user.HomeDir, -1)
 		cachePath = strings.Replace(cachePath, "~", user.HomeDir, -1)
@@ -60,7 +60,7 @@ func readTrueBlocks() *TrueBlocksConfig {
 
 		indexPath := cachedTrueBlocksConfig.Settings.IndexPath
 		if len(indexPath) == 0 || indexPath == "<not_set>" {
-			indexPath = path.Join(configPath, "unchained")
+			indexPath = path.Join(configPath, "unchained") + "/"
 		}
 		indexPath = strings.Replace(indexPath, "$HOME", user.HomeDir, -1)
 		indexPath = strings.Replace(indexPath, "~", user.HomeDir, -1)
@@ -68,12 +68,12 @@ func readTrueBlocks() *TrueBlocksConfig {
 
 		// We establish only the top-level folders here. When we figure out
 		// which chain we're on (not until the user tells us on the command line)
-		// only then can we complete this path. At this point it only points
-		// to the top-levl of the cache. Also note that these two calls do
-		// not return if they fail, so no need to handle errors
-		var none []string
-		file.EstablishFolders(cachedTrueBlocksConfig.Settings.CachePath, none /* folders */)
-		file.EstablishFolders(cachedTrueBlocksConfig.Settings.IndexPath, none /* folders */)
+		// only then can we complete these paths. At this point these paths
+		// only point to the top-levl of the cache or index. Also note that
+		// these two calls do not return if they fail, so no need to handle errors
+		defaultChains := []string{"mainnet"}
+		file.EstablishFolders(cachedTrueBlocksConfig.Settings.CachePath, defaultChains)
+		file.EstablishFolders(cachedTrueBlocksConfig.Settings.IndexPath, defaultChains)
 
 		trueBlocksRead = true
 	}

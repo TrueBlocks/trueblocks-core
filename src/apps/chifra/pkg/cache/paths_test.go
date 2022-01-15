@@ -13,7 +13,7 @@ import (
 
 func TestCacheLayout(t *testing.T) {
 	indexPath := config.GetPathToIndex()
-	cachePath := config.GetPathToCache()
+	cachePath := config.GetPathToCache("mainnet/")
 
 	// TODO: turn these back on
 	tests := []struct {
@@ -89,7 +89,7 @@ func TestCacheLayout(t *testing.T) {
 
 		t.Run(tt.name, func(t *testing.T) {
 			cachePath := &Path{}
-			cachePath.New(tt.expected.Type)
+			cachePath.New("mainnet/", tt.expected.Type)
 
 			if cachePath.Extension != tt.expected.Extension {
 				t.Error("Wrong extension", cachePath.Extension)
