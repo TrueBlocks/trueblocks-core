@@ -209,6 +209,8 @@ bool COptions::showAddrsInTx(CTraverser* trav, const blkrange_t& range, const CA
                 LOG_ERR("Could not allocate reverseAppMap");
                 return false;
             }
+        } else {
+            LOG_WARN("Cannot open index file ", chunkPath);
         }
     }
 
