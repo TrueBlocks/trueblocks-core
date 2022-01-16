@@ -26,7 +26,7 @@ func TestCacheLayout(t *testing.T) {
 		wantErr   bool
 	}{
 		{
-			on:    false,
+			on:    true,
 			name:  "index chunk path",
 			param: "0010000000-0010200000",
 			expected: Path{
@@ -39,7 +39,7 @@ func TestCacheLayout(t *testing.T) {
 			wantErr: false,
 		},
 		{
-			on:    false,
+			on:    true,
 			name:  "Bloom filter path",
 			param: "0010000000-0010200000",
 			expected: Path{
