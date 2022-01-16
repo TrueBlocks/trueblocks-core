@@ -33,7 +33,6 @@ extern string_q getPathToIndex(const string_q& _part);
 //-------------------------------------------------------------------------
 #define chainConfigs_old (getPathToChainConfig_old(""))
 #define chainConfigs_manifest (chainConfigs_old + "manifest/")
-#define chainConfigs_prices (chainConfigs_old + "")
 
 //-------------------------------------------------------------------------
 #define chainConfigs_new (getPathToChainConfig_new(""))
@@ -69,8 +68,8 @@ extern string_q getPathToIndex(const string_q& _part);
 #define chainFolderTxt_manifest (chainConfigs_manifest + "manifest.txt")
 
 //---------------------------------------------------------------------------
-#define chainFolderZip_prices (chainConfigs_prices + "poloniex_USDT_ETH.bin.gz")
-#define chainFolderZip_ts (chainConfigs_old + "ts.bin.gz")
+#define chainFolderZip_prices (chainConfigs_new + "poloniex_USDT_ETH.bin.gz")
+#define chainFolderZip_ts (chainConfigs_new + "ts.bin.gz")
 
 //---------------------------------------------------------------------------
 #define rootConfigToml_trueBlocks (rootConfigs + "trueBlocks.toml")

@@ -67,7 +67,6 @@ bool establishTsFile(void) {
         cmd << "cp \"" << chainFolderZip_ts << "\" . ; ";
         cmd << "gunzip ts.bin.gz";
         string_q result = doCommand(cmd.str());
-        LOG_INFO(result);
         // The original zip file still exists
         ASSERT(fileExists(chainFolderZip_ts));
         // The new timestamp file exists
