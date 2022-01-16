@@ -117,8 +117,8 @@ bool COptions::process_reconciliation(CTraverser* trav) {
                     reportFreq = 1;
                 }
                 return !shouldQuit();
-            } else {
-                trav->trans.statements.clear();
+//             } else {
+//               trav->trans.statements.clear();
             }
         }
     }
