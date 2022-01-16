@@ -1,3 +1,5 @@
+MUST EDIT OUT THE TRUEBLOCKS.TOML FILE
+
 ### Steps to Migrate
 ---
 - [ ] The CheckMigrations routine should fail if the migration isn't complete

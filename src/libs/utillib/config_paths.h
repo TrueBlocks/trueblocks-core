@@ -28,6 +28,7 @@ extern string_q getPathToIndex(const string_q& _part);
 #define rootConfigs (getPathToRootConfig(""))
 #define rootConfigs_abis (rootConfigs + "abis/")
 #define rootConfigs_mocked (rootConfigs + "mocked/")
+#define rootConfigs_perf (rootConfigs + "perf/")
 
 //-------------------------------------------------------------------------
 #define chainConfigs_old (getPathToChainConfig_old(""))
