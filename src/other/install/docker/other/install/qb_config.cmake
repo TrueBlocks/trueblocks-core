@@ -25,10 +25,8 @@ set(INSTALL_SOURCE "${CMAKE_SOURCE_DIR}/../../../src/other/install")
 message(STATUS "Establishing configuration folders at ${ROOT_CONFIG}")
 file(MAKE_DIRECTORY "${ROOT_CONFIG}")
 file(MAKE_DIRECTORY "${ROOT_CONFIG}/cache")
-file(MAKE_DIRECTORY "${ROOT_CONFIG}/cache/abis")
-file(MAKE_DIRECTORY "${ROOT_CONFIG}/cache/prices")
-file(MAKE_DIRECTORY "${ROOT_CONFIG}/cache/tmp")
-file(MAKE_DIRECTORY "${ROOT_CONFIG}/cache/objs")
+file(MAKE_DIRECTORY "${ROOT_CONFIG}/unchained")
+
 file(MAKE_DIRECTORY "${ROOT_CONFIG}/abis")
 file(MAKE_DIRECTORY "${ROOT_CONFIG}/abis/known-000")
 file(MAKE_DIRECTORY "${ROOT_CONFIG}/abis/known-005")
@@ -36,7 +34,6 @@ file(MAKE_DIRECTORY "${ROOT_CONFIG}/abis/known-010")
 file(MAKE_DIRECTORY "${ROOT_CONFIG}/abis/known-015")
 file(MAKE_DIRECTORY "${ROOT_CONFIG}/manifest")
 file(MAKE_DIRECTORY "${ROOT_CONFIG}/mocked")
-file(MAKE_DIRECTORY "${ROOT_CONFIG}/unchained")
 
 #---------------------------------------------------------------
 # Create main config file, if it does not already exist
