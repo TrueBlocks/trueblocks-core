@@ -27,12 +27,12 @@ extern string_q getPathToIndex(const string_q& _part);
 //--------------------------------------------------------------------------------
 #define rootConfigs (getPathToRootConfig(""))
 #define rootConfigs_abis (rootConfigs + "abis/")
-#define rootConfigs_mocked (rootConfigs + "mocked/")
 #define rootConfigs_perf (rootConfigs + "perf/")
 
 //-------------------------------------------------------------------------
 #define chainConfigs_old (getPathToChainConfig_old(""))
 #define chainConfigs_manifest (chainConfigs_old + "manifest/")
+#define chainConfigs_mocked (chainConfigs_new + "mocked/")
 
 //-------------------------------------------------------------------------
 #define chainConfigs_new (getPathToChainConfig_new(""))
@@ -75,7 +75,7 @@ extern string_q getPathToIndex(const string_q& _part);
 #define rootConfigToml_trueBlocks (rootConfigs + "trueBlocks.toml")
 #define rootConfigToml_makeClass (rootConfigs + "makeClass.toml")
 #define rootConfigToml_merge (rootConfigs + name + ".toml")
-#define chainConfigToml_merge (chainConfigs_old + name + ".toml")
+#define chainConfigToml_merge (chainConfigs_new + name + ".toml")
 
 //---------------------------------------------------------------------------
 #define cacheFolderBin_allocs (cacheFolder_names + "allocs.bin")
