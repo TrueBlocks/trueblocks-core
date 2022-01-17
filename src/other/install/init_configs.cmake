@@ -1,6 +1,4 @@
 #---------------------------------------------------------------
-# Functions
-
 function(PrintLine MSG1)
   message(STATUS ${MSG1})
 endfunction(PrintLine)
