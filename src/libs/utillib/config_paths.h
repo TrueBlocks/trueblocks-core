@@ -74,6 +74,8 @@ extern string_q getPathToIndex(const string_q& _part);
 //---------------------------------------------------------------------------
 #define rootConfigToml_trueBlocks (rootConfigs + "trueBlocks.toml")
 #define rootConfigToml_makeClass (rootConfigs + "makeClass.toml")
+#define rootConfigToml_merge (rootConfigs + name + ".toml")
+#define chainConfigToml_merge (chainConfigs_old + name + ".toml")
 
 //---------------------------------------------------------------------------
 #define cacheFolderBin_allocs (cacheFolder_names + "allocs.bin")

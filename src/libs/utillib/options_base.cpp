@@ -736,7 +736,7 @@ int sortByBlockNum(const void* v1, const void* v2) {
 }
 
 //-----------------------------------------------------------------------
-const CToml* getGlobalConfig(const string_q& name) {
+const CToml* getGlobalConfig(const string_q& mergeIn) {
     static CToml* toml = NULL;
     static string_q components = "trueBlocks|";
 
@@ -745,17 +745,23 @@ const CToml* getGlobalConfig(const string_q& name) {
         LOG4(bGreen, "configFile: ", configFile, cOff);
         static CToml theToml(configFile);
         toml = &theToml;
-        string_q fileName = chainConfigs_old + COptionsBase::g_progName + ".toml";
-        if (fileExists(fileName) && !contains(components, COptionsBase::g_progName + "|")) {
-            components += COptionsBase::g_progName + "|";
+        string_q name = COptionsBase::g_progName;
+        string_q fileName = chainConfigToml_merge;
+        if (name == "makeClass" || name == "testRunner")
+            fileName = rootConfigToml_merge;
+        if (fileExists(fileName) && !contains(components, name + "|")) {
+            components += name + "|";
             CToml custom(fileName);
             toml->mergeFile(&custom);
         }
     }
 
     // If we're told explicitly to load another config, do that as well
-    if (!name.empty()) {
-        string_q fileName = chainConfigs_old + name + ".toml";
+    if (!mergeIn.empty()) {
+        string_q name = mergeIn;
+        string_q fileName = chainConfigToml_merge;
+        if (name == "makeClass" || name == "testRunner")
+            fileName = rootConfigToml_merge;
         if (fileExists(fileName) && !contains(components, name + "|")) {
             components += name + "|";
             CToml custom(fileName);

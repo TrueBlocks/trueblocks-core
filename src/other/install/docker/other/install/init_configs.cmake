@@ -74,7 +74,7 @@ CopyNotPresent    (${INSTALL_SOURCE}/manifest/       "manifest.txt"             
 CopyIgnorePresent (${INSTALL_SOURCE}/names/          "names.tab"                ${INSTALL_DEST}/config/mainnet/  )
 CopyIgnorePresent (${INSTALL_SOURCE}/mocked/         "mocks.tar.gz"             ${INSTALL_DEST}/mocked/          )
 CopyIgnorePresent (${INSTALL_SOURCE}/mocked/         "monitors.tar.gz"          ${INSTALL_DEST}/mocked/          )
-CopyIgnorePresent (${INSTALL_SOURCE}/prices/         "poloniex_USDT_ETH.bin.gz" ${INSTALL_DEST}                  )
+CopyIgnorePresent (${INSTALL_SOURCE}/prices/         "poloniex_USDT_ETH.bin.gz" ${INSTALL_DEST}/config/mainnet/  )
 CopyIgnorePresent (${INSTALL_SOURCE}/prices/         "ts.bin.gz"                ${INSTALL_DEST}/config/mainnet/  )
 CopyIgnorePresent (${INSTALL_SOURCE}/allocs/fermion  "allocs.csv"               ${INSTALL_DEST}/config/fermion/  )
 CopyIgnorePresent (${INSTALL_SOURCE}/allocs/gnosis   "allocs.csv"               ${INSTALL_DEST}/config/gnosis/   )
