@@ -57,6 +57,7 @@ func IsTransBlockHashAndId(str string) bool {
 }
 
 func IsValidTransId(ids []string, validTypes ValidArgumentType) (bool, error) {
-	err := ValidateIdentifiers(ids, validTypes, 1)
+	// TODO: BOGUS
+	err := ValidateIdentifiers("mainnet", ids, validTypes, 1)
 	return err == nil, err
 }

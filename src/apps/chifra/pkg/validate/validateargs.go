@@ -38,7 +38,7 @@ const ValidBlockIdWithRangeAndDate = ValidBlockIdWithRange | ValidArgumentDate
 //     ValidateIdentifiers(identifiers, ValidArgumentRange, 1)
 //
 // This routine can be used for both block identifiers and transaction
-func ValidateIdentifiers(identifiers []string, validTypes ValidArgumentType, maxRanges int) error {
+func ValidateIdentifiers(chain string, identifiers []string, validTypes ValidArgumentType, maxRanges int) error {
 	// A helper function to check if bitmask is set
 	isBitmaskSet := func(flag ValidArgumentType) bool {
 		return validTypes&flag != 0
@@ -56,7 +56,7 @@ func ValidateIdentifiers(identifiers []string, validTypes ValidArgumentType, max
 		}
 
 		if isBitmaskSet(ValidArgumentDate) && IsDateTimeString(identifier) {
-			if IsBeforeFirstBlock(identifier) {
+			if IsBeforeFirstBlock(chain, identifier) {
 				return &InvalidIdentifierLiteralError{
 					Value: identifier,
 					Msg:   "is before the first block.",
@@ -65,8 +65,7 @@ func ValidateIdentifiers(identifiers []string, validTypes ValidArgumentType, max
 			continue
 		}
 
-		// TODO: BOGUS
-		if isBitmaskSet(ValidArgumentSpecialBlock) && tslibPkg.IsSpecialBlock("mainnet", identifier) {
+		if isBitmaskSet(ValidArgumentSpecialBlock) && tslibPkg.IsSpecialBlock(chain, identifier) {
 			continue
 		}
 
@@ -90,7 +89,7 @@ func ValidateIdentifiers(identifiers []string, validTypes ValidArgumentType, max
 			}
 		}
 
-		_, rangeErr := IsRange(identifier)
+		_, rangeErr := IsRange(chain, identifier)
 		if rangeErr != nil {
 			return rangeErr
 		}

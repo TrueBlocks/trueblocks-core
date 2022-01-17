@@ -54,7 +54,7 @@ func IsDateTimeString(str string) bool {
 	return bRange.StartType == blockRange.BlockRangeDate
 }
 
-func IsBeforeFirstBlock(str string) bool {
+func IsBeforeFirstBlock(chain, str string) bool {
 	if !IsDateTimeString(str) {
 		return false
 	}
@@ -62,11 +62,10 @@ func IsBeforeFirstBlock(str string) bool {
 	// From https://github.com/araddon/dateparse
 	time.Local, _ = time.LoadLocation("UTC")
 	dt, _ := dateparse.ParseLocal(str) // already validated as a date
-	// TODO: BOGUS
-	return dt.Before(tslibPkg.DateFromName("mainnet", "first"))
+	return dt.Before(tslibPkg.DateFromName(chain, "first"))
 }
 
-func IsRange(str string) (bool, error) {
+func IsRange(chain, str string) (bool, error) {
 	// Disallow "start only ranges" like "1000" or "london"
 	if !strings.Contains(str, "-") {
 		return false, &InvalidIdentifierLiteralError{
@@ -81,17 +80,15 @@ func IsRange(str string) (bool, error) {
 			return false, errors.New("Cannot start range with 'latest'")
 		}
 
-		// TODO: BOGUS
 		if bRange.StartType == blockRange.BlockRangeSpecial &&
-			!tslibPkg.IsSpecialBlock("mainnet", bRange.Start.Special) {
+			!tslibPkg.IsSpecialBlock(chain, bRange.Start.Special) {
 			return false, &InvalidIdentifierLiteralError{
 				Value: bRange.Start.Special,
 			}
 		}
 
-		// TODO: BOGUS
 		if bRange.EndType == blockRange.BlockRangeSpecial &&
-			!tslibPkg.IsSpecialBlock("mainnet", bRange.End.Special) {
+			!tslibPkg.IsSpecialBlock(chain, bRange.End.Special) {
 			return false, &InvalidIdentifierLiteralError{
 				Value: bRange.End.Special,
 			}
@@ -131,6 +128,7 @@ func (e *InvalidIdentifierLiteralError) Error() string {
 }
 
 func IsValidBlockId(ids []string, validTypes ValidArgumentType) (bool, error) {
-	err := ValidateIdentifiers(ids, validTypes, 1)
+	// TODO: BOGUS
+	err := ValidateIdentifiers("mainnet", ids, validTypes, 1)
 	return err == nil, err
 }

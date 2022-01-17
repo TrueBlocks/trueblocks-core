@@ -98,12 +98,12 @@ func TestIsDateTimeString(t *testing.T) {
 		t.Error("Fails for date with time and timezone")
 	}
 
-	if IsBeforeFirstBlock("2015-07-30T15:26:00") {
+	if IsBeforeFirstBlock("mainnet", "2015-07-30T15:26:00") {
 		t.Error("Fails for exact first block date")
 	}
 
 	// TODO: Turn off go testing that requires ts.bin
-	// if !IsBeforeFirstBlock("2015-07-30T15:25:59") {
+	// if !IsBeforeFirstBlock("mainnet", "2015-07-30T15:25:59") {
 	// 	t.Error("Passes for too early date (before first block)")
 	// }
 
@@ -117,42 +117,42 @@ func TestIsDateTimeString(t *testing.T) {
 }
 
 func TestIsRange(t *testing.T) {
-	if r, _ := IsRange("100"); r {
+	if r, _ := IsRange("mainnet", "100"); r {
 		t.Error("Passes for non-range")
 	}
 
-	if r, _ := IsRange("-0100"); r {
+	if r, _ := IsRange("mainnet", "-0100"); r {
 		t.Error("Passes for malformed string (1)")
 	}
 
-	if r, _ := IsRange("100-"); r {
+	if r, _ := IsRange("mainnet", "100-"); r {
 		t.Error("Passes for malformed string (2)")
 	}
 
-	if r, _ := IsRange("0-100:"); r {
+	if r, _ := IsRange("mainnet", "0-100:"); r {
 		t.Error("Passes for malformed string (3)")
 	}
 
-	if r, _ := IsRange("0-100"); !r {
+	if r, _ := IsRange("mainnet", "0-100"); !r {
 		t.Error("Fails for range without step")
 	}
 
-	if r, _ := IsRange("100-100000:20"); !r {
+	if r, _ := IsRange("mainnet", "100-100000:20"); !r {
 		t.Error("Fails for range with step")
 	}
 
-	if r, _ := IsRange("london-100"); !r {
+	if r, _ := IsRange("mainnet", "london-100"); !r {
 		t.Error("Fails for special")
 	}
 
-	if r, _ := IsRange("100-2021-04-20"); !r {
+	if r, _ := IsRange("mainnet", "100-2021-04-20"); !r {
 		t.Error("Fails for number and a date")
 	}
 }
 
 func TestIsRangeLatestAsStart(t *testing.T) {
 	expected := "Cannot start range with 'latest'"
-	_, err := IsRange("latest-10")
+	_, err := IsRange("mainnet", "latest-10")
 
 	if err.Error() != expected {
 		t.Errorf("Error mismatch: %s", err)
@@ -161,7 +161,7 @@ func TestIsRangeLatestAsStart(t *testing.T) {
 
 func TestIsRangeEndGreaterThanStart(t *testing.T) {
 	expected := "'stop' must be strictly larger than 'start'"
-	_, err := IsRange("1000-10")
+	_, err := IsRange("mainnet", "1000-10")
 
 	if err == nil {
 		t.Error("No error")
@@ -174,7 +174,7 @@ func TestIsRangeEndGreaterThanStart(t *testing.T) {
 
 func TestIsRangeModifierError(t *testing.T) {
 	expected := "Input argument appears to be invalid. No such skip marker: biweekly"
-	_, err := IsRange("0-1000:biweekly")
+	_, err := IsRange("mainnet", "0-1000:biweekly")
 
 	if err.Error() != expected {
 		t.Errorf("Error mismatch: %s", err)
@@ -182,7 +182,7 @@ func TestIsRangeModifierError(t *testing.T) {
 }
 
 func TestIsRangeInvalidSpecialStart(t *testing.T) {
-	valid, err := IsRange("notexisting-1000:10")
+	valid, err := IsRange("mainnet", "notexisting-1000:10")
 
 	if valid {
 		t.Error("Invalid special passing")
@@ -194,7 +194,7 @@ func TestIsRangeInvalidSpecialStart(t *testing.T) {
 }
 
 func TestIsRangeInvalidSpecialStop(t *testing.T) {
-	valid, err := IsRange("1000-notexisting:10")
+	valid, err := IsRange("mainnet", "1000-notexisting:10")
 
 	if valid {
 		t.Error("Invalid special passing")
@@ -338,7 +338,12 @@ func TestValidateBlockIdentifiers(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if err := ValidateIdentifiers(tt.args.identifiers, tt.args.validTypes, tt.args.maxRanges); (err != nil) != tt.wantErr {
+			if err := ValidateIdentifiers(
+				"mainnet",
+				tt.args.identifiers,
+				tt.args.validTypes,
+				tt.args.maxRanges,
+			); (err != nil) != tt.wantErr {
 				t.Errorf("ValidateIdentifiers() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
