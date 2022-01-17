@@ -14,6 +14,7 @@ type Timestamp struct {
 	Ts uint32 `json:"ts"`
 }
 
+// TODO: BOGUS -- this will help us make timestamps per-chain
 type TimestampDatabase struct {
 	loaded bool
 	count  uint64
@@ -27,12 +28,12 @@ var memory []Timestamp
 var recordCount uint64 = 0
 
 // nRecords returns the number of records in the timestamp file
-func nRecords() (uint64, error) {
+func nRecords(chain string) (uint64, error) {
 	if recordCount > 0 {
 		return recordCount, nil
 	}
 
-	tsPath := config.GetPathToIndex() + "ts.bin"
+	tsPath := config.GetPathToIndex(chain) + "ts.bin"
 
 	fileStat, err := os.Stat(tsPath)
 	if err != nil {
@@ -43,17 +44,17 @@ func nRecords() (uint64, error) {
 }
 
 // loadTimestamps loads the timestamp data from the file into memory. If the timestamps are already loaded, we short circiut.
-func loadTimestamps() error {
+func loadTimestamps(chain string) error {
 	if loaded {
 		return nil
 	}
 
-	cnt, err := nRecords()
+	cnt, err := nRecords(chain)
 	if err != nil {
 		return err
 	}
 
-	tsPath := config.GetPathToIndex() + "ts.bin"
+	tsPath := config.GetPathToIndex(chain) + "ts.bin"
 
 	tsFile, err := os.Open(tsPath)
 	if err != nil {
@@ -72,13 +73,13 @@ func loadTimestamps() error {
 
 // fromTs is a local function that returns a Timestamp record given a Unix timestamp. It
 // loads the timestamp file into memory if it isn't already
-func fromTs(ts uint64) (*Timestamp, error) {
-	cnt, err := nRecords()
+func fromTs(chain string, ts uint64) (*Timestamp, error) {
+	cnt, err := nRecords(chain)
 	if err != nil {
 		return &Timestamp{}, err
 	}
 
-	err = loadTimestamps()
+	err = loadTimestamps(chain)
 	if err != nil {
 		return &Timestamp{}, err
 	}
@@ -99,8 +100,8 @@ func fromTs(ts uint64) (*Timestamp, error) {
 
 // fromTs is a local function that returns a Timestamp record given a blockNum. It
 // loads the timestamp file into memory if it isn't already
-func fromBn(bn uint64) (*Timestamp, error) {
-	cnt, err := nRecords()
+func fromBn(chain string, bn uint64) (*Timestamp, error) {
+	cnt, err := nRecords(chain)
 	if err != nil {
 		return &Timestamp{}, err
 	}
@@ -109,7 +110,7 @@ func fromBn(bn uint64) (*Timestamp, error) {
 		return &Timestamp{}, errors.New("invalid block number")
 	}
 
-	err = loadTimestamps()
+	err = loadTimestamps(chain)
 	if err != nil {
 		return &Timestamp{}, err
 	}

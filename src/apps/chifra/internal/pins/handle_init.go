@@ -20,7 +20,7 @@ import (
 // InitInternal initializes local copy of UnchainedIndex by downloading manifests and chunks
 func (opts *PinsOptions) InitInternal() error {
 
-	config.EstablishIndexPaths(config.GetPathToIndex())
+	config.EstablishIndexPaths(config.GetPathToIndex(opts.Globals.Chain))
 
 	opts.PrintManifestHeader()
 

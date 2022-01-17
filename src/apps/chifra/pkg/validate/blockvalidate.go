@@ -128,7 +128,6 @@ func (e *InvalidIdentifierLiteralError) Error() string {
 }
 
 func IsValidBlockId(chain string, ids []string, validTypes ValidArgumentType) (bool, error) {
-	// TODO: BOGUS
 	err := ValidateIdentifiers(chain, ids, validTypes, 1)
 	return err == nil, err
 }

@@ -12,7 +12,7 @@ import (
 )
 
 func TestCacheLayout(t *testing.T) {
-	indexPath := config.GetPathToIndex()
+	indexPath := config.GetPathToIndex("mainnet")
 	cachePath := config.GetPathToCache("mainnet")
 
 	// TODO: turn these back on

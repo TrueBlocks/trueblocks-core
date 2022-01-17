@@ -128,9 +128,6 @@ bool COptions::parseArguments(string_q& commandIn) {
         }
     }
 
-    // if (list)
-    //     forEverySpecialBlock(showSpecials, &requests);
-
     string_q format = getGlobalConfig("whenBlock")->getConfigStr("display", "format", STR_DISPLAY_WHEN);
     if (count)
         format = "[{nTimestamps}]";
@@ -188,16 +185,6 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-}
-
-//--------------------------------------------------------------------------------
-bool showSpecials(CNameValue& pair, void* data) {
-    CNameValueArray* array = reinterpret_cast<CNameValueArray*>(data);
-    if (pair.first == "latest")
-        pair.second = uint_2_Str(getBlockProgress(BP_CLIENT).client);
-    CNameValue nv("block", pair.second + "|" + pair.first);
-    array->push_back(nv);
-    return true;
 }
 
 //-----------------------------------------------------------------------

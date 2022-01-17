@@ -800,39 +800,25 @@ static bool sortByValue(const CNameValue& p1, const CNameValue& p2) {
 
 //-----------------------------------------------------------------------
 // TODO(tjayrush): global data
+// TODO(tjayrush): Can we remove this since this is all processed in the go code?
+// TODO(tjayrush): Almost - if we convert specials to block numbers before calling into the C++
 CNameValueArray COptionsBase::specials;
-
-//-----------------------------------------------------------------------
-void COptionsBase::loadSpecials(void) {
-    specials.clear();
-    extern const char* STR_DEFAULT_WHENBLOCKS;
-    string_q specialsStr = STR_DEFAULT_WHENBLOCKS;
-    CKeyValue keyVal;
-    while (keyVal.parseJson3(specialsStr)) {
-        CNameValue pair = make_pair(keyVal.jsonrpc, keyVal.result);
-        specials.push_back(pair);
-        keyVal = CKeyValue();  // reset
-    }
-    sort(specials.begin(), specials.end(), sortByValue);
-    return;
-}
-
-//--------------------------------------------------------------------------------
-bool COptionsBase::forEverySpecialBlock(NAMEVALFUNC func, void* data) {
-    if (!func)
-        return false;
-    if (specials.size() == 0)
-        loadSpecials();
-    for (auto special : specials)
-        if (!(*func)(special, data))
-            return false;
-    return true;
-}
 
 //--------------------------------------------------------------------------------
 bool COptionsBase::findSpecial(CNameValue& pair, const string_q& arg) {
-    if (specials.size() == 0)
-        loadSpecials();
+    if (specials.size() == 0) {
+        specials.clear();
+        extern const char* STR_DEFAULT_WHENBLOCKS;
+        string_q specialsStr = STR_DEFAULT_WHENBLOCKS;
+        CKeyValue keyVal;
+        while (keyVal.parseJson3(specialsStr)) {
+            CNameValue pair = make_pair(keyVal.jsonrpc, keyVal.result);
+            specials.push_back(pair);
+            keyVal = CKeyValue();  // reset
+        }
+        sort(specials.begin(), specials.end(), sortByValue);
+    }
+
     for (auto special : specials) {
         if (arg == special.first) {
             pair = special;

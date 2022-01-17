@@ -35,7 +35,7 @@ type MetaValue struct {
 	value  uint64
 }
 
-func GetMeta(testmode bool) *Meta {
+func GetMeta(chain string, testmode bool) *Meta {
 	if testmode {
 		return &Meta{
 			Unripe:    0xdeadbeef,
@@ -55,10 +55,10 @@ func GetMeta(testmode bool) *Meta {
 	valueChan := make(chan MetaValue)
 
 	var nRoutines int = 4
-	go walkIndexFolder("finalized", valueChan)
-	go walkIndexFolder("staging", valueChan)
-	go walkIndexFolder("ripe", valueChan)
-	go walkIndexFolder("unripe", valueChan)
+	go walkIndexFolder(chain, "finalized", valueChan)
+	go walkIndexFolder(chain, "staging", valueChan)
+	go walkIndexFolder(chain, "ripe", valueChan)
+	go walkIndexFolder(chain, "unripe", valueChan)
 
 	for result := range valueChan {
 		if strings.Contains(result.folder, "done-") {
@@ -91,12 +91,12 @@ func GetMeta(testmode bool) *Meta {
 	return &meta
 }
 
-func walkIndexFolder(folder string, valueChan chan<- MetaValue) {
+func walkIndexFolder(chain, folder string, valueChan chan<- MetaValue) {
 	defer func() {
 		valueChan <- MetaValue{folder: "done"}
 	}()
 
-	filepath.Walk(config.GetPathToIndex()+folder, func(path string, info fs.FileInfo, err error) error {
+	filepath.Walk(config.GetPathToIndex(chain)+folder, func(path string, info fs.FileInfo, err error) error {
 		if err != nil {
 			// If the scraper is running, this will sometimes send an error for a file, for example, that existed
 			// when it was first seen, but the scraper deletes before this call. We ignore any file system errors

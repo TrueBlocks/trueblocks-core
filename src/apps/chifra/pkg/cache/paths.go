@@ -33,7 +33,7 @@ var cacheFolders = map[CacheType]string{
 
 // New sets correct values of Subdir and Extension properties based on cacheType
 func (cl *Path) New(chain string, cacheType CacheType) {
-	indexPath := config.GetPathToIndex()
+	indexPath := config.GetPathToIndex(chain)
 	cachePath := config.GetPathToCache(chain)
 
 	if cacheType == BloomChunk || cacheType == IndexChunk {

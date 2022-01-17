@@ -200,10 +200,13 @@ var mainnetSpecials = []NamedBlock{
 	},
 }
 
+// GetSpecials returns a chain-specific list of special block names and numbers
 func GetSpecials(chain string) []NamedBlock {
+	// TODO: BOGUS -- this needs to be per-chain
 	return mainnetSpecials
 }
 
+// IsSpecialBlock returns true if the given chain-specific name is a special block
 func IsSpecialBlock(chain, needle string) bool {
 	_, found := BnFromName(chain, needle)
 	return found

@@ -1,3 +1,9 @@
+// Package `tslibPkg` provides conversions between four entities: block numbers, dates, Linux
+// timestamps, and special named blocks. The function names are self-explanitory.
+//
+// Note: because the relationship between block numbers and dates or timestamps is a per-chain
+// value, some of these functions require a `chain` name. Any chain name is permissable, but
+// they all require proper configuration in the TrueBlocks config files.
 package tslibPkg
 
 import (
@@ -9,20 +15,20 @@ import (
 	"github.com/araddon/dateparse"
 )
 
-// BnFromDate returns a chain-specific block number given a date string (either 'date time' or 'dateTtime')
+// BnFromDate returns a chain-specific block number given a date string (date strings are valid JSON dates).
 func BnFromDate(chain, date string) (uint64, error) {
 	ts, err := TsFromDate(date)
 	if err != nil {
 		return 0, err
 	}
-	ret, err := fromTs(ts)
+	ret, err := fromTs(chain, ts)
 	return uint64(ret.Bn), err
 }
 
-// BnFromName returns the chain-specific block number (if found) given the name of a special block
+// BnFromName returns the chain-specific block number (if found) given the name of a special block. The list of special blocks is per-chain.
 func BnFromName(chain, needle string) (uint64, bool) {
 	if needle == "latest" {
-		return rpcClient.GetMeta(false).Latest, true
+		return rpcClient.GetMeta(chain, false).Latest, true
 	}
 
 	specials := GetSpecials(chain)
@@ -35,13 +41,13 @@ func BnFromName(chain, needle string) (uint64, bool) {
 	return uint64(utils.NOPOS), false
 }
 
-// BnFromTs returns a chain-specific block number given a Linux timestamp
+// BnFromTs returns a chain-specific block number given a Linux timestamp.
 func BnFromTs(chain string, ts uint64) (uint64, error) {
-	ret, err := fromTs(ts)
+	ret, err := fromTs(chain, ts)
 	return uint64(ret.Bn), err
 }
 
-// DateFromBn returns a date string given a chain-specific block number
+// DateFromBn returns a chain-specific date string given a block number.
 func DateFromBn(chain string, bn uint64) (string, error) {
 	ts, err := TsFromBn(chain, bn)
 	if err != nil {
@@ -50,10 +56,10 @@ func DateFromBn(chain string, bn uint64) (string, error) {
 	return DateFromTs(ts)
 }
 
-// DateFromName returns the block's chain-specific date (if found) given its name
+// DateFromName returns a chain-specific date (if found) given its chain-specific name
 func DateFromName(chain, needle string) time.Time {
 	if needle == "latest" {
-		ts := rpcClient.GetBlockTimestamp(rpcClient.GetMeta(false).Latest)
+		ts := rpcClient.GetBlockTimestamp(rpcClient.GetMeta(chain, false).Latest)
 		date, _ := DateFromTs(ts)
 		dt, _ := dateparse.ParseLocal(date)
 		return dt
@@ -73,7 +79,7 @@ func DateFromName(chain, needle string) time.Time {
 	return dt
 }
 
-// DateFromTs returns a date string given a Linux timestamp (note that this is not chain-specific)
+// DateFromTs returns a date string given a Linux timestamp (not chain-specific)
 func DateFromTs(ts uint64) (string, error) {
 	// TODO: can be initialized at the start of the program as all dates are UTC
 	time.Local, _ = time.LoadLocation("UTC")
@@ -81,7 +87,7 @@ func DateFromTs(ts uint64) (string, error) {
 	return tm.Format("2006-01-02 15:04:05 UTC"), nil
 }
 
-// NameFromBn returns the chain-specific block's name (if found) given its block number
+// NameFromBn returns the block's chain-specific name (if found) given its block number
 func NameFromBn(chain string, needle uint64) (string, bool) {
 	specials := GetSpecials(chain)
 	for _, value := range specials {
@@ -94,11 +100,11 @@ func NameFromBn(chain string, needle uint64) (string, bool) {
 
 // TsFromBn returns a chain-specific Linux timestamp given a block number
 func TsFromBn(chain string, bn uint64) (uint64, error) {
-	ret, err := fromBn(bn)
+	ret, err := fromBn(chain, bn)
 	return uint64(ret.Ts), err
 }
 
-// TsFromDate returns a Linux timestamp given a date string (note that this is not chain-specific)
+// TsFromDate returns a Linux timestamp given a date string (not chain-specific)
 func TsFromDate(date string) (uint64, error) {
 	t, err := time.Parse("2006-01-02 15:04:05", strings.Replace(date, "T", " ", -1))
 	if err != nil {

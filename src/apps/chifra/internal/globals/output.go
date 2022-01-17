@@ -162,7 +162,7 @@ func AsJsonBytes(j *JsonFormatted, opts *GlobalOptions) ([]byte, error) {
 			result.Errors = j.Errors
 		} else {
 			result.Data = j.Data
-			result.Meta = rpcClient.GetMeta(opts.TestMode)
+			result.Meta = rpcClient.GetMeta(opts.Chain, opts.TestMode)
 		}
 	}
 
