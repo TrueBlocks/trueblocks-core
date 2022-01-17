@@ -49,6 +49,7 @@ type fetchResult struct {
 // WorkerArguments are types meant to hold worker function arguments. We cannot
 // pass the arguments directly, because a worker function is expected to take one
 // parameter of type interface{}.
+// TODO: See this issue: https://github.com/golang/go/issues/22602
 type DownloadWorkerArguments struct {
 	chunkPath       *cache.Path
 	ctx             context.Context
@@ -58,6 +59,7 @@ type DownloadWorkerArguments struct {
 	writeChannel    chan *jobResult
 }
 
+// TODO: See this issue: https://github.com/golang/go/issues/22602
 type WriteWorkerArguments struct {
 	cancel          context.CancelFunc
 	chunkPath       *cache.Path
