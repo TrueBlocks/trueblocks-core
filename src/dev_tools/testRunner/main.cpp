@@ -149,9 +149,10 @@ int main(int argc, const char* argv[]) {
         perf << total.Format(perf_fmt) << endl;
         cerr << "    " << substitute(perf.str(), "\n", "\n    ") << endl;
         if (options.full_test && options.report) {
-            string_q perfFile = rootConfigs + string_q("performance") + (total.allPassed ? "" : "_failed") + ".csv";
+            string_q perfFile =
+                rootConfigs + string_q("perf/performance") + (total.allPassed ? "" : "_failed") + ".csv";
             appendToAsciiFile(perfFile, perf.str());
-            appendToAsciiFile(rootConfigs + "performance_slow.csv", slow.str());
+            appendToAsciiFile(rootConfigs + "perf/performance_slow.csv", slow.str());
         } else {
             LOG_WARN(cRed, "Performance results not written because not full test", cOff);
         }
@@ -160,8 +161,8 @@ int main(int argc, const char* argv[]) {
     // If configured, copy the data out to the folder our performance measurement tool knows about
     string_q copyPath = getGlobalConfig("testRunner")->getConfigStr("settings", "copy_path", "<not_set>");
     if (folderExists(copyPath)) {
-        CStringArray files = {"performance.csv", "performance_failed.csv", "performance_slow.csv",
-                              "performance_scraper.csv"};
+        CStringArray files = {"perf/performance.csv", "perf/performance_failed.csv", "perf/performance_slow.csv",
+                              "perf/performance_scraper.csv"};
         for (auto file : files) {
             if (fileExists(rootConfigs + file)) {
                 ostringstream copyCmd;
