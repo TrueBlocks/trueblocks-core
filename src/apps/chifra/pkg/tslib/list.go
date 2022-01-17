@@ -11,7 +11,7 @@ type NamedBlock struct {
 	Name        string `json:"name"`
 }
 
-var specials = []NamedBlock{
+var mainnetSpecials = []NamedBlock{
 	{
 		BlockNumber: 0,
 		Name:        "first",
@@ -200,11 +200,14 @@ var specials = []NamedBlock{
 	},
 }
 
-func GetSpecials() []NamedBlock {
-	return specials
+// GetSpecials returns a chain-specific list of special block names and numbers
+func GetSpecials(chain string) []NamedBlock {
+	// TODO: BOGUS -- this needs to be per-chain
+	return mainnetSpecials
 }
 
-func IsSpecialBlock(needle string) bool {
-	_, found := BnFromName(needle)
+// IsSpecialBlock returns true if the given chain-specific name is a special block
+func IsSpecialBlock(chain, needle string) bool {
+	_, found := BnFromName(chain, needle)
 	return found
 }

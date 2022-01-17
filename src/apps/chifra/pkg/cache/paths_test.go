@@ -12,8 +12,8 @@ import (
 )
 
 func TestCacheLayout(t *testing.T) {
-	indexPath := config.GetPathToIndex()
-	cachePath := config.GetPathToCache("mainnet/")
+	indexPath := config.GetPathToIndex("mainnet")
+	cachePath := config.GetPathToCache("mainnet")
 
 	// TODO: turn these back on
 	tests := []struct {
@@ -89,16 +89,13 @@ func TestCacheLayout(t *testing.T) {
 
 		t.Run(tt.name, func(t *testing.T) {
 			cachePath := &Path{}
-			cachePath.New("mainnet/", tt.expected.Type)
-
+			cachePath.New("mainnet", tt.expected.Type)
 			if cachePath.Extension != tt.expected.Extension {
 				t.Error("Wrong extension", cachePath.Extension)
 			}
-
 			if cachePath.Subdir != tt.expected.Subdir {
 				t.Error("Wrong subdir", cachePath.Subdir)
 			}
-
 			p := cachePath.GetFullPath(tt.param)
 			if p != path.Join(tt.expected.RootPath, tt.path) {
 				t.Error("Wrong full path", p)

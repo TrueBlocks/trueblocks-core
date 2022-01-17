@@ -41,7 +41,7 @@ func PrintServeSettings(testMode bool) {
 	cachePath := config.GetPathToCache(Options.Globals.Chain)
 	indexPath := config.GetPathToIndex1(Options.Globals.Chain)
 	rpcProvider := config.GetRpcProvider()
-	meta := rpcClient.GetMeta(testMode)
+	meta := rpcClient.GetMeta(Options.Globals.Chain, testMode)
 
 	log.Printf("%s%-18.18s%s%s\n", colors.Green, "Server URL:", colors.Off, apiUrl)
 	log.Printf("%s%-18.18s%s%s\n", colors.Green, "RootConfig Path:", colors.Off, configPath)

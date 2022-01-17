@@ -51,7 +51,7 @@ func GetPathToRootConfig() string {
 }
 
 // GetPathToIndex returns the one and only cachePath
-func GetPathToIndex() string {
+func GetPathToIndex(temporarilyUnused string) string {
 	xdg := os.Getenv("XDG_CACHE_HOME")
 	if len(xdg) > 0 && xdg[0] == '/' {
 		chain := "mainnet"

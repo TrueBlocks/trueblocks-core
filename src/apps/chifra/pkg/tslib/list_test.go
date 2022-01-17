@@ -9,43 +9,37 @@ import (
 )
 
 func TestIsStringSpecialBlock(t *testing.T) {
-	result := IsSpecialBlock("devcon1")
-
+	result := IsSpecialBlock("mainnet", "devcon1")
 	if !result {
 		t.Error("Fails for valid block name")
 	}
 
-	shouldBeFalse := IsSpecialBlock("nosuchblock")
-
+	shouldBeFalse := IsSpecialBlock("mainnet", "nosuchblock")
 	if shouldBeFalse {
 		t.Error("Passes for invalid block name")
 	}
 }
 
 func TestGetNameByValue(t *testing.T) {
-	name, found := NameFromBn(2463000)
-
+	name, found := NameFromBn("mainnet", 2463000)
 	if !found {
 		t.Error("Block name not found")
 	}
-
 	if name != "tangerine" {
 		t.Errorf("Wrong name: %s", name)
 	}
 }
 
 func TestGetValueByName(t *testing.T) {
-	value, found := BnFromName("tangerine")
-
+	value, found := BnFromName("mainnet", "tangerine")
 	if !found {
 		t.Error("Block not found by name")
 	}
-
 	if value != 2463000 {
 		t.Errorf("Wrong value: %d", value)
 	}
 
-	value, found = BnFromName("latest")
+	_, found = BnFromName("mainnet", "latest")
 	if !found {
 		t.Error("Latest block not found")
 	}
@@ -56,7 +50,7 @@ func TestGetValueByName(t *testing.T) {
 }
 
 func TestGetSpecials(t *testing.T) {
-	specials := GetSpecials()
+	specials := GetSpecials("mainnet")
 	if len(specials) != 31 {
 		t.Error("Wrong number of special blocks ", len(specials), ". Should have 31.")
 	}

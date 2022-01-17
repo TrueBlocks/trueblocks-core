@@ -15,7 +15,12 @@ func (opts *ReceiptsOptions) ValidateReceipts() error {
 		return opts.BadFlag
 	}
 
-	// err := validate.ValidateIdentifiers(opts.Transactions, validate.ValidTransId, -1)
+	// err := validate.ValidateIdentifiers(
+	// 	opts.Globals.Chain,
+	// 	opts.Transactions,
+	// 	validate.ValidTransId,
+	// 	-1,
+	// )
 	// if err != nil {
 	// 	if invalidLiteral, ok := err.(*validate.InvalidIdentifierLiteralError); ok {
 	// 		return invalidLiteral

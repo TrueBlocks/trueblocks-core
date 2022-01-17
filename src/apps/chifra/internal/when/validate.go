@@ -35,7 +35,12 @@ func (opts *WhenOptions) ValidateWhen() error {
 		}
 	}
 
-	err := validate.ValidateIdentifiers(opts.Blocks, validate.ValidBlockIdWithRangeAndDate, 1)
+	err := validate.ValidateIdentifiers(
+		opts.Globals.Chain,
+		opts.Blocks,
+		validate.ValidBlockIdWithRangeAndDate,
+		1,
+	)
 	if err != nil {
 		if invalidLiteral, ok := err.(*validate.InvalidIdentifierLiteralError); ok {
 			return invalidLiteral

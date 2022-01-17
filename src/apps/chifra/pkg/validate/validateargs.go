@@ -4,6 +4,10 @@
 
 package validate
 
+import (
+	tslibPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+)
+
 // Let's define bitmasks to make it easier to validate multiple block identifiers
 // (which usually are arguments to `chifra` commands). This way we can specify
 // that we want e.g. both block number and a special block as valid arguments
@@ -25,20 +29,16 @@ const ValidBlockId = ValidArgumentBlockHash | ValidArgumentBlockNumber | ValidAr
 const ValidBlockIdWithRange = ValidBlockId | ValidArgumentRange
 const ValidBlockIdWithRangeAndDate = ValidBlockIdWithRange | ValidArgumentDate
 
-// Validates multiple identifiers against multiple valid types (specified as bitmasks).
+// ValidateIdentifiers validates multiple identifiers against multiple valid types (specified as bitmasks).
 // If any of the identifiers are invalid, it returns error
 // If all identifiers are valid, it returns nil
 //
-// To check if identifiers are either block number or a date:
-// ValidateIdentifiers(identifiers, ValidArgumentBlockNumber | ValidArgumentDate, 0)
+// Examples:
+//     ValidateIdentifiers(identifiers, ValidArgumentBlockNumber | ValidArgumentDate, 0)
+//     ValidateIdentifiers(identifiers, ValidArgumentRange, 1)
 //
-// To allow for only a single range:
-// ValidateIdentifiers(identifiers, ValidArgumentRange, 1)
-//
-// This routine can be used for both block identifiers and transaction ValidateIdentifiers
-//
-// ValidateIdentifiers validate block and transaction identifiers
-func ValidateIdentifiers(identifiers []string, validTypes ValidArgumentType, maxRanges int) error {
+// This routine can be used for both block identifiers and transaction
+func ValidateIdentifiers(chain string, identifiers []string, validTypes ValidArgumentType, maxRanges int) error {
 	// A helper function to check if bitmask is set
 	isBitmaskSet := func(flag ValidArgumentType) bool {
 		return validTypes&flag != 0
@@ -56,7 +56,7 @@ func ValidateIdentifiers(identifiers []string, validTypes ValidArgumentType, max
 		}
 
 		if isBitmaskSet(ValidArgumentDate) && IsDateTimeString(identifier) {
-			if IsBeforeFirstBlock(identifier) {
+			if IsBeforeFirstBlock(chain, identifier) {
 				return &InvalidIdentifierLiteralError{
 					Value: identifier,
 					Msg:   "is before the first block.",
@@ -65,7 +65,7 @@ func ValidateIdentifiers(identifiers []string, validTypes ValidArgumentType, max
 			continue
 		}
 
-		if isBitmaskSet(ValidArgumentSpecialBlock) && IsSpecialBlock(identifier) {
+		if isBitmaskSet(ValidArgumentSpecialBlock) && tslibPkg.IsSpecialBlock(chain, identifier) {
 			continue
 		}
 
@@ -89,7 +89,7 @@ func ValidateIdentifiers(identifiers []string, validTypes ValidArgumentType, max
 			}
 		}
 
-		_, rangeErr := IsRange(identifier)
+		_, rangeErr := IsRange(chain, identifier)
 		if rangeErr != nil {
 			return rangeErr
 		}

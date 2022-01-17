@@ -64,6 +64,7 @@ func (opts *StateOptions) ValidateState() error {
 	// Blocks are available for both commands
 	if len(opts.Blocks) > 0 {
 		err := validate.ValidateIdentifiers(
+			opts.Globals.Chain,
 			opts.Blocks,
 			validate.ValidBlockIdWithRange,
 			1,

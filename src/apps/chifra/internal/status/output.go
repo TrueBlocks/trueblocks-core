@@ -31,11 +31,12 @@ func RunStatus(cmd *cobra.Command, args []string) error {
 	}
 
 	// EXISTING_CODE
-	// meta := rpcClient.GetMeta(false)
-	// log.Println(GreenTxt("Config Path:  "), config.Get PathToConfig(""))
-	// log.Println(GreenTxt("Cache Path:   "), config.Get PathToCache())
-	// log.Println(GreenTxt("Index Path:   "), config.Get PathToIndex())
-	// log.Println(GreenTxt("Rpc Provider: "), config.GetRpcProvider())
+	// chain := opts.Globals.Chain
+	// meta := rpcClient.GetMeta(chain, false)
+	// log.Println(GreenTxt("Config Path:  "), config.Get PathToConfig())
+	// log.Println(GreenTxt("Cache Path:   "), config.Get PathToCache(chain))
+	// log.Println(GreenTxt("Index Path:   "), config.Get PathToIndex(chain))
+	// log.Println(GreenTxt("Rpc Provider: "), config.GetRpcProvider(chain))
 	// log.Printf("%s%d, %d (%d), %d (%d), %d (%d), %d (%d)\n", GreenTxt("Progress:      "),
 	//	meta.Latest,
 	//	meta.Finalized, (meta.Latest - meta.Finalized),

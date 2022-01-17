@@ -32,6 +32,7 @@ func (opts *BlocksOptions) ValidateBlocks() error {
 	}
 
 	err := validate.ValidateIdentifiers(
+		opts.Globals.Chain,
 		opts.Blocks,
 		validate.ValidBlockIdWithRange,
 		1,

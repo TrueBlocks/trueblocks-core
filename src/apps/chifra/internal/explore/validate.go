@@ -58,7 +58,7 @@ func (opts *ExploreOptions) ValidateExplore() error {
 			return validate.Usage("The {0} option requires {1}.", "--google", "an address term")
 		}
 
-		valid, _ := validate.IsValidTransId([]string{arg}, validate.ValidTransId)
+		valid, _ := validate.IsValidTransId(opts.Globals.Chain, []string{arg}, validate.ValidTransId)
 		if valid {
 			txHash, err := id_2_TxHash(arg)
 			if err == nil {
@@ -67,7 +67,7 @@ func (opts *ExploreOptions) ValidateExplore() error {
 			}
 		}
 
-		valid, _ = validate.IsValidBlockId([]string{arg}, validate.ValidBlockId)
+		valid, _ = validate.IsValidBlockId(opts.Globals.Chain, []string{arg}, validate.ValidBlockId)
 		if valid {
 			// TODO: The block number needs to be resolved (for example from a hash)
 			// TODO: or a special block

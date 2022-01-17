@@ -72,9 +72,7 @@ class COptionsBase {
 
     // supporting special block names
     static CNameValueArray specials;
-    static void loadSpecials(void);
     static bool findSpecial(CNameValue& pair, const string_q& arg);
-    static bool forEverySpecialBlock(NAMEVALFUNC func, void* data);
 
     // One of --create, --update, --delete, --undelete, --remove for use anywhere
     CStringArray crudCommands;

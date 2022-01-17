@@ -29,8 +29,6 @@ See the instructions in the file [./src/examples/README.md](../README.md) for mo
   - bool `forEveryField`(FIELDVISITFUNC func, void* data)
 - COptionsBlockList
   - bool `forEveryBlockNumber`(UINT64VISITFUNC func, void* data) const
-- COptionsBase
-  - bool `forEverySpecialBlock`(NAMEVALFUNC func, void* data)
 - CBlock
   - bool `forEveryTransaction`(TRANSVISITFUNC func, void* data)
   - bool `forEveryLog`(LOGVISITFUNC func, void* data)
