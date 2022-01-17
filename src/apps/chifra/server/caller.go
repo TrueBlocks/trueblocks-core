@@ -87,10 +87,10 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 	configPath := config.GetPathToRootConfig()
 	chainConfigPath := config.GetPathToChainConfig1(chain)
 	cachePath := config.GetPathToCache(chain)
-	indexPath := config.GetPathToIndex1(chain)
+	indexPath := config.GetPathToIndex(chain)
 
+	// TODO: BOGUS
 	configPath = strings.Replace(configPath, "mainnet/", "", -1)
-	indexPath = strings.Replace(indexPath, "mainnet/", "", -1)
 
 	// In regular operation, we set an environment variable API_MODE=true. When
 	// testing (the test harness sends a special header) we also set the

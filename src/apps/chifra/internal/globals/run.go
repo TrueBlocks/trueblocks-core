@@ -28,10 +28,10 @@ func (opts *GlobalOptions) PassItOn(path string, flags string) error {
 	configPath := config.GetPathToRootConfig()
 	chainConfigPath := config.GetPathToChainConfig1(opts.Chain)
 	cachePath := config.GetPathToCache(opts.Chain)
-	indexPath := config.GetPathToIndex1(opts.Chain)
+	indexPath := config.GetPathToIndex(opts.Chain)
 
+	// TODO: BOGUS
 	configPath = strings.Replace(configPath, "mainnet/", "", -1)
-	indexPath = strings.Replace(indexPath, "mainnet/", "", -1)
 
 	// fmt.Fprintf(os.Stderr, "Calling: %s %s\n", path, options)
 	cmd := exec.Command(config.GetPathToCommands(path), options)

@@ -7,6 +7,7 @@ package servePkg
 import (
 	"log"
 	"os"
+	"path"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
@@ -39,7 +40,8 @@ func PrintServeSettings(testMode bool) {
 	configPath := config.GetPathToRootConfig()
 	chainConfigPath := config.GetPathToChainConfig1(Options.Globals.Chain)
 	cachePath := config.GetPathToCache(Options.Globals.Chain)
-	indexPath := config.GetPathToIndex1(Options.Globals.Chain)
+	// TODO: BOGUS
+	indexPath := path.Join(config.GetPathToIndex(Options.Globals.Chain), Options.Globals.Chain)
 	rpcProvider := config.GetRpcProvider()
 	meta := rpcClient.GetMeta(Options.Globals.Chain, testMode)
 

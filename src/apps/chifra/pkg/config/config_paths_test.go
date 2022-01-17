@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"os"
 	"os/user"
+	"path"
 	"strings"
 	"testing"
 )
@@ -51,7 +52,8 @@ func Test_GetPathTo(t *testing.T) {
 			testPath = GetPathToCache(test.chain) + test.part
 		} else if test.group == "Index" {
 			os.Setenv("XDG_CACHE_HOME", test.xdg)
-			testPath = GetPathToIndex1(test.chain) + test.part
+			// TODO: BOGUS
+			testPath = path.Join(GetPathToIndex(test.chain), test.chain, test.part)
 		}
 
 		testPath = strings.Replace(testPath, user.HomeDir, "$HOME", -1)

@@ -51,19 +51,24 @@ func GetPathToRootConfig() string {
 }
 
 // GetPathToIndex returns the one and only cachePath
-func GetPathToIndex(temporarilyUnused string) string {
+func GetPathToIndex(chain string) string {
+	if len(chain) == 0 {
+		chain = "mainnet"
+	}
+	newPath := ""
 	xdg := os.Getenv("XDG_CACHE_HOME")
 	if len(xdg) > 0 && xdg[0] == '/' {
-		chain := "mainnet"
-		return path.Join(xdg, chain) + "/"
+		if !strings.Contains(xdg, "/unchained") {
+			xdg = path.Join(xdg, "unchained")
+		}
+		newPath = path.Join(xdg, chain) + "/"
+	} else {
+		indexPath := readTrueBlocks().Settings.IndexPath
+		newPath = path.Join(indexPath) + "/"
+		// newPath = path.Join(indexPath, chain) + "/"
 	}
-	indexPath := readTrueBlocks().Settings.IndexPath
-	if len(indexPath) == 0 {
-		userOs := runtime.GOOS
-		user, _ := user.Current()
-		return path.Join(user.HomeDir, OsToPath[userOs]) + "unchained/"
-	}
-	return path.Join(indexPath) + "/"
+	EstablishCachePaths(newPath)
+	return newPath
 }
 
 // GetPathToCache returns the one and only cachePath
@@ -86,20 +91,21 @@ func GetPathToCache(chain string) string {
 	return newPath
 }
 
-// GetPathToIndex1 returns the one and only cachePath
-func GetPathToIndex1(chain string) string {
-	if len(chain) == 0 {
-		chain = "mainnet"
-	}
-	xdg := os.Getenv("XDG_CACHE_HOME")
-	if len(xdg) > 0 && xdg[0] == '/' {
-		if !strings.Contains(xdg, "/unchained") {
-			xdg = path.Join(xdg, "unchained")
-		}
-		return path.Join(xdg, chain) + "/"
-	}
-	return path.Join(readTrueBlocks().Settings.IndexPath, chain) + "/"
-}
+// TODO: BOGUS
+// // GetPathToIndex1 returns the one and only cachePath
+// func GetPathToIndex1(chain string) string {
+// 	if len(chain) == 0 {
+// 		chain = "mainnet"
+// 	}
+// 	xdg := os.Getenv("XDG_CACHE_HOME")
+// 	if len(xdg) > 0 && xdg[0] == '/' {
+// 		if !strings.Contains(xdg, "/unchained") {
+// 			xdg = path.Join(xdg, "unchained")
+// 		}
+// 		return path.Join(xdg, chain) + "/"
+// 	}
+// 	return path.Join(readTrueBlocks().Settings.IndexPath, chain) + "/"
+// }
 
 // GetRpcProvider returns the RPC provider for a chain
 func GetRpcProvider() string {
