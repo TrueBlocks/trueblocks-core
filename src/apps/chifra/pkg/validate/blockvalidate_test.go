@@ -6,6 +6,8 @@ package validate
 
 import (
 	"testing"
+
+	tslibPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 )
 
 func TestIsBlockHash(t *testing.T) {
@@ -50,27 +52,27 @@ func TestIsBlockNumber(t *testing.T) {
 }
 
 func TestIsSpecialBlock(t *testing.T) {
-	if IsSpecialBlock("london byzantium") {
+	if tslibPkg.IsSpecialBlock("mainnet", "london byzantium") {
 		t.Error("Passes for invalid string (space)")
 	}
 
-	if IsSpecialBlock("lądon") {
+	if tslibPkg.IsSpecialBlock("mainnet", "lądon") {
 		t.Error("Passes for string with invalid characters")
 	}
 
-	if IsSpecialBlock("123") {
+	if tslibPkg.IsSpecialBlock("mainnet", "123") {
 		t.Error("Passes for number")
 	}
 
-	if IsSpecialBlock("ab") {
+	if tslibPkg.IsSpecialBlock("mainnet", "ab") {
 		t.Error("Passes for too short strings")
 	}
 
-	if !IsSpecialBlock("london") {
+	if !tslibPkg.IsSpecialBlock("mainnet", "london") {
 		t.Error("Fails for valid block name")
 	}
 
-	if !IsSpecialBlock("devcon1") {
+	if !tslibPkg.IsSpecialBlock("mainnet", "devcon1") {
 		t.Error("Fails for valid block name with a number")
 	}
 }

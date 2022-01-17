@@ -128,8 +128,8 @@ bool COptions::parseArguments(string_q& commandIn) {
         }
     }
 
-    if (list)
-        forEverySpecialBlock(showSpecials, &requests);
+    // if (list)
+    //     forEverySpecialBlock(showSpecials, &requests);
 
     string_q format = getGlobalConfig("whenBlock")->getConfigStr("display", "format", STR_DISPLAY_WHEN);
     if (count)

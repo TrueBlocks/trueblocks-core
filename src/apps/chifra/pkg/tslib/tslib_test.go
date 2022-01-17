@@ -24,21 +24,21 @@ func TestLoadTimestampsPass(t *testing.T) {
 	}
 
 	for _, e := range expected {
-		bn, err := BnFromTs(e.ts)
+		bn, err := BnFromTs("mainnet", e.ts)
 		if err != nil {
 			t.Error(err)
 		} else if bn != e.bn {
 			t.Error("Expected block number", e.bn, "got", bn)
 		}
 
-		bn, err = BnFromDate(e.date)
+		bn, err = BnFromDate("mainnet", e.date)
 		if err != nil {
 			t.Error(err)
 		} else if bn != e.bn {
 			t.Error("Expected block number", e.bn, "got", bn)
 		}
 
-		ts, err := TsFromBn(e.bn)
+		ts, err := TsFromBn("mainnet", e.bn)
 		if err != nil {
 			t.Error(err)
 		} else if bn != e.bn {
@@ -52,7 +52,7 @@ func TestLoadTimestampsPass(t *testing.T) {
 			t.Error("Expected timestamp", e.ts, "got", ts)
 		}
 
-		d, err := DateFromBn(e.bn)
+		d, err := DateFromBn("mainnet", e.bn)
 		if err != nil {
 			t.Error(err)
 		} else if d != e.date+" UTC" {
@@ -75,17 +75,17 @@ func TestLoadTimestampsFail(t *testing.T) {
 	}
 
 	for _, e := range expected {
-		_, err := BnFromTs(e.ts)
+		_, err := BnFromTs("mainnet", e.ts)
 		if err == nil {
 			t.Error("Expected failure for BnFromTs")
 		}
 
-		_, err = BnFromDate(e.date)
+		_, err = BnFromDate("mainnet", e.date)
 		if err == nil {
 			t.Error("Expected failure for BnFromDate")
 		}
 
-		_, err = TsFromBn(e.bn)
+		_, err = TsFromBn("mainnet", e.bn)
 		if err == nil {
 			t.Error("Expected failure for TsFromBn")
 		}
@@ -96,7 +96,7 @@ func TestLoadTimestampsFail(t *testing.T) {
 		// 	t.Error("Expected failure for TsFromDate")
 		// }
 
-		_, err = DateFromBn(e.bn)
+		_, err = DateFromBn("mainnet", e.bn)
 		if err == nil {
 			t.Error("Expected failure for DateFromBn")
 		}
