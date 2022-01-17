@@ -127,8 +127,8 @@ func (e *InvalidIdentifierLiteralError) Error() string {
 	return fmt.Sprintf("The given value '%s' %s", e.Value, e.Msg)
 }
 
-func IsValidBlockId(ids []string, validTypes ValidArgumentType) (bool, error) {
+func IsValidBlockId(chain string, ids []string, validTypes ValidArgumentType) (bool, error) {
 	// TODO: BOGUS
-	err := ValidateIdentifiers("mainnet", ids, validTypes, 1)
+	err := ValidateIdentifiers(chain, ids, validTypes, 1)
 	return err == nil, err
 }
