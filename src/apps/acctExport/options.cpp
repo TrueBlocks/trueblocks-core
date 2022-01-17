@@ -820,7 +820,7 @@ void COptions::writePerformanceData(void) {
     if (stats.nFiles == stats.nSkipped)
         return;
 
-    string_q statsFile = rootConfigs + "performance_scraper.csv";
+    string_q statsFile = rootConfigs + "perf/performance_scraper.csv";
 
     string_q fmt = substitute(STR_DISPLAY_SCRAPESTATISTICS, "\t", ",");
     if (!fileExists(statsFile)) {
