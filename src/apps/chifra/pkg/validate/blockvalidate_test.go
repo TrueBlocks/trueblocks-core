@@ -7,7 +7,9 @@ package validate
 import (
 	"testing"
 
-	tslibPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 )
 
 func TestIsBlockHash(t *testing.T) {
@@ -52,6 +54,13 @@ func TestIsBlockNumber(t *testing.T) {
 }
 
 func TestIsSpecialBlock(t *testing.T) {
+	if !file.FileExists(config.GetPathToChainConfig("mainnet") + "specials.csv") {
+		// The first auto test after update to new folder structure fails
+		// if this file is not present. Once the build finishes, this will be
+		// here and the test will proceed.
+		return
+	}
+
 	if tslibPkg.IsSpecialBlock("mainnet", "london byzantium") {
 		t.Error("Passes for invalid string (space)")
 	}
