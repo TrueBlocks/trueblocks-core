@@ -6,9 +6,19 @@ package tslibPkg
 
 import (
 	"testing"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
 
 func TestIsStringSpecialBlock(t *testing.T) {
+	if !file.FileExists(config.GetPathToChainConfig("mainnet") + "specials.csv") {
+		// The first auto test after update to new folder structure fails
+		// if this file is not present. Once the build finishes, this will be
+		// here and the test will proceed.
+		return
+	}
+
 	result := IsSpecialBlock("mainnet", "devcon1")
 	if !result {
 		t.Error("Fails for valid block name")
@@ -31,6 +41,13 @@ func TestGetNameByValue(t *testing.T) {
 }
 
 func TestGetValueByName(t *testing.T) {
+	if !file.FileExists(config.GetPathToChainConfig("mainnet") + "specials.csv") {
+		// The first auto test after update to new folder structure fails
+		// if this file is not present. Once the build finishes, this will be
+		// here and the test will proceed.
+		return
+	}
+
 	value, found := BnFromName("mainnet", "tangerine")
 	if !found {
 		t.Error("Block not found by name")
@@ -50,6 +67,13 @@ func TestGetValueByName(t *testing.T) {
 }
 
 func TestGetSpecials(t *testing.T) {
+	if !file.FileExists(config.GetPathToChainConfig("mainnet") + "specials.csv") {
+		// The first auto test after update to new folder structure fails
+		// if this file is not present. Once the build finishes, this will be
+		// here and the test will proceed.
+		return
+	}
+
 	specials, err := GetSpecials("mainnet")
 	if err != nil {
 		t.Error(err)
