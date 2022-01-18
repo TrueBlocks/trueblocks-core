@@ -19,8 +19,7 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------------
 extern string_q getPathToRootConfig(const string_q& _part);
-extern string_q getPathToChainConfig_old(const string_q& _part);
-extern string_q getPathToChainConfig_new(const string_q& _part);
+extern string_q getPathToChainConfig(const string_q& _part);
 extern string_q getPathToCache(const string_q& _part);
 extern string_q getPathToIndex(const string_q& _part);
 
@@ -30,12 +29,7 @@ extern string_q getPathToIndex(const string_q& _part);
 #define rootConfigs_perf (rootConfigs + "perf/")
 
 //-------------------------------------------------------------------------
-#define chainConfigs_old (getPathToChainConfig_old(""))
-#define chainConfigs_manifest (chainConfigs_old + "manifest/")
-#define chainConfigs_mocked (chainConfigs_new + "mocked/")
-
-//-------------------------------------------------------------------------
-#define chainConfigs_new (getPathToChainConfig_new(""))
+#define chainConfigs (getPathToChainConfig(""))
 
 //-------------------------------------------------------------------------
 #define cacheFolder (getPathToCache(""))
@@ -51,6 +45,11 @@ extern string_q getPathToIndex(const string_q& _part);
 #define cacheFolder_traces (cacheFolder + "traces/")
 #define cacheFolder_txs (cacheFolder + "txs/")
 
+//---------------------------------------------------------------------------
+#define cacheFolderBin_allocs (cacheFolder_names + "allocs.bin")
+#define cacheFolderBin_names (cacheFolder_names + "names.bin")
+#define cacheFolderBin_prices (cacheFolder_prices + "poloniex_USDT_ETH.bin")
+
 //-------------------------------------------------------------------------
 #define indexFolder (getPathToIndex(""))
 #define indexFolder_staging (indexFolder + "staging/")
@@ -61,27 +60,25 @@ extern string_q getPathToIndex(const string_q& _part);
 #define indexFolder_map (indexFolder + "maps/")
 
 //---------------------------------------------------------------------------
-#define chainConfigsTxt_allocs (chainConfigs_new + "allocs.csv")
-#define chainConfigsTxt_names (chainConfigs_new + "names.tab")
-#define chainConfigsTxt_namesCustom (chainConfigs_new + "names_custom.tab")
-#define chainConfigsTxt_collections (chainConfigs_new + "collections.csv")
-#define chainConfigsTxt_manifest (chainConfigs_manifest + "manifest.txt")
+#define indexFolderBin_ts (indexFolder + "ts.bin")
 
 //---------------------------------------------------------------------------
-#define chainFolderZip_prices (chainConfigs_new + "poloniex_USDT_ETH.bin.gz")
-#define chainFolderZip_ts (chainConfigs_new + "ts.bin.gz")
+#define chainConfigsTxt_allocs (chainConfigs + "allocs.csv")
+#define chainConfigsTxt_names (chainConfigs + "names.tab")
+#define chainConfigsTxt_namesCustom (chainConfigs + "names_custom.tab")
+#define chainConfigsTxt_collections (chainConfigs + "collections.csv")
+#define chainConfigsTxt_manifest (chainConfigs + "manifest.txt")
+#define chainConfigsFolder_mocked (chainConfigs + "mocked/")
+
+//---------------------------------------------------------------------------
+#define chainConfigsZip_prices (chainConfigs + "poloniex_USDT_ETH.bin.gz")
+#define chainConfigsZip_ts (chainConfigs + "ts.bin.gz")
 
 //---------------------------------------------------------------------------
 #define rootConfigToml_trueBlocks (rootConfigs + "trueBlocks.toml")
 #define rootConfigToml_makeClass (rootConfigs + "makeClass.toml")
 #define rootConfigToml_merge (rootConfigs + name + ".toml")
-#define chainConfigToml_merge (chainConfigs_new + name + ".toml")
-
-//---------------------------------------------------------------------------
-#define cacheFolderBin_allocs (cacheFolder_names + "allocs.bin")
-#define cacheFolderBin_names (cacheFolder_names + "names.bin")
-#define cacheFolderBin_prices (cacheFolder_prices + "poloniex_USDT_ETH.bin")
-#define indexFolderBin_ts (indexFolder + "ts.bin")
+#define chainConfigToml_merge (chainConfigs + name + ".toml")
 
 //---------------------------------------------------------------------------
 extern string_q getPathToCommands(const string_q& _part);

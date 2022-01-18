@@ -11,7 +11,6 @@ import (
 	"io"
 	"os"
 	"os/exec"
-	"strings"
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
@@ -26,12 +25,12 @@ func (opts *GlobalOptions) PassItOn(path string, flags string) error {
 	wg.Add(2)
 
 	configPath := config.GetPathToRootConfig()
-	chainConfigPath := config.GetPathToChainConfig1(opts.Chain)
+	chainConfigPath := config.GetPathToChainConfig(opts.Chain)
 	cachePath := config.GetPathToCache(opts.Chain)
 	indexPath := config.GetPathToIndex(opts.Chain)
 
 	// TODO: BOGUS
-	configPath = strings.Replace(configPath, "mainnet/", "", -1)
+	// configPath = strings.Replace(configPath, "main net/", "", -1)
 
 	// fmt.Fprintf(os.Stderr, "Calling: %s %s\n", path, options)
 	cmd := exec.Command(config.GetPathToCommands(path), options)

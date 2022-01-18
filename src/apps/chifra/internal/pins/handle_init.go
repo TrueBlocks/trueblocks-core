@@ -47,7 +47,7 @@ func (opts *PinsOptions) InitInternal() error {
 	}
 
 	// Save manifest
-	manifestPath := config.GetPathToChainConfig(opts.Globals.Chain) + "manifest/manifest.txt"
+	manifestPath := config.GetPathToChainConfig(opts.Globals.Chain) + "manifest.txt"
 	err = pinlib.SaveManifest(manifestPath, downloadedManifest)
 	if err != nil {
 		return err
@@ -188,8 +188,13 @@ func (opts *PinsOptions) PrintManifestHeader() {
 	// TODO: These values should be in a config file
 	// TODO: We can add the "loaded" configuration file to Options
 	// TODO: This needs to be per chain data
+	// TODO: BOGUS
 	logger.Log(logger.Info, "hashToIndexFormatFile:", "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2")
 	logger.Log(logger.Info, "hashToBloomFormatFile:", "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD")
 	logger.Log(logger.Info, "manifestHashEncoding:", config.ReadBlockScrape(opts.Globals.Chain).UnchainedIndex.ManifestHashEncoding)
 	logger.Log(logger.Info, "unchainedIndexAddr:", config.ReadBlockScrape(opts.Globals.Chain).UnchainedIndex.Address)
+	if !opts.Globals.TestMode {
+		logger.Log(logger.Info, "unchainedIndexFolder:", config.GetPathToIndex1(opts.Globals.Chain))
+		logger.Log(logger.Info, "manifestLocation:", config.GetPathToChainConfig(opts.Globals.Chain))
+	}
 }

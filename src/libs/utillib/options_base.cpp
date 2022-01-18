@@ -776,7 +776,7 @@ const CToml* getGlobalConfig(const string_q& mergeIn) {
 bool COptionsBase::Mocked(const string_q& which) {
     if (!mocked)
         return false;
-    string_q path = chainConfigs_mocked + "mocks/" + which + ".json";
+    string_q path = chainConfigsFolder_mocked + "mocks/" + which + ".json";
     if (!fileExists(path))
         return false;
     cout << asciiFileToString(path);

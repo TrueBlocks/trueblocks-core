@@ -43,14 +43,9 @@ namespace qblocks {
         }                                                                                                              \
     }
 
-//---------------------------------------------------------------------------------------------------
-string_q getPathToChainConfig_old(const string_q& _part) {
-    return rootConfigs + _part;
-}
-
 //--------------------------------------------------------------------------------------
 static string_q g_chainConfigPath;
-string_q getPathToChainConfig_new(const string_q& _part) {
+string_q getPathToChainConfig(const string_q& _part) {
     if (!g_chainConfigPath.empty())
         return g_chainConfigPath + _part;
     g_chainConfigPath = getEnvStr("TB_CHAIN_CONFIG_PATH");
@@ -126,7 +121,7 @@ string_q relativize(const string_q& path) {
     string_q ret = path;
     replace(ret, indexFolder, "$INDEX/");
     replace(ret, cacheFolder, "$CACHE/");
-    replace(ret, chainConfigs_new, "$CHAIN/");
+    replace(ret, chainConfigs, "$CHAIN/");
     replace(ret, rootConfigs, "$CONFIG/");
     replace(ret, getPathToCommands("test/"), "");
     replace(ret, getPathToCommands(""), "");

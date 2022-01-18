@@ -58,17 +58,17 @@ bool establishTsFile(void) {
 
     establishFolder(indexFolder);
 
-    time_q zipDate = fileLastModifyDate(chainFolderZip_ts);
+    time_q zipDate = fileLastModifyDate(chainConfigsZip_ts);
     time_q tsDate = fileLastModifyDate(indexFolderBin_ts);
 
     if (zipDate > tsDate) {
         ostringstream cmd;
         cmd << "cd \"" << indexFolder << "\" ; ";
-        cmd << "cp \"" << chainFolderZip_ts << "\" . ; ";
+        cmd << "cp \"" << chainConfigsZip_ts << "\" . ; ";
         cmd << "gunzip ts.bin.gz";
         string_q result = doCommand(cmd.str());
         // The original zip file still exists
-        ASSERT(fileExists(chainFolderZip_ts));
+        ASSERT(fileExists(chainConfigsZip_ts));
         // The new timestamp file exists
         ASSERT(fileExists(indexFolderBin_ts));
         // The copy of the zip file does not exist

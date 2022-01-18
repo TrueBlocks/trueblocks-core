@@ -29,13 +29,13 @@ bool establishPriceFile(void) {
         return true;
     establishFolder(cacheFolder_prices);
 
-    time_q zipDate = fileLastModifyDate(chainFolderZip_prices);
+    time_q zipDate = fileLastModifyDate(chainConfigsZip_prices);
     time_q binDate = fileLastModifyDate(cacheFolderBin_prices);
 
     if (zipDate > binDate) {
         ostringstream cmd;
         cmd << "cd \"" << cacheFolder_prices << "\" ; ";
-        cmd << "cp \"" << chainFolderZip_prices << "\" . ; ";
+        cmd << "cp \"" << chainConfigsZip_prices << "\" . ; ";
         cmd << "gunzip poloniex_USDT_ETH.bin.gz";
         string_q result = doCommand(cmd.str());
         LOG_INFO(result);
@@ -44,7 +44,7 @@ bool establishPriceFile(void) {
         // The new timestamp file exists
         ASSERT(fileExists(cacheFolderBin_prices));
         // The copy of the zip file does not exist any more
-        ASSERT(!fileExists(chainFolderZip_prices));
+        ASSERT(!fileExists(chainConfigsZip_prices));
         return fileExists(cacheFolderBin_prices);
     }
     return true;

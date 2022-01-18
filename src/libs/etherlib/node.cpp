@@ -76,8 +76,7 @@ void etherlib_init(QUITHANDLER qh) {
     CCacheEntry::registerClass();
 
     establishFolder(rootConfigs);
-    establishFolder(chainConfigs_old);
-    establishFolder(chainConfigs_new);
+    establishFolder(chainConfigs);
     establishFolder(cacheFolder);
 }
 

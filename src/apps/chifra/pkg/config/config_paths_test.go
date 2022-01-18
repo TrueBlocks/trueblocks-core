@@ -8,7 +8,6 @@ import (
 	"fmt"
 	"os"
 	"os/user"
-	"path"
 	"strings"
 	"testing"
 )
@@ -43,7 +42,7 @@ func Test_GetPathTo(t *testing.T) {
 				}
 			}
 			if withChain {
-				testPath = GetPathToChainConfig1(test.chain) + test.part
+				testPath = GetPathToChainConfig(test.chain) + test.part
 			} else {
 				testPath = GetPathToRootConfig() + test.part
 			}
@@ -53,7 +52,7 @@ func Test_GetPathTo(t *testing.T) {
 		} else if test.group == "Index" {
 			os.Setenv("XDG_CACHE_HOME", test.xdg)
 			// TODO: BOGUS
-			testPath = path.Join(GetPathToIndex(test.chain), test.chain, test.part)
+			testPath = GetPathToIndex(test.chain) + test.part
 		}
 
 		testPath = strings.Replace(testPath, user.HomeDir, "$HOME", -1)
@@ -101,14 +100,6 @@ var testSet1 = []PathTest{
 	},
 	{
 		group:    "Config",
-		xdg:      "xdg",
-		os:       "linux",
-		chain:    "mainnet",
-		part:     "blockScrape.toml",
-		expected: "$HOME/.local/share/trueblocks/config/{CHAIN}/blockScrape.toml",
-	},
-	{
-		group:    "Config",
 		xdg:      "/xdg",
 		os:       "linux",
 		chain:    "mainnet",
@@ -122,22 +113,6 @@ var testSet1 = []PathTest{
 		chain:    "mainnet",
 		part:     "abis/known-000/uniq_funcs.tab",
 		expected: "/xdg/abis/known-000/uniq_funcs.tab",
-	},
-	{
-		group:    "Config",
-		xdg:      "",
-		os:       "linux",
-		chain:    "mainnet",
-		part:     "trueBlocks.toml",
-		expected: "$HOME/.local/share/trueblocks/trueBlocks.toml",
-	},
-	{
-		group:    "Config",
-		xdg:      "xdg",
-		os:       "linux",
-		chain:    "mainnet",
-		part:     "blockScrape.toml",
-		expected: "$HOME/.local/share/trueblocks/config/{CHAIN}/blockScrape.toml",
 	},
 	{
 		group:    "Config",
@@ -221,14 +196,6 @@ var testSet1 = []PathTest{
 		expected: "$HOME/Library/Application Support/TrueBlocks/cache/{CHAIN}/abis/0x12.json",
 		disabled: true,
 	},
-	// {
-	// 	group:    "Index",
-	// 	xdg:      "/xdg",
-	// 	os:       "linux",
-	// 	chain:    "polygon",
-	// 	part:     "tx/00/00/",
-	// 	expected: "/xdg/unchained/{CHAIN}/tx/00/00/",
-	// },
 	{
 		group:    "Index",
 		xdg:      "",

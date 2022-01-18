@@ -752,7 +752,7 @@ bool COptions::setDisplayFormatting(void) {
 //         }
 //     }
 //     uint64_t nMocked = getGlobalConfig("")->getConfigInt("dev", "n_mocked", 100);
-//     string_q path = chainConfigs_mocked + origMode + ".json";
+//     string_q path = chainConfigsFolder_mocked + origMode + ".json";
 //     if (fileExists(path)) {
 //         if (origMode == "export") {
 //             for (size_t i = 0; i < nMocked; i++) {

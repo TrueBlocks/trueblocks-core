@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/spf13/cobra"
 )
@@ -40,7 +41,7 @@ func (opts *GlobalOptions) TestLog() {
 	logger.TestLog(opts.Verbose, "Verbose: ", opts.Verbose)
 	logger.TestLog(opts.LogLevel > 0, "LogLevel: ", opts.LogLevel)
 	logger.TestLog(opts.NoHeader, "NoHeader: ", opts.NoHeader)
-	logger.TestLog(len(opts.Chain) > 0 && opts.Chain != "mainnet", "Chain: ", opts.Chain)
+	logger.TestLog(len(opts.Chain) > 0 && opts.Chain != config.GetDefaultChain(), "Chain: ", opts.Chain)
 	logger.TestLog(opts.Wei, "Wei: ", opts.Wei)
 	logger.TestLog(opts.Ether, "Ether: ", opts.Ether)
 	logger.TestLog(opts.Dollars, "Dollars: ", opts.Dollars)
@@ -66,7 +67,8 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions) {
 	cmd.Flags().BoolVarP(&opts.Verbose, "verbose", "v", false, "enable verbose (increase detail with --log_level)")
 	cmd.Flags().BoolVarP(&opts.Help, "help", "h", false, "display this help screen")
 
-	cmd.Flags().StringVarP(&opts.Chain, "chain", "", "mainnet", "EVM compatible chain you're running against")
+	// TODO: BOGUS
+	cmd.Flags().StringVarP(&opts.Chain, "chain", "", "", "EVM compatible chain you're running against")
 	cmd.Flags().BoolVarP(&opts.Raw, "raw", "", false, "report JSON data from the node with minimal processing")
 	cmd.Flags().BoolVarP(&opts.Version, "version", "", false, "display the current version of the tool")
 	cmd.Flags().BoolVarP(&opts.Noop, "noop", "", false, "")
@@ -95,6 +97,10 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions) {
 	cmd.Flags().MarkHidden("to_file")
 	cmd.Flags().MarkHidden("file")
 	cmd.Flags().MarkHidden("output")
+
+	if len(opts.Chain) == 0 {
+		opts.Chain = config.GetDefaultChain()
+	}
 }
 
 func (opts *GlobalOptions) ToCmdLine() string {
@@ -195,6 +201,9 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *GlobalOptions {
 		case "output":
 			opts.OutputFn = value[0]
 		}
+	}
+	if len(opts.Chain) == 0 {
+		opts.Chain = config.GetDefaultChain()
 	}
 	return opts
 
