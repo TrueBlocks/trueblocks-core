@@ -50,10 +50,15 @@ func TestGetValueByName(t *testing.T) {
 }
 
 func TestGetSpecials(t *testing.T) {
-	specials := GetSpecials("mainnet")
+	specials, err := GetSpecials("mainnet")
+	if err != nil {
+		t.Error(err)
+	}
+
 	if len(specials) != 31 {
 		t.Error("Wrong number of special blocks ", len(specials), ". Should have 31.")
 	}
+
 	// TODO: Turn off go testing that requires connection to a node
 	// for _, item := range specials {
 	// 	if item.TimeStamp == 0 {

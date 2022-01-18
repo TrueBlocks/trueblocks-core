@@ -1,3 +1,4 @@
+MAKE SURE chifra explore --chain works with different block explorers
 WE SHOULD CREATE A STRUCTURE CALLED opts.Chain.Configs that then allows opts.Chain.Configs[tool][settings][key]
 MUST MAKE SURE BLOCKSCRAPE.TOML IS IN THE RIGHT PLACE
 MUST EDIT OUT THE TRUEBLOCKS.TOML FILE

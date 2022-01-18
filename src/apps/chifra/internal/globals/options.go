@@ -67,7 +67,6 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions) {
 	cmd.Flags().BoolVarP(&opts.Verbose, "verbose", "v", false, "enable verbose (increase detail with --log_level)")
 	cmd.Flags().BoolVarP(&opts.Help, "help", "h", false, "display this help screen")
 
-	// TODO: BOGUS
 	cmd.Flags().StringVarP(&opts.Chain, "chain", "", "", "EVM compatible chain you're running against")
 	cmd.Flags().BoolVarP(&opts.Raw, "raw", "", false, "report JSON data from the node with minimal processing")
 	cmd.Flags().BoolVarP(&opts.Version, "version", "", false, "display the current version of the tool")
@@ -202,6 +201,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *GlobalOptions {
 			opts.OutputFn = value[0]
 		}
 	}
+
 	if len(opts.Chain) == 0 {
 		opts.Chain = config.GetDefaultChain()
 	}

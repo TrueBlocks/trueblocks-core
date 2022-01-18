@@ -31,7 +31,7 @@ func BnFromName(chain, needle string) (uint64, bool) {
 		return rpcClient.GetMeta(chain, false).Latest, true
 	}
 
-	specials := GetSpecials(chain)
+	specials, _ := GetSpecials(chain)
 	for _, value := range specials {
 		if value.Name == needle {
 			return value.BlockNumber, true
@@ -65,7 +65,7 @@ func DateFromName(chain, needle string) time.Time {
 		return dt
 	}
 
-	specials := GetSpecials(chain)
+	specials, _ := GetSpecials(chain)
 	for _, value := range specials {
 		if value.Name == needle {
 			date, _ := DateFromBn(chain, value.BlockNumber)
@@ -89,7 +89,7 @@ func DateFromTs(ts uint64) (string, error) {
 
 // NameFromBn returns the block's chain-specific name (if found) given its block number
 func NameFromBn(chain string, needle uint64) (string, bool) {
-	specials := GetSpecials(chain)
+	specials, _ := GetSpecials(chain)
 	for _, value := range specials {
 		if value.BlockNumber == needle {
 			return value.Name, true

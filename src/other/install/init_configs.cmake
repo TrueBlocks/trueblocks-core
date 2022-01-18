@@ -85,7 +85,7 @@ CopyIgnorePresent (${INSTALL_SOURCE}/prices/            "poloniex_USDT_ETH.bin.g
 CopyIgnorePresent (${INSTALL_SOURCE}/prices/            "ts.bin.gz"                ${INSTALL_DEST}/config/mainnet/        )
 
 CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/mainnet  "allocs.csv"               ${INSTALL_DEST}/config/mainnet/        )
-# CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/mainnet  "specials.csv"             ${INSTALL_DEST}/config/mainnet/        )
+CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/mainnet  "specials.csv"             ${INSTALL_DEST}/config/mainnet/        )
 CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/fermion  "allocs.csv"               ${INSTALL_DEST}/config/fermion/        )
 CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/gnosis   "allocs.csv"               ${INSTALL_DEST}/config/gnosis/         )
 # CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/gnosis   "specials.csv"             ${INSTALL_DEST}/config/gnosis/         )

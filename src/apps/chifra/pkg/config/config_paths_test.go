@@ -51,7 +51,6 @@ func Test_GetPathTo(t *testing.T) {
 			testPath = GetPathToCache(test.chain) + test.part
 		} else if test.group == "Index" {
 			os.Setenv("XDG_CACHE_HOME", test.xdg)
-			// TODO: BOGUS
 			testPath = GetPathToIndex(test.chain) + test.part
 		}
 
