@@ -6,9 +6,6 @@ package tslibPkg
 
 import (
 	"testing"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
 
 func TestIsStringSpecialBlock(t *testing.T) {
