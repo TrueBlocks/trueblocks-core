@@ -6,6 +6,7 @@ package tslibPkg
 
 import (
 	"encoding/csv"
+	"errors"
 	"io"
 	"os"
 	"strconv"
@@ -51,6 +52,10 @@ func GetSpecials(chain string) ([]NamedBlock, error) {
 			})
 		}
 		first = false
+	}
+
+	if len(specials) == 0 {
+		return nil, errors.New("found no special blocks")
 	}
 
 	return specials, nil

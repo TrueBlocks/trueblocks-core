@@ -14,7 +14,7 @@ jobs:
       - name: Install prerequistes
         run: sudo apt-get install build-essential git cmake python python-dev libcurl3-dev clang-format tree jq
       - name: Build TrueBlocks
-        run: mkdir -p build && cd build && cmake ../src && make -j 4 && tree .. && tree ~/.local/share/trueblocks
+        run: mkdir -p build && cd build && cmake ../src && make -j 4 && tree ../src/other/install && tree ~/.config
   GoUnitTests:
     runs-on: ubuntu-latest
     needs: Build
@@ -24,7 +24,7 @@ jobs:
         with:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           go-version: "^1.16"
-      - run: tree .. && tree ~/.local/share/trueblocks && cd src/apps/chifra && go test ./...
+      - run: tree ../src/other/install && tree ~/.config && cd src/apps/chifra && go test ./...
   RemoteTests:
     needs: GoUnitTests
     runs-on: ubuntu-latest
