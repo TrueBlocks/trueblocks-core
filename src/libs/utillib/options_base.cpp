@@ -809,13 +809,17 @@ bool COptionsBase::findSpecial(CNameValue& pair, const string_q& arg) {
     if (specials.size() == 0) {
         CStringArray lines;
         asciiFileToLines(chainConfigsTxt_specials, lines);
+        bool first = true;
         for (auto line : lines) {
-            CKeyValue keyVal;
-            if (keyVal.parseJson3(line)) {
-                CNameValue pair = make_pair(keyVal.jsonrpc, keyVal.result);
-                specials.push_back(pair);
-                keyVal = CKeyValue();  // reset
+            if (!first) {
+                CStringArray fields;
+                explode(fields, line, ',');
+                if (fields.size() > 1) {
+                    CNameValue pp = make_pair(fields[1], fields[0]);
+                    specials.push_back(pp);
+                }
             }
+            first = false;
         }
         sort(specials.begin(), specials.end(), sortByValue);
     }
