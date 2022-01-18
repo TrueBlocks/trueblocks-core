@@ -6,7 +6,22 @@ package tslibPkg
 
 import (
 	"testing"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
+
+func TestLoadSpecials(t *testing.T) {
+	path := config.GetPathToChainConfig("mainnet")
+	t.Log("path: ", path)
+
+	specials, err := GetSpecials("mainnet")
+	if len(specials) == 0 {
+		t.Error("Could not load special blocks")
+	}
+	if err != nil {
+		t.Error(err)
+	}
+}
 
 func TestIsStringSpecialBlock(t *testing.T) {
 	result := IsSpecialBlock("mainnet", "devcon1")

@@ -24,7 +24,7 @@ jobs:
         with:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           go-version: "^1.16"
-      - run: env && tree src/other/install && tree ~/.config && tree ~/.local && cd src/apps/chifra && go test ./...
+      - run: env && tree src/other/install && tree ~/.config && tree ~/.local && cd src/apps/chifra && go test -v ./...
   RemoteTests:
     needs: GoUnitTests
     runs-on: ubuntu-latest
