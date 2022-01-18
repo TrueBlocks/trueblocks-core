@@ -7,9 +7,7 @@ package validate
 import (
 	"testing"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+	tslibPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 )
 
 func TestIsBlockHash(t *testing.T) {
@@ -54,10 +52,6 @@ func TestIsBlockNumber(t *testing.T) {
 }
 
 func TestIsSpecialBlock(t *testing.T) {
-	if noSpecialsFile() {
-		return
-	}
-
 	if tslibPkg.IsSpecialBlock("mainnet", "london byzantium") {
 		t.Error("Passes for invalid string (space)")
 	}
@@ -354,8 +348,4 @@ func TestValidateBlockIdentifiers(t *testing.T) {
 			}
 		})
 	}
-}
-
-func noSpecialsFile() bool {
-	return !file.FileExists(config.GetPathToChainConfig("mainnet") + "specials.csv")
 }

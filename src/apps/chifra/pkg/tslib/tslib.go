@@ -75,12 +75,6 @@ func DateFromName(chain, needle string) time.Time {
 	}
 
 	// default to first
-	if len(specials) == 0 {
-		date, _ := DateFromBn(chain, 0)
-		dt, _ := dateparse.ParseLocal(date)
-		return dt
-	}
-
 	dt, _ := dateparse.ParseLocal(specials[0].Date)
 	return dt
 }

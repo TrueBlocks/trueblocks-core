@@ -12,10 +12,6 @@ import (
 )
 
 func TestIsStringSpecialBlock(t *testing.T) {
-	if noSpecialFile() {
-		return
-	}
-
 	result := IsSpecialBlock("mainnet", "devcon1")
 	if !result {
 		t.Error("Fails for valid block name")
@@ -28,10 +24,6 @@ func TestIsStringSpecialBlock(t *testing.T) {
 }
 
 func TestGetNameByValue(t *testing.T) {
-	if noSpecialFile() {
-		return
-	}
-
 	name, found := NameFromBn("mainnet", 2463000)
 	if !found {
 		t.Error("Block name not found")
@@ -42,10 +34,6 @@ func TestGetNameByValue(t *testing.T) {
 }
 
 func TestGetValueByName(t *testing.T) {
-	if noSpecialFile() {
-		return
-	}
-
 	value, found := BnFromName("mainnet", "tangerine")
 	if !found {
 		t.Error("Block not found by name")
@@ -65,10 +53,6 @@ func TestGetValueByName(t *testing.T) {
 }
 
 func TestGetSpecials(t *testing.T) {
-	if noSpecialFile() {
-		return
-	}
-
 	specials, err := GetSpecials("mainnet")
 	if err != nil {
 		t.Error(err)
@@ -87,9 +71,4 @@ func TestGetSpecials(t *testing.T) {
 	// 		t.Error("Special block ", item.Name, " with zero timestamp")
 	// 	}
 	// }
-}
-
-func noSpecialFile() bool {
-	// The initial run of the go testing does not find this file. Let's not fail because of that
-	return !file.FileExists(config.GetPathToChainConfig("mainnet") + "specials.csv")
 }
