@@ -61,11 +61,11 @@ extern string_q getPathToIndex(const string_q& _part);
 #define indexFolder_map (indexFolder + "maps/")
 
 //---------------------------------------------------------------------------
-#define chainFolderTxt_allocs (chainConfigs_new + "allocs.csv")
-#define chainFolderTxt_names (chainConfigs_new + "names.tab")
-#define chainFolderTxt_namesCustom (chainConfigs_new + "names_custom.tab")
-#define chainFolderTxt_collections (chainConfigs_new + "collections.csv")
-#define chainFolderTxt_manifest (chainConfigs_manifest + "manifest.txt")
+#define chainConfigsTxt_allocs (chainConfigs_new + "allocs.csv")
+#define chainConfigsTxt_names (chainConfigs_new + "names.tab")
+#define chainConfigsTxt_namesCustom (chainConfigs_new + "names_custom.tab")
+#define chainConfigsTxt_collections (chainConfigs_new + "collections.csv")
+#define chainConfigsTxt_manifest (chainConfigs_manifest + "manifest.txt")
 
 //---------------------------------------------------------------------------
 #define chainFolderZip_prices (chainConfigs_new + "poloniex_USDT_ETH.bin.gz")

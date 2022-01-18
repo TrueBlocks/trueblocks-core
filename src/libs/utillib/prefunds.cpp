@@ -62,12 +62,12 @@ bool loadPrefundBalances(void) {
     }
 
     // TODO: Clean this up
-    string_q junk = chainFolderTxt_allocs;
+    string_q junk = chainConfigsTxt_allocs;
     if (isTestMode())
         junk = relativize(junk);
     LOG4("Reading CSV file ", junk);
     CStringArray lines;
-    asciiFileToLines(chainFolderTxt_allocs, lines);
+    asciiFileToLines(chainConfigsTxt_allocs, lines);
     if (lines.size() > 0) {
         for (auto line : lines) {
             if (startsWith(line, "0x")) {
@@ -79,7 +79,7 @@ bool loadPrefundBalances(void) {
             }
         }
     } else {
-        LOG_ERR("Got zero records from ", chainFolderTxt_allocs);
+        LOG_ERR("Got zero records from ", chainConfigsTxt_allocs);
     }
 
     establishFolder(cacheFolderBin_allocs);
@@ -170,11 +170,11 @@ bool readPrefundBals(void) {
 
 //-----------------------------------------------------------------------
 bool readPrefundAscii(void) {
-    if (!fileExists(chainFolderTxt_allocs))
+    if (!fileExists(chainConfigsTxt_allocs))
         return false;
 
     CStringArray lines;
-    asciiFileToLines(chainFolderTxt_allocs, lines);
+    asciiFileToLines(chainConfigsTxt_allocs, lines);
     for (auto line : lines) {
         if (startsWith(line, "0x")) {
             CStringArray parts;

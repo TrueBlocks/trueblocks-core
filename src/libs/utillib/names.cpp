@@ -95,8 +95,8 @@ static bool readNamesFromBinary(void) {
 
 //-----------------------------------------------------------------------
 static bool readNamesFromAscii(void) {
-    string_q txtFile = chainFolderTxt_names;
-    string_q customFile = chainFolderTxt_namesCustom;
+    string_q txtFile = chainConfigsTxt_names;
+    string_q customFile = chainConfigsTxt_namesCustom;
 
     CStringArray lines;
     asciiFileToLines(txtFile, lines);
@@ -169,7 +169,8 @@ bool loadNames(void) {
     }
 
     time_q binDate = fileLastModifyDate(cacheFolderBin_names);
-    time_q txtDate = laterOf(fileLastModifyDate(chainFolderTxt_names), fileLastModifyDate(chainFolderTxt_namesCustom));
+    time_q txtDate =
+        laterOf(fileLastModifyDate(chainConfigsTxt_names), fileLastModifyDate(chainConfigsTxt_namesCustom));
 
     if (txtDate < binDate) {
         if (!readNamesFromBinary())
