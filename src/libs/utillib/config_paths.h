@@ -64,6 +64,7 @@ extern string_q getPathToIndex(const string_q& _part);
 
 //---------------------------------------------------------------------------
 #define chainConfigsTxt_allocs (chainConfigs + "allocs.csv")
+#define chainConfigsTxt_specials (chainConfigs + "specials.csv")
 #define chainConfigsTxt_names (chainConfigs + "names.tab")
 #define chainConfigsTxt_namesCustom (chainConfigs + "names_custom.tab")
 #define chainConfigsTxt_collections (chainConfigs + "collections.csv")

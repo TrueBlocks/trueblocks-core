@@ -124,6 +124,7 @@ inline void CMeasure::initialize(void) {
     totSecs = 0.0;
 
     // EXISTING_CODE
+    // TODO: BOGUS
     chain = "mainnet";
     allPassed = false;
     // EXISTING_CODE

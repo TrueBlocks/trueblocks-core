@@ -807,14 +807,15 @@ CNameValueArray COptionsBase::specials;
 //--------------------------------------------------------------------------------
 bool COptionsBase::findSpecial(CNameValue& pair, const string_q& arg) {
     if (specials.size() == 0) {
-        specials.clear();
-        extern const char* STR_DEFAULT_WHENBLOCKS;
-        string_q specialsStr = STR_DEFAULT_WHENBLOCKS;
-        CKeyValue keyVal;
-        while (keyVal.parseJson3(specialsStr)) {
-            CNameValue pair = make_pair(keyVal.jsonrpc, keyVal.result);
-            specials.push_back(pair);
-            keyVal = CKeyValue();  // reset
+        CStringArray lines;
+        asciiFileToLines(chainConfigsTxt_specials, lines);
+        for (auto line : lines) {
+            CKeyValue keyVal;
+            if (keyVal.parseJson3(line)) {
+                CNameValue pair = make_pair(keyVal.jsonrpc, keyVal.result);
+                specials.push_back(pair);
+                keyVal = CKeyValue();  // reset
+            }
         }
         sort(specials.begin(), specials.end(), sortByValue);
     }
@@ -825,6 +826,7 @@ bool COptionsBase::findSpecial(CNameValue& pair, const string_q& arg) {
             return true;
         }
     }
+
     return false;
 }
 
@@ -906,42 +908,5 @@ string_q cleanFmt(const string_q& str) {
         ret = "\"" + substitute(ret, "\t", "\",\"") + "\"";
     return ret;
 }
-
-//-----------------------------------------------------------------------
-const char* STR_DEFAULT_WHENBLOCKS =
-    "[ "
-    "{ name: \"first\", value: 0 },"
-    "{ name: \"firstTrans\", value: 46147 },"
-    "{ name: \"firstContract\", value: 50111 },"
-    "{ name: \"iceage\", value: 200000 },"
-    "{ name: \"devcon1\", value: 543626 },"
-    "{ name: \"homestead\", value: 1150000 },"
-    "{ name: \"daofund\", value: 1428756 },"
-    "{ name: \"daohack\", value: 1718497 },"
-    "{ name: \"daofork\", value: 1920000 },"
-    "{ name: \"devcon2\", value: 2286910 },"
-    "{ name: \"tangerine\", value: 2463000 },"
-    "{ name: \"spurious\", value: 2675000 },"
-    "{ name: \"stateclear\", value: 2717576 },"
-    "{ name: \"eea\", value: 3265360 },"
-    "{ name: \"ens2\", value: 3327417 },"
-    "{ name: \"parityhack1\", value: 4041179 },"
-    "{ name: \"byzantium\", value: 4370000 },"
-    "{ name: \"devcon3\", value: 4469339 },"
-    "{ name: \"parityhack2\", value: 4501969 },"
-    "{ name: \"kitties\", value: 4605167 },"
-    "{ name: \"makerdao\", value: 4620855 },"
-    "{ name: \"devcon4\", value: 6610517 },"
-    "{ name: \"uniswap\", value: 6627917 },"
-    "{ name: \"constantinople\", value: 7280000 },"
-    "{ name: \"devcon5\", value: 8700401 },"
-    "{ name: \"mcdai\", value: 8928158 },"
-    "{ name: \"istanbul\", value: 9069000 },"
-    "{ name: \"muirglacier\", value: 9200000 },"
-    "{ name: \"berlin\", value: 12244000 },"
-    "{ name: \"london\", value: 12965000 },"
-    "{ name: \"arrowglacier\", value: 13773000 },"
-    "{ name: \"latest\", value:\"\" }"
-    "]";
 
 }  // namespace qblocks
