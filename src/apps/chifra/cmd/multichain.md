@@ -1,3 +1,5 @@
+WE SHOULD CREATE A STRUCTURE CALLED opts.Chain.Configs that then allows opts.Chain.Configs[tool][settings][key]
+MUST MAKE SURE BLOCKSCRAPE.TOML IS IN THE RIGHT PLACE
 MUST EDIT OUT THE TRUEBLOCKS.TOML FILE
 
 ### Steps to Migrate
@@ -18,11 +20,11 @@ MUST EDIT OUT THE TRUEBLOCKS.TOML FILE
 - [x] Rename all path routines from `getXXXPath` to `getPathToXXX` so we can find them more easily
 - [x] Put all the PathAccessor functions in a single file to better control them (one for .go, one for .cpp)
 - [x] Concentrate all changes to paths in the golang code, and send environment varaibles (current) or command line options (if needed) to cary paths to the C++ code.
-- [x] Add `[settings]chain=` option to trueBlocks.toml [No -- we don't want to do this. `--chain` is a command line option only with `mainnet` the default in absences of that option.]
+- [x] Add `[settings]chain=` option to trueBlocks.toml [No -- we don't want to do this. `--chain` is a command line option only with `main net` the default in absences of that option.]
 - [x] Make sure the three base routines that return paths return paths ending with '/' (dependant routines already do this).
 - [x] Add a global command line option `--chain`
 - [x] Use XDG spec for environment variables
-- [x] Expand performance testing to include chain (set to `mainnet` for all records)
+- [x] Expand performance testing to include chain (set to `main net` for all records)
 
 ### What We Need to Control
 ---
@@ -37,7 +39,7 @@ There are three values we need to control:
 - How do we get the value of `chain`?
   - Command line option only (this is already there)
   - Value is sent to C++ code in an environment variable
-  - if empty, set it to default `mainnet`
+  - if empty, set it to default `main net`
   - call this value `CHAIN`
 
 - Where are chain specific configurations?
@@ -46,7 +48,7 @@ There are three values we need to control:
     - `known` abi files (which remain correct even accross chains)
     - Always find these at `$TB_HOME/`
   - Otherwise chain specific configs are found at `$TB_HOME/config/$CHAIN/`
-  - Example: `$TB_HOME/config/mainnet/blockScrape.toml`
+  - Example: `$TB_HOME/config/main net/blockScrape.toml`
   - Users may place a config file at `$TB_HOME`. If found, it will be read first and chain-specific values will be 'overlayed' if present or appended if not.
 
 - Where are the chain-specific caches?
@@ -80,11 +82,11 @@ There are three values we need to control:
 - The installer will install a few config files on first build:
   - If there is no `$TB_HOME/abis` folder, fail
   - If there is no `$TB_HOME/config`, fail
-  - If there is no `$TB_HOME/config/mainnet`, fail
-  - If there is no `$TB_HOME/config/mainnet/manifest/`, fail
+  - If there is no `$TB_HOME/config/main net`, fail
+  - If there is no `$TB_HOME/config/main net/manifest/`, fail
   - Would be amazing if the rest of the configuration for a chain could be found in the manifest
-  - Alt: If there is no `$TB_HOME/config/mainnet/names/`, fail
-  - Alt: If there is no `$TB_HOME/config/mainnet/allocs/`, fail
+  - Alt: If there is no `$TB_HOME/config/main net/names/`, fail
+  - Alt: If there is no `$TB_HOME/config/main net/allocs/`, fail
 
 ### Format of new config file
 ---
@@ -94,7 +96,7 @@ There are three values we need to control:
 cachePath = ""           # defaults to $TB_HOME
 etherscan_key = ""
 
-[mainnet]
+[main net]
 rpcProvider = "http://localhost:8545"
 remoteExplorer = "http://etherscan.io"
 
@@ -105,25 +107,25 @@ remoteExplorer = ""
 
 ### Per-Chain Data
 
-| Chain Id | Chain     | Remote Explorer              | Erigon      | Genesis Hash (from Erigon)                                         |
-| -------- | --------- | ---------------------------- | ----------- | ------------------------------------------------------------------ |
-| 1        | mainnet   | https://etherscan.io         | mainnet     | 0xd4e56740f876aef8c010b86a40d5f56745a118d0906a34e69aec8c0db1cb8fa3 |
-| 3        | ropsten   | https://ropsten.etherscan.io | reposten    | 0x41941023680923e0fe4d74a34bdac8141f2540e3ae90623718e47d66d1ca4a2d |
-| 4        | rinkeby   | https://rinkeby.etherscan.io | rinkeby     | 0x6341fd3daf94b748c72ced5a5b26028f2474f5f00d824504e4fa37a75767e177 |
-| 5        | goerli    | https://goerli.etherscan.io  | goerli      | 0xbf7e331f7f7c1dd2e05159666b3bf8bc7a8a3a9eb1d518969eab529dd9b88c1a |
-| 42       | kovan     | https://kovan.etherscan.io   | kovan       | 0xa3c565fc15c7478862d50ccd6561e3c06b24cc509bf388941c25ea985ce32cb9 |
-|          |           | https://polygonscan.com      |             |                                                                    |
-| 56       |           | https://bscscan.com          | bsc-mainnet | 0x0d21840abff46b96c84b2ac9e10e4f5cdaeb5693cb665db62a2f3b02d2d57b5b |
-|          |           | https://hecoinfo.com         |             |                                                                    |
-|          |           |                              | erigonmine  | 0xfecd5c85712e36f30f09ba3a42386b42c46b5ba5395a4246b952e655f9aa0f58 |
-| 1212120  |           |                              | fermion     | 0x0658360d8680ead416900a552b67b84e6d575c7f0ecab3dbe42406f9f8c34c35 |
-| 77       |           |                              | sokol       | 0x5b28c1bfd3a15230c9a46b399cd0f9a6920d432e85381cc6a140b06e8410112f |
-|          |           |                              | yolov3      |                                                                    |
-| 97       |           |                              | chapel?     | 0x6d3c66c5357ec91d5c43af47e234a939b22557cbb552dc45bebbceeed90fbe34 |
-| 1417     |           |                              | rialto?     | 0x005dc005bddd1967de6187c1c23be801eb7abdd80cebcc24f341b727b70311d6 |
-|          | gnosis    |                              |             | 0x4f1dd23188aab3a76b463e4af801b52b1248ef073c648cbdc4c9333d3da79756 |
-|          | polkadot? |                              |             | ???                                                                |
-|          | filecoin? |                              |             | ???                                                                |
+| Chain Id | Chain     | Remote Explorer              | Erigon       | Genesis Hash (from Erigon)                                         |
+| -------- | --------- | ---------------------------- | ------------ | ------------------------------------------------------------------ |
+| 1        | main net  | https://etherscan.io         | main net     | 0xd4e56740f876aef8c010b86a40d5f56745a118d0906a34e69aec8c0db1cb8fa3 |
+| 3        | ropsten   | https://ropsten.etherscan.io | reposten     | 0x41941023680923e0fe4d74a34bdac8141f2540e3ae90623718e47d66d1ca4a2d |
+| 4        | rinkeby   | https://rinkeby.etherscan.io | rinkeby      | 0x6341fd3daf94b748c72ced5a5b26028f2474f5f00d824504e4fa37a75767e177 |
+| 5        | goerli    | https://goerli.etherscan.io  | goerli       | 0xbf7e331f7f7c1dd2e05159666b3bf8bc7a8a3a9eb1d518969eab529dd9b88c1a |
+| 42       | kovan     | https://kovan.etherscan.io   | kovan        | 0xa3c565fc15c7478862d50ccd6561e3c06b24cc509bf388941c25ea985ce32cb9 |
+|          |           | https://polygonscan.com      |              |                                                                    |
+| 56       |           | https://bscscan.com          | bsc-main net | 0x0d21840abff46b96c84b2ac9e10e4f5cdaeb5693cb665db62a2f3b02d2d57b5b |
+|          |           | https://hecoinfo.com         |              |                                                                    |
+|          |           |                              | erigonmine   | 0xfecd5c85712e36f30f09ba3a42386b42c46b5ba5395a4246b952e655f9aa0f58 |
+| 1212120  |           |                              | fermion      | 0x0658360d8680ead416900a552b67b84e6d575c7f0ecab3dbe42406f9f8c34c35 |
+| 77       |           |                              | sokol        | 0x5b28c1bfd3a15230c9a46b399cd0f9a6920d432e85381cc6a140b06e8410112f |
+|          |           |                              | yolov3       |                                                                    |
+| 97       |           |                              | chapel?      | 0x6d3c66c5357ec91d5c43af47e234a939b22557cbb552dc45bebbceeed90fbe34 |
+| 1417     |           |                              | rialto?      | 0x005dc005bddd1967de6187c1c23be801eb7abdd80cebcc24f341b727b70311d6 |
+|          | gnosis    |                              |              | 0x4f1dd23188aab3a76b463e4af801b52b1248ef073c648cbdc4c9333d3da79756 |
+|          | polkadot? |                              |              | ???                                                                |
+|          | filecoin? |                              |              | ???                                                                |
 
 ### Existing Paths
 
@@ -161,7 +163,7 @@ remoteExplorer = ""
 ### Open Questions
 ----
 - What about the bytzantium hard fork -- block number specific behaviour?
-- What about 'status' on pre-byzantium receipts on non-mainnet chains?
+- What about 'status' on pre-byzantium receipts on non-main net chains?
 - Never call it xDAI. Call it gnosos
 - We should be able to remove the 'requires' options (tracing, parity -- balances already removed) in blockScrape.toml
 - Chain specific data:
@@ -174,15 +176,15 @@ remoteExplorer = ""
   - The unchained index smart contract needs chain id
   - `chifra --chain xdai explore` should go to a different server
   - `chifra slurp` won't work with --chain
-  - `chifra when --list` is mainnet centric
+  - `chifra when --list` is main net centric
 - We need to fix the install files. XDG is present, but does it work?
 - The prefund values per chain are in the repo but not being used
 - Can we use chain ids to verify that the RPC points to the same chain we are being told it is?
 - Private networks have a real problem with 'front of chain' because almost all of the thing is front of chain
-- Uniswap pricing of reconciliations obviously doesn't work on non-mainnet.
-- Test ABI generation for non-mainnet chains
+- Uniswap pricing of reconciliations obviously doesn't work on non-main net.
+- Test ABI generation for non-main net chains
 - Check out https://github.com/symblox/hardhat-abi-gen for ABI generation from Solidity code
-- The server wants to run against the base configuration (i.e. mainnet). This is another reason why --chain must be a global option. Otherwise, we would have to run multiple servers. As a result -- we want to disable the `--chain` option for `chifra serve` (probably other things as well)
+- The server wants to run against the base configuration (i.e. main net). This is another reason why --chain must be a global option. Otherwise, we would have to run multiple servers. As a result -- we want to disable the `--chain` option for `chifra serve` (probably other things as well)
 - Search for IndexPath, CachePath in golang code
 - Blaze has command line options to explicitly take the paths
 - We used to preclude the user from customizing an indexPath if it doesn't exist

@@ -1,22 +1,28 @@
 #---------------------------------------------------------------
+if(NOT WIN32)
+  string(ASCII 27 Esc)
+  set(COff    "${Esc}[m")
+  # set(CColor  "${Esc}[1;37m") bright white
+  set(CColor "${Esc}[1;35m") #magenta
+endif()
 function(PrintLine MSG1)
   message(STATUS ${MSG1})
 endfunction(PrintLine)
 function(CopyNotPresent FROM_DIR IN_FILE TO_DIR)
 	if (NOT EXISTS "${TO_DIR}/${IN_FILE}")
-		PrintLine("   Copying ./${IN_FILE} to ${TO_DIR}")
+		PrintLine("   ${CColor}Copying ./${IN_FILE} to ${TO_DIR}${COff}")
 		file(COPY "${FROM_DIR}/${IN_FILE}" DESTINATION "${TO_DIR}" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 	else()
-		PrintLine("   Not copying ./${IN_FILE}, already present")
+		PrintLine("   ${CColor}Not copying ./${IN_FILE}, already present${COff}")
 	endif()
 endfunction(CopyNotPresent)
 function(CopyIgnorePresent FROM_DIR IN_FILE TO_DIR)
-	PrintLine("   Copying ./${IN_FILE} to ${TO_DIR}")
+	PrintLine("   ${CColor}Copying ./${IN_FILE} to ${TO_DIR}${COff}")
 	file(COPY "${FROM_DIR}/${IN_FILE}" DESTINATION "${TO_DIR}" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 endfunction(CopyIgnorePresent)
 function(CopyFolder FROM_DIR TO_DIR)
 	STRING(REGEX REPLACE ${INSTALL_SOURCE} "." FROM_STR ${FROM_DIR})
-	PrintLine("   Copying ${FROM_STR}* to ${TO_DIR}")
+	PrintLine("   ${CColor}Copying ${FROM_STR}* to ${TO_DIR}${COff}")
 	file(GLOB TARGET_FILES "${FROM_DIR}/*")
 	foreach(FILE ${TARGET_FILES} )
 		file(COPY "${FILE}" DESTINATION "${TO_DIR}/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
@@ -40,12 +46,12 @@ endif()
 
 #---------------------------------------------------------------
 PrintLine("Building...")
-PrintLine("   from: ${INSTALL_SOURCE}")
-PrintLine("   to:   ${INSTALL_DEST}")
+PrintLine("   ${CColor}from: ${INSTALL_SOURCE}${COff}")
+PrintLine("   ${CColor}to:   ${INSTALL_DEST}${COff}")
 
 #---------------------------------------------------------------
 PrintLine("Creating folders...")
-PrintLine("   folders: abis, cache, config, unchained")
+PrintLine("   ${CColor}folders: abis, cache, config, unchained${COff}")
 
 file(MAKE_DIRECTORY "${INSTALL_DEST}")
 file(MAKE_DIRECTORY "${INSTALL_DEST}/cache")
@@ -68,7 +74,7 @@ PrintLine("Copying files and folder to config...")
 #---------------------------------------------------------------
 # Function        InFolder                              InFile                     OutFolder
 CopyNotPresent    (${INSTALL_SOURCE}                    "trueBlocks.toml"          ${INSTALL_DEST}                        )
-CopyNotPresent    (${INSTALL_SOURCE}/manifest/          "manifest.txt"             ${INSTALL_DEST}/manifest/              )
+CopyNotPresent    (${INSTALL_SOURCE}/manifest/          "manifest.txt"             ${INSTALL_DEST}/config/mainnet/        )
 CopyNotPresent    (${INSTALL_SOURCE}/names/             "names_custom.tab"         ${INSTALL_DEST}/config/mainnet/        )
 CopyNotPresent    (${INSTALL_SOURCE}/names/             "collections.csv"          ${INSTALL_DEST}/config/mainnet/        )
 CopyNotPresent    (${INSTALL_SOURCE}/                   "ethslurp.toml"            ${INSTALL_DEST}/config/mainnet/        )
@@ -95,8 +101,8 @@ CopyFolder        (${INSTALL_SOURCE}/abis/known-015/                            
 
 #---------------------------------------------------------------
 PrintLine("Removing files...")
-PrintLine("   ${INSTALL_DEST}/cache/names/names.bin")
-PrintLine("   ${INSTALL_DEST}/cache/abis/known.bin")
+PrintLine("   ${CColor}${INSTALL_DEST}/cache/names/names.bin${COff}")
+PrintLine("   ${CColor}${INSTALL_DEST}/cache/abis/known.bin${COff}")
 file(REMOVE "${INSTALL_DEST}/cache/names/names.bin")
 file(REMOVE "${INSTALL_DEST}/cache/names/names_prefunds_bals.bin")
 file(REMOVE "${INSTALL_DEST}/cache/allocs.bin")

@@ -24,17 +24,15 @@ func (opts *PinsOptions) InitInternal() error {
 
 	opts.PrintManifestHeader()
 
-	logger.Log(logger.Info, "Calling unchained index smart contract")
-
 	// Fetch manifest's CID
-	cid, err := pinlib.GetManifestCidFromContract()
+	cid, err := pinlib.GetManifestCidFromContract(opts.Globals.Chain)
 	if err != nil {
 		return err
 	}
 	logger.Log(logger.Info, "Unchained index returned CID", cid)
 
 	// Download the manifest
-	gatewayUrl := config.ReadBlockScrape().Dev.IpfsGateway
+	gatewayUrl := config.ReadBlockScrape(opts.Globals.Chain).Dev.IpfsGateway
 	logger.Log(logger.Info, "IPFS gateway", gatewayUrl)
 
 	url, err := url.Parse(gatewayUrl)
@@ -49,7 +47,7 @@ func (opts *PinsOptions) InitInternal() error {
 	}
 
 	// Save manifest
-	manifestPath := config.GetPathToChainConfig_newOff() + "manifest/manifest.txt"
+	manifestPath := config.GetPathToChainConfig(opts.Globals.Chain) + "manifest/manifest.txt"
 	err = pinlib.SaveManifest(manifestPath, downloadedManifest)
 	if err != nil {
 		return err
@@ -65,7 +63,7 @@ func (opts *PinsOptions) InitInternal() error {
 	getChunks := func(chunkType cache.CacheType) {
 		chunkPath := &cache.Path{}
 		chunkPath.New(opts.Globals.Chain, chunkType)
-		failedChunks, cancelled := downloadAndReportProgress(downloadedManifest.NewPins, chunkPath)
+		failedChunks, cancelled := downloadAndReportProgress(opts.Globals.Chain, downloadedManifest.NewPins, chunkPath)
 
 		if cancelled {
 			// We don't want to retry if the user has cancelled
@@ -75,7 +73,7 @@ func (opts *PinsOptions) InitInternal() error {
 		if len(failedChunks) > 0 {
 			retry(failedChunks, 3, func(pins []manifest.PinDescriptor) ([]manifest.PinDescriptor, bool) {
 				logger.Log(logger.Info, "Retrying", len(pins), "bloom(s)")
-				return downloadAndReportProgress(pins, chunkPath)
+				return downloadAndReportProgress(opts.Globals.Chain, pins, chunkPath)
 			})
 		}
 	}
@@ -102,7 +100,7 @@ func (opts *PinsOptions) InitInternal() error {
 type downloadFunc func(pins []manifest.PinDescriptor) (failed []manifest.PinDescriptor, cancelled bool)
 
 // Downloads chunks and report progress
-func downloadAndReportProgress(pins []manifest.PinDescriptor, chunkPath *cache.Path) ([]manifest.PinDescriptor, bool) {
+func downloadAndReportProgress(chain string, pins []manifest.PinDescriptor, chunkPath *cache.Path) ([]manifest.PinDescriptor, bool) {
 	chunkTypeToDescription := map[cache.CacheType]string{
 		cache.BloomChunk: "bloom",
 		cache.IndexChunk: "index",
@@ -112,7 +110,7 @@ func downloadAndReportProgress(pins []manifest.PinDescriptor, chunkPath *cache.P
 	progressChannel := progress.MakeChan()
 	defer close(progressChannel)
 
-	go chunk.GetChunksFromRemote(pins, chunkPath, progressChannel)
+	go chunk.GetChunksFromRemote(chain, pins, chunkPath, progressChannel)
 
 	var pinsDone uint
 
@@ -192,6 +190,6 @@ func (opts *PinsOptions) PrintManifestHeader() {
 	// TODO: This needs to be per chain data
 	logger.Log(logger.Info, "hashToIndexFormatFile:", "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2")
 	logger.Log(logger.Info, "hashToBloomFormatFile:", "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD")
-	logger.Log(logger.Info, "unchainedIndexAddr:", pinlib.GetUnchainedIndexAddress())
-	logger.Log(logger.Info, "manifestHashEncoding:", pinlib.GetManifestHashEncoding())
+	logger.Log(logger.Info, "manifestHashEncoding:", config.ReadBlockScrape(opts.Globals.Chain).UnchainedIndex.ManifestHashEncoding)
+	logger.Log(logger.Info, "unchainedIndexAddr:", config.ReadBlockScrape(opts.Globals.Chain).UnchainedIndex.Address)
 }

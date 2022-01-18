@@ -27,7 +27,7 @@ func (opts *AbisOptions) FindInternal() error {
 	var results []Function
 
 	var wg sync.WaitGroup
-	checkOne, _ := ants.NewPoolWithFunc(config.ReadBlockScrape().Dev.MaxPoolSize, func(testSig interface{}) {
+	checkOne, _ := ants.NewPoolWithFunc(config.ReadBlockScrape(opts.Globals.Chain).Dev.MaxPoolSize, func(testSig interface{}) {
 		defer wg.Done()
 		byts := []byte(testSig.(string))
 		sigBytes := crypto.Keccak256(byts)

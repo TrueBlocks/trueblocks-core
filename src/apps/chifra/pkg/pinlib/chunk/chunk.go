@@ -206,8 +206,8 @@ func getWriteWorker(arguments WriteWorkerArguments) WorkerFunction {
 
 // GetChunksFromRemote downloads, unzips and saves the chunk of type indicated by chunkType
 // for each pin in pins. Progress is reported to progressChannel.
-func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkPath *cache.Path, progressChannel chan<- *progress.Progress) {
-	poolSize := config.ReadBlockScrape().Dev.MaxPoolSize
+func GetChunksFromRemote(chain string, pins []manifest.PinDescriptor, chunkPath *cache.Path, progressChannel chan<- *progress.Progress) {
+	poolSize := config.ReadBlockScrape(chain).Dev.MaxPoolSize
 	// Downloaded content will wait for saving in this channel
 	writeChannel := make(chan *jobResult, poolSize)
 	// Context lets us handle Ctrl-C easily
@@ -223,7 +223,7 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkPath *cache.Path, p
 		chunkPath:       chunkPath,
 		ctx:             ctx,
 		downloadWg:      &downloadWg,
-		gatewayUrl:      config.ReadBlockScrape().Dev.IpfsGateway,
+		gatewayUrl:      config.ReadBlockScrape(chain).Dev.IpfsGateway,
 		progressChannel: progressChannel,
 		writeChannel:    writeChannel,
 	}

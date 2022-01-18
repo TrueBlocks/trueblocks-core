@@ -91,8 +91,8 @@ func ReadTabManifest(r io.Reader) (*Manifest, error) {
 }
 
 // FromLocalFile loads the manifest saved in ConfigPath
-func FromLocalFile() (*Manifest, error) {
-	manifestPath := config.GetPathToChainConfig_newOff() + "manifest/manifest.txt"
+func FromLocalFile(chain string) (*Manifest, error) {
+	manifestPath := config.GetPathToChainConfig(chain) + "manifest/manifest.txt"
 	file, err := os.Open(manifestPath)
 	if err != nil {
 		return nil, err

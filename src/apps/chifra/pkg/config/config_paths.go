@@ -20,8 +20,8 @@ var OsToPath = map[string]string{
 	"darwin": "Library/Application Support/TrueBlocks",
 }
 
-// GetPathToChainConfig_newOff returns the chain-specific config folder
-func GetPathToChainConfig_newOff() string {
+// GetPathToChainConfig returns the chain-specific config folder
+func GetPathToChainConfig(chain string) string {
 	ret := GetPathToRootConfig()
 	return ret
 }
