@@ -54,10 +54,7 @@ func TestIsBlockNumber(t *testing.T) {
 }
 
 func TestIsSpecialBlock(t *testing.T) {
-	if !file.FileExists(config.GetPathToChainConfig("mainnet") + "specials.csv") {
-		// The first auto test after update to new folder structure fails
-		// if this file is not present. Once the build finishes, this will be
-		// here and the test will proceed.
+	if noSpecialsFile() {
 		return
 	}
 
@@ -357,4 +354,8 @@ func TestValidateBlockIdentifiers(t *testing.T) {
 			}
 		})
 	}
+}
+
+func noSpecialsFile() bool {
+	return !file.FileExists(config.GetPathToChainConfig("mainnet") + "specials.csv")
 }

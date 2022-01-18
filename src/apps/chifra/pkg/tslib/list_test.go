@@ -12,10 +12,7 @@ import (
 )
 
 func TestIsStringSpecialBlock(t *testing.T) {
-	if !file.FileExists(config.GetPathToChainConfig("mainnet") + "specials.csv") {
-		// The first auto test after update to new folder structure fails
-		// if this file is not present. Once the build finishes, this will be
-		// here and the test will proceed.
+	if noSpecialFile() {
 		return
 	}
 
@@ -31,6 +28,10 @@ func TestIsStringSpecialBlock(t *testing.T) {
 }
 
 func TestGetNameByValue(t *testing.T) {
+	if noSpecialFile() {
+		return
+	}
+
 	name, found := NameFromBn("mainnet", 2463000)
 	if !found {
 		t.Error("Block name not found")
@@ -41,10 +42,7 @@ func TestGetNameByValue(t *testing.T) {
 }
 
 func TestGetValueByName(t *testing.T) {
-	if !file.FileExists(config.GetPathToChainConfig("mainnet") + "specials.csv") {
-		// The first auto test after update to new folder structure fails
-		// if this file is not present. Once the build finishes, this will be
-		// here and the test will proceed.
+	if noSpecialFile() {
 		return
 	}
 
@@ -67,10 +65,7 @@ func TestGetValueByName(t *testing.T) {
 }
 
 func TestGetSpecials(t *testing.T) {
-	if !file.FileExists(config.GetPathToChainConfig("mainnet") + "specials.csv") {
-		// The first auto test after update to new folder structure fails
-		// if this file is not present. Once the build finishes, this will be
-		// here and the test will proceed.
+	if noSpecialFile() {
 		return
 	}
 
@@ -92,4 +87,9 @@ func TestGetSpecials(t *testing.T) {
 	// 		t.Error("Special block ", item.Name, " with zero timestamp")
 	// 	}
 	// }
+}
+
+func noSpecialFile() bool {
+	// The initial run of the go testing does not find this file. Let's not fail because of that
+	return !file.FileExists(config.GetPathToChainConfig("mainnet") + "specials.csv")
 }
