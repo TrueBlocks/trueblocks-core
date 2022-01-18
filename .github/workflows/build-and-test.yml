@@ -16,7 +16,7 @@ jobs:
       - name: Build TrueBlocks
         run: mkdir -p build && cd build && cmake ../src && make -j 4 && tree ../src/other/install && tree ~/.config && cd ../src/apps/chifra && go test -v ./...
   RemoteTests:
-    needs: BuildAndTest
+    needs: Build
     runs-on: ubuntu-latest
     steps:
       - name: Run tests remotely
