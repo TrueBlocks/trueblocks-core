@@ -2,6 +2,18 @@ names?tags
 {
   "data": [
     {
+      "tags": "30-Contract:Optimism Goerli"
+    },
+    {
+      "tags": "30-Contract:Optimism Kovan"
+    },
+    {
+      "tags": "30-Contract:Optimism Mainnet"
+    },
+    {
+      "tags": "30-Contract:Optimism Predepoly"
+    },
+    {
       "tags": "30-Contracts"
     },
     {
@@ -75,9 +87,6 @@ names?tags
     },
     {
       "tags": "34-ENS"
-    },
-    {
-      "tags": "37-Bridges"
     },
     {
       "tags": "37-SelfDestructed"

@@ -1,6 +1,10 @@
 chifra  names --tags
 TEST[DATE|TIME] Tags:  true
 tags
+30-Contract:Optimism Goerli
+30-Contract:Optimism Kovan
+30-Contract:Optimism Mainnet
+30-Contract:Optimism Predepoly
 30-Contracts
 30-Contracts:Balancer
 30-Contracts:Chainlink
@@ -26,7 +30,6 @@ tags
 31-Gitcoin:Team
 31-Gitcoin:Workstreams
 34-ENS
-37-Bridges
 37-SelfDestructed
 39-Yearn
 40-Exchanges
