@@ -40,3 +40,10 @@ func Test_ReadTrueBlocks(t *testing.T) {
 		t.Error("IndexPath is not an absolute path")
 	}
 }
+
+// func Test_TestKeys(t *testing.T) {
+// 	unused := readTrueBlocks()
+// 	settings := trueBlocksViper.Get("settings")
+// 	t.Log(settings)
+// 	t.Log(unused)
+// }

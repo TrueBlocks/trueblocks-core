@@ -13,6 +13,7 @@ import (
 	"github.com/spf13/viper"
 )
 
+// TODO: BOGUS - THIS IS OKAY SINCE THERE'S ONLY ONE OF THESE
 var trueBlocksViper = viper.New()
 var trueBlocksRead = false
 var cachedTrueBlocksConfig TrueBlocksConfig

@@ -12,6 +12,7 @@ import (
 	"github.com/spf13/viper"
 )
 
+// TODO: BOGUS - PROBABLY NOT OKAY SINCE IT IS PER-CHAIN
 var blockScrapeViper = viper.New()
 var blockScrapeRead = false
 var cachedBlockScrape BlockScrape
