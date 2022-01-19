@@ -11,10 +11,10 @@ import (
 )
 
 func TestLoadSpecials(t *testing.T) {
-	path := config.GetPathToChainConfig("mainnet")
+	path := config.GetPathToChainConfig(GetTestChain())
 	t.Log("path: ", path)
 
-	specials, err := GetSpecials("mainnet")
+	specials, err := GetSpecials(GetTestChain())
 	if len(specials) == 0 {
 		t.Error("Could not load special blocks")
 	}
@@ -24,19 +24,19 @@ func TestLoadSpecials(t *testing.T) {
 }
 
 func TestIsStringSpecialBlock(t *testing.T) {
-	result := IsSpecialBlock("mainnet", "devcon1")
+	result := IsSpecialBlock(GetTestChain(), "devcon1")
 	if !result {
 		t.Error("Fails for valid block name")
 	}
 
-	shouldBeFalse := IsSpecialBlock("mainnet", "nosuchblock")
+	shouldBeFalse := IsSpecialBlock(GetTestChain(), "nosuchblock")
 	if shouldBeFalse {
 		t.Error("Passes for invalid block name")
 	}
 }
 
 func TestGetNameByValue(t *testing.T) {
-	name, found := NameFromBn("mainnet", 2463000)
+	name, found := NameFromBn(GetTestChain(), 2463000)
 	if !found {
 		t.Error("Block name not found")
 	}
@@ -46,7 +46,7 @@ func TestGetNameByValue(t *testing.T) {
 }
 
 func TestGetValueByName(t *testing.T) {
-	value, found := BnFromName("mainnet", "tangerine")
+	value, found := BnFromName(GetTestChain(), "tangerine")
 	if !found {
 		t.Error("Block not found by name")
 	}
@@ -54,7 +54,7 @@ func TestGetValueByName(t *testing.T) {
 		t.Errorf("Wrong value: %d", value)
 	}
 
-	_, found = BnFromName("mainnet", "latest")
+	_, found = BnFromName(GetTestChain(), "latest")
 	if !found {
 		t.Error("Latest block not found")
 	}
@@ -65,7 +65,7 @@ func TestGetValueByName(t *testing.T) {
 }
 
 func TestGetSpecials(t *testing.T) {
-	specials, err := GetSpecials("mainnet")
+	specials, err := GetSpecials(GetTestChain())
 	if err != nil {
 		t.Error(err)
 	}
@@ -83,4 +83,10 @@ func TestGetSpecials(t *testing.T) {
 	// 		t.Error("Special block ", item.Name, " with zero timestamp")
 	// 	}
 	// }
+}
+
+// GetTestChain is duplicated in multiple packages to avoid dependancies. See
+// https://stackoverflow.com/questions/49789055/
+func GetTestChain() string {
+	return "mainnet"
 }

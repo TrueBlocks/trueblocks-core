@@ -6,7 +6,6 @@ MUST EDIT OUT THE TRUEBLOCKS.TOML FILE
 ### Steps to Migrate
 ---
 - [ ] The CheckMigrations routine should fail if the migration isn't complete
-- [ ] We need to use the `--chain` option when building paths
 - [ ] Some of the `cmake` files and the `make install` may need to be modified.
 - [ ] Some of the files and scripts in `build_assets` may have to be re-worked
 - [ ] We need to document the way these paths work in the website (search for XDG to find out where)
@@ -18,8 +17,9 @@ MUST EDIT OUT THE TRUEBLOCKS.TOML FILE
 
 ### Steps to Migrate (completed)
 ---
+- [x] We need to use the `--chain` option when building paths
 - [x] Rename all path routines from `getXXXPath` to `getPathToXXX` so we can find them more easily
-- [x] Put all the PathAccessor functions in a single file to better control them (one for .go, one for .cpp)
+- [x] Put all the path related functions in a single file to better control them (one for .go, one for .cpp)
 - [x] Concentrate all changes to paths in the golang code, and send environment varaibles (current) or command line options (if needed) to cary paths to the C++ code.
 - [x] Add `[settings]chain=` option to trueBlocks.toml [No -- we don't want to do this. `--chain` is a command line option only with `main net` the default in absences of that option.]
 - [x] Make sure the three base routines that return paths return paths ending with '/' (dependant routines already do this).

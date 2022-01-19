@@ -14,7 +14,7 @@ type Timestamp struct {
 	Ts uint32 `json:"ts"`
 }
 
-// TODO: BOGUS -- this will help us make timestamps per-chain
+// TODO: BOGUS-TIMESTAMPS
 type TimestampDatabase struct {
 	loaded bool
 	count  uint64

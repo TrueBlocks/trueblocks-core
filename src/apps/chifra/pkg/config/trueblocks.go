@@ -71,7 +71,7 @@ func readTrueBlocks() *TrueBlocksConfig {
 		// only then can we complete these paths. At this point these paths
 		// only point to the top-levl of the cache or index. Also note that
 		// these two calls do not return if they fail, so no need to handle errors
-		// TODO: BOGUS
+		// TODO: BOGUS-DEFAULTCHAIN
 		defaultChains := []string{GetDefaultChain()}
 		file.EstablishFolders(cachedTrueBlocksConfig.Settings.CachePath, defaultChains)
 		file.EstablishFolders(cachedTrueBlocksConfig.Settings.IndexPath, defaultChains)
@@ -83,6 +83,11 @@ func readTrueBlocks() *TrueBlocksConfig {
 }
 
 func GetDefaultChain() string {
-    // TODO: BOGUS
+	// TODO: BOGUS-DEFAULTCHAIN
+	return "mainnet"
+}
+
+func GetTestChain() string {
+	// TODO: BOGUS-DEFAULTCHAIN
 	return "mainnet"
 }

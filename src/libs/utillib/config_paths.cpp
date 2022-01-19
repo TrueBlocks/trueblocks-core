@@ -23,9 +23,7 @@
 
 namespace qblocks {
 
-// TODO: Search for PathAccessor
-
-// TODO: This can be removed once multi-chain works
+// TODO: Search for BOGUS
 //---------------------------------------------------------------------------------------------------
 #define TEST_PATH(path, part, type)                                                                                    \
     if (!isTestMode()) {                                                                                               \
@@ -55,7 +53,6 @@ string_q getPathToChainConfig(const string_q& _part) {
 }
 
 //---------------------------------------------------------------------------------------------------
-// TODO(tjayrush): Remove this comment once multi-path works - PathAccessor
 static string_q g_configPath;
 string_q getPathToRootConfig(const string_q& _part) {
     if (!g_configPath.empty())
@@ -67,7 +64,6 @@ string_q getPathToRootConfig(const string_q& _part) {
 }
 
 //-------------------------------------------------------------------------
-// TODO(tjayrush): Remove this comment once multi-path works - PathAccessor
 static string_q g_cachePath;
 string_q getPathToCache(const string_q& _part) {
     if (!g_cachePath.empty())
@@ -79,7 +75,6 @@ string_q getPathToCache(const string_q& _part) {
 }
 
 //-------------------------------------------------------------------------
-// TODO(tjayrush): Remove this comment once multi-path works - PathAccessor
 static string_q g_indexPath;
 string_q getPathToIndex(const string_q& _part) {
     if (!g_indexPath.empty())
@@ -96,11 +91,11 @@ string_q getPathToCommands(const string_q& _part) {
 }
 
 //-------------------------------------------------------------------------
-// TODO(tjayrush): Remove this comment once multi-path works - PathAccessor
 void loadEnvironmentPaths(void) {
-    // This is only called by makeClass and testRunner (the only two tools that do not run through chifra). It
-    // mimics the way chifra works to build the configPath so these two tools will run. It ignore the
-    // `chain` parameter that is used to build these paths in `chifra` as these two tools don't need them.
+    // This is only called by makeClass and testRunner (the only two tools that do not run
+    // through chifra). It mimics the way chifra works to build the configPath so these
+    // two tools will run. We can ignore the `chain` parameter that is used to build
+    // these paths in `chifra` as these two tools don't need them.
 #if defined(__linux) || defined(__linux__) || defined(linux) || defined(__unix) || defined(__unix__)
     string_q configPath = getHomeFolder() + ".local/share/trueblocks/";
 #elif defined(__APPLE__) || defined(__MACH__)
@@ -111,7 +106,7 @@ void loadEnvironmentPaths(void) {
     ::setenv("TB_CONFIG_PATH", configPath.c_str(), true);
     ::setenv("TB_CHAIN_CONFIG_PATH", (configPath + "config/mainnet/").c_str(), true);
     ::setenv("TB_CACHE_PATH", (configPath + "cache/mainnet/").c_str(), true);
-    // TODO: BOGUS
+    // TODO: BOGUS-INDEXPATH
     // ::setenv("TB_INDEX_PATH", (configPath + "unchained/mainnet/").c_str(), true);
     ::setenv("TB_INDEX_PATH", (configPath + "unchained/").c_str(), true);
 }

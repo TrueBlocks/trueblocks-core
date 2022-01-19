@@ -22,7 +22,6 @@ var OsToPath = map[string]string{
 
 // GetPathToChainConfig returns the chain-specific config folder
 func GetPathToChainConfig(chain string) string {
-	// TODO: BOGUS
 	if len(chain) == 0 {
 		chain = GetDefaultChain()
 	}
@@ -30,7 +29,6 @@ func GetPathToChainConfig(chain string) string {
 	return path.Join(ret, "config/", chain) + "/"
 }
 
-// TODO: Search for PathAccessor
 // GetPathToRootConfig returns the path where to find configuration files
 func GetPathToRootConfig() string {
 	xdg := os.Getenv("XDG_CONFIG_HOME")
@@ -51,7 +49,6 @@ func GetPathToRootConfig() string {
 // GetPathToIndex returns the one and only cachePath
 func GetPathToIndex(chain string) string {
 	if len(chain) == 0 {
-		// TODO: BOGUS
 		chain = GetDefaultChain()
 	}
 	newPath := ""
@@ -63,7 +60,7 @@ func GetPathToIndex(chain string) string {
 		newPath = path.Join(xdg, chain) + "/"
 	} else {
 		indexPath := readTrueBlocks().Settings.IndexPath
-		// TODO: BOGUS
+		// TODO: BOGUS-INDEXPATH
 		newPath = path.Join(indexPath) + "/"
 		// newPath = path.Join(indexPath, chain) + "/"
 	}
@@ -74,7 +71,6 @@ func GetPathToIndex(chain string) string {
 // GetPathToIndex returns the one and only cachePath
 func GetPathToIndex1(chain string) string {
 	if len(chain) == 0 {
-		// TODO: BOGUS
 		chain = GetDefaultChain()
 	}
 	newPath := ""
@@ -95,7 +91,6 @@ func GetPathToIndex1(chain string) string {
 // GetPathToCache returns the one and only cachePath
 func GetPathToCache(chain string) string {
 	if len(chain) == 0 {
-		// TODO: BOGUS
 		chain = GetDefaultChain()
 	}
 	newPath := ""

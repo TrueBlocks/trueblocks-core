@@ -39,7 +39,7 @@ func PrintServeSettings(testMode bool) {
 	configPath := config.GetPathToRootConfig()
 	chainConfigPath := config.GetPathToChainConfig(Options.Globals.Chain)
 	cachePath := config.GetPathToCache(Options.Globals.Chain)
-	// TODO: BOGUS
+	// TODO: BOGUS-INDEXPATH
 	indexPath := config.GetPathToIndex1(Options.Globals.Chain)
 	rpcProvider := config.GetRpcProvider()
 	meta := rpcClient.GetMeta(Options.Globals.Chain, testMode)

@@ -29,9 +29,6 @@ func (opts *GlobalOptions) PassItOn(path string, flags string) error {
 	cachePath := config.GetPathToCache(opts.Chain)
 	indexPath := config.GetPathToIndex(opts.Chain)
 
-	// TODO: BOGUS
-	// configPath = strings.Replace(configPath, "main net/", "", -1)
-
 	// fmt.Fprintf(os.Stderr, "Calling: %s %s\n", path, options)
 	cmd := exec.Command(config.GetPathToCommands(path), options)
 	cmd.Env = append(os.Environ(), "FROM_CHIFRA=true")
