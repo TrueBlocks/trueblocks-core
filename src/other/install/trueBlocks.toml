@@ -3,39 +3,71 @@
 current = "0.5.5-alpha"
 
 [settings]
-# The 'rpcProvider' value points to a valid RPC endpoint. TrueBlocks will not
-# work without it. If you're running your own local node, this will default to
-# http://localhost:8545, however in many cases, you will need to point this
-# elsewhere such as to Infura or QuickNodes, or (if the world is just) your
-# dAppNode.
+cachePath = ""
+etherscan_key = ""
+indexPath = ""
+ipfsGateway = "https://{CHAIN}.unchainedindex.io"
+localExplorer = "http://localhost:1234"
+remoteExplorer = "https://{CHAIN}.etherscan.io"
+
+[mainnet]
+chainId = 1
+genesisHash = "0xd4e56740f876aef8c010b86a40d5f56745a118d0906a34e69aec8c0db1cb8fa3"
+remoteExplorer = "https://etherscan.io"
 rpcProvider = "http://localhost:8545"
 
-# ******
-# The following descriptions reference a value called $(configPath). This value
-# is not customizable and defaults to $HOME/Library/Application Support/TrueBlocks
-# on Mac and $HOME/.local/share/trueblocks on Linux.
-# ******
+[ropsten]
+chainId = 3
+genesisHash = "0x41941023680923e0fe4d74a34bdac8141f2540e3ae90623718e47d66d1ca4a2d"
 
-# The 'cachePath' points to the location of the TrueBlocks cache. Data from
-# the node will be cached only if you query it directly (lazy extraction). 
-# The cache stores ABI files, named addresses, block data, transaction data,
-# traces, logs, etc. Some items are cached by default (ABIs, names). Others
-# (such as blocks, transactions, and traces) are only cached if you specify 
-# so via the command line.
-#
-# This value defaults to "$(configPath)/cache/" if the value is empty.
-cachePath = ""
+[rinkeby]
+chainId = 4
+genesisHash = "0x6341fd3daf94b748c72ced5a5b26028f2474f5f00d824504e4fa37a75767e177"
 
-# The 'indexPath' value defaults to "$(configPath)/unchained/". If you wish
-# to modify it, uncomment the line below and set it to your own path. By default,
-# the unchained index (which is what we call the index of appearances) takes up
-# about 2 GB on of disc space, however if you build the entire index, it may take
-# up to 80 GB. You may wish to point this value to an external drive in that case.
-indexPath = ""
+[goerli]
+chainId = 5
+genesisHash = "0xbf7e331f7f7c1dd2e05159666b3bf8bc7a8a3a9eb1d518969eab529dd9b88c1a"
 
-# The 'etherscan_key' value is optional but if not provided will disable your
-# ability to use the articulate feature in various places. We apologize profusely
-# for this centralization cancer, but the community must decide what it wants
-# to share with private companies and what it does not wish to share. Go to
-# the EtherScan website, tell them who you are, get an etherscan_key are enter it here.
-etherscan_key = ""
+[kovan]
+chainId = 42
+genesisHash = "0xa3c565fc15c7478862d50ccd6561e3c06b24cc509bf388941c25ea985ce32cb9"
+
+[polygon]
+chainId = 0
+remoteExplorer = "https://polygonscan.com"
+
+[bsc-mainnet]
+chainId = 56
+genesisHash = "0x0d21840abff46b96c84b2ac9e10e4f5cdaeb5693cb665db62a2f3b02d2d57b5b"
+remoteExplorer = "https://bscscan.com"
+
+[fremion]
+chainId = 1212120
+genesisHash = "0x0658360d8680ead416900a552b67b84e6d575c7f0ecab3dbe42406f9f8c34c35"
+
+[sokol]
+chainId = 77
+genesisHash = "0x5b28c1bfd3a15230c9a46b399cd0f9a6920d432e85381cc6a140b06e8410112f"
+
+[chapel]
+chainId = 97
+genesisHash = "0x6d3c66c5357ec91d5c43af47e234a939b22557cbb552dc45bebbceeed90fbe34"
+
+[rialto]
+chainId = 1417
+genesisHash = "0x005dc005bddd1967de6187c1c23be801eb7abdd80cebcc24f341b727b70311d6"
+
+[gnosis]
+chainId = 100
+genesisHash = "0x4f1dd23188aab3a76b463e4af801b52b1248ef073c648cbdc4c9333d3da79756"
+
+[polkadot]
+chainId = 0
+
+[filecoin]
+chainId = 0
+
+[optimism]
+chainId = 10
+remoteExplorer = "https://optimistic.etherscan.io"
+rpcProvider = "https://mainnet.optimism.io"
