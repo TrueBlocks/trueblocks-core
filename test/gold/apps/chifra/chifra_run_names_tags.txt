@@ -4,7 +4,6 @@ tags
 30-Contract:Optimism Goerli
 30-Contract:Optimism Kovan
 30-Contract:Optimism Mainnet
-30-Contract:Optimism Predepoly
 30-Contracts
 30-Contracts:Balancer
 30-Contracts:Chainlink

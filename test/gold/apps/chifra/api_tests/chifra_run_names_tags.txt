@@ -11,9 +11,6 @@ names?tags
       "tags": "30-Contract:Optimism Mainnet"
     },
     {
-      "tags": "30-Contract:Optimism Predepoly"
-    },
-    {
       "tags": "30-Contracts"
     },
     {
