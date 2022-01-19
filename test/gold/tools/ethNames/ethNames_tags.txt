@@ -8,6 +8,9 @@ tags
 30-Contracts:Consensys
 30-Contracts:DAO Related
 30-Contracts:Giveth
+30-Contracts:Giveth LP Token
+30-Contracts:Giveth Staking
+30-Contracts:Giveth Token
 30-Contracts:Kyber Network
 30-Contracts:Moloch
 30-Contracts:Pasta
