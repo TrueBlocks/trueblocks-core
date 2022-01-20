@@ -1,3 +1,10 @@
+When running against remote gnosis server, our app does not send in the --client parameter
+    You have to start the server with --client gnosis
+    The server does not accept that value
+
+If the folder does not exist, don't create the index, which already works -- except -- it creates the folder
+    chifra scrape --chain shit reports no such folder shit but also creates the folder so the next time you run it's there
+
 ADD CHAIN TO META DATA
 MAKE SURE chifra explore --chain works with different block explorers
 WE SHOULD CREATE A STRUCTURE CALLED opts.Chain.Configs that then allows opts.Chain.Configs[tool][settings][key]
