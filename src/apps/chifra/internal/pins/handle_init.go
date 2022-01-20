@@ -193,7 +193,7 @@ func (opts *PinsOptions) PrintManifestHeader() {
 	logger.Log(logger.Info, "manifestHashEncoding:", config.ReadBlockScrape(opts.Globals.Chain).UnchainedIndex.ManifestHashEncoding)
 	logger.Log(logger.Info, "unchainedIndexAddr:", config.ReadBlockScrape(opts.Globals.Chain).UnchainedIndex.Address)
 	if !opts.Globals.TestMode {
-		logger.Log(logger.Info, "unchainedIndexFolder:", config.GetPathToIndex1(opts.Globals.Chain))
+		logger.Log(logger.Info, "unchainedIndexFolder:", config.GetPathToIndex(opts.Globals.Chain))
 		logger.Log(logger.Info, "manifestLocation:", config.GetPathToChainConfig(opts.Globals.Chain))
 	}
 }

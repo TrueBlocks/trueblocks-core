@@ -64,7 +64,6 @@ file(MAKE_DIRECTORY "${INSTALL_DEST}/abis/known-000")
 file(MAKE_DIRECTORY "${INSTALL_DEST}/abis/known-005")
 file(MAKE_DIRECTORY "${INSTALL_DEST}/abis/known-010")
 file(MAKE_DIRECTORY "${INSTALL_DEST}/abis/known-015")
-file(MAKE_DIRECTORY "${INSTALL_DEST}/manifest")
 file(MAKE_DIRECTORY "${INSTALL_DEST}/perf")
 file(MAKE_DIRECTORY "${INSTALL_DEST}/config/mainnet/mocked")
 
