@@ -1,29 +1,21 @@
+  - [ ] If the path comes from XDG it must both exist and be fully resolved, otherwise fail
+  - [ ] If the path contains `cache` or `unchained` or end with one one of the caches or index folders, fail without proceeding
+  - [ ] If the config, cache, or index path does not exist, fail with proceeding if it's not the default otherwise create it
+  - [ ] If the config, cache, or index path does exist, establish its subfolders
+  - [ ] If a new chain is presented, create it under the valid `config`, `cache`, and `index` folders - i.e. establish
 
+  - [ ] Add test cases for XDG both valid and not valid
+  - [ ] Add testing that specifies non-existant folders
+  - [ ] Test XDG varables somehow
+  - [ ] Test with chifra status --chain shit
 
 ### Open Questions
 ----
-- [ ] Folder creation:
-  - [ ] It's important to not create the index or cache folder if it doesn't already exist except if its the default or inside XDG
-  - [ ] If the folder does not exist, don't create the index, which already works -- except -- it creates the folder
-  - [ ] chifra scrape --chain shit reports no such folder shit but also creates the folder so the next time you run it's there
-  - [ ] Add testing to utillib tests to set XDG folders using test case .env files
-  - [ ] Add testing that specifies non-existant folders
-  - [ ] Test XDG varables somehow
-  - [ ] If the path contains `unchained` or `finalized` or blooms remove those parts
-  - [ ] If XDG path is present, but not fully qualified - fail - add test case
-  - [ ] If XDG path is present, but the folder doesn't exist, what should we do - I think fail
-  - [ ] We used to preclude the user from customizing an indexPath if it doesn't exist
 - [ ] Chain specific data: 
-  - [ ] Names, Timestamps, Poloniex prices, Manifest files, Explorer APIs, Caches
+  - [ ] names, prefunds, timestamps, prices, manifest, explorer urls, explorer apis
   - [ ] Config items should be able to be read from top-level and overlaid with chain specific config
 - [ ] Chain IDs
   - [ ] User provides his/her own chain id. We query the chain at the RPC and verify we're connected to the rigth chain
-- [ ] Smart Contract
-  - [ ] Needs chain id
-  - [ ] Manifest can be customized as we wish
-  - [ ] How can others participate?
-  - [ ] Does it accept donations?
-  - [ ] Will the smart contract be deployed on different chains? Will it have the same address?
 - [ ] TrueBlocks and other config file
   - [ ] Should it have any per-chain data (probably not)
   - [ ] Need to be able to 'merge' toml files so we can have top-level settings and per-chain overlay
@@ -62,6 +54,13 @@
 - [ ] Other
   - [ ] What about the bytzantium hard fork -- is there block number specific behaviour? (probably -- for ETC for example)
   - [ ] What about 'status' on pre-byzantium receipts on non-main net chains?
+- [ ] Smart Contract
+  - [ ] Needs chain id
+  - [ ] Manifest can be customized as we wish
+  - [ ] How can others participate?
+  - [ ] Does it accept donations?
+  - [ ] Will the smart contract be deployed on different chains? Will it have the same address?
+
 - [x] Closed Issues
   - [x] The prefund values per chain are in the repo but not being used
   - [x] We need to use the `--chain` option when building paths
