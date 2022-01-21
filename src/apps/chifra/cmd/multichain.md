@@ -21,6 +21,7 @@
   - [ ] Manifest can be customized as we wish
   - [ ] How can others participate?
   - [ ] Does it accept donations?
+  - [ ] Will the smart contract be deployed on different chains? Will it have the same address?
 - [ ] TrueBlocks and other config file
   - [ ] Should it have any per-chain data (probably not)
   - [ ] Need to be able to 'merge' toml files so we can have top-level settings and per-chain overlay

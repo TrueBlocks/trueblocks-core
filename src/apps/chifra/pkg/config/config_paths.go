@@ -20,15 +20,6 @@ var OsToPath = map[string]string{
 	"darwin": "Library/Application Support/TrueBlocks",
 }
 
-// GetPathToChainConfig returns the chain-specific config folder
-func GetPathToChainConfig(chain string) string {
-	if len(chain) == 0 {
-		chain = GetDefaultChain()
-	}
-	ret := GetPathToRootConfig()
-	return path.Join(ret, "config/", chain) + "/"
-}
-
 // GetPathToRootConfig returns the path where to find configuration files
 func GetPathToRootConfig() string {
 	xdg := os.Getenv("XDG_CONFIG_HOME")
@@ -46,24 +37,13 @@ func GetPathToRootConfig() string {
 	return path.Join(user.HomeDir, OsToPath[userOs]) + "/"
 }
 
-// GetPathToIndex returns the one and only cachePath
-func GetPathToIndex(chain string) string {
+// GetPathToChainConfig returns the chain-specific config folder
+func GetPathToChainConfig(chain string) string {
 	if len(chain) == 0 {
 		chain = GetDefaultChain()
 	}
-	newPath := ""
-	xdg := os.Getenv("XDG_CACHE_HOME")
-	if len(xdg) > 0 && xdg[0] == '/' {
-		if !strings.Contains(xdg, "/unchained") {
-			xdg = path.Join(xdg, "unchained")
-		}
-		newPath = path.Join(xdg, chain) + "/"
-	} else {
-		indexPath := readTrueBlocks().Settings.IndexPath
-		newPath = path.Join(indexPath, chain) + "/"
-	}
-	EstablishIndexPaths(newPath)
-	return newPath
+	ret := GetPathToRootConfig()
+	return path.Join(ret, "config/", chain) + "/"
 }
 
 // GetPathToCache returns the one and only cachePath
@@ -86,10 +66,41 @@ func GetPathToCache(chain string) string {
 	return newPath
 }
 
+// GetPathToIndex returns the one and only cachePath
+func GetPathToIndex(chain string) string {
+	if len(chain) == 0 {
+		chain = GetDefaultChain()
+	}
+	newPath := ""
+	xdg := os.Getenv("XDG_CACHE_HOME")
+	if len(xdg) > 0 && xdg[0] == '/' {
+		if !strings.Contains(xdg, "/unchained") {
+			xdg = path.Join(xdg, "unchained")
+		}
+		newPath = path.Join(xdg, chain) + "/"
+	} else {
+		indexPath := readTrueBlocks().Settings.IndexPath
+		newPath = path.Join(indexPath, chain) + "/"
+	}
+	EstablishIndexPaths(newPath)
+	return newPath
+}
+
 // GetRpcProvider returns the RPC provider for a chain
 func GetRpcProvider(chain string) string {
 	// TODO: BOGUS - RPC PROVIDER
 	return readTrueBlocks().Settings.RpcProvider
+}
+
+// GetDefaultChain returns the chain to use if there is none supplied on the command line
+func GetDefaultChain() string {
+	return readTrueBlocks().Settings.DefaultChain
+}
+
+// GetTestChain returns the chain against which to test
+func GetTestChain() string {
+	// This function is here for future reference. Assume mainnet
+	return "mainnet"
 }
 
 // GetPathToCommands returns full path the the given tool
