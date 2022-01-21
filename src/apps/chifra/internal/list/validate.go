@@ -15,6 +15,13 @@ func (opts *ListOptions) ValidateList() error {
 		return opts.BadFlag
 	}
 
+	if len(opts.Globals.File) == 0 {
+		err := validate.ValidateAtLeastOneAddr(opts.Addrs)
+		if err != nil {
+			return err
+		}
+	}
+
 	err := validate.ValidateAtLeastOneAddr(opts.Addrs)
 	if err != nil {
 		return err
