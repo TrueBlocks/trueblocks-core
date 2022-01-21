@@ -87,7 +87,6 @@ paths:
       description: List every appearance of an address anywhere on the chain.
       operationId: accounts-list
       parameters:
-        - $ref: "#/components/parameters/fmt"
         - name: addrs
           description: one or more addresses (0x...) to list
           required: true
@@ -159,7 +158,6 @@ paths:
       description: Export full detail of transactions for one or more addresses.
       operationId: accounts-export
       parameters:
-        - $ref: '#/components/parameters/fmt'
         - name: addrs
           description: one or more addresses (0x...) to export
           required: true
@@ -410,7 +408,6 @@ paths:
       description: Add, remove, clean, and list address monitors.
       operationId: accounts-monitors
       parameters:
-        - $ref: '#/components/parameters/fmt'
         - name: addrs
           description: one or more addresses (0x...) to process
           required: true
@@ -470,7 +467,6 @@ paths:
       description: Query addresses or names of well known accounts.
       operationId: accounts-names
       parameters:
-        - $ref: '#/components/parameters/fmt'
         - name: terms
           description: a space separated list of one or more search terms
           required: true
@@ -589,7 +585,6 @@ paths:
       description: Fetches the ABI for a smart contract.
       operationId: accounts-abis
       parameters:
-        - $ref: '#/components/parameters/fmt'
         - name: addrs
           description: a list of one or more smart contracts whose ABIs to display
           required: true
@@ -701,7 +696,6 @@ paths:
       description: Retrieve one or more blocks from the chain or local cache.
       operationId: chaindata-blocks
       parameters:
-        - $ref: '#/components/parameters/fmt'
         - name: blocks
           description: a space-separated list of one or more block identifiers
           required: true
@@ -847,7 +841,6 @@ paths:
       description: Retrieve one or more transactions from the chain or local cache.
       operationId: chaindata-transactions
       parameters:
-        - $ref: '#/components/parameters/fmt'
         - name: transactions
           description: a space-separated list of one or more transaction identifiers
           required: true
@@ -922,7 +915,6 @@ paths:
       description: Retrieve receipts for the given transaction(s).
       operationId: chaindata-receipts
       parameters:
-        - $ref: '#/components/parameters/fmt'
         - name: transactions
           description: a space-separated list of one or more transaction identifiers
           required: true
@@ -964,7 +956,6 @@ paths:
       description: Retrieve logs for the given transaction(s).
       operationId: chaindata-logs
       parameters:
-        - $ref: '#/components/parameters/fmt'
         - name: transactions
           description: a space-separated list of one or more transaction identifiers
           required: true
@@ -1006,7 +997,6 @@ paths:
       description: Retrieve traces for the given transaction(s).
       operationId: chaindata-traces
       parameters:
-        - $ref: '#/components/parameters/fmt'
         - name: transactions
           description: a space-separated list of one or more transaction identifiers
           required: true
@@ -1072,7 +1062,6 @@ paths:
       description: Find block(s) based on date, blockNum, timestamp, or 'special'.
       operationId: chaindata-when
       parameters:
-        - $ref: '#/components/parameters/fmt'
         - name: timestamps
           description: ignore other options and generate timestamps only
           required: false
@@ -1110,7 +1099,6 @@ paths:
       description: Retrieve account balance(s) for one or more addresses at given block(s).
       operationId: chainstate-state
       parameters:
-        - $ref: '#/components/parameters/fmt'
         - name: addrs
           description: one or more addresses (0x...) from which to retrieve balances
           required: true
@@ -1226,7 +1214,6 @@ paths:
       description: Retrieve token balance(s) for one or more addresses at given block(s).
       operationId: chainstate-tokens
       parameters:
-        - $ref: '#/components/parameters/fmt'
         - name: addrs2
           description: >
             two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported
@@ -1323,7 +1310,6 @@ paths:
       description: Report on the status of the TrueBlocks system.
       operationId: admin-status
       parameters:
-        - $ref: '#/components/parameters/fmt'
         - name: modes
           description: the type of status info to retrieve
           required: false
@@ -1521,7 +1507,6 @@ paths:
       description: Manage pinned index of appearances and associated blooms.
       operationId: admin-pins
       parameters:
-        - $ref: '#/components/parameters/fmt'
         - name: list
           description: list the bloom and index hashes from local cache or IPFS
           required: false
@@ -1679,7 +1664,6 @@ paths:
       description: Update or display Ethereum price data. This tool has been deprecated.
       operationId: other-quotes
       parameters:
-        - $ref: '#/components/parameters/fmt'
         - name: period
           description: increment of display
           required: false
@@ -1844,17 +1828,6 @@ paths:
         "400":
           description: bad input parameter
 components:
-  parameters:
-    fmt:
-      in: query
-      name: fmt
-      schema:
-        type: string
-        enum:
-          - json
-          - csv
-          - txt
-          - api
   schemas:
     monitor:
       description: "A local file indicating a user's interest in an address. Includes caches for reconicilations, transactions and appearances as well as an optional association to named account"
@@ -2323,17 +2296,20 @@ components:
         articulatedLog:
           description: "data used when articulating log which is different than Function"
           type: object
-          properties:
-            name:
-              type: string
-            inputs:
-              type: object
-              additionalProperties:
-                type: string
+          items:
+            $ref: "#/components/schemas/articulatedLog"
         compressedLog:
           type: string
           example: "Transfer(0xcfa...9f54..."
           description: "a truncated, more readable version of the articulation"
+    articulatedLog:
+      properties:
+        name:
+          type: string
+        inputs:
+          type: object
+          additionalProperties:
+            type: string
     trace:
       description: "trace data for a given transaction directly from the blockchain"
       type: object
