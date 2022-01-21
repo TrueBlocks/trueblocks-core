@@ -52,6 +52,14 @@ string_q getPathToChainConfig(const string_q& _part) {
 }
 
 //---------------------------------------------------------------------------------------------------
+string_q getChainFromPath(void) {
+    string_q ret = getPathToChainConfig("");
+    CStringArray parts;
+    explode(parts, ret, '/');
+    return parts[parts.size() - 1];
+}
+
+//---------------------------------------------------------------------------------------------------
 static string_q g_configPath;
 string_q getPathToRootConfig(const string_q& _part) {
     if (!g_configPath.empty())

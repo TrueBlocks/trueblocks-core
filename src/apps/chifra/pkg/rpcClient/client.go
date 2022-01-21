@@ -9,21 +9,38 @@ import (
 	"log"
 	"math/big"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/ethclient"
 )
 
 // Get sets up a client instance and returns it
-func Get() ethclient.Client {
+func Get(provider string) ethclient.Client {
 	// TODO: I don't like the fact that we Dail In every time we want to us this
-	client, err := ethclient.Dial(config.GetRpcProvider())
+	client, err := ethclient.Dial(provider)
 	if err != nil {
 		log.Fatalln(err)
 	}
 
 	return *client
+}
+
+// BlockNumber returns the front of chain block
+func BlockNumber(ec *ethclient.Client) uint64 {
+	ret, _ := ec.BlockNumber(context.Background())
+	return ret
+}
+
+// ChainID returns chainId
+func ChainID(ec *ethclient.Client) uint64 {
+	r, _ := ec.ChainID(context.Background())
+	return r.Uint64()
+}
+
+// NetworkID returns networkId
+func NetworkID(ec *ethclient.Client) uint64 {
+	r, _ := ec.NetworkID(context.Background())
+	return r.Uint64()
 }
 
 // HexToAddress converts a string with hex to go-ethereum's common.Address
@@ -36,8 +53,8 @@ func DecodeHex(hex string) []byte {
 	return hexutil.MustDecode(hex)
 }
 
-func GetBlockTimestamp(bn uint64) uint64 {
-	client := Get()
+func GetBlockTimestamp(provider string, bn uint64) uint64 {
+	client := Get(provider)
 	block, err := client.BlockByNumber(context.Background(), big.NewInt(int64(bn)))
 	if err != nil {
 		return 0

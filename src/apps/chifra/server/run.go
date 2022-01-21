@@ -36,12 +36,13 @@ func PrintServeSettings(testMode bool) {
 	if !strings.Contains(apiUrl, "http") {
 		apiUrl = "http://localhost" + apiUrl
 	}
+	chain := Options.Globals.Chain
 	configPath := config.GetPathToRootConfig()
-	chainConfigPath := config.GetPathToChainConfig(Options.Globals.Chain)
-	cachePath := config.GetPathToCache(Options.Globals.Chain)
-	indexPath := config.GetPathToIndex(Options.Globals.Chain)
-	rpcProvider := config.GetRpcProvider()
-	meta := rpcClient.GetMeta(Options.Globals.Chain, testMode)
+	chainConfigPath := config.GetPathToChainConfig(chain)
+	cachePath := config.GetPathToCache(chain)
+	indexPath := config.GetPathToIndex(chain)
+	rpcProvider := config.GetRpcProvider(chain)
+	meta := rpcClient.GetMetaData(chain, testMode)
 
 	log.Printf("%s%-18.18s%s%s\n", colors.Green, "Server URL:", colors.Off, apiUrl)
 	log.Printf("%s%-18.18s%s%s\n", colors.Green, "RootConfig Path:", colors.Off, configPath)

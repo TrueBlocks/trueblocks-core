@@ -87,7 +87,8 @@ func GetPathToCache(chain string) string {
 }
 
 // GetRpcProvider returns the RPC provider for a chain
-func GetRpcProvider() string {
+func GetRpcProvider(chain string) string {
+	// TODO: BOGUS - RPC PROVIDER
 	return readTrueBlocks().Settings.RpcProvider
 }
 

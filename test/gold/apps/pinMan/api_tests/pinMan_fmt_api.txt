@@ -507,6 +507,9 @@ pins?list&fmt=api
     "finalized": "0xdeadbeef",
     "staging": "0xdeadbeef",
     "ripe": "0xdeadbeef",
-    "unripe": "0xdeadbeef"
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
   }
 }

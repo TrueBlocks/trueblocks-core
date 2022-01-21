@@ -30,9 +30,9 @@ var clientLoaded = false
 // GetBalanceInEth returns the balance of the given address at the given block
 // TODO: blockNum is ignored
 // TODO: what to do if we're running against a non-archive node?
-func GetBalanceInEth(address string, blockNum uint64) float64 {
+func GetBalanceInEth(provider, address string, blockNum uint64) float64 {
 	if !clientLoaded {
-		balanceClient = Get()
+		balanceClient = Get(provider)
 		clientLoaded = true
 	}
 	val, _ := balanceClient.BalanceAt(context.Background(), HexToAddress(address), nil)

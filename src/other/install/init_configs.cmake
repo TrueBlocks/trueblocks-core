@@ -85,7 +85,6 @@ CopyIgnorePresent (${INSTALL_SOURCE}/prices/            "ts.bin.gz"             
 
 CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/mainnet  "allocs.csv"               ${INSTALL_DEST}/config/mainnet/        )
 CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/mainnet  "specials.csv"             ${INSTALL_DEST}/config/mainnet/        )
-CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/fermion  "allocs.csv"               ${INSTALL_DEST}/config/fermion/        )
 CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/gnosis   "allocs.csv"               ${INSTALL_DEST}/config/gnosis/         )
 # CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/gnosis   "specials.csv"             ${INSTALL_DEST}/config/gnosis/         )
 CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/goerli   "allocs.csv"               ${INSTALL_DEST}/config/goerli/         )

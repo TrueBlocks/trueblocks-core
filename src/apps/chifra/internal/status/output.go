@@ -32,7 +32,7 @@ func RunStatus(cmd *cobra.Command, args []string) error {
 
 	// EXISTING_CODE
 	// chain := opts.Globals.Chain
-	// meta := rpcClient.GetMeta(chain, false)
+	// meta := rpcClient.GetMetaData(chain, false)
 	// log.Println(GreenTxt("Config Path:  "), config.Get PathToConfig())
 	// log.Println(GreenTxt("Cache Path:   "), config.Get PathToCache(chain))
 	// log.Println(GreenTxt("Index Path:   "), config.Get PathToIndex(chain))

@@ -1,15 +1,45 @@
-When running against remote gnosis server, our app does not send in the --client parameter
-    You have to start the server with --client gnosis
-    The server does not accept that value
+### Open Questions
+----
+- [ ] What about the bytzantium hard fork -- is there block number specific behaviour? (probably -- for ETC for example)
+- [ ] What about 'status' on pre-byzantium receipts on non-main net chains?
+- [ ] We should be able to remove the 'requires' options (tracing, parity -- balances already removed) in blockScrape.toml
+- [ ] Chain specific data: Names, Timestamps, Poloniex prices, Manifest files, Explorer APIs, Caches
+  - [ ] The unchained index smart contract needs chain id
+  - [ ] `chifra --chain gnosis explore` should go to a different server
+  - [ ] `chifra slurp` won't work with --chain
+  - [ ] `chifra when --list` is main net centric
+- [ ] Test XDG varables somehow
+- [ ] Can we use chain ids to verify that the RPC points to the same chain we are being told it is?
+- [ ] Private networks have a real problem with 'front of chain' because almost all of the thing is front of chain
+- [ ] Uniswap pricing of reconciliations obviously doesn't work on non-main net.
+- [ ] Test ABI generation for non-main net chains
+- [ ] Check out https://github.com/symblox/hardhat-abi-gen for ABI generation from Solidity code
+- [ ] The server wants to run against the base configuration (i.e. mainnet -- why???). 
+  - [ ] This is another reason why --chain must be a global option.
+  - [ ] Otherwise, we would have to run multiple servers. As a result -- we want to disable 
+  - [ ] the `--chain` option for `chifra serve` (probably other things as well)
+- [ ] Search for IndexPath, CachePath in golang code
+- [ ] Blaze has command line options to explicitly take the paths
+- [ ] We used to preclude the user from customizing an indexPath if it doesn't exist
+- [ ] Should be fail if the XDG paths do not exist?
+- [ ] This function: func initConfig() in blaze needs attention for paths
+- [ ] ./docs/content/chifra/configs.md needs work
+- [ ] I feel like I need a different pinata account for each chain. Not a problem. Easier to remove a chain
 
-If the folder does not exist, don't create the index, which already works -- except -- it creates the folder
-    chifra scrape --chain shit reports no such folder shit but also creates the folder so the next time you run it's there
-
-ADD CHAIN TO META DATA
-MAKE SURE chifra explore --chain works with different block explorers
-WE SHOULD CREATE A STRUCTURE CALLED opts.Chain.Configs that then allows opts.Chain.Configs[tool][settings][key]
-MUST MAKE SURE BLOCKSCRAPE.TOML IS IN THE RIGHT PLACE
-MUST EDIT OUT THE TRUEBLOCKS.TOML FILE
+### Issues
+---
+- [ ] It's important to not create the index or cache folder if it doesn't already exist except if its the default or inside XDG
+- [ ] If the path contains `unchained` or `finalized` or blooms remove those parts
+- [ ] Need a --test option to chifra init 
+- [ ] When running against remote gnosis server, our app does not send in the --client parameter
+- [ ] You have to start the server with --client gnosis
+- [ ] The server does not accept that value
+- [ ] If the folder does not exist, don't create the index, which already works -- except -- it creates the folder
+- [ ] chifra scrape --chain shit reports no such folder shit but also creates the folder so the next time you run it's there
+- [ ] MAKE SURE chifra explore --chain works with different block explorers
+- [ ] WE SHOULD CREATE A STRUCTURE CALLED opts.Chain.Configs that then allows opts.Chain.Configs[tool][settings][key]
+- [ ] MUST MAKE SURE BLOCKSCRAPE.TOML IS IN THE RIGHT PLACE
+- [ ] MUST EDIT OUT THE TRUEBLOCKS.TOML FILE
 
 ### Steps to Migrate
 ---
@@ -25,15 +55,20 @@ MUST EDIT OUT THE TRUEBLOCKS.TOML FILE
 
 ### Steps to Migrate (completed)
 ---
+- [x] The prefund values per chain are in the repo but not being used
 - [x] We need to use the `--chain` option when building paths
 - [x] Rename all path routines from `getXXXPath` to `getPathToXXX` so we can find them more easily
 - [x] Put all the path related functions in a single file to better control them (one for .go, one for .cpp)
-- [x] Concentrate all changes to paths in the golang code, and send environment varaibles (current) or command line options (if needed) to cary paths to the C++ code.
-- [x] Add `[settings]chain=` option to trueBlocks.toml [No -- we don't want to do this. `--chain` is a command line option only with `main net` the default in absences of that option.]
+- [x] Concentrate all changes to paths in the golang code, and send environment varaibles (current) or command line options 
+- [x] (if needed) to cary paths to the C++ code.
+- [x] Add `[settings]chain=` option to trueBlocks.toml [No -- we don't want to do this. `--chain` is a command
+- [x] line option only with `main net` the default in absences of that option.]
 - [x] Make sure the three base routines that return paths return paths ending with '/' (dependant routines already do this).
 - [x] Add a global command line option `--chain`
 - [x] Use XDG spec for environment variables
 - [x] Expand performance testing to include chain (set to `main net` for all records)
+- [x] Add chain and network/chainid to meta data
+- [x] We need to fix the install files. XDG is present, but does it work?
 
 ### What We Need to Control
 ---
@@ -105,7 +140,7 @@ There are three values we need to control:
 cachePath = ""           # defaults to $TB_HOME
 etherscan_key = ""
 
-[main net]
+[mainnet]
 rpcProvider = "http://localhost:8545"
 remoteExplorer = "http://etherscan.io"
 
@@ -116,25 +151,19 @@ remoteExplorer = ""
 
 ### Per-Chain Data
 
-| Chain Id | Chain     | Remote Explorer              | Erigon       | Genesis Hash (from Erigon)                                         |
-| -------- | --------- | ---------------------------- | ------------ | ------------------------------------------------------------------ |
-| 1        | main net  | https://etherscan.io         | main net     | 0xd4e56740f876aef8c010b86a40d5f56745a118d0906a34e69aec8c0db1cb8fa3 |
-| 3        | ropsten   | https://ropsten.etherscan.io | reposten     | 0x41941023680923e0fe4d74a34bdac8141f2540e3ae90623718e47d66d1ca4a2d |
-| 4        | rinkeby   | https://rinkeby.etherscan.io | rinkeby      | 0x6341fd3daf94b748c72ced5a5b26028f2474f5f00d824504e4fa37a75767e177 |
-| 5        | goerli    | https://goerli.etherscan.io  | goerli       | 0xbf7e331f7f7c1dd2e05159666b3bf8bc7a8a3a9eb1d518969eab529dd9b88c1a |
-| 42       | kovan     | https://kovan.etherscan.io   | kovan        | 0xa3c565fc15c7478862d50ccd6561e3c06b24cc509bf388941c25ea985ce32cb9 |
-|          |           | https://polygonscan.com      |              |                                                                    |
-| 56       |           | https://bscscan.com          | bsc-main net | 0x0d21840abff46b96c84b2ac9e10e4f5cdaeb5693cb665db62a2f3b02d2d57b5b |
-|          |           | https://hecoinfo.com         |              |                                                                    |
-|          |           |                              | erigonmine   | 0xfecd5c85712e36f30f09ba3a42386b42c46b5ba5395a4246b952e655f9aa0f58 |
-| 1212120  |           |                              | fermion      | 0x0658360d8680ead416900a552b67b84e6d575c7f0ecab3dbe42406f9f8c34c35 |
-| 77       |           |                              | sokol        | 0x5b28c1bfd3a15230c9a46b399cd0f9a6920d432e85381cc6a140b06e8410112f |
-|          |           |                              | yolov3       |                                                                    |
-| 97       |           |                              | chapel?      | 0x6d3c66c5357ec91d5c43af47e234a939b22557cbb552dc45bebbceeed90fbe34 |
-| 1417     |           |                              | rialto?      | 0x005dc005bddd1967de6187c1c23be801eb7abdd80cebcc24f341b727b70311d6 |
-|          | gnosis    |                              |              | 0x4f1dd23188aab3a76b463e4af801b52b1248ef073c648cbdc4c9333d3da79756 |
-|          | polkadot? |                              |              | ???                                                                |
-|          | filecoin? |                              |              | ???                                                                |
+| Chain Id | Chain     | Remote Explorer                      | Public RPC | Genesis Hash (from Erigon)                                         |
+| -------- | --------- | ------------------------------------ | ---------- | ------------------------------------------------------------------ |
+| 1        | mainnet   | https://etherscan.io                 |            | 0xd4e56740f876aef8c010b86a40d5f56745a118d0906a34e69aec8c0db1cb8fa3 |
+| 3        | ropsten   | https://ropsten.etherscan.io         |            | 0x41941023680923e0fe4d74a34bdac8141f2540e3ae90623718e47d66d1ca4a2d |
+| 4        | rinkeby   | https://rinkeby.etherscan.io         |            | 0x6341fd3daf94b748c72ced5a5b26028f2474f5f00d824504e4fa37a75767e177 |
+| 5        | goerli    | https://goerli.etherscan.io          |            | 0xbf7e331f7f7c1dd2e05159666b3bf8bc7a8a3a9eb1d518969eab529dd9b88c1a |
+| 42       | kovan     | https://kovan.etherscan.io           |            | 0xa3c565fc15c7478862d50ccd6561e3c06b24cc509bf388941c25ea985ce32cb9 |
+| 137      | polygon   | https://polygonscan.com              |            | 0xa9c28ce2141b56c474f1dc504bee9b01eb1bd7d1a507580d5519d4437a97de1b |
+| 56       | bsc       | https://bscscan.com                  |            | 0x0d21840abff46b96c84b2ac9e10e4f5cdaeb5693cb665db62a2f3b02d2d57b5b |
+| 100      | gnosis    | https://blockscout.com/xdai/mainnet/ |            | 0x4f1dd23188aab3a76b463e4af801b52b1248ef073c648cbdc4c9333d3da79756 |
+| 61       | etc       | https://blockscout.com/etc/mainnet/  |            | 0xd4e56740f876aef8c010b86a40d5f56745a118d0906a34e69aec8c0db1cb8fa3 |
+|          | polkadot? |                                      |            | ???                                                                |
+|          | filecoin? |                                      |            | ???                                                                |
 
 ### Existing Paths
 
@@ -152,14 +181,14 @@ remoteExplorer = ""
 
 #### C++
 ----
-| Name                 | Description                                                                                              |
-| -------------------- | -------------------------------------------------------------------------------------------------------- |
-| getPath ToRootConfig |                                                                                                          |
-|                      | get PathToIndex, getPath ToCache                                                                         |
-| getPath ToCache      | `cachePath` from trueBlocks.toml                                                                         |
-|                      | getPathToBinaryCache, getPathToPriceDb, getPathToMonitor,<br/>getPathToMonitorDels, getPathToMonitorLast |
-| get PathToIndex      | `indexPath` from trueBlocks.toml                                                                         |
-| getPat hToCommands   |                                                                                                          |
+| Name                | Description                                                                                              |
+| ------------------- | -------------------------------------------------------------------------------------------------------- |
+| getPathToRootConfig |                                                                                                          |
+|                     | get PathToIndex, getPath ToCache                                                                         |
+| getPathToCache      | `cachePath` from trueBlocks.toml                                                                         |
+|                     | getPathToBinaryCache, getPathToPriceDb, getPathToMonitor,<br/>getPathToMonitorDels, getPathToMonitorLast |
+| getPathToIndex      | `indexPath` from trueBlocks.toml                                                                         |
+| getPathToCommands   |                                                                                                          |
 
 #### Local Tooling Only
 ----
@@ -169,35 +198,4 @@ remoteExplorer = ""
 | getPathToTemplates | For internal tooling only - works from `./build` folder |
 | getPathToSource    | For internal tooling only - works from `./build` folder |
 
-### Open Questions
-----
-- What about the bytzantium hard fork -- block number specific behaviour?
-- What about 'status' on pre-byzantium receipts on non-main net chains?
-- Never call it xDAI. Call it gnosos
-- We should be able to remove the 'requires' options (tracing, parity -- balances already removed) in blockScrape.toml
-- Chain specific data:
-  - Names
-  - Timestamps
-  - Poloniex prices
-  - Manifest files
-  - EtherScan APIs
-  - All caches
-  - The unchained index smart contract needs chain id
-  - `chifra --chain xdai explore` should go to a different server
-  - `chifra slurp` won't work with --chain
-  - `chifra when --list` is main net centric
-- We need to fix the install files. XDG is present, but does it work?
-- The prefund values per chain are in the repo but not being used
-- Can we use chain ids to verify that the RPC points to the same chain we are being told it is?
-- Private networks have a real problem with 'front of chain' because almost all of the thing is front of chain
-- Uniswap pricing of reconciliations obviously doesn't work on non-main net.
-- Test ABI generation for non-main net chains
-- Check out https://github.com/symblox/hardhat-abi-gen for ABI generation from Solidity code
-- The server wants to run against the base configuration (i.e. main net). This is another reason why --chain must be a global option. Otherwise, we would have to run multiple servers. As a result -- we want to disable the `--chain` option for `chifra serve` (probably other things as well)
-- Search for IndexPath, CachePath in golang code
-- Blaze has command line options to explicitly take the paths
-- We used to preclude the user from customizing an indexPath if it doesn't exist
-- Should be fail if the XDG paths do not exist?
-- This function: func initConfig() in blaze needs attention for paths
-- ./docs/content/chifra/configs.md needs work
-- I feel like I need a different pinata account for each chain. Not a problem. Easier to remove a chain
+We have to make sure the Explorer API includes --chain

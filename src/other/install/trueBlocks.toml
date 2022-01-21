@@ -41,22 +41,6 @@ chainId = 56
 genesisHash = "0x0d21840abff46b96c84b2ac9e10e4f5cdaeb5693cb665db62a2f3b02d2d57b5b"
 remoteExplorer = "https://bscscan.com"
 
-[fremion]
-chainId = 1212120
-genesisHash = "0x0658360d8680ead416900a552b67b84e6d575c7f0ecab3dbe42406f9f8c34c35"
-
-[sokol]
-chainId = 77
-genesisHash = "0x5b28c1bfd3a15230c9a46b399cd0f9a6920d432e85381cc6a140b06e8410112f"
-
-[chapel]
-chainId = 97
-genesisHash = "0x6d3c66c5357ec91d5c43af47e234a939b22557cbb552dc45bebbceeed90fbe34"
-
-[rialto]
-chainId = 1417
-genesisHash = "0x005dc005bddd1967de6187c1c23be801eb7abdd80cebcc24f341b727b70311d6"
-
 [gnosis]
 chainId = 100
 genesisHash = "0x4f1dd23188aab3a76b463e4af801b52b1248ef073c648cbdc4c9333d3da79756"

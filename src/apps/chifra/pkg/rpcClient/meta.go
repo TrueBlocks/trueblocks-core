@@ -5,7 +5,6 @@
 package rpcClient
 
 import (
-	"context"
 	"encoding/json"
 	"errors"
 	"io/fs"
@@ -17,15 +16,18 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-type Meta struct {
+type MetaData struct {
 	Latest    uint64 `json:"client"`
 	Finalized uint64 `json:"finalized"`
 	Staging   uint64 `json:"staging"`
 	Ripe      uint64 `json:"ripe"`
 	Unripe    uint64 `json:"unripe"`
+	ChainId   uint64 `json:"chainId"`
+	NetworkId uint64 `json:"networkId"`
+	Chain     string `json:"chain"`
 }
 
-func (m Meta) String() string {
+func (m MetaData) String() string {
 	ret, _ := json.MarshalIndent(m, "", "  ")
 	return string(ret)
 }
@@ -35,22 +37,28 @@ type MetaValue struct {
 	value  uint64
 }
 
-func GetMeta(chain string, testmode bool) *Meta {
+func GetMetaData(chain string, testmode bool) *MetaData {
+	ethClient := Get(config.GetRpcProvider(chain))
+	defer ethClient.Close()
+
 	if testmode {
-		return &Meta{
+		return &MetaData{
 			Unripe:    0xdeadbeef,
 			Ripe:      0xdeadbeef,
 			Staging:   0xdeadbeef,
 			Finalized: 0xdeadbeef,
 			Latest:    0xdeadbeef,
+			Chain:     chain,
+			ChainId:   ChainID(&ethClient),
+			NetworkId: NetworkID(&ethClient),
 		}
 	}
 
-	ethClient := Get()
-	defer ethClient.Close()
-
-	var meta Meta
-	meta.Latest, _ = ethClient.BlockNumber(context.Background())
+	var meta MetaData
+	meta.Chain = chain
+	meta.ChainId = ChainID(&ethClient)
+	meta.NetworkId = NetworkID(&ethClient)
+	meta.Latest = BlockNumber(&ethClient)
 
 	valueChan := make(chan MetaValue)
 

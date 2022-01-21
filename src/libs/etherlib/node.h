@@ -110,7 +110,6 @@ extern bool isErigon(void);
 extern bool isGeth(void);
 extern bool isParity(void);
 extern bool hasParityTraces(void);
-extern bool getNodeIds(uint64_t& clientId, uint64_t& networkId);
 
 //-------------------------------------------------------------------------
 uint64_t addFilter(address_t addr, const CTopicArray& topics, blknum_t block);

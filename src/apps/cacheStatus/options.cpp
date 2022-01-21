@@ -270,10 +270,9 @@ void COptions::Init(void) {
         status.clientVersion = "Not running";
         status.clientIds = "Not running";
     } else {
+        CMetaData meta = getMetaData();
         status.clientVersion = (isTestMode() ? "Client version" : getVersionFromClient());
-        uint64_t ids[2];
-        getNodeIds(ids[0], ids[1]);
-        status.clientIds = "chainId: " + uint_2_Str(ids[0]) + " networkId: " + uint_2_Str(ids[1]);
+        status.clientIds = "chainId: " + uint_2_Str(meta.chainId) + " networkId: " + uint_2_Str(meta.networkId);
     }
     status.trueblocksVersion = getVersionStr();
     status.isScraping = isTestMode() ? false : (isRunning("chifra scrape") || isRunning("blockScrape"));

@@ -513,6 +513,9 @@ INFO[DATE|TIME] unchainedIndexAddr: 0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd
     "finalized": "0xdeadbeef",
     "staging": "0xdeadbeef",
     "ripe": "0xdeadbeef",
-    "unripe": "0xdeadbeef"
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
   }
 }
