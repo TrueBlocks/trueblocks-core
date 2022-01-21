@@ -39,7 +39,6 @@ func Test_GetPathTo(t *testing.T) {
 			for _, g := range globals {
 				if strings.HasPrefix(test.part, g) {
 					withChain = false
-					break
 				}
 			}
 			if withChain {

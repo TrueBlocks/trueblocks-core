@@ -80,7 +80,6 @@ bool loadPrefundBalances(void) {
         }
     } else {
         LOG_ERR("Got zero records from ", chainConfigsTxt_allocs);
-        return false;
     }
 
     establishFolder(cacheFolderBin_allocs);

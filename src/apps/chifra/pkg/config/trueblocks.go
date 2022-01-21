@@ -9,6 +9,7 @@ import (
 	"path"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/spf13/viper"
 )
 
@@ -22,11 +23,10 @@ type trueBlocksVersion struct {
 }
 
 type trueBlocksSettings struct {
-	RpcProvider  string `toml:"rpcProvider"`
-	CachePath    string `toml:"cachePath"`
-	IndexPath    string `toml:"indexPath"`
+	RpcProvider  string
+	CachePath    string
+	IndexPath    string
 	EtherscanKey string `toml:"etherscan_key"`
-	DefaultChain string `toml:"default_chain"`
 }
 
 type TrueBlocksConfig struct {
@@ -37,10 +37,9 @@ type TrueBlocksConfig struct {
 // init sets up default values for the given configuration
 func init() {
 	trueBlocksViper.SetConfigName("trueBlocks")
-	trueBlocksViper.SetDefault("settings.rpcProvider", "http://localhost:8545")
-	trueBlocksViper.SetDefault("settings.cachePath", GetPathToRootConfig()+"cache/")
-	trueBlocksViper.SetDefault("settings.indexPath", GetPathToRootConfig()+"unchained/")
-	trueBlocksViper.SetDefault("settings.default_chain", "mainnet")
+	trueBlocksViper.SetDefault("Settings.RpcProvider", "http://localhost:8545")
+	trueBlocksViper.SetDefault("Settings.CachePath", GetPathToRootConfig()+"cache/")
+	trueBlocksViper.SetDefault("Settings.IndexPath", GetPathToRootConfig()+"unchained/")
 }
 
 // readTrueBlocks reads and the configuration located in trueBlocks.toml file. Note
@@ -68,7 +67,28 @@ func readTrueBlocks() *TrueBlocksConfig {
 		indexPath = strings.Replace(indexPath, "~", user.HomeDir, -1)
 		cachedTrueBlocksConfig.Settings.IndexPath = indexPath
 
+		// We establish only the top-level folders here. When we figure out
+		// which chain we're on (not until the user tells us on the command line)
+		// only then can we complete these paths. At this point these paths
+		// only point to the top-levl of the cache or index. Also note that
+		// these two calls do not return if they fail, so no need to handle errors
+		// TODO: BOGUS-DEFAULTCHAIN
+		defaultChains := []string{GetDefaultChain()}
+		file.EstablishFolders(cachedTrueBlocksConfig.Settings.CachePath, defaultChains)
+		file.EstablishFolders(cachedTrueBlocksConfig.Settings.IndexPath, defaultChains)
+
 		trueBlocksRead = true
 	}
+
 	return &cachedTrueBlocksConfig
+}
+
+func GetDefaultChain() string {
+	// TODO: BOGUS-DEFAULTCHAIN
+	return "mainnet"
+}
+
+func GetTestChain() string {
+	// TODO: BOGUS-DEFAULTCHAIN
+	return "mainnet"
 }
