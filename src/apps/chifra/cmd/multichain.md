@@ -1,45 +1,80 @@
 ### Open Questions
 ----
-- [ ] What about the bytzantium hard fork -- is there block number specific behaviour? (probably -- for ETC for example)
-- [ ] What about 'status' on pre-byzantium receipts on non-main net chains?
-- [ ] We should be able to remove the 'requires' options (tracing, parity -- balances already removed) in blockScrape.toml
-- [ ] Chain specific data: Names, Timestamps, Poloniex prices, Manifest files, Explorer APIs, Caches
-  - [ ] The unchained index smart contract needs chain id
-  - [ ] `chifra --chain gnosis explore` should go to a different server
-  - [ ] `chifra slurp` won't work with --chain
-  - [ ] `chifra when --list` is main net centric
-- [ ] Test XDG varables somehow
-- [ ] Can we use chain ids to verify that the RPC points to the same chain we are being told it is?
-- [ ] Private networks have a real problem with 'front of chain' because almost all of the thing is front of chain
-- [ ] Uniswap pricing of reconciliations obviously doesn't work on non-main net.
-- [ ] Test ABI generation for non-main net chains
-- [ ] Check out https://github.com/symblox/hardhat-abi-gen for ABI generation from Solidity code
-- [ ] The server wants to run against the base configuration (i.e. mainnet -- why???). 
+- [ ] Folder creation:
+  - [ ] It's important to not create the index or cache folder if it doesn't already exist except if its the default or inside XDG
+  - [ ] If the folder does not exist, don't create the index, which already works -- except -- it creates the folder
+  - [ ] chifra scrape --chain shit reports no such folder shit but also creates the folder so the next time you run it's there
+  - [ ] Add testing to utillib tests to set XDG folders using test case .env files
+  - [ ] Add testing that specifies non-existant folders
+  - [ ] Test XDG varables somehow
+  - [ ] If the path contains `unchained` or `finalized` or blooms remove those parts
+  - [ ] If XDG path is present, but not fully qualified - fail - add test case
+  - [ ] If XDG path is present, but the folder doesn't exist, what should we do - I think fail
+  - [ ] We used to preclude the user from customizing an indexPath if it doesn't exist
+- [ ] Chain specific data: 
+  - [ ] Names, Timestamps, Poloniex prices, Manifest files, Explorer APIs, Caches
+  - [ ] Config items should be able to be read from top-level and overlaid with chain specific config
+- [ ] Chain IDs
+  - [ ] User provides his/her own chain id. We query the chain at the RPC and verify we're connected to the rigth chain
+- [ ] Smart Contract
+  - [ ] Needs chain id
+  - [ ] Manifest can be customized as we wish
+  - [ ] How can others participate?
+  - [ ] Does it accept donations?
+- [ ] TrueBlocks and other config file
+  - [ ] Should it have any per-chain data (probably not)
+  - [ ] Need to be able to 'merge' toml files so we can have top-level settings and per-chain overlay
+  - [ ] Don't expose IndexPath and CachePath (or any config settings) directly. Hide behind function or use a map<string, string>
+- [ ] Server
+  - [ ] How does the server handle `--chain` and/or a different default chain?
+  - [ ] When running against remote gnosis server, our app does not send in the --client parameter
+  - [ ] You have to start the server with --client gnosis
+  - [ ] The server does not accept a --chain value. Why?
+  - [ ] The API must accept --chain
+  - [ ] The server wants to run against the base configuration (i.e. mainnet -- why???). 
+  - [ ] What if we wanted to run two servers -- one for each of two different chains?
   - [ ] This is another reason why --chain must be a global option.
   - [ ] Otherwise, we would have to run multiple servers. As a result -- we want to disable 
   - [ ] the `--chain` option for `chifra serve` (probably other things as well)
-- [ ] Search for IndexPath, CachePath in golang code
-- [ ] Blaze has command line options to explicitly take the paths
-- [ ] We used to preclude the user from customizing an indexPath if it doesn't exist
-- [ ] Should be fail if the XDG paths do not exist?
-- [ ] This function: func initConfig() in blaze needs attention for paths
-- [ ] ./docs/content/chifra/configs.md needs work
-- [ ] I feel like I need a different pinata account for each chain. Not a problem. Easier to remove a chain
-
-### Issues
----
-- [ ] It's important to not create the index or cache folder if it doesn't already exist except if its the default or inside XDG
-- [ ] If the path contains `unchained` or `finalized` or blooms remove those parts
-- [ ] Need a --test option to chifra init 
-- [ ] When running against remote gnosis server, our app does not send in the --client parameter
-- [ ] You have to start the server with --client gnosis
-- [ ] The server does not accept that value
-- [ ] If the folder does not exist, don't create the index, which already works -- except -- it creates the folder
-- [ ] chifra scrape --chain shit reports no such folder shit but also creates the folder so the next time you run it's there
-- [ ] MAKE SURE chifra explore --chain works with different block explorers
-- [ ] WE SHOULD CREATE A STRUCTURE CALLED opts.Chain.Configs that then allows opts.Chain.Configs[tool][settings][key]
-- [ ] MUST MAKE SURE BLOCKSCRAPE.TOML IS IN THE RIGHT PLACE
-- [ ] MUST EDIT OUT THE TRUEBLOCKS.TOML FILE
+- [ ] Chifra Export
+  - [ ] Uniswap pricing of reconciliations obviously doesn't work on non-main net.
+- [ ] Block Scraper
+  - [ ] The function initConfig() in blaze needs attention vis-a-vi paths (we should be able to use the chifra paths directly)
+  - [ ] Blaze has command line options to explicitly take the paths
+  - [ ] We should be able to remove the 'requires' options (tracing, parity -- balances already removed) in blockScrape.toml
+  - [ ] Running against private networks is a problem because almost every thing happens very close to front of chain
+  - [ ] Create a different Pinata account for each chain: gnosis.unchainedindex.io, etc.
+    - [ ] Should be use `v1`? Not sure.
+      - [ ] Don't really like it, but would allow upgrades.
+      - [ ] Should there be upgrades? Doesn't `manifest.txt` allow for inifinite upgrades?
+- [ ] Other Tools
+  - [ ] `chifra explore` needs to be per chain
+  - [ ] Should names be per chain or top level? Both - most names are at top level, user may customize per chain
+  - [ ] Does `ethslurp` work per chain?  The Etherscan API needs to be adjusted per chain
+  - [ ] `chifra when` is per chain - can we test this? Would need time stamp from multiple chains
+  - [ ] Does --sol option work for non-mainnet chains?
+  - [ ] Does articulation work for non-mainnet chains?
+- [ ] Docs
+  - [ ] ./docs/content/chifra/configs.md needs work
+- [ ] Other
+  - [ ] What about the bytzantium hard fork -- is there block number specific behaviour? (probably -- for ETC for example)
+  - [ ] What about 'status' on pre-byzantium receipts on non-main net chains?
+- [x] Closed Issues
+  - [x] The prefund values per chain are in the repo but not being used
+  - [x] We need to use the `--chain` option when building paths
+  - [x] Rename all path routines from `getXXXPath` to `getPathToXXX` so we can find them more easily
+  - [x] Put all the path related functions in a single file to better control them (one for .go, one for .cpp)
+  - [x] Concentrate all changes to paths in the golang code, and send environment varaibles (current) or command line options 
+  - [x] (if needed) to cary paths to the C++ code.
+  - [x] Add `[settings]chain=` option to trueBlocks.toml [No -- we don't want to do this. `--chain` is a command
+  - [x] line option only with `main net` the default in absences of that option.]
+  - [x] Make sure the three base routines that return paths return paths ending with '/' (dependant routines already do this).
+  - [x] Add a global command line option `--chain`
+  - [x] Use XDG spec for environment variables
+  - [x] Expand performance testing to include chain (set to `main net` for all records)
+  - [x] Add chain and network/chainid to meta data
+  - [x] We need to fix the install files. XDG is present, but does it work?
+  - [x] Make sure blockScrape.toml is in the correct location after install
 
 ### Steps to Migrate
 ---
@@ -48,27 +83,10 @@
 - [ ] Some of the files and scripts in `build_assets` may have to be re-worked
 - [ ] We need to document the way these paths work in the website (search for XDG to find out where)
 - [ ] Add `chain` to the `status` endpoints including `--terse`
-- [ ] Add testing to utillib tests to set XDG folders using test case .env files
-- [ ] Add testing that specifies non-existant folders
 - [ ] Finish the migrations-0.25.0.md file
-- [ ] Re-write the `trueBlocks.toml` file with version `0.25.0`. Use this as a marker that the installation is migrated. Alternate: write migrations to the file [migrations]0.25.0=true, etc. (this is the same thing - it's easier to write the version)
-
-### Steps to Migrate (completed)
----
-- [x] The prefund values per chain are in the repo but not being used
-- [x] We need to use the `--chain` option when building paths
-- [x] Rename all path routines from `getXXXPath` to `getPathToXXX` so we can find them more easily
-- [x] Put all the path related functions in a single file to better control them (one for .go, one for .cpp)
-- [x] Concentrate all changes to paths in the golang code, and send environment varaibles (current) or command line options 
-- [x] (if needed) to cary paths to the C++ code.
-- [x] Add `[settings]chain=` option to trueBlocks.toml [No -- we don't want to do this. `--chain` is a command
-- [x] line option only with `main net` the default in absences of that option.]
-- [x] Make sure the three base routines that return paths return paths ending with '/' (dependant routines already do this).
-- [x] Add a global command line option `--chain`
-- [x] Use XDG spec for environment variables
-- [x] Expand performance testing to include chain (set to `main net` for all records)
-- [x] Add chain and network/chainid to meta data
-- [x] We need to fix the install files. XDG is present, but does it work?
+- [ ] Re-write the `trueBlocks.toml` file with version `0.25.0`. 
+  - [ ] Use this as a marker that the installation is migrated. 
+  - [ ] Alternate: write migrations to the file [migrations]0.25.0=true, etc. (not a good idea)
 
 ### What We Need to Control
 ---
@@ -197,5 +215,3 @@ remoteExplorer = ""
 | getPathToDocs      | For internal tooling only - works from `./build` folder |
 | getPathToTemplates | For internal tooling only - works from `./build` folder |
 | getPathToSource    | For internal tooling only - works from `./build` folder |
-
-We have to make sure the Explorer API includes --chain
