@@ -37,6 +37,9 @@ bool COptions::handle_status(ostream& os) {
         else
             m << meta.client << ", " << meta.finalized << ", " << meta.staging << ", " << meta.unripe;
         replace(fmt, "[{PROGRESS}]", m.str());
+        ostringstream n;
+        n << meta.chain << " (" << meta.chainId << "," << meta.networkId << ")";
+        replace(fmt, "[{CHAINDATA}]", n.str());
 
         string_q res = st.Format(fmt);
         replaceAll(res, "++C1++", cGreen);
@@ -501,6 +504,7 @@ const char* STR_TERSE_REPORT =
     "[{TIME}] ++C1++Client:++C2++       [{CLIENTVERSION}][{MODES1}]\n"
     "[{TIME}] ++C1++TrueBlocks:++C2++   [{TRUEBLOCKSVERSION}][{MODES2}]\n"
     "[{TIME}] ++C1++Config Path:++C2++  [{CONFIGPATH}]\n"
+    "[{TIME}] ++C1++Chain (ids):++C2++  [{CHAINDATA}]\n"
     "[{TIME}] ++C1++Cache Path:++C2++   [{CACHEPATH}]\n"
     "[{TIME}] ++C1++Index Path:++C2++   [{INDEXPATH}]\n"
     "[{TIME}] ++C1++RPC Provider:++C2++ [{RPCPROVIDER}]\n"

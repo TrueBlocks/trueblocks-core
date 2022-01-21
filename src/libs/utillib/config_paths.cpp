@@ -60,6 +60,17 @@ string_q getChainFromPath(void) {
 }
 
 //---------------------------------------------------------------------------------------------------
+static string_q g_defaultChain;
+string_q getDefaultChain(void) {
+    if (!g_defaultChain.empty())
+        return g_defaultChain;
+    g_defaultChain = getEnvStr("TB_DEFAULT_CHAIN");
+    ASSERT(!g_defaultChain.empty());
+    LOG4(bGreen, "c-DEFAULT_CHAIN: ", g_defaultChain);
+    return g_defaultChain;
+}
+
+//---------------------------------------------------------------------------------------------------
 static string_q g_configPath;
 string_q getPathToRootConfig(const string_q& _part) {
     if (!g_configPath.empty())
@@ -112,6 +123,7 @@ void loadEnvironmentPaths(void) {
 #endif
     ::setenv("TB_CONFIG_PATH", configPath.c_str(), true);
     ::setenv("TB_CHAIN_CONFIG_PATH", (configPath + "config/mainnet/").c_str(), true);
+    ::setenv("TB_DEFAULT_CHAIN", "mainnet", true);
     ::setenv("TB_CACHE_PATH", (configPath + "cache/mainnet/").c_str(), true);
     ::setenv("TB_INDEX_PATH", (configPath + "unchained/mainnet/").c_str(), true);
 }

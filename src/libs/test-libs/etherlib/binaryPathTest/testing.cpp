@@ -21,6 +21,7 @@ int main(int argc, const char* argv[]) {
 
     cerr << "TB_CONFIG_PATH: " << relativize(getEnvStr("TB_CONFIG_PATH")) << endl;
     cerr << "TB_CHAIN_CONFIG_PATH: " << relativize(getEnvStr("TB_CHAIN_CONFIG_PATH")) << endl;
+    cerr << "TB_DEFAULT_CHAIN: " << getEnvStr("TB_DEFAULT_CHAIN") << endl;
     cerr << "TB_CACHE_PATH: " << relativize(getEnvStr("TB_CACHE_PATH")) << endl;
     cerr << "TB_INDEX_PATH: " << relativize(getEnvStr("TB_INDEX_PATH")) << endl;
 

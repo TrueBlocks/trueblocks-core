@@ -89,6 +89,9 @@ names?prefund&chain=gnosis
     "staging": "0xdeadbeef",
     "finalized": "0xdeadbeef",
     "client": "0xdeadbeef",
+    "chain": "gnosis",
+    "clientId": "0xdeaddead",
+    "networkId": "0xdeaddead",
     "namePath": "--"
   }
 }

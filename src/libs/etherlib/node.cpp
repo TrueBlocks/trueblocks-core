@@ -1069,20 +1069,23 @@ string_q exportPostamble(const CStringArray& errorsIn, const string_q& extra) {
         return os.str() + " }";
     ASSERT(fmt == API1);
 
-    CMetaData progress = getMetaData();
-    blknum_t unripe = progress.unripe;
-    blknum_t ripe = progress.ripe;
-    blknum_t staging = progress.staging;
-    blknum_t finalized = progress.finalized;
-    blknum_t client = progress.client;
-    if (isTestMode())
-        unripe = ripe = staging = finalized = client = 0xdeadbeef;
+    CMetaData meta = getMetaData();
+    if (isTestMode()) {
+        meta.unripe = meta.ripe = meta.staging = meta.finalized = meta.client = 0xdeadbeef;
+        meta.chainId = meta.networkId = 0xdeaddead;
+    }
     os << ", \"meta\": {";
-    os << "\"unripe\": " << dispNumOrHex(unripe) << ",";
-    os << "\"ripe\": " << dispNumOrHex(ripe) << ",";
-    os << "\"staging\": " << dispNumOrHex(staging) << ",";
-    os << "\"finalized\": " << dispNumOrHex(finalized);
-    os << ",\"client\": " << dispNumOrHex(client);
+    os << "\"unripe\": " << dispNumOrHex(meta.unripe) << ",";
+    os << "\"ripe\": " << dispNumOrHex(meta.ripe) << ",";
+    os << "\"staging\": " << dispNumOrHex(meta.staging) << ",";
+    os << "\"finalized\": " << dispNumOrHex(meta.finalized);
+    os << ",\"client\": " << dispNumOrHex(meta.client);
+    if (meta.chain != getDefaultChain()) {
+        os << ",\"chain\": "
+           << "\"" << meta.chain << "\"";
+        os << ",\"clientId\": " << dispNumOrHex(meta.chainId);
+        os << ",\"networkId\": " << dispNumOrHex(meta.networkId);
+    }
     if (!extra.empty())
         os << extra;
     os << " }";

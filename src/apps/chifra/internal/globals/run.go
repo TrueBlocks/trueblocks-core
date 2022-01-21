@@ -28,6 +28,7 @@ func (opts *GlobalOptions) PassItOn(path string, flags string) error {
 	chainConfigPath := config.GetPathToChainConfig(opts.Chain)
 	cachePath := config.GetPathToCache(opts.Chain)
 	indexPath := config.GetPathToIndex(opts.Chain)
+	defChain := config.GetDefaultChain()
 
 	// fmt.Fprintf(os.Stderr, "Calling: %s %s\n", path, options)
 	cmd := exec.Command(config.GetPathToCommands(path), options)
@@ -37,11 +38,13 @@ func (opts *GlobalOptions) PassItOn(path string, flags string) error {
 		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "g-CHAIN_CONFIG_PATH: ", chainConfigPath, colors.Off)
 		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "g-CACHE_PATH:  ", cachePath, colors.Off)
 		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "g-INDEX_PATH:  ", indexPath, colors.Off)
+		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "g-DEFAULT_CHAIN: ", defChain, colors.Off)
 	}
 	cmd.Env = append(cmd.Env, "TB_CONFIG_PATH="+configPath)
 	cmd.Env = append(cmd.Env, "TB_CHAIN_CONFIG_PATH="+chainConfigPath)
 	cmd.Env = append(cmd.Env, "TB_CACHE_PATH="+cachePath)
 	cmd.Env = append(cmd.Env, "TB_INDEX_PATH="+indexPath)
+	cmd.Env = append(cmd.Env, "TB_DEFAULT_CHAIN="+defChain)
 	if os.Getenv("TEST_MODE") == "true" {
 		cmd.Env = append(cmd.Env, "TEST_MODE=true")
 	}
