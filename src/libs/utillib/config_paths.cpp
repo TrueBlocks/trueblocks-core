@@ -46,17 +46,20 @@ string_q getPathToChainConfig(const string_q& _part) {
     if (!g_chainConfigPath.empty())
         return g_chainConfigPath + _part;
     g_chainConfigPath = getEnvStr("TB_CHAIN_CONFIG_PATH");
-    LOG4(bGreen, "c-CHAIN_CONFIG_PATH: ", isTestMode() ? relativize(g_chainConfigPath) : g_chainConfigPath, cOff);
+    // LOG4(bGreen, "c-CHAIN_CONFIG_PATH: ", isTestMode() ? relativize(g_chainConfigPath) : g_chainConfigPath, cOff);
     TEST_PATH(g_chainConfigPath, _part, "Chain Configuration");
     return g_chainConfigPath + _part;
 }
 
 //---------------------------------------------------------------------------------------------------
-string_q getChainFromPath(void) {
-    string_q ret = getPathToChainConfig("");
-    CStringArray parts;
-    explode(parts, ret, '/');
-    return parts[parts.size() - 1];
+static string_q g_Chain;
+string_q getChain(void) {
+    if (!g_Chain.empty())
+        return g_Chain;
+    g_Chain = getEnvStr("TB_CHAIN");
+    ASSERT(!g_Chain.empty());
+    // LOG4(bGreen, "c-CHAIN: ", g_Chain);
+    return g_Chain;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -66,7 +69,7 @@ string_q getDefaultChain(void) {
         return g_defaultChain;
     g_defaultChain = getEnvStr("TB_DEFAULT_CHAIN");
     ASSERT(!g_defaultChain.empty());
-    LOG4(bGreen, "c-DEFAULT_CHAIN: ", g_defaultChain);
+    // LOG4(bGreen, "c-DEFAULT_CHAIN: ", g_defaultChain);
     return g_defaultChain;
 }
 
@@ -76,7 +79,7 @@ string_q getPathToRootConfig(const string_q& _part) {
     if (!g_configPath.empty())
         return g_configPath + _part;
     g_configPath = getEnvStr("TB_CONFIG_PATH");
-    LOG4(bGreen, "c-CONFIG_PATH: ", isTestMode() ? relativize(g_configPath) : g_configPath, cOff);
+    // LOG4(bGreen, "c-CONFIG_PATH: ", isTestMode() ? relativize(g_configPath) : g_configPath, cOff);
     TEST_PATH(g_configPath, _part, "Configuration");
     return g_configPath + _part;
 }
@@ -87,7 +90,7 @@ string_q getPathToCache(const string_q& _part) {
     if (!g_cachePath.empty())
         return g_cachePath + _part;
     g_cachePath = getEnvStr("TB_CACHE_PATH");
-    LOG4(bGreen, "c-CACHE_PATH: ", isTestMode() ? relativize(g_cachePath) : g_cachePath, cOff);
+    // LOG4(bGreen, "c-CACHE_PATH: ", isTestMode() ? relativize(g_cachePath) : g_cachePath, cOff);
     TEST_PATH(g_cachePath, _part, "Cache");
     return g_cachePath + _part;
 }
@@ -98,7 +101,7 @@ string_q getPathToIndex(const string_q& _part) {
     if (!g_indexPath.empty())
         return g_indexPath + _part;
     g_indexPath = getEnvStr("TB_INDEX_PATH");
-    LOG4(bGreen, "c-INDEX_PATH: ", isTestMode() ? relativize(g_indexPath) : g_indexPath, cOff);
+    // LOG4(bGreen, "c-INDEX_PATH: ", isTestMode() ? relativize(g_indexPath) : g_indexPath, cOff);
     TEST_PATH(g_indexPath, _part, "Index");
     return g_indexPath + _part;
 }

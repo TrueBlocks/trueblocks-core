@@ -105,6 +105,7 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "s-CACHE_PATH:  ", cachePath, colors.Off)
 			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "s-INDEX_PATH:  ", indexPath, colors.Off)
 			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "g-DEFAULT_CHAIN: ", defChain, colors.Off)
+			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "g-CHAIN: ", chain, colors.Off)
 		}
 		cmd.Env = append(os.Environ(), "API_MODE=true")
 	}
@@ -113,6 +114,7 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 	cmd.Env = append(cmd.Env, "TB_CACHE_PATH="+cachePath)
 	cmd.Env = append(cmd.Env, "TB_INDEX_PATH="+indexPath)
 	cmd.Env = append(cmd.Env, "TB_DEFAULT_CHAIN="+defChain)
+	cmd.Env = append(cmd.Env, "TB_CHAIN="+chain)
 	cmd.Env = append(cmd.Env, "PROG_NAME=chifra "+apiCmd)
 
 	// We need to pass the stderr through to the command line and also pick

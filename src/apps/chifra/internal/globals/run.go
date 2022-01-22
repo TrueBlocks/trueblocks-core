@@ -39,12 +39,14 @@ func (opts *GlobalOptions) PassItOn(path string, flags string) error {
 		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "g-CACHE_PATH:  ", cachePath, colors.Off)
 		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "g-INDEX_PATH:  ", indexPath, colors.Off)
 		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "g-DEFAULT_CHAIN: ", defChain, colors.Off)
+		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "g-CHAIN: ", opts.Chain, colors.Off)
 	}
 	cmd.Env = append(cmd.Env, "TB_CONFIG_PATH="+configPath)
 	cmd.Env = append(cmd.Env, "TB_CHAIN_CONFIG_PATH="+chainConfigPath)
 	cmd.Env = append(cmd.Env, "TB_CACHE_PATH="+cachePath)
 	cmd.Env = append(cmd.Env, "TB_INDEX_PATH="+indexPath)
 	cmd.Env = append(cmd.Env, "TB_DEFAULT_CHAIN="+defChain)
+	cmd.Env = append(cmd.Env, "TB_CHAIN="+opts.Chain)
 	if os.Getenv("TEST_MODE") == "true" {
 		cmd.Env = append(cmd.Env, "TEST_MODE=true")
 	}

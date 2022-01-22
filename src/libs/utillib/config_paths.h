@@ -22,7 +22,7 @@ extern string_q getPathToRootConfig(const string_q& _part);
 extern string_q getPathToChainConfig(const string_q& _part);
 extern string_q getPathToCache(const string_q& _part);
 extern string_q getPathToIndex(const string_q& _part);
-extern string_q getChainFromPath(void);
+extern string_q getChain(void);
 extern string_q getDefaultChain(void);
 
 //--------------------------------------------------------------------------------
