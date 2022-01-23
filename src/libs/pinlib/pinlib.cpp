@@ -57,7 +57,7 @@ bool pinlib_readManifest(CPinnedChunkArray& pinArray) {
         pinFile.Release();
 
     } else if (!fileExists(textFile)) {
-        LOG_ERR("Pins file is required, but not found.");
+        LOG_ERR("Pins file (", textFile, ") is required, but not found.");
         return false;
 
     } else {

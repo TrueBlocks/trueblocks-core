@@ -33,6 +33,10 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 	for key, value := range r.URL.Query() {
 		if key == "chain" {
 			chain = value[0]
+			if tbCmd == "chifra" {
+				allDogs = append(allDogs, "--chain")
+				allDogs = append(allDogs, chain)
+			}
 		} else {
 			if len(value) > 0 && value[0] != "false" {
 				// These keys exist only in the API. We strip them here since
@@ -157,6 +161,7 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 		parsed = strings.Trim(parsed, " \n")
 		// TODO: Need this to build. Probably not right
 		var unused globals.GlobalOptions
+		unused.Chain = chain
 		unused.TestMode = utils.IsTestModeServer(r)
 		unused.Writer = w
 		unused.RespondWithError(w, http.StatusBadRequest, errors.New(parsed))

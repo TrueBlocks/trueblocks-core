@@ -22,10 +22,5 @@ func (opts *ListOptions) ValidateList() error {
 		}
 	}
 
-	err := validate.ValidateAtLeastOneAddr(opts.Addrs)
-	if err != nil {
-		return err
-	}
-
 	return nil
 }

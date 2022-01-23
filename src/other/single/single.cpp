@@ -14,6 +14,7 @@
 
 //----------------------------------------------------------------
 int main(int argc, const char* argv[]) {
+    loadEnvironmentPaths();
     etherlib_init(quickQuitHandler);
     forEveryFileInFolder("./", visitFile, NULL);
     etherlib_cleanup();

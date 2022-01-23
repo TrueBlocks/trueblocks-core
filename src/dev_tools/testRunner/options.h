@@ -62,7 +62,3 @@ extern double tooSlow;
 extern double fastEnough;
 
 #define getSourcePath3() (getCWD() + string_q("../../../../src/dev_tools/testRunner/testCases/"))
-
-namespace qblocks {
-extern void loadEnvironmentPaths(void);
-}

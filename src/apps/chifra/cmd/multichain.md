@@ -1,3 +1,6 @@
+Search for etherscan everywhere. Different chains have different explorers
+the .env file, if empty, as it will be for most users needs to be made defaulted.
+
   - [ ] If the path comes from XDG it must both exist and be fully resolved, otherwise fail
   - [ ] If the path contains `cache` or `unchained` or end with one one of the caches or index folders, fail without proceeding
   - [ ] If the config, cache, or index path does not exist, fail with proceeding if it's not the default otherwise create it
