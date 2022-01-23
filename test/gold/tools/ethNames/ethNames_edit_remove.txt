@@ -5,5 +5,4 @@ TEST[DATE|TIME] Remove:  true
 TEST[DATE|TIME] LogLevel:  10
 TEST[DATE|TIME] Format:  api
 TIME ~ CLOCK - : 4-----Removing 0x0000000000000000000000000000000010101010
-{ "data": [ TIME ~ CLOCK - : 4-----c-DEFAULT_CHAIN: mainnet
-], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namePath": "--" } }
+{ "data": [ ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namePath": "--" } }
