@@ -22,7 +22,7 @@ import (
 // CallOne handles a route by calling into chifra
 func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string) {
 
-	chain := Options.Globals.Chain
+	chain := GetOptions().Globals.Chain
 
 	// We build an array of options that we send along with the call...
 	allDogs := []string{}
@@ -98,7 +98,7 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 		vars := strings.Split(r.Header.Get("X-TestRunner-Env"), "|")
 		cmd.Env = append(cmd.Env, vars...)
 	} else {
-		if Options.Globals.LogLevel > 3 {
+		if GetOptions().Globals.LogLevel > 3 {
 			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "s-CONFIG_PATH: ", configPath, colors.Off)
 			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "s-CHAIN_CONFIG_PATH: ", chainConfigPath, colors.Off)
 			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "s-CACHE_PATH:  ", cachePath, colors.Off)
