@@ -32,23 +32,23 @@ func (opts *ScrapeOptions) ValidateScrape() error {
 		}
 	}
 
-	if Options.Action == "" {
-		Options.Action = "run"
+	if opts.Action == "" {
+		opts.Action = "run"
 	}
-	err := validate.ValidateEnum("action", Options.Action, "[toggle|run|restart|pause|quit]")
+	err := validate.ValidateEnum("action", opts.Action, "[toggle|run|restart|pause|quit]")
 	if err != nil {
 		return err
 	}
 
-	if Options.Sleep < .5 {
-		return validate.Usage("The {0} option ({1}) must {2}.", "--sleep", fmt.Sprintf("%f", Options.Sleep), "be greater than .5")
+	if opts.Sleep < .5 {
+		return validate.Usage("The {0} option ({1}) must {2}.", "--sleep", fmt.Sprintf("%f", opts.Sleep), "be greater than .5")
 	}
 
-	if Options.Pin && !hasIndexerFlag(opts.Modes[0]) {
+	if opts.Pin && !hasIndexerFlag(opts.Modes[0]) {
 		return validate.Usage("The {0} option is available only with {1}.", "--pin", "the indexer")
 	}
 
-	if Options.Publish && !hasIndexerFlag(opts.Modes[0]) {
+	if opts.Publish && !hasIndexerFlag(opts.Modes[0]) {
 		return validate.Usage("The {0} option is available only with {1}.", "--publish", "the indexer")
 	}
 

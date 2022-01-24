@@ -23,7 +23,7 @@ func RunServe(cmd *cobra.Command, args []string) error {
 	}
 
 	PrintServeSettings(os.Getenv("TEST_MODE") == "true")
-	log.Fatal(RunInternal(Options.Port))
+	log.Fatal(RunInternal(GetOptions().Port))
 
 	return nil
 }
@@ -32,17 +32,17 @@ func PrintServeSettings(testMode bool) {
 	// 	log.Print(utils.Green, "Client:       ", utils.Off, Options.Status.Latest)
 	// 	log.Print(utils.Green, "TrueBlocks:   ", utils.Off, Options.Status.TrueBlocks)
 
-	apiUrl := Options.Port
+	apiUrl := GetOptions().Port
 	if !strings.Contains(apiUrl, "http") {
 		apiUrl = "http://localhost" + apiUrl
 	}
 	configPath := config.GetPathToRootConfig()
-	chainConfigPath := config.GetPathToChainConfig(Options.Globals.Chain)
-	cachePath := config.GetPathToCache(Options.Globals.Chain)
+	chainConfigPath := config.GetPathToChainConfig(GetOptions().Globals.Chain)
+	cachePath := config.GetPathToCache(GetOptions().Globals.Chain)
 	// TODO: BOGUS-INDEXPATH
-	indexPath := config.GetPathToIndex1(Options.Globals.Chain)
+	indexPath := config.GetPathToIndex1(GetOptions().Globals.Chain)
 	rpcProvider := config.GetRpcProvider()
-	meta := rpcClient.GetMeta(Options.Globals.Chain, testMode)
+	meta := rpcClient.GetMeta(GetOptions().Globals.Chain, testMode)
 
 	log.Printf("%s%-18.18s%s%s\n", colors.Green, "Server URL:", colors.Off, apiUrl)
 	log.Printf("%s%-18.18s%s%s\n", colors.Green, "RootConfig Path:", colors.Off, configPath)

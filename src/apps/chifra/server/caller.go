@@ -61,13 +61,13 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 	}
 
 	// If the server was started with --verbose and the command does not have --verbose...
-	if Options.Globals.Verbose && !hasVerbose {
+	if GetOptions().Globals.Verbose && !hasVerbose {
 		allDogs = append(allDogs, "--verbose")
 	}
 
 	// Do the actual call
 	cmd := exec.Command(tbCmd, allDogs...)
-	if Options.Globals.Verbose {
+	if GetOptions().Globals.Verbose {
 		log.Print(colors.Yellow, "Calling: ", cmd, colors.Off)
 	}
 

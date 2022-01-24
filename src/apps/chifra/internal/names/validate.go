@@ -15,25 +15,25 @@ func (opts *NamesOptions) ValidateNames() error {
 		return opts.BadFlag
 	}
 
-	if Options.Tags && anyBase() {
+	if opts.Tags && opts.anyBase() {
 		return validate.Usage("The {0} option is not available{1}.", "--tags", " with any other option")
 	}
 
-	if Options.Collections && anyBase() {
+	if opts.Collections && opts.anyBase() {
 		return validate.Usage("The {0} option is not available{1}.", "--collection", " with any other option")
 	}
 
 	return opts.Globals.ValidateGlobals()
 }
 
-func anyBase() bool {
-	return Options.Expand ||
-		Options.MatchCase ||
-		Options.All ||
-		Options.Custom ||
-		Options.Prefund ||
-		Options.Named ||
-		Options.Addr ||
-		Options.ToCustom ||
-		Options.Clean
+func (opts *NamesOptions) anyBase() bool {
+	return opts.Expand ||
+		opts.MatchCase ||
+		opts.All ||
+		opts.Custom ||
+		opts.Prefund ||
+		opts.Named ||
+		opts.Addr ||
+		opts.ToCustom ||
+		opts.Clean
 }

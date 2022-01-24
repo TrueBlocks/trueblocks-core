@@ -1,6 +1,6 @@
 names?tags&addr
 {
   "errors": [
-    "chifra names - Do not use the --tags option with any other option."
+    "The --tags option is not available with any other option."
   ]
 }

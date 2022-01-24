@@ -16,7 +16,7 @@ func (opts *TokensOptions) ValidateTokens() error {
 	}
 
 	// special case for tokens which don't allow --dollars display
-	if Options.Globals.Dollars {
+	if opts.Globals.Dollars {
 		return validate.Usage("The {0} option is not available{1}.", "--dollars", " with this tool")
 	}
 

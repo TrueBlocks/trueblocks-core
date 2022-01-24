@@ -387,7 +387,7 @@ string_q get_setopts(const CCommandOption& cmd) {
 
             os << "\t[{ROUTE}]Cmd.Flags().";
             os << p.go_flagtype;
-            os << "(&[{ROUTE}]Pkg.Options.";
+            os << "(&[{ROUTE}]Pkg.GetOptions().";
             os << p.Format("[{VARIABLE}]") << ", ";
             os << p.Format("\"[{LONGNAME}]\", ");
             os << p.Format("\"[{HOTKEY}]\", ");

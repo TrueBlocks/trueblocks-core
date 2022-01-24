@@ -28,6 +28,8 @@ type AbisOptions struct {
 	BadFlag error
 }
 
+var abisCmdLineOptions AbisOptions
+
 func (opts *AbisOptions) TestLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(opts.Known, "Known: ", opts.Known)
@@ -94,11 +96,16 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *AbisOptions {
 	return opts
 }
 
-var Options AbisOptions
-
 func AbisFinishParse(args []string) *AbisOptions {
+	opts := GetOptions()
 	// EXISTING_CODE
-	Options.Addrs = args
+	opts.Addrs = args
 	// EXISTING_CODE
-	return &Options
+	return opts
+}
+
+func GetOptions() *AbisOptions {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return &abisCmdLineOptions
 }
