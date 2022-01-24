@@ -30,6 +30,8 @@ type ScrapeOptions struct {
 	BadFlag      error
 }
 
+var scrapeCmdLineOptions ScrapeOptions
+
 func (opts *ScrapeOptions) TestLog() {
 	logger.TestLog(len(opts.Modes) > 0, "Modes: ", opts.Modes)
 	logger.TestLog(len(opts.Action) > 0, "Action: ", opts.Action)
@@ -109,11 +111,16 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ScrapeOptions {
 	return opts
 }
 
-var Options ScrapeOptions
-
 func ScrapeFinishParse(args []string) *ScrapeOptions {
+	opts := GetOptions()
 	// EXISTING_CODE
-	Options.Modes = args
+	opts.Modes = args
 	// EXISTING_CODE
-	return &Options
+	return opts
+}
+
+func GetOptions() *ScrapeOptions {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return &scrapeCmdLineOptions
 }

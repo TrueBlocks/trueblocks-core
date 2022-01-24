@@ -23,7 +23,7 @@ func RunServe(cmd *cobra.Command, args []string) error {
 	}
 
 	PrintServeSettings(os.Getenv("TEST_MODE") == "true")
-	log.Fatal(RunInternal(Options.Port))
+	log.Fatal(RunInternal(GetOptions().Port))
 
 	return nil
 }
@@ -32,11 +32,11 @@ func PrintServeSettings(testMode bool) {
 	// 	log.Print(utils.Green, "Client:       ", utils.Off, Options.Status.Latest)
 	// 	log.Print(utils.Green, "TrueBlocks:   ", utils.Off, Options.Status.TrueBlocks)
 
-	apiUrl := Options.Port
+	apiUrl := GetOptions().Port
 	if !strings.Contains(apiUrl, "http") {
 		apiUrl = "http://localhost" + apiUrl
 	}
-	chain := Options.Globals.Chain
+	chain := GetOptions().Globals.Chain
 	configPath := config.GetPathToRootConfig()
 	chainConfigPath := config.GetPathToChainConfig(chain)
 	cachePath := config.GetPathToCache(chain)

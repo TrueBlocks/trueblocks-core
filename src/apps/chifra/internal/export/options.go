@@ -57,6 +57,8 @@ type ExportOptions struct {
 	BadFlag     error
 }
 
+var exportCmdLineOptions ExportOptions
+
 func (opts *ExportOptions) TestLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(len(opts.Topics) > 0, "Topics: ", opts.Topics)
@@ -304,19 +306,24 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ExportOptions {
 	return opts
 }
 
-var Options ExportOptions
-
 func ExportFinishParse(args []string) *ExportOptions {
+	opts := GetOptions()
 	// EXISTING_CODE
 	for _, arg := range args {
 		if validate.IsValidTopic(arg) {
-			Options.Topics = append(Options.Topics, arg)
+			opts.Topics = append(opts.Topics, arg)
 		} else if validate.IsValidFourByte(arg) {
-			Options.Fourbytes = append(Options.Fourbytes, arg)
+			opts.Fourbytes = append(opts.Fourbytes, arg)
 		} else {
-			Options.Addrs = append(Options.Addrs, arg)
+			opts.Addrs = append(opts.Addrs, arg)
 		}
 	}
 	// EXISTING_CODE
-	return &Options
+	return opts
+}
+
+func GetOptions() *ExportOptions {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return &exportCmdLineOptions
 }

@@ -42,9 +42,9 @@ var notesExplore = ``
 func init() {
 	exploreCmd.Flags().SortFlags = false
 
-	exploreCmd.Flags().BoolVarP(&explorePkg.Options.Local, "local", "l", false, "open the local TrueBlocks explorer")
-	exploreCmd.Flags().BoolVarP(&explorePkg.Options.Google, "google", "g", false, "search google excluding popular blockchain explorers")
-	globals.InitGlobals(exploreCmd, &explorePkg.Options.Globals)
+	exploreCmd.Flags().BoolVarP(&explorePkg.GetOptions().Local, "local", "l", false, "open the local TrueBlocks explorer")
+	exploreCmd.Flags().BoolVarP(&explorePkg.GetOptions().Google, "google", "g", false, "search google excluding popular blockchain explorers")
+	globals.InitGlobals(exploreCmd, &explorePkg.GetOptions().Globals)
 
 	exploreCmd.SetUsageTemplate(UsageWithNotes(notesExplore))
 	exploreCmd.SetOut(os.Stderr)

@@ -23,6 +23,8 @@ type InitOptions struct {
 	BadFlag error
 }
 
+var initCmdLineOptions InitOptions
+
 func (opts *InitOptions) TestLog() {
 	logger.TestLog(opts.All, "All: ", opts.All)
 	opts.Globals.TestLog()
@@ -56,10 +58,15 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *InitOptions {
 	return opts
 }
 
-var Options InitOptions
-
 func InitFinishParse(args []string) *InitOptions {
+	opts := GetOptions()
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return &Options
+	return opts
+}
+
+func GetOptions() *InitOptions {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return &initCmdLineOptions
 }

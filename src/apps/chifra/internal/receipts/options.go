@@ -24,6 +24,8 @@ type ReceiptsOptions struct {
 	BadFlag      error
 }
 
+var receiptsCmdLineOptions ReceiptsOptions
+
 func (opts *ReceiptsOptions) TestLog() {
 	logger.TestLog(len(opts.Transactions) > 0, "Transactions: ", opts.Transactions)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
@@ -63,11 +65,16 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ReceiptsOptions {
 	return opts
 }
 
-var Options ReceiptsOptions
-
 func ReceiptsFinishParse(args []string) *ReceiptsOptions {
+	opts := GetOptions()
 	// EXISTING_CODE
-	Options.Transactions = args
+	opts.Transactions = args
 	// EXISTING_CODE
-	return &Options
+	return opts
+}
+
+func GetOptions() *ReceiptsOptions {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return &receiptsCmdLineOptions
 }
