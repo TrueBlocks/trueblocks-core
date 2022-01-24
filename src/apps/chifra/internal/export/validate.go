@@ -22,12 +22,12 @@ func (opts *ExportOptions) ValidateExport() error {
 		}
 	}
 
-	err := validate.ValidateEnum("--summarize_by", Options.SummarizeBy, "[yearly|quarterly|monthly|weekly|daily|hourly|blockly|tx]")
+	err := validate.ValidateEnum("--summarize_by", opts.SummarizeBy, "[yearly|quarterly|monthly|weekly|daily|hourly|blockly|tx]")
 	if err != nil {
 		return err
 	}
 
-	if len(Options.SummarizeBy) > 0 && !Options.Accounting {
+	if len(opts.SummarizeBy) > 0 && !opts.Accounting {
 		return validate.Usage("The {0} option is available only with {1}.", "--summarized_by", "--accounting")
 	}
 

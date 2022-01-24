@@ -55,13 +55,13 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 	}
 
 	// If the server was started with --verbose and the command does not have --verbose...
-	if Options.Globals.Verbose && !hasVerbose {
+	if GetOptions().Globals.Verbose && !hasVerbose {
 		allDogs = append(allDogs, "--verbose")
 	}
 
 	// Do the actual call
 	cmd := exec.Command(tbCmd, allDogs...)
-	if Options.Globals.Verbose {
+	if GetOptions().Globals.Verbose {
 		log.Print(colors.Yellow, "Calling: ", cmd, colors.Off)
 	}
 
@@ -88,16 +88,16 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 		vars := strings.Split(r.Header.Get("X-TestRunner-Env"), "|")
 		cmd.Env = append(cmd.Env, vars...)
 	} else {
-		if Options.Globals.LogLevel > 3 {
+		if GetOptions().Globals.LogLevel > 3 {
 			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "TB_CONFIG_PATH: ", configPath, colors.Off)
-			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "TB_CACHE_PATH:  ", config.GetPathToCache1(Options.Globals.Chain), colors.Off)
-			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "TB_INDEX_PATH:  ", config.GetPathToIndex1(Options.Globals.Chain), colors.Off)
+			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "TB_CACHE_PATH:  ", config.GetPathToCache1(GetOptions().Globals.Chain), colors.Off)
+			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "TB_INDEX_PATH:  ", config.GetPathToIndex1(GetOptions().Globals.Chain), colors.Off)
 		}
 		cmd.Env = append(os.Environ(), "API_MODE=true")
 	}
 	cmd.Env = append(cmd.Env, "TB_CONFIG_PATH="+configPath)
-	cmd.Env = append(cmd.Env, "TB_CACHE_PATH="+config.GetPathToCache1(Options.Globals.Chain))
-	cmd.Env = append(cmd.Env, "TB_INDEX_PATH="+config.GetPathToIndex1(Options.Globals.Chain))
+	cmd.Env = append(cmd.Env, "TB_CACHE_PATH="+config.GetPathToCache1(GetOptions().Globals.Chain))
+	cmd.Env = append(cmd.Env, "TB_INDEX_PATH="+config.GetPathToIndex1(GetOptions().Globals.Chain))
 	cmd.Env = append(cmd.Env, "PROG_NAME=chifra "+apiCmd)
 
 	// We need to pass the stderr through to the command line and also pick

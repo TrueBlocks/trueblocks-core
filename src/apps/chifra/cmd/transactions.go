@@ -46,12 +46,12 @@ Notes:
 func init() {
 	transactionsCmd.Flags().SortFlags = false
 
-	transactionsCmd.Flags().BoolVarP(&transactionsPkg.Options.Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
-	transactionsCmd.Flags().BoolVarP(&transactionsPkg.Options.Trace, "trace", "t", false, "include the transaction's traces in the results")
-	transactionsCmd.Flags().BoolVarP(&transactionsPkg.Options.Uniq, "uniq", "u", false, "display a list of uniq addresses found in the transaction")
-	transactionsCmd.Flags().StringVarP(&transactionsPkg.Options.Reconcile, "reconcile", "r", "", "reconcile the transaction as per the provided address")
-	transactionsCmd.Flags().BoolVarP(&transactionsPkg.Options.Cache, "cache", "o", false, "force the results of the query into the tx cache (and the trace cache if applicable)")
-	globals.InitGlobals(transactionsCmd, &transactionsPkg.Options.Globals)
+	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
+	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().Trace, "trace", "t", false, "include the transaction's traces in the results")
+	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().Uniq, "uniq", "u", false, "display a list of uniq addresses found in the transaction")
+	transactionsCmd.Flags().StringVarP(&transactionsPkg.GetOptions().Reconcile, "reconcile", "r", "", "reconcile the transaction as per the provided address")
+	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().Cache, "cache", "o", false, "force the results of the query into the tx cache (and the trace cache if applicable)")
+	globals.InitGlobals(transactionsCmd, &transactionsPkg.GetOptions().Globals)
 
 	transactionsCmd.SetUsageTemplate(UsageWithNotes(notesTransactions))
 	transactionsCmd.SetOut(os.Stderr)

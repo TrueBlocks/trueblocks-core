@@ -1,6 +1,6 @@
 status?modes=caches&types=junk
 {
   "errors": [
-    "chifra status - Invalid option 'junk' for 'types'. One or more of [blocks|txs|traces|slurps|prices|all] required."
+    "The --types option (junk) must be one of [ blocks | txs | traces | slurps | prices | all ]"
   ]
 }

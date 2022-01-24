@@ -141,8 +141,8 @@ func (t ExploreType) String() string {
 	}
 }
 
-func (u *ExploreUrl) getUrl() string {
-	if Options.Google {
+func (u *ExploreUrl) getUrl(opts *ExploreOptions) string {
+	if opts.Google {
 		return "https://www.google.com/search?q=" + u.term + "+-etherscan+-etherchain+-bloxy+-bitquery+-ethplorer+-tokenview+-anyblocks+-explorer"
 	}
 
@@ -172,7 +172,7 @@ func (u *ExploreUrl) getUrl() string {
 		query = "address/" + u.term
 	}
 
-	if Options.Local {
+	if opts.Local {
 		url = "http://localhost:1234/"
 		query = strings.Replace(query, "tx/", "explorer/transactions/", -1)
 		query = strings.Replace(query, "block/", "explorer/blocks/", -1)

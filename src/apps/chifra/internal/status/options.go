@@ -34,6 +34,8 @@ type StatusOptions struct {
 	BadFlag    error
 }
 
+var statusCmdLineOptions StatusOptions
+
 func (opts *StatusOptions) TestLog() {
 	logger.TestLog(len(opts.Modes) > 0, "Modes: ", opts.Modes)
 	logger.TestLog(opts.Details, "Details: ", opts.Details)
@@ -132,11 +134,16 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *StatusOptions {
 	return opts
 }
 
-var Options StatusOptions
-
 func StatusFinishParse(args []string) *StatusOptions {
+	opts := GetOptions()
 	// EXISTING_CODE
-	Options.Modes = args
+	opts.Modes = args
 	// EXISTING_CODE
-	return &Options
+	return opts
+}
+
+func GetOptions() *StatusOptions {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return &statusCmdLineOptions
 }

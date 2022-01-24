@@ -27,17 +27,17 @@ func RunList(cmd *cobra.Command, args []string) error {
 	}
 
 	// EXISTING_CODE
-	exportPkg.Options.Appearances = true
+	exportPkg.GetOptions().Appearances = true
 	if opts.Count {
-		exportPkg.Options.Count = true
+		exportPkg.GetOptions().Count = true
 	}
 	if opts.FirstBlock > 0 {
-		exportPkg.Options.FirstBlock = opts.FirstBlock
+		exportPkg.GetOptions().FirstBlock = opts.FirstBlock
 	}
 	if opts.LastBlock > 0 {
-		exportPkg.Options.LastBlock = opts.LastBlock
+		exportPkg.GetOptions().LastBlock = opts.LastBlock
 	}
-	exportPkg.Options.Globals = opts.Globals
+	exportPkg.GetOptions().Globals = opts.Globals
 
 	return exportPkg.RunExport(cmd, args)
 	// EXISTING_CODE

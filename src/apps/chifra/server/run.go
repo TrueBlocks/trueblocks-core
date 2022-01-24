@@ -22,7 +22,7 @@ func RunServe(cmd *cobra.Command, args []string) error {
 	}
 
 	PrintServeSettings(os.Getenv("TEST_MODE") == "true")
-	log.Fatal(RunInternal(Options.Port))
+	log.Fatal(RunInternal(GetOptions().Port))
 
 	return nil
 }
@@ -33,7 +33,7 @@ func PrintServeSettings(testMode bool) {
 	// 	log.Print(utils.Green, "TrueBlocks:   ", utils.Off, Options.Status.TrueBlocks)
 
 	meta := rpcClient.GetMeta(testMode)
-	log.Printf("%s%-15.15s%s%s\n", colors.Green, "Server URL:", colors.Off, "http://localhost"+Options.Port)
+	log.Printf("%s%-15.15s%s%s\n", colors.Green, "Server URL:", colors.Off, "http://localhost"+GetOptions().Port)
 	log.Printf("%s%-15.15s%s%s\n", colors.Green, "Config Path:", colors.Off, config.GetPathToConfig(false))
 	log.Printf("%s%-15.15s%s%s\n", colors.Green, "Cache Path:", colors.Off, config.GetPathToCache())
 	log.Printf("%s%-15.15s%s%s\n", colors.Green, "Index Path:", colors.Off, config.GetPathToIndex())

@@ -25,6 +25,8 @@ type ExploreOptions struct {
 	BadFlag error
 }
 
+var exploreCmdLineOptions ExploreOptions
+
 func (opts *ExploreOptions) TestLog() {
 	logger.TestLog(len(opts.Terms) > 0, "Terms: ", opts.Terms)
 	logger.TestLog(opts.Local, "Local: ", opts.Local)
@@ -70,11 +72,16 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ExploreOptions {
 	return opts
 }
 
-var Options ExploreOptions
-
 func ExploreFinishParse(args []string) *ExploreOptions {
+	opts := GetOptions()
 	// EXISTING_CODE
-	Options.Terms = args
+	opts.Terms = args
 	// EXISTING_CODE
-	return &Options
+	return opts
+}
+
+func GetOptions() *ExploreOptions {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return &exploreCmdLineOptions
 }

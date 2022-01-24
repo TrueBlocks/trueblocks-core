@@ -50,17 +50,17 @@ Notes:
 func init() {
 	stateCmd.Flags().SortFlags = false
 
-	stateCmd.Flags().StringSliceVarP(&statePkg.Options.Parts, "parts", "p", nil, `control which state to export
+	stateCmd.Flags().StringSliceVarP(&statePkg.GetOptions().Parts, "parts", "p", nil, `control which state to export
 One or more of [ none | some | all | balance | nonce | code | storage | deployed | accttype ]`)
-	stateCmd.Flags().BoolVarP(&statePkg.Options.Changes, "changes", "c", false, "only report a balance when it changes from one block to the next")
-	stateCmd.Flags().BoolVarP(&statePkg.Options.NoZero, "no_zero", "n", false, "suppress the display of zero balance accounts")
-	stateCmd.Flags().StringVarP(&statePkg.Options.Call, "call", "a", "", "a bang-separated string consisting of address!4-byte!bytes (hidden)")
-	stateCmd.Flags().StringVarP(&statePkg.Options.ProxyFor, "proxy_for", "r", "", "for the --call option only, redirects calls to this implementation (hidden)")
+	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().Changes, "changes", "c", false, "only report a balance when it changes from one block to the next")
+	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().NoZero, "no_zero", "n", false, "suppress the display of zero balance accounts")
+	stateCmd.Flags().StringVarP(&statePkg.GetOptions().Call, "call", "a", "", "a bang-separated string consisting of address!4-byte!bytes (hidden)")
+	stateCmd.Flags().StringVarP(&statePkg.GetOptions().ProxyFor, "proxy_for", "r", "", "for the --call option only, redirects calls to this implementation (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {
 		stateCmd.Flags().MarkHidden("call")
 		stateCmd.Flags().MarkHidden("proxy_for")
 	}
-	globals.InitGlobals(stateCmd, &statePkg.Options.Globals)
+	globals.InitGlobals(stateCmd, &statePkg.GetOptions().Globals)
 
 	stateCmd.SetUsageTemplate(UsageWithNotes(notesState))
 	stateCmd.SetOut(os.Stderr)

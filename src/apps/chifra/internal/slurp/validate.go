@@ -20,7 +20,7 @@ func (opts *SlurpOptions) ValidateSlurp() error {
 		return err
 	}
 
-	err = validate.ValidateEnumSlice("--types", Options.Types, "[ext|int|token|nfts|miner|uncles|all]")
+	err = validate.ValidateEnumSlice("--types", opts.Types, "[ext|int|token|nfts|miner|uncles|all]")
 	if err != nil {
 		return err
 	}
