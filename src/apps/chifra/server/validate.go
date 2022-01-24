@@ -12,8 +12,8 @@ import (
 )
 
 func Validate(cmd *cobra.Command, args []string) error {
-	if len(Options.Port) > 0 && !strings.Contains(Options.Port, ":") {
-		return validate.Usage("The {0} option ({1}) must {2}.", "--port", Options.Port, "start with ':'")
+	if len(GetOptions().Port) > 0 && !strings.Contains(GetOptions().Port, ":") {
+		return validate.Usage("The {0} option ({1}) must {2}.", "--port", GetOptions().Port, "start with ':'")
 	}
 
 	return nil

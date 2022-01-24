@@ -42,16 +42,16 @@ var notesList = ``
 func init() {
 	listCmd.Flags().SortFlags = false
 
-	listCmd.Flags().BoolVarP(&listPkg.Options.Count, "count", "U", false, "present only the number of records")
-	listCmd.Flags().BoolVarP(&listPkg.Options.Appearances, "appearances", "p", false, "export a list of appearances (hidden)")
-	listCmd.Flags().Uint64VarP(&listPkg.Options.FirstBlock, "first_block", "F", 0, "first block to process (inclusive) (hidden)")
-	listCmd.Flags().Uint64VarP(&listPkg.Options.LastBlock, "last_block", "L", 0, "last block to process (inclusive) (hidden)")
+	listCmd.Flags().BoolVarP(&listPkg.GetOptions().Count, "count", "U", false, "present only the number of records")
+	listCmd.Flags().BoolVarP(&listPkg.GetOptions().Appearances, "appearances", "p", false, "export a list of appearances (hidden)")
+	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().FirstBlock, "first_block", "F", 0, "first block to process (inclusive) (hidden)")
+	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().LastBlock, "last_block", "L", 0, "last block to process (inclusive) (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {
 		listCmd.Flags().MarkHidden("appearances")
 		listCmd.Flags().MarkHidden("first_block")
 		listCmd.Flags().MarkHidden("last_block")
 	}
-	globals.InitGlobals(listCmd, &listPkg.Options.Globals)
+	globals.InitGlobals(listCmd, &listPkg.GetOptions().Globals)
 
 	listCmd.SetUsageTemplate(UsageWithNotes(notesList))
 	listCmd.SetOut(os.Stderr)

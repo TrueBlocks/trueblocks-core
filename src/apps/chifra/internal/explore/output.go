@@ -30,9 +30,9 @@ func RunExplore(cmd *cobra.Command, args []string) error {
 
 	// EXISTING_CODE
 	for _, url := range urls {
-		fmt.Printf("Opening %s\n", url.getUrl())
+		fmt.Printf("Opening %s\n", url.getUrl(opts))
 		if os.Getenv("TEST_MODE") != "true" {
-			utils.OpenBrowser(url.getUrl())
+			utils.OpenBrowser(url.getUrl(opts))
 		}
 	}
 

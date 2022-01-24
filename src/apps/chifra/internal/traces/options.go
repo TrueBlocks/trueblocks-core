@@ -29,6 +29,8 @@ type TracesOptions struct {
 	BadFlag      error
 }
 
+var tracesCmdLineOptions TracesOptions
+
 func (opts *TracesOptions) TestLog() {
 	logger.TestLog(len(opts.Transactions) > 0, "Transactions: ", opts.Transactions)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
@@ -99,11 +101,16 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *TracesOptions {
 	return opts
 }
 
-var Options TracesOptions
-
 func TracesFinishParse(args []string) *TracesOptions {
+	opts := GetOptions()
 	// EXISTING_CODE
-	Options.Transactions = args
+	opts.Transactions = args
 	// EXISTING_CODE
-	return &Options
+	return opts
+}
+
+func GetOptions() *TracesOptions {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return &tracesCmdLineOptions
 }

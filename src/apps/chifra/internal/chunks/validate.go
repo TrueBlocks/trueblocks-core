@@ -19,7 +19,7 @@ func (opts *ChunksOptions) ValidateChunks() error {
 	// 	return validate.Usage("Please choose at least one of {0}.", "--list, --extract, or --check")
 	// }
 
-	if !Options.Check && len(Options.Extract) == 0 {
+	if !opts.Check && len(opts.Extract) == 0 {
 		return validate.Usage("Please choose at least one of {0}.", "--extract or --check")
 	}
 
@@ -31,7 +31,7 @@ func (opts *ChunksOptions) ValidateChunks() error {
 	// 	return validate.Usage("The {0} option is available only with {1}.", "--stats", "--list")
 	// }
 
-	err := validate.ValidateEnum("--extract", Options.Extract, "[header|addr_table|app_table|chunks|blooms]")
+	err := validate.ValidateEnum("--extract", opts.Extract, "[header|addr_table|app_table|chunks|blooms]")
 	if err != nil {
 		return err
 	}

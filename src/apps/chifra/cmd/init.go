@@ -42,8 +42,8 @@ Notes:
 func init() {
 	initCmd.Flags().SortFlags = false
 
-	initCmd.Flags().BoolVarP(&initPkg.Options.All, "all", "a", false, "in addition to Bloom filters, download full index chunks")
-	globals.InitGlobals(initCmd, &initPkg.Options.Globals)
+	initCmd.Flags().BoolVarP(&initPkg.GetOptions().All, "all", "a", false, "in addition to Bloom filters, download full index chunks")
+	globals.InitGlobals(initCmd, &initPkg.GetOptions().Globals)
 
 	initCmd.SetUsageTemplate(UsageWithNotes(notesInit))
 	initCmd.SetOut(os.Stderr)

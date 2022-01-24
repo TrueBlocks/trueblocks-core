@@ -37,11 +37,11 @@ func RunScrape(cmd *cobra.Command, args []string) error {
 	var wg sync.WaitGroup
 
 	wg.Add(1)
-	IndexScraper = NewScraper(colors.Yellow, "IndexScraper", Options.Sleep)
+	IndexScraper = NewScraper(colors.Yellow, "IndexScraper", opts.Sleep)
 	go RunIndexScraper(wg, hasIndexerFlag(args[0]))
 
 	wg.Add(1)
-	MonitorScraper = NewScraper(colors.Purple, "MonitorScraper", Options.Sleep)
+	MonitorScraper = NewScraper(colors.Purple, "MonitorScraper", opts.Sleep)
 	go RunMonitorScraper(wg, hasMonitorsFlag(args[0]))
 
 	wg.Wait()
@@ -98,7 +98,7 @@ func RunIndexScraper(wg sync.WaitGroup, initialState bool) {
 			s.ShowStateChange("sleep", "wake")
 
 			/* -------------- */
-			Options.Globals.PassItOn("blockScrape", Options.ToCmdLine())
+			GetOptions().Globals.PassItOn("blockScrape", GetOptions().ToCmdLine())
 			/* -------------- */
 
 			s.ShowStateChange("wake", "sleep")
@@ -152,7 +152,7 @@ func RunMonitorScraper(wg sync.WaitGroup, initialState bool) {
 				}
 				options := " --freshen"
 				options += " " + addr
-				Options.Globals.PassItOn("acctExport", options)
+				GetOptions().Globals.PassItOn("acctExport", options)
 			}
 			/* -------------- */
 
@@ -182,7 +182,7 @@ func NewScraper(color, name string, secs float64) Scraper {
 	scraper.Name = name
 	scraper.SleepSecs = int64(secs)
 	scraper.Running = false
-	scraper.Verbose = int64(Options.Globals.LogLevel)
+	scraper.Verbose = int64(GetOptions().Globals.LogLevel)
 	return *scraper
 }
 

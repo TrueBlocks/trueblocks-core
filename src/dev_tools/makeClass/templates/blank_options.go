@@ -22,6 +22,8 @@ type [{PROPER}]Options struct {
 [{OPT_FIELDS}]
 }
 
+var [{ROUTE}]CmdLineOptions [{PROPER}]Options
+
 func (opts *[{PROPER}]Options) TestLog() {
 [{TEST_LOGS}]	opts.Globals.TestLog()
 }
@@ -48,10 +50,15 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *[{PROPER}]Options {
 	return opts
 }
 
-var Options [{PROPER}]Options
-
 func [{PROPER}]FinishParse(args []string) *[{PROPER}]Options {
+	opts := GetOptions()
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return &Options
+	return opts
+}
+
+func GetOptions() *[{PROPER}]Options {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return &[{ROUTE}]CmdLineOptions
 }

@@ -42,8 +42,8 @@ Notes:
 func init() {
 	serveCmd.Flags().SortFlags = false
 
-	serveCmd.Flags().StringVarP(&servePkg.Options.Port, "port", "p", ":8080", "specify the server's port")
-	globals.InitGlobals(serveCmd, &servePkg.Options.Globals)
+	serveCmd.Flags().StringVarP(&servePkg.GetOptions().Port, "port", "p", ":8080", "specify the server's port")
+	globals.InitGlobals(serveCmd, &servePkg.GetOptions().Globals)
 
 	serveCmd.SetUsageTemplate(UsageWithNotes(notesServe))
 	serveCmd.SetOut(os.Stderr)

@@ -30,6 +30,8 @@ type PinsOptions struct {
 	BadFlag error
 }
 
+var pinsCmdLineOptions PinsOptions
+
 func (opts *PinsOptions) TestLog() {
 	logger.TestLog(opts.List, "List: ", opts.List)
 	logger.TestLog(opts.Init, "Init: ", opts.Init)
@@ -94,10 +96,15 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *PinsOptions {
 	return opts
 }
 
-var Options PinsOptions
-
 func PinsFinishParse(args []string) *PinsOptions {
+	opts := GetOptions()
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return &Options
+	return opts
+}
+
+func GetOptions() *PinsOptions {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return &pinsCmdLineOptions
 }
