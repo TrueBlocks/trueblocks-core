@@ -32,7 +32,7 @@ int main(int argc, const char* argv[]) {
 }
 #endif
 
-//#define byzantiumBlock        4370000 - 3000000 = 1370000 --> period 13
+// #define byzantiumBlock        4370000 - 3000000 = 1370000 --> period 13
 //#define constantinopleBlock   7280000 - 5000000 = 2280000 --> period 22
 //#define instanbulBlock        9069000 - 9000000 = 69000
 // static blknum_t last = NOPOS;
