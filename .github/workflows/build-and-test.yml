@@ -19,8 +19,8 @@ jobs:
           cd build
           cmake ../src
           make -j 4
-          tree ../src/other/install
-          tree ~/.config
+          # tree ../src/other/install
+          # tree ~/.config
           cd ../src/apps/chifra
           go test ./...
   RemoteTests:

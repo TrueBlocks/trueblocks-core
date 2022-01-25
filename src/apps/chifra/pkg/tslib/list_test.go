@@ -54,10 +54,10 @@ func TestGetValueByName(t *testing.T) {
 		t.Errorf("Wrong value: %d", value)
 	}
 
-	_, found = BnFromName(GetTestChain(), "latest")
-	if !found {
-		t.Error("Latest block not found")
-	}
+	// _, found = BnFromName(GetTestChain(), "latest")
+	// if !found {
+	// 	t.Error("Latest block not found")
+	// }
 	// TODO: Turn off go testing that requires connection to a node
 	// if value == 0 {
 	// 	t.Error("Latest block not set")
