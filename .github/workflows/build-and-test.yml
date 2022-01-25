@@ -22,7 +22,7 @@ jobs:
           tree ../src/other/install
           tree ~/.config
           cd ../src/apps/chifra
-          go test -v ./...
+          go test ./...
   RemoteTests:
     needs: Build
     runs-on: ubuntu-latest
