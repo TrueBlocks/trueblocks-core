@@ -14,7 +14,6 @@ type Timestamp struct {
 	Ts uint32 `json:"ts"`
 }
 
-// TODO: BOGUS-TIMESTAMPS
 type TimestampDatabase struct {
 	loaded bool
 	count  uint64
@@ -23,14 +22,10 @@ type TimestampDatabase struct {
 
 var perChainTimestamps = map[string]TimestampDatabase{}
 
-var loaded = false
-var memory []Timestamp
-var recordCount uint64 = 0
-
 // nRecords returns the number of records in the timestamp file
 func nRecords(chain string) (uint64, error) {
-	if recordCount > 0 {
-		return recordCount, nil
+	if perChainTimestamps[chain].count > 0 {
+		return perChainTimestamps[chain].count, nil
 	}
 
 	tsPath := config.GetPathToIndex(chain) + "ts.bin"
@@ -39,13 +34,18 @@ func nRecords(chain string) (uint64, error) {
 	if err != nil {
 		return 0, err
 	}
-	recordCount = uint64(fileStat.Size()) / 8
-	return recordCount, nil
+
+	perChainTimestamps[chain] = TimestampDatabase{
+		loaded: perChainTimestamps[chain].loaded,
+		count:  uint64(fileStat.Size()) / 8,
+		memory: perChainTimestamps[chain].memory,
+	}
+	return perChainTimestamps[chain].count, nil
 }
 
 // loadTimestamps loads the timestamp data from the file into memory. If the timestamps are already loaded, we short circiut.
 func loadTimestamps(chain string) error {
-	if loaded {
+	if perChainTimestamps[chain].loaded {
 		return nil
 	}
 
@@ -62,12 +62,18 @@ func loadTimestamps(chain string) error {
 	}
 	defer tsFile.Close()
 
-	memory = make([]Timestamp, cnt)
+	memory := make([]Timestamp, cnt)
 	err = binary.Read(tsFile, binary.LittleEndian, memory)
 	if err != nil {
 		return err
 	}
-	loaded = true
+
+	perChainTimestamps[chain] = TimestampDatabase{
+		loaded: true,
+		count:  perChainTimestamps[chain].count,
+		memory: memory,
+	}
+
 	return nil
 }
 
@@ -86,16 +92,16 @@ func fromTs(chain string, ts uint64) (*Timestamp, error) {
 
 	// Go docs: Search uses binary search to find and return the smallest index i in [0, n) at which f(i) is true,
 	index := sort.Search(int(cnt), func(i int) bool {
-		d := memory[i]
+		d := perChainTimestamps[chain].memory[i]
 		v := uint64(d.Ts)
 		return v >= ts
 	})
 
-	if uint64(memory[index].Ts) != ts {
+	if uint64(perChainTimestamps[chain].memory[index].Ts) != ts {
 		return &Timestamp{}, errors.New("timestamp not found")
 	}
 
-	return &memory[index], nil
+	return &perChainTimestamps[chain].memory[index], nil
 }
 
 // fromTs is a local function that returns a Timestamp record given a blockNum. It
@@ -115,5 +121,5 @@ func fromBn(chain string, bn uint64) (*Timestamp, error) {
 		return &Timestamp{}, err
 	}
 
-	return &memory[bn], nil
+	return &perChainTimestamps[chain].memory[bn], nil
 }

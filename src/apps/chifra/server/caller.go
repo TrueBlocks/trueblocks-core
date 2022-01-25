@@ -29,8 +29,7 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 	}
 	hasVerbose := false
 
-	// TODO: BOGUS - per invocation chain option
-	chain := "mainnet" // GetOptions().Globals.Chain
+	chain := config.GetDefaultChain()
 	for key, value := range r.URL.Query() {
 		if key == "chain" {
 			chain = value[0]

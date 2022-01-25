@@ -13,7 +13,8 @@ import (
 	"github.com/spf13/viper"
 )
 
-// TODO: BOGUS - THIS IS OKAY SINCE THERE'S ONLY ONE OF THESE
+// Because we only have a single top level configuration file, it's
+// okay that this is not per chain
 var trueBlocksViper = viper.New()
 var trueBlocksRead = false
 var cachedTrueBlocksConfig TrueBlocksConfig
