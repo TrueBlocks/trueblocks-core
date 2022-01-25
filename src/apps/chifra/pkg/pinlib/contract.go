@@ -19,7 +19,8 @@ import (
 // GetManifestCidFromContract calls UnchainedIndex smart contract to get
 // the current manifest IPFS CID
 func GetManifestCidFromContract(chain string) (string, error) {
-	ethClient := rpcClient.Get(chain)
+	provider := config.GetRpcProvider(chain)
+	ethClient := rpcClient.GetClient(provider)
 	defer ethClient.Close()
 
 	address := rpcClient.HexToAddress(config.ReadBlockScrape(chain).UnchainedIndex.Address)

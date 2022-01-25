@@ -15,7 +15,7 @@ import (
 )
 
 // Get sets up a client instance and returns it
-func Get(provider string) ethclient.Client {
+func GetClient(provider string) ethclient.Client {
 	// TODO: I don't like the fact that we Dail In every time we want to us this
 	client, err := ethclient.Dial(provider)
 	if err != nil {
@@ -54,7 +54,7 @@ func DecodeHex(hex string) []byte {
 }
 
 func GetBlockTimestamp(provider string, bn uint64) uint64 {
-	client := Get(provider)
+	client := GetClient(provider)
 	block, err := client.BlockByNumber(context.Background(), big.NewInt(int64(bn)))
 	if err != nil {
 		return 0

@@ -38,7 +38,8 @@ type MetaValue struct {
 }
 
 func GetMetaData(chain string, testmode bool) *MetaData {
-	ethClient := Get(config.GetRpcProvider(chain))
+	provider := config.GetRpcProvider(chain)
+	ethClient := GetClient(provider)
 	defer ethClient.Close()
 
 	if testmode {
