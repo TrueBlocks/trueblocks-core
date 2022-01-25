@@ -14,11 +14,13 @@
 
 #include "etherlib.h"
 
-#define START 13764614
-#define END 13862562
+#define START 13868374
+#define END   14000000
+//14071609
 
 #if 1
 int main(int argc, const char* argv[]) {
+    loadEnvironmentPaths();
     etherlib_init(quickQuitHandler);
     for (size_t i = START; i < END; i++) {
         CBlock block;
