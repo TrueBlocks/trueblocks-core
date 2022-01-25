@@ -22,21 +22,18 @@ import (
 // CallOne handles a route by calling into chifra
 func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string) {
 
-	chain := GetOptions().Globals.Chain
-
 	// We build an array of options that we send along with the call...
 	allDogs := []string{}
 	if extra != "" {
 		allDogs = append(allDogs, extra)
 	}
 	hasVerbose := false
+
+	// TODO: BOGUS - per invocation chain option
+	chain := "mainnet" // GetOptions().Globals.Chain
 	for key, value := range r.URL.Query() {
 		if key == "chain" {
 			chain = value[0]
-			if tbCmd == "chifra" {
-				allDogs = append(allDogs, "--chain")
-				allDogs = append(allDogs, chain)
-			}
 		} else {
 			if len(value) > 0 && value[0] != "false" {
 				// These keys exist only in the API. We strip them here since
@@ -64,9 +61,18 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 		}
 	}
 
+	GetOptions().Globals.Chain = chain
+	if tbCmd == "chifra" {
+		allDogs = append(allDogs, "--chain")
+		allDogs = append(allDogs, chain)
+	}
+
 	// If the server was started with --verbose and the command does not have --verbose...
 	if GetOptions().Globals.Verbose && !hasVerbose {
 		allDogs = append(allDogs, "--verbose")
+		allDogs = append(allDogs, "--log_level")
+		allDogs = append(allDogs, "4")
+		GetOptions().Globals.LogLevel = 4
 	}
 
 	// Do the actual call
