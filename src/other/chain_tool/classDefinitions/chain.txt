@@ -1,0 +1,5 @@
+[settings]
+class = CChain
+fields = chain.csv
+includes = etherlib.h
+cpp_includes =

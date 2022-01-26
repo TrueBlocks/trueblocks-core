@@ -1,0 +1,8 @@
+name            ,type   ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
+chain_name      ,string ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+chain_type      ,string ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+chain_id        ,uint64 ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+rpc_provider    ,string ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+symbol          ,string ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+remote_explorer ,string ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+ipfs_gateway    ,string ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
