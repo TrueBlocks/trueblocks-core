@@ -15,6 +15,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/rootConfig"
 )
 
 func (opts *GlobalOptions) PassItOn(path string, flags string) error {
@@ -24,11 +25,11 @@ func (opts *GlobalOptions) PassItOn(path string, flags string) error {
 	var wg sync.WaitGroup
 	wg.Add(2)
 
-	configPath := config.GetPathToRootConfig()
+	configPath := rootConfig.GetPathToRootConfig()
 	chainConfigPath := config.GetPathToChainConfig(opts.Chain)
 	cachePath := config.GetPathToCache(opts.Chain)
 	indexPath := config.GetPathToIndex(opts.Chain)
-	defChain := config.GetDefaultChain()
+	defChain := rootConfig.GetDefaultChain()
 
 	// fmt.Fprintf(os.Stderr, "Calling: %s %s\n", path, options)
 	cmd := exec.Command(config.GetPathToCommands(path), options)

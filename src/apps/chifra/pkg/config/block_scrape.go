@@ -8,6 +8,7 @@ import (
 	"runtime"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/rootConfig"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/spf13/viper"
 )
@@ -53,7 +54,7 @@ func init() {
 // ReadBlockScrape reads the configuration located in blockScrape.toml file
 func ReadBlockScrape(chain string) *BlockScrape {
 	if !blockScrapeRead {
-		MustReadConfig(blockScrapeViper, &cachedBlockScrape, GetPathToChainConfig(chain))
+		rootConfig.MustReadConfig(blockScrapeViper, &cachedBlockScrape, GetPathToChainConfig(chain))
 
 		// Validate the URL to ensure we have it in the correct format, so that ethClient.Dial
 		// will not panic

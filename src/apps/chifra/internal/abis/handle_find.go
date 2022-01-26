@@ -17,6 +17,7 @@ import (
 	ants "github.com/panjf2000/ants/v2"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/rootConfig"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 )
@@ -46,7 +47,7 @@ func (opts *AbisOptions) FindInternal() error {
 	})
 	defer checkOne.Release()
 
-	sigsFile, err := os.Open(config.GetPathToRootConfig() + "abis/known-000/uniq_sigs.tab")
+	sigsFile, err := os.Open(rootConfig.GetPathToRootConfig() + "abis/known-000/uniq_sigs.tab")
 	if err != nil {
 		return err
 	}
@@ -57,7 +58,7 @@ func (opts *AbisOptions) FindInternal() error {
 	sigsScanner := bufio.NewScanner(sigsFile)
 	sigsScanner.Split(bufio.ScanLines)
 
-	funcsFile, _ := os.Open(config.GetPathToRootConfig() + "abis/known-000/uniq_funcs.tab")
+	funcsFile, _ := os.Open(rootConfig.GetPathToRootConfig() + "abis/known-000/uniq_funcs.tab")
 	defer func() {
 		funcsFile.Close()
 	}()

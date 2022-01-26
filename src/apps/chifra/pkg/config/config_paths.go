@@ -9,39 +9,18 @@ import (
 	"os"
 	"os/user"
 	"path"
-	"runtime"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/rootConfig"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
-
-// GetPathToRootConfig returns the path where to find configuration files
-func GetPathToRootConfig() string {
-	xdg := os.Getenv("XDG_CONFIG_HOME")
-	if len(xdg) > 0 && xdg[0] == '/' {
-		return path.Join(xdg, "") + "/"
-	}
-
-	// The migration code will have already checked for invalid operating systems (i.e. Windows)
-	userOs := runtime.GOOS
-	if len(os.Getenv("TEST_OS")) > 0 {
-		userOs = os.Getenv("TEST_OS")
-	}
-
-	user, _ := user.Current()
-	osPath := ".local/share/trueblocks"
-	if userOs == "darwin" {
-		osPath = "Library/Application Support/TrueBlocks"
-	}
-	return path.Join(user.HomeDir, osPath) + "/"
-}
 
 // GetPathToChainConfig returns the chain-specific config folder
 func GetPathToChainConfig(chain string) string {
 	if len(chain) == 0 {
-		chain = GetDefaultChain()
+		chain = rootConfig.GetDefaultChain()
 	}
-	ret := GetPathToRootConfig()
+	ret := rootConfig.GetPathToRootConfig()
 	return path.Join(ret, "config/", chain) + "/"
 }
 
@@ -50,7 +29,7 @@ func GetPathToIndex(chain string) string {
 	newPath := ""
 
 	if len(chain) == 0 {
-		chain = GetDefaultChain()
+		chain = rootConfig.GetDefaultChain()
 	}
 
 	xdg := os.Getenv("XDG_CACHE_HOME")
@@ -60,7 +39,7 @@ func GetPathToIndex(chain string) string {
 		}
 		newPath = path.Join(xdg, chain) + "/"
 	} else {
-		indexPath := getRootConfig().Settings.IndexPath
+		indexPath := rootConfig.GetIndexPath()
 		newPath = path.Join(indexPath, chain) + "/"
 	}
 
@@ -73,7 +52,7 @@ func GetPathToCache(chain string) string {
 	newPath := ""
 
 	if len(chain) == 0 {
-		chain = GetDefaultChain()
+		chain = rootConfig.GetDefaultChain()
 	}
 
 	xdg := os.Getenv("XDG_CACHE_HOME")
@@ -83,22 +62,12 @@ func GetPathToCache(chain string) string {
 		}
 		newPath = path.Join(xdg, chain) + "/"
 	} else {
-		cachePath := getRootConfig().Settings.CachePath
+		cachePath := rootConfig.GetCachePath()
 		newPath = path.Join(cachePath, chain) + "/"
 	}
 
 	EstablishCachePaths(newPath)
 	return newPath
-}
-
-// GetRpcProvider returns the RPC provider for a chain
-func GetRpcProvider(chain string) string {
-	// TODO: BOGUS-RPC PROVIDER
-	return getRootConfig().Settings.RpcProvider
-}
-
-func GetDefaultChain() string {
-	return getRootConfig().Settings.DefaultChain
 }
 
 func GetTestChain() string {

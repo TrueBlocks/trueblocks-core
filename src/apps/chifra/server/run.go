@@ -10,6 +10,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/rootConfig"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/spf13/cobra"
 )
@@ -27,11 +28,11 @@ func RunServe(cmd *cobra.Command, args []string) error {
 	}
 
 	chain := GetOptions().Globals.Chain
-	configPath := config.GetPathToRootConfig()
+	configPath := rootConfig.GetPathToRootConfig()
 	chainConfigPath := config.GetPathToChainConfig(chain)
 	cachePath := config.GetPathToCache(chain)
 	indexPath := config.GetPathToIndex(chain)
-	rpcProvider := config.GetRpcProvider(chain)
+	rpcProvider := rootConfig.GetRpcProvider(chain)
 	meta := rpcClient.GetMetaData(chain, false)
 
 	log.Printf("%s%-18.18s%s%s\n", colors.Green, "Server URL:", colors.Off, apiUrl)

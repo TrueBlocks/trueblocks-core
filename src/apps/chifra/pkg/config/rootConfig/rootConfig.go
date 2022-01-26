@@ -2,11 +2,13 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package config
+package rootConfig
 
 import (
+	"os"
 	"os/user"
 	"path"
+	"runtime"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -39,7 +41,7 @@ type ConfigFile struct {
 
 // init sets up default values for the given configuration
 func init() {
-	trueBlocksViper.SetConfigName("trueBlocks")
+	trueBlocksViper.SetConfigName("trueBlocks") // trueBlocks.toml (so we can find it)
 	trueBlocksViper.SetDefault("Settings.RpcProvider", "http://localhost:8545")
 	trueBlocksViper.SetDefault("Settings.CachePath", GetPathToRootConfig()+"cache/")
 	trueBlocksViper.SetDefault("Settings.IndexPath", GetPathToRootConfig()+"unchained/")
@@ -47,9 +49,9 @@ func init() {
 	trueBlocksViper.SetDefault("Settings.EtherscanKey", "")
 }
 
-// getRootConfig reads and the configuration located in trueBlocks.toml file. Note
+// GetRootConfig reads and the configuration located in trueBlocks.toml file. Note
 // that this routine is local to the package
-func getRootConfig() *ConfigFile {
+func GetRootConfig() *ConfigFile {
 	if len(trueBlocksConfig.Settings.CachePath) == 0 {
 		configPath := GetPathToRootConfig()
 		MustReadConfig(trueBlocksViper, &trueBlocksConfig, configPath)
@@ -87,4 +89,43 @@ func getRootConfig() *ConfigFile {
 	}
 
 	return &trueBlocksConfig
+}
+
+// GetPathToRootConfig returns the path where to find configuration files
+func GetPathToRootConfig() string {
+	xdg := os.Getenv("XDG_CONFIG_HOME")
+	if len(xdg) > 0 && xdg[0] == '/' {
+		return path.Join(xdg, "") + "/"
+	}
+
+	// The migration code will have already checked for invalid operating systems (i.e. Windows)
+	userOs := runtime.GOOS
+	if len(os.Getenv("TEST_OS")) > 0 {
+		userOs = os.Getenv("TEST_OS")
+	}
+
+	user, _ := user.Current()
+	osPath := ".local/share/trueblocks"
+	if userOs == "darwin" {
+		osPath = "Library/Application Support/TrueBlocks"
+	}
+	return path.Join(user.HomeDir, osPath) + "/"
+}
+
+func GetIndexPath() string {
+	return GetRootConfig().Settings.IndexPath
+}
+
+func GetCachePath() string {
+	return GetRootConfig().Settings.CachePath
+}
+
+// GetRpcProvider returns the RPC provider for a chain
+func GetRpcProvider(chain string) string {
+	// TODO: BOGUS-RPC PROVIDER
+	return GetRootConfig().Settings.RpcProvider
+}
+
+func GetDefaultChain() string {
+	return GetRootConfig().Settings.DefaultChain
 }

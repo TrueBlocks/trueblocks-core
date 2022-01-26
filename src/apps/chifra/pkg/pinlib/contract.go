@@ -11,6 +11,7 @@ import (
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/rootConfig"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/accounts/abi"
@@ -19,7 +20,7 @@ import (
 // GetManifestCidFromContract calls UnchainedIndex smart contract to get
 // the current manifest IPFS CID
 func GetManifestCidFromContract(chain string) (string, error) {
-	provider := config.GetRpcProvider(chain)
+	provider := rootConfig.GetRpcProvider(chain)
 	ethClient := rpcClient.GetClient(provider)
 	defer ethClient.Close()
 
@@ -39,7 +40,7 @@ func GetManifestCidFromContract(chain string) (string, error) {
 	}
 
 	abiSource, err := os.Open(
-		config.GetPathToRootConfig() + "abis/known-000/unchained.json",
+		rootConfig.GetPathToRootConfig() + "abis/known-000/unchained.json",
 	)
 	if err != nil {
 		return "", fmt.Errorf("while reading contract ABI: %w", err)

@@ -10,6 +10,8 @@ import (
 	"os/user"
 	"strings"
 	"testing"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/rootConfig"
 )
 
 type PathTest struct {
@@ -44,7 +46,7 @@ func Test_GetPathTo(t *testing.T) {
 			if withChain {
 				testPath = GetPathToChainConfig(test.chain) + test.part
 			} else {
-				testPath = GetPathToRootConfig() + test.part
+				testPath = rootConfig.GetPathToRootConfig() + test.part
 			}
 		} else if test.group == "Cache" {
 			os.Setenv("XDG_CACHE_HOME", test.xdg)

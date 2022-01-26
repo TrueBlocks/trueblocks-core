@@ -13,6 +13,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/rootConfig"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
@@ -38,7 +39,7 @@ type MetaValue struct {
 }
 
 func GetMetaData(chain string, testmode bool) *MetaData {
-	provider := config.GetRpcProvider(chain)
+	provider := rootConfig.GetRpcProvider(chain)
 	ethClient := GetClient(provider)
 	defer ethClient.Close()
 
