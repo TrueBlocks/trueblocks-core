@@ -13,26 +13,27 @@ import (
 	"github.com/spf13/viper"
 )
 
-// Because we only have a single top level configuration file, it's
-// okay that this is not per chain
+// We keep a map of per-chain configs. Before reading the chain specific
+// config, we read the global (top-level) config at trueBlocks.toml. Chain
+// config files (if present) appear in ./configs/<chain>/<chain>.toml
+// and are merged into the defaults.
 var trueBlocksViper = viper.New()
-var trueBlocksRead = false
-var cachedTrueBlocksConfig TrueBlocksConfig
+var trueBlocksConfig TrueBlocksConfig
 
-type trueBlocksVersion struct {
-	Current string
+type versionGroup struct {
+	Current string `toml:"current"`
 }
 
-type trueBlocksSettings struct {
-	RpcProvider  string
-	CachePath    string
-	IndexPath    string
+type settingsGroup struct {
+	RpcProvider  string `toml:"rpcProvider"`
+	CachePath    string `toml:"cachePath"`
+	IndexPath    string `toml:"indexPath"`
 	EtherscanKey string `toml:"etherscan_key"`
 }
 
 type TrueBlocksConfig struct {
-	Version  trueBlocksVersion
-	Settings trueBlocksSettings
+	Version  versionGroup
+	Settings settingsGroup
 }
 
 // init sets up default values for the given configuration
@@ -41,32 +42,33 @@ func init() {
 	trueBlocksViper.SetDefault("Settings.RpcProvider", "http://localhost:8545")
 	trueBlocksViper.SetDefault("Settings.CachePath", GetPathToRootConfig()+"cache/")
 	trueBlocksViper.SetDefault("Settings.IndexPath", GetPathToRootConfig()+"unchained/")
+	trueBlocksViper.SetDefault("Settings.EtherscanKey", "")
 }
 
 // readTrueBlocks reads and the configuration located in trueBlocks.toml file. Note
 // that this routine is local to the package
 func readTrueBlocks() *TrueBlocksConfig {
-	if !trueBlocksRead {
+	if len(trueBlocksConfig.Settings.CachePath) == 0 {
 		configPath := GetPathToRootConfig()
-		MustReadConfig(trueBlocksViper, &cachedTrueBlocksConfig, configPath, false)
+		MustReadConfig(trueBlocksViper, &trueBlocksConfig, configPath, false)
 
 		user, _ := user.Current()
 
-		cachePath := cachedTrueBlocksConfig.Settings.CachePath
+		cachePath := trueBlocksConfig.Settings.CachePath
 		if len(cachePath) == 0 || cachePath == "<not_set>" {
 			cachePath = path.Join(configPath, "cache") + "/"
 		}
 		cachePath = strings.Replace(cachePath, "$HOME", user.HomeDir, -1)
 		cachePath = strings.Replace(cachePath, "~", user.HomeDir, -1)
-		cachedTrueBlocksConfig.Settings.CachePath = cachePath
+		trueBlocksConfig.Settings.CachePath = cachePath
 
-		indexPath := cachedTrueBlocksConfig.Settings.IndexPath
+		indexPath := trueBlocksConfig.Settings.IndexPath
 		if len(indexPath) == 0 || indexPath == "<not_set>" {
 			indexPath = path.Join(configPath, "unchained") + "/"
 		}
 		indexPath = strings.Replace(indexPath, "$HOME", user.HomeDir, -1)
 		indexPath = strings.Replace(indexPath, "~", user.HomeDir, -1)
-		cachedTrueBlocksConfig.Settings.IndexPath = indexPath
+		trueBlocksConfig.Settings.IndexPath = indexPath
 
 		// We establish only the top-level folders here. When we figure out
 		// which chain we're on (not until the user tells us on the command line)
@@ -75,13 +77,11 @@ func readTrueBlocks() *TrueBlocksConfig {
 		// these two calls do not return if they fail, so no need to handle errors
 		// TODO: BOGUS-DEFAULTCHAIN
 		defaultChains := []string{GetDefaultChain()}
-		file.EstablishFolders(cachedTrueBlocksConfig.Settings.CachePath, defaultChains)
-		file.EstablishFolders(cachedTrueBlocksConfig.Settings.IndexPath, defaultChains)
-
-		trueBlocksRead = true
+		file.EstablishFolders(trueBlocksConfig.Settings.CachePath, defaultChains)
+		file.EstablishFolders(trueBlocksConfig.Settings.IndexPath, defaultChains)
 	}
 
-	return &cachedTrueBlocksConfig
+	return &trueBlocksConfig
 }
 
 func GetDefaultChain() string {
