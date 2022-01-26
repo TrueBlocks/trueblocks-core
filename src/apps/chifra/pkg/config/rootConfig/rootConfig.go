@@ -5,10 +5,13 @@
 package rootConfig
 
 import (
+	"errors"
+	"log"
 	"os"
 	"os/user"
 	"path"
 	"runtime"
+	"strconv"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -93,8 +96,17 @@ func GetRootConfig() *ConfigFile {
 
 // GetPathToRootConfig returns the path where to find configuration files
 func GetPathToRootConfig() string {
+	// If present, we require both an existing path and a fully qualified path
 	xdg := os.Getenv("XDG_CONFIG_HOME")
-	if len(xdg) > 0 && xdg[0] == '/' {
+	if len(xdg) > 0 {
+		if xdg[0] != '/' {
+			log.Fatal(Usage("The XDG_CONFIG_PATH value ({0}), must be fully qualified.", xdg))
+		}
+
+		if _, err := os.Stat(xdg); err == nil {
+			log.Fatal(Usage("The XDG_CONFIG_PATH folder ({0}) must exist.", xdg))
+		}
+
 		return path.Join(xdg, "") + "/"
 	}
 
@@ -109,6 +121,7 @@ func GetPathToRootConfig() string {
 	if userOs == "darwin" {
 		osPath = "Library/Application Support/TrueBlocks"
 	}
+
 	return path.Join(user.HomeDir, osPath) + "/"
 }
 
@@ -128,4 +141,14 @@ func GetRpcProvider(chain string) string {
 
 func GetDefaultChain() string {
 	return GetRootConfig().Settings.DefaultChain
+}
+
+// TODO: this is duplicated elsewhere because of cyclical imports - combine into usage package
+func Usage(msg string, values ...string) error {
+	ret := msg
+	for index, val := range values {
+		rep := "{" + strconv.FormatInt(int64(index), 10) + "}"
+		ret = strings.Replace(ret, rep, val, -1)
+	}
+	return errors.New(ret)
 }

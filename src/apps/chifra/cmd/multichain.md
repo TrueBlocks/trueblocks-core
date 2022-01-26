@@ -1,10 +1,4 @@
-Multi Chain 9
-
-Search for etherscan everywhere. Different chains have different explorers
-the .env file, if empty, as it will be for most users needs to be made defaulted.
-
   - [ ] If the path comes from XDG it must both exist and be fully resolved, otherwise fail
-  - [ ] If the path contains `cache` or `unchained` or end with one one of the caches or index folders, fail without proceeding
   - [ ] If the config, cache, or index path does not exist, fail with proceeding if it's not the default otherwise create it
   - [ ] If the config, cache, or index path does exist, establish its subfolders
   - [ ] If a new chain is presented, create it under the valid `config`, `cache`, and `index` folders - i.e. establish
@@ -39,8 +33,10 @@ the .env file, if empty, as it will be for most users needs to be made defaulted
   - [ ] This is another reason why --chain must be a global option.
   - [ ] Otherwise, we would have to run multiple servers. As a result -- we want to disable 
   - [ ] the `--chain` option for `chifra serve` (probably other things as well)
+
 - [ ] Chifra Export
   - [ ] Uniswap pricing of reconciliations obviously doesn't work on non-main net.
+
 - [ ] Block Scraper
   - [ ] The function initConfig() in blaze needs attention vis-a-vi paths (we should be able to use the chifra paths directly)
   - [ ] Blaze has command line options to explicitly take the paths
@@ -50,6 +46,7 @@ the .env file, if empty, as it will be for most users needs to be made defaulted
     - [ ] Should be use `v1`? Not sure.
       - [ ] Don't really like it, but would allow upgrades.
       - [ ] Should there be upgrades? Doesn't `manifest.txt` allow for inifinite upgrades?
+
 - [ ] Other Tools
   - [ ] `chifra explore` needs to be per chain
   - [ ] Should names be per chain or top level? Both - most names are at top level, user may customize per chain
@@ -57,22 +54,26 @@ the .env file, if empty, as it will be for most users needs to be made defaulted
   - [ ] `chifra when` is per chain - can we test this? Would need time stamp from multiple chains
   - [ ] Does --sol option work for non-mainnet chains?
   - [ ] Does articulation work for non-mainnet chains?
+
 - [ ] Docs
   - [ ] ./docs/content/chifra/configs.md needs work
+
 - [ ] Other
   - [ ] What about the bytzantium hard fork -- is there block number specific behaviour? (probably -- for ETC for example)
   - [ ] What about 'status' on pre-byzantium receipts on non-main net chains?
+
 - [ ] Smart Contract
   - [ ] Needs chain id
   - [ ] Manifest can be customized as we wish
   - [ ] How can others participate?
   - [ ] Does it accept donations?
   - [ ] Will the smart contract be deployed on different chains? Will it have the same address?
+
 - [ ] `chifra init --chain unknown_chain` should fail gracefully
 
 
-
 - [x] Closed Issues
+  - [x] If the path contains `cache` or `unchained` or end with one one of the caches or index folders, fail without proceeding (not true -- let the user specify any path they want)
   - [x] The prefund values per chain are in the repo but not being used
   - [x] We need to use the `--chain` option when building paths
   - [x] Rename all path routines from `getXXXPath` to `getPathToXXX` so we can find them more easily
