@@ -17,7 +17,7 @@ import (
 // Get sets up a client instance and returns it
 func GetClient(provider string) ethclient.Client {
 	// TODO: I don't like the fact that we Dail In every time we want to us this
-	// TODO: BOGUS - If we make this a cached item, it needs to be cached per chain
+	// TODO: If we make this a cached item, it needs to be cached per chain, see timestamps
 	client, err := ethclient.Dial(provider)
 	if err != nil {
 		log.Fatalln(err)

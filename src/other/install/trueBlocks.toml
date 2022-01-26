@@ -3,10 +3,26 @@
 current = "0.23.7-alpha"
 
 [settings]
+# The folder in which to store caches for all chains. If empty $CONFIG/cache.
 cachePath = ""
-etherscan_key = ""
+
+# The folder in which to store the unchained index for all chains. If empty $CONFIG/unchained.
 indexPath = ""
-ipfsGateway = "https://{CHAIN}.unchainedindex.io"
-localExplorer = "http://localhost:1234"
-remoteExplorer = "https://{CHAIN}.etherscan.io"
+
+# The RPC endpoint for the default chain. This value will be overridden per chain.
 rpcProvider = "http://localhost:8545"
+
+# The assumed default chain (defaults to `mainnet`).
+defaultChain = ""
+
+# For `chifra scrape --pin` and `chifra init`, where to look for the IPFS gateway.
+ipfsGateway = "https://{CHAIN}.unchainedindex.io"
+
+# For `chifra explore --local` where to open the local explorer.
+localExplorer = "http://localhost:1234"
+
+# For `chifra explore` where to open the remote explorer.
+remoteExplorer = "https://{CHAIN}.etherscan.io"
+
+# Required if using EtherScan as the source of ABI files for `chifra export --articulate`.
+etherscan_key = ""
