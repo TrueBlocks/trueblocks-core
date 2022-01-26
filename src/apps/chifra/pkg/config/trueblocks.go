@@ -25,9 +25,10 @@ type versionGroup struct {
 }
 
 type settingsGroup struct {
-	RpcProvider  string `toml:"rpcProvider"`
 	CachePath    string `toml:"cachePath"`
 	IndexPath    string `toml:"indexPath"`
+	RpcProvider  string `toml:"rpcProvider"`
+	DefaultChain string `toml:"defaultChain"`
 	EtherscanKey string `toml:"etherscan_key"`
 }
 
@@ -42,6 +43,7 @@ func init() {
 	trueBlocksViper.SetDefault("Settings.RpcProvider", "http://localhost:8545")
 	trueBlocksViper.SetDefault("Settings.CachePath", GetPathToRootConfig()+"cache/")
 	trueBlocksViper.SetDefault("Settings.IndexPath", GetPathToRootConfig()+"unchained/")
+	trueBlocksViper.SetDefault("Settings.DefaultChain", "mainnet")
 	trueBlocksViper.SetDefault("Settings.EtherscanKey", "")
 }
 
@@ -70,26 +72,19 @@ func getRootConfig() *ConfigFile {
 		indexPath = strings.Replace(indexPath, "~", user.HomeDir, -1)
 		trueBlocksConfig.Settings.IndexPath = indexPath
 
+		if len(trueBlocksConfig.Settings.DefaultChain) == 0 {
+			trueBlocksConfig.Settings.DefaultChain = "mainnet"
+		}
+
 		// We establish only the top-level folders here. When we figure out
 		// which chain we're on (not until the user tells us on the command line)
 		// only then can we complete these paths. At this point these paths
 		// only point to the top-levl of the cache or index. Also note that
 		// these two calls do not return if they fail, so no need to handle errors
-		// TODO: BOGUS-DEFAULTCHAIN
 		defaultChains := []string{GetDefaultChain()}
 		file.EstablishFolders(trueBlocksConfig.Settings.CachePath, defaultChains)
 		file.EstablishFolders(trueBlocksConfig.Settings.IndexPath, defaultChains)
 	}
 
 	return &trueBlocksConfig
-}
-
-func GetDefaultChain() string {
-	// TODO: BOGUS-DEFAULTCHAIN
-	return "mainnet"
-}
-
-func GetTestChain() string {
-	// TODO: BOGUS-DEFAULTCHAIN
-	return "mainnet"
 }

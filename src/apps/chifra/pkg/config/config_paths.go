@@ -93,8 +93,17 @@ func GetPathToCache(chain string) string {
 
 // GetRpcProvider returns the RPC provider for a chain
 func GetRpcProvider(chain string) string {
-	// TODO: BOGUS - RPC PROVIDER
+	// TODO: BOGUS-RPC PROVIDER
 	return getRootConfig().Settings.RpcProvider
+}
+
+func GetDefaultChain() string {
+	return getRootConfig().Settings.DefaultChain
+}
+
+func GetTestChain() string {
+	// This does not get customized per chain. We can only test against mainnet currently
+	return "mainnet"
 }
 
 // GetPathToCommands returns full path the the given tool
