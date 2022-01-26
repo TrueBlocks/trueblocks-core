@@ -15,20 +15,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
 
-var OsToPath = map[string]string{
-	"linux":  ".local/share/trueblocks",
-	"darwin": "Library/Application Support/TrueBlocks",
-}
-
-// GetPathToChainConfig returns the chain-specific config folder
-func GetPathToChainConfig(chain string) string {
-	if len(chain) == 0 {
-		chain = GetDefaultChain()
-	}
-	ret := GetPathToRootConfig()
-	return path.Join(ret, "config/", chain) + "/"
-}
-
 // GetPathToRootConfig returns the path where to find configuration files
 func GetPathToRootConfig() string {
 	xdg := os.Getenv("XDG_CONFIG_HOME")
@@ -43,7 +29,20 @@ func GetPathToRootConfig() string {
 	}
 
 	user, _ := user.Current()
-	return path.Join(user.HomeDir, OsToPath[userOs]) + "/"
+	osPath := ".local/share/trueblocks"
+	if userOs == "darwin" {
+		osPath = "Library/Application Support/TrueBlocks"
+	}
+	return path.Join(user.HomeDir, osPath) + "/"
+}
+
+// GetPathToChainConfig returns the chain-specific config folder
+func GetPathToChainConfig(chain string) string {
+	if len(chain) == 0 {
+		chain = GetDefaultChain()
+	}
+	ret := GetPathToRootConfig()
+	return path.Join(ret, "config/", chain) + "/"
 }
 
 // GetPathToIndex returns the one and only cachePath

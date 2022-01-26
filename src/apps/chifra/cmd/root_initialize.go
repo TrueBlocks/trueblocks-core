@@ -31,7 +31,7 @@ func VerifyOs() {
 		log.Fatalln("Windows is not supported")
 	}
 
-	if len(config.OsToPath[userOs]) == 0 {
+	if userOs != "linux" && userOs != "darwin" {
 		log.Fatalln("Unsupported operating system: ", userOs)
 	}
 
