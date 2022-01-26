@@ -17,14 +17,17 @@ the .env file, if empty, as it will be for most users needs to be made defaulted
 ### Open Questions
 ----
 - [ ] Chain specific data: 
-  - [ ] names, prefunds, timestamps, prices, manifest, explorer urls, explorer apis
+  - [ ] names, prefunds, timestamps, prices, manifest, explorer urls, explorer apis, specials
   - [ ] Config items should be able to be read from top-level and overlaid with chain specific config
+
 - [ ] Chain IDs
   - [ ] User provides his/her own chain id. We query the chain at the RPC and verify we're connected to the rigth chain
+
 - [ ] TrueBlocks and other config file
   - [ ] Should it have any per-chain data (probably not)
   - [ ] Need to be able to 'merge' toml files so we can have top-level settings and per-chain overlay
   - [ ] Don't expose IndexPath and CachePath (or any config settings) directly. Hide behind function or use a map<string, string>
+
 - [ ] Server
   - [ ] How does the server handle `--chain` and/or a different default chain?
   - [ ] When running against remote gnosis server, our app does not send in the --client parameter
@@ -65,6 +68,9 @@ the .env file, if empty, as it will be for most users needs to be made defaulted
   - [ ] How can others participate?
   - [ ] Does it accept donations?
   - [ ] Will the smart contract be deployed on different chains? Will it have the same address?
+- [ ] `chifra init --chain unknown_chain` should fail gracefully
+
+
 
 - [x] Closed Issues
   - [x] The prefund values per chain are in the repo but not being used
