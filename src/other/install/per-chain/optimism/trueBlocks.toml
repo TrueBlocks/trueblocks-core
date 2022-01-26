@@ -1,0 +1,10 @@
+[version]
+# Do not edit this value
+current = "0.23.7-alpha"
+
+# only the following values are customizable per chain[settings]
+rpcProvider = "https://mainnet.optimism.io"
+chainId = "10"
+symbol = "OPT"
+ipfsGateway = "<not_set>"
+remoteExplorer = "https://optimistic.etherscan.io"

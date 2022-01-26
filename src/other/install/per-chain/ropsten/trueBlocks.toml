@@ -1,0 +1,10 @@
+[version]
+# Do not edit this value
+current = "0.23.7-alpha"
+
+# only the following values are customizable per chain[settings]
+rpcProvider = "https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161"
+chainId = "3"
+symbol = "ETH"
+ipfsGateway = "https://ropsten.unchainedindex.io"
+remoteExplorer = "https://ropsten.etherscan.io"

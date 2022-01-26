@@ -1,0 +1,10 @@
+[version]
+# Do not edit this value
+current = "0.23.7-alpha"
+
+# only the following values are customizable per chain[settings]
+rpcProvider = "https://rinkeby-light.eth.linkpool.io"
+chainId = "4"
+symbol = "ETH"
+ipfsGateway = "https://rinkeby.unchainedindex.io"
+remoteExplorer = "https://rinkeby.etherscan.io"

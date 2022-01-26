@@ -1,0 +1,10 @@
+[version]
+# Do not edit this value
+current = "0.23.7-alpha"
+
+# only the following values are customizable per chain[settings]
+rpcProvider = "https://goerli-light.eth.linkpool.io"
+chainId = "5"
+symbol = "ETH"
+ipfsGateway = "https://goerli.unchainedindex.io"
+remoteExplorer = "https://goerli.etherscan.io"

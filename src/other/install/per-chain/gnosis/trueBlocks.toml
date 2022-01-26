@@ -1,0 +1,10 @@
+[version]
+# Do not edit this value
+current = "0.23.7-alpha"
+
+# only the following values are customizable per chain[settings]
+rpcProvider = "https://rpc.gnosischain.com"
+chainId = "100"
+symbol = "XDAI"
+ipfsGateway = "https://gnosis.unchainedindex.io"
+remoteExplorer = "https://blockscout.com/xdai/mainnet"

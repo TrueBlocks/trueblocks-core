@@ -83,17 +83,26 @@ CopyIgnorePresent (${INSTALL_SOURCE}/mocked/               "monitors.tar.gz"    
 CopyIgnorePresent (${INSTALL_SOURCE}/prices/               "poloniex_USDT_ETH.bin.gz" ${INSTALL_DEST}/config/mainnet/        )
 CopyIgnorePresent (${INSTALL_SOURCE}/prices/               "ts.bin.gz"                ${INSTALL_DEST}/config/mainnet/        )
 
-CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/mainnet     "allocs.csv"               ${INSTALL_DEST}/config/mainnet/        )
-CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/mainnet     "specials.csv"             ${INSTALL_DEST}/config/mainnet/        )
-CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/bsc-mainnet "allocs.csv"               ${INSTALL_DEST}/config/bsc-mainnet/    )
 CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/gnosis      "allocs.csv"               ${INSTALL_DEST}/config/gnosis/         )
-# CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/gnosis    "specials.csv"             ${INSTALL_DEST}/config/gnosis/         )
 CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/goerli      "allocs.csv"               ${INSTALL_DEST}/config/goerli/         )
 CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/kovan       "allocs.csv"               ${INSTALL_DEST}/config/kovan/          )
+CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/mainnet     "allocs.csv"               ${INSTALL_DEST}/config/mainnet/        )
 CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/optimism    "allocs.csv"               ${INSTALL_DEST}/config/optimism/       )
 CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/polygon     "allocs.csv"               ${INSTALL_DEST}/config/polygon/        )
 CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/rinkeby     "allocs.csv"               ${INSTALL_DEST}/config/rinkeby/        )
 CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/ropsten     "allocs.csv"               ${INSTALL_DEST}/config/ropsten/        )
+
+CopyNotPresent    (${INSTALL_SOURCE}/per-chain/gnosis      "trueBlocks.toml"          ${INSTALL_DEST}/config/gnosis/         )
+CopyNotPresent    (${INSTALL_SOURCE}/per-chain/goerli      "trueBlocks.toml"          ${INSTALL_DEST}/config/goerli/         )
+CopyNotPresent    (${INSTALL_SOURCE}/per-chain/kovan       "trueBlocks.toml"          ${INSTALL_DEST}/config/kovan/          )
+CopyNotPresent    (${INSTALL_SOURCE}/per-chain/mainnet     "trueBlocks.toml"          ${INSTALL_DEST}/config/mainnet/        )
+CopyNotPresent    (${INSTALL_SOURCE}/per-chain/optimism    "trueBlocks.toml"          ${INSTALL_DEST}/config/optimism/       )
+CopyNotPresent    (${INSTALL_SOURCE}/per-chain/polygon     "trueBlocks.toml"          ${INSTALL_DEST}/config/polygon/        )
+CopyNotPresent    (${INSTALL_SOURCE}/per-chain/rinkeby     "trueBlocks.toml"          ${INSTALL_DEST}/config/rinkeby/        )
+CopyNotPresent    (${INSTALL_SOURCE}/per-chain/ropsten     "trueBlocks.toml"          ${INSTALL_DEST}/config/ropsten/        )
+
+# CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/gnosis    "specials.csv"             ${INSTALL_DEST}/config/gnosis/         )
+CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/mainnet     "specials.csv"             ${INSTALL_DEST}/config/mainnet/        )
 
 CopyFolder        (${INSTALL_SOURCE}/abis/known-000/                                  ${INSTALL_DEST}/abis/known-000/        )
 CopyFolder        (${INSTALL_SOURCE}/abis/known-005/                                  ${INSTALL_DEST}/abis/known-005/        )
@@ -108,5 +117,3 @@ file(REMOVE "${INSTALL_DEST}/cache/names/names.bin")
 file(REMOVE "${INSTALL_DEST}/cache/names/names_prefunds_bals.bin")
 file(REMOVE "${INSTALL_DEST}/cache/allocs.bin")
 file(REMOVE "${INSTALL_DEST}/cache/abis/known.bin")
-
-
