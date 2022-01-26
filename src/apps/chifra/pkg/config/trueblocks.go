@@ -18,7 +18,7 @@ import (
 // config files (if present) appear in ./configs/<chain>/<chain>.toml
 // and are merged into the defaults.
 var trueBlocksViper = viper.New()
-var trueBlocksConfig TrueBlocksConfig
+var trueBlocksConfig ConfigFile
 
 type versionGroup struct {
 	Current string `toml:"current"`
@@ -31,7 +31,7 @@ type settingsGroup struct {
 	EtherscanKey string `toml:"etherscan_key"`
 }
 
-type TrueBlocksConfig struct {
+type ConfigFile struct {
 	Version  versionGroup
 	Settings settingsGroup
 }
@@ -45,12 +45,12 @@ func init() {
 	trueBlocksViper.SetDefault("Settings.EtherscanKey", "")
 }
 
-// readTrueBlocks reads and the configuration located in trueBlocks.toml file. Note
+// getRootConfig reads and the configuration located in trueBlocks.toml file. Note
 // that this routine is local to the package
-func readTrueBlocks() *TrueBlocksConfig {
+func getRootConfig() *ConfigFile {
 	if len(trueBlocksConfig.Settings.CachePath) == 0 {
 		configPath := GetPathToRootConfig()
-		MustReadConfig(trueBlocksViper, &trueBlocksConfig, configPath, false)
+		MustReadConfig(trueBlocksViper, &trueBlocksConfig, configPath)
 
 		user, _ := user.Current()
 

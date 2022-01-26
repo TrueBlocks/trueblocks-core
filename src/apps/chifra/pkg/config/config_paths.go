@@ -47,10 +47,12 @@ func GetPathToChainConfig(chain string) string {
 
 // GetPathToIndex returns the one and only cachePath
 func GetPathToIndex(chain string) string {
+	newPath := ""
+
 	if len(chain) == 0 {
 		chain = GetDefaultChain()
 	}
-	newPath := ""
+
 	xdg := os.Getenv("XDG_CACHE_HOME")
 	if len(xdg) > 0 && xdg[0] == '/' {
 		if !strings.Contains(xdg, "/unchained") {
@@ -58,19 +60,22 @@ func GetPathToIndex(chain string) string {
 		}
 		newPath = path.Join(xdg, chain) + "/"
 	} else {
-		indexPath := readTrueBlocks().Settings.IndexPath
+		indexPath := getRootConfig().Settings.IndexPath
 		newPath = path.Join(indexPath, chain) + "/"
 	}
+
 	EstablishIndexPaths(newPath)
 	return newPath
 }
 
 // GetPathToCache returns the one and only cachePath
 func GetPathToCache(chain string) string {
+	newPath := ""
+
 	if len(chain) == 0 {
 		chain = GetDefaultChain()
 	}
-	newPath := ""
+
 	xdg := os.Getenv("XDG_CACHE_HOME")
 	if len(xdg) > 0 && xdg[0] == '/' {
 		if !strings.Contains(xdg, "/cache") {
@@ -78,9 +83,10 @@ func GetPathToCache(chain string) string {
 		}
 		newPath = path.Join(xdg, chain) + "/"
 	} else {
-		cachePath := readTrueBlocks().Settings.CachePath
+		cachePath := getRootConfig().Settings.CachePath
 		newPath = path.Join(cachePath, chain) + "/"
 	}
+
 	EstablishCachePaths(newPath)
 	return newPath
 }
@@ -88,7 +94,7 @@ func GetPathToCache(chain string) string {
 // GetRpcProvider returns the RPC provider for a chain
 func GetRpcProvider(chain string) string {
 	// TODO: BOGUS - RPC PROVIDER
-	return readTrueBlocks().Settings.RpcProvider
+	return getRootConfig().Settings.RpcProvider
 }
 
 // GetPathToCommands returns full path the the given tool
@@ -104,11 +110,13 @@ func EstablishCachePaths(cachePath string) {
 		"abis", "blocks", "monitors", "names", "objs", "prices",
 		"recons", "slurps", "tmp", "traces", "txs",
 	}
+
 	_, err := os.Stat(path.Join(cachePath, cacheFolders[len(cacheFolders)-1]))
 	if err == nil {
 		// If the last path already exists, assume we've been here before
 		return
 	}
+
 	if err := file.EstablishFolders(cachePath, cacheFolders); err != nil {
 		log.Fatal(err)
 	}
@@ -119,11 +127,13 @@ func EstablishIndexPaths(indexPath string) {
 	indexFolders := []string{
 		"blooms", "finalized", "ripe", "staging", "unripe",
 	}
+
 	_, err := os.Stat(path.Join(indexPath, indexFolders[len(indexFolders)-1]))
 	if err == nil {
 		// If the last path already exists, assume we've been here before
 		return
 	}
+
 	if err := file.EstablishFolders(indexPath, indexFolders); err != nil {
 		log.Fatal(err)
 	}

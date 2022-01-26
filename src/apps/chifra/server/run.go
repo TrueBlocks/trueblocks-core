@@ -6,7 +6,6 @@ package servePkg
 
 import (
 	"log"
-	"os"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
@@ -22,27 +21,18 @@ func RunServe(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	PrintServeSettings(os.Getenv("TEST_MODE") == "true")
-	log.Fatal(RunInternal(GetOptions().Port))
-
-	return nil
-}
-
-func PrintServeSettings(testMode bool) {
-	// 	log.Print(utils.Green, "Client:       ", utils.Off, Options.Status.Latest)
-	// 	log.Print(utils.Green, "TrueBlocks:   ", utils.Off, Options.Status.TrueBlocks)
-
 	apiUrl := GetOptions().Port
 	if !strings.Contains(apiUrl, "http") {
 		apiUrl = "http://localhost" + apiUrl
 	}
+
 	chain := GetOptions().Globals.Chain
 	configPath := config.GetPathToRootConfig()
 	chainConfigPath := config.GetPathToChainConfig(chain)
 	cachePath := config.GetPathToCache(chain)
 	indexPath := config.GetPathToIndex(chain)
 	rpcProvider := config.GetRpcProvider(chain)
-	meta := rpcClient.GetMetaData(chain, testMode)
+	meta := rpcClient.GetMetaData(chain, false)
 
 	log.Printf("%s%-18.18s%s%s\n", colors.Green, "Server URL:", colors.Off, apiUrl)
 	log.Printf("%s%-18.18s%s%s\n", colors.Green, "RootConfig Path:", colors.Off, configPath)
@@ -51,4 +41,8 @@ func PrintServeSettings(testMode bool) {
 	log.Printf("%s%-18.18s%s%s\n", colors.Green, "Index Path:", colors.Off, indexPath)
 	log.Printf("%s%-18.18s%s%s\n", colors.Green, "RPC Provider:", colors.Off, rpcProvider)
 	log.Printf("%s%-18.18s%s%d, %d, %d, %d\n", colors.Green, "Progress:", colors.Off, meta.Latest, meta.Finalized, meta.Staging, meta.Unripe)
+
+	log.Fatal(RunInternal(GetOptions().Port))
+
+	return nil
 }

@@ -9,7 +9,7 @@ import (
 )
 
 func Test_ReadTrueBlocks(t *testing.T) {
-	values := readTrueBlocks()
+	values := getRootConfig()
 	if len(values.Settings.RpcProvider) == 0 {
 		t.Error("RpcProvider is empty")
 	}
@@ -40,10 +40,3 @@ func Test_ReadTrueBlocks(t *testing.T) {
 		t.Error("IndexPath is not an absolute path")
 	}
 }
-
-// func Test_TestKeys(t *testing.T) {
-// 	unused := readTrueBlocks()
-// 	settings := trueBlocksViper.Get("settings")
-// 	t.Log(settings)
-// 	t.Log(unused)
-// }

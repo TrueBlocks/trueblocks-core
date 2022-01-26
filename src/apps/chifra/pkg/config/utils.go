@@ -11,9 +11,9 @@ import (
 	"github.com/spf13/viper"
 )
 
-// MustReadConfig calls v's ReadInConfig and fills values in the
+// MustReadConfig calls Viper's ReadInConfig and fills values in the
 // given targetStruct. Any error will result in a call to logger.Fatal
-func MustReadConfig(v *viper.Viper, targetStruct interface{}, path string, fileRequired bool) {
+func MustReadConfig(v *viper.Viper, targetStruct interface{}, path string) {
 	v.AddConfigPath(path)
 	v.SetEnvPrefix("TB")
 	v.AutomaticEnv()
@@ -23,7 +23,7 @@ func MustReadConfig(v *viper.Viper, targetStruct interface{}, path string, fileR
 	if err != nil {
 		_, ok := err.(viper.ConfigFileNotFoundError)
 		// We only require some files to be present
-		if !ok || (ok && fileRequired) {
+		if !ok {
 			logger.Fatal(err)
 		}
 	}
