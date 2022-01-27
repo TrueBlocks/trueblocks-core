@@ -96,18 +96,11 @@ func GetRootConfig() *ConfigFile {
 
 // GetPathToRootConfig returns the path where to find configuration files
 func GetPathToRootConfig() string {
-	// If present, we require both an existing path and a fully qualified path
-	xdg := os.Getenv("XDG_CONFIG_HOME")
-	if len(xdg) > 0 {
-		if xdg[0] != '/' {
-			log.Fatal(Usage("The XDG_CONFIG_PATH value ({0}), must be fully qualified.", xdg))
-		}
-
-		if _, err := os.Stat(xdg); err == nil {
-			log.Fatal(Usage("The XDG_CONFIG_PATH folder ({0}) must exist.", xdg))
-		}
-
-		return path.Join(xdg, "") + "/"
+	configPath, err := PathFromXDG("XDG_CONFIG_HOME")
+	if err != nil {
+		log.Fatal(err)
+	} else if len(configPath) > 0 {
+		return configPath
 	}
 
 	// The migration code will have already checked for invalid operating systems (i.e. Windows)
@@ -141,6 +134,24 @@ func GetRpcProvider(chain string) string {
 
 func GetDefaultChain() string {
 	return GetRootConfig().Settings.DefaultChain
+}
+
+func PathFromXDG(envVar string) (string, error) {
+	// If present, we require both an existing path and a fully qualified path
+	xdg := os.Getenv(envVar)
+	if len(xdg) == 0 {
+		return "", nil // it's okay if it's empty
+	}
+
+	if xdg[0] != '/' {
+		return "", Usage("The {0} value ({1}), must be fully qualified.", envVar, xdg)
+	}
+
+	if _, err := os.Stat(xdg); err != nil {
+		return "", Usage("The {0} folder ({1}) must exist.", envVar, xdg)
+	}
+
+	return path.Join(xdg, "") + "/", nil
 }
 
 // TODO: this is duplicated elsewhere because of cyclical imports - combine into usage package

@@ -17,55 +17,66 @@ import (
 
 // GetPathToChainConfig returns the chain-specific config folder
 func GetPathToChainConfig(chain string) string {
+	// We always need a chain
 	if len(chain) == 0 {
 		chain = rootConfig.GetDefaultChain()
 	}
 	ret := rootConfig.GetPathToRootConfig()
+
+	// Our configuration files are always in ./config folder relative to top most folder
 	return path.Join(ret, "config/", chain) + "/"
 }
 
 // GetPathToIndex returns the one and only cachePath
 func GetPathToIndex(chain string) string {
-	newPath := ""
+	// We need the index path from either XDG which dominates or the config file
+	indexPath, err := rootConfig.PathFromXDG("XDG_CACHE_HOME")
+	if err != nil {
+		log.Fatal(err)
+	} else if len(indexPath) == 0 {
+		indexPath = rootConfig.GetIndexPath()
+	}
 
+	// We want the index folder to be named `unchained` and be in
+	// the root of cache path
+	if !strings.Contains(indexPath, "/unchained") {
+		indexPath = path.Join(indexPath, "unchained")
+	}
+
+	// We always have to have a chain...
 	if len(chain) == 0 {
 		chain = rootConfig.GetDefaultChain()
 	}
 
-	xdg := os.Getenv("XDG_CACHE_HOME")
-	if len(xdg) > 0 && xdg[0] == '/' {
-		if !strings.Contains(xdg, "/unchained") {
-			xdg = path.Join(xdg, "unchained")
-		}
-		newPath = path.Join(xdg, chain) + "/"
-	} else {
-		indexPath := rootConfig.GetIndexPath()
-		newPath = path.Join(indexPath, chain) + "/"
-	}
-
+	// We know what we want, create it if it doesn't exist and return it
+	newPath := path.Join(indexPath, chain) + "/"
 	EstablishIndexPaths(newPath)
 	return newPath
 }
 
 // GetPathToCache returns the one and only cachePath
 func GetPathToCache(chain string) string {
-	newPath := ""
+	// We need the index path from either XDG which dominates or the config file
+	cachePath, err := rootConfig.PathFromXDG("XDG_CACHE_HOME")
+	if err != nil {
+		log.Fatal(err)
+	} else if len(cachePath) == 0 {
+		cachePath = rootConfig.GetCachePath()
+	}
 
+	// We want the cache folder to be named `cache` and be in
+	// the root of cache path
+	if !strings.Contains(cachePath, "/cache") {
+		cachePath = path.Join(cachePath, "cache")
+	}
+
+	// We always have to have a chain...
 	if len(chain) == 0 {
 		chain = rootConfig.GetDefaultChain()
 	}
 
-	xdg := os.Getenv("XDG_CACHE_HOME")
-	if len(xdg) > 0 && xdg[0] == '/' {
-		if !strings.Contains(xdg, "/cache") {
-			xdg = path.Join(xdg, "cache")
-		}
-		newPath = path.Join(xdg, chain) + "/"
-	} else {
-		cachePath := rootConfig.GetCachePath()
-		newPath = path.Join(cachePath, chain) + "/"
-	}
-
+	// We know what we want, create it if it doesn't exist and return it
+	newPath := path.Join(cachePath, chain) + "/"
 	EstablishCachePaths(newPath)
 	return newPath
 }

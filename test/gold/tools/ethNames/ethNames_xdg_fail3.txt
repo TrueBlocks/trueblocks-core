@@ -1,0 +1,4 @@
+Env: XDG_CACHE_HOME=NOTAPATH
+chifra names  test
+TEST[DATE|TIME] Terms:  [test]
+2022/01/26 19:09:29 The XDG_CACHE_HOME value (NOTAPATH), must be fully qualified.

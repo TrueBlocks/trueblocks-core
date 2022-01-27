@@ -55,6 +55,12 @@ on      ,both ,fast  ,names ,tools/ethNames ,show_undelete          ,y    ,terms
 on      ,both ,fast  ,names ,tools/ethNames ,edit_remove            ,y    ,remove & terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = api & expand
 on      ,both ,fast  ,names ,tools/ethNames ,show_remove            ,y    ,terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = api & expand
 
+#        ,     ,      ,      ,               ,                       ,     ,these tests work but have a timestamp in them so causes diffs
+local   ,cmd  ,fast  ,names ,tools/ethNames ,xdg_fail1              ,y    ,terms = test
+local   ,cmd  ,fast  ,names ,tools/ethNames ,xdg_fail2              ,y    ,terms = test
+local   ,cmd  ,fast  ,names ,tools/ethNames ,xdg_fail3              ,y    ,terms = test
+local   ,cmd  ,fast  ,names ,tools/ethNames ,xdg_fail4              ,y    ,terms = test
+
 off     ,cmd  ,fast  ,null  ,tools/ethNames ,nosave_backup          ,n    ,MOVEFILE -f $CACHE/names/names.bin ./testing_data/backup/
 off     ,cmd  ,fast  ,null  ,tools/ethNames ,nosave_copy            ,n    ,COPYFILE -f ./testing_data/ethNames_upgrade_to_067/names.bin $CACHE/names/
 off     ,cmd  ,fast  ,null  ,tools/ethNames ,nosave_touch           ,n    ,TOUCHFILE $CACHE/names/names.bin

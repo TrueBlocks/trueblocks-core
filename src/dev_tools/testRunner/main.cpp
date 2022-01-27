@@ -224,12 +224,17 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
             if (fileExists(envFile))
                 asciiFileToLines(envFile, fileLines);
 
-            CStringArray envLines;
-            for (auto f : fileLines)
-                if (!startsWith(f, "#"))
-                    envLines.push_back(f);
-
             ostringstream prepender;
+
+            CStringArray envLines;
+            for (auto f : fileLines) {
+                if (!startsWith(f, "#")) {
+                    for (auto line : fileLines)
+                        prepender << "Env: " << line << endl;
+                    envLines.push_back(f);
+                }
+            }
+
             if (cmdTests) {
                 string_q envs = substitute(substitute(linesToString(envLines, '|'), " ", ""), "|", " ");
                 string_q env = "env " + envs + " TEST_MODE=true NO_COLOR=true REDIR_CERR=true ";
@@ -296,6 +301,7 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
             if (!prepender.str().empty()) {
                 contents = prepender.str() + contents;
             }
+
             replaceAll(contents, "3735928559", "\"0xdeadbeef\"");
             stringToAsciiFile(test.workPath + test.fileName, contents);
 
