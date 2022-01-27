@@ -84,9 +84,9 @@ string_q CChain::getValueByName(const string_q& fieldName) const {
                 return uint_2_Str(chain_id);
             }
             break;
-        case 'i':
-            if (fieldName % "ipfs_gateway") {
-                return ipfs_gateway;
+        case 'p':
+            if (fieldName % "pin_gateway") {
+                return pin_gateway;
             }
             break;
         case 'r':
@@ -136,9 +136,9 @@ bool CChain::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
                 return true;
             }
             break;
-        case 'i':
-            if (fieldName % "ipfs_gateway") {
-                ipfs_gateway = fieldValue;
+        case 'p':
+            if (fieldName % "pin_gateway") {
+                pin_gateway = fieldValue;
                 return true;
             }
             break;
@@ -189,7 +189,7 @@ bool CChain::Serialize(CArchive& archive) {
     archive >> rpc_provider;
     archive >> symbol;
     archive >> remote_explorer;
-    archive >> ipfs_gateway;
+    archive >> pin_gateway;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -209,7 +209,7 @@ bool CChain::SerializeC(CArchive& archive) const {
     archive << rpc_provider;
     archive << symbol;
     archive << remote_explorer;
-    archive << ipfs_gateway;
+    archive << pin_gateway;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -265,7 +265,7 @@ void CChain::registerClass(void) {
     ADD_FIELD(CChain, "rpc_provider", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CChain, "symbol", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CChain, "remote_explorer", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CChain, "ipfs_gateway", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CChain, "pin_gateway", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CChain, "schema");

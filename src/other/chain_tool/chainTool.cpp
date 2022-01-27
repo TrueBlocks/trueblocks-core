@@ -39,7 +39,7 @@ int main(int argc, const char* argv[]) {
                 replace(res, "**", "[");
                 replace(res, "**", "]");
             }
-            replace(res, "ipfsGateway = \"\"", "ipfsGateway = \"<not_set>\"");
+            replace(res, "pinGateway = \"\"", "pinGateway = \"<not_set>\"");
             stringToAsciiFile("config/" + chain.chain_name + "/trueBlocks.toml", res);
             cout << "Wrote " << chain.chain_name << endl;
         }
@@ -58,5 +58,5 @@ const char* STR_THESTRING =
     "rpcProvider = \"[{RPC_PROVIDER}]\"\n"
     "chainId = \"[{CHAIN_ID}]\"\n"
     "symbol = \"[{SYMBOL}]\"\n"
-    "ipfsGateway = \"[{IPFS_GATEWAY}]\"\n"
+    "pinGateway = \"[{PIN_GATEWAY}]\"\n"
     "remoteExplorer = \"[{REMOTE_EXPLORER}]\"\n";

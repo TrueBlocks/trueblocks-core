@@ -11,12 +11,12 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"runtime"
 	"sync"
 
 	"github.com/ethereum/go-ethereum/crypto"
 	ants "github.com/panjf2000/ants/v2"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/rootConfig"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
@@ -28,7 +28,7 @@ func (opts *AbisOptions) FindInternal() error {
 	var results []Function
 
 	var wg sync.WaitGroup
-	checkOne, _ := ants.NewPoolWithFunc(config.ReadBlockScrape(opts.Globals.Chain).Dev.MaxPoolSize, func(testSig interface{}) {
+	checkOne, _ := ants.NewPoolWithFunc(runtime.NumCPU()*2, func(testSig interface{}) {
 		defer wg.Done()
 		byts := []byte(testSig.(string))
 		sigBytes := crypto.Keccak256(byts)

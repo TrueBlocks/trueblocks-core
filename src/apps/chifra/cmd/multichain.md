@@ -1,78 +1,70 @@
-  - [ ] If the path comes from XDG it must both exist and be fully resolved, otherwise fail
-  - [ ] If the config, cache, or index path does not exist, fail with proceeding if it's not the default otherwise create it
-  - [ ] If the config, cache, or index path does exist, establish its subfolders
-  - [ ] If a new chain is presented, create it under the valid `config`, `cache`, and `index` folders - i.e. establish
+MAKE A NOTE IN THE DOCS OF WHERE THINGS FALL SHORT
+MAKE A NOTE IN DOCS ABOUT WHAT IS AND WHAT IS NOT INDEXED BY US
 
-  - [ ] Add test cases for XDG both valid and not valid
-  - [ ] Add testing that specifies non-existant folders
-  - [ ] Test XDG varables somehow
-  - [ ] Test with chifra status --chain shit
+  - [ ] `chifra explore` needs to be per chain
+
+
+- [ ] rpc must follow chain to valid RPC (with tracing!)
+- [ ] we should force the user to tell us the chain id when the add a new chain and then check it against the RPC we get if it's new and we've never seen it before. Save that info away so we don't have to do the same every command
 
 ### Open Questions
 ----
-- [ ] Chain specific data: 
-  - [ ] names, prefunds, timestamps, prices, manifest, explorer urls, explorer apis, specials
-  - [ ] Config items should be able to be read from top-level and overlaid with chain specific config
-
-- [ ] Chain IDs
-  - [ ] User provides his/her own chain id. We query the chain at the RPC and verify we're connected to the rigth chain
-
-- [ ] TrueBlocks and other config file
-  - [ ] Should it have any per-chain data (probably not)
-  - [ ] Need to be able to 'merge' toml files so we can have top-level settings and per-chain overlay
-  - [ ] Don't expose IndexPath and CachePath (or any config settings) directly. Hide behind function or use a map<string, string>
-
-- [ ] Server
-  - [ ] How does the server handle `--chain` and/or a different default chain?
-  - [ ] When running against remote gnosis server, our app does not send in the --client parameter
-  - [ ] You have to start the server with --client gnosis
-  - [ ] The server does not accept a --chain value. Why?
-  - [ ] The API must accept --chain
-  - [ ] The server wants to run against the base configuration (i.e. mainnet -- why???). 
-  - [ ] What if we wanted to run two servers -- one for each of two different chains?
-  - [ ] This is another reason why --chain must be a global option.
-  - [ ] Otherwise, we would have to run multiple servers. As a result -- we want to disable 
-  - [ ] the `--chain` option for `chifra serve` (probably other things as well)
-
-- [ ] Chifra Export
-  - [ ] Uniswap pricing of reconciliations obviously doesn't work on non-main net.
-
 - [ ] Block Scraper
   - [ ] The function initConfig() in blaze needs attention vis-a-vi paths (we should be able to use the chifra paths directly)
   - [ ] Blaze has command line options to explicitly take the paths
   - [ ] We should be able to remove the 'requires' options (tracing, parity -- balances already removed) in blockScrape.toml
-  - [ ] Running against private networks is a problem because almost every thing happens very close to front of chain
-  - [ ] Create a different Pinata account for each chain: gnosis.unchainedindex.io, etc.
-    - [ ] Should be use `v1`? Not sure.
-      - [ ] Don't really like it, but would allow upgrades.
-      - [ ] Should there be upgrades? Doesn't `manifest.txt` allow for inifinite upgrades?
 
 - [ ] Other Tools
-  - [ ] `chifra explore` needs to be per chain
-  - [ ] Should names be per chain or top level? Both - most names are at top level, user may customize per chain
   - [ ] Does `ethslurp` work per chain?  The Etherscan API needs to be adjusted per chain
   - [ ] `chifra when` is per chain - can we test this? Would need time stamp from multiple chains
-  - [ ] Does --sol option work for non-mainnet chains?
-  - [ ] Does articulation work for non-mainnet chains?
 
 - [ ] Docs
   - [ ] ./docs/content/chifra/configs.md needs work
+  - [ ] Must document running against private networks and how one must configure the scraper for smaller chunks
 
-- [ ] Other
-  - [ ] What about the bytzantium hard fork -- is there block number specific behaviour? (probably -- for ETC for example)
-  - [ ] What about 'status' on pre-byzantium receipts on non-main net chains?
+- [ ] Chain specific data: 
+  - [ ] prefunds, timestamps, prices, manifest, explorer urls, explorer apis, specials
 
-- [ ] Smart Contract
-  - [ ] Needs chain id
-  - [ ] Manifest can be customized as we wish
-  - [ ] How can others participate?
-  - [ ] Does it accept donations?
-  - [ ] Will the smart contract be deployed on different chains? Will it have the same address?
+- [ ] Chain specific data with overlay
+  - [ ] names
 
-- [ ] `chifra init --chain unknown_chain` should fail gracefully
+- [ ] Not chain specific data
+  - [ ] abis
 
+- [ ] Chifra Export
+  - [ ] Uniswap pricing of reconciliations obviously doesn't work on non-main net.
 
 - [x] Closed Issues
+  - [x] `chifra init --chain unknown_chain` should fail gracefully
+  - [x] Create a different Pinata account for each chain: gnosis.unchainedindex.io, etc.
+  - [x] What about the bytzantium hard fork -- is there block number specific behaviour? (probably -- for ETC for example)
+  - [x] What about 'status' on pre-byzantium receipts on non-main net chains?
+  - [x] Should be use `v1`? Not sure.
+  - [x] Don't really like it, but would allow upgrades.
+  - [x] Should there be upgrades? Doesn't `manifest.txt` allow for inifinite upgrades?
+  - [x] How does the server handle `--chain` and/or a different default chain? (Just works!)
+  - [x] When running against remote gnosis server, our app does not send in the --client parameter (does now)
+  - [x] You have to start the server with --client gnosis (or use default but client now also sends)
+  - [x] The server does not accept a --chain value. Why?
+  - [x] The API must accept --chain
+  - [x] The server wants to run against the base configuration (i.e. mainnet -- why???). 
+  - [x] What if we wanted to run two servers -- one for each of two different chains? (JUST WORKS!)
+  - [x] This is another reason why --chain must be a global option.
+  - [x] Otherwise, we would have to run multiple servers. As a result -- we want to disable 
+  - [x] the `--chain` option for `chifra serve` (probably other things as well)
+  - [x] TrueBlocks and other config file
+  - [x] Should it have any per-chain data (probably not) (NO)
+  - [x] Need to be able to 'merge' toml files so we can have top-level settings and per-chain overlay (Viper makes this easy)
+  - [x] Don't expose IndexPath and CachePath (or any config settings) directly. Hide behind function or use a map<string, string>
+  - [x] User provides his/her own chain id. We query the chain at the RPC and verify we're connected to the rigth chain
+  - [x] Config items should be able to be read from top-level and overlaid with chain specific config
+  - [x] If a new chain is presented, create it under the valid `config`, `cache`, and `index` folders - i.e. establish
+  - [x] Test with chifra status --chain shit
+  - [x] If the config, cache, or index path does not exist, fail without proceeding if it's not the default otherwise create it
+  - [x] If the config, cache, or index path does exist, establish its subfolders
+  - [x] Test XDG varables somehow
+  - [x] Add test cases for XDG both valid and not valid
+  - [x] If the path comes from XDG it must both exist and be fully resolved, otherwise fail
   - [x] If the path contains `cache` or `unchained` or end with one one of the caches or index folders, fail without proceeding (not true -- let the user specify any path they want)
   - [x] The prefund values per chain are in the repo but not being used
   - [x] We need to use the `--chain` option when building paths

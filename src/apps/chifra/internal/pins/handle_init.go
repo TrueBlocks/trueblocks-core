@@ -10,6 +10,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/rootConfig"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/chunk"
@@ -32,7 +33,7 @@ func (opts *PinsOptions) InitInternal() error {
 	logger.Log(logger.Info, "Unchained index returned CID", cid)
 
 	// Download the manifest
-	gatewayUrl := config.ReadBlockScrape(opts.Globals.Chain).Dev.IpfsGateway
+	gatewayUrl := rootConfig.GetRootConfig(opts.Globals.Chain).Settings.PinGateway
 	logger.Log(logger.Info, "IPFS gateway", gatewayUrl)
 
 	url, err := url.Parse(gatewayUrl)

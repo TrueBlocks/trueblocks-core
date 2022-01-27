@@ -2,9 +2,9 @@
 # Do not edit this value
 current = "0.23.7-alpha"
 
-# only the following values are customizable per chain[settings]
-rpcProvider = "https://rpc-mumbai.maticvigil.com"
+[settings]
 chainId = "80001"
-symbol = "MATIC"
-ipfsGateway = "<not_set>"
+pinGateway = "<not_set>"
 remoteExplorer = "https://mumbai.polygonscan.com"
+rpcProvider = "https://rpc-mumbai.maticvigil.com"
+symbol = "MATIC"

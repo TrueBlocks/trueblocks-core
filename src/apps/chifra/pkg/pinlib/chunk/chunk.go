@@ -18,12 +18,13 @@ import (
 	"net/url"
 	"os"
 	"path"
+	"runtime"
 	"strconv"
 	"strings"
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/rootConfig"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
@@ -207,7 +208,7 @@ func getWriteWorker(arguments WriteWorkerArguments) WorkerFunction {
 // GetChunksFromRemote downloads, unzips and saves the chunk of type indicated by chunkType
 // for each pin in pins. Progress is reported to progressChannel.
 func GetChunksFromRemote(chain string, pins []manifest.PinDescriptor, chunkPath *cache.Path, progressChannel chan<- *progress.Progress) {
-	poolSize := config.ReadBlockScrape(chain).Dev.MaxPoolSize
+	poolSize := runtime.NumCPU() * 2
 	// Downloaded content will wait for saving in this channel
 	writeChannel := make(chan *jobResult, poolSize)
 	// Context lets us handle Ctrl-C easily
@@ -223,7 +224,7 @@ func GetChunksFromRemote(chain string, pins []manifest.PinDescriptor, chunkPath 
 		chunkPath:       chunkPath,
 		ctx:             ctx,
 		downloadWg:      &downloadWg,
-		gatewayUrl:      config.ReadBlockScrape(chain).Dev.IpfsGateway,
+		gatewayUrl:      rootConfig.GetRootConfig(chain).Settings.PinGateway,
 		progressChannel: progressChannel,
 		writeChannel:    writeChannel,
 	}

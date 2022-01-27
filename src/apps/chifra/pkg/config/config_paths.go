@@ -34,7 +34,7 @@ func GetPathToIndex(chain string) string {
 	if err != nil {
 		log.Fatal(err)
 	} else if len(indexPath) == 0 {
-		indexPath = rootConfig.GetIndexPath()
+		indexPath = rootConfig.GetRootConfig(chain).Settings.IndexPath
 	}
 
 	// We want the index folder to be named `unchained` and be in
@@ -61,7 +61,7 @@ func GetPathToCache(chain string) string {
 	if err != nil {
 		log.Fatal(err)
 	} else if len(cachePath) == 0 {
-		cachePath = rootConfig.GetCachePath()
+		cachePath = rootConfig.GetRootConfig(chain).Settings.CachePath
 	}
 
 	// We want the cache folder to be named `cache` and be in

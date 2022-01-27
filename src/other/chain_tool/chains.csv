@@ -1,4 +1,4 @@
-chain_name ,chain_type ,rpc_provider                                                  ,chain_id   ,symbol ,remote_explorer                               ,ipfs_gateway
+chain_name ,chain_type ,rpc_provider                                                  ,chain_id   ,symbol ,remote_explorer                               ,pin_gateway
 mainnet    ,mainnet    ,http://localhost:8545                                         ,1          ,ETH    ,https://etherscan.io                          ,https://mainnet.unchainedindex.io
 ropsten    ,testnet    ,https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161 ,3          ,ETH    ,https://ropsten.etherscan.io                  ,https://ropsten.unchainedindex.io
 rinkeby    ,testnet    ,https://rinkeby-light.eth.linkpool.io                         ,4          ,ETH    ,https://rinkeby.etherscan.io                  ,https://rinkeby.unchainedindex.io

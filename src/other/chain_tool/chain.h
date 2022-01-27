@@ -31,7 +31,7 @@ class CChain : public CBaseNode {
     string_q rpc_provider;
     string_q symbol;
     string_q remote_explorer;
-    string_q ipfs_gateway;
+    string_q pin_gateway;
 
   public:
     CChain(void);
@@ -100,7 +100,7 @@ inline void CChain::initialize(void) {
     rpc_provider = "";
     symbol = "";
     remote_explorer = "";
-    ipfs_gateway = "";
+    pin_gateway = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -117,7 +117,7 @@ inline void CChain::duplicate(const CChain& ch) {
     rpc_provider = ch.rpc_provider;
     symbol = ch.symbol;
     remote_explorer = ch.remote_explorer;
-    ipfs_gateway = ch.ipfs_gateway;
+    pin_gateway = ch.pin_gateway;
 
     // EXISTING_CODE
     // EXISTING_CODE

@@ -22,6 +22,7 @@ extern double getPrice_EthPerTok(blknum_t bn, string_q& priceSource, const addre
 extern double getPriceMaker_UsdPerEth(blknum_t bn, string_q& priceSource);
 
 //---------------------------------------------------------------------------
+// BOGUS - CHAIN SPECIFIC - UNISWAP PRICING
 static const address_t sai = "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359";
 static const address_t dai = "0x6b175474e89094c44da98b954eedeac495271d0f";
 static const address_t wEth = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";

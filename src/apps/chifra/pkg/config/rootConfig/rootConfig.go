@@ -15,6 +15,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/spf13/viper"
 )
 
@@ -30,11 +31,15 @@ type versionGroup struct {
 }
 
 type settingsGroup struct {
-	CachePath    string `toml:"cachePath"`
-	IndexPath    string `toml:"indexPath"`
-	RpcProvider  string `toml:"rpcProvider"`
-	DefaultChain string `toml:"defaultChain"`
-	EtherscanKey string `toml:"etherscan_key"`
+	CachePath      string `toml:"cachePath"`
+	IndexPath      string `toml:"indexPath"`
+	RpcProvider    string `toml:"rpcProvider"`
+	DefaultChain   string `toml:"defaultChain"`
+	EtherscanKey   string `toml:"etherscanKey"`
+	ChainId        string `toml:"chainId"`
+	PinGateway     string `toml:"pinGateway"`
+	RemoteExplorer string `toml:"remoteExplorer"`
+	Symbol         string `toml:"symbol"`
 }
 
 type ConfigFile struct {
@@ -54,7 +59,7 @@ func init() {
 
 // GetRootConfig reads and the configuration located in trueBlocks.toml file. Note
 // that this routine is local to the package
-func GetRootConfig() *ConfigFile {
+func GetRootConfig(chain string) *ConfigFile {
 	if len(trueBlocksConfig.Settings.CachePath) == 0 {
 		configPath := GetPathToRootConfig()
 		MustReadConfig(trueBlocksViper, &trueBlocksConfig, configPath)
@@ -79,6 +84,11 @@ func GetRootConfig() *ConfigFile {
 
 		if len(trueBlocksConfig.Settings.DefaultChain) == 0 {
 			trueBlocksConfig.Settings.DefaultChain = "mainnet"
+		}
+
+		// Validate the URL to ensure we have it in the correct format
+		if !strings.HasPrefix(trueBlocksConfig.Settings.PinGateway, "http") {
+			logger.Fatal("missing schema in PinGateway configuration: http or https")
 		}
 
 		// We establish only the top-level folders here. When we figure out
@@ -118,22 +128,14 @@ func GetPathToRootConfig() string {
 	return path.Join(user.HomeDir, osPath) + "/"
 }
 
-func GetIndexPath() string {
-	return GetRootConfig().Settings.IndexPath
-}
-
-func GetCachePath() string {
-	return GetRootConfig().Settings.CachePath
-}
-
 // GetRpcProvider returns the RPC provider for a chain
 func GetRpcProvider(chain string) string {
 	// TODO: BOGUS-RPC PROVIDER
-	return GetRootConfig().Settings.RpcProvider
+	return GetRootConfig(chain).Settings.RpcProvider
 }
 
 func GetDefaultChain() string {
-	return GetRootConfig().Settings.DefaultChain
+	return GetRootConfig("mainnet").Settings.DefaultChain
 }
 
 func PathFromXDG(envVar string) (string, error) {
@@ -162,4 +164,27 @@ func Usage(msg string, values ...string) error {
 		ret = strings.Replace(ret, rep, val, -1)
 	}
 	return errors.New(ret)
+}
+
+// MustReadConfig calls Viper's ReadInConfig and fills values in the
+// given targetStruct. Any error will result in a call to logger.Fatal
+func MustReadConfig(v *viper.Viper, targetStruct interface{}, path string) {
+	v.AddConfigPath(path)
+	v.SetEnvPrefix("TB")
+	v.AutomaticEnv()
+	v.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
+
+	err := v.ReadInConfig()
+	if err != nil {
+		_, ok := err.(viper.ConfigFileNotFoundError)
+		// We only require some files to be present
+		if !ok {
+			logger.Fatal(err)
+		}
+	}
+
+	err = v.Unmarshal(targetStruct)
+	if err != nil {
+		logger.Fatal(err)
+	}
 }

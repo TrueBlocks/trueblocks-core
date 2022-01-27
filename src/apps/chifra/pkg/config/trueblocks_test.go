@@ -11,7 +11,7 @@ import (
 )
 
 func Test_ReadTrueBlocks(t *testing.T) {
-	values := rootConfig.GetRootConfig()
+	values := rootConfig.GetRootConfig("mainnet")
 	if len(values.Settings.RpcProvider) == 0 {
 		t.Error("RpcProvider is empty")
 	}

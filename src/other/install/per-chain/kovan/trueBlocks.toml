@@ -2,9 +2,9 @@
 # Do not edit this value
 current = "0.23.7-alpha"
 
-# only the following values are customizable per chain[settings]
-rpcProvider = "https://kovan.poa.network"
+[settings]
 chainId = "42"
-symbol = "ETH"
-ipfsGateway = "https://kovan.unchainedindex.io"
+pinGateway = "https://kovan.unchainedindex.io"
 remoteExplorer = "https://kovan.etherscan.io"
+rpcProvider = "https://kovan.poa.network"
+symbol = "ETH"
