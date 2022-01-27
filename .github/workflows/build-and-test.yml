@@ -15,11 +15,12 @@ jobs:
         run: sudo apt-get install build-essential git cmake python python-dev libcurl3-dev clang-format tree jq
       - name: Build TrueBlocks
         run: |
-          cd src/apps/chifra ; go test ./... ; cd -
           mkdir -p build
           cd build
           cmake ../src
           make -j 4
+          cd ../src/apps/chifra
+          go test ./...
   RemoteTests:
     needs: Build
     runs-on: ubuntu-latest
