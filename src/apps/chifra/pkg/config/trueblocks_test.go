@@ -6,12 +6,10 @@ package config
 
 import (
 	"testing"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/rootConfig"
 )
 
 func Test_ReadTrueBlocks(t *testing.T) {
-	values := rootConfig.GetRootConfig("mainnet")
+	values := GetRootConfig()
 	if len(values.Settings.RpcProvider) == 0 {
 		t.Error("RpcProvider is empty")
 	}

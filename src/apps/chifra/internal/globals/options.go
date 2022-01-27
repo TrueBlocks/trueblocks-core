@@ -9,7 +9,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/rootConfig"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/spf13/cobra"
 )
@@ -41,7 +41,7 @@ func (opts *GlobalOptions) TestLog() {
 	logger.TestLog(opts.Verbose, "Verbose: ", opts.Verbose)
 	logger.TestLog(opts.LogLevel > 0, "LogLevel: ", opts.LogLevel)
 	logger.TestLog(opts.NoHeader, "NoHeader: ", opts.NoHeader)
-	logger.TestLog(len(opts.Chain) > 0 && opts.Chain != rootConfig.GetDefaultChain(), "Chain: ", opts.Chain)
+	logger.TestLog(len(opts.Chain) > 0 && opts.Chain != config.GetDefaultChain(), "Chain: ", opts.Chain)
 	logger.TestLog(opts.Wei, "Wei: ", opts.Wei)
 	logger.TestLog(opts.Ether, "Ether: ", opts.Ether)
 	logger.TestLog(opts.Dollars, "Dollars: ", opts.Dollars)
@@ -98,7 +98,7 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions) {
 	cmd.Flags().MarkHidden("output")
 
 	if len(opts.Chain) == 0 {
-		opts.Chain = rootConfig.GetDefaultChain()
+		opts.Chain = config.GetDefaultChain()
 	}
 }
 
@@ -203,7 +203,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *GlobalOptions {
 	}
 
 	if len(opts.Chain) == 0 {
-		opts.Chain = rootConfig.GetDefaultChain()
+		opts.Chain = config.GetDefaultChain()
 	}
 	return opts
 

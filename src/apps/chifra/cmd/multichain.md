@@ -1,3 +1,7 @@
+They still have to hard code the RPC endpoint
+
+
+
 MAKE A NOTE IN THE DOCS OF WHERE THINGS FALL SHORT - Uniswap, no index other than a,b,c chains
 MAKE A NOTE IN DOCS ABOUT WHAT IS AND WHAT IS NOT INDEXED BY US
 

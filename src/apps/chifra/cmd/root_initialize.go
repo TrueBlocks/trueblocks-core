@@ -13,7 +13,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/rootConfig"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
 
 // Initalize makes sure everything is ready to run. These routines don't return if they aren't
@@ -69,7 +69,7 @@ func VerifyMigrations() {
 		log.Fatalf(msg)
 	}
 
-	configFolder := rootConfig.GetPathToRootConfig()
+	configFolder := config.GetPathToRootConfig()
 	if _, err := os.Stat(configFolder); err != nil {
 		msg := strings.Replace(notExist, "{0}", "{"+configFolder+"}", -1)
 		msg = strings.Replace(msg, "{", colors.Green, -1)

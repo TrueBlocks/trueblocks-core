@@ -16,7 +16,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/rootConfig"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
@@ -30,7 +29,7 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 	}
 	hasVerbose := false
 
-	chain := rootConfig.GetDefaultChain()
+	chain := config.GetDefaultChain()
 	for key, value := range r.URL.Query() {
 		if key == "chain" {
 			chain = value[0]
@@ -94,11 +93,11 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 		}()
 	}
 
-	configPath := rootConfig.GetPathToRootConfig()
+	configPath := config.GetPathToRootConfig()
 	chainConfigPath := config.GetPathToChainConfig(chain)
 	cachePath := config.GetPathToCache(chain)
 	indexPath := config.GetPathToIndex(chain)
-	defChain := rootConfig.GetDefaultChain()
+	defChain := config.GetDefaultChain()
 
 	// In regular operation, we set an environment variable API_MODE=true. When
 	// testing (the test harness sends a special header) we also set the

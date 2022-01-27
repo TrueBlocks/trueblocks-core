@@ -10,7 +10,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/rootConfig"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/chunk"
@@ -21,19 +20,21 @@ import (
 // InitInternal initializes local copy of UnchainedIndex by downloading manifests and chunks
 func (opts *PinsOptions) InitInternal() error {
 
-	config.EstablishIndexPaths(config.GetPathToIndex(opts.Globals.Chain))
+	chain := opts.Globals.Chain
+
+	config.EstablishIndexPaths(config.GetPathToIndex(chain))
 
 	opts.PrintManifestHeader()
 
 	// Fetch manifest's CID
-	cid, err := pinlib.GetManifestCidFromContract(opts.Globals.Chain)
+	cid, err := pinlib.GetManifestCidFromContract(chain)
 	if err != nil {
 		return err
 	}
 	logger.Log(logger.Info, "Unchained index returned CID", cid)
 
 	// Download the manifest
-	gatewayUrl := rootConfig.GetRootConfig(opts.Globals.Chain).Settings.PinGateway
+	gatewayUrl := config.GetPinGateway(chain)
 	logger.Log(logger.Info, "IPFS gateway", gatewayUrl)
 
 	url, err := url.Parse(gatewayUrl)
@@ -48,7 +49,7 @@ func (opts *PinsOptions) InitInternal() error {
 	}
 
 	// Save manifest
-	manifestPath := config.GetPathToChainConfig(opts.Globals.Chain) + "manifest.txt"
+	manifestPath := config.GetPathToChainConfig(chain) + "manifest.txt"
 	err = pinlib.SaveManifest(manifestPath, downloadedManifest)
 	if err != nil {
 		return err
@@ -63,8 +64,8 @@ func (opts *PinsOptions) InitInternal() error {
 
 	getChunks := func(chunkType cache.CacheType) {
 		chunkPath := &cache.Path{}
-		chunkPath.New(opts.Globals.Chain, chunkType)
-		failedChunks, cancelled := downloadAndReportProgress(opts.Globals.Chain, downloadedManifest.NewPins, chunkPath)
+		chunkPath.New(chain, chunkType)
+		failedChunks, cancelled := downloadAndReportProgress(chain, downloadedManifest.NewPins, chunkPath)
 
 		if cancelled {
 			// We don't want to retry if the user has cancelled
@@ -74,7 +75,7 @@ func (opts *PinsOptions) InitInternal() error {
 		if len(failedChunks) > 0 {
 			retry(failedChunks, 3, func(pins []manifest.PinDescriptor) ([]manifest.PinDescriptor, bool) {
 				logger.Log(logger.Info, "Retrying", len(pins), "bloom(s)")
-				return downloadAndReportProgress(opts.Globals.Chain, pins, chunkPath)
+				return downloadAndReportProgress(chain, pins, chunkPath)
 			})
 		}
 	}
@@ -189,12 +190,13 @@ func (opts *PinsOptions) PrintManifestHeader() {
 	// TODO: These values should be in a config file
 	// TODO: We can add the "loaded" configuration file to Options
 	// TODO: This needs to be per chain data
+	chain := opts.Globals.Chain
 	logger.Log(logger.Info, "hashToIndexFormatFile:", "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2")
 	logger.Log(logger.Info, "hashToBloomFormatFile:", "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD")
-	logger.Log(logger.Info, "manifestHashEncoding:", config.ReadBlockScrape(opts.Globals.Chain).UnchainedIndex.ManifestHashEncoding)
-	logger.Log(logger.Info, "unchainedIndexAddr:", config.ReadBlockScrape(opts.Globals.Chain).UnchainedIndex.Address)
+	logger.Log(logger.Info, "manifestHashEncoding:", config.ReadBlockScrape(chain).UnchainedIndex.ManifestHashEncoding)
+	logger.Log(logger.Info, "unchainedIndexAddr:", config.ReadBlockScrape(chain).UnchainedIndex.Address)
 	if !opts.Globals.TestMode {
-		logger.Log(logger.Info, "unchainedIndexFolder:", config.GetPathToIndex(opts.Globals.Chain))
-		logger.Log(logger.Info, "manifestLocation:", config.GetPathToChainConfig(opts.Globals.Chain))
+		logger.Log(logger.Info, "unchainedIndexFolder:", config.GetPathToIndex(chain))
+		logger.Log(logger.Info, "manifestLocation:", config.GetPathToChainConfig(chain))
 	}
 }

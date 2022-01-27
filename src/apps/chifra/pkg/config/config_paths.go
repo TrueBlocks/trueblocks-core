@@ -11,7 +11,6 @@ import (
 	"path"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/rootConfig"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
 
@@ -19,9 +18,9 @@ import (
 func GetPathToChainConfig(chain string) string {
 	// We always need a chain
 	if len(chain) == 0 {
-		chain = rootConfig.GetDefaultChain()
+		chain = GetDefaultChain()
 	}
-	ret := rootConfig.GetPathToRootConfig()
+	ret := GetPathToRootConfig()
 
 	// Our configuration files are always in ./config folder relative to top most folder
 	return path.Join(ret, "config/", chain) + "/"
@@ -30,11 +29,11 @@ func GetPathToChainConfig(chain string) string {
 // GetPathToIndex returns the one and only cachePath
 func GetPathToIndex(chain string) string {
 	// We need the index path from either XDG which dominates or the config file
-	indexPath, err := rootConfig.PathFromXDG("XDG_CACHE_HOME")
+	indexPath, err := PathFromXDG("XDG_CACHE_HOME")
 	if err != nil {
 		log.Fatal(err)
 	} else if len(indexPath) == 0 {
-		indexPath = rootConfig.GetRootConfig(chain).Settings.IndexPath
+		indexPath = GetRootConfig().Settings.IndexPath
 	}
 
 	// We want the index folder to be named `unchained` and be in
@@ -45,7 +44,7 @@ func GetPathToIndex(chain string) string {
 
 	// We always have to have a chain...
 	if len(chain) == 0 {
-		chain = rootConfig.GetDefaultChain()
+		chain = GetDefaultChain()
 	}
 
 	// We know what we want, create it if it doesn't exist and return it
@@ -57,11 +56,11 @@ func GetPathToIndex(chain string) string {
 // GetPathToCache returns the one and only cachePath
 func GetPathToCache(chain string) string {
 	// We need the index path from either XDG which dominates or the config file
-	cachePath, err := rootConfig.PathFromXDG("XDG_CACHE_HOME")
+	cachePath, err := PathFromXDG("XDG_CACHE_HOME")
 	if err != nil {
 		log.Fatal(err)
 	} else if len(cachePath) == 0 {
-		cachePath = rootConfig.GetRootConfig(chain).Settings.CachePath
+		cachePath = GetRootConfig().Settings.CachePath
 	}
 
 	// We want the cache folder to be named `cache` and be in
@@ -72,7 +71,7 @@ func GetPathToCache(chain string) string {
 
 	// We always have to have a chain...
 	if len(chain) == 0 {
-		chain = rootConfig.GetDefaultChain()
+		chain = GetDefaultChain()
 	}
 
 	// We know what we want, create it if it doesn't exist and return it

@@ -24,7 +24,7 @@ import (
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/rootConfig"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
@@ -224,7 +224,7 @@ func GetChunksFromRemote(chain string, pins []manifest.PinDescriptor, chunkPath 
 		chunkPath:       chunkPath,
 		ctx:             ctx,
 		downloadWg:      &downloadWg,
-		gatewayUrl:      rootConfig.GetRootConfig(chain).Settings.PinGateway,
+		gatewayUrl:      config.GetPinGateway(chain),
 		progressChannel: progressChannel,
 		writeChannel:    writeChannel,
 	}

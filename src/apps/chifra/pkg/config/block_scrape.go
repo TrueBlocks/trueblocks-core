@@ -5,7 +5,6 @@
 package config
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/rootConfig"
 	"github.com/spf13/viper"
 )
 
@@ -42,7 +41,7 @@ func init() {
 // ReadBlockScrape reads the configuration located in blockScrape.toml file
 func ReadBlockScrape(chain string) *BlockScrape {
 	if !blockScrapeRead {
-		rootConfig.MustReadConfig(blockScrapeViper, &cachedBlockScrape, GetPathToChainConfig(chain))
+		MustReadConfig(blockScrapeViper, &cachedBlockScrape, GetPathToChainConfig(chain))
 		blockScrapeRead = true
 	}
 
