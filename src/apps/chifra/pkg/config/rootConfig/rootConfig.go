@@ -88,9 +88,9 @@ func GetRootConfig(chain string) *ConfigFile {
 
 		// Validate the URL to ensure we have it in the correct format
 		// TODO: BOGUS - BREAK ONLINE TESTS
-		// if !strings.HasPrefix(trueBlocksConfig.Settings.PinGateway, "http") {
-		// 	logger.Fatal("missing schema in PinGateway configuration: http or https")
-		// }
+		if !strings.HasPrefix(trueBlocksConfig.Settings.PinGateway, "http") {
+			logger.Fatal("missing schema in PinGateway configuration: http or https")
+		}
 
 		// We establish only the top-level folders here. When we figure out
 		// which chain we're on (not until the user tells us on the command line)
