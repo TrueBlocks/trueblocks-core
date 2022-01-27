@@ -1,11 +1,9 @@
-MAKE A NOTE IN THE DOCS OF WHERE THINGS FALL SHORT
+MAKE A NOTE IN THE DOCS OF WHERE THINGS FALL SHORT - Uniswap, no index other than a,b,c chains
 MAKE A NOTE IN DOCS ABOUT WHAT IS AND WHAT IS NOT INDEXED BY US
 
   - [ ] `chifra explore` needs to be per chain
-
-
-- [ ] rpc must follow chain to valid RPC (with tracing!)
-- [ ] we should force the user to tell us the chain id when the add a new chain and then check it against the RPC we get if it's new and we've never seen it before. Save that info away so we don't have to do the same every command
+  - [ ] rpc must follow chain to valid RPC (with tracing!)
+  - [ ] we should force the user to tell us the chain id when the add a new chain and then check it against the RPC we get if it's new and we've never seen it before. Save that info away so we don't have to do the same every command
 
 ### Open Questions
 ----
