@@ -14,7 +14,7 @@ func GetRpcProvider(chain string) string {
 	return ch.RpcProvider
 }
 
-// GetPinGateway returns the pin gateway per chain
+// GetPinGateway returns the pin gateway for a chain
 func GetPinGateway(chain string) string {
 	ch := GetRootConfig().Chains[chain]
 	gateway := ch.PinGateway
