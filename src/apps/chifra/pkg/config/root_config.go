@@ -30,27 +30,31 @@ type versionGroup struct {
 	Current string `toml:"current"`
 }
 
-type settingsGroup struct {
-	CachePath      string `toml:"cachePath"`
-	IndexPath      string `toml:"indexPath"`
-	RpcProvider    string `toml:"rpcProvider"`
-	DefaultChain   string `toml:"defaultChain"`
-	EtherscanKey   string `toml:"etherscanKey"`
+type chainGroup struct {
 	ChainId        string `toml:"chainId"`
+	LocalExplorer  string `toml:"localExplorer"`
 	PinGateway     string `toml:"pinGateway"`
 	RemoteExplorer string `toml:"remoteExplorer"`
+	RpcProvider    string `toml:"rpcProvider"`
 	Symbol         string `toml:"symbol"`
+}
+
+type settingsGroup struct {
+	CachePath    string `toml:"cachePath"`
+	IndexPath    string `toml:"indexPath"`
+	DefaultChain string `toml:"defaultChain"`
+	EtherscanKey string `toml:"etherscanKey"`
 }
 
 type ConfigFile struct {
 	Version  versionGroup
 	Settings settingsGroup
+	Chains   map[string]chainGroup
 }
 
 // init sets up default values for the given configuration
 func init() {
 	trueBlocksViper.SetConfigName("trueBlocks") // trueBlocks.toml (so we can find it)
-	trueBlocksViper.SetDefault("Settings.RpcProvider", "http://localhost:8545")
 	trueBlocksViper.SetDefault("Settings.CachePath", GetPathToRootConfig()+"cache/")
 	trueBlocksViper.SetDefault("Settings.IndexPath", GetPathToRootConfig()+"unchained/")
 	trueBlocksViper.SetDefault("Settings.DefaultChain", "mainnet")
@@ -84,11 +88,6 @@ func GetRootConfig() *ConfigFile {
 
 		if len(trueBlocksConfig.Settings.DefaultChain) == 0 {
 			trueBlocksConfig.Settings.DefaultChain = "mainnet"
-		}
-
-		// Validate the URL to ensure we have it in the correct format
-		if !strings.HasPrefix(trueBlocksConfig.Settings.PinGateway, "http") {
-			trueBlocksConfig.Settings.PinGateway = "https://" + trueBlocksConfig.Settings.PinGateway
 		}
 
 		// We establish only the top-level folders here. When we figure out

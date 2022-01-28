@@ -98,6 +98,7 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 	cachePath := config.GetPathToCache(chain)
 	indexPath := config.GetPathToIndex(chain)
 	defChain := config.GetDefaultChain()
+	rpcProvider := config.GetRpcProvider(chain)
 
 	// In regular operation, we set an environment variable API_MODE=true. When
 	// testing (the test harness sends a special header) we also set the
@@ -114,6 +115,7 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "s-CACHE_PATH:  ", cachePath, colors.Off)
 			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "s-INDEX_PATH:  ", indexPath, colors.Off)
 			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "g-DEFAULT_CHAIN: ", defChain, colors.Off)
+			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "g-RPC_PROVIDER: ", rpcProvider, colors.Off)
 			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "g-CHAIN: ", chain, colors.Off)
 		}
 		cmd.Env = append(os.Environ(), "API_MODE=true")
@@ -123,6 +125,7 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 	cmd.Env = append(cmd.Env, "TB_CACHE_PATH="+cachePath)
 	cmd.Env = append(cmd.Env, "TB_INDEX_PATH="+indexPath)
 	cmd.Env = append(cmd.Env, "TB_DEFAULT_CHAIN="+defChain)
+	cmd.Env = append(cmd.Env, "TB_RPC_PROVIDER="+rpcProvider)
 	cmd.Env = append(cmd.Env, "TB_CHAIN="+chain)
 	cmd.Env = append(cmd.Env, "PROG_NAME=chifra "+apiCmd)
 

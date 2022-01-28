@@ -20,6 +20,7 @@
 #include "rpcresult.h"
 #include "exportcontext.h"
 #include "logging.h"
+#include "options_base.h"
 
 namespace qblocks {
 
@@ -60,6 +61,17 @@ string_q getChain(void) {
     ASSERT(!g_Chain.empty());
     // LOG4(bGreen, "c-CHAIN: ", g_Chain);
     return g_Chain;
+}
+
+//---------------------------------------------------------------------------------------------------
+static string_q g_RpcProvider;
+string_q getRpcProvider(void) {
+    if (!g_RpcProvider.empty())
+        return g_RpcProvider;
+    g_RpcProvider = getEnvStr("TB_RPC_PROVIDER");
+    ASSERT(!g_RpcProvider.empty());
+    // LOG4(bGreen, "c-CHAIN: ", g_RpcProvider);
+    return g_RpcProvider;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -127,8 +139,11 @@ void loadEnvironmentPaths(void) {
     ::setenv("TB_CONFIG_PATH", configPath.c_str(), true);
     ::setenv("TB_CHAIN_CONFIG_PATH", (configPath + "config/mainnet/").c_str(), true);
     ::setenv("TB_DEFAULT_CHAIN", "mainnet", true);
+    ::setenv("TB_PRC_PROVIDER", "http://", true);
     ::setenv("TB_CACHE_PATH", (configPath + "cache/mainnet/").c_str(), true);
     ::setenv("TB_INDEX_PATH", (configPath + "unchained/mainnet/").c_str(), true);
+    string_q rpc = getGlobalConfig("")->getConfigStr("chains.mainnet", "rpcProvider", "http://localhost:8545");
+    ::setenv("TB_RPC_PROVIDER", rpc.c_str(), true);
 }
 
 //-------------------------------------------------------------------------

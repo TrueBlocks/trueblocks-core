@@ -285,6 +285,7 @@ bool pinlib_getChunkFromRemote(CPinnedChunk& pin, double sleep) {
             // download from ipfs gateway
             static string_q gatewayUrl;
             if (gatewayUrl.empty()) {
+                // TODO: BOGUS Needs to be per chain (i.e. Env variable)
                 gatewayUrl =
                     getGlobalConfig("")->getConfigStr("settings", "pinGateway", "https://ipfs.unchainedindex.io/ipfs/");
                 if (!endsWith(gatewayUrl, "/"))

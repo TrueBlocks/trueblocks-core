@@ -4,14 +4,22 @@
 
 package config
 
+import (
+	"strings"
+)
+
 // GetRpcProvider returns the RPC provider for a chain
 func GetRpcProvider(chain string) string {
-	// TODO: BOGUS-RPC PROVIDER
-	provider := GetRootConfig().Settings.RpcProvider
-	return provider
+	ch := GetRootConfig().Chains[chain]
+	return ch.RpcProvider
 }
 
+// GetPinGateway returns the pin gateway per chain
 func GetPinGateway(chain string) string {
-	gateway := GetRootConfig().Settings.PinGateway
+	ch := GetRootConfig().Chains[chain]
+	gateway := ch.PinGateway
+	if !strings.HasPrefix(gateway, "http") {
+		gateway = "https://" + gateway
+	}
 	return gateway
 }

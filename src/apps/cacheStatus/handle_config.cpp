@@ -34,7 +34,7 @@ bool COptions::handle_config_get(ostream& os) {
 
         CStringArray values;
 
-        string_q prov = cc->getConfigStr(g1_1.name, "rpcProvider", "http://localhost:8545");
+        string_q prov = getRpcProvider();
         if (isTestMode())
             prov = "--rpc Provider--";
         values.push_back(prov);

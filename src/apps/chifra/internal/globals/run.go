@@ -29,6 +29,7 @@ func (opts *GlobalOptions) PassItOn(path string, flags string) error {
 	cachePath := config.GetPathToCache(opts.Chain)
 	indexPath := config.GetPathToIndex(opts.Chain)
 	defChain := config.GetDefaultChain()
+	rpcProvider := config.GetRpcProvider(opts.Chain)
 
 	// fmt.Fprintf(os.Stderr, "Calling: %s %s\n", path, options)
 	cmd := exec.Command(config.GetPathToCommands(path), options)
@@ -39,6 +40,7 @@ func (opts *GlobalOptions) PassItOn(path string, flags string) error {
 		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "g-CACHE_PATH:  ", cachePath, colors.Off)
 		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "g-INDEX_PATH:  ", indexPath, colors.Off)
 		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "g-DEFAULT_CHAIN: ", defChain, colors.Off)
+		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "g-RPC_PROVIDER: ", rpcProvider, colors.Off)
 		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "g-CHAIN: ", opts.Chain, colors.Off)
 	}
 	cmd.Env = append(cmd.Env, "TB_CONFIG_PATH="+configPath)
@@ -46,6 +48,7 @@ func (opts *GlobalOptions) PassItOn(path string, flags string) error {
 	cmd.Env = append(cmd.Env, "TB_CACHE_PATH="+cachePath)
 	cmd.Env = append(cmd.Env, "TB_INDEX_PATH="+indexPath)
 	cmd.Env = append(cmd.Env, "TB_DEFAULT_CHAIN="+defChain)
+	cmd.Env = append(cmd.Env, "TB_RPC_PROVIDER="+rpcProvider)
 	cmd.Env = append(cmd.Env, "TB_CHAIN="+opts.Chain)
 	if os.Getenv("TEST_MODE") == "true" {
 		cmd.Env = append(cmd.Env, "TEST_MODE=true")

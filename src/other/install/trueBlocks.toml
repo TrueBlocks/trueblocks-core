@@ -4,10 +4,72 @@ current = "0.23.7-alpha"
 
 [settings]
 cachePath = ""
-defaultChain = ""
-etherscan_key = ""
 indexPath = ""
+defaultChain = "mainnet"
+etherscan_key = ""
+
+[chains]
+
+[chains.mainnet]
+chainId = "1"
 localExplorer = "http://localhost:1234"
-pinGateway = "https://ipfs.unchainedindex.io"
+pinGateway = "https://ipfs.unchainedindex.io/ipfs/"
 remoteExplorer = "https://etherscan.io"
 rpcProvider = "http://localhost:8545"
+symbol = "ETH"
+
+[chains.gnosis]
+chainId = "100"
+localExplorer = "http://localhost:1234"
+pinGateway = "https://gnosis.unchainedindex.io/ipfs/"
+remoteExplorer = "https://blockscout.com/xdai/mainnet"
+rpcProvider = "https://rpc.gnosischain.com"
+symbol = "XDAI"
+
+[chains.goerli]
+chainId = "5"
+localExplorer = "http://localhost:1234"
+pinGateway = "https://goerli.unchainedindex.io/ipfs/"
+remoteExplorer = "https://goerli.etherscan.io"
+rpcProvider = "https://goerli-light.eth.linkpool.io"
+symbol = "ETH"
+
+[chains.kovan]
+chainId = "42"
+localExplorer = "http://localhost:1234"
+pinGateway = "https://kovan.unchainedindex.io/ipfs/"
+remoteExplorer = "https://kovan.etherscan.io"
+rpcProvider = "https://kovan.poa.network"
+symbol = "ETH"
+
+[chains.optimism]
+chainId = "10"
+localExplorer = "http://localhost:1234"
+pinGateway = "<not_set>"
+remoteExplorer = "https://optimistic.etherscan.io"
+rpcProvider = "https://mainnet.optimism.io"
+symbol = "OPT"
+
+[chains.polygon]
+chainId = "80001"
+localExplorer = "http://localhost:1234"
+pinGateway = "<not_set>"
+remoteExplorer = "https://mumbai.polygonscan.com"
+rpcProvider = "https://rpc-mumbai.maticvigil.com"
+symbol = "MATIC"
+
+[chains.rinkeby]
+chainId = "4"
+localExplorer = "http://localhost:1234"
+pinGateway = "https://rinkeby.unchainedindex.io/ipfs/"
+remoteExplorer = "https://rinkeby.etherscan.io"
+rpcProvider = "https://rinkeby-light.eth.linkpool.io"
+symbol = "ETH"
+
+[chains.ropsten]
+chainId = "3"
+localExplorer = "http://localhost:1234"
+pinGateway = "https://ropsten.unchainedindex.io/ipfs/"
+remoteExplorer = "https://ropsten.etherscan.io"
+rpcProvider = "https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161"
+symbol = "ETH"

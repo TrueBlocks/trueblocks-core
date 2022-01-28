@@ -10,7 +10,8 @@ import (
 
 func Test_ReadTrueBlocks(t *testing.T) {
 	values := GetRootConfig()
-	if len(values.Settings.RpcProvider) == 0 {
+	chain := values.Chains["mainnet"]
+	if len(chain.RpcProvider) == 0 {
 		t.Error("RpcProvider is empty")
 	}
 	if len(values.Settings.CachePath) == 0 {

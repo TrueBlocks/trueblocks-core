@@ -2,10 +2,10 @@ chifra status  --terse --chain gnosis
 TEST[DATE|TIME] Depth:  0
 TEST[DATE|TIME] Terse:  true
 TEST[DATE|TIME] Chain:  gnosis
---TIME-- Client:       Client version (testing, not archive, tracing)
+--TIME-- Client:       Client version (testing, archive, tracing)
 --TIME-- TrueBlocks:   GHC-TrueBlocks//vers-alpha--git-hash---git-ts- (eskey, no pinkey)
 --TIME-- Config Path:  --paths--
---TIME-- Chain (ids):  gnosis (1,1)
+--TIME-- Chain (ids):  gnosis (100,100)
 --TIME-- Cache Path:   --paths--
 --TIME-- Index Path:   --paths--
 --TIME-- RPC Provider: --providers--
