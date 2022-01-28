@@ -92,15 +92,6 @@ CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/polygon     "allocs.csv"         
 CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/rinkeby     "allocs.csv"               ${INSTALL_DEST}/config/rinkeby/        )
 CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/ropsten     "allocs.csv"               ${INSTALL_DEST}/config/ropsten/        )
 
-CopyNotPresent    (${INSTALL_SOURCE}/per-chain/gnosis      "trueBlocks.toml"          ${INSTALL_DEST}/config/gnosis/         )
-CopyNotPresent    (${INSTALL_SOURCE}/per-chain/goerli      "trueBlocks.toml"          ${INSTALL_DEST}/config/goerli/         )
-CopyNotPresent    (${INSTALL_SOURCE}/per-chain/kovan       "trueBlocks.toml"          ${INSTALL_DEST}/config/kovan/          )
-CopyNotPresent    (${INSTALL_SOURCE}/per-chain/mainnet     "trueBlocks.toml"          ${INSTALL_DEST}/config/mainnet/        )
-CopyNotPresent    (${INSTALL_SOURCE}/per-chain/optimism    "trueBlocks.toml"          ${INSTALL_DEST}/config/optimism/       )
-CopyNotPresent    (${INSTALL_SOURCE}/per-chain/polygon     "trueBlocks.toml"          ${INSTALL_DEST}/config/polygon/        )
-CopyNotPresent    (${INSTALL_SOURCE}/per-chain/rinkeby     "trueBlocks.toml"          ${INSTALL_DEST}/config/rinkeby/        )
-CopyNotPresent    (${INSTALL_SOURCE}/per-chain/ropsten     "trueBlocks.toml"          ${INSTALL_DEST}/config/ropsten/        )
-
 # CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/gnosis    "specials.csv"             ${INSTALL_DEST}/config/gnosis/         )
 CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/mainnet     "specials.csv"             ${INSTALL_DEST}/config/mainnet/        )
 
