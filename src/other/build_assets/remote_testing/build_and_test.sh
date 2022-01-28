@@ -35,8 +35,7 @@ then
         exit 1
     fi
 
-    # chifra serve -p ":$SRV_PORT" >/dev/null 2>&1 &
-    chifra serve -p ":$SRV_PORT" &
+    chifra serve -p ":$SRV_PORT" 2>/dev/null &
 
     echo "Waiting for chifra server -p :$SRV_PORT to start..."
     sleep 15

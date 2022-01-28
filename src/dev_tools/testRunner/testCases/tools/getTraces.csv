@@ -66,7 +66,7 @@ on      ,both ,fast  ,traces ,tools/getTraces ,by_filter8          ,y    ,fmt = 
 on      ,both ,fast  ,traces ,tools/getTraces ,by_filter10         ,y    ,fmt = json & filter = 4370000!4370002!!!!1
 on      ,both ,fast  ,traces ,tools/getTraces ,by_filter11         ,y    ,fmt = json & filter = 4370000!4370002!!!1!2
 on      ,both ,fast  ,traces ,tools/getTraces ,not_articulated     ,y    ,transactions = 0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33 & fmt = json
-on      ,both ,fast  ,traces ,tools/getTraces ,articulated         ,y    ,transactions = 0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33 & fmt = json & articulate
+local   ,both ,fast  ,traces ,tools/getTraces ,articulated         ,y    ,transactions = 0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33 & fmt = json & articulate
 
 local   ,both ,slow  ,traces ,tools/getTraces ,articulate_2        ,n    ,transactions = 3648669.24 & articulate & verbose & fmt = csv & no_header
 local   ,both ,fast  ,traces ,tools/getTraces ,multi_articulate    ,y    ,transactions = 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f & articulate & fmt = json
