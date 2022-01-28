@@ -35,16 +35,17 @@ then
         exit 1
     fi
 
-    chifra serve -p ":$SRV_PORT"> /dev/null 2>&1 &
+    # chifra serve -p ":$SRV_PORT" >/dev/null 2>&1 &
+    chifra serve -p ":$SRV_PORT" &
 
-    echo "Waiting for chifra to start up..."
+    echo "Waiting for chifra server -p :$SRV_PORT to start..."
     sleep 15
 
-    echo "Checking if chifra is running..."
+    echo "Checking if chifra serve is running..."
     pgrep chifra
     if [ $? -gt 0 ]
     then
-        echo "Error: Chifra is not running"
+        echo "Error: Waited 15 seconds, chifra serve is not running"
         exit 2
     fi
 
