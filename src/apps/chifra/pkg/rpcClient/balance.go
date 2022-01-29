@@ -5,10 +5,7 @@
 package rpcClient
 
 import (
-	"context"
 	"math/big"
-
-	"github.com/ethereum/go-ethereum/ethclient"
 )
 
 // ethFromWei converts wei to ether.
@@ -22,22 +19,22 @@ func ethFromWei(in big.Int) float64 {
 	return f
 }
 
-// TODO: this should be generalized to the client itself instead of hidden in balanceClient
-// balanceClient caches the client so we can call it many times without re-dialing it every time
-var balanceClient ethclient.Client
-var clientLoaded = false
+// // TODO: this should be generalized to the client itself instead of hidden in balanceClient
+// // balanceClient caches the client so we can call it many times without re-dialing it every time
+// var balanceClient ethclient.Client
+// var clientLoaded = false
 
-// GetBalanceInEth returns the balance of the given address at the given block
-// TODO: blockNum is ignored
-// TODO: what to do if we're running against a non-archive node?
-func GetBalanceInEth(provider, address string, blockNum uint64) float64 {
-	if !clientLoaded {
-		balanceClient = GetClient(provider)
-		clientLoaded = true
-	}
-	val, _ := balanceClient.BalanceAt(context.Background(), HexToAddress(address), nil)
-	if val == nil {
-		return 0.0
-	}
-	return ethFromWei(*val)
-}
+// // // GetBalanceInEth returns the balance of the given address at the given block
+// // // TODO: blockNum is ignored
+// // // TODO: what to do if we're running against a non-archive node?
+// // func GetBalanceInEth(provider, address string, blockNum uint64) float64 {
+// // 	if !clientLoaded {
+// // 		balanceClient = GetClient(provider)
+// // 		clientLoaded = true
+// // 	}
+// // 	val, _ := balanceClient.BalanceAt(context.Background(), HexToAddress(address), nil)
+// // 	if val == nil {
+// // 		return 0.0
+// // 	}
+// // 	return ethFromWei(*val)
+// // }

@@ -55,8 +55,9 @@ func DecodeHex(hex string) []byte {
 }
 
 func GetBlockTimestamp(provider string, bn uint64) uint64 {
-	client := GetClient(provider)
-	block, err := client.BlockByNumber(context.Background(), big.NewInt(int64(bn)))
+	ethClient := GetClient(provider)
+	defer ethClient.Close()
+	block, err := ethClient.BlockByNumber(context.Background(), big.NewInt(int64(bn)))
 	if err != nil {
 		return 0
 	}
