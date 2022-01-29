@@ -39,8 +39,8 @@ type MetaValue struct {
 
 func GetMetaData(chain string, testmode bool) *MetaData {
 	provider := config.GetRpcProvider(chain)
-	ethClient := GetClient(provider)
-	defer ethClient.Close()
+	// ethClient := GetClient(provider)
+	// defer ethClient.Close()
 
 	if testmode {
 		return &MetaData{
@@ -50,16 +50,16 @@ func GetMetaData(chain string, testmode bool) *MetaData {
 			Finalized: 0xdeadbeef,
 			Latest:    0xdeadbeef,
 			Chain:     chain,
-			ChainId:   ChainID(&ethClient),
-			NetworkId: NetworkID(&ethClient),
+			ChainId:   ChainID(provider),
+			NetworkId: NetworkID(provider),
 		}
 	}
 
 	var meta MetaData
 	meta.Chain = chain
-	meta.ChainId = ChainID(&ethClient)
-	meta.NetworkId = NetworkID(&ethClient)
-	meta.Latest = BlockNumber(&ethClient)
+	meta.ChainId = ChainID(provider)
+	meta.NetworkId = NetworkID(provider)
+	meta.Latest = BlockNumber(provider)
 
 	valueChan := make(chan MetaValue)
 
