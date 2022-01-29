@@ -32,6 +32,8 @@ bool visitBlock(CBlock& block, void* data) {
 
 //----------------------------------------------------------------
 int main(int argc, const char* argv[]) {
+    loadEnvironmentPaths();
+
     etherlib_init(quickQuitHandler);
 
     uint32_t counter = 0;

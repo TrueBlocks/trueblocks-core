@@ -52,6 +52,8 @@ class CCounter {
 
 //-------------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
+    loadEnvironmentPaths();
+
     etherlib_init(quickQuitHandler);
 
     cout << "blockNum" << sep << "date" << sep << "nEmpty" << sep << "nFull" << sep << "pctFull" << sep << "nTrans"
