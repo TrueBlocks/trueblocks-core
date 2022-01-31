@@ -34,7 +34,7 @@ func (opts *GlobalOptions) PassItOn(path string, flags string) error {
 	// fmt.Fprintf(os.Stderr, "Calling: %s %s\n", path, options)
 	cmd := exec.Command(config.GetPathToCommands(path), options)
 	cmd.Env = append(os.Environ(), "FROM_CHIFRA=true")
-	if !opts.TestMode && opts.LogLevel > 3 {
+	if !opts.TestMode && opts.LogLevel > 8 {
 		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "g-CONFIG_PATH: ", configPath, colors.Off)
 		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "g-CHAIN_CONFIG_PATH: ", chainConfigPath, colors.Off)
 		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "g-CACHE_PATH:  ", cachePath, colors.Off)

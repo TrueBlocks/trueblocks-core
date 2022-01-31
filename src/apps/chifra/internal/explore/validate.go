@@ -154,6 +154,7 @@ func (u *ExploreUrl) getUrl(opts *ExploreOptions) string {
 		return "https://etherscan.io/enslookup-search?search=" + u.term
 	}
 
+	// TODO: BOGUS - per chain data
 	url := "https://etherscan.io/"
 	query := ""
 	switch u.termType {

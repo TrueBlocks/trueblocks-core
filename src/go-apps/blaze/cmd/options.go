@@ -63,6 +63,7 @@ var Options OptionsType
 func init() {
 	cobra.OnInitialize(initConfig)
 
+	// TODO: BOGUS - use the environment variables instead of duplicate same function with command line params
 	blazeCmd.PersistentFlags().StringVarP(&Options.rpcProvider, "rpcProvider", "r", "http://localhost:8545", "URL to the node's RPC")
 	blazeCmd.PersistentFlags().StringVarP(&Options.indexPath, "indexPath", "c", "", "The location of TrueBlocks' appearance cache (default \"$CONFIG/unchained\")")
 	blazeCmd.PersistentFlags().IntVarP(&Options.startBlock, "startBlock", "s", 0, "First block to visit (required)")

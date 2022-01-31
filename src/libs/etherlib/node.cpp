@@ -1081,7 +1081,7 @@ string_q exportPostamble(const CStringArray& errorsIn, const string_q& extra) {
     os << "\"staging\": " << dispNumOrHex(meta.staging) << ",";
     os << "\"finalized\": " << dispNumOrHex(meta.finalized);
     os << ",\"client\": " << dispNumOrHex(meta.client);
-    if (meta.chain != getDefaultChain()) {
+    if ((isApiMode() && !isTestMode()) || meta.chain != getDefaultChain()) {
         os << ",\"chain\": "
            << "\"" << meta.chain << "\"";
         os << ",\"clientId\": " << dispNumOrHex(meta.chainId);
