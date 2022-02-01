@@ -35,6 +35,7 @@ blknum_t firstTransactionBlock(void) {
 }
 
 blknum_t hardForkBlock(const string_q& hf) {
+    // This data was taken from Geth ./params/config.go
     if (hf == "byzantium") {
         map<string_q, blknum_t> theMap = {
             make_pair("kovan", 5067000),
@@ -53,8 +54,11 @@ blknum_t hardForkBlock(const string_q& hf) {
         return theMap[getChain()];
     } else if (hf == "london") {
         map<string_q, blknum_t> theMap = {
-            make_pair("goerli", 5062605),  make_pair("kovan", 26741100),   make_pair("mainnet", 12965000),
-            make_pair("rinkeby", 8897988), make_pair("ropsten", 10499401),
+            make_pair("goerli", 5062605),
+            make_pair("kovan", 26741100),
+            make_pair("mainnet", 12965000),
+            make_pair("rinkeby", 8897988),
+            make_pair("ropsten", 10499401),
         };
         return theMap[getChain()];
     }
@@ -64,6 +68,7 @@ blknum_t hardForkBlock(const string_q& hf) {
 }  // namespace qblocks
 
 #if 0
+// This data was taken from Geth ./params/config.go
 ArrowGlacierBlock
 	make_pair("mainnet", 13773000),
 
