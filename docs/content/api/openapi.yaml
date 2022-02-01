@@ -7,7 +7,7 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 0.18.0-alpha
+  version: 0.23.7-alpha
   description: >
 
     A REST layer over the TrueBlocks application. With `chifra serve`, you can
@@ -126,8 +126,8 @@ paths:
                     type: array
                     items:
                       oneOf:
-                      - $ref: "#/components/schemas/appearance"
-                      - $ref: "#/components/schemas/listStats"
+                        - $ref: "#/components/schemas/appearance"
+                        - $ref: "#/components/schemas/listStats"
                 example:
                   {
                     "data": [
@@ -181,8 +181,7 @@ paths:
               type: string
               format: topic
         - name: fourbytes
-          description: >
-             filter by one or more fourbytes (only for transactions and trace options)
+          description: filter by one or more fourbytes (only for transactions and trace options)
           required: false
           style: form
           in: query
@@ -331,6 +330,17 @@ paths:
             items:
               type: string
               format: topic
+        - name: asset
+          description: for the statements option only, export only reconciliations for this asset
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: address
         - name: clean
           description: clean (i.e. remove duplicate appearances) from all existing monitors
           required: false
@@ -339,7 +349,17 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: ether
+        - name: staging
+          description: >
+            export transactions labeled staging (i.e. older than 28 blocks but not yet consolidated)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: unripe
+          description: export transactions labeled upripe (i.e. less than 28 blocks old)
           required: false
           style: form
           in: query
@@ -455,8 +475,6 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/monitor"
-                  name:
-                    type: string
         "400":
           description: bad input parameter
   /names:
@@ -631,13 +649,6 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: logLevel
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: number
       responses:
         "200":
           description: returns the requested data
@@ -1357,9 +1368,7 @@ paths:
                     description: This data model carries information about the TrueBlocks system including both the API server and the local binary caches
                     type: array
                     items:
-                      oneOf:
-                        - $ref: "#/components/schemas/status"
-                        - $ref: "#/components/schemas/cache"
+                      $ref: "#/components/schemas/status"
                 example:
                   {
                     "data": [
@@ -1451,6 +1460,80 @@ paths:
           explode: true
           schema:
             type: number
+      responses:
+        "200":
+          description: returns the requested data
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    description: the IPFS hashes of the index chunk and its associated Bloom filter for the given block range
+                    type: array
+                    items:
+                      oneOf:
+                        - $ref: "#/components/schemas/pinnedChunk"
+                        - $ref: "#/components/schemas/manifest"
+        "400":
+          description: bad input parameter
+  /chunks:
+    get:
+      tags:
+        - Admin
+      summary: Manage chunks
+      description: Manage and investigate chunks and bloom filters.
+      operationId: admin-chunks
+      parameters:
+        - name: blocks
+          description: an optional list of blocks to process
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: blknum
+        - name: check
+          description: check the validity of the chunk or bloom
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: extract
+          description: show some or all of the contents of the chunk or bloom filters
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+            enum:
+              - header
+              - addr_table
+              - app_table
+              - chunks
+              - blooms
+        - name: stats
+          description: for the --list option only, display statistics about each chunk or bloom
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: save
+          description: >
+            for the --extract option only, save the entire chunk to a similarly named file as well as display
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
           description: returns the requested data
@@ -1582,86 +1665,12 @@ paths:
                   }
         "400":
           description: bad input parameter
-  /chunks:
-    get:
-      tags:
-        - Admin
-      summary: Manage chunks
-      description: Manage and investigate chunks and bloom filters.
-      operationId: admin-chunks
-      parameters:
-        - name: blocks
-          description: an optional list of blocks to process
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-              format: blknum
-        - name: check
-          description: check the validity of the chunk or bloom
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: extract
-          description: show some or all of the contents of the chunk or bloom filters
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: string
-            enum:
-              - header
-              - addr_table
-              - app_table
-              - chunks
-              - blooms
-        - name: stats
-          description: for the --list option only, display statistics about each chunk or bloom
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: save
-          description: >
-            for the --extract option only, save the entire chunk to a similarly named file as well as display
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-      responses:
-        "200":
-          description: returns the requested data
-          content:
-            application/json:
-              schema:
-                properties:
-                  data:
-                    description: the IPFS hashes of the index chunk and its associated Bloom filter for the given block range
-                    type: array
-                    items:
-                      oneOf:
-                        - $ref: "#/components/schemas/pinnedChunk"
-                        - $ref: "#/components/schemas/manifest"
-        "400":
-          description: bad input parameter
   /quotes:
     get:
       tags:
         - Other
       summary: Price quotes
-      description: Update or display Ethereum price data. This tool has been deprecated.
+      description: Update or display Ethereum price data, this tool has been deprecated.
       operationId: other-quotes
       parameters:
         - name: period
@@ -2475,11 +2484,6 @@ components:
           type: string
           example: "one of 'EOA' or 'Contract'"
           description: "the type of the address at the given block"
-        ether:
-          type: number
-          format: double
-          example: 0.25884369
-          description: "the balance of the address in ethers"
     result:
       description: "the result of a call to a smart contract"
       type: object
