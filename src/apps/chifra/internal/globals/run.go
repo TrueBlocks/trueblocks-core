@@ -11,34 +11,11 @@ import (
 	"io"
 	"os"
 	"os/exec"
-	"strings"
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
-
-type ConfigEnv struct {
-	Chain           string `json:"chain"`
-	ConfigPath      string `json:"configPath"`
-	ChainConfigPath string `json:"chainConfigPath"`
-	CachePath       string `json:"cachePath"`
-	IndexPath       string `json:"indexPath"`
-	DefaultChain    string `json:"defChain"`
-	RpcProvider     string `json:"rpcProvider"`
-}
-
-func (c *ConfigEnv) toCSV() string {
-	var ret []string
-	ret = append(ret, c.Chain)
-	ret = append(ret, c.ConfigPath)
-	ret = append(ret, c.ChainConfigPath)
-	ret = append(ret, c.CachePath)
-	ret = append(ret, c.IndexPath)
-	ret = append(ret, c.DefaultChain)
-	ret = append(ret, c.RpcProvider)
-	return strings.Join(ret, ",")
-}
 
 func (opts *GlobalOptions) PassItOn(path string, flags string) error {
 	options := flags
@@ -47,7 +24,7 @@ func (opts *GlobalOptions) PassItOn(path string, flags string) error {
 	var wg sync.WaitGroup
 	wg.Add(2)
 
-	var env ConfigEnv
+	var env config.ConfigEnv
 	env.Chain = opts.Chain
 	env.ConfigPath = config.GetPathToRootConfig()
 	env.ChainConfigPath = config.GetPathToChainConfig(env.Chain)
@@ -55,7 +32,7 @@ func (opts *GlobalOptions) PassItOn(path string, flags string) error {
 	env.IndexPath = config.GetPathToIndex(env.Chain)
 	env.DefaultChain = config.GetDefaultChain()
 	env.RpcProvider = config.GetRpcProvider(env.Chain)
-	envStr := env.toCSV()
+	envStr := env.ToCSV()
 
 	// fmt.Fprintf(os.Stderr, "Calling: %s %s\n", path, options)
 	cmd := exec.Command(config.GetPathToCommands(path), options)

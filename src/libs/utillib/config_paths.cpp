@@ -96,8 +96,8 @@ string_q getDefaultChain(void) {
 static string_q g_Chain;
 string_q getChain(void) {
     // TODO: BOGUS
-    string_q configEnv = getEnvStr("TB_CONFIG_ENV");
-    LOG_INFO(bGreen, configEnv, cOff);
+    // string_q configEnv = getEnvStr("TB_CONFIG_ENV");
+    // LOG_INFO(bGreen, configEnv, cOff);
     // CConfigEnv env;
     // CStringArray fields = {
     //     "chain", "configPath", "chainConfigPath", "cachePath", "indexPath", "defChain", "rpcProvider",

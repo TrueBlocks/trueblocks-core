@@ -93,40 +93,38 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 		}()
 	}
 
-	configPath := config.GetPathToRootConfig()
-	chainConfigPath := config.GetPathToChainConfig(chain)
-	cachePath := config.GetPathToCache(chain)
-	indexPath := config.GetPathToIndex(chain)
-	defChain := config.GetDefaultChain()
-	rpcProvider := config.GetRpcProvider(chain)
+	var env config.ConfigEnv
+	env.Chain = chain
+	env.ConfigPath = config.GetPathToRootConfig()
+	env.ChainConfigPath = config.GetPathToChainConfig(env.Chain)
+	env.CachePath = config.GetPathToCache(env.Chain)
+	env.IndexPath = config.GetPathToIndex(env.Chain)
+	env.DefaultChain = config.GetDefaultChain()
+	env.RpcProvider = config.GetRpcProvider(env.Chain)
+	envStr := env.ToCSV()
 
-	// In regular operation, we set an environment variable API_MODE=true. When
-	// testing (the test harness sends a special header) we also set the
-	// TEST_MODE=true environment variable and any other vars for this
-	// particular test
 	if utils.IsTestModeServer(r) {
+		// In regular operation, we set an environment variable API_MODE=true. When
+		// testing (the test harness sends a special header) we also set the
+		// TEST_MODE=true environment variable and any other vars for this
+		// particular test
 		cmd.Env = append(append(os.Environ(), "TEST_MODE=true"), "API_MODE=true")
 		vars := strings.Split(r.Header.Get("X-TestRunner-Env"), "|")
 		cmd.Env = append(cmd.Env, vars...)
 	} else {
 		if GetOptions().Globals.LogLevel > 8 {
-			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "s-CONFIG_PATH: ", configPath, colors.Off)
-			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "s-CHAIN_CONFIG_PATH: ", chainConfigPath, colors.Off)
-			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "s-CACHE_PATH:  ", cachePath, colors.Off)
-			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "s-INDEX_PATH:  ", indexPath, colors.Off)
-			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "g-DEFAULT_CHAIN: ", defChain, colors.Off)
-			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "g-RPC_PROVIDER: ", rpcProvider, colors.Off)
-			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "g-CHAIN: ", chain, colors.Off)
+			fmt.Fprintf(os.Stderr, "%s%s%s%s\n", colors.Blue, colors.Bright, envStr, colors.Off)
 		}
 		cmd.Env = append(os.Environ(), "API_MODE=true")
 	}
-	cmd.Env = append(cmd.Env, "TB_CONFIG_PATH="+configPath)
-	cmd.Env = append(cmd.Env, "TB_CHAIN_CONFIG_PATH="+chainConfigPath)
-	cmd.Env = append(cmd.Env, "TB_CACHE_PATH="+cachePath)
-	cmd.Env = append(cmd.Env, "TB_INDEX_PATH="+indexPath)
-	cmd.Env = append(cmd.Env, "TB_DEFAULT_CHAIN="+defChain)
-	cmd.Env = append(cmd.Env, "TB_RPC_PROVIDER="+rpcProvider)
-	cmd.Env = append(cmd.Env, "TB_CHAIN="+chain)
+	cmd.Env = append(cmd.Env, "TB_CONFIG_PATH="+env.ConfigPath)
+	cmd.Env = append(cmd.Env, "TB_CHAIN_CONFIG_PATH="+env.ChainConfigPath)
+	cmd.Env = append(cmd.Env, "TB_CACHE_PATH="+env.CachePath)
+	cmd.Env = append(cmd.Env, "TB_INDEX_PATH="+env.IndexPath)
+	cmd.Env = append(cmd.Env, "TB_DEFAULT_CHAIN="+env.DefaultChain)
+	cmd.Env = append(cmd.Env, "TB_RPC_PROVIDER="+env.RpcProvider)
+	cmd.Env = append(cmd.Env, "TB_CHAIN="+env.Chain)
+	cmd.Env = append(cmd.Env, "TB_CONFIG_ENV="+envStr)
 	cmd.Env = append(cmd.Env, "PROG_NAME=chifra "+apiCmd)
 
 	// We need to pass the stderr through to the command line and also pick
