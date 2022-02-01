@@ -363,14 +363,14 @@ string_q nextReceiptChunk_custom(const string_q& fieldIn, const void* dataPtr) {
                 if (fieldIn % "effectiveGasPrice") {
                     if (!rec->pTransaction || !rec->pTransaction->pBlock)
                         return "";
-                    bool preLondon = rec->pTransaction->pBlock->blockNumber < londonBlock;
+                    bool preLondon = rec->pTransaction->pBlock->blockNumber < londonBlock();
                     return preLondon ? gas_2_Str(rec->pTransaction->gasPrice) : "";
                 }
                 break;
             case 's':
                 if (fieldIn % "status") {
                     bool preByzantium = rec->pTransaction && rec->pTransaction->pBlock &&
-                                        rec->pTransaction->pBlock->blockNumber < byzantiumBlock;
+                                        rec->pTransaction->pBlock->blockNumber < byzantiumBlock();
                     if (rec->status == NO_STATUS) {
                         return "null";
                     } else if (preByzantium) {

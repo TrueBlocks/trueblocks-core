@@ -122,9 +122,9 @@ wei_t getBlockReward2(blknum_t bn) {
         return 0;
 
     wei_t reward = 0;
-    if (bn < byzantiumBlock) {
+    if (bn < byzantiumBlock()) {
         reward = str_2_Wei("5000000000000000000");
-    } else if (bn < constantinopleBlock) {
+    } else if (bn < constantinopleBlock()) {
         reward = str_2_Wei("3000000000000000000");
     } else {
         reward = str_2_Wei("2000000000000000000");

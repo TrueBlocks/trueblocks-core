@@ -968,7 +968,7 @@ bool CTransaction::readBackLevel(CArchive& archive) {
         archive >> receipt;
         archive >> traces;
         archive >> articulatedTx;
-        if (blockNumber < londonBlock) {
+        if (blockNumber < londonBlock()) {
             maxFeePerGas = 0;
             maxPriorityFeePerGas = 0;
         } else {

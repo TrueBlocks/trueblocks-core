@@ -68,7 +68,7 @@ int main(int argc, const char* argv[]) {
             fake_block = bn - 9000000;
         else if (bn > constantinople Block)
             fake_block = bn - 5000000;
-        else if (bn > byzantiumBlock)
+        else if (bn > byzantiumBlock())
             fake_block = bn - 3000000;
         uint64_t period = (uint64_t)floor(fake_block / 100000);
         if ((bn > instanbul Block - 200000) && !(bn % 2000))

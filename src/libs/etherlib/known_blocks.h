@@ -17,16 +17,13 @@ namespace qblocks {
 
 // TODO: BOGUS - MAINNET SPECIFIC
 
-// known timestamps
-timestamp_t blockZeroTs();
+extern timestamp_t blockZeroTs(void);
+extern blknum_t firstTransactionBlock(void);
+extern blknum_t hardForkBlock(const string_q& block);
 
-// known blocks
-#define firstTransactionBlock 46147
-#define firstTraceBlock 50871
-#define byzantiumBlock 4370000
-#define constantinopleBlock 7280000
-// #define instanbulBlock 9069000
-#define londonBlock 12965000
+#define byzantiumBlock() hardForkBlock("byzantium")
+#define constantinopleBlock() hardForkBlock("constantinople")
+#define londonBlock() hardForkBlock("london")
 
 //-----------------------------------------------------------------------
 inline bool ddosRange(blknum_t bn) {

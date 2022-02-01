@@ -133,7 +133,7 @@ bool visitTransaction(CTransaction& trans, void* data) {
             trans.timestamp = block.timestamp;
             trans.receipt.status = NO_STATUS;
             trans.pBlock = &block;
-            if (trans.blockNumber >= byzantiumBlock)
+            if (trans.blockNumber >= byzantiumBlock())
                 getReceipt(trans.receipt, trans.hash);
             writeTransToBinary(trans, txFilename);
         }

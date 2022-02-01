@@ -298,7 +298,7 @@ void CBlock::finishParse() {
         CTransaction* trans = &transactions.at(i);  // taking a non-const reference
         trans->pBlock = this;
         if (!light) {
-            if (blockNumber >= byzantiumBlock && trans->receipt.status == NO_STATUS) {
+            if (blockNumber >= byzantiumBlock() && trans->receipt.status == NO_STATUS) {
                 // If we have NO_STATUS in a receipt after the byzantium block, we have to pick it up.
                 CReceipt rec;
                 getReceipt(rec, trans->hash);
@@ -564,7 +564,7 @@ bool CBlock::readBackLevel(CArchive& archive) {
         archive >> transactions;
         if (m_schema == getVersionNum(0, 10, 3))
             archive >> baseFeePerGas;  // we need to read it, but we reset it anyway
-        if (blockNumber < londonBlock) {
+        if (blockNumber < londonBlock()) {
             baseFeePerGas = 0;
         } else {
             CBlock upgrade;

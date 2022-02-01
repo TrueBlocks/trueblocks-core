@@ -1,7 +1,5 @@
 They still have to hard code the RPC endpoint
 
-
-
 MAKE A NOTE IN THE DOCS OF WHERE THINGS FALL SHORT - Uniswap, no index other than a,b,c chains
 MAKE A NOTE IN DOCS ABOUT WHAT IS AND WHAT IS NOT INDEXED BY US
 
@@ -24,17 +22,11 @@ MAKE A NOTE IN DOCS ABOUT WHAT IS AND WHAT IS NOT INDEXED BY US
   - [ ] ./docs/content/chifra/configs.md needs work
   - [ ] Must document running against private networks and how one must configure the scraper for smaller chunks
 
-- [ ] Chain specific data: 
-  - [ ] prefunds, timestamps, prices, manifest, explorer urls, explorer apis, specials
-
-- [ ] Chain specific data with overlay
-  - [ ] names
-
-- [ ] Not chain specific data
-  - [ ] abis
-
 - [ ] Chifra Export
   - [ ] Uniswap pricing of reconciliations obviously doesn't work on non-main net.
+
+- [ ] What we need in the manifest
+  - [ ] timestamps in the smart contract
 
 - [x] Closed Issues
   - [x] `chifra init --chain unknown_chain` should fail gracefully

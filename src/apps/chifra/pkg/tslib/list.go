@@ -24,6 +24,11 @@ type NamedBlock struct {
 // GetSpecials returns a chain-specific list of special block names and numbers
 func GetSpecials(chain string) ([]NamedBlock, error) {
 	specialsPath := config.GetPathToChainConfig(chain) + "specials.csv"
+	_, err := os.Stat(specialsPath)
+	if err != nil {
+		return nil, errors.New("Special blocks file (" + specialsPath + ") not found.")
+	}
+
 	file, err := os.Open(specialsPath)
 	if err != nil {
 		return nil, err

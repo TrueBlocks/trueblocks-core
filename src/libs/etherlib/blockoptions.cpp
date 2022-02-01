@@ -118,8 +118,8 @@ bool wrangleTxId(string_q& argOut, string_q& errorMsg) {
 bool getDirectionalTxId(blknum_t bn, txnum_t txid, const string_q& dir, string_q& argOut, string_q& errorMsg) {
     blknum_t lastBlock = getBlockProgress(BP_CLIENT).client;
 
-    if (bn < firstTransactionBlock) {
-        argOut = uint_2_Str(firstTransactionBlock) + ".0";
+    if (bn < firstTransactionBlock()) {
+        argOut = uint_2_Str(firstTransactionBlock()) + ".0";
         return true;
     }
 
@@ -128,7 +128,7 @@ bool getDirectionalTxId(blknum_t bn, txnum_t txid, const string_q& dir, string_q
 
     argOut = "";
     txnum_t nextid = txid + 1;
-    while (argOut.empty() && bn >= firstTransactionBlock && bn <= lastBlock) {
+    while (argOut.empty() && bn >= firstTransactionBlock() && bn <= lastBlock) {
         if (dir == "next") {
             if (nextid < block.transactions.size()) {
                 argOut = uint_2_Str(block.blockNumber) + "." + uint_2_Str(nextid);

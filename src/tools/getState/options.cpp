@@ -101,7 +101,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     if (blocks.empty())
-        blocks.numList.push_back(isTestMode() ? byzantiumBlock : newestBlock);  // use 'latest'
+        blocks.numList.push_back(isTestMode() ? byzantiumBlock() : newestBlock);  // use 'latest'
 
     if (!call.empty())
         return handle_call();
