@@ -126,8 +126,8 @@ paths:
                     type: array
                     items:
                       oneOf:
-                      - $ref: "#/components/schemas/appearance"
-                      - $ref: "#/components/schemas/listStats"
+                        - $ref: "#/components/schemas/appearance"
+                        - $ref: "#/components/schemas/listStats"
                 example:
                   {
                     "data": [
@@ -182,7 +182,7 @@ paths:
               format: topic
         - name: fourbytes
           description: >
-             filter by one or more fourbytes (only for transactions and trace options)
+            filter by one or more fourbytes (only for transactions and trace options)
           required: false
           style: form
           in: query
@@ -333,6 +333,22 @@ paths:
               format: topic
         - name: clean
           description: clean (i.e. remove duplicate appearances) from all existing monitors
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: staging
+          description: export transactions labeled staging (i.e. older than 28 blocks but not yet consolidated)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: unripe
+          description: export transactions labeled upripe (i.e. less than 28 blocks old)
           required: false
           style: form
           in: query
@@ -829,7 +845,7 @@ paths:
                     "blockNumber": 3141592,
                     "hash": "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53",
                     "...": "...",
-                    "transactions": []
+                    "transactions": [],
                   }
         "400":
           description: bad input parameter
@@ -1357,9 +1373,7 @@ paths:
                     description: This data model carries information about the TrueBlocks system including both the API server and the local binary caches
                     type: array
                     items:
-                      oneOf:
-                        - $ref: "#/components/schemas/status"
-                        - $ref: "#/components/schemas/cache"
+                      $ref: "#/components/schemas/status"
                 example:
                   {
                     "data": [
@@ -1822,8 +1836,8 @@ paths:
                       "hasToken": "0",
                       "gasUsed": "21000",
                       "date": "2015-08-07 03:50:51 UTC",
-                      "ether": "0.000000000000000000"
-                    }
+                      "ether": "0.000000000000000000",
+                    },
                   ]
         "400":
           description: bad input parameter
