@@ -118,7 +118,7 @@ void COptions::applyFilter() {
                     request.second += " (est)";
 
                 } else {
-                    block.timestamp = blockZeroTs;
+                    block.timestamp = blockZeroTs();
                 }
             }
             block.name = request.second;

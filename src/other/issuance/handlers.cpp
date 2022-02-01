@@ -71,7 +71,7 @@ CStringArray header;
 //    if (rec.blockNum == 0)
 //        return true;
 //    // END LAST TIME: 459690
-//    if (rec.blockNum < 1145042) //(firstTransactionBlock - 10))
+//    if (rec.blockNum < 1145042) //(first TransactionBlock - 10))
 //        return true;
 //
 //    CTransaction trans;

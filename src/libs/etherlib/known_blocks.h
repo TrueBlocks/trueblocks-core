@@ -15,15 +15,17 @@
 
 namespace qblocks {
 
+// TODO: BOGUS - MAINNET SPECIFIC
+
 // known timestamps
-#define blockZeroTs ((timestamp_t)1438269960)
+timestamp_t blockZeroTs();
 
 // known blocks
 #define firstTransactionBlock 46147
 #define firstTraceBlock 50871
 #define byzantiumBlock 4370000
 #define constantinopleBlock 7280000
-#define instanbulBlock 9069000
+// #define instanbulBlock 9069000
 #define londonBlock 12965000
 
 //-----------------------------------------------------------------------

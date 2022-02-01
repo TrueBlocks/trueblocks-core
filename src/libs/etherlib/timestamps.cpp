@@ -111,9 +111,9 @@ bool freshenTimestamps(blknum_t minBlock) {
     }
 
     if (nRecords == 0) {
-        file << (uint32_t)0 << (uint32_t)blockZeroTs;
+        file << (uint32_t)0 << (uint32_t)blockZeroTs();
         file.flush();
-        LOG_INFO(padNum9(0), "\t", blockZeroTs, "\t", ts_2_Date(blockZeroTs).Format(FMT_EXPORT), "          \r");
+        LOG_INFO(padNum9(0), "\t", blockZeroTs(), "\t", ts_2_Date(blockZeroTs()).Format(FMT_EXPORT), "          \r");
         nRecords++;
     }
 
@@ -121,7 +121,7 @@ bool freshenTimestamps(blknum_t minBlock) {
     for (blknum_t bn = nRecords; bn <= minBlock && !shouldQuit(); bn++) {
         block = CBlock();  // reset
         getBlock_header(block, bn);
-        if (block.timestamp < blockZeroTs) {
+        if (block.timestamp < blockZeroTs()) {
             LOG_ERR("Bad data when requesting block '", bn, "'. ", block.Format("[{BLOCKNUMBER}].[{TIMESTAMP}]"),
                     " Cannot continue.");
             file.Release();
