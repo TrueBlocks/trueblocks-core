@@ -40,5 +40,6 @@
 #include "apikey.h"
 #include "markdown.h"
 #include "commandoption.h"
+#include "configenv.h"
 
 using namespace qblocks;  // NOLINT
