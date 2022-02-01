@@ -43,8 +43,8 @@ static const COption params[] = {
     COption("asset", "", "list<addr>", OPT_FLAG, "for the statements option only, export only reconciliations for this asset"),  // NOLINT
     COption("clean", "", "", OPT_SWITCH, "clean (i.e. remove duplicate appearances) from all existing monitors"),
     COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
-    COption("staging", "s", "", OPT_HIDDEN | OPT_SWITCH, "enable search of staging (not yet finalized) folder"),
-    COption("unripe", "u", "", OPT_HIDDEN | OPT_SWITCH, "enable search of unripe (neither staged nor finalized) folder (assumes --staging)"),  // NOLINT
+    COption("staging", "s", "", OPT_SWITCH, "export transactions labeled staging (i.e. older than 28 blocks but not yet consolidated)"),  // NOLINT
+    COption("unripe", "u", "", OPT_SWITCH, "export transactions labeled upripe (i.e. less than 28 blocks old)"),
     COption("load", "", "<string>", OPT_HIDDEN | OPT_FLAG, "a comma separated list of dynamic traversers to load"),
     COption("reversed", "", "", OPT_HIDDEN | OPT_SWITCH, "produce results in reverse chronological order"),
     COption("by_date", "b", "", OPT_HIDDEN | OPT_SWITCH, "produce results sorted by date (report by address otherwise)"),  // NOLINT

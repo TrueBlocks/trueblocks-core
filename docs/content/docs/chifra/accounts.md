@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2021-12-26T22:16:25
+date: 2022-02-01T16:45:47
 lastmod:
   - :git
   - lastmod
@@ -89,6 +89,8 @@ Flags:
       --topic strings       for log export only, export only logs with this topic(s)
       --asset strings       for the statements option only, export only reconciliations for this asset
       --clean               clean (i.e. remove duplicate appearances) from all existing monitors
+  -s, --staging             export transactions labeled staging (i.e. older than 28 blocks but not yet consolidated)
+  -u, --unripe              export transactions labeled upripe (i.e. less than 28 blocks old)
   -x, --fmt string          export format, one of [none|json*|txt|csv|api]
   -v, --verbose             enable verbose (increase detail with --log_level)
   -h, --help                display this help screen

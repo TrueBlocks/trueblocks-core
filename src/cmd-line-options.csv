@@ -2,7 +2,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 
 10200,apps,Accounts,export,acctExport,addrs,,,true,false,true,true,local,positional,list<addr>,one or more addresses (0x...) to export
 10205,apps,Accounts,export,acctExport,topics,,,false,false,true,true,local,positional,list<topic>,filter by one or more log topics (only for --logs option)
-10207,apps,Accounts,export,acctExport,fourbytes,,,false,false,true,true,header,positional,list<fourbyte>,|filter by one or more fourbytes (only for transactions and trace options)
+10207,apps,Accounts,export,acctExport,fourbytes,,,false,false,true,true,header,positional,list<fourbyte>,filter by one or more fourbytes (only for transactions and trace options)
 10210,apps,Accounts,export,acctExport,appearances,p,,false,false,true,true,header,switch,<boolean>,export a list of appearances
 10220,apps,Accounts,export,acctExport,receipts,r,,false,false,true,true,header,switch,<boolean>,export receipts instead of transactional data
 10230,apps,Accounts,export,acctExport,logs,l,,false,false,true,true,header,switch,<boolean>,export logs instead of transactional data
@@ -23,8 +23,8 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10346,apps,Accounts,export,acctExport,asset,,,false,false,true,true,local,flag,list<addr>,for the statements option only&#44; export only reconciliations for this asset
 10085,apps,Accounts,export,acctExport,clean,,,false,false,true,true,header,switch,<boolean>,clean (i.e. remove duplicate appearances) from all existing monitors
 10380,apps,Accounts,export,acctExport,freshen,f,,false,false,false,false,local,switch,<boolean>,freshen but do not print the exported data
-10060,apps,Accounts,export,acctExport,staging,s,,false,false,false,false,header,switch,<boolean>,enable search of staging (not yet finalized) folder
-10080,apps,Accounts,export,acctExport,unripe,u,,false,false,false,false,header,switch,<boolean>,enable search of unripe (neither staged nor finalized) folder (assumes --staging)
+10060,apps,Accounts,export,acctExport,staging,s,,false,false,true,true,header,switch,<boolean>,export transactions labeled staging (i.e. older than 28 blocks but not yet consolidated)
+10080,apps,Accounts,export,acctExport,unripe,u,,false,false,true,true,header,switch,<boolean>,export transactions labeled upripe (i.e. less than 28 blocks old)
 10092,apps,Accounts,export,acctExport,load,,,false,false,false,false,header,flag,<string>,a comma separated list of dynamic traversers to load
 10093,apps,Accounts,export,acctExport,reversed,,,false,false,false,false,header,switch,<boolean>,produce results in reverse chronological order
 10094,apps,Accounts,export,acctExport,by_date,b,,false,false,false,false,header,switch,<boolean>,produce results sorted by date (report by address otherwise)
