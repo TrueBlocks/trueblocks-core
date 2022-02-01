@@ -14,6 +14,17 @@
 
 namespace qblocks {
 
-size_t unused = 0;
+timestamp_t blockZeroTs(void) {
+    static timestamp_t ts = 0;
+    if (ts == 0) {
+        CBlock block;
+        getBlock_light(block, 1);
+        // This is a hack, but block zero has a zero timestamp
+        // and this is the best we can do on multi-chain. Block
+        // zero happens 13 seconds before block one (let's say).
+        ts = block.timestamp - 13;
+    }
+    return ts;
+}
 
 }  // namespace qblocks
