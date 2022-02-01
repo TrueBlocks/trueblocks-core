@@ -1,4 +1,27 @@
-- [ ] Other Tools - Turned off for non-mainnet
+Explorer Issues
+------------------
+5. How do I makes sure the keypress doesn't bubble up?
+6. How do I clear the position of the row for new addresses?
+8. When I click on an option to the right it takes the focus, but I want the table to have the focus.
+
+
+4. chunkMan
+	a. I have a bunch of index/bloom files, can I generate pins
+	b. Piñata support suggests using folders as well as custom domains
+	c. Is smart contract ready to use (even if it's from EtherScan)?
+
+In chifra init if chain != mainnet do not proceed
+
+Write a bug
+	2. Why, if the server isn't running on my laptop, doesn't it report an error if there's no response?
+	a. Turn on server on laptop
+	b. Change explorer to hit against my laptop
+	c. Turn off server
+	d. Reload app, expect an error message
+
+
+
+ - [ ] Other Tools - Turned off for non-mainnet
   - [ ] `chifra explore` needs to be per chain
   - [ ] `chifra when` is per chain - can we test this? Would need time stamp from multiple chains
   - [ ] `ethslurp` won't work per chain.  The Etherscan API needs to be adjusted per chain
