@@ -30,7 +30,7 @@ class CTimeStamper {
   public:
     size_t expected = 0;
     blknum_t prevBn = 0;
-    timestamp_t prevTs = blockZeroTs;
+    timestamp_t prevTs = blockZeroTs();
     bool verbose = false;
 };
 
