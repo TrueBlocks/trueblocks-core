@@ -11,11 +11,34 @@ import (
 	"io"
 	"os"
 	"os/exec"
+	"strings"
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
+
+type ConfigEnv struct {
+	Chain           string `json:"chain"`
+	ConfigPath      string `json:"configPath"`
+	ChainConfigPath string `json:"chainConfigPath"`
+	CachePath       string `json:"cachePath"`
+	IndexPath       string `json:"indexPath"`
+	DefaultChain    string `json:"defChain"`
+	RpcProvider     string `json:"rpcProvider"`
+}
+
+func (c *ConfigEnv) toCSV() string {
+	var ret []string
+	ret = append(ret, c.Chain)
+	ret = append(ret, c.ConfigPath)
+	ret = append(ret, c.ChainConfigPath)
+	ret = append(ret, c.CachePath)
+	ret = append(ret, c.IndexPath)
+	ret = append(ret, c.DefaultChain)
+	ret = append(ret, c.RpcProvider)
+	return strings.Join(ret, ",")
+}
 
 func (opts *GlobalOptions) PassItOn(path string, flags string) error {
 	options := flags
@@ -24,32 +47,30 @@ func (opts *GlobalOptions) PassItOn(path string, flags string) error {
 	var wg sync.WaitGroup
 	wg.Add(2)
 
-	configPath := config.GetPathToRootConfig()
-	chainConfigPath := config.GetPathToChainConfig(opts.Chain)
-	cachePath := config.GetPathToCache(opts.Chain)
-	indexPath := config.GetPathToIndex(opts.Chain)
-	defChain := config.GetDefaultChain()
-	rpcProvider := config.GetRpcProvider(opts.Chain)
+	var env ConfigEnv
+	env.Chain = opts.Chain
+	env.ConfigPath = config.GetPathToRootConfig()
+	env.ChainConfigPath = config.GetPathToChainConfig(env.Chain)
+	env.CachePath = config.GetPathToCache(env.Chain)
+	env.IndexPath = config.GetPathToIndex(env.Chain)
+	env.DefaultChain = config.GetDefaultChain()
+	env.RpcProvider = config.GetRpcProvider(env.Chain)
+	envStr := env.toCSV()
 
 	// fmt.Fprintf(os.Stderr, "Calling: %s %s\n", path, options)
 	cmd := exec.Command(config.GetPathToCommands(path), options)
 	cmd.Env = append(os.Environ(), "FROM_CHIFRA=true")
 	if !opts.TestMode && opts.LogLevel > 8 {
-		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "g-CONFIG_PATH: ", configPath, colors.Off)
-		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "g-CHAIN_CONFIG_PATH: ", chainConfigPath, colors.Off)
-		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "g-CACHE_PATH:  ", cachePath, colors.Off)
-		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "g-INDEX_PATH:  ", indexPath, colors.Off)
-		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "g-DEFAULT_CHAIN: ", defChain, colors.Off)
-		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "g-RPC_PROVIDER: ", rpcProvider, colors.Off)
-		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "g-CHAIN: ", opts.Chain, colors.Off)
+		fmt.Fprintf(os.Stderr, "%s%s%s%s\n", colors.Blue, colors.Bright, envStr, colors.Off)
 	}
-	cmd.Env = append(cmd.Env, "TB_CONFIG_PATH="+configPath)
-	cmd.Env = append(cmd.Env, "TB_CHAIN_CONFIG_PATH="+chainConfigPath)
-	cmd.Env = append(cmd.Env, "TB_CACHE_PATH="+cachePath)
-	cmd.Env = append(cmd.Env, "TB_INDEX_PATH="+indexPath)
-	cmd.Env = append(cmd.Env, "TB_DEFAULT_CHAIN="+defChain)
-	cmd.Env = append(cmd.Env, "TB_RPC_PROVIDER="+rpcProvider)
-	cmd.Env = append(cmd.Env, "TB_CHAIN="+opts.Chain)
+	cmd.Env = append(cmd.Env, "TB_CONFIG_PATH="+env.ConfigPath)
+	cmd.Env = append(cmd.Env, "TB_CHAIN_CONFIG_PATH="+env.ChainConfigPath)
+	cmd.Env = append(cmd.Env, "TB_CACHE_PATH="+env.CachePath)
+	cmd.Env = append(cmd.Env, "TB_INDEX_PATH="+env.IndexPath)
+	cmd.Env = append(cmd.Env, "TB_DEFAULT_CHAIN="+env.DefaultChain)
+	cmd.Env = append(cmd.Env, "TB_RPC_PROVIDER="+env.RpcProvider)
+	cmd.Env = append(cmd.Env, "TB_CHAIN="+env.Chain)
+	cmd.Env = append(cmd.Env, "TB_CONFIG_ENV="+envStr)
 	if os.Getenv("TEST_MODE") == "true" {
 		cmd.Env = append(cmd.Env, "TEST_MODE=true")
 	}

@@ -21,6 +21,7 @@
 #include "exportcontext.h"
 #include "logging.h"
 #include "options_base.h"
+#include "configenv.h"
 
 namespace qblocks {
 
@@ -94,6 +95,20 @@ string_q getDefaultChain(void) {
 //---------------------------------------------------------------------------------------------------
 static string_q g_Chain;
 string_q getChain(void) {
+    // TODO: BOGUS
+    string_q configEnv = getEnvStr("TB_CONFIG_ENV");
+    LOG_INFO(bGreen, configEnv, cOff);
+    // CConfigEnv env;
+    // CStringArray fields = {
+    //     "chain", "configPath", "chainConfigPath", "cachePath", "indexPath", "defChain", "rpcProvider",
+    // };
+    // if (env.parseCSV(fields, configEnv)) {
+    //     ostringstream os;
+    //     os << env << endl;
+    //     LOG_INFO(bGreen, os.str(), cOff);
+    // } else {
+    //     LOG_ERR("COULD NOT PARSE");
+    // }
     if (!g_Chain.empty())
         return g_Chain;
     g_Chain = getEnvStr("TB_CHAIN");
