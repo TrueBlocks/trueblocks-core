@@ -1,11 +1,8 @@
-They still have to hard code the RPC endpoint
-
-MAKE A NOTE IN THE DOCS OF WHERE THINGS FALL SHORT - Uniswap, no index other than a,b,c chains
-MAKE A NOTE IN DOCS ABOUT WHAT IS AND WHAT IS NOT INDEXED BY US
-
+- [ ] Other Tools - Turned off for non-mainnet
   - [ ] `chifra explore` needs to be per chain
-  - [ ] rpc must follow chain to valid RPC (with tracing!)
-  - [ ] we should force the user to tell us the chain id when the add a new chain and then check it against the RPC we get if it's new and we've never seen it before. Save that info away so we don't have to do the same every command
+  - [ ] `chifra when` is per chain - can we test this? Would need time stamp from multiple chains
+  - [ ] `ethslurp` won't work per chain.  The Etherscan API needs to be adjusted per chain
+  - [ ] `chifra init` doesn't currently work per chain.  There is no manifest.
 
 ### Open Questions
 ----
@@ -14,19 +11,23 @@ MAKE A NOTE IN DOCS ABOUT WHAT IS AND WHAT IS NOT INDEXED BY US
   - [ ] Blaze has command line options to explicitly take the paths
   - [ ] We should be able to remove the 'requires' options (tracing, parity -- balances already removed) in blockScrape.toml
 
-- [ ] Other Tools
-  - [ ] Does `ethslurp` work per chain?  The Etherscan API needs to be adjusted per chain
-  - [ ] `chifra when` is per chain - can we test this? Would need time stamp from multiple chains
-
 - [ ] Docs
   - [ ] ./docs/content/chifra/configs.md needs work
   - [ ] Must document running against private networks and how one must configure the scraper for smaller chunks
+  - [ ] Make a note in the docs of where things fall short - uniswap, no index other than a,b,c chains
+  - [ ] Make a note in docs about what is and what is not indexed by us
 
 - [ ] Chifra Export
   - [ ] Uniswap pricing of reconciliations obviously doesn't work on non-main net.
 
 - [ ] What we need in the manifest
   - [ ] timestamps in the smart contract
+
+- [ ] Other
+  - [ ] rpc must follow chain to valid RPC (with tracing!)
+  - [ ] we should force the user to tell us the chain id when the add a new chain and then 
+  - [ ] check it against the RPC we get if it's new and we've never seen it before. Save
+  - [ ] that info away so we don't have to do the same every command
 
 - [x] Closed Issues
   - [x] `chifra init --chain unknown_chain` should fail gracefully
@@ -87,6 +88,7 @@ MAKE A NOTE IN DOCS ABOUT WHAT IS AND WHAT IS NOT INDEXED BY US
 - [ ] Re-write the `trueBlocks.toml` file with version `0.25.0`. 
   - [ ] Use this as a marker that the installation is migrated. 
   - [ ] Alternate: write migrations to the file [migrations]0.25.0=true, etc. (not a good idea)
+- [ ] They still have to hard code the RPC endpoint
 
 ### What We Need to Control
 ---

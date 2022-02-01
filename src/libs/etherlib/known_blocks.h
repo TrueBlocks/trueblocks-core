@@ -15,8 +15,6 @@
 
 namespace qblocks {
 
-// TODO: BOGUS - MAINNET SPECIFIC
-
 extern timestamp_t blockZeroTs(void);
 extern blknum_t firstTransactionBlock(void);
 extern blknum_t hardForkBlock(const string_q& block);

@@ -42,7 +42,7 @@ namespace qblocks {
         }                                                                                                              \
     }
 
-// TODO: BOGUS
+// TODO: BOGUS - multi-chain
 //---------------------------------------------------------------------------------------------------
 static CConfigEnv g_configEnv;
 const CConfigEnv* getConfigEnv(void) {
@@ -112,12 +112,12 @@ string_q getPathToCommands(const string_q& _part) {
     return getHomeFolder() + ".local/bin/chifra/" + _part;
 }
 
+// TODO: BOGUS - multi-chain
 //-------------------------------------------------------------------------
+// This routine is only used by tools that do not make their way through chifra.
+// (makeClass and testRunner primarily). It mimics the way chifra works to build
+// the configPaths. We ignore in this `chain`, defaulting to mainnet.
 void loadEnvironmentPaths(void) {
-    // This is only called by makeClass and testRunner (the only two tools that do not run
-    // through chifra). It mimics the way chifra works to build the configPath so these
-    // two tools will run. We can ignore the `chain` parameter that is used to build
-    // these paths in `chifra` as these two tools don't need them.
 #if defined(__linux) || defined(__linux__) || defined(linux) || defined(__unix) || defined(__unix__)
     string_q configPath = getHomeFolder() + ".local/share/trueblocks/";
 #elif defined(__APPLE__) || defined(__MACH__)
@@ -125,23 +125,21 @@ void loadEnvironmentPaths(void) {
 #else
 #error-- unknown operating system not supported
 #endif
-    // TODO: BOGUS - per chain data
-    string_q rpc;
-    {
-        ostringstream os;
-        os << "mainnet," << configPath << "," << (configPath + "config/mainnet/") << ","
-           << (configPath + "cache/mainnet/") << "," << (configPath + "unchained/mainnet/") << ",mainnet,x";
-        ::setenv("TB_CONFIG_ENV", os.str().c_str(), true);
-        rpc = getGlobalConfig("")->getConfigStr("chains.mainnet", "rpcProvider", "http://localhost:8545");
-        g_configEnv = CConfigEnv();  // reset so we get the rest
-    }
+    // We need to set enough of the environment for us to get the RPC from the config file...
+    ostringstream os1;
+    os1 << "mainnet," << configPath << "," << (configPath + "config/mainnet/") << "," << (configPath + "cache/mainnet/")
+        << "," << (configPath + "unchained/mainnet/") << ",mainnet,x";
+    ::setenv("TB_CONFIG_ENV", os1.str().c_str(), true);
+    string_q rpc = getGlobalConfig("")->getConfigStr("chains.mainnet", "rpcProvider", "http://localhost:8545");
 
-    {
-        ostringstream os;
-        os << "mainnet," << configPath << "," << (configPath + "config/mainnet/") << ","
-           << (configPath + "cache/mainnet/") << "," << (configPath + "unchained/mainnet/") << ",mainnet," << rpc;
-        ::setenv("TB_CONFIG_ENV", os.str().c_str(), true);
-    }
+    // Because `g_configEnv` is statis, we need to clear it...
+    g_configEnv = CConfigEnv();  // reset so we get the rest
+
+    // and reset it with the full env
+    ostringstream os;
+    os << "mainnet," << configPath << "," << (configPath + "config/mainnet/") << "," << (configPath + "cache/mainnet/")
+       << "," << (configPath + "unchained/mainnet/") << ",mainnet," << rpc;
+    ::setenv("TB_CONFIG_ENV", os.str().c_str(), true);
 }
 
 //-------------------------------------------------------------------------
