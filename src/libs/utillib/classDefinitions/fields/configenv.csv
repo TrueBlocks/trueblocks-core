@@ -1,8 +1,8 @@
-name            ,type    ,strDefault ,maxWidth ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
-chain           ,string  ,           ,         ,       ,      ,        ,          ,        ,      ,         ,    ,1    ,        ,
-configPath      ,string  ,           ,         ,       ,      ,        ,          ,        ,      ,         ,    ,2    ,        ,
-chainConfigPath ,string  ,           ,         ,       ,      ,        ,          ,        ,      ,         ,    ,3    ,        ,
-cachePath       ,string  ,           ,         ,       ,      ,        ,          ,        ,      ,         ,    ,4    ,        ,
-indexPath       ,string  ,           ,         ,       ,      ,        ,          ,        ,      ,         ,    ,5    ,        ,
-defChain        ,string  ,           ,         ,       ,      ,        ,          ,        ,      ,         ,    ,6    ,        ,
-rpcProvider     ,string  ,           ,         ,       ,      ,        ,          ,        ,      ,         ,    ,7    ,        ,
+name            ,type    ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
+chain           ,string  ,           ,       ,      ,        ,          ,        ,      ,         ,    ,1    ,        ,
+configPath      ,string  ,           ,       ,      ,        ,          ,        ,      ,         ,    ,2    ,        ,
+chainConfigPath ,string  ,           ,       ,      ,        ,          ,        ,      ,         ,    ,3    ,        ,
+cachePath       ,string  ,           ,       ,      ,        ,          ,        ,      ,         ,    ,4    ,        ,
+indexPath       ,string  ,           ,       ,      ,        ,          ,        ,      ,         ,    ,5    ,        ,
+defChain        ,string  ,           ,       ,      ,        ,          ,        ,      ,         ,    ,6    ,        ,
+rpcProvider     ,string  ,           ,       ,      ,        ,          ,        ,      ,         ,    ,7    ,        ,

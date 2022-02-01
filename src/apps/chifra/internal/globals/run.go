@@ -40,13 +40,6 @@ func (opts *GlobalOptions) PassItOn(path string, flags string) error {
 	if !opts.TestMode && opts.LogLevel > 8 {
 		fmt.Fprintf(os.Stderr, "%s%s%s%s\n", colors.Blue, colors.Bright, envStr, colors.Off)
 	}
-	cmd.Env = append(cmd.Env, "TB_CONFIG_PATH="+env.ConfigPath)
-	cmd.Env = append(cmd.Env, "TB_CHAIN_CONFIG_PATH="+env.ChainConfigPath)
-	cmd.Env = append(cmd.Env, "TB_CACHE_PATH="+env.CachePath)
-	cmd.Env = append(cmd.Env, "TB_INDEX_PATH="+env.IndexPath)
-	cmd.Env = append(cmd.Env, "TB_DEFAULT_CHAIN="+env.DefaultChain)
-	cmd.Env = append(cmd.Env, "TB_RPC_PROVIDER="+env.RpcProvider)
-	cmd.Env = append(cmd.Env, "TB_CHAIN="+env.Chain)
 	cmd.Env = append(cmd.Env, "TB_CONFIG_ENV="+envStr)
 	if os.Getenv("TEST_MODE") == "true" {
 		cmd.Env = append(cmd.Env, "TEST_MODE=true")

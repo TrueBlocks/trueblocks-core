@@ -42,88 +42,69 @@ namespace qblocks {
         }                                                                                                              \
     }
 
+// TODO: BOGUS
 //---------------------------------------------------------------------------------------------------
-static string_q g_configPath;
+static CConfigEnv g_configEnv;
+const CConfigEnv* getConfigEnv(void) {
+    if (g_configEnv.configPath.empty()) {
+        CStringArray fields = {
+            "chain", "configPath", "chainConfigPath", "cachePath", "indexPath", "defChain", "rpcProvider",
+        };
+        string_q envStr = getEnvStr("TB_CONFIG_ENV");
+        if (!g_configEnv.parseCSV(fields, envStr)) {
+            LOG_ERR("Could not parse configEnv string: ", envStr);
+        }
+    }
+    return &g_configEnv;
+}
+
+//---------------------------------------------------------------------------------------------------
 string_q getPathToRootConfig(const string_q& _part) {
-    if (!g_configPath.empty())
-        return g_configPath + _part;
-    g_configPath = getEnvStr("TB_CONFIG_PATH");
-    TEST_PATH(g_configPath, _part, "Configuration");
-    return g_configPath + _part;
+    string_q ret = getConfigEnv()->configPath;
+    TEST_PATH(ret, _part, "Configuration");
+    return ret + _part;
 }
 
 //--------------------------------------------------------------------------------------
-static string_q g_chainConfigPath;
 string_q getPathToChainConfig(const string_q& _part) {
-    if (!g_chainConfigPath.empty())
-        return g_chainConfigPath + _part;
-    g_chainConfigPath = getEnvStr("TB_CHAIN_CONFIG_PATH");
-    TEST_PATH(g_chainConfigPath, _part, "Chain Configuration");
-    return g_chainConfigPath + _part;
+    string_q ret = getConfigEnv()->chainConfigPath;
+    TEST_PATH(ret, _part, "Chain Configuration");
+    return ret + _part;
 }
 
 //-------------------------------------------------------------------------
-static string_q g_cachePath;
 string_q getPathToCache(const string_q& _part) {
-    if (!g_cachePath.empty())
-        return g_cachePath + _part;
-    g_cachePath = getEnvStr("TB_CACHE_PATH");
-    TEST_PATH(g_cachePath, _part, "Cache");
-    return g_cachePath + _part;
+    string_q ret = getConfigEnv()->cachePath;
+    TEST_PATH(ret, _part, "Cache");
+    return ret + _part;
 }
 
 //-------------------------------------------------------------------------
-static string_q g_indexPath;
 string_q getPathToIndex(const string_q& _part) {
-    if (!g_indexPath.empty())
-        return g_indexPath + _part;
-    g_indexPath = getEnvStr("TB_INDEX_PATH");
-    TEST_PATH(g_indexPath, _part, "Index");
-    return g_indexPath + _part;
+    string_q ret = getConfigEnv()->indexPath;
+    TEST_PATH(ret, _part, "Index");
+    return ret + _part;
 }
 
 //---------------------------------------------------------------------------------------------------
-static string_q g_defaultChain;
 string_q getDefaultChain(void) {
-    if (!g_defaultChain.empty())
-        return g_defaultChain;
-    g_defaultChain = getEnvStr("TB_DEFAULT_CHAIN");
-    ASSERT(!g_defaultChain.empty());
-    return g_defaultChain;
+    string_q ret = getConfigEnv()->defChain;
+    ASSERT(!ret.empty());
+    return ret;
 }
 
 //---------------------------------------------------------------------------------------------------
-static string_q g_Chain;
 string_q getChain(void) {
-    // TODO: BOGUS
-    // string_q configEnv = getEnvStr("TB_CONFIG_ENV");
-    // LOG_INFO(bGreen, configEnv, cOff);
-    // CConfigEnv env;
-    // CStringArray fields = {
-    //     "chain", "configPath", "chainConfigPath", "cachePath", "indexPath", "defChain", "rpcProvider",
-    // };
-    // if (env.parseCSV(fields, configEnv)) {
-    //     ostringstream os;
-    //     os << env << endl;
-    //     LOG_INFO(bGreen, os.str(), cOff);
-    // } else {
-    //     LOG_ERR("COULD NOT PARSE");
-    // }
-    if (!g_Chain.empty())
-        return g_Chain;
-    g_Chain = getEnvStr("TB_CHAIN");
-    ASSERT(!g_Chain.empty());
-    return g_Chain;
+    string_q ret = getConfigEnv()->chain;
+    ASSERT(!ret.empty());
+    return ret;
 }
 
 //---------------------------------------------------------------------------------------------------
-static string_q g_RpcProvider;
 string_q getRpcProvider(void) {
-    if (!g_RpcProvider.empty())
-        return g_RpcProvider;
-    g_RpcProvider = getEnvStr("TB_RPC_PROVIDER");
-    ASSERT(!g_RpcProvider.empty());
-    return g_RpcProvider;
+    string_q ret = getConfigEnv()->rpcProvider;
+    ASSERT(!ret.empty());
+    return ret;
 }
 
 //-------------------------------------------------------------------------
@@ -145,14 +126,22 @@ void loadEnvironmentPaths(void) {
 #error-- unknown operating system not supported
 #endif
     // TODO: BOGUS - per chain data
-    ::setenv("TB_CONFIG_PATH", configPath.c_str(), true);
-    ::setenv("TB_CHAIN_CONFIG_PATH", (configPath + "config/mainnet/").c_str(), true);
-    ::setenv("TB_DEFAULT_CHAIN", "mainnet", true);
-    ::setenv("TB_PRC_PROVIDER", "http://", true);
-    ::setenv("TB_CACHE_PATH", (configPath + "cache/mainnet/").c_str(), true);
-    ::setenv("TB_INDEX_PATH", (configPath + "unchained/mainnet/").c_str(), true);
-    string_q rpc = getGlobalConfig("")->getConfigStr("chains.mainnet", "rpcProvider", "http://localhost:8545");
-    ::setenv("TB_RPC_PROVIDER", rpc.c_str(), true);
+    string_q rpc;
+    {
+        ostringstream os;
+        os << "mainnet," << configPath << "," << (configPath + "config/mainnet/") << ","
+           << (configPath + "cache/mainnet/") << "," << (configPath + "unchained/mainnet/") << ",mainnet,x";
+        ::setenv("TB_CONFIG_ENV", os.str().c_str(), true);
+        rpc = getGlobalConfig("")->getConfigStr("chains.mainnet", "rpcProvider", "http://localhost:8545");
+        g_configEnv = CConfigEnv();  // reset so we get the rest
+    }
+
+    {
+        ostringstream os;
+        os << "mainnet," << configPath << "," << (configPath + "config/mainnet/") << ","
+           << (configPath + "cache/mainnet/") << "," << (configPath + "unchained/mainnet/") << ",mainnet," << rpc;
+        ::setenv("TB_CONFIG_ENV", os.str().c_str(), true);
+    }
 }
 
 //-------------------------------------------------------------------------

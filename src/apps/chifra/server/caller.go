@@ -117,13 +117,6 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 		}
 		cmd.Env = append(os.Environ(), "API_MODE=true")
 	}
-	cmd.Env = append(cmd.Env, "TB_CONFIG_PATH="+env.ConfigPath)
-	cmd.Env = append(cmd.Env, "TB_CHAIN_CONFIG_PATH="+env.ChainConfigPath)
-	cmd.Env = append(cmd.Env, "TB_CACHE_PATH="+env.CachePath)
-	cmd.Env = append(cmd.Env, "TB_INDEX_PATH="+env.IndexPath)
-	cmd.Env = append(cmd.Env, "TB_DEFAULT_CHAIN="+env.DefaultChain)
-	cmd.Env = append(cmd.Env, "TB_RPC_PROVIDER="+env.RpcProvider)
-	cmd.Env = append(cmd.Env, "TB_CHAIN="+env.Chain)
 	cmd.Env = append(cmd.Env, "TB_CONFIG_ENV="+envStr)
 	cmd.Env = append(cmd.Env, "PROG_NAME=chifra "+apiCmd)
 

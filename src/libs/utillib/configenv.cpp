@@ -75,31 +75,31 @@ string_q CConfigEnv::getValueByName(const string_q& fieldName) const {
     switch (tolower(fieldName[0])) {
         case 'c':
             if (fieldName % "chain") {
-                return chain.substr(0, 0);
+                return chain;
             }
             if (fieldName % "configPath") {
-                return configPath.substr(0, 0);
+                return configPath;
             }
             if (fieldName % "chainConfigPath") {
-                return chainConfigPath.substr(0, 0);
+                return chainConfigPath;
             }
             if (fieldName % "cachePath") {
-                return cachePath.substr(0, 0);
+                return cachePath;
             }
             break;
         case 'd':
             if (fieldName % "defChain") {
-                return defChain.substr(0, 0);
+                return defChain;
             }
             break;
         case 'i':
             if (fieldName % "indexPath") {
-                return indexPath.substr(0, 0);
+                return indexPath;
             }
             break;
         case 'r':
             if (fieldName % "rpcProvider") {
-                return rpcProvider.substr(0, 0);
+                return rpcProvider;
             }
             break;
         default:
@@ -119,45 +119,42 @@ bool CConfigEnv::setValueByName(const string_q& fieldNameIn, const string_q& fie
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
-    // fieldName = substitute(fieldName, "\"", "");
-    // fieldValue = substitute(fieldValue, "\"", "");
-    cerr << fieldName << "\t[" << fieldValue << "]" << endl;
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
         case 'c':
             if (fieldName % "chain") {
-                chain = fieldValue.substr(0, 0);
+                chain = fieldValue;
                 return true;
             }
             if (fieldName % "configPath") {
-                configPath = fieldValue.substr(0, 0);
+                configPath = fieldValue;
                 return true;
             }
             if (fieldName % "chainConfigPath") {
-                chainConfigPath = fieldValue.substr(0, 0);
+                chainConfigPath = fieldValue;
                 return true;
             }
             if (fieldName % "cachePath") {
-                cachePath = fieldValue.substr(0, 0);
+                cachePath = fieldValue;
                 return true;
             }
             break;
         case 'd':
             if (fieldName % "defChain") {
-                defChain = fieldValue.substr(0, 0);
+                defChain = fieldValue;
                 return true;
             }
             break;
         case 'i':
             if (fieldName % "indexPath") {
-                indexPath = fieldValue.substr(0, 0);
+                indexPath = fieldValue;
                 return true;
             }
             break;
         case 'r':
             if (fieldName % "rpcProvider") {
-                rpcProvider = fieldValue.substr(0, 0);
+                rpcProvider = fieldValue;
                 return true;
             }
             break;
