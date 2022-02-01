@@ -54,11 +54,8 @@ blknum_t hardForkBlock(const string_q& hf) {
         return theMap[getChain()];
     } else if (hf == "london") {
         map<string_q, blknum_t> theMap = {
-            make_pair("goerli", 5062605),
-            make_pair("kovan", 26741100),
-            make_pair("mainnet", 12965000),
-            make_pair("rinkeby", 8897988),
-            make_pair("ropsten", 10499401),
+            make_pair("goerli", 5062605),  make_pair("kovan", 26741100),   make_pair("mainnet", 12965000),
+            make_pair("rinkeby", 8897988), make_pair("ropsten", 10499401),
         };
         return theMap[getChain()];
     }
