@@ -26,6 +26,7 @@ static const COption params[] = {
     COption("depth", "p", "<uint64>", OPT_HIDDEN | OPT_FLAG, "for cache mode only, number of levels deep to report"),
     COption("terse", "e", "", OPT_HIDDEN | OPT_SWITCH, "show a terse summary report"),
     COption("migrate", "m", "enum[test|all]", OPT_HIDDEN | OPT_FLAG, "either effectuate or test to see if a migration is necessary"),  // NOLINT
+    COption("config", "c", "enum[chains|files|all]", OPT_HIDDEN | OPT_FLAG, "returns JSON for config data of the type specified"),  // NOLINT
     COption("first_block", "F", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive -- testing only)"),  // NOLINT
     COption("last_block", "L", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive -- testing only)"),
     COption("", "", "", OPT_DESCRIPTION, "Report on the status of the TrueBlocks system."),
@@ -46,6 +47,7 @@ bool COptions::parseArguments(string_q& command) {
     CStringArray modes;
     CStringArray types;
     string_q migrate = "";
+    string_q config = "";
     blknum_t first_block = 0;
     blknum_t last_block = NOPOS;
     // END_CODE_LOCAL_INIT
@@ -88,6 +90,12 @@ bool COptions::parseArguments(string_q& command) {
                 return false;
         } else if (arg == "-m" || arg == "--migrate") {
             return flag_required("migrate");
+
+        } else if (startsWith(arg, "-c:") || startsWith(arg, "--config:")) {
+            if (!confirmEnum("config", config, arg))
+                return false;
+        } else if (arg == "-c" || arg == "--config") {
+            return flag_required("config");
 
         } else if (startsWith(arg, "-F:") || startsWith(arg, "--first_block:")) {
             if (!confirmBlockNum("first_block", first_block, arg, latest))

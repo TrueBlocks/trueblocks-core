@@ -20,6 +20,8 @@ Flags:
   -e, --terse              show a terse summary report (hidden)
   -m, --migrate string     either effectuate or test to see if a migration is necessary (hidden)
                            One of [ test | all ]
+  -c, --config string      returns JSON for config data of the type specified (hidden)
+                           One of [ chains | files | all ]
   -F, --first_block uint   first block to process (inclusive -- testing only) (hidden)
   -L, --last_block uint    last block to process (inclusive -- testing only) (hidden)
   -x, --fmt string         export format, one of [none|json*|txt|csv|api]
