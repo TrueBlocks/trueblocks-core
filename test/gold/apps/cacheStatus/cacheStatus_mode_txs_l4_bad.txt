@@ -20,8 +20,6 @@ Flags:
   -e, --terse              show a terse summary report (hidden)
   -m, --migrate string     either effectuate or test to see if a migration is necessary (hidden)
                            One of [ test | all ]
-  -g, --get_config         returns JSON data of the editable configuration file items (hidden)
-  -s, --set_config         accepts JSON in an env variable and writes it to configuration files (hidden)
   -F, --first_block uint   first block to process (inclusive -- testing only) (hidden)
   -L, --last_block uint    last block to process (inclusive -- testing only) (hidden)
   -x, --fmt string         export format, one of [none|json*|txt|csv|api]

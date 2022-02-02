@@ -1,5 +1,0 @@
-[settings]
-class = CConfiguration
-base_class = CBaseNode
-fields = configuration.csv
-includes = cachelib.h|configfile.h

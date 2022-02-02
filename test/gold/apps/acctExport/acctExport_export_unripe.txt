@@ -39,8 +39,8 @@ Flags:
       --asset string         for the statements option only, export only reconciliations for this asset
       --clean                clean (i.e. remove duplicate appearances) from all existing monitors
   -f, --freshen              freshen but do not print the exported data (hidden)
-  -s, --staging              enable search of staging (not yet finalized) folder (hidden)
-  -u, --unripe               enable search of unripe (neither staged nor finalized) folder (assumes --staging) (hidden)
+  -s, --staging              export transactions labeled staging (i.e. older than 28 blocks but not yet consolidated)
+  -u, --unripe               export transactions labeled upripe (i.e. less than 28 blocks old)
       --load string          a comma separated list of dynamic traversers to load (hidden)
       --reversed             produce results in reverse chronological order (hidden)
   -b, --by_date              produce results sorted by date (report by address otherwise) (hidden)

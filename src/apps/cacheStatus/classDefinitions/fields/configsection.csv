@@ -1,4 +1,0 @@
-name    ,type       ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
-section ,string     ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
-name    ,string     ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
-keys    ,configItem ,           ,true   ,true  ,        ,          ,        ,      ,         ,    ,     ,        ,

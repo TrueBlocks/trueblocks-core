@@ -26,8 +26,6 @@ static const COption params[] = {
     COption("depth", "p", "<uint64>", OPT_HIDDEN | OPT_FLAG, "for cache mode only, number of levels deep to report"),
     COption("terse", "e", "", OPT_HIDDEN | OPT_SWITCH, "show a terse summary report"),
     COption("migrate", "m", "enum[test|all]", OPT_HIDDEN | OPT_FLAG, "either effectuate or test to see if a migration is necessary"),  // NOLINT
-    COption("get_config", "g", "", OPT_HIDDEN | OPT_SWITCH, "returns JSON data of the editable configuration file items"),  // NOLINT
-    COption("set_config", "s", "", OPT_HIDDEN | OPT_SWITCH, "accepts JSON in an env variable and writes it to configuration files"),  // NOLINT
     COption("first_block", "F", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive -- testing only)"),  // NOLINT
     COption("last_block", "L", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive -- testing only)"),
     COption("", "", "", OPT_DESCRIPTION, "Report on the status of the TrueBlocks system."),
@@ -48,8 +46,6 @@ bool COptions::parseArguments(string_q& command) {
     CStringArray modes;
     CStringArray types;
     string_q migrate = "";
-    bool get_config = false;
-    bool set_config = false;
     blknum_t first_block = 0;
     blknum_t last_block = NOPOS;
     // END_CODE_LOCAL_INIT
@@ -92,12 +88,6 @@ bool COptions::parseArguments(string_q& command) {
                 return false;
         } else if (arg == "-m" || arg == "--migrate") {
             return flag_required("migrate");
-
-        } else if (arg == "-g" || arg == "--get_config") {
-            get_config = true;
-
-        } else if (arg == "-s" || arg == "--set_config") {
-            set_config = true;
 
         } else if (startsWith(arg, "-F:") || startsWith(arg, "--first_block:")) {
             if (!confirmBlockNum("first_block", first_block, arg, latest))
@@ -174,40 +164,28 @@ bool COptions::parseArguments(string_q& command) {
                      ") are only available during testing.");
     scanRange = make_pair(first_block, last_block);
 
-    if (get_config && set_config)
-        return usage("Please chose only one of --set_config and --get_config.");
-
-    if (set_config) {
-        mode = "set";
-        isConfig = true;
-    } else if (get_config) {
-        isConfig = true;
+    if (mode.empty() || contains(mode, "some"))
+        mode = "index|monitors|collections|names|slurps|prices";
+    if (contains(mode, "all")) {
+        mode = "index|monitors|collections|names|abis|prices|caches";
+        types.push_back("all");
     }
+    mode = "|" + trim(mode, '|') + "|";
 
-    if (!isConfig) {
-        if (mode.empty() || contains(mode, "some"))
-            mode = "index|monitors|collections|names|slurps|prices";
-        if (contains(mode, "all")) {
-            mode = "index|monitors|collections|names|abis|prices|caches";
-            types.push_back("all");
+    if (contains(mode, "|caches")) {
+        if (details && depth == NOPOS)
+            depth = 0;
+        if (depth != NOPOS && depth > 3)
+            return usage("--depth parameter must be less than 4.");
+        replaceAll(mode, "|caches", "");
+        ASSERT(endsWith(mode, '|'));
+        bool hasAll = false;
+        for (auto t : types) {
+            hasAll |= (t == "all");
+            if (t != "all")
+                mode += (t + "|");
         }
-        mode = "|" + trim(mode, '|') + "|";
-
-        if (contains(mode, "|caches")) {
-            if (details && depth == NOPOS)
-                depth = 0;
-            if (depth != NOPOS && depth > 3)
-                return usage("--depth parameter must be less than 4.");
-            replaceAll(mode, "|caches", "");
-            ASSERT(endsWith(mode, '|'));
-            bool hasAll = false;
-            for (auto t : types) {
-                hasAll |= (t == "all");
-                if (t != "all")
-                    mode += (t + "|");
-            }
-            mode += (hasAll ? "blocks|txs|traces|slurps|prices|" : "");
-        }
+        mode += (hasAll ? "blocks|txs|traces|slurps|prices|" : "");
     }
 
     if (!details) {
@@ -239,7 +217,6 @@ void COptions::Init(void) {
     // END_CODE_INIT
 
     scanRange = make_pair(0, NOPOS);
-    isConfig = false;
     mode = "";
 
 #ifndef HOST_NAME_MAX
@@ -308,10 +285,6 @@ COptions::COptions(void) {
     CPriceCache::registerClass();
     CPriceCacheItem::registerClass();
     CAbiCacheItem::registerClass();
-    CConfiguration::registerClass();
-    CConfigFile::registerClass();
-    CConfigSection::registerClass();
-    CConfigItem::registerClass();
 
     UNHIDE_FIELD(CCacheBase, "nApps");
     UNHIDE_FIELD(CCacheBase, "sizeInBytes");

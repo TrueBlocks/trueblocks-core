@@ -1,5 +1,0 @@
-[settings]
-class = CConfigItem
-base_class = CBaseNode
-fields = configitem.csv
-includes = cachelib.h

@@ -16,7 +16,6 @@
  * the code outside of the BEG_CODE/END_CODE sections
  */
 #include "cachelib.h"
-#include "configuration.h"
 
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
@@ -32,7 +31,6 @@ class COptions : public CAbiOptions {
 
     CStatus status;
     string_q mode;
-    bool isConfig;
     CIndexHashMap bloomHashes;
     CIndexHashMap indexHashes;
     blkrange_t scanRange;
@@ -44,8 +42,6 @@ class COptions : public CAbiOptions {
     void Init(void) override;
 
     bool handle_status(ostream& os);
-    bool handle_config(ostream& os);
-    bool handle_config_get(ostream& os);
     bool handle_migrate(const CStringArray& cachePaths);
     bool handle_migrate_test(const CStringArray& cachePaths);
 };

@@ -31,8 +31,6 @@ func convertToCommandLine(in string) string {
 		return "first_block"
 	case "firstRecord":
 		return "first_record"
-	case "getConfig":
-		return "get_config"
 	case "lastBlock":
 		return "last_block"
 	case "listCount":
@@ -53,8 +51,6 @@ func convertToCommandLine(in string) string {
 		return "no_zero"
 	case "proxyFor":
 		return "proxy_for"
-	case "setConfig":
-		return "set_config"
 	case "skipDdos":
 		return "skip_ddos"
 	case "summarizeBy":
