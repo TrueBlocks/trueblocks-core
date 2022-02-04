@@ -9,6 +9,7 @@ import (
 	"log"
 	"math/big"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/ethclient"
@@ -35,7 +36,11 @@ func GetClient(provider string) *ethclient.Client {
 // BlockNumber returns the front of chain block
 func BlockNumber(provider string) uint64 {
 	ec := GetClient(provider)
-	r, _ := ec.BlockNumber(context.Background())
+	r, err := ec.BlockNumber(context.Background())
+	if err != nil {
+		logger.Log(logger.Error, "Could not connect to RPC client")
+		return 0
+	}
 	ec.Close()
 	return r
 }
@@ -43,7 +48,11 @@ func BlockNumber(provider string) uint64 {
 // ChainID returns chainId
 func ChainID(provider string) uint64 {
 	ec := GetClient(provider)
-	r, _ := ec.ChainID(context.Background())
+	r, err := ec.ChainID(context.Background())
+	if err != nil {
+		logger.Log(logger.Error, "Could not connect to RPC client")
+		return 1
+	}
 	ec.Close()
 	return r.Uint64()
 }
@@ -51,14 +60,22 @@ func ChainID(provider string) uint64 {
 // NetworkID returns networkId
 func NetworkID(provider string) uint64 {
 	ec := GetClient(provider)
-	r, _ := ec.NetworkID(context.Background())
+	r, err := ec.NetworkID(context.Background())
+	if err != nil {
+		logger.Log(logger.Error, "Could not connect to RPC client")
+		return 1
+	}
 	ec.Close()
 	return r.Uint64()
 }
 
 func GetBlockTimestamp(provider string, bn uint64) uint64 {
 	ec := GetClient(provider)
-	r, _ := ec.BlockByNumber(context.Background(), big.NewInt(int64(bn)))
+	r, err := ec.BlockByNumber(context.Background(), big.NewInt(int64(bn)))
+	if err != nil {
+		logger.Log(logger.Error, "Could not connect to RPC client")
+		return 0
+	}
 	ec.Close()
 	return r.Time()
 }
