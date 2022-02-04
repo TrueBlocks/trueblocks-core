@@ -305,7 +305,8 @@ bool loadTraces(CTransaction& trans, blknum_t bn, blknum_t txid, bool useCache, 
             dDos.loadTraceAsDdos(trans, bn, txid);
             trans.traces.push_back(dDos);
 
-        } else if (txid == 99997 || txid == 99999) {
+        } else if (txid == 99996 || txid == 99997 || txid == 99999) {
+            // 99996 is 'external' rewards found only on gnosis chain so far
             // 99997 was a misconfigured miners early in the chain due to a bug.
             // 99999 is record for the winning miner
             CTrace rewardTrace;

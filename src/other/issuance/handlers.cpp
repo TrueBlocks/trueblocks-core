@@ -203,13 +203,14 @@ bool visitIndexChunk(CIndexArchive& chunk, void* data) {
         CAddressRecord_base* rec = &chunk.addresses[i];
         CAppearance_base* start = &chunk.appearances[rec->offset];
         qsort(start, rec->cnt, sizeof(CAppearance_base), sortReverseByTxid);
-        if (start[0].blk != 0 && (start[0].txid == 99997 || start[0].txid == 99998 || start[0].txid == 99999)) {
+        if (start[0].blk != 0 &&
+            (start[0].txid == 99996 || start[0].txid == 99997 || start[0].txid == 99998 || start[0].txid == 99999)) {
             CAppearance_base* appPtr = &chunk.appearances[rec->offset];
             CAppearance app;
             app.bn = appPtr->blk;
             app.tx = appPtr->txid;
             app.addr = bytes_2_Addr(rec->bytes);
-            nMiners += (appPtr->txid == 99997 || appPtr->txid == 99999);
+            nMiners += (appPtr->txid == 99996 || appPtr->txid == 99997 || appPtr->txid == 99999);
             nUncles += (appPtr->txid == 99998);
             checkList.push_back(app);
         }

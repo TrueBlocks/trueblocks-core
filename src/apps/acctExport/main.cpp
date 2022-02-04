@@ -236,7 +236,7 @@ bool loadTx_Func(CTraverser* trav, void* data) {
             address_t addr = opt->prefundAddrMap[trav->app->txid];
             trav->trans.loadTransAsPrefund(trav->app->blk, trav->app->txid, addr, prefundAt(addr));
 
-        } else if (trav->app->txid == 99997 || trav->app->txid == 99999) {
+        } else if (trav->app->txid == 99996 || trav->app->txid == 99997 || trav->app->txid == 99999) {
             trav->trans.loadTransAsBlockReward(trav->app->blk, trav->app->txid, opt->blkRewardMap[trav->app->blk]);
 
         } else if (trav->app->txid == 99998) {

@@ -18,7 +18,7 @@ bool visitOnLoad(CAppearance_mon& app, void* data) {
     ASSERT(opt->curMonitor);
     if (app.blk == 0)
         opt->prefundAddrMap[app.txid] = opt->curMonitor->address;
-    if (app.txid == 99997 || app.txid == 99998 || app.txid == 99999)
+    if (app.txid == 99996 || app.txid == 99997 || app.txid == 99998 || app.txid == 99999)
         opt->blkRewardMap[app.blk] = opt->curMonitor->address;
     opt->stats.nFileRecords++;
     return true;

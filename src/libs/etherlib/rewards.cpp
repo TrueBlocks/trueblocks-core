@@ -16,7 +16,7 @@ namespace qblocks {
 
 //---------------------------------------------------------------------------
 void CTrace::loadTraceAsBlockReward(const CTransaction& trans, blknum_t bn, blknum_t txid) {
-    ASSERT(txid == 99999 || txid == 99997);
+    ASSERT(txid == 99996 || txid == 99997 || txid == 99999);
     blockNumber = bn;
     transactionIndex = txid;
     action.from = "0xBlockReward";
@@ -88,7 +88,7 @@ bool CTransaction::loadTransAsPrefund(blknum_t bn, blknum_t txid, const address_
 
 //-------------------------------------------------------------------------
 bool CTransaction::loadTransAsBlockReward(blknum_t bn, blknum_t txid, const address_t& addr) {
-    ASSERT(txid == 99999 || txid == 99997);
+    ASSERT(txid == 99996 || txid == 99997 || txid == 99999);
     initialize();
     blockNumber = bn;
     transactionIndex = txid;
