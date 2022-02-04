@@ -96,7 +96,8 @@ bool freshenTimestamps(blknum_t minBlock) {
 
     // LOG_INFO("Found ", nRecords, " records");
     if (fileExists(indexFolderBin_ts + ".lck")) {  // it's being updated elsewhere
-        LOG_ERR("Timestamp file ", indexFolderBin_ts, " is locked. Cannot update.");
+        LOG_ERR("Timestamp file ", indexFolderBin_ts, " is locked. Cannot update. Re-running...");
+        ::remove((indexFolderBin_ts + ".lck").c_str());
         return false;
     }
 

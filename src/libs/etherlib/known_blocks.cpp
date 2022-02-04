@@ -62,6 +62,13 @@ blknum_t hardForkBlock(const string_q& hf) {
     return 0;
 }
 
+//-----------------------------------------------------------------------
+bool isDdos(blknum_t bn) {
+    if (getChain() != "mainnet")
+        return false;
+    return (bn >= 2283440 && bn <= 2718436);
+}
+
 }  // namespace qblocks
 
 #if 0

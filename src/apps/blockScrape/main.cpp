@@ -31,7 +31,7 @@ int main(int argc, const char* argv[]) {
         LOG_INFO("Block scraper is paused: ", Now().Format(FMT_EXPORT), "\r");
 
     } else {
-        LOG_INFO(cYellow, "Block scraper is running...", cOff);
+        // LOG_INFO(cYellow, "Block scraper is running...", cOff);
         bool ret1 = options.scrape_blocks();
         LOG_INFO(ret1 ? "  ...pass completed." : "  ...pass did not complete.");
 

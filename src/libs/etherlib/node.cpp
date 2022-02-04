@@ -1099,7 +1099,7 @@ string_q exportPostamble(const CStringArray& errorsIn, const string_q& extra) {
 
 //----------------------------------------------------------------
 bool excludeTrace(const CTransaction* trans, size_t maxTraces) {
-    if (!ddosRange(trans->blockNumber))
+    if (!isDdos(trans->blockNumber))
         return false;  // be careful, it's backwards
 
     static string_q exclusions;

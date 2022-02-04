@@ -62,7 +62,7 @@ bool visitAddrs(const CAppearance& item, void* data) {
 //----------------------------------------------------------------
 // Return 'true' if we want the caller NOT to visit the traces of this transaction
 bool transFilter(const CTransaction* trans, void* data) {
-    if (!ddosRange(trans->blockNumber))
+    if (!isDdos(trans->blockNumber))
         return false;
     return (getTraceCount(trans->hash) > 250);
 }
