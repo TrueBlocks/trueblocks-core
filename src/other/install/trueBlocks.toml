@@ -16,6 +16,7 @@ localExplorer = "http://localhost:1234"
 pinGateway = "https://ipfs.unchainedindex.io/ipfs/"
 remoteExplorer = "https://etherscan.io"
 rpcProvider = "http://localhost:8545"
+apiProvider = "http://localhost:8080"
 symbol = "ETH"
 
 [chains.gnosis]
@@ -24,6 +25,7 @@ localExplorer = "http://localhost:1234"
 pinGateway = "https://gnosis.unchainedindex.io/ipfs/"
 remoteExplorer = "https://blockscout.com/xdai/mainnet"
 rpcProvider = "https://rpc.gnosischain.com"
+apiProvider = "http://localhost:8080"
 symbol = "XDAI"
 
 [chains.goerli]
@@ -32,6 +34,7 @@ localExplorer = "http://localhost:1234"
 pinGateway = "https://goerli.unchainedindex.io/ipfs/"
 remoteExplorer = "https://goerli.etherscan.io"
 rpcProvider = "https://goerli-light.eth.linkpool.io"
+apiProvider = "http://localhost:8080"
 symbol = "ETH"
 
 [chains.kovan]
@@ -40,6 +43,7 @@ localExplorer = "http://localhost:1234"
 pinGateway = "https://kovan.unchainedindex.io/ipfs/"
 remoteExplorer = "https://kovan.etherscan.io"
 rpcProvider = "https://kovan.poa.network"
+apiProvider = "http://localhost:8080"
 symbol = "ETH"
 
 [chains.optimism]
@@ -48,6 +52,7 @@ localExplorer = "http://localhost:1234"
 pinGateway = "<not_set>"
 remoteExplorer = "https://optimistic.etherscan.io"
 rpcProvider = "https://mainnet.optimism.io"
+apiProvider = "http://localhost:8080"
 symbol = "OPT"
 
 [chains.polygon]
@@ -56,6 +61,7 @@ localExplorer = "http://localhost:1234"
 pinGateway = "<not_set>"
 remoteExplorer = "https://mumbai.polygonscan.com"
 rpcProvider = "https://rpc-mumbai.maticvigil.com"
+apiProvider = "http://localhost:8080"
 symbol = "MATIC"
 
 [chains.rinkeby]
@@ -64,6 +70,7 @@ localExplorer = "http://localhost:1234"
 pinGateway = "https://rinkeby.unchainedindex.io/ipfs/"
 remoteExplorer = "https://rinkeby.etherscan.io"
 rpcProvider = "https://rinkeby-light.eth.linkpool.io"
+apiProvider = "http://localhost:8080"
 symbol = "ETH"
 
 [chains.ropsten]
@@ -72,4 +79,5 @@ localExplorer = "http://localhost:1234"
 pinGateway = "https://ropsten.unchainedindex.io/ipfs/"
 remoteExplorer = "https://ropsten.etherscan.io"
 rpcProvider = "https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161"
+apiProvider = "http://localhost:8080"
 symbol = "ETH"

@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2021-12-31T13:45:29
+date: 2022-02-05T06:27:42
 lastmod:
   - :git
   - lastmod
@@ -31,25 +31,26 @@ The following commands produce and manage status:
 
 Status data is made of the following data fields:
 
-| Field             | Description                                       | Type      |
-| ----------------- | ------------------------------------------------- | --------- |
-| clientVersion     | the version string as reported by the rpcProvider | string    |
-| clientIds         | netword_id and chain_id from the rpcProvider      | string    |
-| trueblocksVersion | the TrueBlocks version string                     | string    |
-| rpcProvider       | the current rpcProvider                           | string    |
-| configPath        | the path to config files                          | string    |
-| cachePath         | the path to the local binary caches               | string    |
-| indexPath         | the path to the local binary indexes              | string    |
-| host              | the host portion of the local API server          | string    |
-| isTesting         | `true` if the server is running in test mode      | bool      |
-| isApi             | `true` if the server is running in API mode       | bool      |
-| isDocker          | `true` if running under a docker image            | bool      |
-| isScraping        | `true` if the index scraper is running            | bool      |
-| isArchive         | `true` if the rpcProvider is an archive node      | bool      |
-| isTracing         | `true` if the rpcProvider provides Parity traces  | bool      |
-| hasEskey          | `true` if an EtherScan key is present             | bool      |
-| hasPinkey         | `true` if a Pinata API key is present             | bool      |
-| ts                | the timestamp when this status data was produced  | timestamp |
+| Field             | Description                                       | Type        |
+| ----------------- | ------------------------------------------------- | ----------- |
+| clientVersion     | the version string as reported by the rpcProvider | string      |
+| clientIds         | netword_id and chain_id from the rpcProvider      | string      |
+| trueblocksVersion | the TrueBlocks version string                     | string      |
+| rpcProvider       | the current rpcProvider                           | string      |
+| configPath        | the path to config files                          | string      |
+| cachePath         | the path to the local binary caches               | string      |
+| indexPath         | the path to the local binary indexes              | string      |
+| host              | the host portion of the local API server          | string      |
+| isTesting         | `true` if the server is running in test mode      | bool        |
+| isApi             | `true` if the server is running in API mode       | bool        |
+| isDocker          | `true` if running under a docker image            | bool        |
+| isScraping        | `true` if the index scraper is running            | bool        |
+| isArchive         | `true` if the rpcProvider is an archive node      | bool        |
+| isTracing         | `true` if the rpcProvider provides Parity traces  | bool        |
+| hasEskey          | `true` if an EtherScan key is present             | bool        |
+| hasPinkey         | `true` if a Pinata API key is present             | bool        |
+| ts                | the timestamp when this status data was produced  | timestamp   |
+| chains            |                                                   | CChainArray |
 
 
 ## Cache
@@ -114,6 +115,20 @@ Manifest data is made of the following data fields:
 | lastPin     | the most recent block included in this manifest                 | blknum            |
 | pins        | a list of all the pins in the unchained index                   | CPinnedChunkArray |
 
+
+## Chain
+
+
+| Field          | Description                                                      | Type   |
+| -------------- | ---------------------------------------------------------------- | ------ |
+| chain          | The common name of the chain                                     | string |
+| chainId        | The chain id as reported by the RPC                              | uint64 |
+| symbol         | The symbol of the base currency on the chain                     | string |
+| rpcProvider    | A valid RPC provider for the chain                               | string |
+| apiProvider    | A valid API provider for the explorer                            | string |
+| remoteExplorer | A remote explorer for the chain such as EtherScan                | string |
+| localExplorer  | The local explorer for the chain (typically TrueBlocks Explorer) | string |
+| pinGateway     | An IPFS gateway for pinning the index if enabled                 | string |
 
 ## Base types
 

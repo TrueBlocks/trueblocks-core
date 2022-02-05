@@ -17,6 +17,7 @@
  */
 #include "etherlib.h"
 #include "cache.h"
+#include "chain.h"
 
 namespace qblocks {
 
@@ -45,6 +46,7 @@ class CStatus : public CBaseNode {
     bool hasPinkey;
     timestamp_t ts;
     CCachePtrArray caches;
+    CChainArray chains;
 
   public:
     CStatus(void);
@@ -127,6 +129,7 @@ inline void CStatus::initialize(void) {
     hasPinkey = false;
     ts = date_2_Ts(Now());
     caches.clear();
+    chains.clear();
 
     // EXISTING_CODE
     // convert ts to UTC
@@ -161,6 +164,7 @@ inline void CStatus::duplicate(const CStatus& st) {
     hasPinkey = st.hasPinkey;
     ts = st.ts;
     caches = st.caches;
+    chains = st.chains;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -194,6 +198,10 @@ inline bool operator<(const CStatus& v1, const CStatus& v2) {
 typedef vector<CStatus> CStatusArray;
 extern CArchive& operator>>(CArchive& archive, CStatusArray& array);
 extern CArchive& operator<<(CArchive& archive, const CStatusArray& array);
+
+//---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CStatus& sta);
+extern CArchive& operator>>(CArchive& archive, CStatus& sta);
 
 //---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_STATUS;

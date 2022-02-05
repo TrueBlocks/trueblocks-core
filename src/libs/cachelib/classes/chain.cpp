@@ -73,28 +73,35 @@ string_q CChain::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
+        case 'a':
+            if (fieldName % "apiProvider") {
+                return apiProvider;
+            }
+            break;
         case 'c':
-            if (fieldName % "chain_name") {
-                return chain_name;
+            if (fieldName % "chain") {
+                return chain;
             }
-            if (fieldName % "chain_type") {
-                return chain_type;
+            if (fieldName % "chainId") {
+                return uint_2_Str(chainId);
             }
-            if (fieldName % "chain_id") {
-                return uint_2_Str(chain_id);
+            break;
+        case 'l':
+            if (fieldName % "localExplorer") {
+                return localExplorer;
             }
             break;
         case 'p':
-            if (fieldName % "pin_gateway") {
-                return pin_gateway;
+            if (fieldName % "pinGateway") {
+                return pinGateway;
             }
             break;
         case 'r':
-            if (fieldName % "rpc_provider") {
-                return rpc_provider;
+            if (fieldName % "rpcProvider") {
+                return rpcProvider;
             }
-            if (fieldName % "remote_explorer") {
-                return remote_explorer;
+            if (fieldName % "remoteExplorer") {
+                return remoteExplorer;
             }
             break;
         case 's':
@@ -122,33 +129,41 @@ bool CChain::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
+        case 'a':
+            if (fieldName % "apiProvider") {
+                apiProvider = fieldValue;
+                return true;
+            }
+            break;
         case 'c':
-            if (fieldName % "chain_name") {
-                chain_name = fieldValue;
+            if (fieldName % "chain") {
+                chain = fieldValue;
                 return true;
             }
-            if (fieldName % "chain_type") {
-                chain_type = fieldValue;
+            if (fieldName % "chainId") {
+                chainId = str_2_Uint(fieldValue);
                 return true;
             }
-            if (fieldName % "chain_id") {
-                chain_id = str_2_Uint(fieldValue);
+            break;
+        case 'l':
+            if (fieldName % "localExplorer") {
+                localExplorer = fieldValue;
                 return true;
             }
             break;
         case 'p':
-            if (fieldName % "pin_gateway") {
-                pin_gateway = fieldValue;
+            if (fieldName % "pinGateway") {
+                pinGateway = fieldValue;
                 return true;
             }
             break;
         case 'r':
-            if (fieldName % "rpc_provider") {
-                rpc_provider = fieldValue;
+            if (fieldName % "rpcProvider") {
+                rpcProvider = fieldValue;
                 return true;
             }
-            if (fieldName % "remote_explorer") {
-                remote_explorer = fieldValue;
+            if (fieldName % "remoteExplorer") {
+                remoteExplorer = fieldValue;
                 return true;
             }
             break;
@@ -183,13 +198,14 @@ bool CChain::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> chain_name;
-    archive >> chain_type;
-    archive >> chain_id;
-    archive >> rpc_provider;
+    archive >> chain;
+    archive >> chainId;
     archive >> symbol;
-    archive >> remote_explorer;
-    archive >> pin_gateway;
+    archive >> rpcProvider;
+    archive >> apiProvider;
+    archive >> remoteExplorer;
+    archive >> localExplorer;
+    archive >> pinGateway;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -203,13 +219,14 @@ bool CChain::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << chain_name;
-    archive << chain_type;
-    archive << chain_id;
-    archive << rpc_provider;
+    archive << chain;
+    archive << chainId;
     archive << symbol;
-    archive << remote_explorer;
-    archive << pin_gateway;
+    archive << rpcProvider;
+    archive << apiProvider;
+    archive << remoteExplorer;
+    archive << localExplorer;
+    archive << pinGateway;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -259,13 +276,14 @@ void CChain::registerClass(void) {
     ADD_FIELD(CChain, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CChain, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CChain, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CChain, "chain_name", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CChain, "chain_type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CChain, "chain_id", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CChain, "rpc_provider", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CChain, "chain", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CChain, "chainId", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CChain, "symbol", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CChain, "remote_explorer", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CChain, "pin_gateway", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CChain, "rpcProvider", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CChain, "apiProvider", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CChain, "remoteExplorer", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CChain, "localExplorer", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CChain, "pinGateway", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CChain, "schema");

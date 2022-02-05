@@ -52,6 +52,7 @@ extern bool noteMonitor(const string_q& path, void* data);
 extern bool noteABI(const string_q& path, void* data);
 extern bool notePrice(const string_q& path, void* data);
 extern bool noteIndex(const string_q& path, void* data);
+extern bool getChainList(CChainArray& chains);
 
 //-------------------------------------------------------------------------
 class CItemCounter : public CCache {

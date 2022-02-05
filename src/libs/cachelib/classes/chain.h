@@ -25,13 +25,14 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CChain : public CBaseNode {
   public:
-    string_q chain_name;
-    string_q chain_type;
-    uint64_t chain_id;
-    string_q rpc_provider;
+    string_q chain;
+    uint64_t chainId;
     string_q symbol;
-    string_q remote_explorer;
-    string_q pin_gateway;
+    string_q rpcProvider;
+    string_q apiProvider;
+    string_q remoteExplorer;
+    string_q localExplorer;
+    string_q pinGateway;
 
   public:
     CChain(void);
@@ -94,13 +95,14 @@ inline void CChain::clear(void) {
 inline void CChain::initialize(void) {
     CBaseNode::initialize();
 
-    chain_name = "";
-    chain_type = "";
-    chain_id = 0;
-    rpc_provider = "";
+    chain = "";
+    chainId = 0;
     symbol = "";
-    remote_explorer = "";
-    pin_gateway = "";
+    rpcProvider = "http://localhost:8545";
+    apiProvider = "http://localhost:8080";
+    remoteExplorer = "http://etherscan.io";
+    localExplorer = "http://localhost:1234";
+    pinGateway = "http://gateway.ipfs.io/ipfs";
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -111,13 +113,14 @@ inline void CChain::duplicate(const CChain& ch) {
     clear();
     CBaseNode::duplicate(ch);
 
-    chain_name = ch.chain_name;
-    chain_type = ch.chain_type;
-    chain_id = ch.chain_id;
-    rpc_provider = ch.rpc_provider;
+    chain = ch.chain;
+    chainId = ch.chainId;
     symbol = ch.symbol;
-    remote_explorer = ch.remote_explorer;
-    pin_gateway = ch.pin_gateway;
+    rpcProvider = ch.rpcProvider;
+    apiProvider = ch.apiProvider;
+    remoteExplorer = ch.remoteExplorer;
+    localExplorer = ch.localExplorer;
+    pinGateway = ch.pinGateway;
 
     // EXISTING_CODE
     // EXISTING_CODE

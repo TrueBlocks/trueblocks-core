@@ -253,7 +253,6 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10760,apps,Admin,status,cacheStatus,report,r,,false,false,false,true,local,deprecated,<boolean>,run the command with no options for the same result
 10770,apps,Admin,status,cacheStatus,terse,e,,false,false,false,true,header,switch,<boolean>,show a terse summary report
 10782,apps,Admin,status,cacheStatus,migrate,m,,false,false,false,false,local,flag,enum[test|all],either effectuate or test to see if a migration is necessary
-10820,apps,Admin,status,cacheStatus,config,c,,false,false,false,false,local,flag,enum[chains|settings|all],returns JSON for config data of the type specified
 10820,apps,Admin,status,cacheStatus,first_block,F,0,false,false,false,false,local,flag,<blknum>,first block to process (inclusive -- testing only)
 10840,apps,Admin,status,cacheStatus,last_block,L,NOPOS,false,false,false,false,local,flag,<blknum>,last block to process (inclusive -- testing only)
 10860,apps,Admin,status,cacheStatus,,,,false,false,true,true,--,description,,Report on the status of the TrueBlocks system.

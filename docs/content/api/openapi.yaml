@@ -2621,6 +2621,10 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/cache"
+        chains:
+          type: array
+          items:
+            $ref: "#/components/schemas/chain"
     cache:
       description: "The cache data model carries information about the various local binary caches"
       type: object
@@ -2701,6 +2705,35 @@ components:
           items:
             $ref: "#/components/schemas/pinnedChunk"
           description: "a list of all the pins in the unchained index"
+    chain:
+      description: "The chain data model carries information about configured chains"
+      type: object
+      properties:
+        chain:
+          type: string
+          description: "The common name of the chain"
+        chainId:
+          type: number
+          format: uint64
+          description: "The chain id as reported by the RPC"
+        symbol:
+          type: string
+          description: "The symbol of the base currency on the chain"
+        rpcProvider:
+          type: string
+          description: "A valid RPC provider for the chain"
+        apiProvider:
+          type: string
+          description: "A valid API provider for the explorer"
+        remoteExplorer:
+          type: string
+          description: "A remote explorer for the chain such as EtherScan"
+        localExplorer:
+          type: string
+          description: "The local explorer for the chain (typically TrueBlocks Explorer)"
+        pinGateway:
+          type: string
+          description: "An IPFS gateway for pinning the index if enabled"
     function:
       description: "a human readable representation of a Solidity function call or event"
       type: object

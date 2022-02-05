@@ -32,6 +32,7 @@
 
 #include "classes/status.h"
 #include "classes/statusterse.h"
+#include "classes/chain.h"
 
 namespace qblocks {
 extern bool countFiles(const string_q& path, void* data);
