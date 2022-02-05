@@ -14,6 +14,7 @@ status?terse
       "isTracing": true,
       "hasEskey": true,
       "hasPinkey": false,
+      "chains": [],
       "date": "--date--"
     }
   ],
