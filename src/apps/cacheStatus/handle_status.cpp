@@ -29,7 +29,7 @@ bool COptions::handle_status(ostream& os) {
         if (!isText) {
             fmt = "";
             manageFields("CStatusTerse:modes1,modes2", FLD_HIDE);
-            manageFields("CStatus:clientIds,host,isApi,isScraping,caches", FLD_HIDE);
+            manageFields("CStatus:clientIds,host,isApi,isScraping,caches,chains", FLD_HIDE);
         }
         CMetaData meta = getMetaData();
         ostringstream m;
