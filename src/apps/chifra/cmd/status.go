@@ -52,7 +52,7 @@ One or more of [ blocks | txs | traces | slurps | prices | all ]`)
 	statusCmd.Flags().StringVarP(&statusPkg.GetOptions().Migrate, "migrate", "m", "", `either effectuate or test to see if a migration is necessary (hidden)
 One of [ test | all ]`)
 	statusCmd.Flags().StringVarP(&statusPkg.GetOptions().Config, "config", "c", "", `returns JSON for config data of the type specified (hidden)
-One of [ chains | files | all ]`)
+One of [ chains | settings | all ]`)
 	statusCmd.Flags().Uint64VarP(&statusPkg.GetOptions().FirstBlock, "first_block", "F", 0, "first block to process (inclusive -- testing only) (hidden)")
 	statusCmd.Flags().Uint64VarP(&statusPkg.GetOptions().LastBlock, "last_block", "L", 0, "last block to process (inclusive -- testing only) (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {
