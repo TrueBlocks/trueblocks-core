@@ -502,7 +502,7 @@ bool getChainList(CChainArray& chains) {
     time_q configFileDate = fileLastModifyDate(rootConfigToml_trueBlocks);
     time_q chainConfigDate = fileLastModifyDate(cacheFolder_tmp + "chains.bin");
     if (!isTestMode() && chainConfigDate > configFileDate) {
-        LOG_INFO("Reading chains from cache");
+        // LOG_INFO("Reading chains from cache");
         CArchive archive(READING_ARCHIVE);
         if (archive.Lock(cacheFolder_tmp + "chains.bin", modeReadOnly, LOCK_NOWAIT)) {
             archive >> chains;
