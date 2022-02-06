@@ -97,18 +97,20 @@ In chifra init if chain != mainnet do not proceed
   - [x] We need to fix the install files. XDG is present, but does it work?
   - [x] Make sure blockScrape.toml is in the correct location after install
 
+### Docs
+
+- [ ] We need to document the way these paths work in the website (search for XDG to find out where)
+
 ### Steps to Migrate
 ---
 - [ ] The CheckMigrations routine should fail if the migration isn't complete
-- [ ] Some of the `cmake` files and the `make install` may need to be modified.
-- [ ] Some of the files and scripts in `build_assets` may have to be re-worked
-- [ ] We need to document the way these paths work in the website (search for XDG to find out where)
-- [ ] Add `chain` to the `status` endpoints including `--terse`
+- [x] Some of the `cmake` files and the `make install` may need to be modified.
+- [x] Some of the files and scripts in `build_assets` may have to be re-worked
+- [x] Add `chain` to the `status` endpoints
 - [ ] Finish the migrations-0.25.0.md file
 - [ ] Re-write the `trueBlocks.toml` file with version `0.25.0`. 
   - [ ] Use this as a marker that the installation is migrated. 
   - [ ] Alternate: write migrations to the file [migrations]0.25.0=true, etc. (not a good idea)
-- [ ] They still have to hard code the RPC endpoint
 
 ### What We Need to Control
 ---
@@ -123,7 +125,7 @@ There are three values we need to control:
 - How do we get the value of `chain`?
   - Command line option only (this is already there)
   - Value is sent to C++ code in an environment variable
-  - if empty, set it to default `main net`
+  - if empty, set it to default `mainnet`
   - call this value `CHAIN`
 
 - Where are chain specific configurations?
@@ -161,79 +163,15 @@ There are three values we need to control:
 - If the `$TB_HOME` contains any of the following folders, fail.
   - `cache`, `mocked`, `manifest`, `unchained`, `ts.bin.gz`, `poloniex.tar.gz`
   - Tell the user to complete the migration and quit
+
 - If the `$TB_HOME` contains any `toml` file other than `trueBlocks.toml` 
   - Tell them to move them to the chain-specific config and quit
+
 - The installer will install a few config files on first build:
   - If there is no `$TB_HOME/abis` folder, fail
   - If there is no `$TB_HOME/config`, fail
-  - If there is no `$TB_HOME/config/main net`, fail
-  - If there is no `$TB_HOME/config/main net/manifest/`, fail
+  - If there is no `$TB_HOME/config/mainnet`, fail
+  - If there is no `$TB_HOME/config/mainnet/manifest/`, fail
   - Would be amazing if the rest of the configuration for a chain could be found in the manifest
-  - Alt: If there is no `$TB_HOME/config/main net/names/`, fail
-  - Alt: If there is no `$TB_HOME/config/main net/allocs/`, fail
-
-### Format of new config file
----
-
-```
-[settings]
-cachePath = ""           # defaults to $TB_HOME
-etherscan_key = ""
-
-[mainnet]
-rpcProvider = "http://localhost:8545"
-remoteExplorer = "http://etherscan.io"
-
-[rinkeby]
-rpcProvider = ""
-remoteExplorer = ""
-```
-
-### Per-Chain Data
-
-| Chain Id | Chain     | Remote Explorer                      | Public RPC | Genesis Hash (from Erigon)                                         |
-| -------- | --------- | ------------------------------------ | ---------- | ------------------------------------------------------------------ |
-| 1        | mainnet   | https://etherscan.io                 |            | 0xd4e56740f876aef8c010b86a40d5f56745a118d0906a34e69aec8c0db1cb8fa3 |
-| 3        | ropsten   | https://ropsten.etherscan.io         |            | 0x41941023680923e0fe4d74a34bdac8141f2540e3ae90623718e47d66d1ca4a2d |
-| 4        | rinkeby   | https://rinkeby.etherscan.io         |            | 0x6341fd3daf94b748c72ced5a5b26028f2474f5f00d824504e4fa37a75767e177 |
-| 5        | goerli    | https://goerli.etherscan.io          |            | 0xbf7e331f7f7c1dd2e05159666b3bf8bc7a8a3a9eb1d518969eab529dd9b88c1a |
-| 42       | kovan     | https://kovan.etherscan.io           |            | 0xa3c565fc15c7478862d50ccd6561e3c06b24cc509bf388941c25ea985ce32cb9 |
-| 137      | polygon   | https://polygonscan.com              |            | 0xa9c28ce2141b56c474f1dc504bee9b01eb1bd7d1a507580d5519d4437a97de1b |
-| 56       | bsc       | https://bscscan.com                  |            | 0x0d21840abff46b96c84b2ac9e10e4f5cdaeb5693cb665db62a2f3b02d2d57b5b |
-| 100      | gnosis    | https://blockscout.com/xdai/mainnet/ |            | 0x4f1dd23188aab3a76b463e4af801b52b1248ef073c648cbdc4c9333d3da79756 |
-| 61       | etc       | https://blockscout.com/etc/mainnet/  |            | 0xd4e56740f876aef8c010b86a40d5f56745a118d0906a34e69aec8c0db1cb8fa3 |
-|          | polkadot? |                                      |            | ???                                                                |
-|          | filecoin? |                                      |            | ???                                                                |
-
-### Existing Paths
-
-#### GoLang
-----
-| Name                 | Description                                                                  |
-| -------------------- | ---------------------------------------------------------------------------- |
-| GetPathToRootConfig  | Where to find the trueBlocks.toml                                            |
-| GetPathToCHainConfig | Where to find the per-chain config files                                     |
-| GetPathTo Cache      | Found in config file<br>defaults to `GetPathToChainConfig() + "cache"`       |
-| GetPath ToIndex      | Found in config file<br>defaults to `GetPathToChainConfig() + "unchained"`   |
-| GetPathToCommands    | Hard coded to $HOME/.local/bin/chifra on both platforms in GetPathToCommands |
-
-<br>
-
-#### C++
-----
-| Name                | Description                                                                                              |
-| ------------------- | -------------------------------------------------------------------------------------------------------- |
-| getPathToRootConfig |                                                                                                          |
-|                     | get PathToIndex, getPath ToCache                                                                         |
-| getPathToCache      | `cachePath` from trueBlocks.toml                                                                         |
-|                     | getPathToBinaryCache, getPathToPriceDb, getPathToMonitor,<br/>getPathToMonitorDels, getPathToMonitorLast |
-| getPathToIndex      | `indexPath` from trueBlocks.toml                                                                         |
-| getPathToCommands   |                                                                                                          |
-
-#### Local Tooling Only
-----
-| Name               | Description                                             |
-| ------------------ | ------------------------------------------------------- |
-| getPathToDocs      | For internal tooling only - works from `./build` folder |
-| getPathToTemplates | For internal tooling only - works from `./build` folder |
-| getPathToSource    | For internal tooling only - works from `./build` folder |
+  - Alt: If there is no `$TB_HOME/config/mainnet/names/`, fail
+  - Alt: If there is no `$TB_HOME/config/mainnet/allocs/`, fail
