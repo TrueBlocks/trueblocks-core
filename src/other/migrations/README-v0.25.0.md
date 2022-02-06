@@ -2,34 +2,57 @@
 
 ---
 
-(January 2, 2022)
-
-## WORK IN PROGRESS
-
-Do not complete this migration until you are told to do so.
+(February 6, 2022)
 
 ## Why the Change?
 
 With this migration we enter into the world of multi-chain.
 
-While the changes here are pretty simple, they are delicate in the sense that you must edit files and folders on your hard drive. It is possible to damage not only your installation of TrueBlocks, but your computer as a whole if you are not careful. Please don't say we didn't warn you.
+While the changes here are relatively simple, they are delicate in the sense that you must edit configuration files and move folders on your hard drive. It is possible to damage not only your installation of TrueBlocks, but your computer if you are not careful.
+
+Please don't say we didn't warn you.
 
 ### What's Changed
 
-The image below shows the changes you will be making.
+In a certain sense, not much has changed. We added a new command line option to all tools (`--chain`). This had two basic effects: (1) we had to move the location of the `cache` and `unchained` index folders, and (2) we needed to edit one configuration file and move a few others.
 
-It shows a step-by-step process that you will follow in the "Instructions" section below. This is a four step process. The folders you will be moving are in TrueBlocks' $CONFIG folder (`~/.local/share/trueblocks/` on Linux, `~/Library/Application Support/TrueBlocks/` on Mac). If you've already customized these locations in your installation, see the Already Customized section below.
+The image below shows which existing folders have to be moved (by you). When you rebuild TrueBlocks to version 0.25.0 or later, the correct folders will be created during the build. Also, the new versions of the configuration files will be installed.
 
-![Instructions](./migration.24.png)
+The existing config files and folders from the previous version will be left in place.
+
+`chifra` will refuse to run, warning you to complete this migration, until you complete the following steps.
+
+### The Migration in a Single Image
+
+![Instructions](https://github.com/TrueBlocks/trueblocks-core/blob/master/src/other/migrations/migration.25.png)
+
+The above image shows the completed migration you should see after following the step-by-step process below. This is a four step process. The folders you will be moving are in TrueBlocks' $CONFIG folder (`~/.local/share/trueblocks/` on Linux, `~/Library/Application Support/TrueBlocks/` on Mac). If you've already customized these locations in your installation, see the Already Customized section below.
 
 ### Instructions
 
-(1) Find the $CONFIG folder and create a subfolder in that folder
+In the following instructions `$CONFIG` stands for the root configuration folder of TrueBlocks on your computer. On Linux, this means `~/.local/share/trublocks`. On Mac, it's `~/Library/Application Support/TrueBlocks`. (On Windows it doesn't mean anything, as we don't support Windows.)
+
+(0) Stop any long running processes that involved TrueBlocks (such as the scraper). Don't start them again until the migration is completed.
+
+(1) Move the existing installation to a safe place. (Don't copy -- move.)
 
 ```
-cd ~/.local/share/trueblocks           # or ~/Library/Application Support/TrueBlocks on Mac
-mkdir -p mainnet
+mv $CONFIG <safe_place>
 ```
+
+This will leave your home folder as if TrueBlocks has never been installed before. Next, we install TrueBlocks fresh.
+
+From the `./build` folder:
+
+```
+git pull
+git checkout multi-chain-12
+cmake ../src
+make -j 4
+```
+
+Confirm that this creates folders in your $CONFIG folder called `unchained` and `cache`.
+
 
 (2) Move all the files and folders currently in the $CONFIG folder into the new `mainnet` folder (except the `abis` folder and the file `trueBlocks.toml`.
 

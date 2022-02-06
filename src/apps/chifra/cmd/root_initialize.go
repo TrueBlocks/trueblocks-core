@@ -85,8 +85,8 @@ func VerifyMigrations() {
 		log.Fatalf(msg)
 	}
 
-	// // If any of the following folders or files exist, the user has not completed
-	// // the migration. Tell the user and quit.
+	// If any of the following folders or files exist, the user has not completed
+	// the migration. Tell the user and quit.
 	// items := []string{
 	// 	"manifest",
 	// 	"mocked",
@@ -113,14 +113,11 @@ func VerifyMigrations() {
 	// 	}
 	// }
 
-	// fmt.Fprintln(os.Stderr, configPath)
-	// Search for MultiChain
-	// configPath := config.GetPath ToConfig("chains")
-	// if _, err := os.Stat(configPath); err != nil {
-	// 	msg := "\n\n"
-	//     msg += "\tThe multi-chain folder ($CONFIG/chains) was not found. Please complete migration v0.23.0.\n"
-	// 	msg += "\tSee https://github.com/TrueBlocks/trueblocks-core/blob/develop/MIGRATIONS.md\n"
-	//     msg += "\n";
+	// chainConfigPath := config.GetPathToChainConfig("")
+	// if _, err := os.Stat(chainConfigPath); err != nil {
+	// 	msg := strings.Replace(notExist, "{0}", "{"+chainConfigPath+"}", -1)
+	// 	msg = strings.Replace(msg, "{", colors.Green, -1)
+	// 	msg = strings.Replace(msg, "}", colors.Off, -1)
 	// 	log.Fatalf(msg)
-	//}
+	// }
 }

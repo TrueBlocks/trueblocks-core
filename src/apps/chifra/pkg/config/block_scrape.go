@@ -41,7 +41,7 @@ func init() {
 // ReadBlockScrape reads the configuration located in blockScrape.toml file
 func ReadBlockScrape(chain string) *BlockScrape {
 	if !blockScrapeRead {
-		MustReadConfig(blockScrapeViper, &cachedBlockScrape, GetPathToChainConfig(chain))
+		MustReadConfig(blockScrapeViper, &cachedBlockScrape, GetPathToChainConfig(chain) + "blockScrape.toml")
 		blockScrapeRead = true
 	}
 
