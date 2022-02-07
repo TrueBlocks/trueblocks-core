@@ -5,10 +5,12 @@
 package explorePkg
 
 import (
-	"errors"
 	"fmt"
+	"strconv"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -51,27 +53,28 @@ func (opts *ExploreOptions) ValidateExplore() error {
 			} else {
 				urls = append(urls, ExploreUrl{arg, ExploreAddress})
 			}
+			// We got a valid address, we're done checking
 			continue
 		}
 
+		// The argument is not an address, so we can't use --google
 		if opts.Google {
 			return validate.Usage("The {0} option requires {1}.", "--google", "an address term")
 		}
 
 		valid, _ := validate.IsValidTransId(opts.Globals.Chain, []string{arg}, validate.ValidTransId)
 		if valid {
-			txHash, err := id_2_TxHash(arg)
+			txHash, err := id_2_TxHash(opts.Globals.Chain, arg)
 			if err == nil {
 				urls = append(urls, ExploreUrl{txHash, ExploreTx})
 				continue
 			}
+			// an error here is okay since we can't distinquish between tx hashes and block hashes...
 		}
 
 		valid, _ = validate.IsValidBlockId(opts.Globals.Chain, []string{arg}, validate.ValidBlockId)
 		if valid {
-			// TODO: The block number needs to be resolved (for example from a hash)
-			// TODO: or a special block
-			blockHash, err := id_2_BlockHash(arg)
+			blockHash, err := id_2_BlockHash(opts.Globals.Chain, arg)
 			if err == nil {
 				urls = append(urls, ExploreUrl{blockHash, ExploreBlock})
 				continue
@@ -83,7 +86,7 @@ func (opts *ExploreOptions) ValidateExplore() error {
 			continue
 		}
 
-		return validate.Usage("The {0} option ({1}) must {2}.", "term", arg, "be a valid term")
+		return validate.Usage("The {0} option ({1}) must {2}.", "term", arg, "is invalid")
 	}
 
 	if len(urls) == 0 {
@@ -93,29 +96,54 @@ func (opts *ExploreOptions) ValidateExplore() error {
 	return opts.Globals.ValidateGlobals()
 }
 
-func id_2_TxHash(arg string) (string, error) {
-	if strings.Contains(arg, ".") {
-		parts := strings.Split(arg, ".")
-		// we've already checked validity so we can assert(len(parts) == 2)
-		if validate.IsBlockHash(parts[0]) {
-			// call eth_getTransactionByBlockHashAndIndex
-			return "0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060", nil
+// id_2_TxHash takes a valid identifier (txHash/blockHash, blockHash.txId, blockNumber.txId)
+// and returns the transaction hash represented by that identifier. (If it's a valid transaction.
+// It may not be becuase transaction hashes and block hashes are both 32-byte hex)
+func id_2_TxHash(chain, arg string) (string, error) {
+	provider := config.GetRpcProvider(chain)
+
+	// simple case first
+	if !strings.Contains(arg, ".") {
+		// We know it's a hash, but we want to know if it's a legitimate tx on chain
+		return rpcClient.TxHashFromHash(provider, arg)
+	}
+
+	parts := strings.Split(arg, ".")
+	if len(parts) != 2 {
+		panic("Programmer error - valid transaction identifiers with a `.` must have two and only two parts")
+	}
+
+	if validate.IsBlockHash(parts[0]) {
+		txId, err := strconv.ParseUint(parts[1], 10, 64)
+		if err != nil {
+			return "", nil
 		}
-		// call eth_getTransactionByBlockNumberAndIndex
-		return "0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060", nil
+		return rpcClient.TxHashFromHashAndId(provider, parts[0], txId)
 	}
-	// call eth_getTransactionByHash
-	if arg == "0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060" {
-		return arg, nil
+
+	blockNum, err := strconv.ParseUint(parts[0], 10, 64)
+	if err != nil {
+		return "", nil
 	}
-	return "", errors.New("not a transaction")
+	txId, err := strconv.ParseUint(parts[1], 10, 64)
+	if err != nil {
+		return "", nil
+	}
+
+	return rpcClient.TxHashFromNumberAndId(provider, blockNum, txId)
 }
 
-func id_2_BlockHash(arg string) (string, error) {
-	if arg != "0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060" {
-		return arg, nil
+func id_2_BlockHash(chain, arg string) (string, error) {
+	provider := config.GetRpcProvider(chain)
+	if validate.IsBlockHash(arg) {
+		return rpcClient.BlockHashFromHash(provider, arg)
 	}
-	return "", errors.New("not a block hash")
+
+	blockNum, err := strconv.ParseUint(arg, 10, 64)
+	if err != nil {
+		return "", nil
+	}
+	return rpcClient.BlockHashFromNumber(provider, blockNum)
 }
 
 // TODO: Turn off OPT_FMT OPT_VERBOSE
