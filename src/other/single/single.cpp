@@ -18,7 +18,7 @@ int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
     forEveryFileInFolder("./", visitFile, NULL);
     etherlib_cleanup();
-    return 1;
+    return 0;
 }
 
 //----------------------------------------------------------------
