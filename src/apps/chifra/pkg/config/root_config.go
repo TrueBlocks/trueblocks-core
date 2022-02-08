@@ -36,6 +36,7 @@ type chainGroup struct {
 	PinGateway     string `toml:"pinGateway"`
 	RemoteExplorer string `toml:"remoteExplorer"`
 	RpcProvider    string `toml:"rpcProvider"`
+	ApiProvider    string `toml:"apiProvider"`
 	Symbol         string `toml:"symbol"`
 }
 

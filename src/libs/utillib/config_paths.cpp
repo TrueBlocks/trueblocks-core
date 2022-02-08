@@ -42,7 +42,6 @@ namespace qblocks {
         }                                                                                                              \
     }
 
-// TODO: BOGUS - multi-chain
 //---------------------------------------------------------------------------------------------------
 static CConfigEnv g_configEnv;
 const CConfigEnv* getConfigEnv(void) {
@@ -112,7 +111,6 @@ string_q getPathToCommands(const string_q& _part) {
     return getHomeFolder() + ".local/bin/chifra/" + _part;
 }
 
-// TODO: BOGUS - multi-chain
 //-------------------------------------------------------------------------
 // This routine is only used by tools that do not make their way through chifra.
 // (makeClass and testRunner primarily). It mimics the way chifra works to build

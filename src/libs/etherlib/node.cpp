@@ -698,16 +698,10 @@ bool hasTraceAt(const string_q& hashIn, size_t where) {
 
 //-------------------------------------------------------------------------
 bool isTracingNode(void) {
-    // short curcuit for some situations
-    const CToml* config = getGlobalConfig("blockScrape");
-    if (!config->getConfigBool("requires", "tracing", true))
+    // BOGUS - Chain specific -- tracing test
+    if (getChain() != "mainnet")
         return true;
 
-    // BOGUS - CHAIN SPECIFIC - TRACING
-    // At block 50871 (first TraceBlock) transaction 0, (hash:
-    // 0x6df0b4a0d15ae3b925b9819646a0cff4d1bc0a53b294c0d84d884865302d13a5) we know there were exactly 23 traces as per
-    // Parity. We check that here to see if the node is running with --tracing enabled. Not sure how this works with
-    // Geth
     static int answered = int(-1);  // NOLINT
     if (answered != int(-1))        // NOLINT
         return answered;

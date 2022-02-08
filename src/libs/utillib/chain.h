@@ -15,7 +15,7 @@
  * Parts of this file were generated with makeClass --run. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
-#include "etherlib.h"
+#include "utillib.h"
 
 namespace qblocks {
 
@@ -164,5 +164,7 @@ extern const char* STR_DISPLAY_CHAIN;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+extern bool getChainList(CChainArray& chains);
+extern bool findChain(const string_q& needle, CChain& chainOut);
 // EXISTING_CODE
 }  // namespace qblocks

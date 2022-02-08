@@ -1,7 +1,7 @@
 [settings]
 class = CChain
 fields = chain.csv
-includes = etherlib.h
+includes = utillib.h
 cpp_includes =
 doc_group = 04-Admin
 doc_descr = The chain data model carries information about configured chains

@@ -27,10 +27,10 @@ func (opts *GlobalOptions) PassItOn(path string, flags string) error {
 	var env config.ConfigEnv
 	env.Chain = opts.Chain
 	env.ConfigPath = config.GetPathToRootConfig()
-	env.ChainConfigPath = config.GetPathToChainConfig(env.Chain)
+	env.DefaultChain = config.GetDefaultChain()
 	env.CachePath = config.GetPathToCache(env.Chain)
 	env.IndexPath = config.GetPathToIndex(env.Chain)
-	env.DefaultChain = config.GetDefaultChain()
+	env.ChainConfigPath = config.GetPathToChainConfig(env.Chain)
 	env.RpcProvider = config.GetRpcProvider(env.Chain)
 	envStr := env.ToCSV()
 

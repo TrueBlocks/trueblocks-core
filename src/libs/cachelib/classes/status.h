@@ -17,7 +17,6 @@
  */
 #include "etherlib.h"
 #include "cache.h"
-#include "chain.h"
 
 namespace qblocks {
 

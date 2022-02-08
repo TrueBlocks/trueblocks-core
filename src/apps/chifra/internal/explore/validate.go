@@ -19,7 +19,6 @@ type ExploreType uint8
 const (
 	ExploreNone ExploreType = iota
 	ExploreAddress
-	ExploreName
 	ExploreEnsName
 	ExploreTx
 	ExploreBlock
@@ -72,7 +71,7 @@ func (opts *ExploreOptions) ValidateExplore() error {
 			// an error here is okay since we can't distinquish between tx hashes and block hashes...
 		}
 
-		valid, _ = validate.IsValidBlockId(opts.Globals.Chain, []string{arg}, validate.ValidBlockId)
+		valid, _ = validate.IsValidBlockId(opts.Globals.Chain, []string{arg}, validate.ValidBlockIdWithRangeAndDate)
 		if valid {
 			blockHash, err := id_2_BlockHash(opts.Globals.Chain, arg)
 			if err == nil {
@@ -86,7 +85,7 @@ func (opts *ExploreOptions) ValidateExplore() error {
 			continue
 		}
 
-		return validate.Usage("The {0} option ({1}) must {2}.", "term", arg, "is invalid")
+		return validate.Usage("The {0} option ({1}) {2}.", "term", arg, "is not valid")
 	}
 
 	if len(urls) == 0 {
@@ -146,16 +145,12 @@ func id_2_BlockHash(chain, arg string) (string, error) {
 	return rpcClient.BlockHashFromNumber(provider, blockNum)
 }
 
-// TODO: Turn off OPT_FMT OPT_VERBOSE
-// TODO: Read base URLs from config file
 func (t ExploreType) String() string {
 	switch t {
 	case ExploreNone:
 		return "ExploreNone"
 	case ExploreAddress:
 		return "ExploreAddress"
-	case ExploreName:
-		return "ExploreName"
 	case ExploreEnsName:
 		return "ExploreEnsName"
 	case ExploreTx:
@@ -167,46 +162,4 @@ func (t ExploreType) String() string {
 	default:
 		return fmt.Sprintf("%d", t)
 	}
-}
-
-func (u *ExploreUrl) getUrl(opts *ExploreOptions) string {
-	if opts.Google {
-		return "https://www.google.com/search?q=" + u.term + "+-etherscan+-etherchain+-bloxy+-bitquery+-ethplorer+-tokenview+-anyblocks+-explorer"
-	}
-
-	if u.termType == ExploreFourByte {
-		return "https://www.4byte.directory/signatures/?bytes4_signature=" + u.term
-	}
-
-	if u.termType == ExploreEnsName {
-		return "https://etherscan.io/enslookup-search?search=" + u.term
-	}
-
-	// TODO: BOGUS - per chain data
-	url := "https://etherscan.io/"
-	query := ""
-	switch u.termType {
-	case ExploreNone:
-		return url
-	case ExploreTx:
-		query = "tx/" + u.term
-	case ExploreBlock:
-		query = "block/" + u.term
-	case ExploreName:
-		// TODO: we must resolve the name if possible or fail
-		fallthrough
-	case ExploreAddress:
-		fallthrough
-	default:
-		query = "address/" + u.term
-	}
-
-	if opts.Local {
-		url = "http://localhost:1234/"
-		query = strings.Replace(query, "tx/", "explorer/transactions/", -1)
-		query = strings.Replace(query, "block/", "explorer/blocks/", -1)
-		query = strings.Replace(query, "address/", "dashboard/accounts?address=", -1)
-	}
-
-	return url + query
 }

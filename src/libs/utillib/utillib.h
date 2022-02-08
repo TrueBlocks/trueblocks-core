@@ -41,5 +41,6 @@
 #include "markdown.h"
 #include "commandoption.h"
 #include "configenv.h"
+#include "chain.h"
 
 using namespace qblocks;  // NOLINT
