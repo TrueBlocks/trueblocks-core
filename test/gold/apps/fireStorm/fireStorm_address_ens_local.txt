@@ -1,4 +1,4 @@
 chifra explore  trueblocks.eth --local
 TEST[DATE|TIME] Terms:  [trueblocks.eth]
 TEST[DATE|TIME] Local:  true
-Opening https://etherscan.io/enslookup-search?search=trueblocks.eth
+Opening https://app.ens.domains/name/trueblocks.eth/details

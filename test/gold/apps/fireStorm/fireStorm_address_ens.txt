@@ -1,3 +1,3 @@
 chifra explore  trueblocks.eth
 TEST[DATE|TIME] Terms:  [trueblocks.eth]
-Opening https://etherscan.io/enslookup-search?search=trueblocks.eth
+Opening https://app.ens.domains/name/trueblocks.eth/details
