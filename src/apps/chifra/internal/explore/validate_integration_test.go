@@ -12,7 +12,7 @@ import (
 
 func Test_Explore_Validate(t *testing.T) {
 	var opts ExploreOptions
-	opts.Terms = append(opts.Terms, "1001001.1")
+	opts.Terms = append(opts.Terms, "1001001.0")
 	opts.Globals.Chain = "mainnet"
 	err := opts.ValidateExplore()
 	if err != nil {
