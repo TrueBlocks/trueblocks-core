@@ -698,17 +698,13 @@ bool hasTraceAt(const string_q& hashIn, size_t where) {
 
 //-------------------------------------------------------------------------
 bool isTracingNode(void) {
-    // BOGUS - Chain specific -- tracing test
-    if (getChain() != "mainnet")
-        return true;
-
-    static int answered = int(-1);  // NOLINT
-    if (answered != int(-1))        // NOLINT
-        return answered;
-    bool at23 = hasTraceAt("0x6df0b4a0d15ae3b925b9819646a0cff4d1bc0a53b294c0d84d884865302d13a5", 23);
-    bool at24 = hasTraceAt("0x6df0b4a0d15ae3b925b9819646a0cff4d1bc0a53b294c0d84d884865302d13a5", 24);
-    answered = (at23 && !at24);
-    return answered;
+    ostringstream os;
+    os << "[\"";
+    os << str_2_Hash("0x6df0b4a0d15ae3b925b9819646a0cff4d1bc0a53b294c0d84d884865302d13a5");
+    os << "\",[\"";
+    os << uint_2_Hex(23);
+    os << "\"]]";
+    return !contains(callRPC("trace_get", os.str().c_str(), true), "error");
 }
 
 //--------------------------------------------------------------

@@ -7,12 +7,10 @@ package cmd
 import (
 	"fmt"
 	"os"
-	"runtime"
 	"strings"
 
 	"github.com/spf13/cobra"
 
-	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/viper"
 )
 
@@ -63,9 +61,9 @@ var Options OptionsType
 func init() {
 	cobra.OnInitialize(initConfig)
 
-	// TODO: BOGUS - use the environment variables instead of duplicate same function with command line params
-	blazeCmd.PersistentFlags().StringVarP(&Options.rpcProvider, "rpcProvider", "r", "http://localhost:8545", "URL to the node's RPC")
-	blazeCmd.PersistentFlags().StringVarP(&Options.indexPath, "indexPath", "c", "", "The location of TrueBlocks' appearance cache (default \"$CONFIG/unchained\")")
+	var unused1, unused2 string
+	blazeCmd.PersistentFlags().StringVarP(&unused1, "rpcProvider", "r", "http://localhost:8545", "URL to the node's RPC")
+	blazeCmd.PersistentFlags().StringVarP(&unused2, "indexPath", "c", "", "The location of TrueBlocks' appearance cache (default \"$CONFIG/unchained\")")
 	blazeCmd.PersistentFlags().IntVarP(&Options.startBlock, "startBlock", "s", 0, "First block to visit (required)")
 	blazeCmd.PersistentFlags().IntVarP(&Options.block_cnt, "block_cnt", "n", 0, "The number of blocks to scrape (required)")
 	blazeCmd.PersistentFlags().IntVarP(&Options.block_chan_cnt, "block_chan_cnt", "b", 20, "The number of block processors to create (required)")
@@ -75,64 +73,10 @@ func init() {
 	blazeCmd.MarkPersistentFlagRequired("startBlock")
 	blazeCmd.MarkPersistentFlagRequired("block_cnt")
 	blazeCmd.MarkPersistentFlagRequired("ripeBlock")
-}
 
-// initConfig reads in config file and ENV variables if set.
-func initConfig() {
-	fmt.Fprintf(os.Stderr, "Initializing scraper...\n")
-
-	// Find home directory.
-	home, err := homedir.Dir()
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-
-	configPath := "<unset>"
-	// TODO(tjayrush): This should read XDG_CONFIG_HOME and if the folder exists, use it
-	if runtime.GOOS == "darwin" {
-		configPath = home + "/Library/Application Support/TrueBlocks"
-	} else if runtime.GOOS == "linux" {
-		configPath = home + "/.local/share/trueblocks"
-	} else {
-		fmt.Println("Windows not supported.")
-		// TODO(tjayrush): This should fail without proceeding
-	}
-	viper.AddConfigPath(configPath)
-	viper.SetConfigName("trueBlocks")
-	viper.SetConfigType("toml")
-	err = viper.ReadInConfig()
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-
-	// read in environment variables that match
-	viper.SetEnvPrefix("TB")
-	viper.SetEnvKeyReplacer(strings.NewReplacer("SETTINGS.", ""))
-	viper.AutomaticEnv()
-	viper.BindPFlag("settings.rpcProvider", blazeCmd.PersistentFlags().Lookup("rpcProvider"))
-	viper.BindPFlag("settings.indexPath", blazeCmd.PersistentFlags().Lookup("indexPath"))
-	viper.BindEnv("rpcProvider")
-	viper.BindEnv("indexPath")
-
-	// Cleanup
-	Options.rpcProvider = viper.GetString("settings.rpcProvider")
-	if len(Options.rpcProvider) == 0 {
-		fmt.Println("Your rpcProvider is empty. Quitting...")
-		os.Exit(1)
-	}
-	if Options.rpcProvider[len(Options.rpcProvider)-1] != '/' {
-		Options.rpcProvider += "/"
-	}
-
-	Options.indexPath = viper.GetString("settings.indexPath")
-	if Options.indexPath == "" {
-		Options.indexPath = configPath + "/unchained/"
-	}
-	if Options.indexPath[len(Options.indexPath)-1] != '/' {
-		Options.indexPath += "/"
-	}
+	envs := strings.Split(os.Getenv("TB_CONFIG_ENV"), ",")
+	Options.indexPath = envs[4]
+	Options.rpcProvider = envs[6]
 
 	Options.ripePath = Options.indexPath + "ripe/"
 	if _, err := os.Stat(Options.ripePath); os.IsNotExist(err) {
@@ -144,14 +88,11 @@ func initConfig() {
 		os.MkdirAll(Options.unripePath, 0777)
 	}
 
-	if Options.verbose > 8 {
+	if Options.verbose > 4 {
 		fmt.Println("blaze.rpcProvider: ", Options.rpcProvider)
 		fmt.Println("blaze.indexPath:   ", Options.indexPath)
 		fmt.Println("blaze.ripePath:    ", Options.ripePath)
 		fmt.Println("blaze.unripePath:  ", Options.unripePath)
-	}
-
-	if Options.verbose > 4 {
 		fmt.Println("blaze.startBlock:     ", Options.startBlock)
 		fmt.Println("blaze.block_cnt:      ", Options.block_cnt)
 		fmt.Println("blaze.block_chan_cnt: ", Options.block_chan_cnt)
@@ -159,4 +100,23 @@ func initConfig() {
 		fmt.Println("blaze.ripeBlock:      ", Options.ripeBlock)
 		fmt.Println("blaze.verbose:        ", Options.verbose)
 	}
+}
+
+// initConfig reads in config file and ENV variables if set.
+func initConfig() {
+	envs := strings.Split(os.Getenv("TB_CONFIG_ENV"), ",")
+	configPath := envs[1]
+
+	// TODO: The caller should have set up all configuration, so this is probably not needed.
+	viper.AddConfigPath(configPath)
+	viper.SetConfigName("trueBlocks")
+	viper.SetConfigType("toml")
+	err := viper.ReadInConfig()
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	viper.SetEnvPrefix("TB")
+	viper.SetEnvKeyReplacer(strings.NewReplacer("SETTINGS.", ""))
+	viper.AutomaticEnv()
 }

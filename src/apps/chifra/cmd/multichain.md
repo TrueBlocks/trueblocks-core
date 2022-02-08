@@ -1,6 +1,6 @@
 Turn off any tool that only works on mainnet
   -- chifra init
-  -- chifra explore
+      In chifra init if chain != mainnet do not proceed
   -- pricing w/ UniSwap
 
 Remove all BOGUS markers
@@ -16,20 +16,13 @@ Explorer Issues
 	b. Piñata support suggests using folders as well as custom domains
 	c. Is smart contract ready to use (even if it's from EtherScan)?
 
-In chifra init if chain != mainnet do not proceed
-
  - [ ] Other Tools - Turned off for non-mainnet
-  - [ ] `chifra explore` needs to be per chain
   - [ ] `chifra when` is per chain - can we test this? Would need time stamp from multiple chains
   - [ ] `ethslurp` won't work per chain.  The Etherscan API needs to be adjusted per chain
   - [ ] `chifra init` doesn't currently work per chain.  There is no manifest.
 
 ### Open Questions
 ----
-- [ ] Block Scraper
-  - [ ] The function initConfig() in blaze needs attention vis-a-vi paths (we should be able to use the chifra paths directly)
-  - [ ] Blaze has command line options to explicitly take the paths
-  - [ ] We should be able to remove the 'requires' options (tracing, parity -- balances already removed) in blockScrape.toml
 
 - [ ] Docs
   - [ ] ./docs/content/chifra/configs.md needs work
@@ -96,6 +89,11 @@ In chifra init if chain != mainnet do not proceed
   - [x] Add chain and network/chainid to meta data
   - [x] We need to fix the install files. XDG is present, but does it work?
   - [x] Make sure blockScrape.toml is in the correct location after install
+  - [x] Block Scraper
+  - [x] The function init Config() in blaze needs attention vis-a-vi paths (we should be able to use the chifra paths directly)
+  - [x] Blaze has command line options to explicitly take the paths
+  - [x] We should be able to remove the 'requires' options (tracing, parity -- balances already removed) in blockScrape.toml
+  - [x] `chifra explore` needs to be per chain
 
 ### Docs
 
