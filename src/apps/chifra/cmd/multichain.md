@@ -1,7 +1,3 @@
-Turn off any tool that only works on mainnet
-  -- pricing w/ UniSwap
-      Uniswap pricing of reconciliations obviously doesn't work on non-main net.
-
 Remove all BOGUS markers
 
  - [ ] Other Tools - Turned off for non-mainnet
