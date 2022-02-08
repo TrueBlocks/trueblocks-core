@@ -1,10 +1,5 @@
 Remove all BOGUS markers
 
- - [ ] Other Tools - Turned off for non-mainnet
-  - [ ] `chifra when` is per chain - can we test this? Would need time stamp from multiple chains
-  - [ ] `ethslurp` won't work per chain.  The Etherscan API needs to be adjusted per chain
-  - [ ] `chifra init` doesn't currently work per chain.  There is no manifest.
-
 - [ ] Docs
   - [ ] ./docs/content/chifra/configs.md needs work
   - [ ] Must document running against private networks and how one must configure the scraper for smaller chunks
