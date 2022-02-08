@@ -47,6 +47,7 @@ func (opts *AbisOptions) FindInternal() error {
 	})
 	defer checkOne.Release()
 
+	// TODO: UnchainedIndex --> This could be part of unchained index
 	sigsFile, err := os.Open(config.GetPathToRootConfig() + "abis/known-000/uniq_sigs.tab")
 	if err != nil {
 		return err
@@ -58,6 +59,7 @@ func (opts *AbisOptions) FindInternal() error {
 	sigsScanner := bufio.NewScanner(sigsFile)
 	sigsScanner.Split(bufio.ScanLines)
 
+	// TODO: UnchainedIndex --> This could be part of unchained index
 	funcsFile, _ := os.Open(config.GetPathToRootConfig() + "abis/known-000/uniq_funcs.tab")
 	defer func() {
 		funcsFile.Close()

@@ -36,6 +36,7 @@ blknum_t firstTransactionBlock(void) {
 
 blknum_t hardForkBlock(const string_q& hf) {
     // This data was taken from Geth ./params/config.go
+    // TODO: UnchainedIndex --> This could be part of unchained index
     if (hf == "byzantium") {
         map<string_q, blknum_t> theMap = {
             make_pair("kovan", 5067000),

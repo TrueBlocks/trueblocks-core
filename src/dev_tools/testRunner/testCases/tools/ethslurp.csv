@@ -19,6 +19,7 @@ on      ,both ,fast  ,slurp ,tools/ethslurp ,fmt_csv                  ,n    ,add
 on      ,both ,fast  ,slurp ,tools/ethslurp ,fmt_api                  ,y    ,addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & types = int & blocks = 0-7000000 & fmt = api
 on      ,both ,fast  ,slurp ,tools/ethslurp ,fmt_json                 ,y    ,addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & types = int & blocks = 0-7000000 & fmt = json
 on      ,cmd  ,fast  ,slurp ,tools/ethslurp ,fmt_junk                 ,y    ,addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & types = int & blocks = 0-7000000 & fmt = junk
+on      ,both ,fast  ,slurp ,tools/ethslurp ,fmt_txt_rink             ,n    ,addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & types = int & blocks = 0-7000000 & fmt = txt & chain = rinkeby
 
 off     ,cmd  ,medi  ,slurp ,tools/ethslurp ,no_record_in_block_range ,n    ,addrs = 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 & blocks = 0-1
 off     ,cmd  ,medi  ,slurp ,tools/ethslurp ,not_found_address        ,n    ,addrs = 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b5

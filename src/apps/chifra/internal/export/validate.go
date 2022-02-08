@@ -5,6 +5,7 @@
 package exportPkg
 
 import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -29,6 +30,10 @@ func (opts *ExportOptions) ValidateExport() error {
 
 	if len(opts.SummarizeBy) > 0 && !opts.Accounting {
 		return validate.Usage("The {0} option is available only with {1}.", "--summarized_by", "--accounting")
+	}
+
+	if opts.Accounting && opts.Globals.Chain != "mainnet" {
+		logger.Log(logger.Warning, "The --accounting option reports a spotPrice of one for all assets on non-mainnet chains.")
 	}
 
 	return opts.Globals.ValidateGlobals()
