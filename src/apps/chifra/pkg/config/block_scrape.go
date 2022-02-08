@@ -8,7 +8,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-// TODO: BOGUS - PROBABLY NOT OKAY SINCE IT IS PER-CHAIN
+// TODO: This needs to be per-chain -- see the timestamps cached-in-memory data
 var blockScrapeViper = viper.New()
 var blockScrapeRead = false
 var cachedBlockScrape BlockScrape
@@ -41,7 +41,7 @@ func init() {
 // ReadBlockScrape reads the configuration located in blockScrape.toml file
 func ReadBlockScrape(chain string) *BlockScrape {
 	if !blockScrapeRead {
-		MustReadConfig(blockScrapeViper, &cachedBlockScrape, GetPathToChainConfig(chain) + "blockScrape.toml")
+		MustReadConfig(blockScrapeViper, &cachedBlockScrape, GetPathToChainConfig(chain)+"blockScrape.toml")
 		blockScrapeRead = true
 	}
 

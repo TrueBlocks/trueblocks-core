@@ -1,5 +1,3 @@
-Remove all BOGUS markers
-
 - [ ] Docs
   - [ ] ./docs/content/chifra/configs.md needs work
   - [ ] Must document running against private networks and how one must configure the scraper for smaller chunks
