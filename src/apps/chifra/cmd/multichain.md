@@ -2,47 +2,27 @@ Turn off any tool that only works on mainnet
   -- chifra init
       In chifra init if chain != mainnet do not proceed
   -- pricing w/ UniSwap
+      Uniswap pricing of reconciliations obviously doesn't work on non-main net.
 
 Remove all BOGUS markers
-
-Explorer Issues
-------------------
-5. How do I makes sure the keypress doesn't bubble up?
-6. How do I clear the position of the row for new addresses?
-8. When I click on an option to the right it takes the focus, but I want the table to have the focus.
-
-4. chunkMan
-	a. I have a bunch of index/bloom files, can I generate pins
-	b. Piñata support suggests using folders as well as custom domains
-	c. Is smart contract ready to use (even if it's from EtherScan)?
 
  - [ ] Other Tools - Turned off for non-mainnet
   - [ ] `chifra when` is per chain - can we test this? Would need time stamp from multiple chains
   - [ ] `ethslurp` won't work per chain.  The Etherscan API needs to be adjusted per chain
   - [ ] `chifra init` doesn't currently work per chain.  There is no manifest.
 
-### Open Questions
-----
-
 - [ ] Docs
   - [ ] ./docs/content/chifra/configs.md needs work
   - [ ] Must document running against private networks and how one must configure the scraper for smaller chunks
   - [ ] Make a note in the docs of where things fall short - uniswap, no index other than a,b,c chains
   - [ ] Make a note in docs about what is and what is not indexed by us
-
-- [ ] Chifra Export
-  - [ ] Uniswap pricing of reconciliations obviously doesn't work on non-main net.
-
-- [ ] What we need in the manifest
-  - [ ] timestamps in the smart contract
-
-- [ ] Other
-  - [ ] rpc must follow chain to valid RPC (with tracing!)
-  - [ ] we should force the user to tell us the chain id when the add a new chain and then 
-  - [ ] check it against the RPC we get if it's new and we've never seen it before. Save
-  - [ ] that info away so we don't have to do the same every command
+  - [ ] We need to document the way these paths work in the website (search for XDG to find out where)
 
 - [x] Closed Issues
+  - [x] rpc must follow chain to valid RPC (with tracing!)
+  - [x] we should force the user to tell us the chain id when the add a new chain and then 
+  - [x] check it against the RPC we get if it's new and we've never seen it before. Save
+  - [x] that info away so we don't have to do the same every command
   - [x] `chifra init --chain unknown_chain` should fail gracefully
   - [x] Create a different Pinata account for each chain: gnosis.unchainedindex.io, etc.
   - [x] What about the bytzantium hard fork -- is there block number specific behaviour? (probably -- for ETC for example)
@@ -63,7 +43,7 @@ Explorer Issues
   - [x] TrueBlocks and other config file
   - [x] Should it have any per-chain data (probably not) (NO)
   - [x] Need to be able to 'merge' toml files so we can have top-level settings and per-chain overlay (Viper makes this easy)
-  - [x] Don't expose IndexPath and CachePath (or any config settings) directly. Hide behind function or use a map<string, string>
+  - [x] Don't expose IndexPath and CachePath (or any config settings) directly.
   - [x] User provides his/her own chain id. We query the chain at the RPC and verify we're connected to the rigth chain
   - [x] Config items should be able to be read from top-level and overlaid with chain specific config
   - [x] If a new chain is presented, create it under the valid `config`, `cache`, and `index` folders - i.e. establish
@@ -73,7 +53,7 @@ Explorer Issues
   - [x] Test XDG varables somehow
   - [x] Add test cases for XDG both valid and not valid
   - [x] If the path comes from XDG it must both exist and be fully resolved, otherwise fail
-  - [x] If the path contains `cache` or `unchained` or end with one one of the caches or index folders, fail without proceeding (not true -- let the user specify any path they want)
+  - [x] If the path contains `cache` or `unchained` or end with one one of the caches or index folders
   - [x] The prefund values per chain are in the repo but not being used
   - [x] We need to use the `--chain` option when building paths
   - [x] Rename all path routines from `getXXXPath` to `getPathToXXX` so we can find them more easily
@@ -94,10 +74,6 @@ Explorer Issues
   - [x] Blaze has command line options to explicitly take the paths
   - [x] We should be able to remove the 'requires' options (tracing, parity -- balances already removed) in blockScrape.toml
   - [x] `chifra explore` needs to be per chain
-
-### Docs
-
-- [ ] We need to document the way these paths work in the website (search for XDG to find out where)
 
 ### Steps to Migrate
 ---

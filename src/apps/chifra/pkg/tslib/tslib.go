@@ -58,6 +58,13 @@ func DateFromBn(chain string, bn uint64) (string, error) {
 
 // DateFromName returns a chain-specific date (if found) given its chain-specific name
 func DateFromName(chain, needle string) time.Time {
+	specials, _ := GetSpecials(chain)
+	if len(specials) == 0 {
+		date, _ := DateFromBn(chain, 0)
+		dt, _ := dateparse.ParseLocal(date)
+		return dt
+	}
+
 	if needle == "latest" {
 		ts := rpcClient.GetBlockTimestamp(chain, rpcClient.GetMetaData(chain, false).Latest)
 		date, _ := DateFromTs(ts)
@@ -65,7 +72,6 @@ func DateFromName(chain, needle string) time.Time {
 		return dt
 	}
 
-	specials, _ := GetSpecials(chain)
 	for _, value := range specials {
 		if value.Name == needle {
 			date, _ := DateFromBn(chain, value.BlockNumber)
