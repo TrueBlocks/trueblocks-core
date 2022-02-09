@@ -497,6 +497,15 @@ names?
       "description": ""
     },
     {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x0077cd5eca22e86177cc465633227652ff02f32d",
+      "name": "BrightID_Main_DAO",
+      "symbol": "BMAIN",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
       "tags": "31-Gitcoin:Grants",
       "address": "0x007b003c4d0145b512286494d5ae123aeef29d9e",
       "name": "Grant 0845 Remote Developer Bootcamp",
@@ -1798,15 +1807,6 @@ names?
       "name": "Chainlink DAI-ETH Aggregator",
       "symbol": "",
       "source": "EtherScan.io",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "31-Gitcoin:Grants",
-      "address": "0x0384610bf8e9292ec499145cb126e32a17e7ccd6",
-      "name": "Grant 3475 - Nectar: L2 + Healthcare",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/3475/nectar-l2-healthcare",
       "decimals": 0,
       "description": ""
     }

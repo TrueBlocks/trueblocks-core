@@ -364,6 +364,14 @@ TEST[DATE|TIME] Format:  json
     "source": "TrueBlocks.io"
   },
   {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x0077cd5eca22e86177cc465633227652ff02f32d",
+    "name": "BrightID_Main_DAO",
+    "symbol": "BMAIN",
+    "source": "On chain",
+    "decimals": 18
+  },
+  {
     "tags": "31-Gitcoin:Grants",
     "address": "0x007b003c4d0145b512286494d5ae123aeef29d9e",
     "name": "Grant 0845 Remote Developer Bootcamp",
@@ -1367,10 +1375,4 @@ TEST[DATE|TIME] Format:  json
     "address": "0x037e8f2125bf532f3e228991e051c8a7253b642c",
     "name": "Chainlink DAI-ETH Aggregator",
     "source": "EtherScan.io"
-  },
-  {
-    "tags": "31-Gitcoin:Grants",
-    "address": "0x0384610bf8e9292ec499145cb126e32a17e7ccd6",
-    "name": "Grant 3475 - Nectar: L2 + Healthcare",
-    "source": "https://gitcoin.co/grants/3475/nectar-l2-healthcare"
   }] }

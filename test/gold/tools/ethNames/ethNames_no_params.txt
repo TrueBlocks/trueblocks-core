@@ -55,6 +55,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x006bea43baa3f7a6f765f14f10a1a1b08334ef45	Stox	STX		18
 31-Contracts:Giveth Project	0x006cfc89e7f521ce3290b200df9530dce911b896	St. Ignatius Martyr Catholic Church
 80-Malicious:Shanghai	0x006e61aa7e7ce25b8dad331d5181f2fbe5c23a54	Shanghai Cleaner Contract
+50-Tokens:ERC20	0x0077cd5eca22e86177cc465633227652ff02f32d	BrightID_Main_DAO	BMAIN		18
 31-Gitcoin:Grants	0x007b003c4d0145b512286494d5ae123aeef29d9e	Grant 0845 Remote Developer Bootcamp
 91-Early:Addresses	0x007d42b9192b8c087b0d3e6ef73aae48e74b41c1	Ethventures4
 50-Tokens:ERC20	0x007d63afd542886570046da400c403f0dc63bd08	Zō Baby 象の赤ちゃん	ZOBABY		18
@@ -200,4 +201,3 @@ tags	address	name	symbol	decimals
 31-Gitcoin:Grants	0x03798c0d62e6a0b0548114fb6241efa07ca4122d	Grant 4257 - Reputable DAO
 31-Gitcoin:Grants	0x037e414abacc799a598314153509b6b967608bf9	Grant 3059 - CO2KEN — Carbon as a money lego
 37-SelfDestructed	0x037e8f2125bf532f3e228991e051c8a7253b642c	Chainlink DAI-ETH Aggregator
-31-Gitcoin:Grants	0x0384610bf8e9292ec499145cb126e32a17e7ccd6	Grant 3475 - Nectar: L2 + Healthcare
