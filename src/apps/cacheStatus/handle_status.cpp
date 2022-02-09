@@ -85,6 +85,7 @@ bool COptions::handle_status(ostream& os) {
         } else {
             LOG8("Read from cache");
         }
+        LOG_PROGRESS("Completed", index.nFiles, index.nFiles, "");
         status.caches.push_back(&index);
     }
 
