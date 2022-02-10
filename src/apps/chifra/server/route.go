@@ -25,6 +25,10 @@ type Routes []Route
 func NewRouter() *mux.Router {
 	router := mux.NewRouter().StrictSlash(true)
 	router.Use(CorsHandler)
+	router.
+		Methods("OPTIONS").
+		Handler(OptionsHandler)
+
 	for _, route := range routes {
 		var handler http.Handler
 		handler = route.HandlerFunc
