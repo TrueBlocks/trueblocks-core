@@ -1,4 +1,15 @@
-- [ ] Docs
+Folders to remove
+	Anything of our cache names in the top level cache
+	Any of our five folders in unchained
+	Any thing in the top level other than
+		trueBlocks.toml
+		cache folder
+		abis folder
+		config folder
+		unchained folder
+
+
+	- [ ] Docs
   - [ ] ./docs/content/chifra/configs.md needs work
   - [ ] Must document running against private networks and how one must configure the scraper for smaller chunks
   - [ ] Make a note in the docs of where things fall short - uniswap, no index other than a,b,c chains
