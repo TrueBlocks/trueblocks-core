@@ -254,7 +254,8 @@ bool COptions::handle_status(ostream& os) {
         status.caches.push_back(&prices);
     }
 
-    getChainList(status.chains);
+    if (origMode.empty() || origMode == "all" || origMode == "some")
+        getChainList(status.chains);
     status.toJson(os);
 
     EXIT_NOMSG(true);
