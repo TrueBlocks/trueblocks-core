@@ -62,6 +62,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x006bea43baa3f7a6f765f14f10a1a1b08334ef45	Stox	STX		18
 31-Contracts:Giveth Project	0x006cfc89e7f521ce3290b200df9530dce911b896	St. Ignatius Martyr Catholic Church
 80-Malicious:Shanghai	0x006e61aa7e7ce25b8dad331d5181f2fbe5c23a54	Shanghai Cleaner Contract
+50-Tokens:ERC20	0x0077cd5eca22e86177cc465633227652ff02f32d	BrightID_Main_DAO	BMAIN		18
 31-Gitcoin:Grants	0x007b003c4d0145b512286494d5ae123aeef29d9e	Grant 0845 Remote Developer Bootcamp
 91-Early:Addresses	0x007d42b9192b8c087b0d3e6ef73aae48e74b41c1	Ethventures4
 50-Tokens:ERC20	0x007d63afd542886570046da400c403f0dc63bd08	Zō Baby 象の赤ちゃん	ZOBABY		18
@@ -203,4 +204,3 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x0360b415b56bd77def7ffd64ab9c0a9f63a84e4f	NL	NL Token		18
 50-Tokens:ERC20	0x036407f23d5e1c1486f7488332cf54bf06e5f09f	Alphabit	ABC		18
 50-Tokens:ERC20	0x036ea7048a4c1f28b299b9dd9e3c9fe9022e2a2a	ShibAkita Inu	SHIBAKITA		18
-50-Tokens:ERC20	0x0371a82e4a9d0a4312f3ee2ac9c6958512891372	Student Coin	STU		18

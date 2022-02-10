@@ -632,6 +632,15 @@ names?terms=etwork
       "description": ""
     },
     {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x8ea197328f3d72e148af942d9ea93f9cfb40626b",
+      "name": "Not Aragon Network DAO launch council",
+      "symbol": "NOTANLC",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
       "tags": "31-Gitcoin:Grants",
       "address": "0x904065ba663879deb7e5f902220e7db97cbf04af",
       "name": "Grant 0681 Flowstake - Activity Staking Blockchain Network",
@@ -683,6 +692,15 @@ names?terms=etwork
       "symbol": "",
       "source": "0xTracker",
       "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x9bde098be22658d057c3f1f185e3fd4653e2fbd1",
+      "name": "KP2R.Network",
+      "symbol": "KP2R",
+      "source": "On chain",
+      "decimals": 18,
       "description": ""
     },
     {
@@ -828,6 +846,15 @@ names?terms=etwork
       "source": "https://gitcoin.co/grants/338/2key-network-labs",
       "decimals": 0,
       "description": "https://2key.network"
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0xb5261ca6b24103cf5d3784612b179b51913d4186",
+      "name": "Aragon Network governor council",
+      "symbol": "ANGC",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
     },
     {
       "tags": "31-Gitcoin:Grants",
