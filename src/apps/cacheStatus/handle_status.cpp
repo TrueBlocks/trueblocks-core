@@ -254,7 +254,7 @@ bool COptions::handle_status(ostream& os) {
         status.caches.push_back(&prices);
     }
 
-    if (origMode.empty() || origMode == "all" || origMode == "some")
+    if (origMode.empty() || contains(origMode, "all") || contains(origMode, "some"))
         getChainList(status.chains);
     status.toJson(os);
 

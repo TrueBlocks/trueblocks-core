@@ -477,6 +477,52 @@ paths:
                       $ref: "#/components/schemas/monitor"
         "400":
           description: bad input parameter
+    delete:
+      summary: Delete, undelete, or remove a monitor
+      operationId: accounts-monitors
+      parameters:
+        - name: addrs
+          description: one or more addresses (0x...) to process
+          required: true
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: address
+        - name: delete
+          description: delete a monitor, but do not remove it
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: undelete
+          description: undelete a previously deleted monitor
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: remove
+          description: remove a previously deleted monitor
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: Deleted
+        "404":
+          description: id not found
+        "401":
+          description: Unauthorized
   /names:
     get:
       tags:
