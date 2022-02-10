@@ -12,6 +12,7 @@ import (
 	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 type NamedBlock struct {
@@ -26,7 +27,9 @@ func GetSpecials(chain string) ([]NamedBlock, error) {
 	specialsPath := config.GetPathToChainConfig(chain) + "specials.csv"
 	_, err := os.Stat(specialsPath)
 	if err != nil {
-		return nil, errors.New("Special blocks file (" + specialsPath + ") not found.")
+		// It's okay if there are no specials for a certain chain
+		logger.Log(logger.Info, "No special block file found for chain ", chain)
+		return []NamedBlock{}, nil
 	}
 
 	file, err := os.Open(specialsPath)
