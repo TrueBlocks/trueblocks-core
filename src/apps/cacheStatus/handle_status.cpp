@@ -117,6 +117,7 @@ bool COptions::handle_status(ostream& os) {
             //            monitors.writeBinaryCache("monitors", details);
             LOG4("done writing cache");
         }
+        SHOW_FIELD(CMonitorCacheItem, "deleted");
         status.caches.push_back(&monitors);
     }
 
