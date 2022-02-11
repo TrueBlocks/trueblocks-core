@@ -4,21 +4,21 @@ lastExport       ,blknum  ,           ,       ,      ,true    ,          ,      
 firstAppearance  ,blknum  ,           ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,        ,
 latestAppearance ,blknum  ,UINT_MAX   ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,        ,
 lastVisitedBlock ,blknum  ,           ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,        ,
-sizeInBytes      ,uint64  ,           ,       ,      ,true    ,true      ,        ,      ,         ,4   ,     ,        ,the size of this monitor on disc
-nApps            ,blknum  ,           ,       ,      ,        ,          ,true    ,      ,true     ,1   ,     ,        ,the number of appearances for this monitor
-firstApp         ,blknum  ,           ,       ,      ,        ,          ,true    ,      ,true     ,2   ,     ,        ,the first block at which this address appears
-latestApp        ,blknum  ,           ,       ,      ,        ,          ,true    ,      ,true     ,3   ,     ,        ,the latest block at which this address appears
+sizeInBytes      ,uint64  ,           ,       ,      ,true    ,true      ,        ,      ,         ,4   ,4    ,        ,the size of this monitor on disc
+nApps            ,blknum  ,           ,       ,      ,        ,          ,true    ,      ,true     ,1   ,1    ,        ,the number of appearances for this monitor
+firstApp         ,blknum  ,           ,       ,      ,        ,          ,true    ,      ,true     ,2   ,2    ,        ,the first block at which this address appears
+latestApp        ,blknum  ,           ,       ,      ,        ,          ,true    ,      ,true     ,3   ,3    ,        ,the latest block at which this address appears
 path             ,string  ,           ,       ,      ,        ,          ,        ,true  ,         ,    ,     ,        ,
-address          ,address ,           ,       ,      ,        ,          ,true    ,      ,true     ,6   ,     ,        ,the address being monitored
-decimals         ,uint64  ,           ,       ,      ,        ,          ,        ,true  ,         ,    ,     ,        ,
-deleted          ,bool    ,           ,       ,      ,        ,          ,        ,true  ,         ,    ,     ,        ,
+address          ,address ,           ,       ,      ,        ,          ,true    ,      ,true     ,6   ,6    ,        ,the address being monitored
+decimals         ,uint64  ,           ,       ,      ,        ,          ,true    ,      ,true     ,    ,     ,        ,
 description      ,string  ,           ,       ,      ,        ,          ,        ,true  ,         ,    ,     ,        ,
-isContract       ,bool    ,           ,       ,      ,        ,          ,        ,true  ,         ,    ,     ,        ,
-isCustom         ,bool    ,           ,       ,      ,        ,          ,true    ,      ,true     ,8   ,     ,        ,`true` if this address is customized
+isContract       ,bool    ,           ,       ,      ,        ,          ,true    ,      ,true     ,    ,     ,        ,
+isCustom         ,bool    ,           ,       ,      ,        ,          ,true    ,      ,true     ,8   ,8    ,        ,`true` if this address is customized
 isErc20          ,bool    ,           ,       ,      ,        ,          ,        ,true  ,         ,    ,     ,        ,
 isErc721         ,bool    ,           ,       ,      ,        ,          ,        ,true  ,         ,    ,     ,        ,
 isPrefund        ,bool    ,           ,       ,      ,        ,          ,        ,true  ,         ,    ,     ,        ,
-name             ,string  ,           ,       ,      ,        ,          ,        ,true  ,         ,7   ,     ,        ,the name given to this address
+name             ,string  ,           ,       ,      ,        ,          ,true    ,      ,true     ,7   ,7    ,        ,the name given to this address
 source           ,string  ,           ,       ,      ,        ,          ,true    ,      ,true     ,    ,     ,        ,
-symbol           ,string  ,           ,       ,      ,        ,          ,        ,true  ,         ,    ,     ,        ,
-tags             ,string  ,           ,       ,      ,        ,          ,true    ,      ,true     ,5   ,     ,        ,the tag given to this address
+symbol           ,string  ,           ,       ,      ,        ,          ,true    ,      ,true     ,    ,     ,        ,
+tags             ,string  ,           ,       ,      ,        ,          ,true    ,      ,true     ,5   ,5    ,        ,the tag given to this address
+deleted          ,bool    ,           ,       ,      ,        ,          ,true    ,      ,true     ,9   ,9    ,        ,`true` if deleted&#44; `false` otherwise

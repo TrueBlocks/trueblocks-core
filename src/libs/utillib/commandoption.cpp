@@ -962,8 +962,10 @@ string_q CCommandOption::toApiPath(const string_q& inStr, const string_q& exampl
     if (!isApiRoute(api_route))
         return "";
 
+    bool hasDelete = false;
     ostringstream paramStream;
     for (auto param : *(CCommandOptionArray*)params) {
+        hasDelete |= contains(param.longName, "deleteMe");
         replace(param.longName, "deleteMe", "delete");
         if (param.longName.empty() || !param.is_visible_docs)
             continue;
@@ -1025,6 +1027,7 @@ string_q CCommandOption::toApiPath(const string_q& inStr, const string_q& exampl
     replaceAll(ret, "[{PARAMS}]", paramStream.str());
     replaceAll(ret, "[{SUMMARY}]", summary);
     replaceAll(ret, "[{DESCR}]", description);
+    replaceAll(ret, "[{DELETE}]", hasDelete ? "X\n" : "");
     replaceAll(ret, "[{ID}]", toLower(substitute(grp, " ", "") + "-" + api_route));
     return ret;
 }
@@ -1075,7 +1078,7 @@ string_q CCommandOption::getSchema(void) const {
     if (contains(data_type, "boolean")) {
         return lead + "type: " + "boolean";
 
-    } else if (contains(data_type, "uint") || contains(data_type, "double")) {
+    } else if (contains(data_type, "uint") || contains(data_type, "double") || contains(data_type, "blknum")) {
         return lead + "type: " + "number";
 
     } else if (contains(data_type, "enum")) {
@@ -1121,7 +1124,8 @@ const char* STR_PATH_YAML =
     "            application/json:\n"
     "              schema:\n"
     "[{PROPERTIES}][{EXAMPLE}]        \"400\":\n"
-    "          description: bad input parameter\n";
+    "          description: bad input parameter\n"
+    "[{DELETE}]";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_PARAM_YAML =
