@@ -221,6 +221,7 @@ var routes = Routes{
 	Route{"RouteQuotes", "GET", "/quotes", RouteQuotes},
 	Route{"RouteSlurp", "GET", "/slurp", RouteSlurp},
 	// END_ROUTE_ITEMS
+	Route{"DeleteMonitors", "DELETE", "/monitors", RouteMonitors},
 }
 
 // By removing, inserting into, or altering any lines of code in this
