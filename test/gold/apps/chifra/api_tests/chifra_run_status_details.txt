@@ -32,6 +32,7 @@ status?details&firstBlock=1400000&lastBlock=2000000
           "addrs": [],
           "items": [
             {
+              "deleted": false,
               "type": "",
               "nApps": 0,
               "firstApp": 0,

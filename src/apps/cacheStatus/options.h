@@ -31,6 +31,7 @@ class COptions : public CAbiOptions {
 
     CStatus status;
     string_q mode;
+    string_q origMode;
     CIndexHashMap bloomHashes;
     CIndexHashMap indexHashes;
     blkrange_t scanRange;

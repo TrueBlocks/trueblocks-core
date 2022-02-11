@@ -158,6 +158,7 @@ bool COptions::parseArguments(string_q& command) {
 
     for (auto m : modes)
         mode += (m + "|");
+    origMode = mode;
 
     if (!isTestMode() && (first_block != 0 || (last_block != NOPOS && last_block != 0)))
         return usage("--first_block (" + uint_2_Str(first_block) + ") and --last_block (" + uint_2_Str(last_block) +

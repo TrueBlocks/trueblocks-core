@@ -23,6 +23,7 @@ status?details&modes=abis%20caches%20monitors&types=slurps
           "addrs": [],
           "items": [
             {
+              "deleted": false,
               "type": "",
               "nApps": 0,
               "firstApp": 0,
@@ -92,28 +93,7 @@ status?details&modes=abis%20caches%20monitors&types=slurps
           "isValid": true
         }
       ],
-      "chains": [
-        {
-          "chain": "mainnet",
-          "chainId": 1,
-          "symbol": "ETH",
-          "rpcProvider": "--provider-mainnet--",
-          "apiProvider": "--provider-mainnet--",
-          "remoteExplorer": "--explorer-mainnet--",
-          "localExplorer": "--explorer-mainnet--",
-          "pinGateway": "--gateway-mainnet--"
-        },
-        {
-          "chain": "gnosis",
-          "chainId": 100,
-          "symbol": "XDAI",
-          "rpcProvider": "--provider-gnosis--",
-          "apiProvider": "--provider-gnosis--",
-          "remoteExplorer": "--explorer-gnosis--",
-          "localExplorer": "--explorer-gnosis--",
-          "pinGateway": "--gateway-gnosis--"
-        }
-      ],
+      "chains": [],
       "date": "--date--"
     }
   ],

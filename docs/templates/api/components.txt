@@ -27,9 +27,15 @@ components:
           type: string
           format: address
           description: "the address being monitored"
+        name:
+          type: string
+          description: "the name given to this address"
         isCustom:
           type: boolean
           description: "`true` if this address is customized"
+        deleted:
+          type: boolean
+          description: "`true` if deleted, `false` otherwise"
     appearance:
       description: "a single appearance of an address anywhere in the chain in the form of blockNumber.transactionIndex"
       type: object
@@ -631,11 +637,6 @@ components:
           type: string
           example: "one of 'EOA' or 'Contract'"
           description: "the type of the address at the given block"
-        ether:
-          type: number
-          format: double
-          example: 0.25884369
-          description: "the balance of the address in ethers"
     result:
       description: "the result of a call to a smart contract"
       type: object
@@ -811,6 +812,14 @@ components:
           type: ipfshash
           example: "QmTbYpR...qWLj44"
           description: "the IPFS hash of the index chunk at that range"
+        firstApp:
+          type: number
+          format: blknum
+          description: "the first appearance in the chunk"
+        latestApp:
+          type: number
+          format: blknum
+          description: "the latest appearance in the chunk"
     manifest:
       description: "a manifest of the IPFS hashes created for the unchained index"
       type: object

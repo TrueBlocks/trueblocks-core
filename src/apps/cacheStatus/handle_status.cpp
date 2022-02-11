@@ -85,6 +85,8 @@ bool COptions::handle_status(ostream& os) {
         } else {
             LOG8("Read from cache");
         }
+        if (!origMode.empty())
+            LOG_PROGRESS("Completed", index.nFiles, index.nFiles, "");
         status.caches.push_back(&index);
     }
 
@@ -115,6 +117,7 @@ bool COptions::handle_status(ostream& os) {
             //            monitors.writeBinaryCache("monitors", details);
             LOG4("done writing cache");
         }
+        SHOW_FIELD(CMonitorCacheItem, "deleted");
         status.caches.push_back(&monitors);
     }
 
@@ -253,7 +256,8 @@ bool COptions::handle_status(ostream& os) {
         status.caches.push_back(&prices);
     }
 
-    getChainList(status.chains);
+    if (origMode.empty() || contains(origMode, "all") || contains(origMode, "some"))
+        getChainList(status.chains);
     status.toJson(os);
 
     EXIT_NOMSG(true);

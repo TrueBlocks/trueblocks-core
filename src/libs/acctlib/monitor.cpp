@@ -374,7 +374,16 @@ const CBaseNode* CMonitor::getObjectAt(const string_q& fieldName, size_t index) 
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_MONITOR = "";
+const char* STR_DISPLAY_MONITOR =
+    "[{NAPPS}]\t"
+    "[{FIRSTAPP}]\t"
+    "[{LATESTAPP}]\t"
+    "[{SIZEINBYTES}]\t"
+    "[{TAGS}]\t"
+    "[{ADDRESS}]\t"
+    "[{NAME}]\t"
+    "[{ISCUSTOM}]\t"
+    "[{DELETED}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

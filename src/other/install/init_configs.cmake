@@ -83,7 +83,9 @@ CopyIgnorePresent (${INSTALL_SOURCE}/mocked/               "monitors.tar.gz"    
 CopyIgnorePresent (${INSTALL_SOURCE}/prices/               "poloniex_USDT_ETH.bin.gz" ${INSTALL_DEST}/config/mainnet/        )
 CopyIgnorePresent (${INSTALL_SOURCE}/prices/               "ts.bin.gz"                ${INSTALL_DEST}/config/mainnet/        )
 
+CopyIgnorePresent (${INSTALL_SOURCE}/names/                "names.tab"                ${INSTALL_DEST}/config/gnosis/         )
 CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/gnosis      "allocs.csv"               ${INSTALL_DEST}/config/gnosis/         )
+
 CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/goerli      "allocs.csv"               ${INSTALL_DEST}/config/goerli/         )
 CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/kovan       "allocs.csv"               ${INSTALL_DEST}/config/kovan/          )
 CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/mainnet     "allocs.csv"               ${INSTALL_DEST}/config/mainnet/        )

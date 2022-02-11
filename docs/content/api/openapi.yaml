@@ -297,7 +297,7 @@ paths:
           in: query
           explode: true
           schema:
-            type: string
+            type: number
         - name: relevant
           description: >
             for log and accounting export only, export only logs relevant to one of the given export addresses
@@ -477,6 +477,50 @@ paths:
                       $ref: "#/components/schemas/monitor"
         "400":
           description: bad input parameter
+    delete:
+      summary: Delete, undelete, or remove a monitor
+      operationId: accounts-monitors
+      parameters:
+        - name: addrs
+          description: one or more addresses (0x...) to process
+          required: true
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: address
+        - name: delete
+          description: delete a monitor, but do not remove it
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: undelete
+          description: undelete a previously deleted monitor
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: remove
+          description: remove a previously deleted monitor
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: Deleted
+        "404":
+          description: id not found
   /names:
     get:
       tags:
@@ -595,6 +639,50 @@ paths:
                   ]
         "400":
           description: bad input parameter
+    delete:
+      summary: Delete, undelete, or remove a monitor
+      operationId: accounts-monitors
+      parameters:
+        - name: addrs
+          description: one or more addresses (0x...) to process
+          required: true
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: address
+        - name: delete
+          description: delete a monitor, but do not remove it
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: undelete
+          description: undelete a previously deleted monitor
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: remove
+          description: remove a previously deleted monitor
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: Deleted
+        "404":
+          description: id not found
   /abis:
     get:
       tags:
@@ -614,6 +702,14 @@ paths:
             items:
               type: string
               format: address
+        - name: known
+          description: load common 'known' ABIs from cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: sol
           description: extract the abi definition from the provided .sol file(s)
           required: false
@@ -633,22 +729,6 @@ paths:
             items:
               type: string
               format: string
-        - name: known
-          description: load common 'known' ABIs from cache
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: source
-          description: show the source of the ABI information
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
       responses:
         "200":
           description: returns the requested data
@@ -1073,6 +1153,17 @@ paths:
       description: Find block(s) based on date, blockNum, timestamp, or 'special'.
       operationId: chaindata-when
       parameters:
+        - name: blocks
+          description: a space-separated list of one or more block identifiers
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: blknum
         - name: timestamps
           description: ignore other options and generate timestamps only
           required: false
@@ -1865,11 +1956,12 @@ components:
           type: string
           format: address
           description: "the address being monitored"
+        name:
+          type: string
+          description: "the name given to this address"
         isCustom:
           type: boolean
           description: "`true` if this address is customized"
-        name:
-          type: string
         symbol:
           type: string
         source:
@@ -1880,6 +1972,9 @@ components:
           type: boolean
         isValid:
           type: boolean
+        deleted:
+          type: boolean
+          description: "`true` if deleted, `false` otherwise"
     appearance:
       description: "a single appearance of an address anywhere in the chain in the form of blockNumber.transactionIndex"
       type: object
@@ -2303,10 +2398,10 @@ components:
           example: "0x0000...3ff6"
           description: "any remaining un-indexed parameters to the event"
         articulatedLog:
-          description: "data used when articulating log which is different than Function"
           type: object
           items:
             $ref: "#/components/schemas/articulatedLog"
+          description: "data used when articulating log which is different than Function"
         compressedLog:
           type: string
           example: "Transfer(0xcfa...9f54..."
@@ -2677,11 +2772,13 @@ components:
           example: "QmTbYpR...qWLj44"
           description: "the IPFS hash of the index chunk at that range"
         firstApp:
-          type: string
+          type: number
           format: blknum
+          description: "the first appearance in the chunk"
         latestApp:
-          type: string
+          type: number
           format: blknum
+          description: "the latest appearance in the chunk"
     manifest:
       description: "a manifest of the IPFS hashes created for the unchained index"
       type: object

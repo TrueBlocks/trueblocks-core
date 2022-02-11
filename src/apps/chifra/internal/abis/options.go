@@ -22,7 +22,6 @@ type AbisOptions struct {
 	Known   bool
 	Sol     bool
 	Find    []string
-	Source  bool
 	Classes bool
 	Globals globals.GlobalOptions
 	BadFlag error
@@ -35,7 +34,6 @@ func (opts *AbisOptions) TestLog() {
 	logger.TestLog(opts.Known, "Known: ", opts.Known)
 	logger.TestLog(opts.Sol, "Sol: ", opts.Sol)
 	logger.TestLog(len(opts.Find) > 0, "Find: ", opts.Find)
-	logger.TestLog(opts.Source, "Source: ", opts.Source)
 	logger.TestLog(opts.Classes, "Classes: ", opts.Classes)
 	opts.Globals.TestLog()
 }
@@ -50,9 +48,6 @@ func (opts *AbisOptions) ToCmdLine() string {
 	}
 	for _, find := range opts.Find {
 		options += " --find " + find
-	}
-	if opts.Source {
-		options += " --source"
 	}
 	if opts.Classes {
 		options += " --classes"
@@ -80,8 +75,6 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *AbisOptions {
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Find = append(opts.Find, s...)
 			}
-		case "source":
-			opts.Source = true
 		case "classes":
 			opts.Classes = true
 		default:
