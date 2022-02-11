@@ -23,6 +23,7 @@ status?details&modes=abis%20caches%20monitors&types=slurps
           "addrs": [],
           "items": [
             {
+              "deleted": false,
               "type": "",
               "nApps": 0,
               "firstApp": 0,

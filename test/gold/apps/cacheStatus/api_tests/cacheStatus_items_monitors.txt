@@ -23,6 +23,7 @@ status?details&modes=monitors
           "addrs": [],
           "items": [
             {
+              "deleted": false,
               "type": "",
               "nApps": 0,
               "firstApp": 0,

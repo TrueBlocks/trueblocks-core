@@ -19,6 +19,7 @@ TEST[DATE|TIME] Depth:  0
     {
       "items": [
         {
+          "deleted": false,
           "nApps": 0,
           "firstApp": 0,
           "latestApp": 0,

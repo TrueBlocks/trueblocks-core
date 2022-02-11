@@ -29,6 +29,7 @@ TEST[DATE|TIME] LastBlock:  3100000
     {
       "items": [
         {
+          "deleted": false,
           "nApps": 0,
           "firstApp": 0,
           "latestApp": 0,
