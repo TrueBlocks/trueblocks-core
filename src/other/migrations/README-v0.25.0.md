@@ -146,7 +146,7 @@ The last step is to remove old configuration files and folders. When you're fini
 
 **Important:** If you've customized any of TrueBlocks' configuration files other than `trueBlocks.toml`, you should preserve those values. You will find fresh copies of the existing config files in `$HOME/.local/share/trueblocks/config/mainnet`. Move any setting you've customized ***EXCEPT*** the `[requires]` group in `blockScrape.toml`. That config item is no longer needed.
 
-When you're finished, the root configuration folder should contain a single toml file (`trueBlocks.toml`) and four subfolders: `abis`, `config`, `cache`, `unchained`. The `config`, `cache`, and `unchained` subfolders should contain only chain-specific sub-folders (no files). There must be at least one (`mainnet` and may or may not be others).
+When you're finished, the root configuration folder should contain a single toml file (`trueBlocks.toml`) and four subfolders: `abis`, `config`, `cache`, `unchained`. The `config`, `cache`, and `unchained` subfolders should contain only chain-specific sub-folders (no files). There must be at least one (`mainnet`) and may or may not be others.
 
 Continue running `chifra status --terse` until it stops complaining. When it does, you will know you're finished.
 
