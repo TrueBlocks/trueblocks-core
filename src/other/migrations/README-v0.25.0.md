@@ -2,49 +2,45 @@
 
 ---
 
-(February 8, 2022)
+(February 10, 2022)
 
 ## Why the Change?
 
-With this migration we enter into the world of multi-chain blockchains.
+With this migration, TrueBlocks enters into the world of multi-chain blockchains.
 
-Under the covers, this was a massive change to our code base. On the surface, it's quite simple: we added a `--chain` option to all commands. We've pre-configured a few chains for you, but you can add support for any EVM-based chain yourself.
+Under the covers, this was a massive change to our code base. On the surface, it's quite simple: we added the `--chain` option to all commands. We've also pre-configured a few chains for you, but you may add support for any EVM-based chain yourself.
 
-This migration require you to edit a configuration files and move some existing folders to new locations. Be careful, if you make a mistake, you could damage not only your installation of TrueBlocks, but your computer.
+This migration requires you to edit a configuration files and move existing folders to new locations. Be careful, if you make a mistake, you may damage not only your installation of TrueBlocks, but your computer.
 
-Please don't say we didn't warn you.
+Please do not say we didn't warn you.
 
-### What's changed
+### What's do you need to change?
 
 This migration consists of three major changes:
 
-- the location of the two folders (`cache` and `unchained` index) have changed,  
-- two configuration items in `trueBlocks.toml` pointing to those folders have changed,  
-- a number of other configuration files have been removed or moved.
-
-### The migration in a single image
-
-![Folders](./migration.25.png)
-
-The above image shows the migration visually. All of the files and folders you will be moving are in TrueBlocks' root `$CONFIG` folder (`~/.local/share/trueblocks/` on Linux, `~/Library/Application Support/TrueBlocks/` on Mac).
+- the location of the two folders (`cache` and `unchained` index) must changed,  
+- two configuration items in `trueBlocks.toml` pointing to those folders must also changed,  
+- a few other configuration files moved to new locations or removed.
 
 ## Instructions
 
-In the following, we assume you're working on a Linux installation. If you're on a Mac, adjust the paths as appropriate.
+In the following instructions, we assume you are working on a Linux installation. If you're on a Mac, adjust the paths as appropriate.
 
 ### Before you start
 
-- Stop any long running TrueBlocks processes (such as the `chifra scrape` or `chifra serve`). Do not restart them until the migration is completed.
+- Stop any long running TrueBlocks processes (such as the `chifra scrape` or `chifra serve`). Do not restart them until the migration is complete.
 
-- Preserve the old `trueBlocks.toml` configuration file:
+- Move -- do not copy -- move the old `trueBlocks.toml` configuration file. We will need some settings in this file later.
 
 ```
 mv $HOME/.local/share/trueblocks/trueBlocks.toml ./trueBlocks.save
 ```
 
-### Rebuilding
+### Pull and rebuild TrueBlocks
 
-- Download and rebuild the latest version (`multi-chain` branch) of TrueBlocks. Do this from the source code folder:
+- Pull the latest copy of TrueBlocks, switch to the right branch (`multi-chain-10` branch), and rebuild. If you've moved or copied the executable files to a different location, please remove those old files.
+
+Complete the following from the top of the repo:
 
 
 ```
@@ -55,31 +51,77 @@ cmake ../src
 make -j 4
 ```
 
-This will create the new folder structure and install the newly formatted `trueBlocks.toml` file in the root config folder. Change to that folder:
+This will rebuild the exectuable and create the new multi-chain folder structure and install the newly formatted `trueBlocks.toml` file.
+
+Make sure you have the latest version:
+
+```
+chifra status --terse
+```
+
+should return the following version (or later)
+
+```
+chifra version GHC-TrueBlocks//0.25.0-alpha
+```
+
+You should also get a warning message pointing you to this page. Until you've completed the migration fully, `chifra` chifra will continue to display this message.
+
+**Important:** Before proceeding, we need to edit the configuration file
+
+### Editing configuration files
+
+Display the values in the old configuration file you saved earlier:
+
+```
+cat ./trueBlocks.toml
+```
+
+Make note of three values:
+
+```
+cachePath = "<cache_path>"
+indexPath = "<index_path>"
+etherscan_key = "<etherscan_key>"
+```
+
+Change your directory to the configuration folder:
 
 ```
 cd $HOME/.local/share/trueblocks
 pwd
 ```
 
-On Linux, you should be in `$HOME/.local/share/trueblocks`. On Mac, `$HOME/Library/Application Support/TrueBlocks`.
+(on Mac, `pwd` should say `$HOME/Library/Application Support/TrueBlocks`).
 
-From now on, until you've completed the migration, all `chifra` commands will refuse to run and direct you to this page.
+Edit the `trueBlocks.toml` file and replace these three values with the values you noted above. Your settings should now look like this:
+
+```
+[settings]
+cachePath = "<cache_path>"
+indexPath = "<index_path>"
+etherscan_key = "<etherscan_key>"
+defaultChain = "mainnet"
+```
+
+You may review, but do not modify, the list of available chains. Documentation for editing changes is in the help file.
+
+Run `chifra status --terse` again. You should get the same message.
 
 ### Moving existing cache and unchained index folders
 
-**Important Note:** If you've customized the following paths, adjust these instructions accordingly.
+**Important:** If you've customized the location of your `cache` or `unchained` folders, adjust these instructions accordingly.
  
-**Note:** You may get a warnings with some of the following commands saying you're trying to move a folder into itself. It's okay.
-
 Complete the following steps:
 
-- Move existing cache folders into the new chain-specific `mainnet` cache folder:
+- Move the existing cache folders into the chain-specific `mainnet` cache folder:
 
 ```
 cd $HOME/.local/share/trueblocks/cache
 mv * mainnet
 ```
+
+*Note: You may get a warning saying you've tried to move a folder into itself. That's okay.*
 
 - Move existing unchained index folders into the new chain-specific `mainnet` unchained index folder:
 
@@ -88,54 +130,36 @@ cd $HOME/.local/share/trueblocks/unchained
 mv * mainnet
 ```
 
-`chifra` commands should continue to complain and refuse to run until you complete the following steps.
+*Note: You may get a warning saying you've tried to move a folder into itself. That's okay.*
 
-### Replace config values in the new config file
-
-The goal of this final step is to replace a few old configuration items in the new configuration file (`trueBlocks.toml`).
-
-We won't instruct you on how to edit files on the command line, but find these values (`cachePath`, `indexPath`, and `etherscan_key`) in the saved `trueBlocks.toml` file and replace them into the new file.
-
-After this step, our configuration looks like this:
-
-```
-[settings]
-cachePath = "/home/tb/.local/share/trueblocks/cache/"
-indexPath = "/home/tb/.local/share/trueblocks/unchained/"
-etherscan_key = "6---obscured---8E1B---obscured---1"
-defaultChain = "mainnet"
-
-... [ a bunch of chain specific configurations ] ....
-
-```
-
-The `chifra` commands should still complain and refuse to run. There's one more step...
+Your `chifra` commands should continue to complain.
 
 ### Removing old configuration files
 
-Most users may remove any files or folders in the root configuration folder other than `trueBlocks.toml` file and these folders:
+The last step is to remove old configuration files and folders. When you're finished, the root of the TrueBlocks configuration folder should look like this:
 
 <img width="200" src="./migration.25.2.png">
 
-Once you remove those other files and folders, `chifra` should stop complaining and you'll be finished with the migration.
+In other words, it should contain only these three folders and only a single configuration file called `trueBlocks.toml`.
 
+Once you've removed any other file or folders, `chifra` should will stop complaining and you will be finished with the migration.
+
+Important: If you've customized any of the other configuration files, you must move those values. You will find the new location of the files in `$HOME/.local/share/trueblocks/config/mainnet`. Move anything you've customized EXCEPT the `[requires]` group in `blockScrape.toml`. That config is no longer needed.
 
 ## Are you finished?
 
-If you've completed the above steps fully, you should be able to run any `chifra` commands as before. If `chifra` continues to complain, you've not completed something properly. Please review the above steps.
+If you've completed the above steps, you should be able to run all `chifra` commands as before. If `chifra` continues to complain, you've not completed something properly. Please review the above steps.
 
-If you run `chifra status --terse` you should be able to see the folders you've modified. On our Mac, we get:
+You'll know things are working properly if you run `chifra status --terse` and you can see the folder locations you've modified. On our machines, it says:
 
 ```
-2022/02/08 08:44:45 Client:       erigon/2021.11.3/linux-amd64/go1.16.3 (archive, tracing)
-2022/02/08 08:44:45 TrueBlocks:   GHC-TrueBlocks//0.23.7-alpha-32ec1498f-20220208 (eskey, no pinkey)
-2022/02/08 08:44:45 Config Path:  /Users/tb/Library/Application Support/TrueBlocks/
-2022/02/08 08:44:45 Chain (ids):  mainnet (1,1)
-2022/02/08 08:44:45 Cache Path:   /Users/tb/Development/trueblocks-core/build/cache/mainnet/
-2022/02/08 08:44:45 Index Path:   /Users/tb/Development/trueblocks-index/wild.0/unchained/mainnet/
-2022/02/08 08:44:45 RPC Provider: http://localhost:23456/
-2022/02/08 08:44:45 Progress:     14165759, 14143890, 14146478, 14146478
-
+<date-time> Client:       erigon/2021.11.3/linux-amd64/go1.16.3 (archive, tracing)
+<date-time> TrueBlocks:   GHC-TrueBlocks//0.25.0-alpha (eskey, no pinkey)
+<date-time> Config Path:  /Users/tb/Library/Application Support/TrueBlocks/
+<date-time> Chain (ids):  mainnet (1,1)
+<date-time> Cache Path:   /Users/tb/Library/Application Support/TrueBlocks/cache/mainnet/
+<date-time> Index Path:   /Users/tb/Library/Application Support/TrueBlocks/unchained/mainnet/
+<date-time> RPC Provider: http://localhost:8545/
 ```
 
 ## Using Multi-Chain
