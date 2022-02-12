@@ -16,11 +16,11 @@ Please do not say we didn't warn you.
 
 ### What's do you need to change?
 
-This migration consists of three major changes:
+This migration involves you doing three primary things. You must
 
-- the location of the two folders (`cache` and `unchained` index) must changed,  
-- two configuration items in `trueBlocks.toml` pointing to those folders must also changed,  
-- a few other configuration files moved to new locations or removed.
+- change the location of two folders (`cache` and `unchained` index),  
+- edit a configuration file to point to these new folders,  
+- remove or move old configuration files and folders.
 
 ## Instructions
 
