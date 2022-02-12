@@ -108,7 +108,9 @@ defaultChain = "mainnet"
 
 You may review, but do not modify, the list of available chains. Documentation for editing changes is in the help file.
 
-Run `chifra status --terse` again. You should get the same message.
+Run `chifra status --terse` again.
+
+You should still get the same warning message.
 
 ### Moving existing cache and unchained index folders
 
