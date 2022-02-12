@@ -38,7 +38,7 @@ mv $HOME/.local/share/trueblocks/trueBlocks.toml ./trueBlocks.save
 
 ### Pull and rebuild TrueBlocks
 
-- Pull the latest copy of TrueBlocks, switch to the right branch (`multi-chain-10` branch), and rebuild. If you've moved or copied the executable files to a different location, please remove those old files.
+- Pull the latest copy of TrueBlocks, switch to the `multi-chain-11` branch), and rebuild. If you've moved or copied the executable files to a different location, please remove those old files.
 
 Complete the following from the top of the repo:
 
