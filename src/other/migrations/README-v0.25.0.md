@@ -108,9 +108,7 @@ defaultChain = "mainnet"
 
 You may review, but do not modify, the list of available chains. Documentation for editing changes is in the help file.
 
-Run `chifra status --terse` again.
-
-You should still get the same warning message.
+Run `chifra status --terse` again. You will get the same warning message.
 
 ### Moving existing cache and unchained index folders
 
@@ -138,7 +136,7 @@ mv * mainnet
 
 *Note: You may get a warning saying you've tried to move a folder into itself. That's okay.*
 
-Your `chifra` commands should continue to complain.
+Run `chifra status --terse` again. You will continue to get the warning message.
 
 ### Removing old configuration files
 
@@ -146,17 +144,19 @@ The last step is to remove old configuration files and folders. When you're fini
 
 <img width="200" src="./migration.25.2.png">
 
-In other words, it should contain only these three folders and only a single configuration file called `trueBlocks.toml`.
+**Important:** If you've customized any of TrueBlocks' configuration files other than `trueBlocks.toml`, you should preserve those values. You will find fresh copies of the existing config files in `$HOME/.local/share/trueblocks/config/mainnet`. Move any setting you've customized ***EXCEPT*** the `[requires]` group in `blockScrape.toml`. That config item is no longer needed.
 
-Once you've removed any other file or folders, `chifra` should will stop complaining and you will be finished with the migration.
+When you're finished, the root configuration folder should contain a single toml file (`trueBlocks.toml`) and four subfolders: `abis`, `config`, `cache`, `unchained`. The `config`, `cache`, and `unchained` subfolders should contain only chain-specific sub-folders (no files). There must be at least one (`mainnet` and may or may not be others).
 
-Important: If you've customized any of the other configuration files, you must move those values. You will find the new location of the files in `$HOME/.local/share/trueblocks/config/mainnet`. Move anything you've customized EXCEPT the `[requires]` group in `blockScrape.toml`. That config is no longer needed.
+Continue running `chifra status --terse` until it stops complaining. When it does, you will know you're finished.
 
 ## Are you finished?
 
-If you've completed the above steps, you should be able to run all `chifra` commands as before. If `chifra` continues to complain, you've not completed something properly. Please review the above steps.
+If you've completed the above steps, you should be able to run any `chifra` command. If `chifra` continues to complain, review the above steps or contact us in discord.
 
-You'll know things are working properly if you run `chifra status --terse` and you can see the folder locations you've modified. On our machines, it says:
+Run `chifra status --terse`.
+
+Once the migration is finished, it will return:
 
 ```
 <date-time> Client:       erigon/2021.11.3/linux-amd64/go1.16.3 (archive, tracing)
@@ -168,11 +168,9 @@ You'll know things are working properly if you run `chifra status --terse` and y
 <date-time> RPC Provider: http://localhost:8545/
 ```
 
-## Using Multi-Chain
-
-Please see [this page](./) for information on using the new `--chain` option to `chifra`.
-
 ## You're Finished
+
+Please see the help file on our website for information on using the new `--chain` options to `chifra`.
 
 Please report any problems by creating an issue.
 
