@@ -14,7 +14,7 @@ This migration requires you to edit a configuration files and move existing fold
 
 Please do not say we didn't warn you.
 
-### What's do you need to change?
+### What do you need to change?
 
 This migration involves you doing three primary things. You must
 
