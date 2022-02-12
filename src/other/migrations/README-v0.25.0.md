@@ -38,38 +38,40 @@ mv $HOME/.local/share/trueblocks/trueBlocks.toml ./trueBlocks.save
 
 ### Pull and rebuild TrueBlocks
 
-- Pull the latest copy of TrueBlocks, switch to the `multi-chain-11` branch), and rebuild. If you've moved or copied the executable files to a different location, please remove those old files.
+- Pull the latest copy of TrueBlocks, switch to the `multi-chain-11` branch, and rebuild. If you've moved or copied the executable files to a different location, remove those old files.
 
-Complete the following from the top of the repo:
+Complete the following instructions from the top of the repo:
 
 
 ```
 cd ./build
 git pull
-git checkout multi-chain   # once we merge this change, you will use the 'develop' branch
+git checkout multi-chain-11   # once we merge this change, you will use the 'develop' branch
 cmake ../src
 make -j 4
 ```
 
-This will rebuild the exectuable and create the new multi-chain folder structure and install the newly formatted `trueBlocks.toml` file.
+The above will rebuild the exectuables and create the new multi-chain folder structure. It will also install the newly formatted `trueBlocks.toml` file.
 
-Make sure you have the latest version:
+### Did the build work?
+
+Make sure the build worked and you have the latest version:
 
 ```
 chifra status --terse
 ```
 
-should return the following version (or later)
+This should return the following version (or later):
 
 ```
 chifra version GHC-TrueBlocks//0.25.0-alpha
 ```
 
-You should also get a warning message pointing you to this page. Until you've completed the migration fully, `chifra` chifra will continue to display this message.
-
-**Important:** Before proceeding, we need to edit the configuration file
+You will also get a warning message pointing you to this page. Until you've completed the migration, this message will continue to display.
 
 ### Editing configuration files
+
+**Important:** Before doing anything else, we need to edit a configuration file
 
 Display the values in the old configuration file you saved earlier:
 
