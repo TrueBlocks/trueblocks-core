@@ -122,6 +122,7 @@ Complete the following steps:
 
 ```
 cd $HOME/.local/share/trueblocks/cache
+mkdir -p mainnet
 mv * mainnet
 ```
 
@@ -131,6 +132,7 @@ mv * mainnet
 
 ```
 cd $HOME/.local/share/trueblocks/unchained
+mkdir -p mainnet
 mv * mainnet
 ```
 
