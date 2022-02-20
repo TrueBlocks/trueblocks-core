@@ -180,12 +180,6 @@ func (opts *ExportOptions) ToCmdLine() string {
 	if opts.Deep {
 		options += " --deep"
 	}
-	if opts.SkipDdos {
-		options += " --skip_ddos"
-	}
-	if opts.MaxTraces != 250 {
-		options += (" --max_traces " + fmt.Sprintf("%d", opts.MaxTraces))
-	}
 	if opts.FirstBlock != 0 {
 		options += (" --first_block " + fmt.Sprintf("%d", opts.FirstBlock))
 	}

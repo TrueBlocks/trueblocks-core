@@ -24,7 +24,6 @@ static const COption params[] = {
     COption("action", "a", "enum[toggle|run|restart|pause|quit]", OPT_FLAG, "command to apply to the specified scrape"),
     COption("pin", "p", "", OPT_SWITCH, "pin chunks (and blooms) to IPFS as they are created (requires pinning service)"),  // NOLINT
     COption("publish", "u", "", OPT_SWITCH, "after pinning the chunk, publish it to UnchainedIndex"),
-    COption("sleep", "s", "<double>", OPT_FLAG, "seconds to sleep between scraper passes"),
     COption("block_cnt", "n", "<uint64>", OPT_FLAG, "maximum number of blocks to process per pass"),
     COption("", "", "", OPT_DESCRIPTION, "Scan the chain and update (and optionally pin) the TrueBlocks index of appearances."),  // NOLINT
     // clang-format on
@@ -42,7 +41,6 @@ bool COptions::parseArguments(string_q& command) {
 
     // BEG_CODE_LOCAL_INIT
     string_q action = "";
-    double sleep = 14;
     // END_CODE_LOCAL_INIT
 
     CBlock block;
@@ -67,12 +65,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-u" || arg == "--publish") {
             publish = true;
-
-        } else if (startsWith(arg, "-s:") || startsWith(arg, "--sleep:")) {
-            if (!confirmDouble("sleep", sleep, arg))
-                return false;
-        } else if (arg == "-s" || arg == "--sleep") {
-            return flag_required("sleep");
 
         } else if (startsWith(arg, "-n:") || startsWith(arg, "--block_cnt:")) {
             if (!confirmUint("block_cnt", block_cnt, arg))

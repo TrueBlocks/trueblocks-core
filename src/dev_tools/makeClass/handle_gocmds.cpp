@@ -402,7 +402,7 @@ string_q get_setopts(const CCommandOption& cmd) {
 string_q get_copyopts(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
-        if (p.isDeprecated)
+        if (p.isDeprecated || p.codeLoc() == GOCMD)
             continue;
 
         replace(p.longName, "deleteMe", "delete");

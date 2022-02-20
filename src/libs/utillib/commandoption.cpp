@@ -503,8 +503,6 @@ string_q nextCommandoptionChunk_custom(const string_q& fieldIn, const void* data
                         ret += ("|OPT_POSITIONAL");
                     else if (com->option_type == "note")
                         ret = com->description;
-                    else if (com->option_type == "config")
-                        ret = com->description;
                     else if (com->option_type == "error")
                         ret = com->description;
                     else
@@ -643,9 +641,9 @@ bool CCommandOption::finishCleanup(void) {
     isDouble = contains(data_type, "double");
     isAddress = contains(data_type, "address");
     isNote = option_type == "note";
-    isConfig = option_type == "config";
     isErr = option_type == "error";
     isConfig = generate == "config";
+    isGoOnly = generate == "gocmd";
     isDeprecated = option_type == "deprecated";
 
     real_type = data_type;
@@ -704,8 +702,7 @@ void CCommandOption::verifyOptions(CStringArray& warnings) {
         if (startsWith(data_type, "list"))
             valid_type = true;
     }
-    if (!valid_type &&
-        (option_type == "description" || option_type == "note" || option_type == "error" || option_type == "config") &&
+    if (!valid_type && (option_type == "description" || option_type == "note" || option_type == "error" || isConfig) &&
         data_type.empty())
         valid_type = true;
     if (!valid_type && startsWith(data_type, "opt_"))
@@ -717,9 +714,6 @@ void CCommandOption::verifyOptions(CStringArray& warnings) {
         warnstream << "Description '" << description << "' should end with a period or colon.|";
     if (option_type == "note" && !endsWith(description, ".") && !endsWith(description, ":"))
         warnstream << "Note '" << description << "' should end with a period or colon.|";
-    if (option_type == "config") {  // do nothing
-        // warnstream << "Note '" << description << "' should end with a period or colon.|";
-    }
     if (option_type == "error" && !endsWith(description, ".") && !endsWith(description, ":"))
         warnstream << "Error string '" << description << "' should end with a period or colon.|";
     if ((option_type != "description" && option_type != "note" && option_type != "error" && option_type != "config") &&

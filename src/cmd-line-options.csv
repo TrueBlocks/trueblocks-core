@@ -215,7 +215,6 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 11111,apps,Admin,,blockScrape,action,a,,false,true,true,true,local,flag,enum[toggle|run|restart|pause|quit],command to apply to the specified scrape
 11112,apps,Admin,,blockScrape,pin,p,,false,false,true,true,header,switch,<boolean>,pin chunks (and blooms) to IPFS as they are created (requires pinning service)
 11113,apps,Admin,,blockScrape,publish,u,,false,false,true,true,header,switch,<boolean>,after pinning the chunk&#44; publish it to UnchainedIndex
-11114,apps,Admin,,blockScrape,sleep,s,14,false,false,true,true,local,flag,<double>,seconds to sleep between scraper passes
 11116,apps,Admin,,blockScrape,block_cnt,n,2000,false,true,true,true,header,flag,<uint64>,maximum number of blocks to process per pass
 11117,apps,Admin,,blockScrape,block_chan_cnt,b,10,false,true,false,false,config,flag,<uint64>,number of concurrent block processing channels
 11118,apps,Admin,,blockScrape,addr_chan_cnt,d,20,false,true,false,false,config,flag,<uint64>,number of concurrent address processing channels
@@ -229,7 +228,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 
 12110,apps,Admin,scrape,flame-scrape,modes,,,true,false,true,true,local,positional,list<enum[indexer|monitors|both]>,which scraper(s) to control
 12113,apps,Admin,scrape,flame-scrape,action,a,,false,true,true,true,local,flag,enum[toggle|run|restart|pause|quit],command to apply to the specified scrape
-12115,apps,Admin,scrape,flame-scrape,sleep,s,14,false,false,true,true,header,flag,<double>,seconds to sleep between scraper passes
+12115,apps,Admin,scrape,flame-scrape,sleep,s,14,false,false,true,true,gocmd,flag,<double>,seconds to sleep between scraper passes
 12117,apps,Admin,scrape,flame-scrape,pin,p,,false,false,true,true,header,switch,<boolean>,pin chunks (and blooms) to IPFS as they are created (requires pinning service)
 12119,apps,Admin,scrape,flame-scrape,publish,u,,false,false,true,true,header,switch,<boolean>,after pinning the chunk&#44; publish it to UnchainedIndex
 12121,apps,Admin,scrape,flame-scrape,block_cnt,n,2000,false,true,true,true,header,flag,<uint64>,maximum number of blocks to process per pass
