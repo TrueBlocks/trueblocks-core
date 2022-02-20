@@ -93,6 +93,7 @@ CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/optimism    "allocs.csv"         
 CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/polygon     "allocs.csv"               ${INSTALL_DEST}/config/polygon/        )
 CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/rinkeby     "allocs.csv"               ${INSTALL_DEST}/config/rinkeby/        )
 CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/ropsten     "allocs.csv"               ${INSTALL_DEST}/config/ropsten/        )
+CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/sepolia     "allocs.csv"               ${INSTALL_DEST}/config/sepolia/        )
 
 # CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/gnosis    "specials.csv"             ${INSTALL_DEST}/config/gnosis/         )
 CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/mainnet     "specials.csv"             ${INSTALL_DEST}/config/mainnet/        )

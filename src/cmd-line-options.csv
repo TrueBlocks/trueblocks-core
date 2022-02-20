@@ -215,7 +215,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 11111,apps,Admin,,blockScrape,action,a,,false,true,true,true,local,flag,enum[toggle|run|restart|pause|quit],command to apply to the specified scrape
 11112,apps,Admin,,blockScrape,pin,p,,false,false,true,true,header,switch,<boolean>,pin chunks (and blooms) to IPFS as they are created (requires pinning service)
 11113,apps,Admin,,blockScrape,publish,u,,false,false,true,true,header,switch,<boolean>,after pinning the chunk&#44; publish it to UnchainedIndex
-11114,apps,Admin,,blockScrape,sleep,s,14,false,false,true,true,header,flag,<double>,seconds to sleep between scraper passes
+11114,apps,Admin,,blockScrape,sleep,s,14,false,false,true,true,local,flag,<double>,seconds to sleep between scraper passes
 11116,apps,Admin,,blockScrape,block_cnt,n,2000,false,true,true,true,header,flag,<uint64>,maximum number of blocks to process per pass
 11117,apps,Admin,,blockScrape,block_chan_cnt,b,10,false,true,false,false,config,flag,<uint64>,number of concurrent block processing channels
 11118,apps,Admin,,blockScrape,addr_chan_cnt,d,20,false,true,false,false,config,flag,<uint64>,number of concurrent address processing channels

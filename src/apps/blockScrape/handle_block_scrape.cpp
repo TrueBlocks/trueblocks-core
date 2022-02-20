@@ -69,8 +69,6 @@ bool COptions::scrape_blocks(void) {
 
     // How far are we from the head? This is useful for telling how long to sleep the next time.
     cons.distFromHead = (cons.client > cons.blazeStart ? cons.client - cons.blazeStart : 0);
-    if (sleep < 13 && cons.distFromHead <= cons.blazeCnt)
-        sleep = 13;  // we're basically caught up, so we can sleep until the next expected block
 
     ostringstream os;
     os << string_q(5, '-');

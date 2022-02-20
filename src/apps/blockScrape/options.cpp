@@ -42,6 +42,7 @@ bool COptions::parseArguments(string_q& command) {
 
     // BEG_CODE_LOCAL_INIT
     string_q action = "";
+    double sleep = 14;
     // END_CODE_LOCAL_INIT
 
     CBlock block;
@@ -91,10 +92,6 @@ bool COptions::parseArguments(string_q& command) {
 
     if (Mocked(""))
         return false;
-
-    // no less than one half second of sleep between runs
-    if (sleep < .5)
-        sleep = .5;
 
     if (pin && !getApiKey(lic)) {
         if (!isTestMode()) {
@@ -197,7 +194,6 @@ void COptions::Init(void) {
     // BEG_CODE_INIT
     pin = false;
     publish = false;
-    sleep = 14;
     // clang-format off
     block_cnt = getGlobalConfig("blockScrape")->getConfigInt("settings", "block_cnt", 2000);
     block_chan_cnt = getGlobalConfig("blockScrape")->getConfigInt("settings", "block_chan_cnt", 10);

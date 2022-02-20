@@ -392,7 +392,8 @@ wei_t getBalanceAt(const string_q& addr, blknum_t num) {
     if (num == NOPOS)
         num = getBlockProgress(BP_CLIENT).client;
     string_q params = "[\"[{ADDRESS}]\",\"[{NUM}]\"]";
-    replace(params, "[{ADDRESS}]", str_2_Addr(addr));
+    address_t a = isZeroAddr(addr) ? "0x0000000000000000000000000000000000000000" : str_2_Addr(addr);
+    replace(params, "[{ADDRESS}]", a);
     replace(params, "[{NUM}]", uint_2_Hex(num));
     string_q ret = callRPC("eth_getBalance", params, false);
     if (contains(ret, "error") || contains(ret, "message"))
