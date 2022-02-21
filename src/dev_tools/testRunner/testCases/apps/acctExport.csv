@@ -12,8 +12,8 @@ on      ,both ,fast  ,list     ,apps/acctExport ,list_count               ,y    
 on      ,both ,fast  ,list     ,apps/acctExport ,list_appearances         ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000
 on      ,both ,fast  ,list     ,apps/acctExport ,list_appearances_csv     ,n    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000 & fmt = csv
 
-on      ,both ,fast  ,list     ,apps/acctExport ,ens_test_list             ,y    ,addrs = trueblocks.eth & first_block = 8608710 & last_block = 9146300
-on      ,both ,fast  ,export   ,apps/acctExport ,ens_test_export           ,y    ,addrs = trueblocks.eth & first_block = 8608710 & last_block = 9146300
+on      ,both ,fast  ,list     ,apps/acctExport ,ens_test_list             ,y    ,addrs = rhyslindmark.eth & first_block = 4037786 & last_block = 4589473
+on      ,both ,fast  ,export   ,apps/acctExport ,ens_test_export           ,y    ,addrs = rhyslindmark.eth & first_block = 4037786 & last_block = 4589473
 
 on      ,cmd  ,fast  ,monitors ,apps/acctExport ,monitors_help            ,n    ,@h
 on      ,cmd  ,fast  ,monitors ,apps/acctExport ,monitors_long_help       ,n    ,help
