@@ -136,15 +136,6 @@ bool COptions::parseArguments(string_q& command) {
         return usage(errMsg);
     }
 
-    // Parity traces are much better (and easier to use) than Geth's. But, in some
-    // cases, the user may not care and tells us she doesn't need parity
-    bool needsParity = config->getConfigBool("requires", "parity", true);
-    if (needsParity && !hasParityTraces()) {
-        return usage(
-            "This tool requires Parity traces. Add [requires]\\nparity=false to $CONFIG/blockScrape.toml to turn "
-            "this restriction off.");
-    }
-
     if (!isArchiveNode())
         return usage("This tool requires historical balances which your RPC server does not provide.");
 

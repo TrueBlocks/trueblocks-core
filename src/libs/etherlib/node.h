@@ -109,7 +109,6 @@ extern string_q getVersionFromClient(void);
 extern bool isErigon(void);
 extern bool isGeth(void);
 extern bool isParity(void);
-extern bool hasParityTraces(void);
 
 //-------------------------------------------------------------------------
 uint64_t addFilter(address_t addr, const CTopicArray& topics, blknum_t block);

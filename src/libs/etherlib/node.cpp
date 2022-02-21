@@ -645,11 +645,6 @@ bool isParity(void) {
 }
 
 //-------------------------------------------------------------------------
-bool hasParityTraces(void) {
-    return isErigon() || isParity();
-}
-
-//-------------------------------------------------------------------------
 uint64_t addFilter(address_t addr, const CTopicArray& topics, blknum_t num) {
     // Creates a filter object, based on filter options, to notify when the state changes (logs). To check if the state
     // has changed, call eth_getFilterChanges.
