@@ -129,8 +129,8 @@ bool getBlockHeader(CBlock& block, const string_q& hexVal) {
     blknum_t bn = str_2_Uint(hexVal);
     if (bn != 0 && fileSize(getBinaryCacheFilename(CT_BLOCKS, bn)) > 0)
         return readBlockFromBinary(block, getBinaryCacheFilename(CT_BLOCKS, bn));
-    // if (isErigon())
-    //     return getObjectViaRPC(block, "erigon_getHeaderByNumber", "[" + quote(hexVal) + "]");
+    if (isErigon())
+        return getObjectViaRPC(block, "erigon_getHeaderByNumber", "[" + quote(hexVal) + "]");
     return getBlockLight(block, hexVal);
 }
 

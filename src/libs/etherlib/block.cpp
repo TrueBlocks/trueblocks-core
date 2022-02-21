@@ -180,6 +180,9 @@ bool CBlock::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
     } else if (fieldName % "blockHash") {
         fieldName = "hash";  // NOLINT
 
+    } else if (fieldName % "baseFeePerGas") {
+        fieldValue = substitute(fieldValue, "null", "0x0");
+
     } else if (fieldName % "transactions") {
         // Transactions come to us either as a JSON objects or lists of hashes (i.e. a string array).
         // JSON objects have (among other things) a 'from' field so we can identify the former by its absence
