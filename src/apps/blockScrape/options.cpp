@@ -44,7 +44,7 @@ bool COptions::parseArguments(string_q& command) {
     // END_CODE_LOCAL_INIT
 
     CBlock block;
-    getBlock_light(block, getBlockProgress(BP_CLIENT).client);
+    getBlockHeader(block, getBlockProgress(BP_CLIENT).client);
     latestBlockTs = block.timestamp;
     latestBlockNum = block.blockNumber;
 

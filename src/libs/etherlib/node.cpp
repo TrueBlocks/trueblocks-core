@@ -110,35 +110,28 @@ bool getObjectViaRPC(CBaseNode& node, const string_q& method, const string_q& pa
 }
 
 //--------------------------------------------------------------------------------
-bool getBlock_light(CBlock& block, const string_q& val) {
-    if (str_2_Uint(val) != 0 && fileSize(getBinaryCacheFilename(CT_BLOCKS, str_2_Uint(val))) > 0)
-        return readBlockFromBinary(block, getBinaryCacheFilename(CT_BLOCKS, str_2_Uint(val)));
-    block.light = true;
-    getObjectViaRPC(block, "eth_getBlockByNumber", "[" + quote(val) + ",false]");
-    return true;
+time_q getBlockDate(blknum_t num) {
+    CBlock block;
+    getBlockHeader(block, num);
+    return ts_2_Date(block.timestamp);
 }
 
 //--------------------------------------------------------------------------------
-bool getBlock_light(CBlock& block, blknum_t num) {
-    if (fileSize(getBinaryCacheFilename(CT_BLOCKS, num)) > 0)
-        return readBlockFromBinary(block, getBinaryCacheFilename(CT_BLOCKS, num));
-    return getBlock_light(block, uint_2_Hex(num));
-}
-
-//--------------------------------------------------------------------------------
-bool getBlock_header(CBlock& block, const string_q& val) {
-    if (isParity())
-        getObjectViaRPC(block, "parity_getBlockHeaderByNumber", "[" + quote(val) + "]");
-    else
-        getBlock_light(block, str_2_Uint(val));
-    return true;
-}
-
-//--------------------------------------------------------------------------------
-bool getBlock_header(CBlock& block, blknum_t bn) {
-    if (fileSize(getBinaryCacheFilename(CT_BLOCKS, bn)) > 0)
+bool getBlockLight(CBlock& block, const string_q& hexVal) {
+    blknum_t bn = str_2_Uint(hexVal);
+    if (bn != 0 && fileSize(getBinaryCacheFilename(CT_BLOCKS, bn)) > 0)
         return readBlockFromBinary(block, getBinaryCacheFilename(CT_BLOCKS, bn));
-    return getBlock_header(block, uint_2_Hex(bn));
+    return getObjectViaRPC(block, "eth_getBlockByNumber", "[" + quote(hexVal) + ",false]");
+}
+
+//--------------------------------------------------------------------------------
+bool getBlockHeader(CBlock& block, const string_q& hexVal) {
+    blknum_t bn = str_2_Uint(hexVal);
+    if (bn != 0 && fileSize(getBinaryCacheFilename(CT_BLOCKS, bn)) > 0)
+        return readBlockFromBinary(block, getBinaryCacheFilename(CT_BLOCKS, bn));
+    // if (isErigon())
+    //     return getObjectViaRPC(block, "erigon_getHeaderByNumber", "[" + quote(hexVal) + "]");
+    return getBlockLight(block, hexVal);
 }
 
 //-------------------------------------------------------------------------
@@ -629,22 +622,6 @@ string_q getVersionFromClient(void) {
 }
 
 //-------------------------------------------------------------------------
-bool isErigon(void) {
-    return contains(toLower(getVersionFromClient()), "erigon");
-}
-
-//-------------------------------------------------------------------------
-bool isGeth(void) {
-    return contains(toLower(getVersionFromClient()), "geth") && !isErigon();
-}
-
-//-------------------------------------------------------------------------
-bool isParity(void) {
-    return contains(toLower(getVersionFromClient()), "parity") ||
-           contains(toLower(getVersionFromClient()), "openethereum");
-}
-
-//-------------------------------------------------------------------------
 uint64_t addFilter(address_t addr, const CTopicArray& topics, blknum_t num) {
     // Creates a filter object, based on filter options, to notify when the state changes (logs). To check if the state
     // has changed, call eth_getFilterChanges.
@@ -860,24 +837,6 @@ bool forEveryBlock(BLOCKVISITFUNC func, void* data, uint64_t start, uint64_t cou
 }
 
 //-------------------------------------------------------------------------
-bool forEveryBlock_light(BLOCKVISITFUNC func, void* data, uint64_t start, uint64_t count, uint64_t skip) {
-    // Here we simply scan the numbers and either read from disc or query the node
-    if (!func)
-        return false;
-
-    for (uint64_t i = start; i < start + count - 1; i = i + skip) {
-        CBlock block;
-        getBlock_light(block, i);
-        bool ret = (*func)(block, data);
-        if (!ret) {
-            // Cleanup and return if user tells us to
-            return false;
-        }
-    }
-    return true;
-}
-
-//-------------------------------------------------------------------------
 bool forEveryBlock(BLOCKVISITFUNC func, void* data, const string_q& block_list) {
     return true;
 }
@@ -923,7 +882,7 @@ bool forEveryTransaction(TRANSVISITFUNC func, void* data, const string_q& trans_
             trans.pBlock = &block;
             if (isHash(trans.hash)) {
                 // Note: at this point, we are not fully formed, we need the receipt and the timestamp
-                getBlock_light(block, trans.blockNumber);
+                getBlockLight(block, trans.blockNumber);
                 getFullReceipt(&trans, true);
                 trans.timestamp = block.timestamp;
                 trans.receipt.pTransaction = &trans;

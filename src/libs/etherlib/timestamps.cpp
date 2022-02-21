@@ -121,7 +121,7 @@ bool freshenTimestamps(blknum_t minBlock) {
     CBlock block;
     for (blknum_t bn = nRecords; bn <= minBlock && !shouldQuit(); bn++) {
         block = CBlock();  // reset
-        getBlock_header(block, bn);
+        getBlockHeader(block, bn);
         if (block.timestamp < blockZeroTs()) {
             LOG_ERR("Bad data when requesting block '", bn, "'. ", block.Format("[{BLOCKNUMBER}].[{TIMESTAMP}]"),
                     " Cannot continue.");

@@ -87,10 +87,17 @@ extern hash_t getRawBlockHash(blknum_t bn);
 extern hash_t getRawTransactionHash(blknum_t bn, txnum_t tx);
 
 //-----------------------------------------------------------------------
-extern bool getBlock_light(CBlock& block, const string_q& val);
-extern bool getBlock_light(CBlock& block, blknum_t num);
-extern bool getBlock_header(CBlock& block, const string_q& val);
-extern bool getBlock_header(CBlock& block, blknum_t num);
+extern time_q getBlockDate(blknum_t num);
+
+//-----------------------------------------------------------------------
+extern bool getBlockLight(CBlock& block, const string_q& val);
+inline bool getBlockLight(CBlock& block, blknum_t bn) {
+    return getBlockLight(block, uint_2_Hex(bn));
+}
+extern bool getBlockHeader(CBlock& block, const string_q& val);
+inline bool getBlockHeader(CBlock& block, blknum_t bn) {
+    return getBlockHeader(block, uint_2_Hex(bn));
+}
 
 //-----------------------------------------------------------------------
 extern void writeToJson(const CBaseNode& node, const string_q& fileName);
@@ -106,9 +113,9 @@ extern bool readNodeFromBinary(CBaseNode& item, const string_q& fileName);
 
 //-------------------------------------------------------------------------
 extern string_q getVersionFromClient(void);
-extern bool isErigon(void);
-extern bool isGeth(void);
-extern bool isParity(void);
+inline bool isErigon(void) {
+    return contains(toLower(getVersionFromClient()), "erigon");
+}
 
 //-------------------------------------------------------------------------
 uint64_t addFilter(address_t addr, const CTopicArray& topics, blknum_t block);
@@ -132,8 +139,6 @@ typedef bool (*ABIVISITFUNC)(CAbi& abi_spec, void* data);
 extern bool forEveryBlock(BLOCKVISITFUNC func, void* data, const string_q& block_list);  // NOLINT
 extern bool forEveryBlock(BLOCKVISITFUNC func, void* data, uint64_t start, uint64_t count,
                           uint64_t skip = 1);  // NOLINT
-extern bool forEveryBlock_light(BLOCKVISITFUNC func, void* data, uint64_t start, uint64_t count,
-                                uint64_t skip = 1);  // NOLINT
 extern bool forEveryTransaction(TRANSVISITFUNC func, void* data, const string_q& trans_list);
 extern bool forEveryTimestamp(BLOCKVISITFUNC func, void* data);
 

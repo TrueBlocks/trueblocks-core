@@ -57,7 +57,7 @@ bool testReadWrite(COptions& options) {
     CNewBlock newBlock;
 
     CBlock latest;
-    getBlock_light(latest, "latest");
+    getBlockLight(latest, "latest");
 
     switch (options.testNum) {
         case 0: {

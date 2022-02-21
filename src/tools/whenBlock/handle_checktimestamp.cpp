@@ -29,7 +29,7 @@ bool checkTimestamp(CBlock& block, void* data) {
 
     if (block.timestamp <= c->prevTs) {
         CBlock fix;
-        getBlock_light(fix, c->prevBn);
+        getBlockHeader(fix, c->prevBn);
         opt->corrections.push_back(fix);
         reason = "ts > c->prevTs";
     }
@@ -37,7 +37,7 @@ bool checkTimestamp(CBlock& block, void* data) {
     if (!reason.empty()) {
         ostringstream os;
         CBlock blk;
-        getBlock_light(blk, c->expected);
+        getBlockHeader(blk, c->expected);
         LOG_WARN(reason, " at block ", c->expected, " ==> ", " sb:", block.blockNumber, ".", block.timestamp,
                  " is: ", blk.blockNumber, ".", blk.timestamp, " c: ", c->expected, ".", c->prevBn, ".", c->prevTs);
         opt->corrections.push_back(blk);

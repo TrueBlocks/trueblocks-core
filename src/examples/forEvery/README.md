@@ -17,7 +17,6 @@ See the instructions in the file [./src/examples/README.md](../README.md) for mo
 - on Blocks
   - bool `forEveryBlock`(BLOCKVISITFUNC func, void* data, uint64_t start, uint64_t count, uint64_t skip)
   - bool `forEveryBlock`(BLOCKVISITFUNC func, void* data, const string_q& block_list)
-  - bool `forEveryBlock_light`(BLOCKVISITFUNC func, void* data, uint64_t start, uint64_t count, uint64_t skip)
 - on Transactions
   - bool `forEveryTransaction`(TRANSVISITFUNC func, void* data, const string_q& trans_list)
 - on Traversers

@@ -692,7 +692,7 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void* dataPt
                         return "100";
                     static CBlock latest;
                     if (latest.timestamp == 0)
-                        getBlock_light(latest, "latest");
+                        getBlockHeader(latest, "latest");
                     timestamp_t myTs = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
                     timestamp_t blkTs = ((timestamp_t)latest.timestamp);
                     if (blkTs > myTs) {

@@ -41,7 +41,6 @@ class CBlock : public CBaseNode {
     CTransactionArray transactions;
     CStringArray tx_hashes;
     string_q name;
-    bool light;
 
   public:
     CBlock(void);
@@ -125,7 +124,6 @@ inline void CBlock::initialize(void) {
     transactions.clear();
     tx_hashes.clear();
     name = "";
-    light = false;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -149,7 +147,6 @@ inline void CBlock::duplicate(const CBlock& bl) {
     transactions = bl.transactions;
     tx_hashes = bl.tx_hashes;
     name = bl.name;
-    light = bl.light;
 
     // EXISTING_CODE
     finishParse();

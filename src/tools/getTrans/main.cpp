@@ -129,7 +129,7 @@ bool visitTransaction(CTransaction& trans, void* data) {
         string_q txFilename = getBinaryCacheFilename(CT_TXS, trans.blockNumber, trans.transactionIndex);
         if (!fileExists(txFilename)) {
             CBlock block;
-            getBlock_light(block, trans.blockNumber);
+            getBlockLight(block, trans.blockNumber);
             trans.timestamp = block.timestamp;
             trans.receipt.status = NO_STATUS;
             trans.pBlock = &block;

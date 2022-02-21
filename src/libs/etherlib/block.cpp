@@ -105,11 +105,6 @@ string_q CBlock::getValueByName(const string_q& fieldName) const {
                 return hash_2_Str(hash);
             }
             break;
-        case 'l':
-            if (fieldName % "light") {
-                return bool_2_Str_t(light);
-            }
-            break;
         case 'm':
             if (fieldName % "miner") {
                 return addr_2_Str(miner);
@@ -239,12 +234,6 @@ bool CBlock::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
                 return true;
             }
             break;
-        case 'l':
-            if (fieldName % "light") {
-                light = str_2_Bool(fieldValue);
-                return true;
-            }
-            break;
         case 'm':
             if (fieldName % "miner") {
                 miner = str_2_Addr(fieldValue);
@@ -297,14 +286,6 @@ void CBlock::finishParse() {
     for (size_t i = 0; i < transactions.size(); i++) {
         CTransaction* trans = &transactions.at(i);  // taking a non-const reference
         trans->pBlock = this;
-        if (!light) {
-            if (blockNumber >= byzantiumBlock() && trans->receipt.status == NO_STATUS) {
-                // If we have NO_STATUS in a receipt after the byzantium block, we have to pick it up.
-                CReceipt rec;
-                getReceipt(rec, trans->hash);
-                trans->receipt.status = rec.status;
-            }
-        }
     }
     // EXISTING_CODE
 }
@@ -335,7 +316,6 @@ bool CBlock::Serialize(CArchive& archive) {
     archive >> transactions;
     // archive >> tx_hashes;
     // archive >> name;
-    // archive >> light;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -362,7 +342,6 @@ bool CBlock::SerializeC(CArchive& archive) const {
     archive << transactions;
     // archive << tx_hashes;
     // archive << name;
-    // archive << light;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -427,8 +406,6 @@ void CBlock::registerClass(void) {
     HIDE_FIELD(CBlock, "tx_hashes");
     ADD_FIELD(CBlock, "name", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CBlock, "name");
-    ADD_FIELD(CBlock, "light", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CBlock, "light");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CBlock, "schema");
@@ -459,7 +436,7 @@ string_q nextBlockChunk_custom(const string_q& fieldIn, const void* dataPtr) {
                         return "100";
                     static CBlock latest;
                     if (latest.timestamp == 0)
-                        getBlock_light(latest, "latest");
+                        getBlockHeader(latest, "latest");
                     timestamp_t myTs = (blo->timestamp);
                     timestamp_t blkTs = ((timestamp_t)latest.timestamp);
                     if (blkTs > myTs) {
@@ -568,8 +545,7 @@ bool CBlock::readBackLevel(CArchive& archive) {
             baseFeePerGas = 0;
         } else {
             CBlock upgrade;
-            upgrade.light = true;
-            getObjectViaRPC(upgrade, "eth_getBlockByNumber", "[" + quote(uint_2_Hex(blockNumber)) + ",false]");
+            getBlockHeader(upgrade, uint_2_Hex(blockNumber));
             baseFeePerGas = upgrade.baseFeePerGas;
         }
         finalized = false;

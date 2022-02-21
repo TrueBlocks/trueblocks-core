@@ -46,7 +46,7 @@ bool COptions::parseArguments(string_q& commandIn) {
     CStringArray blocks;
     // END_CODE_LOCAL_INIT
 
-    getBlock_light(latest, "latest");
+    getBlockHeader(latest, "latest");
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
