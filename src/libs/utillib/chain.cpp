@@ -429,6 +429,7 @@ bool getChainList(CChainArray& chains) {
             explode(parts, line, '=');
             if (parts.size() == 2) {
                 parts[0] = trim(substitute(parts[0], "\"", ""));
+                parts[1] = trim(nextTokenClear(parts[1], '#'));
                 parts[1] = trim(substitute(parts[1], "\"", ""));
                 replaceNames(current.chain, parts[0], parts[1]);
                 current.setValueByName(parts[0], parts[1]);
