@@ -238,7 +238,7 @@ void COptions::Init(void) {
         status.configPath = status.cachePath = status.indexPath = "--paths--";
     } else {
         status.host = string_q(hostname) + " (" + username + ")";
-        // BOGUS FIXME: THIS IS BROKEN
+        // BOGUS FIXME: THIS IS BROKENer
         status.rpcProvider = getRpcProvider();
         status.configPath = rootConfigs;
         status.cachePath = cacheFolder;
