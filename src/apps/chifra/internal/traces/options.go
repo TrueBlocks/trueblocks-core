@@ -97,6 +97,8 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *TracesOptions {
 		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return opts
 }

@@ -74,6 +74,8 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 		GetOptions().Globals.LogLevel = 4
 	}
 
+	allDogs = globals.ConvertEns(chain, allDogs)
+
 	// Do the actual call
 	cmd := exec.Command(tbCmd, allDogs...)
 	if GetOptions().Globals.Verbose {

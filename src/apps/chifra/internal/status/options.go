@@ -113,6 +113,8 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *StatusOptions {
 		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return opts
 }

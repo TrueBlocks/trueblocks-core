@@ -296,6 +296,11 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ExportOptions {
 		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)
+	// EXISTING_CODE
+	opts.Addrs = globals.ConvertEns(opts.Globals.Chain, opts.Addrs)
+	opts.Emitter = globals.ConvertEns(opts.Globals.Chain, opts.Emitter)
+	opts.Asset = globals.ConvertEns(opts.Globals.Chain, opts.Asset)
+	// EXISTING_CODE
 
 	return opts
 }
@@ -312,6 +317,9 @@ func ExportFinishParse(args []string) *ExportOptions {
 			opts.Addrs = append(opts.Addrs, arg)
 		}
 	}
+	opts.Addrs = globals.ConvertEns(opts.Globals.Chain, opts.Addrs)
+	opts.Emitter = globals.ConvertEns(opts.Globals.Chain, opts.Emitter)
+	opts.Asset = globals.ConvertEns(opts.Globals.Chain, opts.Asset)
 	// EXISTING_CODE
 	return opts
 }

@@ -113,6 +113,9 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *MonitorsOptions {
 		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)
+	// EXISTING_CODE
+	opts.Addrs = globals.ConvertEns(opts.Globals.Chain, opts.Addrs)
+	// EXISTING_CODE
 
 	return opts
 }
@@ -120,7 +123,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *MonitorsOptions {
 func MonitorsFinishParse(args []string) *MonitorsOptions {
 	opts := GetOptions()
 	// EXISTING_CODE
-	opts.Addrs = args
+	opts.Addrs = globals.ConvertEns(opts.Globals.Chain, args)
 	// EXISTING_CODE
 	return opts
 }

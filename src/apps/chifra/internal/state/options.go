@@ -100,6 +100,10 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *StateOptions {
 		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)
+	// EXISTING_CODE
+	opts.Addrs = globals.ConvertEns(opts.Globals.Chain, opts.Addrs)
+	opts.ProxyFor = globals.ConvertOneEns(opts.Globals.Chain, opts.ProxyFor)
+	// EXISTING_CODE
 
 	return opts
 }
@@ -114,6 +118,8 @@ func StateFinishParse(args []string) *StateOptions {
 			opts.Blocks = append(opts.Blocks, arg)
 		}
 	}
+	opts.Addrs = globals.ConvertEns(opts.Globals.Chain, opts.Addrs)
+	opts.ProxyFor = globals.ConvertOneEns(opts.Globals.Chain, opts.ProxyFor)
 	// EXISTING_CODE
 	return opts
 }

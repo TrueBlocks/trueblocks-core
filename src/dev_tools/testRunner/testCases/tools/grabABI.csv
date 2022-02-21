@@ -21,6 +21,7 @@ local   ,both ,fast  ,abis  ,tools/grabABI ,fmt_csv             ,n    ,addrs = 0
 on      ,both ,fast  ,abis  ,tools/grabABI ,fmt_api             ,y    ,addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = api
 on      ,both ,fast  ,abis  ,tools/grabABI ,fmt_json            ,y    ,addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = json
 on      ,both ,fast  ,abis  ,tools/grabABI ,fmt_junk            ,y    ,addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = junk
+on      ,both ,fast  ,abis  ,tools/grabABI ,ens_test            ,y    ,addrs = uniswap.eth & fmt = json
 
 on      ,both ,fast  ,abis  ,tools/grabABI ,findSig_tooshort    ,y    ,find = 0x1aa3a0
 on      ,both ,fast  ,abis  ,tools/grabABI ,findSig_toolong     ,y    ,find = 0x1aa3a00800

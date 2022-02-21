@@ -279,9 +279,14 @@ bool parseBlockList2(COptionsBase* opt, COptionsBlockList& blocks, const string_
 
 //--------------------------------------------------------------------------------
 bool parseAddressList(COptionsBase* opt, CAddressArray& addrs, const string_q& argIn) {
-    if (!isAddress(argIn))
+    if (contains(argIn, ".eth")) {
+        // We should never get this far with an unresolved .eth name unless there
+        // is no address for this .eth name. Let the user know.
+        return opt->usage("Invalid address '" + argIn + "'. Is this a valid .eth name?");
+    } else if (!isAddress(argIn)) {
         return opt->usage("Invalid address '" + argIn + "'. Length (" + uint_2_Str(argIn.length()) +
                           ") is not equal to 40 characters (20 bytes).");
+    }
     address_t lower = toLower(str_2_Addr(argIn));
     for (auto a : addrs) {
         if (a == lower) {

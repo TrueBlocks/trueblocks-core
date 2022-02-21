@@ -79,6 +79,9 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)
+	// EXISTING_CODE
+	opts.Addrs = globals.ConvertEns(opts.Globals.Chain, opts.Addrs)
+	// EXISTING_CODE
 
 	return opts
 }
@@ -93,6 +96,7 @@ func SlurpFinishParse(args []string) *SlurpOptions {
 			opts.Blocks = append(opts.Blocks, arg)
 		}
 	}
+	opts.Addrs = globals.ConvertEns(opts.Globals.Chain, opts.Addrs)
 	// EXISTING_CODE
 	return opts
 }

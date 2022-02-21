@@ -8,7 +8,10 @@ import (
 	"context"
 	"log"
 	"math/big"
+	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
@@ -47,21 +50,38 @@ func BlockNumber(provider string) uint64 {
 	return r
 }
 
+var noProvider string = `
+
+  {R}Warning{O}: The RPC server ([{PROVIDER}]) was not found. Either start it, or edit the {T}rpcProvider{O}
+  value in the file {T}[{FILE}]{O}. Quitting...
+`
+
+// CheckRpc will not return if the RPC is not available
+func CheckRpc(provider string) {
+	GetIDs(provider)
+}
+
 // GetIDs returns both chainId and networkId from the node
 func GetIDs(provider string) (uint64, uint64) {
 	ec := GetClient(provider)
 	defer ec.Close()
 
+	// We might need it, so create it
+	msg := noProvider
+	msg = strings.Replace(msg, "[{PROVIDER}]", provider, -1)
+	msg = strings.Replace(msg, "[{FILE}]", config.GetPathToRootConfig()+"trueBlocks.toml", -1)
+	msg = strings.Replace(msg, "{R}", colors.Red, -1)
+	msg = strings.Replace(msg, "{T}", colors.Cyan, -1)
+	msg = strings.Replace(msg, "{O}", colors.Off, -1)
+
 	ch, err := ec.ChainID(context.Background())
 	if err != nil {
-		logger.Log(logger.Error, "Could not get chainId from client")
-		return 1, 1
+		log.Fatalln(msg)
 	}
 
 	n, err := ec.NetworkID(context.Background())
 	if err != nil {
-		logger.Log(logger.Error, "Could not get networkId from client")
-		return 1, 1
+		log.Fatalln(msg)
 	}
 
 	return ch.Uint64(), n.Uint64()

@@ -1,0 +1,22 @@
+names?terms=wildmolasses.eth
+{
+  "data": [
+    {
+      "tags": "90-Individuals:Gitcoin Grants",
+      "address": "0x69e271483c38ed4902a55c3ea8aab9e7cc8617e5",
+      "name": "Name 0x69e27148",
+      "symbol": "",
+      "source": "Gitcoin Website",
+      "decimals": 0,
+      "description": ""
+    }
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef",
+    "namePath": "--"
+  }
+}

@@ -101,6 +101,7 @@ func (opts *ExploreOptions) ValidateExplore() error {
 // It may not be becuase transaction hashes and block hashes are both 32-byte hex)
 func id_2_TxHash(chain, arg string) (string, error) {
 	provider := config.GetRpcProvider(chain)
+	rpcClient.CheckRpc(provider)
 
 	// simple case first
 	if !strings.Contains(arg, ".") {
@@ -135,6 +136,8 @@ func id_2_TxHash(chain, arg string) (string, error) {
 
 func id_2_BlockHash(chain, arg string) (string, error) {
 	provider := config.GetRpcProvider(chain)
+	rpcClient.CheckRpc(provider)
+
 	if validate.IsBlockHash(arg) {
 		return rpcClient.BlockHashFromHash(provider, arg)
 	}

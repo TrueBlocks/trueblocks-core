@@ -16,17 +16,19 @@ import (
 
 // Run runs serve command and sends any errors to log.Fatal
 func RunServe(cmd *cobra.Command, args []string) error {
+	opts := ServeFinishParse(args)
+
 	err := Validate(cmd, args)
 	if err != nil {
 		return err
 	}
 
-	apiUrl := GetOptions().Port
+	apiUrl := opts.Port
 	if !strings.Contains(apiUrl, "http") {
 		apiUrl = "http://localhost" + apiUrl
 	}
 
-	chain := GetOptions().Globals.Chain
+	chain := opts.Globals.Chain
 	configPath := config.GetPathToRootConfig()
 	chainConfigPath := config.GetPathToChainConfig(chain)
 	cachePath := config.GetPathToCache(chain)
@@ -42,7 +44,7 @@ func RunServe(cmd *cobra.Command, args []string) error {
 	log.Printf("%s%-18.18s%s%s\n", colors.Green, "RPC Provider:", colors.Off, rpcProvider)
 	log.Printf("%s%-18.18s%s%d, %d, %d, %d\n", colors.Green, "Progress:", colors.Off, meta.Latest, meta.Finalized, meta.Staging, meta.Unripe)
 
-	log.Fatal(RunInternal(GetOptions().Port))
+	log.Fatal(RunInternal(opts.Port))
 
 	return nil
 }

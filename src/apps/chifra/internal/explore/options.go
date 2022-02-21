@@ -68,6 +68,9 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ExploreOptions {
 		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)
+	// EXISTING_CODE
+	opts.Terms = globals.ConvertEns(opts.Globals.Chain, opts.Terms)
+	// EXISTING_CODE
 
 	return opts
 }
@@ -75,7 +78,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ExploreOptions {
 func ExploreFinishParse(args []string) *ExploreOptions {
 	opts := GetOptions()
 	// EXISTING_CODE
-	opts.Terms = args
+	opts.Terms = globals.ConvertEns(opts.Globals.Chain, args)
 	// EXISTING_CODE
 	return opts
 }

@@ -54,6 +54,8 @@ on      ,both ,fast  ,names ,tools/ethNames ,edit_undelete          ,y    ,undel
 on      ,both ,fast  ,names ,tools/ethNames ,show_undelete          ,y    ,terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = api & expand
 on      ,both ,fast  ,names ,tools/ethNames ,edit_remove            ,y    ,remove & terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = api & expand
 on      ,both ,fast  ,names ,tools/ethNames ,show_remove            ,y    ,terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = api & expand
+on      ,both ,fast  ,names ,tools/ethNames ,ens_test               ,y    ,terms = wildmolasses.eth
+on      ,both ,fast  ,names ,tools/ethNames ,ens_test_fail          ,y    ,terms = notathingy.eth
 
 #        ,     ,      ,      ,               ,                       ,     ,these tests work but have a timestamp in them so causes diffs
 local   ,cmd  ,fast  ,names ,tools/ethNames ,xdg_fail1              ,y    ,terms = test
