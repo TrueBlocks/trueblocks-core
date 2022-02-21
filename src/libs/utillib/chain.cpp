@@ -385,6 +385,7 @@ bool findChain(const string_q& needle, CChain& chainOut) {
 
 //--------------------------------------------------------------------------------
 bool getChainList(CChainArray& chains) {
+    // BOGUS - something something chase
     // TODO: This hacky assed code is because our TOML code does not read arrays
     time_q configFileDate = fileLastModifyDate(rootConfigToml_trueBlocks);
     time_q chainConfigDate = fileLastModifyDate(cacheFolder_tmp + "chains.bin");

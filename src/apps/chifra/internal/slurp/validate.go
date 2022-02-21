@@ -25,6 +25,7 @@ func (opts *SlurpOptions) ValidateSlurp() error {
 		return err
 	}
 
+	// BOGUS
 	if opts.Globals.Chain != "mainnet" {
 		return validate.Usage("The {0} command is currently available only on the {1} chain.", "slurp", "mainnet")
 	}

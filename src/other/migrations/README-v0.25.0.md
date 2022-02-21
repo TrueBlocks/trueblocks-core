@@ -1,8 +1,10 @@
+BOGUS
+
 # v0.25.0 Multi-chain
 
 ---
 
-(February 10, 2022)
+(February 22, 2022)
 
 ## Why the Change?
 
@@ -173,6 +175,10 @@ Once the migration is finished, it will return:
 Please see the help file on our website for information on using the new `--chain` options to `chifra`.
 
 Please report any problems by creating an issue.
+
+## Yet to be Completed
+
+The following things are not completed yet with the multi-chain change. Since these things don't materially effect the way multi-chain works, we decided to proceed with the merge without them. They will be completed as time becomes available. Each uncompleted item is listed along with a method to get around the limitation.
 
 ## Previous Migration
 

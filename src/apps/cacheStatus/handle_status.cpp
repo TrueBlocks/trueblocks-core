@@ -63,7 +63,7 @@ bool COptions::handle_status(ostream& os) {
     CIndexCache index;
     if (contains(mode, "|index|")) {
         LOG8("Reporting on index");
-        // FIXME: NOT SURE THIS IS WRONG, BUT IT LOOKS WEIRD
+        // BOGUS FIXME: NOT SURE THIS IS WRONG, BUT IT LOOKS WEIRD
         if (!index.readBinaryCache(indexFolder_finalized, "index", details)) {
             LOG8("Regenerating cache");
             index.type = index.getRuntimeClass()->m_ClassName;

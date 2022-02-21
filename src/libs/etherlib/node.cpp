@@ -698,6 +698,7 @@ bool hasTraceAt(const string_q& hashIn, size_t where) {
 
 //-------------------------------------------------------------------------
 bool isTracingNode(void) {
+    // BOGUS - document how (and why) this works. It's very confusing
     ostringstream os;
     os << "[\"";
     os << str_2_Hash("0x6df0b4a0d15ae3b925b9819646a0cff4d1bc0a53b294c0d84d884865302d13a5");

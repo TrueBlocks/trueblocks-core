@@ -19,6 +19,7 @@ type ExploreType uint8
 const (
 	ExploreNone ExploreType = iota
 	ExploreAddress
+	ExploreName
 	ExploreEnsName
 	ExploreTx
 	ExploreBlock
@@ -151,6 +152,8 @@ func (t ExploreType) String() string {
 		return "ExploreNone"
 	case ExploreAddress:
 		return "ExploreAddress"
+	case ExploreName:
+		return "ExploreName"
 	case ExploreEnsName:
 		return "ExploreEnsName"
 	case ExploreTx:

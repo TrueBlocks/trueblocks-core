@@ -8,7 +8,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-// TODO: This needs to be per-chain -- see the timestamps cached-in-memory data
+// BOGUS TODO: This needs to be per-chain -- see the timestamps cached-in-memory data
 var blockScrapeViper = viper.New()
 var blockScrapeRead = false
 var cachedBlockScrape BlockScrape

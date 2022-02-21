@@ -27,6 +27,7 @@ timestamp_t blockZeroTs(void) {
     return ts;
 }
 
+// BOGUS - this could be done for other chains
 blknum_t firstTransactionBlock(void) {
     map<string_q, blknum_t> theMap = {
         make_pair("mainnet", 46147),
@@ -36,7 +37,7 @@ blknum_t firstTransactionBlock(void) {
 
 blknum_t hardForkBlock(const string_q& hf) {
     // This data was taken from Geth ./params/config.go
-    // TODO: UnchainedIndex --> This could be part of unchained index
+    // BOGUS TODO: UnchainedIndex --> This could be part of unchained index
     if (hf == "byzantium") {
         map<string_q, blknum_t> theMap = {
             make_pair("kovan", 5067000),

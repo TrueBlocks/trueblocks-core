@@ -15,6 +15,7 @@ func (opts *InitOptions) ValidateInit() error {
 		return opts.BadFlag
 	}
 
+	// BOGUS
 	if opts.Globals.Chain != "mainnet" {
 		return validate.Usage("The {0} command is currently available only on the {1} chain.", "init", "mainnet")
 	}

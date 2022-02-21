@@ -14,16 +14,6 @@ func GetChainId(chain string) string {
 	return ch.ChainId
 }
 
-func cleanUrl(url string) string {
-	if !strings.HasPrefix(url, "http") {
-		url = "https://" + url
-	}
-	if !strings.HasSuffix(url, "/") {
-		url += "/"
-	}
-	return url
-}
-
 // GetLocalExplorer returns the expected chain id for a given chain
 func GetLocalExplorer(chain string) string {
 	ch := GetRootConfig().Chains[chain]
@@ -58,4 +48,14 @@ func GetApiProvider(chain string) string {
 func GetSymbol(chain string) string {
 	ch := GetRootConfig().Chains[chain]
 	return ch.Symbol
+}
+
+func cleanUrl(url string) string {
+	if !strings.HasPrefix(url, "http") {
+		url = "https://" + url
+	}
+	if !strings.HasSuffix(url, "/") {
+		url += "/"
+	}
+	return url
 }

@@ -61,6 +61,8 @@ var Options OptionsType
 func init() {
 	cobra.OnInitialize(initConfig)
 
+
+	// BOGUS - why do we have these command line options?
 	var unused1, unused2 string
 	blazeCmd.PersistentFlags().StringVarP(&unused1, "rpcProvider", "r", "http://localhost:8545", "URL to the node's RPC")
 	blazeCmd.PersistentFlags().StringVarP(&unused2, "indexPath", "c", "", "The location of TrueBlocks' appearance cache (default \"$CONFIG/unchained\")")
@@ -74,6 +76,7 @@ func init() {
 	blazeCmd.MarkPersistentFlagRequired("block_cnt")
 	blazeCmd.MarkPersistentFlagRequired("ripeBlock")
 
+	// BOGUS - what if we're called with some BOGUS data
 	envs := strings.Split(os.Getenv("TB_CONFIG_ENV"), ",")
 	Options.indexPath = envs[4]
 	Options.rpcProvider = envs[6]
@@ -104,6 +107,7 @@ func init() {
 
 // initConfig reads in config file and ENV variables if set.
 func initConfig() {
+    // BOGUS - is this okay? Does config work with env variables?
 	envs := strings.Split(os.Getenv("TB_CONFIG_ENV"), ",")
 	configPath := envs[1]
 

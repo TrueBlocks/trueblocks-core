@@ -138,6 +138,7 @@ func BlockHashFromNumber(provider string, blkNum uint64) (string, error) {
 }
 
 /*
+// Functions available in the client
 func NewClient(c *rpc.Client) *Client
 func (ec *Client) BalanceAt(ctx context.Context, account common.Address, blockNumber *big.Int) (*big.Int, error)
 func (ec *Client) CallContract(ctx context.Context, msg ethereum.CallMsg, blockNumber *big.Int) ([]byte, error)
@@ -168,11 +169,11 @@ func (ec *Client) TransactionSender(ctx context.Context, tx *types.Transaction, 
 func GetBlockTimestamp(provider string, bn uint64) uint64 {
 	ec := GetClient(provider)
 	r, err := ec.BlockByNumber(context.Background(), big.NewInt(int64(bn)))
+	defer ec.Close()
 	if err != nil {
 		logger.Log(logger.Error, "Could not connect to RPC client")
 		return 0
 	}
-	ec.Close()
 	return r.Time()
 }
 

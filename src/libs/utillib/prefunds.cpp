@@ -41,7 +41,7 @@ bool loadPrefundBalances(void) {
     }
 
     if (fileExists(cacheFolderBin_allocs)) {
-        // TODO: Clean this up
+        // BOGUS TODO: Clean this up? In what way?
         string_q junk = cacheFolderBin_allocs;
         if (isTestMode())
             junk = relativize(junk);
@@ -61,7 +61,7 @@ bool loadPrefundBalances(void) {
         }
     }
 
-    // TODO: Clean this up
+    // BOGUS TODO: Clean this up
     string_q junk = chainConfigsTxt_allocs;
     if (isTestMode())
         junk = relativize(junk);
@@ -86,7 +86,7 @@ bool loadPrefundBalances(void) {
 
     CArchive archive(WRITING_ARCHIVE);
     if (archive.Lock(cacheFolderBin_allocs, modeWriteCreate, LOCK_NOWAIT)) {
-        // TODO: Clean this up
+        // BOGUS TODO: Clean this up
         junk = cacheFolderBin_allocs;
         if (isTestMode())
             junk = relativize(junk);

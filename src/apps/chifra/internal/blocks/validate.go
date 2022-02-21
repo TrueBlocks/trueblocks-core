@@ -54,11 +54,6 @@ func (opts *BlocksOptions) ValidateBlocks() error {
 	if len(opts.Globals.File) > 0 {
 		// Do nothing
 	} else {
-		// if opts.ListCount != 0 && len(opts.Blocks) != 0 {
-		// 	fmt.Println(opts.ListCount)
-		// 	fmt.Println(len(opts.Blocks))
-		// 	return validate.Usage("Supply either the --list_count option or block identifiers, not both.")
-		// } else
 		if opts.List > 0 {
 			if opts.ListCount == 0 {
 				return validate.Usage("You must supply a non-zero value for the --list_count option with --list.")

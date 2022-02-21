@@ -71,6 +71,7 @@ class CUniPair : public CEthCall {
 
 //---------------------------------------------------------------------------
 double getPriceInUsd(blknum_t bn, string& priceSource, const address_t& addr) {
+    // BOGUS - Document this and make it very apparent
     if (getChain() != "mainnet") {
         return 1.0;
     }
