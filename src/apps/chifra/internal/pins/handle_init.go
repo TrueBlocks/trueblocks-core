@@ -19,19 +19,22 @@ import (
 
 // InitInternal initializes local copy of UnchainedIndex by downloading manifests and chunks
 func (opts *PinsOptions) InitInternal() error {
+
+	chain := opts.Globals.Chain
+
+	config.EstablishIndexPaths(config.GetPathToIndex(chain))
+
 	opts.PrintManifestHeader()
 
-	logger.Log(logger.Info, "Calling unchained index smart contract...")
-
 	// Fetch manifest's CID
-	cid, err := pinlib.GetManifestCidFromContract()
+	cid, err := pinlib.GetManifestCidFromContract(chain)
 	if err != nil {
 		return err
 	}
-	logger.Log(logger.Info, "Found manifest hash at", cid)
+	logger.Log(logger.Info, "Unchained index returned CID", cid)
 
 	// Download the manifest
-	gatewayUrl := config.ReadBlockScrape().Dev.IpfsGateway
+	gatewayUrl := config.GetPinGateway(chain)
 	logger.Log(logger.Info, "IPFS gateway", gatewayUrl)
 
 	url, err := url.Parse(gatewayUrl)
@@ -46,7 +49,8 @@ func (opts *PinsOptions) InitInternal() error {
 	}
 
 	// Save manifest
-	err = pinlib.SaveManifest(config.GetPathToConfig(false /* withChain */)+"manifest/manifest.txt", downloadedManifest)
+	manifestPath := config.GetPathToChainConfig(chain) + "manifest.txt"
+	err = pinlib.SaveManifest(manifestPath, downloadedManifest)
 	if err != nil {
 		return err
 	}
@@ -60,8 +64,8 @@ func (opts *PinsOptions) InitInternal() error {
 
 	getChunks := func(chunkType cache.CacheType) {
 		chunkPath := &cache.Path{}
-		chunkPath.New(chunkType)
-		failedChunks, cancelled := downloadAndReportProgress(downloadedManifest.NewPins, chunkPath)
+		chunkPath.New(chain, chunkType)
+		failedChunks, cancelled := downloadAndReportProgress(chain, downloadedManifest.NewPins, chunkPath)
 
 		if cancelled {
 			// We don't want to retry if the user has cancelled
@@ -71,7 +75,7 @@ func (opts *PinsOptions) InitInternal() error {
 		if len(failedChunks) > 0 {
 			retry(failedChunks, 3, func(pins []manifest.PinDescriptor) ([]manifest.PinDescriptor, bool) {
 				logger.Log(logger.Info, "Retrying", len(pins), "bloom(s)")
-				return downloadAndReportProgress(pins, chunkPath)
+				return downloadAndReportProgress(chain, pins, chunkPath)
 			})
 		}
 	}
@@ -98,7 +102,7 @@ func (opts *PinsOptions) InitInternal() error {
 type downloadFunc func(pins []manifest.PinDescriptor) (failed []manifest.PinDescriptor, cancelled bool)
 
 // Downloads chunks and report progress
-func downloadAndReportProgress(pins []manifest.PinDescriptor, chunkPath *cache.Path) ([]manifest.PinDescriptor, bool) {
+func downloadAndReportProgress(chain string, pins []manifest.PinDescriptor, chunkPath *cache.Path) ([]manifest.PinDescriptor, bool) {
 	chunkTypeToDescription := map[cache.CacheType]string{
 		cache.BloomChunk: "bloom",
 		cache.IndexChunk: "index",
@@ -108,7 +112,7 @@ func downloadAndReportProgress(pins []manifest.PinDescriptor, chunkPath *cache.P
 	progressChannel := progress.MakeChan()
 	defer close(progressChannel)
 
-	go chunk.GetChunksFromRemote(pins, chunkPath, progressChannel)
+	go chunk.GetChunksFromRemote(chain, pins, chunkPath, progressChannel)
 
 	var pinsDone uint
 
@@ -181,13 +185,18 @@ func retry(failedPins []manifest.PinDescriptor, times uint, downloadChunks downl
 }
 
 func (opts *PinsOptions) PrintManifestHeader() {
-	// The following two values should be read from manifest.txt, however right now only TSV format
-	// is available for download and it lacks this information
+	// The following two values should be read the manifest, however right now only
+	// TSV format is available for download and it lacks this information
 	// TODO: These values should be in a config file
 	// TODO: We can add the "loaded" configuration file to Options
 	// TODO: This needs to be per chain data
+	chain := opts.Globals.Chain
 	logger.Log(logger.Info, "hashToIndexFormatFile:", "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2")
 	logger.Log(logger.Info, "hashToBloomFormatFile:", "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD")
-	logger.Log(logger.Info, "unchainedIndexAddr:", pinlib.GetUnchainedIndexAddress())
-	logger.Log(logger.Info, "manifestHashEncoding:", pinlib.GetManifestHashEncoding())
+	logger.Log(logger.Info, "manifestHashEncoding:", config.ReadBlockScrape(chain).UnchainedIndex.ManifestHashEncoding)
+	logger.Log(logger.Info, "unchainedIndexAddr:", config.ReadBlockScrape(chain).UnchainedIndex.Address)
+	if !opts.Globals.TestMode {
+		logger.Log(logger.Info, "unchainedIndexFolder:", config.GetPathToIndex(chain))
+		logger.Log(logger.Info, "manifestLocation:", config.GetPathToChainConfig(chain))
+	}
 }

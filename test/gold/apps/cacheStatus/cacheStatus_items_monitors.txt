@@ -2,8 +2,6 @@ chifra status  --details monitors
 TEST[DATE|TIME] Modes:  [monitors]
 TEST[DATE|TIME] Details:  true
 TEST[DATE|TIME] Depth:  0
-TIME ~ CLOCK - [0m[0;32m[1m<INFO>  [0m: Loading prefund balances
-TIME ~ CLOCK - <INFO>  : Loading names
 {
   "clientVersion": "Client version",
   "clientIds": "chainId: 1 networkId: 1",
@@ -21,6 +19,7 @@ TIME ~ CLOCK - <INFO>  : Loading names
     {
       "items": [
         {
+          "deleted": false,
           "nApps": 0,
           "firstApp": 0,
           "latestApp": 0,

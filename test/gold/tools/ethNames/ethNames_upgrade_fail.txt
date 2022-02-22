@@ -1,6 +1,5 @@
 chifra names  --fmt json
 TEST[DATE|TIME] Format:  json
-TIME ~ CLOCK - <INFO>  : Loading names
 { "data": [
   {
     "tags": "55-Defi",
@@ -363,6 +362,14 @@ TIME ~ CLOCK - <INFO>  : Loading names
     "address": "0x006e61aa7e7ce25b8dad331d5181f2fbe5c23a54",
     "name": "Shanghai Cleaner Contract",
     "source": "TrueBlocks.io"
+  },
+  {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x0077cd5eca22e86177cc465633227652ff02f32d",
+    "name": "BrightID_Main_DAO",
+    "symbol": "BMAIN",
+    "source": "On chain",
+    "decimals": 18
   },
   {
     "tags": "31-Gitcoin:Grants",
@@ -1368,10 +1375,4 @@ TIME ~ CLOCK - <INFO>  : Loading names
     "address": "0x037e8f2125bf532f3e228991e051c8a7253b642c",
     "name": "Chainlink DAI-ETH Aggregator",
     "source": "EtherScan.io"
-  },
-  {
-    "tags": "31-Gitcoin:Grants",
-    "address": "0x0384610bf8e9292ec499145cb126e32a17e7ccd6",
-    "name": "Grant 3475 - Nectar: L2 + Healthcare",
-    "source": "https://gitcoin.co/grants/3475/nectar-l2-healthcare"
   }] }

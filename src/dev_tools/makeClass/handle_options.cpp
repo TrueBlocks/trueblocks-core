@@ -84,7 +84,7 @@ bool COptions::handle_options(void) {
                         config += "  // NOLINT";
                     configStream << config << endl;
 
-                } else {
+                } else if (!option.isGoOnly) {
                     if (option.is_customizable) {
                         string_q config = option.Format(substitute(STR_OPTION_CONFIGSTR, "OPTS", "DESCRIPTION"));
                         if (config.length() > 120)
@@ -96,6 +96,8 @@ bool COptions::handle_options(void) {
                     if (opt.length() > 120)
                         opt += "  // NOLINT";
                     optionStream << opt << endl;
+                } else {
+                    // do nothing
                 }
 
                 string_q initFmt = "    [{LONGNAME}] = [{DEF_VAL}];";
@@ -207,12 +209,12 @@ void COptions::generate_toggle(const CCommandOption& option) {
                                                     : "Int"));
     }
 
-    if (option.generate == "local") {
+    if (option.codeLoc() == LOCAL) {
         localStream << option.Format(STR_DEFAULT_ASSIGNMENT) << endl;
         if (!option.isConfig)
             autoStream << option.Format(STR_AUTO_TOGGLE) << endl;
 
-    } else if (option.generate == "header" || option.isConfig) {
+    } else if (option.codeLoc() == HEADER || option.isConfig) {
         initStream << option.Format(initFmt) << endl;
         headerStream << option.Format(STR_DECLARATION) << endl;
         if (!option.isConfig)
@@ -230,12 +232,12 @@ void COptions::generate_switch(const CCommandOption& option) {
                                                     : "Int"));
     }
 
-    if (option.generate == "local") {
+    if (option.codeLoc() == LOCAL) {
         localStream << option.Format(STR_DEFAULT_ASSIGNMENT) << endl;
         if (!option.isConfig)
             autoStream << option.Format(STR_AUTO_SWITCH) << endl;
 
-    } else if (option.generate == "header" || option.isConfig) {
+    } else if (option.codeLoc() == HEADER || option.isConfig) {
         initStream << option.Format(initFmt) << endl;
         headerStream << option.Format(STR_DECLARATION) << endl;
         if (!option.isConfig)
@@ -253,7 +255,7 @@ void COptions::generate_flag(const CCommandOption& option) {
                                                     : "Int"));
     }
 
-    if (option.generate == "local") {
+    if (option.codeLoc() == LOCAL) {
         if (option.isEnumList) {
             localStream << option.Format("    CStringArray [{LONGNAME}];") << endl;
             if (!option.isConfig)
@@ -290,7 +292,7 @@ void COptions::generate_flag(const CCommandOption& option) {
             }
         }
 
-    } else if (option.generate == "header" || option.isConfig) {
+    } else if (option.codeLoc() == HEADER || option.isConfig) {
         if (option.isEnumList) {
             initStream << option.Format("    [{LONGNAME}].clear();") << endl;
             headerStream << option.Format("    CStringArray [{LONGNAME}];") << endl;
@@ -337,7 +339,7 @@ void COptions::generate_flag(const CCommandOption& option) {
 //---------------------------------------------------------------------------------------------------
 void COptions::generate_positional(const CCommandOption& option) {
     ostringstream posStream;
-    if (option.generate == "local") {
+    if (option.codeLoc() == LOCAL) {
         if (option.data_type == "list<addr>") {
             localStream << substitute(option.Format("    CAddressArray [{LONGNAME}];"), "addrs2", "addrs") << endl;
             posStream << option.Format(STR_ADDRLIST_PROCESSOR) << endl;
@@ -378,7 +380,7 @@ void COptions::generate_positional(const CCommandOption& option) {
             // don't know type
         }
 
-    } else if (option.generate == "header" || option.isConfig) {
+    } else if (option.codeLoc() == HEADER || option.isConfig) {
         if (option.data_type == "list<addr>") {
             headerStream << substitute(option.Format("    CAddressArray [{LONGNAME}];"), "addrs2", "addrs") << endl;
             posStream << option.Format(STR_ADDRLIST_PROCESSOR) << endl;
@@ -418,6 +420,7 @@ void COptions::generate_positional(const CCommandOption& option) {
             // unknown type
         }
     }
+
     if (!posStream.str().empty())
         positionals.push_back(posStream.str());
 }

@@ -1,0 +1,24 @@
+chifra slurp  0x1324e7b922b30B49Ab8EA81086341cc41C249346 --types int 0-7000000 --fmt txt --chain rinkeby
+TEST[DATE|TIME] Addrs:  [0x1324e7b922b30B49Ab8EA81086341cc41C249346]
+TEST[DATE|TIME] Blocks:  [0-7000000]
+TEST[DATE|TIME] Types:  [int]
+TEST[DATE|TIME] Chain:  rinkeby
+TEST[DATE|TIME] Format:  txt
+Error: The slurp command is currently available only on the mainnet chain.
+Usage:
+  chifra slurp [flags] <address> [address...] [block...]
+
+Arguments:
+  addrs - one or more addresses to slurp from Etherscan (required)
+  blocks - an optional range of blocks to slurp
+
+Flags:
+  -t, --types strings   which types of transactions to request
+                        One or more of [ ext | int | token | nfts | miner | uncles | all ]
+  -p, --appearances     show only the blocknumer.tx_id appearances of the exported transactions
+  -x, --fmt string      export format, one of [none|json*|txt|csv|api]
+  -v, --verbose         enable verbose (increase detail with --log_level)
+  -h, --help            display this help screen
+
+Notes:
+  - Portions of this software are Powered by Etherscan.io APIs.

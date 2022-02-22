@@ -54,6 +54,8 @@ on      ,cmd  ,fast  ,state ,tools/getState ,fmt_junk                       ,y  
 on      ,cmd  ,fast  ,state ,tools/getState ,from_file                      ,y    ,file = cmd_file
 on      ,both ,fast  ,state ,tools/getState ,get_range                      ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & blocks = 1428000-1438000:200
 
+on      ,both ,fast  ,state ,tools/getState ,ens_test                       ,y    ,addrs = trueblocks.eth & blocks = 8854700-8854900:20
+
 on      ,both ,fast  ,state ,tools/getState ,contract_call_fail1            ,y    ,call = 0xa4f29fc548856180f6b1e319ee4d86715875!0x12065fe0 & blocks = 6523977-6540000:2000
 on      ,both ,fast  ,state ,tools/getState ,contract_call_fail2            ,y    ,call = 0xa4f29fc548856180f6b1e319ee4d86715875cce4!12065fe0 & blocks = 6523977-6540000:2000
 on      ,both ,fast  ,state ,tools/getState ,contract_call                  ,y    ,call = 0xa4f29fc548856180f6b1e319ee4d86715875cce4!0x12065fe0 & blocks = 6523977-6540000:2000

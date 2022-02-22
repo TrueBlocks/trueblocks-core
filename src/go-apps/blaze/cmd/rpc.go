@@ -34,14 +34,13 @@ func getTracesFromBlock(blockNum int) ([]byte, error) {
 		fmt.Println(err)
 		return nil, err
 	}
-
+	defer resp.Body.Close()
 	tracesBody, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
 	}
 
-	defer resp.Body.Close()
 	return tracesBody, nil
 }
 

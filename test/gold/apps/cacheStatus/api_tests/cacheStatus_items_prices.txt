@@ -50,6 +50,7 @@ status?details&modes=caches&types=prices
           "isValid": true
         }
       ],
+      "chains": [],
       "date": "--date--"
     }
   ],

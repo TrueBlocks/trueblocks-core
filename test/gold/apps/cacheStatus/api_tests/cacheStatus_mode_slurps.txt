@@ -28,6 +28,7 @@ status?modes=caches&types=slurps
           "isValid": true
         }
       ],
+      "chains": [],
       "date": "--date--"
     }
   ],

@@ -1,7 +1,6 @@
 chifra names  etwork --verbose
 TEST[DATE|TIME] Terms:  [etwork]
 TEST[DATE|TIME] Verbose:  true
-TIME ~ CLOCK - <INFO>  : Loading names
 tags	address	name	symbol	decimals	source
 31-Gitcoin:Grants	0x011c2c1433b36a524b548444ae2f20c015427d04	Grant 0491 - Tokamak Network: Decentralized, Scalable, Turing Complete Layer 2 Plasma				https://gitcoin.co/grants/491/tokamak-network-decentralized-scalable-turing-com
 50-Tokens:ERC20	0x04c62019ab478bff5874e7b7d9bc84fcf7e30025	POA Network: MultiSig				EtherScan.io
@@ -73,12 +72,14 @@ tags	address	name	symbol	decimals	source
 50-Tokens:ERC20	0x881ef48211982d01e2cb7092c915e647cd40d85c	Open Trading Network	OTN		18	On chain
 31-Gitcoin:Grants	0x887a26839d9e33b1536857a24f91f192ce9d4732	Grant 2776 - pulp-network				https://gitcoin.co/grants/2776/pulp-network
 31-Gitcoin:Grants	0x8a970573f88dbc7b69dfed2ba193c98c2d5d8314	Grant 0101 Geon App: Augmented Reality App Leveraging Poa Core Network				https://gitcoin.co/grants/101/geon-app-augmented-reality-app-leveraging-poa-cor
+50-Tokens:ERC20	0x8ea197328f3d72e148af942d9ea93f9cfb40626b	Not Aragon Network DAO launch council	NOTANLC		18	On chain
 31-Gitcoin:Grants	0x904065ba663879deb7e5f902220e7db97cbf04af	Grant 0681 Flowstake - Activity Staking Blockchain Network				https://gitcoin.co/grants/681/flowstake-activity-staking-blockchain-network
 31-Gitcoin:Grants	0x934b510d4c9103e6a87aef13b816fb080286d649	Grant 0159 - Mask Network - The Portal to the New, Open Internet.				https://gitcoin.co/grants/159/mask-network-the-portal-to-the-new-open-internet
 50-Tokens:ERC20	0x9469d013805bffb7d3debe5e7839237e535ec483	Darwinia Network Token	RING		18	defipulse.com
 50-Tokens:ERC20	0x95cda24d2515491095d21d94f1b94f319e016d35	Vegetanetwork	Vegeta		18	On chain
 50-Tokens:ERC20	0x960b236a07cf122663c4303350609a66a7b288c0	Aragon Network Token	ANT		18	On chain
 30-Contracts:Kyber Network	0x9ae49c0d7f8f9ef4b864e004fe86ac8294e20950	Kyber Network				0xTracker
+50-Tokens:ERC20	0x9bde098be22658d057c3f1f185e3fd4653e2fbd1	KP2R.Network	KP2R		18	On chain
 31-Gitcoin:Grants	0x9c159121ceebf937e9bad98fd0c895d7f6038bd4	Grant 0565 Our Network - Community Driven Analytics				https://gitcoin.co/grants/565/our-network-community-driven-analytics
 50-Tokens:ERC721	0x9dd91d61a7aa58537fcdbf16fd21be25731341b3	Opium Network Position Token	ONP		18	On chain
 50-Tokens:ERC20	0xa117000000f279d81a1d3cc75430faa017fa5a2e	Aragon Network Token	ANT		18	On chain
@@ -95,6 +96,7 @@ tags	address	name	symbol	decimals	source
 50-Tokens:ERC20	0xb2135ab9695a7678dd590b1a996cb0f37bcb0718	Signals Network Token	SGN		9	On chain
 50-Tokens:ERC20	0xb417fa71a03a9badbf962589f2478353fd5693e2	Coin Display Network	CDN		18	On chain
 31-Gitcoin:Grants	0xb422e46540153ddaaccd8f5e899893fc53ab77b8	Grant 0338 2key Network Labs				https://gitcoin.co/grants/338/2key-network-labs
+50-Tokens:ERC20	0xb5261ca6b24103cf5d3784612b179b51913d4186	Aragon Network governor council	ANGC		18	On chain
 31-Gitcoin:Grants	0xb5e48595afb989ddbc97763cd516ae3a983a3e36	Grant 0072 Poa Network Community Management Grant for Khizer				https://gitcoin.co/grants/72/poa-network-community-management-grant-for-khizer
 31-Gitcoin:Grants	0xb64850fe701fb64667b6cc762aa2c12f2e02193c	Grant 0742 Crypto Community Ventures Network				https://gitcoin.co/grants/742/crypto-community-ventures-network
 31-Gitcoin:Grants	0xb9c5ed064288dc62adb6e6a0d8106fd6e71ac2a2	Grant 4294 - Frontpage Ping: Decentralized Real-Time Collaboration Network Protocol for Web3				https://gitcoin.co/grants/4294/frontpage-ping-decentralized-real-time-collaborat

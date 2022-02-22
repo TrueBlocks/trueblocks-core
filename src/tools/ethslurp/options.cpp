@@ -108,8 +108,8 @@ bool COptions::parseArguments(string_q& command) {
     if (addrs.empty())
         return usage("You must supply an Ethereum account or contract address. ");
 
-    if (!establishFolder(getPathToCache("slurps/")))
-        return usage("Unable to create data folders at " + getPathToCache("slurps/"));
+    if (!establishFolder(cacheFolder_slurps))
+        return usage("Unable to create data folders at " + cacheFolder_slurps);
 
     if (blocks.start == 0 && blocks.stop == 0)
         blocks.stop = INT_MAX;
@@ -201,8 +201,11 @@ bool COptions::getFormatString(const string_q& which, bool ignoreBlank, string_q
         errors.push_back("Mismatched brackets in display string '" + formatName + "': '" + ret + "'.\n");
 
     } else if (ret.empty() && !ignoreBlank) {
-        const char* ERR_NO_DISPLAY_STR = "Your configuration file contains an empty display string 'fmt_[{FMT}]_file'.";
-        errors.push_back(substitute(ERR_NO_DISPLAY_STR, "[{FMT}]", exportFormat));
+        const char* ERR_NO_DISPLAY_STR =
+            "Your configuration file ([{PATH}]) contains an empty display string 'fmt_[{FMT}]_file'.";
+        string_q msg = substitute(ERR_NO_DISPLAY_STR, "[{FMT}]", exportFormat);
+        msg = substitute(msg, "[{PATH}]", getGlobalConfig("ethslurp")->getFilename());
+        errors.push_back(msg);
     }
 
     fmtOut = ret;

@@ -24,7 +24,6 @@ static const COption params[] = {
     COption("known", "k", "", OPT_SWITCH, "load common 'known' ABIs from cache"),
     COption("sol", "s", "", OPT_SWITCH, "extract the abi definition from the provided .sol file(s)"),
     COption("find", "f", "list<string>", OPT_FLAG, "search for function or event declarations given a four- or 32-byte code(s)"),  // NOLINT
-    COption("source", "o", "", OPT_HIDDEN | OPT_SWITCH, "show the source of the ABI information"),
     COption("classes", "c", "", OPT_HIDDEN | OPT_SWITCH, "generate classDefinitions folder and class definitions"),
     COption("", "", "", OPT_DESCRIPTION, "Fetches the ABI for a smart contract."),
     // clang-format on
@@ -42,7 +41,6 @@ bool COptions::parseArguments(string_q& command) {
     bool known = false;
     bool sol = false;
     CStringArray find;
-    bool source = false;
     bool classes = false;
     // END_CODE_LOCAL_INIT
 
@@ -68,9 +66,6 @@ bool COptions::parseArguments(string_q& command) {
             find.push_back(arg);
         } else if (arg == "-f" || arg == "--find") {
             return flag_required("find");
-
-        } else if (arg == "-o" || arg == "--source") {
-            source = true;
 
         } else if (arg == "-c" || arg == "--classes") {
             classes = true;
@@ -106,7 +101,7 @@ bool COptions::parseArguments(string_q& command) {
 
     for (auto addr : addrs) {
         bool testing = isTestMode() && addr == "0xeeeeeeeeddddddddeeeeeeeeddddddddeeeeeeee";
-        string_q fileName = getPathToCache("abis/" + addr + ".json");
+        string_q fileName = cacheFolder_abis + addr + ".json";
         if (!testing && !isContractAt(addr, latest) && !fileExists(fileName)) {
             cerr << "Address " << addr << " is not a smart contract. Skipping..." << endl;
         } else {
@@ -127,10 +122,8 @@ bool COptions::parseArguments(string_q& command) {
         funcFields = "CFunction:" + substitute(ffields, "inputs,outputs", "input_names,output_names");
     replace(format, "[{ADDRESS}]\t", "");
     replace(funcFields, "address,", "");
-    if (!source) {
-        replace(format, "[{ABI_SOURCE}]\t", "");
-        replace(funcFields, "abi_source,", "");
-    }
+    replace(format, "[{ABI_SOURCE}]\t", "");
+    replace(funcFields, "abi_source,", "");
 
     if (verbose && (expContext().exportFmt == JSON1 || expContext().exportFmt == API1)) {
         replaceAll(funcFields, "_name", "");

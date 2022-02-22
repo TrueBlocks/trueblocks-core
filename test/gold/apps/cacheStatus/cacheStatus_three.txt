@@ -2,8 +2,6 @@ chifra status  abis caches monitors --types slurps
 TEST[DATE|TIME] Modes:  [abis caches monitors]
 TEST[DATE|TIME] Types:  [slurps]
 TEST[DATE|TIME] Depth:  0
-TIME ~ CLOCK - [0m[0;32m[1m<INFO>  [0m: Loading prefund balances
-TIME ~ CLOCK - <INFO>  : Loading names
 {
   "clientVersion": "Client version",
   "clientIds": "chainId: 1 networkId: 1",

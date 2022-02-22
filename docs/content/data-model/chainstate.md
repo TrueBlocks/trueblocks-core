@@ -2,7 +2,7 @@
 title: "Chain state"
 description: ""
 lead: ""
-date: 2021-11-22T23:00:40
+date: 2022-02-10T20:02:12
 lastmod:
   - :git
   - lastmod
@@ -45,7 +45,6 @@ State data is made of the following data fields:
 | address     | the address of the state being queried                                                          | address |
 | deployed    | the block number at which this smart contract was deployed (if a smart contact)                 | blknum  |
 | accttype    | the type of the address at the given block                                                      | string  |
-| ether       | the balance of the address in ethers                                                            | double  |
 
 
 ## Result
@@ -97,7 +96,6 @@ This documentation mentions the following basic data types.
 | blknum    | an alias for a uint64                           |                |
 | bool      | a value either `true`, `false`, `1`, or `0`     |                |
 | bytes     | an arbitrarily long string of bytes             |                |
-| double    | a floating point number of double precision     |                |
 | string    | a normal character string                       |                |
 | uint64    | a 64-bit unsigned integer                       |                |
 | wei       | an unsigned big number                          | as a string    |

@@ -31,31 +31,30 @@ func (opts *BlocksOptions) ValidateBlocks() error {
 		}
 	}
 
-	err := validate.ValidateIdentifiers(
-		opts.Blocks,
-		validate.ValidBlockIdWithRange,
-		1,
-	)
+	if opts.ListCount == 0 {
+		err := validate.ValidateIdentifiers(
+			opts.Globals.Chain,
+			opts.Blocks,
+			validate.ValidBlockIdWithRange,
+			1,
+		)
+		if err != nil {
+			if invalidLiteral, ok := err.(*validate.InvalidIdentifierLiteralError); ok {
+				return invalidLiteral
+			}
 
-	if err != nil {
-		if invalidLiteral, ok := err.(*validate.InvalidIdentifierLiteralError); ok {
-			return invalidLiteral
+			if errors.Is(err, validate.ErrTooManyRanges) {
+				return validate.Usage("Specify only a single block range at a time.")
+			}
+
+			return err
 		}
-
-		if errors.Is(err, validate.ErrTooManyRanges) {
-			return validate.Usage("Specify only a single block range at a time.")
-		}
-
-		return err
 	}
 
 	if len(opts.Globals.File) > 0 {
 		// Do nothing
 	} else {
-		if opts.ListCount != 0 && len(opts.Blocks) != 0 {
-			return validate.Usage("Supply either the --list_count option or block identifiers, not both.")
-
-		} else if opts.List > 0 {
+		if opts.List > 0 {
 			if opts.ListCount == 0 {
 				return validate.Usage("You must supply a non-zero value for the --list_count option with --list.")
 			}

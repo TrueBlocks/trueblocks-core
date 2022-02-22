@@ -141,13 +141,12 @@ func (opts *GlobalOptions) CsvFormatter(i interface{}) ([]byte, error) {
 }
 
 type JsonFormatted struct {
-	Data   interface{}     `json:"data,omitempty"`
-	Errors []string        `json:"errors,omitempty"`
-	Meta   *rpcClient.Meta `json:"meta,omitempty"`
+	Data   interface{}         `json:"data,omitempty"`
+	Errors []string            `json:"errors,omitempty"`
+	Meta   *rpcClient.MetaData `json:"meta,omitempty"`
 }
 
-// AsJsonBytes marshals JsonFormatted struct, populating Meta field if
-// needed
+// AsJsonBytes marshals JsonFormatted struct, populating Meta field if needed
 func AsJsonBytes(j *JsonFormatted, opts *GlobalOptions) ([]byte, error) {
 	var result JsonFormatted
 
@@ -162,7 +161,7 @@ func AsJsonBytes(j *JsonFormatted, opts *GlobalOptions) ([]byte, error) {
 			result.Errors = j.Errors
 		} else {
 			result.Data = j.Data
-			result.Meta = rpcClient.GetMeta(opts.TestMode)
+			result.Meta = rpcClient.GetMetaData(opts.Chain, opts.TestMode)
 		}
 	}
 

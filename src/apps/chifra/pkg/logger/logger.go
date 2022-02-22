@@ -35,12 +35,16 @@ var severityToLabel = map[severity]string{
 var testMode bool = os.Getenv("TEST_MODE") == "true"
 var apiMode bool = os.Getenv("API_MODE") == "true"
 
-// TestLog is used for testing and prints it's single input but only if it's true when in testMode
-func TestLog(isDefault bool, a ...interface{}) {
-	if !isDefault || !testMode || apiMode {
+// TestLog is used to print command line options to the screen during testing only
+func TestLog(notDefault bool, a ...interface{}) {
+	if !testMode || apiMode {
+		// If we're not testing or in apiMode
 		return
 	}
-	Log(Test, a...)
+
+	if notDefault {
+		Log(Test, a...)
+	}
 }
 
 // Log prints `a` to stderr with a label corresponding to the severity level

@@ -19,6 +19,7 @@ status?modes=collections
       "hasEskey": true,
       "hasPinkey": false,
       "caches": [],
+      "chains": [],
       "date": "--date--"
     }
   ],

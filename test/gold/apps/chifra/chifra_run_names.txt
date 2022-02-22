@@ -1,7 +1,6 @@
 chifra  names 50-Tokens --expand
 TEST[DATE|TIME] Terms:  [50-Tokens]
 TEST[DATE|TIME] Expand:  true
-TIME ~ CLOCK - <INFO>  : Loading names
 tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	iscontract	iserc20	iserc721
 50-Tokens:ERC721	0x0000000000001b84b1cb32787b0d64758d019317	HomeWork 🏠🛠️	HWK	On chain	18		false	false	false	true	true	true
 50-Tokens:ERC20	0x0000000000004946c0e9f43f4dee607b0ef1fa1c	Chi Gastoken by 1inch	CHI	On chain	18		false	false	false	true	true	false
@@ -19,6 +18,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0x00319f722bd546182cb2c701ca254146d3f084fc	Democracy Earth	HOUR	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC721	0x004f5683e183908d0f6b688239e3e2d5bbb066ca	Hall Of Fame Goat Lodge	HOFG	On chain	18		false	false	false	true	true	true
 50-Tokens:ERC20	0x006bea43baa3f7a6f765f14f10a1a1b08334ef45	Stox	STX	On chain	18	Blockchain Prediction Markets Platform.	false	false	false	true	true	false
+50-Tokens:ERC20	0x0077cd5eca22e86177cc465633227652ff02f32d	BrightID_Main_DAO	BMAIN	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x007d63afd542886570046da400c403f0dc63bd08	Zō Baby 象の赤ちゃん	ZOBABY	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x007dfb0c30f55ccac0191387fe5ffc9cfde519c0	AINU TOKEN	AINU	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x009c216b7e86e5c38af14fcd8c07aab3a2e7888e	Writing Hedge Contracts DAI	writeDAI	On chain	18		false	false	false	true	true	false
@@ -126,6 +126,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27	Zilliqa	ZIL	On chain	12	Zilliqa is a high-throughput public blockchain platform - designed to scale to thousands of transactions per second.	false	false	false	true	true	false
 50-Tokens:ERC20	0x06012c8cf97bead5deae237070f9587f8e7a266d	CryptoKitties	CK	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x06147110022b768ba8f99a8f385df11a151a9cc8	ACE Token	ACE	On chain	18	ACE is a utility token, that serves as a form of access to the TokenStars platform and its internal currency. TokenStars is the first talent management platform on the blockchain, that will connect talents celebrities with fans and advertisers.	false	false	false	true	true	false
+50-Tokens:ERC20	0x0619e4499fb404f87a988fa62d94647de7c2c401	Uniswap V2	UNI-V2	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x06325440d014e39736583c165c2963ba99faf14e	Curve.fi ETH/stETH	steCRV	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0637ff2583c829eb286905aefa5f4bd93dfdd490	Ethereum KISHU	eKISHU	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0663210a18dfdc62688b14c4ec10a1df8912e28c	E-talon	ETALON	On chain	8		false	false	false	true	true	false
@@ -188,6 +189,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0x08d32b0da63e2c3bcf8019c9c5d849d7a9d791e6	Dentacoin	٨	On chain	18	Aims to be the blockchain solution for the global dental industry.	false	false	false	true	true	false
 50-Tokens:ERC20	0x08f5a9235b08173b7569f83645d2c7fb55e8ccd8	Tierion Network Token	TNT	On chain	8	Tierion creates software to reduce the cost and complexity of trust. Anchoring data to the blockchain and generating a timestamp proof.	false	false	false	true	true	false
 50-Tokens:ERC20	0x08ff7e2be3c23ab3938b6d275193d6a49ccef73e	Spartan Bucket Token	CTKN_Spartan_Bucket	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC20	0x0907239acfe1d0cfc7f960fc7651e946bb34a7b0	Uniswap V2	UNI-V2	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x093c4be59fe9c1fe194c8209e9e18ede38485444	&#x20b0;ShibEx	✔️ShibEx	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0947b0e6d821378805c9598291385ce7c791a6b2	Lendingblock	LND	On chain	18	Lendingblock is an open exchange for cryptocurrency loans, where borrowers and lenders are instantly matched in simple, safe and transparent way.	false	false	false	true	true	false
 50-Tokens:ERC20	0x094c4fdbd4c8ff299bc75f85e19a3a7115ee3a41	Rainbow	RWC	On chain	18		false	false	false	true	true	false
@@ -196,11 +198,8 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0x099fabb0a5ad43732d8f636f856da15006431581	best ICO 2018-2019 https://jullar.io	JULLAR.io	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x09a3ecafa817268f77be1283176b946c4ff2e608	Wrapped MIR Token	MIR	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x09ade3ab80b9f885eca960e8001a430d8021b591	SHIBASWAP	SHIBASWAP	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC721	0x09c09baa9502a7b0c74c24e7ff72fd25c864c266	VENTURE DAO	MCV	On chain	18		false	false	false	true	true	true
 50-Tokens:ERC721	0x09caa2563c1cb6e8f18e643ad78f659604265406	LaserCats	LaserCats	On chain	18		false	false	false	true	true	true
 50-Tokens:ERC20	0x09cad6752aab770485ca9f8c67a462b705e6555b	$YUMMY COIN	YUMMY	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x09e333e720e1bd0fe82d188d6aed36d22f96d399	Elon Doge Moon	ELONDM	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x09fe5f0236f0ea5d930197dce254d77b04128075	Wrapped CryptoKitties	WCK	On chain	18		false	false	false	true	true	false
-50-Tokens:ERC20	0x0a52d6aeac2e06cf12e168784eaa2afbda62a17a	Balancer Pool Token	BPT	On chain	18		false	false	false	true	true	false
-50-Tokens:ERC20	0x0a76aad21948ea1ef447d26dee91a54370e151e0	Ethereum Lite	ELITE	On chain	18		false	false	false	true	true	false
-50-Tokens:ERC20	0x0a7eed8bd71079121ee45649f9d88d193686d9ac	Leveraged ETH 4/15	LETH 4/15	On chain	18		false	false	false	true	true	false
-50-Tokens:ERC20	0x0a913bead80f321e7ac35285ee10d9d922659cb7	DOS Network Token	DOS	On chain	18		false	false	false	true	true	false

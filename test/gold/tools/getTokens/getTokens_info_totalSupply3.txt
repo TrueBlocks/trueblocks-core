@@ -3,7 +3,6 @@ TEST[DATE|TIME] Addrs2:  [0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568
 TEST[DATE|TIME] Blocks:  [4001001-4001002]
 TEST[DATE|TIME] Parts:  [totalSupply]
 TEST[DATE|TIME] Format:  json
-TIME ~ CLOCK - <INFO>  : Loading names
 { "data": [
   {
     "blockNumber": 4001001,

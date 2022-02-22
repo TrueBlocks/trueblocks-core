@@ -1,0 +1,97 @@
+names?prefund&chain=gnosis
+{
+  "data": [
+    {
+      "tags": "80-Prefund",
+      "address": "0x0000000000000000000000000000000000000001",
+      "name": "Prefund_0000",
+      "symbol": "",
+      "source": "Genesis",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "80-Prefund",
+      "address": "0x0000000000000000000000000000000000000002",
+      "name": "Prefund_0001",
+      "symbol": "",
+      "source": "Genesis",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "80-Prefund",
+      "address": "0x0000000000000000000000000000000000000003",
+      "name": "Prefund_0002",
+      "symbol": "",
+      "source": "Genesis",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "80-Prefund",
+      "address": "0x0000000000000000000000000000000000000004",
+      "name": "Prefund_0003",
+      "symbol": "",
+      "source": "Genesis",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "80-Prefund",
+      "address": "0x0000000000000000000000000000000000000005",
+      "name": "Prefund_0004",
+      "symbol": "",
+      "source": "Genesis",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "80-Prefund",
+      "address": "0x0000000000000000000000000000000000000006",
+      "name": "Prefund_0005",
+      "symbol": "",
+      "source": "Genesis",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "80-Prefund",
+      "address": "0x0000000000000000000000000000000000000007",
+      "name": "Prefund_0006",
+      "symbol": "",
+      "source": "Genesis",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "80-Prefund",
+      "address": "0x0000000000000000000000000000000000000008",
+      "name": "Prefund_0007",
+      "symbol": "",
+      "source": "Genesis",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "80-Prefund",
+      "address": "0x0000000000000000000000000000000000000009",
+      "name": "Prefund_0008",
+      "symbol": "",
+      "source": "Genesis",
+      "decimals": 0,
+      "description": ""
+    }
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef",
+    "chain": "gnosis",
+    "clientId": "0xdeaddead",
+    "networkId": "0xdeaddead",
+    "namePath": "--"
+  }
+}

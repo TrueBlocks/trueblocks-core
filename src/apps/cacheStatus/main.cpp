@@ -25,17 +25,9 @@ int main(int argc, const char* argv[]) {
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
-
-        if (options.isConfig) {
-            if (once)
-                cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CConfiguration));
-            options.handle_config(cout);
-
-        } else {
-            if (once)
-                cout << exportPreamble(expContext().fmtMap["header"], "");
-            options.handle_status(cout);
-        }
+        if (once)
+            cout << exportPreamble(expContext().fmtMap["header"], "");
+        options.handle_status(cout);
         once = false;
     }
     cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);

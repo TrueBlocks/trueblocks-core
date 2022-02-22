@@ -28,6 +28,9 @@ CMetaData getMetaData(void) {
     ret.staging = getLatestBlock_cache_staging();
     ret.ripe = getLatestBlock_cache_ripe();
     ret.unripe = getLatestBlock_cache_unripe();
+    ret.chainId = str_2_Uint(callRPC("eth_chainId", "[]", false));
+    ret.networkId = str_2_Uint(callRPC("net_version", "[]", false));
+    ret.chain = getChain();
     return ret;
 }
 

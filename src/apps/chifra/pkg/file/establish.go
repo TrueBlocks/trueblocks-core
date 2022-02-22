@@ -9,21 +9,11 @@ import (
 	"path"
 )
 
-// establishFolders creates the rootPath and any subfolders
+// EstablishFolders creates the rootPath and any subfolders
 func EstablishFolders(rootPath string, folders []string) error {
-	_, err := os.Stat(rootPath)
+	err := establishFolder(rootPath)
 	if err != nil {
-		if os.IsNotExist(err) {
-			// Create the rootPath if it doesn't exist
-			err = os.Mkdir(rootPath, 0755)
-			if err != nil {
-				return err
-			}
-
-		} else {
-			// If there's an error other than not exist...we fail
-			return err
-		}
+		return err
 	}
 
 	for _, folder := range folders {
@@ -37,11 +27,11 @@ func EstablishFolders(rootPath string, folders []string) error {
 }
 
 // establishFolder creates folders given a list of folders
-func establishFolder(subdirPath string) error {
-	_, err := os.Stat(subdirPath)
+func establishFolder(rootPath string) error {
+	_, err := os.Stat(rootPath)
 	if err != nil {
 		if os.IsNotExist(err) {
-			err = os.Mkdir(subdirPath, 0755)
+			err = os.Mkdir(rootPath, 0755)
 			if err != nil {
 				return err
 			}

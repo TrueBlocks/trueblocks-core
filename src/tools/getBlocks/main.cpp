@@ -21,7 +21,7 @@ int main(int argc, const char* argv[]) {
 
     // We want to get the latestBlock prior to turning on --prove for example
     COptions options;
-    getBlock_light(options.latestBlock, "latest");
+    getBlockHeader(options.latestBlock, "latest");
     if (!options.prepareArguments(argc, argv))
         return 0;
 
@@ -61,7 +61,7 @@ int main(int argc, const char* argv[]) {
 //------------------------------------------------------------
 string_q doOneLightBlock(blknum_t num) {
     CBlock gold;
-    getBlock_light(gold, num);
+    getBlockLight(gold, num);
     if (gold.blockNumber == 0 && gold.timestamp == 0)
         gold.timestamp = blockZeroTs();
     HIDE_FIELD(CTransaction, "datesh");

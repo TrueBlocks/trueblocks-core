@@ -85,6 +85,9 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ListOptions {
 		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)
+	// EXISTING_CODE
+	opts.Addrs = globals.ConvertEns(opts.Globals.Chain, opts.Addrs)
+	// EXISTING_CODE
 
 	return opts
 }
@@ -92,7 +95,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ListOptions {
 func ListFinishParse(args []string) *ListOptions {
 	opts := GetOptions()
 	// EXISTING_CODE
-	opts.Addrs = args
+	opts.Addrs = globals.ConvertEns(opts.Globals.Chain, args)
 	// EXISTING_CODE
 	return opts
 }

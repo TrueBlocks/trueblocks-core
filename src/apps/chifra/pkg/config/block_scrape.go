@@ -5,13 +5,10 @@
 package config
 
 import (
-	"runtime"
-	"strings"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/spf13/viper"
 )
 
+// TODO: Multi-chain configure individual tools per chain (for example blockScrape)
 var blockScrapeViper = viper.New()
 var blockScrapeRead = false
 var cachedBlockScrape BlockScrape
@@ -22,11 +19,6 @@ type blockScrapeRequires struct {
 	Archive bool
 }
 
-type blockScrapeDev struct {
-	IpfsGateway string `mapstructure:"ipfs_gateway"`
-	MaxPoolSize int
-}
-
 type blockScrapeUnchainedIndex struct {
 	Address              string
 	ManifestHashEncoding string
@@ -34,15 +26,12 @@ type blockScrapeUnchainedIndex struct {
 
 type BlockScrape struct {
 	Requires       blockScrapeRequires
-	Dev            blockScrapeDev
 	UnchainedIndex blockScrapeUnchainedIndex
 }
 
 // init sets up default values for the given configuration
 func init() {
 	blockScrapeViper.SetConfigName("blockScrape")
-	blockScrapeViper.SetDefault("Dev.Ipfs_Gateway", "https://ipfs.unchainedindex.io/ipfs")
-	blockScrapeViper.SetDefault("Dev.MaxPoolSize", runtime.NumCPU()*2)
 	blockScrapeViper.SetDefault("UnchainedIndex.Address", "0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd")
 	blockScrapeViper.SetDefault("UnchainedIndex.ManifestHashEncoding", "0x337f3f32")
 	blockScrapeViper.SetDefault("Requires.Tracing", true)
@@ -50,16 +39,9 @@ func init() {
 }
 
 // ReadBlockScrape reads the configuration located in blockScrape.toml file
-func ReadBlockScrape() *BlockScrape {
+func ReadBlockScrape(chain string) *BlockScrape {
 	if !blockScrapeRead {
-		MustReadConfig(blockScrapeViper, &cachedBlockScrape, GetPathToConfig(true /* withChain */), false)
-
-		// Validate the URL to ensure we have it in the correct format, so that ethClient.Dial
-		// will not panic
-		if !strings.HasPrefix(cachedBlockScrape.Dev.IpfsGateway, "http") {
-			logger.Fatal("missing schema in IpfsGateway configuration: http or https")
-		}
-
+		MustReadConfig(blockScrapeViper, &cachedBlockScrape, GetPathToChainConfig(chain)+"blockScrape.toml")
 		blockScrapeRead = true
 	}
 

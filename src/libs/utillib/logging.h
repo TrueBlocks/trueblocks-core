@@ -281,10 +281,7 @@ extern logger<log_policy_i>* eLogger;
         }                                                                                                              \
     }
 #define LOG_TEST_CALL(a)                                                                                               \
-    {                                                                                                                  \
-        LOG4(bWhite, l_funcName, " ----> ", (isTestMode() ? substitute((a), getPathToCache(""), "$CACHE/") : (a)),     \
-             cOff);                                                                                                    \
-    }
+    { LOG4(bWhite, l_funcName, " ----> ", (isTestMode() ? substitute((a), cacheFolder, "$CACHE/") : (a)), cOff); }
 #else
 #define LOG_TEST(a, b, is_default)
 #define LOG_TEST_STR(str)

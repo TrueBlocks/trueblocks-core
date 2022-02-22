@@ -60,6 +60,7 @@ status?modes=caches&types=all
           "isValid": true
         }
       ],
+      "chains": [],
       "date": "--date--"
     }
   ],

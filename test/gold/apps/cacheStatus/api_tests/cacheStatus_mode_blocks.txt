@@ -28,6 +28,7 @@ status?modes=caches&types=blocks
           "isValid": true
         }
       ],
+      "chains": [],
       "date": "--date--"
     }
   ],

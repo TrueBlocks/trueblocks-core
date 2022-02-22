@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2021-11-22T21:37:54
+date: 2022-02-10T19:56:40
 lastmod:
   - :git
   - lastmod
@@ -48,7 +48,9 @@ Monitor data is made of the following data fields:
 | sizeInBytes | the size of this monitor on disc               | uint64  |
 | tags        | the tag given to this address                  | string  |
 | address     | the address being monitored                    | address |
+| name        | the name given to this address                 | string  |
 | isCustom    | `true` if this address is customized           | bool    |
+| deleted     | `true` if deleted, `false` otherwise           | bool    |
 
 
 ## Appearance

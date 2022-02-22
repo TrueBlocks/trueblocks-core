@@ -11,6 +11,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"runtime"
 	"sync"
 
 	"github.com/ethereum/go-ethereum/crypto"
@@ -27,7 +28,7 @@ func (opts *AbisOptions) FindInternal() error {
 	var results []Function
 
 	var wg sync.WaitGroup
-	checkOne, _ := ants.NewPoolWithFunc(config.ReadBlockScrape().Dev.MaxPoolSize, func(testSig interface{}) {
+	checkOne, _ := ants.NewPoolWithFunc(runtime.NumCPU()*2, func(testSig interface{}) {
 		defer wg.Done()
 		byts := []byte(testSig.(string))
 		sigBytes := crypto.Keccak256(byts)
@@ -46,7 +47,8 @@ func (opts *AbisOptions) FindInternal() error {
 	})
 	defer checkOne.Release()
 
-	sigsFile, err := os.Open(config.GetPathToConfig(false /* withChain */) + "abis/known-000/uniq_sigs.tab")
+	// TODO: UnchainedIndex --> This could be part of unchained index
+	sigsFile, err := os.Open(config.GetPathToRootConfig() + "abis/known-000/uniq_sigs.tab")
 	if err != nil {
 		return err
 	}
@@ -57,7 +59,8 @@ func (opts *AbisOptions) FindInternal() error {
 	sigsScanner := bufio.NewScanner(sigsFile)
 	sigsScanner.Split(bufio.ScanLines)
 
-	funcsFile, _ := os.Open(config.GetPathToConfig(false /* withChain */) + "abis/known-000/uniq_funcs.tab")
+	// TODO: UnchainedIndex --> This could be part of unchained index
+	funcsFile, _ := os.Open(config.GetPathToRootConfig() + "abis/known-000/uniq_funcs.tab")
 	defer func() {
 		funcsFile.Close()
 	}()

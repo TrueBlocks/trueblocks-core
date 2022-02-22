@@ -60,7 +60,7 @@ typedef vector<CTest> CTestArray;
 
 //--------------------------------------------------------------
 int main(int argc, const char* argv[]) {
-    string_q nodeStr = asciiFileToString(getPathToConfig("testing_nodes"));
+    string_q nodeStr = asciiFileToString(rootConfigs + "testing_nodes");
     CNodeArray nodes;
     while (!nodeStr.empty()) {
         string_q line = nextTokenClear(nodeStr, '\n');

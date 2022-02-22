@@ -68,7 +68,7 @@ static bool bloomVisitFunc(const string_q& path, void* data) {
         cout << checkSize << delim;
         cout << ((header.nAddrs == totalAddrs) ? greenCheck : redX);
         cout << endl;
-        appendToAsciiFile(getPathToCache("tmp/chunk_stats.csv"), os.str() + "\n");
+        appendToAsciiFile(cacheFolder_tmp + "chunk_stats.csv", os.str() + "\n");
     }
 
     return true;
@@ -98,7 +98,7 @@ bool COptions::handle_stats() {
     cout << endl;
 
     CStringArray lines;
-    asciiFileToLines(getPathToCache("tmp/chunk_stats.csv"), lines);
+    asciiFileToLines(cacheFolder_tmp + "chunk_stats.csv", lines);
     for (auto line : lines) {
         cout << line << endl;
     }

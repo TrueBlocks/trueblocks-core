@@ -1,41 +1,83 @@
 [version]
 # Do not edit this value
-current = "0.5.5-alpha"
+current = "0.23.7-alpha"
 
 [settings]
-# The 'rpcProvider' value points to a valid RPC endpoint. TrueBlocks will not
-# work without it. If you're running your own local node, this will default to
-# http://localhost:8545, however in many cases, you will need to point this
-# elsewhere such as to Infura or QuickNodes, or (if the world is just) your
-# dAppNode.
-rpcProvider = "http://localhost:8545"
-
-# ******
-# The following descriptions reference a value called $(configPath). This value
-# is not customizable and defaults to $HOME/Library/Application Support/TrueBlocks
-# on Mac and $HOME/.local/share/trueblocks on Linux.
-# ******
-
-# The 'cachePath' points to the location of the TrueBlocks cache. Data from
-# the node will be cached only if you query it directly (lazy extraction). 
-# The cache stores ABI files, named addresses, block data, transaction data,
-# traces, logs, etc. Some items are cached by default (ABIs, names). Others
-# (such as blocks, transactions, and traces) are only cached if you specify 
-# so via the command line.
-#
-# This value defaults to "$(configPath)/cache/" if the value is empty.
 cachePath = ""
-
-# The 'indexPath' value defaults to "$(configPath)/unchained/". If you wish
-# to modify it, uncomment the line below and set it to your own path. By default,
-# the unchained index (which is what we call the index of appearances) takes up
-# about 2 GB on of disc space, however if you build the entire index, it may take
-# up to 80 GB. You may wish to point this value to an external drive in that case.
 indexPath = ""
-
-# The 'etherscan_key' value is optional but if not provided will disable your
-# ability to use the articulate feature in various places. We apologize profusely
-# for this centralization cancer, but the community must decide what it wants
-# to share with private companies and what it does not wish to share. Go to
-# the EtherScan website, tell them who you are, get an etherscan_key are enter it here.
+defaultChain = "mainnet"
 etherscan_key = ""
+
+[chains]
+
+[chains.mainnet]
+chainId = "1"
+localExplorer = "http://localhost:1234"
+pinGateway = "https://ipfs.unchainedindex.io/ipfs/"
+remoteExplorer = "https://etherscan.io"
+rpcProvider = "http://localhost:8545"
+apiProvider = "http://localhost:8080"
+symbol = "ETH"
+
+[chains.gnosis]
+chainId = "100"
+localExplorer = "http://localhost:1234"
+pinGateway = "https://gnosis.unchainedindex.io/ipfs/"
+remoteExplorer = "https://blockscout.com/xdai/mainnet"
+rpcProvider = "https://rpc.gnosischain.com"
+apiProvider = "http://localhost:8080"
+symbol = "XDAI"
+
+[chains.goerli]
+chainId = "5"
+localExplorer = "http://localhost:1234"
+pinGateway = "https://goerli.unchainedindex.io/ipfs/"
+remoteExplorer = "https://goerli.etherscan.io"
+rpcProvider = "https://goerli-light.eth.linkpool.io"
+apiProvider = "http://localhost:8080"
+symbol = "ETH"
+
+[chains.kovan]
+chainId = "42"
+localExplorer = "http://localhost:1234"
+pinGateway = "https://kovan.unchainedindex.io/ipfs/"
+remoteExplorer = "https://kovan.etherscan.io"
+rpcProvider = "https://kovan.poa.network"
+apiProvider = "http://localhost:8080"
+symbol = "ETH"
+
+[chains.optimism]
+chainId = "10"
+localExplorer = "http://localhost:1234"
+pinGateway = "<not_set>"
+remoteExplorer = "https://optimistic.etherscan.io"
+rpcProvider = "https://mainnet.optimism.io"
+apiProvider = "http://localhost:8080"
+symbol = "OPT"
+
+[chains.polygon]
+chainId = "80001"
+localExplorer = "http://localhost:1234"
+pinGateway = "<not_set>"
+remoteExplorer = "https://mumbai.polygonscan.com"
+rpcProvider = "https://rpc-mumbai.maticvigil.com"
+apiProvider = "http://localhost:8080"
+symbol = "MATIC"
+
+[chains.rinkeby]
+chainId = "4"
+localExplorer = "http://localhost:1234"
+pinGateway = "https://rinkeby.unchainedindex.io/ipfs/"
+remoteExplorer = "https://rinkeby.etherscan.io"
+rpcProvider = "https://rinkeby-light.eth.linkpool.io"
+apiProvider = "http://localhost:8080"
+symbol = "ETH"
+
+[chains.ropsten]
+chainId = "3"
+localExplorer = "http://localhost:1234"
+pinGateway = "https://ropsten.unchainedindex.io/ipfs/"
+remoteExplorer = "https://ropsten.etherscan.io"
+rpcProvider = "https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161"
+apiProvider = "http://localhost:8080"
+symbol = "ETH"

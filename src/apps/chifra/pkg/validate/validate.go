@@ -11,6 +11,7 @@ import (
 	"strings"
 )
 
+// TODO: this is duplicated elsewhere because of cyclical imports - combine into usage package
 func Usage(msg string, values ...string) error {
 	ret := msg
 	for index, val := range values {

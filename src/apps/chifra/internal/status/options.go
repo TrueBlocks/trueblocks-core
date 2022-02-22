@@ -25,9 +25,7 @@ type StatusOptions struct {
 	Depth      uint64
 	Report     bool
 	Terse      bool
-	Migrate    []string
-	GetConfig  bool
-	SetConfig  bool
+	Migrate    string
 	FirstBlock uint64
 	LastBlock  uint64
 	Globals    globals.GlobalOptions
@@ -43,8 +41,6 @@ func (opts *StatusOptions) TestLog() {
 	logger.TestLog(opts.Depth != utils.NOPOS, "Depth: ", opts.Depth)
 	logger.TestLog(opts.Terse, "Terse: ", opts.Terse)
 	logger.TestLog(len(opts.Migrate) > 0, "Migrate: ", opts.Migrate)
-	logger.TestLog(opts.GetConfig, "GetConfig: ", opts.GetConfig)
-	logger.TestLog(opts.SetConfig, "SetConfig: ", opts.SetConfig)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
 	opts.Globals.TestLog()
@@ -64,14 +60,8 @@ func (opts *StatusOptions) ToCmdLine() string {
 	if opts.Terse {
 		options += " --terse"
 	}
-	for _, migrate := range opts.Migrate {
-		options += " --migrate " + migrate
-	}
-	if opts.GetConfig {
-		options += " --get_config"
-	}
-	if opts.SetConfig {
-		options += " --set_config"
+	if len(opts.Migrate) > 0 {
+		options += " --migrate " + opts.Migrate
 	}
 	if opts.FirstBlock != 0 {
 		options += (" --first_block " + fmt.Sprintf("%d", opts.FirstBlock))
@@ -110,14 +100,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *StatusOptions {
 		case "terse":
 			opts.Terse = true
 		case "migrate":
-			for _, val := range value {
-				s := strings.Split(val, " ") // may contain space separated items
-				opts.Migrate = append(opts.Migrate, s...)
-			}
-		case "getConfig":
-			opts.GetConfig = true
-		case "setConfig":
-			opts.SetConfig = true
+			opts.Migrate = value[0]
 		case "firstBlock":
 			opts.FirstBlock = globals.ToUint64(value[0])
 		case "lastBlock":
@@ -130,6 +113,8 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *StatusOptions {
 		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return opts
 }

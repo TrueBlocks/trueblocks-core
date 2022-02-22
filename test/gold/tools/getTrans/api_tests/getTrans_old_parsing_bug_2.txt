@@ -290,17 +290,7 @@ transactions?transactions=0xfa62ab036f36b4755bfa0d6e3e641d08daa7e41e95b0c1f22464
               "0x000000000000000000000000d6ad7a6750a7593e092a9b218d66c0a814a3436e"
             ],
             "data": "0x00000000000000000000000000000000000000000000000000000000e0a8f6430000000000000000000000000000000000000000000000000000000000a83c6200000000000000000000000000000000000000000346dc99bb39ee4f2954101f",
-            "articulatedLog": {
-              "name": "Redeem",
-              "stateMutability": "nonpayable",
-              "inputs": {
-                "_from": "0xd6ad7a6750a7593e092a9b218d66c0a814a3436e",
-                "_fromBalanceIncrease": "11025506",
-                "_fromIndex": "1014121593306210030440419359",
-                "_value": "3769169475"
-              }
-            },
-            "compressedLog": "Redeem(0xd6ad7a6750a7593e092a9b218d66c0a814a3436e /*_from*/, 3769169475 /*_value*/, 11025506 /*_fromBalanceIncrease*/, 1014121593306210030440419359 /*_fromIndex*/); "
+            "compressedLog": ""
           },
           {
             "address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",

@@ -9,109 +9,80 @@ import (
 	"os"
 	"os/user"
 	"path"
-	"runtime"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
 
-var OsToPath = map[string]string{
-	"linux":  ".local/share/trueblocks",
-	"darwin": "Library/Application Support/TrueBlocks",
-}
-
-// TODO: Search for PathAccessor
-// GetPathToConfig returns the path where to find configuration files (appends chain if told to do so)
-func GetPathToConfig(withChain bool) string {
-	chain := ""
-	if withChain {
-		chain = "mainnet/"
-		if len(os.Getenv("TEST_CHAIN")) > 0 {
-			chain = os.Getenv("TEST_CHAIN") + "/"
-		}
-		chain = "config/" + chain
+// GetPathToChainConfig returns the chain-specific config folder
+func GetPathToChainConfig(chain string) string {
+	// We always need a chain
+	if len(chain) == 0 {
+		chain = GetDefaultChain()
 	}
+	ret := GetPathToRootConfig()
 
-	xdg := os.Getenv("XDG_CONFIG_HOME")
-	if len(xdg) > 0 && xdg[0] == '/' {
-		return path.Join(xdg, chain) + "/"
-	}
-
-	// The migration code will have already checked for invalid operating systems (i.e. Windows)
-	userOs := runtime.GOOS
-	if len(os.Getenv("TEST_OS")) > 0 {
-		userOs = os.Getenv("TEST_OS")
-	}
-
-	user, _ := user.Current()
-	return path.Join(user.HomeDir, OsToPath[userOs], chain) + "/"
-}
-
-// GetPathToCache returns the one and only cachePath
-func GetPathToCache() string {
-	xdg := os.Getenv("XDG_CACHE_HOME")
-	if len(xdg) > 0 && xdg[0] == '/' {
-		chain := "mainnet"
-		return path.Join(xdg, chain) + "/"
-	}
-	cachePath := ReadTrueBlocks().Settings.CachePath
-	if len(cachePath) == 0 {
-		userOs := runtime.GOOS
-		user, _ := user.Current()
-		return path.Join(user.HomeDir, OsToPath[userOs]) + "cache/"
-	}
-	return path.Join(cachePath) + "/"
+	// Our configuration files are always in ./config folder relative to top most folder
+	return path.Join(ret, "config/", chain) + "/"
 }
 
 // GetPathToIndex returns the one and only cachePath
-func GetPathToIndex() string {
-	xdg := os.Getenv("XDG_CACHE_HOME")
-	if len(xdg) > 0 && xdg[0] == '/' {
-		chain := "mainnet"
-		return path.Join(xdg, chain) + "/"
+func GetPathToIndex(chain string) string {
+	// We need the index path from either XDG which dominates or the config file
+	indexPath, err := PathFromXDG("XDG_CACHE_HOME")
+	if err != nil {
+		log.Fatal(err)
+	} else if len(indexPath) == 0 {
+		indexPath = GetRootConfig().Settings.IndexPath
 	}
-	indexPath := ReadTrueBlocks().Settings.IndexPath
-	if len(indexPath) == 0 {
-		userOs := runtime.GOOS
-		user, _ := user.Current()
-		return path.Join(user.HomeDir, OsToPath[userOs]) + "unchained/"
-	}
-	return path.Join(indexPath) + "/"
-}
 
-// GetPathToCache1 returns the one and only cachePath
-func GetPathToCache1(chain string) string {
+	// We want the index folder to be named `unchained` and be in
+	// the root of cache path
+	if !strings.Contains(indexPath, "/unchained") {
+		indexPath = path.Join(indexPath, "unchained")
+	}
+
+	// We always have to have a chain...
 	if len(chain) == 0 {
-		chain = "mainnet"
+		chain = GetDefaultChain()
 	}
-	xdg := os.Getenv("XDG_CACHE_HOME")
-	if len(xdg) > 0 && xdg[0] == '/' {
-		if !strings.Contains(xdg, "/cache") {
-			xdg = path.Join(xdg, "cache")
-		}
-		return path.Join(xdg, chain) + "/"
-	}
-	return path.Join(ReadTrueBlocks().Settings.CachePath, chain) + "/"
+
+	// We know what we want, create it if it doesn't exist and return it
+	newPath := path.Join(indexPath, chain) + "/"
+	EstablishIndexPaths(newPath)
+	return newPath
 }
 
-// GetPathToIndex1 returns the one and only cachePath
-func GetPathToIndex1(chain string) string {
+// GetPathToCache returns the one and only cachePath
+func GetPathToCache(chain string) string {
+	// We need the index path from either XDG which dominates or the config file
+	cachePath, err := PathFromXDG("XDG_CACHE_HOME")
+	if err != nil {
+		log.Fatal(err)
+	} else if len(cachePath) == 0 {
+		cachePath = GetRootConfig().Settings.CachePath
+	}
+
+	// We want the cache folder to be named `cache` and be in
+	// the root of cache path
+	if !strings.Contains(cachePath, "/cache") {
+		cachePath = path.Join(cachePath, "cache")
+	}
+
+	// We always have to have a chain...
 	if len(chain) == 0 {
-		chain = "mainnet"
+		chain = GetDefaultChain()
 	}
-	xdg := os.Getenv("XDG_CACHE_HOME")
-	if len(xdg) > 0 && xdg[0] == '/' {
-		if !strings.Contains(xdg, "/unchained") {
-			xdg = path.Join(xdg, "unchained")
-		}
-		return path.Join(xdg, chain) + "/"
-	}
-	return path.Join(ReadTrueBlocks().Settings.IndexPath, chain) + "/"
+
+	// We know what we want, create it if it doesn't exist and return it
+	newPath := path.Join(cachePath, chain) + "/"
+	EstablishCachePaths(newPath)
+	return newPath
 }
 
-// GetRpcProvider returns the RPC provider for a chain
-func GetRpcProvider() string {
-	return ReadTrueBlocks().Settings.RpcProvider
+func GetTestChain() string {
+	// This does not get customized per chain. We can only test against mainnet currently
+	return "mainnet"
 }
 
 // GetPathToCommands returns full path the the given tool
@@ -127,11 +98,13 @@ func EstablishCachePaths(cachePath string) {
 		"abis", "blocks", "monitors", "names", "objs", "prices",
 		"recons", "slurps", "tmp", "traces", "txs",
 	}
+
 	_, err := os.Stat(path.Join(cachePath, cacheFolders[len(cacheFolders)-1]))
 	if err == nil {
 		// If the last path already exists, assume we've been here before
 		return
 	}
+
 	if err := file.EstablishFolders(cachePath, cacheFolders); err != nil {
 		log.Fatal(err)
 	}
@@ -142,11 +115,13 @@ func EstablishIndexPaths(indexPath string) {
 	indexFolders := []string{
 		"blooms", "finalized", "ripe", "staging", "unripe",
 	}
+
 	_, err := os.Stat(path.Join(indexPath, indexFolders[len(indexFolders)-1]))
 	if err == nil {
 		// If the last path already exists, assume we've been here before
 		return
 	}
+
 	if err := file.EstablishFolders(indexPath, indexFolders); err != nil {
 		log.Fatal(err)
 	}

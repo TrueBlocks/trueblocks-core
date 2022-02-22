@@ -796,7 +796,7 @@ string_q wei_2_Export(const blknum_t& bn, const wei_t& weiIn, uint64_t decimals)
             static map<blknum_t, timestamp_t> timestampMap;
             if (timestampMap[bn] == (timestamp_t)0) {
                 CBlock blk;
-                getBlock_light(blk, bn);
+                getBlockHeader(blk, bn);
                 timestampMap[bn] = blk.timestamp;
             }
             ret = wei_2_Dollars(timestampMap[bn], weiIn, decimals);

@@ -11,7 +11,6 @@ import (
 	"io"
 	"os"
 	"os/exec"
-	"strings"
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
@@ -25,18 +24,23 @@ func (opts *GlobalOptions) PassItOn(path string, flags string) error {
 	var wg sync.WaitGroup
 	wg.Add(2)
 
+	var env config.ConfigEnv
+	env.Chain = opts.Chain
+	env.ConfigPath = config.GetPathToRootConfig()
+	env.DefaultChain = config.GetDefaultChain()
+	env.CachePath = config.GetPathToCache(env.Chain)
+	env.IndexPath = config.GetPathToIndex(env.Chain)
+	env.ChainConfigPath = config.GetPathToChainConfig(env.Chain)
+	env.RpcProvider = config.GetRpcProvider(env.Chain)
+	envStr := env.ToCSV()
+
 	// fmt.Fprintf(os.Stderr, "Calling: %s %s\n", path, options)
 	cmd := exec.Command(config.GetPathToCommands(path), options)
 	cmd.Env = append(os.Environ(), "FROM_CHIFRA=true")
-	configPath := strings.Replace(config.GetPathToConfig(false), "mainnet/", "", -1)
-	if !opts.TestMode {
-		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "TB_CONFIG_PATH: ", configPath, colors.Off)
-		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "TB_CACHE_PATH:  ", config.GetPathToCache1(opts.Chain), colors.Off)
-		fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "TB_INDEX_PATH:  ", config.GetPathToIndex1(opts.Chain), colors.Off)
+	if !opts.TestMode && opts.LogLevel > 8 {
+		fmt.Fprintf(os.Stderr, "%s%s%s%s\n", colors.Blue, colors.Bright, envStr, colors.Off)
 	}
-	cmd.Env = append(cmd.Env, "TB_CONFIG_PATH="+configPath)
-	cmd.Env = append(cmd.Env, "TB_CACHE_PATH="+config.GetPathToCache1(opts.Chain))
-	cmd.Env = append(cmd.Env, "TB_INDEX_PATH="+config.GetPathToIndex1(opts.Chain))
+	cmd.Env = append(cmd.Env, "TB_CONFIG_ENV="+envStr)
 	if os.Getenv("TEST_MODE") == "true" {
 		cmd.Env = append(cmd.Env, "TEST_MODE=true")
 	}

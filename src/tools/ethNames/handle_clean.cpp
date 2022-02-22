@@ -168,13 +168,13 @@ bool COptions::cleanNames(const string_q& sourceIn, const string_q& destIn) {
 //--------------------------------------------------------------------
 bool COptions::handle_clean(void) {
     string_q mainSource = getGlobalConfig("ethNames")->getConfigStr("settings", "source", "<not_set>");
-    string_q mainDest = getPathToConfig("names/names.tab");
+    string_q mainDest = chainConfigsTxt_names;
     if (!cleanNames(mainSource, mainDest))
         return usage("This installation of TrueBlocks may not clean the names file.");
     LOG_WARN("The primary names file was cleaned.", string_q(50, ' '));
 
     //    string_q customSource = getGlobalConfig("ethNames")->getConfigStr("settings", "custom", "<not_set>");
-    //    string_q customDest = getPathToConfig("names/names_custom.tab");
+    //    string_q customDest = chainConfigsTxt_namesCustom;
     //    if (!cleanNames(customSource, customDest))
     //        return usage("This installation of TrueBlocks may not clean the names file. Customized names file was not
     //        set.");

@@ -28,7 +28,7 @@ int main(int argc, const char* argv[]) {
 
         bool isText = (expContext().exportFmt & (TXT1 | CSV1 | NONE1));
         if (isText && options.items.size() == 0) {
-            cout << "No results for " << command << endl;
+            cout << "No results for " << (command.empty() ? "\"\"" : command) << endl;
 
         } else if (options.items.size() == 0) {
             cout << "{ \"data\": [ ";  // TODO: We used to send this, but it probably breaks something to not send it --

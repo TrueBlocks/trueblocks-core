@@ -64,5 +64,4 @@ class COptions : public CBlockOptions {
     bool applyCorrections(void);
 };
 
-extern bool showSpecials(CNameValue& pair, void* data);
 extern bool checkTimestamp(CBlock& block, void* data);

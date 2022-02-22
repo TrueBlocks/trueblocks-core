@@ -13,7 +13,8 @@
 #include "options.h"
 
 extern const char* STR_TERSE_REPORT;
-extern string_q pathName(const string_q& str, const string_q& path = "");
+extern string_q pathName(const string_q& str, const string_q& path);
+extern void replaceNames(const string_q& chain, string_q& key, string_q& value);
 //--------------------------------------------------------------------------------
 bool COptions::handle_status(ostream& os) {
     ENTER("handle_status");
@@ -28,7 +29,7 @@ bool COptions::handle_status(ostream& os) {
         if (!isText) {
             fmt = "";
             manageFields("CStatusTerse:modes1,modes2", FLD_HIDE);
-            manageFields("CStatus:clientIds,host,isApi,isScraping,caches", FLD_HIDE);
+            manageFields("CStatus:clientIds,host,isApi,isScraping,caches,chains", FLD_HIDE);
         }
         CMetaData meta = getMetaData();
         ostringstream m;
@@ -37,6 +38,9 @@ bool COptions::handle_status(ostream& os) {
         else
             m << meta.client << ", " << meta.finalized << ", " << meta.staging << ", " << meta.unripe;
         replace(fmt, "[{PROGRESS}]", m.str());
+        ostringstream n;
+        n << meta.chain << " (" << meta.chainId << "," << meta.networkId << ")";
+        replace(fmt, "[{CHAINDATA}]", n.str());
 
         string_q res = st.Format(fmt);
         replaceAll(res, "++C1++", cGreen);
@@ -46,25 +50,24 @@ bool COptions::handle_status(ostream& os) {
         return true;
     }
 
-    establishFolder(getPathToCache("abis/"));
-    establishFolder(getPathToCache("blocks/"));
-    establishFolder(getPathToCache("monitors/"));
-    establishFolder(getPathToCache("names/"));
-    establishFolder(getPathToCache("prices/"));
-    establishFolder(getPathToCache("slurps/"));
-    establishFolder(getPathToCache("tmp/"));
-    establishFolder(getPathToCache("traces/"));
-    establishFolder(getPathToCache("txs/"));
+    establishFolder(cacheFolder_abis);
+    establishFolder(cacheFolder_blocks);
+    establishFolder(cacheFolder_monitors);
+    establishFolder(cacheFolder_names);
+    establishFolder(cacheFolder_prices);
+    establishFolder(cacheFolder_slurps);
+    establishFolder(cacheFolder_tmp);
+    establishFolder(cacheFolder_traces);
+    establishFolder(cacheFolder_txs);
 
     CIndexCache index;
     if (contains(mode, "|index|")) {
         LOG8("Reporting on index");
-        if (!index.readBinaryCache("index", details)) {
-            string_q thePath = getPathToIndex("");
+        if (!index.readBinaryCache(indexFolder_finalized, "index", details)) {
             LOG8("Regenerating cache");
             index.type = index.getRuntimeClass()->m_ClassName;
-            index.path = pathName("index", thePath);
-            forEveryFileInFolder(thePath, countFiles, &index);
+            index.path = pathName("index", indexFolder);
+            forEveryFileInFolder(indexFolder, countFiles, &index);
             LOG8("Counted files");
             CItemCounter counter(this);
             index.path = pathName("index", indexFolder_finalized);
@@ -81,6 +84,8 @@ bool COptions::handle_status(ostream& os) {
         } else {
             LOG8("Read from cache");
         }
+        if (!origMode.empty())
+            LOG_PROGRESS("Completed", index.nFiles, index.nFiles, "");
         status.caches.push_back(&index);
     }
 
@@ -88,11 +93,11 @@ bool COptions::handle_status(ostream& os) {
     CMonitorCache monitors;
     if (contains(mode, "|monitors|")) {
         LOG8("Reporting on monitors");
-        if (!monitors.readBinaryCache("monitors", details)) {
+        if (!monitors.readBinaryCache(cacheFolder_monitors, "monitors", details)) {
             CMonitor m;
             string_q thePath = m.getPathToMonitor("", false);
             monitors.type = monitors.getRuntimeClass()->m_ClassName;
-            monitors.path = pathName("monitors");
+            monitors.path = pathName("monitors", cacheFolder_monitors);
             LOG4("counting monitors");
             forEveryFileInFolder(thePath, countFiles, &monitors);
             LOG4("done counting monitors");
@@ -111,16 +116,17 @@ bool COptions::handle_status(ostream& os) {
             //            monitors.writeBinaryCache("monitors", details);
             LOG4("done writing cache");
         }
+        SHOW_FIELD(CMonitorCacheItem, "deleted");
         status.caches.push_back(&monitors);
     }
 
     CNameCache names;
     if (contains(mode, "|names|")) {
         LOG8("Reporting on names");
-        if (!names.readBinaryCache("names", details)) {
-            string_q thePath = getPathToCache("names/");
+        if (!names.readBinaryCache(cacheFolder_names, "names", details)) {
+            string_q thePath = cacheFolder_names;
             names.type = names.getRuntimeClass()->m_ClassName;
-            names.path = pathName("names");
+            names.path = pathName("names", cacheFolder_names);
             forEveryFileInFolder(thePath, countFiles, &names);
             CItemCounter counter(this);
             counter.cachePtr = &names;
@@ -140,10 +146,10 @@ bool COptions::handle_status(ostream& os) {
     CAbiCache abi_cache;
     if (contains(mode, "|abis|")) {
         LOG8("Reporting on abis");
-        if (!abi_cache.readBinaryCache("abis", details)) {
-            string_q thePath = getPathToCache("abis/");
+        if (!abi_cache.readBinaryCache(cacheFolder_abis, "abis", details)) {
+            string_q thePath = cacheFolder_abis;
             abi_cache.type = abi_cache.getRuntimeClass()->m_ClassName;
-            abi_cache.path = pathName("abis");
+            abi_cache.path = pathName("abis", cacheFolder_abis);
             forEveryFileInFolder(thePath, countFiles, &abi_cache);
             if (details) {
                 CItemCounter counter(this);
@@ -160,10 +166,10 @@ bool COptions::handle_status(ostream& os) {
     CChainCache blocks;
     if (contains(mode, "|blocks|") || contains(mode, "|data|")) {
         LOG8("Reporting on blocks");
-        if (!blocks.readBinaryCache("blocks", details)) {
-            string_q thePath = getPathToCache("blocks/");
+        if (!blocks.readBinaryCache(cacheFolder_blocks, "blocks", details)) {
+            string_q thePath = cacheFolder_blocks;
             blocks.type = blocks.getRuntimeClass()->m_ClassName;
-            blocks.path = pathName("blocks");
+            blocks.path = pathName("blocks", cacheFolder_blocks);
             blocks.max_depth = countOf(thePath, '/') + depth;
             forEveryFileInFolder(thePath, countFilesInCache, &blocks);
             blocks.max_depth = depth;
@@ -176,10 +182,10 @@ bool COptions::handle_status(ostream& os) {
     CChainCache txs;
     if (contains(mode, "|txs|") || contains(mode, "|data|")) {
         LOG8("Reporting on txs");
-        if (!txs.readBinaryCache("txs", details)) {
-            string_q thePath = getPathToCache("txs/");
+        if (!txs.readBinaryCache(cacheFolder_txs, "txs", details)) {
+            string_q thePath = cacheFolder_txs;
             txs.type = txs.getRuntimeClass()->m_ClassName;
-            txs.path = pathName("txs");
+            txs.path = pathName("txs", cacheFolder_txs);
             txs.max_depth = countOf(thePath, '/') + depth;
             forEveryFileInFolder(thePath, countFilesInCache, &txs);
             txs.max_depth = depth;
@@ -192,10 +198,10 @@ bool COptions::handle_status(ostream& os) {
     CChainCache traces;
     if (contains(mode, "|traces|") || contains(mode, "|data|")) {
         LOG8("Reporting on traces");
-        if (!traces.readBinaryCache("traces", details)) {
-            string_q thePath = getPathToCache("traces/");
+        if (!traces.readBinaryCache(cacheFolder_traces, "traces", details)) {
+            string_q thePath = cacheFolder_traces;
             traces.type = traces.getRuntimeClass()->m_ClassName;
-            traces.path = pathName("traces");
+            traces.path = pathName("traces", cacheFolder_traces);
             traces.max_depth = countOf(thePath, '/') + depth;
             forEveryFileInFolder(thePath, countFilesInCache, &traces);
             traces.max_depth = depth;
@@ -208,10 +214,10 @@ bool COptions::handle_status(ostream& os) {
     CSlurpCache slurps;
     if (contains(mode, "|slurps|")) {
         LOG8("Reporting on slurps");
-        if (!slurps.readBinaryCache("slurps", details)) {
-            string_q thePath = getPathToCache("slurps/");
+        if (!slurps.readBinaryCache(cacheFolder_slurps, "slurps", details)) {
+            string_q thePath = cacheFolder_slurps;
             slurps.type = slurps.getRuntimeClass()->m_ClassName;
-            slurps.path = pathName("slurps");
+            slurps.path = pathName("slurps", cacheFolder_slurps);
             forEveryFileInFolder(thePath, countFiles, &slurps);
             CItemCounter counter(this);
             counter.cachePtr = &slurps;
@@ -232,10 +238,10 @@ bool COptions::handle_status(ostream& os) {
     CPriceCache prices;
     if (contains(mode, "|prices|")) {
         LOG8("Reporting on prices");
-        if (!prices.readBinaryCache("prices", details)) {
-            string_q thePath = getPathToCache("prices/");
+        if (!prices.readBinaryCache(cacheFolder_prices, "prices", details)) {
+            string_q thePath = cacheFolder_prices;
             prices.type = prices.getRuntimeClass()->m_ClassName;
-            prices.path = pathName("prices");
+            prices.path = pathName("prices", cacheFolder_prices);
             forEveryFileInFolder(thePath, countFiles, &prices);
             if (details) {
                 CItemCounter counter(this);
@@ -249,6 +255,8 @@ bool COptions::handle_status(ostream& os) {
         status.caches.push_back(&prices);
     }
 
+    if (origMode.empty() || contains(origMode, "all") || contains(origMode, "some"))
+        getChainList(status.chains);
     status.toJson(os);
 
     EXIT_NOMSG(true);
@@ -493,7 +501,7 @@ bool notePrice(const string_q& path, void* data) {
 
 //--------------------------------------------------------------------------------
 string_q pathName(const string_q& str, const string_q& path) {
-    return (isTestMode() ? str + "Path" : (path.empty() ? getPathToCache(str + "/") : path));
+    return (isTestMode() ? str + "Path" : path);
 }
 
 //--------------------------------------------------------------------------------
@@ -501,6 +509,7 @@ const char* STR_TERSE_REPORT =
     "[{TIME}] ++C1++Client:++C2++       [{CLIENTVERSION}][{MODES1}]\n"
     "[{TIME}] ++C1++TrueBlocks:++C2++   [{TRUEBLOCKSVERSION}][{MODES2}]\n"
     "[{TIME}] ++C1++Config Path:++C2++  [{CONFIGPATH}]\n"
+    "[{TIME}] ++C1++Chain (ids):++C2++  [{CHAINDATA}]\n"
     "[{TIME}] ++C1++Cache Path:++C2++   [{CACHEPATH}]\n"
     "[{TIME}] ++C1++Index Path:++C2++   [{INDEXPATH}]\n"
     "[{TIME}] ++C1++RPC Provider:++C2++ [{RPCPROVIDER}]\n"

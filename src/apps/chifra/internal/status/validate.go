@@ -26,7 +26,7 @@ func (opts *StatusOptions) ValidateStatus() error {
 		return err
 	}
 
-	err = validate.ValidateEnumSlice("--migrate", opts.Migrate, "[test|abi_cache|block_cache|tx_cache|trace_cache|recon_cache|name_cache|slurp_cache|all]")
+	err = validate.ValidateEnum("--migrate", opts.Migrate, "[test|all]")
 	if err != nil {
 		return err
 	}

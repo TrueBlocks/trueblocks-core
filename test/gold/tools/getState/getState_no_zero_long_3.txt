@@ -4,5 +4,4 @@ TEST[DATE|TIME] Blocks:  [0 4000000]
 TEST[DATE|TIME] NoZero:  true
 TEST[DATE|TIME] Format:  txt
 blockNumber	address	balance
-TIME ~ CLOCK - <INFO>  : Loading prefund balances
 4000000	0xf27daff52c38b2c373ad2b9392652ddf433303c4	672784612482328644707614

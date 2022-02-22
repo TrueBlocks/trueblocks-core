@@ -12,6 +12,9 @@ on      ,both ,fast  ,list     ,apps/acctExport ,list_count               ,y    
 on      ,both ,fast  ,list     ,apps/acctExport ,list_appearances         ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000
 on      ,both ,fast  ,list     ,apps/acctExport ,list_appearances_csv     ,n    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000 & fmt = csv
 
+on      ,both ,fast  ,list     ,apps/acctExport ,ens_test_list             ,y    ,addrs = rhyslindmark.eth & first_block = 4037786 & last_block = 4589473
+on      ,both ,fast  ,export   ,apps/acctExport ,ens_test_export           ,y    ,addrs = rhyslindmark.eth & first_block = 4037786 & last_block = 4589473
+
 on      ,cmd  ,fast  ,monitors ,apps/acctExport ,monitors_help            ,n    ,@h
 on      ,cmd  ,fast  ,monitors ,apps/acctExport ,monitors_long_help       ,n    ,help
 on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_no_params       ,y    ,
@@ -66,6 +69,7 @@ on      ,both ,fast  ,export   ,apps/acctExport ,accounting_wei_2         ,y    
 local   ,cmd  ,fast  ,export   ,apps/acctExport ,statements_wei_2         ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & max_records = 15 & statements & fmt = csv
 on      ,both ,fast  ,export   ,apps/acctExport ,accounting_invalid1      ,y    ,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & fmt = json & summarize_by = tx
 on      ,both ,fast  ,export   ,apps/acctExport ,accounting_invalid2      ,y    ,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & fmt = json & summarize_by = jimp
+local   ,both ,fast  ,export   ,apps/acctExport ,accounting_wei_1_rink    ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & max_records = 5 & accounting & fmt = api & log_level = 10 & chain = rinkeby
 
 on      ,both ,fast  ,export   ,apps/acctExport ,neighbor1                ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors
 on      ,both ,fast  ,export   ,apps/acctExport ,neighbor2                ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors & deep

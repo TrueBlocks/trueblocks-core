@@ -2,7 +2,6 @@ chifra tokens  0xa9fe4601811213c340e850ea305481aff02f5b28 --parts all 12000000
 TEST[DATE|TIME] Addrs2:  [0xa9fe4601811213c340e850ea305481aff02f5b28]
 TEST[DATE|TIME] Blocks:  [12000000]
 TEST[DATE|TIME] Parts:  [all]
-TIME ~ CLOCK - <INFO>  : Loading names
 blockNumber	address	name	symbol	decimals	totalsupply
 
 level: 1

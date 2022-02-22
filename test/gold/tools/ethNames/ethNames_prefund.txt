@@ -1,7 +1,5 @@
 chifra names  --prefund
 TEST[DATE|TIME] Prefund:  true
-TIME ~ CLOCK - <INFO>  : Loading names
-TIME ~ CLOCK - <INFO>  : Loading prefund balances
 tags	address	name	symbol	decimals
 80-Prefund	0x000d836201318ec6899a67540690382780743280	Prefund_0000
 80-Prefund	0x001762430ea9c3a26e5749afdb70da5f78ddbb8c	Prefund_0001

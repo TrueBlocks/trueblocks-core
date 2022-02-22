@@ -19,7 +19,6 @@ bool needsMigrate(const string_q& path, void* data) {
         return forEveryFileInFolder(path + "*", needsMigrate, data);
 
     } else {
-        string_q relative = substitute(path, getPathToCache(""), "$CACHE/");
         if (endsWith(path, ".bin") && !contains(path, "/ts.bin")) {
             CArchive readArchive(READING_ARCHIVE);
             if (readArchive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
@@ -27,10 +26,12 @@ bool needsMigrate(const string_q& path, void* data) {
                 bool isRecon = contains(path, "/recons/");
                 bool isNames = contains(path, "/names/");
                 checker->needs = readArchive.needsUpgrade(isTrace || isRecon || isNames);
-                LOG_INFO("  Checking '", relative, "'", (checker->needs ? "" : "\r"));
+                LOG_INFO(bBlack, "    Checking '", relativize(path), "'", cOff, "\r");
                 readArchive.Release();
-                if (checker->needs)
+                if (checker->needs) {
+                    checker->msg = path;
                     return false;  // quit after we find the first one that needs migrate
+                }
             }
         }
     }
@@ -38,16 +39,17 @@ bool needsMigrate(const string_q& path, void* data) {
 }
 
 //--------------------------------------------------------------------------------
-bool COptions::handle_migrate_test(void) {
+bool COptions::handle_migrate_test(const CStringArray& cachePaths) {
+    LOG_INFO("Checking caches at ", bBlue, cacheFolder, cOff);
     for (auto cache : cachePaths) {
-        string_q path = getPathToCache(cache);
-        LOG_INFO(cGreen, "Checking '$CACHES/", cache, "'", string_q(50, ' '), cOff);
-        CMigrationChecker checker(path, cache);
-        forEveryFileInFolder(path, needsMigrate, &checker);  // will quit early if it finds a migrate
+        CMigrationChecker checker(cache);
+        forEveryFileInFolder(cache, needsMigrate, &checker);  // will quit early if it finds a migrate
+
         if (checker.needs) {
-            LOG_WARN(cYellow, "  Cache '$CACHES/", cache, "' needs a migration.", cOff);
+            LOG_WARN(bBlue, "  ", relativize(cache), cYellow, " needs a migration at ", bBlack, relativize(checker.msg),
+                     cOff);
         } else {
-            LOG_WARN("  Cache '$CACHES/", cache, "' is up to date.", string_q(70, ' '));
+            LOG_INFO(bBlue, "  ", relativize(cache), cOff, " is up to date.", string_q(70, ' '));
         }
     }
 

@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CStatus, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextStatusChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextStatusChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextStatusChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -95,6 +95,19 @@ string_q CStatus::getValueByName(const string_q& fieldName) const {
                 string_q retS;
                 for (size_t i = 0; i < cnt; i++) {
                     retS += caches[i]->Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
+            }
+            if (fieldName % "chains" || fieldName % "chainsCnt") {
+                size_t cnt = chains.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt)
+                    return "";
+                string_q retS;
+                for (size_t i = 0; i < cnt; i++) {
+                    retS += chains[i].Format();
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
                 }
                 return retS;
@@ -193,6 +206,15 @@ bool CStatus::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
                 //     return caches->parseJson3(str);
                 // }
                 return false;
+            }
+            if (fieldName % "chains") {
+                CChain obj;
+                string_q str = fieldValue;
+                while (obj.parseJson3(str)) {
+                    chains.push_back(obj);
+                    obj = CChain();  // reset
+                }
+                return true;
             }
             break;
         case 'h':
@@ -297,7 +319,8 @@ bool CStatus::Serialize(CArchive& archive) {
     archive >> hasEskey;
     archive >> hasPinkey;
     // archive >> ts;
-    // archive >> caches
+    // archive >> caches;
+    // archive >> chains;
     // EXISTING_CODE
     uint64_t nCaches = 0;
     archive >> nCaches;
@@ -341,7 +364,8 @@ bool CStatus::SerializeC(CArchive& archive) const {
     archive << hasEskey;
     archive << hasPinkey;
     // archive << ts;
-    // archive << cache;
+    // archive << caches;
+    // archive << chains;
     // EXISTING_CODE
     archive << (uint64_t)caches.size();
     for (auto cache : caches) {
@@ -416,6 +440,7 @@ void CStatus::registerClass(void) {
     ADD_FIELD(CStatus, "ts", T_TIMESTAMP, ++fieldNum);
     HIDE_FIELD(CStatus, "ts");
     ADD_FIELD(CStatus, "caches", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "chains", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CStatus, "schema");
@@ -472,6 +497,18 @@ bool CStatus::readBackLevel(CArchive& archive) {
     return done;
 }
 
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CStatus& sta) {
+    sta.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CStatus& sta) {
+    sta.Serialize(archive);
+    return archive;
+}
+
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CStatus& it) {
     // EXISTING_CODE
@@ -494,6 +531,15 @@ const CBaseNode* CStatus::getObjectAt(const string_q& fieldName, size_t index) c
         }
         if (index < caches.size())
             return caches[index];
+    }
+    if (fieldName % "chains") {
+        if (index == NOPOS) {
+            CChain empty;
+            ((CStatus*)this)->chains.push_back(empty);  // NOLINT
+            index = chains.size() - 1;
+        }
+        if (index < chains.size())
+            return &chains[index];
     }
     // EXISTING_CODE
     // EXISTING_CODE

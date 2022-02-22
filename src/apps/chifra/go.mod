@@ -5,13 +5,13 @@ go 1.16
 require (
 	github.com/alecthomas/participle/v2 v2.0.0-alpha7
 	github.com/araddon/dateparse v0.0.0-20210429162001-6b43995a97de
-	github.com/ethereum/go-ethereum v1.10.12
+	github.com/ethereum/go-ethereum v1.10.15
 	github.com/gorilla/mux v1.8.0
 	github.com/gorilla/websocket v1.4.2
-	github.com/mitchellh/go-homedir v1.1.0
 	github.com/panjf2000/ants/v2 v2.4.6
 	github.com/spf13/cobra v1.2.1
 	github.com/spf13/viper v1.9.0
-	golang.org/x/crypto v0.0.0-20210817164053-32db794688a5
+	github.com/wealdtech/go-ens/v3 v3.5.2
+	golang.org/x/crypto v0.0.0-20220213190939-1e6e3497d506
 	golang.org/x/time v0.0.0-20210220033141-f8bda1e9f3ba
 )

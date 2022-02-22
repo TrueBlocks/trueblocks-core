@@ -1,0 +1,6 @@
+slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=int&blocks=0-7000000&fmt=txt&chain=rinkeby
+{
+  "errors": [
+    "The slurp command is currently available only on the mainnet chain."
+  ]
+}

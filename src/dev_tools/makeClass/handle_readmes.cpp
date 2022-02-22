@@ -20,7 +20,7 @@ string_q get_usage(const string_q& route) {
 
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_readmes(void) {
-    CToml config(getPathToConfig("makeClass.toml"));
+    CToml config(rootConfigToml_makeClass);
     bool enabled = config.getConfigBool("enabled", "readmes", false);
     if (!enabled) {
         LOG_WARN("Skipping readmes...");

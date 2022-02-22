@@ -2,6 +2,15 @@ names?tags
 {
   "data": [
     {
+      "tags": "30-Contract:Optimism Goerli"
+    },
+    {
+      "tags": "30-Contract:Optimism Kovan"
+    },
+    {
+      "tags": "30-Contract:Optimism Mainnet"
+    },
+    {
       "tags": "30-Contracts"
     },
     {
@@ -21,6 +30,15 @@ names?tags
     },
     {
       "tags": "30-Contracts:Giveth"
+    },
+    {
+      "tags": "30-Contracts:Giveth LP Token"
+    },
+    {
+      "tags": "30-Contracts:Giveth Staking"
+    },
+    {
+      "tags": "30-Contracts:Giveth Token"
     },
     {
       "tags": "30-Contracts:Kyber Network"
@@ -66,9 +84,6 @@ names?tags
     },
     {
       "tags": "34-ENS"
-    },
-    {
-      "tags": "37-Bridges"
     },
     {
       "tags": "37-SelfDestructed"

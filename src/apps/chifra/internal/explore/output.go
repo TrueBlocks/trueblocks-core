@@ -12,8 +12,9 @@ package explorePkg
 import (
 	"fmt"
 	"net/http"
-	"os"
+	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -30,9 +31,10 @@ func RunExplore(cmd *cobra.Command, args []string) error {
 
 	// EXISTING_CODE
 	for _, url := range urls {
-		fmt.Printf("Opening %s\n", url.getUrl(opts))
-		if os.Getenv("TEST_MODE") != "true" {
-			utils.OpenBrowser(url.getUrl(opts))
+		ret := url.getUrl(opts)
+		fmt.Printf("Opening %s\n", ret)
+		if !opts.Globals.TestMode {
+			utils.OpenBrowser(ret)
 		}
 	}
 
@@ -55,4 +57,59 @@ func ServeExplore(w http.ResponseWriter, r *http.Request) bool {
 }
 
 // EXISTING_CODE
+func (u *ExploreUrl) getUrl(opts *ExploreOptions) string {
+
+	var chain = opts.Globals.Chain
+
+	// TODO: We should be able to read these URLs from a config file to allow for customization by chain. Also, there's an EIP that describes the URLs for an explorer. We should follow that.
+
+	if opts.Google {
+		var query = "https://www.google.com/search?q=[{TERM}]"
+		query = strings.Replace(query, "[{TERM}]", u.term, -1)
+		var exclusions = []string{
+			"etherscan", "etherchain", "bloxy", "bitquery", "ethplorer", "tokenview", "anyblocks", "explorer",
+		}
+		for _, ex := range exclusions {
+			query += ("+-" + ex)
+		}
+		return query
+	}
+
+	if u.termType == ExploreFourByte {
+		var query = "https://www.4byte.directory/signatures/?bytes4_signature=[{TERM}]"
+		query = strings.Replace(query, "[{TERM}]", u.term, -1)
+		return query
+	}
+
+	if u.termType == ExploreEnsName {
+		var query = "https://app.ens.domains/name/[{TERM}]/details"
+		query = strings.Replace(query, "[{TERM}]", u.term, -1)
+		return query
+	}
+
+	url := config.GetRemoteExplorer(chain)
+	query := ""
+	switch u.termType {
+	case ExploreNone:
+		// do nothing
+	case ExploreTx:
+		query = "tx/" + u.term
+	case ExploreBlock:
+		query = "block/" + u.term
+	case ExploreAddress:
+		fallthrough
+	default:
+		query = "address/" + u.term
+	}
+
+	if opts.Local {
+		url = config.GetLocalExplorer(chain)
+		query = strings.Replace(query, "tx/", "explorer/transactions/", -1)
+		query = strings.Replace(query, "block/", "explorer/blocks/", -1)
+		query = strings.Replace(query, "address/", "dashboard/accounts?address=", -1)
+	}
+
+	return url + query
+}
+
 // EXISTING_CODE

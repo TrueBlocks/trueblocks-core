@@ -43,8 +43,8 @@ static const COption params[] = {
     COption("asset", "", "list<addr>", OPT_FLAG, "for the statements option only, export only reconciliations for this asset"),  // NOLINT
     COption("clean", "", "", OPT_SWITCH, "clean (i.e. remove duplicate appearances) from all existing monitors"),
     COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
-    COption("staging", "s", "", OPT_HIDDEN | OPT_SWITCH, "enable search of staging (not yet finalized) folder"),
-    COption("unripe", "u", "", OPT_HIDDEN | OPT_SWITCH, "enable search of unripe (neither staged nor finalized) folder (assumes --staging)"),  // NOLINT
+    COption("staging", "s", "", OPT_SWITCH, "export transactions labeled staging (i.e. older than 28 blocks but not yet consolidated)"),  // NOLINT
+    COption("unripe", "u", "", OPT_SWITCH, "export transactions labeled upripe (i.e. less than 28 blocks old)"),
     COption("load", "", "<string>", OPT_HIDDEN | OPT_FLAG, "a comma separated list of dynamic traversers to load"),
     COption("reversed", "", "", OPT_HIDDEN | OPT_SWITCH, "produce results in reverse chronological order"),
     COption("by_date", "b", "", OPT_HIDDEN | OPT_SWITCH, "produce results sorted by date (report by address otherwise)"),  // NOLINT
@@ -446,7 +446,7 @@ bool COptions::parseArguments(string_q& command) {
                 return false;
 
         } else {
-            string_q fileName = getPathToCache("objs/" + load);
+            string_q fileName = cacheFolder_objs + load;
             LOG_INFO("Trying to load dynamic library ", fileName);
 
             if (!fileExists(fileName)) {
@@ -546,8 +546,7 @@ void COptions::Init(void) {
     establishFolder(indexFolder_staging);
     establishFolder(indexFolder_unripe);
     establishFolder(indexFolder_ripe);
-    establishFolder(getPathToCache("tmp/"));
-    establishFolder(getPathToCache("apps/"));
+    establishFolder(cacheFolder_tmp);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -753,7 +752,7 @@ bool COptions::setDisplayFormatting(void) {
 //         }
 //     }
 //     uint64_t nMocked = getGlobalConfig("")->getConfigInt("dev", "n_mocked", 100);
-//     string_q path = getPathToConfig("mocked/" + origMode + ".json");
+//     string_q path = chainConfigsFolder_mocked + origMode + ".json";
 //     if (fileExists(path)) {
 //         if (origMode == "export") {
 //             for (size_t i = 0; i < nMocked; i++) {
@@ -821,7 +820,7 @@ void COptions::writePerformanceData(void) {
     if (stats.nFiles == stats.nSkipped)
         return;
 
-    string_q statsFile = getPathToConfig("performance_scraper.csv");
+    string_q statsFile = rootConfigs + "perf/performance_scraper.csv";
 
     string_q fmt = substitute(STR_DISPLAY_SCRAPESTATISTICS, "\t", ",");
     if (!fileExists(statsFile)) {

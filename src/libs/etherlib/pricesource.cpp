@@ -25,31 +25,27 @@ bool parsePoloniex(CPriceQuote& quote, string_q& str) {
 
 //-----------------------------------------------------------------------
 bool establishPriceFile(void) {
-    string_q pricesFolder = getPathToCache("prices/");
-    string_q zipFile = getPathToConfig("poloniex_USDT_ETH.bin.gz");
-    string_q binFile = pricesFolder + "poloniex_USDT_ETH.bin";
-
-    if (fileExists(binFile))
+    if (fileExists(cacheFolderBin_prices))
         return true;
-    establishFolder(pricesFolder);
+    establishFolder(cacheFolder_prices);
 
-    time_q zipDate = fileLastModifyDate(zipFile);
-    time_q binDate = fileLastModifyDate(binFile);
+    time_q zipDate = fileLastModifyDate(chainConfigsZip_prices);
+    time_q binDate = fileLastModifyDate(cacheFolderBin_prices);
 
     if (zipDate > binDate) {
         ostringstream cmd;
-        cmd << "cd \"" << pricesFolder << "\" ; ";
-        cmd << "cp \"" << zipFile << "\" . ; ";
+        cmd << "cd \"" << cacheFolder_prices << "\" ; ";
+        cmd << "cp \"" << chainConfigsZip_prices << "\" . ; ";
         cmd << "gunzip poloniex_USDT_ETH.bin.gz";
         string_q result = doCommand(cmd.str());
         LOG_INFO(result);
         // The original zip file still exists
         ASSERT(fileExists(zipFile));
         // The new timestamp file exists
-        ASSERT(fileExists(binFile));
+        ASSERT(fileExists(cacheFolderBin_prices));
         // The copy of the zip file does not exist any more
-        ASSERT(!fileExists(binFile + ".gz"));
-        return fileExists(binFile);
+        ASSERT(!fileExists(chainConfigsZip_prices));
+        return fileExists(cacheFolderBin_prices);
     }
     return true;
 }
@@ -58,7 +54,7 @@ bool establishPriceFile(void) {
 string_q CPriceSource::getPathToPriceDb(string_q& source) const {
     source = substitute(substitute(url, "http://", ""), "https://", "");
     source = nextTokenClear(source, '.');
-    string_q ret = getPathToCache("prices/" + source + "_" + pair + ".bin");
+    string_q ret = cacheFolder_prices + source + "_" + pair + ".bin";
     establishPriceFile();
     return ret;
 }

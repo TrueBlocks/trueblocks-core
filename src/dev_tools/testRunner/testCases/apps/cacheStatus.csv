@@ -38,9 +38,9 @@ on      ,both ,fast  ,status ,apps/cacheStatus ,items_prices     ,y    ,details 
 on      ,both ,fast  ,status ,apps/cacheStatus ,items_some       ,y    ,details & modes = some & first_block = 3000000 & last_block = 3100000
 on      ,both ,fast  ,status ,apps/cacheStatus ,items_scrap_mon  ,y    ,details & modes = index & first_block = 1000000 & last_block = 2200000
 on      ,both ,fast  ,status ,apps/cacheStatus ,items_three      ,y    ,details & modes = abis caches monitors & types = slurps
-on      ,both ,fast  ,status ,apps/cacheStatus ,config_get       ,n    ,get_config
 on      ,both ,fast  ,status ,apps/cacheStatus ,report           ,n    ,report & fmt = txt
 on      ,both ,fast  ,status ,apps/cacheStatus ,report_json      ,y    ,report & fmt = json
 on      ,both ,fast  ,status ,apps/cacheStatus ,terse            ,y    ,terse
+local   ,both ,fast  ,status ,apps/cacheStatus ,terse_gnosis     ,y    ,terse & chain = gnosis
 
 local   ,both ,slow  ,status ,apps/cacheStatus ,to_file          ,y    ,modes = names & to_file

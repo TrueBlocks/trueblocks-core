@@ -23,6 +23,7 @@ on      ,both ,fast  ,names ,tools/ethNames ,simple_two_terms       ,y    ,terms
 on      ,both ,fast  ,names ,tools/ethNames ,simple_four_terms      ,y    ,terms = etwork & terms = one & terms = 88897 & terms = torj
 on      ,both ,fast  ,names ,tools/ethNames ,simple_addr_only       ,y    ,terms = 0xb6 & addr
 on      ,both ,fast  ,names ,tools/ethNames ,prefund                ,y    ,prefund
+on      ,both ,fast  ,names ,tools/ethNames ,prefund_gnosis         ,y    ,prefund & chain = gnosis
 on      ,both ,fast  ,names ,tools/ethNames ,prefund_search1        ,y    ,prefund & terms = 004
 on      ,both ,fast  ,names ,tools/ethNames ,prefund_search2        ,y    ,prefund & terms = _004
 on      ,both ,fast  ,names ,tools/ethNames ,prefund_search3        ,y    ,prefund & terms = etwork
@@ -53,13 +54,21 @@ on      ,both ,fast  ,names ,tools/ethNames ,edit_undelete          ,y    ,undel
 on      ,both ,fast  ,names ,tools/ethNames ,show_undelete          ,y    ,terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = api & expand
 on      ,both ,fast  ,names ,tools/ethNames ,edit_remove            ,y    ,remove & terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = api & expand
 on      ,both ,fast  ,names ,tools/ethNames ,show_remove            ,y    ,terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = api & expand
+on      ,both ,fast  ,names ,tools/ethNames ,ens_test               ,y    ,terms = wildmolasses.eth
+on      ,both ,fast  ,names ,tools/ethNames ,ens_test_fail          ,y    ,terms = notathingy.eth
 
-off     ,cmd  ,fast  ,null  ,tools/ethNames ,nosave_backup          ,n    ,MOVEFILE -f $CONFIG/names/names.bin ./testing_data/backup/
-off     ,cmd  ,fast  ,null  ,tools/ethNames ,nosave_copy            ,n    ,COPYFILE -f ./testing_data/ethNames_upgrade_to_067/names.bin $CONFIG/names/
-off     ,cmd  ,fast  ,null  ,tools/ethNames ,nosave_touch           ,n    ,TOUCHFILE $CONFIG/names/names.bin
+#        ,     ,      ,      ,               ,                       ,     ,these tests work but have a timestamp in them so causes diffs
+local   ,cmd  ,fast  ,names ,tools/ethNames ,xdg_fail1              ,y    ,terms = test
+local   ,cmd  ,fast  ,names ,tools/ethNames ,xdg_fail2              ,y    ,terms = test
+local   ,cmd  ,fast  ,names ,tools/ethNames ,xdg_fail3              ,y    ,terms = test
+local   ,cmd  ,fast  ,names ,tools/ethNames ,xdg_fail4              ,y    ,terms = test
+
+off     ,cmd  ,fast  ,null  ,tools/ethNames ,nosave_backup          ,n    ,MOVEFILE -f $CACHE/names/names.bin ./testing_data/backup/
+off     ,cmd  ,fast  ,null  ,tools/ethNames ,nosave_copy            ,n    ,COPYFILE -f ./testing_data/ethNames_upgrade_to_067/names.bin $CACHE/names/
+off     ,cmd  ,fast  ,null  ,tools/ethNames ,nosave_touch           ,n    ,TOUCHFILE $CACHE/names/names.bin
 off     ,both ,medi  ,names ,tools/ethNames ,upgrade_to_067         ,y    ,fmt = json
-off     ,cmd  ,fast  ,null  ,tools/ethNames ,nosave_remove          ,n    ,RMFILE -f $CONFIG/names/names.bin
-off     ,cmd  ,fast  ,null  ,tools/ethNames ,nosave_restore         ,n    ,MOVEFILE -f ./testing_data/backup/names.bin $CONFIG/names/
+off     ,cmd  ,fast  ,null  ,tools/ethNames ,nosave_remove          ,n    ,RMFILE -f $CACHE/names/names.bin
+off     ,cmd  ,fast  ,null  ,tools/ethNames ,nosave_restore         ,n    ,MOVEFILE -f ./testing_data/backup/names.bin $CACHE/names/
 
 local   ,both ,medi  ,names ,tools/ethNames ,to_file                ,n    ,named & custom & fmt = json & to_file
 local   ,both ,fast  ,names ,tools/ethNames ,edit_custom_delete     ,y    ,delete & terms = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & log_level = 10 & to_custom & all & expand

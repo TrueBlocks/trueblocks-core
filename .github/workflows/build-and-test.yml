@@ -12,21 +12,18 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           go-version: "^1.16"
       - name: Install prerequistes
-        run: sudo apt-get install build-essential git cmake python python-dev libcurl3-dev clang-format jq tree
-      - name: Build TrueBlocks
-        run: mkdir -p build && cd build && cmake ../src && make -j 4
-  GoUnitTests:
-    runs-on: ubuntu-latest
-    needs: Build
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-go@v2
-        with:
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          go-version: "^1.16"
-      - run: cd src/apps/chifra && go test ./...
+        run: sudo apt-get install build-essential git cmake python python-dev libcurl3-dev clang-format tree jq
+      - name: Run basic golang unit tests
+        run: |
+          mkdir -p build
+          cd build
+          cmake ../src
+          cd other/install
+          make
+          cd ../../../src/apps/chifra
+          go test ./...
   RemoteTests:
-    needs: GoUnitTests
+    needs: Build
     runs-on: ubuntu-latest
     steps:
       - name: Run tests remotely
