@@ -14,8 +14,7 @@
 
 //----------------------------------------------------------------
 bool COptions::handle_check() {
-    // BOGUS - shouldn't this be #defined?
-    bool enabled = getGlobalConfig("chunkMan.toml")->getConfigBool("enabled", "download_manifest", true);
+    bool enabled = getGlobalConfig("chunkMan")->getConfigBool("enabled", "download_manifest", true);
     if (!enabled) {
         LOG_INFO("Manifest not downloaded. Not initializing.");
         return true;

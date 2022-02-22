@@ -25,7 +25,7 @@ func (opts *SlurpOptions) ValidateSlurp() error {
 		return err
 	}
 
-	// BOGUS
+	// TODO: Multi-chain missing feature on other chains
 	if opts.Globals.Chain != "mainnet" {
 		return validate.Usage("The {0} command is currently available only on the {1} chain.", "slurp", "mainnet")
 	}

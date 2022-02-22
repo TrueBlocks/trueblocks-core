@@ -42,7 +42,6 @@ namespace qblocks {
         }                                                                                                              \
     }
 
-// BOGUS - in general check this
 //---------------------------------------------------------------------------------------------------
 static CConfigEnv g_configEnv;
 const CConfigEnv* getConfigEnv(void) {

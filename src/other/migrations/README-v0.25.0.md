@@ -178,7 +178,13 @@ Please report any problems by creating an issue.
 
 ## Yet to be Completed
 
-The following things are not completed yet with the multi-chain change. Since these things don't materially effect the way multi-chain works, we decided to proceed with the merge without them. They will be completed as time becomes available. Each uncompleted item is listed along with a method to get around the limitation.
+There are a few things not completed for the multi-chain work just yet. We are working on these actively, but we did not want to delay release. These issues will be completed as time becomes available.
+
+`chifra init` and `chifra init -all` routines work only for the Mainnet Ethereum. For all other chains, you can get the unchained index, but you must scrape it yourself. You may do so with `chifra scrape indexer`.
+
+On Mainnet Ethereum, we use the Uniswap smart contract to create a spot price for Ether and other tokens relative to the US Dollar. As this does not make sense on other chains (because Uniswap does not run on other chains), we cannot create a spot price for assets on other chains. This applies only to `chifra export --accounting <address>` and will result in a value of 1.0 for `spotPrice` for all assets on any chain other than Mainnet Ethereum. We welcome any ideas how to get around this limitation.
+
+For all chains other than Mainnet Ethereum, `chifra slurp` does not work. As this tools will be deprecated at a certain point, we will not be support `chifra slurp` on other chains.
 
 ## Previous Migration
 

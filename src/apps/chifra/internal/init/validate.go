@@ -15,7 +15,7 @@ func (opts *InitOptions) ValidateInit() error {
 		return opts.BadFlag
 	}
 
-	// BOGUS
+	// TODO: Multi-chain missing feature on other chains
 	if opts.Globals.Chain != "mainnet" {
 		return validate.Usage("The {0} command is currently available only on the {1} chain.", "init", "mainnet")
 	}

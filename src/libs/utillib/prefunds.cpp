@@ -41,11 +41,6 @@ bool loadPrefundBalances(void) {
     }
 
     if (fileExists(cacheFolderBin_allocs)) {
-        // BOGUS TODO: Clean this up? In what way?
-        string_q junk = cacheFolderBin_allocs;
-        if (isTestMode())
-            junk = relativize(junk);
-        // LOG4("Reading binary cache ", junk, " (", fileSize(junk), ")");
         CArchive archive(READING_ARCHIVE);
         if (archive.Lock(cacheFolderBin_allocs, modeReadOnly, LOCK_NOWAIT)) {
             uint64_t count;
@@ -61,11 +56,6 @@ bool loadPrefundBalances(void) {
         }
     }
 
-    // BOGUS TODO: Clean this up
-    string_q junk = chainConfigsTxt_allocs;
-    if (isTestMode())
-        junk = relativize(junk);
-    LOG4("Reading CSV file ", junk);
     CStringArray lines;
     asciiFileToLines(chainConfigsTxt_allocs, lines);
     if (lines.size() > 0) {
@@ -86,11 +76,6 @@ bool loadPrefundBalances(void) {
 
     CArchive archive(WRITING_ARCHIVE);
     if (archive.Lock(cacheFolderBin_allocs, modeWriteCreate, LOCK_NOWAIT)) {
-        // BOGUS TODO: Clean this up
-        junk = cacheFolderBin_allocs;
-        if (isTestMode())
-            junk = relativize(junk);
-        LOG4("Writing binary cache ", junk);
         archive << uint64_t(prefundBalMap.size());
         for (const auto& item : prefundBalMap)
             archive << item.first << item.second;

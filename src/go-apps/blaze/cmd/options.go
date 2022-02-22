@@ -6,6 +6,7 @@ package cmd
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"strings"
 
@@ -61,11 +62,6 @@ var Options OptionsType
 func init() {
 	cobra.OnInitialize(initConfig)
 
-
-	// BOGUS - why do we have these command line options?
-	var unused1, unused2 string
-	blazeCmd.PersistentFlags().StringVarP(&unused1, "rpcProvider", "r", "http://localhost:8545", "URL to the node's RPC")
-	blazeCmd.PersistentFlags().StringVarP(&unused2, "indexPath", "c", "", "The location of TrueBlocks' appearance cache (default \"$CONFIG/unchained\")")
 	blazeCmd.PersistentFlags().IntVarP(&Options.startBlock, "startBlock", "s", 0, "First block to visit (required)")
 	blazeCmd.PersistentFlags().IntVarP(&Options.block_cnt, "block_cnt", "n", 0, "The number of blocks to scrape (required)")
 	blazeCmd.PersistentFlags().IntVarP(&Options.block_chan_cnt, "block_chan_cnt", "b", 20, "The number of block processors to create (required)")
@@ -76,10 +72,13 @@ func init() {
 	blazeCmd.MarkPersistentFlagRequired("block_cnt")
 	blazeCmd.MarkPersistentFlagRequired("ripeBlock")
 
-	// BOGUS - what if we're called with some BOGUS data
 	envs := strings.Split(os.Getenv("TB_CONFIG_ENV"), ",")
-	Options.indexPath = envs[4]
-	Options.rpcProvider = envs[6]
+	if len(envs) < 7 {
+		log.Fatalln("Not enough values in TB_CONFIG_ENV: ", os.Getenv("TB_CONFIG_ENV"))
+	} else {
+		Options.indexPath = envs[4]
+		Options.rpcProvider = envs[6]
+	}
 
 	Options.ripePath = Options.indexPath + "ripe/"
 	if _, err := os.Stat(Options.ripePath); os.IsNotExist(err) {
@@ -107,9 +106,13 @@ func init() {
 
 // initConfig reads in config file and ENV variables if set.
 func initConfig() {
-    // BOGUS - is this okay? Does config work with env variables?
+	var configPath string
 	envs := strings.Split(os.Getenv("TB_CONFIG_ENV"), ",")
-	configPath := envs[1]
+	if len(envs) < 2 {
+		log.Fatalln("Not enough values in TB_CONFIG_ENV: ", os.Getenv("TB_CONFIG_ENV"))
+	} else {
+		configPath = envs[1]
+	}
 
 	// TODO: The caller should have set up all configuration, so this is probably not needed.
 	viper.AddConfigPath(configPath)

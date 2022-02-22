@@ -670,14 +670,21 @@ bool hasTraceAt(const string_q& hashIn, size_t where) {
 
 //-------------------------------------------------------------------------
 bool isTracingNode(void) {
-    // BOGUS - document how (and why) this works. It's very confusing
-    ostringstream os;
-    os << "[\"";
-    os << str_2_Hash("0x6df0b4a0d15ae3b925b9819646a0cff4d1bc0a53b294c0d84d884865302d13a5");
-    os << "\",[\"";
-    os << uint_2_Hex(23);
-    os << "\"]]";
-    return !contains(callRPC("trace_get", os.str().c_str(), true), "error");
+    ostringstream cmd;
+    cmd << "[\"";
+    cmd << str_2_Hash("0x6df0b4a0d15ae3b925b9819646a0cff4d1bc0a53b294c0d84d884865302d13a5");
+    cmd << "\",[\"";
+    cmd << uint_2_Hex(23);
+    cmd << "\"]]";
+
+    // Returns an error if traces are not supported. If traces are supported
+    // no error is returned even if the trace does not exist.
+    string_q result = callRPC("trace_get", cmd.str().c_str(), true);
+    CStringArray errMsgs = {"not enabled", "does not exist", "error"};
+    for (auto msg : errMsgs)
+        if (contains(result, msg))
+            return false;
+    return true;
 }
 
 //--------------------------------------------------------------
