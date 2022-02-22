@@ -43,8 +43,8 @@ Flags:
   -D, --deep                  for --neighbors option only, dig deeply into detail (otherwise, to and from only) (hidden)
   -d, --skip_ddos             toggle skipping over 2016 dDos transactions ('on' by default) (hidden)
   -m, --max_traces uint       if --skip_ddos is on, this many traces defines what a ddos transaction is (hidden) (default 250)
-  -F, --first_block uint      first block to process (inclusive) (hidden)
-  -L, --last_block uint       last block to process (inclusive) (hidden)
+  -F, --first_block uint      first block to process (inclusive)
+  -L, --last_block uint       last block to process (inclusive)
   -x, --fmt string            export format, one of [none|json*|txt|csv|api]
   -v, --verbose               enable verbose (increase detail with --log_level)
   -h, --help                  display this help screen

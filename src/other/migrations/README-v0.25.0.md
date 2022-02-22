@@ -24,7 +24,7 @@ This migration involves you doing three things. You must
 
 ## Instructions
 
-In the following instructions, we assume you are working on a Linux installation. If you're on a Mac, adjust the paths as needed.
+In the following instructions, we assume you are working on a Linux installation. If you're on a Mac, adjust the paths as needed. (For Linux, the main configuration path is `$HOME/.local/share/trueblocks`, for Mac, it's `$HOME/Library/Application Support/TrueBlocks`.)
 
 ### Before you start
 
@@ -61,13 +61,15 @@ Let's make sure the build worked and that you have the latest version. Run
 chifra status --terse
 ```
 
-This should return a warning message and the following version (or later):
+Unless you're running your Ethereum node at `http://localhost:8545` (the default location), this will return an error message saying the node could not be found. If that happens, see the next set of instructions below.
+
+The above command may report a message saying that you have not completed the migration. If it does, it should also show the following version (or later):
 
 ```
 chifra version GHC-TrueBlocks//0.25.0-alpha
 ```
 
-Until you've completed the migration, the warning message will continue to display.
+Until you've completed the migration, the migration message will continue to display.
 
 ### Editing configuration files
 
@@ -79,7 +81,7 @@ Display the values in the old configuration file you saved earlier:
 cat ./trueBlocks.save
 ```
 
-Make note of three values:
+Make note of four values:
 
 ```
 cachePath = "<cache_path>"
@@ -95,9 +97,9 @@ cd $HOME/.local/share/trueblocks
 pwd
 ```
 
-(on Mac, `pwd` should say `$HOME/Library/Application Support/TrueBlocks`).
+(on Mac, change directory to `$HOME/Library/Application Support/TrueBlocks`).
 
-Edit the `trueBlocks.toml` file you find there and replace the above three values with the values you noted above. Note, we are not yet replacing the `rpcProvider` in this section. We will do that next. Your settings should now look something like this:
+Edit the `trueBlocks.toml` file you find there and replace the following values with the values you noted above. Note, you may remove the existing `rpcProvider` in this section. We will replace that next. Your `[settings]` section should now look something like this:
 
 ```
 [settings]
@@ -107,7 +109,7 @@ etherscan_key = "<etherscan_key>"
 defaultChain = "mainnet"
 ```
 
-Find the `rpcProvider` value in the configuration section called `[chains.mainnet]`. Replace that value with the value from your previous installation.
+Find the section called `[chains.mainnet]`. You should be able to find an item called `rpcProvider` in that section. Replace that value with the value from your previous installation.
 
 The `[chains.mainnet]` section of your file should look something like this:
 
@@ -122,13 +124,13 @@ rpcProvider = "<your_rpc_provider>"
 symbol = "ETH"
 ```
 
-If you have `rpcProvider` values for other chains, you may set them now if you wish.
+If you have values for the rpcProviders for other chains, you may set them now if you wish. Each chain has its own configuration section.
 
-Run `chifra status --terse` again. You should get the same warning message as earlier.
+Run `chifra status --terse` again. You should get the same migration message as earlier.
 
 ### Moving existing cache and unchained index folders
 
-**Important:** If you've customized the location of your `cache` or `unchained` folders, adjust these instructions accordingly to account for those differing locations.
+**Important:** If, in your previous installation, you've customized the location of your `cache` or `unchained` folders, adjust these instructions accordingly to account for those differing locations.
  
 Complete the following steps:
 
@@ -169,13 +171,13 @@ You'll notice a few files and folders different than the image below. The last s
 
 <img width="200" src="./migration.25.2.png">
 
-When you've completed this step, the root configuration folder should contain a single `.toml` file (`trueBlocks.toml`) and four subfolders: `abis`, `config`, `cache`, `unchained`. The `config`, `cache`, and `unchained` subfolders should contain one or more chain-specific sub-folders (no files). There must be at least the `mainnet` folder and may be one or two others.
+When you've completed this step, the root configuration folder should contain a single `.toml` file (`trueBlocks.toml`) and four subfolders: `abis`, `config`, `cache`, `unchained`. The `config`, `cache`, and `unchained` subfolders should contain one or more chain-specific sub-folders (no files). There must be at least the chain-specific `mainnet` folder and there may be one or two others for other chains.
 
-**Important:** If you've customized any of TrueBlocks' configuration files other than `trueBlocks.toml`, you should preserve those values. You will find (or you can create) fresh copies of the existing configuration files in `$HOME/.local/share/trueblocks/config/mainnet`. Move any settings you've customized to those files.
+**Important:** If you've customized any of TrueBlocks' configuration files other than `trueBlocks.toml`, you may preserve those values before removing the files. You will find (or you may create) fresh copies of the existing configuration files in `$HOME/.local/share/trueblocks/config/mainnet`. Move any settings you've customized in your previous installation to those new files.
 
 **Note:**  You may remove the `[requires]` section from the `blockScrape.toml` file as it is no longer needed.
 
-Continue running `chifra status --terse` until it stops complaining. When it does stop complaining, you will be finished. It should tell you what files you need to remove until its satisfied.
+Continue running `chifra status --terse` until chifra stops complaining. When it does stop complaining, you will be finished. Chifra should tell you what files it needs you to remove until its satisfied.
 
 ## Are you finished?
 
@@ -195,6 +197,8 @@ If the migration is finished, it will return something similar to this:
 <date-time> RPC Provider: http://localhost:8545/
 ```
 
+Try this: `chifra status --terse --chain gnosis`. Does it work? You're multi-chain!
+
 ## Are we finished?
 
 There are a few things that we have not yet completed for the multi-chain work. We are working on these actively, but they do not materially harm any functions. We did not want to delay release.
@@ -203,7 +207,7 @@ There are a few things that we have not yet completed for the multi-chain work. 
 
 - On Mainnet Ethereum, TrueBlocks uses the Uniswap and Maker smart contracts to create a US dollar spot price for Ether and other tokens for all transactions. As these tools are not available on other chains (because they don't exist), we cannot create spot prices on other chains. This applies only to the commands `chifra export --accounting <address>` and `chifra transactions --reconcile...`. Instead of a `spotPrice` TrueBlocks returns a value of 1.0 for all assets on non-Mainnet chains. We welcome any ideas how to work around this limitation.
 
-- For the same reason, support for ENS only works on the Mainnet
+- For the same reason, support for ENS only works on the Mainnet.
 
 - For all chains other than Mainnet Ethereum, `chifra slurp` does not work. As this tools will be deprecated in the future, this is a permanent state of affairs.
 

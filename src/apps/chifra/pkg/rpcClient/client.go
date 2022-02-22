@@ -63,9 +63,6 @@ func CheckRpc(provider string) {
 
 // GetIDs returns both chainId and networkId from the node
 func GetIDs(provider string) (uint64, uint64) {
-	ec := GetClient(provider)
-	defer ec.Close()
-
 	// We might need it, so create it
 	msg := noProvider
 	msg = strings.Replace(msg, "[{PROVIDER}]", provider, -1)
@@ -73,6 +70,13 @@ func GetIDs(provider string) (uint64, uint64) {
 	msg = strings.Replace(msg, "{R}", colors.Red, -1)
 	msg = strings.Replace(msg, "{T}", colors.Cyan, -1)
 	msg = strings.Replace(msg, "{O}", colors.Off, -1)
+	if provider == "https://" {
+		msg = strings.Replace(msg, "https://", "<empty>", -1)
+		log.Fatalln(msg)
+	}
+
+	ec := GetClient(provider)
+	defer ec.Close()
 
 	ch, err := ec.ChainID(context.Background())
 	if err != nil {

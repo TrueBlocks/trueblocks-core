@@ -61,7 +61,7 @@ func (u *ExploreUrl) getUrl(opts *ExploreOptions) string {
 
 	var chain = opts.Globals.Chain
 
-	// TODO: We should be able to read these URLs from a config file to allow for customization by chain. Also, there's an EIP that describes the URLs for an explorer. We should follow that.
+	// TODO: Multi-chain customize remote explorer strings per chain
 
 	if opts.Google {
 		var query = "https://www.google.com/search?q=[{TERM}]"

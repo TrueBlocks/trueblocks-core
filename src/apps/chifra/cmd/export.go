@@ -80,8 +80,8 @@ One of [ yearly | quarterly | monthly | weekly | daily | hourly | blockly | tx ]
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Deep, "deep", "D", false, "for --neighbors option only, dig deeply into detail (otherwise, to and from only) (hidden)")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().SkipDdos, "skip_ddos", "d", false, "toggle skipping over 2016 dDos transactions ('on' by default) (hidden)")
 	exportCmd.Flags().Uint64VarP(&exportPkg.GetOptions().MaxTraces, "max_traces", "m", 250, "if --skip_ddos is on, this many traces defines what a ddos transaction is (hidden)")
-	exportCmd.Flags().Uint64VarP(&exportPkg.GetOptions().FirstBlock, "first_block", "F", 0, "first block to process (inclusive) (hidden)")
-	exportCmd.Flags().Uint64VarP(&exportPkg.GetOptions().LastBlock, "last_block", "L", 0, "last block to process (inclusive) (hidden)")
+	exportCmd.Flags().Uint64VarP(&exportPkg.GetOptions().FirstBlock, "first_block", "F", 0, "first block to process (inclusive)")
+	exportCmd.Flags().Uint64VarP(&exportPkg.GetOptions().LastBlock, "last_block", "L", 0, "last block to process (inclusive)")
 	if os.Getenv("TEST_MODE") != "true" {
 		exportCmd.Flags().MarkHidden("freshen")
 		exportCmd.Flags().MarkHidden("load")
@@ -91,8 +91,6 @@ One of [ yearly | quarterly | monthly | weekly | daily | hourly | blockly | tx ]
 		exportCmd.Flags().MarkHidden("deep")
 		exportCmd.Flags().MarkHidden("skip_ddos")
 		exportCmd.Flags().MarkHidden("max_traces")
-		exportCmd.Flags().MarkHidden("first_block")
-		exportCmd.Flags().MarkHidden("last_block")
 	}
 	globals.InitGlobals(exportCmd, &exportPkg.GetOptions().Globals)
 
