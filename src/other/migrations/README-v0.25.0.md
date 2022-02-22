@@ -203,6 +203,8 @@ There are a few things that we have not yet completed for the multi-chain work. 
 
 - On Mainnet Ethereum, TrueBlocks uses the Uniswap and Maker smart contracts to create a US dollar spot price for Ether and other tokens for all transactions. As these tools are not available on other chains (because they don't exist), we cannot create spot prices on other chains. This applies only to the commands `chifra export --accounting <address>` and `chifra transactions --reconcile...`. Instead of a `spotPrice` TrueBlocks returns a value of 1.0 for all assets on non-Mainnet chains. We welcome any ideas how to work around this limitation.
 
+- For the same reason, support for ENS only works on the Mainnet
+
 - For all chains other than Mainnet Ethereum, `chifra slurp` does not work. As this tools will be deprecated in the future, this is a permanent state of affairs.
 
 ## You're finished!
