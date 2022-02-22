@@ -76,7 +76,7 @@ Until you've completed the migration, the warning message will continue to displ
 Display the values in the old configuration file you saved earlier:
 
 ```
-cat ./trueBlocks.toml
+cat ./trueBlocks.save
 ```
 
 Make note of three values:
@@ -121,7 +121,8 @@ remoteExplorer = "https://etherscan.io"
 rpcProvider = "<your_rpc_provider>"
 symbol = "ETH"
 ```
-If you have `rpcProvider` values for other chains, you may set them now as well if you wish.
+
+If you have `rpcProvider` values for other chains, you may set them now if you wish.
 
 Run `chifra status --terse` again. You should get the same warning message as earlier.
 
@@ -157,17 +158,22 @@ Run `chifra status --terse` again. You will continue to get the warning message.
 
 Almost done!
 
-The last step is to remove old configuration files and folders. When you're finished, the root of the TrueBlocks configuration folder should look like this:
+Change back into the root configuration folder:
+
+```
+cd $HOME/.local/share/trueblocks/
+ls -l
+```
+
+You'll notice a few files and folders different than the image below. The last step is to remove these old files and folders. When you're finished, the root of the TrueBlocks configuration folder should look like this:
 
 <img width="200" src="./migration.25.2.png">
 
-Notice there is only a single `.toml` file and a few folders.
+When you've completed this step, the root configuration folder should contain a single `.toml` file (`trueBlocks.toml`) and four subfolders: `abis`, `config`, `cache`, `unchained`. The `config`, `cache`, and `unchained` subfolders should contain one or more chain-specific sub-folders (no files). There must be at least the `mainnet` folder and may be one or two others.
 
 **Important:** If you've customized any of TrueBlocks' configuration files other than `trueBlocks.toml`, you should preserve those values. You will find (or you can create) fresh copies of the existing configuration files in `$HOME/.local/share/trueblocks/config/mainnet`. Move any settings you've customized to those files.
 
 **Note:**  You may remove the `[requires]` section from the `blockScrape.toml` file as it is no longer needed.
-
-When you've completed this step, the root configuration folder should contain a single `.toml` file (`trueBlocks.toml`) and four subfolders: `abis`, `config`, `cache`, `unchained`. The `config`, `cache`, and `unchained` subfolders should contain one or more chain-specific sub-folders (no files). There must be at least the `mainnet` folder and may be one or two others.
 
 Continue running `chifra status --terse` until it stops complaining. When it does stop complaining, you will be finished. It should tell you what files you need to remove until its satisfied.
 
