@@ -20,6 +20,7 @@ import (
 // the current manifest IPFS CID
 func GetManifestCidFromContract(chain string) (string, error) {
 	provider := config.GetRpcProvider(chain)
+	rpcClient.CheckRpc(provider)
 	ethClient := rpcClient.GetClient(provider)
 	defer ethClient.Close()
 

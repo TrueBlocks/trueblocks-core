@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2022-02-10T19:03:48
+date: 2022-02-22T07:16:50
 lastmod:
   - :git
   - lastmod
@@ -91,6 +91,8 @@ Flags:
       --clean               clean (i.e. remove duplicate appearances) from all existing monitors
   -s, --staging             export transactions labeled staging (i.e. older than 28 blocks but not yet consolidated)
   -u, --unripe              export transactions labeled upripe (i.e. less than 28 blocks old)
+  -F, --first_block uint    first block to process (inclusive)
+  -L, --last_block uint     last block to process (inclusive)
   -x, --fmt string          export format, one of [none|json*|txt|csv|api]
   -v, --verbose             enable verbose (increase detail with --log_level)
   -h, --help                display this help screen
