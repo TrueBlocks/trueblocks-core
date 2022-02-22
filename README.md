@@ -76,6 +76,35 @@ chifra blocks 12345
 6. To make deep data queries, [get the index](https://trueblocks.io/docs/install/get-the-index/)
 7. To explore the data visually, [install the explorer application](https://trueblocks.io/docs/install/install-explorer/).
 
+## Docker Container
+
+A `Dockerfile` is included in this repo as an example for creating a Docker image.
+
+1. Build a docker image (example tagged with `latest`)
+  ```bash
+  docker build . --tag=trueblocks-core:latest
+  ```
+
+2. Run a docker container (Examples:)
+  ```bash
+  # Running a simple chifra command
+  docker run trueblocks-core:latest chifra status
+
+  # Mounting config, cache, and index (aka unchained) folders and running chifra init
+  docker run -v ./trueblocks:/root/.local/share/trueblocks \
+    -v ./cache:/root/.local/share/trueblocks/cache \
+    -v ./unchained:/root/.local/share/trueblocks/unchained \
+    trueblocks-core:latest chifra init
+
+  # Mounting config, cache, and index (aka unchained) folders and starting chifra serve
+  docker run -v ./trueblocks:/root/.local/share/trueblocks \
+    -v ./cache:/root/.local/share/trueblocks/cache \
+    -v ./unchained:/root/.local/share/trueblocks/unchained \
+    trueblocks-core:latest chifra serve --port 0.0.0.0:8080
+  ```
+
+It is recommended to use mounts or docker volumes for
+
 ## Introducing chifra
 
 Similar to `git`, TrueBlocks has an overarching command called `chifra` that gives you access to all of the other subcommands.
@@ -156,6 +185,7 @@ Thanks to the following people who have contributed to this project:
 * [@MattDodsonEnglish](https://github.com/MattDodsonEnglish)
 * [@wildmolasses](https://github.com/wildmolasses)
 * [@crodnun](https://github.com/crodnun)
+* [@MysticRyuujin](https://github.com/MysticRyuujin)
 
 ## Contact
 
