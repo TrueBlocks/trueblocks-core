@@ -90,20 +90,20 @@ A `Dockerfile` is included in this repo as an example for creating a Docker imag
   # Running a simple chifra command
   docker run trueblocks-core:latest chifra status
 
-  # Mounting config, cache, and index (aka unchained) folders and running chifra init
-  docker run -v ./trueblocks:/root/.local/share/trueblocks \
+  # Mounting separate config, cache, and index folders and running chifra init
+  docker run \
+    -v ./trueblocks:/root/.local/share/trueblocks \
     -v ./cache:/root/.local/share/trueblocks/cache \
     -v ./unchained:/root/.local/share/trueblocks/unchained \
     trueblocks-core:latest chifra init
 
-  # Mounting config, cache, and index (aka unchained) folders and starting chifra serve
-  docker run -v ./trueblocks:/root/.local/share/trueblocks \
+  # Mounting those same folders and starting the chifra serve
+  docker run \
+    -v ./trueblocks:/root/.local/share/trueblocks \
     -v ./cache:/root/.local/share/trueblocks/cache \
     -v ./unchained:/root/.local/share/trueblocks/unchained \
     trueblocks-core:latest chifra serve --port 0.0.0.0:8080
   ```
-
-It is recommended to use mounts or docker volumes for
 
 ## Introducing chifra
 
