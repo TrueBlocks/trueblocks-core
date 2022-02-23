@@ -1,3 +1,5 @@
+// +build integration
+
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
@@ -92,7 +94,6 @@ var testSet1 = []PathTest{
 		chain:    GetTestChain(),
 		part:     "trueBlocks.toml",
 		expected: "$HOME/.local/share/trueblocks/trueBlocks.toml",
-		disabled: false,
 	},
 	{
 		group:    "Config",
@@ -101,7 +102,6 @@ var testSet1 = []PathTest{
 		chain:    GetTestChain(),
 		part:     "blockScrape.toml",
 		expected: "$HOME/.local/share/trueblocks/config/{CHAIN}/blockScrape.toml",
-		disabled: false,
 	},
 	{
 		group: "Config",
@@ -111,7 +111,6 @@ var testSet1 = []PathTest{
 		part:  "trueBlocks.toml",
 		// expected: "/xdg/trueBlocks.toml",
 		expected: "$HOME/.local/share/trueblocks/trueBlocks.toml",
-		disabled: false,
 	},
 	{
 		group: "Config",
@@ -121,7 +120,6 @@ var testSet1 = []PathTest{
 		part:  "abis/known-000/uniq_funcs.tab",
 		// expected: "/xdg/trueBlocks.toml",
 		expected: "$HOME/.local/share/trueblocks/abis/known-000/uniq_funcs.tab",
-		disabled: false,
 	},
 	{
 		group: "Config",
@@ -131,7 +129,6 @@ var testSet1 = []PathTest{
 		part:  "blockScrape.toml",
 		// expected: "/xdg/config/gnosis/blockScrape.toml",
 		expected: "$HOME/.local/share/trueblocks/config/gnosis/blockScrape.toml",
-		disabled: false,
 	},
 	{
 		group:    "Config",
@@ -140,7 +137,6 @@ var testSet1 = []PathTest{
 		chain:    GetTestChain(),
 		part:     "blockScrape.toml",
 		expected: "$HOME/Library/Application Support/TrueBlocks/config/mainnet/blockScrape.toml",
-		disabled: false,
 	},
 	{
 		group:    "Config",
@@ -149,7 +145,6 @@ var testSet1 = []PathTest{
 		chain:    GetTestChain(),
 		part:     "blockScrape.toml",
 		expected: "$HOME/Library/Application Support/TrueBlocks/config/{CHAIN}/blockScrape.toml",
-		disabled: false,
 	},
 	{
 		group: "Config",
@@ -159,7 +154,6 @@ var testSet1 = []PathTest{
 		part:  "trueBlocks.toml",
 		// expected: "/xdg/trueBlocks.toml",
 		expected: "$HOME/Library/Application Support/TrueBlocks/trueBlocks.toml",
-		disabled: false,
 	},
 	{
 		group:    "Config",
@@ -168,7 +162,6 @@ var testSet1 = []PathTest{
 		chain:    "gnosis",
 		part:     "trueBlocks.toml",
 		expected: "$HOME/Library/Application Support/TrueBlocks/trueBlocks.toml",
-		disabled: false,
 	},
 	{
 		group:    "Config",
@@ -177,7 +170,6 @@ var testSet1 = []PathTest{
 		chain:    "gnosis",
 		part:     "trueBlocks.toml",
 		expected: "$HOME/Library/Application Support/TrueBlocks/trueBlocks.toml",
-		disabled: false,
 	},
 	{
 		group: "Config",
@@ -187,7 +179,6 @@ var testSet1 = []PathTest{
 		part:  "trueBlocks.toml",
 		// expected: "/xdg/trueBlocks.toml",
 		expected: "$HOME/Library/Application Support/TrueBlocks/trueBlocks.toml",
-		disabled: false,
 	},
 	// {
 	// 	group:    "Cache",
@@ -196,8 +187,7 @@ var testSet1 = []PathTest{
 	// 	chain:    "polygon",
 	// 	part:     "tx/00/00/",
 	// 	expected: "/xdg/cache/{CHAIN}/tx/00/00/",
-	//  expected: "$HOME/.local/share/trueblocks/cache/{CHAIN}/tx/00/00/",
-	//  disabled: true,
+	// expected: "$HOME/.local/share/trueblocks/cache/{CHAIN}/tx/00/00/",
 	// },
 	{
 		group:    "Cache",
