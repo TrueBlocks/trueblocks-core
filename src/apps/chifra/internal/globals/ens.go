@@ -13,7 +13,7 @@ import (
 )
 
 func ConvertEns(chain string, addrsIn []string) []string {
-	provider := config.GetRpcProvider(chain)
+	provider := config.GetRpcProvider("mainnet")
 	ec := rpcClient.GetClient(provider)
 	defer ec.Close()
 
