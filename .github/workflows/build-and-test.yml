@@ -45,3 +45,4 @@ jobs:
             cd src/other/build_assets/remote_testing
             CONFIG_FILE=$HOME/trueBlocks.toml bash test_with_docker.sh ${{ github.repository }} ${{ github.sha }} ${{ github.head_ref }} test-all
             docker system prune -af --filter "until=1h"
+            echo "Results placed in /home/testuser/testing/${{ github.sha }}"

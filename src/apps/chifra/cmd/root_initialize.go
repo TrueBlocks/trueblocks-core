@@ -61,6 +61,17 @@ const notExist string = `
 
 `
 
+const noChains string = `
+
+	The root configuration file ({0})
+	does not contain a list of chains. Please follow all migrations up to {1} to continue.
+
+	See https://github.com/TrueBlocks/trueblocks-core/blob/develop/MIGRATIONS.md
+
+	[{VERSION}]
+
+`
+
 // VerifyMigrations will panic if the installation is not properly migrated
 func VerifyMigrations() {
 	user, _ := user.Current()
@@ -89,6 +100,15 @@ func VerifyMigrations() {
 	configFile := path.Join(configFolder + "trueBlocks.toml")
 	if _, err := os.Stat(configFile); err != nil {
 		msg := strings.Replace(notExist, "{0}", "{"+configFile+"}", -1)
+		msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
+		msg = strings.Replace(msg, "{", colors.Green, -1)
+		msg = strings.Replace(msg, "}", colors.Off, -1)
+		log.Fatalf(msg)
+	}
+
+	if !config.HasChains() {
+		msg := strings.Replace(noChains, "{0}", "{"+configFile+"}", -1)
+		msg = strings.Replace(msg, "{1}", "{v0.25.0}", -1)
 		msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
 		msg = strings.Replace(msg, "{", colors.Green, -1)
 		msg = strings.Replace(msg, "}", colors.Off, -1)

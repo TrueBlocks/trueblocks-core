@@ -7,7 +7,7 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 0.23.7-alpha
+  version: 0.25.0-alpha
   description: >
 
     A REST layer over the TrueBlocks application. With `chifra serve`, you can
@@ -366,6 +366,22 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: firstBlock
+          description: first block to process (inclusive)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+        - name: lastBlock
+          description: last block to process (inclusive)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
       responses:
         "200":
           description: returns the requested data

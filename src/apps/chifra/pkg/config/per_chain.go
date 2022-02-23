@@ -8,6 +8,11 @@ import (
 	"strings"
 )
 
+// HasChains returns the expected chain id for a given chain
+func HasChains() bool {
+	return len(GetRootConfig().Chains) > 0
+}
+
 // GetChainId returns the expected chain id for a given chain
 func GetChainId(chain string) string {
 	ch := GetRootConfig().Chains[chain]
