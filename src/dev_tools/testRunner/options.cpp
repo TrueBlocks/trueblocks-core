@@ -267,6 +267,8 @@ void establishTestData(void) {
     doCommand("chifra abis 0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc");
     doCommand("chifra abis 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11");
     doCommand("chifra abis 0x7d655c57f71464b6f83811c55d84009cd9f5221c");
+    doCommand("chifra abis 0x5deda52dc2b3a565d77e10f0f8d4bd738401d7d3");
+    doCommand("chifra abis 0xd0b3462481c33f63a288cd1923e2a261ee65b4ff");
 
     // TODO(tjayrush): Not sure what this is about.
 #if 1
