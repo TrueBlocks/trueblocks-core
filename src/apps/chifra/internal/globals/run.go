@@ -29,8 +29,8 @@ func (opts *GlobalOptions) PassItOn(path string, flags string) error {
 	env.ConfigPath = config.GetPathToRootConfig()
 	env.DefaultChain = config.GetDefaultChain()
 	env.CachePath = config.GetPathToCache(env.Chain)
-	env.IndexPath = config.GetPathToIndex(env.Chain)
-	env.ChainConfigPath = config.GetPathToChainConfig(env.Chain)
+	env.ChainConfigPath = config.GetPathToChainConfig(env.Chain) // order matters
+	env.IndexPath = config.GetPathToIndex(env.Chain)             // order matters
 	env.RpcProvider = config.GetRpcProvider(env.Chain)
 	envStr := env.ToCSV()
 
