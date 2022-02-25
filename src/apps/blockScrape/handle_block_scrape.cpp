@@ -40,7 +40,7 @@ bool COptions::scrape_blocks(void) {
     // ...but we may make some adjustments to speed things up. When not running in docker mode,
     // we can do more blocks. In docker mode, we stick with the defaults otherwise, docker
     // may kill us for using too many resources.
-    if (!isDockerMode()) {
+    if (!isDockerMode() && getChain() == "mainnet") {
         // We can speed things up on the early chain...
         if (cons.blazeStart < 450000) {
             cons.blazeCnt = max(blknum_t(4000), cons.blazeCnt);
