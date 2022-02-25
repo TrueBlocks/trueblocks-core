@@ -87,14 +87,19 @@ func RunMonitorScraper(opts *ScrapeOptions, wg sync.WaitGroup, initialState bool
 					}
 					countBefore := mon.Count
 
+					fmt.Println("Done")
 					nProcessed++
 					options := " --freshen"
 					options += " " + mon.Address
 					opts.Globals.PassItOn("acctExport", options)
+					options = " --appearances -U --no_header " + mon.Address
+					opts.Globals.PassItOn("acctExport", options)
+					fmt.Println("Done")
 					in, err := os.Stat(mon.Path)
 					if err != nil {
 						log.Fatal(err)
 					}
+					// fmt.Println(in)
 					mon.Size = uint64(in.Size())
 					mon.Count = mon.Size / 8
 					if countBefore < mon.Count {
