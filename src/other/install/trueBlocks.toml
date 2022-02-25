@@ -64,6 +64,15 @@ rpcProvider = "https://rpc-mumbai.maticvigil.com"
 apiProvider = "http://localhost:8080"
 symbol = "MATIC"
 
+[chains.sepolia]
+apiProvider = "http://localhost:8080"
+chainId = "11155111"
+localExplorer = "http://localhost:1234"
+pinGateway = "https://ropsten.unchainedindex.io/ipfs/"
+remoteExplorer = "http://localhost:1234"
+rpcProvider = "http://localhost:8548"
+symbol = "ETH"
+
 [chains.rinkeby]
 chainId = "4"
 localExplorer = "http://localhost:1234"
