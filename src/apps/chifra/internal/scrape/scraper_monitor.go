@@ -6,6 +6,7 @@ package scrapePkg
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 	"strings"
@@ -66,7 +67,7 @@ func RunMonitorScraper(opts *ScrapeOptions, wg sync.WaitGroup, initialState bool
 						parts := strings.Split(strings.Replace(path, ".acct.bin", "", -1), "/")
 
 						var mon Monitor
-						mon.Path = strings.Replace(path, config.GetPathToCache(chain), "$CACHE/", -1)
+						mon.Path = path
 						mon.Address = parts[len(parts)-1]
 						mon.Size = uint64(info.Size())
 						mon.Count = mon.Size / 8
@@ -86,12 +87,14 @@ func RunMonitorScraper(opts *ScrapeOptions, wg sync.WaitGroup, initialState bool
 					}
 					countBefore := mon.Count
 
-					fmt.Println("\t", mon.Address, mon.Path, mon.Size, mon.Count, (float64(mon.Size) / 8.0))
 					nProcessed++
-					options := " --appearances"
+					options := " --freshen"
 					options += " " + mon.Address
 					opts.Globals.PassItOn("acctExport", options)
-					in, _ := os.Stat(mon.Path)
+					in, err := os.Stat(mon.Path)
+					if err != nil {
+						log.Fatal(err)
+					}
 					mon.Size = uint64(in.Size())
 					mon.Count = mon.Size / 8
 					if countBefore < mon.Count {

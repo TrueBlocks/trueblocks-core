@@ -122,7 +122,7 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTA
     archive.Write((uint32_t)blockTable.size());  // not accurate yet
     string_q msg = "";
     for (size_t l = 0; l < lines.size(); l++) {
-        if (!(++progress % notifyCnt)) {
+        if (lines.size() > 1000 && !(++progress % notifyCnt)) {
             msg += ".";
             LOG_INFO(cYellow, STR_STEP1, msg, cOff, "\r");
         }
