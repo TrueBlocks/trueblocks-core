@@ -1,12 +1,8 @@
+package scrapePkg
+
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
-/*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
- * the code inside of 'EXISTING_CODE' tags.
- */
-
-package scrapePkg
 
 import (
 	"encoding/json"
@@ -14,32 +10,35 @@ import (
 	"io/ioutil"
 	"log"
 	"time"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 var statusPath string = "/tmp/"
 
 type Scraper struct {
-	Counter    uint64 `json:"Counter"`
-	Running    bool   `json:"Running"`
-	WasRunning bool   `json:""`
-	SleepSecs  int64  `json:"SleepSecs"`
-	Color      string `json:"Color"`
-	Name       string `json:"Name"`
-	Verbose    int64  `json:"Verbose"`
+	Counter    uint64  `json:"Counter"`
+	Running    bool    `json:"Running"`
+	WasRunning bool    `json:""`
+	SleepSecs  float64 `json:"SleepSecs"`
+	Color      string  `json:"Color"`
+	Name       string  `json:"Name"`
+	Verbose    uint64  `json:"Verbose"`
 }
 
-func NewScraper(color, name string, secs float64) Scraper {
+func NewScraper(color, name string, secs float64, logLev uint64) Scraper {
 	scraper := new(Scraper)
 	scraper.Color = color
 	scraper.Name = name
-	scraper.SleepSecs = int64(secs)
+	scraper.SleepSecs = secs
 	scraper.Running = false
-	scraper.Verbose = int64(GetOptions().Globals.LogLevel)
+	scraper.Verbose = logLev
 	return *scraper
 }
 
 func (scraper *Scraper) ShowStateChange(from, to string) {
-	// logger.Log(logger.Info, scraper.Color, scraper.Name, ": [", from, " --> ", to, "]", colors.Off)
+	logger.Log(logger.Info, scraper.Color, scraper.Name, ": [", from, " --> ", to, "]", colors.Off)
 }
 
 func (scraper *Scraper) ToJson() string {

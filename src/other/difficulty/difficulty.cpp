@@ -14,8 +14,8 @@
 
 #include "etherlib.h"
 
-#define START 14000000
-#define END 14071609
+#define START 14071609
+#define END 14274880
 
 #if 1
 int main(int argc, const char* argv[]) {
@@ -23,7 +23,7 @@ int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
     for (size_t i = START; i < END; i++) {
         CBlock block;
-        getBlock_light(block, i);
+        getBlockLight(block, i);
         cout << block.blockNumber << "," << block.timestamp << "," << block.difficulty << endl;
         cerr << block.blockNumber << " " << (END - block.blockNumber) << "     \r";
         cerr.flush();
