@@ -1,4 +1,3 @@
-BOGUS
 - [ ] ./docs/content/chifra/configs.md needs work
 - [ ] Must document running against private networks and how one must configure the scraper for smaller chunks
 - [ ] Make a note in the docs of where things fall short - uniswap, no index other than a,b,c chains
