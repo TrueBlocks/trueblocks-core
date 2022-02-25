@@ -444,6 +444,8 @@ uint64_t getNonceAt(const address_t& addr, blknum_t num) {
 
 //-------------------------------------------------------------------------
 string_q getStorageAt(const string_q& addr, uint64_t pos, blknum_t num) {
+    if (!isContractAt(addr, num))
+        return "0x";
     if (num == NOPOS)
         num = getBlockProgress(BP_CLIENT).client;
     string_q params = "[\"[{ADDRESS}]\",\"[{POS}]\",\"[{NUM}]\"]";
