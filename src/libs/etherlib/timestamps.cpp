@@ -132,11 +132,10 @@ bool freshenTimestamps(blknum_t minBlock) {
             file << ((uint32_t)block.blockNumber) << ((uint32_t)block.timestamp);
             file.flush();
             ostringstream post;
-            post << " (" << block.timestamp << " - " << ts_2_Date(block.timestamp).Format(FMT_EXPORT) << ")"
+            post << (minBlock - block.blockNumber) << " (" << block.timestamp << " - "
+                 << ts_2_Date(block.timestamp).Format(FMT_EXPORT) << ")"
                  << "\r";
-            ostringstream pre;
-            pre << "Updating " << (minBlock - block.blockNumber) << " timestamps ";
-            LOG_PROGRESS(pre.str(), block.blockNumber, minBlock, post.str());
+            LOG_PROGRESS(UPDATE, block.blockNumber, minBlock, post.str());
         }
     }
     cerr << "\r" << string_q(150, ' ') << "\r";

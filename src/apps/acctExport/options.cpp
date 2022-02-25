@@ -756,7 +756,7 @@ bool COptions::setDisplayFormatting(void) {
 //     if (fileExists(path)) {
 //         if (origMode == "export") {
 //             for (size_t i = 0; i < nMocked; i++) {
-//                 LOG_PROGRESS("Extracting", i, nMocked, "\r");
+//                 LOG_ PROGRESS("Extracting", i, nMocked, "\r");
 //                 usleep(30000);
 //             }
 //             CStringArray lines;
@@ -767,7 +767,7 @@ bool COptions::setDisplayFormatting(void) {
 //             for (auto line : lines) {
 //                 cout << line << endl;
 //                 if (!(++cnt % recordSize)) {
-//                     LOG_PROGRESS("Displaying", record++, nMocked, "\r");
+//                     LOG_ PROGRESS("Displaying", record++, nMocked, "\r");
 //                     usleep(10000);
 //                 }
 //             }

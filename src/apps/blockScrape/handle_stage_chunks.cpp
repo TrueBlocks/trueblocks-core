@@ -44,7 +44,7 @@ bool CConsolidator::stage_chunks(void) {
         // TODO(tjayrush): the number 59 here is obviously not a good thing...
         blknum_t curSize = fileSize(oldStage) / 59;
         LOG_INFO(bBlue, "Consolidation not ready...", cOff);
-        LOG_PROGRESS("No new blocks ", curSize, opts->apps_per_chunk,
+        LOG_PROGRESS(COMPLETE, curSize, opts->apps_per_chunk,
                      ". Need " + uint_2_Str(opts->apps_per_chunk - curSize) + " more.");
         EXIT_NOMSG(true);
     }
