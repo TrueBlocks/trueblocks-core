@@ -1,3 +1,5 @@
+// +build integration
+
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
@@ -8,6 +10,7 @@ import (
 	"fmt"
 	"os"
 	"os/user"
+	"runtime"
 	"strings"
 	"testing"
 )
@@ -23,8 +26,9 @@ type PathTest struct {
 }
 
 func Test_GetPathTo(t *testing.T) {
+	userOs := runtime.GOOS
 	for index, test := range testSet1 {
-		if test.disabled {
+		if test.disabled || userOs != test.os {
 			continue
 		}
 

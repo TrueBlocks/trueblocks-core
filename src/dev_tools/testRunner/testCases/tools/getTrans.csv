@@ -71,3 +71,6 @@ local   ,cmd  ,fast  ,transactions ,tools/getTrans ,mulit_line_mulit_txs ,n    ,
 #,,,,,,,this actually passes but fails if we remove code with the word unparsable in it which is a hack
 local   ,both ,fast  ,transactions, tools/getTrans ,unparsable           ,y    ,transactions = 12596470.26 & articulate & fmt = json
 local   ,both ,slow  ,transactions ,tools/getTrans ,broken_unparseable   ,y    ,transactions = 0xd886ab84df63e4eeb3ea07ccf12fa1f752afdc4d7b82ab4d71c95adae1d86b1f & fmt = json & articulate
+
+#,,,,,,,this test case should decode this string as a message (in this case, it's an IPFS hash)
+local   ,both ,fast  ,transactions ,tools/getTrans ,messages             ,y    ,transactions = 0x0f0171122023385b433a766e70c65928ea9f9e29e6a6c82a7330cb46b63334e7e9ba7a35c3 & articulate & fmt = json

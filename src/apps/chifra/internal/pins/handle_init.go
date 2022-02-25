@@ -196,7 +196,7 @@ func (opts *PinsOptions) PrintManifestHeader() {
 	logger.Log(logger.Info, "manifestHashEncoding:", config.ReadBlockScrape(chain).UnchainedIndex.ManifestHashEncoding)
 	logger.Log(logger.Info, "unchainedIndexAddr:", config.ReadBlockScrape(chain).UnchainedIndex.Address)
 	if !opts.Globals.TestMode {
-		logger.Log(logger.Info, "unchainedIndexFolder:", config.GetPathToIndex(chain))
-		logger.Log(logger.Info, "manifestLocation:", config.GetPathToChainConfig(chain))
+		logger.Log(logger.Info, "manifestLocation:", config.GetPathToChainConfig(chain)) // order matters
+		logger.Log(logger.Info, "unchainedIndexFolder:", config.GetPathToIndex(chain))   // order matters
 	}
 }

@@ -85,7 +85,7 @@ bool COptions::handle_status(ostream& os) {
             LOG8("Read from cache");
         }
         if (!origMode.empty())
-            LOG_PROGRESS("Completed", index.nFiles, index.nFiles, "");
+            LOG_PROGRESS(COMPLETE, index.nFiles, index.nFiles, "");
         status.caches.push_back(&index);
     }
 
@@ -383,7 +383,7 @@ bool noteIndex(const string_q& path, void* data) {
         timestamp_t unused;
         blknum_t last = NOPOS;
         blknum_t first = path_2_Bn(path, last, unused);
-        LOG_PROGRESS("Scanning", ++counter->fileRange.first, counter->fileRange.second, "\r");
+        LOG_PROGRESS(SCANNING, ++counter->fileRange.first, counter->fileRange.second, "\r");
 
         if (last < counter->options->scanRange.first)
             return true;

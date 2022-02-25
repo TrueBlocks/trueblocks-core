@@ -98,9 +98,9 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 	var env config.ConfigEnv
 	env.Chain = chain
 	env.ConfigPath = config.GetPathToRootConfig()
-	env.ChainConfigPath = config.GetPathToChainConfig(env.Chain)
 	env.CachePath = config.GetPathToCache(env.Chain)
-	env.IndexPath = config.GetPathToIndex(env.Chain)
+	env.ChainConfigPath = config.GetPathToChainConfig(env.Chain) // order matters
+	env.IndexPath = config.GetPathToIndex(env.Chain)             // order matters
 	env.DefaultChain = config.GetDefaultChain()
 	env.RpcProvider = config.GetRpcProvider(env.Chain)
 	envStr := env.ToCSV()

@@ -14,6 +14,13 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
 
+const chainConfigMustExist string = `
+
+	The chain configuration folder for chain {0} does not exist. Is it correct?
+	Check: {1}
+
+`
+
 // GetPathToChainConfig returns the chain-specific config folder
 func GetPathToChainConfig(chain string) string {
 	// We always need a chain
@@ -23,7 +30,11 @@ func GetPathToChainConfig(chain string) string {
 	ret := GetPathToRootConfig()
 
 	// Our configuration files are always in ./config folder relative to top most folder
-	return path.Join(ret, "config/", chain) + "/"
+	cfgFolder := path.Join(ret, "config/", chain) + "/"
+	if _, err := os.Stat(cfgFolder); err != nil {
+		log.Fatal(Usage(chainConfigMustExist, chain, cfgFolder))
+	}
+	return cfgFolder
 }
 
 // GetPathToIndex returns the one and only cachePath

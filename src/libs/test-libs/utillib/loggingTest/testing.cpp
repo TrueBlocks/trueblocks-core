@@ -31,7 +31,7 @@ int main(int argc, const char* argv[]) {
         LOG4("The value of 'i' is ", i, ". ", 10 - i - 1, " more iterations left ");
         SEP8("seperator");
         LOG8("The value of 'i' is ", i, ". ", 10 - i - 1, " more iterations left ");
-        LOG_PROGRESS("Logging", i, 2, "\n");
+        LOG_PROGRESS(UPDATE, i, 2, "\n");
     }
     LOG_WARN("Loop over");
     LOG_ERR("All good things come to an end.. :(");

@@ -182,7 +182,7 @@ bool prog_Log(CTraverser* trav, void* data) {
         // Reports as "searchType index of total txs (found X operation) for address A"
         post << " txs (" << prog << " " << trav->searchType << ") for address " << opt->accountedFor.address;
     }
-    LOG_PROGRESS(padRight(trav->searchOp, 11), blknum_t(opt->first_record + trav->index), nApps, post.str() + "\r");
+    LOG_PROGRESS(trav->searchOp, blknum_t(opt->first_record + trav->index), nApps, post.str() + "\r");
 
     return (opt->slowQueries <= opt->maxSlowQueries && !shouldQuit());
 }
@@ -206,7 +206,7 @@ void end_Log(CTraverser* trav, void* data) {
         // Reports as "searchType index of total txs (found X operation) for address A"
         post << " txs (" << prog << " " << trav->searchType << ") for address " << opt->accountedFor.address;
     }
-    LOG_PROGRESS(padRight("Completed", 11), blknum_t(opt->first_record + trav->index), nApps, post.str());
+    LOG_PROGRESS(COMPLETE, blknum_t(opt->first_record + trav->index), nApps, post.str());
     return;
 }
 
@@ -225,10 +225,10 @@ bool loadTx_Func(CTraverser* trav, void* data) {
     bool inCache = trav->app->blk != 0 && fileExists(txFilename);
     if (inCache) {
         readTransFromBinary(trav->trans, txFilename);
-        trav->searchOp = "Reading";
+        trav->searchOp = searchOpType(READ);
 
     } else {
-        trav->searchOp = "Extracting";
+        trav->searchOp = EXTRACT;
         opt->slowQueries++;
         opt->reportFreq = 1;
         dirty = true;

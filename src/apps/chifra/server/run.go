@@ -30,9 +30,9 @@ func RunServe(cmd *cobra.Command, args []string) error {
 
 	chain := opts.Globals.Chain
 	configPath := config.GetPathToRootConfig()
-	chainConfigPath := config.GetPathToChainConfig(chain)
 	cachePath := config.GetPathToCache(chain)
-	indexPath := config.GetPathToIndex(chain)
+	chainConfigPath := config.GetPathToChainConfig(chain) // order matters
+	indexPath := config.GetPathToIndex(chain)             // order matters
 	rpcProvider := config.GetRpcProvider(chain)
 	meta := rpcClient.GetMetaData(chain, false)
 
