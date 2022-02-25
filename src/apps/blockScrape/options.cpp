@@ -143,10 +143,10 @@ bool COptions::parseArguments(string_q& command) {
     string chunkId = padNum9(0) + "-" + padNum9(0);
     string_q bloomPath = indexFolder_blooms + chunkId + ".bloom";
     if (!fileExists(bloomPath)) {
-        LOG_INFO("Index for block zero not found. Building from prefund file.");
-
         if (!loadPrefundBalances())
             return usage("Could not load names database.");
+
+        LOG_INFO("Index for block zero not found. Building from prefund file.");
 
         // Each chain must have it's own prefund addresses. Here, we scan the prefund list
         // and add a psuedo-transaction (block: 0, txid: order-in-file) for each address.

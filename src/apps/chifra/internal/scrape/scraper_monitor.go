@@ -12,6 +12,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 )
@@ -62,10 +63,13 @@ func RunMonitorScraper(opts *ScrapeOptions, wg sync.WaitGroup, initialState bool
 				root := config.GetPathToCache(chain) + "monitors/"
 				err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
 					if strings.Contains(path, ".acct.bin") {
-						path = strings.Replace(path, ".acct.bin", "", -1)
-						parts := strings.Split(path, "/")
+						parts := strings.Split(strings.Replace(path, ".acct.bin", "", -1), "/")
+
 						var mon Monitor
+						mon.Path = strings.Replace(path, config.GetPathToCache(chain), "$CACHE/", -1)
 						mon.Address = parts[len(parts)-1]
+						mon.Size = uint64(info.Size())
+						mon.Count = mon.Size / 8
 						monitors = append(monitors, mon)
 					}
 					return nil
@@ -74,17 +78,29 @@ func RunMonitorScraper(opts *ScrapeOptions, wg sync.WaitGroup, initialState bool
 					panic(err)
 				}
 
+				var nChanged uint = 0
+				var nProcessed uint = 0
 				for _, mon := range monitors {
-					addr := mon.Address
 					if !MonitorScraper.Running {
 						break
 					}
-					options := " --freshen"
-					options += " " + addr
-					fmt.Println("\tfreshing ", addr)
-					// opts.Globals.PassItOn("acctExport", options)
+					countBefore := mon.Count
+
+					fmt.Println("\t", mon.Address, mon.Path, mon.Size, mon.Count, (float64(mon.Size) / 8.0))
+					nProcessed++
+					options := " --appearances"
+					options += " " + mon.Address
+					opts.Globals.PassItOn("acctExport", options)
+					in, _ := os.Stat(mon.Path)
+					mon.Size = uint64(in.Size())
+					mon.Count = mon.Size / 8
+					if countBefore < mon.Count {
+						fmt.Println(colors.Red, "\tChanged", mon.Address, mon.Path, mon.Size, mon.Count, (float64(mon.Size) / 8.0), colors.Off)
+						nChanged++
+					}
 				}
 
+				fmt.Println("nProcessed: ", nProcessed, " nChanged: ", nChanged)
 				s.ShowStateChange("wake", "sleep")
 				time.Sleep(time.Duration(MonitorScraper.SleepSecs) * time.Second)
 			}
@@ -95,7 +111,6 @@ func RunMonitorScraper(opts *ScrapeOptions, wg sync.WaitGroup, initialState bool
 }
 
 /*
-        size_t nChanged = 0, nProcessed = 0;
         for (auto line : lines) {
             CStringArray parts;
             explode(parts, line, ',');

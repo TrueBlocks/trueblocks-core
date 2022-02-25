@@ -31,11 +31,11 @@ func RunScrape(cmd *cobra.Command, args []string) error {
 	var wg sync.WaitGroup
 
 	wg.Add(1)
-	IndexScraper = NewScraper(colors.Yellow, "IndexScraper", opts.Sleep)
+	IndexScraper = NewScraper(colors.Yellow, "IndexScraper", opts.Sleep, opts.Globals.LogLevel)
 	go RunIndexScraper(opts, wg, hasIndexerFlag(args[0]))
 
 	wg.Add(1)
-	MonitorScraper = NewScraper(colors.Purple, "MonitorScraper", opts.Sleep)
+	MonitorScraper = NewScraper(colors.Purple, "MonitorScraper", opts.Sleep, opts.Globals.LogLevel)
 	go RunMonitorScraper(opts, wg, hasMonitorsFlag(args[0]))
 
 	wg.Wait()

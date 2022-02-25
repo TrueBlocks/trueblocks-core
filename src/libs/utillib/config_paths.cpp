@@ -111,18 +111,14 @@ string_q getPathToCommands(const string_q& _part) {
     return getHomeFolder() + ".local/bin/chifra/" + _part;
 }
 
+extern string_q getConfigPathLocal(void);
 //-------------------------------------------------------------------------
 // This routine is only used by tools that do not make their way through chifra.
 // (makeClass and testRunner primarily). It mimics the way chifra works to build
 // the configPaths. We ignore in this `chain`, defaulting to mainnet.
-void loadEnvironmentPaths(void) {
-#if defined(__linux) || defined(__linux__) || defined(linux) || defined(__unix) || defined(__unix__)
-    string_q configPath = getHomeFolder() + ".local/share/trueblocks/";
-#elif defined(__APPLE__) || defined(__MACH__)
-    string_q configPath = getHomeFolder() + "Library/Application Support/TrueBlocks/";
-#else
-#error-- unknown operating system not supported
-#endif
+void loadEnvironmentPaths(const string_q& chainIn, const string_q& unchainedPathIn) {
+    string_q configPath = getConfigPathLocal();
+
     // We need to set enough of the environment for us to get the RPC from the config file...
     ostringstream os1;
     os1 << "mainnet," << configPath << "," << (configPath + "config/mainnet/") << "," << (configPath + "cache/mainnet/")
@@ -133,11 +129,22 @@ void loadEnvironmentPaths(void) {
     // Because `g_configEnv` is statis, we need to clear it...
     g_configEnv = CConfigEnv();  // reset so we get the rest
 
+    string_q unchainedPath = substitute(unchainedPathIn, "/unchained", "");
+    if (unchainedPath.empty()) {
+        unchainedPath = configPath;
+    }
+
     // and reset it with the full env
     ostringstream os;
     os << "mainnet," << configPath << "," << (configPath + "config/mainnet/") << "," << (configPath + "cache/mainnet/")
-       << "," << (configPath + "unchained/mainnet/") << ",mainnet," << rpc;
-    ::setenv("TB_CONFIG_ENV", os.str().c_str(), true);
+       << "," << (unchainedPath + "unchained/mainnet/") << ",mainnet," << rpc;
+
+    string_q env = os.str();
+    if (!chainIn.empty()) {
+        replaceAll(env, "mainnet", chainIn);
+    }
+
+    ::setenv("TB_CONFIG_ENV", env.c_str(), true);
 }
 
 //-------------------------------------------------------------------------
@@ -151,6 +158,18 @@ string_q relativize(const string_q& path) {
     replace(ret, getPathToCommands(""), "");
     replace(ret, getHomeFolder(), "$HOME/");
     return ret;
+}
+
+//-------------------------------------------------------------------------
+string_q getConfigPathLocal(void) {
+#if defined(__linux) || defined(__linux__) || defined(linux) || defined(__unix) || defined(__unix__)
+    string_q configPath = getHomeFolder() + ".local/share/trueblocks/";
+#elif defined(__APPLE__) || defined(__MACH__)
+    string_q configPath = getHomeFolder() + "Library/Application Support/TrueBlocks/";
+#else
+#error-- unknown operating system not supported
+#endif
+    return configPath;
 }
 
 }  // namespace qblocks

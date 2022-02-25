@@ -86,6 +86,6 @@ extern string_q getDefaultChain(void);
 
 //---------------------------------------------------------------------------
 extern string_q getPathToCommands(const string_q& _part);
-extern void loadEnvironmentPaths(void);
+extern void loadEnvironmentPaths(const string_q& chainIn = "", const string_q& unchainedPathIn = "");
 
 }  // namespace qblocks

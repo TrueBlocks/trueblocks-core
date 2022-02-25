@@ -8,6 +8,7 @@ type Monitor struct {
 	Address string `json:"address"`
 	Path    string `json:"path"`
 	Count   uint64 `json:"count"`
+	Size    uint64 `json:"size"`
 }
 
 func NewMonitor() Monitor {
