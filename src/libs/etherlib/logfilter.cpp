@@ -459,7 +459,7 @@ string_q CLogFilter::toRPC(void) const {
     //        "topics":
     //        ["0x6effdda786735d5033bfad5f53e5131abcced9e52be6c507b62d639685fbed6d","0x6effdda786735d5033bfad5f53e5131abcced9e52be6c507b62d639685fbed6d"]
     //     }]
-    //   }' -H "Content-Type: application/json" http://localhost:23456 | jq
+    //   }' -H "Content-Type: application/json" http://localhost:8545 | jq
     //
     //
     // fromBlock:   QUANTITY|TAG - (optional, default: "latest") Integer block number, or "latest" for the last mined

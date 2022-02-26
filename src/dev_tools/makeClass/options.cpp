@@ -125,7 +125,7 @@ bool COptions::parseArguments(string_q& command) {
     }
     forEveryLineInAsciiFile(optionsFile, parseOptionsFile, this);
 
-    CToml config(getPathToConfig("makeClass.toml"));
+    CToml config(rootConfigToml_makeClass);
     bool enabled = config.getConfigBool("enabled", "generate", false);
     if (!enabled) {
         LOG_WARN("Skipping code generation...");
@@ -248,7 +248,7 @@ void COptions::Init(void) {
     classDefs.clear();
     counter = CCounter();
 
-    CToml toml(getPathToConfig("makeClass.toml"));
+    CToml toml(rootConfigToml_makeClass);
     lastFormat = static_cast<timestamp_t>(toml.getConfigInt("settings", "last_format", 0));
     lastLint = static_cast<timestamp_t>(toml.getConfigInt("settings", "last_lint", 0));
     toml.Release();

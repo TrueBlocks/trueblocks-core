@@ -29,6 +29,8 @@ type StateOptions struct {
 	BadFlag  error
 }
 
+var stateCmdLineOptions StateOptions
+
 func (opts *StateOptions) TestLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
@@ -98,21 +100,32 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *StateOptions {
 		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)
+	// EXISTING_CODE
+	opts.Addrs = globals.ConvertEns(opts.Globals.Chain, opts.Addrs)
+	opts.ProxyFor = globals.ConvertOneEns(opts.Globals.Chain, opts.ProxyFor)
+	// EXISTING_CODE
 
 	return opts
 }
 
-var Options StateOptions
-
 func StateFinishParse(args []string) *StateOptions {
+	opts := GetOptions()
 	// EXISTING_CODE
 	for _, arg := range args {
 		if validate.IsValidAddress(arg) {
-			Options.Addrs = append(Options.Addrs, arg)
+			opts.Addrs = append(opts.Addrs, arg)
 		} else {
-			Options.Blocks = append(Options.Blocks, arg)
+			opts.Blocks = append(opts.Blocks, arg)
 		}
 	}
+	opts.Addrs = globals.ConvertEns(opts.Globals.Chain, opts.Addrs)
+	opts.ProxyFor = globals.ConvertOneEns(opts.Globals.Chain, opts.ProxyFor)
 	// EXISTING_CODE
-	return &Options
+	return opts
+}
+
+func GetOptions() *StateOptions {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return &stateCmdLineOptions
 }

@@ -15,7 +15,7 @@ func (opts *MonitorsOptions) ValidateMonitors() error {
 		return opts.BadFlag
 	}
 
-	if !opts.Globals.ApiMode && !Options.Clean {
+	if !opts.Globals.ApiMode && !opts.Clean {
 		if len(opts.Globals.File) > 0 {
 			// Do nothing
 		} else {

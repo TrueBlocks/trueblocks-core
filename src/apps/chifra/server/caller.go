@@ -28,40 +28,57 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 		allDogs = append(allDogs, extra)
 	}
 	hasVerbose := false
+
+	chain := config.GetDefaultChain()
 	for key, value := range r.URL.Query() {
-		if len(value) > 0 && value[0] != "false" {
-			// These keys exist only in the API. We strip them here since the command line
-			// tools will report them as invalid options.
-			if key != "addrs" &&
-				key != "terms" &&
-				key != "modes" &&
-				key != "blocks" &&
-				key != "transactions" &&
-				key != "mode" &&
-				key != "topics" &&
-				key != "fourbytes" &&
-				key != "names" &&
-				key != "addrs2" {
-				key = convertToCommandLine(key)
-				allDogs = append(allDogs, "--"+key)
-			}
-			if key == "verbose" {
-				hasVerbose = true
-			}
-			if len(value) > 1 || value[0] != "true" {
-				allDogs = append(allDogs, value...)
+		if key == "chain" {
+			chain = value[0]
+		} else {
+			if len(value) > 0 && value[0] != "false" {
+				// These keys exist only in the API. We strip them here since
+				// the command line tools will report them as invalid options.
+				if key != "addrs" &&
+					key != "terms" &&
+					key != "modes" &&
+					key != "blocks" &&
+					key != "transactions" &&
+					key != "mode" &&
+					key != "topics" &&
+					key != "fourbytes" &&
+					key != "names" &&
+					key != "addrs2" {
+					key = convertToCommandLine(key)
+					allDogs = append(allDogs, "--"+key)
+				}
+				if key == "verbose" {
+					hasVerbose = true
+				}
+				if len(value) > 1 || value[0] != "true" {
+					allDogs = append(allDogs, value...)
+				}
 			}
 		}
 	}
 
-	// If the server was started with --verbose and the command does not have --verbose...
-	if Options.Globals.Verbose && !hasVerbose {
-		allDogs = append(allDogs, "--verbose")
+	GetOptions().Globals.Chain = chain
+	if tbCmd == "chifra" {
+		allDogs = append(allDogs, "--chain")
+		allDogs = append(allDogs, chain)
 	}
+
+	// If the server was started with --verbose and the command does not have --verbose...
+	if GetOptions().Globals.Verbose && !hasVerbose {
+		allDogs = append(allDogs, "--verbose")
+		allDogs = append(allDogs, "--log_level")
+		allDogs = append(allDogs, "4")
+		GetOptions().Globals.LogLevel = 4
+	}
+
+	allDogs = globals.ConvertEns(chain, allDogs)
 
 	// Do the actual call
 	cmd := exec.Command(tbCmd, allDogs...)
-	if Options.Globals.Verbose {
+	if GetOptions().Globals.Verbose {
 		log.Print(colors.Yellow, "Calling: ", cmd, colors.Off)
 	}
 
@@ -78,26 +95,31 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 		}()
 	}
 
-	// In regular operation, we set an environment variable API_MODE=true. When
-	// testing (the test harness sends a special header) we also set the
-	// TEST_MODE=true environment variable and any other vars for this
-	// particular test
-	configPath := strings.Replace(config.GetPathToConfig(false), "mainnet/", "", -1)
+	var env config.ConfigEnv
+	env.Chain = chain
+	env.ConfigPath = config.GetPathToRootConfig()
+	env.CachePath = config.GetPathToCache(env.Chain)
+	env.ChainConfigPath = config.GetPathToChainConfig(env.Chain) // order matters
+	env.IndexPath = config.GetPathToIndex(env.Chain)             // order matters
+	env.DefaultChain = config.GetDefaultChain()
+	env.RpcProvider = config.GetRpcProvider(env.Chain)
+	envStr := env.ToCSV()
+
 	if utils.IsTestModeServer(r) {
+		// In regular operation, we set an environment variable API_MODE=true. When
+		// testing (the test harness sends a special header) we also set the
+		// TEST_MODE=true environment variable and any other vars for this
+		// particular test
 		cmd.Env = append(append(os.Environ(), "TEST_MODE=true"), "API_MODE=true")
 		vars := strings.Split(r.Header.Get("X-TestRunner-Env"), "|")
 		cmd.Env = append(cmd.Env, vars...)
 	} else {
-		if Options.Globals.LogLevel > 3 {
-			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "TB_CONFIG_PATH: ", configPath, colors.Off)
-			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "TB_CACHE_PATH:  ", config.GetPathToCache1(Options.Globals.Chain), colors.Off)
-			fmt.Fprintf(os.Stderr, "%s%s%s%s%s\n", colors.Blue, colors.Bright, "TB_INDEX_PATH:  ", config.GetPathToIndex1(Options.Globals.Chain), colors.Off)
+		if GetOptions().Globals.LogLevel > 8 {
+			fmt.Fprintf(os.Stderr, "%s%s%s%s\n", colors.Blue, colors.Bright, envStr, colors.Off)
 		}
 		cmd.Env = append(os.Environ(), "API_MODE=true")
 	}
-	cmd.Env = append(cmd.Env, "TB_CONFIG_PATH="+configPath)
-	cmd.Env = append(cmd.Env, "TB_CACHE_PATH="+config.GetPathToCache1(Options.Globals.Chain))
-	cmd.Env = append(cmd.Env, "TB_INDEX_PATH="+config.GetPathToIndex1(Options.Globals.Chain))
+	cmd.Env = append(cmd.Env, "TB_CONFIG_ENV="+envStr)
 	cmd.Env = append(cmd.Env, "PROG_NAME=chifra "+apiCmd)
 
 	// We need to pass the stderr through to the command line and also pick
@@ -140,6 +162,7 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 		parsed = strings.Trim(parsed, " \n")
 		// TODO: Need this to build. Probably not right
 		var unused globals.GlobalOptions
+		unused.Chain = chain
 		unused.TestMode = utils.IsTestModeServer(r)
 		unused.Writer = w
 		unused.RespondWithError(w, http.StatusBadRequest, errors.New(parsed))

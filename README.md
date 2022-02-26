@@ -43,6 +43,8 @@ If you need help with a step, see the [installation's troubleshooting section](h
     - &#9745; [Install the latest version of Go](https://golang.org/doc/install).
     - &#9745; Install the other dependencies with your command line: `build-essential` `git` `cmake` `python` `python-dev` `libcurl3-dev` `clang-format` `jq`.
 
+Alternatively, for nix users, you can drop into an isolated environment with necessary dependencies with `nix-shell`.
+
 1. Compile from the codebase
     ```shell
     git clone -b develop https://github.com/trueblocks/trueblocks-core
@@ -75,6 +77,35 @@ chifra blocks 12345
 
 6. To make deep data queries, [get the index](https://trueblocks.io/docs/install/get-the-index/)
 7. To explore the data visually, [install the explorer application](https://trueblocks.io/docs/install/install-explorer/).
+
+## Docker Container
+
+A `Dockerfile` is included in this repo as an example for creating a Docker image.
+
+1. Build a docker image (example tagged with `latest`)
+  ```bash
+  docker build . --tag=trueblocks-core:latest
+  ```
+
+2. Run a docker container (Examples:)
+  ```bash
+  # Running a simple chifra command
+  docker run trueblocks-core:latest chifra status
+
+  # Mounting separate config, cache, and index folders and running chifra init
+  docker run \
+    -v ./trueblocks:/root/.local/share/trueblocks \
+    -v ./cache:/root/.local/share/trueblocks/cache \
+    -v ./unchained:/root/.local/share/trueblocks/unchained \
+    trueblocks-core:latest chifra init
+
+  # Mounting those same folders and starting the chifra serve
+  docker run \
+    -v ./trueblocks:/root/.local/share/trueblocks \
+    -v ./cache:/root/.local/share/trueblocks/cache \
+    -v ./unchained:/root/.local/share/trueblocks/unchained \
+    trueblocks-core:latest chifra serve --port 0.0.0.0:8080
+  ```
 
 ## Introducing chifra
 
@@ -156,6 +187,7 @@ Thanks to the following people who have contributed to this project:
 * [@MattDodsonEnglish](https://github.com/MattDodsonEnglish)
 * [@wildmolasses](https://github.com/wildmolasses)
 * [@crodnun](https://github.com/crodnun)
+* [@MysticRyuujin](https://github.com/MysticRyuujin)
 
 ## Contact
 

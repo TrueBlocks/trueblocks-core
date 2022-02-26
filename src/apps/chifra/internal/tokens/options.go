@@ -27,6 +27,8 @@ type TokensOptions struct {
 	BadFlag error
 }
 
+var tokensCmdLineOptions TokensOptions
+
 func (opts *TokensOptions) TestLog() {
 	logger.TestLog(len(opts.Addrs2) > 0, "Addrs2: ", opts.Addrs2)
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
@@ -84,21 +86,30 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *TokensOptions {
 		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)
+	// EXISTING_CODE
+	opts.Addrs2 = globals.ConvertEns(opts.Globals.Chain, opts.Addrs2)
+	// EXISTING_CODE
 
 	return opts
 }
 
-var Options TokensOptions
-
 func TokensFinishParse(args []string) *TokensOptions {
+	opts := GetOptions()
 	// EXISTING_CODE
 	for _, arg := range args {
 		if validate.IsValidAddress(arg) {
-			Options.Addrs2 = append(Options.Addrs2, arg)
+			opts.Addrs2 = append(opts.Addrs2, arg)
 		} else {
-			Options.Blocks = append(Options.Blocks, arg)
+			opts.Blocks = append(opts.Blocks, arg)
 		}
 	}
+	opts.Addrs2 = globals.ConvertEns(opts.Globals.Chain, opts.Addrs2)
 	// EXISTING_CODE
-	return &Options
+	return opts
+}
+
+func GetOptions() *TokensOptions {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return &tokensCmdLineOptions
 }

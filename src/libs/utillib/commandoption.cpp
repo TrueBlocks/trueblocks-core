@@ -503,8 +503,6 @@ string_q nextCommandoptionChunk_custom(const string_q& fieldIn, const void* data
                         ret += ("|OPT_POSITIONAL");
                     else if (com->option_type == "note")
                         ret = com->description;
-                    else if (com->option_type == "config")
-                        ret = com->description;
                     else if (com->option_type == "error")
                         ret = com->description;
                     else
@@ -643,9 +641,9 @@ bool CCommandOption::finishCleanup(void) {
     isDouble = contains(data_type, "double");
     isAddress = contains(data_type, "address");
     isNote = option_type == "note";
-    isConfig = option_type == "config";
     isErr = option_type == "error";
     isConfig = generate == "config";
+    isGoOnly = generate == "gocmd";
     isDeprecated = option_type == "deprecated";
 
     real_type = data_type;
@@ -704,8 +702,7 @@ void CCommandOption::verifyOptions(CStringArray& warnings) {
         if (startsWith(data_type, "list"))
             valid_type = true;
     }
-    if (!valid_type &&
-        (option_type == "description" || option_type == "note" || option_type == "error" || option_type == "config") &&
+    if (!valid_type && (option_type == "description" || option_type == "note" || option_type == "error" || isConfig) &&
         data_type.empty())
         valid_type = true;
     if (!valid_type && startsWith(data_type, "opt_"))
@@ -717,9 +714,6 @@ void CCommandOption::verifyOptions(CStringArray& warnings) {
         warnstream << "Description '" << description << "' should end with a period or colon.|";
     if (option_type == "note" && !endsWith(description, ".") && !endsWith(description, ":"))
         warnstream << "Note '" << description << "' should end with a period or colon.|";
-    if (option_type == "config") {  // do nothing
-        // warnstream << "Note '" << description << "' should end with a period or colon.|";
-    }
     if (option_type == "error" && !endsWith(description, ".") && !endsWith(description, ":"))
         warnstream << "Error string '" << description << "' should end with a period or colon.|";
     if ((option_type != "description" && option_type != "note" && option_type != "error" && option_type != "config") &&
@@ -962,8 +956,10 @@ string_q CCommandOption::toApiPath(const string_q& inStr, const string_q& exampl
     if (!isApiRoute(api_route))
         return "";
 
+    bool hasDelete = false;
     ostringstream paramStream;
     for (auto param : *(CCommandOptionArray*)params) {
+        hasDelete |= contains(param.longName, "deleteMe");
         replace(param.longName, "deleteMe", "delete");
         if (param.longName.empty() || !param.is_visible_docs)
             continue;
@@ -1025,6 +1021,7 @@ string_q CCommandOption::toApiPath(const string_q& inStr, const string_q& exampl
     replaceAll(ret, "[{PARAMS}]", paramStream.str());
     replaceAll(ret, "[{SUMMARY}]", summary);
     replaceAll(ret, "[{DESCR}]", description);
+    replaceAll(ret, "[{DELETE}]", hasDelete ? "X\n" : "");
     replaceAll(ret, "[{ID}]", toLower(substitute(grp, " ", "") + "-" + api_route));
     return ret;
 }
@@ -1075,7 +1072,7 @@ string_q CCommandOption::getSchema(void) const {
     if (contains(data_type, "boolean")) {
         return lead + "type: " + "boolean";
 
-    } else if (contains(data_type, "uint") || contains(data_type, "double")) {
+    } else if (contains(data_type, "uint") || contains(data_type, "double") || contains(data_type, "blknum")) {
         return lead + "type: " + "number";
 
     } else if (contains(data_type, "enum")) {
@@ -1121,7 +1118,8 @@ const char* STR_PATH_YAML =
     "            application/json:\n"
     "              schema:\n"
     "[{PROPERTIES}][{EXAMPLE}]        \"400\":\n"
-    "          description: bad input parameter\n";
+    "          description: bad input parameter\n"
+    "[{DELETE}]";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_PARAM_YAML =

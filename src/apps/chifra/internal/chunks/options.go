@@ -27,6 +27,8 @@ type ChunksOptions struct {
 	BadFlag error
 }
 
+var chunksCmdLineOptions ChunksOptions
+
 func (opts *ChunksOptions) TestLog() {
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
 	logger.TestLog(opts.Check, "Check: ", opts.Check)
@@ -80,15 +82,24 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ChunksOptions {
 		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)
+	// EXISTING_CODE
+	opts.Extract = globals.ConvertOneEns(opts.Globals.Chain, opts.Extract)
+	// EXISTING_CODE
 
 	return opts
 }
 
-var Options ChunksOptions
-
 func ChunksFinishParse(args []string) *ChunksOptions {
+	opts := GetOptions()
 	// EXISTING_CODE
-	Options.Blocks = args
+	opts.Blocks = args
+	opts.Extract = globals.ConvertOneEns(opts.Globals.Chain, opts.Extract)
 	// EXISTING_CODE
-	return &Options
+	return opts
+}
+
+func GetOptions() *ChunksOptions {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return &chunksCmdLineOptions
 }

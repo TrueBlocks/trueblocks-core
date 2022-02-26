@@ -29,6 +29,8 @@ type WhenOptions struct {
 	BadFlag    error
 }
 
+var whenCmdLineOptions WhenOptions
+
 func (opts *WhenOptions) TestLog() {
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
 	logger.TestLog(opts.List, "List: ", opts.List)
@@ -94,15 +96,22 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *WhenOptions {
 		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return opts
 }
 
-var Options WhenOptions
-
 func WhenFinishParse(args []string) *WhenOptions {
+	opts := GetOptions()
 	// EXISTING_CODE
-	Options.Blocks = args
+	opts.Blocks = args
 	// EXISTING_CODE
-	return &Options
+	return opts
+}
+
+func GetOptions() *WhenOptions {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return &whenCmdLineOptions
 }

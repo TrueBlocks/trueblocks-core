@@ -16,25 +16,16 @@ import (
 	"github.com/ethereum/go-ethereum/accounts/abi"
 )
 
-// GetUnchainedIndexAddress returns UnchainedIndex smart contract address
-func GetUnchainedIndexAddress() string {
-	return config.ReadBlockScrape().UnchainedIndex.Address
-}
-
-// GetManifestHashEncoding returns encoding of manifestHash getter of
-// UnchainedIndex smart contract
-func GetManifestHashEncoding() string {
-	return config.ReadBlockScrape().UnchainedIndex.ManifestHashEncoding
-}
-
 // GetManifestCidFromContract calls UnchainedIndex smart contract to get
 // the current manifest IPFS CID
-func GetManifestCidFromContract() (string, error) {
-	ethClient := rpcClient.Get()
+func GetManifestCidFromContract(chain string) (string, error) {
+	provider := config.GetRpcProvider(chain)
+	rpcClient.CheckRpc(provider)
+	ethClient := rpcClient.GetClient(provider)
 	defer ethClient.Close()
 
-	address := rpcClient.HexToAddress(GetUnchainedIndexAddress())
-	data := rpcClient.DecodeHex(GetManifestHashEncoding())
+	address := rpcClient.HexToAddress(config.ReadBlockScrape(chain).UnchainedIndex.Address)
+	data := rpcClient.DecodeHex(config.ReadBlockScrape(chain).UnchainedIndex.ManifestHashEncoding)
 
 	response, err := ethClient.CallContract(
 		context.Background(),
@@ -49,7 +40,7 @@ func GetManifestCidFromContract() (string, error) {
 	}
 
 	abiSource, err := os.Open(
-		config.GetPathToConfig(false /* withChain */) + "abis/known-000/unchained.json",
+		config.GetPathToRootConfig() + "abis/known-000/unchained.json",
 	)
 	if err != nil {
 		return "", fmt.Errorf("while reading contract ABI: %w", err)

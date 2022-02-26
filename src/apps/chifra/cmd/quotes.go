@@ -41,13 +41,13 @@ Notes:
 func init() {
 	quotesCmd.Flags().SortFlags = false
 
-	quotesCmd.Flags().BoolVarP(&quotesPkg.Options.Update, "update", "u", false, "freshen price database")
-	quotesCmd.Flags().StringVarP(&quotesPkg.Options.Period, "period", "p", "", `increment of display
+	quotesCmd.Flags().BoolVarP(&quotesPkg.GetOptions().Update, "update", "u", false, "freshen price database")
+	quotesCmd.Flags().StringVarP(&quotesPkg.GetOptions().Period, "period", "p", "", `increment of display
 One of [ 5 | 15 | 30 | 60 | 120 | 240 | 1440 | 10080 | hourly | daily | weekly ]`)
-	quotesCmd.Flags().StringVarP(&quotesPkg.Options.Pair, "pair", "a", "", "which price pair to freshen or list (see Poloniex)")
-	quotesCmd.Flags().StringVarP(&quotesPkg.Options.Feed, "feed", "e", "", `the feed for the price data
+	quotesCmd.Flags().StringVarP(&quotesPkg.GetOptions().Pair, "pair", "a", "", "which price pair to freshen or list (see Poloniex)")
+	quotesCmd.Flags().StringVarP(&quotesPkg.GetOptions().Feed, "feed", "e", "", `the feed for the price data
 One of [ poloniex | maker | tellor ]`)
-	globals.InitGlobals(quotesCmd, &quotesPkg.Options.Globals)
+	globals.InitGlobals(quotesCmd, &quotesPkg.GetOptions().Globals)
 
 	quotesCmd.SetUsageTemplate(UsageWithNotes(notesQuotes))
 	quotesCmd.SetOut(os.Stderr)

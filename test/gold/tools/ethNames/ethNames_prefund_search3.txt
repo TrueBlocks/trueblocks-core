@@ -1,6 +1,4 @@
 chifra names  --prefund etwork
 TEST[DATE|TIME] Terms:  [etwork]
 TEST[DATE|TIME] Prefund:  true
-TIME ~ CLOCK - <INFO>  : Loading names
-TIME ~ CLOCK - <INFO>  : Loading prefund balances
 No results for --prefund etwork

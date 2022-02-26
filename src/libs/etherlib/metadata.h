@@ -20,6 +20,9 @@ struct CMetaData {
     blknum_t staging;
     blknum_t finalized;
     blknum_t client;
+    uint64_t chainId;
+    uint64_t networkId;
+    string_q chain;
 };
 
 #define BP_CLIENT (1 << 1)

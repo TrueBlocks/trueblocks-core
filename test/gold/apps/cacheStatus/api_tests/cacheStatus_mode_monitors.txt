@@ -32,6 +32,7 @@ status?modes=monitors
           "isValid": true
         }
       ],
+      "chains": [],
       "date": "--date--"
     }
   ],

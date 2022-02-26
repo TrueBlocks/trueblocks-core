@@ -1789,6 +1789,21 @@ names?terms=etwork&expand&noHeader
     {
       "deleted": false,
       "tags": "50-Tokens:ERC20",
+      "address": "0x8ea197328f3d72e148af942d9ea93f9cfb40626b",
+      "name": "Not Aragon Network DAO launch council",
+      "symbol": "NOTANLC",
+      "source": "On chain",
+      "decimals": 18,
+      "description": "",
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
+    },
+    {
+      "deleted": false,
+      "tags": "50-Tokens:ERC20",
       "address": "0x8f8221afbb33998d8584a2b05749ba73c37a938a",
       "name": "Request Token",
       "symbol": "REQ",
@@ -1904,6 +1919,21 @@ names?terms=etwork&expand&noHeader
       "isPrefund": false,
       "isContract": true,
       "isErc20": false,
+      "isErc721": false
+    },
+    {
+      "deleted": false,
+      "tags": "50-Tokens:ERC20",
+      "address": "0x9bde098be22658d057c3f1f185e3fd4653e2fbd1",
+      "name": "KP2R.Network",
+      "symbol": "KP2R",
+      "source": "On chain",
+      "decimals": 18,
+      "description": "",
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
       "isErc721": false
     },
     {
@@ -2204,6 +2234,21 @@ names?terms=etwork&expand&noHeader
       "isPrefund": false,
       "isContract": false,
       "isErc20": false,
+      "isErc721": false
+    },
+    {
+      "deleted": false,
+      "tags": "50-Tokens:ERC20",
+      "address": "0xb5261ca6b24103cf5d3784612b179b51913d4186",
+      "name": "Aragon Network governor council",
+      "symbol": "ANGC",
+      "source": "On chain",
+      "decimals": 18,
+      "description": "",
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
       "isErc721": false
     },
     {
@@ -2969,51 +3014,6 @@ names?terms=etwork&expand&noHeader
       "isPrefund": false,
       "isContract": false,
       "isErc20": false,
-      "isErc721": false
-    },
-    {
-      "deleted": false,
-      "tags": "50-Tokens:ERC20",
-      "address": "0xec491c1088eae992b7a214efb0a266ad0927a72a",
-      "name": "AB-CHAIN RTB token",
-      "symbol": "RTB",
-      "source": "On chain",
-      "decimals": 18,
-      "description": "ADS IN BLOCKCHAIN ADVERTISING NETWORK. Online advertising enhanced by blockchain and AI technologies.",
-      "isCustom": false,
-      "isPrefund": false,
-      "isContract": true,
-      "isErc20": true,
-      "isErc721": false
-    },
-    {
-      "deleted": false,
-      "tags": "50-Tokens:ERC20",
-      "address": "0xeef9f339514298c6a857efcfc1a762af84438dee",
-      "name": "Hermez Network Token",
-      "symbol": "HEZ",
-      "source": "On chain",
-      "decimals": 18,
-      "description": "",
-      "isCustom": false,
-      "isPrefund": false,
-      "isContract": true,
-      "isErc20": true,
-      "isErc721": false
-    },
-    {
-      "deleted": false,
-      "tags": "50-Tokens:ERC20",
-      "address": "0xef88808d0fbb5c0c2c89f6d9b45eda53c0150993",
-      "name": "iBuildApp Network Token",
-      "symbol": "IBA",
-      "source": "On chain",
-      "decimals": 4,
-      "description": "",
-      "isCustom": false,
-      "isPrefund": false,
-      "isContract": true,
-      "isErc20": true,
       "isErc721": false
     }
   ],

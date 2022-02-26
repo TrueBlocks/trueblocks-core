@@ -40,14 +40,13 @@ bool COptions::scrape_blocks(void) {
     // ...but we may make some adjustments to speed things up. When not running in docker mode,
     // we can do more blocks. In docker mode, we stick with the defaults otherwise, docker
     // may kill us for using too many resources.
-    if (!isDockerMode()) {
+    if (!isDockerMode() && getChain() == "mainnet") {
+        // We can speed things up on the early chain...
         if (cons.blazeStart < 450000) {
-            // We can speed things up on the early chain...
             cons.blazeCnt = max(blknum_t(4000), cons.blazeCnt);
-
-        } else if (ddosRange(cons.blazeStart)) {
+        } else if (isDdos(cons.blazeStart)) {
             // ...or slow things down during 2016s dDos...
-            cons.blazeCnt = getGlobalConfig("blockScrape")->getConfigInt("settings", "n_blocks_fallback", 500);
+            cons.blazeCnt = 500;
         }
     }
 
@@ -70,10 +69,7 @@ bool COptions::scrape_blocks(void) {
 
     // How far are we from the head? This is useful for telling how long to sleep the next time.
     cons.distFromHead = (cons.client > cons.blazeStart ? cons.client - cons.blazeStart : 0);
-    if (sleep < 13 && cons.distFromHead <= cons.blazeCnt)
-        sleep = 13;  // we're basically caught up, so we can sleep until the next expected block
 
-    cerr << endl;
     ostringstream os;
     os << string_q(5, '-');
     os << " Scraping " << cons.blazeStart << " to " << min(cons.client, (cons.blazeStart + cons.blazeCnt));
@@ -109,8 +105,8 @@ bool COptions::scrape_blocks(void) {
     LOG_TEST_CALL(os.str());
 
     ostringstream cmd;
-    cmd << "env TB_INDEXPATH=\"" << getPathToIndex("")
-        << "\" ";  // note--cobra/viper will pick this up even though you won't find it
+    // Note: Blaze's Cobra/Viper code will use this even though if you search, you won't find it#pragma endregion
+    cmd << "env TB_INDEXPATH=\"" << indexFolder << "\" ";
     cmd << os.str() << " ";
     cmd << "--block_chan_cnt " << block_chan_cnt << " ";
     cmd << "--addr_chan_cnt " << addr_chan_cnt << " ";
@@ -124,7 +120,7 @@ bool COptions::scrape_blocks(void) {
         defaultQuitHandler(1);  // this does not quit, but only notifies the caller that the user quit blaze early
         EXIT_NOMSG(false);
     }
-    LOG_INFO("- <PROG> : Scraping ", cons.blazeCnt, " of ", cons.blazeCnt, " at block ", cons.client, "\n");
+    LOG_INFO("- <PROG> : Scraping ", cons.blazeCnt, " of ", cons.blazeCnt, " at block ", cons.client);
 
     if (!verbose) {
         cerr << '\r' << string_q(120, ' ') << '\r';

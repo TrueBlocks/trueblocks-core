@@ -45,16 +45,14 @@ Notes:
 func init() {
 	abisCmd.Flags().SortFlags = false
 
-	abisCmd.Flags().BoolVarP(&abisPkg.Options.Known, "known", "k", false, "load common 'known' ABIs from cache")
-	abisCmd.Flags().BoolVarP(&abisPkg.Options.Sol, "sol", "s", false, "extract the abi definition from the provided .sol file(s)")
-	abisCmd.Flags().StringSliceVarP(&abisPkg.Options.Find, "find", "f", nil, "search for function or event declarations given a four- or 32-byte code(s)")
-	abisCmd.Flags().BoolVarP(&abisPkg.Options.Source, "source", "o", false, "show the source of the ABI information (hidden)")
-	abisCmd.Flags().BoolVarP(&abisPkg.Options.Classes, "classes", "c", false, "generate classDefinitions folder and class definitions (hidden)")
+	abisCmd.Flags().BoolVarP(&abisPkg.GetOptions().Known, "known", "k", false, "load common 'known' ABIs from cache")
+	abisCmd.Flags().BoolVarP(&abisPkg.GetOptions().Sol, "sol", "s", false, "extract the abi definition from the provided .sol file(s)")
+	abisCmd.Flags().StringSliceVarP(&abisPkg.GetOptions().Find, "find", "f", nil, "search for function or event declarations given a four- or 32-byte code(s)")
+	abisCmd.Flags().BoolVarP(&abisPkg.GetOptions().Classes, "classes", "c", false, "generate classDefinitions folder and class definitions (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {
-		abisCmd.Flags().MarkHidden("source")
 		abisCmd.Flags().MarkHidden("classes")
 	}
-	globals.InitGlobals(abisCmd, &abisPkg.Options.Globals)
+	globals.InitGlobals(abisCmd, &abisPkg.GetOptions().Globals)
 
 	abisCmd.SetUsageTemplate(UsageWithNotes(notesAbis))
 	abisCmd.SetOut(os.Stderr)

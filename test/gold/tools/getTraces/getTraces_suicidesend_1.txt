@@ -1,3 +1,7 @@
+Env: SETTINGS_SKIP_DDOS = false
+Env: NO_CACHE = true
+Env: SETTINGS_SKIP_DDOS = false
+Env: NO_CACHE = true
 chifra traces  0x343ba476313771d4431018d7d2e935eba2bfe26d5be3e6cb84af6817fd0e4309 --fmt txt
 TEST[DATE|TIME] Transactions:  [0x343ba476313771d4431018d7d2e935eba2bfe26d5be3e6cb84af6817fd0e4309]
 TEST[DATE|TIME] Format:  txt

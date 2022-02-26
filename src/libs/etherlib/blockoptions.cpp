@@ -71,7 +71,7 @@ bool wrangleTxId(string_q& argOut, string_q& errorMsg) {
 
     if ((parts.size() == 2) && endsWith(argOut, ".*")) {
         CBlock block;
-        getBlock_light(block, str_2_Uint(parts[0]));
+        getBlockLight(block, str_2_Uint(parts[0]));
         argOut = parts[0] + ".0";
         if (block.transactions.size() > 0)
             argOut += ("-to-" + uint_2_Str(block.transactions.size()));
@@ -95,7 +95,7 @@ bool wrangleTxId(string_q& argOut, string_q& errorMsg) {
     // it's directional
     if (parts[0] == "latest") {
         CBlock block;
-        getBlock_light(block, "latest");
+        getBlockLight(block, "latest");
         if (block.transactions.size() > 0) {
             ostringstream os;
             os << block.blockNumber << "." << (block.transactions.size() - 1);
@@ -118,8 +118,8 @@ bool wrangleTxId(string_q& argOut, string_q& errorMsg) {
 bool getDirectionalTxId(blknum_t bn, txnum_t txid, const string_q& dir, string_q& argOut, string_q& errorMsg) {
     blknum_t lastBlock = getBlockProgress(BP_CLIENT).client;
 
-    if (bn < firstTransactionBlock) {
-        argOut = uint_2_Str(firstTransactionBlock) + ".0";
+    if (bn < firstTransactionBlock()) {
+        argOut = uint_2_Str(firstTransactionBlock()) + ".0";
         return true;
     }
 
@@ -128,7 +128,7 @@ bool getDirectionalTxId(blknum_t bn, txnum_t txid, const string_q& dir, string_q
 
     argOut = "";
     txnum_t nextid = txid + 1;
-    while (argOut.empty() && bn >= firstTransactionBlock && bn <= lastBlock) {
+    while (argOut.empty() && bn >= firstTransactionBlock() && bn <= lastBlock) {
         if (dir == "next") {
             if (nextid < block.transactions.size()) {
                 argOut = uint_2_Str(block.blockNumber) + "." + uint_2_Str(nextid);
@@ -165,21 +165,14 @@ bool parseTransList2(COptionsBase* opt, COptionsTransList& transList, const stri
     return true;
 }
 
-//--------------------------------------------------------------------------------
-time_q getBlockDate(blknum_t num) {
-    CBlock block;
-    getBlock_light(block, num);
-    return ts_2_Date(block.timestamp);
-}
-
 //--------------------------------------------------------------
 extern bool findTimestamp_binarySearch(CBlock& block, size_t first, size_t last);
 bool findTimestamp_binarySearch(CBlock& block, size_t first, size_t last) {
     if (last > first) {
         size_t mid = first + ((last - first) / 2);
         CBlock b1, b2;
-        getBlock_light(b1, mid);
-        getBlock_light(b2, mid + 1);
+        getBlockHeader(b1, mid);
+        getBlockHeader(b2, mid + 1);
         bool atMid = (b1.timestamp <= block.timestamp);
         bool atMid1 = (b2.timestamp <= block.timestamp);
         if (atMid && !atMid1) {
@@ -192,7 +185,7 @@ bool findTimestamp_binarySearch(CBlock& block, size_t first, size_t last) {
         // we're too low, so search above
         return findTimestamp_binarySearch(block, mid + 1, last);
     }
-    getBlock_light(block, first);
+    getBlockHeader(block, first);
     return true;
 }
 
@@ -279,9 +272,14 @@ bool parseBlockList2(COptionsBase* opt, COptionsBlockList& blocks, const string_
 
 //--------------------------------------------------------------------------------
 bool parseAddressList(COptionsBase* opt, CAddressArray& addrs, const string_q& argIn) {
-    if (!isAddress(argIn))
+    if (contains(argIn, ".eth")) {
+        // We should never get this far with an unresolved .eth name unless there
+        // is no address for this .eth name. Let the user know.
+        return opt->usage("Invalid address '" + argIn + "'. Is this a valid .eth name?");
+    } else if (!isAddress(argIn)) {
         return opt->usage("Invalid address '" + argIn + "'. Length (" + uint_2_Str(argIn.length()) +
                           ") is not equal to 40 characters (20 bytes).");
+    }
     address_t lower = toLower(str_2_Addr(argIn));
     for (auto a : addrs) {
         if (a == lower) {

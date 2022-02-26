@@ -69,11 +69,17 @@ bool COptions::writeOpenApiFile(void) {
     }
     goConvertStream << "\t}" << endl;
 
-    // writeCodeOut(this, getDocsPathContent("api/openapi.yaml"));
     writeCodeOut(this, getPathToSource("apps/chifra/server/routes.go"));
     writeCodeOut(this, getPathToSource("apps/chifra/server/convert_params.go"));
     // writeCodeOut(this, getPathToSource("apps/chifra/options.cpp"));
     // writeCodeOut(this, getPathToSource("libs/utillib/options_base.cpp"));
+
+    // writeCodeOut(this, getDocsPathContent("api/openapi.yaml"));
+    // ostringstream tsos;
+    // #define explorerPath string_q("/Users/jrush/Development/trueblocks-explorer/")
+    // tsos << "cd " << explorerPath << " ; node_modules/.bin/tsc -p src/sdk && node src/sdk/dist/index.js >/dev/null";
+    // if (system(tsos.str().c_str()) != 0) {
+    // }
 
     LOG_INFO(cYellow, "makeClass --openapi", cOff, " processed ", counter.routeCount, "/", counter.cmdCount,
              " routes/cmds ", " (changed ", counter.nProcessed, ").", string_q(40, ' '));

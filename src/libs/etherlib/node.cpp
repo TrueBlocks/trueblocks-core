@@ -72,11 +72,13 @@ void etherlib_init(QUITHANDLER qh) {
     CAppearance::registerClass();
     CRPCResult::registerClass();
     CAccountName::registerClass();
+    CConfigEnv::registerClass();
     CCollection::registerClass();
     CCacheEntry::registerClass();
 
-    establishFolder(getPathToConfig(""));
-    establishFolder(getPathToCache(""));
+    establishFolder(rootConfigs);
+    establishFolder(chainConfigs);
+    establishFolder(cacheFolder);
 }
 
 //-------------------------------------------------------------------------
@@ -108,42 +110,28 @@ bool getObjectViaRPC(CBaseNode& node, const string_q& method, const string_q& pa
 }
 
 //--------------------------------------------------------------------------------
-bool getBlock_light(CBlock& block, const string_q& val) {
-    if (str_2_Uint(val) != 0 && fileSize(getBinaryCacheFilename(CT_BLOCKS, str_2_Uint(val))) > 0)
-        return readBlockFromBinary(block, getBinaryCacheFilename(CT_BLOCKS, str_2_Uint(val)));
-    block.light = true;
-    getObjectViaRPC(block, "eth_getBlockByNumber", "[" + quote(val) + ",false]");
-    return true;
+time_q getBlockDate(blknum_t num) {
+    CBlock block;
+    getBlockHeader(block, num);
+    return ts_2_Date(block.timestamp);
 }
 
 //--------------------------------------------------------------------------------
-bool getNodeIds(uint64_t& clientId, uint64_t& networkId) {
-    clientId = str_2_Uint(callRPC("eth_chainId", "[]", false));
-    networkId = str_2_Uint(callRPC("net_version", "[]", false));
-    return true;
-}
-
-//--------------------------------------------------------------------------------
-bool getBlock_light(CBlock& block, blknum_t num) {
-    if (fileSize(getBinaryCacheFilename(CT_BLOCKS, num)) > 0)
-        return readBlockFromBinary(block, getBinaryCacheFilename(CT_BLOCKS, num));
-    return getBlock_light(block, uint_2_Hex(num));
-}
-
-//--------------------------------------------------------------------------------
-bool getBlock_header(CBlock& block, const string_q& val) {
-    if (isParity())
-        getObjectViaRPC(block, "parity_getBlockHeaderByNumber", "[" + quote(val) + "]");
-    else
-        getBlock_light(block, str_2_Uint(val));
-    return true;
-}
-
-//--------------------------------------------------------------------------------
-bool getBlock_header(CBlock& block, blknum_t bn) {
-    if (fileSize(getBinaryCacheFilename(CT_BLOCKS, bn)) > 0)
+bool getBlockLight(CBlock& block, const string_q& hexVal) {
+    blknum_t bn = str_2_Uint(hexVal);
+    if (bn != 0 && fileSize(getBinaryCacheFilename(CT_BLOCKS, bn)) > 0)
         return readBlockFromBinary(block, getBinaryCacheFilename(CT_BLOCKS, bn));
-    return getBlock_header(block, uint_2_Hex(bn));
+    return getObjectViaRPC(block, "eth_getBlockByNumber", "[" + quote(hexVal) + ",false]");
+}
+
+//--------------------------------------------------------------------------------
+bool getBlockHeader(CBlock& block, const string_q& hexVal) {
+    blknum_t bn = str_2_Uint(hexVal);
+    if (bn != 0 && fileSize(getBinaryCacheFilename(CT_BLOCKS, bn)) > 0)
+        return readBlockFromBinary(block, getBinaryCacheFilename(CT_BLOCKS, bn));
+    if (isErigon())
+        return getObjectViaRPC(block, "erigon_getHeaderByNumber", "[" + quote(hexVal) + "]");
+    return getBlockLight(block, hexVal);
 }
 
 //-------------------------------------------------------------------------
@@ -310,7 +298,8 @@ bool loadTraces(CTransaction& trans, blknum_t bn, blknum_t txid, bool useCache, 
             dDos.loadTraceAsDdos(trans, bn, txid);
             trans.traces.push_back(dDos);
 
-        } else if (txid == 99997 || txid == 99999) {
+        } else if (txid == 99996 || txid == 99997 || txid == 99999) {
+            // 99996 is 'external' rewards found only on gnosis chain so far
             // 99997 was a misconfigured miners early in the chain due to a bug.
             // 99999 is record for the winning miner
             CTrace rewardTrace;
@@ -354,7 +343,7 @@ bool loadTraces(CTransaction& trans, blknum_t bn, blknum_t txid, bool useCache, 
 //-------------------------------------------------------------------------
 bool getFullReceipt(CTransaction* trans, bool needsTrace) {
     getReceipt(trans->receipt, trans->hash);
-    if (trans->blockNumber >= byzantiumBlock || isErigon()) {
+    if (trans->blockNumber >= byzantiumBlock() || isErigon()) {
         trans->isError = (trans->receipt.status == 0);
 
     } else if (needsTrace && trans->gas == trans->receipt.gasUsed) {
@@ -606,7 +595,7 @@ void getTracesByFilter(CTraceArray& traces, const CTraceFilter& filter) {
 
 //-------------------------------------------------------------------------
 string_q getVersionFromClient(void) {
-    string_q clientVersionFn = getPathToCache("tmp/clientVersion.txt");
+    string_q clientVersionFn = cacheFolder_tmp + "clientVersion.txt";
     string_q contents;
     if (fileExists(clientVersionFn))
         contents = asciiFileToString(clientVersionFn);
@@ -619,7 +608,7 @@ string_q getVersionFromClient(void) {
         // If the rpcProvider changed or we haven't checked in 20 seconds, check again.
         string_q clientVersion = callRPC("web3_clientVersion", "[]", false);
         if (!clientVersion.empty()) {
-            if (folderExists(getPathToCache("tmp/")))
+            if (folderExists(cacheFolder_tmp))
                 stringToAsciiFile(clientVersionFn, getCurlContext()->baseURL + "\t" + clientVersion);
             return clientVersion;
         }
@@ -630,27 +619,6 @@ string_q getVersionFromClient(void) {
     if (parts.size() < 2)
         return uint_2_Str(NOPOS);
     return parts[1];
-}
-
-//-------------------------------------------------------------------------
-bool isErigon(void) {
-    return contains(toLower(getVersionFromClient()), "erigon");
-}
-
-//-------------------------------------------------------------------------
-bool isGeth(void) {
-    return contains(toLower(getVersionFromClient()), "geth") && !isErigon();
-}
-
-//-------------------------------------------------------------------------
-bool isParity(void) {
-    return contains(toLower(getVersionFromClient()), "parity") ||
-           contains(toLower(getVersionFromClient()), "openethereum");
-}
-
-//-------------------------------------------------------------------------
-bool hasParityTraces(void) {
-    return isErigon() || isParity();
 }
 
 //-------------------------------------------------------------------------
@@ -702,22 +670,21 @@ bool hasTraceAt(const string_q& hashIn, size_t where) {
 
 //-------------------------------------------------------------------------
 bool isTracingNode(void) {
-    // short curcuit for some situations
-    const CToml* config = getGlobalConfig("blockScrape");
-    if (!config->getConfigBool("requires", "tracing", true))
-        return true;
+    ostringstream cmd;
+    cmd << "[\"";
+    cmd << str_2_Hash("0x6df0b4a0d15ae3b925b9819646a0cff4d1bc0a53b294c0d84d884865302d13a5");
+    cmd << "\",[\"";
+    cmd << uint_2_Hex(23);
+    cmd << "\"]]";
 
-    // At block 50871 (firstTraceBlock) transaction 0, (hash:
-    // 0x6df0b4a0d15ae3b925b9819646a0cff4d1bc0a53b294c0d84d884865302d13a5) we know there were exactly 23 traces as per
-    // Parity. We check that here to see if the node is running with --tracing enabled. Not sure how this works with
-    // Geth
-    static int answered = int(-1);  // NOLINT
-    if (answered != int(-1))        // NOLINT
-        return answered;
-    bool at23 = hasTraceAt("0x6df0b4a0d15ae3b925b9819646a0cff4d1bc0a53b294c0d84d884865302d13a5", 23);
-    bool at24 = hasTraceAt("0x6df0b4a0d15ae3b925b9819646a0cff4d1bc0a53b294c0d84d884865302d13a5", 24);
-    answered = (at23 && !at24);
-    return answered;
+    // Returns an error if traces are not supported. If traces are supported
+    // no error is returned even if the trace does not exist.
+    string_q result = callRPC("trace_get", cmd.str().c_str(), true);
+    CStringArray errMsgs = {"not enabled", "does not exist", "error"};
+    for (auto msg : errMsgs)
+        if (contains(result, msg))
+            return false;
+    return true;
 }
 
 //--------------------------------------------------------------
@@ -793,38 +760,22 @@ static string_q getFilename_local(cache_t type, const string_q& item1, const str
     ostringstream os;
     switch (type) {
         case CT_BLOCKS:
-            os << "blocks/";
-            break;
-        case CT_BLOOMS:
-            os << "blooms/";
+            os << cacheFolder_blocks;
             break;
         case CT_TXS:
-            os << "txs/";
+            os << cacheFolder_txs;
             break;
         case CT_TRACES:
-            os << "traces/";
-            break;
-        case CT_ACCTS:
-            os << "accts/";
-            break;
-        case CT_MONITORS:
-            os << "monitors/";
+            os << cacheFolder_traces;
             break;
         case CT_RECONS:
-            os << "recons/";
-            break;
-        case CT_APPS:
-            os << "apps/";
+            os << cacheFolder_recons;
             break;
         default:
             ASSERT(0);  // should not happen
     }
 
-    if (type == CT_ACCTS || type == CT_MONITORS) {
-        string_q addr = toLower(substitute(item1, "0x", ""));
-        os << extract(addr, 0, 4) << "/" << extract(addr, 4, 4) << "/" << addr << ".bin";
-
-    } else if (type == CT_RECONS) {
+    if (type == CT_RECONS) {
         string_q addr = toLower(substitute(item1, "0x", ""));
         string_q part1 = extract(addr, 0, 4);
         string_q part2 = extract(addr, 4, 4);
@@ -839,12 +790,12 @@ static string_q getFilename_local(cache_t type, const string_q& item1, const str
         os << extract(item1, 0, 2) << "/" << extract(item1, 2, 2) << "/" << extract(item1, 4, 2) << "/";
         if (!asPath) {
             os << item1;
-            os << ((type == CT_TRACES || type == CT_TXS || type == CT_APPS) ? "-" + item2 : "");
+            os << ((type == CT_TRACES || type == CT_TXS) ? "-" + item2 : "");
             os << (type == CT_TRACES && !item3.empty() ? "-" + item3 : "");
             os << ".bin";
         }
     }
-    return getPathToCache(os.str());
+    return os.str();
 }
 
 //-------------------------------------------------------------------------
@@ -883,24 +834,6 @@ bool forEveryBlock(BLOCKVISITFUNC func, void* data, uint64_t start, uint64_t cou
             getBlock(block, i);
         }
 
-        bool ret = (*func)(block, data);
-        if (!ret) {
-            // Cleanup and return if user tells us to
-            return false;
-        }
-    }
-    return true;
-}
-
-//-------------------------------------------------------------------------
-bool forEveryBlock_light(BLOCKVISITFUNC func, void* data, uint64_t start, uint64_t count, uint64_t skip) {
-    // Here we simply scan the numbers and either read from disc or query the node
-    if (!func)
-        return false;
-
-    for (uint64_t i = start; i < start + count - 1; i = i + skip) {
-        CBlock block;
-        getBlock_light(block, i);
         bool ret = (*func)(block, data);
         if (!ret) {
             // Cleanup and return if user tells us to
@@ -956,7 +889,7 @@ bool forEveryTransaction(TRANSVISITFUNC func, void* data, const string_q& trans_
             trans.pBlock = &block;
             if (isHash(trans.hash)) {
                 // Note: at this point, we are not fully formed, we need the receipt and the timestamp
-                getBlock_light(block, trans.blockNumber);
+                getBlockLight(block, trans.blockNumber);
                 getFullReceipt(&trans, true);
                 trans.timestamp = block.timestamp;
                 trans.receipt.pTransaction = &trans;
@@ -1091,20 +1024,23 @@ string_q exportPostamble(const CStringArray& errorsIn, const string_q& extra) {
         return os.str() + " }";
     ASSERT(fmt == API1);
 
-    CMetaData progress = getMetaData();
-    blknum_t unripe = progress.unripe;
-    blknum_t ripe = progress.ripe;
-    blknum_t staging = progress.staging;
-    blknum_t finalized = progress.finalized;
-    blknum_t client = progress.client;
-    if (isTestMode())
-        unripe = ripe = staging = finalized = client = 0xdeadbeef;
+    CMetaData meta = getMetaData();
+    if (isTestMode()) {
+        meta.unripe = meta.ripe = meta.staging = meta.finalized = meta.client = 0xdeadbeef;
+        meta.chainId = meta.networkId = 0xdeaddead;
+    }
     os << ", \"meta\": {";
-    os << "\"unripe\": " << dispNumOrHex(unripe) << ",";
-    os << "\"ripe\": " << dispNumOrHex(ripe) << ",";
-    os << "\"staging\": " << dispNumOrHex(staging) << ",";
-    os << "\"finalized\": " << dispNumOrHex(finalized);
-    os << ",\"client\": " << dispNumOrHex(client);
+    os << "\"unripe\": " << dispNumOrHex(meta.unripe) << ",";
+    os << "\"ripe\": " << dispNumOrHex(meta.ripe) << ",";
+    os << "\"staging\": " << dispNumOrHex(meta.staging) << ",";
+    os << "\"finalized\": " << dispNumOrHex(meta.finalized);
+    os << ",\"client\": " << dispNumOrHex(meta.client);
+    if ((isApiMode() && !isTestMode()) || meta.chain != getDefaultChain()) {
+        os << ",\"chain\": "
+           << "\"" << meta.chain << "\"";
+        os << ",\"clientId\": " << dispNumOrHex(meta.chainId);
+        os << ",\"networkId\": " << dispNumOrHex(meta.networkId);
+    }
     if (!extra.empty())
         os << extra;
     os << " }";
@@ -1115,7 +1051,7 @@ string_q exportPostamble(const CStringArray& errorsIn, const string_q& extra) {
 
 //----------------------------------------------------------------
 bool excludeTrace(const CTransaction* trans, size_t maxTraces) {
-    if (!ddosRange(trans->blockNumber))
+    if (!isDdos(trans->blockNumber))
         return false;  // be careful, it's backwards
 
     static string_q exclusions;

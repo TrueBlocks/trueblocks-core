@@ -202,6 +202,8 @@ extern logger<log_policy_i>* eLogger;
 
 #define LOGGING_LEVEL
 #ifdef LOGGING_LEVEL
+typedef enum { EXTRACT = 0, READ, UPDATE, RECONCILE, SCANNING, SKIPPING, COMPLETE } searchOpType;
+extern void logProgress(searchOpType op, uint64_t progress, uint64_t goal, const qblocks::string_q& post);
 #define LOG0 dLogger->print<sev_debug0>
 #define LOG1 dLogger->print<sev_debug1>
 #define LOG2 dLogger->print<sev_debug2>
@@ -218,10 +220,7 @@ extern logger<log_policy_i>* eLogger;
 #define SEP3(a) LOG3(cYellow + string_q(10, '-') + (a) + string_q(10, '-') + cOff)
 #define SEP4(a) LOG4(cRed + string_q(10, '-') + (a) + string_q(10, '-') + cOff)
 #define SEP8(a) LOG8(cTeal + string_q(10, '-') + (a) + string_q(10, '-') + cOff)
-#define LOG_PROGRESS(op, progress, goal, post)                                                                         \
-    if (!isTestMode()) {                                                                                               \
-        LOG_PROG((op), " ", padNum6T(uint64_t(progress)), " of ", padNum6T(uint64_t(goal)), (post));                   \
-    }
+#define LOG_PROGRESS(op, progress, goal, post) logProgress((op), (progress), (goal), (post))
 #else
 #define LOG0(...)
 #define LOG1(...)
@@ -229,6 +228,7 @@ extern logger<log_policy_i>* eLogger;
 #define LOG3(...)
 #define LOG4(...)
 #define LOG8(...)
+#define LOG_PROG(...)
 #define LOG_INFO(...)
 #define LOG_WARN(...)
 #define LOG_ERR(...)
@@ -281,10 +281,7 @@ extern logger<log_policy_i>* eLogger;
         }                                                                                                              \
     }
 #define LOG_TEST_CALL(a)                                                                                               \
-    {                                                                                                                  \
-        LOG4(bWhite, l_funcName, " ----> ", (isTestMode() ? substitute((a), getPathToCache(""), "$CACHE/") : (a)),     \
-             cOff);                                                                                                    \
-    }
+    { LOG4(bWhite, l_funcName, " ----> ", (isTestMode() ? substitute((a), cacheFolder, "$CACHE/") : (a)), cOff); }
 #else
 #define LOG_TEST(a, b, is_default)
 #define LOG_TEST_STR(str)

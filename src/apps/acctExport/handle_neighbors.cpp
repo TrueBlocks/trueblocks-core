@@ -21,7 +21,6 @@ bool showApp(const CAppearance& item, void* data) {
     return !shouldQuit();
 }
 
-#define indexFolder_map (getPathToIndex("maps/"))
 extern bool getChunkRanges(CBlockRangeArray& ranges);
 
 //-----------------------------------------------------------------------
@@ -45,7 +44,7 @@ bool CIndexArchive::LoadReverseMaps(const blkrange_t& range) {
         reverseAppMap = nullptr;
     }
 
-    uint32_t nApps = header->nRows;
+    uint32_t nAppsHere = header->nRows;
 
     string_q mapFile = substitute(getFilename(), indexFolder_finalized, indexFolder_map);
     if (fileExists(mapFile)) {
@@ -55,7 +54,7 @@ bool CIndexArchive::LoadReverseMaps(const blkrange_t& range) {
             return false;
         }
         size_t nRecords = fileSize(mapFile) / sizeof(CReverseAppMapEntry);
-        ASSERT(nRecords == nApps);
+        ASSERT(nRecords == nAppsHere);
         // Cleaned up on destruction of the chunk
         reverseAppMap = new CReverseAppMapEntry[nRecords];
         if (!reverseAppMap) {
@@ -75,12 +74,12 @@ bool CIndexArchive::LoadReverseMaps(const blkrange_t& range) {
     }
 
     // Cleaned up on destruction of the chunk
-    reverseAppMap = new CReverseAppMapEntry[nApps];
+    reverseAppMap = new CReverseAppMapEntry[nAppsHere];
     if (!reverseAppMap) {
         LOG_ERR("Could not allocate memory for CReverseAppMapEntry");
         return false;
     }
-    for (uint32_t i = 0; i < nApps; i++) {
+    for (uint32_t i = 0; i < nAppsHere; i++) {
         reverseAppMap[i].n = i;
         reverseAppMap[i].blk = appearances[i].blk;
         reverseAppMap[i].tx = appearances[i].txid;
@@ -94,14 +93,14 @@ bool CIndexArchive::LoadReverseMaps(const blkrange_t& range) {
         reverseAddrRanges.push_back(r);
     }
 
-    qsort(reverseAppMap, nApps, sizeof(CReverseAppMapEntry), sortRecords);
+    qsort(reverseAppMap, nAppsHere, sizeof(CReverseAppMapEntry), sortRecords);
 
     CArchive archive(WRITING_ARCHIVE);
     if (!archive.Lock(mapFile, modeWriteCreate, LOCK_WAIT)) {
         LOG_ERR("Could not open file ", mapFile);
         return false;
     }
-    archive.Write(reverseAppMap, sizeof(char), nApps * sizeof(CReverseAppMapEntry));
+    archive.Write(reverseAppMap, sizeof(char), nAppsHere * sizeof(CReverseAppMapEntry));
     archive.Release();
 
     LOG_PROG("Processed: " + getFilename());
@@ -210,6 +209,8 @@ bool COptions::showAddrsInTx(CTraverser* trav, const blkrange_t& range, const CA
                 LOG_ERR("Could not allocate reverseAppMap");
                 return false;
             }
+        } else {
+            LOG_WARN("Cannot open index file ", chunkPath);
         }
     }
 
@@ -237,15 +238,15 @@ bool COptions::showAddrsInTx(CTraverser* trav, const blkrange_t& range, const CA
             for (size_t i = start; i < theIndex->reverseAddrRanges.size(); i++) {
                 blkrange_t* r = &theIndex->reverseAddrRanges[i];
                 if (inRange(found->n, *r)) {
-                    CAppearance app;
-                    app.bn = found->blk;
-                    app.tx = found->tx;
-                    app.addr = bytes_2_Addr(theIndex->addresses[i].bytes);
-                    if (assignReason(accountedFor, app, trav->trans)) {
+                    CAppearance appHere;
+                    appHere.bn = found->blk;
+                    appHere.tx = found->tx;
+                    appHere.addr = bytes_2_Addr(theIndex->addresses[i].bytes);
+                    if (assignReason(accountedFor, appHere, trav->trans)) {
                         trav->nProcessed++;
                         if (!prog_Log(trav, this))
                             return false;
-                        showApp(app, this);
+                        showApp(appHere, this);
                     }
                     start = i;
                     break;
@@ -316,7 +317,7 @@ size_t neighbors_Count(CTraverser* trav, void* data) {
 extern bool visitBloom(const string_q& path, void* data);
 //-----------------------------------------------------------------------
 bool getChunkRanges(CBlockRangeArray& ranges) {
-    forEveryFileInFolder(getPathToIndex("blooms/*"), visitBloom, &ranges);
+    forEveryFileInFolder(indexFolder_blooms + "*", visitBloom, &ranges);
     // LOG_INFO("Found ", ranges.size(), " chunks");
     return true;
 }
@@ -325,7 +326,7 @@ bool getChunkRanges(CBlockRangeArray& ranges) {
 bool visitBloom(const string_q& path, void* data) {
     if (endsWith(path, ".bloom")) {
         CBlockRangeArray* ranges = (CBlockRangeArray*)data;
-        blkrange_t range = str_2_Range(substitute(path, getPathToIndex("blooms/"), ""));
+        blkrange_t range = str_2_Range(substitute(path, indexFolder_blooms, ""));
         ranges->push_back(range);
     }
     return true;

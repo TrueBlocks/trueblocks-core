@@ -14,7 +14,7 @@ import (
 )
 
 func (opts *PinsOptions) ListInternal() error {
-	manifestData, err := manifest.FromLocalFile()
+	manifestData, err := manifest.FromLocalFile(opts.Globals.Chain)
 	if err != nil {
 		return err
 	}

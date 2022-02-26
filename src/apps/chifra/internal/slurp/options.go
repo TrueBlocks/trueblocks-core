@@ -26,6 +26,8 @@ type SlurpOptions struct {
 	BadFlag     error
 }
 
+var slurpCmdLineOptions SlurpOptions
+
 func (opts *SlurpOptions) TestLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
@@ -77,21 +79,30 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)
+	// EXISTING_CODE
+	opts.Addrs = globals.ConvertEns(opts.Globals.Chain, opts.Addrs)
+	// EXISTING_CODE
 
 	return opts
 }
 
-var Options SlurpOptions
-
 func SlurpFinishParse(args []string) *SlurpOptions {
+	opts := GetOptions()
 	// EXISTING_CODE
 	for _, arg := range args {
 		if validate.IsValidAddress(arg) {
-			Options.Addrs = append(Options.Addrs, arg)
+			opts.Addrs = append(opts.Addrs, arg)
 		} else {
-			Options.Blocks = append(Options.Blocks, arg)
+			opts.Blocks = append(opts.Blocks, arg)
 		}
 	}
+	opts.Addrs = globals.ConvertEns(opts.Globals.Chain, opts.Addrs)
 	// EXISTING_CODE
-	return &Options
+	return opts
+}
+
+func GetOptions() *SlurpOptions {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return &slurpCmdLineOptions
 }

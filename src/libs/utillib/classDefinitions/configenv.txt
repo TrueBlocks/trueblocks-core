@@ -1,0 +1,5 @@
+[settings]
+class = CConfigEnv
+fields = confident.csv
+includes = basetypes.h|basenode.h|exportcontext.h|sfarchive.h
+cpp_includes =

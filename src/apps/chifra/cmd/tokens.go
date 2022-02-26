@@ -49,11 +49,11 @@ Notes:
 func init() {
 	tokensCmd.Flags().SortFlags = false
 
-	tokensCmd.Flags().StringSliceVarP(&tokensPkg.Options.Parts, "parts", "p", nil, `which parts of the token information to retrieve
+	tokensCmd.Flags().StringSliceVarP(&tokensPkg.GetOptions().Parts, "parts", "p", nil, `which parts of the token information to retrieve
 One or more of [ name | symbol | decimals | totalSupply | version | none | all ]`)
-	tokensCmd.Flags().BoolVarP(&tokensPkg.Options.ByAcct, "by_acct", "b", false, "consider each address an ERC20 token except the last, whose balance is reported for each token")
-	tokensCmd.Flags().BoolVarP(&tokensPkg.Options.NoZero, "no_zero", "n", false, "suppress the display of zero balance accounts")
-	globals.InitGlobals(tokensCmd, &tokensPkg.Options.Globals)
+	tokensCmd.Flags().BoolVarP(&tokensPkg.GetOptions().ByAcct, "by_acct", "b", false, "consider each address an ERC20 token except the last, whose balance is reported for each token")
+	tokensCmd.Flags().BoolVarP(&tokensPkg.GetOptions().NoZero, "no_zero", "n", false, "suppress the display of zero balance accounts")
+	globals.InitGlobals(tokensCmd, &tokensPkg.GetOptions().Globals)
 
 	tokensCmd.SetUsageTemplate(UsageWithNotes(notesTokens))
 	tokensCmd.SetOut(os.Stderr)

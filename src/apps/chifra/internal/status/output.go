@@ -31,18 +31,6 @@ func RunStatus(cmd *cobra.Command, args []string) error {
 	}
 
 	// EXISTING_CODE
-	// meta := rpcClient.GetMeta(false)
-	// log.Println(GreenTxt("Config Path:  "), config.GetPathToConfig(""))
-	// log.Println(GreenTxt("Cache Path:   "), config.GetPathToCache())
-	// log.Println(GreenTxt("Index Path:   "), config.GetPathToIndex())
-	// log.Println(GreenTxt("Rpc Provider: "), config.GetRpcProvider())
-	// log.Printf("%s%d, %d (%d), %d (%d), %d (%d), %d (%d)\n", GreenTxt("Progress:      "),
-	//	meta.Latest,
-	//	meta.Finalized, (meta.Latest - meta.Finalized),
-	//	meta.Staging, (meta.Staging - meta.Finalized),
-	//	meta.Ripe, (meta.Ripe - meta.Staging),
-	//	meta.Unripe, (meta.Unripe - meta.Ripe))
-	// return nil
 	return opts.Globals.PassItOn("cacheStatus", opts.ToCmdLine())
 	// EXISTING_CODE
 }

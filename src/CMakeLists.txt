@@ -94,6 +94,5 @@ add_custom_target(test-all COMMAND "${BIN_TEST_DIR}/test-all.sh" WORKING_DIRECTO
 add_subdirectory (libs)
 add_subdirectory (tools)
 add_subdirectory (apps)
-add_subdirectory (go-apps)
 add_subdirectory (dev_tools)
 add_subdirectory (other)

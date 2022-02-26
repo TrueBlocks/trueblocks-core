@@ -111,19 +111,19 @@ bool COptions::process_reconciliation(CTraverser* trav) {
                 }
                 if (backLevel) {
                     // LOG_WARN(cYellow, "Updating statements", cOff);
-                    trav->searchOp = "Updating";
+                    trav->searchOp = UPDATE;
                     cacheIfReconciled(trav, true /* isNew */);
                     slowQueries++;
                     reportFreq = 1;
                 }
                 return !shouldQuit();
-            } else {
-                trav->trans.statements.clear();
+                //             } else {
+                //               trav->trans.statements.clear();
             }
         }
     }
 
-    trav->searchOp = "Reconciling";
+    trav->searchOp = RECONCILE;
     slowQueries++;
     reportFreq = 1;
 

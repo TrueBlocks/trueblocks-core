@@ -40,6 +40,8 @@ type NamesOptions struct {
 	BadFlag     error
 }
 
+var namesCmdLineOptions NamesOptions
+
 func (opts *NamesOptions) TestLog() {
 	logger.TestLog(len(opts.Terms) > 0, "Terms: ", opts.Terms)
 	logger.TestLog(opts.Expand, "Expand: ", opts.Expand)
@@ -171,15 +173,23 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *NamesOptions {
 		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)
+	// EXISTING_CODE
+	opts.Terms = globals.ConvertEns(opts.Globals.Chain, opts.Terms)
+	// EXISTING_CODE
 
 	return opts
 }
 
-var Options NamesOptions
-
 func NamesFinishParse(args []string) *NamesOptions {
+	opts := GetOptions()
 	// EXISTING_CODE
-	Options.Terms = args
+	opts.Terms = globals.ConvertEns(opts.Globals.Chain, args)
 	// EXISTING_CODE
-	return &Options
+	return opts
+}
+
+func GetOptions() *NamesOptions {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return &namesCmdLineOptions
 }

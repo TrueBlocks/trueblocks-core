@@ -23,6 +23,7 @@ status?details&modes=monitors
           "addrs": [],
           "items": [
             {
+              "deleted": false,
               "type": "",
               "nApps": 0,
               "firstApp": 0,
@@ -50,6 +51,7 @@ status?details&modes=monitors
           "isValid": true
         }
       ],
+      "chains": [],
       "date": "--date--"
     }
   ],

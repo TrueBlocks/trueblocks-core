@@ -1,0 +1,30 @@
+status?terse&chain=gnosis
+{
+  "data": [
+    {
+      "clientVersion": "Client version",
+      "trueblocksVersion": "GHC-TrueBlocks//vers-alpha--git-hash---git-ts-",
+      "rpcProvider": "--providers--",
+      "configPath": "--paths--",
+      "cachePath": "--paths--",
+      "indexPath": "--paths--",
+      "isTesting": true,
+      "isDocker": false,
+      "isArchive": true,
+      "isTracing": true,
+      "hasEskey": true,
+      "hasPinkey": false,
+      "date": "--date--"
+    }
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef",
+    "chain": "gnosis",
+    "clientId": "0xdeaddead",
+    "networkId": "0xdeaddead"
+  }
+}

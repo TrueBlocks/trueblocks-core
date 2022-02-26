@@ -736,24 +736,32 @@ int sortByBlockNum(const void* v1, const void* v2) {
 }
 
 //-----------------------------------------------------------------------
-const CToml* getGlobalConfig(const string_q& name) {
+const CToml* getGlobalConfig(const string_q& mergeIn) {
     static CToml* toml = NULL;
     static string_q components = "trueBlocks|";
 
     if (!toml) {
-        static CToml theToml(getPathToConfig("trueBlocks.toml"));
+        string_q configFile = rootConfigToml_trueBlocks;
+        LOG4(bGreen, "configFile: ", configFile, cOff);
+        static CToml theToml(configFile);
         toml = &theToml;
-        string_q fileName = getPathToConfig(COptionsBase::g_progName + ".toml");
-        if (fileExists(fileName) && !contains(components, COptionsBase::g_progName + "|")) {
-            components += COptionsBase::g_progName + "|";
+        string_q name = COptionsBase::g_progName;
+        string_q fileName = chainConfigToml_merge;
+        if (name == "makeClass" || name == "testRunner")
+            fileName = rootConfigToml_merge;
+        if (fileExists(fileName) && !contains(components, name + "|")) {
+            components += name + "|";
             CToml custom(fileName);
             toml->mergeFile(&custom);
         }
     }
 
     // If we're told explicitly to load another config, do that as well
-    if (!name.empty()) {
-        string_q fileName = getPathToConfig(name + ".toml");
+    if (!mergeIn.empty()) {
+        string_q name = mergeIn;
+        string_q fileName = chainConfigToml_merge;
+        if (name == "makeClass" || name == "testRunner")
+            fileName = rootConfigToml_merge;
         if (fileExists(fileName) && !contains(components, name + "|")) {
             components += name + "|";
             CToml custom(fileName);
@@ -768,7 +776,7 @@ const CToml* getGlobalConfig(const string_q& name) {
 bool COptionsBase::Mocked(const string_q& which) {
     if (!mocked)
         return false;
-    string_q path = getPathToConfig("mocked/mocks/" + which + ".json");
+    string_q path = chainConfigsFolder_mocked + "mocks/" + which + ".json";
     if (!fileExists(path))
         return false;
     cout << asciiFileToString(path);
@@ -792,45 +800,37 @@ static bool sortByValue(const CNameValue& p1, const CNameValue& p2) {
 
 //-----------------------------------------------------------------------
 // TODO(tjayrush): global data
+// TODO(tjayrush): Can we remove this since this is all processed in the go code?
+// TODO(tjayrush): Almost - if we convert specials to block numbers before calling into the C++
 CNameValueArray COptionsBase::specials;
-
-//-----------------------------------------------------------------------
-void COptionsBase::loadSpecials(void) {
-    specials.clear();
-    extern const char* STR_DEFAULT_WHENBLOCKS;
-    string_q specialsStr = STR_DEFAULT_WHENBLOCKS;
-    CKeyValue keyVal;
-    while (keyVal.parseJson3(specialsStr)) {
-        CNameValue pair = make_pair(keyVal.jsonrpc, keyVal.result);
-        specials.push_back(pair);
-        keyVal = CKeyValue();  // reset
-    }
-    sort(specials.begin(), specials.end(), sortByValue);
-    return;
-}
-
-//--------------------------------------------------------------------------------
-bool COptionsBase::forEverySpecialBlock(NAMEVALFUNC func, void* data) {
-    if (!func)
-        return false;
-    if (specials.size() == 0)
-        loadSpecials();
-    for (auto special : specials)
-        if (!(*func)(special, data))
-            return false;
-    return true;
-}
 
 //--------------------------------------------------------------------------------
 bool COptionsBase::findSpecial(CNameValue& pair, const string_q& arg) {
-    if (specials.size() == 0)
-        loadSpecials();
+    if (specials.size() == 0) {
+        CStringArray lines;
+        asciiFileToLines(chainConfigsTxt_specials, lines);
+        bool first = true;
+        for (auto line : lines) {
+            if (!first) {
+                CStringArray fields;
+                explode(fields, line, ',');
+                if (fields.size() > 1) {
+                    CNameValue pp = make_pair(fields[1], fields[0]);
+                    specials.push_back(pp);
+                }
+            }
+            first = false;
+        }
+        sort(specials.begin(), specials.end(), sortByValue);
+    }
+
     for (auto special : specials) {
         if (arg == special.first) {
             pair = special;
             return true;
         }
     }
+
     return false;
 }
 
@@ -912,42 +912,5 @@ string_q cleanFmt(const string_q& str) {
         ret = "\"" + substitute(ret, "\t", "\",\"") + "\"";
     return ret;
 }
-
-//-----------------------------------------------------------------------
-const char* STR_DEFAULT_WHENBLOCKS =
-    "[ "
-    "{ name: \"first\", value: 0 },"
-    "{ name: \"firstTrans\", value: 46147 },"
-    "{ name: \"firstContract\", value: 50111 },"
-    "{ name: \"iceage\", value: 200000 },"
-    "{ name: \"devcon1\", value: 543626 },"
-    "{ name: \"homestead\", value: 1150000 },"
-    "{ name: \"daofund\", value: 1428756 },"
-    "{ name: \"daohack\", value: 1718497 },"
-    "{ name: \"daofork\", value: 1920000 },"
-    "{ name: \"devcon2\", value: 2286910 },"
-    "{ name: \"tangerine\", value: 2463000 },"
-    "{ name: \"spurious\", value: 2675000 },"
-    "{ name: \"stateclear\", value: 2717576 },"
-    "{ name: \"eea\", value: 3265360 },"
-    "{ name: \"ens2\", value: 3327417 },"
-    "{ name: \"parityhack1\", value: 4041179 },"
-    "{ name: \"byzantium\", value: 4370000 },"
-    "{ name: \"devcon3\", value: 4469339 },"
-    "{ name: \"parityhack2\", value: 4501969 },"
-    "{ name: \"kitties\", value: 4605167 },"
-    "{ name: \"makerdao\", value: 4620855 },"
-    "{ name: \"devcon4\", value: 6610517 },"
-    "{ name: \"uniswap\", value: 6627917 },"
-    "{ name: \"constantinople\", value: 7280000 },"
-    "{ name: \"devcon5\", value: 8700401 },"
-    "{ name: \"mcdai\", value: 8928158 },"
-    "{ name: \"istanbul\", value: 9069000 },"
-    "{ name: \"muirglacier\", value: 9200000 },"
-    "{ name: \"berlin\", value: 12244000 },"
-    "{ name: \"london\", value: 12965000 },"
-    "{ name: \"arrowglacier\", value: 13773000 },"
-    "{ name: \"latest\", value:\"\" }"
-    "]";
 
 }  // namespace qblocks

@@ -41,8 +41,8 @@ bool pinlib_readManifest(CPinnedChunkArray& pinArray) {
     if (!pinArray.empty())
         return true;
 
-    string_q binFile = getPathToCache("tmp/pins.bin");
-    string_q textFile = getPathToConfig("manifest/manifest.txt");
+    string_q binFile = cacheFolder_tmp + "pins.bin";
+    string_q textFile = chainConfigsTxt_manifest;
 
     time_q binDate = fileLastModifyDate(binFile);
     time_q textDate = fileLastModifyDate(textFile);
@@ -57,7 +57,7 @@ bool pinlib_readManifest(CPinnedChunkArray& pinArray) {
         pinFile.Release();
 
     } else if (!fileExists(textFile)) {
-        LOG_ERR("Pins file is required, but not found.");
+        LOG_ERR("Pins file (", textFile, ") is required, but not found.");
         return false;
 
     } else {
@@ -73,7 +73,7 @@ bool pinlib_readManifest(CPinnedChunkArray& pinArray) {
 
 //---------------------------------------------------------------------------
 bool pinlib_updateManifest(CPinnedChunkArray& pList) {
-    string_q binFile = getPathToCache("tmp/pins.bin");
+    string_q binFile = cacheFolder_tmp + "pins.bin";
     establishFolder(binFile);
 
     lockSection();  // disallow control+C until we write both files
@@ -276,24 +276,25 @@ bool pinlib_unpinChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinn
 
 //---------------------------------------------------------------------------
 bool pinlib_getChunkFromRemote(CPinnedChunk& pin, double sleep) {
-    string_q outFile = "finalized/" + pin.fileName + ".bin";
+    string_q outFile = indexFolder_finalized + pin.fileName + ".bin";
     ipfshash_t ipfshash = pin.indexHash;
 
-    if (!fileExists(getPathToIndex(outFile))) {
+    if (!fileExists(outFile)) {
         string_q zipFile = outFile + ".gz";
-        if (!fileExists(getPathToIndex(zipFile))) {
+        if (!fileExists(zipFile)) {
             // download from ipfs gateway
             static string_q gatewayUrl;
             if (gatewayUrl.empty()) {
-                gatewayUrl = getGlobalConfig("blockScrape")
-                                 ->getConfigStr("dev", "ipfs_gateway", "https://ipfs.unchainedindex.io/ipfs/");
+                CChain chain;
+                findChain(getChain(), chain);
+                gatewayUrl = chain.pinGateway;
                 if (!endsWith(gatewayUrl, "/"))
                     gatewayUrl += "/";
             }
 
             ostringstream cmd;
             cmd << "curl --silent -o ";
-            cmd << "\"" << getPathToIndex(zipFile) << "\" ";
+            cmd << "\"" << zipFile << "\" ";
             cmd << "\"" << gatewayUrl << ipfshash << "\"";
             LOG_INFO(bBlue, "Unchaining ", (contains(outFile, "bloom") ? "bloom" : "index"), " ", ipfshash, " to ",
                      pin.fileName, cOff);
@@ -305,15 +306,15 @@ bool pinlib_getChunkFromRemote(CPinnedChunk& pin, double sleep) {
                 if (ret == 2)
                     defaultQuitHandler(-1);  // user hit control+c, let ourselves know
                 LOG_WARN("Could not download zip file ", zipFile);
-                ::remove(getPathToIndex(zipFile).c_str());
+                ::remove(zipFile.c_str());
             } else {
                 usleep((useconds_t)(sleep * 1000000));  // do not remove cruft - stays responsive to control+C
             }
         }
 
-        if (fileExists(getPathToIndex(zipFile))) {
+        if (fileExists(zipFile)) {
             ostringstream cmd;
-            cmd << "cd \"" << getPathToIndex("") << "\" && gunzip -k " << zipFile;
+            cmd << "cd \"" << indexFolder << "\" && gunzip -k " << zipFile;
             lockSection();
             int ret = system(cmd.str().c_str());
             unlockSection();
@@ -325,9 +326,9 @@ bool pinlib_getChunkFromRemote(CPinnedChunk& pin, double sleep) {
                 err << "Could not download file " << outFile;
                 LOG_WARN(err.str());
                 err << endl;
-                appendToAsciiFile(getPathToCache("tmp/failed_downloads.log"), err.str());
-                ::remove(getPathToIndex(zipFile).c_str());
-                ::remove(getPathToIndex(outFile).c_str());
+                appendToAsciiFile(cacheFolder_tmp + "failed_downloads.log", err.str());
+                ::remove(zipFile.c_str());
+                ::remove(outFile.c_str());
             }
         } else {
             LOG_INFO("File ", outFile, " does not exist.");

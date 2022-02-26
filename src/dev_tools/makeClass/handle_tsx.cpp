@@ -26,7 +26,7 @@ static CCommandOptionArray routes;
 #define explorerPath string_q("/Users/jrush/Development/trueblocks-explorer/")
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_tsx(void) {
-    CToml config(getPathToConfig("makeClass.toml"));
+    CToml config(rootConfigToml_makeClass);
     bool enabled = config.getConfigBool("enabled", "tsx", false);
     if (isTestMode() || !enabled) {
         LOG_WARN("Skipping javascript generation...");

@@ -32,6 +32,8 @@ type MonitorsOptions struct {
 	BadFlag     error
 }
 
+var monitorsCmdLineOptions MonitorsOptions
+
 func (opts *MonitorsOptions) TestLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(opts.Appearances, "Appearances: ", opts.Appearances)
@@ -111,15 +113,23 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *MonitorsOptions {
 		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)
+	// EXISTING_CODE
+	opts.Addrs = globals.ConvertEns(opts.Globals.Chain, opts.Addrs)
+	// EXISTING_CODE
 
 	return opts
 }
 
-var Options MonitorsOptions
-
 func MonitorsFinishParse(args []string) *MonitorsOptions {
+	opts := GetOptions()
 	// EXISTING_CODE
-	Options.Addrs = args
+	opts.Addrs = globals.ConvertEns(opts.Globals.Chain, args)
 	// EXISTING_CODE
-	return &Options
+	return opts
+}
+
+func GetOptions() *MonitorsOptions {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return &monitorsCmdLineOptions
 }

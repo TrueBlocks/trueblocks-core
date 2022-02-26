@@ -71,6 +71,10 @@ class CUniPair : public CEthCall {
 
 //---------------------------------------------------------------------------
 double getPriceInUsd(blknum_t bn, string& priceSource, const address_t& addr) {
+    // TODO: Multi-chain missing feature on other chains
+    if (getChain() != "mainnet") {
+        return 1.0;
+    }
     return addr.empty() ? getPrice_UsdPerEth(bn, priceSource) : getPrice_UsdPerTok(bn, priceSource, addr);
 }
 

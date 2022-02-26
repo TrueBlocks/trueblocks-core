@@ -23,6 +23,8 @@ type ServeOptions struct {
 	BadFlag error
 }
 
+var serveCmdLineOptions ServeOptions
+
 func (opts *ServeOptions) TestLog() {
 	logger.TestLog(len(opts.Port) > 0, "Port: ", opts.Port)
 	opts.Globals.TestLog()
@@ -52,14 +54,21 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ServeOptions {
 		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return opts
 }
 
-var Options ServeOptions
-
 func ServeFinishParse(args []string) *ServeOptions {
+	opts := GetOptions()
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return &Options
+	return opts
+}
+
+func GetOptions() *ServeOptions {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return &serveCmdLineOptions
 }

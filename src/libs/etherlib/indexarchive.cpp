@@ -65,8 +65,8 @@ bool CIndexArchive::ReadIndexFromBinary(const string_q& path) {
     }
 
     header = reinterpret_cast<CIndexHeader*>(rawData);
-    ASSERT(h->magic == MAGIC_NUMBER);
-    ASSERT(bytes_2_Hash(h->hash) == versionHash);
+    ASSERT(header->magic == MAGIC_NUMBER);
+    ASSERT(bytes_2_Hash(header->hash) == versionHash);
     nAddrs = header->nAddrs;
     nApps = header->nRows;
     addresses = (CIndexedAddress*)(rawData + sizeof(CIndexHeader));  // NOLINT
@@ -86,70 +86,6 @@ static const string_q STR_STEP3 = STR_STEP2 + "exporting...";
 static const string_q STR_STEP4 = STR_STEP3 + "finalizing...";
 static const string_q STR_STEP5 = STR_STEP4 + "binary file created ";
 static const string_q STR_STEP5_A = STR_STEP4 + "ascii file created ";
-
-//----------------------------------------------------------------
-void writeIndexAsAscii(const string_q& outFn, const CStringArray& lines) {
-    ASSERT(!fileExists(outFn));
-
-    address_t prev;
-    uint32_t offset = 0, nAddrs = 0, cnt = 0;
-    CIndexedAppearanceArray blockTable;
-
-    LOG_INFO(cYellow, STR_STEP1, cOff, "\r");
-
-    // We want to notify 12 times
-    uint64_t notifyCnt = lines.size() / 12;
-    uint64_t progress = 0;
-
-    string_q msg = "";
-    ostringstream addrStream;
-    for (const auto& line : lines) {
-        if (!(++progress % notifyCnt)) {
-            msg += ".";
-            LOG_INFO(cYellow, STR_STEP1, msg, cOff, "\r");
-        }
-        CStringArray parts;
-        explode(parts, line, '\t');
-        CIndexedAppearance rec(parts[1], parts[2]);
-        blockTable.push_back(rec);
-        if (!prev.empty() && parts[0] != prev) {
-            addrStream << prev << "\t";
-            addrStream << padNum6(offset) << "\t";
-            addrStream << padNum6(cnt) << endl;
-            offset += cnt;
-            cnt = 0;
-            nAddrs++;
-        }
-        cnt++;
-        prev = parts[0];
-    }
-    // The above algo always misses the last address, so we add it here
-    addrStream << prev << "\t";
-    addrStream << padNum6(offset) << "\t";
-    addrStream << padNum6(cnt) << endl;
-    nAddrs++;
-
-    LOG_INFO(cYellow, STR_STEP2, cOff, "\r");
-    ostringstream blockStream;
-    for (auto record : blockTable) {
-        blockStream << padNum9(record.blk) << "\t";
-        blockStream << padNum5(record.txid) << endl;
-    }
-
-    LOG_INFO(cYellow, STR_STEP3, cOff, "\r");
-    ostringstream headerStream;
-    headerStream << padNum7(MAGIC_NUMBER) << "\t";
-    headerStream << versionHash << "\t";
-    headerStream << padNum7(nAddrs) << "\t";
-    headerStream << padNum7((uint32_t)blockTable.size()) << endl;
-
-    LOG_INFO(cYellow, STR_STEP4, cOff, "\r");
-    lockSection();
-    stringToAsciiFile(outFn, headerStream.str() + addrStream.str() + blockStream.str());
-    unlockSection();
-
-    LOG_INFO(cYellow, STR_STEP5_A, greenCheck, cOff);
-}
 
 //----------------------------------------------------------------
 bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTAPPLYFUNC pinFunc, void* pinFuncData) {
@@ -174,7 +110,11 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTA
     LOG_INFO(cYellow, STR_STEP1, cOff, "\r");
 
     CArchive archive(WRITING_ARCHIVE);
-    archive.Lock(tmpFile, modeWriteCreate, LOCK_NOWAIT);
+    if (!archive.Lock(tmpFile, modeWriteCreate, LOCK_NOWAIT)) {
+        LOG_ERR("Could not lock index file: ", tmpFile);
+        return false;
+    }
+
     archive.Seek(0, SEEK_SET);  // write the header even though it's not fully detailed to preserve the space
     archive.Write(MAGIC_NUMBER);
     archive.Write(hash.data(), hash.size(), sizeof(uint8_t));
@@ -182,7 +122,7 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTA
     archive.Write((uint32_t)blockTable.size());  // not accurate yet
     string_q msg = "";
     for (size_t l = 0; l < lines.size(); l++) {
-        if (!(++progress % notifyCnt)) {
+        if (lines.size() > 1000 && !(++progress % notifyCnt)) {
             msg += ".";
             LOG_INFO(cYellow, STR_STEP1, msg, cOff, "\r");
         }
@@ -299,130 +239,70 @@ bool readIndexHeader(const string_q& path, CIndexHeader& header) {
     archive.Release();
     return true;
 }
-// EXISTING_CODE
 }  // namespace qblocks
 
 #if 0
-//--------------------------------------------------------------
-// bool chunkVisitFunc(const string_q& path, void* data) {
-//     if (endsWith(path, "/")) {
-//         return forEveryFileInFolder(path + "*", chunkVisitFunc, data);
-//     } else {
-//         CChunkVisitor* visitor = (CChunkVisitor*)data;  // NOLINT
-//         if (!visitor || !visitor->indexFunc)
-//             return false;
-//         CIndexArchive archive(READING_ARCHIVE);
-//         archive.ReadIndexFromBinary(path);
-//         return (*visitor->indexFunc)(archive, visitor->callData);
-//     }
-//     return true;
-// }
+//----------------------------------------------------------------
+void writeIndexAsAscii(const string_q& outFn, const CStringArray& lines) {
+    ASSERT(!fileExists(outFn));
 
-//--------------------------------------------------------------
-// bool addressVisitFunc(const string_q& path, void* data) {
-//     if (endsWith(path, "/")) {
-//         return forEveryFileInFolder(path + "*", addressVisitFunc, data);
-//     } else {
-//         CChunkVisitor* visitor = (CChunkVisitor*)data;  // NOLINT
-//         if (!visitor || !visitor->addrFunc)
-//             return false;
-//         CIndexArchive archive(READING_ARCHIVE);
-//         archive.ReadIndexFromBinary(path);
-//         for (uint64_t i = 0; i < archive.nAddrs; i++) {
-//             CIndexedAddress* rec = &archive.addresses[i];
-//             address_t addr = bytes_2_Addr(rec->bytes);
-//             bool ret = (*visitor->addrFunc)(addr, visitor->callData);
-//             if (!ret)
-//                 return false;
-//         }
-//     }
-//     return true;
-// }
+    address_t prev;
+    uint32_t offset = 0, nAddrs = 0, cnt = 0;
+    CIndexedAppearanceArray blockTable;
 
-//--------------------------------------------------------------
-// bool forEveryAddressInIndex(ADDRESSFUNC func, const blkrange_t& range, void* data) {
-//     CChunkVisitor visitor;
-//     visitor.addrFunc = func;
-//     visitor.range = range;
-//     visitor.callData = data;
-//     return forEveryFileInFolder(indexFolder_finalized, addressVisitFunc, &visitor);
-//     return true;
-// }
+    LOG_INFO(cYellow, STR_STEP1, "(", lines.size(), ")", cOff, "\r");
 
-//--------------------------------------------------------------
-// bool hasCodeAt(const address_t& addr, blknum_t blk) {
-//     return !getCodeAt(addr, blk).empty();
-// }
+    // We want to notify 12 times
+    uint64_t notifyCnt = lines.size() / 12;
+    uint64_t progress = 0;
 
-//--------------------------------------------------------------
-// bool smartContractVisitFunc(const string_q& path, void* data) {
-//     if (endsWith(path, "/")) {
-//         return forEveryFileInFolder(path + "*", smartContractVisitFunc, data);
-//     } else {
-//         CChunkVisitor* visitor = (CChunkVisitor*)data;  // NOLINT
-//         if (!visitor || !visitor->addrFunc)
-//             return false;
-//         CIndexArchive archive(READING_ARCHIVE);
-//         archive.ReadIndexFromBinary(path);
-//         for (uint64_t i = 0; i < archive.nAddrs; i++) {
-//             CIndexedAddress* rec = &archive.addresses[i];
-//             address_t addr = bytes_2_Addr(rec->bytes);
-//             if (hasCodeAt(addr, visitor->range.first)) {
-//                 bool ret = (*visitor->addrFunc)(addr, visitor->callData);
-//                 if (!ret)
-//                     return false;
-//             }
-//         }
-//     }
-//     return true;
-// }
+    string_q msg = "";
+    ostringstream addrStream;
+    for (const auto& line : lines) {
+        if (!(++progress % notifyCnt)) {
+            msg += ".";
+            LOG_INFO(cYellow, STR_STEP1, "(", lines.size(), ")", cOff, "\r");
+        }
+        CStringArray parts;
+        explode(parts, line, '\t');
+        CIndexedAppearance rec(parts[1], parts[2]);
+        blockTable.push_back(rec);
+        if (!prev.empty() && parts[0] != prev) {
+            addrStream << prev << "\t";
+            addrStream << padNum6(offset) << "\t";
+            addrStream << padNum6(cnt) << endl;
+            offset += cnt;
+            cnt = 0;
+            nAddrs++;
+        }
+        cnt++;
+        prev = parts[0];
+    }
+    // The above algo always misses the last address, so we add it here
+    addrStream << prev << "\t";
+    addrStream << padNum6(offset) << "\t";
+    addrStream << padNum6(cnt) << endl;
+    nAddrs++;
 
-//--------------------------------------------------------------
-// bool forEverySmartContractInIndex(ADDRESSFUNC func, void* data) {
-//     CChunkVisitor visitor;
-//     visitor.addrFunc = func;
-//     visitor.callData = data;
-//     visitor.range.first = getBlockProgress(BP_CLIENT).client;
-//     return forEveryFileInFolder(indexFolder_finalized, smartContractVisitFunc, &visitor);
-//     return true;
-// }
+    LOG_INFO(cYellow, STR_STEP2, cOff, "\r");
+    ostringstream blockStream;
+    for (auto record : blockTable) {
+        blockStream << padNum9(record.blk) << "\t";
+        blockStream << padNum5(record.txid) << endl;
+    }
 
-//    //--------------------------------------------------------------
-//    bool visitIndex(CIndexArchive& chunk, void* data) {
-//        string_q fn = substitute(chunk.getFilename(), indexFolder_finalized, "");
-//        LOG_INFO(fn, "\t", chunk.nApps, "\t", chunk.nAddrs, "\t", fileSize(chunk.getFilename()));
-//
-//        uint32_t cnt = 0;
-//        CAppearanceArray apps;
-//        for (uint64_t a = 0 ; a < chunk.nAddrs ; a++) {
-//            CIndexedAddress* addr = &chunk.addresses[a];
-//            for (uint64_t p = addr->offset ; p < (addr->offset + addr->cnt) ; p++) {
-//                CIndexedAppearance* app =&chunk.appearances[p];
-//                if (app->txid == 99998) {
-//                    CAppearance aa;
-//                    aa.bn = app->blk;
-//                    aa.tx = app->txid;
-//                    aa.addr = bytes_2_Addr(addr->bytes);
-//                    aa.reason = "Uncle";
-//                    apps.push_back(aa);
-//                }
-//                if (!(cnt++ % 23))
-//                    cerr << "Checking: " << bytes_2_Addr(addr->bytes) << "\t" << app->blk << "\t" << app->txid <<
-//                    "\r";cerr.flush();
-//            }
-//        }
-//
-//        sort(apps.begin(), apps.end());
-//        for (auto app : apps) {
-//            size_t count = getUncleCount(app.bn);
-//            for (blknum_t i = 0 ; i < count ; i++) {
-//                CBlock uncle;
-//                getUncle(uncle, app.bn, i);
-//                cout << i << "\t" << app.bn << "\t" << uncle.blockNumber << "\t" << (float(uncle.blockNumber + 8 -
-//                app.bn) / 8) << endl;
-//            }
-//        }
-//
-//        return true;
-//    }
+    LOG_INFO(cYellow, STR_STEP3, cOff, "\r");
+    ostringstream headerStream;
+    headerStream << padNum7(MAGIC_NUMBER) << "\t";
+    headerStream << versionHash << "\t";
+    headerStream << padNum7(nAddrs) << "\t";
+    headerStream << padNum7((uint32_t)blockTable.size()) << endl;
+
+    LOG_INFO(cYellow, STR_STEP4, cOff, "\r");
+    lockSection();
+    stringToAsciiFile(outFn, headerStream.str() + addrStream.str() + blockStream.str());
+    unlockSection();
+
+    LOG_INFO(cYellow, STR_STEP5_A, greenCheck, cOff);
+}
 #endif

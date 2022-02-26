@@ -1,11 +1,10 @@
+Env: FORCE_LOGGING=true
 chifra export  0x05a56e2d52c817161883f50c441c3228cfe54d9f --max_records 15 --accounting --fmt api --log_level 10
 TEST[DATE|TIME] Addrs:  [0x05a56e2d52c817161883f50c441c3228cfe54d9f]
 TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] MaxRecords:  15
 TEST[DATE|TIME] LogLevel:  10
 TEST[DATE|TIME] Format:  api
-TIME ~ CLOCK - <INFO>  : Loading prefund balances
-TIME ~ CLOCK - <INFO>  : Loading names
 TIME ~ CLOCK - : 4-----0x05a56e2d52c817161883f50c441c3228cfe54d9f freshened to 11854827
 TIME ~ CLOCK - : 4-----Loaded timestamp file
 {"data": [

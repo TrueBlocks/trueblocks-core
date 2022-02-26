@@ -79,6 +79,8 @@ extern string_q getLastFileInFolder(const string_q& folder, bool recurse);
 #define F_FILES_ONLY (F_INCLUDE_FILES | F_RECURSIVE | F_SORTED)
 #define F_FOLDERS_ONLY (F_INCLUDE_FOLDERS | F_RECURSIVE | F_SORTED)
 
+extern string_q relativize(const string_q& path);
+
 }  // namespace qblocks
 
 extern bool visitFile(const qblocks::string_q& path, void* data);

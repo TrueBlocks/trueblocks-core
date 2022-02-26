@@ -52,6 +52,7 @@ status?details&modes=abis
           "isValid": true
         }
       ],
+      "chains": [],
       "date": "--date--"
     }
   ],

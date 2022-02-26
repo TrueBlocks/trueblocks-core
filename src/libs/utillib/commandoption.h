@@ -20,6 +20,7 @@
 namespace qblocks {
 
 // EXISTING_CODE
+typedef enum { LOCAL = (1 << 0), HEADER = (1 << 1), GOCMD = (1 << 2) } codeLocation;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -68,6 +69,7 @@ class CCommandOption : public CBaseNode {
     bool isDouble;
     bool isAddress;
     bool isConfig;
+    bool isGoOnly;
     bool isDeprecated;
     bool isNote;
     bool isErr;
@@ -92,6 +94,9 @@ class CCommandOption : public CBaseNode {
         return (isEnum || isEnumList || isStringList || isAddressList || isTopicList);
     }
     bool finishCleanup(void);
+    codeLocation codeLoc(void) const {
+        return generate == "local" ? LOCAL : generate == "header" ? HEADER : GOCMD;
+    }
     // EXISTING_CODE
     bool operator==(const CCommandOption& it) const;
     bool operator!=(const CCommandOption& it) const {
@@ -179,6 +184,7 @@ inline void CCommandOption::initialize(void) {
     isDouble = false;
     isAddress = false;
     isConfig = false;
+    isGoOnly = false;
     isDeprecated = false;
     isNote = false;
     isErr = false;
@@ -227,6 +233,7 @@ inline void CCommandOption::duplicate(const CCommandOption& co) {
     isDouble = co.isDouble;
     isAddress = co.isAddress;
     isConfig = co.isConfig;
+    isGoOnly = co.isGoOnly;
     isDeprecated = co.isDeprecated;
     isNote = co.isNote;
     isErr = co.isErr;

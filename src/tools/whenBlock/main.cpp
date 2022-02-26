@@ -105,7 +105,7 @@ void COptions::applyFilter() {
                     continue;  // latest changes per test, so skip
             }
 
-            getBlock_light(block, str_2_Uint(bnStr));
+            getBlockHeader(block, str_2_Uint(bnStr));
 
             // TODO(tjayrush): this should be in the library so every request for zero block
             // TODO(tjayrush): gets a valid blockNumber
@@ -118,7 +118,7 @@ void COptions::applyFilter() {
                     request.second += " (est)";
 
                 } else {
-                    block.timestamp = blockZeroTs;
+                    block.timestamp = blockZeroTs();
                 }
             }
             block.name = request.second;

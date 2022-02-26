@@ -47,8 +47,8 @@ Notes:
 func init() {
 	logsCmd.Flags().SortFlags = false
 
-	logsCmd.Flags().BoolVarP(&logsPkg.Options.Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
-	globals.InitGlobals(logsCmd, &logsPkg.Options.Globals)
+	logsCmd.Flags().BoolVarP(&logsPkg.GetOptions().Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
+	globals.InitGlobals(logsCmd, &logsPkg.GetOptions().Globals)
 
 	logsCmd.SetUsageTemplate(UsageWithNotes(notesLogs))
 	logsCmd.SetOut(os.Stderr)

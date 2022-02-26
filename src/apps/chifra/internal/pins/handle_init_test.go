@@ -23,25 +23,25 @@ func Test_retry(t *testing.T) {
 			FileName: "third",
 		},
 	}
-	fakeDownload := func(p []manifest.PinDescriptor) []manifest.PinDescriptor {
+	fakeDownload := func(p []manifest.PinDescriptor) ([]manifest.PinDescriptor, bool) {
 		defer func() { callCounter++ }()
 		switch callCounter {
 		case 0:
-			return failingPins
+			return failingPins, false
 		case 1:
 			if len(p) != len(failingPins) {
 				t.Error("Wrong count for 2nd call")
 			}
-			return failingPins[2:]
+			return failingPins[2:], false
 		case 2:
 			if len(p) != len(failingPins[2:]) {
 				t.Error("Wrong count for 3nd call", len(p))
 			}
-			return []manifest.PinDescriptor{}
+			return []manifest.PinDescriptor{}, false
 		}
 
 		t.Fatal("Too many calls")
-		return nil
+		return nil, false
 	}
 
 	totalFailed := retry(failingPins, 3, fakeDownload)

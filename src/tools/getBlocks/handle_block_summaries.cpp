@@ -18,7 +18,7 @@ bool COptions::handle_block_summaries(blknum_t start, blknum_t nBlocks) {
     blknum_t end = (start < nBlocks ? 0 : start - nBlocks);
     for (blknum_t b = start; b > end; b--) {
         CBlock block;
-        getBlock_light(block, b);
+        getBlockLight(block, b);
         if (!firstOut) {
             if (!isText)
                 cout << ",";

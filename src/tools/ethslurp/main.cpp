@@ -70,7 +70,7 @@ bool Slurp(CCachedAccount& theAccount, COptions& options) {
     bool first = true;
     for (auto type : options.typesList) {
         string_q cacheFilename =
-            getPathToCache("slurps/" + theAccount.addr + (type == "ext" || type.empty() ? "" : "." + type) + ".bin");
+            cacheFolder_slurps + theAccount.addr + (type == "ext" || type.empty() ? "" : "." + type) + ".bin";
         if (fileExists(cacheFilename)) {
             CArchive inArchive(READING_ARCHIVE);
             if (inArchive.Lock(cacheFilename, modeReadOnly, LOCK_NOWAIT)) {
@@ -92,7 +92,7 @@ bool Slurp(CCachedAccount& theAccount, COptions& options) {
                                      "/api.etherscan.io/apis");
 
             string_q responseStr = urlToString(url);
-            if (getGlobalConfig()->getConfigBool("dev", "debug_curl", false)) {
+            if (getGlobalConfig("")->getConfigBool("dev", "debug_curl", false)) {
                 cerr << "[calling EtherScan: " << url << endl;
                 cerr << "[result: " << url << responseStr << endl;
             }

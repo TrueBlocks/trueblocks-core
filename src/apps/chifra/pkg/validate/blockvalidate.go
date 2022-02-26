@@ -46,16 +46,6 @@ func IsBlockNumber(str string) bool {
 	return err == nil
 }
 
-func IsSpecialBlock(str string) bool {
-	_, err := strconv.Atoi(str)
-	if err == nil {
-		// numbers not allowed
-		return false
-	}
-
-	return tslibPkg.IsSpecialBlock(str)
-}
-
 func IsDateTimeString(str string) bool {
 	bRange, err := blockRange.New(str)
 	if err != nil {
@@ -64,7 +54,7 @@ func IsDateTimeString(str string) bool {
 	return bRange.StartType == blockRange.BlockRangeDate
 }
 
-func IsBeforeFirstBlock(str string) bool {
+func IsBeforeFirstBlock(chain, str string) bool {
 	if !IsDateTimeString(str) {
 		return false
 	}
@@ -72,10 +62,10 @@ func IsBeforeFirstBlock(str string) bool {
 	// From https://github.com/araddon/dateparse
 	time.Local, _ = time.LoadLocation("UTC")
 	dt, _ := dateparse.ParseLocal(str) // already validated as a date
-	return dt.Before(tslibPkg.DateFromName("first"))
+	return dt.Before(tslibPkg.DateFromName(chain, "first"))
 }
 
-func IsRange(str string) (bool, error) {
+func IsRange(chain, str string) (bool, error) {
 	// Disallow "start only ranges" like "1000" or "london"
 	if !strings.Contains(str, "-") {
 		return false, &InvalidIdentifierLiteralError{
@@ -91,14 +81,14 @@ func IsRange(str string) (bool, error) {
 		}
 
 		if bRange.StartType == blockRange.BlockRangeSpecial &&
-			!tslibPkg.IsSpecialBlock(bRange.Start.Special) {
+			!tslibPkg.IsSpecialBlock(chain, bRange.Start.Special) {
 			return false, &InvalidIdentifierLiteralError{
 				Value: bRange.Start.Special,
 			}
 		}
 
 		if bRange.EndType == blockRange.BlockRangeSpecial &&
-			!tslibPkg.IsSpecialBlock(bRange.End.Special) {
+			!tslibPkg.IsSpecialBlock(chain, bRange.End.Special) {
 			return false, &InvalidIdentifierLiteralError{
 				Value: bRange.End.Special,
 			}
@@ -137,7 +127,7 @@ func (e *InvalidIdentifierLiteralError) Error() string {
 	return fmt.Sprintf("The given value '%s' %s", e.Value, e.Msg)
 }
 
-func IsValidBlockId(ids []string, validTypes ValidArgumentType) (bool, error) {
-	err := ValidateIdentifiers(ids, validTypes, 1)
+func IsValidBlockId(chain string, ids []string, validTypes ValidArgumentType) (bool, error) {
+	err := ValidateIdentifiers(chain, ids, validTypes, 1)
 	return err == nil, err
 }

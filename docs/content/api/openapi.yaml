@@ -7,7 +7,7 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 0.18.0-alpha
+  version: 0.25.0-alpha
   description: >
 
     A REST layer over the TrueBlocks application. With `chifra serve`, you can
@@ -87,7 +87,6 @@ paths:
       description: List every appearance of an address anywhere on the chain.
       operationId: accounts-list
       parameters:
-        - $ref: "#/components/parameters/fmt"
         - name: addrs
           description: one or more addresses (0x...) to list
           required: true
@@ -127,8 +126,8 @@ paths:
                     type: array
                     items:
                       oneOf:
-                      - $ref: "#/components/schemas/appearance"
-                      - $ref: "#/components/schemas/listStats"
+                        - $ref: "#/components/schemas/appearance"
+                        - $ref: "#/components/schemas/listStats"
                 example:
                   {
                     "data": [
@@ -159,7 +158,6 @@ paths:
       description: Export full detail of transactions for one or more addresses.
       operationId: accounts-export
       parameters:
-        - $ref: '#/components/parameters/fmt'
         - name: addrs
           description: one or more addresses (0x...) to export
           required: true
@@ -183,8 +181,7 @@ paths:
               type: string
               format: topic
         - name: fourbytes
-          description: >
-             filter by one or more fourbytes (only for transactions and trace options)
+          description: filter by one or more fourbytes (only for transactions and trace options)
           required: false
           style: form
           in: query
@@ -300,7 +297,7 @@ paths:
           in: query
           explode: true
           schema:
-            type: string
+            type: number
         - name: relevant
           description: >
             for log and accounting export only, export only logs relevant to one of the given export addresses
@@ -333,6 +330,17 @@ paths:
             items:
               type: string
               format: topic
+        - name: asset
+          description: for the statements option only, export only reconciliations for this asset
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: address
         - name: clean
           description: clean (i.e. remove duplicate appearances) from all existing monitors
           required: false
@@ -341,13 +349,39 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: ether
+        - name: staging
+          description: >
+            export transactions labeled staging (i.e. older than 28 blocks but not yet consolidated)
           required: false
           style: form
           in: query
           explode: true
           schema:
             type: boolean
+        - name: unripe
+          description: export transactions labeled upripe (i.e. less than 28 blocks old)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: firstBlock
+          description: first block to process (inclusive)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+        - name: lastBlock
+          description: last block to process (inclusive)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
       responses:
         "200":
           description: returns the requested data
@@ -410,7 +444,6 @@ paths:
       description: Add, remove, clean, and list address monitors.
       operationId: accounts-monitors
       parameters:
-        - $ref: '#/components/parameters/fmt'
         - name: addrs
           description: one or more addresses (0x...) to process
           required: true
@@ -458,10 +491,52 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/monitor"
-                  name:
-                    type: string
         "400":
           description: bad input parameter
+    delete:
+      summary: Delete, undelete, or remove a monitor
+      operationId: accounts-monitors
+      parameters:
+        - name: addrs
+          description: one or more addresses (0x...) to process
+          required: true
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: address
+        - name: delete
+          description: delete a monitor, but do not remove it
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: undelete
+          description: undelete a previously deleted monitor
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: remove
+          description: remove a previously deleted monitor
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: Deleted
+        "404":
+          description: id not found
   /names:
     get:
       tags:
@@ -470,7 +545,6 @@ paths:
       description: Query addresses or names of well known accounts.
       operationId: accounts-names
       parameters:
-        - $ref: '#/components/parameters/fmt'
         - name: terms
           description: a space separated list of one or more search terms
           required: true
@@ -581,6 +655,50 @@ paths:
                   ]
         "400":
           description: bad input parameter
+    delete:
+      summary: Delete, undelete, or remove a monitor
+      operationId: accounts-monitors
+      parameters:
+        - name: addrs
+          description: one or more addresses (0x...) to process
+          required: true
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: address
+        - name: delete
+          description: delete a monitor, but do not remove it
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: undelete
+          description: undelete a previously deleted monitor
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: remove
+          description: remove a previously deleted monitor
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: Deleted
+        "404":
+          description: id not found
   /abis:
     get:
       tags:
@@ -589,7 +707,6 @@ paths:
       description: Fetches the ABI for a smart contract.
       operationId: accounts-abis
       parameters:
-        - $ref: '#/components/parameters/fmt'
         - name: addrs
           description: a list of one or more smart contracts whose ABIs to display
           required: true
@@ -601,6 +718,14 @@ paths:
             items:
               type: string
               format: address
+        - name: known
+          description: load common 'known' ABIs from cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: sol
           description: extract the abi definition from the provided .sol file(s)
           required: false
@@ -620,29 +745,6 @@ paths:
             items:
               type: string
               format: string
-        - name: known
-          description: load common 'known' ABIs from cache
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: source
-          description: show the source of the ABI information
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: logLevel
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: number
       responses:
         "200":
           description: returns the requested data
@@ -701,7 +803,6 @@ paths:
       description: Retrieve one or more blocks from the chain or local cache.
       operationId: chaindata-blocks
       parameters:
-        - $ref: '#/components/parameters/fmt'
         - name: blocks
           description: a space-separated list of one or more block identifiers
           required: true
@@ -847,7 +948,6 @@ paths:
       description: Retrieve one or more transactions from the chain or local cache.
       operationId: chaindata-transactions
       parameters:
-        - $ref: '#/components/parameters/fmt'
         - name: transactions
           description: a space-separated list of one or more transaction identifiers
           required: true
@@ -922,7 +1022,6 @@ paths:
       description: Retrieve receipts for the given transaction(s).
       operationId: chaindata-receipts
       parameters:
-        - $ref: '#/components/parameters/fmt'
         - name: transactions
           description: a space-separated list of one or more transaction identifiers
           required: true
@@ -964,7 +1063,6 @@ paths:
       description: Retrieve logs for the given transaction(s).
       operationId: chaindata-logs
       parameters:
-        - $ref: '#/components/parameters/fmt'
         - name: transactions
           description: a space-separated list of one or more transaction identifiers
           required: true
@@ -1006,7 +1104,6 @@ paths:
       description: Retrieve traces for the given transaction(s).
       operationId: chaindata-traces
       parameters:
-        - $ref: '#/components/parameters/fmt'
         - name: transactions
           description: a space-separated list of one or more transaction identifiers
           required: true
@@ -1072,7 +1169,17 @@ paths:
       description: Find block(s) based on date, blockNum, timestamp, or 'special'.
       operationId: chaindata-when
       parameters:
-        - $ref: '#/components/parameters/fmt'
+        - name: blocks
+          description: a space-separated list of one or more block identifiers
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: blknum
         - name: timestamps
           description: ignore other options and generate timestamps only
           required: false
@@ -1110,7 +1217,6 @@ paths:
       description: Retrieve account balance(s) for one or more addresses at given block(s).
       operationId: chainstate-state
       parameters:
-        - $ref: '#/components/parameters/fmt'
         - name: addrs
           description: one or more addresses (0x...) from which to retrieve balances
           required: true
@@ -1226,8 +1332,7 @@ paths:
       description: Retrieve token balance(s) for one or more addresses at given block(s).
       operationId: chainstate-tokens
       parameters:
-        - $ref: '#/components/parameters/fmt'
-        - name: addrs2
+        - name: addrs
           description: >
             two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported
           required: true
@@ -1236,6 +1341,7 @@ paths:
           explode: true
           schema:
             type: array
+            minItems: 2
             items:
               type: string
               format: address
@@ -1323,7 +1429,6 @@ paths:
       description: Report on the status of the TrueBlocks system.
       operationId: admin-status
       parameters:
-        - $ref: '#/components/parameters/fmt'
         - name: modes
           description: the type of status info to retrieve
           required: false
@@ -1371,9 +1476,7 @@ paths:
                     description: This data model carries information about the TrueBlocks system including both the API server and the local binary caches
                     type: array
                     items:
-                      oneOf:
-                        - $ref: "#/components/schemas/status"
-                        - $ref: "#/components/schemas/cache"
+                      $ref: "#/components/schemas/status"
                 example:
                   {
                     "data": [
@@ -1481,6 +1584,80 @@ paths:
                         - $ref: "#/components/schemas/manifest"
         "400":
           description: bad input parameter
+  /chunks:
+    get:
+      tags:
+        - Admin
+      summary: Manage chunks
+      description: Manage and investigate chunks and bloom filters.
+      operationId: admin-chunks
+      parameters:
+        - name: blocks
+          description: an optional list of blocks to process
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: blknum
+        - name: check
+          description: check the validity of the chunk or bloom
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: extract
+          description: show some or all of the contents of the chunk or bloom filters
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+            enum:
+              - header
+              - addr_table
+              - app_table
+              - chunks
+              - blooms
+        - name: stats
+          description: for the --list option only, display statistics about each chunk or bloom
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: save
+          description: >
+            for the --extract option only, save the entire chunk to a similarly named file as well as display
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: returns the requested data
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    description: the IPFS hashes of the index chunk and its associated Bloom filter for the given block range
+                    type: array
+                    items:
+                      oneOf:
+                        - $ref: "#/components/schemas/pinnedChunk"
+                        - $ref: "#/components/schemas/manifest"
+        "400":
+          description: bad input parameter
   /init:
     get:
       tags:
@@ -1521,7 +1698,6 @@ paths:
       description: Manage pinned index of appearances and associated blooms.
       operationId: admin-pins
       parameters:
-        - $ref: '#/components/parameters/fmt'
         - name: list
           description: list the bloom and index hashes from local cache or IPFS
           required: false
@@ -1597,89 +1773,14 @@ paths:
                   }
         "400":
           description: bad input parameter
-  /chunks:
-    get:
-      tags:
-        - Admin
-      summary: Manage chunks
-      description: Manage and investigate chunks and bloom filters.
-      operationId: admin-chunks
-      parameters:
-        - name: blocks
-          description: an optional list of blocks to process
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-              format: blknum
-        - name: check
-          description: check the validity of the chunk or bloom
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: extract
-          description: show some or all of the contents of the chunk or bloom filters
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: string
-            enum:
-              - header
-              - addr_table
-              - app_table
-              - chunks
-              - blooms
-        - name: stats
-          description: for the --list option only, display statistics about each chunk or bloom
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: save
-          description: >
-            for the --extract option only, save the entire chunk to a similarly named file as well as display
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-      responses:
-        "200":
-          description: returns the requested data
-          content:
-            application/json:
-              schema:
-                properties:
-                  data:
-                    description: the IPFS hashes of the index chunk and its associated Bloom filter for the given block range
-                    type: array
-                    items:
-                      oneOf:
-                        - $ref: "#/components/schemas/pinnedChunk"
-                        - $ref: "#/components/schemas/manifest"
-        "400":
-          description: bad input parameter
   /quotes:
     get:
       tags:
         - Other
       summary: Price quotes
-      description: Update or display Ethereum price data. This tool has been deprecated.
+      description: Update or display Ethereum price data, this tool has been deprecated.
       operationId: other-quotes
       parameters:
-        - $ref: '#/components/parameters/fmt'
         - name: period
           description: increment of display
           required: false
@@ -1844,17 +1945,6 @@ paths:
         "400":
           description: bad input parameter
 components:
-  parameters:
-    fmt:
-      in: query
-      name: fmt
-      schema:
-        type: string
-        enum:
-          - json
-          - csv
-          - txt
-          - api
   schemas:
     monitor:
       description: "A local file indicating a user's interest in an address. Includes caches for reconicilations, transactions and appearances as well as an optional association to named account"
@@ -1883,11 +1973,12 @@ components:
           type: string
           format: address
           description: "the address being monitored"
+        name:
+          type: string
+          description: "the name given to this address"
         isCustom:
           type: boolean
           description: "`true` if this address is customized"
-        name:
-          type: string
         symbol:
           type: string
         source:
@@ -1898,6 +1989,9 @@ components:
           type: boolean
         isValid:
           type: boolean
+        deleted:
+          type: boolean
+          description: "`true` if deleted, `false` otherwise"
     appearance:
       description: "a single appearance of an address anywhere in the chain in the form of blockNumber.transactionIndex"
       type: object
@@ -2321,19 +2415,22 @@ components:
           example: "0x0000...3ff6"
           description: "any remaining un-indexed parameters to the event"
         articulatedLog:
-          description: "data used when articulating log which is different than Function"
           type: object
-          properties:
-            name:
-              type: string
-            inputs:
-              type: object
-              additionalProperties:
-                type: string
+          items:
+            $ref: "#/components/schemas/articulatedLog"
+          description: "data used when articulating log which is different than Function"
         compressedLog:
           type: string
           example: "Transfer(0xcfa...9f54..."
           description: "a truncated, more readable version of the articulation"
+    articulatedLog:
+      properties:
+        name:
+          type: string
+        inputs:
+          type: object
+          additionalProperties:
+            type: string
     trace:
       description: "trace data for a given transaction directly from the blockchain"
       type: object
@@ -2499,11 +2596,6 @@ components:
           type: string
           example: "one of 'EOA' or 'Contract'"
           description: "the type of the address at the given block"
-        ether:
-          type: number
-          format: double
-          example: 0.25884369
-          description: "the balance of the address in ethers"
     result:
       description: "the result of a call to a smart contract"
       type: object
@@ -2641,6 +2733,10 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/cache"
+        chains:
+          type: array
+          items:
+            $ref: "#/components/schemas/chain"
     cache:
       description: "The cache data model carries information about the various local binary caches"
       type: object
@@ -2693,11 +2789,13 @@ components:
           example: "QmTbYpR...qWLj44"
           description: "the IPFS hash of the index chunk at that range"
         firstApp:
-          type: string
+          type: number
           format: blknum
+          description: "the first appearance in the chunk"
         latestApp:
-          type: string
+          type: number
           format: blknum
+          description: "the latest appearance in the chunk"
     manifest:
       description: "a manifest of the IPFS hashes created for the unchained index"
       type: object
@@ -2721,6 +2819,35 @@ components:
           items:
             $ref: "#/components/schemas/pinnedChunk"
           description: "a list of all the pins in the unchained index"
+    chain:
+      description: "The chain data model carries information about configured chains"
+      type: object
+      properties:
+        chain:
+          type: string
+          description: "The common name of the chain"
+        chainId:
+          type: number
+          format: uint64
+          description: "The chain id as reported by the RPC"
+        symbol:
+          type: string
+          description: "The symbol of the base currency on the chain"
+        rpcProvider:
+          type: string
+          description: "A valid RPC provider for the chain"
+        apiProvider:
+          type: string
+          description: "A valid API provider for the explorer"
+        remoteExplorer:
+          type: string
+          description: "A remote explorer for the chain such as EtherScan"
+        localExplorer:
+          type: string
+          description: "The local explorer for the chain (typically TrueBlocks Explorer)"
+        pinGateway:
+          type: string
+          description: "An IPFS gateway for pinning the index if enabled"
     function:
       description: "a human readable representation of a Solidity function call or event"
       type: object

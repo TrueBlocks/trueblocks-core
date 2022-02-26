@@ -17,16 +17,16 @@ func (opts *StatusOptions) ValidateStatus() error {
 		return opts.BadFlag
 	}
 
-	if Options.Depth > 3 {
-		return validate.Usage("The {0} option ({1}) must {2}.", "--depth", strconv.FormatUint(Options.Depth, 10), "be less than four (4)")
+	if opts.Depth != uint64(0xffffffffffffffff) && opts.Depth > 3 {
+		return validate.Usage("The {0} option ({1}) must {2}.", "--depth", strconv.FormatUint(opts.Depth, 10), "be less than four (4)")
 	}
 
-	err := validate.ValidateEnumSlice("--types", Options.Types, "[blocks|txs|traces|slurps|prices|all]")
+	err := validate.ValidateEnumSlice("--types", opts.Types, "[blocks|txs|traces|slurps|prices|all]")
 	if err != nil {
 		return err
 	}
 
-	err = validate.ValidateEnumSlice("--migrate", Options.Migrate, "[test|abi_cache|block_cache|tx_cache|trace_cache|recon_cache|name_cache|slurp_cache|all]")
+	err = validate.ValidateEnum("--migrate", opts.Migrate, "[test|all]")
 	if err != nil {
 		return err
 	}

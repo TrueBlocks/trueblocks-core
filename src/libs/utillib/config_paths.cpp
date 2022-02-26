@@ -20,63 +20,90 @@
 #include "rpcresult.h"
 #include "exportcontext.h"
 #include "logging.h"
+#include "options_base.h"
+#include "configenv.h"
 
 namespace qblocks {
 
-// TODO: Search for PathAccessor
+//---------------------------------------------------------------------------------------------------
+#define TEST_PATH(path, part, type)                                                                                    \
+    if (!isTestMode()) {                                                                                               \
+        if (!folderExists((path))) {                                                                                   \
+            LOG_ERR(string_q(type) + " folder must exist: ", (path));                                                  \
+            quickQuitHandler(1);                                                                                       \
+        }                                                                                                              \
+        if (!(part).empty() && !fileExists((path) + (part))) {                                                         \
+            LOG_ERR(string_q(type) + " part is missing: ", (path) + (part));                                           \
+            quickQuitHandler(1);                                                                                       \
+        }                                                                                                              \
+        if (!endsWith((path), "/")) {                                                                                  \
+            LOG_ERR(string_q(type) + " folder must end with '/': ", (path));                                           \
+            quickQuitHandler(1);                                                                                       \
+        }                                                                                                              \
+    }
 
 //---------------------------------------------------------------------------------------------------
-// TODO(tjayrush): global data
-string_q getPathToConfig(const string_q& _part) {
-    static string_q g_configPath;
-    if (!g_configPath.empty())
-        return g_configPath + _part;
-
-    // We go through here once per invocation, so we can spend some time verifying (even
-    // though we've already done this in chifra. This guards against calling the
-    // tool from the command line).
-    g_configPath = getEnvStr("TB_CONFIG_PATH");
-
-    // Invariants
-    if (!folderExists(g_configPath)) {
-        LOG_ERR("Configuration folder must exist: ", g_configPath);
-        quickQuitHandler(1);
+static CConfigEnv g_configEnv;
+const CConfigEnv* getConfigEnv(void) {
+    if (g_configEnv.configPath.empty()) {
+        CStringArray fields = {
+            "chain", "configPath", "chainConfigPath", "cachePath", "indexPath", "defChain", "rpcProvider",
+        };
+        string_q envStr = getEnvStr("TB_CONFIG_ENV");
+        if (!g_configEnv.parseCSV(fields, envStr)) {
+            LOG_ERR("Could not parse configEnv string: ", envStr);
+        }
     }
-    if (!endsWith(g_configPath, "/")) {
-        LOG_ERR("Configuration folder must end with '/': ", g_configPath);
-        quickQuitHandler(1);
-    }
-    LOG4(bGreen, "TB_CONFIG_PATH: ", g_configPath, cOff);
+    return &g_configEnv;
+}
 
-    return g_configPath + _part;
+//---------------------------------------------------------------------------------------------------
+string_q getPathToRootConfig(const string_q& _part) {
+    string_q ret = getConfigEnv()->configPath;
+    TEST_PATH(ret, _part, "Configuration");
+    return ret + _part;
+}
+
+//--------------------------------------------------------------------------------------
+string_q getPathToChainConfig(const string_q& _part) {
+    string_q ret = getConfigEnv()->chainConfigPath;
+    TEST_PATH(ret, _part, "Chain Configuration");
+    return ret + _part;
 }
 
 //-------------------------------------------------------------------------
-// TODO(tjayrush): global data
 string_q getPathToCache(const string_q& _part) {
-    static string_q g_cachePath;
-    if (!g_cachePath.empty())
-        return g_cachePath + _part;
-
-    if (!isTestMode())
-        cerr << bGreen << "TB_CACHE_PATH: " << getEnvStr("TB_CACHE_PATH") << cOff << endl;
-
-    g_cachePath = substitute(getEnvStr("TB_CACHE_PATH"), "mainnet/", "");
-    return g_cachePath + _part;
+    string_q ret = getConfigEnv()->cachePath;
+    TEST_PATH(ret, _part, "Cache");
+    return ret + _part;
 }
 
-extern void guardLiveTest(const string_q& path);
 //-------------------------------------------------------------------------
 string_q getPathToIndex(const string_q& _part) {
-    static string_q g_indexPath;
-    if (!g_indexPath.empty())
-        return g_indexPath + _part;
+    string_q ret = getConfigEnv()->indexPath;
+    TEST_PATH(ret, _part, "Index");
+    return ret + _part;
+}
 
-    if (!isTestMode())
-        cerr << bGreen << "TB_INDEX_PATH: " << getEnvStr("TB_INDEX_PATH") << cOff << endl;
+//---------------------------------------------------------------------------------------------------
+string_q getDefaultChain(void) {
+    string_q ret = getConfigEnv()->defChain;
+    ASSERT(!ret.empty());
+    return ret;
+}
 
-    g_indexPath = substitute(getEnvStr("TB_INDEX_PATH"), "mainnet/", "");
-    return g_indexPath + _part;
+//---------------------------------------------------------------------------------------------------
+string_q getChain(void) {
+    string_q ret = getConfigEnv()->chain;
+    ASSERT(!ret.empty());
+    return ret;
+}
+
+//---------------------------------------------------------------------------------------------------
+string_q getRpcProvider(void) {
+    string_q ret = getConfigEnv()->rpcProvider;
+    ASSERT(!ret.empty());
+    return ret;
 }
 
 //-------------------------------------------------------------------------
@@ -84,10 +111,57 @@ string_q getPathToCommands(const string_q& _part) {
     return getHomeFolder() + ".local/bin/chifra/" + _part;
 }
 
+extern string_q getConfigPathLocal(void);
 //-------------------------------------------------------------------------
-void loadEnvironmentPaths(void) {
-    // This is only called by makeClass and testRunner (the only two tools that do not run through chifra). It
-    // mimics the way chifra works to build the configPath so these two tools will run
+// This routine is only used by tools that do not make their way through chifra.
+// (makeClass and testRunner primarily). It mimics the way chifra works to build
+// the configPaths. We ignore in this `chain`, defaulting to mainnet.
+void loadEnvironmentPaths(const string_q& chainIn, const string_q& unchainedPathIn) {
+    string_q configPath = getConfigPathLocal();
+
+    // We need to set enough of the environment for us to get the RPC from the config file...
+    ostringstream os1;
+    os1 << "mainnet," << configPath << "," << (configPath + "config/mainnet/") << "," << (configPath + "cache/mainnet/")
+        << "," << (configPath + "unchained/mainnet/") << ",mainnet,x";
+    ::setenv("TB_CONFIG_ENV", os1.str().c_str(), true);
+    string_q rpc = getGlobalConfig("")->getConfigStr("chains.mainnet", "rpcProvider", "http://localhost:8545");
+
+    // Because `g_configEnv` is statis, we need to clear it...
+    g_configEnv = CConfigEnv();  // reset so we get the rest
+
+    string_q unchainedPath = substitute(unchainedPathIn, "/unchained", "");
+    if (unchainedPath.empty()) {
+        unchainedPath = configPath;
+    }
+
+    // and reset it with the full env
+    ostringstream os;
+    os << "mainnet," << configPath << "," << (configPath + "config/mainnet/") << "," << (configPath + "cache/mainnet/")
+       << "," << (unchainedPath + "unchained/mainnet/") << ",mainnet," << rpc;
+
+    string_q env = os.str();
+    if (!chainIn.empty()) {
+        replaceAll(env, "mainnet", chainIn);
+    }
+
+    ::setenv("TB_CONFIG_ENV", env.c_str(), true);
+}
+
+//-------------------------------------------------------------------------
+string_q relativize(const string_q& path) {
+    string_q ret = path;
+    replace(ret, indexFolder, "$INDEX/");
+    replace(ret, cacheFolder, "$CACHE/");
+    replace(ret, chainConfigs, "$CHAIN/");
+    replace(ret, rootConfigs, "$CONFIG/");
+    replace(ret, getPathToCommands("test/"), "");
+    replace(ret, getPathToCommands(""), "");
+    replace(ret, getHomeFolder(), "$HOME/");
+    return ret;
+}
+
+//-------------------------------------------------------------------------
+string_q getConfigPathLocal(void) {
 #if defined(__linux) || defined(__linux__) || defined(linux) || defined(__unix) || defined(__unix__)
     string_q configPath = getHomeFolder() + ".local/share/trueblocks/";
 #elif defined(__APPLE__) || defined(__MACH__)
@@ -95,9 +169,7 @@ void loadEnvironmentPaths(void) {
 #else
 #error-- unknown operating system not supported
 #endif
-    ::setenv("TB_CONFIG_PATH", configPath.c_str(), true);
-    ::setenv("TB_CACHE_PATH", (configPath + "cache/").c_str(), true);
-    ::setenv("TB_INDEX_PATH", (configPath + "unchained/").c_str(), true);
+    return configPath;
 }
 
 }  // namespace qblocks

@@ -114,7 +114,7 @@ inline void CMeasure::initialize(void) {
     date = "";
     machine = "";
     node = "";
-    chain = "mainnet";
+    chain = "";
     epoch = "";
     group = "";
     cmd = "";
@@ -124,6 +124,7 @@ inline void CMeasure::initialize(void) {
     totSecs = 0.0;
 
     // EXISTING_CODE
+    chain = getGlobalConfig("testRunner")->getConfigStr("settings", "defaultChain", "mainnet");
     allPassed = false;
     // EXISTING_CODE
 }

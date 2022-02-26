@@ -28,6 +28,8 @@ type TransactionsOptions struct {
 	BadFlag      error
 }
 
+var transactionsCmdLineOptions TransactionsOptions
+
 func (opts *TransactionsOptions) TestLog() {
 	logger.TestLog(len(opts.Transactions) > 0, "Transactions: ", opts.Transactions)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
@@ -87,15 +89,24 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *TransactionsOptions {
 		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)
+	// EXISTING_CODE
+	opts.Reconcile = globals.ConvertOneEns(opts.Globals.Chain, opts.Reconcile)
+	// EXISTING_CODE
 
 	return opts
 }
 
-var Options TransactionsOptions
-
 func TransactionsFinishParse(args []string) *TransactionsOptions {
+	opts := GetOptions()
 	// EXISTING_CODE
-	Options.Transactions = args
+	opts.Transactions = args
+	opts.Reconcile = globals.ConvertOneEns(opts.Globals.Chain, opts.Reconcile)
 	// EXISTING_CODE
-	return &Options
+	return opts
+}
+
+func GetOptions() *TransactionsOptions {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return &transactionsCmdLineOptions
 }

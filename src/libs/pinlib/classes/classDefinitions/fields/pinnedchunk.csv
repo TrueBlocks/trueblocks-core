@@ -3,3 +3,5 @@ fileName  ,string   ,           ,       ,      ,        ,          ,        ,   
 bloomHash ,ipfshash ,           ,       ,      ,        ,          ,        ,      ,         ,2   ,2    ,QmXHjjY...HDqvWT    ,the IPFS hash of the bloom filter at that range
 indexHash ,ipfshash ,           ,       ,      ,        ,          ,        ,      ,         ,3   ,3    ,QmTbYpR...qWLj44    ,the IPFS hash of the index chunk at that range
 onDisc    ,bool     ,           ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,                    ,
+firstApp  ,blknum   ,           ,       ,      ,        ,          ,true    ,      ,true     ,4   ,4    ,                    ,the first appearance in the chunk
+latestApp ,blknum   ,           ,       ,      ,        ,          ,true    ,      ,true     ,5   ,5    ,                    ,the latest appearance in the chunk

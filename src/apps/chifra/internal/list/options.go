@@ -28,6 +28,8 @@ type ListOptions struct {
 	BadFlag     error
 }
 
+var listCmdLineOptions ListOptions
+
 func (opts *ListOptions) TestLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
@@ -83,15 +85,23 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ListOptions {
 		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)
+	// EXISTING_CODE
+	opts.Addrs = globals.ConvertEns(opts.Globals.Chain, opts.Addrs)
+	// EXISTING_CODE
 
 	return opts
 }
 
-var Options ListOptions
-
 func ListFinishParse(args []string) *ListOptions {
+	opts := GetOptions()
 	// EXISTING_CODE
-	Options.Addrs = args
+	opts.Addrs = globals.ConvertEns(opts.Globals.Chain, args)
 	// EXISTING_CODE
-	return &Options
+	return opts
+}
+
+func GetOptions() *ListOptions {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return &listCmdLineOptions
 }

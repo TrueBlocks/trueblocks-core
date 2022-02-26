@@ -22,18 +22,18 @@ type AbisOptions struct {
 	Known   bool
 	Sol     bool
 	Find    []string
-	Source  bool
 	Classes bool
 	Globals globals.GlobalOptions
 	BadFlag error
 }
+
+var abisCmdLineOptions AbisOptions
 
 func (opts *AbisOptions) TestLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(opts.Known, "Known: ", opts.Known)
 	logger.TestLog(opts.Sol, "Sol: ", opts.Sol)
 	logger.TestLog(len(opts.Find) > 0, "Find: ", opts.Find)
-	logger.TestLog(opts.Source, "Source: ", opts.Source)
 	logger.TestLog(opts.Classes, "Classes: ", opts.Classes)
 	opts.Globals.TestLog()
 }
@@ -48,9 +48,6 @@ func (opts *AbisOptions) ToCmdLine() string {
 	}
 	for _, find := range opts.Find {
 		options += " --find " + find
-	}
-	if opts.Source {
-		options += " --source"
 	}
 	if opts.Classes {
 		options += " --classes"
@@ -78,8 +75,6 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *AbisOptions {
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Find = append(opts.Find, s...)
 			}
-		case "source":
-			opts.Source = true
 		case "classes":
 			opts.Classes = true
 		default:
@@ -90,15 +85,23 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *AbisOptions {
 		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)
+	// EXISTING_CODE
+	opts.Addrs = globals.ConvertEns(opts.Globals.Chain, opts.Addrs)
+	// EXISTING_CODE
 
 	return opts
 }
 
-var Options AbisOptions
-
 func AbisFinishParse(args []string) *AbisOptions {
+	opts := GetOptions()
 	// EXISTING_CODE
-	Options.Addrs = args
+	opts.Addrs = globals.ConvertEns(opts.Globals.Chain, args)
 	// EXISTING_CODE
-	return &Options
+	return opts
+}
+
+func GetOptions() *AbisOptions {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return &abisCmdLineOptions
 }

@@ -47,6 +47,8 @@ bool visitAddress(const CAppearance& item, void* data) {
 
 //-----------------------------------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
+    loadEnvironmentPaths();
+
     // Initialize the library, provide a control+c handler
     etherlib_init(quickQuitHandler);
 

@@ -26,6 +26,8 @@ type QuotesOptions struct {
 	BadFlag error
 }
 
+var quotesCmdLineOptions QuotesOptions
+
 func (opts *QuotesOptions) TestLog() {
 	logger.TestLog(opts.Update, "Update: ", opts.Update)
 	logger.TestLog(len(opts.Period) > 0, "Period: ", opts.Period)
@@ -73,14 +75,21 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *QuotesOptions {
 		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return opts
 }
 
-var Options QuotesOptions
-
 func QuotesFinishParse(args []string) *QuotesOptions {
+	opts := GetOptions()
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return &Options
+	return opts
+}
+
+func GetOptions() *QuotesOptions {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return &quotesCmdLineOptions
 }

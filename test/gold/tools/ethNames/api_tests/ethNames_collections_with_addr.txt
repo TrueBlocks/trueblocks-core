@@ -1,6 +1,6 @@
 names?collections&addr
 {
   "errors": [
-    "chifra names - Do not use the --collections option with any other option."
+    "The --collection option is not available with any other option."
   ]
 }

@@ -95,7 +95,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
             for (auto monitor : possibles)
                 monitor.writeLastBlockInMonitor(fileRange.second + 1, monitor.isStaging);
             options->stats.nBloomMisses++;
-            LOG_PROGRESS("Skipping", options->fileRange.first, options->listRange.second, " bloom miss\r");
+            LOG_PROGRESS(SKIPPING, options->fileRange.first, options->listRange.second, " bloom miss\r");
             EXIT_NOMSG(true);
         }
     }
@@ -104,7 +104,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
         EXIT_FAIL("Could not download index chunk " + indexPath + ".");
 
     options->stats.nBloomHits++;
-    LOG_PROGRESS("Scanning", options->fileRange.first, options->listRange.second, " bloom hit \r");
+    LOG_PROGRESS(SCANNING, options->fileRange.first, options->listRange.second, " bloom hit \r");
 
     CArchive* chunk = NULL;
     char* rawData = NULL;
@@ -193,7 +193,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
     }
 
     string_q result = indexHit ? " index hit " + hits : " false positive";
-    LOG_PROGRESS("Scanning", options->fileRange.first, options->listRange.second, " bloom hit" + result);
+    LOG_PROGRESS(SCANNING, options->fileRange.first, options->listRange.second, " bloom hit" + result);
 
     EXIT_NOMSG(!shouldQuit());
 }
@@ -218,7 +218,7 @@ bool COptions::establishIndexChunk(const string_q& fullPathToChunk) {
     }
     CPinnedChunk pin;
     if (pinlib_findChunk(pins, fileName, pin)) {
-        LOG_PROGRESS(cGreen + "Unchaining-index", fileRange.first, listRange.second, " from IPFS" + cOff);
+        LOG_PROGRESS(EXTRACT, fileRange.first, listRange.second, " from IPFS" + cOff);
         if (!pinlib_getChunkFromRemote(pin, .25))
             LOG_ERR("Could not retrieve file from IPFS: ", fullPathToChunk);
     } else {

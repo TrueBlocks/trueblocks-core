@@ -24,7 +24,6 @@ static const COption params[] = {
     COption("action", "a", "enum[toggle|run|restart|pause|quit]", OPT_FLAG, "command to apply to the specified scrape"),
     COption("pin", "p", "", OPT_SWITCH, "pin chunks (and blooms) to IPFS as they are created (requires pinning service)"),  // NOLINT
     COption("publish", "u", "", OPT_SWITCH, "after pinning the chunk, publish it to UnchainedIndex"),
-    COption("sleep", "s", "<double>", OPT_FLAG, "seconds to sleep between scraper passes"),
     COption("block_cnt", "n", "<uint64>", OPT_FLAG, "maximum number of blocks to process per pass"),
     COption("", "", "", OPT_DESCRIPTION, "Scan the chain and update (and optionally pin) the TrueBlocks index of appearances."),  // NOLINT
     // clang-format on
@@ -45,7 +44,7 @@ bool COptions::parseArguments(string_q& command) {
     // END_CODE_LOCAL_INIT
 
     CBlock block;
-    getBlock_light(block, getBlockProgress(BP_CLIENT).client);
+    getBlockHeader(block, getBlockProgress(BP_CLIENT).client);
     latestBlockTs = block.timestamp;
     latestBlockNum = block.blockNumber;
 
@@ -67,12 +66,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-u" || arg == "--publish") {
             publish = true;
 
-        } else if (startsWith(arg, "-s:") || startsWith(arg, "--sleep:")) {
-            if (!confirmDouble("sleep", sleep, arg))
-                return false;
-        } else if (arg == "-s" || arg == "--sleep") {
-            return flag_required("sleep");
-
         } else if (startsWith(arg, "-n:") || startsWith(arg, "--block_cnt:")) {
             if (!confirmUint("block_cnt", block_cnt, arg))
                 return false;
@@ -91,10 +84,6 @@ bool COptions::parseArguments(string_q& command) {
 
     if (Mocked(""))
         return false;
-
-    // no less than one half second of sleep between runs
-    if (sleep < .5)
-        sleep = .5;
 
     if (pin && !getApiKey(lic)) {
         if (!isTestMode()) {
@@ -147,26 +136,17 @@ bool COptions::parseArguments(string_q& command) {
         return usage(errMsg);
     }
 
-    // Parity traces are much better (and easier to use) than Geth's. But, in some
-    // cases, the user may not care and tells us she doesn't need parity
-    bool needsParity = config->getConfigBool("requires", "parity", true);
-    if (needsParity && !hasParityTraces()) {
-        return usage(
-            "This tool requires Parity traces. Add [requires]\\nparity=false to $CONFIG/blockScrape.toml to turn "
-            "this restriction off.");
-    }
-
     if (!isArchiveNode())
         return usage("This tool requires historical balances which your RPC server does not provide.");
 
     // This may be the first time we've ever run. In that case, we need to build the zero block index file...
     string chunkId = padNum9(0) + "-" + padNum9(0);
-    string_q bloomPath = getPathToIndex("blooms/" + chunkId + ".bloom");
+    string_q bloomPath = indexFolder_blooms + chunkId + ".bloom";
     if (!fileExists(bloomPath)) {
-        LOG_INFO("Index for block zero not found. Building from prefund file.");
-
         if (!loadPrefundBalances())
-            return usage("Could not load names database.");
+            return usage("Could not load prefunds database.");
+
+        LOG_INFO("Index for block zero not found. Building from prefund file.");
 
         // Each chain must have it's own prefund addresses. Here, we scan the prefund list
         // and add a psuedo-transaction (block: 0, txid: order-in-file) for each address.
@@ -175,8 +155,11 @@ bool COptions::parseArguments(string_q& command) {
         forEveryPrefund(visitPrefund, &appearances);
 
         // Write the chunk and the bloom to the binary cache
-        string_q chunkPath = getPathToIndex("finalized/" + chunkId + ".bin");
-        writeIndexAsBinary(chunkPath, appearances, (pin ? visitToPin : nullptr), &pinList);
+        string_q chunkPath = indexFolder_finalized + chunkId + ".bin";
+        if (!writeIndexAsBinary(chunkPath, appearances, (pin ? visitToPin : nullptr), &pinList)) {
+            LOG_ERR(cRed, "Failed to write index chunk for block zero.", cOff);
+            return false;
+        }
         LOG_INFO("Done...");
     }
 
@@ -197,7 +180,6 @@ void COptions::Init(void) {
     // BEG_CODE_INIT
     pin = false;
     publish = false;
-    sleep = 14;
     // clang-format off
     block_cnt = getGlobalConfig("blockScrape")->getConfigInt("settings", "block_cnt", 2000);
     block_chan_cnt = getGlobalConfig("blockScrape")->getConfigInt("settings", "block_chan_cnt", 10);
@@ -248,7 +230,7 @@ COptions::COptions(void) {
     establishFolder(indexFolder_staging);
     establishFolder(indexFolder_unripe);
     establishFolder(indexFolder_ripe);
-    establishFolder(getPathToCache("tmp/"));
+    establishFolder(cacheFolder_tmp);
 }
 
 //--------------------------------------------------------------------------------

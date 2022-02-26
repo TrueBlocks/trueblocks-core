@@ -33,7 +33,7 @@ We corrected a previous mistake in the headers of .txt and .csv output. Previous
 
 ### Other slight changes
 
-The `chifra export --neighbors` option now no longer include the `traceId` field. Additionally, the `reason` field is slightly less informative that it was previously. All of this in service of a significant increase in the speed of the option.
+The `chifra export --neighbors` option now no longer include the `traceId` field. Additionally, the `reason` field is slightly less informative than it was previously. All of this in service of a significant increase in the speed of the option.
 
 ## You're Finished
 

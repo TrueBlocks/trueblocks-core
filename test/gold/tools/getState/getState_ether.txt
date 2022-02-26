@@ -4,5 +4,4 @@ TEST[DATE|TIME] Blocks:  [4000000]
 TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] Format:  txt
 blockNumber	address	ether
-TIME ~ CLOCK - <INFO>  : Loading prefund balances
 4000000	0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359	4098.334073083150747787

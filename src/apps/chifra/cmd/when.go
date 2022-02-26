@@ -45,19 +45,19 @@ Notes:
 func init() {
 	whenCmd.Flags().SortFlags = false
 
-	whenCmd.Flags().BoolVarP(&whenPkg.Options.List, "list", "l", false, "export a list of the 'special' blocks")
-	whenCmd.Flags().BoolVarP(&whenPkg.Options.Timestamps, "timestamps", "t", false, "ignore other options and generate timestamps only")
-	whenCmd.Flags().BoolVarP(&whenPkg.Options.Check, "check", "c", false, "available only with --timestamps, checks the validity of the timestamp data (hidden)")
-	whenCmd.Flags().BoolVarP(&whenPkg.Options.Fix, "fix", "f", false, "available only with --timestamps, fixes incorrect timestamps if any (hidden)")
-	whenCmd.Flags().BoolVarP(&whenPkg.Options.Count, "count", "u", false, "available only with --timestamps, returns the number of timestamps in the cache (hidden)")
-	whenCmd.Flags().BoolVarP(&whenPkg.Options.NoUpdate, "no_update", "n", false, "do not update timestamps database prior to completing the task at hand (hidden)")
+	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().List, "list", "l", false, "export a list of the 'special' blocks")
+	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Timestamps, "timestamps", "t", false, "ignore other options and generate timestamps only")
+	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Check, "check", "c", false, "available only with --timestamps, checks the validity of the timestamp data (hidden)")
+	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Fix, "fix", "f", false, "available only with --timestamps, fixes incorrect timestamps if any (hidden)")
+	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Count, "count", "u", false, "available only with --timestamps, returns the number of timestamps in the cache (hidden)")
+	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().NoUpdate, "no_update", "n", false, "do not update timestamps database prior to completing the task at hand (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {
 		whenCmd.Flags().MarkHidden("check")
 		whenCmd.Flags().MarkHidden("fix")
 		whenCmd.Flags().MarkHidden("count")
 		whenCmd.Flags().MarkHidden("no_update")
 	}
-	globals.InitGlobals(whenCmd, &whenPkg.Options.Globals)
+	globals.InitGlobals(whenCmd, &whenPkg.GetOptions().Globals)
 
 	whenCmd.SetUsageTemplate(UsageWithNotes(notesWhen))
 	whenCmd.SetOut(os.Stderr)

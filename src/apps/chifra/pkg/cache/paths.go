@@ -32,9 +32,9 @@ var cacheFolders = map[CacheType]string{
 }
 
 // New sets correct values of Subdir and Extension properties based on cacheType
-func (cl *Path) New(cacheType CacheType) {
-	indexPath := config.GetPathToIndex()
-	cachePath := config.GetPathToCache()
+func (cl *Path) New(chain string, cacheType CacheType) {
+	indexPath := config.GetPathToIndex(chain)
+	cachePath := config.GetPathToCache(chain)
 
 	if cacheType == BloomChunk || cacheType == IndexChunk {
 		cl.RootPath = indexPath
@@ -47,6 +47,7 @@ func (cl *Path) New(cacheType CacheType) {
 		cl.Extension = ".bloom"
 	}
 	cl.Subdir = cacheFolders[cacheType]
+	cl.Type = cacheType
 }
 
 // GetFullPath builds a full path from the Path type
@@ -56,7 +57,7 @@ func (cl *Path) GetFullPath(name string) string {
 		fallthrough
 	case BloomChunk:
 		fallthrough
-	case MonitorCache:
+	case MonitorCache: // TODO: I don't love this. It looks weird
 		return path.Join(cl.RootPath, cl.Subdir, name+cl.Extension)
 	default:
 		return path.Join(cl.RootPath, cl.Subdir)

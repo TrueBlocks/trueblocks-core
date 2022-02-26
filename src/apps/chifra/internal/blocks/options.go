@@ -37,6 +37,8 @@ type BlocksOptions struct {
 	BadFlag    error
 }
 
+var blocksCmdLineOptions BlocksOptions
+
 func (opts *BlocksOptions) TestLog() {
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
 	logger.TestLog(opts.Hashes, "Hashes: ", opts.Hashes)
@@ -159,15 +161,22 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *BlocksOptions {
 		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return opts
 }
 
-var Options BlocksOptions
-
 func BlocksFinishParse(args []string) *BlocksOptions {
+	opts := GetOptions()
 	// EXISTING_CODE
-	Options.Blocks = args
+	opts.Blocks = args
 	// EXISTING_CODE
-	return &Options
+	return opts
+}
+
+func GetOptions() *BlocksOptions {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return &blocksCmdLineOptions
 }

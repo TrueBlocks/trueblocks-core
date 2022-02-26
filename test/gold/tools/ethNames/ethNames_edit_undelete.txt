@@ -4,7 +4,6 @@ TEST[DATE|TIME] Expand:  true
 TEST[DATE|TIME] Undelete:  true
 TEST[DATE|TIME] LogLevel:  10
 TEST[DATE|TIME] Format:  api
-TIME ~ CLOCK - <INFO>  : Loading names
 TIME ~ CLOCK - : 4-----Undeleting 0x0000000000000000000000000000000010101010
 {"data": [
   {

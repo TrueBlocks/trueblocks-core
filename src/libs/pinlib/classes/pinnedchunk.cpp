@@ -310,7 +310,9 @@ ostream& operator<<(ostream& os, const CPinnedChunk& it) {
 const char* STR_DISPLAY_PINNEDCHUNK =
     "[{FILENAME}]\t"
     "[{BLOOMHASH}]\t"
-    "[{INDEXHASH}]";
+    "[{INDEXHASH}]\t"
+    "[{FIRSTAPP}]\t"
+    "[{LATESTAPP}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

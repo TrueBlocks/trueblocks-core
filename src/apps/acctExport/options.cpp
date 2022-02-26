@@ -43,15 +43,15 @@ static const COption params[] = {
     COption("asset", "", "list<addr>", OPT_FLAG, "for the statements option only, export only reconciliations for this asset"),  // NOLINT
     COption("clean", "", "", OPT_SWITCH, "clean (i.e. remove duplicate appearances) from all existing monitors"),
     COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
-    COption("staging", "s", "", OPT_HIDDEN | OPT_SWITCH, "enable search of staging (not yet finalized) folder"),
-    COption("unripe", "u", "", OPT_HIDDEN | OPT_SWITCH, "enable search of unripe (neither staged nor finalized) folder (assumes --staging)"),  // NOLINT
+    COption("staging", "s", "", OPT_SWITCH, "export transactions labeled staging (i.e. older than 28 blocks but not yet consolidated)"),  // NOLINT
+    COption("unripe", "u", "", OPT_SWITCH, "export transactions labeled upripe (i.e. less than 28 blocks old)"),
     COption("load", "", "<string>", OPT_HIDDEN | OPT_FLAG, "a comma separated list of dynamic traversers to load"),
     COption("reversed", "", "", OPT_HIDDEN | OPT_SWITCH, "produce results in reverse chronological order"),
     COption("by_date", "b", "", OPT_HIDDEN | OPT_SWITCH, "produce results sorted by date (report by address otherwise)"),  // NOLINT
     COption("summarize_by", "z", "enum[yearly|quarterly|monthly|weekly|daily|hourly|blockly|tx]", OPT_HIDDEN | OPT_FLAG, "for --accounting only, summarize reconciliations by this time period"),  // NOLINT
     COption("deep", "D", "", OPT_HIDDEN | OPT_SWITCH, "for --neighbors option only, dig deeply into detail (otherwise, to and from only)"),  // NOLINT
-    COption("first_block", "F", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
-    COption("last_block", "L", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
+    COption("first_block", "F", "<blknum>", OPT_FLAG, "first block to process (inclusive)"),
+    COption("last_block", "L", "<blknum>", OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more addresses."),
     COption("delete", "", "", OPT_SWITCH, "delete a monitor, but do not remove it"),
     COption("undelete", "", "", OPT_SWITCH, "undelete a previously deleted monitor"),
@@ -446,7 +446,7 @@ bool COptions::parseArguments(string_q& command) {
                 return false;
 
         } else {
-            string_q fileName = getPathToCache("objs/" + load);
+            string_q fileName = cacheFolder_objs + load;
             LOG_INFO("Trying to load dynamic library ", fileName);
 
             if (!fileExists(fileName)) {
@@ -546,8 +546,7 @@ void COptions::Init(void) {
     establishFolder(indexFolder_staging);
     establishFolder(indexFolder_unripe);
     establishFolder(indexFolder_ripe);
-    establishFolder(getPathToCache("tmp/"));
-    establishFolder(getPathToCache("apps/"));
+    establishFolder(cacheFolder_tmp);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -753,11 +752,11 @@ bool COptions::setDisplayFormatting(void) {
 //         }
 //     }
 //     uint64_t nMocked = getGlobalConfig("")->getConfigInt("dev", "n_mocked", 100);
-//     string_q path = getPathToConfig("mocked/" + origMode + ".json");
+//     string_q path = chainConfigsFolder_mocked + origMode + ".json";
 //     if (fileExists(path)) {
 //         if (origMode == "export") {
 //             for (size_t i = 0; i < nMocked; i++) {
-//                 LOG_PROGRESS("Extracting", i, nMocked, "\r");
+//                 LOG_ PROGRESS("Extracting", i, nMocked, "\r");
 //                 usleep(30000);
 //             }
 //             CStringArray lines;
@@ -768,7 +767,7 @@ bool COptions::setDisplayFormatting(void) {
 //             for (auto line : lines) {
 //                 cout << line << endl;
 //                 if (!(++cnt % recordSize)) {
-//                     LOG_PROGRESS("Displaying", record++, nMocked, "\r");
+//                     LOG_ PROGRESS("Displaying", record++, nMocked, "\r");
 //                     usleep(10000);
 //                 }
 //             }
@@ -821,7 +820,7 @@ void COptions::writePerformanceData(void) {
     if (stats.nFiles == stats.nSkipped)
         return;
 
-    string_q statsFile = getPathToConfig("performance_scraper.csv");
+    string_q statsFile = rootConfigs + "perf/performance_scraper.csv";
 
     string_q fmt = substitute(STR_DISPLAY_SCRAPESTATISTICS, "\t", ",");
     if (!fileExists(statsFile)) {

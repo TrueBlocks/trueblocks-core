@@ -23,8 +23,8 @@ extern size_t nullCallback(char* ptr, size_t size, size_t nmemb, void* userdata)
 
 //-------------------------------------------------------------------------
 CCurlContext::CCurlContext(void) {
-    baseURL = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
-    debugging = getGlobalConfig()->getConfigBool("dev", "debug_curl", false);
+    baseURL = getRpcProvider();
+    debugging = getGlobalConfig("")->getConfigBool("dev", "debug_curl", false);
     callBackFunc = writeCallback;
     curlNoteFunc = NULL;
     theID = 1;
@@ -212,8 +212,8 @@ bool isNodeRunning(void) {
 
 //-------------------------------------------------------------------------
 static const char* STR_ERROR_CURLERR =
-    "The RPC server ([{PROVIDER}]) was not found. Either start it, or edit the|"
-    "`rpcProvider` value in the file `$CONFIG`.";
+    "The RPC server ([{PROVIDER}]) was not found. Either start it, or edit the `rpcProvider`|"
+    "value in the file `$CONFIG`.";
 
 //-------------------------------------------------------------------------
 static const char* STR_ERROR_CURLEMPTY = "The Ethereum node (`[{PROVIDER}]`) returned an empty response.";

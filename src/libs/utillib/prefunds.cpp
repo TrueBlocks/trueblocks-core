@@ -13,7 +13,7 @@
 // NOTE: This file has a lot of NOLINT's in it. Because it's someone else's code, I wanted
 // to be conservitive in changing it. It's easier to hide the lint than modify the code
 
-#define LOGGING_LEVEL_TEST
+// #define LOGGING_LEVEL_TEST
 #include "exportcontext.h"
 #include "prefunds.h"
 #include "names.h"
@@ -21,11 +21,6 @@
 #include "options_base.h"
 
 namespace qblocks {
-
-//---------------------------------------------------------------------------
-// We define these so they don't run until they are called...
-#define STR_PREFUND_BALANCES_TAB1 getPathToConfig("names/names_prefunds.tab")
-#define STR_PREFUND_BALANCES_BIN1 getPathToCache("names/names_prefunds_bals.bin")
 
 //---------------------------------------------------------------------------
 // TODO: These singletons are used throughout - it doesn't appear to have any downsides.
@@ -45,9 +40,9 @@ bool loadPrefundBalances(void) {
         return true;
     }
 
-    if (fileExists(STR_PREFUND_BALANCES_BIN1)) {
+    if (fileExists(cacheFolderBin_allocs)) {
         CArchive archive(READING_ARCHIVE);
-        if (archive.Lock(STR_PREFUND_BALANCES_BIN1, modeReadOnly, LOCK_NOWAIT)) {
+        if (archive.Lock(cacheFolderBin_allocs, modeReadOnly, LOCK_NOWAIT)) {
             uint64_t count;
             archive >> count;
             for (size_t i = 0; i < count; i++) {
@@ -62,29 +57,35 @@ bool loadPrefundBalances(void) {
     }
 
     CStringArray lines;
-    asciiFileToLines(STR_PREFUND_BALANCES_TAB1, lines);
-    for (auto line : lines) {
-        if (startsWith(line, "0x")) {
-            CStringArray parts;
-            explode(parts, line, '\t');
-            string_q address = toLower(parts[0]);
-            wei_t amount = str_2_Wei(parts[1]);
-            prefundBalMap[address] = amount;
+    asciiFileToLines(chainConfigsTxt_allocs, lines);
+    if (lines.size() > 0) {
+        for (auto line : lines) {
+            if (startsWith(line, "0x")) {
+                CStringArray parts;
+                explode(parts, substitute(line, "\"", ""), ',');
+                string_q address = toLower(parts[0]);
+                wei_t amount = str_2_Wei(parts[1]);
+                prefundBalMap[address] = amount;
+            }
         }
+    } else {
+        LOG_ERR("Got zero records from ", chainConfigsTxt_allocs);
     }
 
-    establishFolder(STR_PREFUND_BALANCES_BIN1);
+    establishFolder(cacheFolderBin_allocs);
 
     CArchive archive(WRITING_ARCHIVE);
-    if (archive.Lock(STR_PREFUND_BALANCES_BIN1, modeWriteCreate, LOCK_NOWAIT)) {
+    if (archive.Lock(cacheFolderBin_allocs, modeWriteCreate, LOCK_NOWAIT)) {
         archive << uint64_t(prefundBalMap.size());
         for (const auto& item : prefundBalMap)
             archive << item.first << item.second;
         archive.Release();
         return true;
+    } else {
+        LOG_ERR("Could not open prefunds cache for writing", cacheFolderBin_allocs);
     }
 
-    LOG_WARN("Could not lock prefund cache at: ", STR_PREFUND_BALANCES_BIN1);
+    LOG_WARN("Could not lock prefund cache at: ", cacheFolderBin_allocs);
     return false;
 }
 
@@ -132,11 +133,11 @@ Allocation largestPrefund(void) {
 #if 0
 //-----------------------------------------------------------------------
 bool readPrefundBals(void) {
-    if (!fileExists(STR_PREFUND_BALANCES_BIN1))
+    if (!fileExists(cacheFolderBin_allocs))
         return false;
 
     CArchive archive(READING_ARCHIVE);
-    if (!archive.Lock(STR_PREFUND_BALANCES_BIN1, modeReadOnly, LOCK_NOWAIT))
+    if (!archive.Lock(cacheFolderBin_allocs, modeReadOnly, LOCK_NOWAIT))
         return false;
 
     uint64_t count;
@@ -154,11 +155,11 @@ bool readPrefundBals(void) {
 
 //-----------------------------------------------------------------------
 bool readPrefundAscii(void) {
-    if (!fileExists(STR_PREFUND_BALANCES_TAB1))
+    if (!fileExists(chainConfigsTxt_allocs))
         return false;
 
     CStringArray lines;
-    asciiFileToLines(STR_PREFUND_BALANCES_TAB1, lines);
+    asciiFileToLines(chainConfigsTxt_allocs, lines);
     for (auto line : lines) {
         if (startsWith(line, "0x")) {
             CStringArray parts;
@@ -174,8 +175,8 @@ bool readPrefundAscii(void) {
 //-----------------------------------------------------------------------
 bool writePrefundBin(void) {
     CArchive archive(WRITING_ARCHIVE);
-    if (!archive.Lock(STR_PREFUND_BALANCES_BIN1, modeWriteCreate, LOCK_NOWAIT)) {
-        LOG_WARN("Could not lock prefund cache at: ", STR_PREFUND_BALANCES_BIN1);
+    if (!archive.Lock(cacheFolderBin_allocs, modeWriteCreate, LOCK_NOWAIT)) {
+        LOG_WARN("Could not lock prefund cache at: ", cacheFolderBin_allocs);
         return false;
     }
 

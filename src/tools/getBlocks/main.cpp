@@ -21,7 +21,7 @@ int main(int argc, const char* argv[]) {
 
     // We want to get the latestBlock prior to turning on --prove for example
     COptions options;
-    getBlock_light(options.latestBlock, "latest");
+    getBlockHeader(options.latestBlock, "latest");
     if (!options.prepareArguments(argc, argv))
         return 0;
 
@@ -61,9 +61,9 @@ int main(int argc, const char* argv[]) {
 //------------------------------------------------------------
 string_q doOneLightBlock(blknum_t num) {
     CBlock gold;
-    getBlock_light(gold, num);
+    getBlockLight(gold, num);
     if (gold.blockNumber == 0 && gold.timestamp == 0)
-        gold.timestamp = blockZeroTs;
+        gold.timestamp = blockZeroTs();
     HIDE_FIELD(CTransaction, "datesh");
     HIDE_FIELD(CTransaction, "time");
     HIDE_FIELD(CTransaction, "date");
@@ -78,7 +78,7 @@ string_q doOneLightBlock(blknum_t num) {
 string_q doOneHeavyBlock(CBlock& gold, blknum_t num, const COptions& opt) {
     queryBlock(gold, uint_2_Str(num), true);
     if (gold.blockNumber == 0 && gold.timestamp == 0)
-        gold.timestamp = blockZeroTs;
+        gold.timestamp = blockZeroTs();
     gold.finalized = isBlockFinal(gold.timestamp, opt.latestBlock.timestamp, opt.secsFinal);
     return gold.Format(expContext().fmtMap["format"]);
 }

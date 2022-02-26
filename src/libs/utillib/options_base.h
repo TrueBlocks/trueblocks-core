@@ -72,9 +72,7 @@ class COptionsBase {
 
     // supporting special block names
     static CNameValueArray specials;
-    static void loadSpecials(void);
     static bool findSpecial(CNameValue& pair, const string_q& arg);
-    static bool forEverySpecialBlock(NAMEVALFUNC func, void* data);
 
     // One of --create, --update, --delete, --undelete, --remove for use anywhere
     CStringArray crudCommands;
@@ -151,7 +149,7 @@ extern uint64_t verbose;
 
 //--------------------------------------------------------------------------------
 class CToml;
-extern const CToml* getGlobalConfig(const string_q& name = "");
+extern const CToml* getGlobalConfig(const string_q& name);
 
 inline bool listBlocks(uint64_t bn, void* data) {
     CUintArray* array = (CUintArray*)data;

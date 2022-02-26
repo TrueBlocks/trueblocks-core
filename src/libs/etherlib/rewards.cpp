@@ -16,7 +16,7 @@ namespace qblocks {
 
 //---------------------------------------------------------------------------
 void CTrace::loadTraceAsBlockReward(const CTransaction& trans, blknum_t bn, blknum_t txid) {
-    ASSERT(txid == 99999 || txid == 99997);
+    ASSERT(txid == 99996 || txid == 99997 || txid == 99999);
     blockNumber = bn;
     transactionIndex = txid;
     action.from = "0xBlockReward";
@@ -88,7 +88,7 @@ bool CTransaction::loadTransAsPrefund(blknum_t bn, blknum_t txid, const address_
 
 //-------------------------------------------------------------------------
 bool CTransaction::loadTransAsBlockReward(blknum_t bn, blknum_t txid, const address_t& addr) {
-    ASSERT(txid == 99999 || txid == 99997);
+    ASSERT(txid == 99996 || txid == 99997 || txid == 99999);
     initialize();
     blockNumber = bn;
     transactionIndex = txid;
@@ -122,9 +122,9 @@ wei_t getBlockReward2(blknum_t bn) {
         return 0;
 
     wei_t reward = 0;
-    if (bn < byzantiumBlock) {
+    if (bn < byzantiumBlock()) {
         reward = str_2_Wei("5000000000000000000");
-    } else if (bn < constantinopleBlock) {
+    } else if (bn < constantinopleBlock()) {
         reward = str_2_Wei("3000000000000000000");
     } else {
         reward = str_2_Wei("2000000000000000000");

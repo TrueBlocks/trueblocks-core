@@ -2,7 +2,6 @@ chifra names  etwork --expand --no_header
 TEST[DATE|TIME] Terms:  [etwork]
 TEST[DATE|TIME] Expand:  true
 TEST[DATE|TIME] NoHeader:  true
-TIME ~ CLOCK - <INFO>  : Loading names
 50-Tokens:ERC20	0x00c4b398500645eb5da00a1a379a88b11683ba01	Eximchain Token	EXC	On chain	18	Eximchain‚Äö√Ñ√¥s public blockchain network enables privacy, scalability and security for the supply chain.	false	false	false	true	true	false
 31-Gitcoin:Grants	0x011c2c1433b36a524b548444ae2f20c015427d04	Grant 0491 - Tokamak Network: Decentralized, Scalable, Turing Complete Layer 2 Plasma		https://gitcoin.co/grants/491/tokamak-network-decentralized-scalable-turing-com			false	false	false	false	false	false
 31-Gitcoin:Grants	0x03c2bc72a3e007179e54ffb4563cc235bec8151a	Grant 0600 Synthereum: Synthetic Assets with Liquidity Pools to Bridge Traditional and Digital Finance		https://gitcoin.co/grants/600/synthereum-synthetic-assets-with-liquidity-pools-t		https://jarvis.network	false	false	false	false	false	false
@@ -122,6 +121,7 @@ TIME ~ CLOCK - <INFO>  : Loading names
 50-Tokens:ERC20	0x8a88f04e0c905054d2f33b26bb3a46d7091a039a	IG	IG	On chain	18	An unprecedented prediction market of based decentralization network. High centralization hinders social progress. Therefore, we hope to establish a completely decentralized Consensus Prediction System, and everyone's weight is equal.	false	false	false	true	true	false
 31-Gitcoin:Grants	0x8a970573f88dbc7b69dfed2ba193c98c2d5d8314	Grant 0101 Geon App: Augmented Reality App Leveraging Poa Core Network		https://gitcoin.co/grants/101/geon-app-augmented-reality-app-leveraging-poa-cor			false	false	false	false	false	false
 50-Tokens:ERC20	0x8d75959f1e61ec2571aa72798237101f084de63a	Substratum	SUB	On chain	18	Substratum is an open-source network that allows anyone to allocate spare computing resources to make the internet a free and fair place for the entire world.	false	false	false	true	true	false
+50-Tokens:ERC20	0x8ea197328f3d72e148af942d9ea93f9cfb40626b	Not Aragon Network DAO launch council	NOTANLC	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x8f8221afbb33998d8584a2b05749ba73c37a938a	Request Token	REQ	On chain	18	A decentralized network built on top of Ethereum, which allows anyone, anywhere to request a payment.	false	false	false	true	true	false
 31-Gitcoin:Grants	0x904065ba663879deb7e5f902220e7db97cbf04af	Grant 0681 Flowstake - Activity Staking Blockchain Network		https://gitcoin.co/grants/681/flowstake-activity-staking-blockchain-network		https://flowstake.webflow.io	false	false	false	false	false	false
 50-Tokens:ERC20	0x92e52a1a235d9a103d970901066ce910aacefd37	UCASH	UCASH	On chain	8	Aims to build a global network of retail and individual converters providing cash to digital conversions to and from our ecosystem, helping people worldwide to unbank.	false	false	false	true	true	false
@@ -130,6 +130,7 @@ TIME ~ CLOCK - <INFO>  : Loading names
 50-Tokens:ERC20	0x95cda24d2515491095d21d94f1b94f319e016d35	Vegetanetwork	Vegeta	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x960b236a07cf122663c4303350609a66a7b288c0	Aragon Network Token	ANT	On chain	18	Create and manage unstoppable organizations. Aragon lets you manage entire organizations using the blockchain. This makes Aragon organizations more efficient than their traditional counterparties.	false	false	false	true	true	false
 30-Contracts:Kyber Network	0x9ae49c0d7f8f9ef4b864e004fe86ac8294e20950	Kyber Network		0xTracker			false	false	false	true	false	false
+50-Tokens:ERC20	0x9bde098be22658d057c3f1f185e3fd4653e2fbd1	KP2R.Network	KP2R	On chain	18		false	false	false	true	true	false
 31-Gitcoin:Grants	0x9c159121ceebf937e9bad98fd0c895d7f6038bd4	Grant 0565 Our Network - Community Driven Analytics		https://gitcoin.co/grants/565/our-network-community-driven-analytics			false	false	false	false	false	false
 50-Tokens:ERC721	0x9dd91d61a7aa58537fcdbf16fd21be25731341b3	Opium Network Position Token	ONP	On chain	18		false	false	false	true	true	true
 50-Tokens:ERC20	0xa117000000f279d81a1d3cc75430faa017fa5a2e	Aragon Network Token	ANT	On chain	18		false	false	false	true	true	false
@@ -150,6 +151,7 @@ TIME ~ CLOCK - <INFO>  : Loading names
 50-Tokens:ERC20	0xb2135ab9695a7678dd590b1a996cb0f37bcb0718	Signals Network Token	SGN	On chain	9	Marketplace of data science powered signals for trading cryptocurrencies	false	false	false	true	true	false
 50-Tokens:ERC20	0xb417fa71a03a9badbf962589f2478353fd5693e2	Coin Display Network	CDN	On chain	18		false	false	false	true	true	false
 31-Gitcoin:Grants	0xb422e46540153ddaaccd8f5e899893fc53ab77b8	Grant 0338 2key Network Labs		https://gitcoin.co/grants/338/2key-network-labs		https://2key.network	false	false	false	false	false	false
+50-Tokens:ERC20	0xb5261ca6b24103cf5d3784612b179b51913d4186	Aragon Network governor council	ANGC	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0xb5a5f22694352c15b00323844ad545abb2b11028	ICON Old Token	ICX	EtherScan.io		The ICON Network is comprised of various institutions ranging from: financial institutions, insurance companies, hospitals, universities and more.	false	false	false	true	false	false
 31-Gitcoin:Grants	0xb5e48595afb989ddbc97763cd516ae3a983a3e36	Grant 0072 Poa Network Community Management Grant for Khizer		https://gitcoin.co/grants/72/poa-network-community-management-grant-for-khizer			false	false	false	false	false	false
 31-Gitcoin:Grants	0xb64850fe701fb64667b6cc762aa2c12f2e02193c	Grant 0742 Crypto Community Ventures Network		https://gitcoin.co/grants/742/crypto-community-ventures-network		https://www.bitfwd.com	false	false	false	false	false	false
@@ -201,6 +203,3 @@ TIME ~ CLOCK - <INFO>  : Loading names
 50-Tokens:ERC20	0xe95990825aab1a7f0af4cc648f76a3bcc99f25b2	Zenswap Network Token	ZNT	On chain	18	Zenswap Network offers a new and practical cryptosphere for cryptocurrency and token swap, integrated with user-friendly value-added services to deliver the best crypto experience.	false	false	false	true	true	false
 50-Tokens:ERC20	0xea5f88e54d982cbb0c441cde4e79bc305e5b43bc	Pareto Network Token	PARETO	On chain	18	The Pareto Network is a peer to peer financial content marketplace.	false	false	false	true	true	false
 31-Gitcoin:Grants	0xea6cdbe70e5c18c605427d93dc6374b648843fac	Grant 1487 Memorial.network		https://gitcoin.co/grants/1487/memorialnetwork			false	false	false	false	false	false
-50-Tokens:ERC20	0xec491c1088eae992b7a214efb0a266ad0927a72a	AB-CHAIN RTB token	RTB	On chain	18	ADS IN BLOCKCHAIN ADVERTISING NETWORK. Online advertising enhanced by blockchain and AI technologies.	false	false	false	true	true	false
-50-Tokens:ERC20	0xeef9f339514298c6a857efcfc1a762af84438dee	Hermez Network Token	HEZ	On chain	18		false	false	false	true	true	false
-50-Tokens:ERC20	0xef88808d0fbb5c0c2c89f6d9b45eda53c0150993	iBuildApp Network Token	IBA	On chain	4		false	false	false	true	true	false

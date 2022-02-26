@@ -407,16 +407,16 @@ void CAbi::clearInterfaceMap(void) {
 //---------------------------------------------------------------------------
 bool CAbi::loadAbisFromKnown(bool tokensOnly) {
     if (tokensOnly) {
-        bool ret1 = loadAbiFromFile(getPathToConfig("abis/known-000/erc_00020.json"));
-        bool ret2 = loadAbiFromFile(getPathToConfig("abis/known-000/erc_00721.json"));
+        bool ret1 = loadAbiFromFile(rootConfigs_abis + "known-000/erc_00020.json");
+        bool ret2 = loadAbiFromFile(rootConfigs_abis + "known-000/erc_00721.json");
         return (ret1 && ret2);
     }
 
-    string_q srcPath = getPathToConfig("abis/");
+    string_q srcPath = rootConfigs_abis;
     if (abiSourcesMap[srcPath])
         return true;
 
-    string_q binPath = getPathToCache("abis/known.bin");
+    string_q binPath = cacheFolder_abis + "known.bin";
     if (fileExists(binPath)) {
         // If any file is newer, don't use binary cache
         fileInfo info = getNewestFileInFolder(srcPath);
@@ -426,9 +426,7 @@ bool CAbi::loadAbisFromKnown(bool tokensOnly) {
             if (archive.Lock(binPath, modeReadOnly, LOCK_NOWAIT)) {
                 archive >> *this;
                 archive.Release();
-                LOG_TEST(
-                    "Loaded " + uint_2_Str(nInterfaces()) + " interfaces from",
-                    substitute(substitute(binPath, getPathToCache(""), "$CACHE/"), getPathToConfig(""), "$CONFIG/"));
+                LOG_TEST("Loaded " + uint_2_Str(nInterfaces()) + " interfaces from", relativize(binPath));
                 abiSourcesMap[srcPath] = true;
                 return true;
             }
@@ -445,8 +443,7 @@ bool CAbi::loadAbisFromKnown(bool tokensOnly) {
     if (archive.Lock(binPath, modeWriteCreate, LOCK_NOWAIT)) {
         archive << *this;
         archive.Release();
-        LOG_TEST("Saved " + uint_2_Str(nInterfaces()) + " interfaces in",
-                 substitute(substitute(binPath, getPathToCache(""), "$CACHE/"), getPathToConfig(""), "$CONFIG/"));
+        LOG_TEST("Saved " + uint_2_Str(nInterfaces()) + " interfaces in", relativize(binPath));
         return true;
     }
 
@@ -457,7 +454,7 @@ bool CAbi::loadAbisFromKnown(bool tokensOnly) {
 bool CAbi::loadAbiFromAddress(const address_t& addr, bool recurse) {
     ASSERT(!isZeroAddr(addr));
 
-    string_q fileName = getPathToCache("abis/" + addr + ".json");
+    string_q fileName = cacheFolder_abis + addr + ".json";
     string_q localFile = (getCWD() + addr + ".json");
     if (fileExists(localFile) && localFile != fileName) {
         LOG_TEST("Local file copied to cache", "./" + addr + ".json");
@@ -498,8 +495,7 @@ bool CAbi::loadAbiFromFile(const string_q& fileName) {
     if (loadAbiFromJson(asciiFileToString(fileName))) {
         for (auto& item : interfaceMap)
             if (item.second.abi_source.empty()) {
-                string_q str =
-                    substitute(substitute(fileName, getPathToCache("abis/"), ""), getPathToConfig("abis/"), "");
+                string_q str = substitute(substitute(fileName, cacheFolder_abis, ""), rootConfigs_abis, "");
                 nextTokenClear(str, '/');
                 item.second.abi_source = str;
             }
@@ -556,7 +552,7 @@ bool CAbi::loadAbiFromEtherscan(const address_t& addr) {
     replaceAll(fromES, "\\r", "\r");
     replaceAll(fromES, "\\n", "\n");
 
-    string_q fileName = getPathToCache("abis/" + addr + ".json");
+    string_q fileName = cacheFolder_abis + addr + ".json";
     establishFolder(fileName);
 
     string_q results = substitute(fromES, "\\", "");
@@ -639,7 +635,7 @@ bool sortByFuncName(const CFunction& f1, const CFunction& f2) {
 bool isKnownAbi(const string_q& addr, string_q& path) {
     CStringArray paths = {"000", "005", "010", "015"};
     for (auto p : paths) {
-        path = getPathToConfig("abis/known-" + p + "/" + addr + ".json");
+        path = rootConfigs_abis + "known-" + p + "/" + addr + ".json";
         if (fileExists(path))
             return true;
     }

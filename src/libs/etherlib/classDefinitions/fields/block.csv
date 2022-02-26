@@ -12,7 +12,6 @@ baseFeePerGas   ,wei         ,           ,       ,      ,        ,          ,   
 transactions    ,transaction ,           ,true   ,true  ,        ,          ,        ,      ,         ,8   ,     ,              ,a possibly empty array of transactions or transaction hashes
 tx_hashes       ,string      ,           ,       ,true  ,true    ,          ,        ,      ,         ,    ,     ,              ,a possibly empty array of transactions or transaction hashes
 name            ,string      ,           ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,              ,the name of the block if any (see chifra when)
-light           ,bool        ,           ,       ,      ,true    ,true      ,        ,      ,         ,    ,     ,              ,`true` if this block is only the block header&#44; `false` otherwise
 date            ,date        ,           ,       ,      ,true    ,          ,        ,true  ,         ,    ,     ,              ,the date of this block as represented by its timestamp
 unclesCnt       ,uint64      ,           ,       ,      ,true    ,          ,        ,true  ,         ,    ,     ,              ,the number of uncles in this block
 extraData       ,string      ,           ,       ,      ,true    ,          ,        ,true  ,         ,    ,     ,              ,an extra data string for use in the front end only
