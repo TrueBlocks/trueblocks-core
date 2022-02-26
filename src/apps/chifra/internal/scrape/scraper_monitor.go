@@ -13,7 +13,6 @@ import (
 	"sync"
 	"time"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 )
@@ -103,7 +102,7 @@ func RunMonitorScraper(opts *ScrapeOptions, wg sync.WaitGroup, initialState bool
 					mon.Size = uint64(in.Size())
 					mon.Count = mon.Size / 8
 					if countBefore < mon.Count {
-						fmt.Println(colors.Red, "\tChanged", mon.Address, mon.Path, mon.Size, mon.Count, (float64(mon.Size) / 8.0), colors.Off)
+						fmt.Println("\tChanged", mon.Address, mon.Path, mon.Size, mon.Count, (float64(mon.Size) / 8.0))
 						nChanged++
 					}
 				}

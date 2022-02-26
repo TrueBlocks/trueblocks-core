@@ -144,7 +144,7 @@ bool COptions::parseArguments(string_q& command) {
     string_q bloomPath = indexFolder_blooms + chunkId + ".bloom";
     if (!fileExists(bloomPath)) {
         if (!loadPrefundBalances())
-            return usage("Could not load names database.");
+            return usage("Could not load prefunds database.");
 
         LOG_INFO("Index for block zero not found. Building from prefund file.");
 
@@ -157,7 +157,7 @@ bool COptions::parseArguments(string_q& command) {
         // Write the chunk and the bloom to the binary cache
         string_q chunkPath = indexFolder_finalized + chunkId + ".bin";
         if (!writeIndexAsBinary(chunkPath, appearances, (pin ? visitToPin : nullptr), &pinList)) {
-            LOG_ERR(cRed, "Failed to write zero block index.", cOff);
+            LOG_ERR(cRed, "Failed to write index chunk for block zero.", cOff);
             return false;
         }
         LOG_INFO("Done...");

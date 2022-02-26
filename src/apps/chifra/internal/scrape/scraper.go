@@ -10,9 +10,6 @@ import (
 	"io/ioutil"
 	"log"
 	"time"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 var statusPath string = "/tmp/"
@@ -38,7 +35,7 @@ func NewScraper(color, name string, secs float64, logLev uint64) Scraper {
 }
 
 func (scraper *Scraper) ShowStateChange(from, to string) {
-	logger.Log(logger.Info, scraper.Color, scraper.Name, ": [", from, " --> ", to, "]", colors.Off)
+	// logger.Log(logger.Info, scraper.Color, scraper.Name, ": [", from, " --> ", to, "]", colors.Off)
 }
 
 func (scraper *Scraper) ToJson() string {
