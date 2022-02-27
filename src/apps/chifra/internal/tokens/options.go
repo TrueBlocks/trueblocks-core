@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -87,7 +88,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *TokensOptions {
 	}
 	opts.Globals = *globals.FromRequest(w, r)
 	// EXISTING_CODE
-	opts.Addrs2 = globals.ConvertEns(opts.Globals.Chain, opts.Addrs2)
+	opts.Addrs2 = ens.ConvertEns(opts.Globals.Chain, opts.Addrs2)
 	// EXISTING_CODE
 
 	return opts
@@ -103,7 +104,7 @@ func TokensFinishParse(args []string) *TokensOptions {
 			opts.Blocks = append(opts.Blocks, arg)
 		}
 	}
-	opts.Addrs2 = globals.ConvertEns(opts.Globals.Chain, opts.Addrs2)
+	opts.Addrs2 = ens.ConvertEns(opts.Globals.Chain, opts.Addrs2)
 	// EXISTING_CODE
 	return opts
 }

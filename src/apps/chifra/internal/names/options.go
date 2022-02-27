@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -174,7 +175,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *NamesOptions {
 	}
 	opts.Globals = *globals.FromRequest(w, r)
 	// EXISTING_CODE
-	opts.Terms = globals.ConvertEns(opts.Globals.Chain, opts.Terms)
+	opts.Terms = ens.ConvertEns(opts.Globals.Chain, opts.Terms)
 	// EXISTING_CODE
 
 	return opts
@@ -183,7 +184,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *NamesOptions {
 func NamesFinishParse(args []string) *NamesOptions {
 	opts := GetOptions()
 	// EXISTING_CODE
-	opts.Terms = globals.ConvertEns(opts.Globals.Chain, args)
+	opts.Terms = ens.ConvertEns(opts.Globals.Chain, args)
 	// EXISTING_CODE
 	return opts
 }

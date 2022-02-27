@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -101,8 +102,8 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *StateOptions {
 	}
 	opts.Globals = *globals.FromRequest(w, r)
 	// EXISTING_CODE
-	opts.Addrs = globals.ConvertEns(opts.Globals.Chain, opts.Addrs)
-	opts.ProxyFor = globals.ConvertOneEns(opts.Globals.Chain, opts.ProxyFor)
+	opts.Addrs = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
+	opts.ProxyFor = ens.ConvertOneEns(opts.Globals.Chain, opts.ProxyFor)
 	// EXISTING_CODE
 
 	return opts
@@ -118,8 +119,8 @@ func StateFinishParse(args []string) *StateOptions {
 			opts.Blocks = append(opts.Blocks, arg)
 		}
 	}
-	opts.Addrs = globals.ConvertEns(opts.Globals.Chain, opts.Addrs)
-	opts.ProxyFor = globals.ConvertOneEns(opts.Globals.Chain, opts.ProxyFor)
+	opts.Addrs = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
+	opts.ProxyFor = ens.ConvertOneEns(opts.Globals.Chain, opts.ProxyFor)
 	// EXISTING_CODE
 	return opts
 }

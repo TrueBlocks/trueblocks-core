@@ -22,7 +22,7 @@ extern string_q get_testlogs(const CCommandOption& cmd);
 extern string_q get_copyopts(const CCommandOption& cmd);
 extern string_q get_positionals2(const CCommandOption& cmd);
 extern string_q get_use(const CCommandOption& cmd);
-extern string_q clean_positionals(const string_q& in);
+extern string_q clean_go_positionals(const string_q& in, bool hasEns);
 
 extern const char* STR_REQUEST_CASE1;
 extern const char* STR_REQUEST_CASE2;
@@ -56,6 +56,11 @@ bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_gocmds_options(const CCommandOption& p) {
+    string_q fn = getPathToSource("apps/chifra/internal/" + p.api_route + "/options.go");
+    replaceAll(fn, "/internal/serve", "/server");
+    establishFolder(fn);
+    bool hasEns = contains(asciiFileToString(fn), "ens.Convert");
+
     string_q source = asciiFileToString(getPathToTemplates("blank_options.go"));
     replaceAll(source, "[{ROUTE}]", p.api_route);
     replaceAll(source, "[{PROPER}]", toProper(p.api_route));
@@ -70,11 +75,8 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     replaceAll(source, "[{DASH_STR}]", get_copyopts(p));
     replaceAll(source, "[{POSITIONALS}]", get_positionals2(p));
     replaceAll(source, "opts.LastBlock != utils.NOPOS", "opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS");
-    source = clean_positionals(source);
+    source = clean_go_positionals(source, hasEns);
 
-    string_q fn = getPathToSource("apps/chifra/internal/" + p.api_route + "/options.go");
-    replaceAll(fn, "/internal/serve", "/server");
-    establishFolder(fn);
     codewrite_t cw(fn, source);
     cw.nSpaces = 0;
     cw.stripEOFNL = false;
@@ -338,12 +340,14 @@ string_q get_goDescription(const CCommandOption& cmd) {
 }
 
 //---------------------------------------------------------------------------------------------------
-string_q clean_positionals(const string_q& in) {
+string_q clean_go_positionals(const string_q& in, bool hasEns) {
     string_q ret = in;
     replaceAll(ret, "\t[]string{} = args\n", "");
     replaceAll(ret, "opts.[]string{}", "[]string{}");
     if (!contains(ret, "utils."))
         replaceAll(ret, "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils\"\n", "");
+    if (!hasEns)
+        replaceAll(ret, "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens\"\n", "");
     return ret;
 }
 

@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -297,9 +298,9 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ExportOptions {
 	}
 	opts.Globals = *globals.FromRequest(w, r)
 	// EXISTING_CODE
-	opts.Addrs = globals.ConvertEns(opts.Globals.Chain, opts.Addrs)
-	opts.Emitter = globals.ConvertEns(opts.Globals.Chain, opts.Emitter)
-	opts.Asset = globals.ConvertEns(opts.Globals.Chain, opts.Asset)
+	opts.Addrs = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
+	opts.Emitter = ens.ConvertEns(opts.Globals.Chain, opts.Emitter)
+	opts.Asset = ens.ConvertEns(opts.Globals.Chain, opts.Asset)
 	// EXISTING_CODE
 
 	return opts
@@ -317,9 +318,9 @@ func ExportFinishParse(args []string) *ExportOptions {
 			opts.Addrs = append(opts.Addrs, arg)
 		}
 	}
-	opts.Addrs = globals.ConvertEns(opts.Globals.Chain, opts.Addrs)
-	opts.Emitter = globals.ConvertEns(opts.Globals.Chain, opts.Emitter)
-	opts.Asset = globals.ConvertEns(opts.Globals.Chain, opts.Asset)
+	opts.Addrs = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
+	opts.Emitter = ens.ConvertEns(opts.Globals.Chain, opts.Emitter)
+	opts.Asset = ens.ConvertEns(opts.Globals.Chain, opts.Asset)
 	// EXISTING_CODE
 	return opts
 }
