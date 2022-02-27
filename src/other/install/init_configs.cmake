@@ -97,6 +97,7 @@ CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/sepolia     "allocs.csv"         
 
 # CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/gnosis    "specials.csv"             ${INSTALL_DEST}/config/gnosis/         )
 CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/mainnet     "specials.csv"             ${INSTALL_DEST}/config/mainnet/        )
+CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/sepolia     "specials.csv"             ${INSTALL_DEST}/config/sepolia/        )
 
 CopyFolder        (${INSTALL_SOURCE}/abis/known-000/                                  ${INSTALL_DEST}/abis/known-000/        )
 CopyFolder        (${INSTALL_SOURCE}/abis/known-005/                                  ${INSTALL_DEST}/abis/known-005/        )
