@@ -121,7 +121,7 @@ bool COptions::handle_gocmds(void) {
     for (auto p : endpointArray) {
         if (!p.is_visible) {
             if (!p.group.empty())
-                chifraHelpStream << p.toChifraHelp() << endl;
+                chifraHelpStream << p.toChifraHelp();
             continue;
         }
         CCommandOptionArray params;
@@ -140,7 +140,7 @@ bool COptions::handle_gocmds(void) {
         handle_gocmds_cmd(p);
         handle_gocmds_options(p);
         handle_gocmds_output(p);
-        chifraHelpStream << p.toChifraHelp() << endl;
+        chifraHelpStream << p.toChifraHelp();
     }
     chifraHelpStream << STR_CHIFRA_HELP_END;
 

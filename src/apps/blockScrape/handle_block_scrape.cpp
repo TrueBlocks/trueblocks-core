@@ -95,22 +95,21 @@ bool COptions::scrape_blocks(void) {
     }
 
     // We're ready to scrape, so build the blaze command line...
-    os.clear();
-    os.str("");
-    os << getPathToCommands("blaze") + " scrape ";
-    os << "--startBlock " << cons.blazeStart << " ";
-    os << "--block_cnt " << cons.blazeCnt << " ";
-    os << "--ripeBlock " << cons.blazeRipe << " ";
-    os << (verbose ? ("--verbose " + uint_2_Str(verbose)) : "");
-    LOG_TEST_CALL(os.str());
+    ostringstream blazeCmd;
+    blazeCmd << "chifra blaze ";
+    blazeCmd << "--start_block " << cons.blazeStart << " ";
+    blazeCmd << "--ripe_block " << cons.blazeRipe << " ";
+    blazeCmd << "--block_cnt " << cons.blazeCnt << " ";
+    blazeCmd << "--block_chan_cnt " << block_chan_cnt << " ";
+    blazeCmd << "--addr_chan_cnt " << addr_chan_cnt << " ";
+    blazeCmd << "--chain " << getChain() << " ";
+    blazeCmd << (verbose ? ("--verbose " + uint_2_Str(verbose)) : "");
+#undef LOG_TEST_CALL
+#define LOG_TEST_CALL(a)                                                                                               \
+    { LOG_INFO(bWhite, l_funcName, " ----> ", (isTestMode() ? substitute((a), cacheFolder, "$CACHE/") : (a)), cOff); }
+    LOG_TEST_CALL(blazeCmd.str());
 
-    ostringstream cmd;
-    // Note: Blaze's Cobra/Viper code will use this even though if you search, you won't find it#pragma endregion
-    cmd << "env TB_INDEXPATH=\"" << indexFolder << "\" ";
-    cmd << os.str() << " ";
-    cmd << "--block_chan_cnt " << block_chan_cnt << " ";
-    cmd << "--addr_chan_cnt " << addr_chan_cnt << " ";
-    if (system(cmd.str().c_str()) != 0) {
+    if (system(blazeCmd.str().c_str()) != 0) {
         // Blaze returns non-zero if it fails. In this case, we need to remove files in the 'ripe'
         // folder because they're inconsistent (blaze's runs in parallel, so the block sequence
         // is not complete). We blindly clean all ripe files, which is a bit of overill, but it's
@@ -120,7 +119,7 @@ bool COptions::scrape_blocks(void) {
         defaultQuitHandler(1);  // this does not quit, but only notifies the caller that the user quit blaze early
         EXIT_NOMSG(false);
     }
-    LOG_INFO("Scraped ", cons.blazeCnt, " of ", cons.blazeCnt, " to block ", padNum9(cons.client), "          ");
+    LOG_PROGRESS(SCANNING, cons.blazeCnt, cons.blazeStart + cons.blazeCnt, "                    ");
 
     if (!verbose) {
         cerr << '\r' << string_q(120, ' ') << '\r';
@@ -200,7 +199,7 @@ bool COptions::scrape_blocks(void) {
 
     // TODO(tjayrush): We should try to scrape timestamps with blaze while we're doing this scan
     // TODO(tjayrush): try to capture timestamps during blaze scraping
-    freshenTimestamps(getBlockProgress(BP_RIPE).ripe);
+    freshenTimestamps(cons.blazeStart + cons.blazeCnt);
 
     // Consolidate...
     bool ret = cons.consolidate_chunks();

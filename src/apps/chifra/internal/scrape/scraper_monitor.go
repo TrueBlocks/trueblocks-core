@@ -86,14 +86,12 @@ func RunMonitorScraper(opts *ScrapeOptions, wg sync.WaitGroup, initialState bool
 					}
 					countBefore := mon.Count
 
-					fmt.Println("Done")
 					nProcessed++
 					options := " --freshen"
 					options += " " + mon.Address
 					opts.Globals.PassItOn("acctExport", options)
 					options = " --appearances -U --no_header " + mon.Address
 					opts.Globals.PassItOn("acctExport", options)
-					fmt.Println("Done")
 					in, err := os.Stat(mon.Path)
 					if err != nil {
 						log.Fatal(err)

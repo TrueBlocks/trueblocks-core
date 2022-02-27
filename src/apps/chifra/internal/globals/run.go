@@ -13,7 +13,6 @@ import (
 	"os/exec"
 	"sync"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
 
@@ -37,9 +36,6 @@ func (opts *GlobalOptions) PassItOn(path string, flags string) error {
 	// fmt.Fprintf(os.Stderr, "Calling: %s %s\n", path, options)
 	cmd := exec.Command(config.GetPathToCommands(path), options)
 	cmd.Env = append(os.Environ(), "FROM_CHIFRA=true")
-	if !opts.TestMode && opts.LogLevel > 8 {
-		fmt.Fprintf(os.Stderr, "%s%s%s%s\n", colors.Blue, colors.Bright, envStr, colors.Off)
-	}
 	cmd.Env = append(cmd.Env, "TB_CONFIG_ENV="+envStr)
 	if os.Getenv("TEST_MODE") == "true" {
 		cmd.Env = append(cmd.Env, "TEST_MODE=true")

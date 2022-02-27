@@ -785,15 +785,15 @@ string_q CCommandOption::toChifraCmd(void) const {
 
 //---------------------------------------------------------------------------------------------------
 string_q CCommandOption::toChifraHelp(void) const {
-    if (description.empty() && !api_route.empty())
+    if ((description.empty() && !api_route.empty()) || api_route == "blaze")
         return "";
 
     CCommandOption ret = *this;
     replaceAll(ret.description, ".", "");
     ret.description = firstLower(ret.description);
     if (api_route.empty())
-        return toProper(ret.Format("  [{GROUP}]:"));
-    return ret.Format("    [{w:14:API_ROUTE}][{DESCRIPTION}]");
+        return toProper(ret.Format("  [{GROUP}]:")) + "\n";
+    return ret.Format("    [{w:14:API_ROUTE}][{DESCRIPTION}]") + "\n";
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -814,7 +814,7 @@ string_q CCommandOption::toPairMap(void) const {
 
 //---------------------------------------------------------------------------------------------------
 bool isApiRoute(const string_q& route) {
-    if (route == "serve" || route == "explore")
+    if (route == "serve" || route == "explore" || route == "blaze")
         return false;
     return !route.empty();
 }

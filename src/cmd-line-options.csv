@@ -239,6 +239,13 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12154,apps,Admin,scrape,flame-scrape,n2,,,false,false,false,false,--,note,,the --pin and --publish options require an API to the pinning service.
 12155,apps,Admin,scrape,flame-scrape,n3,,,false,false,false,false,--,note,,the --n_* related options allow you to tune the scrapers.
 
+14144,apps,Admin,blaze,acctScrape2,start_block,s,0,false,true,true,true,gocmd,flag,<uint64>,first block to visit 
+14145,apps,Admin,blaze,acctScrape2,block_cnt,n,2000,false,true,true,true,gocmd,flag,<uint64>,maximum number of blocks to process per pass 
+14146,apps,Admin,blaze,acctScrape2,block_chan_cnt,b,10,false,true,true,true,gocmd,flag,<uint64>,number of concurrent block processing channels 
+14147,apps,Admin,blaze,acctScrape2,addr_chan_cnt,d,20,false,true,true,true,gocmd,flag,<uint64>,number of concurrent address processing channels 
+14147,apps,Admin,blaze,acctScrape2,ripe_block,r,0,false,true,true,true,gocmd,flag,<uint64>,blocks prior to this value are written to 'ripe' folder 
+14148,apps,Admin,blaze,acctScrape2,,,,false,false,false,false,--,description,,Private service to process indexing individual blocks.
+
 13111,apps,Admin,serve,flame,port,p,:8080,false,false,true,true,header,flag,<string>,specify the server's port
 13112,apps,Admin,serve,flame,,,,false,false,true,true,--,description,,Serve the TrueBlocks API using the flame server.
 13113,apps,Admin,serve,flame,n1,,,false,false,false,false,--,note,,To start API open terminal window and run chifra serve.

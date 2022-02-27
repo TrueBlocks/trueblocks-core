@@ -6,48 +6,35 @@
  * the code inside of 'EXISTING_CODE' tags.
  */
 
-package scrapePkg
+package blazePkg
 
 // EXISTING_CODE
 import (
 	"net/http"
-	"sync"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/spf13/cobra"
 )
 
 // EXISTING_CODE
 
-func RunScrape(cmd *cobra.Command, args []string) error {
-	opts := ScrapeFinishParse(args)
+func RunBlaze(cmd *cobra.Command, args []string) error {
+	opts := BlazeFinishParse(args)
 
-	err := opts.ValidateScrape()
+	err := opts.ValidateBlaze()
 	if err != nil {
 		return err
 	}
 
 	// EXISTING_CODE
-	var wg sync.WaitGroup
-
-	wg.Add(1)
-	IndexScraper = NewScraper(colors.Yellow, "IndexScraper", opts.Sleep, opts.Globals.LogLevel)
-	go RunIndexScraper(opts, wg, hasIndexerFlag(args[0]))
-
-	// wg.Add(1)
-	// MonitorScraper = NewScraper(colors.Purple, "MonitorScraper", opts.Sleep, opts.Globals.LogLevel)
-	// go RunMonitorScraper(opts, wg, hasMonitorsFlag(args[0]))
-
-	wg.Wait()
-
+	opts.ScrapeBlocks()
 	return nil
 	// EXISTING_CODE
 }
 
-func ServeScrape(w http.ResponseWriter, r *http.Request) bool {
+func ServeBlaze(w http.ResponseWriter, r *http.Request) bool {
 	opts := FromRequest(w, r)
 
-	err := opts.ValidateScrape()
+	err := opts.ValidateBlaze()
 	if err != nil {
 		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
 		return true

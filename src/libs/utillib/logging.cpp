@@ -79,5 +79,5 @@ const CStringArray searchOps = {
 void logProgress(searchOpType op, uint64_t progress, uint64_t goal, const string_q& post) {
     if (isTestMode())
         return;
-    LOG_PROG(padRight(searchOps[op], 11), " ", padNum6T(uint64_t(progress)), " of ", padNum6T(uint64_t(goal)), (post));
+    LOG_PROG(padRight(searchOps[op], 11), " ", padNum8T(uint64_t(progress)), " of ", padNum8T(uint64_t(goal)), (post));
 }
