@@ -55,20 +55,25 @@ endif()
 
 # ----------------------------------------------------------------------------------------
 # Linkable libraries
-set (BASE_LIBS pin acct ether util ${CURL_LIBRARIES})
+set (BASE_LIBS cache pin acct ether util ${CURL_LIBRARIES})
 
 # ----------------------------------------------------------------------------------------
 # Base included paths
 set (BASE_INCLUDE 
+     "${CMAKE_SOURCE_DIR}/libs/sqlite3lib"
      "${CMAKE_SOURCE_DIR}/libs/utillib"
      "${CMAKE_SOURCE_DIR}/libs/etherlib"
      "${CMAKE_SOURCE_DIR}/libs/acctlib"
-     "${CMAKE_SOURCE_DIR}/libs/pinlib")
+     "${CMAKE_SOURCE_DIR}/libs/pinlib"
+     "${CMAKE_SOURCE_DIR}/libs/cachelib")
 
 # ----------------------------------------------------------------------------------------
 set (BIN_DIR ${CMAKE_SOURCE_DIR}/../bin)
-set (BIN_CMDS_DIR ${BIN_DIR})
-set (BIN_TEST_DIR ${BIN_DIR}/test)
+set (BIN_CMDS_DIR $ENV{HOME}/.local/bin/chifra)
+set (BIN_TEST_DIR ${BIN_CMDS_DIR}/test)
+
+# ----------------------------------------------------------------------------------------
+set(CMAKE_INSTALL_PREFIX "/usr/local/" CACHE PATH "Default install directory")
 
 # ----------------------------------------------------------------------------------------
 # Enable testing
@@ -76,19 +81,18 @@ set (BIN_TEST_DIR ${BIN_DIR}/test)
 
 add_custom_target(lint COMMAND "${BIN_DIR}/makeClass" "--lint" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 add_custom_target(format COMMAND "${BIN_DIR}/makeClass" "--format" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
-add_custom_target(options COMMAND "${BIN_DIR}/makeClass" "--options --api" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
-add_custom_target(generate COMMAND "${BIN_DIR}/makeClass" "-Aaopm" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+add_custom_target(options COMMAND "${BIN_DIR}/makeClass" "--options --openapi" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+add_custom_target(generate COMMAND "${BIN_DIR}/makeClass" "--all --readmes --openapi --options --gocmds" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+add_custom_target(gocmds COMMAND "${BIN_DIR}/makeClass" "--options --gocmds" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 add_custom_target(readmes COMMAND "${BIN_DIR}/makeClass" "--readmes" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
-add_custom_target(finish COMMAND "${BIN_DIR}/makeClass" "-lf" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
-add_custom_target(tests COMMAND "${BIN_DIR}/test/test.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
-add_custom_target(test-all COMMAND "${BIN_DIR}/test/test-all.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
+add_custom_target(finish COMMAND "${BIN_DIR}/makeClass" "--lint --format" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+add_custom_target(tests COMMAND "${BIN_TEST_DIR}/test.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
+add_custom_target(test-all COMMAND "${BIN_TEST_DIR}/test-all.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
 
 # ----------------------------------------------------------------------------------------
 # Compilation order for the subfolders
 add_subdirectory (libs)
 add_subdirectory (tools)
 add_subdirectory (apps)
-add_subdirectory (go-apps)
 add_subdirectory (dev_tools)
-#add_subdirectory (examples)
 add_subdirectory (other)
