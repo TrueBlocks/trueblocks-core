@@ -33,10 +33,6 @@ int main(int argc, const char* argv[]) {
     } else {
         bool ret1 = options.scrape_blocks();
         LOG_INFO(ret1 ? "  ...pass completed." : "  ...pass did not complete.");
-
-        // TODO(tjayrush): We should try to scrape timestamps with blaze while we're doing this scan
-        // TODO(tjayrush): try to capture timestamps during blaze scraping
-        freshenTimestamps(getBlockProgress(BP_RIPE).ripe);
     }
 
     pinlib_cleanup();

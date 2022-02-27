@@ -198,6 +198,10 @@ bool COptions::scrape_blocks(void) {
     if (shouldQuit())
         EXIT_NOMSG(false);
 
+    // TODO(tjayrush): We should try to scrape timestamps with blaze while we're doing this scan
+    // TODO(tjayrush): try to capture timestamps during blaze scraping
+    freshenTimestamps(getBlockProgress(BP_RIPE).ripe);
+
     // Consolidate...
     bool ret = cons.consolidate_chunks();
 
