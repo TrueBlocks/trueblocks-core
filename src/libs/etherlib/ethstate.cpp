@@ -391,6 +391,8 @@ const char* STR_DISPLAY_ETHSTATE =
 wei_t getBalanceAt(const string_q& addr, blknum_t num) {
     if (num == NOPOS)
         num = getBlockProgress(BP_CLIENT).client;
+    // TODO: Erigon bug!
+    num += 1;
     string_q params = "[\"[{ADDRESS}]\",\"[{NUM}]\"]";
     address_t a = isZeroAddr(addr) ? "0x0000000000000000000000000000000000000000" : str_2_Addr(addr);
     replace(params, "[{ADDRESS}]", a);
