@@ -120,7 +120,7 @@ bool COptions::scrape_blocks(void) {
         defaultQuitHandler(1);  // this does not quit, but only notifies the caller that the user quit blaze early
         EXIT_NOMSG(false);
     }
-    LOG_INFO("- <PROG> : Scraping ", cons.blazeCnt, " of ", cons.blazeCnt, " at block ", cons.client);
+    LOG_INFO("Scraped ", cons.blazeCnt, " of ", cons.blazeCnt, " to block ", padNum9(cons.client), "          ");
 
     if (!verbose) {
         cerr << '\r' << string_q(120, ' ') << '\r';

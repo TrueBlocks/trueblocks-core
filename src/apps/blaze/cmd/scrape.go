@@ -316,7 +316,7 @@ func writeAddresses(blockNum string, addressMap map[string]bool) {
 	}
 	counter++
 	if counter%skip == 0 {
-		fmt.Fprintf(os.Stderr, "- <PROG> : Scraping %d of %d at block %s\r", counter, Options.block_cnt, blockNum)
+		fmt.Fprintf(os.Stderr, "00000000 ( 000000)- <PROG>  : Scraping %d of %d at block %s\r", counter, Options.block_cnt, blockNum)
 	}
 }
 
