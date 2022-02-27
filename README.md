@@ -15,7 +15,8 @@ Please complete any applicable [Migrations](https://github.com/TrueBlocks/truebl
   - [Quick Install](#quick-install)
   - [Introducing chifra](#introducing-chifra)
   - [Using chifra](#using-chifra)
-  - [Building the Index of Appearances](#building-the-trueblocks-index-of-appearances)
+  - [Building the Index](#building-the-index)
+  - [Docker](#docker)
   - [Contributing](#contributing-to-trueblocks)
   - [List of Contributors](#contributors)
   - [Contact](#contact)
@@ -78,35 +79,6 @@ chifra blocks 12345
 6. To make deep data queries, [get the index](https://trueblocks.io/docs/install/get-the-index/)
 7. To explore the data visually, [install the explorer application](https://trueblocks.io/docs/install/install-explorer/).
 
-## Docker Container
-
-A `Dockerfile` is included in this repo as an example for creating a Docker image.
-
-1. Build a docker image (example tagged with `latest`)
-  ```bash
-  docker build . --tag=trueblocks-core:latest
-  ```
-
-2. Run a docker container (Examples:)
-  ```bash
-  # Running a simple chifra command
-  docker run trueblocks-core:latest chifra status
-
-  # Mounting separate config, cache, and index folders and running chifra init
-  docker run \
-    -v ./trueblocks:/root/.local/share/trueblocks \
-    -v ./cache:/root/.local/share/trueblocks/cache \
-    -v ./unchained:/root/.local/share/trueblocks/unchained \
-    trueblocks-core:latest chifra init
-
-  # Mounting those same folders and starting the chifra serve
-  docker run \
-    -v ./trueblocks:/root/.local/share/trueblocks \
-    -v ./cache:/root/.local/share/trueblocks/cache \
-    -v ./unchained:/root/.local/share/trueblocks/unchained \
-    trueblocks-core:latest chifra serve --port 0.0.0.0:8080
-  ```
-
 ## Introducing chifra
 
 Similar to `git`, TrueBlocks has an overarching command called `chifra` that gives you access to all of the other subcommands.
@@ -156,7 +128,7 @@ chifra blocks 0-100000:10
 
 Hit `Control+C` to stop the processing.
 
-## Building the TrueBlocks Index of Appearances
+## Building the Index
 
 ---
 
@@ -165,6 +137,39 @@ The primary data structure produced by TrueBlocks is an index of address appeara
 You may either build the entire index from scratch (requires a tracing, archive node), or you may download part of the index and build it from there on.
 
 This process is described in this article [Indexing Addresses](https://trueblocks.io/docs/install/get-the-index/).
+
+## Docker
+
+Our official docker version is in a [separate repo](https://github.com/TrueBlocks/trueblocks-docker). Please see that repo for more information.
+
+### Below is the old docker instructions. This section will be moved shortly.
+
+A `Dockerfile` is included in this repo as an example for creating a Docker image.
+
+1. Build a docker image (example tagged with `latest`)
+  ```bash
+  docker build . --tag=trueblocks-core:latest
+  ```
+
+2. Run a docker container (Examples:)
+  ```bash
+  # Running a simple chifra command
+  docker run trueblocks-core:latest chifra status
+
+  # Mounting separate config, cache, and index folders and running chifra init
+  docker run \
+    -v ./trueblocks:/root/.local/share/trueblocks \
+    -v ./cache:/root/.local/share/trueblocks/cache \
+    -v ./unchained:/root/.local/share/trueblocks/unchained \
+    trueblocks-core:latest chifra init
+
+  # Mounting those same folders and starting the chifra serve
+  docker run \
+    -v ./trueblocks:/root/.local/share/trueblocks \
+    -v ./cache:/root/.local/share/trueblocks/cache \
+    -v ./unchained:/root/.local/share/trueblocks/unchained \
+    trueblocks-core:latest chifra serve --port 0.0.0.0:8080
+  ```
 
 ## Contributing to TrueBlocks
 
