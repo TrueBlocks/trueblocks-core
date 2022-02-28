@@ -14,8 +14,6 @@
 
 //---------------------------------------------------------------
 bool cleanMonitorFile(const string_q& path, void* data) {
-    ENTER("visitFile");
-
     if (endsWith(path, '/')) {
         forEveryFileInFolder(path + "*", cleanMonitorFile, data);
 
@@ -32,11 +30,13 @@ bool cleanMonitorFile(const string_q& path, void* data) {
             CMonitor m;
             size_t sizeThen = m.getRecordCnt(path);
             if (!sizeThen)
-                EXIT_NOMSG(!shouldQuit());
+                return !shouldQuit();
 
             m.address = path_2_Addr(path);
-            if (!m.loadAppearances(nullptr, nullptr))
-                EXIT_FAIL("Could not open cache file.");
+            if (!m.loadAppearances(nullptr, nullptr)) {
+                LOG_WARN("Could not open cache file.");
+                return false;
+            }
             sort(m.apps.begin(), m.apps.end());
 
             CAppearance_mon prev;

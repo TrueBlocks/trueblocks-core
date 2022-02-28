@@ -33,8 +33,6 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 extern bool visitPrefund(const Allocation& prefund, void* data);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-    ENTER("parseArguments");
-
     if (!standardOptions(command))
         return false;
 
@@ -138,8 +136,6 @@ bool COptions::parseArguments(string_q& command) {
         if (!loadPrefundBalances())
             return usage("Could not load prefunds database.");
 
-        LOG_INFO("Index for block zero not found. Building from prefund file.");
-
         // Each chain must have it's own prefund addresses. Here, we scan the prefund list
         // and add a psuedo-transaction (block: 0, txid: order-in-file) for each address.
         // Tradition has it that the prefund list is sorted by address.
@@ -152,7 +148,6 @@ bool COptions::parseArguments(string_q& command) {
             LOG_ERR(cRed, "Failed to write index chunk for block zero.", cOff);
             return false;
         }
-        LOG_INFO("Done...");
     }
 
     // The previous run may have quit early, leaving the folders in a mild state of

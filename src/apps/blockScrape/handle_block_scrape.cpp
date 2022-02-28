@@ -16,8 +16,6 @@
 // Note: We want to re-evaluate our progress each time we loop, so don't move this to parseOptions
 //--------------------------------------------------------------------------
 bool COptions::scrape_blocks(void) {
-    ENTER("scrape_blocks");
-
     static blknum_t runs = 0;  // this counter is used for texting purposes only
     if (isLiveTest() && runs++ > n_test_runs)
         defaultQuitHandler(0);
@@ -84,13 +82,13 @@ bool COptions::scrape_blocks(void) {
     // Returning false only means this round didn't complete, the loop will continue.
     if (cons.blazeStart > cons.client) {
         LOG_INFO("The index (", cons.blazeStart, ") is ahead of the chain (", cons.client, ").");
-        EXIT_NOMSG(false);
+        return false;
     }
 
     // If the user hit control+C somewhere along the way, let's get out of here...
     if (shouldQuit()) {
         LOG_WARN("The user hit control+C...");
-        EXIT_NOMSG(false);
+        return false;
     }
 
     // We're ready to scrape, so build the blaze command line...
@@ -103,7 +101,10 @@ bool COptions::scrape_blocks(void) {
     blazeCmd << "--addr_chan_cnt " << addr_chan_cnt << " ";
     blazeCmd << "--chain " << getChain() << " ";
     blazeCmd << (verbose ? ("--verbose " + uint_2_Str(verbose)) : "");
-    LOG_TEST_CALL(blazeCmd.str());
+    // #undef LOG_TEST_CALL
+    // #define LOG_TEST_CALL(a) \
+//     { LOG_INFO(bWhite, (a), cOff); }
+    //     LOG_TEST_CALL(blazeCmd.str());
 
     if (system(blazeCmd.str().c_str()) != 0) {
         // Blaze returns non-zero if it fails. In this case, we need to remove files in the 'ripe'
@@ -113,7 +114,7 @@ bool COptions::scrape_blocks(void) {
         cleanFolder(indexFolder_ripe);
         LOG_WARN("Blaze quit without finishing. Reprocessing...");
         defaultQuitHandler(1);  // this does not quit, but only notifies the caller that the user quit blaze early
-        EXIT_NOMSG(false);
+        return false;
     }
     // LOG_PROGRESS(SCANNING, cons.blazeCnt, cons.blazeStart + cons.blazeCnt, "                    ");
 
@@ -127,7 +128,7 @@ bool COptions::scrape_blocks(void) {
     // folder is in a consistant state, and the next scrape will pick up where it left off.
     if (isRunning("acctExport")) {
         LOG_WARN("'chifra export' is running. 'chifra scrape' cannot run at this time...");
-        EXIT_NOMSG(false);
+        return false;
     }
 
     // Blaze has sucessfullly created an individual file for each block between 'blazeStart' and
@@ -156,7 +157,7 @@ bool COptions::scrape_blocks(void) {
     if (!cons.tmp_stream.is_open()) {
         // If we can't open the temporary stage, let the user know and try again later
         LOG_WARN("Could not open temporary staging file.");
-        EXIT_NOMSG(false);
+        return false;
     }
 
     // Blaze has finished processign blazeCnt blocks. We spin through the 'ripe' folder and process each
@@ -173,7 +174,7 @@ bool COptions::scrape_blocks(void) {
         cleanFolder(indexFolder_ripe);
         cons.tmp_stream.close();
         ::remove(cons.tmp_fn.c_str());
-        EXIT_NOMSG(false);
+        return false;
     }
     cons.tmp_stream.close();
 
@@ -191,15 +192,15 @@ bool COptions::scrape_blocks(void) {
 
     // Did user hit control+c? Just checking...
     if (shouldQuit())
-        EXIT_NOMSG(false);
+        return false;
 
     // TODO(tjayrush): We should try to scrape timestamps with blaze while we're doing this scan
     // TODO(tjayrush): try to capture timestamps during blaze scraping
-    freshenTimestamps(cons.blazeStart + cons.blazeCnt);
+    // freshenTimestamps(cons.blazeStart + cons.blazeCnt);
 
     // Consolidate...
     bool ret = cons.consolidate_chunks();
 
     // We're done with a single scrape, we can go to sleep...
-    EXIT_NOMSG(ret);
+    return ret;
 }

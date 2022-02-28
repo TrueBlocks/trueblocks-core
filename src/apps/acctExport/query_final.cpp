@@ -68,8 +68,6 @@ bool visitFinalIndexFiles(const string_q& path, void* data) {
 
 //---------------------------------------------------------------
 bool COptions::visitBinaryFile(const string_q& path, void* data) {
-    ENTER("visitBinaryFile");
-
     COptions* options = reinterpret_cast<COptions*>(data);
     options->stats.nChecked++;
 
@@ -96,12 +94,14 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
                 monitor.writeLastBlockInMonitor(fileRange.second + 1, monitor.isStaging);
             options->stats.nBloomMisses++;
             LOG_PROGRESS(SKIPPING, options->fileRange.first, options->listRange.second, " bloom miss\r");
-            EXIT_NOMSG(true);
+            return true;
         }
     }
 
-    if (!establishIndexChunk(indexPath))
-        EXIT_FAIL("Could not download index chunk " + indexPath + ".");
+    if (!establishIndexChunk(indexPath)) {
+        LOG_WARN("Could not download index chunk " + indexPath + ".");
+        return false;
+    }
 
     options->stats.nBloomHits++;
     LOG_PROGRESS(SCANNING, options->fileRange.first, options->listRange.second, " bloom hit \r");
@@ -115,8 +115,10 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
     for (size_t mo = 0; mo < possibles.size() && !shouldQuit(); mo++) {
         CMonitor* monitor = &possibles[mo];
         if (hitMap[monitor->address]) {
-            if (!monitor->openForWriting(monitor->isStaging))
-                EXIT_FAIL("Could not open monitor file for " + monitor->address + ".");
+            if (!monitor->openForWriting(monitor->isStaging)) {
+                LOG_WARN("Could not open monitor file for " + monitor->address + ".");
+                return false;
+            }
 
             CAppearanceArray_mon items;
             items.reserve(300000);
@@ -125,22 +127,27 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
 
             if (!chunk) {
                 chunk = new CArchive(READING_ARCHIVE);
-                if (!chunk || !chunk->Lock(indexPath, modeReadOnly, LOCK_NOWAIT))
-                    EXIT_FAIL("Could not open index file " + indexPath + ".");
+                if (!chunk || !chunk->Lock(indexPath, modeReadOnly, LOCK_NOWAIT)) {
+                    LOG_WARN("Could not open index file " + indexPath + ".");
+                    return false;
+                }
 
                 size_t sz = fileSize(indexPath);
-                rawData = reinterpret_cast<char*>(malloc(sz + (2 * 59)));
+                rawData = reinterpret_cast<char*>(malloc(sz + (2 * asciiAppearanceSize)));
                 if (!rawData) {
                     chunk->Release();
                     delete chunk;
                     chunk = NULL;
-                    EXIT_FAIL("Could not allocate memory for data.");
+                    LOG_WARN("Could not allocate memory for data.");
+                    return false;
                 }
 
-                bzero(rawData, sz + (2 * 59));
+                bzero(rawData, sz + (2 * asciiAppearanceSize));
                 size_t nRead = chunk->Read(rawData, sz, sizeof(char));
-                if (nRead != sz)
-                    EXIT_FAIL("Could not read entire file.");
+                if (nRead != sz) {
+                    LOG_WARN("Could not read entire file.");
+                    return false;
+                }
 
                 CIndexHeader* h = reinterpret_cast<CIndexHeader*>(rawData);
                 ASSERT(h->magic == MAGIC_NUMBER);
@@ -195,7 +202,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
     string_q result = indexHit ? " index hit " + hits : " false positive";
     LOG_PROGRESS(SCANNING, options->fileRange.first, options->listRange.second, " bloom hit" + result);
 
-    EXIT_NOMSG(!shouldQuit());
+    return !shouldQuit();
 }
 
 //---------------------------------------------------------------

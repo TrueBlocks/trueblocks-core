@@ -31,8 +31,7 @@ int main(int argc, const char* argv[]) {
         LOG_INFO("Block scraper is paused: ", Now().Format(FMT_EXPORT), "\r");
 
     } else {
-        bool ret1 = options.scrape_blocks();
-        LOG_INFO(ret1 ? "  ...pass completed." : "  ...pass did not complete.");
+        options.scrape_blocks();
     }
 
     pinlib_cleanup();

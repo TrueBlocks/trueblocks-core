@@ -17,19 +17,6 @@ import (
 
 func (opts *BlazeOptions) ScrapeBlocks() {
 	// opts.Globals.LogLevel = 10
-	if opts.Globals.LogLevel > 0 {
-		fmt.Println("------------------------------------------------------------------------")
-		fmt.Println("  chifra.blaze.RpcProvider:          ", config.GetRpcProvider(opts.Globals.Chain))
-		fmt.Println("  chifra.blaze.IndexPath:            ", config.GetPathToIndex(opts.Globals.Chain))
-		fmt.Println("  chifra.blaze.RipePath:             ", config.GetPathToIndex(opts.Globals.Chain)+"ripe/")
-		fmt.Println("  chifra.blaze.UnripePath:           ", config.GetPathToIndex(opts.Globals.Chain)+"unripe/")
-		fmt.Println("  chifra.blaze.startBlock:           ", opts.StartBlock)
-		fmt.Println("  chifra.blaze.block_cnt:            ", opts.BlockCnt)
-		fmt.Println("  chifra.blaze.block_chan_cnt:       ", opts.BlockChanCnt)
-		fmt.Println("  chifra.blaze.addr_chan_cnt:        ", opts.AddrChanCnt)
-		fmt.Println("  chifra.blaze.ripeBlock:            ", opts.RipeBlock)
-		fmt.Println("  chifra.blaze.verbose:              ", opts.Globals.Verbose)
-	}
 
 	blockChannel := make(chan int)
 	addressChannel := make(chan tracesAndLogs)
@@ -320,8 +307,6 @@ func extractAddressesFromLogs(addressMap map[string]bool, logs *Log, blockNum st
 	}
 }
 
-var counter uint64 = 0
-
 func (opts *BlazeOptions) writeAddresses(blockNum string, addressMap map[string]bool) {
 	if len(addressMap) == 0 {
 		return
@@ -348,14 +333,6 @@ func (opts *BlazeOptions) writeAddresses(blockNum string, addressMap map[string]
 		os.Exit(1) // caller will start over if this process exits with non-zero value
 	}
 	// Show fifty dots no matter how many blocks we're scraping
-	skip := opts.BlockCnt / 100
-	if skip < 1 {
-		skip = 1
-	}
-	counter++
-	if counter%skip == 0 {
-		fmt.Fprintf(os.Stderr, "-------- ( ------)- <PROG>  : Scraping %d of %d at block %s\r", counter, opts.BlockCnt, blockNum)
-	}
 }
 
 func padLeft(str string, totalLen int) string {

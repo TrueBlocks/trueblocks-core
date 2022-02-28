@@ -19,33 +19,11 @@ static logger<err_log> elog("");
 logger<log_policy_i>* dLogger = (logger<log_policy_i>*)&elog;
 logger<log_policy_i>* eLogger = (logger<log_policy_i>*)&elog;
 
-static CDefaultOptions g_LocalUseOnly;
-bool silenceEnter = true;  // getEnvStr("SILENCE") != "false";
-bool silenceExit = silenceEnter;
-static size_t dbg_depth = 0;
-//----------------------------------------------------------------
-string_q _logEnter(const string_q& func) {
-    ostringstream os;
-    os << string_q(dbg_depth++, ' ') + bGreen << "Enter" << cOff << "(" << g_LocalUseOnly.getProgName() << "," << func
-       << "): ";
-    return os.str();
-}
-
-//----------------------------------------------------------------
-string_q _logExit(const string_q& func) {
-    if (dbg_depth > 0)
-        dbg_depth = dbg_depth - 1;
-    ostringstream os;
-    os << string_q(dbg_depth, ' ') + bBlue << "Exit" << cOff << "(" << g_LocalUseOnly.getProgName() << "," << func
-       << "): ";
-    return os.str();
-}
-
 //----------------------------------------------------------------
 template <>
 string_q logger<log_policy_i>::get_logline_header(void) {
     stringstream header;
-#define LOG_TIMING true
+#define LOG_TIMING false
     if (LOG_TIMING) {
         if (isTestMode()) {
             header << "TIME ~ CLOCK - ";

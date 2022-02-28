@@ -290,39 +290,3 @@ extern void logProgress(searchOpType op, uint64_t progress, uint64_t goal, const
 #define LOG_TEST_CALL(a)
 #define LOG_TEST_OBJ(a)
 #endif
-
-// The LOG parts of these routines disappear if turned off, but they still do their work because of the returns
-namespace qblocks {
-extern string_q _logEnter(const string_q& func);
-extern string_q _logExit(const string_q& func);
-extern bool silenceEnter;
-extern bool silenceExit;
-}  // namespace qblocks
-
-#define ENTER(a)                                                                                                       \
-    {                                                                                                                  \
-        if (!silenceEnter)                                                                                             \
-            LOG4(_logEnter(a));                                                                                        \
-    }                                                                                                                  \
-    string_q l_funcName = (a);
-
-#define EXIT_FAIL(a)                                                                                                   \
-    {                                                                                                                  \
-        LOG_WARN(_logExit(l_funcName));                                                                                \
-        cerr << (a);                                                                                                   \
-        return false;                                                                                                  \
-    }
-
-#define EXIT_NOMSG(b)                                                                                                  \
-    {                                                                                                                  \
-        if (!silenceExit)                                                                                              \
-            LOG4(_logExit(l_funcName));                                                                                \
-        return (b);                                                                                                    \
-    }
-
-#define EXIT_VOID()                                                                                                    \
-    {                                                                                                                  \
-        if (!silenceExit)                                                                                              \
-            LOG4(_logExit(l_funcName));                                                                                \
-        return;                                                                                                        \
-    }

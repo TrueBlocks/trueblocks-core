@@ -17,8 +17,6 @@ extern string_q pathName(const string_q& str, const string_q& path);
 extern void replaceNames(const string_q& chain, string_q& key, string_q& value);
 //--------------------------------------------------------------------------------
 bool COptions::handle_status(ostream& os) {
-    ENTER("handle_status");
-
     if (terse) {
         string_q fmt = STR_TERSE_REPORT;
         replaceAll(fmt, "[{TIME}]",
@@ -259,7 +257,7 @@ bool COptions::handle_status(ostream& os) {
         getChainList(status.chains);
     status.toJson(os);
 
-    EXIT_NOMSG(true);
+    return true;
 }
 
 //---------------------------------------------------------------------------
