@@ -26,13 +26,13 @@ bool COptions::queryFlatFile(const string_q& path, bool sorted) {
     }
 
     size_t sizeInBytes = fileSize(path);
-    rawData = reinterpret_cast<char*>(malloc(sizeInBytes + (2 * 59)));  // extra room
+    rawData = reinterpret_cast<char*>(malloc(sizeInBytes + (2 * asciiAppearanceSize)));  // extra room
     if (!rawData) {
         stage.Release();
         LOG_WARN("Could not allocate memory for data.");
         return !shouldQuit();
     }
-    bzero(rawData, sizeInBytes + (2 * 59));
+    bzero(rawData, sizeInBytes + (2 * asciiAppearanceSize));
 
     size_t nRead = stage.Read(rawData, sizeInBytes, sizeof(char));
     if (nRead != sizeInBytes) {
@@ -40,10 +40,10 @@ bool COptions::queryFlatFile(const string_q& path, bool sorted) {
         return !shouldQuit();
     }
 
-    size_t nRecords = fileSize(path) / 59;
+    size_t nRecords = fileSize(path) / asciiAppearanceSize;
     // stats.nRecords += nRecords;
     // cerr << "Unsorted: " << endl << rawData << endl;
-    qsort(rawData, nRecords, 59, sortRecord);
+    qsort(rawData, nRecords, asciiAppearanceSize, sortRecord);
     // cout << "Sorted: " << endl << rawData << endl;
     endOfData = rawData + sizeInBytes;
 
@@ -52,7 +52,7 @@ bool COptions::queryFlatFile(const string_q& path, bool sorted) {
         char search[70];
         strncpy(search, monitor->address.c_str(), monitor->address.size());
         search[monitor->address.size()] = '\0';
-        char* found = (char*)bsearch(search, rawData, nRecords, 59, findAppearance);
+        char* found = (char*)bsearch(search, rawData, nRecords, asciiAppearanceSize, findAppearance);
         if (!found) {
             LOG_PROGRESS(SCANNING, fileRange.first, listRange.second, " stage miss");
         } else {
@@ -62,7 +62,7 @@ bool COptions::queryFlatFile(const string_q& path, bool sorted) {
                 // Go backwards until we hit either the top of the file or the record
                 // before the first record in the file with the address we're interested
                 // in, then skip ahead one to get to the first record.
-                ptr -= 59;
+                ptr -= asciiAppearanceSize;
                 if (findAppearance(search, ptr))
                     ptr = rawData;
                 else
@@ -79,7 +79,7 @@ bool COptions::queryFlatFile(const string_q& path, bool sorted) {
                     app.blk = (uint32_t)str_2_Uint(nextTokenClear(s, '\t'));
                     app.txid = (uint32_t)str_2_Uint(s);
                     monitor->apps.push_back(app);
-                    found += 59;
+                    found += asciiAppearanceSize;
                 } else {
                     found = endOfData;
                 }
@@ -101,7 +101,7 @@ bool COptions::queryFlatFile(const string_q& path, bool sorted) {
 int sortRecord(const void* v1, const void* v2) {
     const char* s1 = (const char*)v1;
     const char* s2 = (const char*)v2;
-    return strncmp(s1, s2, 59);
+    return strncmp(s1, s2, asciiAppearanceSize);
 }
 
 //----------------------------------------------------------------

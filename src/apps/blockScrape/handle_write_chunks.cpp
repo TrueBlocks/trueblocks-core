@@ -15,27 +15,16 @@
 
 //---------------------------------------------------------------------------------------------------
 bool CConsolidator::write_chunks(blknum_t chunkSize, bool atLeastOnce) {
-    ENTER("write_chunks");
-
-    blknum_t nRecords = fileSize(newStage) / 59;
+    blknum_t nRecords = fileSize(newStage) / asciiAppearanceSize;
 
     // We have enough records to consolidate. Process chunks (of size 'chunkSize') until done.
     // This may take more than one pass. Check for user input control+C at each pass.
-    size_t pass = 0;
     while ((atLeastOnce || nRecords > chunkSize) && !shouldQuit()) {
         lockSection();
 
-        LOG4(bBlue, "Consolidation pass ", pass++, cOff);
         CStringArray lines;
         lines.reserve(nRecords + 100);
         asciiFileToLines(newStage, lines);
-
-        LOG4(cWhite, "  Starting search at record ", (chunkSize - 1), " of ", lines.size(), cOff);
-        LOG4(cGreen, "\t", (chunkSize - 1), ": ", lines[chunkSize - 1], cOff);
-        if (chunkSize < lines.size())
-            LOG4(cGreen, "\t", (chunkSize), ": ", lines[chunkSize], cOff);
-        LOG4("chunkSize: ", chunkSize, " lines.size(): ", lines.size());
-        LOG4((lines.size() == 0 ? "newStage file has zero lines" : ""));
 
         // We're looking for the location where the last complete block ends and the number
         // of records overtops chunkSize (note that chunkSize may be less than apps_per_chunk due
@@ -45,9 +34,6 @@ bool CConsolidator::write_chunks(blknum_t chunkSize, bool atLeastOnce) {
         for (uint64_t record = (chunkSize - 1); record < lines.size() && loc == NOPOS; record++) {
             CStringArray pParts;
             explode(pParts, lines[record], '\t');
-            if (verbose > 2 && (record == lines.size() - 2)) {
-                LOG4(bBlue, "\t", record, ": ", pParts[0], " -- ", pParts[1], " -- ", pParts[2], cOff);
-            }
             if (prvBlock != pParts[1]) {
                 if (!prvBlock.empty())
                     loc = record - 1;
@@ -60,15 +46,7 @@ bool CConsolidator::write_chunks(blknum_t chunkSize, bool atLeastOnce) {
         // the array back into newStage
         if (loc == NOPOS) {
             loc = lines.size() ? lines.size() - 1 : 0;
-            LOG8("  Last full block is last line in file: ", nRecords, " loc: ", loc);
         }
-
-        LOG4(cWhite, "  Break line ", loc, " of ", lines.size(), ". [0 to ", loc, " of ", (loc - 0 + 1), "]", cOff);
-        LOG4(cGreen, "\t", 0, ": ", lines[0], cOff);
-        LOG4(cGreen, "\t", 1, ": ", lines[1], cOff);
-        LOG4(bBlue, "\t", loc, ": ", lines[loc], cOff);
-        if (loc + 1 < lines.size())
-            LOG4(bTeal, "\t", min(lines.size(), loc + 1), ": ", lines[loc + 1], cOff);
 
         CStringArray remainingLines;
         remainingLines.reserve(chunkSize + 100);
@@ -81,7 +59,7 @@ bool CConsolidator::write_chunks(blknum_t chunkSize, bool atLeastOnce) {
                     LOG_WARN("preceeding line:\t[", ((record > 0) ? lines[record - 1] : "N/A"), "]");
                     LOG_WARN("offending line:\t[", lines[record], "]");
                     LOG_WARN("following line:\t[", ((record < loc) ? lines[record + 1] : "N/A"), "]");
-                    EXIT_NOMSG(false);
+                    return false;
                 }
                 consolidatedLines.push_back(lines[record]);
             }
@@ -98,49 +76,104 @@ bool CConsolidator::write_chunks(blknum_t chunkSize, bool atLeastOnce) {
 
                 writeIndexAsBinary(chunkPath, consolidatedLines, (pin ? visitToPin : nullptr), &pinList);
 
-                LOG8("  Found a chunk at [", chunkId, "] (inclusive)");
-                LOG4(cWhite, "  Wrote ", consolidatedLines.size(), " records to ", chunkPath, cOff);
-
                 loc++;
-                LOG4(cWhite, "  Rewriting records ", loc, " to ", lines.size(), " of ", lines.size(), " back to stage",
-                     cOff);
-                if (loc < lines.size())
-                    LOG4(cGreen, "\t", loc, ": ", lines[loc], cOff);
-                if (loc + 1 < lines.size())
-                    LOG4(cGreen, "\t", (loc + 1), ": ", lines[loc + 1], cOff);
-                if (loc - 1 < lines.size())
-                    LOG4(bBlue, "\t", (loc - 1), ": ", lines[loc - 1], cOff);
-                if (loc < lines.size())
-                    LOG4(bTeal, "\t", (loc), ": ", lines[loc], cOff);
 
                 for (uint64_t record = loc; record < lines.size(); record++)
                     remainingLines.push_back(lines[record]);
 
                 ::remove(newStage.c_str());
-
-            } else {
-                LOG4("consolidatedLines.size() == 0. Not able to write a chunk.");
             }
-
-        } else {
-            LOG4("lines.size() == 0. Not able to write a chunk.");
         }
 
         if (remainingLines.size()) {
             linesToAsciiFile(newStage, remainingLines);
-            LOG4(cWhite, "  Wrote ", remainingLines.size(), " records to ", newStage, cOff);
-        } else {
-            LOG4(cWhite, "  No records remain. ", substitute(newStage, indexFolder_staging, "$STAGING/"),
-                 " not written.", cOff);
         }
 
-        nRecords = fileSize(newStage) / 59;
+        nRecords = fileSize(newStage) / asciiAppearanceSize;
         unlockSection();
         if (atLeastOnce)
             atLeastOnce = nRecords > 0;
         chunkSize = min(opts->apps_per_chunk, nRecords);
     }
 
-    LOG_FN8(newStage);
-    EXIT_NOMSG(true);
+    return true;
+}
+
+//----------------------------------------------------------------
+bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTAPPLYFUNC pinFunc, void* pinFuncData) {
+    // ASSUMES THE ARRAY IS SORTED!
+
+    ASSERT(!fileExists(outFn));
+    string_q tmpFile = substitute(outFn, ".bin", ".tmp");
+
+    address_t prev;
+    uint32_t offset = 0, nAddrs = 0, cnt = 0;
+    CIndexedAppearanceArray blockTable;
+
+    hashbytes_t hash = hash_2_Bytes(versionHash);
+
+    CBloomArray blooms;
+
+    CArchive archive(WRITING_ARCHIVE);
+    if (!archive.Lock(tmpFile, modeWriteCreate, LOCK_NOWAIT)) {
+        LOG_ERR("Could not lock index file: ", tmpFile);
+        return false;
+    }
+
+    archive.Seek(0, SEEK_SET);  // write the header even though it's not fully detailed to preserve the space
+    archive.Write(MAGIC_NUMBER);
+    archive.Write(hash.data(), hash.size(), sizeof(uint8_t));
+    archive.Write(nAddrs);
+    archive.Write((uint32_t)blockTable.size());  // not accurate yet
+    for (size_t l = 0; l < lines.size(); l++) {
+        string_q line = lines[l];
+        ASSERT(countOf(line, '\t') == 2);
+        CStringArray parts;
+        explode(parts, line, '\t');
+        CIndexedAppearance rec(parts[1], parts[2]);
+        blockTable.push_back(rec);
+        if (!prev.empty() && parts[0] != prev) {
+            addToSet(blooms, prev);
+            addrbytes_t bytes = addr_2_Bytes(prev);
+            archive.Write(bytes.data(), bytes.size(), sizeof(uint8_t));
+            archive.Write(offset);
+            archive.Write(cnt);
+            offset += cnt;
+            cnt = 0;
+            nAddrs++;
+        }
+        cnt++;
+        prev = parts[0];
+    }
+
+    // The above algo always misses the last address, so we add it here
+    addToSet(blooms, prev);
+    addrbytes_t bytes = addr_2_Bytes(prev);
+    archive.Write(bytes.data(), bytes.size(), sizeof(uint8_t));
+    archive.Write(offset);
+    archive.Write(cnt);
+    nAddrs++;
+
+    for (auto record : blockTable) {
+        archive.Write(record.blk);
+        archive.Write(record.txid);
+    }
+
+    archive.Seek(0, SEEK_SET);  // re-write the header now that we have full data
+    archive.Write(MAGIC_NUMBER);
+    archive.Write(hash.data(), hash.size(), sizeof(uint8_t));
+    archive.Write(nAddrs);
+    archive.Write((uint32_t)blockTable.size());
+    archive.Release();
+
+    // We've built the data in a temporary file. We do this in case we're interrupted during the building of the
+    // data so it's not corrupted. In this way, we only move the data to its final resting place once. It's safer.
+    string_q bloomFile = substitute(substitute(outFn, "/finalized/", "/blooms/"), ".bin", ".bloom");
+    lockSection();                          // disallow control+c
+    writeBloomToBinary(bloomFile, blooms);  // write the bloom file
+    copyFile(tmpFile, outFn);               // move the index file
+    ::remove(tmpFile.c_str());              // remove the tmp file
+    unlockSection();
+
+    return (pinFunc ? ((*pinFunc)(outFn, pinFuncData)) : true);
 }

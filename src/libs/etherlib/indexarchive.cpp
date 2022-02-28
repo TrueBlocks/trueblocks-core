@@ -49,14 +49,14 @@ bool CIndexArchive::ReadIndexFromBinary(const string_q& path) {
         return false;
 
     size_t sz = fileSize(path);
-    rawData = reinterpret_cast<char*>(malloc(sz + (2 * 59)));
+    rawData = reinterpret_cast<char*>(malloc(sz + (2 * asciiAppearanceSize)));
     if (!rawData) {
         LOG_ERR("Could not allocate memory for data.");
         Release();
         return false;
     }
 
-    bzero(rawData, sz + (2 * 59));
+    bzero(rawData, sz + (2 * asciiAppearanceSize));
     size_t nRead = Read(rawData, sz, sizeof(char));
     if (nRead != sz) {
         LOG_ERR("Could not read entire file.");
@@ -77,110 +77,6 @@ bool CIndexArchive::ReadIndexFromBinary(const string_q& path) {
     appearances = (CIndexedAppearance*)(rawData + size);  // NOLINT
     Release();
     return true;
-}
-
-//----------------------------------------------------------------
-static const string_q STR_STEP1 = "  Extracting addresses...";
-static const string_q STR_STEP2 = STR_STEP1 + "extracting appearances...";
-static const string_q STR_STEP3 = STR_STEP2 + "exporting...";
-static const string_q STR_STEP4 = STR_STEP3 + "finalizing...";
-static const string_q STR_STEP5 = STR_STEP4 + "binary file created ";
-static const string_q STR_STEP5_A = STR_STEP4 + "ascii file created ";
-
-//----------------------------------------------------------------
-bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTAPPLYFUNC pinFunc, void* pinFuncData) {
-    // ASSUMES THE ARRAY IS SORTED!
-
-    ASSERT(!fileExists(outFn));
-    string_q tmpFile = substitute(outFn, ".bin", ".tmp");
-
-    address_t prev;
-    uint32_t offset = 0, nAddrs = 0, cnt = 0;
-    CIndexedAppearanceArray blockTable;
-
-    hashbytes_t hash = hash_2_Bytes(versionHash);
-    LOG8("versionHash: ", versionHash);
-
-    CBloomArray blooms;
-
-    // We want to notify 12 times
-    uint64_t notifyCnt = lines.size() / 12;
-    uint64_t progress = 0;
-
-    // LOG_INFO(cYellow, STR_STEP1, cOff, "\r");
-
-    CArchive archive(WRITING_ARCHIVE);
-    if (!archive.Lock(tmpFile, modeWriteCreate, LOCK_NOWAIT)) {
-        LOG_ERR("Could not lock index file: ", tmpFile);
-        return false;
-    }
-
-    archive.Seek(0, SEEK_SET);  // write the header even though it's not fully detailed to preserve the space
-    archive.Write(MAGIC_NUMBER);
-    archive.Write(hash.data(), hash.size(), sizeof(uint8_t));
-    archive.Write(nAddrs);
-    archive.Write((uint32_t)blockTable.size());  // not accurate yet
-    string_q msg = "";
-    for (size_t l = 0; l < lines.size(); l++) {
-        if (lines.size() > 1000 && !(++progress % notifyCnt)) {
-            msg += ".";
-            // LOG_INFO(cYellow, STR_STEP1, msg, cOff, "\r");
-        }
-        string_q line = lines[l];
-        ASSERT(countOf(line, '\t') == 2);
-        CStringArray parts;
-        explode(parts, line, '\t');
-        CIndexedAppearance rec(parts[1], parts[2]);
-        blockTable.push_back(rec);
-        if (!prev.empty() && parts[0] != prev) {
-            addToSet(blooms, prev);
-            addrbytes_t bytes = addr_2_Bytes(prev);
-            archive.Write(bytes.data(), bytes.size(), sizeof(uint8_t));
-            archive.Write(offset);
-            archive.Write(cnt);
-            offset += cnt;
-            cnt = 0;
-            nAddrs++;
-        }
-        cnt++;
-        prev = parts[0];
-    }
-
-    // The above algo always misses the last address, so we add it here
-    addToSet(blooms, prev);
-    addrbytes_t bytes = addr_2_Bytes(prev);
-    archive.Write(bytes.data(), bytes.size(), sizeof(uint8_t));
-    archive.Write(offset);
-    archive.Write(cnt);
-    nAddrs++;
-
-    // LOG_INFO(cYellow, STR_STEP2, cOff, "\r");
-    for (auto record : blockTable) {
-        archive.Write(record.blk);
-        archive.Write(record.txid);
-    }
-
-    // LOG_INFO(cYellow, STR_STEP3, cOff, "\r");
-    archive.Seek(0, SEEK_SET);  // re-write the header now that we have full data
-    archive.Write(MAGIC_NUMBER);
-    archive.Write(hash.data(), hash.size(), sizeof(uint8_t));
-    archive.Write(nAddrs);
-    archive.Write((uint32_t)blockTable.size());
-    archive.Release();
-
-    // We've built the data in a temporary file. We do this in case we're interrupted during the building of the
-    // data so it's not corrupted. In this way, we only move the data to its final resting place once. It's safer.
-    // LOG_INFO(cYellow, STR_STEP4, cOff, "\r");
-    string_q bloomFile = substitute(substitute(outFn, "/finalized/", "/blooms/"), ".bin", ".bloom");
-    lockSection();                          // disallow control+c
-    writeBloomToBinary(bloomFile, blooms);  // write the bloom file
-    copyFile(tmpFile, outFn);               // move the index file
-    ::remove(tmpFile.c_str());              // remove the tmp file
-    unlockSection();
-
-    // LOG_INFO(cYellow, STR_STEP5, greenCheck, cOff);
-
-    return (pinFunc ? ((*pinFunc)(outFn, pinFuncData)) : true);
 }
 
 //--------------------------------------------------------------
@@ -213,7 +109,7 @@ bool readIndexHeader(const string_q& path, CIndexHeader& header) {
     }
 
     if (endsWith(path, ".txt")) {
-        header.nRows = (uint32_t)fileSize(path) / (uint32_t)59;
+        header.nRows = (uint32_t)fileSize(path) / (uint32_t)asciiAppearanceSize;
         CStringArray lines;
         asciiFileToLines(path, lines);
         CAddressBoolMap addrMap;
@@ -240,69 +136,3 @@ bool readIndexHeader(const string_q& path, CIndexHeader& header) {
     return true;
 }
 }  // namespace qblocks
-
-#if 0
-//----------------------------------------------------------------
-void writeIndexAsAscii(const string_q& outFn, const CStringArray& lines) {
-    ASSERT(!fileExists(outFn));
-
-    address_t prev;
-    uint32_t offset = 0, nAddrs = 0, cnt = 0;
-    CIndexedAppearanceArray blockTable;
-
-    LOG_INFO(cYellow, STR_STEP1, "(", lines.size(), ")", cOff, "\r");
-
-    // We want to notify 12 times
-    uint64_t notifyCnt = lines.size() / 12;
-    uint64_t progress = 0;
-
-    string_q msg = "";
-    ostringstream addrStream;
-    for (const auto& line : lines) {
-        if (!(++progress % notifyCnt)) {
-            msg += ".";
-            LOG_INFO(cYellow, STR_STEP1, "(", lines.size(), ")", cOff, "\r");
-        }
-        CStringArray parts;
-        explode(parts, line, '\t');
-        CIndexedAppearance rec(parts[1], parts[2]);
-        blockTable.push_back(rec);
-        if (!prev.empty() && parts[0] != prev) {
-            addrStream << prev << "\t";
-            addrStream << padNum6(offset) << "\t";
-            addrStream << padNum6(cnt) << endl;
-            offset += cnt;
-            cnt = 0;
-            nAddrs++;
-        }
-        cnt++;
-        prev = parts[0];
-    }
-    // The above algo always misses the last address, so we add it here
-    addrStream << prev << "\t";
-    addrStream << padNum6(offset) << "\t";
-    addrStream << padNum6(cnt) << endl;
-    nAddrs++;
-
-    LOG_INFO(cYellow, STR_STEP2, cOff, "\r");
-    ostringstream blockStream;
-    for (auto record : blockTable) {
-        blockStream << padNum9(record.blk) << "\t";
-        blockStream << padNum5(record.txid) << endl;
-    }
-
-    LOG_INFO(cYellow, STR_STEP3, cOff, "\r");
-    ostringstream headerStream;
-    headerStream << padNum7(MAGIC_NUMBER) << "\t";
-    headerStream << versionHash << "\t";
-    headerStream << padNum7(nAddrs) << "\t";
-    headerStream << padNum7((uint32_t)blockTable.size()) << endl;
-
-    LOG_INFO(cYellow, STR_STEP4, cOff, "\r");
-    lockSection();
-    stringToAsciiFile(outFn, headerStream.str() + addrStream.str() + blockStream.str());
-    unlockSection();
-
-    LOG_INFO(cYellow, STR_STEP5_A, greenCheck, cOff);
-}
-#endif
