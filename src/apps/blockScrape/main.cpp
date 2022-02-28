@@ -20,8 +20,8 @@ int main(int argc, const char* argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    ASSERT(options.commandLines.size() > 0);  // no support for --file: option
-    // for (auto command : options.commandLines) {
+    // no support for --file: option
+    ASSERT(options.commandLines.size() == 1);
     if (!options.parseArguments(options.commandLines[0]))
         return 0;
 

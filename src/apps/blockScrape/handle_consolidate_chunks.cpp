@@ -33,9 +33,9 @@ bool CConsolidator::consolidate_chunks(void) {
 
     // ...if we don't have enough, return and get more...
     if (nRecords <= chunkSize) {
-        LOG_INFO("");
-        LOG_INFO(bBlue, "Consolidation not ready...", cOff);
-        LOG_INFO(cYellow, "  Have ", nRecords, " records of ", chunkSize, ". Need ", distToHead, " more.", cOff);
+        LOG4("");
+        LOG4(bBlue, "Consolidation not ready...", cOff);
+        LOG4(cYellow, "  Have ", nRecords, " records of ", chunkSize, ". Need ", distToHead, " more.", cOff);
         LOG_FN8(newStage);
         EXIT_NOMSG(true);
     }
@@ -45,7 +45,7 @@ bool CConsolidator::consolidate_chunks(void) {
 
 //---------------------------------------------------------------------------------------------------
 bool visitToPin(const string_q& chunkId, void* data) {
-    LOG_INFO("  Pinning");
+    LOG4("  Pinning");
     LOG_FN8(chunkId);
     ASSERT(data);
     CPinnedChunkArray& pinList = *(CPinnedChunkArray*)data;  // NO_LINT

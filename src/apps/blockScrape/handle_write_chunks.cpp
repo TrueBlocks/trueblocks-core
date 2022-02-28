@@ -25,13 +25,12 @@ bool CConsolidator::write_chunks(blknum_t chunkSize, bool atLeastOnce) {
     while ((atLeastOnce || nRecords > chunkSize) && !shouldQuit()) {
         lockSection();
 
-        LOG_INFO("");
-        LOG_INFO(bBlue, "Consolidation pass ", pass++, cOff);
+        LOG4(bBlue, "Consolidation pass ", pass++, cOff);
         CStringArray lines;
         lines.reserve(nRecords + 100);
         asciiFileToLines(newStage, lines);
 
-        LOG_INFO(cWhite, "  Starting search at record ", (chunkSize - 1), " of ", lines.size(), cOff);
+        LOG4(cWhite, "  Starting search at record ", (chunkSize - 1), " of ", lines.size(), cOff);
         LOG4(cGreen, "\t", (chunkSize - 1), ": ", lines[chunkSize - 1], cOff);
         if (chunkSize < lines.size())
             LOG4(cGreen, "\t", (chunkSize), ": ", lines[chunkSize], cOff);
@@ -47,7 +46,7 @@ bool CConsolidator::write_chunks(blknum_t chunkSize, bool atLeastOnce) {
             CStringArray pParts;
             explode(pParts, lines[record], '\t');
             if (verbose > 2 && (record == lines.size() - 2)) {
-                LOG_INFO(bBlue, "\t", record, ": ", pParts[0], " -- ", pParts[1], " -- ", pParts[2], cOff);
+                LOG4(bBlue, "\t", record, ": ", pParts[0], " -- ", pParts[1], " -- ", pParts[2], cOff);
             }
             if (prvBlock != pParts[1]) {
                 if (!prvBlock.empty())
@@ -64,7 +63,7 @@ bool CConsolidator::write_chunks(blknum_t chunkSize, bool atLeastOnce) {
             LOG8("  Last full block is last line in file: ", nRecords, " loc: ", loc);
         }
 
-        LOG_INFO(cWhite, "  Break line ", loc, " of ", lines.size(), ". [0 to ", loc, " of ", (loc - 0 + 1), "]", cOff);
+        LOG4(cWhite, "  Break line ", loc, " of ", lines.size(), ". [0 to ", loc, " of ", (loc - 0 + 1), "]", cOff);
         LOG4(cGreen, "\t", 0, ": ", lines[0], cOff);
         LOG4(cGreen, "\t", 1, ": ", lines[1], cOff);
         LOG4(bBlue, "\t", loc, ": ", lines[loc], cOff);
@@ -100,7 +99,7 @@ bool CConsolidator::write_chunks(blknum_t chunkSize, bool atLeastOnce) {
                 writeIndexAsBinary(chunkPath, consolidatedLines, (pin ? visitToPin : nullptr), &pinList);
 
                 LOG8("  Found a chunk at [", chunkId, "] (inclusive)");
-                LOG_INFO(cWhite, "  Wrote ", consolidatedLines.size(), " records to ", chunkPath, cOff);
+                LOG4(cWhite, "  Wrote ", consolidatedLines.size(), " records to ", chunkPath, cOff);
 
                 loc++;
                 LOG4(cWhite, "  Rewriting records ", loc, " to ", lines.size(), " of ", lines.size(), " back to stage",
@@ -129,10 +128,10 @@ bool CConsolidator::write_chunks(blknum_t chunkSize, bool atLeastOnce) {
 
         if (remainingLines.size()) {
             linesToAsciiFile(newStage, remainingLines);
-            LOG_INFO(cWhite, "  Wrote ", remainingLines.size(), " records to ", newStage, cOff);
+            LOG4(cWhite, "  Wrote ", remainingLines.size(), " records to ", newStage, cOff);
         } else {
-            LOG_INFO(cWhite, "  No records remain. ", substitute(newStage, indexFolder_staging, "$STAGING/"),
-                     " not written.", cOff);
+            LOG4(cWhite, "  No records remain. ", substitute(newStage, indexFolder_staging, "$STAGING/"),
+                 " not written.", cOff);
         }
 
         nRecords = fileSize(newStage) / 59;

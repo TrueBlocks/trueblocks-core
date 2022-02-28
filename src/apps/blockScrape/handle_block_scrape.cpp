@@ -71,11 +71,10 @@ bool COptions::scrape_blocks(void) {
     cons.distFromHead = (cons.client > cons.blazeStart ? cons.client - cons.blazeStart : 0);
 
     ostringstream os;
-    os << string_q(5, '-');
-    os << " Scraping " << cons.blazeStart << " to " << min(cons.client, (cons.blazeStart + cons.blazeCnt));
-    os << " of " << cons.client;
-    os << " (" << (cons.distFromHead) << " from head) " << string_q(30, '-');
-    LOG_INFO(os.str());
+    // os << "Scraping " << cons.blazeStart << " to " << min(cons.client, (cons.blazeStart + cons.blazeCnt));
+    // os << " of " << cons.client;
+    // os << " (" << (cons.distFromHead) << " from head) ";
+    // LOG_INFO(os.str());
 
     // Let the user know what's going on
     if (verbose >= 8)
@@ -104,9 +103,6 @@ bool COptions::scrape_blocks(void) {
     blazeCmd << "--addr_chan_cnt " << addr_chan_cnt << " ";
     blazeCmd << "--chain " << getChain() << " ";
     blazeCmd << (verbose ? ("--verbose " + uint_2_Str(verbose)) : "");
-#undef LOG_TEST_CALL
-#define LOG_TEST_CALL(a)                                                                                               \
-    { LOG_INFO(bWhite, l_funcName, " ----> ", (isTestMode() ? substitute((a), cacheFolder, "$CACHE/") : (a)), cOff); }
     LOG_TEST_CALL(blazeCmd.str());
 
     if (system(blazeCmd.str().c_str()) != 0) {
@@ -119,7 +115,7 @@ bool COptions::scrape_blocks(void) {
         defaultQuitHandler(1);  // this does not quit, but only notifies the caller that the user quit blaze early
         EXIT_NOMSG(false);
     }
-    LOG_PROGRESS(SCANNING, cons.blazeCnt, cons.blazeStart + cons.blazeCnt, "                    ");
+    // LOG_PROGRESS(SCANNING, cons.blazeCnt, cons.blazeStart + cons.blazeCnt, "                    ");
 
     if (!verbose) {
         cerr << '\r' << string_q(120, ' ') << '\r';

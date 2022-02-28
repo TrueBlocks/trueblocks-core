@@ -46,9 +46,6 @@ func (opts *ScrapeOptions) TestLog() {
 
 func (opts *ScrapeOptions) ToCmdLine() string {
 	options := ""
-	if len(opts.Action) > 0 {
-		options += " --action " + opts.Action
-	}
 	if opts.Pin {
 		options += " --pin"
 	}

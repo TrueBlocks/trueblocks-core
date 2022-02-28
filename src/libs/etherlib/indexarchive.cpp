@@ -107,7 +107,7 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTA
     uint64_t notifyCnt = lines.size() / 12;
     uint64_t progress = 0;
 
-    LOG_INFO(cYellow, STR_STEP1, cOff, "\r");
+    // LOG_INFO(cYellow, STR_STEP1, cOff, "\r");
 
     CArchive archive(WRITING_ARCHIVE);
     if (!archive.Lock(tmpFile, modeWriteCreate, LOCK_NOWAIT)) {
@@ -124,7 +124,7 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTA
     for (size_t l = 0; l < lines.size(); l++) {
         if (lines.size() > 1000 && !(++progress % notifyCnt)) {
             msg += ".";
-            LOG_INFO(cYellow, STR_STEP1, msg, cOff, "\r");
+            // LOG_INFO(cYellow, STR_STEP1, msg, cOff, "\r");
         }
         string_q line = lines[l];
         ASSERT(countOf(line, '\t') == 2);
@@ -154,13 +154,13 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTA
     archive.Write(cnt);
     nAddrs++;
 
-    LOG_INFO(cYellow, STR_STEP2, cOff, "\r");
+    // LOG_INFO(cYellow, STR_STEP2, cOff, "\r");
     for (auto record : blockTable) {
         archive.Write(record.blk);
         archive.Write(record.txid);
     }
 
-    LOG_INFO(cYellow, STR_STEP3, cOff, "\r");
+    // LOG_INFO(cYellow, STR_STEP3, cOff, "\r");
     archive.Seek(0, SEEK_SET);  // re-write the header now that we have full data
     archive.Write(MAGIC_NUMBER);
     archive.Write(hash.data(), hash.size(), sizeof(uint8_t));
@@ -170,7 +170,7 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTA
 
     // We've built the data in a temporary file. We do this in case we're interrupted during the building of the
     // data so it's not corrupted. In this way, we only move the data to its final resting place once. It's safer.
-    LOG_INFO(cYellow, STR_STEP4, cOff, "\r");
+    // LOG_INFO(cYellow, STR_STEP4, cOff, "\r");
     string_q bloomFile = substitute(substitute(outFn, "/finalized/", "/blooms/"), ".bin", ".bloom");
     lockSection();                          // disallow control+c
     writeBloomToBinary(bloomFile, blooms);  // write the bloom file
@@ -178,7 +178,7 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTA
     ::remove(tmpFile.c_str());              // remove the tmp file
     unlockSection();
 
-    LOG_INFO(cYellow, STR_STEP5, greenCheck, cOff);
+    // LOG_INFO(cYellow, STR_STEP5, greenCheck, cOff);
 
     return (pinFunc ? ((*pinFunc)(outFn, pinFuncData)) : true);
 }

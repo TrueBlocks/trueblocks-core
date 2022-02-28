@@ -16,7 +16,7 @@ import (
 )
 
 func (opts *BlazeOptions) ScrapeBlocks() {
-	opts.Globals.LogLevel = 10
+	// opts.Globals.LogLevel = 10
 	if opts.Globals.LogLevel > 0 {
 		fmt.Println("------------------------------------------------------------------------")
 		fmt.Println("  chifra.blaze.RpcProvider:          ", config.GetRpcProvider(opts.Globals.Chain))
@@ -320,7 +320,7 @@ func extractAddressesFromLogs(addressMap map[string]bool, logs *Log, blockNum st
 	}
 }
 
-var counter = 0
+var counter uint64 = 0
 
 func (opts *BlazeOptions) writeAddresses(blockNum string, addressMap map[string]bool) {
 	if len(addressMap) == 0 {
@@ -348,15 +348,14 @@ func (opts *BlazeOptions) writeAddresses(blockNum string, addressMap map[string]
 		os.Exit(1) // caller will start over if this process exits with non-zero value
 	}
 	// Show fifty dots no matter how many blocks we're scraping
-	// skip := 1 // Options.block_cnt / 100
-	// if skip < 1 {
-	// 	skip = 1
-	// }
+	skip := opts.BlockCnt / 100
+	if skip < 1 {
+		skip = 1
+	}
 	counter++
-	// if counter%skip == 0 {
-	fmt.Fprintf(os.Stderr, "00000000 ( 000000)- <PROG>  : Scraping %d of %d at block %s\r", counter, opts.BlockCnt, blockNum)
-	// time.Sleep(30000 * time.Microsecond)
-	// }
+	if counter%skip == 0 {
+		fmt.Fprintf(os.Stderr, "-------- ( ------)- <PROG>  : Scraping %d of %d at block %s\r", counter, opts.BlockCnt, blockNum)
+	}
 }
 
 func padLeft(str string, totalLen int) string {

@@ -21,7 +21,6 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("action", "a", "enum[toggle|run|restart|pause|quit]", OPT_FLAG, "command to apply to the specified scrape"),
     COption("pin", "p", "", OPT_SWITCH, "pin chunks (and blooms) to IPFS as they are created (requires pinning service)"),  // NOLINT
     COption("publish", "u", "", OPT_SWITCH, "after pinning the chunk, publish it to UnchainedIndex"),
     COption("block_cnt", "n", "<uint64>", OPT_FLAG, "maximum number of blocks to process per pass"),
@@ -40,7 +39,6 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     // BEG_CODE_LOCAL_INIT
-    string_q action = "";
     // END_CODE_LOCAL_INIT
 
     CBlock block;
@@ -54,12 +52,6 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
-        } else if (startsWith(arg, "-a:") || startsWith(arg, "--action:")) {
-            if (!confirmEnum("action", action, arg))
-                return false;
-        } else if (arg == "-a" || arg == "--action") {
-            return flag_required("action");
-
         } else if (arg == "-p" || arg == "--pin") {
             pin = true;
 
