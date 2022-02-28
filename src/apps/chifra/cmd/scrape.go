@@ -55,10 +55,9 @@ One of [ toggle | run | restart | pause | quit ]`)
 	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().BlockCnt, "block_cnt", "n", 2000, "maximum number of blocks to process per pass")
 	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().BlockChanCnt, "block_chan_cnt", "b", 10, "number of concurrent block processing channels (hidden)")
 	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().AddrChanCnt, "addr_chan_cnt", "d", 20, "number of concurrent address processing channels (hidden)")
-	if os.Getenv("TEST_MODE") != "true" {
-		scrapeCmd.Flags().MarkHidden("block_chan_cnt")
-		scrapeCmd.Flags().MarkHidden("addr_chan_cnt")
-	}
+	scrapeCmd.Flags().BoolVarP(&scrapePkg.GetOptions().Blaze, "blaze", "z", false, "invoke the blaze scraper")
+	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().StartBlock, "start_block", "l", 0, "first block to visit (available only for blaze scraper)")
+	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().RipeBlock, "ripe_block", "r", 0, "blocks prior to this value are written to 'ripe' folder (available only for blaze scraper)")
 	globals.InitGlobals(scrapeCmd, &scrapePkg.GetOptions().Globals)
 
 	scrapeCmd.SetUsageTemplate(UsageWithNotes(notesScrape))

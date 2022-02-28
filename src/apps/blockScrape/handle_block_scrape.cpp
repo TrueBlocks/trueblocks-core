@@ -38,7 +38,7 @@ bool COptions::scrape_blocks(void) {
         return false;
     }
     ostringstream blazeCmd;
-    blazeCmd << "chifra blaze ";
+    blazeCmd << "chifra scrape indexer --blaze ";
     blazeCmd << "--start_block " << cons.blazeStart << " ";
     blazeCmd << "--ripe_block " << cons.blazeRipe << " ";
     blazeCmd << "--block_cnt " << cons.blazeCnt << " ";

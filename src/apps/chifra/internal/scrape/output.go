@@ -27,20 +27,23 @@ func RunScrape(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	// EXISTING_CODE
-	var wg sync.WaitGroup
+	if opts.Blaze {
+		opts.ScrapeBlocks()
+	} else {
+		// EXISTING_CODE
+		var wg sync.WaitGroup
 
-	wg.Add(1)
-	IndexScraper = NewScraper(colors.Yellow, "IndexScraper", opts.Sleep, opts.Globals.LogLevel)
-	go opts.RunIndexScraper(&wg, hasIndexerFlag(args[0]))
+		wg.Add(1)
+		IndexScraper = NewScraper(colors.Yellow, "IndexScraper", opts.Sleep, opts.Globals.LogLevel)
+		go opts.RunIndexScraper(&wg, hasIndexerFlag(args[0]))
 
-	// BOGUS - UNCOMMENT THIS
-	// wg.Add(1)
-	// MonitorScraper = NewScraper(colors.Purple, "MonitorScraper", opts.Sleep, opts.Globals.LogLevel)
-	// go opts.RunMonitorScraper(&wg, hasMonitorsFlag(args[0]))
+		// BOGUS - UNCOMMENT THIS
+		// wg.Add(1)
+		// MonitorScraper = NewScraper(colors.Purple, "MonitorScraper", opts.Sleep, opts.Globals.LogLevel)
+		// go opts.RunMonitorScraper(&wg, hasMonitorsFlag(args[0]))
 
-	wg.Wait()
-
+		wg.Wait()
+	}
 	return nil
 	// EXISTING_CODE
 }
@@ -55,6 +58,7 @@ func ServeScrape(w http.ResponseWriter, r *http.Request) bool {
 	}
 
 	// EXISTING_CODE
+	// TODO: BOGUS -- FIGURE OUT SOME WAY TO DISABLE CERTAIN COMMANDS FROM SERVER USE
 	return false
 	// EXISTING_CODE
 }

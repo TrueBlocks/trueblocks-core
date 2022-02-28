@@ -26,6 +26,9 @@ type ScrapeOptions struct {
 	BlockCnt     uint64
 	BlockChanCnt uint64
 	AddrChanCnt  uint64
+	Blaze        bool
+	StartBlock   uint64
+	RipeBlock    uint64
 	Globals      globals.GlobalOptions
 	BadFlag      error
 }
@@ -41,6 +44,9 @@ func (opts *ScrapeOptions) TestLog() {
 	logger.TestLog(opts.BlockCnt != 2000, "BlockCnt: ", opts.BlockCnt)
 	logger.TestLog(opts.BlockChanCnt != 10, "BlockChanCnt: ", opts.BlockChanCnt)
 	logger.TestLog(opts.AddrChanCnt != 20, "AddrChanCnt: ", opts.AddrChanCnt)
+	logger.TestLog(opts.Blaze, "Blaze: ", opts.Blaze)
+	logger.TestLog(opts.StartBlock != 0, "StartBlock: ", opts.StartBlock)
+	logger.TestLog(opts.RipeBlock != 0, "RipeBlock: ", opts.RipeBlock)
 	opts.Globals.TestLog()
 }
 
@@ -55,6 +61,9 @@ func (opts *ScrapeOptions) ToCmdLine() string {
 	if opts.BlockCnt != 2000 {
 		options += (" --block_cnt " + fmt.Sprintf("%d", opts.BlockCnt))
 	}
+	// TODO: BOGUS
+	// logger.TestLog(opts.StartBlock != 0, "StartBlock: ", opts.StartBlock)
+	// logger.TestLog(opts.RipeBlock != 0, "RipeBlock: ", opts.RipeBlock)
 	options += " " + strings.Join(opts.Modes, " ")
 	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
@@ -66,6 +75,10 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ScrapeOptions {
 	opts.BlockCnt = 2000
 	opts.BlockChanCnt = 10
 	opts.AddrChanCnt = 20
+	// TODO: BOGUS -- should we explicitly set boolean options?
+	opts.Blaze = false
+	opts.StartBlock = 0
+	opts.RipeBlock = 0
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "modes":
@@ -87,6 +100,12 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ScrapeOptions {
 			opts.BlockChanCnt = globals.ToUint64(value[0])
 		case "addrChanCnt":
 			opts.AddrChanCnt = globals.ToUint64(value[0])
+		case "blaze":
+			opts.Blaze = true
+		case "startBlock":
+			opts.StartBlock = globals.ToUint64(value[0])
+		case "ripeBlock":
+			opts.RipeBlock = globals.ToUint64(value[0])
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "scrape")

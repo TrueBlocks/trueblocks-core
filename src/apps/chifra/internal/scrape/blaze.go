@@ -1,4 +1,4 @@
-package blazePkg
+package scrapePkg
 
 import (
 	"bytes"
@@ -15,7 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
 
-func (opts *BlazeOptions) ScrapeBlocks() {
+func (opts *ScrapeOptions) ScrapeBlocks() {
 	// opts.Globals.LogLevel = 10
 
 	blockChannel := make(chan int)
@@ -52,7 +52,7 @@ type tracesAndLogs struct {
 }
 
 // getTracesAndLogs Process the block channel and for each block query the node for both traces and logs. Send results to addressChannel
-func (opts *BlazeOptions) getTracesAndLogs(blockChannel chan int, addressChannel chan tracesAndLogs, blockWG *sync.WaitGroup) {
+func (opts *ScrapeOptions) getTracesAndLogs(blockChannel chan int, addressChannel chan tracesAndLogs, blockWG *sync.WaitGroup) {
 
 	for blockNum := range blockChannel {
 		traces, err := opts.getTracesFromBlock(blockNum)
@@ -72,7 +72,7 @@ func (opts *BlazeOptions) getTracesAndLogs(blockChannel chan int, addressChannel
 	blockWG.Done()
 }
 
-func (opts *BlazeOptions) extractAddresses(addressChannel chan tracesAndLogs, addressWG *sync.WaitGroup) {
+func (opts *ScrapeOptions) extractAddresses(addressChannel chan tracesAndLogs, addressWG *sync.WaitGroup) {
 
 	for blockTraceAndLog := range addressChannel {
 		addressMap := make(map[string]bool)
@@ -104,7 +104,7 @@ func (opts *BlazeOptions) extractAddresses(addressChannel chan tracesAndLogs, ad
 	addressWG.Done()
 }
 
-func (opts *BlazeOptions) extractAddressesFromTraces(addressMap map[string]bool, traces *Trace, blockNum string) {
+func (opts *ScrapeOptions) extractAddressesFromTraces(addressMap map[string]bool, traces *Trace, blockNum string) {
 	if traces.Result == nil || len(traces.Result) == 0 {
 		return
 	}
@@ -308,9 +308,9 @@ func extractAddressesFromLogs(addressMap map[string]bool, logs *Log, blockNum st
 }
 
 // TODO: BOGUS
-var counter uint64 = 0
+var counter12 uint64 = 0
 
-func (opts *BlazeOptions) writeAddresses(blockNum string, addressMap map[string]bool) {
+func (opts *ScrapeOptions) writeAddresses(blockNum string, addressMap map[string]bool) {
 	if len(addressMap) == 0 {
 		return
 	}
@@ -337,8 +337,8 @@ func (opts *BlazeOptions) writeAddresses(blockNum string, addressMap map[string]
 	}
 	// Show fifty dots no matter how many blocks we're scraping
 	// TODO: BOGUS
-	counter++
-	fmt.Fprintf(os.Stderr, "-------- ( ------)- <PROG>  : Scraping %d of %d at block %s\r", counter, opts.BlockCnt, blockNum)
+	counter12++
+	fmt.Fprintf(os.Stderr, "-------- ( ------)- <PROG>  : Scraping %d of %d at block %s\r", counter12, opts.BlockCnt, blockNum)
 }
 
 func padLeft(str string, totalLen int) string {
@@ -383,7 +383,7 @@ func padLeft(str string, totalLen int) string {
 // TODO:
 
 // getTracesFromBlock Returns all traces for a given block.
-func (opts *BlazeOptions) getTracesFromBlock(blockNum int) ([]byte, error) {
+func (opts *ScrapeOptions) getTracesFromBlock(blockNum int) ([]byte, error) {
 	payloadBytes, err := json.Marshal(RPCPayload{"2.0", "trace_block", RPCParams{fmt.Sprintf("0x%x", blockNum)}, 2})
 	if err != nil {
 		fmt.Println(err)
@@ -414,7 +414,7 @@ func (opts *BlazeOptions) getTracesFromBlock(blockNum int) ([]byte, error) {
 }
 
 // getLogsFromBlock Returns all logs for a given block.
-func (opts *BlazeOptions) getLogsFromBlock(blockNum int) ([]byte, error) {
+func (opts *ScrapeOptions) getLogsFromBlock(blockNum int) ([]byte, error) {
 	payloadBytes, err := json.Marshal(RPCPayload{"2.0", "eth_getLogs", RPCParams{LogFilter{fmt.Sprintf("0x%x", blockNum), fmt.Sprintf("0x%x", blockNum)}}, 2})
 	if err != nil {
 		fmt.Println(err)
@@ -446,7 +446,7 @@ func (opts *BlazeOptions) getLogsFromBlock(blockNum int) ([]byte, error) {
 }
 
 // getTransactionReceipt Returns recipt for a given transaction -- only used in errored contract creations
-func (opts *BlazeOptions) getTransactionReceipt(hash string) ([]byte, error) {
+func (opts *ScrapeOptions) getTransactionReceipt(hash string) ([]byte, error) {
 	payloadBytes, err := json.Marshal(RPCPayload{"2.0", "eth_getTransactionReceipt", RPCParams{hash}, 2})
 	if err != nil {
 		fmt.Println(err)
