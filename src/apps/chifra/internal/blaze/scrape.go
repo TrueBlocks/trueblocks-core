@@ -307,6 +307,9 @@ func extractAddressesFromLogs(addressMap map[string]bool, logs *Log, blockNum st
 	}
 }
 
+// TODO: BOGUS
+var counter uint64 = 0
+
 func (opts *BlazeOptions) writeAddresses(blockNum string, addressMap map[string]bool) {
 	if len(addressMap) == 0 {
 		return
@@ -333,6 +336,9 @@ func (opts *BlazeOptions) writeAddresses(blockNum string, addressMap map[string]
 		os.Exit(1) // caller will start over if this process exits with non-zero value
 	}
 	// Show fifty dots no matter how many blocks we're scraping
+	// TODO: BOGUS
+	counter++
+	fmt.Fprintf(os.Stderr, "-------- ( ------)- <PROG>  : Scraping %d of %d at block %s\r", counter, opts.BlockCnt, blockNum)
 }
 
 func padLeft(str string, totalLen int) string {

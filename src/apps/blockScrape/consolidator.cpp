@@ -33,6 +33,27 @@ CConsolidator::CConsolidator(const COptions* o) : pin(false), prevBlock(0), opts
 }
 
 //--------------------------------------------------------------------------
+void CConsolidator::Format(ostream& os) const {
+    os << "oldStage:     " << oldStage << endl;
+    os << "newStage:     " << newStage << endl;
+    os << "tmpFile:      " << tmpFile << endl;
+    os << "tmp_fn:       " << tmp_fn << endl;
+    os << "blazeStart:   " << blazeStart << endl;
+    os << "blazeRipe:    " << blazeRipe << endl;
+    os << "blazeCnt:     " << blazeCnt << endl;
+    os << "prevBlock:    " << prevBlock << endl;
+    os << "client:       " << client << endl;
+    os << "finalized:    " << finalized << endl;
+    os << "staging:      " << staging << endl;
+    os << "ripe:         " << ripe << endl;
+    os << "unripe:       " << unripe << endl;
+    os << "pin:          " << (pin ? "true" : "false") << endl;
+    uint32_t x = 0;
+    for (auto pi : pinList)
+        os << "pinList[" << padNum3(x++) << "]: " << pi << endl;
+}
+
+//--------------------------------------------------------------------------
 bool appendFile(const string_q& toFile, const string_q& fromFile) {
     ofstream output;
     output.open(toFile, ios::out | ios::app);

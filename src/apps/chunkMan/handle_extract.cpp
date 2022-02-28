@@ -43,7 +43,6 @@ static bool chunkVisitFunc(const string_q& path, void* data) {
                 LOG_ERR("Could not create file ", outFile, ". Quitting...");
                 return false;
             }
-            LOG_INFO("File opened for writing");
         }
 
         CIndexArchive index(READING_ARCHIVE);
@@ -76,13 +75,9 @@ static bool chunkVisitFunc(const string_q& path, void* data) {
                         }
                     }
                 }
-                LOG_INFO(a, " of ", index.nAddrs, " ", bytes_2_Addr(aRec->bytes) + "\r");
             }
             if (opts->save) {
                 output.close();
-                LOG_INFO("Wrote ", fileSize(outFile), " bytes to ", outFile);
-            } else {
-                LOG_PROG("Processed: " + path);
             }
         }
     }
