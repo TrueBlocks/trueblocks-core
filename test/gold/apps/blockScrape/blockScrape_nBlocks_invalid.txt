@@ -15,9 +15,12 @@ Flags:
   -s, --sleep float           seconds to sleep between scraper passes (default 14)
   -p, --pin                   pin chunks (and blooms) to IPFS as they are created (requires pinning service)
   -u, --publish               after pinning the chunk, publish it to UnchainedIndex
+  -z, --blaze                 invoke the blaze scraper to process blocks
   -n, --block_cnt uint        maximum number of blocks to process per pass (default 2000)
-  -b, --block_chan_cnt uint   number of concurrent block processing channels (hidden) (default 10)
-  -d, --addr_chan_cnt uint    number of concurrent address processing channels (hidden) (default 20)
+  -b, --block_chan_cnt uint   number of concurrent block processing channels (default 10)
+  -d, --addr_chan_cnt uint    number of concurrent address processing channels (default 20)
+  -l, --start_block uint      first block to visit (available only for blaze scraper)
+  -r, --ripe_block uint       blocks prior to this value are written to 'ripe' folder (available only for blaze scraper)
   -x, --fmt string            export format, one of [none|json*|txt|csv|api]
   -v, --verbose               enable verbose (increase detail with --log_level)
   -h, --help                  display this help screen

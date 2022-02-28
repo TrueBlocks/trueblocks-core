@@ -51,8 +51,12 @@ func convertToCommandLine(in string) string {
 		return "no_zero"
 	case "proxyFor":
 		return "proxy_for"
+	case "ripeBlock":
+		return "ripe_block"
 	case "skipDdos":
 		return "skip_ddos"
+	case "startBlock":
+		return "start_block"
 	case "summarizeBy":
 		return "summarize_by"
 	case "toCustom":

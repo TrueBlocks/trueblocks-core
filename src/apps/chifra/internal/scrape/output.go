@@ -27,10 +27,10 @@ func RunScrape(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
+	// EXISTING_CODE
 	if opts.Blaze {
 		opts.ScrapeBlocks()
 	} else {
-		// EXISTING_CODE
 		var wg sync.WaitGroup
 
 		wg.Add(1)

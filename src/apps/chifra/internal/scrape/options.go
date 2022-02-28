@@ -23,10 +23,10 @@ type ScrapeOptions struct {
 	Sleep        float64
 	Pin          bool
 	Publish      bool
+	Blaze        bool
 	BlockCnt     uint64
 	BlockChanCnt uint64
 	AddrChanCnt  uint64
-	Blaze        bool
 	StartBlock   uint64
 	RipeBlock    uint64
 	Globals      globals.GlobalOptions
@@ -41,10 +41,10 @@ func (opts *ScrapeOptions) TestLog() {
 	logger.TestLog(opts.Sleep != 14, "Sleep: ", opts.Sleep)
 	logger.TestLog(opts.Pin, "Pin: ", opts.Pin)
 	logger.TestLog(opts.Publish, "Publish: ", opts.Publish)
+	logger.TestLog(opts.Blaze, "Blaze: ", opts.Blaze)
 	logger.TestLog(opts.BlockCnt != 2000, "BlockCnt: ", opts.BlockCnt)
 	logger.TestLog(opts.BlockChanCnt != 10, "BlockChanCnt: ", opts.BlockChanCnt)
 	logger.TestLog(opts.AddrChanCnt != 20, "AddrChanCnt: ", opts.AddrChanCnt)
-	logger.TestLog(opts.Blaze, "Blaze: ", opts.Blaze)
 	logger.TestLog(opts.StartBlock != 0, "StartBlock: ", opts.StartBlock)
 	logger.TestLog(opts.RipeBlock != 0, "RipeBlock: ", opts.RipeBlock)
 	opts.Globals.TestLog()
@@ -58,12 +58,18 @@ func (opts *ScrapeOptions) ToCmdLine() string {
 	if opts.Publish {
 		options += " --publish"
 	}
+	if opts.Blaze {
+		options += " --blaze"
+	}
 	if opts.BlockCnt != 2000 {
 		options += (" --block_cnt " + fmt.Sprintf("%d", opts.BlockCnt))
 	}
-	// TODO: BOGUS
-	// logger.TestLog(opts.StartBlock != 0, "StartBlock: ", opts.StartBlock)
-	// logger.TestLog(opts.RipeBlock != 0, "RipeBlock: ", opts.RipeBlock)
+	if opts.BlockChanCnt != 10 {
+		options += (" --block_chan_cnt " + fmt.Sprintf("%d", opts.BlockChanCnt))
+	}
+	if opts.AddrChanCnt != 20 {
+		options += (" --addr_chan_cnt " + fmt.Sprintf("%d", opts.AddrChanCnt))
+	}
 	options += " " + strings.Join(opts.Modes, " ")
 	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
@@ -75,8 +81,6 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ScrapeOptions {
 	opts.BlockCnt = 2000
 	opts.BlockChanCnt = 10
 	opts.AddrChanCnt = 20
-	// TODO: BOGUS -- should we explicitly set boolean options?
-	opts.Blaze = false
 	opts.StartBlock = 0
 	opts.RipeBlock = 0
 	for key, value := range r.URL.Query() {
@@ -94,14 +98,14 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ScrapeOptions {
 			opts.Pin = true
 		case "publish":
 			opts.Publish = true
+		case "blaze":
+			opts.Blaze = true
 		case "blockCnt":
 			opts.BlockCnt = globals.ToUint64(value[0])
 		case "blockChanCnt":
 			opts.BlockChanCnt = globals.ToUint64(value[0])
 		case "addrChanCnt":
 			opts.AddrChanCnt = globals.ToUint64(value[0])
-		case "blaze":
-			opts.Blaze = true
 		case "startBlock":
 			opts.StartBlock = globals.ToUint64(value[0])
 		case "ripeBlock":

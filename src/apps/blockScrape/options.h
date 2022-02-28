@@ -29,6 +29,7 @@ class COptions : public COptionsBase {
     bool pin;
     bool publish;
     uint64_t block_cnt;
+    bool blaze;
     uint64_t block_chan_cnt;
     uint64_t addr_chan_cnt;
     uint64_t apps_per_chunk;
