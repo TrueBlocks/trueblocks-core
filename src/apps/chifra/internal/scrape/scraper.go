@@ -71,8 +71,6 @@ func hasMonitorsFlag(mode string) bool {
 var IndexScraper Scraper
 var MonitorScraper Scraper
 
-var counter uint64 = 0
-
 func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup, initialState bool) {
 	defer wg.Done()
 
@@ -85,10 +83,6 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup, initialState bool
 
 		} else {
 			opts.Globals.PassItOn("blockScrape", opts.ToCmdLine())
-			if counter > 125 {
-				break
-			}
-			counter += opts.BlockCnt
 			if s.Running {
 				s.Pause()
 			}
