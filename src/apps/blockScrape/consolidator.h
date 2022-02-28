@@ -19,7 +19,6 @@ class COptions;
 class CConsolidator : public CMetaData {
   public:
     bool pin;
-    blknum_t distFromHead;
     blknum_t prevBlock;
     blknum_t blazeStart;
     blknum_t blazeRipe;
@@ -36,12 +35,4 @@ class CConsolidator : public CMetaData {
     bool stage_chunks(void);
     bool consolidate_chunks(void);
     bool write_chunks(blknum_t chunkSize, bool atLeastOnce);
-    friend ostream& operator<<(ostream& os, const CConsolidator& it);
 };
-
-//-------------------------------------------------------------------------
-inline ostream& operator<<(ostream& os, const CConsolidator& it) {
-    it.Format(os);
-    os << endl;
-    return os;
-}

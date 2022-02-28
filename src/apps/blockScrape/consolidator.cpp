@@ -14,7 +14,7 @@
 #include "consolidator.h"
 
 //--------------------------------------------------------------------------
-CConsolidator::CConsolidator(const COptions* o) : pin(false), distFromHead(0), prevBlock(0), opts(o) {
+CConsolidator::CConsolidator(const COptions* o) : pin(false), prevBlock(0), opts(o) {
     blazeStart = 0;
     blazeRipe = 0;
     blazeCnt = 0;
@@ -133,4 +133,121 @@ bool copyRipeToStage(const string_q& path, void* data) {
 
     // Return true if the user has not hit control+c
     return !shouldQuit();
+}
+
+//--------------------------------------------------------------------------
+bool CConsolidator::consolidate_chunks(void) {
+    blknum_t nRecords = fileSize(newStage) / asciiAppearanceSize;
+    blknum_t chunkSize = opts->apps_per_chunk;
+    if (nRecords <= chunkSize) {
+        return true;
+    }
+    return write_chunks(chunkSize, false /* atLeastOnce */);
+}
+
+//--------------------------------------------------------------------------
+bool CConsolidator::stage_chunks(void) {
+    oldStage = getLastFileInFolder(indexFolder_staging, false);
+    newStage = indexFolder_staging + padNum9(prevBlock) + ".txt";
+    if (oldStage == newStage) {
+        return true;
+    }
+
+    tmpFile = indexFolder + "temp.txt";
+    if (oldStage != tmp_fn) {
+        if (!appendFile(tmpFile /* to */, oldStage /* from */)) {
+            return false;
+        }
+    }
+
+    if (!appendFile(tmpFile /* to */, tmp_fn /* from */)) {
+        ::remove(tmpFile.c_str());
+        return false;
+    }
+
+    lockSection();
+    ::rename(tmpFile.c_str(), newStage.c_str());
+    if (oldStage != tmp_fn && oldStage != newStage)
+        ::remove(oldStage.c_str());
+    ::remove(tmp_fn.c_str());
+    unlockSection();
+
+    return true;
+}
+
+//---------------------------------------------------------------------------------------------------
+bool CConsolidator::write_chunks(blknum_t chunkSize, bool atLeastOnce) {
+    blknum_t nRecords = fileSize(newStage) / asciiAppearanceSize;
+    while ((atLeastOnce || nRecords > chunkSize) && !shouldQuit()) {
+        lockSection();
+
+        CStringArray lines;
+        lines.reserve(nRecords + 100);
+        asciiFileToLines(newStage, lines);
+
+        string_q prvBlock;
+        size_t loc = NOPOS;
+        for (uint64_t record = (chunkSize - 1); record < lines.size() && loc == NOPOS; record++) {
+            CStringArray pParts;
+            explode(pParts, lines[record], '\t');
+            if (prvBlock != pParts[1]) {
+                if (!prvBlock.empty())
+                    loc = record - 1;
+                prvBlock = pParts[1];
+            }
+        }
+
+        if (loc == NOPOS) {
+            loc = lines.size() ? lines.size() - 1 : 0;
+        }
+
+        CStringArray remainingLines;
+        remainingLines.reserve(chunkSize + 100);
+        if (lines.size() > 0) {
+            CStringArray consolidatedLines;
+            consolidatedLines.reserve(lines.size());
+            for (uint64_t record = 0; record <= loc; record++) {
+                if (countOf(lines[record], '\t') != 2) {
+                    LOG_WARN("Found a record with less than two tabs.");
+                    LOG_WARN("preceeding line:\t[", ((record > 0) ? lines[record - 1] : "N/A"), "]");
+                    LOG_WARN("offending line:\t[", lines[record], "]");
+                    LOG_WARN("following line:\t[", ((record < loc) ? lines[record + 1] : "N/A"), "]");
+                    return false;
+                }
+                consolidatedLines.push_back(lines[record]);
+            }
+
+            if (consolidatedLines.size() > 0) {
+                CStringArray p1;
+                explode(p1, consolidatedLines[0], '\t');
+                CStringArray p2;
+                explode(p2, consolidatedLines[consolidatedLines.size() - 1], '\t');
+
+                sort(consolidatedLines.begin(), consolidatedLines.end());
+                string_q chunkId = p1[1] + "-" + p2[1];
+                string_q chunkPath = indexFolder_finalized + chunkId + ".bin";
+
+                writeIndexAsBinary(chunkPath, consolidatedLines, (pin ? visitToPin : nullptr), &pinList);
+
+                loc++;
+
+                for (uint64_t record = loc; record < lines.size(); record++)
+                    remainingLines.push_back(lines[record]);
+
+                ::remove(newStage.c_str());
+            }
+        }
+
+        if (remainingLines.size()) {
+            linesToAsciiFile(newStage, remainingLines);
+        }
+
+        nRecords = fileSize(newStage) / asciiAppearanceSize;
+        unlockSection();
+        if (atLeastOnce)
+            atLeastOnce = nRecords > 0;
+        chunkSize = min(opts->apps_per_chunk, nRecords);
+    }
+
+    return true;
 }

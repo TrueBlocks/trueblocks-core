@@ -56,6 +56,7 @@ string_q COptionsBase::getProgName(void) const {
 
 //--------------------------------------------------------------------------------
 bool COptionsBase::prePrepareArguments(CStringArray& separatedArgs_, int argCountIn, const char* argvIn[]) {
+    colorsOff();
     if (argCountIn > 0)  // always is, but check anyway
         COptionsBase::g_progName = CFilename(argvIn[0]).getFilename();
     if (!getEnvStr("PROG_NAME").empty())

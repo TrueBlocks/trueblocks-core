@@ -180,14 +180,6 @@ void COptions::Init(void) {
     // clang-format on
     // END_CODE_INIT
 
-    if (isLiveTest()) {
-        n_test_runs = 10;
-        first_snap = 0;
-        snap_to_grid = 30;
-        apps_per_chunk = 6000;
-        unripe_dist = 28;  // doesn't change
-    }
-
     minArgs = 0;
 }
 

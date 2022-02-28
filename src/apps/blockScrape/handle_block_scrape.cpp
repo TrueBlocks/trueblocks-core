@@ -16,70 +16,17 @@
 // Note: We want to re-evaluate our progress each time we loop, so don't move this to parseOptions
 //--------------------------------------------------------------------------
 bool COptions::scrape_blocks(void) {
-    static blknum_t runs = 0;  // this counter is used for texting purposes only
-    if (isLiveTest() && runs++ > n_test_runs)
-        defaultQuitHandler(0);
-
-    // We need to know how far along in the scrape we are. We get the progress (i.e. highest
-    // block) of the client and the each of index caches. From there, we can determine where to
-    // start the scraper (one more than the largest cache). Note that the first chunk for block
-    // zero is special and has already been created.
     CConsolidator cons(this);
-
-    // This peice of data will be needed later when we create a new chunk, so we save it off here.
     cons.pin = pin;
-
-    // We need to know where to start...
     cons.blazeStart = max(cons.ripe, max(cons.staging, cons.finalized)) + 1;
-
-    // We need to know how many blocks to scrape. The user has told us...
     cons.blazeCnt = block_cnt;
-
-    // ...but we may make some adjustments to speed things up. When not running in docker mode,
-    // we can do more blocks. In docker mode, we stick with the defaults otherwise, docker
-    // may kill us for using too many resources.
-    if (!isDockerMode() && getChain() == "mainnet") {
-        // We can speed things up on the early chain...
-        if (cons.blazeStart < 450000) {
-            cons.blazeCnt = max(blknum_t(4000), cons.blazeCnt);
-        } else if (isDdos(cons.blazeStart)) {
-            // ...or slow things down during 2016s dDos...
-            cons.blazeCnt = 500;
-        }
-    }
-
-    // If a block is more than 28 (unripe_dist) blocks from the head we consider it 'ripe.' We
-    // want to tell the blaze scraper when 'ripe' is, so it can ignore those blocks. Once a block
-    // goes ripe, we no longer scrape it. We move it to staging instead. Staging means the block
-    // is ready to be consolidated (or finalized) and put into a chunk.
-    //
-    // Note that 28 blocks is an arbitrarily chosen value, but is a bit more than six minutes under
-    // normal operation ((14 * 28) / 60 == 6.5). If the index is near the head of the chain and the
-    // difficulty level is high (the time bomb is exploding), the time will extend, but the
-    // nature of the operation is the same.
     cons.blazeRipe = (cons.client < unripe_dist ? 0 : cons.client - unripe_dist);
-
-    // One final adjustment to blazeCnt so we don't run past the tip of the chain...
     if ((cons.blazeStart + cons.blazeCnt) > cons.client) {
         ASSERT(blazeStart <= cons.client);  // see above
         cons.blazeCnt = (cons.client - cons.blazeStart);
     }
+    distFromHead = (cons.client > cons.blazeStart ? cons.client - cons.blazeStart : 0);
 
-    // How far are we from the head? This is useful for telling how long to sleep the next time.
-    cons.distFromHead = (cons.client > cons.blazeStart ? cons.client - cons.blazeStart : 0);
-
-    ostringstream os;
-    // os << "Scraping " << cons.blazeStart << " to " << min(cons.client, (cons.blazeStart + cons.blazeCnt));
-    // os << " of " << cons.client;
-    // os << " (" << (cons.distFromHead) << " from head) ";
-    // LOG_INFO(os.str());
-
-    // Let the user know what's going on
-    if (verbose >= 8)
-        cerr << cons;
-
-    // If the index is ahead of the tip of the chain (for example, the node is re-syncing)...do nothing...
-    // Returning false only means this round didn't complete, the loop will continue.
     if (cons.blazeStart > cons.client) {
         LOG_INFO("The index (", cons.blazeStart, ") is ahead of the chain (", cons.client, ").");
         return false;
@@ -90,8 +37,6 @@ bool COptions::scrape_blocks(void) {
         LOG_WARN("The user hit control+C...");
         return false;
     }
-
-    // We're ready to scrape, so build the blaze command line...
     ostringstream blazeCmd;
     blazeCmd << "chifra blaze ";
     blazeCmd << "--start_block " << cons.blazeStart << " ";
@@ -101,75 +46,25 @@ bool COptions::scrape_blocks(void) {
     blazeCmd << "--addr_chan_cnt " << addr_chan_cnt << " ";
     blazeCmd << "--chain " << getChain() << " ";
     blazeCmd << (verbose ? ("--verbose " + uint_2_Str(verbose)) : "");
-    // #undef LOG_TEST_CALL
-    // #define LOG_TEST_CALL(a) \
-//     { LOG_INFO(bWhite, (a), cOff); }
-    //     LOG_TEST_CALL(blazeCmd.str());
 
     if (system(blazeCmd.str().c_str()) != 0) {
-        // Blaze returns non-zero if it fails. In this case, we need to remove files in the 'ripe'
-        // folder because they're inconsistent (blaze's runs in parallel, so the block sequence
-        // is not complete). We blindly clean all ripe files, which is a bit of overill, but it's
-        // easy and it works. Next time we run, blaze will start over at the last staged block.
         cleanFolder(indexFolder_ripe);
         LOG_WARN("Blaze quit without finishing. Reprocessing...");
-        defaultQuitHandler(1);  // this does not quit, but only notifies the caller that the user quit blaze early
+        defaultQuitHandler(1);
         return false;
     }
-    // LOG_PROGRESS(SCANNING, cons.blazeCnt, cons.blazeStart + cons.blazeCnt, "                    ");
 
-    if (!verbose) {
-        cerr << '\r' << string_q(120, ' ') << '\r';
-        cerr.flush();
-    }
-
-    // Blaze succeeded, but the user may have started `acctExport` during the time blaze started and finished.
-    // Because we don't want acctExport to produce incorrect results, so we bail out knowing that the ripe
-    // folder is in a consistant state, and the next scrape will pick up where it left off.
     if (isRunning("acctExport")) {
         LOG_WARN("'chifra export' is running. 'chifra scrape' cannot run at this time...");
         return false;
     }
 
-    // Blaze has sucessfullly created an individual file for each block between 'blazeStart' and
-    // 'blazeStart + block_cnt'. Each file is a fixed-width list of addresses that appear in that block.
-    // The unripe folder holds blocks that are less than 28 (unripe_dist) blocks old. We do nothing
-    // further with them, although acctExport may use them if it wishes to.
-
-    // From this point until the end of this invocation (scrape), the processing must be able to stop abruptly
-    // without resulting in corrupted data (Control+C for example). This means we must process a single file at
-    // a time in sequential order. 'Processing' means moving files from ripe to staging and then (if possible)
-    // from the staging into a finalized chunk. If we stop processing at any point, we want to leave the
-    // data in a state where the next invocation can either clean up or pick up where it left off.
-
-    // Next, we processes one file in the ripe folder at a time (using the consolidator) by appending
-    // that file's data to a temporary, growing staging file. We flush the data to disc after each append
-    // and then remove the ripe file. If this process is interrupted, we clean up both the ripe folder and
-    // the temporary staging file. This may be over kill, but it's safer. In effect, we start over at the
-    // most recently successfully staged block the next time through. The value `prevBlock` points to the
-    // last completed staging block. That is, the last block in the file is ../staged/{prevBlock}.txt.
-    //
-    // We're also processing time stamps at the same time.
-
-    // This file is where the consolidator stores the temporary new stage. We don't write to that newStage
-    // directly. We collect in a temporary file and only write at the end. In this way, we don't corrupt
-    // the stage.
     if (!cons.tmp_stream.is_open()) {
-        // If we can't open the temporary stage, let the user know and try again later
         LOG_WARN("Could not open temporary staging file.");
         return false;
     }
 
-    // Blaze has finished processign blazeCnt blocks. We spin through the 'ripe' folder and process each
-    // one sequentially. At some points during this processing (when we hit a grid boundary) we consolidate
-    // a chunk that is short of the MAX_ROWS boundary. That is, we will snap to grid. We do this in order to
-    // make recovering from incorrect chunking, if it is ever identified, easier. (Otherwise, because the
-    // index chunk files are named by block, every file would have to be regnerated if we found an error.)
     if (!forEveryFileInFolder(indexFolder_ripe, copyRipeToStage, &cons)) {
-        // One of two thing can have happened here. (1) the user hit control+c or we encountered
-        // a non-sequential block (i.e. blaze did something wrong.) The second thing that could have
-        // happened is that we chunked up because we snapped to the grid. In either case, we clean up
-        // and start another scrape wherever we left off.
         cleanFolder(indexFolder_unripe);
         cleanFolder(indexFolder_ripe);
         cons.tmp_stream.close();
@@ -178,29 +73,112 @@ bool COptions::scrape_blocks(void) {
     }
     cons.tmp_stream.close();
 
-    // The stage (which is a single text file of fixed-width records of un-chunked blocks) now
-    // contains all non-consolidated records. That is, the ripe folder is empty. All files are closed.
-
-    // Next, we try to create some chunks. Creating a chunk means consolidating them (writing
-    // them to a binary relational table), and re-write any un-chunked records back onto the stage.
-    // Again, if anything goes wrong we need clean up and leave the data in a recoverable state.
     if (!cons.stage_chunks()) {
         cleanFolder(indexFolder_unripe);
         cleanFolder(indexFolder_ripe);
         ::remove(cons.tmp_fn.c_str());
     }
 
-    // Did user hit control+c? Just checking...
     if (shouldQuit())
         return false;
 
-    // TODO(tjayrush): We should try to scrape timestamps with blaze while we're doing this scan
-    // TODO(tjayrush): try to capture timestamps during blaze scraping
+    // TODO: BOGUS - we need to turn timestamps on again
     // freshenTimestamps(cons.blazeStart + cons.blazeCnt);
 
-    // Consolidate...
-    bool ret = cons.consolidate_chunks();
+    return cons.consolidate_chunks();
+}
 
-    // We're done with a single scrape, we can go to sleep...
-    return ret;
+//----------------------------------------------------------------
+bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTAPPLYFUNC pinFunc, void* pinFuncData) {
+    // ASSUMES THE ARRAY IS SORTED!
+
+    ASSERT(!fileExists(outFn));
+    string_q tmpFile = substitute(outFn, ".bin", ".tmp");
+
+    address_t prev;
+    uint32_t offset = 0, nAddrs = 0, cnt = 0;
+    CIndexedAppearanceArray blockTable;
+
+    hashbytes_t hash = hash_2_Bytes(versionHash);
+
+    CBloomArray blooms;
+
+    CArchive archive(WRITING_ARCHIVE);
+    if (!archive.Lock(tmpFile, modeWriteCreate, LOCK_NOWAIT)) {
+        LOG_ERR("Could not lock index file: ", tmpFile);
+        return false;
+    }
+
+    archive.Seek(0, SEEK_SET);  // write the header even though it's not fully detailed to preserve the space
+    archive.Write(MAGIC_NUMBER);
+    archive.Write(hash.data(), hash.size(), sizeof(uint8_t));
+    archive.Write(nAddrs);
+    archive.Write((uint32_t)blockTable.size());  // not accurate yet
+    for (size_t l = 0; l < lines.size(); l++) {
+        string_q line = lines[l];
+        ASSERT(countOf(line, '\t') == 2);
+        CStringArray parts;
+        explode(parts, line, '\t');
+        CIndexedAppearance rec(parts[1], parts[2]);
+        blockTable.push_back(rec);
+        if (!prev.empty() && parts[0] != prev) {
+            addToSet(blooms, prev);
+            addrbytes_t bytes = addr_2_Bytes(prev);
+            archive.Write(bytes.data(), bytes.size(), sizeof(uint8_t));
+            archive.Write(offset);
+            archive.Write(cnt);
+            offset += cnt;
+            cnt = 0;
+            nAddrs++;
+        }
+        cnt++;
+        prev = parts[0];
+    }
+
+    // The above algo always misses the last address, so we add it here
+    addToSet(blooms, prev);
+    addrbytes_t bytes = addr_2_Bytes(prev);
+    archive.Write(bytes.data(), bytes.size(), sizeof(uint8_t));
+    archive.Write(offset);
+    archive.Write(cnt);
+    nAddrs++;
+
+    for (auto record : blockTable) {
+        archive.Write(record.blk);
+        archive.Write(record.txid);
+    }
+
+    archive.Seek(0, SEEK_SET);  // re-write the header now that we have full data
+    archive.Write(MAGIC_NUMBER);
+    archive.Write(hash.data(), hash.size(), sizeof(uint8_t));
+    archive.Write(nAddrs);
+    archive.Write((uint32_t)blockTable.size());
+    archive.Release();
+
+    // We've built the data in a temporary file. We do this in case we're interrupted during the building of the
+    // data so it's not corrupted. In this way, we only move the data to its final resting place once. It's safer.
+    string_q bloomFile = substitute(substitute(outFn, "/finalized/", "/blooms/"), ".bin", ".bloom");
+    lockSection();                          // disallow control+c
+    writeBloomToBinary(bloomFile, blooms);  // write the bloom file
+    copyFile(tmpFile, outFn);               // move the index file
+    ::remove(tmpFile.c_str());              // remove the tmp file
+    unlockSection();
+
+    return (pinFunc ? ((*pinFunc)(outFn, pinFuncData)) : true);
+}
+
+//---------------------------------------------------------------------------------------------------
+bool visitToPin(const string_q& chunkId, void* data) {
+    CPinnedChunkArray& pinList = *(CPinnedChunkArray*)data;  // NO_LINT
+    CPinnedChunk pinRecord;
+    pinlib_pinChunk(pinList, chunkId, pinRecord);
+    string_q ci = substitute(pinRecord.fileName, indexFolder_finalized, "");
+    ci = substitute(ci, indexFolder_blooms, "");
+    ci = substitute(ci, ".bin", "");
+    ostringstream os;
+    os << ci << "\t" << pinRecord.bloomHash << "\t" << pinRecord.indexHash << endl;
+    string_q manifestFile = chainConfigsTxt_manifest;
+    os << asciiFileToString(manifestFile);
+    stringToAsciiFile(manifestFile, os.str());
+    return !shouldQuit();
 }
