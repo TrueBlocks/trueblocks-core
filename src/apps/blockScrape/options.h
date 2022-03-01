@@ -50,7 +50,6 @@ class COptions : public COptionsBase {
     blknum_t latestBlockNum;
     CPinnedChunkArray pinList;
     CApiKey lic;
-    blknum_t distFromHead;
 
     COptions(void);
     ~COptions(void);

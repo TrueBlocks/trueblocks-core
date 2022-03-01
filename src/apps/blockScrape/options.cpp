@@ -97,12 +97,6 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // Nor should we run if the index is being actively scanned...
-    if (isRunning("acctExport")) {
-        LOG_WARN("Refusing to run while 'chifra export' is running.");
-        return false;
-    }
-
     // We can't really test this code, so we just report and quit
     if (isTestMode()) {
         ostringstream os;
@@ -169,7 +163,7 @@ bool COptions::parseArguments(string_q& command) {
     ::remove((indexFolder_staging + "000000000-temp.txt").c_str());
     cleanFolder(indexFolder_unripe);
 
-    return true;
+    return !isRunning("acctExport");
 }
 
 //---------------------------------------------------------------------------------------------------

@@ -14,25 +14,21 @@
 
 //--------------------------------------------------------------------------
 bool COptions::scrape_blocks(void) {
-    CMetaData meta = getMetaData();
     prev_block = 0;
     tmp_fn = indexFolder_staging + "000000000-temp.txt";
     tmp_stream.open(tmp_fn, ios::out | ios::trunc);
-    blaze_start = max(meta.ripe, max(meta.staging, meta.finalized)) + 1;
-    blaze_ripe = (meta.client < unripe_dist ? 0 : meta.client - unripe_dist);
-    if ((blaze_start + block_cnt) > meta.client) {
-        ASSERT(blaze_start <= meta.client);  // see above
-        block_cnt = (meta.client - blaze_start);
-    }
-    distFromHead = (meta.client > blaze_start ? meta.client - blaze_start : 0);
-
-    if (blaze_start > meta.client) {
-        LOG_INFO("The index (", blaze_start, ") is ahead of the chain (", meta.client, ").");
+    if (!tmp_stream.is_open()) {
+        LOG_WARN("Could not open temporary staging file.");
         return false;
     }
 
-    if (shouldQuit()) {
-        LOG_WARN("The user hit control+C...");
+    CMetaData meta = getMetaData();
+    blaze_ripe = (meta.client < unripe_dist ? 0 : meta.client - unripe_dist);
+    blaze_start = max(meta.ripe, max(meta.staging, meta.finalized)) + 1;
+    if ((blaze_start + block_cnt) > meta.client)
+        block_cnt = (meta.client - blaze_start);
+    if (blaze_start > meta.client) {
+        LOG_INFO("The index (", blaze_start, ") is ahead of the chain (", meta.client, ").");
         return false;
     }
 
@@ -49,17 +45,12 @@ bool COptions::scrape_blocks(void) {
     if (system(blazeCmd.str().c_str()) != 0) {
         cleanFolder(indexFolder_ripe);
         LOG_WARN("Blaze quit without finishing. Reprocessing...");
-        defaultQuitHandler(1);
         return false;
     }
 
     if (isRunning("acctExport")) {
+        cleanFolder(indexFolder_ripe);
         LOG_WARN("'chifra export' is running. 'chifra scrape' cannot run at this time...");
-        return false;
-    }
-
-    if (!tmp_stream.is_open()) {
-        LOG_WARN("Could not open temporary staging file.");
         return false;
     }
 
