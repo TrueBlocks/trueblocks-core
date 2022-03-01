@@ -57,7 +57,6 @@ One of [ toggle | run | restart | pause | quit ]`)
 	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().SnapToGrid, "snap_to_grid", "", 100000, "an override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index (hidden)")
 	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().FirstSnap, "first_snap", "", 2250000, "the first block at which snap_to_grid is enabled (hidden)")
 	scrapeCmd.Flags().BoolVarP(&scrapePkg.GetOptions().AllowMissing, "allow_missing", "", false, "do not report errors for blockchain that contain blocks with zero addresses (hidden)")
-	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().NTestRuns, "n_test_runs", "", 0, "in live testing mode, the number of test runs to process before quitting (hidden)")
 	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().StartBlock, "start_block", "l", 0, "first block to visit (available only for blaze scraper)")
 	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().RipeBlock, "ripe_block", "r", 0, "blocks prior to this value are written to 'ripe' folder (available only for blaze scraper)")
 	if os.Getenv("TEST_MODE") != "true" {
@@ -66,7 +65,6 @@ One of [ toggle | run | restart | pause | quit ]`)
 		scrapeCmd.Flags().MarkHidden("snap_to_grid")
 		scrapeCmd.Flags().MarkHidden("first_snap")
 		scrapeCmd.Flags().MarkHidden("allow_missing")
-		scrapeCmd.Flags().MarkHidden("n_test_runs")
 	}
 	globals.InitGlobals(scrapeCmd, &scrapePkg.GetOptions().Globals)
 

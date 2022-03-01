@@ -49,8 +49,6 @@ func convertToCommandLine(in string) string {
 		return "max_records"
 	case "maxTraces":
 		return "max_traces"
-	case "nTestRuns":
-		return "n_test_runs"
 	case "noHeader":
 		return "no_header"
 	case "noUpdate":

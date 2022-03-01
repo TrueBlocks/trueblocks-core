@@ -43,8 +43,6 @@ bool COptions::parseArguments(string_q& command) {
 
     CBlock block;
     getBlockHeader(block, getBlockProgress(BP_CLIENT).client);
-    latestBlockTs = block.timestamp;
-    latestBlockNum = block.blockNumber;
 
     Init();
     explode(arguments, command, ' ');
@@ -184,7 +182,6 @@ void COptions::Init(void) {
     snap_to_grid = getGlobalConfig("blockScrape")->getConfigInt("settings", "snap_to_grid", 100000);
     first_snap = getGlobalConfig("blockScrape")->getConfigInt("settings", "first_snap", 2250000);
     allow_missing = getGlobalConfig("blockScrape")->getConfigBool("settings", "allow_missing", false);
-    n_test_runs = getGlobalConfig("blockScrape")->getConfigInt("settings", "n_test_runs", 0);
     // clang-format on
     // END_CODE_INIT
 
