@@ -24,7 +24,6 @@ static const COption params[] = {
     COption("pin", "p", "", OPT_SWITCH, "pin chunks (and blooms) to IPFS as they are created (requires pinning service)"),  // NOLINT
     COption("publish", "u", "", OPT_SWITCH, "after pinning the chunk, publish it to UnchainedIndex"),
     COption("block_cnt", "n", "<uint64>", OPT_FLAG, "maximum number of blocks to process per pass"),
-    COption("blaze", "z", "", OPT_SWITCH, "invoke the blaze scraper to process blocks"),
     COption("block_chan_cnt", "b", "<uint64>", OPT_FLAG, "number of concurrent block processing channels"),
     COption("addr_chan_cnt", "d", "<uint64>", OPT_FLAG, "number of concurrent address processing channels"),
     COption("", "", "", OPT_DESCRIPTION, "Scan the chain and update (and optionally pin) the TrueBlocks index of appearances."),  // NOLINT
@@ -64,9 +63,6 @@ bool COptions::parseArguments(string_q& command) {
                 return false;
         } else if (arg == "-n" || arg == "--block_cnt") {
             return flag_required("block_cnt");
-
-        } else if (arg == "-z" || arg == "--blaze") {
-            blaze = true;
 
         } else if (startsWith(arg, "-b:") || startsWith(arg, "--block_chan_cnt:")) {
             if (!confirmUint("block_chan_cnt", block_chan_cnt, arg))
@@ -187,9 +183,6 @@ void COptions::Init(void) {
     publish = false;
     // clang-format off
     block_cnt = getGlobalConfig("blockScrape")->getConfigInt("settings", "block_cnt", 2000);
-    // clang-format on
-    blaze = false;
-    // clang-format off
     block_chan_cnt = getGlobalConfig("blockScrape")->getConfigInt("settings", "block_chan_cnt", 10);
     addr_chan_cnt = getGlobalConfig("blockScrape")->getConfigInt("settings", "addr_chan_cnt", 20);
     apps_per_chunk = getGlobalConfig("blockScrape")->getConfigInt("settings", "apps_per_chunk", 2000000);

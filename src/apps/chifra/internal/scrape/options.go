@@ -27,6 +27,12 @@ type ScrapeOptions struct {
 	BlockCnt     uint64
 	BlockChanCnt uint64
 	AddrChanCnt  uint64
+	AppsPerChunk uint64
+	UnripeDist   uint64
+	SnapToGrid   uint64
+	FirstSnap    uint64
+	AllowMissing bool
+	NTestRuns    uint64
 	StartBlock   uint64
 	RipeBlock    uint64
 	Globals      globals.GlobalOptions
@@ -45,6 +51,12 @@ func (opts *ScrapeOptions) TestLog() {
 	logger.TestLog(opts.BlockCnt != 2000, "BlockCnt: ", opts.BlockCnt)
 	logger.TestLog(opts.BlockChanCnt != 10, "BlockChanCnt: ", opts.BlockChanCnt)
 	logger.TestLog(opts.AddrChanCnt != 20, "AddrChanCnt: ", opts.AddrChanCnt)
+	logger.TestLog(opts.AppsPerChunk != 2000000, "AppsPerChunk: ", opts.AppsPerChunk)
+	logger.TestLog(opts.UnripeDist != 28, "UnripeDist: ", opts.UnripeDist)
+	logger.TestLog(opts.SnapToGrid != 100000, "SnapToGrid: ", opts.SnapToGrid)
+	logger.TestLog(opts.FirstSnap != 2250000, "FirstSnap: ", opts.FirstSnap)
+	logger.TestLog(opts.AllowMissing, "AllowMissing: ", opts.AllowMissing)
+	logger.TestLog(opts.NTestRuns != 0, "NTestRuns: ", opts.NTestRuns)
 	logger.TestLog(opts.StartBlock != 0, "StartBlock: ", opts.StartBlock)
 	logger.TestLog(opts.RipeBlock != 0, "RipeBlock: ", opts.RipeBlock)
 	opts.Globals.TestLog()
@@ -57,9 +69,6 @@ func (opts *ScrapeOptions) ToCmdLine() string {
 	}
 	if opts.Publish {
 		options += " --publish"
-	}
-	if opts.Blaze {
-		options += " --blaze"
 	}
 	if opts.BlockCnt != 2000 {
 		options += (" --block_cnt " + fmt.Sprintf("%d", opts.BlockCnt))
@@ -81,6 +90,11 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ScrapeOptions {
 	opts.BlockCnt = 2000
 	opts.BlockChanCnt = 10
 	opts.AddrChanCnt = 20
+	opts.AppsPerChunk = 2000000
+	opts.UnripeDist = 28
+	opts.SnapToGrid = 100000
+	opts.FirstSnap = 2250000
+	opts.NTestRuns = 0
 	opts.StartBlock = 0
 	opts.RipeBlock = 0
 	for key, value := range r.URL.Query() {
@@ -106,6 +120,18 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ScrapeOptions {
 			opts.BlockChanCnt = globals.ToUint64(value[0])
 		case "addrChanCnt":
 			opts.AddrChanCnt = globals.ToUint64(value[0])
+		case "appsPerChunk":
+			opts.AppsPerChunk = globals.ToUint64(value[0])
+		case "unripeDist":
+			opts.UnripeDist = globals.ToUint64(value[0])
+		case "snapToGrid":
+			opts.SnapToGrid = globals.ToUint64(value[0])
+		case "firstSnap":
+			opts.FirstSnap = globals.ToUint64(value[0])
+		case "allowMissing":
+			opts.AllowMissing = true
+		case "nTestRuns":
+			opts.NTestRuns = globals.ToUint64(value[0])
 		case "startBlock":
 			opts.StartBlock = globals.ToUint64(value[0])
 		case "ripeBlock":

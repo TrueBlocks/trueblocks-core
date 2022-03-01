@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-02-28T18:42:39
+date: 2022-02-28T19:22:53
 lastmod:
   - :git
   - lastmod
@@ -85,11 +85,6 @@ Flags:
   -x, --fmt string            export format, one of [none|json*|txt|csv|api]
   -v, --verbose               enable verbose (increase detail with --log_level)
   -h, --help                  display this help screen
-
-Notes:
-  - if no mode is presented, chifra scrape indexer --action run is assumed.
-  - the --pin and --publish options require an API to the pinning service.
-  - the --n_* related options allow you to tune the scrapers.
 ```
 
 ### explainer
