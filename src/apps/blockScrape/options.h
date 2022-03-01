@@ -35,19 +35,14 @@ class COptions : public COptionsBase {
     uint64_t snap_to_grid;
     uint64_t first_snap;
     bool allow_missing;
-    uint64_t n_test_runs;
     // END_CODE_DECLARE
 
-    string_q tmpFile;
     string_q oldStage;
     string_q newStage;
-    ofstream tmp_stream;
-    string_q tmp_fn;
+    ofstream tmpStagingStream;
     blknum_t prev_block{0};
     blknum_t blaze_ripe{0};
     blknum_t blaze_start{0};
-    timestamp_t latestBlockTs;
-    blknum_t latestBlockNum;
     CPinnedChunkArray pinList;
     CApiKey lic;
 
@@ -59,7 +54,7 @@ class COptions : public COptionsBase {
 
     bool start_scraper(void);
     bool scrape_blocks(void);
-    bool stage_chunks(void);
+    bool stage_chunks(const string_q& tmpFn);
     bool write_chunks(blknum_t chunkSize, bool atLeastOnce);
     bool isSnapToGrid(blknum_t bn) {
         return bn > first_snap && !(bn % snap_to_grid);
@@ -68,6 +63,6 @@ class COptions : public COptionsBase {
 
 //-----------------------------------------------------------------------------
 extern bool copyRipeToStage(const string_q& path, void* data);
-extern bool prepareMonitors(const string_q& path, void* data);
 extern bool visitToPin(const string_q& chunkId, void* data);
-bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTAPPLYFUNC pinFunc, void* pinFuncData);
+extern bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTAPPLYFUNC pinFunc,
+                               void* pinFuncData);

@@ -15,9 +15,9 @@
 //--------------------------------------------------------------------------
 bool COptions::scrape_blocks(void) {
     prev_block = 0;
-    tmp_fn = indexFolder_staging + "000000000-temp.txt";
-    tmp_stream.open(tmp_fn, ios::out | ios::trunc);
-    if (!tmp_stream.is_open()) {
+    string_q tmpStagingFn = (indexFolder_staging + "000000000-temp.txt");
+    tmpStagingStream.open(tmpStagingFn, ios::out | ios::trunc);
+    if (!tmpStagingStream.is_open()) {
         LOG_WARN("Could not open temporary staging file.");
         return false;
     }
@@ -57,13 +57,13 @@ bool COptions::scrape_blocks(void) {
     if (!forEveryFileInFolder(indexFolder_ripe, copyRipeToStage, this)) {
         cleanFolder(indexFolder_unripe);
         cleanFolder(indexFolder_ripe);
-        tmp_stream.close();
-        ::remove(tmp_fn.c_str());
+        tmpStagingStream.close();
+        ::remove(tmpStagingFn.c_str());
         return false;
     }
-    tmp_stream.close();
+    tmpStagingStream.close();
 
-    if (!stage_chunks())
+    if (!stage_chunks(tmpStagingFn))
         return false;
     blknum_t nRecords = fileSize(newStage) / asciiAppearanceSize;
     blknum_t chunkSize = apps_per_chunk;
@@ -79,12 +79,9 @@ bool copyRipeToStage(const string_q& path, void* data) {
         return forEveryFileInFolder(path + "*", copyRipeToStage, data);
 
     } else {
-        blknum_t e_unused;
-        timestamp_t ts;
-        blknum_t bn = path_2_Bn(path, e_unused, ts);
-
         COptions* opts = reinterpret_cast<COptions*>(data);
 
+        blknum_t bn = path_2_Bn(path);
         bool allow = opts->allow_missing;
         bool sequential = (opts->prev_block + 1) == bn;
         bool less_than = (opts->prev_block < bn);
@@ -100,15 +97,16 @@ bool copyRipeToStage(const string_q& path, void* data) {
         }
 
         lockSection();
-        opts->tmp_stream << inputStream.rdbuf();
-        opts->tmp_stream.flush();
+        opts->tmpStagingStream << inputStream.rdbuf();
+        opts->tmpStagingStream.flush();
         inputStream.close();
         ::remove(path.c_str());
         opts->prev_block = bn;
         unlockSection();
 
         if (opts->isSnapToGrid(bn)) {
-            if (!opts->stage_chunks())
+            string_q tmpStagingFn = (indexFolder_staging + "000000000-temp.txt");
+            if (!opts->stage_chunks(tmpStagingFn))
                 return false;
             blknum_t nRecords = fileSize(opts->newStage) / asciiAppearanceSize;
             blknum_t chunkSize = min(nRecords, opts->apps_per_chunk);
@@ -294,35 +292,35 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTA
 }
 
 //--------------------------------------------------------------------------
-bool COptions::stage_chunks(void) {
+bool COptions::stage_chunks(const string_q& tmpFn) {
     oldStage = getLastFileInFolder(indexFolder_staging, false);
     newStage = indexFolder_staging + padNum9(prev_block) + ".txt";
     if (oldStage == newStage) {
         return !shouldQuit();
     }
 
-    tmpFile = indexFolder + "temp.txt";
-    if (oldStage != tmp_fn) {
+    string_q tmpFile = indexFolder + "temp.txt";
+    if (oldStage != tmpFn) {
         if (!appendFile(tmpFile /* to */, oldStage /* from */)) {
             cleanFolder(indexFolder_unripe);
             cleanFolder(indexFolder_ripe);
             ::remove(tmpFile.c_str());
-            ::remove(tmp_fn.c_str());
+            ::remove(tmpFn.c_str());
             return false;
         }
     }
 
-    if (!appendFile(tmpFile /* to */, tmp_fn /* from */)) {
+    if (!appendFile(tmpFile /* to */, tmpFn /* from */)) {
         cleanFolder(indexFolder_unripe);
         cleanFolder(indexFolder_ripe);
         ::remove(tmpFile.c_str());
-        ::remove(tmp_fn.c_str());
+        ::remove(tmpFn.c_str());
         return false;
     }
 
     lockSection();
     ::rename(tmpFile.c_str(), newStage.c_str());
-    ::remove(tmp_fn.c_str());
+    ::remove(tmpFn.c_str());
     if (fileExists(oldStage) && oldStage != newStage)
         ::remove(oldStage.c_str());
     unlockSection();
