@@ -61,8 +61,10 @@ class COptions : public COptionsBase {
     bool start_scraper(void);
     bool scrape_blocks(void);
     bool stage_chunks(void);
-    bool consolidate_chunks(void);
     bool write_chunks(blknum_t chunkSize, bool atLeastOnce);
+    bool isSnapToGrid(blknum_t bn) {
+        return bn > first_snap && !(bn % snap_to_grid);
+    }
 };
 
 //-----------------------------------------------------------------------------
