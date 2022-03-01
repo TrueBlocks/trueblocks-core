@@ -13,35 +13,35 @@
 #include "options.h"
 #include "consolidator.h"
 
-// Note: We want to re-evaluate our progress each time we loop, so don't move this to parseOptions
 //--------------------------------------------------------------------------
 bool COptions::scrape_blocks(void) {
-    CConsolidator cons(this);
-    cons.pin = pin;
-    cons.blazeStart = max(cons.ripe, max(cons.staging, cons.finalized)) + 1;
-    cons.blazeCnt = block_cnt;
-    cons.blazeRipe = (cons.client < unripe_dist ? 0 : cons.client - unripe_dist);
-    if ((cons.blazeStart + cons.blazeCnt) > cons.client) {
-        ASSERT(blazeStart <= cons.client);  // see above
-        cons.blazeCnt = (cons.client - cons.blazeStart);
+    CMetaData meta = getMetaData();
+    prev_block = 0;
+    tmp_fn = indexFolder_staging + "000000000-temp.txt";
+    tmp_stream.open(tmp_fn, ios::out | ios::trunc);
+    blaze_start = max(meta.ripe, max(meta.staging, meta.finalized)) + 1;
+    blaze_ripe = (meta.client < unripe_dist ? 0 : meta.client - unripe_dist);
+    if ((blaze_start + block_cnt) > meta.client) {
+        ASSERT(blaze_start <= meta.client);  // see above
+        block_cnt = (meta.client - blaze_start);
     }
-    distFromHead = (cons.client > cons.blazeStart ? cons.client - cons.blazeStart : 0);
+    distFromHead = (meta.client > blaze_start ? meta.client - blaze_start : 0);
 
-    if (cons.blazeStart > cons.client) {
-        LOG_INFO("The index (", cons.blazeStart, ") is ahead of the chain (", cons.client, ").");
+    if (blaze_start > meta.client) {
+        LOG_INFO("The index (", blaze_start, ") is ahead of the chain (", meta.client, ").");
         return false;
     }
 
-    // If the user hit control+C somewhere along the way, let's get out of here...
     if (shouldQuit()) {
         LOG_WARN("The user hit control+C...");
         return false;
     }
+
     ostringstream blazeCmd;
     blazeCmd << "chifra scrape indexer --blaze ";
-    blazeCmd << "--start_block " << cons.blazeStart << " ";
-    blazeCmd << "--ripe_block " << cons.blazeRipe << " ";
-    blazeCmd << "--block_cnt " << cons.blazeCnt << " ";
+    blazeCmd << "--start_block " << blaze_start << " ";
+    blazeCmd << "--ripe_block " << blaze_ripe << " ";
+    blazeCmd << "--block_cnt " << block_cnt << " ";
     blazeCmd << "--block_chan_cnt " << block_chan_cnt << " ";
     blazeCmd << "--addr_chan_cnt " << addr_chan_cnt << " ";
     blazeCmd << "--chain " << getChain() << " ";
@@ -59,33 +59,33 @@ bool COptions::scrape_blocks(void) {
         return false;
     }
 
-    if (!cons.tmp_stream.is_open()) {
+    if (!tmp_stream.is_open()) {
         LOG_WARN("Could not open temporary staging file.");
         return false;
     }
 
-    if (!forEveryFileInFolder(indexFolder_ripe, copyRipeToStage, &cons)) {
+    if (!forEveryFileInFolder(indexFolder_ripe, copyRipeToStage, this)) {
         cleanFolder(indexFolder_unripe);
         cleanFolder(indexFolder_ripe);
-        cons.tmp_stream.close();
-        ::remove(cons.tmp_fn.c_str());
+        tmp_stream.close();
+        ::remove(tmp_fn.c_str());
         return false;
     }
-    cons.tmp_stream.close();
+    tmp_stream.close();
 
-    if (!cons.stage_chunks()) {
+    if (!stage_chunks()) {
         cleanFolder(indexFolder_unripe);
         cleanFolder(indexFolder_ripe);
-        ::remove(cons.tmp_fn.c_str());
+        ::remove(tmp_fn.c_str());
     }
 
     if (shouldQuit())
         return false;
 
     // TODO: BOGUS - we need to turn timestamps on again
-    // freshenTimestamps(cons.blazeStart + cons.blazeCnt);
+    // freshenTimestamps(blaze_start + cons.blazeCnt);
 
-    return cons.consolidate_chunks();
+    return consolidate_chunks();
 }
 
 //----------------------------------------------------------------
@@ -93,7 +93,7 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTA
     // ASSUMES THE ARRAY IS SORTED!
 
     ASSERT(!fileExists(outFn));
-    string_q tmpFile = substitute(outFn, ".bin", ".tmp");
+    string_q tmpFile2 = substitute(outFn, ".bin", ".tmp");
 
     address_t prev;
     uint32_t offset = 0, nAddrs = 0, cnt = 0;
@@ -104,8 +104,8 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTA
     CBloomArray blooms;
 
     CArchive archive(WRITING_ARCHIVE);
-    if (!archive.Lock(tmpFile, modeWriteCreate, LOCK_NOWAIT)) {
-        LOG_ERR("Could not lock index file: ", tmpFile);
+    if (!archive.Lock(tmpFile2, modeWriteCreate, LOCK_NOWAIT)) {
+        LOG_ERR("Could not lock index file: ", tmpFile2);
         return false;
     }
 
@@ -160,8 +160,8 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTA
     string_q bloomFile = substitute(substitute(outFn, "/finalized/", "/blooms/"), ".bin", ".bloom");
     lockSection();                          // disallow control+c
     writeBloomToBinary(bloomFile, blooms);  // write the bloom file
-    copyFile(tmpFile, outFn);               // move the index file
-    ::remove(tmpFile.c_str());              // remove the tmp file
+    copyFile(tmpFile2, outFn);              // move the index file
+    ::remove(tmpFile2.c_str());             // remove the tmp file
     unlockSection();
 
     return (pinFunc ? ((*pinFunc)(outFn, pinFuncData)) : true);

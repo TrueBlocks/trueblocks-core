@@ -14,66 +14,6 @@
 #include "consolidator.h"
 
 //--------------------------------------------------------------------------
-CConsolidator::CConsolidator(const COptions* o) : pin(false), prevBlock(0), opts(o) {
-    blazeStart = 0;
-    blazeRipe = 0;
-    blazeCnt = 0;
-
-    CMetaData prog = getMetaData();
-    unripe = prog.unripe;
-    ripe = prog.ripe;
-    staging = prog.staging;
-    finalized = prog.finalized;
-    client = prog.client;
-
-    prevBlock = (prog.staging == NOPOS ? (prog.finalized == NOPOS ? 0 : prog.finalized) : prog.staging);
-
-    tmp_fn = indexFolder_staging + "000000000-temp.txt";
-    tmp_stream.open(tmp_fn, ios::out | ios::trunc);
-}
-
-//--------------------------------------------------------------------------
-void CConsolidator::Format(ostream& os) const {
-    os << "oldStage:     " << oldStage << endl;
-    os << "newStage:     " << newStage << endl;
-    os << "tmpFile:      " << tmpFile << endl;
-    os << "tmp_fn:       " << tmp_fn << endl;
-    os << "blazeStart:   " << blazeStart << endl;
-    os << "blazeRipe:    " << blazeRipe << endl;
-    os << "blazeCnt:     " << blazeCnt << endl;
-    os << "prevBlock:    " << prevBlock << endl;
-    os << "client:       " << client << endl;
-    os << "finalized:    " << finalized << endl;
-    os << "staging:      " << staging << endl;
-    os << "ripe:         " << ripe << endl;
-    os << "unripe:       " << unripe << endl;
-    os << "pin:          " << (pin ? "true" : "false") << endl;
-    uint32_t x = 0;
-    for (auto pi : pinList)
-        os << "pinList[" << padNum3(x++) << "]: " << pi << endl;
-}
-
-//--------------------------------------------------------------------------
-bool appendFile(const string_q& toFile, const string_q& fromFile) {
-    ofstream output;
-    output.open(toFile, ios::out | ios::app);
-    if (!output.is_open())
-        return false;
-
-    ifstream input(fromFile, ios::in);
-    if (!input.is_open()) {
-        output.close();
-        return false;
-    }
-
-    output << input.rdbuf();
-    output.flush();
-    input.close();
-
-    return true;
-}
-
-//--------------------------------------------------------------------------
 bool copyRipeToStage(const string_q& path, void* data) {
     if (endsWith(path, '/')) {
         return forEveryFileInFolder(path + "*", copyRipeToStage, data);
@@ -84,14 +24,14 @@ bool copyRipeToStage(const string_q& path, void* data) {
         blknum_t bn = path_2_Bn(path, e_unused, ts);
 
         // If we're not one behind, we have a problem
-        CConsolidator* con = reinterpret_cast<CConsolidator*>(data);
+        COptions* opts = reinterpret_cast<COptions*>(data);
 
-        bool allow = con->opts->allow_missing;
-        bool sequential = (con->prevBlock + 1) == bn;
-        bool less_than = (con->prevBlock < bn);
+        bool allow = opts->allow_missing;
+        bool sequential = (opts->prev_block + 1) == bn;
+        bool less_than = (opts->prev_block < bn);
         if ((!allow && !sequential) || (allow && !less_than)) {
             // Something went wrong. We quit here but we will try again next time
-            LOG_WARN("Current file (", path, ") does not sequentially follow previous file ", con->prevBlock, ".");
+            LOG_WARN("Current file (", path, ") does not sequentially follow previous file ", opts->prev_block, ".");
             return false;
         }
 
@@ -103,28 +43,28 @@ bool copyRipeToStage(const string_q& path, void* data) {
         }
 
         lockSection();
-        con->tmp_stream << inputStream.rdbuf();
-        con->tmp_stream.flush();
+        opts->tmp_stream << inputStream.rdbuf();
+        opts->tmp_stream.flush();
         inputStream.close();
         ::remove(path.c_str());
-        con->prevBlock = bn;
+        opts->prev_block = bn;
         unlockSection();
 
-        if (bn > con->opts->first_snap && !(bn % con->opts->snap_to_grid)) {
+        if (bn > opts->first_snap && !(bn % opts->snap_to_grid)) {
             LOG4("  Snapping to block number ", bn);
 
             // We've been copying each block's data into a temporary file. At this point, we've
             // encountered a block that is a snap-to block (for example, every 100,000 blocks).
             // We write a short chunk here. We do this in order to make correcting errors in the
             // index easier. As we do during normal processing, we clean up of the chunking does
-            // not complete properly. 'stage_chunks' creates the newStage.
+            // not complete properly. 'stage_ chunks' creates the newStage.
 
             // First, we complete the staging at the current progress. Cleanup and quit if something
             // goes wrong. Quit the scan and start over later...
-            if (!con->stage_chunks()) {
+            if (!opts->stage_chunks()) {
                 cleanFolder(indexFolder_unripe);
                 cleanFolder(indexFolder_ripe);
-                ::remove(con->tmp_fn.c_str());
+                ::remove(opts->tmp_fn.c_str());
                 return false;
             }
 
@@ -136,13 +76,13 @@ bool copyRipeToStage(const string_q& path, void* data) {
             // but we want to do a chunk no matter what (since we've snapped to grid).
 
             // How many records are there?
-            blknum_t nRecords = fileSize(con->newStage) / asciiAppearanceSize;
+            blknum_t nRecords = fileSize(opts->newStage) / asciiAppearanceSize;
 
             // How big are we going to make this chunk?
-            blknum_t chunkSize = min(nRecords, con->opts->apps_per_chunk);
+            blknum_t chunkSize = min(nRecords, opts->apps_per_chunk);
 
             // Now we try to write the chunk. We will write at least one chunk no matter how many records there are
-            con->write_chunks(chunkSize, true /* atLeastOnce */);
+            opts->write_chunks(chunkSize, true /* atLeastOnce */);
 
             // We return false here to pretend this scrape did not complete. We do this because we've actually already
             // written at least one chunk and we know we are at a snap-to boundary. We want the processor to clean up
@@ -157,9 +97,9 @@ bool copyRipeToStage(const string_q& path, void* data) {
 }
 
 //--------------------------------------------------------------------------
-bool CConsolidator::consolidate_chunks(void) {
+bool COptions::consolidate_chunks(void) {
     blknum_t nRecords = fileSize(newStage) / asciiAppearanceSize;
-    blknum_t chunkSize = opts->apps_per_chunk;
+    blknum_t chunkSize = apps_per_chunk;
     if (nRecords <= chunkSize) {
         return true;
     }
@@ -167,9 +107,9 @@ bool CConsolidator::consolidate_chunks(void) {
 }
 
 //--------------------------------------------------------------------------
-bool CConsolidator::stage_chunks(void) {
+bool COptions::stage_chunks(void) {
     oldStage = getLastFileInFolder(indexFolder_staging, false);
-    newStage = indexFolder_staging + padNum9(prevBlock) + ".txt";
+    newStage = indexFolder_staging + padNum9(prev_block) + ".txt";
     if (oldStage == newStage) {
         return true;
     }
@@ -188,16 +128,16 @@ bool CConsolidator::stage_chunks(void) {
 
     lockSection();
     ::rename(tmpFile.c_str(), newStage.c_str());
-    if (oldStage != tmp_fn && oldStage != newStage)
-        ::remove(oldStage.c_str());
     ::remove(tmp_fn.c_str());
+    if (fileExists(oldStage) && oldStage != newStage)
+        ::remove(oldStage.c_str());
     unlockSection();
 
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CConsolidator::write_chunks(blknum_t chunkSize, bool atLeastOnce) {
+bool COptions::write_chunks(blknum_t chunkSize, bool atLeastOnce) {
     blknum_t nRecords = fileSize(newStage) / asciiAppearanceSize;
     while ((atLeastOnce || nRecords > chunkSize) && !shouldQuit()) {
         lockSection();
@@ -267,7 +207,7 @@ bool CConsolidator::write_chunks(blknum_t chunkSize, bool atLeastOnce) {
         unlockSection();
         if (atLeastOnce)
             atLeastOnce = nRecords > 0;
-        chunkSize = min(opts->apps_per_chunk, nRecords);
+        chunkSize = min(apps_per_chunk, nRecords);
     }
 
     return true;

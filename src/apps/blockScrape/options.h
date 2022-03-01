@@ -21,7 +21,6 @@
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
 
-class CConsolidator;
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
   public:
@@ -39,6 +38,14 @@ class COptions : public COptionsBase {
     uint64_t n_test_runs;
     // END_CODE_DECLARE
 
+    string_q tmpFile;
+    string_q oldStage;
+    string_q newStage;
+    ofstream tmp_stream;
+    string_q tmp_fn;
+    blknum_t prev_block{0};
+    blknum_t blaze_ripe{0};
+    blknum_t blaze_start{0};
     timestamp_t latestBlockTs;
     blknum_t latestBlockNum;
     CPinnedChunkArray pinList;
@@ -53,11 +60,13 @@ class COptions : public COptionsBase {
 
     bool start_scraper(void);
     bool scrape_blocks(void);
+    bool stage_chunks(void);
+    bool consolidate_chunks(void);
+    bool write_chunks(blknum_t chunkSize, bool atLeastOnce);
 };
 
 //-----------------------------------------------------------------------------
 extern bool copyRipeToStage(const string_q& path, void* data);
-extern bool appendFile(const string_q& toFile, const string_q& fromFile);
 extern bool prepareMonitors(const string_q& path, void* data);
 extern bool visitToPin(const string_q& chunkId, void* data);
 bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTAPPLYFUNC pinFunc, void* pinFuncData);
