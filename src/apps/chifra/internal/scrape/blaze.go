@@ -337,8 +337,11 @@ func (opts *ScrapeOptions) writeAddresses(blockNum string, addressMap map[string
 	}
 	// Show fifty dots no matter how many blocks we're scraping
 	// TODO: BOGUS
+	step := uint64(7)
 	counter12++
-	fmt.Fprintf(os.Stderr, "-------- ( ------)- <PROG>  : Scraping %d of %d at block %s\r", counter12, opts.BlockCnt, blockNum)
+	if counter12%step == 0 {
+		fmt.Fprintf(os.Stderr, "-------- ( ------)- <PROG>  : Scraping %-04d of %-04d at block %s\r", counter12, opts.BlockCnt, blockNum)
+	}
 }
 
 func padLeft(str string, totalLen int) string {

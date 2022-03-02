@@ -15,7 +15,7 @@
 //--------------------------------------------------------------------------
 bool COptions::scrape_blocks(void) {
     prev_block = 0;
-    string_q tmpStagingFn = (indexFolder_staging + "000000000-temp.txt");
+    string_q tmpStagingFn = indexFolder_staging + "000000000-temp.txt";
     tmpStagingStream.open(tmpStagingFn, ios::out | ios::trunc);
     if (!tmpStagingStream.is_open()) {
         LOG_WARN("Could not open temporary staging file.");
@@ -32,6 +32,8 @@ bool COptions::scrape_blocks(void) {
         return false;
     }
 
+    string_q oldStage = getLastFileInFolder(indexFolder_staging, false);
+    blknum_t nRecsThen = fileSize(oldStage) / asciiAppearanceSize;
     ostringstream blazeCmd;
     blazeCmd << "chifra scrape indexer --blaze ";
     blazeCmd << "--start_block " << blaze_start << " ";
@@ -65,9 +67,24 @@ bool COptions::scrape_blocks(void) {
 
     if (!stage_chunks(tmpStagingFn))
         return false;
-    blknum_t nRecords = fileSize(newStage) / asciiAppearanceSize;
+    blknum_t nRecsNow = fileSize(newStage) / asciiAppearanceSize;
     blknum_t chunkSize = apps_per_chunk;
-    if (nRecords <= chunkSize) {
+    double pct = double(nRecsNow) / double(chunkSize);
+    blknum_t found = nRecsNow - nRecsThen;
+    double pBlk = double(found) / double(block_cnt);
+    if (nRecsNow <= chunkSize) {
+        const char* STR_RESULTS = "Block {0}: have {1} addrs of {2} ({3}). Need {4} more. Found {5} records ({6}).";
+        string_q result = STR_RESULTS;
+        replace(result, "{0}", "{" + uint_2_Str(blaze_start + block_cnt) + "}");
+        replace(result, "{1}", "{" + uint_2_Str(nRecsNow) + "}");
+        replace(result, "{2}", "{" + uint_2_Str(chunkSize) + "}");
+        replace(result, "{3}", "{" + double_2_Str(pct * 100.00, 1) + "%}");
+        replace(result, "{4}", "{" + uint_2_Str(chunkSize - nRecsNow) + "}");
+        replace(result, "{5}", "{" + uint_2_Str(found) + "}");
+        replace(result, "{6}", "{" + double_2_Str(pBlk, 2) + "/blk}");
+        replaceAll(result, "{", cGreen);
+        replaceAll(result, "}", cOff);
+        LOG_INFO(result);
         return true;
     }
     return write_chunks(chunkSize, false /* atLeastOnce */);
@@ -168,7 +185,13 @@ bool COptions::write_chunks(blknum_t chunkSize, bool atLeastOnce) {
                 sort(consolidatedLines.begin(), consolidatedLines.end());
                 string_q chunkId = p1[1] + "-" + p2[1];
                 string_q chunkPath = indexFolder_finalized + chunkId + ".bin";
-
+                ostringstream os;
+                os << "Wrote: " << cTeal << relativize(chunkPath);
+                if (atLeastOnce) {
+                    os << cYellow << " (snapped to " << snap_to_grid << " blocks)";
+                }
+                os << cOff;
+                LOG_INFO(os.str());
                 writeIndexAsBinary(chunkPath, consolidatedLines, (pin ? visitToPin : nullptr), &pinList);
 
                 loc++;
