@@ -196,19 +196,39 @@ bool COptions::write_chunks(blknum_t chunkSize, bool atLeastOnce) {
     return !shouldQuit();
 }
 
-//---------------------------------------------------------------------------------------------------
-bool visitToPin(const string_q& chunkId, void* data) {
-    CPinnedChunkArray& pinList = *(CPinnedChunkArray*)data;  // NO_LINT
-    CPinnedChunk pinRecord;
-    pinlib_pinChunk(pinList, chunkId, pinRecord);
-    string_q ci = substitute(pinRecord.fileName, indexFolder_finalized, "");
-    ci = substitute(ci, indexFolder_blooms, "");
-    ci = substitute(ci, ".bin", "");
-    ostringstream os;
-    os << ci << "\t" << pinRecord.bloomHash << "\t" << pinRecord.indexHash << endl;
-    string_q manifestFile = chainConfigsTxt_manifest;
-    os << asciiFileToString(manifestFile);
-    stringToAsciiFile(manifestFile, os.str());
+//--------------------------------------------------------------------------
+bool COptions::stage_chunks(const string_q& tmpFn) {
+    string_q prevStage = getLastFileInFolder(indexFolder_staging, false);
+    newStage = indexFolder_staging + padNum9(prev_block) + ".txt";
+    if (prevStage == newStage) {
+        return !shouldQuit();
+    }
+
+    string_q tmpFile = indexFolder + "temp.txt";
+    if (prevStage != tmpFn) {
+        if (!appendFile(tmpFile /* to */, prevStage /* from */)) {
+            cleanFolder(indexFolder_unripe);
+            cleanFolder(indexFolder_ripe);
+            ::remove(tmpFile.c_str());
+            ::remove(tmpFn.c_str());
+            return false;
+        }
+    }
+
+    if (!appendFile(tmpFile /* to */, tmpFn /* from */)) {
+        cleanFolder(indexFolder_unripe);
+        cleanFolder(indexFolder_ripe);
+        ::remove(tmpFile.c_str());
+        ::remove(tmpFn.c_str());
+        return false;
+    }
+
+    lockSection();
+    ::rename(tmpFile.c_str(), newStage.c_str());
+    ::remove(tmpFn.c_str());
+    if (fileExists(prevStage) && prevStage != newStage)
+        ::remove(prevStage.c_str());
+    unlockSection();
     return !shouldQuit();
 }
 
@@ -291,38 +311,18 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTA
     return (pinFunc ? ((*pinFunc)(outFn, pinFuncData)) : true);
 }
 
-//--------------------------------------------------------------------------
-bool COptions::stage_chunks(const string_q& tmpFn) {
-    oldStage = getLastFileInFolder(indexFolder_staging, false);
-    newStage = indexFolder_staging + padNum9(prev_block) + ".txt";
-    if (oldStage == newStage) {
-        return !shouldQuit();
-    }
-
-    string_q tmpFile = indexFolder + "temp.txt";
-    if (oldStage != tmpFn) {
-        if (!appendFile(tmpFile /* to */, oldStage /* from */)) {
-            cleanFolder(indexFolder_unripe);
-            cleanFolder(indexFolder_ripe);
-            ::remove(tmpFile.c_str());
-            ::remove(tmpFn.c_str());
-            return false;
-        }
-    }
-
-    if (!appendFile(tmpFile /* to */, tmpFn /* from */)) {
-        cleanFolder(indexFolder_unripe);
-        cleanFolder(indexFolder_ripe);
-        ::remove(tmpFile.c_str());
-        ::remove(tmpFn.c_str());
-        return false;
-    }
-
-    lockSection();
-    ::rename(tmpFile.c_str(), newStage.c_str());
-    ::remove(tmpFn.c_str());
-    if (fileExists(oldStage) && oldStage != newStage)
-        ::remove(oldStage.c_str());
-    unlockSection();
+//---------------------------------------------------------------------------------------------------
+bool visitToPin(const string_q& chunkId, void* data) {
+    CPinnedChunkArray& pinList = *(CPinnedChunkArray*)data;  // NO_LINT
+    CPinnedChunk pinRecord;
+    pinlib_pinChunk(pinList, chunkId, pinRecord);
+    string_q ci = substitute(pinRecord.fileName, indexFolder_finalized, "");
+    ci = substitute(ci, indexFolder_blooms, "");
+    ci = substitute(ci, ".bin", "");
+    ostringstream os;
+    os << ci << "\t" << pinRecord.bloomHash << "\t" << pinRecord.indexHash << endl;
+    string_q manifestFile = chainConfigsTxt_manifest;
+    os << asciiFileToString(manifestFile);
+    stringToAsciiFile(manifestFile, os.str());
     return !shouldQuit();
 }

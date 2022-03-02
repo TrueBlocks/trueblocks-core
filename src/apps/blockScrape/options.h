@@ -37,7 +37,6 @@ class COptions : public COptionsBase {
     bool allow_missing;
     // END_CODE_DECLARE
 
-    string_q oldStage;
     string_q newStage;
     ofstream tmpStagingStream;
     blknum_t prev_block{0};
