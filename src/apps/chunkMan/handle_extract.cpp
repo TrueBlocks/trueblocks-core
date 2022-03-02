@@ -27,8 +27,13 @@ static bool chunkVisitFunc(const string_q& path, void* data) {
         blknum_t startBlock = path_2_Bn(path, endBlock);
 
         COptions* opts = (COptions*)data;
-        //        cerr << opts->blocks.start << ":" << opts->blocks.stop << endl;
-        if (opts->blocks.start != NOPOS && !inRange(opts->blocks.start, startBlock, endBlock)) {
+        blknum_t startTest = opts->blocks.start == NOPOS ? 0 : opts->blocks.start;
+        blknum_t endTest = opts->blocks.stop;
+        if (!inRange(startBlock, startTest, endTest)) {
+            LOG_PROG("Skipped: " + path + "\r");
+            return true;
+        }
+        if (!inRange(endBlock, startTest, endTest)) {
             LOG_PROG("Skipped: " + path + "\r");
             return true;
         }
