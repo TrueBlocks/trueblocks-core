@@ -96,26 +96,26 @@ func (opts *ScrapeOptions) processBlocks(blockChannel chan int, addressChannel c
 func (opts *ScrapeOptions) extractAddresses(addressChannel chan tracesAndLogs, addressWG *sync.WaitGroup) {
 
 	for blockTraceAndLog := range addressChannel {
+		bn := blockTraceAndLog.block
 		addressMap := make(map[string]bool)
-		blockNumStr := padLeft(strconv.Itoa(blockTraceAndLog.block), 9)
-
-		opts.extractAddressesFromTraces(addressMap, &blockTraceAndLog.traces, blockNumStr)
-		opts.extractAddressesFromLogs(addressMap, &blockTraceAndLog.logs, blockNumStr)
-		opts.writeAddresses(blockNumStr, addressMap)
+		opts.extractFromTraces(bn, addressMap, &blockTraceAndLog.traces)
+		opts.extractFromLogs(bn, addressMap, &blockTraceAndLog.logs)
+		opts.writeAddresses(bn, addressMap)
 	}
 
 	addressWG.Done()
 }
 
-func (opts *ScrapeOptions) extractAddressesFromTraces(addressMap map[string]bool, traces *Trace, blockNum string) {
+func (opts *ScrapeOptions) extractFromTraces(bn int, addressMap map[string]bool, traces *Trace) {
 	if traces.Result == nil || len(traces.Result) == 0 {
 		return
 	}
 
+	blockNumStr := padLeft(strconv.Itoa(bn), 9)
 	for i := 0; i < len(traces.Result); i++ {
 
 		idx := padLeft(strconv.Itoa(traces.Result[i].TransactionPosition), 5)
-		blockAndIdx := "\t" + blockNum + "\t" + idx
+		blockAndIdx := "\t" + blockNumStr + "\t" + idx
 
 		if traces.Result[i].Type == "call" {
 			// If it's a call, get the to and from
@@ -136,11 +136,11 @@ func (opts *ScrapeOptions) extractAddressesFromTraces(addressMap map[string]bool
 					// 0x0 (reward got burned). We enter a false record with a false tx_id
 					// to account for this.
 					author = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
-					addressMap[author+"\t"+blockNum+"\t"+"99997"] = true
+					addressMap[author+"\t"+blockNumStr+"\t"+"99997"] = true
 
 				} else {
 					if goodAddr(author) {
-						addressMap[author+"\t"+blockNum+"\t"+"99999"] = true
+						addressMap[author+"\t"+blockNumStr+"\t"+"99999"] = true
 					}
 				}
 
@@ -151,11 +151,11 @@ func (opts *ScrapeOptions) extractAddressesFromTraces(addressMap map[string]bool
 					// 0x0 (reward got burned). We enter a false record with a false tx_id
 					// to account for this.
 					author = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
-					addressMap[author+"\t"+blockNum+"\t"+"99998"] = true
+					addressMap[author+"\t"+blockNumStr+"\t"+"99998"] = true
 
 				} else {
 					if goodAddr(author) {
-						addressMap[author+"\t"+blockNum+"\t"+"99998"] = true
+						addressMap[author+"\t"+blockNumStr+"\t"+"99998"] = true
 					}
 				}
 
@@ -163,7 +163,7 @@ func (opts *ScrapeOptions) extractAddressesFromTraces(addressMap map[string]bool
 				// This only happens in xDai as far as we know...
 				author := traces.Result[i].Action.Author
 				if goodAddr(author) {
-					addressMap[author+"\t"+blockNum+"\t"+"99996"] = true
+					addressMap[author+"\t"+blockNumStr+"\t"+"99996"] = true
 				}
 
 			} else {
@@ -215,13 +215,13 @@ func (opts *ScrapeOptions) extractAddressesFromTraces(addressMap map[string]bool
 					if traces.Result[i].Error != "" {
 						bytes, err := opts.getTransactionReceipt(traces.Result[i].TransactionHash)
 						if err != nil {
-							fmt.Println("extractAddressesFromTraces --> getTransactionReceipt returned error")
+							fmt.Println("extractFromTraces --> getTransactionReceipt returned error")
 							log.Fatal(err)
 						}
 						var receipt Receipt
 						err = json.Unmarshal(bytes, &receipt)
 						if err != nil {
-							fmt.Println("extractAddressesFromTraces --> json.Unmarshal returned error")
+							fmt.Println("extractFromTraces --> json.Unmarshal returned error")
 							log.Fatal(err)
 						}
 						addr := receipt.Result.ContractAddress
@@ -234,7 +234,7 @@ func (opts *ScrapeOptions) extractAddressesFromTraces(addressMap map[string]bool
 
 		} else {
 			err := "New trace type:" + traces.Result[i].Type
-			fmt.Println("extractAddressesFromTraces -->")
+			fmt.Println("extractFromTraces -->")
 			log.Fatal(err)
 		}
 
@@ -269,21 +269,22 @@ func (opts *ScrapeOptions) extractAddressesFromTraces(addressMap map[string]bool
 	}
 }
 
-// extractAddressesFromLogs Extracts addresses from any part of the log data.
-func (opts *ScrapeOptions) extractAddressesFromLogs(addressMap map[string]bool, logs *Log, blockNum string) {
+// extractFromLogs Extracts addresses from any part of the log data.
+func (opts *ScrapeOptions) extractFromLogs(bn int, addressMap map[string]bool, logs *Log) {
 	if logs.Result == nil || len(logs.Result) == 0 {
 		return
 	}
 
+	blockNumStr := padLeft(strconv.Itoa(bn), 9)
 	for i := 0; i < len(logs.Result); i++ {
 		idxInt, err := strconv.ParseInt(logs.Result[i].TransactionIndex, 0, 32)
 		if err != nil {
-			fmt.Println("extractAddressesFromLogs --> strconv.ParseInt returned error")
+			fmt.Println("extractFromLogs --> strconv.ParseInt returned error")
 			log.Fatal(err)
 		}
 		idx := padLeft(strconv.FormatInt(idxInt, 10), 5)
 
-		blockAndIdx := "\t" + blockNum + "\t" + idx
+		blockAndIdx := "\t" + blockNumStr + "\t" + idx
 
 		for j := 0; j < len(logs.Result[i].Topics); j++ {
 			addr := string(logs.Result[i].Topics[j][2:])
@@ -313,11 +314,12 @@ func (opts *ScrapeOptions) extractAddressesFromLogs(addressMap map[string]bool, 
 // TODO: BOGUS
 var counter12 uint64 = 0
 
-func (opts *ScrapeOptions) writeAddresses(blockNum string, addressMap map[string]bool) {
+func (opts *ScrapeOptions) writeAddresses(bn int, addressMap map[string]bool) {
 	if len(addressMap) == 0 {
 		return
 	}
 
+	blockNumStr := padLeft(strconv.Itoa(bn), 9)
 	addressArray := make([]string, len(addressMap))
 	idx := 0
 	for address := range addressMap {
@@ -327,10 +329,10 @@ func (opts *ScrapeOptions) writeAddresses(blockNum string, addressMap map[string
 	sort.Strings(addressArray)
 	toWrite := []byte(strings.Join(addressArray[:], "\n") + "\n")
 
-	bn, _ := strconv.Atoi(blockNum)
-	fileName := config.GetPathToIndex(opts.Globals.Chain) + "ripe/" + blockNum + ".txt"
+	bn, _ := strconv.Atoi(blockNumStr)
+	fileName := config.GetPathToIndex(opts.Globals.Chain) + "ripe/" + blockNumStr + ".txt"
 	if bn > int(opts.RipeBlock) {
-		fileName = config.GetPathToIndex(opts.Globals.Chain) + "unripe/" + blockNum + ".txt"
+		fileName = config.GetPathToIndex(opts.Globals.Chain) + "unripe/" + blockNumStr + ".txt"
 	}
 
 	err := ioutil.WriteFile(fileName, toWrite, 0744)
@@ -343,7 +345,7 @@ func (opts *ScrapeOptions) writeAddresses(blockNum string, addressMap map[string
 	step := uint64(7)
 	counter12++
 	if counter12%step == 0 {
-		fmt.Fprintf(os.Stderr, "-------- ( ------)- <PROG>  : Scraping %-04d of %-04d at block %s\r", counter12, opts.BlockCnt, blockNum)
+		fmt.Fprintf(os.Stderr, "-------- ( ------)- <PROG>  : Scraping %-04d of %-04d at block %s\r", counter12, opts.BlockCnt, blockNumStr)
 	}
 }
 
@@ -389,8 +391,8 @@ func padLeft(str string, totalLen int) string {
 // TODO:
 
 // getBlockHeader Returns all traces for a given block.
-func (opts *ScrapeOptions) getBlockHeader(blockNum int) ([]byte, error) {
-	payloadBytes, err := json.Marshal(RPCPayload{"2.0", "eth_getBlockByNumber", RPCParams{LogFilter{fmt.Sprintf("0x%x", blockNum), "false"}}, 2})
+func (opts *ScrapeOptions) getBlockHeader(bn int) ([]byte, error) {
+	payloadBytes, err := json.Marshal(RPCPayload{"2.0", "eth_getBlockByNumber", RPCParams{LogFilter{fmt.Sprintf("0x%x", bn), "false"}}, 2})
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
@@ -420,8 +422,8 @@ func (opts *ScrapeOptions) getBlockHeader(blockNum int) ([]byte, error) {
 }
 
 // getTracesFromBlock Returns all traces for a given block.
-func (opts *ScrapeOptions) getTracesFromBlock(blockNum int) ([]byte, error) {
-	payloadBytes, err := json.Marshal(RPCPayload{"2.0", "trace_block", RPCParams{fmt.Sprintf("0x%x", blockNum)}, 2})
+func (opts *ScrapeOptions) getTracesFromBlock(bn int) ([]byte, error) {
+	payloadBytes, err := json.Marshal(RPCPayload{"2.0", "trace_block", RPCParams{fmt.Sprintf("0x%x", bn)}, 2})
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
@@ -451,8 +453,8 @@ func (opts *ScrapeOptions) getTracesFromBlock(blockNum int) ([]byte, error) {
 }
 
 // getLogsFromBlock Returns all logs for a given block.
-func (opts *ScrapeOptions) getLogsFromBlock(blockNum int) ([]byte, error) {
-	payloadBytes, err := json.Marshal(RPCPayload{"2.0", "eth_getLogs", RPCParams{LogFilter{fmt.Sprintf("0x%x", blockNum), fmt.Sprintf("0x%x", blockNum)}}, 2})
+func (opts *ScrapeOptions) getLogsFromBlock(bn int) ([]byte, error) {
+	payloadBytes, err := json.Marshal(RPCPayload{"2.0", "eth_getLogs", RPCParams{LogFilter{fmt.Sprintf("0x%x", bn), fmt.Sprintf("0x%x", bn)}}, 2})
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
