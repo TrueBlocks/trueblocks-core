@@ -42,6 +42,8 @@ class COptions : public COptionsBase {
     blknum_t prev_block{0};
     blknum_t blaze_ripe{0};
     blknum_t blaze_start{0};
+    blknum_t nRecsThen{0};
+    blknum_t nRecsNow{0};
     CPinnedChunkArray pinList;
     CApiKey lic;
 
@@ -58,6 +60,7 @@ class COptions : public COptionsBase {
     bool isSnapToGrid(blknum_t bn) const {
         return bn > first_snap && !(bn % snap_to_grid);
     }
+    bool report(void);
 };
 
 //-----------------------------------------------------------------------------

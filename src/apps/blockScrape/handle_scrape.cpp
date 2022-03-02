@@ -62,7 +62,7 @@ bool COptions::scrape_blocks(void) {
         return false;
     }
 
-    blknum_t nRecsThen = fileSize(getLastFileInFolder(indexFolder_staging, false)) / asciiAppearanceSize;
+    nRecsThen = fileSize(getLastFileInFolder(indexFolder_staging, false)) / asciiAppearanceSize;
     if (!forEveryFileInFolder(indexFolder_ripe, copyRipeToStage, this)) {
         cleanFolder(indexFolder_unripe);
         cleanFolder(indexFolder_ripe);
@@ -74,25 +74,7 @@ bool COptions::scrape_blocks(void) {
 
     if (!stage_chunks(tmpStagingFn))
         return false;
-
-    blknum_t nRecsNow = fileSize(newStage) / asciiAppearanceSize;
-    blknum_t found = nRecsNow - nRecsThen;
-    blknum_t need = apps_per_chunk >= nRecsNow ? apps_per_chunk - nRecsNow : 0;
-    double pct = double(nRecsNow) / double(apps_per_chunk);
-    double pBlk = double(found) / double(block_cnt);
-
-    string_q result = "Block {0}: have {1} addrs of {2} ({3}). Need {4} more. Found {5} records ({6}).";
-    replace(result, "{0}", "{" + uint_2_Str(blaze_start + block_cnt) + "}");
-    replace(result, "{1}", "{" + uint_2_Str(nRecsNow) + "}");
-    replace(result, "{2}", "{" + uint_2_Str(apps_per_chunk) + "}");
-    replace(result, "{3}", "{" + double_2_Str(pct * 100.00, 1) + "%}");
-    replace(result, "{4}", "{" + uint_2_Str(need) + "}");
-    replace(result, "{5}", "{" + uint_2_Str(found) + "}");
-    replace(result, "{6}", "{" + double_2_Str(pBlk, 2) + "/blk}");
-    replaceAll(result, "{", cGreen);
-    replaceAll(result, "}", cOff);
-    LOG_INFO(result);
-
+    report();
     if (nRecsNow <= apps_per_chunk)
         return true;
     return write_chunks(apps_per_chunk, false /* snapped */);
@@ -133,6 +115,7 @@ bool copyRipeToStage(const string_q& path, void* data) {
             string_q tmpStagingFn = (indexFolder_staging + "000000000-temp.txt");
             if (!opts->stage_chunks(tmpStagingFn))
                 return false;
+            opts->report();
             blknum_t nRecords = fileSize(opts->newStage) / asciiAppearanceSize;
             blknum_t chunkSize = min(nRecords, opts->apps_per_chunk);
             opts->write_chunks(chunkSize, true /* snapped */);
@@ -261,6 +244,28 @@ bool COptions::stage_chunks(const string_q& tmpFn) {
         ::remove(prevStage.c_str());
     unlockSection();
     return !shouldQuit();
+}
+
+//---------------------------------------------------------------------------------------------------
+bool COptions::report(void) {
+    nRecsNow = fileSize(newStage) / asciiAppearanceSize;
+    blknum_t found = nRecsNow - nRecsThen;
+    blknum_t need = apps_per_chunk >= nRecsNow ? apps_per_chunk - nRecsNow : 0;
+    double pct = double(nRecsNow) / double(apps_per_chunk);
+    double pBlk = double(found) / double(block_cnt);
+
+    string_q result = "Block {0}: have {1} addrs of {2} ({3}). Need {4} more. Found {5} records ({6}).";
+    replace(result, "{0}", "{" + uint_2_Str(blaze_start + block_cnt) + "}");
+    replace(result, "{1}", "{" + uint_2_Str(nRecsNow) + "}");
+    replace(result, "{2}", "{" + uint_2_Str(apps_per_chunk) + "}");
+    replace(result, "{3}", "{" + double_2_Str(pct * 100.00, 1) + "%}");
+    replace(result, "{4}", "{" + uint_2_Str(need) + "}");
+    replace(result, "{5}", "{" + uint_2_Str(found) + "}");
+    replace(result, "{6}", "{" + double_2_Str(pBlk, 2) + "/blk}");
+    replaceAll(result, "{", cGreen);
+    replaceAll(result, "}", cOff);
+    LOG_INFO(result);
+    return true;
 }
 
 //----------------------------------------------------------------
