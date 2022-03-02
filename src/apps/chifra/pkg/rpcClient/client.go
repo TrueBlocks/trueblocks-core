@@ -212,3 +212,9 @@ func HexToAddress(hex string) common.Address {
 func DecodeHex(hex string) []byte {
 	return hexutil.MustDecode(hex)
 }
+
+// IsErigon returns true if we're running against Erigon, false otherwise
+func IsErigon() bool {
+	return false
+	// return contains(toLower(getVersionFromClient()), "erigon");
+}

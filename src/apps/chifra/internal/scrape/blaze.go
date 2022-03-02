@@ -25,7 +25,7 @@ func (opts *ScrapeOptions) ScrapeBlocks() {
 	var blockWG sync.WaitGroup
 	blockWG.Add(int(opts.BlockChanCnt))
 	for i := 0; i < int(opts.BlockChanCnt); i++ {
-		go opts.getTracesAndLogs(blockChannel, addressChannel, &blockWG)
+		go opts.processBlocks(blockChannel, addressChannel, &blockWG)
 	}
 
 	var addressWG sync.WaitGroup
@@ -48,27 +48,47 @@ func (opts *ScrapeOptions) ScrapeBlocks() {
 // tracesAndLogs combines traces and logs to make processing easier
 type tracesAndLogs struct {
 	block  int
-	traces []byte
-	logs   []byte
+	header []byte
+	traces Trace
+	logs   Log
 }
 
-// getTracesAndLogs Process the block channel and for each block query the node for both traces and logs. Send results to addressChannel
-func (opts *ScrapeOptions) getTracesAndLogs(blockChannel chan int, addressChannel chan tracesAndLogs, blockWG *sync.WaitGroup) {
+// processBlocks Process the block channel and for each block query the node for both traces and logs. Send results to addressChannel
+func (opts *ScrapeOptions) processBlocks(blockChannel chan int, addressChannel chan tracesAndLogs, blockWG *sync.WaitGroup) {
 
 	for blockNum := range blockChannel {
-		traces, err := opts.getTracesFromBlock(blockNum)
+
+		header, err := opts.getBlockHeader(blockNum)
 		if err != nil {
-			fmt.Println("getTracesAndLogs --> opts.getTracesFromBlock returned error")
+			fmt.Println("processBlocks --> opts.getBlockHeader returned error")
 			log.Fatal(err)
 		}
 
-		logs, err := opts.getLogsFromBlock(blockNum)
+		var traces Trace
+		traceBytes, err := opts.getTracesFromBlock(blockNum)
 		if err != nil {
-			fmt.Println("getTracesAndLogs --> opts.getLogsFromBlock returned error")
+			fmt.Println("processBlocks --> opts.getTracesFromBlock returned error")
+			log.Fatal(err)
+		}
+		err = json.Unmarshal(traceBytes, &traces)
+		if err != nil {
+			fmt.Println("extractAddresses --> json.Unmarshal1 returned error")
 			log.Fatal(err)
 		}
 
-		addressChannel <- tracesAndLogs{blockNum, traces, logs}
+		var logs Log
+		logsBytes, err := opts.getLogsFromBlock(blockNum)
+		if err != nil {
+			fmt.Println("processBlocks --> opts.getLogsFromBlock returned error")
+			log.Fatal(err)
+		}
+		err = json.Unmarshal(logsBytes, &logs)
+		if err != nil {
+			fmt.Println("extractAddresses --> json.Unmarshal2 returned error")
+			log.Fatal(err)
+		}
+
+		addressChannel <- tracesAndLogs{blockNum, header, traces, logs}
 	}
 	blockWG.Done()
 }
@@ -79,25 +99,8 @@ func (opts *ScrapeOptions) extractAddresses(addressChannel chan tracesAndLogs, a
 		addressMap := make(map[string]bool)
 		blockNumStr := padLeft(strconv.Itoa(blockTraceAndLog.block), 9)
 
-		// Parse the traces
-		var traces Trace
-		err := json.Unmarshal(blockTraceAndLog.traces, &traces)
-		if err != nil {
-			fmt.Println("extractAddresses --> json.Unmarshal1 returned error")
-			log.Fatal(err)
-		}
-		opts.extractAddressesFromTraces(addressMap, &traces, blockNumStr)
-
-		// Now, parse log data
-		var logs Log
-		err = json.Unmarshal(blockTraceAndLog.logs, &logs)
-		if err != nil {
-			fmt.Println("extractAddresses --> json.Unmarshal2 returned error")
-			log.Fatal(err)
-		}
-		extractAddressesFromLogs(addressMap, &logs, blockNumStr)
-
-		// We still may have no addresses here, but we deal with that elsewhere
+		opts.extractAddressesFromTraces(addressMap, &blockTraceAndLog.traces, blockNumStr)
+		opts.extractAddressesFromLogs(addressMap, &blockTraceAndLog.logs, blockNumStr)
 		opts.writeAddresses(blockNumStr, addressMap)
 	}
 
@@ -267,7 +270,7 @@ func (opts *ScrapeOptions) extractAddressesFromTraces(addressMap map[string]bool
 }
 
 // extractAddressesFromLogs Extracts addresses from any part of the log data.
-func extractAddressesFromLogs(addressMap map[string]bool, logs *Log, blockNum string) {
+func (opts *ScrapeOptions) extractAddressesFromLogs(addressMap map[string]bool, logs *Log, blockNum string) {
 	if logs.Result == nil || len(logs.Result) == 0 {
 		return
 	}
@@ -385,6 +388,37 @@ func padLeft(str string, totalLen int) string {
 // TODO: My expectation is that we will eventually have to re-generate the index. We'll fix this then.
 // TODO:
 
+// getBlockHeader Returns all traces for a given block.
+func (opts *ScrapeOptions) getBlockHeader(blockNum int) ([]byte, error) {
+	payloadBytes, err := json.Marshal(RPCPayload{"2.0", "eth_getBlockByNumber", RPCParams{LogFilter{fmt.Sprintf("0x%x", blockNum), "false"}}, 2})
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+
+	body := bytes.NewReader(payloadBytes)
+	req, err := http.NewRequest("POST", config.GetRpcProvider(opts.Globals.Chain), body)
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+
+	req.Header.Set("Content-Type", "application/json")
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+	defer resp.Body.Close()
+	theBytes, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+
+	return theBytes, nil
+}
+
 // getTracesFromBlock Returns all traces for a given block.
 func (opts *ScrapeOptions) getTracesFromBlock(blockNum int) ([]byte, error) {
 	payloadBytes, err := json.Marshal(RPCPayload{"2.0", "trace_block", RPCParams{fmt.Sprintf("0x%x", blockNum)}, 2})
@@ -407,13 +441,13 @@ func (opts *ScrapeOptions) getTracesFromBlock(blockNum int) ([]byte, error) {
 		return nil, err
 	}
 	defer resp.Body.Close()
-	tracesBody, err := ioutil.ReadAll(resp.Body)
+	theBytes, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
 	}
 
-	return tracesBody, nil
+	return theBytes, nil
 }
 
 // getLogsFromBlock Returns all logs for a given block.
@@ -437,15 +471,14 @@ func (opts *ScrapeOptions) getLogsFromBlock(blockNum int) ([]byte, error) {
 		fmt.Println(err)
 		return nil, err
 	}
-
-	logsBody, err := ioutil.ReadAll(resp.Body)
+	defer resp.Body.Close()
+	theBytes, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
 	}
 
-	defer resp.Body.Close()
-	return logsBody, nil
+	return theBytes, nil
 }
 
 // getTransactionReceipt Returns recipt for a given transaction -- only used in errored contract creations

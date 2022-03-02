@@ -14,6 +14,7 @@ import (
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+
 	"github.com/spf13/cobra"
 )
 

@@ -72,7 +72,7 @@ static bool chunkVisitFunc(const string_q& path, void* data) {
             replace(msg, "{5}", "{" + padNum9T(uint64_t(index.header->nRows)) + "}");
             replaceAll(msg, "{", cGreen);
             replaceAll(msg, "}", cOff);
-            LOG_INFO(msg);
+            cout << msg << endl;
             for (uint32_t a = 0; a < index.nAddrs; a++) {
                 CIndexedAddress* aRec = &index.addresses[a];
                 if (opts->save) {
