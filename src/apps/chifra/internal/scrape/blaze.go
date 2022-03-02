@@ -16,25 +16,30 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
 
-func (opts *ScrapeOptions) ScrapeBlocks() {
-	// opts.Globals.LogLevel = 10
+type BlazeOptions struct {
+	scrapeOpts *ScrapeOptions
+	addressMap *map[string]bool
+}
+
+func (opts *BlazeOptions) ScrapeBlocks() {
+	// opts.scrapeOpts.Globals.LogLevel = 10
 
 	blockChannel := make(chan int)
 	addressChannel := make(chan tracesAndLogs)
 
 	var blockWG sync.WaitGroup
-	blockWG.Add(int(opts.BlockChanCnt))
-	for i := 0; i < int(opts.BlockChanCnt); i++ {
+	blockWG.Add(int(opts.scrapeOpts.BlockChanCnt))
+	for i := 0; i < int(opts.scrapeOpts.BlockChanCnt); i++ {
 		go opts.processBlocks(blockChannel, addressChannel, &blockWG)
 	}
 
 	var addressWG sync.WaitGroup
-	addressWG.Add(int(opts.AddrChanCnt))
-	for i := 0; i < int(opts.AddrChanCnt); i++ {
+	addressWG.Add(int(opts.scrapeOpts.AddrChanCnt))
+	for i := 0; i < int(opts.scrapeOpts.AddrChanCnt); i++ {
 		go opts.extractAddresses(addressChannel, &addressWG)
 	}
 
-	for block := int(opts.StartBlock); block < int(opts.StartBlock+opts.BlockCnt); block++ {
+	for block := int(opts.scrapeOpts.StartBlock); block < int(opts.scrapeOpts.StartBlock+opts.scrapeOpts.BlockCnt); block++ {
 		blockChannel <- block
 	}
 
@@ -54,20 +59,20 @@ type tracesAndLogs struct {
 }
 
 // processBlocks Process the block channel and for each block query the node for both traces and logs. Send results to addressChannel
-func (opts *ScrapeOptions) processBlocks(blockChannel chan int, addressChannel chan tracesAndLogs, blockWG *sync.WaitGroup) {
+func (opts *BlazeOptions) processBlocks(blockChannel chan int, addressChannel chan tracesAndLogs, blockWG *sync.WaitGroup) {
 
 	for blockNum := range blockChannel {
 
 		header, err := opts.getBlockHeader(blockNum)
 		if err != nil {
-			fmt.Println("processBlocks --> opts.getBlockHeader returned error")
+			fmt.Println("processBlocks --> opts.scrapeOpts.getBlockHeader returned error")
 			log.Fatal(err)
 		}
 
 		var traces Trace
 		traceBytes, err := opts.getTracesFromBlock(blockNum)
 		if err != nil {
-			fmt.Println("processBlocks --> opts.getTracesFromBlock returned error")
+			fmt.Println("processBlocks --> opts.scrapeOpts.getTracesFromBlock returned error")
 			log.Fatal(err)
 		}
 		err = json.Unmarshal(traceBytes, &traces)
@@ -79,7 +84,7 @@ func (opts *ScrapeOptions) processBlocks(blockChannel chan int, addressChannel c
 		var logs Log
 		logsBytes, err := opts.getLogsFromBlock(blockNum)
 		if err != nil {
-			fmt.Println("processBlocks --> opts.getLogsFromBlock returned error")
+			fmt.Println("processBlocks --> opts.scrapeOpts.getLogsFromBlock returned error")
 			log.Fatal(err)
 		}
 		err = json.Unmarshal(logsBytes, &logs)
@@ -93,7 +98,7 @@ func (opts *ScrapeOptions) processBlocks(blockChannel chan int, addressChannel c
 	blockWG.Done()
 }
 
-func (opts *ScrapeOptions) extractAddresses(addressChannel chan tracesAndLogs, addressWG *sync.WaitGroup) {
+func (opts *BlazeOptions) extractAddresses(addressChannel chan tracesAndLogs, addressWG *sync.WaitGroup) {
 
 	for blockTraceAndLog := range addressChannel {
 		bn := blockTraceAndLog.block
@@ -101,12 +106,13 @@ func (opts *ScrapeOptions) extractAddresses(addressChannel chan tracesAndLogs, a
 		opts.extractFromTraces(bn, addressMap, &blockTraceAndLog.traces)
 		opts.extractFromLogs(bn, addressMap, &blockTraceAndLog.logs)
 		opts.writeAddresses(bn, addressMap)
+		opts.addressMap = &addressMap
 	}
 
 	addressWG.Done()
 }
 
-func (opts *ScrapeOptions) extractFromTraces(bn int, addressMap map[string]bool, traces *Trace) {
+func (opts *BlazeOptions) extractFromTraces(bn int, addressMap map[string]bool, traces *Trace) {
 	if traces.Result == nil || len(traces.Result) == 0 {
 		return
 	}
@@ -270,7 +276,7 @@ func (opts *ScrapeOptions) extractFromTraces(bn int, addressMap map[string]bool,
 }
 
 // extractFromLogs Extracts addresses from any part of the log data.
-func (opts *ScrapeOptions) extractFromLogs(bn int, addressMap map[string]bool, logs *Log) {
+func (opts *BlazeOptions) extractFromLogs(bn int, addressMap map[string]bool, logs *Log) {
 	if logs.Result == nil || len(logs.Result) == 0 {
 		return
 	}
@@ -314,7 +320,7 @@ func (opts *ScrapeOptions) extractFromLogs(bn int, addressMap map[string]bool, l
 // TODO: BOGUS
 var counter12 uint64 = 0
 
-func (opts *ScrapeOptions) writeAddresses(bn int, addressMap map[string]bool) {
+func (opts *BlazeOptions) writeAddresses(bn int, addressMap map[string]bool) {
 	if len(addressMap) == 0 {
 		return
 	}
@@ -330,9 +336,9 @@ func (opts *ScrapeOptions) writeAddresses(bn int, addressMap map[string]bool) {
 	toWrite := []byte(strings.Join(addressArray[:], "\n") + "\n")
 
 	bn, _ = strconv.Atoi(blockNumStr)
-	fileName := config.GetPathToIndex(opts.Globals.Chain) + "ripe/" + blockNumStr + ".txt"
-	if bn > int(opts.RipeBlock) {
-		fileName = config.GetPathToIndex(opts.Globals.Chain) + "unripe/" + blockNumStr + ".txt"
+	fileName := config.GetPathToIndex(opts.scrapeOpts.Globals.Chain) + "ripe/" + blockNumStr + ".txt"
+	if bn > int(opts.scrapeOpts.RipeBlock) {
+		fileName = config.GetPathToIndex(opts.scrapeOpts.Globals.Chain) + "unripe/" + blockNumStr + ".txt"
 	}
 
 	err := ioutil.WriteFile(fileName, toWrite, 0744)
@@ -345,7 +351,7 @@ func (opts *ScrapeOptions) writeAddresses(bn int, addressMap map[string]bool) {
 	step := uint64(7)
 	counter12++
 	if counter12%step == 0 {
-		fmt.Fprintf(os.Stderr, "-------- ( ------)- <PROG>  : Scraping %-04d of %-04d at block %s\r", counter12, opts.BlockCnt, blockNumStr)
+		fmt.Fprintf(os.Stderr, "-------- ( ------)- <PROG>  : Scraping %-04d of %-04d at block %s\r", counter12, opts.scrapeOpts.BlockCnt, blockNumStr)
 	}
 }
 
@@ -391,7 +397,7 @@ func padLeft(str string, totalLen int) string {
 // TODO:
 
 // getBlockHeader Returns all traces for a given block.
-func (opts *ScrapeOptions) getBlockHeader(bn int) ([]byte, error) {
+func (opts *BlazeOptions) getBlockHeader(bn int) ([]byte, error) {
 	payloadBytes, err := json.Marshal(RPCPayload{"2.0", "eth_getBlockByNumber", RPCParams{LogFilter{fmt.Sprintf("0x%x", bn), "false"}}, 2})
 	if err != nil {
 		fmt.Println(err)
@@ -399,7 +405,7 @@ func (opts *ScrapeOptions) getBlockHeader(bn int) ([]byte, error) {
 	}
 
 	body := bytes.NewReader(payloadBytes)
-	req, err := http.NewRequest("POST", config.GetRpcProvider(opts.Globals.Chain), body)
+	req, err := http.NewRequest("POST", config.GetRpcProvider(opts.scrapeOpts.Globals.Chain), body)
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
@@ -422,7 +428,7 @@ func (opts *ScrapeOptions) getBlockHeader(bn int) ([]byte, error) {
 }
 
 // getTracesFromBlock Returns all traces for a given block.
-func (opts *ScrapeOptions) getTracesFromBlock(bn int) ([]byte, error) {
+func (opts *BlazeOptions) getTracesFromBlock(bn int) ([]byte, error) {
 	payloadBytes, err := json.Marshal(RPCPayload{"2.0", "trace_block", RPCParams{fmt.Sprintf("0x%x", bn)}, 2})
 	if err != nil {
 		fmt.Println(err)
@@ -430,7 +436,7 @@ func (opts *ScrapeOptions) getTracesFromBlock(bn int) ([]byte, error) {
 	}
 
 	body := bytes.NewReader(payloadBytes)
-	req, err := http.NewRequest("POST", config.GetRpcProvider(opts.Globals.Chain), body)
+	req, err := http.NewRequest("POST", config.GetRpcProvider(opts.scrapeOpts.Globals.Chain), body)
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
@@ -453,7 +459,7 @@ func (opts *ScrapeOptions) getTracesFromBlock(bn int) ([]byte, error) {
 }
 
 // getLogsFromBlock Returns all logs for a given block.
-func (opts *ScrapeOptions) getLogsFromBlock(bn int) ([]byte, error) {
+func (opts *BlazeOptions) getLogsFromBlock(bn int) ([]byte, error) {
 	payloadBytes, err := json.Marshal(RPCPayload{"2.0", "eth_getLogs", RPCParams{LogFilter{fmt.Sprintf("0x%x", bn), fmt.Sprintf("0x%x", bn)}}, 2})
 	if err != nil {
 		fmt.Println(err)
@@ -461,7 +467,7 @@ func (opts *ScrapeOptions) getLogsFromBlock(bn int) ([]byte, error) {
 	}
 
 	body := bytes.NewReader(payloadBytes)
-	req, err := http.NewRequest("POST", config.GetRpcProvider(opts.Globals.Chain), body)
+	req, err := http.NewRequest("POST", config.GetRpcProvider(opts.scrapeOpts.Globals.Chain), body)
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
@@ -484,7 +490,7 @@ func (opts *ScrapeOptions) getLogsFromBlock(bn int) ([]byte, error) {
 }
 
 // getTransactionReceipt Returns recipt for a given transaction -- only used in errored contract creations
-func (opts *ScrapeOptions) getTransactionReceipt(hash string) ([]byte, error) {
+func (opts *BlazeOptions) getTransactionReceipt(hash string) ([]byte, error) {
 	payloadBytes, err := json.Marshal(RPCPayload{"2.0", "eth_getTransactionReceipt", RPCParams{hash}, 2})
 	if err != nil {
 		fmt.Println(err)
@@ -492,7 +498,7 @@ func (opts *ScrapeOptions) getTransactionReceipt(hash string) ([]byte, error) {
 	}
 
 	body := bytes.NewReader(payloadBytes)
-	req, err := http.NewRequest("POST", config.GetRpcProvider(opts.Globals.Chain), body)
+	req, err := http.NewRequest("POST", config.GetRpcProvider(opts.scrapeOpts.Globals.Chain), body)
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
