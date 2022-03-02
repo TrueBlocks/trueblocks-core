@@ -56,9 +56,10 @@ class COptions : public COptionsBase {
     bool scrape_blocks(void);
     bool stage_chunks(const string_q& tmpFn);
     bool write_chunks(blknum_t chunkSize, bool atLeastOnce);
-    bool isSnapToGrid(blknum_t bn) {
+    bool isSnapToGrid(blknum_t bn) const {
         return bn > first_snap && !(bn % snap_to_grid);
     }
+    bool isAllDefaults(void) const;
 };
 
 //-----------------------------------------------------------------------------

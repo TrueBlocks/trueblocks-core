@@ -20,10 +20,7 @@ bool COptions::handle_check() {
         return true;
     }
 
-    if (!folderExists(indexFolder))
-        return false;
-    establishFolder(indexFolder_blooms);
-    establishFolder(indexFolder_finalized);
+    establishIndexFolders();
 
     // If the user is calling here, she wants a fresh read even if we've not just freshened.
     pins.clear();

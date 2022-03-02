@@ -271,8 +271,6 @@ bool neighbors_Pre(CTraverser* trav, void* data) {
 
     // LOG_INFO("Processing address ", opt->accountedFor.address);
 
-    establishFolder(indexFolder_map);
-
     CBlockRangeArray ranges;
     getChunkRanges(ranges);
 

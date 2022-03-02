@@ -48,15 +48,7 @@ bool COptions::handle_status(ostream& os) {
         return true;
     }
 
-    establishFolder(cacheFolder_abis);
-    establishFolder(cacheFolder_blocks);
-    establishFolder(cacheFolder_monitors);
-    establishFolder(cacheFolder_names);
-    establishFolder(cacheFolder_prices);
-    establishFolder(cacheFolder_slurps);
-    establishFolder(cacheFolder_tmp);
-    establishFolder(cacheFolder_traces);
-    establishFolder(cacheFolder_txs);
+    establishCacheFolders();
 
     CIndexCache index;
     if (contains(mode, "|index|")) {

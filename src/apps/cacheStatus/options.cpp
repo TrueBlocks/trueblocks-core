@@ -145,14 +145,8 @@ bool COptions::parseArguments(string_q& command) {
     if (!loadNames())
         return usage("Could not load names database.");
 
-    establishFolder(cacheFolder_tmp);
-    establishFolder(indexFolder_finalized);
-    establishFolder(indexFolder_blooms);
-    establishFolder(cacheFolder_slurps);
-    establishFolder(cacheFolder_blocks);
-    establishFolder(cacheFolder_txs);
-    establishFolder(cacheFolder_traces);
-    establishFolder(cacheFolder_monitors);
+    establishIndexFolders();
+    establishCacheFolders();
 
     for (auto m : modes)
         mode += (m + "|");

@@ -28,6 +28,7 @@
 #include "database.h"
 #include "filenames.h"
 #include "logging.h"
+#include "config_paths.h"
 
 namespace qblocks {
 
@@ -255,6 +256,34 @@ uint64_t fileSize(const string_q& filename) {
     struct stat statBuf;
     stat(filename.c_str(), &statBuf);
     return (uint64_t)statBuf.st_size;
+}
+
+//------------------------------------------------------------------
+bool establishIndexFolders(void) {
+    establishFolder(indexFolder);
+    establishFolder(indexFolder_blooms);
+    establishFolder(indexFolder_finalized);
+    establishFolder(indexFolder_map);
+    establishFolder(indexFolder_ripe);
+    establishFolder(indexFolder_staging);
+    establishFolder(indexFolder_unripe);
+    return true;
+}
+
+//------------------------------------------------------------------
+bool establishCacheFolders(void) {
+    establishFolder(cacheFolder_abis);
+    establishFolder(cacheFolder_blocks);
+    establishFolder(cacheFolder_monitors);
+    establishFolder(cacheFolder_names);
+    establishFolder(cacheFolder_objs);
+    establishFolder(cacheFolder_prices);
+    establishFolder(cacheFolder_recons);
+    establishFolder(cacheFolder_slurps);
+    establishFolder(cacheFolder_tmp);
+    establishFolder(cacheFolder_traces);
+    establishFolder(cacheFolder_txs);
+    return true;
 }
 
 //----------------------------------------------------------------------------

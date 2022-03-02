@@ -41,10 +41,11 @@ bool COptions::parseArguments(string_q& command) {
     // BEG_CODE_LOCAL_INIT
     // END_CODE_LOCAL_INIT
 
+    Init();
+
     CBlock block;
     getBlockHeader(block, getBlockProgress(BP_CLIENT).client);
 
-    Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         if (false) {
@@ -185,6 +186,13 @@ void COptions::Init(void) {
     // clang-format on
     // END_CODE_INIT
 
+    if (getChain() != "mainnet" && isAllDefaults()) {
+        LOG_ERR("In order to use the scraper on non-mainnet chains, you must customize the config file");
+        LOG_ERR("at ", cTeal + getPathToChainConfig("") + "blockScrape.toml" + cOff);
+        LOG_ERR(cRed, "Sleeping...");
+        quickQuitHandler(EXIT_FAILURE);
+    }
+
     minArgs = 0;
 }
 
@@ -208,12 +216,7 @@ COptions::COptions(void) {
 
     // Establish the folders that hold the data...
     establishMonitorFolders();
-    establishFolder(indexFolder);
-    establishFolder(indexFolder_finalized);
-    establishFolder(indexFolder_blooms);
-    establishFolder(indexFolder_staging);
-    establishFolder(indexFolder_unripe);
-    establishFolder(indexFolder_ripe);
+    establishIndexFolders();
     establishFolder(cacheFolder_tmp);
 }
 
@@ -230,4 +233,19 @@ bool visitPrefund(const Allocation& prefund, void* data) {
     appearances->push_back(os.str());
 
     return true;
+}
+
+//-----------------------------------------------------------------------
+bool COptions::isAllDefaults(void) const {
+    // clang-format off
+    if (block_cnt != 2000) return false;
+    if (block_chan_cnt != 10) return false;
+    if (addr_chan_cnt != 20) return false;
+    if (apps_per_chunk != 2000000) return false;
+    if (unripe_dist != 28) return false;
+    if (snap_to_grid != 100000) return false;
+    if (first_snap != 2250000) return false;
+    if (allow_missing) return false;
+    return true;
+    // clang-format on
 }
