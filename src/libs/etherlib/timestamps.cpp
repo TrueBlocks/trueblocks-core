@@ -137,7 +137,7 @@ bool freshenTimestamps(blknum_t minBlock) {
             LOG_PROGRESS(UPDATE, block.blockNumber, minBlock, post.str());
         }
     }
-    LOG_PROGRESS(COMPLETE, block.blockNumber, minBlock, string_q(80, ' '));
+    // LOG_PROGRESS(COMPLETE, block.blockNumber, minBlock, string_q(80, ' '));
 
     file.Release();
     unlockSection();
