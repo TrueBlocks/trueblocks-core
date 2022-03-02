@@ -65,6 +65,7 @@ static bool chunkVisitFunc(const string_q& path, void* data) {
                 "{" + padNum9T(fileSize(substitute(substitute(path, "finalized", "blooms"), ".bin", ".bloom"))) + "}");
             replace(msg, "{4}", "{" + padNum9T(uint64_t(index.header->nAddrs)) + "}");
             replace(msg, "{5}", "{" + padNum9T(uint64_t(index.header->nRows)) + "}");
+            LOG_INFO(msg);
             for (uint32_t a = 0; a < index.nAddrs; a++) {
                 CIndexedAddress* aRec = &index.addresses[a];
                 if (opts->save) {
