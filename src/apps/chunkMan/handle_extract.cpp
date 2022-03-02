@@ -56,13 +56,15 @@ static bool chunkVisitFunc(const string_q& path, void* data) {
                 output << "nAddrs: " << index.header->nAddrs << endl;
                 output << "nRows: " << index.header->nRows << endl;
             }
-            cout << "start: " << startBlock << endl;
-            cout << "end: " << endBlock << endl;
-            cout << "fileSize: " << fileSize(path) << endl;
-            cout << "bloomSize: " << fileSize(substitute(substitute(path, "finalized", "blooms"), ".bin", ".bloom"))
-                 << endl;
-            cout << "nAddrs: " << index.header->nAddrs << endl;
-            cout << "nRows: " << index.header->nRows << endl;
+            string_q msg = "start: {0} end: {1} fileSize: {2} bloomSize: {3} nAddrs: {4} nRows: {5}";
+            replace(msg, "{0}", "{" + padNum9T(startBlock) + "}");
+            replace(msg, "{1}", "{" + padNum9T(endBlock) + "}");
+            replace(msg, "{2}", "{" + padNum9T(fileSize(path)) + "}");
+            replace(
+                msg, "{3}",
+                "{" + padNum9T(fileSize(substitute(substitute(path, "finalized", "blooms"), ".bin", ".bloom"))) + "}");
+            replace(msg, "{4}", "{" + padNum9T(uint64_t(index.header->nAddrs)) + "}");
+            replace(msg, "{5}", "{" + padNum9T(uint64_t(index.header->nRows)) + "}");
             for (uint32_t a = 0; a < index.nAddrs; a++) {
                 CIndexedAddress* aRec = &index.addresses[a];
                 if (opts->save) {
