@@ -329,7 +329,7 @@ func (opts *ScrapeOptions) writeAddresses(bn int, addressMap map[string]bool) {
 	sort.Strings(addressArray)
 	toWrite := []byte(strings.Join(addressArray[:], "\n") + "\n")
 
-	bn, _ := strconv.Atoi(blockNumStr)
+	bn, _ = strconv.Atoi(blockNumStr)
 	fileName := config.GetPathToIndex(opts.Globals.Chain) + "ripe/" + blockNumStr + ".txt"
 	if bn > int(opts.RipeBlock) {
 		fileName = config.GetPathToIndex(opts.Globals.Chain) + "unripe/" + blockNumStr + ".txt"
