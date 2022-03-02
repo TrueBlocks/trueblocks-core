@@ -50,10 +50,10 @@ func (opts *ScrapeOptions) TestLog() {
 	logger.TestLog(opts.BlockCnt != 2000, "BlockCnt: ", opts.BlockCnt)
 	logger.TestLog(opts.BlockChanCnt != 10, "BlockChanCnt: ", opts.BlockChanCnt)
 	logger.TestLog(opts.AddrChanCnt != 20, "AddrChanCnt: ", opts.AddrChanCnt)
-	logger.TestLog(opts.AppsPerChunk != 2000000, "AppsPerChunk: ", opts.AppsPerChunk)
+	logger.TestLog(opts.AppsPerChunk != 200000, "AppsPerChunk: ", opts.AppsPerChunk)
 	logger.TestLog(opts.UnripeDist != 28, "UnripeDist: ", opts.UnripeDist)
 	logger.TestLog(opts.SnapToGrid != 100000, "SnapToGrid: ", opts.SnapToGrid)
-	logger.TestLog(opts.FirstSnap != 2250000, "FirstSnap: ", opts.FirstSnap)
+	logger.TestLog(opts.FirstSnap != 0, "FirstSnap: ", opts.FirstSnap)
 	logger.TestLog(opts.AllowMissing, "AllowMissing: ", opts.AllowMissing)
 	logger.TestLog(opts.StartBlock != 0, "StartBlock: ", opts.StartBlock)
 	logger.TestLog(opts.RipeBlock != 0, "RipeBlock: ", opts.RipeBlock)
@@ -88,10 +88,10 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ScrapeOptions {
 	opts.BlockCnt = 2000
 	opts.BlockChanCnt = 10
 	opts.AddrChanCnt = 20
-	opts.AppsPerChunk = 2000000
+	opts.AppsPerChunk = 200000
 	opts.UnripeDist = 28
 	opts.SnapToGrid = 100000
-	opts.FirstSnap = 2250000
+	opts.FirstSnap = 0
 	opts.StartBlock = 0
 	opts.RipeBlock = 0
 	for key, value := range r.URL.Query() {

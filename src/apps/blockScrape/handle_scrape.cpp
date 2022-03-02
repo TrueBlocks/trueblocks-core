@@ -32,8 +32,6 @@ bool COptions::scrape_blocks(void) {
         return false;
     }
 
-    string_q oldStage = getLastFileInFolder(indexFolder_staging, false);
-    blknum_t nRecsThen = fileSize(oldStage) / asciiAppearanceSize;
     ostringstream blazeCmd;
     blazeCmd << "chifra scrape indexer --blaze ";
     blazeCmd << "--start_block " << blaze_start << " ";
@@ -43,10 +41,18 @@ bool COptions::scrape_blocks(void) {
     blazeCmd << "--addr_chan_cnt " << addr_chan_cnt << " ";
     blazeCmd << "--chain " << getChain() << " ";
     blazeCmd << (verbose ? ("--verbose " + uint_2_Str(verbose)) : "");
+    // LOG_INFO(bWhite, blazeCmd.str(), cOff);
 
     if (system(blazeCmd.str().c_str()) != 0) {
         cleanFolder(indexFolder_ripe);
-        LOG_WARN("Blaze quit without finishing. Reprocessing...");
+        static bool failed_already = false;
+        if (!failed_already) {
+            failed_already = true;
+            LOG_WARN(cYellow, "Blaze quit without finishing. Retrying...", cOff);
+            sleep(3);
+            return scrape_blocks();
+        }
+        LOG_WARN(cYellow, "Blaze quit without finishing. Reprocessing...", cOff);
         return false;
     }
 
@@ -56,6 +62,7 @@ bool COptions::scrape_blocks(void) {
         return false;
     }
 
+    blknum_t nRecsThen = fileSize(getLastFileInFolder(indexFolder_staging, false)) / asciiAppearanceSize;
     if (!forEveryFileInFolder(indexFolder_ripe, copyRipeToStage, this)) {
         cleanFolder(indexFolder_unripe);
         cleanFolder(indexFolder_ripe);
@@ -67,27 +74,28 @@ bool COptions::scrape_blocks(void) {
 
     if (!stage_chunks(tmpStagingFn))
         return false;
+
     blknum_t nRecsNow = fileSize(newStage) / asciiAppearanceSize;
-    blknum_t chunkSize = apps_per_chunk;
-    double pct = double(nRecsNow) / double(chunkSize);
     blknum_t found = nRecsNow - nRecsThen;
+    blknum_t need = apps_per_chunk >= nRecsNow ? apps_per_chunk - nRecsNow : 0;
+    double pct = double(nRecsNow) / double(apps_per_chunk);
     double pBlk = double(found) / double(block_cnt);
-    if (nRecsNow <= chunkSize) {
-        const char* STR_RESULTS = "Block {0}: have {1} addrs of {2} ({3}). Need {4} more. Found {5} records ({6}).";
-        string_q result = STR_RESULTS;
-        replace(result, "{0}", "{" + uint_2_Str(blaze_start + block_cnt) + "}");
-        replace(result, "{1}", "{" + uint_2_Str(nRecsNow) + "}");
-        replace(result, "{2}", "{" + uint_2_Str(chunkSize) + "}");
-        replace(result, "{3}", "{" + double_2_Str(pct * 100.00, 1) + "%}");
-        replace(result, "{4}", "{" + uint_2_Str(chunkSize - nRecsNow) + "}");
-        replace(result, "{5}", "{" + uint_2_Str(found) + "}");
-        replace(result, "{6}", "{" + double_2_Str(pBlk, 2) + "/blk}");
-        replaceAll(result, "{", cGreen);
-        replaceAll(result, "}", cOff);
-        LOG_INFO(result);
+
+    string_q result = "Block {0}: have {1} addrs of {2} ({3}). Need {4} more. Found {5} records ({6}).";
+    replace(result, "{0}", "{" + uint_2_Str(blaze_start + block_cnt) + "}");
+    replace(result, "{1}", "{" + uint_2_Str(nRecsNow) + "}");
+    replace(result, "{2}", "{" + uint_2_Str(apps_per_chunk) + "}");
+    replace(result, "{3}", "{" + double_2_Str(pct * 100.00, 1) + "%}");
+    replace(result, "{4}", "{" + uint_2_Str(need) + "}");
+    replace(result, "{5}", "{" + uint_2_Str(found) + "}");
+    replace(result, "{6}", "{" + double_2_Str(pBlk, 2) + "/blk}");
+    replaceAll(result, "{", cGreen);
+    replaceAll(result, "}", cOff);
+    LOG_INFO(result);
+
+    if (nRecsNow <= apps_per_chunk)
         return true;
-    }
-    return write_chunks(chunkSize, false /* atLeastOnce */);
+    return write_chunks(apps_per_chunk, false /* snapped */);
 }
 
 //--------------------------------------------------------------------------
@@ -127,7 +135,7 @@ bool copyRipeToStage(const string_q& path, void* data) {
                 return false;
             blknum_t nRecords = fileSize(opts->newStage) / asciiAppearanceSize;
             blknum_t chunkSize = min(nRecords, opts->apps_per_chunk);
-            opts->write_chunks(chunkSize, true /* atLeastOnce */);
+            opts->write_chunks(chunkSize, true /* snapped */);
             return false;
         }
     }
@@ -135,9 +143,9 @@ bool copyRipeToStage(const string_q& path, void* data) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool COptions::write_chunks(blknum_t chunkSize, bool atLeastOnce) {
+bool COptions::write_chunks(blknum_t chunkSize, bool snapped) {
     blknum_t nRecords = fileSize(newStage) / asciiAppearanceSize;
-    while ((atLeastOnce || nRecords > chunkSize) && !shouldQuit()) {
+    while ((snapped || nRecords > chunkSize) && !shouldQuit()) {
         lockSection();
 
         CStringArray lines;
@@ -186,8 +194,8 @@ bool COptions::write_chunks(blknum_t chunkSize, bool atLeastOnce) {
                 string_q chunkId = p1[1] + "-" + p2[1];
                 string_q chunkPath = indexFolder_finalized + chunkId + ".bin";
                 ostringstream os;
-                os << "Wrote: " << cTeal << relativize(chunkPath);
-                if (atLeastOnce) {
+                os << "Wrote " << consolidatedLines.size() << " records to " << cTeal << relativize(chunkPath);
+                if (snapped) {
                     os << cYellow << " (snapped to " << snap_to_grid << " blocks)";
                 }
                 os << cOff;
@@ -206,11 +214,11 @@ bool COptions::write_chunks(blknum_t chunkSize, bool atLeastOnce) {
         if (remainingLines.size()) {
             linesToAsciiFile(newStage, remainingLines);
         }
+        unlockSection();
 
         nRecords = fileSize(newStage) / asciiAppearanceSize;
-        unlockSection();
-        if (atLeastOnce)
-            atLeastOnce = nRecords > 0;
+        if (snapped)
+            snapped = nRecords > 0;
         chunkSize = min(apps_per_chunk, nRecords);
     }
 

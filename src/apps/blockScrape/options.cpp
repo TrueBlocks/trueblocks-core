@@ -178,19 +178,18 @@ void COptions::Init(void) {
     block_cnt = getGlobalConfig("blockScrape")->getConfigInt("settings", "block_cnt", 2000);
     block_chan_cnt = getGlobalConfig("blockScrape")->getConfigInt("settings", "block_chan_cnt", 10);
     addr_chan_cnt = getGlobalConfig("blockScrape")->getConfigInt("settings", "addr_chan_cnt", 20);
-    apps_per_chunk = getGlobalConfig("blockScrape")->getConfigInt("settings", "apps_per_chunk", 2000000);
+    apps_per_chunk = getGlobalConfig("blockScrape")->getConfigInt("settings", "apps_per_chunk", 200000);
     unripe_dist = getGlobalConfig("blockScrape")->getConfigInt("settings", "unripe_dist", 28);
     snap_to_grid = getGlobalConfig("blockScrape")->getConfigInt("settings", "snap_to_grid", 100000);
-    first_snap = getGlobalConfig("blockScrape")->getConfigInt("settings", "first_snap", 2250000);
+    first_snap = getGlobalConfig("blockScrape")->getConfigInt("settings", "first_snap", 0);
     allow_missing = getGlobalConfig("blockScrape")->getConfigBool("settings", "allow_missing", false);
     // clang-format on
     // END_CODE_INIT
 
-    if (getChain() != "mainnet" && isAllDefaults()) {
-        LOG_ERR("In order to use the scraper on non-mainnet chains, you must customize the config file");
-        LOG_ERR("at ", cTeal + getPathToChainConfig("") + "blockScrape.toml" + cOff);
-        LOG_ERR(cRed, "Sleeping...");
-        quickQuitHandler(EXIT_FAILURE);
+    if (getChain() == "mainnet") {
+        // different defaults for mainnet
+        apps_per_chunk = apps_per_chunk == 200000 ? 2000000 : apps_per_chunk;
+        first_snap = first_snap == 0 ? 2250000 : first_snap;
     }
 
     minArgs = 0;
@@ -233,19 +232,4 @@ bool visitPrefund(const Allocation& prefund, void* data) {
     appearances->push_back(os.str());
 
     return true;
-}
-
-//-----------------------------------------------------------------------
-bool COptions::isAllDefaults(void) const {
-    // clang-format off
-    if (block_cnt != 2000) return false;
-    if (block_chan_cnt != 10) return false;
-    if (addr_chan_cnt != 20) return false;
-    if (apps_per_chunk != 2000000) return false;
-    if (unripe_dist != 28) return false;
-    if (snap_to_grid != 100000) return false;
-    if (first_snap != 2250000) return false;
-    if (allow_missing) return false;
-    return true;
-    // clang-format on
 }

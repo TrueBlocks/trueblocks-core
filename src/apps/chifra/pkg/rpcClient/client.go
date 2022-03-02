@@ -8,6 +8,7 @@ import (
 	"context"
 	"log"
 	"math/big"
+	"os"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
@@ -29,6 +30,7 @@ func GetClient(provider string) *ethclient.Client {
 		// TODO: If we make this a cached item, it needs to be cached per chain, see timestamps
 		ec, err := ethclient.Dial(provider)
 		if err != nil {
+			log.Println("Missdial(" + os.Args[0] + "):")
 			log.Fatalln(err)
 		}
 		perProviderClientMap[provider] = ec

@@ -221,10 +221,10 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 11116,apps,Admin,scrape,blockScrape,block_cnt,n,2000,false,true,true,true,header,flag,<uint64>,maximum number of blocks to process per pass
 11117,apps,Admin,scrape,blockScrape,block_chan_cnt,b,10,false,true,true,true,header,flag,<uint64>,number of concurrent block processing channels
 11118,apps,Admin,scrape,blockScrape,addr_chan_cnt,d,20,false,true,true,true,header,flag,<uint64>,number of concurrent address processing channels
-11119,apps,Admin,scrape,blockScrape,apps_per_chunk,,2000000,false,true,false,false,config,flag,<uint64>,the number of appearances to build into a chunk before consolidating it
+11119,apps,Admin,scrape,blockScrape,apps_per_chunk,,200000,false,true,false,false,config,flag,<uint64>,the number of appearances to build into a chunk before consolidating it
 11120,apps,Admin,scrape,blockScrape,unripe_dist,,28,false,true,false,false,config,flag,<uint64>,the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe
 11121,apps,Admin,scrape,blockScrape,snap_to_grid,,100000,false,true,false,false,config,flag,<uint64>,an override to apps_per_chunk to snap-to-grid at every modulo of this value&#44; this allows easier corrections to the index
-11122,apps,Admin,scrape,blockScrape,first_snap,,2250000,false,true,false,false,config,flag,<uint64>,the first block at which snap_to_grid is enabled
+11122,apps,Admin,scrape,blockScrape,first_snap,,0,false,true,false,false,config,flag,<uint64>,the first block at which snap_to_grid is enabled
 11123,apps,Admin,scrape,blockScrape,allow_missing,,,false,true,false,false,config,flag,<boolean>,do not report errors for blockchain that contain blocks with zero addresses
 12127,apps,Admin,scrape,blockScrape,start_block,l,0,false,true,true,true,gocmd,flag,<uint64>,first block to visit (available only for blaze scraper)
 12127,apps,Admin,scrape,blockScrape,ripe_block,r,0,false,true,true,true,gocmd,flag,<uint64>,blocks prior to this value are written to 'ripe' folder (available only for blaze scraper)

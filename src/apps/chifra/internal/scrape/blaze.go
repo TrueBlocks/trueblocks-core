@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"os"
 	"sort"
@@ -57,14 +58,14 @@ func (opts *ScrapeOptions) getTracesAndLogs(blockChannel chan int, addressChanne
 	for blockNum := range blockChannel {
 		traces, err := opts.getTracesFromBlock(blockNum)
 		if err != nil {
-			fmt.Println(err)
-			os.Exit(1) // caller will start over if this process exits with non-zero value
+			fmt.Println("getTracesAndLogs --> opts.getTracesFromBlock returned error")
+			log.Fatal(err)
 		}
 
 		logs, err := opts.getLogsFromBlock(blockNum)
 		if err != nil {
-			fmt.Println(err)
-			os.Exit(1) // caller will start over if this process exits with non-zero value
+			fmt.Println("getTracesAndLogs --> opts.getLogsFromBlock returned error")
+			log.Fatal(err)
 		}
 
 		addressChannel <- tracesAndLogs{blockNum, traces, logs}
@@ -76,15 +77,14 @@ func (opts *ScrapeOptions) extractAddresses(addressChannel chan tracesAndLogs, a
 
 	for blockTraceAndLog := range addressChannel {
 		addressMap := make(map[string]bool)
-
 		blockNumStr := padLeft(strconv.Itoa(blockTraceAndLog.block), 9)
 
 		// Parse the traces
 		var traces Trace
 		err := json.Unmarshal(blockTraceAndLog.traces, &traces)
 		if err != nil {
-			fmt.Println(err)
-			os.Exit(1) // caller will start over if this process exits with non-zero value
+			fmt.Println("extractAddresses --> json.Unmarshal1 returned error")
+			log.Fatal(err)
 		}
 		opts.extractAddressesFromTraces(addressMap, &traces, blockNumStr)
 
@@ -92,8 +92,8 @@ func (opts *ScrapeOptions) extractAddresses(addressChannel chan tracesAndLogs, a
 		var logs Log
 		err = json.Unmarshal(blockTraceAndLog.logs, &logs)
 		if err != nil {
-			fmt.Println(err)
-			os.Exit(1) // caller will start over if this process exits with non-zero value
+			fmt.Println("extractAddresses --> json.Unmarshal2 returned error")
+			log.Fatal(err)
 		}
 		extractAddressesFromLogs(addressMap, &logs, blockNumStr)
 
@@ -212,14 +212,14 @@ func (opts *ScrapeOptions) extractAddressesFromTraces(addressMap map[string]bool
 					if traces.Result[i].Error != "" {
 						bytes, err := opts.getTransactionReceipt(traces.Result[i].TransactionHash)
 						if err != nil {
-							fmt.Println(err)
-							os.Exit(1) // caller will start over if this process exits with non-zero value
+							fmt.Println("extractAddressesFromTraces --> getTransactionReceipt returned error")
+							log.Fatal(err)
 						}
 						var receipt Receipt
 						err = json.Unmarshal(bytes, &receipt)
 						if err != nil {
-							fmt.Println(err)
-							os.Exit(1) // caller will start over if this process exits with non-zero value
+							fmt.Println("extractAddressesFromTraces --> json.Unmarshal returned error")
+							log.Fatal(err)
 						}
 						addr := receipt.Result.ContractAddress
 						if goodAddr(addr) {
@@ -231,8 +231,8 @@ func (opts *ScrapeOptions) extractAddressesFromTraces(addressMap map[string]bool
 
 		} else {
 			err := "New trace type:" + traces.Result[i].Type
-			fmt.Println(err)
-			os.Exit(1) // caller will start over if this process exits with non-zero value
+			fmt.Println("extractAddressesFromTraces -->")
+			log.Fatal(err)
 		}
 
 		// Try to get addresses from the input data
@@ -275,8 +275,8 @@ func extractAddressesFromLogs(addressMap map[string]bool, logs *Log, blockNum st
 	for i := 0; i < len(logs.Result); i++ {
 		idxInt, err := strconv.ParseInt(logs.Result[i].TransactionIndex, 0, 32)
 		if err != nil {
-			fmt.Println(err)
-			os.Exit(1) // caller will start over if this process exits with non-zero value
+			fmt.Println("extractAddressesFromLogs --> strconv.ParseInt returned error")
+			log.Fatal(err)
 		}
 		idx := padLeft(strconv.FormatInt(idxInt, 10), 5)
 
@@ -332,8 +332,8 @@ func (opts *ScrapeOptions) writeAddresses(blockNum string, addressMap map[string
 
 	err := ioutil.WriteFile(fileName, toWrite, 0744)
 	if err != nil {
-		fmt.Println(err)
-		os.Exit(1) // caller will start over if this process exits with non-zero value
+		fmt.Println("writeAddresses --> ioutil.WriteFile returned error")
+		log.Fatal(err)
 	}
 	// Show fifty dots no matter how many blocks we're scraping
 	// TODO: BOGUS
