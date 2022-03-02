@@ -178,7 +178,7 @@ bool COptions::write_chunks(blknum_t chunkSize, bool snapped) {
                 string_q chunkPath = indexFolder_finalized + chunkId + ".bin";
                 ostringstream os;
                 os << "Wrote " << consolidatedLines.size() << " records to " << cTeal << relativize(chunkPath);
-                if (snapped) {
+                if (snapped && !(str_2_Uint(p2[1]) % apps_per_chunk)) {
                     os << cYellow << " (snapped to " << snap_to_grid << " blocks)";
                 }
                 os << cOff;
