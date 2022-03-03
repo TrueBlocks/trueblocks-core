@@ -32,11 +32,11 @@ func (opts *ScrapeOptions) ValidateScrape() error {
 		}
 	}
 
-	if opts.Blaze {
-		// TODO: BOGUS - StartBlock and RipeBlock must be sent with the --blaze option
-	} else {
-		// TODO: BOGUS - StartBlock and RipeBlock can only be sent with the --blaze option
-	}
+	// if opts.Blaze {
+	// 	// TODO: StartBlock and RipeBlock must be sent with the --blaze option
+	// } else {
+	// 	// TODO: StartBlock and RipeBlock can only be sent with the --blaze option
+	// }
 
 	if opts.Action == "" {
 		opts.Action = "run"

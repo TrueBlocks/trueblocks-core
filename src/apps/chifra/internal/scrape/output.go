@@ -30,8 +30,8 @@ func RunScrape(cmd *cobra.Command, args []string) error {
 
 	// EXISTING_CODE
 	if opts.Blaze {
-		tsArray := make([]uint64, opts.BlockCnt)
-		opts.ScrapeBlocks(tsArray)
+		opts.ScrapeBlocks()
+
 	} else {
 		var wg sync.WaitGroup
 
@@ -39,10 +39,9 @@ func RunScrape(cmd *cobra.Command, args []string) error {
 		IndexScraper = NewScraper(colors.Yellow, "IndexScraper", opts.Sleep, opts.Globals.LogLevel)
 		go opts.RunIndexScraper(&wg, hasIndexerFlag(args[0]))
 
-		// BOGUS - UNCOMMENT THIS
-		// wg.Add(1)
-		// MonitorScraper = NewScraper(colors.Purple, "MonitorScraper", opts.Sleep, opts.Globals.LogLevel)
-		// go opts.RunMonitorScraper(&wg, hasMonitorsFlag(args[0]))
+		wg.Add(1)
+		MonitorScraper = NewScraper(colors.Purple, "MonitorScraper", opts.Sleep, opts.Globals.LogLevel)
+		go opts.RunMonitorScraper(&wg, hasMonitorsFlag(args[0]))
 
 		wg.Wait()
 	}
@@ -60,7 +59,7 @@ func ServeScrape(w http.ResponseWriter, r *http.Request) bool {
 	}
 
 	// EXISTING_CODE
-	// TODO: BOGUS -- FIGURE OUT SOME WAY TO DISABLE CERTAIN COMMANDS FROM SERVER USE
+	// TODO: Can we disable certain things from running in server mode?
 	return false
 	// EXISTING_CODE
 }

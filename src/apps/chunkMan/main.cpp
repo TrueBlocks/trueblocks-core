@@ -26,7 +26,7 @@ int main(int argc, const char* argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        // TODO: BOGUS
+        // TODO: This needs to work for some options, but doesn't work on non-mainnet chains
         // pinlib_readManifest(options.pins);
         if (once)
             cout << exportPreamble(expContext().fmtMap["header"], "CPinnedChunk");
