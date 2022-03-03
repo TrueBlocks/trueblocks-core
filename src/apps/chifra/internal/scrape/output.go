@@ -10,7 +10,6 @@ package scrapePkg
 
 // EXISTING_CODE
 import (
-	"fmt"
 	"net/http"
 	"sync"
 
@@ -31,13 +30,7 @@ func RunScrape(cmd *cobra.Command, args []string) error {
 
 	// EXISTING_CODE
 	if opts.Blaze {
-		var blazer BlazeOptions
-		blazer.scrapeOpts = opts
-		blazer.ScrapeBlocks()
-		fmt.Println("Found ", len(*blazer.addressMap), "appearances")
-		for item := range *blazer.addressMap {
-			fmt.Println(item)
-		}
+		opts.ScrapeBlocks()
 	} else {
 		var wg sync.WaitGroup
 

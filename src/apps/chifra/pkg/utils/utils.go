@@ -61,6 +61,17 @@ func OpenBrowser(url string) {
 	}
 }
 
+func PadLeft(str string, totalLen int) string {
+	if len(str) >= totalLen {
+		return str
+	}
+	zeros := ""
+	for i := 0; i < totalLen-len(str); i++ {
+		zeros += "0"
+	}
+	return zeros + str
+}
+
 func ToCamelCase(in string) string {
 	if len(in) == 0 {
 		return in

@@ -75,7 +75,7 @@ bool COptions::scrape_blocks(void) {
     if (!stage_chunks(tmpStagingFn))
         return false;
     // TODO: BOGUS - we need to turn timestamps on again
-    freshenTimestamps(blaze_start + block_cnt);
+    // freshenTimestamps(blaze_start + block_cnt);
     report();
     if (nRecsNow <= apps_per_chunk)
         return true;

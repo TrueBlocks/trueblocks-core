@@ -72,7 +72,7 @@ var IndexScraper Scraper
 var MonitorScraper Scraper
 
 // BOGUS
-// var counter uint64 = 0
+var counter uint64 = 0
 
 func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup, initialState bool) {
 	defer wg.Done()
@@ -87,10 +87,10 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup, initialState bool
 		} else {
 			opts.Globals.PassItOn("blockScrape", opts.ToCmdLine())
 			// BOGUS
-			// if counter > 1 {
-			// 	break
-			// }
-			// counter++
+			if counter > 1 {
+				break
+			}
+			counter++
 			if s.Running {
 				s.Pause()
 			}
