@@ -23,7 +23,7 @@ type ScrapedData struct {
 	logs   rpcClient.Log
 }
 
-func (opts *ScrapeOptions) ScrapeBlocks() {
+func (opts *ScrapeOptions) ScrapeBlocks(tsArray []uint64) {
 	rpcProvider := config.GetRpcProvider(opts.Globals.Chain)
 
 	blockChannel := make(chan int)

@@ -30,7 +30,8 @@ func RunScrape(cmd *cobra.Command, args []string) error {
 
 	// EXISTING_CODE
 	if opts.Blaze {
-		opts.ScrapeBlocks()
+		tsArray := make([]uint64, opts.BlockCnt)
+		opts.ScrapeBlocks(tsArray)
 	} else {
 		var wg sync.WaitGroup
 
