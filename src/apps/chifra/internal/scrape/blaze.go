@@ -293,8 +293,7 @@ func (opts *ScrapeOptions) extractFromLogs(bn int, addressMap map[string]bool, l
 	}
 }
 
-// TODO: BOGUS
-var counter12 uint64 = 0
+var nProcessed uint64 = 0
 
 func (opts *ScrapeOptions) writeAddresses(bn int, addressMap map[string]bool) {
 	if len(addressMap) == 0 {
@@ -323,13 +322,12 @@ func (opts *ScrapeOptions) writeAddresses(bn int, addressMap map[string]bool) {
 		fmt.Println("writeAddresses --> ioutil.WriteFile returned error")
 		log.Fatal(err)
 	}
-	// Show fifty dots no matter how many blocks we're scraping
-	// TODO: BOGUS
+
 	step := uint64(7)
-	counter12++
-	if counter12%step == 0 {
-		fmt.Fprintf(os.Stderr, "-------- ( ------)- <PROG>  : Scraping %-04d of %-04d at block %s\r", counter12, opts.BlockCnt, blockNumStr)
+	if nProcessed%step == 0 {
+		fmt.Fprintf(os.Stderr, "-------- ( ------)- <PROG>  : Scraping %-04d of %-04d at block %s\r", nProcessed, opts.BlockCnt, blockNumStr)
 	}
+	nProcessed++
 }
 
 // goodAddr Returns true if the address is not a precompile and not the zero address
