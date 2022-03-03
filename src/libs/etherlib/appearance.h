@@ -20,6 +20,21 @@
 namespace qblocks {
 
 // EXISTING_CODE
+/*
+
+This is the width of an ascii version of an appearance stored in flat files:
+
+  42 character 0x-prefixed address                  42 bytes
+  \t                                                 1
+  nine character 0-prefixed block number             9
+  \t                                                 1
+  five character 0-prefixed transaction id           5
+  \n                                                 1
+                                                -------
+                                                    59
+*/
+
+#define asciiAppearanceSize uint32_t(59)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------

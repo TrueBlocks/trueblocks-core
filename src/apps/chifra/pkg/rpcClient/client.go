@@ -8,6 +8,7 @@ import (
 	"context"
 	"log"
 	"math/big"
+	"os"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
@@ -29,6 +30,7 @@ func GetClient(provider string) *ethclient.Client {
 		// TODO: If we make this a cached item, it needs to be cached per chain, see timestamps
 		ec, err := ethclient.Dial(provider)
 		if err != nil {
+			log.Println("Missdial(" + os.Args[0] + "):")
 			log.Fatalln(err)
 		}
 		perProviderClientMap[provider] = ec
@@ -209,4 +211,10 @@ func HexToAddress(hex string) common.Address {
 // DecodeHex decodes a string with hex into a slice of bytes
 func DecodeHex(hex string) []byte {
 	return hexutil.MustDecode(hex)
+}
+
+// IsErigon returns true if we're running against Erigon, false otherwise
+func IsErigon() bool {
+	return false
+	// return contains(toLower(getVersionFromClient()), "erigon");
 }

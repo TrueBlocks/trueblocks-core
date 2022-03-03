@@ -603,9 +603,9 @@ string_q getVersionFromClient(void) {
     timestamp_t lastUpdate = date_2_Ts(fileLastModifyDate(clientVersionFn));
     timestamp_t now = date_2_Ts(Now());
     timestamp_t diff = now - lastUpdate;
-    if (diff > 20 || !contains(contents, getCurlContext()->baseURL)) {
+    if (diff > 60 || !contains(contents, getCurlContext()->baseURL)) {
         // We do this to avoid constantly hitting the node just to see if it's there.
-        // If the rpcProvider changed or we haven't checked in 20 seconds, check again.
+        // If the rpcProvider changed or we haven't checked in 60 seconds, check again.
         string_q clientVersion = callRPC("web3_clientVersion", "[]", false);
         if (!clientVersion.empty()) {
             if (folderExists(cacheFolder_tmp))

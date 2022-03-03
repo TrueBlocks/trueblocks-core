@@ -540,12 +540,7 @@ void COptions::Init(void) {
 
     // Establish folders. This may be redundant, but it's cheap.
     establishMonitorFolders();
-    establishFolder(indexFolder);
-    establishFolder(indexFolder_finalized);
-    establishFolder(indexFolder_blooms);
-    establishFolder(indexFolder_staging);
-    establishFolder(indexFolder_unripe);
-    establishFolder(indexFolder_ripe);
+    establishIndexFolders();
     establishFolder(cacheFolder_tmp);
 }
 

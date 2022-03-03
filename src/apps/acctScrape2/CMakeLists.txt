@@ -2,7 +2,7 @@
 cmake_minimum_required (VERSION 3.0)
 
 # application project
-project (blaze)
+project (acctScrape2)
 
 function(ADD_GO_INSTALLABLE_PROGRAM NAME MAIN_SRC)
   get_filename_component(MAIN_SRC_ABS ${MAIN_SRC} ABSOLUTE)
@@ -16,10 +16,10 @@ function(ADD_GO_INSTALLABLE_PROGRAM NAME MAIN_SRC)
   add_custom_target(${NAME}_all ALL DEPENDS ${NAME})
 endfunction(ADD_GO_INSTALLABLE_PROGRAM)
 
-ADD_GO_INSTALLABLE_PROGRAM(blaze *.go)
+ADD_GO_INSTALLABLE_PROGRAM(acctScrape2 *.go)
 
 # Define the executable to be generated
-set(TOOL_NAME "blaze")
+set(TOOL_NAME "acctScrape2")
 set(PROJ_NAME "go-apps")
 
 # Testing

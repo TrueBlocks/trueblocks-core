@@ -39,8 +39,18 @@ bool CTraverser::traverse(const CAppearanceArray_mon& apps, void* data) {
     if (preFunc && !(*preFunc)(this, data))
         return false;
 
+    blknum_t start = 0;
+    if (exportRange.first != 0) {
+        for (index = 0; index < apps.size() && !shouldQuit(); index++) {
+            if (apps[index].blk >= exportRange.first) {
+                break;
+            }
+            start = index;
+        }
+    }
+
     // For each appearance...
-    for (index = 0; index < apps.size() && !shouldQuit(); index++) {
+    for (index = start; index < apps.size() && !shouldQuit(); index++) {
         app = &apps[index];
         trans = CTransaction();  // reset
         bool passedFilter = !filterFunc || (*filterFunc)(this, data);

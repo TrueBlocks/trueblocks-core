@@ -21,10 +21,11 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("action", "a", "enum[toggle|run|restart|pause|quit]", OPT_FLAG, "command to apply to the specified scrape"),
     COption("pin", "p", "", OPT_SWITCH, "pin chunks (and blooms) to IPFS as they are created (requires pinning service)"),  // NOLINT
     COption("publish", "u", "", OPT_SWITCH, "after pinning the chunk, publish it to UnchainedIndex"),
     COption("block_cnt", "n", "<uint64>", OPT_FLAG, "maximum number of blocks to process per pass"),
+    COption("block_chan_cnt", "b", "<uint64>", OPT_FLAG, "number of concurrent block processing channels"),
+    COption("addr_chan_cnt", "d", "<uint64>", OPT_FLAG, "number of concurrent address processing channels"),
     COption("", "", "", OPT_DESCRIPTION, "Scan the chain and update (and optionally pin) the TrueBlocks index of appearances."),  // NOLINT
     // clang-format on
     // END_CODE_OPTIONS
@@ -34,32 +35,22 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 extern bool visitPrefund(const Allocation& prefund, void* data);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-    ENTER("parseArguments");
-
     if (!standardOptions(command))
         return false;
 
     // BEG_CODE_LOCAL_INIT
-    string_q action = "";
     // END_CODE_LOCAL_INIT
+
+    Init();
 
     CBlock block;
     getBlockHeader(block, getBlockProgress(BP_CLIENT).client);
-    latestBlockTs = block.timestamp;
-    latestBlockNum = block.blockNumber;
 
-    Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
-        } else if (startsWith(arg, "-a:") || startsWith(arg, "--action:")) {
-            if (!confirmEnum("action", action, arg))
-                return false;
-        } else if (arg == "-a" || arg == "--action") {
-            return flag_required("action");
-
         } else if (arg == "-p" || arg == "--pin") {
             pin = true;
 
@@ -71,6 +62,18 @@ bool COptions::parseArguments(string_q& command) {
                 return false;
         } else if (arg == "-n" || arg == "--block_cnt") {
             return flag_required("block_cnt");
+
+        } else if (startsWith(arg, "-b:") || startsWith(arg, "--block_chan_cnt:")) {
+            if (!confirmUint("block_chan_cnt", block_chan_cnt, arg))
+                return false;
+        } else if (arg == "-b" || arg == "--block_chan_cnt") {
+            return flag_required("block_chan_cnt");
+
+        } else if (startsWith(arg, "-d:") || startsWith(arg, "--addr_chan_cnt:")) {
+            if (!confirmUint("addr_chan_cnt", addr_chan_cnt, arg))
+                return false;
+        } else if (arg == "-d" || arg == "--addr_chan_cnt") {
+            return flag_required("addr_chan_cnt");
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -91,12 +94,6 @@ bool COptions::parseArguments(string_q& command) {
             os << "The --pin option requires you to have a Pinata key.";
             return usage(os.str());
         }
-    }
-
-    // Nor should we run if the index is being actively scanned...
-    if (isRunning("acctExport")) {
-        LOG_WARN("Refusing to run while 'chifra export' is running.");
-        return false;
     }
 
     // We can't really test this code, so we just report and quit
@@ -146,8 +143,6 @@ bool COptions::parseArguments(string_q& command) {
         if (!loadPrefundBalances())
             return usage("Could not load prefunds database.");
 
-        LOG_INFO("Index for block zero not found. Building from prefund file.");
-
         // Each chain must have it's own prefund addresses. Here, we scan the prefund list
         // and add a psuedo-transaction (block: 0, txid: order-in-file) for each address.
         // Tradition has it that the prefund list is sorted by address.
@@ -160,7 +155,6 @@ bool COptions::parseArguments(string_q& command) {
             LOG_ERR(cRed, "Failed to write index chunk for block zero.", cOff);
             return false;
         }
-        LOG_INFO("Done...");
     }
 
     // The previous run may have quit early, leaving the folders in a mild state of
@@ -168,7 +162,7 @@ bool COptions::parseArguments(string_q& command) {
     ::remove((indexFolder_staging + "000000000-temp.txt").c_str());
     cleanFolder(indexFolder_unripe);
 
-    return true;
+    return !isRunning("acctExport");
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -184,21 +178,18 @@ void COptions::Init(void) {
     block_cnt = getGlobalConfig("blockScrape")->getConfigInt("settings", "block_cnt", 2000);
     block_chan_cnt = getGlobalConfig("blockScrape")->getConfigInt("settings", "block_chan_cnt", 10);
     addr_chan_cnt = getGlobalConfig("blockScrape")->getConfigInt("settings", "addr_chan_cnt", 20);
-    apps_per_chunk = getGlobalConfig("blockScrape")->getConfigInt("settings", "apps_per_chunk", 2000000);
+    apps_per_chunk = getGlobalConfig("blockScrape")->getConfigInt("settings", "apps_per_chunk", 200000);
     unripe_dist = getGlobalConfig("blockScrape")->getConfigInt("settings", "unripe_dist", 28);
     snap_to_grid = getGlobalConfig("blockScrape")->getConfigInt("settings", "snap_to_grid", 100000);
-    first_snap = getGlobalConfig("blockScrape")->getConfigInt("settings", "first_snap", 2250000);
+    first_snap = getGlobalConfig("blockScrape")->getConfigInt("settings", "first_snap", 0);
     allow_missing = getGlobalConfig("blockScrape")->getConfigBool("settings", "allow_missing", false);
-    n_test_runs = getGlobalConfig("blockScrape")->getConfigInt("settings", "n_test_runs", 0);
     // clang-format on
     // END_CODE_INIT
 
-    if (isLiveTest()) {
-        n_test_runs = 10;
-        first_snap = 0;
-        snap_to_grid = 30;
-        apps_per_chunk = 6000;
-        unripe_dist = 28;  // doesn't change
+    if (getChain() == "mainnet") {
+        // different defaults for mainnet
+        apps_per_chunk = apps_per_chunk == 200000 ? 2000000 : apps_per_chunk;
+        first_snap = first_snap == 0 ? 2250000 : first_snap;
     }
 
     minArgs = 0;
@@ -224,12 +215,7 @@ COptions::COptions(void) {
 
     // Establish the folders that hold the data...
     establishMonitorFolders();
-    establishFolder(indexFolder);
-    establishFolder(indexFolder_finalized);
-    establishFolder(indexFolder_blooms);
-    establishFolder(indexFolder_staging);
-    establishFolder(indexFolder_unripe);
-    establishFolder(indexFolder_ripe);
+    establishIndexFolders();
     establishFolder(cacheFolder_tmp);
 }
 

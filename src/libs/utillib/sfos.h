@@ -29,6 +29,8 @@ inline bool establishFolder(const string_q& path) {
     string_q unused;
     return establishFolder(path, unused);
 }
+extern bool establishIndexFolders(void);
+extern bool establishCacheFolders(void);
 
 extern string_q getCWD(const string_q& filename = "");
 extern string_q doCommand(const string_q& cmd);

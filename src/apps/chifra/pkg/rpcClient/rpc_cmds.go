@@ -2,9 +2,44 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package cmd
+package rpcClient
 
-// BlockHeader carries values returned by the `eth_getBlock` RPC command
+import (
+	"bytes"
+	"encoding/json"
+	"io/ioutil"
+	"net/http"
+)
+
+// FromRpc Returns all traces for a given block.
+func FromRpc(rpcProvider string, payload *RPCPayload, ret interface{}) error {
+	plBytes, err := json.Marshal(payload)
+	if err != nil {
+		return err
+	}
+
+	body := bytes.NewReader(plBytes)
+	req, err := http.NewRequest("POST", rpcProvider, body)
+	if err != nil {
+		return err
+	}
+
+	req.Header.Set("Content-Type", "application/json")
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	theBytes, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
+
+	return json.Unmarshal(theBytes, ret)
+}
+
+// BlockHeader carries values returned by the `eth_getBlockByNumber` RPC command
 type BlockHeader struct {
 	Jsonrpc string `json:"jsonrpc"`
 	Result  struct {
@@ -31,7 +66,7 @@ type BlockHeader struct {
 	ID int `json:"id"`
 }
 
-// Trace carries values returned by Parity's `trace_block` RPC command
+// Trace carries values returned the `trace_block` RPC command
 type Trace struct {
 	Jsonrpc string `json:"jsonrpc"`
 	Result  []struct {

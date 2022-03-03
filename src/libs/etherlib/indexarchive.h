@@ -53,8 +53,6 @@ class CIndexArchive : public CArchive {
 //-----------------------------------------------------------------------
 #define MAGIC_NUMBER ((uint32_t)str_2_Uint("0xdeadbeef"))
 extern hash_t versionHash;
-extern bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTAPPLYFUNC pinFunc = nullptr,
-                               void* pinFuncData = nullptr);
 //--------------------------------------------------------------
 typedef bool (*INDEXCHUNKFUNC)(CIndexArchive& chunk, void* data);
 typedef bool (*INDEXBLOOMFUNC)(CBloomArray& blooms, void* data);

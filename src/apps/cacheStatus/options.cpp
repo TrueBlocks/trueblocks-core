@@ -37,10 +37,8 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 extern void loadPinMaps(CIndexStringMap& filenameMap, CIndexHashMap& bloomMap, CIndexHashMap& indexMap);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-    ENTER("parseArguments");
-
     if (!standardOptions(command))
-        EXIT_NOMSG(false);
+        return false;
 
     // BEG_CODE_LOCAL_INIT
     CStringArray modes;
@@ -142,19 +140,13 @@ bool COptions::parseArguments(string_q& command) {
     for (auto m : modes)
         cs |= (m == "caches");
     if (Mocked(cs ? "caches" : "status"))
-        EXIT_NOMSG(false);
+        return false;
 
     if (!loadNames())
         return usage("Could not load names database.");
 
-    establishFolder(cacheFolder_tmp);
-    establishFolder(indexFolder_finalized);
-    establishFolder(indexFolder_blooms);
-    establishFolder(cacheFolder_slurps);
-    establishFolder(cacheFolder_blocks);
-    establishFolder(cacheFolder_txs);
-    establishFolder(cacheFolder_traces);
-    establishFolder(cacheFolder_monitors);
+    establishIndexFolders();
+    establishCacheFolders();
 
     for (auto m : modes)
         mode += (m + "|");
@@ -202,7 +194,7 @@ bool COptions::parseArguments(string_q& command) {
     }
     HIDE_FIELD(CChainCache, "max_depth");
 
-    EXIT_NOMSG(true);
+    return true;
 }
 
 //---------------------------------------------------------------------------------------------------

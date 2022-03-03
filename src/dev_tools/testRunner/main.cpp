@@ -71,6 +71,8 @@ int main(int argc, const char* argv[]) {
 
             map<string_q, CTestCase> testMap;
             for (auto line : lines) {
+                if (startsWith(line, "erigon"))
+                    replace(line, "erigon", "local");
                 if (runLocal && startsWith(line, "local"))
                     replace(line, "local", "on");
                 bool ignore1 = startsWith(line, "#");

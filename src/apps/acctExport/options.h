@@ -63,7 +63,6 @@ class COptions : public CAbiOptions {
     CAccountName accountedFor;
 
     CReconciliationMap prevStatements;
-    CPinnedChunkArray pinList;
 
     CBlockAddressMap prefundAddrMap;
     CBlockAddressMap blkRewardMap;

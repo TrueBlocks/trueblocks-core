@@ -5,12 +5,9 @@
 package main
 
 import (
-	"os"
-
-	"github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/cmd"
+	"testing"
 )
 
-func main() {
-	cmd.Execute()
-	os.Exit(0)
+func TestMain(m *testing.M) {
+	main()
 }

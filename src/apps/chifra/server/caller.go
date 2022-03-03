@@ -16,6 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
@@ -74,7 +75,7 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 		GetOptions().Globals.LogLevel = 4
 	}
 
-	allDogs = globals.ConvertEns(chain, allDogs)
+	allDogs = ens.ConvertEns(chain, allDogs)
 
 	// Do the actual call
 	cmd := exec.Command(tbCmd, allDogs...)
@@ -114,9 +115,6 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 		vars := strings.Split(r.Header.Get("X-TestRunner-Env"), "|")
 		cmd.Env = append(cmd.Env, vars...)
 	} else {
-		if GetOptions().Globals.LogLevel > 8 {
-			fmt.Fprintf(os.Stderr, "%s%s%s%s\n", colors.Blue, colors.Bright, envStr, colors.Off)
-		}
 		cmd.Env = append(os.Environ(), "API_MODE=true")
 	}
 	cmd.Env = append(cmd.Env, "TB_CONFIG_ENV="+envStr)

@@ -2,14 +2,14 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package globals
+package ens
 
 import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
-	ens "github.com/wealdtech/go-ens/v3"
+	ensGo "github.com/wealdtech/go-ens/v3"
 )
 
 func ConvertEns(chain string, addrsIn []string) []string {
@@ -21,7 +21,7 @@ func ConvertEns(chain string, addrsIn []string) []string {
 	for i := 0; i < len(addrsIn); i++ {
 		term := addrsIn[i]
 		if strings.Contains(term, ".eth") {
-			val, err := ens.Resolve(ec, term)
+			val, err := ensGo.Resolve(ec, term)
 			if err == nil && len(val) > 0 {
 				term = val.Hex()
 			}
@@ -40,7 +40,7 @@ func ConvertOneEns(chain string, in string) string {
 	ec := rpcClient.GetClient(provider)
 	defer ec.Close()
 
-	val, err := ens.Resolve(ec, in)
+	val, err := ensGo.Resolve(ec, in)
 	if err == nil && len(val) > 0 {
 		return val.Hex()
 	}

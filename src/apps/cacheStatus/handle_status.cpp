@@ -17,8 +17,6 @@ extern string_q pathName(const string_q& str, const string_q& path);
 extern void replaceNames(const string_q& chain, string_q& key, string_q& value);
 //--------------------------------------------------------------------------------
 bool COptions::handle_status(ostream& os) {
-    ENTER("handle_status");
-
     if (terse) {
         string_q fmt = STR_TERSE_REPORT;
         replaceAll(fmt, "[{TIME}]",
@@ -50,15 +48,7 @@ bool COptions::handle_status(ostream& os) {
         return true;
     }
 
-    establishFolder(cacheFolder_abis);
-    establishFolder(cacheFolder_blocks);
-    establishFolder(cacheFolder_monitors);
-    establishFolder(cacheFolder_names);
-    establishFolder(cacheFolder_prices);
-    establishFolder(cacheFolder_slurps);
-    establishFolder(cacheFolder_tmp);
-    establishFolder(cacheFolder_traces);
-    establishFolder(cacheFolder_txs);
+    establishCacheFolders();
 
     CIndexCache index;
     if (contains(mode, "|index|")) {
@@ -259,7 +249,7 @@ bool COptions::handle_status(ostream& os) {
         getChainList(status.chains);
     status.toJson(os);
 
-    EXIT_NOMSG(true);
+    return true;
 }
 
 //---------------------------------------------------------------------------
