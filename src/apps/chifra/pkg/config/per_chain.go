@@ -40,7 +40,7 @@ func GetPinGateway(chain string) string {
 // GetRpcProvider returns the RPC provider for a chain
 func GetRpcProvider(chain string) string {
 	ch := GetRootConfig().Chains[chain]
-	return cleanUrl(ch.RpcProvider)
+	return cleanPrefix(ch.RpcProvider)
 }
 
 // GetApiProvider returns the RPC provider for a chain
@@ -56,11 +56,16 @@ func GetSymbol(chain string) string {
 }
 
 func cleanUrl(url string) string {
-	if !strings.HasPrefix(url, "http") {
-		url = "https://" + url
-	}
+	url = cleanPrefix(url)
 	if !strings.HasSuffix(url, "/") {
 		url += "/"
+	}
+	return url
+}
+
+func cleanPrefix(url string) string {
+	if !strings.HasPrefix(url, "http") {
+		url = "https://" + url
 	}
 	return url
 }
