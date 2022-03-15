@@ -1,7 +1,9 @@
 package chunk
 
 import (
+	"bytes"
 	"encoding/binary"
+	"encoding/hex"
 	"fmt"
 	"os"
 )
@@ -22,7 +24,6 @@ const (
 )
 
 type EthHash [HashLength]byte
-type EthAddress [AddressLength]byte
 
 type Chunk struct {
 	*os.File
@@ -40,9 +41,9 @@ type Header struct {
 }
 
 type AddressRecord struct {
-	Address         EthAddress
-	StartRecord     uint32
-	NumberOfRecords uint32
+	Address EthAddress
+	Offset  uint32
+	Count   uint32
 }
 
 type AppearanceRecord struct {
@@ -156,4 +157,32 @@ func GetAddress(chunk Chunk, number int) (AddressRecord, error) {
 	}
 
 	return record, nil
+}
+
+// EthAddress is 20 bytes
+type EthAddress [AddressLength]byte
+
+// Compares two addresses
+func (a EthAddress) Compare(b EthAddress) int {
+	return bytes.Compare(a[:], b[:])
+}
+
+func (a *EthAddress) setBytes(b []byte) {
+	if len(b) > len(a) {
+		b = b[len(b)-AddressLength:]
+	}
+	copy(a[AddressLength-len(b):], b)
+}
+
+// NewAddressFromHex Converts a hex string to an address
+func NewAddressFromHex(hexString string) (newAddress EthAddress, err error) {
+	if hexString[:2] == "0x" {
+		hexString = hexString[2:]
+	}
+	hexBytes, err := hex.DecodeString(hexString)
+	if err != nil {
+		return EthAddress{}, err
+	}
+	newAddress.setBytes(hexBytes)
+	return
 }
