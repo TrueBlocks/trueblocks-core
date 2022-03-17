@@ -65,8 +65,6 @@ func convertToCommandLine(in string) string {
 		return "snap_to_grid"
 	case "startBlock":
 		return "start_block"
-	case "summarizeBy":
-		return "summarize_by"
 	case "toCustom":
 		return "to_custom"
 	case "toFile":

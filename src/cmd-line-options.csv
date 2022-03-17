@@ -28,7 +28,6 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10092,apps,Accounts,export,acctExport,load,,,false,false,false,false,header,flag,<string>,a comma separated list of dynamic traversers to load
 10093,apps,Accounts,export,acctExport,reversed,,,false,false,false,false,header,switch,<boolean>,produce results in reverse chronological order
 10094,apps,Accounts,export,acctExport,by_date,b,,false,false,false,false,header,switch,<boolean>,produce results sorted by date (report by address otherwise)
-10095,apps,Accounts,export,acctExport,summarize_by,z,,false,false,false,false,header,flag,enum[yearly|quarterly|monthly|weekly|daily|hourly|blockly|tx],for --accounting only&#44; summarize reconciliations by this time period
 10097,apps,Accounts,export,acctExport,deep,D,,false,false,false,false,header,switch,<boolean>,for --neighbors option only&#44; dig deeply into detail (otherwise&#44; to and from only)
 10340,apps,Accounts,export,acctExport,skip_ddos,d,true,false,true,false,false,config,toggle,<boolean>,toggle skipping over 2016 dDos transactions ([{DEF}] by default)
 10350,apps,Accounts,export,acctExport,max_traces,m,250,false,true,false,false,config,flag,<uint64>,if --skip_ddos is on&#44; this many traces defines what a ddos transaction is

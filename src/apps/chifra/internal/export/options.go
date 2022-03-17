@@ -48,7 +48,6 @@ type ExportOptions struct {
 	Load        string
 	Reversed    bool
 	ByDate      bool
-	SummarizeBy string
 	Deep        bool
 	SkipDdos    bool
 	MaxTraces   uint64
@@ -89,7 +88,6 @@ func (opts *ExportOptions) TestLog() {
 	logger.TestLog(len(opts.Load) > 0, "Load: ", opts.Load)
 	logger.TestLog(opts.Reversed, "Reversed: ", opts.Reversed)
 	logger.TestLog(opts.ByDate, "ByDate: ", opts.ByDate)
-	logger.TestLog(len(opts.SummarizeBy) > 0, "SummarizeBy: ", opts.SummarizeBy)
 	logger.TestLog(opts.Deep, "Deep: ", opts.Deep)
 	logger.TestLog(opts.SkipDdos, "SkipDdos: ", opts.SkipDdos)
 	logger.TestLog(opts.MaxTraces != 250, "MaxTraces: ", opts.MaxTraces)
@@ -174,9 +172,6 @@ func (opts *ExportOptions) ToCmdLine() string {
 	}
 	if opts.ByDate {
 		options += " --by_date"
-	}
-	if len(opts.SummarizeBy) > 0 {
-		options += " --summarize_by " + opts.SummarizeBy
 	}
 	if opts.Deep {
 		options += " --deep"
@@ -277,8 +272,6 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ExportOptions {
 			opts.Reversed = true
 		case "byDate":
 			opts.ByDate = true
-		case "summarizeBy":
-			opts.SummarizeBy = value[0]
 		case "deep":
 			opts.Deep = true
 		case "skipDdos":
