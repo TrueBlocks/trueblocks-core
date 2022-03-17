@@ -28,7 +28,7 @@ class CTestTraverser : public CTraverser {
         theCall.encoding = getPair;
         theCall.bytes = pairBytes;
         theCall.abi_spec.loadAbiFromEtherscan(uniswapFactory);
-        theCall.blockNumber = getBlockProgress(BP_CLIENT).client;
+        theCall.blockNumber = getLatestBlock_client();
         LOG4("Calling ", substitute(theCall.Format(), "\n", " "));
         if (doEthCall(theCall)) {
             perTxCall.address = theCall.getCallResult();

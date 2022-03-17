@@ -52,7 +52,7 @@
 //     this->encoding = getPairSelector;
 //     this->bytes = padLeft(substitute(r1, "0x", ""), 64, '0') + padLeft(substitute(r2, "0x", ""), 64, '0');
 //     this->abi_spec.loadAbiFromEtherscan(factory);
-//     this->blockNumber = getBlockProgress(BP_CLIENT).client;
+//     this->blockNumber = getLatestBlock_client();
 //     if (!doEthCall(*this)) {
 //         LOG_WARN("Could not find pair for ", r1, " to ", r2);
 //         return false;

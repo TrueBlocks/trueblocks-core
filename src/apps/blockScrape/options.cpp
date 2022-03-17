@@ -44,7 +44,7 @@ bool COptions::parseArguments(string_q& command) {
     Init();
 
     CBlock block;
-    getBlockHeader(block, getBlockProgress(BP_CLIENT).client);
+    getBlockHeader(block, getLatestBlock_client());
 
     explode(arguments, command, ' ');
     for (auto arg : arguments) {

@@ -36,7 +36,7 @@ bool COptions::parseArguments(string_q& command) {
     // BEG_CODE_LOCAL_INIT
     // END_CODE_LOCAL_INIT
 
-    blknum_t latest = getBlockProgress(BP_CLIENT).client;
+    blknum_t latest = getLatestBlock_client();
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {

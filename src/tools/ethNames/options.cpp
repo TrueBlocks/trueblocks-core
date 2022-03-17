@@ -74,7 +74,7 @@ bool COptions::parseArguments(string_q& command) {
     bool addr_only = false;
 
     Init();
-    blknum_t latest = isTestMode() ? 10800000 : getBlockProgress(BP_CLIENT).client;
+    blknum_t latest = isTestMode() ? 10800000 : getLatestBlock_client();
     latestBlock = latest;
     explode(arguments, command, ' ');
     for (auto arg : arguments) {

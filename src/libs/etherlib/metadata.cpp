@@ -35,28 +35,6 @@ CMetaData getMetaData(void) {
 }
 
 //--------------------------------------------------------------------------
-CMetaData getBlockProgress(size_t which) {
-    CMetaData ret;
-
-    if (which & BP_CLIENT)
-        ret.client = getLatestBlock_client();
-
-    if (which & BP_FINAL)
-        ret.finalized = getLatestBlock_cache_final();
-
-    if (which & BP_STAGING)
-        ret.staging = getLatestBlock_cache_staging();
-
-    if (which & BP_RIPE)
-        ret.ripe = getLatestBlock_cache_ripe();
-
-    if (which & BP_RIPE)
-        ret.unripe = getLatestBlock_cache_unripe();
-
-    return ret;
-}
-
-//--------------------------------------------------------------------------
 blknum_t getLatestBlock_cache_final(void) {
     string_q finLast = getLastFileInFolder(indexFolder_blooms, false);
     if (!finLast.empty()) {

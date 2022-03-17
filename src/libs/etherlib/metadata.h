@@ -25,12 +25,6 @@ struct CMetaData {
     string_q chain;
 };
 
-#define BP_CLIENT (1 << 1)
-#define BP_FINAL (1 << 2)
-#define BP_STAGING (1 << 3)
-#define BP_RIPE (1 << 4)
-#define BP_UNRIPE (1 << 5)
-
 //-------------------------------------------------------------------------
 extern CMetaData getMetaData(void);
-extern CMetaData getBlockProgress(size_t which);
+extern blknum_t getLatestBlock_client(void);
