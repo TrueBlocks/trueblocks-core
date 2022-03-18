@@ -44,6 +44,7 @@ All tools accept the following additional flags, although in some cases, they ha
       --raw             pass raw RPC data directly from the node with no processing
       --to_file         write the results to a temporary file and return the filename
       --output string   write the results to file 'fn' and return the filename
+      --append          for --output command only append to instead of replace contents of file
       --file string     specify multiple sets of command line options in a file
 ```
 
