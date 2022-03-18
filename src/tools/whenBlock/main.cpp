@@ -142,13 +142,39 @@ void COptions::applyFilter() {
     }
 }
 
-#define EST_BLOCK_TIME float(13.3)
+#define TEST string_q("flat")
+// #define TEST string_q("onesec")
+// #define TEST string_q("")
+double estSeconds(blknum_t bn) {
+    blknum_t fake = bn - 10700000;
+    uint64_t period = fake / 100000;
+    uint64_t inc = 2;
+    if (TEST == "onesec") {
+        inc = 1;
+    }
+    if (period < 37 || TEST == "flat")
+        return 13.3;
+    switch (period) {
+        case 37:
+            return 14 + (inc * 0);
+        case 38:
+            return 14 + (inc * 1);
+        case 39:
+            return 14 + (inc * 2);
+        case 40:
+            return 14 + (inc * 3);
+        case 41:
+            return 14 + (inc * 4);
+    }
+    return 14 + (inc * 5);
+}
+
 void estTsFromBn(CBlock& block, blknum_t bn) {
     if (block.blockNumber > bn)
         return;
     // incoming block has 'latest' timestamp and blockNumber
     float needed = bn - block.blockNumber;
-    block.timestamp = block.timestamp + timestamp_t(EST_BLOCK_TIME * needed);
+    block.timestamp = block.timestamp + timestamp_t(estSeconds(bn) * needed);
     block.blockNumber = bn;
 }
 
@@ -157,6 +183,6 @@ void estBnFromTs(CBlock& block, timestamp_t ts) {
         return;
     // incoming block has 'latest' timestamp and blockNumber
     timestamp_t needed = ts - block.timestamp;
-    block.blockNumber = block.blockNumber + blknum_t(floor((needed / EST_BLOCK_TIME) + .5));
+    block.blockNumber = block.blockNumber + blknum_t(floor((needed / estSeconds(block.blockNumber)) + .5));
     block.timestamp = ts;
 }
