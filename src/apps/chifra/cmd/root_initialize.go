@@ -116,7 +116,8 @@ func VerifyMigrations() {
 	}
 
 	// If any of the following folders or files exist, the user has not
-	// completed migration 0.25.0. Tell them to do so and quit:
+	// completed migration 0.25.0. Tell them to do so and quit.
+	// TODO(tjayrush): This can be removed at some point
 	items := []string{
 		"manifest",
 		"mocked",

@@ -46,6 +46,7 @@ class COptions : public COptionsBase {
     blknum_t nRecsNow{0};
     CPinnedChunkArray pinList;
     CApiKey lic;
+    CMetaData meta;
 
     COptions(void);
     ~COptions(void);
@@ -55,6 +56,7 @@ class COptions : public COptionsBase {
 
     bool start_scraper(void);
     bool scrape_blocks(void);
+    bool handle_reset(void);
     bool stage_chunks(const string_q& tmpFn);
     bool write_chunks(blknum_t chunkSize, bool snapped);
     bool isSnapToGrid(blknum_t bn) const {

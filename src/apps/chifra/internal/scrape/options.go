@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -27,6 +28,7 @@ type ScrapeOptions struct {
 	BlockCnt     uint64
 	BlockChanCnt uint64
 	AddrChanCnt  uint64
+	Reset        uint64
 	AppsPerChunk uint64
 	UnripeDist   uint64
 	SnapToGrid   uint64
@@ -50,6 +52,7 @@ func (opts *ScrapeOptions) TestLog() {
 	logger.TestLog(opts.BlockCnt != 2000, "BlockCnt: ", opts.BlockCnt)
 	logger.TestLog(opts.BlockChanCnt != 10, "BlockChanCnt: ", opts.BlockChanCnt)
 	logger.TestLog(opts.AddrChanCnt != 20, "AddrChanCnt: ", opts.AddrChanCnt)
+	logger.TestLog(opts.Reset != utils.NOPOS, "Reset: ", opts.Reset)
 	logger.TestLog(opts.AppsPerChunk != 200000, "AppsPerChunk: ", opts.AppsPerChunk)
 	logger.TestLog(opts.UnripeDist != 28, "UnripeDist: ", opts.UnripeDist)
 	logger.TestLog(opts.SnapToGrid != 100000, "SnapToGrid: ", opts.SnapToGrid)
@@ -77,6 +80,9 @@ func (opts *ScrapeOptions) ToCmdLine() string {
 	if opts.AddrChanCnt != 20 {
 		options += (" --addr_chan_cnt " + fmt.Sprintf("%d", opts.AddrChanCnt))
 	}
+	if opts.Reset != utils.NOPOS {
+		options += (" --reset " + fmt.Sprintf("%d", opts.Reset))
+	}
 	options += " " + strings.Join(opts.Modes, " ")
 	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
@@ -88,6 +94,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ScrapeOptions {
 	opts.BlockCnt = 2000
 	opts.BlockChanCnt = 10
 	opts.AddrChanCnt = 20
+	opts.Reset = utils.NOPOS
 	opts.AppsPerChunk = 200000
 	opts.UnripeDist = 28
 	opts.SnapToGrid = 100000
@@ -117,6 +124,8 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ScrapeOptions {
 			opts.BlockChanCnt = globals.ToUint64(value[0])
 		case "addrChanCnt":
 			opts.AddrChanCnt = globals.ToUint64(value[0])
+		case "reset":
+			opts.Reset = globals.ToUint64(value[0])
 		case "appsPerChunk":
 			opts.AppsPerChunk = globals.ToUint64(value[0])
 		case "unripeDist":

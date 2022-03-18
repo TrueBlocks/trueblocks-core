@@ -26,6 +26,7 @@ static const COption params[] = {
     COption("block_cnt", "n", "<uint64>", OPT_FLAG, "maximum number of blocks to process per pass"),
     COption("block_chan_cnt", "b", "<uint64>", OPT_FLAG, "number of concurrent block processing channels"),
     COption("addr_chan_cnt", "d", "<uint64>", OPT_FLAG, "number of concurrent address processing channels"),
+    COption("reset", "e", "<blknum>", OPT_HIDDEN | OPT_FLAG, "reset the scraper to the provided block (or end of earliest chunk prior to that block)"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Scan the chain and update (and optionally pin) the TrueBlocks index of appearances."),  // NOLINT
     // clang-format on
     // END_CODE_OPTIONS
@@ -38,13 +39,15 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-    // BEG_CODE_LOCAL_INIT
-    // END_CODE_LOCAL_INIT
-
     Init();
 
+    // BEG_CODE_LOCAL_INIT
+    blknum_t reset = NOPOS;
+    // END_CODE_LOCAL_INIT
+
+    blknum_t latest = getLatestBlock_client();
     CBlock block;
-    getBlockHeader(block, getLatestBlock_client());
+    getBlockHeader(block, latest);
 
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
@@ -75,6 +78,12 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-d" || arg == "--addr_chan_cnt") {
             return flag_required("addr_chan_cnt");
 
+        } else if (startsWith(arg, "-e:") || startsWith(arg, "--reset:")) {
+            if (!confirmBlockNum("reset", reset, arg, latest))
+                return false;
+        } else if (arg == "-e" || arg == "--reset") {
+            return flag_required("reset");
+
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -83,6 +92,10 @@ bool COptions::parseArguments(string_q& command) {
 
             // END_CODE_AUTO
         }
+    }
+
+    if (reset != NOPOS) {
+        return handle_reset();
     }
 
     if (Mocked(""))
@@ -138,23 +151,26 @@ bool COptions::parseArguments(string_q& command) {
 
     // This may be the first time we've ever run. In that case, we need to build the zero block index file...
     string chunkId = padNum9(0) + "-" + padNum9(0);
-    string_q bloomPath = indexFolder_blooms + chunkId + ".bloom";
-    if (!fileExists(bloomPath)) {
+    string_q bloomZeroPath = indexFolder_blooms + chunkId + ".bloom";
+    if (!fileExists(bloomZeroPath)) {
         if (!loadPrefundBalances())
             return usage("Could not load prefunds database.");
 
         // Each chain must have it's own prefund addresses. Here, we scan the prefund list
         // and add a psuedo-transaction (block: 0, txid: order-in-file) for each address.
         // Tradition has it that the prefund list is sorted by address.
-        CStringArray appearances;
-        forEveryPrefund(visitPrefund, &appearances);
+        CStringArray consolidatedLines;
+        forEveryPrefund(visitPrefund, &consolidatedLines);
 
         // Write the chunk and the bloom to the binary cache
         string_q chunkPath = indexFolder_finalized + chunkId + ".bin";
-        if (!writeIndexAsBinary(chunkPath, appearances, (pin ? visitToPin : nullptr), &pinList)) {
+        if (!writeIndexAsBinary(chunkPath, consolidatedLines, (pin ? visitToPin : nullptr), &pinList)) {
             LOG_ERR(cRed, "Failed to write index chunk for block zero.", cOff);
             return false;
         }
+        ostringstream os;
+        os << "Wrote " << consolidatedLines.size() << " records to " << cTeal << relativize(chunkPath) << cOff;
+        LOG_INFO(os.str());
     }
 
     // The previous run may have quit early, leaving the folders in a mild state of
@@ -185,6 +201,8 @@ void COptions::Init(void) {
     allow_missing = getGlobalConfig("blockScrape")->getConfigBool("settings", "allow_missing", false);
     // clang-format on
     // END_CODE_INIT
+
+    meta = getMetaData();
 
     if (getChain() == "mainnet") {
         // different defaults for mainnet
