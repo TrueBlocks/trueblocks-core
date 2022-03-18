@@ -73,7 +73,9 @@ bool CTraverser::traverse(const CAppearanceArray_mon& apps, void* data) {
 }
 
 //-----------------------------------------------------------------------
-bool filterFunc(CTraverser* trav, void* data) {
+bool filterByRange(CTraverser* trav, void* data) {
+    if (!getTimestampAt(trav->app->blk) || shouldQuit())
+        return false;
     return inRange(blknum_t(trav->app->blk), trav->traverserRange.first, trav->traverserRange.second);
 }
 

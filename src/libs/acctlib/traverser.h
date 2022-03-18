@@ -26,7 +26,7 @@ inline bool noopFunc(CTraverser* trav, void* data) {
 }
 
 //-----------------------------------------------------------------------
-extern bool filterFunc(CTraverser* trav, void* data);
+extern bool filterByRange(CTraverser* trav, void* data);
 
 typedef map<address_t, CMonitor> monitor_map_t;
 //-----------------------------------------------------------------------
@@ -45,7 +45,7 @@ class CTraverser {
         searchOp = EXTRACT;
         curMonitor = nullptr;
         traverserRange = make_pair(0, NOPOS);
-        filterFunc = ::filterFunc;
+        filterFunc = filterByRange;
     }
     virtual ~CTraverser(void) {
     }
