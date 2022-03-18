@@ -1,6 +1,0 @@
-export?addrs=0x00a3819199113fc6a6e6ba1298afde7377e2009b&maxRecords=30&fmt=json&summarizeBy=tx
-{
-  "errors": [
-    "The --summarized_by option is available only with --accounting."
-  ]
-}

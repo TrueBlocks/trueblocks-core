@@ -1,6 +1,0 @@
-export?addrs=0x00a3819199113fc6a6e6ba1298afde7377e2009b&maxRecords=30&fmt=json&summarizeBy=jimp
-{
-  "errors": [
-    "The --summarize_by option (jimp) must be one of [ yearly | quarterly | monthly | weekly | daily | hourly | blockly | tx ]"
-  ]
-}
