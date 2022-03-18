@@ -15,7 +15,7 @@
 extern int findAppearance(const void* v1, const void* v2);
 extern int sortRecord(const void* v1, const void* v2);
 //---------------------------------------------------------------
-bool COptions::queryFlatFile(const string_q& path, bool sorted) {
+bool COptions::queryFlatFile(const string_q& path, bool sorted, bool saveTo, CAppearanceArray_mon& items) {
     char* rawData = nullptr;
     char* endOfData = nullptr;
 
@@ -41,10 +41,7 @@ bool COptions::queryFlatFile(const string_q& path, bool sorted) {
     }
 
     size_t nRecords = fileSize(path) / asciiAppearanceSize;
-    // stats.nRecords += nRecords;
-    // cerr << "Unsorted: " << endl << rawData << endl;
     qsort(rawData, nRecords, asciiAppearanceSize, sortRecord);
-    // cout << "Sorted: " << endl << rawData << endl;
     endOfData = rawData + sizeInBytes;
 
     for (size_t mo = 0; mo < allMonitors.size() && !shouldQuit(); mo++) {
@@ -54,7 +51,7 @@ bool COptions::queryFlatFile(const string_q& path, bool sorted) {
         search[monitor->address.size()] = '\0';
         char* found = (char*)bsearch(search, rawData, nRecords, asciiAppearanceSize, findAppearance);
         if (!found) {
-            LOG_PROGRESS(SCANNING, fileRange.first, listRange.second, " stage miss");
+            LOG_PROGRESS(SCANNING, fileRange.first, needRange.second, " stage miss");
         } else {
             stats.nStageHits++;
             char* ptr = found;
@@ -70,7 +67,7 @@ bool COptions::queryFlatFile(const string_q& path, bool sorted) {
             }
 
             while (found < endOfData) {
-                char* pos = &found[58];
+                char* pos = &found[asciiAppearanceSize - 1];
                 *pos = '\0';
                 string_q s = found;
                 address_t addr = nextTokenClear(s, '\t');
@@ -86,7 +83,7 @@ bool COptions::queryFlatFile(const string_q& path, bool sorted) {
             }
 
             found = endOfData;
-            LOG_PROGRESS(SCANNING, fileRange.first, listRange.second, " stage hit");
+            LOG_PROGRESS(SCANNING, fileRange.first, needRange.second, " stage hit");
         }
     }
 

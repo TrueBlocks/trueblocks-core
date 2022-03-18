@@ -40,9 +40,9 @@ bool CTraverser::traverse(const CAppearanceArray_mon& apps, void* data) {
         return false;
 
     blknum_t start = 0;
-    if (exportRange.first != 0) {
+    if (traverserRange.first != 0) {
         for (index = 0; index < apps.size() && !shouldQuit(); index++) {
-            if (apps[index].blk >= exportRange.first) {
+            if (apps[index].blk >= traverserRange.first) {
                 break;
             }
             start = index;
@@ -74,7 +74,7 @@ bool CTraverser::traverse(const CAppearanceArray_mon& apps, void* data) {
 
 //-----------------------------------------------------------------------
 bool filterFunc(CTraverser* trav, void* data) {
-    return inRange(blknum_t(trav->app->blk), trav->exportRange.first, trav->exportRange.second);
+    return inRange(blknum_t(trav->app->blk), trav->traverserRange.first, trav->traverserRange.second);
 }
 
 }  // namespace qblocks

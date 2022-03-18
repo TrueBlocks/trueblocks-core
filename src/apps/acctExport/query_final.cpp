@@ -13,9 +13,9 @@
 #include "options.h"
 
 //---------------------------------------------------------------
-bool visitFinalIndexFiles(const string_q& path, void* data) {
+bool visitToFreshen_fromFinalized(const string_q& path, void* data) {
     if (endsWith(path, "/")) {
-        return forEveryFileInFolder(path + "*", visitFinalIndexFiles, data);
+        return forEveryFileInFolder(path + "*", visitToFreshen_fromFinalized, data);
 
     } else {
         // Pick up some useful data for either method...
@@ -34,17 +34,17 @@ bool visitFinalIndexFiles(const string_q& path, void* data) {
         ASSERT(unused != NOPOS && options->fileRange.first != NOPOS && options->fileRange.second != NOPOS);
 
         // Note that `start` and `end` options are ignored when scanning
-        if (!rangesIntersect(options->listRange, options->fileRange)) {
+        if (!rangesIntersect(options->needRange, options->fileRange)) {
             options->stats.nSkipped++;
             return !shouldQuit();
         }
 
         options->possibles.clear();
         for (auto m : options->allMonitors) {
-            blknum_t lb = m.getLastBlockInMonitorPlusOne();
-            // LOG_INFO("lb: ", lb, " fileRange: ", options->fileRange.first, "-", options->fileRange.second);
-            if (lb == 0 || lb <= options->fileRange.first)
+            blknum_t nextVisit = m.getNextBlockToVisit();
+            if (nextVisit == 0 || nextVisit <= options->fileRange.first) {
                 options->possibles.push_back(m);
+            }
         }
 
         if (options->possibles.size() == 0) {
@@ -57,7 +57,6 @@ bool visitFinalIndexFiles(const string_q& path, void* data) {
             return false;
         }
 
-        // LOG4("Scanning ", path);
         bool ret = options->visitBinaryFile(path, data) && !shouldQuit();
         return ret;
     }
@@ -91,9 +90,9 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
         if (!hit) {
             // none of them hit, so write last block for each of them
             for (auto monitor : possibles)
-                monitor.writeLastBlockInMonitor(fileRange.second + 1, monitor.isStaging);
+                monitor.writeNextBlockToVisit(fileRange.second + 1, monitor.isStaging);
             options->stats.nBloomMisses++;
-            LOG_PROGRESS(SKIPPING, options->fileRange.first, options->listRange.second, " bloom miss\r");
+            LOG_PROGRESS(SKIPPING, options->fileRange.first, options->needRange.second, " bloom miss\r");
             return true;
         }
     }
@@ -104,7 +103,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
     }
 
     options->stats.nBloomHits++;
-    LOG_PROGRESS(SCANNING, options->fileRange.first, options->listRange.second, " bloom hit \r");
+    LOG_PROGRESS(SCANNING, options->fileRange.first, options->needRange.second, " bloom hit      \r");
 
     CArchive* chunk = NULL;
     char* rawData = NULL;
@@ -176,7 +175,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
 
                 if (items.size()) {
                     lockSection();
-                    monitor->writeMonitorArray(items);
+                    monitor->writeAppendNewApps(items);
                     unlockSection();
                 }
             } else {
@@ -186,7 +185,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
     }
 
     for (auto monitor : possibles)
-        monitor.writeLastBlockInMonitor(fileRange.second + 1, monitor.isStaging);
+        monitor.writeNextBlockToVisit(fileRange.second + 1, monitor.isStaging);
 
     if (chunk) {
         chunk->Release();
@@ -199,8 +198,18 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
         rawData = NULL;
     }
 
-    string_q result = indexHit ? " index hit " + hits : " false positive";
-    LOG_PROGRESS(SCANNING, options->fileRange.first, options->listRange.second, " bloom hit" + result);
+    {  // do not remove the frame
+        static int cnt = 0;
+        if (!(++cnt % 23)) {
+            if (indexHit) {
+                LOG_PROGRESS(SCANNING, options->fileRange.first, options->needRange.second,
+                             " bloom hit index hit      \r");
+            } else {
+                LOG_PROGRESS(SCANNING, options->fileRange.first, options->needRange.second,
+                             " bloom hit false positive \r");
+            }
+        }
+    }
 
     return !shouldQuit();
 }
@@ -225,7 +234,7 @@ bool COptions::establishIndexChunk(const string_q& fullPathToChunk) {
     }
     CPinnedChunk pin;
     if (pinlib_findChunk(pins, fileName, pin)) {
-        LOG_PROGRESS(EXTRACT, fileRange.first, listRange.second, " from IPFS" + cOff);
+        LOG_PROGRESS(EXTRACT, fileRange.first, needRange.second, " from IPFS" + cOff);
         if (!pinlib_getChunkFromRemote(pin, .25))
             LOG_ERR("Could not retrieve file from IPFS: ", fullPathToChunk);
     } else {

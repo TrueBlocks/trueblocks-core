@@ -13,9 +13,9 @@
 #include "options.h"
 
 //---------------------------------------------------------------
-bool visitStagingIndexFiles(const string_q& path, void* data) {
+bool visitToFreshen_fromStaging(const string_q& path, void* data) {
     if (endsWith(path, "/")) {
-        return forEveryFileInFolder(path + "*", visitStagingIndexFiles, data);
+        return forEveryFileInFolder(path + "*", visitToFreshen_fromStaging, data);
 
     } else {
         // There should only be a single file in the ./staging folder (other than
@@ -38,14 +38,17 @@ bool visitStagingIndexFiles(const string_q& path, void* data) {
         ASSERT(unused != NOPOS && options->fileRange.first != NOPOS && options->fileRange.second != NOPOS);
 
         // Note that `start` and `end` options are ignored when scanning
-        if (!rangesIntersect(options->listRange, options->fileRange)) {
+        if (!rangesIntersect(options->needRange, options->fileRange)) {
             options->stats.nSkipped++;
             return !shouldQuit();
         }
 
         options->stats.nStageChecked++;
 
-        return options->queryFlatFile(path, true /* sorted */);
+        options->possibles.clear();  // we don't use possible here because they don't help
+
+        CAppearanceArray_mon unused2;
+        return options->queryFlatFile(path, true /* sorted */, false /* saveTo */, unused2);
     }
     ASSERT(0);  // should not happen
     return !shouldQuit();

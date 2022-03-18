@@ -9,7 +9,7 @@ displayStrsTest  CMonitor
   "lastExport": 0,
   "firstAppearance": 0,
   "latestAppearance": 4294967295,
-  "lastVisitedBlock": 0,
+  "lastVisitedBlock": 18446744073709551615,
   "address": "0x0",
   "name": "monitor"
 }

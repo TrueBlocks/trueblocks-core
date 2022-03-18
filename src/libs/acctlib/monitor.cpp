@@ -408,9 +408,10 @@ bool CMonitor::openForWriting(bool staging) {
 }
 
 //-------------------------------------------------------------------------
-void CMonitor::writeMonitorArray(const CAppearanceArray_mon& items) {
+void CMonitor::writeAppendNewApps(const CAppearanceArray_mon& items) {
     if (tx_cache == NULL)
         return;
+    LOG_INFO(bBlue, address, cOff, " adding appearances (count: ", items.size(), ")");
     for (auto item : items)
         *tx_cache << item.blk << item.txid;
     tx_cache->flush();
@@ -436,32 +437,25 @@ string_q CMonitor::getPathToMonitorLast(const address_t& addr, bool staging) con
 }
 
 //-------------------------------------------------------------------------
-void CMonitor::writeLastBlockInMonitor(blknum_t bn, bool staging) {
+void CMonitor::writeNextBlockToVisit(blknum_t bn, bool staging) {
     lastVisitedBlock = bn;
     stringToAsciiFile(getPathToMonitorLast(address, staging), uint_2_Str(bn) + "\n");
 }
 
-//-----------------------------------------------------------------------
-blknum_t CMonitor::getLastBlockInMonitorPlusOne(void) const {
-    return str_2_Uint(asciiFileToString(getPathToMonitorLast(address, false)));
-}
-
 //--------------------------------------------------------------------------------
 blknum_t CMonitor::getNextBlockToVisit(bool fresh) const {
-    if (lastVisitedBlock == NOPOS || fresh) {
-        // If the monitor exists, the next block is stored in the database...
-        if (fileExists(getPathToMonitorLast(address, false))) {
-            ((CMonitor*)this)->lastVisitedBlock =
-                str_2_Uint(asciiFileToString(getPathToMonitorLast(address, false)));  // NOLINT
+    if (fileExists(getPathToMonitorLast(address, false))) {
+        ((CMonitor*)this)->lastVisitedBlock =
+            str_2_Uint(asciiFileToString(getPathToMonitorLast(address, false)));  // NOLINT
 
-        } else {
-            // Accounts can receive ETH counter-factually. By default, we ignore
-            // this and start our scan from the account's deploy block (in the case
-            // of a contract) or the zero block. User can change this setting.
-            if (getGlobalConfig("acctExport")->getConfigBool("settings", "start_when_deployed", true)) {
-                blknum_t deployed = getDeployBlock(address);
-                ((CMonitor*)this)->lastVisitedBlock = (deployed == NOPOS ? 0 : deployed);  // NOLINT
-            }
+    } else {
+        // Accounts can receive ETH counter-factually. By default, we ignore
+        // this and start our scan from the account's deploy block (in the case
+        // of a contract) or the zero block. User can change this setting.
+        ((CMonitor*)this)->lastVisitedBlock = 0;  // NOLINT
+        if (getGlobalConfig("acctExport")->getConfigBool("settings", "start_when_deployed", true)) {
+            blknum_t deployed = getDeployBlock(address);
+            ((CMonitor*)this)->lastVisitedBlock = (deployed == NOPOS ? 0 : deployed);  // NOLINT
         }
     }
     return lastVisitedBlock;
@@ -510,17 +504,24 @@ void doMoveFile(const string_q& from, const string_q& to) {
 }
 
 //--------------------------------------------------------------------------------
+void CMonitor::closeMonitorCache(void) {
+    if (!tx_cache)
+        return;
+    tx_cache->Release();
+    delete tx_cache;
+    tx_cache = NULL;
+}
+
+//--------------------------------------------------------------------------------
 void CMonitor::moveToProduction(bool staging) {
     if (!staging)
         return;
     ASSERT(staging);
     isStaging = false;
 
-    if (tx_cache) {
-        tx_cache->Release();
-        delete tx_cache;
-        tx_cache = NULL;
-    }
+    closeMonitorCache();
+    removeDuplicates(getPathToMonitor(address, true));
+
     bool binExists = fileExists(getPathToMonitor(address, true));
     bool lastExists = fileExists(getPathToMonitorLast(address, true));
     lockSection();
@@ -534,6 +535,44 @@ void CMonitor::moveToProduction(bool staging) {
         ::remove(getPathToMonitorLast(address, true).c_str());
     }
     unlockSection();
+}
+
+//----------------------------------------------------------------
+bool CMonitor::removeDuplicates(const string_q& path) {
+    address = path_2_Addr(path);
+    if (!loadAppearances(nullptr, nullptr)) {
+        LOG_WARN("Could load monitor for address ", address);
+        return false;
+    }
+    sort(apps.begin(), apps.end());
+
+    CAppearance_mon prev;
+    bool hasDups = false;
+    for (auto a : apps) {
+        if (a.blk == prev.blk && a.txid == prev.txid) {
+            hasDups = true;
+            break;
+        }
+        prev = a;
+    }
+    if (!hasDups)
+        return true;
+
+    CAppearanceArray_mon deduped;
+    for (auto a : apps) {
+        if (a.blk != prev.blk || a.txid != prev.txid) {
+            deduped.push_back(a);
+        }
+        prev = a;
+    }
+
+    CArchive archiveOut(WRITING_ARCHIVE);
+    archiveOut.Lock(path, modeWriteCreate, LOCK_WAIT);
+    for (auto item : deduped)
+        archiveOut << item.blk << item.txid;
+    archiveOut.Release();
+
+    return true;
 }
 
 //-----------------------------------------------------------------------
@@ -578,18 +617,22 @@ bloom_t CMonitor::getBloom(void) {
 blknum_t CMonitor::loadAppearances(MONAPPFUNC func, void* data) {
     string_q path = getPathToMonitor(address, false);
     blknum_t nRecs = this->getRecordCnt(path);
-    if (!nRecs)
-        return false;
+    if (!nRecs) {
+        return true;
+    }
 
     CAppearance_mon* buffer = new CAppearance_mon[nRecs];
-    if (!buffer)
+    if (!buffer) {
+        LOG_ERR("Could not allocate buffer for address ", path_2_Addr(path));
         return false;
+    }
 
     bzero((void*)buffer, nRecs * sizeof(CAppearance_mon));  // NOLINT
     CArchive archiveIn(READING_ARCHIVE);
     if (!archiveIn.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
         archiveIn.Release();
         delete[] buffer;
+        LOG_ERR("Could not lock file ", path_2_Addr(path));
         return false;
     }
     archiveIn.Read(buffer, sizeof(CAppearance_mon), nRecs);
@@ -598,8 +641,10 @@ blknum_t CMonitor::loadAppearances(MONAPPFUNC func, void* data) {
     apps.reserve(apps.size() + nRecs);
     for (size_t i = 0; i < nRecs; i++) {
         apps.push_back(buffer[i]);
-        if (func && !(*func)(buffer[i], data))
+        if (func && !(*func)(buffer[i], data)) {
+            LOG4("forEvery func returns false for address ", path_2_Addr(path));
             return false;
+        }
     }
 
     delete[] buffer;

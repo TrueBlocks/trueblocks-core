@@ -35,14 +35,15 @@ bool visitUnripeIndexFiles(const string_q& path, void* data) {
         ASSERT(unused != NOPOS && options->fileRange.first != NOPOS && options->fileRange.second != NOPOS);
 
         // Note that `start` and `end` options are ignored when scanning
-        if (!rangesIntersect(options->listRange, options->fileRange)) {
+        if (!rangesIntersect(options->needRange, options->fileRange)) {
             options->stats.nSkipped++;
             return !shouldQuit();
         }
 
         options->stats.nStageChecked++;
 
-        return options->queryFlatFile(path, true /* sorted */);
+        CAppearanceArray_mon unused2;
+        return options->queryFlatFile(path, true /* sorted */, false /* saveTo */, unused2);
     }
     ASSERT(0);  // should not happen
     return !shouldQuit();
