@@ -6,22 +6,21 @@ package listPkg
 
 // TODO: BOGUS -- USED TO BE ACCTSCRAPE2
 import (
-	"encoding/binary"
 	"encoding/csv"
 	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
 	"os"
-	"sort"
 	"sync"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/address"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/chunk"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 )
 
-func (opts *ListOptions) FreshenAndExport() {
+func (opts *ListOptions) FreshenMonitor(store bool, w io.Writer) {
 	indexPath := config.GetPathToIndex(opts.Globals.Chain) + "finalized/"
 	files, err := ioutil.ReadDir(indexPath)
 	if err != nil {
@@ -36,10 +35,9 @@ func (opts *ListOptions) FreshenAndExport() {
 	for _, info := range files {
 		if !info.IsDir() {
 			if taskCount >= maxTasks {
-				// wait until we can clear out some room in the channel
 				resArray := <-resultChannel
 				for _, r := range resArray {
-					r.Output()
+					r.Output(w)
 				}
 				taskCount--
 			}
@@ -53,7 +51,12 @@ func (opts *ListOptions) FreshenAndExport() {
 	for i := 0; i < taskCount; i++ {
 		resArray := <-resultChannel
 		for _, r := range resArray {
-			r.Output()
+			if store {
+				log.Println("Storing ", r.Address, len(*r.AppRecords), "records")
+			} else {
+				log.Println("Not storing", r.Address, len(*r.AppRecords), "records")
+			}
+			r.Output(w)
 		}
 	}
 
@@ -62,7 +65,7 @@ func (opts *ListOptions) FreshenAndExport() {
 
 	for resArray := range resultChannel {
 		for _, r := range resArray {
-			r.Output()
+			r.Output(w)
 		}
 	}
 }
@@ -81,136 +84,66 @@ func parseFile(fileName string, addrs []string, resultChannel chan<- []ResultRec
 	}
 	defer f.Close()
 
-	head, err := chunk.ReadHeader(f)
+	head, err := index.ReadHeader(f)
 	if err != nil {
 		// TODO(BOGUS): handle this panic or use an error channel?
 		log.Fatal(err)
 	}
 
 	var results []ResultRecord
-	for _, address := range addrs {
-		searchAddress, err := chunk.NewAddressFromHex(address)
+	for _, addr := range addrs {
+		searchAddress, err := address.Hex_2_Address(addr)
 		if err != nil {
 			// TODO(BOGUS): handle this panic or use an error channel?
 			log.Fatal(err)
 		}
 
-		foundAt := searchForAddressRecord(f, head.AddressCount, searchAddress)
+		foundAt := index.SearchForAddressRecord(f, head.AddressCount, searchAddress)
 		if foundAt != -1 {
-			startOfAddress := int64(HeaderSize + (foundAt * AddressSize))
-			_, err = f.Seek(startOfAddress, io.SeekStart)
+			startOfAddressRecord := int64(index.HeaderWidth + (foundAt * index.AddrRecordWidth))
+			_, err = f.Seek(startOfAddressRecord, io.SeekStart)
 			if err != nil {
 				// TODO(BOGUS): handle this panic or use an error channel?
 				log.Fatal(err)
 			}
 
-			addressRecord, err := chunk.ReadAddressRecord(f)
+			addressRecord, err := index.ReadAddressRecord(f)
 			if err != nil {
 				// TODO(BOGUS): handle this panic or use an error channel?
 				log.Fatal(err)
 			}
 
-			appearances, err := readAppearanceRecords(f, address, head.AddressCount, addressRecord.Offset, addressRecord.Count)
+			appearances, err := index.ReadAppearanceRecords(f, head.AddressCount, &addressRecord)
 			if err != nil {
 				// TODO(BOGUS): handle this panic or use an error channel?
 				log.Fatal(err)
 			}
 
-			results = append(results, ResultRecord{Address: address, AppRecords: &appearances})
+			results = append(results, ResultRecord{Address: addr, AppRecords: &appearances})
 		}
 	}
 
 	resultChannel <- results
 }
 
-func readAppearanceRecords(f *os.File, address string, numAddresses, offset, numRecs uint32) (apps []chunk.AppearanceRecord, err error) {
-	readLocation := int64(HeaderSize + AddressSize*numAddresses + AppearanceSize*offset)
-
-	_, err = f.Seek(readLocation, io.SeekStart)
-	if err != nil {
-		return
-	}
-
-	apps = make([]chunk.AppearanceRecord, numRecs)
-	err = binary.Read(f, binary.LittleEndian, &apps)
-	return
-}
-
-func searchForAddressRecord(f *os.File, numRecs uint32, addr chunk.EthAddress) int {
-	compareFunc := func(pos int) bool {
-		if pos == -1 {
-			return false
-		}
-
-		if pos == int(numRecs) {
-			return true
-		}
-
-		readLocation := int64(HeaderSize + pos*AddressSize)
-		_, err := f.Seek(readLocation, io.SeekStart)
-		if err != nil {
-			fmt.Println(err)
-			return false
-		}
-
-		addressRec, err := chunk.ReadAddressRecord(f)
-		if err != nil {
-			fmt.Println(err)
-			return false
-		}
-
-		return addressRec.Bytes.Compare(addr) >= 0
-	}
-
-	pos := sort.Search(int(numRecs), compareFunc)
-
-	readLocation := int64(HeaderSize + pos*AddressSize)
-	f.Seek(readLocation, io.SeekStart)
-	rec, err := chunk.ReadAddressRecord(f)
-	if err != nil {
-		return -1
-	}
-
-	if rec.Bytes.Compare(addr) != 0 {
-		return -1
-	}
-
-	return pos
-}
-
 type ResultRecord struct {
 	Address    string
-	AppRecords *[]chunk.AppearanceRecord
+	AppRecords *[]index.AppearanceRecord
 }
 
-func (result *ResultRecord) Output() {
+func (result *ResultRecord) Output(w io.Writer) {
 	if result.AppRecords == nil {
 		return
 	}
 
-	w := csv.NewWriter(os.Stdout)
-	w.Comma = 0x9
+	theWriter := csv.NewWriter(w)
+	theWriter.Comma = 0x9
 	var out [][]string
 	for _, app := range *result.AppRecords {
 		out = append(out, []string{result.Address, fmt.Sprintf("%d", app.BlockNumber), fmt.Sprintf("%d", app.TransactionId)})
 	}
-	w.WriteAll(out)
-	if err := w.Error(); err != nil {
+	theWriter.WriteAll(out)
+	if err := theWriter.Error(); err != nil {
 		log.Fatal(err)
 	}
 }
-
-const (
-	// MagicNumber is used to check data validity
-	MagicNumber = 0xdeadbeef // deadbeef in hex
-	// HashLength = number of bytes in a HASH
-	HashLength = 32
-	// HeaderSize - size of Header Record
-	HeaderSize = 44
-	// AddressSize - size of Address Record
-	AddressSize = 28
-	// AppearanceSize - size of Appearance Record
-	AppearanceSize = 8
-)
-
-type EthHash [HashLength]byte
