@@ -29,7 +29,6 @@ bool COptions::handle_status(ostream& os) {
             manageFields("CStatusTerse:modes1,modes2", FLD_HIDE);
             manageFields("CStatus:clientIds,host,isApi,isScraping,caches,chains", FLD_HIDE);
         }
-        CMetaData meta = getMetaData();
         ostringstream m;
         if (isTestMode())
             m << "--client--, --final--, --staging--, --unripe";
