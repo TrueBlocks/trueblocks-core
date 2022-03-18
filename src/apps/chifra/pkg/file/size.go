@@ -2,12 +2,16 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package main
+package file
 
 import (
-	"testing"
+	"os"
 )
 
-func TestMain(m *testing.M) {
-	main()
+func FileSize(filename string) int64 {
+	info, err := os.Stat(filename)
+	if os.IsNotExist(err) {
+		return 0
+	}
+	return info.Size()
 }

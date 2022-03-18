@@ -2,21 +2,22 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package whenPkg
+package listPkg
 
 import (
 	"net/http"
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	tslibPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 )
 
-func (opts *WhenOptions) HandleWhenList() error {
-
-	result, err := tslibPkg.GetSpecials(opts.Globals.Chain)
-	if err != nil {
-		return err
+func (opts *ListOptions) HandleListCount() error {
+	// TODO: BOGUS -- NEEDS TO FRESHEN FIRST OTHERWISE TESTS BREAK
+	var result []monitor.MonitorLight
+	for _, addr := range opts.Addrs {
+		m := monitor.NewMonitorLight(opts.Globals.Chain, addr)
+		result = append(result, m)
 	}
 
 	if opts.Globals.ApiMode {

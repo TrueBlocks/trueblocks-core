@@ -105,35 +105,35 @@ func GetPathToCommands(part string) string {
 
 // EstablishCachePaths sets up the cache folders and subfolders. It only returns if it succeeds.
 func EstablishCachePaths(cachePath string) {
-	cacheFolders := []string{
+	folders := []string{
 		"abis", "blocks", "monitors", "names", "objs", "prices",
 		"recons", "slurps", "tmp", "traces", "txs",
 	}
 
-	_, err := os.Stat(path.Join(cachePath, cacheFolders[len(cacheFolders)-1]))
+	_, err := os.Stat(path.Join(cachePath, folders[len(folders)-1]))
 	if err == nil {
 		// If the last path already exists, assume we've been here before
 		return
 	}
 
-	if err := file.EstablishFolders(cachePath, cacheFolders); err != nil {
+	if err := file.EstablishFolders(cachePath, folders); err != nil {
 		log.Fatal(err)
 	}
 }
 
 // EstablishIndexPaths sets up the index path and subfolders. It only returns if it succeeds.
 func EstablishIndexPaths(indexPath string) {
-	indexFolders := []string{
+	folders := []string{
 		"blooms", "finalized", "ripe", "staging", "unripe",
 	}
 
-	_, err := os.Stat(path.Join(indexPath, indexFolders[len(indexFolders)-1]))
+	_, err := os.Stat(path.Join(indexPath, folders[len(folders)-1]))
 	if err == nil {
 		// If the last path already exists, assume we've been here before
 		return
 	}
 
-	if err := file.EstablishFolders(indexPath, indexFolders); err != nil {
+	if err := file.EstablishFolders(indexPath, folders); err != nil {
 		log.Fatal(err)
 	}
 }

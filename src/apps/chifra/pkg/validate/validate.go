@@ -87,6 +87,11 @@ func IsValidAddressE(val string) (bool, error) {
 	return IsValidHex("address", val, 20)
 }
 
+func IsZeroAddress(val string) bool {
+	v := strings.Replace(val, "0", "", -1)
+	return v == "x" || v == "X"
+}
+
 func ValidateAtLeastOneAddr(args []string) error {
 	hasOne := false
 	for _, arg := range args {

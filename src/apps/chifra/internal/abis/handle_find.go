@@ -22,7 +22,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 )
 
-func (opts *AbisOptions) FindInternal() error {
+func (opts *AbisOptions) HandleAbiFind() error {
 	scanBar := progress.NewScanBar(uint64(len(opts.Find)) /* wanted */, 139419 /* freq */, 50000000 /* max */)
 
 	var results []Function

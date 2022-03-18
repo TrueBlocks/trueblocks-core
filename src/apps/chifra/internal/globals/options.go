@@ -31,6 +31,7 @@ type GlobalOptions struct {
 	Mocked   bool
 	NoColor  bool
 	OutputFn string
+	Append   bool
 	Format   string
 	TestMode bool
 	ApiMode  bool
@@ -54,6 +55,7 @@ func (opts *GlobalOptions) TestLog() {
 	logger.TestLog(opts.Mocked, "Mocked: ", opts.Mocked)
 	logger.TestLog(opts.NoColor, "NoColor: ", opts.NoColor)
 	logger.TestLog(len(opts.OutputFn) > 0, "OutputFn: ", opts.OutputFn)
+	logger.TestLog(opts.Append, "Append: ", opts.Append)
 	logger.TestLog(len(opts.Format) > 0, "Format: ", opts.Format)
 	// logger.TestLog(opts.TestMode, "TestMode: ", opts.TestMode)
 	logger.TestLog(opts.ApiMode, "ApiMode: ", opts.ApiMode)
@@ -81,6 +83,7 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions) {
 	cmd.Flags().BoolVarP(&opts.ToFile, "to_file", "", false, "write the results to a temporary file and return the filename")
 	cmd.Flags().StringVarP(&opts.File, "file", "", "", "specify multiple sets of command line options in a file")
 	cmd.Flags().StringVarP(&opts.OutputFn, "output", "", "", "write the results to file 'fn' and return the filename")
+	cmd.Flags().BoolVarP(&opts.Append, "append", "", false, "enable verbose (increase detail with --log_level)")
 
 	cmd.Flags().MarkHidden("chain")
 	cmd.Flags().MarkHidden("raw")
@@ -96,6 +99,7 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions) {
 	cmd.Flags().MarkHidden("to_file")
 	cmd.Flags().MarkHidden("file")
 	cmd.Flags().MarkHidden("output")
+	cmd.Flags().MarkHidden("append")
 
 	if len(opts.Chain) == 0 {
 		opts.Chain = config.GetDefaultChain()
@@ -125,6 +129,9 @@ func (opts *GlobalOptions) ToCmdLine() string {
 	}
 	if len(opts.OutputFn) > 0 {
 		options += " --output " + opts.OutputFn
+	}
+	if opts.Append {
+		options += " --append"
 	}
 	if opts.NoHeader {
 		options += " --no_header"
@@ -199,6 +206,8 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *GlobalOptions {
 			opts.File = value[0]
 		case "output":
 			opts.OutputFn = value[0]
+		case "append":
+			opts.Append = true
 		}
 	}
 
@@ -229,6 +238,7 @@ func IsGlobalOption(key string) bool {
 		"toFile",
 		"file",
 		"output",
+		"append",
 	}
 	for _, per := range permitted {
 		if per == key {

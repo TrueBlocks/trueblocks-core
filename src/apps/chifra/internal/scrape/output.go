@@ -14,6 +14,7 @@ import (
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 
 	"github.com/spf13/cobra"
 )
@@ -31,6 +32,9 @@ func RunScrape(cmd *cobra.Command, args []string) error {
 	// EXISTING_CODE
 	if opts.Blaze {
 		opts.ScrapeBlocks()
+
+	} else if opts.Reset != utils.NOPOS {
+		return opts.Globals.PassItOn("blockScrape", opts.ToCmdLine())
 
 	} else {
 		var wg sync.WaitGroup

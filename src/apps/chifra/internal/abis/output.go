@@ -27,7 +27,7 @@ func RunAbis(cmd *cobra.Command, args []string) error {
 
 	// EXISTING_CODE
 	if len(opts.Find) > 0 {
-		return opts.FindInternal()
+		return opts.HandleAbiFind()
 	}
 
 	return opts.Globals.PassItOn("grabABI", opts.ToCmdLine())
@@ -45,7 +45,7 @@ func ServeAbis(w http.ResponseWriter, r *http.Request) bool {
 
 	// EXISTING_CODE
 	if len(opts.Find) > 0 {
-		err = opts.FindInternal()
+		err = opts.HandleAbiFind()
 		if err != nil {
 			opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
 			return true

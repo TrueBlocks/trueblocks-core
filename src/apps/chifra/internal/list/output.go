@@ -27,6 +27,23 @@ func RunList(cmd *cobra.Command, args []string) error {
 	}
 
 	// EXISTING_CODE
+	if opts.Newone {
+		// TODO: BOGUS -- WHAT?
+		// if opts.Count {
+		// 	err := opts.Freshen()
+		// 	if err != nil {
+		// 		logger.Fatal("Could not handle count request", err)
+		// 	}
+		// 	err = opts.HandleListCount()
+		// 	if err != nil {
+		// 		logger.Fatal("Could not handle count request", err)
+		// 	}
+		// 	return nil
+		// }
+		opts.FreshenAndExport()
+		return nil
+	}
+
 	exportPkg.GetOptions().Appearances = true
 	if opts.Count {
 		exportPkg.GetOptions().Count = true
@@ -53,6 +70,20 @@ func ServeList(w http.ResponseWriter, r *http.Request) bool {
 	}
 
 	// EXISTING_CODE
+	if opts.Newone {
+		// TODO: BOGUS -- WHAT?
+		// if opts.Count {
+		// 	err := opts.Freshen()
+		// 	if err != nil {
+		// 		logger.Fatal("Could not handle count request", err)
+		// 	}
+		// 	err = opts.HandleListCount()
+		// 	if err != nil {
+		// 		logger.Fatal("Could not handle count request", err)
+		// 	}
+		// 	return nil
+		// }
+	}
 	return false
 	// EXISTING_CODE
 }

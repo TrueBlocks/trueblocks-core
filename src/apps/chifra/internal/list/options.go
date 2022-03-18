@@ -25,6 +25,7 @@ type ListOptions struct {
 	Appearances bool
 	FirstBlock  uint64
 	LastBlock   uint64
+	Newone      bool
 	Globals     globals.GlobalOptions
 	BadFlag     error
 }
@@ -37,6 +38,7 @@ func (opts *ListOptions) TestLog() {
 	logger.TestLog(opts.Appearances, "Appearances: ", opts.Appearances)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
+	logger.TestLog(opts.Newone, "Newone: ", opts.Newone)
 	opts.Globals.TestLog()
 }
 
@@ -78,6 +80,8 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ListOptions {
 			opts.FirstBlock = globals.ToUint64(value[0])
 		case "lastBlock":
 			opts.LastBlock = globals.ToUint64(value[0])
+		case "newone":
+			opts.Newone = true
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "list")

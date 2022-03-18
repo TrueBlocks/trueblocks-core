@@ -5,6 +5,8 @@
 package exportPkg
 
 import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -25,6 +27,15 @@ func (opts *ExportOptions) ValidateExport() error {
 
 	if opts.Accounting && opts.Globals.Chain != "mainnet" {
 		logger.Log(logger.Warning, "The --accounting option reports a spotPrice of one for all assets on non-mainnet chains.")
+	}
+
+	var bloomZero cache.Path
+	bloomZero.New(opts.Globals.Chain, cache.BloomChunk)
+	path := bloomZero.GetFullPath("000000000-000000000")
+	if !file.FileExists(path) {
+		msg := "The bloom filter for block zero (000000000-000000000.bloom) was not found. You must run "
+		msg += "'chifra init' (and allow it to complete) or 'chifra scrape' before using this command."
+		return validate.Usage(msg)
 	}
 
 	return opts.Globals.ValidateGlobals()
