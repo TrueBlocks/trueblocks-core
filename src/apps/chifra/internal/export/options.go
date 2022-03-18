@@ -48,7 +48,6 @@ type ExportOptions struct {
 	Load        string
 	Reversed    bool
 	ByDate      bool
-	Deep        bool
 	SkipDdos    bool
 	MaxTraces   uint64
 	FirstBlock  uint64
@@ -88,7 +87,6 @@ func (opts *ExportOptions) TestLog() {
 	logger.TestLog(len(opts.Load) > 0, "Load: ", opts.Load)
 	logger.TestLog(opts.Reversed, "Reversed: ", opts.Reversed)
 	logger.TestLog(opts.ByDate, "ByDate: ", opts.ByDate)
-	logger.TestLog(opts.Deep, "Deep: ", opts.Deep)
 	logger.TestLog(opts.SkipDdos, "SkipDdos: ", opts.SkipDdos)
 	logger.TestLog(opts.MaxTraces != 250, "MaxTraces: ", opts.MaxTraces)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
@@ -172,9 +170,6 @@ func (opts *ExportOptions) ToCmdLine() string {
 	}
 	if opts.ByDate {
 		options += " --by_date"
-	}
-	if opts.Deep {
-		options += " --deep"
 	}
 	if opts.FirstBlock != 0 {
 		options += (" --first_block " + fmt.Sprintf("%d", opts.FirstBlock))
@@ -272,8 +267,6 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ExportOptions {
 			opts.Reversed = true
 		case "byDate":
 			opts.ByDate = true
-		case "deep":
-			opts.Deep = true
 		case "skipDdos":
 			opts.SkipDdos = true
 		case "maxTraces":

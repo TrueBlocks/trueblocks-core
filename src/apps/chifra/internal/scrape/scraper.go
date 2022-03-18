@@ -249,6 +249,6 @@ func (opts *ScrapeOptions) RunMonitorScraper(wg *sync.WaitGroup, initialState bo
 const char* STR_CMD_LIST = "chifra export --appearances --fmt csv [{ADDR}] | cut -f2,3 -d',' >apps/[{ADDR}].csv ; ";
 const char* STR_CMD_TXS = "chifra export --articulate --cache --cache_traces --fmt csv [{ADDR}] >txs/[{ADDR}].csv ; ";
 const char* STR_CMD_LOGS = "./export_logs.1.sh [{ADDR}] ; ";
-const char* STR_CMD_NEIGHBORS = "chifra export --neighbors --deep --fmt csv [{ADDR}] >neighbors/[{ADDR}].csv ; ";
+const char* STR_CMD_NEIGHBORS = "chifra export --neighbors --fmt csv [{ADDR}] >neighbors/[{ADDR}].csv ; ";
 const char* STR_CMD_STATEMENTS = "./export_statements.1.sh [{ADDR}] ; ";
 */
