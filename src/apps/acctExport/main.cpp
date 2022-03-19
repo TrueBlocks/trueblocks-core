@@ -124,13 +124,6 @@ int main(int argc, const char* argv[]) {
 }
 
 //-----------------------------------------------------------------------
-bool tsRangeFunc(CTraverser* trav, void* data) {
-    if (!getTimestampAt(trav->app->blk) || shouldQuit())
-        return false;
-    return inRange(blknum_t(trav->app->blk), trav->traverserRange.first, trav->traverserRange.second);
-}
-
-//-----------------------------------------------------------------------
 bool pre_Func(CTraverser* trav, void* data) {
     start_Log(trav, data);
     return true;

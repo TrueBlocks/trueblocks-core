@@ -14,7 +14,6 @@
 #include "acctlib.h"
 
 //-----------------------------------------------------------------------
-extern bool tsRangeFunc(CTraverser* trav, void* data);
 extern bool loadTx_Func(CTraverser* trav, void* data);
 extern bool pre_Func(CTraverser* trav, void* data);
 extern bool post_Func(CTraverser* trav, void* data);
@@ -27,7 +26,7 @@ extern bool app_Display(CTraverser* trav, void* data);
 class CAppearanceTraverser : public CTraverser {
   public:
     CAppearanceTraverser(void) : CTraverser("appearances") {
-        filterFunc = tsRangeFunc;
+        filterFunc = filterByRange;
         preFunc = pre_Func;
         postFunc = app_Post;
         dataFunc = noopFunc;
@@ -39,7 +38,7 @@ extern bool receipts_Display(CTraverser* trav, void* data);
 class CReceiptTraverser : public CTraverser {
   public:
     CReceiptTraverser(void) : CTraverser("receipts") {
-        filterFunc = tsRangeFunc;
+        filterFunc = filterByRange;
         preFunc = pre_Func;
         postFunc = post_Func;
         dataFunc = loadTx_Func;
@@ -51,7 +50,7 @@ extern bool statements_Display(CTraverser* trav, void* data);
 class CStatementTraverser : public CTraverser {
   public:
     CStatementTraverser(void) : CTraverser("statements") {
-        filterFunc = tsRangeFunc;
+        filterFunc = filterByRange;
         preFunc = pre_Func;
         postFunc = post_Func;
         dataFunc = loadTx_Func;
@@ -64,7 +63,7 @@ extern size_t logs_Count(CTraverser* trav, void* data);
 class CLogTraverser : public CTraverser {
   public:
     CLogTraverser(void) : CTraverser("logs") {
-        filterFunc = tsRangeFunc;
+        filterFunc = filterByRange;
         postFunc = post_Func;
         dataFunc = loadTx_Func;
         displayFunc = logs_Display;
@@ -77,7 +76,7 @@ extern size_t traces_Count(CTraverser* trav, void* data);
 class CTraceTraverser : public CTraverser {
   public:
     CTraceTraverser(void) : CTraverser("traces") {
-        filterFunc = tsRangeFunc;
+        filterFunc = filterByRange;
         preFunc = pre_Func;
         postFunc = post_Func;
         dataFunc = loadTx_Func;
@@ -91,7 +90,7 @@ extern bool acct_PreFunc(CTraverser* trav, void* data);
 class CTransactionTraverser : public CTraverser {
   public:
     CTransactionTraverser(void) : CTraverser("txs") {
-        filterFunc = tsRangeFunc;
+        filterFunc = filterByRange;
         preFunc = acct_PreFunc;
         postFunc = post_Func;
         dataFunc = loadTx_Func;

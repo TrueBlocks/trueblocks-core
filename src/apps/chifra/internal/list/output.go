@@ -11,6 +11,7 @@ package listPkg
 // EXISTING_CODE
 import (
 	"net/http"
+	"os"
 
 	exportPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
 	"github.com/spf13/cobra"
@@ -27,6 +28,7 @@ func RunList(cmd *cobra.Command, args []string) error {
 	}
 
 	// EXISTING_CODE
+	maxTasks := 12
 	if opts.Newone {
 		// TODO: BOGUS -- WHAT?
 		// if opts.Count {
@@ -40,7 +42,7 @@ func RunList(cmd *cobra.Command, args []string) error {
 		// 	}
 		// 	return nil
 		// }
-		opts.FreshenAndExport()
+		opts.FreshenMonitor(true, maxTasks, os.Stdout)
 		return nil
 	}
 
@@ -70,10 +72,11 @@ func ServeList(w http.ResponseWriter, r *http.Request) bool {
 	}
 
 	// EXISTING_CODE
+	// maxTasks := 12
 	if opts.Newone {
 		// TODO: BOGUS -- WHAT?
 		// if opts.Count {
-		// 	err := opts.Freshen()
+		// 	err := opts.FreshenMonitor(true, maxTasks, os.Stdout)
 		// 	if err != nil {
 		// 		logger.Fatal("Could not handle count request", err)
 		// 	}

@@ -35,7 +35,7 @@ type Monitor struct {
 }
 
 const itemSizeInBytes = 4
-const recordSizeInBytes = (itemSizeInBytes * 2)
+const recordSizeInBytes = 8 // (itemSizeInBytes * 2)
 
 func (mon Monitor) String() string {
 	return fmt.Sprintf("%s\t%d\t%d", mon.Address, mon.Count, mon.FileSize)
