@@ -28,6 +28,7 @@ func RunList(cmd *cobra.Command, args []string) error {
 	}
 
 	// EXISTING_CODE
+	maxTasks := 12
 	if opts.Newone {
 		// TODO: BOGUS -- WHAT?
 		// if opts.Count {
@@ -41,7 +42,7 @@ func RunList(cmd *cobra.Command, args []string) error {
 		// 	}
 		// 	return nil
 		// }
-		opts.FreshenMonitor(true, os.Stdout)
+		opts.FreshenMonitor(true, maxTasks, os.Stdout)
 		return nil
 	}
 
@@ -71,10 +72,11 @@ func ServeList(w http.ResponseWriter, r *http.Request) bool {
 	}
 
 	// EXISTING_CODE
+	// maxTasks := 12
 	if opts.Newone {
 		// TODO: BOGUS -- WHAT?
 		// if opts.Count {
-		// 	err := opts.FreshenMonitor()
+		// 	err := opts.FreshenMonitor(true, maxTasks, os.Stdout)
 		// 	if err != nil {
 		// 		logger.Fatal("Could not handle count request", err)
 		// 	}

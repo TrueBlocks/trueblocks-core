@@ -15,12 +15,13 @@ import (
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/address"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 )
 
-func (opts *ListOptions) FreshenMonitor(store bool, w io.Writer) {
+func (opts *ListOptions) FreshenMonitor(store bool, maxTasks int, w io.Writer) {
 	indexPath := config.GetPathToIndex(opts.Globals.Chain) + "finalized/"
 	files, err := ioutil.ReadDir(indexPath)
 	if err != nil {
@@ -31,19 +32,19 @@ func (opts *ListOptions) FreshenMonitor(store bool, w io.Writer) {
 	resultChannel := make(chan []ResultRecord, len(files))
 
 	taskCount := 0
-	var maxTasks = 10
 	for _, info := range files {
 		if !info.IsDir() {
 			if taskCount >= maxTasks {
 				resArray := <-resultChannel
 				for _, r := range resArray {
-					r.Output(w)
+					opts.Report(w, &r, store)
 				}
 				taskCount--
 			}
-			wg.Add(1)
+
 			taskCount++
 			indexFileName := indexPath + "/" + info.Name()
+			wg.Add(1)
 			go parseFile(indexFileName, opts.Addrs, resultChannel, &wg)
 		}
 	}
@@ -51,12 +52,7 @@ func (opts *ListOptions) FreshenMonitor(store bool, w io.Writer) {
 	for i := 0; i < taskCount; i++ {
 		resArray := <-resultChannel
 		for _, r := range resArray {
-			if store {
-				log.Println("Storing ", r.Address, len(*r.AppRecords), "records")
-			} else {
-				log.Println("Not storing", r.Address, len(*r.AppRecords), "records")
-			}
-			r.Output(w)
+			opts.Report(w, &r, store)
 		}
 	}
 
@@ -65,7 +61,7 @@ func (opts *ListOptions) FreshenMonitor(store bool, w io.Writer) {
 
 	for resArray := range resultChannel {
 		for _, r := range resArray {
-			r.Output(w)
+			opts.Report(w, &r, store)
 		}
 	}
 }
@@ -131,9 +127,13 @@ type ResultRecord struct {
 	AppRecords *[]index.AppearanceRecord
 }
 
-func (result *ResultRecord) Output(w io.Writer) {
-	if result.AppRecords == nil {
+func (opts *ListOptions) Report(w io.Writer, result *ResultRecord, store bool) {
+	if result == nil || result.AppRecords == nil {
 		return
+	}
+
+	if store {
+		log.Println(colors.Bright, colors.Blue, result.Address, colors.Off, len(*result.AppRecords), "records")
 	}
 
 	theWriter := csv.NewWriter(w)
