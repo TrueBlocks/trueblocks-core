@@ -31,8 +31,6 @@ class CCurlContext {
     size_t theID;
     CURL* curlHandle;
     struct curl_slist* headerPtr;
-    CCounterMap methodMap;
-    uint64_t methodCnt;
     bool reportErrors;
     CStringArray curlErrors;
 
@@ -61,6 +59,9 @@ inline string_q getDataSource(void) {
 extern string_q callRPC(const string_q& method, const string_q& params, bool raw);
 extern bool getObjectViaRPC(CBaseNode& node, const string_q& method, const string_q& params);
 
+//-------------------------------------------------------------------------
+extern size_t nullCallback(char* ptr, size_t size, size_t nmemb, void* userdata);
 extern size_t writeCallback(char* ptr, size_t size, size_t nmemb, void* userdata);
 extern size_t errorCallback(char* ptr, size_t size, size_t nmemb, void* userdata);
+
 }  // namespace qblocks

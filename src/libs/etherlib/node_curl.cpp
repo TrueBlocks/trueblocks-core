@@ -13,13 +13,9 @@
 #include <thread>  // NOLINT
 #include "node.h"
 #include "node_curl.h"
+#include "node_curl_debug.h"
 
 namespace qblocks {
-
-//-------------------------------------------------------------------------
-extern size_t writeCallback(char* ptr, size_t size, size_t nmemb, void* userdata);
-extern size_t errorCallback(char* ptr, size_t size, size_t nmemb, void* userdata);
-extern size_t nullCallback(char* ptr, size_t size, size_t nmemb, void* userdata);
 
 //-------------------------------------------------------------------------
 CCurlContext::CCurlContext(void) {
@@ -36,8 +32,6 @@ CCurlContext::CCurlContext(void) {
     curlHandle = NULL;
     headerPtr = NULL;
     //      source       = "binary";
-    //      methodMap    = "";
-    methodCnt = 0;
     //      curlErrors;
     reportErrors = false;
 }
@@ -48,77 +42,6 @@ string_q CCurlContext::getCurlID(void) {
 }
 
 //-------------------------------------------------------------------------
-#define DEBUG_RPC
-#ifdef DEBUG_RPC
-
-//-------------------------------------------------------------------------
-string_q showResult(const string_q& result, const string_q& msg) {
-    if (result.empty())
-        return "";
-    string_q res = result;
-    cleanString(res, false);
-    replaceAny(res, "{}[]", "");
-    replaceAll(res, ",", "\n");
-    replaceAll(res, "\"result\":", "");
-    ostringstream os;
-    os << string_q(50, '-') << endl;
-    os << msg << endl;
-    CStringArray lines;
-    explode(lines, res, '\n');
-    sort(lines.begin(), lines.end());
-    os << cGreen << "result:\n" << cOff;
-    for (auto line : lines) {
-        replaceAny(line, "\n", "");
-        if (!line.empty() && !contains(line, "\"id\":") && !contains(line, "\"chainId\":") &&
-            !contains(line, "\"condition\":") && !contains(line, "\"creates\":") && !contains(line, "\"publicKey\":") &&
-            !contains(line, "\"jsonrpc\":") && !contains(line, "\"raw\":") && !contains(line, "\"standardV\":") &&
-            !contains(line, "\"transactionLogIndex\":") && !contains(line, "\"type\":") &&
-            !contains(line, "\"author\":") && !contains(line, "\"sealFields\":"))
-            os << "--[" << line << "]--" << endl;
-    }
-    return os.str();
-}
-string_q showCommand(const string_q& method, const string_q& params, const string_q& url) {
-    ostringstream os;
-    os << "curl -s ";
-    os << "--data '{\"method\":\"" << method;
-    os << "\",\"params\":" << params << ",\"id\":\"1\",\"jsonrpc\":\"2.0\"}' ";
-    os << "-H \"Content-Type: application/json\" ";
-    os << "-X POST " << url;
-    return os.str();
-}
-#define PRINT(msg)                                                                                                     \
-    if (debugging) {                                                                                                   \
-        cout.flush();                                                                                                  \
-        cerr.flush();                                                                                                  \
-        cerr << showResult(result, msg);                                                                               \
-        cerr << cGreen << "earlyAbort: " << cOff << earlyAbort << endl;                                                \
-        cerr << cGreen << "curlID: " << cOff << getCurlID() << endl;                                                   \
-    }
-
-#define PRINTQ(msg)                                                                                                    \
-    if (data->debugging) {                                                                                             \
-        cout.flush();                                                                                                  \
-        cerr.flush();                                                                                                  \
-        cerr << string_q(50, '-') << endl;                                                                             \
-        cerr << "." << msg << endl;                                                                                    \
-    }
-
-#define PRINTL(msg)                                                                                                    \
-    if (debugging) {                                                                                                   \
-        cout.flush();                                                                                                  \
-        cerr.flush();                                                                                                  \
-        cerr << string_q(50, '-') << endl;                                                                             \
-        PRINT(msg);                                                                                                    \
-    }
-#else  // DEBUG_RPC
-#define showCommand(a, b, c) string_q("")
-#define PRINTQ(msg)
-#define PRINT(msg)
-#define PRINTL(msg)
-#endif  // DEBUG_RPC
-
-//-------------------------------------------------------------------------
 void CCurlContext::setPostData(const string_q& method, const string_q& params) {
     clear();
     postData = "{";
@@ -127,8 +50,6 @@ void CCurlContext::setPostData(const string_q& method, const string_q& params) {
     postData += quote("params") + ":" + params + ",";
     postData += quote("id") + ":" + quote(getCurlContext()->getCurlID());
     postData += "}";
-
-    PRINT("postData: " + postData);
 
     curl_easy_setopt(getCurlContext()->getCurl(), CURLOPT_POSTFIELDS, postData.c_str());
     curl_easy_setopt(getCurlContext()->getCurl(), CURLOPT_POSTFIELDSIZE, postData.length());
@@ -239,18 +160,17 @@ string_q callRPC(const string_q& method, const string_q& params, bool raw) {
 
 //-------------------------------------------------------------------------
 string_q CCurlContext::perform(const string_q& method, const string_q& params, bool raw) {
-    PRINTL("perform:\nmethod: " + method + "\nparams: " + params);
-    PRINTL(showCommand(method, params, getCurlContext()->baseURL))
-    //        getCurlContext()->methodMap[method]++;
-    getCurlContext()->methodCnt++;
     getCurlContext()->setPostData(method, params);
+
+    PRINT("", debugCurlCommand(getCurlID(), method, params, getCurlContext()->baseURL))
+
     CURLcode res = curl_easy_perform(curlHandle);
     if (res != CURLE_OK && !earlyAbort) {
-        PRINT("CURL returned an error: ! CURLE_OK")
+        PRINT(result, "CURL returned an error: ! CURLE_OK")
         curlErrorAndExit(STR_ERROR_CURLERR, curl_easy_strerror(res), method, params);
     }
 
-    PRINT("CURL returned CURLE_OK")
+    PRINT(result, "CURL returned CURLE_OK")
     string_q check = substitute(substitute(result, "VM execution error", ""), "\"error\":", "");
     if (result.empty()) {
         curlErrorAndExit(STR_ERROR_CURLEMPTY, "", method, params);
@@ -264,7 +184,6 @@ string_q CCurlContext::perform(const string_q& method, const string_q& params, b
         return result;
     }
 
-    // PRINTL("Received: " + result);
     if (raw)
         return result;
     CRPCResult generic;
@@ -315,8 +234,6 @@ size_t writeCallback(char* ptr, size_t size, size_t nmemb, void* userdata) {
     CCurlContext* data = (CCurlContext*)userdata;  // NOLINT
     data->result += s;
 
-    // PRINTQ("data->result ==> " + string_q(s));
-
     if (data && data->curlNoteFunc)
         if (!(*data->curlNoteFunc)(ptr, size, nmemb, userdata))  // returns zero if it wants us to stop
             return 0;
@@ -343,4 +260,5 @@ size_t errorCallback(char* ptr, size_t size, size_t nmemb, void* userdata) {
 size_t nullCallback(char* ptr, size_t size, size_t nmemb, void* userdata) {
     return size * nmemb;
 }
+
 }  // namespace qblocks
