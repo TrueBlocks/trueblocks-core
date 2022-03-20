@@ -16,7 +16,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
-	"github.com/ethereum/go-ethereum/common"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 )
 
 func (opts *ListOptions) HandleFreshenMonitors(maxTasks int, w io.Writer) error {
@@ -29,9 +29,9 @@ func (opts *ListOptions) HandleFreshenMonitors(maxTasks int, w io.Writer) error 
 	var wg sync.WaitGroup
 	resultChannel := make(chan []index.ResultRecord, len(files))
 
-	var addrs []common.Address
+	var monitors []monitor.Monitor
 	for _, addr := range opts.Addrs {
-		addrs = append(addrs, common.HexToAddress(addr))
+		monitors = append(monitors, monitor.NewMonitor(opts.Globals.Chain, addr))
 	}
 
 	taskCount := 0
@@ -47,7 +47,7 @@ func (opts *ListOptions) HandleFreshenMonitors(maxTasks int, w io.Writer) error 
 			taskCount++
 			indexFileName := indexPath + "/" + info.Name()
 			wg.Add(1)
-			go opts.parseFile(indexFileName, addrs, resultChannel, &wg)
+			go opts.parseFile(indexFileName, monitors, resultChannel, &wg)
 		}
 	}
 
@@ -64,7 +64,7 @@ func (opts *ListOptions) HandleFreshenMonitors(maxTasks int, w io.Writer) error 
 
 // parseFile opens one index file, searches for all the address(es) we're looking for and pushes the resultRecords
 // (even if empty) down the resultsChannel.
-func (opts *ListOptions) parseFile(fileName string, addresses []common.Address, resultChannel chan<- []index.ResultRecord, wg *sync.WaitGroup) {
+func (opts *ListOptions) parseFile(fileName string, monitors []monitor.Monitor, resultChannel chan<- []index.ResultRecord, wg *sync.WaitGroup) {
 	var results []index.ResultRecord
 	defer func() {
 		wg.Done()
@@ -82,8 +82,8 @@ func (opts *ListOptions) parseFile(fileName string, addresses []common.Address, 
 		return
 	}
 
-	for _, addr := range addresses {
-		rec := indexChunk.GetAppearanceRecords(addr)
+	for _, mon := range monitors {
+		rec := indexChunk.GetAppearanceRecords(mon.Address)
 		if rec != nil {
 			results = append(results, *rec)
 		}
