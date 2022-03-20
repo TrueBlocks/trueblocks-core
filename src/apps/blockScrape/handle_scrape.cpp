@@ -267,7 +267,7 @@ bool COptions::report(void) {
     replace(result, "{3}", "{" + double_2_Str(pct * 100.00, 1) + "%}");
     replace(result, "{4}", "{" + uint_2_Str(need) + "}");
     replace(result, "{5}", "{" + uint_2_Str(found) + "}");
-    replace(result, "{6}", "{" + double_2_Str(pBlk, 2) + "/blk}");
+    replace(result, "{6}", "{" + double_2_Str(pBlk, 2) + " txs/blk}");
     replaceAll(result, "{", cGreen);
     replaceAll(result, "}", cOff);
     LOG_INFO(result);

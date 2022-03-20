@@ -6,6 +6,8 @@ package scrapePkg
 
 import (
 	"sync"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 )
 
 func hasIndexerFlag(mode string) bool {
@@ -27,7 +29,9 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup, initialState bool
 		} else {
 			opts.Globals.PassItOn("blockScrape", opts.ToCmdLine())
 			if s.Running {
-				s.Pause()
+				if rpcClient.DistanceFromHead(opts.Globals.Chain) <= (2 * opts.UnripeDist) {
+					s.Pause()
+				}
 			}
 		}
 	}

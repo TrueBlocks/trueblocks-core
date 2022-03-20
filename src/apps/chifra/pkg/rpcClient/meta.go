@@ -36,6 +36,11 @@ type MetaValue struct {
 	value  uint64
 }
 
+func DistanceFromHead(chain string) uint64 {
+    meta := GetMetaData(chain, false)
+    return meta.Latest - meta.Finalized
+}
+
 func GetMetaData(chain string, testmode bool) *MetaData {
 	provider := config.GetRpcProvider(chain)
 
