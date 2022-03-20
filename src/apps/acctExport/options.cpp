@@ -359,7 +359,7 @@ bool COptions::parseArguments(string_q& command) {
             return usage(msg);
         }
 
-        nextBlockToVisit = min(nextBlockToVisit, monitor.getNextBlockToVisit());
+        nextBlockToVisit = min(nextBlockToVisit, monitor.getNextBlockToVisit(false));
 
         if (accountedFor.address.empty()) {
             accountedFor.address = monitor.address;

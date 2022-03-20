@@ -443,8 +443,9 @@ void CMonitor::writeNextBlockToVisit(blknum_t bn, bool staging) {
 }
 
 //--------------------------------------------------------------------------------
-blknum_t CMonitor::getNextBlockToVisit(bool fresh) const {
-    if (fileExists(getPathToMonitorLast(address, false))) {
+blknum_t CMonitor::getNextBlockToVisit(bool ifExists) const {
+    bool exists = fileExists(getPathToMonitorLast(address, false));
+    if (ifExists || exists) {
         ((CMonitor*)this)->lastVisitedBlock =
             str_2_Uint(asciiFileToString(getPathToMonitorLast(address, false)));  // NOLINT
 
@@ -458,6 +459,7 @@ blknum_t CMonitor::getNextBlockToVisit(bool fresh) const {
             ((CMonitor*)this)->lastVisitedBlock = (deployed == NOPOS ? 0 : deployed);  // NOLINT
         }
     }
+
     return lastVisitedBlock;
 }
 

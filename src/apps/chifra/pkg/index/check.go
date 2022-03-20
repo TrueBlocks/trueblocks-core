@@ -7,7 +7,7 @@ import (
 )
 
 func validateFileSize(file *os.File) error {
-	header, err := ReadHeader(file)
+	header, err := readHeader(file)
 	if err != nil {
 		return err
 	}

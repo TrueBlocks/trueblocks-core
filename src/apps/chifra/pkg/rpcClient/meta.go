@@ -6,12 +6,11 @@ package rpcClient
 
 import (
 	"encoding/json"
-	"errors"
 	"io/fs"
 	"path/filepath"
-	"strconv"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -113,30 +112,9 @@ func walkIndexFolder(chain, folder string, valueChan chan<- MetaValue) {
 			return err
 		}
 		if !info.IsDir() {
-			_, last, _ := fn_2_Vals(path)
-			valueChan <- MetaValue{folder: folder, value: last}
+			blkRange, _ := blockRange.RangeFromFilename(path)
+			valueChan <- MetaValue{folder: folder, value: uint64(blkRange.Last)}
 		}
 		return nil
 	})
-}
-
-func fn_2_Vals(path string) (uint64, uint64, error) {
-	if !strings.Contains(path, ".") {
-		return 0, 0, errors.New("invalid filename")
-	}
-	_, fn := filepath.Split(path)
-	if strings.Contains(fn, ".") {
-		fn = strings.Split(fn, ".")[0]
-	}
-	parts := strings.Split(fn, "-")
-	var first, last int
-	if len(parts) > 1 {
-		first, _ = strconv.Atoi(parts[0])
-		last, _ = strconv.Atoi(parts[1])
-	} else {
-		first = 0
-		last, _ = strconv.Atoi(parts[0])
-	}
-
-	return uint64(first), uint64(last), nil
 }

@@ -73,7 +73,7 @@ class CMonitor : public CAccountName {
     void removeMonitor(void);
 
     blknum_t loadAppearances(MONAPPFUNC func, void* data);
-    blknum_t getNextBlockToVisit(bool fresh = false) const;
+    blknum_t getNextBlockToVisit(bool ifExists) const;
     bloom_t getBloom(void);
     size_t getFileSize(const string_q& path) const;
     size_t getRecordCnt(const string_q& path) const;

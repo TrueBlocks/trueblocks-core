@@ -41,7 +41,7 @@ bool visitToFreshen_fromFinalized(const string_q& path, void* data) {
 
         options->possibles.clear();
         for (auto m : options->allMonitors) {
-            blknum_t nextVisit = m.getNextBlockToVisit();
+            blknum_t nextVisit = m.getNextBlockToVisit(true /* ifExists */);
             if (nextVisit == 0 || nextVisit <= options->fileRange.first) {
                 options->possibles.push_back(m);
             }

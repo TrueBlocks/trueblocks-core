@@ -32,7 +32,7 @@ func ethFromWei(in big.Int) float64 {
 // 		balanceClient = GetClient(provider)
 // 		clientLoaded = true
 // 	}
-// 	val, _ := balanceClient.BalanceAt(context.Background(), HexToAddress(address), nil)
+// 	val, _ := balanceClient.BalanceAt(context.Background(), common.HexToAddress(address), nil)
 // 	if val == nil {
 // 		return 0.0
 // 	}

@@ -52,7 +52,7 @@ bool COptions::process_freshen(void) {
         }
         for (auto monitor : allMonitors) {
             monitor.moveToProduction(monitor.isStaging);
-            LOG4(monitor.address, " freshened to ", monitor.getNextBlockToVisit(true /* fresh */));
+            LOG4(monitor.address, " freshened to ", monitor.getNextBlockToVisit(false));
         }
     }
 

@@ -21,6 +21,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	"github.com/ethereum/go-ethereum/common"
 )
 
 func hasMonitorsFlag(mode string) bool {
@@ -52,7 +53,7 @@ func (opts *ScrapeOptions) RunMonitorScraper(wg *sync.WaitGroup, initialState bo
 			count := 0
 			for result := range monitorChan {
 				switch result.Address {
-				case "done":
+				case sentinalAddr:
 					close(monitorChan)
 				default:
 					if result.Count > 100000 {
@@ -93,7 +94,7 @@ func Freshen(chain string, monitors []monitor.Monitor) error {
 	for i := 0; i < len(batches); i++ {
 		var addrs []string
 		for j := 0; j < len(batches[i]); j++ {
-			addrs = append(addrs, batches[i][j].Address)
+			addrs = append(addrs, batches[i][j].GetAddrStr())
 		}
 		addrStr := strings.Join(addrs, " ")
 
@@ -119,7 +120,7 @@ func Freshen(chain string, monitors []monitor.Monitor) error {
 					continue
 				}
 
-				appsPath := "exports/apps/" + mon.Address + ".csv"
+				appsPath := "exports/apps/" + mon.GetAddrStr() + ".csv"
 				exists := file.FileExists(appsPath)
 				if !exists || countAfter > countBefore {
 					start := countBefore + 1
@@ -131,7 +132,7 @@ func Freshen(chain string, monitors []monitor.Monitor) error {
 					expApps.Globals.PassItOn("acctExport", expApps.ToCmdLine())
 				}
 
-				txsPath := "exports/txs/" + mon.Address + ".csv"
+				txsPath := "exports/txs/" + mon.GetAddrStr() + ".csv"
 				exists = file.FileExists(txsPath)
 				if !exists || countAfter > countBefore {
 					start := countBefore + 1
@@ -144,7 +145,7 @@ func Freshen(chain string, monitors []monitor.Monitor) error {
 					expTxs.Globals.PassItOn("acctExport", expTxs.ToCmdLine())
 				}
 
-				logsPath := "exports/logs/" + mon.Address + ".csv"
+				logsPath := "exports/logs/" + mon.GetAddrStr() + ".csv"
 				exists = file.FileExists(logsPath)
 				if !exists || countAfter > countBefore {
 					start := countBefore + 1
@@ -169,9 +170,11 @@ func Freshen(chain string, monitors []monitor.Monitor) error {
 	return nil
 }
 
+var sentinalAddr = common.HexToAddress("0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead")
+
 func getMonitors(chain, folder string, monitorChan chan<- monitor.Monitor) {
 	defer func() {
-		monitorChan <- monitor.Monitor{Address: "done"}
+		monitorChan <- monitor.Monitor{Address: sentinalAddr}
 	}()
 
 	info, err := os.Stat("./addresses.csv")
@@ -257,11 +260,14 @@ func establishExportPaths() {
 }
 
 func getExportOpts(mon *monitor.Monitor, chain, path string, firstBlock, lastBlock uint32) exportPkg.ExportOptions {
+	first, _ := mon.GetTxAt(firstBlock)
+	last, _ := mon.GetTxAt(lastBlock)
+
 	expOpts := exportPkg.ExportOptions{MaxRecords: 250, MaxTraces: 250}
-	expOpts.Addrs = append(expOpts.Addrs, mon.Address)
+	expOpts.Addrs = append(expOpts.Addrs, mon.GetAddrStr())
 	expOpts.Globals.Chain = chain
-	expOpts.FirstBlock, _, _ = mon.GetTxAt(firstBlock)
-	expOpts.LastBlock, _, _ = mon.GetTxAt(lastBlock)
+	expOpts.FirstBlock = uint64(first.BlockNumber)
+	expOpts.LastBlock = uint64(last.BlockNumber)
 	expOpts.Globals.Format = "csv"
 	expOpts.Globals.OutputFn = path
 	expOpts.Globals.Append = file.FileExists(expOpts.Globals.OutputFn)
