@@ -77,7 +77,7 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (startBlock >= endBlock || endBlock > getBlockProgress(BP_CLIENT).client)
+    if (startBlock >= endBlock || endBlock > getLatestBlock_client())
         return usage("Invalid --s tart or --e nd.");
 
     if (thing) {

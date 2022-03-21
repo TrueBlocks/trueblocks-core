@@ -58,7 +58,7 @@ apps                	1011	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OM
   "lastExport": 0,
   "firstAppearance": 0,
   "latestAppearance": 4294967295,
-  "lastVisitedBlock": 0,
+  "lastVisitedBlock": 18446744073709551615,
   "address": "0x0"
 }
 

@@ -43,7 +43,6 @@ Here's a table showing which endpoints changed. Previously the API endpoints wer
 |              |              | --load         |             |
 |              |              | --reversed     |             |
 |              |              | --by_date      | byDate      |
-|              |              | --summarize_by | summarizeBy |
 |              |              | --skip_ddos    | skipDdos    |
 |              |              | --max_traces   | maxTraces   |
 |              |              | --first_block  | firstBlock  |
