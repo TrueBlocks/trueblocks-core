@@ -10,12 +10,11 @@ import (
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/ethereum/go-ethereum/common"
 )
 
 const (
-	// MagicNumber is used to check data validity
-	MagicNumber = 0xdeadbeef
 	// HeaderWidth - size of Header Record
 	HeaderWidth = 44
 	// AddrRecordWidth - size of Address Record
@@ -50,9 +49,9 @@ type IndexChunk struct {
 	Range          blockRange.FileRange
 }
 
-// LoadIndexChunk returns an IndexChunk with an opened file pointer to the given fileName. The HeaderRecord
+// LoadIndexHeader returns an IndexChunk with an opened file pointer to the given fileName. The HeaderRecord
 // for the chunk has been populated and the file position to the two tables are ready for use.
-func LoadIndexChunk(fileName string) (IndexChunk, error) {
+func LoadIndexHeader(fileName string) (IndexChunk, error) {
 	blkRange, err := blockRange.RangeFromFilename(fileName)
 	if err != nil {
 		return IndexChunk{}, err
@@ -132,14 +131,14 @@ type HeaderRecord struct {
 	AppearanceCount uint32
 }
 
-func readHeader(file *os.File) (header HeaderRecord, err error) {
-	err = binary.Read(file, binary.LittleEndian, &header)
+func readHeader(fl *os.File) (header HeaderRecord, err error) {
+	err = binary.Read(fl, binary.LittleEndian, &header)
 	if err != nil {
 		return
 	}
 
-	if header.Magic != MagicNumber {
-		return header, fmt.Errorf("magic number in file %s is incorrect, expected %d, got %d", file.Name(), MagicNumber, header.Magic)
+	if header.Magic != file.MagicNumber {
+		return header, fmt.Errorf("magic number in file %s is incorrect, expected %d, got %d", fl.Name(), file.MagicNumber, header.Magic)
 	}
 
 	return
