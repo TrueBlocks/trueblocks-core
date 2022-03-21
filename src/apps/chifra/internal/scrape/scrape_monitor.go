@@ -89,7 +89,6 @@ func chunkMonitors(slice []monitor.Monitor, chunkSize int) [][]monitor.Monitor {
 func Freshen(chain string, monitors []monitor.Monitor) error {
 	addrsPerCall := 8
 
-	// cnt := len(monitors)
 	batches := chunkMonitors(monitors, addrsPerCall)
 	for i := 0; i < len(batches); i++ {
 		var addrs []string
@@ -112,7 +111,7 @@ func Freshen(chain string, monitors []monitor.Monitor) error {
 
 			mon := batches[i][j]
 			countBefore := mon.Count
-			countAfter, _ := mon.Resolve(chain)
+			countAfter, _ := mon.Reload(chain)
 
 			if countAfter > 0 {
 				if countAfter > 100000 {
@@ -260,8 +259,9 @@ func establishExportPaths() {
 }
 
 func getExportOpts(mon *monitor.Monitor, chain, path string, firstBlock, lastBlock uint32) exportPkg.ExportOptions {
-	first, _ := mon.GetTxAt(firstBlock)
-	last, _ := mon.GetTxAt(lastBlock)
+	// firstBlock and lastBlock are one-based
+	first, _ := mon.Peek(firstBlock)
+	last, _ := mon.Peek(lastBlock)
 
 	expOpts := exportPkg.ExportOptions{MaxRecords: 250, MaxTraces: 250}
 	expOpts.Addrs = append(expOpts.Addrs, mon.GetAddrStr())
