@@ -268,6 +268,8 @@ void establishTestData(void) {
     doCommand("chifra abis 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11");
     doCommand("chifra abis 0x7d655c57f71464b6f83811c55d84009cd9f5221c");
 
+    doCommand("TEST_MODE=true chifra list 0x001d14804b399c6ef80e64576f657660804fec0b");
+
 #if 1
     // TODO(tjayrush): Not sure what this is about. Hard to explain,
     // TODO(tjayrush): but this removes a few transactions from the cache

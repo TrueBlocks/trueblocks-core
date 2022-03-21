@@ -42,16 +42,16 @@ func RunList(cmd *cobra.Command, args []string) error {
 	}
 
 	// EXISTING_CODE
-	// Give ourselves some room to work...
-	optsEx := NewListOptsEx(opts)
-
-	// Freshen the monitor by which we mean add any new appearance records to the file on disc
-	err = optsEx.HandleFreshenMonitors()
-	if err != nil {
-		return err
-	}
-
 	if opts.Newone {
+		// Give ourselves some room to work...
+		optsEx := NewListOptsEx(opts)
+
+		// Freshen the monitor by which we mean add any new appearance records to the file on disc
+		err = optsEx.HandleFreshenMonitors()
+		if err != nil {
+			return err
+		}
+
 		if opts.Count {
 			return opts.HandleListCount()
 		}
