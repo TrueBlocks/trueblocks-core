@@ -1,4 +1,4 @@
-export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&maxRecords=3&neighbors&fmt=csv&deep
+export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&maxRecords=3&neighbors&fmt=csv
 "blockNumber","transactionIndex","neighbor","reason"
 "1428757","0","0x17cd41543a3c3c77d5e372704c9577df09eea003","trace"
 "1428757","0","0x793ea9692ada1900fbd0b80fffec6e431fe8b391","from"

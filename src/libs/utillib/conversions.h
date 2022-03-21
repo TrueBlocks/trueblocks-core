@@ -196,4 +196,9 @@ inline string_q insertCommas(const string_q& dIn) {
     return ret;
 }
 
+inline ostream& operator<<(ostream& os, const blkrange_t& range) {
+    os << range.first << "-" << range.second;
+    return os;
+}
+
 }  // namespace qblocks

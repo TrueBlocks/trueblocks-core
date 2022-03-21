@@ -1,3 +1,13 @@
+// TODO(tjayrush): If an abi file is newer than the monitor file - clear the cache
+// TODO(tjayrush): accounting disallows freshen, apps, logs, receipts, statements, traces, but requires articulate
+// TODO(tjayrush): accounting must be exportFmt API1 - why?
+// TODO(tjayrush): accounting must be for one monitor address - why?
+// TODO(tjayrush): accounting requires node balances - why?
+// TODO(tjayrush): Used to do this: if any ABI files was newer, re-read abi and re-articulate in cache
+// TODO(tjayrush): What does blkRewardMap do? Needs testing
+// TODO(tjayrush): Reconciliation loads traces -- plus it reduplicates the isSuicide, isGeneration, isUncle shit
+// TODO(tjayrush): If a monitor file is locked, remove the lock and move on (don't read) but don't wait either
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -16,6 +26,7 @@
  */
 #include "options.h"
 
+extern const char* STR_MONITOR_LOCKED;
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
@@ -48,8 +59,6 @@ static const COption params[] = {
     COption("load", "", "<string>", OPT_HIDDEN | OPT_FLAG, "a comma separated list of dynamic traversers to load"),
     COption("reversed", "", "", OPT_HIDDEN | OPT_SWITCH, "produce results in reverse chronological order"),
     COption("by_date", "b", "", OPT_HIDDEN | OPT_SWITCH, "produce results sorted by date (report by address otherwise)"),  // NOLINT
-    COption("summarize_by", "z", "enum[yearly|quarterly|monthly|weekly|daily|hourly|blockly|tx]", OPT_HIDDEN | OPT_FLAG, "for --accounting only, summarize reconciliations by this time period"),  // NOLINT
-    COption("deep", "D", "", OPT_HIDDEN | OPT_SWITCH, "for --neighbors option only, dig deeply into detail (otherwise, to and from only)"),  // NOLINT
     COption("first_block", "F", "<blknum>", OPT_FLAG, "first block to process (inclusive)"),
     COption("last_block", "L", "<blknum>", OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more addresses."),
@@ -205,15 +214,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-b" || arg == "--by_date") {
             by_date = true;
 
-        } else if (startsWith(arg, "-z:") || startsWith(arg, "--summarize_by:")) {
-            if (!confirmEnum("summarize_by", summarize_by, arg))
-                return false;
-        } else if (arg == "-z" || arg == "--summarize_by") {
-            return flag_required("summarize_by");
-
-        } else if (arg == "-D" || arg == "--deep") {
-            deep = true;
-
         } else if (startsWith(arg, "-F:") || startsWith(arg, "--first_block:")) {
             if (!confirmBlockNum("first_block", first_block, arg, latest))
                 return false;
@@ -276,13 +276,6 @@ bool COptions::parseArguments(string_q& command) {
         max_records = NOPOS;
 
     freshenOnly = freshen;
-
-    if (!accounting && !summarize_by.empty())
-        return usage("You may use --summarized_by only with the --accounting option.");
-
-    if (!bloomsAreInitalized())
-        return usage("Bloom filters not found in " + indexFolder_blooms +
-                     ". You must run 'chifra init' before running this command.");
 
     if (clean) {
         if (!process_clean())
@@ -359,36 +352,27 @@ bool COptions::parseArguments(string_q& command) {
         monitor.clearMonitorLocks();
         monitor.finishParse();
         monitor.isStaging = !fileExists(monitor.getPathToMonitor(monitor.address, false));
-        if (monitor.monitorExists()) {
-            string_q unused;
-            if (monitor.isMonitorLocked(unused))
-                LOG_ERR(
-                    "The cache file is locked. The program is either already "
-                    "running or it did not end cleanly the\n\tlast time it ran. "
-                    "Quit the already running program or, if it is not running, "
-                    "remove the lock\n\tfile: " +
-                    monitor.getPathToMonitor(addr, false) + ".lck'. Proceeding anyway...");
-            string_q msg;
-            if (monitor.isMonitorLocked(msg))  // If locked, we fail
-                return usage(msg);
-            nextBlockToVisit = min(nextBlockToVisit, monitor.getNextBlockToVisit());
-            LOG_TEST("Monitor found for", addr, false);
-            LOG_TEST("Last block in monitor", monitor.getLastBlockInMonitorPlusOne(), false);
-        } else {
-            if (!isTestMode())
-                LOG_WARN("Monitor not found for ", addr + ". Continuing anyway.");
-            nextBlockToVisit = 0;  // monitor.getNextBlockToVisit()
+        string_q msg;
+        if (monitor.isMonitorLocked(msg)) {
+            string_q msg = STR_MONITOR_LOCKED;
+            replace(msg, "{0}", monitor.getPathToMonitor(addr, false));
+            return usage(msg);
         }
+
+        nextBlockToVisit = min(nextBlockToVisit, monitor.getNextBlockToVisit(false));
+
         if (accountedFor.address.empty()) {
             accountedFor.address = monitor.address;
             findName(monitor.address, accountedFor);
             accountedFor.isContract = !getCodeAt(monitor.address, latest).empty();
         }
+
         allMonitors.push_back(monitor);
     }
 
     if (appearances || count)
         articulate = false;
+
     if (articulate) {
         abi_spec.loadAbisFromKnown();
         for (auto monitor : allMonitors) {
@@ -406,7 +390,7 @@ bool COptions::parseArguments(string_q& command) {
 
     // Last block depends on scrape type or user input `end` option (with appropriate check)
     blknum_t lastBlockToVisit = max((blknum_t)1, unripe ? meta.unripe : staging ? meta.staging : meta.finalized);
-    listRange = make_pair((nextBlockToVisit == NOPOS ? 0 : nextBlockToVisit), lastBlockToVisit);
+    needRange = make_pair((nextBlockToVisit == NOPOS ? 0 : nextBlockToVisit), max(nextBlockToVisit, lastBlockToVisit));
 
     if (isTestMode() && (staging || unripe))
         return usage("--staging and --unripe are disabled for testing.");
@@ -442,7 +426,7 @@ bool COptions::parseArguments(string_q& command) {
 
     } else {
         if (load.empty()) {
-            if (!loadAllAppearances())
+            if (!loadMonitors())
                 return false;
 
         } else {
@@ -503,8 +487,6 @@ void COptions::Init(void) {
     load = "";
     reversed = false;
     by_date = false;
-    summarize_by = "";
-    deep = false;
     // clang-format off
     skip_ddos = getGlobalConfig("acctExport")->getConfigBool("settings", "skip_ddos", true);
     max_traces = getGlobalConfig("acctExport")->getConfigInt("settings", "max_traces", 250);
@@ -515,7 +497,7 @@ void COptions::Init(void) {
         cache = true;  // backwards compat
 
     meta = getMetaData();
-    listRange = make_pair(0, NOPOS);
+    needRange = make_pair(0, NOPOS);
 
     allMonitors.clear();
     monApps.clear();
@@ -717,64 +699,6 @@ bool COptions::setDisplayFormatting(void) {
     return true;
 }
 
-// TODO(tjayrush): If an abi file is changed, we should re-articulate.
-// TODO(tjayrush): accounting can not be freshen, appearances, logs, receipts, statements, traces, but must be
-// TODO(tjayrush): articulate - why?
-// TODO(tjayrush): accounting must be exportFmt API1 - why?
-// TODO(tjayrush): accounting must be for one monitor address - why?
-// TODO(tjayrush): accounting requires node balances - why?
-// TODO(tjayrush): Used to do this: if any ABI files was newer, re-read abi and re-articulate in cache
-// TODO(tjayrush): What does blkRewardMap do? Needs testing
-// TODO(tjayrush): Reconciliation loads traces -- plus it reduplicates the isSuicide, isGeneration, isUncle shit
-// TODO(tjayrush): writeLastEncountered is weird (in fact removed -- used to keep freshen from revisiting blocks twice
-// TODO(tjayrush): writeLastBlockInMonitor is really weird
-// TODO(tjayrush): We used to write traces sometimes
-// TODO(tjayrush): We used to cache the monitored txs - I think it was pretty fast (we used the monitor staging folder)
-// TODO(tjayrush): We used to do a ten address thing that would scan the index for ten addrs at a time and then
-// TODO(tjayrush): (oddly) scan for --freshen on acctExport one address at a time. All that got removed when we
-// TODO(tjayrush): made chifra so light weight. It might be interesting to put it back in (or re-write it actually)
-// TODO(tjayrush): While looking into that, make sure to take advantage of 'needsUpdate' which would do this:
-// TODO(tjayrush): (1) store the number of records in monitor file, (2) freshen monitor file, (3) only --freshen if the
-// TODO(tjayrush): We used to check to see if the monitor file was locked. That may have gotten lost. Don't spin. Just
-// TODO(tjayrush): die right away if it's locked.
-
-// TODO(tjayrush): Re-enable mocked data
-// if (mocked) {
-//     string_q which = origMode;
-//     } else if (origMode == "status") {
-//         if (contains(tool_flags, "monitors")) {
-//             origMode = "monitors";
-//         }
-//     }
-//     uint64_t nMocked = getGlobalConfig("")->getConfigInt("dev", "n_mocked", 100);
-//     string_q path = chainConfigsFolder_mocked + origMode + ".json";
-//     if (fileExists(path)) {
-//         if (origMode == "export") {
-//             for (size_t i = 0; i < nMocked; i++) {
-//                 LOG_ PROGRESS("Extracting", i, nMocked, "\r");
-//                 usleep(30000);
-//             }
-//             CStringArray lines;
-//             asciiFileToLines(path, lines);
-//             size_t cnt = 0;
-//             size_t record = 0;
-//             size_t recordSize = lines.size() / nMocked;
-//             for (auto line : lines) {
-//                 cout << line << endl;
-//                 if (!(++cnt % recordSize)) {
-//                     LOG_ PROGRESS("Displaying", record++, nMocked, "\r");
-//                     usleep(10000);
-//                 }
-//             }
-//             return false;
-//         } else {
-//             cout << asciiFileToString(path);
-//             return false;
-//         }
-//     }
-//     tool_flags += " --mocked ";
-// }
-
 //-----------------------------------------------------------------------
 bool COptions::isEmitter(const address_t& test) const {
     for (auto monitor : allMonitors)
@@ -828,3 +752,10 @@ void COptions::writePerformanceData(void) {
     data << stats.Format(fmt) << endl;
     appendToAsciiFile(statsFile, data.str());
 }
+
+//-----------------------------------------------------------------------
+const char* STR_MONITOR_LOCKED =
+    "The cache file is locked. The program is either already "
+    "running or it did not end cleanly the\n\tlast time it ran. "
+    "Quit the already running program or, if it is not running, "
+    "remove the lock\n\tfile: '{0}.lck'.";

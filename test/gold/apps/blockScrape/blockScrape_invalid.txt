@@ -19,6 +19,7 @@ Flags:
   -n, --block_cnt uint        maximum number of blocks to process per pass (default 2000)
   -b, --block_chan_cnt uint   number of concurrent block processing channels (default 10)
   -d, --addr_chan_cnt uint    number of concurrent address processing channels (default 20)
+  -e, --reset uint            reset the scraper to the provided block (or end of earliest chunk prior to that block) (hidden)
       --apps_per_chunk uint   the number of appearances to build into a chunk before consolidating it (hidden) (default 200000)
       --unripe_dist uint      the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe (hidden) (default 28)
       --snap_to_grid uint     an override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index (hidden) (default 100000)

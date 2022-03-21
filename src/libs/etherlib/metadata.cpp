@@ -14,50 +14,7 @@
 #include "metadata.h"
 
 //--------------------------------------------------------------------------
-extern blknum_t getLatestBlock_cache_final(void);
-extern blknum_t getLatestBlock_cache_staging(void);
-extern blknum_t getLatestBlock_cache_ripe(void);
-extern blknum_t getLatestBlock_cache_unripe(void);
-extern blknum_t getLatestBlock_client(void);
-
-//-------------------------------------------------------------------------
-CMetaData getMetaData(void) {
-    CMetaData ret;
-    ret.client = getLatestBlock_client();
-    ret.finalized = getLatestBlock_cache_final();
-    ret.staging = getLatestBlock_cache_staging();
-    ret.ripe = getLatestBlock_cache_ripe();
-    ret.unripe = getLatestBlock_cache_unripe();
-    ret.chainId = str_2_Uint(callRPC("eth_chainId", "[]", false));
-    ret.networkId = str_2_Uint(callRPC("net_version", "[]", false));
-    ret.chain = getChain();
-    return ret;
-}
-
-//--------------------------------------------------------------------------
-CMetaData getBlockProgress(size_t which) {
-    CMetaData ret;
-
-    if (which & BP_CLIENT)
-        ret.client = getLatestBlock_client();
-
-    if (which & BP_FINAL)
-        ret.finalized = getLatestBlock_cache_final();
-
-    if (which & BP_STAGING)
-        ret.staging = getLatestBlock_cache_staging();
-
-    if (which & BP_RIPE)
-        ret.ripe = getLatestBlock_cache_ripe();
-
-    if (which & BP_RIPE)
-        ret.unripe = getLatestBlock_cache_unripe();
-
-    return ret;
-}
-
-//--------------------------------------------------------------------------
-blknum_t getLatestBlock_cache_final(void) {
+static blknum_t getLatestBlock_cache_final(void) {
     string_q finLast = getLastFileInFolder(indexFolder_blooms, false);
     if (!finLast.empty()) {
         // Files in this folder are n-m.bin
@@ -70,29 +27,32 @@ blknum_t getLatestBlock_cache_final(void) {
 }
 
 //--------------------------------------------------------------------------
-blknum_t getLatestBlock_cache_staging(void) {
+static blknum_t getLatestBlock_cache_staging(void) {
     string_q stageLast = getLastFileInFolder(indexFolder_staging, false);
     // Files in this folder are n.txt, if empty, we fall back on finalized folder
-    if (!stageLast.empty())
+    if (!stageLast.empty() && stageLast != (indexFolder_staging + "000000000.txt")) {
         return path_2_Bn(stageLast);
+    }
     return getLatestBlock_cache_final();
 }
 
 //--------------------------------------------------------------------------
-blknum_t getLatestBlock_cache_ripe(void) {
+static blknum_t getLatestBlock_cache_ripe(void) {
     string_q ripeLast = getLastFileInFolder(indexFolder_ripe, false);
     // Files in this folder are n.txt, if empty, we fall back on staging folder
-    if (!ripeLast.empty())
+    if (!ripeLast.empty()) {
         return path_2_Bn(ripeLast);
+    }
     return getLatestBlock_cache_staging();
 }
 
 //--------------------------------------------------------------------------
-blknum_t getLatestBlock_cache_unripe(void) {
+static blknum_t getLatestBlock_cache_unripe(void) {
     string_q unripeLast = getLastFileInFolder(indexFolder_unripe, false);
     // Files in this folder are n.txt, if empty, we fall back on ripe folder
-    if (!unripeLast.empty())
+    if (!unripeLast.empty()) {
         return path_2_Bn(unripeLast);
+    }
     return getLatestBlock_cache_ripe();
 }
 
@@ -118,4 +78,25 @@ blknum_t getLatestBlock_client(void) {
         lastBlock = str_2_Uint(str);
     }
     return lastBlock;
+}
+
+//-------------------------------------------------------------------------
+CMetaData getMetaData(void) {
+    static CMetaData lastMeta;
+    static timestamp_t lastTime = timestamp_t(NOPOS);
+    timestamp_t thisTime = date_2_Ts(Now());
+    if (thisTime != timestamp_t(NOPOS) && thisTime < timestamp_t(lastTime + 13)) {
+        return lastMeta;
+    }
+
+    CMetaData ret;
+    ret.client = getLatestBlock_client();
+    ret.finalized = getLatestBlock_cache_final();
+    ret.staging = getLatestBlock_cache_staging();
+    ret.ripe = getLatestBlock_cache_ripe();
+    ret.unripe = getLatestBlock_cache_unripe();
+    ret.chainId = str_2_Uint(callRPC("eth_chainId", "[]", false));
+    ret.networkId = str_2_Uint(callRPC("net_version", "[]", false));
+    ret.chain = getChain();
+    return ret;
 }

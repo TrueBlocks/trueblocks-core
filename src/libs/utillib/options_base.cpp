@@ -115,7 +115,7 @@ bool COptionsBase::isBadSingleDash(const string_q& arg) const {
             return true;
     }
 
-    CStringArray builtInCmds = {"verbose", "log_level", "fmt",     "ether",   "output",  "raw",
+    CStringArray builtInCmds = {"verbose", "log_level", "fmt",     "ether",   "output",  "append", "raw",
                                 "mocked",  "wei",       "dollars", "version", "nocolor", "noop"};
 
     for (auto bi : builtInCmds) {
@@ -315,6 +315,12 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
         replaceAll(cmdLine, "--to_file", rep.str());
     }
 
+    bool append = false;
+    if (contains(cmdLine, "--append")) {
+        append = true;
+        replaceAll(cmdLine, "--append", "");
+    }
+
     // Note: check each item individual in case more than one appears on the command line
     cmdLine += " ";
     replace(cmdLine, "--output ", "--output:");
@@ -389,7 +395,7 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
         if (!folderExists(fn.getPath()))
             return usage("Output file path not found and could not be created: '" + fn.getPath() + "'.");
         rd_outputFilename = fn.getFullPath();
-        outputStream.open(rd_outputFilename.c_str());
+        outputStream.open(rd_outputFilename.c_str(), (append ? ios::out | ios::app : ios::out | ios::trunc));
         if (outputStream.is_open()) {
             coutSaved = cout.rdbuf();          // back up cout's streambuf
             cout.rdbuf(outputStream.rdbuf());  // assign streambuf to cout
@@ -433,7 +439,7 @@ bool COptionsBase::builtInCmd(const string_q& arg) {
 
     if (isEnabled(OPT_ETHER) && arg == "--ether")
         return true;
-    if (isEnabled(OPT_OUTPUT) && startsWith(arg, "--output:"))
+    if (isEnabled(OPT_OUTPUT) && (startsWith(arg, "--output:") || startsWith(arg, "--append")))
         return true;
     if (isEnabled(OPT_RAW) && arg == "--raw")
         return true;
@@ -876,11 +882,9 @@ void COptionsBase::closeRedirect(void) {
         string_q outFn = (isTestMode() ? "--output_filename--" : rd_outputFilename) + (rd_zipOnClose ? ".gz" : "");
         switch (expContext().exportFmt) {
             case TXT1:
-                cout << outFn << endl;
-                break;
             case CSV1:
             case YAML1:
-                cout << "-outputFilename: " << outFn << endl;
+                // only report if the user isn't in API mode
                 break;
             default:
                 cout << "{ \"outputFilename\": \"" << outFn << "\" }";

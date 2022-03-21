@@ -25,7 +25,7 @@ bool visitOnLoad(CAppearance_mon& app, void* data) {
 }
 
 //-----------------------------------------------------------------------
-bool COptions::loadAllAppearances(void) {
+bool COptions::loadMonitors(void) {
     if (count)
         return true;
 
@@ -33,7 +33,9 @@ bool COptions::loadAllAppearances(void) {
         forEveryFileInFolder(indexFolder_unripe, visitUnripeIndexFiles, this);
 
     } else if (staging) {
-        forEveryFileInFolder(indexFolder_staging, visitStagingIndexFiles, this);
+        // TODO: BOGUS - scrape to front of chain
+        LOG_INFO("Staging option is currently not available.");
+        // forEveryFileInFolder(indexFolder_staging, visitToFreshen_fromStaging, this);
 
     } else {
         for (CMonitor& monitor : allMonitors) {
@@ -42,15 +44,14 @@ bool COptions::loadAllAppearances(void) {
                 LOG_ERR("Could not load appearances for address " + monitor.address);
                 return false;
             }
-
-            // TODO(tjayrush): This used to set last encountered block (search for writeLastEncountered)
-            // if (freshenOnly) {
-            //     blknum_t l astExport = monitor.getLastEncounter ed();
-            //     if (exportRange.first == 0)  // we can start where the last export happened on any address...
-            //         exportRange.first = l astExport;
-            //     if (l astExport < exportRange.first)  // ...but the eariest of the last exports is where we start
-            //         exportRange.first = l astExport;
-            // }
+            string_q path = monitor.getPathToMonitor(monitor.address, false);
+            if (monitor.getRecordCnt(path) == 0) {
+                // We don't continue if we have no transactions. We used to report an
+                // error here, but this is not really an error
+                if (!freshenOnly)
+                    LOG_WARN("No records found for address ", path_2_Addr(path));
+                return false;
+            }
         }
     }
 
@@ -66,7 +67,7 @@ bool COptions::loadAllAppearances(void) {
                     reloaded = true;
                 }
                 findName(mon.address, accountedFor);
-                accountedFor.isContract = !getCodeAt(mon.address, getMetaData().client).empty();
+                accountedFor.isContract = !getCodeAt(mon.address, meta.client).empty();
             }
             monTmp.push_back(app);
         }

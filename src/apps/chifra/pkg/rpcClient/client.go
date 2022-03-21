@@ -194,27 +194,18 @@ func (ec *Client) TransactionSender(ctx context.Context, tx *types.Transaction, 
 
 func GetBlockTimestamp(provider string, bn uint64) uint64 {
 	ec := GetClient(provider)
-	r, err := ec.BlockByNumber(context.Background(), big.NewInt(int64(bn)))
 	defer ec.Close()
+
+	r, err := ec.BlockByNumber(context.Background(), big.NewInt(int64(bn)))
 	if err != nil {
 		logger.Log(logger.Error, "Could not connect to RPC client")
 		return 0
 	}
-	return r.Time()
-}
 
-// HexToAddress converts a string with hex to go-ethereum's common.Address
-func HexToAddress(hex string) common.Address {
-	return common.HexToAddress(hex)
+	return r.Time()
 }
 
 // DecodeHex decodes a string with hex into a slice of bytes
 func DecodeHex(hex string) []byte {
 	return hexutil.MustDecode(hex)
-}
-
-// IsErigon returns true if we're running against Erigon, false otherwise
-func IsErigon() bool {
-	return false
-	// return contains(toLower(getVersionFromClient()), "erigon");
 }

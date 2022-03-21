@@ -12,7 +12,7 @@ import (
 	tslibPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 )
 
-func (opts *WhenOptions) ListInternal() error {
+func (opts *WhenOptions) HandleWhenList() error {
 
 	result, err := tslibPkg.GetSpecials(opts.Globals.Chain)
 	if err != nil {

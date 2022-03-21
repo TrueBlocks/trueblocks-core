@@ -10,15 +10,15 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/chunk"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 )
 
 // InitInternal initializes local copy of UnchainedIndex by downloading manifests and chunks
-func (opts *PinsOptions) InitInternal() error {
+func (opts *PinsOptions) HandlePinsInit() error {
 
 	chain := opts.Globals.Chain
 
@@ -112,7 +112,7 @@ func downloadAndReportProgress(chain string, pins []manifest.PinDescriptor, chun
 	progressChannel := progress.MakeChan()
 	defer close(progressChannel)
 
-	go chunk.GetChunksFromRemote(chain, pins, chunkPath, progressChannel)
+	go index.GetChunksFromRemote(chain, pins, chunkPath, progressChannel)
 
 	var pinsDone uint
 

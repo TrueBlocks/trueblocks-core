@@ -1,3 +1,4 @@
+//go:build integration
 // +build integration
 
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
@@ -24,7 +25,7 @@ func Test_Client(t *testing.T) {
 		t.Error("incorrect result from DecodeHex")
 	}
 
-	addr := HexToAddress("0x00000000000000000000000000000000deadbeef")
+	addr := common.HexToAddress("0x00000000000000000000000000000000deadbeef")
 	expected := common.BigToAddress(big.NewInt(0x00000000000000000000000000000000DEADBeeF))
 	if addr != expected {
 		t.Error("incorrect result from HexToAddress")

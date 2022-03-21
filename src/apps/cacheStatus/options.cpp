@@ -48,7 +48,7 @@ bool COptions::parseArguments(string_q& command) {
     blknum_t last_block = NOPOS;
     // END_CODE_LOCAL_INIT
 
-    blknum_t latest = NOPOS;  // getBlockProgress(BP_CLIENT).client;
+    blknum_t latest = NOPOS;  // getLatestBlock_client();
 
     Init();
     explode(arguments, command, ' ');
@@ -209,6 +209,8 @@ void COptions::Init(void) {
     terse = false;
     // END_CODE_INIT
 
+    meta = getMetaData();
+
     scanRange = make_pair(0, NOPOS);
     mode = "";
 
@@ -239,7 +241,6 @@ void COptions::Init(void) {
         status.clientVersion = "Not running";
         status.clientIds = "Not running";
     } else {
-        CMetaData meta = getMetaData();
         status.clientVersion = (isTestMode() ? "Client version" : getVersionFromClient());
         status.clientIds = "chainId: " + uint_2_Str(meta.chainId) + " networkId: " + uint_2_Str(meta.networkId);
     }

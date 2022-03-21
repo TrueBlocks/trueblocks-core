@@ -46,10 +46,12 @@ func init() {
 	listCmd.Flags().BoolVarP(&listPkg.GetOptions().Appearances, "appearances", "p", false, "export a list of appearances (hidden)")
 	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().FirstBlock, "first_block", "F", 0, "first block to process (inclusive) (hidden)")
 	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().LastBlock, "last_block", "L", 0, "last block to process (inclusive) (hidden)")
+	listCmd.Flags().BoolVarP(&listPkg.GetOptions().Newone, "newone", "", false, "use the new scraper (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {
 		listCmd.Flags().MarkHidden("appearances")
 		listCmd.Flags().MarkHidden("first_block")
 		listCmd.Flags().MarkHidden("last_block")
+		listCmd.Flags().MarkHidden("newone")
 	}
 	globals.InitGlobals(listCmd, &listPkg.GetOptions().Globals)
 

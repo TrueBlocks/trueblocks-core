@@ -28,7 +28,7 @@ int main(int argc, const char* argv[]) {
 
     address_t theDaoAddr("0xbb9bc244d798123fde783fcc1c72d3bb8c189413");
 
-    for (blknum_t bl = startBlock; bl < getBlockProgress(BP_CLIENT).client; bl++) {
+    for (blknum_t bl = startBlock; bl < getLatestBlock_client(); bl++) {
         CBlock block;
         getBlock(block, bl);
         if (!block.forEveryUniqueAppearanceInTxs(visitAddress /* func */, NULL /* filterFunc */, &theDaoAddr /* data */))

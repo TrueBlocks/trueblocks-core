@@ -64,7 +64,6 @@ class CChunkVisitor {
     void* callData = nullptr;
     blkrange_t range = make_pair(0, NOPOS);
 };
-extern bool bloomsAreInitalized(void);
 extern bool readIndexHeader(const string_q& inFn, CIndexHeader& header);
 }  // namespace qblocks
 

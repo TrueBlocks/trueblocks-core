@@ -9,7 +9,6 @@
 package servePkg
 
 import (
-	"fmt"
 	"net/http"
 	"os"
 
@@ -189,7 +188,7 @@ func RouteSlurp(w http.ResponseWriter, r *http.Request) {
 // END_ROUTE_CODE
 
 func Index(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Users Manual")
+	http.Redirect(w, r, "https://trueblocks.io/docs/", 301)
 }
 
 var routes = Routes{

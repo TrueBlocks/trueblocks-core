@@ -61,7 +61,8 @@ then
     pkill chifra
 fi
 
-echo "Compressing and saving test/working"
+P=`pwd`
+echo "Compressing and saving test/working into $P"
 tar -cJ --file /root/test_results/working.tar.xz ../test/working/
 
 exit $RESULT

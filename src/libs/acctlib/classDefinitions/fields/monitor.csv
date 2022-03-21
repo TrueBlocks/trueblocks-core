@@ -3,7 +3,7 @@ nAppearances     ,blknum  ,           ,       ,      ,true    ,          ,      
 lastExport       ,blknum  ,           ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,        ,
 firstAppearance  ,blknum  ,           ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,        ,
 latestAppearance ,blknum  ,UINT_MAX   ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,        ,
-lastVisitedBlock ,blknum  ,           ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,        ,
+lastVisitedBlock ,blknum  ,NOPOS      ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,        ,
 sizeInBytes      ,uint64  ,           ,       ,      ,true    ,true      ,        ,      ,         ,4   ,4    ,        ,the size of this monitor on disc
 nApps            ,blknum  ,           ,       ,      ,        ,          ,true    ,      ,true     ,1   ,1    ,        ,the number of appearances for this monitor
 firstApp         ,blknum  ,           ,       ,      ,        ,          ,true    ,      ,true     ,2   ,2    ,        ,the first block at which this address appears
