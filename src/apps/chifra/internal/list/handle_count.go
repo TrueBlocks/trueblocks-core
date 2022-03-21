@@ -13,7 +13,6 @@ import (
 )
 
 func (opts *ListOptions) HandleListCount() error {
-	// TODO: BOGUS -- NEEDS TO FRESHEN FIRST OTHERWISE TESTS BREAK
 	var result []monitor.MonitorLight
 	for _, addr := range opts.Addrs {
 		m := monitor.NewMonitorLight(opts.Globals.Chain, addr)

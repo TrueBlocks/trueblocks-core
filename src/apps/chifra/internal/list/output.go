@@ -10,12 +10,26 @@ package listPkg
 
 // EXISTING_CODE
 import (
+	"io"
 	"net/http"
 	"os"
 
 	exportPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
+	"github.com/ethereum/go-ethereum/common"
 	"github.com/spf13/cobra"
 )
+
+// AddressMonitorMap carries arrays of appearances that have not yet been written to the monitor file
+type AddressMonitorMap map[common.Address]monitor.Monitor
+
+// ListOptionsExtended stores the original 'chifra list' command line options plus
+type ListOptionsExtended struct {
+	opts       *ListOptions
+	writer     io.Writer
+	maxTasks   int
+	addrMonMap AddressMonitorMap
+}
 
 // EXISTING_CODE
 
@@ -28,22 +42,20 @@ func RunList(cmd *cobra.Command, args []string) error {
 	}
 
 	// EXISTING_CODE
-	maxTasks := 12
+	// Give ourselves some room to work...
+	optsEx := NewListOptsEx(opts)
+
+	// Freshen the monitor by which we mean add any new appearance records to the file on disc
+	err = optsEx.HandleFreshenMonitors()
+	if err != nil {
+		return err
+	}
+
 	if opts.Newone {
-		// TODO: BOGUS -- WHAT?
-		// if opts.Count {
-		// 	err := opts.Freshen()
-		// 	if err != nil {
-		// 		logger.Fatal("Could not handle count request", err)
-		// 	}
-		// 	err = opts.HandleListCount()
-		// 	if err != nil {
-		// 		logger.Fatal("Could not handle count request", err)
-		// 	}
-		// 	return nil
-		// }
-		opts.HandleFreshenMonitors(maxTasks, os.Stdout)
-		return nil
+		if opts.Count {
+			return opts.HandleListCount()
+		}
+		// optsEx.HandleFreshenMonitors()
 	}
 
 	exportPkg.GetOptions().Appearances = true
@@ -57,7 +69,6 @@ func RunList(cmd *cobra.Command, args []string) error {
 		exportPkg.GetOptions().LastBlock = opts.LastBlock
 	}
 	exportPkg.GetOptions().Globals = opts.Globals
-
 	return exportPkg.RunExport(cmd, args)
 	// EXISTING_CODE
 }
@@ -72,24 +83,23 @@ func ServeList(w http.ResponseWriter, r *http.Request) bool {
 	}
 
 	// EXISTING_CODE
-	// maxTasks := 12
-	if opts.Newone {
-		// TODO: BOGUS -- WHAT?
-		// if opts.Count {
-		// 	err := opts.HandleFreshenMonitors(maxTasks, os.Stdout)
-		// 	if err != nil {
-		// 		logger.Fatal("Could not handle count request", err)
-		// 	}
-		// 	err = opts.HandleListCount()
-		// 	if err != nil {
-		// 		logger.Fatal("Could not handle count request", err)
-		// 	}
-		// 	return nil
-		// }
-	}
+	// TODO: BOGUS -- HANDLE THIS IN GOLANG
 	return false
 	// EXISTING_CODE
 }
 
 // EXISTING_CODE
+func NewListOptsEx(opts *ListOptions) (ret ListOptionsExtended) {
+	ret.opts = opts
+	ret.writer = os.Stdout
+	ret.maxTasks = 12
+	ret.addrMonMap = make(AddressMonitorMap, len(opts.Addrs))
+	for _, addr := range opts.Addrs {
+		a := common.HexToAddress(addr)
+		m := monitor.NewMonitor(opts.Globals.Chain, addr)
+		ret.addrMonMap[a] = m
+	}
+	return
+}
+
 // EXISTING_CODE
