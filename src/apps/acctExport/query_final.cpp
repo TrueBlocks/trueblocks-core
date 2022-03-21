@@ -13,9 +13,9 @@
 #include "options.h"
 
 //---------------------------------------------------------------
-bool visitToFreshen_fromFinalized(const string_q& path, void* data) {
+bool visitChunkToFreshenFinal(const string_q& path, void* data) {
     if (endsWith(path, "/")) {
-        return forEveryFileInFolder(path + "*", visitToFreshen_fromFinalized, data);
+        return forEveryFileInFolder(path + "*", visitChunkToFreshenFinal, data);
 
     } else {
         // Pick up some useful data for either method...

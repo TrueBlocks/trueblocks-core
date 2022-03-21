@@ -48,7 +48,7 @@ bool COptions::process_freshen(void) {
 
         if ((needRange.second - needRange.first) > 0) {
             // TODO: BOGUS - scrape to front of chain
-            forEveryFileInFolder(indexFolder_blooms, visitToFreshen_fromFinalized, this);
+            forEveryFileInFolder(indexFolder_blooms, visitChunkToFreshenFinal, this);
         }
         for (auto monitor : allMonitors) {
             monitor.moveToProduction(monitor.isStaging);

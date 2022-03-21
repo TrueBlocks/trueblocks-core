@@ -135,7 +135,7 @@ class COptions : public CAbiOptions {
 
 //--------------------------------------------------------------------------------
 extern bool visitOnLoad(CAppearance_mon& app, void* data);
-extern bool visitToFreshen_fromFinalized(const string_q& path, void* data);
+extern bool visitChunkToFreshenFinal(const string_q& path, void* data);
 extern bool visitToFreshen_fromStaging(const string_q& path, void* data);
 extern bool visitUnripeIndexFiles(const string_q& path, void* data);
 extern bool isTokenFunc(const string_q& input);
