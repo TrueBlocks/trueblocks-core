@@ -35,6 +35,7 @@ class COptions : public CAbiOptions {
     CIndexHashMap bloomHashes;
     CIndexHashMap indexHashes;
     blkrange_t scanRange;
+    CMetaData meta;
 
     COptions(void);
     ~COptions(void);

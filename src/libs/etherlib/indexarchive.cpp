@@ -80,28 +80,6 @@ bool CIndexArchive::ReadIndexFromBinary(const string_q& path) {
 }
 
 //--------------------------------------------------------------
-bool visitBloom(const string_q& path, void* data) {
-    if (endsWith(path, "/")) {
-        return forEveryFileInFolder(path + "*", visitBloom, data);
-    } else {
-        if (endsWith(path, ".bloom")) {
-            size_t* counter = (size_t*)data;  // NOLINT
-            (*counter)++;
-            // we don't have to count them all, just make sure there are some
-            return (*counter < 2);
-        }
-    }
-    return true;
-}
-
-//--------------------------------------------------------------
-bool bloomsAreInitalized(void) {
-    size_t counter = 0;
-    forEveryFileInFolder(indexFolder_blooms, visitBloom, &counter);
-    return counter > 1;
-}
-
-//--------------------------------------------------------------
 bool readIndexHeader(const string_q& path, CIndexHeader& header) {
     header.nRows = header.nAddrs = (uint32_t)-1;
     if (contains(path, "blooms")) {
