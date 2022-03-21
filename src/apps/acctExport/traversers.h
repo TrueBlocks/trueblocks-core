@@ -12,7 +12,6 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "acctlib.h"
-#include "accumulator.h"
 
 //-----------------------------------------------------------------------
 extern bool tsRangeFunc(CTraverser* trav, void* data);
@@ -91,7 +90,6 @@ extern bool acct_Display(CTraverser* trav, void* data);
 extern bool acct_PreFunc(CTraverser* trav, void* data);
 class CTransactionTraverser : public CTraverser {
   public:
-    CAccumulator pl;
     CTransactionTraverser(void) : CTraverser("txs") {
         filterFunc = tsRangeFunc;
         preFunc = acct_PreFunc;

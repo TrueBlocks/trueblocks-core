@@ -75,9 +75,6 @@ func init() {
 	exportCmd.Flags().StringVarP(&exportPkg.GetOptions().Load, "load", "", "", "a comma separated list of dynamic traversers to load (hidden)")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Reversed, "reversed", "", false, "produce results in reverse chronological order (hidden)")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().ByDate, "by_date", "b", false, "produce results sorted by date (report by address otherwise) (hidden)")
-	exportCmd.Flags().StringVarP(&exportPkg.GetOptions().SummarizeBy, "summarize_by", "z", "", `for --accounting only, summarize reconciliations by this time period (hidden)
-One of [ yearly | quarterly | monthly | weekly | daily | hourly | blockly | tx ]`)
-	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Deep, "deep", "D", false, "for --neighbors option only, dig deeply into detail (otherwise, to and from only) (hidden)")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().SkipDdos, "skip_ddos", "d", false, "toggle skipping over 2016 dDos transactions ('on' by default) (hidden)")
 	exportCmd.Flags().Uint64VarP(&exportPkg.GetOptions().MaxTraces, "max_traces", "m", 250, "if --skip_ddos is on, this many traces defines what a ddos transaction is (hidden)")
 	exportCmd.Flags().Uint64VarP(&exportPkg.GetOptions().FirstBlock, "first_block", "F", 0, "first block to process (inclusive)")
@@ -87,8 +84,6 @@ One of [ yearly | quarterly | monthly | weekly | daily | hourly | blockly | tx ]
 		exportCmd.Flags().MarkHidden("load")
 		exportCmd.Flags().MarkHidden("reversed")
 		exportCmd.Flags().MarkHidden("by_date")
-		exportCmd.Flags().MarkHidden("summarize_by")
-		exportCmd.Flags().MarkHidden("deep")
 		exportCmd.Flags().MarkHidden("skip_ddos")
 		exportCmd.Flags().MarkHidden("max_traces")
 	}

@@ -11,41 +11,38 @@ Arguments:
   fourbytes - filter by one or more fourbytes (only for transactions and trace options)
 
 Flags:
-  -p, --appearances           export a list of appearances
-  -r, --receipts              export receipts instead of transactional data
-  -l, --logs                  export logs instead of transactional data
-  -t, --traces                export traces instead of transactional data
-  -A, --statements            export reconciliations instead of transactional data (requires --accounting option)
-  -n, --neighbors             export the neighbors of the given address
-  -C, --accounting            attach accounting records to the exported data (applies to transactions export only)
-  -a, --articulate            articulate transactions, traces, logs, and outputs
-  -i, --cache                 write transactions to the cache (see notes)
-  -R, --cache_traces          write traces to the cache (see notes)
-  -y, --factory               scan for contract creations from the given address(es) and report address of those contracts
-  -U, --count                 only available for --appearances mode, if present, return only the number of records
-  -c, --first_record uint     the first record to process
-  -e, --max_records uint      the maximum number of records to process before reporting (default 250)
-      --relevant              for log and accounting export only, export only logs relevant to one of the given export addresses
-      --emitter strings       for log export only, export only logs if emitted by one of these address(es)
-      --topic strings         for log export only, export only logs with this topic(s)
-      --asset strings         for the statements option only, export only reconciliations for this asset
-      --clean                 clean (i.e. remove duplicate appearances) from all existing monitors
-  -f, --freshen               freshen but do not print the exported data (hidden)
-  -s, --staging               export transactions labeled staging (i.e. older than 28 blocks but not yet consolidated)
-  -u, --unripe                export transactions labeled upripe (i.e. less than 28 blocks old)
-      --load string           a comma separated list of dynamic traversers to load (hidden)
-      --reversed              produce results in reverse chronological order (hidden)
-  -b, --by_date               produce results sorted by date (report by address otherwise) (hidden)
-  -z, --summarize_by string   for --accounting only, summarize reconciliations by this time period (hidden)
-                              One of [ yearly | quarterly | monthly | weekly | daily | hourly | blockly | tx ]
-  -D, --deep                  for --neighbors option only, dig deeply into detail (otherwise, to and from only) (hidden)
-  -d, --skip_ddos             toggle skipping over 2016 dDos transactions ('on' by default) (hidden)
-  -m, --max_traces uint       if --skip_ddos is on, this many traces defines what a ddos transaction is (hidden) (default 250)
-  -F, --first_block uint      first block to process (inclusive)
-  -L, --last_block uint       last block to process (inclusive)
-  -x, --fmt string            export format, one of [none|json*|txt|csv|api]
-  -v, --verbose               enable verbose (increase detail with --log_level)
-  -h, --help                  display this help screen
+  -p, --appearances         export a list of appearances
+  -r, --receipts            export receipts instead of transactional data
+  -l, --logs                export logs instead of transactional data
+  -t, --traces              export traces instead of transactional data
+  -A, --statements          export reconciliations instead of transactional data (requires --accounting option)
+  -n, --neighbors           export the neighbors of the given address
+  -C, --accounting          attach accounting records to the exported data (applies to transactions export only)
+  -a, --articulate          articulate transactions, traces, logs, and outputs
+  -i, --cache               write transactions to the cache (see notes)
+  -R, --cache_traces        write traces to the cache (see notes)
+  -y, --factory             scan for contract creations from the given address(es) and report address of those contracts
+  -U, --count               only available for --appearances mode, if present, return only the number of records
+  -c, --first_record uint   the first record to process
+  -e, --max_records uint    the maximum number of records to process before reporting (default 250)
+      --relevant            for log and accounting export only, export only logs relevant to one of the given export addresses
+      --emitter strings     for log export only, export only logs if emitted by one of these address(es)
+      --topic strings       for log export only, export only logs with this topic(s)
+      --asset strings       for the statements option only, export only reconciliations for this asset
+      --clean               clean (i.e. remove duplicate appearances) from all existing monitors
+  -f, --freshen             freshen but do not print the exported data (hidden)
+  -s, --staging             export transactions labeled staging (i.e. older than 28 blocks but not yet consolidated)
+  -u, --unripe              export transactions labeled upripe (i.e. less than 28 blocks old)
+      --load string         a comma separated list of dynamic traversers to load (hidden)
+      --reversed            produce results in reverse chronological order (hidden)
+  -b, --by_date             produce results sorted by date (report by address otherwise) (hidden)
+  -d, --skip_ddos           toggle skipping over 2016 dDos transactions ('on' by default) (hidden)
+  -m, --max_traces uint     if --skip_ddos is on, this many traces defines what a ddos transaction is (hidden) (default 250)
+  -F, --first_block uint    first block to process (inclusive)
+  -L, --last_block uint     last block to process (inclusive)
+  -x, --fmt string          export format, one of [none|json*|txt|csv|api]
+  -v, --verbose             enable verbose (increase detail with --log_level)
+  -h, --help                display this help screen
 
 Notes:
   - An address must start with '0x' and be forty-two characters long.

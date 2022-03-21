@@ -1,4 +1,0 @@
-[settings]
-class = CAccumulator
-fields = accumulator.csv
-includes = acctlib.h

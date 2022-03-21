@@ -13,30 +13,6 @@
 #include "options.h"
 
 //-----------------------------------------------------------------------
-// TODO(tjayrush): NO!
-CReconciliationArray statements;
-CReconciliation current;
-bool CAccumulator::accumulate(const CTransaction* trans, CTransaction& summary) {
-    if (isSamePeriod(sum_type, endOfPeriod, ts_2_Date(trans->timestamp))) {
-        for (auto statement : trans->statements) {
-            statements.push_back(statement);
-            current += statement;
-        }
-        return false;
-    }
-
-    ((CTransaction*)trans)->statements.clear();
-    summary = *trans;
-    summary.from = "0xSummary";
-    summary.setValueByName("timestamp", ts_2_Str(date_2_Ts(endOfPeriod)));
-    summary.timestamp = date_2_Ts(endOfPeriod);
-    summary.statements.push_back(current);
-    current = CReconciliation();
-    endOfPeriod = EOP(sum_type, ts_2_Date(trans->timestamp));
-    return true;
-}
-
-//-----------------------------------------------------------------------
 bool acct_Display(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)data;
 
@@ -50,29 +26,16 @@ bool acct_Display(CTraverser* trav, void* data) {
             }
         }
 
-        if (opt->summarize_by.empty()) {
-            if (opt->statements) {
-                for (auto recon : trav->trans.statements) {
-                    cout << ((isJson() && !opt->firstOut) ? ", " : "");
-                    cout << recon.Format() << endl;
-                    opt->firstOut = false;
-                }
-            } else {
+        if (opt->statements) {
+            for (auto recon : trav->trans.statements) {
                 cout << ((isJson() && !opt->firstOut) ? ", " : "");
-                cout << trav->trans;
+                cout << recon.Format() << endl;
                 opt->firstOut = false;
             }
         } else {
-            trav->trans.from = "0xSummary";
-            CTransactionTraverser* tt = (CTransactionTraverser*)trav;
-            CTransaction summary;
-            if (tt->pl.endOfPeriod == earliestDate)
-                tt->pl.endOfPeriod = EOP(tt->pl.sum_type, ts_2_Date(tt->trans.timestamp));
-            if (tt->pl.accumulate(&tt->trans, summary)) {
-                cout << ((isJson() && !opt->firstOut) ? ", " : "");
-                cout << summary;
-                opt->firstOut = false;
-            }
+            cout << ((isJson() && !opt->firstOut) ? ", " : "");
+            cout << trav->trans;
+            opt->firstOut = false;
         }
     }
 
@@ -231,28 +194,6 @@ void COptions::cacheIfReconciled(CTraverser* trav, bool isNew) const {
 
 //-----------------------------------------------------------------------
 bool acct_PreFunc(CTraverser* trav, void* data) {
-    COptions* opt = (COptions*)data;
-    if (opt->summarize_by.empty())
-        return true;
-    HIDE_FIELD(CTransaction, "to");
-    HIDE_FIELD(CTransaction, "value");
-    HIDE_FIELD(CTransaction, "gas");
-    HIDE_FIELD(CTransaction, "gasPrice");
-    HIDE_FIELD(CTransaction, "input");
-    HIDE_FIELD(CTransaction, "receipt");
-    HIDE_FIELD(CTransaction, "traces");
-    HIDE_FIELD(CTransaction, "compressedTx");
-    HIDE_FIELD(CTransaction, "gasCost");
-    HIDE_FIELD(CTransaction, "etherGasCost");
-    HIDE_FIELD(CTransaction, "function");
-    HIDE_FIELD(CTransaction, "gasUsed");
-    HIDE_FIELD(CTransaction, "ether");
-    HIDE_FIELD(CTransaction, "encoding");
-    HIDE_FIELD(CTransaction, "articulatedTx");
-    HIDE_FIELD(CTransaction, "isError");
-    CTransactionTraverser* tt = (CTransactionTraverser*)trav;
-    tt->pl.sum_type = getSummaryType(opt->summarize_by);
-    tt->pl.endOfPeriod = earliestDate;
     return true;
 }
 
