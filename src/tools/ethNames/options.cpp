@@ -180,7 +180,7 @@ bool COptions::parseArguments(string_q& command) {
     //         term = addressFromENSName(term);
 
     if (clean) {
-        latestBlock = isTestMode() ? 10800000 : getBlockProgress(BP_CLIENT).client;
+        latestBlock = isTestMode() ? 10800000 : getLatestBlock_client();
         abi_spec.loadAbisFromKnown(true);
         return handle_clean();
     }

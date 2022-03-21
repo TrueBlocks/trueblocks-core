@@ -100,7 +100,7 @@ bool CUniPair::findPair(void) {
         uniFactory.address = uniswapFactory;
         uniFactory.encoding = getPair;
         uniFactory.abi_spec.loadAbisKnown("uniswap");
-        uniFactory.blockNumber = getBlockProgress(BP_CLIENT).client;  // doesn't really matter
+        uniFactory.blockNumber = getLatestBlock_client();  // doesn't really matter
         uniFactory.deployed = getDeployBlock(uniswapFactory);
     }
     uniFactory.bytes = hex_2_Pad64(r1) + hex_2_Pad64(r2);

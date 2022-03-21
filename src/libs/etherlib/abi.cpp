@@ -472,7 +472,7 @@ bool CAbi::loadAbiFromAddress(const address_t& addr, bool recurse) {
     //     theCall.address = addr;
     //     theCall.encoding = "0x59679b0f";  // implementation()
     //     theCall.bytes = "";
-    //     theCall.blockNumber = getBlockProgress(BP_CLIENT).client;
+    //     theCall.blockNumber = getLatestBlock_client();
     //     theCall.checkProxy = false;
     //     if (doEthCall(theCall))
     //         loadAbiFromAddress(theCall.getResult(), false);
@@ -528,7 +528,7 @@ bool CAbi::loadAbiFromEtherscan(const address_t& addr) {
         return true;
 
     // If this isn't a smart contract, don't bother
-    if (!isContractAt(addr, getBlockProgress(BP_CLIENT).client)) {
+    if (!isContractAt(addr, getLatestBlock_client())) {
         abiSourcesMap[addr] = true;
         return true;
     }
