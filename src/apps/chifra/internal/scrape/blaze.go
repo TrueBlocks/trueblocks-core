@@ -13,6 +13,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 // ScrapedData combines the block data, trace data, and log data into a single structure
@@ -117,7 +118,7 @@ func (opts *ScrapeOptions) extractFromTraces(rpcProvider string, bn int, address
 		} else if traces.Result[i].Type == "reward" {
 			if traces.Result[i].Action.RewardType == "block" {
 				author := traces.Result[i].Action.Author
-				if author == "0x0" || author == "0x0000000000000000000000000000000000000000" {
+				if validate.IsZeroAddress(author) {
 					// Early clients allowed misconfigured miner settings with address
 					// 0x0 (reward got burned). We enter a false record with a false tx_id
 					// to account for this.
@@ -132,7 +133,7 @@ func (opts *ScrapeOptions) extractFromTraces(rpcProvider string, bn int, address
 
 			} else if traces.Result[i].Action.RewardType == "uncle" {
 				author := traces.Result[i].Action.Author
-				if author == "0x0" || author == "0x0000000000000000000000000000000000000000" {
+				if validate.IsZeroAddress(author) {
 					// Early clients allowed misconfigured miner settings with address
 					// 0x0 (reward got burned). We enter a false record with a false tx_id
 					// to account for this.
@@ -325,7 +326,8 @@ func (opts *ScrapeOptions) writeAddresses(bn int, addressMap map[string]bool) {
 
 	step := uint64(7)
 	if nProcessed%step == 0 {
-		fmt.Fprintf(os.Stderr, "-------- ( ------)- <PROG>  : Scraping %-04d of %-04d at block %s\r", nProcessed, opts.BlockCnt, blockNumStr)
+		f := "-------- ( ------)- <PROG>  : Scraping %-04d of %-04d at block %s of %d\r"
+		fmt.Fprintf(os.Stderr, f, nProcessed, opts.BlockCnt, blockNumStr, opts.RipeBlock)
 	}
 	nProcessed++
 }

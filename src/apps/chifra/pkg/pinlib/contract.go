@@ -14,6 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/accounts/abi"
+	"github.com/ethereum/go-ethereum/common"
 )
 
 // GetManifestCidFromContract calls UnchainedIndex smart contract to get
@@ -24,7 +25,7 @@ func GetManifestCidFromContract(chain string) (string, error) {
 	ethClient := rpcClient.GetClient(provider)
 	defer ethClient.Close()
 
-	address := rpcClient.HexToAddress(config.ReadBlockScrape(chain).UnchainedIndex.Address)
+	address := common.HexToAddress(config.ReadBlockScrape(chain).UnchainedIndex.Address)
 	data := rpcClient.DecodeHex(config.ReadBlockScrape(chain).UnchainedIndex.ManifestHashEncoding)
 
 	response, err := ethClient.CallContract(
