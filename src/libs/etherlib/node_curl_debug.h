@@ -18,16 +18,9 @@ namespace qblocks {
 //-------------------------------------------------------------------------
 #define DEBUG_RPC
 #ifdef DEBUG_RPC
-extern string_q showResult(const string_q& res, const string_q& msg);
+extern string_q showResult(const string_q& res, const string_q& msg, const string_q& curlId);
 extern string_q debugCurlCommand(const string_q& id, const string_q& method, const string_q& params,
                                  const string_q& url);
-
-#define PRINT(res, msg)                                                                                                \
-    if (debugging) {                                                                                                   \
-        cerr << showResult(res, msg);                                                                                  \
-    }
-#else  // DEBUG_RPC
-#define PRINT(res, msg)
 #endif  // DEBUG_RPC
 
 }  // namespace qblocks

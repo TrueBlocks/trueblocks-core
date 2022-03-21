@@ -159,6 +159,16 @@ string_q callRPC(const string_q& method, const string_q& params, bool raw) {
 }
 
 //-------------------------------------------------------------------------
+#ifdef DEBUG_RPC
+#define PRINT(res, msg)                                                                                                \
+    if (debugging) {                                                                                                   \
+        cerr << showResult(res, msg, padLeft(getCurlID(), 4, '0'));                                                    \
+    }
+#else  // DEBUG_RPC
+#define PRINT(res, msg)
+#endif  // DEBUG_RPC
+
+//-------------------------------------------------------------------------
 string_q CCurlContext::perform(const string_q& method, const string_q& params, bool raw) {
     getCurlContext()->setPostData(method, params);
 
@@ -166,11 +176,11 @@ string_q CCurlContext::perform(const string_q& method, const string_q& params, b
 
     CURLcode res = curl_easy_perform(curlHandle);
     if (res != CURLE_OK && !earlyAbort) {
-        PRINT(result, "CURL returned an error: ! CURLE_OK")
+        PRINT(result, "CURL ERROR")
         curlErrorAndExit(STR_ERROR_CURLERR, curl_easy_strerror(res), method, params);
     }
+    PRINT(result, "CURL OK")
 
-    PRINT(result, "CURL returned CURLE_OK")
     string_q check = substitute(substitute(result, "VM execution error", ""), "\"error\":", "");
     if (result.empty()) {
         curlErrorAndExit(STR_ERROR_CURLEMPTY, "", method, params);

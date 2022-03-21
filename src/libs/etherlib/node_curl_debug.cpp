@@ -19,11 +19,13 @@ namespace qblocks {
 
 #ifdef DEBUG_RPC
 //-------------------------------------------------------------------------
-string_q showResult(const string_q& result, const string_q& msg) {
+string_q showResult(const string_q& result, const string_q& msg, const string_q& curlId) {
     cout.flush();
     cerr.flush();
 
     ostringstream os;
+    os << string_q(20, '-') << curlId << string_q(20, '-') << curlId << string_q(20, '-') << endl;
+
     if (!msg.empty()) {
         os << msg << endl;
     }
@@ -49,6 +51,7 @@ string_q showResult(const string_q& result, const string_q& msg) {
         //         os << "--[" << line << "]--" << endl;
         // }
     }
+    os << string_q(20, '-') << curlId << string_q(20, '-') << curlId << string_q(20, '-') << endl;
 
     return os.str();
 }
