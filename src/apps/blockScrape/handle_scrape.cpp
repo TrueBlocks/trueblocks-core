@@ -14,7 +14,6 @@
 
 //--------------------------------------------------------------------------
 bool COptions::scrape_blocks(void) {
-    prev_block = 0;
     string_q tmpStagingFn = indexFolder_staging + "000000000-temp.txt";
     tmpStagingStream.open(tmpStagingFn, ios::out | ios::trunc);
     if (!tmpStagingStream.is_open()) {
@@ -22,7 +21,6 @@ bool COptions::scrape_blocks(void) {
         return false;
     }
 
-    CMetaData meta = getMetaData();
     blaze_ripe = (meta.client < unripe_dist ? 0 : meta.client - unripe_dist);
     blaze_start = max(meta.ripe, max(meta.staging, meta.finalized)) + 1;
     if ((blaze_start + block_cnt) > meta.client)
@@ -62,7 +60,9 @@ bool COptions::scrape_blocks(void) {
         return false;
     }
 
-    nRecsThen = fileSize(getLastFileInFolder(indexFolder_staging, false)) / asciiAppearanceSize;
+    string_q stageFn = getLastFileInFolder(indexFolder_staging, false);
+    prev_block = path_2_Bn(stageFn);
+    nRecsThen = fileSize(stageFn) / asciiAppearanceSize;
     if (!forEveryFileInFolder(indexFolder_ripe, copyRipeToStage, this)) {
         cleanFolder(indexFolder_unripe);
         cleanFolder(indexFolder_ripe);
@@ -74,7 +74,8 @@ bool COptions::scrape_blocks(void) {
 
     if (!stage_chunks(tmpStagingFn))
         return false;
-    freshenTimestamps(blaze_start + block_cnt);
+    if (!isTestMode())
+        freshenTimestamps(blaze_start + block_cnt);
     report();
     if (nRecsNow <= apps_per_chunk)
         return true;
@@ -93,7 +94,7 @@ bool copyRipeToStage(const string_q& path, void* data) {
         bool allow = opts->allow_missing;
         bool sequential = (opts->prev_block + 1) == bn;
         bool less_than = (opts->prev_block < bn);
-        if ((!allow && !sequential) || (allow && !less_than)) {
+        if (opts->prev_block != 0 && ((!allow && !sequential) || (allow && !less_than))) {
             LOG_WARN("Current file (", path, ") does not sequentially follow previous file ", opts->prev_block, ".");
             return false;
         }
@@ -177,6 +178,8 @@ bool COptions::write_chunks(blknum_t chunkSize, bool snapped) {
                 sort(consolidatedLines.begin(), consolidatedLines.end());
                 string_q chunkId = p1[1] + "-" + p2[1];
                 string_q chunkPath = indexFolder_finalized + chunkId + ".bin";
+                LOG_INFO("Writing...", string_q(80, ' '), "\r");
+                writeIndexAsBinary(chunkPath, consolidatedLines, (pin ? visitToPin : nullptr), &pinList);
                 ostringstream os;
                 os << "Wrote " << consolidatedLines.size() << " records to " << cTeal << relativize(chunkPath);
                 if (snapped && (lines.size() - 1 == loc)) {
@@ -184,7 +187,6 @@ bool COptions::write_chunks(blknum_t chunkSize, bool snapped) {
                 }
                 os << cOff;
                 LOG_INFO(os.str());
-                writeIndexAsBinary(chunkPath, consolidatedLines, (pin ? visitToPin : nullptr), &pinList);
 
                 loc++;
 
@@ -249,6 +251,11 @@ bool COptions::stage_chunks(const string_q& tmpFn) {
 bool COptions::report(void) {
     nRecsNow = fileSize(newStage) / asciiAppearanceSize;
     blknum_t found = nRecsNow - nRecsThen;
+    if (!found) {
+        LOG_INFO("No new blocks...", string_q(80, ' '), "\r");
+        return true;
+    }
+
     blknum_t need = apps_per_chunk >= nRecsNow ? apps_per_chunk - nRecsNow : 0;
     double pct = double(nRecsNow) / double(apps_per_chunk);
     double pBlk = double(found) / double(block_cnt);

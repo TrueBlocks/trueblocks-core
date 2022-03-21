@@ -151,23 +151,26 @@ bool COptions::parseArguments(string_q& command) {
 
     // This may be the first time we've ever run. In that case, we need to build the zero block index file...
     string chunkId = padNum9(0) + "-" + padNum9(0);
-    string_q bloomPath = indexFolder_blooms + chunkId + ".bloom";
-    if (!fileExists(bloomPath)) {
+    string_q bloomZeroPath = indexFolder_blooms + chunkId + ".bloom";
+    if (!fileExists(bloomZeroPath)) {
         if (!loadPrefundBalances())
             return usage("Could not load prefunds database.");
 
         // Each chain must have it's own prefund addresses. Here, we scan the prefund list
         // and add a psuedo-transaction (block: 0, txid: order-in-file) for each address.
         // Tradition has it that the prefund list is sorted by address.
-        CStringArray appearances;
-        forEveryPrefund(visitPrefund, &appearances);
+        CStringArray consolidatedLines;
+        forEveryPrefund(visitPrefund, &consolidatedLines);
 
         // Write the chunk and the bloom to the binary cache
         string_q chunkPath = indexFolder_finalized + chunkId + ".bin";
-        if (!writeIndexAsBinary(chunkPath, appearances, (pin ? visitToPin : nullptr), &pinList)) {
+        if (!writeIndexAsBinary(chunkPath, consolidatedLines, (pin ? visitToPin : nullptr), &pinList)) {
             LOG_ERR(cRed, "Failed to write index chunk for block zero.", cOff);
             return false;
         }
+        ostringstream os;
+        os << "Wrote " << consolidatedLines.size() << " records to " << cTeal << relativize(chunkPath) << cOff;
+        LOG_INFO(os.str());
     }
 
     // The previous run may have quit early, leaving the folders in a mild state of
@@ -198,6 +201,8 @@ void COptions::Init(void) {
     allow_missing = getGlobalConfig("blockScrape")->getConfigBool("settings", "allow_missing", false);
     // clang-format on
     // END_CODE_INIT
+
+    meta = getMetaData();
 
     if (getChain() == "mainnet") {
         // different defaults for mainnet

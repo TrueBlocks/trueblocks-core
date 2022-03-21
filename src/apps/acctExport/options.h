@@ -82,7 +82,7 @@ class COptions : public CAbiOptions {
     CScrapeStatistics stats;
 
     blkrange_t fileRange;
-    blkrange_t listRange;
+    blkrange_t needRange;
     blkrange_t exportRange;
 
     string_q className;
@@ -95,7 +95,7 @@ class COptions : public CAbiOptions {
     void Init(void);
 
     bool setDisplayFormatting(void);
-    bool loadAllAppearances(void);
+    bool loadMonitors(void);
 
     bool handle_traversers(void);
 
@@ -116,7 +116,7 @@ class COptions : public CAbiOptions {
 
     void writePerformanceData(void);
 
-    bool queryFlatFile(const string_q& path, bool sorted);
+    bool queryFlatFile(const string_q& path, bool sorted, bool saveTo, CAppearanceArray_mon& items);
     bool process_reconciliation(CTraverser* trav);
     bool isReconciled(CTraverser* trav) const;
     void cacheIfReconciled(CTraverser* trav, bool isNew) const;
@@ -135,8 +135,8 @@ class COptions : public CAbiOptions {
 
 //--------------------------------------------------------------------------------
 extern bool visitOnLoad(CAppearance_mon& app, void* data);
-extern bool visitFinalIndexFiles(const string_q& path, void* data);
-extern bool visitStagingIndexFiles(const string_q& path, void* data);
+extern bool visitChunkToFreshenFinal(const string_q& path, void* data);
+extern bool visitToFreshen_fromStaging(const string_q& path, void* data);
 extern bool visitUnripeIndexFiles(const string_q& path, void* data);
 extern bool isTokenFunc(const string_q& input);
 extern bool isTokenTopic(const CLogEntry* log);

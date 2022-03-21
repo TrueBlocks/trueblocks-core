@@ -71,23 +71,29 @@ static bool chunkVisitFunc(const string_q& path, void* data) {
             replaceAll(msg, "{", cGreen);
             replaceAll(msg, "}", cOff);
             cout << msg << endl;
-            for (uint32_t a = 0; a < index.nAddrs; a++) {
-                CIndexedAddress* aRec = &index.addresses[a];
-                if (opts->save) {
-                    output << bytes_2_Addr(aRec->bytes) << "\t" << aRec->offset << "\t" << aRec->cnt << endl;
+
+            if (verbose > 0) {
+                ostringstream out;
+                for (uint32_t a = 0; a < index.nAddrs; a++) {
+                    CIndexedAddress* aRec = &index.addresses[a];
+                    out << bytes_2_Addr(aRec->bytes) << "\t" << aRec->offset << "\t" << aRec->cnt << endl;
                     if (verbose > 4) {
                         for (uint32_t b = aRec->offset; b < (aRec->offset + aRec->cnt); b++) {
                             CIndexedAppearance* bRec = &index.appearances[b];
-                            if (opts->save) {
-                                output << "\t" << bRec->blk << "\t" << bRec->txid << endl;
-                            }
+                            out << "\t" << bRec->blk << "\t" << bRec->txid << endl;
                         }
                     }
                 }
+
+                cout << out.str();
+                if (opts->save) {
+                    output << out.str();
+                }
             }
-            if (opts->save) {
-                output.close();
-            }
+        }
+
+        if (opts->save) {
+            output.close();
         }
     }
     return true;

@@ -46,6 +46,7 @@ class COptions : public COptionsBase {
     blknum_t nRecsNow{0};
     CPinnedChunkArray pinList;
     CApiKey lic;
+    CMetaData meta;
 
     COptions(void);
     ~COptions(void);
