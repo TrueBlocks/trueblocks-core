@@ -74,8 +74,6 @@ bool COptions::parseArguments(string_q& command) {
     bool addr_only = false;
 
     Init();
-    blknum_t latest = isTestMode() ? 10800000 : getLatestBlock_client();
-    latestBlock = latest;
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         if (false) {
@@ -182,6 +180,8 @@ bool COptions::parseArguments(string_q& command) {
     //         term = addressFromENSName(term);
 
     if (clean) {
+        blknum_t latest = isTestMode() ? 10800000 : getLatestBlock_client();
+        latestBlock = latest;
         abi_spec.loadAbisFromKnown(true);
         return handle_clean();
     }
