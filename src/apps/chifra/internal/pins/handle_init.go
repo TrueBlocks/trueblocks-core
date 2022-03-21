@@ -18,7 +18,7 @@ import (
 )
 
 // InitInternal initializes local copy of UnchainedIndex by downloading manifests and chunks
-func (opts *PinsOptions) InitInternal() error {
+func (opts *PinsOptions) HandlePinsInit() error {
 
 	chain := opts.Globals.Chain
 

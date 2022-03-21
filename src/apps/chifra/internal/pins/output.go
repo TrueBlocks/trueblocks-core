@@ -28,7 +28,7 @@ func RunPins(cmd *cobra.Command, args []string) error {
 
 	// EXISTING_CODE
 	if opts.List {
-		err := opts.ListInternal()
+		err := opts.HandlePinsList()
 		if err != nil {
 			logger.Fatal("Cannot open local manifest file", err)
 		}
@@ -36,7 +36,7 @@ func RunPins(cmd *cobra.Command, args []string) error {
 	}
 
 	if opts.Init {
-		err := opts.InitInternal()
+		err := opts.HandlePinsInit()
 		if err != nil {
 			logger.Fatal(err)
 		}
@@ -66,7 +66,7 @@ func ServePins(w http.ResponseWriter, r *http.Request) bool {
 
 	// EXISTING_CODE
 	if opts.List {
-		err := opts.ListInternal()
+		err := opts.HandlePinsList()
 		if err != nil {
 			opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
 			return true
@@ -74,7 +74,7 @@ func ServePins(w http.ResponseWriter, r *http.Request) bool {
 	}
 
 	if opts.Init {
-		err := opts.InitInternal()
+		err := opts.HandlePinsInit()
 		if err != nil {
 			opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
 			return true

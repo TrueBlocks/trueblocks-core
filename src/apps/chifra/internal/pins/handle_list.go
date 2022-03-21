@@ -13,7 +13,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
 )
 
-func (opts *PinsOptions) ListInternal() error {
+func (opts *PinsOptions) HandlePinsList() error {
 	manifestData, err := manifest.FromLocalFile(opts.Globals.Chain)
 	if err != nil {
 		return err
