@@ -77,8 +77,9 @@ func (optsEx *ListOptionsExtended) visitChunkToFreshenFinal(fileName string, mon
 		return
 	}
 
-	// TODO: BOGUS - only process the block range we're interested in
-	// TODO: BOGUS - if ranges do not intersect the return
+	if !optsEx.RangesIntersect(indexChunk.Range) {
+		return
+	}
 
 	for _, mon := range monitors {
 		rec := indexChunk.GetAppearanceRecords(mon.Address)

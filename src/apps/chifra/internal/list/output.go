@@ -15,6 +15,7 @@ import (
 	"os"
 
 	exportPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/spf13/cobra"
@@ -43,21 +44,18 @@ func RunList(cmd *cobra.Command, args []string) error {
 
 	// EXISTING_CODE
 	if opts.Newone {
-		// Give ourselves some room to work...
 		optsEx := NewListOptsEx(opts)
-
-		// Freshen the monitor by which we mean add any new appearance records to the file on disc
 		err = optsEx.HandleFreshenMonitors()
 		if err != nil {
 			return err
 		}
-
 		if opts.Count {
 			return opts.HandleListCount()
 		}
-		// optsEx.HandleFreshenMonitors()
+		// return nil
 	}
 
+	// exportPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
 	exportPkg.GetOptions().Appearances = true
 	if opts.Count {
 		exportPkg.GetOptions().Count = true
@@ -100,6 +98,13 @@ func NewListOptsEx(opts *ListOptions) (ret ListOptionsExtended) {
 		ret.addrMonMap[a] = m
 	}
 	return
+}
+
+func (optsEx *ListOptionsExtended) RangesIntersect(r2 blockRange.FileRange) bool {
+	var r1 blockRange.FileRange
+	r1.First = int(optsEx.opts.FirstBlock)
+	r1.Last = int(optsEx.opts.LastBlock)
+	return !(r1.Last < r2.First || r1.First > r2.Last)
 }
 
 // EXISTING_CODE
