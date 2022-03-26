@@ -27,9 +27,9 @@ TrueBlocks is a collection of libraries, tools, and applications that improve ac
 
 1) TrueBlocks allows you to scrape the chain to build an index of address appearances. This index enables lightning-fast access to transactional histories for a given address (something not available from the node itself),
 
-2) TrueBlocks also provides for a local binary cache of data extracted from the node. This speeds up subsequent queries for the same data by an order of magintude or more. This enables a much better user experience for distributed applications written directly against the node such as the [TrueBlocks Explorer](https://github.com/TrueBlocks/trueblocks-explorer),
+2) TrueBlocks also provides for a local binary cache of data extracted from the node. This speeds up subsequent queries for the same data by  order of magnitude or more. This enables a much better user experience for distributed applications written directly against the node, such as the [TrueBlocks Explorer](https://github.com/TrueBlocks/trueblocks-explorer),
 
-3) TrueBlocks enhances the Ethereum RPC interfaces. For example, you may query blocks and transactions by date, by block range, by hashes or any combination. Furthermore, two additional endpoints are provided for extracting (`export`) and listing (`list`) historical transactions per address.
+3) TrueBlocks enhances the Ethereum RPC interfaces. For example, you may query blocks and transactions by date, by block range, by hashes, or any combination. Furthermore, two additional endpoints are provided to extract (`export`) and list (`list`) historical transactions per address.
 
 ## Quick Install
 
@@ -134,7 +134,7 @@ Hit `Control+C` to stop the processing.
 
 The primary data structure produced by TrueBlocks is an index of address appearances. This index provides very quick access to transaction histories for a given address.
 
-You may either build the entire index from scratch (requires a tracing, archive node), or you may download part of the index and build it from there on.
+You may either build the entire index from scratch (requires a tracing, archive node) or download part of the index and build it from there.
 
 This process is described in this article [Indexing Addresses](https://trueblocks.io/docs/install/get-the-index/).
 
