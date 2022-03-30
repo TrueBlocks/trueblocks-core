@@ -14,8 +14,6 @@
 
 //---------------------------------------------------------------
 bool cleanMonitorFile(const string_q& path, void* data) {
-    ENTER("visitFile");
-
     if (endsWith(path, '/')) {
         forEveryFileInFolder(path + "*", cleanMonitorFile, data);
 
@@ -32,40 +30,25 @@ bool cleanMonitorFile(const string_q& path, void* data) {
             CMonitor m;
             size_t sizeThen = m.getRecordCnt(path);
             if (!sizeThen)
-                EXIT_NOMSG(!shouldQuit());
+                return !shouldQuit();
 
-            m.address = path_2_Addr(path);
-            if (!m.loadAppearances(nullptr, nullptr))
-                EXIT_FAIL("Could not open cache file.");
-            sort(m.apps.begin(), m.apps.end());
-
-            CAppearance_mon prev;
-            CAppearanceArray_mon deduped;
-            for (auto a : m.apps) {
-                if (a.blk != prev.blk || a.txid != prev.txid) {
-                    deduped.push_back(a);
-                }
-                prev = a;
-            }
-
-            CArchive archiveOut(WRITING_ARCHIVE);
-            archiveOut.Lock(path, modeWriteCreate, LOCK_WAIT);
-            for (auto item : deduped)
-                archiveOut << item.blk << item.txid;
-            archiveOut.Release();
+            if (!m.removeDuplicates(path))
+                return false;
 
             static bool first = true;
-            if (!first)
-                cout << ",";
-            first = false;
             size_t sizeNow = m.getRecordCnt(path);
-            cout << "{ ";
-            cout << "\"path\": \"" << substitute(path, m.getPathToMonitor("", false), "$CACHE/") << "\", ";
-            cout << "\"sizeThen\": " << sizeThen << ", ";
-            cout << "\"sizeNow\": " << sizeNow;
-            if (sizeThen > sizeNow)
-                cout << ", \"dupsRemoved\": " << (sizeThen - sizeNow);
-            cout << " }" << endl;
+            if (verbose || sizeThen != sizeNow) {
+                if (!first)
+                    cout << ",";
+                first = false;
+                cout << "{ ";
+                cout << "\"path\": \"" << substitute(path, m.getPathToMonitor("", false), "$CACHE/") << "\", ";
+                cout << "\"sizeThen\": " << sizeThen << ", ";
+                cout << "\"sizeNow\": " << sizeNow;
+                if (sizeThen > sizeNow)
+                    cout << ", \"dupsRemoved\": " << (sizeThen - sizeNow);
+                cout << " }" << endl;
+            }
         }
     }
 

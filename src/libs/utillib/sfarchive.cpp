@@ -374,6 +374,26 @@ size_t stringToAsciiFile(const string_q& fileName, const string_q& contents) {
     return true;
 }
 
+//--------------------------------------------------------------------------
+bool appendFile(const string_q& toFile, const string_q& fromFile) {
+    ofstream output;
+    output.open(toFile, ios::out | ios::app);
+    if (!output.is_open())
+        return false;
+
+    ifstream input(fromFile, ios::in);
+    if (!input.is_open()) {
+        output.close();
+        return false;
+    }
+
+    output << input.rdbuf();
+    output.flush();
+    input.close();
+
+    return true;
+}
+
 //----------------------------------------------------------------------
 size_t appendToAsciiFile(const string_q& fileName, const string_q& addContents) {
     CArchive asciiCache(WRITING_ARCHIVE);

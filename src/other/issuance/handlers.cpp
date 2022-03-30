@@ -314,7 +314,7 @@ class CAccumulator {
         period = BY_NOTHING;
         discrete = false;
         start = 0;
-        end = getBlockProgress(BP_CLIENT).client;
+        end = getLatestBlock_client();
     }
     bool isSamePeriod(const CReconciliation& r) {
         if (isBlockSummary())

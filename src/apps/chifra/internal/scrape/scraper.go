@@ -5,8 +5,6 @@ package scrapePkg
 // be found in the LICENSE file.
 
 import (
-	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"time"
@@ -15,36 +13,17 @@ import (
 var statusPath string = "/tmp/"
 
 type Scraper struct {
-	Counter    uint64  `json:"Counter"`
-	Running    bool    `json:"Running"`
-	WasRunning bool    `json:""`
-	SleepSecs  float64 `json:"SleepSecs"`
-	Color      string  `json:"Color"`
-	Name       string  `json:"Name"`
-	Verbose    uint64  `json:"Verbose"`
+	Running   bool    `json:"Running"`
+	SleepSecs float64 `json:"SleepSecs"`
+	Name      string  `json:"Name"`
 }
 
 func NewScraper(color, name string, secs float64, logLev uint64) Scraper {
 	scraper := new(Scraper)
-	scraper.Color = color
 	scraper.Name = name
 	scraper.SleepSecs = secs
 	scraper.Running = false
-	scraper.Verbose = logLev
 	return *scraper
-}
-
-func (scraper *Scraper) ShowStateChange(from, to string) {
-	// logger.Log(logger.Info, scraper.Color, scraper.Name, ": [", from, " --> ", to, "]", colors.Off)
-}
-
-func (scraper *Scraper) ToJson() string {
-	e, err := json.Marshal(scraper)
-	if err != nil {
-		fmt.Printf("%s", err)
-		return ""
-	}
-	return string(e)
 }
 
 func (scraper *Scraper) ChangeState(onOff bool) bool {

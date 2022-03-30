@@ -18,20 +18,20 @@ Arguments:
 	One or more of [ indexer | monitors | both ]
 
 Flags:
-  -a, --action string    command to apply to the specified scrape
-                         One of [ toggle | run | restart | pause | quit ]
-  -s, --sleep float      seconds to sleep between scraper passes (default 14)
-  -p, --pin              pin chunks (and blooms) to IPFS as they are created (requires pinning service)
-  -u, --publish          after pinning the chunk, publish it to UnchainedIndex
-  -n, --block_cnt uint   maximum number of blocks to process per pass (default 2000)
-  -x, --fmt string       export format, one of [none|json*|txt|csv|api]
-  -v, --verbose          enable verbose (increase detail with --log_level)
-  -h, --help             display this help screen
-
-Notes:
-  - if no mode is presented, chifra scrape indexer --action run is assumed.
-  - the --pin and --publish options require an API to the pinning service.
-  - the --n_* related options allow you to tune the scrapers.
+  -a, --action string         command to apply to the specified scrape
+                              One of [ toggle | run | restart | pause | quit ]
+  -s, --sleep float           seconds to sleep between scraper passes (default 14)
+  -p, --pin                   pin chunks (and blooms) to IPFS as they are created (requires pinning service)
+  -u, --publish               after pinning the chunk, publish it to UnchainedIndex
+  -z, --blaze                 invoke the blaze scraper to process blocks
+  -n, --block_cnt uint        maximum number of blocks to process per pass (default 2000)
+  -b, --block_chan_cnt uint   number of concurrent block processing channels (default 10)
+  -d, --addr_chan_cnt uint    number of concurrent address processing channels (default 20)
+  -l, --start_block uint      first block to visit (available only for blaze scraper)
+  -r, --ripe_block uint       blocks prior to this value are written to 'ripe' folder (available only for blaze scraper)
+  -x, --fmt string            export format, one of [none|json*|txt|csv|api]
+  -v, --verbose               enable verbose (increase detail with --log_level)
+  -h, --help                  display this help screen
 ```
 
 ### explainer

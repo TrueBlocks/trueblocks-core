@@ -55,12 +55,12 @@ bool visitFile(const string_q& path, void* data) {
                 return usage("Could not open index file " + path + ".");
 
             size_t sz = fileSize(path);
-            rawData = (char*)malloc(sz + (2 * 59));
+            rawData = (char*)malloc(sz + (2 * asciiAppearanceSize));
             if (!rawData) {
                 chunk.Release();
                 return usage("Could not allocate memory for data.");
             }
-            bzero(rawData, sz + (2 * 59));
+            bzero(rawData, sz + (2 * asciiAppearanceSize));
             size_t nRead = chunk.Read(rawData, sz, sizeof(char));
             if (nRead != sz) {
                 usage("Could not read entire file.");

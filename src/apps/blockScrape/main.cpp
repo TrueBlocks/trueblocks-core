@@ -20,24 +20,10 @@ int main(int argc, const char* argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    ASSERT(options.commandLines.size() > 0);  // no support for --file: option
-    // for (auto command : options.commandLines) {
+    ASSERT(options.commandLines.size() == 1);
     if (!options.parseArguments(options.commandLines[0]))
         return 0;
-
-    if (isRunning("acctExport")) {
-        // User may have started the account scraper since we started. Here, we
-        // go to sleep for a short while to allow that program to complete...
-        LOG_INFO("Block scraper is paused: ", Now().Format(FMT_EXPORT), "\r");
-
-    } else {
-        bool ret1 = options.scrape_blocks();
-        LOG_INFO(ret1 ? "  ...pass completed." : "  ...pass did not complete.");
-
-        // TODO(tjayrush): We should try to scrape timestamps with blaze while we're doing this scan
-        // TODO(tjayrush): try to capture timestamps during blaze scraping
-        freshenTimestamps(getBlockProgress(BP_RIPE).ripe);
-    }
+    options.scrape_blocks();
 
     pinlib_cleanup();
     return 0;

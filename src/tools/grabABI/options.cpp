@@ -33,7 +33,6 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-    ENTER("parseArguments: " + command);
     if (!standardOptions(command))
         return false;
 
@@ -46,7 +45,7 @@ bool COptions::parseArguments(string_q& command) {
 
     Init();
     explode(arguments, command, ' ');
-    blknum_t latest = NOPOS;  // getBlockProgress(BP_CLIENT).client;
+    blknum_t latest = NOPOS;  // getLatestBlock_client();
     string_q unused;
     for (auto arg : arguments) {
         if (false) {

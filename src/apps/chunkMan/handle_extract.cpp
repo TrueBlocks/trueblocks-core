@@ -27,8 +27,13 @@ static bool chunkVisitFunc(const string_q& path, void* data) {
         blknum_t startBlock = path_2_Bn(path, endBlock);
 
         COptions* opts = (COptions*)data;
-        //        cerr << opts->blocks.start << ":" << opts->blocks.stop << endl;
-        if (opts->blocks.start != NOPOS && !inRange(opts->blocks.start, startBlock, endBlock)) {
+        blknum_t startTest = opts->blocks.start == NOPOS ? 0 : opts->blocks.start;
+        blknum_t endTest = opts->blocks.stop == 0 ? NOPOS : opts->blocks.stop;
+        if (!inRange(startBlock, startTest, endTest)) {
+            LOG_PROG("Skipped: " + path + "\r");
+            return true;
+        }
+        if (!inRange(endBlock, startTest, endTest)) {
             LOG_PROG("Skipped: " + path + "\r");
             return true;
         }
@@ -43,46 +48,52 @@ static bool chunkVisitFunc(const string_q& path, void* data) {
                 LOG_ERR("Could not create file ", outFile, ". Quitting...");
                 return false;
             }
-            LOG_INFO("File opened for writing");
         }
 
         CIndexArchive index(READING_ARCHIVE);
         if (index.ReadIndexFromBinary(path)) {
+            string_q msg = "start: {0} end: {1} fileSize: {2} bloomSize: {3} nAddrs: {4} nRows: {5}";
+            replace(msg, "{0}", "{" + padNum9T(startBlock) + "}");
+            replace(msg, "{1}", "{" + padNum9T(endBlock) + "}");
+            replace(msg, "{2}", "{" + padNum9T(fileSize(path)) + "}");
+            replace(
+                msg, "{3}",
+                "{" + padNum9T(fileSize(substitute(substitute(path, "finalized", "blooms"), ".bin", ".bloom"))) + "}");
+            replace(msg, "{4}", "{" + padNum9T(uint64_t(index.header->nAddrs)) + "}");
+            replace(msg, "{5}", "{" + padNum9T(uint64_t(index.header->nRows)) + "}");
             if (opts->save) {
-                output << "start: " << startBlock << endl;
-                output << "end: " << endBlock << endl;
-                output << "fileSize: " << fileSize(path) << endl;
-                output << "bloomSize: "
-                       << fileSize(substitute(substitute(path, "finalized", "blooms"), ".bin", ".bloom")) << endl;
-                output << "nAddrs: " << index.header->nAddrs << endl;
-                output << "nRows: " << index.header->nRows << endl;
+                string_q m = msg;
+                replaceAny(m, "{}", "");
+                replaceAll(m, "  ", " ");
+                output << "# " << m << endl;
+                output << "address\tstart\tcount" << endl;
             }
-            cout << "start: " << startBlock << endl;
-            cout << "end: " << endBlock << endl;
-            cout << "fileSize: " << fileSize(path) << endl;
-            cout << "bloomSize: " << fileSize(substitute(substitute(path, "finalized", "blooms"), ".bin", ".bloom"))
-                 << endl;
-            cout << "nAddrs: " << index.header->nAddrs << endl;
-            cout << "nRows: " << index.header->nRows << endl;
-            for (uint32_t a = 0; a < index.nAddrs; a++) {
-                CIndexedAddress* aRec = &index.addresses[a];
-                if (opts->save) {
-                    output << bytes_2_Addr(aRec->bytes) << endl;
-                    for (uint32_t b = aRec->offset; b < (aRec->offset + aRec->cnt); b++) {
-                        CIndexedAppearance* bRec = &index.appearances[b];
-                        if (opts->save) {
-                            output << "\t" << bRec->blk << "\t" << bRec->txid << endl;
+            replaceAll(msg, "{", cGreen);
+            replaceAll(msg, "}", cOff);
+            cout << msg << endl;
+
+            if (verbose > 0) {
+                ostringstream out;
+                for (uint32_t a = 0; a < index.nAddrs; a++) {
+                    CIndexedAddress* aRec = &index.addresses[a];
+                    out << bytes_2_Addr(aRec->bytes) << "\t" << aRec->offset << "\t" << aRec->cnt << endl;
+                    if (verbose > 4) {
+                        for (uint32_t b = aRec->offset; b < (aRec->offset + aRec->cnt); b++) {
+                            CIndexedAppearance* bRec = &index.appearances[b];
+                            out << "\t" << bRec->blk << "\t" << bRec->txid << endl;
                         }
                     }
                 }
-                LOG_INFO(a, " of ", index.nAddrs, " ", bytes_2_Addr(aRec->bytes) + "\r");
+
+                cout << out.str();
+                if (opts->save) {
+                    output << out.str();
+                }
             }
-            if (opts->save) {
-                output.close();
-                LOG_INFO("Wrote ", fileSize(outFile), " bytes to ", outFile);
-            } else {
-                LOG_PROG("Processed: " + path);
-            }
+        }
+
+        if (opts->save) {
+            output.close();
         }
     }
     return true;

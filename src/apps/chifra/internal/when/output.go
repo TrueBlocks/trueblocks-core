@@ -29,7 +29,7 @@ func RunWhen(cmd *cobra.Command, args []string) error {
 
 	// EXISTING_CODE
 	if opts.List {
-		err := opts.ListInternal()
+		err := opts.HandleWhenList()
 		if err != nil {
 			return err
 		}
@@ -56,7 +56,7 @@ func ServeWhen(w http.ResponseWriter, r *http.Request) bool {
 
 	// EXISTING_CODE
 	if opts.List {
-		err := opts.ListInternal()
+		err := opts.HandleWhenList()
 		if err != nil {
 			// TODO: this message is wrong - it was copy/pasted from pinMan code - no manifest here
 			logger.Fatal("Cannot open local manifest file", err)

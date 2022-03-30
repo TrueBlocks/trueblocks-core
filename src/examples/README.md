@@ -2,6 +2,11 @@
 
 The `examples` folder contains a small collection of example code that may help illustrate how to write your own programs using TrueBlocks. This is a community generated repository. If you wish to add to this folder, feel free to do so by making a pull request.
 
+### Building
+
+In order to build the examples in this folder, you must have first run `make install` from the `./build` folder. If you experience trouble building these examples, first make sure to do `make install`.
+
+
 ### Folders
 
 The examples directly in the folder detail how to use TrueBlocks to write something like a command line tool. Other great sources for examples of command line tools are in the ./src/tools folder.

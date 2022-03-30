@@ -8,6 +8,7 @@ import (
 	"context"
 	"log"
 	"math/big"
+	"os"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
@@ -29,6 +30,7 @@ func GetClient(provider string) *ethclient.Client {
 		// TODO: If we make this a cached item, it needs to be cached per chain, see timestamps
 		ec, err := ethclient.Dial(provider)
 		if err != nil {
+			log.Println("Missdial(" + os.Args[0] + "):")
 			log.Fatalln(err)
 		}
 		perProviderClientMap[provider] = ec
@@ -192,18 +194,15 @@ func (ec *Client) TransactionSender(ctx context.Context, tx *types.Transaction, 
 
 func GetBlockTimestamp(provider string, bn uint64) uint64 {
 	ec := GetClient(provider)
-	r, err := ec.BlockByNumber(context.Background(), big.NewInt(int64(bn)))
 	defer ec.Close()
+
+	r, err := ec.BlockByNumber(context.Background(), big.NewInt(int64(bn)))
 	if err != nil {
 		logger.Log(logger.Error, "Could not connect to RPC client")
 		return 0
 	}
-	return r.Time()
-}
 
-// HexToAddress converts a string with hex to go-ethereum's common.Address
-func HexToAddress(hex string) common.Address {
-	return common.HexToAddress(hex)
+	return r.Time()
 }
 
 // DecodeHex decodes a string with hex into a slice of bytes

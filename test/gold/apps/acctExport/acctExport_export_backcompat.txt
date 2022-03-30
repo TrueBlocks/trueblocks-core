@@ -43,8 +43,6 @@ Flags:
       --load string          a comma separated list of dynamic traversers to load (hidden)
       --reversed             produce results in reverse chronological order (hidden)
   -b, --by_date              produce results sorted by date (report by address otherwise) (hidden)
-  -z, --summarize_by <val>   for --accounting only, summarize reconciliations by this time period, one of [yearly|quarterly|monthly|weekly|daily|hourly|blockly|tx] (hidden)
-  -D, --deep                 for --neighbors option only, dig deeply into detail (otherwise, to and from only) (hidden)
   -F, --first_block <num>    first block to process (inclusive)
   -L, --last_block <num>     last block to process (inclusive)
       --delete               delete a monitor, but do not remove it

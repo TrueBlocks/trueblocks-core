@@ -160,7 +160,7 @@ bool getUncle(CBlock& block, const hash_t& blockHash, size_t index) {
 //-------------------------------------------------------------------------
 bool queryUncle(CBlock& block, const string_q& datIn, size_t index) {
     if (datIn == "latest")
-        return queryUncle(block, uint_2_Hex(getBlockProgress(BP_CLIENT).client), index);
+        return queryUncle(block, uint_2_Hex(getLatestBlock_client()), index);
     string_q func = isHash(datIn) ? "eth_getUncleByBlockHashAndIndex" : "eth_getUncleByBlockNumberAndIndex";
     string_q params = "[" + quote(datIn) + "," + quote(uint_2_Hex(index)) + "]";
     return getObjectViaRPC(block, func, params);
@@ -179,7 +179,7 @@ size_t getUncleCount(const hash_t& blockHash) {
 //-------------------------------------------------------------------------
 size_t queryUncleCount(const string_q& datIn) {
     if (datIn == "latest")
-        return queryUncleCount(uint_2_Hex(getBlockProgress(BP_CLIENT).client));
+        return queryUncleCount(uint_2_Hex(getLatestBlock_client()));
     string_q func = isHash(datIn) ? "eth_getUncleCountByBlockHash" : "eth_getUncleCountByBlockNumber";
     return str_2_Uint(callRPC(func, "[" + quote(datIn) + "]", false));
 }
@@ -360,7 +360,7 @@ bool getFullReceipt(CTransaction* trans, bool needsTrace) {
 //-------------------------------------------------------------------------
 bool queryBlock(CBlock& block, const string_q& datIn, bool needTrace) {
     if (datIn == "latest")
-        return queryBlock(block, uint_2_Str(getBlockProgress(BP_CLIENT).client), needTrace);
+        return queryBlock(block, uint_2_Str(getLatestBlock_client()), needTrace);
 
     if (isHash(datIn)) {
         getObjectViaRPC(block, "eth_getBlockByHash", "[" + quote(datIn) + ",true]");
@@ -404,7 +404,7 @@ bool queryRawBlock(string_q& blockStr, const string_q& datIn, bool needTrace, bo
 //-------------------------------------------------------------------------
 bool queryRawUncle(string_q& results, const string_q& blockNum, uint64_t index) {
     if (blockNum == "latest")
-        return queryRawUncle(results, uint_2_Str(getBlockProgress(BP_CLIENT).client), index);
+        return queryRawUncle(results, uint_2_Str(getLatestBlock_client()), index);
     string_q func = isHash(blockNum) ? "eth_getUncleByBlockHashAndIndex" : "eth_getUncleByBlockNumberAndIndex";
     uint64_t bn = str_2_Uint(blockNum);
     string_q params = "[" + quote(uint_2_Hex(bn)) + "," + quote(uint_2_Hex(index)) + "]";
@@ -603,9 +603,9 @@ string_q getVersionFromClient(void) {
     timestamp_t lastUpdate = date_2_Ts(fileLastModifyDate(clientVersionFn));
     timestamp_t now = date_2_Ts(Now());
     timestamp_t diff = now - lastUpdate;
-    if (diff > 20 || !contains(contents, getCurlContext()->baseURL)) {
+    if (diff > 60 || !contains(contents, getCurlContext()->baseURL)) {
         // We do this to avoid constantly hitting the node just to see if it's there.
-        // If the rpcProvider changed or we haven't checked in 20 seconds, check again.
+        // If the rpcProvider changed or we haven't checked in 60 seconds, check again.
         string_q clientVersion = callRPC("web3_clientVersion", "[]", false);
         if (!clientVersion.empty()) {
             if (folderExists(cacheFolder_tmp))

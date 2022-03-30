@@ -9,7 +9,7 @@ on      ,both ,fast  ,state ,tools/getState ,no_address                     ,y  
 on      ,both ,fast  ,state ,tools/getState ,invalid_address_1              ,y    ,addrs = 0x12
 on      ,both ,fast  ,state ,tools/getState ,invalid_address_2              ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d3592
 on      ,both ,fast  ,state ,tools/getState ,invalid_block_1                ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 fdfsdf
-on      ,both ,fast  ,state ,tools/getState ,two_accts                      ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & blocks = 1500000 & fmt = api
+erigon  ,both ,fast  ,state ,tools/getState ,two_accts                      ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & blocks = 1500000 & fmt = api
 on      ,both ,fast  ,state ,tools/getState ,tip_4                          ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & blocks = 1500000 2000000 2500000 3000000
 on      ,both ,fast  ,state ,tools/getState ,multiple_accounts              ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 0x6f46cf5569aefa1acc1009290c8e043747172d89 & blocks = 4000000
 on      ,both ,fast  ,state ,tools/getState ,multiple_accounts_and_blocks_1 ,n    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 0x6f46cf5569aefa1acc1009290c8e043747172d89 & blocks = 3500000 4000000 & fmt = txt
@@ -31,18 +31,18 @@ on      ,both ,fast  ,state ,tools/getState ,special_block_2                ,y  
 on      ,both ,fast  ,state ,tools/getState ,special_block_3                ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & blocks = first
 on      ,both ,fast  ,state ,tools/getState ,wei                            ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & blocks = 4000000 & wei
 on      ,both ,fast  ,state ,tools/getState ,ether                          ,n    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & blocks = 4000000 & ether & fmt = txt
-on      ,both ,medi  ,state ,tools/getState ,changes                        ,n    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & blocks = 1430957-1430966 & changes & fmt = txt
-on      ,both ,fast  ,state ,tools/getState ,e_dao_1500000                  ,n    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & blocks = 1500000 & ether & fmt = txt
-on      ,both ,fast  ,state ,tools/getState ,e_two_accts                    ,n    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 0x7cb57b5a97eabe94205c07890be4c1ad31e486a8 & blocks = 1500000 & ether & fmt = txt
+erigon  ,both ,medi  ,state ,tools/getState ,changes                        ,n    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & blocks = 1430957-1430966 & changes & fmt = txt
+erigon  ,both ,fast  ,state ,tools/getState ,e_dao_1500000                  ,n    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & blocks = 1500000 & ether & fmt = txt
+erigon  ,both ,fast  ,state ,tools/getState ,e_two_accts                    ,n    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 0x7cb57b5a97eabe94205c07890be4c1ad31e486a8 & blocks = 1500000 & ether & fmt = txt
 on      ,both ,fast  ,state ,tools/getState ,e_tip_4                        ,n    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & blocks = 1500000 2000000 2500000 3000000 & ether & fmt = txt
 on      ,both ,fast  ,state ,tools/getState ,mode_bal                       ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & parts = balance & blocks = 2500000
 on      ,both ,fast  ,state ,tools/getState ,mode_nonce                     ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & parts = nonce & blocks = 2500000
 on      ,both ,fast  ,state ,tools/getState ,mode_code                      ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & parts = code & blocks = 2500000
 on      ,both ,fast  ,state ,tools/getState ,mode_storage                   ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & parts = storage & blocks = 2500000
-on      ,both ,slow  ,state ,tools/getState ,mode_deployed                  ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & parts = deployed & blocks = 2500000
+erigon  ,both ,slow  ,state ,tools/getState ,mode_deployed                  ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & parts = deployed & blocks = 2500000
 on      ,both ,fast  ,state ,tools/getState ,mode_accttype                  ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & parts = accttype & blocks = 2500000
 on      ,both ,fast  ,state ,tools/getState ,mode_some                      ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & parts = some & blocks = 2500000
-on      ,both ,medi  ,state ,tools/getState ,mode_all                       ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & parts = all & blocks = 2500000
+erigon  ,both ,medi  ,state ,tools/getState ,mode_all                       ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & parts = all & blocks = 2500000
 on      ,both ,fast  ,state ,tools/getState ,mode_none                      ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & parts = none & blocks = 2500000
 on      ,both ,fast  ,state ,tools/getState ,mode_nonce_only                ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & parts = none & parts = nonce & blocks = 2500000
 on      ,both ,fast  ,state ,tools/getState ,mode_fail                      ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & parts = junk & blocks = 2500000
@@ -51,14 +51,14 @@ on      ,both ,fast  ,state ,tools/getState ,fmt_csv                        ,n  
 on      ,both ,fast  ,state ,tools/getState ,fmt_api                        ,y    ,addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & fmt = api & blocks = 2000000
 on      ,both ,fast  ,state ,tools/getState ,fmt_json                       ,y    ,addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & fmt = json & blocks = 2000000 & dollars
 on      ,cmd  ,fast  ,state ,tools/getState ,fmt_junk                       ,y    ,addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & fmt = junk & blocks = 2000000
-on      ,cmd  ,fast  ,state ,tools/getState ,from_file                      ,y    ,file = cmd_file
-on      ,both ,fast  ,state ,tools/getState ,get_range                      ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & blocks = 1428000-1438000:200
+erigon  ,cmd  ,fast  ,state ,tools/getState ,from_file                      ,y    ,file = cmd_file
+erigon  ,both ,fast  ,state ,tools/getState ,get_range                      ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & blocks = 1428000-1438000:200
 
 on      ,both ,fast  ,state ,tools/getState ,ens_test                       ,y    ,addrs = trueblocks.eth & blocks = 8854700-8854900:20
 
 on      ,both ,fast  ,state ,tools/getState ,contract_call_fail1            ,y    ,call = 0xa4f29fc548856180f6b1e319ee4d86715875!0x12065fe0 & blocks = 6523977-6540000:2000
 on      ,both ,fast  ,state ,tools/getState ,contract_call_fail2            ,y    ,call = 0xa4f29fc548856180f6b1e319ee4d86715875cce4!12065fe0 & blocks = 6523977-6540000:2000
-on      ,both ,fast  ,state ,tools/getState ,contract_call                  ,y    ,call = 0xa4f29fc548856180f6b1e319ee4d86715875cce4!0x12065fe0 & blocks = 6523977-6540000:2000
+erigon  ,both ,fast  ,state ,tools/getState ,contract_call                  ,y    ,call = 0xa4f29fc548856180f6b1e319ee4d86715875cce4!0x12065fe0 & blocks = 6523977-6540000:2000
 on      ,both ,fast  ,state ,tools/getState ,uniswap_factory_getPair        ,n    ,call = 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f!0xe6a43905!0000000000000000000000002260fac5e5542a773aa44fbcfedf7c193bc2c599000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2 & blocks = 10092000 & fmt = csv
 on      ,both ,fast  ,state ,tools/getState ,uniswap_token0                 ,y    ,call = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0x0dfe1681 & blocks = 10092000
 on      ,both ,fast  ,state ,tools/getState ,uniswap_token0_name            ,n    ,call = 0x2260fac5e5542a773aa44fbcfedf7c193bc2c599!0x06fdde03 & blocks = 10092000 & fmt = txt

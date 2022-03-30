@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -24,6 +25,7 @@ type ListOptions struct {
 	Appearances bool
 	FirstBlock  uint64
 	LastBlock   uint64
+	Newone      bool
 	Globals     globals.GlobalOptions
 	BadFlag     error
 }
@@ -36,6 +38,7 @@ func (opts *ListOptions) TestLog() {
 	logger.TestLog(opts.Appearances, "Appearances: ", opts.Appearances)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
+	logger.TestLog(opts.Newone, "Newone: ", opts.Newone)
 	opts.Globals.TestLog()
 }
 
@@ -77,6 +80,8 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ListOptions {
 			opts.FirstBlock = globals.ToUint64(value[0])
 		case "lastBlock":
 			opts.LastBlock = globals.ToUint64(value[0])
+		case "newone":
+			opts.Newone = true
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "list")
@@ -86,7 +91,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ListOptions {
 	}
 	opts.Globals = *globals.FromRequest(w, r)
 	// EXISTING_CODE
-	opts.Addrs = globals.ConvertEns(opts.Globals.Chain, opts.Addrs)
+	opts.Addrs = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
 	// EXISTING_CODE
 
 	return opts
@@ -95,7 +100,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ListOptions {
 func ListFinishParse(args []string) *ListOptions {
 	opts := GetOptions()
 	// EXISTING_CODE
-	opts.Addrs = globals.ConvertEns(opts.Globals.Chain, args)
+	opts.Addrs = ens.ConvertEns(opts.Globals.Chain, args)
 	// EXISTING_CODE
 	return opts
 }

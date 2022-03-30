@@ -38,11 +38,7 @@ var shortScrape = "scan the chain and update (and optionally pin) the TrueBlocks
 var longScrape = `Purpose:
   Scan the chain and update (and optionally pin) the TrueBlocks index of appearances.`
 
-var notesScrape = `
-Notes:
-  - if no mode is presented, chifra scrape indexer --action run is assumed.
-  - the --pin and --publish options require an API to the pinning service.
-  - the --n_* related options allow you to tune the scrapers.`
+var notesScrape = ``
 
 func init() {
 	scrapeCmd.Flags().SortFlags = false
@@ -52,12 +48,25 @@ One of [ toggle | run | restart | pause | quit ]`)
 	scrapeCmd.Flags().Float64VarP(&scrapePkg.GetOptions().Sleep, "sleep", "s", 14, "seconds to sleep between scraper passes")
 	scrapeCmd.Flags().BoolVarP(&scrapePkg.GetOptions().Pin, "pin", "p", false, "pin chunks (and blooms) to IPFS as they are created (requires pinning service)")
 	scrapeCmd.Flags().BoolVarP(&scrapePkg.GetOptions().Publish, "publish", "u", false, "after pinning the chunk, publish it to UnchainedIndex")
+	scrapeCmd.Flags().BoolVarP(&scrapePkg.GetOptions().Blaze, "blaze", "z", false, "invoke the blaze scraper to process blocks")
 	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().BlockCnt, "block_cnt", "n", 2000, "maximum number of blocks to process per pass")
-	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().BlockChanCnt, "block_chan_cnt", "b", 10, "number of concurrent block processing channels (hidden)")
-	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().AddrChanCnt, "addr_chan_cnt", "d", 20, "number of concurrent address processing channels (hidden)")
+	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().BlockChanCnt, "block_chan_cnt", "b", 10, "number of concurrent block processing channels")
+	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().AddrChanCnt, "addr_chan_cnt", "d", 20, "number of concurrent address processing channels")
+	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().Reset, "reset", "e", 0, "reset the scraper to the provided block (or end of earliest chunk prior to that block) (hidden)")
+	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().AppsPerChunk, "apps_per_chunk", "", 200000, "the number of appearances to build into a chunk before consolidating it (hidden)")
+	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().UnripeDist, "unripe_dist", "", 28, "the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe (hidden)")
+	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().SnapToGrid, "snap_to_grid", "", 100000, "an override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index (hidden)")
+	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().FirstSnap, "first_snap", "", 0, "the first block at which snap_to_grid is enabled (hidden)")
+	scrapeCmd.Flags().BoolVarP(&scrapePkg.GetOptions().AllowMissing, "allow_missing", "", false, "do not report errors for blockchain that contain blocks with zero addresses (hidden)")
+	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().StartBlock, "start_block", "l", 0, "first block to visit (available only for blaze scraper)")
+	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().RipeBlock, "ripe_block", "r", 0, "blocks prior to this value are written to 'ripe' folder (available only for blaze scraper)")
 	if os.Getenv("TEST_MODE") != "true" {
-		scrapeCmd.Flags().MarkHidden("block_chan_cnt")
-		scrapeCmd.Flags().MarkHidden("addr_chan_cnt")
+		scrapeCmd.Flags().MarkHidden("reset")
+		scrapeCmd.Flags().MarkHidden("apps_per_chunk")
+		scrapeCmd.Flags().MarkHidden("unripe_dist")
+		scrapeCmd.Flags().MarkHidden("snap_to_grid")
+		scrapeCmd.Flags().MarkHidden("first_snap")
+		scrapeCmd.Flags().MarkHidden("allow_missing")
 	}
 	globals.InitGlobals(scrapeCmd, &scrapePkg.GetOptions().Globals)
 

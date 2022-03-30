@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -47,8 +48,6 @@ type ExportOptions struct {
 	Load        string
 	Reversed    bool
 	ByDate      bool
-	SummarizeBy string
-	Deep        bool
 	SkipDdos    bool
 	MaxTraces   uint64
 	FirstBlock  uint64
@@ -88,8 +87,6 @@ func (opts *ExportOptions) TestLog() {
 	logger.TestLog(len(opts.Load) > 0, "Load: ", opts.Load)
 	logger.TestLog(opts.Reversed, "Reversed: ", opts.Reversed)
 	logger.TestLog(opts.ByDate, "ByDate: ", opts.ByDate)
-	logger.TestLog(len(opts.SummarizeBy) > 0, "SummarizeBy: ", opts.SummarizeBy)
-	logger.TestLog(opts.Deep, "Deep: ", opts.Deep)
 	logger.TestLog(opts.SkipDdos, "SkipDdos: ", opts.SkipDdos)
 	logger.TestLog(opts.MaxTraces != 250, "MaxTraces: ", opts.MaxTraces)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
@@ -173,12 +170,6 @@ func (opts *ExportOptions) ToCmdLine() string {
 	}
 	if opts.ByDate {
 		options += " --by_date"
-	}
-	if len(opts.SummarizeBy) > 0 {
-		options += " --summarize_by " + opts.SummarizeBy
-	}
-	if opts.Deep {
-		options += " --deep"
 	}
 	if opts.FirstBlock != 0 {
 		options += (" --first_block " + fmt.Sprintf("%d", opts.FirstBlock))
@@ -276,10 +267,6 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ExportOptions {
 			opts.Reversed = true
 		case "byDate":
 			opts.ByDate = true
-		case "summarizeBy":
-			opts.SummarizeBy = value[0]
-		case "deep":
-			opts.Deep = true
 		case "skipDdos":
 			opts.SkipDdos = true
 		case "maxTraces":
@@ -297,9 +284,9 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ExportOptions {
 	}
 	opts.Globals = *globals.FromRequest(w, r)
 	// EXISTING_CODE
-	opts.Addrs = globals.ConvertEns(opts.Globals.Chain, opts.Addrs)
-	opts.Emitter = globals.ConvertEns(opts.Globals.Chain, opts.Emitter)
-	opts.Asset = globals.ConvertEns(opts.Globals.Chain, opts.Asset)
+	opts.Addrs = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
+	opts.Emitter = ens.ConvertEns(opts.Globals.Chain, opts.Emitter)
+	opts.Asset = ens.ConvertEns(opts.Globals.Chain, opts.Asset)
 	// EXISTING_CODE
 
 	return opts
@@ -317,9 +304,9 @@ func ExportFinishParse(args []string) *ExportOptions {
 			opts.Addrs = append(opts.Addrs, arg)
 		}
 	}
-	opts.Addrs = globals.ConvertEns(opts.Globals.Chain, opts.Addrs)
-	opts.Emitter = globals.ConvertEns(opts.Globals.Chain, opts.Emitter)
-	opts.Asset = globals.ConvertEns(opts.Globals.Chain, opts.Asset)
+	opts.Addrs = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
+	opts.Emitter = ens.ConvertEns(opts.Globals.Chain, opts.Emitter)
+	opts.Asset = ens.ConvertEns(opts.Globals.Chain, opts.Asset)
 	// EXISTING_CODE
 	return opts
 }

@@ -94,7 +94,6 @@ bool freshenTimestamps(blknum_t minBlock) {
     if (nRecords >= minBlock)
         return true;
 
-    // LOG_INFO("Found ", nRecords, " records");
     if (fileExists(indexFolderBin_ts + ".lck")) {  // it's being updated elsewhere
         LOG_ERR("Timestamp file ", indexFolderBin_ts, " is locked. Cannot update. Re-running...");
         ::remove((indexFolderBin_ts + ".lck").c_str());
@@ -119,7 +118,7 @@ bool freshenTimestamps(blknum_t minBlock) {
     }
 
     CBlock block;
-    for (blknum_t bn = nRecords; bn <= minBlock && !shouldQuit(); bn++) {
+    for (blknum_t bn = nRecords; bn < (minBlock + 1) && !shouldQuit(); bn++) {
         block = CBlock();  // reset
         getBlockHeader(block, bn);
         if (block.timestamp < blockZeroTs()) {
@@ -132,14 +131,13 @@ bool freshenTimestamps(blknum_t minBlock) {
             file << ((uint32_t)block.blockNumber) << ((uint32_t)block.timestamp);
             file.flush();
             ostringstream post;
-            post << (minBlock - block.blockNumber) << " (" << block.timestamp << " - "
-                 << ts_2_Date(block.timestamp).Format(FMT_EXPORT) << ")"
-                 << "\r";
+            post << " (" << ((minBlock + 1) - block.blockNumber);
+            post << " " << block.timestamp << " - " << ts_2_Date(block.timestamp).Format(FMT_EXPORT) << ")";
+            post << "\r";
             LOG_PROGRESS(UPDATE, block.blockNumber, minBlock, post.str());
         }
     }
-    cerr << "\r" << string_q(150, ' ') << "\r";
-    cerr.flush();
+    // LOG_PROGRESS(COMPLETE, block.blockNumber, minBlock, string_q(80, ' '));
 
     file.Release();
     unlockSection();

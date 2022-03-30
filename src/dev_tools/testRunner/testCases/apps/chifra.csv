@@ -28,7 +28,7 @@ on      ,both ,fast  ,names   ,apps/chifra ,run_names             ,y    ,modes =
 on      ,both ,fast  ,names   ,apps/chifra ,run_names_tags        ,y    ,modes = names & tags
 on      ,both ,fast  ,names   ,apps/chifra ,run_names_collections ,y    ,modes = names & collections
 on      ,both ,fast  ,quotes  ,apps/chifra ,run_prices            ,y    ,modes = quotes @ p 1440
-on      ,both ,fast  ,slurp   ,apps/chifra ,run_slurp             ,y    ,modes = slurp & addrs = 0x1234567812345678123456781234567812345678
+local   ,both ,fast  ,slurp   ,apps/chifra ,run_slurp             ,y    ,modes = slurp & addrs = 0x1234567812345678123456781234567812345678
 on      ,cmd  ,fast  ,explore ,apps/chifra ,run_explore           ,n    ,modes = explore & terms = 0x1234567812345678123456781234567812345678
 on      ,both ,fast  ,blocks  ,apps/chifra ,run_blocks            ,y    ,modes = blocks & blocks = 12
 on      ,both ,fast  ,blocks  ,apps/chifra ,run_blocks2           ,n    ,modes = blocks & blocks = 12 & fmt = csv & no_header

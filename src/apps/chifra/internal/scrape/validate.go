@@ -7,6 +7,8 @@ package scrapePkg
 import (
 	"fmt"
 
+	exportPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -20,17 +22,39 @@ func (opts *ScrapeOptions) ValidateScrape() error {
 		return opts.BadFlag
 	}
 
-	if len(opts.Modes) == 0 {
-		return validate.Usage("Please choose at least one of {0}.", "[indexer|monitors|both]")
+	if opts.Reset == 0 {
+		opts.Reset = utils.NOPOS
+	}
 
-	} else {
-		for _, arg := range opts.Modes {
-			err := validate.ValidateEnum("mode", arg, "[indexer|monitors|both]")
-			if err != nil {
-				return err
+	if opts.Reset == utils.NOPOS {
+		if len(opts.Modes) == 0 {
+			return validate.Usage("Please choose at least one of {0}.", "[indexer|monitors|both]")
+
+		} else {
+			for _, arg := range opts.Modes {
+				err := validate.ValidateEnum("mode", arg, "[indexer|monitors|both]")
+				if err != nil {
+					return err
+				}
+				if arg == "monitors" || arg == "both" {
+					// phonied up just to make sure we have bloom for block zero
+					var expOpts exportPkg.ExportOptions
+					expOpts.Addrs = append(expOpts.Addrs, "0x0000000000000000000000000000000000000001")
+					expOpts.Globals.Chain = opts.Globals.Chain
+					err := expOpts.ValidateExport()
+					if err != nil {
+						return validate.Usage(err.Error())
+					}
+				}
 			}
 		}
 	}
+
+	// if opts.Blaze {
+	// 	// TODO: StartBlock and RipeBlock must be sent with the --blaze option
+	// } else {
+	// 	// TODO: StartBlock and RipeBlock can only be sent with the --blaze option
+	// }
 
 	if opts.Action == "" {
 		opts.Action = "run"
@@ -40,8 +64,8 @@ func (opts *ScrapeOptions) ValidateScrape() error {
 		return err
 	}
 
-	if opts.Sleep < .5 {
-		return validate.Usage("The {0} option ({1}) must {2}.", "--sleep", fmt.Sprintf("%f", opts.Sleep), "be greater than .5")
+	if opts.Sleep < .25 {
+		return validate.Usage("The {0} option ({1}) must {2}.", "--sleep", fmt.Sprintf("%f", opts.Sleep), "be at least .25")
 	}
 
 	if opts.Pin && !hasIndexerFlag(opts.Modes[0]) {

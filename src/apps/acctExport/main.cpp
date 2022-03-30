@@ -51,43 +51,43 @@ int main(int argc, const char* argv[]) {
 
             if (options.appearances) {
                 CAppearanceTraverser at;
-                at.exportRange = options.exportRange;
+                at.traverserRange = options.exportRange;
                 traversers.push_back(at);
             }
 
             if (options.receipts) {
                 CReceiptTraverser rt;
-                rt.exportRange = options.exportRange;
+                rt.traverserRange = options.exportRange;
                 traversers.push_back(rt);
             }
 
             if (options.statements) {
                 CStatementTraverser st;
-                st.exportRange = options.exportRange;
+                st.traverserRange = options.exportRange;
                 traversers.push_back(st);
             }
 
             if (options.neighbors) {
                 CNeighborTraverser nt;
-                nt.exportRange = options.exportRange;
+                nt.traverserRange = options.exportRange;
                 traversers.push_back(nt);
             }
 
             if (options.logs) {
                 CLogTraverser lt;
-                lt.exportRange = options.exportRange;
+                lt.traverserRange = options.exportRange;
                 traversers.push_back(lt);
             }
 
             if (options.traces) {
                 CTraceTraverser tt;
-                tt.exportRange = options.exportRange;
+                tt.traverserRange = options.exportRange;
                 traversers.push_back(tt);
             }
 
             if (traversers.empty()) {
                 CTransactionTraverser tt;
-                tt.exportRange = options.exportRange;
+                tt.traverserRange = options.exportRange;
                 traversers.push_back(tt);
             }
 
@@ -124,13 +124,6 @@ int main(int argc, const char* argv[]) {
 }
 
 //-----------------------------------------------------------------------
-bool tsRangeFunc(CTraverser* trav, void* data) {
-    if (!getTimestampAt(trav->app->blk) || shouldQuit())
-        return false;
-    return inRange(blknum_t(trav->app->blk), trav->exportRange.first, trav->exportRange.second);
-}
-
-//-----------------------------------------------------------------------
 bool pre_Func(CTraverser* trav, void* data) {
     start_Log(trav, data);
     return true;
@@ -140,10 +133,6 @@ bool pre_Func(CTraverser* trav, void* data) {
 bool post_Func(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)data;
 
-    // TODO(tjayrush): We used to call writeLastEncountered (since removed) that would
-    // TODO(tjayrush): keep track of the last encountered block to avoid starting
-    // TODO(tjayrush): each freshen cycle at the previous stored block since we
-    // TODO(tjayrush): already processed encountered blocks.
     opt->reportNeighbors();
 
     end_Log(trav, data);

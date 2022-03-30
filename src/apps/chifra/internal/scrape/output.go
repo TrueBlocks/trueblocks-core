@@ -14,6 +14,8 @@ import (
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+
 	"github.com/spf13/cobra"
 )
 
@@ -28,18 +30,25 @@ func RunScrape(cmd *cobra.Command, args []string) error {
 	}
 
 	// EXISTING_CODE
-	var wg sync.WaitGroup
+	if opts.Blaze {
+		opts.ScrapeBlocks()
 
-	wg.Add(1)
-	IndexScraper = NewScraper(colors.Yellow, "IndexScraper", opts.Sleep, opts.Globals.LogLevel)
-	go RunIndexScraper(opts, wg, hasIndexerFlag(args[0]))
+	} else if opts.Reset != utils.NOPOS {
+		return opts.Globals.PassItOn("blockScrape", opts.ToCmdLine())
 
-	wg.Add(1)
-	MonitorScraper = NewScraper(colors.Purple, "MonitorScraper", opts.Sleep, opts.Globals.LogLevel)
-	go RunMonitorScraper(opts, wg, hasMonitorsFlag(args[0]))
+	} else {
+		var wg sync.WaitGroup
 
-	wg.Wait()
+		wg.Add(1)
+		IndexScraper = NewScraper(colors.Yellow, "IndexScraper", opts.Sleep, opts.Globals.LogLevel)
+		go opts.RunIndexScraper(&wg, hasIndexerFlag(args[0]))
 
+		wg.Add(1)
+		MonitorScraper = NewScraper(colors.Purple, "MonitorScraper", opts.Sleep, opts.Globals.LogLevel)
+		go opts.RunMonitorScraper(&wg, hasMonitorsFlag(args[0]))
+
+		wg.Wait()
+	}
 	return nil
 	// EXISTING_CODE
 }
@@ -54,6 +63,7 @@ func ServeScrape(w http.ResponseWriter, r *http.Request) bool {
 	}
 
 	// EXISTING_CODE
+	// TODO: Can we disable certain things from running in server mode?
 	return false
 	// EXISTING_CODE
 }

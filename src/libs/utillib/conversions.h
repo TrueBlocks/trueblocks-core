@@ -182,14 +182,6 @@ inline bool isApiMode(void) {
     return api_mode;
 }
 
-//---------------------------------------------------------------------------
-inline bool isLiveTest(void) {
-    static uint64_t test_mode = NOPOS;
-    if (test_mode == NOPOS)
-        test_mode = getEnvStr("LIVE_TEST") == "true";
-    return test_mode;
-}
-
 //-----------------------------------------------------------------------
 inline string_q insertCommas(const string_q& dIn) {
     string_q d = dIn;
@@ -202,6 +194,11 @@ inline string_q insertCommas(const string_q& dIn) {
         ret = (d.empty() ? "" : ",") + three + ret;
     }
     return ret;
+}
+
+inline ostream& operator<<(ostream& os, const blkrange_t& range) {
+    os << range.first << "-" << range.second;
+    return os;
 }
 
 }  // namespace qblocks

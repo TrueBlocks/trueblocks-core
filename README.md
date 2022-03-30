@@ -15,7 +15,8 @@ Please complete any applicable [Migrations](https://github.com/TrueBlocks/truebl
   - [Quick Install](#quick-install)
   - [Introducing chifra](#introducing-chifra)
   - [Using chifra](#using-chifra)
-  - [Building the Index of Appearances](#building-the-trueblocks-index-of-appearances)
+  - [Building the Index](#building-the-index)
+  - [Docker](#docker)
   - [Contributing](#contributing-to-trueblocks)
   - [List of Contributors](#contributors)
   - [Contact](#contact)
@@ -26,9 +27,9 @@ TrueBlocks is a collection of libraries, tools, and applications that improve ac
 
 1) TrueBlocks allows you to scrape the chain to build an index of address appearances. This index enables lightning-fast access to transactional histories for a given address (something not available from the node itself),
 
-2) TrueBlocks also provides for a local binary cache of data extracted from the node. This speeds up subsequent queries for the same data by an order of magintude or more. This enables a much better user experience for distributed applications written directly against the node such as the [TrueBlocks Explorer](https://github.com/TrueBlocks/trueblocks-explorer),
+2) TrueBlocks also provides for a local binary cache of data extracted from the node. This speeds up subsequent queries for the same data by  order of magnitude or more. This enables a much better user experience for distributed applications written directly against the node, such as the [TrueBlocks Explorer](https://github.com/TrueBlocks/trueblocks-explorer),
 
-3) TrueBlocks enhances the Ethereum RPC interfaces. For example, you may query blocks and transactions by date, by block range, by hashes or any combination. Furthermore, two additional endpoints are provided for extracting (`export`) and listing (`list`) historical transactions per address.
+3) TrueBlocks enhances the Ethereum RPC interfaces. For example, you may query blocks and transactions by date, by block range, by hashes, or any combination. Furthermore, two additional endpoints are provided to extract (`export`) and list (`list`) historical transactions per address.
 
 ## Quick Install
 
@@ -77,35 +78,6 @@ chifra blocks 12345
 
 6. To make deep data queries, [get the index](https://trueblocks.io/docs/install/get-the-index/)
 7. To explore the data visually, [install the explorer application](https://trueblocks.io/docs/install/install-explorer/).
-
-## Docker Container
-
-A `Dockerfile` is included in this repo as an example for creating a Docker image.
-
-1. Build a docker image (example tagged with `latest`)
-  ```bash
-  docker build . --tag=trueblocks-core:latest
-  ```
-
-2. Run a docker container (Examples:)
-  ```bash
-  # Running a simple chifra command
-  docker run trueblocks-core:latest chifra status
-
-  # Mounting separate config, cache, and index folders and running chifra init
-  docker run \
-    -v ./trueblocks:/root/.local/share/trueblocks \
-    -v ./cache:/root/.local/share/trueblocks/cache \
-    -v ./unchained:/root/.local/share/trueblocks/unchained \
-    trueblocks-core:latest chifra init
-
-  # Mounting those same folders and starting the chifra serve
-  docker run \
-    -v ./trueblocks:/root/.local/share/trueblocks \
-    -v ./cache:/root/.local/share/trueblocks/cache \
-    -v ./unchained:/root/.local/share/trueblocks/unchained \
-    trueblocks-core:latest chifra serve --port 0.0.0.0:8080
-  ```
 
 ## Introducing chifra
 
@@ -156,15 +128,48 @@ chifra blocks 0-100000:10
 
 Hit `Control+C` to stop the processing.
 
-## Building the TrueBlocks Index of Appearances
+## Building the Index
 
 ---
 
 The primary data structure produced by TrueBlocks is an index of address appearances. This index provides very quick access to transaction histories for a given address.
 
-You may either build the entire index from scratch (requires a tracing, archive node), or you may download part of the index and build it from there on.
+You may either build the entire index from scratch (requires a tracing, archive node) or download part of the index and build it from there.
 
 This process is described in this article [Indexing Addresses](https://trueblocks.io/docs/install/get-the-index/).
+
+## Docker
+
+Our official docker version is in a [separate repo](https://github.com/TrueBlocks/trueblocks-docker). Please see that repo for more information.
+
+### Below is the old docker instructions. This section will be moved shortly.
+
+A `Dockerfile` is included in this repo as an example for creating a Docker image.
+
+1. Build a docker image (example tagged with `latest`)
+  ```bash
+  docker build . --tag=trueblocks-core:latest
+  ```
+
+2. Run a docker container (Examples:)
+  ```bash
+  # Running a simple chifra command
+  docker run trueblocks-core:latest chifra status
+
+  # Mounting separate config, cache, and index folders and running chifra init
+  docker run \
+    -v ./trueblocks:/root/.local/share/trueblocks \
+    -v ./cache:/root/.local/share/trueblocks/cache \
+    -v ./unchained:/root/.local/share/trueblocks/unchained \
+    trueblocks-core:latest chifra init
+
+  # Mounting those same folders and starting the chifra serve
+  docker run \
+    -v ./trueblocks:/root/.local/share/trueblocks \
+    -v ./cache:/root/.local/share/trueblocks/cache \
+    -v ./unchained:/root/.local/share/trueblocks/unchained \
+    trueblocks-core:latest chifra serve --port 0.0.0.0:8080
+  ```
 
 ## Contributing to TrueBlocks
 

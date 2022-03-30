@@ -37,10 +37,8 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 extern void loadPinMaps(CIndexStringMap& filenameMap, CIndexHashMap& bloomMap, CIndexHashMap& indexMap);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-    ENTER("parseArguments");
-
     if (!standardOptions(command))
-        EXIT_NOMSG(false);
+        return false;
 
     // BEG_CODE_LOCAL_INIT
     CStringArray modes;
@@ -50,7 +48,7 @@ bool COptions::parseArguments(string_q& command) {
     blknum_t last_block = NOPOS;
     // END_CODE_LOCAL_INIT
 
-    blknum_t latest = NOPOS;  // getBlockProgress(BP_CLIENT).client;
+    blknum_t latest = NOPOS;  // getLatestBlock_client();
 
     Init();
     explode(arguments, command, ' ');
@@ -142,19 +140,13 @@ bool COptions::parseArguments(string_q& command) {
     for (auto m : modes)
         cs |= (m == "caches");
     if (Mocked(cs ? "caches" : "status"))
-        EXIT_NOMSG(false);
+        return false;
 
     if (!loadNames())
         return usage("Could not load names database.");
 
-    establishFolder(cacheFolder_tmp);
-    establishFolder(indexFolder_finalized);
-    establishFolder(indexFolder_blooms);
-    establishFolder(cacheFolder_slurps);
-    establishFolder(cacheFolder_blocks);
-    establishFolder(cacheFolder_txs);
-    establishFolder(cacheFolder_traces);
-    establishFolder(cacheFolder_monitors);
+    establishIndexFolders();
+    establishCacheFolders();
 
     for (auto m : modes)
         mode += (m + "|");
@@ -202,7 +194,7 @@ bool COptions::parseArguments(string_q& command) {
     }
     HIDE_FIELD(CChainCache, "max_depth");
 
-    EXIT_NOMSG(true);
+    return true;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -216,6 +208,8 @@ void COptions::Init(void) {
     depth = NOPOS;
     terse = false;
     // END_CODE_INIT
+
+    meta = getMetaData();
 
     scanRange = make_pair(0, NOPOS);
     mode = "";
@@ -247,7 +241,6 @@ void COptions::Init(void) {
         status.clientVersion = "Not running";
         status.clientIds = "Not running";
     } else {
-        CMetaData meta = getMetaData();
         status.clientVersion = (isTestMode() ? "Client version" : getVersionFromClient());
         status.clientIds = "chainId: " + uint_2_Str(meta.chainId) + " networkId: " + uint_2_Str(meta.networkId);
     }

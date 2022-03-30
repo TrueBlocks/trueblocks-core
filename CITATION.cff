@@ -1,0 +1,7 @@
+cff-version: 1.2.0
+message: "To cite TrueBlocks in publications, please cite it as below:"
+authors:
+  - name: TrueBlocks Team
+title: "TrueBlocks: Lightweight indexing for any EVM-based blockchain"
+url: "https://trueblocks.io/"
+date-released: 2022-02-26

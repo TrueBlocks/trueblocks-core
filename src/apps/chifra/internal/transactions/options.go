@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -90,7 +91,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *TransactionsOptions {
 	}
 	opts.Globals = *globals.FromRequest(w, r)
 	// EXISTING_CODE
-	opts.Reconcile = globals.ConvertOneEns(opts.Globals.Chain, opts.Reconcile)
+	opts.Reconcile = ens.ConvertOneEns(opts.Globals.Chain, opts.Reconcile)
 	// EXISTING_CODE
 
 	return opts
@@ -100,7 +101,7 @@ func TransactionsFinishParse(args []string) *TransactionsOptions {
 	opts := GetOptions()
 	// EXISTING_CODE
 	opts.Transactions = args
-	opts.Reconcile = globals.ConvertOneEns(opts.Globals.Chain, opts.Reconcile)
+	opts.Reconcile = ens.ConvertOneEns(opts.Globals.Chain, opts.Reconcile)
 	// EXISTING_CODE
 	return opts
 }
