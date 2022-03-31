@@ -60,6 +60,8 @@ Make sure you're in the folder <indexPath> and that you see the above folder tre
 Complete the following commands:
 
 ```
+rm -fR blooms/0133*
+rm -fR finalized/0133*
 rm -fR blooms/0139*
 rm -fR finalized/0139*
 rm -fR blooms/014*
