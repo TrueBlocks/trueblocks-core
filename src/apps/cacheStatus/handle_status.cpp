@@ -259,7 +259,7 @@ bool noteMonitor_light(const string_q& path, void* data) {
     if (endsWith(path, '/')) {
         return forEveryFileInFolder(path + "*", noteMonitor_light, data);
 
-    } else if (endsWith(path, "acct.bin")) {
+    } else if (isMonitorFilePath(path)) {
         CItemCounter* counter = reinterpret_cast<CItemCounter*>(data);
         ASSERT(counter->options);
         CMonitorCache* ptr = (CMonitorCache*)counter->cachePtr;  // NOLINT
@@ -308,7 +308,7 @@ bool noteMonitor(const string_q& path, void* data) {
     if (endsWith(path, '/')) {
         return forEveryFileInFolder(path + "*", noteMonitor, data);
 
-    } else if (endsWith(path, "acct.bin")) {
+    } else if (isMonitorFilePath(path)) {
         CItemCounter* counter = reinterpret_cast<CItemCounter*>(data);
         ASSERT(counter->options);
         CMonitorCacheItem mdi;

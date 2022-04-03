@@ -26,7 +26,7 @@ func Test_Monitor(t *testing.T) {
 		t.Error("Incorrect suffix in 'dir'. Expected: \"/cache/mainnet/monitors/\" Dir:", dir)
 	}
 
-	if testAddr+".acct.bin" == fileName {
+	if testAddr+Ext == fileName {
 		t.Error("Filename should be lower case: ", fileName)
 	}
 

@@ -18,7 +18,7 @@ bool cleanMonitorFile(const string_q& path, void* data) {
         forEveryFileInFolder(path + "*", cleanMonitorFile, data);
 
     } else {
-        if (endsWith(path, "acct.bin")) {
+        if (isMonitorFilePath(path)) {
             if (isTestMode()) {
                 string_q testes =
                     "|0x001d14804b399c6ef80e64576f657660804fec0b|"

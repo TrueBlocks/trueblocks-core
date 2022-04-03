@@ -421,8 +421,6 @@ void CMonitor::writeAppendNewApps(const CAppearanceArray_mon& items) {
 string_q CMonitor::getPathToMonitor(const address_t& addr, bool staging) const {
     string_q fn = isAddress(addr) ? addr + ".acct.bin" : addr;
     string_q base = cacheFolder_monitors + (staging ? "staging/" : "");
-    if (isTestMode())
-        base = chainConfigsFolder_mocked + "monitors/" + (staging ? "staging/" : "");
     return base + fn;
 }
 
@@ -624,11 +622,15 @@ void cleanMonitorStage(void) {
 
 //----------------------------------------------------------------
 address_t path_2_Addr(const string_q& path) {
-    if (!endsWith(path, ".acct.bin"))
+    if (!isMonitorFilePath(path))
         return "";
     CStringArray parts;
     explode(parts, path, '/');
     return substitute(parts[parts.size() - 1], ".acct.bin", "");
+}
+
+bool isMonitorFilePath(const string_q& path) {
+    return endsWith(path, "acct.bin")
 }
 // EXISTING_CODE
 }  // namespace qblocks

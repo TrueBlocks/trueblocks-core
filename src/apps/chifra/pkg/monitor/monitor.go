@@ -70,7 +70,6 @@ func NewStagedMonitor(chain, addr string) Monitor {
 func (mon Monitor) String() string {
 	if mon.Deleted {
 		return fmt.Sprintf("%s\t%d\t%d\t%t", hexutil.Encode(mon.Address.Bytes()), mon.Count, mon.FileSize, mon.Deleted)
-
 	}
 	return fmt.Sprintf("%s\t%d\t%d", hexutil.Encode(mon.Address.Bytes()), mon.Count, mon.FileSize)
 }
