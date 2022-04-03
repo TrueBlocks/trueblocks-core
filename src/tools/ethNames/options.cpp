@@ -161,9 +161,6 @@ bool COptions::parseArguments(string_q& command) {
     if (remove)
         crudCommands.push_back("remove");
 
-    if (Mocked((tags ? "tags" : collections ? "collections" : "names")))
-        return false;
-
     if (prefund) {
         if (!loadNamesWithPrefunds())
             return usage("Could not load names database.");

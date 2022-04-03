@@ -83,8 +83,8 @@ on      ,cmd  ,fast  ,null  ,utillib/tomlTest2   ,whenBlock    ,n    ,val = when
 on      ,cmd  ,fast  ,null  ,utillib/typesTest   ,01           ,n    ,val = 0
 on      ,cmd  ,fast  ,null  ,utillib/versionTest ,versions     ,n    ,
 on      ,cmd  ,fast  ,null  ,utillib/yamlTest    ,01           ,n    ,val = 0
-on      ,cmd  ,fast  ,null  ,utillib/builtInTest ,minimal      ,n    ,fmt = json & ether & mocked & wei & dollars & nocolor & noop
-on      ,cmd  ,fast  ,null  ,utillib/builtInTest ,verbose      ,n    ,verbose & fmt = json & ether & mocked & wei & dollars & nocolor & noop & output file & raw & version
+on      ,cmd  ,fast  ,null  ,utillib/builtInTest ,minimal      ,n    ,fmt = json & ether & wei & dollars & nocolor & noop
+on      ,cmd  ,fast  ,null  ,utillib/builtInTest ,verbose      ,n    ,verbose & fmt = json & ether & wei & dollars & nocolor & noop & output file & raw & version
 
 off     ,cmd  ,fast  ,null  ,utillib/runningTest ,01           ,n    ,val = 0
 off     ,cmd  ,fast  ,null  ,utillib/curlTest    ,test00       ,n    ,

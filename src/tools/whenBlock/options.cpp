@@ -87,9 +87,6 @@ bool COptions::parseArguments(string_q& commandIn) {
         }
     }
 
-    if (Mocked("when"))
-        return false;
-
     if (!timestamps && (check || fix))
         return usage("The --check and --fix options are available only with --timestamps.");
 

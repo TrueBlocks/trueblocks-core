@@ -97,9 +97,6 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (Mocked(""))
-        return false;
-
     if (blocks.empty())
         blocks.numList.push_back(isTestMode() ? byzantiumBlock() : newestBlock);  // use 'latest'
 

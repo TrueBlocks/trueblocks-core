@@ -98,9 +98,6 @@ bool COptions::parseArguments(string_q& command) {
         return handle_reset();
     }
 
-    if (Mocked(""))
-        return false;
-
     if (pin && !getApiKey(lic)) {
         if (!isTestMode()) {
             ostringstream os;

@@ -91,9 +91,6 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("show_errs", show_errs);
     // END_DEBUG_DISPLAY
 
-    if (Mocked(""))
-        return false;
-
     if (tokens.empty() || tokens.size() > 1)
         return usage("Please supply a single ERC20 token address.");
 
