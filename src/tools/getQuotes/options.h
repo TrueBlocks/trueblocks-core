@@ -24,6 +24,7 @@
 class COptions : public COptionsBase {
   public:
     // BEG_CODE_DECLARE
+    bool update;
     string_q feed;
     // END_CODE_DECLARE
 
