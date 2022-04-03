@@ -109,7 +109,7 @@ bool COptions::parseArguments(string_q& command) {
 
     // We need to find the cache
     CMonitor m;
-    cacheFile = m.getPathToMonitor(tokens[0]);
+    cacheFile = m.get PathToMonitor(tokens[0]);
     if (!fileExists(cacheFile))
         return usage("Could not find cache file: " + cacheFile);
 

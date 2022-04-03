@@ -305,6 +305,8 @@ func (mon *Monitor) Remove() (bool, error) {
 	return !file.FileExists(mon.Path()), nil
 }
 
+// TODO: This should be non-interuptable
+// MoveToProduction moves a previously staged monitor to the monitors folder.
 func (mon *Monitor) MoveToProduction() error {
 	if !mon.Staged {
 		return errors.New("trying to move monitor that is not staged")

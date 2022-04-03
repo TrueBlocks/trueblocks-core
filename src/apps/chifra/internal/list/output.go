@@ -10,27 +10,11 @@ package listPkg
 
 // EXISTING_CODE
 import (
-	"io"
 	"net/http"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
-	"github.com/ethereum/go-ethereum/common"
 	"github.com/spf13/cobra"
 )
-
-// AddressMonitorMap carries arrays of appearances that have not yet been written to the monitor file
-type AddressMonitorMap map[common.Address]*monitor.Monitor
-
-// MonitorUpdate stores the original 'chifra list' command line options plus
-type MonitorUpdate struct {
-	writer     io.Writer
-	maxTasks   int
-	monitorMap AddressMonitorMap
-	Globals    globals.GlobalOptions
-	Range      cache.FileRange
-}
 
 // EXISTING_CODE
 

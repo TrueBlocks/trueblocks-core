@@ -7,11 +7,13 @@ package listPkg
 // TODO: BOGUS -- USED TO BE ACCTSCRAPE2
 import (
 	"fmt"
+	"io"
 	"io/ioutil"
 	"log"
 	"os"
 	"sync"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -19,6 +21,18 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/ethereum/go-ethereum/common"
 )
+
+// AddressMonitorMap carries arrays of appearances that have not yet been written to the monitor file
+type AddressMonitorMap map[common.Address]*monitor.Monitor
+
+// MonitorUpdate stores the original 'chifra list' command line options plus
+type MonitorUpdate struct {
+	writer     io.Writer
+	maxTasks   int
+	monitorMap AddressMonitorMap
+	Globals    globals.GlobalOptions
+	Range      cache.FileRange
+}
 
 func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) error {
 	var updater MonitorUpdate
@@ -67,7 +81,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 			if taskCount >= updater.maxTasks {
 				resArray := <-resultChannel
 				for _, r := range resArray {
-					updater.UpdateMonitors(&r)
+					updater.updateMonitors(&r)
 				}
 				taskCount--
 			}
@@ -82,11 +96,11 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 
 	for resArray := range resultChannel {
 		for _, r := range resArray {
-			updater.UpdateMonitors(&r)
+			updater.updateMonitors(&r)
 		}
 	}
 
-	return updater.MoveAllToProduction()
+	return updater.moveAllToProduction()
 }
 
 // visitChunkToFreshenFinal opens one index file, searches for all the address(es) we're looking for and pushes the resultRecords
@@ -118,9 +132,9 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 	}
 }
 
-// UpdateMonitors writes an array of appearances to the Monitor file updating the header for lastScanned. It
+// updateMonitors writes an array of appearances to the Monitor file updating the header for lastScanned. It
 // is called by 'chifra list' and 'chifra export' prior to reporting results
-func (updater *MonitorUpdate) UpdateMonitors(result *index.ResultRecord) {
+func (updater *MonitorUpdate) updateMonitors(result *index.ResultRecord) {
 	mon := updater.monitorMap[result.Address]
 	if result == nil {
 		fmt.Println("Should not happen -- null result")
@@ -141,7 +155,9 @@ func (updater *MonitorUpdate) UpdateMonitors(result *index.ResultRecord) {
 	}
 }
 
-func (updater *MonitorUpdate) MoveAllToProduction() error {
+// moveAllToProduction completes the update by moving the monitor files from ./cache/<chain>/monitors/staging to
+// ./cache/<chain>/monitors.
+func (updater *MonitorUpdate) moveAllToProduction() error {
 	for _, mon := range updater.monitorMap {
 		err := mon.MoveToProduction()
 		if err != nil {
