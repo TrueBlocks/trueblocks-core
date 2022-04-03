@@ -116,7 +116,7 @@ extern string_q getConfigPathLocal(void);
 // This routine is only used by tools that do not make their way through chifra.
 // (makeClass and testRunner primarily). It mimics the way chifra works to build
 // the configPaths. We ignore in this `chain`, defaulting to mainnet.
-void loadEnvironmentPaths(const string_q& chainIn, const string_q& unchainedPathIn) {
+void loadEnvironmentPaths(const string_q& chainIn, const string_q& unchainedPathIn, const string_q& cachePathIn) {
     string_q configPath = getConfigPathLocal();
 
     // We need to set enough of the environment for us to get the RPC from the config file...
