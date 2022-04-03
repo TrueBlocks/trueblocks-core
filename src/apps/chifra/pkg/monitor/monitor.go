@@ -251,6 +251,17 @@ func (mon *Monitor) WriteApps(apps []index.AppearanceRecord, lastScanned uint32)
 	return
 }
 
+// IsMonitor returns true if the monitor file exists
+func (mon *Monitor) IsMonitor() bool {
+	exists := file.FileExists(mon.Path())
+	if !exists {
+		// TODO: BOGUS
+		oldAcctFile := strings.Replace(mon.Path(), Ext, ".acct.bin", -1)
+		exists = file.FileExists(oldAcctFile)
+	}
+	return exists
+}
+
 // Delete marks the file's delete flag, but does not physically remove the file
 func (mon *Monitor) Delete() (prev bool) {
 	prev = mon.Deleted

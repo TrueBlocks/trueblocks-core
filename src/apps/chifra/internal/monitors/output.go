@@ -15,7 +15,6 @@ import (
 	"os"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
@@ -79,7 +78,7 @@ func (opts *MonitorsOptions) HandleCrudCommands(w io.Writer) bool {
 
 	for _, addr := range opts.Addrs {
 		m := monitor.NewMonitor(opts.Globals.Chain, addr, false)
-		if !file.FileExists(m.Path()) {
+		if !m.IsMonitor() {
 			msg := "Monitor not found for address " + addr + "."
 			logger.Log(logger.Info, msg)
 			return true
