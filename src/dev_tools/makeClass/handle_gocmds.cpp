@@ -55,6 +55,26 @@ bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
 }
 
 //---------------------------------------------------------------------------------------------------
+void COptions::verifyGoEnumValidators(void) {
+    for (auto p : cmdOptionArray) {
+        if (contains(p.data_type, "enum") && !p.api_route.empty()) {
+            string_q e = p.data_type;
+            replace(e, "enum", "");
+            replace(e, "list", "");
+            replaceAny(e, "<[*]>", "");
+            e = "[" + e + "]";
+            string_q fn = getPathToSource("apps/chifra/internal/" + p.api_route + "/validate.go");
+            string_q contents = asciiFileToString(fn);
+            if (contains(contents, e)) {
+                // cout << cGreen << "HAS: " << fn << ": " << e << cOff << endl;
+            } else {
+                LOG_WARN("\t", p.api_route, " has no an enum validator for ", e);
+            }
+        }
+    }
+}
+
+//---------------------------------------------------------------------------------------------------
 bool COptions::handle_gocmds_options(const CCommandOption& p) {
     string_q fn = getPathToSource("apps/chifra/internal/" + p.api_route + "/options.go");
     replaceAll(fn, "/internal/serve", "/server");
