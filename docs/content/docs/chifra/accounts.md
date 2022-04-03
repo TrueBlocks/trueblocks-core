@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2022-02-22T07:16:50
+date: 2022-04-02T22:03:14
 lastmod:
   - :git
   - lastmod
@@ -126,15 +126,13 @@ Arguments:
   addrs - one or more addresses (0x...) to process (required)
 
 Flags:
-  -p, --appearances   export a list of appearances
-  -U, --count         present only the number of records
-      --clean         clean (i.e. remove duplicate appearances) from monitors
-      --delete        delete a monitor, but do not remove it
-      --undelete      undelete a previously deleted monitor
-      --remove        remove a previously deleted monitor
-  -x, --fmt string    export format, one of [none|json*|txt|csv|api]
-  -v, --verbose       enable verbose (increase detail with --log_level)
-  -h, --help          display this help screen
+      --clean        clean (i.e. remove duplicate appearances) from monitors
+      --delete       delete a monitor, but do not remove it
+      --undelete     undelete a previously deleted monitor
+      --remove       remove a previously deleted monitor
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -v, --verbose      enable verbose (increase detail with --log_level)
+  -h, --help         display this help screen
 
 Notes:
   - An address must start with '0x' and be forty-two characters long.

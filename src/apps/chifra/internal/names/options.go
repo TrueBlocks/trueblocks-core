@@ -33,10 +33,10 @@ type NamesOptions struct {
 	Clean       bool
 	Autoname    string
 	Create      bool
-	Delete      bool
 	Update      bool
-	Remove      bool
+	Delete      bool
 	Undelete    bool
+	Remove      bool
 	Globals     globals.GlobalOptions
 	BadFlag     error
 }
@@ -58,10 +58,10 @@ func (opts *NamesOptions) TestLog() {
 	logger.TestLog(opts.Clean, "Clean: ", opts.Clean)
 	logger.TestLog(len(opts.Autoname) > 0, "Autoname: ", opts.Autoname)
 	logger.TestLog(opts.Create, "Create: ", opts.Create)
-	logger.TestLog(opts.Delete, "Delete: ", opts.Delete)
 	logger.TestLog(opts.Update, "Update: ", opts.Update)
-	logger.TestLog(opts.Remove, "Remove: ", opts.Remove)
+	logger.TestLog(opts.Delete, "Delete: ", opts.Delete)
 	logger.TestLog(opts.Undelete, "Undelete: ", opts.Undelete)
+	logger.TestLog(opts.Remove, "Remove: ", opts.Remove)
 	opts.Globals.TestLog()
 }
 
@@ -106,17 +106,17 @@ func (opts *NamesOptions) ToCmdLine() string {
 	if opts.Create {
 		options += " --create"
 	}
-	if opts.Delete {
-		options += " --delete"
-	}
 	if opts.Update {
 		options += " --update"
 	}
-	if opts.Remove {
-		options += " --remove"
+	if opts.Delete {
+		options += " --delete"
 	}
 	if opts.Undelete {
 		options += " --undelete"
+	}
+	if opts.Remove {
+		options += " --remove"
 	}
 	options += " " + strings.Join(opts.Terms, " ")
 	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
@@ -158,14 +158,14 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *NamesOptions {
 			opts.Autoname = value[0]
 		case "create":
 			opts.Create = true
-		case "delete":
-			opts.Delete = true
 		case "update":
 			opts.Update = true
-		case "remove":
-			opts.Remove = true
+		case "delete":
+			opts.Delete = true
 		case "undelete":
 			opts.Undelete = true
+		case "remove":
+			opts.Remove = true
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "names")

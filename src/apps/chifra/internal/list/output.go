@@ -43,17 +43,17 @@ func RunList(cmd *cobra.Command, args []string) error {
 	}
 
 	// EXISTING_CODE
-	if opts.Newone {
-		optsEx := NewListOptsEx(opts)
-		err = optsEx.HandleFreshenMonitors()
-		if err != nil {
-			return err
-		}
-		if opts.Count {
-			return opts.HandleListCount()
-		}
-		// return nil
-	}
+	//if opts.Newone {
+	//	optsEx := NewListOptsEx(opts)
+	//	err = optsEx.HandleFreshenMonitors()
+	//	if err != nil {
+	//		return err
+	//	}
+	//	if opts.Count {
+	//		return opts.HandleListCount()
+	//	}
+	//	// return nil
+	//}
 
 	// exportPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
 	exportPkg.GetOptions().Appearances = true
