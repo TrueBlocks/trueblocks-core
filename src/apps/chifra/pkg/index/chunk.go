@@ -51,7 +51,7 @@ type fetchResult struct {
 // pass the arguments directly, because a worker function is expected to take one
 // parameter of type interface{}.
 type DownloadWorkerArguments struct {
-	chunkPath       *cache.Path
+	chunkPath       *cache.CachePath
 	ctx             context.Context
 	downloadWg      *sync.WaitGroup
 	gatewayUrl      string
@@ -61,7 +61,7 @@ type DownloadWorkerArguments struct {
 
 type WriteWorkerArguments struct {
 	cancel          context.CancelFunc
-	chunkPath       *cache.Path
+	chunkPath       *cache.CachePath
 	ctx             context.Context
 	progressChannel chan<- *progress.Progress
 	writeWg         *sync.WaitGroup
@@ -114,7 +114,7 @@ func getDownloadWorker(arguments DownloadWorkerArguments) WorkerFunction {
 		default:
 			// Perform download => unzip-and-save
 			hash := pin.BloomHash
-			if arguments.chunkPath.Type == cache.IndexChunk {
+			if arguments.chunkPath.Type == cache.Index_Final {
 				hash = pin.IndexHash
 			}
 
@@ -207,7 +207,7 @@ func getWriteWorker(arguments WriteWorkerArguments) WorkerFunction {
 
 // GetChunksFromRemote downloads, unzips and saves the chunk of type indicated by chunkType
 // for each pin in pins. Progress is reported to progressChannel.
-func GetChunksFromRemote(chain string, pins []manifest.PinDescriptor, chunkPath *cache.Path, progressChannel chan<- *progress.Progress) {
+func GetChunksFromRemote(chain string, pins []manifest.PinDescriptor, chunkPath *cache.CachePath, progressChannel chan<- *progress.Progress) {
 	poolSize := runtime.NumCPU() * 2
 	// Downloaded content will wait for saving in this channel
 	writeChannel := make(chan *jobResult, poolSize)
@@ -290,7 +290,7 @@ func GetChunksFromRemote(chain string, pins []manifest.PinDescriptor, chunkPath 
 }
 
 // saveFileContents decompresses the downloaded data and saves it to files
-func saveFileContents(res *jobResult, chunkPath *cache.Path) error {
+func saveFileContents(res *jobResult, chunkPath *cache.CachePath) error {
 	// We load content to the buffer first to check its size
 	buffer := &bytes.Buffer{}
 	read, err := buffer.ReadFrom(res.contents)
@@ -323,7 +323,7 @@ func saveFileContents(res *jobResult, chunkPath *cache.Path) error {
 }
 
 // FilterDownloadedChunks returns new []manifest.PinDescriptor slice with all pins from RootPath removed
-func FilterDownloadedChunks(pins []manifest.PinDescriptor, chunkPath *cache.Path) []manifest.PinDescriptor {
+func FilterDownloadedChunks(pins []manifest.PinDescriptor, chunkPath *cache.CachePath) []manifest.PinDescriptor {
 	fileMap := make(map[string]bool)
 
 	files, err := ioutil.ReadDir(chunkPath.String())

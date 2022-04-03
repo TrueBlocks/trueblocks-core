@@ -19,6 +19,7 @@ func (opts *WhenOptions) HandleWhenList() error {
 		return err
 	}
 
+	// TODO: Fix export without arrays
 	if opts.Globals.ApiMode {
 		opts.Globals.Respond(opts.Globals.Writer, http.StatusOK, result)
 

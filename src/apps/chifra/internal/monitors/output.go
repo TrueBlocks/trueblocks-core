@@ -10,9 +10,14 @@ package monitorsPkg
 
 // EXISTING_CODE
 import (
+	"io"
 	"net/http"
+	"os"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
@@ -28,6 +33,9 @@ func RunMonitors(cmd *cobra.Command, args []string) error {
 	}
 
 	// EXISTING_CODE
+	if opts.HandleCrudCommands(os.Stdout) {
+		return nil
+	}
 	return opts.Globals.PassItOn("acctExport", opts.ToCmdLine())
 	// EXISTING_CODE
 }
@@ -59,10 +67,47 @@ func ServeMonitors(w http.ResponseWriter, r *http.Request) bool {
 			return true
 		}
 	}
-	// opts.Globals.PassItOn("acctExport --appearances", opts.ToCmdLine())
-	return false
+	return opts.HandleCrudCommands(w)
 	// EXISTING_CODE
 }
 
 // EXISTING_CODE
+func (opts *MonitorsOptions) HandleCrudCommands(w io.Writer) bool {
+	if !(opts.Delete || opts.Undelete || opts.Remove) {
+		return false
+	}
+
+	for _, addr := range opts.Addrs {
+		m := monitor.NewMonitor(opts.Globals.Chain, addr, false)
+		if !file.FileExists(m.Path()) {
+			msg := "Monitor not found for address " + addr + "."
+			logger.Log(logger.Info, msg)
+			return true
+		} else {
+			if opts.Delete {
+				m.Delete()
+				msg := "Monitor " + addr + " was deleted but not removed."
+				logger.Log(logger.Info, msg)
+			} else if opts.Undelete {
+				m.UnDelete()
+				msg := "Monitor " + addr + " was undeleted."
+				logger.Log(logger.Info, msg)
+			}
+
+			if opts.Remove {
+				wasRemoved, err := m.Remove()
+				if !wasRemoved || err != nil {
+					msg := "Monitor for " + addr + " was not  removed. " + err.Error()
+					logger.Log(logger.Info, msg)
+					return true
+				} else {
+					msg := "Monitor for " + addr + " was permanently removed."
+					logger.Log(logger.Info, msg)
+				}
+			}
+		}
+	}
+	return true
+}
+
 // EXISTING_CODE

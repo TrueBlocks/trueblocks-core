@@ -1134,7 +1134,7 @@ const char* STR_PARAM_YAML =
 
 // TODO: search for go-port
 bool goPortNewCode(const string_q& a) {
-    CStringArray tools = {"fireStorm", "pinMan", "flame"};
+    CStringArray tools = {"chunkMan", "fireStorm", "init", "flame"};
     for (auto tool : tools) {
         if (contains(a, tool))
             return true;

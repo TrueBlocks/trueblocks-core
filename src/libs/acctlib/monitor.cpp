@@ -470,17 +470,6 @@ blknum_t CMonitor::getNextBlockToVisit(bool ifExists) const {
         return true;                                                                                                   \
     }
 
-//-----------------------------------------------------------------------
-bool CMonitor::monitorExists(void) const {
-    if (fileExists(getPathToMonitor(address, false)))
-        return true;
-    if (fileExists(getPathToMonitorLast(address, false)))
-        return true;
-    if (fileExists(getPathToMonitorDels(address)))
-        return true;
-    return false;
-}
-
 //--------------------------------------------------------------------------------
 bool CMonitor::isMonitorLocked(string_q& msg) const {
     checkLock(getPathToMonitor(address, false), "cache");
@@ -580,39 +569,6 @@ bool CMonitor::removeDuplicates(const string_q& path) {
 //-----------------------------------------------------------------------
 bool CMonitor::isDeleted(void) const {
     return fileExists(getPathToMonitorDels(address));
-}
-
-//-----------------------------------------------------------------------
-void CMonitor::deleteMonitor(void) {
-    stringToAsciiFile(getPathToMonitorDels(address), Now().Format(FMT_EXPORT));
-}
-
-//-----------------------------------------------------------------------
-void CMonitor::undeleteMonitor(void) {
-    ::remove(getPathToMonitorDels(address).c_str());
-}
-
-//---------------------------------------------------------------------------
-void removeFile(const string_q& fn) {
-    ::remove(fn.c_str());
-    ::remove((fn + ".lck").c_str());
-}
-
-//-----------------------------------------------------------------------
-void CMonitor::removeMonitor(void) {
-    removeFile(getPathToMonitor(address, false));
-    removeFile(getPathToMonitorLast(address, false));
-    removeFile(getPathToMonitorDels(address));
-    // TODO(tjayrush): remove reconciliations
-}
-
-//-----------------------------------------------------------------------
-bloom_t CMonitor::getBloom(void) {
-    bloom_t not_set;
-    if (bloom == not_set) {
-        bloom = addr_2_Bloom(address);
-    }
-    return bloom;
 }
 
 //----------------------------------------------------------------

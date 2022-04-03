@@ -132,7 +132,7 @@ bool COptions::parseArguments(string_q& command) {
                 tests.push_back("apps/chunkMan");
                 tests.push_back("apps/fireStorm");
                 tests.push_back("apps/chifra");
-                tests.push_back("apps/pinMan");
+                tests.push_back("apps/init");
 
             } else {
                 tests.push_back(arg);
@@ -178,7 +178,7 @@ bool COptions::parseArguments(string_q& command) {
         tests.push_back("apps/chunkMan");
         tests.push_back("apps/fireStorm");
         tests.push_back("apps/chifra");
-        tests.push_back("apps/pinMan");
+        tests.push_back("apps/init");
     }
 
     SHOW_FIELD(CTestCase, "test_id");
@@ -267,8 +267,6 @@ void establishTestData(void) {
     doCommand("chifra abis 0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc");
     doCommand("chifra abis 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11");
     doCommand("chifra abis 0x7d655c57f71464b6f83811c55d84009cd9f5221c");
-
-    doCommand("TEST_MODE=true chifra list 0x001d14804b399c6ef80e64576f657660804fec0b");
 
 #if 1
     // TODO(tjayrush): Not sure what this is about. Hard to explain,

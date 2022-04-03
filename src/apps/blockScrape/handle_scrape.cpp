@@ -287,8 +287,6 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTA
 
     hashbytes_t hash = hash_2_Bytes(versionHash);
 
-    CBloomArray blooms;
-
     CArchive archive(WRITING_ARCHIVE);
     if (!archive.Lock(tmpFile2, modeWriteCreate, LOCK_NOWAIT)) {
         LOG_ERR("Could not lock index file: ", tmpFile2);
@@ -300,6 +298,8 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTA
     archive.Write(hash.data(), hash.size(), sizeof(uint8_t));
     archive.Write(nAddrs);
     archive.Write((uint32_t)blockTable.size());  // not accurate yet
+
+    CBloomFilter bloomFilter;
     for (size_t l = 0; l < lines.size(); l++) {
         string_q line = lines[l];
         ASSERT(countOf(line, '\t') == 2);
@@ -308,7 +308,7 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTA
         CIndexedAppearance rec(parts[1], parts[2]);
         blockTable.push_back(rec);
         if (!prev.empty() && parts[0] != prev) {
-            addToSet(blooms, prev);
+            bloomFilter.addAddrToBloom(prev);
             addrbytes_t bytes = addr_2_Bytes(prev);
             archive.Write(bytes.data(), bytes.size(), sizeof(uint8_t));
             archive.Write(offset);
@@ -322,7 +322,7 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTA
     }
 
     // The above algo always misses the last address, so we add it here
-    addToSet(blooms, prev);
+    bloomFilter.addAddrToBloom(prev);
     addrbytes_t bytes = addr_2_Bytes(prev);
     archive.Write(bytes.data(), bytes.size(), sizeof(uint8_t));
     archive.Write(offset);
@@ -344,10 +344,10 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTA
     // We've built the data in a temporary file. We do this in case we're interrupted during the building of the
     // data so it's not corrupted. In this way, we only move the data to its final resting place once. It's safer.
     string_q bloomFile = substitute(substitute(outFn, "/finalized/", "/blooms/"), ".bin", ".bloom");
-    lockSection();                          // disallow control+c
-    writeBloomToBinary(bloomFile, blooms);  // write the bloom file
-    copyFile(tmpFile2, outFn);              // move the index file
-    ::remove(tmpFile2.c_str());             // remove the tmp file
+    lockSection();                            // disallow control+c
+    bloomFilter.writeBloomFilter(bloomFile);  // write the bloom file
+    copyFile(tmpFile2, outFn);                // move the index file
+    ::remove(tmpFile2.c_str());               // remove the tmp file
     unlockSection();
 
     return (pinFunc ? ((*pinFunc)(outFn, pinFuncData)) : true);

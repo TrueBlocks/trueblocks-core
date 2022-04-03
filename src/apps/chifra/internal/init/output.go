@@ -12,7 +12,7 @@ package initPkg
 import (
 	"net/http"
 
-	pinsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/pins"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/spf13/cobra"
 )
 
@@ -27,10 +27,11 @@ func RunInit(cmd *cobra.Command, args []string) error {
 	}
 
 	// EXISTING_CODE
-	pinsPkg.GetOptions().Init = true
-	pinsPkg.GetOptions().All = opts.All
-	pinsPkg.GetOptions().Globals = opts.Globals
-	return pinsPkg.RunPins(cmd, args)
+	err = opts.HandleInit()
+	if err != nil {
+		logger.Fatal(err)
+	}
+	return nil
 	// EXISTING_CODE
 }
 
@@ -44,7 +45,11 @@ func ServeInit(w http.ResponseWriter, r *http.Request) bool {
 	}
 
 	// EXISTING_CODE
-	return false
+	err = opts.HandleInit()
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+	}
+	return true
 	// EXISTING_CODE
 }
 

@@ -283,10 +283,6 @@ bool COptions::parseArguments(string_q& command) {
         return false;
     }
 
-    // Handle the easy cases first...
-    if (isCrudCommand())
-        return process_rm(addrs);
-
     if (accounting && !isArchiveNode())
         return usage("The --accounting option requires historical balances which your RPC server does not provide.");
 
@@ -354,7 +350,7 @@ bool COptions::parseArguments(string_q& command) {
         monitor.isStaging = !fileExists(monitor.getPathToMonitor(monitor.address, false));
         string_q msg;
         if (monitor.isMonitorLocked(msg)) {
-            string_q msg = STR_MONITOR_LOCKED;
+            msg = STR_MONITOR_LOCKED;
             replace(msg, "{0}", monitor.getPathToMonitor(addr, false));
             return usage(msg);
         }

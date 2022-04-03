@@ -2,39 +2,24 @@ list?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&firstBlock=100000&lastBloc
 {
   "data": [
     {
-      "blockNumber": 202249,
-      "transactionIndex": 0,
       "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
-      "name": "Prefund_0002"
+      "blockNumber": 202249,
+      "transactionIndex": 0
     },
     {
-      "blockNumber": 1501459,
-      "transactionIndex": 2,
       "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
-      "name": "Prefund_0002"
+      "blockNumber": 1501459,
+      "transactionIndex": 2
     }
   ],
   "meta": {
-    "unripe": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "staging": "0xdeadbeef",
-    "finalized": "0xdeadbeef",
     "client": "0xdeadbeef",
-    "first_block": "0xdeadbeef",
-    "last_block": "0xdeadbeef",
-    "accountedFor": {
-      "tags": "80-Prefund",
-      "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
-      "name": "Prefund_0002",
-      "symbol": "",
-      "source": "Genesis",
-      "decimals": 0,
-      "description": "",
-      "isCustom": false,
-      "isPrefund": true,
-      "isContract": false,
-      "isErc20": false,
-      "isErc721": false
-    }
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
   }
 }

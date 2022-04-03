@@ -413,11 +413,12 @@ bool noteIndex(const string_q& path, void* data) {
         aci.firstTs = getTimestampAt(aci.firstApp);
         aci.latestTs = getTimestampAt(aci.latestApp);
 
-        CIndexHeader header;
-        readIndexHeader(path, header);
-        aci.nApps = header.nRows;
-        aci.nAddrs = header.nAddrs;
-        counter->indexArray->push_back(aci);
+        CIndexArchive index(READING_ARCHIVE);
+        if (index.ReadIndexFromBinary(path, IP_HEADER)) {
+            aci.nApps = index.header.nApps;
+            aci.nAddrs = index.header.nAddrs;
+            counter->indexArray->push_back(aci);
+        }
     }
     return !shouldQuit();
 }

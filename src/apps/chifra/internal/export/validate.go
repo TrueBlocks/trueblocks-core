@@ -29,8 +29,7 @@ func (opts *ExportOptions) ValidateExport() error {
 		logger.Log(logger.Warning, "The --accounting option reports a spotPrice of one for all assets on non-mainnet chains.")
 	}
 
-	var bloomZero cache.Path
-	bloomZero.New(opts.Globals.Chain, cache.BloomChunk)
+	bloomZero := cache.NewCachePath(opts.Globals.Chain, cache.Index_Bloom)
 	path := bloomZero.GetFullPath("000000000-000000000")
 	if !file.FileExists(path) {
 		msg := "The bloom filter for block zero (000000000-000000000.bloom) was not found. You must run "

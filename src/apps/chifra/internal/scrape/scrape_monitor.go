@@ -19,6 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/ethereum/go-ethereum/common"
@@ -111,7 +112,7 @@ func Freshen(chain string, monitors []monitor.Monitor) error {
 
 			mon := batches[i][j]
 			countBefore := mon.Count
-			countAfter, _ := mon.Reload(chain)
+			countAfter, _ := mon.Reload(true /* create */)
 
 			if countAfter > 0 {
 				if countAfter > 100000 {
@@ -126,7 +127,7 @@ func Freshen(chain string, monitors []monitor.Monitor) error {
 					if !exists {
 						start = 0
 					}
-					expApps := getExportOpts(&mon, chain, appsPath, start, countAfter)
+					expApps, _ := getExportOpts(&mon, chain, appsPath, start, countAfter)
 					expApps.Appearances = true
 					expApps.Globals.PassItOn("acctExport", expApps.ToCmdLine())
 				}
@@ -138,7 +139,7 @@ func Freshen(chain string, monitors []monitor.Monitor) error {
 					if !exists {
 						start = 0
 					}
-					expTxs := getExportOpts(&mon, chain, txsPath, start, countAfter)
+					expTxs, _ := getExportOpts(&mon, chain, txsPath, start, countAfter)
 					expTxs.Cache = true
 					expTxs.CacheTraces = true
 					expTxs.Globals.PassItOn("acctExport", expTxs.ToCmdLine())
@@ -151,7 +152,7 @@ func Freshen(chain string, monitors []monitor.Monitor) error {
 					if !exists {
 						start = 0
 					}
-					expLogs := getExportOpts(&mon, chain, logsPath, start, countAfter)
+					expLogs, _ := getExportOpts(&mon, chain, logsPath, start, countAfter)
 					expLogs.Logs = true
 					expLogs.Relevant = true
 					expLogs.Articulate = true
@@ -185,7 +186,7 @@ func getMonitors(chain, folder string, monitorChan chan<- monitor.Monitor) {
 			if !strings.HasPrefix(line, "#") {
 				parts := strings.Split(line, ",")
 				if len(parts) > 0 && validate.IsValidAddress(parts[0]) && !validate.IsZeroAddress(parts[0]) {
-					monitorChan <- monitor.NewMonitor(chain, parts[0])
+					monitorChan <- monitor.NewMonitor(chain, parts[0], true /* create */)
 				}
 			}
 		}
@@ -201,7 +202,7 @@ func getMonitors(chain, folder string, monitorChan chan<- monitor.Monitor) {
 		if !info.IsDir() {
 			addr, _ := fn_2_Addr(path)
 			if len(addr) > 0 {
-				monitorChan <- monitor.NewMonitor(chain, addr)
+				monitorChan <- monitor.NewMonitor(chain, addr, true /* create */)
 			}
 		}
 		return nil
@@ -258,19 +259,28 @@ func establishExportPaths() {
 	}
 }
 
-func getExportOpts(mon *monitor.Monitor, chain, path string, firstBlock, lastBlock uint32) exportPkg.ExportOptions {
-	// firstBlock and lastBlock are one-based
-	first, _ := mon.Peek(firstBlock)
-	last, _ := mon.Peek(lastBlock)
-
+// getExportOpts creates an ExportOptions item to export from the first to last appearance found in the file. firstPos and lastPos are one-based
+func getExportOpts(mon *monitor.Monitor, chain, path string, firstPos, lastPos uint32) (exportPkg.ExportOptions, error) {
 	expOpts := exportPkg.ExportOptions{MaxRecords: 250, MaxTraces: 250}
 	expOpts.Addrs = append(expOpts.Addrs, mon.GetAddrStr())
 	expOpts.Globals.Chain = chain
-	expOpts.FirstBlock = uint64(first.BlockNumber)
-	expOpts.LastBlock = uint64(last.BlockNumber)
 	expOpts.Globals.Format = "csv"
 	expOpts.Globals.OutputFn = path
 	expOpts.Globals.Append = file.FileExists(expOpts.Globals.OutputFn)
 	expOpts.Globals.NoHeader = file.FileExists(expOpts.Globals.OutputFn)
-	return expOpts
+
+	var app index.AppearanceRecord
+	err := mon.ReadApp(firstPos, &app)
+	if err != nil {
+		return exportPkg.ExportOptions{}, err
+	}
+	expOpts.FirstBlock = uint64(app.BlockNumber)
+
+	err = mon.ReadApp(lastPos, &app)
+	if err != nil {
+		return exportPkg.ExportOptions{}, err
+	}
+	expOpts.LastBlock = uint64(app.BlockNumber)
+
+	return expOpts, nil
 }

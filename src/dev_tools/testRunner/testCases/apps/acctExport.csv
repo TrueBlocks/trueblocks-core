@@ -8,6 +8,7 @@ on      ,cmd  ,fast  ,list     ,apps/acctExport ,list_help                ,n    
 on      ,cmd  ,fast  ,list     ,apps/acctExport ,list_long_help           ,n    ,help
 on      ,both ,fast  ,list     ,apps/acctExport ,list_no_params           ,y    ,
 
+on      ,both ,fast  ,list     ,apps/acctExport ,list_list                ,n    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & fmt = txt
 on      ,both ,fast  ,list     ,apps/acctExport ,list_count               ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & count
 on      ,both ,fast  ,list     ,apps/acctExport ,list_appearances         ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000
 on      ,both ,fast  ,list     ,apps/acctExport ,list_appearances_csv     ,n    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000 & fmt = csv
@@ -19,6 +20,8 @@ on      ,cmd  ,fast  ,monitors ,apps/acctExport ,monitors_help            ,n    
 on      ,cmd  ,fast  ,monitors ,apps/acctExport ,monitors_long_help       ,n    ,help
 on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_no_params       ,y    ,
 
+on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_not_both1       ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & last_block = 9000000 & fmt = json & remove & undelete
+on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_not_both2       ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & last_block = 9000000 & fmt = json & delete & undelete
 on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_delete_1        ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & delete
 on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_delete_1_fail   ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & delete
 on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_undelete        ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & undelete

@@ -28,24 +28,15 @@ class bloom_t {
     bloom_t(const bloom_t& b);
     bloom_t& operator=(const bloom_t& b);
     bool operator==(const bloom_t& item) const;
-    bool operator!=(const bloom_t& item) const {
-        return !operator==(item);
-    }
 
     void lightBit(size_t bit);
-    void unlightBit(size_t bit);
-    size_t nBitsHit(void) const;
-
-    void showBloom(ostream& os, size_t first, size_t cnt) const;
-    bool isBitLit(size_t bit) const;
-    void toggleBit(size_t bit);
     bool isInBloom(const bloom_t& test) const;
+    bool isInBloom(const CUintArray& bitsLit) const;
 
   private:
     void copy(const bloom_t& b);
     void init(void);
 };
-typedef vector<bloom_t> CBloomArray;
 
 //---------------------------------------------------------------------------
 inline bloom_t::bloom_t(void) {
@@ -73,21 +64,24 @@ inline bloom_t& bloom_t::operator=(const bloom_t& b) {
 //---------------------------------------------------------------------------
 extern bloom_t addr_2_Bloom(const address_t& addrIn, CUintArray& litBits);
 
-//---------------------------------------------------------------------------
-inline bloom_t addr_2_Bloom(const address_t& addrIn) {
-    CUintArray litBits;
-    return addr_2_Bloom(addrIn, litBits);
-}
+typedef vector<bloom_t> CBloomArray;
+extern bool isBitLit(size_t bit, uint8_t* bits);
 
-//----------------------------------------------------------------------
-extern bool addToSet(CBloomArray& blooms, const address_t& addr);
-extern bool isMember(const CBloomArray& blooms, const bloom_t& bloom);
-extern bool writeBloomToBinary(const string_q& fileName, const CBloomArray& blooms);
-extern bool readBloomFromBinary(const string_q& fileName, CBloomArray& blooms);
-extern size_t getBloomWidthInBytes(void);
-extern size_t getBloomWidthInBits(void);
-extern size_t getMaxAddrsInBloom(void);
-extern size_t getNibbleWid(void);
-extern size_t getK(void);
+//---------------------------------------------------------------------------
+class CBloomFilter {
+  public:
+    CBloomArray array;
+    bool addAddrToBloom(const address_t& addr);
+    bool writeBloomFilter(const string_q& fileName);
+    bool readBloomFilter(const string_q& fileName, bool readBits);
+    bool isMemberOf(uint8_t const bytes[20]);
+    bool isMemberOf(const address_t& addr);
+
+    friend ostream& operator<<(ostream& os, const CBloomFilter& bloomFilter);
+};
+
+extern void getLitBits(const address_t& addrIn, CUintArray& litBitsOut);
+
+#define EXTRACT_WID 8
 
 }  // namespace qblocks

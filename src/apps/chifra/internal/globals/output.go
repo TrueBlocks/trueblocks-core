@@ -22,6 +22,10 @@ import (
 
 // Output converts data into the given format and writes to where writer
 func (opts *GlobalOptions) Output(where io.Writer, format string, data interface{}) error {
+	return opts.Output2(where, format, data, false)
+}
+
+func (opts *GlobalOptions) Output2(where io.Writer, format string, data interface{}, hideHeader bool) error {
 	nonEmptyFormat := format
 	if format == "" || format == "none" {
 		if utils.IsApiMode() {
@@ -47,12 +51,12 @@ func (opts *GlobalOptions) Output(where io.Writer, format string, data interface
 	case "json":
 		output, err = opts.JsonFormatter(data)
 	case "csv":
-		output, err = opts.CsvFormatter(data)
+		output, err = opts.CsvFormatter(data, hideHeader)
 	case "txt":
-		output, err = opts.TxtFormatter(data)
+		output, err = opts.TxtFormatter(data, hideHeader)
 	// TODO: There is no such case -- this is 'txt' in non-API mode with a terminal
 	case "tab":
-		output, err = opts.TabFormatter(data)
+		output, err = opts.TabFormatter(data, hideHeader)
 	default:
 		return fmt.Errorf("unsupported format %s", format)
 	}
@@ -86,9 +90,9 @@ func (opts *GlobalOptions) JsonFormatter(data interface{}) ([]byte, error) {
 }
 
 // TxtFormatter turns data into TSV string
-func (opts *GlobalOptions) TxtFormatter(data interface{}) ([]byte, error) {
+func (opts *GlobalOptions) TxtFormatter(data interface{}, hideHeader bool) ([]byte, error) {
 	out := bytes.Buffer{}
-	tsv, err := opts.AsTsv(data)
+	tsv, err := opts.AsTsv(data, hideHeader)
 	if err != nil {
 		return nil, err
 	}
@@ -100,10 +104,10 @@ func (opts *GlobalOptions) TxtFormatter(data interface{}) ([]byte, error) {
 }
 
 // TabFormatter turns data into a table (string)
-func (opts *GlobalOptions) TabFormatter(data interface{}) ([]byte, error) {
+func (opts *GlobalOptions) TabFormatter(data interface{}, hideHeader bool) ([]byte, error) {
 	tabOutput := &bytes.Buffer{}
 	tab := tabwriter.NewWriter(tabOutput, 0, 0, 2, ' ', 0)
-	tsv, err := opts.AsTsv(data)
+	tsv, err := opts.AsTsv(data, hideHeader)
 	if err != nil {
 		return nil, err
 	}
@@ -122,8 +126,8 @@ type CsvFormatted struct {
 // CsvFormatter turns a type into CSV string. It uses custom code instead of
 // Go's encoding/csv to maintain compatibility with C++ output, which
 // quotes each item. encoding/csv would double-quote a quoted string...
-func (opts *GlobalOptions) CsvFormatter(i interface{}) ([]byte, error) {
-	records, err := ToStringRecords(i, true)
+func (opts *GlobalOptions) CsvFormatter(i interface{}, hideHeader bool) ([]byte, error) {
+	records, err := ToStringRecords(i, true, hideHeader)
 	if err != nil {
 		return nil, err
 	}
@@ -215,8 +219,8 @@ func (t *Table) Print() error {
 }
 
 // AsTsv turns a type into tab-separated values
-func (opts *GlobalOptions) AsTsv(data interface{}) ([]byte, error) {
-	records, err := ToStringRecords(data, false)
+func (opts *GlobalOptions) AsTsv(data interface{}, hideHeader bool) ([]byte, error) {
+	records, err := ToStringRecords(data, false, hideHeader)
 	if err != nil {
 		return nil, err
 	}
@@ -305,7 +309,7 @@ func MakeFirstUpperCase(s string) string {
 // ToStringRecords uses Reflect API to read data from the provided slice of structs and
 // turns it into a slice of string slices that can be later passed to encoding package
 // writers to convert between different output formats
-func ToStringRecords(data interface{}, quote bool) ([][]string, error) {
+func ToStringRecords(data interface{}, quote bool, hideHeader bool) ([][]string, error) {
 	var records [][]string
 	// We can quote the data now, so that we don't have to loop over it again
 	// later.
@@ -344,8 +348,9 @@ func ToStringRecords(data interface{}, quote bool) ([][]string, error) {
 		records = append(records, record)
 	}
 
-	result := [][]string{
-		header,
+	var result [][]string
+	if !hideHeader {
+		result = append(result, header)
 	}
 	result = append(result, records...)
 	return result, nil
@@ -383,6 +388,20 @@ func (opts *GlobalOptions) Respond(w http.ResponseWriter, httpStatus int, respon
 	w.Header().Set("Content-Type", formatToMimeType[formatNotEmpty])
 	opts.Format = formatNotEmpty
 	err := opts.Output(w, opts.Format, responseData)
+	if err != nil {
+		opts.RespondWithError(w, http.StatusInternalServerError, err)
+	}
+}
+
+func (opts *GlobalOptions) Respond2(w http.ResponseWriter, httpStatus int, responseData interface{}, hideHeader bool) {
+	formatNotEmpty := opts.Format
+	if formatNotEmpty == "" {
+		formatNotEmpty = "api"
+	}
+
+	w.Header().Set("Content-Type", formatToMimeType[formatNotEmpty])
+	opts.Format = formatNotEmpty
+	err := opts.Output2(w, opts.Format, responseData, hideHeader)
 	if err != nil {
 		opts.RespondWithError(w, http.StatusInternalServerError, err)
 	}

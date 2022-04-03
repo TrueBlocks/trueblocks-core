@@ -1,0 +1,2 @@
+chifra init  
+INFO[DATE|TIME] chifra init is not processed in test mode.

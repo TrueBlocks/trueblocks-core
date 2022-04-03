@@ -1,0 +1,3 @@
+chifra init  --fmt csv
+TEST[DATE|TIME] Format:  csv
+INFO[DATE|TIME] chifra init is not processed in test mode.

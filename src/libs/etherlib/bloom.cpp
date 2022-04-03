@@ -17,8 +17,7 @@ namespace qblocks {
 #define BLOOM_WIDTH_IN_BYTES (1048576 / 8)
 #define BLOOM_WIDTH_IN_BITS (BLOOM_WIDTH_IN_BYTES * 8)
 #define MAX_ADDRS_IN_BLOOM 50000
-#define NIBBLE_WID 8
-#define K 5
+#define BLOOM_K 5
 //---------------------------------------------------------------------------
 void bloom_t::init(void) {
     nInserted = 0;
@@ -29,9 +28,7 @@ void bloom_t::init(void) {
 //---------------------------------------------------------------------------
 void bloom_t::copy(const bloom_t& b) {
     nInserted = b.nInserted;
-    for (size_t i = 0; i < BLOOM_WIDTH_IN_BYTES; i++) {
-        bits[i] = b.bits[i];
-    }
+    memcpy(bits, b.bits, BLOOM_WIDTH_IN_BYTES);
 }
 
 //---------------------------------------------------------------------------
@@ -46,13 +43,6 @@ bool bloom_t::operator==(const bloom_t& test) const {
 }
 
 //---------------------------------------------------------------------------
-void bloom_t::showBloom(ostream& os, size_t first, size_t cnt) const {
-    for (size_t i = first; i < first + cnt; i++) {
-        os << byte_2_Bits(bits[i]) << " ";
-    }
-}
-
-//---------------------------------------------------------------------------
 void bloom_t::lightBit(size_t bit) {
     size_t which = (bit / 8);
     size_t whence = (bit % 8);
@@ -62,97 +52,106 @@ void bloom_t::lightBit(size_t bit) {
 }
 
 //---------------------------------------------------------------------------
-void bloom_t::unlightBit(size_t bit) {
-    size_t which = (bit / 8);
+bool isBitLit(size_t bit, uint8_t* bits) {
     size_t whence = (bit % 8);
-    size_t index = BLOOM_WIDTH_IN_BYTES - which - 1;
     uint8_t mask = uint8_t(1 << whence);
-    bits[index] &= ~(mask);
-}
 
-//---------------------------------------------------------------------------
-bool bloom_t::isBitLit(size_t bit) const {
     size_t which = (bit / 8);
-    size_t whence = (bit % 8);
     size_t index = BLOOM_WIDTH_IN_BYTES - which - 1;
-    uint8_t mask = uint8_t(1 << whence);
+
     return (bits[index] & mask);
-}
-
-//---------------------------------------------------------------------------
-void bloom_t::toggleBit(size_t bit) {
-    if (isBitLit(bit))
-        unlightBit(bit);
-    else
-        lightBit(bit);
-}
-
-//---------------------------------------------------------------------------
-size_t bloom_t::nBitsHit(void) const {
-    size_t cnt = 0;
-    for (size_t b = 0; b < BLOOM_WIDTH_IN_BYTES; b++) {
-        string_q bitStr = byte_2_Bits(bits[b]);
-        for (auto ch : bitStr) {
-            if (ch == '1')
-                cnt++;
-        }
-    }
-    return cnt;
 }
 
 //---------------------------------------------------------------------------
 bool bloom_t::isInBloom(const bloom_t& test) const {
     for (size_t b = 0; b < BLOOM_WIDTH_IN_BITS; b++)
-        if (test.isBitLit(b) && !isBitLit(b))
+        if (isBitLit(b, test.bits) && !isBitLit(b, bits))
             return false;
     return true;
 }
 
 //---------------------------------------------------------------------------
-bloom_t addr_2_Bloom(const address_t& addrIn, CUintArray& litBits) {
-    bloom_t ret;
-    if (isAddress(addrIn)) {
-        string_q sha = addrIn;
-        for (size_t k = 0; k < K; k++) {
-            string_q dbl_byte = ("0x" + extract(sha, 2 + (k * NIBBLE_WID), NIBBLE_WID));
-            uint64_t bit = (str_2_Uint(dbl_byte) % BLOOM_WIDTH_IN_BITS);
-            ret.lightBit(bit);
-            litBits.push_back(bit);
-        }
+bool bloom_t::isInBloom(const CUintArray& bitsLit) const {
+    for (auto bit : bitsLit) {
+        if (!isBitLit(bit, bits))
+            return false;
     }
+    return true;
+}
+
+//---------------------------------------------------------------------------
+void getLitBits(const address_t& addrIn, CUintArray& litBitsOut) {
+    for (size_t k = 0; k < BLOOM_K; k++) {
+        string_q fourByte = ("0x" + extract(addrIn, 2 + (k * EXTRACT_WID), EXTRACT_WID));
+        uint64_t bit = (str_2_Uint(fourByte) % BLOOM_WIDTH_IN_BITS);
+        litBitsOut.push_back(bit);
+    }
+    return;
+}
+
+//---------------------------------------------------------------------------
+bloom_t addr_2_Bloom(const address_t& addrIn, CUintArray& litBitsOut) {
+    bloom_t ret;
+    if (!isAddress(addrIn)) {
+        return ret;
+    }
+
+    getLitBits(addrIn, litBitsOut);
+    for (auto bit : litBitsOut) {
+        ret.lightBit(bit);
+    }
+
     return ret;
 }
 
+static CUintArray unused;
+static const bloom_t zeroBloom = addr_2_Bloom("0x0", unused);
 //----------------------------------------------------------------------
-bool addToSet(CBloomArray& blooms, const address_t& addr) {
+bool CBloomFilter::addAddrToBloom(const address_t& addr) {
+    if (array.size() == 0) {
+        array.push_back(zeroBloom);  // so we have something to add to
+    }
+
     CUintArray litBits;
-    bloom_t zeroBloom = addr_2_Bloom("0x0", litBits);
-    if (blooms.size() == 0)
-        blooms.push_back(zeroBloom);  // so we have something to add to
-
     addr_2_Bloom(addr, litBits);
-    for (auto bit : litBits)
-        blooms[blooms.size() - 1].lightBit(bit);
-    blooms[blooms.size() - 1].nInserted++;
+    for (auto bit : litBits) {
+        array[array.size() - 1].lightBit(bit);
+    }
+    array[array.size() - 1].nInserted++;
 
-    if (blooms[blooms.size() - 1].nInserted > MAX_ADDRS_IN_BLOOM)
-        blooms.push_back(zeroBloom);
+    if (array[array.size() - 1].nInserted > MAX_ADDRS_IN_BLOOM)
+        array.push_back(zeroBloom);
 
     return true;
 }
 
 //----------------------------------------------------------------------
-bool isMember(const CBloomArray& blooms, const bloom_t& bloomIn) {
-    for (auto bloom : blooms) {
+bool CBloomFilter::isMemberOf(const address_t& addr) {
+    CUintArray unused1;
+    bloom_t bloomIn = addr_2_Bloom(addr, unused1);
+    for (auto bloom : array) {
         if (bloom.isInBloom(bloomIn))
             return true;
     }
     return false;
 }
 
+//---------------------------------------------------------------------------
+bool CBloomFilter::isMemberOf(uint8_t const bytes[20]) {
+    address_t addr = bytes_2_Addr(bytes);
+    CUintArray bitsLit;
+    getLitBits(addr, bitsLit);
+    for (size_t i = 0; i < array.size(); i++) {
+        if (array[i].isInBloom(bitsLit)) {
+            return true;
+        }
+    }
+    return false;
+}
+
 //----------------------------------------------------------------------------------
-bool readBloomFromBinary(const string_q& fileName, CBloomArray& blooms) {
-    blooms.clear();
+bool CBloomFilter::readBloomFilter(const string_q& fileName, bool readBits) {
+    array.clear();
     CArchive bloomCache(READING_ARCHIVE);
     if (bloomCache.Lock(fileName, modeReadOnly, LOCK_NOWAIT)) {
         uint32_t nBlooms;
@@ -160,8 +159,12 @@ bool readBloomFromBinary(const string_q& fileName, CBloomArray& blooms) {
         for (size_t i = 0; i < nBlooms; i++) {
             bloom_t bloom;
             bloomCache.Read(bloom.nInserted);
-            bloomCache.Read(bloom.bits, sizeof(uint8_t), BLOOM_WIDTH_IN_BYTES);
-            blooms.push_back(bloom);
+            if (readBits) {
+                bloomCache.Read(bloom.bits, sizeof(uint8_t), BLOOM_WIDTH_IN_BYTES);
+            } else {
+                bloomCache.Seek(BLOOM_WIDTH_IN_BYTES, SEEK_CUR);
+            }
+            array.push_back(bloom);
         }
         bloomCache.Close();
         return true;
@@ -170,15 +173,15 @@ bool readBloomFromBinary(const string_q& fileName, CBloomArray& blooms) {
 }
 
 //----------------------------------------------------------------------
-bool writeBloomToBinary(const string_q& fileName, const CBloomArray& blooms) {
+bool CBloomFilter::writeBloomFilter(const string_q& fileName) {
     lockSection();
     CArchive output(WRITING_ARCHIVE);
     if (!output.Lock(fileName, modeWriteCreate, LOCK_NOWAIT)) {
         unlockSection();
         return false;
     }
-    output.Write((uint32_t)blooms.size());
-    for (auto bloom : blooms) {
+    output.Write((uint32_t)array.size());
+    for (auto bloom : array) {
         output.Write(bloom.nInserted);
         output.Write(bloom.bits, sizeof(uint8_t), BLOOM_WIDTH_IN_BYTES);
     }
@@ -187,19 +190,29 @@ bool writeBloomToBinary(const string_q& fileName, const CBloomArray& blooms) {
     return true;
 }
 
-size_t getBloomWidthInBytes(void) {
-    return BLOOM_WIDTH_IN_BYTES;
+ostream& operator<<(ostream& os, const CBloomFilter& bloomFilter) {
+    CUintArray bitsLit;
+    uint64_t nBlooms, nInserted, nBitsLit, nBitsNotLit, sz;
+    nBlooms = nInserted = nBitsLit = nBitsNotLit = sz = 0;
+    nBlooms = bloomFilter.array.size();
+    for (const auto& b : bloomFilter.array) {
+        nInserted += b.nInserted;
+        for (size_t i = 0; i < BLOOM_WIDTH_IN_BITS; i++) {
+            if (isBitLit(i, b.bits)) {
+                nBitsLit++;
+                bitsLit.push_back(i);
+            } else {
+                nBitsNotLit++;
+            }
+        }
+    }
+    os << "nBlooms:     " << nBlooms << " nInserted:   " << nInserted << " nBitsLit:    " << nBitsLit
+       << " nBitsNotLit: " << nBitsNotLit << endl;
+    os << "bitsLit:" << endl;
+    for (auto b : bitsLit) {
+        os << b << ",";
+    }
+    return os;
 }
-size_t getBloomWidthInBits(void) {
-    return BLOOM_WIDTH_IN_BITS;
-}
-size_t getMaxAddrsInBloom(void) {
-    return MAX_ADDRS_IN_BLOOM;
-}
-size_t getNibbleWid(void) {
-    return NIBBLE_WID;
-}
-size_t getK(void) {
-    return K;
-}
+
 }  // namespace qblocks

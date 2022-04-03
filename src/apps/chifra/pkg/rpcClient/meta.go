@@ -6,11 +6,8 @@ package rpcClient
 
 import (
 	"encoding/json"
-	"io/fs"
-	"path/filepath"
-	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -31,14 +28,9 @@ func (m MetaData) String() string {
 	return string(ret)
 }
 
-type MetaValue struct {
-	folder string
-	value  uint64
-}
-
 func DistanceFromHead(chain string) uint64 {
-    meta := GetMetaData(chain, false)
-    return meta.Latest - meta.Finalized
+	meta := GetMetaData(chain, false)
+	return meta.Latest - meta.Finalized
 }
 
 func GetMetaData(chain string, testmode bool) *MetaData {
@@ -64,32 +56,28 @@ func GetMetaData(chain string, testmode bool) *MetaData {
 	meta.NetworkId = networkId
 	meta.Latest = BlockNumber(provider)
 
-	valueChan := make(chan MetaValue)
+	filenameChan := make(chan cache.IndexFileInfo)
 
 	var nRoutines int = 4
-	go walkIndexFolder(chain, "finalized", valueChan)
-	go walkIndexFolder(chain, "staging", valueChan)
-	go walkIndexFolder(chain, "ripe", valueChan)
-	go walkIndexFolder(chain, "unripe", valueChan)
+	go cache.WalkCacheFolder(chain, cache.Index_Final, filenameChan)
+	go cache.WalkCacheFolder(chain, cache.Index_Staging, filenameChan)
+	go cache.WalkCacheFolder(chain, cache.Index_Ripe, filenameChan)
+	go cache.WalkCacheFolder(chain, cache.Index_Unripe, filenameChan)
 
-	for result := range valueChan {
-		if strings.Contains(result.folder, "done-") {
-
-		} else {
-			switch result.folder {
-			case "finalized":
-				meta.Finalized = utils.Max(meta.Finalized, result.value)
-			case "staging":
-				meta.Staging = utils.Max(meta.Staging, result.value)
-			case "ripe":
-				meta.Ripe = utils.Max(meta.Ripe, result.value)
-			case "unripe":
-				meta.Unripe = utils.Max(meta.Unripe, result.value)
-			case "done":
-				nRoutines--
-				if nRoutines == 0 {
-					close(valueChan)
-				}
+	for result := range filenameChan {
+		switch result.Type {
+		case cache.Index_Final:
+			meta.Finalized = utils.Max(meta.Finalized, result.Range.Last)
+		case cache.Index_Staging:
+			meta.Staging = utils.Max(meta.Staging, result.Range.Last)
+		case cache.Index_Ripe:
+			meta.Ripe = utils.Max(meta.Ripe, result.Range.Last)
+		case cache.Index_Unripe:
+			meta.Unripe = utils.Max(meta.Unripe, result.Range.Last)
+		case cache.None:
+			nRoutines--
+			if nRoutines == 0 {
+				close(filenameChan)
 			}
 		}
 	}
@@ -101,25 +89,4 @@ func GetMetaData(chain string, testmode bool) *MetaData {
 	meta.Unripe = utils.Max(meta.Ripe, meta.Unripe)
 
 	return &meta
-}
-
-func walkIndexFolder(chain, folder string, valueChan chan<- MetaValue) {
-	defer func() {
-		valueChan <- MetaValue{folder: "done"}
-	}()
-
-	filepath.Walk(config.GetPathToIndex(chain)+folder, func(path string, info fs.FileInfo, err error) error {
-		if err != nil {
-			// If the scraper is running, this will sometimes send an error for a file, for example, that existed
-			// when it was first seen, but the scraper deletes before this call. We ignore any file system errors
-			// this routine, but if we experience problems, we can uncomment this line
-			// fmt.Printf("prevent panic by handling failure accessing a path %q: %v\n", path, err)
-			return err
-		}
-		if !info.IsDir() {
-			blkRange, _ := blockRange.RangeFromFilename(path)
-			valueChan <- MetaValue{folder: folder, value: uint64(blkRange.Last)}
-		}
-		return nil
-	})
 }

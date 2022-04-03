@@ -23,6 +23,33 @@
 // END_ERROR_DEFINES
 
 typedef map<CAppearance_mon, CAddressArray> appAddrMap;
+typedef struct CReverseAppMapEntry {
+  public:
+    uint32_t n;
+    uint32_t blk;
+    uint32_t tx;
+} CReverseAppMapEntry;
+
+//---------------------------------------------------------------------------
+class CIndexArchiveWithNeighborMaps : public CIndexArchive {
+  public:
+    CBlockRangeArray reverseAddrRanges;
+    CReverseAppMapEntry* reverseAppMap{nullptr};
+    explicit CIndexArchiveWithNeighborMaps(bool mode) : CIndexArchive(mode) {
+        reverseAppMap = nullptr;
+    }
+    ~CIndexArchiveWithNeighborMaps();
+    bool LoadReverseMaps(const blkrange_t& range);
+
+  private:
+    void clean(void) {
+        if (reverseAppMap) {
+            delete[] reverseAppMap;
+            reverseAppMap = nullptr;
+        }
+        reverseAddrRanges.clear();
+    }
+};
 
 //-----------------------------------------------------------------------
 class COptions : public CAbiOptions {
@@ -100,7 +127,6 @@ class COptions : public CAbiOptions {
     bool handle_traversers(void);
 
     bool process_clean(void);
-    bool process_rm(const CAddressArray& addrs);
     bool process_freshen(void);
 
     bool visitBinaryFile(const string_q& path, void* data);
@@ -129,7 +155,7 @@ class COptions : public CAbiOptions {
 
     // Used as temporary data to count neighbor traversals
     size_t neighborCount{0};
-    CIndexArchive* theIndex{nullptr};
+    CIndexArchiveWithNeighborMaps* theIndex{nullptr};
     bool showAddrsInTx(CTraverser* trav, const blkrange_t& range, const CAppearance_mon& app);
 };
 

@@ -19,6 +19,6 @@ struct CIndexHeader {
     uint32_t magic;
     uint8_t hash[32];
     uint32_t nAddrs;
-    uint32_t nRows;
+    uint32_t nApps;
 };
 }  // namespace qblocks

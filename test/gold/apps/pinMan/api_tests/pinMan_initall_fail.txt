@@ -1,6 +1,0 @@
-pins?list&initAll
-{
-  "errors": [
-    "The --init_all flag has been deprecated. Use --init --all instead."
-  ]
-}

@@ -56,10 +56,9 @@ func ServeWhen(w http.ResponseWriter, r *http.Request) bool {
 
 	// EXISTING_CODE
 	if opts.List {
-		err := opts.HandleWhenList()
+		err = opts.HandleWhenList()
 		if err != nil {
-			// TODO: this message is wrong - it was copy/pasted from pinMan code - no manifest here
-			logger.Fatal("Cannot open local manifest file", err)
+			logger.Fatal("Cannot generate when list", err)
 			return false
 		}
 		if len(opts.Blocks) == 0 {
