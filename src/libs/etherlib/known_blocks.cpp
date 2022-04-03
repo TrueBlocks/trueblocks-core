@@ -76,35 +76,35 @@ bool isDdos(blknum_t bn) {
 #if 0
 // This data was taken from Geth ./params/config.go
 ArrowGlacierBlock
-	make_pair("mainnet", 13773000),
+make_pair("mainnet", 13773000),
 
 BerlinBlock
-	make_pair("goerli",  4460644),
-	make_pair("kovan",   24770900),
-	make_pair("mainnet", 12244000),
-	make_pair("rinkeby", 8290928),
-	make_pair("ropsten", 9812189),
+make_pair("goerli",  4460644),
+make_pair("kovan",   24770900),
+make_pair("mainnet", 12244000),
+make_pair("rinkeby", 8290928),
+make_pair("ropsten", 9812189),
 
 DAOForkBlock
-	make_pair("mainnet", 1920000),
+make_pair("mainnet", 1920000),
 
 HomesteadBlock
-	make_pair("mainnet", 1150000),
+make_pair("mainnet", 1150000),
 
 IstanbulBlock
-	make_pair("goerli", 1561651),
-	make_pair("kovan", 14111141),
-	make_pair("mainnet", 9069000),
-	make_pair("rinkeby", 5435345),
-	make_pair("ropsten", 6485846),
+make_pair("goerli", 1561651),
+make_pair("kovan", 14111141),
+make_pair("mainnet", 9069000),
+make_pair("rinkeby", 5435345),
+make_pair("ropsten", 6485846),
 
 MuirGlacierBlock
-	make_pair("mainnet", 9200000),
-	make_pair("ropsten", 7117117),
+make_pair("mainnet", 9200000),
+make_pair("ropsten", 7117117),
 
 PetersburgBlock
-	make_pair("kovan", 10255201),
-	make_pair("mainnet", 7280000),
-	make_pair("rinkeby", 4321234),
-	make_pair("ropsten", 4939394),
+make_pair("kovan", 10255201),
+make_pair("mainnet", 7280000),
+make_pair("rinkeby", 4321234),
+make_pair("ropsten", 4939394),
 #endif
