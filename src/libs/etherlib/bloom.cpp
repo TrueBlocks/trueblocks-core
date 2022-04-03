@@ -89,19 +89,20 @@ void getLitBits(const address_t& addrIn, CUintArray& litBitsOut) {
     return;
 }
 
+//----------------------------------------------------------------------
+bool CBloomFilter::isMemberOf(const address_t& addr) {
+    CUintArray bitsLit;
+    getLitBits(addr, bitsLit);
+    for (auto bloom : array) {
+        if (bloom.isInBloom(bitsLit))
+            return true;
+    }
+    return false;
+}
+
 //---------------------------------------------------------------------------
-bloom_t addr_2_Bloom(const address_t& addrIn, CUintArray& litBitsOut) {
-    bloom_t ret;
-    if (!isAddress(addrIn)) {
-        return ret;
-    }
-
-    getLitBits(addrIn, litBitsOut);
-    for (auto bit : litBitsOut) {
-        ret.lightBit(bit);
-    }
-
-    return ret;
+bool CBloomFilter::isMemberOf(uint8_t const bytes[20]) {
+    return isMemberOf(bytes_2_Addr(bytes));
 }
 
 //----------------------------------------------------------------------
@@ -110,9 +111,9 @@ bool CBloomFilter::addToSet(const address_t& addr) {
         array.push_back(bloom_t());  // so we have something to add to
     }
 
-    CUintArray litBits;
-    addr_2_Bloom(addr, litBits);
-    for (auto bit : litBits) {
+    CUintArray bitsLit;
+    getLitBits(addr, bitsLit);
+    for (auto bit : bitsLit) {
         array[array.size() - 1].lightBit(bit);
     }
     array[array.size() - 1].nInserted++;
@@ -121,30 +122,6 @@ bool CBloomFilter::addToSet(const address_t& addr) {
         array.push_back(bloom_t());
 
     return true;
-}
-
-//----------------------------------------------------------------------
-bool CBloomFilter::isMemberOf(const address_t& addr) {
-    CUintArray unused1;
-    bloom_t bloomIn = addr_2_Bloom(addr, unused1);
-    for (auto bloom : array) {
-        if (bloom.isInBloom(bloomIn))
-            return true;
-    }
-    return false;
-}
-
-//---------------------------------------------------------------------------
-bool CBloomFilter::isMemberOf(uint8_t const bytes[20]) {
-    address_t addr = bytes_2_Addr(bytes);
-    CUintArray bitsLit;
-    getLitBits(addr, bitsLit);
-    for (auto bloom : array) {
-        if (bloom.isInBloom(bitsLit)) {
-            return true;
-        }
-    }
-    return false;
 }
 
 //----------------------------------------------------------------------------------
