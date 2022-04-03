@@ -83,7 +83,6 @@ bool COptions::parseArguments(string_q& command) {
     CAddressArray emitter;
     CStringArray topic;
     CAddressArray asset;
-    bool freshen = false;
     blknum_t first_block = 0;
     blknum_t last_block = NOPOS;
     bool deleteMe = false;
@@ -272,8 +271,6 @@ bool COptions::parseArguments(string_q& command) {
     if (!isApiMode() && max_records == 250)
         max_records = NOPOS;
 
-    freshenOnly = freshen;
-
     if (clean) {
         if (!process_clean())
             return usage("Clean function returned false.");
@@ -314,13 +311,13 @@ bool COptions::parseArguments(string_q& command) {
     if (accounting && (addrs.size() != 1))
         return usage("You may only use --accounting option with a single address.");
 
-    if (accounting && freshenOnly)
+    if (accounting && freshen)
         return usage("Do not use the --accounting option with --freshen.");
 
     if ((accounting) && (appearances || logs || traces || receipts || statements))
         return usage("Do not use the --accounting option with other options.");
 
-    if (freshenOnly && (logs || traces || receipts || statements))
+    if (freshen && (logs || traces || receipts || statements))
         return usage("Do not use the --freshen option with other options.");
 
     for (auto e : emitter)
@@ -475,6 +472,7 @@ void COptions::Init(void) {
     max_records = 250;
     relevant = false;
     clean = false;
+    freshen = false;
     staging = false;
     unripe = false;
     load = "";
@@ -711,7 +709,7 @@ bool COptions::isRelevant(const CLogEntry& log) const {
 
 //-----------------------------------------------------------------------
 bool fourByteFilter(const string_q& input, const COptions* opt) {
-    ASSERT(!opt->freshenOnly);
+    ASSERT(!opt->freshen);
     if (opt->fourbytes.empty())
         return true;
 

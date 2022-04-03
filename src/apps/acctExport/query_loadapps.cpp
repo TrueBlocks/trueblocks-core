@@ -48,7 +48,7 @@ bool COptions::loadMonitors(void) {
             if (monitor.getRecordCnt(path) == 0) {
                 // We don't continue if we have no transactions. We used to report an
                 // error here, but this is not really an error
-                if (!freshenOnly)
+                if (!freshen)
                     LOG_WARN("No records found for address ", path_2_Addr(path));
                 return false;
             }
@@ -101,7 +101,7 @@ bool COptions::loadMonitors(void) {
             return false;
 
     } else {
-        if (!freshenOnly)
+        if (!freshen)
             LOG_INFO("Nothing to export" + (allMonitors.size() ? (" from " + accountedFor.address) : "") + ".");
         return false;
     }

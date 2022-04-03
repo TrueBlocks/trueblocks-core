@@ -72,6 +72,7 @@ class COptions : public CAbiOptions {
     blknum_t max_records;
     bool relevant;
     bool clean;
+    bool freshen;
     bool staging;
     bool unripe;
     string_q load;
