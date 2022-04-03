@@ -52,5 +52,8 @@ One of [ poloniex | maker | tellor ]`)
 	quotesCmd.SetUsageTemplate(UsageWithNotes(notesQuotes))
 	quotesCmd.SetOut(os.Stderr)
 
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	chifraCmd.AddCommand(quotesCmd)
 }

@@ -92,5 +92,8 @@ func init() {
 	exportCmd.SetUsageTemplate(UsageWithNotes(notesExport))
 	exportCmd.SetOut(os.Stderr)
 
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	chifraCmd.AddCommand(exportCmd)
 }

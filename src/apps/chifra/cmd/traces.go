@@ -63,5 +63,8 @@ func init() {
 	tracesCmd.SetUsageTemplate(UsageWithNotes(notesTraces))
 	tracesCmd.SetOut(os.Stderr)
 
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	chifraCmd.AddCommand(tracesCmd)
 }

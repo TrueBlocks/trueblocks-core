@@ -58,5 +58,8 @@ One or more of [ name | symbol | decimals | totalSupply | version | none | all ]
 	tokensCmd.SetUsageTemplate(UsageWithNotes(notesTokens))
 	tokensCmd.SetOut(os.Stderr)
 
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	chifraCmd.AddCommand(tokensCmd)
 }

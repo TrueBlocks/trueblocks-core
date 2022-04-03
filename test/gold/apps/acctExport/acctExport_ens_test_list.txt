@@ -1,8 +1,8 @@
 chifra list  rhyslindmark.eth --first_block 4037786 --last_block 4589473
-TEST[DATE|TIME] Addrs:  [0xFf9387A9aaE1F5DAAB1Cd8Eb0E92113eA9d19CA3]
+TEST[DATE|TIME] Addrs:  [0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3]
 TEST[DATE|TIME] FirstBlock:  4037786
 TEST[DATE|TIME] LastBlock:  4589473
-TEST[DATE|TIME] Addrs:  [0xFf9387A9aaE1F5DAAB1Cd8Eb0E92113eA9d19CA3]
+TEST[DATE|TIME] Addrs:  [0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3]
 TEST[DATE|TIME] Appearances:  true
 TEST[DATE|TIME] FirstBlock:  4037786
 TEST[DATE|TIME] LastBlock:  4589473

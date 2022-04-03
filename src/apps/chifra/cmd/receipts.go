@@ -52,5 +52,8 @@ func init() {
 	receiptsCmd.SetUsageTemplate(UsageWithNotes(notesReceipts))
 	receiptsCmd.SetOut(os.Stderr)
 
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	chifraCmd.AddCommand(receiptsCmd)
 }
