@@ -39,6 +39,7 @@ bool visitIndexChunk(CIndexArchive& chunk, void* data) {
         return false;
     }
 
+    CBloomFilter testBloom;
     size_t missed = 0, nFp = 0;  // number of false positives
     for (size_t i = 0; i < chunk.header.nAddrs; i++) {
         bool hit = bloomFilter.isMemberOf(addrs[i].bytes);
@@ -50,13 +51,40 @@ bool visitIndexChunk(CIndexArchive& chunk, void* data) {
                 LOG_INFO(v->range.first, ":", v->range.second, " ", i, " ", chunk.header.nAddrs, " ", missed, "\r");
             }
         }
+        testBloom.addToSet(bytes_2_Addr(addrs[i].bytes));
+
         alterAddress(addrs[i].bytes, i);
         hit = bloomFilter.isMemberOf(addrs[i].bytes);
         if (hit) {
             nFp++;
         } else {
             if (!(i % 57)) {
-                LOG_INFO(v->range.first, ":", v->range.second, " ", i, " ", chunk.header.nAddrs, " ", nFp, "\r");
+                LOG_INFO("Pass 1 ", v->range.first, ":", v->range.second, " ", i, " ", chunk.header.nAddrs, " ", nFp,
+                         "\r");
+            }
+        }
+    }
+
+    if (testBloom != bloomFilter) {
+        LOG_WARN("Bloom created is different from the bloom read from disc ", bloomPath);
+    }
+
+    chunk.Seek(sizeof(CIndexHeader), SEEK_SET);
+    nRead = chunk.Read(addrs, sizeof(CIndexedAddress) * chunk.header.nAddrs, sizeof(char));
+    if (nRead != (sizeof(CIndexedAddress) * chunk.header.nAddrs)) {
+        LOG_WARN("Could not read addresses from ", indexPath);
+        return false;
+    }
+    size_t missed2 = 0;  // number of false positives
+    for (size_t i = 0; i < chunk.header.nAddrs; i++) {
+        bool hit = testBloom.isMemberOf(addrs[i].bytes);
+        if (!hit) {
+            LOG_WARN("Address should be in bloom: ", bytes_2_Addr(addrs[i].bytes));
+            missed2++;
+        } else {
+            if (!(i % 57)) {
+                LOG_INFO("Pass 2 ", v->range.first, ":", v->range.second, " ", i, " ", chunk.header.nAddrs, " ",
+                         missed2, "    \r");
             }
         }
     }

@@ -213,4 +213,27 @@ ostream& operator<<(ostream& os, const CBloomFilter& bloomFilter) {
     return os;
 }
 
+bool CBloomFilter::operator==(const CBloomFilter& it) const {
+    if (array.size() != it.array.size()) {
+        cerr << endl << "Differs in size " << array.size() << "," << it.array.size() << endl;
+        getchar();
+        return false;
+    }
+    for (size_t i = 0; i < array.size(); i++) {
+        for (size_t j = 0; j < BLOOM_WIDTH_IN_BYTES; j++) {
+            if (array[i].bits[j] != it.array[i].bits[j]) {
+                cerr << endl;
+                cerr << "Differs at ";
+                cerr << array[i].bits[j];
+                cerr << " ";
+                cerr << it.array[i].bits[j];
+                cerr << endl;
+                getchar();
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 }  // namespace qblocks

@@ -75,6 +75,10 @@ class CBloomFilter {
     bool addToSet(const address_t& addr);
     bool isMemberOf(uint8_t const bytes[20]);
     bool isMemberOf(const address_t& addr);
+    bool operator==(const CBloomFilter& it) const;
+    bool operator!=(const CBloomFilter& it) const {
+        return !operator==(it);
+    }
 
     friend ostream& operator<<(ostream& os, const CBloomFilter& bloomFilter);
 };
