@@ -16,8 +16,6 @@ extern void alterAddress(uint8_t bytes[20], int inc);
 //----------------------------------------------------------------
 bool visitIndexChunk(CIndexArchive& chunk, void* data) {
     CIndexChunkVisitor* v = (CIndexChunkVisitor*)data;
-    if (v->range.first < 2683122)
-        return true;
 
     string_q indexPath = chunk.getFilename();
     string_q bloomPath = substitute(substitute(indexPath, ".bin", ".bloom"), "finalized", "blooms");

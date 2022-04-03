@@ -39,7 +39,7 @@ int main(int argc, const char* argv[]) {
     // First, we create a bloom filter and add each address in the addrsInSet set to it.
     CBloomFilter bloomFilter;
     for (auto addr : addrsInSet) {
-        bloomFilter.addAddrToBloom(addr);
+        bloomFilter.addToSet(addr);
     }
 
     // Next we show a few statistics about the bloom filter

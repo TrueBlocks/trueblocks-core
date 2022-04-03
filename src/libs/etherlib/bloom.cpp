@@ -104,12 +104,10 @@ bloom_t addr_2_Bloom(const address_t& addrIn, CUintArray& litBitsOut) {
     return ret;
 }
 
-static CUintArray unused;
-static const bloom_t zeroBloom = addr_2_Bloom("0x0", unused);
 //----------------------------------------------------------------------
-bool CBloomFilter::addAddrToBloom(const address_t& addr) {
+bool CBloomFilter::addToSet(const address_t& addr) {
     if (array.size() == 0) {
-        array.push_back(zeroBloom);  // so we have something to add to
+        array.push_back(bloom_t());  // so we have something to add to
     }
 
     CUintArray litBits;
@@ -120,7 +118,7 @@ bool CBloomFilter::addAddrToBloom(const address_t& addr) {
     array[array.size() - 1].nInserted++;
 
     if (array[array.size() - 1].nInserted > MAX_ADDRS_IN_BLOOM)
-        array.push_back(zeroBloom);
+        array.push_back(bloom_t());
 
     return true;
 }
@@ -141,8 +139,8 @@ bool CBloomFilter::isMemberOf(uint8_t const bytes[20]) {
     address_t addr = bytes_2_Addr(bytes);
     CUintArray bitsLit;
     getLitBits(addr, bitsLit);
-    for (size_t i = 0; i < array.size(); i++) {
-        if (array[i].isInBloom(bitsLit)) {
+    for (auto bloom : array) {
+        if (bloom.isInBloom(bitsLit)) {
             return true;
         }
     }

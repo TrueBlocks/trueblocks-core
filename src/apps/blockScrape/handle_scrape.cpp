@@ -308,7 +308,7 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTA
         CIndexedAppearance rec(parts[1], parts[2]);
         blockTable.push_back(rec);
         if (!prev.empty() && parts[0] != prev) {
-            bloomFilter.addAddrToBloom(prev);
+            bloomFilter.addToSet(prev);
             addrbytes_t bytes = addr_2_Bytes(prev);
             archive.Write(bytes.data(), bytes.size(), sizeof(uint8_t));
             archive.Write(offset);
@@ -322,7 +322,7 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTA
     }
 
     // The above algo always misses the last address, so we add it here
-    bloomFilter.addAddrToBloom(prev);
+    bloomFilter.addToSet(prev);
     addrbytes_t bytes = addr_2_Bytes(prev);
     archive.Write(bytes.data(), bytes.size(), sizeof(uint8_t));
     archive.Write(offset);

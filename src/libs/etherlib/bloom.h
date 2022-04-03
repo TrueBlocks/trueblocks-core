@@ -62,18 +62,17 @@ inline bloom_t& bloom_t::operator=(const bloom_t& b) {
 }
 
 //---------------------------------------------------------------------------
-extern bloom_t addr_2_Bloom(const address_t& addrIn, CUintArray& litBits);
-
-typedef vector<bloom_t> CBloomArray;
 extern bool isBitLit(size_t bit, uint8_t* bits);
 
 //---------------------------------------------------------------------------
 class CBloomFilter {
+    typedef vector<bloom_t> CBloomArray;
+
   public:
     CBloomArray array;
-    bool addAddrToBloom(const address_t& addr);
     bool writeBloomFilter(const string_q& fileName);
     bool readBloomFilter(const string_q& fileName, bool readBits);
+    bool addToSet(const address_t& addr);
     bool isMemberOf(uint8_t const bytes[20]);
     bool isMemberOf(const address_t& addr);
 
