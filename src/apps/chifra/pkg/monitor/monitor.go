@@ -145,7 +145,10 @@ func (mon *Monitor) WriteHeader(deleted bool, lastScanned uint32) (err error) {
 	defer f.Close()
 
 	mon.Deleted = deleted
-	mon.LastScanned = lastScanned
+	// we want to store nextBlockToVisit (one more than the last block scanned)
+	if lastScanned > mon.LastScanned {
+		mon.LastScanned = lastScanned
+	}
 
 	f.Seek(0, io.SeekStart)
 	err = binary.Write(f, binary.LittleEndian, mon.Header)
@@ -212,7 +215,7 @@ func (mon *Monitor) WriteApps(apps []index.AppearanceRecord, lastScanned uint32)
 	mon.Close()
 
 	// Order matters
-	mon.WriteHeader(mon.Deleted, lastScanned)
+	mon.WriteHeader(mon.Deleted, lastScanned+1)
 
 	mode := os.O_WRONLY | os.O_CREATE
 	if file.FileExists(mon.Path()) {

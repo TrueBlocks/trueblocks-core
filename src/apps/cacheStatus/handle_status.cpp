@@ -309,10 +309,9 @@ bool noteMonitor(const string_q& path, void* data) {
         return forEveryFileInFolder(path + "*", noteMonitor, data);
 
     } else if (isMonitorFilePath(path)) {
-        CItemCounter* counter = reinterpret_cast<CItemCounter*>(data);
-        ASSERT(counter->options);
         CMonitorCacheItem mdi;
         mdi.type = mdi.getRuntimeClass()->m_ClassName;
+
         string_q addr = substitute(path, "/0x", "|");
         nextTokenClear(addr, '|');
         mdi.address = "0x" + nextTokenClear(addr, '.');
@@ -347,8 +346,14 @@ bool noteMonitor(const string_q& path, void* data) {
 
         CMonitor m;
         m.address = mdi.address;
-        mdi.deleted = m.isDeleted();
+        CMonitorHeader header;
+        m.readHeader(header);
+        mdi.deleted = header.deleted;
+
+        CItemCounter* counter = reinterpret_cast<CItemCounter*>(data);
+        ASSERT(counter->options);
         counter->monitorArray->push_back(mdi);
+
         if (isTestMode())
             return false;
     }

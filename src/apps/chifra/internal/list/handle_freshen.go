@@ -124,7 +124,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 		if rec != nil {
 			results = append(results, *rec)
 		} else {
-			err := mon.WriteHeader(mon.Deleted, uint32(indexChunk.Range.Last))
+			err := mon.WriteHeader(mon.Deleted, uint32(indexChunk.Range.Last+1))
 			if err != nil {
 				log.Println(err)
 			}

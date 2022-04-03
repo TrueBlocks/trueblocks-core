@@ -339,17 +339,12 @@ bool COptions::parseArguments(string_q& command) {
         CMonitor monitor;
         monitor.setValueByName("address", toLower(addr));
         monitor.setValueByName("name", toLower(addr));
-        monitor.clearMonitorLocks();
         monitor.finishParse();
         monitor.isStaging = !fileExists(monitor.getPathToMonitor(monitor.address, false));
-        string_q msg;
-        if (monitor.isMonitorLocked(msg)) {
-            msg = STR_MONITOR_LOCKED;
-            replace(msg, "{0}", monitor.getPathToMonitor(addr, false));
-            return usage(msg);
-        }
 
-        nextBlockToVisit = min(nextBlockToVisit, monitor.getNextBlockToVisit(false));
+        CMonitorHeader header;
+        monitor.readHeader(header);
+        nextBlockToVisit = min(nextBlockToVisit, uint64_t(header.lastScanned));
 
         if (accountedFor.address.empty()) {
             accountedFor.address = monitor.address;

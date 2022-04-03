@@ -425,63 +425,58 @@ string_q CMonitor::getPathToMonitor(const address_t& addr, bool staging) const {
 }
 
 //---------------------------------------------------------------------------
-string_q CMonitor::getPathToMonitorDels(const address_t& addr) const {
-    return getPathToMonitor(addr, false) + ".deleted";
-}
-
-//---------------------------------------------------------------------------
-string_q CMonitor::getPathToMonitorLast(const address_t& addr, bool staging) const {
-    return substitute(getPathToMonitor(addr, staging), ".acct.bin", ".last.txt");
-}
+#define getPathToMonitorDels(a) (getPathToMonitor((a), false) + ".deleted")
+#define getPathToMonitorLast(a, b) (substitute(getPathToMonitor((a), (b)), ".acct.bin", ".last.txt"))
+#define getPathToMonitorLastStaging(a) (getPathToMonitorLast((a), true))
+#define getPathToMontorLastProduction(a) (getPathToMonitorLast((a), false))
+#define getPathToNewMonitorType(a, b) (substitute(getPathToMonitor((a), (b)), ".acct.bin", ".mon.bin"))
 
 //-------------------------------------------------------------------------
 void CMonitor::writeNextBlockToVisit(blknum_t bn, bool staging) {
-    lastVisitedBlock = bn;
     stringToAsciiFile(getPathToMonitorLast(address, staging), uint_2_Str(bn) + "\n");
 }
 
 //--------------------------------------------------------------------------------
-blknum_t CMonitor::getNextBlockToVisit(bool ifExists) const {
-    bool exists = fileExists(getPathToMonitorLast(address, false));
-    if (ifExists || exists) {
-        ((CMonitor*)this)->lastVisitedBlock =
-            str_2_Uint(asciiFileToString(getPathToMonitorLast(address, false)));  // NOLINT
+void CMonitor::readHeader(CMonitorHeader& header) const {
+    string_q prodFn = getPathToMontorLastProduction(address);
+    bool prodExists = fileExists(prodFn);
+    string_q stageFn = getPathToMonitorLastStaging(address);
+    bool stageExists = fileExists(stageFn);
 
+    header.deleted = fileExists(getPathToMonitorDels(address));
+    if (stageExists) {
+        header.lastScanned = uint32_t(str_2_Uint(asciiFileToString(stageFn)));
+    } else if (prodExists) {
+        header.lastScanned = uint32_t(str_2_Uint(asciiFileToString(prodFn)));
     } else {
         // Accounts can receive ETH counter-factually. By default, we ignore
         // this and start our scan from the account's deploy block (in the case
         // of a contract) or the zero block. User can change this setting.
-        ((CMonitor*)this)->lastVisitedBlock = 0;  // NOLINT
+        header.lastScanned = 0;  // NOLINT
         if (getGlobalConfig("acctExport")->getConfigBool("settings", "start_when_deployed", true)) {
             blknum_t deployed = getDeployBlock(address);
-            ((CMonitor*)this)->lastVisitedBlock = (deployed == NOPOS ? 0 : deployed);  // NOLINT
+            header.lastScanned = uint32_t(deployed == NOPOS ? 0 : deployed);  // NOLINT
         }
     }
 
-    return lastVisitedBlock;
-}
-
-//--------------------------------------------------------------------------------
-#define checkLock(fn, b)                                                                                               \
-    if (fileExists((fn) + ".lck")) {                                                                                   \
-        msg = ("The " + string_q(b) + " file for monitor " + address + " is locked. Quitting...");                     \
-        return true;                                                                                                   \
+    string_q newFilename = getPathToNewMonitorType(address, stageExists);
+    if (fileExists(newFilename)) {
+        if (header.lastScanned > 0) {
+            cerr << "Returning " << header.lastScanned << endl;
+            cerr << "Returning " << header.deleted << endl;
+            CArchive archive(READING_ARCHIVE);
+            if (archive.Lock(newFilename, modeReadOnly, LOCK_NOWAIT)) {
+                CMonitorHeader test;
+                archive.Read(&test, sizeof(CMonitorHeader), 1);
+                archive.Release();
+                cerr << "Would have returned " << test.lastScanned << endl;
+                cerr << "Would have returned " << test.deleted << endl;
+            }
+        }
+    } else {
+        // cerr << "WHERE IS THE NEW FORMAT FILE" << endl;
+        // exit(0);
     }
-
-//--------------------------------------------------------------------------------
-bool CMonitor::isMonitorLocked(string_q& msg) const {
-    checkLock(getPathToMonitor(address, false), "cache");
-    checkLock(getPathToMonitorLast(address, false), "last block");
-    checkLock(getPathToMonitorDels(address), "marker");
-    return false;
-}
-
-//--------------------------------------------------------------------------------
-bool CMonitor::clearMonitorLocks(void) {
-    ::remove((getPathToMonitor(address, false) + ".lck").c_str());
-    ::remove((getPathToMonitorLast(address, false) + ".lck").c_str());
-    ::remove((getPathToMonitorDels(address) + ".lck").c_str());
-    return true;
 }
 
 //--------------------------------------------------------------------------------
@@ -511,24 +506,34 @@ void CMonitor::moveToProduction(bool staging) {
     closeMonitorCache();
     removeDuplicates(getPathToMonitor(address, true));
 
-    bool binExists = fileExists(getPathToMonitor(address, true));
-    bool lastExists = fileExists(getPathToMonitorLast(address, true));
-    lockSection();
-    if (binExists || lastExists) {
-        doMoveFile(getPathToMonitor(address, true), getPathToMonitor(address, false));
-        doMoveFile(getPathToMonitorLast(address, true), getPathToMonitorLast(address, false));
-    } else {
+    bool binStageExists = fileExists(getPathToMonitor(address, true));
+    bool lastStageExists = fileExists(getPathToMonitorLastStaging(address));
+
+    if (!binStageExists && !lastStageExists) {
         // For some reason (user quit, UI switched to adding a different address to monitor, something went
         // wrong...) the binary cache was not created. Cleanup everything. The user will have to start over.
         ::remove(getPathToMonitor(address, true).c_str());
-        ::remove(getPathToMonitorLast(address, true).c_str());
+        ::remove(getPathToMonitorLastStaging(address).c_str());
+    } else {
+        lockSection();
+        if (binStageExists) {
+            doMoveFile(getPathToMonitor(address, true), getPathToMonitor(address, false));
+        }
+        if (lastStageExists) {
+            doMoveFile(getPathToMonitorLastStaging(address), getPathToMontorLastProduction(address));
+        }
+        unlockSection();
     }
-    unlockSection();
 }
 
 //----------------------------------------------------------------
 bool CMonitor::removeDuplicates(const string_q& path) {
-    address = path_2_Addr(path);
+    if (!isMonitorFilePath(path))
+        return false;
+    CStringArray parts;
+    explode(parts, path, '/');
+    address = substitute(parts[parts.size() - 1], ".acct.bin", "");
+
     if (!loadAppearances(nullptr, nullptr)) {
         LOG_WARN("Could load monitor for address ", address);
         return false;
@@ -564,11 +569,6 @@ bool CMonitor::removeDuplicates(const string_q& path) {
     return true;
 }
 
-//-----------------------------------------------------------------------
-bool CMonitor::isDeleted(void) const {
-    return fileExists(getPathToMonitorDels(address));
-}
-
 //----------------------------------------------------------------
 blknum_t CMonitor::loadAppearances(MONAPPFUNC func, void* data) {
     string_q path = getPathToMonitor(address, false);
@@ -579,7 +579,7 @@ blknum_t CMonitor::loadAppearances(MONAPPFUNC func, void* data) {
 
     CAppearance_mon* buffer = new CAppearance_mon[nRecs];
     if (!buffer) {
-        LOG_ERR("Could not allocate buffer for address ", path_2_Addr(path));
+        LOG_ERR("Could not allocate buffer for address ", address);
         return false;
     }
 
@@ -588,7 +588,7 @@ blknum_t CMonitor::loadAppearances(MONAPPFUNC func, void* data) {
     if (!archiveIn.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
         archiveIn.Release();
         delete[] buffer;
-        LOG_ERR("Could not lock file ", path_2_Addr(path));
+        LOG_ERR("Could not lock file ", address);
         return false;
     }
     archiveIn.Read(buffer, sizeof(CAppearance_mon), nRecs);
@@ -598,7 +598,7 @@ blknum_t CMonitor::loadAppearances(MONAPPFUNC func, void* data) {
     for (size_t i = 0; i < nRecs; i++) {
         apps.push_back(buffer[i]);
         if (func && !(*func)(buffer[i], data)) {
-            LOG4("forEvery func returns false for address ", path_2_Addr(path));
+            LOG4("forEvery func returns false for address ", address);
             return false;
         }
     }
@@ -621,14 +621,6 @@ void cleanMonitorStage(void) {
 }
 
 //----------------------------------------------------------------
-address_t path_2_Addr(const string_q& path) {
-    if (!isMonitorFilePath(path))
-        return "";
-    CStringArray parts;
-    explode(parts, path, '/');
-    return substitute(parts[parts.size() - 1], ".acct.bin", "");
-}
-
 bool isMonitorFilePath(const string_q& path) {
     return endsWith(path, "acct.bin");
 }

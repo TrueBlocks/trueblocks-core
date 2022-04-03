@@ -41,8 +41,9 @@ bool visitChunkToFreshenFinal(const string_q& path, void* data) {
 
         options->possibles.clear();
         for (auto m : options->allMonitors) {
-            blknum_t nextVisit = m.getNextBlockToVisit(true /* ifExists */);
-            if (nextVisit == 0 || nextVisit <= options->fileRange.first) {
+            CMonitorHeader header;
+            m.readHeader(header);
+            if (header.lastScanned == 0 || header.lastScanned <= options->fileRange.first) {
                 options->possibles.push_back(m);
             }
         }

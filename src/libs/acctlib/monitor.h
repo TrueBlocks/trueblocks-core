@@ -24,6 +24,13 @@
 namespace qblocks {
 
 // EXISTING_CODE
+class CMonitorHeader {
+  public:
+    uint16_t magic;
+    uint8_t unused;
+    uint8_t deleted;
+    uint32_t lastScanned;
+};
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -52,27 +59,20 @@ class CMonitor : public CAccountName {
     CArchive* tx_cache;
     CAppearanceArray_mon apps;
 
-  private:
-    string_q getPathToMonitorLast(const address_t& addr, bool staging) const;
-    string_q getPathToMonitorDels(const address_t& addr) const;
-
   public:
     string_q getPathToMonitor(const address_t& addr, bool staging) const;
     bool openForWriting(bool staging);
     void closeMonitorCache(void);
     void writeAppendNewApps(const CAppearanceArray_mon& array);
-    void writeNextBlockToVisit(blknum_t bn, bool staging);
     bool removeDuplicates(const string_q& path);
     void moveToProduction(bool staging);
-    bool isDeleted(void) const;
 
     blknum_t loadAppearances(MONAPPFUNC func, void* data);
-    blknum_t getNextBlockToVisit(bool ifExists) const;
     size_t getFileSize(const string_q& path) const;
     size_t getRecordCnt(const string_q& path) const;
 
-    bool isMonitorLocked(string_q& msg) const;
-    bool clearMonitorLocks(void);
+    void writeNextBlockToVisit(blknum_t bn, bool staging);
+    void readHeader(CMonitorHeader& header) const;
 
     // EXISTING_CODE
     bool operator==(const CMonitor& it) const;
@@ -206,7 +206,6 @@ extern const char* STR_DISPLAY_MONITOR;
 typedef map<address_t, CMonitor> CMonitorMap;  // NOLINT
 extern void establishMonitorFolders(void);
 extern void cleanMonitorStage(void);
-extern address_t path_2_Addr(const string_q& path);
 extern bool isMonitorFilePath(const string_q& path);
 // EXISTING_CODE
 }  // namespace qblocks

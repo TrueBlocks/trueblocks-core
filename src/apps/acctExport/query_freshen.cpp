@@ -50,9 +50,9 @@ bool COptions::process_freshen(void) {
             // TODO: BOGUS - scrape to front of chain
             forEveryFileInFolder(indexFolder_blooms, visitChunkToFreshenFinal, this);
         }
+
         for (auto monitor : allMonitors) {
             monitor.moveToProduction(monitor.isStaging);
-            LOG4(monitor.address, " freshened to ", monitor.getNextBlockToVisit(false));
         }
     }
 

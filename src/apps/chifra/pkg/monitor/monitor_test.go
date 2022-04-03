@@ -52,7 +52,7 @@ func Test_Monitor_Print(t *testing.T) {
 
 	// The monitor should report that it has two appearances
 	got := fmt.Sprintln(mon.ToJSON())
-	expected := "{\"address\":\"0xf503017d7baf7fbc0fff7492b751025c6a781791\",\"count\":6,\"fileSize\":56,\"lastScanned\":2002002}\n"
+	expected := "{\"address\":\"0xf503017d7baf7fbc0fff7492b751025c6a781791\",\"count\":6,\"fileSize\":56,\"lastScanned\":2002003}\n"
 	if got != expected {
 		t.Error("Expected:", expected, "Got:", got)
 	}
@@ -137,7 +137,7 @@ func Test_Monitor_Delete(t *testing.T) {
 
 	// The monitor should report that it has two appearances
 	got := fmt.Sprintln(mon.ToJSON())
-	expected := "{\"address\":\"0xf503017d7baf7fbc0fff7492b751025c6a781791\",\"count\":3,\"fileSize\":32,\"lastScanned\":2002002}\n"
+	expected := "{\"address\":\"0xf503017d7baf7fbc0fff7492b751025c6a781791\",\"count\":3,\"fileSize\":32,\"lastScanned\":2002003}\n"
 	if got != expected {
 		t.Error("Expected:", expected, "Got:", got)
 	}

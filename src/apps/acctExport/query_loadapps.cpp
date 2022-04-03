@@ -49,7 +49,7 @@ bool COptions::loadMonitors(void) {
                 // We don't continue if we have no transactions. We used to report an
                 // error here, but this is not really an error
                 if (!freshen)
-                    LOG_WARN("No records found for address ", path_2_Addr(path));
+                    LOG_WARN("No records found for address ", monitor.address);
                 return false;
             }
         }
