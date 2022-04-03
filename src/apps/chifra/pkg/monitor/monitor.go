@@ -11,6 +11,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -324,4 +325,14 @@ func (mon *Monitor) MoveToProduction() error {
 	oldpath := mon.Path()
 	mon.Staged = false
 	return os.Rename(oldpath, mon.Path())
+}
+
+func AddressFromMonitorPath(path string) (string, error) {
+	// TODO: BOGUS
+	if !strings.Contains(path, ".") && !strings.HasSuffix(path, ".acct.bin") && !strings.HasSuffix(path, Ext) {
+		return "", errors.New("path does not contain an address")
+	}
+	_, fileName := filepath.Split(path)
+	parts := strings.Split(fileName, ".")
+	return strings.ToLower(parts[0]), nil
 }

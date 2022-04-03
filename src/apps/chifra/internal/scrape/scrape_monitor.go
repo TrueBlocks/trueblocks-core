@@ -200,22 +200,13 @@ func getMonitors(chain, folder string, monitorChan chan<- monitor.Monitor) {
 			return err
 		}
 		if !info.IsDir() {
-			addr, _ := fn_2_Addr(path)
+			addr, _ := monitor.AddressFromMonitorPath(path)
 			if len(addr) > 0 {
 				monitorChan <- monitor.NewMonitor(chain, addr, true /* create */)
 			}
 		}
 		return nil
 	})
-}
-
-func fn_2_Addr(path string) (string, error) {
-	ret := strings.Replace(path, ".acct.bin", "", -1)
-	parts := strings.Split(ret, "/")
-	if len(parts) == 0 || ret == path {
-		return "", nil
-	}
-	return parts[len(parts)-1], nil
 }
 
 // TODO: We could add statistics counting -- nChanged, nProcessed, txCount, etc

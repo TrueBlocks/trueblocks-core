@@ -630,7 +630,7 @@ address_t path_2_Addr(const string_q& path) {
 }
 
 bool isMonitorFilePath(const string_q& path) {
-    return endsWith(path, "acct.bin")
+    return endsWith(path, "acct.bin");
 }
 // EXISTING_CODE
 }  // namespace qblocks
