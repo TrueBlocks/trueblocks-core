@@ -1,7 +1,7 @@
 tomlTest2  chifra.toml
 tests/chifra.toml
 [version]
-current = "vers-alpha"
+current = "vers-beta"
 
 [settings]
 # none =

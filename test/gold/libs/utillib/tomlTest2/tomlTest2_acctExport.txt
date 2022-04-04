@@ -1,7 +1,7 @@
 tomlTest2  acctExport.toml
 tests/acctExport.toml
 [version]
-current = "vers-alpha"
+current = "vers-beta"
 
 [settings]
 # writeBlocks = false
