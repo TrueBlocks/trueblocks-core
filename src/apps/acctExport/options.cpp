@@ -367,7 +367,7 @@ bool COptions::parseArguments(string_q& command) {
         for (auto monitor : allMonitors) {
             CMonitorCount monCount;
             monCount.address = monitor.address;
-            monCount.fileSize = monitor.getFileSize(monitor.getPathToMonitor(monitor.address, false));
+            monCount.fileSize = fileSize(monitor.getPathToMonitor(monitor.address, false));
             monCount.nRecords = monitor.getRecordCnt(monitor.getPathToMonitor(monitor.address, false));
             cout << ((isJson() && !firstOut) ? ", " : "");
             cout << monCount;

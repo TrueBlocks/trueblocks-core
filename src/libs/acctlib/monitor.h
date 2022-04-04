@@ -63,7 +63,6 @@ class CMonitor : public CAccountName {
     bool removeDuplicates(const string_q& path);
 
     blknum_t loadAppearances(MONAPPFUNC func, void* data);
-    size_t getFileSize(const string_q& path) const;
     size_t getRecordCnt(const string_q& path) const;
 
     void readHeader(CMonitorHeader& header) const;

@@ -387,11 +387,6 @@ const char* STR_DISPLAY_MONITOR =
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-//---------------------------------------------------------------------------
-size_t CMonitor::getFileSize(const string_q& path) const {
-    return ::fileSize(path);
-}
-
 // TODO: BOGUS - CLEAN THIS UP
 //-------------------------------------------------------------------------
 size_t CMonitor::getRecordCnt(const string_q& path) const {
@@ -404,22 +399,16 @@ size_t CMonitor::getRecordCnt(const string_q& path) const {
 
 //---------------------------------------------------------------------------
 string_q CMonitor::getPathToMonitor(const address_t& addr, bool staging) const {
-    string_q fn = isAddress(addr) ? addr + ".acct.bin" : addr;
-    fn = substitute(fn, ".acct.bin", ".mon.bin");
+    string_q fn = isAddress(addr) ? addr + ".mon.bin" : addr;
     string_q base = cacheFolder_monitors + (staging ? "staging/" : "");
     if (isTestMode())
         base = chainConfigsFolder_mocked + "monitors/" + (staging ? "staging/" : "");
     return base + fn;
 }
 
-//---------------------------------------------------------------------------
-#define getPathToMonitorDels(a) (getPathToMonitor((a), false) + ".deleted")
-#define getPathToNewMonitorType(a, b) (substitute(getPathToMonitor((a), (b)), ".acct.bin", ".mon.bin"))
-
 //--------------------------------------------------------------------------------
 void CMonitor::readHeader(CMonitorHeader& header) const {
-    header.deleted = fileExists(getPathToMonitorDels(address));
-    string_q newFilename = getPathToNewMonitorType(address, isStaging);
+    string_q newFilename = getPathToMonitor(address, isStaging);
     if (fileExists(newFilename)) {
         if (header.lastScanned > 0) {
             CArchive archive(READING_ARCHIVE);
@@ -449,7 +438,7 @@ bool CMonitor::removeDuplicates(const string_q& path) {
         return false;
     CStringArray parts;
     explode(parts, path, '/');
-    address = substitute(parts[parts.size() - 1], ".acct.bin", "");
+    address = substitute(parts[parts.size() - 1], "mon.bin", "");
 
     if (!loadAppearances(nullptr, nullptr)) {
         LOG_WARN("Could load monitor for address ", address);

@@ -262,22 +262,13 @@ func (mon *Monitor) WriteApps(apps []index.AppearanceRecord, lastScanned uint32)
 
 // IsMonitor returns true if the monitor file exists
 func (mon *Monitor) IsMonitor() bool {
-	exists := file.FileExists(mon.Path())
-	if !exists {
-		// TODO: BOGUS
-		oldAcctFile := strings.Replace(mon.Path(), Ext, ".acct.bin", -1)
-		exists = file.FileExists(oldAcctFile)
-	}
-	return exists
+	return file.FileExists(mon.Path())
 }
 
 // Delete marks the file's delete flag, but does not physically remove the file
 func (mon *Monitor) Delete() (prev bool) {
 	prev = mon.Deleted
 	mon.WriteHeader(true, mon.LastScanned)
-	// TODO: BOGUS
-	oldDelFile := strings.Replace(mon.Path(), Ext, ".acct.bin", -1) + ".deleted"
-	file.Touch(oldDelFile)
 	return
 }
 
@@ -291,9 +282,6 @@ func (mon *Monitor) IsDeleted() bool {
 func (mon *Monitor) UnDelete() (prev bool) {
 	prev = mon.Deleted
 	mon.WriteHeader(false, mon.LastScanned)
-	// TODO: BOGUS
-	oldDelFile := strings.Replace(mon.Path(), Ext, ".acct.bin", -1) + ".deleted"
-	file.Remove(oldDelFile)
 	return
 }
 
@@ -310,17 +298,9 @@ func (mon *Monitor) ToggleDelete() (prev bool) {
 
 // Remove removes a previously deleted file, does nothing if the file is not deleted
 func (mon *Monitor) Remove() (bool, error) {
-	// TODO: BOGUS
-	oldAcctFile := strings.Replace(mon.Path(), Ext, ".acct.bin", -1)
-	oldCntFile := strings.Replace(mon.Path(), Ext, ".last.txt", -1)
-	oldDelFile := strings.Replace(mon.Path(), Ext, ".acct.bin", -1) + ".deleted"
-	exists := file.FileExists(oldDelFile)
-	if !mon.Deleted && !exists {
+	if !mon.Deleted {
 		return false, errors.New("cannot remove a file that has not been deleted")
 	}
-	file.Remove(oldAcctFile)
-	file.Remove(oldCntFile)
-	file.Remove(oldDelFile)
 	file.Remove(mon.Path())
 	return !file.FileExists(mon.Path()), nil
 }
@@ -337,8 +317,7 @@ func (mon *Monitor) MoveToProduction() error {
 }
 
 func AddressFromMonitorPath(path string) (string, error) {
-	// TODO: BOGUS
-	if !strings.Contains(path, ".") && !strings.HasSuffix(path, ".acct.bin") && !strings.HasSuffix(path, Ext) {
+	if !strings.Contains(path, ".") && !strings.HasSuffix(path, Ext) {
 		return "", errors.New("path does not contain an address")
 	}
 	_, fileName := filepath.Split(path)
