@@ -1,5 +1,5 @@
 chifra monitors  
-Error: Please specify at least one valid Ethereum address.
+Error: You must provide at least one Ethereum address for this command.
 Usage:
   chifra monitors [flags] <address> [address...]
 

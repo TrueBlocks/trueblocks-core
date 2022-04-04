@@ -2,14 +2,9 @@ chifra export  0x001d14804b399c6ef80e64576f657660804fec0b --count --logs
 TEST[DATE|TIME] Addrs:  [0x001d14804b399c6ef80e64576f657660804fec0b]
 TEST[DATE|TIME] Logs:  true
 TEST[DATE|TIME] Count:  true
-
-  --count option is only available with --appearances option. Quitting...
-
-Purpose:
-  Export full detail of transactions for one or more addresses.
-
+Error: The --count option is only available with transactional options.
 Usage:
-  acctExport [flags] <address> [address...] [topics] [fourbytes]
+  chifra export [flags] <address> [address...] [topics...] [fourbytes...]
 
 Arguments:
   addrs - one or more addresses (0x...) to export (required)
@@ -17,39 +12,37 @@ Arguments:
   fourbytes - filter by one or more fourbytes (only for transactions and trace options)
 
 Flags:
-  -p, --appearances          export a list of appearances
-  -r, --receipts             export receipts instead of transactional data
-  -l, --logs                 export logs instead of transactional data
-  -t, --traces               export traces instead of transactional data
-  -A, --statements           export reconciliations instead of transactional data (requires --accounting option)
-  -n, --neighbors            export the neighbors of the given address
-  -C, --accounting           attach accounting records to the exported data (applies to transactions export only)
-  -a, --articulate           articulate transactions, traces, logs, and outputs
-  -i, --cache                write transactions to the cache (see notes)
-  -R, --cache_traces         write traces to the cache (see notes)
-  -y, --factory              scan for contract creations from the given address(es) and report address of those contracts
-  -U, --count                only available for --appearances mode, if present, return only the number of records
-  -c, --first_record <num>   the first record to process
-  -e, --max_records <num>    the maximum number of records to process before reporting
-      --relevant             for log and accounting export only, export only logs relevant to one of the given export addresses
-      --emitter string       for log export only, export only logs if emitted by one of these address(es)
-      --topic string         for log export only, export only logs with this topic(s)
-      --asset string         for the statements option only, export only reconciliations for this asset
-      --clean                clean (i.e. remove duplicate appearances) from all existing monitors
-  -f, --freshen              freshen but do not print the exported data (hidden)
-      --load string          a comma separated list of dynamic traversers to load (hidden)
-      --reversed             produce results in reverse chronological order (hidden)
-  -b, --by_date              produce results sorted by date (report by address otherwise) (hidden)
-  -F, --first_block <num>    first block to process (inclusive)
-  -L, --last_block <num>     last block to process (inclusive)
-      --delete               delete a monitor, but do not remove it
-      --undelete             undelete a previously deleted monitor
-      --remove               remove a previously deleted monitor
-
-Global Flags:
-  -x, --fmt string     export format, one of [none|json*|txt|csv|api]
-  -v, --verbose uint   set verbose level (optional level defaults to 1)
-  -h, --help           display this help screen
+  -p, --appearances         export a list of appearances
+  -r, --receipts            export receipts instead of transactional data
+  -l, --logs                export logs instead of transactional data
+  -t, --traces              export traces instead of transactional data
+  -A, --statements          export reconciliations instead of transactional data (requires --accounting option)
+  -n, --neighbors           export the neighbors of the given address
+  -C, --accounting          attach accounting records to the exported data (applies to transactions export only)
+  -a, --articulate          articulate transactions, traces, logs, and outputs
+  -i, --cache               write transactions to the cache (see notes)
+  -R, --cache_traces        write traces to the cache (see notes)
+  -y, --factory             scan for contract creations from the given address(es) and report address of those contracts
+  -U, --count               only available for --appearances mode, if present, return only the number of records
+  -c, --first_record uint   the first record to process
+  -e, --max_records uint    the maximum number of records to process before reporting (default 250)
+      --relevant            for log and accounting export only, export only logs relevant to one of the given export addresses
+      --emitter strings     for log export only, export only logs if emitted by one of these address(es)
+      --topic strings       for log export only, export only logs with this topic(s)
+      --asset strings       for the statements option only, export only reconciliations for this asset
+      --clean               clean (i.e. remove duplicate appearances) from all existing monitors
+  -f, --freshen             freshen but do not print the exported data (hidden)
+  -s, --staging             export transactions labeled staging (i.e. older than 28 blocks but not yet consolidated)
+  -u, --unripe              export transactions labeled upripe (i.e. less than 28 blocks old)
+      --load string         a comma separated list of dynamic traversers to load (hidden)
+      --reversed            produce results in reverse chronological order (hidden)
+  -d, --skip_ddos           toggle skipping over 2016 dDos transactions ('on' by default) (hidden)
+  -m, --max_traces uint     if --skip_ddos is on, this many traces defines what a ddos transaction is (hidden) (default 250)
+  -F, --first_block uint    first block to process (inclusive)
+  -L, --last_block uint     last block to process (inclusive)
+  -x, --fmt string          export format, one of [none|json*|txt|csv|api]
+  -v, --verbose             enable verbose (increase detail with --log_level)
+  -h, --help                display this help screen
 
 Notes:
   - An address must start with '0x' and be forty-two characters long.
@@ -57,4 +50,3 @@ Notes:
   - For the --logs option, you may optionally specify one or more --emmitter, one or more --topics, or both.
   - The --logs option is significantly faster if you provide an --emitter or a --topic.
   - Neighbors include every address that appears in any transaction in which the export address also appears.
-
