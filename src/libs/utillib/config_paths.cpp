@@ -117,6 +117,8 @@ extern string_q getConfigPathLocal(void);
 // (makeClass and testRunner primarily). It mimics the way chifra works to build
 // the configPaths. We ignore in this `chain`, defaulting to mainnet.
 void loadEnvironmentPaths(const string_q& chainIn, const string_q& unchainedPathIn, const string_q& cachePathIn) {
+    string_q chain = (chainIn.empty() ? "mainnet" : chainIn);
+
     string_q configPath = getConfigPathLocal();
 
     // We need to set enough of the environment for us to get the RPC from the config file...
@@ -129,19 +131,24 @@ void loadEnvironmentPaths(const string_q& chainIn, const string_q& unchainedPath
     // Because `g_configEnv` is statis, we need to clear it...
     g_configEnv = CConfigEnv();  // reset so we get the rest
 
-    string_q unchainedPath = substitute(unchainedPathIn, "/unchained", "");
+    string_q unchainedPath = substitute(substitute(unchainedPathIn, "/unchained", ""), chain + "/", "");
     if (unchainedPath.empty()) {
         unchainedPath = configPath;
     }
 
+    string_q cachePath = substitute(substitute(cachePathIn, "/cache", ""), chain + "/", "");
+    if (cachePath.empty()) {
+        cachePath = configPath;
+    }
+
     // and reset it with the full env
     ostringstream os;
-    os << "mainnet," << configPath << "," << (configPath + "config/mainnet/") << "," << (configPath + "cache/mainnet/")
+    os << "mainnet," << configPath << "," << (configPath + "config/mainnet/") << "," << (cachePath + "cache/mainnet/")
        << "," << (unchainedPath + "unchained/mainnet/") << ",mainnet," << rpc;
 
     string_q env = os.str();
-    if (!chainIn.empty()) {
-        replaceAll(env, "mainnet", chainIn);
+    if (!chain.empty()) {
+        replaceAll(env, "mainnet", chain);
     }
 
     ::setenv("TB_CONFIG_ENV", env.c_str(), true);

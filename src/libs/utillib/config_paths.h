@@ -34,14 +34,11 @@ extern string_q getDefaultChain(void);
 //-------------------------------------------------------------------------
 #define chainConfigs (getPathToChainConfig(""))
 
-//---------------------------------------------------------------------------
-#define chainConfigsFolder_mocked (chainConfigs + "mocked/")
-
 //-------------------------------------------------------------------------
 #define cacheFolder (getPathToCache(""))
 #define cacheFolder_abis (cacheFolder + "abis/")
 #define cacheFolder_blocks (cacheFolder + "blocks/")
-#define cacheFolder_monitors ((isTestMode() ? chainConfigsFolder_mocked : cacheFolder) + "monitors/")
+#define cacheFolder_monitors (cacheFolder + "monitors/")
 #define cacheFolder_names (cacheFolder + "names/")
 #define cacheFolder_objs (cacheFolder + "objs/")
 #define cacheFolder_prices (cacheFolder + "prices/")
@@ -75,6 +72,7 @@ extern string_q getDefaultChain(void);
 #define chainConfigsTxt_namesCustom (chainConfigs + "names_custom.tab")
 #define chainConfigsTxt_collections (chainConfigs + "collections.csv")
 #define chainConfigsTxt_manifest (chainConfigs + "manifest.txt")
+#define chainConfigsFolder_mocked (chainConfigs + "mocked/")
 
 //---------------------------------------------------------------------------
 #define chainConfigsZip_prices (chainConfigs + "poloniex_USDT_ETH.bin.gz")
