@@ -484,9 +484,12 @@ const char* STR_DISPLAY_TESTCASE = "";
 // EXISTING_CODE
 //---------------------------------------------------------------------------------------------
 void establishTestMonitors(void) {
-    if (folderExists(chainConfigsFolder_mocked + "monitors/"))
+    if (folderExists(chainConfigsFolder_mocked + "monitors/")) {
+        // The mocked folder has already been unpacked
         return;
+    }
 
+    LOG_INFO("Creating folder: ", chainConfigsFolder_mocked + "monitors/");
     string_q gzipFile = chainConfigsFolder_mocked + "monitors.tar.gz";
     if (!fileExists(gzipFile)) {
         LOG_WARN("Cannot find test monitors file: ", gzipFile);

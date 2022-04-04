@@ -300,7 +300,7 @@ func (mon *Monitor) ToggleDelete() (prev bool) {
 
 // Remove removes a previously deleted file, does nothing if the file is not deleted
 func (mon *Monitor) Remove() (bool, error) {
-	if !mon.Deleted {
+	if !mon.IsDeleted() {
 		return false, errors.New("cannot remove a file that has not been deleted")
 	}
 	file.Remove(mon.Path())

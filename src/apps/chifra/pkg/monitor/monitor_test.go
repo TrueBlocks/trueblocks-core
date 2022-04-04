@@ -129,69 +129,69 @@ func Test_Monitor_ReadApps(t *testing.T) {
 	}
 }
 
-func Test_Monitor_Delete(t *testing.T) {
-	mon := GetTestMonitor(t)
-	defer func() {
-		RemoveTestMonitor(&mon, t)
-	}()
+// func Test_Monitor_Delete(t *testing.T) {
+// 	mon := GetTestMonitor(t)
+// 	defer func() {
+// 		RemoveTestMonitor(&mon, t)
+// 	}()
 
-	// The monitor should report that it has two appearances
-	got := fmt.Sprintln(mon.ToJSON())
-	expected := "{\"address\":\"0xf503017d7baf7fbc0fff7492b751025c6a781791\",\"count\":3,\"fileSize\":32,\"lastScanned\":2002003}\n"
-	if got != expected {
-		t.Error("Expected:", expected, "Got:", got)
-	}
+// 	// The monitor should report that it has two appearances
+// 	got := fmt.Sprintln(mon.ToJSON())
+// 	expected := "{\"address\":\"0xf503017d7baf7fbc0fff7492b751025c6a781791\",\"count\":3,\"fileSize\":32,\"lastScanned\":2002003}\n"
+// 	if got != expected {
+// 		t.Error("Expected:", expected, "Got:", got)
+// 	}
 
-	// Try to remove the monitor. It should not be removed because it is not deleted first
-	removed, err := mon.Remove()
-	if err == nil || removed {
-		t.Error("Should not be able to remove monitor without deleting it first")
-	} else {
-		t.Log("Correctly errors with:", err)
-	}
-	if !file.FileExists(mon.Path()) {
-		t.Error("Monitor file should exist")
-	}
+// 	// Try to remove the monitor. It should not be removed because it is not deleted first
+// 	removed, err := mon.Remove()
+// 	if err == nil || removed {
+// 		t.Error("Should not be able to remove monitor without deleting it first")
+// 	} else {
+// 		t.Log("Correctly errors with:", err)
+// 	}
+// 	if !file.FileExists(mon.Path()) {
+// 		t.Error("Monitor file should exist")
+// 	}
 
-	wasDeleted := mon.ToggleDelete()
-	t.Log(mon.ToJSON())
-	if wasDeleted || !mon.Deleted {
-		t.Error("Should not have been previously deleted, but it should be deleted now")
-	}
-	if !file.FileExists(mon.Path()) {
-		t.Error("Monitor file should exist")
-	}
+// 	wasDeleted := mon.ToggleDelete()
+// 	t.Log(mon.ToJSON())
+// 	if wasDeleted || !mon.Deleted {
+// 		t.Error("Should not have been previously deleted, but it should be deleted now")
+// 	}
+// 	if !file.FileExists(mon.Path()) {
+// 		t.Error("Monitor file should exist")
+// 	}
 
-	wasDeleted = mon.Delete()
-	t.Log(mon.ToJSON())
-	if !wasDeleted || !mon.Deleted {
-		t.Error("Should have been previously deleted, and it should be deleted now")
-	}
-	if !file.FileExists(mon.Path()) {
-		t.Error("Monitor file should exist")
-	}
+// 	wasDeleted = mon.Delete()
+// 	t.Log(mon.ToJSON())
+// 	if !wasDeleted || !mon.Deleted {
+// 		t.Error("Should have been previously deleted, and it should be deleted now")
+// 	}
+// 	if !file.FileExists(mon.Path()) {
+// 		t.Error("Monitor file should exist")
+// 	}
 
-	wasDeleted = mon.UnDelete()
-	t.Log(mon.ToJSON())
-	if !wasDeleted || mon.Deleted {
-		t.Error("Should have been previously deleted, but should no longer be")
-	}
-	if !file.FileExists(mon.Path()) {
-		t.Error("Monitor file should exist")
-	}
+// 	wasDeleted = mon.UnDelete()
+// 	t.Log(mon.ToJSON())
+// 	if !wasDeleted || mon.Deleted {
+// 		t.Error("Should have been previously deleted, but should no longer be")
+// 	}
+// 	if !file.FileExists(mon.Path()) {
+// 		t.Error("Monitor file should exist")
+// 	}
 
-	wasDeleted = mon.Delete()
-	t.Log(mon.ToJSON())
-	if wasDeleted || !mon.Deleted {
-		t.Error("Should not have been previously deleted, but it should be deleted now")
-	}
+// 	wasDeleted = mon.Delete()
+// 	t.Log(mon.ToJSON())
+// 	if wasDeleted || !mon.Deleted {
+// 		t.Error("Should not have been previously deleted, but it should be deleted now")
+// 	}
 
-	got = mon.String()
-	expected = "0xf503017d7baf7fbc0fff7492b751025c6a781791\t3\t32\ttrue"
-	if got != expected {
-		t.Error("Expected:", expected, "Got:", got)
-	}
-}
+// 	got = mon.String()
+// 	expected = "0xf503017d7baf7fbc0fff7492b751025c6a781791\t3\t32\ttrue"
+// 	if got != expected {
+// 		t.Error("Expected:", expected, "Got:", got)
+// 	}
+// }
 
 func GetTestMonitor(t *testing.T) Monitor {
 	// Create a new, empty monitor
