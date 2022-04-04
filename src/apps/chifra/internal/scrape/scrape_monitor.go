@@ -177,6 +177,7 @@ func getMonitors(chain, folder string, monitorChan chan<- monitor.Monitor) {
 		monitorChan <- monitor.Monitor{Address: sentinalAddr}
 	}()
 
+	isMocked := strings.Contains(folder, "/mocked/")
 	info, err := os.Stat("./addresses.csv")
 	if err == nil {
 		// If the shorthand file exists in the current folder, use it...
@@ -186,7 +187,7 @@ func getMonitors(chain, folder string, monitorChan chan<- monitor.Monitor) {
 			if !strings.HasPrefix(line, "#") {
 				parts := strings.Split(line, ",")
 				if len(parts) > 0 && validate.IsValidAddress(parts[0]) && !validate.IsZeroAddress(parts[0]) {
-					monitorChan <- monitor.NewMonitor(chain, parts[0], true /* create */)
+					monitorChan <- monitor.NewMonitor(chain, parts[0], true /* create */, isMocked)
 				}
 			}
 		}
@@ -202,7 +203,7 @@ func getMonitors(chain, folder string, monitorChan chan<- monitor.Monitor) {
 		if !info.IsDir() {
 			addr, _ := monitor.AddressFromMonitorPath(path)
 			if len(addr) > 0 {
-				monitorChan <- monitor.NewMonitor(chain, addr, true /* create */)
+				monitorChan <- monitor.NewMonitor(chain, addr, true /* create */, isMocked)
 			}
 		}
 		return nil

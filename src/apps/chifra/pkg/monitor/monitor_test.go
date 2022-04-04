@@ -18,12 +18,12 @@ import (
 func Test_Monitor(t *testing.T) {
 	testAddr := "0xF503017d7bAf7fbc0fff7492b751025c6a78179b"
 
-	mon := NewMonitor("mainnet", testAddr, true /* create */)
+	mon := NewMonitor("mainnet", testAddr, true /* create */, true /* testMode */)
 	path := mon.Path()
 	dir, fileName := filepath.Split(path)
 
-	if !strings.HasSuffix(dir, "/cache/mainnet/monitors/") {
-		t.Error("Incorrect suffix in 'dir'. Expected: \"/cache/mainnet/monitors/\" Dir:", dir)
+	if !strings.HasSuffix(dir, "/config/mainnet/mocked/monitors/") {
+		t.Error("Incorrect suffix in 'dir'. Expected: \"/config/mainnet/mocked/monitors/\" Dir:", dir)
 	}
 
 	if testAddr+Ext == fileName {
@@ -196,7 +196,7 @@ func Test_Monitor_Delete(t *testing.T) {
 func GetTestMonitor(t *testing.T) Monitor {
 	// Create a new, empty monitor
 	testAddr := "0xF503017d7bAf7fbc0fff7492b751025c6a781791"
-	mon := NewMonitor("mainnet", testAddr, true /* create */)
+	mon := NewMonitor("mainnet", testAddr, true /* create */, true /* testMode */)
 
 	if mon.Address != common.HexToAddress(testAddr) {
 		t.Error("Expected:", common.HexToAddress(testAddr), "Got:", mon.Address)

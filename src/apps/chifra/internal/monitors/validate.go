@@ -31,7 +31,7 @@ func (opts *MonitorsOptions) ValidateMonitors() error {
 				return validate.Usage("The --undelete option may not be used with --delete or --remove.")
 			}
 			for _, addr := range opts.Addrs {
-				if !IsMonitorDeleted(chain, addr) {
+				if !IsMonitorDeleted(chain, addr, opts.Globals.TestMode) {
 					return validate.Usage("Monitor for {0} must be deleted before being undeleted.", addr)
 				}
 			}
@@ -39,13 +39,13 @@ func (opts *MonitorsOptions) ValidateMonitors() error {
 			// We have to handle the case where both --delete and --remove are sent in the same command
 			if opts.Delete {
 				for _, addr := range opts.Addrs {
-					if IsMonitorDeleted(chain, addr) {
+					if IsMonitorDeleted(chain, addr, opts.Globals.TestMode) {
 						return validate.Usage("Monitor for {0} is already deleted.", addr)
 					}
 				}
 			} else if opts.Remove {
 				for _, addr := range opts.Addrs {
-					if !IsMonitorDeleted(chain, addr) {
+					if !IsMonitorDeleted(chain, addr, opts.Globals.TestMode) {
 						return validate.Usage("Monitor for {0} must be deleted before being removed.", addr)
 					}
 				}
@@ -67,7 +67,7 @@ func (opts *MonitorsOptions) ValidateMonitors() error {
 	return opts.Globals.ValidateGlobals()
 }
 
-func IsMonitorDeleted(chain, addr string) bool {
-	m := monitor.NewMonitor(chain, addr, false /* create */)
+func IsMonitorDeleted(chain, addr string, testMode bool) bool {
+	m := monitor.NewMonitor(chain, addr, false /* create */, testMode)
 	return m.IsDeleted()
 }

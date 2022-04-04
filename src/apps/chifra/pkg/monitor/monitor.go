@@ -37,6 +37,7 @@ type Monitor struct {
 	Staged   bool           `json:"-"`
 	Chain    string         `json:"-"`
 	ReadFp   *os.File       `json:"-"`
+	TestMode bool           `json:"-"`
 	Header
 }
 
@@ -47,22 +48,24 @@ const (
 
 // NewMonitor returns a Monitor (but has not yet read in the AppearanceRecords). If 'create' is
 // sent, create the Monitor if it does not already exist
-func NewMonitor(chain, addr string, create bool) Monitor {
+func NewMonitor(chain, addr string, create, testMode bool) Monitor {
 	mon := new(Monitor)
 	mon.Header = Header{Magic: file.SmallMagicNumber}
 	mon.Address = common.HexToAddress(addr)
 	mon.Chain = chain
+	mon.TestMode = testMode
 	mon.Reload(create)
 	return *mon
 }
 
 // NewStagedMonitor returns a Monitor whose path is in the 'staging' folder
-func NewStagedMonitor(chain, addr string) Monitor {
+func NewStagedMonitor(chain, addr string, testMode bool) Monitor {
 	mon := new(Monitor)
 	mon.Header = Header{Magic: file.SmallMagicNumber}
 	mon.Address = common.HexToAddress(addr)
 	mon.Chain = chain
 	mon.Staged = true
+	mon.TestMode = testMode
 	mon.Reload(true)
 	return *mon
 }
@@ -90,6 +93,9 @@ func (mon *Monitor) Path() (path string) {
 		path = config.GetPathToCache(mon.Chain) + "monitors/staging/" + strings.ToLower(mon.Address.Hex()) + Ext
 	} else {
 		path = config.GetPathToCache(mon.Chain) + "monitors/" + strings.ToLower(mon.Address.Hex()) + Ext
+	}
+	if mon.TestMode {
+		path = strings.Replace(path, config.GetPathToCache(mon.Chain), config.GetPathToChainConfig(mon.Chain)+"mocked/", -1)
 	}
 	return
 }

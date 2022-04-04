@@ -77,7 +77,7 @@ func (opts *MonitorsOptions) HandleCrudCommands(w io.Writer) bool {
 	}
 
 	for _, addr := range opts.Addrs {
-		m := monitor.NewMonitor(opts.Globals.Chain, addr, false)
+		m := monitor.NewMonitor(opts.Globals.Chain, addr, false, opts.Globals.TestMode)
 		if !m.IsMonitor() {
 			msg := "Monitor not found for address " + addr + "."
 			logger.Log(logger.Info, msg)

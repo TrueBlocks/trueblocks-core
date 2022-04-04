@@ -43,7 +43,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 	updater.Globals = opts.Globals
 	for _, addr := range opts.Addrs {
 		if updater.monitorMap[common.HexToAddress(addr)] == nil {
-			m := monitor.NewStagedMonitor(updater.Globals.Chain, addr)
+			m := monitor.NewStagedMonitor(updater.Globals.Chain, addr, opts.Globals.TestMode)
 			*monitorArray = append(*monitorArray, m)
 			updater.monitorMap[m.Address] = &(*monitorArray)[len(*monitorArray)-1]
 		}
