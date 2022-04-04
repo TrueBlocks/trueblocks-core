@@ -67,7 +67,7 @@ to                  	1013	0	20971575	T_ADDRESS TS_STRING TS_OMITEMPTY
 value               	1014	0	545259555	T_WEI TS_NUMERAL TS_BIGNUM
 ether               	1015	0	545259565	T_ETHER TS_NUMERAL TS_BIGNUM
 {
-  "schema": 27000,
+  "schema": 28000,
   "deleted": false,
   "showing": true,
   "cname": "TraceAction",
