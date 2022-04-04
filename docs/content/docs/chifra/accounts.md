@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2022-04-02T13:06:34
+date: 2022-04-04T16:57:38
 lastmod:
   - :git
   - lastmod
@@ -80,7 +80,6 @@ Flags:
   -a, --articulate          articulate transactions, traces, logs, and outputs
   -i, --cache               write transactions to the cache (see notes)
   -R, --cache_traces        write traces to the cache (see notes)
-  -y, --factory             scan for contract creations from the given address(es) and report address of those contracts
   -U, --count               only available for --appearances mode, if present, return only the number of records
   -c, --first_record uint   the first record to process
   -e, --max_records uint    the maximum number of records to process before reporting (default 250)
@@ -88,7 +87,7 @@ Flags:
       --emitter strings     for log export only, export only logs if emitted by one of these address(es)
       --topic strings       for log export only, export only logs with this topic(s)
       --asset strings       for the statements option only, export only reconciliations for this asset
-      --clean               clean (i.e. remove duplicate appearances) from all existing monitors
+  -y, --factory             scan for contract creations from the given address(es) and report address of those contracts
   -s, --staging             export transactions labeled staging (i.e. older than 28 blocks but not yet consolidated)
   -u, --unripe              export transactions labeled upripe (i.e. less than 28 blocks old)
   -F, --first_block uint    first block to process (inclusive)

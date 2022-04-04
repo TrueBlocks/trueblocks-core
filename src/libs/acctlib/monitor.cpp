@@ -407,7 +407,7 @@ string_q CMonitor::getPathToMonitor(const address_t& addr, bool staging) const {
 }
 
 //--------------------------------------------------------------------------------
-void CMonitor::readHeader(CMonitorHeader& header) const {
+bool CMonitor::readHeader(CMonitorHeader& header) const {
     string_q newFilename = getPathToMonitor(address, isStaging);
     if (fileExists(newFilename)) {
         if (header.lastScanned > 0) {
@@ -417,66 +417,12 @@ void CMonitor::readHeader(CMonitorHeader& header) const {
                 archive.Release();
             }
         }
-    } else {
-        // cerr << "WHERE IS THE NEW FORMAT FILE" << endl;
-        // exit(0);
     }
-}
-
-//--------------------------------------------------------------------------------
-void doMoveFile(const string_q& from, const string_q& to) {
-#define CLEAN(a) (cTeal + (isTestMode() ? substitute((a), cacheFolder, "$CACHE/") : (a)) + cOff)
-    LOG4("Moving ", CLEAN(from), " to ", CLEAN(to));
-    if (fileExists(from))
-        moveFile(from, to);
-}
-
-// TODO: BOGUS - Do we need to use monitors/staging or can we build it in memory?
-//----------------------------------------------------------------
-bool CMonitor::removeDuplicates(const string_q& path) {
-    if (!isMonitorFilePath(path))
-        return false;
-    CStringArray parts;
-    explode(parts, path, '/');
-    address = substitute(parts[parts.size() - 1], "mon.bin", "");
-
-    if (!loadAppearances(nullptr, nullptr)) {
-        LOG_WARN("Could load monitor for address ", address);
-        return false;
-    }
-    sort(apps.begin(), apps.end());
-
-    CAppearance_mon prev;
-    bool hasDups = false;
-    for (auto a : apps) {
-        if (a.blk == prev.blk && a.txid == prev.txid) {
-            hasDups = true;
-            break;
-        }
-        prev = a;
-    }
-    if (!hasDups)
-        return true;
-
-    CAppearanceArray_mon deduped;
-    for (auto a : apps) {
-        if (a.blk != prev.blk || a.txid != prev.txid) {
-            deduped.push_back(a);
-        }
-        prev = a;
-    }
-
-    CArchive archiveOut(WRITING_ARCHIVE);
-    archiveOut.Lock(path, modeWriteCreate, LOCK_WAIT);
-    for (auto item : deduped)
-        archiveOut << item.blk << item.txid;
-    archiveOut.Release();
-
     return true;
 }
 
 //----------------------------------------------------------------
-blknum_t CMonitor::loadAppearances(MONAPPFUNC func, void* data) {
+bool CMonitor::readAppearances(MONAPPFUNC func, void* data) {
     string_q path = getPathToMonitor(address, false);
     blknum_t nRecs = this->getRecordCnt(path);
     if (!nRecs) {
@@ -497,6 +443,7 @@ blknum_t CMonitor::loadAppearances(MONAPPFUNC func, void* data) {
         LOG_ERR("Could not lock file ", address);
         return false;
     }
+
     CMonitorHeader header;
     archiveIn.Read(&header, sizeof(CMonitorHeader), 1);
     archiveIn.Read(buffer, sizeof(CAppearance_mon), nRecs);

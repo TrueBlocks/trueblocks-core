@@ -46,18 +46,6 @@ func (opts *MonitorsOptions) TestLog() {
 
 func (opts *MonitorsOptions) ToCmdLine() string {
 	options := ""
-	if opts.Clean {
-		options += " --clean"
-	}
-	if opts.Delete {
-		options += " --delete"
-	}
-	if opts.Undelete {
-		options += " --undelete"
-	}
-	if opts.Remove {
-		options += " --remove"
-	}
 	if opts.FirstBlock != 0 {
 		options += (" --first_block " + fmt.Sprintf("%d", opts.FirstBlock))
 	}

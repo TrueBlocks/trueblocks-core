@@ -32,6 +32,10 @@ func RunMonitors(cmd *cobra.Command, args []string) error {
 	}
 
 	// EXISTING_CODE
+	if opts.Clean {
+		return opts.HandleClean()
+	}
+
 	if opts.HandleCrudCommands(os.Stdout) {
 		return nil
 	}
@@ -49,6 +53,14 @@ func ServeMonitors(w http.ResponseWriter, r *http.Request) bool {
 	}
 
 	// EXISTING_CODE
+	if opts.Clean {
+		err = opts.HandleClean()
+		if err != nil {
+			opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		}
+		return true
+	}
+
 	if !opts.Globals.TestMode { // our test harness does not use DELETE
 		delOptions := "--delete, --undelete, or --remove"
 		if r.Method == "DELETE" {

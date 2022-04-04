@@ -33,7 +33,6 @@ type ExportOptions struct {
 	Articulate  bool
 	Cache       bool
 	CacheTraces bool
-	Factory     bool
 	Count       bool
 	FirstRecord uint64
 	MaxRecords  uint64
@@ -41,13 +40,12 @@ type ExportOptions struct {
 	Emitter     []string
 	Topic       []string
 	Asset       []string
-	Clean       bool
+	Factory     bool
 	Freshen     bool
 	Staging     bool
 	Unripe      bool
 	Load        string
 	Reversed    bool
-	ByDate      bool
 	SkipDdos    bool
 	MaxTraces   uint64
 	FirstBlock  uint64
@@ -72,7 +70,6 @@ func (opts *ExportOptions) TestLog() {
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	logger.TestLog(opts.Cache, "Cache: ", opts.Cache)
 	logger.TestLog(opts.CacheTraces, "CacheTraces: ", opts.CacheTraces)
-	logger.TestLog(opts.Factory, "Factory: ", opts.Factory)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	logger.TestLog(opts.FirstRecord != 0, "FirstRecord: ", opts.FirstRecord)
 	logger.TestLog(opts.MaxRecords != 250, "MaxRecords: ", opts.MaxRecords)
@@ -80,13 +77,12 @@ func (opts *ExportOptions) TestLog() {
 	logger.TestLog(len(opts.Emitter) > 0, "Emitter: ", opts.Emitter)
 	logger.TestLog(len(opts.Topic) > 0, "Topic: ", opts.Topic)
 	logger.TestLog(len(opts.Asset) > 0, "Asset: ", opts.Asset)
-	logger.TestLog(opts.Clean, "Clean: ", opts.Clean)
+	logger.TestLog(opts.Factory, "Factory: ", opts.Factory)
 	logger.TestLog(opts.Freshen, "Freshen: ", opts.Freshen)
 	logger.TestLog(opts.Staging, "Staging: ", opts.Staging)
 	logger.TestLog(opts.Unripe, "Unripe: ", opts.Unripe)
 	logger.TestLog(len(opts.Load) > 0, "Load: ", opts.Load)
 	logger.TestLog(opts.Reversed, "Reversed: ", opts.Reversed)
-	logger.TestLog(opts.ByDate, "ByDate: ", opts.ByDate)
 	logger.TestLog(opts.SkipDdos, "SkipDdos: ", opts.SkipDdos)
 	logger.TestLog(opts.MaxTraces != 250, "MaxTraces: ", opts.MaxTraces)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
@@ -126,9 +122,6 @@ func (opts *ExportOptions) ToCmdLine() string {
 	if opts.CacheTraces {
 		options += " --cache_traces"
 	}
-	if opts.Factory {
-		options += " --factory"
-	}
 	if opts.Count {
 		options += " --count"
 	}
@@ -150,20 +143,14 @@ func (opts *ExportOptions) ToCmdLine() string {
 	for _, asset := range opts.Asset {
 		options += " --asset " + asset
 	}
-	if opts.Clean {
-		options += " --clean"
-	}
-	if opts.Freshen {
-		options += " --freshen"
+	if opts.Factory {
+		options += " --factory"
 	}
 	if len(opts.Load) > 0 {
 		options += " --load " + opts.Load
 	}
 	if opts.Reversed {
 		options += " --reversed"
-	}
-	if opts.ByDate {
-		options += " --by_date"
 	}
 	if opts.FirstBlock != 0 {
 		options += (" --first_block " + fmt.Sprintf("%d", opts.FirstBlock))
@@ -222,8 +209,6 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ExportOptions {
 			opts.Cache = true
 		case "cacheTraces":
 			opts.CacheTraces = true
-		case "factory":
-			opts.Factory = true
 		case "count":
 			opts.Count = true
 		case "firstRecord":
@@ -247,8 +232,8 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ExportOptions {
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Asset = append(opts.Asset, s...)
 			}
-		case "clean":
-			opts.Clean = true
+		case "factory":
+			opts.Factory = true
 		case "freshen":
 			opts.Freshen = true
 		case "staging":
@@ -259,8 +244,6 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ExportOptions {
 			opts.Load = value[0]
 		case "reversed":
 			opts.Reversed = true
-		case "byDate":
-			opts.ByDate = true
 		case "skipDdos":
 			opts.SkipDdos = true
 		case "maxTraces":

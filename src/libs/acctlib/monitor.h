@@ -60,12 +60,10 @@ class CMonitor : public CAccountName {
 
   public:
     string_q getPathToMonitor(const address_t& addr, bool staging) const;
-    bool removeDuplicates(const string_q& path);
-
-    blknum_t loadAppearances(MONAPPFUNC func, void* data);
     size_t getRecordCnt(const string_q& path) const;
 
-    void readHeader(CMonitorHeader& header) const;
+    bool readHeader(CMonitorHeader& header) const;
+    bool readAppearances(MONAPPFUNC func, void* data);
 
     // EXISTING_CODE
     bool operator==(const CMonitor& it) const;

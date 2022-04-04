@@ -66,16 +66,13 @@ class COptions : public CAbiOptions {
     bool articulate;
     bool cache;
     bool cache_traces;
-    bool factory;
     bool count;
     blknum_t first_record;
     blknum_t max_records;
     bool relevant;
-    bool clean;
-    bool freshen;
+    bool factory;
     string_q load;
     bool reversed;
-    bool by_date;
     bool skip_ddos;
     uint64_t max_traces;
     // END_CODE_DECLARE
@@ -122,8 +119,6 @@ class COptions : public CAbiOptions {
     bool loadMonitors(void);
 
     bool handle_traversers(void);
-
-    bool process_clean(void);
 
     void addNeighbor(CAddressUintMap& map, const address_t& addr);
     void markNeighbors(const CTransaction& trans);

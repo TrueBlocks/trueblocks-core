@@ -44,7 +44,6 @@ static const COption params[] = {
     COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
     COption("cache", "i", "", OPT_SWITCH, "write transactions to the cache (see notes)"),
     COption("cache_traces", "R", "", OPT_SWITCH, "write traces to the cache (see notes)"),
-    COption("factory", "y", "", OPT_SWITCH, "scan for contract creations from the given address(es) and report address of those contracts"),  // NOLINT
     COption("count", "U", "", OPT_SWITCH, "only available for --appearances mode, if present, return only the number of records"),  // NOLINT
     COption("first_record", "c", "<blknum>", OPT_FLAG, "the first record to process"),
     COption("max_records", "e", "<blknum>", OPT_FLAG, "the maximum number of records to process before reporting"),
@@ -52,17 +51,12 @@ static const COption params[] = {
     COption("emitter", "", "list<addr>", OPT_FLAG, "for log export only, export only logs if emitted by one of these address(es)"),  // NOLINT
     COption("topic", "", "list<topic>", OPT_FLAG, "for log export only, export only logs with this topic(s)"),
     COption("asset", "", "list<addr>", OPT_FLAG, "for the statements option only, export only reconciliations for this asset"),  // NOLINT
-    COption("clean", "", "", OPT_SWITCH, "clean (i.e. remove duplicate appearances) from all existing monitors"),
-    COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
+    COption("factory", "y", "", OPT_SWITCH, "scan for contract creations from the given address(es) and report address of those contracts"),  // NOLINT
     COption("load", "", "<string>", OPT_HIDDEN | OPT_FLAG, "a comma separated list of dynamic traversers to load"),
     COption("reversed", "", "", OPT_HIDDEN | OPT_SWITCH, "produce results in reverse chronological order"),
-    COption("by_date", "b", "", OPT_HIDDEN | OPT_SWITCH, "produce results sorted by date (report by address otherwise)"),  // NOLINT
     COption("first_block", "F", "<blknum>", OPT_FLAG, "first block to process (inclusive)"),
     COption("last_block", "L", "<blknum>", OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more addresses."),
-    COption("delete", "", "", OPT_SWITCH, "delete a monitor, but do not remove it"),
-    COption("undelete", "", "", OPT_SWITCH, "undelete a previously deleted monitor"),
-    COption("remove", "", "", OPT_SWITCH, "remove a previously deleted monitor"),
     // clang-format on
     // END_CODE_OPTIONS
 };
@@ -73,8 +67,6 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-    replaceAll(command, "--delete", "--deleteMe");
-
     // BEG_CODE_LOCAL_INIT
     CAddressArray addrs;
     CTopicArray topics;
@@ -83,9 +75,6 @@ bool COptions::parseArguments(string_q& command) {
     CAddressArray asset;
     blknum_t first_block = 0;
     blknum_t last_block = NOPOS;
-    bool deleteMe = false;
-    bool undelete = false;
-    bool remove = false;
     // END_CODE_LOCAL_INIT
 
     blknum_t latest = meta.client;
@@ -102,11 +91,9 @@ bool COptions::parseArguments(string_q& command) {
                 legit = arg;
             }
             term = arg;
-        } else if (arg == "--clean") {
-            clean = true;
         }
     }
-    if (!clean && legit.empty() && !term.empty())
+    if (legit.empty() && !term.empty())
         return parseAddressList(this, addrs, term);
     // Weirdness, if the user doesn't provide a valid address, topic, or fourbyte, report bad addr
 
@@ -145,9 +132,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-R" || arg == "--cache_traces") {
             cache_traces = true;
-
-        } else if (arg == "-y" || arg == "--factory") {
-            factory = true;
 
         } else if (arg == "-U" || arg == "--count") {
             count = true;
@@ -188,11 +172,8 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "--asset") {
             return flag_required("asset");
 
-        } else if (arg == "--clean") {
-            clean = true;
-
-        } else if (arg == "-f" || arg == "--freshen") {
-            freshen = true;
+        } else if (arg == "-y" || arg == "--factory") {
+            factory = true;
 
         } else if (startsWith(arg, "--load:")) {
             load = substitute(substitute(arg, "-:", ""), "--load:", "");
@@ -201,9 +182,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "--reversed") {
             reversed = true;
-
-        } else if (arg == "-b" || arg == "--by_date") {
-            by_date = true;
 
         } else if (startsWith(arg, "-F:") || startsWith(arg, "--first_block:")) {
             if (!confirmBlockNum("first_block", first_block, arg, latest))
@@ -216,15 +194,6 @@ bool COptions::parseArguments(string_q& command) {
                 return false;
         } else if (arg == "-L" || arg == "--last_block") {
             return flag_required("last_block");
-
-        } else if (arg == "--deleteMe") {
-            deleteMe = true;
-
-        } else if (arg == "--undelete") {
-            undelete = true;
-
-        } else if (arg == "--remove") {
-            remove = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -248,72 +217,20 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (deleteMe)
-        crudCommands.push_back("delete");
-
-    if (undelete)
-        crudCommands.push_back("undelete");
-
-    if (remove)
-        crudCommands.push_back("remove");
-
-    for (auto t : topics)
-        logFilter.topics.push_back(t);
-
     if (!isApiMode() && max_records == 250)
         max_records = NOPOS;
-
-    if (clean) {
-        if (!process_clean())
-            return usage("Clean function returned false.");
-        return false;
-    }
 
     if (accounting && !isArchiveNode())
         return usage("The --accounting option requires historical balances which your RPC server does not provide.");
 
-    // We need at least one address to scrape...
-    if (addrs.size() == 0)
-        return usage("You must provide at least one Ethereum address.");
-
-    if (topics.size() && !logs)
-        return usage("Use the topics option only with --logs.");
-
-    if (fourbytes.size() && (logs || receipts || statements || appearances))
-        return usage("Use the fourbytes option only with non-logs commands.");
-
-    if ((appearances + receipts + statements + logs + traces) > 1)
+    if ((appearances + logs + receipts + traces + statements + neighbors + accounting) > 1)
         return usage("Please export only one of list, receipts, statements, logs, or traces.");
-
-    if (emitter.size() > 0 && !logs)
-        return usage("The --emitter option is only available when exporting logs.");
-
-    if (!topics.empty() && !logs)
-        return usage("The --topic option is only available when exporting logs.");
-
-    if (asset.size() > 0 && !statements)
-        return usage("The --asset option is only available when exporting statements.");
-
-    if (factory && !traces)
-        return usage("The --factory option is only available when exporting traces.");
-
-    if (count && (receipts || statements || logs || traces || factory))
-        return usage("--count option is only available with --appearances option.");
-
-    if (accounting && (addrs.size() != 1))
-        return usage("You may only use --accounting option with a single address.");
-
-    if (accounting && freshen)
-        return usage("Do not use the --accounting option with --freshen.");
-
-    if ((accounting) && (appearances || logs || traces || receipts || statements))
-        return usage("Do not use the --accounting option with other options.");
-
-    if (freshen && (logs || traces || receipts || statements))
-        return usage("Do not use the --freshen option with other options.");
 
     for (auto e : emitter)
         logFilter.emitters.push_back(e);
+
+    for (auto t : topics)
+        logFilter.topics.push_back(t);
 
     for (auto t : topic)
         logFilter.topics.push_back(t);
@@ -430,16 +347,13 @@ void COptions::Init(void) {
     cache = getGlobalConfig("acctExport")->getConfigBool("settings", "cache", false);
     cache_traces = getGlobalConfig("acctExport")->getConfigBool("settings", "cache_traces", false);
     // clang-format on
-    factory = false;
     count = false;
     first_record = 0;
     max_records = 250;
     relevant = false;
-    clean = false;
-    freshen = false;
+    factory = false;
     load = "";
     reversed = false;
-    by_date = false;
     // clang-format off
     skip_ddos = getGlobalConfig("acctExport")->getConfigBool("settings", "skip_ddos", true);
     max_traces = getGlobalConfig("acctExport")->getConfigInt("settings", "max_traces", 250);

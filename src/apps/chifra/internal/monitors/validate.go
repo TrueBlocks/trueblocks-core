@@ -53,6 +53,10 @@ func (opts *MonitorsOptions) ValidateMonitors() error {
 		}
 	}
 
+	if !opts.Clean && len(opts.Addrs) == 0 {
+		return validate.Usage("You must provide at least one Ethereum address for this command.")
+	}
+
 	if !opts.Globals.ApiMode && !opts.Clean {
 		if len(opts.Globals.File) > 0 {
 			// Do nothing

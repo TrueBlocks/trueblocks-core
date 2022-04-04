@@ -31,7 +31,7 @@ bool COptions::loadMonitors(void) {
 
     for (CMonitor& monitor : allMonitors) {
         curMonitor = &monitor;
-        if (!monitor.loadAppearances(visitOnLoad, this)) {
+        if (!monitor.readAppearances(visitOnLoad, this)) {
             LOG_ERR("Could not load appearances for address " + monitor.address);
             return false;
         }
@@ -39,8 +39,7 @@ bool COptions::loadMonitors(void) {
         if (monitor.getRecordCnt(path) == 0) {
             // We don't continue if we have no transactions. We used to report an
             // error here, but this is not really an error
-            if (!freshen)
-                LOG_WARN("No records found for address ", monitor.address);
+            LOG_WARN("No records found for address ", monitor.address);
             return false;
         }
     }
@@ -91,8 +90,7 @@ bool COptions::loadMonitors(void) {
             return false;
 
     } else {
-        if (!freshen)
-            LOG_INFO("Nothing to export" + (allMonitors.size() ? (" from " + accountedFor.address) : "") + ".");
+        LOG_INFO("Nothing to export" + (allMonitors.size() ? (" from " + accountedFor.address) : "") + ".");
         return false;
     }
 

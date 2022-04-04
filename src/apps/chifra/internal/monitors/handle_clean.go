@@ -1,18 +1,14 @@
-/*-------------------------------------------------------------------------------------------
- * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
- *
- * This program is free software: you may redistribute it and/or modify it under the terms
- * of the GNU General Public License as published by the Free Software Foundation, either
- * version 3 of the License, or (at your option) any later version. This program is
- * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
- * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * General Public License for more details. You should have received a copy of the GNU General
- * Public License along with this program. If not, see http://www.gnu.org/licenses/.
- *-------------------------------------------------------------------------------------------*/
-#include "options.h"
+// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
 
-//---------------------------------------------------------------
+package monitorsPkg
+
+func (opts *MonitorsOptions) HandleClean() error {
+	return nil
+}
+
+/*
 bool cleanMonitorFile(const string_q& path, void* data) {
     if (endsWith(path, '/')) {
         forEveryFileInFolder(path + "*", cleanMonitorFile, data);
@@ -57,8 +53,6 @@ bool cleanMonitorFile(const string_q& path, void* data) {
 
     return !shouldQuit();
 }
-
-//---------------------------------------------------------------
 bool COptions::process_clean(void) {
     CMonitor m;
     cout << "[";
@@ -66,3 +60,47 @@ bool COptions::process_clean(void) {
     cout << "]";
     return ret;
 }
+// TODO: BOGUS - Do we need to use monitors/staging or can we build it in memory?
+//----------------------------------------------------------------
+bool CMonitor::removeDuplicates(const string_q& path) {
+    if (!isMonitorFilePath(path))
+        return false;
+    CStringArray parts;
+    explode(parts, path, '/');
+    address = substitute(parts[parts.size() - 1], "mon.bin", "");
+
+    if (!readAppearances(nullptr, nullptr)) {
+        LOG_WARN("Could load monitor for address ", address);
+        return false;
+    }
+    sort(apps.begin(), apps.end());
+
+    CAppearance_mon prev;
+    bool hasDups = false;
+    for (auto a : apps) {
+        if (a.blk == prev.blk && a.txid == prev.txid) {
+            hasDups = true;
+            break;
+        }
+        prev = a;
+    }
+    if (!hasDups)
+        return true;
+
+    CAppearanceArray_mon deduped;
+    for (auto a : apps) {
+        if (a.blk != prev.blk || a.txid != prev.txid) {
+            deduped.push_back(a);
+        }
+        prev = a;
+    }
+
+    CArchive archiveOut(WRITING_ARCHIVE);
+    archiveOut.Lock(path, modeWriteCreate, LOCK_WAIT);
+    for (auto item : deduped)
+        archiveOut << item.blk << item.txid;
+    archiveOut.Release();
+
+    return true;
+}
+*/
