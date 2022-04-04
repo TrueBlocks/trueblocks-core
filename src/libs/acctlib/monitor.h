@@ -56,22 +56,16 @@ class CMonitor : public CAccountName {
     // EXISTING_CODE
   public:
     bool isStaging;
-    CArchive* tx_cache;
     CAppearanceArray_mon apps;
 
   public:
     string_q getPathToMonitor(const address_t& addr, bool staging) const;
-    bool openForWriting(bool staging);
-    void closeMonitorCache(void);
-    void writeAppendNewApps(const CAppearanceArray_mon& array);
     bool removeDuplicates(const string_q& path);
-    void moveToProduction(bool staging);
 
     blknum_t loadAppearances(MONAPPFUNC func, void* data);
     size_t getFileSize(const string_q& path) const;
     size_t getRecordCnt(const string_q& path) const;
 
-    void writeNextBlockToVisit(blknum_t bn, bool staging);
     void readHeader(CMonitorHeader& header) const;
 
     // EXISTING_CODE
@@ -102,7 +96,6 @@ inline CMonitor::CMonitor(void) {
 //--------------------------------------------------------------------------
 inline CMonitor::CMonitor(const CMonitor& mo) {
     // EXISTING_CODE
-    tx_cache = NULL;
     // EXISTING_CODE
     duplicate(mo);
 }
@@ -120,11 +113,6 @@ inline CMonitor::~CMonitor(void) {
 //--------------------------------------------------------------------------
 inline void CMonitor::clear(void) {
     // EXISTING_CODE
-    if (tx_cache) {
-        tx_cache->Release();
-        delete tx_cache;
-    }
-    tx_cache = NULL;
     // EXISTING_CODE
 }
 
@@ -141,7 +129,6 @@ inline void CMonitor::initialize(void) {
 
     // EXISTING_CODE
     isStaging = false;
-    tx_cache = NULL;
     apps.clear();
     // EXISTING_CODE
 }
@@ -160,7 +147,6 @@ inline void CMonitor::duplicate(const CMonitor& mo) {
 
     // EXISTING_CODE
     isStaging = mo.isStaging;
-    tx_cache = NULL;  // we do not copy the tx_cache
     apps = mo.apps;
     // EXISTING_CODE
 }

@@ -25,6 +25,14 @@ func (opts *ExportOptions) ValidateExport() error {
 		}
 	}
 
+	if opts.Unripe && opts.Staging {
+		return validate.Usage("Please choose only one of {0} or {1}", "--staging", "--unripe")
+	}
+
+	if opts.Globals.TestMode && (opts.Staging || opts.Unripe) {
+		return validate.Usage("--staging and --unripe are disabled for testing.")
+	}
+
 	if opts.Accounting && opts.Globals.Chain != "mainnet" {
 		logger.Log(logger.Warning, "The --accounting option reports a spotPrice of one for all assets on non-mainnet chains.")
 	}

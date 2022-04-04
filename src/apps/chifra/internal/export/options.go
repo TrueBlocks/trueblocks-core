@@ -156,12 +156,6 @@ func (opts *ExportOptions) ToCmdLine() string {
 	if opts.Freshen {
 		options += " --freshen"
 	}
-	if opts.Staging {
-		options += " --staging"
-	}
-	if opts.Unripe {
-		options += " --unripe"
-	}
 	if len(opts.Load) > 0 {
 		options += " --load " + opts.Load
 	}

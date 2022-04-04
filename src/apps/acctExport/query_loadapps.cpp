@@ -29,29 +29,19 @@ bool COptions::loadMonitors(void) {
     if (count)
         return true;
 
-    if (unripe) {
-        forEveryFileInFolder(indexFolder_unripe, visitUnripeIndexFiles, this);
-
-    } else if (staging) {
-        // TODO: BOGUS - scrape to front of chain
-        LOG_INFO("Staging option is currently not available.");
-        // forEveryFileInFolder(indexFolder_staging, visitToFreshen_fromStaging, this);
-
-    } else {
-        for (CMonitor& monitor : allMonitors) {
-            curMonitor = &monitor;
-            if (!monitor.loadAppearances(visitOnLoad, this)) {
-                LOG_ERR("Could not load appearances for address " + monitor.address);
-                return false;
-            }
-            string_q path = monitor.getPathToMonitor(monitor.address, false);
-            if (monitor.getRecordCnt(path) == 0) {
-                // We don't continue if we have no transactions. We used to report an
-                // error here, but this is not really an error
-                if (!freshen)
-                    LOG_WARN("No records found for address ", monitor.address);
-                return false;
-            }
+    for (CMonitor& monitor : allMonitors) {
+        curMonitor = &monitor;
+        if (!monitor.loadAppearances(visitOnLoad, this)) {
+            LOG_ERR("Could not load appearances for address " + monitor.address);
+            return false;
+        }
+        string_q path = monitor.getPathToMonitor(monitor.address, false);
+        if (monitor.getRecordCnt(path) == 0) {
+            // We don't continue if we have no transactions. We used to report an
+            // error here, but this is not really an error
+            if (!freshen)
+                LOG_WARN("No records found for address ", monitor.address);
+            return false;
         }
     }
 

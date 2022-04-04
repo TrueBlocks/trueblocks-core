@@ -402,28 +402,6 @@ size_t CMonitor::getRecordCnt(const string_q& path) const {
     return (sz / s2) - 1;
 }
 
-//-------------------------------------------------------------------------
-bool CMonitor::openForWriting(bool staging) {
-    if (tx_cache != NULL)
-        return true;
-    tx_cache = new CArchive(WRITING_ARCHIVE);
-    if (tx_cache == NULL)
-        return false;
-    return tx_cache->Lock(getPathToMonitor(address, staging), modeWriteAppend, LOCK_WAIT);
-}
-
-//-------------------------------------------------------------------------
-void CMonitor::writeAppendNewApps(const CAppearanceArray_mon& items) {
-    if (tx_cache == NULL)
-        return;
-    if (!isTestMode()) {
-        LOG_INFO(bBlue, address, cOff, " adding appearances (count: ", items.size(), ")");
-    }
-    for (auto item : items)
-        *tx_cache << item.blk << item.txid;
-    tx_cache->flush();
-}
-
 //---------------------------------------------------------------------------
 string_q CMonitor::getPathToMonitor(const address_t& addr, bool staging) const {
     string_q fn = isAddress(addr) ? addr + ".acct.bin" : addr;
@@ -437,10 +415,6 @@ string_q CMonitor::getPathToMonitor(const address_t& addr, bool staging) const {
 //---------------------------------------------------------------------------
 #define getPathToMonitorDels(a) (getPathToMonitor((a), false) + ".deleted")
 #define getPathToNewMonitorType(a, b) (substitute(getPathToMonitor((a), (b)), ".acct.bin", ".mon.bin"))
-
-//-------------------------------------------------------------------------
-void CMonitor::writeNextBlockToVisit(blknum_t bn, bool staging) {
-}
 
 //--------------------------------------------------------------------------------
 void CMonitor::readHeader(CMonitorHeader& header) const {
@@ -468,39 +442,7 @@ void doMoveFile(const string_q& from, const string_q& to) {
         moveFile(from, to);
 }
 
-//--------------------------------------------------------------------------------
-void CMonitor::closeMonitorCache(void) {
-    if (!tx_cache)
-        return;
-    tx_cache->Release();
-    delete tx_cache;
-    tx_cache = NULL;
-}
-
-//--------------------------------------------------------------------------------
-void CMonitor::moveToProduction(bool staging) {
-    if (!staging)
-        return;
-    ASSERT(staging);
-    isStaging = false;
-
-    closeMonitorCache();
-    removeDuplicates(getPathToMonitor(address, true));
-
-    bool binStageExists = fileExists(getPathToMonitor(address, true));
-    if (!binStageExists) {
-        // For some reason (user quit, UI switched to adding a different address to monitor, something went
-        // wrong...) the binary cache was not created. Cleanup everything. The user will have to start over.
-        ::remove(getPathToMonitor(address, true).c_str());
-    } else {
-        lockSection();
-        if (binStageExists) {
-            doMoveFile(getPathToMonitor(address, true), getPathToMonitor(address, false));
-        }
-        unlockSection();
-    }
-}
-
+// TODO: BOGUS - Do we need to use monitors/staging or can we build it in memory?
 //----------------------------------------------------------------
 bool CMonitor::removeDuplicates(const string_q& path) {
     if (!isMonitorFilePath(path))

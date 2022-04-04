@@ -54,8 +54,6 @@ static const COption params[] = {
     COption("asset", "", "list<addr>", OPT_FLAG, "for the statements option only, export only reconciliations for this asset"),  // NOLINT
     COption("clean", "", "", OPT_SWITCH, "clean (i.e. remove duplicate appearances) from all existing monitors"),
     COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
-    COption("staging", "s", "", OPT_SWITCH, "export transactions labeled staging (i.e. older than 28 blocks but not yet consolidated)"),  // NOLINT
-    COption("unripe", "u", "", OPT_SWITCH, "export transactions labeled upripe (i.e. less than 28 blocks old)"),
     COption("load", "", "<string>", OPT_HIDDEN | OPT_FLAG, "a comma separated list of dynamic traversers to load"),
     COption("reversed", "", "", OPT_HIDDEN | OPT_SWITCH, "produce results in reverse chronological order"),
     COption("by_date", "b", "", OPT_HIDDEN | OPT_SWITCH, "produce results sorted by date (report by address otherwise)"),  // NOLINT
@@ -196,12 +194,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-f" || arg == "--freshen") {
             freshen = true;
 
-        } else if (arg == "-s" || arg == "--staging") {
-            staging = true;
-
-        } else if (arg == "-u" || arg == "--unripe") {
-            unripe = true;
-
         } else if (startsWith(arg, "--load:")) {
             load = substitute(substitute(arg, "-:", ""), "--load:", "");
         } else if (arg == "--load") {
@@ -332,19 +324,12 @@ bool COptions::parseArguments(string_q& command) {
     if (!loadNames())
         return usage("Could not load names database.");
 
-    // Where will we start?
-    blknum_t nextBlockToVisit = NOPOS;
-
     for (auto addr : addrs) {
         CMonitor monitor;
         monitor.setValueByName("address", toLower(addr));
         monitor.setValueByName("name", toLower(addr));
         monitor.finishParse();
         monitor.isStaging = !fileExists(monitor.getPathToMonitor(monitor.address, false));
-
-        CMonitorHeader header;
-        monitor.readHeader(header);
-        nextBlockToVisit = min(nextBlockToVisit, uint64_t(header.lastScanned));
 
         if (accountedFor.address.empty()) {
             accountedFor.address = monitor.address;
@@ -369,25 +354,9 @@ bool COptions::parseArguments(string_q& command) {
     if (!setDisplayFormatting())
         return false;
 
-    // Are we visiting unripe and/or staging in our search?
-    if (staging && unripe)
-        return usage("Please choose only one of --staging or --unripe.");
-
-    // Last block depends on scrape type or user input `end` option (with appropriate check)
-    blknum_t lastBlockToVisit = max((blknum_t)1, unripe ? meta.unripe : staging ? meta.staging : meta.finalized);
-    needRange = make_pair((nextBlockToVisit == NOPOS ? 0 : nextBlockToVisit), max(nextBlockToVisit, lastBlockToVisit));
-
-    if (isTestMode() && (staging || unripe))
-        return usage("--staging and --unripe are disabled for testing.");
-
-    if (unripe && (cache || cache_traces)) {
-        cache = cache_traces = false;
-        LOG_INFO("Turning off caching for unripe blocks.");
-    }
-
-    // always freshen (i.e. query blooms) up to every block
-    if (!process_freshen())
-        return usage("freshen returns false.");
+    // The monitor data has already been updated by the golang code
+    // TODO: BOGUS - this can be done in the golang code
+    cleanMonitorStage();
 
     if (first_block > last_block)
         return usage("--first_block must be less than or equal to --last_block.");
@@ -468,8 +437,6 @@ void COptions::Init(void) {
     relevant = false;
     clean = false;
     freshen = false;
-    staging = false;
-    unripe = false;
     load = "";
     reversed = false;
     by_date = false;
@@ -483,7 +450,6 @@ void COptions::Init(void) {
         cache = true;  // backwards compat
 
     meta = getMetaData();
-    needRange = make_pair(0, NOPOS);
 
     allMonitors.clear();
     monApps.clear();
@@ -500,7 +466,6 @@ void COptions::Init(void) {
     minArgs = 0;
     fileRange = make_pair(NOPOS, NOPOS);
     allMonitors.clear();
-    possibles.clear();
     reportFreq = reportDef = 7;
     slowQueries = 0;
     maxSlowQueries =
@@ -740,8 +705,36 @@ void COptions::writePerformanceData(void) {
 }
 
 //-----------------------------------------------------------------------
+// TODO: BOGUS
+// bool establishIndexChunk(const string_q& fileName);
+// bool COptions::establishIndexChunk(const string_q& fullPathToChunk) {
+//     if (fileExists(fullPathToChunk))
+//         return true;
+
+//     string_q fileName = substitute(substitute(fullPathToChunk, indexFolder_finalized, ""), ".bin", "");
+//     static CPinnedChunkArray pins;
+//     if (pins.size() == 0) {
+//         if (!pinlib_readManifest(pins)) {
+//             LOG_ERR("Could not read the manifest.");
+//             return false;
+//         }
+//     }
+//     CPinnedChunk pin;
+//     if (pinlib_findChunk(pins, fileName, pin)) {
+//         LOG_PROGRESS(EXTRACT, fileRange.first, n eedRange.second, " from IPFS" + cOff);
+//         if (!pinlib_getChunkFromRemote(pin, .25))
+//             LOG_ERR("Could not retrieve file from IPFS: ", fullPathToChunk);
+//     } else {
+//         LOG_ERR("Could not find file in manifest: ", fullPathToChunk);
+//     }
+//     return fileExists(fullPathToChunk);
+// }
+
+//-----------------------------------------------------------------------
 const char* STR_MONITOR_LOCKED =
     "The cache file is locked. The program is either already "
     "running or it did not end cleanly the\n\tlast time it ran. "
     "Quit the already running program or, if it is not running, "
     "remove the lock\n\tfile: '{0}.lck'.";
+
+// TODO: BOGUS - WE NO LONGER HAVE THE ABILITY TO KEEP TRACK OF HOW MANY BLOOM FILTERS HIT DURING CHIFRA LIST
