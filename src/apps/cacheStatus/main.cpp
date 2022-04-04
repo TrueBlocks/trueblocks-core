@@ -14,6 +14,8 @@
 
 //-------------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
+    // loadEnvironmentPaths("mainnet", "/Users/jrush/Development/trueblocks-index/wild.0/unchained/",
+    //                      "/Users/jrush/Development/trueblocks-index/wild.0/cache/mainnet/");
     nodeNotRequired();
     acctlib_init(quickQuitHandler);
 
