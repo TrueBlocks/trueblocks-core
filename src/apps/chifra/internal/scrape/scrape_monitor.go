@@ -6,23 +6,18 @@ package scrapePkg
 
 import (
 	"fmt"
-	"io/fs"
 	"log"
 	"os"
 	"path"
-	"path/filepath"
 	"strings"
 	"sync"
 	"time"
 
 	exportPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 func hasMonitorsFlag(mode string) bool {
@@ -49,12 +44,12 @@ func (opts *ScrapeOptions) RunMonitorScraper(wg *sync.WaitGroup, initialState bo
 			monitorChan := make(chan monitor.Monitor)
 
 			var monitors []monitor.Monitor
-			go getMonitors(chain, "monitors", monitorChan)
+			go monitor.GetMonitors(chain, "monitors", monitorChan)
 
 			count := 0
 			for result := range monitorChan {
 				switch result.Address {
-				case sentinalAddr:
+				case monitor.SentinalAddr:
 					close(monitorChan)
 				default:
 					if result.Count > 100000 {
@@ -168,46 +163,6 @@ func Freshen(chain string, monitors []monitor.Monitor) error {
 		}
 	}
 	return nil
-}
-
-var sentinalAddr = common.HexToAddress("0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead")
-
-func getMonitors(chain, folder string, monitorChan chan<- monitor.Monitor) {
-	defer func() {
-		monitorChan <- monitor.Monitor{Address: sentinalAddr}
-	}()
-
-	isMocked := strings.Contains(folder, "/mocked/")
-	info, err := os.Stat("./addresses.csv")
-	if err == nil {
-		// If the shorthand file exists in the current folder, use it...
-		lines := file.AsciiFileToLines(info.Name())
-		fmt.Println("Found ", len(lines), " addresses to monitor in ./addresses.csv")
-		for _, line := range lines {
-			if !strings.HasPrefix(line, "#") {
-				parts := strings.Split(line, ",")
-				if len(parts) > 0 && validate.IsValidAddress(parts[0]) && !validate.IsZeroAddress(parts[0]) {
-					monitorChan <- monitor.NewMonitor(chain, parts[0], true /* create */, isMocked)
-				}
-			}
-		}
-		return
-	}
-
-	// ...otherwise freshen all existing monitors
-	pp := config.GetPathToCache(chain) + folder
-	filepath.Walk(pp, func(path string, info fs.FileInfo, err error) error {
-		if err != nil {
-			return err
-		}
-		if !info.IsDir() {
-			addr, _ := monitor.AddressFromMonitorPath(path)
-			if len(addr) > 0 {
-				monitorChan <- monitor.NewMonitor(chain, addr, true /* create */, isMocked)
-			}
-		}
-		return nil
-	})
 }
 
 // TODO: We could add statistics counting -- nChanged, nProcessed, txCount, etc

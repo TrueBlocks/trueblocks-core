@@ -10,6 +10,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"io/fs"
 	"os"
 	"path/filepath"
 	"strings"
@@ -17,6 +18,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
@@ -316,11 +318,54 @@ func (mon *Monitor) MoveToProduction() error {
 	return os.Rename(oldpath, mon.Path())
 }
 
-func AddressFromMonitorPath(path string) (string, error) {
-	if !strings.Contains(path, ".") && !strings.HasSuffix(path, Ext) {
-		return "", errors.New("path does not contain an address")
-	}
+func addressFromPath(path string) (string, error) {
 	_, fileName := filepath.Split(path)
+	if len(fileName) == 0 || !strings.HasPrefix(fileName, "0x") || !strings.HasSuffix(fileName, ".mon.bin") {
+		return "", errors.New("path does is not a valid monitor filename")
+	}
 	parts := strings.Split(fileName, ".")
 	return strings.ToLower(parts[0]), nil
+}
+
+// SentinalAddr is a marker to signify the end of the monitor list produced by GetMonitors
+var SentinalAddr = common.HexToAddress("0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead")
+
+// GetMonitors puts a list of Monitors into the monitorChannel. The list of monitors is built from
+// a file called addresses.csv in the current folder or, if not present, from existing monitors
+func GetMonitors(chain, folder string, monitorChan chan<- Monitor) {
+	defer func() {
+		monitorChan <- Monitor{Address: SentinalAddr}
+	}()
+
+	isMocked := strings.Contains(folder, "/mocked/")
+	info, err := os.Stat("./addresses.csv")
+	if err == nil {
+		// If the shorthand file exists in the current folder, use it...
+		lines := file.AsciiFileToLines(info.Name())
+		fmt.Println("Found ", len(lines), " addresses to monitor in ./addresses.csv")
+		for _, line := range lines {
+			if !strings.HasPrefix(line, "#") {
+				parts := strings.Split(line, ",")
+				if len(parts) > 0 && validate.IsValidAddress(parts[0]) && !validate.IsZeroAddress(parts[0]) {
+					monitorChan <- NewMonitor(chain, parts[0], true /* create */, isMocked)
+				}
+			}
+		}
+		return
+	}
+
+	// ...otherwise freshen all existing monitors
+	pp := config.GetPathToCache(chain) + folder
+	filepath.Walk(pp, func(path string, info fs.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+		if !info.IsDir() {
+			addr, _ := addressFromPath(path)
+			if len(addr) > 0 {
+				monitorChan <- NewMonitor(chain, addr, true /* create */, isMocked)
+			}
+		}
+		return nil
+	})
 }
