@@ -392,9 +392,14 @@ size_t CMonitor::getFileSize(const string_q& path) const {
     return ::fileSize(path);
 }
 
+// TODO: BOGUS - CLEAN THIS UP
 //-------------------------------------------------------------------------
 size_t CMonitor::getRecordCnt(const string_q& path) const {
-    return ::fileSize(path) / sizeof(CAppearance_mon);
+    size_t sz = ::fileSize(path);
+    if (!sz)
+        return 0;
+    size_t s2 = sizeof(CAppearance_mon);
+    return (sz / s2) - 1;
 }
 
 //-------------------------------------------------------------------------
@@ -411,7 +416,9 @@ bool CMonitor::openForWriting(bool staging) {
 void CMonitor::writeAppendNewApps(const CAppearanceArray_mon& items) {
     if (tx_cache == NULL)
         return;
-    LOG_INFO(bBlue, address, cOff, " adding appearances (count: ", items.size(), ")");
+    if (!isTestMode()) {
+        LOG_INFO(bBlue, address, cOff, " adding appearances (count: ", items.size(), ")");
+    }
     for (auto item : items)
         *tx_cache << item.blk << item.txid;
     tx_cache->flush();
@@ -420,57 +427,31 @@ void CMonitor::writeAppendNewApps(const CAppearanceArray_mon& items) {
 //---------------------------------------------------------------------------
 string_q CMonitor::getPathToMonitor(const address_t& addr, bool staging) const {
     string_q fn = isAddress(addr) ? addr + ".acct.bin" : addr;
+    fn = substitute(fn, ".acct.bin", ".mon.bin");
     string_q base = cacheFolder_monitors + (staging ? "staging/" : "");
+    if (isTestMode())
+        base = chainConfigsFolder_mocked + "monitors/" + (staging ? "staging/" : "");
     return base + fn;
 }
 
 //---------------------------------------------------------------------------
 #define getPathToMonitorDels(a) (getPathToMonitor((a), false) + ".deleted")
-#define getPathToMonitorLast(a, b) (substitute(getPathToMonitor((a), (b)), ".acct.bin", ".last.txt"))
-#define getPathToMonitorLastStaging(a) (getPathToMonitorLast((a), true))
-#define getPathToMontorLastProduction(a) (getPathToMonitorLast((a), false))
 #define getPathToNewMonitorType(a, b) (substitute(getPathToMonitor((a), (b)), ".acct.bin", ".mon.bin"))
 
 //-------------------------------------------------------------------------
 void CMonitor::writeNextBlockToVisit(blknum_t bn, bool staging) {
-    stringToAsciiFile(getPathToMonitorLast(address, staging), uint_2_Str(bn) + "\n");
 }
 
 //--------------------------------------------------------------------------------
 void CMonitor::readHeader(CMonitorHeader& header) const {
-    string_q prodFn = getPathToMontorLastProduction(address);
-    bool prodExists = fileExists(prodFn);
-    string_q stageFn = getPathToMonitorLastStaging(address);
-    bool stageExists = fileExists(stageFn);
-
     header.deleted = fileExists(getPathToMonitorDels(address));
-    if (stageExists) {
-        header.lastScanned = uint32_t(str_2_Uint(asciiFileToString(stageFn)));
-    } else if (prodExists) {
-        header.lastScanned = uint32_t(str_2_Uint(asciiFileToString(prodFn)));
-    } else {
-        // Accounts can receive ETH counter-factually. By default, we ignore
-        // this and start our scan from the account's deploy block (in the case
-        // of a contract) or the zero block. User can change this setting.
-        header.lastScanned = 0;  // NOLINT
-        if (getGlobalConfig("acctExport")->getConfigBool("settings", "start_when_deployed", true)) {
-            blknum_t deployed = getDeployBlock(address);
-            header.lastScanned = uint32_t(deployed == NOPOS ? 0 : deployed);  // NOLINT
-        }
-    }
-
-    string_q newFilename = getPathToNewMonitorType(address, stageExists);
+    string_q newFilename = getPathToNewMonitorType(address, isStaging);
     if (fileExists(newFilename)) {
         if (header.lastScanned > 0) {
-            cerr << "Returning " << header.lastScanned << endl;
-            cerr << "Returning " << header.deleted << endl;
             CArchive archive(READING_ARCHIVE);
             if (archive.Lock(newFilename, modeReadOnly, LOCK_NOWAIT)) {
-                CMonitorHeader test;
-                archive.Read(&test, sizeof(CMonitorHeader), 1);
+                archive.Read(&header, sizeof(CMonitorHeader), 1);
                 archive.Release();
-                cerr << "Would have returned " << test.lastScanned << endl;
-                cerr << "Would have returned " << test.deleted << endl;
             }
         }
     } else {
@@ -507,20 +488,14 @@ void CMonitor::moveToProduction(bool staging) {
     removeDuplicates(getPathToMonitor(address, true));
 
     bool binStageExists = fileExists(getPathToMonitor(address, true));
-    bool lastStageExists = fileExists(getPathToMonitorLastStaging(address));
-
-    if (!binStageExists && !lastStageExists) {
+    if (!binStageExists) {
         // For some reason (user quit, UI switched to adding a different address to monitor, something went
         // wrong...) the binary cache was not created. Cleanup everything. The user will have to start over.
         ::remove(getPathToMonitor(address, true).c_str());
-        ::remove(getPathToMonitorLastStaging(address).c_str());
     } else {
         lockSection();
         if (binStageExists) {
             doMoveFile(getPathToMonitor(address, true), getPathToMonitor(address, false));
-        }
-        if (lastStageExists) {
-            doMoveFile(getPathToMonitorLastStaging(address), getPathToMontorLastProduction(address));
         }
         unlockSection();
     }
@@ -591,6 +566,8 @@ blknum_t CMonitor::loadAppearances(MONAPPFUNC func, void* data) {
         LOG_ERR("Could not lock file ", address);
         return false;
     }
+    CMonitorHeader header;
+    archiveIn.Read(&header, sizeof(CMonitorHeader), 1);
     archiveIn.Read(buffer, sizeof(CAppearance_mon), nRecs);
     archiveIn.Release();
 
@@ -598,10 +575,13 @@ blknum_t CMonitor::loadAppearances(MONAPPFUNC func, void* data) {
     for (size_t i = 0; i < nRecs; i++) {
         apps.push_back(buffer[i]);
         if (func && !(*func)(buffer[i], data)) {
+            sort(apps.begin(), apps.end());
             LOG4("forEvery func returns false for address ", address);
             return false;
         }
     }
+    // TODO: BOGUS - DO WE NEED THIS?
+    sort(apps.begin(), apps.end());
 
     delete[] buffer;
     return true;
@@ -622,7 +602,7 @@ void cleanMonitorStage(void) {
 
 //----------------------------------------------------------------
 bool isMonitorFilePath(const string_q& path) {
-    return endsWith(path, "acct.bin");
+    return endsWith(path, "mon.bin");
 }
 // EXISTING_CODE
 }  // namespace qblocks
