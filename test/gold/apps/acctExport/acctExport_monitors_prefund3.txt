@@ -1,4 +1,4 @@
-chifra monitors  0x05a56e2d52c817161883f50c441c3228cfe54d9f --first_block 2 --last_block 7
+chifra export  0x05a56e2d52c817161883f50c441c3228cfe54d9f --first_block 2 --last_block 7
 TEST[DATE|TIME] Addrs:  [0x05a56e2d52c817161883f50c441c3228cfe54d9f]
 TEST[DATE|TIME] FirstBlock:  2
 TEST[DATE|TIME] LastBlock:  7

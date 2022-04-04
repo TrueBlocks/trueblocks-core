@@ -1,6 +1,5 @@
-monitors?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&firstBlock=0&lastBlock=3375495&fmt=csv&appearances
-{
-  "errors": [
-    "Invalid key (appearances) in monitors route."
-  ]
-}
+export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&firstBlock=0&lastBlock=3375495&fmt=csv&appearances
+"address","blockNumber","transactionIndex"
+"0x001d14804b399c6ef80e64576f657660804fec0b","0","2"
+"0x001d14804b399c6ef80e64576f657660804fec0b","202249","0"
+"0x001d14804b399c6ef80e64576f657660804fec0b","1501459","2"
