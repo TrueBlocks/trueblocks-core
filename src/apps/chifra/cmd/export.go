@@ -68,7 +68,6 @@ func init() {
 	exportCmd.Flags().StringSliceVarP(&exportPkg.GetOptions().Topic, "topic", "", nil, "for log export only, export only logs with this topic(s)")
 	exportCmd.Flags().StringSliceVarP(&exportPkg.GetOptions().Asset, "asset", "", nil, "for the statements option only, export only reconciliations for this asset")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Factory, "factory", "y", false, "scan for contract creations from the given address(es) and report address of those contracts")
-	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Freshen, "freshen", "f", false, "freshen but do not print the exported data (hidden)")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Staging, "staging", "s", false, "export transactions labeled staging (i.e. older than 28 blocks but not yet consolidated)")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Unripe, "unripe", "u", false, "export transactions labeled upripe (i.e. less than 28 blocks old)")
 	exportCmd.Flags().StringVarP(&exportPkg.GetOptions().Load, "load", "", "", "a comma separated list of dynamic traversers to load (hidden)")
@@ -78,7 +77,6 @@ func init() {
 	exportCmd.Flags().Uint64VarP(&exportPkg.GetOptions().FirstBlock, "first_block", "F", 0, "first block to process (inclusive)")
 	exportCmd.Flags().Uint64VarP(&exportPkg.GetOptions().LastBlock, "last_block", "L", 0, "last block to process (inclusive)")
 	if os.Getenv("TEST_MODE") != "true" {
-		exportCmd.Flags().MarkHidden("freshen")
 		exportCmd.Flags().MarkHidden("load")
 		exportCmd.Flags().MarkHidden("reversed")
 		exportCmd.Flags().MarkHidden("skip_ddos")

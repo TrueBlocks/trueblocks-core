@@ -63,7 +63,7 @@ func (opts *ScrapeOptions) RunMonitorScraper(wg *sync.WaitGroup, initialState bo
 					}
 				}
 			}
-			Freshen(chain, monitors)
+			Refresh(chain, monitors)
 			fmt.Println("Sleeping for", opts.Sleep, "seconds.")
 			time.Sleep(time.Duration(opts.Sleep) * time.Second)
 		}
@@ -82,7 +82,7 @@ func chunkMonitors(slice []monitor.Monitor, chunkSize int) [][]monitor.Monitor {
 	return chunks
 }
 
-func Freshen(chain string, monitors []monitor.Monitor) error {
+func Refresh(chain string, monitors []monitor.Monitor) error {
 	addrsPerCall := 8
 
 	batches := chunkMonitors(monitors, addrsPerCall)
@@ -100,7 +100,6 @@ func Freshen(chain string, monitors []monitor.Monitor) error {
 		expOpts := exportPkg.ExportOptions{MaxRecords: 250, MaxTraces: 250}
 		expOpts.Addrs = append(expOpts.Addrs, addrStr)
 		expOpts.Globals.Chain = chain
-		expOpts.Freshen = true
 		expOpts.Globals.PassItOn("acctExport", expOpts.ToCmdLine())
 
 		for j := 0; j < len(batches[i]); j++ {

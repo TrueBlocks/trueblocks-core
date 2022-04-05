@@ -41,7 +41,6 @@ type ExportOptions struct {
 	Topic       []string
 	Asset       []string
 	Factory     bool
-	Freshen     bool
 	Staging     bool
 	Unripe      bool
 	Load        string
@@ -78,7 +77,6 @@ func (opts *ExportOptions) TestLog() {
 	logger.TestLog(len(opts.Topic) > 0, "Topic: ", opts.Topic)
 	logger.TestLog(len(opts.Asset) > 0, "Asset: ", opts.Asset)
 	logger.TestLog(opts.Factory, "Factory: ", opts.Factory)
-	logger.TestLog(opts.Freshen, "Freshen: ", opts.Freshen)
 	logger.TestLog(opts.Staging, "Staging: ", opts.Staging)
 	logger.TestLog(opts.Unripe, "Unripe: ", opts.Unripe)
 	logger.TestLog(len(opts.Load) > 0, "Load: ", opts.Load)
@@ -234,8 +232,6 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ExportOptions {
 			}
 		case "factory":
 			opts.Factory = true
-		case "freshen":
-			opts.Freshen = true
 		case "staging":
 			opts.Staging = true
 		case "unripe":

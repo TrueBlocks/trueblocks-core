@@ -33,10 +33,6 @@ func (opts *ExportOptions) ValidateExport() error {
 		return validate.Usage("--staging and --unripe are disabled for testing.")
 	}
 
-	if opts.Freshen && (opts.Logs || opts.Traces || opts.Receipts || opts.Statements || opts.Accounting) {
-		return validate.Usage("Do not use the --freshen option with other options.")
-	}
-
 	if opts.Count && (opts.Logs || opts.Receipts || opts.Traces || opts.Statements || opts.Neighbors) {
 		return validate.Usage("The {0} option is only available with transactional options.", "--count")
 	}
