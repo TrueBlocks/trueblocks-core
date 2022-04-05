@@ -35,9 +35,11 @@ func RunList(cmd *cobra.Command, args []string) error {
 
 	if opts.Count {
 		return opts.HandleListCount(monitorArray)
-	} else {
+	} else if !opts.Silent {
 		return opts.HandleListAppearances(monitorArray)
 	}
+
+	return nil
 	// EXISTING_CODE
 }
 
@@ -59,7 +61,7 @@ func ServeList(w http.ResponseWriter, r *http.Request) bool {
 	}
 	if opts.Count {
 		err = opts.HandleListCount(monitorArray)
-	} else {
+	} else if !opts.Silent {
 		err = opts.HandleListAppearances(monitorArray)
 	}
 	if err != nil {

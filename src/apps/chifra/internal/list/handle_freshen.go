@@ -13,7 +13,6 @@ import (
 	"os"
 	"sync"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -29,7 +28,7 @@ type AddressMonitorMap map[common.Address]*monitor.Monitor
 type MonitorUpdate struct {
 	MaxTasks    int
 	MonitorMap  AddressMonitorMap
-	Globals     globals.GlobalOptions
+	Options     *ListOptions
 	ExportRange cache.FileRange
 	Writer      io.Writer
 }
@@ -39,7 +38,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 		MaxTasks:    12,
 		MonitorMap:  make(AddressMonitorMap, len(opts.Addrs)),
 		ExportRange: cache.FileRange{First: opts.FirstBlock, Last: opts.LastBlock},
-		Globals:     opts.Globals,
+		Options:     opts,
 		Writer:      os.Stdout,
 	}
 
@@ -47,14 +46,14 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 	// a pointer to the monitors
 	for _, addr := range opts.Addrs {
 		if updater.MonitorMap[common.HexToAddress(addr)] == nil {
-			m := monitor.NewStagedMonitor(updater.Globals.Chain, addr, opts.Globals.TestMode)
+			m := monitor.NewStagedMonitor(opts.Globals.Chain, addr, opts.Globals.TestMode)
 			*monitorArray = append(*monitorArray, m)
 			// we need the address here because we want to modify this object below
 			updater.MonitorMap[m.Address] = &(*monitorArray)[len(*monitorArray)-1]
 		}
 	}
 
-	chain := updater.Globals.Chain
+	chain := opts.Globals.Chain
 	bloomPath := config.GetPathToIndex(chain) + "blooms/"
 	files, err := ioutil.ReadDir(bloomPath)
 	if err != nil {
@@ -75,7 +74,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 				continue
 			}
 
-			if updater.Globals.TestMode && fileRange.Last > 5000000 {
+			if opts.Globals.TestMode && fileRange.Last > 5000000 {
 				continue
 			}
 
@@ -169,7 +168,7 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 	_, err := mon.WriteAppearances(*result.AppRecords, uint32(result.Range.Last))
 	if err != nil {
 		log.Println(err)
-	} else if !updater.Globals.TestMode {
+	} else if !updater.Options.Globals.TestMode && !updater.Options.Silent {
 		bBlue := (colors.Bright + colors.Blue)
 		log.Printf("Found %s%s%s adding appearances (count: %d)\n", bBlue, mon.GetAddrStr(), colors.Off, len(*result.AppRecords))
 	}

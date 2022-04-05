@@ -7,10 +7,9 @@ import (
 
 func (opts *ExportOptions) FreshenMonitors() error {
 	listOpts := listPkg.ListOptions{
-		Addrs:       opts.Addrs,
-		Count:       opts.Count,
-		Appearances: opts.Appearances,
-		Globals:     opts.Globals,
+		Addrs:   opts.Addrs,
+		Silent:  true,
+		Globals: opts.Globals,
 	}
 
 	monitorArray := make([]monitor.Monitor, 0, len(opts.Addrs))
