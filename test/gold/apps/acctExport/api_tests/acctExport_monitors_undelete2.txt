@@ -1,6 +1,6 @@
 monitors?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&undelete
 {
   "errors": [
-    "Monitor for 0x001d14804b399c6ef80e64576f657660804fec0b must be deleted before being undeleted."
+    "Monitor not found for address 0x001d14804b399c6ef80e64576f657660804fec0b."
   ]
 }

@@ -26,7 +26,7 @@ func (opts *ListOptions) HandleListAppearances(monitorArray []monitor.Monitor) e
 	// theWriter.Comma = 0x9
 	for _, mon := range monitorArray {
 		apps := make([]index.AppearanceRecord, mon.Count, mon.Count)
-		err := mon.ReadApps(&apps)
+		err := mon.ReadAppearances(&apps)
 		if err != nil {
 			return err
 		}

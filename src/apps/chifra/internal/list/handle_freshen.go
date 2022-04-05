@@ -146,7 +146,7 @@ func (updater *MonitorUpdate) updateMonitors(result *index.ResultRecord) {
 		return
 	}
 
-	_, err := mon.WriteApps(*result.AppRecords, uint32(result.Range.Last))
+	_, err := mon.WriteAppearances(*result.AppRecords, uint32(result.Range.Last))
 	if err != nil {
 		log.Println(err)
 	} else if !updater.Globals.TestMode {

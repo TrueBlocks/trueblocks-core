@@ -144,30 +144,11 @@ func (mon *Monitor) ReadHeader() (err error) {
 	return
 }
 
-// WriteHeader reads the monitor's header
-func (mon *Monitor) WriteHeader(deleted bool, lastScanned uint32) (err error) {
-	f, err := os.OpenFile(mon.Path(), os.O_WRONLY|os.O_CREATE, 0644)
-	if err != nil {
-		return
-	}
-	defer f.Close()
-
-	mon.Deleted = deleted
-	// TODO: BOGUS we want to store mon.LastScanned (one more than the last block scanned)
-	if lastScanned > mon.LastScanned {
-		mon.LastScanned = lastScanned
-	}
-
-	f.Seek(0, io.SeekStart)
-	err = binary.Write(f, binary.LittleEndian, mon.Header)
-	return
-}
-
-// ReadApp returns the appearance at the one-based index.
-func (mon *Monitor) ReadApp(idx uint32, app *index.AppearanceRecord) (err error) {
+// ReadAppearanceAt returns the appearance at the one-based index.
+func (mon *Monitor) ReadAppearanceAt(idx uint32, app *index.AppearanceRecord) (err error) {
 	if idx == 0 || idx > mon.Count {
-		// one-based index for ease in caller code
-		err = errors.New(fmt.Sprintf("index out of range in ReadApp[%d]", idx))
+		// the file contains a header on record wide, so a one-based index eases caller code
+		err = errors.New(fmt.Sprintf("index out of range in ReadAppearanceAt[%d]", idx))
 		return
 	}
 
@@ -194,8 +175,8 @@ func (mon *Monitor) ReadApp(idx uint32, app *index.AppearanceRecord) (err error)
 	return
 }
 
-// ReadApps returns appearances starting at the first appearance in the file.
-func (mon *Monitor) ReadApps(apps *[]index.AppearanceRecord) (err error) {
+// ReadAppearances returns appearances starting at the first appearance in the file.
+func (mon *Monitor) ReadAppearances(apps *[]index.AppearanceRecord) (err error) {
 	if mon.ReadFp == nil {
 		path := mon.Path()
 		mon.ReadFp, err = os.OpenFile(path, os.O_RDONLY, 0644)
@@ -217,8 +198,27 @@ func (mon *Monitor) ReadApps(apps *[]index.AppearanceRecord) (err error) {
 	return
 }
 
-// WriteApps writes appearances to a Monitor and updates lastScanned
-func (mon *Monitor) WriteApps(apps []index.AppearanceRecord, lastScanned uint32) (count int, err error) {
+// WriteHeader reads the monitor's header
+func (mon *Monitor) WriteHeader(deleted bool, lastScanned uint32) (err error) {
+	f, err := os.OpenFile(mon.Path(), os.O_WRONLY|os.O_CREATE, 0644)
+	if err != nil {
+		return
+	}
+	defer f.Close()
+
+	mon.Deleted = deleted
+	// TODO: BOGUS we want to store mon.LastScanned (one more than the last block scanned)
+	if lastScanned > mon.LastScanned {
+		mon.LastScanned = lastScanned
+	}
+
+	f.Seek(0, io.SeekStart)
+	err = binary.Write(f, binary.LittleEndian, mon.Header)
+	return
+}
+
+// WriteAppearances writes appearances to a Monitor and updates lastScanned
+func (mon *Monitor) WriteAppearances(apps []index.AppearanceRecord, lastScanned uint32) (count int, err error) {
 	// close the reader if it's open
 	mon.Close()
 
@@ -262,46 +262,32 @@ func (mon *Monitor) WriteApps(apps []index.AppearanceRecord, lastScanned uint32)
 	return
 }
 
-// IsMonitor returns true if the monitor file exists
-func (mon *Monitor) IsMonitor() bool {
-	return file.FileExists(mon.Path())
-}
-
-// Delete marks the file's delete flag, but does not physically remove the file
-func (mon *Monitor) Delete() (prev bool) {
-	prev = mon.Deleted
-	mon.WriteHeader(true, mon.LastScanned)
-	return
-}
-
 // IsDeleted returns true if the monitor has been deleted but not removed
 func (mon *Monitor) IsDeleted() bool {
 	mon.ReadHeader()
 	return mon.Header.Deleted
 }
 
+// Delete marks the file's delete flag, but does not physically remove the file
+func (mon *Monitor) Delete() (prev bool) {
+	prev = mon.Deleted
+	mon.WriteHeader(true, mon.LastScanned)
+	mon.Deleted = true
+	return
+}
+
 // UnDelete unmarks the file's delete flag
 func (mon *Monitor) UnDelete() (prev bool) {
 	prev = mon.Deleted
 	mon.WriteHeader(false, mon.LastScanned)
-	return
-}
-
-// ToggleDelete toggles the file's delete flag
-func (mon *Monitor) ToggleDelete() (prev bool) {
-	prev = mon.Deleted
-	if mon.Deleted {
-		mon.UnDelete()
-	} else {
-		mon.Delete()
-	}
+	mon.Deleted = false
 	return
 }
 
 // Remove removes a previously deleted file, does nothing if the file is not deleted
 func (mon *Monitor) Remove() (bool, error) {
 	if !mon.IsDeleted() {
-		return false, errors.New("cannot remove a file that has not been deleted")
+		return false, errors.New("cannot remove a monitor that is not deleted")
 	}
 	file.Remove(mon.Path())
 	return !file.FileExists(mon.Path()), nil
@@ -327,17 +313,16 @@ func addressFromPath(path string) (string, error) {
 	return strings.ToLower(parts[0]), nil
 }
 
-// SentinalAddr is a marker to signify the end of the monitor list produced by GetMonitors
+// SentinalAddr is a marker to signify the end of the monitor list produced by ListMonitors
 var SentinalAddr = common.HexToAddress("0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead")
 
-// GetMonitors puts a list of Monitors into the monitorChannel. The list of monitors is built from
+// ListMonitors puts a list of Monitors into the monitorChannel. The list of monitors is built from
 // a file called addresses.csv in the current folder or, if not present, from existing monitors
-func GetMonitors(chain, folder string, monitorChan chan<- Monitor) {
+func ListMonitors(chain, folder string, monitorChan chan<- Monitor) {
 	defer func() {
 		monitorChan <- Monitor{Address: SentinalAddr}
 	}()
 
-	isMocked := strings.Contains(folder, "/mocked/")
 	info, err := os.Stat("./addresses.csv")
 	if err == nil {
 		// If the shorthand file exists in the current folder, use it...
@@ -347,7 +332,7 @@ func GetMonitors(chain, folder string, monitorChan chan<- Monitor) {
 			if !strings.HasPrefix(line, "#") {
 				parts := strings.Split(line, ",")
 				if len(parts) > 0 && validate.IsValidAddress(parts[0]) && !validate.IsZeroAddress(parts[0]) {
-					monitorChan <- NewMonitor(chain, parts[0], true /* create */, isMocked)
+					monitorChan <- NewMonitor(chain, parts[0], true /* create */, false)
 				}
 			}
 		}
@@ -363,7 +348,7 @@ func GetMonitors(chain, folder string, monitorChan chan<- Monitor) {
 		if !info.IsDir() {
 			addr, _ := addressFromPath(path)
 			if len(addr) > 0 {
-				monitorChan <- NewMonitor(chain, addr, true /* create */, isMocked)
+				monitorChan <- NewMonitor(chain, addr, true /* create */, false)
 			}
 		}
 		return nil

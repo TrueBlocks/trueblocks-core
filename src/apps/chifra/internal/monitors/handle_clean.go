@@ -4,28 +4,47 @@
 
 package monitorsPkg
 
+import (
+	"fmt"
+	"strings"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
+)
+
 func (opts *MonitorsOptions) HandleClean() error {
+	monitorChan := make(chan monitor.Monitor)
+
+	var monitors []monitor.Monitor
+	go monitor.ListMonitors(opts.Globals.Chain, "monitors", monitorChan)
+
+	for result := range monitorChan {
+		switch result.Address {
+		case monitor.SentinalAddr:
+			close(monitorChan)
+		default:
+			monitors = append(monitors, result)
+		}
+	}
+
+	for _, mon := range monitors {
+		if opts.Globals.TestMode {
+			if strings.ToLower(mon.Address.Hex()) == "0x001d14804b399c6ef80e64576f657660804fec0b" ||
+				strings.ToLower(mon.Address.Hex()) == "0x0029218e1dab069656bfb8a75947825e7989b987" {
+				fmt.Println(mon)
+			}
+		} else {
+			//apps := make([]index.AppearanceRecord, mon.Count, mon.Count)
+			//err := mon.ReadApps(&apps)
+			//if err != nil {
+			//	return err
+			//}
+			fmt.Println(mon)
+		}
+	}
 	return nil
 }
 
 /*
-bool cleanMonitorFile(const string_q& path, void* data) {
-    if (endsWith(path, '/')) {
-        forEveryFileInFolder(path + "*", cleanMonitorFile, data);
-
-    } else {
-        if (isMonitorFilePath(path)) {
-            if (isTestMode()) {
-                CStringArray testes = {"0x001d14804b399c6ef80e64576f657660804fec0b",
-                                       "0x0029218e1dab069656bfb8a75947825e7989b987"};
-                for (auto t : testes) {
-                    if (contains(path, t)) {
-                        return true;
-                    }
-                }
-                return false;
-            }
-
             CMonitor m;
             size_t sizeThen = m.getRecordCnt(path);
             if (!sizeThen)
@@ -53,13 +72,7 @@ bool cleanMonitorFile(const string_q& path, void* data) {
 
     return !shouldQuit();
 }
-bool COptions::process_clean(void) {
-    CMonitor m;
-    cout << "[";
-    bool ret = forEveryFileInFolder(m.getPathToMonitor(m.address, false), cleanMonitorFile, NULL);
-    cout << "]";
-    return ret;
-}
+
 // TODO: BOGUS - Do we need to use monitors/staging or can we build it in memory?
 //----------------------------------------------------------------
 bool CMonitor::removeDuplicates(const string_q& path) {

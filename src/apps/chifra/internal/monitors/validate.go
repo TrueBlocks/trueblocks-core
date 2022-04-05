@@ -16,45 +16,19 @@ func (opts *MonitorsOptions) ValidateMonitors() error {
 		return opts.BadFlag
 	}
 
-	//								 [Action]
-	// [State]		|	Delete		Undelete		Remove
-	// -------------|----------------------------------------
-	// Not Deleted	|	Delete		Error			Error
-	// Deleted		|	Error		Undelete		Remove
-	// -------------|----------------------------------------
-
-	isCrud := opts.Delete || opts.Undelete || opts.Remove
-	if isCrud {
-		chain := opts.Globals.Chain
-		if opts.Undelete {
-			if opts.Delete || opts.Remove {
-				return validate.Usage("The --undelete option may not be used with --delete or --remove.")
-			}
-			for _, addr := range opts.Addrs {
-				if !IsMonitorDeleted(chain, addr, opts.Globals.TestMode) {
-					return validate.Usage("Monitor for {0} must be deleted before being undeleted.", addr)
-				}
-			}
-		} else {
-			// We have to handle the case where both --delete and --remove are sent in the same command
-			if opts.Delete {
-				for _, addr := range opts.Addrs {
-					if IsMonitorDeleted(chain, addr, opts.Globals.TestMode) {
-						return validate.Usage("Monitor for {0} is already deleted.", addr)
-					}
-				}
-			} else if opts.Remove {
-				for _, addr := range opts.Addrs {
-					if !IsMonitorDeleted(chain, addr, opts.Globals.TestMode) {
-						return validate.Usage("Monitor for {0} must be deleted before being removed.", addr)
-					}
-				}
-			}
+	// We validate some of the simpler curd commands here and the rest in HandleCrudCommands
+	if opts.Undelete {
+		if opts.Delete || opts.Remove {
+			return validate.Usage("The --undelete option may not be used with --delete or --remove.")
 		}
 	}
 
 	if !opts.Clean && len(opts.Addrs) == 0 {
 		return validate.Usage("You must provide at least one Ethereum address for this command.")
+	}
+
+	if !opts.Clean && !opts.Delete && !opts.Undelete && !opts.Remove {
+		return validate.Usage("Please provide either --clean or one of the CRUD commands.")
 	}
 
 	if !opts.Globals.ApiMode && !opts.Clean {

@@ -44,7 +44,7 @@ func (opts *ScrapeOptions) RunMonitorScraper(wg *sync.WaitGroup, initialState bo
 			monitorChan := make(chan monitor.Monitor)
 
 			var monitors []monitor.Monitor
-			go monitor.GetMonitors(chain, "monitors", monitorChan)
+			go monitor.ListMonitors(chain, "monitors", monitorChan)
 
 			count := 0
 			for result := range monitorChan {
@@ -217,13 +217,13 @@ func getExportOpts(mon *monitor.Monitor, chain, path string, firstPos, lastPos u
 	expOpts.Globals.NoHeader = file.FileExists(expOpts.Globals.OutputFn)
 
 	var app index.AppearanceRecord
-	err := mon.ReadApp(firstPos, &app)
+	err := mon.ReadAppearanceAt(firstPos, &app)
 	if err != nil {
 		return exportPkg.ExportOptions{}, err
 	}
 	expOpts.FirstBlock = uint64(app.BlockNumber)
 
-	err = mon.ReadApp(lastPos, &app)
+	err = mon.ReadAppearanceAt(lastPos, &app)
 	if err != nil {
 		return exportPkg.ExportOptions{}, err
 	}
