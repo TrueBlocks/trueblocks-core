@@ -168,7 +168,7 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 	_, err := mon.WriteAppearances(*result.AppRecords, uint32(result.Range.Last))
 	if err != nil {
 		log.Println(err)
-	} else if !updater.Options.Globals.TestMode && !updater.Options.Silent {
+	} else if !updater.Options.Globals.TestMode {
 		bBlue := (colors.Bright + colors.Blue)
 		log.Printf("Found %s%s%s adding appearances (count: %d)\n", bBlue, mon.GetAddrStr(), colors.Off, len(*result.AppRecords))
 	}
