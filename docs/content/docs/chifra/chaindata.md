@@ -2,7 +2,7 @@
 title: "Chain data"
 description: ""
 lead: ""
-date: 2022-02-22T07:45:38
+date: 2022-04-05T15:52:02
 lastmod:
   - :git
   - lastmod
@@ -71,29 +71,7 @@ The `--articulate` option fetches the ABI from each encountered smart contract (
 The `--trace` option attaches an array transaction traces to the output (if the node you're querying has --tracing enabled), while the `--uniq` option displays a list of uniq address appearances instead of the underlying data (including uniq addresses in traces if enabled).
 
 ```[plaintext]
-Purpose:
-  Retrieve one or more transactions from the chain or local cache.
 
-Usage:
-  chifra transactions [flags] <tx_id> [tx_id...]
-
-Arguments:
-  transactions - a space-separated list of one or more transaction identifiers (required)
-
-Flags:
-  -a, --articulate         articulate the retrieved data if ABIs can be found
-  -t, --trace              include the transaction's traces in the results
-  -u, --uniq               display a list of uniq addresses found in the transaction
-  -r, --reconcile string   reconcile the transaction as per the provided address
-  -o, --cache              force the results of the query into the tx cache (and the trace cache if applicable)
-  -x, --fmt string         export format, one of [none|json*|txt|csv|api]
-  -v, --verbose            enable verbose (increase detail with --log_level)
-  -h, --help               display this help screen
-
-Notes:
-  - The transactions list may be one or more transaction hashes, blockNumber.transactionID pairs, or a blockHash.transactionID pairs.
-  - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
-  - If the queried node does not store historical state, the results for most older transactions are undefined.
 ```
 
 **Source code**: [`internal/transactions`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/transactions)
@@ -107,25 +85,7 @@ The `--articulate` option fetches the ABI from each encountered smart contract (
 Generally speaking, this tool is less useful than others as you may report the same data using `chifra transactions` and more focused data using `chifra logs`. It is included here for completeness, as the `receipt` is a fundamental data structure in Ethereum.
 
 ```[plaintext]
-Purpose:
-  Retrieve receipts for the given transaction(s).
 
-Usage:
-  chifra receipts [flags] <tx_id> [tx_id...]
-
-Arguments:
-  transactions - a space-separated list of one or more transaction identifiers (required)
-
-Flags:
-  -a, --articulate   articulate the retrieved data if ABIs can be found
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -v, --verbose      enable verbose (increase detail with --log_level)
-  -h, --help         display this help screen
-
-Notes:
-  - The transactions list may be one or more transaction hashes, blockNumber.transactionID pairs, or a blockHash.transactionID pairs.
-  - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
-  - If the queried node does not store historical state, the results for most older transactions are undefined.
 ```
 
 **Source code**: [`internal/receipts`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/receipts)

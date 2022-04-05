@@ -49,11 +49,13 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 11099,apps,Accounts,monitors,acctExport,n2,,,false,false,false,false,--,note,,If no address is presented to the --clean command&#44; all monitors will be cleaned.
 
 12005,apps,Accounts,list,acctExport,addrs,,,true,false,true,true,local,positional,list<addr>,one or more addresses (0x...) to list
-12015,apps,Accounts,list,acctExport,count,U,,false,false,true,true,header,switch,<boolean>,present only the number of records
-11210,apps,Accounts,list,acctExport,appearances,p,,false,false,false,true,header,switch,<boolean>,export a list of appearances
-11440,apps,Accounts,list,acctExport,first_block,F,0,false,false,false,false,local,flag,<blknum>,first block to process (inclusive)
-11450,apps,Accounts,list,acctExport,last_block,L,NOPOS,false,false,false,false,local,flag,<blknum>,last block to process (inclusive)
+12015,apps,Accounts,list,acctExport,count,U,,false,false,true,true,gocmd,switch,<boolean>,display only the count of records for each monitor
+11210,apps,Accounts,list,acctExport,appearances,p,,false,false,false,true,gocmd,switch,<boolean>,export each monitor's list of appearances (the default)
+11210,apps,Accounts,list,acctExport,silent,,,false,false,false,true,gocmd,switch,<boolean>,freshen the monitor only (no reporting)
+11440,apps,Accounts,list,acctExport,first_block,F,0,false,false,false,false,gocmd,flag,<blknum>,first block to export (inclusive&#44; ignored when counting or freshening)
+11450,apps,Accounts,list,acctExport,last_block,L,NOPOS,false,false,false,false,gocmd,flag,<blknum>,last block to export (inclusive&#44; ignored when counting or freshening)
 12025,apps,Accounts,list,acctExport,,,,false,false,true,true,--,description,,List every appearance of an address anywhere on the chain.
+11097,apps,Accounts,list,acctExport,n1,,,false,false,false,false,--,note,,No other options are permitted when --silent is selected.
 
 12260,tools,Accounts,names,ethNames,terms,,,true,false,true,true,header,positional,list<string>,a space separated list of one or more search terms
 12280,tools,Accounts,names,ethNames,expand,e,,false,false,true,true,local,switch,<boolean>,expand search to include all fields (search name&#44; address&#44; and symbol otherwise)

@@ -26,7 +26,7 @@ func RunExport(cmd *cobra.Command, args []string) error {
 	}
 
 	// EXISTING_CODE
-	err = opts.HandleFreshenMonitors()
+	err = opts.FreshenMonitors()
 	if err != nil {
 		return err
 	}
@@ -45,7 +45,7 @@ func ServeExport(w http.ResponseWriter, r *http.Request) bool {
 	}
 
 	// EXISTING_CODE
-	err = opts.HandleFreshenMonitors()
+	err = opts.FreshenMonitors()
 	if err != nil {
 		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
 		return true

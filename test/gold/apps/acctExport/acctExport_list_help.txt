@@ -9,10 +9,14 @@ Arguments:
   addrs - one or more addresses (0x...) to list (required)
 
 Flags:
-  -U, --count              present only the number of records
-  -p, --appearances        export a list of appearances (hidden)
-  -F, --first_block uint   first block to process (inclusive) (hidden)
-  -L, --last_block uint    last block to process (inclusive) (hidden)
+  -U, --count              display only the count of records for each monitor
+  -p, --appearances        export each monitor's list of appearances (the default) (hidden)
+      --silent             freshen the monitor only (no reporting) (hidden)
+  -F, --first_block uint   first block to export (inclusive, ignored when counting or freshening) (hidden)
+  -L, --last_block uint    last block to export (inclusive, ignored when counting or freshening) (hidden)
   -x, --fmt string         export format, one of [none|json*|txt|csv|api]
   -v, --verbose            enable verbose (increase detail with --log_level)
   -h, --help               display this help screen
+
+Notes:
+  - No other options are permitted when --silent is selected.
