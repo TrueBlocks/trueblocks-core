@@ -19,6 +19,18 @@ type IndexChunk struct {
 	Bloom BloomFilter
 }
 
+// NewBloomData returns the bloom filter for a chunk
+func NewBloomData(path string) (chunk IndexChunk, err error) {
+	bloomPath := toBloomPath(path)
+	chunk.Range, err = cache.RangeFromFilename(bloomPath)
+	if err != nil {
+		return
+	}
+
+	err = chunk.Bloom.ReadBloomFilter(bloomPath)
+	return
+}
+
 // NewIndexChunk returns an index chunk with the bloom filter read in but not the index itself
 func NewIndexChunk(path string) (chunk IndexChunk, err error) {
 	bloomPath := toBloomPath(path)
@@ -27,7 +39,7 @@ func NewIndexChunk(path string) (chunk IndexChunk, err error) {
 		return
 	}
 
-	err = chunk.Bloom.ReadBloomFilter(path)
+	err = chunk.Bloom.ReadBloomFilter(bloomPath)
 	if err != nil {
 		return
 	}

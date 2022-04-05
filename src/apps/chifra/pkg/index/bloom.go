@@ -115,6 +115,7 @@ func isBitLit(bit uint32, bytes []byte) bool {
 	return (bytes[index]&mask != 0)
 }
 
+//---------------------------------------------------------------------------
 func (bloom *BloomFilter) ReadBloomFilter(fileName string) (err error) {
 	bloom.Range, err = cache.RangeFromFilename(fileName)
 	if err != nil {
@@ -125,6 +126,7 @@ func (bloom *BloomFilter) ReadBloomFilter(fileName string) (err error) {
 	if err != nil {
 		return err
 	}
+	defer file.Close()
 
 	err = binary.Read(file, binary.LittleEndian, &bloom.Count)
 	if err != nil {

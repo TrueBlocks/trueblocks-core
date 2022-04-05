@@ -11,7 +11,6 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
-	"strings"
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
@@ -53,8 +52,8 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 	}
 
 	chain := updater.Globals.Chain
-	indexPath := config.GetPathToIndex(chain) + "finalized/"
-	files, err := ioutil.ReadDir(indexPath)
+	bloomPath := config.GetPathToIndex(chain) + "blooms/"
+	files, err := ioutil.ReadDir(bloomPath)
 	if err != nil {
 		return err
 	}
@@ -65,8 +64,8 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 	taskCount := 0
 	for _, info := range files {
 		if !info.IsDir() {
-			indexFileName := indexPath + "/" + info.Name()
-			fileRange, err := cache.RangeFromFilename(indexFileName)
+			bloomFilename := bloomPath + "/" + info.Name()
+			fileRange, err := cache.RangeFromFilename(bloomFilename)
 			if err != nil {
 				// don't respond further -- there may be foreign files in the folder
 				fmt.Println(err)
@@ -92,7 +91,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 			// Run a go routine for each index file
 			taskCount++
 			wg.Add(1)
-			go updater.visitChunkToFreshenFinal(indexFileName, resultChannel, &wg)
+			go updater.visitChunkToFreshenFinal(bloomFilename, resultChannel, &wg)
 		}
 	}
 
@@ -117,14 +116,20 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 		resultChannel <- results
 	}()
 
+	bloom, err := index.NewBloomData(fileName)
+	if err != nil {
+		fmt.Println("Error", fileName, err)
+		return
+	}
 	var bloomHits = false
 	for _, mon := range updater.MonitorMap {
-		bloomHits = mon.Address != common.Address{}
+		if bloom.Bloom.IsMemberOf(mon.Address) {
+			bloomHits = true
+			break
+		}
 	}
 	if !bloomHits {
-		bloomFilename := strings.Replace(fileName, ".bin", ".bloom", -1)
-		bloomFilename = strings.Replace(fileName, "finalized", "blooms", -1)
-		log.Println("No blooms hit: ", bloomFilename)
+		// log.Println("Bloom filter does not hit for: ", fileName)
 		return
 	}
 
