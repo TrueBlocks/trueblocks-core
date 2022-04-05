@@ -92,7 +92,7 @@ func Test_Bloom(t *testing.T) {
 		},
 	}
 
-	bloom := NewBloomFilter()
+	bloom := NewChunkBloom()
 	for _, tt := range tests {
 		_, _, bits := bitsToLight(tt.Addr)
 		if tt.AddToSet {
@@ -122,14 +122,14 @@ func Test_Bloom(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		if tt.AddToSet && !bloom.IsMemberOf(tt.Addr) {
+		if tt.AddToSet && !bloom.IsMember(tt.Addr) {
 			t.Error("address should be member, but isn't", tt.Addr.Hex())
 
-		} else if !tt.AddToSet && bloom.IsMemberOf(tt.Addr) { // && !tt.FalsePositive {
+		} else if !tt.AddToSet && bloom.IsMember(tt.Addr) { // && !tt.FalsePositive {
 			t.Error("address should not be member, but is (ignores false positives)", tt.Addr.Hex())
 		}
 
-		fmt.Println(strings.ToLower(tt.Addr.Hex()), bloom.IsMemberOf(tt.Addr))
+		fmt.Println(strings.ToLower(tt.Addr.Hex()), bloom.IsMember(tt.Addr))
 	}
 }
 

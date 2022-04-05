@@ -619,32 +619,6 @@ void COptions::writePerformanceData(void) {
 }
 
 //-----------------------------------------------------------------------
-// TODO: BOGUS
-// bool establishIndexChunk(const string_q& fileName);
-// bool COptions::establishIndexChunk(const string_q& fullPathToChunk) {
-//     if (fileExists(fullPathToChunk))
-//         return true;
-
-//     string_q fileName = substitute(substitute(fullPathToChunk, indexFolder_finalized, ""), ".bin", "");
-//     static CPinnedChunkArray pins;
-//     if (pins.size() == 0) {
-//         if (!pinlib_readManifest(pins)) {
-//             LOG_ERR("Could not read the manifest.");
-//             return false;
-//         }
-//     }
-//     CPinnedChunk pin;
-//     if (pinlib_findChunk(pins, fileName, pin)) {
-//         LOG_PROGRESS(EXTRACT, fileRange.first, n eedRange.second, " from IPFS" + cOff);
-//         if (!pinlib_getChunkFromRemote(pin, .25))
-//             LOG_ERR("Could not retrieve file from IPFS: ", fullPathToChunk);
-//     } else {
-//         LOG_ERR("Could not find file in manifest: ", fullPathToChunk);
-//     }
-//     return fileExists(fullPathToChunk);
-// }
-
-//-----------------------------------------------------------------------
 const char* STR_MONITOR_LOCKED =
     "The cache file is locked. The program is either already "
     "running or it did not end cleanly the\n\tlast time it ran. "

@@ -16,7 +16,7 @@ type AppearanceRecord struct {
 	TransactionId uint32 `json:"transactionIndex"`
 }
 
-func (chunk *IndexData) readAppearanceRecords(addrRecord *AddressRecord) (apps []AppearanceRecord, err error) {
+func (chunk *ChunkData) readAppearanceRecords(addrRecord *AddressRecord) (apps []AppearanceRecord, err error) {
 	readLocation := int64(HeaderWidth + AddrRecordWidth*chunk.Header.AddressCount + AppRecordWidth*addrRecord.Offset)
 
 	_, err = chunk.File.Seek(readLocation, io.SeekStart)

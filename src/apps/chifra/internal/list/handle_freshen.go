@@ -27,26 +27,29 @@ type AddressMonitorMap map[common.Address]*monitor.Monitor
 
 // MonitorUpdate stores the original 'chifra list' command line options plus
 type MonitorUpdate struct {
-	MaxTasks   int
-	MonitorMap AddressMonitorMap
-	Globals    globals.GlobalOptions
-	Range      cache.FileRange
-	Writer     io.Writer
+	MaxTasks    int
+	MonitorMap  AddressMonitorMap
+	Globals     globals.GlobalOptions
+	ExportRange cache.FileRange
+	Writer      io.Writer
 }
 
 func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) error {
 	var updater = MonitorUpdate{
-		MaxTasks:   12,
-		MonitorMap: make(AddressMonitorMap, len(opts.Addrs)),
-		Range:      cache.FileRange{First: opts.FirstBlock, Last: opts.LastBlock},
-		Globals:    opts.Globals,
-		Writer:     os.Stdout,
+		MaxTasks:    12,
+		MonitorMap:  make(AddressMonitorMap, len(opts.Addrs)),
+		ExportRange: cache.FileRange{First: opts.FirstBlock, Last: opts.LastBlock},
+		Globals:     opts.Globals,
+		Writer:      os.Stdout,
 	}
 
+	// This removes duplicates from the input array and keep a map from address to
+	// a pointer to the monitors
 	for _, addr := range opts.Addrs {
 		if updater.MonitorMap[common.HexToAddress(addr)] == nil {
 			m := monitor.NewStagedMonitor(updater.Globals.Chain, addr, opts.Globals.TestMode)
 			*monitorArray = append(*monitorArray, m)
+			// we need the address here because we want to modify this object below
 			updater.MonitorMap[m.Address] = &(*monitorArray)[len(*monitorArray)-1]
 		}
 	}
@@ -73,10 +76,6 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 			}
 
 			if updater.Globals.TestMode && fileRange.Last > 5000000 {
-				continue
-			}
-
-			if !cache.Intersects(updater.Range, fileRange) {
 				continue
 			}
 
@@ -116,14 +115,14 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 		resultChannel <- results
 	}()
 
-	// bloom, err := index.NewBloomData(fileName)
+	// bloom, err := index.NewChunk(fileName)
 	// if err != nil {
 	// 	fmt.Println("Error", fileName, err)
 	// 	return
 	// }
 	// var bloomHits = false
 	// for _, mon := range updater.MonitorMap {
-	// 	if bloom.Bloom.IsMemberOf(mon.Address) {
+	// 	if bloom.Bloom.IsMember(mon.Address) {
 	// 		bloomHits = true
 	// 		break
 	// 	}
@@ -133,7 +132,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 	// 	return
 	// }
 
-	indexChunk, err := index.NewIndexData(fileName)
+	indexChunk, err := index.NewChunkData(fileName)
 	if err != nil {
 		log.Println(err)
 		return

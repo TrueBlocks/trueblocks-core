@@ -33,7 +33,7 @@ type ChunkStats struct {
 }
 
 func NewChunkStats(path string) ChunkStats {
-	chunk, err := index.NewIndexChunk(path)
+	chunk, err := index.NewChunk(path)
 	if err != nil {
 		fmt.Println(err)
 	}

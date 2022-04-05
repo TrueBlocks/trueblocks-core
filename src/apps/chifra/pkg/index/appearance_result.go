@@ -8,15 +8,15 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
-// AppearanceResult carries the appearances found in a single IndexData for the given address.
+// AppearanceResult carries the appearances found in a single ChunkData for the given address.
 type AppearanceResult struct {
 	Address    common.Address
 	Range      cache.FileRange
 	AppRecords *[]AppearanceRecord
 }
 
-// GetAppearanceRecords searches an already-opened IndexData for the given address. Returns a AppearanceResult or nil
-func (chunk *IndexData) GetAppearanceRecords(address common.Address) *AppearanceResult {
+// GetAppearanceRecords searches an already-opened ChunkData for the given address. Returns a AppearanceResult or nil
+func (chunk *ChunkData) GetAppearanceRecords(address common.Address) *AppearanceResult {
 	foundAt := chunk.searchForAddressRecord(address)
 	if foundAt == -1 {
 		return nil

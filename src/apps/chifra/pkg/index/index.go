@@ -1,7 +1,6 @@
 package index
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
@@ -12,9 +11,9 @@ const (
 	HeaderWidth = 44
 )
 
-// IndexData is one part of the two part IndexChunk (the other part is the BloomFilter)
+// ChunkData is one part of the two part Chunk (the other part is the ChunkBloom)
 //
-// Each IndexData contains a HeaderRecord followed by two tables: the AddressTable and a related AppearanceTable.
+// Each ChunkData contains a HeaderRecord followed by two tables: the AddressTable and a related AppearanceTable.
 //
 // The HeaderRecord (44 bytes long) contains a four-byte magic number (`0xdeadbeef` -- to indicate we're reading
 // a file of the correct type), a 32-byte hash representing the file's version, and two 4-byte integers representing
@@ -28,7 +27,7 @@ const (
 //
 // The AppearanceTable contains nAppeeances pairs of <blockNumber.transactionId> pairs arranged by the Offset
 // and Count pairs found in the corresponding AddressTable records.
-type IndexData struct {
+type ChunkData struct {
 	File           *os.File
 	Header         HeaderRecord
 	Range          cache.FileRange
@@ -36,30 +35,29 @@ type IndexData struct {
 	AppTableStart  int64
 }
 
-// NewIndexData returns an IndexData with an opened file pointer to the given fileName. The HeaderRecord
+// NewChunkData returns an ChunkData with an opened file pointer to the given fileName. The HeaderRecord
 // for the chunk has been populated and the file position to the two tables are ready for use.
-func NewIndexData(path string) (chunk IndexData, err error) {
+func NewChunkData(path string) (chunk ChunkData, err error) {
 	indexPath := toIndexPath(path)
-	fmt.Println(indexPath)
 
 	blkRange, err := cache.RangeFromFilename(indexPath)
 	if err != nil {
-		return IndexData{}, err
+		return ChunkData{}, err
 	}
 
 	file, err := os.Open(indexPath)
 	if err != nil {
-		return IndexData{}, err
+		return ChunkData{}, err
 	}
 	// Note, we don't defer closing here since we want the file to stay opened. Caller must close it.
 
 	header, err := readHeader(file)
 	if err != nil {
 		file.Close()
-		return IndexData{}, err
+		return ChunkData{}, err
 	}
 
-	chunk = IndexData{
+	chunk = ChunkData{
 		File:           file,
 		Header:         header,
 		AddrTableStart: HeaderWidth,
@@ -70,8 +68,8 @@ func NewIndexData(path string) (chunk IndexData, err error) {
 	return
 }
 
-// Close closes the IndexData's associated File pointer (if opened)
-func (chunk *IndexData) Close() error {
+// Close closes the ChunkData's associated File pointer (if opened)
+func (chunk *ChunkData) Close() error {
 	if chunk.File != nil {
 		chunk.File.Close()
 	}

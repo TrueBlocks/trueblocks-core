@@ -10,6 +10,7 @@ import (
 	"os"
 	"sort"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
@@ -22,8 +23,6 @@ type SimpleAppearance struct {
 }
 
 func (opts *ListOptions) HandleListAppearances(monitorArray []monitor.Monitor) error {
-	// theWriter := csv.NewWriter(os.Stdout)
-	// theWriter.Comma = 0x9
 	for _, mon := range monitorArray {
 		apps := make([]index.AppearanceRecord, mon.Count, mon.Count)
 		err := mon.ReadAppearances(&apps)
@@ -45,15 +44,15 @@ func (opts *ListOptions) HandleListAppearances(monitorArray []monitor.Monitor) e
 
 		results := make([]SimpleAppearance, 0, mon.Count)
 		for _, app := range apps {
-			// range1 := cache.FileRange{First: opts.FirstBlock, Last: opts.LastBlock}
-			// range2 := cache.FileRange{First: uint64(app.BlockNumber), Last: uint64(app.BlockNumber)}
-			// if Intersects(range1, range2) {
-			var s SimpleAppearance
-			s.Address = mon.GetAddrStr()
-			s.BlockNumber = app.BlockNumber
-			s.TransactionIndex = app.TransactionId
-			results = append(results, s)
-			// }
+			exportRange := cache.FileRange{First: opts.FirstBlock, Last: opts.LastBlock}
+			appRange := cache.FileRange{First: uint64(app.BlockNumber), Last: uint64(app.BlockNumber)}
+			if cache.Intersects(appRange, exportRange) {
+				var s SimpleAppearance
+				s.Address = mon.GetAddrStr()
+				s.BlockNumber = app.BlockNumber
+				s.TransactionIndex = app.TransactionId
+				results = append(results, s)
+			}
 		}
 
 		// TODO: Fix export without arrays
@@ -61,9 +60,6 @@ func (opts *ListOptions) HandleListAppearances(monitorArray []monitor.Monitor) e
 			opts.Globals.Respond(opts.Globals.Writer, http.StatusOK, results)
 
 		} else {
-			// fmt.Println("SOMETHING IS BROKEN HERE")
-			// fmt.Println("Size: ", len(results))
-			// fmt.Println("Results: ", results)
 			err := opts.Globals.Output(os.Stdout, opts.Globals.Format, results)
 			if err != nil {
 				logger.Log(logger.Error, err)

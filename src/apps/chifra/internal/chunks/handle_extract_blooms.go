@@ -17,7 +17,7 @@ func (opts *ChunksOptions) showBloom(path string, first bool) {
 		}
 	}
 
-	var bloom index.BloomFilter
-	bloom.ReadBloomFilter(path)
-	bloom.DisplayBloom(int(opts.Globals.LogLevel))
+	var bloom index.ChunkBloom
+	bloom.Read(path)
+	bloom.Display(int(opts.Globals.LogLevel))
 }

@@ -19,7 +19,7 @@ type bloomBytes struct {
 	Bytes     []byte
 }
 
-type BloomFilter struct {
+type ChunkBloom struct {
 	Range  cache.FileRange
 	Count  uint32
 	Blooms []bloomBytes
@@ -31,11 +31,10 @@ const (
 	MAX_ADDRS_IN_BLOOM   = 50000
 )
 
-func NewBloomFilter() BloomFilter {
-	var ret BloomFilter
+func NewChunkBloom() (ret ChunkBloom) {
 	ret.Blooms = make([]bloomBytes, 0, 1)
 	ret.Count = 1
-	return ret
+	return
 }
 
 func bitsToLight(addr common.Address) (parts [5][]byte, vals [5]uint32, bits [5]uint32) {
@@ -56,7 +55,7 @@ func bitsToLight(addr common.Address) (parts [5][]byte, vals [5]uint32, bits [5]
 }
 
 //----------------------------------------------------------------------
-func (bloom *BloomFilter) getStats() (nBlooms uint64, nInserted uint64, nBitsLit uint64, nBitsNotLit uint64, sz uint64, bitsLit []uint64) {
+func (bloom *ChunkBloom) getStats() (nBlooms uint64, nInserted uint64, nBitsLit uint64, nBitsNotLit uint64, sz uint64, bitsLit []uint64) {
 	bitsLit = []uint64{}
 	sz += 4
 	nBlooms = uint64(bloom.Count)
@@ -79,23 +78,16 @@ func (bloom *BloomFilter) getStats() (nBlooms uint64, nInserted uint64, nBitsLit
 //----------------------------------------------------------------------
 func (bb *bloomBytes) isInBloomBytes(addr common.Address) bool {
 	_, _, bitsLitInAddr := bitsToLight(addr)
-	// fmt.Println("Checking address", addr.Hex(), bitsLitInAddr)
 	for _, bit := range bitsLitInAddr {
-		// fmt.Println("\tTesting:", bit, isBitLit(bit, bb.Bytes))
 		if !isBitLit(bit, bb.Bytes) {
-			// fmt.Println("\t\tMISS")
 			return false
-			// } else {
-			// 	fmt.Println("\t\tHIT")
 		}
 	}
 	return true
 }
 
 //----------------------------------------------------------------------
-func (bloom *BloomFilter) IsMemberOf(addr common.Address) bool {
-	// _, _, _, _, _, bitsLit := bloom.getStats()
-	// fmt.Println("\n------------------------------------\nbitsLit:", bitsLit)
+func (bloom *ChunkBloom) IsMember(addr common.Address) bool {
 	for _, bb := range bloom.Blooms {
 		if bb.isInBloomBytes(addr) {
 			return true
@@ -116,7 +108,7 @@ func isBitLit(bit uint32, bytes []byte) bool {
 }
 
 //---------------------------------------------------------------------------
-func (bloom *BloomFilter) ReadBloomFilter(fileName string) (err error) {
+func (bloom *ChunkBloom) Read(fileName string) (err error) {
 	bloom.Range, err = cache.RangeFromFilename(fileName)
 	if err != nil {
 		return err
@@ -151,7 +143,7 @@ func (bloom *BloomFilter) ReadBloomFilter(fileName string) (err error) {
 	return nil
 }
 
-func (bloom *BloomFilter) DisplayBloom(verbose int) {
+func (bloom *ChunkBloom) Display(verbose int) {
 	var bytesPerLine = (2048 / 16)
 	if verbose > 0 {
 		if verbose > 4 {
@@ -186,7 +178,7 @@ func (bloom *BloomFilter) DisplayBloom(verbose int) {
 	}
 }
 
-func (bloom *BloomFilter) LightBits(bits [5]uint32) {
+func (bloom *ChunkBloom) LightBits(bits [5]uint32) {
 	if len(bloom.Blooms) == 0 {
 		bloom.Blooms = append(bloom.Blooms, bloomBytes{})
 		bloom.Blooms[0].Bytes = make([]byte, BLOOM_WIDTH_IN_BYTES)

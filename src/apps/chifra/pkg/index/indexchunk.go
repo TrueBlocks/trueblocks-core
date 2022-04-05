@@ -10,42 +10,30 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 )
 
-// IndexChunk represents both parts of a consolidated portion of the index (represented by the Range field).
-// The two parts of an IndexChunk are the BloomFilter which reveals set membership for all the addresses
+// Chunk represents both parts of a consolidated portion of the index (represented by the Range field).
+// The two parts of an Chunk are the ChunkBloom which reveals set membership for all the addresses
 // in the index portion and the Index itself which is a relational table of addresses to appearances.
-type IndexChunk struct {
+type Chunk struct {
 	Range cache.FileRange
-	Index IndexData
-	Bloom BloomFilter
+	Index ChunkData
+	Bloom ChunkBloom
 }
 
-// NewBloomData returns the bloom filter for a chunk
-func NewBloomData(path string) (chunk IndexChunk, err error) {
+// NewChunk returns an index chunk with the bloom filter read in but not the index itself
+func NewChunk(path string) (chunk Chunk, err error) {
 	bloomPath := toBloomPath(path)
 	chunk.Range, err = cache.RangeFromFilename(bloomPath)
 	if err != nil {
 		return
 	}
 
-	err = chunk.Bloom.ReadBloomFilter(bloomPath)
-	return
-}
-
-// NewIndexChunk returns an index chunk with the bloom filter read in but not the index itself
-func NewIndexChunk(path string) (chunk IndexChunk, err error) {
-	bloomPath := toBloomPath(path)
-	chunk.Range, err = cache.RangeFromFilename(bloomPath)
-	if err != nil {
-		return
-	}
-
-	err = chunk.Bloom.ReadBloomFilter(bloomPath)
+	err = chunk.Bloom.Read(bloomPath)
 	if err != nil {
 		return
 	}
 
 	indexPath := toIndexPath(path)
-	chunk.Index, err = NewIndexData(indexPath)
+	chunk.Index, err = NewChunkData(indexPath)
 	return
 }
 
@@ -70,3 +58,31 @@ func toIndexPath(pathIn string) string {
 	ret = strings.Replace(ret, "/blooms/", "/finalized/", -1)
 	return ret
 }
+
+/*
+-----------------------------------------------------------------------
+TODO: BOGUS
+bool establishIndexChunk(const string_q& fileName);
+bool COptions::establishIndexChunk(const string_q& fullPathToChunk) {
+    if (fileExists(fullPathToChunk))
+        return true;
+
+    string_q fileName = substitute(substitute(fullPathToChunk, indexFolder_finalized, ""), ".bin", "");
+    static CPinnedChunkArray pins;
+    if (pins.size() == 0) {
+        if (!pinlib_readManifest(pins)) {
+            LOG_ERR("Could not read the manifest.");
+            return false;
+        }
+    }
+    CPinnedChunk pin;
+    if (pinlib_findChunk(pins, fileName, pin)) {
+        LOG_PROGRESS(EXTRACT, fileRange.first, n eedRange.second, " from IPFS" + cOff);
+        if (!pinlib_getChunkFromRemote(pin, .25))
+            LOG_ERR("Could not retrieve file from IPFS: ", fullPathToChunk);
+    } else {
+        LOG_ERR("Could not find file in manifest: ", fullPathToChunk);
+    }
+    return fileExists(fullPathToChunk);
+}
+*/
