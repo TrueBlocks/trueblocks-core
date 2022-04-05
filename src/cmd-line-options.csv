@@ -21,7 +21,6 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10344,apps,Accounts,export,acctExport,topic,,,false,false,true,true,local,flag,list<topic>,for log export only&#44; export only logs with this topic(s)
 10346,apps,Accounts,export,acctExport,asset,,,false,false,true,true,local,flag,list<addr>,for the statements option only&#44; export only reconciliations for this asset
 10332,apps,Accounts,export,acctExport,factory,y,false,false,false,true,false,header,switch,<boolean>,scan for contract creations from the given address(es) and report address of those contracts
-10380,apps,Accounts,export,acctExport,freshen,f,,false,false,false,false,gocmd,switch,<boolean>,freshen but do not print the exported data
 10060,apps,Accounts,export,acctExport,staging,s,,false,false,true,true,gocmd,switch,<boolean>,export transactions labeled staging (i.e. older than 28 blocks but not yet consolidated)
 10080,apps,Accounts,export,acctExport,unripe,u,,false,false,true,true,gocmd,switch,<boolean>,export transactions labeled upripe (i.e. less than 28 blocks old)
 10092,apps,Accounts,export,acctExport,load,,,false,false,false,false,header,flag,<string>,a comma separated list of dynamic traversers to load
