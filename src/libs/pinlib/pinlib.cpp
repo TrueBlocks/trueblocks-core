@@ -155,42 +155,42 @@ static string_q pinOneChunk(const string_q& fileName, const string_q& type) {
     return result;
 }
 
-//----------------------------------------------------------------
-static string_q unpinOneChunk(const string_q& hash) {
-    CApiKey lic;
-    if (!getApiKey(lic)) {
-        cerr << "You need to put Pinata API keys in $CONFIG/blockScrape.toml" << endl;
-        return "";
-    }
+// //----------------------------------------------------------------
+// static string_q unpinOneChunk(const string_q& hash) {
+//     CApiKey lic;
+//     if (!getApiKey(lic)) {
+//         cerr << "You need to put Pinata API keys in $CONFIG/blockScrape.toml" << endl;
+//         return "";
+//     }
 
-    string_q result;
-    CURL* curl;
-    curl = curl_easy_init();
-    if (curl) {
-        curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "DELETE");
-        curl_easy_setopt(curl, CURLOPT_URL, ("https://api.pinata.cloud/pinning/unpin/" + hash).c_str());
-        curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
-        curl_easy_setopt(curl, CURLOPT_DEFAULT_PROTOCOL, "https");
-        struct curl_slist* headers = NULL;
-        headers = curl_slist_append(headers, ("pinata_api_key: " + lic.key).c_str());
-        headers = curl_slist_append(headers, ("pinata_secret_api_key: " + lic.secret).c_str());
-        headers = curl_slist_append(headers, "Content-Type: application/json");
-        curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
-        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
-        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, curlCallback);
-        CURLcode res = curl_easy_perform(curl);
-        if (res != CURLE_OK) {
-            result += curl_easy_strerror(res);
-        }
-        curl_slist_free_all(headers);
-    }
-    curl_easy_cleanup(curl);
-    if (contains(result, "error"))
-        LOG_WARN("Pinata returned an error: ", result);
-    else
-        LOG_INFO("Finishing unpin: ", result);
-    return result;
-}
+//     string_q result;
+//     CURL* curl;
+//     curl = curl_easy_init();
+//     if (curl) {
+//         curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "DELETE");
+//         curl_easy_setopt(curl, CURLOPT_URL, ("https://api.pinata.cloud/pinning/unpin/" + hash).c_str());
+//         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
+//         curl_easy_setopt(curl, CURLOPT_DEFAULT_PROTOCOL, "https");
+//         struct curl_slist* headers = NULL;
+//         headers = curl_slist_append(headers, ("pinata_api_key: " + lic.key).c_str());
+//         headers = curl_slist_append(headers, ("pinata_secret_api_key: " + lic.secret).c_str());
+//         headers = curl_slist_append(headers, "Content-Type: application/json");
+//         curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+//         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
+//         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, curlCallback);
+//         CURLcode res = curl_easy_perform(curl);
+//         if (res != CURLE_OK) {
+//             result += curl_easy_strerror(res);
+//         }
+//         curl_slist_free_all(headers);
+//     }
+//     curl_easy_cleanup(curl);
+//     if (contains(result, "error"))
+//         LOG_WARN("Pinata returned an error: ", result);
+//     else
+//         LOG_INFO("Finishing unpin: ", result);
+//     return result;
+// }
 
 //----------------------------------------------------------------
 bool pinlib_pinChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinnedChunk& item) {
@@ -244,101 +244,101 @@ bool pinlib_pinChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinned
 }
 
 //---------------------------------------------------------------------------
-bool pinlib_unpinChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinnedChunk& item) {
-    // If we don't think it's pinned, Pinata may, so proceed even if not found
-    CPinnedChunk copy;
-    if (!pinlib_findChunk(pList, fileName, copy)) {
-        item = copy;
-        item.fileName = fileName;
-        // return true;
-    }
+// bool pinlib_unpinChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinnedChunk& item) {
+//     // If we don't think it's pinned, Pinata may, so proceed even if not found
+//     CPinnedChunk copy;
+//     if (!pinlib_findChunk(pList, fileName, copy)) {
+//         item = copy;
+//         item.fileName = fileName;
+//         // return true;
+//     }
 
-    CPinnedChunkArray array;
-    for (auto pin : pList) {
-        if (pin.fileName == fileName) {
-            cout << "Unpinning: " << pin.fileName << endl;
-            unpinOneChunk(pin.indexHash);
-            unpinOneChunk(pin.bloomHash);
-            item = pin;
-        } else {
-            cout << "Keeping " << pin.fileName << "\r";
-            cout.flush();
-            array.push_back(pin);
-        }
-    }
-    cout << endl;
+//     CPinnedChunkArray array;
+//     for (auto pin : pList) {
+//         if (pin.fileName == fileName) {
+//             cout << "Unpinning: " << pin.fileName << endl;
+//             unpinOneChunk(pin.indexHash);
+//             unpinOneChunk(pin.bloomHash);
+//             item = pin;
+//         } else {
+//             cout << "Keeping " << pin.fileName << "\r";
+//             cout.flush();
+//             array.push_back(pin);
+//         }
+//     }
+//     cout << endl;
 
-    pList.clear();
-    pList = array;
-    sort(pList.begin(), pList.end());
-    return pinlib_updateManifest(pList);
-}
+//     pList.clear();
+//     pList = array;
+//     sort(pList.begin(), pList.end());
+//     return pinlib_updateManifest(pList);
+// }
 
-//---------------------------------------------------------------------------
-bool pinlib_getChunkFromRemote(CPinnedChunk& pin, double sleep) {
-    string_q outFile = indexFolder_finalized + pin.fileName + ".bin";
-    ipfshash_t ipfshash = pin.indexHash;
+// //---------------------------------------------------------------------------
+// bool pinlib_getChunkFromRemote(CPinnedChunk& pin, double sleep) {
+//     string_q outFile = indexFolder_finalized + pin.fileName + ".bin";
+//     ipfshash_t ipfshash = pin.indexHash;
 
-    if (!fileExists(outFile)) {
-        string_q zipFile = outFile + ".gz";
-        if (!fileExists(zipFile)) {
-            // download from ipfs gateway
-            static string_q gatewayUrl;
-            if (gatewayUrl.empty()) {
-                CChain chain;
-                findChain(getChain(), chain);
-                gatewayUrl = chain.pinGateway;
-                if (!endsWith(gatewayUrl, "/"))
-                    gatewayUrl += "/";
-            }
+//     if (!fileExists(outFile)) {
+//         string_q zipFile = outFile + ".gz";
+//         if (!fileExists(zipFile)) {
+//             // download from ipfs gateway
+//             static string_q gatewayUrl;
+//             if (gatewayUrl.empty()) {
+//                 CChain chain;
+//                 findChain(getChain(), chain);
+//                 gatewayUrl = chain.pinGateway;
+//                 if (!endsWith(gatewayUrl, "/"))
+//                     gatewayUrl += "/";
+//             }
 
-            ostringstream cmd;
-            cmd << "curl --silent -o ";
-            cmd << "\"" << zipFile << "\" ";
-            cmd << "\"" << gatewayUrl << ipfshash << "\"";
-            LOG_INFO(bBlue, "Unchaining ", (contains(outFile, "bloom") ? "bloom" : "index"), " ", ipfshash, " to ",
-                     pin.fileName, cOff);
-            lockSection();
-            int ret = system(cmd.str().c_str());
-            unlockSection();
-            if (ret != 0) {
-                // clean up on failure
-                if (ret == 2)
-                    defaultQuitHandler(-1);  // user hit control+c, let ourselves know
-                LOG_WARN("Could not download zip file ", zipFile);
-                ::remove(zipFile.c_str());
-            } else {
-                usleep((useconds_t)(sleep * 1000000));  // do not remove cruft - stays responsive to control+C
-            }
-        }
+//             ostringstream cmd;
+//             cmd << "curl --silent -o ";
+//             cmd << "\"" << zipFile << "\" ";
+//             cmd << "\"" << gatewayUrl << ipfshash << "\"";
+//             LOG_INFO(bBlue, "Unchaining ", (contains(outFile, "bloom") ? "bloom" : "index"), " ", ipfshash, " to ",
+//                      pin.fileName, cOff);
+//             lockSection();
+//             int ret = system(cmd.str().c_str());
+//             unlockSection();
+//             if (ret != 0) {
+//                 // clean up on failure
+//                 if (ret == 2)
+//                     defaultQuitHandler(-1);  // user hit control+c, let ourselves know
+//                 LOG_WARN("Could not download zip file ", zipFile);
+//                 ::remove(zipFile.c_str());
+//             } else {
+//                 usleep((useconds_t)(sleep * 1000000));  // do not remove cruft - stays responsive to control+C
+//             }
+//         }
 
-        if (fileExists(zipFile)) {
-            ostringstream cmd;
-            cmd << "cd \"" << indexFolder << "\" && gunzip -k " << zipFile;
-            lockSection();
-            int ret = system(cmd.str().c_str());
-            unlockSection();
-            if (ret != 0) {
-                // clean up on failure
-                if (ret == 2)
-                    defaultQuitHandler(-1);  // user hit control+c, let ourselves know
-                ostringstream err;
-                err << "Could not download file " << outFile;
-                LOG_WARN(err.str());
-                err << endl;
-                appendToAsciiFile(cacheFolder_tmp + "failed_downloads.log", err.str());
-                ::remove(zipFile.c_str());
-                ::remove(outFile.c_str());
-            }
-        } else {
-            LOG_INFO("File ", outFile, " does not exist.");
-        }
+//         if (fileExists(zipFile)) {
+//             ostringstream cmd;
+//             cmd << "cd \"" << indexFolder << "\" && gunzip -k " << zipFile;
+//             lockSection();
+//             int ret = system(cmd.str().c_str());
+//             unlockSection();
+//             if (ret != 0) {
+//                 // clean up on failure
+//                 if (ret == 2)
+//                     defaultQuitHandler(-1);  // user hit control+c, let ourselves know
+//                 ostringstream err;
+//                 err << "Could not download file " << outFile;
+//                 LOG_WARN(err.str());
+//                 err << endl;
+//                 appendToAsciiFile(cacheFolder_tmp + "failed_downloads.log", err.str());
+//                 ::remove(zipFile.c_str());
+//                 ::remove(outFile.c_str());
+//             }
+//         } else {
+//             LOG_INFO("File ", outFile, " does not exist.");
+//         }
 
-    } else {
-        LOG_INFO("File ", outFile, " exists.");
-    }
-    return true;
-}
+//     } else {
+//         LOG_INFO("File ", outFile, " exists.");
+//     }
+//     return true;
+// }
 
 //---------------------------------------------------------------------------
 bool pinlib_findChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinnedChunk& item) {

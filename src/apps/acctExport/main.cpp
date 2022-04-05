@@ -15,7 +15,7 @@
 //-----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     //    loadEnvironmentPaths("mainnet", "/Users/jrush/Development/trueblocks-index/wild.0/unchained/", "");
-    pinlib_init(quickQuitHandler);
+    acctlib_init(quickQuitHandler);
 
     COptions options;
     if (!options.prepareArguments(argc, argv))
@@ -119,7 +119,7 @@ int main(int argc, const char* argv[]) {
 
     options.writePerformanceData();
 
-    pinlib_cleanup();
+    acctlib_cleanup();
     return 0;
 }
 
