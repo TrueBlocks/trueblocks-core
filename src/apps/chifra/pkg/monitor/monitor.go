@@ -44,8 +44,7 @@ type Monitor struct {
 }
 
 const (
-	HeaderRecordWidth = index.AppRecordWidth
-	Ext               = ".mon.bin"
+	Ext = ".mon.bin"
 )
 
 // NewMonitor returns a Monitor (but has not yet read in the AppearanceRecords). If 'create' is
@@ -112,7 +111,7 @@ func (mon *Monitor) Reload(create bool) (uint32, error) {
 		}
 	}
 	mon.FileSize = uint32(file.FileSize(mon.Path()))
-	mon.Count = uint32(file.FileSize(mon.Path())/HeaderRecordWidth) - 1
+	mon.Count = uint32(file.FileSize(mon.Path())/index.AppRecordWidth) - 1
 	return mon.Count, nil
 }
 
@@ -186,7 +185,7 @@ func (mon *Monitor) ReadAppearances(apps *[]index.AppearanceRecord) (err error) 
 	}
 
 	// Seek past the header to get to the first record
-	_, err = mon.ReadFp.Seek(HeaderRecordWidth, io.SeekStart)
+	_, err = mon.ReadFp.Seek(index.AppRecordWidth, io.SeekStart)
 	if err != nil {
 		return
 	}
@@ -237,7 +236,7 @@ func (mon *Monitor) WriteAppearances(apps []index.AppearanceRecord, lastScanned 
 		return
 	}
 
-	f.Seek(HeaderRecordWidth, io.SeekStart)
+	f.Seek(index.AppRecordWidth, io.SeekStart)
 
 	b := make([]byte, 4, 4)
 	for _, app := range apps {

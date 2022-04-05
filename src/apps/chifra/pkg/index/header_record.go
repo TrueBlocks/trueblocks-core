@@ -9,7 +9,7 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
-// HeaderRecord is the first 44 bytes of an IndexChunk file. This structure carries a magic number (4 bytes),
+// HeaderRecord is the first 44 bytes of an IndexData. This structure carries a magic number (4 bytes),
 // a version specifier (32 bytes), and two four-byte integers representing the number of records in each
 // of the two tables.
 type HeaderRecord struct {

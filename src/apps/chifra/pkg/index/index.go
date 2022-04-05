@@ -11,11 +11,9 @@ const (
 	HeaderWidth = 44
 )
 
-// IndexChunk represents a consolidated portion of the Index of All Appearances (called a Chunk). The name
-// of the file is the form Start-End.bin (where both Start and End are nine character, zero-left-padded block
-// numbers representing the first block and the last block (inclusive) of the range covered by this chunk.
+// IndexData is one part of the two part IndexChunk (the other part is the BloomFilter)
 //
-// Each IndexChunk contains a HeaderRecord followed by two tables: the AddressTable and a related AppearanceTable.
+// Each IndexData contains a HeaderRecord followed by two tables: the AddressTable and a related AppearanceTable.
 //
 // The HeaderRecord (44 bytes long) contains a four-byte magic number (`0xdeadbeef` -- to indicate we're reading
 // a file of the correct type), a 32-byte hash representing the file's version, and two 4-byte integers representing
@@ -29,7 +27,7 @@ const (
 //
 // The AppearanceTable contains nAppeeances pairs of <blockNumber.transactionId> pairs arranged by the Offset
 // and Count pairs found in the corresponding AddressTable records.
-type IndexChunk struct {
+type IndexData struct {
 	File           *os.File
 	Header         HeaderRecord
 	Range          cache.FileRange
@@ -37,27 +35,29 @@ type IndexChunk struct {
 	AppTableStart  int64
 }
 
-// NewIndexChunk returns an IndexChunk with an opened file pointer to the given fileName. The HeaderRecord
+// NewIndexData returns an IndexData with an opened file pointer to the given fileName. The HeaderRecord
 // for the chunk has been populated and the file position to the two tables are ready for use.
-func NewIndexChunk(fileName string) (chunk IndexChunk, err error) {
-	blkRange, err := cache.RangeFromFilename(fileName)
+func NewIndexData(path string) (chunk IndexData, err error) {
+	indexPath := toIndexPath(path)
+
+	blkRange, err := cache.RangeFromFilename(indexPath)
 	if err != nil {
-		return IndexChunk{}, err
+		return IndexData{}, err
 	}
 
-	file, err := os.Open(fileName)
+	file, err := os.Open(indexPath)
 	if err != nil {
-		return IndexChunk{}, err
+		return IndexData{}, err
 	}
-	// Note, we don't defer closing here since we want the file to stay opened. Caller has to close it.
+	// Note, we don't defer closing here since we want the file to stay opened. Caller must close it.
 
 	header, err := readHeader(file)
 	if err != nil {
 		file.Close()
-		return IndexChunk{}, err
+		return IndexData{}, err
 	}
 
-	chunk = IndexChunk{
+	chunk = IndexData{
 		File:           file,
 		Header:         header,
 		AddrTableStart: HeaderWidth,
@@ -68,8 +68,8 @@ func NewIndexChunk(fileName string) (chunk IndexChunk, err error) {
 	return
 }
 
-// Close closes the IndexChunk's associated File pointer (if opened)
-func (chunk *IndexChunk) Close() error {
+// Close closes the IndexData's associated File pointer (if opened)
+func (chunk *IndexData) Close() error {
 	if chunk.File != nil {
 		chunk.File.Close()
 	}

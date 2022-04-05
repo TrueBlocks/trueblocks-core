@@ -5,8 +5,8 @@
 package chunksPkg
 
 import (
-	bloomPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 )
 
 func (opts *ChunksOptions) showBloom(path string, first bool) {
@@ -17,7 +17,7 @@ func (opts *ChunksOptions) showBloom(path string, first bool) {
 		}
 	}
 
-	var bloom bloomPkg.BloomFilter
+	var bloom index.BloomFilter
 	bloom.ReadBloomFilter(path)
 	bloom.DisplayBloom(int(opts.Globals.LogLevel))
 }

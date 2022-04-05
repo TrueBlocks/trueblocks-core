@@ -10,29 +10,11 @@ import (
 	"os"
 	"strings"
 
-	bloomPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
-
-type Chunk struct {
-	Range cache.FileRange
-	Index index.IndexChunk
-	Bloom bloomPkg.BloomFilter
-}
-
-func NewChunk(path string) (chunk Chunk, err error) {
-	chunk.Range, err = cache.RangeFromFilename(path)
-	if err != nil {
-		return
-	}
-	chunk.Bloom.ReadBloomFilter(path)
-	p := strings.Replace(strings.Replace(path, ".bloom", ".bin", -1), "blooms", "finalized", -1)
-	chunk.Index, err = index.NewIndexChunk(p)
-	return
-}
 
 type ChunkStats struct {
 	Start         uint64 `json:"start"`
@@ -51,7 +33,7 @@ type ChunkStats struct {
 }
 
 func NewChunkStats(path string) ChunkStats {
-	chunk, err := NewChunk(path)
+	chunk, err := index.NewIndexChunk(path)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -69,7 +51,7 @@ func NewChunkStats(path string) ChunkStats {
 	if ret.NAddrs > 0 {
 		ret.AppsPerAddr = fmt.Sprintf("%.3f", float64(ret.NApps)/float64(ret.NAddrs))
 	}
-	ret.RecWid = 4 + bloomPkg.BLOOM_WIDTH_IN_BYTES
+	ret.RecWid = 4 + index.BLOOM_WIDTH_IN_BYTES
 	ret.BloomSz = file.FileSize(path)
 	p := strings.Replace(strings.Replace(path, ".bloom", ".bin", -1), "blooms", "finalized", -1)
 	ret.ChunkSz = file.FileSize(p)

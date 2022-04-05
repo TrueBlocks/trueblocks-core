@@ -22,12 +22,12 @@ type AddressRecord struct {
 	Count   uint32
 }
 
-func (chunk *IndexChunk) readAddressRecord() (addressRec AddressRecord, err error) {
+func (chunk *IndexData) readAddressRecord() (addressRec AddressRecord, err error) {
 	err = binary.Read(chunk.File, binary.LittleEndian, &addressRec)
 	return
 }
 
-func (chunk *IndexChunk) searchForAddressRecord(address common.Address) int {
+func (chunk *IndexData) searchForAddressRecord(address common.Address) int {
 	compareFunc := func(pos int) bool {
 		if pos == -1 {
 			return false

@@ -1,4 +1,4 @@
-package bloomPkg
+package index
 
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
@@ -64,7 +64,7 @@ func (bloom *BloomFilter) getStats() (nBlooms uint64, nInserted uint64, nBitsLit
 		nInserted += uint64(bf.NInserted)
 		sz += 4 + uint64(len(bf.Bytes))
 		for bitPos := 0; bitPos < len(bf.Bytes)*8; bitPos++ {
-			if IsBitLit(uint32(bitPos), bf.Bytes) {
+			if isBitLit(uint32(bitPos), bf.Bytes) {
 				nBitsLit++
 				bitsLit = append(bitsLit, uint64(bitPos))
 			} else {
@@ -81,8 +81,8 @@ func (bb *bloomBytes) isInBloomBytes(addr common.Address) bool {
 	_, _, bitsLitInAddr := bitsToLight(addr)
 	// fmt.Println("Checking address", addr.Hex(), bitsLitInAddr)
 	for _, bit := range bitsLitInAddr {
-		// fmt.Println("\tTesting:", bit, IsBitLit(bit, bb.Bytes))
-		if !IsBitLit(bit, bb.Bytes) {
+		// fmt.Println("\tTesting:", bit, isBitLit(bit, bb.Bytes))
+		if !isBitLit(bit, bb.Bytes) {
 			// fmt.Println("\t\tMISS")
 			return false
 			// } else {
@@ -105,7 +105,7 @@ func (bloom *BloomFilter) IsMemberOf(addr common.Address) bool {
 }
 
 //---------------------------------------------------------------------------
-func IsBitLit(bit uint32, bytes []byte) bool {
+func isBitLit(bit uint32, bytes []byte) bool {
 	which := uint32(bit / 8)
 	index := uint32(BLOOM_WIDTH_IN_BYTES - which - 1)
 

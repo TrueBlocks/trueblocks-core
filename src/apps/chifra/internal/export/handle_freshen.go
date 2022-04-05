@@ -7,16 +7,19 @@ import (
 )
 
 func (opts *ExportOptions) HandleFreshenMonitors() error {
-	listOpts := listPkg.ListOptions{}
-	listOpts.Addrs = opts.Addrs
-	listOpts.Count = opts.Count
-	listOpts.Appearances = opts.Appearances
-	listOpts.FirstBlock = opts.FirstBlock
-	listOpts.LastBlock = opts.LastBlock
+	listOpts := listPkg.ListOptions{
+		Addrs:       opts.Addrs,
+		Count:       opts.Count,
+		Appearances: opts.Appearances,
+		FirstBlock:  opts.FirstBlock,
+		LastBlock:   opts.LastBlock,
+		Globals:     opts.Globals,
+	}
+
 	if listOpts.LastBlock == 0 {
 		listOpts.LastBlock = utils.NOPOS
 	}
-	listOpts.Globals = opts.Globals
+
 	monitorArray := make([]monitor.Monitor, 0, len(opts.Addrs))
 	return listOpts.HandleFreshenMonitors(&monitorArray)
 }

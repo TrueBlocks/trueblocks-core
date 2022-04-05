@@ -50,7 +50,7 @@ type fetchResult struct {
 // WorkerArguments are types meant to hold worker function arguments. We cannot
 // pass the arguments directly, because a worker function is expected to take one
 // parameter of type interface{}.
-type DownloadWorkerArguments struct {
+type downloadWorkerArguments struct {
 	chunkPath       *cache.CachePath
 	ctx             context.Context
 	downloadWg      *sync.WaitGroup
@@ -59,7 +59,7 @@ type DownloadWorkerArguments struct {
 	writeChannel    chan *jobResult
 }
 
-type WriteWorkerArguments struct {
+type writeWorkerArguments struct {
 	cancel          context.CancelFunc
 	chunkPath       *cache.CachePath
 	ctx             context.Context
@@ -68,7 +68,7 @@ type WriteWorkerArguments struct {
 }
 
 // worker function type as accepted by Ants
-type WorkerFunction func(interface{})
+type workerFunction func(interface{})
 
 // fetchChunk downloads a chunk using HTTP
 func fetchChunk(ctx context.Context, url string) (*fetchResult, error) {
@@ -97,7 +97,7 @@ func fetchChunk(ctx context.Context, url string) (*fetchResult, error) {
 }
 
 // getDownloadWorker returns a worker function that downloads a chunk
-func getDownloadWorker(arguments DownloadWorkerArguments) WorkerFunction {
+func getDownloadWorker(arguments downloadWorkerArguments) workerFunction {
 	progressChannel := arguments.progressChannel
 	ctx := arguments.ctx
 
@@ -159,7 +159,7 @@ func getDownloadWorker(arguments DownloadWorkerArguments) WorkerFunction {
 }
 
 // getWriteWorker returns a worker function that writes chunk to disk
-func getWriteWorker(arguments WriteWorkerArguments) WorkerFunction {
+func getWriteWorker(arguments writeWorkerArguments) workerFunction {
 	progressChannel := arguments.progressChannel
 	ctx := arguments.ctx
 
@@ -220,7 +220,7 @@ func GetChunksFromRemote(chain string, pins []manifest.PinDescriptor, chunkPath 
 		cancel()
 	}()
 
-	downloadWorkerArgs := DownloadWorkerArguments{
+	downloadWorkerArgs := downloadWorkerArguments{
 		chunkPath:       chunkPath,
 		ctx:             ctx,
 		downloadWg:      &downloadWg,
@@ -234,7 +234,7 @@ func GetChunksFromRemote(chain string, pins []manifest.PinDescriptor, chunkPath 
 		panic(err)
 	}
 
-	writeWorkerArgs := WriteWorkerArguments{
+	writeWorkerArgs := writeWorkerArguments{
 		cancel:          cancel,
 		chunkPath:       chunkPath,
 		ctx:             ctx,
@@ -266,7 +266,7 @@ func GetChunksFromRemote(chain string, pins []manifest.PinDescriptor, chunkPath 
 		writeWg.Done()
 	}()
 
-	pinsToDownload := FilterDownloadedChunks(pins, chunkPath)
+	pinsToDownload := filterDownloadedChunks(pins, chunkPath)
 	for _, pin := range pinsToDownload {
 		downloadWg.Add(1)
 		downloadPool.Invoke(pin)
@@ -298,32 +298,32 @@ func saveFileContents(res *jobResult, chunkPath *cache.CachePath) error {
 		return err
 	}
 	if read != res.fileSize {
-		return &ErrSavingCorruptedDownload{res.fileName, res.fileSize, read}
+		return &errSavingCorruptedDownload{res.fileName, res.fileSize, read}
 	}
 
 	archive, err := gzip.NewReader(buffer)
 	if err != nil {
-		return &ErrSavingCannotDecompress{res.fileName, err}
+		return &errSavingCannotDecompress{res.fileName, err}
 	}
 	defer archive.Close()
 
 	outputFile, err := os.Create(chunkPath.GetFullPath(res.fileName))
 	if err != nil {
-		return &ErrSavingCreateFile{res.fileName, err}
+		return &errSavingCreateFile{res.fileName, err}
 	}
 	defer outputFile.Close()
 
 	// Unzip and save content to a file
 	_, werr := io.Copy(outputFile, archive)
 	if werr != nil {
-		return &ErrSavingCopy{res.fileName, werr}
+		return &errSavingCopy{res.fileName, werr}
 	}
 
 	return nil
 }
 
-// FilterDownloadedChunks returns new []manifest.PinDescriptor slice with all pins from RootPath removed
-func FilterDownloadedChunks(pins []manifest.PinDescriptor, chunkPath *cache.CachePath) []manifest.PinDescriptor {
+// filterDownloadedChunks returns new []manifest.PinDescriptor slice with all pins from RootPath removed
+func filterDownloadedChunks(pins []manifest.PinDescriptor, chunkPath *cache.CachePath) []manifest.PinDescriptor {
 	fileMap := make(map[string]bool)
 
 	files, err := ioutil.ReadDir(chunkPath.String())
