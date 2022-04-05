@@ -1,6 +1,7 @@
 package index
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
@@ -39,6 +40,7 @@ type IndexData struct {
 // for the chunk has been populated and the file position to the two tables are ready for use.
 func NewIndexData(path string) (chunk IndexData, err error) {
 	indexPath := toIndexPath(path)
+	fmt.Println(indexPath)
 
 	blkRange, err := cache.RangeFromFilename(indexPath)
 	if err != nil {

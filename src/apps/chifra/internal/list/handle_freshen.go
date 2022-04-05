@@ -116,22 +116,22 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 		resultChannel <- results
 	}()
 
-	bloom, err := index.NewBloomData(fileName)
-	if err != nil {
-		fmt.Println("Error", fileName, err)
-		return
-	}
-	var bloomHits = false
-	for _, mon := range updater.MonitorMap {
-		if bloom.Bloom.IsMemberOf(mon.Address) {
-			bloomHits = true
-			break
-		}
-	}
-	if !bloomHits {
-		// log.Println("Bloom filter does not hit for: ", fileName)
-		return
-	}
+	// bloom, err := index.NewBloomData(fileName)
+	// if err != nil {
+	// 	fmt.Println("Error", fileName, err)
+	// 	return
+	// }
+	// var bloomHits = false
+	// for _, mon := range updater.MonitorMap {
+	// 	if bloom.Bloom.IsMemberOf(mon.Address) {
+	// 		bloomHits = true
+	// 		break
+	// 	}
+	// }
+	// if !bloomHits {
+	// 	// log.Println("Bloom filter does not hit for: ", fileName)
+	// 	return
+	// }
 
 	indexChunk, err := index.NewIndexData(fileName)
 	if err != nil {

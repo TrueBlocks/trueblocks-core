@@ -31,11 +31,18 @@ func (opts *MonitorsOptions) HandleCrudCommands(w io.Writer) error {
 			if opts.Undelete && !m.IsDeleted() {
 				return validate.Usage("Monitor for {0} must be deleted before being undeleted.", addr)
 
-			} else if opts.Delete && m.IsDeleted() {
-				return validate.Usage("Monitor for {0} is already deleted.", addr)
+			} else {
+				if opts.Delete && opts.Remove {
+					// do nothing, it will be resolved below...
 
-			} else if opts.Remove && !m.IsDeleted() {
-				return validate.Usage("Cannot remove a file that has not previously been deleted.")
+				} else {
+					if opts.Delete && m.IsDeleted() {
+						return validate.Usage("Monitor for {0} is already deleted.", addr)
+
+					} else if opts.Remove && !m.IsDeleted() {
+						return validate.Usage("Cannot remove a file that has not previously been deleted.")
+					}
+				}
 			}
 		}
 	}
