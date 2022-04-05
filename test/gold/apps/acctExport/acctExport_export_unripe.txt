@@ -32,7 +32,6 @@ Flags:
       --topic strings       for log export only, export only logs with this topic(s)
       --asset strings       for the statements option only, export only reconciliations for this asset
   -y, --factory             scan for contract creations from the given address(es) and report address of those contracts
-  -f, --freshen             freshen but do not print the exported data (hidden)
   -s, --staging             export transactions labeled staging (i.e. older than 28 blocks but not yet consolidated)
   -u, --unripe              export transactions labeled upripe (i.e. less than 28 blocks old)
       --load string         a comma separated list of dynamic traversers to load (hidden)
