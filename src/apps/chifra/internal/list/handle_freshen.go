@@ -18,6 +18,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 	"github.com/ethereum/go-ethereum/common"
 )
 
@@ -149,6 +151,51 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 			}
 		}
 	}
+}
+
+// downloadBloomByRange accpets cache.FileRange, converts it to file name and finds
+// correspoding CID (hash) entry in the manifest. Next, it downloads the bloom filter.
+func downloadBloomByRange(chain string, fileRange cache.FileRange) error {
+	// Open manifest
+	localManifest, err := manifest.FromLocalFile(chain)
+	if err != nil {
+		return err
+	}
+
+	// Find bloom filter's CID
+	var matchedPin manifest.PinDescriptor
+	chunkFileName := cache.FilenameFromRange(fileRange, "")
+	for _, pin := range localManifest.NewPins {
+		if pin.FileName == chunkFileName {
+			matchedPin = pin
+			break
+		}
+	}
+	if matchedPin.FileName == "" {
+		return fmt.Errorf("filename not found in pins: %s", chunkFileName)
+	}
+
+	// Start downloading the filter
+	pins := []manifest.PinDescriptor{matchedPin}
+	chunkPath := cache.NewCachePath(chain, cache.Index_Bloom)
+	progressChannel := make(chan *progress.Progress)
+
+	go func() {
+		index.GetChunksFromRemote(chain, pins, &chunkPath, progressChannel)
+		close(progressChannel)
+	}()
+
+	for event := range progressChannel {
+		switch event.Event {
+		case progress.AllDone:
+			return nil
+		case progress.Cancelled:
+			return nil
+		case progress.Error:
+			return fmt.Errorf("error while downloading: %s", event.Message)
+		}
+	}
+	return nil
 }
 
 // updateMonitors writes an array of appearances to the Monitor file updating the header for lastScanned. It

@@ -58,3 +58,67 @@ func TestFileRange(t *testing.T) {
 		fmt.Println(s)
 	}
 }
+
+func TestFilenameFromRange(t *testing.T) {
+	type args struct {
+		fileRange FileRange
+		extension string
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			name: "Pads numbers",
+			args: args{
+				fileRange: FileRange{
+					First: 0,
+					Last:  1,
+				},
+				extension: "bloom",
+			},
+			want: "000000000-000000001.bloom",
+		},
+		{
+			name: "Random range 1",
+			args: args{
+				fileRange: FileRange{
+					First: 14040187,
+					Last:  14043115,
+				},
+				extension: "bloom",
+			},
+			want: "014040187-014043115.bloom",
+		},
+		{
+			name: "Random range 2",
+			args: args{
+				fileRange: FileRange{
+					First: 1371353,
+					Last:  1504328,
+				},
+				extension: "bloom",
+			},
+			want: "001371353-001504328.bloom",
+		},
+		{
+			name: "Works without extension",
+			args: args{
+				fileRange: FileRange{
+					First: 1371353,
+					Last:  1504328,
+				},
+				extension: "",
+			},
+			want: "001371353-001504328",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := FilenameFromRange(tt.args.fileRange, tt.args.extension); got != tt.want {
+				t.Errorf("FilenameFromRange() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
