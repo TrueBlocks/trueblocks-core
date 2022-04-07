@@ -91,9 +91,6 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("show_errs", show_errs);
     // END_DEBUG_DISPLAY
 
-    if (Mocked(""))
-        return false;
-
     if (tokens.empty() || tokens.size() > 1)
         return usage("Please supply a single ERC20 token address.");
 
@@ -109,7 +106,7 @@ bool COptions::parseArguments(string_q& command) {
 
     // We need to find the cache
     CMonitor m;
-    cacheFile = m.getPathToMonitor(tokens[0]);
+    cacheFile = m.get PathToMonitor(tokens[0]);
     if (!fileExists(cacheFile))
         return usage("Could not find cache file: " + cacheFile);
 
