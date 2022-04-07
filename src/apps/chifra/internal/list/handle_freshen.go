@@ -18,6 +18,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
@@ -130,7 +131,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(bloomFilename string, res
 	// 	}
 	// }
 	// if !bloomHits {
-	// 	// log.Println("Bloom filter does not hit for: ", bloomFilename)
+	// 	log.Println("Bloom filter does not hit for: ", bloomFilename)
 	// 	return
 	// }
 
@@ -179,10 +180,12 @@ func establishIndexChunk(chain string, indexFilename string) (bool, error) {
 		return false, err
 	}
 
+	fileRange, _ := cache.RangeFromFilename(indexFilename)
+
 	// Find bloom filter's CID
 	var matchedPin manifest.PinDescriptor
 	for _, pin := range localManifest.NewPins {
-		if pin.FileName == indexFilename {
+		if pin.FileName == cache.FilenameFromRange(fileRange, "") {
 			matchedPin = pin
 			break
 		}
@@ -190,6 +193,8 @@ func establishIndexChunk(chain string, indexFilename string) (bool, error) {
 	if matchedPin.FileName == "" {
 		return false, fmt.Errorf("filename not found in pins: %s", indexFilename)
 	}
+
+	logger.Log(logger.Info, "Downloading", colors.Blue, fileRange, colors.Off, "from IPFS.")
 
 	// Start downloading the filter
 	pins := []manifest.PinDescriptor{matchedPin}
