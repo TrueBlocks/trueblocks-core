@@ -29,6 +29,6 @@ class CPriceSource {
     string_q getPathToPriceDb(string& source) const;
 };
 
-extern bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes, bool freshen, string_q& message);
+extern bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes, bool update, string_q& message);
 
 }  // namespace qblocks
