@@ -69,7 +69,7 @@ finalized           	1013	0	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
 timestamp           	1014	0	1082130447	T_TIMESTAMP TS_NUMERAL TS_INTEGER
 transactions        	1015	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
 {
-  "schema": 28000,
+  "schema": 30000,
   "deleted": false,
   "showing": true,
   "cname": "NewBlock",
