@@ -21,7 +21,7 @@ type Chunk struct {
 
 // NewChunk returns an index chunk with the bloom filter read in but not the index itself
 func NewChunk(path string) (chunk Chunk, err error) {
-	bloomPath := toBloomPath(path)
+	bloomPath := ToBloomPath(path)
 	chunk.Range, err = cache.RangeFromFilename(bloomPath)
 	if err != nil {
 		return
@@ -32,13 +32,13 @@ func NewChunk(path string) (chunk Chunk, err error) {
 		return
 	}
 
-	indexPath := toIndexPath(path)
+	indexPath := ToIndexPath(path)
 	chunk.Index, err = NewChunkData(indexPath)
 	return
 }
 
-// toBloomPath returns a path pointing to the bloom filter
-func toBloomPath(pathIn string) string {
+// ToBloomPath returns a path pointing to the bloom filter
+func ToBloomPath(pathIn string) string {
 	if strings.HasSuffix(pathIn, ".bloom") {
 		return pathIn
 	}
@@ -48,8 +48,8 @@ func toBloomPath(pathIn string) string {
 	return ret
 }
 
-// toIndexPath returns a path pointing to the bloom filter
-func toIndexPath(pathIn string) string {
+// ToIndexPath returns a path pointing to the bloom filter
+func ToIndexPath(pathIn string) string {
 	if strings.HasSuffix(pathIn, ".bin") {
 		return pathIn
 	}
@@ -58,31 +58,3 @@ func toIndexPath(pathIn string) string {
 	ret = strings.Replace(ret, "/blooms/", "/finalized/", -1)
 	return ret
 }
-
-/*
------------------------------------------------------------------------
-TODO: BOGUS
-bool establishIndexChunk(const string_q& fileName);
-bool COptions::establishIndexChunk(const string_q& fullPathToChunk) {
-    if (fileExists(fullPathToChunk))
-        return true;
-
-    string_q fileName = substitute(substitute(fullPathToChunk, indexFolder_finalized, ""), ".bin", "");
-    static CPinnedChunkArray pins;
-    if (pins.size() == 0) {
-        if (!pinlib_readManifest(pins)) {
-            LOG_ERR("Could not read the manifest.");
-            return false;
-        }
-    }
-    CPinnedChunk pin;
-    if (pinlib_findChunk(pins, fileName, pin)) {
-        LOG_PROGRESS(EXTRACT, fileRange.first, n eedRange.second, " from IPFS" + cOff);
-        if (!pinlib_getChunkFromRemote(pin, .25))
-            LOG_ERR("Could not retrieve file from IPFS: ", fullPathToChunk);
-    } else {
-        LOG_ERR("Could not find file in manifest: ", fullPathToChunk);
-    }
-    return fileExists(fullPathToChunk);
-}
-*/

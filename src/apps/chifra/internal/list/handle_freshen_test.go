@@ -7,7 +7,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 )
 
-func Test_downloadBloomByRangeValidFilename(t *testing.T) {
+func Test_establishIndexChunkValidFilename(t *testing.T) {
 	// Such a range should not be listed in manifest, so the function will fail
 	// and we can investigate
 	fileRange := cache.FileRange{
@@ -15,7 +15,7 @@ func Test_downloadBloomByRangeValidFilename(t *testing.T) {
 		Last:  1,
 	}
 
-	err := downloadBloomByRange("mainnet", fileRange)
+	_, err := establishIndexChunk("mainnet", cache.FilenameFromRange(fileRange, "bloom"))
 	if err == nil {
 		t.Fatal("error expected")
 	}

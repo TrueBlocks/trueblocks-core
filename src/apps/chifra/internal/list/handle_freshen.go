@@ -16,6 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
@@ -109,16 +110,16 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 
 // visitChunkToFreshenFinal opens one index file, searches for all the address(es) we're looking for and pushes the resultRecords
 // (even if empty) down the resultsChannel.
-func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultChannel chan<- []index.AppearanceResult, wg *sync.WaitGroup) {
+func (updater *MonitorUpdate) visitChunkToFreshenFinal(bloomFilename string, resultChannel chan<- []index.AppearanceResult, wg *sync.WaitGroup) {
 	var results []index.AppearanceResult
 	defer func() {
 		wg.Done()
 		resultChannel <- results
 	}()
 
-	// bloom, err := index.NewChunk(fileName)
+	// bloom, err := index.NewChunk(bloomFilename)
 	// if err != nil {
-	// 	fmt.Println("Error", fileName, err)
+	// 	fmt.Println("Error", bloomFilename, err)
 	// 	return
 	// }
 	// var bloomHits = false
@@ -129,11 +130,22 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 	// 	}
 	// }
 	// if !bloomHits {
-	// 	// log.Println("Bloom filter does not hit for: ", fileName)
+	// 	// log.Println("Bloom filter does not hit for: ", bloomFilename)
 	// 	return
 	// }
 
-	indexChunk, err := index.NewChunkData(fileName)
+	indexFilename := index.ToIndexPath(bloomFilename)
+	ok, err := establishIndexChunk(updater.Options.Globals.Chain, indexFilename)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	if !ok {
+		log.Println("index file not found", indexFilename)
+		return
+	}
+
+	indexChunk, err := index.NewChunkData(indexFilename)
 	if err != nil {
 		log.Println(err)
 		return
@@ -153,31 +165,35 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 	}
 }
 
-// downloadBloomByRange accpets cache.FileRange, converts it to file name and finds
+// TODO: BOGUS
+// establishIndexChunk accpets cache.FileRange, converts it to file name and finds
 // correspoding CID (hash) entry in the manifest. Next, it downloads the bloom filter.
-func downloadBloomByRange(chain string, fileRange cache.FileRange) error {
+func establishIndexChunk(chain string, indexFilename string) (bool, error) {
+	if file.FileExists(indexFilename) {
+		return true, nil
+	}
+
 	// Open manifest
 	localManifest, err := manifest.FromLocalFile(chain)
 	if err != nil {
-		return err
+		return false, err
 	}
 
 	// Find bloom filter's CID
 	var matchedPin manifest.PinDescriptor
-	chunkFileName := cache.FilenameFromRange(fileRange, "")
 	for _, pin := range localManifest.NewPins {
-		if pin.FileName == chunkFileName {
+		if pin.FileName == indexFilename {
 			matchedPin = pin
 			break
 		}
 	}
 	if matchedPin.FileName == "" {
-		return fmt.Errorf("filename not found in pins: %s", chunkFileName)
+		return false, fmt.Errorf("filename not found in pins: %s", indexFilename)
 	}
 
 	// Start downloading the filter
 	pins := []manifest.PinDescriptor{matchedPin}
-	chunkPath := cache.NewCachePath(chain, cache.Index_Bloom)
+	chunkPath := cache.NewCachePath(chain, cache.Index_Final)
 	progressChannel := make(chan *progress.Progress)
 
 	go func() {
@@ -186,16 +202,17 @@ func downloadBloomByRange(chain string, fileRange cache.FileRange) error {
 	}()
 
 	for event := range progressChannel {
+		exists := file.FileExists(indexFilename)
 		switch event.Event {
 		case progress.AllDone:
-			return nil
+			return exists, nil
 		case progress.Cancelled:
-			return nil
+			return exists, nil
 		case progress.Error:
-			return fmt.Errorf("error while downloading: %s", event.Message)
+			return exists, fmt.Errorf("error while downloading: %s", event.Message)
 		}
 	}
-	return nil
+	return file.FileExists(indexFilename), nil
 }
 
 // updateMonitors writes an array of appearances to the Monitor file updating the header for lastScanned. It

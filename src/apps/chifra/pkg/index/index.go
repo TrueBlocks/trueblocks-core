@@ -38,7 +38,7 @@ type ChunkData struct {
 // NewChunkData returns an ChunkData with an opened file pointer to the given fileName. The HeaderRecord
 // for the chunk has been populated and the file position to the two tables are ready for use.
 func NewChunkData(path string) (chunk ChunkData, err error) {
-	indexPath := toIndexPath(path)
+	indexPath := ToIndexPath(path)
 
 	blkRange, err := cache.RangeFromFilename(indexPath)
 	if err != nil {
