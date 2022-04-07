@@ -1,3 +1,4 @@
+//go:build integration
 // +build integration
 
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.

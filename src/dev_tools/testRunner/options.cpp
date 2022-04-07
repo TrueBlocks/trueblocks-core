@@ -132,7 +132,7 @@ bool COptions::parseArguments(string_q& command) {
                 tests.push_back("apps/chunkMan");
                 tests.push_back("apps/fireStorm");
                 tests.push_back("apps/chifra");
-                tests.push_back("apps/pinMan");
+                tests.push_back("apps/init");
 
             } else {
                 tests.push_back(arg);
@@ -178,7 +178,7 @@ bool COptions::parseArguments(string_q& command) {
         tests.push_back("apps/chunkMan");
         tests.push_back("apps/fireStorm");
         tests.push_back("apps/chifra");
-        tests.push_back("apps/pinMan");
+        tests.push_back("apps/init");
     }
 
     SHOW_FIELD(CTestCase, "test_id");

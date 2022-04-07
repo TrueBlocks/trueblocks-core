@@ -259,7 +259,7 @@ bool noteMonitor_light(const string_q& path, void* data) {
     if (endsWith(path, '/')) {
         return forEveryFileInFolder(path + "*", noteMonitor_light, data);
 
-    } else if (endsWith(path, "acct.bin") || endsWith(path, ".json")) {
+    } else if (isMonitorFilePath(path)) {
         CItemCounter* counter = reinterpret_cast<CItemCounter*>(data);
         ASSERT(counter->options);
         CMonitorCache* ptr = (CMonitorCache*)counter->cachePtr;  // NOLINT
@@ -308,11 +308,10 @@ bool noteMonitor(const string_q& path, void* data) {
     if (endsWith(path, '/')) {
         return forEveryFileInFolder(path + "*", noteMonitor, data);
 
-    } else if (endsWith(path, "acct.bin")) {
-        CItemCounter* counter = reinterpret_cast<CItemCounter*>(data);
-        ASSERT(counter->options);
+    } else if (isMonitorFilePath(path)) {
         CMonitorCacheItem mdi;
         mdi.type = mdi.getRuntimeClass()->m_ClassName;
+
         string_q addr = substitute(path, "/0x", "|");
         nextTokenClear(addr, '|');
         mdi.address = "0x" + nextTokenClear(addr, '.');
