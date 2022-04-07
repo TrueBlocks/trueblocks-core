@@ -1,3 +1,6 @@
+// TODO: BOGUS - Do we need to use monitors/staging or can we build it in memory?
+// TODO: BOGUS - Does chifra clean work?
+
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
@@ -73,7 +76,6 @@ func (opts *MonitorsOptions) HandleClean() error {
     return !shouldQuit();
 }
 
-// TODO: BOGUS - Do we need to use monitors/staging or can we build it in memory?
 //----------------------------------------------------------------
 bool CMonitor::removeDuplicates(const string_q& path) {
     if (!isMonitorFilePath(path))

@@ -1,3 +1,5 @@
+// TODO: BOGUS - MUST REMOVE OLD .acct.bin files and auto upgrade to .mon.bin file
+
 package scrapePkg
 
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
@@ -255,7 +257,6 @@ func (opts *ScrapeOptions) Refresh(chain string, monitors []monitor.Monitor) err
 					// expOpts.Emitter = append(expOpts.Emitter, "0x3ebaffe01513164e638480404c651e885cca0aa4")
 					expOpts.Globals.PassItOn("acctExport", expOpts.ToCmdLine())
 				}
-				// 	// TODO: BOGUS
 			}
 		}
 	}

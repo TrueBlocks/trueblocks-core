@@ -1,3 +1,5 @@
+// TODO: BOGUS I don't like using uint64s everywhere
+
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
@@ -12,7 +14,6 @@ import (
 	"strings"
 )
 
-// TODO: BOGUS I don't like using uint64s everywhere
 type FileRange struct {
 	First uint64
 	Last  uint64
