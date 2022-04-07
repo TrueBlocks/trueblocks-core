@@ -58,6 +58,11 @@ class COptions : public CAbiOptions {
     bool finishClean(CAccountName& name);
     bool cleanNames(const string_q& sourceIn, const string_q& destIn);
 
+    CStringArray crudCommands;
+    bool isCrudCommand(void) const {
+        return crudCommands.size() > 0;
+    }
+
     // Crud command handling
     CAccountName target;
     bool handle_editcmds(bool autoname);

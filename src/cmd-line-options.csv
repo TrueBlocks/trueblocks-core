@@ -74,10 +74,10 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12455,tools,Accounts,names,ethNames,clean,C,,false,false,false,false,local,switch,<boolean>,clean the data (addrs to lower case&#44; sort by addr)
 12456,tools,Accounts,names,ethNames,autoname,A,,false,false,false,false,local,flag,<string>,an address assumed to be a token&#44; added automatically to names database if true
 12460,tools,Accounts,names,ethNames,create,,,false,false,false,true,local,switch,<boolean>,create a new name record
-12462,tools,Accounts,names,ethNames,deleteMe,,,false,false,false,true,local,switch,<boolean>,delete a name&#44; but do not remove it
 12464,tools,Accounts,names,ethNames,update,,,false,false,false,true,local,switch,<boolean>,edit an existing name
-12466,tools,Accounts,names,ethNames,remove,,,false,false,false,true,local,switch,<boolean>,remove a previously deleted name
+12462,tools,Accounts,names,ethNames,deleteMe,,,false,false,false,true,local,switch,<boolean>,delete a name&#44; but do not remove it
 12468,tools,Accounts,names,ethNames,undelete,,,false,false,false,true,local,switch,<boolean>,undelete a previously deleted name
+12466,tools,Accounts,names,ethNames,remove,,,false,false,false,true,local,switch,<boolean>,remove a previously deleted name
 12470,tools,Accounts,names,ethNames,,,,false,false,true,true,--,description,,Query addresses or names of well known accounts.
 12472,tools,Accounts,names,ethNames,n1,,,false,false,false,false,--,note,,The tool will accept up to three terms&#44; each of which must match against any field in the database.
 12478,tools,Accounts,names,ethNames,n2,,,false,false,false,false,--,note,,The `--match_case` option enables case sensitive matching.
