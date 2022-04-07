@@ -104,7 +104,6 @@ func Freshen(chain string, monitors []monitor.Monitor) error {
 		expOpts := exportPkg.ExportOptions{MaxRecords: 250, MaxTraces: 250}
 		expOpts.Addrs = append(expOpts.Addrs, addrStr)
 		expOpts.Globals.Chain = chain
-		expOpts.Freshen = true
 		expOpts.Globals.PassItOn("acctExport", expOpts.ToCmdLine())
 
 		for j := 0; j < len(batches[i]); j++ {

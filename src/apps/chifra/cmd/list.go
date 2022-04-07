@@ -37,7 +37,9 @@ var shortList = "list every appearance of an address anywhere on the chain"
 var longList = `Purpose:
   List every appearance of an address anywhere on the chain.`
 
-var notesList = ``
+var notesList = `
+Notes:
+  - No other options are permitted when --silent is selected.`
 
 func init() {
 	listCmd.Flags().SortFlags = false

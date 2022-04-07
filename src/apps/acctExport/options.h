@@ -39,19 +39,18 @@ class COptions : public CAbiOptions {
     bool articulate;
     bool cache;
     bool cache_traces;
-    bool factory;
     bool count;
     blknum_t first_record;
     blknum_t max_records;
     bool relevant;
-    bool clean;
+    bool factory;
     bool staging;
     bool unripe;
     string_q load;
     bool reversed;
-    bool by_date;
     bool skip_ddos;
     uint64_t max_traces;
+    bool clean;
     // END_CODE_DECLARE
 
     CAppearanceArray_mon monApps;
