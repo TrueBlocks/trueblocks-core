@@ -64,10 +64,6 @@ func (opts *ScrapeOptions) RunMonitorScraper(wg *sync.WaitGroup, initialState bo
 				}
 			}
 			opts.Refresh(chain, monitors)
-			// TODO: BOGUS remove this
-			if os.Getenv("ONCE") == "true" {
-				os.Exit(0)
-			}
 			fmt.Println("Sleeping for", opts.Sleep, "seconds.")
 			time.Sleep(time.Duration(opts.Sleep) * time.Second)
 		}
