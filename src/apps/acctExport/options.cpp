@@ -52,17 +52,11 @@ static const COption params[] = {
     COption("topic", "", "list<topic>", OPT_FLAG, "for log export only, export only logs with this topic(s)"),
     COption("asset", "", "list<addr>", OPT_FLAG, "for the statements option only, export only reconciliations for this asset"),  // NOLINT
     COption("factory", "y", "", OPT_SWITCH, "scan for contract creations from the given address(es) and report address of those contracts"),  // NOLINT
-    COption("staging", "s", "", OPT_SWITCH, "export transactions labeled staging (i.e. older than 28 blocks but not yet consolidated)"),  // NOLINT
-    COption("unripe", "u", "", OPT_SWITCH, "export transactions labeled upripe (i.e. less than 28 blocks old)"),
     COption("load", "", "<string>", OPT_HIDDEN | OPT_FLAG, "a comma separated list of dynamic traversers to load"),
     COption("reversed", "", "", OPT_HIDDEN | OPT_SWITCH, "produce results in reverse chronological order"),
     COption("first_block", "F", "<blknum>", OPT_FLAG, "first block to process (inclusive)"),
     COption("last_block", "L", "<blknum>", OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more addresses."),
-    COption("clean", "", "", OPT_SWITCH, "clean (i.e. remove duplicate appearances) from monitors"),
-    COption("delete", "", "", OPT_SWITCH, "delete a monitor, but do not remove it"),
-    COption("undelete", "", "", OPT_SWITCH, "undelete a previously deleted monitor"),
-    COption("remove", "", "", OPT_SWITCH, "remove a previously deleted monitor"),
     // clang-format on
     // END_CODE_OPTIONS
 };
@@ -83,9 +77,6 @@ bool COptions::parseArguments(string_q& command) {
     CAddressArray asset;
     blknum_t first_block = 0;
     blknum_t last_block = NOPOS;
-    bool deleteMe = false;
-    bool undelete = false;
-    bool remove = false;
     // END_CODE_LOCAL_INIT
 
     blknum_t latest = meta.client;
@@ -188,12 +179,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-y" || arg == "--factory") {
             factory = true;
 
-        } else if (arg == "-s" || arg == "--staging") {
-            staging = true;
-
-        } else if (arg == "-u" || arg == "--unripe") {
-            unripe = true;
-
         } else if (startsWith(arg, "--load:")) {
             load = substitute(substitute(arg, "-:", ""), "--load:", "");
         } else if (arg == "--load") {
@@ -213,18 +198,6 @@ bool COptions::parseArguments(string_q& command) {
                 return false;
         } else if (arg == "-L" || arg == "--last_block") {
             return flag_required("last_block");
-
-        } else if (arg == "--clean") {
-            clean = true;
-
-        } else if (arg == "--deleteMe") {
-            deleteMe = true;
-
-        } else if (arg == "--undelete") {
-            undelete = true;
-
-        } else if (arg == "--remove") {
-            remove = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -461,15 +434,12 @@ void COptions::Init(void) {
     max_records = 250;
     relevant = false;
     factory = false;
-    staging = false;
-    unripe = false;
     load = "";
     reversed = false;
     // clang-format off
     skip_ddos = getGlobalConfig("acctExport")->getConfigBool("settings", "skip_ddos", true);
     max_traces = getGlobalConfig("acctExport")->getConfigInt("settings", "max_traces", 250);
     // clang-format on
-    clean = false;
     // END_CODE_INIT
 
     if (!cache && getGlobalConfig("acctExport")->getConfigBool("settings", "cache_txs", false))

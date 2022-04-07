@@ -43,7 +43,8 @@ func RunList(cmd *cobra.Command, args []string) error {
 	}
 
 	// EXISTING_CODE
-	if opts.Newone {
+	// if opts.Newone
+	{
 		optsEx := NewListOptsEx(opts)
 		err = optsEx.HandleFreshenMonitors()
 		if err != nil {

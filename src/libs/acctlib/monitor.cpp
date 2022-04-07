@@ -541,7 +541,7 @@ void CMonitor::moveToProduction(bool staging) {
 
 //----------------------------------------------------------------
 bool CMonitor::removeDuplicates(const string_q& path) {
-    address = path_2_Addr(path);
+    address = "";  // path_2_Addr(path);
     if (!loadAppearances(nullptr, nullptr)) {
         LOG_WARN("Could load monitor for address ", address);
         return false;
@@ -625,7 +625,7 @@ blknum_t CMonitor::loadAppearances(MONAPPFUNC func, void* data) {
 
     CAppearance_mon* buffer = new CAppearance_mon[nRecs];
     if (!buffer) {
-        LOG_ERR("Could not allocate buffer for address ", path_2_Addr(path));
+        LOG_ERR("Could not allocate buffer for address ", "");  // path_2_Addr(path));
         return false;
     }
 
@@ -634,7 +634,7 @@ blknum_t CMonitor::loadAppearances(MONAPPFUNC func, void* data) {
     if (!archiveIn.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
         archiveIn.Release();
         delete[] buffer;
-        LOG_ERR("Could not lock file ", path_2_Addr(path));
+        LOG_ERR("Could not lock file ", "");  // path_2_Addr(path));
         return false;
     }
     archiveIn.Read(buffer, sizeof(CAppearance_mon), nRecs);
@@ -644,7 +644,7 @@ blknum_t CMonitor::loadAppearances(MONAPPFUNC func, void* data) {
     for (size_t i = 0; i < nRecs; i++) {
         apps.push_back(buffer[i]);
         if (func && !(*func)(buffer[i], data)) {
-            LOG4("forEvery func returns false for address ", path_2_Addr(path));
+            LOG4("forEvery func returns false for address ", "");  // path_2_Addr(path));
             return false;
         }
     }

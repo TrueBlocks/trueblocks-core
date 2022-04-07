@@ -12,7 +12,6 @@ package initPkg
 import (
 	"net/http"
 
-	pinsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/pins"
 	"github.com/spf13/cobra"
 )
 
@@ -27,10 +26,11 @@ func RunInit(cmd *cobra.Command, args []string) error {
 	}
 
 	// EXISTING_CODE
-	pinsPkg.GetOptions().Init = true
-	pinsPkg.GetOptions().All = opts.All
-	pinsPkg.GetOptions().Globals = opts.Globals
-	return pinsPkg.RunPins(cmd, args)
+	// pinsPkg.GetOptions().Init = true
+	// pinsPkg.GetOptions().All = opts.All
+	// pinsPkg.GetOptions().Globals = opts.Globals
+	// return pinsPkg.RunPins(cmd, args)
+	return nil
 	// EXISTING_CODE
 }
 

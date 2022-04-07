@@ -144,12 +144,6 @@ func (opts *ExportOptions) ToCmdLine() string {
 	if opts.Factory {
 		options += " --factory"
 	}
-	if opts.Staging {
-		options += " --staging"
-	}
-	if opts.Unripe {
-		options += " --unripe"
-	}
 	if len(opts.Load) > 0 {
 		options += " --load " + opts.Load
 	}

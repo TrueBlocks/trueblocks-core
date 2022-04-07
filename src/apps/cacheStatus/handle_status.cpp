@@ -259,7 +259,7 @@ bool noteMonitor_light(const string_q& path, void* data) {
     if (endsWith(path, '/')) {
         return forEveryFileInFolder(path + "*", noteMonitor_light, data);
 
-    } else if (isMonitorFilePath(path)) {
+    } else if (false) {  // isMonitorFilePath(path)) {
         CItemCounter* counter = reinterpret_cast<CItemCounter*>(data);
         ASSERT(counter->options);
         CMonitorCache* ptr = (CMonitorCache*)counter->cachePtr;  // NOLINT
@@ -308,7 +308,7 @@ bool noteMonitor(const string_q& path, void* data) {
     if (endsWith(path, '/')) {
         return forEveryFileInFolder(path + "*", noteMonitor, data);
 
-    } else if (isMonitorFilePath(path)) {
+    } else if (false) {  // isMonitorFilePath(path)) {
         CMonitorCacheItem mdi;
         mdi.type = mdi.getRuntimeClass()->m_ClassName;
 
@@ -347,7 +347,7 @@ bool noteMonitor(const string_q& path, void* data) {
         CMonitor m;
         m.address = mdi.address;
         mdi.deleted = m.isDeleted();
-        counter->monitorArray->push_back(mdi);
+        // counter->monitorArray->push_back(mdi);
         if (isTestMode())
             return false;
     }

@@ -44,13 +44,10 @@ class COptions : public CAbiOptions {
     blknum_t max_records;
     bool relevant;
     bool factory;
-    bool staging;
-    bool unripe;
     string_q load;
     bool reversed;
     bool skip_ddos;
     uint64_t max_traces;
-    bool clean;
     // END_CODE_DECLARE
 
     CAppearanceArray_mon monApps;
