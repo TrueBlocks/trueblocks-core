@@ -67,8 +67,6 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-    replaceAll(command, "--delete", "--deleteMe");
-
     // BEG_CODE_LOCAL_INIT
     CAddressArray addrs;
     CTopicArray topics;
@@ -93,11 +91,9 @@ bool COptions::parseArguments(string_q& command) {
                 legit = arg;
             }
             term = arg;
-        } else if (arg == "--clean") {
-            clean = true;
         }
     }
-    if (!clean && legit.empty() && !term.empty())
+    if (legit.empty() && !term.empty())
         return parseAddressList(this, addrs, term);
     // Weirdness, if the user doesn't provide a valid address, topic, or fourbyte, report bad addr
 
@@ -221,70 +217,20 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (deleteMe)
-        crudCommands.push_back("delete");
-
-    if (undelete)
-        crudCommands.push_back("undelete");
-
-    if (remove)
-        crudCommands.push_back("remove");
-
-    for (auto t : topics)
-        logFilter.topics.push_back(t);
-
     if (!isApiMode() && max_records == 250)
         max_records = NOPOS;
-
-    if (clean) {
-        if (!process_clean())
-            return usage("Clean function returned false.");
-        return false;
-    }
-
-    // Handle the easy cases first...
-    if (isCrudCommand())
-        return process_rm(addrs);
 
     if (accounting && !isArchiveNode())
         return usage("The --accounting option requires historical balances which your RPC server does not provide.");
 
-    // We need at least one address to scrape...
-    if (addrs.size() == 0)
-        return usage("You must provide at least one Ethereum address.");
-
-    if (topics.size() && !logs)
-        return usage("Use the topics option only with --logs.");
-
-    if (fourbytes.size() && (logs || receipts || statements || appearances))
-        return usage("Use the fourbytes option only with non-logs commands.");
-
-    if ((appearances + receipts + statements + logs + traces) > 1)
+    if ((appearances + logs + receipts + traces + statements + neighbors + accounting) > 1)
         return usage("Please export only one of list, receipts, statements, logs, or traces.");
-
-    if (emitter.size() > 0 && !logs)
-        return usage("The --emitter option is only available when exporting logs.");
-
-    if (!topics.empty() && !logs)
-        return usage("The --topic option is only available when exporting logs.");
-
-    if (asset.size() > 0 && !statements)
-        return usage("The --asset option is only available when exporting statements.");
-
-    if (factory && !traces)
-        return usage("The --factory option is only available when exporting traces.");
-
-    if (count && (receipts || statements || logs || traces || factory))
-        return usage("--count option is only available with --appearances option.");
-
-    if (accounting && (addrs.size() != 1))
-        return usage("You may only use --accounting option with a single address.");
-
-    if ((accounting) && (appearances || logs || traces || receipts || statements))
-        return usage("Do not use the --accounting option with other options.");
 
     for (auto e : emitter)
         logFilter.emitters.push_back(e);
+
+    for (auto t : topics)
+        logFilter.topics.push_back(t);
 
     for (auto t : topic)
         logFilter.topics.push_back(t);
@@ -295,24 +241,12 @@ bool COptions::parseArguments(string_q& command) {
     if (!loadNames())
         return usage("Could not load names database.");
 
-    // Where will we start?
-    blknum_t nextBlockToVisit = NOPOS;
-
     for (auto addr : addrs) {
         CMonitor monitor;
         monitor.setValueByName("address", toLower(addr));
         monitor.setValueByName("name", toLower(addr));
-        monitor.clearMonitorLocks();
         monitor.finishParse();
         monitor.isStaging = !fileExists(monitor.getPathToMonitor(monitor.address, false));
-        string_q msg;
-        if (monitor.isMonitorLocked(msg)) {
-            string_q msg = STR_MONITOR_LOCKED;
-            replace(msg, "{0}", monitor.getPathToMonitor(addr, false));
-            return usage(msg);
-        }
-
-        nextBlockToVisit = min(nextBlockToVisit, monitor.getNextBlockToVisit(false));
 
         if (accountedFor.address.empty()) {
             accountedFor.address = monitor.address;
@@ -337,25 +271,9 @@ bool COptions::parseArguments(string_q& command) {
     if (!setDisplayFormatting())
         return false;
 
-    // Are we visiting unripe and/or staging in our search?
-    if (staging && unripe)
-        return usage("Please choose only one of --staging or --unripe.");
-
-    // Last block depends on scrape type or user input `end` option (with appropriate check)
-    blknum_t lastBlockToVisit = max((blknum_t)1, unripe ? meta.unripe : staging ? meta.staging : meta.finalized);
-    needRange = make_pair((nextBlockToVisit == NOPOS ? 0 : nextBlockToVisit), max(nextBlockToVisit, lastBlockToVisit));
-
-    if (isTestMode() && (staging || unripe))
-        return usage("--staging and --unripe are disabled for testing.");
-
-    if (unripe && (cache || cache_traces)) {
-        cache = cache_traces = false;
-        LOG_INFO("Turning off caching for unripe blocks.");
-    }
-
-    // always freshen (i.e. query blooms) up to every block
-    if (!process_freshen())
-        return usage("freshen returns false.");
+    // The monitor data has already been updated by the golang code
+    // TODO: BOGUS - this can be done in the golang code
+    cleanMonitorStage();
 
     if (first_block > last_block)
         return usage("--first_block must be less than or equal to --last_block.");
@@ -446,7 +364,6 @@ void COptions::Init(void) {
         cache = true;  // backwards compat
 
     meta = getMetaData();
-    needRange = make_pair(0, NOPOS);
 
     allMonitors.clear();
     monApps.clear();
@@ -463,7 +380,6 @@ void COptions::Init(void) {
     minArgs = 0;
     fileRange = make_pair(NOPOS, NOPOS);
     allMonitors.clear();
-    possibles.clear();
     reportFreq = reportDef = 7;
     slowQueries = 0;
     maxSlowQueries =

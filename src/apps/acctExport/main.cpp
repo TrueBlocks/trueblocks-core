@@ -14,7 +14,7 @@
 
 //-----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
-    pinlib_init(quickQuitHandler);
+    acctlib_init(quickQuitHandler);
 
     COptions options;
     if (!options.prepareArguments(argc, argv))
@@ -118,7 +118,7 @@ int main(int argc, const char* argv[]) {
 
     options.writePerformanceData();
 
-    pinlib_cleanup();
+    acctlib_cleanup();
     return 0;
 }
 
