@@ -1,7 +1,7 @@
 tomlTest  test14.toml
 test14.toml
 [version]
-current = "vers-alpha"
+current = "vers-beta"
 
 [display]
 format = "[{TIMESTAMP}]\t[{DATE}]\t[{FROM}]\t[{TO}]\t[{VALUE}]\t[{ETHER}]\t[{FUNCTION}]\t[{INPUT}]\t[{ISERROR}]\t[{ISINTERNALTX}]\t[{GAS}]\t[{GASUSED}]\t[{BLOCKNUMBER}]\t[{HASH}]\n"
@@ -45,7 +45,7 @@ color_0      = "bBlue"
 
 File contents after write
 [version]
-current = "vers-alpha"
+current = "vers-beta"
 
 [display]
 format = "[{TIMESTAMP}]\t[{DATE}]\t[{FROM}]\t[{TO}]\t[{VALUE}]\t[{ETHER}]\t[{FUNCTION}]\t[{INPUT}]\t[{ISERROR}]\t[{ISINTERNALTX}]\t[{GAS}]\t[{GASUSED}]\t[{BLOCKNUMBER}]\t[{HASH}]\n"

@@ -1,0 +1,2 @@
+init?fmt=csv
+{ "msg": "chifra init is not processed in test mode." }

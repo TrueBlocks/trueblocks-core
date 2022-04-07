@@ -4,7 +4,7 @@ TIME ~ CLOCK - <INFO>  : Processing 1 class definition files.
 ./classDefinitions/function.txt
 ------------------------------------------------------------------------------------------------------------------------
 [version]
-current = "vers-alpha"
+current = "vers-beta"
 
 [settings]
 class = "CFunction"

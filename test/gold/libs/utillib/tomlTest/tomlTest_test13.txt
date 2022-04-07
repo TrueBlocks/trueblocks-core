@@ -1,7 +1,7 @@
 tomlTest  test13.toml
 test13.toml
 [version]
-current = "vers-alpha"
+current = "vers-beta"
 
 [display]
 to_screen = true
@@ -113,7 +113,7 @@ startBlock = 1718250
 
 File contents after write
 [version]
-current = "vers-alpha"
+current = "vers-beta"
 
 [display]
 to_screen = true

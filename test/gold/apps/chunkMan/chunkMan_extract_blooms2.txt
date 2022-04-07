@@ -1,0 +1,10 @@
+chifra chunks  --extract blooms
+TEST[DATE|TIME] Extract:  blooms
+range: {0 0}
+nBlooms: 1
+byteWidth: 131072
+nInserted: 8893
+range: {1 590501}
+nBlooms: 1
+byteWidth: 131072
+nInserted: 29330

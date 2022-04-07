@@ -1,0 +1,2 @@
+init?fmt=txt
+{ "msg": "chifra init is not processed in test mode." }

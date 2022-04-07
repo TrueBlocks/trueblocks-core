@@ -1,7 +1,7 @@
 tomlTest  test12.toml
 test12.toml
 [version]
-current = "vers-alpha"
+current = "vers-beta"
 
 [settings]
 name = "accts"
@@ -56,7 +56,7 @@ export_fmt = " \"[{DATE}]\",\"[{BLOCKNUMBER}]\",\"[{TRANSACTIONINDEX}]\",\"[{FRO
 
 File contents after write
 [version]
-current = "vers-alpha"
+current = "vers-beta"
 
 [settings]
 name = "accts"

@@ -1,5 +1,5 @@
 chifra explore  0xf503017D7baF7FBC0fff749badha5hfab532aeeecf549be93e358737d0648f50d57083a0
-TEST[DATE|TIME] Terms:  [0xf503017D7baF7FBC0fff749badha5hfab532aeeecf549be93e358737d0648f50d57083a0]
+TEST[DATE|TIME] Terms:  [0xf503017d7baf7fbc0fff749badha5hfab532aeeecf549be93e358737d0648f50d57083a0]
 Error: The term option (0xf503017d7baf7fbc0fff749badha5hfab532aeeecf549be93e358737d0648f50d57083a0) is not valid.
 Usage:
   chifra explore [flags] <term> [term...]
@@ -8,9 +8,7 @@ Arguments:
   terms - one or more address, name, block, or transaction identifier
 
 Flags:
-  -l, --local        open the local TrueBlocks explorer
-  -g, --google       search google excluding popular blockchain explorers
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -v, --verbose      enable verbose (increase detail with --log_level)
-  -h, --help         display this help screen
+  -l, --local    open the local TrueBlocks explorer
+  -g, --google   search google excluding popular blockchain explorers
+  -h, --help     display this help screen
 

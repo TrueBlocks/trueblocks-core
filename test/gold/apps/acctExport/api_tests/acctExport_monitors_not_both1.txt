@@ -1,0 +1,6 @@
+monitors?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&lastBlock=9000000&fmt=json&remove&undelete
+{
+  "errors": [
+    "The --undelete option may not be used with --delete or --remove."
+  ]
+}

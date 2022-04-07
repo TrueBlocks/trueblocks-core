@@ -1,5 +1,5 @@
 chifra abis  uniswap.eth --fmt json
-TEST[DATE|TIME] Addrs:  [0x1a9C8182C09F50C8318d769245beA52c32BE35BC]
+TEST[DATE|TIME] Addrs:  [0x1a9c8182c09f50c8318d769245bea52c32be35bc]
 TEST[DATE|TIME] Format:  json
 { "data": [
 {

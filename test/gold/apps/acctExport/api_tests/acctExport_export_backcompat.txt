@@ -1,2 +1,6 @@
 export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&firstRecord=0&maxRecords=1&staging&unripe
-{ "errors": [ "chifra export - Please choose only one of --staging or --unripe." ] }
+{
+  "errors": [
+    "Please choose only one of --staging or --unripe"
+  ]
+}
