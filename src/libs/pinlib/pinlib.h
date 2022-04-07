@@ -25,9 +25,6 @@ extern bool pinlib_readManifest(CPinnedChunkArray& pList);
 extern bool pinlib_updateManifest(CPinnedChunkArray& pList);
 
 extern bool pinlib_pinChunk(CPinnedChunkArray& pList, const string_q& fn, CPinnedChunk& item);
-extern bool pinlib_unpinChunk(CPinnedChunkArray& pList, const string_q& fn, CPinnedChunk& item);
-
-extern bool pinlib_getChunkFromRemote(CPinnedChunk& pin, double sleep);
 extern bool pinlib_findChunk(CPinnedChunkArray& pList, const string_q& fn, CPinnedChunk& item);
 
 }  // namespace qblocks

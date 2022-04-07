@@ -2,17 +2,14 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package cache
+package file
 
-type CacheType uint
+import "os"
 
-const (
-	BloomChunk CacheType = iota
-	IndexChunk
-	BlockCache
-	TxCache
-	TraceCache
-	MonitorCache
-	NeighborCache
-	ReconCache
-)
+func Remove(fileName string) bool {
+	if !FileExists(fileName) {
+		return true
+	}
+	os.Remove(fileName)
+	return !FileExists(fileName)
+}

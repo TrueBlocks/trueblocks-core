@@ -106,7 +106,7 @@ func GetPathToCommands(part string) string {
 // EstablishCachePaths sets up the cache folders and subfolders. It only returns if it succeeds.
 func EstablishCachePaths(cachePath string) {
 	folders := []string{
-		"abis", "blocks", "monitors", "names", "objs", "prices",
+		"abis", "blocks", "monitors", "monitors/staging", "names", "objs", "prices",
 		"recons", "slurps", "tmp", "traces", "txs",
 	}
 

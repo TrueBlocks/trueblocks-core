@@ -1,33 +1,19 @@
 package index
 
 import (
-	"bytes"
-	"encoding/binary"
-	"fmt"
-	"io"
-	"log"
 	"os"
-	"sort"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/ethereum/go-ethereum/common"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 )
 
 const (
 	// HeaderWidth - size of Header Record
 	HeaderWidth = 44
-	// AddrRecordWidth - size of Address Record
-	AddrRecordWidth = 28
-	// AppRecordWidth - size of Appearance Record
-	AppRecordWidth = 8
 )
 
-// IndexChunk represents a consolidated portion of the Index of All Appearances (called a Chunk). The name
-// of the file is the form Start-End.bin (where both Start and End are nine character, zero-left-padded block
-// numbers representing the first block and the last block (inclusive) of the range covered by this chunk.
+// ChunkData is one part of the two part Chunk (the other part is the ChunkBloom)
 //
-// Each IndexChunk contains a HeaderRecord followed by two tables: the AddressTable and a related AppearanceTable.
+// Each ChunkData contains a HeaderRecord followed by two tables: the AddressTable and a related AppearanceTable.
 //
 // The HeaderRecord (44 bytes long) contains a four-byte magic number (`0xdeadbeef` -- to indicate we're reading
 // a file of the correct type), a 32-byte hash representing the file's version, and two 4-byte integers representing
@@ -41,33 +27,37 @@ const (
 //
 // The AppearanceTable contains nAppeeances pairs of <blockNumber.transactionId> pairs arranged by the Offset
 // and Count pairs found in the corresponding AddressTable records.
-type IndexChunk struct {
+type ChunkData struct {
 	File           *os.File
 	Header         HeaderRecord
+	Range          cache.FileRange
 	AddrTableStart int64
 	AppTableStart  int64
-	Range          blockRange.FileRange
 }
 
-// LoadIndexHeader returns an IndexChunk with an opened file pointer to the given fileName. The HeaderRecord
+// NewChunkData returns an ChunkData with an opened file pointer to the given fileName. The HeaderRecord
 // for the chunk has been populated and the file position to the two tables are ready for use.
-func LoadIndexHeader(fileName string) (IndexChunk, error) {
-	blkRange, err := blockRange.RangeFromFilename(fileName)
+func NewChunkData(path string) (chunk ChunkData, err error) {
+	indexPath := ToIndexPath(path)
+
+	blkRange, err := cache.RangeFromFilename(indexPath)
 	if err != nil {
-		return IndexChunk{}, err
+		return ChunkData{}, err
 	}
 
-	file, err := os.Open(fileName)
+	file, err := os.Open(indexPath)
 	if err != nil {
-		return IndexChunk{}, err
+		return ChunkData{}, err
 	}
+	// Note, we don't defer closing here since we want the file to stay opened. Caller must close it.
 
 	header, err := readHeader(file)
 	if err != nil {
-		return IndexChunk{}, err
+		file.Close()
+		return ChunkData{}, err
 	}
 
-	chunk := IndexChunk{
+	chunk = ChunkData{
 		File:           file,
 		Header:         header,
 		AddrTableStart: HeaderWidth,
@@ -75,145 +65,13 @@ func LoadIndexHeader(fileName string) (IndexChunk, error) {
 		Range:          blkRange,
 	}
 
-	return chunk, nil
+	return
 }
 
-// Close closes the IndexChunk's associated File pointer (if opened)
-func (chunk *IndexChunk) Close() error {
+// Close closes the ChunkData's associated File pointer (if opened)
+func (chunk *ChunkData) Close() error {
 	if chunk.File != nil {
 		chunk.File.Close()
 	}
 	return nil
-}
-
-// ResultRecord carries the appearances found in a single IndexChunk for the given address.
-type ResultRecord struct {
-	Address    common.Address
-	AppRecords *[]AppearanceRecord
-}
-
-// GetAppearanceRecords searches an already-opened IndexChunk for the given address. Returns a ResultRecord or nil
-func (chunk *IndexChunk) GetAppearanceRecords(address common.Address) *ResultRecord {
-	foundAt := chunk.searchForAddressRecord(address)
-	if foundAt == -1 {
-		return nil
-	}
-
-	startOfAddressRecord := int64(HeaderWidth + (foundAt * AddrRecordWidth))
-	_, err := chunk.File.Seek(startOfAddressRecord, io.SeekStart)
-	if err != nil {
-		log.Println(err)
-		return nil
-	}
-
-	addressRecord, err := chunk.readAddressRecord()
-	if err != nil {
-		log.Println(err)
-		return nil
-	}
-
-	appearances, err := chunk.readAppearanceRecords(&addressRecord)
-	if err != nil {
-		log.Println(err)
-		return nil
-	}
-
-	return &ResultRecord{Address: address, AppRecords: &appearances}
-}
-
-// HeaderRecord is the first 44 bytes of an IndexChunk file. This structure carries a magic number (4 bytes),
-// a version specifier (32 bytes), and two four-byte integers representing the number of records in each
-// of the two tables.
-type HeaderRecord struct {
-	Magic           uint32
-	Hash            common.Hash
-	AddressCount    uint32
-	AppearanceCount uint32
-}
-
-func readHeader(fl *os.File) (header HeaderRecord, err error) {
-	err = binary.Read(fl, binary.LittleEndian, &header)
-	if err != nil {
-		return
-	}
-
-	if header.Magic != file.MagicNumber {
-		return header, fmt.Errorf("magic number in file %s is incorrect, expected %d, got %d", fl.Name(), file.MagicNumber, header.Magic)
-	}
-
-	return
-}
-
-// AddressRecord is a single record in the Address table
-type AddressRecord struct {
-	Address common.Address
-	Offset  uint32
-	Count   uint32
-}
-
-func (chunk *IndexChunk) readAddressRecord() (addressRec AddressRecord, err error) {
-	err = binary.Read(chunk.File, binary.LittleEndian, &addressRec)
-	return
-}
-
-func (chunk *IndexChunk) searchForAddressRecord(address common.Address) int {
-	compareFunc := func(pos int) bool {
-		if pos == -1 {
-			return false
-		}
-
-		if pos == int(chunk.Header.AddressCount) {
-			return true
-		}
-
-		readLocation := int64(HeaderWidth + pos*AddrRecordWidth)
-		_, err := chunk.File.Seek(readLocation, io.SeekStart)
-		if err != nil {
-			fmt.Println(err)
-			return false
-		}
-
-		addressRec, err := chunk.readAddressRecord()
-		if err != nil {
-			fmt.Println(err)
-			return false
-		}
-
-		return bytes.Compare(addressRec.Address[:], address[:]) >= 0
-	}
-
-	pos := sort.Search(int(chunk.Header.AddressCount), compareFunc)
-
-	readLocation := int64(HeaderWidth + pos*AddrRecordWidth)
-	chunk.File.Seek(readLocation, io.SeekStart)
-	rec, err := chunk.readAddressRecord()
-	if err != nil {
-		return -1
-	}
-
-	if bytes.Compare(rec.Address[:], address[:]) != 0 {
-		return -1
-	}
-
-	return pos
-}
-
-// AppearanceRecord is a single record in the Appearance table
-type AppearanceRecord struct {
-	BlockNumber   uint32 `json:"blockNumber"`
-	TransactionId uint32 `json:"transactionIndex"`
-}
-
-func (chunk *IndexChunk) readAppearanceRecords(addrRecord *AddressRecord) (apps []AppearanceRecord, err error) {
-	readLocation := int64(HeaderWidth + AddrRecordWidth*chunk.Header.AddressCount + AppRecordWidth*addrRecord.Offset)
-
-	_, err = chunk.File.Seek(readLocation, io.SeekStart)
-	if err != nil {
-		return
-	}
-
-	apps = make([]AppearanceRecord, addrRecord.Count)
-	err = binary.Read(chunk.File, binary.LittleEndian, &apps)
-
-	return
 }

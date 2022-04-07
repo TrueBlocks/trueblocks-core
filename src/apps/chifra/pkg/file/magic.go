@@ -6,5 +6,6 @@ package file
 
 const (
 	// MagicNumber is used to check data validity
-	MagicNumber = 0xdeadbeef
+	MagicNumber      = 0xdeadbeef
+	SmallMagicNumber = uint16(0xdead)
 )
