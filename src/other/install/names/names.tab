@@ -4377,6 +4377,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 80-Malicious:DaoDrain	0x579a80d909f346fbfb1189493f521d7f48d52238	DAO Drain 036		GethSource			false	false	false	true	false	false
 50-Tokens:ERC20	0x579d59a5764eb95882ce078751073eb8ad01bf9c	Shiba Inu Badger	SHIB 🦡	On chain	18		false	false	false	true	true	false
 31-Contracts:Giveth Project	0x579dadeac63468560eb47488639d837905bf495c	California Rangeland Trust		Giveth Website			false	false	false	false	false	false
+31-Gitcoin:Core	0x57a8865cfb1ecef7253c27da6b4bc3daee5be518	Gitcoin GTC Timelock		Discord			false	false	false	false	false	false
 50-Tokens:ERC20	0x57ab1e02fee23774580c119740129eac7081e9d3	Synth sUSD	sUSD	On chain	18	sUSD is part of the Synethix network.	false	false	false	true	false	false
 50-Tokens:ERC20	0x57ab1ec28d129707052df4df418d58a2d46d5f51	Synth sUSD	sUSD	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x57ad67acf9bf015e4820fbd66ea1a21bed8852ec	Lympo tokens	LYM	On chain	18		false	false	false	true	true	false
