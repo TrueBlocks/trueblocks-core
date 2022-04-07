@@ -53,5 +53,8 @@ func init() {
 	logsCmd.SetUsageTemplate(UsageWithNotes(notesLogs))
 	logsCmd.SetOut(os.Stderr)
 
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	chifraCmd.AddCommand(logsCmd)
 }

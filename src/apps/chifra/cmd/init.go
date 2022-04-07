@@ -48,5 +48,8 @@ func init() {
 	initCmd.SetUsageTemplate(UsageWithNotes(notesInit))
 	initCmd.SetOut(os.Stderr)
 
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	chifraCmd.AddCommand(initCmd)
 }

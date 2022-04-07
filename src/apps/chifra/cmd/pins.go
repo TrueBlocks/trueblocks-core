@@ -61,5 +61,8 @@ func init() {
 	pinsCmd.SetUsageTemplate(UsageWithNotes(notesPins))
 	pinsCmd.SetOut(os.Stderr)
 
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	chifraCmd.AddCommand(pinsCmd)
 }

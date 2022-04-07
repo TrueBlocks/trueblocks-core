@@ -53,5 +53,8 @@ One or more of [ ext | int | token | nfts | miner | uncles | all ]`)
 	slurpCmd.SetUsageTemplate(UsageWithNotes(notesSlurp))
 	slurpCmd.SetOut(os.Stderr)
 
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	chifraCmd.AddCommand(slurpCmd)
 }

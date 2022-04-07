@@ -65,5 +65,8 @@ One or more of [ none | some | all | balance | nonce | code | storage | deployed
 	stateCmd.SetUsageTemplate(UsageWithNotes(notesState))
 	stateCmd.SetOut(os.Stderr)
 
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	chifraCmd.AddCommand(stateCmd)
 }

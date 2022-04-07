@@ -77,5 +77,8 @@ func init() {
 	namesCmd.SetUsageTemplate(UsageWithNotes(notesNames))
 	namesCmd.SetOut(os.Stderr)
 
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	chifraCmd.AddCommand(namesCmd)
 }

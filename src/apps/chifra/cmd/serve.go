@@ -48,5 +48,8 @@ func init() {
 	serveCmd.SetUsageTemplate(UsageWithNotes(notesServe))
 	serveCmd.SetOut(os.Stderr)
 
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	chifraCmd.AddCommand(serveCmd)
 }

@@ -54,5 +54,8 @@ One of [ header | addr_table | app_table | chunks | blooms ]`)
 	chunksCmd.SetUsageTemplate(UsageWithNotes(notesChunks))
 	chunksCmd.SetOut(os.Stderr)
 
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	chifraCmd.AddCommand(chunksCmd)
 }

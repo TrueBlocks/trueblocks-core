@@ -62,5 +62,8 @@ func init() {
 	monitorsCmd.SetUsageTemplate(UsageWithNotes(notesMonitors))
 	monitorsCmd.SetOut(os.Stderr)
 
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	chifraCmd.AddCommand(monitorsCmd)
 }
