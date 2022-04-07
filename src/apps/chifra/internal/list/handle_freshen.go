@@ -118,6 +118,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(bloomFilename string, res
 		resultChannel <- results
 	}()
 
+	// TODO: BOGUS - Do blooms speed things up?
 	// bloom, err := index.NewChunk(bloomFilename)
 	// if err != nil {
 	// 	fmt.Println("Error", bloomFilename, err)
@@ -166,7 +167,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(bloomFilename string, res
 	}
 }
 
-// TODO: BOGUS
+// TODO: BOGUS - This could use some integration tests
 // establishIndexChunk accpets cache.FileRange, converts it to file name and finds
 // correspoding CID (hash) entry in the manifest. Next, it downloads the bloom filter.
 func establishIndexChunk(chain string, indexFilename string) (bool, error) {

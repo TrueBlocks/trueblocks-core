@@ -206,7 +206,6 @@ func (mon *Monitor) WriteHeader(deleted bool, lastScanned uint32) (err error) {
 	defer f.Close()
 
 	mon.Deleted = deleted
-	// TODO: BOGUS we want to store mon.LastScanned (one more than the last block scanned)
 	if lastScanned > mon.LastScanned {
 		mon.LastScanned = lastScanned
 	}
