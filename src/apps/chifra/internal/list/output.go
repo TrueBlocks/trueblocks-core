@@ -10,27 +10,11 @@ package listPkg
 
 // EXISTING_CODE
 import (
-	"io"
 	"net/http"
-	"os"
 
-	exportPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
-	"github.com/ethereum/go-ethereum/common"
 	"github.com/spf13/cobra"
 )
-
-// AddressMonitorMap carries arrays of appearances that have not yet been written to the monitor file
-type AddressMonitorMap map[common.Address]monitor.Monitor
-
-// ListOptionsExtended stores the original 'chifra list' command line options plus
-type ListOptionsExtended struct {
-	opts       *ListOptions
-	writer     io.Writer
-	maxTasks   int
-	addrMonMap AddressMonitorMap
-}
 
 // EXISTING_CODE
 
@@ -43,32 +27,19 @@ func RunList(cmd *cobra.Command, args []string) error {
 	}
 
 	// EXISTING_CODE
-	// if opts.Newone
-	{
-		optsEx := NewListOptsEx(opts)
-		err = optsEx.HandleFreshenMonitors()
-		if err != nil {
-			return err
-		}
-		if opts.Count {
-			return opts.HandleListCount()
-		}
-		// return nil
+	monitorArray := make([]monitor.Monitor, 0, len(opts.Addrs))
+	err = opts.HandleFreshenMonitors(&monitorArray)
+	if err != nil {
+		return err
 	}
 
-	// exportPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
-	exportPkg.GetOptions().Appearances = true
 	if opts.Count {
-		exportPkg.GetOptions().Count = true
+		return opts.HandleListCount(monitorArray)
+	} else if !opts.Silent {
+		return opts.HandleListAppearances(monitorArray)
 	}
-	if opts.FirstBlock > 0 {
-		exportPkg.GetOptions().FirstBlock = opts.FirstBlock
-	}
-	if opts.LastBlock > 0 {
-		exportPkg.GetOptions().LastBlock = opts.LastBlock
-	}
-	exportPkg.GetOptions().Globals = opts.Globals
-	return exportPkg.RunExport(cmd, args)
+
+	return nil
 	// EXISTING_CODE
 }
 
@@ -82,30 +53,23 @@ func ServeList(w http.ResponseWriter, r *http.Request) bool {
 	}
 
 	// EXISTING_CODE
-	// TODO: BOGUS -- HANDLE THIS IN GOLANG
-	return false
+	monitorArray := make([]monitor.Monitor, 0, len(opts.Addrs))
+	err = opts.HandleFreshenMonitors(&monitorArray)
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		return true
+	}
+	if opts.Count {
+		err = opts.HandleListCount(monitorArray)
+	} else if !opts.Silent {
+		err = opts.HandleListAppearances(monitorArray)
+	}
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+	}
+	return true
 	// EXISTING_CODE
 }
 
 // EXISTING_CODE
-func NewListOptsEx(opts *ListOptions) (ret ListOptionsExtended) {
-	ret.opts = opts
-	ret.writer = os.Stdout
-	ret.maxTasks = 12
-	ret.addrMonMap = make(AddressMonitorMap, len(opts.Addrs))
-	for _, addr := range opts.Addrs {
-		a := common.HexToAddress(addr)
-		m := monitor.NewMonitor(opts.Globals.Chain, addr)
-		ret.addrMonMap[a] = m
-	}
-	return
-}
-
-func (optsEx *ListOptionsExtended) RangesIntersect(r2 blockRange.FileRange) bool {
-	var r1 blockRange.FileRange
-	r1.First = int(optsEx.opts.FirstBlock)
-	r1.Last = int(optsEx.opts.LastBlock)
-	return !(r1.Last < r2.First || r1.First > r2.Last)
-}
-
 // EXISTING_CODE

@@ -6,22 +6,18 @@ package scrapePkg
 
 import (
 	"fmt"
-	"io/fs"
 	"log"
 	"os"
 	"path"
-	"path/filepath"
 	"strings"
 	"sync"
 	"time"
 
 	exportPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
-	"github.com/ethereum/go-ethereum/common"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func hasMonitorsFlag(mode string) bool {
@@ -48,12 +44,12 @@ func (opts *ScrapeOptions) RunMonitorScraper(wg *sync.WaitGroup, initialState bo
 			monitorChan := make(chan monitor.Monitor)
 
 			var monitors []monitor.Monitor
-			go getMonitors(chain, "monitors", monitorChan)
+			go monitor.ListMonitors(chain, "monitors", monitorChan)
 
 			count := 0
 			for result := range monitorChan {
 				switch result.Address {
-				case sentinalAddr:
+				case monitor.SentinalAddr:
 					close(monitorChan)
 				default:
 					if result.Count > 100000 {
@@ -67,7 +63,7 @@ func (opts *ScrapeOptions) RunMonitorScraper(wg *sync.WaitGroup, initialState bo
 					}
 				}
 			}
-			Freshen(chain, monitors)
+			opts.Refresh(chain, monitors)
 			fmt.Println("Sleeping for", opts.Sleep, "seconds.")
 			time.Sleep(time.Duration(opts.Sleep) * time.Second)
 		}
@@ -86,7 +82,7 @@ func chunkMonitors(slice []monitor.Monitor, chunkSize int) [][]monitor.Monitor {
 	return chunks
 }
 
-func Freshen(chain string, monitors []monitor.Monitor) error {
+func (opts *ScrapeOptions) Refresh(chain string, monitors []monitor.Monitor) error {
 	addrsPerCall := 8
 
 	batches := chunkMonitors(monitors, addrsPerCall)
@@ -101,16 +97,12 @@ func Freshen(chain string, monitors []monitor.Monitor) error {
 		s := fmt.Sprintf("%s\r%d-%d", colors.Blue+colors.Bright+spaces, i*addrsPerCall, len(monitors))
 		fmt.Println(s, colors.Green, "chifra export --freshen", strings.Replace(addrStr, "0x", " \\\n\t0x", -1), colors.Off)
 
-		expOpts := exportPkg.ExportOptions{MaxRecords: 250, MaxTraces: 250}
-		expOpts.Addrs = append(expOpts.Addrs, addrStr)
-		expOpts.Globals.Chain = chain
-		expOpts.Globals.PassItOn("acctExport", expOpts.ToCmdLine())
-
+		opts.FreshenMonitors(addrs)
 		for j := 0; j < len(batches[i]); j++ {
 
 			mon := batches[i][j]
 			countBefore := mon.Count
-			countAfter, _ := mon.Reload(chain)
+			countAfter, _ := mon.Reload(true /* create */)
 
 			if countAfter > 0 {
 				if countAfter > 100000 {
@@ -121,99 +113,153 @@ func Freshen(chain string, monitors []monitor.Monitor) error {
 				appsPath := "exports/apps/" + mon.GetAddrStr() + ".csv"
 				exists := file.FileExists(appsPath)
 				if !exists || countAfter > countBefore {
-					start := countBefore + 1
-					if !exists {
-						start = 0
+					expOpts := exportPkg.ExportOptions{
+						Addrs: append([]string{}, mon.GetAddrStr()),
+						// Topics:      append([]string{}, ""),
+						// Fourbytes:   append([]string{}, ""),
+						Appearances: true,
+						// Receipts:    false,
+						// Logs:        false,
+						// Traces:      false,
+						// Statements:  false,
+						// Neighbors:   false,
+						// Accounting:  false,
+						// Articulate:  false,
+						// Cache:       false,
+						// CacheTraces: false,
+						// Count:       false,
+						FirstRecord: uint64(countBefore + 1),
+						MaxRecords:  uint64(countAfter - countBefore + 1), // extra space won't hurt
+						// Relevant:    false,
+						// Emitter:     append([]string{}, ""),
+						// Topic:       append([]string{}, ""),
+						// Asset:       append([]string{}, ""),
+						// Factory:     false,
+						// Staging:     false,
+						// Unripe:      false,
+						// Load:        "",
+						// Reversed:    false,
+						// SkipDdos:    false,
+						MaxTraces:  250,
+						FirstBlock: 0,
+						LastBlock:  utils.NOPOS,
+						Globals:    opts.Globals,
+						// BadFlag:    nil,
 					}
-					expApps := getExportOpts(&mon, chain, appsPath, start, countAfter)
-					expApps.Appearances = true
-					expApps.Globals.PassItOn("acctExport", expApps.ToCmdLine())
+					if !exists {
+						expOpts.FirstRecord = 0
+					}
+					expOpts.Globals.OutputFn = appsPath
+					expOpts.Globals.Append = file.FileExists(expOpts.Globals.OutputFn)
+					expOpts.Globals.NoHeader = file.FileExists(expOpts.Globals.OutputFn)
+					expOpts.Globals.Format = "csv"
+					expOpts.Globals.File = ""
+					expOpts.Globals.PassItOn("acctExport", expOpts.ToCmdLine())
 				}
 
 				txsPath := "exports/txs/" + mon.GetAddrStr() + ".csv"
 				exists = file.FileExists(txsPath)
 				if !exists || countAfter > countBefore {
-					start := countBefore + 1
-					if !exists {
-						start = 0
+					expOpts := exportPkg.ExportOptions{
+						Addrs: append([]string{}, mon.GetAddrStr()),
+						// Topics:      append([]string{}, ""),
+						// Fourbytes:   append([]string{}, ""),
+						// Appearances: false,
+						// Receipts:    false,
+						// Logs:        false,
+						// Traces:      false,
+						// Statements:  false,
+						// Neighbors:   false,
+						// Accounting:  false,
+						Articulate:  true,
+						Cache:       true,
+						CacheTraces: true,
+						// Count:       false,
+						FirstRecord: uint64(countBefore + 1),
+						MaxRecords:  uint64(countAfter - countBefore + 1), // extra space won't hurt
+						// Relevant:    false,
+						// Emitter:     append([]string{}, ""),
+						// Topic:       append([]string{}, ""),
+						// Asset:       append([]string{}, ""),
+						// Factory:     false,
+						// Staging:     false,
+						// Unripe:      false,
+						// Load:        "",
+						// Reversed:    false,
+						// SkipDdos:    false,
+						MaxTraces:  250,
+						FirstBlock: 0,
+						LastBlock:  utils.NOPOS,
+						Globals:    opts.Globals,
+						// BadFlag:    nil,
 					}
-					expTxs := getExportOpts(&mon, chain, txsPath, start, countAfter)
-					expTxs.Cache = true
-					expTxs.CacheTraces = true
-					expTxs.Globals.PassItOn("acctExport", expTxs.ToCmdLine())
+					if !exists {
+						expOpts.FirstRecord = 0
+					}
+					expOpts.Globals.OutputFn = txsPath
+					expOpts.Globals.Append = file.FileExists(expOpts.Globals.OutputFn)
+					expOpts.Globals.NoHeader = file.FileExists(expOpts.Globals.OutputFn)
+					expOpts.Globals.Format = "csv"
+					expOpts.Globals.File = ""
+					expOpts.Globals.PassItOn("acctExport", expOpts.ToCmdLine())
 				}
 
 				logsPath := "exports/logs/" + mon.GetAddrStr() + ".csv"
 				exists = file.FileExists(logsPath)
 				if !exists || countAfter > countBefore {
-					start := countBefore + 1
-					if !exists {
-						start = 0
+					expOpts := exportPkg.ExportOptions{
+						Addrs: append([]string{}, mon.GetAddrStr()),
+						// Topics:      append([]string{}, ""),
+						// Fourbytes:   append([]string{}, ""),
+						// Appearances: false,
+						// Receipts:    false,
+						Logs: true,
+						// Traces:      false,
+						// Statements:  false,
+						// Neighbors:   false,
+						// Accounting:  false,
+						// Articulate:  true,
+						// Cache:       false,
+						// CacheTraces: false,
+						// Count:       false,
+						FirstRecord: uint64(countBefore + 1),
+						MaxRecords:  uint64(countAfter - countBefore + 1), // extra space won't hurt
+						// Relevant:    true,
+						// Emitter:     append([]string{}, ""),
+						// Topic:       append([]string{}, ""),
+						// Asset:       append([]string{}, ""),
+						// Factory:     false,
+						// Staging:     false,
+						// Unripe:      false,
+						// Load:        "",
+						// Reversed:    false,
+						// SkipDdos:    false,
+						MaxTraces:  250,
+						FirstBlock: 0,
+						LastBlock:  utils.NOPOS,
+						Globals:    opts.Globals,
+						// BadFlag:    nil,
 					}
-					expLogs := getExportOpts(&mon, chain, logsPath, start, countAfter)
-					expLogs.Logs = true
-					expLogs.Relevant = true
-					expLogs.Articulate = true
-					// TODO: BOGUS
-					// expLogs.Emitter = append(expLogs.Emitter, "0xdf869fad6db91f437b59f1edefab319493d4c4ce")
-					// expLogs.Emitter = append(expLogs.Emitter, "0x7d655c57f71464b6f83811c55d84009cd9f5221c")
-					// expLogs.Emitter = append(expLogs.Emitter, "0xf2354570be2fb420832fb7ff6ff0ae0df80cf2c6")
-					// expLogs.Emitter = append(expLogs.Emitter, "0x3342e3737732d879743f2682a3953a730ae4f47c")
-					// expLogs.Emitter = append(expLogs.Emitter, "0x3ebaffe01513164e638480404c651e885cca0aa4")
-					expLogs.Globals.PassItOn("acctExport", expLogs.ToCmdLine())
+					if !exists {
+						expOpts.FirstRecord = 0
+					}
+					expOpts.Globals.OutputFn = logsPath
+					expOpts.Globals.Append = file.FileExists(expOpts.Globals.OutputFn)
+					expOpts.Globals.NoHeader = file.FileExists(expOpts.Globals.OutputFn)
+					expOpts.Globals.Format = "csv"
+					expOpts.Globals.File = ""
+					expOpts.Emitter = append(expOpts.Emitter, "0xdf869fad6db91f437b59f1edefab319493d4c4ce")
+					// expOpts.Emitter = append(expOpts.Emitter, "0x7d655c57f71464b6f83811c55d84009cd9f5221c")
+					// expOpts.Emitter = append(expOpts.Emitter, "0xf2354570be2fb420832fb7ff6ff0ae0df80cf2c6")
+					// expOpts.Emitter = append(expOpts.Emitter, "0x3342e3737732d879743f2682a3953a730ae4f47c")
+					// expOpts.Emitter = append(expOpts.Emitter, "0x3ebaffe01513164e638480404c651e885cca0aa4")
+					expOpts.Globals.PassItOn("acctExport", expOpts.ToCmdLine())
 				}
+				// 	// TODO: BOGUS
 			}
 		}
 	}
 	return nil
-}
-
-var sentinalAddr = common.HexToAddress("0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead")
-
-func getMonitors(chain, folder string, monitorChan chan<- monitor.Monitor) {
-	defer func() {
-		monitorChan <- monitor.Monitor{Address: sentinalAddr}
-	}()
-
-	info, err := os.Stat("./addresses.csv")
-	if err == nil {
-		// If the shorthand file exists in the current folder, use it...
-		lines := file.AsciiFileToLines(info.Name())
-		fmt.Println("Found ", len(lines), " addresses to monitor in ./addresses.csv")
-		for _, line := range lines {
-			if !strings.HasPrefix(line, "#") {
-				parts := strings.Split(line, ",")
-				if len(parts) > 0 && validate.IsValidAddress(parts[0]) && !validate.IsZeroAddress(parts[0]) {
-					monitorChan <- monitor.NewMonitor(chain, parts[0])
-				}
-			}
-		}
-		return
-	}
-
-	// ...otherwise freshen all existing monitors
-	pp := config.GetPathToCache(chain) + folder
-	filepath.Walk(pp, func(path string, info fs.FileInfo, err error) error {
-		if err != nil {
-			return err
-		}
-		if !info.IsDir() {
-			addr, _ := fn_2_Addr(path)
-			if len(addr) > 0 {
-				monitorChan <- monitor.NewMonitor(chain, addr)
-			}
-		}
-		return nil
-	})
-}
-
-func fn_2_Addr(path string) (string, error) {
-	ret := strings.Replace(path, ".acct.bin", "", -1)
-	parts := strings.Split(ret, "/")
-	if len(parts) == 0 || ret == path {
-		return "", nil
-	}
-	return parts[len(parts)-1], nil
 }
 
 // TODO: We could add statistics counting -- nChanged, nProcessed, txCount, etc
@@ -255,21 +301,4 @@ func establishExportPaths() {
 	if err := file.EstablishFolders(exportPath, folders); err != nil {
 		log.Fatal(err)
 	}
-}
-
-func getExportOpts(mon *monitor.Monitor, chain, path string, firstBlock, lastBlock uint32) exportPkg.ExportOptions {
-	// firstBlock and lastBlock are one-based
-	first, _ := mon.Peek(firstBlock)
-	last, _ := mon.Peek(lastBlock)
-
-	expOpts := exportPkg.ExportOptions{MaxRecords: 250, MaxTraces: 250}
-	expOpts.Addrs = append(expOpts.Addrs, mon.GetAddrStr())
-	expOpts.Globals.Chain = chain
-	expOpts.FirstBlock = uint64(first.BlockNumber)
-	expOpts.LastBlock = uint64(last.BlockNumber)
-	expOpts.Globals.Format = "csv"
-	expOpts.Globals.OutputFn = path
-	expOpts.Globals.Append = file.FileExists(expOpts.Globals.OutputFn)
-	expOpts.Globals.NoHeader = file.FileExists(expOpts.Globals.OutputFn)
-	return expOpts
 }

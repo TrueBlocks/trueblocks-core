@@ -33,10 +33,10 @@ func (opts *GlobalOptions) PassItOn(path string, flags string) error {
 	env.RpcProvider = config.GetRpcProvider(env.Chain)
 	envStr := env.ToCSV()
 
-	// fmt.Fprintf(os.Stderr, "Calling: %s %s\n", path, options)
 	cmd := exec.Command(config.GetPathToCommands(path), options)
 	cmd.Env = append(os.Environ(), "FROM_CHIFRA=true")
 	cmd.Env = append(cmd.Env, "TB_CONFIG_ENV="+envStr)
+	// fmt.Fprintf(os.Stderr, "Calling: TB_CONFIG_ENV=\"%s\" %s %s\n", envStr, config.GetPathToCommands(path), options)
 	if os.Getenv("TEST_MODE") == "true" {
 		cmd.Env = append(cmd.Env, "TEST_MODE=true")
 	}
