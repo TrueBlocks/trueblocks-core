@@ -15,102 +15,114 @@
 namespace qblocks {
 //----------------------------------------------------------------
 CIndexArchive::CIndexArchive(bool mode) : CArchive(mode) {
-    rawData = NULL;
-    header = NULL;
-    addresses = NULL;
-    appearances = NULL;
-    nAddrs = nApps = 0;
+    addresses2 = nullptr;
+    appearances2 = nullptr;
+    rawData = nullptr;
 }
 
 //----------------------------------------------------------------
 CIndexArchive::~CIndexArchive(void) {
+    clean();
+}
+
+//----------------------------------------------------------------
+void CIndexArchive::clean(void) {
     if (rawData) {
         delete[] rawData;
-        header = NULL;
-        addresses = NULL;
-        appearances = NULL;
-        rawData = NULL;
-        nAddrs = nApps = 0;
-    }
-    if (reverseAppMap) {
-        delete[] reverseAppMap;
-        reverseAddrRanges.clear();
+        rawData = nullptr;
+        header = CIndexHeader();
+        addresses2 = nullptr;
+        appearances2 = nullptr;
     }
     Release();
 }
 
 //----------------------------------------------------------------
-bool CIndexArchive::ReadIndexFromBinary(const string_q& path) {
+bool CIndexArchive::ReadIndexFromBinary(const string_q& path, indexpart_t parts) {
     if (!m_isReading)
         return false;
     if (!fileExists(path))
         return false;
+    if (parts == IP_NONE)
+        return false;
+
     if (!Lock(path, modeReadOnly, LOCK_NOWAIT))
         return false;
 
-    size_t sz = fileSize(path);
-    rawData = reinterpret_cast<char*>(malloc(sz + (2 * asciiAppearanceSize)));
+    size_t readSize = sizeof(CIndexHeader);
+    size_t memorySize = readSize;
+    if ((parts & IP_ADDRS) || (parts & IP_APPS)) {
+        readSize = fileSize(path);
+        memorySize = readSize + (2 * asciiAppearanceSize);  // a bit of extra room for some reason...
+    }
+
+    rawData = reinterpret_cast<char*>(malloc(memorySize));
     if (!rawData) {
         LOG_ERR("Could not allocate memory for data.");
         Release();
         return false;
     }
+    bzero(rawData, memorySize);
 
-    bzero(rawData, sz + (2 * asciiAppearanceSize));
-    size_t nRead = Read(rawData, sz, sizeof(char));
-    if (nRead != sz) {
+    size_t nRead = Read(rawData, readSize, sizeof(char));
+    if (nRead != readSize) {
         LOG_ERR("Could not read entire file.");
-        Release();
+        clean();
         return false;
     }
 
-    header = reinterpret_cast<CIndexHeader*>(rawData);
-    ASSERT(header->magic == MAGIC_NUMBER);
-    ASSERT(bytes_2_Hash(header->hash) == versionHash);
-    nAddrs = header->nAddrs;
-    nApps = header->nRows;
-    addresses = (CIndexedAddress*)(rawData + sizeof(CIndexHeader));  // NOLINT
-    size_t aRecSize = sizeof(CIndexedAddress);
-    size_t sizeOfARecs = aRecSize * nAddrs;
-    size_t sizeOfHeader = sizeof(CIndexHeader);
-    size_t size = sizeOfHeader + sizeOfARecs;
-    appearances = (CIndexedAppearance*)(rawData + size);  // NOLINT
-    Release();
+    header = *(reinterpret_cast<CIndexHeader*>(rawData));
+    ASSERT(header.magic == MAGIC_NUMBER);
+    ASSERT(bytes_2_Hash(header.hash) == versionHash);
+
+    size_t startOfAddrTable = sizeof(CIndexHeader);
+    size_t addrTableSize = sizeof(CIndexedAddress) * header.nAddrs;
+    size_t startOfAppsTable = startOfAddrTable + addrTableSize;
+
+    if (readSize == sizeof(CIndexHeader)) {
+        addresses2 = nullptr;
+        appearances2 = nullptr;
+    } else {
+        addresses2 = (CIndexedAddress*)(rawData + startOfAddrTable);       // NOLINT
+        appearances2 = (CIndexedAppearance*)(rawData + startOfAppsTable);  // NOLINT
+    }
+    if (!(parts & IP_LEAVEOPEN)) {
+        Release();
+    }
     return true;
 }
 
-//--------------------------------------------------------------
-bool readIndexHeader(const string_q& path, CIndexHeader& header) {
-    header.nRows = header.nAddrs = (uint32_t)-1;
-    if (contains(path, "blooms")) {
-        return false;
+//----------------------------------------------------------------
+bool visitOneChunk(const string_q& path, void* data) {
+    if (endsWith(path, '/')) {
+        return forEveryFileInFolder(path + "*", visitOneChunk, data);
+
+    } else {
+        CIndexChunkVisitor* v = (CIndexChunkVisitor*)data;
+        if (!v->indexFunc)
+            return false;
+
+        v->range.first = path_2_Bn(path, v->range.second);
+
+        CIndexArchive index(READING_ARCHIVE);  // Releases when it goes out of scope
+        if (!index.ReadIndexFromBinary(path, v->parts))
+            return false;
+
+        if (!(*v->indexFunc)(index, v))
+            return false;
     }
 
-    if (endsWith(path, ".txt")) {
-        header.nRows = (uint32_t)fileSize(path) / (uint32_t)asciiAppearanceSize;
-        CStringArray lines;
-        asciiFileToLines(path, lines);
-        CAddressBoolMap addrMap;
-        for (auto line : lines)
-            addrMap[nextTokenClear(line, '\t')] = true;
-        header.nAddrs = (uint32_t)addrMap.size();
-        return true;
-    }
-
-    CArchive archive(READING_ARCHIVE);
-    if (!archive.Lock(path, modeReadOnly, LOCK_NOWAIT))
-        return false;
-
-    bzero(&header, sizeof(header));
-    // size_t nRead =
-    archive.Read(&header, sizeof(header), 1);
-    // if (false) { //nRead != sizeof(header)) {
-    //    cerr << "Could not read file: " << path << endl;
-    //    return;
-    //}
-    ASSERT(header.magic == MAGIC_NUMBER);
-    // ASSERT(bytes_2_Hash(h->hash) == versionHash);
-    archive.Release();
     return true;
+}
+
+//----------------------------------------------------------------
+bool forEveryIndexChunk(INDEXCHUNKFUNC func, void* data) {
+    if (!func)
+        return false;
+
+    CIndexChunkVisitor v;
+    v.indexFunc = func;
+    v.callData = data;
+    return forEveryFileInFolder(indexFolder_finalized, visitOneChunk, &v);
 }
 }  // namespace qblocks

@@ -24,6 +24,13 @@
 namespace qblocks {
 
 // EXISTING_CODE
+class CMonitorHeader {
+  public:
+    uint16_t magic;
+    uint8_t unused;
+    uint8_t deleted;
+    uint32_t lastScanned;
+};
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -49,37 +56,14 @@ class CMonitor : public CAccountName {
     // EXISTING_CODE
   public:
     bool isStaging;
-    bloom_t bloom;
-    CArchive* tx_cache;
     CAppearanceArray_mon apps;
-
-  private:
-    string_q getPathToMonitorLast(const address_t& addr, bool staging) const;
-    string_q getPathToMonitorDels(const address_t& addr) const;
 
   public:
     string_q getPathToMonitor(const address_t& addr, bool staging) const;
-    bool openForWriting(bool staging);
-    void closeMonitorCache(void);
-    void writeAppendNewApps(const CAppearanceArray_mon& array);
-    void writeNextBlockToVisit(blknum_t bn, bool staging);
-    bool removeDuplicates(const string_q& path);
-    void moveToProduction(bool staging);
-
-    bool monitorExists(void) const;
-    bool isDeleted(void) const;
-    void deleteMonitor(void);
-    void undeleteMonitor(void);
-    void removeMonitor(void);
-
-    blknum_t loadAppearances(MONAPPFUNC func, void* data);
-    blknum_t getNextBlockToVisit(bool ifExists) const;
-    bloom_t getBloom(void);
-    size_t getFileSize(const string_q& path) const;
     size_t getRecordCnt(const string_q& path) const;
 
-    bool isMonitorLocked(string_q& msg) const;
-    bool clearMonitorLocks(void);
+    bool readHeader(CMonitorHeader& header) const;
+    bool readAppearances(MONAPPFUNC func, void* data);
 
     // EXISTING_CODE
     bool operator==(const CMonitor& it) const;
@@ -109,7 +93,6 @@ inline CMonitor::CMonitor(void) {
 //--------------------------------------------------------------------------
 inline CMonitor::CMonitor(const CMonitor& mo) {
     // EXISTING_CODE
-    tx_cache = NULL;
     // EXISTING_CODE
     duplicate(mo);
 }
@@ -127,11 +110,6 @@ inline CMonitor::~CMonitor(void) {
 //--------------------------------------------------------------------------
 inline void CMonitor::clear(void) {
     // EXISTING_CODE
-    if (tx_cache) {
-        tx_cache->Release();
-        delete tx_cache;
-    }
-    tx_cache = NULL;
     // EXISTING_CODE
 }
 
@@ -148,8 +126,6 @@ inline void CMonitor::initialize(void) {
 
     // EXISTING_CODE
     isStaging = false;
-    bloom = bloom_t();
-    tx_cache = NULL;
     apps.clear();
     // EXISTING_CODE
 }
@@ -168,8 +144,6 @@ inline void CMonitor::duplicate(const CMonitor& mo) {
 
     // EXISTING_CODE
     isStaging = mo.isStaging;
-    bloom = mo.bloom;
-    tx_cache = NULL;  // we do not copy the tx_cache
     apps = mo.apps;
     // EXISTING_CODE
 }

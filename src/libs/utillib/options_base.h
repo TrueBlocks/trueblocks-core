@@ -72,12 +72,6 @@ class COptionsBase {
     static CNameValueArray specials;
     static bool findSpecial(CNameValue& pair, const string_q& arg);
 
-    // One of --create, --update, --delete, --undelete, --remove for use anywhere
-    CStringArray crudCommands;
-    bool isCrudCommand(void) const {
-        return crudCommands.size() > 0;
-    }
-
   public:
     // enabling options
     bool isEnabled(uint32_t q) const;
