@@ -162,7 +162,7 @@ func RouteChunks(w http.ResponseWriter, r *http.Request) {
 // RouteInit Initialize the TrueBlocks system by downloading from IPFS.
 func RouteInit(w http.ResponseWriter, r *http.Request) {
 	if !initPkg.ServeInit(w, r) {
-		CallOne(w, r, config.GetPathToCommands("init"), "", "init")
+		CallOne(w, r, "chifra", "init", "init")
 	}
 }
 
