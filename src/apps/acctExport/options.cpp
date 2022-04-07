@@ -83,7 +83,6 @@ bool COptions::parseArguments(string_q& command) {
     CAddressArray emitter;
     CStringArray topic;
     CAddressArray asset;
-    bool freshen = false;
     blknum_t first_block = 0;
     blknum_t last_block = NOPOS;
     bool deleteMe = false;
@@ -194,9 +193,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "--clean") {
             clean = true;
 
-        } else if (arg == "-f" || arg == "--freshen") {
-            freshen = true;
-
         } else if (arg == "-s" || arg == "--staging") {
             staging = true;
 
@@ -271,8 +267,6 @@ bool COptions::parseArguments(string_q& command) {
 
     if (!isApiMode() && max_records == 250)
         max_records = NOPOS;
-
-    freshenOnly = freshen;
 
     if (clean) {
         if (!process_clean())
@@ -410,7 +404,7 @@ bool COptions::parseArguments(string_q& command) {
         for (auto monitor : allMonitors) {
             CMonitorCount monCount;
             monCount.address = monitor.address;
-            monCount.fileSize = monitor.getFileSize(monitor.getPathToMonitor(monitor.address, false));
+            monCount.fileSize = fileSize(monitor.getPathToMonitor(monitor.address, false));
             monCount.nRecords = monitor.getRecordCnt(monitor.getPathToMonitor(monitor.address, false));
             cout << ((isJson() && !firstOut) ? ", " : "");
             cout << monCount;
@@ -715,7 +709,7 @@ bool COptions::isRelevant(const CLogEntry& log) const {
 
 //-----------------------------------------------------------------------
 bool fourByteFilter(const string_q& input, const COptions* opt) {
-    ASSERT(!opt->freshenOnly);
+    ASSERT(!opt->freshen);
     if (opt->fourbytes.empty())
         return true;
 
@@ -756,3 +750,5 @@ const char* STR_MONITOR_LOCKED =
     "running or it did not end cleanly the\n\tlast time it ran. "
     "Quit the already running program or, if it is not running, "
     "remove the lock\n\tfile: '{0}.lck'.";
+
+// TODO: BOGUS - WE NO LONGER HAVE THE ABILITY TO KEEP TRACK OF HOW MANY BLOOM FILTERS HIT DURING CHIFRA LIST

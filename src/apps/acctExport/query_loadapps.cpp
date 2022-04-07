@@ -48,7 +48,6 @@ bool COptions::loadMonitors(void) {
             if (monitor.getRecordCnt(path) == 0) {
                 // We don't continue if we have no transactions. We used to report an
                 // error here, but this is not really an error
-                if (!freshenOnly)
                     LOG_WARN("No records found for address ", path_2_Addr(path));
                 return false;
             }

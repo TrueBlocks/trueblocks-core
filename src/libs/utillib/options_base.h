@@ -47,7 +47,6 @@ class COptionsBase {
     bool isVeryRaw;
     bool noHeader;
     bool firstOut;
-    bool freshenOnly;
 
   public:
     COptionsBase(void);
