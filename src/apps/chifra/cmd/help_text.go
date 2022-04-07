@@ -29,7 +29,6 @@ var helpText = `  Accounts:
     scrape        scan the chain and update (and optionally pin) the TrueBlocks index of appearances
     chunks        manage and investigate chunks and bloom filters
     init          initialize the TrueBlocks system by downloading from IPFS
-    pins          manage pinned index of appearances and associated blooms
   Other:
     quotes        update or display Ethereum price data, this tool has been deprecated
     explore       open a local or remote explorer for one or more addresses, blocks, or transactions

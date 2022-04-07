@@ -30,7 +30,7 @@ var chunksCmd = &cobra.Command{
 var usageChunks = `chunks [flags] <block> [block...]
 
 Arguments:
-  blocks - an optional list of blocks to process`
+  blocks - optional list of blocks to intersect with chunk ranges`
 
 var shortChunks = "manage and investigate chunks and bloom filters"
 
@@ -44,11 +44,8 @@ Notes:
 func init() {
 	chunksCmd.Flags().SortFlags = false
 
-	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Check, "check", "c", false, "check the validity of the chunk or bloom")
 	chunksCmd.Flags().StringVarP(&chunksPkg.GetOptions().Extract, "extract", "e", "", `show some or all of the contents of the chunk or bloom filters
-One of [ header | addr_table | app_table | chunks | blooms ]`)
-	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Stats, "stats", "s", false, "for the --list option only, display statistics about each chunk or bloom")
-	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Save, "save", "a", false, "for the --extract option only, save the entire chunk to a similarly named file as well as display")
+One of [ stats | pins | blooms | index | header | addresses | appearances ]`)
 	globals.InitGlobals(chunksCmd, &chunksPkg.GetOptions().Globals)
 
 	chunksCmd.SetUsageTemplate(UsageWithNotes(notesChunks))

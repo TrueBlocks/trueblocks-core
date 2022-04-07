@@ -23,7 +23,6 @@ import (
 	logsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/logs"
 	monitorsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/monitors"
 	namesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/names"
-	pinsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/pins"
 	quotesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/quotes"
 	receiptsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/receipts"
 	scrapePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/scrape"
@@ -163,13 +162,8 @@ func RouteChunks(w http.ResponseWriter, r *http.Request) {
 // RouteInit Initialize the TrueBlocks system by downloading from IPFS.
 func RouteInit(w http.ResponseWriter, r *http.Request) {
 	if !initPkg.ServeInit(w, r) {
-		CallOne(w, r, "chifra", "init", "init")
+		CallOne(w, r, config.GetPathToCommands("init"), "", "init")
 	}
-}
-
-// RoutePins Manage pinned index of appearances and associated blooms.
-func RoutePins(w http.ResponseWriter, r *http.Request) {
-	pinsPkg.ServePins(w, r)
 }
 
 // RouteQuotes Update or display Ethereum price data, this tool has been deprecated.
@@ -216,7 +210,6 @@ var routes = Routes{
 	Route{"RouteScrape", "GET", "/scrape", RouteScrape},
 	Route{"RouteChunks", "GET", "/chunks", RouteChunks},
 	Route{"RouteInit", "GET", "/init", RouteInit},
-	Route{"RoutePins", "GET", "/pins", RoutePins},
 	Route{"RouteQuotes", "GET", "/quotes", RouteQuotes},
 	Route{"RouteSlurp", "GET", "/slurp", RouteSlurp},
 	// END_ROUTE_ITEMS

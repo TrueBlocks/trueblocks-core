@@ -242,31 +242,14 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10840,apps,Admin,status,cacheStatus,last_block,L,NOPOS,false,false,false,false,local,flag,<blknum>,last block to process (inclusive -- testing only)
 10860,apps,Admin,status,cacheStatus,,,,false,false,true,true,--,description,,Report on the status of the TrueBlocks system.
 
-21950,apps,Admin,chunks,chunkMan,blocks,,,false,false,true,true,header,positional,list<blknum>,an optional list of blocks to process
-21954,apps,Admin,chunks,chunkMan,check,c,,false,false,true,true,header,switch,<boolean>,check the validity of the chunk or bloom
-21956,apps,Admin,chunks,chunkMan,extract,e,,false,false,true,true,header,flag,enum[header|addr_table|app_table|chunks|blooms],show some or all of the contents of the chunk or bloom filters
-21958,apps,Admin,chunks,chunkMan,stats,s,,false,false,true,true,header,switch,<boolean>,for the --list option only&#44; display statistics about each chunk or bloom
-21960,apps,Admin,chunks,chunkMan,save,a,,false,false,true,true,header,switch,<boolean>,for the --extract option only&#44; save the entire chunk to a similarly named file as well as display
+21950,apps,Admin,chunks,chunkMan,blocks,,,false,false,true,true,header,positional,list<blknum>,optional list of blocks to intersect with chunk ranges
+21956,apps,Admin,chunks,chunkMan,extract,e,,false,false,true,true,header,flag,enum[stats|pins|blooms|index|header|addresses|appearances],show some or all of the contents of the chunk or bloom filters
 21962,apps,Admin,chunks,chunkMan,,,,false,false,true,true,--,description,,Manage and investigate chunks and bloom filters.
 21964,apps,Admin,chunks,chunkMan,n1,,,false,false,false,false,--,note,,Only a single block in a given chunk needs to be supplied.
 
-10950,apps,Admin,pins,pinMan,list,l,,false,false,true,true,local,switch,<boolean>,list the bloom and index hashes from local cache or IPFS
-10952,apps,Admin,pins,pinMan,init,i,,false,false,true,true,header,switch,<boolean>,download the blooms or index chunks from IPFS
-10958,apps,Admin,pins,pinMan,all,a,,false,false,true,true,header,switch,<boolean>,in addition to Bloom filters&#44; download full index chunks
-10962,apps,Admin,pins,pinMan,share,S,,false,false,true,true,header,switch,<boolean>,share downloaded data by pinning it to IPFS (the IPFS daemon must be running)
-10960,apps,Admin,pins,pinMan,sleep,s,.25,false,false,true,true,header,flag,<double>,throttle requests by this many seconds
-10954,apps,Admin,pins,pinMan,freshen,f,,false,false,false,false,header,deprecated,<boolean>,check for new bloom or index chunks and download if available
-10956,apps,Admin,pins,pinMan,remote,r,,false,false,false,false,header,deprecated,<boolean>,for --list mode only&#44; recover the manifest from IPFS via UnchainedIndex smart contract
-10964,apps,Admin,pins,pinMan,init_all,n,,false,false,false,false,header,deprecated,<boolean>,use --init --all instead
-10966,apps,Admin,pins,pinMan,,,,false,false,true,true,--,description,,Manage pinned index of appearances and associated blooms.
-10970,apps,Admin,pins,pinMan,n1,,,false,false,false,false,--,note,,One of `--list` or `--init` is required.
-10974,apps,Admin,pins,pinMan,n2,,,false,false,false,false,--,note,,Re-run `chifra init` as often as you wish. It will repair or freshen the index.
-10972,apps,Admin,pins,pinMan,n3,,,false,false,false,false,--,note,,The `--share` option works only if an IPFS daemon is running.
-
-11905,apps,Admin,init,pinMan,all,a,,false,false,true,true,header,switch,<boolean>,in addition to Bloom filters&#44; download full index chunks
-11910,apps,Admin,init,pinMan,,,,false,false,true,true,--,description,,Initialize the TrueBlocks system by downloading from IPFS.
-11915,apps,Admin,init,pinMan,n1,,,false,false,false,false,--,note,,`chifra init` is an alias for the `chifra pins --init` command.
-11920,apps,Admin,init,pinMan,n2,,,false,false,false,false,--,note,,See `chifra pins --help` for more information.
+11905,apps,Admin,init,init,all,a,,false,false,true,true,header,switch,<boolean>,in addition to Bloom filters&#44; download full index chunks
+11910,apps,Admin,init,init,,,,false,false,true,true,--,description,,Initialize the TrueBlocks system by downloading from IPFS.
+10974,apps,Admin,init,init,n1,,,false,false,false,false,--,note,,Re-run `chifra init` as often as you wish. It will repair or freshen the index.
 
 12020,tools,Other,quotes,getQuotes,update,u,,false,false,true,true,header,switch,<boolean>,freshen price database
 12040,tools,Other,quotes,getQuotes,period,p,,false,false,true,true,local,flag,enum[5|15|30|60|120*|240|1440|10080|hourly|daily|weekly],increment of display
