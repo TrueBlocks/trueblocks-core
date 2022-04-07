@@ -86,13 +86,9 @@ bool COptions::loadMonitors(void) {
     // Make sure the timestamps column is at least as up to date as this monitor
     if (monApps.size()) {
         // it's okay to not be able to freshen this. We'll just report less txs
-        if (!getTimestampAt(1))  // loads the timestamp file and returns non-zero
-            return false;
-
-    } else {
-        LOG_INFO("Nothing to export" + (allMonitors.size() ? (" from " + accountedFor.address) : "") + ".");
-        return false;
+        return getTimestampAt(1);  // loads the timestamp file and returns non-zero
     }
 
-    return true;
+    LOG_INFO("Nothing to export" + (allMonitors.size() ? (" from " + accountedFor.address) : "") + ".");
+    return allMonitors.size() > 0;
 }
