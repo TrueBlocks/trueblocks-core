@@ -28,7 +28,6 @@ type GlobalOptions struct {
 	File     string
 	Version  bool
 	Noop     bool
-	Mocked   bool
 	NoColor  bool
 	OutputFn string
 	Append   bool
@@ -52,7 +51,6 @@ func (opts *GlobalOptions) TestLog() {
 	logger.TestLog(len(opts.File) > 0, "File: ", opts.File)
 	logger.TestLog(opts.Version, "Version: ", opts.Version)
 	logger.TestLog(opts.Noop, "Noop: ", opts.Noop)
-	logger.TestLog(opts.Mocked, "Mocked: ", opts.Mocked)
 	logger.TestLog(opts.NoColor, "NoColor: ", opts.NoColor)
 	logger.TestLog(len(opts.OutputFn) > 0, "OutputFn: ", opts.OutputFn)
 	logger.TestLog(opts.Append, "Append: ", opts.Append)
@@ -73,7 +71,6 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions) {
 	cmd.Flags().BoolVarP(&opts.Raw, "raw", "", false, "report JSON data from the node with minimal processing")
 	cmd.Flags().BoolVarP(&opts.Version, "version", "", false, "display the current version of the tool")
 	cmd.Flags().BoolVarP(&opts.Noop, "noop", "", false, "")
-	cmd.Flags().BoolVarP(&opts.Mocked, "mocked", "", false, "")
 	cmd.Flags().BoolVarP(&opts.NoColor, "nocolor", "", false, "")
 	cmd.Flags().Uint64VarP(&opts.LogLevel, "log_level", "", 0, "")
 	cmd.Flags().BoolVarP(&opts.NoHeader, "no_header", "", false, "supress export of header row for csv and txt exports")
@@ -89,7 +86,6 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions) {
 	cmd.Flags().MarkHidden("raw")
 	cmd.Flags().MarkHidden("version")
 	cmd.Flags().MarkHidden("noop")
-	cmd.Flags().MarkHidden("mocked")
 	cmd.Flags().MarkHidden("nocolor")
 	cmd.Flags().MarkHidden("log_level")
 	cmd.Flags().MarkHidden("no_header")
@@ -184,8 +180,6 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *GlobalOptions {
 			opts.Version = true
 		case "noop":
 			// do nothing
-		case "mocked":
-			opts.Mocked = true
 		case "nocolor":
 			opts.NoColor = true
 		case "logLevel":
@@ -227,7 +221,6 @@ func IsGlobalOption(key string) bool {
 		"raw",
 		"version",
 		"noop",
-		"mocked",
 		"nocolor",
 		"logLevel",
 		"noHeader",

@@ -76,9 +76,6 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (Mocked(""))
-        return false;
-
     if (blocks.empty()) {
         blocks.start = NOPOS;
     } else if (blocks.size() > 0) {

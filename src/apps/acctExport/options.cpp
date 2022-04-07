@@ -266,9 +266,6 @@ bool COptions::parseArguments(string_q& command) {
     if (remove)
         crudCommands.push_back("remove");
 
-    if (Mocked(""))
-        return false;
-
     for (auto t : topics)
         logFilter.topics.push_back(t);
 

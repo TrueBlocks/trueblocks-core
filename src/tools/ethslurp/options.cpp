@@ -76,9 +76,6 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (Mocked(""))
-        return false;
-
     // This will fail if we don't have a key. Let's fail early.
     getApiKey("Etherscan", "http://api.etherscan.io/apis");
 

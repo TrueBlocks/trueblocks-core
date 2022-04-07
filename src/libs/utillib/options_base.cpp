@@ -115,8 +115,8 @@ bool COptionsBase::isBadSingleDash(const string_q& arg) const {
             return true;
     }
 
-    CStringArray builtInCmds = {"verbose", "log_level", "fmt",     "ether",   "output",  "append", "raw",
-                                "mocked",  "wei",       "dollars", "version", "nocolor", "noop"};
+    CStringArray builtInCmds = {"verbose", "log_level", "fmt",     "ether",   "output",  "append",
+                                "raw",     "wei",       "dollars", "version", "nocolor", "noop"};
 
     for (auto bi : builtInCmds) {
         if (arg == ("-" + bi))
@@ -374,11 +374,6 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
         isRaw = true;
     }
 
-    if (isEnabled(OPT_MOCKDATA) && contains(cmdLine, "--mocked ")) {
-        replaceAll(cmdLine, "--mocked ", "");
-        mocked = true;
-    }
-
     if (isEnabled(OPT_OUTPUT) && contains(cmdLine, "--output:")) {
         closeRedirect();  // close the current one in case it's open (--file for example)
         string_q temp = substitute(cmdLine, "--output:", "|");
@@ -442,8 +437,6 @@ bool COptionsBase::builtInCmd(const string_q& arg) {
     if (isEnabled(OPT_OUTPUT) && (startsWith(arg, "--output:") || startsWith(arg, "--append")))
         return true;
     if (isEnabled(OPT_RAW) && arg == "--raw")
-        return true;
-    if (isEnabled(OPT_MOCKDATA) && arg == "--mocked")
         return true;
     if (isEnabled(OPT_WEI) && arg == "--wei")
         return true;
@@ -778,17 +771,6 @@ const CToml* getGlobalConfig(const string_q& mergeIn) {
     return toml;
 }
 
-//--------------------------------------------------------------------------------
-bool COptionsBase::Mocked(const string_q& which) {
-    if (!mocked)
-        return false;
-    string_q path = chainConfigsFolder_mocked + "mocks/" + which + ".json";
-    if (!fileExists(path))
-        return false;
-    cout << asciiFileToString(path);
-    return true;
-}
-
 //-----------------------------------------------------------------------
 static bool sortByValue(const CNameValue& p1, const CNameValue& p2) {
     blknum_t b1 = str_2_Uint(p1.second);
@@ -845,7 +827,6 @@ COptionsBase::COptionsBase(void) {
     minArgs = 1;
     isRaw = false;
     isVeryRaw = false;
-    mocked = false;
     firstOut = true;
     freshenOnly = false;
     noHeader = false;
