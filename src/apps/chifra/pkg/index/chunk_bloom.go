@@ -18,17 +18,6 @@ import (
 )
 
 //----------------------------------------------------------------------
-func (bb *BloomBytes) IsMember(addr common.Address) bool {
-	whichBits := WhichBits(addr)
-	for _, bit := range whichBits {
-		if !IsBitLit(bit, bb.Bytes) {
-			return false
-		}
-	}
-	return true
-}
-
-//----------------------------------------------------------------------
 func (bloom *ChunkBloom) IsMember(addr common.Address) bool {
 	for _, bb := range bloom.Blooms {
 		if bb.IsMember(addr) {
@@ -38,40 +27,15 @@ func (bloom *ChunkBloom) IsMember(addr common.Address) bool {
 	return false
 }
 
-//---------------------------------------------------------------------------
-func (bloom *ChunkBloom) Read(fileName string) (err error) {
-	bloom.Range, err = cache.RangeFromFilename(fileName)
-	if err != nil {
-		return err
-	}
-
-	bloom.File, err = os.OpenFile(fileName, os.O_RDONLY, 0644)
-	if err != nil {
-		return err
-	}
-	defer bloom.File.Close()
-
-	err = binary.Read(bloom.File, binary.LittleEndian, &bloom.Count)
-	if err != nil {
-		return err
-	}
-
-	bloom.Blooms = make([]BloomBytes, bloom.Count)
-	for i := uint32(0); i < bloom.Count; i++ {
-		// fmt.Println("nBlooms:", bloom.Count)
-		err = binary.Read(bloom.File, binary.LittleEndian, &bloom.Blooms[i].NInserted)
-		if err != nil {
-			return err
-		}
-		// fmt.Println("nInserted:", bloom.Blooms[i].NInserted)
-		bloom.Blooms[i].Bytes = make([]byte, BLOOM_WIDTH_IN_BYTES)
-		err = binary.Read(bloom.File, binary.LittleEndian, &bloom.Blooms[i].Bytes)
-		if err != nil {
-			return err
+//----------------------------------------------------------------------
+func (bb *BloomBytes) IsMember(addr common.Address) bool {
+	whichBits := WhichBits(addr)
+	for _, bit := range whichBits {
+		if !IsBitLit(bit, bb.Bytes) {
+			return false
 		}
 	}
-
-	return nil
+	return true
 }
 
 func (bloom *ChunkBloom) Display(verbose int) {
@@ -118,27 +82,6 @@ func ToBloomPath(pathIn string) string {
 	ret := strings.Replace(pathIn, ".bin", ".bloom", -1)
 	ret = strings.Replace(ret, "/finalized/", "/blooms/", -1)
 	return ret
-}
-
-//----------------------------------------------------------------------
-func (bloom *ChunkBloom) getStats() (nBlooms uint64, nInserted uint64, nBitsLit uint64, nBitsNotLit uint64, sz uint64, bitsLit []uint64) {
-	bitsLit = []uint64{}
-	sz += 4
-	nBlooms = uint64(bloom.Count)
-	for _, bf := range bloom.Blooms {
-		nInserted += uint64(bf.NInserted)
-		sz += 4 + uint64(len(bf.Bytes))
-		for bitPos := 0; bitPos < len(bf.Bytes)*8; bitPos++ {
-			if IsBitLit(uint32(bitPos), bf.Bytes) {
-				nBitsLit++
-				bitsLit = append(bitsLit, uint64(bitPos))
-			} else {
-				nBitsNotLit++
-				// fmt.Printf("%d", b)
-			}
-		}
-	}
-	return
 }
 
 // ChunkBloom structures contain an array of BloomBytes each BLOOM_WIDTH_IN_BYTES wide. A new BloomBytes is added to

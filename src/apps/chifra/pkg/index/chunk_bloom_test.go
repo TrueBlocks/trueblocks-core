@@ -96,7 +96,7 @@ func Test_Bloom(t *testing.T) {
 	for _, tt := range tests {
 		whichBits := WhichBits(tt.Addr)
 		if tt.AddToSet {
-			bloom.LightBits(whichBits)
+			bloom.lightBits(whichBits)
 		}
 	}
 
@@ -150,7 +150,7 @@ func Test_Bloom(t *testing.T) {
 //     return true;
 // }
 
-func (bloom *ChunkBloom) LightBits(bits [5]uint32) {
+func (bloom *ChunkBloom) lightBits(bits [5]uint32) {
 	if len(bloom.Blooms) == 0 {
 		bloom.Blooms = append(bloom.Blooms, BloomBytes{})
 		bloom.Blooms[0].Bytes = make([]byte, BLOOM_WIDTH_IN_BYTES)
@@ -169,4 +169,24 @@ func (bloom *ChunkBloom) LightBits(bits [5]uint32) {
 	if bloom.Blooms[loc].NInserted > MAX_ADDRS_IN_BLOOM {
 		bloom.Blooms = append(bloom.Blooms, BloomBytes{})
 	}
+}
+
+func (bloom *ChunkBloom) getStats() (nBlooms uint64, nInserted uint64, nBitsLit uint64, nBitsNotLit uint64, sz uint64, bitsLit []uint64) {
+	bitsLit = []uint64{}
+	sz += 4
+	nBlooms = uint64(bloom.Count)
+	for _, bf := range bloom.Blooms {
+		nInserted += uint64(bf.NInserted)
+		sz += 4 + uint64(len(bf.Bytes))
+		for bitPos := 0; bitPos < len(bf.Bytes)*8; bitPos++ {
+			if IsBitLit(uint32(bitPos), bf.Bytes) {
+				nBitsLit++
+				bitsLit = append(bitsLit, uint64(bitPos))
+			} else {
+				nBitsNotLit++
+				// fmt.Printf("%d", b)
+			}
+		}
+	}
+	return
 }
