@@ -2,6 +2,7 @@ package index
 
 import (
 	"os"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 )
@@ -74,4 +75,15 @@ func (chunk *ChunkData) Close() error {
 		chunk.File.Close()
 	}
 	return nil
+}
+
+// ToIndexPath returns a path pointing to the bloom filter
+func ToIndexPath(pathIn string) string {
+	if strings.HasSuffix(pathIn, ".bin") {
+		return pathIn
+	}
+
+	ret := strings.Replace(pathIn, ".bloom", ".bin", -1)
+	ret = strings.Replace(ret, "/blooms/", "/finalized/", -1)
+	return ret
 }

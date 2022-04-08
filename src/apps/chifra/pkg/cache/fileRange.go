@@ -40,19 +40,17 @@ func RangeFromFilename(path string) (blkRange FileRange, err error) {
 	return
 }
 
+func (fR FileRange) String() string {
+	return fmt.Sprintf("%09d-%09d", fR.First, fR.Last)
+}
+
 // FilenameFromRange builds file name in form of `range.First-range.Last`, with numbers padded. If `extension` is present,
 // then it will be added to the file name as well
 func FilenameFromRange(fileRange FileRange, extension string) string {
-	fileName := fmt.Sprintf(
-		"%09d-%09d",
-		fileRange.First,
-		fileRange.Last,
-	)
-
+	fileName := fileRange.String()
 	if extension != "" {
 		return fmt.Sprintf("%s.%s", fileName, extension)
 	}
-
 	return fileName
 }
 

@@ -40,8 +40,8 @@ func NewChunkStats(path string) ChunkStats {
 	var ret ChunkStats
 	ret.Start = chunk.Range.First
 	ret.End = chunk.Range.Last
-	ret.NAddrs = uint64(chunk.Index.Header.AddressCount)
-	ret.NApps = uint64(chunk.Index.Header.AppearanceCount)
+	ret.NAddrs = uint64(chunk.Data.Header.AddressCount)
+	ret.NApps = uint64(chunk.Data.Header.AppearanceCount)
 	ret.NBlocks = ret.End - ret.Start + 1
 	ret.NBlooms = uint64(chunk.Bloom.Count)
 	if ret.NBlocks > 0 {
