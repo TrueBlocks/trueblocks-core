@@ -46,7 +46,7 @@ func (opts *ListOptions) HandleListAppearances(monitorArray []monitor.Monitor) e
 		for _, app := range apps {
 			exportRange := cache.FileRange{First: opts.FirstBlock, Last: opts.LastBlock}
 			appRange := cache.FileRange{First: uint64(app.BlockNumber), Last: uint64(app.BlockNumber)}
-			if cache.Intersects(appRange, exportRange) {
+			if appRange.Intersects(exportRange) {
 				var s SimpleAppearance
 				s.Address = mon.GetAddrStr()
 				s.BlockNumber = app.BlockNumber

@@ -21,7 +21,7 @@ func (opts *ChunksOptions) HandleChunksExtract(displayFunc func(path string, fir
 		case cache.Index_Bloom:
 			hit := false
 			for _, block := range blocks {
-				h := cache.BlockIntersects(result.Range, block)
+				h := result.Range.BlockIntersects(block)
 				hit = hit || h
 			}
 			if len(blocks) == 0 || hit {

@@ -9,38 +9,37 @@ import (
 	"testing"
 )
 
-type TestType struct {
-	fileName string
-	expected FileRange
-	errored  bool
-}
-
 func TestFileRange(t *testing.T) {
+	type TestType struct {
+		fileName string
+		want     FileRange
+		errored  bool
+	}
 	tests := []TestType{
 		{
 			fileName: "0.bin",
-			expected: FileRange{0, 0},
+			want:     FileRange{0, 0},
 		},
 		{
 			fileName: "illformed-x",
-			expected: FileRange{0, 0},
+			want:     FileRange{0, 0},
 			errored:  true,
 		},
 		{
 			fileName: "9991-9909.bin",
-			expected: FileRange{9991, 9909},
+			want:     FileRange{9991, 9909},
 		},
 		{
 			fileName: "000100001-000100002.bin",
-			expected: FileRange{100001, 100002},
+			want:     FileRange{100001, 100002},
 		},
 		{
 			fileName: "891919121.bin",
-			expected: FileRange{0, 891919121},
+			want:     FileRange{0, 891919121},
 		},
 		{
 			fileName: "/unchained/mainnet/blooms/013433393-013436307.bloom",
-			expected: FileRange{13433393, 13436307},
+			want:     FileRange{13433393, 13436307},
 		},
 	}
 
@@ -120,5 +119,79 @@ func TestFilenameFromRange(t *testing.T) {
 				t.Errorf("FilenameFromRange() = %v, want %v", got, tt.want)
 			}
 		})
+	}
+}
+
+func Test_RangeRangeIntersect(t *testing.T) {
+	type TestType struct {
+		name string
+		r1   FileRange
+		r2   FileRange
+		want []bool
+	}
+	tests := []TestType{
+		{
+			name: "right less than left",
+			r1:   FileRange{200, 300},
+			r2:   FileRange{100, 150},
+			want: []bool{false, false, false},
+		},
+		{
+			name: "fully overlap",
+			r1:   FileRange{200, 300},
+			r2:   FileRange{100, 400},
+			want: []bool{true, false, false},
+		},
+		{
+			name: "fully contained",
+			r1:   FileRange{200, 300},
+			r2:   FileRange{250, 275},
+			want: []bool{true, true, true},
+		},
+		{
+			name: "lefts align",
+			r1:   FileRange{200, 300},
+			r2:   FileRange{200, 400},
+			want: []bool{true, true, false},
+		},
+		{
+			name: "left greater than",
+			r1:   FileRange{200, 300},
+			r2:   FileRange{250, 400},
+			want: []bool{true, true, false},
+		},
+		{
+			name: "left aligns right",
+			r1:   FileRange{200, 300},
+			r2:   FileRange{300, 400},
+			want: []bool{true, true, false},
+		},
+		{
+			name: "rights align",
+			r1:   FileRange{200, 300},
+			r2:   FileRange{250, 300},
+			want: []bool{true, true, true},
+		},
+		{
+			name: "left greater than right",
+			r1:   FileRange{200, 300},
+			r2:   FileRange{350, 400},
+			want: []bool{false, false, false},
+		},
+	}
+
+	for _, tt := range tests {
+		s := tt.r1.Intersects(tt.r2)
+		if s != tt.want[0] {
+			t.Error("Test", tt.name, "failed.")
+		}
+		s = tt.r1.BlockIntersects(tt.r2.First)
+		if s != tt.want[1] {
+			t.Error("Test", tt.name, "failed.")
+		}
+		s = tt.r1.BlockIntersects(tt.r2.Last)
+		if s != tt.want[2] {
+			t.Error("Test", tt.name, "failed.")
+		}
 	}
 }

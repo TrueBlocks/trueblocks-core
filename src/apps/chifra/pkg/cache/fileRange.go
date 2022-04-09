@@ -54,10 +54,10 @@ func FilenameFromRange(fileRange FileRange, extension string) string {
 	return fileName
 }
 
-func Intersects(r1, r2 FileRange) bool {
-	return !(r1.Last < r2.First || r1.First > r2.Last)
+func (r *FileRange) Intersects(r2 FileRange) bool {
+	return !(r.Last < r2.First || r.First > r2.Last)
 }
 
-func BlockIntersects(r FileRange, blk uint64) bool {
+func (r *FileRange) BlockIntersects(blk uint64) bool {
 	return !(blk < r.First || blk > r.Last)
 }
