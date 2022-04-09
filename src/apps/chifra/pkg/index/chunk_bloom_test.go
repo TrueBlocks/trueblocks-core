@@ -157,7 +157,8 @@ func (bloom *ChunkBloom) getStats() (nBlooms uint64, nInserted uint64, nBitsLit 
 		nInserted += uint64(bf.NInserted)
 		sz += 4 + uint64(len(bf.Bytes))
 		for bitPos := 0; bitPos < len(bf.Bytes)*8; bitPos++ {
-			if bloom.IsBitLit_Old(uint32(bitPos), bf.Bytes) {
+			tester := BitTester{bit: uint32(bitPos)}
+			if bloom.isBitLitMemory(&tester, bf.Bytes) {
 				nBitsLit++
 				bitsLit = append(bitsLit, uint64(bitPos))
 			} else {
