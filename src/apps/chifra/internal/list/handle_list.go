@@ -24,7 +24,7 @@ type SimpleAppearance struct {
 
 func (opts *ListOptions) HandleListAppearances(monitorArray []monitor.Monitor) error {
 	for _, mon := range monitorArray {
-		apps := make([]index.AppearanceRecord, mon.Count, mon.Count)
+		apps := make([]index.AppearanceRecord, mon.Count(), mon.Count())
 		err := mon.ReadAppearances(&apps)
 		if err != nil {
 			return err
@@ -42,7 +42,7 @@ func (opts *ListOptions) HandleListAppearances(monitorArray []monitor.Monitor) e
 			return si < sj
 		})
 
-		results := make([]SimpleAppearance, 0, mon.Count)
+		results := make([]SimpleAppearance, 0, mon.Count())
 		for _, app := range apps {
 			exportRange := cache.FileRange{First: opts.FirstBlock, Last: opts.LastBlock}
 			appRange := cache.FileRange{First: uint64(app.BlockNumber), Last: uint64(app.BlockNumber)}

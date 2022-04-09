@@ -54,13 +54,13 @@ func (opts *ScrapeOptions) RunMonitorScraper(wg *sync.WaitGroup, initialState bo
 				case monitor.SentinalAddr:
 					close(monitorChan)
 				default:
-					if result.Count > 100000 {
+					if result.Count() > 100000 {
 						fmt.Println("Ignoring too-large address", result.Address)
 						continue
 					}
 					monitors = append(monitors, result)
 					count++
-					if result.Count > 0 {
+					if result.Count() > 0 {
 						fmt.Println("     ", count, ": ", result, "                                        ")
 					}
 				}
@@ -103,7 +103,7 @@ func (opts *ScrapeOptions) Refresh(chain string, monitors []monitor.Monitor) err
 		for j := 0; j < len(batches[i]); j++ {
 
 			mon := batches[i][j]
-			countBefore := mon.Count
+			countBefore := mon.Count()
 			countAfter, _ := mon.Reload(true /* create */)
 
 			if countAfter > 0 {

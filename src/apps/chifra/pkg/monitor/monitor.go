@@ -34,7 +34,6 @@ type Header struct {
 // Monitor carries information about a Monitor file and its header
 type Monitor struct {
 	Address  common.Address `json:"address"`
-	Count    uint32         `json:"count"`
 	FileSize uint32         `json:"fileSize"`
 	Staged   bool           `json:"-"`
 	Chain    string         `json:"-"`
@@ -74,9 +73,9 @@ func NewStagedMonitor(chain, addr string, testMode bool) Monitor {
 // String implements the Stringer interface
 func (mon Monitor) String() string {
 	if mon.Deleted {
-		return fmt.Sprintf("%s\t%d\t%d\t%d\t%t", hexutil.Encode(mon.Address.Bytes()), mon.Count, mon.FileSize, mon.LastScanned, mon.Deleted)
+		return fmt.Sprintf("%s\t%d\t%d\t%d\t%t", hexutil.Encode(mon.Address.Bytes()), mon.Count(), mon.FileSize, mon.LastScanned, mon.Deleted)
 	}
-	return fmt.Sprintf("%s\t%d\t%d\t%d", hexutil.Encode(mon.Address.Bytes()), mon.Count, mon.FileSize, mon.LastScanned)
+	return fmt.Sprintf("%s\t%d\t%d\t%d", hexutil.Encode(mon.Address.Bytes()), mon.Count(), mon.FileSize, mon.LastScanned)
 }
 
 // ToJSON returns a JSON object from a Monitor
@@ -111,8 +110,14 @@ func (mon *Monitor) Reload(create bool) (uint32, error) {
 		}
 	}
 	mon.FileSize = uint32(file.FileSize(mon.Path()))
-	mon.Count = uint32(file.FileSize(mon.Path())/index.AppRecordWidth) - 1
-	return mon.Count, nil
+	return mon.Count(), nil
+}
+
+func (mon *Monitor) Count() uint32 {
+	if file.FileSize(mon.Path()) == 0 {
+		return 0
+	}
+	return uint32(file.FileSize(mon.Path())/index.AppRecordWidth) - 1
 }
 
 // GetAddrStr returns the Monitor's address as a string
@@ -147,7 +152,7 @@ func (mon *Monitor) ReadHeader() (err error) {
 
 // ReadAppearanceAt returns the appearance at the one-based index.
 func (mon *Monitor) ReadAppearanceAt(idx uint32, app *index.AppearanceRecord) (err error) {
-	if idx == 0 || idx > mon.Count {
+	if idx == 0 || idx > mon.Count() {
 		// the file contains a header on record wide, so a one-based index eases caller code
 		err = errors.New(fmt.Sprintf("index out of range in ReadAppearanceAt[%d]", idx))
 		return
@@ -253,7 +258,7 @@ func (mon *Monitor) WriteAppearances(apps []index.AppearanceRecord) (count int, 
 
 	f.Close() // do not defer this, we need to close it so the fileSize is right
 	mon.Reload(false /* create */)
-	count = int(mon.Count)
+	count = int(mon.Count())
 
 	return
 }

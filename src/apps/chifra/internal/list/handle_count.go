@@ -23,7 +23,7 @@ func (opts *ListOptions) HandleListCount(monitorArray []monitor.Monitor) error {
 	for _, mon := range monitorArray {
 		var m SimpleMonitor
 		m.Address = mon.GetAddrStr()
-		m.NRecords = mon.Count
+		m.NRecords = mon.Count()
 		m.FileSize = mon.FileSize
 		results = append(results, m)
 
