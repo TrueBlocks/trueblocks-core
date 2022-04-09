@@ -133,7 +133,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(bloomFilename string, res
 		}
 	}
 	if !bloomHits {
-		log.Println("Bloom filter does not hit for: ", bloomFilename)
+		// log.Println("Bloom filter does not hit for: ", bloomFilename)
 		return
 	}
 
