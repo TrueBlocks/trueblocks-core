@@ -137,6 +137,8 @@ func (mon *Monitor) ReadHeader() (err error) {
 		}
 	}
 	err = binary.Read(mon.ReadFp, binary.LittleEndian, &mon.Header)
+	// TODO: BOGUS1
+	// fmt.Println("Readzy: ", mon)
 	if err != nil {
 		return
 	}
@@ -208,6 +210,8 @@ func (mon *Monitor) WriteMonHeader(deleted bool, lastScanned uint32) (err error)
 	mon.Deleted = deleted
 	if lastScanned > mon.LastScanned {
 		mon.LastScanned = lastScanned
+		// TODO: BOGUS1
+		// fmt.Fprintf(os.Stdout, "%sWritzy--> %s%s\n", colors.Green, mon, colors.Off)
 	}
 
 	f.Seek(0, io.SeekStart)

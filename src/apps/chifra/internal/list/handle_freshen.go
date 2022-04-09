@@ -52,8 +52,9 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 	for _, addr := range opts.Addrs {
 		if updater.MonitorMap[common.HexToAddress(addr)] == nil {
 			m := monitor.NewStagedMonitor(opts.Globals.Chain, addr, opts.Globals.TestMode)
+			m.ReadHeader()
 			// TODO: BOGUS1
-			// fmt.Fprintf(os.Stdout, "%s\n", m)
+			// fmt.Fprintf(os.Stdout, "Init: %s\n", m)
 			*monitorArray = append(*monitorArray, m)
 			// we need the address here because we want to modify this object below
 			updater.MonitorMap[m.Address] = &(*monitorArray)[len(*monitorArray)-1]
@@ -131,7 +132,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(bloomFilename string, res
 	}
 	for _, mon := range updater.MonitorMap {
 		// TODO: BOGUS1
-		// fmt.Fprintf(os.Stdout, "%s\n", mon)
+		// fmt.Fprintf(os.Stdout, "Scanzy: %s%s --> %s%s\n", colors.Cyan, chunk.Range, mon, colors.Off)
 		if chunk.Bloom.IsMember_New(mon.Address) {
 			bloomHits = true
 			break
@@ -139,8 +140,13 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(bloomFilename string, res
 	}
 	chunk.Close()
 	if !bloomHits {
+		for _, mon := range updater.MonitorMap {
+			results = append(results, index.AppearanceResult{Address: mon.Address, Range: chunk.Range})
+		}
 		return
 	}
+	// TODO: BOGUS1
+	// fmt.Fprintf(os.Stdout, "%sPozzi: %s --> %s\n", colors.Red, chunk.Range, colors.Off)
 
 	indexFilename := index.ToIndexPath(bloomFilename)
 	ok, err := establishIndexChunk(updater.Options.Globals.Chain, indexFilename)
@@ -240,18 +246,14 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 	// Write out the header
 	mon.WriteMonHeader(mon.Deleted, uint32(result.Range.Last)+1)
 
-	// fmt.Println("1:", result)
 	if result.AppRecords != nil {
-		// fmt.Println("2:", result)
 		if len(*result.AppRecords) > 0 {
-			// fmt.Println("3:", result)
-			// fmt.Println(result)
 			_, err := mon.WriteAppearances(*result.AppRecords)
 			if err != nil {
 				log.Println(err)
 			} else if !updater.Options.Globals.TestMode {
 				bBlue := (colors.Bright + colors.Blue)
-				log.Printf("Found %s%s%s adding appearances (count: %d)\n", bBlue, mon.GetAddrStr(), colors.Off, len(*result.AppRecords))
+				log.Printf("%s%s%s adding appearances (count: %d)\n", bBlue, mon.GetAddrStr(), colors.Off, len(*result.AppRecords))
 			}
 		}
 	}
@@ -265,6 +267,8 @@ func (updater *MonitorUpdate) moveAllToProduction() error {
 		if err != nil {
 			return err
 		}
+		// TODO: BOGUS1
+		// fmt.Fprintf(os.Stdout, "Donze: %s%s --> %s\n", colors.Red, mon, colors.Off)
 	}
 	return nil
 }
