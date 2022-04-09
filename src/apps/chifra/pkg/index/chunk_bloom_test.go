@@ -94,9 +94,8 @@ func Test_Bloom(t *testing.T) {
 
 	bloom := ChunkBloom{}
 	for _, tt := range tests {
-		whichBits := WhichBits(tt.Addr)
 		if tt.AddToSet {
-			bloom.lightBits(whichBits)
+			bloom.AddToSet(tt.Addr)
 		}
 	}
 
@@ -149,27 +148,6 @@ func Test_Bloom(t *testing.T) {
 //     unlockSection();
 //     return true;
 // }
-
-func (bloom *ChunkBloom) lightBits(bits [5]uint32) {
-	if len(bloom.Blooms) == 0 {
-		bloom.Blooms = append(bloom.Blooms, BloomBytes{})
-		bloom.Blooms[0].Bytes = make([]byte, BLOOM_WIDTH_IN_BYTES)
-	}
-
-	loc := len(bloom.Blooms) - 1
-	for _, bit := range bits {
-		which := (bit / 8)
-		whence := (bit % 8)
-		index := BLOOM_WIDTH_IN_BYTES - which - 1
-		mask := uint8(1 << whence)
-		bloom.Blooms[loc].Bytes[index] |= mask
-	}
-	bloom.Blooms[loc].NInserted++
-
-	if bloom.Blooms[loc].NInserted > MAX_ADDRS_IN_BLOOM {
-		bloom.Blooms = append(bloom.Blooms, BloomBytes{})
-	}
-}
 
 func (bloom *ChunkBloom) getStats() (nBlooms uint64, nInserted uint64, nBitsLit uint64, nBitsNotLit uint64, sz uint64, bitsLit []uint64) {
 	bitsLit = []uint64{}
