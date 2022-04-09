@@ -6,6 +6,7 @@ package listPkg
 
 // TODO: BOGUS -- USED TO BE ACCTSCRAPE2
 import (
+	"errors"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -51,6 +52,8 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 	for _, addr := range opts.Addrs {
 		if updater.MonitorMap[common.HexToAddress(addr)] == nil {
 			m := monitor.NewStagedMonitor(opts.Globals.Chain, addr, opts.Globals.TestMode)
+			// TODO: BOGUS1
+			// fmt.Fprintf(os.Stdout, "%s\n", m)
 			*monitorArray = append(*monitorArray, m)
 			// we need the address here because we want to modify this object below
 			updater.MonitorMap[m.Address] = &(*monitorArray)[len(*monitorArray)-1]
@@ -122,11 +125,13 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(bloomFilename string, res
 	var bloomHits = false
 	chunk, err := index.NewChunk(bloomFilename)
 	if err != nil {
-		fmt.Println("Error", bloomFilename, err)
+		results = append(results, index.AppearanceResult{Range: chunk.Range, Err: err})
 		chunk.Close()
 		return
 	}
 	for _, mon := range updater.MonitorMap {
+		// TODO: BOGUS1
+		// fmt.Fprintf(os.Stdout, "%s\n", mon)
 		if chunk.Bloom.IsMember_New(mon.Address) {
 			bloomHits = true
 			break
@@ -140,31 +145,24 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(bloomFilename string, res
 	indexFilename := index.ToIndexPath(bloomFilename)
 	ok, err := establishIndexChunk(updater.Options.Globals.Chain, indexFilename)
 	if err != nil {
-		log.Println(err)
+		results = append(results, index.AppearanceResult{Range: chunk.Range, Err: err})
 		return
 	}
 	if !ok {
-		log.Println("index file not found", indexFilename)
+		err := errors.New("could not establish index file: " + indexFilename)
+		results = append(results, index.AppearanceResult{Range: chunk.Range, Err: err})
 		return
 	}
 
 	indexChunk, err := index.NewChunkData(indexFilename)
 	if err != nil {
-		log.Println(err)
+		results = append(results, index.AppearanceResult{Range: chunk.Range, Err: err})
 		return
 	}
 	defer indexChunk.Close()
 
 	for _, mon := range updater.MonitorMap {
-		rec := indexChunk.GetAppearanceRecords(mon.Address)
-		if rec != nil {
-			results = append(results, *rec)
-		} else {
-			err := mon.WriteHeader(mon.Deleted, uint32(indexChunk.Range.Last+1))
-			if err != nil {
-				log.Println(err)
-			}
-		}
+		results = append(results, *indexChunk.GetAppearanceRecords(mon.Address))
 	}
 }
 
@@ -231,17 +229,31 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 		return
 	}
 
-	if result.AppRecords == nil || len(*result.AppRecords) == 0 {
-		fmt.Println("Should not happen -- empty result record:", result.Address)
+	if result.Err != nil {
+		fmt.Println("Error processing index file:", result.Err)
 		return
 	}
 
-	_, err := mon.WriteAppearances(*result.AppRecords, uint32(result.Range.Last))
-	if err != nil {
-		log.Println(err)
-	} else if !updater.Options.Globals.TestMode {
-		bBlue := (colors.Bright + colors.Blue)
-		log.Printf("Found %s%s%s adding appearances (count: %d)\n", bBlue, mon.GetAddrStr(), colors.Off, len(*result.AppRecords))
+	// Just in case, will be re-opened
+	mon.Close()
+
+	// Write out the header
+	mon.WriteMonHeader(mon.Deleted, uint32(result.Range.Last)+1)
+
+	// fmt.Println("1:", result)
+	if result.AppRecords != nil {
+		// fmt.Println("2:", result)
+		if len(*result.AppRecords) > 0 {
+			// fmt.Println("3:", result)
+			// fmt.Println(result)
+			_, err := mon.WriteAppearances(*result.AppRecords)
+			if err != nil {
+				log.Println(err)
+			} else if !updater.Options.Globals.TestMode {
+				bBlue := (colors.Bright + colors.Blue)
+				log.Printf("Found %s%s%s adding appearances (count: %d)\n", bBlue, mon.GetAddrStr(), colors.Off, len(*result.AppRecords))
+			}
+		}
 	}
 }
 

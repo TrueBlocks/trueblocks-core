@@ -74,9 +74,9 @@ func NewStagedMonitor(chain, addr string, testMode bool) Monitor {
 // String implements the Stringer interface
 func (mon Monitor) String() string {
 	if mon.Deleted {
-		return fmt.Sprintf("%s\t%d\t%d\t%t", hexutil.Encode(mon.Address.Bytes()), mon.Count, mon.FileSize, mon.Deleted)
+		return fmt.Sprintf("%s\t%d\t%d\t%d\t%t", hexutil.Encode(mon.Address.Bytes()), mon.Count, mon.FileSize, mon.LastScanned, mon.Deleted)
 	}
-	return fmt.Sprintf("%s\t%d\t%d", hexutil.Encode(mon.Address.Bytes()), mon.Count, mon.FileSize)
+	return fmt.Sprintf("%s\t%d\t%d\t%d", hexutil.Encode(mon.Address.Bytes()), mon.Count, mon.FileSize, mon.LastScanned)
 }
 
 // ToJSON returns a JSON object from a Monitor
@@ -105,7 +105,7 @@ func (mon *Monitor) Path() (path string) {
 func (mon *Monitor) Reload(create bool) (uint32, error) {
 	if create && !file.FileExists(mon.Path()) {
 		// Make sure the file exists since we've been told to monitor it
-		err := mon.WriteHeader(false, 0)
+		err := mon.WriteMonHeader(false, 0)
 		if err != nil {
 			return 0, err
 		}
@@ -197,8 +197,8 @@ func (mon *Monitor) ReadAppearances(apps *[]index.AppearanceRecord) (err error) 
 	return
 }
 
-// WriteHeader reads the monitor's header
-func (mon *Monitor) WriteHeader(deleted bool, lastScanned uint32) (err error) {
+// WriteMonHeader reads the monitor's header
+func (mon *Monitor) WriteMonHeader(deleted bool, lastScanned uint32) (err error) {
 	f, err := os.OpenFile(mon.Path(), os.O_WRONLY|os.O_CREATE, 0644)
 	if err != nil {
 		return
@@ -215,14 +215,8 @@ func (mon *Monitor) WriteHeader(deleted bool, lastScanned uint32) (err error) {
 	return
 }
 
-// WriteAppearances writes appearances to a Monitor and updates lastScanned
-func (mon *Monitor) WriteAppearances(apps []index.AppearanceRecord, lastScanned uint32) (count int, err error) {
-	// close the reader if it's open
-	mon.Close()
-
-	// Order matters
-	mon.WriteHeader(mon.Deleted, lastScanned+1)
-
+// WriteAppearances writes appearances to a Monitor
+func (mon *Monitor) WriteAppearances(apps []index.AppearanceRecord) (count int, err error) {
 	mode := os.O_WRONLY | os.O_CREATE
 	if file.FileExists(mon.Path()) {
 		// log.Println("Appending to existing monitor", mon.GetAddrStr())
@@ -269,7 +263,7 @@ func (mon *Monitor) IsDeleted() bool {
 // Delete marks the file's delete flag, but does not physically remove the file
 func (mon *Monitor) Delete() (prev bool) {
 	prev = mon.Deleted
-	mon.WriteHeader(true, mon.LastScanned)
+	mon.WriteMonHeader(true, mon.LastScanned)
 	mon.Deleted = true
 	return
 }
@@ -277,7 +271,7 @@ func (mon *Monitor) Delete() (prev bool) {
 // UnDelete unmarks the file's delete flag
 func (mon *Monitor) UnDelete() (prev bool) {
 	prev = mon.Deleted
-	mon.WriteHeader(false, mon.LastScanned)
+	mon.WriteMonHeader(false, mon.LastScanned)
 	mon.Deleted = false
 	return
 }

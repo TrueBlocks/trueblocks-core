@@ -24,7 +24,8 @@ func Test_Monitor_Print(t *testing.T) {
 	}()
 
 	// Append again, expect twice as many
-	count, err := mon.WriteAppearances(testApps, 2002002)
+	mon.WriteMonHeader(mon.Deleted, 2002003)
+	count, err := mon.WriteAppearances(testApps)
 	if err != nil {
 		t.Error(err)
 	}
@@ -40,7 +41,7 @@ func Test_Monitor_Print(t *testing.T) {
 	}
 
 	got = mon.String()
-	expected = "0xf503017d7baf7fbc0fff7492b751025c6a781791\t6\t56"
+	expected = "0xf503017d7baf7fbc0fff7492b751025c6a781791\t6\t56\t2002003"
 	if got != expected {
 		t.Error("Expected:", expected, "Got:", got)
 	}
@@ -169,7 +170,7 @@ func Test_Monitor_Delete(t *testing.T) {
 	}
 
 	got = mon.String()
-	expected = "0xf503017d7baf7fbc0fff7492b751025c6a781791\t3\t32\ttrue"
+	expected = "0xf503017d7baf7fbc0fff7492b751025c6a781791\t3\t32\t2002003\ttrue"
 	if got != expected {
 		t.Error("Expected:", expected, "Got:", got)
 	}
@@ -209,7 +210,8 @@ func GetTestMonitor(t *testing.T) Monitor {
 	}
 
 	// Append the appearances to the monitor
-	count, err := mon.WriteAppearances(testApps, 2002002)
+	mon.WriteMonHeader(mon.Deleted, 2002003)
+	count, err := mon.WriteAppearances(testApps)
 	if err != nil {
 		t.Error(err)
 	}
