@@ -55,17 +55,17 @@ func ReadBloom(bloom *ChunkBloom, fileName string) (err error) {
 
 func (bloom *ChunkBloom) IsMember_Old(addr common.Address) bool {
 	for _, bb := range bloom.Blooms {
-		if bb.IsMember_Old(addr) {
+		if bloom.IsMember_Old_Inner(&bb, addr) {
 			return true
 		}
 	}
 	return false
 }
 
-func (bb *BloomBytes) IsMember_Old(addr common.Address) bool {
+func (bloom *ChunkBloom) IsMember_Old_Inner(bb *BloomBytes, addr common.Address) bool {
 	whichBits := WhichBits(addr)
 	for _, bit := range whichBits {
-		if !IsBitLit_Old(bit, bb.Bytes) {
+		if !bloom.IsBitLit_Old(bit, bb.Bytes) {
 			return false
 		}
 	}
@@ -73,7 +73,7 @@ func (bb *BloomBytes) IsMember_Old(addr common.Address) bool {
 }
 
 // IsBitLit returns true if the given bit is lit in the given byte array
-func IsBitLit_Old(bit uint32, bytes []byte) bool {
+func (bloom *ChunkBloom) IsBitLit_Old(bit uint32, bytes []byte) bool {
 	which := uint32(bit / 8)
 	index := uint32(BLOOM_WIDTH_IN_BYTES - which - 1)
 
