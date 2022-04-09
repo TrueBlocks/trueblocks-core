@@ -24,37 +24,40 @@ func main() {
 // import (
 // 	"fmt"
 // 	"os"
+// 	"strings"
 
 // 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 // 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+// 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 // 	"github.com/ethereum/go-ethereum/common"
 // )
 
 // func main() {
-// 	newVersion := len(os.Args) > 1
-// 	// newVersion := true
-// 	addr := common.HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b")
-// 	for i := 0; i < 1000; i++ {
-// 		i := 0
+// 	contents := utils.AsciiFileToString("./addresses.csv")
+// 	lines := strings.Split(contents, "\n")
+// 	for _, line := range lines {
+// 		if line == "0x19f494583c7c933be7b0ee58104ddafac1e8adfa" {
+// 			fmt.Println()
+// 		}
+// 		addr := common.HexToAddress(line)
 // 		cachePath := cache.NewCachePath("mainnet", cache.Index_Bloom)
 // 		filePath := cachePath.GetFullPath(cache.FileRange{First: 14435826, Last: 14438546}.String())
-// 		// fmt.Println(addr)
-// 		// fmt.Println(cachePath)
-// 		// fmt.Println(bloomPath)
-// 		if newVersion {
-// 			chunk, _ := index.NewChunk(filePath)
-// 			// fmt.Println(chunk)
-// 			fmt.Printf("%d %t\r", i, chunk.IsMember2(addr))
-// 		} else {
-// 			chunk, _ := index.NewChunk(filePath)
-// 			err := index.ReadBloom(&chunk.Bloom, filePath)
-// 			if err != nil {
-// 				fmt.Println("Error", filePath, err)
-// 				return
+// 		which := len(os.Args) > 1 && os.Args[1] == "old"
+// 		for i := 0; i < 1; i++ {
+// 			if which {
+// 				oldChunk, _ := index.NewChunk(filePath)
+// 				index.ReadBloom(&oldChunk.Bloom, filePath)
+// 				fmt.Fprintf(os.Stdout, "=========== %d %s ==========\n", i, line)
+// 				fmt.Fprintf(os.Stdout, "%d: %t\n", i, oldChunk.Bloom.IsMember_Old(i, addr))
+// 				oldChunk.Close()
+// 			} else {
+// 				newChunk, _ := index.NewChunk(filePath)
+// 				fmt.Fprintf(os.Stdout, "=========== %d %s ==========\n", i, line)
+// 				fmt.Fprintf(os.Stdout, "%d: %t\n", i, newChunk.Bloom.IsMember_New(i, addr))
+// 				newChunk.Close()
 // 			}
-// 			fmt.Printf("%d %t\r", i, chunk.Bloom.IsMember(addr))
 // 		}
 // 	}
-// 	fmt.Println()
+
 // 	return
 // }

@@ -57,9 +57,11 @@ func (chunk Chunk) String() string {
 func (chunk *Chunk) Close() {
 	if chunk.Bloom.File != nil {
 		chunk.Bloom.File.Close()
+		chunk.Bloom.File = nil
 	}
 
 	if chunk.Data.File != nil {
 		chunk.Data.File.Close()
+		chunk.Data.File = nil
 	}
 }

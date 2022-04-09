@@ -15,7 +15,11 @@ func IsBitLit(bit uint32, bytes []byte) bool {
 	whence := uint32(bit % 8)
 	mask := byte(1 << whence)
 
-	return (bytes[index]&mask != 0)
+	byt := bytes[index]
+	res := byt & mask
+
+	// fmt.Fprintf(os.Stdout, "%d-%d-%d: % 9d\t% 9d\t% 9d\t% 9d\t% 9d\t% 9d\t%t\n", i, j, k, which, index, whence, mask, byt, res, (res != 0))
+	return (res != 0)
 }
 
 // WhichBits returns the five bits calculated from an address used to determine if the address is

@@ -4,57 +4,58 @@ package index
 // 	"encoding/binary"
 // 	"fmt"
 // 	"io"
+// 	"os"
 
 // 	"github.com/ethereum/go-ethereum/common"
 // )
 
-// func (chunk *Chunk) IsMember2(addr common.Address) bool {
-// 	for i := 0; i < int(chunk.Bloom.Count); i++ {
-// 		if chunk.Bloom.IsMember2(i, addr) {
+// func (bloom *ChunkBloom) IsMember_New(i int, addr common.Address) bool {
+// 	fmt.Println("Count:", bloom.Count)
+// 	const COUNT_SIZE = 4
+// 	const NINSERT_SIZE = 4
+// 	offset := COUNT_SIZE
+// 	for j := 0; j < int(bloom.Count); j++ {
+// 		offset += NINSERT_SIZE
+// 		fmt.Printf("--------- bloom: %d-%d -----------\n", i, j)
+// 		if bloom.IsMember_New_Inner(i, j, offset, addr) {
 // 			return true
 // 		}
+// 		offset += BLOOM_WIDTH_IN_BYTES
 // 	}
 // 	return false
 // }
 
-// func (bloom *ChunkBloom) IsMember2(which int, addr common.Address) bool {
-// 	const ARRAY_START = 4
-// 	const ITEM_SIZE_IN_BYTES = 4 + BLOOM_WIDTH_IN_BYTES
-
-// 	var positions []int
-// 	for i := 0; i < int(bloom.Count); i++ {
-// 		positions = append(positions, ARRAY_START+(i*ITEM_SIZE_IN_BYTES))
-// 	}
-// 	for i, p := range positions {
-// 		fmt.Println(i, p)
-// 	}
-// 	fmt.Println(bloom.Range, bloom.Size)
-
+// func (bloom *ChunkBloom) IsMember_New_Inner(i, j, offset int, addr common.Address) bool {
 // 	whichBits := WhichBits(addr)
-// 	for i, p := range positions {
-// 		hitCount := 0
-// 		for j, bit := range whichBits {
-// 			byt := bit / 8
-// 			which := bit % 8
-// 			mask := uint8(1 << which)
-// 			// fByte := float64(bit) / float64(8)
-// 			readLoc := int64(p + int(byt))
-// 			bloom.File.Seek(readLoc, io.SeekStart)
-// 			var val uint8
-// 			err := binary.Read(bloom.File, binary.LittleEndian, &val)
-// 			if err != nil {
-// 				return false
-// 			}
-// 			fmt.Printf("readingAt: %d %d % 9d % 9d % 9d % 9d % 9d % 9d %d %d\n", i, j, p, bit, which, mask, byt, readLoc, val, val&mask)
-// 			if val&mask > 0 {
-// 				hitCount++
-// 			}
-// 		}
-// 		fmt.Println("hitCount:", hitCount)
-// 		if hitCount == len(whichBits) {
-// 			return true
+// 	for k, bit := range whichBits {
+// 		if !bloom.IsBitLit_New(i, j, k, offset, bit) {
+// 			return false
 // 		}
 // 	}
-// 	fmt.Println()
 // 	return true
+// }
+
+// func (bloom *ChunkBloom) IsBitLit_New(i, j, k, offset int, bit uint32) bool {
+// 	which := uint32(bit / 8)
+// 	index := uint32(BLOOM_WIDTH_IN_BYTES - which - 1)
+
+// 	whence := uint32(bit % 8)
+// 	mask := byte(1 << whence)
+
+// 	var byt uint8
+// 	_, err := bloom.File.Seek(int64(offset+int(index)), io.SeekStart)
+// 	if err != nil {
+// 		fmt.Println("Seek error:", err)
+// 		return false
+// 	}
+
+// 	err = binary.Read(bloom.File, binary.LittleEndian, &byt)
+// 	if err != nil {
+// 		fmt.Println("Read error:", err)
+// 		return false
+// 	}
+
+// 	res := byt & mask
+// 	fmt.Fprintf(os.Stdout, "%d-%d-%d: % 9d\t% 9d\t% 9d\t% 9d\t% 9d\t% 9d\t%t\n", i, j, k, which, index, whence, mask, byt, res, (res != 0))
+// 	return (res != 0)
 // }
