@@ -132,23 +132,6 @@ func Test_Bloom(t *testing.T) {
 	}
 }
 
-// writeBloom
-//     lockSection();
-//     CArchive output(WRITING_ARCHIVE);
-//     if (!output.Lock(fileName, modeWriteCreate, LOCK_NOWAIT)) {
-//         unlockSection();
-//         return false;
-//     }
-//     output.Write((uint32_t)blooms.size());
-//     for (auto bloom : blooms) {
-//         output.Write(bloom.nInserted);
-//         output.Write(bloom.bits, sizeof(uint8_t), BLOOM_WIDTH_IN_BYTES);
-//     }
-//     output.Release();
-//     unlockSection();
-//     return true;
-// }
-
 func (bloom *ChunkBloom) getStats() (nBlooms uint64, nInserted uint64, nBitsLit uint64, nBitsNotLit uint64, sz uint64, bitsLit []uint64) {
 	bitsLit = []uint64{}
 	sz += 4
@@ -157,8 +140,8 @@ func (bloom *ChunkBloom) getStats() (nBlooms uint64, nInserted uint64, nBitsLit 
 		nInserted += uint64(bf.NInserted)
 		sz += 4 + uint64(len(bf.Bytes))
 		for bitPos := 0; bitPos < len(bf.Bytes)*8; bitPos++ {
-			tester := BitTester{bit: uint32(bitPos)}
-			if bloom.isBitLitMemory(&tester, bf.Bytes) {
+			tester := bitChecker{bit: uint32(bitPos), bytes: bf.Bytes}
+			if bloom.isBitLit(&tester) {
 				nBitsLit++
 				bitsLit = append(bitsLit, uint64(bitPos))
 			} else {

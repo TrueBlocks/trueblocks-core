@@ -188,3 +188,20 @@ func (bloom *ChunkBloom) AddToSet(addr common.Address) {
 		bloom.Blooms = append(bloom.Blooms, BloomBytes{})
 	}
 }
+
+// writeBloom
+//     lockSection();
+//     CArchive output(WRITING_ARCHIVE);
+//     if (!output.Lock(fileName, modeWriteCreate, LOCK_NOWAIT)) {
+//         unlockSection();
+//         return false;
+//     }
+//     output.Write((uint32_t)blooms.size());
+//     for (auto bloom : blooms) {
+//         output.Write(bloom.nInserted);
+//         output.Write(bloom.bits, sizeof(uint8_t), BLOOM_WIDTH_IN_BYTES);
+//     }
+//     output.Release();
+//     unlockSection();
+//     return true;
+// }
