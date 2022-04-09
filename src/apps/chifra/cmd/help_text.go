@@ -39,4 +39,4 @@ var helpText = `  Accounts:
   Use "chifra [command] --help" for more information about a command.
 `
 
-var versionText = "GHC-TrueBlocks//0.30.0-beta"
+var versionText = "GHC-TrueBlocks//0.29.0-beta"
