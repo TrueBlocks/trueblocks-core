@@ -8,10 +8,8 @@ package listPkg
 import (
 	"errors"
 	"fmt"
-	"io"
 	"io/ioutil"
 	"log"
-	"os"
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
@@ -31,20 +29,18 @@ type AddressMonitorMap map[common.Address]*monitor.Monitor
 
 // MonitorUpdate stores the original 'chifra list' command line options plus
 type MonitorUpdate struct {
-	MaxTasks    int
-	MonitorMap  AddressMonitorMap
-	Options     *ListOptions
-	ExportRange cache.FileRange
-	Writer      io.Writer
+	MaxTasks   int
+	MonitorMap AddressMonitorMap
+	Chain      string
+	TestMode   bool
 }
 
 func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) error {
 	var updater = MonitorUpdate{
-		MaxTasks:    12,
-		MonitorMap:  make(AddressMonitorMap, len(opts.Addrs)),
-		ExportRange: cache.FileRange{First: opts.FirstBlock, Last: opts.LastBlock},
-		Options:     opts,
-		Writer:      os.Stdout,
+		MaxTasks:   12,
+		MonitorMap: make(AddressMonitorMap, len(opts.Addrs)),
+		Chain:      opts.Globals.Chain,
+		TestMode:   opts.Globals.TestMode,
 	}
 
 	// This removes duplicates from the input array and keep a map from address to
@@ -149,7 +145,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(bloomFilename string, res
 	// fmt.Fprintf(os.Stdout, "%sPozzi: %s --> %s\n", colors.Red, chunk.Range, colors.Off)
 
 	indexFilename := index.ToIndexPath(bloomFilename)
-	ok, err := establishIndexChunk(updater.Options.Globals.Chain, indexFilename)
+	ok, err := establishIndexChunk(updater.Chain, indexFilename)
 	if err != nil {
 		results = append(results, index.AppearanceResult{Range: chunk.Range, Err: err})
 		return
@@ -251,7 +247,7 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 			_, err := mon.WriteAppearances(*result.AppRecords)
 			if err != nil {
 				log.Println(err)
-			} else if !updater.Options.Globals.TestMode {
+			} else if !updater.TestMode {
 				bBlue := (colors.Bright + colors.Blue)
 				log.Printf("%s%s%s adding appearances (count: %d)\n", bBlue, mon.GetAddrStr(), colors.Off, len(*result.AppRecords))
 			}

@@ -35,7 +35,7 @@ func Test_Monitor_Print(t *testing.T) {
 
 	// The monitor should report that it has two appearances
 	got := fmt.Sprintln(mon.ToJSON())
-	expected := "{\"address\":\"0xf503017d7baf7fbc0fff7492b751025c6a781791\",\"count\":6,\"fileSize\":56,\"lastScanned\":2002003}\n"
+	expected := "{\"address\":\"0xf503017d7baf7fbc0fff7492b751025c6a781791\",\"fileSize\":56,\"lastScanned\":2002003}\n"
 	if got != expected {
 		t.Error("Expected:", expected, "Got:", got)
 	}
@@ -72,7 +72,7 @@ func Test_Monitor_ReadApp(t *testing.T) {
 	}
 
 	expected = index.AppearanceRecord{BlockNumber: 1001003, TransactionId: 2}
-	err = mon.ReadAppearanceAt(mon.Count, &got)
+	err = mon.ReadAppearanceAt(mon.Count(), &got)
 	if got != expected || err != nil {
 		t.Error("Expected:", expected, "Got:", got, err)
 	}
@@ -89,8 +89,8 @@ func Test_Monitor_ReadApps(t *testing.T) {
 		RemoveTestMonitor(&mon, t)
 	}()
 
-	if mon.Count != nTests {
-		t.Error("Number of records in monitor", mon.Count, "is not as expected", nTests)
+	if mon.Count() != nTests {
+		t.Error("Number of records in monitor", mon.Count(), "is not as expected", nTests)
 	}
 
 	err := mon.ReadHeader()
@@ -99,7 +99,7 @@ func Test_Monitor_ReadApps(t *testing.T) {
 	}
 	// TODO: read the header
 
-	apps := make([]index.AppearanceRecord, mon.Count)
+	apps := make([]index.AppearanceRecord, mon.Count())
 	err = mon.ReadAppearances(&apps)
 	if err != nil {
 		t.Error(err)
@@ -120,7 +120,7 @@ func Test_Monitor_Delete(t *testing.T) {
 
 	// The monitor should report that it has two appearances
 	got := fmt.Sprintln(mon.ToJSON())
-	expected := "{\"address\":\"0xf503017d7baf7fbc0fff7492b751025c6a781791\",\"count\":3,\"fileSize\":32,\"lastScanned\":2002003}\n"
+	expected := "{\"address\":\"0xf503017d7baf7fbc0fff7492b751025c6a781791\",\"fileSize\":32,\"lastScanned\":2002003}\n"
 	if got != expected {
 		t.Error("Expected:", expected, "Got:", got)
 	}
@@ -184,7 +184,6 @@ func GetTestMonitor(t *testing.T) Monitor {
 	if file.FileExists(mon.Path()) {
 		file.Remove(mon.Path())
 		file.Touch(mon.Path())
-		mon.Count = 0
 	}
 
 	if mon.Address != common.HexToAddress(testAddr) {
@@ -201,7 +200,7 @@ func GetTestMonitor(t *testing.T) Monitor {
 	}
 
 	// and be empty
-	if mon.Count != 0 {
+	if mon.Count() != 0 {
 		t.Error("New monitor file should be empty")
 	}
 
@@ -226,8 +225,8 @@ func RemoveTestMonitor(mon *Monitor, t *testing.T) {
 	if !file.FileExists(mon.Path()) {
 		t.Error("Monitor file should exist")
 	}
-	if mon.Count != nTests && mon.Count != nTests*2 {
-		t.Error("Monitor should have three or six records, has:", mon.Count)
+	if mon.Count() != nTests && mon.Count() != nTests*2 {
+		t.Error("Monitor should have three or six records, has:", mon.Count())
 	}
 	file.Remove(mon.Path())
 }
