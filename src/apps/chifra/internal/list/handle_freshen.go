@@ -119,23 +119,23 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(bloomFilename string, res
 	}()
 
 	// TODO: BOGUS - Do blooms speed things up?
-	// var bloom index.ChunkBloom
-	// err := index.ReadBloom(&bloom, bloomFilename)
-	// if err != nil {
-	// 	fmt.Println("Error", bloomFilename, err)
-	// 	return
-	// }
-	// var bloomHits = false
-	// for _, mon := range updater.MonitorMap {
-	// 	if bloom.IsMember(mon.Address) {
-	// 		bloomHits = true
-	// 		break
-	// 	}
-	// }
-	// if !bloomHits {
-	// 	log.Println("Bloom filter does not hit for: ", bloomFilename)
-	// 	return
-	// }
+	var bloom index.ChunkBloom
+	err := index.ReadBloom(&bloom, bloomFilename)
+	if err != nil {
+		fmt.Println("Error", bloomFilename, err)
+		return
+	}
+	var bloomHits = false
+	for _, mon := range updater.MonitorMap {
+		if bloom.IsMember(mon.Address) {
+			bloomHits = true
+			break
+		}
+	}
+	if !bloomHits {
+		log.Println("Bloom filter does not hit for: ", bloomFilename)
+		return
+	}
 
 	indexFilename := index.ToIndexPath(bloomFilename)
 	ok, err := establishIndexChunk(updater.Options.Globals.Chain, indexFilename)
