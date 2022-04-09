@@ -118,22 +118,37 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(bloomFilename string, res
 		resultChannel <- results
 	}()
 
+	oldShit := false // os.Getenv("NEW") != "true"
 	// TODO: BOGUS - Do blooms speed things up?
-	var bloom index.ChunkBloom
-	err := index.ReadBloom(&bloom, bloomFilename)
-	if err != nil {
-		fmt.Println("Error", bloomFilename, err)
-		return
-	}
 	var bloomHits = false
-	for _, mon := range updater.MonitorMap {
-		if bloom.IsMember_Old(mon.Address) {
-			bloomHits = true
-			break
+	if oldShit {
+		var bloom index.ChunkBloom
+		err := index.ReadBloom(&bloom, bloomFilename)
+		if err != nil {
+			fmt.Println("Error", bloomFilename, err)
+			return
 		}
+		for _, mon := range updater.MonitorMap {
+			if bloom.IsMember_Old(mon.Address) {
+				bloomHits = true
+				break
+			}
+		}
+	} else {
+		chunk, err := index.NewChunk(bloomFilename)
+		if err != nil {
+			fmt.Println("Error", bloomFilename, err)
+			return
+		}
+		for _, mon := range updater.MonitorMap {
+			if chunk.Bloom.IsMember_New(mon.Address) {
+				bloomHits = true
+				break
+			}
+		}
+		chunk.Close()
 	}
 	if !bloomHits {
-		// log.Println("Bloom filter does not hit for: ", bloomFilename)
 		return
 	}
 

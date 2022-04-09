@@ -8,6 +8,40 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
+func (bloom *ChunkBloom) IsMember_Old(addr common.Address) bool {
+	for _, bb := range bloom.Blooms {
+		if bloom.IsMember_Old_Inner(&bb, addr) {
+			return true
+		}
+	}
+	return false
+}
+
+func (bloom *ChunkBloom) IsMember_Old_Inner(bb *BloomBytes, addr common.Address) bool {
+	whichBits := WhichBits(addr)
+	for _, bit := range whichBits {
+		if !bloom.IsBitLit_Old(bit, bb.Bytes) {
+			return false
+		}
+	}
+	return true
+}
+
+// IsBitLit returns true if the given bit is lit in the given byte array
+func (bloom *ChunkBloom) IsBitLit_Old(bit uint32, bytes []byte) bool {
+	which := uint32(bit / 8)
+	index := uint32(BLOOM_WIDTH_IN_BYTES - which - 1)
+
+	whence := uint32(bit % 8)
+	mask := byte(1 << whence)
+
+	byt := bytes[index]
+	res := byt & mask
+
+	// fmt.Fprintf(os.Stdout, "%d-%d-%d: % 9d\t% 9d\t% 9d\t% 9d\t% 9d\t% 9d\t%t\n", i, j, k, which, index, whence, mask, byt, res, (res != 0))
+	return (res != 0)
+}
+
 func (bloom *ChunkBloom) IsMember_New(addr common.Address) bool {
 	const COUNT_SIZE = 4
 	const NINSERT_SIZE = 4

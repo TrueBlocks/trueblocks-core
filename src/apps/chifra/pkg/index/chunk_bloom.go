@@ -17,145 +17,6 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
-//---------------------------------------------------------------------------
-func ReadBloom(bloom *ChunkBloom, fileName string) (err error) {
-	bloom.Range, err = cache.RangeFromFilename(fileName)
-	if err != nil {
-		return err
-	}
-
-	bloom.File, err = os.OpenFile(fileName, os.O_RDONLY, 0644)
-	if err != nil {
-		return err
-	}
-	defer bloom.File.Close()
-
-	err = binary.Read(bloom.File, binary.LittleEndian, &bloom.Count)
-	if err != nil {
-		return err
-	}
-
-	bloom.Blooms = make([]BloomBytes, bloom.Count)
-	for i := uint32(0); i < bloom.Count; i++ {
-		// fmt.Println("nBlooms:", bloom.Count)
-		err = binary.Read(bloom.File, binary.LittleEndian, &bloom.Blooms[i].NInserted)
-		if err != nil {
-			return err
-		}
-		// fmt.Println("nInserted:", bloom.Blooms[i].NInserted)
-		bloom.Blooms[i].Bytes = make([]byte, BLOOM_WIDTH_IN_BYTES)
-		err = binary.Read(bloom.File, binary.LittleEndian, &bloom.Blooms[i].Bytes)
-		if err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (bloom *ChunkBloom) IsMember_Old(addr common.Address) bool {
-	for _, bb := range bloom.Blooms {
-		if bloom.IsMember_Old_Inner(&bb, addr) {
-			return true
-		}
-	}
-	return false
-}
-
-func (bloom *ChunkBloom) IsMember_Old_Inner(bb *BloomBytes, addr common.Address) bool {
-	whichBits := WhichBits(addr)
-	for _, bit := range whichBits {
-		if !bloom.IsBitLit_Old(bit, bb.Bytes) {
-			return false
-		}
-	}
-	return true
-}
-
-// IsBitLit returns true if the given bit is lit in the given byte array
-func (bloom *ChunkBloom) IsBitLit_Old(bit uint32, bytes []byte) bool {
-	which := uint32(bit / 8)
-	index := uint32(BLOOM_WIDTH_IN_BYTES - which - 1)
-
-	whence := uint32(bit % 8)
-	mask := byte(1 << whence)
-
-	byt := bytes[index]
-	res := byt & mask
-
-	// fmt.Fprintf(os.Stdout, "%d-%d-%d: % 9d\t% 9d\t% 9d\t% 9d\t% 9d\t% 9d\t%t\n", i, j, k, which, index, whence, mask, byt, res, (res != 0))
-	return (res != 0)
-}
-
-func (bloom *ChunkBloom) Display(verbose int) {
-	var bytesPerLine = (2048 / 16)
-	if verbose > 0 {
-		if verbose > 4 {
-			bytesPerLine = 128
-		} else {
-			bytesPerLine = 32
-		}
-	}
-
-	nInserted := uint32(0)
-	for i := uint32(0); i < bloom.Count; i++ {
-		nInserted += bloom.Blooms[i].NInserted
-	}
-	fmt.Println("range:", bloom.Range)
-	fmt.Println("nBlooms:", bloom.Count)
-	fmt.Println("byteWidth:", BLOOM_WIDTH_IN_BYTES)
-	fmt.Println("nInserted:", nInserted)
-	if verbose > 0 {
-		for i := uint32(0); i < bloom.Count; i++ {
-			for j := 0; j < len(bloom.Blooms[i].Bytes); j++ {
-				if (j % bytesPerLine) == 0 {
-					if j != 0 {
-						fmt.Println()
-					}
-				}
-				ch := bloom.Blooms[i].Bytes[j]
-				str := fmt.Sprintf("%08b", ch)
-				fmt.Printf("%s ", strings.Replace(str, "0", ".", -1))
-			}
-		}
-		fmt.Println()
-	}
-}
-
-// AddToSet adds an address to a bloom filter
-func (bloom *ChunkBloom) AddToSet(addr common.Address) {
-	if len(bloom.Blooms) == 0 {
-		bloom.Blooms = append(bloom.Blooms, BloomBytes{})
-		bloom.Blooms[0].Bytes = make([]byte, BLOOM_WIDTH_IN_BYTES)
-	}
-
-	loc := len(bloom.Blooms) - 1
-	bits := WhichBits(addr)
-	for _, bit := range bits {
-		which := (bit / 8)
-		whence := (bit % 8)
-		index := BLOOM_WIDTH_IN_BYTES - which - 1
-		mask := uint8(1 << whence)
-		bloom.Blooms[loc].Bytes[index] |= mask
-	}
-	bloom.Blooms[loc].NInserted++
-
-	if bloom.Blooms[loc].NInserted > MAX_ADDRS_IN_BLOOM {
-		bloom.Blooms = append(bloom.Blooms, BloomBytes{})
-	}
-}
-
-// ToBloomPath returns a path pointing to the bloom filter given either a path to itself or its associated index data
-func ToBloomPath(pathIn string) string {
-	if strings.HasSuffix(pathIn, ".bloom") {
-		return pathIn
-	}
-
-	ret := strings.Replace(pathIn, ".bin", ".bloom", -1)
-	ret = strings.Replace(ret, "/finalized/", "/blooms/", -1)
-	return ret
-}
-
 // ChunkBloom structures contain an array of BloomBytes each BLOOM_WIDTH_IN_BYTES wide. A new BloomBytes is added to
 // the ChunkBloom when around MAX_ADDRS_IN_BLOOM addresses has been added. These Adaptive Bloom Filters allow us to
 // maintain a near-constant false-positive rate at the expense of slightly larger bloom filters than might be expected.
@@ -220,5 +81,110 @@ func (bloom *ChunkBloom) Close() {
 	if bloom.File != nil {
 		bloom.File.Close()
 		bloom.File = nil
+	}
+}
+
+// ToBloomPath returns a path pointing to the bloom filter given either a path to itself or its associated index data
+func ToBloomPath(pathIn string) string {
+	if strings.HasSuffix(pathIn, ".bloom") {
+		return pathIn
+	}
+
+	ret := strings.Replace(pathIn, ".bin", ".bloom", -1)
+	ret = strings.Replace(ret, "/finalized/", "/blooms/", -1)
+	return ret
+}
+
+//---------------------------------------------------------------------------
+func ReadBloom(bloom *ChunkBloom, fileName string) (err error) {
+	bloom.Range, err = cache.RangeFromFilename(fileName)
+	if err != nil {
+		return err
+	}
+
+	bloom.File, err = os.OpenFile(fileName, os.O_RDONLY, 0644)
+	if err != nil {
+		return err
+	}
+	defer bloom.File.Close()
+
+	err = binary.Read(bloom.File, binary.LittleEndian, &bloom.Count)
+	if err != nil {
+		return err
+	}
+
+	bloom.Blooms = make([]BloomBytes, bloom.Count)
+	for i := uint32(0); i < bloom.Count; i++ {
+		// fmt.Println("nBlooms:", bloom.Count)
+		err = binary.Read(bloom.File, binary.LittleEndian, &bloom.Blooms[i].NInserted)
+		if err != nil {
+			return err
+		}
+		// fmt.Println("nInserted:", bloom.Blooms[i].NInserted)
+		bloom.Blooms[i].Bytes = make([]byte, BLOOM_WIDTH_IN_BYTES)
+		err = binary.Read(bloom.File, binary.LittleEndian, &bloom.Blooms[i].Bytes)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (bloom *ChunkBloom) Display(verbose int) {
+	var bytesPerLine = (2048 / 16)
+	if verbose > 0 {
+		if verbose > 4 {
+			bytesPerLine = 128
+		} else {
+			bytesPerLine = 32
+		}
+	}
+
+	nInserted := uint32(0)
+	for i := uint32(0); i < bloom.Count; i++ {
+		nInserted += bloom.Blooms[i].NInserted
+	}
+	fmt.Println("range:", bloom.Range)
+	fmt.Println("nBlooms:", bloom.Count)
+	fmt.Println("byteWidth:", BLOOM_WIDTH_IN_BYTES)
+	fmt.Println("nInserted:", nInserted)
+	if verbose > 0 {
+		for i := uint32(0); i < bloom.Count; i++ {
+			for j := 0; j < len(bloom.Blooms[i].Bytes); j++ {
+				if (j % bytesPerLine) == 0 {
+					if j != 0 {
+						fmt.Println()
+					}
+				}
+				ch := bloom.Blooms[i].Bytes[j]
+				str := fmt.Sprintf("%08b", ch)
+				fmt.Printf("%s ", strings.Replace(str, "0", ".", -1))
+			}
+		}
+		fmt.Println()
+	}
+}
+
+// AddToSet adds an address to a bloom filter
+func (bloom *ChunkBloom) AddToSet(addr common.Address) {
+	if len(bloom.Blooms) == 0 {
+		bloom.Blooms = append(bloom.Blooms, BloomBytes{})
+		bloom.Blooms[0].Bytes = make([]byte, BLOOM_WIDTH_IN_BYTES)
+	}
+
+	loc := len(bloom.Blooms) - 1
+	bits := WhichBits(addr)
+	for _, bit := range bits {
+		which := (bit / 8)
+		whence := (bit % 8)
+		index := BLOOM_WIDTH_IN_BYTES - which - 1
+		mask := uint8(1 << whence)
+		bloom.Blooms[loc].Bytes[index] |= mask
+	}
+	bloom.Blooms[loc].NInserted++
+
+	if bloom.Blooms[loc].NInserted > MAX_ADDRS_IN_BLOOM {
+		bloom.Blooms = append(bloom.Blooms, BloomBytes{})
 	}
 }
