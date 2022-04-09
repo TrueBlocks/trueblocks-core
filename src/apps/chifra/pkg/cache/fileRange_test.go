@@ -134,64 +134,72 @@ func Test_RangeRangeIntersect(t *testing.T) {
 			name: "right less than left",
 			r1:   FileRange{200, 300},
 			r2:   FileRange{100, 150},
-			want: []bool{false, false, false},
+			want: []bool{false, false, false, true, false},
 		},
 		{
 			name: "fully overlap",
 			r1:   FileRange{200, 300},
 			r2:   FileRange{100, 400},
-			want: []bool{true, false, false},
+			want: []bool{true, false, false, true, true},
 		},
 		{
 			name: "fully contained",
 			r1:   FileRange{200, 300},
 			r2:   FileRange{250, 275},
-			want: []bool{true, true, true},
+			want: []bool{true, true, true, false, false},
 		},
 		{
 			name: "lefts align",
 			r1:   FileRange{200, 300},
 			r2:   FileRange{200, 400},
-			want: []bool{true, true, false},
+			want: []bool{true, true, false, false, true},
 		},
 		{
 			name: "left greater than",
 			r1:   FileRange{200, 300},
 			r2:   FileRange{250, 400},
-			want: []bool{true, true, false},
+			want: []bool{true, true, false, false, true},
 		},
 		{
 			name: "left aligns right",
 			r1:   FileRange{200, 300},
 			r2:   FileRange{300, 400},
-			want: []bool{true, true, false},
+			want: []bool{true, true, false, false, true},
 		},
 		{
 			name: "rights align",
 			r1:   FileRange{200, 300},
 			r2:   FileRange{250, 300},
-			want: []bool{true, true, true},
+			want: []bool{true, true, true, false, false},
 		},
 		{
 			name: "left greater than right",
 			r1:   FileRange{200, 300},
 			r2:   FileRange{350, 400},
-			want: []bool{false, false, false},
+			want: []bool{false, false, false, false, true},
 		},
 	}
 
 	for _, tt := range tests {
 		s := tt.r1.Intersects(tt.r2)
 		if s != tt.want[0] {
-			t.Error("Test", tt.name, "failed.")
+			t.Error("Test", tt.name, "failed Intersects.")
 		}
 		s = tt.r1.BlockIntersects(tt.r2.First)
 		if s != tt.want[1] {
-			t.Error("Test", tt.name, "failed.")
+			t.Error("Test", tt.name, "failed BlockIntersects1.")
 		}
 		s = tt.r1.BlockIntersects(tt.r2.Last)
 		if s != tt.want[2] {
-			t.Error("Test", tt.name, "failed.")
+			t.Error("Test", tt.name, "failed BlockIntersects2.")
+		}
+		s = tt.r1.BlockIsBefore(tt.r2.First)
+		if s != tt.want[3] {
+			t.Error("Test", tt.name, "failed BlockIsBefore.")
+		}
+		s = tt.r1.BlockIsAfter(tt.r2.Last)
+		if s != tt.want[4] {
+			t.Error("Test", tt.name, "failed BlockIsAfter.")
 		}
 	}
 }

@@ -54,10 +54,22 @@ func FilenameFromRange(fileRange FileRange, extension string) string {
 	return fileName
 }
 
+// Intersects returns true if the two ranges intersect
 func (r *FileRange) Intersects(r2 FileRange) bool {
 	return !(r.Last < r2.First || r.First > r2.Last)
 }
 
+// BlockIntersects returns true if block is inside the range (inclusive on both ends)
 func (r *FileRange) BlockIntersects(blk uint64) bool {
 	return !(blk < r.First || blk > r.Last)
+}
+
+// BlockIsAfter returns true if the last block in the file is less than the given block
+func (r *FileRange) BlockIsAfter(blk uint64) bool {
+	return r.Last < blk
+}
+
+// BlockIsBefore returns true if the first block in the file is greater than the given block
+func (r *FileRange) BlockIsBefore(blk uint64) bool {
+	return r.First > blk
 }
