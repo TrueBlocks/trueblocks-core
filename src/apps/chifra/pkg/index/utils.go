@@ -7,21 +7,6 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
-// IsBitLit returns true if the given bit is lit in the given byte array
-func IsBitLit(bit uint32, bytes []byte) bool {
-	which := uint32(bit / 8)
-	index := uint32(BLOOM_WIDTH_IN_BYTES - which - 1)
-
-	whence := uint32(bit % 8)
-	mask := byte(1 << whence)
-
-	byt := bytes[index]
-	res := byt & mask
-
-	// fmt.Fprintf(os.Stdout, "%d-%d-%d: % 9d\t% 9d\t% 9d\t% 9d\t% 9d\t% 9d\t%t\n", i, j, k, which, index, whence, mask, byt, res, (res != 0))
-	return (res != 0)
-}
-
 // WhichBits returns the five bits calculated from an address used to determine if the address is
 // in the bloom filter. We get the five bits by cutting the 20-byte address into five equal four-byte
 // parts, turning those four bytes into an 32-bit integer modulo the width of a bloom array item.

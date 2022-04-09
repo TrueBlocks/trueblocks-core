@@ -72,6 +72,21 @@ func (bb *BloomBytes) IsMember(addr common.Address) bool {
 	return true
 }
 
+// IsBitLit returns true if the given bit is lit in the given byte array
+func IsBitLit(bit uint32, bytes []byte) bool {
+	which := uint32(bit / 8)
+	index := uint32(BLOOM_WIDTH_IN_BYTES - which - 1)
+
+	whence := uint32(bit % 8)
+	mask := byte(1 << whence)
+
+	byt := bytes[index]
+	res := byt & mask
+
+	// fmt.Fprintf(os.Stdout, "%d-%d-%d: % 9d\t% 9d\t% 9d\t% 9d\t% 9d\t% 9d\t%t\n", i, j, k, which, index, whence, mask, byt, res, (res != 0))
+	return (res != 0)
+}
+
 func (bloom *ChunkBloom) Display(verbose int) {
 	var bytesPerLine = (2048 / 16)
 	if verbose > 0 {
