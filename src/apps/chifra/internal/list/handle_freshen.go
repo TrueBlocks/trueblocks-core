@@ -127,7 +127,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(bloomFilename string, res
 	}
 	var bloomHits = false
 	for _, mon := range updater.MonitorMap {
-		if bloom.IsMember(mon.Address) {
+		if bloom.IsMember_Old(mon.Address) {
 			bloomHits = true
 			break
 		}

@@ -121,14 +121,14 @@ func Test_Bloom(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		if tt.AddToSet && !bloom.IsMember(tt.Addr) {
+		if tt.AddToSet && !bloom.IsMember_Old(tt.Addr) {
 			t.Error("address should be member, but isn't", tt.Addr.Hex())
 
-		} else if !tt.AddToSet && bloom.IsMember(tt.Addr) { // && !tt.FalsePositive {
+		} else if !tt.AddToSet && bloom.IsMember_Old(tt.Addr) { // && !tt.FalsePositive {
 			t.Error("address should not be member, but is (ignores false positives)", tt.Addr.Hex())
 		}
 
-		fmt.Println(strings.ToLower(tt.Addr.Hex()), bloom.IsMember(tt.Addr))
+		fmt.Println(strings.ToLower(tt.Addr.Hex()), bloom.IsMember_Old(tt.Addr))
 	}
 }
 
@@ -157,7 +157,7 @@ func (bloom *ChunkBloom) getStats() (nBlooms uint64, nInserted uint64, nBitsLit 
 		nInserted += uint64(bf.NInserted)
 		sz += 4 + uint64(len(bf.Bytes))
 		for bitPos := 0; bitPos < len(bf.Bytes)*8; bitPos++ {
-			if IsBitLit(uint32(bitPos), bf.Bytes) {
+			if IsBitLit_Old(uint32(bitPos), bf.Bytes) {
 				nBitsLit++
 				bitsLit = append(bitsLit, uint64(bitPos))
 			} else {
