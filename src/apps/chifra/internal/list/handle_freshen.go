@@ -33,6 +33,7 @@ type MonitorUpdate struct {
 	MonitorMap AddressMonitorMap
 	Chain      string
 	TestMode   bool
+	LogLevel   int
 }
 
 func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) error {
@@ -41,6 +42,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 		MonitorMap: make(AddressMonitorMap, len(opts.Addrs)),
 		Chain:      opts.Globals.Chain,
 		TestMode:   opts.Globals.TestMode,
+		LogLevel:   int(opts.Globals.LogLevel),
 	}
 
 	// This removes duplicates from the input array and keep a map from address to
@@ -48,7 +50,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 	for _, addr := range opts.Addrs {
 		if updater.MonitorMap[common.HexToAddress(addr)] == nil {
 			m := monitor.NewStagedMonitor(opts.Globals.Chain, addr, opts.Globals.TestMode)
-			m.ReadHeader()
+			m.ReadMonHeader()
 			// TODO: BOGUS1
 			// fmt.Fprintf(os.Stdout, "Init: %s\n", m)
 			*monitorArray = append(*monitorArray, m)
@@ -121,28 +123,34 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(bloomFilename string, res
 	// TODO: BOGUS - Should only scan if we're not already seen the block
 	var bloomHits = false
 	chunk, err := index.NewChunk(bloomFilename)
+	// At this point, we have a chunk with two structures: a bloom and the corresponding index
+	// portion. Both file's headers have been read, but the underlying data has not. Both files
+	// are still open and we are responsible to close them.
 	if err != nil {
 		results = append(results, index.AppearanceResult{Range: chunk.Range, Err: err})
 		chunk.Close()
 		return
 	}
+
+	// We first check to see if any of the monitor addresses even hit the bloom filter...
 	for _, mon := range updater.MonitorMap {
-		// TODO: BOGUS1
-		// fmt.Fprintf(os.Stdout, "Scanzy: %s%s --> %s%s\n", colors.Cyan, chunk.Range, mon, colors.Off)
 		if chunk.Bloom.IsMember_New(mon.Address) {
 			bloomHits = true
 			break
 		}
 	}
+
+	// And now we're done with the bloom (note we don't defer it, we want to close it as
+	// soon as we can so we don't have too many files open unnessacarily.
 	chunk.Close()
+
+	// If nothing hit, we're done with this file...
 	if !bloomHits {
 		for _, mon := range updater.MonitorMap {
 			results = append(results, index.AppearanceResult{Address: mon.Address, Range: chunk.Range})
 		}
 		return
 	}
-	// TODO: BOGUS1
-	// fmt.Fprintf(os.Stdout, "%sPozzi: %s --> %s\n", colors.Red, chunk.Range, colors.Off)
 
 	indexFilename := index.ToIndexPath(bloomFilename)
 	ok, err := establishIndexChunk(updater.Chain, indexFilename)
@@ -225,7 +233,6 @@ func establishIndexChunk(chain string, indexFilename string) (bool, error) {
 // updateMonitors writes an array of appearances to the Monitor file updating the header for lastScanned. It
 // is called by 'chifra list' and 'chifra export' prior to reporting results
 func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
-	mon := updater.MonitorMap[result.Address]
 	if result == nil {
 		fmt.Println("Should not happen -- null result")
 		return
@@ -236,12 +243,9 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 		return
 	}
 
-	// Just in case, will be re-opened
+	mon := updater.MonitorMap[result.Address]
 	mon.Close()
-
-	// Write out the header
 	mon.WriteMonHeader(mon.Deleted, uint32(result.Range.Last)+1)
-
 	if result.AppRecords != nil {
 		if len(*result.AppRecords) > 0 {
 			_, err := mon.WriteAppearances(*result.AppRecords)

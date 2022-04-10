@@ -117,7 +117,10 @@ func (mon *Monitor) Count() uint32 {
 	if file.FileSize(mon.Path()) == 0 {
 		return 0
 	}
-	return uint32(file.FileSize(mon.Path())/index.AppRecordWidth) - 1
+	s := uint32(file.FileSize(mon.Path()))
+	w := uint32(index.AppRecordWidth)
+	n := uint32(s / w)
+	return n - 1
 }
 
 // GetAddrStr returns the Monitor's address as a string
@@ -133,8 +136,8 @@ func (mon *Monitor) Close() {
 	}
 }
 
-// ReadHeader reads the monitor's header
-func (mon *Monitor) ReadHeader() (err error) {
+// ReadMonHeader reads the monitor's header and returns without closing the file
+func (mon *Monitor) ReadMonHeader() (err error) {
 	if mon.ReadFp == nil {
 		mon.ReadFp, err = os.OpenFile(mon.Path(), os.O_RDONLY, 0644)
 		if err != nil {
@@ -265,7 +268,7 @@ func (mon *Monitor) WriteAppearances(apps []index.AppearanceRecord) (count int, 
 
 // IsDeleted returns true if the monitor has been deleted but not removed
 func (mon *Monitor) IsDeleted() bool {
-	mon.ReadHeader()
+	mon.ReadMonHeader()
 	return mon.Header.Deleted
 }
 
@@ -292,17 +295,6 @@ func (mon *Monitor) Remove() (bool, error) {
 	}
 	file.Remove(mon.Path())
 	return !file.FileExists(mon.Path()), nil
-}
-
-// TODO: This should be non-interuptable
-// MoveToProduction moves a previously staged monitor to the monitors folder.
-func (mon *Monitor) MoveToProduction() error {
-	if !mon.Staged {
-		return errors.New("trying to move monitor that is not staged")
-	}
-	oldpath := mon.Path()
-	mon.Staged = false
-	return os.Rename(oldpath, mon.Path())
 }
 
 func addressFromPath(path string) (string, error) {
@@ -355,3 +347,15 @@ func ListMonitors(chain, folder string, monitorChan chan<- Monitor) {
 		return nil
 	})
 }
+
+// TODO: This should be non-interuptable
+// MoveToProduction moves a previously staged monitor to the monitors folder.
+func (mon *Monitor) MoveToProduction() error {
+	if !mon.Staged {
+		return errors.New("trying to move monitor that is not staged")
+	}
+	oldpath := mon.Path()
+	mon.Staged = false
+	return os.Rename(oldpath, mon.Path())
+}
+

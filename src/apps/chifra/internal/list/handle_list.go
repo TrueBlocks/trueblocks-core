@@ -24,7 +24,8 @@ type SimpleAppearance struct {
 
 func (opts *ListOptions) HandleListAppearances(monitorArray []monitor.Monitor) error {
 	for _, mon := range monitorArray {
-		apps := make([]index.AppearanceRecord, mon.Count(), mon.Count())
+		count := mon.Count()
+		apps := make([]index.AppearanceRecord, count, count)
 		err := mon.ReadAppearances(&apps)
 		if err != nil {
 			return err

@@ -25,12 +25,12 @@ func Test_Monitor_Print(t *testing.T) {
 
 	// Append again, expect twice as many
 	mon.WriteMonHeader(mon.Deleted, 2002003)
-	count, err := mon.WriteAppearances(testApps)
+	_, err := mon.WriteAppearances(testApps)
 	if err != nil {
 		t.Error(err)
 	}
-	if count != nTests*2 {
-		t.Error("Expected count", nTests*2, "for monitor, got:", count)
+	if mon.Count() != nTests*2 {
+		t.Error("Expected count", nTests*2, "for monitor, got:", mon.Count())
 	}
 
 	// The monitor should report that it has two appearances
@@ -93,7 +93,7 @@ func Test_Monitor_ReadApps(t *testing.T) {
 		t.Error("Number of records in monitor", mon.Count(), "is not as expected", nTests)
 	}
 
-	err := mon.ReadHeader()
+	err := mon.ReadMonHeader()
 	if err != nil {
 		t.Error(err)
 	}
@@ -210,12 +210,12 @@ func GetTestMonitor(t *testing.T) Monitor {
 
 	// Append the appearances to the monitor
 	mon.WriteMonHeader(mon.Deleted, 2002003)
-	count, err := mon.WriteAppearances(testApps)
+	_, err := mon.WriteAppearances(testApps)
 	if err != nil {
 		t.Error(err)
 	}
-	if count != nTests {
-		t.Error("Expected count", nTests, "for monitor, got:", count)
+	if mon.Count() != nTests {
+		t.Error("Expected count", nTests, "for monitor, got:", mon.Count())
 	}
 
 	return mon
