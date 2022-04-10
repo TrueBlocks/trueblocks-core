@@ -11,6 +11,7 @@ import (
 	"fmt"
 	"io"
 	"io/fs"
+	"log"
 	"os"
 	"path/filepath"
 	"strings"
@@ -24,6 +25,7 @@ import (
 )
 
 // Header is the header of the Monitor file. Note that it's the same width as an index.AppearanceRecord
+// therefor one should not change its size
 type Header struct {
 	Magic       uint16 `json:"-"`
 	Unused      bool   `json:"-"`
@@ -34,7 +36,6 @@ type Header struct {
 // Monitor carries information about a Monitor file and its header
 type Monitor struct {
 	Address  common.Address `json:"address"`
-	FileSize uint32         `json:"fileSize"`
 	Staged   bool           `json:"-"`
 	Chain    string         `json:"-"`
 	ReadFp   *os.File       `json:"-"`
@@ -59,28 +60,58 @@ func NewMonitor(chain, addr string, create, testMode bool) Monitor {
 }
 
 // NewStagedMonitor returns a Monitor whose path is in the 'staging' folder
-func NewStagedMonitor(chain, addr string, testMode bool) Monitor {
-	mon := new(Monitor)
-	mon.Header = Header{Magic: file.SmallMagicNumber}
-	mon.Address = common.HexToAddress(addr)
-	mon.Chain = chain
+func NewStagedMonitor(chain, addr string, testMode bool) (Monitor, error) {
+	mon := Monitor{
+		Header:   Header{Magic: file.SmallMagicNumber},
+		Address:  common.HexToAddress(addr),
+		Chain:    chain,
+		TestMode: testMode,
+	}
+
+	// Note, we are not yet staged, so Path returns the production folder
+	prodPath := mon.Path()
 	mon.Staged = true
-	mon.TestMode = testMode
-	mon.Reload(true)
-	return *mon
+	// stagedPath := mon.Path()
+
+	// either copy the existing monitor or create a new one
+	if file.FileExists(prodPath) {
+	} else {
+		err := mon.WriteMonHeader(false, 0)
+		if err != nil {
+			return mon, err
+		}
+	}
+	return mon, nil
 }
 
 // String implements the Stringer interface
 func (mon Monitor) String() string {
 	if mon.Deleted {
-		return fmt.Sprintf("%s\t%d\t%d\t%d\t%t", hexutil.Encode(mon.Address.Bytes()), mon.Count(), mon.FileSize, mon.LastScanned, mon.Deleted)
+		return fmt.Sprintf("%s\t%d\t%d\t%d\t%t", hexutil.Encode(mon.Address.Bytes()), mon.Count(), file.FileSize(mon.Path()), mon.LastScanned, mon.Deleted)
 	}
-	return fmt.Sprintf("%s\t%d\t%d\t%d", hexutil.Encode(mon.Address.Bytes()), mon.Count(), mon.FileSize, mon.LastScanned)
+	return fmt.Sprintf("%s\t%d\t%d\t%d", hexutil.Encode(mon.Address.Bytes()), mon.Count(), file.FileSize(mon.Path()), mon.LastScanned)
+}
+
+type SimpleMonitor struct {
+	Address     string `json:"address"`
+	NRecords    int    `json:"nRecords"`
+	FileSize    int64  `json:"fileSize"`
+	LastScanned uint32 `json:"lastScanned"`
+}
+
+func NewSimpleMonitor(mon Monitor) SimpleMonitor {
+	return SimpleMonitor{
+		Address:     mon.GetAddrStr(),
+		NRecords:    int(mon.Count()),
+		FileSize:    file.FileSize(mon.Path()),
+		LastScanned: mon.Header.LastScanned,
+	}
 }
 
 // ToJSON returns a JSON object from a Monitor
 func (mon Monitor) ToJSON() string {
-	bytes, err := json.Marshal(mon)
+	sm := NewSimpleMonitor(mon)
+	bytes, err := json.Marshal(sm)
 	if err != nil {
 		return ""
 	}
@@ -109,7 +140,6 @@ func (mon *Monitor) Reload(create bool) (uint32, error) {
 			return 0, err
 		}
 	}
-	mon.FileSize = uint32(file.FileSize(mon.Path()))
 	return mon.Count(), nil
 }
 
@@ -144,8 +174,7 @@ func (mon *Monitor) ReadMonHeader() (err error) {
 			return
 		}
 	}
-	mon.FileSize = uint32(file.FileSize(mon.Path()))
-	if mon.FileSize > 0 {
+	if file.FileSize(mon.Path()) > 0 {
 		return binary.Read(mon.ReadFp, binary.LittleEndian, &mon.Header)
 	}
 	return
@@ -225,29 +254,32 @@ func (mon *Monitor) WriteMonHeader(deleted bool, lastScanned uint32) (err error)
 	return
 }
 
-// WriteAppendApps writes appearances to a Monitor and the header info
-func (mon *Monitor) WriteAppendApps(lastScanned uint32, apps *[]index.AppearanceRecord) (nWritten int, err error) {
-	if mon != nil {
-		err := mon.WriteMonHeader(mon.Deleted, lastScanned)
-		if err != nil {
-			return 0, err
-		}
+// WriteAppendApps appends appearances to the end of the file, updates the header with
+// lastScanned (if later) and returns the number of records written. Note that we should
+// be writing to a temporary file.
+func (mon *Monitor) WriteAppendApps(lastScanned uint32, apps *[]index.AppearanceRecord) error {
+	if !mon.Staged {
+		log.Fatal("Trying to write to a non-staged file. Should not happen.")
 
-		if apps != nil {
-			nWritten = len(*apps)
-			if nWritten > 0 {
-				_, err := mon.WriteAppearances(*apps)
-				if err != nil {
-					return 0, err
-				}
-			}
-		}
-
-	} else {
-		return 0, errors.New("nil monitor should not happen")
+	} else if mon == nil {
+		log.Fatal("Trying to write from a nil monitor. Should not happen.")
 	}
 
-	return
+	err := mon.WriteMonHeader(mon.Deleted, lastScanned)
+	if err != nil {
+		return err
+	}
+
+	if apps != nil {
+		if len(*apps) > 0 {
+			_, err := mon.WriteAppearances(*apps)
+			if err != nil {
+				return err
+			}
+		}
+	}
+
+	return nil
 }
 
 // WriteAppearances writes appearances to a Monitor

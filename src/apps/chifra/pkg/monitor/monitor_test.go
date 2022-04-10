@@ -1,6 +1,3 @@
-//go:build integration
-// +build integration
-
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
@@ -24,7 +21,7 @@ func Test_Monitor_Print(t *testing.T) {
 	}()
 
 	// Append again, expect twice as many
-	_, err := mon.WriteAppendApps(2002003, &testApps)
+	err := mon.WriteAppendApps(2002003, &testApps)
 	if err != nil {
 		t.Error(err)
 	}
@@ -34,7 +31,7 @@ func Test_Monitor_Print(t *testing.T) {
 
 	// The monitor should report that it has two appearances
 	got := fmt.Sprintln(mon.ToJSON())
-	expected := "{\"address\":\"0xf503017d7baf7fbc0fff7492b751025c6a781791\",\"fileSize\":56,\"lastScanned\":2002003}\n"
+	expected := "{\"address\":\"0xf503017d7baf7fbc0fff7492b751025c6a781791\",\"nRecords\":6,\"fileSize\":56,\"lastScanned\":2002003}\n"
 	if got != expected {
 		t.Error("Expected:", expected, "Got:", got)
 	}
@@ -119,7 +116,7 @@ func Test_Monitor_Delete(t *testing.T) {
 
 	// The monitor should report that it has two appearances
 	got := fmt.Sprintln(mon.ToJSON())
-	expected := "{\"address\":\"0xf503017d7baf7fbc0fff7492b751025c6a781791\",\"fileSize\":32,\"lastScanned\":2002003}\n"
+	expected := "{\"address\":\"0xf503017d7baf7fbc0fff7492b751025c6a781791\",\"nRecords\":3,\"fileSize\":32,\"lastScanned\":2002003}\n"
 	if got != expected {
 		t.Error("Expected:", expected, "Got:", got)
 	}
@@ -207,8 +204,11 @@ func GetTestMonitor(t *testing.T) Monitor {
 		t.Error("Incorrect length for test data:", len(testApps), "should be ", nTests, ".")
 	}
 
+	// WriteAppendApps expects to append only to staged monitors
+	mon.Staged = true
+
 	// Append the appearances to the monitor
-	_, err := mon.WriteAppendApps(2002003, &testApps)
+	err := mon.WriteAppendApps(2002003, &testApps)
 	if err != nil {
 		t.Error(err)
 	}

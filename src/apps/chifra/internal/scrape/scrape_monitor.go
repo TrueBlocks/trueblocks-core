@@ -99,16 +99,21 @@ func (opts *ScrapeOptions) Refresh(chain string, monitors []monitor.Monitor) err
 		s := fmt.Sprintf("%s\r%d-%d", colors.Blue+colors.Bright+spaces, i*addrsPerCall, len(monitors))
 		fmt.Println(s, colors.Green, "chifra export --freshen", strings.Replace(addrStr, "0x", " \\\n\t0x", -1), colors.Off)
 
+		countsBefore := []uint32{}
+		for j := 0; j < len(batches[i]); j++ {
+			countsBefore = append(countsBefore, batches[i][j].Count())
+		}
 		opts.FreshenMonitors(addrs)
+
 		for j := 0; j < len(batches[i]); j++ {
 
 			mon := batches[i][j]
-			countBefore := mon.Count()
-			countAfter, _ := mon.Reload(true /* create */)
+			countBefore := countsBefore[j]
+			countAfter := mon.Count()
 
 			if countAfter > 0 {
 				if countAfter > 100000 {
-					fmt.Println("Too many transactions for address", mon.Address)
+					fmt.Println(colors.Red, "Too many transactions for address", mon.Address, colors.Off)
 					continue
 				}
 
@@ -159,104 +164,104 @@ func (opts *ScrapeOptions) Refresh(chain string, monitors []monitor.Monitor) err
 					expOpts.Globals.PassItOn("acctExport", expOpts.ToCmdLine())
 				}
 
-				txsPath := "exports/txs/" + mon.GetAddrStr() + ".csv"
-				exists = file.FileExists(txsPath)
-				if !exists || countAfter > countBefore {
-					expOpts := exportPkg.ExportOptions{
-						Addrs: append([]string{}, mon.GetAddrStr()),
-						// Topics:      append([]string{}, ""),
-						// Fourbytes:   append([]string{}, ""),
-						// Appearances: false,
-						// Receipts:    false,
-						// Logs:        false,
-						// Traces:      false,
-						// Statements:  false,
-						// Neighbors:   false,
-						// Accounting:  false,
-						Articulate:  true,
-						Cache:       true,
-						CacheTraces: true,
-						// Count:       false,
-						FirstRecord: uint64(countBefore + 1),
-						MaxRecords:  uint64(countAfter - countBefore + 1), // extra space won't hurt
-						// Relevant:    false,
-						// Emitter:     append([]string{}, ""),
-						// Topic:       append([]string{}, ""),
-						// Asset:       append([]string{}, ""),
-						// Factory:     false,
-						// Staging:     false,
-						// Unripe:      false,
-						// Load:        "",
-						// Reversed:    false,
-						// SkipDdos:    false,
-						MaxTraces:  250,
-						FirstBlock: 0,
-						LastBlock:  utils.NOPOS,
-						Globals:    opts.Globals,
-						// BadFlag:    nil,
-					}
-					if !exists {
-						expOpts.FirstRecord = 0
-					}
-					expOpts.Globals.OutputFn = txsPath
-					expOpts.Globals.Append = file.FileExists(expOpts.Globals.OutputFn)
-					expOpts.Globals.NoHeader = file.FileExists(expOpts.Globals.OutputFn)
-					expOpts.Globals.Format = "csv"
-					expOpts.Globals.File = ""
-					expOpts.Globals.PassItOn("acctExport", expOpts.ToCmdLine())
-				}
+				// txsPath := "exports/txs/" + mon.GetAddrStr() + ".csv"
+				// exists = file.FileExists(txsPath)
+				// if !exists || countAfter > countBefore {
+				// 	expOpts := exportPkg.ExportOptions{
+				// 		Addrs: append([]string{}, mon.GetAddrStr()),
+				// 		// Topics:      append([]string{}, ""),
+				// 		// Fourbytes:   append([]string{}, ""),
+				// 		// Appearances: false,
+				// 		// Receipts:    false,
+				// 		// Logs:        false,
+				// 		// Traces:      false,
+				// 		// Statements:  false,
+				// 		// Neighbors:   false,
+				// 		// Accounting:  false,
+				// 		Articulate:  true,
+				// 		Cache:       true,
+				// 		CacheTraces: true,
+				// 		// Count:       false,
+				// 		FirstRecord: uint64(countBefore + 1),
+				// 		MaxRecords:  uint64(countAfter - countBefore + 1), // extra space won't hurt
+				// 		// Relevant:    false,
+				// 		// Emitter:     append([]string{}, ""),
+				// 		// Topic:       append([]string{}, ""),
+				// 		// Asset:       append([]string{}, ""),
+				// 		// Factory:     false,
+				// 		// Staging:     false,
+				// 		// Unripe:      false,
+				// 		// Load:        "",
+				// 		// Reversed:    false,
+				// 		// SkipDdos:    false,
+				// 		MaxTraces:  250,
+				// 		FirstBlock: 0,
+				// 		LastBlock:  utils.NOPOS,
+				// 		Globals:    opts.Globals,
+				// 		// BadFlag:    nil,
+				// 	}
+				// 	if !exists {
+				// 		expOpts.FirstRecord = 0
+				// 	}
+				// 	expOpts.Globals.OutputFn = txsPath
+				// 	expOpts.Globals.Append = file.FileExists(expOpts.Globals.OutputFn)
+				// 	expOpts.Globals.NoHeader = file.FileExists(expOpts.Globals.OutputFn)
+				// 	expOpts.Globals.Format = "csv"
+				// 	expOpts.Globals.File = ""
+				// 	expOpts.Globals.PassItOn("acctExport", expOpts.ToCmdLine())
+				// }
 
-				logsPath := "exports/logs/" + mon.GetAddrStr() + ".csv"
-				exists = file.FileExists(logsPath)
-				if !exists || countAfter > countBefore {
-					expOpts := exportPkg.ExportOptions{
-						Addrs: append([]string{}, mon.GetAddrStr()),
-						// Topics:      append([]string{}, ""),
-						// Fourbytes:   append([]string{}, ""),
-						// Appearances: false,
-						// Receipts:    false,
-						Logs: true,
-						// Traces:      false,
-						// Statements:  false,
-						// Neighbors:   false,
-						// Accounting:  false,
-						// Articulate:  true,
-						// Cache:       false,
-						// CacheTraces: false,
-						// Count:       false,
-						FirstRecord: uint64(countBefore + 1),
-						MaxRecords:  uint64(countAfter - countBefore + 1), // extra space won't hurt
-						// Relevant:    true,
-						// Emitter:     append([]string{}, ""),
-						// Topic:       append([]string{}, ""),
-						// Asset:       append([]string{}, ""),
-						// Factory:     false,
-						// Staging:     false,
-						// Unripe:      false,
-						// Load:        "",
-						// Reversed:    false,
-						// SkipDdos:    false,
-						MaxTraces:  250,
-						FirstBlock: 0,
-						LastBlock:  utils.NOPOS,
-						Globals:    opts.Globals,
-						// BadFlag:    nil,
-					}
-					if !exists {
-						expOpts.FirstRecord = 0
-					}
-					expOpts.Globals.OutputFn = logsPath
-					expOpts.Globals.Append = file.FileExists(expOpts.Globals.OutputFn)
-					expOpts.Globals.NoHeader = file.FileExists(expOpts.Globals.OutputFn)
-					expOpts.Globals.Format = "csv"
-					expOpts.Globals.File = ""
-					expOpts.Emitter = append(expOpts.Emitter, "0xdf869fad6db91f437b59f1edefab319493d4c4ce")
-					// expOpts.Emitter = append(expOpts.Emitter, "0x7d655c57f71464b6f83811c55d84009cd9f5221c")
-					// expOpts.Emitter = append(expOpts.Emitter, "0xf2354570be2fb420832fb7ff6ff0ae0df80cf2c6")
-					// expOpts.Emitter = append(expOpts.Emitter, "0x3342e3737732d879743f2682a3953a730ae4f47c")
-					// expOpts.Emitter = append(expOpts.Emitter, "0x3ebaffe01513164e638480404c651e885cca0aa4")
-					expOpts.Globals.PassItOn("acctExport", expOpts.ToCmdLine())
-				}
+				// logsPath := "exports/logs/" + mon.GetAddrStr() + ".csv"
+				// exists = file.FileExists(logsPath)
+				// if !exists || countAfter > countBefore {
+				// 	expOpts := exportPkg.ExportOptions{
+				// 		Addrs: append([]string{}, mon.GetAddrStr()),
+				// 		// Topics:      append([]string{}, ""),
+				// 		// Fourbytes:   append([]string{}, ""),
+				// 		// Appearances: false,
+				// 		// Receipts:    false,
+				// 		Logs: true,
+				// 		// Traces:      false,
+				// 		// Statements:  false,
+				// 		// Neighbors:   false,
+				// 		// Accounting:  false,
+				// 		// Articulate:  true,
+				// 		// Cache:       false,
+				// 		// CacheTraces: false,
+				// 		// Count:       false,
+				// 		FirstRecord: uint64(countBefore + 1),
+				// 		MaxRecords:  uint64(countAfter - countBefore + 1), // extra space won't hurt
+				// 		// Relevant:    true,
+				// 		// Emitter:     append([]string{}, ""),
+				// 		// Topic:       append([]string{}, ""),
+				// 		// Asset:       append([]string{}, ""),
+				// 		// Factory:     false,
+				// 		// Staging:     false,
+				// 		// Unripe:      false,
+				// 		// Load:        "",
+				// 		// Reversed:    false,
+				// 		// SkipDdos:    false,
+				// 		MaxTraces:  250,
+				// 		FirstBlock: 0,
+				// 		LastBlock:  utils.NOPOS,
+				// 		Globals:    opts.Globals,
+				// 		// BadFlag:    nil,
+				// 	}
+				// 	if !exists {
+				// 		expOpts.FirstRecord = 0
+				// 	}
+				// 	expOpts.Globals.OutputFn = logsPath
+				// 	expOpts.Globals.Append = file.FileExists(expOpts.Globals.OutputFn)
+				// 	expOpts.Globals.NoHeader = file.FileExists(expOpts.Globals.OutputFn)
+				// 	expOpts.Globals.Format = "csv"
+				// 	expOpts.Globals.File = ""
+				// 	expOpts.Emitter = append(expOpts.Emitter, "0xdf869fad6db91f437b59f1edefab319493d4c4ce")
+				// 	// expOpts.Emitter = append(expOpts.Emitter, "0x7d655c57f71464b6f83811c55d84009cd9f5221c")
+				// 	// expOpts.Emitter = append(expOpts.Emitter, "0xf2354570be2fb420832fb7ff6ff0ae0df80cf2c6")
+				// 	// expOpts.Emitter = append(expOpts.Emitter, "0x3342e3737732d879743f2682a3953a730ae4f47c")
+				// 	// expOpts.Emitter = append(expOpts.Emitter, "0x3ebaffe01513164e638480404c651e885cca0aa4")
+				// 	expOpts.Globals.PassItOn("acctExport", expOpts.ToCmdLine())
+				// }
 			}
 		}
 	}

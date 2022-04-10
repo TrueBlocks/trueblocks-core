@@ -15,12 +15,9 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common"
 )
 
@@ -31,29 +28,30 @@ type AddressMonitorMap map[common.Address]*monitor.Monitor
 type MonitorUpdate struct {
 	MaxTasks   int
 	MonitorMap AddressMonitorMap
-	Chain      string
-	TestMode   bool
-	LogLevel   int
+	Options    *ListOptions
+	FirstBlock uint64
 }
 
 func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) error {
 	var updater = MonitorUpdate{
 		MaxTasks:   12,
 		MonitorMap: make(AddressMonitorMap, len(opts.Addrs)),
-		Chain:      opts.Globals.Chain,
-		TestMode:   opts.Globals.TestMode,
-		LogLevel:   int(opts.Globals.LogLevel),
+		Options:    opts,
+		FirstBlock: utils.NOPOS,
 	}
 
 	// This removes duplicates from the input array and keep a map from address to
 	// a pointer to the monitors
 	for _, addr := range opts.Addrs {
 		if updater.MonitorMap[common.HexToAddress(addr)] == nil {
-			m := monitor.NewStagedMonitor(opts.Globals.Chain, addr, opts.Globals.TestMode)
-			m.ReadMonHeader()
-			*monitorArray = append(*monitorArray, m)
+			mon, _ := monitor.NewStagedMonitor(opts.Globals.Chain, addr, opts.Globals.TestMode)
+			mon.ReadMonHeader()
+			if uint64(mon.LastScanned) < updater.FirstBlock {
+				updater.FirstBlock = uint64(mon.LastScanned)
+			}
+			*monitorArray = append(*monitorArray, mon)
 			// we need the address here because we want to modify this object below
-			updater.MonitorMap[m.Address] = &(*monitorArray)[len(*monitorArray)-1]
+			updater.MonitorMap[mon.Address] = &(*monitorArray)[len(*monitorArray)-1]
 		}
 	}
 
@@ -149,7 +147,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(bloomFilename string, res
 	}
 
 	indexFilename := index.ToIndexPath(bloomFilename)
-	ok, err := establishIndexChunk(updater.Chain, indexFilename)
+	ok, err := establishIndexChunk(updater.Options.Globals.Chain, indexFilename)
 	if err != nil {
 		results = append(results, index.AppearanceResult{Range: chunk.Range, Err: err})
 		return
@@ -172,60 +170,6 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(bloomFilename string, res
 	}
 }
 
-// TODO: BOGUS - This could use some integration tests
-// establishIndexChunk accpets cache.FileRange, converts it to file name and finds
-// correspoding CID (hash) entry in the manifest. Next, it downloads the bloom filter.
-func establishIndexChunk(chain string, indexFilename string) (bool, error) {
-	if file.FileExists(indexFilename) {
-		return true, nil
-	}
-
-	// Open manifest
-	localManifest, err := manifest.FromLocalFile(chain)
-	if err != nil {
-		return false, err
-	}
-
-	fileRange, _ := cache.RangeFromFilename(indexFilename)
-
-	// Find bloom filter's CID
-	var matchedPin manifest.PinDescriptor
-	for _, pin := range localManifest.NewPins {
-		if pin.FileName == cache.FilenameFromRange(fileRange, "") {
-			matchedPin = pin
-			break
-		}
-	}
-	if matchedPin.FileName == "" {
-		return false, fmt.Errorf("filename not found in pins: %s", indexFilename)
-	}
-
-	logger.Log(logger.Info, "Downloading", colors.Blue, fileRange, colors.Off, "from IPFS.")
-
-	// Start downloading the filter
-	pins := []manifest.PinDescriptor{matchedPin}
-	chunkPath := cache.NewCachePath(chain, cache.Index_Final)
-	progressChannel := make(chan *progress.Progress)
-
-	go func() {
-		index.GetChunksFromRemote(chain, pins, &chunkPath, progressChannel)
-		close(progressChannel)
-	}()
-
-	for event := range progressChannel {
-		exists := file.FileExists(indexFilename)
-		switch event.Event {
-		case progress.AllDone:
-			return exists, nil
-		case progress.Cancelled:
-			return exists, nil
-		case progress.Error:
-			return exists, fmt.Errorf("error while downloading: %s", event.Message)
-		}
-	}
-	return file.FileExists(indexFilename), nil
-}
-
 // updateMonitors writes an array of appearances to the Monitor file updating the header for lastScanned. It
 // is called by 'chifra list' and 'chifra export' prior to reporting results
 func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
@@ -241,9 +185,16 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 
 	mon := updater.MonitorMap[result.Address]
 	if mon == nil {
+		// In this case, there were no errors, but all monitors were skipped. This would
+		// happen, for example, due to false positives hits on the bloom filters. We want
+		// to update the LastScanned values for each of these monitors. WriteAppendApps, when
+		// given a nil appearance list simply updates the header. Note we update for the
+		// start of the next chunk (plus 1 to current range).
 		for _, mon := range updater.MonitorMap {
+			// TODO: BOGUS - can we manage these files pointers so they aren't
+			// copied and therefore there aren't too many of them and it crashes
 			mon.Close()
-			_, err := mon.WriteAppendApps(uint32(result.Range.Last)+1, nil)
+			err := mon.WriteAppendApps(uint32(result.Range.Last)+1, nil)
 			if err != nil {
 				log.Println(err)
 			}
@@ -251,6 +202,8 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 
 	} else {
 		mon.Close()
+		// Note that result.AppRecords may be nil here (because, for example, this
+		// monitor had a false positive), but we do still want to update the header.
 		mon.WriteMonHeader(mon.Deleted, uint32(result.Range.Last)+1)
 		if result.AppRecords != nil {
 			nWritten := len(*result.AppRecords)
@@ -258,7 +211,7 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 				_, err := mon.WriteAppearances(*result.AppRecords)
 				if err != nil {
 					log.Println(err)
-				} else if !updater.TestMode {
+				} else if !updater.Options.Globals.TestMode {
 					bBlue := (colors.Bright + colors.Blue)
 					log.Printf("%s%s%s appended %d apps at %s\n", bBlue, mon.GetAddrStr(), colors.Off, nWritten, result.Range)
 				}

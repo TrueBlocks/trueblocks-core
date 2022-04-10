@@ -12,21 +12,10 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 )
 
-type SimpleMonitor struct {
-	Address  string `json:"address"`
-	NRecords uint32 `json:"nRecords"`
-	FileSize uint32 `json:"fileSize"`
-}
-
 func (opts *ListOptions) HandleListCount(monitorArray []monitor.Monitor) error {
-	results := make([]SimpleMonitor, 0, len(monitorArray))
+	results := make([]monitor.SimpleMonitor, 0, len(monitorArray))
 	for _, mon := range monitorArray {
-		var m SimpleMonitor
-		m.Address = mon.GetAddrStr()
-		m.NRecords = mon.Count()
-		m.FileSize = mon.FileSize
-		results = append(results, m)
-
+		results = append(results, monitor.NewSimpleMonitor(mon))
 	}
 
 	// TODO: Fix export without arrays
