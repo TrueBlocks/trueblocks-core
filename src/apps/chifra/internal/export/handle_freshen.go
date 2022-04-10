@@ -12,6 +12,6 @@ func (opts *ExportOptions) FreshenMonitors() error {
 		Globals: opts.Globals,
 	}
 
-	monitorArray := make([]monitor.Monitor, 0, len(opts.Addrs))
-	return listOpts.HandleFreshenMonitors(&monitorArray)
+	unused := make([]monitor.Monitor, 0, len(opts.Addrs))
+	return listOpts.HandleFreshenMonitors(&unused)
 }
