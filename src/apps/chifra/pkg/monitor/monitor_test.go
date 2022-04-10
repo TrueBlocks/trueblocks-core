@@ -24,8 +24,7 @@ func Test_Monitor_Print(t *testing.T) {
 	}()
 
 	// Append again, expect twice as many
-	mon.WriteMonHeader(mon.Deleted, 2002003)
-	_, err := mon.WriteAppearances(testApps)
+	_, err := mon.WriteAppendApps(2002003, &testApps)
 	if err != nil {
 		t.Error(err)
 	}
@@ -209,8 +208,7 @@ func GetTestMonitor(t *testing.T) Monitor {
 	}
 
 	// Append the appearances to the monitor
-	mon.WriteMonHeader(mon.Deleted, 2002003)
-	_, err := mon.WriteAppearances(testApps)
+	_, err := mon.WriteAppendApps(2002003, &testApps)
 	if err != nil {
 		t.Error(err)
 	}

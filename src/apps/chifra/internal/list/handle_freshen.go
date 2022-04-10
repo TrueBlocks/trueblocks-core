@@ -51,8 +51,6 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 		if updater.MonitorMap[common.HexToAddress(addr)] == nil {
 			m := monitor.NewStagedMonitor(opts.Globals.Chain, addr, opts.Globals.TestMode)
 			m.ReadMonHeader()
-			// TODO: BOGUS1
-			// fmt.Fprintf(os.Stdout, "Init: %s\n", m)
 			*monitorArray = append(*monitorArray, m)
 			// we need the address here because we want to modify this object below
 			updater.MonitorMap[m.Address] = &(*monitorArray)[len(*monitorArray)-1]

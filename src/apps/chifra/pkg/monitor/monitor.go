@@ -227,6 +227,31 @@ func (mon *Monitor) WriteMonHeader(deleted bool, lastScanned uint32) (err error)
 	return
 }
 
+// WriteAppendApps writes appearances to a Monitor and the header info
+func (mon *Monitor) WriteAppendApps(lastScanned uint32, apps *[]index.AppearanceRecord) (nWritten int, err error) {
+	if mon != nil {
+		err := mon.WriteMonHeader(mon.Deleted, lastScanned)
+		if err != nil {
+			return 0, err
+		}
+
+		if apps != nil {
+			nWritten = len(*apps)
+			if nWritten > 0 {
+				_, err := mon.WriteAppearances(*apps)
+				if err != nil {
+					return 0, err
+				}
+			}
+		}
+
+	} else {
+		return 0, errors.New("nil monitor should not happen")
+	}
+
+	return
+}
+
 // WriteAppearances writes appearances to a Monitor
 func (mon *Monitor) WriteAppearances(apps []index.AppearanceRecord) (count int, err error) {
 	mode := os.O_WRONLY | os.O_CREATE
@@ -354,8 +379,8 @@ func (mon *Monitor) MoveToProduction() error {
 	if !mon.Staged {
 		return errors.New("trying to move monitor that is not staged")
 	}
-	oldpath := mon.Path()
-	mon.Staged = false
-	return os.Rename(oldpath, mon.Path())
-}
 
+	oldPath := mon.Path()
+	mon.Staged = false
+	return os.Rename(oldPath, mon.Path())
+}
