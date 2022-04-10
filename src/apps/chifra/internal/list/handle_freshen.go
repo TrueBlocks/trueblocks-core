@@ -144,9 +144,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(bloomFilename string, res
 
 	// If nothing hit, we're done with this file...
 	if !bloomHits {
-		for _, mon := range updater.MonitorMap {
-			results = append(results, index.AppearanceResult{Address: mon.Address, Range: chunk.Range})
-		}
+		results = append(results, index.AppearanceResult{Range: chunk.Range})
 		return
 	}
 
@@ -242,16 +240,28 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 	}
 
 	mon := updater.MonitorMap[result.Address]
-	mon.Close()
-	mon.WriteMonHeader(mon.Deleted, uint32(result.Range.Last)+1)
-	if result.AppRecords != nil {
-		if len(*result.AppRecords) > 0 {
-			_, err := mon.WriteAppearances(*result.AppRecords)
+	if mon == nil {
+		for _, mon := range updater.MonitorMap {
+			mon.Close()
+			_, err := mon.WriteAppendApps(uint32(result.Range.Last)+1, nil)
 			if err != nil {
 				log.Println(err)
-			} else if !updater.TestMode {
-				bBlue := (colors.Bright + colors.Blue)
-				log.Printf("%s%s%s adding appearances (count: %d)\n", bBlue, mon.GetAddrStr(), colors.Off, len(*result.AppRecords))
+			}
+		}
+
+	} else {
+		mon.Close()
+		mon.WriteMonHeader(mon.Deleted, uint32(result.Range.Last)+1)
+		if result.AppRecords != nil {
+			nWritten := len(*result.AppRecords)
+			if nWritten > 0 {
+				_, err := mon.WriteAppearances(*result.AppRecords)
+				if err != nil {
+					log.Println(err)
+				} else if !updater.TestMode {
+					bBlue := (colors.Bright + colors.Blue)
+					log.Printf("%s%s%s appended %d apps at %s\n", bBlue, mon.GetAddrStr(), colors.Off, nWritten, result.Range)
+				}
 			}
 		}
 	}

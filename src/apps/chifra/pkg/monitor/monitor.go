@@ -144,11 +144,9 @@ func (mon *Monitor) ReadMonHeader() (err error) {
 			return
 		}
 	}
-	err = binary.Read(mon.ReadFp, binary.LittleEndian, &mon.Header)
-	// TODO: BOGUS1
-	// fmt.Println("Readzy: ", mon)
-	if err != nil {
-		return
+	mon.FileSize = uint32(file.FileSize(mon.Path()))
+	if mon.FileSize > 0 {
+		return binary.Read(mon.ReadFp, binary.LittleEndian, &mon.Header)
 	}
 	return
 }
