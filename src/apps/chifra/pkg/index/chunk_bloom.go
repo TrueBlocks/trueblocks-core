@@ -106,7 +106,10 @@ func ReadBloom(bloom *ChunkBloom, fileName string) (err error) {
 	if err != nil {
 		return err
 	}
-	defer bloom.File.Close()
+	defer func() {
+		bloom.File.Close()
+		bloom.File = nil
+	}()
 
 	err = binary.Read(bloom.File, binary.LittleEndian, &bloom.Count)
 	if err != nil {

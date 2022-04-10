@@ -73,6 +73,7 @@ func NewChunkData(path string) (chunk ChunkData, err error) {
 func (chunk *ChunkData) Close() error {
 	if chunk.File != nil {
 		chunk.File.Close()
+		chunk.File = nil
 	}
 	return nil
 }

@@ -12,6 +12,6 @@ func (opts *ScrapeOptions) FreshenMonitors(addrs []string) error {
 		Globals: opts.Globals,
 	}
 
-	monitorArray := make([]monitor.Monitor, 0, len(addrs))
-	return listOpts.HandleFreshenMonitors(&monitorArray)
+	unused := make([]monitor.Monitor, 0, len(addrs))
+	return listOpts.HandleFreshenMonitors(&unused)
 }
