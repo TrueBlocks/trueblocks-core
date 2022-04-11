@@ -5,7 +5,6 @@
 package monitorsPkg
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -43,9 +42,4 @@ func (opts *MonitorsOptions) ValidateMonitors() error {
 	}
 
 	return opts.Globals.ValidateGlobals()
-}
-
-func IsMonitorDeleted(chain, addr string, testMode bool) bool {
-	m := monitor.NewMonitor(chain, addr, false /* create */, testMode)
-	return m.IsDeleted()
 }

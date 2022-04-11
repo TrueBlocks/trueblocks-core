@@ -175,7 +175,7 @@ func Test_Monitor_Delete(t *testing.T) {
 func GetTestMonitor(t *testing.T) Monitor {
 	// Create a new, empty monitor
 	testAddr := "0xF503017d7bAf7fbc0fff7492b751025c6a781791"
-	mon := NewMonitor("mainnet", testAddr, true /* create */, true /* testMode */)
+	mon, _ := NewStagedMonitor("mainnet", testAddr, true /* testMode */)
 
 	if file.FileExists(mon.Path()) {
 		file.Remove(mon.Path())
@@ -203,9 +203,6 @@ func GetTestMonitor(t *testing.T) Monitor {
 	if len(testApps) != nTests {
 		t.Error("Incorrect length for test data:", len(testApps), "should be ", nTests, ".")
 	}
-
-	// WriteAppendApps expects to append only to staged monitors
-	mon.Staged = true
 
 	// Append the appearances to the monitor
 	err := mon.WriteAppendApps(2002003, &testApps)
