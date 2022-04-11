@@ -36,6 +36,7 @@ func (opts *MonitorsOptions) HandleClean() error {
 				fmt.Println(mon)
 			}
 		} else {
+			mon.ReadMonHeader()
 			//apps := make([]index.AppearanceRecord, mon.Count, mon.Count)
 			//err := mon.ReadApps(&apps)
 			//if err != nil {

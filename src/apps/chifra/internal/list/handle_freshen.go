@@ -18,6 +18,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"os"
+	"strconv"
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
@@ -82,6 +84,14 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 				// don't respond further -- there may be foreign files in the folder
 				fmt.Println(err)
 				continue
+			}
+
+			max := os.Getenv("FAKE_FINAL_BLOCK") // This is for testing only, please ignore
+			if len(max) > 0 {
+				m, _ := strconv.ParseUint(max, 10, 32)
+				if fileRange.Last > m {
+					break
+				}
 			}
 
 			if opts.Globals.TestMode && fileRange.Last > 5000000 {
