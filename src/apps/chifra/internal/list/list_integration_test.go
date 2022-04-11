@@ -1,5 +1,5 @@
-// g o : b u i l d   i n t e g r a t i o n
-//  + b u i l d   i n t e g  r a t i o n
+//go:build integration
+// +build integration
 
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
