@@ -229,9 +229,8 @@ COptions::COptions(void) {
     // END_ERROR_STRINGS
 
     // Establish the folders that hold the data...
-    establishMonitorFolders();
+    establishCacheFolders();
     establishIndexFolders();
-    establishFolder(cacheFolder_tmp);
 }
 
 //--------------------------------------------------------------------------------

@@ -386,9 +386,8 @@ void COptions::Init(void) {
         isApiMode() ? getGlobalConfig("acctExport")->getConfigInt("settings", "max_slow_queries", 50) : NOPOS;
 
     // Establish folders. This may be redundant, but it's cheap.
-    establishMonitorFolders();
+    establishCacheFolders();
     establishIndexFolders();
-    establishFolder(cacheFolder_tmp);
 }
 
 //---------------------------------------------------------------------------------------------------

@@ -465,14 +465,6 @@ bool CMonitor::readAppearances(MONAPPFUNC func, void* data) {
 
 //----------------------------------------------------------------
 // TODO: BOGUS - Do this in the golang code
-void establishMonitorFolders(void) {
-    CMonitor m;
-    establishFolder(m.getPathToMonitor("", false));
-    establishFolder(m.getPathToMonitor("", true));
-}
-
-//----------------------------------------------------------------
-// TODO: BOGUS - Do this in the golang code
 void cleanMonitorStage(void) {
     CMonitor m;
     cleanFolder(m.getPathToMonitor("", true));

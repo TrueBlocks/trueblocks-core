@@ -39,6 +39,7 @@ extern string_q getDefaultChain(void);
 #define cacheFolder_abis (cacheFolder + "abis/")
 #define cacheFolder_blocks (cacheFolder + "blocks/")
 #define cacheFolder_monitors (cacheFolder + "monitors/")
+#define cacheFolder_monitors_staging (cacheFolder + "monitors/staging/")
 #define cacheFolder_names (cacheFolder + "names/")
 #define cacheFolder_objs (cacheFolder + "objs/")
 #define cacheFolder_prices (cacheFolder + "prices/")
