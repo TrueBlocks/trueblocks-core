@@ -175,7 +175,7 @@ func Test_Monitor_Delete(t *testing.T) {
 func GetTestMonitor(t *testing.T) Monitor {
 	// Create a new, empty monitor
 	testAddr := "0x049029dd41661e58f99271a0112dfd34695f7000"
-	mon, _ := NewStagedMonitor("mainnet", testAddr, true /* testMode */)
+	mon, _ := NewStagedMonitor("mainnet", testAddr, false)
 	file.Remove(mon.Path())
 	file.Touch(mon.Path())
 
