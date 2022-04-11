@@ -12,6 +12,8 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
 
 type FileRange struct {
@@ -72,4 +74,12 @@ func (r *FileRange) BlockIsAfter(blk uint64) bool {
 // BlockIsBefore returns true if the first block in the file is greater than the given block
 func (r *FileRange) BlockIsBefore(blk uint64) bool {
 	return r.First > blk
+}
+
+// RangeToFilename returns a fileName and and existance bool given a file range and a type
+func (r *FileRange) RangeToFilename(chain string, mode CacheType) (bool, string) {
+	rangeStr := FilenameFromRange(*r, "")
+	chunkPath := NewCachePath(chain, mode)
+	fileName := chunkPath.GetFullPath(rangeStr)
+	return file.FileExists(fileName), fileName
 }

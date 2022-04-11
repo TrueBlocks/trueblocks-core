@@ -1,3 +1,12 @@
+// TODO: BOGUS
+// Integration testing
+// 1. Never seen an address before (with a false stopping point)
+// 2. Same address without a false stopping point so we see freshen)
+// 3. Remove that address, remove one or two index chunks
+// 4. Re-run without a stopping point -- should download missing chunks
+// 5. An address with no transactions
+// 6. Use a progressChannel
+
 package listPkg
 
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
@@ -6,15 +15,14 @@ package listPkg
 
 // TODO: BOGUS -- USED TO BE ACCTSCRAPE2
 import (
-	"errors"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -68,8 +76,8 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 	taskCount := 0
 	for _, info := range files {
 		if !info.IsDir() {
-			bloomFilename := bloomPath + "/" + info.Name()
-			fileRange, err := cache.RangeFromFilename(bloomFilename)
+			fileName := bloomPath + "/" + info.Name()
+			fileRange, err := cache.RangeFromFilename(fileName)
 			if err != nil {
 				// don't respond further -- there may be foreign files in the folder
 				fmt.Println(err)
@@ -77,6 +85,10 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 			}
 
 			if opts.Globals.TestMode && fileRange.Last > 5000000 {
+				continue
+			}
+
+			if fileRange.BlockIsAfter(updater.FirstBlock) {
 				continue
 			}
 
@@ -91,7 +103,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 			// Run a go routine for each index file
 			taskCount++
 			wg.Add(1)
-			go updater.visitChunkToFreshenFinal(bloomFilename, resultChannel, &wg)
+			go updater.visitChunkToFreshenFinal(fileName, resultChannel, &wg)
 		}
 	}
 
@@ -109,7 +121,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 
 // visitChunkToFreshenFinal opens one index file, searches for all the address(es) we're looking for and pushes the resultRecords
 // (even if empty) down the resultsChannel.
-func (updater *MonitorUpdate) visitChunkToFreshenFinal(bloomFilename string, resultChannel chan<- []index.AppearanceResult, wg *sync.WaitGroup) {
+func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultChannel chan<- []index.AppearanceResult, wg *sync.WaitGroup) {
 	var results []index.AppearanceResult
 	defer func() {
 		wg.Done()
@@ -117,50 +129,53 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(bloomFilename string, res
 	}()
 
 	// TODO: BOGUS - Should only scan if we're not already seen the block
-	var bloomHits = false
-	chunk, err := index.NewChunk(bloomFilename)
-	// At this point, we have a chunk with two structures: a bloom and the corresponding index
-	// portion. Both file's headers have been read, but the underlying data has not. Both files
-	// are still open and we are responsible to close them.
+	bloomFilename := index.ToBloomPath(fileName)
+
+	// We open the bloom filter and read its header but we do not read any of the
+	// actual bits in the blooms. The IsMember function reads individual bytes to
+	// check individual bits.
+	bloom, err := index.NewChunkBloom(bloomFilename)
 	if err != nil {
-		results = append(results, index.AppearanceResult{Range: chunk.Range, Err: err})
-		chunk.Close()
+		results = append(results, index.AppearanceResult{Range: bloom.Range, Err: err})
+		bloom.Close()
 		return
 	}
 
-	// We first check to see if any of the monitor addresses even hit the bloom filter...
+	// We check each address against the bloom to see if there are any hits...
+	var bloomHits = false
 	for _, mon := range updater.MonitorMap {
-		if chunk.Bloom.IsMember_New(mon.Address) {
+		if bloom.IsMember_New(mon.Address) {
 			bloomHits = true
 			break
 		}
 	}
 
-	// And now we're done with the bloom (note we don't defer it, we want to close it as
-	// soon as we can so we don't have too many files open unnessacarily.
-	chunk.Close()
+	// We're done with the bloom and we want to close it as soon as we can (therefore
+	// we don't defer this close, but close it right away -- otherwise too many files
+	// are open and we get an error).
+	bloom.Close()
 
-	// If nothing hit, we're done with this file...
+	// If none of the addresses hit, we're finished with this index chunk. We want the
+	// caller to note this range even though there was no hit. In this way, we keep
+	// track of the last index portion we've seen. Because none of the addresses hit,
+	// we don't need to send a specific message.
 	if !bloomHits {
-		results = append(results, index.AppearanceResult{Range: chunk.Range})
+		results = append(results, index.AppearanceResult{Range: bloom.Range})
 		return
 	}
 
-	indexFilename := index.ToIndexPath(bloomFilename)
-	ok, err := establishIndexChunk(updater.Options.Globals.Chain, indexFilename)
-	if err != nil {
-		results = append(results, index.AppearanceResult{Range: chunk.Range, Err: err})
-		return
-	}
-	if !ok {
-		err := errors.New("could not establish index file: " + indexFilename)
-		results = append(results, index.AppearanceResult{Range: chunk.Range, Err: err})
-		return
+	indexFilename := index.ToIndexPath(fileName)
+	if !file.FileExists(indexFilename) {
+		_, err := index.EstablishIndexChunk(updater.Options.Globals.Chain, bloom.Range)
+		if err != nil {
+			results = append(results, index.AppearanceResult{Range: bloom.Range, Err: err})
+			return
+		}
 	}
 
 	indexChunk, err := index.NewChunkData(indexFilename)
 	if err != nil {
-		results = append(results, index.AppearanceResult{Range: chunk.Range, Err: err})
+		results = append(results, index.AppearanceResult{Range: bloom.Range, Err: err})
 		return
 	}
 	defer indexChunk.Close()
@@ -212,8 +227,7 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 				if err != nil {
 					log.Println(err)
 				} else if !updater.Options.Globals.TestMode {
-					bBlue := (colors.Bright + colors.Blue)
-					log.Printf("%s%s%s appended %d apps at %s\n", bBlue, mon.GetAddrStr(), colors.Off, nWritten, result.Range)
+					log.Printf("%s appended %d apps at %s\n", mon.GetAddrStr(), nWritten, result.Range)
 				}
 			}
 		}

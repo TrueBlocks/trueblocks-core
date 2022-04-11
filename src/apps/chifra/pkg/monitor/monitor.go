@@ -71,10 +71,14 @@ func NewStagedMonitor(chain, addr string, testMode bool) (Monitor, error) {
 	// Note, we are not yet staged, so Path returns the production folder
 	prodPath := mon.Path()
 	mon.Staged = true
-	// stagedPath := mon.Path()
+	stagedPath := mon.Path()
 
 	// either copy the existing monitor or create a new one
 	if file.FileExists(prodPath) {
+		_, err := file.Copy(stagedPath, prodPath)
+		if err != nil {
+			return mon, err
+		}
 	} else {
 		err := mon.WriteMonHeader(false, 0)
 		if err != nil {
