@@ -90,7 +90,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 			if len(max) > 0 {
 				m, _ := strconv.ParseUint(max, 10, 32)
 				if fileRange.Last > m {
-					break
+					continue
 				}
 			}
 

@@ -31,13 +31,13 @@ func Test_Monitor_Print(t *testing.T) {
 
 	// The monitor should report that it has two appearances
 	got := fmt.Sprintln(mon.ToJSON())
-	expected := "{\"address\":\"0xf503017d7baf7fbc0fff7492b751025c6a781791\",\"nRecords\":6,\"fileSize\":56,\"lastScanned\":2002003}\n"
+	expected := "{\"address\":\"0x049029dd41661e58f99271a0112dfd34695f7000\",\"nRecords\":6,\"fileSize\":56,\"lastScanned\":2002003}\n"
 	if got != expected {
 		t.Error("Expected:", expected, "Got:", got)
 	}
 
 	got = mon.String()
-	expected = "0xf503017d7baf7fbc0fff7492b751025c6a781791\t6\t56\t2002003"
+	expected = "0x049029dd41661e58f99271a0112dfd34695f7000\t6\t56\t2002003"
 	if got != expected {
 		t.Error("Expected:", expected, "Got:", got)
 	}
@@ -116,7 +116,7 @@ func Test_Monitor_Delete(t *testing.T) {
 
 	// The monitor should report that it has two appearances
 	got := fmt.Sprintln(mon.ToJSON())
-	expected := "{\"address\":\"0xf503017d7baf7fbc0fff7492b751025c6a781791\",\"nRecords\":3,\"fileSize\":32,\"lastScanned\":2002003}\n"
+	expected := "{\"address\":\"0x049029dd41661e58f99271a0112dfd34695f7000\",\"nRecords\":3,\"fileSize\":32,\"lastScanned\":2002003}\n"
 	if got != expected {
 		t.Error("Expected:", expected, "Got:", got)
 	}
@@ -166,7 +166,7 @@ func Test_Monitor_Delete(t *testing.T) {
 	}
 
 	got = mon.String()
-	expected = "0xf503017d7baf7fbc0fff7492b751025c6a781791\t3\t32\t2002003\ttrue"
+	expected = "0x049029dd41661e58f99271a0112dfd34695f7000\t3\t32\t2002003\ttrue"
 	if got != expected {
 		t.Error("Expected:", expected, "Got:", got)
 	}
@@ -174,13 +174,10 @@ func Test_Monitor_Delete(t *testing.T) {
 
 func GetTestMonitor(t *testing.T) Monitor {
 	// Create a new, empty monitor
-	testAddr := "0xF503017d7bAf7fbc0fff7492b751025c6a781791"
+	testAddr := "0x049029dd41661e58f99271a0112dfd34695f7000"
 	mon, _ := NewStagedMonitor("mainnet", testAddr, true /* testMode */)
-
-	if file.FileExists(mon.Path()) {
-		file.Remove(mon.Path())
-		file.Touch(mon.Path())
-	}
+	file.Remove(mon.Path())
+	file.Touch(mon.Path())
 
 	if mon.Address != common.HexToAddress(testAddr) {
 		t.Error("Expected:", common.HexToAddress(testAddr), "Got:", mon.Address)
