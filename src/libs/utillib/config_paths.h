@@ -72,7 +72,6 @@ extern string_q getDefaultChain(void);
 #define chainConfigsTxt_namesCustom (chainConfigs + "names_custom.tab")
 #define chainConfigsTxt_collections (chainConfigs + "collections.csv")
 #define chainConfigsTxt_manifest (chainConfigs + "manifest.txt")
-#define chainConfigsFolder_mocked (chainConfigs + "mocked/")
 
 //---------------------------------------------------------------------------
 #define chainConfigsZip_prices (chainConfigs + "poloniex_USDT_ETH.bin.gz")

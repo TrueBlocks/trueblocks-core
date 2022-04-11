@@ -401,8 +401,6 @@ size_t CMonitor::getRecordCnt(const string_q& path) const {
 string_q CMonitor::getPathToMonitor(const address_t& addr, bool staging) const {
     string_q fn = isAddress(addr) ? addr + ".mon.bin" : addr;
     string_q base = cacheFolder_monitors + (staging ? "staging/" : "");
-    if (isTestMode())
-        base = chainConfigsFolder_mocked + "monitors/" + (staging ? "staging/" : "");
     return base + fn;
 }
 

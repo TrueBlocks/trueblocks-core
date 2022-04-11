@@ -9,7 +9,4 @@ import (
 )
 
 func Test_HandleClean(t *testing.T) {
-	// var opts MonitorsOptions
-	// opts.Addrs = append(opts.Addrs, "0x001d14804b399c6ef80e64576f657660804fec0b")
-	// opts.HandleClean()
 }

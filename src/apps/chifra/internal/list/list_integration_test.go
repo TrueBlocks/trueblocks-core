@@ -24,7 +24,7 @@ func Test_HandleFreshenMonitors(t *testing.T) {
 	}
 
 	// This is an address that we use for testing...early transactor but not for long so unlikely to be used for real
-	mon := monitor.NewMonitor("mainnet", listOpts.Addrs[0], true, false)
+	mon := monitor.NewMonitor("mainnet", listOpts.Addrs[0], true)
 	file.Remove(mon.Path())
 
 	got := mon.String()

@@ -222,7 +222,6 @@ COptions::COptions(void) {
 
     // BEG_ERROR_STRINGS
     // END_ERROR_STRINGS
-    establishTestMonitors();
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -245,7 +244,6 @@ bool COptions::cleanTest(const string_q& path, const string_q& testName) {
 //---------------------------------------------------------------------------------------------------
 void establishTestData(void) {
     cleanFolder(cacheFolder_tmp);
-    cleanFolder(chainConfigsFolder_mocked + "unchained");
 
     // TODO(tjayrush): This code is a hack to make test cases pass. We should fix the underlyign reason
     // TODO(tjayrush): these tests fail. To reproduce, delete the entire cache, comment the lines below

@@ -23,7 +23,7 @@ import (
 // -------------|----------------------------------------
 func (opts *MonitorsOptions) HandleCrudCommands(w io.Writer) error {
 	for _, addr := range opts.Addrs {
-		m := monitor.NewMonitor(opts.Globals.Chain, addr, false, opts.Globals.TestMode)
+		m := monitor.NewMonitor(opts.Globals.Chain, addr, false)
 		if !file.FileExists(m.Path()) {
 			return validate.Usage("Monitor not found for address " + addr + ".")
 
@@ -48,7 +48,7 @@ func (opts *MonitorsOptions) HandleCrudCommands(w io.Writer) error {
 	}
 
 	for _, addr := range opts.Addrs {
-		m := monitor.NewMonitor(opts.Globals.Chain, addr, false, opts.Globals.TestMode)
+		m := monitor.NewMonitor(opts.Globals.Chain, addr, false)
 		if opts.Undelete {
 			m.UnDelete()
 			logger.Log(logger.Info, ("Monitor " + addr + " was undeleted."))
