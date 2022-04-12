@@ -35,7 +35,7 @@ transactions?transactions=6409270.108&articulate&fmt=json
           "success": ""
         }
       },
-      "compressedTx": "multiTransfer(/*destinations*/,  /*tokens*/); ",
+      "compressedTx": "multiTransfer(destinations:|tokens:); ",
       "gasCost": 486000000000000,
       "gasUsed": 60000,
       "date": "2018-09-27 13:21:58 UTC",

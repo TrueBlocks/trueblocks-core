@@ -698,7 +698,7 @@ string_q compressInput(const string_q& inputIn) {
 
 //-----------------------------------------------------------------------
 const char* STR_COMPRESSED_FMT = "[{NAME}](++INPUTS++);";
-const char* STR_COMPRESSED_INPUT = "[{VALUE}] /*[{NAME}]*/, ";
+const char* STR_COMPRESSED_INPUT = "[{NAME}]:[{VALUE}]|";
 
 //-----------------------------------------------------------------------
 string_q CFunction::compressed(const string_q& def) const {
@@ -713,7 +713,7 @@ string_q CFunction::compressed(const string_q& def) const {
     for (auto input : inputs)
         inp << input.Format(STR_COMPRESSED_INPUT);
     string_q ret = func.str();
-    replace(ret, "++INPUTS++", trim(trim(inp.str(), ' '), ','));
+    replace(ret, "++INPUTS++", trim(trim(inp.str(), ' '), '|'));
     if (ret.empty())
         return compressInput(def);
     replaceAll(ret, "--tuple--", "");
