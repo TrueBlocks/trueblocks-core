@@ -32,7 +32,7 @@ func (opts *ScrapeOptions) RunMonitorScraper(wg *sync.WaitGroup, initialState bo
 	defer wg.Done()
 
 	chain := opts.Globals.Chain
-	establishExportPaths()
+	establishExportPaths(chain)
 
 	var s *Scraper = &MonitorScraper
 	s.ChangeState(initialState)
@@ -141,7 +141,7 @@ func (opts *ScrapeOptions) Refresh(chain string, monitors []monitor.Monitor) err
 		if len(cmd) > 0 && !strings.HasPrefix(cmd, "#") {
 			sp := SemiParse{}
 			sp.fmt = getFormat(cmd, opts.Globals.Format)
-			sp.folder = "exports/" + getOutputFolder(cmd, "unknown")
+			sp.folder = "exports/" + chain + "/" + getOutputFolder(cmd, "unknown")
 			sp.cmd = strings.Replace(cmd, " csv ", " "+sp.fmt+" ", -1)
 			sp.cmd = strings.Replace(cmd, " json ", " "+sp.fmt+" ", -1)
 			sp.cmd = strings.Replace(cmd, " txt ", " "+sp.fmt+" ", -1)
@@ -237,21 +237,32 @@ func (opts *ScrapeOptions) Refresh(chain string, monitors []monitor.Monitor) err
 // cat statements/balances/$addr.csv | grep -v assetAddr | cut -d, -f1,2 | sort | uniq -c | sort -n -r | sed 's/ //g' | sed 's/"/,/g' | cut -d, -f1,2,5 | tee -a statements/tx_counts/$addr.csv
 
 // establishExportPaths sets up the index path and subfolders. It only returns if it succeeds.
-func establishExportPaths() {
+func establishExportPaths(chain string) {
 	folders := []string{
-		"txs", "apps", "statements", "neighbors", "logs", "combined", "zips",
+		"apps",
+		"logs",
+		"txs",
+		"neighbors",
+		"neighbors/networks",
+		"neighbors/adjacencies",
+		"neighbors/images",
+		"neighbors/images/pngs",
+		"statements",
+		"statements/tx_counts",
+		"statements/balances",
+		"statements/balances/plots",
+		"raw",
+		"combined",
+		"zips",
 	}
 
 	cwd, _ := os.Getwd()
-
-	exportPath := cwd + "/exports/"
-
+	exportPath := cwd + "/exports/" + chain + "/"
 	_, err := os.Stat(path.Join(exportPath, folders[len(folders)-1]))
 	if err == nil {
 		// If the last path already exists, assume we've been here before
 		return
 	}
-
 	if err := file.EstablishFolders(exportPath, folders); err != nil {
 		log.Fatal(err)
 	}
