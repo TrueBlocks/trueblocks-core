@@ -197,14 +197,7 @@ func (opts *ScrapeOptions) Refresh(chain string, monitors []monitor.Monitor) err
 						add := ""
 						if exists {
 							add += fmt.Sprintf(" --first_record %d", uint64(countBefore+1))
-						} else {
-							add += fmt.Sprintf(" --first_record %d", 0)
-						}
-						add += fmt.Sprintf(" --max_records %d", uint64(countAfter-countBefore+1)) // extra space won't hurt
-						// add += fmt.Sprintf(" --max_traces 250")
-						// add += fmt.Sprintf(" --first_block 0")
-						// add += fmt.Sprintf(" --last_block %d", utils.NOPOS)
-						if exists {
+							add += fmt.Sprintf(" --max_records %d", uint64(countAfter-countBefore+1)) // extra space won't hurt
 							add += fmt.Sprintf(" --append")
 							add += fmt.Sprintf(" --no_header")
 						}

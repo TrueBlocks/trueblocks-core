@@ -14,6 +14,13 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 )
 
+type CleanReport struct {
+	Path     string `json:"path"`
+	SizeThen int    `json:"sizeThen"`
+	SizeNow  int    `json:"sizeNow"`
+	Dups     int    `json:"dupsRemoved"`
+}
+
 func (opts *MonitorsOptions) HandleClean() error {
 	monitorChan := make(chan monitor.Monitor)
 
@@ -36,6 +43,11 @@ func (opts *MonitorsOptions) HandleClean() error {
 				fmt.Println(mon)
 			}
 		} else {
+			// sizeThen := mon.Count()
+			// if sizeThen > 0 {
+			// 	// mon.RemoveDuplicates()
+			// }
+			// sizeNow := mon.Count()
 			mon.ReadMonHeader()
 			//apps := make([]index.AppearanceRecord, mon.Count, mon.Count)
 			//err := mon.ReadApps(&apps)
@@ -49,16 +61,7 @@ func (opts *MonitorsOptions) HandleClean() error {
 }
 
 /*
-            CMonitor m;
-            size_t sizeThen = m.getRecordCnt(path);
-            if (!sizeThen)
-                return !shouldQuit();
-
-            if (!m.removeDuplicates(path))
-                return false;
-
             static bool first = true;
-            size_t sizeNow = m.getRecordCnt(path);
             if (verbose || sizeThen != sizeNow) {
                 if (!first)
                     cout << ",";
