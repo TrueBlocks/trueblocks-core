@@ -656,7 +656,7 @@ params.size: 0
               "_tokenAmount": "25000000000000000000"
             }
           },
-          "compressedLog": "AcceptRequest(_key:6|_etherAmount:236159796400000000|_tokenAmount:25000000000000000000|_dollarPrice:2000000000000000000|_acceptor:0xd503d263de9092232d28492d60c5a956ad754a83); "
+          "compressedLog": "AcceptRequest(_key:6|_etherAmount:236159796400000000|_tokenAmount:25000000000000000000|_dollarPrice:2000000000000000000|_acceptor:0xd503d263de9092232d28492d60c5a956ad754a83) "
         },
         {
           "address": "0x159cf1e9ae58211b588f5e3bf1d7e423952d959b",
@@ -677,7 +677,7 @@ params.size: 0
               "_tokenAmount": "25000000000000000000"
             }
           },
-          "compressedLog": "AcceptRequest(_key:5|_etherAmount:236159796400000000|_tokenAmount:25000000000000000000|_dollarPrice:2000000000000000000|_acceptor:0xd503d263de9092232d28492d60c5a956ad754a83); "
+          "compressedLog": "AcceptRequest(_key:5|_etherAmount:236159796400000000|_tokenAmount:25000000000000000000|_dollarPrice:2000000000000000000|_acceptor:0xd503d263de9092232d28492d60c5a956ad754a83) "
         }
       ],
       "status": 1
@@ -712,7 +712,7 @@ params.size: 0
             "_tokenAmounts": "[25000000000000000000, 25000000000000000000]"
           }
         },
-        "compressedTrace": "acceptTheseAskRequestsAndBUY(_keys:[6, 5]|_tokenAmounts:[25000000000000000000, 25000000000000000000]|_dollarPrices:[2000000000000000000, 2000000000000000000]); "
+        "compressedTrace": "acceptTheseAskRequestsAndBUY(_keys:[6|5]|_tokenAmounts:[25000000000000000000|25000000000000000000]|_dollarPrices:[2000000000000000000|2000000000000000000]) "
       },
       {
         "subtraces": 0,
@@ -744,7 +744,7 @@ params.size: 0
             "ret_0": "47231959280000"
           }
         },
-        "compressedTrace": "USD(_id:0); "
+        "compressedTrace": "USD(_id:0) "
       },
       {
         "subtraces": 0,
@@ -776,7 +776,7 @@ params.size: 0
             "ret_0": "47231959280000"
           }
         },
-        "compressedTrace": "USD(_id:0); "
+        "compressedTrace": "USD(_id:0) "
       }
     ],
     "articulatedTx": {
@@ -788,7 +788,7 @@ params.size: 0
         "_tokenAmounts": "[25000000000000000000, 25000000000000000000]"
       }
     },
-    "compressedTx": "acceptTheseAskRequestsAndBUY(_keys:[6, 5]|_tokenAmounts:[25000000000000000000, 25000000000000000000]|_dollarPrices:[2000000000000000000, 2000000000000000000]); ",
+    "compressedTx": "acceptTheseAskRequestsAndBUY(_keys:[6|5]|_tokenAmounts:[25000000000000000000|25000000000000000000]|_dollarPrices:[2000000000000000000|2000000000000000000]) ",
     "gasCost": 10470350000000000,
     "gasUsed": 209407,
     "date": "2018-11-16 00:10:08 UTC",

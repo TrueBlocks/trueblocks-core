@@ -47,7 +47,7 @@ params.size: 0
               "value": "0"
             }
           },
-          "compressedLog": "Deposit(from:0x0000000000000000000000000de0b6b3a7640000|value:0); "
+          "compressedLog": "Deposit(from:0x0000000000000000000000000de0b6b3a7640000|value:0) "
         }
       ],
       "status": null
@@ -80,7 +80,7 @@ params.size: 0
             "ret_0": "1"
           }
         },
-        "compressedTrace": "deposit(); "
+        "compressedTrace": "deposit() "
       }
     ],
     "articulatedTx": {
@@ -90,7 +90,7 @@ params.size: 0
         "ret_0": "1"
       }
     },
-    "compressedTx": "deposit(); ",
+    "compressedTx": "deposit() ",
     "gasCost": 864200000000000,
     "gasUsed": 43210,
     "date": "2016-05-19 10:19:53 UTC",
