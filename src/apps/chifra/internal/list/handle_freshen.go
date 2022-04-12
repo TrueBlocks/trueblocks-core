@@ -163,6 +163,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 	// We're done with the bloom and we want to close it as soon as we can (therefore
 	// we don't defer this close, but close it right away -- otherwise too many files
 	// are open and we get an error).
+	// TODO: Must we always be closing these files?
 	bloom.Close()
 
 	// If none of the addresses hit, we're finished with this index chunk. We want the
