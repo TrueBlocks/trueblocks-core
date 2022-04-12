@@ -186,7 +186,7 @@ bool CIndexArchiveWithNeighborMaps::LoadReverseMaps(const blkrange_t& range) {
     archive.Write(reverseAppMap, sizeof(char), nAppsHere * sizeof(CReverseAppMapEntry));
     archive.Release();
 
-    LOG_PROG("Processed: " + getFilename());
+    // LOG_PROG("Processed: " + getFilename());
     return true;
 }
 
@@ -296,7 +296,7 @@ bool neighbors_Pre(CTraverser* trav, void* data) {
     }
 
     post_Func(trav, data);
-    LOG_INFO("   Done...");
+    // LOG_INFO("   Done...");
     return false;  // !shouldQuit();
 }
 
