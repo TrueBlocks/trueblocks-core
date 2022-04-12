@@ -36,7 +36,6 @@ func (opts *GlobalOptions) PassItOn(path string, flags string) error {
 	cmd := exec.Command(config.GetPathToCommands(path), options)
 	cmd.Env = append(os.Environ(), "FROM_CHIFRA=true")
 	cmd.Env = append(cmd.Env, "TB_CONFIG_ENV="+envStr)
-	// fmt.Fprintf(os.Stderr, "Calling: TB_CONFIG_ENV=\"%s\" %s %s\n", envStr, config.GetPathToCommands(path), options)
 	if os.Getenv("TEST_MODE") == "true" {
 		cmd.Env = append(cmd.Env, "TEST_MODE=true")
 	}
@@ -70,6 +69,8 @@ func (opts *GlobalOptions) PassItOn(path string, flags string) error {
 	}
 	wg.Wait()
 	cmd.Wait()
+	// fmt.Fprintf(os.Stderr, "Calling: TB_CONFIG_ENV=\"%s\" %s %s\n", envStr, config.GetPathToCommands(path), options)
+	// time.Sleep(4 * time.Second)
 	return nil
 }
 

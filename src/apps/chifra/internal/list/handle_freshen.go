@@ -236,8 +236,8 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 				_, err := mon.WriteAppearances(*result.AppRecords)
 				if err != nil {
 					log.Println(err)
-				} else if !updater.Options.Globals.TestMode {
-					log.Printf("%s appended %d apps at %s\n", mon.GetAddrStr(), nWritten, result.Range)
+					// } else if !updater.Options.Globals.TestMode {
+					// log.Printf("%s appended %d apps at %s\n", mon.GetAddrStr(), nWritten, result.Range)
 				}
 			}
 		}

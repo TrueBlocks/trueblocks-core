@@ -62,29 +62,12 @@ func (opts *ScrapeOptions) ValidateScrape() error {
 					}
 
 					if !file.FileExists(cmdFile) {
-						return validate.Usage("The command file you specified ({0}) for `chifra scrape monitors` was not found.", "monitors.cmds")
-
+						return validate.Usage("The command file you specified ({0}) for `chifra scrape monitors` was not found.", cmdFile)
 					} else {
-						// validate each command
 						contents := utils.AsciiFileToString(cmdFile)
 						cmds := strings.Split(contents, "\n")
 						if len(cmds) == 0 {
-							return validate.Usage("The command file you specified ({0}) was found but contained no commands.", "monitors.cmds")
-						}
-
-						theCmds := []string{}
-						for _, cmd := range cmds {
-							cmd = strings.Trim(cmd, " \t")
-							if len(cmd) > 0 {
-								theCmds = append(theCmds, cmd)
-							}
-						}
-						fmt.Println("Found ", len(theCmds), " commands to process in ./monitors.cmds")
-						for i, cmd := range cmds {
-							cmd = strings.Trim(cmd, " \t")
-							if len(cmd) > 0 {
-								fmt.Printf("\t%d. %s\n", i, cmd)
-							}
+							return validate.Usage("The command file you specified ({0}) was found but contained no commands.", cmdFile)
 						}
 					}
 				}
