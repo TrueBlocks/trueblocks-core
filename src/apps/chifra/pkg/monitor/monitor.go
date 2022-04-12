@@ -373,15 +373,20 @@ func ListMonitors(chain, folder string, monitorChan chan<- Monitor) {
 	if err == nil {
 		// If the shorthand file exists in the current folder, use it...
 		lines := file.AsciiFileToLines(info.Name())
-		fmt.Println("Found ", len(lines), " addresses to monitor in ./addresses.csv")
+		addrMap := make(map[string]bool)
 		for _, line := range lines {
 			if !strings.HasPrefix(line, "#") {
 				parts := strings.Split(line, ",")
-				if len(parts) > 0 && validate.IsValidAddress(parts[0]) && !validate.IsZeroAddress(parts[0]) {
-					monitorChan <- NewMonitor(chain, parts[0], true /* create */)
+				if len(parts) > 0 {
+					addr := parts[0]
+					if !addrMap[addr] && validate.IsValidAddress(parts[0]) && !validate.IsZeroAddress(parts[0]) {
+						monitorChan <- NewMonitor(chain, parts[0], true /* create */)
+					}
+					addrMap[addr] = true
 				}
 			}
 		}
+		fmt.Println("Found", len(lines), "unique addresses in ./addresses.csv")
 		return
 	}
 
