@@ -413,7 +413,7 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
         expContext().asWei = false;
     }
 
-    cmdLine = trim(cmdLine);
+    cmdLine = substitute(trim(cmdLine), "  ", " ");
     return true;
 }
 
