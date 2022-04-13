@@ -413,6 +413,8 @@ func (mon *Monitor) MoveToProduction() error {
 		return errors.New("trying to move monitor that is not staged")
 	}
 
+	// TODO: BOGUS1 THIS NEEDS TO REMOVE DUPLICATES AND SORT, BUT IN THE FUTURE, THE CODE THAT CREATES THIS
+	// TODO: FILE SHOULD STOP PRODUCING DUPLICATES
 	oldPath := mon.Path()
 	mon.Staged = false
 	return os.Rename(oldPath, mon.Path())
