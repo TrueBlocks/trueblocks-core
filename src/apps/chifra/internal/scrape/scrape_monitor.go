@@ -243,26 +243,32 @@ func establishExportPaths(chain string) {
 		"logs",
 		"txs",
 		"neighbors",
+		"statements",
+		"raw",
+		"combined",
+		"zips",
 		"neighbors/networks",
 		"neighbors/adjacencies",
 		"neighbors/images",
 		"neighbors/images/pngs",
-		"statements",
 		"statements/tx_counts",
 		"statements/balances",
 		"statements/balances/plots",
-		"raw",
-		"combined",
-		"zips",
 	}
 
 	cwd, _ := os.Getwd()
-	exportPath := cwd + "/exports/" + chain + "/"
+	exportPath := cwd + "/exports/"
+	if err := file.EstablishFolders(exportPath, nil); err != nil {
+		log.Fatal(err)
+	}
+
+	exportPath = cwd + "/exports/" + chain + "/"
 	_, err := os.Stat(path.Join(exportPath, folders[len(folders)-1]))
 	if err == nil {
 		// If the last path already exists, assume we've been here before
 		return
 	}
+
 	if err := file.EstablishFolders(exportPath, folders); err != nil {
 		log.Fatal(err)
 	}

@@ -16,10 +16,12 @@ func EstablishFolders(rootPath string, folders []string) error {
 		return err
 	}
 
-	for _, folder := range folders {
-		err := establishFolder(path.Join(rootPath, folder))
-		if err != nil {
-			return err
+	if folders != nil {
+		for _, folder := range folders {
+			err := establishFolder(path.Join(rootPath, folder))
+			if err != nil {
+				return err
+			}
 		}
 	}
 
