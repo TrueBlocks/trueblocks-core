@@ -12,8 +12,8 @@
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
 
-#define START 14528620
-#define END 14562065
+#define START 14562065
+#define END 14585980
 
 int main(int argc, const char* argv[]) {
     loadEnvironmentPaths();
