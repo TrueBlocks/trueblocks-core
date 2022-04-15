@@ -234,7 +234,7 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 		if result.AppRecords != nil {
 			nWritten := len(*result.AppRecords)
 			if nWritten > 0 {
-				_, err := mon.WriteAppearances(*result.AppRecords)
+				_, err := mon.WriteAppearances(*result.AppRecords, os.O_WRONLY|os.O_APPEND)
 				if err != nil {
 					log.Println(err)
 				} else if !updater.Options.Globals.TestMode {

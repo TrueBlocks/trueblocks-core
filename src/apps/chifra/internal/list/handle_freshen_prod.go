@@ -12,8 +12,6 @@ func (updater *MonitorUpdate) moveAllToProduction() error {
 		if err != nil {
 			return err
 		}
-		// TODO: BOGUS1
-		// fmt.Fprintf(os.Stdout, "Donze: %s%s --> %s\n", colors.Red, mon, colors.Off)
 	}
 	return nil
 }

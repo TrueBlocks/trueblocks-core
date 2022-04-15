@@ -10,7 +10,6 @@ import (
 	"log"
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 )
 
@@ -52,7 +51,7 @@ func (mon *Monitor) WriteAppendApps(lastScanned uint32, apps *[]index.Appearance
 
 	if apps != nil {
 		if len(*apps) > 0 {
-			_, err := mon.WriteAppearances(*apps)
+			_, err := mon.WriteAppearances(*apps, os.O_WRONLY|os.O_APPEND)
 			if err != nil {
 				return err
 			}
@@ -63,12 +62,7 @@ func (mon *Monitor) WriteAppendApps(lastScanned uint32, apps *[]index.Appearance
 }
 
 // WriteAppearances writes appearances to a Monitor
-func (mon *Monitor) WriteAppearances(apps []index.AppearanceRecord) (count int, err error) {
-	mode := os.O_WRONLY | os.O_CREATE
-	if file.FileExists(mon.Path()) {
-		// log.Println("Appending to existing monitor", mon.GetAddrStr())
-		mode = os.O_WRONLY | os.O_APPEND
-	}
+func (mon *Monitor) WriteAppearances(apps []index.AppearanceRecord, mode int) (count int, err error) {
 
 	path := mon.Path()
 	f, err := os.OpenFile(path, mode, 0644)

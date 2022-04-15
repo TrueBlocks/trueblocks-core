@@ -248,15 +248,22 @@ func ListMonitors(chain, folder string, monitorChan chan<- Monitor) {
 	})
 }
 
-// TODO: This should be non-interuptable
+// TODO: BOGUS This should be non-interuptable
 // MoveToProduction moves a previously staged monitor to the monitors folder.
 func (mon *Monitor) MoveToProduction() error {
 	if !mon.Staged {
-		return errors.New("trying to move monitor that is not staged")
+		return fmt.Errorf("trying to move monitor that is not staged")
 	}
 
-	// TODO: BOGUS1 THIS NEEDS TO REMOVE DUPLICATES AND SORT, BUT IN THE FUTURE, THE CODE THAT CREATES THIS
-	// TODO: FILE SHOULD STOP PRODUCING DUPLICATES
+	before, after, err := mon.RemoveDups()
+	if err != nil {
+		return err
+	}
+
+	if before != after {
+		fmt.Printf("%d duplicates removed.", (before - after))
+	}
+
 	oldPath := mon.Path()
 	mon.Staged = false
 	return os.Rename(oldPath, mon.Path())
