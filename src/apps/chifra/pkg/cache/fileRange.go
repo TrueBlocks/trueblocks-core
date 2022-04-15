@@ -83,3 +83,9 @@ func (r *FileRange) RangeToFilename(chain string, mode CacheType) (bool, string)
 	fileName := chunkPath.GetFullPath(rangeStr)
 	return file.FileExists(fileName), fileName
 }
+
+// SequentiallyFollows returns true if the last block in the previous range is one less than
+// the first block on the given range
+func (r *FileRange) SequentiallyFollows(prev FileRange) bool {
+	return r.First == prev.Last+1
+}

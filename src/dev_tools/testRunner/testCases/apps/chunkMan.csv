@@ -1,4 +1,4 @@
-enabled ,mode ,speed ,route  ,path/tool     ,filename           ,post ,options                     ,opt_cmd ,has_env
+enabled ,mode ,speed ,route  ,path/tool     ,filename           ,post ,options                          ,opt_cmd ,has_env
 on      ,cmd  ,fast  ,chunks ,apps/chunkMan ,help               ,n    ,@h
 on      ,cmd  ,fast  ,chunks ,apps/chunkMan ,help_long          ,n    ,help
 on      ,both ,fast  ,chunks ,apps/chunkMan ,no_params          ,y    ,
@@ -10,6 +10,10 @@ on      ,cmd  ,fast  ,chunks ,apps/chunkMan ,extract_blooms2    ,n    ,extract =
 on      ,both ,fast  ,chunks ,apps/chunkMan ,extract_pins       ,n    ,extract = pins & fmt = csv
 on      ,both ,fast  ,chunks ,apps/chunkMan ,extract_pins2      ,y    ,extract = pins
 on      ,both ,fast  ,chunks ,apps/chunkMan ,extract_pins3      ,y    ,extract = pins & fmt = api
+
+on      ,both ,fast  ,chunks ,apps/chunkMan ,fail_neither       ,y    ,
+on      ,both ,fast  ,chunks ,apps/chunkMan ,fail_both          ,y    ,extract = pins & check
+
 
 off     ,both ,fast  ,chunks ,apps/chunkMan ,invalid_param_1    ,y    ,junk
 off     ,both ,fast  ,chunks ,apps/chunkMan ,list_local         ,y    ,list

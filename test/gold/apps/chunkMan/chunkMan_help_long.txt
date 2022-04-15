@@ -11,6 +11,7 @@ Arguments:
 Flags:
   -e, --extract string   show some or all of the contents of the chunk or bloom filters
                          One of [ stats | pins | blooms | index | header | addresses | appearances ]
+  -c, --check            check the index for internal consistency (hidden)
   -x, --fmt string       export format, one of [none|json*|txt|csv|api]
   -v, --verbose          enable verbose (increase detail with --log_level)
   -h, --help             display this help screen

@@ -15,13 +15,17 @@ func (opts *ChunksOptions) ValidateChunks() error {
 		return opts.BadFlag
 	}
 
-	if len(opts.Extract) == 0 {
-		return validate.Usage("The --extract option may not be empty.")
-	}
-
 	err := validate.ValidateEnum("--extract", opts.Extract, "[stats|pins|blooms|index|header|addresses|appearances]")
 	if err != nil {
 		return err
+	}
+
+	if !opts.Check && len(opts.Extract) == 0 {
+		return validate.Usage("Please choose at least one of {0}.", "--extract or --check")
+	}
+
+	if opts.Check && len(opts.Extract) > 0 {
+		return validate.Usage("Please choose only one of {0}.", "--extract or --check")
 	}
 
 	return opts.Globals.ValidateGlobals()

@@ -28,6 +28,10 @@ func RunChunks(cmd *cobra.Command, args []string) error {
 	}
 
 	// EXISTING_CODE
+	if opts.Check {
+		return opts.HandleChunksCheck()
+	}
+
 	if opts.Extract == "blooms" {
 		return opts.HandleChunksExtract(opts.showBloom)
 	} else if opts.Extract == "pins" {
@@ -50,6 +54,14 @@ func ServeChunks(w http.ResponseWriter, r *http.Request) bool {
 	}
 
 	// EXISTING_CODE
+	if opts.Check {
+		err = opts.HandleChunksCheck()
+		if err != nil {
+			logger.Log(logger.Warning, "Could not extract blooms", err)
+		}
+		return true
+	}
+
 	if opts.Extract == "blooms" {
 		err = opts.HandleChunksExtract(opts.showBloom)
 		if err != nil {

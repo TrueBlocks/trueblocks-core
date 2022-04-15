@@ -1,5 +1,7 @@
-chifra chunks  
-Error: Please choose at least one of --extract or --check.
+chifra chunks  --extract pins --check
+TEST[DATE|TIME] Extract:  pins
+TEST[DATE|TIME] Check:  true
+Error: Please choose only one of --extract or --check.
 Usage:
   chifra chunks [flags] <block> [block...]
 
