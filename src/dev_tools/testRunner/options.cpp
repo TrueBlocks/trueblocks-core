@@ -23,7 +23,6 @@ static const COption params[] = {
     // clang-format off
     COption("mode", "m", "enum[cmd*|api|both]", OPT_FLAG, "determine which set of tests to run"),
     COption("filter", "f", "enum[fast*|medi|slow|all]", OPT_FLAG, "determine how long it takes to run tests"),
-    COption("clean", "c", "", OPT_SWITCH, "clean working folder before running tests"),
     COption("skip", "s", "<uint64>", OPT_HIDDEN | OPT_FLAG, "run only every 'skip' test (faster)"),
     COption("report", "r", "", OPT_SWITCH, "display performance report to screen"),
     COption("", "", "", OPT_DESCRIPTION, "Run TrueBlocks' test cases with options."),
@@ -63,9 +62,6 @@ bool COptions::parseArguments(string_q& command) {
                 return false;
         } else if (arg == "-f" || arg == "--filter") {
             return flag_required("filter");
-
-        } else if (arg == "-c" || arg == "--clean") {
-            clean = true;
 
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--skip:")) {
             if (!confirmUint("skip", skip, arg))
@@ -200,7 +196,6 @@ void COptions::Init(void) {
 
     // BEG_CODE_INIT
     filter = "";
-    clean = false;
     skip = 1;
     report = false;
     // END_CODE_INIT
@@ -230,8 +225,6 @@ COptions::~COptions(void) {
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::cleanTest(const string_q& path, const string_q& testName) {
-    if (!clean)
-        return true;
     ostringstream os;
     // clang-format off
     os << "find ../../../working/" << path << "/" << testName << "/ -maxdepth 1 -name \"" << testName << "_*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
