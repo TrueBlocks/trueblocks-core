@@ -1,4 +1,3 @@
-// TODO: BOGUS -- Check out develop -- run chifra list <addr> -- check out update -- re-run -- should remove the old monitor files
 package monitor
 
 import (

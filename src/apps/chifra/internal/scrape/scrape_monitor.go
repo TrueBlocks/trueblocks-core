@@ -1,5 +1,3 @@
-// TODO: BOGUS - MUST REMOVE OLD .acct.bin files and auto upgrade to .mon.bin file
-
 package scrapePkg
 
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.

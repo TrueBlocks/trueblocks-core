@@ -272,7 +272,6 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     // The monitor data has already been updated by the golang code
-    // TODO: BOGUS - this can be done in the golang code
     cleanMonitorStage();
 
     if (first_block > last_block)
@@ -623,5 +622,3 @@ const char* STR_MONITOR_LOCKED =
     "running or it did not end cleanly the\n\tlast time it ran. "
     "Quit the already running program or, if it is not running, "
     "remove the lock\n\tfile: '{0}.lck'.";
-
-// TODO: BOGUS - WE NO LONGER HAVE THE ABILITY TO KEEP TRACK OF HOW MANY BLOOM FILTERS HIT DURING CHIFRA LIST

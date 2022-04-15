@@ -1,11 +1,20 @@
-// TODO: BOGUS
-// Integration testing
-// 1. Never seen an address before (with a false stopping point)
-// 2. Same address without a false stopping point so we see freshen)
-// 3. Remove that address, remove one or two index chunks
-// 4. Re-run without a stopping point -- should download missing chunks
-// 5. An address with no transactions
-// 6. Use a progressChannel
+// TODO: BOGUS - getRecordCnt - CLEAN THIS UP
+// TODO: BOGUS MoveToProduction should be non-interuptable
+// TODO: BOGUS -- Check out develop -- run chifra list <addr> -- check out update -- re-run -- should remove the old monitor files
+// TODO: BOGUS - remove IsMember_Old bloom code if possible
+// TODO: BOGUS - MUST REMOVE OLD .acct.bin files and auto upgrade to .mon.bin file
+// TODO: BOGUS - if opts.Sleep != 14 || rpcClient.DistanceFromHead(opts.Globals.Chain) <= (2 * opts.UnripeDist) { DOESN'T WORK
+// TODO: BOGUS - Do we need to use monitors/staging or can we build it in memory?
+// TODO: BOGUS - Does chifra clean work? -- yes, it does now
+// TODO: BOGUS - WE NO LONGER HAVE THE ABILITY TO KEEP TRACK OF HOW MANY BLOOM FILTERS HIT DURING CHIFRA LIST
+// TODO: BOGUS - cleanMonitorStage should be done in the golang code
+// TODO: BOGUS - Integration testing
+// TODO: BOGUS - 1. Never seen an address before (with a false stopping point)
+// TODO: BOGUS - 2. Same address without a false stopping point so we see freshen)
+// TODO: BOGUS - 3. Remove that address, remove one or two index chunks
+// TODO: BOGUS - 4. Re-run without a stopping point -- should download missing chunks
+// TODO: BOGUS - 5. An address with no transactions
+// TODO: BOGUS - 6. Use a progressChannel
 
 package listPkg
 
@@ -13,7 +22,6 @@ package listPkg
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-// TODO: BOGUS -- USED TO BE ACCTSCRAPE2
 import (
 	"fmt"
 	"io/ioutil"

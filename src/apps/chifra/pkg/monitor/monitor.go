@@ -248,7 +248,6 @@ func ListMonitors(chain, folder string, monitorChan chan<- Monitor) {
 	})
 }
 
-// TODO: BOGUS This should be non-interuptable
 // MoveToProduction moves a previously staged monitor to the monitors folder.
 func (mon *Monitor) MoveToProduction() error {
 	if !mon.Staged {

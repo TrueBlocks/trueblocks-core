@@ -128,7 +128,6 @@ func Test_Bloom(t *testing.T) {
 			t.Error("address should not be member, but is (ignores false positives)", tt.Addr.Hex())
 		}
 
-		// TODO: BOGUS - remove _Old bloom testing code if possible
 		fmt.Println(strings.ToLower(tt.Addr.Hex()), bloom.IsMember_Old(tt.Addr))
 	}
 }

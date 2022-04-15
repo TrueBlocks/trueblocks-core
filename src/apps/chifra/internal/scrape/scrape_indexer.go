@@ -29,8 +29,7 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup, initialState bool
 		} else {
 			opts.Globals.PassItOn("blockScrape", opts.ToCmdLine())
 			if s.Running {
-				// TODO: BOGUS - THIS DOESN'T WORK
-				if opts.Sleep != 14 || rpcClient.DistanceFromHead(opts.Globals.Chain) <= (2 * opts.UnripeDist) {
+				if opts.Sleep != 14 || rpcClient.DistanceFromHead(opts.Globals.Chain) <= (2*opts.UnripeDist) {
 					s.Pause()
 				}
 			}

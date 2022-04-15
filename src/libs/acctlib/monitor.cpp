@@ -387,7 +387,6 @@ const char* STR_DISPLAY_MONITOR =
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-// TODO: BOGUS - CLEAN THIS UP
 //-------------------------------------------------------------------------
 size_t CMonitor::getRecordCnt(const string_q& path) const {
     size_t sz = ::fileSize(path);
@@ -456,7 +455,7 @@ bool CMonitor::readAppearances(MONAPPFUNC func, void* data) {
             return false;
         }
     }
-    // TODO: BOGUS - DO WE NEED THIS?
+
     sort(apps.begin(), apps.end());
 
     delete[] buffer;
@@ -464,7 +463,6 @@ bool CMonitor::readAppearances(MONAPPFUNC func, void* data) {
 }
 
 //----------------------------------------------------------------
-// TODO: BOGUS - Do this in the golang code
 void cleanMonitorStage(void) {
     CMonitor m;
     cleanFolder(m.getPathToMonitor("", true));
