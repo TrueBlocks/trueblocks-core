@@ -89,11 +89,16 @@ func Test_Monitor_ReadApps(t *testing.T) {
 		t.Error("Number of records in monitor", mon.Count(), "is not as expected", nTests)
 	}
 
-	err := mon.ReadMonHeader()
+	err := mon.ReadHeader()
 	if err != nil {
 		t.Error(err)
 	}
-	// TODO: read the header
+
+	tooLarge := make([]index.AppearanceRecord, mon.Count()+2)
+	err = mon.ReadAppearances(&tooLarge)
+	if err == nil {
+		t.Error("Expected an error with too large array. Did not get error.")
+	}
 
 	apps := make([]index.AppearanceRecord, mon.Count())
 	err = mon.ReadAppearances(&apps)

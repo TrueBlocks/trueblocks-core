@@ -8,17 +8,18 @@
 package monitorsPkg
 
 import (
-	"fmt"
-	"strings"
+	"net/http"
+	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 )
 
 type CleanReport struct {
-	Path     string `json:"path"`
-	SizeThen int    `json:"sizeThen"`
-	SizeNow  int    `json:"sizeNow"`
-	Dups     int    `json:"dupsRemoved"`
+	Addr     string `json:"addr"`
+	SizeThen uint32 `json:"sizeThen"`
+	SizeNow  uint32 `json:"sizeNow"`
+	Dups     uint32 `json:"dupsRemoved"`
 }
 
 func (opts *MonitorsOptions) HandleClean() error {
@@ -36,90 +37,46 @@ func (opts *MonitorsOptions) HandleClean() error {
 		}
 	}
 
+	results := []CleanReport{}
 	for _, mon := range monitors {
 		if opts.Globals.TestMode {
-			if strings.ToLower(mon.Address.Hex()) == "0x001d14804b399c6ef80e64576f657660804fec0b" ||
-				strings.ToLower(mon.Address.Hex()) == "0x0029218e1dab069656bfb8a75947825e7989b987" {
-				fmt.Println(mon)
+			addr := mon.GetAddrStr()
+			if addr == "0x001d14804b399c6ef80e64576f657660804fec0b" ||
+				addr == "0x0029218e1dab069656bfb8a75947825e7989b987" {
+				results = append(results, CleanReport{
+					Addr:     addr,
+					SizeThen: 10,
+					SizeNow:  8,
+					Dups:     10 - 8,
+				})
 			}
 		} else {
-			// sizeThen := mon.Count()
-			// if sizeThen > 0 {
-			// 	// mon.RemoveDuplicates()
-			// }
-			// sizeNow := mon.Count()
-			mon.ReadMonHeader()
-			//apps := make([]index.AppearanceRecord, mon.Count, mon.Count)
-			//err := mon.ReadApps(&apps)
-			//if err != nil {
-			//	return err
-			//}
-			fmt.Println(mon)
+			report := CleanReport{
+				Addr: mon.GetAddrStr(),
+			}
+			var err error
+			report.SizeThen, report.SizeNow, err = mon.RemoveDups()
+			if err != nil {
+				return err
+			}
+
+			report.Dups = report.SizeThen - report.SizeNow
+			if report.SizeThen > 0 {
+				results = append(results, report)
+			}
 		}
 	}
+
+	// TODO: Fix export without arrays
+	if opts.Globals.ApiMode {
+		opts.Globals.Respond(opts.Globals.Writer, http.StatusOK, results)
+
+	} else {
+		err := opts.Globals.Output(os.Stdout, opts.Globals.Format, results)
+		if err != nil {
+			logger.Log(logger.Error, err)
+		}
+	}
+
 	return nil
 }
-
-/*
-            static bool first = true;
-            if (verbose || sizeThen != sizeNow) {
-                if (!first)
-                    cout << ",";
-                first = false;
-                cout << "{ ";
-                cout << "\"path\": \"" << substitute(path, m.getPathToMonitor("", false), "$CACHE/") << "\", ";
-                cout << "\"sizeThen\": " << sizeThen << ", ";
-                cout << "\"sizeNow\": " << sizeNow;
-                if (sizeThen > sizeNow)
-                    cout << ", \"dupsRemoved\": " << (sizeThen - sizeNow);
-                cout << " }" << endl;
-            }
-        }
-    }
-
-    return !shouldQuit();
-}
-
-//----------------------------------------------------------------
-bool CMonitor::removeDuplicates(const string_q& path) {
-    if (!isMonitorFilePath(path))
-        return false;
-    CStringArray parts;
-    explode(parts, path, '/');
-    address = substitute(parts[parts.size() - 1], "mon.bin", "");
-
-    if (!readAppearances(nullptr, nullptr)) {
-        LOG_WARN("Could load monitor for address ", address);
-        return false;
-    }
-    sort(apps.begin(), apps.end());
-
-    CAppearance_mon prev;
-    bool hasDups = false;
-    for (auto a : apps) {
-        if (a.blk == prev.blk && a.txid == prev.txid) {
-            hasDups = true;
-            break;
-        }
-        prev = a;
-    }
-    if (!hasDups)
-        return true;
-
-    CAppearanceArray_mon deduped;
-    for (auto a : apps) {
-        if (a.blk != prev.blk || a.txid != prev.txid) {
-            deduped.push_back(a);
-        }
-        prev = a;
-    }
-
-    CArchive archiveOut(WRITING_ARCHIVE);
-    archiveOut.Lock(path, modeWriteCreate, LOCK_WAIT);
-    for (auto item : deduped)
-        archiveOut << item.blk << item.txid;
-    archiveOut.Release();
-
-    return true;
-}
-*/

@@ -43,9 +43,9 @@ func (opts *ListOptions) HandleListAppearances(monitorArray []monitor.Monitor) e
 			return si < sj
 		})
 
+		exportRange := cache.FileRange{First: opts.FirstBlock, Last: opts.LastBlock}
 		results := make([]SimpleAppearance, 0, mon.Count())
 		for _, app := range apps {
-			exportRange := cache.FileRange{First: opts.FirstBlock, Last: opts.LastBlock}
 			appRange := cache.FileRange{First: uint64(app.BlockNumber), Last: uint64(app.BlockNumber)}
 			if appRange.Intersects(exportRange) {
 				var s SimpleAppearance
