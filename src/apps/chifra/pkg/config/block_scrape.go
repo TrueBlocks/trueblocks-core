@@ -24,9 +24,23 @@ type blockScrapeUnchainedIndex struct {
 	ManifestHashEncoding string
 }
 
+// We should remove these underlined config entries in a migration some day
+type blockScrapeSettings struct {
+	// block_cnt      int
+	// block_chan_cnt int
+	// addr_chan_cnt  int
+	// apps_per_chunk int
+	// unripe_dist    int
+	// snap_to_grid   int
+	// first_snap     int
+	// allow_missing  bool
+	Allow_missing bool
+}
+
 type BlockScrape struct {
 	Requires       blockScrapeRequires
 	UnchainedIndex blockScrapeUnchainedIndex
+	Settings       blockScrapeSettings
 }
 
 // init sets up default values for the given configuration
@@ -41,7 +55,7 @@ func init() {
 // ReadBlockScrape reads the configuration located in blockScrape.toml file
 func ReadBlockScrape(chain string) *BlockScrape {
 	if !blockScrapeRead {
-		MustReadConfig(blockScrapeViper, &cachedBlockScrape, GetPathToChainConfig(chain)+"blockScrape.toml")
+		MustReadConfig(blockScrapeViper, &cachedBlockScrape, GetPathToChainConfig(chain))
 		blockScrapeRead = true
 	}
 

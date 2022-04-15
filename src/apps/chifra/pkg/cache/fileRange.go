@@ -84,8 +84,12 @@ func (r *FileRange) RangeToFilename(chain string, mode CacheType) (bool, string)
 	return file.FileExists(fileName), fileName
 }
 
-// SequentiallyFollows returns true if the last block in the previous range is one less than
-// the first block on the given range
-func (r *FileRange) SequentiallyFollows(prev FileRange) bool {
-	return r.First == prev.Last+1
+// Follows returns true if the last block in the previous range is one less than
+// the first block on the given range or if sequential is false, if last is
+// prev.smaller than curr.first
+func (curr *FileRange) Follows(prev FileRange, sequential bool) bool {
+	if sequential && false {
+		return curr.First == prev.Last+1
+	}
+	return curr.First > prev.Last
 }

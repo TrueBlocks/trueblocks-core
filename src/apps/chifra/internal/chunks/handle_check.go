@@ -43,6 +43,8 @@ func (opts *ChunksOptions) HandleChunksCheck() error {
 		return filenames[i] < filenames[j]
 	})
 
+	allow_missing := config.ReadBlockScrape(opts.Globals.Chain).Settings.Allow_missing
+
 	nChecks := 0
 	nChecksFailed := 0
 	notARange := cache.FileRange{First: utils.NOPOS, Last: utils.NOPOS}
@@ -52,16 +54,16 @@ func (opts *ChunksOptions) HandleChunksCheck() error {
 			fR, _ := cache.RangeFromFilename(filename)
 			if prev == notARange {
 				prev = fR
-			} else {
+			} else if prev != fR {
 				nChecks++
-				if !fR.SequentiallyFollows(prev) {
+				if !fR.Follows(prev, !allow_missing) {
 					nChecksFailed++
 					fmt.Println(fR, "does not sequentially follow", prev)
 				}
 			}
 			prev = fR
 		}
-		fmt.Println(nChecksFailed, "failed checks out of", nChecks, ".")
+		fmt.Printf("Checked %d chunks, %d failed checks.\n", nChecks, nChecksFailed)
 	}
 
 	return nil
