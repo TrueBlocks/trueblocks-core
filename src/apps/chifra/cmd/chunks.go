@@ -46,6 +46,10 @@ func init() {
 
 	chunksCmd.Flags().StringVarP(&chunksPkg.GetOptions().Extract, "extract", "e", "", `show some or all of the contents of the chunk or bloom filters
 One of [ stats | pins | blooms | index | header | addresses | appearances ]`)
+	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Check, "check", "c", false, "check the index for internal consistency (hidden)")
+	if os.Getenv("TEST_MODE") != "true" {
+		chunksCmd.Flags().MarkHidden("check")
+	}
 	globals.InitGlobals(chunksCmd, &chunksPkg.GetOptions().Globals)
 
 	chunksCmd.SetUsageTemplate(UsageWithNotes(notesChunks))

@@ -244,6 +244,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 
 21950,apps,Admin,chunks,chunkMan,blocks,,,false,false,true,true,header,positional,list<blknum>,optional list of blocks to intersect with chunk ranges
 21956,apps,Admin,chunks,chunkMan,extract,e,,false,false,true,true,header,flag,enum[stats|pins|blooms|index|header|addresses|appearances],show some or all of the contents of the chunk or bloom filters
+21956,apps,Admin,chunks,chunkMan,check,c,,false,false,false,false,gocmd,switch,<boolean>,check the index for internal consistency
 21962,apps,Admin,chunks,chunkMan,,,,false,false,true,true,--,description,,Manage and investigate chunks and bloom filters.
 21964,apps,Admin,chunks,chunkMan,n1,,,false,false,false,false,--,note,,Only a single block in a given chunk needs to be supplied.
 

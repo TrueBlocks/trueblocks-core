@@ -21,6 +21,7 @@ import (
 type ChunksOptions struct {
 	Blocks  []string
 	Extract string
+	Check   bool
 	Globals globals.GlobalOptions
 	BadFlag error
 }
@@ -30,6 +31,7 @@ var chunksCmdLineOptions ChunksOptions
 func (opts *ChunksOptions) TestLog() {
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
 	logger.TestLog(len(opts.Extract) > 0, "Extract: ", opts.Extract)
+	logger.TestLog(opts.Check, "Check: ", opts.Check)
 	opts.Globals.TestLog()
 }
 
@@ -54,6 +56,8 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ChunksOptions {
 			}
 		case "extract":
 			opts.Extract = value[0]
+		case "check":
+			opts.Check = true
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "chunks")
