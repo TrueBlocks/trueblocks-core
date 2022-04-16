@@ -3,75 +3,6 @@
 
 // TODO: BOGUS - if opts.Sleep != 14 || rpcClient.DistanceFromHead(opts.Globals.Chain) <= (2 * opts.UnripeDist) { DOESN'T WORK
 // TODO: BOGUS - WALK THROUGH THE MONITOR FOLDER LOOKING FOR .acct.bin files report an error
-// const needsMigration_30_0 string = `
-// 	Old style monitor files found. Please run {0}.
-// 	See https://github.com/TrueBlocks/trueblocks-core/blob/develop/MIGRATIONS.md
-// 	[{VERSION}]
-// `
-// 	if !file.FileExists(config.GetPathToChainConfig("") + "migration.0.30.0") {
-// 		msg := strings.Replace(needsMigration_30_0, "{0}", "{chifra status --migration all}", -1)
-// 		msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
-// 		msg = strings.Replace(msg, "{", colors.Green, -1)
-// 		msg = strings.Replace(msg, "}", colors.Off, -1)
-// 		log.Fatalf(msg)
-// 	}
-//--------------------------------------------------------------------------------
-// bool migrateOne_30_0(const string_q& path, void* data) {
-//     CMigrationChecker* checker = (CMigrationChecker*)data;
-//     if (endsWith(path, "/")) {
-//         return forEveryFileInFolder(path + "*", migrateOne_30_0, data);
-//     } else {
-//         checker->nSeen++;
-//         if (!endsWith(path, ".acct.bin")) {
-//             if (endsWith(path, ".mon.bin"))
-//                 checker->nSkipped++;
-// we only need to migrate if there's an old-fashioned monitor file...
-//             return !shouldQuit();
-//         }
-//         checker->nMigrated++;
-//         string_q monFile = substitute(path, ".acct.bin", ".mon.bin");
-//         string_q delFile = substitute(path, ".acct.bin", ".acct.bin.deleted");
-//         bool wasDeleted = fileExists(delFile);
-//         Handle the situation differently if the new style monitor does not exists
-//         if (!fileExists(monFile)) {
-//             CStringArray parts;
-//             explode(parts, substitute(path, ".acct.bin", ""), '/');
-
-//             {  // keep the frame...
-//                 ostringstream cmd;
-//                 cmd << "chifra list --silent " << parts[parts.size() - 1] << " 2>&1 >/dev/null";
-//                 if (system(cmd.str().c_str())) {
-//                 }  // Don't remove cruft. Silences compiler warnings
-//             }
-//             if (wasDeleted) {
-//                 ostringstream cmd;
-//                 cmd << "chifra monitors --delete " << parts[parts.size() - 1] << " 2>/dev/null";
-//                 if (system(cmd.str().c_str())) {
-//                 }  // Don't remove cruft. Silences compiler warnings
-//             }
-//         }
-//         if (fileExists(path)) {
-//             ::remove(path.c_str());
-//         }
-//         if (fileExists(delFile)) {
-//             ::remove(delFile.c_str());
-//         }
-//         string_q lastFile = substitute(path, ".acct.bin", ".last.txt");
-//         if (fileExists(lastFile)) {
-//             ::remove(lastFile.c_str());
-//         }
-//     }
-//     return !shouldQuit();
-// }
-//--------------------------------------------------------------------------------
-// bool COptions::handle_migrate_30_0(void) {
-//     auto cache = cacheFolder_monitors;
-//     LOG_INFO(cGreen, "Checking '", relativize(cache), "'", string_q(50, ' '), cOff);
-//     CMigrationChecker checker(cache);
-//     forEveryFileInFolder(cache, migrateOne_30_0, &checker);  // will quit early if it finds a migrate
-//     LOG_INFO("  ", checker.Report() + string_q(30, ' '));
-//     return false;
-// }
 
 package listPkg
 
@@ -85,6 +16,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"strings"
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
@@ -93,6 +25,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/ethereum/go-ethereum/common"
 )
 
@@ -118,6 +51,11 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 	// This removes duplicates from the input array and keep a map from address to
 	// a pointer to the monitors
 	for _, addr := range opts.Addrs {
+		err := needsMigration(addr)
+		if err != nil {
+			return err
+		}
+
 		if updater.MonitorMap[common.HexToAddress(addr)] == nil {
 			mon, _ := monitor.NewStagedMonitor(opts.Globals.Chain, addr)
 			mon.ReadHeader()
@@ -308,4 +246,14 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 			}
 		}
 	}
+}
+
+func needsMigration(addr string) error {
+	mon := monitor.Monitor{Address: common.HexToAddress(addr)}
+	path := strings.Replace(mon.Path(), ".mon.bin", ".acct.bin", -1)
+	if file.FileExists(path) {
+		path = strings.Replace(path, config.GetPathToCache(mon.Chain), "./", -1)
+		return validate.Usage("Old style monitor found at {0}. Please run '{1}'", path, "chifra status --migrate [test|all]")
+	}
+	return nil
 }
