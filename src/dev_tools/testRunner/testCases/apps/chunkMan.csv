@@ -14,7 +14,6 @@ on      ,both ,fast  ,chunks ,apps/chunkMan ,extract_pins3      ,y    ,extract =
 on      ,both ,fast  ,chunks ,apps/chunkMan ,fail_neither       ,y    ,
 on      ,both ,fast  ,chunks ,apps/chunkMan ,fail_both          ,y    ,extract = pins & check
 
-
 off     ,both ,fast  ,chunks ,apps/chunkMan ,invalid_param_1    ,y    ,junk
 off     ,both ,fast  ,chunks ,apps/chunkMan ,list_local         ,y    ,list
 off     ,both ,fast  ,chunks ,apps/chunkMan ,list_check_invalid ,y    ,list & check
