@@ -8,7 +8,7 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
-func (bloom *ChunkBloom) IsMember_Old(addr common.Address) bool {
+func (bloom *ChunkBloom) IsMemberBytes(addr common.Address) bool {
 	whichBits := WhichBits(addr)
 	for _, bb := range bloom.Blooms {
 		var tester = bitChecker{bytes: bb.Bytes, whichBits: whichBits}
@@ -19,7 +19,7 @@ func (bloom *ChunkBloom) IsMember_Old(addr common.Address) bool {
 	return false
 }
 
-func (bloom *ChunkBloom) IsMember_New(addr common.Address) bool {
+func (bloom *ChunkBloom) IsMember(addr common.Address) bool {
 	whichBits := WhichBits(addr)
 	offset := uint32(4)
 	for j := 0; j < int(bloom.Count); j++ {

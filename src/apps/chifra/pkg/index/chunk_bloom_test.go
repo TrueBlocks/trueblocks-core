@@ -121,14 +121,14 @@ func Test_Bloom(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		if tt.AddToSet && !bloom.IsMember_Old(tt.Addr) {
+		if tt.AddToSet && !bloom.IsMemberBytes(tt.Addr) {
 			t.Error("address should be member, but isn't", tt.Addr.Hex())
 
-		} else if !tt.AddToSet && bloom.IsMember_Old(tt.Addr) { // && !tt.FalsePositive {
+		} else if !tt.AddToSet && bloom.IsMemberBytes(tt.Addr) { // && !tt.FalsePositive {
 			t.Error("address should not be member, but is (ignores false positives)", tt.Addr.Hex())
 		}
 
-		fmt.Println(strings.ToLower(tt.Addr.Hex()), bloom.IsMember_Old(tt.Addr))
+		fmt.Println(strings.ToLower(tt.Addr.Hex()), bloom.IsMemberBytes(tt.Addr))
 	}
 }
 

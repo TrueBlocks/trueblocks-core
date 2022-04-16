@@ -119,9 +119,9 @@ func (mon Monitor) ToJSON() string {
 // Path returns the path to the Monitor file
 func (mon *Monitor) Path() (path string) {
 	if mon.Staged {
-		path = config.GetPathToCache(mon.Chain) + "monitors/staging/" + strings.ToLower(mon.Address.Hex()) + Ext
+		path = config.GetPathToCache(mon.Chain) + "monitors/staging/" + mon.GetAddrStr() + Ext
 	} else {
-		path = config.GetPathToCache(mon.Chain) + "monitors/" + strings.ToLower(mon.Address.Hex()) + Ext
+		path = config.GetPathToCache(mon.Chain) + "monitors/" + mon.GetAddrStr() + Ext
 	}
 	return
 }
