@@ -1,20 +1,77 @@
-// TODO: BOGUS - getRecordCnt - CLEAN THIS UP
-// TODO: BOGUS MoveToProduction should be non-interuptable
 // TODO: BOGUS -- Check out develop -- run chifra list <addr> -- check out update -- re-run -- should remove the old monitor files
-// TODO: BOGUS - remove IsMember_Old bloom code if possible
 // TODO: BOGUS - MUST REMOVE OLD .acct.bin files and auto upgrade to .mon.bin file
+
 // TODO: BOGUS - if opts.Sleep != 14 || rpcClient.DistanceFromHead(opts.Globals.Chain) <= (2 * opts.UnripeDist) { DOESN'T WORK
-// TODO: BOGUS - Do we need to use monitors/staging or can we build it in memory?
-// TODO: BOGUS - Does chifra clean work? -- yes, it does now
-// TODO: BOGUS - WE NO LONGER HAVE THE ABILITY TO KEEP TRACK OF HOW MANY BLOOM FILTERS HIT DURING CHIFRA LIST
-// TODO: BOGUS - cleanMonitorStage should be done in the golang code
-// TODO: BOGUS - Integration testing
-// TODO: BOGUS - 1. Never seen an address before (with a false stopping point)
-// TODO: BOGUS - 2. Same address without a false stopping point so we see freshen)
-// TODO: BOGUS - 3. Remove that address, remove one or two index chunks
-// TODO: BOGUS - 4. Re-run without a stopping point -- should download missing chunks
-// TODO: BOGUS - 5. An address with no transactions
-// TODO: BOGUS - 6. Use a progressChannel
+// TODO: BOGUS - WALK THROUGH THE MONITOR FOLDER LOOKING FOR .acct.bin files report an error
+// const needsMigration_30_0 string = `
+// 	Old style monitor files found. Please run {0}.
+// 	See https://github.com/TrueBlocks/trueblocks-core/blob/develop/MIGRATIONS.md
+// 	[{VERSION}]
+// `
+// 	if !file.FileExists(config.GetPathToChainConfig("") + "migration.0.30.0") {
+// 		msg := strings.Replace(needsMigration_30_0, "{0}", "{chifra status --migration all}", -1)
+// 		msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
+// 		msg = strings.Replace(msg, "{", colors.Green, -1)
+// 		msg = strings.Replace(msg, "}", colors.Off, -1)
+// 		log.Fatalf(msg)
+// 	}
+//--------------------------------------------------------------------------------
+// bool migrateOne_30_0(const string_q& path, void* data) {
+//     CMigrationChecker* checker = (CMigrationChecker*)data;
+//     if (endsWith(path, "/")) {
+//         return forEveryFileInFolder(path + "*", migrateOne_30_0, data);
+//     } else {
+//         checker->nSeen++;
+//         if (!endsWith(path, ".acct.bin")) {
+//             if (endsWith(path, ".mon.bin"))
+//                 checker->nSkipped++;
+// we only need to migrate if there's an old-fashioned monitor file...
+//             return !shouldQuit();
+//         }
+//         checker->nMigrated++;
+//         string_q monFile = substitute(path, ".acct.bin", ".mon.bin");
+//         string_q delFile = substitute(path, ".acct.bin", ".acct.bin.deleted");
+//         bool wasDeleted = fileExists(delFile);
+//         Handle the situation differently if the new style monitor does not exists
+//         if (!fileExists(monFile)) {
+//             CStringArray parts;
+//             explode(parts, substitute(path, ".acct.bin", ""), '/');
+
+//             {  // keep the frame...
+//                 ostringstream cmd;
+//                 cmd << "chifra list --silent " << parts[parts.size() - 1] << " 2>&1 >/dev/null";
+//                 if (system(cmd.str().c_str())) {
+//                 }  // Don't remove cruft. Silences compiler warnings
+//             }
+//             if (wasDeleted) {
+//                 ostringstream cmd;
+//                 cmd << "chifra monitors --delete " << parts[parts.size() - 1] << " 2>/dev/null";
+//                 if (system(cmd.str().c_str())) {
+//                 }  // Don't remove cruft. Silences compiler warnings
+//             }
+//         }
+//         if (fileExists(path)) {
+//             ::remove(path.c_str());
+//         }
+//         if (fileExists(delFile)) {
+//             ::remove(delFile.c_str());
+//         }
+//         string_q lastFile = substitute(path, ".acct.bin", ".last.txt");
+//         if (fileExists(lastFile)) {
+//             ::remove(lastFile.c_str());
+//         }
+//     }
+//     return !shouldQuit();
+// }
+//--------------------------------------------------------------------------------
+// bool COptions::handle_migrate_30_0(void) {
+//     auto cache = cacheFolder_monitors;
+//     LOG_INFO(cGreen, "Checking '", relativize(cache), "'", string_q(50, ' '), cOff);
+//     CMigrationChecker checker(cache);
+//     forEveryFileInFolder(cache, migrateOne_30_0, &checker);  // will quit early if it finds a migrate
+//     LOG_INFO("  ", checker.Report() + string_q(30, ' '));
+//     return false;
+// }
 
 package listPkg
 
@@ -162,7 +219,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 	// We check each address against the bloom to see if there are any hits...
 	var bloomHits = false
 	for _, mon := range updater.MonitorMap {
-		if bloom.IsMember_New(mon.Address) {
+		if bloom.IsMember(mon.Address) {
 			bloomHits = true
 			break
 		}
