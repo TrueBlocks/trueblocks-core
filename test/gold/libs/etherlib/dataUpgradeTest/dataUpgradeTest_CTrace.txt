@@ -72,7 +72,7 @@ articulatedTrace    	1015	0	138412107	T_OBJECT TS_OBJECT TS_OMITEMPTY
 compressedTrace     	1016	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 date                	1017	0	33554437	T_DATE TS_DATE
 {
-  "schema": 29000,
+  "schema": 30000,
   "deleted": false,
   "showing": true,
   "cname": "Trace",
