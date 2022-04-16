@@ -1,6 +1,4 @@
 // TODO: BOGUS Write a migration document
-// TODO: BOGUS - if opts.Sleep != 14 || rpcClient.DistanceFromHead(opts.Globals.Chain) <= (2 * opts.UnripeDist) { DOESN'T WORK
-
 package listPkg
 
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
