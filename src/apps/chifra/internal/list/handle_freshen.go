@@ -1,8 +1,5 @@
-// TODO: BOGUS -- Check out develop -- run chifra list <addr> -- check out update -- re-run -- should remove the old monitor files
-// TODO: BOGUS - MUST REMOVE OLD .acct.bin files and auto upgrade to .mon.bin file
-
+// TODO: BOGUS Write a migration document
 // TODO: BOGUS - if opts.Sleep != 14 || rpcClient.DistanceFromHead(opts.Globals.Chain) <= (2 * opts.UnripeDist) { DOESN'T WORK
-// TODO: BOGUS - WALK THROUGH THE MONITOR FOLDER LOOKING FOR .acct.bin files report an error
 
 package listPkg
 
@@ -220,8 +217,8 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 		// given a nil appearance list simply updates the header. Note we update for the
 		// start of the next chunk (plus 1 to current range).
 		for _, mon := range updater.MonitorMap {
-			// TODO: BOGUS - can we manage these files pointers so they aren't
-			// copied and therefore there aren't too many of them and it crashes
+			// TODO: BOGUS - can we manage these file pointers so they aren't copied and
+			// TODO: BOGUS - therefore don't need to be Closed so or else it crashes
 			mon.Close()
 			err := mon.WriteAppendApps(uint32(result.Range.Last)+1, nil)
 			if err != nil {
