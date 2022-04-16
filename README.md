@@ -1,6 +1,7 @@
 # Recent Migrations
 
-Complete any applicable [Migrations](https://github.com/TrueBlocks/trueblocks-core/blob/develop/MIGRATIONS.md) which contains important information.
+Unless you're new to TrueBlocks, you should consult the [Migrations Page](https://github.com/TrueBlocks/trueblocks-core/blob/develop/MIGRATIONS.md) which 
+contains important information.
 
 # TrueBlocks Core
 
