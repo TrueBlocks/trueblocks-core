@@ -463,12 +463,6 @@ bool CMonitor::readAppearances(MONAPPFUNC func, void* data) {
 }
 
 //----------------------------------------------------------------
-void cleanMonitorStage(void) {
-    CMonitor m;
-    cleanFolder(m.getPathToMonitor("", true));
-}
-
-//----------------------------------------------------------------
 bool isMonitorFilePath(const string_q& path) {
     return endsWith(path, "mon.bin");
 }

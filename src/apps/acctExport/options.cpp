@@ -271,8 +271,9 @@ bool COptions::parseArguments(string_q& command) {
     if (!setDisplayFormatting())
         return false;
 
-    // The monitor data has already been updated by the golang code
-    cleanMonitorStage();
+    // TODO: This can be removed
+    CMonitor m;
+    cleanFolder(m.getPathToMonitor("", true));
 
     if (first_block > last_block)
         return usage("--first_block must be less than or equal to --last_block.");

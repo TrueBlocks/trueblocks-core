@@ -187,7 +187,6 @@ extern const char* STR_DISPLAY_MONITOR;
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 typedef map<address_t, CMonitor> CMonitorMap;  // NOLINT
-extern void cleanMonitorStage(void);
 extern bool isMonitorFilePath(const string_q& path);
 // EXISTING_CODE
 }  // namespace qblocks
