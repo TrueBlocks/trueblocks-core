@@ -1,4 +1,3 @@
-// TODO: BOGUS Write a migration document
 package listPkg
 
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
