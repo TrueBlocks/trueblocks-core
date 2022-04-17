@@ -51,7 +51,9 @@ func ValidateIdentifiers(chain string, identifiers []string, validTypes ValidArg
 			continue
 		}
 
-		if isBitmaskSet(ValidArgumentBlockNumber) && IsBlockNumber(identifier) {
+		validBlockNumber, _ := IsBlockNumber(identifier)
+
+		if isBitmaskSet(ValidArgumentBlockNumber) && validBlockNumber {
 			continue
 		}
 
