@@ -1,0 +1,122 @@
+chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --fmt json --max_records 1 --first_record 212
+TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+TEST[DATE|TIME] FirstRecord:  212
+TEST[DATE|TIME] MaxRecords:  1
+TEST[DATE|TIME] Format:  json
+{ "data": [
+{
+  "hash": "0xdfa263cb6a202c9f301944cbd8be76f8cdd97e1abb42f1ca1347bb3e31fafd00",
+  "blockHash": "0xb0eeae84197ce9710061d248b0d94b26e9e539ae0d5498be83d43bcfc8f81bfc",
+  "blockNumber": 10277780,
+  "transactionIndex": 102,
+  "timestamp": 1592323744,
+  "from": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
+  "to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+  "value": 0,
+  "gas": 200000,
+  "gasPrice": 40000000000,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
+  "isError": 0,
+  "hasToken": 1,
+  "receipt": {
+    "contractAddress": "0x0",
+    "gasUsed": 68590,
+    "effectiveGasPrice": 40000000000,
+    "logs": [
+      {
+        "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+        "logIndex": 118,
+        "topics": [
+          "0x3bb7428b25f9bdad9bd2faa4c6a7a9e5d5882657e96c1d24cc41c1d6c1910a98",
+          "0x0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f",
+          "0x000000000000000000000000000000000000000000000000869d529b714a0000",
+          "0x000000000000000000000000054993ab0f2b1acc0fdc65405ee203b4271bebe6"
+        ],
+        "data": "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b",
+        "articulatedLog": {
+          "name": "DonationSent",
+          "inputs": {
+            "amount": "9700000000000000000",
+            "dest": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+            "donor": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
+            "token": "0x6b175474e89094c44da98b954eedeac495271d0f"
+          }
+        },
+        "compressedLog": "DonationSent(token:0x6b175474e89094c44da98b954eedeac495271d0f|amount:9700000000000000000|dest:0xf503017d7baf7fbc0fff7492b751025c6a78179b|donor:0x054993ab0f2b1acc0fdc65405ee203b4271bebe6)"
+      },
+      {
+        "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "logIndex": 119,
+        "topics": [
+          "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+          "0x000000000000000000000000054993ab0f2b1acc0fdc65405ee203b4271bebe6",
+          "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
+        ],
+        "data": "0x000000000000000000000000000000000000000000000000869d529b714a0000",
+        "articulatedLog": {
+          "name": "Transfer",
+          "inputs": {
+            "_amount": "9700000000000000000",
+            "_from": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
+            "_to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
+          }
+        },
+        "compressedLog": "Transfer(_from:0x054993ab0f2b1acc0fdc65405ee203b4271bebe6|_to:0xf503017d7baf7fbc0fff7492b751025c6a78179b|_amount:9700000000000000000)"
+      },
+      {
+        "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+        "logIndex": 120,
+        "topics": [
+          "0x3bb7428b25f9bdad9bd2faa4c6a7a9e5d5882657e96c1d24cc41c1d6c1910a98",
+          "0x0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f",
+          "0x00000000000000000000000000000000000000000000000003782dace9d90000",
+          "0x000000000000000000000000054993ab0f2b1acc0fdc65405ee203b4271bebe6"
+        ],
+        "data": "0x00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3",
+        "articulatedLog": {
+          "name": "DonationSent",
+          "inputs": {
+            "amount": "250000000000000000",
+            "dest": "0x00de4b13153673bcae2616b67bf822500d325fc3",
+            "donor": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
+            "token": "0x6b175474e89094c44da98b954eedeac495271d0f"
+          }
+        },
+        "compressedLog": "DonationSent(token:0x6b175474e89094c44da98b954eedeac495271d0f|amount:250000000000000000|dest:0x00de4b13153673bcae2616b67bf822500d325fc3|donor:0x054993ab0f2b1acc0fdc65405ee203b4271bebe6)"
+      },
+      {
+        "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "logIndex": 121,
+        "topics": [
+          "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+          "0x000000000000000000000000054993ab0f2b1acc0fdc65405ee203b4271bebe6",
+          "0x00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3"
+        ],
+        "data": "0x00000000000000000000000000000000000000000000000003782dace9d90000",
+        "articulatedLog": {
+          "name": "Transfer",
+          "inputs": {
+            "_amount": "250000000000000000",
+            "_from": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
+            "_to": "0x00de4b13153673bcae2616b67bf822500d325fc3"
+          }
+        },
+        "compressedLog": "Transfer(_from:0x054993ab0f2b1acc0fdc65405ee203b4271bebe6|_to:0x00de4b13153673bcae2616b67bf822500d325fc3|_amount:250000000000000000)"
+      }
+    ],
+    "status": 1
+  },
+  "articulatedTx": {
+    "name": "donate",
+    "inputs": {
+      "_donations": "[{\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"9700000000000000000\", \"dest\":\"0xf503017d7baf7fbc0fff7492b751025c6a78179b\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"250000000000000000\", \"dest\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}]"
+    }
+  },
+  "compressedTx": "donate(_donations:[{token:0x6b175474e89094c44da98b954eedeac495271d0f|amount:9700000000000000000|dest:0xf503017d7baf7fbc0fff7492b751025c6a78179b}|{token:0x6b175474e89094c44da98b954eedeac495271d0f|amount:250000000000000000|dest:0x00de4b13153673bcae2616b67bf822500d325fc3}])",
+  "gasCost": 2743600000000000,
+  "gasUsed": 68590,
+  "date": "2020-06-16 16:09:04 UTC",
+  "ether": 0.000000000000000000
+}
+] }
