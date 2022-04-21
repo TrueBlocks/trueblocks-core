@@ -22,7 +22,7 @@ Cmd: 3327450.0 -a -v:1
         "_to": "0xdf21fa922215b1a56f5a6d6294e6e36c85a0acfb"
       }
     },
-    "compressedLog": "Transfer(_from:0x306b79fc32fb1561480102e032844bb36ea97102|_to:0xdf21fa922215b1a56f5a6d6294e6e36c85a0acfb|_amount:666666666600000000) "
+    "compressedLog": "Transfer(_from:0x306b79fc32fb1561480102e032844bb36ea97102|_to:0xdf21fa922215b1a56f5a6d6294e6e36c85a0acfb|_amount:666666666600000000)"
   }params.size: 0
 ==================================================
 
@@ -41,5 +41,5 @@ Cmd: 3327450.0 -a -v:1
         "tokenHolder": "0x63585740143301cf0163f6448fd8a63c3b376fd3"
       }
     },
-    "compressedLog": "ProfitWithdrawn(tokenHolder:0x63585740143301cf0163f6448fd8a63c3b376fd3|amountPaidOut:87810925078238973) "
+    "compressedLog": "ProfitWithdrawn(tokenHolder:0x63585740143301cf0163f6448fd8a63c3b376fd3|amountPaidOut:87810925078238973)"
   }] }

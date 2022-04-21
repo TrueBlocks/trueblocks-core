@@ -689,15 +689,15 @@ string_q compressInput(const string_q& inputIn) {
     while (!input.empty()) {
         string_q chunk = input.substr(0, 364);
         replace(input, chunk, "");
-        ret += ("stub:" + chunk + "|");
+        ret += ("stub:" + chunk + ", ");
     }
-    ret = trim(trim(ret, ' '), '|');
+    ret = trim(trim(trim(ret, ' '), ','), ' ');
     ret += ")";
     return ret;
 }
 
 //-----------------------------------------------------------------------
-const char* STR_COMPRESSED_FMT = "[{NAME}](++INPUTS++)";
+const char* STR_COMPRESSED_FMT = "[{NAME}](++INPUTS++);";
 const char* STR_COMPRESSED_INPUT = "[{NAME}]:[{VALUE}]|";
 
 //-----------------------------------------------------------------------
@@ -705,23 +705,25 @@ string_q CFunction::compressed(const string_q& def) const {
     if (!message.empty())
         return "message:" + message;
 
-    string_q ret;
-    if (!name.empty()) {
-        ostringstream func, inp;
-        func << Format(STR_COMPRESSED_FMT) << endl;
-        for (auto input : inputs)
-            inp << input.Format(STR_COMPRESSED_INPUT);
-        ret = func.str();
-        replace(ret, "++INPUTS++", trim(trim(inp.str(), ' '), '|'));
-    }
-    if (ret.empty())
-        ret = compressInput(def);
-    // replaceAll(ret, "--tuple--", "");
-    replaceAll(ret, ",", "|");
-    replaceAll(ret, "\"", "");
-    replaceAll(ret, "| ", "|");
+    if (name.empty())
+        return compressInput(def);
 
-    return stripWhitespace(ret);
+    ostringstream func, inp;
+    func << Format(STR_COMPRESSED_FMT) << endl;
+    for (auto input : inputs)
+        inp << input.Format(STR_COMPRESSED_INPUT);
+    string_q ret = func.str();
+    replace(ret, "++INPUTS++", trim(trim(inp.str(), ' '), ','));
+    if (ret.empty())
+        return compressInput(def);
+    replaceAll(ret, "--tuple--", "");
+
+    ret = stripWhitespace(ret);
+    replaceAll(ret, "\\\"", "");
+    replaceAll(ret, ", ", "|");
+    replaceAll(ret, "|);", ")");
+    ret = trim(trim(trim(ret, ' '), ';'), ' ');
+    return ret;
 }
 
 //-----------------------------------------------------------------------

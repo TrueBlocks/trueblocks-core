@@ -356,7 +356,7 @@ params.size: 0
         }
       ]
     },
-    "compressedTrace": "acceptTheseAskRequestsAndBUY(_keys:[6|5]|_tokenAmounts:[25000000000000000000|25000000000000000000]|_dollarPrices:[2000000000000000000|2000000000000000000]) "
+    "compressedTrace": "acceptTheseAskRequestsAndBUY(_keys:[6|5]|_tokenAmounts:[25000000000000000000|25000000000000000000]|_dollarPrices:[2000000000000000000|2000000000000000000])"
   },  {
     "blockHash": "0xc9d375441b8deb0ca5544234ccbe3f6a9f67361ec30128030401b0d16713b55a",
     "blockNumber": 6711969,
@@ -399,7 +399,7 @@ params.size: 0
         }
       ]
     },
-    "compressedTrace": "USD(_id:0) "
+    "compressedTrace": "USD(_id:0)"
   },  {
     "blockHash": "0xc9d375441b8deb0ca5544234ccbe3f6a9f67361ec30128030401b0d16713b55a",
     "blockNumber": 6711969,
@@ -442,5 +442,5 @@ params.size: 0
         }
       ]
     },
-    "compressedTrace": "USD(_id:0) "
+    "compressedTrace": "USD(_id:0)"
   }], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }
