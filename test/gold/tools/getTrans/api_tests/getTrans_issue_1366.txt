@@ -38,7 +38,7 @@ transactions?transactions=0x557c3e14a8e86cd0b947d5c7790d332bbe52bb6ec8cba0aa532d
                 "value": "0"
               }
             },
-            "compressedLog": "Deposit(from:0x0000000000000000000000000de0b6b3a7640000|value:0)"
+            "compressedLog": "{name:Deposit|inputs:{from:0x0000000000000000000000000de0b6b3a7640000|value:0}}"
           }
         ],
         "status": null
@@ -72,7 +72,7 @@ transactions?transactions=0x557c3e14a8e86cd0b947d5c7790d332bbe52bb6ec8cba0aa532d
               "ret_0": "1"
             }
           },
-          "compressedTrace": "deposit()"
+          "compressedTrace": "{name:deposit|outputs:{ret_0:1}}"
         }
       ],
       "articulatedTx": {
@@ -82,7 +82,7 @@ transactions?transactions=0x557c3e14a8e86cd0b947d5c7790d332bbe52bb6ec8cba0aa532d
           "ret_0": "1"
         }
       },
-      "compressedTx": "deposit()",
+      "compressedTx": "{name:deposit|outputs:{ret_0:1}}",
       "gasCost": 864200000000000,
       "gasUsed": 43210,
       "date": "2016-05-19 10:19:53 UTC",

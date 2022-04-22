@@ -38,7 +38,7 @@ transactions?transactions=3648669.24&articulate&verbose&trace&fmt=json
                 "registrationDate": "1494329242"
               }
             },
-            "compressedLog": "AuctionStarted(hash:0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c|registrationDate:1494329242)"
+            "compressedLog": "{name:AuctionStarted|inputs:{hash:0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c|registrationDate:1494329242}}"
           },
           {
             "address": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
@@ -56,7 +56,7 @@ transactions?transactions=3648669.24&articulate&verbose&trace&fmt=json
                 "registrationDate": "1494329242"
               }
             },
-            "compressedLog": "AuctionStarted(hash:0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc|registrationDate:1494329242)"
+            "compressedLog": "{name:AuctionStarted|inputs:{hash:0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc|registrationDate:1494329242}}"
           },
           {
             "address": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
@@ -74,7 +74,7 @@ transactions?transactions=3648669.24&articulate&verbose&trace&fmt=json
                 "registrationDate": "1494329242"
               }
             },
-            "compressedLog": "AuctionStarted(hash:0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573|registrationDate:1494329242)"
+            "compressedLog": "{name:AuctionStarted|inputs:{hash:0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573|registrationDate:1494329242}}"
           },
           {
             "address": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
@@ -94,7 +94,7 @@ transactions?transactions=3648669.24&articulate&verbose&trace&fmt=json
                 "hash": "0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811"
               }
             },
-            "compressedLog": "NewBid(hash:0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811|bidder:0xd1220a0cf47c7b9be7a2e6ba89f429762e7b9adb|deposit:10000000000000000)"
+            "compressedLog": "{name:NewBid|inputs:{bidder:0xd1220a0cf47c7b9be7a2e6ba89f429762e7b9adb|deposit:10000000000000000|hash:0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811}}"
           }
         ],
         "status": null
@@ -129,7 +129,7 @@ transactions?transactions=3648669.24&articulate&verbose&trace&fmt=json
               "sealedBid": "0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811"
             }
           },
-          "compressedTrace": "startAuctionsAndBid(hashes:[0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c|0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc|0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573]|sealedBid:0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811)"
+          "compressedTrace": "{name:startAuctionsAndBid|stateMutability:payable|inputs:{hashes:[0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c|0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc|0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573]|sealedBid:0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811}}"
         },
         {
           "subtraces": 0,
@@ -162,7 +162,7 @@ transactions?transactions=3648669.24&articulate&verbose&trace&fmt=json
               "ret_0": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef"
             }
           },
-          "compressedTrace": "owner(_node:0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae)"
+          "compressedTrace": "{name:owner|inputs:{_node:0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae}|outputs:{ret_0:0x6090a6e47849629b7245dfa1ca21d94cd15878ef}}"
         },
         {
           "subtraces": 0,
@@ -195,7 +195,7 @@ transactions?transactions=3648669.24&articulate&verbose&trace&fmt=json
               "ret_0": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef"
             }
           },
-          "compressedTrace": "owner(_node:0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae)"
+          "compressedTrace": "{name:owner|inputs:{_node:0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae}|outputs:{ret_0:0x6090a6e47849629b7245dfa1ca21d94cd15878ef}}"
         },
         {
           "subtraces": 0,
@@ -228,7 +228,7 @@ transactions?transactions=3648669.24&articulate&verbose&trace&fmt=json
               "ret_0": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef"
             }
           },
-          "compressedTrace": "owner(_node:0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae)"
+          "compressedTrace": "{name:owner|inputs:{_node:0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae}|outputs:{ret_0:0x6090a6e47849629b7245dfa1ca21d94cd15878ef}}"
         },
         {
           "subtraces": 0,
@@ -262,7 +262,7 @@ transactions?transactions=3648669.24&articulate&verbose&trace&fmt=json
           "sealedBid": "0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811"
         }
       },
-      "compressedTx": "startAuctionsAndBid(hashes:[0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c|0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc|0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573]|sealedBid:0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811)",
+      "compressedTx": "{name:startAuctionsAndBid|stateMutability:payable|inputs:{hashes:[0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c|0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc|0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573]|sealedBid:0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811}}",
       "gasCost": 10849501969331552,
       "gasUsed": 533321,
       "date": "2017-05-04 11:27:22 UTC",

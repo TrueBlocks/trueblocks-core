@@ -41,7 +41,7 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&fmt=json&maxRecords=1&fi
                 "token": "0x6b175474e89094c44da98b954eedeac495271d0f"
               }
             },
-            "compressedLog": "DonationSent(token:0x6b175474e89094c44da98b954eedeac495271d0f|amount:9700000000000000000|dest:0xf503017d7baf7fbc0fff7492b751025c6a78179b|donor:0x054993ab0f2b1acc0fdc65405ee203b4271bebe6)"
+            "compressedLog": "{name:DonationSent|inputs:{amount:9700000000000000000|dest:0xf503017d7baf7fbc0fff7492b751025c6a78179b|donor:0x054993ab0f2b1acc0fdc65405ee203b4271bebe6|token:0x6b175474e89094c44da98b954eedeac495271d0f}}"
           },
           {
             "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
@@ -60,7 +60,7 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&fmt=json&maxRecords=1&fi
                 "_to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
               }
             },
-            "compressedLog": "Transfer(_from:0x054993ab0f2b1acc0fdc65405ee203b4271bebe6|_to:0xf503017d7baf7fbc0fff7492b751025c6a78179b|_amount:9700000000000000000)"
+            "compressedLog": "{name:Transfer|inputs:{_amount:9700000000000000000|_from:0x054993ab0f2b1acc0fdc65405ee203b4271bebe6|_to:0xf503017d7baf7fbc0fff7492b751025c6a78179b}}"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -81,7 +81,7 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&fmt=json&maxRecords=1&fi
                 "token": "0x6b175474e89094c44da98b954eedeac495271d0f"
               }
             },
-            "compressedLog": "DonationSent(token:0x6b175474e89094c44da98b954eedeac495271d0f|amount:250000000000000000|dest:0x00de4b13153673bcae2616b67bf822500d325fc3|donor:0x054993ab0f2b1acc0fdc65405ee203b4271bebe6)"
+            "compressedLog": "{name:DonationSent|inputs:{amount:250000000000000000|dest:0x00de4b13153673bcae2616b67bf822500d325fc3|donor:0x054993ab0f2b1acc0fdc65405ee203b4271bebe6|token:0x6b175474e89094c44da98b954eedeac495271d0f}}"
           },
           {
             "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
@@ -100,7 +100,7 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&fmt=json&maxRecords=1&fi
                 "_to": "0x00de4b13153673bcae2616b67bf822500d325fc3"
               }
             },
-            "compressedLog": "Transfer(_from:0x054993ab0f2b1acc0fdc65405ee203b4271bebe6|_to:0x00de4b13153673bcae2616b67bf822500d325fc3|_amount:250000000000000000)"
+            "compressedLog": "{name:Transfer|inputs:{_amount:250000000000000000|_from:0x054993ab0f2b1acc0fdc65405ee203b4271bebe6|_to:0x00de4b13153673bcae2616b67bf822500d325fc3}}"
           }
         ],
         "status": 1
@@ -112,7 +112,7 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&fmt=json&maxRecords=1&fi
           "_donations": "[{\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"9700000000000000000\", \"dest\":\"0xf503017d7baf7fbc0fff7492b751025c6a78179b\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"250000000000000000\", \"dest\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}]"
         }
       },
-      "compressedTx": "donate(_donations:[{token:0x6b175474e89094c44da98b954eedeac495271d0f|amount:9700000000000000000|dest:0xf503017d7baf7fbc0fff7492b751025c6a78179b}|{token:0x6b175474e89094c44da98b954eedeac495271d0f|amount:250000000000000000|dest:0x00de4b13153673bcae2616b67bf822500d325fc3}])",
+      "compressedTx": "{name:donate|inputs:{_donations:[{token:0x6b175474e89094c44da98b954eedeac495271d0f|amount:9700000000000000000|dest:0xf503017d7baf7fbc0fff7492b751025c6a78179b}|{token:0x6b175474e89094c44da98b954eedeac495271d0f|amount:250000000000000000|dest:0x00de4b13153673bcae2616b67bf822500d325fc3}]}}",
       "gasCost": 2743600000000000,
       "etherGasCost": 0.0027436,
       "function": "donate",

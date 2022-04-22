@@ -60,35 +60,33 @@ func (mon *Monitor) WriteAppendApps(lastScanned uint32, apps *[]index.Appearance
 }
 
 // WriteAppearances writes appearances to a Monitor
-func (mon *Monitor) WriteAppearances(apps []index.AppearanceRecord, mode int) (count int, err error) {
+func (mon *Monitor) WriteAppearances(apps []index.AppearanceRecord, mode int) (int, error) {
 
 	path := mon.Path()
 	f, err := os.OpenFile(path, mode, 0644)
 	if err != nil {
-		return
+		return 0, err
 	}
 
 	f.Seek(index.AppRecordWidth, io.SeekStart)
 
-	b := make([]byte, 4, 4)
+	b := make([]byte, 4)
 	for _, app := range apps {
 		binary.LittleEndian.PutUint32(b, app.BlockNumber)
 		_, err = f.Write(b)
 		if err != nil {
 			f.Close()
-			return
+			return 0, err
 		}
 		binary.LittleEndian.PutUint32(b, app.TransactionId)
 		_, err = f.Write(b)
 		if err != nil {
 			f.Close()
-			return
+			return 0, err
 		}
 	}
 
 	f.Close() // do not defer this, we need to close it so the fileSize is right
 	mon.Reload(false /* create */)
-	count = int(mon.Count())
-
-	return
+	return int(mon.Count()), nil
 }

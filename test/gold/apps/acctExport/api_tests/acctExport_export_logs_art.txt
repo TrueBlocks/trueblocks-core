@@ -19,7 +19,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0xac039da3add6efb42d47b6ea21f7feca82091236|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0xac039da3add6efb42d47b6ea21f7feca82091236|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 0
     },
     {
@@ -40,7 +40,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0x0faf56cad156ac317ff5c3f352e83999e4e30f12|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0x0faf56cad156ac317ff5c3f352e83999e4e30f12|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 2
     },
     {
@@ -61,7 +61,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0x6b2e80dc62893cab8ee9e45fcdacb2840f131728|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0x6b2e80dc62893cab8ee9e45fcdacb2840f131728|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 3
     },
     {
@@ -82,7 +82,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0x452b888213c8f91626d1549de8af28f20eba90b9|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0x452b888213c8f91626d1549de8af28f20eba90b9|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 5
     },
     {
@@ -103,7 +103,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0x61c96d87d95d65bd1dbfc9b6c9d165272f3d1e47|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0x61c96d87d95d65bd1dbfc9b6c9d165272f3d1e47|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 6
     },
     {
@@ -124,7 +124,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0x75c7739485bd7705856bbe890a5ee0f6aab0371d|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0x75c7739485bd7705856bbe890a5ee0f6aab0371d|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 7
     },
     {
@@ -145,7 +145,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0xa8984c322e01b4116990687631036e7f2a2491b1|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0xa8984c322e01b4116990687631036e7f2a2491b1|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 1
     },
     {
@@ -166,7 +166,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0xdb183cc6c528ee2f4db445d467dc8a0835faa350|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0xdb183cc6c528ee2f4db445d467dc8a0835faa350|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 3
     },
     {
@@ -187,7 +187,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0xf2cfcd6bb629bacb9dbf12b26eb827f57d097ea2|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0xf2cfcd6bb629bacb9dbf12b26eb827f57d097ea2|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 5
     },
     {
@@ -208,7 +208,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0xdcc431f61aa807be5322847687e00eda57652f39|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0xdcc431f61aa807be5322847687e00eda57652f39|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 6
     },
     {
@@ -229,7 +229,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0xdc1b6d156d87737ea9a2997fcf65256453ca0472|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0xdc1b6d156d87737ea9a2997fcf65256453ca0472|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 7
     },
     {
@@ -250,7 +250,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0xfefe6ca63d5785ca8b9c3f9d7220870cc53f16a0|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0xfefe6ca63d5785ca8b9c3f9d7220870cc53f16a0|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 8
     },
     {
@@ -271,7 +271,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0x38218a50a7b7313351bdd0323688f0eed71c2c5b|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0x38218a50a7b7313351bdd0323688f0eed71c2c5b|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 10
     },
     {
@@ -292,7 +292,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0x587cc6be7bd64807fa52669f546cc71685742998|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0x587cc6be7bd64807fa52669f546cc71685742998|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 0
     },
     {
@@ -313,7 +313,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0xf19648cd0445a1173fab9cda8d85be06707ea80d|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0xf19648cd0445a1173fab9cda8d85be06707ea80d|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 2
     },
     {
@@ -334,7 +334,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0xa5bec12a7faa20ad38487aed51597de304a20658|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0xa5bec12a7faa20ad38487aed51597de304a20658|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 0
     },
     {
@@ -355,7 +355,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0xd233643e601046ba10349b376a7a968baad4c580|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0xd233643e601046ba10349b376a7a968baad4c580|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 2
     },
     {
@@ -376,7 +376,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0x70d64c76d912b405da8159c6cd2827a5b09ccba2|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0x70d64c76d912b405da8159c6cd2827a5b09ccba2|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 3
     },
     {
@@ -397,7 +397,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0x6f0b194b4d3ad0906745c35be490fcb093ea8d11|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0x6f0b194b4d3ad0906745c35be490fcb093ea8d11|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 4
     },
     {
@@ -418,7 +418,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0x4471604b7bd09a986cf734a73106f0ea05c6c421|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0x4471604b7bd09a986cf734a73106f0ea05c6c421|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 0
     },
     {
@@ -439,7 +439,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0x8456e5e90bb1a0b0cc175c3254767284b75ba4fd|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0x8456e5e90bb1a0b0cc175c3254767284b75ba4fd|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 1
     },
     {
@@ -460,7 +460,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0x33b8b222c3df81a720ae7ea535ca922dad20ba95|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0x33b8b222c3df81a720ae7ea535ca922dad20ba95|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 2
     },
     {
@@ -481,7 +481,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0xf25f02a815eaadf97f6e8b23592d3a5cca570ce9|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0xf25f02a815eaadf97f6e8b23592d3a5cca570ce9|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 3
     },
     {
@@ -502,7 +502,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0x3b921e9cb0b8c41e577dcb49c40aef5b62267531|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0x3b921e9cb0b8c41e577dcb49c40aef5b62267531|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 4
     },
     {
@@ -523,7 +523,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0xebe460301d848333e1970c133c7c810b08665b1a|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0xebe460301d848333e1970c133c7c810b08665b1a|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 5
     },
     {
@@ -544,7 +544,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0x9d20a31801655e658778798863c6560a498633a5|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0x9d20a31801655e658778798863c6560a498633a5|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 6
     },
     {
@@ -565,7 +565,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0xb09791581983fd1b31b0910da68288208302388a|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0xb09791581983fd1b31b0910da68288208302388a|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 7
     },
     {
@@ -586,7 +586,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0x496cd65b947a9e21b863b63f8853082fd2021d69|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0x496cd65b947a9e21b863b63f8853082fd2021d69|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 8
     },
     {
@@ -607,7 +607,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0x736a3ccc3d1dc82df60c19806c5e78b50341cb75|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0x736a3ccc3d1dc82df60c19806c5e78b50341cb75|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 9
     },
     {
@@ -628,7 +628,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0x54db10f615ad288e7fd9f3b695939356520a7eb5|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0x54db10f615ad288e7fd9f3b695939356520a7eb5|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 10
     },
     {
@@ -649,7 +649,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0x1c837314c9211c09923a418e0088494e3c3d20d2|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0x1c837314c9211c09923a418e0088494e3c3d20d2|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 12
     },
     {
@@ -670,7 +670,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0x0eb3b79bc6bd80d47cdfea689afa2a84a4dd9a36|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0x0eb3b79bc6bd80d47cdfea689afa2a84a4dd9a36|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 13
     },
     {
@@ -691,7 +691,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0xc7a18ad499f0217289931c3dd139ea33f001823b|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0xc7a18ad499f0217289931c3dd139ea33f001823b|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 0
     },
     {
@@ -712,7 +712,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0x71aa8ce8e345040e8c731b26cd9cda7603f80fd6|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0x71aa8ce8e345040e8c731b26cd9cda7603f80fd6|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 1
     },
     {
@@ -733,7 +733,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0x1954f116d3e40aa0ca2d0f5f82a52fb899a38a9d|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0x1954f116d3e40aa0ca2d0f5f82a52fb899a38a9d|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 2
     },
     {
@@ -754,7 +754,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0xe6f5f6545737421a5374c1401cf6a0af395e0d73|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0xe6f5f6545737421a5374c1401cf6a0af395e0d73|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 3
     },
     {
@@ -775,7 +775,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0x7010e86c1cd3610107da1b4130bd0393afb32d58|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0x7010e86c1cd3610107da1b4130bd0393afb32d58|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 0
     },
     {
@@ -796,7 +796,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0xb21aa1935f38da784286185a7d7d76002962e4e6|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0xb21aa1935f38da784286185a7d7d76002962e4e6|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 1
     },
     {
@@ -817,7 +817,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0xafff0a7b37cf993443d1120c5180556bcf166645|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0xafff0a7b37cf993443d1120c5180556bcf166645|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 3
     },
     {
@@ -838,7 +838,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0x3a6bb3d4128ff8fefdbd0f8783e6847e28971c2e|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0x3a6bb3d4128ff8fefdbd0f8783e6847e28971c2e|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 4
     },
     {
@@ -859,7 +859,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0x3857c94e657e7328cceca66f034dde76d8701da4|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0x3857c94e657e7328cceca66f034dde76d8701da4|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 5
     },
     {
@@ -880,7 +880,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0xcd58452ab5ae90f9ccb440fddc92637348de237b|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0xcd58452ab5ae90f9ccb440fddc92637348de237b|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 6
     },
     {
@@ -901,7 +901,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0xdda54247d489b80b5477bc11056280ca621fa1d1|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0xdda54247d489b80b5477bc11056280ca621fa1d1|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 7
     },
     {
@@ -922,7 +922,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0x9956a325a6904296096a608ad68c0b0d0cfd61df|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0x9956a325a6904296096a608ad68c0b0d0cfd61df|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 8
     },
     {
@@ -943,7 +943,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0x979fbc894c15275b74996849a45928f5e7baeb0e|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0x979fbc894c15275b74996849a45928f5e7baeb0e|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 0
     },
     {
@@ -964,7 +964,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0xc1bdd1e009f9e12aecdd6152d87e4f4ee467d58d|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0xc1bdd1e009f9e12aecdd6152d87e4f4ee467d58d|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 1
     },
     {
@@ -985,7 +985,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0x412218b4c197db6ad8c897e3be6306cd26e92f58|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0x412218b4c197db6ad8c897e3be6306cd26e92f58|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 1
     },
     {
@@ -1006,7 +1006,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0x9be49c88d9a061fea8b2641616bec6f4d91b1803|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0x9be49c88d9a061fea8b2641616bec6f4d91b1803|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 2
     },
     {
@@ -1027,7 +1027,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0xeafef6e6effb29e686e65084f3356fe4d603a8d8|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0xeafef6e6effb29e686e65084f3356fe4d603a8d8|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 4
     },
     {
@@ -1048,7 +1048,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0x32ebe54386100cb9d24e86e2c427126676f0bedf|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0x32ebe54386100cb9d24e86e2c427126676f0bedf|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 5
     },
     {
@@ -1069,7 +1069,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0xa3cd98dbd3970c03edba72faa51d0f79400338c4|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0xa3cd98dbd3970c03edba72faa51d0f79400338c4|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 6
     },
     {
@@ -1090,7 +1090,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0x95d88eeea0191914d6509016cd3fa23340d2f2e2|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0x95d88eeea0191914d6509016cd3fa23340d2f2e2|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 8
     },
     {
@@ -1111,7 +1111,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0x18c7bcbc328b27b4154fdb817494aa4dca3f71f6|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0x18c7bcbc328b27b4154fdb817494aa4dca3f71f6|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 9
     },
     {
@@ -1132,7 +1132,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0xa1017ef9e1d110ecd9939cbef198fd8b92396af9|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0xa1017ef9e1d110ecd9939cbef198fd8b92396af9|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 10
     },
     {
@@ -1153,7 +1153,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0x88eec58014cf137ba59f621088b0240f27530f7a|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0x88eec58014cf137ba59f621088b0240f27530f7a|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 11
     },
     {
@@ -1174,7 +1174,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "_spender": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
         }
       },
-      "compressedLog": "Approval(_owner:0xe8a942c143e38c887ab55f479dbd9f852943e72e|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98|_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935)",
+      "compressedLog": "{name:Approval|inputs:{_amount:115792089237316195423570985008687907853269984665640564039457584007913129639935|_owner:0xe8a942c143e38c887ab55f479dbd9f852943e72e|_spender:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98}}",
       "transactionIndex": 12
     },
     {
@@ -1193,7 +1193,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "to": "0xe46d8ec2d4f501e3c0c67a818ada2e534056f4d9"
         }
       },
-      "compressedLog": "CreatedToken(to:0xe46d8ec2d4f501e3c0c67a818ada2e534056f4d9|amount:49368520000000000)",
+      "compressedLog": "{name:CreatedToken|inputs:{amount:49368520000000000|to:0xe46d8ec2d4f501e3c0c67a818ada2e534056f4d9}}",
       "transactionIndex": 6
     },
     {
@@ -1212,7 +1212,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "to": "0x81b938914f5f0f661f48bc7f644dbe3ceb1523d5"
         }
       },
-      "compressedLog": "CreatedToken(to:0x81b938914f5f0f661f48bc7f644dbe3ceb1523d5|amount:120786420000000000)",
+      "compressedLog": "{name:CreatedToken|inputs:{amount:120786420000000000|to:0x81b938914f5f0f661f48bc7f644dbe3ceb1523d5}}",
       "transactionIndex": 0
     },
     {
@@ -1231,7 +1231,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "to": "0x3914bff975ef35e8d3403e1ea953bf886b0e8fea"
         }
       },
-      "compressedLog": "CreatedToken(to:0x3914bff975ef35e8d3403e1ea953bf886b0e8fea|amount:50000000000000000)",
+      "compressedLog": "{name:CreatedToken|inputs:{amount:50000000000000000|to:0x3914bff975ef35e8d3403e1ea953bf886b0e8fea}}",
       "transactionIndex": 1
     },
     {
@@ -1250,7 +1250,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "to": "0xe46d8ec2d4f501e3c0c67a818ada2e534056f4d9"
         }
       },
-      "compressedLog": "CreatedToken(to:0xe46d8ec2d4f501e3c0c67a818ada2e534056f4d9|amount:32223400000000000)",
+      "compressedLog": "{name:CreatedToken|inputs:{amount:32223400000000000|to:0xe46d8ec2d4f501e3c0c67a818ada2e534056f4d9}}",
       "transactionIndex": 1
     },
     {
@@ -1269,7 +1269,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&firstBlock=1429283&lastB
           "to": "0xe46d8ec2d4f501e3c0c67a818ada2e534056f4d9"
         }
       },
-      "compressedLog": "CreatedToken(to:0xe46d8ec2d4f501e3c0c67a818ada2e534056f4d9|amount:46381360000000000)",
+      "compressedLog": "{name:CreatedToken|inputs:{amount:46381360000000000|to:0xe46d8ec2d4f501e3c0c67a818ada2e534056f4d9}}",
       "transactionIndex": 4
     }
   ]

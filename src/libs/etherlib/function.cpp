@@ -708,22 +708,25 @@ string_q CFunction::compressed(const string_q& def) const {
     if (name.empty())
         return compressInput(def);
 
-    ostringstream func, inp;
-    func << Format(STR_COMPRESSED_FMT) << endl;
-    for (auto input : inputs)
-        inp << input.Format(STR_COMPRESSED_INPUT);
-    string_q ret = func.str();
-    replace(ret, "++INPUTS++", trim(trim(inp.str(), ' '), ','));
-    if (ret.empty())
-        return compressInput(def);
-    replaceAll(ret, "--tuple--", "");
-
-    ret = stripWhitespace(ret);
+    ostringstream os;
+    os << *this;
+    string_q ret = os.str();
     replaceAll(ret, "\\\"", "");
+    replaceAll(ret, "\"", "");
+    replaceAny(ret, "\t\n", " ");
+    replaceAll(ret, "  ", " ");
+    replaceAll(ret, "{ ", "{");
+    replaceAll(ret, " }", "}");
+    replaceAll(ret, "[ ", "[");
+    replaceAll(ret, " ]", "]");
+    replaceAll(ret, ": ", ":");
     replaceAll(ret, ", ", "|");
-    replaceAll(ret, "|);", ")");
-    ret = trim(trim(trim(ret, ' '), ';'), ' ');
-    return ret;
+    replaceAll(ret, ",", "|");
+    replaceAll(ret, "|stateMutability:nonpayable", "");
+    replaceAll(ret, "|stateMutability:view", "");
+    replaceAll(ret, "|components:[]", "");
+    replaceAll(ret, "|unused:false", "");
+    return trim(ret);
 }
 
 //-----------------------------------------------------------------------
