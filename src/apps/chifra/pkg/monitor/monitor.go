@@ -9,6 +9,7 @@ import (
 	"errors"
 	"fmt"
 	"io/fs"
+	"log"
 	"os"
 	"path/filepath"
 	"strings"
@@ -211,20 +212,22 @@ func ListMonitors(chain, folder string, monitorChan chan<- Monitor) {
 		monitorChan <- Monitor{Address: SentinalAddr}
 	}()
 
-	info, err := os.Stat("./addresses.csv")
+	info, err := os.Stat("./addresses.txt")
 	if err == nil {
 		// If the shorthand file exists in the current folder, use it...
 		lines := file.AsciiFileToLines(info.Name())
 		addrMap := make(map[string]bool)
 		for _, line := range lines {
 			if !strings.HasPrefix(line, "#") {
-				parts := strings.Split(line, ",")
+				parts := strings.Split(line, "\t")
 				if len(parts) > 0 {
 					addr := parts[0]
 					if !addrMap[addr] && validate.IsValidAddress(parts[0]) && !validate.IsZeroAddress(parts[0]) {
 						monitorChan <- NewMonitor(chain, parts[0], true /* create */)
 					}
 					addrMap[addr] = true
+				} else {
+					log.Panic("Invalid line in file", info.Name())
 				}
 			}
 		}
