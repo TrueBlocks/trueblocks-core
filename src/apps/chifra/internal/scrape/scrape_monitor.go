@@ -1,3 +1,9 @@
+// TODO: We could add statistics counting -- nChanged, nProcessed, txCount, etc
+// TODO: Need to protect against invalid addresses including zero address
+// TODO: Need to protect against very large files (optionally) --> keep a list of them?
+// TODO: Does control+c work right? Does data get corrupted?
+// TODO: We need post processing? Summarization? Coallessing? Zip files?
+
 package scrapePkg
 
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
@@ -140,9 +146,9 @@ func (opts *ScrapeOptions) Refresh(chain string, monitors []monitor.Monitor) err
 			sp := SemiParse{}
 			sp.fmt = getFormat(cmd, opts.Globals.Format)
 			sp.folder = "exports/" + chain + "/" + getOutputFolder(cmd, "unknown")
-			sp.cmd = strings.Replace(cmd, " csv ", " "+sp.fmt+" ", -1)
-			sp.cmd = strings.Replace(cmd, " json ", " "+sp.fmt+" ", -1)
-			sp.cmd = strings.Replace(cmd, " txt ", " "+sp.fmt+" ", -1)
+			sp.cmd = strings.Replace(cmd, " csv", " "+sp.fmt, -1)
+			sp.cmd = strings.Replace(cmd, " json", " "+sp.fmt, -1)
+			sp.cmd = strings.Replace(cmd, " txt", " "+sp.fmt, -1)
 			if !strings.Contains(sp.cmd, "--fmt") {
 				sp.cmd += " --fmt " + sp.fmt
 			}
@@ -201,8 +207,6 @@ func (opts *ScrapeOptions) Refresh(chain string, monitors []monitor.Monitor) err
 						}
 						cmd += add + " " + mon.GetAddrStr()
 						cmd = strings.Replace(cmd, "  ", " ", -1)
-						// fmt.Println(cmd)
-						// time.Sleep(3 * time.Second)
 						o := opts
 						o.Globals.File = ""
 						o.Globals.PassItOn("acctExport", cmd)
@@ -213,26 +217,6 @@ func (opts *ScrapeOptions) Refresh(chain string, monitors []monitor.Monitor) err
 	}
 	return nil
 }
-
-// TODO: We could add statistics counting -- nChanged, nProcessed, txCount, etc
-// TODO: Need to protect against invalid addresses including zero address
-// TODO: Need to protect against very large files (optionally) --> keep a list of them?
-// TODO: Does control+c work right? Does data get corrupted?
-// TODO: We need post processing? Summarization? Coallessing? Zip files?
-
-// const char* STR_CMD_LOGS = "./export_logs.1.sh [{ADDR}] ; ";
-// const char* STR_CMD_NEIGHBORS = "chifra export --neighbors --deep --fmt csv [{ADDR}] >neighbors/[{ADDR}].csv ; ";
-// const char* STR_CMD_STATEMENTS = "./export_statements.1.sh [{ADDR}] ; ";
-
-// cat /tmp/$addr.csv | cut -f1-10 -d, >logs/$addr.csv
-// cat /tmp/$addr.csv | cut -f1-5,11-2000 -d, >logs/articulated/$addr.csv
-// rm -f /tmp/$addr.csv
-
-// STATEMENTS
-// chifra export --statements --fmt csv $addr >statements/$addr.csv
-// cat statements/$addr.csv | cut -d, -f1,2,3,4,5,6,9,25,26,30-33 | tee statements/balances/$addr.csv
-// echo "count,assetAddr,assetSymbol" | tee statements/tx_counts/$addr.csv
-// cat statements/balances/$addr.csv | grep -v assetAddr | cut -d, -f1,2 | sort | uniq -c | sort -n -r | sed 's/ //g' | sed 's/"/,/g' | cut -d, -f1,2,5 | tee -a statements/tx_counts/$addr.csv
 
 // establishExportPaths sets up the index path and subfolders. It only returns if it succeeds.
 func establishExportPaths(chain string) {
