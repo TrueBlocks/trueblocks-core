@@ -397,17 +397,17 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
                 os << cRed << "\tFailed: " << cTeal << (endsWith(test.path, "lib") ? test.tool : measure.cmd) << " ";
                 os << test.name << ".txt " << cOff << "(" << (test.builtin ? "" : measure.cmd) << " "
                    << trim(test.options) << ")" << cRed;
-                if (newText.empty())
-                    os << " working file is empty ";
-                // if (ret)
-                //     os << " system call returned non-zero ";
-                if (newText != oldText) {
-                    os << " files differ " << endl;
-                    os << "newFile: " << newFn << ": " << fileExists(newFn) << ": " << newText.size() << endl;
-                    os << cYellow << newText << endl;
-                    os << "oldFile: " << oldFn << ": " << fileExists(oldFn) << ": " << oldText.size() << endl;
-                    os << cBlue << oldText << endl;
-                }
+                //if (newText.empty())
+                //    os << " working file is empty ";
+                //// if (ret)
+                ////     os << " system call returned non-zero ";
+                //if (newText != oldText) {
+                //    os << " files differ " << endl;
+                //    os << "newFile: " << newFn << ": " << fileExists(newFn) << ": " << newText.size() << endl;
+                //    os << cYellow << newText << endl;
+                //    os << "oldFile: " << oldFn << ": " << fileExists(oldFn) << ": " << oldText.size() << endl;
+                //    os << cBlue << oldText << endl;
+                //}
                 os << cOff << endl;
                 fails.push_back(os.str());
                 result = redX;
