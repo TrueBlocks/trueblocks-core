@@ -1,7 +1,7 @@
 #-------------------------------------------------
 libraries=../../libs
 bin=bin
-cflags=-std=c++11 -Werror -Wall -O2 -I. -I$(libraries)/utillib -I$(libraries)/etherlib
+cflags=-std=c++17 -Werror -Wall -O2 -I. -I$(libraries)/utillib -I$(libraries)/etherlib
 curl=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib/libcurl.tbd
 
 #-------------------------------------------------
