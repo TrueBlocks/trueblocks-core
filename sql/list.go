@@ -8,7 +8,7 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-func list() {
+func main() {
 	db, err := sql.Open("sqlite3", "./txs-with-indexes.db")
 	if err != nil {
 		log.Fatal(err)
