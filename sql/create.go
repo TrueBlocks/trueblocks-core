@@ -20,11 +20,16 @@ func main() {
 	defer db.Close()
 
 	sqlStmt := `
+	CREATE TABLE addresses (
+		address    TEXT PRIMARY KEY, 
+		addressID  INTEGER AUTO_INCREMENTS
+	);
 	CREATE TABLE IF NOT EXISTS txs (
 		id INTEGER PRIMARY KEY, 
 		address TEXT, 
 		blockIndex INT, 
-		transactionIndex INT
+		transactionIndex INT,
+		FOREIGN KEY(address) REFERENCES addresses(addressID)
 	);
 	CREATE INDEX IF NOT EXISTS idx_address ON txs (address);
 	`

@@ -74,7 +74,7 @@ func readFile(path string) ([]Appearance, error) {
 }
 
 func main() {
-	db, err := sql.Open("sqlite3", "./txs.db")
+	db, err := sql.Open("sqlite3", "./txs-with-indexes.db")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -98,11 +98,13 @@ func main() {
 		log.Fatal(err)
 	}
 	// For each file, read in all the addresses, and their appearances
+	var i = 0
 	for _, f := range files {
 		if strings.HasSuffix(f.Name(), ".gz") {
 			continue
 		}
-		fmt.Println(f.Name())
+		i++
+		fmt.Println(f.Name(), i)
 
 		var appearances, err = readFile(filepath.Join(path, f.Name()))
 
@@ -111,6 +113,9 @@ func main() {
 			if err != nil {
 				log.Fatal(err)
 			}
+		}
+		if i == 1 {
+			break
 		}
 	}
 	tx.Commit()
