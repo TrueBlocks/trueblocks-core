@@ -21,17 +21,19 @@ func main() {
 
 	sqlStmt := `
 	CREATE TABLE addresses (
-		address    TEXT PRIMARY KEY, 
-		addressID  INTEGER AUTO_INCREMENTS
+		addressID 	INTEGER NOT NULL PRIMARY KEY,
+		address    TEXT NOT NULL,
+		UNIQUE(address)
 	);
+	CREATE UNIQUE INDEX idx_addresses_address on addresses(address);
 	CREATE TABLE IF NOT EXISTS txs (
 		id INTEGER PRIMARY KEY, 
-		address TEXT, 
+		txAddressID INTEGER,
 		blockIndex INT, 
 		transactionIndex INT,
-		FOREIGN KEY(address) REFERENCES addresses(addressID)
+		FOREIGN KEY(txAddressID) REFERENCES addresses(addressID)
 	);
-	CREATE INDEX IF NOT EXISTS idx_address ON txs (address);
+	CREATE INDEX IF NOT EXISTS idx_txs_address ON txs (txAddressID);
 	`
 	fmt.Println("Creating DB")
 	_, err = db.Exec(sqlStmt)
