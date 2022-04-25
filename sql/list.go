@@ -15,7 +15,7 @@ func main() {
 	}
 	defer db.Close()
 
-	rows, err := db.Query("select address, blockIndex, transactionIndex from txs where address = '1776281d0d40108941cb41e604dcafbdc3cd61a1'")
+	rows, err := db.Query("select txAddressID, blockIndex, transactionIndex from txs where txAddressID = (SELECT addressID from addresses where addresses.address = '1776281d0d40108941cb41e604dcafbdc3cd61a1')")
 	if err != nil {
 		log.Fatal(err)
 	}

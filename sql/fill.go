@@ -85,11 +85,17 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	stmt, err := tx.Prepare("insert into txs(address, blockIndex, transactionIndex) values(?, ?, ?)")
+	addressesInsertStmt, err := tx.Prepare("INSERT OR IGNORE INTO addresses(address) VALUES(?)")
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer stmt.Close()
+	defer addressesInsertStmt.Close()
+
+	txsInsertStmt, err := tx.Prepare("insert into txs(txAddressID, blockIndex, transactionIndex) values( (SELECT addressID FROM addresses where addresses.address=?), ?, ?);")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer txsInsertStmt.Close()
 
 	var path = "../data/index/unchained/mainnet/finalized"
 
@@ -109,12 +115,18 @@ func main() {
 		var appearances, err = readFile(filepath.Join(path, f.Name()))
 
 		for _, appearance := range appearances {
-			_, err = stmt.Exec(appearance.address, appearance.blockIndex, appearance.transactionIndex)
+			// First we insert the address
+			_, err = addressesInsertStmt.Exec(appearance.address)
+			if err != nil {
+				log.Fatal(err)
+			}
+			// Then, we insert the transaction
+			_, err = txsInsertStmt.Exec(appearance.address, appearance.blockIndex, appearance.transactionIndex)
 			if err != nil {
 				log.Fatal(err)
 			}
 		}
-		if i == 1 {
+		if i == 15 {
 			break
 		}
 	}
