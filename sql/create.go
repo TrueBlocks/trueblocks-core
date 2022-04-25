@@ -15,17 +15,17 @@ import (
 )
 
 // Deletes the existing database in this file
-func deleteDatabase() {
-	fmt.Println("Remving DB")
-	os.Remove("./txs-with-indexes.db")
+func deleteDatabase(databasePath string) {
+	fmt.Println("Deleting database", databasePath)
+	os.Remove(databasePath)
 }
 
 // Creates an empty SQLite database in an space-optimized format
 // that allows for massively quick querying of a specific address
 // to get all the (blockIndex, transactionIndex) pairs it's been
 // involved in
-func createEmptyDatabase() {
-	db, err := sql.Open("sqlite3", "./txs-with-indexes.db")
+func createEmptyDatabase(databasePath string) {
+	db, err := sql.Open("sqlite3", databasePath)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -97,6 +97,7 @@ func readFile(path string) ([]Appearance, error) {
 	}
 
 	for i := 0; int64(i) < int64(nAddresses); i++ {
+		// TODO: I am not sure this hex encoding is correct, so check it
 		var address = hex.EncodeToString(addressByteSlice[(i * 28) : (i*28)+20])
 		var startRecord = binary.LittleEndian.Uint32(addressByteSlice[(i*28)+20 : (i*28)+20+4])
 		var nRecord = binary.LittleEndian.Uint32(addressByteSlice[(i*28)+20+4 : (i*28)+20+4+4])
@@ -113,8 +114,8 @@ func readFile(path string) ([]Appearance, error) {
 }
 
 // Fills a database with the first X chunks of the index, for testing
-func fillDatabase() {
-	db, err := sql.Open("sqlite3", "./txs-with-indexes.db")
+func fillDatabase(databasePath string, indexFolderPath string) {
+	db, err := sql.Open("sqlite3", databasePath)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -136,9 +137,7 @@ func fillDatabase() {
 	}
 	defer txsInsertStmt.Close()
 
-	var path = "../data/index/unchained/mainnet/finalized"
-
-	files, err := ioutil.ReadDir(path)
+	files, err := ioutil.ReadDir(indexFolderPath)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -151,7 +150,7 @@ func fillDatabase() {
 		i++
 		fmt.Println(f.Name(), i)
 
-		var appearances, err = readFile(filepath.Join(path, f.Name()))
+		var appearances, err = readFile(filepath.Join(indexFolderPath, f.Name()))
 
 		for _, appearance := range appearances {
 			// First we insert the address, if it needs to be inserted
@@ -172,13 +171,20 @@ func fillDatabase() {
 	tx.Commit()
 }
 
+// Deletes existing database, creates a new one, and fills it
+// with the index data
 func main() {
+	// Set this as the name of the sqlite database file you want to create
+	const databasePath = "./txs-with-indexes.db"
+	// Set this as the path to the finalized index chunks
+	const indexFolderPath = "../data/index/unchained/mainnet/finalized"
+
 	// Delete the database
-	deleteDatabase()
+	deleteDatabase(databasePath)
 
 	// Create a new database
-	createEmptyDatabase()
+	createEmptyDatabase(databasePath)
 
 	// Fill the new database
-	fillDatabase()
+	fillDatabase(databasePath, indexFolderPath)
 }
