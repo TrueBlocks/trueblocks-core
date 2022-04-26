@@ -30,7 +30,6 @@ func (opts *NamesOptions) anyBase() bool {
 	return opts.Expand ||
 		opts.MatchCase ||
 		opts.All ||
-		opts.Custom ||
 		opts.Prefund ||
 		opts.Named ||
 		opts.Addr ||

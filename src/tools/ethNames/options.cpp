@@ -212,7 +212,7 @@ bool COptions::parseArguments(string_q& command) {
     for (auto term : terms)
         searches.push_back(term);
 
-#define anyBase() (match_case || expand || all || custom || prefund || named || addr || to_custom || clean)
+#define anyBase() (match_case || expand || all || prefund || named || addr || to_custom || clean)
 
     if (collections) {
         if (anyBase())
