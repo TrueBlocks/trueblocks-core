@@ -12,9 +12,6 @@ import (
 // be found in the LICENSE file.
 
 func (mon *Monitor) RemoveDups() (cntBefore uint32, cntAfter uint32, err error) {
-	if mon.GetAddrStr() != "0xf503017d7baf7fbc0fff7492b751025c6a78179b" {
-		return mon.Count(), mon.Count(), nil
-	}
 	defer mon.Close()
 
 	cntBefore = mon.Count()

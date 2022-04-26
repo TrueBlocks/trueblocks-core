@@ -193,13 +193,13 @@ func Test_RangeRangeIntersect(t *testing.T) {
 		if s != tt.want[2] {
 			t.Error("Test", tt.name, "failed BlockIntersects2.")
 		}
-		s = tt.r1.BlockIsBefore(tt.r2.First)
+		s = tt.r1.LaterThan(tt.r2.First)
 		if s != tt.want[3] {
-			t.Error("Test", tt.name, "failed BlockIsBefore.")
+			t.Error("Test", tt.name, "failed LaterThan.")
 		}
-		s = tt.r1.BlockIsAfter(tt.r2.Last)
+		s = tt.r1.EarlierThan(tt.r2.Last)
 		if s != tt.want[4] {
-			t.Error("Test", tt.name, "failed BlockIsAfter.")
+			t.Error("Test", tt.name, "failed EarlierThan.")
 		}
 	}
 }

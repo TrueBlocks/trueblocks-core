@@ -65,13 +65,13 @@ func (r *FileRange) BlockIntersects(blk uint64) bool {
 	return !(blk < r.First || blk > r.Last)
 }
 
-// BlockIsAfter returns true if the last block in the file is less than the given block
-func (r *FileRange) BlockIsAfter(blk uint64) bool {
+// EarlierThan returns true if the last block in the file is less than the given block
+func (r *FileRange) EarlierThan(blk uint64) bool {
 	return r.Last < blk
 }
 
-// BlockIsBefore returns true if the first block in the file is greater than the given block
-func (r *FileRange) BlockIsBefore(blk uint64) bool {
+// LaterThan returns true if the first block in the file is greater than the given block
+func (r *FileRange) LaterThan(blk uint64) bool {
 	return r.First > blk
 }
 
