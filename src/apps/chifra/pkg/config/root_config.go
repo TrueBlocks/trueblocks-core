@@ -5,17 +5,16 @@
 package config
 
 import (
-	"errors"
 	"log"
 	"os"
 	"os/user"
 	"path"
 	"runtime"
-	"strconv"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
 	"github.com/spf13/viper"
 )
 
@@ -141,24 +140,14 @@ func PathFromXDG(envVar string) (string, error) {
 	}
 
 	if xdg[0] != '/' {
-		return "", Usage("The {0} value ({1}), must be fully qualified.", envVar, xdg)
+		return "", usage.Usage("The {0} value ({1}), must be fully qualified.", envVar, xdg)
 	}
 
 	if _, err := os.Stat(xdg); err != nil {
-		return "", Usage("The {0} folder ({1}) must exist.", envVar, xdg)
+		return "", usage.Usage("The {0} folder ({1}) must exist.", envVar, xdg)
 	}
 
 	return path.Join(xdg, "") + "/", nil
-}
-
-// TODO: this is duplicated elsewhere because of cyclical imports - combine into usage package
-func Usage(msg string, values ...string) error {
-	ret := msg
-	for index, val := range values {
-		rep := "{" + strconv.FormatInt(int64(index), 10) + "}"
-		ret = strings.Replace(ret, rep, val, -1)
-	}
-	return errors.New(ret)
 }
 
 // MustReadConfig calls Viper's ReadInConfig and fills values in the
