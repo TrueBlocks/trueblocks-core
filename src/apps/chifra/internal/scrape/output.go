@@ -44,7 +44,7 @@ func RunScrape(cmd *cobra.Command, args []string) error {
 		go opts.RunIndexScraper(&wg, hasIndexerFlag(args[0]))
 
 		wg.Add(1)
-		MonitorScraper = NewScraper(colors.Purple, "MonitorScraper", opts.Sleep, opts.Globals.LogLevel)
+		MonitorScraper = NewScraper(colors.Magenta, "MonitorScraper", opts.Sleep, opts.Globals.LogLevel)
 		go opts.RunMonitorScraper(&wg, hasMonitorsFlag(args[0]))
 
 		wg.Wait()

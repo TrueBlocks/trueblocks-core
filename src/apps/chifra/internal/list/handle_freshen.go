@@ -95,7 +95,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 				continue
 			}
 
-			if fileRange.BlockIsAfter(updater.FirstBlock) {
+			if fileRange.EarlierThan(updater.FirstBlock) {
 				continue
 			}
 
@@ -206,18 +206,20 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 		return
 	}
 
+	lastScanned := uint32(result.Range.Last) + 1
+
 	mon := updater.MonitorMap[result.Address]
 	if mon == nil {
 		// In this case, there were no errors, but all monitors were skipped. This would
 		// happen, for example, due to false positives hits on the bloom filters. We want
-		// to update the LastScanned values for each of these monitors. WriteAppendApps, when
+		// to update the LastScanned values for each of these monitors. WriteAppearancesAppend, when
 		// given a nil appearance list simply updates the header. Note we update for the
 		// start of the next chunk (plus 1 to current range).
 		for _, mon := range updater.MonitorMap {
 			// TODO: BOGUS - can we manage these file pointers so they aren't copied and
 			// TODO: BOGUS - therefore don't need to be Closed so or else it crashes
 			mon.Close()
-			err := mon.WriteAppendApps(uint32(result.Range.Last)+1, nil)
+			err := mon.WriteAppearancesAppend(lastScanned, nil)
 			if err != nil {
 				log.Println(err)
 			}
@@ -227,7 +229,7 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 		mon.Close()
 		// Note that result.AppRecords may be nil here (because, for example, this
 		// monitor had a false positive), but we do still want to update the header.
-		mon.WriteMonHeader(mon.Deleted, uint32(result.Range.Last)+1)
+		mon.WriteMonHeader(mon.Deleted, lastScanned)
 		if result.AppRecords != nil {
 			nWritten := len(*result.AppRecords)
 			if nWritten > 0 {

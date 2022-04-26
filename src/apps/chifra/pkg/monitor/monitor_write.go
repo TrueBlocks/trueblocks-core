@@ -31,10 +31,10 @@ func (mon *Monitor) WriteMonHeader(deleted bool, lastScanned uint32) (err error)
 	return
 }
 
-// WriteAppendApps appends appearances to the end of the file, updates the header with
+// WriteAppearancesAppend appends appearances to the end of the file, updates the header with
 // lastScanned (if later) and returns the number of records written. Note that we should
 // be writing to a temporary file.
-func (mon *Monitor) WriteAppendApps(lastScanned uint32, apps *[]index.AppearanceRecord) error {
+func (mon *Monitor) WriteAppearancesAppend(lastScanned uint32, apps *[]index.AppearanceRecord) error {
 	if !mon.Staged {
 		log.Fatal("Trying to write to a non-staged file. Should not happen.")
 
@@ -60,7 +60,7 @@ func (mon *Monitor) WriteAppendApps(lastScanned uint32, apps *[]index.Appearance
 }
 
 // WriteAppearances writes appearances to a Monitor
-func (mon *Monitor) WriteAppearances(apps []index.AppearanceRecord, mode int) (int, error) {
+func (mon *Monitor) WriteAppearances(apps []index.AppearanceRecord, mode int) (uint32, error) {
 
 	path := mon.Path()
 	f, err := os.OpenFile(path, mode, 0644)
@@ -88,5 +88,5 @@ func (mon *Monitor) WriteAppearances(apps []index.AppearanceRecord, mode int) (i
 
 	f.Close() // do not defer this, we need to close it so the fileSize is right
 	mon.Reload(false /* create */)
-	return int(mon.Count()), nil
+	return mon.Count(), nil
 }
