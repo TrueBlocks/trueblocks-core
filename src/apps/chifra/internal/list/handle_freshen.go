@@ -76,6 +76,9 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 	for _, info := range files {
 		if !info.IsDir() {
 			fileName := bloomPath + "/" + info.Name()
+			if !strings.HasSuffix(fileName, ".bloom") {
+				continue // sometimes there are .gz files in this folder, for example
+			}
 			fileRange, err := cache.RangeFromFilename(fileName)
 			if err != nil {
 				// don't respond further -- there may be foreign files in the folder

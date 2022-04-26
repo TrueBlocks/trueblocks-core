@@ -29,14 +29,14 @@ func hasMonitorsFlag(mode string) bool {
 var MonitorScraper Scraper
 
 // RunMonitorScraper runs continually, never stopping and freshens any existing monitors
-func (opts *ScrapeOptions) RunMonitorScraper(wg *sync.WaitGroup, initialState bool) {
+func (opts *ScrapeOptions) RunMonitorScraper(wg *sync.WaitGroup) {
 	defer wg.Done()
 
 	chain := opts.Globals.Chain
 	establishExportPaths(chain)
 
 	var s *Scraper = &MonitorScraper
-	s.ChangeState(initialState)
+	s.ChangeState(true)
 
 	for {
 		if !s.Running {
@@ -65,6 +65,10 @@ func (opts *ScrapeOptions) RunMonitorScraper(wg *sync.WaitGroup, initialState bo
 			}
 
 			opts.Refresh(monitors)
+
+			if os.Getenv("RUN_ONCE") == "true" {
+				return
+			}
 
 			fmt.Println("Sleeping for", opts.Sleep, "seconds.")
 			time.Sleep(time.Duration(opts.Sleep) * time.Second)

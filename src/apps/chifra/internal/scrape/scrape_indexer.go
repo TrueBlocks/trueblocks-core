@@ -17,11 +17,11 @@ func hasIndexerFlag(mode string) bool {
 
 var IndexScraper Scraper
 
-func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup, initialState bool) {
+func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 	defer wg.Done()
 
 	var s *Scraper = &IndexScraper
-	s.ChangeState(initialState)
+	s.ChangeState(true)
 
 	for {
 		if !s.Running {
