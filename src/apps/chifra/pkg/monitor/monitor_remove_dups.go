@@ -11,47 +11,47 @@ import (
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-func (mon *Monitor) RemoveDups() (cntBefore uint32, cntAfter uint32, err error) {
-	defer mon.Close()
-
-	cntBefore = mon.Count()
-	cntAfter = cntBefore
-	if cntBefore > 0 {
-		apps := make([]index.AppearanceRecord, mon.Count())
-		deDupped := make([]index.AppearanceRecord, 0, mon.Count())
-		err = mon.ReadAppearances(&apps)
-		if err != nil {
-			return
-		}
-
-		sort.Slice(apps, func(i, j int) bool {
-			si := uint64(apps[i].BlockNumber)
-			si = (si << 32) + uint64(apps[i].TransactionId)
-			sj := uint64(apps[j].BlockNumber)
-			sj = (sj << 32) + uint64(apps[j].TransactionId)
-			return si < sj
-		})
-
-		deDupped = append(deDupped, apps[0])
-		prev := apps[0]
-		for i, app := range apps {
-			if i > 0 {
-				if prev.BlockNumber != app.BlockNumber || prev.TransactionId != app.TransactionId {
-					deDupped = append(deDupped, app)
-					prev = app
-				}
-			}
-		}
-
-		if len(apps) != len(deDupped) {
-			mon.Close() // so when we open it, it gets replaced
-			_, err = mon.WriteAppearances(deDupped, os.O_WRONLY|os.O_CREATE|os.O_TRUNC)
-			if err != nil {
-				return
-			}
-			cntAfter = uint32(len(deDupped))
-		}
+func (mon *Monitor) RemoveDups() (uint32, uint32, error) {
+	if mon.Count() == 0 {
+		return 0, 0, nil
 	}
 
-	return
+	defer mon.Close()
+
+	apps := make([]index.AppearanceRecord, mon.Count())
+	err := mon.ReadAppearances(&apps)
+	if err != nil {
+		return mon.Count(), mon.Count(), err
+	}
+
+	sort.Slice(apps, func(i, j int) bool {
+		si := uint64(apps[i].BlockNumber)
+		si = (si << 32) + uint64(apps[i].TransactionId)
+		sj := uint64(apps[j].BlockNumber)
+		sj = (sj << 32) + uint64(apps[j].TransactionId)
+		return si < sj
+	})
+
+	cntBefore := mon.Count()
+	cntAfter := cntBefore
+
+	var prev index.AppearanceRecord
+	deDupped := make([]index.AppearanceRecord, 0, mon.Count())
+	for i, app := range apps {
+		if i == 0 || (prev.BlockNumber != app.BlockNumber || prev.TransactionId != app.TransactionId) {
+			deDupped = append(deDupped, app)
+		}
+		prev = app
+	}
+
+	if len(apps) != len(deDupped) {
+		mon.Close() // so when we open it, it gets replaced
+		cntAfter, err = mon.WriteAppearances(deDupped, os.O_WRONLY|os.O_CREATE|os.O_TRUNC)
+		if err != nil {
+			return cntBefore, cntAfter, err
+		}
+		mon.WriteMonHeader(mon.Deleted, mon.LastScanned)
+	}
+
+	return cntBefore, cntAfter, err
 }

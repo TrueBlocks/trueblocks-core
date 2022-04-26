@@ -1,9 +1,3 @@
-// TODO: We could add statistics counting -- nChanged, nProcessed, txCount, etc
-// TODO: Need to protect against invalid addresses including zero address
-// TODO: Need to protect against very large files (optionally) --> keep a list of them?
-// TODO: Does control+c work right? Does data get corrupted?
-// TODO: We need post processing? Summarization? Coallessing? Zip files?
-
 package scrapePkg
 
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
@@ -11,6 +5,7 @@ package scrapePkg
 // be found in the LICENSE file.
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"os"
@@ -19,8 +14,10 @@ import (
 	"sync"
 	"time"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -47,10 +44,8 @@ func (opts *ScrapeOptions) RunMonitorScraper(wg *sync.WaitGroup, initialState bo
 
 		} else {
 			monitorChan := make(chan monitor.Monitor)
-
 			var monitors []monitor.Monitor
 			go monitor.ListMonitors(chain, "monitors", monitorChan)
-
 			count := 0
 			for result := range monitorChan {
 				switch result.Address {
@@ -64,58 +59,100 @@ func (opts *ScrapeOptions) RunMonitorScraper(wg *sync.WaitGroup, initialState bo
 					monitors = append(monitors, result)
 					count++
 					if result.Count() > 0 {
-						fmt.Println("     ", count, ": ", result, "                                        ")
+						logger.Log(logger.Info, "     ", count, ": ", result, "                                        ")
 					}
 				}
 			}
-			opts.Refresh(chain, monitors)
+
+			opts.Refresh(monitors)
+
 			fmt.Println("Sleeping for", opts.Sleep, "seconds.")
 			time.Sleep(time.Duration(opts.Sleep) * time.Second)
 		}
 	}
 }
 
-func batchMonitors(slice []monitor.Monitor, chunkSize int) [][]monitor.Monitor {
-	var chunks [][]monitor.Monitor
-	for i := 0; i < len(slice); i += chunkSize {
-		end := i + chunkSize
+type SemiParse struct {
+	CmdLine string `json:"cmdLine"`
+	Fmt     string `json:"fmt"`
+	Folder  string `json:"folder"`
+}
+
+func (sp SemiParse) String() string {
+	ret, _ := json.MarshalIndent(sp, "", "  ")
+	return string(ret)
+}
+
+const addrsPerBatch = 8
+
+func (opts *ScrapeOptions) Refresh(monitors []monitor.Monitor) error {
+	theCmds, _ := getCommandsFromFile(opts.Globals)
+
+	batches := batchMonitors(monitors, addrsPerBatch)
+	for i := 0; i < len(batches); i++ {
+		addrs, countsBefore := preProcessBatch(batches[i], i, len(monitors))
+
+		err := opts.FreshenMonitorsScrape(addrs)
+		if err != nil {
+			return err
+		}
+
+		for j := 0; j < len(batches[i]); j++ {
+			mon := batches[i][j]
+			countAfter := mon.Count()
+
+			if countAfter > 100000 {
+				fmt.Println(colors.Red, "Too many transactions for address", mon.Address, colors.Off)
+				continue
+			}
+
+			if countAfter == 0 {
+				continue
+			}
+
+			for _, sp := range theCmds {
+				outputFn := sp.Folder + "/" + mon.GetAddrStr() + "." + sp.Fmt
+				exists := file.FileExists(outputFn)
+				countBefore := countsBefore[j]
+
+				if !exists || countAfter > countBefore {
+					cmd := sp.CmdLine + " --output " + outputFn
+					add := ""
+					if exists {
+						add += fmt.Sprintf(" --first_record %d", uint64(countBefore+1))
+						add += fmt.Sprintf(" --max_records %d", uint64(countAfter-countBefore+1)) // extra space won't hurt
+						add += fmt.Sprintf(" --append")
+						add += fmt.Sprintf(" --no_header")
+					}
+					cmd += add + " " + mon.GetAddrStr()
+					cmd = strings.Replace(cmd, "  ", " ", -1)
+					o := opts
+					o.Globals.File = ""
+					o.Globals.PassItOn("acctExport", cmd)
+					// fmt.Println("Processing:", colors.BrightYellow, outputFn, colors.BrightWhite, exists, countBefore, countAfter, colors.Off)
+					// } else {
+					// 	fmt.Println("Skipping:", colors.BrightYellow, outputFn, colors.BrightWhite, exists, countBefore, countAfter, colors.Off)
+				}
+				// time.Sleep(500 * time.Millisecond)
+			}
+		}
+	}
+	return nil
+}
+
+func batchMonitors(slice []monitor.Monitor, batchSize int) [][]monitor.Monitor {
+	var batches [][]monitor.Monitor
+	for i := 0; i < len(slice); i += batchSize {
+		end := i + batchSize
 		if end > len(slice) {
 			end = len(slice)
 		}
-		chunks = append(chunks, slice[i:end])
+		batches = append(batches, slice[i:end])
 	}
-	return chunks
+	return batches
 }
 
-func getOutputFolder(cmd, def string) string {
-	cmd += " "
-	cmd = strings.Replace(cmd, "-p ", "--appearances ", -1)
-	cmd = strings.Replace(cmd, "-r ", "--receipts ", -1)
-	cmd = strings.Replace(cmd, "-l ", "--logs ", -1)
-	cmd = strings.Replace(cmd, "-t ", "--traces ", -1)
-	cmd = strings.Replace(cmd, "-A ", "--statements ", -1)
-	cmd = strings.Replace(cmd, "-n ", "--neighbors ", -1)
-	cmd = strings.Replace(cmd, "-C ", "--accounting ", -1)
-
-	if strings.Contains(cmd, "--appearances") {
-		return "apps"
-	} else if strings.Contains(cmd, "--receipts") {
-		return "receipts"
-	} else if strings.Contains(cmd, "--logs") {
-		return "logs"
-	} else if strings.Contains(cmd, "--traces") {
-		return "traces"
-	} else if strings.Contains(cmd, "--statements") {
-		return "statements"
-	} else if strings.Contains(cmd, "--neighbors") {
-		return "neighbors"
-	} else if strings.Contains(cmd, "--accounting") {
-		return "accounting"
-	}
-	return "txs"
-}
-
-func getFormat(cmd, def string) string {
+func GetExportFormat(cmd, def string) string {
 	if strings.Contains(cmd, "json") {
 		return "json"
 	} else if strings.Contains(cmd, "txt") {
@@ -129,94 +166,65 @@ func getFormat(cmd, def string) string {
 	return "csv"
 }
 
-type SemiParse struct {
-	cmd    string
-	fmt    string
-	folder string
-}
+func getCommandsFromFile(globals globals.GlobalOptions) ([]SemiParse, error) {
+	if !file.FileExists(globals.File) {
+		return []SemiParse{}, fmt.Errorf("file %s not found", globals.File)
+	}
 
-func (opts *ScrapeOptions) Refresh(chain string, monitors []monitor.Monitor) error {
-	cmdFile := opts.Globals.File
-	contents := utils.AsciiFileToString(cmdFile)
-	cmds := strings.Split(contents, "\n")
-	theCmds := []SemiParse{}
-	for _, cmd := range cmds {
+	ret := []SemiParse{}
+
+	cmdLines := utils.AsciiFileToLines(globals.File)
+	for _, cmd := range cmdLines {
 		cmd = strings.Trim(cmd, " \t")
 		if len(cmd) > 0 && !strings.HasPrefix(cmd, "#") {
 			sp := SemiParse{}
-			sp.fmt = getFormat(cmd, opts.Globals.Format)
-			sp.folder = "exports/" + chain + "/" + getOutputFolder(cmd, "unknown")
-			sp.cmd = strings.Replace(cmd, " csv", " "+sp.fmt, -1)
-			sp.cmd = strings.Replace(cmd, " json", " "+sp.fmt, -1)
-			sp.cmd = strings.Replace(cmd, " txt", " "+sp.fmt, -1)
-			if !strings.Contains(sp.cmd, "--fmt") {
-				sp.cmd += " --fmt " + sp.fmt
+			sp.Folder = "exports/" + globals.Chain + "/" + GetOutputFolder(cmd, "unknown")
+
+			sp.Fmt = GetExportFormat(cmd, globals.Format)
+			sp.CmdLine = cmd
+			sp.CmdLine = strings.Replace(sp.CmdLine, " csv", " "+sp.Fmt, -1)
+			sp.CmdLine = strings.Replace(sp.CmdLine, " json", " "+sp.Fmt, -1)
+			sp.CmdLine = strings.Replace(sp.CmdLine, " txt", " "+sp.Fmt, -1)
+			if !strings.Contains(sp.CmdLine, "--fmt") {
+				sp.CmdLine += " --fmt " + sp.Fmt
 			}
-			theCmds = append(theCmds, sp)
+			ret = append(ret, sp)
 		}
 	}
 
-	fmt.Println("Found", len(theCmds), "commands to process in ./"+cmdFile)
-	for i, cmd := range theCmds {
-		fmt.Printf("\t%d. %s\n", i, cmd.cmd)
+	logger.Log(logger.Info, "Found", len(ret), "commands to process in ./"+globals.File)
+	for i, cmd := range ret {
+		msg := fmt.Sprintf("\t%d. %s", i, cmd.CmdLine)
+		logger.Log(logger.Info, msg)
 	}
 
-	addrsPerCall := 8
-
-	batches := batchMonitors(monitors, addrsPerCall)
-	for i := 0; i < len(batches); i++ {
-		var addrs []string
-		for j := 0; j < len(batches[i]); j++ {
-			addrs = append(addrs, batches[i][j].GetAddrStr())
-		}
-		addrStr := strings.Join(addrs, " ")
-
-		spaces := "                                                                                 \r"
-		s := fmt.Sprintf("%s\r%d-%d", colors.Blue+colors.Bright+spaces, i*addrsPerCall, len(monitors))
-		fmt.Println(s, colors.Green, "chifra export --freshen", strings.Replace(addrStr, "0x", " \\\n\t0x", -1), colors.Off)
-
-		countsBefore := []uint32{}
-		for j := 0; j < len(batches[i]); j++ {
-			countsBefore = append(countsBefore, batches[i][j].Count())
-		}
-		opts.FreshenMonitors(addrs)
-
-		for j := 0; j < len(batches[i]); j++ {
-
-			mon := batches[i][j]
-			countBefore := countsBefore[j]
-			countAfter := mon.Count()
-
-			if countAfter > 0 {
-				if countAfter > 100000 {
-					fmt.Println(colors.Red, "Too many transactions for address", mon.Address, colors.Off)
-					continue
-				}
-
-				for _, sp := range theCmds {
-					cmd := sp.cmd + " --output " + sp.folder + "/" + mon.GetAddrStr() + "." + sp.fmt
-					appsPath := sp.folder + "/" + mon.GetAddrStr() + "." + sp.fmt
-					exists := file.FileExists(appsPath)
-					if !exists || countAfter > countBefore {
-						add := ""
-						if exists {
-							add += fmt.Sprintf(" --first_record %d", uint64(countBefore+1))
-							add += fmt.Sprintf(" --max_records %d", uint64(countAfter-countBefore+1)) // extra space won't hurt
-							add += fmt.Sprintf(" --append")
-							add += fmt.Sprintf(" --no_header")
-						}
-						cmd += add + " " + mon.GetAddrStr()
-						cmd = strings.Replace(cmd, "  ", " ", -1)
-						o := opts
-						o.Globals.File = ""
-						o.Globals.PassItOn("acctExport", cmd)
-					}
-				}
-			}
-		}
-	}
-	return nil
+	return ret, nil
 }
+
+const spaces = "                                                                                 "
+
+func preProcessBatch(batch []monitor.Monitor, i, nMons int) ([]string, []uint32) {
+	var addrs []string
+	for j := 0; j < len(batch); j++ {
+		addrs = append(addrs, batch[j].GetAddrStr())
+	}
+
+	s := fmt.Sprintf("%s\r%d-%d", colors.BrightBlue+spaces, i*addrsPerBatch, nMons)
+	fmt.Println(s, colors.Green, "chifra export --freshen", strings.Replace(strings.Join(addrs, " "), "0x", " \\\n\t0x", -1), colors.Off)
+
+	countsBefore := []uint32{}
+	for j := 0; j < len(batch); j++ {
+		countsBefore = append(countsBefore, (batch)[j].Count())
+	}
+
+	return addrs, countsBefore
+}
+
+// TODO: We could add statistics counting -- nChanged, nProcessed, txCount, etc
+// TODO: Need to protect against invalid addresses including zero address
+// TODO: Need to protect against very large files (optionally) --> keep a list of them?
+// TODO: Does control+c work right? Does data get corrupted?
+// TODO: We need post processing? Summarization? Coallessing? Zip files?
 
 // establishExportPaths sets up the index path and subfolders. It only returns if it succeeds.
 func establishExportPaths(chain string) {
@@ -254,4 +262,32 @@ func establishExportPaths(chain string) {
 	if err := file.EstablishFolders(exportPath, folders); err != nil {
 		log.Fatal(err)
 	}
+}
+
+func GetOutputFolder(cmdLine, def string) string {
+	cmdLine += " "
+	cmdLine = strings.Replace(cmdLine, "-p ", "--appearances ", -1)
+	cmdLine = strings.Replace(cmdLine, "-r ", "--receipts ", -1)
+	cmdLine = strings.Replace(cmdLine, "-l ", "--logs ", -1)
+	cmdLine = strings.Replace(cmdLine, "-t ", "--traces ", -1)
+	cmdLine = strings.Replace(cmdLine, "-A ", "--statements ", -1)
+	cmdLine = strings.Replace(cmdLine, "-n ", "--neighbors ", -1)
+	cmdLine = strings.Replace(cmdLine, "-C ", "--accounting ", -1)
+
+	if strings.Contains(cmdLine, "--appearances") {
+		return "apps"
+	} else if strings.Contains(cmdLine, "--receipts") {
+		return "receipts"
+	} else if strings.Contains(cmdLine, "--logs") {
+		return "logs"
+	} else if strings.Contains(cmdLine, "--traces") {
+		return "traces"
+	} else if strings.Contains(cmdLine, "--statements") {
+		return "statements"
+	} else if strings.Contains(cmdLine, "--neighbors") {
+		return "neighbors"
+	} else if strings.Contains(cmdLine, "--accounting") {
+		return "accounting"
+	}
+	return "txs"
 }
