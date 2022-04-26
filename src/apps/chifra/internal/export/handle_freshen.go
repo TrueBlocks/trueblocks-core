@@ -5,7 +5,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 )
 
-func (opts *ExportOptions) FreshenMonitors() error {
+func (opts *ExportOptions) FreshenMonitorsForExport() error {
 	listOpts := listPkg.ListOptions{
 		Addrs:   opts.Addrs,
 		Silent:  true,
