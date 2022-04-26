@@ -17,6 +17,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
@@ -216,6 +217,7 @@ func ListMonitors(chain, folder string, monitorChan chan<- Monitor) {
 	if err == nil {
 		// If the shorthand file exists in the current folder, use it...
 		lines := file.AsciiFileToLines(info.Name())
+		logger.Log(logger.Info, "Found", len(lines), "unique addresses in ./addresses.txt")
 		addrMap := make(map[string]bool)
 		for _, line := range lines {
 			if !strings.HasPrefix(line, "#") {
@@ -231,7 +233,6 @@ func ListMonitors(chain, folder string, monitorChan chan<- Monitor) {
 				}
 			}
 		}
-		fmt.Println("Found", len(lines), "unique addresses in ./addresses.txt")
 		return
 	}
 
