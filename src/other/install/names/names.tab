@@ -1792,7 +1792,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 91-Early:Addresses	0x22f83d39a2148dd389ed4c7a9280f57d5c8679da	Emailer		EtherScan.io			false	false	false	false	false	false
 90-Individuals:DevCon2	0x2306df931a940d58c01665fa4d0800802c02edfe	wuehler (Prefund_1171)		DevCon2 Token Contract			false	false	false	false	false	false
 30-Contracts	0x230dc92857948821f88a4e81b67a593fad2ae8cd	Arbitrage Bot		0xTracker			false	false	false	true	false	false
-31-Gitcoin:Grants	0x230fc981f7cae90cfc4ed4c18f7c178b239e5f9f	Moonshot Collective Multisig					false	false	false	true	false	false
+31-Gitcoin:Workstreams	0x230fc981f7cae90cfc4ed4c18f7c178b239e5f9f	Moonshot Collective Multisig		GitCoin			false	false	false	true	false	false
 91-Early:Addresses	0x23141df767233776f7cbbec497800ddedaa4c684	BranchSender_id305		Ether Camp			false	false	false	true	false	false
 91-Early:Addresses	0x231c7510f24d1c8b9578558bcb7fa6c659b4ca98	Crypted_Rps		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x231e68028d9db9ffd0ab491f9e4d261c37ef5fdf	Moon Doge	MOGE	On chain	18		false	false	false	true	true	false
@@ -4696,6 +4696,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 31-Contracts:Giveth Project	0x5dcbd0125a7bceb564c5efced998db015225b12a	Purple Maia Foundation		Giveth Website			false	false	false	false	false	false
 50-Tokens:ERC20	0x5dce29e92b1b939f8e8c60dcf15bde82a85be4a9	Badger Sett Curve.fi bBTC/sbtcCRV	bbBTC/sbtcCRV	On chain	18		false	false	false	true	true	false
 31-Gitcoin:Grants	0x5dd3fb53db9045497449484baf026a24c817e10e	Grant 1671 the Blockchain School		https://gitcoin.co/grants/1671/the-blockchain-school			false	false	false	false	false	false
+31-Gitcoin:Workstreams	0x5dd4721bb322499616d827be45c93f55d9181bc3	DAO Ops MultiSig		GitCoin			false	false	false	true	false	false
 50-Tokens:ERC20	0x5dd57da40e6866c9fcc34f4b6ddc89f1ba740dfe	Bright	BRIGHT	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x5de7f5f2e373f44273b1fd1cd4f9644ffd3e0a82	Uniswap V2	UNI-V2	On chain	18		false	false	false	true	true	false
 31-Gitcoin:Grants	0x5df67bdf139abc95b0b3a5851875a73a5e722c0e	Grant 0117 Gitcoin Product Development Grant		https://gitcoin.co/grants/117/gitcoin-product-development-grant			false	false	false	false	false	false
@@ -5835,6 +5836,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 30-Contracts:DAO Related	0x755cdba6ae4f479f7164792b318b2a06c759833b	Extra Balance Refund		Griff Green Medium Post			false	false	false	true	false	false
 31-Contracts:Giveth Project	0x755d4c686b9ae88c988429e21903ea80ff5edb34	Baker Industries, Inc.		Giveth Website			false	false	false	false	false	false
 50-Tokens:ERC20	0x755eb14d2feff2939eb3026f5cad9d03775b9ff4	BunnyToken	BUNNY	On chain	18		false	false	false	true	true	false
+31-Gitcoin:Workstreams	0x756239e5b7d2aa6f3da0594b296952121fb71606	dCompass Multisig		GitCoin			false	false	false	true	false	false
 50-Tokens:ERC20	0x7565556c69758f381e57685473afcb27ca7a9643	Metaverse	META	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x757b2350cd60d5e46e1fc3314f980f20d85cfb9f	dolphins.wtf	EEEE	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x757eac40756ac62d5439553761dd40e6984417a4	Cavalier King Charles	CAVALIER	On chain	18		false	false	false	true	true	false
@@ -7266,7 +7268,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0x930ed81ad809603baf727117385d01f04354612e	SOLARITE	SOLARITE	On chain	18		false	false	false	true	true	false
 30-Contracts:Humanity DAO	0x9312b86c153ed78abdbfdf47076c550171fdd7f6	heavycrag		https://www.humanitydao.org/humans			false	false	false	false	false	false
 50-Tokens:ERC20	0x9314941c11d6dee1d7bf93113eb74d4718949f3b	Uniswap V2	UNI-V2	On chain	18		false	false	false	true	true	false
-31-Gitcoin:Workstreams	0x931896a8a9313f622a2afca76d1471b97955e551	dGrants					false	false	false	true	false	false
+31-Gitcoin:Workstreams	0x931896a8a9313f622a2afca76d1471b97955e551	dGrants Multisig		GitCoin			false	false	false	true	false	false
 50-Tokens:ERC20	0x93190dbce9b9bd4aa546270a8d1d65905b5fdd28	DAPSTOKEN	DAPS	On chain	18	The DAPS project plans to create the world's first fully private blockchain that also maintains the 'Trustless' structure of traditional public blockchains.	false	false	false	true	true	false
 30-Contracts:Set Protocol	0x931a809658b677390c80a443415d16f4fcd37d1e	Rebalancing Helper Library		https://github.com/SetProtocol/set-protocol-contracts			false	false	false	true	false	false
 30-Contracts	0x932348df588923ba3f1fd50593b22c4e2a287919	DEX.AG		0xTracker			false	false	false	true	false	false
@@ -8251,6 +8253,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 90-Individuals:Gitcoin Grants	0xa7a5a2745f10d5c23d75a6fd228a408cede1cae5	slgraham		Gitcoin Website			false	false	false	false	false	false
 30-Contracts:Consensys	0xa7a677183373ca33a65f00084eb81747c8ae5f03	Standard Token Factory		Consensys			false	false	false	true	false	false
 30-Contracts:Humanity DAO	0xa7aaa7af0c4171a5d2d6067c95e3c5f880ac9b6e	jessehhudson		https://www.humanitydao.org/humans			false	false	false	false	false	false
+31-Gitcoin:Workstreams	0xa7ac9f7087d7197e0047db9a90562a1364bf897d	PFG Multisig		GitCoin			false	false	false	true	false	false
 50-Tokens:ERC20	0xa7ad4ce6c21d9e875f1067cd377256326b483002	Uniswap V2	UNI-V2	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0xa7b9d2d2b6f5a7ef150e5de3a548a88484582743	Shares	SHARE	On chain	18		false	false	false	true	true	false
 30-Contracts:Humanity DAO	0xa7bd09daab3eb5ec96f04914d94c47681489d604	jordan_mack		https://www.humanitydao.org/humans			false	false	false	false	false	false
@@ -9585,7 +9588,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 31-Gitcoin:Grants	0xc2373689538848d7dcbfe9f29384b158863c4ae7	Grant 2116 - funny		https://gitcoin.co/grants/2116/funny			false	false	false	false	false	false
 31-Contracts:Giveth Project	0xc2379fcdb9d5c9856a0a440d65a69b36cfa7b207	YouthHope		Giveth Website			false	false	false	false	false	false
 31-Contracts:Giveth Project	0xc23bd70f9a9960b4a055a36c0064a32b7224fa07	USA Clay Target League		Giveth Website			false	false	false	false	false	false
-31-Gitcoin:Workstreams	0xc23da3ca9300571b9cf43298228353cbb3e1b4c0	MMM					false	false	false	true	false	false
+31-Gitcoin:Workstreams	0xc23da3ca9300571b9cf43298228353cbb3e1b4c0	MMM Multisig		GitCoin			false	false	false	true	false	false
 31-Gitcoin:Grants	0xc23f65b2c9869482204b2af68f1c6002983c7fc3	Grant 1232 Bullionschain		https://gitcoin.co/grants/1232/bullionschain			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0xc2569af22883c23ed4bc423051dfb8afa8808ba1	myxboxbroke		https://www.humanitydao.org/humans			false	false	false	false	false	false
 50-Tokens:ERC20	0xc25a3a3b969415c80451098fa907ec722572917f	Curve.fi DAI/USDC/USDT/sUSD	crvPlain3andSUSD	On chain	18		false	false	false	true	true	false
@@ -10432,7 +10435,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0xd44bb6663936cab1310584a277f7daa6943d4904	Winco	WCO	On chain	8		false	false	false	true	true	false
 90-Individuals:Kickback	0xd44d3947d23ec6a7908a8b777614cf24860715e9	gm		https://kickback.events/			false	false	false	false	false	false
 50-Tokens:ERC20	0xd45247c07379d94904e0a87b4481f0a1ddfa0c64	Buggyra Coin Zero	BCZERO	On chain	18	BCZERO will act as the payment platform for racing series in China, India, Europe, South America and for Sponsorships and Fans.	false	false	false	true	true	false
-31-Gitcoin:Workstreams	0xd4567069c5a1c1fc8261d8ff5c0b1d98f069cf47	FDD Workstream					false	false	false	true	false	false
+31-Gitcoin:Workstreams	0xd4567069c5a1c1fc8261d8ff5c0b1d98f069cf47	FDD Multisig		GitCoin			false	false	false	true	false	false
 50-Tokens:ERC20	0xd4568b270962f0e416a135fe89b8365907d35ece	水贝	SBTC	On chain	18		false	false	false	true	true	false
 31-Contracts:Giveth Project	0xd45f2928ffa98f1e166370b7a98e09633b5b6dc1	Blankets of Hope		Giveth Website			false	false	false	false	false	false
 50-Tokens:ERC20	0xd45f89c83689c58ec649ae62f8bb2737a1c53200	Ethereum Pro	ETHPRO	On chain	18		false	false	false	true	true	false
