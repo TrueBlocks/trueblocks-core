@@ -40,7 +40,7 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 				meta := rpcClient.GetMetaData(opts.Globals.Chain, false)
 				distanceFromHead := meta.Latest - meta.Staging
 				closeEnough := distanceFromHead <= (2 * opts.UnripeDist)
-				// TODO: BOGUS - per chain data
+				// TODO: per chain data
 				if closeEnough {
 					opts.Sleep = 13
 				}
