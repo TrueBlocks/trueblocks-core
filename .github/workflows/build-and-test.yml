@@ -12,9 +12,9 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           go-version: "^1.16"
       - name: Install prerequistes
-        run:
-          apt-get update
-          apt-get upgrade
+        run: |
+          sudo apt-get update 
+          sudo apt-get upgrade
           sudo apt-get install build-essential git cmake
           sudo apt-get install python python-dev tree jq
           sudo apt-get install libcurl3-dev clang-format
