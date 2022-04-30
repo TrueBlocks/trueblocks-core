@@ -12,11 +12,14 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           go-version: "^1.16"
       - name: Install prerequistes
-        run: sudo apt-get install build-essential git cmake python python-dev libcurl3-dev clang-format tree jq
+        run:
+          apt-get update
+          apt-get upgrade
+          sudo apt-get install build-essential git cmake
+          sudo apt-get install python python-dev tree jq
+          sudo apt-get install libcurl3-dev clang-format
       - name: Run basic golang unit tests
         run: |
-          sudo apt-get -o Acquire::Retries=3 update
-          sudo apt-get -o Acquire::Retries=3 upgrade
           mkdir -p build
           cd build
           cmake ../src
