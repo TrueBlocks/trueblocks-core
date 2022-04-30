@@ -3,9 +3,8 @@ TEST[DATE|TIME] Depth:  0
 TEST[DATE|TIME] Terse:  true
 --TIME-- Client:       Client version (testing, archive, tracing)
 --TIME-- TrueBlocks:   GHC-TrueBlocks//vers-beta--git-hash---git-ts- (eskey, no pinkey)
+--TIME-- RPC Provider: --providers-- - mainnet (1,1)
 --TIME-- Config Path:  --paths--
---TIME-- Chain (ids):  mainnet (1,1)
 --TIME-- Cache Path:   --paths--
 --TIME-- Index Path:   --paths--
---TIME-- RPC Provider: --providers--
 --TIME-- Progress:     --client--, --final--, --staging--, --unripe

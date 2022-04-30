@@ -503,9 +503,8 @@ string_q pathName(const string_q& str, const string_q& path) {
 const char* STR_TERSE_REPORT =
     "[{TIME}] ++C1++Client:++C2++       [{CLIENTVERSION}][{MODES1}]\n"
     "[{TIME}] ++C1++TrueBlocks:++C2++   [{TRUEBLOCKSVERSION}][{MODES2}]\n"
+    "[{TIME}] ++C1++RPC Provider:++C2++ [{RPCPROVIDER}] - [{CHAINDATA}]\n"
     "[{TIME}] ++C1++Config Path:++C2++  [{CONFIGPATH}]\n"
-    "[{TIME}] ++C1++Chain (ids):++C2++  [{CHAINDATA}]\n"
     "[{TIME}] ++C1++Cache Path:++C2++   [{CACHEPATH}]\n"
     "[{TIME}] ++C1++Index Path:++C2++   [{INDEXPATH}]\n"
-    "[{TIME}] ++C1++RPC Provider:++C2++ [{RPCPROVIDER}]\n"
     "[{TIME}] ++C1++Progress:++C2++     [{PROGRESS}]";
