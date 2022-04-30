@@ -58,24 +58,27 @@ func init() {
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Clean, "clean", "C", false, "clean the data (addrs to lower case, sort by addr) (hidden)")
 	namesCmd.Flags().StringVarP(&namesPkg.GetOptions().Autoname, "autoname", "A", "", "an address assumed to be a token, added automatically to names database if true (hidden)")
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Create, "create", "", false, "create a new name record (hidden)")
-	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Delete, "delete", "", false, "delete a name, but do not remove it (hidden)")
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Update, "update", "", false, "edit an existing name (hidden)")
-	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Remove, "remove", "", false, "remove a previously deleted name (hidden)")
+	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Delete, "delete", "", false, "delete a name, but do not remove it (hidden)")
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Undelete, "undelete", "", false, "undelete a previously deleted name (hidden)")
+	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Remove, "remove", "", false, "remove a previously deleted name (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {
 		namesCmd.Flags().MarkHidden("to_custom")
 		namesCmd.Flags().MarkHidden("clean")
 		namesCmd.Flags().MarkHidden("autoname")
 		namesCmd.Flags().MarkHidden("create")
-		namesCmd.Flags().MarkHidden("delete")
 		namesCmd.Flags().MarkHidden("update")
-		namesCmd.Flags().MarkHidden("remove")
+		namesCmd.Flags().MarkHidden("delete")
 		namesCmd.Flags().MarkHidden("undelete")
+		namesCmd.Flags().MarkHidden("remove")
 	}
 	globals.InitGlobals(namesCmd, &namesPkg.GetOptions().Globals)
 
 	namesCmd.SetUsageTemplate(UsageWithNotes(notesNames))
 	namesCmd.SetOut(os.Stderr)
+
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	chifraCmd.AddCommand(namesCmd)
 }

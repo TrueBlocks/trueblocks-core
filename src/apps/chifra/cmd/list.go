@@ -37,26 +37,31 @@ var shortList = "list every appearance of an address anywhere on the chain"
 var longList = `Purpose:
   List every appearance of an address anywhere on the chain.`
 
-var notesList = ``
+var notesList = `
+Notes:
+  - No other options are permitted when --silent is selected.`
 
 func init() {
 	listCmd.Flags().SortFlags = false
 
-	listCmd.Flags().BoolVarP(&listPkg.GetOptions().Count, "count", "U", false, "present only the number of records")
-	listCmd.Flags().BoolVarP(&listPkg.GetOptions().Appearances, "appearances", "p", false, "export a list of appearances (hidden)")
-	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().FirstBlock, "first_block", "F", 0, "first block to process (inclusive) (hidden)")
-	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().LastBlock, "last_block", "L", 0, "last block to process (inclusive) (hidden)")
-	listCmd.Flags().BoolVarP(&listPkg.GetOptions().Newone, "newone", "", false, "use the new scraper (hidden)")
+	listCmd.Flags().BoolVarP(&listPkg.GetOptions().Count, "count", "U", false, "display only the count of records for each monitor")
+	listCmd.Flags().BoolVarP(&listPkg.GetOptions().Appearances, "appearances", "p", false, "export each monitor's list of appearances (the default) (hidden)")
+	listCmd.Flags().BoolVarP(&listPkg.GetOptions().Silent, "silent", "", false, "freshen the monitor only (no reporting) (hidden)")
+	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().FirstBlock, "first_block", "F", 0, "first block to export (inclusive, ignored when counting or freshening) (hidden)")
+	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().LastBlock, "last_block", "L", 0, "last block to export (inclusive, ignored when counting or freshening) (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {
 		listCmd.Flags().MarkHidden("appearances")
+		listCmd.Flags().MarkHidden("silent")
 		listCmd.Flags().MarkHidden("first_block")
 		listCmd.Flags().MarkHidden("last_block")
-		listCmd.Flags().MarkHidden("newone")
 	}
 	globals.InitGlobals(listCmd, &listPkg.GetOptions().Globals)
 
 	listCmd.SetUsageTemplate(UsageWithNotes(notesList))
 	listCmd.SetOut(os.Stderr)
+
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	chifraCmd.AddCommand(listCmd)
 }

@@ -1,6 +1,6 @@
 tokens?addrs2=0xd26114cd6ee289accf82350c8d8487fedb8a0c07&parts=junk
 {
   "errors": [
-    "chifra tokens - Invalid option 'junk' for 'parts'. One or more of [name|symbol|decimals|totalSupply|version|none|all] required."
+    "The --parts option (junk) must be one of [ name | symbol | decimals | totalSupply | version | none | all ]"
   ]
 }

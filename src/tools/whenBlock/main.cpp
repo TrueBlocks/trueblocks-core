@@ -93,7 +93,7 @@ bool visitBlock(CBlock& block, void* data) {
 }
 
 extern void estBnFromTs(CBlock& block, timestamp_t ts);
-extern void estTsFromBn(CBlock& block, blknum_t bn);
+extern string_q estTsFromBn(CBlock& block, blknum_t bn);
 //--------------------------------------------------------------------------------
 void COptions::applyFilter() {
     for (auto request : requests) {
@@ -114,8 +114,7 @@ void COptions::applyFilter() {
                 if (bn != 0) {
                     // We've been asked to find a block that is in the future...estimate 14 second blocks
                     block = latest;
-                    estTsFromBn(block, bn);
-                    request.second += " (est)";
+                    request.second += estTsFromBn(block, bn);
 
                 } else {
                     block.timestamp = blockZeroTs();
@@ -142,9 +141,9 @@ void COptions::applyFilter() {
     }
 }
 
-#define TEST string_q("flat")
-// #define TEST string_q("onesec")
-// #define TEST string_q("")
+//#define TEST string_q("flat")
+#define TEST string_q("onesec")
+//#define TEST string_q("twosecs")
 double estSeconds(blknum_t bn) {
     blknum_t fake = bn - 10700000;
     uint64_t period = fake / 100000;
@@ -169,13 +168,14 @@ double estSeconds(blknum_t bn) {
     return 14 + (inc * 5);
 }
 
-void estTsFromBn(CBlock& block, blknum_t bn) {
+string_q estTsFromBn(CBlock& block, blknum_t bn) {
     if (block.blockNumber > bn)
-        return;
+        return "";
     // incoming block has 'latest' timestamp and blockNumber
     float needed = bn - block.blockNumber;
     block.timestamp = block.timestamp + timestamp_t(estSeconds(bn) * needed);
     block.blockNumber = bn;
+    return " (est " + TEST + ")";
 }
 
 void estBnFromTs(CBlock& block, timestamp_t ts) {

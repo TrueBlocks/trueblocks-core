@@ -1,4 +1,4 @@
 tomlTest2  ethNames.toml
 tests/ethNames.toml
 [version]
-current = "vers-alpha"
+current = "vers-beta"

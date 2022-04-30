@@ -12,6 +12,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
 )
 
 const chainConfigMustExist string = `
@@ -32,7 +33,7 @@ func GetPathToChainConfig(chain string) string {
 	// Our configuration files are always in ./config folder relative to top most folder
 	cfgFolder := path.Join(ret, "config/", chain) + "/"
 	if _, err := os.Stat(cfgFolder); err != nil {
-		log.Fatal(Usage(chainConfigMustExist, chain, cfgFolder))
+		log.Fatal(usage.Usage(chainConfigMustExist, chain, cfgFolder))
 	}
 	return cfgFolder
 }
@@ -106,7 +107,7 @@ func GetPathToCommands(part string) string {
 // EstablishCachePaths sets up the cache folders and subfolders. It only returns if it succeeds.
 func EstablishCachePaths(cachePath string) {
 	folders := []string{
-		"abis", "blocks", "monitors", "names", "objs", "prices",
+		"abis", "blocks", "monitors", "monitors/staging", "names", "objs", "prices",
 		"recons", "slurps", "tmp", "traces", "txs",
 	}
 

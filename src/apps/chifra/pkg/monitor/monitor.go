@@ -5,124 +5,270 @@ package monitor
 // be found in the LICENSE file.
 
 import (
-	"encoding/binary"
+	"encoding/json"
 	"errors"
 	"fmt"
-	"io"
+	"io/fs"
+	"log"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
-type MonitorLight struct {
-	Address  common.Address `json:"address"`
-	NRecords uint32         `json:"nRecords"`
-	FileSize uint32         `json:"fileSize"`
+// Header is the header of the Monitor file. Note that it's the same width as an index.AppearanceRecord
+// therefor one should not change its size
+type Header struct {
+	Magic       uint16 `json:"-"`
+	Unused      bool   `json:"-"`
+	Deleted     bool   `json:"deleted,omitempty"`
+	LastScanned uint32 `json:"lastScanned,omitempty"`
 }
 
-func NewMonitorLight(chain, addr string) MonitorLight {
-	m := NewMonitor(chain, addr)
-	return MonitorLight{Address: m.Address, NRecords: m.Count, FileSize: m.FileSize}
-}
-
+// Monitor carries information about a Monitor file and its header
 type Monitor struct {
-	Address  common.Address `json:"address"`
-	Count    uint32         `json:"count"`
-	FileSize uint32         `json:"fileSize"`
-	Path     string
-	File     *os.File
+	Address common.Address `json:"address"`
+	Staged  bool           `json:"-"`
+	Chain   string         `json:"-"`
+	ReadFp  *os.File       `json:"-"`
+	Header
 }
 
-func (mon Monitor) String() string {
-	return fmt.Sprintf("%s\t%d\t%d", mon.Address, mon.Count, mon.FileSize)
-}
+const (
+	Ext = ".mon.bin"
+)
 
-func NewMonitor(chain, addr string) Monitor {
+// NewMonitor returns a Monitor (but has not yet read in the AppearanceRecords). If 'create' is
+// sent, create the Monitor if it does not already exist
+func NewMonitor(chain, addr string, create bool) Monitor {
 	mon := new(Monitor)
+	mon.Header = Header{Magic: file.SmallMagicNumber}
 	mon.Address = common.HexToAddress(addr)
-	mon.Reload(chain)
+	mon.Chain = chain
+	mon.Reload(create)
 	return *mon
 }
 
-func (mon *Monitor) Reload(chain string) (uint32, error) {
-	mon.Path, _ = addr_2_Fn(chain, mon.Address)
-	if !file.FileExists(mon.Path) {
-		// Make sure the file exists since we've been told to monitor it
-		file.Touch(mon.Path)
+// NewStagedMonitor returns a Monitor whose path is in the 'staging' folder
+func NewStagedMonitor(chain, addr string) (Monitor, error) {
+	mon := Monitor{
+		Header:  Header{Magic: file.SmallMagicNumber},
+		Address: common.HexToAddress(addr),
+		Chain:   chain,
 	}
-	mon.FileSize = uint32(file.FileSize(mon.Path))
-	mon.Count = uint32(file.FileSize(mon.Path) / index.AppRecordWidth)
-	return mon.Count, nil
+
+	// Note, we are not yet staged, so Path returns the production folder
+	prodPath := mon.Path()
+	mon.Staged = true
+	stagedPath := mon.Path()
+
+	// either copy the existing monitor or create a new one
+	if file.FileExists(prodPath) {
+		_, err := file.Copy(stagedPath, prodPath)
+		if err != nil {
+			return mon, err
+		}
+	} else {
+		err := mon.WriteMonHeader(false, 0)
+		if err != nil {
+			return mon, err
+		}
+	}
+	return mon, nil
 }
 
+// String implements the Stringer interface
+func (mon Monitor) String() string {
+	if mon.Deleted {
+		return fmt.Sprintf("%s\t%d\t%d\t%d\t%t", hexutil.Encode(mon.Address.Bytes()), mon.Count(), file.FileSize(mon.Path()), mon.LastScanned, mon.Deleted)
+	}
+	return fmt.Sprintf("%s\t%d\t%d\t%d", hexutil.Encode(mon.Address.Bytes()), mon.Count(), file.FileSize(mon.Path()), mon.LastScanned)
+}
+
+type SimpleMonitor struct {
+	Address     string `json:"address"`
+	NRecords    int    `json:"nRecords"`
+	FileSize    int64  `json:"fileSize"`
+	LastScanned uint32 `json:"lastScanned"`
+}
+
+func NewSimpleMonitor(mon Monitor) SimpleMonitor {
+	return SimpleMonitor{
+		Address:     mon.GetAddrStr(),
+		NRecords:    int(mon.Count()),
+		FileSize:    file.FileSize(mon.Path()),
+		LastScanned: mon.Header.LastScanned,
+	}
+}
+
+// ToJSON returns a JSON object from a Monitor
+func (mon Monitor) ToJSON() string {
+	sm := NewSimpleMonitor(mon)
+	bytes, err := json.Marshal(sm)
+	if err != nil {
+		return ""
+	}
+	return string(bytes)
+}
+
+// Path returns the path to the Monitor file
+func (mon *Monitor) Path() (path string) {
+	if mon.Staged {
+		path = config.GetPathToCache(mon.Chain) + "monitors/staging/" + mon.GetAddrStr() + Ext
+	} else {
+		path = config.GetPathToCache(mon.Chain) + "monitors/" + mon.GetAddrStr() + Ext
+	}
+	return
+}
+
+// Reload loads information about the monitor such as the file's size and record count
+func (mon *Monitor) Reload(create bool) (uint32, error) {
+	if create && !file.FileExists(mon.Path()) {
+		// Make sure the file exists since we've been told to monitor it
+		err := mon.WriteMonHeader(false, 0)
+		if err != nil {
+			return 0, err
+		}
+	}
+	return mon.Count(), nil
+}
+
+func (mon *Monitor) Count() uint32 {
+	if file.FileSize(mon.Path()) == 0 {
+		return 0
+	}
+	s := uint32(file.FileSize(mon.Path()))
+	w := uint32(index.AppRecordWidth)
+	n := uint32(s / w)
+	return n - 1
+}
+
+// GetAddrStr returns the Monitor's address as a string
 func (mon *Monitor) GetAddrStr() string {
 	return strings.ToLower(mon.Address.Hex())
 }
 
-// Peek returns the appearance at the index - 1. For example, ask for PeekAt(1) to get the
-// first record in the file or Peek(Count) to get the last record.
-func (mon *Monitor) Peek(idx uint32) (app index.AppearanceRecord, err error) {
-	if idx == 0 || idx > mon.Count {
-		// one-based index for ease in caller code
-		err = errors.New(fmt.Sprintf("index out of range in Peek[%d]", idx))
-		return
+// Close closes an open Monitor if it's open, does nothing otherwise
+func (mon *Monitor) Close() {
+	if mon.ReadFp != nil {
+		mon.ReadFp.Close()
+		mon.ReadFp = nil
 	}
+}
 
-	if mon.File == nil {
-		mon.File, err = os.OpenFile(mon.Path, os.O_RDONLY, 0644)
-		if err != nil {
-			return
-		}
-	}
+// IsDeleted returns true if the monitor has been deleted but not removed
+func (mon *Monitor) IsDeleted() bool {
+	mon.ReadHeader()
+	return mon.Header.Deleted
+}
 
-	// Caller wants record 1, which stands at location 0, etc.
-	byteIndex := int64(idx-1) * index.AppRecordWidth
-	_, err = mon.File.Seek(byteIndex, io.SeekStart)
-	if err != nil {
-		return
-	}
-
-	err = binary.Read(mon.File, binary.LittleEndian, &app.BlockNumber)
-	if err != nil {
-		return
-	}
-	err = binary.Read(mon.File, binary.LittleEndian, &app.TransactionId)
+// Delete marks the file's delete flag, but does not physically remove the file
+func (mon *Monitor) Delete() (prev bool) {
+	prev = mon.Deleted
+	mon.WriteMonHeader(true, mon.LastScanned)
+	mon.Deleted = true
 	return
 }
 
-func addr_2_Fn(chain string, addr common.Address) (string, error) {
-	return config.GetPathToCache(chain) + "monitors/" + addr.Hex() + ".acct.bin", nil
+// UnDelete unmarks the file's delete flag
+func (mon *Monitor) UnDelete() (prev bool) {
+	prev = mon.Deleted
+	mon.WriteMonHeader(false, mon.LastScanned)
+	mon.Deleted = false
+	return
 }
 
-func (mon *Monitor) Append(apps []index.AppearanceRecord) (err error) {
-	if mon.File != nil {
-		mon.File.Close()
-		mon.File = nil
+// Remove removes a previously deleted file, does nothing if the file is not deleted
+func (mon *Monitor) Remove() (bool, error) {
+	if !mon.IsDeleted() {
+		return false, errors.New("cannot remove a monitor that is not deleted")
 	}
+	file.Remove(mon.Path())
+	return !file.FileExists(mon.Path()), nil
+}
 
-	f, err := os.OpenFile(mon.Path, os.O_WRONLY|os.O_APPEND, 0644)
-	if err != nil {
+func addressFromPath(path string) (string, error) {
+	_, fileName := filepath.Split(path)
+	if len(fileName) == 0 || !strings.HasPrefix(fileName, "0x") || !strings.HasSuffix(fileName, ".mon.bin") {
+		return "", errors.New("path does is not a valid monitor filename")
+	}
+	parts := strings.Split(fileName, ".")
+	return strings.ToLower(parts[0]), nil
+}
+
+// SentinalAddr is a marker to signify the end of the monitor list produced by ListMonitors
+var SentinalAddr = common.HexToAddress("0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead")
+
+// ListMonitors puts a list of Monitors into the monitorChannel. The list of monitors is built from
+// a file called addresses.tsv in the current folder or, if not present, from existing monitors
+func ListMonitors(chain, folder string, monitorChan chan<- Monitor) {
+	defer func() {
+		monitorChan <- Monitor{Address: SentinalAddr}
+	}()
+
+	info, err := os.Stat("./addresses.tsv")
+	if err == nil {
+		// If the shorthand file exists in the current folder, use it...
+		lines := file.AsciiFileToLines(info.Name())
+		logger.Log(logger.Info, "Found", len(lines), "unique addresses in ./addresses.tsv")
+		addrMap := make(map[string]bool)
+		for _, line := range lines {
+			if !strings.HasPrefix(line, "#") {
+				parts := strings.Split(line, "\t")
+				if len(parts) > 0 {
+					addr := parts[0]
+					if !addrMap[addr] && validate.IsValidAddress(parts[0]) && !validate.IsZeroAddress(parts[0]) {
+						monitorChan <- NewMonitor(chain, parts[0], true /* create */)
+					}
+					addrMap[addr] = true
+				} else {
+					log.Panic("Invalid line in file", info.Name())
+				}
+			}
+		}
 		return
 	}
-	defer f.Close()
 
-	b := make([]byte, 4)
-	for _, app := range apps {
-		binary.LittleEndian.PutUint32(b, app.BlockNumber)
-		_, err = f.Write(b)
+	// ...otherwise freshen all existing monitors
+	pp := config.GetPathToCache(chain) + folder
+	filepath.Walk(pp, func(path string, info fs.FileInfo, err error) error {
 		if err != nil {
-			return
+			return err
 		}
-		binary.LittleEndian.PutUint32(b, app.BlockNumber)
-		_, err = f.Write(b)
-		if err != nil {
-			return
+		if !info.IsDir() {
+			addr, _ := addressFromPath(path)
+			if len(addr) > 0 {
+				monitorChan <- NewMonitor(chain, addr, true /* create */)
+			}
 		}
+		return nil
+	})
+}
+
+// MoveToProduction moves a previously staged monitor to the monitors folder.
+func (mon *Monitor) MoveToProduction() error {
+	if !mon.Staged {
+		return fmt.Errorf("trying to move monitor that is not staged")
 	}
 
-	return
+	before, after, err := mon.RemoveDups()
+	if err != nil {
+		return err
+	}
+
+	if before != after {
+		msg := fmt.Sprintf("%s %d duplicates removed.", mon.GetAddrStr(), (before - after))
+		logger.Log(logger.Warning, msg)
+	}
+
+	oldPath := mon.Path()
+	mon.Staged = false
+	return os.Rename(oldPath, mon.Path())
 }

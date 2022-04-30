@@ -1,6 +1,6 @@
 monitors?
 {
   "errors": [
-    "chifra monitors - You must provide at least one Ethereum address."
+    "You must provide at least one Ethereum address for this command."
   ]
 }

@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2022-02-22T07:16:50
+date: 2022-04-05T18:06:06
 lastmod:
   - :git
   - lastmod
@@ -39,10 +39,13 @@ Arguments:
   addrs - one or more addresses (0x...) to list (required)
 
 Flags:
-  -U, --count        present only the number of records
+  -U, --count        display only the count of records for each monitor
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
   -v, --verbose      enable verbose (increase detail with --log_level)
   -h, --help         display this help screen
+
+Notes:
+  - No other options are permitted when --silent is selected.
 ```
 
 **Source code**: [`internal/list`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/list)
@@ -80,7 +83,6 @@ Flags:
   -a, --articulate          articulate transactions, traces, logs, and outputs
   -i, --cache               write transactions to the cache (see notes)
   -R, --cache_traces        write traces to the cache (see notes)
-  -y, --factory             scan for contract creations from the given address(es) and report address of those contracts
   -U, --count               only available for --appearances mode, if present, return only the number of records
   -c, --first_record uint   the first record to process
   -e, --max_records uint    the maximum number of records to process before reporting (default 250)
@@ -88,7 +90,7 @@ Flags:
       --emitter strings     for log export only, export only logs if emitted by one of these address(es)
       --topic strings       for log export only, export only logs with this topic(s)
       --asset strings       for the statements option only, export only reconciliations for this asset
-      --clean               clean (i.e. remove duplicate appearances) from all existing monitors
+  -y, --factory             scan for contract creations from the given address(es) and report address of those contracts
   -s, --staging             export transactions labeled staging (i.e. older than 28 blocks but not yet consolidated)
   -u, --unripe              export transactions labeled upripe (i.e. less than 28 blocks old)
   -F, --first_block uint    first block to process (inclusive)
@@ -126,15 +128,13 @@ Arguments:
   addrs - one or more addresses (0x...) to process (required)
 
 Flags:
-  -p, --appearances   export a list of appearances
-  -U, --count         present only the number of records
-      --clean         clean (i.e. remove duplicate appearances) from monitors
-      --delete        delete a monitor, but do not remove it
-      --undelete      undelete a previously deleted monitor
-      --remove        remove a previously deleted monitor
-  -x, --fmt string    export format, one of [none|json*|txt|csv|api]
-  -v, --verbose       enable verbose (increase detail with --log_level)
-  -h, --help          display this help screen
+      --clean        clean (i.e. remove duplicate appearances) from monitors
+      --delete       delete a monitor, but do not remove it
+      --undelete     undelete a previously deleted monitor
+      --remove       remove a previously deleted monitor
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -v, --verbose      enable verbose (increase detail with --log_level)
+  -h, --help         display this help screen
 
 Notes:
   - An address must start with '0x' and be forty-two characters long.

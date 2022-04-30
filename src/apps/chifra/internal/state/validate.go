@@ -50,7 +50,7 @@ func (opts *StateOptions) ValidateState() error {
 		} else {
 
 			if len(opts.ProxyFor) > 0 {
-				return validate.Usage("The --proxy_for option is only available with the --call option.")
+				return validate.Usage("The {0} option is only available with the {1} option.", "--proxy_for", "--call")
 			}
 
 			err := validate.ValidateAtLeastOneAddr(opts.Addrs)

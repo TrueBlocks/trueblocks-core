@@ -1,4 +1,4 @@
-chifra monitors  0x05a56e2d52c817161883f50c441c3228cfe54d9f --first_block 0 --last_block 1
+chifra export  0x05a56e2d52c817161883f50c441c3228cfe54d9f --first_block 0 --last_block 1
 TEST[DATE|TIME] Addrs:  [0x05a56e2d52c817161883f50c441c3228cfe54d9f]
 TEST[DATE|TIME] LastBlock:  1
 blockNumber	transactionIndex	date	timestamp	from	to	ether	ethGasPrice	gasUsed	hash	isError	encoding	compressedTx

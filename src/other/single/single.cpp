@@ -14,7 +14,7 @@
 
 //----------------------------------------------------------------
 int main(int argc, const char* argv[]) {
-    loadEnvironmentPaths();
+    loadEnvironmentPaths("", "", "");
     etherlib_init(quickQuitHandler);
     forEveryFileInFolder("./", visitFile, NULL);
     etherlib_cleanup();
@@ -26,7 +26,7 @@ bool visitFile(const string_q& path, void* data) {
     if (endsWith(path, '/')) {
         forEveryFileInFolder(path + "*", visitFile, data);
     } else {
-        cout << path << "\n";
+        cout << path << endl;
     }
     return true;
 }

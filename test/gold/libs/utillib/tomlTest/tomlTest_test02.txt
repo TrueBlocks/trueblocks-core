@@ -1,7 +1,7 @@
 tomlTest  test02.toml
 test02.toml
 [version]
-current = "vers-alpha"
+current = "vers-beta"
 
 name: 		NONAME
 max_width: 	10000
@@ -12,5 +12,5 @@ File contents as read
 
 File contents after write
 [version]
-current = "vers-alpha"
+current = "vers-beta"
 

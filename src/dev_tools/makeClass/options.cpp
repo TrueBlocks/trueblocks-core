@@ -133,6 +133,8 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     verifyDescriptions();
+    if (gocmds)
+        verifyGoEnumValidators();
 
     if (tsx)
         handle_tsx();

@@ -33,8 +33,6 @@ bool forEveryAppearance(const CTraverserArray& traversers, const CAppearanceArra
 
 //-----------------------------------------------------------------------
 bool CTraverser::traverse(const CAppearanceArray_mon& apps, void* data) {
-    const COptionsBase* opt = (const COptionsBase*)data;
-
     // Prepare the export...
     if (preFunc && !(*preFunc)(this, data))
         return false;
@@ -55,12 +53,10 @@ bool CTraverser::traverse(const CAppearanceArray_mon& apps, void* data) {
         trans = CTransaction();  // reset
         bool passedFilter = !filterFunc || (*filterFunc)(this, data);
         if (passedFilter) {
-            if (!opt->freshenOnly) {
-                if (dataFunc && !(*dataFunc)(this, data))
-                    return (!postFunc || (*postFunc)(this, data)) && false;
-                if (displayFunc && !(*displayFunc)(this, data))
-                    return (!postFunc || (*postFunc)(this, data)) && false;
-            }
+            if (dataFunc && !(*dataFunc)(this, data))
+                return (!postFunc || (*postFunc)(this, data)) && false;
+            if (displayFunc && !(*displayFunc)(this, data))
+                return (!postFunc || (*postFunc)(this, data)) && false;
             nProcessed += (counterFunc ? (*counterFunc)(this, data) : 1);
         }
     }

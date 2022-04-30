@@ -27,8 +27,6 @@ func convertToCommandLine(in string) string {
 		return "block_cnt"
 	case "byAcct":
 		return "by_acct"
-	case "byDate":
-		return "by_date"
 	case "cacheTraces":
 		return "cache_traces"
 	case "firstBlock":

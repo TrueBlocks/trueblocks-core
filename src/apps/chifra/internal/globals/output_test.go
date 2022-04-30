@@ -21,7 +21,7 @@ func TestToStringRecords(t *testing.T) {
 		{"second first", "second second"},
 	}
 
-	result, err := ToStringRecords(input, false)
+	result, err := ToStringRecords(input, false, false)
 	if err != nil {
 		t.Error(err)
 		return
@@ -50,7 +50,7 @@ func TestAsCsv(t *testing.T) {
 
 	var opts GlobalOptions
 	opts.Format = "csv"
-	result, err := opts.CsvFormatter(input)
+	result, err := opts.CsvFormatter(input, false)
 	if err != nil {
 		t.Error(err)
 		return

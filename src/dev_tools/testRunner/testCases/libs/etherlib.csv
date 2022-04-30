@@ -24,6 +24,8 @@ on      ,cmd  ,slow  ,null  ,etherlib/blockTest       ,02               ,n    ,v
 on      ,cmd  ,fast  ,null  ,etherlib/blockTest       ,03               ,n    ,val = 3
 on      ,cmd  ,fast  ,null  ,etherlib/blockTest       ,04               ,n    ,val = 4
 
+on      ,cmd  ,fast  ,null  ,etherlib/bloomTest       ,01               ,n    ,
+
 on      ,cmd  ,fast  ,null  ,etherlib/dataUpgradeTest ,00               ,n    ,val = 0
 on      ,cmd  ,fast  ,null  ,etherlib/dataUpgradeTest ,01               ,n    ,val = 1
 on      ,cmd  ,fast  ,null  ,etherlib/dataUpgradeTest ,02               ,n    ,val = 2

@@ -14,7 +14,7 @@
 
 //-----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
-    pinlib_init(quickQuitHandler);
+    acctlib_init(quickQuitHandler);
 
     COptions options;
     if (!options.prepareArguments(argc, argv))
@@ -45,7 +45,6 @@ int main(int argc, const char* argv[]) {
                         : GETRUNTIME_CLASS(CTransaction)->m_ClassName))))));
             // clang-format on
 
-            once = once && !options.freshenOnly;
             if (once)
                 cout << exportPreamble(expContext().fmtMap["header"], options.className);
 
@@ -119,7 +118,7 @@ int main(int argc, const char* argv[]) {
 
     options.writePerformanceData();
 
-    pinlib_cleanup();
+    acctlib_cleanup();
     return 0;
 }
 
@@ -179,7 +178,7 @@ bool prog_Log(CTraverser* trav, void* data) {
 //-----------------------------------------------------------------------
 void end_Log(CTraverser* trav, void* data) {
     const COptions* opt = (const COptions*)data;
-    if (!trav->logging || opt->freshenOnly)
+    if (!trav->logging)
         return;
 
     blknum_t prog = opt->first_record + trav->nProcessed;

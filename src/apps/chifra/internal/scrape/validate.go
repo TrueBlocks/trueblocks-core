@@ -6,8 +6,12 @@ package scrapePkg
 
 import (
 	"fmt"
+	"os"
+	"path/filepath"
+	"strings"
 
 	exportPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -36,6 +40,7 @@ func (opts *ScrapeOptions) ValidateScrape() error {
 				if err != nil {
 					return err
 				}
+
 				if arg == "monitors" || arg == "both" {
 					// phonied up just to make sure we have bloom for block zero
 					var expOpts exportPkg.ExportOptions
@@ -44,6 +49,26 @@ func (opts *ScrapeOptions) ValidateScrape() error {
 					err := expOpts.ValidateExport()
 					if err != nil {
 						return validate.Usage(err.Error())
+					}
+
+					if len(opts.Globals.File) == 0 {
+						return validate.Usage("The chifra scrape monitors command requires the --file option.")
+					}
+
+					cmdFile := opts.Globals.File
+					if !file.FileExists(cmdFile) {
+						dir, _ := os.Getwd()
+						cmdFile = filepath.Join(dir, opts.Globals.File)
+					}
+
+					if !file.FileExists(cmdFile) {
+						return validate.Usage("The command file you specified ({0}) for `chifra scrape monitors` was not found.", cmdFile)
+					} else {
+						contents := utils.AsciiFileToString(cmdFile)
+						cmds := strings.Split(contents, "\n")
+						if len(cmds) == 0 {
+							return validate.Usage("The command file you specified ({0}) was found but contained no commands.", cmdFile)
+						}
 					}
 				}
 			}

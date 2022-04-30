@@ -79,6 +79,14 @@ int copyFile(const string_q& fromIn, const string_q& toIn) {
 }
 
 //------------------------------------------------------------------
+int touchFile(const string_q& pathname) {
+    if (open(pathname.c_str(), O_WRONLY | O_CREAT | O_NOCTTY | O_NONBLOCK, 0666) >= 0)
+        if (utimensat(AT_FDCWD, pathname.c_str(), nullptr, 0) != 0)
+            return 0;
+    return -1;
+}
+
+//------------------------------------------------------------------
 // Returns a list of either files or folders, but not both.
 //------------------------------------------------------------------
 void doGlob(size_t& nStrs, string_q* strs, const string_q& maskIn, int wantFiles) {
@@ -275,6 +283,7 @@ bool establishCacheFolders(void) {
     establishFolder(cacheFolder_abis);
     establishFolder(cacheFolder_blocks);
     establishFolder(cacheFolder_monitors);
+    establishFolder(cacheFolder_monitors_staging);
     establishFolder(cacheFolder_names);
     establishFolder(cacheFolder_objs);
     establishFolder(cacheFolder_prices);

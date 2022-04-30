@@ -23,7 +23,6 @@ static const COption params[] = {
     // clang-format off
     COption("mode", "m", "enum[cmd*|api|both]", OPT_FLAG, "determine which set of tests to run"),
     COption("filter", "f", "enum[fast*|medi|slow|all]", OPT_FLAG, "determine how long it takes to run tests"),
-    COption("clean", "c", "", OPT_SWITCH, "clean working folder before running tests"),
     COption("skip", "s", "<uint64>", OPT_HIDDEN | OPT_FLAG, "run only every 'skip' test (faster)"),
     COption("report", "r", "", OPT_SWITCH, "display performance report to screen"),
     COption("", "", "", OPT_DESCRIPTION, "Run TrueBlocks' test cases with options."),
@@ -63,9 +62,6 @@ bool COptions::parseArguments(string_q& command) {
                 return false;
         } else if (arg == "-f" || arg == "--filter") {
             return flag_required("filter");
-
-        } else if (arg == "-c" || arg == "--clean") {
-            clean = true;
 
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--skip:")) {
             if (!confirmUint("skip", skip, arg))
@@ -132,7 +128,7 @@ bool COptions::parseArguments(string_q& command) {
                 tests.push_back("apps/chunkMan");
                 tests.push_back("apps/fireStorm");
                 tests.push_back("apps/chifra");
-                tests.push_back("apps/pinMan");
+                tests.push_back("apps/init");
 
             } else {
                 tests.push_back(arg);
@@ -178,7 +174,7 @@ bool COptions::parseArguments(string_q& command) {
         tests.push_back("apps/chunkMan");
         tests.push_back("apps/fireStorm");
         tests.push_back("apps/chifra");
-        tests.push_back("apps/pinMan");
+        tests.push_back("apps/init");
     }
 
     SHOW_FIELD(CTestCase, "test_id");
@@ -200,7 +196,6 @@ void COptions::Init(void) {
 
     // BEG_CODE_INIT
     filter = "";
-    clean = false;
     skip = 1;
     report = false;
     // END_CODE_INIT
@@ -222,7 +217,6 @@ COptions::COptions(void) {
 
     // BEG_ERROR_STRINGS
     // END_ERROR_STRINGS
-    establishTestMonitors();
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -231,8 +225,6 @@ COptions::~COptions(void) {
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::cleanTest(const string_q& path, const string_q& testName) {
-    if (!clean)
-        return true;
     ostringstream os;
     // clang-format off
     os << "find ../../../working/" << path << "/" << testName << "/ -maxdepth 1 -name \"" << testName << "_*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
@@ -245,7 +237,6 @@ bool COptions::cleanTest(const string_q& path, const string_q& testName) {
 //---------------------------------------------------------------------------------------------------
 void establishTestData(void) {
     cleanFolder(cacheFolder_tmp);
-    cleanFolder(chainConfigsFolder_mocked + "unchained");
 
     // TODO(tjayrush): This code is a hack to make test cases pass. We should fix the underlyign reason
     // TODO(tjayrush): these tests fail. To reproduce, delete the entire cache, comment the lines below
@@ -267,8 +258,6 @@ void establishTestData(void) {
     doCommand("chifra abis 0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc");
     doCommand("chifra abis 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11");
     doCommand("chifra abis 0x7d655c57f71464b6f83811c55d84009cd9f5221c");
-
-    doCommand("TEST_MODE=true chifra list 0x001d14804b399c6ef80e64576f657660804fec0b");
 
 #if 1
     // TODO(tjayrush): Not sure what this is about. Hard to explain,

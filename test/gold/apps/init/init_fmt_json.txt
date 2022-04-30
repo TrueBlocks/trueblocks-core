@@ -1,0 +1,3 @@
+chifra init  --fmt json
+TEST[DATE|TIME] Format:  json
+INFO[DATE|TIME] chifra init is not processed in test mode.

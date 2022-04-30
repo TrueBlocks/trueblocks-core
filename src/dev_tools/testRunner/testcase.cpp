@@ -483,31 +483,6 @@ const char* STR_DISPLAY_TESTCASE = "";
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------------------------
-void establishTestMonitors(void) {
-    if (folderExists(chainConfigsFolder_mocked + "monitors/"))
-        return;
-
-    string_q gzipFile = chainConfigsFolder_mocked + "monitors.tar.gz";
-    if (!fileExists(gzipFile)) {
-        LOG_WARN("Cannot find test monitors file: ", gzipFile);
-        return;
-    }
-
-    const char* STR_UNZIP_CMD =
-        "cd \"[{PATH}]\" && "
-        "rm -fR mocks && "
-        "rm -fR monitors && "
-        "gunzip -k *.gz && "
-        "tar -xvf monitors.tar 2>/dev/null && rm -f monitors.tar && "
-        "tar -xvf mocks.tar 2>/dev/null && rm -f mocks.tar";
-
-    string_q cmd = substitute(STR_UNZIP_CMD, "[{PATH}]", chainConfigsFolder_mocked);
-    // LOG_INFO(cmd);
-    // clang-format off
-    if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
-    // clang-format on
-}
-
 CStringArray commands = {"COPYFILE|cp", "RMFILE|rm", "MOVEFILE|mv", "TOUCHFILE|touch", "RESET"};
 //-----------------------------------------------------------------------
 bool prepareBuiltIn(string_q& options) {
@@ -517,9 +492,7 @@ bool prepareBuiltIn(string_q& options) {
             bool debug = false;
             ostringstream os;
             if (match == "RESET") {
-                establishTestMonitors();
                 cleanFolder(cacheFolder_tmp);
-                cleanFolder(chainConfigsFolder_mocked + "unchained");
                 options = "";
                 if (debug)
                     os << "Cleanup" << endl;

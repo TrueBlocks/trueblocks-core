@@ -88,8 +88,10 @@ class CMigrationChecker {
     size_t nSeen;
     size_t nMigrated;
     size_t nSkipped;
+    string_q which;
 
-    CMigrationChecker(const string_q& p) : needs(false), path(p), msg(""), nSeen(0), nMigrated(0), nSkipped(0) {
+    CMigrationChecker(const string_q& p, const string_q& w)
+        : needs(false), path(p), msg(""), nSeen(0), nMigrated(0), nSkipped(0), which(w) {
     }
 
     CMigrationChecker(const CMigrationChecker& mig) {
@@ -121,3 +123,5 @@ class CMigrationChecker {
     CMigrationChecker(void) = delete;
     CMigrationChecker& operator=(const CMigrationChecker&) = delete;
 };
+
+bool needsMigration(const string_q& path, void* data);

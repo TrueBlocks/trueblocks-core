@@ -69,12 +69,6 @@ string_q str_2_Ether(const string_q& _value, uint64_t decimals) {
 }
 
 //--------------------------------------------------------------------------------
-string_q byte_2_Bits(uint8_t ch) {
-    bitset<8> bits(ch);
-    return bits.to_string();
-}
-
-//--------------------------------------------------------------------------------
 bool str_2_Bool(const string_q& str) {
     return static_cast<bool>(containsI(str, "true") || str_2_Int(str) != 0);
 }

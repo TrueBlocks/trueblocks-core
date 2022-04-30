@@ -31,7 +31,6 @@ class COptions : public COptionsBase {
   public:
     // BEG_CODE_DECLARE
     string_q filter;
-    bool clean;
     uint64_t skip;
     bool report;
     // END_CODE_DECLARE

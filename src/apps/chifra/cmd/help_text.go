@@ -29,7 +29,6 @@ var helpText = `  Accounts:
     scrape        scan the chain and update (and optionally pin) the TrueBlocks index of appearances
     chunks        manage and investigate chunks and bloom filters
     init          initialize the TrueBlocks system by downloading from IPFS
-    pins          manage pinned index of appearances and associated blooms
   Other:
     quotes        update or display Ethereum price data, this tool has been deprecated
     explore       open a local or remote explorer for one or more addresses, blocks, or transactions
@@ -40,4 +39,4 @@ var helpText = `  Accounts:
   Use "chifra [command] --help" for more information about a command.
 `
 
-var versionText = "GHC-TrueBlocks//0.27.0-alpha"
+var versionText = "GHC-TrueBlocks//0.30.0-beta"

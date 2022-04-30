@@ -12,18 +12,18 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 )
 
-func (opts *ListOptions) HandleListCount() error {
-	var result []monitor.MonitorLight
-	for _, addr := range opts.Addrs {
-		m := monitor.NewMonitorLight(opts.Globals.Chain, addr)
-		result = append(result, m)
+func (opts *ListOptions) HandleListCount(monitorArray []monitor.Monitor) error {
+	results := make([]monitor.SimpleMonitor, 0, len(monitorArray))
+	for _, mon := range monitorArray {
+		results = append(results, monitor.NewSimpleMonitor(mon))
 	}
 
+	// TODO: Fix export without arrays
 	if opts.Globals.ApiMode {
-		opts.Globals.Respond(opts.Globals.Writer, http.StatusOK, result)
+		opts.Globals.Respond(opts.Globals.Writer, http.StatusOK, results)
 
 	} else {
-		err := opts.Globals.Output(os.Stdout, opts.Globals.Format, result)
+		err := opts.Globals.Output(os.Stdout, opts.Globals.Format, results)
 		if err != nil {
 			logger.Log(logger.Error, err)
 		}

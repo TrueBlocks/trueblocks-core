@@ -23,6 +23,33 @@
 // END_ERROR_DEFINES
 
 typedef map<CAppearance_mon, CAddressArray> appAddrMap;
+typedef struct CReverseAppMapEntry {
+  public:
+    uint32_t n;
+    uint32_t blk;
+    uint32_t tx;
+} CReverseAppMapEntry;
+
+//---------------------------------------------------------------------------
+class CIndexArchiveWithNeighborMaps : public CIndexArchive {
+  public:
+    CBlockRangeArray reverseAddrRanges;
+    CReverseAppMapEntry* reverseAppMap{nullptr};
+    explicit CIndexArchiveWithNeighborMaps(bool mode) : CIndexArchive(mode) {
+        reverseAppMap = nullptr;
+    }
+    ~CIndexArchiveWithNeighborMaps();
+    bool LoadReverseMaps(const blkrange_t& range);
+
+  private:
+    void clean(void) {
+        if (reverseAppMap) {
+            delete[] reverseAppMap;
+            reverseAppMap = nullptr;
+        }
+        reverseAddrRanges.clear();
+    }
+};
 
 //-----------------------------------------------------------------------
 class COptions : public CAbiOptions {
@@ -39,24 +66,19 @@ class COptions : public CAbiOptions {
     bool articulate;
     bool cache;
     bool cache_traces;
-    bool factory;
     bool count;
     blknum_t first_record;
     blknum_t max_records;
     bool relevant;
-    bool clean;
-    bool staging;
-    bool unripe;
+    bool factory;
     string_q load;
     bool reversed;
-    bool by_date;
     bool skip_ddos;
     uint64_t max_traces;
     // END_CODE_DECLARE
 
     CAppearanceArray_mon monApps;
     CMonitorArray allMonitors;
-    CMonitorArray possibles;
     const CMonitor* curMonitor;
     CAccountName accountedFor;
 
@@ -82,7 +104,6 @@ class COptions : public CAbiOptions {
     CScrapeStatistics stats;
 
     blkrange_t fileRange;
-    blkrange_t needRange;
     blkrange_t exportRange;
 
     string_q className;
@@ -99,24 +120,17 @@ class COptions : public CAbiOptions {
 
     bool handle_traversers(void);
 
-    bool process_clean(void);
-    bool process_rm(const CAddressArray& addrs);
-    bool process_freshen(void);
-
-    bool visitBinaryFile(const string_q& path, void* data);
     void addNeighbor(CAddressUintMap& map, const address_t& addr);
     void markNeighbors(const CTransaction& trans);
     bool articulateAll(CTransaction& trans);
     bool reportNeighbors(void);
 
-    bool establishIndexChunk(const string_q& fileName);
     bool isEmitter(const address_t& test) const;
     bool wasEmittedBy(const address_t& test) const;
     bool isRelevant(const CLogEntry& log) const;
 
     void writePerformanceData(void);
 
-    bool queryFlatFile(const string_q& path, bool sorted, bool saveTo, CAppearanceArray_mon& items);
     bool process_reconciliation(CTraverser* trav);
     bool isReconciled(CTraverser* trav) const;
     void cacheIfReconciled(CTraverser* trav, bool isNew) const;
@@ -129,15 +143,12 @@ class COptions : public CAbiOptions {
 
     // Used as temporary data to count neighbor traversals
     size_t neighborCount{0};
-    CIndexArchive* theIndex{nullptr};
+    CIndexArchiveWithNeighborMaps* theIndex{nullptr};
     bool showAddrsInTx(CTraverser* trav, const blkrange_t& range, const CAppearance_mon& app);
 };
 
 //--------------------------------------------------------------------------------
 extern bool visitOnLoad(CAppearance_mon& app, void* data);
-extern bool visitChunkToFreshenFinal(const string_q& path, void* data);
-extern bool visitToFreshen_fromStaging(const string_q& path, void* data);
-extern bool visitUnripeIndexFiles(const string_q& path, void* data);
 extern bool isTokenFunc(const string_q& input);
 extern bool isTokenTopic(const CLogEntry* log);
 extern bool fourByteFilter(const string_q& input, const COptions* opt);

@@ -83,9 +83,6 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (Mocked(""))
-        return false;
-
     if (sol) {
         for (auto s : addrs) {
             // We've already check that the file exists

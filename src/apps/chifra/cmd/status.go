@@ -66,5 +66,8 @@ One of [ test | all ]`)
 	statusCmd.SetUsageTemplate(UsageWithNotes(notesStatus))
 	statusCmd.SetOut(os.Stderr)
 
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	chifraCmd.AddCommand(statusCmd)
 }

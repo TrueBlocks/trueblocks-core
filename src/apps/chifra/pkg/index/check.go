@@ -28,7 +28,7 @@ func validateFileSize(file *os.File) error {
 	return nil
 }
 
-func validateStructure(chunk IndexChunk) error {
+func validateStructure(chunk ChunkData) error {
 	// Try to read first address
 	_, err := chunk.File.Seek(chunk.AddrTableStart, 0)
 	if err != nil {

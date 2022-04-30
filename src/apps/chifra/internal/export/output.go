@@ -26,6 +26,11 @@ func RunExport(cmd *cobra.Command, args []string) error {
 	}
 
 	// EXISTING_CODE
+	err = opts.FreshenMonitorsForExport()
+	if err != nil {
+		return err
+	}
+
 	return opts.Globals.PassItOn("acctExport", opts.ToCmdLine())
 	// EXISTING_CODE
 }
@@ -40,6 +45,12 @@ func ServeExport(w http.ResponseWriter, r *http.Request) bool {
 	}
 
 	// EXISTING_CODE
+	err = opts.FreshenMonitorsForExport()
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		return true
+	}
+
 	// opts.Globals.PassItOn("acctExport", opts.ToCmdLine())
 	return false
 	// EXISTING_CODE

@@ -4,7 +4,7 @@ status?modes=index&firstBlock=100
     {
       "clientVersion": "Client version",
       "clientIds": "chainId: 1 networkId: 1",
-      "trueblocksVersion": "GHC-TrueBlocks//vers-alpha--git-hash---git-ts-",
+      "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-",
       "rpcProvider": "--providers--",
       "configPath": "--paths--",
       "cachePath": "--paths--",

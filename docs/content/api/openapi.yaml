@@ -7,7 +7,7 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 0.27.0-beta
+  version: 0.30.0-beta
   description: >
 
     A REST layer over the TrueBlocks application. With `chifra serve`, you can
@@ -99,7 +99,7 @@ paths:
               type: string
               format: address
         - name: count
-          description: present only the number of records
+          description: display only the count of records for each monitor
           required: false
           style: form
           in: query
@@ -107,7 +107,15 @@ paths:
           schema:
             type: boolean
         - name: appearances
-          description: export a list of appearances
+          description: export each monitor's list of appearances (the default)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: silent
+          description: freshen the monitor only (no reporting)
           required: false
           style: form
           in: query
@@ -341,14 +349,6 @@ paths:
             items:
               type: string
               format: address
-        - name: clean
-          description: clean (i.e. remove duplicate appearances) from all existing monitors
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: staging
           description: >
             export transactions labeled staging (i.e. older than 28 blocks but not yet consolidated)
@@ -455,22 +455,6 @@ paths:
             items:
               type: string
               format: address
-        - name: appearances
-          description: export a list of appearances
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: count
-          description: present only the number of records
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: clean
           description: clean (i.e. remove duplicate appearances) from monitors
           required: false
@@ -1593,7 +1577,7 @@ paths:
       operationId: admin-chunks
       parameters:
         - name: blocks
-          description: an optional list of blocks to process
+          description: optional list of blocks to intersect with chunk ranges
           required: false
           style: form
           in: query
@@ -1603,14 +1587,6 @@ paths:
             items:
               type: string
               format: blknum
-        - name: check
-          description: check the validity of the chunk or bloom
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: extract
           description: show some or all of the contents of the chunk or bloom filters
           required: false
@@ -1620,28 +1596,13 @@ paths:
           schema:
             type: string
             enum:
-              - header
-              - addr_table
-              - app_table
-              - chunks
+              - stats
+              - pins
               - blooms
-        - name: stats
-          description: for the --list option only, display statistics about each chunk or bloom
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: save
-          description: >
-            for the --extract option only, save the entire chunk to a similarly named file as well as display
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
+              - index
+              - header
+              - addresses
+              - appearances
       responses:
         "200":
           description: returns the requested data
@@ -1688,89 +1649,6 @@ paths:
                       oneOf:
                         - $ref: "#/components/schemas/pinnedChunk"
                         - $ref: "#/components/schemas/manifest"
-        "400":
-          description: bad input parameter
-  /pins:
-    get:
-      tags:
-        - Admin
-      summary: Manage pins
-      description: Manage pinned index of appearances and associated blooms.
-      operationId: admin-pins
-      parameters:
-        - name: list
-          description: list the bloom and index hashes from local cache or IPFS
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: init
-          description: download the blooms or index chunks from IPFS
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: all
-          description: in addition to Bloom filters, download full index chunks
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: share
-          description: >
-            share downloaded data by pinning it to IPFS (the IPFS daemon must be running)
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: sleep
-          description: throttle requests by this many seconds
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: number
-      responses:
-        "200":
-          description: returns the requested data
-          content:
-            application/json:
-              schema:
-                properties:
-                  data:
-                    description: the IPFS hashes of the index chunk and its associated Bloom filter for the given block range
-                    type: array
-                    items:
-                      oneOf:
-                        - $ref: "#/components/schemas/pinnedChunk"
-                        - $ref: "#/components/schemas/manifest"
-                example:
-                  {
-                    "data": [
-                      {
-                        "fileName": "000000000-000000000",
-                        "bloomHash": "QmbCQaYmfTR3sGNAvASoVjPynaY9UD31Hfxv7dGtzsptkb",
-                        "indexHash": "QmPmfSrYT5HDpfjj4uYSycaFECo9EqPSuADQ3YPbVp3yu4"
-                      },
-                      {
-                        "fileName": "000000001-000590501",
-                        "bloomHash": "QmSGuSQHgK4S9yiZQ3dKrykQVpLTmdFettY9sAwa537gPL",
-                        "indexHash": "QmSaoxc3XA9DEaA3inhLW5ZKsk5C5LWvowSXpHwVHsMjQp"
-                      },
-                      {
-                        "...": "..."
-                      }
-                    ]
-                  }
         "400":
           description: bad input parameter
   /quotes:

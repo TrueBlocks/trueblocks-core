@@ -61,7 +61,7 @@ string_q CPriceSource::getPathToPriceDb(string_q& source) const {
 
 extern size_t dotDot(char* ptr, size_t size, size_t nmemb, void* userdata);
 //---------------------------------------------------------------------------
-bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes, bool freshen, string_q& message) {
+bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes, bool update, string_q& message) {
     string_q theSource;
     string_q cacheFile = source.getPathToPriceDb(theSource);
 
@@ -95,7 +95,7 @@ bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes, bool fr
         }
 
     } else {
-        freshen = true;
+        update = true;
         if (verbose)
             cerr << "Price database not found. Creating it.\n";
     }
@@ -113,7 +113,7 @@ bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes, bool fr
     cerr.flush();
 #endif
     bool reportAtEnd = verbose;
-    if (nextRead > now && !freshen) {
+    if (nextRead > now && !update) {
         if (!isTestMode())
             msg = "Price database is up-to-date as of ";
         reportAtEnd = false;
@@ -122,7 +122,7 @@ bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes, bool fr
         if (!isTestMode())
             msg = "Price database has been updated to ";
         time_q prevLast = lastRead;
-        if (freshen) {
+        if (update) {
             if (verbose < 2) {
                 if (!isTestMode())
                     cerr << "Retrieving price history data...";
@@ -192,7 +192,7 @@ bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes, bool fr
         }
 
         // Write the database to the cache
-        if (prevLast != lastRead && freshen) {
+        if (prevLast != lastRead && update) {
             CArchive priceCache(WRITING_ARCHIVE);
             if (!priceCache.Lock(cacheFile, modeWriteCreate, LOCK_WAIT)) {
                 message = "Could not open cache file for writing: '" + cacheFile + "'";

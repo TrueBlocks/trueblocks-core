@@ -1,7 +1,7 @@
 tomlTest2  ethslurp.toml
 tests/ethslurp.toml
 [version]
-current = "vers-alpha"
+current = "vers-beta"
 
 [settings]
 apiProvider = "EtherScan"

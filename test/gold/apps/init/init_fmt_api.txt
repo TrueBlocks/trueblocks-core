@@ -1,0 +1,3 @@
+chifra init  --fmt api
+TEST[DATE|TIME] Format:  api
+INFO[DATE|TIME] chifra init is not processed in test mode.

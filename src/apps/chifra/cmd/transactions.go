@@ -56,5 +56,8 @@ func init() {
 	transactionsCmd.SetUsageTemplate(UsageWithNotes(notesTransactions))
 	transactionsCmd.SetOut(os.Stderr)
 
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	chifraCmd.AddCommand(transactionsCmd)
 }

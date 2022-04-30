@@ -136,12 +136,6 @@ bool COptions::parseArguments(string_q& command) {
         return usage("Invalid migration: " + migrate);
     }
 
-    bool cs = false;
-    for (auto m : modes)
-        cs |= (m == "caches");
-    if (Mocked(cs ? "caches" : "status"))
-        return false;
-
     if (!loadNames())
         return usage("Could not load names database.");
 

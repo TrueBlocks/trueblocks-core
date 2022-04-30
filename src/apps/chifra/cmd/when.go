@@ -62,5 +62,8 @@ func init() {
 	whenCmd.SetUsageTemplate(UsageWithNotes(notesWhen))
 	whenCmd.SetOut(os.Stderr)
 
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	chifraCmd.AddCommand(whenCmd)
 }

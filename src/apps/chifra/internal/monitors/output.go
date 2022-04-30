@@ -11,6 +11,7 @@ package monitorsPkg
 // EXISTING_CODE
 import (
 	"net/http"
+	"os"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
@@ -28,7 +29,11 @@ func RunMonitors(cmd *cobra.Command, args []string) error {
 	}
 
 	// EXISTING_CODE
-	return opts.Globals.PassItOn("acctExport", opts.ToCmdLine())
+	if opts.Clean {
+		return opts.HandleClean()
+	}
+
+	return opts.HandleCrudCommands(os.Stdout)
 	// EXISTING_CODE
 }
 
@@ -42,6 +47,14 @@ func ServeMonitors(w http.ResponseWriter, r *http.Request) bool {
 	}
 
 	// EXISTING_CODE
+	if opts.Clean {
+		err = opts.HandleClean()
+		if err != nil {
+			opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		}
+		return true
+	}
+
 	if !opts.Globals.TestMode { // our test harness does not use DELETE
 		delOptions := "--delete, --undelete, or --remove"
 		if r.Method == "DELETE" {
@@ -59,8 +72,11 @@ func ServeMonitors(w http.ResponseWriter, r *http.Request) bool {
 			return true
 		}
 	}
-	// opts.Globals.PassItOn("acctExport --appearances", opts.ToCmdLine())
-	return false
+	err = opts.HandleCrudCommands(w)
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+	}
+	return true
 	// EXISTING_CODE
 }
 

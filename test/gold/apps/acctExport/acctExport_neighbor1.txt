@@ -14,4 +14,3 @@ blockNumber	transactionIndex	neighbor	reason
 1429008	0	0x931f12be72a1d106408af5ced7e1b7af0bc864ae	from
 1429008	0	0xbb9bc244d798123fde783fcc1c72d3bb8c189413	to
 1429008	0	0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98	log_0_topic_2
-TIME ~ CLOCK - <INFO>  :    Done...

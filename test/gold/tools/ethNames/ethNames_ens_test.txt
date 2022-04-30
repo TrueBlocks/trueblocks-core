@@ -1,4 +1,4 @@
 chifra names  wildmolasses.eth
-TEST[DATE|TIME] Terms:  [0x69E271483C38ED4902a55C3Ea8AAb9e7cc8617E5]
+TEST[DATE|TIME] Terms:  [0x69e271483c38ed4902a55c3ea8aab9e7cc8617e5]
 tags	address	name	symbol	decimals
 90-Individuals:Gitcoin Grants	0x69e271483c38ed4902a55c3ea8aab9e7cc8617e5	Name 0x69e27148

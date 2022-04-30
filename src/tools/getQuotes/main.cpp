@@ -28,7 +28,7 @@ int main(int argc, const char* argv[]) {
 
         string_q message;
         CPriceQuoteArray quotes;
-        if (!loadPriceData(options.source, quotes, options.freshenOnly, message) && quotes.size())
+        if (!loadPriceData(options.source, quotes, options.update, message) && quotes.size())
             return options.usage(message);
 
         if (once)

@@ -6,14 +6,30 @@ package cache
 
 import (
 	"path"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
 
-// Path helps to keep track of cache paths and extensions depending on
+type CacheType uint
+
+const (
+	None CacheType = iota
+	Index_Bloom
+	Index_Final
+	Index_Staging
+	Index_Ripe
+	Index_Unripe
+	Cache_Block
+	Cache_Tx
+	Cache_Trace
+	Cache_Monitor
+	Cache_Neighbor
+	Cache_Recon
+)
+
+// CachePath helps to keep track of cache paths and extensions depending on
 // chunk type
-type Path struct {
+type CachePath struct {
 	Type      CacheType
 	RootPath  string
 	Subdir    string
@@ -21,56 +37,51 @@ type Path struct {
 }
 
 var cacheFolders = map[CacheType]string{
-	BloomChunk:    "blooms/",
-	IndexChunk:    "finalized/",
-	BlockCache:    "blocks/",
-	TxCache:       "txs/",
-	TraceCache:    "traces/",
-	MonitorCache:  "monitors/",
-	NeighborCache: "neighbors/",
-	ReconCache:    "recons/",
+	None:           "",
+	Index_Bloom:    "blooms/",
+	Index_Final:    "finalized/",
+	Index_Staging:  "staging/",
+	Index_Ripe:     "ripe/",
+	Index_Unripe:   "unripe/",
+	Cache_Block:    "blocks/",
+	Cache_Tx:       "txs/",
+	Cache_Trace:    "traces/",
+	Cache_Monitor:  "monitors/",
+	Cache_Neighbor: "neighbors/",
+	Cache_Recon:    "recons/",
 }
 
 // New sets correct values of Subdir and Extension properties based on cacheType
-func (cl *Path) New(chain string, cacheType CacheType) {
-	indexPath := config.GetPathToIndex(chain)
-	cachePath := config.GetPathToCache(chain)
+func NewCachePath(chain string, cacheType CacheType) CachePath {
+	var ret CachePath
 
-	if cacheType == BloomChunk || cacheType == IndexChunk {
-		cl.RootPath = indexPath
+	if cacheType == Index_Bloom || cacheType == Index_Final || cacheType == Index_Staging || cacheType == Index_Ripe || cacheType == Index_Unripe {
+		ret.RootPath = config.GetPathToIndex(chain)
 	} else {
-		cl.RootPath = cachePath
+		ret.RootPath = config.GetPathToCache(chain)
 	}
 
-	cl.Extension = ".bin"
-	if cacheType == BloomChunk {
-		cl.Extension = ".bloom"
+	ret.Extension = ".bin"
+	if cacheType == Index_Bloom {
+		ret.Extension = ".bloom"
+	} else if cacheType == None {
+		ret.Extension = ""
 	}
-	cl.Subdir = cacheFolders[cacheType]
-	cl.Type = cacheType
+	ret.Subdir = cacheFolders[cacheType]
+	ret.Type = cacheType
+	return ret
 }
 
 // GetFullPath builds a full path from the Path type
-func (cl *Path) GetFullPath(name string) string {
-	switch cl.Type {
-	case IndexChunk:
-		fallthrough
-	case BloomChunk:
-		fallthrough
-	case MonitorCache: // TODO: I don't love this. It looks weird
-		return path.Join(cl.RootPath, cl.Subdir, name+cl.Extension)
-	default:
+func (cl *CachePath) GetFullPath(name string) string {
+	if name == "" {
 		return path.Join(cl.RootPath, cl.Subdir)
 	}
-}
-
-// RemoveExtension removes Extension (".bloom" or ".bin") from fileName
-func (cl *Path) RemoveExtension(fileName string) string {
-	return strings.Replace(fileName, cl.Extension, "", 1)
+	return path.Join(cl.RootPath, cl.Subdir, name+cl.Extension)
 }
 
 // String turns cachePath data (RootPath and Subdir) into a path
 // and returns it as a string
-func (cl *Path) String() string {
+func (cl *CachePath) String() string {
 	return path.Join(cl.RootPath, cl.Subdir)
 }
