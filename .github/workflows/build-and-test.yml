@@ -15,7 +15,8 @@ jobs:
         run: sudo apt-get install build-essential git cmake python python-dev libcurl3-dev clang-format tree jq
       - name: Run basic golang unit tests
         run: |
-          apt update && apt upgrade
+          sudo apt-get -o Acquire::Retries=3 update
+          sudo apt-get -o Acquire::Retries=3 upgrade
           mkdir -p build
           cd build
           cmake ../src
