@@ -12,6 +12,13 @@ import (
 	ensGo "github.com/wealdtech/go-ens/v3"
 )
 
+func lowerIfHex(addr string) string {
+	if !strings.HasPrefix(addr, "0x") {
+		return addr
+	}
+	return strings.ToLower(addr)
+}
+
 func ConvertEns(chain string, addrsIn []string) []string {
 	provider := config.GetRpcProvider("mainnet")
 	ec := rpcClient.GetClient(provider)
@@ -26,14 +33,14 @@ func ConvertEns(chain string, addrsIn []string) []string {
 				term = val.Hex()
 			}
 		}
-		out = append(out, term)
+		out = append(out, lowerIfHex(term))
 	}
 	return out
 }
 
 func ConvertOneEns(chain string, in string) string {
 	if !strings.Contains(in, ".eth") {
-		return in
+		return lowerIfHex(in)
 	}
 
 	provider := config.GetRpcProvider(chain)
@@ -42,8 +49,8 @@ func ConvertOneEns(chain string, in string) string {
 
 	val, err := ensGo.Resolve(ec, in)
 	if err == nil && len(val) > 0 {
-		return val.Hex()
+		return lowerIfHex(val.Hex())
 	}
 
-	return in
+	return lowerIfHex(in)
 }

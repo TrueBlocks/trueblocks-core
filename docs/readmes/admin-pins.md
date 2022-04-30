@@ -10,14 +10,11 @@ Usage:
   chifra pins [flags]
 
 Flags:
-  -l, --list          list the bloom and index hashes from local cache or IPFS
-  -i, --init          download the blooms or index chunks from IPFS
-  -a, --all           in addition to Bloom filters, download full index chunks
-  -S, --share         share downloaded data by pinning it to IPFS (the IPFS daemon must be running)
-  -s, --sleep float   throttle requests by this many seconds (default 0.25)
-  -x, --fmt string    export format, one of [none|json*|txt|csv|api]
-  -v, --verbose       enable verbose (increase detail with --log_level)
-  -h, --help          display this help screen
+  -i, --init         download the blooms or index chunks from IPFS
+  -a, --all          in addition to Bloom filters, download full index chunks
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -v, --verbose      enable verbose (increase detail with --log_level)
+  -h, --help         display this help screen
 
 Notes:
   - One of --list or --init is required.

@@ -1,2 +1,2 @@
-builtInTest  --verbose --fmt json --ether --mocked --wei --dollars --nocolor --noop --output file --raw --version
-builtInTest GHC-TrueBlocks//vers-alpha--git-hash---git-ts-
+builtInTest  --verbose --fmt json --ether --wei --dollars --nocolor --noop --output file --raw --version
+builtInTest GHC-TrueBlocks//vers-beta--git-hash---git-ts-

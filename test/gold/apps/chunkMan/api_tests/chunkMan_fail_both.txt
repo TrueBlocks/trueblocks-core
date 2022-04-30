@@ -1,0 +1,6 @@
+chunks?extract=pins&check
+{
+  "errors": [
+    "Please choose only one of --extract or --check."
+  ]
+}

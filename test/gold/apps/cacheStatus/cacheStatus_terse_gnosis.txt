@@ -4,9 +4,8 @@ TEST[DATE|TIME] Terse:  true
 TEST[DATE|TIME] Chain:  gnosis
 --TIME-- Client:       Client version (testing, archive, tracing)
 --TIME-- TrueBlocks:   GHC-TrueBlocks//vers-alpha--git-hash---git-ts- (eskey, no pinkey)
+--TIME-- RPC Provider: --providers-- - gnosis (100,100)
 --TIME-- Config Path:  --paths--
---TIME-- Chain (ids):  gnosis (100,100)
 --TIME-- Cache Path:   --paths--
 --TIME-- Index Path:   --paths--
---TIME-- RPC Provider: --providers--
 --TIME-- Progress:     --client--, --final--, --staging--, --unripe

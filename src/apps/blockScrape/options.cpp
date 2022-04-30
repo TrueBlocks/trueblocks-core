@@ -98,9 +98,6 @@ bool COptions::parseArguments(string_q& command) {
         return handle_reset();
     }
 
-    if (Mocked(""))
-        return false;
-
     if (pin && !getApiKey(lic)) {
         if (!isTestMode()) {
             ostringstream os;
@@ -232,9 +229,8 @@ COptions::COptions(void) {
     // END_ERROR_STRINGS
 
     // Establish the folders that hold the data...
-    establishMonitorFolders();
+    establishCacheFolders();
     establishIndexFolders();
-    establishFolder(cacheFolder_tmp);
 }
 
 //--------------------------------------------------------------------------------

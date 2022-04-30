@@ -32,7 +32,9 @@ func IsBlockHash(str string) bool {
 	return true
 }
 
-func IsBlockNumber(str string) bool {
+type blockNum = uint32
+
+func IsBlockNumber(str string) (bool, blockNum) {
 	base := 10
 	source := str
 
@@ -41,9 +43,27 @@ func IsBlockNumber(str string) bool {
 		source = str[2:]
 	}
 
-	_, err := strconv.ParseUint(source, base, 64)
+	value, err := strconv.ParseUint(source, base, 32)
+	if err != nil {
+		return false, 0
+	}
 
-	return err == nil
+	return true, blockNum(value)
+}
+
+func IsBlockNumberList(strs []string) (bool, []blockNum) {
+	result := make([]blockNum, len(strs))
+
+	for index, stringValue := range strs {
+		check, value := IsBlockNumber(stringValue)
+		if !check {
+			return false, nil
+		}
+
+		result[index] = value
+	}
+
+	return true, result
 }
 
 func IsDateTimeString(str string) bool {
@@ -77,7 +97,7 @@ func IsRange(chain, str string) (bool, error) {
 
 	if err == nil {
 		if bRange.Start.Special == "latest" {
-			return false, errors.New("Cannot start range with 'latest'")
+			return false, errors.New("cannot start range with 'latest'")
 		}
 
 		if bRange.StartType == blockRange.BlockRangeSpecial &&

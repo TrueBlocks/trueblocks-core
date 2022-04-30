@@ -44,7 +44,8 @@ func IsTransBlockNumAndId(str string) bool {
 		return false
 	}
 
-	return IsBlockNumber(parts[0]) && IsTransIndex(parts[1])
+	validBlockNumber, _ := IsBlockNumber(parts[0])
+	return validBlockNumber && IsTransIndex(parts[1])
 }
 
 func IsTransBlockHashAndId(str string) bool {

@@ -15,6 +15,21 @@ func (opts *MonitorsOptions) ValidateMonitors() error {
 		return opts.BadFlag
 	}
 
+	// We validate some of the simpler curd commands here and the rest in HandleCrudCommands
+	if opts.Undelete {
+		if opts.Delete || opts.Remove {
+			return validate.Usage("The --undelete option may not be used with --delete or --remove.")
+		}
+	}
+
+	if !opts.Clean && len(opts.Addrs) == 0 {
+		return validate.Usage("You must provide at least one Ethereum address for this command.")
+	}
+
+	if !opts.Clean && !opts.Delete && !opts.Undelete && !opts.Remove {
+		return validate.Usage("Please provide either --clean or one of the CRUD commands.")
+	}
+
 	if !opts.Globals.ApiMode && !opts.Clean {
 		if len(opts.Globals.File) > 0 {
 			// Do nothing

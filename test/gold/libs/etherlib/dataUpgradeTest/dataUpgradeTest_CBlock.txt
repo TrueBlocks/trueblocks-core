@@ -81,7 +81,7 @@ name                	1017	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 date                	1018	0	33554437	T_DATE TS_DATE
 age                 	1019	0	33554437	T_DATE TS_DATE
 {
-  "schema": 27000,
+  "schema": 30000,
   "deleted": false,
   "showing": true,
   "cname": "Block",

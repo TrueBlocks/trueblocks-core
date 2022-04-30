@@ -35,7 +35,7 @@ params.size: 0
         "_value": "8263636363636363636"
       }
     },
-    "compressedTrace": "transferFrom(0xbb9bc244d798123fde783fcc1c72d3bb8c189413 /*_from*/, 0x713fa27cb26b5902ea398b04d21e6018bba3a2f1 /*_to*/, 8263636363636363636 /*_value*/); "
+    "compressedTrace": "{name:transferFrom|inputs:{_from:0xbb9bc244d798123fde783fcc1c72d3bb8c189413|_to:0x713fa27cb26b5902ea398b04d21e6018bba3a2f1|_value:8263636363636363636}}"
   }params.size: 0
 ==================================================
 
@@ -70,7 +70,7 @@ params.size: 0
         "_key": "1"
       }
     },
-    "compressedTrace": "cancelExistingRequest(1 /*_key*/); "
+    "compressedTrace": "{name:cancelExistingRequest|inputs:{_key:1}}"
   },  {
     "blockHash": "0xcd4dbd459893241b0c21c91d64b445b1eb0579f7341afd17e7b797795a7f1d7e",
     "blockNumber": 2001002,
@@ -106,7 +106,7 @@ params.size: 0
         "ret_0": "true"
       }
     },
-    "compressedTrace": "split(0x167a9333bf582556f35bd4d16a7e80e191aa6476 /*targetFork*/, 0x571b7b69829ce2568b9bc3d32eaf7405dab76b21 /*targetNoFork*/); "
+    "compressedTrace": "{name:split|inputs:{targetFork:0x167a9333bf582556f35bd4d16a7e80e191aa6476|targetNoFork:0x571b7b69829ce2568b9bc3d32eaf7405dab76b21}|outputs:{ret_0:true}}"
   }params.size: 0
 ==================================================
 
@@ -141,7 +141,7 @@ params.size: 0
         "val_0": "true"
       }
     },
-    "compressedTrace": "forked(); "
+    "compressedTrace": "{name:forked|outputs:{val_0:true}}"
   },  {
     "blockHash": "0xcd4dbd459893241b0c21c91d64b445b1eb0579f7341afd17e7b797795a7f1d7e",
     "blockNumber": 2001002,

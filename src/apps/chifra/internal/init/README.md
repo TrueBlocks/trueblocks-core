@@ -22,8 +22,7 @@ Flags:
   -h, --help         display this help screen
 
 Notes:
-  - chifra init is an alias for the chifra pins --init command.
-  - See chifra pins --help for more information.
+  - Re-run chifra init as often as you wish. It will repair or freshen the index.
 ```
 
 Other Options

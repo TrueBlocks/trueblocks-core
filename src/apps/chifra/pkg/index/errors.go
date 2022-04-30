@@ -8,39 +8,39 @@ import "fmt"
 
 // Errors that can happen when validating and saving a file
 
-type ErrSavingCorruptedDownload struct {
+type errSavingCorruptedDownload struct {
 	fileName string
 	expected int64
 	read     int64
 }
 
-func (err *ErrSavingCorruptedDownload) Error() string {
+func (err *errSavingCorruptedDownload) Error() string {
 	return fmt.Sprintf("file corrupted: %s (expected %d but got %d bytes)", err.fileName, err.expected, err.read)
 }
 
-type ErrSavingCannotDecompress struct {
+type errSavingCannotDecompress struct {
 	fileName string
 	reason   error
 }
 
-func (err *ErrSavingCannotDecompress) Error() string {
+func (err *errSavingCannotDecompress) Error() string {
 	return fmt.Sprintf("error unpacking %s: %s", err.fileName, err.reason)
 }
 
-type ErrSavingCreateFile struct {
+type errSavingCreateFile struct {
 	fileName string
 	reason   error
 }
 
-func (err *ErrSavingCreateFile) Error() string {
+func (err *errSavingCreateFile) Error() string {
 	return fmt.Sprintf("error creating file %s: %s", err.fileName, err.reason)
 }
 
-type ErrSavingCopy struct {
+type errSavingCopy struct {
 	fileName string
 	reason   error
 }
 
-func (err *ErrSavingCopy) Error() string {
+func (err *errSavingCopy) Error() string {
 	return fmt.Sprintf("error copying %s: %s", err.fileName, err.reason)
 }

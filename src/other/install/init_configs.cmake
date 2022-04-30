@@ -65,7 +65,6 @@ file(MAKE_DIRECTORY "${INSTALL_DEST}/abis/known-005")
 file(MAKE_DIRECTORY "${INSTALL_DEST}/abis/known-010")
 file(MAKE_DIRECTORY "${INSTALL_DEST}/abis/known-015")
 file(MAKE_DIRECTORY "${INSTALL_DEST}/perf")
-file(MAKE_DIRECTORY "${INSTALL_DEST}/config/mainnet/mocked")
 
 #---------------------------------------------------------------
 PrintLine("Copying files and folder to config...")
@@ -78,8 +77,6 @@ CopyNotPresent    (${INSTALL_SOURCE}/names/                "names_custom.tab"   
 CopyNotPresent    (${INSTALL_SOURCE}/names/                "collections.csv"          ${INSTALL_DEST}/config/mainnet/        )
 CopyNotPresent    (${INSTALL_SOURCE}/                      "ethslurp.toml"            ${INSTALL_DEST}/config/mainnet/        )
 CopyIgnorePresent (${INSTALL_SOURCE}/names/                "names.tab"                ${INSTALL_DEST}/config/mainnet/        )
-CopyIgnorePresent (${INSTALL_SOURCE}/mocked/               "mocks.tar.gz"             ${INSTALL_DEST}/config/mainnet/mocked/ )
-CopyIgnorePresent (${INSTALL_SOURCE}/mocked/               "monitors.tar.gz"          ${INSTALL_DEST}/config/mainnet/mocked/ )
 CopyIgnorePresent (${INSTALL_SOURCE}/prices/               "poloniex_USDT_ETH.bin.gz" ${INSTALL_DEST}/config/mainnet/        )
 CopyIgnorePresent (${INSTALL_SOURCE}/prices/               "ts.bin.gz"                ${INSTALL_DEST}/config/mainnet/        )
 

@@ -20,10 +20,8 @@ import (
 
 type ChunksOptions struct {
 	Blocks  []string
-	Check   bool
 	Extract string
-	Stats   bool
-	Save    bool
+	Check   bool
 	Globals globals.GlobalOptions
 	BadFlag error
 }
@@ -32,26 +30,15 @@ var chunksCmdLineOptions ChunksOptions
 
 func (opts *ChunksOptions) TestLog() {
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
-	logger.TestLog(opts.Check, "Check: ", opts.Check)
 	logger.TestLog(len(opts.Extract) > 0, "Extract: ", opts.Extract)
-	logger.TestLog(opts.Stats, "Stats: ", opts.Stats)
-	logger.TestLog(opts.Save, "Save: ", opts.Save)
+	logger.TestLog(opts.Check, "Check: ", opts.Check)
 	opts.Globals.TestLog()
 }
 
 func (opts *ChunksOptions) ToCmdLine() string {
 	options := ""
-	if opts.Check {
-		options += " --check"
-	}
 	if len(opts.Extract) > 0 {
 		options += " --extract " + opts.Extract
-	}
-	if opts.Stats {
-		options += " --stats"
-	}
-	if opts.Save {
-		options += " --save"
 	}
 	options += " " + strings.Join(opts.Blocks, " ")
 	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
@@ -67,14 +54,10 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ChunksOptions {
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Blocks = append(opts.Blocks, s...)
 			}
-		case "check":
-			opts.Check = true
 		case "extract":
 			opts.Extract = value[0]
-		case "stats":
-			opts.Stats = true
-		case "save":
-			opts.Save = true
+		case "check":
+			opts.Check = true
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "chunks")

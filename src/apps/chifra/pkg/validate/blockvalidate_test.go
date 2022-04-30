@@ -5,9 +5,10 @@
 package validate
 
 import (
+	"reflect"
 	"testing"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+	tslibPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 )
 
 func TestIsBlockHash(t *testing.T) {
@@ -29,25 +30,78 @@ func TestIsBlockHash(t *testing.T) {
 }
 
 func TestIsBlockNumber(t *testing.T) {
-	if IsBlockNumber("notanumber") {
+	if check, _ := IsBlockNumber("notanumber"); check {
 		t.Error("Passes for strings")
 	}
 
-	if IsBlockNumber("") {
+	if check, _ := IsBlockNumber(""); check {
 		t.Error("Passes for empty string")
 	}
 
 	// We only support decimal numbers for block numbers
-	if !IsBlockNumber("0xff") {
+	if check, _ := IsBlockNumber("0xff"); !check {
 		t.Error("Fails for hex")
 	}
 
-	if !IsBlockNumber("0") {
+	if check, _ := IsBlockNumber("0"); !check {
 		t.Error("Fails for 0")
 	}
 
-	if !IsBlockNumber("1000") {
+	if check, _ := IsBlockNumber("1000"); !check {
 		t.Error("Fails for numbers")
+	}
+
+	check, value := IsBlockNumber("12147043")
+	if !check || value != uint32(12147043) {
+		t.Fatal("Failed for correct input:", check, value)
+	}
+}
+
+func TestIsBlockNumberList(t *testing.T) {
+	type args struct {
+		strs []string
+	}
+	tests := []struct {
+		name  string
+		args  args
+		want  bool
+		want1 []blockNum
+	}{
+		{
+			name: "list of valid blocknumbers",
+			args: args{
+				strs: []string{"12147043", "12147042", "12147041"},
+			},
+			want:  true,
+			want1: []blockNum{12147043, 12147042, 12147041},
+		},
+		{
+			name: "list of invalid blocknumbers",
+			args: args{
+				strs: []string{"0xfff", "latest", "newest"},
+			},
+			want:  false,
+			want1: nil,
+		},
+		{
+			name: "list of mixed blocknumbers",
+			args: args{
+				strs: []string{"12147043", "latest", "newest"},
+			},
+			want:  false,
+			want1: nil,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, got1 := IsBlockNumberList(tt.args.strs)
+			if got != tt.want {
+				t.Errorf("IsBlockNumberList() got = %v, want %v", got, tt.want)
+			}
+			if !reflect.DeepEqual(got1, tt.want1) {
+				t.Errorf("IsBlockNumberList() got1 = %v, want %v", got1, tt.want1)
+			}
+		})
 	}
 }
 
@@ -151,7 +205,7 @@ func TestIsRange(t *testing.T) {
 }
 
 func TestIsRangeLatestAsStart(t *testing.T) {
-	expected := "Cannot start range with 'latest'"
+	expected := "cannot start range with 'latest'"
 	_, err := IsRange(GetTestChain(), "latest-10")
 
 	if err.Error() != expected {

@@ -1,10 +1,10 @@
-monitors?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&count
+export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&count
 {
   "data": [
     {
       "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
       "nRecords": 3,
-      "fileSize": 24
+      "fileSize": 32
     }
   ],
   "meta": {

@@ -1,6 +1,0 @@
-pins?list&remote&fmt=csv
-{
-  "errors": [
-    "The --remote flag has been deprecated."
-  ]
-}

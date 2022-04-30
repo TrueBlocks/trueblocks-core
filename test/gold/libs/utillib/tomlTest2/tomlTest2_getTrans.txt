@@ -1,7 +1,7 @@
 tomlTest2  getTrans.toml
 tests/getTrans.toml
 [version]
-current = "vers-alpha"
+current = "vers-beta"
 
 [display]
 # format = "[{EVENTS}]"

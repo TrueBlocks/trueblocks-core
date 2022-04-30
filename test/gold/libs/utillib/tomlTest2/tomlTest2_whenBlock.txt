@@ -1,4 +1,4 @@
 tomlTest2  whenBlock.toml
 tests/whenBlock.toml
 [version]
-current = "vers-alpha"
+current = "vers-beta"

@@ -13,7 +13,6 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10310,apps,Accounts,export,acctExport,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate transactions&#44; traces&#44; logs&#44; and outputs
 10320,apps,Accounts,export,acctExport,cache,i,false,false,true,true,true,header,switch,<boolean>,write transactions to the cache (see notes)
 10330,apps,Accounts,export,acctExport,cache_traces,R,false,false,true,true,true,header,switch,<boolean>,write traces to the cache (see notes)
-10332,apps,Accounts,export,acctExport,factory,y,false,false,false,true,false,header,switch,<boolean>,scan for contract creations from the given address(es) and report address of those contracts
 10334,apps,Accounts,export,acctExport,count,U,,false,false,true,true,header,switch,<boolean>,only available for --appearances mode&#44; if present&#44; return only the number of records
 10336,apps,Accounts,export,acctExport,first_record,c,0,false,false,true,true,header,flag,<blknum>,the first record to process
 10338,apps,Accounts,export,acctExport,max_records,e,250,false,false,true,true,header,flag,<blknum>,the maximum number of records to process before reporting
@@ -21,13 +20,11 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10342,apps,Accounts,export,acctExport,emitter,,,false,false,true,true,local,flag,list<addr>,for log export only&#44; export only logs if emitted by one of these address(es)
 10344,apps,Accounts,export,acctExport,topic,,,false,false,true,true,local,flag,list<topic>,for log export only&#44; export only logs with this topic(s)
 10346,apps,Accounts,export,acctExport,asset,,,false,false,true,true,local,flag,list<addr>,for the statements option only&#44; export only reconciliations for this asset
-10085,apps,Accounts,export,acctExport,clean,,,false,false,true,true,header,switch,<boolean>,clean (i.e. remove duplicate appearances) from all existing monitors
-10380,apps,Accounts,export,acctExport,freshen,f,,false,false,false,false,local,switch,<boolean>,freshen but do not print the exported data
-10060,apps,Accounts,export,acctExport,staging,s,,false,false,true,true,header,switch,<boolean>,export transactions labeled staging (i.e. older than 28 blocks but not yet consolidated)
-10080,apps,Accounts,export,acctExport,unripe,u,,false,false,true,true,header,switch,<boolean>,export transactions labeled upripe (i.e. less than 28 blocks old)
+10332,apps,Accounts,export,acctExport,factory,y,false,false,false,true,false,header,switch,<boolean>,scan for contract creations from the given address(es) and report address of those contracts
+10060,apps,Accounts,export,acctExport,staging,s,,false,false,true,true,gocmd,switch,<boolean>,export transactions labeled staging (i.e. older than 28 blocks but not yet consolidated)
+10080,apps,Accounts,export,acctExport,unripe,u,,false,false,true,true,gocmd,switch,<boolean>,export transactions labeled upripe (i.e. less than 28 blocks old)
 10092,apps,Accounts,export,acctExport,load,,,false,false,false,false,header,flag,<string>,a comma separated list of dynamic traversers to load
 10093,apps,Accounts,export,acctExport,reversed,,,false,false,false,false,header,switch,<boolean>,produce results in reverse chronological order
-10094,apps,Accounts,export,acctExport,by_date,b,,false,false,false,false,header,switch,<boolean>,produce results sorted by date (report by address otherwise)
 10340,apps,Accounts,export,acctExport,skip_ddos,d,true,false,true,false,false,config,toggle,<boolean>,toggle skipping over 2016 dDos transactions ([{DEF}] by default)
 10350,apps,Accounts,export,acctExport,max_traces,m,250,false,true,false,false,config,flag,<uint64>,if --skip_ddos is on&#44; this many traces defines what a ddos transaction is
 10440,apps,Accounts,export,acctExport,first_block,F,0,false,false,true,true,local,flag,<blknum>,first block to process (inclusive)
@@ -40,12 +37,10 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10476,apps,Accounts,export,acctExport,n5,,,false,false,false,false,--,note,,Neighbors include every address that appears in any transaction in which the export address also appears.
 
 11200,apps,Accounts,monitors,acctExport,addrs,,,true,false,true,true,local,positional,list<addr>,one or more addresses (0x...) to process
-11210,apps,Accounts,monitors,acctExport,appearances,p,,false,false,true,true,header,switch,<boolean>,export a list of appearances
-12015,apps,Accounts,monitors,acctExport,count,U,,false,false,true,true,header,switch,<boolean>,present only the number of records
-11085,apps,Accounts,monitors,acctExport,clean,,,false,false,true,true,header,switch,<boolean>,clean (i.e. remove duplicate appearances) from monitors
-11087,apps,Accounts,monitors,acctExport,deleteMe,,,false,false,true,true,local,switch,<boolean>,delete a monitor&#44; but do not remove it
-11093,apps,Accounts,monitors,acctExport,undelete,,,false,false,true,true,local,switch,<boolean>,undelete a previously deleted monitor
-11091,apps,Accounts,monitors,acctExport,remove,,,false,false,true,true,local,switch,<boolean>,remove a previously deleted monitor
+11085,apps,Accounts,monitors,acctExport,clean,,,false,false,true,true,gocmd,switch,<boolean>,clean (i.e. remove duplicate appearances) from monitors
+11087,apps,Accounts,monitors,acctExport,deleteMe,,,false,false,true,true,gocmd,switch,<boolean>,delete a monitor&#44; but do not remove it
+11093,apps,Accounts,monitors,acctExport,undelete,,,false,false,true,true,gocmd,switch,<boolean>,undelete a previously deleted monitor
+11091,apps,Accounts,monitors,acctExport,remove,,,false,false,true,true,gocmd,switch,<boolean>,remove a previously deleted monitor
 11440,apps,Accounts,monitors,acctExport,first_block,F,0,false,false,false,false,local,flag,<blknum>,first block to process (inclusive)
 11450,apps,Accounts,monitors,acctExport,last_block,L,NOPOS,false,false,false,false,local,flag,<blknum>,last block to process (inclusive)
 11095,apps,Accounts,monitors,acctExport,,,,false,false,true,true,--,description,,Add&#44; remove&#44; clean&#44; and list address monitors.
@@ -53,12 +48,13 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 11099,apps,Accounts,monitors,acctExport,n2,,,false,false,false,false,--,note,,If no address is presented to the --clean command&#44; all monitors will be cleaned.
 
 12005,apps,Accounts,list,acctExport,addrs,,,true,false,true,true,local,positional,list<addr>,one or more addresses (0x...) to list
-12015,apps,Accounts,list,acctExport,count,U,,false,false,true,true,header,switch,<boolean>,present only the number of records
-11210,apps,Accounts,list,acctExport,appearances,p,,false,false,false,true,header,switch,<boolean>,export a list of appearances
-11440,apps,Accounts,list,acctExport,first_block,F,0,false,false,false,false,local,flag,<blknum>,first block to process (inclusive)
-11450,apps,Accounts,list,acctExport,last_block,L,NOPOS,false,false,false,false,local,flag,<blknum>,last block to process (inclusive)
-11450,apps,Accounts,list,acctExport,newone,,,false,false,false,false,gocmd,switch,<boolean>,use the new scraper
+12015,apps,Accounts,list,acctExport,count,U,,false,false,true,true,gocmd,switch,<boolean>,display only the count of records for each monitor
+11210,apps,Accounts,list,acctExport,appearances,p,,false,false,false,true,gocmd,switch,<boolean>,export each monitor's list of appearances (the default)
+11210,apps,Accounts,list,acctExport,silent,,,false,false,false,true,gocmd,switch,<boolean>,freshen the monitor only (no reporting)
+11440,apps,Accounts,list,acctExport,first_block,F,0,false,false,false,false,gocmd,flag,<blknum>,first block to export (inclusive&#44; ignored when counting or freshening)
+11450,apps,Accounts,list,acctExport,last_block,L,NOPOS,false,false,false,false,gocmd,flag,<blknum>,last block to export (inclusive&#44; ignored when counting or freshening)
 12025,apps,Accounts,list,acctExport,,,,false,false,true,true,--,description,,List every appearance of an address anywhere on the chain.
+11097,apps,Accounts,list,acctExport,n1,,,false,false,false,false,--,note,,No other options are permitted when --silent is selected.
 
 12260,tools,Accounts,names,ethNames,terms,,,true,false,true,true,header,positional,list<string>,a space separated list of one or more search terms
 12280,tools,Accounts,names,ethNames,expand,e,,false,false,true,true,local,switch,<boolean>,expand search to include all fields (search name&#44; address&#44; and symbol otherwise)
@@ -74,10 +70,10 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12455,tools,Accounts,names,ethNames,clean,C,,false,false,false,false,local,switch,<boolean>,clean the data (addrs to lower case&#44; sort by addr)
 12456,tools,Accounts,names,ethNames,autoname,A,,false,false,false,false,local,flag,<string>,an address assumed to be a token&#44; added automatically to names database if true
 12460,tools,Accounts,names,ethNames,create,,,false,false,false,true,local,switch,<boolean>,create a new name record
-12462,tools,Accounts,names,ethNames,deleteMe,,,false,false,false,true,local,switch,<boolean>,delete a name&#44; but do not remove it
 12464,tools,Accounts,names,ethNames,update,,,false,false,false,true,local,switch,<boolean>,edit an existing name
-12466,tools,Accounts,names,ethNames,remove,,,false,false,false,true,local,switch,<boolean>,remove a previously deleted name
+12462,tools,Accounts,names,ethNames,deleteMe,,,false,false,false,true,local,switch,<boolean>,delete a name&#44; but do not remove it
 12468,tools,Accounts,names,ethNames,undelete,,,false,false,false,true,local,switch,<boolean>,undelete a previously deleted name
+12466,tools,Accounts,names,ethNames,remove,,,false,false,false,true,local,switch,<boolean>,remove a previously deleted name
 12470,tools,Accounts,names,ethNames,,,,false,false,true,true,--,description,,Query addresses or names of well known accounts.
 12472,tools,Accounts,names,ethNames,n1,,,false,false,false,false,--,note,,The tool will accept up to three terms&#44; each of which must match against any field in the database.
 12478,tools,Accounts,names,ethNames,n2,,,false,false,false,false,--,note,,The `--match_case` option enables case sensitive matching.
@@ -246,33 +242,17 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10840,apps,Admin,status,cacheStatus,last_block,L,NOPOS,false,false,false,false,local,flag,<blknum>,last block to process (inclusive -- testing only)
 10860,apps,Admin,status,cacheStatus,,,,false,false,true,true,--,description,,Report on the status of the TrueBlocks system.
 
-21950,apps,Admin,chunks,chunkMan,blocks,,,false,false,true,true,header,positional,list<blknum>,an optional list of blocks to process
-21954,apps,Admin,chunks,chunkMan,check,c,,false,false,true,true,header,switch,<boolean>,check the validity of the chunk or bloom
-21956,apps,Admin,chunks,chunkMan,extract,e,,false,false,true,true,header,flag,enum[header|addr_table|app_table|chunks|blooms],show some or all of the contents of the chunk or bloom filters
-21958,apps,Admin,chunks,chunkMan,stats,s,,false,false,true,true,header,switch,<boolean>,for the --list option only&#44; display statistics about each chunk or bloom
-21960,apps,Admin,chunks,chunkMan,save,a,,false,false,true,true,header,switch,<boolean>,for the --extract option only&#44; save the entire chunk to a similarly named file as well as display
+21950,apps,Admin,chunks,chunkMan,blocks,,,false,false,true,true,header,positional,list<blknum>,optional list of blocks to intersect with chunk ranges
+21956,apps,Admin,chunks,chunkMan,extract,e,,false,false,true,true,header,flag,enum[stats|pins|blooms|index|header|addresses|appearances],show some or all of the contents of the chunk or bloom filters
+21956,apps,Admin,chunks,chunkMan,check,c,,false,false,false,false,gocmd,switch,<boolean>,check the index for internal consistency
 21962,apps,Admin,chunks,chunkMan,,,,false,false,true,true,--,description,,Manage and investigate chunks and bloom filters.
 21964,apps,Admin,chunks,chunkMan,n1,,,false,false,false,false,--,note,,Only a single block in a given chunk needs to be supplied.
 
-10950,apps,Admin,pins,pinMan,list,l,,false,false,true,true,local,switch,<boolean>,list the bloom and index hashes from local cache or IPFS
-10952,apps,Admin,pins,pinMan,init,i,,false,false,true,true,header,switch,<boolean>,download the blooms or index chunks from IPFS
-10958,apps,Admin,pins,pinMan,all,a,,false,false,true,true,header,switch,<boolean>,in addition to Bloom filters&#44; download full index chunks
-10962,apps,Admin,pins,pinMan,share,S,,false,false,true,true,header,switch,<boolean>,share downloaded data by pinning it to IPFS (the IPFS daemon must be running)
-10960,apps,Admin,pins,pinMan,sleep,s,.25,false,false,true,true,header,flag,<double>,throttle requests by this many seconds
-10954,apps,Admin,pins,pinMan,freshen,f,,false,false,false,false,header,deprecated,<boolean>,check for new bloom or index chunks and download if available
-10956,apps,Admin,pins,pinMan,remote,r,,false,false,false,false,header,deprecated,<boolean>,for --list mode only&#44; recover the manifest from IPFS via UnchainedIndex smart contract
-10964,apps,Admin,pins,pinMan,init_all,n,,false,false,false,false,header,deprecated,<boolean>,use --init --all instead
-10966,apps,Admin,pins,pinMan,,,,false,false,true,true,--,description,,Manage pinned index of appearances and associated blooms.
-10970,apps,Admin,pins,pinMan,n1,,,false,false,false,false,--,note,,One of `--list` or `--init` is required.
-10974,apps,Admin,pins,pinMan,n2,,,false,false,false,false,--,note,,Re-run `chifra init` as often as you wish. It will repair or freshen the index.
-10972,apps,Admin,pins,pinMan,n3,,,false,false,false,false,--,note,,The `--share` option works only if an IPFS daemon is running.
+11905,apps,Admin,init,init,all,a,,false,false,true,true,header,switch,<boolean>,in addition to Bloom filters&#44; download full index chunks
+11910,apps,Admin,init,init,,,,false,false,true,true,--,description,,Initialize the TrueBlocks system by downloading from IPFS.
+10974,apps,Admin,init,init,n1,,,false,false,false,false,--,note,,Re-run `chifra init` as often as you wish. It will repair or freshen the index.
 
-11905,apps,Admin,init,pinMan,all,a,,false,false,true,true,header,switch,<boolean>,in addition to Bloom filters&#44; download full index chunks
-11910,apps,Admin,init,pinMan,,,,false,false,true,true,--,description,,Initialize the TrueBlocks system by downloading from IPFS.
-11915,apps,Admin,init,pinMan,n1,,,false,false,false,false,--,note,,`chifra init` is an alias for the `chifra pins --init` command.
-11920,apps,Admin,init,pinMan,n2,,,false,false,false,false,--,note,,See `chifra pins --help` for more information.
-
-12020,tools,Other,quotes,getQuotes,update,u,,false,false,true,true,local,switch,<boolean>,freshen price database
+12020,tools,Other,quotes,getQuotes,update,u,,false,false,true,true,header,switch,<boolean>,freshen price database
 12040,tools,Other,quotes,getQuotes,period,p,,false,false,true,true,local,flag,enum[5|15|30|60|120*|240|1440|10080|hourly|daily|weekly],increment of display
 12060,tools,Other,quotes,getQuotes,pair,a,,false,false,true,true,local,flag,<string>,which price pair to freshen or list (see Poloniex)
 12060,tools,Other,quotes,getQuotes,feed,e,,false,false,true,true,header,flag,enum[poloniex*|maker|tellor],the feed for the price data
@@ -310,7 +290,6 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 
 11880,dev_tools,,,testRunner,mode,m,,false,false,true,false,local,flag,enum[cmd*|api|both],determine which set of tests to run
 11900,dev_tools,,,testRunner,filter,f,,false,false,true,false,header,flag,enum[fast*|medi|slow|all],determine how long it takes to run tests
-11920,dev_tools,,,testRunner,clean,c,,false,false,true,false,header,switch,<boolean>,clean working folder before running tests
 11930,dev_tools,,,testRunner,skip,s,1,false,false,false,false,header,flag,<uint64>,run only every 'skip' test (faster)
 11960,dev_tools,,,testRunner,report,r,,false,false,true,false,header,switch,<boolean>,display performance report to screen
 11980,dev_tools,,,testRunner,,,,false,false,true,false,--,description,,Run TrueBlocks' test cases with options.

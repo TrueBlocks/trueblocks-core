@@ -5,23 +5,21 @@ package scrapePkg
 // be found in the LICENSE file.
 
 import (
+	"encoding/json"
 	"fmt"
-	"io/fs"
 	"log"
 	"os"
 	"path"
-	"path/filepath"
 	"strings"
 	"sync"
 	"time"
 
-	exportPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
-	"github.com/ethereum/go-ethereum/common"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func hasMonitorsFlag(mode string) bool {
@@ -31,14 +29,14 @@ func hasMonitorsFlag(mode string) bool {
 var MonitorScraper Scraper
 
 // RunMonitorScraper runs continually, never stopping and freshens any existing monitors
-func (opts *ScrapeOptions) RunMonitorScraper(wg *sync.WaitGroup, initialState bool) {
+func (opts *ScrapeOptions) RunMonitorScraper(wg *sync.WaitGroup) {
 	defer wg.Done()
 
 	chain := opts.Globals.Chain
-	establishExportPaths()
+	establishExportPaths(chain)
 
 	var s *Scraper = &MonitorScraper
-	s.ChangeState(initialState)
+	s.ChangeState(true)
 
 	for {
 		if !s.Running {
@@ -46,175 +44,184 @@ func (opts *ScrapeOptions) RunMonitorScraper(wg *sync.WaitGroup, initialState bo
 
 		} else {
 			monitorChan := make(chan monitor.Monitor)
-
 			var monitors []monitor.Monitor
-			go getMonitors(chain, "monitors", monitorChan)
-
+			go monitor.ListMonitors(chain, "monitors", monitorChan)
 			count := 0
 			for result := range monitorChan {
 				switch result.Address {
-				case sentinalAddr:
+				case monitor.SentinalAddr:
 					close(monitorChan)
 				default:
-					if result.Count > 100000 {
+					if result.Count() > 100000 {
 						fmt.Println("Ignoring too-large address", result.Address)
 						continue
 					}
 					monitors = append(monitors, result)
 					count++
-					if result.Count > 0 {
-						fmt.Println("     ", count, ": ", result, "                                        ")
+					if result.Count() > 0 {
+						logger.Log(logger.Info, "     ", count, ": ", result, "                                        ")
 					}
 				}
 			}
-			Freshen(chain, monitors)
+
+			opts.Refresh(monitors)
+
+			if os.Getenv("RUN_ONCE") == "true" {
+				return
+			}
+
 			fmt.Println("Sleeping for", opts.Sleep, "seconds.")
 			time.Sleep(time.Duration(opts.Sleep) * time.Second)
 		}
 	}
 }
 
-func chunkMonitors(slice []monitor.Monitor, chunkSize int) [][]monitor.Monitor {
-	var chunks [][]monitor.Monitor
-	for i := 0; i < len(slice); i += chunkSize {
-		end := i + chunkSize
-		if end > len(slice) {
-			end = len(slice)
-		}
-		chunks = append(chunks, slice[i:end])
-	}
-	return chunks
+type SemiParse struct {
+	CmdLine string `json:"cmdLine"`
+	Fmt     string `json:"fmt"`
+	Folder  string `json:"folder"`
 }
 
-func Freshen(chain string, monitors []monitor.Monitor) error {
-	addrsPerCall := 8
+func (sp SemiParse) String() string {
+	ret, _ := json.MarshalIndent(sp, "", "  ")
+	return string(ret)
+}
 
-	batches := chunkMonitors(monitors, addrsPerCall)
+const addrsPerBatch = 8
+
+func (opts *ScrapeOptions) Refresh(monitors []monitor.Monitor) error {
+	theCmds, _ := getCommandsFromFile(opts.Globals)
+
+	batches := batchMonitors(monitors, addrsPerBatch)
 	for i := 0; i < len(batches); i++ {
-		var addrs []string
-		for j := 0; j < len(batches[i]); j++ {
-			addrs = append(addrs, batches[i][j].GetAddrStr())
+		addrs, countsBefore := preProcessBatch(batches[i], i, len(monitors))
+
+		err := opts.FreshenMonitorsScrape(addrs)
+		if err != nil {
+			return err
 		}
-		addrStr := strings.Join(addrs, " ")
-
-		spaces := "                                                                                 \r"
-		s := fmt.Sprintf("%s\r%d-%d", colors.Blue+colors.Bright+spaces, i*addrsPerCall, len(monitors))
-		fmt.Println(s, colors.Green, "chifra export --freshen", strings.Replace(addrStr, "0x", " \\\n\t0x", -1), colors.Off)
-
-		expOpts := exportPkg.ExportOptions{MaxRecords: 250, MaxTraces: 250}
-		expOpts.Addrs = append(expOpts.Addrs, addrStr)
-		expOpts.Globals.Chain = chain
-		expOpts.Freshen = true
-		expOpts.Globals.PassItOn("acctExport", expOpts.ToCmdLine())
 
 		for j := 0; j < len(batches[i]); j++ {
-
 			mon := batches[i][j]
-			countBefore := mon.Count
-			countAfter, _ := mon.Reload(chain)
+			countAfter := mon.Count()
 
-			if countAfter > 0 {
-				if countAfter > 100000 {
-					fmt.Println("Too many transactions for address", mon.Address)
-					continue
-				}
+			if countAfter > 100000 {
+				fmt.Println(colors.Red, "Too many transactions for address", mon.Address, colors.Off)
+				continue
+			}
 
-				appsPath := "exports/apps/" + mon.GetAddrStr() + ".csv"
-				exists := file.FileExists(appsPath)
+			if countAfter == 0 {
+				continue
+			}
+
+			for _, sp := range theCmds {
+				outputFn := sp.Folder + "/" + mon.GetAddrStr() + "." + sp.Fmt
+				exists := file.FileExists(outputFn)
+				countBefore := countsBefore[j]
+
 				if !exists || countAfter > countBefore {
-					start := countBefore + 1
-					if !exists {
-						start = 0
+					cmd := sp.CmdLine + " --output " + outputFn
+					add := ""
+					if exists {
+						add += fmt.Sprintf(" --first_record %d", uint64(countBefore+1))
+						add += fmt.Sprintf(" --max_records %d", uint64(countAfter-countBefore+1)) // extra space won't hurt
+						add += fmt.Sprintf(" --append")
+						add += fmt.Sprintf(" --no_header")
 					}
-					expApps := getExportOpts(&mon, chain, appsPath, start, countAfter)
-					expApps.Appearances = true
-					expApps.Globals.PassItOn("acctExport", expApps.ToCmdLine())
+					cmd += add + " " + mon.GetAddrStr()
+					cmd = strings.Replace(cmd, "  ", " ", -1)
+					o := opts
+					o.Globals.File = ""
+					o.Globals.PassItOn("acctExport", cmd)
+					// fmt.Println("Processing:", colors.BrightYellow, outputFn, colors.BrightWhite, exists, countBefore, countAfter, colors.Off)
+					// } else {
+					// 	fmt.Println("Skipping:", colors.BrightYellow, outputFn, colors.BrightWhite, exists, countBefore, countAfter, colors.Off)
 				}
-
-				txsPath := "exports/txs/" + mon.GetAddrStr() + ".csv"
-				exists = file.FileExists(txsPath)
-				if !exists || countAfter > countBefore {
-					start := countBefore + 1
-					if !exists {
-						start = 0
-					}
-					expTxs := getExportOpts(&mon, chain, txsPath, start, countAfter)
-					expTxs.Cache = true
-					expTxs.CacheTraces = true
-					expTxs.Globals.PassItOn("acctExport", expTxs.ToCmdLine())
-				}
-
-				logsPath := "exports/logs/" + mon.GetAddrStr() + ".csv"
-				exists = file.FileExists(logsPath)
-				if !exists || countAfter > countBefore {
-					start := countBefore + 1
-					if !exists {
-						start = 0
-					}
-					expLogs := getExportOpts(&mon, chain, logsPath, start, countAfter)
-					expLogs.Logs = true
-					expLogs.Relevant = true
-					expLogs.Articulate = true
-					// TODO: BOGUS
-					// expLogs.Emitter = append(expLogs.Emitter, "0xdf869fad6db91f437b59f1edefab319493d4c4ce")
-					// expLogs.Emitter = append(expLogs.Emitter, "0x7d655c57f71464b6f83811c55d84009cd9f5221c")
-					// expLogs.Emitter = append(expLogs.Emitter, "0xf2354570be2fb420832fb7ff6ff0ae0df80cf2c6")
-					// expLogs.Emitter = append(expLogs.Emitter, "0x3342e3737732d879743f2682a3953a730ae4f47c")
-					// expLogs.Emitter = append(expLogs.Emitter, "0x3ebaffe01513164e638480404c651e885cca0aa4")
-					expLogs.Globals.PassItOn("acctExport", expLogs.ToCmdLine())
-				}
+				// time.Sleep(500 * time.Millisecond)
 			}
 		}
 	}
 	return nil
 }
 
-var sentinalAddr = common.HexToAddress("0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead")
-
-func getMonitors(chain, folder string, monitorChan chan<- monitor.Monitor) {
-	defer func() {
-		monitorChan <- monitor.Monitor{Address: sentinalAddr}
-	}()
-
-	info, err := os.Stat("./addresses.csv")
-	if err == nil {
-		// If the shorthand file exists in the current folder, use it...
-		lines := file.AsciiFileToLines(info.Name())
-		fmt.Println("Found ", len(lines), " addresses to monitor in ./addresses.csv")
-		for _, line := range lines {
-			if !strings.HasPrefix(line, "#") {
-				parts := strings.Split(line, ",")
-				if len(parts) > 0 && validate.IsValidAddress(parts[0]) && !validate.IsZeroAddress(parts[0]) {
-					monitorChan <- monitor.NewMonitor(chain, parts[0])
-				}
-			}
+func batchMonitors(slice []monitor.Monitor, batchSize int) [][]monitor.Monitor {
+	var batches [][]monitor.Monitor
+	for i := 0; i < len(slice); i += batchSize {
+		end := i + batchSize
+		if end > len(slice) {
+			end = len(slice)
 		}
-		return
+		batches = append(batches, slice[i:end])
 	}
-
-	// ...otherwise freshen all existing monitors
-	pp := config.GetPathToCache(chain) + folder
-	filepath.Walk(pp, func(path string, info fs.FileInfo, err error) error {
-		if err != nil {
-			return err
-		}
-		if !info.IsDir() {
-			addr, _ := fn_2_Addr(path)
-			if len(addr) > 0 {
-				monitorChan <- monitor.NewMonitor(chain, addr)
-			}
-		}
-		return nil
-	})
+	return batches
 }
 
-func fn_2_Addr(path string) (string, error) {
-	ret := strings.Replace(path, ".acct.bin", "", -1)
-	parts := strings.Split(ret, "/")
-	if len(parts) == 0 || ret == path {
-		return "", nil
+func GetExportFormat(cmd, def string) string {
+	if strings.Contains(cmd, "json") {
+		return "json"
+	} else if strings.Contains(cmd, "txt") {
+		return "txt"
+	} else if strings.Contains(cmd, "csv") {
+		return "csv"
 	}
-	return parts[len(parts)-1], nil
+	if len(def) > 0 {
+		return def
+	}
+	return "csv"
+}
+
+func getCommandsFromFile(globals globals.GlobalOptions) ([]SemiParse, error) {
+	if !file.FileExists(globals.File) {
+		return []SemiParse{}, fmt.Errorf("file %s not found", globals.File)
+	}
+
+	ret := []SemiParse{}
+
+	cmdLines := utils.AsciiFileToLines(globals.File)
+	for _, cmd := range cmdLines {
+		cmd = strings.Trim(cmd, " \t")
+		if len(cmd) > 0 && !strings.HasPrefix(cmd, "#") {
+			sp := SemiParse{}
+			sp.Folder = "exports/" + globals.Chain + "/" + GetOutputFolder(cmd, "unknown")
+
+			sp.Fmt = GetExportFormat(cmd, globals.Format)
+			sp.CmdLine = cmd
+			sp.CmdLine = strings.Replace(sp.CmdLine, " csv", " "+sp.Fmt, -1)
+			sp.CmdLine = strings.Replace(sp.CmdLine, " json", " "+sp.Fmt, -1)
+			sp.CmdLine = strings.Replace(sp.CmdLine, " txt", " "+sp.Fmt, -1)
+			if !strings.Contains(sp.CmdLine, "--fmt") {
+				sp.CmdLine += " --fmt " + sp.Fmt
+			}
+			ret = append(ret, sp)
+		}
+	}
+
+	logger.Log(logger.Info, "Found", len(ret), "commands to process in ./"+globals.File)
+	for i, cmd := range ret {
+		msg := fmt.Sprintf("\t%d. %s", i, cmd.CmdLine)
+		logger.Log(logger.Info, msg)
+	}
+
+	return ret, nil
+}
+
+const spaces = "                                                                                 "
+
+func preProcessBatch(batch []monitor.Monitor, i, nMons int) ([]string, []uint32) {
+	var addrs []string
+	for j := 0; j < len(batch); j++ {
+		addrs = append(addrs, batch[j].GetAddrStr())
+	}
+
+	s := fmt.Sprintf("%s\r%d-%d", colors.BrightBlue+spaces, i*addrsPerBatch, nMons)
+	fmt.Println(s, colors.Green, "chifra export --freshen", strings.Replace(strings.Join(addrs, " "), "0x", " \\\n\t0x", -1), colors.Off)
+
+	countsBefore := []uint32{}
+	for j := 0; j < len(batch); j++ {
+		countsBefore = append(countsBefore, (batch)[j].Count())
+	}
+
+	return addrs, countsBefore
 }
 
 // TODO: We could add statistics counting -- nChanged, nProcessed, txCount, etc
@@ -223,30 +230,33 @@ func fn_2_Addr(path string) (string, error) {
 // TODO: Does control+c work right? Does data get corrupted?
 // TODO: We need post processing? Summarization? Coallessing? Zip files?
 
-// const char* STR_CMD_LOGS = "./export_logs.1.sh [{ADDR}] ; ";
-// const char* STR_CMD_NEIGHBORS = "chifra export --neighbors --deep --fmt csv [{ADDR}] >neighbors/[{ADDR}].csv ; ";
-// const char* STR_CMD_STATEMENTS = "./export_statements.1.sh [{ADDR}] ; ";
-
-// cat /tmp/$addr.csv | cut -f1-10 -d, >logs/$addr.csv
-// cat /tmp/$addr.csv | cut -f1-5,11-2000 -d, >logs/articulated/$addr.csv
-// rm -f /tmp/$addr.csv
-
-// STATEMENTS
-// chifra export --statements --fmt csv $addr >statements/$addr.csv
-// cat statements/$addr.csv | cut -d, -f1,2,3,4,5,6,9,25,26,30-33 | tee statements/balances/$addr.csv
-// echo "count,assetAddr,assetSymbol" | tee statements/tx_counts/$addr.csv
-// cat statements/balances/$addr.csv | grep -v assetAddr | cut -d, -f1,2 | sort | uniq -c | sort -n -r | sed 's/ //g' | sed 's/"/,/g' | cut -d, -f1,2,5 | tee -a statements/tx_counts/$addr.csv
-
 // establishExportPaths sets up the index path and subfolders. It only returns if it succeeds.
-func establishExportPaths() {
+func establishExportPaths(chain string) {
 	folders := []string{
-		"txs", "apps", "statements", "neighbors", "logs", "combined", "zips",
+		"apps",
+		"logs",
+		"txs",
+		"neighbors",
+		"statements",
+		"raw",
+		"combined",
+		"zips",
+		"neighbors/networks",
+		"neighbors/adjacencies",
+		"neighbors/images",
+		"neighbors/images/pngs",
+		"statements/tx_counts",
+		"statements/balances",
+		"statements/balances/plots",
 	}
 
 	cwd, _ := os.Getwd()
-
 	exportPath := cwd + "/exports/"
+	if err := file.EstablishFolders(exportPath, nil); err != nil {
+		log.Fatal(err)
+	}
 
+	exportPath = cwd + "/exports/" + chain + "/"
 	_, err := os.Stat(path.Join(exportPath, folders[len(folders)-1]))
 	if err == nil {
 		// If the last path already exists, assume we've been here before
@@ -258,19 +268,30 @@ func establishExportPaths() {
 	}
 }
 
-func getExportOpts(mon *monitor.Monitor, chain, path string, firstBlock, lastBlock uint32) exportPkg.ExportOptions {
-	// firstBlock and lastBlock are one-based
-	first, _ := mon.Peek(firstBlock)
-	last, _ := mon.Peek(lastBlock)
+func GetOutputFolder(cmdLine, def string) string {
+	cmdLine += " "
+	cmdLine = strings.Replace(cmdLine, "-p ", "--appearances ", -1)
+	cmdLine = strings.Replace(cmdLine, "-r ", "--receipts ", -1)
+	cmdLine = strings.Replace(cmdLine, "-l ", "--logs ", -1)
+	cmdLine = strings.Replace(cmdLine, "-t ", "--traces ", -1)
+	cmdLine = strings.Replace(cmdLine, "-A ", "--statements ", -1)
+	cmdLine = strings.Replace(cmdLine, "-n ", "--neighbors ", -1)
+	cmdLine = strings.Replace(cmdLine, "-C ", "--accounting ", -1)
 
-	expOpts := exportPkg.ExportOptions{MaxRecords: 250, MaxTraces: 250}
-	expOpts.Addrs = append(expOpts.Addrs, mon.GetAddrStr())
-	expOpts.Globals.Chain = chain
-	expOpts.FirstBlock = uint64(first.BlockNumber)
-	expOpts.LastBlock = uint64(last.BlockNumber)
-	expOpts.Globals.Format = "csv"
-	expOpts.Globals.OutputFn = path
-	expOpts.Globals.Append = file.FileExists(expOpts.Globals.OutputFn)
-	expOpts.Globals.NoHeader = file.FileExists(expOpts.Globals.OutputFn)
-	return expOpts
+	if strings.Contains(cmdLine, "--appearances") {
+		return "apps"
+	} else if strings.Contains(cmdLine, "--receipts") {
+		return "receipts"
+	} else if strings.Contains(cmdLine, "--logs") {
+		return "logs"
+	} else if strings.Contains(cmdLine, "--traces") {
+		return "traces"
+	} else if strings.Contains(cmdLine, "--statements") {
+		return "statements"
+	} else if strings.Contains(cmdLine, "--neighbors") {
+		return "neighbors"
+	} else if strings.Contains(cmdLine, "--accounting") {
+		return "accounting"
+	}
+	return "txs"
 }

@@ -1,0 +1,3 @@
+chifra init  --fmt txt
+TEST[DATE|TIME] Format:  txt
+INFO[DATE|TIME] chifra init is not processed in test mode.

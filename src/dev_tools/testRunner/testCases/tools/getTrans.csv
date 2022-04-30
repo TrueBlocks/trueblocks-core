@@ -33,8 +33,8 @@ on      ,both ,fast  ,transactions ,tools/getTrans ,message              ,y    ,
 on      ,cmd  ,medi  ,transactions ,tools/getTrans ,core_dump_bug        ,y    ,transactions = 0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10 @ avt & fmt = api
 on      ,both ,fast  ,transactions ,tools/getTrans ,uniqAddrs_fail       ,y    ,transactions = 1301011.0 1301672.0 1301324.0 & broken & fmt = json
 on      ,both ,fast  ,transactions ,tools/getTrans ,uniqAddrs            ,y    ,transactions = 1301011.0 1301672.0 1301324.0 & uniq & fmt = json
-on      ,both ,fast  ,transactions ,tools/getTrans ,first                ,n    ,transactions = 40500.0.next & fmt = txt
-on      ,both ,fast  ,transactions ,tools/getTrans ,first2               ,n    ,transactions = first & fmt = txt
+local   ,both ,fast  ,transactions ,tools/getTrans ,first                ,n    ,transactions = 40500.0.next & fmt = txt
+local   ,both ,fast  ,transactions ,tools/getTrans ,first2               ,n    ,transactions = first & fmt = txt
 on      ,both ,fast  ,transactions ,tools/getTrans ,nav_prev1            ,n    ,transactions = 1001001.1.prev & fmt = txt
 on      ,both ,fast  ,transactions ,tools/getTrans ,nav_prev2            ,n    ,transactions = 1001001.0.prev & fmt = txt & no_header
 on      ,both ,fast  ,transactions ,tools/getTrans ,nav_next1            ,n    ,transactions = 1001001.2.next & fmt = txt
@@ -50,7 +50,7 @@ on      ,both ,fast  ,transactions ,tools/getTrans ,old_hang_bug         ,y    ,
 local   ,both ,slow  ,transactions ,tools/getTrans ,old_parsing_bug_1    ,y    ,transactions = 0xfa62ab036f36b4755bfa0d6e3e641d08daa7e41e95b0c1f2246485702319efb8 & fmt = json & articulate
 local   ,both ,slow  ,transactions ,tools/getTrans ,old_parsing_bug_2    ,y    ,transactions = 0xfa62ab036f36b4755bfa0d6e3e641d08daa7e41e95b0c1f2246485702319efb8 & fmt = json & articulate
 on      ,both ,slow  ,transactions ,tools/getTrans ,issue_1366           ,y    ,transactions = 0x557c3e14a8e86cd0b947d5c7790d332bbe52bb6ec8cba0aa532ddc717ffd0abe & fmt = json & trace & articulate
-on      ,both ,slow  ,transactions ,tools/getTrans ,issue_1583           ,y    ,transactions = 0x2f83088fa87f6054779a5511ec4f6b64f1e773e9bd7ec97956d6e04910d59303 & articulate & fmt = json
+local   ,both ,slow  ,transactions ,tools/getTrans ,issue_1583           ,y    ,transactions = 0x2f83088fa87f6054779a5511ec4f6b64f1e773e9bd7ec97956d6e04910d59303 & articulate & fmt = json
 on      ,both ,fast  ,transactions ,tools/getTrans ,fail_reconcile1      ,y    ,transactions = 0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63 & reconcile = 0x12 & fmt = json
 on      ,both ,fast  ,transactions ,tools/getTrans ,fail_reconcile2      ,y    ,transactions = 0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63 & reconcile = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & cache
 on      ,both ,fast  ,transactions ,tools/getTrans ,reconcile            ,y    ,transactions = 0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63 & reconcile = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & log_level = 10

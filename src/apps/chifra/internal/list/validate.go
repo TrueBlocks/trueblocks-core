@@ -20,12 +20,16 @@ func (opts *ListOptions) ValidateList() error {
 		return opts.BadFlag
 	}
 
-	if opts.FirstBlock >= opts.LastBlock && opts.LastBlock != 0 {
+	if opts.LastBlock == 0 {
+		opts.LastBlock = utils.NOPOS
+	}
+
+	if opts.FirstBlock >= opts.LastBlock {
 		msg := fmt.Sprintf("first_block (%d) must be strictly earlier than last_block (%d).", opts.FirstBlock, opts.LastBlock)
 		return validate.Usage(msg)
 	}
 
-	if opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS {
+	if opts.LastBlock != utils.NOPOS {
 		provider := config.GetRpcProvider(opts.Globals.Chain)
 		latest := rpcClient.BlockNumber(provider)
 		if opts.LastBlock > latest {

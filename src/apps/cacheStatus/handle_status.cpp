@@ -259,7 +259,7 @@ bool noteMonitor_light(const string_q& path, void* data) {
     if (endsWith(path, '/')) {
         return forEveryFileInFolder(path + "*", noteMonitor_light, data);
 
-    } else if (endsWith(path, "acct.bin") || endsWith(path, ".json")) {
+    } else if (isMonitorFilePath(path)) {
         CItemCounter* counter = reinterpret_cast<CItemCounter*>(data);
         ASSERT(counter->options);
         CMonitorCache* ptr = (CMonitorCache*)counter->cachePtr;  // NOLINT
@@ -308,11 +308,10 @@ bool noteMonitor(const string_q& path, void* data) {
     if (endsWith(path, '/')) {
         return forEveryFileInFolder(path + "*", noteMonitor, data);
 
-    } else if (endsWith(path, "acct.bin")) {
-        CItemCounter* counter = reinterpret_cast<CItemCounter*>(data);
-        ASSERT(counter->options);
+    } else if (isMonitorFilePath(path)) {
         CMonitorCacheItem mdi;
         mdi.type = mdi.getRuntimeClass()->m_ClassName;
+
         string_q addr = substitute(path, "/0x", "|");
         nextTokenClear(addr, '|');
         mdi.address = "0x" + nextTokenClear(addr, '.');
@@ -347,8 +346,14 @@ bool noteMonitor(const string_q& path, void* data) {
 
         CMonitor m;
         m.address = mdi.address;
-        mdi.deleted = m.isDeleted();
+        CMonitorHeader header;
+        m.readHeader(header);
+        mdi.deleted = header.deleted;
+
+        CItemCounter* counter = reinterpret_cast<CItemCounter*>(data);
+        ASSERT(counter->options);
         counter->monitorArray->push_back(mdi);
+
         if (isTestMode())
             return false;
     }
@@ -413,11 +418,12 @@ bool noteIndex(const string_q& path, void* data) {
         aci.firstTs = getTimestampAt(aci.firstApp);
         aci.latestTs = getTimestampAt(aci.latestApp);
 
-        CIndexHeader header;
-        readIndexHeader(path, header);
-        aci.nApps = header.nRows;
-        aci.nAddrs = header.nAddrs;
-        counter->indexArray->push_back(aci);
+        CIndexArchive index(READING_ARCHIVE);
+        if (index.ReadIndexFromBinary(path, IP_HEADER)) {
+            aci.nApps = index.header.nApps;
+            aci.nAddrs = index.header.nAddrs;
+            counter->indexArray->push_back(aci);
+        }
     }
     return !shouldQuit();
 }
@@ -497,9 +503,8 @@ string_q pathName(const string_q& str, const string_q& path) {
 const char* STR_TERSE_REPORT =
     "[{TIME}] ++C1++Client:++C2++       [{CLIENTVERSION}][{MODES1}]\n"
     "[{TIME}] ++C1++TrueBlocks:++C2++   [{TRUEBLOCKSVERSION}][{MODES2}]\n"
+    "[{TIME}] ++C1++RPC Provider:++C2++ [{RPCPROVIDER}] - [{CHAINDATA}]\n"
     "[{TIME}] ++C1++Config Path:++C2++  [{CONFIGPATH}]\n"
-    "[{TIME}] ++C1++Chain (ids):++C2++  [{CHAINDATA}]\n"
     "[{TIME}] ++C1++Cache Path:++C2++   [{CACHEPATH}]\n"
     "[{TIME}] ++C1++Index Path:++C2++   [{INDEXPATH}]\n"
-    "[{TIME}] ++C1++RPC Provider:++C2++ [{RPCPROVIDER}]\n"
     "[{TIME}] ++C1++Progress:++C2++     [{PROGRESS}]";

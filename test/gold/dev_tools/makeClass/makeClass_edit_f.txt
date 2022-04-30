@@ -4,7 +4,7 @@ TIME ~ CLOCK - <INFO>  : Processing 3 class definition files.
 ./classDefinitions/block.txt
 ------------------------------------------------------------------------------------------------------------------------
 [version]
-current = "vers-alpha"
+current = "vers-beta"
 
 [settings]
 class = "CBlock"
@@ -43,7 +43,7 @@ serialize = true
 ./classDefinitions/function.txt
 ------------------------------------------------------------------------------------------------------------------------
 [version]
-current = "vers-alpha"
+current = "vers-beta"
 
 [settings]
 class = "CFunction"
@@ -54,7 +54,7 @@ includes = "utillib.h|parameter.h"
 ./classDefinitions/status.txt
 ------------------------------------------------------------------------------------------------------------------------
 [version]
-current = "vers-alpha"
+current = "vers-beta"
 
 [settings]
 class = "CStatus"

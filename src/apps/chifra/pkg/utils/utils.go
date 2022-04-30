@@ -31,17 +31,22 @@ func IsTerminal() bool {
 	return terminal.IsTerminal(int(os.Stdout.Fd()))
 }
 
-func AsciiFileToString(fn string) string {
-	if !file.FileExists(fn) {
+func AsciiFileToString(fileName string) string {
+	if !file.FileExists(fileName) {
 		return ""
 	}
 
-	contents, err := ioutil.ReadFile(fn)
+	contents, err := ioutil.ReadFile(fileName)
 	if err != nil {
 		log.Println(err)
 		return ""
 	}
 	return string(contents)
+}
+
+func AsciiFileToLines(fileName string) []string {
+	contents := AsciiFileToString(fileName)
+	return strings.Split(contents, "\n")
 }
 
 func OpenBrowser(url string) {

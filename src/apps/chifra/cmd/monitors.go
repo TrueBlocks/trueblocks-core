@@ -45,8 +45,6 @@ Notes:
 func init() {
 	monitorsCmd.Flags().SortFlags = false
 
-	monitorsCmd.Flags().BoolVarP(&monitorsPkg.GetOptions().Appearances, "appearances", "p", false, "export a list of appearances")
-	monitorsCmd.Flags().BoolVarP(&monitorsPkg.GetOptions().Count, "count", "U", false, "present only the number of records")
 	monitorsCmd.Flags().BoolVarP(&monitorsPkg.GetOptions().Clean, "clean", "", false, "clean (i.e. remove duplicate appearances) from monitors")
 	monitorsCmd.Flags().BoolVarP(&monitorsPkg.GetOptions().Delete, "delete", "", false, "delete a monitor, but do not remove it")
 	monitorsCmd.Flags().BoolVarP(&monitorsPkg.GetOptions().Undelete, "undelete", "", false, "undelete a previously deleted monitor")
@@ -61,6 +59,9 @@ func init() {
 
 	monitorsCmd.SetUsageTemplate(UsageWithNotes(notesMonitors))
 	monitorsCmd.SetOut(os.Stderr)
+
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	chifraCmd.AddCommand(monitorsCmd)
 }

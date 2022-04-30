@@ -84,9 +84,6 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (Mocked("traces"))
-        return false;
-
     if (!isTracingNode())
         return usage("Tracing is required for this program to work properly.");
 

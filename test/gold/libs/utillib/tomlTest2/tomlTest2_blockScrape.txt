@@ -1,7 +1,7 @@
 tomlTest2  blockScrape.toml
 tests/blockScrape.toml
 [version]
-current = "vers-alpha"
+current = "vers-beta"
 
 [settings]
 # block_cnt = 2000

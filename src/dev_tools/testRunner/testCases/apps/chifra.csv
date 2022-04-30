@@ -23,7 +23,7 @@ on      ,cmd  ,fast  ,null    ,apps/chifra ,help_scrape           ,n    ,modes =
 on      ,cmd  ,fast  ,null    ,apps/chifra ,help_status           ,n    ,modes = status & help & log_level = 2
 on      ,cmd  ,fast  ,null    ,apps/chifra ,help_quotes           ,n    ,modes = quotes & help & log_level = 2
 on      ,cmd  ,fast  ,null    ,apps/chifra ,help_when             ,n    ,modes = when & help & log_level = 2
-on      ,both ,fast  ,export  ,apps/chifra ,run_rm                ,y    ,modes = monitors & addrs = 0x807640a13483f8ac783c557fcdf27be11ea4ac7a & remove
+local   ,both ,fast  ,export  ,apps/chifra ,run_rm                ,y    ,modes = monitors & addrs = 0x807640a13483f8ac783c557fcdf27be11ea4ac7a & remove
 on      ,both ,fast  ,names   ,apps/chifra ,run_names             ,y    ,modes = names & terms = 50-Tokens & expand
 on      ,both ,fast  ,names   ,apps/chifra ,run_names_tags        ,y    ,modes = names & tags
 on      ,both ,fast  ,names   ,apps/chifra ,run_names_collections ,y    ,modes = names & collections
@@ -35,7 +35,7 @@ on      ,both ,fast  ,blocks  ,apps/chifra ,run_blocks2           ,n    ,modes =
 on      ,both ,fast  ,abis    ,apps/chifra ,run_abi               ,y    ,modes = abis & addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 on      ,both ,fast  ,when    ,apps/chifra ,run_when              ,y    ,modes = when & list
 on      ,both ,fast  ,status  ,apps/chifra ,run_status            ,y    ,modes = status all
-on      ,both ,fast  ,status  ,apps/chifra ,run_status_details    ,y    ,modes = status all & details & first_block = 1400000 & last_block = 2000000
+local   ,both ,fast  ,status  ,apps/chifra ,run_status_details    ,y    ,modes = status all & details & first_block = 1400000 & last_block = 2000000
 
 off     ,cmd  ,fast  ,null    ,apps/chifra ,help_server           ,n    ,modes = serve & help & log_level = 2
 off     ,both ,fast  ,export  ,apps/chifra ,run_list              ,y    ,modes = monitors & addrs = 0xfb744b951d094b310262c8f986c860df9ab1de65 & last_block = 10000

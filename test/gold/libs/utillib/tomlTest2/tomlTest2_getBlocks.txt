@@ -1,7 +1,7 @@
 tomlTest2  getBlocks.toml
 tests/getBlocks.toml
 [version]
-current = "vers-alpha"
+current = "vers-beta"
 
 [settings]
 # secs_when_final = 300

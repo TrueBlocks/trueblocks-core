@@ -685,20 +685,20 @@ string_q compressInput(const string_q& inputIn) {
     string_q input = (startsWith(inputIn, "0x") ? "" : "0x") + inputIn;
     string_q name = input.substr(0, 10);
     replace(input, name, "");
-    string_q ret = name + " ( ";
+    string_q ret = name + "(";
     while (!input.empty()) {
         string_q chunk = input.substr(0, 364);
         replace(input, chunk, "");
-        ret += ("stub: " + chunk + ", ");
+        ret += ("stub:" + chunk + ", ");
     }
-    ret = trim(trim(ret, ' '), ',');
-    ret += " )";
+    ret = trim(trim(trim(ret, ' '), ','), ' ');
+    ret += ")";
     return ret;
 }
 
 //-----------------------------------------------------------------------
 const char* STR_COMPRESSED_FMT = "[{NAME}](++INPUTS++);";
-const char* STR_COMPRESSED_INPUT = "[{VALUE}] /*[{NAME}]*/, ";
+const char* STR_COMPRESSED_INPUT = "[{NAME}]:[{VALUE}]|";
 
 //-----------------------------------------------------------------------
 string_q CFunction::compressed(const string_q& def) const {
@@ -708,17 +708,25 @@ string_q CFunction::compressed(const string_q& def) const {
     if (name.empty())
         return compressInput(def);
 
-    ostringstream func, inp;
-    func << Format(STR_COMPRESSED_FMT) << endl;
-    for (auto input : inputs)
-        inp << input.Format(STR_COMPRESSED_INPUT);
-    string_q ret = func.str();
-    replace(ret, "++INPUTS++", trim(trim(inp.str(), ' '), ','));
-    if (ret.empty())
-        return compressInput(def);
-    replaceAll(ret, "--tuple--", "");
-
-    return stripWhitespace(ret);
+    ostringstream os;
+    os << *this;
+    string_q ret = os.str();
+    replaceAll(ret, "\\\"", "");
+    replaceAll(ret, "\"", "");
+    replaceAny(ret, "\t\n", " ");
+    replaceAll(ret, "  ", " ");
+    replaceAll(ret, "{ ", "{");
+    replaceAll(ret, " }", "}");
+    replaceAll(ret, "[ ", "[");
+    replaceAll(ret, " ]", "]");
+    replaceAll(ret, ": ", ":");
+    replaceAll(ret, ", ", "|");
+    replaceAll(ret, ",", "|");
+    replaceAll(ret, "|stateMutability:nonpayable", "");
+    replaceAll(ret, "|stateMutability:view", "");
+    replaceAll(ret, "|components:[]", "");
+    replaceAll(ret, "|unused:false", "");
+    return trim(ret);
 }
 
 //-----------------------------------------------------------------------

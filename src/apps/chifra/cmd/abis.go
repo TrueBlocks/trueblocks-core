@@ -57,5 +57,8 @@ func init() {
 	abisCmd.SetUsageTemplate(UsageWithNotes(notesAbis))
 	abisCmd.SetOut(os.Stderr)
 
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	chifraCmd.AddCommand(abisCmd)
 }

@@ -145,9 +145,6 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (Mocked("blocks"))
-        return false;
-
     if (cache)
         etherlib_init(defaultQuitHandler);
 

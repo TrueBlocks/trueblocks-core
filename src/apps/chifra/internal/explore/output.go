@@ -106,7 +106,6 @@ func (u *ExploreUrl) getUrl(opts *ExploreOptions) string {
 		url = config.GetLocalExplorer(chain)
 		query = strings.Replace(query, "tx/", "explorer/transactions/", -1)
 		query = strings.Replace(query, "block/", "explorer/blocks/", -1)
-		query = strings.Replace(query, "address/", "dashboard/accounts?address=", -1)
 	}
 
 	return url + query

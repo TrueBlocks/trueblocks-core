@@ -1,5 +1,5 @@
 chifra monitors  
-Error: Please specify at least one valid Ethereum address.
+Error: You must provide at least one Ethereum address for this command.
 Usage:
   chifra monitors [flags] <address> [address...]
 
@@ -7,8 +7,6 @@ Arguments:
   addrs - one or more addresses (0x...) to process (required)
 
 Flags:
-  -p, --appearances        export a list of appearances
-  -U, --count              present only the number of records
       --clean              clean (i.e. remove duplicate appearances) from monitors
       --delete             delete a monitor, but do not remove it
       --undelete           undelete a previously deleted monitor

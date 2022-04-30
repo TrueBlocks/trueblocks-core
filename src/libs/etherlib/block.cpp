@@ -497,6 +497,7 @@ bool CBlock::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     double removed1;
     biguint_t removed2;
+    // TODO: Remove old upgrade code -- it's okay -- don't worry about it...
     if (m_schema < getVersionNum(0, 3, 1)) {
         archive >> gasLimit;
         archive >> gasUsed;

@@ -36,7 +36,7 @@ jsonrpc             	1005	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 result              	1006	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 id                  	1007	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 {
-  "schema": 27000,
+  "schema": 30000,
   "deleted": false,
   "showing": true,
   "cname": "RPCResult"

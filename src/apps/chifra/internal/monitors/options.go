@@ -20,25 +20,21 @@ import (
 )
 
 type MonitorsOptions struct {
-	Addrs       []string
-	Appearances bool
-	Count       bool
-	Clean       bool
-	Delete      bool
-	Undelete    bool
-	Remove      bool
-	FirstBlock  uint64
-	LastBlock   uint64
-	Globals     globals.GlobalOptions
-	BadFlag     error
+	Addrs      []string
+	Clean      bool
+	Delete     bool
+	Undelete   bool
+	Remove     bool
+	FirstBlock uint64
+	LastBlock  uint64
+	Globals    globals.GlobalOptions
+	BadFlag    error
 }
 
 var monitorsCmdLineOptions MonitorsOptions
 
 func (opts *MonitorsOptions) TestLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
-	logger.TestLog(opts.Appearances, "Appearances: ", opts.Appearances)
-	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	logger.TestLog(opts.Clean, "Clean: ", opts.Clean)
 	logger.TestLog(opts.Delete, "Delete: ", opts.Delete)
 	logger.TestLog(opts.Undelete, "Undelete: ", opts.Undelete)
@@ -50,24 +46,6 @@ func (opts *MonitorsOptions) TestLog() {
 
 func (opts *MonitorsOptions) ToCmdLine() string {
 	options := ""
-	if opts.Appearances {
-		options += " --appearances"
-	}
-	if opts.Count {
-		options += " --count"
-	}
-	if opts.Clean {
-		options += " --clean"
-	}
-	if opts.Delete {
-		options += " --delete"
-	}
-	if opts.Undelete {
-		options += " --undelete"
-	}
-	if opts.Remove {
-		options += " --remove"
-	}
 	if opts.FirstBlock != 0 {
 		options += (" --first_block " + fmt.Sprintf("%d", opts.FirstBlock))
 	}
@@ -90,10 +68,6 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *MonitorsOptions {
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Addrs = append(opts.Addrs, s...)
 			}
-		case "appearances":
-			opts.Appearances = true
-		case "count":
-			opts.Count = true
 		case "clean":
 			opts.Clean = true
 		case "delete":

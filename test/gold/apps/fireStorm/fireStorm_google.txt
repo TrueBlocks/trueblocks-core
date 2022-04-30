@@ -1,4 +1,4 @@
 chifra explore  0xf503017D7baF7FBC0fff7492b751025c6A78179b --google
-TEST[DATE|TIME] Terms:  [0xf503017D7baF7FBC0fff7492b751025c6A78179b]
+TEST[DATE|TIME] Terms:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
 TEST[DATE|TIME] Google:  true
 Opening https://www.google.com/search?q=0xf503017d7baf7fbc0fff7492b751025c6a78179b+-etherscan+-etherchain+-bloxy+-bitquery+-ethplorer+-tokenview+-anyblocks+-explorer

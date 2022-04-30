@@ -1,0 +1,15 @@
+chifra init   -h
+Purpose:
+  Initialize the TrueBlocks system by downloading from IPFS.
+
+Usage:
+  chifra init [flags]
+
+Flags:
+  -a, --all          in addition to Bloom filters, download full index chunks
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -v, --verbose      enable verbose (increase detail with --log_level)
+  -h, --help         display this help screen
+
+Notes:
+  - Re-run chifra init as often as you wish. It will repair or freshen the index.

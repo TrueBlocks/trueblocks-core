@@ -59,9 +59,6 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (Mocked("logs"))
-        return false;
-
     if (isRaw)
         expContext().exportFmt = JSON1;
 

@@ -19,7 +19,7 @@ ifeq ($(UNAME_S),Linux)
     libs += -lcurl
 endif
 ifeq ($(UNAME_S),Darwin)
-    libs += /Library/Developer/CommandLineTools/SDKs/MacOSX11.sdk/usr/lib/libcurl.4.tbd
+    libs += /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib/libcurl.tbd
 endif
 
 #-------------------------------------------------

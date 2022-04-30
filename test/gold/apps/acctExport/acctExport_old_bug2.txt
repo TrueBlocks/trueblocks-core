@@ -1,0 +1,60 @@
+chifra export  0x000001f568875f378bf6d170b790967fe429c81a --fmt json --first_record 2909 --max_records 1
+TEST[DATE|TIME] Addrs:  [0x000001f568875f378bf6d170b790967fe429c81a]
+TEST[DATE|TIME] FirstRecord:  2909
+TEST[DATE|TIME] MaxRecords:  1
+TEST[DATE|TIME] Format:  json
+{ "data": [
+{
+  "hash": "0x670affb7f18893dedca5115f0ecaad827ecace4c1a68b7fe9e67fc59b2a3a9ab",
+  "blockHash": "0x12e1caa69fca456c2121b92c2d35e2521a0f4e2cf3c0f52f64efda3fce2adfe2",
+  "blockNumber": 13394694,
+  "transactionIndex": 276,
+  "timestamp": 1633919634,
+  "from": "0x000001f568875f378bf6d170b790967fe429c81a",
+  "to": "0xb21f8684f23dbb1008508b4de91a0aaedebdb7e4",
+  "value": 0,
+  "gas": 705600,
+  "gasPrice": 216469184523,
+  "maxFeePerGas": 294525899848,
+  "maxPriorityFeePerGas": 1000000000,
+  "isError": 0,
+  "hasToken": 0,
+  "receipt": {
+    "contractAddress": "0x0",
+    "gasUsed": 377259,
+    "effectiveGasPrice": 216469184523,
+    "logs": [
+      {
+        "address": "0xb21f8684f23dbb1008508b4de91a0aaedebdb7e4",
+        "logIndex": 319,
+        "topics": [
+          "0x962cd36cf694aa154c5d3a551f19c98f356d906e96828eeb616e16fae6415738"
+        ],
+        "data": "0x00000000000000000000000000000000000000000000000000000000000000110000000000000000000000000000000000000000000000000000000000000011",
+        "articulatedLog": {
+          "name": "TileChanged",
+          "inputs": {
+            "col": "17",
+            "row": "17"
+          }
+        },
+        "compressedLog": "{name:TileChanged|inputs:{col:17|row:17}}"
+      }
+    ],
+    "status": 1
+  },
+  "articulatedTx": {
+    "name": "setName",
+    "inputs": {
+      "_n": "\bGM GM GM\u0002\ufffd\u072d\u0711\tCA\fD\u0452\u0007[\u0005\u96a8[5\u0425y\b$,\u7a18\ufffd\u000b\ufffdz\u0001",
+      "col": "17",
+      "row": "17"
+    }
+  },
+  "compressedTx": "{name:setName|inputs:{_n:\bGM GM GM\u0002\ufffd\u072d\u0711\tCA\fD\u0452\u0007[\u0005\u96a8[5\u0425y\b$|\u7a18\ufffd\u000b\ufffdz\u0001|col:17|row:17}}",
+  "gasCost": 81664948083962457,
+  "gasUsed": 377259,
+  "date": "2021-10-11 02:33:54 UTC",
+  "ether": 0.000000000000000000
+}
+] }

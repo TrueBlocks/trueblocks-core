@@ -36,7 +36,6 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     // BEG_CODE_LOCAL_INIT
-    bool update = false;
     string_q period = "";
     string_q pair = "";
     // END_CODE_LOCAL_INIT
@@ -81,11 +80,6 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (Mocked(""))
-        return false;
-
-    freshenOnly = update;
-
     // Data wrangling
     if (!pair.empty())
         source.pair = pair;
@@ -113,6 +107,7 @@ void COptions::Init(void) {
     // END_CODE_GLOBALOPTS
 
     // BEG_CODE_INIT
+    update = false;
     feed = "";
     // END_CODE_INIT
 

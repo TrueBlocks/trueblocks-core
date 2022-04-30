@@ -1,4 +1,4 @@
-chifra explore  0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060 --local
-TEST[DATE|TIME] Terms:  [0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060]
+chifra explore  0x893c428fed019404f704cf4d9be977ed9ca01050ed93dccdd6c169422155586f --local
+TEST[DATE|TIME] Terms:  [0x893c428fed019404f704cf4d9be977ed9ca01050ed93dccdd6c169422155586f]
 TEST[DATE|TIME] Local:  true
-Opening http://localhost:1234/explorer/transactions/0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060
+Opening http://localhost:1234/explorer/transactions/0x893c428fed019404f704cf4d9be977ed9ca01050ed93dccdd6c169422155586f

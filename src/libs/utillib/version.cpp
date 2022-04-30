@@ -17,11 +17,11 @@ namespace qblocks {
 
 // Run make generate in order for this to take effect
 #define MAJOR 0
-#define MINOR 27
+#define MINOR 30
 #define BUILD 0
 // Run make generate in order for this to take effect
 
-#define SUBVERS "alpha"
+#define SUBVERS "beta"
 #define PRODUCT_NAME "GHC-TrueBlocks//"
 //--------------------------------------------------------------------------------
 uint32_t getVersionNum(void) {

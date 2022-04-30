@@ -39,13 +39,17 @@ func RunScrape(cmd *cobra.Command, args []string) error {
 	} else {
 		var wg sync.WaitGroup
 
-		wg.Add(1)
-		IndexScraper = NewScraper(colors.Yellow, "IndexScraper", opts.Sleep, opts.Globals.LogLevel)
-		go opts.RunIndexScraper(&wg, hasIndexerFlag(args[0]))
+		if hasIndexerFlag(args[0]) {
+			wg.Add(1)
+			IndexScraper = NewScraper(colors.Yellow, "IndexScraper", opts.Sleep, opts.Globals.LogLevel)
+			go opts.RunIndexScraper(&wg)
+		}
 
-		wg.Add(1)
-		MonitorScraper = NewScraper(colors.Purple, "MonitorScraper", opts.Sleep, opts.Globals.LogLevel)
-		go opts.RunMonitorScraper(&wg, hasMonitorsFlag(args[0]))
+		if hasMonitorsFlag(args[0]) {
+			wg.Add(1)
+			MonitorScraper = NewScraper(colors.Magenta, "MonitorScraper", opts.Sleep, opts.Globals.LogLevel)
+			go opts.RunMonitorScraper(&wg)
+		}
 
 		wg.Wait()
 	}

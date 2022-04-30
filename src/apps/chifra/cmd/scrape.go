@@ -73,5 +73,8 @@ One of [ toggle | run | restart | pause | quit ]`)
 	scrapeCmd.SetUsageTemplate(UsageWithNotes(notesScrape))
 	scrapeCmd.SetOut(os.Stderr)
 
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	chifraCmd.AddCommand(scrapeCmd)
 }

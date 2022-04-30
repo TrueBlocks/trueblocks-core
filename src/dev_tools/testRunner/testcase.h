@@ -193,6 +193,5 @@ extern const char* STR_DISPLAY_TESTCASE;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern void establishTestMonitors(void);
 // EXISTING_CODE
 }  // namespace qblocks

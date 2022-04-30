@@ -46,9 +46,7 @@ class COptionsBase {
     bool isRaw;
     bool isVeryRaw;
     bool noHeader;
-    bool mocked;
     bool firstOut;
-    bool freshenOnly;
 
   public:
     COptionsBase(void);
@@ -73,12 +71,6 @@ class COptionsBase {
     // supporting special block names
     static CNameValueArray specials;
     static bool findSpecial(CNameValue& pair, const string_q& arg);
-
-    // One of --create, --update, --delete, --undelete, --remove for use anywhere
-    CStringArray crudCommands;
-    bool isCrudCommand(void) const {
-        return crudCommands.size() > 0;
-    }
 
   public:
     // enabling options
@@ -118,7 +110,6 @@ class COptionsBase {
     vector<COption> parameters;
 
     virtual void Init(void) = 0;
-    virtual bool Mocked(const string_q& which);
     void registerOptions(size_t nP, const COption* pP, uint32_t on = NOOPT, uint32_t off = NOOPT);
 
   private:
@@ -223,7 +214,7 @@ extern void errorMessage(const string_q& msg);
 inline bool isReserved(const string_q& command) {
     const char* STR_RESERVED =
         "|help|verbose|fmt|output|append|noop|version|nocolor|no_header|raw|"
-        "wei|ether|dollars|cmd|mocked|api_mode|to_file|file|";
+        "wei|ether|dollars|cmd|api_mode|to_file|file|";
     return contains(STR_RESERVED, "|" + command + "|");
 }
 

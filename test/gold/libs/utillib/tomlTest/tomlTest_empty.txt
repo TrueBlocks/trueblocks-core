@@ -1,7 +1,7 @@
 tomlTest  empty.toml
 empty.toml
 [version]
-current = "vers-alpha"
+current = "vers-beta"
 
 name: 		NONAME
 max_width: 	10000
@@ -12,7 +12,7 @@ File contents as read
 
 File contents after write
 [version]
-current = "vers-alpha"
+current = "vers-beta"
 
 {
 	{ "thing1": "Value 1 with spaces" }

@@ -4,44 +4,116 @@ package listPkg
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-// TODO: BOGUS -- USED TO BE ACCTSCRAPE2
 import (
-	"encoding/csv"
 	"fmt"
 	"io/ioutil"
 	"log"
+	"os"
+	"strconv"
 	"strings"
 	"sync"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	"github.com/ethereum/go-ethereum/common"
 )
 
-func (optsEx *ListOptionsExtended) HandleFreshenMonitors() error {
-	chain := optsEx.opts.Globals.Chain
-	indexPath := config.GetPathToIndex(chain) + "finalized/"
-	files, err := ioutil.ReadDir(indexPath)
+// AddressMonitorMap carries arrays of appearances that have not yet been written to the monitor file
+type AddressMonitorMap map[common.Address]*monitor.Monitor
+
+// MonitorUpdate stores the original 'chifra list' command line options plus
+type MonitorUpdate struct {
+	MaxTasks   int
+	MonitorMap AddressMonitorMap
+	Options    *ListOptions
+	FirstBlock uint64
+}
+
+func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) error {
+	var updater = MonitorUpdate{
+		MaxTasks:   12,
+		MonitorMap: make(AddressMonitorMap, len(opts.Addrs)),
+		Options:    opts,
+		FirstBlock: utils.NOPOS,
+	}
+
+	// This removes duplicates from the input array and keep a map from address to
+	// a pointer to the monitors
+	for _, addr := range opts.Addrs {
+		err := needsMigration(addr)
+		if err != nil {
+			return err
+		}
+
+		if updater.MonitorMap[common.HexToAddress(addr)] == nil {
+			mon, _ := monitor.NewStagedMonitor(opts.Globals.Chain, addr)
+			mon.ReadHeader()
+			if uint64(mon.LastScanned) < updater.FirstBlock {
+				updater.FirstBlock = uint64(mon.LastScanned)
+			}
+			*monitorArray = append(*monitorArray, mon)
+			// we need the address here because we want to modify this object below
+			updater.MonitorMap[mon.Address] = &(*monitorArray)[len(*monitorArray)-1]
+		}
+	}
+
+	chain := opts.Globals.Chain
+	bloomPath := config.GetPathToIndex(chain) + "blooms/"
+	files, err := ioutil.ReadDir(bloomPath)
 	if err != nil {
 		return err
 	}
 
 	var wg sync.WaitGroup
-	resultChannel := make(chan []index.ResultRecord, len(files))
+	resultChannel := make(chan []index.AppearanceResult, len(files))
 
 	taskCount := 0
 	for _, info := range files {
 		if !info.IsDir() {
-			if taskCount >= optsEx.maxTasks {
+			fileName := bloomPath + "/" + info.Name()
+			if !strings.HasSuffix(fileName, ".bloom") {
+				continue // sometimes there are .gz files in this folder, for example
+			}
+			fileRange, err := cache.RangeFromFilename(fileName)
+			if err != nil {
+				// don't respond further -- there may be foreign files in the folder
+				fmt.Println(err)
+				continue
+			}
+
+			max := os.Getenv("FAKE_FINAL_BLOCK") // This is for testing only, please ignore
+			if len(max) > 0 {
+				m, _ := strconv.ParseUint(max, 10, 32)
+				if fileRange.Last > m {
+					continue
+				}
+			}
+
+			if opts.Globals.TestMode && fileRange.Last > 5000000 {
+				continue
+			}
+
+			if fileRange.EarlierThan(updater.FirstBlock) {
+				continue
+			}
+
+			if taskCount >= updater.MaxTasks {
 				resArray := <-resultChannel
 				for _, r := range resArray {
-					optsEx.PostProcess(&r)
+					updater.updateMonitors(&r)
 				}
 				taskCount--
 			}
+
+			// Run a go routine for each index file
 			taskCount++
-			indexFileName := indexPath + "/" + info.Name()
 			wg.Add(1)
-			go optsEx.visitChunkToFreshenFinal(indexFileName, optsEx.addrMonMap, resultChannel, &wg)
+			go updater.visitChunkToFreshenFinal(fileName, resultChannel, &wg)
 		}
 	}
 
@@ -50,75 +122,137 @@ func (optsEx *ListOptionsExtended) HandleFreshenMonitors() error {
 
 	for resArray := range resultChannel {
 		for _, r := range resArray {
-			optsEx.PostProcess(&r)
+			updater.updateMonitors(&r)
 		}
 	}
 
-	return nil
+	return updater.moveAllToProduction()
 }
 
 // visitChunkToFreshenFinal opens one index file, searches for all the address(es) we're looking for and pushes the resultRecords
 // (even if empty) down the resultsChannel.
-func (optsEx *ListOptionsExtended) visitChunkToFreshenFinal(fileName string, monitors AddressMonitorMap, resultChannel chan<- []index.ResultRecord, wg *sync.WaitGroup) {
-	var results []index.ResultRecord
+func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultChannel chan<- []index.AppearanceResult, wg *sync.WaitGroup) {
+	var results []index.AppearanceResult
 	defer func() {
 		wg.Done()
 		resultChannel <- results
 	}()
 
-	indexChunk, err := index.LoadIndexHeader(fileName)
+	// TODO: BOGUS - Should only scan if we're not already seen the block
+	bloomFilename := index.ToBloomPath(fileName)
+
+	// We open the bloom filter and read its header but we do not read any of the
+	// actual bits in the blooms. The IsMember function reads individual bytes to
+	// check individual bits.
+	bloom, err := index.NewChunkBloom(bloomFilename)
 	if err != nil {
-		log.Println(err)
+		results = append(results, index.AppearanceResult{Range: bloom.Range, Err: err})
+		bloom.Close()
+		return
+	}
+
+	// We check each address against the bloom to see if there are any hits...
+	var bloomHits = false
+	for _, mon := range updater.MonitorMap {
+		if bloom.IsMember(mon.Address) {
+			bloomHits = true
+			break
+		}
+	}
+
+	// We're done with the bloom and we want to close it as soon as we can (therefore
+	// we don't defer this close, but close it right away -- otherwise too many files
+	// are open and we get an error).
+	// TODO: Must we always be closing these files?
+	bloom.Close()
+
+	// If none of the addresses hit, we're finished with this index chunk. We want the
+	// caller to note this range even though there was no hit. In this way, we keep
+	// track of the last index portion we've seen. Because none of the addresses hit,
+	// we don't need to send a specific message.
+	if !bloomHits {
+		results = append(results, index.AppearanceResult{Range: bloom.Range})
+		return
+	}
+
+	indexFilename := index.ToIndexPath(fileName)
+	if !file.FileExists(indexFilename) {
+		_, err := index.EstablishIndexChunk(updater.Options.Globals.Chain, bloom.Range)
+		if err != nil {
+			results = append(results, index.AppearanceResult{Range: bloom.Range, Err: err})
+			return
+		}
+	}
+
+	indexChunk, err := index.NewChunkData(indexFilename)
+	if err != nil {
+		results = append(results, index.AppearanceResult{Range: bloom.Range, Err: err})
 		return
 	}
 	defer indexChunk.Close()
 
-	if optsEx.opts.Globals.TestMode && indexChunk.Range.Last > 5000000 {
+	for _, mon := range updater.MonitorMap {
+		results = append(results, *indexChunk.GetAppearanceRecords(mon.Address))
+	}
+}
+
+// updateMonitors writes an array of appearances to the Monitor file updating the header for lastScanned. It
+// is called by 'chifra list' and 'chifra export' prior to reporting results
+func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
+	if result == nil {
+		fmt.Println("Should not happen -- null result")
 		return
 	}
 
-	if !optsEx.RangesIntersect(indexChunk.Range) {
+	if result.Err != nil {
+		fmt.Println("Error processing index file:", result.Err)
 		return
 	}
 
-	for _, mon := range monitors {
-		rec := indexChunk.GetAppearanceRecords(mon.Address)
-		if rec != nil {
-			results = append(results, *rec)
+	lastScanned := uint32(result.Range.Last) + 1
+
+	mon := updater.MonitorMap[result.Address]
+	if mon == nil {
+		// In this case, there were no errors, but all monitors were skipped. This would
+		// happen, for example, due to false positives hits on the bloom filters. We want
+		// to update the LastScanned values for each of these monitors. WriteAppearancesAppend, when
+		// given a nil appearance list simply updates the header. Note we update for the
+		// start of the next chunk (plus 1 to current range).
+		for _, mon := range updater.MonitorMap {
+			// TODO: BOGUS - can we manage these file pointers so they aren't copied and
+			// TODO: BOGUS - therefore don't need to be Closed so or else it crashes
+			mon.Close()
+			err := mon.WriteAppearancesAppend(lastScanned, nil)
+			if err != nil {
+				log.Println(err)
+			}
+		}
+
+	} else {
+		mon.Close()
+		// Note that result.AppRecords may be nil here (because, for example, this
+		// monitor had a false positive), but we do still want to update the header.
+		mon.WriteMonHeader(mon.Deleted, lastScanned)
+		if result.AppRecords != nil {
+			nWritten := len(*result.AppRecords)
+			if nWritten > 0 {
+				_, err := mon.WriteAppearances(*result.AppRecords, os.O_WRONLY|os.O_APPEND)
+				if err != nil {
+					log.Println(err)
+				} else if !updater.Options.Globals.TestMode {
+					log.Printf("%s appended %d apps at %s\n", mon.GetAddrStr(), nWritten, result.Range)
+				}
+			}
 		}
 	}
 }
 
-// PostProcess
-func (optsEx *ListOptionsExtended) PostProcess(result *index.ResultRecord) {
-	if optsEx.opts.Count {
-		return
+func needsMigration(addr string) error {
+	mon := monitor.Monitor{Address: common.HexToAddress(addr)}
+	path := strings.Replace(mon.Path(), ".mon.bin", ".acct.bin", -1)
+	if file.FileExists(path) {
+		path = strings.Replace(path, config.GetPathToCache(mon.Chain), "./", -1)
+		return validate.Usage("Old style monitor found at {0}. Please run '{1}'", path, "chifra status --migrate [test|all]")
 	}
-
-	if result == nil {
-		fmt.Println("null result")
-		return
-	}
-
-	if result.AppRecords == nil || len(*result.AppRecords) == 0 {
-		fmt.Println("Empty result record:", result.Address)
-		return
-	}
-
-	// log.Println(colors.Bright, colors.Blue, result.Address, colors.Off, len(*result.AppRecords), "records.")
-	// if opts.Count {
-	// 	log.Println(colors.Bright, colors.Blue, result.Address, colors.Off, len(*result.AppRecords), "records")
-	// }
-
-	theWriter := csv.NewWriter(optsEx.writer)
-	theWriter.Comma = 0x9
-	var out [][]string
-	for _, app := range *result.AppRecords {
-		out = append(out, []string{strings.ToLower(result.Address.Hex()), fmt.Sprintf("%d", app.BlockNumber), fmt.Sprintf("%d", app.TransactionId)})
-	}
-	theWriter.WriteAll(out)
-	if err := theWriter.Error(); err != nil {
-		// TODO: BOGUS
-		log.Fatal("F", err)
-	}
+	return nil
 }

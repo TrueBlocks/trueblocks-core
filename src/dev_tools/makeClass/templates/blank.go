@@ -35,5 +35,8 @@ var notes[{PROPER}] = `[{POSTNOTES}]`
 	[{ROUTE}]Cmd.SetUsageTemplate(UsageWithNotes(notes[{PROPER}]))
 	[{ROUTE}]Cmd.SetOut(os.Stderr)
 
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	chifraCmd.AddCommand([{ROUTE}]Cmd)
 }

@@ -21,7 +21,7 @@ func TestCacheLayout(t *testing.T) {
 		name      string
 		cacheType CacheType
 		param     string
-		expected  Path
+		expected  CachePath
 		path      string
 		wantErr   bool
 	}{
@@ -29,8 +29,8 @@ func TestCacheLayout(t *testing.T) {
 			on:    true,
 			name:  "index chunk path",
 			param: "0010000000-0010200000",
-			expected: Path{
-				Type:      IndexChunk,
+			expected: CachePath{
+				Type:      Index_Final,
 				RootPath:  indexPath,
 				Subdir:    "finalized/",
 				Extension: ".bin",
@@ -42,8 +42,8 @@ func TestCacheLayout(t *testing.T) {
 			on:    true,
 			name:  "Bloom filter path",
 			param: "0010000000-0010200000",
-			expected: Path{
-				Type:      BloomChunk,
+			expected: CachePath{
+				Type:      Index_Bloom,
 				RootPath:  indexPath,
 				Subdir:    "blooms/",
 				Extension: ".bloom",
@@ -55,8 +55,8 @@ func TestCacheLayout(t *testing.T) {
 			on:    false,
 			name:  "Block cache path",
 			param: "001001001",
-			expected: Path{
-				Type:      BlockCache,
+			expected: CachePath{
+				Type:      Cache_Block,
 				RootPath:  cachePath,
 				Subdir:    "blocks/",
 				Extension: ".bin",
@@ -68,8 +68,8 @@ func TestCacheLayout(t *testing.T) {
 			on:    false,
 			name:  "Transaction cache path",
 			param: "1001001.20",
-			expected: Path{
-				Type:      TxCache,
+			expected: CachePath{
+				Type:      Cache_Tx,
 				RootPath:  cachePath,
 				Subdir:    "txs/",
 				Extension: ".bin",
@@ -88,8 +88,7 @@ func TestCacheLayout(t *testing.T) {
 		}
 
 		t.Run(tt.name, func(t *testing.T) {
-			cachePath := &Path{}
-			cachePath.New(GetTestChain(), tt.expected.Type)
+			cachePath := NewCachePath(GetTestChain(), tt.expected.Type)
 			if cachePath.Extension != tt.expected.Extension {
 				t.Error("Wrong extension", cachePath.Extension)
 			}

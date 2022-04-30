@@ -13,26 +13,38 @@
 #include "options.h"
 
 //--------------------------------------------------------------------------------
-bool needsMigrate(const string_q& path, void* data) {
+bool needsMigration(const string_q& path, void* data) {
     CMigrationChecker* checker = (CMigrationChecker*)data;
     if (endsWith(path, "/")) {
-        return forEveryFileInFolder(path + "*", needsMigrate, data);
+        return forEveryFileInFolder(path + "*", needsMigration, data);
 
     } else {
         if (endsWith(path, ".bin") && !contains(path, "/ts.bin")) {
-            CArchive readArchive(READING_ARCHIVE);
-            if (readArchive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
-                bool isTrace = contains(path, "/traces/");
-                bool isRecon = contains(path, "/recons/");
-                bool isNames = contains(path, "/names/");
-                checker->needs = readArchive.needsUpgrade(isTrace || isRecon || isNames);
-                LOG_INFO(bBlack, "    Checking '", relativize(path), "'", cOff, "\r");
-                readArchive.Release();
-                if (checker->needs) {
-                    checker->msg = path;
-                    return false;  // quit after we find the first one that needs migrate
+            CStringArray which;
+            explode(which, checker->which, ',');
+            for (auto w : which) {
+                if (w == "0.17.0") {
+                    if (!contains(path, "monitors")) {
+                        CArchive readArchive(READING_ARCHIVE);
+                        if (readArchive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
+                            bool isTrace = contains(path, "/traces/");
+                            bool isRecon = contains(path, "/recons/");
+                            bool isNames = contains(path, "/names/");
+                            checker->needs = readArchive.needsUpgrade(isTrace || isRecon || isNames);
+                            LOG_INFO(bBlack, "    Checking '", relativize(path), "'", cOff, "\r");
+                            readArchive.Release();
+                        }
+                    }
+                } else if (w == "0.30.0") {
+                    if (contains(path, ".acct.bin")) {
+                        checker->needs = true;
+                    }
                 }
             }
+        }
+        if (checker->needs) {
+            checker->msg = path;
+            return false;  // quit after we find the first one that needs migration
         }
     }
     return !shouldQuit();
@@ -42,9 +54,8 @@ bool needsMigrate(const string_q& path, void* data) {
 bool COptions::handle_migrate_test(const CStringArray& cachePaths) {
     LOG_INFO("Checking caches at ", bBlue, cacheFolder, cOff);
     for (auto cache : cachePaths) {
-        CMigrationChecker checker(cache);
-        forEveryFileInFolder(cache, needsMigrate, &checker);  // will quit early if it finds a migrate
-
+        CMigrationChecker checker(cache, "0.17.0,0.30.0");
+        forEveryFileInFolder(cache, needsMigration, &checker);  // will quit early if it finds a migrate
         if (checker.needs) {
             LOG_WARN(bBlue, "  ", relativize(cache), cYellow, " needs a migration at ", bBlack, relativize(checker.msg),
                      cOff);
