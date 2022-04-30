@@ -11,14 +11,14 @@ import (
 
 // EstablishFolders creates the rootPath and any subfolders
 func EstablishFolders(rootPath string, folders []string) error {
-	err := establishFolder(rootPath)
+	err := EstablishFolder(rootPath)
 	if err != nil {
 		return err
 	}
 
 	if folders != nil {
 		for _, folder := range folders {
-			err := establishFolder(path.Join(rootPath, folder))
+			err := EstablishFolder(path.Join(rootPath, folder))
 			if err != nil {
 				return err
 			}
@@ -28,8 +28,8 @@ func EstablishFolders(rootPath string, folders []string) error {
 	return nil
 }
 
-// establishFolder creates folders given a list of folders
-func establishFolder(rootPath string) error {
+// EstablishFolder creates folders given a list of folders
+func EstablishFolder(rootPath string) error {
 	_, err := os.Stat(rootPath)
 	if err != nil {
 		if os.IsNotExist(err) {
