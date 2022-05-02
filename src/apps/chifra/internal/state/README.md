@@ -33,7 +33,7 @@ Notes:
   - You may specify multiple modes on a single line.
 ```
 
-Other Options
+#### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.
 

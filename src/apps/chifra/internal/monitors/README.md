@@ -30,7 +30,7 @@ Notes:
   - If no address is presented to the --clean command, all monitors will be cleaned.
 ```
 
-Other Options
+#### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.
 

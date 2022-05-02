@@ -32,7 +32,7 @@ Notes:
   - If the queried node does not store historical state, the results for most older transactions are undefined.
 ```
 
-Other Options
+#### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.
 

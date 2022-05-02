@@ -33,7 +33,7 @@ Notes:
   - A state diff trace describes, for each modified address, what changed during that trace.
 ```
 
-Other Options
+#### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.
 
