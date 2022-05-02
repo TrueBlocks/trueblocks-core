@@ -702,43 +702,41 @@ paths:
                     items:
                       $ref: "#/components/schemas/function"
                 example:
-                  {
-                    "data":
-                      [
-                        {
-                          "name": "PairCreated",
-                          "type": "event",
-                          "stateMutability": "nonpayable",
-                          "signature": "PairCreated(address,address,address,uint256)",
-                          "encoding": "0x0d3648bd0f6ba80134a33ba9275ac585d9d315f0ad8355cddefde31afa28d0e9",
-                          "inputs":
-                            [
-                              {
-                                "type": "address",
-                                "name": "token0",
-                                "indexed": true,
-                                "internalType": "address",
-                              },
-                              {
-                                "type": "address",
-                                "name": "token1",
-                                "indexed": true,
-                                "internalType": "address",
-                              },
-                              {
-                                "type": "address",
-                                "name": "pair",
-                                "internalType": "address",
-                              },
-                              {
-                                "type": "uint256",
-                                "name": "val0",
-                                "internalType": "uint256",
-                              },
-                            ],
-                        },
-                      ],
-                  }
+                 {
+                   "data": [
+                     {
+                       "name": "PairCreated",
+                       "type": "event",
+                       "stateMutability": "nonpayable",
+                       "signature": "PairCreated(address,address,address,uint256)",
+                       "encoding": "0x0d3648bd0f6ba80134a33ba9275ac585d9d315f0ad8355cddefde31afa28d0e9",
+                       "inputs": [
+                         {
+                           "type": "address",
+                           "name": "token0",
+                           "indexed": true,
+                           "internalType": "address"
+                         },
+                         {
+                           "type": "address",
+                           "name": "token1",
+                           "indexed": true,
+                           "internalType": "address"
+                         },
+                         {
+                           "type": "address",
+                           "name": "pair",
+                           "internalType": "address"
+                         },
+                         {
+                           "type": "uint256",
+                           "name": "val_0",
+                           "internalType": "uint256"
+                         }
+                       ]
+                     }
+                   ]
+                 }
         "400":
           description: bad input parameter
   /blocks:
@@ -1354,21 +1352,20 @@ paths:
                     items:
                       $ref: "#/components/schemas/token"
                 example:
-                  {
-                    "data":
-                      [
-                        {
-                          "holder": "0x2910543af39aba0cd09dbb2d50200b3e800a63d2",
-                          "balance": "624980000000000000",
-                          "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
-                          "name": "The DAO Original",
-                          "decimals": 1,
-                          "isContract": true,
-                          "isErc20": true,
-                          "isErc721": true,
-                        },
-                      ],
-                  }
+                 {
+                   "data": [
+                     {
+                       "holder": "0x2910543af39aba0cd09dbb2d50200b3e800a63d2",
+                       "balance": "624980000000000000",
+                       "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+                       "name": "The DAO Original",
+                       "decimals": 1,
+                       "isContract": true,
+                       "isErc20": true,
+                       "isErc721": true
+                     }
+                   ]
+                 }
         "400":
           description: bad input parameter
   /status:
