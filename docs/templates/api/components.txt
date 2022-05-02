@@ -36,8 +36,17 @@ components:
         deleted:
           type: boolean
           description: "`true` if deleted, `false` otherwise"
+        symbol:
+          type: string
+        source:
+          type: string
+        decimals:
+          type: number
+          format: uint64
+        isContract:
+          type: boolean
     appearance:
-      description: "a single appearance of an address anywhere in the chain in the form of blockNumber.transactionIndex"
+      description: "data of the appropriate type from a single appearance of an address or the count of same"
       type: object
       properties:
         blockNumber:
@@ -252,19 +261,22 @@ components:
         isErc721:
           type: boolean
           description: "`true` if the address is an ERC720, `false` otherwise"
-    abi:
-      description: "a collection of function and event definitions as described elsewhere in the Ethereum system"
+    listStats:
+      description: "data of the appropriate type from a single appearance of an address or the count of same"
       type: object
       properties:
         address:
           type: string
           format: address
-          description: "the smart contract that implements this abi"
-        interfaces:
-          type: array
-          items:
-            $ref: "#/components/schemas/function"
-          description: "the list of events and functions on this abi"
+          description: "the address for this count"
+        nRecords:
+          type: number
+          format: uint64
+          description: "the number of appearances for the given address"
+        fileSize:
+          type: number
+          format: uint64
+          description: "the size of the monitor file containing those appearances"
     block:
       description: "block data directly from the blockchain"
       type: object
@@ -318,20 +330,24 @@ components:
           type: boolean
           example: true
           description: "flag indicating the system considers this data final"
+        unclesCnt:
+          type: number
+          format: uint64
+          description: "the number of uncles in this block"
     transaction:
       description: "the transaction data for a given transaction directly from the blockchain"
       type: object
       properties:
-        hash:
-          type: string
-          format: hash
-          example: "0xf128...1e98"
-          description: "The hash of the transaction"
         gasPrice:
           type: string
           format: gas
           example: "63525836552"
           description: "the number of wei per unit of gas the sender is willing to spend"
+        hash:
+          type: string
+          format: hash
+          example: "0xf128...1e98"
+          description: "The hash of the transaction"
         blockHash:
           type: string
           format: hash
@@ -404,6 +420,13 @@ components:
           type: boolean
           example: true
           description: "flag indicating the system considers this data final"
+        extraData:
+          type: string
+        isError:
+          type: boolean
+        date:
+          type: string
+          format: date
     receipt:
       description: "receipt data for a given transaction directly from the blockchain"
       type: object
@@ -774,6 +797,11 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/chain"
+        caches:
+          type: array
+          items:
+            $ref: "#/components/schemas/cache"
+          description: "a collection of information concerning the binary caches"
     cache:
       description: "The cache data model carries information about the various local binary caches"
       type: object
@@ -796,6 +824,11 @@ components:
           type: number
           format: uint64
           description: "the size of the cache in bytes"
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/cacheEntry"
+          description: "an array of cache items"
     pinnedChunk:
       description: "the IPFS hashes of the index chunk and its associated Bloom filter for the given block range"
       type: object
@@ -805,11 +838,13 @@ components:
           example: "013142464-013145212"
           description: "for each chunk, the range of blocks contained in that chunk"
         bloomHash:
-          type: ipfshash
+          type: string
+          format: ipfshash
           example: "QmXHjjY...HDqvWT"
           description: "the IPFS hash of the bloom filter at that range"
         indexHash:
-          type: ipfshash
+          type: string
+          format: ipfshash
           example: "QmTbYpR...qWLj44"
           description: "the IPFS hash of the index chunk at that range"
         firstApp:
@@ -872,6 +907,15 @@ components:
         pinGateway:
           type: string
           description: "An IPFS gateway for pinning the index if enabled"
+    cacheEntry:
+      description: "an entry in one of the caches"
+      type: object
+      properties:
+        address:
+          type: string
+          format: address
+        name:
+          type: string
     function:
       description: "a human readable representation of a Solidity function call or event"
       type: object

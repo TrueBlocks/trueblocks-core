@@ -4,8 +4,8 @@ Complete any applicable [Migrations](https://github.com/TrueBlocks/trueblocks-co
 
 # TrueBlocks Core
 
-![GitHub repo size](https://img.shields.io/github/repo-size/scottydocs/README-template.md)
-![GitHub contributors](https://img.shields.io/github/contributors/scottydocs/README-template.md)
+![GitHub repo size](https://img.shields.io/github/repo-size/TrueBlocks/trueblocks-core)
+![GitHub contributors](https://img.shields.io/github/contributors/TrueBlocks/trueblocks-core)
 ![GitHub stars](https://img.shields.io/github/stars/TrueBlocks/trueblocks-core?style%3Dsocial)
 ![GitHub forks](https://img.shields.io/github/forks/TrueBlocks/trueblocks-core?style=social)
 ![Twitter Follow](https://img.shields.io/twitter/follow/trueblocks?style=social)

@@ -130,7 +130,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: a single appearance of an address anywhere in the chain in the form of blockNumber.transactionIndex
+                    description: data of the appropriate type from a single appearance of an address or the count of same
                     type: array
                     items:
                       oneOf:
@@ -138,23 +138,22 @@ paths:
                         - $ref: "#/components/schemas/listStats"
                 example:
                   {
-                    "data": [
-                      {
-                        "blockNumber": 8854723,
-                        "transactionIndex": 61,
-                        "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-                        "name": "TrueBlocks 2020 Wallet 0xf503"
-                      },
-                      {
-                        "blockNumber": 8855603,
-                        "transactionIndex": 121,
-                        "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-                        "name": "TrueBlocks 2020 Wallet 0xf503"
-                      },
-                      {
-                        "...": "..."
-                      }
-                    ]
+                    "data":
+                      [
+                        {
+                          "blockNumber": 8854723,
+                          "transactionIndex": 61,
+                          "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+                          "name": "TrueBlocks 2020 Wallet 0xf503",
+                        },
+                        {
+                          "blockNumber": 8855603,
+                          "transactionIndex": 121,
+                          "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+                          "name": "TrueBlocks 2020 Wallet 0xf503",
+                        },
+                        { "...": "..." },
+                      ],
                   }
         "400":
           description: bad input parameter
@@ -390,12 +389,13 @@ paths:
               schema:
                 properties:
                   data:
-                    description: a single appearance of an address anywhere in the chain in the form of blockNumber.transactionIndex
+                    description: data of the appropriate type from a single appearance of an address or the count of same
                     type: array
                     items:
                       oneOf:
                         - $ref: "#/components/schemas/appearance"
                         - $ref: "#/components/schemas/reconciliation"
+                        - $ref: "#/components/schemas/listStats"
                         - $ref: "#/components/schemas/transaction"
                         - $ref: "#/components/schemas/receipt"
                         - $ref: "#/components/schemas/log"
@@ -440,7 +440,7 @@ paths:
     get:
       tags:
         - Accounts
-      summary: Manage Monitors
+      summary: Manage monitors
       description: Add, remove, clean, and list address monitors.
       operationId: accounts-monitors
       parameters:
@@ -463,6 +463,30 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: delete
+          description: delete the item, but do not remove it
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: undelete
+          description: undelete a previously deleted item
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: remove
+          description: remove a previously deleted item
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
           description: returns the requested data
@@ -477,50 +501,6 @@ paths:
                       $ref: "#/components/schemas/monitor"
         "400":
           description: bad input parameter
-    delete:
-      summary: Delete, undelete, or remove a monitor
-      operationId: accounts-monitors
-      parameters:
-        - name: addrs
-          description: one or more addresses (0x...) to process
-          required: true
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-              format: address
-        - name: delete
-          description: delete a monitor, but do not remove it
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: undelete
-          description: undelete a previously deleted monitor
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: remove
-          description: remove a previously deleted monitor
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-      responses:
-        "200":
-          description: Deleted
-        "404":
-          description: id not found
   /names:
     get:
       tags:
@@ -613,6 +593,30 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: delete
+          description: delete the item, but do not remove it
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: undelete
+          description: undelete a previously deleted item
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: remove
+          description: remove a previously deleted item
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
           description: returns the requested data
@@ -639,50 +643,6 @@ paths:
                   ]
         "400":
           description: bad input parameter
-    delete:
-      summary: Delete, undelete, or remove a monitor
-      operationId: accounts-monitors
-      parameters:
-        - name: addrs
-          description: one or more addresses (0x...) to process
-          required: true
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-              format: address
-        - name: delete
-          description: delete a monitor, but do not remove it
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: undelete
-          description: undelete a previously deleted monitor
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: remove
-          description: remove a previously deleted monitor
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-      responses:
-        "200":
-          description: Deleted
-        "404":
-          description: id not found
   /abis:
     get:
       tags:
@@ -737,45 +697,47 @@ paths:
               schema:
                 properties:
                   data:
-                    description: a collection of function and event definitions as described elsewhere in the Ethereum system
+                    description: a human readable representation of a Solidity function call or event
                     type: array
                     items:
                       $ref: "#/components/schemas/function"
                 example:
                   {
-                    "data": [
-                      {
-                        "name": "PairCreated",
-                        "type": "event",
-                        "stateMutability": "nonpayable",
-                        "signature": "PairCreated(address,address,address,uint256)",
-                        "encoding": "0x0d3648bd0f6ba80134a33ba9275ac585d9d315f0ad8355cddefde31afa28d0e9",
-                        "inputs": [
-                          {
-                            "type": "address",
-                            "name": "token0",
-                            "indexed": true,
-                            "internalType": "address"
-                          },
-                          {
-                            "type": "address",
-                            "name": "token1",
-                            "indexed": true,
-                            "internalType": "address"
-                          },
-                          {
-                            "type": "address",
-                            "name": "pair",
-                            "internalType": "address"
-                          },
-                          {
-                            "type": "uint256",
-                            "name": "val0",
-                            "internalType": "uint256"
-                          }
-                        ]
-                      }
-                    ]
+                    "data":
+                      [
+                        {
+                          "name": "PairCreated",
+                          "type": "event",
+                          "stateMutability": "nonpayable",
+                          "signature": "PairCreated(address,address,address,uint256)",
+                          "encoding": "0x0d3648bd0f6ba80134a33ba9275ac585d9d315f0ad8355cddefde31afa28d0e9",
+                          "inputs":
+                            [
+                              {
+                                "type": "address",
+                                "name": "token0",
+                                "indexed": true,
+                                "internalType": "address",
+                              },
+                              {
+                                "type": "address",
+                                "name": "token1",
+                                "indexed": true,
+                                "internalType": "address",
+                              },
+                              {
+                                "type": "address",
+                                "name": "pair",
+                                "internalType": "address",
+                              },
+                              {
+                                "type": "uint256",
+                                "name": "val0",
+                                "internalType": "uint256",
+                              },
+                            ],
+                        },
+                      ],
                   }
         "400":
           description: bad input parameter
@@ -892,17 +854,17 @@ paths:
           required: false
           style: form
           in: query
+          explode: true
           schema:
-            type: string
-            format: blknum
+            type: number
         - name: listCount
-          description: the number of blocks to report for list option
+          description: the number of blocks to report for --list option
           required: false
           style: form
           in: query
+          explode: true
           schema:
-            type: string
-            format: blknum
+            type: number
       responses:
         "200":
           description: returns the requested data
@@ -920,7 +882,7 @@ paths:
                     "blockNumber": 3141592,
                     "hash": "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53",
                     "...": "...",
-                    "transactions": []
+                    "transactions": [],
                   }
         "400":
           description: bad input parameter
@@ -1154,7 +1116,8 @@ paths:
       operationId: chaindata-when
       parameters:
         - name: blocks
-          description: a space-separated list of one or more block identifiers
+          description: >
+            one or more dates, block numbers, hashes, or special named blocks (see notes)
           required: false
           style: form
           in: query
@@ -1163,20 +1126,21 @@ paths:
             type: array
             items:
               type: string
-              format: blknum
-        - name: timestamps
-          description: ignore other options and generate timestamps only
+              format: string
+        - name: list
+          description: export a list of the 'special' blocks
           required: false
           style: form
           in: query
           explode: true
           schema:
             type: boolean
-        - name: list
-          description: "export a list of the 'special' blocks"
+        - name: timestamps
+          description: ignore other options and generate timestamps only
           required: false
           style: form
           in: query
+          explode: true
           schema:
             type: boolean
       responses:
@@ -1292,19 +1256,20 @@ paths:
                         - $ref: "#/components/schemas/result"
                 example:
                   {
-                    "data": [
-                      {
-                        "blockNumber": 13176226,
-                        "balance": 258843698360318500,
-                        "nonce": 115,
-                        "code": "0x",
-                        "storage": "0x0000000000000000000000000000000000000000000000000000000000000000",
-                        "address": "0xa1e4380a3b1f749673e270229993ee55f35663b4",
-                        "deployed": 0,
-                        "accttype": "EOA",
-                        "ether": 0.2588436983603185
-                      }
-                    ]
+                    "data":
+                      [
+                        {
+                          "blockNumber": 13176226,
+                          "balance": 258843698360318500,
+                          "nonce": 115,
+                          "code": "0x",
+                          "storage": "0x0000000000000000000000000000000000000000000000000000000000000000",
+                          "address": "0xa1e4380a3b1f749673e270229993ee55f35663b4",
+                          "deployed": 0,
+                          "accttype": "EOA",
+                          "ether": 0.2588436983603185,
+                        },
+                      ],
                   }
         "400":
           description: bad input parameter
@@ -1390,18 +1355,19 @@ paths:
                       $ref: "#/components/schemas/token"
                 example:
                   {
-                    "data": [
-                      {
-                        "holder": "0x2910543af39aba0cd09dbb2d50200b3e800a63d2",
-                        "balance": "624980000000000000",
-                        "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
-                        "name": "The DAO Original",
-                        "decimals": 1,
-                        "isContract": true,
-                        "isErc20": true,
-                        "isErc721": true
-                      }
-                    ]
+                    "data":
+                      [
+                        {
+                          "holder": "0x2910543af39aba0cd09dbb2d50200b3e800a63d2",
+                          "balance": "624980000000000000",
+                          "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+                          "name": "The DAO Original",
+                          "decimals": 1,
+                          "isContract": true,
+                          "isErc20": true,
+                          "isErc721": true,
+                        },
+                      ],
                   }
         "400":
           description: bad input parameter
@@ -1463,23 +1429,24 @@ paths:
                       $ref: "#/components/schemas/status"
                 example:
                   {
-                    "data": [
-                      {
-                        "clientVersion": "erigon/2021.09.2/linux-amd64/go1.16.3",
-                        "trueblocksVersion": "GHC-TrueBlocks//0.12.1-alpha-7ac3196d7-20210903",
-                        "rpcProvider": "http://localhost:23456",
-                        "configPath": "~/Library/Application Support/TrueBlocks/",
-                        "cachePath": "~/Library/Application Support/TrueBlocks/cache/",
-                        "indexPath": "~/Library/Application Support/TrueBlocks/unchained/",
-                        "isTesting": false,
-                        "isDocker": false,
-                        "isArchive": true,
-                        "isTracing": true,
-                        "hasEskey": true,
-                        "hasPinkey": true,
-                        "date": "2021-09-03 19:38:19 UTC"
-                      }
-                    ]
+                    "data":
+                      [
+                        {
+                          "clientVersion": "erigon/2021.09.2/linux-amd64/go1.16.3",
+                          "trueblocksVersion": "GHC-TrueBlocks//0.12.1-alpha-7ac3196d7-20210903",
+                          "rpcProvider": "http://localhost:23456",
+                          "configPath": "~/Library/Application Support/TrueBlocks/",
+                          "cachePath": "~/Library/Application Support/TrueBlocks/cache/",
+                          "indexPath": "~/Library/Application Support/TrueBlocks/unchained/",
+                          "isTesting": false,
+                          "isDocker": false,
+                          "isArchive": true,
+                          "isTracing": true,
+                          "hasEskey": true,
+                          "hasPinkey": true,
+                          "date": "2021-09-03 19:38:19 UTC",
+                        },
+                      ],
                   }
         "400":
           description: bad input parameter
@@ -1505,20 +1472,6 @@ paths:
                 - indexer
                 - monitors
                 - both
-        - name: action
-          description: command to apply to the specified scrape
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: string
-            enum:
-              - toggle
-              - run
-              - restart
-              - pause
-              - quit
         - name: sleep
           description: seconds to sleep between scraper passes
           required: false
@@ -1530,14 +1483,6 @@ paths:
         - name: pin
           description: >
             pin chunks (and blooms) to IPFS as they are created (requires pinning service)
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: publish
-          description: after pinning the chunk, publish it to UnchainedIndex
           required: false
           style: form
           in: query
@@ -1713,18 +1658,19 @@ paths:
                       $ref: "#/components/schemas/quote"
                 example:
                   {
-                    "data": [
-                      {
-                        "timestamp": 1439078400,
-                        "close": 1.4,
-                        "date": "2015-08-09 00:00:00 UTC"
-                      },
-                      {
-                        "timestamp": 1439085600,
-                        "close": 1.4,
-                        "date": "2015-08-09 02:00:00 UTC"
-                      }
-                    ]
+                    "data":
+                      [
+                        {
+                          "timestamp": 1439078400,
+                          "close": 1.4,
+                          "date": "2015-08-09 00:00:00 UTC",
+                        },
+                        {
+                          "timestamp": 1439085600,
+                          "close": 1.4,
+                          "date": "2015-08-09 02:00:00 UTC",
+                        },
+                      ],
                   }
         "400":
           description: bad input parameter
@@ -1817,8 +1763,8 @@ paths:
                       "hasToken": "0",
                       "gasUsed": "21000",
                       "date": "2015-08-07 03:50:51 UTC",
-                      "ether": "0.000000000000000000"
-                    }
+                      "ether": "0.000000000000000000",
+                    },
                   ]
         "400":
           description: bad input parameter
@@ -1857,21 +1803,20 @@ components:
         isCustom:
           type: boolean
           description: "`true` if this address is customized"
+        deleted:
+          type: boolean
+          description: "`true` if deleted, `false` otherwise"
         symbol:
           type: string
         source:
           type: string
         decimals:
           type: number
+          format: uint64
         isContract:
           type: boolean
-        isValid:
-          type: boolean
-        deleted:
-          type: boolean
-          description: "`true` if deleted, `false` otherwise"
     appearance:
-      description: "a single appearance of an address anywhere in the chain in the form of blockNumber.transactionIndex"
+      description: "data of the appropriate type from a single appearance of an address or the count of same"
       type: object
       properties:
         blockNumber:
@@ -2086,6 +2031,22 @@ components:
         isErc721:
           type: boolean
           description: "`true` if the address is an ERC720, `false` otherwise"
+    listStats:
+      description: "data of the appropriate type from a single appearance of an address or the count of same"
+      type: object
+      properties:
+        address:
+          type: string
+          format: address
+          description: "the address for this count"
+        nRecords:
+          type: number
+          format: uint64
+          description: "the number of appearances for the given address"
+        fileSize:
+          type: number
+          format: uint64
+          description: "the size of the monitor file containing those appearances"
     block:
       description: "block data directly from the blockchain"
       type: object
@@ -2141,20 +2102,22 @@ components:
           description: "flag indicating the system considers this data final"
         unclesCnt:
           type: number
+          format: uint64
+          description: "the number of uncles in this block"
     transaction:
       description: "the transaction data for a given transaction directly from the blockchain"
       type: object
       properties:
-        hash:
-          type: string
-          format: hash
-          example: "0xf128...1e98"
-          description: "The hash of the transaction"
         gasPrice:
           type: string
           format: gas
           example: "63525836552"
           description: "the number of wei per unit of gas the sender is willing to spend"
+        hash:
+          type: string
+          format: hash
+          example: "0xf128...1e98"
+          description: "The hash of the transaction"
         blockHash:
           type: string
           format: hash
@@ -2233,6 +2196,7 @@ components:
           type: boolean
         date:
           type: string
+          format: date
     receipt:
       description: "receipt data for a given transaction directly from the blockchain"
       type: object
@@ -2295,20 +2259,12 @@ components:
         articulatedLog:
           type: object
           items:
-            $ref: "#/components/schemas/articulatedLog"
-          description: "data used when articulating log which is different than Function"
+            $ref: "#/components/schemas/function"
+          description: "a human-readable version of the topic and data fields"
         compressedLog:
           type: string
           example: "Transfer(0xcfa...9f54..."
           description: "a truncated, more readable version of the articulation"
-    articulatedLog:
-      properties:
-        name:
-          type: string
-        inputs:
-          type: object
-          additionalProperties:
-            type: string
     trace:
       description: "trace data for a given transaction directly from the blockchain"
       type: object
@@ -2607,14 +2563,15 @@ components:
           type: number
           format: timestamp
           description: "the timestamp when this status data was produced"
-        caches:
-          type: array
-          items:
-            $ref: "#/components/schemas/cache"
         chains:
           type: array
           items:
             $ref: "#/components/schemas/chain"
+        caches:
+          type: array
+          items:
+            $ref: "#/components/schemas/cache"
+          description: "a collection of information concerning the binary caches"
     cache:
       description: "The cache data model carries information about the various local binary caches"
       type: object
@@ -2640,16 +2597,8 @@ components:
         items:
           type: array
           items:
-            $ref: "#/components/schemas/cacheItem"
-    cacheItem:
-      description: "Cache content"
-      type: object
-      properties:
-        address:
-          type: string
-          format: address
-        name:
-          type: string
+            $ref: "#/components/schemas/cacheEntry"
+          description: "an array of cache items"
     pinnedChunk:
       description: "the IPFS hashes of the index chunk and its associated Bloom filter for the given block range"
       type: object
@@ -2659,11 +2608,13 @@ components:
           example: "013142464-013145212"
           description: "for each chunk, the range of blocks contained in that chunk"
         bloomHash:
-          type: ipfshash
+          type: string
+          format: ipfshash
           example: "QmXHjjY...HDqvWT"
           description: "the IPFS hash of the bloom filter at that range"
         indexHash:
-          type: ipfshash
+          type: string
+          format: ipfshash
           example: "QmTbYpR...qWLj44"
           description: "the IPFS hash of the index chunk at that range"
         firstApp:
@@ -2726,6 +2677,15 @@ components:
         pinGateway:
           type: string
           description: "An IPFS gateway for pinning the index if enabled"
+    cacheEntry:
+      description: "an entry in one of the caches"
+      type: object
+      properties:
+        address:
+          type: string
+          format: address
+        name:
+          type: string
     function:
       description: "a human readable representation of a Solidity function call or event"
       type: object
@@ -2799,17 +2759,6 @@ components:
           type: string
           example: "Byzantium"
           description: "the name of the block for some named 'special' blocks"
-    listStats:
-      description: "`list` statistics"
-      type: object
-      properties:
-        address:
-          type: string
-          format: address
-        nRecords:
-          type: number
-        fileSize:
-          type: number
     response:
       required:
         - result
