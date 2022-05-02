@@ -154,6 +154,7 @@ string_q typeFmt(const CParameter& fld) {
             replace(t, "C", "");
         replace(t, "Array", "");
         replace(ret, "++X++", firstLower(t));
+        replace(ret, "cachePtr", "cache");
         replace(ret, "logEntry", "log");
         return ret;
     }
@@ -166,14 +167,15 @@ string_q typeFmt(const CParameter& fld) {
         replace(t, "Array", "");
         replace(ret, "++X++", firstLower(t));
         replace(ret, "logEntry", "log");
+        replace(ret, "cachePtr", "cache");
         return ret;
     }
 
     if (fld.type == "blknum" || fld.type == "uint64" || fld.type == "timestamp" || fld.type == "double" ||
         fld.type == "uint32")
         return "[          type: number\n          format: {TYPE}\n]";
-    if (fld.type == "address" || fld.type == "hash" || fld.type == "bytes" || fld.type == "gas" || fld.type == "wei" ||
-        fld.type == "int256" || fld.type == "uint256" || fld.type == "date")
+    if (fld.type == "address" || fld.type == "ipfshash" || fld.type == "hash" || fld.type == "bytes" ||
+        fld.type == "gas" || fld.type == "wei" || fld.type == "int256" || fld.type == "uint256" || fld.type == "date")
         return "[          type: string\n          format: {TYPE}\n]";
     if (fld.type == "bool" || fld.type == "uint8")
         return "[          type: boolean\n]";

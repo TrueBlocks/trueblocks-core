@@ -30,7 +30,7 @@ var whenCmd = &cobra.Command{
 var usageWhen = `when [flags] < block | date > [ block... | date... ]
 
 Arguments:
-  blocks - one or more dates, block numbers, hashes, or special named blocks (see notes) (required)`
+  blocks - one or more dates, block numbers, hashes, or special named blocks (see notes)`
 
 var shortWhen = "find block(s) based on date, blockNum, timestamp, or 'special'"
 

@@ -767,6 +767,7 @@ void CCommandOption::verifyHotkey(CStringArray& warnings, map<string, string>& e
 //---------------------------------------------------------------------------------------------------
 extern const char* STR_PATH_YAML;
 extern const char* STR_PARAM_YAML;
+extern const char* STR_DELETE_OPTS;
 
 //---------------------------------------------------------------------------------------------------
 bool CCommandOption::isChifraRoute(bool depOk) const {
@@ -855,33 +856,27 @@ string_q CCommandOption::toGoCall(void) const {
     os << endl;
     os << Format("// [{GOROUTEFUNC}] [{DESCRIPTION}]") << endl;
     os << Format("func [{GOROUTEFUNC}](w http.ResponseWriter, r *http.Request) {") << endl;
-    if (api_route == "pins") {
-        os << Format("\t[{API_ROUTE}]Pkg.Serve[{PROPER}](w, r)") << endl;
-    } else {
-        os << Format("\tif ![{API_ROUTE}]Pkg.Serve[{PROPER}](w, r) {") << endl;
-        if (api_route == "when" || api_route == "pins" || api_route == "abis") {
-            os << "\t\tos.Setenv(\"NO_SCHEMAS\", \"true\") // temporary while porting to go" << endl;
-            os << "\t\tos.Setenv(\"GO_PORT\", \"true\")    // temporary while porting to go" << endl;
-        }
-        bool redirect = tool.empty() || contains(tool, " ");
-        if ((!redirect && !goPortNewCode(api_route)) && api_route != "abis") {
-            const char* STR_CALLONE =
-                "\t\tCallOne(w, r, config.GetPathToCommands(\"[{TOOL}]\"), \"\", \"[{API_ROUTE}]\")";
-            os << Format(STR_CALLONE) << endl;
-        } else if ((api_route == "tags" || api_route == "collections")) {
-            const char* STR_CALLONE =
-                "\t\tCallOne(w, r, config.GetPathToCommands(\"ethNames\"), \"\", \"[{API_ROUTE}]\")";
-            os << Format(STR_CALLONE) << endl;
-        } else {
-            const char* STR_CALLONEEXTRA = "\t\tCallOne(w, r, \"chifra\", \"[{API_ROUTE}]\", \"[{API_ROUTE}]\")";
-            os << Format(STR_CALLONEEXTRA) << endl;
-        }
-        if (api_route == "when" || api_route == "pins" || api_route == "abis") {
-            os << "\t\tos.Setenv(\"NO_SCHEMAS\", \"\") // temporary while porting to go" << endl;
-            os << "\t\tos.Setenv(\"GO_PORT\", \"\")    // temporary while porting to go" << endl;
-        }
-        os << Format("\t}") << endl;
+    os << Format("\tif ![{API_ROUTE}]Pkg.Serve[{PROPER}](w, r) {") << endl;
+    if (api_route == "when" || api_route == "abis") {
+        os << "\t\tos.Setenv(\"NO_SCHEMAS\", \"true\") // temporary while porting to go" << endl;
+        os << "\t\tos.Setenv(\"GO_PORT\", \"true\")    // temporary while porting to go" << endl;
     }
+    bool redirect = tool.empty() || contains(tool, " ");
+    if ((!redirect && !goPortNewCode(api_route)) && api_route != "abis") {
+        const char* STR_CALLONE = "\t\tCallOne(w, r, config.GetPathToCommands(\"[{TOOL}]\"), \"\", \"[{API_ROUTE}]\")";
+        os << Format(STR_CALLONE) << endl;
+    } else if ((api_route == "tags" || api_route == "collections")) {
+        const char* STR_CALLONE = "\t\tCallOne(w, r, config.GetPathToCommands(\"ethNames\"), \"\", \"[{API_ROUTE}]\")";
+        os << Format(STR_CALLONE) << endl;
+    } else {
+        const char* STR_CALLONEEXTRA = "\t\tCallOne(w, r, \"chifra\", \"[{API_ROUTE}]\", \"[{API_ROUTE}]\")";
+        os << Format(STR_CALLONEEXTRA) << endl;
+    }
+    if (api_route == "when" || api_route == "abis") {
+        os << "\t\tos.Setenv(\"NO_SCHEMAS\", \"\") // temporary while porting to go" << endl;
+        os << "\t\tos.Setenv(\"GO_PORT\", \"\")    // temporary while porting to go" << endl;
+    }
+    os << Format("\t}") << endl;
     os << "}" << endl;
 
     return os.str();
@@ -959,7 +954,9 @@ string_q CCommandOption::toApiPath(const string_q& inStr, const string_q& exampl
     bool hasDelete = false;
     ostringstream paramStream;
     for (auto param : *(CCommandOptionArray*)params) {
+        bool hasAddrs2 = contains(param.longName, "addrs2");
         hasDelete |= contains(param.longName, "deleteMe");
+        replace(param.longName, "addrs2", "addrs");
         replace(param.longName, "deleteMe", "delete");
         if (param.longName.empty() || !param.is_visible_docs)
             continue;
@@ -969,6 +966,9 @@ string_q CCommandOption::toApiPath(const string_q& inStr, const string_q& exampl
             replace(yp, "[{DESCR}]", prepareDescr(param.swagger_descr));
             replace(yp, "[{REQ}]", param.is_required ? "true" : "false");
             replace(yp, "[{SCHEMA}]", param.getSchema());
+            if (hasAddrs2) {
+                replace(yp, "            type: array\n", "            type: array\n            minItems: 2\n");
+            }
             if (paramStream.str().empty())
                 paramStream << "      parameters:\n";
             paramStream << yp << endl;
@@ -1021,7 +1021,7 @@ string_q CCommandOption::toApiPath(const string_q& inStr, const string_q& exampl
     replaceAll(ret, "[{PARAMS}]", paramStream.str());
     replaceAll(ret, "[{SUMMARY}]", summary);
     replaceAll(ret, "[{DESCR}]", description);
-    replaceAll(ret, "[{DELETE}]", hasDelete ? "X\n" : "");
+    replaceAll(ret, "[{DELETE}]", hasDelete ? STR_DELETE_OPTS : "");
     replaceAll(ret, "[{ID}]", toLower(substitute(grp, " ", "") + "-" + api_route));
     return ret;
 }
@@ -1110,7 +1110,7 @@ const char* STR_PATH_YAML =
     "      summary: [{SUMMARY}]\n"
     "      description: [{DESCR}]\n"
     "      operationId: [{ID}]\n"
-    "[{PARAMS}]"
+    "[{PARAMS}][{DELETE}]"
     "      responses:\n"
     "        \"200\":\n"
     "          description: returns the requested data\n"
@@ -1118,8 +1118,7 @@ const char* STR_PATH_YAML =
     "            application/json:\n"
     "              schema:\n"
     "[{PROPERTIES}][{EXAMPLE}]        \"400\":\n"
-    "          description: bad input parameter\n"
-    "[{DELETE}]";
+    "          description: bad input parameter\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_PARAM_YAML =
@@ -1131,6 +1130,33 @@ const char* STR_PARAM_YAML =
     "          explode: true\n"
     "          schema:\n"
     "[{SCHEMA}]";
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_DELETE_OPTS =
+    "        - name: delete\n"
+    "          description: delete the item, but do not remove it\n"
+    "          required: false\n"
+    "          style: form\n"
+    "          in: query\n"
+    "          explode: true\n"
+    "          schema:\n"
+    "            type: boolean\n"
+    "        - name: undelete\n"
+    "          description: undelete a previously deleted item\n"
+    "          required: false\n"
+    "          style: form\n"
+    "          in: query\n"
+    "          explode: true\n"
+    "          schema:\n"
+    "            type: boolean\n"
+    "        - name: remove\n"
+    "          description: remove a previously deleted item\n"
+    "          required: false\n"
+    "          style: form\n"
+    "          in: query\n"
+    "          explode: true\n"
+    "          schema:\n"
+    "            type: boolean\n";
 
 // TODO: search for go-port
 bool goPortNewCode(const string_q& a) {
