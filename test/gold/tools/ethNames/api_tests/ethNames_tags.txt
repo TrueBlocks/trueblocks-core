@@ -83,6 +83,12 @@ names?tags
       "tags": "31-Gitcoin:Workstreams"
     },
     {
+      "tags": "31-Giveth:Core"
+    },
+    {
+      "tags": "31-Giveth:Project"
+    },
+    {
       "tags": "34-ENS"
     },
     {

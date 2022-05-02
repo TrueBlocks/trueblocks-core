@@ -110,11 +110,11 @@ names?terms=etwork
       "description": ""
     },
     {
-      "tags": "31-Contracts:Giveth Project",
+      "tags": "31-Giveth:Project",
       "address": "0x1b415ec11276f385db867e631c5c9692f3088112",
       "name": "Austin Disaster Relief Network",
       "symbol": "",
-      "source": "Giveth Website",
+      "source": "Tokenomics",
       "decimals": 0,
       "description": ""
     },
@@ -218,11 +218,11 @@ names?terms=etwork
       "description": ""
     },
     {
-      "tags": "31-Contracts:Giveth Project",
+      "tags": "31-Giveth:Project",
       "address": "0x373483a546e5212b0d009db1dbf0d14daff80f9a",
       "name": "Luminus Network for New Americans",
       "symbol": "",
-      "source": "Giveth Website",
+      "source": "Tokenomics",
       "decimals": 0,
       "description": ""
     },
@@ -308,11 +308,11 @@ names?terms=etwork
       "description": ""
     },
     {
-      "tags": "31-Contracts:Giveth Project",
+      "tags": "31-Giveth:Project",
       "address": "0x5219ffb88175588510e9752a1ecaa3cd217ca783",
       "name": "Bloom Network",
       "symbol": "",
-      "source": "Giveth Website",
+      "source": "Tokenomics",
       "decimals": 0,
       "description": ""
     },
@@ -344,11 +344,11 @@ names?terms=etwork
       "description": ""
     },
     {
-      "tags": "31-Contracts:Giveth Project",
+      "tags": "31-Giveth:Project",
       "address": "0x538f022f50038994f7a04a58f5004c1b98ed41a4",
       "name": "Alexander Youth Network",
       "symbol": "",
-      "source": "Giveth Website",
+      "source": "Tokenomics",
       "decimals": 0,
       "description": ""
     },
@@ -506,11 +506,11 @@ names?terms=etwork
       "description": ""
     },
     {
-      "tags": "31-Contracts:Giveth Project",
+      "tags": "31-Giveth:Project",
       "address": "0x70a68a29bac0b3c85bed4b47bb3a639f0f245e70",
       "name": "Allergy & Asthma Network",
       "symbol": "",
-      "source": "Giveth Website",
+      "source": "Tokenomics",
       "decimals": 0,
       "description": ""
     },
@@ -551,11 +551,11 @@ names?terms=etwork
       "description": "Archetypal Network is an Ethereum based cloudmining smart contract miner to support real-time mining and high transaction throughput."
     },
     {
-      "tags": "31-Contracts:Giveth Project",
+      "tags": "31-Giveth:Project",
       "address": "0x7bc1f30ffeaeee36baf17ea421830281b148b397",
       "name": "Trustlines Network",
       "symbol": "",
-      "source": "Giveth Website",
+      "source": "Tokenomics",
       "decimals": 0,
       "description": ""
     },
@@ -665,6 +665,15 @@ names?terms=etwork
       "symbol": "RING",
       "source": "defipulse.com",
       "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "31-Giveth:Project",
+      "address": "0x95bc825c196f42c13b0fd5d636251005f3756809",
+      "name": "Blockchain Education Network",
+      "symbol": "",
+      "source": "Tokenomics",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1028,6 +1037,15 @@ names?terms=etwork
       "description": "A protocol for building decentralized marketplaces using the Ethereum blockchain"
     },
     {
+      "tags": "31-Giveth:Project",
+      "address": "0xd3a8518a8e75a6c9317027abd29847ea1965f2b1",
+      "name": "Strengthening the Citizen Water Observatories Network",
+      "symbol": "",
+      "source": "Tokenomics",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "50-Tokens:ERC20",
       "address": "0xd523a36bec9ffa8057d5f1fe2bc882124e2fbf55",
       "name": "DECORUM.NETWORK",
@@ -1051,6 +1069,15 @@ names?terms=etwork
       "name": "Grant 1971 Elixi/o Decentralized Social Network with Social Consensus Over Ipfs",
       "symbol": "",
       "source": "https://gitcoin.co/grants/1971/elixio-decentralized-social-network-with-social-c",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Giveth:Project",
+      "address": "0xda503eef0326db7b28c0962a5a45af3bf7e0c1d8",
+      "name": "The Lantern Network",
+      "symbol": "",
+      "source": "Tokenomics",
       "decimals": 0,
       "description": ""
     },
@@ -1123,6 +1150,15 @@ names?terms=etwork
       "name": "Grant 1827 Fission Network",
       "symbol": "",
       "source": "https://gitcoin.co/grants/1827/fission-network",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Giveth:Project",
+      "address": "0xe3f738ff9fa4e157cab12ee6f1847f680495229a",
+      "name": "Permaculture Action Network",
+      "symbol": "",
+      "source": "Tokenomics",
       "decimals": 0,
       "description": ""
     },

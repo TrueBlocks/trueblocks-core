@@ -13,7 +13,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x0f7f961648ae6db43c75663ac7e5414eb79b5704	XIO Network	XIO		18
 31-Gitcoin:Grants	0x1074f62d7019c3184a2f7ea8c6a8acd6780beb48	Grant 0083 Poa Network Community Management Grant for Adj
 50-Tokens:ERC20	0x14409b0fc5c7f87b5dad20754fe22d29a3de8217	PYRO Network	PYRO		18
-31-Contracts:Giveth Project	0x1b415ec11276f385db867e631c5c9692f3088112	Austin Disaster Relief Network
+31-Giveth:Project	0x1b415ec11276f385db867e631c5c9692f3088112	Austin Disaster Relief Network
 50-Tokens:ERC20	0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c	Bancor Network Token	BNT		18
 31-Gitcoin:Grants	0x1fb3e449448faf1330dba45d945554c1bedcab5a	Grant 2250 - Cura Network - the decentralized healthcare system that super-charges healthcare delivery
 50-Tokens:ERC20	0x20f7a3ddf244dc9299975b4da1c39f8d5d75f05a	Sapien Network	SPN		6
@@ -25,7 +25,7 @@ tags	address	name	symbol	decimals
 31-Gitcoin:Grants	0x30755d3e65c0cf46c35b72d11e52d941c5fc3a3e	Grant 0026 Peepeth: Social Network for a Better World
 50-Tokens:ERC20	0x3543638ed4a9006e4840b105944271bcea15605d	UNetworkToken	UUU		18
 30-Contracts:Set Protocol	0x3700414bb6716fcd8b14344fb10ddd91fdea59ec	Kyber Network Wrapper
-31-Contracts:Giveth Project	0x373483a546e5212b0d009db1dbf0d14daff80f9a	Luminus Network for New Americans
+31-Giveth:Project	0x373483a546e5212b0d009db1dbf0d14daff80f9a	Luminus Network for New Americans
 50-Tokens:ERC20	0x3cc83c2400e00a54fa1e588d62bc28bf15d5def5	OPTICAL NETWORK	OPTC		18
 50-Tokens:ERC20	0x4162178b78d6985480a308b2190ee5517460406d	Colu Local Network	CLN		18
 50-Tokens:ERC20	0x447f59850dc5f72609a5e5edc71fbf45fb3af17a	DOG Network	DOG		18
@@ -35,11 +35,11 @@ tags	address	name	symbol	decimals
 31-Gitcoin:Grants	0x4c63f570590b7e145d5af265497aa23fa2bc0b8c	Grant 0653 Gas Stations Network
 31-Gitcoin:Grants	0x4c994efd3cf90092dc35ee2e3d660d782652727b	Grant 2103 - Open Source Climate Offsets Network
 30-Contracts:Kyber Network	0x52166528fcc12681af996e409ee3a421a4e128a3	Kyber Fee Burner
-31-Contracts:Giveth Project	0x5219ffb88175588510e9752a1ecaa3cd217ca783	Bloom Network
+31-Giveth:Project	0x5219ffb88175588510e9752a1ecaa3cd217ca783	Bloom Network
 30-Contracts	0x521d32f3d23f1fc82b1dbe306edc3ef668e5d973	Clovers Network Related
 50-Tokens:ERC20	0x53066cddbc0099eb6c96785d9b3df2aaeede5da3	Penta Network Token	PNT		18
 30-Contracts	0x5346d0f80e2816fad329f2c140c870ffc3c3e2ef	EtherRouter: Colony Network
-31-Contracts:Giveth Project	0x538f022f50038994f7a04a58f5004c1b98ed41a4	Alexander Youth Network
+31-Giveth:Project	0x538f022f50038994f7a04a58f5004c1b98ed41a4	Alexander Youth Network
 31-Gitcoin:Grants	0x55b23ed53fe13060183b92979c737a8ef9a73b73	Grant 4201 - Spect Network
 30-Contracts:Kyber Network	0x57f8160e1c59d16c01bbe181fd94db4e56b60495	Kyber Weth Reserve
 50-Tokens:ERC20	0x5f3789907b35dce5605b00c0be0a7ecdbfa8a841	Content and Ad Network	CAN		18
@@ -57,12 +57,12 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x6fb3e0a217407efff7ca062d46c26e5d60a14d69	IoTeX Network	IOTX		18
 50-Tokens:ERC20	0x6fff3806bbac52a20e0d79bc538d527f6a22c96b	Network			18
 50-Tokens:ERC20	0x70861e862e1ac0c96f853c8231826e469ead37b1	DOS Network Token	DOS		18
-31-Contracts:Giveth Project	0x70a68a29bac0b3c85bed4b47bb3a639f0f245e70	Allergy & Asthma Network
+31-Giveth:Project	0x70a68a29bac0b3c85bed4b47bb3a639f0f245e70	Allergy & Asthma Network
 50-Tokens:ERC20	0x744d70fdbe2ba4cf95131626614a1763df805b9e	Status Network Token	SNT		18
 30-Contracts:Kyber Network	0x798abda6cc246d0edba912092a2a3dbd3d11191b	Kyber Conversion Rates
 50-Tokens:ERC20	0x7b0c06043468469967dba22d1af33d77d44056c8	Morpheus.Network	MRPH		4
 50-Tokens:ERC20	0x7b2df125567815ac9b57da04b620f50bc93b320c	Archetypal Network	ACTP		8
-31-Contracts:Giveth Project	0x7bc1f30ffeaeee36baf17ea421830281b148b397	Trustlines Network
+31-Giveth:Project	0x7bc1f30ffeaeee36baf17ea421830281b148b397	Trustlines Network
 50-Tokens:ERC20	0x7c5a0ce9267ed19b22f8cae653f198e3e8daf098	SANtiment network token	SAN		18
 50-Tokens:ERC20	0x7c5d5100b339fe7d995a893af6cb496b9474373c	Loon Network	LOON		18
 50-Tokens:ERC20	0x7c6c3b4e91923f080d6cc847a68d7330400a95d7	Union Network Dollar Token	UNDT		18
@@ -75,6 +75,7 @@ tags	address	name	symbol	decimals
 31-Gitcoin:Grants	0x904065ba663879deb7e5f902220e7db97cbf04af	Grant 0681 Flowstake - Activity Staking Blockchain Network
 31-Gitcoin:Grants	0x934b510d4c9103e6a87aef13b816fb080286d649	Grant 0159 - Mask Network - The Portal to the New, Open Internet.
 50-Tokens:ERC20	0x9469d013805bffb7d3debe5e7839237e535ec483	Darwinia Network Token	RING		18
+31-Giveth:Project	0x95bc825c196f42c13b0fd5d636251005f3756809	Blockchain Education Network
 50-Tokens:ERC20	0x95cda24d2515491095d21d94f1b94f319e016d35	Vegetanetwork	Vegeta		18
 50-Tokens:ERC20	0x960b236a07cf122663c4303350609a66a7b288c0	Aragon Network Token	ANT		18
 30-Contracts:Kyber Network	0x9ae49c0d7f8f9ef4b864e004fe86ac8294e20950	Kyber Network
@@ -115,9 +116,11 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0xcfb98637bcae43c13323eaa1731ced2b716962fd	Nimiq Network Interim Token	NET		18
 50-Tokens:ERC20	0xd29f0b5b3f50b07fe9a9511f7d86f4f4bac3f8c4	Liquidity.Network Token	LQD		18
 50-Tokens:ERC20	0xd2fa8f92ea72abb35dbd6deca57173d22db2ba49	Origami Network	ORI		18
+31-Giveth:Project	0xd3a8518a8e75a6c9317027abd29847ea1965f2b1	Strengthening the Citizen Water Observatories Network
 50-Tokens:ERC20	0xd523a36bec9ffa8057d5f1fe2bc882124e2fbf55	DECORUM.NETWORK	DEC		18
 50-Tokens:ERC20	0xd559f20296ff4895da39b5bd9add54b442596a61	FintruX Network	FTX		18
 31-Gitcoin:Grants	0xd77bab833568dd0c8e59ab62013165ce2fb611b7	Grant 1971 Elixi/o Decentralized Social Network with Social Consensus Over Ipfs
+31-Giveth:Project	0xda503eef0326db7b28c0962a5a45af3bf7e0c1d8	The Lantern Network
 31-Gitcoin:Grants	0xda72e4f2f86cc4114844c5894241616c82667c48	Grant 1229 Pulp Network
 50-Tokens:ERC20	0xda80b20038bdf968c7307bb5907a469482cf6251	BrokerNekoNetwork	BNN		8
 50-Tokens:ERC20	0xdd974d5c2e2928dea5f71b9825b8b646686bd200	Kyber Network Crystal	KNC		18
@@ -126,6 +129,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0xdfdc0d82d96f8fd40ca0cfb4a288955becec2088	MTC Mesh Network	MTC		18
 50-Tokens:ERC20	0xe25bcec5d3801ce3a794079bf94adf1b8ccd802d	MATRIX AI Network	MAN		18
 31-Gitcoin:Grants	0xe302ca18c14ab31a002ac14a0889560d99e54633	Grant 1827 Fission Network
+31-Giveth:Project	0xe3f738ff9fa4e157cab12ee6f1847f680495229a	Permaculture Action Network
 50-Tokens:ERC20	0xe469c4473af82217b30cf17b10bcdb6c8c796e75	EXRP Network	EXRN		18
 50-Tokens:ERC20	0xe530441f4f73bdb6dc2fa5af7c3fc5fd551ec838	GSENetwork	GSE		4
 50-Tokens:ERC20	0xe7e4279b80d319ede2889855135a22021baf0907	ZeusNetwork	ZEUS		18

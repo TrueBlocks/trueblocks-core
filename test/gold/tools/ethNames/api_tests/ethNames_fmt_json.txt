@@ -20,11 +20,11 @@ names?terms=tip&fmt=json
       "description": ""
     },
     {
-      "tags": "31-Contracts:Giveth Project",
+      "tags": "31-Giveth:Project",
       "address": "0x1e1dee1a47b6d4dd5122c6cd7483ddbb1f42bdce",
       "name": "Sammy Tippit Ministries",
       "symbol": "",
-      "source": "Giveth Website",
+      "source": "Tokenomics",
       "decimals": 0,
       "description": ""
     },

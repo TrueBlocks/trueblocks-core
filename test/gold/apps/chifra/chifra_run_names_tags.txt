@@ -28,6 +28,8 @@ tags
 31-Gitcoin:Grants
 31-Gitcoin:Team
 31-Gitcoin:Workstreams
+31-Giveth:Core
+31-Giveth:Project
 34-ENS
 37-SelfDestructed
 39-Yearn
