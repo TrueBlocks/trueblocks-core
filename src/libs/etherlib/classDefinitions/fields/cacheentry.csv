@@ -1,5 +1,7 @@
-name   ,type   ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
-type   ,uint64 ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
-extra  ,string ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
-cached ,bool   ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
-path   ,string ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+name    ,type    ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
+type    ,uint64  ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+extra   ,string  ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+cached  ,bool    ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+path    ,string  ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+address ,address ,           ,       ,      ,true    ,          ,true    ,  ,true         ,  1 ,     ,        ,
+name    ,string  ,           ,       ,      ,true    ,          ,true    ,  ,true         ,  2 ,     ,        ,

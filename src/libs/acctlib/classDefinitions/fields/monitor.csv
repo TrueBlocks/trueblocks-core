@@ -10,15 +10,15 @@ firstApp         ,blknum  ,           ,       ,      ,        ,          ,true  
 latestApp        ,blknum  ,           ,       ,      ,        ,          ,true    ,      ,true     ,3   ,3    ,        ,the latest block at which this address appears
 path             ,string  ,           ,       ,      ,        ,          ,        ,true  ,         ,    ,     ,        ,
 address          ,address ,           ,       ,      ,        ,          ,true    ,      ,true     ,6   ,6    ,        ,the address being monitored
-decimals         ,uint64  ,           ,       ,      ,        ,          ,true    ,      ,true     ,    ,     ,        ,
+decimals         ,uint64  ,           ,       ,      ,        ,          ,true    ,      ,true     ,12  ,     ,        ,
 description      ,string  ,           ,       ,      ,        ,          ,        ,true  ,         ,    ,     ,        ,
-isContract       ,bool    ,           ,       ,      ,        ,          ,true    ,      ,true     ,    ,     ,        ,
+isContract       ,bool    ,           ,       ,      ,        ,          ,true    ,      ,true     ,13  ,     ,        ,
 isCustom         ,bool    ,           ,       ,      ,        ,          ,true    ,      ,true     ,8   ,8    ,        ,`true` if this address is customized
 isErc20          ,bool    ,           ,       ,      ,        ,          ,        ,true  ,         ,    ,     ,        ,
 isErc721         ,bool    ,           ,       ,      ,        ,          ,        ,true  ,         ,    ,     ,        ,
 isPrefund        ,bool    ,           ,       ,      ,        ,          ,        ,true  ,         ,    ,     ,        ,
 name             ,string  ,           ,       ,      ,        ,          ,true    ,      ,true     ,7   ,7    ,        ,the name given to this address
-source           ,string  ,           ,       ,      ,        ,          ,true    ,      ,true     ,    ,     ,        ,
-symbol           ,string  ,           ,       ,      ,        ,          ,true    ,      ,true     ,    ,     ,        ,
+source           ,string  ,           ,       ,      ,        ,          ,true    ,      ,true     ,11  ,     ,        ,
+symbol           ,string  ,           ,       ,      ,        ,          ,true    ,      ,true     ,10  ,     ,        ,
 tags             ,string  ,           ,       ,      ,        ,          ,true    ,      ,true     ,5   ,5    ,        ,the tag given to this address
 deleted          ,bool    ,           ,       ,      ,        ,          ,true    ,      ,true     ,9   ,9    ,        ,`true` if deleted&#44; `false` otherwise

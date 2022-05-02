@@ -7,4 +7,4 @@ equals = fileName == it.fileName
 doc_group = 04-Admin
 doc_descr = the IPFS hashes of the index chunk and its associated Bloom filter for the given block range
 doc_api = 32-pinnedChunk
-doc_producer = pins, chunks, init, scrape
+doc_producer = chunks, init, scrape
