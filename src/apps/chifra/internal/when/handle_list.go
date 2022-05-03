@@ -5,7 +5,6 @@
 package whenPkg
 
 import (
-	"net/http"
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -21,10 +20,10 @@ func (opts *WhenOptions) HandleWhenList() error {
 
 	// TODO: Fix export without arrays
 	if opts.Globals.ApiMode {
-		opts.Globals.Respond(opts.Globals.Writer, http.StatusOK, result)
+		opts.Globals.Respond2(opts.Globals.Writer, result, false)
 
 	} else {
-		err := opts.Globals.Output(os.Stdout, opts.Globals.Format, result)
+		err := opts.Globals.Output2(os.Stdout, opts.Globals.Format, result, false)
 		if err != nil {
 			logger.Log(logger.Error, err)
 		}

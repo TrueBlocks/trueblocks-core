@@ -30,7 +30,7 @@ func RunAbis(cmd *cobra.Command, args []string) error {
 		return opts.HandleAbiFind()
 	}
 
-	return opts.Globals.PassItOn("grabABI", opts.ToCmdLine())
+	return opts.Globals.PassItOn("grabABI", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
 	// EXISTING_CODE
 }
 
@@ -53,7 +53,7 @@ func ServeAbis(w http.ResponseWriter, r *http.Request) bool {
 		return true
 	}
 
-	// opts.Globals.PassItOn("grabABI", opts.ToCmdLine())
+	// return opts.Globals.PassItOn("grabABI", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
 	return false
 	// EXISTING_CODE
 }

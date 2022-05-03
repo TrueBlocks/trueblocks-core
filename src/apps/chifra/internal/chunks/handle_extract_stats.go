@@ -6,7 +6,6 @@ package chunksPkg
 
 import (
 	"fmt"
-	"net/http"
 	"os"
 	"strings"
 
@@ -23,17 +22,19 @@ type ChunkStats struct {
 	NApps         uint64 `json:"nApps"`
 	NBlocks       uint64 `json:"nBlocks"`
 	NBlooms       uint64 `json:"nBlooms"`
-	AddrsPerBlock string `json:"addrsPerBlock"`
-	AppsPerBlock  string `json:"appsPerBlock"`
-	AppsPerAddr   string `json:"appsPerAddr"`
 	RecWid        uint64 `json:"recWid"`
 	BloomSz       int64  `json:"bloomSz"`
 	ChunkSz       int64  `json:"chunkSz"`
+	AddrsPerBlock string `json:"addrsPerBlock"`
+	AppsPerBlock  string `json:"appsPerBlock"`
+	AppsPerAddr   string `json:"appsPerAddr"`
 	Ratio         string `json:"ratio"`
 }
 
 func NewChunkStats(path string) ChunkStats {
 	chunk, err := index.NewChunk(path)
+	defer chunk.Close()
+
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -75,7 +76,7 @@ func (opts *ChunksOptions) showStats(path string, first bool) {
 
 	// TODO: Fix export without arrays
 	if opts.Globals.ApiMode {
-		opts.Globals.Respond2(opts.Globals.Writer, http.StatusOK, results, !first)
+		opts.Globals.Respond2(opts.Globals.Writer, results, !first)
 
 	} else {
 		err := opts.Globals.Output2(os.Stdout, opts.Globals.Format, results, !first)

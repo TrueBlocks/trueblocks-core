@@ -5,7 +5,6 @@
 package listPkg
 
 import (
-	"net/http"
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -24,7 +23,7 @@ func (opts *ListOptions) HandleListCount(monitorArray []monitor.Monitor) error {
 
 	// TODO: Fix export without arrays
 	if opts.Globals.ApiMode {
-		opts.Globals.Respond2(opts.Globals.Writer, http.StatusOK, results, opts.Globals.NoHeader)
+		opts.Globals.Respond2(opts.Globals.Writer, results, opts.Globals.NoHeader)
 
 	} else {
 		err := opts.Globals.Output2(os.Stdout, opts.Globals.Format, results, opts.Globals.NoHeader)

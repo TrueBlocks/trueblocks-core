@@ -5,7 +5,6 @@
 package chunksPkg
 
 import (
-	"net/http"
 	"os"
 	"sort"
 
@@ -34,10 +33,10 @@ func (opts *ChunksOptions) HandleChunksExtractPins() error {
 	// TODO: Fix export without arrays
 	opts.PrintManifestHeader()
 	if opts.Globals.ApiMode {
-		opts.Globals.Respond(opts.Globals.Writer, http.StatusOK, manifestData.NewPins)
+		opts.Globals.Respond2(opts.Globals.Writer, manifestData.NewPins, false)
 
 	} else {
-		err = opts.Globals.Output(os.Stdout, opts.Globals.Format, manifestData.NewPins)
+		err = opts.Globals.Output2(os.Stdout, opts.Globals.Format, manifestData.NewPins, false)
 		if err != nil {
 			logger.Log(logger.Error, err)
 		}

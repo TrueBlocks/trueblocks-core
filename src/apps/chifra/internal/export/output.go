@@ -31,7 +31,7 @@ func RunExport(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	return opts.Globals.PassItOn("acctExport", opts.ToCmdLine())
+	return opts.Globals.PassItOn("acctExport", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
 	// EXISTING_CODE
 }
 
@@ -51,7 +51,7 @@ func ServeExport(w http.ResponseWriter, r *http.Request) bool {
 		return true
 	}
 
-	// opts.Globals.PassItOn("acctExport", opts.ToCmdLine())
+	// return opts.Globals.PassItOn("acctExport", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
 	return false
 	// EXISTING_CODE
 }

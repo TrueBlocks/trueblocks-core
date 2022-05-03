@@ -5,7 +5,6 @@
 package monitorsPkg
 
 import (
-	"net/http"
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -66,10 +65,10 @@ func (opts *MonitorsOptions) HandleClean() error {
 
 	// TODO: Fix export without arrays
 	if opts.Globals.ApiMode {
-		opts.Globals.Respond(opts.Globals.Writer, http.StatusOK, results)
+		opts.Globals.Respond2(opts.Globals.Writer, results, false)
 
 	} else {
-		err := opts.Globals.Output(os.Stdout, opts.Globals.Format, results)
+		err := opts.Globals.Output2(os.Stdout, opts.Globals.Format, results, false)
 		if err != nil {
 			logger.Log(logger.Error, err)
 		}

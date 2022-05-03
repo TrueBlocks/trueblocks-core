@@ -20,58 +20,16 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-// Output converts data into the given format and writes to where writer
-func (opts *GlobalOptions) Output(where io.Writer, format string, data interface{}) error {
-	return opts.Output2(where, format, data, false)
+// This type is used to carry CSV layout information
+type CsvFormatted struct {
+	Header  []string
+	Content [][]string
 }
 
-func (opts *GlobalOptions) Output2(where io.Writer, format string, data interface{}, hideHeader bool) error {
-	nonEmptyFormat := format
-	if format == "" || format == "none" {
-		if utils.IsApiMode() {
-			nonEmptyFormat = "api"
-		} else {
-			nonEmptyFormat = "txt"
-		}
-	}
-	if nonEmptyFormat == "txt" {
-		_, ok := where.(http.ResponseWriter)
-		// We would never want to use tab format in server environment
-		if utils.IsTerminal() && !ok {
-			nonEmptyFormat = "tab"
-		}
-	}
-
-	var output []byte
-	var err error
-
-	switch nonEmptyFormat {
-	case "api":
-		fallthrough
-	case "json":
-		output, err = opts.JsonFormatter(data)
-	case "csv":
-		output, err = opts.CsvFormatter(data, hideHeader)
-	case "txt":
-		output, err = opts.TxtFormatter(data, hideHeader)
-	// TODO: There is no such case -- this is 'txt' in non-API mode with a terminal
-	case "tab":
-		output, err = opts.TabFormatter(data, hideHeader)
-	default:
-		return fmt.Errorf("unsupported format %s", format)
-	}
-
-	if err != nil {
-		return err
-	}
-
-	where.Write(output)
-	// Maintain newline compatibility with C++ version
-	if nonEmptyFormat == "json" || nonEmptyFormat == "api" {
-		where.Write([]byte{'\n'})
-	}
-
-	return nil
+type JsonFormatted struct {
+	Data   interface{}         `json:"data,omitempty"`
+	Errors []string            `json:"errors,omitempty"`
+	Meta   *rpcClient.MetaData `json:"meta,omitempty"`
 }
 
 // JsonFormatter turns data into JSON
@@ -117,12 +75,6 @@ func (opts *GlobalOptions) TabFormatter(data interface{}, hideHeader bool) ([]by
 	return tabOutput.Bytes(), err
 }
 
-// This type is used to carry CSV layout information
-type CsvFormatted struct {
-	Header  []string
-	Content [][]string
-}
-
 // CsvFormatter turns a type into CSV string. It uses custom code instead of
 // Go's encoding/csv to maintain compatibility with C++ output, which
 // quotes each item. encoding/csv would double-quote a quoted string...
@@ -142,12 +94,6 @@ func (opts *GlobalOptions) CsvFormatter(i interface{}, hideHeader bool) ([]byte,
 	return []byte(
 		strings.Join(result, "\n") + "\n",
 	), nil
-}
-
-type JsonFormatted struct {
-	Data   interface{}         `json:"data,omitempty"`
-	Errors []string            `json:"errors,omitempty"`
-	Meta   *rpcClient.MetaData `json:"meta,omitempty"`
 }
 
 // AsJsonBytes marshals JsonFormatted struct, populating Meta field if needed
@@ -377,32 +323,69 @@ func (opts *GlobalOptions) RespondWithError(w http.ResponseWriter, httpStatus in
 	w.Write(marshalled)
 }
 
-// Respond decides which format should be used, calls the right Responder, sets HTTP status code
+// Respond2 decides which format should be used, calls the right Responder, sets HTTP status code
 // and writes a response
-func (opts *GlobalOptions) Respond(w http.ResponseWriter, httpStatus int, responseData interface{}) {
+func (opts *GlobalOptions) Respond2(w http.ResponseWriter, responseData interface{}, hideHeader bool) {
 	formatNotEmpty := opts.Format
 	if formatNotEmpty == "" {
 		formatNotEmpty = "api"
 	}
 
-	w.Header().Set("Content-Type", formatToMimeType[formatNotEmpty])
-	opts.Format = formatNotEmpty
-	err := opts.Output(w, opts.Format, responseData)
-	if err != nil {
-		opts.RespondWithError(w, http.StatusInternalServerError, err)
-	}
-}
-
-func (opts *GlobalOptions) Respond2(w http.ResponseWriter, httpStatus int, responseData interface{}, hideHeader bool) {
-	formatNotEmpty := opts.Format
-	if formatNotEmpty == "" {
-		formatNotEmpty = "api"
-	}
-
+	// TODO: Fix export without arrays
 	w.Header().Set("Content-Type", formatToMimeType[formatNotEmpty])
 	opts.Format = formatNotEmpty
 	err := opts.Output2(w, opts.Format, responseData, hideHeader)
 	if err != nil {
 		opts.RespondWithError(w, http.StatusInternalServerError, err)
 	}
+}
+
+// TODO: Fix export without arrays
+func (opts *GlobalOptions) Output2(where io.Writer, format string, data interface{}, hideHeader bool) error {
+	nonEmptyFormat := format
+	if format == "" || format == "none" {
+		if utils.IsApiMode() {
+			nonEmptyFormat = "api"
+		} else {
+			nonEmptyFormat = "txt"
+		}
+	}
+	if nonEmptyFormat == "txt" {
+		_, ok := where.(http.ResponseWriter)
+		// We would never want to use tab format in server environment
+		if utils.IsTerminal() && !ok {
+			nonEmptyFormat = "tab"
+		}
+	}
+
+	var output []byte
+	var err error
+
+	switch nonEmptyFormat {
+	case "api":
+		fallthrough
+	case "json":
+		output, err = opts.JsonFormatter(data)
+	case "csv":
+		output, err = opts.CsvFormatter(data, hideHeader)
+	case "txt":
+		output, err = opts.TxtFormatter(data, hideHeader)
+	case "tab":
+		// TODO: There is no such case -- this is 'txt' in non-API mode with a terminal
+		output, err = opts.TabFormatter(data, hideHeader)
+	default:
+		return fmt.Errorf("unsupported format %s", format)
+	}
+
+	if err != nil {
+		return err
+	}
+
+	where.Write(output)
+	// Maintain newline compatibility with C++ version
+	if nonEmptyFormat == "json" || nonEmptyFormat == "api" {
+		where.Write([]byte{'\n'})
+	}
+
+	return nil
 }

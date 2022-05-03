@@ -6,7 +6,6 @@ package listPkg
 
 import (
 	"fmt"
-	"net/http"
 	"os"
 	"sort"
 
@@ -58,7 +57,7 @@ func (opts *ListOptions) HandleListAppearances(monitorArray []monitor.Monitor) e
 
 		// TODO: Fix export without arrays
 		if opts.Globals.ApiMode {
-			opts.Globals.Respond2(opts.Globals.Writer, http.StatusOK, results, opts.Globals.NoHeader)
+			opts.Globals.Respond2(opts.Globals.Writer, results, opts.Globals.NoHeader)
 
 		} else {
 			err := opts.Globals.Output2(os.Stdout, opts.Globals.Format, results, opts.Globals.NoHeader)
