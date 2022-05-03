@@ -36,7 +36,7 @@ func (opts *ChunksOptions) HandleChunksExtractPins() error {
 		opts.Globals.Respond2(opts.Globals.Writer, manifestData.NewPins, false)
 
 	} else {
-		err = opts.Globals.Output2(os.Stdout, opts.Globals.Format, manifestData.NewPins, false)
+		err = opts.Globals.Output2(os.Stdout, manifestData.NewPins, false)
 		if err != nil {
 			logger.Log(logger.Error, err)
 		}

@@ -79,7 +79,7 @@ func (opts *ChunksOptions) showStats(path string, first bool) {
 		opts.Globals.Respond2(opts.Globals.Writer, results, !first)
 
 	} else {
-		err := opts.Globals.Output2(os.Stdout, opts.Globals.Format, results, !first)
+		err := opts.Globals.Output2(os.Stdout, results, !first)
 		if err != nil {
 			logger.Log(logger.Error, err)
 		}

@@ -68,7 +68,7 @@ func (opts *MonitorsOptions) HandleClean() error {
 		opts.Globals.Respond2(opts.Globals.Writer, results, false)
 
 	} else {
-		err := opts.Globals.Output2(os.Stdout, opts.Globals.Format, results, false)
+		err := opts.Globals.Output2(os.Stdout, results, false)
 		if err != nil {
 			logger.Log(logger.Error, err)
 		}

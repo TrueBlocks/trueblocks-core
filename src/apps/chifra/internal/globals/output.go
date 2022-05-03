@@ -334,14 +334,15 @@ func (opts *GlobalOptions) Respond2(w http.ResponseWriter, responseData interfac
 	// TODO: Fix export without arrays
 	w.Header().Set("Content-Type", formatToMimeType[formatNotEmpty])
 	opts.Format = formatNotEmpty
-	err := opts.Output2(w, opts.Format, responseData, hideHeader)
+	err := opts.Output2(w, responseData, hideHeader)
 	if err != nil {
 		opts.RespondWithError(w, http.StatusInternalServerError, err)
 	}
 }
 
 // TODO: Fix export without arrays
-func (opts *GlobalOptions) Output2(where io.Writer, format string, data interface{}, hideHeader bool) error {
+func (opts *GlobalOptions) Output2(where io.Writer, data interface{}, hideHeader bool) error {
+	format := opts.Format
 	nonEmptyFormat := format
 	if format == "" || format == "none" {
 		if utils.IsApiMode() {

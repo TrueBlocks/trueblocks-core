@@ -23,7 +23,7 @@ func (opts *WhenOptions) HandleWhenList() error {
 		opts.Globals.Respond2(opts.Globals.Writer, result, false)
 
 	} else {
-		err := opts.Globals.Output2(os.Stdout, opts.Globals.Format, result, false)
+		err := opts.Globals.Output2(os.Stdout, result, false)
 		if err != nil {
 			logger.Log(logger.Error, err)
 		}

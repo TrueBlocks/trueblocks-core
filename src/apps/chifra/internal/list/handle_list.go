@@ -60,7 +60,7 @@ func (opts *ListOptions) HandleListAppearances(monitorArray []monitor.Monitor) e
 			opts.Globals.Respond2(opts.Globals.Writer, results, opts.Globals.NoHeader)
 
 		} else {
-			err := opts.Globals.Output2(os.Stdout, opts.Globals.Format, results, opts.Globals.NoHeader)
+			err := opts.Globals.Output2(os.Stdout, results, opts.Globals.NoHeader)
 			if err != nil {
 				logger.Log(logger.Error, err)
 			}
