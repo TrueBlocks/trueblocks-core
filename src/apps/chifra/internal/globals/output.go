@@ -6,17 +6,16 @@ package globals
 
 import (
 	"bytes"
-	"encoding/csv"
 	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
 	"os"
-	"reflect"
 	"strings"
 	"text/tabwriter"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -33,75 +32,11 @@ type JsonFormatted struct {
 	Meta   *rpcClient.MetaData `json:"meta,omitempty"`
 }
 
-// JsonFormatter turns data into JSON
-func (opts *GlobalOptions) JsonFormatter(data interface{}) ([]byte, error) {
-	formatted := &JsonFormatted{}
-	err, ok := data.(error)
-	if ok {
-		formatted.Errors = []string{
-			err.Error(),
-		}
-	} else {
-		formatted.Data = data
-	}
-
-	return AsJsonBytes(formatted, opts)
-}
-
-// TxtFormatter turns data into TSV string
-func (opts *GlobalOptions) TxtFormatter(data interface{}, hideHeader bool) ([]byte, error) {
-	out := bytes.Buffer{}
-	tsv, err := opts.AsTsv(data, hideHeader)
-	if err != nil {
-		return nil, err
-	}
-	_, err = out.Write(tsv)
-	if err != nil {
-		return nil, err
-	}
-	return out.Bytes(), nil
-}
-
-// TabFormatter turns data into a table (string)
-func (opts *GlobalOptions) TabFormatter(data interface{}, hideHeader bool) ([]byte, error) {
-	tabOutput := &bytes.Buffer{}
-	tab := tabwriter.NewWriter(tabOutput, 0, 0, 2, ' ', 0)
-	tsv, err := opts.AsTsv(data, hideHeader)
-	if err != nil {
-		return nil, err
-	}
-	tab.Write(tsv)
-	err = tab.Flush()
-
-	return tabOutput.Bytes(), err
-}
-
-// CsvFormatter turns a type into CSV string. It uses custom code instead of
-// Go's encoding/csv to maintain compatibility with C++ output, which
-// quotes each item. encoding/csv would double-quote a quoted string...
-func (opts *GlobalOptions) CsvFormatter(i interface{}, hideHeader bool) ([]byte, error) {
-	records, err := ToStringRecords(i, true, hideHeader)
-	if err != nil {
-		return nil, err
-	}
-	result := []string{}
-	// We have to join records in one row with a ","
-	for _, row := range records {
-		result = append(result, strings.Join(row, ","))
-	}
-
-	// Now we need to join all rows with a newline and add an ending newline
-	// top match the .txt output
-	return []byte(
-		strings.Join(result, "\n") + "\n",
-	), nil
-}
-
 // AsJsonBytes marshals JsonFormatted struct, populating Meta field if needed
-func AsJsonBytes(j *JsonFormatted, opts *GlobalOptions) ([]byte, error) {
+func AsJsonBytes(j *JsonFormatted, format, chain string, testMode bool) ([]byte, error) {
 	var result JsonFormatted
 
-	if opts.Format == "json" {
+	if format == "json" {
 		if len(j.Errors) > 0 {
 			result.Errors = j.Errors
 		} else {
@@ -112,7 +47,7 @@ func AsJsonBytes(j *JsonFormatted, opts *GlobalOptions) ([]byte, error) {
 			result.Errors = j.Errors
 		} else {
 			result.Data = j.Data
-			result.Meta = rpcClient.GetMetaData(opts.Chain, opts.TestMode)
+			result.Meta = rpcClient.GetMetaData(chain, testMode)
 		}
 	}
 
@@ -126,7 +61,7 @@ func AsJsonBytes(j *JsonFormatted, opts *GlobalOptions) ([]byte, error) {
 
 // PrintJson marshals its arguments and prints JSON in a standardized format
 func PrintJson(j *JsonFormatted, opts *GlobalOptions) error {
-	marshalled, err := AsJsonBytes(j, opts)
+	marshalled, err := AsJsonBytes(j, opts.Format, opts.Chain, opts.TestMode)
 	if err != nil {
 		return err
 	}
@@ -163,40 +98,6 @@ func (t *Table) Row(cells []string) {
 // Print flushes the Writer, which will print the table
 func (t *Table) Print() error {
 	return t.Writer.Flush()
-}
-
-// AsTsv turns a type into tab-separated values
-func (opts *GlobalOptions) AsTsv(data interface{}, hideHeader bool) ([]byte, error) {
-	records, err := ToStringRecords(data, false, hideHeader)
-	if err != nil {
-		return nil, err
-	}
-
-	buf := &bytes.Buffer{}
-	writer := csv.NewWriter(buf)
-	writer.Comma = '\t'
-
-	err = writer.WriteAll(records)
-	if err != nil {
-		return nil, err
-	}
-
-	err = writer.Error()
-	if err != nil {
-		return nil, err
-	}
-
-	return buf.Bytes(), nil
-}
-
-func MakeFirstLowerCase(s string) string {
-	if len(s) < 2 {
-		return strings.ToLower(s)
-	}
-	bts := []byte(s)
-	lc := bytes.ToLower([]byte{bts[0]})
-	rest := bts[1:]
-	return string(bytes.Join([][]byte{lc, rest}, nil))
 }
 
 func MakeFirstUpperCase(s string) string {
@@ -253,56 +154,6 @@ func MakeFirstUpperCase(s string) string {
 // 	return tt, err
 // }
 
-// ToStringRecords uses Reflect API to read data from the provided slice of structs and
-// turns it into a slice of string slices that can be later passed to encoding package
-// writers to convert between different output formats
-func ToStringRecords(data interface{}, quote bool, hideHeader bool) ([][]string, error) {
-	var records [][]string
-	// We can quote the data now, so that we don't have to loop over it again
-	// later.
-	format := "%v"
-	if quote {
-		format = `"%v"`
-	}
-	header := []string{}
-	// We only support slice of structs
-	slice := reflect.ValueOf(data)
-	if slice.Kind() != reflect.Slice {
-		return nil, fmt.Errorf("%s is not a structure", slice.Type().Name())
-	}
-	insideType := reflect.TypeOf(slice.Index(0).Interface())
-	if insideType.Kind() != reflect.Struct {
-		return nil, fmt.Errorf("%s is not a struct", insideType.Name())
-	}
-
-	for i := 0; i < slice.Len(); i++ {
-		var record []string
-		// Read the struct
-		content := slice.Index(i).Interface()
-		strct := reflect.ValueOf(content)
-
-		for j := 0; j < strct.NumField(); j++ {
-			// Now read each field from it and put into record
-			field := strct.Field(j).Interface()
-			record = append(record, fmt.Sprintf(format, field))
-
-			// If it's our first iteration, we save the struct's key names
-			// to use them as headers
-			if i == 0 {
-				header = append(header, fmt.Sprintf(format, MakeFirstLowerCase(insideType.Field(j).Name)))
-			}
-		}
-		records = append(records, record)
-	}
-
-	var result [][]string
-	if !hideHeader {
-		result = append(result, header)
-	}
-	result = append(result, records...)
-	return result, nil
-}
-
 var formatToMimeType = map[string]string{
 	"api":  "application/json",
 	"json": "application/json",
@@ -315,22 +166,33 @@ var formatToMimeType = map[string]string{
 func (opts *GlobalOptions) RespondWithError(w http.ResponseWriter, httpStatus int, err error) {
 	marshalled, err := AsJsonBytes(&JsonFormatted{
 		Errors: []string{err.Error()},
-	}, opts)
+	}, opts.Format, opts.Chain, opts.TestMode)
 	if err != nil {
 		panic(err)
 	}
-
 	w.WriteHeader(httpStatus)
 	w.Write(marshalled)
 }
 
 // TODO: Fix export without arrays
 func (opts *GlobalOptions) OutputArray(data interface{}) error {
-	if opts.ApiMode {
-		opts.Respond2(opts.Writer, data, opts.NoHeader)
+	formatNotEmpty := opts.Format
+	if formatNotEmpty == "" {
+		formatNotEmpty = "api"
+	}
+
+	if opts.ApiMode && opts.Writer != nil {
+		// Decides which format should be used, calls the right Responder, sets HTTP
+		// status code and writes a response
+		opts.Writer.Header().Set("Content-Type", formatToMimeType[formatNotEmpty])
+		opts.Format = formatNotEmpty
+		err := opts.Output2(opts.Writer, data, opts.Format, opts.NoHeader)
+		if err != nil {
+			opts.RespondWithError(opts.Writer, http.StatusInternalServerError, err)
+		}
 
 	} else {
-		err := opts.Output2(os.Stdout, data, opts.NoHeader)
+		err := opts.Output2(os.Stdout, data, opts.Format, opts.NoHeader)
 		if err != nil {
 			logger.Log(logger.Error, err)
 		}
@@ -340,25 +202,7 @@ func (opts *GlobalOptions) OutputArray(data interface{}) error {
 }
 
 // TODO: Fix export without arrays
-// Respond2 decides which format should be used, calls the right Responder, sets HTTP status code
-// and writes a response
-func (opts *GlobalOptions) Respond2(w http.ResponseWriter, responseData interface{}, hideHeader bool) {
-	formatNotEmpty := opts.Format
-	if formatNotEmpty == "" {
-		formatNotEmpty = "api"
-	}
-
-	w.Header().Set("Content-Type", formatToMimeType[formatNotEmpty])
-	opts.Format = formatNotEmpty
-	err := opts.Output2(w, responseData, hideHeader)
-	if err != nil {
-		opts.RespondWithError(w, http.StatusInternalServerError, err)
-	}
-}
-
-// TODO: Fix export without arrays
-func (opts *GlobalOptions) Output2(where io.Writer, data interface{}, hideHeader bool) error {
-	format := opts.Format
+func (opts *GlobalOptions) Output2(where io.Writer, data interface{}, format string, hideHeader bool) error {
 	nonEmptyFormat := format
 	if format == "" || format == "none" {
 		if utils.IsApiMode() {
@@ -375,21 +219,30 @@ func (opts *GlobalOptions) Output2(where io.Writer, data interface{}, hideHeader
 		}
 	}
 
-	var output []byte
+	var outputBytes []byte
 	var err error
 
 	switch nonEmptyFormat {
 	case "api":
 		fallthrough
 	case "json":
-		output, err = opts.JsonFormatter(data)
+		formatted := &JsonFormatted{}
+		err, ok := data.(error)
+		if ok {
+			formatted.Errors = []string{
+				err.Error(),
+			}
+		} else {
+			formatted.Data = data
+		}
+		outputBytes, err = AsJsonBytes(formatted, opts.Format, opts.Chain, opts.TestMode)
 	case "csv":
-		output, err = opts.CsvFormatter(data, hideHeader)
+		outputBytes, err = output.CsvFormatter(data, hideHeader)
 	case "txt":
-		output, err = opts.TxtFormatter(data, hideHeader)
+		outputBytes, err = output.TxtFormatter(data, hideHeader)
 	case "tab":
 		// TODO: There is no such case -- this is 'txt' in non-API mode with a terminal
-		output, err = opts.TabFormatter(data, hideHeader)
+		outputBytes, err = output.TabFormatter(data, hideHeader)
 	default:
 		return fmt.Errorf("unsupported format %s", format)
 	}
@@ -398,7 +251,7 @@ func (opts *GlobalOptions) Output2(where io.Writer, data interface{}, hideHeader
 		return err
 	}
 
-	where.Write(output)
+	where.Write(outputBytes)
 	// Maintain newline compatibility with C++ version
 	if nonEmptyFormat == "json" || nonEmptyFormat == "api" {
 		where.Write([]byte{'\n'})

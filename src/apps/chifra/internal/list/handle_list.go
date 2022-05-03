@@ -20,6 +20,9 @@ type SimpleAppearance struct {
 }
 
 func (opts *ListOptions) HandleListAppearances(monitorArray []monitor.Monitor) error {
+	if opts.Globals.Format == "json" || opts.Globals.Format == "api" {
+		fmt.Println("{\"data\":[")
+	}
 	for _, mon := range monitorArray {
 		count := mon.Count()
 		apps := make([]index.AppearanceRecord, count, count)
@@ -53,10 +56,15 @@ func (opts *ListOptions) HandleListAppearances(monitorArray []monitor.Monitor) e
 			}
 		}
 
+		// TODO: Fix export without arrays
 		err = opts.Globals.OutputArray(results)
 		if err != nil {
 			return err
 		}
 	}
+	if opts.Globals.Format == "json" || opts.Globals.Format == "api" {
+		fmt.Println("]}")
+	}
+
 	return nil
 }

@@ -60,5 +60,6 @@ func (opts *MonitorsOptions) HandleClean() error {
 		}
 	}
 
+	// TODO: Fix export without arrays
 	return opts.Globals.OutputArray(results)
 }

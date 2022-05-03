@@ -18,5 +18,6 @@ func (opts *ListOptions) HandleListCount(monitorArray []monitor.Monitor) error {
 		results = append(results, simp)
 	}
 
+	// TODO: Fix export without arrays
 	return opts.Globals.OutputArray(results)
 }

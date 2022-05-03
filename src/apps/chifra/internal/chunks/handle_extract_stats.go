@@ -72,5 +72,7 @@ func (opts *ChunksOptions) showStats(path string, first bool) error {
 	var results []ChunkStats
 	results = append(results, NewChunkStats(path))
 
+	opts.Globals.NoHeader = !first
+	// TODO: Fix export without arrays
 	return opts.Globals.OutputArray(results)
 }

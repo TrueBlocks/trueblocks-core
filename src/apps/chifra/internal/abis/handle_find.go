@@ -85,6 +85,7 @@ func (opts *AbisOptions) HandleAbiFind() error {
 
 	defer wg.Wait()
 
+	// TODO: Fix export without arrays
 	return opts.Globals.OutputArray(results)
 }
 

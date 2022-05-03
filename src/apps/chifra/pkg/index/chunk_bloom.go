@@ -135,13 +135,9 @@ func ReadBloom(bloom *ChunkBloom, fileName string) (err error) {
 }
 
 func (bloom *ChunkBloom) Display(verbose int) {
-	var bytesPerLine = (2048 / 16)
-	if verbose > 0 {
-		if verbose > 4 {
-			bytesPerLine = 128
-		} else {
-			bytesPerLine = 32
-		}
+	var bytesPerLine = (2048 / 16) /* 128 */
+	if verbose > 0 && verbose <= 4 {
+		bytesPerLine = 32
 	}
 
 	nInserted := uint32(0)

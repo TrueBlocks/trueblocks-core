@@ -30,6 +30,7 @@ func (opts *ChunksOptions) HandleChunksExtractPins() error {
 	}
 
 	opts.PrintManifestHeader()
+	// TODO: Fix export without arrays
 	return opts.Globals.OutputArray(manifestData.NewPins)
 }
 
