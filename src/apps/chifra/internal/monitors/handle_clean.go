@@ -5,9 +5,6 @@
 package monitorsPkg
 
 import (
-	"os"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 )
 
@@ -63,16 +60,5 @@ func (opts *MonitorsOptions) HandleClean() error {
 		}
 	}
 
-	// TODO: Fix export without arrays
-	if opts.Globals.ApiMode {
-		opts.Globals.Respond2(opts.Globals.Writer, results, opts.Globals.NoHeader)
-
-	} else {
-		err := opts.Globals.Output2(os.Stdout, results, opts.Globals.NoHeader)
-		if err != nil {
-			logger.Log(logger.Error, err)
-		}
-	}
-
-	return nil
+	return opts.Globals.OutputArray(results)
 }

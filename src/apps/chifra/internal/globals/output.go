@@ -16,6 +16,7 @@ import (
 	"strings"
 	"text/tabwriter"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -323,6 +324,22 @@ func (opts *GlobalOptions) RespondWithError(w http.ResponseWriter, httpStatus in
 	w.Write(marshalled)
 }
 
+// TODO: Fix export without arrays
+func (opts *GlobalOptions) OutputArray(data interface{}) error {
+	if opts.ApiMode {
+		opts.Respond2(opts.Writer, data, opts.NoHeader)
+
+	} else {
+		err := opts.Output2(os.Stdout, data, opts.NoHeader)
+		if err != nil {
+			logger.Log(logger.Error, err)
+		}
+	}
+
+	return nil
+}
+
+// TODO: Fix export without arrays
 // Respond2 decides which format should be used, calls the right Responder, sets HTTP status code
 // and writes a response
 func (opts *GlobalOptions) Respond2(w http.ResponseWriter, responseData interface{}, hideHeader bool) {
@@ -331,7 +348,6 @@ func (opts *GlobalOptions) Respond2(w http.ResponseWriter, responseData interfac
 		formatNotEmpty = "api"
 	}
 
-	// TODO: Fix export without arrays
 	w.Header().Set("Content-Type", formatToMimeType[formatNotEmpty])
 	opts.Format = formatNotEmpty
 	err := opts.Output2(w, responseData, hideHeader)

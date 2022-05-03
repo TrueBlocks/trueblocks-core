@@ -9,15 +9,16 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 )
 
-func (opts *ChunksOptions) showBloom(path string, first bool) {
+func (opts *ChunksOptions) showBloom(path string, first bool) error {
 	if opts.Globals.TestMode {
 		r, _ := cache.RangeFromFilename(path)
 		if r.First > 1 {
-			return
+			return nil
 		}
 	}
 
 	var bloom index.ChunkBloom
 	index.ReadBloom(&bloom, path)
 	bloom.Display(int(opts.Globals.LogLevel))
+	return nil
 }

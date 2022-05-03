@@ -6,13 +6,11 @@ package chunksPkg
 
 import (
 	"fmt"
-	"os"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 type ChunkStats struct {
@@ -60,28 +58,19 @@ func NewChunkStats(path string) ChunkStats {
 	return ret
 }
 
-func (opts *ChunksOptions) showStats(path string, first bool) {
+func (opts *ChunksOptions) showStats(path string, first bool) error {
 	if opts.Globals.TestMode {
 		r, _ := cache.RangeFromFilename(path)
 		if r.First > 2000000 && r.First < 3000000 {
-			return
+			return nil
 		}
 		if r.First > 4000000 {
-			return
+			return nil
 		}
 	}
 
 	var results []ChunkStats
 	results = append(results, NewChunkStats(path))
 
-	// TODO: Fix export without arrays
-	if opts.Globals.ApiMode {
-		opts.Globals.Respond2(opts.Globals.Writer, results, !first)
-
-	} else {
-		err := opts.Globals.Output2(os.Stdout, results, !first)
-		if err != nil {
-			logger.Log(logger.Error, err)
-		}
-	}
+	return opts.Globals.OutputArray(results)
 }

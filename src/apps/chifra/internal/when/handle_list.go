@@ -5,29 +5,13 @@
 package whenPkg
 
 import (
-	"os"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	tslibPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 )
 
 func (opts *WhenOptions) HandleWhenList() error {
-
 	result, err := tslibPkg.GetSpecials(opts.Globals.Chain)
 	if err != nil {
 		return err
 	}
-
-	// TODO: Fix export without arrays
-	if opts.Globals.ApiMode {
-		opts.Globals.Respond2(opts.Globals.Writer, result, opts.Globals.NoHeader)
-
-	} else {
-		err := opts.Globals.Output2(os.Stdout, result, opts.Globals.NoHeader)
-		if err != nil {
-			logger.Log(logger.Error, err)
-		}
-	}
-
-	return nil
+	return opts.Globals.OutputArray(result)
 }

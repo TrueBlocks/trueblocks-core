@@ -8,7 +8,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 )
 
-func (opts *ChunksOptions) HandleChunksExtract(displayFunc func(path string, first bool)) error {
+func (opts *ChunksOptions) HandleChunksExtract(displayFunc func(path string, first bool) error) error {
 	blocks := cache.Convert(opts.Blocks)
 	filenameChan := make(chan cache.IndexFileInfo)
 
