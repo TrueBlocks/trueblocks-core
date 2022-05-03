@@ -20,10 +20,10 @@ func (opts *WhenOptions) HandleWhenList() error {
 
 	// TODO: Fix export without arrays
 	if opts.Globals.ApiMode {
-		opts.Globals.Respond2(opts.Globals.Writer, result, false)
+		opts.Globals.Respond2(opts.Globals.Writer, result, opts.Globals.NoHeader)
 
 	} else {
-		err := opts.Globals.Output2(os.Stdout, result, false)
+		err := opts.Globals.Output2(os.Stdout, result, opts.Globals.NoHeader)
 		if err != nil {
 			logger.Log(logger.Error, err)
 		}

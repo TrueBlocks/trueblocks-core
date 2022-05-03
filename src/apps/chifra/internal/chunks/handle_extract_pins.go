@@ -33,10 +33,10 @@ func (opts *ChunksOptions) HandleChunksExtractPins() error {
 	// TODO: Fix export without arrays
 	opts.PrintManifestHeader()
 	if opts.Globals.ApiMode {
-		opts.Globals.Respond2(opts.Globals.Writer, manifestData.NewPins, false)
+		opts.Globals.Respond2(opts.Globals.Writer, manifestData.NewPins, opts.Globals.NoHeader)
 
 	} else {
-		err = opts.Globals.Output2(os.Stdout, manifestData.NewPins, false)
+		err = opts.Globals.Output2(os.Stdout, manifestData.NewPins, opts.Globals.NoHeader)
 		if err != nil {
 			logger.Log(logger.Error, err)
 		}
