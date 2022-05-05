@@ -37,7 +37,7 @@ func RunChunks(cmd *cobra.Command, args []string) error {
 	} else if opts.Extract == "pins" {
 		return opts.HandleChunksExtractPins()
 	} else if opts.Extract == "stats" {
-		return opts.HandleChunksExtract(opts.showStats)
+		return opts.HandleChunksExtract2(opts.showStats)
 	}
 
 	return validate.Usage("Extractor for {0} not yet implemented.", opts.Extract)
