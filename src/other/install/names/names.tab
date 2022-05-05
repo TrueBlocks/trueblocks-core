@@ -3459,6 +3459,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0x4375e7ad8a01b8ec3ed041399f62d9cd120e0063	BZ	BZ	On chain	18	Digital asset trading exchanges, providing professional digital asset trading and OTC Over the Counter services.	false	false	false	true	true	false
 90-Individuals:DAO Whales	0x437631e209736187b21090c0269e7a5f443811c3	Dao Whale 03		WhaleWatch.io			false	false	false	false	false	false
 50-Tokens:ERC20	0x437b0da7932b21f54488fd80ee09b519a6f4d8ad	SushiSwap LP Token	SLP	On chain	18		false	false	false	true	true	false
+30-Contracts:dAppNode	0x437f55560f9bb83cb01db9488d82fd3954f32d1b	dAppNode Payments		Thier Website			false	false	false	true	false	false
 30-Contracts	0x438e458e16314c30fdbc622d81108cbc8877f2a0	TrueBlocks Publish		OnChain			false	false	false	true	false	false
 50-Tokens:ERC20	0x43901e05f08f48546fff8d6f8df108f60570498b	BASENJI	BSJ	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x4391f29d3bca9a765beccc482574acf28a392b8d	CommonERC20 v4.0.1	CMN	On chain	18		false	false	false	true	true	false
