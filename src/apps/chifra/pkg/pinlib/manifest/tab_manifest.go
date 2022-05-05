@@ -78,15 +78,11 @@ func ReadTabManifest(r io.Reader) (*Manifest, error) {
 	}
 
 	return &Manifest{
-		FileName:           "",
-		IndexFormat:        "",
-		BloomFormat:        "",
-		CommitHash:         "",
-		PreviousHash:       "",
-		NewBlockRange:      newBlockRange,
-		PreviousBlockRange: ManifestRange{0, 0},
-		NewPins:            descriptors,
-		PreviousPins:       []PinDescriptor{},
+		IndexFormat: "",
+		BloomFormat: "",
+		CommitHash:  "",
+		BlockRange:  newBlockRange,
+		Pins:        descriptors,
 	}, nil
 }
 

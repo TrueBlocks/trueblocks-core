@@ -11,13 +11,16 @@ import (
 
 var manifestSource = `
 {
-  "fileName": "pin-manifest.json",
+  "version": "2",
+  "chain": "mainnet",
+  "chainId": 1,
   "indexFormat": "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2",
   "bloomFormat": "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD",
   "commitHash": "f29699d3281e41cb011ddfbe50b7f01bfe5e3c53",
-  "prevHash": "QmP4i6ihnVrj8Tx7cTFw4aY6ungpaPYxDJEZ7Vg1RSNSdm",
-  "newBlockRange": "000000000-000864336",
-  "newPins": [
+  "names": "QmP4i6ihnVrj8Tx7cTFw4aY6ungpaPYxDJEZ7Vg1RSNSdm",
+  "timestamps": "QmcvjroTiE95LWeiP8HHq1YA3ysRchLuVx8HLQui8WcSBV",
+  "blockRange": "000000000-000864336",
+  "pins": [
     {
       "fileName": "000000000-000000000",
       "bloomHash": "QmPQEgUm7nzQuW9HYyWp5Ff3aoUwg2rsxDngyuyddJTvrv",
@@ -43,9 +46,7 @@ var manifestSource = `
       "bloomHash": "QmXW2AQoZRV8qMw6DCn1vJEdz37wH1Q9WTjgecR4JHj5xH",
       "indexHash": "QmRedJaRUQEZoP3v32EYXGAiYT9gvXSGwtQMUcdRRJ7GQW"
     }
-   ],
-  "prevBlockRange": "",
-  "prevPins": []
+   ]
 }
 `
 
@@ -63,9 +64,19 @@ func TestReadManifest(t *testing.T) {
 
 	cases := []TestCases{
 		{
-			name:     "FileName",
-			field:    m.FileName,
-			expected: "pin-manifest.json",
+			name:     "Version",
+			field:    m.Version.String(),
+			expected: "2",
+		},
+		{
+			name:     "Chain",
+			field:    m.Chain,
+			expected: "mainnet",
+		},
+		{
+			name:     "ChainId",
+			field:    m.ChainId.String(),
+			expected: "1",
 		},
 		{
 			name:     "IndexFormat",
@@ -83,9 +94,14 @@ func TestReadManifest(t *testing.T) {
 			expected: "f29699d3281e41cb011ddfbe50b7f01bfe5e3c53",
 		},
 		{
-			name:     "PreviousHash",
-			field:    m.PreviousHash,
+			name:     "Names",
+			field:    m.Names,
 			expected: "QmP4i6ihnVrj8Tx7cTFw4aY6ungpaPYxDJEZ7Vg1RSNSdm",
+		},
+		{
+			name:     "Timestamps",
+			field:    m.Timestamps,
+			expected: "QmcvjroTiE95LWeiP8HHq1YA3ysRchLuVx8HLQui8WcSBV",
 		},
 	}
 
@@ -95,15 +111,15 @@ func TestReadManifest(t *testing.T) {
 		}
 	}
 
-	if m.NewBlockRange[0] != 0 {
-		t.Errorf("Wrong NewBlockRange[0]: %d", m.NewBlockRange[0])
+	if m.BlockRange[0] != 0 {
+		t.Errorf("Wrong NewBlockRange[0]: %d", m.BlockRange[0])
 	}
 
-	if m.NewBlockRange[1] != 864336 {
-		t.Errorf("Wrong NewBlockRange[1]: %d", m.NewBlockRange[1])
+	if m.BlockRange[1] != 864336 {
+		t.Errorf("Wrong NewBlockRange[1]: %d", m.BlockRange[1])
 	}
 
-	newPins := m.NewPins
+	newPins := m.Pins
 
 	if len(newPins) != 5 {
 		t.Errorf("Incorrect NewPins length: %d", len(newPins))
@@ -111,13 +127,5 @@ func TestReadManifest(t *testing.T) {
 
 	if newPins[0].BloomHash != "QmPQEgUm7nzQuW9HYyWp5Ff3aoUwg2rsxDngyuyddJTvrv" {
 		t.Errorf("Wrong NewPins[0].BloomHash: %s", newPins[0].BloomHash)
-	}
-
-	if m.PreviousBlockRange[1] != 0 {
-		t.Errorf("Wrong PreviousBlockRange[1]: %d", m.PreviousBlockRange[1])
-	}
-
-	if len(m.PreviousPins) > 0 {
-		t.Errorf("Wrong len(m.PreviousPins): %d", len(m.PreviousPins))
 	}
 }
