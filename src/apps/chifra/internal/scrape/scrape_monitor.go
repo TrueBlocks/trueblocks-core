@@ -179,6 +179,9 @@ func getCommandsFromFile(globals globals.GlobalOptions) ([]SemiParse, error) {
 
 	cmdLines := utils.AsciiFileToLines(globals.File)
 	for _, cmd := range cmdLines {
+		if strings.HasPrefix(cmd, "export ") {
+			cmd = strings.Replace(cmd, "export ", "", -1)
+		}
 		cmd = strings.Trim(cmd, " \t")
 		if len(cmd) > 0 && !strings.HasPrefix(cmd, "#") {
 			sp := SemiParse{}
