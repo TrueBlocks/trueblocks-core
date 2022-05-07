@@ -749,6 +749,15 @@ names?prefund&custom&named
       "description": ""
     },
     {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x00c83aecc790e8a4453e5dd3b0b4b3680501a7a7",
+      "name": "Skale",
+      "symbol": "18",
+      "source": "Giveth Docs",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "31-Gitcoin:Grants",
       "address": "0x00cf36853aa4024fb5bf5cc377dfd85844b411a0",
       "name": "Grant 0143 Dappnode - Panvala League",
@@ -1799,15 +1808,6 @@ names?prefund&custom&named
       "symbol": "",
       "source": "EtherScan.io",
       "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC721",
-      "address": "0x032dd2a3c6d234aa9620d65eb618fcdc72be3dbb",
-      "name": "HashDemons",
-      "symbol": "HASHDEMONS",
-      "source": "On chain",
-      "decimals": 18,
       "description": ""
     }
   ],

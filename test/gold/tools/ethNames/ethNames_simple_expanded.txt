@@ -111,6 +111,7 @@ TEST[DATE|TIME] NoHeader:  true
 50-Tokens:ERC20	0x7c6c3b4e91923f080d6cc847a68d7330400a95d7	Union Network Dollar Token	UNDT	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x8069080a922834460c3a092fb2c1510224dc066b	SpaceChain	SPC	On chain	18	SpaceChain is a community-based space platform that combines space and blockchain technologies to build the world‚Äö√Ñ√¥s first open-source blockchain-based satellite network.	false	false	false	true	true	false
 30-Contracts:Set Protocol	0x818e6fecd516ecc3849daf6845e3ec868087b755	Kyber Network Proxy		https://github.com/SetProtocol/set-protocol-contracts			false	false	false	true	false	false
+50-Tokens:ERC20	0x8290333cef9e6d528dd5618fb97a76f268f3edd4	Ankr Network	18	Giveth Docs			false	false	false	true	false	false
 31-Gitcoin:Grants	0x863199c0a7eb5c6e70e0889a93242445ee998cf4	Grant 0762 Community Based Audit		https://gitcoin.co/grants/762/community-based-audit		https://github.com/SmartAuditNetwork	false	false	false	false	false	false
 31-Gitcoin:Grants	0x8767aacd8ae48e6a23077548c24121e46dca0696	Grant 2728 - Using social networks for fun, affordable, and lucrative delivery.		https://gitcoin.co/grants/2728/using-social-networks-for-fun-affordable-and-lucr			false	false	false	false	false	false
 50-Tokens:ERC20	0x877c7deb5eb1fc5faad30c71e3a6e39dc8b1519f	HeartBout	HB	On chain	18	HeartBout is a social network based on the blockchain technology with a decentralized system to encourage user activity.	false	false	false	true	true	false
@@ -202,4 +203,3 @@ TEST[DATE|TIME] NoHeader:  true
 31-Giveth:Project	0xe3f738ff9fa4e157cab12ee6f1847f680495229a	Permaculture Action Network		Tokenomics			false	false	false	false	false	false
 50-Tokens:ERC20	0xe469c4473af82217b30cf17b10bcdb6c8c796e75	EXRP Network	EXRN	On chain	18	Connecting the blockchains using crosschain gateway built with smart contracts.	false	false	false	true	true	false
 50-Tokens:ERC20	0xe530441f4f73bdb6dc2fa5af7c3fc5fd551ec838	GSENetwork	GSE	On chain	4		false	false	false	true	true	false
-50-Tokens:ERC20	0xe7e4279b80d319ede2889855135a22021baf0907	ZeusNetwork	ZEUS	On chain	18	Cryptocurrency that allows people to raise crypto for events to challenging circumstances like accidents and illnesses or real world emergencies. 'The GoFundMe of Crypto'	false	false	false	true	true	false

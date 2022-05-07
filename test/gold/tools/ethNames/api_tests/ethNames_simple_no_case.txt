@@ -596,6 +596,15 @@ names?terms=network
       "description": ""
     },
     {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x8290333cef9e6d528dd5618fb97a76f268f3edd4",
+      "name": "Ankr Network",
+      "symbol": "18",
+      "source": "Giveth Docs",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "31-Gitcoin:Grants",
       "address": "0x8767aacd8ae48e6a23077548c24121e46dca0696",
       "name": "Grant 2728 - Using social networks for fun, affordable, and lucrative delivery.",
