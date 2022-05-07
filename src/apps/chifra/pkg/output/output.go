@@ -6,14 +6,12 @@ package output
 
 import (
 	"bytes"
-	"encoding/csv"
 	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
 	"reflect"
 	"strings"
-	"text/tabwriter"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -23,55 +21,6 @@ type JsonFormatted struct {
 	Data   interface{}         `json:"data,omitempty"`
 	Errors []string            `json:"errors,omitempty"`
 	Meta   *rpcClient.MetaData `json:"meta,omitempty"`
-}
-
-// CsvFormatter turns a type into CSV string. It uses custom code instead of
-// Go's encoding/csv to maintain compatibility with C++ output, which
-// quotes each item. encoding/csv would double-quote a quoted string...
-func CsvFormatter(i interface{}, hideHeader bool) ([]byte, error) {
-	records, err := ToStringRecords(i, true, hideHeader)
-	if err != nil {
-		return nil, err
-	}
-	result := []string{}
-	// We have to join records in one row with a ","
-	for _, row := range records {
-		result = append(result, strings.Join(row, ","))
-	}
-
-	// Now we need to join all rows with a newline and add an ending newline
-	// top match the .txt output
-	return []byte(
-		strings.Join(result, "\n") + "\n",
-	), nil
-}
-
-// TxtFormatter turns data into TSV string
-func TxtFormatter(data interface{}, hideHeader bool) ([]byte, error) {
-	out := bytes.Buffer{}
-	tsv, err := AsTsv(data, hideHeader)
-	if err != nil {
-		return nil, err
-	}
-	_, err = out.Write(tsv)
-	if err != nil {
-		return nil, err
-	}
-	return out.Bytes(), nil
-}
-
-// TabFormatter turns data into a table (string)
-func TabFormatter(data interface{}, hideHeader bool) ([]byte, error) {
-	tabOutput := &bytes.Buffer{}
-	tab := tabwriter.NewWriter(tabOutput, 0, 0, 2, ' ', 0)
-	tsv, err := AsTsv(data, hideHeader)
-	if err != nil {
-		return nil, err
-	}
-	tab.Write(tsv)
-	err = tab.Flush()
-
-	return tabOutput.Bytes(), err
 }
 
 // AsJsonBytes1 marshals JsonFormatted struct, populating Meta field if needed
@@ -99,67 +48,6 @@ func AsJsonBytes1(j *JsonFormatted, data interface{}, format, chain string, test
 	}
 
 	return marshalled, err
-}
-
-// JsonFormatter marshals JsonFormatted struct, populating Meta field if needed
-func JsonFormatter(data interface{}, format, chain string, testMode bool) ([]byte, error) {
-	j := &JsonFormatted{}
-	err, ok := data.(error)
-	if ok {
-		j.Errors = []string{
-			err.Error(),
-		}
-	} else {
-		j.Data = data
-	}
-
-	var result JsonFormatted
-
-	if format == "json" {
-		if len(j.Errors) > 0 {
-			result.Errors = j.Errors
-		} else {
-			result.Data = j.Data
-		}
-	} else {
-		if len(j.Errors) > 0 {
-			result.Errors = j.Errors
-		} else {
-			result.Data = j.Data
-			result.Meta = rpcClient.GetMetaData(chain, testMode)
-		}
-	}
-
-	marshalled, err := json.MarshalIndent(result, "", "  ")
-	if err != nil {
-		return nil, err
-	}
-
-	return marshalled, err
-}
-
-// AsTsv turns a type into tab-separated values
-func AsTsv(data interface{}, hideHeader bool) ([]byte, error) {
-	records, err := ToStringRecords(data, false, hideHeader)
-	if err != nil {
-		return nil, err
-	}
-
-	buf := &bytes.Buffer{}
-	writer := csv.NewWriter(buf)
-	writer.Comma = '\t'
-
-	err = writer.WriteAll(records)
-	if err != nil {
-		return nil, err
-	}
-
-	err = writer.Error()
-	if err != nil {
-		return nil, err
-	}
-
-	return buf.Bytes(), nil
 }
 
 // ToStringRecords uses Reflect API to read data from the provided slice of structs and
@@ -240,16 +128,16 @@ func Output2(where io.Writer, data interface{}, format, chain string, hideHeader
 	case "api":
 		fallthrough
 	case "json":
-		outputBytes, err = JsonFormatter(data, nonEmptyFormat, chain, testMode)
+		outputBytes, err = jsonFormatter(data, nonEmptyFormat, chain, testMode)
 	case "csv":
-		outputBytes, err = CsvFormatter(data, hideHeader)
+		outputBytes, err = csvFormatter(data, hideHeader)
 	case "txt":
 		_, ok := where.(http.ResponseWriter)
 		if !utils.IsTerminal() || ok {
-			outputBytes, err = TxtFormatter(data, hideHeader)
+			outputBytes, err = txtFormatter(data, hideHeader)
 		} else {
 			// Use a table only on the command line when we're not re-directed or piped
-			outputBytes, err = TabFormatter(data, hideHeader)
+			outputBytes, err = tabFormatter(data, hideHeader)
 		}
 	default:
 		err = fmt.Errorf("unsupported format %s", format)
