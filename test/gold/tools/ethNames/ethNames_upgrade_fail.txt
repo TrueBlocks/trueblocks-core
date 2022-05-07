@@ -525,6 +525,13 @@ TEST[DATE|TIME] Format:  json
     "source": "Gitcoin Website"
   },
   {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x00c83aecc790e8a4453e5dd3b0b4b3680501a7a7",
+    "name": "Skale",
+    "symbol": "18",
+    "source": "Giveth Docs"
+  },
+  {
     "tags": "31-Gitcoin:Grants",
     "address": "0x00cf36853aa4024fb5bf5cc377dfd85844b411a0",
     "name": "Grant 0143 Dappnode - Panvala League",
@@ -1358,12 +1365,4 @@ TEST[DATE|TIME] Format:  json
     "address": "0x035032655b5b3784d359b56eb82c803bd971c582",
     "name": "Grant 2800 - LogicBeach Explainer Series",
     "source": "https://gitcoin.co/grants/2800/logicbeach-explainer-series"
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x03552d005d0f4262bf2d85fa2a3263541d4059c1",
-    "name": "Miller Real Estate Holdings",
-    "symbol": "RENT",
-    "source": "On chain",
-    "decimals": 6
   }] }

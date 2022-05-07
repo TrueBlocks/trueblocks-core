@@ -58,7 +58,7 @@ func CsvFormatter(i interface{}, hideHeader bool) ([]byte, error) {
 	// Now we need to join all rows with a newline and add an ending newline
 	// top match the .txt output
 	return []byte(
-		strings.Join(result, "\n") + "\n",
+		strings.Join(result, "\n"),
 	), nil
 }
 

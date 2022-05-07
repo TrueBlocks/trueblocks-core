@@ -38,9 +38,6 @@ names?tags
       "tags": "30-Contracts:Giveth Staking"
     },
     {
-      "tags": "30-Contracts:Giveth Token"
-    },
-    {
       "tags": "30-Contracts:Kyber Network"
     },
     {
