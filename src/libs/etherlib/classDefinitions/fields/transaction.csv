@@ -25,10 +25,11 @@ articulatedTx        ,function       ,           ,true   ,      ,        ,      
 compressedTx         ,string         ,           ,       ,      ,true    ,          ,        ,      ,         ,16  ,13   ,0x3d18b912( ) ,truncated&#44; more readable version of the articulation
 statements           ,reconciliation ,           ,true   ,true  ,true    ,          ,        ,      ,         ,14  ,     ,              ,array of reconciliations
 finalized            ,bool           ,           ,       ,      ,true    ,true      ,        ,      ,         ,18  ,     ,true          ,flag indicating the system considers this data final
-date                 ,date           ,           ,       ,      ,        ,          ,true    ,      ,true     ,    ,3    ,              ,
+date                 ,date           ,           ,       ,      ,        ,          ,true    ,      ,true     ,21  ,3    ,              ,
 fromName             ,string         ,           ,       ,      ,        ,          ,true    ,      ,true     ,    ,     ,              ,
 toName               ,string         ,           ,       ,      ,        ,          ,true    ,      ,true     ,    ,     ,              ,
-extraData            ,string         ,           ,       ,      ,        ,          ,true    ,      ,true     ,    ,     ,              ,
+extraData            ,string         ,           ,       ,      ,        ,          ,true    ,      ,true     ,19  ,     ,              ,
+isError              ,bool           ,           ,       ,      ,        ,          ,true    ,      ,true     ,20  ,     ,              ,
 ether                ,string         ,           ,       ,      ,        ,          ,true    ,      ,true     ,    ,7    ,              ,
 etherGasPrice        ,string         ,           ,       ,      ,        ,          ,true    ,      ,true     ,    ,8    ,              ,
 gasUsed              ,string         ,           ,       ,      ,        ,          ,true    ,      ,true     ,    ,9    ,              ,

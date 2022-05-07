@@ -38,9 +38,6 @@ names?tags
       "tags": "30-Contracts:Giveth Staking"
     },
     {
-      "tags": "30-Contracts:Giveth Token"
-    },
-    {
       "tags": "30-Contracts:Kyber Network"
     },
     {
@@ -81,6 +78,12 @@ names?tags
     },
     {
       "tags": "31-Gitcoin:Workstreams"
+    },
+    {
+      "tags": "31-Giveth:Core"
+    },
+    {
+      "tags": "31-Giveth:Project"
     },
     {
       "tags": "34-ENS"

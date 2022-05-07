@@ -5,7 +5,7 @@ list?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&count
       "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
       "nRecords": 3,
       "fileSize": 32,
-      "lastScanned": 5000001
+      "lastScanned": 5000000
     }
   ],
   "meta": {

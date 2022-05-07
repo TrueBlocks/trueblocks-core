@@ -100,8 +100,8 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12976,tools,ChainData,blocks,getBlocks,big_range,r,500,false,false,false,false,header,flag,<uint64>,for the --logs option only&#44; allow for block ranges larger than 500
 12578,tools,ChainData,blocks,getBlocks,count,c,,false,false,true,true,header,switch,<boolean>,display the number of the lists of appearances for --addrs or --uniq
 12580,tools,ChainData,blocks,getBlocks,cache,o,,false,false,true,true,header,switch,<boolean>,force a write of the block to the cache
-12582,tools,ChainData,blocks,getBlocks,list,l,0,false,false,false,false,local,flag,<blknum>,summary list of blocks running backwards from latest block minus num
-12584,tools,ChainData,blocks,getBlocks,list_count,C,0,false,false,false,false,header,flag,<blknum>,the number of blocks to report for --list option
+12582,tools,ChainData,blocks,getBlocks,list,l,0,false,false,false,true,local,flag,<blknum>,summary list of blocks running backwards from latest block minus num
+12584,tools,ChainData,blocks,getBlocks,list_count,C,0,false,false,false,true,header,flag,<blknum>,the number of blocks to report for --list option
 12590,tools,ChainData,blocks,getBlocks,,,,false,false,true,true,--,description,,Retrieve one or more blocks from the chain or local cache.
 12600,tools,ChainData,blocks,getBlocks,n1,,,false,false,false,false,--,note,,`blocks` is a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
 12610,tools,ChainData,blocks,getBlocks,n2,,,false,false,false,false,--,note,,`blocks` may be specified as either numbers or hashes.
@@ -164,8 +164,8 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13628,tools,ChainData,traces,getTraces,n5,,,false,false,false,false,--,note,,A state diff trace describes&#44; for each modified address&#44; what changed during that trace.
 13629,tools,ChainData,traces,getTraces,ERR_PROVIDEONETXID,,,false,false,false,false,--,error,,Please specify at least one transaction identifier.
 
-13940,tools,ChainData,when,whenBlock,blocks,,,true,false,true,false,local,positional,list<string>,one or more dates&#44; block numbers&#44; hashes&#44; or special named blocks (see notes)
-13960,tools,ChainData,when,whenBlock,list,l,,false,false,true,false,header,switch,<boolean>,export a list of the 'special' blocks
+13940,tools,ChainData,when,whenBlock,blocks,,,false,false,true,true,local,positional,list<string>,one or more dates&#44; block numbers&#44; hashes&#44; or special named blocks (see notes)
+13960,tools,ChainData,when,whenBlock,list,l,,false,false,true,true,header,switch,<boolean>,export a list of the 'special' blocks
 13962,tools,ChainData,when,whenBlock,timestamps,t,,false,false,true,true,header,switch,<boolean>,ignore other options and generate timestamps only
 13963,tools,ChainData,when,whenBlock,check,c,,false,false,false,false,header,switch,<boolean>,available only with --timestamps&#44; checks the validity of the timestamp data
 13965,tools,ChainData,when,whenBlock,fix,f,,false,false,false,false,header,switch,<boolean>,available only with --timestamps&#44; fixes incorrect timestamps if any
@@ -208,23 +208,23 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13372,tools,ChainState,tokens,getTokens,n5,,,false,false,false,false,--,note,,`special` blocks are detailed under `chifra when --list`.
 
 12110,apps,Admin,scrape,blockScrape,modes,,,true,false,true,true,gocmd,positional,list<enum[indexer|monitors|both]>,which scraper(s) to control
-12113,apps,Admin,scrape,blockScrape,action,a,,false,true,true,true,gocmd,flag,enum[toggle|run|restart|pause|quit],command to apply to the specified scrape
 12115,apps,Admin,scrape,blockScrape,sleep,s,14,false,false,true,true,gocmd,flag,<double>,seconds to sleep between scraper passes
-11112,apps,Admin,scrape,blockScrape,pin,p,,false,false,true,true,header,switch,<boolean>,pin chunks (and blooms) to IPFS as they are created (requires pinning service)
-11113,apps,Admin,scrape,blockScrape,publish,u,,false,false,true,true,header,switch,<boolean>,after pinning the chunk&#44; publish it to UnchainedIndex
-11112,apps,Admin,scrape,blockScrape,blaze,z,,false,false,true,true,gocmd,switch,<boolean>,invoke the blaze scraper to process blocks
-11116,apps,Admin,scrape,blockScrape,block_cnt,n,2000,false,true,true,true,header,flag,<uint64>,maximum number of blocks to process per pass
-11117,apps,Admin,scrape,blockScrape,block_chan_cnt,b,10,false,true,true,true,header,flag,<uint64>,number of concurrent block processing channels
-11118,apps,Admin,scrape,blockScrape,addr_chan_cnt,d,20,false,true,true,true,header,flag,<uint64>,number of concurrent address processing channels
-12127,apps,Admin,scrape,blockScrape,reset,e,NOPOS,false,true,false,false,local,flag,<blknum>,reset the scraper to the provided block (or end of earliest chunk prior to that block)
-11119,apps,Admin,scrape,blockScrape,apps_per_chunk,,200000,false,true,false,false,config,flag,<uint64>,the number of appearances to build into a chunk before consolidating it
-11120,apps,Admin,scrape,blockScrape,unripe_dist,,28,false,true,false,false,config,flag,<uint64>,the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe
-11121,apps,Admin,scrape,blockScrape,snap_to_grid,,100000,false,true,false,false,config,flag,<uint64>,an override to apps_per_chunk to snap-to-grid at every modulo of this value&#44; this allows easier corrections to the index
-11122,apps,Admin,scrape,blockScrape,first_snap,,0,false,true,false,false,config,flag,<uint64>,the first block at which snap_to_grid is enabled
-11123,apps,Admin,scrape,blockScrape,allow_missing,,,false,true,false,false,config,flag,<boolean>,do not report errors for blockchain that contain blocks with zero addresses
-12127,apps,Admin,scrape,blockScrape,start_block,l,0,false,true,true,true,gocmd,flag,<uint64>,first block to visit (available only for blaze scraper)
-12127,apps,Admin,scrape,blockScrape,ripe_block,r,0,false,true,true,true,gocmd,flag,<uint64>,blocks prior to this value are written to 'ripe' folder (available only for blaze scraper)
-11125,apps,Admin,scrape,blockScrape,,,,false,false,true,true,--,description,,Scan the chain and update (and optionally pin) the TrueBlocks index of appearances.
+12120,apps,Admin,scrape,blockScrape,pin,p,,false,false,true,true,header,switch,<boolean>,pin chunks (and blooms) to IPFS as they are created (requires pinning service)
+12125,apps,Admin,scrape,blockScrape,block_cnt,n,2000,false,true,true,true,header,flag,<uint64>,maximum number of blocks to process per pass
+12130,apps,Admin,scrape,blockScrape,reset,e,NOPOS,false,false,false,false,local,flag,<blknum>,reset the scraper to the provided block (or end of earliest chunk prior to that block)
+12135,apps,Admin,scrape,blockScrape,action,a,,false,false,false,false,gocmd,flag,enum[toggle|run|restart|pause|quit],command to apply to the specified scrape
+12140,apps,Admin,scrape,blockScrape,publish,u,,false,false,false,false,header,switch,<boolean>,after pinning the chunk&#44; publish it to UnchainedIndex
+12145,apps,Admin,scrape,blockScrape,blaze,z,,false,false,false,false,gocmd,switch,<boolean>,invoke the blaze scraper to process blocks
+12150,apps,Admin,scrape,blockScrape,block_chan_cnt,b,10,false,true,false,false,header,flag,<uint64>,number of concurrent block processing channels
+12155,apps,Admin,scrape,blockScrape,addr_chan_cnt,d,20,false,true,false,false,header,flag,<uint64>,number of concurrent address processing channels
+12160,apps,Admin,scrape,blockScrape,apps_per_chunk,,200000,false,true,false,false,config,flag,<uint64>,the number of appearances to build into a chunk before consolidating it
+12165,apps,Admin,scrape,blockScrape,unripe_dist,,28,false,true,false,false,config,flag,<uint64>,the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe
+12170,apps,Admin,scrape,blockScrape,snap_to_grid,,100000,false,true,false,false,config,flag,<uint64>,an override to apps_per_chunk to snap-to-grid at every modulo of this value&#44; this allows easier corrections to the index
+12175,apps,Admin,scrape,blockScrape,first_snap,,0,false,true,false,false,config,flag,<uint64>,the first block at which snap_to_grid is enabled
+12180,apps,Admin,scrape,blockScrape,allow_missing,,,false,true,false,false,config,flag,<boolean>,do not report errors for blockchain that contain blocks with zero addresses
+12185,apps,Admin,scrape,blockScrape,start_block,l,0,false,false,false,false,gocmd,flag,<uint64>,first block to visit (available only for blaze scraper)
+12190,apps,Admin,scrape,blockScrape,ripe_block,r,0,false,false,false,false,gocmd,flag,<uint64>,blocks prior to this value are written to 'ripe' folder (available only for blaze scraper)
+12195,apps,Admin,scrape,blockScrape,,,,false,false,true,true,--,description,,Scan the chain and update (and optionally pin) the TrueBlocks index of appearances.
 
 13111,apps,Admin,serve,flame,port,p,:8080,false,false,true,true,header,flag,<string>,specify the server's port
 13112,apps,Admin,serve,flame,,,,false,false,true,true,--,description,,Serve the TrueBlocks API using the flame server.

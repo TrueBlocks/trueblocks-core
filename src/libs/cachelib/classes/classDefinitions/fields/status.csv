@@ -16,5 +16,5 @@ isTracing         ,bool      ,                 ,       ,      ,        ,        
 hasEskey          ,bool      ,                 ,       ,      ,        ,          ,        ,      ,         ,16  ,     ,        ,`true` if an EtherScan key is present
 hasPinkey         ,bool      ,                 ,       ,      ,        ,          ,        ,      ,         ,17  ,     ,        ,`true` if a Pinata API key is present
 ts                ,timestamp ,date_2_Ts(Now()) ,       ,      ,true    ,          ,        ,      ,         ,18  ,     ,        ,the timestamp when this status data was produced
-caches            ,cachePtr  ,                 ,true   ,true  ,true    ,          ,        ,      ,         ,    ,     ,        ,a collection of information concerning the binary caches
+caches            ,cachePtr  ,                 ,true   ,true  ,true    ,          ,        ,      ,         ,20  ,     ,        ,a collection of information concerning the binary caches
 chains            ,Chain     ,                 ,true   ,true  ,true    ,          ,        ,      ,         ,19  ,     ,        ,

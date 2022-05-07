@@ -78,6 +78,19 @@ string_q CCache::getValueByName(const string_q& fieldName) const {
             if (fieldName % "isValid") {
                 return bool_2_Str(isValid);
             }
+            if (fieldName % "items" || fieldName % "itemsCnt") {
+                size_t cnt = items.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt)
+                    return "";
+                string_q retS;
+                for (size_t i = 0; i < cnt; i++) {
+                    retS += items[i].Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
+            }
             break;
         case 'n':
             if (fieldName % "nFiles") {
@@ -125,6 +138,15 @@ bool CCache::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
         case 'i':
             if (fieldName % "isValid") {
                 isValid = str_2_Bool(fieldValue);
+                return true;
+            }
+            if (fieldName % "items") {
+                CCacheEntry obj;
+                string_q str = fieldValue;
+                while (obj.parseJson3(str)) {
+                    items.push_back(obj);
+                    obj = CCacheEntry();  // reset
+                }
                 return true;
             }
             break;
@@ -187,6 +209,7 @@ bool CCache::Serialize(CArchive& archive) {
     archive >> nFolders;
     archive >> sizeInBytes;
     archive >> isValid;
+    // archive >> items;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -206,6 +229,7 @@ bool CCache::SerializeC(CArchive& archive) const {
     archive << nFolders;
     archive << sizeInBytes;
     archive << isValid;
+    // archive << items;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -261,6 +285,8 @@ void CCache::registerClass(void) {
     ADD_FIELD(CCache, "nFolders", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CCache, "sizeInBytes", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CCache, "isValid", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCache, "items", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CCache, "items");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CCache, "schema");
@@ -328,6 +354,25 @@ ostream& operator<<(ostream& os, const CCache& it) {
     it.Format(os, "", nullptr);
     os << "\n";
     return os;
+}
+
+//---------------------------------------------------------------------------
+const CBaseNode* CCache::getObjectAt(const string_q& fieldName, size_t index) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    if (fieldName % "items") {
+        if (index == NOPOS) {
+            CCacheEntry empty;
+            ((CCache*)this)->items.push_back(empty);  // NOLINT
+            index = items.size() - 1;
+        }
+        if (index < items.size())
+            return &items[index];
+    }
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    return NULL;
 }
 
 //---------------------------------------------------------------------------

@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-02-10T20:28:27
+date: 2022-05-02T07:09:41
 lastmod:
   - :git
   - lastmod
@@ -31,26 +31,27 @@ The following commands produce and manage status:
 
 Status data is made of the following data fields:
 
-| Field             | Description                                       | Type        |
-| ----------------- | ------------------------------------------------- | ----------- |
-| clientVersion     | the version string as reported by the rpcProvider | string      |
-| clientIds         | netword_id and chain_id from the rpcProvider      | string      |
-| trueblocksVersion | the TrueBlocks version string                     | string      |
-| rpcProvider       | the current rpcProvider                           | string      |
-| configPath        | the path to config files                          | string      |
-| cachePath         | the path to the local binary caches               | string      |
-| indexPath         | the path to the local binary indexes              | string      |
-| host              | the host portion of the local API server          | string      |
-| isTesting         | `true` if the server is running in test mode      | bool        |
-| isApi             | `true` if the server is running in API mode       | bool        |
-| isDocker          | `true` if running under a docker image            | bool        |
-| isScraping        | `true` if the index scraper is running            | bool        |
-| isArchive         | `true` if the rpcProvider is an archive node      | bool        |
-| isTracing         | `true` if the rpcProvider provides Parity traces  | bool        |
-| hasEskey          | `true` if an EtherScan key is present             | bool        |
-| hasPinkey         | `true` if a Pinata API key is present             | bool        |
-| ts                | the timestamp when this status data was produced  | timestamp   |
-| chains            |                                                   | CChainArray |
+| Field             | Description                                              | Type           |
+| ----------------- | -------------------------------------------------------- | -------------- |
+| clientVersion     | the version string as reported by the rpcProvider        | string         |
+| clientIds         | netword_id and chain_id from the rpcProvider             | string         |
+| trueblocksVersion | the TrueBlocks version string                            | string         |
+| rpcProvider       | the current rpcProvider                                  | string         |
+| configPath        | the path to config files                                 | string         |
+| cachePath         | the path to the local binary caches                      | string         |
+| indexPath         | the path to the local binary indexes                     | string         |
+| host              | the host portion of the local API server                 | string         |
+| isTesting         | `true` if the server is running in test mode             | bool           |
+| isApi             | `true` if the server is running in API mode              | bool           |
+| isDocker          | `true` if running under a docker image                   | bool           |
+| isScraping        | `true` if the index scraper is running                   | bool           |
+| isArchive         | `true` if the rpcProvider is an archive node             | bool           |
+| isTracing         | `true` if the rpcProvider provides Parity traces         | bool           |
+| hasEskey          | `true` if an EtherScan key is present                    | bool           |
+| hasPinkey         | `true` if a Pinata API key is present                    | bool           |
+| ts                | the timestamp when this status data was produced         | timestamp      |
+| chains            |                                                          | CChainArray    |
+| caches            | a collection of information concerning the binary caches | CCachePtrArray |
 
 
 ## Cache
@@ -65,13 +66,14 @@ The following commands produce and manage caches:
 
 Cache data is made of the following data fields:
 
-| Field       | Description                                             | Type   |
-| ----------- | ------------------------------------------------------- | ------ |
-| type        | the type of the cache (one of the nine different types) | string |
-| path        | the physical path to the cache on the hard drive        | string |
-| nFiles      | the number of files in the cache                        | uint64 |
-| nFolders    | the number of subfolders in the cache                   | uint64 |
-| sizeInBytes | the size of the cache in bytes                          | uint64 |
+| Field       | Description                                             | Type             |
+| ----------- | ------------------------------------------------------- | ---------------- |
+| type        | the type of the cache (one of the nine different types) | string           |
+| path        | the physical path to the cache on the hard drive        | string           |
+| nFiles      | the number of files in the cache                        | uint64           |
+| nFolders    | the number of subfolders in the cache                   | uint64           |
+| sizeInBytes | the size of the cache in bytes                          | uint64           |
+| items       | an array of cache items                                 | CCacheEntryArray |
 
 
 ## PinnedChunk
@@ -83,7 +85,7 @@ The following commands produce and manage pinnedchunks:
 | Tools                                              |                                                                 |
 | -------------------------------------------------- | --------------------------------------------------------------- |
 | [chifra scrape](/docs/chifra/admin/#chifra-scrape) | scan the chain and update the TrueBlocks index of appearances   |
-| [chifra pins](/docs/chifra/admin/#chifra-pins)     | manage pinned index of appearances and associated Bloom filters |
+| [chifra chunks](/docs/chifra/admin/#chifra-chunks) | manage pinned index of appearances and associated Bloom filters |
 
 Pinnedchunk data is made of the following data fields:
 
@@ -105,7 +107,7 @@ The following commands produce and manage manifests:
 | Tools                                              |                                                                 |
 | -------------------------------------------------- | --------------------------------------------------------------- |
 | [chifra scrape](/docs/chifra/admin/#chifra-scrape) | scan the chain and update the TrueBlocks index of appearances   |
-| [chifra pins](/docs/chifra/admin/#chifra-pins)     | manage pinned index of appearances and associated Bloom filters |
+| [chifra chunks](/docs/chifra/admin/#chifra-chunks) | manage pinned index of appearances and associated Bloom filters |
 
 Manifest data is made of the following data fields:
 
@@ -132,12 +134,21 @@ Manifest data is made of the following data fields:
 | localExplorer  | The local explorer for the chain (typically TrueBlocks Explorer) | string |
 | pinGateway     | An IPFS gateway for pinning the index if enabled                 | string |
 
+## CacheEntry
+
+
+| Field   | Description | Type    |
+| ------- | --- | ------- |
+| address |     | address |
+| name    |     | string  |
+
 ## Base types
 
 This documentation mentions the following basic data types.
 
 | Type      | Description                                     | Notes          |
 | --------- | ----------------------------------------------- | -------------- |
+| address   | a 20-byte hexadecimal string starting with '0x' | lowercase      |
 | blknum    | an alias for a uint64                           |                |
 | bool      | a value either `true`, `false`, `1`, or `0`     |                |
 | ipfshash  | a multi-hash produced by IPFS                   | mixed-case     |

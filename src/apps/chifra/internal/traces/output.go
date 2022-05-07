@@ -26,7 +26,7 @@ func RunTraces(cmd *cobra.Command, args []string) error {
 	}
 
 	// EXISTING_CODE
-	return opts.Globals.PassItOn("getTraces", opts.ToCmdLine())
+	return opts.Globals.PassItOn("getTraces", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
 	// EXISTING_CODE
 }
 
@@ -40,7 +40,7 @@ func ServeTraces(w http.ResponseWriter, r *http.Request) bool {
 	}
 
 	// EXISTING_CODE
-	// opts.Globals.PassItOn("getTraces", opts.ToCmdLine())
+	// return opts.Globals.PassItOn("getTraces", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
 	return false
 	// EXISTING_CODE
 }

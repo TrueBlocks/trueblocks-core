@@ -37,7 +37,7 @@ Notes:
   - The --match_case option enables case sensitive matching.
 ```
 
-Other Options
+#### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.
 

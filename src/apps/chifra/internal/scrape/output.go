@@ -34,7 +34,7 @@ func RunScrape(cmd *cobra.Command, args []string) error {
 		opts.ScrapeBlocks()
 
 	} else if opts.Reset != utils.NOPOS {
-		return opts.Globals.PassItOn("blockScrape", opts.ToCmdLine())
+		return opts.Globals.PassItOn("blockScrape", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
 
 	} else {
 		var wg sync.WaitGroup
@@ -68,6 +68,7 @@ func ServeScrape(w http.ResponseWriter, r *http.Request) bool {
 
 	// EXISTING_CODE
 	// TODO: Can we disable certain things from running in server mode?
+	// return opts.Globals.PassItOn("blockScrape", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
 	return false
 	// EXISTING_CODE
 }

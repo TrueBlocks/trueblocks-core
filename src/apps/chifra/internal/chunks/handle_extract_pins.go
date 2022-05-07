@@ -5,8 +5,6 @@
 package chunksPkg
 
 import (
-	"net/http"
-	"os"
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -31,19 +29,9 @@ func (opts *ChunksOptions) HandleChunksExtractPins() error {
 		manifestData.NewPins = manifestData.NewPins[:100]
 	}
 
-	// TODO: Fix export without arrays
 	opts.PrintManifestHeader()
-	if opts.Globals.ApiMode {
-		opts.Globals.Respond(opts.Globals.Writer, http.StatusOK, manifestData.NewPins)
-
-	} else {
-		err = opts.Globals.Output(os.Stdout, opts.Globals.Format, manifestData.NewPins)
-		if err != nil {
-			logger.Log(logger.Error, err)
-		}
-	}
-
-	return nil
+	// TODO: Fix export without arrays
+	return opts.Globals.OutputArray(manifestData.NewPins)
 }
 
 func (opts *ChunksOptions) PrintManifestHeader() {

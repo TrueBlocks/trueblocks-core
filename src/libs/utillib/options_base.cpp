@@ -794,6 +794,11 @@ CNameValueArray COptionsBase::specials;
 
 //--------------------------------------------------------------------------------
 bool COptionsBase::findSpecial(CNameValue& pair, const string_q& arg) {
+    if (arg == "latest") {
+        pair.first = "latest";
+        return true;
+    }
+
     if (specials.size() == 0) {
         CStringArray lines;
         asciiFileToLines(chainConfigsTxt_specials, lines);

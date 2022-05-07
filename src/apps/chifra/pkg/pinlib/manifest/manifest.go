@@ -4,10 +4,6 @@
 
 package manifest
 
-import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-)
-
 type IpfsHash = string
 
 type PinDescriptor struct {
@@ -29,11 +25,17 @@ type Manifest struct {
 	PreviousPins       PinsList      `json:"prevPins"`
 }
 
+// This type is used to carry CSV layout information
+type CsvFormatted struct {
+	Header  []string
+	Content [][]string
+}
+
 type PinsList []PinDescriptor
 
 // GetCsvOutput returns data for CSV and TSV formats
-func (pl *PinsList) GetCsvOutput() *globals.CsvFormatted {
-	data := &globals.CsvFormatted{
+func (pl *PinsList) GetCsvOutput() *CsvFormatted {
+	data := &CsvFormatted{
 		Header: []string{
 			"fileName", "bloomHash", "indexHash",
 		},

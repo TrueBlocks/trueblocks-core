@@ -71,15 +71,19 @@ bool COptions::writeOpenApiFile(void) {
 
     writeCodeOut(this, getPathToSource("apps/chifra/server/routes.go"));
     writeCodeOut(this, getPathToSource("apps/chifra/server/convert_params.go"));
-    // writeCodeOut(this, getPathToSource("apps/chifra/options.cpp"));
-    // writeCodeOut(this, getPathToSource("libs/utillib/options_base.cpp"));
 
-    // writeCodeOut(this, getDocsPathContent("api/openapi.yaml"));
-    // ostringstream tsos;
-    // #define explorerPath string_q("/Users/jrush/Development/trueblocks-explorer/")
-    // tsos << "cd " << explorerPath << " ; node_modules/.bin/tsc -p src/sdk && node src/sdk/dist/index.js >/dev/null";
-    // if (system(tsos.str().c_str()) != 0) {
-    // }
+    if (getEnvStr("GENERATE_YAML") != "false") {
+        writeCodeOut(this, getDocsPathContent("api/openapi.yaml"));
+    }
+    if (getEnvStr("GENERATE_SDK") == "true") {
+        ostringstream tsos;
+#define explorerPath string_q("/Users/jrush/Development/trueblocks-explorer/")
+#define coreDocsPath string_q("/Users/jrush/Development/trueblocks-core/docs/content/api/openapi.yaml")
+        tsos << "cd " << explorerPath << " ; ";
+        tsos << "URL=" << coreDocsPath << " yarn generate:sdk";
+        if (system(tsos.str().c_str()) != 0) {
+        }
+    }
 
     LOG_INFO(cYellow, "makeClass --openapi", cOff, " processed ", counter.routeCount, "/", counter.cmdCount,
              " routes/cmds ", " (changed ", counter.nProcessed, ").", string_q(40, ' '));
@@ -107,6 +111,7 @@ string_q COptions::getProductions(const CCommandOption& ep) {
 
     string_q prods;
     for (auto p : productions) {
+        replace(p, "cachePtr", "cache");
         prods += "$ref: \"#/components/schemas/" + p + "\"\n";
     }
     if (productions.size() > 1) {

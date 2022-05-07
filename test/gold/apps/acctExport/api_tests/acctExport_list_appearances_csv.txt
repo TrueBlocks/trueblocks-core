@@ -1,4 +1,3 @@
-list?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&firstBlock=100000&lastBlock=2000000&fmt=csv
-"address","blockNumber","transactionIndex"
+list?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&firstBlock=100000&lastBlock=2000000&fmt=csv&noHeader
 "0x001d14804b399c6ef80e64576f657660804fec0b","202249","0"
 "0x001d14804b399c6ef80e64576f657660804fec0b","1501459","2"

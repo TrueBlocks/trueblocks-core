@@ -3,3 +3,6 @@ class = CCacheEntry
 fields = cacheentry.csv
 includes = basetypes.h|basenode.h|sfarchive.h
 cpp_includes = exportcontext.h
+doc_group = 04-Admin
+doc_descr = an entry in one of the caches
+doc_api = 35-cacheEntry

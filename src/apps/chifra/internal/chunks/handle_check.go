@@ -11,10 +11,11 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 func (opts *ChunksOptions) HandleChunksCheck() error {
-	blocks := cache.Convert(opts.Blocks)
+	blocks := validate.Convert(opts.Blocks)
 	filenameChan := make(chan cache.IndexFileInfo)
 
 	var nRoutines int = 1

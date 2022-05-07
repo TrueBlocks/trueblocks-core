@@ -23,7 +23,7 @@ Notes:
   - Only a single block in a given chunk needs to be supplied.
 ```
 
-Other Options
+#### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.
 

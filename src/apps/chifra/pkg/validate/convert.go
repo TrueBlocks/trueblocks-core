@@ -2,11 +2,12 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package cache
+package validate
 
 import "strconv"
 
 func Convert(blockStrs []string) []uint64 {
+	// TODO: This needs to handle string values such as specials and latest/first, etc.
 	var ret []uint64
 	for _, blockStr := range blockStrs {
 		val, _ := strconv.ParseUint(blockStr, 10, 64)

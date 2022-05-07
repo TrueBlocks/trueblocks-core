@@ -6,10 +6,11 @@ package chunksPkg
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-func (opts *ChunksOptions) HandleChunksExtract(displayFunc func(path string, first bool)) error {
-	blocks := cache.Convert(opts.Blocks)
+func (opts *ChunksOptions) HandleChunksExtract(displayFunc func(path string, first bool) error) error {
+	blocks := validate.Convert(opts.Blocks)
 	filenameChan := make(chan cache.IndexFileInfo)
 
 	var nRoutines int = 1
@@ -21,6 +22,44 @@ func (opts *ChunksOptions) HandleChunksExtract(displayFunc func(path string, fir
 		case cache.Index_Bloom:
 			hit := false
 			for _, block := range blocks {
+				if opts.Globals.Format == "api" {
+					opts.Globals.Format = "json"
+				}
+				h := result.Range.BlockIntersects(block)
+				hit = hit || h
+			}
+			if len(blocks) == 0 || hit {
+				displayFunc(result.Path, i == 0)
+				i++
+			}
+		case cache.None:
+			nRoutines--
+			if nRoutines == 0 {
+				close(filenameChan)
+			}
+		}
+	}
+
+	return nil
+}
+
+// TODO: BOGUS - This is here to test new code. Can probably be removed
+func (opts *ChunksOptions) HandleChunksExtract2(displayFunc func(path string, first bool) error) error {
+	blocks := validate.Convert(opts.Blocks)
+
+	var nRoutines int = 1
+	filenameChan := make(chan cache.IndexFileInfo)
+	go cache.WalkCacheFolder(opts.Globals.Chain, cache.Index_Bloom, filenameChan)
+
+	i := 0
+	for result := range filenameChan {
+		switch result.Type {
+		case cache.Index_Bloom:
+			hit := false
+			for _, block := range blocks {
+				if opts.Globals.Format == "api" {
+					opts.Globals.Format = "json"
+				}
 				h := result.Range.BlockIntersects(block)
 				hit = hit || h
 			}

@@ -41,7 +41,7 @@ func RunWhen(cmd *cobra.Command, args []string) error {
 		opts.Globals.NoHeader = true
 	}
 
-	return opts.Globals.PassItOn("whenBlock", opts.ToCmdLine())
+	return opts.Globals.PassItOn("whenBlock", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
 	// EXISTING_CODE
 }
 
@@ -68,6 +68,7 @@ func ServeWhen(w http.ResponseWriter, r *http.Request) bool {
 		r.URL.RawQuery = strings.Replace(r.URL.RawQuery, "list", "noop", -1)
 		r.URL.RawQuery += "&no_header"
 	}
+	// return opts.Globals.PassItOn("whenBlock", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
 	return false
 	// EXISTING_CODE
 }

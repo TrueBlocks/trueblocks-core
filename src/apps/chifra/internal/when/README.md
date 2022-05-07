@@ -14,7 +14,7 @@ Usage:
   chifra when [flags] < block | date > [ block... | date... ]
 
 Arguments:
-  blocks - one or more dates, block numbers, hashes, or special named blocks (see notes) (required)
+  blocks - one or more dates, block numbers, hashes, or special named blocks (see notes)
 
 Flags:
   -l, --list         export a list of the 'special' blocks
@@ -28,7 +28,7 @@ Notes:
   - Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].
 ```
 
-Other Options
+#### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.
 

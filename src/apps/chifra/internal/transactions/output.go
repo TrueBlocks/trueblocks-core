@@ -26,7 +26,7 @@ func RunTransactions(cmd *cobra.Command, args []string) error {
 	}
 
 	// EXISTING_CODE
-	return opts.Globals.PassItOn("getTrans", opts.ToCmdLine())
+	return opts.Globals.PassItOn("getTrans", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
 	// EXISTING_CODE
 }
 
@@ -40,7 +40,7 @@ func ServeTransactions(w http.ResponseWriter, r *http.Request) bool {
 	}
 
 	// EXISTING_CODE
-	// opts.Globals.PassItOn("getTrans", opts.ToCmdLine())
+	// return opts.Globals.PassItOn("getTrans", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
 	return false
 	// EXISTING_CODE
 }
