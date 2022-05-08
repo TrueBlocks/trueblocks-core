@@ -10,19 +10,78 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"net/http"
 	"reflect"
 	"strings"
-	"text/tabwriter"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-type JsonFormatted struct {
-	Data   interface{}         `json:"data,omitempty"`
-	Errors []string            `json:"errors,omitempty"`
-	Meta   *rpcClient.MetaData `json:"meta,omitempty"`
+// TODO: Fix export without arrays
+func Output3(w io.Writer, data interface{}, format, chain string, hideHeader, testMode bool) error {
+	nonEmptyFormat := format
+	if format == "" || format == "none" {
+		nonEmptyFormat = "json"
+	}
+
+	var outputBytes []byte
+	var err error
+
+	switch nonEmptyFormat {
+	case "api":
+		fallthrough
+	case "json":
+		var meta *rpcClient.MetaData = nil
+		if format != "json" {
+			meta = rpcClient.GetMetaData(chain, testMode)
+		}
+		result := JsonResult{Data: data, Meta: meta}
+		outputBytes, err = json.MarshalIndent(result, "", "  ")
+	case "csv":
+		records, err := toStringRecords(data, true /* quote */, hideHeader)
+		if err == nil {
+			result := []string{}
+			for _, row := range records {
+				result = append(result, strings.Join(row, ","))
+			}
+			outputBytes = []byte(
+				strings.Join(result, "\n"),
+			)
+		}
+	case "txt":
+		records, err := toStringRecords(data, false /* quote */, hideHeader)
+		if err == nil {
+			out := bytes.Buffer{}
+			writer := csv.NewWriter(&out)
+			writer.Comma = '\t'
+			err = writer.WriteAll(records)
+			if err == nil {
+				outputBytes = out.Bytes()
+			}
+		}
+	default:
+		return fmt.Errorf("unsupported format %s", nonEmptyFormat)
+	}
+
+	if err != nil {
+		return err
+	}
+
+	w.Write(outputBytes)
+	return nil
+}
+
+// TODO: Fix export without arrays
+func Output2(w io.Writer, data interface{}, format, chain string, hideHeader, testMode bool) error {
+	nonEmptyFormat := format
+	if format == "" || format == "none" {
+		nonEmptyFormat = "txt"
+	}
+	return Output3(w, data, nonEmptyFormat, chain, hideHeader, testMode)
+}
+
+type JsonResult struct {
+	Data interface{}         `json:"data,omitempty"`
+	Meta *rpcClient.MetaData `json:"meta,omitempty"`
 }
 
 // toStringRecords uses Reflect API to read data from the provided slice of structs and
@@ -83,141 +142,4 @@ func makeFirstLowerCase(s string) string {
 	lc := bytes.ToLower([]byte{bts[0]})
 	rest := bts[1:]
 	return string(bytes.Join([][]byte{lc, rest}, nil))
-}
-
-// TODO: Fix export without arrays
-func Output3(w io.Writer, data interface{}, format, chain string, hideHeader, testMode bool) error {
-	nonEmptyFormat := format
-	if format == "" || format == "none" {
-		nonEmptyFormat = "json"
-	}
-
-	var outputBytes []byte
-	var err error
-
-	switch nonEmptyFormat {
-	case "api":
-		fallthrough
-	case "json":
-		j := &JsonFormatted{}
-		err, ok := data.(error)
-		if ok {
-			j.Errors = []string{
-				err.Error(),
-			}
-		} else {
-			j.Data = data
-		}
-
-		var result JsonFormatted
-
-		if format == "json" {
-			if len(j.Errors) > 0 {
-				result.Errors = j.Errors
-			} else {
-				result.Data = j.Data
-			}
-		} else {
-			if len(j.Errors) > 0 {
-				result.Errors = j.Errors
-			} else {
-				result.Data = j.Data
-				result.Meta = rpcClient.GetMetaData(chain, testMode)
-			}
-		}
-
-		marshalled, err := json.MarshalIndent(result, "", "  ")
-		if err != nil {
-			return err
-		}
-		outputBytes = marshalled
-
-	case "csv":
-		records, err := toStringRecords(data, true, hideHeader)
-		if err != nil {
-			return err
-		}
-		result := []string{}
-		// We have to join records in one row with a ","
-		for _, row := range records {
-			result = append(result, strings.Join(row, ","))
-		}
-
-		// Now we need to join all rows with a newline and add an ending newline
-		// top match the .txt output
-		outputBytes = []byte(
-			strings.Join(result, "\n"),
-		)
-	case "txt":
-		_, ok := w.(http.ResponseWriter)
-		if !utils.IsTerminal() || ok {
-			out := bytes.Buffer{}
-			records, err := toStringRecords(data, false, hideHeader)
-			if err != nil {
-				return err
-			}
-			buf := &bytes.Buffer{}
-			writer := csv.NewWriter(buf)
-			writer.Comma = '\t'
-			err = writer.WriteAll(records)
-			if err != nil {
-				return err
-			}
-			err = writer.Error()
-			if err != nil {
-				return err
-			}
-			tsv := buf.Bytes()
-			if err != nil {
-				return err
-			}
-			_, err = out.Write(tsv)
-			if err != nil {
-				return err
-			}
-			outputBytes = out.Bytes()
-		} else {
-			out := bytes.Buffer{}
-			tab := tabwriter.NewWriter(&out, 0, 0, 2, ' ', 0)
-			records, err := toStringRecords(data, false, hideHeader)
-			if err != nil {
-				return err
-			}
-			buf := &bytes.Buffer{}
-			writer := csv.NewWriter(buf)
-			writer.Comma = '\t'
-			err = writer.WriteAll(records)
-			if err != nil {
-				return err
-			}
-			err = writer.Error()
-			if err != nil {
-				return err
-			}
-			tsv := buf.Bytes()
-			if err != nil {
-				return err
-			}
-			tab.Write(tsv)
-			err = tab.Flush()
-			outputBytes = out.Bytes()
-		}
-	default:
-		err = fmt.Errorf("unsupported format %s", nonEmptyFormat)
-	}
-	if err != nil {
-		return err
-	}
-
-	w.Write(outputBytes)
-	return nil
-}
-
-// TODO: Fix export without arrays
-func Output2(w io.Writer, data interface{}, format, chain string, hideHeader, testMode bool) error {
-	nonEmptyFormat := format
-	if format == "" || format == "none" {
-		nonEmptyFormat = "txt"
-	}
-	return Output3(w, data, nonEmptyFormat, chain, hideHeader, testMode)
 }
