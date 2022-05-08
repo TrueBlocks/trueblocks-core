@@ -4,6 +4,8 @@
 
 package manifest
 
+import "encoding/json"
+
 type IpfsHash = string
 
 type PinDescriptor struct {
