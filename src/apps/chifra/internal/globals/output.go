@@ -5,33 +5,18 @@
 package globals
 
 import (
+	"encoding/json"
 	"net/http"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 )
 
-func (opts *GlobalOptions) GetExportFormat(cmd string) string {
-	if strings.Contains(cmd, "json") {
-		return "json"
-	} else if strings.Contains(cmd, "txt") {
-		return "txt"
-	} else if strings.Contains(cmd, "csv") {
-		return "csv"
-	}
-	if len(opts.Format) > 0 {
-		return opts.Format
-	}
-	return "csv"
-}
-
 // RespondWithError marshals the given error err into JSON
 // that can be returned to the client and sets httpStatus HTTP error status code
 func (opts *GlobalOptions) RespondWithError(w http.ResponseWriter, httpStatus int, err error) {
-	formatted := output.JsonFormatted{Errors: []string{err.Error()}}
-	data := []string{}
-	marshalled, err := output.AsJsonBytes1(&formatted, data, opts.Format, opts.Chain, opts.TestMode)
+	result := output.JsonFormatted{Errors: []string{err.Error()}}
+	marshalled, err := json.MarshalIndent(result, "", "  ")
 	if err != nil {
 		panic(err)
 	}

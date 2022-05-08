@@ -156,6 +156,20 @@ func batchMonitors(slice []monitor.Monitor, batchSize int) [][]monitor.Monitor {
 	return batches
 }
 
+func GetExportFormat(cmd, def string) string {
+	if strings.Contains(cmd, "json") {
+		return "json"
+	} else if strings.Contains(cmd, "txt") {
+		return "txt"
+	} else if strings.Contains(cmd, "csv") {
+		return "csv"
+	}
+	if len(def) > 0 {
+		return def
+	}
+	return "csv"
+}
+
 func getCommandsFromFile(globals globals.GlobalOptions) ([]SemiParse, error) {
 	if !file.FileExists(globals.File) {
 		return []SemiParse{}, fmt.Errorf("file %s not found", globals.File)
@@ -173,7 +187,7 @@ func getCommandsFromFile(globals globals.GlobalOptions) ([]SemiParse, error) {
 			sp := SemiParse{}
 			sp.Folder = "exports/" + globals.Chain + "/" + GetOutputFolder(cmd, "unknown")
 
-			sp.Fmt = globals.GetExportFormat(cmd)
+			sp.Fmt = GetExportFormat(cmd, globals.Format)
 			sp.CmdLine = cmd
 			sp.CmdLine = strings.Replace(sp.CmdLine, " csv", " "+sp.Fmt, -1)
 			sp.CmdLine = strings.Replace(sp.CmdLine, " json", " "+sp.Fmt, -1)

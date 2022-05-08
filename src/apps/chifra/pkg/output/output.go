@@ -74,33 +74,6 @@ func tabFormatter(data interface{}, hideHeader bool) ([]byte, error) {
 	return tabOutput.Bytes(), err
 }
 
-// AsJsonBytes1 marshals JsonFormatted struct, populating Meta field if needed
-func AsJsonBytes1(j *JsonFormatted, data interface{}, format, chain string, testMode bool) ([]byte, error) {
-	var result JsonFormatted
-
-	if format == "json" {
-		if len(j.Errors) > 0 {
-			result.Errors = j.Errors
-		} else {
-			result.Data = j.Data
-		}
-	} else {
-		if len(j.Errors) > 0 {
-			result.Errors = j.Errors
-		} else {
-			result.Data = j.Data
-			result.Meta = rpcClient.GetMetaData(chain, testMode)
-		}
-	}
-
-	marshalled, err := json.MarshalIndent(result, "", "  ")
-	if err != nil {
-		return nil, err
-	}
-
-	return marshalled, err
-}
-
 // jsonFormatter marshals JsonFormatted struct, populating Meta field if needed
 func jsonFormatter(data interface{}, format, chain string, testMode bool) ([]byte, error) {
 	j := &JsonFormatted{}
