@@ -6,6 +6,7 @@ package globals
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -25,15 +26,13 @@ func (opts *GlobalOptions) RespondWithError(w http.ResponseWriter, httpStatus in
 
 // TODO: Fix export without arrays
 func (opts *GlobalOptions) OutputArray(data interface{}) error {
-	var hw http.ResponseWriter
-	var ok bool
-	if opts.Writer != nil {
-		hw, ok = opts.Writer.(http.ResponseWriter)
-	}
+	if opts.ApiMode {
+		if opts.Writer == nil {
+			log.Fatal("opts.Writer is nil in OutputArray")
+		}
 
-	if opts.ApiMode && ok {
-		// Decides which format should be used, calls the right Responder, sets HTTP
-		// status code and writes a response
+		// We could check this, but if it's not empty, we know it's type
+		hw, _ := opts.Writer.(http.ResponseWriter)
 		switch opts.Format {
 		case "txt":
 			hw.Header().Set("Content-Type", "text/tab-separated-values")
@@ -43,18 +42,20 @@ func (opts *GlobalOptions) OutputArray(data interface{}) error {
 			hw.Header().Set("Content-Type", "application/json")
 		}
 
-		err := output.Output3(hw, data, opts.Format, opts.Chain, opts.NoHeader, opts.TestMode)
+		err := output.Output(opts.Writer, data, opts.Format, opts.Chain, opts.NoHeader, opts.TestMode)
 		if err != nil {
 			opts.RespondWithError(hw, http.StatusInternalServerError, err)
 		}
 
 	} else {
-		err := output.Output2(opts.Writer, data, opts.Format, opts.Chain, opts.NoHeader, opts.TestMode)
+		if opts.Format == "" || opts.Format == "none" {
+			opts.Format = "txt"
+		}
+		err := output.Output(opts.Writer, data, opts.Format, opts.Chain, opts.NoHeader, opts.TestMode)
 		if err != nil {
 			logger.Log(logger.Error, err)
 		}
 	}
-
 	return nil
 }
 

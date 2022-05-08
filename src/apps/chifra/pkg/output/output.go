@@ -14,10 +14,11 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // TODO: Fix export without arrays
-func Output3(w io.Writer, data interface{}, format, chain string, hideHeader, testMode bool) error {
+func Output(w io.Writer, data interface{}, format, chain string, hideHeader, testMode bool) error {
 	nonEmptyFormat := format
 	if format == "" || format == "none" {
 		nonEmptyFormat = "json"
@@ -58,6 +59,15 @@ func Output3(w io.Writer, data interface{}, format, chain string, hideHeader, te
 				outputBytes = out.Bytes()
 			}
 		}
+		// tt := reflect.TypeOf(data[0])
+		// // if IsSlice(data) {
+		// // 	tt = reflect.TypeOf(data[0])
+		// // }
+		// rowTemplate, err := GetRowTemplate(&tt, format)
+		// if err != nil {
+		// 	return err
+		// }
+		// return rowTemplate.Execute(w, data)
 	default:
 		return fmt.Errorf("unsupported format %s", nonEmptyFormat)
 	}
@@ -68,15 +78,6 @@ func Output3(w io.Writer, data interface{}, format, chain string, hideHeader, te
 
 	w.Write(outputBytes)
 	return nil
-}
-
-// TODO: Fix export without arrays
-func Output2(w io.Writer, data interface{}, format, chain string, hideHeader, testMode bool) error {
-	nonEmptyFormat := format
-	if format == "" || format == "none" {
-		nonEmptyFormat = "txt"
-	}
-	return Output3(w, data, nonEmptyFormat, chain, hideHeader, testMode)
 }
 
 type JsonResult struct {
@@ -120,7 +121,7 @@ func toStringRecords(data interface{}, quote bool, hideHeader bool) ([][]string,
 			// If it's our first iteration, we save the struct's key names
 			// to use them as headers
 			if i == 0 {
-				header = append(header, fmt.Sprintf(format, makeFirstLowerCase(insideType.Field(j).Name)))
+				header = append(header, fmt.Sprintf(format, utils.MakeFirstLowerCase(insideType.Field(j).Name)))
 			}
 		}
 		records = append(records, record)
@@ -132,14 +133,4 @@ func toStringRecords(data interface{}, quote bool, hideHeader bool) ([][]string,
 	}
 	result = append(result, records...)
 	return result, nil
-}
-
-func makeFirstLowerCase(s string) string {
-	if len(s) < 2 {
-		return strings.ToLower(s)
-	}
-	bts := []byte(s)
-	lc := bytes.ToLower([]byte{bts[0]})
-	rest := bts[1:]
-	return string(bytes.Join([][]byte{lc, rest}, nil))
 }
