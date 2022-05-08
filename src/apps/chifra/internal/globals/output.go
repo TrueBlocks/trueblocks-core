@@ -5,7 +5,6 @@
 package globals
 
 import (
-	"encoding/json"
 	"io"
 	"log"
 	"net/http"
@@ -16,6 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
+// TODO: Fix export without arrays
 func RenderSlice[
 	T types.NamedBlock |
 		types.Function |
@@ -23,15 +23,11 @@ func RenderSlice[
 		types.SimpleMonitor |
 		types.SimplePinList |
 		types.SimpleAppearance](opts *GlobalOptions, arr []T) error {
-	b := make([]interface{}, len(arr))
+	data := make([]interface{}, len(arr))
 	for i := range arr {
-		b[i] = arr[i]
+		data[i] = arr[i]
 	}
-	return opts.renderSlice(b)
-}
 
-// TODO: Fix export without arrays
-func (opts *GlobalOptions) renderSlice(data []interface{}) error {
 	if opts.Writer == nil {
 		log.Fatal("opts.Writer is nil")
 	}
@@ -113,15 +109,4 @@ func (opts *GlobalOptions) RenderHeader(data interface{}, w *io.Writer, format s
 	}
 
 	return output.OutputHeader(data, *w, format, apiMode)
-}
-
-// RespondWithError marshals an err into JSON and returns the bytes
-// back to the caller httpStatus HTTP error status code
-func (opts *GlobalOptions) RespondWithError(w http.ResponseWriter, httpStatus int, err error) {
-	type ErrorResponse struct {
-		Errors []string `json:"errors,omitempty"`
-	}
-	marshalled, _ := json.MarshalIndent(ErrorResponse{Errors: []string{err.Error()}}, "", "  ")
-	w.WriteHeader(httpStatus)
-	w.Write(marshalled)
 }
