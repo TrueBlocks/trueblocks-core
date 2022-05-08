@@ -6,6 +6,7 @@ package globals
 
 import (
 	"fmt"
+	"io"
 	"net/http"
 	"os"
 
@@ -34,7 +35,7 @@ type GlobalOptions struct {
 	Format   string
 	TestMode bool
 	ApiMode  bool
-	Writer   http.ResponseWriter
+	Writer   io.Writer
 }
 
 func (opts *GlobalOptions) TestLog() {
