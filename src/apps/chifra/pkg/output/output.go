@@ -223,14 +223,44 @@ func makeFirstLowerCase(s string) string {
 }
 
 // TODO: Fix export without arrays
+func Output2_ForApi(where io.Writer, data interface{}, format, chain string, hideHeader, testMode bool) error {
+	nonEmptyFormat := format
+	if format == "" || format == "none" {
+		nonEmptyFormat = "json"
+	}
+
+	var outputBytes []byte
+	var err error
+
+	switch nonEmptyFormat {
+	case "json":
+		outputBytes, err = jsonFormatter(data, nonEmptyFormat, chain, testMode)
+	case "csv":
+		outputBytes, err = csvFormatter(data, hideHeader)
+	case "txt":
+		_, ok := where.(http.ResponseWriter)
+		if !utils.IsTerminal() || ok {
+			outputBytes, err = txtFormatter(data, hideHeader)
+		} else {
+			// Use a table only on the command line when we're not re-directed or piped
+			outputBytes, err = tabFormatter(data, hideHeader)
+		}
+	default:
+		err = fmt.Errorf("unsupported format %s", format)
+	}
+	if err != nil {
+		return err
+	}
+
+	where.Write(outputBytes)
+	return nil
+}
+
+// TODO: Fix export without arrays
 func Output2(where io.Writer, data interface{}, format, chain string, hideHeader, testMode bool) error {
 	nonEmptyFormat := format
 	if format == "" || format == "none" {
-		if utils.IsApiMode() {
-			nonEmptyFormat = "api"
-		} else {
-			nonEmptyFormat = "txt"
-		}
+		nonEmptyFormat = "txt"
 	}
 
 	var outputBytes []byte

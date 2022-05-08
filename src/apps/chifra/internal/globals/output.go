@@ -13,11 +13,18 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 )
 
-var formatToMimeType = map[string]string{
-	"api":  "application/json",
-	"json": "application/json",
-	"csv":  "text/csv",
-	"txt":  "text/tab-separated-values",
+func (opts *GlobalOptions) GetExportFormat(cmd string) string {
+	if strings.Contains(cmd, "json") {
+		return "json"
+	} else if strings.Contains(cmd, "txt") {
+		return "txt"
+	} else if strings.Contains(cmd, "csv") {
+		return "csv"
+	}
+	if len(opts.Format) > 0 {
+		return opts.Format
+	}
+	return "csv"
 }
 
 // RespondWithError marshals the given error err into JSON
@@ -35,22 +42,25 @@ func (opts *GlobalOptions) RespondWithError(w http.ResponseWriter, httpStatus in
 
 // TODO: Fix export without arrays
 func (opts *GlobalOptions) OutputArray(data interface{}) error {
-	formatNotEmpty := opts.Format
-	if formatNotEmpty == "" {
-		formatNotEmpty = "api"
-	}
-
 	var hw http.ResponseWriter
 	var ok bool
 	if opts.Writer != nil {
 		hw, ok = opts.Writer.(http.ResponseWriter)
 	}
+
 	if opts.ApiMode && ok {
 		// Decides which format should be used, calls the right Responder, sets HTTP
 		// status code and writes a response
-		hw.Header().Set("Content-Type", formatToMimeType[formatNotEmpty])
-		opts.Format = formatNotEmpty
-		err := output.Output2(hw, data, opts.Format, opts.Chain, opts.NoHeader, opts.TestMode)
+		switch opts.Format {
+		case "txt":
+			hw.Header().Set("Content-Type", "text/tab-separated-values")
+		case "csv":
+			hw.Header().Set("Content-Type", "text/csv")
+		default:
+			hw.Header().Set("Content-Type", "application/json")
+		}
+
+		err := output.Output2_ForApi(hw, data, opts.Format, opts.Chain, opts.NoHeader, opts.TestMode)
 		if err != nil {
 			opts.RespondWithError(hw, http.StatusInternalServerError, err)
 		}
@@ -67,18 +77,4 @@ func (opts *GlobalOptions) OutputArray(data interface{}) error {
 
 func (opts *GlobalOptions) OutputObject(data interface{}) error {
 	return opts.OutputArray(data)
-}
-
-func (opts *GlobalOptions) GetExportFormat(cmd string) string {
-	if strings.Contains(cmd, "json") {
-		return "json"
-	} else if strings.Contains(cmd, "txt") {
-		return "txt"
-	} else if strings.Contains(cmd, "csv") {
-		return "csv"
-	}
-	if len(opts.Format) > 0 {
-		return opts.Format
-	}
-	return "csv"
 }

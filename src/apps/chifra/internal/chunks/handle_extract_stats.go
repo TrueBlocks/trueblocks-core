@@ -74,8 +74,8 @@ func (opts *ChunksOptions) showStats(path string, first bool) error {
 
 	opts.Globals.NoHeader = !first
 	// TODO: Fix export without arrays
-	ret := opts.Globals.OutputArray(results)
-	if opts.Globals.Format == "txt" || opts.Globals.Format == "csv" {
+	ret := opts.Globals.OutputObject(results)
+	if opts.Globals.Format == "csv" {
 		if opts.Globals.Writer != nil {
 			opts.Globals.Writer.Write([]byte{'\n'})
 		} else {

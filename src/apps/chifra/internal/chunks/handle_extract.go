@@ -22,9 +22,6 @@ func (opts *ChunksOptions) HandleChunksExtract(displayFunc func(path string, fir
 		case cache.Index_Bloom:
 			hit := false
 			for _, block := range blocks {
-				if opts.Globals.Format == "api" {
-					opts.Globals.Format = "json"
-				}
 				h := result.Range.BlockIntersects(block)
 				hit = hit || h
 			}
