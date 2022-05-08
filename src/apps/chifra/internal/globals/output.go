@@ -15,11 +15,10 @@ import (
 // RespondWithError marshals the given error err into JSON
 // that can be returned to the client and sets httpStatus HTTP error status code
 func (opts *GlobalOptions) RespondWithError(w http.ResponseWriter, httpStatus int, err error) {
-	result := output.JsonFormatted{Errors: []string{err.Error()}}
-	marshalled, err := json.MarshalIndent(result, "", "  ")
-	if err != nil {
-		panic(err)
+	type ErrorResponse struct {
+		Errors []string `json:"errors,omitempty"`
 	}
+	marshalled, _ := json.MarshalIndent(ErrorResponse{Errors: []string{err.Error()}}, "", "  ")
 	w.WriteHeader(httpStatus)
 	w.Write(marshalled)
 }
@@ -44,7 +43,7 @@ func (opts *GlobalOptions) OutputArray(data interface{}) error {
 			hw.Header().Set("Content-Type", "application/json")
 		}
 
-		err := output.Output2_ForApi(hw, data, opts.Format, opts.Chain, opts.NoHeader, opts.TestMode)
+		err := output.Output3(hw, data, opts.Format, opts.Chain, opts.NoHeader, opts.TestMode)
 		if err != nil {
 			opts.RespondWithError(hw, http.StatusInternalServerError, err)
 		}
