@@ -5,18 +5,14 @@
 package whenPkg
 
 import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	tslibPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 )
 
 func (opts *WhenOptions) HandleWhenList() error {
-	result, err := tslibPkg.GetSpecials(opts.Globals.Chain)
+	results, err := tslibPkg.GetSpecials(opts.Globals.Chain)
 	if err != nil {
 		return err
 	}
-	b := make([]interface{}, len(result))
-	for i := range result {
-		b[i] = result[i]
-	}
-	// TODO: Fix export without arrays
-	return opts.Globals.RenderSlice(b)
+	return globals.RenderSlice(&opts.Globals, results)
 }

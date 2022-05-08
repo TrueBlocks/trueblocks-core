@@ -5,15 +5,10 @@
 package monitorsPkg
 
 import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
-
-type CleanReport struct {
-	Addr     string `json:"addr"`
-	SizeThen uint32 `json:"sizeThen"`
-	SizeNow  uint32 `json:"sizeNow"`
-	Dups     uint32 `json:"dupsRemoved"`
-}
 
 func (opts *MonitorsOptions) HandleClean() error {
 	monitorChan := make(chan monitor.Monitor)
@@ -30,13 +25,13 @@ func (opts *MonitorsOptions) HandleClean() error {
 		}
 	}
 
-	results := []CleanReport{}
+	results := []types.CleanReport{}
 	for _, mon := range monitors {
 		if opts.Globals.TestMode {
 			addr := mon.GetAddrStr()
 			if addr == "0x001d14804b399c6ef80e64576f657660804fec0b" ||
 				addr == "0x0029218e1dab069656bfb8a75947825e7989b987" {
-				results = append(results, CleanReport{
+				results = append(results, types.CleanReport{
 					Addr:     addr,
 					SizeThen: 10,
 					SizeNow:  8,
@@ -44,7 +39,7 @@ func (opts *MonitorsOptions) HandleClean() error {
 				})
 			}
 		} else {
-			report := CleanReport{
+			report := types.CleanReport{
 				Addr: mon.GetAddrStr(),
 			}
 			var err error
@@ -61,9 +56,5 @@ func (opts *MonitorsOptions) HandleClean() error {
 	}
 
 	// TODO: Fix export without arrays
-	b := make([]interface{}, len(results))
-	for i := range results {
-		b[i] = results[i]
-	}
-	return opts.Globals.RenderSlice(b)
+	return globals.RenderSlice(&opts.Globals, results)
 }

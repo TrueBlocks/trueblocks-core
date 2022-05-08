@@ -13,17 +13,18 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// RespondWithError marshals the given error err into JSON
-// that can be returned to the client and sets httpStatus HTTP error status code
-func (opts *GlobalOptions) RespondWithError(w http.ResponseWriter, httpStatus int, err error) {
-	type ErrorResponse struct {
-		Errors []string `json:"errors,omitempty"`
+func RenderSlice[
+	T types.NamedBlock |
+		types.CleanReport |
+		types.SimpleAppearance](opts *GlobalOptions, arr []T) error {
+	b := make([]interface{}, len(arr))
+	for i := range arr {
+		b[i] = arr[i]
 	}
-	marshalled, _ := json.MarshalIndent(ErrorResponse{Errors: []string{err.Error()}}, "", "  ")
-	w.WriteHeader(httpStatus)
-	w.Write(marshalled)
+	return opts.RenderSlice(b)
 }
 
 // TODO: Fix export without arrays
@@ -32,17 +33,8 @@ func (opts *GlobalOptions) RenderSlice(data []interface{}) error {
 		log.Fatal("opts.Writer is nil in RenderSlice")
 	}
 
-	nonEmptyFormat := opts.Format
-	if opts.Format == "" || opts.Format == "none" {
-		if opts.ApiMode {
-			nonEmptyFormat = "json"
-		} else {
-			nonEmptyFormat = "txt"
-		}
-	}
-
 	var meta *rpcClient.MetaData = nil
-	if nonEmptyFormat != "json" {
+	if opts.Format == "api" {
 		meta = rpcClient.GetMetaData(opts.Chain, opts.TestMode)
 	}
 
@@ -77,17 +69,8 @@ func (opts *GlobalOptions) RenderObject(data interface{}) error {
 		log.Fatal("opts.Writer is nil in RenderSlice")
 	}
 
-	nonEmptyFormat := opts.Format
-	if opts.Format == "" || opts.Format == "none" {
-		if opts.ApiMode {
-			nonEmptyFormat = "json"
-		} else {
-			nonEmptyFormat = "txt"
-		}
-	}
-
 	var meta *rpcClient.MetaData = nil
-	if nonEmptyFormat != "json" {
+	if opts.Format == "api" {
 		meta = rpcClient.GetMetaData(opts.Chain, opts.TestMode)
 	}
 
@@ -127,4 +110,15 @@ func (opts *GlobalOptions) RenderHeader(data interface{}, w *io.Writer, format s
 	}
 
 	return output.OutputHeader(data, *w, format, apiMode)
+}
+
+// RespondWithError marshals an err into JSON and returns the bytes
+// back to the caller httpStatus HTTP error status code
+func (opts *GlobalOptions) RespondWithError(w http.ResponseWriter, httpStatus int, err error) {
+	type ErrorResponse struct {
+		Errors []string `json:"errors,omitempty"`
+	}
+	marshalled, _ := json.MarshalIndent(ErrorResponse{Errors: []string{err.Error()}}, "", "  ")
+	w.WriteHeader(httpStatus)
+	w.Write(marshalled)
 }

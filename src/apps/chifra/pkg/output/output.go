@@ -5,90 +5,49 @@
 package output
 
 import (
-	"bytes"
-	"encoding/csv"
 	"encoding/json"
 	"fmt"
 	"io"
 	"reflect"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // TODO: Fix export without arrays
-func OutputArray(data interface{}, w io.Writer, format string, hideHeader, apiMode bool, meta *rpcClient.MetaData) error {
-	nonEmptyFormat := format
-	if format == "" || format == "none" {
-		if apiMode {
-			nonEmptyFormat = "json"
-		} else {
-			nonEmptyFormat = "txt"
-		}
-	}
-
-	var outputBytes []byte
-	var err error
-
-	switch nonEmptyFormat {
+func OutputArray(data []interface{}, w io.Writer, format string, hideHeader, apiMode bool, meta *rpcClient.MetaData) error {
+	switch format {
 	case "api":
 		fallthrough
 	case "json":
-		result := struct {
-			Data interface{}         `json:"data,omitempty"`
-			Meta *rpcClient.MetaData `json:"meta,omitempty"`
-		}{Data: data, Meta: meta}
-		outputBytes, err = json.MarshalIndent(result, "", "  ")
+		return OutputObject(data, w, format, hideHeader, apiMode, meta)
 	case "csv":
-		records, err := toStringRecords(data, true /* quote */, hideHeader)
-		if err == nil {
-			result := []string{}
-			for _, row := range records {
-				result = append(result, strings.Join(row, ","))
-			}
-			outputBytes = []byte(
-				strings.Join(result, "\n"),
-			)
-		}
+		fallthrough
 	case "txt":
-		records, err := toStringRecords(data, false /* quote */, hideHeader)
-		if err == nil {
-			out := bytes.Buffer{}
-			writer := csv.NewWriter(&out)
-			writer.Comma = '\t'
-			err = writer.WriteAll(records)
-			if err == nil {
-				outputBytes = out.Bytes()
+		for i, item := range data {
+			if i == 0 {
+				if !hideHeader {
+					err := OutputHeader(item, w, format, apiMode)
+					if err != nil {
+						return err
+					}
+				}
+			}
+			err := OutputObject(item, w, format, hideHeader, apiMode, meta)
+			if err != nil {
+				return err
 			}
 		}
-	default:
-		return fmt.Errorf("unsupported format %s", nonEmptyFormat)
+		return nil
 	}
-
-	if err != nil {
-		return err
-	}
-	w.Write(outputBytes)
-
-	return nil
+	return fmt.Errorf("unsupported format %s", format)
 }
 
 // TODO: Fix export without arrays
 func OutputObject(data interface{}, w io.Writer, format string, hideHeader, apiMode bool, meta *rpcClient.MetaData) error {
-	nonEmptyFormat := format
-	if format == "" || format == "none" {
-		if apiMode {
-			nonEmptyFormat = "json"
-		} else {
-			nonEmptyFormat = "txt"
-		}
-	}
-
 	var outputBytes []byte
 	var err error
 
-	switch nonEmptyFormat {
+	switch format {
 	case "api":
 		fallthrough
 	case "json":
@@ -107,7 +66,7 @@ func OutputObject(data interface{}, w io.Writer, format string, hideHeader, apiM
 		}
 		return rowTemplate.Execute(w, data)
 	default:
-		return fmt.Errorf("unsupported format %s", nonEmptyFormat)
+		return fmt.Errorf("unsupported format %s", format)
 	}
 
 	if err != nil {
@@ -116,56 +75,6 @@ func OutputObject(data interface{}, w io.Writer, format string, hideHeader, apiM
 	w.Write(outputBytes)
 
 	return nil
-}
-
-// toStringRecords uses Reflect API to read data from the provided slice of structs and
-// turns it into a slice of string slices that can be later passed to encoding package
-// writers to convert between different output formats
-func toStringRecords(data interface{}, quote bool, hideHeader bool) ([][]string, error) {
-	var records [][]string
-	// We can quote the data now, so that we don't have to loop over it again
-	// later.
-	format := "%v"
-	if quote {
-		format = `"%v"`
-	}
-	header := []string{}
-	// We only support slice of structs
-	slice := reflect.ValueOf(data)
-	if slice.Kind() != reflect.Slice {
-		return nil, fmt.Errorf("%s is not a structure", slice.Type().Name())
-	}
-	insideType := reflect.TypeOf(slice.Index(0).Interface())
-	if insideType.Kind() != reflect.Struct {
-		return nil, fmt.Errorf("%s is not a struct", insideType.Name())
-	}
-
-	for i := 0; i < slice.Len(); i++ {
-		var record []string
-		// Read the struct
-		content := slice.Index(i).Interface()
-		strct := reflect.ValueOf(content)
-
-		for j := 0; j < strct.NumField(); j++ {
-			// Now read each field from it and put into record
-			field := strct.Field(j).Interface()
-			record = append(record, fmt.Sprintf(format, field))
-
-			// If it's our first iteration, we save the struct's key names
-			// to use them as headers
-			if i == 0 {
-				header = append(header, fmt.Sprintf(format, utils.MakeFirstLowerCase(insideType.Field(j).Name)))
-			}
-		}
-		records = append(records, record)
-	}
-
-	var result [][]string
-	if !hideHeader {
-		result = append(result, header)
-	}
-	result = append(result, records...)
-	return result, nil
 }
 
 func OutputHeader(data interface{}, w io.Writer, format string, apiMode bool) error {
