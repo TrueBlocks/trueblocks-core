@@ -18,15 +18,15 @@ func (opts *ChunksOptions) HandleChunksExtractPins() error {
 		return err
 	}
 
-	sort.Slice(manifestData.NewPins, func(i, j int) bool {
-		iPin := manifestData.NewPins[i]
-		jPin := manifestData.NewPins[j]
+	sort.Slice(manifestData.Pins, func(i, j int) bool {
+		iPin := manifestData.Pins[i]
+		jPin := manifestData.Pins[j]
 		return iPin.FileName < jPin.FileName
 	})
 
 	if opts.Globals.TestMode {
 		// Shorten the array for testing
-		manifestData.NewPins = manifestData.NewPins[:100]
+		manifestData.Pins = manifestData.Pins[:100]
 	}
 
 	opts.PrintManifestHeader()

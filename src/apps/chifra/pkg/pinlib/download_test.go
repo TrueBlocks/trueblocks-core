@@ -13,13 +13,16 @@ import (
 
 var manifestJSONSource = `
 {
-  "fileName": "pin-manifest.json",
+  "version": "2",
+  "chain": "mainnet",
+  "chainId": 1,
   "indexFormat": "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2",
   "bloomFormat": "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD",
   "commitHash": "f29699d3281e41cb011ddfbe50b7f01bfe5e3c53",
-  "prevHash": "QmP4i6ihnVrj8Tx7cTFw4aY6ungpaPYxDJEZ7Vg1RSNSdm",
-  "newBlockRange": "000000000-000350277",
-  "newPins": [
+  "names": "QmP4i6ihnVrj8Tx7cTFw4aY6ungpaPYxDJEZ7Vg1RSNSdm",
+  "timestamps": "QmcvjroTiE95LWeiP8HHq1YA3ysRchLuVx8HLQui8WcSBV",
+  "blockRange": "000000000-000864336",
+  "pins": [
     {
       "fileName": "000000000-000000000",
       "bloomHash": "QmPQEgUm7nzQuW9HYyWp5Ff3aoUwg2rsxDngyuyddJTvrv",
@@ -59,7 +62,7 @@ func TestDownloadJSON(t *testing.T) {
 		t.Error(err)
 	}
 
-	if l := len(manifest.NewPins); l != 2 {
+	if l := len(manifest.Pins); l != 2 {
 		t.Errorf("Wrong NewPins length: %d", l)
 	}
 }
@@ -77,7 +80,7 @@ func TestDownloadTab(t *testing.T) {
 		t.Error(err)
 	}
 
-	if l := len(manifest.NewPins); l != 7 {
+	if l := len(manifest.Pins); l != 7 {
 		t.Errorf("Wrong NewPins length: %d", l)
 	}
 }
