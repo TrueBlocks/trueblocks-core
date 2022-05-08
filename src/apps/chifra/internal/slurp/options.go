@@ -90,6 +90,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 func SlurpFinishParse(args []string) *SlurpOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
+	defFmt := "txt"
 	// EXISTING_CODE
 	for _, arg := range args {
 		if validate.IsValidAddress(arg) {
@@ -100,6 +101,9 @@ func SlurpFinishParse(args []string) *SlurpOptions {
 	}
 	opts.Addrs = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
 	// EXISTING_CODE
+	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
+		opts.Globals.Format = defFmt
+	}
 	return opts
 }
 

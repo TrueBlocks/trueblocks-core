@@ -268,6 +268,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ExportOptions {
 func ExportFinishParse(args []string) *ExportOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
+	defFmt := "txt"
 	// EXISTING_CODE
 	for _, arg := range args {
 		if validate.IsValidTopic(arg) {
@@ -282,6 +283,9 @@ func ExportFinishParse(args []string) *ExportOptions {
 	opts.Emitter = ens.ConvertEns(opts.Globals.Chain, opts.Emitter)
 	opts.Asset = ens.ConvertEns(opts.Globals.Chain, opts.Asset)
 	// EXISTING_CODE
+	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
+		opts.Globals.Format = defFmt
+	}
 	return opts
 }
 

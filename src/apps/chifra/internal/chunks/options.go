@@ -76,10 +76,14 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ChunksOptions {
 func ChunksFinishParse(args []string) *ChunksOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
+	defFmt := "txt"
 	// EXISTING_CODE
 	opts.Blocks = args
 	opts.Extract = ens.ConvertOneEns(opts.Globals.Chain, opts.Extract)
 	// EXISTING_CODE
+	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
+		opts.Globals.Format = defFmt
+	}
 	return opts
 }
 

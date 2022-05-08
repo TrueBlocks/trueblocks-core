@@ -122,9 +122,14 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *StatusOptions {
 func StatusFinishParse(args []string) *StatusOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
+	defFmt := "txt"
 	// EXISTING_CODE
+	defFmt = ""
 	opts.Modes = args
 	// EXISTING_CODE
+	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
+		opts.Globals.Format = defFmt
+	}
 	return opts
 }
 

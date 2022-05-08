@@ -222,9 +222,6 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *GlobalOptions {
 
 func (opts *GlobalOptions) FinishParse(args []string) {
 	opts.Writer = os.Stdout
-	// if len(opts.Format) == 0 || opts.Format == "none" {
-	// 	opts.Format = "txt"
-	// }
 }
 
 func IsGlobalOption(key string) bool {

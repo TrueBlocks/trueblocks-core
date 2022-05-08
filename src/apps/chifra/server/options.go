@@ -63,8 +63,12 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ServeOptions {
 func ServeFinishParse(args []string) *ServeOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
+	defFmt := "txt"
 	// EXISTING_CODE
 	// EXISTING_CODE
+	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
+		opts.Globals.Format = defFmt
+	}
 	return opts
 }
 

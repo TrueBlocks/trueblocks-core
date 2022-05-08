@@ -112,6 +112,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *StateOptions {
 func StateFinishParse(args []string) *StateOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
+	defFmt := "txt"
 	// EXISTING_CODE
 	for _, arg := range args {
 		if validate.IsValidAddress(arg) {
@@ -123,6 +124,9 @@ func StateFinishParse(args []string) *StateOptions {
 	opts.Addrs = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
 	opts.ProxyFor = ens.ConvertOneEns(opts.Globals.Chain, opts.ProxyFor)
 	// EXISTING_CODE
+	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
+		opts.Globals.Format = defFmt
+	}
 	return opts
 }
 

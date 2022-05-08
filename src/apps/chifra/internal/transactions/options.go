@@ -100,10 +100,14 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *TransactionsOptions {
 func TransactionsFinishParse(args []string) *TransactionsOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
+	defFmt := "txt"
 	// EXISTING_CODE
 	opts.Transactions = args
 	opts.Reconcile = ens.ConvertOneEns(opts.Globals.Chain, opts.Reconcile)
 	// EXISTING_CODE
+	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
+		opts.Globals.Format = defFmt
+	}
 	return opts
 }
 

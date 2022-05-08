@@ -105,9 +105,13 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *WhenOptions {
 func WhenFinishParse(args []string) *WhenOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
+	defFmt := "txt"
 	// EXISTING_CODE
 	opts.Blocks = args
 	// EXISTING_CODE
+	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
+		opts.Globals.Format = defFmt
+	}
 	return opts
 }
 

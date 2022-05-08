@@ -97,6 +97,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *TokensOptions {
 func TokensFinishParse(args []string) *TokensOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
+	defFmt := "txt"
 	// EXISTING_CODE
 	for _, arg := range args {
 		if validate.IsValidAddress(arg) {
@@ -107,6 +108,9 @@ func TokensFinishParse(args []string) *TokensOptions {
 	}
 	opts.Addrs2 = ens.ConvertEns(opts.Globals.Chain, opts.Addrs2)
 	// EXISTING_CODE
+	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
+		opts.Globals.Format = defFmt
+	}
 	return opts
 }
 
