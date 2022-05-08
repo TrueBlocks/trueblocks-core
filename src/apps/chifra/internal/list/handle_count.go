@@ -5,11 +5,13 @@
 package listPkg
 
 import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 func (opts *ListOptions) HandleListCount(monitorArray []monitor.Monitor) error {
-	results := make([]monitor.SimpleMonitor, 0, len(monitorArray))
+	results := make([]types.SimpleMonitor, 0, len(monitorArray))
 	for _, mon := range monitorArray {
 		simp := monitor.NewSimpleMonitor(mon)
 		if opts.Globals.TestMode {
@@ -19,9 +21,5 @@ func (opts *ListOptions) HandleListCount(monitorArray []monitor.Monitor) error {
 	}
 
 	// TODO: Fix export without arrays
-	b := make([]interface{}, len(results))
-	for i := range results {
-		b[i] = results[i]
-	}
-	return opts.Globals.RenderSlice(b)
+	return globals.RenderSlice(&opts.Globals, results)
 }

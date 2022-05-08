@@ -18,19 +18,22 @@ import (
 
 func RenderSlice[
 	T types.NamedBlock |
+		types.Function |
 		types.CleanReport |
+		types.SimpleMonitor |
+		types.SimplePinList |
 		types.SimpleAppearance](opts *GlobalOptions, arr []T) error {
 	b := make([]interface{}, len(arr))
 	for i := range arr {
 		b[i] = arr[i]
 	}
-	return opts.RenderSlice(b)
+	return opts.renderSlice(b)
 }
 
 // TODO: Fix export without arrays
-func (opts *GlobalOptions) RenderSlice(data []interface{}) error {
+func (opts *GlobalOptions) renderSlice(data []interface{}) error {
 	if opts.Writer == nil {
-		log.Fatal("opts.Writer is nil in RenderSlice")
+		log.Fatal("opts.Writer is nil")
 	}
 
 	var meta *rpcClient.MetaData = nil
@@ -66,7 +69,7 @@ func (opts *GlobalOptions) RenderSlice(data []interface{}) error {
 
 func (opts *GlobalOptions) RenderObject(data interface{}) error {
 	if opts.Writer == nil {
-		log.Fatal("opts.Writer is nil in RenderSlice")
+		log.Fatal("opts.Writer is nil")
 	}
 
 	var meta *rpcClient.MetaData = nil

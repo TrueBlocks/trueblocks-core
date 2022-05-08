@@ -19,3 +19,21 @@ type SimpleAppearance struct {
 	BlockNumber      uint32 `json:"blockNumber"`
 	TransactionIndex uint32 `json:"transactionIndex"`
 }
+
+type Function struct {
+	Encoding  string `json:"encoding,omitempty"`
+	Signature string `json:"signature,omitempty"`
+}
+
+type SimpleMonitor struct {
+	Address     string `json:"address"`
+	NRecords    int    `json:"nRecords"`
+	FileSize    int64  `json:"fileSize"`
+	LastScanned uint32 `json:"lastScanned"`
+}
+
+type SimplePinList struct {
+	FileName  string `json:"fileName"`
+	BloomHash string `json:"bloomHash"`
+	IndexHash string `json:"indexHash"`
+}

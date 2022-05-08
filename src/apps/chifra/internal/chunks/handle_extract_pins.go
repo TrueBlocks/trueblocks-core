@@ -5,37 +5,25 @@
 package chunksPkg
 
 import (
-	"sort"
-
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
 )
 
 func (opts *ChunksOptions) HandleChunksExtractPins() error {
-	manifestData, err := manifest.FromLocalFile(opts.Globals.Chain)
+	results, err := manifest.GetPinList(opts.Globals.Chain)
 	if err != nil {
 		return err
 	}
 
-	sort.Slice(manifestData.Pins, func(i, j int) bool {
-		iPin := manifestData.Pins[i]
-		jPin := manifestData.Pins[j]
-		return iPin.FileName < jPin.FileName
-	})
-
 	if opts.Globals.TestMode {
 		// Shorten the array for testing
-		manifestData.Pins = manifestData.Pins[:100]
+		results = results[:100]
 	}
 
 	opts.PrintManifestHeader()
-	// TODO: Fix export without arrays
-	b := make([]interface{}, len(manifestData.Pins))
-	for i := range manifestData.Pins {
-		b[i] = manifestData.Pins[i]
-	}
-	return opts.Globals.RenderSlice(b)
+	return globals.RenderSlice(&opts.Globals, results)
 }
 
 func (opts *ChunksOptions) PrintManifestHeader() {
