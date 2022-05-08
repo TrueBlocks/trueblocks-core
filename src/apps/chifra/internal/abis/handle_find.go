@@ -90,7 +90,7 @@ func (opts *AbisOptions) HandleAbiFind() error {
 	for i := range results {
 		b[i] = results[i]
 	}
-	return opts.Globals.OutputArray(b)
+	return opts.Globals.RenderSlice(b)
 }
 
 // TODO: These are not implemented

@@ -69,14 +69,11 @@ func (opts *ChunksOptions) showStats(path string, first bool) error {
 		}
 	}
 
-	if first && !opts.Globals.NoHeader {
-		var header ChunkStats
-		err := opts.Globals.OutputHeader(header)
-		if err != nil {
-			return err
-		}
-	}
-
 	// TODO: Fix export without arrays
-	return opts.Globals.OutputObject(NewChunkStats(path))
+	obj := NewChunkStats(path)
+	err := opts.Globals.RenderHeader(obj, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, !opts.Globals.NoHeader, first)
+	if err != nil {
+		return err
+	}
+	return opts.Globals.RenderObject(obj)
 }

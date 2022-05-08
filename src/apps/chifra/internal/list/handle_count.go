@@ -23,5 +23,5 @@ func (opts *ListOptions) HandleListCount(monitorArray []monitor.Monitor) error {
 	for i := range results {
 		b[i] = results[i]
 	}
-	return opts.Globals.OutputArray(b)
+	return opts.Globals.RenderSlice(b)
 }

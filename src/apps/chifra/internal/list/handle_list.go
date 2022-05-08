@@ -58,7 +58,7 @@ func (opts *ListOptions) HandleListAppearances(monitorArray []monitor.Monitor) e
 		for i := range results {
 			b[i] = results[i]
 		}
-		err = opts.Globals.OutputArray(b)
+		err = opts.Globals.RenderSlice(b)
 		if err != nil {
 			return err
 		}

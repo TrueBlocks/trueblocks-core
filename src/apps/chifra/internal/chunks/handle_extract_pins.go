@@ -35,7 +35,7 @@ func (opts *ChunksOptions) HandleChunksExtractPins() error {
 	for i := range manifestData.Pins {
 		b[i] = manifestData.Pins[i]
 	}
-	return opts.Globals.OutputArray(b)
+	return opts.Globals.RenderSlice(b)
 }
 
 func (opts *ChunksOptions) PrintManifestHeader() {

@@ -18,5 +18,5 @@ func (opts *WhenOptions) HandleWhenList() error {
 		b[i] = result[i]
 	}
 	// TODO: Fix export without arrays
-	return opts.Globals.OutputArray(b)
+	return opts.Globals.RenderSlice(b)
 }

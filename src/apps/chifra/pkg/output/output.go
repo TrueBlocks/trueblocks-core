@@ -18,7 +18,7 @@ import (
 )
 
 // TODO: Fix export without arrays
-func OutputArray(data interface{}, w io.Writer, format, chain string, hideHeader, testMode bool) error {
+func OutputArray(data interface{}, w io.Writer, format, chain string, hideHeader, apiMode, testMode bool) error {
 	nonEmptyFormat := format
 	if format == "" || format == "none" {
 		nonEmptyFormat = "json"
@@ -84,10 +84,14 @@ func OutputArray(data interface{}, w io.Writer, format, chain string, hideHeader
 }
 
 // TODO: Fix export without arrays
-func OutputObject(data interface{}, w io.Writer, format, chain string, hideHeader, testMode bool) error {
+func OutputObject(data interface{}, w io.Writer, format string, hideHeader, apiMode bool, meta *rpcClient.MetaData) error {
 	nonEmptyFormat := format
 	if format == "" || format == "none" {
-		nonEmptyFormat = "json"
+		if apiMode {
+			nonEmptyFormat = "json"
+		} else {
+			nonEmptyFormat = "txt"
+		}
 	}
 
 	var outputBytes []byte
@@ -97,10 +101,6 @@ func OutputObject(data interface{}, w io.Writer, format, chain string, hideHeade
 	case "api":
 		fallthrough
 	case "json":
-		var meta *rpcClient.MetaData = nil
-		if format != "json" {
-			meta = rpcClient.GetMetaData(chain, testMode)
-		}
 		result := struct {
 			Data interface{}         `json:"data,omitempty"`
 			Meta *rpcClient.MetaData `json:"meta,omitempty"`
@@ -175,4 +175,13 @@ func toStringRecords(data interface{}, quote bool, hideHeader bool) ([][]string,
 	}
 	result = append(result, records...)
 	return result, nil
+}
+
+func OutputHeader(data interface{}, w io.Writer, format string, apiMode bool) error {
+	if format == "txt" || format == "csv" {
+		tt := reflect.TypeOf(data)
+		w.Write([]byte(GetHeader(&tt, format)))
+		w.Write([]byte("\n"))
+	}
+	return nil
 }
