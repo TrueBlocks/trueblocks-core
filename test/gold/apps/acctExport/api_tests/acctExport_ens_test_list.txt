@@ -46,5 +46,15 @@ list?addrs=rhyslindmark.eth&firstBlock=4037786&lastBlock=4589473
       "blockNumber": 4589473,
       "transactionIndex": 37
     }
-  ]
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
 }

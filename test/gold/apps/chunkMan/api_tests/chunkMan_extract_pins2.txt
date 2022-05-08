@@ -501,5 +501,15 @@ chunks?extract=pins
       "bloomHash": "Qme5iZjf6FKGKrxDD98Pd4hzTQmq11kFLmnBpPxSFA1kEp",
       "indexHash": "QmdoxtFya7wJgQYucpeY5m3KfbLJ62X7CjxYrVZH1z4EH1"
     }
-  ]
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
 }

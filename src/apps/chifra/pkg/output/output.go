@@ -25,43 +25,6 @@ type JsonFormatted struct {
 	Meta   *rpcClient.MetaData `json:"meta,omitempty"`
 }
 
-// jsonFormatter marshals JsonFormatted struct, populating Meta field if needed
-func jsonFormatter(data interface{}, format, chain string, testMode bool) ([]byte, error) {
-	j := &JsonFormatted{}
-	err, ok := data.(error)
-	if ok {
-		j.Errors = []string{
-			err.Error(),
-		}
-	} else {
-		j.Data = data
-	}
-
-	var result JsonFormatted
-
-	if format == "json" {
-		if len(j.Errors) > 0 {
-			result.Errors = j.Errors
-		} else {
-			result.Data = j.Data
-		}
-	} else {
-		if len(j.Errors) > 0 {
-			result.Errors = j.Errors
-		} else {
-			result.Data = j.Data
-			result.Meta = rpcClient.GetMetaData(chain, testMode)
-		}
-	}
-
-	marshalled, err := json.MarshalIndent(result, "", "  ")
-	if err != nil {
-		return nil, err
-	}
-
-	return marshalled, err
-}
-
 // toStringRecords uses Reflect API to read data from the provided slice of structs and
 // turns it into a slice of string slices that can be later passed to encoding package
 // writers to convert between different output formats
@@ -136,7 +99,39 @@ func Output3(w io.Writer, data interface{}, format, chain string, hideHeader, te
 	case "api":
 		fallthrough
 	case "json":
-		outputBytes, err = jsonFormatter(data, nonEmptyFormat, chain, testMode)
+		j := &JsonFormatted{}
+		err, ok := data.(error)
+		if ok {
+			j.Errors = []string{
+				err.Error(),
+			}
+		} else {
+			j.Data = data
+		}
+
+		var result JsonFormatted
+
+		if format == "json" {
+			if len(j.Errors) > 0 {
+				result.Errors = j.Errors
+			} else {
+				result.Data = j.Data
+			}
+		} else {
+			if len(j.Errors) > 0 {
+				result.Errors = j.Errors
+			} else {
+				result.Data = j.Data
+				result.Meta = rpcClient.GetMetaData(chain, testMode)
+			}
+		}
+
+		marshalled, err := json.MarshalIndent(result, "", "  ")
+		if err != nil {
+			return err
+		}
+		outputBytes = marshalled
+
 	case "csv":
 		records, err := toStringRecords(data, true, hideHeader)
 		if err != nil {
