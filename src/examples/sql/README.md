@@ -9,3 +9,5 @@ This example shows three things:
 ### Building
 
 This tool is built as part of the build of examples but may also be built directly by running `make` in this folder.
+
+Currently, this example is disabled.
