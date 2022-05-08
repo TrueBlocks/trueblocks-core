@@ -54,7 +54,11 @@ func (opts *ListOptions) HandleListAppearances(monitorArray []monitor.Monitor) e
 		}
 
 		// TODO: Fix export without arrays
-		err = opts.Globals.OutputArray(results)
+		b := make([]interface{}, len(results))
+		for i := range results {
+			b[i] = results[i]
+		}
+		err = opts.Globals.OutputArray(b)
 		if err != nil {
 			return err
 		}

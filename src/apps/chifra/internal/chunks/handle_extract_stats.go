@@ -69,18 +69,25 @@ func (opts *ChunksOptions) showStats(path string, first bool) error {
 		}
 	}
 
-	var results []ChunkStats
-	results = append(results, NewChunkStats(path))
+	if first {
+		err := opts.Globals.OutputHeader(NewChunkStats(path))
+		if err != nil {
+			return err
+		}
+
+	}
+	// var results []ChunkStats
+	// results = append(results, NewChunkStats(path))
 
 	opts.Globals.NoHeader = !first
 	// TODO: Fix export without arrays
-	ret := opts.Globals.OutputObject(results)
-	if opts.Globals.Format == "csv" {
-		if opts.Globals.Writer != nil {
-			opts.Globals.Writer.Write([]byte{'\n'})
-		} else {
-			fmt.Println()
-		}
-	}
+	ret := opts.Globals.OutputObject(NewChunkStats(path))
+	// if opts.Globals.Format == "csv" {
+	// 	if opts.Globals.Writer != nil {
+	// 		opts.Globals.Writer.Write([]byte{'\n'})
+	// 	} else {
+	// 		fmt.Println()
+	// 	}
+	// }
 	return ret
 }

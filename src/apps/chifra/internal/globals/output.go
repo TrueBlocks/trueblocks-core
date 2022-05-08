@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"reflect"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -25,7 +26,7 @@ func (opts *GlobalOptions) RespondWithError(w http.ResponseWriter, httpStatus in
 }
 
 // TODO: Fix export without arrays
-func (opts *GlobalOptions) OutputArray(data interface{}) error {
+func (opts *GlobalOptions) OutputArray(data []interface{}) error {
 	if opts.ApiMode {
 		if opts.Writer == nil {
 			log.Fatal("opts.Writer is nil in OutputArray")
@@ -42,7 +43,7 @@ func (opts *GlobalOptions) OutputArray(data interface{}) error {
 			hw.Header().Set("Content-Type", "application/json")
 		}
 
-		err := output.Output(opts.Writer, data, opts.Format, opts.Chain, opts.NoHeader, opts.TestMode)
+		err := output.OutputArray(data, opts.Writer, opts.Format, opts.Chain, opts.NoHeader, opts.TestMode)
 		if err != nil {
 			opts.RespondWithError(hw, http.StatusInternalServerError, err)
 		}
@@ -51,7 +52,7 @@ func (opts *GlobalOptions) OutputArray(data interface{}) error {
 		if opts.Format == "" || opts.Format == "none" {
 			opts.Format = "txt"
 		}
-		err := output.Output(opts.Writer, data, opts.Format, opts.Chain, opts.NoHeader, opts.TestMode)
+		err := output.OutputArray(data, opts.Writer, opts.Format, opts.Chain, opts.NoHeader, opts.TestMode)
 		if err != nil {
 			logger.Log(logger.Error, err)
 		}
@@ -60,5 +61,44 @@ func (opts *GlobalOptions) OutputArray(data interface{}) error {
 }
 
 func (opts *GlobalOptions) OutputObject(data interface{}) error {
-	return opts.OutputArray(data)
+	if opts.ApiMode {
+		if opts.Writer == nil {
+			log.Fatal("opts.Writer is nil in OutputArray")
+		}
+
+		// We could check this, but if it's not empty, we know it's type
+		hw, _ := opts.Writer.(http.ResponseWriter)
+		switch opts.Format {
+		case "txt":
+			hw.Header().Set("Content-Type", "text/tab-separated-values")
+		case "csv":
+			hw.Header().Set("Content-Type", "text/csv")
+		default:
+			hw.Header().Set("Content-Type", "application/json")
+		}
+
+		err := output.OutputObject(data, opts.Writer, opts.Format, opts.Chain, opts.NoHeader, opts.TestMode)
+		if err != nil {
+			opts.RespondWithError(hw, http.StatusInternalServerError, err)
+		}
+
+	} else {
+		if opts.Format == "" || opts.Format == "none" {
+			opts.Format = "txt"
+		}
+		err := output.OutputObject(data, opts.Writer, opts.Format, opts.Chain, opts.NoHeader, opts.TestMode)
+		if err != nil {
+			logger.Log(logger.Error, err)
+		}
+	}
+	return nil
+}
+
+func (opts *GlobalOptions) OutputHeader(data interface{}) error {
+	if opts.Format == "txt" || opts.Format == "csv" {
+		tt := reflect.TypeOf(data)
+		opts.Writer.Write([]byte(output.GetHeader(&tt, opts.Format)))
+		opts.Writer.Write([]byte("\n"))
+	}
+	return nil
 }

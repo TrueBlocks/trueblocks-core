@@ -19,5 +19,9 @@ func (opts *ListOptions) HandleListCount(monitorArray []monitor.Monitor) error {
 	}
 
 	// TODO: Fix export without arrays
-	return opts.Globals.OutputArray(results)
+	b := make([]interface{}, len(results))
+	for i := range results {
+		b[i] = results[i]
+	}
+	return opts.Globals.OutputArray(b)
 }

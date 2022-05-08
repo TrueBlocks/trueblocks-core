@@ -9,12 +9,17 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func getFields(t *reflect.Type, format string) (fields []string, sep string, quote string) {
+func getFields(t *reflect.Type, format string, header bool) (fields []string, sep string, quote string) {
 	if (*t).Kind() != reflect.Struct {
 		logger.Fatal((*t).Name() + " is not a structure")
 	}
 	for i := 0; i < (*t).NumField(); i++ {
-		fields = append(fields, utils.MakeFirstLowerCase((*t).Field(i).Name))
+		fn := (*t).Field(i).Name
+		if header {
+			fields = append(fields, utils.MakeFirstLowerCase(fn))
+		} else {
+			fields = append(fields, fn)
+		}
 	}
 	sep = "\t"
 	quote = ""
@@ -26,7 +31,7 @@ func getFields(t *reflect.Type, format string) (fields []string, sep string, quo
 }
 
 func GetHeader(t *reflect.Type, format string) string {
-	fields, sep, quote := getFields(t, format)
+	fields, sep, quote := getFields(t, format, true)
 	var sb strings.Builder
 	for i, field := range fields {
 		if i > 0 {
@@ -38,13 +43,13 @@ func GetHeader(t *reflect.Type, format string) string {
 }
 
 func GetRowTemplate(t *reflect.Type, format string) (*template.Template, error) {
-	fields, sep, quote := getFields(t, format)
+	fields, sep, quote := getFields(t, format, false)
 	var sb strings.Builder
 	for i, field := range fields {
 		if i > 0 {
 			sb.WriteString(sep)
 		}
-		sb.WriteString(quote + "{{." + utils.MakeFirstLowerCase(field) + "}}" + quote)
+		sb.WriteString(quote + "{{." + field + "}}" + quote)
 	}
 	tt, err := template.New("").Parse(sb.String() + "\n")
 	return tt, err

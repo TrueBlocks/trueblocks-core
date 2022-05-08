@@ -13,7 +13,10 @@ func (opts *WhenOptions) HandleWhenList() error {
 	if err != nil {
 		return err
 	}
-
+	b := make([]interface{}, len(result))
+	for i := range result {
+		b[i] = result[i]
+	}
 	// TODO: Fix export without arrays
-	return opts.Globals.OutputArray(result)
+	return opts.Globals.OutputArray(b)
 }

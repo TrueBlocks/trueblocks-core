@@ -31,7 +31,11 @@ func (opts *ChunksOptions) HandleChunksExtractPins() error {
 
 	opts.PrintManifestHeader()
 	// TODO: Fix export without arrays
-	return opts.Globals.OutputArray(manifestData.Pins)
+	b := make([]interface{}, len(manifestData.Pins))
+	for i := range manifestData.Pins {
+		b[i] = manifestData.Pins[i]
+	}
+	return opts.Globals.OutputArray(b)
 }
 
 func (opts *ChunksOptions) PrintManifestHeader() {

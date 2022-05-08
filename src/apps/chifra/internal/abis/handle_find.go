@@ -86,7 +86,11 @@ func (opts *AbisOptions) HandleAbiFind() error {
 	defer wg.Wait()
 
 	// TODO: Fix export without arrays
-	return opts.Globals.OutputArray(results)
+	b := make([]interface{}, len(results))
+	for i := range results {
+		b[i] = results[i]
+	}
+	return opts.Globals.OutputArray(b)
 }
 
 // TODO: These are not implemented

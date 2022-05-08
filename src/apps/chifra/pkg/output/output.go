@@ -18,7 +18,7 @@ import (
 )
 
 // TODO: Fix export without arrays
-func Output(w io.Writer, data interface{}, format, chain string, hideHeader, testMode bool) error {
+func OutputArray(data interface{}, w io.Writer, format, chain string, hideHeader, testMode bool) error {
 	nonEmptyFormat := format
 	if format == "" || format == "none" {
 		nonEmptyFormat = "json"
@@ -35,7 +35,10 @@ func Output(w io.Writer, data interface{}, format, chain string, hideHeader, tes
 		if format != "json" {
 			meta = rpcClient.GetMetaData(chain, testMode)
 		}
-		result := JsonResult{Data: data, Meta: meta}
+		result := struct {
+			Data interface{}         `json:"data,omitempty"`
+			Meta *rpcClient.MetaData `json:"meta,omitempty"`
+		}{Data: data, Meta: meta}
 		outputBytes, err = json.MarshalIndent(result, "", "  ")
 	case "csv":
 		records, err := toStringRecords(data, true /* quote */, hideHeader)
@@ -75,14 +78,53 @@ func Output(w io.Writer, data interface{}, format, chain string, hideHeader, tes
 	if err != nil {
 		return err
 	}
-
 	w.Write(outputBytes)
+
 	return nil
 }
 
-type JsonResult struct {
-	Data interface{}         `json:"data,omitempty"`
-	Meta *rpcClient.MetaData `json:"meta,omitempty"`
+// TODO: Fix export without arrays
+func OutputObject(data interface{}, w io.Writer, format, chain string, hideHeader, testMode bool) error {
+	nonEmptyFormat := format
+	if format == "" || format == "none" {
+		nonEmptyFormat = "json"
+	}
+
+	var outputBytes []byte
+	var err error
+
+	switch nonEmptyFormat {
+	case "api":
+		fallthrough
+	case "json":
+		var meta *rpcClient.MetaData = nil
+		if format != "json" {
+			meta = rpcClient.GetMetaData(chain, testMode)
+		}
+		result := struct {
+			Data interface{}         `json:"data,omitempty"`
+			Meta *rpcClient.MetaData `json:"meta,omitempty"`
+		}{Data: data, Meta: meta}
+		outputBytes, err = json.MarshalIndent(result, "", "  ")
+	case "csv":
+		fallthrough
+	case "txt":
+		tt := reflect.TypeOf(data)
+		rowTemplate, err := GetRowTemplate(&tt, format)
+		if err != nil {
+			return err
+		}
+		return rowTemplate.Execute(w, data)
+	default:
+		return fmt.Errorf("unsupported format %s", nonEmptyFormat)
+	}
+
+	if err != nil {
+		return err
+	}
+	w.Write(outputBytes)
+
+	return nil
 }
 
 // toStringRecords uses Reflect API to read data from the provided slice of structs and
