@@ -7,6 +7,7 @@ package globals
 import (
 	"net/http"
 	"os"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -62,4 +63,22 @@ func (opts *GlobalOptions) OutputArray(data interface{}) error {
 	}
 
 	return nil
+}
+
+func (opts *GlobalOptions) OutputObject(data interface{}) error {
+	return opts.OutputArray(data)
+}
+
+func (opts *GlobalOptions) GetExportFormat(cmd string) string {
+	if strings.Contains(cmd, "json") {
+		return "json"
+	} else if strings.Contains(cmd, "txt") {
+		return "txt"
+	} else if strings.Contains(cmd, "csv") {
+		return "csv"
+	}
+	if len(opts.Format) > 0 {
+		return opts.Format
+	}
+	return "csv"
 }

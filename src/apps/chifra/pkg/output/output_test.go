@@ -21,7 +21,7 @@ package output
 // 		{"second first", "second second"},
 // 	}
 
-// 	result, err := ToStringRecords(input, false, false)
+// 	result, err := toStringRecords(input, false, false)
 // 	if err != nil {
 // 		t.Error(err)
 // 		return
@@ -50,7 +50,7 @@ package output
 
 // 	var opts GlobalOptions
 // 	opts.Format = "csv"
-// 	result, err := opts.CsvFormatter(input, false)
+// 	result, err := opts.csvFormatter(input, false)
 // 	if err != nil {
 // 		t.Error(err)
 // 		return
