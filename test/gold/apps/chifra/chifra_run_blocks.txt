@@ -1,5 +1,6 @@
 chifra  blocks 12
 TEST[DATE|TIME] Blocks:  [12]
+TEST[DATE|TIME] Format:  json
 { "data": [
 {
   "gasLimit": 5000,

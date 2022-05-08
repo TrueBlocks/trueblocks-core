@@ -1,6 +1,7 @@
 chifra tokens  0xd26114cd6ee289accf82350c8d8487fedb8a0c07 --parts junk
 TEST[DATE|TIME] Addrs2:  [0xd26114cd6ee289accf82350c8d8487fedb8a0c07]
 TEST[DATE|TIME] Parts:  [junk]
+TEST[DATE|TIME] Format:  txt
 Error: The --parts option (junk) must be one of [ name | symbol | decimals | totalSupply | version | none | all ]
 Usage:
   chifra tokens [flags] <address> <address> [address...] [block...]

@@ -2,6 +2,7 @@ chifra blocks  4012000-4012001 --trace --hashes
 TEST[DATE|TIME] Blocks:  [4012000-4012001]
 TEST[DATE|TIME] Hashes:  true
 TEST[DATE|TIME] Trace:  true
+TEST[DATE|TIME] Format:  json
 Error: The --trace option is not available with the --hashes option.
 Usage:
   chifra blocks [flags] <block> [block...]

@@ -1,24 +1,20 @@
 chifra logs  
-Purpose:
-  Retrieve logs for the given transaction(s).
-
+TEST[DATE|TIME] Format:  txt
+Error: Please supply one or more transaction identifiers.
 Usage:
-  getLogs [flags] <tx_id> [tx_id...]
+  chifra logs [flags] <tx_id> [tx_id...]
 
 Arguments:
   transactions - a space-separated list of one or more transaction identifiers (required)
 
 Flags:
   -a, --articulate   articulate the retrieved data if ABIs can be found
-
-Global Flags:
-  -x, --fmt string     export format, one of [none|json*|txt|csv|api]
-  -v, --verbose uint   set verbose level (optional level defaults to 1)
-  -h, --help           display this help screen
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -v, --verbose      enable verbose (increase detail with --log_level)
+  -h, --help         display this help screen
 
 Notes:
   - The transactions list may be one or more transaction hashes, blockNumber.transactionID pairs, or a blockHash.transactionID pairs.
   - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
   - If the queried node does not store historical state, the results for most older transactions are undefined.
   - If you specify a 32-byte hash, it will be assumed to be a transaction hash, if the transaction is not found, it will be used as a topic.
-

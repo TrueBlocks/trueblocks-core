@@ -1,6 +1,7 @@
 chifra when  2015-03-02 --list
 TEST[DATE|TIME] Blocks:  [2015-03-02]
 TEST[DATE|TIME] List:  true
+TEST[DATE|TIME] Format:  txt
 Error: Please use the --list or --timestamp option or supply block identifiers, not both.
 Usage:
   chifra when [flags] < block | date > [ block... | date... ]

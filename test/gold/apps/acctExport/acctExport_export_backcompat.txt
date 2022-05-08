@@ -3,6 +3,7 @@ TEST[DATE|TIME] Addrs:  [0x001d14804b399c6ef80e64576f657660804fec0b]
 TEST[DATE|TIME] MaxRecords:  1
 TEST[DATE|TIME] Staging:  true
 TEST[DATE|TIME] Unripe:  true
+TEST[DATE|TIME] Format:  txt
 Error: Please choose only one of --staging or --unripe
 Usage:
   chifra export [flags] <address> [address...] [topics...] [fourbytes...]

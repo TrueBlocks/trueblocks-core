@@ -1,5 +1,6 @@
 chifra  quotes -p 1440
 TEST[DATE|TIME] Period:  1440
+TEST[DATE|TIME] Format:  txt
 timestamp	date	close
 1439078400	2015-08-09 00:00:00 UTC	1.40000
 1439164800	2015-08-10 00:00:00 UTC	1.40000

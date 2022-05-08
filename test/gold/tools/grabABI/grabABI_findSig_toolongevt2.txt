@@ -1,5 +1,6 @@
 chifra abis  --find 0x1aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a008000
 TEST[DATE|TIME] Find:  [0x1aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a008000]
+TEST[DATE|TIME] Format:  txt
 Error: The topic option (0x1aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a008000) must be 32 bytes long.
 Usage:
   chifra abis [flags] <address> [address...]

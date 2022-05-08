@@ -1,6 +1,6 @@
 logs?
 {
   "errors": [
-    "chifra logs - Not enough arguments presented."
+    "Please supply one or more transaction identifiers."
   ]
 }

@@ -1,4 +1,5 @@
 chifra explore  0xc63f666315fa1eae17e354fab532aeeecf549be93e358737d0648f50d57083a0 --local
 TEST[DATE|TIME] Terms:  [0xc63f666315fa1eae17e354fab532aeeecf549be93e358737d0648f50d57083a0]
 TEST[DATE|TIME] Local:  true
+TEST[DATE|TIME] Format:  txt
 Opening http://localhost:1234/explorer/blocks/0xc63f666315fa1eae17e354fab532aeeecf549be93e358737d0648f50d57083a0

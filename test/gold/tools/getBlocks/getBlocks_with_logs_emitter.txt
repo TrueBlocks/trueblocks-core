@@ -2,6 +2,7 @@ chifra blocks  4012000-4012001 --logs --emitter 0x86fa049857e0209aa7d9e616f7eb3b
 TEST[DATE|TIME] Blocks:  [4012000-4012001]
 TEST[DATE|TIME] Logs:  true
 TEST[DATE|TIME] Emitter:  [0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0]
+TEST[DATE|TIME] Format:  json
 { "data": [
 TIME ~ CLOCK - <INFO>  : Processing log query 4012000 to 4012000{
   "address": "0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0",

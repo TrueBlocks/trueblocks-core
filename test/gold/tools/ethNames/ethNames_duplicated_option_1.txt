@@ -1,4 +1,5 @@
 chifra names  0xb6 torj --addr --addr --addr --addr
 TEST[DATE|TIME] Terms:  [0xb6 torj]
 TEST[DATE|TIME] Addr:  true
+TEST[DATE|TIME] Format:  txt
 0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac

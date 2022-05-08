@@ -1,5 +1,6 @@
 chifra quotes  --period 12
 TEST[DATE|TIME] Period:  12
+TEST[DATE|TIME] Format:  txt
 Error: The --period option (12) must be one of [ 5 | 15 | 30 | 60 | 120 | 240 | 1440 | 10080 | hourly | daily | weekly ]
 Usage:
   chifra quotes [flags]

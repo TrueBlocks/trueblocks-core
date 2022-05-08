@@ -1,4 +1,5 @@
 chifra receipts  
+TEST[DATE|TIME] Format:  txt
 Error: Please supply one or more transaction identifiers.
 Usage:
   chifra receipts [flags] <tx_id> [tx_id...]

@@ -1,5 +1,6 @@
 chifra when  10000 --verbose
 TEST[DATE|TIME] Blocks:  [10000]
 TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] Format:  txt
 blockNumber	timestamp	date	name
 10000	1438334627	2015-07-31 09:23:47 UTC

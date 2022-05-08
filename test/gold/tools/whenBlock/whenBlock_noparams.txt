@@ -1,4 +1,5 @@
 chifra when  
+TEST[DATE|TIME] Format:  txt
 Error: Please supply one or more block identifiers or one or more dates.
 Usage:
   chifra when [flags] < block | date > [ block... | date... ]

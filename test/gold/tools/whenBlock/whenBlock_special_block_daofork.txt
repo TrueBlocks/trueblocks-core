@@ -1,5 +1,6 @@
 chifra when  daofork --verbose
 TEST[DATE|TIME] Blocks:  [daofork]
 TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] Format:  txt
 blockNumber	timestamp	date	name
 1920000	1469020840	2016-07-20 13:20:40 UTC	daofork

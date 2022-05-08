@@ -1,4 +1,5 @@
 chifra monitors  
+TEST[DATE|TIME] Format:  txt
 Error: You must provide at least one Ethereum address for this command.
 Usage:
   chifra monitors [flags] <address> [address...]
