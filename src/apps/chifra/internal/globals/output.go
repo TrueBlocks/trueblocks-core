@@ -6,7 +6,6 @@ package globals
 
 import (
 	"net/http"
-	"os"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -66,7 +65,7 @@ func (opts *GlobalOptions) OutputArray(data interface{}) error {
 		}
 
 	} else {
-		err := output.Output2(os.Stdout, data, opts.Format, opts.Chain, opts.NoHeader, opts.TestMode)
+		err := output.Output2(opts.Writer, data, opts.Format, opts.Chain, opts.NoHeader, opts.TestMode)
 		if err != nil {
 			logger.Log(logger.Error, err)
 		}

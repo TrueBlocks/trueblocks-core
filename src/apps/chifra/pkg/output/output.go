@@ -233,6 +233,8 @@ func Output2_ForApi(where io.Writer, data interface{}, format, chain string, hid
 	var err error
 
 	switch nonEmptyFormat {
+	case "api":
+		fallthrough
 	case "json":
 		outputBytes, err = jsonFormatter(data, nonEmptyFormat, chain, testMode)
 	case "csv":
@@ -246,7 +248,7 @@ func Output2_ForApi(where io.Writer, data interface{}, format, chain string, hid
 			outputBytes, err = tabFormatter(data, hideHeader)
 		}
 	default:
-		err = fmt.Errorf("unsupported format %s", format)
+		err = fmt.Errorf("unsupported format %s", nonEmptyFormat)
 	}
 	if err != nil {
 		return err

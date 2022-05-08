@@ -183,6 +183,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *NamesOptions {
 
 func NamesFinishParse(args []string) *NamesOptions {
 	opts := GetOptions()
+	opts.Globals.FinishParse(args)
 	// EXISTING_CODE
 	opts.Terms = ens.ConvertEns(opts.Globals.Chain, args)
 	// EXISTING_CODE

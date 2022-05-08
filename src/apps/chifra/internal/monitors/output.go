@@ -11,7 +11,6 @@ package monitorsPkg
 // EXISTING_CODE
 import (
 	"net/http"
-	"os"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
@@ -33,7 +32,7 @@ func RunMonitors(cmd *cobra.Command, args []string) error {
 		return opts.HandleClean()
 	}
 
-	return opts.HandleCrudCommands(os.Stdout)
+	return opts.HandleCrudCommands()
 	// EXISTING_CODE
 }
 
@@ -72,7 +71,7 @@ func ServeMonitors(w http.ResponseWriter, r *http.Request) bool {
 			return true
 		}
 	}
-	err = opts.HandleCrudCommands(w)
+	err = opts.HandleCrudCommands()
 	if err != nil {
 		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
 	}

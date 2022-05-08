@@ -169,6 +169,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *BlocksOptions {
 
 func BlocksFinishParse(args []string) *BlocksOptions {
 	opts := GetOptions()
+	opts.Globals.FinishParse(args)
 	// EXISTING_CODE
 	opts.Blocks = args
 	// EXISTING_CODE

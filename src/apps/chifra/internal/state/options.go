@@ -111,6 +111,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *StateOptions {
 
 func StateFinishParse(args []string) *StateOptions {
 	opts := GetOptions()
+	opts.Globals.FinishParse(args)
 	// EXISTING_CODE
 	for _, arg := range args {
 		if validate.IsValidAddress(arg) {

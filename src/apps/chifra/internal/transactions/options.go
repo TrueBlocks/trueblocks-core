@@ -99,6 +99,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *TransactionsOptions {
 
 func TransactionsFinishParse(args []string) *TransactionsOptions {
 	opts := GetOptions()
+	opts.Globals.FinishParse(args)
 	// EXISTING_CODE
 	opts.Transactions = args
 	opts.Reconcile = ens.ConvertOneEns(opts.Globals.Chain, opts.Reconcile)

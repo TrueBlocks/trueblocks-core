@@ -75,6 +75,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ChunksOptions {
 
 func ChunksFinishParse(args []string) *ChunksOptions {
 	opts := GetOptions()
+	opts.Globals.FinishParse(args)
 	// EXISTING_CODE
 	opts.Blocks = args
 	opts.Extract = ens.ConvertOneEns(opts.Globals.Chain, opts.Extract)

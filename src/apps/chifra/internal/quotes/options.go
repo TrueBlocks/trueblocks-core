@@ -83,6 +83,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *QuotesOptions {
 
 func QuotesFinishParse(args []string) *QuotesOptions {
 	opts := GetOptions()
+	opts.Globals.FinishParse(args)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return opts

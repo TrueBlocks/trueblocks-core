@@ -97,6 +97,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *MonitorsOptions {
 
 func MonitorsFinishParse(args []string) *MonitorsOptions {
 	opts := GetOptions()
+	opts.Globals.FinishParse(args)
 	// EXISTING_CODE
 	opts.Addrs = ens.ConvertEns(opts.Globals.Chain, args)
 	// EXISTING_CODE

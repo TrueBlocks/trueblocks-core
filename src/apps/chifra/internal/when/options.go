@@ -104,6 +104,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *WhenOptions {
 
 func WhenFinishParse(args []string) *WhenOptions {
 	opts := GetOptions()
+	opts.Globals.FinishParse(args)
 	// EXISTING_CODE
 	opts.Blocks = args
 	// EXISTING_CODE

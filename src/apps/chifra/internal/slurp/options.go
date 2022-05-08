@@ -89,6 +89,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 
 func SlurpFinishParse(args []string) *SlurpOptions {
 	opts := GetOptions()
+	opts.Globals.FinishParse(args)
 	// EXISTING_CODE
 	for _, arg := range args {
 		if validate.IsValidAddress(arg) {

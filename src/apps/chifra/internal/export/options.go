@@ -267,6 +267,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ExportOptions {
 
 func ExportFinishParse(args []string) *ExportOptions {
 	opts := GetOptions()
+	opts.Globals.FinishParse(args)
 	// EXISTING_CODE
 	for _, arg := range args {
 		if validate.IsValidTopic(arg) {

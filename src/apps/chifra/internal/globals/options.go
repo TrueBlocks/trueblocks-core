@@ -215,6 +215,10 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *GlobalOptions {
 	// cmd.Flags().BoolVarP(&opts.Help, "help", "h", false, "display this help screen")
 }
 
+func (opts *GlobalOptions) FinishParse(args []string) {
+	opts.Writer = os.Stdout
+}
+
 func IsGlobalOption(key string) bool {
 	permitted := []string{
 		"fmt",

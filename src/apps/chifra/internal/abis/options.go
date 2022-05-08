@@ -95,6 +95,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *AbisOptions {
 
 func AbisFinishParse(args []string) *AbisOptions {
 	opts := GetOptions()
+	opts.Globals.FinishParse(args)
 	// EXISTING_CODE
 	opts.Addrs = ens.ConvertEns(opts.Globals.Chain, args)
 	// EXISTING_CODE

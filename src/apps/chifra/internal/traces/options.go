@@ -105,6 +105,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *TracesOptions {
 
 func TracesFinishParse(args []string) *TracesOptions {
 	opts := GetOptions()
+	opts.Globals.FinishParse(args)
 	// EXISTING_CODE
 	opts.Transactions = args
 	// EXISTING_CODE

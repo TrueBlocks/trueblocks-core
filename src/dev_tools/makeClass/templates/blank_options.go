@@ -55,6 +55,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *[{PROPER}]Options {
 
 func [{PROPER}]FinishParse(args []string) *[{PROPER}]Options {
 	opts := GetOptions()
+	opts.Globals.FinishParse(args)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return opts
