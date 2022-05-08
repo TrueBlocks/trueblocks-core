@@ -209,6 +209,11 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *GlobalOptions {
 	if len(opts.Chain) == 0 {
 		opts.Chain = config.GetDefaultChain()
 	}
+
+	if len(opts.Format) == 0 || opts.Format == "none" {
+		opts.Format = "api"
+	}
+
 	return opts
 
 	// The 'help' command is a special case for cobra, so doesn't need to be handled here
@@ -217,6 +222,9 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *GlobalOptions {
 
 func (opts *GlobalOptions) FinishParse(args []string) {
 	opts.Writer = os.Stdout
+	// if len(opts.Format) == 0 || opts.Format == "none" {
+	// 	opts.Format = "txt"
+	// }
 }
 
 func IsGlobalOption(key string) bool {

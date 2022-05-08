@@ -32,6 +32,20 @@ func (opts *GlobalOptions) RenderSlice(data []interface{}) error {
 		log.Fatal("opts.Writer is nil in RenderSlice")
 	}
 
+	nonEmptyFormat := opts.Format
+	if opts.Format == "" || opts.Format == "none" {
+		if opts.ApiMode {
+			nonEmptyFormat = "json"
+		} else {
+			nonEmptyFormat = "txt"
+		}
+	}
+
+	var meta *rpcClient.MetaData = nil
+	if nonEmptyFormat != "json" {
+		meta = rpcClient.GetMetaData(opts.Chain, opts.TestMode)
+	}
+
 	if opts.ApiMode {
 		// We could check this, but if it's not empty, we know it's type
 		hw, _ := opts.Writer.(http.ResponseWriter)
@@ -44,16 +58,13 @@ func (opts *GlobalOptions) RenderSlice(data []interface{}) error {
 			hw.Header().Set("Content-Type", "application/json")
 		}
 
-		err := output.OutputArray(data, opts.Writer, opts.Format, opts.Chain, opts.NoHeader, opts.ApiMode, opts.TestMode)
+		err := output.OutputArray(data, opts.Writer, opts.Format, opts.NoHeader, opts.ApiMode, meta)
 		if err != nil {
 			opts.RespondWithError(hw, http.StatusInternalServerError, err)
 		}
 
 	} else {
-		if opts.Format == "" || opts.Format == "none" {
-			opts.Format = "txt"
-		}
-		err := output.OutputArray(data, opts.Writer, opts.Format, opts.Chain, opts.NoHeader, opts.ApiMode, opts.TestMode)
+		err := output.OutputArray(data, opts.Writer, opts.Format, opts.NoHeader, opts.ApiMode, meta)
 		if err != nil {
 			logger.Log(logger.Error, err)
 		}
@@ -66,12 +77,22 @@ func (opts *GlobalOptions) RenderObject(data interface{}) error {
 		log.Fatal("opts.Writer is nil in RenderSlice")
 	}
 
+	nonEmptyFormat := opts.Format
+	if opts.Format == "" || opts.Format == "none" {
+		if opts.ApiMode {
+			nonEmptyFormat = "json"
+		} else {
+			nonEmptyFormat = "txt"
+		}
+	}
+
+	var meta *rpcClient.MetaData = nil
+	if nonEmptyFormat != "json" {
+		meta = rpcClient.GetMetaData(opts.Chain, opts.TestMode)
+	}
+
 	if opts.ApiMode {
 		// We could check this, but if it's not empty, we know it's type
-		var meta *rpcClient.MetaData = nil
-		if opts.Format == "api" {
-			meta = rpcClient.GetMetaData(opts.Chain, opts.TestMode)
-		}
 		err := output.OutputObject(data, opts.Writer, opts.Format, opts.NoHeader, opts.ApiMode, meta)
 		if err != nil {
 			hw, _ := opts.Writer.(http.ResponseWriter)
@@ -79,7 +100,7 @@ func (opts *GlobalOptions) RenderObject(data interface{}) error {
 		}
 
 	} else {
-		err := output.OutputObject(data, opts.Writer, opts.Format, opts.NoHeader, opts.ApiMode, nil)
+		err := output.OutputObject(data, opts.Writer, opts.Format, opts.NoHeader, opts.ApiMode, meta)
 		if err != nil {
 			logger.Log(logger.Error, err)
 		}
@@ -90,7 +111,7 @@ func (opts *GlobalOptions) RenderObject(data interface{}) error {
 func (opts *GlobalOptions) RenderHeader(data interface{}, w *io.Writer, format string, apiMode, showHeader, first bool) error {
 	if apiMode {
 		// We could check this, but if it's not empty, we know it's type
-		hw, _ := opts.Writer.(http.ResponseWriter)
+		hw, _ := (*w).(http.ResponseWriter)
 		switch opts.Format {
 		case "txt":
 			hw.Header().Set("Content-Type", "text/tab-separated-values")
@@ -105,5 +126,5 @@ func (opts *GlobalOptions) RenderHeader(data interface{}, w *io.Writer, format s
 		return nil
 	}
 
-	return output.OutputHeader(data, opts.Writer, format, apiMode)
+	return output.OutputHeader(data, *w, format, apiMode)
 }

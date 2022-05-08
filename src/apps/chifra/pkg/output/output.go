@@ -18,10 +18,14 @@ import (
 )
 
 // TODO: Fix export without arrays
-func OutputArray(data interface{}, w io.Writer, format, chain string, hideHeader, apiMode, testMode bool) error {
+func OutputArray(data interface{}, w io.Writer, format string, hideHeader, apiMode bool, meta *rpcClient.MetaData) error {
 	nonEmptyFormat := format
 	if format == "" || format == "none" {
-		nonEmptyFormat = "json"
+		if apiMode {
+			nonEmptyFormat = "json"
+		} else {
+			nonEmptyFormat = "txt"
+		}
 	}
 
 	var outputBytes []byte
@@ -31,10 +35,6 @@ func OutputArray(data interface{}, w io.Writer, format, chain string, hideHeader
 	case "api":
 		fallthrough
 	case "json":
-		var meta *rpcClient.MetaData = nil
-		if format != "json" {
-			meta = rpcClient.GetMetaData(chain, testMode)
-		}
 		result := struct {
 			Data interface{}         `json:"data,omitempty"`
 			Meta *rpcClient.MetaData `json:"meta,omitempty"`
@@ -62,15 +62,6 @@ func OutputArray(data interface{}, w io.Writer, format, chain string, hideHeader
 				outputBytes = out.Bytes()
 			}
 		}
-		// tt := reflect.TypeOf(data[0])
-		// // if IsSlice(data) {
-		// // 	tt = reflect.TypeOf(data[0])
-		// // }
-		// rowTemplate, err := GetRowTemplate(&tt, format)
-		// if err != nil {
-		// 	return err
-		// }
-		// return rowTemplate.Execute(w, data)
 	default:
 		return fmt.Errorf("unsupported format %s", nonEmptyFormat)
 	}
