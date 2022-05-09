@@ -10,7 +10,7 @@ jobs:
         uses: actions/setup-go@v2
         with:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          go-version: "^1.16"
+          go-version: "^1.18"
       - name: Install prerequistes
         run: |
           sudo apt-get update 
