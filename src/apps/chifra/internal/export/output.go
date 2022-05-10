@@ -17,21 +17,24 @@ import (
 
 // EXISTING_CODE
 
+// RunExport handles the export command for the command line. Returns error only as per cobra.
 func RunExport(cmd *cobra.Command, args []string) (err error) {
 	opts := ExportFinishParse(args)
-	// EXISTING_CODE
-	// EXISTING_CODE
+	// JINKY
+	// JINKY
 	err, _ = opts.ExportInternal()
 	return
 }
 
+// ServeExport handles the export command for the API. Returns error and a bool if handled
 func ServeExport(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := ExportFinishParseApi(w, r)
-	// EXISTING_CODE
-	// EXISTING_CODE
+	// JINKY
+	// JINKY
 	return opts.ExportInternal()
 }
 
+// ExportInternal handles the internal workings of the export command.  Returns error and a bool if handled
 func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
 	err = opts.ValidateExport()
 	if err != nil {
@@ -48,10 +51,10 @@ func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
 		// The caller has to handle this when in API mode
 		return nil, false
 	}
-	// EXISTING_CODE
-
 	handled = true
 	err = opts.Globals.PassItOn("acctExport", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
+	// EXISTING_CODE
+
 	return
 }
 

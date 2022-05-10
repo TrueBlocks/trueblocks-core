@@ -11,29 +11,34 @@ package [{API_ROUTE}]Pkg
 // EXISTING_CODE
 // EXISTING_CODE
 
-func Run[{PROPER}](cmd *cobra.Command, args []string) error {
+// Run[{PROPER}] handles the [{ROUTE}] command for the command line. Returns error only as per cobra.
+func Run[{PROPER}](cmd *cobra.Command, args []string) (err error) {
 	opts := [{PROPER}]FinishParse(args)
-
-	err := opts.Validate[{PROPER}]()
-	if err != nil {
-		return err
-	}
-
-	// EXISTING_CODE
-	// EXISTING_CODE
+	// JINKY
+	// JINKY
+	err, _ = opts.[{PROPER}]Internal()
+	return
 }
 
-func Serve[{PROPER}](w http.ResponseWriter, r *http.Request) bool {
+// Serve[{PROPER}] handles the [{ROUTE}] command for the API. Returns error and a bool if handled
+func Serve[{PROPER}](w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := [{PROPER}]FinishParseApi(w, r)
+	// JINKY
+	// JINKY
+	return opts.[{PROPER}]Internal()
+}
 
-	err := opts.Validate[{PROPER}]()
+// [{PROPER}]Internal handles the internal workings of the [{ROUTE}] command.  Returns error and a bool if handled
+func (opts *[{PROPER}]Options) [{PROPER}]Internal() (err error, handled bool) {
+	err = opts.Validate[{PROPER}]()
 	if err != nil {
-		output.RespondWithError(w, http.StatusInternalServerError, err)
-		return true
+		return err, true
 	}
 
 	// EXISTING_CODE
 	// EXISTING_CODE
+
+	return
 }
 
 // EXISTING_CODE

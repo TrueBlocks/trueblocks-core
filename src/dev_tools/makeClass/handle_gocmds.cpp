@@ -109,6 +109,7 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_gocmds_output(const CCommandOption& p) {
     string_q source = asciiFileToString(getPathToTemplates("blank_output.go"));
+    replaceAll(source, "[{ROUTE}]", p.api_route);
     source = substitute(source, "[]string", "++SAVED++");
     source = p.Format(source);
     replaceAll(source, "++SAVED++", "[]string");
