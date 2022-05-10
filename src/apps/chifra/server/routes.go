@@ -138,21 +138,27 @@ func RouteWhen(w http.ResponseWriter, r *http.Request) {
 
 // RouteState Retrieve account balance(s) for one or more addresses at given block(s).
 func RouteState(w http.ResponseWriter, r *http.Request) {
-	if !statePkg.ServeState(w, r) {
+	if err, handled := statePkg.ServeState(w, r); err != nil {
+		output.RespondWithError(w, http.StatusInternalServerError, err)
+	} else if !handled {
 		CallOne(w, r, config.GetPathToCommands("getState"), "", "state")
 	}
 }
 
 // RouteTokens Retrieve token balance(s) for one or more addresses at given block(s).
 func RouteTokens(w http.ResponseWriter, r *http.Request) {
-	if !tokensPkg.ServeTokens(w, r) {
+	if err, handled := tokensPkg.ServeTokens(w, r); err != nil {
+		output.RespondWithError(w, http.StatusInternalServerError, err)
+	} else if !handled {
 		CallOne(w, r, config.GetPathToCommands("getTokens"), "", "tokens")
 	}
 }
 
 // RouteStatus Report on the status of the TrueBlocks system.
 func RouteStatus(w http.ResponseWriter, r *http.Request) {
-	if !statusPkg.ServeStatus(w, r) {
+	if err, handled := statusPkg.ServeStatus(w, r); err != nil {
+		output.RespondWithError(w, http.StatusInternalServerError, err)
+	} else if !handled {
 		CallOne(w, r, config.GetPathToCommands("cacheStatus"), "", "status")
 	}
 }
@@ -166,7 +172,9 @@ func RouteScrape(w http.ResponseWriter, r *http.Request) {
 
 // RouteChunks Manage and investigate chunks and bloom filters.
 func RouteChunks(w http.ResponseWriter, r *http.Request) {
-	if !chunksPkg.ServeChunks(w, r) {
+	if err, handled := chunksPkg.ServeChunks(w, r); err != nil {
+		output.RespondWithError(w, http.StatusInternalServerError, err)
+	} else if !handled {
 		CallOne(w, r, config.GetPathToCommands("chunkMan"), "", "chunks")
 	}
 }

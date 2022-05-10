@@ -12,38 +12,38 @@ package statePkg
 import (
 	"net/http"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/spf13/cobra"
 )
 
 // EXISTING_CODE
 
-func RunState(cmd *cobra.Command, args []string) error {
+func RunState(cmd *cobra.Command, args []string) (err error) {
 	opts := StateFinishParse(args)
-
-	err := opts.ValidateState()
-	if err != nil {
-		return err
-	}
-
-	// EXISTING_CODE
-	return opts.Globals.PassItOn("getState", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
-	// EXISTING_CODE
+	err, _ = opts.StateInternal()
+	return
 }
 
-func ServeState(w http.ResponseWriter, r *http.Request) bool {
+func ServeState(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := StateFinishParseApi(w, r)
+	return opts.StateInternal()
+}
 
-	err := opts.ValidateState()
+func (opts *StateOptions) StateInternal() (err error, handled bool) {
+	err = opts.ValidateState()
 	if err != nil {
-		output.RespondWithError(w, http.StatusInternalServerError, err)
-		return true
+		return err, true
 	}
 
 	// EXISTING_CODE
-	// return opts.Globals.PassItOn("getState", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
-	return false
+	if opts.Globals.ApiMode {
+		return nil, false
+	}
+
+	handled = true
+	err = opts.Globals.PassItOn("getState", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
 	// EXISTING_CODE
+
+	return
 }
 
 // EXISTING_CODE

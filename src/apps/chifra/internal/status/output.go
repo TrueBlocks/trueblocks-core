@@ -12,43 +12,38 @@ package statusPkg
 import (
 	"net/http"
 
-	// "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/spf13/cobra"
 )
 
-// func GreenTxt(txt string) string {
-// 	return colors.Green + txt + colors.Off
-// }
-
 // EXISTING_CODE
 
-func RunStatus(cmd *cobra.Command, args []string) error {
+func RunStatus(cmd *cobra.Command, args []string) (err error) {
 	opts := StatusFinishParse(args)
-
-	err := opts.ValidateStatus()
-	if err != nil {
-		return err
-	}
-
-	// EXISTING_CODE
-	return opts.Globals.PassItOn("cacheStatus", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
-	// EXISTING_CODE
+	err, _ = opts.StatusInternal()
+	return
 }
 
-func ServeStatus(w http.ResponseWriter, r *http.Request) bool {
+func ServeStatus(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := StatusFinishParseApi(w, r)
+	return opts.StatusInternal()
+}
 
-	err := opts.ValidateStatus()
+func (opts *StatusOptions) StatusInternal() (err error, handled bool) {
+	err = opts.ValidateStatus()
 	if err != nil {
-		output.RespondWithError(w, http.StatusInternalServerError, err)
-		return true
+		return err, true
 	}
 
 	// EXISTING_CODE
-	// return opts.Globals.PassItOn("cacheStatus", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
-	return false
+	if opts.Globals.ApiMode {
+		return nil, false
+	}
+
+	handled = true
+	err = opts.Globals.PassItOn("cacheStatus", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
 	// EXISTING_CODE
+
+	return
 }
 
 // EXISTING_CODE

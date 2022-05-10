@@ -12,38 +12,38 @@ package tokensPkg
 import (
 	"net/http"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/spf13/cobra"
 )
 
 // EXISTING_CODE
 
-func RunTokens(cmd *cobra.Command, args []string) error {
+func RunTokens(cmd *cobra.Command, args []string) (err error) {
 	opts := TokensFinishParse(args)
-
-	err := opts.ValidateTokens()
-	if err != nil {
-		return err
-	}
-
-	// EXISTING_CODE
-	return opts.Globals.PassItOn("getTokens", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
-	// EXISTING_CODE
+	err, _ = opts.TokensInternal()
+	return
 }
 
-func ServeTokens(w http.ResponseWriter, r *http.Request) bool {
+func ServeTokens(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := TokensFinishParseApi(w, r)
+	return opts.TokensInternal()
+}
 
-	err := opts.ValidateTokens()
+func (opts *TokensOptions) TokensInternal() (err error, handled bool) {
+	err = opts.ValidateTokens()
 	if err != nil {
-		output.RespondWithError(w, http.StatusInternalServerError, err)
-		return true
+		return err, true
 	}
 
 	// EXISTING_CODE
-	// return opts.Globals.PassItOn("getTokens", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
-	return false
+	if opts.Globals.ApiMode {
+		return nil, false
+	}
+
+	handled = true
+	err = opts.Globals.PassItOn("getTokens", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
 	// EXISTING_CODE
+
+	return
 }
 
 // EXISTING_CODE
