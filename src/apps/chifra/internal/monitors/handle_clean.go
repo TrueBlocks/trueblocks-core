@@ -6,6 +6,7 @@ package monitorsPkg
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -25,13 +26,13 @@ func (opts *MonitorsOptions) HandleClean() error {
 		}
 	}
 
-	results := []types.CleanReport{}
+	objs := []types.CleanReport{}
 	for _, mon := range monitors {
 		if opts.Globals.TestMode {
 			addr := mon.GetAddrStr()
 			if addr == "0x001d14804b399c6ef80e64576f657660804fec0b" ||
 				addr == "0x0029218e1dab069656bfb8a75947825e7989b987" {
-				results = append(results, types.CleanReport{
+				objs = append(objs, types.CleanReport{
 					Addr:     addr,
 					SizeThen: 10,
 					SizeNow:  8,
@@ -39,22 +40,23 @@ func (opts *MonitorsOptions) HandleClean() error {
 				})
 			}
 		} else {
-			report := types.CleanReport{
+			obj := types.CleanReport{
 				Addr: mon.GetAddrStr(),
 			}
+			logger.Log(logger.Info, "Cleaning", obj.Addr, mon.Count())
 			var err error
-			report.SizeThen, report.SizeNow, err = mon.RemoveDups()
+			obj.SizeThen, obj.SizeNow, err = mon.RemoveDups()
 			if err != nil {
 				return err
 			}
 
-			report.Dups = report.SizeThen - report.SizeNow
-			if report.SizeThen > 0 {
-				results = append(results, report)
+			obj.Dups = obj.SizeThen - obj.SizeNow
+			if obj.SizeThen > 0 {
+				objs = append(objs, obj)
 			}
 		}
 	}
 
 	// TODO: Fix export without arrays
-	return globals.RenderSlice(&opts.Globals, results)
+	return globals.RenderSlice(&opts.Globals, objs)
 }

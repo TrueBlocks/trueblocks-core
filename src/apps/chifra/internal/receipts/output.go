@@ -12,6 +12,7 @@ package receiptsPkg
 import (
 	"net/http"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/spf13/cobra"
 )
 
@@ -31,11 +32,11 @@ func RunReceipts(cmd *cobra.Command, args []string) error {
 }
 
 func ServeReceipts(w http.ResponseWriter, r *http.Request) bool {
-	opts := FromRequest(w, r)
+	opts := ReceiptsFinishParseApi(w, r)
 
 	err := opts.ValidateReceipts()
 	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		output.RespondWithError(w, http.StatusInternalServerError, err)
 		return true
 	}
 

@@ -71,7 +71,7 @@ func (opts *ChunksOptions) showStats(path string, first bool) error {
 
 	// TODO: Fix export without arrays
 	obj := NewChunkStats(path)
-	err := opts.Globals.RenderHeader(obj, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, !opts.Globals.NoHeader, first)
+	err := opts.Globals.RenderHeader(obj, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, first)
 	if err != nil {
 		return err
 	}

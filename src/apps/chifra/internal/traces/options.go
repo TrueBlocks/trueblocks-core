@@ -67,7 +67,7 @@ func (opts *TracesOptions) ToCmdLine() string {
 	return options
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *TracesOptions {
+func TracesFinishParseApi(w http.ResponseWriter, r *http.Request) *TracesOptions {
 	opts := &TracesOptions{}
 	opts.Max = 250
 	for key, value := range r.URL.Query() {
@@ -96,7 +96,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *TracesOptions {
 			}
 		}
 	}
-	opts.Globals = *globals.FromRequest(w, r)
+	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
 	// EXISTING_CODE
 

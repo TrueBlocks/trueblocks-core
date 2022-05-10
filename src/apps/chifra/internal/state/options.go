@@ -66,7 +66,7 @@ func (opts *StateOptions) ToCmdLine() string {
 	return options
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *StateOptions {
+func StateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
 	opts := &StateOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -100,7 +100,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *StateOptions {
 			}
 		}
 	}
-	opts.Globals = *globals.FromRequest(w, r)
+	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
 	opts.Addrs = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
 	opts.ProxyFor = ens.ConvertOneEns(opts.Globals.Chain, opts.ProxyFor)

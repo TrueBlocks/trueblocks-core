@@ -19,41 +19,17 @@ import (
 
 // EXISTING_CODE
 
-func RunMonitors(cmd *cobra.Command, args []string) error {
+func RunMonitors(cmd *cobra.Command, args []string) (err error) {
 	opts := MonitorsFinishParse(args)
-
-	err := opts.ValidateMonitors()
-	if err != nil {
-		return err
-	}
-
 	// EXISTING_CODE
-	if opts.Clean {
-		return opts.HandleClean()
-	}
-
-	return opts.HandleCrudCommands()
 	// EXISTING_CODE
+	err, _ = opts.MonitorsInternal()
+	return
 }
 
-func ServeMonitors(w http.ResponseWriter, r *http.Request) bool {
-	opts := FromRequest(w, r)
-
-	err := opts.ValidateMonitors()
-	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return true
-	}
-
+func ServeMonitors(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
+	opts := MonitorsFinishParseApi(w, r)
 	// EXISTING_CODE
-	if opts.Clean {
-		err = opts.HandleClean()
-		if err != nil {
-			opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		}
-		return true
-	}
-
 	if !opts.Globals.TestMode { // our test harness does not use DELETE
 		delOptions := "--delete, --undelete, or --remove"
 		if r.Method == "DELETE" {
@@ -67,16 +43,31 @@ func ServeMonitors(w http.ResponseWriter, r *http.Request) bool {
 			}
 		}
 		if err != nil {
-			opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-			return true
+			return err, true
 		}
 	}
-	err = opts.HandleCrudCommands()
-	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-	}
-	return true
 	// EXISTING_CODE
+	return opts.MonitorsInternal()
+}
+
+func (opts *MonitorsOptions) MonitorsInternal() (err error, handled bool) {
+	err = opts.ValidateMonitors()
+	if err != nil {
+		return err, true
+	}
+
+	// EXISTING_CODE
+	handled = true // everything is handled even on failure
+
+	if opts.Clean {
+		err = opts.HandleClean()
+		return
+	}
+
+	err = opts.HandleCrudCommands()
+	// EXISTING_CODE
+
+	return
 }
 
 // EXISTING_CODE

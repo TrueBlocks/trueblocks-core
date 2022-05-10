@@ -14,6 +14,7 @@ import (
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 
 	"github.com/spf13/cobra"
@@ -58,11 +59,11 @@ func RunScrape(cmd *cobra.Command, args []string) error {
 }
 
 func ServeScrape(w http.ResponseWriter, r *http.Request) bool {
-	opts := FromRequest(w, r)
+	opts := ScrapeFinishParseApi(w, r)
 
 	err := opts.ValidateScrape()
 	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		output.RespondWithError(w, http.StatusInternalServerError, err)
 		return true
 	}
 

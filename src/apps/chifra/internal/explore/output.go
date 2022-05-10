@@ -15,6 +15,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -43,11 +44,11 @@ func RunExplore(cmd *cobra.Command, args []string) error {
 }
 
 func ServeExplore(w http.ResponseWriter, r *http.Request) bool {
-	opts := FromRequest(w, r)
+	opts := ExploreFinishParseApi(w, r)
 
 	err := opts.ValidateExplore()
 	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		output.RespondWithError(w, http.StatusInternalServerError, err)
 		return true
 	}
 

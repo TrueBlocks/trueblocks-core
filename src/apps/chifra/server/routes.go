@@ -10,10 +10,9 @@ package servePkg
 
 import (
 	"net/http"
-	"os"
 
 	// BEG_ROUTE_PKGS
- 
+
 	abisPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/abis"
 	blocksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/blocks"
 	chunksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/chunks"
@@ -34,6 +33,7 @@ import (
 	transactionsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/transactions"
 	whenPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/when"
 	config "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	// END_ROUTE_PKGS
 )
 
@@ -41,21 +41,27 @@ import (
 
 // RouteList List every appearance of an address anywhere on the chain.
 func RouteList(w http.ResponseWriter, r *http.Request) {
-	if !listPkg.ServeList(w, r) {
+	if err, handled := listPkg.ServeList(w, r); err != nil {
+		output.RespondWithError(w, http.StatusInternalServerError, err)
+	} else if !handled {
 		CallOne(w, r, "chifra", "list", "list")
 	}
 }
 
 // RouteExport Export full detail of transactions for one or more addresses.
 func RouteExport(w http.ResponseWriter, r *http.Request) {
-	if !exportPkg.ServeExport(w, r) {
+	if err, handled := exportPkg.ServeExport(w, r); err != nil {
+		output.RespondWithError(w, http.StatusInternalServerError, err)
+	} else if !handled {
 		CallOne(w, r, config.GetPathToCommands("acctExport"), "", "export")
 	}
 }
 
 // RouteMonitors Add, remove, clean, and list address monitors.
 func RouteMonitors(w http.ResponseWriter, r *http.Request) {
-	if !monitorsPkg.ServeMonitors(w, r) {
+	if err, handled := monitorsPkg.ServeMonitors(w, r); err != nil {
+		output.RespondWithError(w, http.StatusInternalServerError, err)
+	} else if !handled {
 		CallOne(w, r, "chifra", "monitors", "monitors")
 	}
 }
@@ -70,11 +76,7 @@ func RouteNames(w http.ResponseWriter, r *http.Request) {
 // RouteAbis Fetches the ABI for a smart contract.
 func RouteAbis(w http.ResponseWriter, r *http.Request) {
 	if !abisPkg.ServeAbis(w, r) {
-		os.Setenv("NO_SCHEMAS", "true") // temporary while porting to go
-		os.Setenv("GO_PORT", "true")    // temporary while porting to go
 		CallOne(w, r, "chifra", "abis", "abis")
-		os.Setenv("NO_SCHEMAS", "") // temporary while porting to go
-		os.Setenv("GO_PORT", "")    // temporary while porting to go
 	}
 }
 
@@ -116,11 +118,7 @@ func RouteTraces(w http.ResponseWriter, r *http.Request) {
 // RouteWhen Find block(s) based on date, blockNum, timestamp, or 'special'.
 func RouteWhen(w http.ResponseWriter, r *http.Request) {
 	if !whenPkg.ServeWhen(w, r) {
-		os.Setenv("NO_SCHEMAS", "true") // temporary while porting to go
-		os.Setenv("GO_PORT", "true")    // temporary while porting to go
 		CallOne(w, r, config.GetPathToCommands("whenBlock"), "", "when")
-		os.Setenv("NO_SCHEMAS", "") // temporary while porting to go
-		os.Setenv("GO_PORT", "")    // temporary while porting to go
 	}
 }
 
@@ -179,6 +177,7 @@ func RouteSlurp(w http.ResponseWriter, r *http.Request) {
 		CallOne(w, r, config.GetPathToCommands("ethslurp"), "", "slurp")
 	}
 }
+
 // END_ROUTE_CODE
 
 func Index(w http.ResponseWriter, r *http.Request) {

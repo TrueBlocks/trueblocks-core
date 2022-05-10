@@ -51,7 +51,7 @@ func (opts *SlurpOptions) ToCmdLine() string {
 	return options
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *SlurpOptions {
+func SlurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 	opts := &SlurpOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -79,7 +79,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 			}
 		}
 	}
-	opts.Globals = *globals.FromRequest(w, r)
+	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
 	opts.Addrs = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
 	// EXISTING_CODE

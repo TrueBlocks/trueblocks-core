@@ -13,6 +13,7 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
@@ -45,11 +46,11 @@ func RunChunks(cmd *cobra.Command, args []string) error {
 }
 
 func ServeChunks(w http.ResponseWriter, r *http.Request) bool {
-	opts := FromRequest(w, r)
+	opts := ChunksFinishParseApi(w, r)
 
 	err := opts.ValidateChunks()
 	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		output.RespondWithError(w, http.StatusInternalServerError, err)
 		return true
 	}
 
@@ -65,24 +66,24 @@ func ServeChunks(w http.ResponseWriter, r *http.Request) bool {
 	if opts.Extract == "blooms" {
 		err = opts.HandleChunksExtract(opts.showBloom)
 		if err != nil {
-			logger.Log(logger.Warning, "Could not extract blooms", err)
+			output.RespondWithErrorMsg(w, http.StatusInternalServerError, "could not extract blooms", err)
 		}
 		return true
 	} else if opts.Extract == "pins" {
 		err = opts.HandleChunksExtractPins()
 		if err != nil {
-			logger.Log(logger.Warning, "Could not extract pin list", err)
+			output.RespondWithErrorMsg(w, http.StatusInternalServerError, "could not extract pin list", err)
 		}
 		return true
 	} else if opts.Extract == "stats" {
 		err = opts.HandleChunksExtract(opts.showStats)
 		if err != nil {
-			logger.Log(logger.Warning, "Could not extract stats", err)
+			output.RespondWithErrorMsg(w, http.StatusInternalServerError, "could not extract stats", err)
 		}
 		return true
 	}
 
-	opts.Globals.RespondWithError(w, http.StatusInternalServerError, validate.Usage("Extractor for {0} not yet implemented.", opts.Extract))
+	output.RespondWithError(w, http.StatusInternalServerError, validate.Usage("extractor for {0} not yet implemented.", opts.Extract))
 	return true
 	// EXISTING_CODE
 }

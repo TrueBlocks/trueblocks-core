@@ -13,6 +13,7 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/spf13/cobra"
 )
 
@@ -31,24 +32,26 @@ func RunInit(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		logger.Fatal(err)
 	}
+
 	return nil
 	// EXISTING_CODE
 }
 
 func ServeInit(w http.ResponseWriter, r *http.Request) bool {
-	opts := FromRequest(w, r)
+	opts := InitFinishParseApi(w, r)
 
 	err := opts.ValidateInit()
 	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		output.RespondWithError(w, http.StatusInternalServerError, err)
 		return true
 	}
 
 	// EXISTING_CODE
 	err = opts.HandleInit()
 	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		output.RespondWithError(w, http.StatusInternalServerError, err)
 	}
+
 	return true
 	// EXISTING_CODE
 }

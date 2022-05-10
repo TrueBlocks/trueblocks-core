@@ -163,7 +163,7 @@ func (opts *ExportOptions) ToCmdLine() string {
 	return options
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *ExportOptions {
+func ExportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions {
 	opts := &ExportOptions{}
 	opts.FirstRecord = 0
 	opts.MaxRecords = 250
@@ -255,7 +255,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ExportOptions {
 			}
 		}
 	}
-	opts.Globals = *globals.FromRequest(w, r)
+	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
 	opts.Addrs = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
 	opts.Emitter = ens.ConvertEns(opts.Globals.Chain, opts.Emitter)

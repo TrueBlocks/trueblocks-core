@@ -35,7 +35,7 @@ func (opts *[{PROPER}]Options) ToCmdLine() string {
 	return options
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *[{PROPER}]Options {
+func [{PROPER}]FinishParseApi(w http.ResponseWriter, r *http.Request) *[{PROPER}]Options {
 	opts := &[{PROPER}]Options{}
 [{DEFAULTS_API}]	for key, value := range r.URL.Query() {
 		switch key {
@@ -46,7 +46,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *[{PROPER}]Options {
 			}
 		}
 	}
-	opts.Globals = *globals.FromRequest(w, r)
+	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
 	// EXISTING_CODE
 

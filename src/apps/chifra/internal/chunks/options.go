@@ -45,7 +45,7 @@ func (opts *ChunksOptions) ToCmdLine() string {
 	return options
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *ChunksOptions {
+func ChunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions {
 	opts := &ChunksOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -65,7 +65,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ChunksOptions {
 			}
 		}
 	}
-	opts.Globals = *globals.FromRequest(w, r)
+	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
 	opts.Extract = ens.ConvertOneEns(opts.Globals.Chain, opts.Extract)
 	// EXISTING_CODE

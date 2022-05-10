@@ -88,7 +88,7 @@ func (opts *ScrapeOptions) ToCmdLine() string {
 	return options
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *ScrapeOptions {
+func ScrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions {
 	opts := &ScrapeOptions{}
 	opts.Sleep = 14
 	opts.BlockCnt = 2000
@@ -147,7 +147,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ScrapeOptions {
 			}
 		}
 	}
-	opts.Globals = *globals.FromRequest(w, r)
+	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
 	// EXISTING_CODE
 

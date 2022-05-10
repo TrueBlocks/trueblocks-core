@@ -162,7 +162,7 @@ func (opts *GlobalOptions) ToCmdLine() string {
 	return options
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *GlobalOptions {
+func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOptions {
 	opts := &GlobalOptions{}
 	opts.Writer = w
 

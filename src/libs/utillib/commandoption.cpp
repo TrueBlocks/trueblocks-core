@@ -857,10 +857,6 @@ string_q CCommandOption::toGoCall(void) const {
     os << Format("// [{GOROUTEFUNC}] [{DESCRIPTION}]") << endl;
     os << Format("func [{GOROUTEFUNC}](w http.ResponseWriter, r *http.Request) {") << endl;
     os << Format("\tif ![{API_ROUTE}]Pkg.Serve[{PROPER}](w, r) {") << endl;
-    if (api_route == "when" || api_route == "abis") {
-        os << "\t\tos.Setenv(\"NO_SCHEMAS\", \"true\") // temporary while porting to go" << endl;
-        os << "\t\tos.Setenv(\"GO_PORT\", \"true\")    // temporary while porting to go" << endl;
-    }
     bool redirect = tool.empty() || contains(tool, " ");
     if ((!redirect && !goPortNewCode(api_route)) && api_route != "abis") {
         const char* STR_CALLONE = "\t\tCallOne(w, r, config.GetPathToCommands(\"[{TOOL}]\"), \"\", \"[{API_ROUTE}]\")";
@@ -871,10 +867,6 @@ string_q CCommandOption::toGoCall(void) const {
     } else {
         const char* STR_CALLONEEXTRA = "\t\tCallOne(w, r, \"chifra\", \"[{API_ROUTE}]\", \"[{API_ROUTE}]\")";
         os << Format(STR_CALLONEEXTRA) << endl;
-    }
-    if (api_route == "when" || api_route == "abis") {
-        os << "\t\tos.Setenv(\"NO_SCHEMAS\", \"\") // temporary while porting to go" << endl;
-        os << "\t\tos.Setenv(\"GO_PORT\", \"\")    // temporary while porting to go" << endl;
     }
     os << Format("\t}") << endl;
     os << "}" << endl;

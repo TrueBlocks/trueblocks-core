@@ -56,7 +56,7 @@ func (opts *TokensOptions) ToCmdLine() string {
 	return options
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *TokensOptions {
+func TokensFinishParseApi(w http.ResponseWriter, r *http.Request) *TokensOptions {
 	opts := &TokensOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -86,7 +86,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *TokensOptions {
 			}
 		}
 	}
-	opts.Globals = *globals.FromRequest(w, r)
+	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
 	opts.Addrs2 = ens.ConvertEns(opts.Globals.Chain, opts.Addrs2)
 	// EXISTING_CODE

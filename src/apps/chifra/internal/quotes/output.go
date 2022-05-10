@@ -12,6 +12,7 @@ package quotesPkg
 import (
 	"net/http"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/spf13/cobra"
 )
 
@@ -31,11 +32,11 @@ func RunQuotes(cmd *cobra.Command, args []string) error {
 }
 
 func ServeQuotes(w http.ResponseWriter, r *http.Request) bool {
-	opts := FromRequest(w, r)
+	opts := QuotesFinishParseApi(w, r)
 
 	err := opts.ValidateQuotes()
 	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		output.RespondWithError(w, http.StatusInternalServerError, err)
 		return true
 	}
 

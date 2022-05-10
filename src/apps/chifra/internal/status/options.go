@@ -74,7 +74,7 @@ func (opts *StatusOptions) ToCmdLine() string {
 	return options
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *StatusOptions {
+func StatusFinishParseApi(w http.ResponseWriter, r *http.Request) *StatusOptions {
 	opts := &StatusOptions{}
 	opts.Depth = utils.NOPOS
 	opts.FirstBlock = 0
@@ -112,7 +112,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *StatusOptions {
 			}
 		}
 	}
-	opts.Globals = *globals.FromRequest(w, r)
+	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
 	// EXISTING_CODE
 

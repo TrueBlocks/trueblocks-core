@@ -12,6 +12,7 @@ package abisPkg
 import (
 	"net/http"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/spf13/cobra"
 )
 
@@ -35,11 +36,11 @@ func RunAbis(cmd *cobra.Command, args []string) error {
 }
 
 func ServeAbis(w http.ResponseWriter, r *http.Request) bool {
-	opts := FromRequest(w, r)
+	opts := AbisFinishParseApi(w, r)
 
 	err := opts.ValidateAbis()
 	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		output.RespondWithError(w, http.StatusInternalServerError, err)
 		return true
 	}
 
@@ -47,7 +48,7 @@ func ServeAbis(w http.ResponseWriter, r *http.Request) bool {
 	if len(opts.Find) > 0 {
 		err = opts.HandleAbiFind()
 		if err != nil {
-			opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+			output.RespondWithError(w, http.StatusInternalServerError, err)
 			return true
 		}
 		return true

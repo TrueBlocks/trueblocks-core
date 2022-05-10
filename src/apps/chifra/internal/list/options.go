@@ -49,7 +49,7 @@ func (opts *ListOptions) ToCmdLine() string {
 	return options
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *ListOptions {
+func ListFinishParseApi(w http.ResponseWriter, r *http.Request) *ListOptions {
 	opts := &ListOptions{}
 	opts.FirstBlock = 0
 	opts.LastBlock = utils.NOPOS
@@ -77,7 +77,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ListOptions {
 			}
 		}
 	}
-	opts.Globals = *globals.FromRequest(w, r)
+	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
 	opts.Addrs = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
 	// EXISTING_CODE

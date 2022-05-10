@@ -13,6 +13,7 @@ import (
 	"net/http"
 
 	// "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/spf13/cobra"
 )
 
@@ -36,11 +37,11 @@ func RunStatus(cmd *cobra.Command, args []string) error {
 }
 
 func ServeStatus(w http.ResponseWriter, r *http.Request) bool {
-	opts := FromRequest(w, r)
+	opts := StatusFinishParseApi(w, r)
 
 	err := opts.ValidateStatus()
 	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		output.RespondWithError(w, http.StatusInternalServerError, err)
 		return true
 	}
 

@@ -123,7 +123,7 @@ func (opts *NamesOptions) ToCmdLine() string {
 	return options
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *NamesOptions {
+func NamesFinishParseApi(w http.ResponseWriter, r *http.Request) *NamesOptions {
 	opts := &NamesOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -173,7 +173,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *NamesOptions {
 			}
 		}
 	}
-	opts.Globals = *globals.FromRequest(w, r)
+	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
 	opts.Terms = ens.ConvertEns(opts.Globals.Chain, opts.Terms)
 	// EXISTING_CODE

@@ -12,6 +12,7 @@ package tracesPkg
 import (
 	"net/http"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/spf13/cobra"
 )
 
@@ -31,11 +32,11 @@ func RunTraces(cmd *cobra.Command, args []string) error {
 }
 
 func ServeTraces(w http.ResponseWriter, r *http.Request) bool {
-	opts := FromRequest(w, r)
+	opts := TracesFinishParseApi(w, r)
 
 	err := opts.ValidateTraces()
 	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		output.RespondWithError(w, http.StatusInternalServerError, err)
 		return true
 	}
 

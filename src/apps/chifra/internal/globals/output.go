@@ -9,7 +9,6 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -23,6 +22,7 @@ func RenderSlice[
 		types.SimpleMonitor |
 		types.SimplePinList |
 		types.SimpleAppearance](opts *GlobalOptions, arr []T) error {
+
 	data := make([]interface{}, len(arr))
 	for i := range arr {
 		data[i] = arr[i]
@@ -51,13 +51,13 @@ func RenderSlice[
 
 		err := output.OutputArray(data, opts.Writer, opts.Format, opts.NoHeader, opts.ApiMode, meta)
 		if err != nil {
-			opts.RespondWithError(hw, http.StatusInternalServerError, err)
+			return err
 		}
 
 	} else {
 		err := output.OutputArray(data, opts.Writer, opts.Format, opts.NoHeader, opts.ApiMode, meta)
 		if err != nil {
-			logger.Log(logger.Error, err)
+			return err
 		}
 	}
 	return nil
@@ -77,20 +77,19 @@ func (opts *GlobalOptions) RenderObject(data interface{}) error {
 		// We could check this, but if it's not empty, we know it's type
 		err := output.OutputObject(data, opts.Writer, opts.Format, opts.NoHeader, opts.ApiMode, meta)
 		if err != nil {
-			hw, _ := opts.Writer.(http.ResponseWriter)
-			opts.RespondWithError(hw, http.StatusInternalServerError, err)
+			return err
 		}
 
 	} else {
 		err := output.OutputObject(data, opts.Writer, opts.Format, opts.NoHeader, opts.ApiMode, meta)
 		if err != nil {
-			logger.Log(logger.Error, err)
+			return err
 		}
 	}
 	return nil
 }
 
-func (opts *GlobalOptions) RenderHeader(data interface{}, w *io.Writer, format string, apiMode, showHeader, first bool) error {
+func (opts *GlobalOptions) RenderHeader(data interface{}, w *io.Writer, format string, apiMode, hideHeader, first bool) error {
 	if apiMode {
 		// We could check this, but if it's not empty, we know it's type
 		hw, _ := (*w).(http.ResponseWriter)
@@ -104,7 +103,7 @@ func (opts *GlobalOptions) RenderHeader(data interface{}, w *io.Writer, format s
 		}
 	}
 
-	if !showHeader || !first {
+	if hideHeader || !first {
 		return nil
 	}
 

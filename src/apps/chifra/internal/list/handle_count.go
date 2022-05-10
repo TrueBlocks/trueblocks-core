@@ -18,6 +18,7 @@ func (opts *ListOptions) HandleListCount(monitorArray []monitor.Monitor) error {
 			simp.LastScanned = maxTestingBlock
 		}
 		results = append(results, simp)
+		mon.Close()
 	}
 
 	// TODO: Fix export without arrays

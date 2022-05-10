@@ -42,7 +42,7 @@ func (opts *LogsOptions) ToCmdLine() string {
 	return options
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *LogsOptions {
+func LogsFinishParseApi(w http.ResponseWriter, r *http.Request) *LogsOptions {
 	opts := &LogsOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -60,7 +60,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *LogsOptions {
 			}
 		}
 	}
-	opts.Globals = *globals.FromRequest(w, r)
+	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
 	// EXISTING_CODE
 

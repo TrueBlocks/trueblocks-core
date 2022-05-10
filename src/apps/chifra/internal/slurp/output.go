@@ -12,6 +12,7 @@ package slurpPkg
 import (
 	"net/http"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/spf13/cobra"
 )
 
@@ -31,11 +32,11 @@ func RunSlurp(cmd *cobra.Command, args []string) error {
 }
 
 func ServeSlurp(w http.ResponseWriter, r *http.Request) bool {
-	opts := FromRequest(w, r)
+	opts := SlurpFinishParseApi(w, r)
 
 	err := opts.ValidateSlurp()
 	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		output.RespondWithError(w, http.StatusInternalServerError, err)
 		return true
 	}
 

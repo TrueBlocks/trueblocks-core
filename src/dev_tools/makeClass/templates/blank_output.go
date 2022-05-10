@@ -24,11 +24,11 @@ func Run[{PROPER}](cmd *cobra.Command, args []string) error {
 }
 
 func Serve[{PROPER}](w http.ResponseWriter, r *http.Request) bool {
-	opts := FromRequest(w, r)
+	opts := [{PROPER}]FinishParseApi(w, r)
 
 	err := opts.Validate[{PROPER}]()
 	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		output.RespondWithError(w, http.StatusInternalServerError, err)
 		return true
 	}
 
