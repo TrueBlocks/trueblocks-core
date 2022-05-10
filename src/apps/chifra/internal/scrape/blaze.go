@@ -24,7 +24,7 @@ type ScrapedData struct {
 	logs   rpcClient.Log
 }
 
-func (opts *ScrapeOptions) ScrapeBlocks() {
+func (opts *ScrapeOptions) ScrapeBlocks() error {
 	rpcProvider := config.GetRpcProvider(opts.Globals.Chain)
 
 	blockChannel := make(chan int)
@@ -51,6 +51,8 @@ func (opts *ScrapeOptions) ScrapeBlocks() {
 
 	close(addressChannel)
 	addressWG.Wait()
+
+	return nil
 }
 
 // processBlocks Process the block channel and for each block query the node for both traces and logs. Send results to addressChannel

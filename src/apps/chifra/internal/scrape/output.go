@@ -41,12 +41,12 @@ func (opts *ScrapeOptions) ScrapeInternal() (err error, handled bool) {
 
 	// EXISTING_CODE
 	if opts.Globals.ApiMode {
-		return validate.Usage("Cannot use scrape route in API mode"), true
+		return validate.Usage("chifra scrape is not available in API mode"), true
 	}
 
 	handled = true
 	if opts.Blaze {
-		opts.ScrapeBlocks()
+		err = opts.ScrapeBlocks()
 
 	} else if opts.Reset != utils.NOPOS {
 		err = opts.Globals.PassItOn("blockScrape", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
