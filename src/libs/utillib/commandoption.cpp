@@ -844,34 +844,49 @@ string_q CCommandOption::toGoPackage(void) const {
     return os.str();
 }
 
+const char* STR_ONEROUTE =
+    "// [{GOROUTEFUNC}] [{DESCRIPTION}]\n"
+    "func [{GOROUTEFUNC}](w http.ResponseWriter, r *http.Request) {\n"
+    "\tif err, handled := [{API_ROUTE}]Pkg.Serve[{PROPER}](w, r); err != nil {\n"
+    "\t\toutput.RespondWithError(w, http.StatusInternalServerError, err)\n"
+    "\t} else if !handled {\n"
+    "\t\tCallOne(w, r, config.GetPathToCommands(\"[{TOOL}]\"), \"\", \"[{API_ROUTE}]\")\n"
+    "\t}\n"
+    "}";
+
 //---------------------------------------------------------------------------------------------------
 string_q CCommandOption::toGoCall(void) const {
     if (!isApiRoute(api_route))
         return "";
 
-    string_q goRouteFunc = Format("[{GOROUTEFUNC}]");
-
     ostringstream os;
-
     os << endl;
-    os << Format("// [{GOROUTEFUNC}] [{DESCRIPTION}]") << endl;
-    os << Format("func [{GOROUTEFUNC}](w http.ResponseWriter, r *http.Request) {") << endl;
-    os << Format("\tif ![{API_ROUTE}]Pkg.Serve[{PROPER}](w, r) {") << endl;
-    bool redirect = tool.empty() || contains(tool, " ");
-    if ((!redirect && !goPortNewCode(api_route)) && api_route != "abis") {
-        const char* STR_CALLONE = "\t\tCallOne(w, r, config.GetPathToCommands(\"[{TOOL}]\"), \"\", \"[{API_ROUTE}]\")";
-        os << Format(STR_CALLONE) << endl;
-    } else if ((api_route == "tags" || api_route == "collections")) {
-        const char* STR_CALLONE = "\t\tCallOne(w, r, config.GetPathToCommands(\"ethNames\"), \"\", \"[{API_ROUTE}]\")";
-        os << Format(STR_CALLONE) << endl;
-    } else {
-        const char* STR_CALLONEEXTRA = "\t\tCallOne(w, r, \"chifra\", \"[{API_ROUTE}]\", \"[{API_ROUTE}]\")";
-        os << Format(STR_CALLONEEXTRA) << endl;
-    }
-    os << Format("\t}") << endl;
-    os << "}" << endl;
-
+    os << Format(STR_ONEROUTE) << endl;
     return os.str();
+
+    // string_q goRouteFunc = Format("[{GOROUTEFUNC}]");
+
+    // os << Format("func [{GOROUTEFUNC}](w http.ResponseWriter, r *http.Request) {") << endl;
+    // os << Format("\terr, handled := [{API_ROUTE}]Pkg.Serve[{PROPER}](w, r); if err != nil {") << endl;
+
+    // bool redirect = tool.empty() || contains(tool, " ");
+    // if ((!redirect && !goPortNewCode(api_route)) && api_route != "abis") {
+    //     const char* STR_CALLONE = "\t\tCallOne(w, r, config.GetPathToCommands(\"[{TOOL}]\"), \"\",
+    //     \"[{API_ROUTE}]\")"; os << Format(STR_CALLONE) << endl;
+
+    // } else if ((api_route == "tags" || api_route == "collections")) {
+    //     const char* STR_CALLONE = "\t\tCallOne(w, r, config.GetPathToCommands(\"ethNames\"), \"\",
+    //     \"[{API_ROUTE}]\")"; os << Format(STR_CALLONE) << endl;
+
+    // } else {
+    //     const char* STR_CALLONEEXTRA = "\t\tCallOne(w, r, \"chifra\", \"[{API_ROUTE}]\", \"[{API_ROUTE}]\")";
+    //     os << Format(STR_CALLONEEXTRA) << endl;
+    // }
+
+    // os << Format("\t}") << endl;
+    // os << "}" << endl;
+
+    // return os.str();
 }
 
 //---------------------------------------------------------------------------------------------------

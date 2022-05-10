@@ -13,65 +13,71 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/spf13/cobra"
 )
 
 // EXISTING_CODE
 
-func RunWhen(cmd *cobra.Command, args []string) error {
+func RunWhen(cmd *cobra.Command, args []string) (err error) {
 	opts := WhenFinishParse(args)
-
-	err := opts.ValidateWhen()
-	if err != nil {
-		return err
-	}
-
-	// EXISTING_CODE
-	if opts.List {
-		err := opts.HandleWhenList()
-		if err != nil {
-			return err
-		}
-		if len(opts.Blocks) == 0 {
-			return nil
-		}
-		// continue but don't show headers
-		opts.List = false
-		opts.Globals.NoHeader = true
-	}
-
-	return opts.Globals.PassItOn("whenBlock", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
-	// EXISTING_CODE
+	err, _ = opts.WhenInternal()
+	return
 }
 
-func ServeWhen(w http.ResponseWriter, r *http.Request) bool {
+func ServeWhen(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := WhenFinishParseApi(w, r)
+	// JANKY
+	if opts.Globals.ApiMode {
+		// weird special case since we have to alter the request
+		if opts.List {
+			err = opts.ValidateWhen()
+			if err != nil {
+				return err, true
+			}
+			err = opts.HandleWhenList()
+			if err != nil {
+				return err, true
+			}
+			if len(opts.Blocks) == 0 {
+				return nil, true
+			}
+			r.URL.RawQuery = strings.Replace(r.URL.RawQuery, "list", "noop", -1)
+			r.URL.RawQuery += "&no_header"
+		}
+	}
+	// JANKY
+	return opts.WhenInternal()
+}
 
-	err := opts.ValidateWhen()
+func (opts *WhenOptions) WhenInternal() (err error, handled bool) {
+	err = opts.ValidateWhen()
 	if err != nil {
-		output.RespondWithError(w, http.StatusInternalServerError, err)
-		return true
+		return err, true
 	}
 
 	// EXISTING_CODE
 	if opts.List {
 		err = opts.HandleWhenList()
 		if err != nil {
-			logger.Fatal("Cannot generate when list", err)
-			return false
+			return err, true
 		}
 		if len(opts.Blocks) == 0 {
-			return true
+			return nil, true
 		}
-		// continue but don't show headers or --list
-		r.URL.RawQuery = strings.Replace(r.URL.RawQuery, "list", "noop", -1)
-		r.URL.RawQuery += "&no_header"
+		// continue but don't show headers
+		opts.List = false
+		opts.Globals.NoHeader = true
 	}
-	// return opts.Globals.PassItOn("whenBlock", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
-	return false
+
+	if opts.Globals.ApiMode {
+		return nil, false
+	}
+
+	handled = true
+	err = opts.Globals.PassItOn("whenBlock", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
 	// EXISTING_CODE
+
+	return
 }
 
 // EXISTING_CODE

@@ -81,7 +81,7 @@ func RouteAbis(w http.ResponseWriter, r *http.Request) {
 	if err, handled := abisPkg.ServeAbis(w, r); err != nil {
 		output.RespondWithError(w, http.StatusInternalServerError, err)
 	} else if !handled {
-		CallOne(w, r, "chifra", "abis", "abis")
+		CallOne(w, r, config.GetPathToCommands("grabABI"), "", "abis")
 	}
 }
 
@@ -132,7 +132,9 @@ func RouteTraces(w http.ResponseWriter, r *http.Request) {
 
 // RouteWhen Find block(s) based on date, blockNum, timestamp, or 'special'.
 func RouteWhen(w http.ResponseWriter, r *http.Request) {
-	if !whenPkg.ServeWhen(w, r) {
+	if err, handled := whenPkg.ServeWhen(w, r); err != nil {
+		output.RespondWithError(w, http.StatusInternalServerError, err)
+	} else if !handled {
 		CallOne(w, r, config.GetPathToCommands("whenBlock"), "", "when")
 	}
 }

@@ -21,7 +21,6 @@ import (
 func RunAbis(cmd *cobra.Command, args []string) (err error) {
 	opts := AbisFinishParse(args)
 	// JINKY
-	opts.Globals.ApiMode = false
 	// JINKY
 	err, _ = opts.AbisInternal()
 	return
