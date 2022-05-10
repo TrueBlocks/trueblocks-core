@@ -68,49 +68,63 @@ func RouteMonitors(w http.ResponseWriter, r *http.Request) {
 
 // RouteNames Query addresses or names of well known accounts.
 func RouteNames(w http.ResponseWriter, r *http.Request) {
-	if !namesPkg.ServeNames(w, r) {
+	if err, handled := namesPkg.ServeNames(w, r); err != nil {
+		output.RespondWithError(w, http.StatusInternalServerError, err)
+	} else if !handled {
 		CallOne(w, r, config.GetPathToCommands("ethNames"), "", "names")
 	}
 }
 
 // RouteAbis Fetches the ABI for a smart contract.
 func RouteAbis(w http.ResponseWriter, r *http.Request) {
-	if !abisPkg.ServeAbis(w, r) {
+	if err, handled := abisPkg.ServeAbis(w, r); err != nil {
+		output.RespondWithError(w, http.StatusInternalServerError, err)
+	} else if !handled {
 		CallOne(w, r, "chifra", "abis", "abis")
 	}
 }
 
 // RouteBlocks Retrieve one or more blocks from the chain or local cache.
 func RouteBlocks(w http.ResponseWriter, r *http.Request) {
-	if !blocksPkg.ServeBlocks(w, r) {
+	if err, handled := blocksPkg.ServeBlocks(w, r); err != nil {
+		output.RespondWithError(w, http.StatusInternalServerError, err)
+	} else if !handled {
 		CallOne(w, r, config.GetPathToCommands("getBlocks"), "", "blocks")
 	}
 }
 
 // RouteTransactions Retrieve one or more transactions from the chain or local cache.
 func RouteTransactions(w http.ResponseWriter, r *http.Request) {
-	if !transactionsPkg.ServeTransactions(w, r) {
+	if err, handled := transactionsPkg.ServeTransactions(w, r); err != nil {
+		output.RespondWithError(w, http.StatusInternalServerError, err)
+	} else if !handled {
 		CallOne(w, r, config.GetPathToCommands("getTrans"), "", "transactions")
 	}
 }
 
 // RouteReceipts Retrieve receipts for the given transaction(s).
 func RouteReceipts(w http.ResponseWriter, r *http.Request) {
-	if !receiptsPkg.ServeReceipts(w, r) {
+	if err, handled := receiptsPkg.ServeReceipts(w, r); err != nil {
+		output.RespondWithError(w, http.StatusInternalServerError, err)
+	} else if !handled {
 		CallOne(w, r, config.GetPathToCommands("getReceipts"), "", "receipts")
 	}
 }
 
 // RouteLogs Retrieve logs for the given transaction(s).
 func RouteLogs(w http.ResponseWriter, r *http.Request) {
-	if !logsPkg.ServeLogs(w, r) {
+	if err, handled := logsPkg.ServeLogs(w, r); err != nil {
+		output.RespondWithError(w, http.StatusInternalServerError, err)
+	} else if !handled {
 		CallOne(w, r, config.GetPathToCommands("getLogs"), "", "logs")
 	}
 }
 
 // RouteTraces Retrieve traces for the given transaction(s).
 func RouteTraces(w http.ResponseWriter, r *http.Request) {
-	if !tracesPkg.ServeTraces(w, r) {
+	if err, handled := tracesPkg.ServeTraces(w, r); err != nil {
+		output.RespondWithError(w, http.StatusInternalServerError, err)
+	} else if !handled {
 		CallOne(w, r, config.GetPathToCommands("getTraces"), "", "traces")
 	}
 }
@@ -159,25 +173,30 @@ func RouteChunks(w http.ResponseWriter, r *http.Request) {
 
 // RouteInit Initialize the TrueBlocks system by downloading from IPFS.
 func RouteInit(w http.ResponseWriter, r *http.Request) {
-	if !initPkg.ServeInit(w, r) {
+	if err, handled := initPkg.ServeInit(w, r); err != nil {
+		output.RespondWithError(w, http.StatusInternalServerError, err)
+	} else if !handled {
 		CallOne(w, r, "chifra", "init", "init")
 	}
 }
 
 // RouteQuotes Update or display Ethereum price data, this tool has been deprecated.
 func RouteQuotes(w http.ResponseWriter, r *http.Request) {
-	if !quotesPkg.ServeQuotes(w, r) {
+	if err, handled := quotesPkg.ServeQuotes(w, r); err != nil {
+		output.RespondWithError(w, http.StatusInternalServerError, err)
+	} else if !handled {
 		CallOne(w, r, config.GetPathToCommands("getQuotes"), "", "quotes")
 	}
 }
 
 // RouteSlurp Fetch data from EtherScan for any address.
 func RouteSlurp(w http.ResponseWriter, r *http.Request) {
-	if !slurpPkg.ServeSlurp(w, r) {
+	if err, handled := slurpPkg.ServeSlurp(w, r); err != nil {
+		output.RespondWithError(w, http.StatusInternalServerError, err)
+	} else if !handled {
 		CallOne(w, r, config.GetPathToCommands("ethslurp"), "", "slurp")
 	}
 }
-
 // END_ROUTE_CODE
 
 func Index(w http.ResponseWriter, r *http.Request) {

@@ -164,8 +164,8 @@ func (opts *GlobalOptions) ToCmdLine() string {
 
 func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOptions {
 	opts := &GlobalOptions{}
-	opts.Writer = w
 
+	opts.Writer = w
 	opts.TestMode = r.Header.Get("User-Agent") == "testRunner"
 	opts.ApiMode = true
 
