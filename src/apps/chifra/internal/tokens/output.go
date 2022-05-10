@@ -17,17 +17,24 @@ import (
 
 // EXISTING_CODE
 
+// RunTokens handles the tokens command for the command line. Returns error only as per cobra.
 func RunTokens(cmd *cobra.Command, args []string) (err error) {
 	opts := TokensFinishParse(args)
+	// JINKY
+	// JINKY
 	err, _ = opts.TokensInternal()
 	return
 }
 
+// ServeTokens handles the tokens command for the API. Returns error and a bool if handled
 func ServeTokens(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := TokensFinishParseApi(w, r)
+	// JINKY
+	// JINKY
 	return opts.TokensInternal()
 }
 
+// TokensInternal handles the internal workings of the tokens command.  Returns error and a bool if handled
 func (opts *TokensOptions) TokensInternal() (err error, handled bool) {
 	err = opts.ValidateTokens()
 	if err != nil {

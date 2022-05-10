@@ -165,7 +165,9 @@ func RouteStatus(w http.ResponseWriter, r *http.Request) {
 
 // RouteScrape Scan the chain and update (and optionally pin) the TrueBlocks index of appearances.
 func RouteScrape(w http.ResponseWriter, r *http.Request) {
-	if !scrapePkg.ServeScrape(w, r) {
+	if err, handled := scrapePkg.ServeScrape(w, r); err != nil {
+		output.RespondWithError(w, http.StatusInternalServerError, err)
+	} else if !handled {
 		CallOne(w, r, config.GetPathToCommands("blockScrape"), "", "scrape")
 	}
 }
