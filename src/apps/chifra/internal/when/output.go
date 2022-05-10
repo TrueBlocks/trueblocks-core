@@ -11,7 +11,6 @@ package whenPkg
 // EXISTING_CODE
 import (
 	"net/http"
-	"strings"
 
 	"github.com/spf13/cobra"
 )
@@ -31,24 +30,6 @@ func RunWhen(cmd *cobra.Command, args []string) (err error) {
 func ServeWhen(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := WhenFinishParseApi(w, r)
 	// EXISTING_CODE
-	if opts.Globals.ApiMode {
-		// weird special case since we have to alter the request
-		if opts.List {
-			err = opts.ValidateWhen()
-			if err != nil {
-				return err, true
-			}
-			err = opts.HandleWhenList()
-			if err != nil {
-				return err, true
-			}
-			if len(opts.Blocks) == 0 {
-				return nil, true
-			}
-			r.URL.RawQuery = strings.Replace(r.URL.RawQuery, "list", "noop", -1)
-			r.URL.RawQuery += "&no_header"
-		}
-	}
 	// EXISTING_CODE
 	return opts.WhenInternal()
 }
@@ -62,16 +43,7 @@ func (opts *WhenOptions) WhenInternal() (err error, handled bool) {
 
 	// EXISTING_CODE
 	if opts.List {
-		err = opts.HandleWhenList()
-		if err != nil {
-			return err, true
-		}
-		if len(opts.Blocks) == 0 {
-			return nil, true
-		}
-		// continue but don't show headers
-		opts.List = false
-		opts.Globals.NoHeader = true
+		return opts.HandleWhenList(), true
 	}
 
 	if opts.Globals.ApiMode {

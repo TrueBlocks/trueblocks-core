@@ -59,6 +59,7 @@ bool COptions::writeOpenApiFile(void) {
     for (auto pkg : pkgs)
         goPkgStream << pkg.first << " " << pkg.second << endl;
     goPkgStream << "\tconfig \"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config\"" << endl;
+    goPkgStream << "\toutput \"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output\"" << endl;
 
     converts["logLevel"] = "log_level";
     converts["noHeader"] = "no_header";
@@ -97,7 +98,7 @@ extern bool isApiRoute(const string_q& route);
 
 //---------------------------------------------------------------------------------------------------
 string_q COptions::getProductions(const CCommandOption& ep) {
-    if (!isApiRoute(ep.api_route))
+    if (!isApiRoute(ep.api_route) || contains(ep.api_route, "explore"))
         return "";
     CStringArray productions;
     string_q descr;

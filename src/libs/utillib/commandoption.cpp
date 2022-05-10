@@ -815,14 +815,14 @@ string_q CCommandOption::toPairMap(void) const {
 
 //---------------------------------------------------------------------------------------------------
 bool isApiRoute(const string_q& route) {
-    if (route == "serve" || route == "explore" || route == "blaze")
+    if (route == "serve" || route == "blaze")
         return false;
     return !route.empty();
 }
 
 //---------------------------------------------------------------------------------------------------
 string_q CCommandOption::toApiTag(void) const {
-    if (isApiRoute(tool) || !is_visible_docs)
+    if ((isApiRoute(tool) && !contains(tool, "explore")) || !is_visible_docs)
         return "";
     const char* STR_TAG_YAML =
         "  - name: [{GROUP}]\n"
@@ -859,9 +859,15 @@ string_q CCommandOption::toGoCall(void) const {
     if (!isApiRoute(api_route))
         return "";
 
+    string_q format = STR_ONEROUTE;
+    if (goPortNewCode(api_route) || (tool.empty() || contains(tool, " ")) || api_route == "explore") {
+        format = substitute(format, "CallOne(w, r, config.GetPathToCommands(\"[{TOOL}]\"), \"\", \"[{API_ROUTE}]\")",
+                            "CallOne(w, r, \"chifra\", \"[{API_ROUTE}]\", \"[{API_ROUTE}]\")");
+    }
+
     ostringstream os;
     os << endl;
-    os << Format(STR_ONEROUTE) << endl;
+    os << Format(format) << endl;
     return os.str();
 
     // string_q goRouteFunc = Format("[{GOROUTEFUNC}]");
@@ -870,12 +876,8 @@ string_q CCommandOption::toGoCall(void) const {
     // os << Format("\terr, handled := [{API_ROUTE}]Pkg.Serve[{PROPER}](w, r); if err != nil {") << endl;
 
     // bool redirect = tool.empty() || contains(tool, " ");
-    // if ((!redirect && !goPortNewCode(api_route)) && api_route != "abis") {
+    // if ((!redirect && !goPortNewCode(api_route))) {
     //     const char* STR_CALLONE = "\t\tCallOne(w, r, config.GetPathToCommands(\"[{TOOL}]\"), \"\",
-    //     \"[{API_ROUTE}]\")"; os << Format(STR_CALLONE) << endl;
-
-    // } else if ((api_route == "tags" || api_route == "collections")) {
-    //     const char* STR_CALLONE = "\t\tCallOne(w, r, config.GetPathToCommands(\"ethNames\"), \"\",
     //     \"[{API_ROUTE}]\")"; os << Format(STR_CALLONE) << endl;
 
     // } else {
@@ -955,7 +957,7 @@ bool isCrud(const string_q& cmd) {
 
 //---------------------------------------------------------------------------------------------------
 string_q CCommandOption::toApiPath(const string_q& inStr, const string_q& exampleFn) const {
-    if (!isApiRoute(api_route))
+    if (!isApiRoute(api_route) || contains(api_route, "explore"))
         return "";
 
     bool hasDelete = false;
