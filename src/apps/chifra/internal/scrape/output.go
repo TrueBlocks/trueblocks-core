@@ -22,17 +22,24 @@ import (
 
 // EXISTING_CODE
 
+// RunScrape handles the scrape command for the command line. Returns error only as per cobra.
 func RunScrape(cmd *cobra.Command, args []string) (err error) {
 	opts := ScrapeFinishParse(args)
+	// JINKY
+	// JINKY
 	err, _ = opts.ScrapeInternal()
 	return
 }
 
+// ServeScrape handles the scrape command for the API. Returns error and a bool if handled
 func ServeScrape(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := ScrapeFinishParseApi(w, r)
+	// JINKY
+	// JINKY
 	return opts.ScrapeInternal()
 }
 
+// ScrapeInternal handles the internal workings of the scrape command.  Returns error and a bool if handled
 func (opts *ScrapeOptions) ScrapeInternal() (err error, handled bool) {
 	err = opts.ValidateScrape()
 	if err != nil {

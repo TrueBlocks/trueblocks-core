@@ -16,6 +16,7 @@ import (
 	abisPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/abis"
 	blocksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/blocks"
 	chunksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/chunks"
+	explorePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/explore"
 	exportPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
 	initPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/init"
 	listPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/list"
@@ -190,6 +191,15 @@ func RouteInit(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// RouteExplore Open a local or remote explorer for one or more addresses, blocks, or transactions
+func RouteExplore(w http.ResponseWriter, r *http.Request) {
+	if err, handled := explorePkg.ServeExplore(w, r); err != nil {
+		output.RespondWithError(w, http.StatusInternalServerError, err)
+	} else if !handled {
+		CallOne(w, r, "chifra", "explore", "explore")
+	}
+}
+
 // RouteQuotes Update or display Ethereum price data, this tool has been deprecated.
 func RouteQuotes(w http.ResponseWriter, r *http.Request) {
 	if err, handled := quotesPkg.ServeQuotes(w, r); err != nil {
@@ -236,6 +246,7 @@ var routes = Routes{
 	Route{"RouteState", "GET", "/state", RouteState},
 	Route{"RouteTokens", "GET", "/tokens", RouteTokens},
 	Route{"RouteStatus", "GET", "/status", RouteStatus},
+	Route{"RouteExplore", "GET", "/explore", RouteExplore},
 	Route{"RouteScrape", "GET", "/scrape", RouteScrape},
 	Route{"RouteChunks", "GET", "/chunks", RouteChunks},
 	Route{"RouteInit", "GET", "/init", RouteInit},
