@@ -20,8 +20,8 @@ import (
 // RunNames handles the names command for the command line. Returns error only as per cobra.
 func RunNames(cmd *cobra.Command, args []string) (err error) {
 	opts := NamesFinishParse(args)
-	// JINKY
-	// JINKY
+	// EXISTING_CODE
+	// EXISTING_CODE
 	err, _ = opts.NamesInternal()
 	return
 }
@@ -29,8 +29,8 @@ func RunNames(cmd *cobra.Command, args []string) (err error) {
 // ServeNames handles the names command for the API. Returns error and a bool if handled
 func ServeNames(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := NamesFinishParseApi(w, r)
-	// JINKY
-	// JINKY
+	// EXISTING_CODE
+	// EXISTING_CODE
 	return opts.NamesInternal()
 }
 

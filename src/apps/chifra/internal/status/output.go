@@ -20,8 +20,8 @@ import (
 // RunStatus handles the status command for the command line. Returns error only as per cobra.
 func RunStatus(cmd *cobra.Command, args []string) (err error) {
 	opts := StatusFinishParse(args)
-	// JINKY
-	// JINKY
+	// EXISTING_CODE
+	// EXISTING_CODE
 	err, _ = opts.StatusInternal()
 	return
 }
@@ -29,8 +29,8 @@ func RunStatus(cmd *cobra.Command, args []string) (err error) {
 // ServeStatus handles the status command for the API. Returns error and a bool if handled
 func ServeStatus(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := StatusFinishParseApi(w, r)
-	// JINKY
-	// JINKY
+	// EXISTING_CODE
+	// EXISTING_CODE
 	return opts.StatusInternal()
 }
 

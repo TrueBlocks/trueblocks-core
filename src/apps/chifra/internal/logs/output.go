@@ -20,8 +20,8 @@ import (
 // RunLogs handles the logs command for the command line. Returns error only as per cobra.
 func RunLogs(cmd *cobra.Command, args []string) (err error) {
 	opts := LogsFinishParse(args)
-	// JINKY
-	// JINKY
+	// EXISTING_CODE
+	// EXISTING_CODE
 	err, _ = opts.LogsInternal()
 	return
 }
@@ -29,8 +29,8 @@ func RunLogs(cmd *cobra.Command, args []string) (err error) {
 // ServeLogs handles the logs command for the API. Returns error and a bool if handled
 func ServeLogs(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := LogsFinishParseApi(w, r)
-	// JINKY
-	// JINKY
+	// EXISTING_CODE
+	// EXISTING_CODE
 	return opts.LogsInternal()
 }
 

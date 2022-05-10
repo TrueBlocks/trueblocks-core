@@ -20,8 +20,8 @@ import (
 // RunAbis handles the abis command for the command line. Returns error only as per cobra.
 func RunAbis(cmd *cobra.Command, args []string) (err error) {
 	opts := AbisFinishParse(args)
-	// JINKY
-	// JINKY
+	// EXISTING_CODE
+	// EXISTING_CODE
 	err, _ = opts.AbisInternal()
 	return
 }
@@ -29,8 +29,8 @@ func RunAbis(cmd *cobra.Command, args []string) (err error) {
 // ServeAbis handles the abis command for the API. Returns error and a bool if handled
 func ServeAbis(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := AbisFinishParseApi(w, r)
-	// JINKY
-	// JINKY
+	// EXISTING_CODE
+	// EXISTING_CODE
 	return opts.AbisInternal()
 }
 

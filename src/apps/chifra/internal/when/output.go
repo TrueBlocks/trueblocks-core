@@ -18,15 +18,19 @@ import (
 
 // EXISTING_CODE
 
+// RunWhen handles the when command for the command line. Returns error only as per cobra.
 func RunWhen(cmd *cobra.Command, args []string) (err error) {
 	opts := WhenFinishParse(args)
+	// EXISTING_CODE
+	// EXISTING_CODE
 	err, _ = opts.WhenInternal()
 	return
 }
 
+// ServeWhen handles the when command for the API. Returns error and a bool if handled
 func ServeWhen(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := WhenFinishParseApi(w, r)
-	// JANKY
+	// EXISTING_CODE
 	if opts.Globals.ApiMode {
 		// weird special case since we have to alter the request
 		if opts.List {
@@ -45,10 +49,11 @@ func ServeWhen(w http.ResponseWriter, r *http.Request) (err error, handled bool)
 			r.URL.RawQuery += "&no_header"
 		}
 	}
-	// JANKY
+	// EXISTING_CODE
 	return opts.WhenInternal()
 }
 
+// WhenInternal handles the internal workings of the when command.  Returns error and a bool if handled
 func (opts *WhenOptions) WhenInternal() (err error, handled bool) {
 	err = opts.ValidateWhen()
 	if err != nil {

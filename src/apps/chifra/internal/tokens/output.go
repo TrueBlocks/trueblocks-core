@@ -20,8 +20,8 @@ import (
 // RunTokens handles the tokens command for the command line. Returns error only as per cobra.
 func RunTokens(cmd *cobra.Command, args []string) (err error) {
 	opts := TokensFinishParse(args)
-	// JINKY
-	// JINKY
+	// EXISTING_CODE
+	// EXISTING_CODE
 	err, _ = opts.TokensInternal()
 	return
 }
@@ -29,8 +29,8 @@ func RunTokens(cmd *cobra.Command, args []string) (err error) {
 // ServeTokens handles the tokens command for the API. Returns error and a bool if handled
 func ServeTokens(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := TokensFinishParseApi(w, r)
-	// JINKY
-	// JINKY
+	// EXISTING_CODE
+	// EXISTING_CODE
 	return opts.TokensInternal()
 }
 

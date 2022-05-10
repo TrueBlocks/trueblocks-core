@@ -20,8 +20,8 @@ import (
 // RunSlurp handles the slurp command for the command line. Returns error only as per cobra.
 func RunSlurp(cmd *cobra.Command, args []string) (err error) {
 	opts := SlurpFinishParse(args)
-	// JINKY
-	// JINKY
+	// EXISTING_CODE
+	// EXISTING_CODE
 	err, _ = opts.SlurpInternal()
 	return
 }
@@ -29,8 +29,8 @@ func RunSlurp(cmd *cobra.Command, args []string) (err error) {
 // ServeSlurp handles the slurp command for the API. Returns error and a bool if handled
 func ServeSlurp(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := SlurpFinishParseApi(w, r)
-	// JINKY
-	// JINKY
+	// EXISTING_CODE
+	// EXISTING_CODE
 	return opts.SlurpInternal()
 }
 

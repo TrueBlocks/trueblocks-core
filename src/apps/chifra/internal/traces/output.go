@@ -20,8 +20,8 @@ import (
 // RunTraces handles the traces command for the command line. Returns error only as per cobra.
 func RunTraces(cmd *cobra.Command, args []string) (err error) {
 	opts := TracesFinishParse(args)
-	// JINKY
-	// JINKY
+	// EXISTING_CODE
+	// EXISTING_CODE
 	err, _ = opts.TracesInternal()
 	return
 }
@@ -29,8 +29,8 @@ func RunTraces(cmd *cobra.Command, args []string) (err error) {
 // ServeTraces handles the traces command for the API. Returns error and a bool if handled
 func ServeTraces(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := TracesFinishParseApi(w, r)
-	// JINKY
-	// JINKY
+	// EXISTING_CODE
+	// EXISTING_CODE
 	return opts.TracesInternal()
 }
 

@@ -219,7 +219,6 @@ func RouteSlurp(w http.ResponseWriter, r *http.Request) {
 		CallOne(w, r, config.GetPathToCommands("ethslurp"), "", "slurp")
 	}
 }
-
 // END_ROUTE_CODE
 
 func Index(w http.ResponseWriter, r *http.Request) {

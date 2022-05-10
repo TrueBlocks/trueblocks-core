@@ -20,8 +20,8 @@ import (
 // RunExport handles the export command for the command line. Returns error only as per cobra.
 func RunExport(cmd *cobra.Command, args []string) (err error) {
 	opts := ExportFinishParse(args)
-	// JINKY
-	// JINKY
+	// EXISTING_CODE
+	// EXISTING_CODE
 	err, _ = opts.ExportInternal()
 	return
 }
@@ -29,8 +29,8 @@ func RunExport(cmd *cobra.Command, args []string) (err error) {
 // ServeExport handles the export command for the API. Returns error and a bool if handled
 func ServeExport(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := ExportFinishParseApi(w, r)
-	// JINKY
-	// JINKY
+	// EXISTING_CODE
+	// EXISTING_CODE
 	return opts.ExportInternal()
 }
 

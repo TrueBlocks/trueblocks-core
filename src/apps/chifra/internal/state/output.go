@@ -20,8 +20,8 @@ import (
 // RunState handles the state command for the command line. Returns error only as per cobra.
 func RunState(cmd *cobra.Command, args []string) (err error) {
 	opts := StateFinishParse(args)
-	// JINKY
-	// JINKY
+	// EXISTING_CODE
+	// EXISTING_CODE
 	err, _ = opts.StateInternal()
 	return
 }
@@ -29,8 +29,8 @@ func RunState(cmd *cobra.Command, args []string) (err error) {
 // ServeState handles the state command for the API. Returns error and a bool if handled
 func ServeState(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := StateFinishParseApi(w, r)
-	// JINKY
-	// JINKY
+	// EXISTING_CODE
+	// EXISTING_CODE
 	return opts.StateInternal()
 }
 

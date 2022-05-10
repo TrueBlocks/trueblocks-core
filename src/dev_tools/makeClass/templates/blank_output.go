@@ -14,8 +14,8 @@ package [{API_ROUTE}]Pkg
 // Run[{PROPER}] handles the [{ROUTE}] command for the command line. Returns error only as per cobra.
 func Run[{PROPER}](cmd *cobra.Command, args []string) (err error) {
 	opts := [{PROPER}]FinishParse(args)
-	// JINKY
-	// JINKY
+	// EXISTING_CODE
+	// EXISTING_CODE
 	err, _ = opts.[{PROPER}]Internal()
 	return
 }
@@ -23,8 +23,8 @@ func Run[{PROPER}](cmd *cobra.Command, args []string) (err error) {
 // Serve[{PROPER}] handles the [{ROUTE}] command for the API. Returns error and a bool if handled
 func Serve[{PROPER}](w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := [{PROPER}]FinishParseApi(w, r)
-	// JINKY
-	// JINKY
+	// EXISTING_CODE
+	// EXISTING_CODE
 	return opts.[{PROPER}]Internal()
 }
 

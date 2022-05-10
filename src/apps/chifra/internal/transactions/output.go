@@ -20,8 +20,8 @@ import (
 // RunTransactions handles the transactions command for the command line. Returns error only as per cobra.
 func RunTransactions(cmd *cobra.Command, args []string) (err error) {
 	opts := TransactionsFinishParse(args)
-	// JINKY
-	// JINKY
+	// EXISTING_CODE
+	// EXISTING_CODE
 	err, _ = opts.TransactionsInternal()
 	return
 }
@@ -29,8 +29,8 @@ func RunTransactions(cmd *cobra.Command, args []string) (err error) {
 // ServeTransactions handles the transactions command for the API. Returns error and a bool if handled
 func ServeTransactions(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := TransactionsFinishParseApi(w, r)
-	// JINKY
-	// JINKY
+	// EXISTING_CODE
+	// EXISTING_CODE
 	return opts.TransactionsInternal()
 }
 
