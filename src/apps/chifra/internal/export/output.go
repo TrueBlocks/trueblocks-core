@@ -17,43 +17,46 @@ import (
 
 // EXISTING_CODE
 
-func RunExport(cmd *cobra.Command, args []string) error {
+// RunExport handles the export command for the command line. Returns error only as per cobra.
+func RunExport(cmd *cobra.Command, args []string) (err error) {
 	opts := ExportFinishParse(args)
-
-	err := opts.ValidateExport()
-	if err != nil {
-		return err
-	}
-
 	// EXISTING_CODE
-	err = opts.FreshenMonitorsForExport()
-	if err != nil {
-		return err
-	}
-
-	return opts.Globals.PassItOn("acctExport", opts.ToCmdLine())
 	// EXISTING_CODE
+	err, _ = opts.ExportInternal()
+	return
 }
 
-func ServeExport(w http.ResponseWriter, r *http.Request) bool {
+// ServeExport handles the export command for the API. Returns error and a bool if handled
+func ServeExport(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := ExportFinishParseApi(w, r)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return opts.ExportInternal()
+}
 
-	err := opts.ValidateExport()
+// ExportInternal handles the internal workings of the export command.  Returns error and a bool if handled
+func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
+	err = opts.ValidateExport()
 	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return true
+		return err, true
 	}
 
 	// EXISTING_CODE
 	err = opts.FreshenMonitorsForExport()
 	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return true
+		return err, true
 	}
 
-	// opts.Globals.PassItOn("acctExport", opts.ToCmdLine())
-	return false
+	if opts.Globals.ApiMode {
+		// The caller has to handle this when in API mode
+		return nil, false
+	}
+
+	handled = true
+	err = opts.Globals.PassItOn("acctExport", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
 	// EXISTING_CODE
+
+	return
 }
 
 // EXISTING_CODE

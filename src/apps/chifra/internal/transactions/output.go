@@ -17,32 +17,40 @@ import (
 
 // EXISTING_CODE
 
-func RunTransactions(cmd *cobra.Command, args []string) error {
+// RunTransactions handles the transactions command for the command line. Returns error only as per cobra.
+func RunTransactions(cmd *cobra.Command, args []string) (err error) {
 	opts := TransactionsFinishParse(args)
-
-	err := opts.ValidateTransactions()
-	if err != nil {
-		return err
-	}
-
 	// EXISTING_CODE
-	return opts.Globals.PassItOn("getTrans", opts.ToCmdLine())
 	// EXISTING_CODE
+	err, _ = opts.TransactionsInternal()
+	return
 }
 
-func ServeTransactions(w http.ResponseWriter, r *http.Request) bool {
+// ServeTransactions handles the transactions command for the API. Returns error and a bool if handled
+func ServeTransactions(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := TransactionsFinishParseApi(w, r)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return opts.TransactionsInternal()
+}
 
-	err := opts.ValidateTransactions()
+// TransactionsInternal handles the internal workings of the transactions command.  Returns error and a bool if handled
+func (opts *TransactionsOptions) TransactionsInternal() (err error, handled bool) {
+	err = opts.ValidateTransactions()
 	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return true
+		return err, true
 	}
 
 	// EXISTING_CODE
-	// opts.Globals.PassItOn("getTrans", opts.ToCmdLine())
-	return false
+	if opts.Globals.ApiMode {
+		return nil, false
+	}
+
+	handled = true
+	err = opts.Globals.PassItOn("getTrans", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
 	// EXISTING_CODE
+
+	return
 }
 
 // EXISTING_CODE

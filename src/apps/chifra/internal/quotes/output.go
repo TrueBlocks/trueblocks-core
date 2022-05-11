@@ -17,32 +17,40 @@ import (
 
 // EXISTING_CODE
 
-func RunQuotes(cmd *cobra.Command, args []string) error {
+// RunQuotes handles the quotes command for the command line. Returns error only as per cobra.
+func RunQuotes(cmd *cobra.Command, args []string) (err error) {
 	opts := QuotesFinishParse(args)
-
-	err := opts.ValidateQuotes()
-	if err != nil {
-		return err
-	}
-
 	// EXISTING_CODE
-	return opts.Globals.PassItOn("getQuotes", opts.ToCmdLine())
 	// EXISTING_CODE
+	err, _ = opts.QuotesInternal()
+	return
 }
 
-func ServeQuotes(w http.ResponseWriter, r *http.Request) bool {
+// ServeQuotes handles the quotes command for the API. Returns error and a bool if handled
+func ServeQuotes(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := QuotesFinishParseApi(w, r)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return opts.QuotesInternal()
+}
 
-	err := opts.ValidateQuotes()
+// QuotesInternal handles the internal workings of the quotes command.  Returns error and a bool if handled
+func (opts *QuotesOptions) QuotesInternal() (err error, handled bool) {
+	err = opts.ValidateQuotes()
 	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return true
+		return err, true
 	}
 
 	// EXISTING_CODE
-	// opts.Globals.PassItOn("getQuotes", opts.ToCmdLine())
-	return false
+	if opts.Globals.ApiMode {
+		return nil, false
+	}
+
+	handled = true
+	err = opts.Globals.PassItOn("getQuotes", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
 	// EXISTING_CODE
+
+	return
 }
 
 // EXISTING_CODE

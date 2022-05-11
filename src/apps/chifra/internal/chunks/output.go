@@ -12,79 +12,60 @@ package chunksPkg
 import (
 	"net/http"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
 // EXISTING_CODE
 
-func RunChunks(cmd *cobra.Command, args []string) error {
+// RunChunks handles the chunks command for the command line. Returns error only as per cobra.
+func RunChunks(cmd *cobra.Command, args []string) (err error) {
 	opts := ChunksFinishParse(args)
-
-	err := opts.ValidateChunks()
-	if err != nil {
-		return err
-	}
-
 	// EXISTING_CODE
-	if opts.Check {
-		return opts.HandleChunksCheck()
-	}
-
-	if opts.Extract == "blooms" {
-		return opts.HandleChunksExtract(opts.showBloom)
-	} else if opts.Extract == "pins" {
-		return opts.HandleChunksExtractPins()
-	} else if opts.Extract == "stats" {
-		return opts.HandleChunksExtract(opts.showStats)
-	}
-
-	return validate.Usage("Extractor for {0} not yet implemented.", opts.Extract)
 	// EXISTING_CODE
+	err, _ = opts.ChunksInternal()
+	return
 }
 
-func ServeChunks(w http.ResponseWriter, r *http.Request) bool {
+// ServeChunks handles the chunks command for the API. Returns error and a bool if handled
+func ServeChunks(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := ChunksFinishParseApi(w, r)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return opts.ChunksInternal()
+}
 
-	err := opts.ValidateChunks()
+// ChunksInternal handles the internal workings of the chunks command.  Returns error and a bool if handled
+func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
+	err = opts.ValidateChunks()
 	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return true
+		return err, true
 	}
 
 	// EXISTING_CODE
+	handled = true
+
 	if opts.Check {
 		err = opts.HandleChunksCheck()
-		if err != nil {
-			logger.Log(logger.Warning, "Could not extract blooms", err)
-		}
-		return true
-	}
 
-	if opts.Extract == "blooms" {
-		err = opts.HandleChunksExtract(opts.showBloom)
-		if err != nil {
-			logger.Log(logger.Warning, "Could not extract blooms", err)
-		}
-		return true
-	} else if opts.Extract == "pins" {
-		err = opts.HandleChunksExtractPins()
-		if err != nil {
-			logger.Log(logger.Warning, "Could not extract pin list", err)
-		}
-		return true
-	} else if opts.Extract == "stats" {
-		err = opts.HandleChunksExtract(opts.showStats)
-		if err != nil {
-			logger.Log(logger.Warning, "Could not extract stats", err)
-		}
-		return true
-	}
+	} else {
+		if opts.Extract == "blooms" {
+			err = opts.HandleChunksExtract(opts.showBloom)
 
-	opts.Globals.RespondWithError(w, http.StatusInternalServerError, validate.Usage("Extractor for {0} not yet implemented.", opts.Extract))
-	return true
+		} else if opts.Extract == "pins" {
+			err = opts.HandleChunksExtractPins()
+
+		} else if opts.Extract == "stats" {
+			err = opts.HandleChunksExtract(opts.showStats)
+
+		} else {
+			err = validate.Usage("Extractor for {0} not yet implemented.", opts.Extract)
+
+		}
+	}
 	// EXISTING_CODE
+
+	return
 }
 
 // EXISTING_CODE

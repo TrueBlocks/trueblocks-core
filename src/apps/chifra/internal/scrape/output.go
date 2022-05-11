@@ -15,61 +15,71 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 
 	"github.com/spf13/cobra"
 )
 
 // EXISTING_CODE
 
-func RunScrape(cmd *cobra.Command, args []string) error {
+// RunScrape handles the scrape command for the command line. Returns error only as per cobra.
+func RunScrape(cmd *cobra.Command, args []string) (err error) {
 	opts := ScrapeFinishParse(args)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	err, _ = opts.ScrapeInternal()
+	return
+}
 
-	err := opts.ValidateScrape()
+// ServeScrape handles the scrape command for the API. Returns error and a bool if handled
+func ServeScrape(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
+	opts := ScrapeFinishParseApi(w, r)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return opts.ScrapeInternal()
+}
+
+// ScrapeInternal handles the internal workings of the scrape command.  Returns error and a bool if handled
+func (opts *ScrapeOptions) ScrapeInternal() (err error, handled bool) {
+	err = opts.ValidateScrape()
 	if err != nil {
-		return err
+		return err, true
 	}
 
 	// EXISTING_CODE
+	if opts.Globals.ApiMode {
+		return validate.Usage("chifra scrape is not available in API mode"), true
+	}
+
+	handled = true
 	if opts.Blaze {
-		opts.ScrapeBlocks()
+		err = opts.ScrapeBlocks()
 
 	} else if opts.Reset != utils.NOPOS {
-		return opts.Globals.PassItOn("blockScrape", opts.ToCmdLine())
+		err = opts.Globals.PassItOn("blockScrape", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
 
 	} else {
 		var wg sync.WaitGroup
 
-		if hasIndexerFlag(args[0]) {
+		if hasIndexerFlag(opts.Modes[0]) {
 			wg.Add(1)
 			IndexScraper = NewScraper(colors.Yellow, "IndexScraper", opts.Sleep, opts.Globals.LogLevel)
+			// Note that this never returns
 			go opts.RunIndexScraper(&wg)
 		}
 
-		if hasMonitorsFlag(args[0]) {
+		if hasMonitorsFlag(opts.Modes[0]) {
 			wg.Add(1)
 			MonitorScraper = NewScraper(colors.Magenta, "MonitorScraper", opts.Sleep, opts.Globals.LogLevel)
+			// Note that this never returns
 			go opts.RunMonitorScraper(&wg)
 		}
 
 		wg.Wait()
 	}
-	return nil
 	// EXISTING_CODE
-}
 
-func ServeScrape(w http.ResponseWriter, r *http.Request) bool {
-	opts := ScrapeFinishParseApi(w, r)
-
-	err := opts.ValidateScrape()
-	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return true
-	}
-
-	// EXISTING_CODE
-	// TODO: Can we disable certain things from running in server mode?
-	return false
-	// EXISTING_CODE
+	return
 }
 
 // EXISTING_CODE

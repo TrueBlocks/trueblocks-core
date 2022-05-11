@@ -17,32 +17,40 @@ import (
 
 // EXISTING_CODE
 
-func RunBlocks(cmd *cobra.Command, args []string) error {
+// RunBlocks handles the blocks command for the command line. Returns error only as per cobra.
+func RunBlocks(cmd *cobra.Command, args []string) (err error) {
 	opts := BlocksFinishParse(args)
-
-	err := opts.ValidateBlocks()
-	if err != nil {
-		return err
-	}
-
 	// EXISTING_CODE
-	return opts.Globals.PassItOn("getBlocks", opts.ToCmdLine())
 	// EXISTING_CODE
+	err, _ = opts.BlocksInternal()
+	return
 }
 
-func ServeBlocks(w http.ResponseWriter, r *http.Request) bool {
+// ServeBlocks handles the blocks command for the API. Returns error and a bool if handled
+func ServeBlocks(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := BlocksFinishParseApi(w, r)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return opts.BlocksInternal()
+}
 
-	err := opts.ValidateBlocks()
+// BlocksInternal handles the internal workings of the blocks command.  Returns error and a bool if handled
+func (opts *BlocksOptions) BlocksInternal() (err error, handled bool) {
+	err = opts.ValidateBlocks()
 	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return true
+		return err, true
 	}
 
 	// EXISTING_CODE
-	// opts.Globals.PassItOn("getBlocks", opts.ToCmdLine())
-	return false
+	if opts.Globals.ApiMode {
+		return nil, false
+	}
+
+	handled = true
+	err = opts.Globals.PassItOn("getBlocks", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
 	// EXISTING_CODE
+
+	return
 }
 
 // EXISTING_CODE

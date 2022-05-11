@@ -5,29 +5,22 @@
 package listPkg
 
 import (
-	"net/http"
-	"os"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 func (opts *ListOptions) HandleListCount(monitorArray []monitor.Monitor) error {
-	results := make([]monitor.SimpleMonitor, 0, len(monitorArray))
+	results := make([]types.SimpleMonitor, 0, len(monitorArray))
 	for _, mon := range monitorArray {
-		results = append(results, monitor.NewSimpleMonitor(mon))
+		simp := monitor.NewSimpleMonitor(mon)
+		if opts.Globals.TestMode {
+			simp.LastScanned = maxTestingBlock
+		}
+		results = append(results, simp)
+		mon.Close()
 	}
 
 	// TODO: Fix export without arrays
-	if opts.Globals.ApiMode {
-		opts.Globals.Respond(opts.Globals.Writer, http.StatusOK, results)
-
-	} else {
-		err := opts.Globals.Output(os.Stdout, opts.Globals.Format, results)
-		if err != nil {
-			logger.Log(logger.Error, err)
-		}
-	}
-
-	return nil
+	return globals.RenderSlice(&opts.Globals, results)
 }

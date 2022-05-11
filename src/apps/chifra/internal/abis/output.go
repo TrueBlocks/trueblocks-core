@@ -17,45 +17,44 @@ import (
 
 // EXISTING_CODE
 
-func RunAbis(cmd *cobra.Command, args []string) error {
+// RunAbis handles the abis command for the command line. Returns error only as per cobra.
+func RunAbis(cmd *cobra.Command, args []string) (err error) {
 	opts := AbisFinishParse(args)
-
-	err := opts.ValidateAbis()
-	if err != nil {
-		return err
-	}
-
 	// EXISTING_CODE
-	if len(opts.Find) > 0 {
-		return opts.HandleAbiFind()
-	}
-
-	return opts.Globals.PassItOn("grabABI", opts.ToCmdLine())
 	// EXISTING_CODE
+	err, _ = opts.AbisInternal()
+	return
 }
 
-func ServeAbis(w http.ResponseWriter, r *http.Request) bool {
+// ServeAbis handles the abis command for the API. Returns error and a bool if handled
+func ServeAbis(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := AbisFinishParseApi(w, r)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return opts.AbisInternal()
+}
 
-	err := opts.ValidateAbis()
+// AbisInternal handles the internal workings of the abis command.  Returns error and a bool if handled
+func (opts *AbisOptions) AbisInternal() (err error, handled bool) {
+	err = opts.ValidateAbis()
 	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return true
+		return err, true
 	}
 
 	// EXISTING_CODE
 	if len(opts.Find) > 0 {
-		err = opts.HandleAbiFind()
-		if err != nil {
-			opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-			return true
-		}
-		return true
+		return opts.HandleAbiFind(), true
 	}
 
-	// opts.Globals.PassItOn("grabABI", opts.ToCmdLine())
-	return false
+	if opts.Globals.ApiMode {
+		return nil, false
+	}
+
+	handled = true
+	err = opts.Globals.PassItOn("grabABI", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
 	// EXISTING_CODE
+
+	return
 }
 
 // EXISTING_CODE

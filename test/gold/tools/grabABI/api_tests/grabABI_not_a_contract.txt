@@ -1,1 +1,11 @@
 abis?addrs=0xf1aa581f353005ba3765b81bf52d6b1c488c2101
+{
+  "data": [],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
+  }
+}

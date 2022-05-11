@@ -17,32 +17,40 @@ import (
 
 // EXISTING_CODE
 
-func RunReceipts(cmd *cobra.Command, args []string) error {
+// RunReceipts handles the receipts command for the command line. Returns error only as per cobra.
+func RunReceipts(cmd *cobra.Command, args []string) (err error) {
 	opts := ReceiptsFinishParse(args)
-
-	err := opts.ValidateReceipts()
-	if err != nil {
-		return err
-	}
-
 	// EXISTING_CODE
-	return opts.Globals.PassItOn("getReceipts", opts.ToCmdLine())
 	// EXISTING_CODE
+	err, _ = opts.ReceiptsInternal()
+	return
 }
 
-func ServeReceipts(w http.ResponseWriter, r *http.Request) bool {
+// ServeReceipts handles the receipts command for the API. Returns error and a bool if handled
+func ServeReceipts(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := ReceiptsFinishParseApi(w, r)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return opts.ReceiptsInternal()
+}
 
-	err := opts.ValidateReceipts()
+// ReceiptsInternal handles the internal workings of the receipts command.  Returns error and a bool if handled
+func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
+	err = opts.ValidateReceipts()
 	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return true
+		return err, true
 	}
 
 	// EXISTING_CODE
-	// opts.Globals.PassItOn("getReceipts", opts.ToCmdLine())
-	return false
+	if opts.Globals.ApiMode {
+		return nil, false
+	}
+
+	handled = true
+	err = opts.Globals.PassItOn("getReceipts", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
 	// EXISTING_CODE
+
+	return
 }
 
 // EXISTING_CODE

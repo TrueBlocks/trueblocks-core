@@ -18,6 +18,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
@@ -92,15 +93,8 @@ func (mon Monitor) String() string {
 	return fmt.Sprintf("%s\t%d\t%d\t%d", hexutil.Encode(mon.Address.Bytes()), mon.Count(), file.FileSize(mon.Path()), mon.LastScanned)
 }
 
-type SimpleMonitor struct {
-	Address     string `json:"address"`
-	NRecords    int    `json:"nRecords"`
-	FileSize    int64  `json:"fileSize"`
-	LastScanned uint32 `json:"lastScanned"`
-}
-
-func NewSimpleMonitor(mon Monitor) SimpleMonitor {
-	return SimpleMonitor{
+func NewSimpleMonitor(mon Monitor) types.SimpleMonitor {
+	return types.SimpleMonitor{
 		Address:     mon.GetAddrStr(),
 		NRecords:    int(mon.Count()),
 		FileSize:    file.FileSize(mon.Path()),

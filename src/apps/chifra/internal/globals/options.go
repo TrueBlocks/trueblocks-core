@@ -6,6 +6,7 @@ package globals
 
 import (
 	"fmt"
+	"io"
 	"net/http"
 	"os"
 
@@ -34,7 +35,7 @@ type GlobalOptions struct {
 	Format   string
 	TestMode bool
 	ApiMode  bool
-	Writer   http.ResponseWriter
+	Writer   io.Writer
 }
 
 func (opts *GlobalOptions) TestLog() {
@@ -220,6 +221,7 @@ func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOption
 }
 
 func (opts *GlobalOptions) FinishParse(args []string) {
+	opts.Writer = os.Stdout
 }
 
 func IsGlobalOption(key string) bool {

@@ -34,6 +34,8 @@ type MonitorUpdate struct {
 	FirstBlock uint64
 }
 
+const maxTestingBlock = 5000000
+
 func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) error {
 	var updater = MonitorUpdate{
 		MaxTasks:   12,
@@ -94,7 +96,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 				}
 			}
 
-			if opts.Globals.TestMode && fileRange.Last > 5000000 {
+			if opts.Globals.TestMode && fileRange.Last > maxTestingBlock {
 				continue
 			}
 

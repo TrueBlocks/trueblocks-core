@@ -17,32 +17,40 @@ import (
 
 // EXISTING_CODE
 
-func RunNames(cmd *cobra.Command, args []string) error {
+// RunNames handles the names command for the command line. Returns error only as per cobra.
+func RunNames(cmd *cobra.Command, args []string) (err error) {
 	opts := NamesFinishParse(args)
-
-	err := opts.ValidateNames()
-	if err != nil {
-		return err
-	}
-
 	// EXISTING_CODE
-	return opts.Globals.PassItOn("ethNames", opts.ToCmdLine())
 	// EXISTING_CODE
+	err, _ = opts.NamesInternal()
+	return
 }
 
-func ServeNames(w http.ResponseWriter, r *http.Request) bool {
+// ServeNames handles the names command for the API. Returns error and a bool if handled
+func ServeNames(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := NamesFinishParseApi(w, r)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return opts.NamesInternal()
+}
 
-	err := opts.ValidateNames()
+// NamesInternal handles the internal workings of the names command.  Returns error and a bool if handled
+func (opts *NamesOptions) NamesInternal() (err error, handled bool) {
+	err = opts.ValidateNames()
 	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return true
+		return err, true
 	}
 
 	// EXISTING_CODE
-	// opts.Globals.PassItOn("ethNames", opts.ToCmdLine())
-	return false
+	if opts.Globals.ApiMode {
+		return nil, false
+	}
+
+	handled = true
+	err = opts.Globals.PassItOn("ethNames", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
 	// EXISTING_CODE
+
+	return
 }
 
 // EXISTING_CODE

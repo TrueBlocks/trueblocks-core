@@ -11,7 +11,6 @@ package monitorsPkg
 // EXISTING_CODE
 import (
 	"net/http"
-	"os"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
@@ -20,41 +19,19 @@ import (
 
 // EXISTING_CODE
 
-func RunMonitors(cmd *cobra.Command, args []string) error {
+// RunMonitors handles the monitors command for the command line. Returns error only as per cobra.
+func RunMonitors(cmd *cobra.Command, args []string) (err error) {
 	opts := MonitorsFinishParse(args)
-
-	err := opts.ValidateMonitors()
-	if err != nil {
-		return err
-	}
-
 	// EXISTING_CODE
-	if opts.Clean {
-		return opts.HandleClean()
-	}
-
-	return opts.HandleCrudCommands(os.Stdout)
 	// EXISTING_CODE
+	err, _ = opts.MonitorsInternal()
+	return
 }
 
-func ServeMonitors(w http.ResponseWriter, r *http.Request) bool {
+// ServeMonitors handles the monitors command for the API. Returns error and a bool if handled
+func ServeMonitors(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := MonitorsFinishParseApi(w, r)
-
-	err := opts.ValidateMonitors()
-	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return true
-	}
-
 	// EXISTING_CODE
-	if opts.Clean {
-		err = opts.HandleClean()
-		if err != nil {
-			opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		}
-		return true
-	}
-
 	if !opts.Globals.TestMode { // our test harness does not use DELETE
 		delOptions := "--delete, --undelete, or --remove"
 		if r.Method == "DELETE" {
@@ -68,16 +45,33 @@ func ServeMonitors(w http.ResponseWriter, r *http.Request) bool {
 			}
 		}
 		if err != nil {
-			opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-			return true
+			return err, true
 		}
 	}
-	err = opts.HandleCrudCommands(w)
-	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-	}
-	return true
 	// EXISTING_CODE
+	return opts.MonitorsInternal()
+}
+
+// MonitorsInternal handles the internal workings of the monitors command.  Returns error and a bool if handled
+func (opts *MonitorsOptions) MonitorsInternal() (err error, handled bool) {
+	err = opts.ValidateMonitors()
+	if err != nil {
+		return err, true
+	}
+
+	// EXISTING_CODE
+	handled = true // everything is handled even on failure
+
+	if opts.Clean {
+		err = opts.HandleClean()
+
+	} else {
+		err = opts.HandleCrudCommands()
+
+	}
+	// EXISTING_CODE
+
+	return
 }
 
 // EXISTING_CODE
