@@ -34,7 +34,7 @@ class CTestTraverser : public CTraverser {
 ...and we return that custom traverser when we're initialized...
 
 ```
-extern "C" CTraverser* makeTraverser(void) {
+extern "C" CTraverser* makeTraverser(uint32_t wanted) {
     CTestTraverser* trav = new CTestTraverser;
     trav->preFunc = header;
     trav->displayFunc = display;

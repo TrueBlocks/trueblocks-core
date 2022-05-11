@@ -43,6 +43,8 @@ bool header(CTraverser* trav, void* data) {
 
 //-----------------------------------------------------------------------
 bool display(CTraverser* trav, void* data) {
+    cerr << "At least I am here" << endl;
+
     CTestTraverser* tt = (CTestTraverser*)trav;
 
     cerr << string_q(120, ' ') << "\r";
@@ -72,10 +74,10 @@ bool display(CTraverser* trav, void* data) {
 }
 
 //-----------------------------------------------------------------------
-extern "C" CTraverser* makeTraverser(void) {
-    if (getVersionNum() < getVersionNum(0, 18, 0)) {
+extern "C" CTraverser* makeTraverser(uint32_t wanted) {
+    if (getVersionNum() < wanted) {
         LOG_ERR("Cannot load traverser from older versions: ", getVersionNum());
-        LOG_ERR("Perhaps you need to re-install TrueBlocks.");
+        LOG_ERR("You need to re-install TrueBlocks and rebuild this traverser.");
         return nullptr;
     }
     CTestTraverser* trav = new CTestTraverser;

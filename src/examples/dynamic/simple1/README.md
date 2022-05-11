@@ -32,7 +32,7 @@ bool display(CTraverser* trav, void* data) {
 }
 
 //-----------------------------------------------------------------------
-extern "C" CTraverser* makeTraverser(void) {
+extern "C" CTraverser* makeTraverser(uint32_t wanted) {
     CTraverser* trav = new CTraverser("testing");
 
     trav->preFunc = header;
