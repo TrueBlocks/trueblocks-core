@@ -43,8 +43,6 @@ bool header(CTraverser* trav, void* data) {
 
 //-----------------------------------------------------------------------
 bool display(CTraverser* trav, void* data) {
-    cerr << "At least I am here" << endl;
-
     CTestTraverser* tt = (CTestTraverser*)trav;
 
     cerr << string_q(120, ' ') << "\r";
