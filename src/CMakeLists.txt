@@ -96,5 +96,6 @@ add_subdirectory (libs)
 add_subdirectory (tools)
 add_subdirectory (apps)
 add_subdirectory (dev_tools)
-add_subdirectory (other)
 add_subdirectory (examples)
+add_subdirectory (other)
+
