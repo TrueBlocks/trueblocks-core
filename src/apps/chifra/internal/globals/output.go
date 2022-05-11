@@ -5,6 +5,7 @@
 package globals
 
 import (
+	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -48,19 +49,34 @@ func RenderSlice[
 		default:
 			hw.Header().Set("Content-Type", "application/json")
 		}
-
-		err := output.OutputArray(data, opts.Writer, opts.Format, opts.NoHeader, opts.ApiMode, meta)
-		if err != nil {
-			return err
-		}
-
-	} else {
-		err := output.OutputArray(data, opts.Writer, opts.Format, opts.NoHeader, opts.ApiMode, meta)
-		if err != nil {
-			return err
-		}
 	}
-	return nil
+
+	switch opts.Format {
+	case "api":
+		fallthrough
+	case "json":
+		return output.OutputObject(data, opts.Writer, opts.Format, opts.NoHeader, opts.ApiMode, meta)
+	case "csv":
+		fallthrough
+	case "txt":
+		for i, item := range data {
+			if i == 0 {
+				if !opts.NoHeader {
+					err := output.OutputHeader(item, opts.Writer, opts.Format, opts.ApiMode)
+					if err != nil {
+						return err
+					}
+				}
+			}
+			err := output.OutputObject(item, opts.Writer, opts.Format, opts.NoHeader, opts.ApiMode, meta)
+			if err != nil {
+				return err
+			}
+		}
+		return nil
+	}
+
+	return fmt.Errorf("unsupported format %s", opts.Format)
 }
 
 func (opts *GlobalOptions) RenderObject(data interface{}) error {
@@ -73,20 +89,7 @@ func (opts *GlobalOptions) RenderObject(data interface{}) error {
 		meta = rpcClient.GetMetaData(opts.Chain, opts.TestMode)
 	}
 
-	if opts.ApiMode {
-		// We could check this, but if it's not empty, we know it's type
-		err := output.OutputObject(data, opts.Writer, opts.Format, opts.NoHeader, opts.ApiMode, meta)
-		if err != nil {
-			return err
-		}
-
-	} else {
-		err := output.OutputObject(data, opts.Writer, opts.Format, opts.NoHeader, opts.ApiMode, meta)
-		if err != nil {
-			return err
-		}
-	}
-	return nil
+	return output.OutputObject(data, opts.Writer, opts.Format, opts.NoHeader, opts.ApiMode, meta)
 }
 
 func (opts *GlobalOptions) RenderHeader(data interface{}, w *io.Writer, format string, apiMode, hideHeader, first bool) error {
