@@ -1,6 +1,7 @@
 chifra names  network --match_case
 TEST[DATE|TIME] Terms:  [network]
 TEST[DATE|TIME] MatchCase:  true
+TEST[DATE|TIME] Format:  txt
 tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x069d653038db2f9d84e9620be140b3d404a40258	Jarvis network Smart Relay Token	JRTBNT		18
 50-Tokens:ERC20	0x4bbbc57af270138ef2ff2c50dbfad684e9e0e604	WABnetwork	WAB		18

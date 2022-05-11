@@ -1,12 +1,13 @@
 chifra when  213123213 --list
 TEST[DATE|TIME] Blocks:  [213123213]
 TEST[DATE|TIME] List:  true
+TEST[DATE|TIME] Format:  txt
 Error: Please use the --list or --timestamp option or supply block identifiers, not both.
 Usage:
   chifra when [flags] < block | date > [ block... | date... ]
 
 Arguments:
-  blocks - one or more dates, block numbers, hashes, or special named blocks (see notes) (required)
+  blocks - one or more dates, block numbers, hashes, or special named blocks (see notes)
 
 Flags:
   -l, --list         export a list of the 'special' blocks

@@ -44,7 +44,7 @@ func RunList(cmd *cobra.Command, args []string) error {
 }
 
 func ServeList(w http.ResponseWriter, r *http.Request) bool {
-	opts := FromRequest(w, r)
+	opts := ListFinishParseApi(w, r)
 
 	err := opts.ValidateList()
 	if err != nil {

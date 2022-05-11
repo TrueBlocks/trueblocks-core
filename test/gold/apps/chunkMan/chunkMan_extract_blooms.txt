@@ -1,6 +1,7 @@
 chifra chunks  --extract blooms --log_level 5
 TEST[DATE|TIME] Extract:  blooms
 TEST[DATE|TIME] LogLevel:  5
+TEST[DATE|TIME] Format:  txt
 range: 000000000-000000000
 nBlooms: 1
 byteWidth: 131072

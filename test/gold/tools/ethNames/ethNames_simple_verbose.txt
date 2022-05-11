@@ -1,6 +1,7 @@
 chifra names  etwork --verbose
 TEST[DATE|TIME] Terms:  [etwork]
 TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] Format:  txt
 tags	address	name	symbol	decimals	source
 31-Gitcoin:Grants	0x011c2c1433b36a524b548444ae2f20c015427d04	Grant 0491 - Tokamak Network: Decentralized, Scalable, Turing Complete Layer 2 Plasma				https://gitcoin.co/grants/491/tokamak-network-decentralized-scalable-turing-com
 50-Tokens:ERC20	0x04c62019ab478bff5874e7b7d9bc84fcf7e30025	POA Network: MultiSig				EtherScan.io

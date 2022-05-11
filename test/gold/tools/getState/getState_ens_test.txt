@@ -1,6 +1,7 @@
 chifra state  trueblocks.eth 8854700-8854900:20
 TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
 TEST[DATE|TIME] Blocks:  [8854700-8854900:20]
+TEST[DATE|TIME] Format:  txt
 blockNumber	address	balance
 8854700	0xf503017d7baf7fbc0fff7492b751025c6a78179b	0
 8854720	0xf503017d7baf7fbc0fff7492b751025c6a78179b	0

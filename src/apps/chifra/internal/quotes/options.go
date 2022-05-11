@@ -55,7 +55,7 @@ func (opts *QuotesOptions) ToCmdLine() string {
 	return options
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *QuotesOptions {
+func QuotesFinishParseApi(w http.ResponseWriter, r *http.Request) *QuotesOptions {
 	opts := &QuotesOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -74,7 +74,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *QuotesOptions {
 			}
 		}
 	}
-	opts.Globals = *globals.FromRequest(w, r)
+	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
 	// EXISTING_CODE
 
@@ -83,8 +83,13 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *QuotesOptions {
 
 func QuotesFinishParse(args []string) *QuotesOptions {
 	opts := GetOptions()
+	opts.Globals.FinishParse(args)
+	defFmt := "txt"
 	// EXISTING_CODE
 	// EXISTING_CODE
+	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
+		opts.Globals.Format = defFmt
+	}
 	return opts
 }
 

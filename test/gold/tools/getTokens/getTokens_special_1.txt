@@ -1,6 +1,7 @@
 chifra tokens  0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98 first devcon4
 TEST[DATE|TIME] Addrs2:  [0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98]
 TEST[DATE|TIME] Blocks:  [first devcon4]
+TEST[DATE|TIME] Format:  txt
 blockNumber	holder	address	name	symbol	decimals	balance
 0	0x5e44c3e467a49c9ca0296a9f130fc433041aaa28	0xd26114cd6ee289accf82350c8d8487fedb8a0c07	OMGToken Airdrop	OMG	18	""
 6610517	0x5e44c3e467a49c9ca0296a9f130fc433041aaa28	0xd26114cd6ee289accf82350c8d8487fedb8a0c07	OMGToken Airdrop	OMG	18	"28161.606913030313059494"

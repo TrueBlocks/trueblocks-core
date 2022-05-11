@@ -36,7 +36,7 @@ func RunInit(cmd *cobra.Command, args []string) error {
 }
 
 func ServeInit(w http.ResponseWriter, r *http.Request) bool {
-	opts := FromRequest(w, r)
+	opts := InitFinishParseApi(w, r)
 
 	err := opts.ValidateInit()
 	if err != nil {

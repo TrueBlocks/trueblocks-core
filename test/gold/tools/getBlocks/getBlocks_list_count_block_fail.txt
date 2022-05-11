@@ -1,6 +1,7 @@
 chifra blocks  --list_count 10 1000
 TEST[DATE|TIME] Blocks:  [1000]
 TEST[DATE|TIME] ListCount:  10
+TEST[DATE|TIME] Format:  json
 { "data": [
 { "hash": "0x18c61333ffa442a487f9ff3e90cd434d6543aaa043e8aba03305e1c08c215b5b", "blockNumber": 2000100, "timestamp": 1470174977, "difficulty": "49896873456293", "miner": "0x2a65aca4d5fc5b5c859090a6c34d164135398226", "transactionsCnt": 3, "unclesCnt": 0, "gasLimit": 4707788, "gasUsed": 73561},
 { "hash": "0xdb97b4a8a92efdcab2d074317a30f346d6c6f776cdbba4730e7f5ebb4c7a660e", "blockNumber": 2000099, "timestamp": 1470174965, "difficulty": "49896873194149", "miner": "0xea674fdde714fd979de3edf0f56aa9716b898ec8", "transactionsCnt": 4, "unclesCnt": 1, "gasLimit": 4712388, "gasUsed": 94561},

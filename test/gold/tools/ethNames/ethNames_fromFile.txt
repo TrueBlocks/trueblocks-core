@@ -1,5 +1,6 @@
 chifra names  --file names.txt
 TEST[DATE|TIME] File:  names.txt
+TEST[DATE|TIME] Format:  txt
 Cmd: LockTrip 
 Cmd: UCASH 
 Cmd: XES 

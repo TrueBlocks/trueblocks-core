@@ -1,5 +1,6 @@
 chifra blocks  3982128 --count
 TEST[DATE|TIME] Blocks:  [3982128]
 TEST[DATE|TIME] Count:  true
+TEST[DATE|TIME] Format:  json
 { "data": [
 { "blockNumber": 3982128, "transactionsCnt": 91}] }

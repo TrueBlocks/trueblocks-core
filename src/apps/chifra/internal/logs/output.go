@@ -31,7 +31,7 @@ func RunLogs(cmd *cobra.Command, args []string) error {
 }
 
 func ServeLogs(w http.ResponseWriter, r *http.Request) bool {
-	opts := FromRequest(w, r)
+	opts := LogsFinishParseApi(w, r)
 
 	err := opts.ValidateLogs()
 	if err != nil {

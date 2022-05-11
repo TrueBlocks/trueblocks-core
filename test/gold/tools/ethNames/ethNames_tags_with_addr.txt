@@ -1,6 +1,7 @@
 chifra names  --tags --addr
 TEST[DATE|TIME] Addr:  true
 TEST[DATE|TIME] Tags:  true
+TEST[DATE|TIME] Format:  txt
 Error: The --tags option is not available with any other option.
 Usage:
   chifra names [flags] <term> [term...]

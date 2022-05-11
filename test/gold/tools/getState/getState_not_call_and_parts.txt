@@ -1,6 +1,7 @@
 chifra state  --call 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B!0x0902f1ac --parts some
 TEST[DATE|TIME] Parts:  [some]
 TEST[DATE|TIME] Call:  0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B!0x0902f1ac
+TEST[DATE|TIME] Format:  txt
 Error: The --parts option is not available with the --call option.
 Usage:
   chifra state [flags] <address> [address...] [block...]

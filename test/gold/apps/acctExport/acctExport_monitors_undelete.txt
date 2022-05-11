@@ -1,4 +1,5 @@
 chifra monitors  0x001d14804b399c6ef80e64576f657660804fec0b --undelete
 TEST[DATE|TIME] Addrs:  [0x001d14804b399c6ef80e64576f657660804fec0b]
 TEST[DATE|TIME] Undelete:  true
+TEST[DATE|TIME] Format:  txt
 INFO[DATE|TIME] Monitor 0x001d14804b399c6ef80e64576f657660804fec0b was undeleted.

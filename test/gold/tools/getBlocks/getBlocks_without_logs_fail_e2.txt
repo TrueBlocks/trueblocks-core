@@ -1,6 +1,7 @@
 chifra blocks  4012000-4012001 --emitter 0x86fa049857e0209aa7d9e616f7eb3b3b7
 TEST[DATE|TIME] Blocks:  [4012000-4012001]
 TEST[DATE|TIME] Emitter:  [0x86fa049857e0209aa7d9e616f7eb3b3b7]
+TEST[DATE|TIME] Format:  json
 Error: The address option (0x86fa049857e0209aa7d9e616f7eb3b3b7) must be 20 bytes long.
 Usage:
   chifra blocks [flags] <block> [block...]

@@ -1,5 +1,6 @@
 chifra abis  --find 0x1aa3a00800
 TEST[DATE|TIME] Find:  [0x1aa3a00800]
+TEST[DATE|TIME] Format:  txt
 Error: The fourbyte option (0x1aa3a00800) must be 4 bytes long.
 Usage:
   chifra abis [flags] <address> [address...]

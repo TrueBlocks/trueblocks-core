@@ -1,6 +1,7 @@
 chifra tokens  0xd26114cd6ee289accf82350c8d8487fedb8a0c07 --parts all
 TEST[DATE|TIME] Addrs2:  [0xd26114cd6ee289accf82350c8d8487fedb8a0c07]
 TEST[DATE|TIME] Parts:  [all]
+TEST[DATE|TIME] Format:  txt
 address	name	symbol	decimals	totalsupply
 
 level: 1

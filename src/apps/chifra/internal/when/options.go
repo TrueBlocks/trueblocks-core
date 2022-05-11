@@ -67,7 +67,7 @@ func (opts *WhenOptions) ToCmdLine() string {
 	return options
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *WhenOptions {
+func WhenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
 	opts := &WhenOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -95,7 +95,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *WhenOptions {
 			}
 		}
 	}
-	opts.Globals = *globals.FromRequest(w, r)
+	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
 	// EXISTING_CODE
 
@@ -104,9 +104,14 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *WhenOptions {
 
 func WhenFinishParse(args []string) *WhenOptions {
 	opts := GetOptions()
+	opts.Globals.FinishParse(args)
+	defFmt := "txt"
 	// EXISTING_CODE
 	opts.Blocks = args
 	// EXISTING_CODE
+	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
+		opts.Globals.Format = defFmt
+	}
 	return opts
 }
 

@@ -63,7 +63,7 @@ func (opts *TransactionsOptions) ToCmdLine() string {
 	return options
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *TransactionsOptions {
+func TransactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *TransactionsOptions {
 	opts := &TransactionsOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -89,7 +89,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *TransactionsOptions {
 			}
 		}
 	}
-	opts.Globals = *globals.FromRequest(w, r)
+	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
 	opts.Reconcile = ens.ConvertOneEns(opts.Globals.Chain, opts.Reconcile)
 	// EXISTING_CODE
@@ -99,10 +99,15 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *TransactionsOptions {
 
 func TransactionsFinishParse(args []string) *TransactionsOptions {
 	opts := GetOptions()
+	opts.Globals.FinishParse(args)
+	defFmt := "txt"
 	// EXISTING_CODE
 	opts.Transactions = args
 	opts.Reconcile = ens.ConvertOneEns(opts.Globals.Chain, opts.Reconcile)
 	// EXISTING_CODE
+	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
+		opts.Globals.Format = defFmt
+	}
 	return opts
 }
 

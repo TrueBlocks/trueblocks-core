@@ -1,6 +1,7 @@
 chifra blocks  --list 1000 1000
 TEST[DATE|TIME] Blocks:  [1000]
 TEST[DATE|TIME] List:  1000
+TEST[DATE|TIME] Format:  json
 Error: You must supply a non-zero value for the --list_count option with --list.
 Usage:
   chifra blocks [flags] <block> [block...]

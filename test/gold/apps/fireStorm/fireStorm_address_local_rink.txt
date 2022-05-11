@@ -2,4 +2,5 @@ chifra explore  0xf503017D7baF7FBC0fff7492b751025c6A78179b --local --chain rinke
 TEST[DATE|TIME] Terms:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
 TEST[DATE|TIME] Local:  true
 TEST[DATE|TIME] Chain:  rinkeby
+TEST[DATE|TIME] Format:  txt
 Opening http://localhost:1234/address/0xf503017d7baf7fbc0fff7492b751025c6a78179b

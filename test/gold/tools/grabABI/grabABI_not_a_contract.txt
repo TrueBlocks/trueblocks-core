@@ -1,4 +1,5 @@
 chifra abis  0xf1aa581f353005ba3765b81bf52d6b1c488c2101
 TEST[DATE|TIME] Addrs:  [0xf1aa581f353005ba3765b81bf52d6b1c488c2101]
+TEST[DATE|TIME] Format:  txt
 Address 0xf1aa581f353005ba3765b81bf52d6b1c488c2101 is not a smart contract. Skipping...
 encoding	type	name	signature	input_names	output_names

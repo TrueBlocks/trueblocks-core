@@ -1,3 +1,4 @@
 chifra explore  12
 TEST[DATE|TIME] Terms:  [12]
+TEST[DATE|TIME] Format:  txt
 Opening https://etherscan.io/block/0xc63f666315fa1eae17e354fab532aeeecf549be93e358737d0648f50d57083a0

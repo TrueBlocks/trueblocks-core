@@ -1,2 +1,3 @@
 chifra explore  
+TEST[DATE|TIME] Format:  txt
 Opening https://etherscan.io/

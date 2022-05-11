@@ -1,5 +1,6 @@
 chifra state  --proxy_for 0xbb2b8038a1640196fbe3e38816f3e67cba72d940
 TEST[DATE|TIME] ProxyFor:  0xbb2b8038a1640196fbe3e38816f3e67cba72d940
+TEST[DATE|TIME] Format:  txt
 Error: The --proxy_for option is only available with the --call option.
 Usage:
   chifra state [flags] <address> [address...] [block...]

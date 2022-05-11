@@ -2,6 +2,7 @@ chifra slurp  0xc8ebccc5f5689fa8659d83713341e5ad19349448 --types uncles 1-10
 TEST[DATE|TIME] Addrs:  [0xc8ebccc5f5689fa8659d83713341e5ad19349448]
 TEST[DATE|TIME] Blocks:  [1-10]
 TEST[DATE|TIME] Types:  [uncles]
+TEST[DATE|TIME] Format:  txt
 Processing: --types:uncles 0xc8ebccc5f5689fa8659d83713341e5ad19349448 1-10
 	Slurping 0xc8ebccc5f5689fa8659d83713341e5ad19349448
                                                                                                                         0x0	0x0	1	99998	0	1438270018	0xUncleReward	0x0	3750000000000000000	0	0	0	0		0	0	0	2015-07-30 15:26:58 UTC	3.750000000000000000

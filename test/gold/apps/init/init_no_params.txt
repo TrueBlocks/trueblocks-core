@@ -1,2 +1,3 @@
 chifra init  
+TEST[DATE|TIME] Format:  txt
 INFO[DATE|TIME] chifra init is not processed in test mode.

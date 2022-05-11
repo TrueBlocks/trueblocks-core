@@ -2,4 +2,5 @@ chifra names  --custom account_1 --match_case
 TEST[DATE|TIME] Terms:  [account_1]
 TEST[DATE|TIME] MatchCase:  true
 TEST[DATE|TIME] Custom:  true
+TEST[DATE|TIME] Format:  txt
 No results for --match_case --custom account_1

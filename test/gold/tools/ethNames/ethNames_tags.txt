@@ -1,5 +1,6 @@
 chifra names  --tags
 TEST[DATE|TIME] Tags:  true
+TEST[DATE|TIME] Format:  txt
 tags
 30-Contract:Optimism Goerli
 30-Contract:Optimism Kovan

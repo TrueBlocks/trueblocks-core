@@ -1,4 +1,8 @@
 chifra tokens  
+TEST[DATE|TIME] Format:  txt
+
+  Use either --parts or provide at least one token and one other account. Quitting...
+
 Purpose:
   Retrieve token balance(s) for one or more addresses at given block(s).
 
