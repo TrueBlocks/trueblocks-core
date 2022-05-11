@@ -1,17 +1,8 @@
 all:
-	@cd findFirst && make
-	@cd forEvery && make
-	@cd forEveryIndex && make
-	@cd simple && make
 	@cd sql && make
-	@cd txCounter && make
 	@cd dynamic && make
 
 clean:
-	@cd findFirst && make clean
-	@cd forEvery && make clean
-	@cd forEveryIndex && make clean
-	@cd simple && make clean
 	@cd sql && make clean
-	@cd txCounter && make clean
 	@cd dynamic && make clean
+	@cd ../../bin/examples && rm -f *
