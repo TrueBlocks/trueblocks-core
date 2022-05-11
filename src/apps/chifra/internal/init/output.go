@@ -43,6 +43,7 @@ func (opts *InitOptions) InitInternal() (err error, handled bool) {
 
 	// EXISTING_CODE
 	handled = true
+
 	err = opts.HandleInit()
 	// EXISTING_CODE
 

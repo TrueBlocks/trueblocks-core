@@ -43,23 +43,25 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	if opts.Check {
-		return opts.HandleChunksCheck(), true
-	}
-
 	handled = true
-	if opts.Extract == "blooms" {
-		err = opts.HandleChunksExtract(opts.showBloom)
 
-	} else if opts.Extract == "pins" {
-		err = opts.HandleChunksExtractPins()
-
-	} else if opts.Extract == "stats" {
-		err = opts.HandleChunksExtract(opts.showStats)
+	if opts.Check {
+		err = opts.HandleChunksCheck()
 
 	} else {
-		err = validate.Usage("Extractor for {0} not yet implemented.", opts.Extract)
+		if opts.Extract == "blooms" {
+			err = opts.HandleChunksExtract(opts.showBloom)
 
+		} else if opts.Extract == "pins" {
+			err = opts.HandleChunksExtractPins()
+
+		} else if opts.Extract == "stats" {
+			err = opts.HandleChunksExtract(opts.showStats)
+
+		} else {
+			err = validate.Usage("Extractor for {0} not yet implemented.", opts.Extract)
+
+		}
 	}
 	// EXISTING_CODE
 

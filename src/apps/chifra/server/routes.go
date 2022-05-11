@@ -42,10 +42,8 @@ import (
 
 // RouteList List every appearance of an address anywhere on the chain.
 func RouteList(w http.ResponseWriter, r *http.Request) {
-	if err, handled := listPkg.ServeList(w, r); err != nil {
+	if err, _ := listPkg.ServeList(w, r); err != nil {
 		output.RespondWithError(w, http.StatusInternalServerError, err)
-	} else if !handled {
-		CallOne(w, r, "chifra", "list", "list")
 	}
 }
 
@@ -60,10 +58,8 @@ func RouteExport(w http.ResponseWriter, r *http.Request) {
 
 // RouteMonitors Add, remove, clean, and list address monitors.
 func RouteMonitors(w http.ResponseWriter, r *http.Request) {
-	if err, handled := monitorsPkg.ServeMonitors(w, r); err != nil {
+	if err, _ := monitorsPkg.ServeMonitors(w, r); err != nil {
 		output.RespondWithError(w, http.StatusInternalServerError, err)
-	} else if !handled {
-		CallOne(w, r, "chifra", "monitors", "monitors")
 	}
 }
 
@@ -177,19 +173,15 @@ func RouteScrape(w http.ResponseWriter, r *http.Request) {
 
 // RouteChunks Manage and investigate chunks and bloom filters.
 func RouteChunks(w http.ResponseWriter, r *http.Request) {
-	if err, handled := chunksPkg.ServeChunks(w, r); err != nil {
+	if err, _ := chunksPkg.ServeChunks(w, r); err != nil {
 		output.RespondWithError(w, http.StatusInternalServerError, err)
-	} else if !handled {
-		CallOne(w, r, config.GetPathToCommands("chunkMan"), "", "chunks")
 	}
 }
 
 // RouteInit Initialize the TrueBlocks system by downloading from IPFS.
 func RouteInit(w http.ResponseWriter, r *http.Request) {
-	if err, handled := initPkg.ServeInit(w, r); err != nil {
+	if err, _ := initPkg.ServeInit(w, r); err != nil {
 		output.RespondWithError(w, http.StatusInternalServerError, err)
-	} else if !handled {
-		CallOne(w, r, "chifra", "init", "init")
 	}
 }
 

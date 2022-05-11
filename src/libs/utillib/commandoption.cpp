@@ -844,6 +844,7 @@ string_q CCommandOption::toGoPackage(void) const {
     return os.str();
 }
 
+//---------------------------------------------------------------------------------------------------
 const char* STR_ONEROUTE =
     "// [{GOROUTEFUNC}] [{DESCRIPTION}]\n"
     "func [{GOROUTEFUNC}](w http.ResponseWriter, r *http.Request) {\n"
@@ -855,11 +856,34 @@ const char* STR_ONEROUTE =
     "}";
 
 //---------------------------------------------------------------------------------------------------
+const char* STR_ONEROUTE2 =
+    "// [{GOROUTEFUNC}] [{DESCRIPTION}]\n"
+    "func [{GOROUTEFUNC}](w http.ResponseWriter, r *http.Request) {\n"
+    "\tif err, _ := [{API_ROUTE}]Pkg.Serve[{PROPER}](w, r); err != nil {\n"
+    "\t\toutput.RespondWithError(w, http.StatusInternalServerError, err)\n"
+    "\t}\n"
+    "}";
+
+//---------------------------------------------------------------------------------------------------
+bool isFinishCmd(const string_q& a) {
+    CStringArray tools = {"list", "monitors", "chunks", "init"};
+    for (auto tool : tools) {
+        if (contains(a, tool))
+            return true;
+    }
+    return false;
+}
+
+//---------------------------------------------------------------------------------------------------
 string_q CCommandOption::toGoCall(void) const {
     if (!isApiRoute(api_route))
         return "";
 
     string_q format = STR_ONEROUTE;
+    if (isFinishCmd(api_route)) {
+        format = STR_ONEROUTE2;
+    }
+
     if (goPortNewCode(api_route) || (tool.empty() || contains(tool, " ")) || api_route == "explore") {
         format = substitute(format, "CallOne(w, r, config.GetPathToCommands(\"[{TOOL}]\"), \"\", \"[{API_ROUTE}]\")",
                             "CallOne(w, r, \"chifra\", \"[{API_ROUTE}]\", \"[{API_ROUTE}]\")");

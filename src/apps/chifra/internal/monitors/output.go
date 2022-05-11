@@ -64,10 +64,11 @@ func (opts *MonitorsOptions) MonitorsInternal() (err error, handled bool) {
 
 	if opts.Clean {
 		err = opts.HandleClean()
-		return
-	}
 
-	err = opts.HandleCrudCommands()
+	} else {
+		err = opts.HandleCrudCommands()
+
+	}
 	// EXISTING_CODE
 
 	return
