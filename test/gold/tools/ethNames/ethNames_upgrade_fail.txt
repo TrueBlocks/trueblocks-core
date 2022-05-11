@@ -215,6 +215,12 @@ TEST[DATE|TIME] Format:  json
     "source": "EtherScan.io"
   },
   {
+    "tags": "31-Giveth:Project",
+    "address": "0x001bae3291db1f401771a1eaa8f0078534177bcc",
+    "name": "Sansum Diabetes Research Institute",
+    "source": "Tokenomics"
+  },
+  {
     "tags": "50-Tokens:ERC20",
     "address": "0x001f0aa5da15585e5b2305dbab2bac425ea71007",
     "name": "IPSX",
@@ -293,6 +299,12 @@ TEST[DATE|TIME] Format:  json
     "source": "OnChain"
   },
   {
+    "tags": "31-Giveth:Project",
+    "address": "0x0038eb9084ea8aa63dcb8fbdd63d8862f5bbb3a0",
+    "name": "The Turing Trust",
+    "source": "Tokenomics"
+  },
+  {
     "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x003f6b20bfa4b5cab701960ecf73859cb3c095fc",
     "name": "Name 0x003f6b20",
@@ -352,10 +364,10 @@ TEST[DATE|TIME] Format:  json
     "description": "Blockchain Prediction Markets Platform."
   },
   {
-    "tags": "31-Contracts:Giveth Project",
+    "tags": "31-Giveth:Project",
     "address": "0x006cfc89e7f521ce3290b200df9530dce911b896",
     "name": "St. Ignatius Martyr Catholic Church",
-    "source": "Giveth Website"
+    "source": "Tokenomics"
   },
   {
     "tags": "80-Malicious:Shanghai",
@@ -437,10 +449,10 @@ TEST[DATE|TIME] Format:  json
     "source": "WhaleWatch.io"
   },
   {
-    "tags": "31-Contracts:Giveth Project",
+    "tags": "31-Giveth:Project",
     "address": "0x009a82e5762189384bf2880a2d21f75e209eee12",
     "name": "UNRWA USA",
-    "source": "Giveth Website"
+    "source": "Tokenomics"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -513,6 +525,13 @@ TEST[DATE|TIME] Format:  json
     "source": "Gitcoin Website"
   },
   {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x00c83aecc790e8a4453e5dd3b0b4b3680501a7a7",
+    "name": "Skale",
+    "symbol": "18",
+    "source": "Giveth Docs"
+  },
+  {
     "tags": "31-Gitcoin:Grants",
     "address": "0x00cf36853aa4024fb5bf5cc377dfd85844b411a0",
     "name": "Grant 0143 Dappnode - Panvala League",
@@ -529,6 +548,12 @@ TEST[DATE|TIME] Format:  json
     "address": "0x00d0f137b51692d0ac708bde7b367a373865cffe",
     "name": "Zapper.Fi : Balancer Remove",
     "source": "EtherScan.io"
+  },
+  {
+    "tags": "31-Giveth:Project",
+    "address": "0x00d7e52cb140df6ab91291e289318ad62a18f80c",
+    "name": "ReFi In The Classroom",
+    "source": "Tokenomics"
   },
   {
     "tags": "90-Individuals:Twitter",
@@ -597,10 +622,10 @@ TEST[DATE|TIME] Format:  json
     "decimals": 8
   },
   {
-    "tags": "31-Contracts:Giveth Project",
+    "tags": "31-Giveth:Project",
     "address": "0x0109c0faae3f358bce232dff482e2d6eca1f4dab",
     "name": "FARE - Food Allergy Research & Education",
-    "source": "Giveth Website"
+    "source": "Tokenomics"
   },
   {
     "tags": "90-Individuals:Gitcoin Grants",
@@ -609,10 +634,10 @@ TEST[DATE|TIME] Format:  json
     "source": "Gitcoin Website"
   },
   {
-    "tags": "31-Contracts:Giveth Project",
+    "tags": "31-Giveth:Project",
     "address": "0x010f0c8b31ba0cefe2764c373fa23e8635becb60",
     "name": "Lutheran World Relief",
-    "source": "Giveth Website"
+    "source": "Tokenomics"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -648,10 +673,22 @@ TEST[DATE|TIME] Format:  json
     "source": "0xTracker"
   },
   {
+    "tags": "31-Giveth:Project",
+    "address": "0x012546d756867d4a88cd3322bbb72d787e49ebf3",
+    "name": "MetaGame",
+    "source": "Tokenomics"
+  },
+  {
     "tags": "37-SelfDestructed",
     "address": "0x0133aa47b6197d0ba090bf2cd96626eb71ffd13c",
     "name": "Chainlink BTC-ETH Aggregator",
     "source": "EtherScan.io"
+  },
+  {
+    "tags": "31-Giveth:Project",
+    "address": "0x013e247651a601535eda98528b2961813406d96e",
+    "name": "Free Arts NYC",
+    "source": "Tokenomics"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -663,10 +700,10 @@ TEST[DATE|TIME] Format:  json
     "description": "Paycent is a hybrid mobile app that lets users convert digital assets to fiat and vice versa in real time."
   },
   {
-    "tags": "31-Contracts:Giveth Project",
+    "tags": "31-Giveth:Project",
     "address": "0x014797cc3d15f6ea6bb220a32a465ac8f7a5e3b8",
     "name": "FUTURO NATIVO",
-    "source": "Giveth Website"
+    "source": "Tokenomics"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -820,10 +857,10 @@ TEST[DATE|TIME] Format:  json
     "decimals": 8
   },
   {
-    "tags": "31-Contracts:Giveth Project",
+    "tags": "31-Giveth:Project",
     "address": "0x01ca185fdcf1c2001c24e7e2362d3fc1b570ead3",
     "name": "National Association of Free and Charitable Clinics",
-    "source": "Giveth Website"
+    "source": "Tokenomics"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -849,16 +886,16 @@ TEST[DATE|TIME] Format:  json
     "decimals": 18
   },
   {
-    "tags": "31-Contracts:Giveth Project",
+    "tags": "31-Giveth:Project",
     "address": "0x01d6c3db752551baf985f5fc7d47db6f5c9b3a7b",
     "name": "The Jerusalem Hills Therapeutic Centers",
-    "source": "Giveth Website"
+    "source": "Tokenomics"
   },
   {
-    "tags": "31-Contracts:Giveth Project",
+    "tags": "31-Giveth:Project",
     "address": "0x01da64059bc5a81ec78362505faf7bb459c575e4",
     "name": "CARITAS Aotearoa New Zealand",
-    "source": "Giveth Website"
+    "source": "Tokenomics"
   },
   {
     "tags": "30-Contracts",
@@ -995,6 +1032,12 @@ TEST[DATE|TIME] Format:  json
     "decimals": 18
   },
   {
+    "tags": "31-Giveth:Project",
+    "address": "0x0240626490620f3b80bd7cfb1687309704fbbdd3",
+    "name": "LGBTQ Freedom Fund",
+    "source": "Tokenomics"
+  },
+  {
     "tags": "50-Tokens:ERC20",
     "address": "0x0246890c9278d0a786812dda4dd20361ed13cda0",
     "name": "Nashu Inu",
@@ -1003,10 +1046,16 @@ TEST[DATE|TIME] Format:  json
     "decimals": 18
   },
   {
-    "tags": "31-Contracts:Giveth Project",
+    "tags": "31-Giveth:Project",
+    "address": "0x0249317d94b3b85ac198cfd1232c351c551a8d41",
+    "name": "Autism Alliance of Michigan (AAoM)",
+    "source": "Tokenomics"
+  },
+  {
+    "tags": "31-Giveth:Project",
     "address": "0x024bd890b037adbbfe1545d595490f65361c4a66",
     "name": "Clearway Clinic",
-    "source": "Giveth Website"
+    "source": "Tokenomics"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1093,6 +1142,12 @@ TEST[DATE|TIME] Format:  json
     "decimals": 4
   },
   {
+    "tags": "31-Giveth:Project",
+    "address": "0x02b1cb4de1af0d10a53d0efc243e56f6baa39c1a",
+    "name": "basinDAO",
+    "source": "Tokenomics"
+  },
+  {
     "tags": "91-Early:Addresses",
     "address": "0x02b2101903eb6a51518e63e84b785180859fda9d",
     "name": "Thewhalegame",
@@ -1112,10 +1167,10 @@ TEST[DATE|TIME] Format:  json
     "source": "EtherScan.io"
   },
   {
-    "tags": "31-Contracts:Giveth Project",
+    "tags": "31-Giveth:Project",
     "address": "0x02c2ec416601daf7eb2c69c8ed3000457945fa20",
     "name": "Merijaan — for a plastic free world",
-    "source": "Giveth Website"
+    "source": "Tokenomics"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1173,10 +1228,10 @@ TEST[DATE|TIME] Format:  json
     "source": "EtherScan.io"
   },
   {
-    "tags": "31-Contracts:Giveth Project",
+    "tags": "31-Giveth:Project",
     "address": "0x02e0ea1bd6bbd1f5a30b51903b5987f187a2dfcc",
     "name": "Childrens Cancer Association",
-    "source": "Giveth Website"
+    "source": "Tokenomics"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1300,79 +1355,14 @@ TEST[DATE|TIME] Format:  json
     "description": "The ICO market is becoming more regulated, but this isn‚Äö√Ñ√¥t stopping scams from penetrating the cryptocurrency community. That is why we created the Founding Community Bitdepositary with integrated payment systems."
   },
   {
-    "tags": "31-Contracts:Giveth Project",
+    "tags": "31-Giveth:Project",
     "address": "0x033618a08649300184ec221c6d825416dbee8f92",
     "name": "World Vision",
-    "source": "Giveth Website"
+    "source": "Tokenomics"
   },
   {
     "tags": "31-Gitcoin:Grants",
     "address": "0x035032655b5b3784d359b56eb82c803bd971c582",
     "name": "Grant 2800 - LogicBeach Explainer Series",
     "source": "https://gitcoin.co/grants/2800/logicbeach-explainer-series"
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x03552d005d0f4262bf2d85fa2a3263541d4059c1",
-    "name": "Miller Real Estate Holdings",
-    "symbol": "RENT",
-    "source": "On chain",
-    "decimals": 6
-  },
-  {
-    "tags": "30-Contracts",
-    "address": "0x0358629bd27fa559b88d0f41ea3da28d057c3414",
-    "name": "Arbitrage Bot",
-    "source": "0xTracker"
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x0360b415b56bd77def7ffd64ab9c0a9f63a84e4f",
-    "name": "NL",
-    "symbol": "NL Token",
-    "source": "On chain",
-    "decimals": 18
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x036407f23d5e1c1486f7488332cf54bf06e5f09f",
-    "name": "Alphabit",
-    "symbol": "ABC",
-    "source": "On chain",
-    "decimals": 18
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x036ea7048a4c1f28b299b9dd9e3c9fe9022e2a2a",
-    "name": "ShibAkita Inu",
-    "symbol": "SHIBAKITA",
-    "source": "On chain",
-    "decimals": 18
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x0371a82e4a9d0a4312f3ee2ac9c6958512891372",
-    "name": "Student Coin",
-    "symbol": "STU",
-    "source": "On chain",
-    "decimals": 18,
-    "description": "Student jobs marketplace."
-  },
-  {
-    "tags": "31-Gitcoin:Grants",
-    "address": "0x03798c0d62e6a0b0548114fb6241efa07ca4122d",
-    "name": "Grant 4257 - Reputable DAO",
-    "source": "https://gitcoin.co/grants/4257/reputable-dao"
-  },
-  {
-    "tags": "31-Gitcoin:Grants",
-    "address": "0x037e414abacc799a598314153509b6b967608bf9",
-    "name": "Grant 3059 - CO2KEN — Carbon as a money lego",
-    "source": "https://gitcoin.co/grants/3059/co2ken-carbon-as-a-money-lego"
-  },
-  {
-    "tags": "37-SelfDestructed",
-    "address": "0x037e8f2125bf532f3e228991e051c8a7253b642c",
-    "name": "Chainlink DAI-ETH Aggregator",
-    "source": "EtherScan.io"
   }] }
