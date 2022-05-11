@@ -20,13 +20,13 @@ bool COptions::handle_traversers(void) {
     if (!loadNames())
         return usage("Could not load names database.");
 
-    auto libFactory = lib.get_function<CTraverser*(void)>("makeTraverser");
+    auto libFactory = lib.get_function<CTraverser*(uint32_t)>("makeTraverser");
     if (!libFactory) {
         LOG_ERR("Could not instantiate traverser. Quitting.");
         return false;
     }
     LOG_INFO(bBlue, "Instantiating traverser", cOff);
-    CTraverser* trav = libFactory();
+    CTraverser* trav = libFactory(getVersionNum());
     if (trav->dataFunc == noopFunc || trav->dataFunc == nullptr)
         trav->dataFunc = loadTx_Func;
     trav->traverserRange = exportRange;

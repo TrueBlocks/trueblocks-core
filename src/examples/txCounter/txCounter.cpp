@@ -32,7 +32,7 @@ class CCounter {
         string_q contents;
         asciiFileToString("./data/countsByWeek.txt", contents);
         if (contents.empty()) {
-            cerr << "Error: /data/countsByWeek.txt contents is empty" << '\n';
+            cerr << "Error: ./data/countsByWeek.txt contents is empty" << '\n';
             return;
         }
         CStringArray lines;

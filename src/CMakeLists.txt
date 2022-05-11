@@ -69,6 +69,7 @@ set (BASE_INCLUDE
 
 # ----------------------------------------------------------------------------------------
 set (BIN_DIR ${CMAKE_SOURCE_DIR}/../bin)
+set (EXAMPLES_DIR ${CMAKE_SOURCE_DIR}/../bin/examples)
 set (BIN_CMDS_DIR $ENV{HOME}/.local/bin/chifra)
 set (BIN_TEST_DIR ${BIN_CMDS_DIR}/test)
 
@@ -95,4 +96,6 @@ add_subdirectory (libs)
 add_subdirectory (tools)
 add_subdirectory (apps)
 add_subdirectory (dev_tools)
+add_subdirectory (examples)
 add_subdirectory (other)
+
