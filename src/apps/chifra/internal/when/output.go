@@ -11,65 +11,50 @@ package whenPkg
 // EXISTING_CODE
 import (
 	"net/http"
-	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/spf13/cobra"
 )
 
 // EXISTING_CODE
 
-func RunWhen(cmd *cobra.Command, args []string) error {
+// RunWhen handles the when command for the command line. Returns error only as per cobra.
+func RunWhen(cmd *cobra.Command, args []string) (err error) {
 	opts := WhenFinishParse(args)
-
-	err := opts.ValidateWhen()
-	if err != nil {
-		return err
-	}
-
 	// EXISTING_CODE
-	if opts.List {
-		err := opts.HandleWhenList()
-		if err != nil {
-			return err
-		}
-		if len(opts.Blocks) == 0 {
-			return nil
-		}
-		// continue but don't show headers
-		opts.List = false
-		opts.Globals.NoHeader = true
-	}
-
-	return opts.Globals.PassItOn("whenBlock", opts.ToCmdLine())
 	// EXISTING_CODE
+	err, _ = opts.WhenInternal()
+	return
 }
 
-func ServeWhen(w http.ResponseWriter, r *http.Request) bool {
-	opts := FromRequest(w, r)
+// ServeWhen handles the when command for the API. Returns error and a bool if handled
+func ServeWhen(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
+	opts := WhenFinishParseApi(w, r)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return opts.WhenInternal()
+}
 
-	err := opts.ValidateWhen()
+// WhenInternal handles the internal workings of the when command.  Returns error and a bool if handled
+func (opts *WhenOptions) WhenInternal() (err error, handled bool) {
+	err = opts.ValidateWhen()
 	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return true
+		return err, true
 	}
 
 	// EXISTING_CODE
 	if opts.List {
-		err = opts.HandleWhenList()
-		if err != nil {
-			logger.Fatal("Cannot generate when list", err)
-			return false
-		}
-		if len(opts.Blocks) == 0 {
-			return true
-		}
-		// continue but don't show headers or --list
-		r.URL.RawQuery = strings.Replace(r.URL.RawQuery, "list", "noop", -1)
-		r.URL.RawQuery += "&no_header"
+		return opts.HandleWhenList(), true
 	}
-	return false
+
+	if opts.Globals.ApiMode {
+		return nil, false
+	}
+
+	handled = true
+	err = opts.Globals.PassItOn("whenBlock", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
 	// EXISTING_CODE
+
+	return
 }
 
 // EXISTING_CODE

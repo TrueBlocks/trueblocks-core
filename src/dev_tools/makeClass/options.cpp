@@ -225,7 +225,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // We need the template files
-    CStringArray templs = {"", "blank.yaml", "blank.cpp", "blank.h", "blank.go", "blank_options.go"};
+    CStringArray templs = {"", "blank.yaml", "blank.cpp", "blank.h", "blank.go.tmpl", "blank_options.go.tmpl"};
     for (auto temp : templs) {
         if (!fileExists(getPathToTemplates(temp))) {
             return makeError(ERR_CONFIGMISSING, getPathToTemplates(temp));

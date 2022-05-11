@@ -20,15 +20,15 @@ import (
 
 type ScrapeOptions struct {
 	Modes        []string
-	Action       string
 	Sleep        float64
 	Pin          bool
+	BlockCnt     uint64
+	Reset        uint64
+	Action       string
 	Publish      bool
 	Blaze        bool
-	BlockCnt     uint64
 	BlockChanCnt uint64
 	AddrChanCnt  uint64
-	Reset        uint64
 	AppsPerChunk uint64
 	UnripeDist   uint64
 	SnapToGrid   uint64
@@ -44,15 +44,15 @@ var scrapeCmdLineOptions ScrapeOptions
 
 func (opts *ScrapeOptions) TestLog() {
 	logger.TestLog(len(opts.Modes) > 0, "Modes: ", opts.Modes)
-	logger.TestLog(len(opts.Action) > 0, "Action: ", opts.Action)
 	logger.TestLog(opts.Sleep != 14, "Sleep: ", opts.Sleep)
 	logger.TestLog(opts.Pin, "Pin: ", opts.Pin)
+	logger.TestLog(opts.BlockCnt != 2000, "BlockCnt: ", opts.BlockCnt)
+	logger.TestLog(opts.Reset != utils.NOPOS, "Reset: ", opts.Reset)
+	logger.TestLog(len(opts.Action) > 0, "Action: ", opts.Action)
 	logger.TestLog(opts.Publish, "Publish: ", opts.Publish)
 	logger.TestLog(opts.Blaze, "Blaze: ", opts.Blaze)
-	logger.TestLog(opts.BlockCnt != 2000, "BlockCnt: ", opts.BlockCnt)
 	logger.TestLog(opts.BlockChanCnt != 10, "BlockChanCnt: ", opts.BlockChanCnt)
 	logger.TestLog(opts.AddrChanCnt != 20, "AddrChanCnt: ", opts.AddrChanCnt)
-	logger.TestLog(opts.Reset != utils.NOPOS, "Reset: ", opts.Reset)
 	logger.TestLog(opts.AppsPerChunk != 200000, "AppsPerChunk: ", opts.AppsPerChunk)
 	logger.TestLog(opts.UnripeDist != 28, "UnripeDist: ", opts.UnripeDist)
 	logger.TestLog(opts.SnapToGrid != 100000, "SnapToGrid: ", opts.SnapToGrid)
@@ -68,11 +68,14 @@ func (opts *ScrapeOptions) ToCmdLine() string {
 	if opts.Pin {
 		options += " --pin"
 	}
-	if opts.Publish {
-		options += " --publish"
-	}
 	if opts.BlockCnt != 2000 {
 		options += (" --block_cnt " + fmt.Sprintf("%d", opts.BlockCnt))
+	}
+	if opts.Reset != utils.NOPOS {
+		options += (" --reset " + fmt.Sprintf("%d", opts.Reset))
+	}
+	if opts.Publish {
+		options += " --publish"
 	}
 	if opts.BlockChanCnt != 10 {
 		options += (" --block_chan_cnt " + fmt.Sprintf("%d", opts.BlockChanCnt))
@@ -80,21 +83,18 @@ func (opts *ScrapeOptions) ToCmdLine() string {
 	if opts.AddrChanCnt != 20 {
 		options += (" --addr_chan_cnt " + fmt.Sprintf("%d", opts.AddrChanCnt))
 	}
-	if opts.Reset != utils.NOPOS {
-		options += (" --reset " + fmt.Sprintf("%d", opts.Reset))
-	}
 	options += " " + strings.Join(opts.Modes, " ")
 	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *ScrapeOptions {
+func ScrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions {
 	opts := &ScrapeOptions{}
 	opts.Sleep = 14
 	opts.BlockCnt = 2000
+	opts.Reset = utils.NOPOS
 	opts.BlockChanCnt = 10
 	opts.AddrChanCnt = 20
-	opts.Reset = utils.NOPOS
 	opts.AppsPerChunk = 200000
 	opts.UnripeDist = 28
 	opts.SnapToGrid = 100000
@@ -108,24 +108,24 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ScrapeOptions {
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Modes = append(opts.Modes, s...)
 			}
-		case "action":
-			opts.Action = value[0]
 		case "sleep":
 			opts.Sleep = globals.ToFloat64(value[0])
 		case "pin":
 			opts.Pin = true
+		case "blockCnt":
+			opts.BlockCnt = globals.ToUint64(value[0])
+		case "reset":
+			opts.Reset = globals.ToUint64(value[0])
+		case "action":
+			opts.Action = value[0]
 		case "publish":
 			opts.Publish = true
 		case "blaze":
 			opts.Blaze = true
-		case "blockCnt":
-			opts.BlockCnt = globals.ToUint64(value[0])
 		case "blockChanCnt":
 			opts.BlockChanCnt = globals.ToUint64(value[0])
 		case "addrChanCnt":
 			opts.AddrChanCnt = globals.ToUint64(value[0])
-		case "reset":
-			opts.Reset = globals.ToUint64(value[0])
 		case "appsPerChunk":
 			opts.AppsPerChunk = globals.ToUint64(value[0])
 		case "unripeDist":
@@ -147,7 +147,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ScrapeOptions {
 			}
 		}
 	}
-	opts.Globals = *globals.FromRequest(w, r)
+	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
 	// EXISTING_CODE
 
@@ -156,9 +156,14 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ScrapeOptions {
 
 func ScrapeFinishParse(args []string) *ScrapeOptions {
 	opts := GetOptions()
+	opts.Globals.FinishParse(args)
+	defFmt := "txt"
 	// EXISTING_CODE
 	opts.Modes = args
 	// EXISTING_CODE
+	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
+		opts.Globals.Format = defFmt
+	}
 	return opts
 }
 

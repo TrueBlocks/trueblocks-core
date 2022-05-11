@@ -16,6 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -147,29 +148,29 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 		}
 	}
 
-	output := string(out[:])
+	outp := string(out[:])
 	// connectionPool.broadcast <- &Message{
 	// 	Action:  CommandOutputMessage,
 	// 	ID:      tbCmd,
-	// 	Content: string(output),
+	// 	Content: string(outp),
 	// }
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	if strings.Contains(output, "Error:") {
+	if strings.Contains(outp, "Error:") {
 		// Remove Cobra's "Error:\n" decorator
-		parsed := strings.Replace(output, "Error:", "", 1)
+		parsed := strings.Replace(outp, "Error:", "", 1)
 		parsed = strings.Trim(parsed, " \n")
 		// TODO: Need this to build. Probably not right
 		var unused globals.GlobalOptions
 		unused.Chain = chain
 		unused.TestMode = utils.IsTestModeServer(r)
 		unused.Writer = w
-		unused.RespondWithError(w, http.StatusBadRequest, errors.New(parsed))
+		output.RespondWithError(w, http.StatusBadRequest, errors.New(parsed))
 		return
 	}
-	if strings.Contains(output, "\"errors\":") {
+	if strings.Contains(outp, "\"errors\":") {
 		w.WriteHeader(http.StatusBadRequest)
 	} else {
 		w.WriteHeader(http.StatusOK)
 	}
-	fmt.Fprint(w, output)
+	fmt.Fprint(w, outp)
 }

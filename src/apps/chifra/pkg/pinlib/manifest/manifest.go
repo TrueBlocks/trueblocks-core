@@ -4,9 +4,7 @@
 
 package manifest
 
-import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-)
+import "encoding/json"
 
 type IpfsHash = string
 
@@ -14,26 +12,36 @@ type PinDescriptor struct {
 	FileName  string   `json:"fileName"`
 	BloomHash IpfsHash `json:"bloomHash"`
 	IndexHash IpfsHash `json:"indexHash"`
+	// BloomChecksum string   `json:"bloomChecksum"`
+	// IndexChecksum string   `json:"indexChecksum"`
+	// file size (gzipped file)
+	// md5
 }
 
 type Manifest struct {
-	// TODO: This structure will be updated with better data shortly
-	FileName           string        `json:"fileName"`
-	IndexFormat        IpfsHash      `json:"indexFormat"`
-	BloomFormat        IpfsHash      `json:"bloomFormat"`
-	CommitHash         string        `json:"commitHash"`
-	PreviousHash       IpfsHash      `json:"prevHash"`
-	NewBlockRange      ManifestRange `json:"newBlockRange"`
-	PreviousBlockRange ManifestRange `json:"prevBlockRange"`
-	NewPins            PinsList      `json:"newPins"`
-	PreviousPins       PinsList      `json:"prevPins"`
+	Version     json.Number   `json:"version"`
+	Chain       string        `json:"chain"`
+	ChainId     json.Number   `json:"chainId"` // not sure
+	IndexFormat IpfsHash      `json:"indexFormat"`
+	BloomFormat IpfsHash      `json:"bloomFormat"`
+	CommitHash  string        `json:"commitHash"`
+	BlockRange  ManifestRange `json:"blockRange"`
+	Names       IpfsHash      `json:"names"`
+	Timestamps  IpfsHash      `json:"timestamps"`
+	Pins        PinsList      `json:"pins"`
+}
+
+// This type is used to carry CSV layout information
+type CsvFormatted struct {
+	Header  []string
+	Content [][]string
 }
 
 type PinsList []PinDescriptor
 
 // GetCsvOutput returns data for CSV and TSV formats
-func (pl *PinsList) GetCsvOutput() *globals.CsvFormatted {
-	data := &globals.CsvFormatted{
+func (pl *PinsList) GetCsvOutput() *CsvFormatted {
+	data := &CsvFormatted{
 		Header: []string{
 			"fileName", "bloomHash", "indexHash",
 		},

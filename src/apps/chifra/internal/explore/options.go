@@ -48,7 +48,7 @@ func (opts *ExploreOptions) ToCmdLine() string {
 	return options
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *ExploreOptions {
+func ExploreFinishParseApi(w http.ResponseWriter, r *http.Request) *ExploreOptions {
 	opts := &ExploreOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -68,7 +68,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ExploreOptions {
 			}
 		}
 	}
-	opts.Globals = *globals.FromRequest(w, r)
+	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
 	opts.Terms = ens.ConvertEns(opts.Globals.Chain, opts.Terms)
 	// EXISTING_CODE
@@ -78,9 +78,14 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ExploreOptions {
 
 func ExploreFinishParse(args []string) *ExploreOptions {
 	opts := GetOptions()
+	opts.Globals.FinishParse(args)
+	defFmt := "txt"
 	// EXISTING_CODE
 	opts.Terms = ens.ConvertEns(opts.Globals.Chain, args)
 	// EXISTING_CODE
+	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
+		opts.Globals.Format = defFmt
+	}
 	return opts
 }
 

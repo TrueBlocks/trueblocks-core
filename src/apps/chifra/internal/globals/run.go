@@ -16,15 +16,15 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
 
-func (opts *GlobalOptions) PassItOn(path string, flags string) error {
+func (opts *GlobalOptions) PassItOn(path string, chain, flags, globalFlags string) error {
 	options := flags
-	options += opts.ToCmdLine()
+	options += globalFlags
 
 	var wg sync.WaitGroup
 	wg.Add(2)
 
 	var env config.ConfigEnv
-	env.Chain = opts.Chain
+	env.Chain = chain
 	env.ConfigPath = config.GetPathToRootConfig()
 	env.DefaultChain = config.GetDefaultChain()
 	env.CachePath = config.GetPathToCache(env.Chain)

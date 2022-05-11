@@ -16,20 +16,41 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
 // EXISTING_CODE
 
-func RunExplore(cmd *cobra.Command, args []string) error {
+// RunExplore handles the explore command for the command line. Returns error only as per cobra.
+func RunExplore(cmd *cobra.Command, args []string) (err error) {
 	opts := ExploreFinishParse(args)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	err, _ = opts.ExploreInternal()
+	return
+}
 
-	err := opts.ValidateExplore()
+// ServeExplore handles the explore command for the API. Returns error and a bool if handled
+func ServeExplore(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
+	opts := ExploreFinishParseApi(w, r)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return opts.ExploreInternal()
+}
+
+// ExploreInternal handles the internal workings of the explore command.  Returns error and a bool if handled
+func (opts *ExploreOptions) ExploreInternal() (err error, handled bool) {
+	err = opts.ValidateExplore()
 	if err != nil {
-		return err
+		return err, true
 	}
 
 	// EXISTING_CODE
+	if opts.Globals.ApiMode {
+		return validate.Usage("Cannot use explore route in API mode."), true
+	}
+
 	for _, url := range urls {
 		ret := url.getUrl(opts)
 		fmt.Printf("Opening %s\n", ret)
@@ -37,23 +58,9 @@ func RunExplore(cmd *cobra.Command, args []string) error {
 			utils.OpenBrowser(ret)
 		}
 	}
-
-	return nil
 	// EXISTING_CODE
-}
 
-func ServeExplore(w http.ResponseWriter, r *http.Request) bool {
-	opts := FromRequest(w, r)
-
-	err := opts.ValidateExplore()
-	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return true
-	}
-
-	// EXISTING_CODE
-	return false
-	// EXISTING_CODE
+	return
 }
 
 // EXISTING_CODE

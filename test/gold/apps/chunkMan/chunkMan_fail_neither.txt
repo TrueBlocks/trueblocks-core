@@ -1,4 +1,5 @@
 chifra chunks  
+TEST[DATE|TIME] Format:  txt
 Error: Please choose at least one of --extract or --check.
 Usage:
   chifra chunks [flags] <block> [block...]

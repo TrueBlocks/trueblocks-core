@@ -41,6 +41,7 @@ class CBlock : public CBaseNode {
     CTransactionArray transactions;
     CStringArray tx_hashes;
     string_q name;
+    uint64_t unclesCnt;
 
   public:
     CBlock(void);
@@ -124,6 +125,7 @@ inline void CBlock::initialize(void) {
     transactions.clear();
     tx_hashes.clear();
     name = "";
+    unclesCnt = 0;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -147,6 +149,7 @@ inline void CBlock::duplicate(const CBlock& bl) {
     transactions = bl.transactions;
     tx_hashes = bl.tx_hashes;
     name = bl.name;
+    unclesCnt = bl.unclesCnt;
 
     // EXISTING_CODE
     finishParse();

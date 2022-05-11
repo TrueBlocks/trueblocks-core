@@ -1,35 +1,35 @@
-{
-  "data": [
-    {
-      "name": "PairCreated",
-      "type": "event",
-      "stateMutability": "nonpayable",
-      "signature": "PairCreated(address,address,address,uint256)",
-      "encoding": "0x0d3648bd0f6ba80134a33ba9275ac585d9d315f0ad8355cddefde31afa28d0e9",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "token0",
-          "indexed": true,
-          "internalType": "address"
-        },
-        {
-          "type": "address",
-          "name": "token1",
-          "indexed": true,
-          "internalType": "address"
-        },
-        {
-          "type": "address",
-          "name": "pair",
-          "internalType": "address"
-        },
-        {
-          "type": "uint256",
-          "name": "val0",
-          "internalType": "uint256"
-        }
-      ]
-    }
-  ]
-}
+                 {
+                   "data": [
+                     {
+                       "name": "PairCreated",
+                       "type": "event",
+                       "stateMutability": "nonpayable",
+                       "signature": "PairCreated(address,address,address,uint256)",
+                       "encoding": "0x0d3648bd0f6ba80134a33ba9275ac585d9d315f0ad8355cddefde31afa28d0e9",
+                       "inputs": [
+                         {
+                           "type": "address",
+                           "name": "token0",
+                           "indexed": true,
+                           "internalType": "address"
+                         },
+                         {
+                           "type": "address",
+                           "name": "token1",
+                           "indexed": true,
+                           "internalType": "address"
+                         },
+                         {
+                           "type": "address",
+                           "name": "pair",
+                           "internalType": "address"
+                         },
+                         {
+                           "type": "uint256",
+                           "name": "val_0",
+                           "internalType": "uint256"
+                         }
+                       ]
+                     }
+                   ]
+                 }

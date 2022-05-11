@@ -12,42 +12,45 @@ package statusPkg
 import (
 	"net/http"
 
-	// "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/spf13/cobra"
 )
 
-// func GreenTxt(txt string) string {
-// 	return colors.Green + txt + colors.Off
-// }
-
 // EXISTING_CODE
 
-func RunStatus(cmd *cobra.Command, args []string) error {
+// RunStatus handles the status command for the command line. Returns error only as per cobra.
+func RunStatus(cmd *cobra.Command, args []string) (err error) {
 	opts := StatusFinishParse(args)
-
-	err := opts.ValidateStatus()
-	if err != nil {
-		return err
-	}
-
 	// EXISTING_CODE
-	return opts.Globals.PassItOn("cacheStatus", opts.ToCmdLine())
 	// EXISTING_CODE
+	err, _ = opts.StatusInternal()
+	return
 }
 
-func ServeStatus(w http.ResponseWriter, r *http.Request) bool {
-	opts := FromRequest(w, r)
+// ServeStatus handles the status command for the API. Returns error and a bool if handled
+func ServeStatus(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
+	opts := StatusFinishParseApi(w, r)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return opts.StatusInternal()
+}
 
-	err := opts.ValidateStatus()
+// StatusInternal handles the internal workings of the status command.  Returns error and a bool if handled
+func (opts *StatusOptions) StatusInternal() (err error, handled bool) {
+	err = opts.ValidateStatus()
 	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return true
+		return err, true
 	}
 
 	// EXISTING_CODE
-	// opts.Globals.PassItOn("cacheStatus", opts.ToCmdLine())
-	return false
+	if opts.Globals.ApiMode {
+		return nil, false
+	}
+
+	handled = true
+	err = opts.Globals.PassItOn("cacheStatus", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
 	// EXISTING_CODE
+
+	return
 }
 
 // EXISTING_CODE

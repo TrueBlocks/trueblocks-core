@@ -57,7 +57,7 @@ func (opts *MonitorsOptions) ToCmdLine() string {
 	return options
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *MonitorsOptions {
+func MonitorsFinishParseApi(w http.ResponseWriter, r *http.Request) *MonitorsOptions {
 	opts := &MonitorsOptions{}
 	opts.FirstBlock = 0
 	opts.LastBlock = utils.NOPOS
@@ -87,7 +87,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *MonitorsOptions {
 			}
 		}
 	}
-	opts.Globals = *globals.FromRequest(w, r)
+	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
 	opts.Addrs = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
 	// EXISTING_CODE
@@ -97,9 +97,14 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *MonitorsOptions {
 
 func MonitorsFinishParse(args []string) *MonitorsOptions {
 	opts := GetOptions()
+	opts.Globals.FinishParse(args)
+	defFmt := "txt"
 	// EXISTING_CODE
 	opts.Addrs = ens.ConvertEns(opts.Globals.Chain, args)
 	// EXISTING_CODE
+	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
+		opts.Globals.Format = defFmt
+	}
 	return opts
 }
 

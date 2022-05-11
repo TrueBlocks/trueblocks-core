@@ -1,0 +1,8 @@
+[settings]
+class = CListStats
+fields = liststats.csv
+includes = etherlib.h
+doc_group = 01-Accounts
+doc_descr = data of the appropriate type from a single appearance of an address or the count of same
+doc_api = 06-listStats
+doc_producer = list, export

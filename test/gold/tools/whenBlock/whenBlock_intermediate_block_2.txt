@@ -1,4 +1,5 @@
 chifra when  2677160
 TEST[DATE|TIME] Blocks:  [2677160]
+TEST[DATE|TIME] Format:  txt
 blockNumber	timestamp	date	name
 2677160	1479863166	2016-11-23 01:06:06 UTC

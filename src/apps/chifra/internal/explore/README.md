@@ -18,7 +18,7 @@ Flags:
   -h, --help     display this help screen
 ```
 
-Other Options
+#### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.
 

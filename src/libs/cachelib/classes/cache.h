@@ -31,6 +31,7 @@ class CCache : public CBaseNode {
     uint64_t nFolders;
     uint64_t sizeInBytes;
     bool isValid;
+    CCacheEntryArray items;
 
   public:
     CCache(void);
@@ -39,6 +40,8 @@ class CCache : public CBaseNode {
     CCache& operator=(const CCache& ca);
 
     DECLARE_NODE(CCache);
+
+    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     void noteFile(const string_q& p) {
@@ -113,6 +116,7 @@ inline void CCache::initialize(void) {
     nFolders = 0;
     sizeInBytes = 0;
     isValid = false;
+    items.clear();
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -129,6 +133,7 @@ inline void CCache::duplicate(const CCache& ca) {
     nFolders = ca.nFolders;
     sizeInBytes = ca.sizeInBytes;
     isValid = ca.isValid;
+    items = ca.items;
 
     // EXISTING_CODE
     // EXISTING_CODE

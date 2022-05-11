@@ -2,7 +2,7 @@
 title: "Chain data"
 description: ""
 lead: ""
-date: 2021-12-18T07:30:06
+date: 2022-05-02T07:09:41
 lastmod:
   - :git
   - lastmod
@@ -46,6 +46,7 @@ Block data is made of the following data fields:
 | transactions  | a possibly empty array of transactions or transaction hashes  | CTransactionArray |
 | baseFeePerGas | the base fee for this block                                   | wei               |
 | finalized     | flag indicating the system considers this data final          | bool              |
+| unclesCnt     | the number of uncles in this block                            | uint64            |
 
 
 ## Transaction
@@ -67,8 +68,8 @@ Transaction data is made of the following data fields:
 
 | Field            | Description                                                                                           | Type                 |
 | ---------------- | ----------------------------------------------------------------------------------------------------- | -------------------- |
-| hash             | The hash of the transaction                                                                           | hash                 |
 | gasPrice         | the number of wei per unit of gas the sender is willing to spend                                      | gas                  |
+| hash             | The hash of the transaction                                                                           | hash                 |
 | blockHash        | The hash of the block containing this transaction                                                     | hash                 |
 | blockNumber      | the number of the block                                                                               | blknum               |
 | transactionIndex | the zero-indexed position of the transaction in the block                                             | blknum               |
@@ -85,6 +86,9 @@ Transaction data is made of the following data fields:
 | compressedTx     | truncated, more readable version of the articulation                                                  | string               |
 | hasToken         | `true` if the transaction is token related, `false` otherwise                                         | uint8                |
 | finalized        | flag indicating the system considers this data final                                                  | bool                 |
+| extraData        |                                                                                                       | string               |
+| isError          |                                                                                                       | bool                 |
+| date             |                                                                                                       | date                 |
 
 
 ## Receipt

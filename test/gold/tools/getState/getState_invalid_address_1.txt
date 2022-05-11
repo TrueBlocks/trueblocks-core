@@ -1,5 +1,6 @@
 chifra state  0x12
 TEST[DATE|TIME] Blocks:  [0x12]
+TEST[DATE|TIME] Format:  txt
 Error: Please specify at least one valid Ethereum address.
 Usage:
   chifra state [flags] <address> [address...] [block...]

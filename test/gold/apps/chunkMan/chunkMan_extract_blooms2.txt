@@ -1,5 +1,6 @@
 chifra chunks  --extract blooms
 TEST[DATE|TIME] Extract:  blooms
+TEST[DATE|TIME] Format:  txt
 range: 000000000-000000000
 nBlooms: 1
 byteWidth: 131072

@@ -1,5 +1,6 @@
 chifra blocks  2222222 2332332
 TEST[DATE|TIME] Blocks:  [2222222 2332332]
+TEST[DATE|TIME] Format:  json
 { "data": [
 {
   "gasLimit": 4704588,

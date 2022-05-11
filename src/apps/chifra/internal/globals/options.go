@@ -6,6 +6,7 @@ package globals
 
 import (
 	"fmt"
+	"io"
 	"net/http"
 	"os"
 
@@ -34,7 +35,7 @@ type GlobalOptions struct {
 	Format   string
 	TestMode bool
 	ApiMode  bool
-	Writer   http.ResponseWriter
+	Writer   io.Writer
 }
 
 func (opts *GlobalOptions) TestLog() {
@@ -161,10 +162,10 @@ func (opts *GlobalOptions) ToCmdLine() string {
 	return options
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *GlobalOptions {
+func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOptions {
 	opts := &GlobalOptions{}
-	opts.Writer = w
 
+	opts.Writer = w
 	opts.TestMode = r.Header.Get("User-Agent") == "testRunner"
 	opts.ApiMode = true
 
@@ -208,10 +209,19 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *GlobalOptions {
 	if len(opts.Chain) == 0 {
 		opts.Chain = config.GetDefaultChain()
 	}
+
+	if len(opts.Format) == 0 || opts.Format == "none" {
+		opts.Format = "api"
+	}
+
 	return opts
 
 	// The 'help' command is a special case for cobra, so doesn't need to be handled here
 	// cmd.Flags().BoolVarP(&opts.Help, "help", "h", false, "display this help screen")
+}
+
+func (opts *GlobalOptions) FinishParse(args []string) {
+	opts.Writer = os.Stdout
 }
 
 func IsGlobalOption(key string) bool {

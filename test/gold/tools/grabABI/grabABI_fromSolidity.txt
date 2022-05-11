@@ -1,6 +1,7 @@
 chifra abis  --sol 0x2234567812345678123456781234567812345678
 TEST[DATE|TIME] Addrs:  [0x2234567812345678123456781234567812345678]
 TEST[DATE|TIME] Sol:  true
+TEST[DATE|TIME] Format:  txt
 Error: The file option (./0x2234567812345678123456781234567812345678.sol) must exist
 Usage:
   chifra abis [flags] <address> [address...]

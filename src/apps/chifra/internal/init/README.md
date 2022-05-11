@@ -25,7 +25,7 @@ Notes:
   - Re-run chifra init as often as you wish. It will repair or freshen the index.
 ```
 
-Other Options
+#### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.
 

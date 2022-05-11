@@ -1,4 +1,5 @@
 chifra list  
+TEST[DATE|TIME] Format:  txt
 Error: Please specify at least one valid Ethereum address.
 Usage:
   chifra list [flags] <address> [address...]

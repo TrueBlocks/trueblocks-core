@@ -1,5 +1,6 @@
 chifra logs  --file cmd_file
 TEST[DATE|TIME] File:  cmd_file
+TEST[DATE|TIME] Format:  txt
 Cmd: 0x96c58614708ee5b51961a9903af7e0661e88d77f929842d05e29be4d37a004dc -a 
 Cmd: 3327450.0 -a 
 blockNumber	transactionIndex	logIndex	timestamp	address	topic0	topic1	topic2	topic3	data	compressedLog

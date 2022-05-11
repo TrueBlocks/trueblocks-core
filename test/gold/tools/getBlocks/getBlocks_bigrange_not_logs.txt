@@ -1,6 +1,7 @@
 chifra blocks  4012000-4012001 --big_range 100
 TEST[DATE|TIME] Blocks:  [4012000-4012001]
 TEST[DATE|TIME] BigRange:  100
+TEST[DATE|TIME] Format:  json
 
   The --big_range option is only available with the --logs option (min 50). Quitting...
 

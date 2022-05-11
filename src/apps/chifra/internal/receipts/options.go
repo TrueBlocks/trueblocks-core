@@ -42,7 +42,7 @@ func (opts *ReceiptsOptions) ToCmdLine() string {
 	return options
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *ReceiptsOptions {
+func ReceiptsFinishParseApi(w http.ResponseWriter, r *http.Request) *ReceiptsOptions {
 	opts := &ReceiptsOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -60,7 +60,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ReceiptsOptions {
 			}
 		}
 	}
-	opts.Globals = *globals.FromRequest(w, r)
+	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
 	// EXISTING_CODE
 
@@ -69,9 +69,14 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ReceiptsOptions {
 
 func ReceiptsFinishParse(args []string) *ReceiptsOptions {
 	opts := GetOptions()
+	opts.Globals.FinishParse(args)
+	defFmt := "txt"
 	// EXISTING_CODE
 	opts.Transactions = args
 	// EXISTING_CODE
+	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
+		opts.Globals.Format = defFmt
+	}
 	return opts
 }
 

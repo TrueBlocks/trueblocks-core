@@ -9,8 +9,10 @@ import (
 	"errors"
 	"io"
 	"os"
+	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // ReadPinDescriptors parses pin information and returns a slice of
@@ -78,15 +80,11 @@ func ReadTabManifest(r io.Reader) (*Manifest, error) {
 	}
 
 	return &Manifest{
-		FileName:           "",
-		IndexFormat:        "",
-		BloomFormat:        "",
-		CommitHash:         "",
-		PreviousHash:       "",
-		NewBlockRange:      newBlockRange,
-		PreviousBlockRange: ManifestRange{0, 0},
-		NewPins:            descriptors,
-		PreviousPins:       []PinDescriptor{},
+		IndexFormat: "",
+		BloomFormat: "",
+		CommitHash:  "",
+		BlockRange:  newBlockRange,
+		Pins:        descriptors,
 	}, nil
 }
 
@@ -97,6 +95,26 @@ func FromLocalFile(chain string) (*Manifest, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	return ReadTabManifest(file)
+}
+
+func GetPinList(chain string) ([]types.SimplePinList, error) {
+	manifestData, err := FromLocalFile(chain)
+	if err != nil {
+		return []types.SimplePinList{}, err
+	}
+
+	sort.Slice(manifestData.Pins, func(i, j int) bool {
+		iPin := manifestData.Pins[i]
+		jPin := manifestData.Pins[j]
+		return iPin.FileName < jPin.FileName
+	})
+
+	pinList := make([]types.SimplePinList, len(manifestData.Pins))
+	for i := range manifestData.Pins {
+		pinList[i].FileName = manifestData.Pins[i].FileName
+		pinList[i].BloomHash = string(manifestData.Pins[i].BloomHash)
+		pinList[i].IndexHash = string(manifestData.Pins[i].IndexHash)
+	}
+	return pinList, nil
 }

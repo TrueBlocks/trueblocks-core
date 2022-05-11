@@ -1,5 +1,6 @@
 chifra state  0xfb6916095ca1df60bb79ce92ce3ea74c37c5d3592
 TEST[DATE|TIME] Blocks:  [0xfb6916095ca1df60bb79ce92ce3ea74c37c5d3592]
+TEST[DATE|TIME] Format:  txt
 Error: Please specify at least one valid Ethereum address.
 Usage:
   chifra state [flags] <address> [address...] [block...]

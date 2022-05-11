@@ -18,57 +18,54 @@ import (
 
 // EXISTING_CODE
 
-func RunList(cmd *cobra.Command, args []string) error {
+// RunList handles the list command for the command line. Returns error only as per cobra.
+func RunList(cmd *cobra.Command, args []string) (err error) {
 	opts := ListFinishParse(args)
-
-	err := opts.ValidateList()
-	if err != nil {
-		return err
-	}
-
 	// EXISTING_CODE
-	monitorArray := make([]monitor.Monitor, 0, len(opts.Addrs))
-	err = opts.HandleFreshenMonitors(&monitorArray)
-	if err != nil {
-		return err
-	}
-
-	if opts.Count {
-		return opts.HandleListCount(monitorArray)
-	} else if !opts.Silent {
-		return opts.HandleListAppearances(monitorArray)
-	}
-
-	return nil
 	// EXISTING_CODE
+	err, _ = opts.ListInternal()
+	return
 }
 
-func ServeList(w http.ResponseWriter, r *http.Request) bool {
-	opts := FromRequest(w, r)
+// ServeList handles the list command for the API. Returns error and a bool if handled
+func ServeList(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
+	opts := ListFinishParseApi(w, r)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return opts.ListInternal()
+}
 
-	err := opts.ValidateList()
+// ListInternal handles the internal workings of the list command.  Returns error and a bool if handled
+func (opts *ListOptions) ListInternal() (err error, handled bool) {
+	err = opts.ValidateList()
 	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return true
+		return err, true
 	}
 
 	// EXISTING_CODE
+	handled = true // everything is handled even on failure
+
+	// We always freshen the monitors. This call fills the monitors array.
 	monitorArray := make([]monitor.Monitor, 0, len(opts.Addrs))
 	err = opts.HandleFreshenMonitors(&monitorArray)
 	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return true
+		return
 	}
+
 	if opts.Count {
 		err = opts.HandleListCount(monitorArray)
+		if err != nil {
+			return
+		}
 	} else if !opts.Silent {
 		err = opts.HandleListAppearances(monitorArray)
+		if err != nil {
+			return
+		}
 	}
-	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-	}
-	return true
 	// EXISTING_CODE
+
+	return
 }
 
 // EXISTING_CODE

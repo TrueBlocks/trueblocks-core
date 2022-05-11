@@ -1,4 +1,5 @@
 chifra state  0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359
 TEST[DATE|TIME] Addrs:  [0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359]
+TEST[DATE|TIME] Format:  txt
 blockNumber	address	balance
 4370000	0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359	2910685340015980069700

@@ -12,45 +12,42 @@ package initPkg
 import (
 	"net/http"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/spf13/cobra"
 )
 
 // EXISTING_CODE
 
-func RunInit(cmd *cobra.Command, args []string) error {
+// RunInit handles the init command for the command line. Returns error only as per cobra.
+func RunInit(cmd *cobra.Command, args []string) (err error) {
 	opts := InitFinishParse(args)
-
-	err := opts.ValidateInit()
-	if err != nil {
-		return err
-	}
-
 	// EXISTING_CODE
-	err = opts.HandleInit()
-	if err != nil {
-		logger.Fatal(err)
-	}
-	return nil
 	// EXISTING_CODE
+	err, _ = opts.InitInternal()
+	return
 }
 
-func ServeInit(w http.ResponseWriter, r *http.Request) bool {
-	opts := FromRequest(w, r)
+// ServeInit handles the init command for the API. Returns error and a bool if handled
+func ServeInit(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
+	opts := InitFinishParseApi(w, r)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return opts.InitInternal()
+}
 
-	err := opts.ValidateInit()
+// InitInternal handles the internal workings of the init command.  Returns error and a bool if handled
+func (opts *InitOptions) InitInternal() (err error, handled bool) {
+	err = opts.ValidateInit()
 	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return true
+		return err, true
 	}
 
 	// EXISTING_CODE
+	handled = true
+
 	err = opts.HandleInit()
-	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-	}
-	return true
 	// EXISTING_CODE
+
+	return
 }
 
 // EXISTING_CODE

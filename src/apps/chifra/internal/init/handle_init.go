@@ -72,7 +72,7 @@ func (opts *InitOptions) HandleInit() error {
 
 	getChunks := func(chunkType cache.CacheType) {
 		chunkPath := cache.NewCachePath(chain, chunkType)
-		failedChunks, cancelled := downloadAndReportProgress(chain, downloadedManifest.NewPins, &chunkPath)
+		failedChunks, cancelled := downloadAndReportProgress(chain, downloadedManifest.Pins, &chunkPath)
 
 		if cancelled {
 			// We don't want to retry if the user has cancelled

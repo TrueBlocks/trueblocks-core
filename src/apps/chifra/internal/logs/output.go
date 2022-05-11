@@ -17,32 +17,40 @@ import (
 
 // EXISTING_CODE
 
-func RunLogs(cmd *cobra.Command, args []string) error {
+// RunLogs handles the logs command for the command line. Returns error only as per cobra.
+func RunLogs(cmd *cobra.Command, args []string) (err error) {
 	opts := LogsFinishParse(args)
-
-	err := opts.ValidateLogs()
-	if err != nil {
-		return err
-	}
-
 	// EXISTING_CODE
-	return opts.Globals.PassItOn("getLogs", opts.ToCmdLine())
 	// EXISTING_CODE
+	err, _ = opts.LogsInternal()
+	return
 }
 
-func ServeLogs(w http.ResponseWriter, r *http.Request) bool {
-	opts := FromRequest(w, r)
+// ServeLogs handles the logs command for the API. Returns error and a bool if handled
+func ServeLogs(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
+	opts := LogsFinishParseApi(w, r)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return opts.LogsInternal()
+}
 
-	err := opts.ValidateLogs()
+// LogsInternal handles the internal workings of the logs command.  Returns error and a bool if handled
+func (opts *LogsOptions) LogsInternal() (err error, handled bool) {
+	err = opts.ValidateLogs()
 	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return true
+		return err, true
 	}
 
 	// EXISTING_CODE
-	// opts.Globals.PassItOn("getLogs", opts.ToCmdLine())
-	return false
+	if opts.Globals.ApiMode {
+		return nil, false
+	}
+
+	handled = true
+	err = opts.Globals.PassItOn("getLogs", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
 	// EXISTING_CODE
+
+	return
 }
 
 // EXISTING_CODE

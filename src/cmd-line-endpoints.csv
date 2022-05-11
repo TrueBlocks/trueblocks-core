@@ -2,7 +2,7 @@ num ,group       ,is_visible ,is_visible_docs ,api_group ,api_route    ,tool    
 01  ,Accounts    ,false      ,true            ,          ,             ,                         ,                     ,Access and cache transactional data
 01  ,Accounts    ,true       ,true            ,apps      ,list         ,acctExport --appearances ,List transactions    ,List every appearance of an address anywhere on the chain.
 01  ,Accounts    ,true       ,true            ,apps      ,export       ,acctExport               ,Export details       ,Export full detail of transactions for one or more addresses.
-01  ,Accounts    ,true       ,true            ,apps      ,monitors     ,acctExport --appearances ,Manage Monitors      ,Add&#44; remove&#44; clean&#44; and list address monitors.
+01  ,Accounts    ,true       ,true            ,apps      ,monitors     ,acctExport --appearances ,Manage monitors      ,Add&#44; remove&#44; clean&#44; and list address monitors.
 01  ,Accounts    ,true       ,true            ,tools     ,names        ,ethNames                 ,Names                ,Query addresses or names of well known accounts.
 01  ,Accounts    ,true       ,true            ,tools     ,abis         ,grabABI                  ,ABIs                 ,Fetches the ABI for a smart contract.
 

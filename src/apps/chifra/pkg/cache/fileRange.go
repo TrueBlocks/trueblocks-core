@@ -20,7 +20,7 @@ type FileRange struct {
 	Last  uint64
 }
 
-// RangeFromFilename returns a block range given a chunk filename. Format of filenames may be start-end.bin (start and end are nine digit
+// RangeFromFilename returns a block range given a chunk filename. The format of filenames may be start-end.bin (start and end are nine digit
 // and zero-padded to the left) or start.txt
 func RangeFromFilename(path string) (blkRange FileRange, err error) {
 	_, fn := filepath.Split(path)

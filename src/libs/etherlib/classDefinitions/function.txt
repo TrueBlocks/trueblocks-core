@@ -8,3 +8,4 @@ tsx = true
 doc_group = 05-Other
 doc_descr = a human readable representation of a Solidity function call or event
 doc_api = 40-function
+doc_producer = abis

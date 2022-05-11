@@ -53,7 +53,7 @@ bool visitIndexChunk(CIndexArchive& chunk, void* data) {
         }
         testBloom.addToSet(bytes_2_Addr(addrs[i].bytes));
 
-        alterAddress(addrs[i].bytes, i);
+        alterAddress(addrs[i].bytes, int(i));
         hit = bloomFilter.isMemberOf(addrs[i].bytes);
         if (hit) {
             nFp++;

@@ -9,7 +9,6 @@ import (
 	"bytes"
 	"encoding/hex"
 	"io"
-	"net/http"
 	"os"
 	"runtime"
 	"sync"
@@ -17,15 +16,17 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 	ants "github.com/panjf2000/ants/v2"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 func (opts *AbisOptions) HandleAbiFind() error {
 	scanBar := progress.NewScanBar(uint64(len(opts.Find)) /* wanted */, 139419 /* freq */, 50000000 /* max */)
 
-	var results []Function
+	var results []types.Function
 
 	var wg sync.WaitGroup
 	checkOne, _ := ants.NewPoolWithFunc(runtime.NumCPU()*2, func(testSig interface{}) {
@@ -40,7 +41,7 @@ func (opts *AbisOptions) HandleAbiFind() error {
 			if bytes.Equal(sigBytes[:len(str)], str) {
 				scanBar.Found++
 				logger.Log(logger.Progress, "Found ", scanBar.Found, " of ", scanBar.Wanted, arg, testSig)
-				results = append(results, Function{Encoding: arg, Signature: testSig.(string)})
+				results = append(results, types.Function{Encoding: arg, Signature: testSig.(string)})
 				return
 			}
 		}
@@ -87,23 +88,9 @@ func (opts *AbisOptions) HandleAbiFind() error {
 	defer wg.Wait()
 
 	// TODO: Fix export without arrays
-	if opts.Globals.ApiMode {
-		opts.Globals.Respond(opts.Globals.Writer, http.StatusOK, results)
-
-	} else {
-		err = opts.Globals.Output(os.Stdout, opts.Globals.Format, results)
-		if err != nil {
-			logger.Log(logger.Error, err)
-		}
-	}
-	return nil
+	return globals.RenderSlice(&opts.Globals, results)
 }
 
 // TODO: These are not implemented
 // TODO: if Root.to_file == true, write the output to a filename
 // TODO: if Root.output == <fn>, write the output to a <fn>
-
-type Function struct {
-	Encoding  string `json:"encoding,omitempty"`
-	Signature string `json:"signature,omitempty"`
-}

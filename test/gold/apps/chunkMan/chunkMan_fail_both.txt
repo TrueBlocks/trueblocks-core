@@ -1,6 +1,7 @@
 chifra chunks  --extract pins --check
 TEST[DATE|TIME] Extract:  pins
 TEST[DATE|TIME] Check:  true
+TEST[DATE|TIME] Format:  txt
 Error: Please choose only one of --extract or --check.
 Usage:
   chifra chunks [flags] <block> [block...]

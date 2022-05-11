@@ -6,14 +6,11 @@ package chunksPkg
 
 import (
 	"fmt"
-	"net/http"
-	"os"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 type ChunkStats struct {
@@ -23,17 +20,19 @@ type ChunkStats struct {
 	NApps         uint64 `json:"nApps"`
 	NBlocks       uint64 `json:"nBlocks"`
 	NBlooms       uint64 `json:"nBlooms"`
-	AddrsPerBlock string `json:"addrsPerBlock"`
-	AppsPerBlock  string `json:"appsPerBlock"`
-	AppsPerAddr   string `json:"appsPerAddr"`
 	RecWid        uint64 `json:"recWid"`
 	BloomSz       int64  `json:"bloomSz"`
 	ChunkSz       int64  `json:"chunkSz"`
+	AddrsPerBlock string `json:"addrsPerBlock"`
+	AppsPerBlock  string `json:"appsPerBlock"`
+	AppsPerAddr   string `json:"appsPerAddr"`
 	Ratio         string `json:"ratio"`
 }
 
 func NewChunkStats(path string) ChunkStats {
 	chunk, err := index.NewChunk(path)
+	defer chunk.Close()
+
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -59,28 +58,22 @@ func NewChunkStats(path string) ChunkStats {
 	return ret
 }
 
-func (opts *ChunksOptions) showStats(path string, first bool) {
+func (opts *ChunksOptions) showStats(path string, first bool) error {
 	if opts.Globals.TestMode {
 		r, _ := cache.RangeFromFilename(path)
 		if r.First > 2000000 && r.First < 3000000 {
-			return
+			return nil
 		}
 		if r.First > 4000000 {
-			return
+			return nil
 		}
 	}
-
-	var results []ChunkStats
-	results = append(results, NewChunkStats(path))
 
 	// TODO: Fix export without arrays
-	if opts.Globals.ApiMode {
-		opts.Globals.Respond2(opts.Globals.Writer, http.StatusOK, results, !first)
-
-	} else {
-		err := opts.Globals.Output2(os.Stdout, opts.Globals.Format, results, !first)
-		if err != nil {
-			logger.Log(logger.Error, err)
-		}
+	obj := NewChunkStats(path)
+	err := opts.Globals.RenderHeader(obj, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, first)
+	if err != nil {
+		return err
 	}
+	return opts.Globals.RenderObject(obj)
 }

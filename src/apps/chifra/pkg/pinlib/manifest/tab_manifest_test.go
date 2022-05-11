@@ -25,19 +25,19 @@ func TestReadTabManifest(t *testing.T) {
 		t.Error(err)
 	}
 
-	if len(m.NewPins) != 7 {
-		t.Errorf("Wrong length: %d", len(m.NewPins))
+	if len(m.Pins) != 7 {
+		t.Errorf("Wrong length: %d", len(m.Pins))
 	}
 
-	if m.NewPins[0].FileName != "013326058-013328910" {
-		t.Errorf("Wrong FileName: %s", m.NewPins[0].FileName)
+	if m.Pins[0].FileName != "013326058-013328910" {
+		t.Errorf("Wrong FileName: %s", m.Pins[0].FileName)
 	}
 
-	if m.NewPins[3].BloomHash != "QmRxGboQht2ST1NMwkWdytsF1nL5FVrgfEhZ4ozBU1UZQU" {
-		t.Errorf("Wrong BloomHash: %s", m.NewPins[0].BloomHash)
+	if m.Pins[3].BloomHash != "QmRxGboQht2ST1NMwkWdytsF1nL5FVrgfEhZ4ozBU1UZQU" {
+		t.Errorf("Wrong BloomHash: %s", m.Pins[0].BloomHash)
 	}
 
-	if m.NewPins[6].IndexHash != "QmP81iaNY88aHYaFrJPST1cT8gD76q3ZtnCHBk1YJA4dM6" {
-		t.Errorf("Wrong IndexHash: %s", m.NewPins[0].IndexHash)
+	if m.Pins[6].IndexHash != "QmP81iaNY88aHYaFrJPST1cT8gD76q3ZtnCHBk1YJA4dM6" {
+		t.Errorf("Wrong IndexHash: %s", m.Pins[0].IndexHash)
 	}
 }

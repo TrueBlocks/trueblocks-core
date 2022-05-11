@@ -1,4 +1,5 @@
 chifra blocks  
+TEST[DATE|TIME] Format:  json
 Error: Please supply one or more block identifiers or the --list_count option.
 Usage:
   chifra blocks [flags] <block> [block...]

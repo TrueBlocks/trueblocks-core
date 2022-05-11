@@ -28,7 +28,6 @@ Purpose:
     scrape        scan the chain and update the TrueBlocks index of appearances
     chunks        manage and investigate chunks and bloom filters
     init          initialize the TrueBlocks system by downloading from IPFS
-    pins          manage pinned index of appearances and associated blooms
   Other:
     quotes        update or display Ethereum price data. This tool has been deprecated
     explore       open an explorer for one or more addresses, blocks, or transactions

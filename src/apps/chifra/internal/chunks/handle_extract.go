@@ -6,10 +6,11 @@ package chunksPkg
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-func (opts *ChunksOptions) HandleChunksExtract(displayFunc func(path string, first bool)) error {
-	blocks := cache.Convert(opts.Blocks)
+func (opts *ChunksOptions) HandleChunksExtract(displayFunc func(path string, first bool) error) error {
+	blocks := validate.Convert(opts.Blocks)
 	filenameChan := make(chan cache.IndexFileInfo)
 
 	var nRoutines int = 1

@@ -107,7 +107,7 @@ func (opts *BlocksOptions) ToCmdLine() string {
 	return options
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *BlocksOptions {
+func BlocksFinishParseApi(w http.ResponseWriter, r *http.Request) *BlocksOptions {
 	opts := &BlocksOptions{}
 	opts.BigRange = 500
 	opts.List = 0
@@ -160,7 +160,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *BlocksOptions {
 			}
 		}
 	}
-	opts.Globals = *globals.FromRequest(w, r)
+	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
 	// EXISTING_CODE
 
@@ -169,9 +169,17 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *BlocksOptions {
 
 func BlocksFinishParse(args []string) *BlocksOptions {
 	opts := GetOptions()
+	opts.Globals.FinishParse(args)
+	defFmt := "txt"
 	// EXISTING_CODE
+	if !opts.Uniq {
+		defFmt = "json"
+	}
 	opts.Blocks = args
 	// EXISTING_CODE
+	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
+		opts.Globals.Format = defFmt
+	}
 	return opts
 }
 

@@ -1,3 +1,4 @@
 chifra logs  3657480.79 --output testing_file
 TEST[DATE|TIME] Transactions:  [3657480.79]
 TEST[DATE|TIME] OutputFn:  testing_file
+TEST[DATE|TIME] Format:  txt

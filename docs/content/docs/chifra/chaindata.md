@@ -2,7 +2,7 @@
 title: "Chain data"
 description: ""
 lead: ""
-date: 2022-02-22T07:45:38
+date: 2022-05-08T00:36:49
 lastmod:
   - :git
   - lastmod
@@ -214,7 +214,7 @@ Usage:
   chifra when [flags] < block | date > [ block... | date... ]
 
 Arguments:
-  blocks - one or more dates, block numbers, hashes, or special named blocks (see notes) (required)
+  blocks - one or more dates, block numbers, hashes, or special named blocks (see notes)
 
 Flags:
   -l, --list         export a list of the 'special' blocks

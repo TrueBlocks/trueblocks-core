@@ -17,32 +17,40 @@ import (
 
 // EXISTING_CODE
 
-func RunTraces(cmd *cobra.Command, args []string) error {
+// RunTraces handles the traces command for the command line. Returns error only as per cobra.
+func RunTraces(cmd *cobra.Command, args []string) (err error) {
 	opts := TracesFinishParse(args)
-
-	err := opts.ValidateTraces()
-	if err != nil {
-		return err
-	}
-
 	// EXISTING_CODE
-	return opts.Globals.PassItOn("getTraces", opts.ToCmdLine())
 	// EXISTING_CODE
+	err, _ = opts.TracesInternal()
+	return
 }
 
-func ServeTraces(w http.ResponseWriter, r *http.Request) bool {
-	opts := FromRequest(w, r)
+// ServeTraces handles the traces command for the API. Returns error and a bool if handled
+func ServeTraces(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
+	opts := TracesFinishParseApi(w, r)
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return opts.TracesInternal()
+}
 
-	err := opts.ValidateTraces()
+// TracesInternal handles the internal workings of the traces command.  Returns error and a bool if handled
+func (opts *TracesOptions) TracesInternal() (err error, handled bool) {
+	err = opts.ValidateTraces()
 	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return true
+		return err, true
 	}
 
 	// EXISTING_CODE
-	// opts.Globals.PassItOn("getTraces", opts.ToCmdLine())
-	return false
+	if opts.Globals.ApiMode {
+		return nil, false
+	}
+
+	handled = true
+	err = opts.Globals.PassItOn("getTraces", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
 	// EXISTING_CODE
+
+	return
 }
 
 // EXISTING_CODE

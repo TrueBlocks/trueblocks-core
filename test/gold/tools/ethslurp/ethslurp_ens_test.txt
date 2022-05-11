@@ -2,6 +2,7 @@ chifra slurp  wildmolasses.eth --types int 12524380-13675400
 TEST[DATE|TIME] Addrs:  [0x69e271483c38ed4902a55c3ea8aab9e7cc8617e5]
 TEST[DATE|TIME] Blocks:  [12524380-13675400]
 TEST[DATE|TIME] Types:  [int]
+TEST[DATE|TIME] Format:  txt
 Processing: --types:int 0x69e271483c38ed4902a55c3ea8aab9e7cc8617e5 12524380-13675400
 	Slurping 0x69e271483c38ed4902a55c3ea8aab9e7cc8617e5
                                                                                                                         0x912236ba436a0eba7dc7edc18b46354accea21b903c0a4207301368f40fc37b4	0x0	12524381	151	0	1622226121	0x283af0b28c62c092c9727f1ee09c02ca627eb7f5	0x69e271483c38ed4902a55c3ea8aab9e7cc8617e5	1008811545605067	2300	0	0	0		0	0	0	2021-05-28 18:22:01 UTC	0.001008811545605067

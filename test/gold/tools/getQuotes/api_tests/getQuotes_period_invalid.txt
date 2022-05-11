@@ -1,6 +1,6 @@
 quotes?period
 {
   "errors": [
-    "Please specify at least one command line option."
+    "chifra quotes - The --period option requires a value."
   ]
 }

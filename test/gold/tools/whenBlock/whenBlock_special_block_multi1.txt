@@ -1,6 +1,7 @@
 chifra when  stateclear iceage 4001001 --verbose
 TEST[DATE|TIME] Blocks:  [stateclear iceage 4001001]
 TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] Format:  txt
 blockNumber	timestamp	date	name
 2717576	1480448309	2016-11-29 19:38:29 UTC	stateclear
 200000	1441661589	2015-09-07 21:33:09 UTC	iceage

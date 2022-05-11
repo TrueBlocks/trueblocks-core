@@ -5,8 +5,6 @@
 package monitorsPkg
 
 import (
-	"io"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
@@ -21,7 +19,7 @@ import (
 // Not Deleted	|	Delete		Error			Error
 // Deleted		|	Error		Undelete		Remove
 // -------------|----------------------------------------
-func (opts *MonitorsOptions) HandleCrudCommands(w io.Writer) error {
+func (opts *MonitorsOptions) HandleCrudCommands() error {
 	for _, addr := range opts.Addrs {
 		m := monitor.NewMonitor(opts.Globals.Chain, addr, false)
 		if !file.FileExists(m.Path()) {

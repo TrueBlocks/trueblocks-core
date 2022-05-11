@@ -2,6 +2,7 @@ chifra blocks  2769609 2799895 2872831 3076260 --cache --apps
 TEST[DATE|TIME] Blocks:  [2769609 2799895 2872831 3076260]
 TEST[DATE|TIME] Apps:  true
 TEST[DATE|TIME] Cache:  true
+TEST[DATE|TIME] Format:  json
 Error: The --cache option is not available with the --apps option.
 Usage:
   chifra blocks [flags] <block> [block...]

@@ -1,12 +1,13 @@
 chifra when  1301000 --count
 TEST[DATE|TIME] Blocks:  [1301000]
 TEST[DATE|TIME] Count:  true
+TEST[DATE|TIME] Format:  txt
 Error: The --check, --fix, and --count option are only available with the --timestamps option.
 Usage:
   chifra when [flags] < block | date > [ block... | date... ]
 
 Arguments:
-  blocks - one or more dates, block numbers, hashes, or special named blocks (see notes) (required)
+  blocks - one or more dates, block numbers, hashes, or special named blocks (see notes)
 
 Flags:
   -l, --list         export a list of the 'special' blocks

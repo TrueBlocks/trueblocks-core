@@ -1,5 +1,6 @@
 chifra receipts  .clink
 TEST[DATE|TIME] Transactions:  [.clink]
+TEST[DATE|TIME] Format:  txt
 
   .clink does not appear to be a valid transaction index. Quitting...
 

@@ -1,5 +1,6 @@
 chifra traces  .whatever
 TEST[DATE|TIME] Transactions:  [.whatever]
+TEST[DATE|TIME] Format:  txt
 
   .whatever does not appear to be a valid transaction index. Quitting...
 

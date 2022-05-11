@@ -1,6 +1,7 @@
 chifra blocks  4000001-4000003 --cache
 TEST[DATE|TIME] Blocks:  [4000001-4000003]
 TEST[DATE|TIME] Cache:  true
+TEST[DATE|TIME] Format:  json
 { "data": [
 {
   "gasLimit": 6712392,

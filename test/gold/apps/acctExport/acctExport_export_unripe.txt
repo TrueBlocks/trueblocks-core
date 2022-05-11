@@ -4,6 +4,7 @@ TEST[DATE|TIME] Staging:  true
 TEST[DATE|TIME] Unripe:  true
 TEST[DATE|TIME] FirstBlock:  100000
 TEST[DATE|TIME] LastBlock:  2000000
+TEST[DATE|TIME] Format:  txt
 Error: Please choose only one of --staging or --unripe
 Usage:
   chifra export [flags] <address> [address...] [topics...] [fourbytes...]

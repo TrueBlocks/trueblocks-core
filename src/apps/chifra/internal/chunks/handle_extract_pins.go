@@ -5,45 +5,25 @@
 package chunksPkg
 
 import (
-	"net/http"
-	"os"
-	"sort"
-
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
 )
 
 func (opts *ChunksOptions) HandleChunksExtractPins() error {
-	manifestData, err := manifest.FromLocalFile(opts.Globals.Chain)
+	results, err := manifest.GetPinList(opts.Globals.Chain)
 	if err != nil {
 		return err
 	}
 
-	sort.Slice(manifestData.NewPins, func(i, j int) bool {
-		iPin := manifestData.NewPins[i]
-		jPin := manifestData.NewPins[j]
-		return iPin.FileName < jPin.FileName
-	})
-
 	if opts.Globals.TestMode {
 		// Shorten the array for testing
-		manifestData.NewPins = manifestData.NewPins[:100]
+		results = results[:100]
 	}
 
-	// TODO: Fix export without arrays
 	opts.PrintManifestHeader()
-	if opts.Globals.ApiMode {
-		opts.Globals.Respond(opts.Globals.Writer, http.StatusOK, manifestData.NewPins)
-
-	} else {
-		err = opts.Globals.Output(os.Stdout, opts.Globals.Format, manifestData.NewPins)
-		if err != nil {
-			logger.Log(logger.Error, err)
-		}
-	}
-
-	return nil
+	return globals.RenderSlice(&opts.Globals, results)
 }
 
 func (opts *ChunksOptions) PrintManifestHeader() {

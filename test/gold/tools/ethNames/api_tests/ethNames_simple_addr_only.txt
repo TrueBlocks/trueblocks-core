@@ -94,6 +94,10 @@ names?terms=0xb6&addr
       "decimals": 0
     },
     {
+      "address": "0xb6615ebc95cb072774af1a346c522ed8d8b541b2",
+      "decimals": 0
+    },
+    {
       "address": "0xb66d6eb682dcebb57b0fc56d7143ab52e43d32a5",
       "decimals": 18
     },
@@ -162,6 +166,10 @@ names?terms=0xb6&addr
       "decimals": 18
     },
     {
+      "address": "0xb6989f472bef8931e6ca882b1f875539b7d5da19",
+      "decimals": 0
+    },
+    {
       "address": "0xb69fa0ba7f4cf765c94a9ced37310327191ac949",
       "decimals": 0
     },
@@ -215,6 +223,10 @@ names?terms=0xb6&addr
     },
     {
       "address": "0xb6e41bab6fcc63967d84e30f57b818ff3cb91df3",
+      "decimals": 0
+    },
+    {
+      "address": "0xb6e921614ac702b3a5849a3d7a3fe59074925bb5",
       "decimals": 0
     },
     {

@@ -1,7 +1,8 @@
-name        ,type   ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
-type        ,string ,           ,       ,      ,        ,          ,        ,      ,         ,1   ,     ,        ,the type of the cache (one of the nine different types)
-path        ,string ,           ,       ,      ,        ,          ,        ,      ,         ,2   ,     ,        ,the physical path to the cache on the hard drive
-nFiles      ,uint64 ,           ,       ,      ,        ,          ,        ,      ,         ,3   ,     ,        ,the number of files in the cache
-nFolders    ,uint64 ,           ,       ,      ,        ,          ,        ,      ,         ,4   ,     ,        ,the number of subfolders in the cache
-sizeInBytes ,uint64 ,           ,       ,      ,        ,          ,        ,      ,         ,5   ,     ,        ,the size of the cache in bytes
-isValid     ,bool   ,false      ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+name        ,type      ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
+type        ,string    ,           ,       ,      ,        ,          ,        ,      ,         ,  1 ,     ,        ,the type of the cache (one of the nine different types)
+path        ,string    ,           ,       ,      ,        ,          ,        ,      ,         ,  2 ,     ,        ,the physical path to the cache on the hard drive
+nFiles      ,uint64    ,           ,       ,      ,        ,          ,        ,      ,         ,  3 ,     ,        ,the number of files in the cache
+nFolders    ,uint64    ,           ,       ,      ,        ,          ,        ,      ,         ,  4 ,     ,        ,the number of subfolders in the cache
+sizeInBytes ,uint64    ,           ,       ,      ,        ,          ,        ,      ,         ,  5 ,     ,        ,the size of the cache in bytes
+isValid     ,bool      ,false      ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+items       ,CacheEntry,           ,true   ,true  ,true    ,          ,        ,      ,         ,  8 ,     ,        ,an array of cache items

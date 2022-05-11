@@ -151,6 +151,11 @@ string_q CBlock::getValueByName(const string_q& fieldName) const {
                 return retS;
             }
             break;
+        case 'u':
+            if (fieldName % "unclesCnt") {
+                return uint_2_Str(unclesCnt);
+            }
+            break;
         default:
             break;
     }
@@ -277,6 +282,12 @@ bool CBlock::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
                 return true;
             }
             break;
+        case 'u':
+            if (fieldName % "unclesCnt") {
+                unclesCnt = str_2_Uint(fieldValue);
+                return true;
+            }
+            break;
         default:
             break;
     }
@@ -319,6 +330,7 @@ bool CBlock::Serialize(CArchive& archive) {
     archive >> transactions;
     // archive >> tx_hashes;
     // archive >> name;
+    // archive >> unclesCnt;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -345,6 +357,7 @@ bool CBlock::SerializeC(CArchive& archive) const {
     archive << transactions;
     // archive << tx_hashes;
     // archive << name;
+    // archive << unclesCnt;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -409,6 +422,8 @@ void CBlock::registerClass(void) {
     HIDE_FIELD(CBlock, "tx_hashes");
     ADD_FIELD(CBlock, "name", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CBlock, "name");
+    ADD_FIELD(CBlock, "unclesCnt", T_UNUMBER, ++fieldNum);
+    HIDE_FIELD(CBlock, "unclesCnt");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CBlock, "schema");

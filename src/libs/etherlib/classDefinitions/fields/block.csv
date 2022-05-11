@@ -13,6 +13,6 @@ transactions    ,transaction ,           ,true   ,true  ,        ,          ,   
 tx_hashes       ,string      ,           ,       ,true  ,true    ,          ,        ,      ,         ,    ,     ,              ,a possibly empty array of transactions or transaction hashes
 name            ,string      ,           ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,              ,the name of the block if any (see chifra when)
 date            ,date        ,           ,       ,      ,true    ,          ,        ,true  ,         ,    ,     ,              ,the date of this block as represented by its timestamp
-unclesCnt       ,uint64      ,           ,       ,      ,true    ,          ,        ,true  ,         ,    ,     ,              ,the number of uncles in this block
+unclesCnt       ,uint64      ,           ,       ,      ,true    ,          ,        ,      ,         ,11  ,     ,              ,the number of uncles in this block
 extraData       ,string      ,           ,       ,      ,true    ,          ,        ,true  ,         ,    ,     ,              ,an extra data string for use in the front end only
 transactionsCnt ,uint64      ,           ,       ,      ,        ,          ,true    ,      ,true     ,    ,10   ,              ,a possibly empty array of transactions or transaction hashes
