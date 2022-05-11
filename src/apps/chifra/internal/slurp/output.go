@@ -31,7 +31,7 @@ func RunSlurp(cmd *cobra.Command, args []string) error {
 }
 
 func ServeSlurp(w http.ResponseWriter, r *http.Request) bool {
-	opts := FromRequest(w, r)
+	opts := SlurpFinishParseApi(w, r)
 
 	err := opts.ValidateSlurp()
 	if err != nil {

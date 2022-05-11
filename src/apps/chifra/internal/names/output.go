@@ -31,7 +31,7 @@ func RunNames(cmd *cobra.Command, args []string) error {
 }
 
 func ServeNames(w http.ResponseWriter, r *http.Request) bool {
-	opts := FromRequest(w, r)
+	opts := NamesFinishParseApi(w, r)
 
 	err := opts.ValidateNames()
 	if err != nil {

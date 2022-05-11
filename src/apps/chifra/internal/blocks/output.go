@@ -31,7 +31,7 @@ func RunBlocks(cmd *cobra.Command, args []string) error {
 }
 
 func ServeBlocks(w http.ResponseWriter, r *http.Request) bool {
-	opts := FromRequest(w, r)
+	opts := BlocksFinishParseApi(w, r)
 
 	err := opts.ValidateBlocks()
 	if err != nil {

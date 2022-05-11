@@ -38,7 +38,7 @@ func RunMonitors(cmd *cobra.Command, args []string) error {
 }
 
 func ServeMonitors(w http.ResponseWriter, r *http.Request) bool {
-	opts := FromRequest(w, r)
+	opts := MonitorsFinishParseApi(w, r)
 
 	err := opts.ValidateMonitors()
 	if err != nil {

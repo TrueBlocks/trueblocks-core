@@ -31,7 +31,7 @@ func RunTokens(cmd *cobra.Command, args []string) error {
 }
 
 func ServeTokens(w http.ResponseWriter, r *http.Request) bool {
-	opts := FromRequest(w, r)
+	opts := TokensFinishParseApi(w, r)
 
 	err := opts.ValidateTokens()
 	if err != nil {

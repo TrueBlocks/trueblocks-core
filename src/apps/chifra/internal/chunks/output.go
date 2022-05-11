@@ -45,7 +45,7 @@ func RunChunks(cmd *cobra.Command, args []string) error {
 }
 
 func ServeChunks(w http.ResponseWriter, r *http.Request) bool {
-	opts := FromRequest(w, r)
+	opts := ChunksFinishParseApi(w, r)
 
 	err := opts.ValidateChunks()
 	if err != nil {

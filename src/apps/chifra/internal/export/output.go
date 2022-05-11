@@ -36,7 +36,7 @@ func RunExport(cmd *cobra.Command, args []string) error {
 }
 
 func ServeExport(w http.ResponseWriter, r *http.Request) bool {
-	opts := FromRequest(w, r)
+	opts := ExportFinishParseApi(w, r)
 
 	err := opts.ValidateExport()
 	if err != nil {

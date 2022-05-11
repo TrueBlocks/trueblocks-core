@@ -58,7 +58,7 @@ func RunScrape(cmd *cobra.Command, args []string) error {
 }
 
 func ServeScrape(w http.ResponseWriter, r *http.Request) bool {
-	opts := FromRequest(w, r)
+	opts := ScrapeFinishParseApi(w, r)
 
 	err := opts.ValidateScrape()
 	if err != nil {

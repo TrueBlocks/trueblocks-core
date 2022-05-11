@@ -31,7 +31,7 @@ func RunQuotes(cmd *cobra.Command, args []string) error {
 }
 
 func ServeQuotes(w http.ResponseWriter, r *http.Request) bool {
-	opts := FromRequest(w, r)
+	opts := QuotesFinishParseApi(w, r)
 
 	err := opts.ValidateQuotes()
 	if err != nil {

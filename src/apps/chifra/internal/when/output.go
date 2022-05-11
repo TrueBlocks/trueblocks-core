@@ -46,7 +46,7 @@ func RunWhen(cmd *cobra.Command, args []string) error {
 }
 
 func ServeWhen(w http.ResponseWriter, r *http.Request) bool {
-	opts := FromRequest(w, r)
+	opts := WhenFinishParseApi(w, r)
 
 	err := opts.ValidateWhen()
 	if err != nil {

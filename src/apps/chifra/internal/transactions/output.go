@@ -31,7 +31,7 @@ func RunTransactions(cmd *cobra.Command, args []string) error {
 }
 
 func ServeTransactions(w http.ResponseWriter, r *http.Request) bool {
-	opts := FromRequest(w, r)
+	opts := TransactionsFinishParseApi(w, r)
 
 	err := opts.ValidateTransactions()
 	if err != nil {

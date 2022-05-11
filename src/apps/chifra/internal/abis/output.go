@@ -35,7 +35,7 @@ func RunAbis(cmd *cobra.Command, args []string) error {
 }
 
 func ServeAbis(w http.ResponseWriter, r *http.Request) bool {
-	opts := FromRequest(w, r)
+	opts := AbisFinishParseApi(w, r)
 
 	err := opts.ValidateAbis()
 	if err != nil {

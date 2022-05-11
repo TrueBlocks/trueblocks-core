@@ -36,7 +36,7 @@ func RunStatus(cmd *cobra.Command, args []string) error {
 }
 
 func ServeStatus(w http.ResponseWriter, r *http.Request) bool {
-	opts := FromRequest(w, r)
+	opts := StatusFinishParseApi(w, r)
 
 	err := opts.ValidateStatus()
 	if err != nil {

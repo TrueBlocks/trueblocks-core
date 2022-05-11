@@ -43,7 +43,7 @@ func RunExplore(cmd *cobra.Command, args []string) error {
 }
 
 func ServeExplore(w http.ResponseWriter, r *http.Request) bool {
-	opts := FromRequest(w, r)
+	opts := ExploreFinishParseApi(w, r)
 
 	err := opts.ValidateExplore()
 	if err != nil {
