@@ -29,7 +29,7 @@ extern const char* STR_REQUEST_CASE2;
 extern const char* STR_CHIFRA_HELP_END;
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
-    string_q source = asciiFileToString(getPathToTemplates("blank.go"));
+    string_q source = asciiFileToString(getPathToTemplates("blank.go.tmpl"));
     replaceAll(source, "[{LONG}]", "Purpose:\n  " + p.description);
     replaceAll(source, "[{OPT_DEF}]", "");
     replaceAll(source, "validate[{PROPER}]Args", "[{ROUTE}]Pkg.Validate");
@@ -81,7 +81,7 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     establishFolder(fn);
     bool hasEns = contains(asciiFileToString(fn), "ens.Convert");
 
-    string_q source = asciiFileToString(getPathToTemplates("blank_options.go"));
+    string_q source = asciiFileToString(getPathToTemplates("blank_options.go.tmpl"));
     replaceAll(source, "[{ROUTE}]", p.api_route);
     replaceAll(source, "[{PROPER}]", toProper(p.api_route));
     replaceAll(source, "[{OPT_FIELDS}]", get_optfields(p));
@@ -108,7 +108,8 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_gocmds_output(const CCommandOption& p) {
-    string_q source = asciiFileToString(getPathToTemplates("blank_output.go"));
+    string_q source = asciiFileToString(getPathToTemplates("blank_output.go.tmpl"));
+    replaceAll(source, "[{ROUTE}]", p.api_route);
     source = substitute(source, "[]string", "++SAVED++");
     source = p.Format(source);
     replaceAll(source, "++SAVED++", "[]string");
@@ -164,7 +165,7 @@ bool COptions::handle_gocmds(void) {
     }
     chifraHelpStream << STR_CHIFRA_HELP_END;
 
-    string_q contents = asciiFileToString(getPathToTemplates("help_text.go"));
+    string_q contents = asciiFileToString(getPathToTemplates("help_text.go.tmpl"));
     replace(contents, "[{HELP_TEXT}]", chifraHelpStream.str());
     replace(contents, "[{VERSION}]", getVersionStr(true, false));
     stringToAsciiFile(getPathToSource("apps/chifra/cmd/help_text.go"), contents);
