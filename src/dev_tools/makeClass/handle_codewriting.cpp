@@ -126,7 +126,7 @@ bool writeCodeOut(COptions* opts, const string_q& fn) {
         converted = replaceCode(converted, "CODE_CHIFRA_PAIRMAP", opts->pairMapStream.str());
         replaceAll(converted, "    // clang-format on\n    // clang-format off\n", "");
 
-    } else if (endsWith(fn, ".go")) {
+    } else if (endsWith(fn, ".go.tmpl") || endsWith(fn, ".go")) {
         converted = replaceCode(converted, "ROUTE_PKGS", trim(opts->goPkgStream.str(), '\n') + "\n");
         converted = replaceCode(converted, "ROUTE_CODE", opts->goCallStream.str());
         converted = replaceCode(converted, "ROUTE_ITEMS", opts->goRouteStream.str());
