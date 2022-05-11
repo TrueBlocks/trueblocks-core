@@ -23,53 +23,33 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CCache : public CBaseNode {
+class CListStats : public CBaseNode {
   public:
-    string_q type;
-    string_q path;
-    uint64_t nFiles;
-    uint64_t nFolders;
-    uint64_t sizeInBytes;
-    bool isValid;
-    CCacheEntryArray items;
+    address_t address;
+    uint64_t nRecords;
+    uint64_t fileSize;
 
   public:
-    CCache(void);
-    CCache(const CCache& ca);
-    virtual ~CCache(void);
-    CCache& operator=(const CCache& ca);
+    CListStats(void);
+    CListStats(const CListStats& li);
+    virtual ~CListStats(void);
+    CListStats& operator=(const CListStats& li);
 
-    DECLARE_NODE(CCache);
-
-    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
+    DECLARE_NODE(CListStats);
 
     // EXISTING_CODE
-    void noteFile(const string_q& p) {
-        nFiles++;
-        sizeInBytes += fileSize(p);
-    }
-    void noteFolder(const string_q& p) {
-        nFolders++;
-    }
-    void reset(void) {
-        initialize();
-    }
-    virtual bool readBinaryCache(const string_q& cachePath, const string_q& cacheType, bool details,
-                                 bool ignore = false);
-    virtual bool writeBinaryCache(const string_q& cacheType, bool details);
-    virtual bool needsRefresh(const string_q& cachePath, const string_q& cacheType, bool details);
     // EXISTING_CODE
-    bool operator==(const CCache& it) const;
-    bool operator!=(const CCache& it) const {
+    bool operator==(const CListStats& it) const;
+    bool operator!=(const CListStats& it) const {
         return !operator==(it);
     }
-    friend bool operator<(const CCache& v1, const CCache& v2);
-    friend ostream& operator<<(ostream& os, const CCache& it);
+    friend bool operator<(const CListStats& v1, const CListStats& v2);
+    friend ostream& operator<<(ostream& os, const CListStats& it);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CCache& ca);
+    void duplicate(const CListStats& li);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -77,78 +57,70 @@ class CCache : public CBaseNode {
 };
 
 //--------------------------------------------------------------------------
-inline CCache::CCache(void) {
+inline CListStats::CListStats(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CCache::CCache(const CCache& ca) {
+inline CListStats::CListStats(const CListStats& li) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(ca);
+    duplicate(li);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CCache::~CCache(void) {
+inline CListStats::~CListStats(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CCache::clear(void) {
+inline void CListStats::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CCache::initialize(void) {
+inline void CListStats::initialize(void) {
     CBaseNode::initialize();
 
-    type = "";
-    path = "";
-    nFiles = 0;
-    nFolders = 0;
-    sizeInBytes = 0;
-    isValid = false;
-    items.clear();
+    address = "";
+    nRecords = 0;
+    fileSize = 0;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CCache::duplicate(const CCache& ca) {
+inline void CListStats::duplicate(const CListStats& li) {
     clear();
-    CBaseNode::duplicate(ca);
+    CBaseNode::duplicate(li);
 
-    type = ca.type;
-    path = ca.path;
-    nFiles = ca.nFiles;
-    nFolders = ca.nFolders;
-    sizeInBytes = ca.sizeInBytes;
-    isValid = ca.isValid;
-    items = ca.items;
+    address = li.address;
+    nRecords = li.nRecords;
+    fileSize = li.fileSize;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CCache& CCache::operator=(const CCache& ca) {
-    duplicate(ca);
+inline CListStats& CListStats::operator=(const CListStats& li) {
+    duplicate(li);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CCache::operator==(const CCache& it) const {
+inline bool CListStats::operator==(const CListStats& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -156,7 +128,7 @@ inline bool CCache::operator==(const CCache& it) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CCache& v1, const CCache& v2) {
+inline bool operator<(const CListStats& v1, const CListStats& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -164,19 +136,18 @@ inline bool operator<(const CCache& v1, const CCache& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CCache> CCacheArray;
-extern CArchive& operator>>(CArchive& archive, CCacheArray& array);
-extern CArchive& operator<<(CArchive& archive, const CCacheArray& array);
+typedef vector<CListStats> CListStatsArray;
+extern CArchive& operator>>(CArchive& archive, CListStatsArray& array);
+extern CArchive& operator<<(CArchive& archive, const CListStatsArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CCache& cac);
-extern CArchive& operator>>(CArchive& archive, CCache& cac);
+extern CArchive& operator<<(CArchive& archive, const CListStats& lis);
+extern CArchive& operator>>(CArchive& archive, CListStats& lis);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_CACHE;
+extern const char* STR_DISPLAY_LISTSTATS;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-typedef vector<CCache*> CCachePtrArray;
 // EXISTING_CODE
 }  // namespace qblocks

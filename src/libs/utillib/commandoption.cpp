@@ -767,6 +767,7 @@ void CCommandOption::verifyHotkey(CStringArray& warnings, map<string, string>& e
 //---------------------------------------------------------------------------------------------------
 extern const char* STR_PATH_YAML;
 extern const char* STR_PARAM_YAML;
+extern const char* STR_DELETE_OPTS;
 
 //---------------------------------------------------------------------------------------------------
 bool CCommandOption::isChifraRoute(bool depOk) const {
@@ -959,7 +960,9 @@ string_q CCommandOption::toApiPath(const string_q& inStr, const string_q& exampl
     bool hasDelete = false;
     ostringstream paramStream;
     for (auto param : *(CCommandOptionArray*)params) {
+        bool hasAddrs2 = contains(param.longName, "addrs2");
         hasDelete |= contains(param.longName, "deleteMe");
+        replace(param.longName, "addrs2", "addrs");
         replace(param.longName, "deleteMe", "delete");
         if (param.longName.empty() || !param.is_visible_docs)
             continue;
@@ -969,6 +972,9 @@ string_q CCommandOption::toApiPath(const string_q& inStr, const string_q& exampl
             replace(yp, "[{DESCR}]", prepareDescr(param.swagger_descr));
             replace(yp, "[{REQ}]", param.is_required ? "true" : "false");
             replace(yp, "[{SCHEMA}]", param.getSchema());
+            if (hasAddrs2) {
+                replace(yp, "            type: array\n", "            type: array\n            minItems: 2\n");
+            }
             if (paramStream.str().empty())
                 paramStream << "      parameters:\n";
             paramStream << yp << endl;
@@ -1021,7 +1027,7 @@ string_q CCommandOption::toApiPath(const string_q& inStr, const string_q& exampl
     replaceAll(ret, "[{PARAMS}]", paramStream.str());
     replaceAll(ret, "[{SUMMARY}]", summary);
     replaceAll(ret, "[{DESCR}]", description);
-    replaceAll(ret, "[{DELETE}]", hasDelete ? "X\n" : "");
+    replaceAll(ret, "[{DELETE}]", hasDelete ? STR_DELETE_OPTS : "");
     replaceAll(ret, "[{ID}]", toLower(substitute(grp, " ", "") + "-" + api_route));
     return ret;
 }
@@ -1110,7 +1116,7 @@ const char* STR_PATH_YAML =
     "      summary: [{SUMMARY}]\n"
     "      description: [{DESCR}]\n"
     "      operationId: [{ID}]\n"
-    "[{PARAMS}]"
+    "[{PARAMS}][{DELETE}]"
     "      responses:\n"
     "        \"200\":\n"
     "          description: returns the requested data\n"
@@ -1118,8 +1124,7 @@ const char* STR_PATH_YAML =
     "            application/json:\n"
     "              schema:\n"
     "[{PROPERTIES}][{EXAMPLE}]        \"400\":\n"
-    "          description: bad input parameter\n"
-    "[{DELETE}]";
+    "          description: bad input parameter\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_PARAM_YAML =
@@ -1131,6 +1136,33 @@ const char* STR_PARAM_YAML =
     "          explode: true\n"
     "          schema:\n"
     "[{SCHEMA}]";
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_DELETE_OPTS =
+    "        - name: delete\n"
+    "          description: delete the item, but do not remove it\n"
+    "          required: false\n"
+    "          style: form\n"
+    "          in: query\n"
+    "          explode: true\n"
+    "          schema:\n"
+    "            type: boolean\n"
+    "        - name: undelete\n"
+    "          description: undelete a previously deleted item\n"
+    "          required: false\n"
+    "          style: form\n"
+    "          in: query\n"
+    "          explode: true\n"
+    "          schema:\n"
+    "            type: boolean\n"
+    "        - name: remove\n"
+    "          description: remove a previously deleted item\n"
+    "          required: false\n"
+    "          style: form\n"
+    "          in: query\n"
+    "          explode: true\n"
+    "          schema:\n"
+    "            type: boolean\n";
 
 // TODO: search for go-port
 bool goPortNewCode(const string_q& a) {

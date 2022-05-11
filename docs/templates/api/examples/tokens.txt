@@ -1,14 +1,14 @@
-{
-  "data": [
-    {
-      "holder": "0x2910543af39aba0cd09dbb2d50200b3e800a63d2",
-      "balance": "624980000000000000",
-      "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
-      "name": "The DAO Original",
-      "decimals": 1,
-      "isContract": true,
-      "isErc20": true,
-      "isErc721": true
-    }
-  ]
-}
+                 {
+                   "data": [
+                     {
+                       "holder": "0x2910543af39aba0cd09dbb2d50200b3e800a63d2",
+                       "balance": "624980000000000000",
+                       "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+                       "name": "The DAO Original",
+                       "decimals": 1,
+                       "isContract": true,
+                       "isErc20": true,
+                       "isErc721": true
+                     }
+                   ]
+                 }

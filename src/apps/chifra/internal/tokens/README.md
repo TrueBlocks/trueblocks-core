@@ -36,7 +36,7 @@ Notes:
   - special blocks are detailed under chifra when --list.
 ```
 
-Other Options
+#### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.
 

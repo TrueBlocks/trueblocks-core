@@ -2,6 +2,10 @@
 
 The `[{NAME}]` tool runs the TrueBlocks tests. The test cases are stored in CSV files a folder called `./testCases`.
 
+[{USAGE}]
+
+#### Test Cases
+
 Test cases contain the following fields:
 
 | field   | meaning                                                                                  |
@@ -18,5 +22,4 @@ Test cases contain the following fields:
 
 You may run all tests from the `./build` folder by entering `make test-all` (or `make tests` to run only the `cmd/fast` cases).
 
-[{USAGE}]
 [{FOOTER}]

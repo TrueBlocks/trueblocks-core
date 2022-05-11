@@ -6,7 +6,3 @@ cpp_includes = node.h
 equals = (address == it.address)
 tsx = true
 disabled = true
-doc_group = 01-Accounts
-doc_descr = a collection of function and event definitions as described elsewhere in the Ethereum system
-doc_api = 05-abi
-doc_producer = abis

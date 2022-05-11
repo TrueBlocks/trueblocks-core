@@ -28,7 +28,7 @@ Notes:
   - Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].
 ```
 
-Other Options
+#### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.
 

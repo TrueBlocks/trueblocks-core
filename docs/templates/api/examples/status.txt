@@ -1,19 +1,20 @@
-{
-  "data": [
-    {
-      "clientVersion": "erigon/2021.09.2/linux-amd64/go1.16.3",
-      "trueblocksVersion": "GHC-TrueBlocks//0.12.1-alpha-7ac3196d7-20210903",
-      "rpcProvider": "http://localhost:23456",
-      "configPath": "~/Library/Application Support/TrueBlocks/",
-      "cachePath": "~/Library/Application Support/TrueBlocks/cache/",
-      "indexPath": "~/Library/Application Support/TrueBlocks/unchained/",
-      "isTesting": false,
-      "isDocker": false,
-      "isArchive": true,
-      "isTracing": true,
-      "hasEskey": true,
-      "hasPinkey": true,
-      "date": "2021-09-03 19:38:19 UTC"
-    }
-  ]
-}
+                  {
+                    "data":
+                      [
+                        {
+                          "clientVersion": "erigon/2021.09.2/linux-amd64/go1.16.3",
+                          "trueblocksVersion": "GHC-TrueBlocks//0.12.1-alpha-7ac3196d7-20210903",
+                          "rpcProvider": "http://localhost:23456",
+                          "configPath": "~/Library/Application Support/TrueBlocks/",
+                          "cachePath": "~/Library/Application Support/TrueBlocks/cache/",
+                          "indexPath": "~/Library/Application Support/TrueBlocks/unchained/",
+                          "isTesting": false,
+                          "isDocker": false,
+                          "isArchive": true,
+                          "isTracing": true,
+                          "hasEskey": true,
+                          "hasPinkey": true,
+                          "date": "2021-09-03 19:38:19 UTC",
+                        },
+                      ],
+                  }
