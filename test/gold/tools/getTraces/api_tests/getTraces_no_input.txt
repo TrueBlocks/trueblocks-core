@@ -1,6 +1,6 @@
 traces?
 {
   "errors": [
-    "chifra traces - Not enough arguments presented."
+    "Please supply one or more transaction identifiers or filters."
   ]
 }
