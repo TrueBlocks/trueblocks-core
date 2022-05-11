@@ -10,10 +10,11 @@ on      ,both ,fast  ,list     ,apps/acctExport ,list_no_params           ,y    
 
 on      ,both ,fast  ,list     ,apps/acctExport ,list_list                ,n    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & fmt = txt
 on      ,both ,fast  ,list     ,apps/acctExport ,list_appearances         ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000
-on      ,both ,fast  ,list     ,apps/acctExport ,list_appearances_csv     ,n    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000 & fmt = csv
+on      ,both ,fast  ,list     ,apps/acctExport ,list_appearances_csv     ,n    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000 & fmt = csv & no_header
+on      ,both ,fast  ,list     ,apps/acctExport ,list_count               ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & count
 
-on      ,both ,fast  ,list     ,apps/acctExport ,ens_test_list             ,y    ,addrs = rhyslindmark.eth & first_block = 4037786 & last_block = 4589473
-local   ,both ,fast  ,export   ,apps/acctExport ,ens_test_export           ,y    ,addrs = rhyslindmark.eth & first_block = 4037786 & last_block = 4589473
+on      ,both ,fast  ,list     ,apps/acctExport ,ens_test_list            ,y    ,addrs = rhyslindmark.eth & first_block = 4037786 & last_block = 4589473
+local   ,both ,fast  ,export   ,apps/acctExport ,ens_test_export          ,y    ,addrs = rhyslindmark.eth & first_block = 4037786 & last_block = 4589473
 
 on      ,cmd  ,fast  ,monitors ,apps/acctExport ,monitors_help            ,n    ,@h
 on      ,cmd  ,fast  ,monitors ,apps/acctExport ,monitors_long_help       ,n    ,help
@@ -98,5 +99,3 @@ local   ,both ,fast  ,monitors ,apps/acctExport ,monitors_to_file         ,y    
 local   ,both ,fast  ,export   ,apps/acctExport ,export_freshen_0-30      ,y    ,addrs = 0xbb7b8287f3f0a933474a79eae42cbca977791171 & first_block = 1 & last_block = 30 & appearances & freshen
 local   ,both ,fast  ,export   ,apps/acctExport ,export_freshen_31-60     ,y    ,addrs = 0xbb7b8287f3f0a933474a79eae42cbca977791171 & first_block = 31 & last_block = 60 & appearances & freshen
 local   ,both ,fast  ,export   ,apps/acctExport ,export_freshen_61-100    ,y    ,addrs = 0xbb7b8287f3f0a933474a79eae42cbca977791171 & first_block = 61 & last_block = 100 & appearances & freshen
-
-local   ,both ,fast  ,list     ,apps/acctExport ,list_count               ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & count

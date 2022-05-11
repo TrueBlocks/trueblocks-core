@@ -11,7 +11,7 @@ on      ,both ,fast  ,when  ,tools/whenBlock ,invalid_alone_syntax_3      ,y    
 on      ,both ,fast  ,when  ,tools/whenBlock ,invalid_alone_syntax_4      ,y    ,blocks = 0pppppp
 on      ,both ,fast  ,when  ,tools/whenBlock ,invalid_block_1             ,y    ,blocks = 0x0a
 on      ,both ,fast  ,when  ,tools/whenBlock ,invalid_block_2             ,y    ,blocks = 1ppppppp
-on      ,both ,slow  ,when  ,tools/whenBlock ,invalid_list_syntax_1       ,y    ,list
+on      ,both ,slow  ,when  ,tools/whenBlock ,invalid_list_syntax_1       ,y    ,list & fmt = api
 on      ,both ,fast  ,when  ,tools/whenBlock ,invalid_list_syntax_2       ,y    ,blocks = 213123213 & list
 on      ,both ,fast  ,when  ,tools/whenBlock ,invalid_list_syntax_3       ,y    ,blocks = 2015-03-02 & list
 on      ,both ,slow  ,when  ,tools/whenBlock ,invalid_list_syntax_4       ,n    ,blocks = 23123 & list & fmt = txt

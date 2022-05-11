@@ -20,3 +20,4 @@ on      ,cmd  ,fast  ,explore ,apps/fireStorm ,block_id_local    ,n    ,terms = 
 on      ,cmd  ,fast  ,explore ,apps/fireStorm ,google_fail       ,n    ,terms = 1001001.0 & local & google
 on      ,cmd  ,fast  ,explore ,apps/fireStorm ,google_fail2      ,n    ,terms = 1001001.0 & google
 on      ,cmd  ,fast  ,explore ,apps/fireStorm ,google            ,n    ,terms = 0xf503017D7baF7FBC0fff7492b751025c6A78179b & google
+on      ,both ,fast  ,explore ,apps/fireStorm ,failApi           ,y    ,terms = 0xf503017D7baF7FBC0fff7492b751025c6A78179b
