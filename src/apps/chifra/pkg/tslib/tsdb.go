@@ -22,8 +22,8 @@ type TimestampDatabase struct {
 
 var perChainTimestamps = map[string]TimestampDatabase{}
 
-// nRecords returns the number of records in the timestamp file
-func nRecords(chain string) (uint64, error) {
+// NRecords returns the number of records in the timestamp file
+func NRecords(chain string) (uint64, error) {
 	if perChainTimestamps[chain].count > 0 {
 		return perChainTimestamps[chain].count, nil
 	}
@@ -49,7 +49,7 @@ func loadTimestamps(chain string) error {
 		return nil
 	}
 
-	cnt, err := nRecords(chain)
+	cnt, err := NRecords(chain)
 	if err != nil {
 		return err
 	}
@@ -80,7 +80,7 @@ func loadTimestamps(chain string) error {
 // fromTs is a local function that returns a Timestamp record given a Unix timestamp. It
 // loads the timestamp file into memory if it isn't already
 func fromTs(chain string, ts uint64) (*Timestamp, error) {
-	cnt, err := nRecords(chain)
+	cnt, err := NRecords(chain)
 	if err != nil {
 		return &Timestamp{}, err
 	}
@@ -107,7 +107,7 @@ func fromTs(chain string, ts uint64) (*Timestamp, error) {
 // fromTs is a local function that returns a Timestamp record given a blockNum. It
 // loads the timestamp file into memory if it isn't already
 func fromBn(chain string, bn uint64) (*Timestamp, error) {
-	cnt, err := nRecords(chain)
+	cnt, err := NRecords(chain)
 	if err != nil {
 		return &Timestamp{}, err
 	}

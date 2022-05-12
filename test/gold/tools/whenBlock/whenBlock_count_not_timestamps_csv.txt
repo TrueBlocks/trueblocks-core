@@ -1,0 +1,6 @@
+chifra when  --count --fmt csv --timestamps
+TEST[DATE|TIME] Timestamps:  true
+TEST[DATE|TIME] Count:  true
+TEST[DATE|TIME] Format:  csv
+"count"
+"5000000"

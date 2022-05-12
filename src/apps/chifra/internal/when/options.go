@@ -44,9 +44,6 @@ func (opts *WhenOptions) TestLog() {
 
 func (opts *WhenOptions) ToCmdLine() string {
 	options := ""
-	if opts.List {
-		options += " --list"
-	}
 	if opts.Timestamps {
 		options += " --timestamps"
 	}
@@ -55,9 +52,6 @@ func (opts *WhenOptions) ToCmdLine() string {
 	}
 	if opts.Fix {
 		options += " --fix"
-	}
-	if opts.Count {
-		options += " --count"
 	}
 	if opts.NoUpdate {
 		options += " --no_update"

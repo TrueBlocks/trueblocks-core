@@ -36,16 +36,11 @@ int main(int argc, const char* argv[]) {
                 options.applyFilter();
 
             } else if (options.timestamps) {
-                if (options.count) {
-                    cout << (options.isText ? uint_2_Str(nTimestamps())
-                                            : "{ \"nTimestamps\": " + uint_2_Str(nTimestamps()) + "}");
-                } else {
-                    if (!options.no_update)
-                        getTimestampAt(options.latest.blockNumber);  // freshens timestamp file but otherwise ignored
-                    forEveryTimestamp(visitBlock, &options);
-                    if (options.corrections.size() > 0) {
-                        options.applyCorrections();
-                    }
+                if (!options.no_update)
+                    getTimestampAt(options.latest.blockNumber);  // freshens timestamp file but otherwise ignored
+                forEveryTimestamp(visitBlock, &options);
+                if (options.corrections.size() > 0) {
+                    options.applyCorrections();
                 }
             }
 

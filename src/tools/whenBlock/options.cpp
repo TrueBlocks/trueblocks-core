@@ -23,11 +23,9 @@ static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
     COption("blocks", "", "list<string>", OPT_POSITIONAL, "one or more dates, block numbers, hashes, or special named blocks (see notes)"),  // NOLINT
-    COption("list", "l", "", OPT_SWITCH, "export a list of the 'special' blocks"),
     COption("timestamps", "t", "", OPT_SWITCH, "ignore other options and generate timestamps only"),
     COption("check", "c", "", OPT_HIDDEN | OPT_SWITCH, "available only with --timestamps, checks the validity of the timestamp data"),  // NOLINT
     COption("fix", "f", "", OPT_HIDDEN | OPT_SWITCH, "available only with --timestamps, fixes incorrect timestamps if any"),  // NOLINT
-    COption("count", "u", "", OPT_HIDDEN | OPT_SWITCH, "available only with --timestamps, returns the number of timestamps in the cache"),  // NOLINT
     COption("no_update", "n", "", OPT_HIDDEN | OPT_SWITCH, "do not update timestamps database prior to completing the task at hand"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Find block(s) based on date, blockNum, timestamp, or 'special'."),
     // clang-format on
@@ -55,9 +53,6 @@ bool COptions::parseArguments(string_q& commandIn) {
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
-        } else if (arg == "-l" || arg == "--list") {
-            list = true;
-
         } else if (arg == "-t" || arg == "--timestamps") {
             timestamps = true;
 
@@ -66,9 +61,6 @@ bool COptions::parseArguments(string_q& commandIn) {
 
         } else if (arg == "-f" || arg == "--fix") {
             fix = true;
-
-        } else if (arg == "-u" || arg == "--count") {
-            count = true;
 
         } else if (arg == "-n" || arg == "--no_update") {
             no_update = true;
@@ -126,8 +118,6 @@ bool COptions::parseArguments(string_q& commandIn) {
     }
 
     string_q format = getGlobalConfig("whenBlock")->getConfigStr("display", "format", STR_DISPLAY_WHEN);
-    if (count)
-        format = "[{nTimestamps}]";
     configureDisplay("whenBlock", "CBlock", format);
     manageFields("CBlock:" + string_q(format));
 
@@ -141,11 +131,9 @@ void COptions::Init(void) {
     // END_CODE_GLOBALOPTS
 
     // BEG_CODE_INIT
-    list = false;
     timestamps = false;
     check = false;
     fix = false;
-    count = false;
     no_update = false;
     // END_CODE_INIT
 

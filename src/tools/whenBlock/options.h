@@ -38,11 +38,9 @@ class CTimeStamper {
 class COptions : public CBlockOptions {
   public:
     // BEG_CODE_DECLARE
-    bool list;
     bool timestamps;
     bool check;
     bool fix;
-    bool count;
     bool no_update;
     // END_CODE_DECLARE
 
