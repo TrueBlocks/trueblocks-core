@@ -32,9 +32,17 @@ func IsBlockHash(str string) bool {
 	return true
 }
 
-type blockNum = uint32
+type blknum_t = uint32
 
-func IsBlockNumber(str string) (bool, blockNum) {
+func IsTimestamp(str string) (bool, blknum_t) {
+	ok, bn := IsBlockNumber(str)
+	if !ok {
+		return false, 0
+	}
+	return bn > 1438269975 && bn <= 2542852800, bn
+}
+
+func IsBlockNumber(str string) (bool, blknum_t) {
 	base := 10
 	source := str
 
@@ -48,11 +56,11 @@ func IsBlockNumber(str string) (bool, blockNum) {
 		return false, 0
 	}
 
-	return true, blockNum(value)
+	return true, blknum_t(value)
 }
 
-func IsBlockNumberList(strs []string) (bool, []blockNum) {
-	result := make([]blockNum, len(strs))
+func IsBlockNumberList(strs []string) (bool, []blknum_t) {
+	result := make([]blknum_t, len(strs))
 
 	for index, stringValue := range strs {
 		check, value := IsBlockNumber(stringValue)
@@ -67,6 +75,10 @@ func IsBlockNumberList(strs []string) (bool, []blockNum) {
 }
 
 func IsDateTimeString(str string) bool {
+	if strings.Count(str, "-") != 2 {
+		return false
+	}
+
 	bRange, err := blockRange.New(str)
 	if err != nil {
 		return false
@@ -74,7 +86,7 @@ func IsDateTimeString(str string) bool {
 	return bRange.StartType == blockRange.BlockRangeDate
 }
 
-func IsBeforeFirstBlock(chain, str string) bool {
+func isBeforeFirstBlock(chain, str string) bool {
 	if !IsDateTimeString(str) {
 		return false
 	}
@@ -82,7 +94,12 @@ func IsBeforeFirstBlock(chain, str string) bool {
 	// From https://github.com/araddon/dateparse
 	time.Local, _ = time.LoadLocation("UTC")
 	dt, _ := dateparse.ParseLocal(str) // already validated as a date
-	return dt.Before(tslibPkg.DateFromName(chain, "first"))
+	firstDate := tslibPkg.DateFromName(chain, "0")
+	b := dt.Before(firstDate)
+	// fmt.Println(dt)
+	// fmt.Println(firstDate)
+	// fmt.Println(b)
+	return b
 }
 
 func IsRange(chain, str string) (bool, error) {

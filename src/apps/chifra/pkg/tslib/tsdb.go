@@ -97,8 +97,11 @@ func fromTs(chain string, ts uint64) (*Timestamp, error) {
 		return v >= ts
 	})
 
-	if uint64(perChainTimestamps[chain].memory[index].Ts) != ts {
-		return &Timestamp{}, errors.New("timestamp not found")
+	if ts > uint64(perChainTimestamps[chain].memory[cnt-1].Ts) {
+		est := perChainTimestamps[chain].memory[index-1]
+		est.Bn = (uint32(ts) - uint32(est.Ts)) / 14
+		est.Ts = uint32(ts)
+		return &est, errors.New("timestamp in the future")
 	}
 
 	return &perChainTimestamps[chain].memory[index], nil

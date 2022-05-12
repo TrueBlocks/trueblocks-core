@@ -16,6 +16,7 @@ type ValidArgumentType uint16
 const (
 	ValidArgumentBlockHash ValidArgumentType = 1 << iota
 	ValidArgumentBlockNumber
+	ValidArgumentTimestamp
 	ValidArgumentDate
 	ValidArgumentRange
 	ValidArgumentSpecialBlock
@@ -25,7 +26,7 @@ const (
 )
 
 const ValidTransId = ValidArgumentTransHash | ValidArgumentTransBlockNumberAndId | ValidArgumentTransBlockHashAndId
-const ValidBlockId = ValidArgumentBlockHash | ValidArgumentBlockNumber | ValidArgumentSpecialBlock
+const ValidBlockId = ValidArgumentBlockHash | ValidArgumentBlockNumber | ValidArgumentTimestamp | ValidArgumentSpecialBlock
 const ValidBlockIdWithRange = ValidBlockId | ValidArgumentRange
 const ValidBlockIdWithRangeAndDate = ValidBlockIdWithRange | ValidArgumentDate
 
@@ -51,14 +52,18 @@ func ValidateIdentifiers(chain string, identifiers []string, validTypes ValidArg
 			continue
 		}
 
-		validBlockNumber, _ := IsBlockNumber(identifier)
+		validTimestamp, _ := IsTimestamp(identifier)
+		if isBitmaskSet(ValidArgumentTimestamp) && validTimestamp {
+			continue
+		}
 
+		validBlockNumber, _ := IsBlockNumber(identifier)
 		if isBitmaskSet(ValidArgumentBlockNumber) && validBlockNumber {
 			continue
 		}
 
 		if isBitmaskSet(ValidArgumentDate) && IsDateTimeString(identifier) {
-			if IsBeforeFirstBlock(chain, identifier) {
+			if isBeforeFirstBlock(chain, identifier) {
 				return &InvalidIdentifierLiteralError{
 					Value: identifier,
 					Msg:   "is before the first block.",

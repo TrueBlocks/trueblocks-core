@@ -60,7 +60,7 @@ func DateFromBn(chain string, bn uint64) (string, error) {
 // DateFromName returns a chain-specific date (if found) given its chain-specific name
 func DateFromName(chain, needle string) time.Time {
 	specials, _ := GetSpecials(chain)
-	if len(specials) == 0 {
+	if len(specials) == 0 || needle == "0" {
 		date, _ := DateFromBn(chain, 0)
 		dt, _ := dateparse.ParseLocal(date)
 		return dt

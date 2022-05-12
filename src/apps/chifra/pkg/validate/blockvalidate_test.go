@@ -65,7 +65,7 @@ func TestIsBlockNumberList(t *testing.T) {
 		name  string
 		args  args
 		want  bool
-		want1 []blockNum
+		want1 []blknum_t
 	}{
 		{
 			name: "list of valid blocknumbers",
@@ -73,7 +73,7 @@ func TestIsBlockNumberList(t *testing.T) {
 				strs: []string{"12147043", "12147042", "12147041"},
 			},
 			want:  true,
-			want1: []blockNum{12147043, 12147042, 12147041},
+			want1: []blknum_t{12147043, 12147042, 12147041},
 		},
 		{
 			name: "list of invalid blocknumbers",
@@ -152,12 +152,12 @@ func TestIsDateTimeString(t *testing.T) {
 		t.Error("Fails for date with time and timezone")
 	}
 
-	if IsBeforeFirstBlock(GetTestChain(), "2015-07-30T15:26:00") {
+	if isBeforeFirstBlock(GetTestChain(), "2015-07-30T15:26:00") {
 		t.Error("Fails for exact first block date")
 	}
 
 	// TODO: Turn off go testing that requires ts.bin
-	// if !IsBeforeFirstBlock(GetTestChain(), "2015-07-30T15:25:59") {
+	// if !isBeforeFirstBlock(GetTestChain(), "2015-07-30T15:25:59") {
 	// 	t.Error("Passes for too early date (before first block)")
 	// }
 
@@ -274,8 +274,8 @@ func TestValidateBlockIdentifiers(t *testing.T) {
 		{
 			name: "correct block numbers",
 			args: args{
-				identifiers: []string{"10", "100", "1000"},
-				validTypes:  ValidArgumentBlockNumber,
+				identifiers: []string{"10", "100", "1000", "2542852800"},
+				validTypes:  ValidArgumentBlockNumber | ValidArgumentTimestamp,
 				maxRanges:   1,
 			},
 			wantErr: false,
