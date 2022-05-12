@@ -1,8 +1,9 @@
-chifra when  2015-03-02 --list
-TEST[DATE|TIME] Blocks:  [2015-03-02]
-TEST[DATE|TIME] List:  true
+chifra when  --timestamps --fix --check
+TEST[DATE|TIME] Timestamps:  true
+TEST[DATE|TIME] Check:  true
+TEST[DATE|TIME] Fix:  true
 TEST[DATE|TIME] Format:  txt
-Error: Please supply either block identifiers, the --list option, or the --timestamps option.
+Error: Please choose only one of --check or --fix.
 Usage:
   chifra when [flags] < block | date > [ block... | date... ]
 

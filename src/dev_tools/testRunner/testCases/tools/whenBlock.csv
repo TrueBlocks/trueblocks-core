@@ -67,6 +67,7 @@ on      ,both ,fast  ,when  ,tools/whenBlock ,check_not_timestamps        ,y    
 on      ,both ,fast  ,when  ,tools/whenBlock ,count_not_timestamps        ,y    ,blocks = 1301000 & count
 on      ,both ,fast  ,when  ,tools/whenBlock ,count_not_timestamps_csv    ,n    ,count & fmt = csv & timestamps
 on      ,both ,fast  ,when  ,tools/whenBlock ,count_not_timestamps_json   ,y    ,count & fmt = json & timestamps
+on      ,both ,fast  ,when  ,tools/whenBlock ,fix_and_check_bad           ,y    ,timestamps & fix & check
 
 local   ,both ,fast  ,when  ,tools/whenBlock ,to_file                     ,y    ,blocks = 1001001 & fmt = json & to_file
 local   ,cmd  ,medi  ,when  ,tools/whenBlock ,skip_hourly                 ,n    ,fmt = txt & blocks = 1125561-1130516:hourly

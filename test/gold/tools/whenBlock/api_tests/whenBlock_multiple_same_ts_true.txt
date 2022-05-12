@@ -1,6 +1,6 @@
 when?blocks=12345&blocks=54321&blocks=2016-12-01&blocks=2016-12-01-01&timestamps
 {
   "errors": [
-    "Please use the --list or --timestamp option or supply block identifiers, not both."
+    "Please supply either block identifiers, the --list option, or the --timestamps option."
   ]
 }

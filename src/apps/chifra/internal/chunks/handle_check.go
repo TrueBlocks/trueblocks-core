@@ -15,7 +15,7 @@ import (
 )
 
 func (opts *ChunksOptions) HandleChunksCheck() error {
-	blocks := validate.Convert(opts.Blocks)
+	blockNums := validate.Convert(opts.Blocks)
 	filenameChan := make(chan cache.IndexFileInfo)
 
 	var nRoutines int = 1
@@ -26,11 +26,14 @@ func (opts *ChunksOptions) HandleChunksCheck() error {
 		switch result.Type {
 		case cache.Index_Bloom:
 			hit := false
-			for _, block := range blocks {
+			for _, block := range blockNums {
 				h := result.Range.BlockIntersects(block)
 				hit = hit || h
+				if hit {
+					break
+				}
 			}
-			if len(blocks) == 0 || hit {
+			if len(blockNums) == 0 || hit {
 				filenames = append(filenames, result.Path)
 			}
 		case cache.None:

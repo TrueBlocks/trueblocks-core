@@ -46,8 +46,10 @@ func (opts *WhenOptions) WhenInternal() (err error, handled bool) {
 		return opts.HandleWhenList(), true
 	}
 
-	if opts.Timestamps && opts.Count {
-		return opts.HandleWhenTimestampCount(), true
+	if opts.Timestamps {
+		if opts.Count {
+			return opts.HandleWhenTimestampCount(), true
+		}
 	}
 
 	if opts.Globals.ApiMode {

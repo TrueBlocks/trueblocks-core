@@ -79,12 +79,6 @@ bool COptions::parseArguments(string_q& commandIn) {
         }
     }
 
-    if (!timestamps && (check || fix))
-        return usage("The --check and --fix options are available only with --timestamps.");
-
-    if (timestamps && (check + fix > 1))
-        return usage("Please choose only one of --check or --fix.");
-
     for (auto item : blocks) {
         if (isDate(item)) {
             if (!parseRequestDates(this, requests, item))
