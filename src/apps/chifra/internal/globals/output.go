@@ -35,7 +35,11 @@ func RenderSlice[
 
 	var meta *rpcClient.MetaData = nil
 	if opts.Format == "api" {
-		meta = rpcClient.GetMetaData(opts.Chain, opts.TestMode)
+		var err error
+		meta, err = rpcClient.GetMetaData(opts.Chain, opts.TestMode)
+		if err != nil {
+			return err
+		}
 	}
 
 	if opts.ApiMode {
@@ -86,7 +90,11 @@ func (opts *GlobalOptions) RenderObject(data interface{}) error {
 
 	var meta *rpcClient.MetaData = nil
 	if opts.Format == "api" {
-		meta = rpcClient.GetMetaData(opts.Chain, opts.TestMode)
+		var err error
+		meta, err = rpcClient.GetMetaData(opts.Chain, opts.TestMode)
+		if err != nil {
+			return err
+		}
 	}
 
 	return output.OutputObject(data, opts.Writer, opts.Format, opts.NoHeader, opts.ApiMode, meta)

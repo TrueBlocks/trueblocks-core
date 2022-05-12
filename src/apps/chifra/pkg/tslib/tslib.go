@@ -28,7 +28,8 @@ func BnFromDate(chain, date string) (uint64, error) {
 // BnFromName returns the chain-specific block number (if found) given the name of a special block. The list of special blocks is per-chain.
 func BnFromName(chain, needle string) (uint64, bool) {
 	if needle == "latest" {
-		return rpcClient.GetMetaData(chain, false).Latest, true
+		meta, _ := rpcClient.GetMetaData(chain, false)
+		return meta.Latest, true
 	}
 
 	specials, _ := GetSpecials(chain)
@@ -66,7 +67,8 @@ func DateFromName(chain, needle string) time.Time {
 	}
 
 	if needle == "latest" {
-		ts := rpcClient.GetBlockTimestamp(chain, rpcClient.GetMetaData(chain, false).Latest)
+		meta, _ := rpcClient.GetMetaData(chain, false)
+		ts := rpcClient.GetBlockTimestamp(chain, meta.Latest)
 		date, _ := DateFromTs(ts)
 		dt, _ := dateparse.ParseLocal(date)
 		return dt

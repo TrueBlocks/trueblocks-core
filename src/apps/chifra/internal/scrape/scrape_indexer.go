@@ -37,7 +37,7 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 				//
 				// If we're closeEnough and the user specified a sleep value less than
 				// 14 seconds, there's not reason to not sleep
-				meta := rpcClient.GetMetaData(opts.Globals.Chain, false)
+				meta, _ := rpcClient.GetMetaData(opts.Globals.Chain, false)
 				distanceFromHead := meta.Latest - meta.Staging
 				closeEnough := distanceFromHead <= (2 * opts.UnripeDist)
 				// TODO: per chain data

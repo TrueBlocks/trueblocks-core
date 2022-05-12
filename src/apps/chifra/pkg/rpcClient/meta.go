@@ -28,10 +28,14 @@ func (m MetaData) String() string {
 	return string(ret)
 }
 
-func GetMetaData(chain string, testmode bool) *MetaData {
+func GetMetaData(chain string, testmode bool) (*MetaData, error) {
 	provider := config.GetRpcProvider(chain)
 
-	chainId, networkId := GetIDs(provider)
+	chainId, networkId, err := GetIDs(provider)
+	if err != nil {
+		return nil, err
+	}
+
 	if testmode {
 		return &MetaData{
 			Unripe:    0xdeadbeef,
@@ -42,7 +46,7 @@ func GetMetaData(chain string, testmode bool) *MetaData {
 			Chain:     chain,
 			ChainId:   chainId,
 			NetworkId: networkId,
-		}
+		}, nil
 	}
 
 	var meta MetaData
@@ -83,5 +87,5 @@ func GetMetaData(chain string, testmode bool) *MetaData {
 	meta.Ripe = utils.Max(meta.Staging, meta.Ripe)
 	meta.Unripe = utils.Max(meta.Ripe, meta.Unripe)
 
-	return &meta
+	return &meta, nil
 }

@@ -6,6 +6,7 @@ package rpcClient
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"math/big"
 	"os"
@@ -64,7 +65,7 @@ func CheckRpc(provider string) {
 }
 
 // GetIDs returns both chainId and networkId from the node
-func GetIDs(provider string) (uint64, uint64) {
+func GetIDs(provider string) (uint64, uint64, error) {
 	// We might need it, so create it
 	msg := noProvider
 	msg = strings.Replace(msg, "[{PROVIDER}]", provider, -1)
@@ -74,7 +75,7 @@ func GetIDs(provider string) (uint64, uint64) {
 	msg = strings.Replace(msg, "{O}", colors.Off, -1)
 	if provider == "https://" {
 		msg = strings.Replace(msg, "https://", "<empty>", -1)
-		log.Fatalln(msg)
+		return 0, 0, fmt.Errorf("%s", msg)
 	}
 
 	ec := GetClient(provider)
@@ -82,15 +83,15 @@ func GetIDs(provider string) (uint64, uint64) {
 
 	ch, err := ec.ChainID(context.Background())
 	if err != nil {
-		log.Fatalln(msg)
+		return 0, 0, err
 	}
 
 	n, err := ec.NetworkID(context.Background())
 	if err != nil {
-		log.Fatalln(msg)
+		return 0, 0, err
 	}
 
-	return ch.Uint64(), n.Uint64()
+	return ch.Uint64(), n.Uint64(), nil
 }
 
 // TxHashFromHash returns a transaction's hash if it's a valid transaction
