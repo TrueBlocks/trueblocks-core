@@ -9,8 +9,8 @@ import "strconv"
 func Convert(blockStrs []string) []uint64 {
 	// TODO: This needs to handle string values such as specials and latest/first, etc.
 	var ret []uint64
-	for _, blockStr := range blockStrs {
-		val, _ := strconv.ParseUint(blockStr, 10, 64)
+	for _, item := range blockStrs {
+		val, _ := strconv.ParseUint(item, 10, 64)
 		ret = append(ret, val)
 	}
 	return ret

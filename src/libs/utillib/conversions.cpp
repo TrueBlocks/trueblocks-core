@@ -386,7 +386,7 @@ bool isAddress(const string_q& addrIn) {
 //--------------------------------------------------------------------------------
 bool isTimestamp(const string_q& ts) {
     // this is hokey, but it works for our purposes
-    return (isNumeral(ts) && str_2_Uint(ts) > 1438315200 && str_2_Uint(ts) <= 2542852800);
+    return (isNumeral(ts) && str_2_Uint(ts) >= 1438269975 && str_2_Uint(ts) <= 2542852800);
 }
 
 //--------------------------------------------------------------------------------
