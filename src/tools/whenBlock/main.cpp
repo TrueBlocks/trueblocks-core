@@ -136,8 +136,8 @@ void COptions::applyFilter() {
     }
 }
 
-//#define TEST string_q("flat")
-#define TEST string_q("onesec")
+#define TEST string_q("flat")
+//#define TEST string_q("onesec")
 //#define TEST string_q("twosecs")
 double estSeconds(blknum_t bn) {
     blknum_t fake = bn - 10700000;

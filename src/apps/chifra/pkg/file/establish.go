@@ -33,7 +33,7 @@ func EstablishFolder(rootPath string) error {
 	_, err := os.Stat(rootPath)
 	if err != nil {
 		if os.IsNotExist(err) {
-			err = os.Mkdir(rootPath, 0755)
+			err = os.MkdirAll(rootPath, 0755)
 			if err != nil {
 				return err
 			}
