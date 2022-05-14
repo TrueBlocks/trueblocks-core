@@ -160,6 +160,7 @@ func TestValidateTransIdentifiers(t *testing.T) {
 				tt.args.identifiers,
 				tt.args.validTypes,
 				tt.args.maxRanges,
+				nil,
 			); (err != nil) != tt.wantErr {
 				t.Errorf("ValidateIdentifiers() error = %v, wantErr %v", err, tt.wantErr)
 			}

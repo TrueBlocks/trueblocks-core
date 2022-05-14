@@ -5,6 +5,7 @@
 package validate
 
 import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
 	tslibPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 )
 
@@ -39,7 +40,7 @@ const ValidBlockIdWithRangeAndDate = ValidBlockIdWithRange | ValidArgumentDate
 //     ValidateIdentifiers(identifiers, ValidArgumentRange, 1)
 //
 // This routine can be used for both block identifiers and transaction
-func ValidateIdentifiers(chain string, identifiers []string, validTypes ValidArgumentType, maxRanges int) error {
+func ValidateIdentifiers(chain string, identifiers []string, validTypes ValidArgumentType, maxRanges int, results *[]blockRange.BlockRange) error {
 	// A helper function to check if bitmask is set
 	isBitmaskSet := func(flag ValidArgumentType) bool {
 		return validTypes&flag != 0
@@ -49,16 +50,19 @@ func ValidateIdentifiers(chain string, identifiers []string, validTypes ValidArg
 
 	for _, identifier := range identifiers {
 		if isBitmaskSet(ValidArgumentBlockHash) && IsBlockHash(identifier) {
+			appendResult(results, identifier)
 			continue
 		}
 
 		validTimestamp, _ := IsTimestamp(identifier)
 		if isBitmaskSet(ValidArgumentTimestamp) && validTimestamp {
+			appendResult(results, identifier)
 			continue
 		}
 
 		validBlockNumber, _ := IsBlockNumber(identifier)
 		if isBitmaskSet(ValidArgumentBlockNumber) && validBlockNumber {
+			appendResult(results, identifier)
 			continue
 		}
 
@@ -69,22 +73,27 @@ func ValidateIdentifiers(chain string, identifiers []string, validTypes ValidArg
 					Msg:   "is before the first block.",
 				}
 			}
+			appendResult(results, identifier)
 			continue
 		}
 
 		if isBitmaskSet(ValidArgumentSpecialBlock) && tslibPkg.IsSpecialBlock(chain, identifier) {
+			appendResult(results, identifier)
 			continue
 		}
 
 		if isBitmaskSet(ValidArgumentTransHash) && IsTransHash(identifier) {
+			appendResult(results, identifier)
 			continue
 		}
 
 		if isBitmaskSet(ValidArgumentTransBlockNumberAndId) && IsTransBlockNumAndId(identifier) {
+			appendResult(results, identifier)
 			continue
 		}
 
 		if isBitmaskSet(ValidArgumentTransBlockHashAndId) && IsTransBlockHashAndId(identifier) {
+			appendResult(results, identifier)
 			continue
 		}
 
@@ -105,7 +114,16 @@ func ValidateIdentifiers(chain string, identifiers []string, validTypes ValidArg
 		if rangesFound > maxRanges {
 			return ErrTooManyRanges
 		}
+		appendResult(results, identifier)
 	}
 
 	return nil
+}
+
+func appendResult(results *[]blockRange.BlockRange, identifier string) {
+	if results == nil {
+		return
+	}
+	br, _ := blockRange.New(identifier)
+	*results = append(*results, *br)
 }

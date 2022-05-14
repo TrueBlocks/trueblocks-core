@@ -43,6 +43,7 @@ func (opts *WhenOptions) ValidateWhen() error {
 		opts.Blocks,
 		validate.ValidBlockIdWithRangeAndDate,
 		1,
+		nil,
 	)
 	if err != nil {
 		if invalidLiteral, ok := err.(*validate.InvalidIdentifierLiteralError); ok {
