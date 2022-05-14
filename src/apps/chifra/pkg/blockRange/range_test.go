@@ -12,7 +12,7 @@ import (
 )
 
 func TestPointToPointTypeBlock(t *testing.T) {
-	point := &Point{Block: 100}
+	point := &Point{BlockOrTs: 100}
 	result := getPointType(point)
 
 	if result != BlockRangeBlockNumber {
@@ -66,7 +66,7 @@ func TestNewBlocks(t *testing.T) {
 		t.Error("StartType is not block number")
 	}
 
-	if blockRange.Start.Block != 10 {
+	if blockRange.Start.BlockOrTs != 10 {
 		t.Errorf("Wrong start")
 	}
 
@@ -74,7 +74,7 @@ func TestNewBlocks(t *testing.T) {
 		t.Error("EndType is not block number")
 	}
 
-	if blockRange.End.Block != 1000 {
+	if blockRange.End.BlockOrTs != 1000 {
 		t.Error("Wrong end")
 	}
 
@@ -149,12 +149,12 @@ func TestBlockRange_UnmarshalJSON(t *testing.T) {
 		t.Errorf("Wrong EndType %d", record.Blocks.EndType)
 	}
 
-	if record.Blocks.Start.Block != uint(0) {
+	if record.Blocks.Start.BlockOrTs != uint(0) {
 		t.Error("Wrong start value")
 	}
 
-	if record.Blocks.End.Block != uint(10567003) {
-		t.Errorf("Wrong end value %d", record.Blocks.End.Block)
+	if record.Blocks.End.BlockOrTs != uint(10567003) {
+		t.Errorf("Wrong end value %d", record.Blocks.End.BlockOrTs)
 	}
 }
 
@@ -163,9 +163,9 @@ func TestToString(t *testing.T) {
 	if err != nil {
 		t.Errorf("Could not parse block")
 	}
-	expected := "{\"StartType\":0,\"Start\":{\"Block\":1234,\"Date\":\"\",\"Special\":\"\"},\"EndType\":5,\"End\":{\"Block\":0,\"Date\":\"\",\"Special\":\"\"},\"ModifierType\":5,\"Modifier\":{\"Step\":0,\"Period\":\"\"}}\n"
-	got := fmt.Sprintf("%s\n", br.ToJSON())
+	expected := `{"start":{"blockOrTs":1234},"endType":7,"end":{},"modifierType":7,"modifier":{}}`
+	got := fmt.Sprintf("%s", br.ToJSON())
 	if got != expected {
-		t.Errorf("String printer for blockRange not equal to expected")
+		t.Errorf("String printer for blockRange not equal to expected:\n%s\n%s", got, expected)
 	}
 }

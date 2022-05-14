@@ -46,8 +46,8 @@ func TestGetNameByValue(t *testing.T) {
 }
 
 func TestGetValueByName(t *testing.T) {
-	value, found := BnFromName(GetTestChain(), "tangerine")
-	if !found {
+	value, err := BnFromName(GetTestChain(), "tangerine")
+	if err != nil {
 		t.Error("Block not found by name")
 	}
 	if value != 2463000 {

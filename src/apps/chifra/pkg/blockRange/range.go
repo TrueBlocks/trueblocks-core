@@ -10,7 +10,32 @@ import (
 	"fmt"
 	"regexp"
 	"strconv"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
+
+type BlockRangeValue int64
+
+const (
+	BlockRangeBlockNumber BlockRangeValue = iota
+	BlockRangeTimestamp
+	BlockRangeHash
+	BlockRangeDate
+	BlockRangeSpecial
+	BlockRangePeriod
+	BlockRangeStep
+	BlockRangeNotDefined
+)
+
+type BlockRange struct {
+	StartType    BlockRangeValue `json:"startType,omitempty"`
+	Start        Point           `json:"start,omitempty"`
+	EndType      BlockRangeValue `json:"endType,omitempty"`
+	End          Point           `json:"end,omitempty"`
+	ModifierType BlockRangeValue `json:"modifierType,omitempty"`
+	Modifier     Modifier        `json:"modifier,omitempty"`
+	Orig         string          `json:"-"`
+}
 
 // Parses a string containing block range and returns a struct
 // that always has Start, StartType, EndType, ModifierType fields
@@ -26,6 +51,7 @@ func New(rangeStr string) (*BlockRange, error) {
 		return nil, handleParserErrors(err)
 	}
 
+	newBlockRange.Orig = rangeStr
 	newBlockRange.StartType = getPointType(parsed.Points[0])
 	newBlockRange.Start = *parsed.Points[0]
 
@@ -46,24 +72,17 @@ func New(rangeStr string) (*BlockRange, error) {
 	return newBlockRange, nil
 }
 
-type BlockRangeValue int64
-
-const (
-	BlockRangeBlockNumber BlockRangeValue = iota
-	BlockRangeDate
-	BlockRangeSpecial
-	BlockRangePeriod
-	BlockRangeStep
-	BlockRangeNotDefined
-)
-
-type BlockRange struct {
-	StartType    BlockRangeValue
-	Start        Point
-	EndType      BlockRangeValue
-	End          Point
-	ModifierType BlockRangeValue
-	Modifier     Modifier
+func (brv BlockRangeValue) String() string {
+	return []string{
+		"BlockRangeBlockNumber",
+		"BlockRangeTimestamp",
+		"BlockRangeHash",
+		"BlockRangeDate",
+		"BlockRangeSpecial",
+		"BlockRangePeriod",
+		"BlockRangeStep",
+		"BlockRangeNotDefined",
+	}[brv]
 }
 
 func (br BlockRange) ToJSON() string {
@@ -90,6 +109,10 @@ func (br *BlockRange) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (br *BlockRange) String() string {
+	return br.ToJSON()
+}
+
 func getPointType(p *Point) BlockRangeValue {
 	if p == nil {
 		return BlockRangeNotDefined
@@ -101,6 +124,14 @@ func getPointType(p *Point) BlockRangeValue {
 
 	if p.Special != "" {
 		return BlockRangeSpecial
+	}
+
+	if p.BlockHash != "" {
+		return BlockRangeHash
+	}
+
+	if p.BlockOrTs >= utils.EarliestTs {
+		return BlockRangeTimestamp
 	}
 
 	return BlockRangeBlockNumber

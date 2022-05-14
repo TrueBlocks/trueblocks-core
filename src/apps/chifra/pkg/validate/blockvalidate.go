@@ -13,6 +13,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
 	tslibPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/araddon/dateparse"
 )
 
@@ -39,7 +40,7 @@ func IsTimestamp(str string) (bool, blknum_t) {
 	if !ok {
 		return false, 0
 	}
-	return bn > 1438269975 && bn <= 2542852800, bn
+	return bn >= utils.EarliestTs, bn
 }
 
 func IsBlockNumber(str string) (bool, blknum_t) {
@@ -95,11 +96,7 @@ func isBeforeFirstBlock(chain, str string) bool {
 	time.Local, _ = time.LoadLocation("UTC")
 	dt, _ := dateparse.ParseLocal(str) // already validated as a date
 	firstDate := tslibPkg.DateFromName(chain, "0")
-	b := dt.Before(firstDate)
-	// fmt.Println(dt)
-	// fmt.Println(firstDate)
-	// fmt.Println(b)
-	return b
+	return dt.Before(firstDate)
 }
 
 func IsRange(chain, str string) (bool, error) {
@@ -134,7 +131,7 @@ func IsRange(chain, str string) (bool, error) {
 		onlyNumbers := bRange.StartType == blockRange.BlockRangeBlockNumber &&
 			bRange.EndType == blockRange.BlockRangeBlockNumber
 
-		if onlyNumbers && bRange.Start.Block >= bRange.End.Block {
+		if onlyNumbers && bRange.Start.BlockOrTs >= bRange.End.BlockOrTs {
 			return false, errors.New("'stop' must be strictly larger than 'start'")
 		}
 
@@ -165,6 +162,6 @@ func (e *InvalidIdentifierLiteralError) Error() string {
 }
 
 func IsValidBlockId(chain string, ids []string, validTypes ValidArgumentType) (bool, error) {
-	err := ValidateIdentifiers(chain, ids, validTypes, 1)
+	err := ValidateIdentifiers(chain, ids, validTypes, 1, nil)
 	return err == nil, err
 }

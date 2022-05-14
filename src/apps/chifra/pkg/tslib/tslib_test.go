@@ -18,8 +18,8 @@ type Expected struct {
 func TestLoadTimestampsPass(t *testing.T) {
 	expected := []Expected{
 		// TODO: Turn off go testing that requires ts.bin
-		// {name: "Block Zero", bn: 0, ts: 1438269975, date: "2015-07-30 15:26:15"},
-		// {name: "Block One", bn: 1, ts: 1438269988, date: "2015-07-30 15:26:28"},
+		// {name: "Block Zero", bn: 0, ts: utils.EarliestTs, date: "2015-07-30 15:26:15"},
+		// {name: "Block One", bn: 1, ts: utils.BlockOneTs, date: "2015-07-30 15:26:28"},
 		// {name: "Block 1 Mil", bn: 1000000, ts: 1455404053, date: "2016-02-13 22:54:13"},
 	}
 

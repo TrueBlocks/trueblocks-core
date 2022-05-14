@@ -7,46 +7,11 @@
 package tslibPkg
 
 import (
-	"strings"
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/araddon/dateparse"
 )
-
-// BnFromDate returns a chain-specific block number given a date string (date strings are valid JSON dates).
-func BnFromDate(chain, date string) (uint64, error) {
-	ts, err := TsFromDate(date)
-	if err != nil {
-		return 0, err
-	}
-	ret, err := fromTs(chain, ts)
-	return uint64(ret.Bn), err
-}
-
-// BnFromName returns the chain-specific block number (if found) given the name of a special block. The list of special blocks is per-chain.
-func BnFromName(chain, needle string) (uint64, bool) {
-	if needle == "latest" {
-		meta, _ := rpcClient.GetMetaData(chain, false)
-		return meta.Latest, true
-	}
-
-	specials, _ := GetSpecials(chain)
-	for _, value := range specials {
-		if value.Name == needle {
-			return value.BlockNumber, true
-		}
-	}
-
-	return uint64(utils.NOPOS), false
-}
-
-// BnFromTs returns a chain-specific block number given a Linux timestamp.
-func BnFromTs(chain string, ts uint64) (uint64, error) {
-	ret, err := fromTs(chain, ts)
-	return uint64(ret.Bn), err
-}
 
 // DateFromBn returns a chain-specific date string given a block number.
 func DateFromBn(chain string, bn uint64) (string, error) {
@@ -93,30 +58,4 @@ func DateFromTs(ts uint64) (string, error) {
 	time.Local, _ = time.LoadLocation("UTC")
 	tm := time.Unix(int64(ts), 0)
 	return tm.Format("2006-01-02 15:04:05 UTC"), nil
-}
-
-// NameFromBn returns the block's chain-specific name (if found) given its block number
-func NameFromBn(chain string, needle uint64) (string, bool) {
-	specials, _ := GetSpecials(chain)
-	for _, value := range specials {
-		if value.BlockNumber == needle {
-			return value.Name, true
-		}
-	}
-	return "", false
-}
-
-// TsFromBn returns a chain-specific Linux timestamp given a block number
-func TsFromBn(chain string, bn uint64) (uint64, error) {
-	ret, err := fromBn(chain, bn)
-	return uint64(ret.Ts), err
-}
-
-// TsFromDate returns a Linux timestamp given a date string (not chain-specific)
-func TsFromDate(date string) (uint64, error) {
-	t, err := time.Parse("2006-01-02 15:04:05", strings.Replace(date, "T", " ", -1))
-	if err != nil {
-		return 0, err
-	}
-	return uint64(t.Unix()), nil
 }

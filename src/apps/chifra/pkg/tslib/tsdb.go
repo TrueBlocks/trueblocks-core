@@ -90,19 +90,28 @@ func fromTs(chain string, ts uint64) (*Timestamp, error) {
 		return &Timestamp{}, err
 	}
 
-	// Go docs: Search uses binary search to find and return the smallest index i in [0, n) at which f(i) is true,
-	index := sort.Search(int(cnt), func(i int) bool {
-		d := perChainTimestamps[chain].memory[i]
-		v := uint64(d.Ts)
-		return v >= ts
-	})
-
 	if ts > uint64(perChainTimestamps[chain].memory[cnt-1].Ts) {
-		est := perChainTimestamps[chain].memory[index-1]
+		est := perChainTimestamps[chain].memory[cnt-1]
+		// TODO: Multi-chain
 		est.Bn = (uint32(ts) - uint32(est.Ts)) / 14
 		est.Ts = uint32(ts)
 		return &est, errors.New("timestamp in the future")
 	}
+
+	// Go docs: Search uses binary search to find and return the smallest index i in [0, n) at which f(i) is true,
+	index := sort.Search(int(cnt), func(i int) bool {
+		d := perChainTimestamps[chain].memory[i]
+		v := uint64(d.Ts)
+		return v > ts
+	})
+
+	// ts should not be before the first block
+	if index == 0 {
+		return nil, errors.New("timestamp is before the first block")
+	}
+
+	// The index is one past where we want to be because it's the first block larger
+	index--
 
 	return &perChainTimestamps[chain].memory[index], nil
 }

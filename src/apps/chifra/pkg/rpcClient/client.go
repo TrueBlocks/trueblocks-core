@@ -151,6 +151,19 @@ func BlockHashFromHash(provider, hash string) (string, error) {
 	return block.Hash().Hex(), nil
 }
 
+// BlockNumberFromHash returns a block's hash if it's a valid block
+func BlockNumberFromHash(provider, hash string) (uint64, error) {
+	ec := GetClient(provider)
+	defer ec.Close()
+
+	block, err := ec.BlockByHash(context.Background(), common.HexToHash(hash))
+	if err != nil {
+		return 0, err
+	}
+
+	return block.NumberU64(), nil
+}
+
 // BlockHashFromNumber returns a block's hash if it's a valid block
 func BlockHashFromNumber(provider string, blkNum uint64) (string, error) {
 	ec := GetClient(provider)
