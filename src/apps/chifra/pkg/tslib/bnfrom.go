@@ -13,8 +13,9 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-// BnFromDate returns a chain-specific block number given a date string (date strings are valid JSON dates).
-func BnFromDate(chain, date string) (uint64, error) {
+// BnFromDate returns a chain-specific block number given a date string (date strings are valid JSON dates). Snap too, which may be
+// empty, will push the date back to the next nearest period if provided. Period can be hourly, daily, weekly, monthly, or annually
+func BnFromDate(chain, date, period string) (uint64, error) {
 	ts, err := TsFromDate(date)
 	if err != nil {
 		return 0, err
@@ -24,20 +25,20 @@ func BnFromDate(chain, date string) (uint64, error) {
 }
 
 // BnFromName returns the chain-specific block number (if found) given the name of a special block. The list of special blocks is per-chain.
-func BnFromName(chain, needle string) (uint64, error) {
-	if needle == "latest" {
+func BnFromName(chain, name string) (uint64, error) {
+	if name == "latest" {
 		meta, _ := rpcClient.GetMetaData(chain, false)
 		return meta.Latest, nil
 	}
 
 	specials, _ := GetSpecials(chain)
 	for _, value := range specials {
-		if value.Name == needle {
+		if value.Name == name {
 			return value.BlockNumber, nil
 		}
 	}
 
-	return uint64(utils.NOPOS), errors.New("Block " + needle + " not found")
+	return uint64(utils.NOPOS), errors.New("Block " + name + " not found")
 }
 
 // BnFromTs returns a chain-specific block number given a Linux timestamp.

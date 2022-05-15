@@ -22,8 +22,8 @@ func (br *BlockRange) Resolve(chain string) []uint64 {
 }
 
 func (br *BlockRange) getBounds(chain string) (uint64, uint64) {
-	start := br.Start.resolvePoint(br.Modifier.Period, chain)
-	end := br.End.resolvePoint(br.Modifier.Period, chain)
+	start := br.Start.resolvePoint(chain, br.Modifier.Period)
+	end := br.End.resolvePoint(chain, br.Modifier.Period)
 	if end == utils.NOPOS || end == 0 {
 		end = start + 1
 	}
@@ -54,13 +54,13 @@ func (br *BlockRange) nextBlock(current uint64) uint64 {
 	}
 }
 
-func (p *Point) resolvePoint(period, chain string) uint64 {
+func (p *Point) resolvePoint(chain, period string) uint64 {
 	var bn uint64
 	if p.BlockHash != "" {
 		provider := config.GetRpcProvider(chain)
 		bn, _ = rpcClient.BlockNumberFromHash(provider, p.BlockHash)
 	} else if p.Date != "" {
-		bn, _ = tslibPkg.BnFromDate(chain, p.Date)
+		bn, _ = tslibPkg.BnFromDate(chain, p.Date, period)
 	} else if p.Special != "" {
 		bn, _ = tslibPkg.BnFromName(chain, p.Special)
 	} else if p.BlockOrTs >= utils.EarliestTs {
@@ -71,7 +71,7 @@ func (p *Point) resolvePoint(period, chain string) uint64 {
 	if period == "" {
 		return bn
 	}
-	return snapTo(bn, period, chain)
+	return bn
 }
 
 func snapTo(bn uint64, period, chain string) uint64 {

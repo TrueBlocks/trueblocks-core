@@ -9,12 +9,12 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
-	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
 	tslibPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/araddon/dateparse"
+
+	"github.com/bykof/gostradamus"
 )
 
 func IsBlockHash(str string) bool {
@@ -87,16 +87,33 @@ func IsDateTimeString(str string) bool {
 	return bRange.StartType == blockRange.BlockRangeDate
 }
 
-func isBeforeFirstBlock(chain, str string) bool {
-	if !IsDateTimeString(str) {
+// TODO: BOGUS
+func ToIsoDateStr2(dateStr string) string {
+	// assumes an already validated date string
+	str := strings.Replace(dateStr, "T", " ", -1)
+	if strings.Count(str, ":") == 0 {
+		if strings.Count(str, " ") == 1 {
+			str += ":00:00"
+		} else {
+			str += " 00:00:00"
+		}
+	} else if strings.Count(str, ":") == 1 {
+		str += ":00"
+	}
+	str = strings.Replace(str, " ", "T", -1)
+	str += ".000000"
+	return str
+}
+
+func isBeforeFirstBlock(chain, dateStr string) bool {
+	if !IsDateTimeString(dateStr) {
 		return false
 	}
 
-	// From https://github.com/araddon/dateparse
-	time.Local, _ = time.LoadLocation("UTC")
-	dt, _ := dateparse.ParseLocal(str) // already validated as a date
+	isoStr := ToIsoDateStr2(dateStr)
+	dt, _ := gostradamus.Parse(isoStr, gostradamus.Iso8601) // already validated as a date
 	firstDate := tslibPkg.DateFromName(chain, "0")
-	return dt.Before(firstDate)
+	return dt.Time().Before(firstDate)
 }
 
 func IsRange(chain, str string) (bool, error) {

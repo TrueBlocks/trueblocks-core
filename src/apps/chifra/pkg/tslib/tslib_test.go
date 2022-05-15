@@ -31,7 +31,7 @@ func TestLoadTimestampsPass(t *testing.T) {
 			t.Error("Expected block number", e.bn, "got", bn)
 		}
 
-		bn, err = BnFromDate(GetTestChain(), e.date)
+		bn, err = BnFromDate(GetTestChain(), e.date, "")
 		if err != nil {
 			t.Error(err)
 		} else if bn != e.bn {
@@ -80,7 +80,7 @@ func TestLoadTimestampsFail(t *testing.T) {
 			t.Error("Expected failure for BnFromTs")
 		}
 
-		_, err = BnFromDate(GetTestChain(), e.date)
+		_, err = BnFromDate(GetTestChain(), e.date, "")
 		if err == nil {
 			t.Error("Expected failure for BnFromDate")
 		}
@@ -108,3 +108,5 @@ func TestLoadTimestampsFail(t *testing.T) {
 		// }
 	}
 }
+
+// TODO: Test BnFromDate with periods of hourly, daily, weekly, monthly, and annually
