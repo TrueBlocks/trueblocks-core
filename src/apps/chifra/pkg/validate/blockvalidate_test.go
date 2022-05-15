@@ -152,7 +152,7 @@ func TestIsDateTimeString(t *testing.T) {
 		t.Error("Fails for date with time and timezone")
 	}
 
-	if isBeforeFirstBlock(GetTestChain(), "2015-07-30T15:26:00") {
+	if isBeforeFirstBlock(GetTestChain(), "2015-07-30T15:26:15") {
 		t.Error("Fails for exact first block date")
 	}
 
