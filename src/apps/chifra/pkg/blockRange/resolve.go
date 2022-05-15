@@ -109,7 +109,10 @@ func (br *BlockRange) nextBlock(chain string, current, latest uint64) uint64 {
 			}
 
 			ts := uint64(dt.UnixTimestamp())
-			bn, _ = tslibPkg.FromTsToBn(chain, ts)
+			bn, err = tslibPkg.FromTsToBn(chain, ts)
+			if err != nil {
+				return utils.NOPOS
+			}
 		}
 
 	} else {

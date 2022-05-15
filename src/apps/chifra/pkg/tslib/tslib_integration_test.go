@@ -6,6 +6,8 @@ package tslibPkg
 
 import (
 	"testing"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 type Expected struct {
@@ -17,10 +19,8 @@ type Expected struct {
 
 func TestLoadTimestampsPass(t *testing.T) {
 	expected := []Expected{
-		// TODO: Turn off go testing that requires ts.bin
-		// {name: "Block Zero", bn: 0, ts: utils.EarliestTs, date: "2015-07-30 15:26:15"},
-		// {name: "Block One", bn: 1, ts: utils.BlockOneTs, date: "2015-07-30 15:26:28"},
-		// {name: "Block 1 Mil", bn: 1000000, ts: 1455404053, date: "2016-02-13 22:54:13"},
+		{name: "Block Zero", bn: 1, ts: utils.BlockOneTs, date: "2015-07-30 15:26:28"},
+		{name: "Block 1 Mil", bn: 1000000, ts: 1455404053, date: "2016-02-13 22:54:13"},
 	}
 
 	for _, e := range expected {
@@ -52,27 +52,27 @@ func TestLoadTimestampsPass(t *testing.T) {
 			t.Error("Expected timestamp", e.ts, "got", ts)
 		}
 
-		// d, err := FromBnToDate(GetTestChain(), e.bn)
-		// if err != nil {
-		// 	t.Error(err)
-		// } else if d != e.date+" UTC" {
-		// 	t.Error("Expected date", e.date+" UTC", "got", d)
-		// }
+		d, err := FromBnToDate(GetTestChain(), e.bn)
+		s := d.Format("YYYY-MM-DD HH:mm:ss")
+		if err != nil {
+			t.Error(err)
+		} else if s != e.date {
+			t.Error("Expected date", e.date, "got", d)
+		}
 
-		// dt, err := FromTsToDate(e.ts)
-		// d = dt.Format(gostradamus.Iso8601)
-		// if err != nil {
-		// 	t.Error(err)
-		// } else if d != e.date+" UTC" {
-		// 	t.Error("Expected date", e.date+" UTC", "got", d)
-		// }
+		d, err = FromTsToDate(e.ts)
+		s = d.Format("YYYY-MM-DD HH:mm:ss")
+		if err != nil {
+			t.Error(err)
+		} else if s != e.date {
+			t.Error("Expected date", e.date, "got", d)
+		}
 	}
 }
 
 func TestLoadTimestampsFail(t *testing.T) {
 	expected := []Expected{
-		// TODO: Turn off go testing that requires ts.bin
-		// {name: "Bad Block", bn: 100000000, ts: 12, date: "2012-02-13 22:54:13"},
+		{name: "Bad Block", bn: 100000000, ts: 12, date: "2012-02-13 22:54:13"},
 	}
 
 	for _, e := range expected {
