@@ -1,6 +1,6 @@
 blocks?blocks=1590000%204000001-4000002%20x400x001
 {
   "errors": [
-    "The given value 'x400x001' is not a numeral or a special named block."
+    "The given value 'x400x001' is not a valid block identifier."
   ]
 }

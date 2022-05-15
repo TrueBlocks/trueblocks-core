@@ -1,6 +1,6 @@
 when?blocks=stateclear%20iceage%204001001%20junk&verbose
 {
   "errors": [
-    "The given value 'junk' is not a numeral or a special named block."
+    "The given value 'junk' is not a valid block identifier."
   ]
 }

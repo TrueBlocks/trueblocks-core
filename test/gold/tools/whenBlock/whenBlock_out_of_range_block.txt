@@ -1,7 +1,7 @@
 chifra when  40000000000000000000000000000
 TEST[DATE|TIME] Blocks:  [40000000000000000000000000000]
 TEST[DATE|TIME] Format:  txt
-Error: The given value '40000000000000000000000000000' is not a numeral or a special named block.
+Error: The given value '40000000000000000000000000000' is not a valid block identifier.
 Usage:
   chifra when [flags] < block | date > [ block... | date... ]
 

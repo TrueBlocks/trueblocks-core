@@ -13,7 +13,7 @@ func (opts *WhenOptions) HandleWhenTimestampCount() error {
 		Count uint64 `json:"count"`
 	}
 
-	count, err := tslibPkg.NRecords(opts.Globals.Chain)
+	count, err := tslibPkg.NTimestamps(opts.Globals.Chain)
 	if err != nil {
 		return err
 	}

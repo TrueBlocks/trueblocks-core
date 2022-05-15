@@ -22,8 +22,8 @@ type TimestampDatabase struct {
 
 var perChainTimestamps = map[string]TimestampDatabase{}
 
-// NRecords returns the number of records in the timestamp file
-func NRecords(chain string) (uint64, error) {
+// NTimestamps returns the number of records in the timestamp file
+func NTimestamps(chain string) (uint64, error) {
 	if perChainTimestamps[chain].count > 0 {
 		return perChainTimestamps[chain].count, nil
 	}
@@ -49,7 +49,7 @@ func loadTimestamps(chain string) error {
 		return nil
 	}
 
-	cnt, err := NRecords(chain)
+	cnt, err := NTimestamps(chain)
 	if err != nil {
 		return err
 	}
@@ -80,7 +80,7 @@ func loadTimestamps(chain string) error {
 // fromTs is a local function that returns a Timestamp record given a Unix timestamp. It
 // loads the timestamp file into memory if it isn't already
 func fromTs(chain string, ts uint64) (*Timestamp, error) {
-	cnt, err := NRecords(chain)
+	cnt, err := NTimestamps(chain)
 	if err != nil {
 		return &Timestamp{}, err
 	}
@@ -91,11 +91,13 @@ func fromTs(chain string, ts uint64) (*Timestamp, error) {
 	}
 
 	if ts > uint64(perChainTimestamps[chain].memory[cnt-1].Ts) {
-		est := perChainTimestamps[chain].memory[cnt-1]
-		// TODO: Multi-chain
-		est.Bn = (uint32(ts) - uint32(est.Ts)) / 14
-		est.Ts = uint32(ts)
-		return &est, errors.New("timestamp in the future")
+		last := perChainTimestamps[chain].memory[cnt-1]
+		secs := ts - uint64(last.Ts)
+		// TODO: Multi-chain specific
+		blks := uint32(float64(secs) / 13.3)
+		last.Bn = last.Bn + blks
+		last.Ts = uint32(ts)
+		return &last, errors.New("timestamp in the future")
 	}
 
 	// Go docs: Search uses binary search to find and return the smallest index i in [0, n) at which f(i) is true,
@@ -119,7 +121,7 @@ func fromTs(chain string, ts uint64) (*Timestamp, error) {
 // fromTs is a local function that returns a Timestamp record given a blockNum. It
 // loads the timestamp file into memory if it isn't already
 func fromBn(chain string, bn uint64) (*Timestamp, error) {
-	cnt, err := NRecords(chain)
+	cnt, err := NTimestamps(chain)
 	if err != nil {
 		return &Timestamp{}, err
 	}

@@ -24,47 +24,48 @@ func TestLoadTimestampsPass(t *testing.T) {
 	}
 
 	for _, e := range expected {
-		bn, err := BnFromTs(GetTestChain(), e.ts)
+		bn, err := FromTsToBn(GetTestChain(), e.ts)
 		if err != nil {
 			t.Error(err)
 		} else if bn != e.bn {
 			t.Error("Expected block number", e.bn, "got", bn)
 		}
 
-		bn, err = BnFromDate(GetTestChain(), e.date, "")
+		bn, err = FromDateToBn(GetTestChain(), e.date)
 		if err != nil {
 			t.Error(err)
 		} else if bn != e.bn {
 			t.Error("Expected block number", e.bn, "got", bn)
 		}
 
-		ts, err := TsFromBn(GetTestChain(), e.bn)
+		ts, err := FromBnToTs(GetTestChain(), e.bn)
 		if err != nil {
 			t.Error(err)
 		} else if bn != e.bn {
 			t.Error("Expected timestamp", e.ts, "got", ts)
 		}
 
-		ts, err = TsFromDate(e.date)
+		ts, err = FromDateToTs(e.date)
 		if err != nil {
 			t.Error(err)
 		} else if bn != e.bn {
 			t.Error("Expected timestamp", e.ts, "got", ts)
 		}
 
-		d, err := DateFromBn(GetTestChain(), e.bn)
-		if err != nil {
-			t.Error(err)
-		} else if d != e.date+" UTC" {
-			t.Error("Expected date", e.date+" UTC", "got", d)
-		}
+		// d, err := FromBnToDate(GetTestChain(), e.bn)
+		// if err != nil {
+		// 	t.Error(err)
+		// } else if d != e.date+" UTC" {
+		// 	t.Error("Expected date", e.date+" UTC", "got", d)
+		// }
 
-		d, err = DateFromTs(e.ts)
-		if err != nil {
-			t.Error(err)
-		} else if d != e.date+" UTC" {
-			t.Error("Expected date", e.date+" UTC", "got", d)
-		}
+		// dt, err := FromTsToDate(e.ts)
+		// d = dt.Format(gostradamus.Iso8601)
+		// if err != nil {
+		// 	t.Error(err)
+		// } else if d != e.date+" UTC" {
+		// 	t.Error("Expected date", e.date+" UTC", "got", d)
+		// }
 	}
 }
 
@@ -75,38 +76,38 @@ func TestLoadTimestampsFail(t *testing.T) {
 	}
 
 	for _, e := range expected {
-		_, err := BnFromTs(GetTestChain(), e.ts)
+		_, err := FromTsToBn(GetTestChain(), e.ts)
 		if err == nil {
-			t.Error("Expected failure for BnFromTs")
+			t.Error("Expected failure for FromTsToBn")
 		}
 
-		_, err = BnFromDate(GetTestChain(), e.date, "")
+		_, err = FromDateToBn(GetTestChain(), e.date)
 		if err == nil {
-			t.Error("Expected failure for BnFromDate")
+			t.Error("Expected failure for FromDateToBn")
 		}
 
-		_, err = TsFromBn(GetTestChain(), e.bn)
+		_, err = FromBnToTs(GetTestChain(), e.bn)
 		if err == nil {
-			t.Error("Expected failure for TsFromBn")
+			t.Error("Expected failure for FromBnToTs")
 		}
 
 		// Never fails
-		// _, err = TsFromDate(e.date)
+		// _, err = FromDateToTs(e.date)
 		// if err == nil {
-		// 	t.Error("Expected failure for TsFromDate")
+		// 	t.Error("Expected failure for FromDateToTs")
 		// }
 
-		_, err = DateFromBn(GetTestChain(), e.bn)
+		_, err = FromBnToDate(GetTestChain(), e.bn)
 		if err == nil {
-			t.Error("Expected failure for DateFromBn")
+			t.Error("Expected failure for FromBnToDate")
 		}
 
 		// Never fails
-		// _, err = DateFromTs(e.ts)
+		// _, err = FromTsToDate(e.ts)
 		// if err == nil {
-		// 	t.Error("Expected failure for DateFromTs")
+		// 	t.Error("Expected failure for FromTsToDate")
 		// }
 	}
 }
 
-// TODO: Test BnFromDate with periods of hourly, daily, weekly, monthly, and annually
+// TODO: Test FromDateToBn with periods of hourly, daily, weekly, monthly, and annually

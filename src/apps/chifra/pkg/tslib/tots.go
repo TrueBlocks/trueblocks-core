@@ -12,13 +12,23 @@ import (
 	"github.com/bykof/gostradamus"
 )
 
-// TsFromBn returns a chain-specific Linux timestamp given a block number
-func TsFromBn(chain string, bn uint64) (uint64, error) {
+// FromBnToTs returns a chain-specific Linux timestamp given a block number
+func FromBnToTs(chain string, bn uint64) (uint64, error) {
 	ret, err := fromBn(chain, bn)
 	return uint64(ret.Ts), err
 }
 
-func ToIsoDateStr(dateStr string) string {
+// FromDateToTs returns a Linux timestamp given a date string (not chain-specific)
+func FromDateToTs(dateStr string) (uint64, error) {
+	str := toIsoDateStr(dateStr)
+	t, err := gostradamus.Parse(str, gostradamus.Iso8601)
+	if err != nil {
+		return 0, err
+	}
+	return uint64(t.UnixTimestamp()), nil
+}
+
+func toIsoDateStr(dateStr string) string {
 	// assumes an already validated date string
 	str := strings.Replace(dateStr, "T", " ", -1)
 	if strings.Count(str, ":") == 0 {
@@ -33,14 +43,4 @@ func ToIsoDateStr(dateStr string) string {
 	str = strings.Replace(str, " ", "T", -1)
 	str += ".000000"
 	return str
-}
-
-// TsFromDate returns a Linux timestamp given a date string (not chain-specific)
-func TsFromDate(dateStr string) (uint64, error) {
-	str := ToIsoDateStr(dateStr)
-	t, err := gostradamus.Parse(str, gostradamus.Iso8601)
-	if err != nil {
-		return 0, err
-	}
-	return uint64(t.UnixTimestamp()), nil
 }

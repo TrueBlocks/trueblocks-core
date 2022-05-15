@@ -112,8 +112,8 @@ func isBeforeFirstBlock(chain, dateStr string) bool {
 
 	isoStr := ToIsoDateStr2(dateStr)
 	dt, _ := gostradamus.Parse(isoStr, gostradamus.Iso8601) // already validated as a date
-	firstDate := tslibPkg.DateFromName(chain, "0")
-	return dt.Time().Before(firstDate)
+	firstDate, _ := tslibPkg.FromNameToDate(chain, "0")
+	return dt.Time().Before(firstDate.Time())
 }
 
 func IsRange(chain, str string) (bool, error) {
@@ -173,7 +173,7 @@ type InvalidIdentifierLiteralError struct {
 
 func (e *InvalidIdentifierLiteralError) Error() string {
 	if len(e.Msg) == 0 {
-		e.Msg = "is not a numeral or a special named block."
+		e.Msg = "is not a valid block identifier."
 	}
 	return fmt.Sprintf("The given value '%s' %s", e.Value, e.Msg)
 }
