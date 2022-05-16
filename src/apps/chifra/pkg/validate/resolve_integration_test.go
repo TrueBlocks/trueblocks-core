@@ -13,6 +13,9 @@ import (
 
 func Test_BlockRanges(t *testing.T) {
 	for _, item := range testBlocks {
+		if !item.enabled {
+			continue
+		}
 		fmt.Println("----------->", item.input)
 		inputs := []string{item.input}
 		var results []blockRange.BlockRange
@@ -55,12 +58,14 @@ func Test_BlockRanges(t *testing.T) {
 type TestCase struct {
 	input    string
 	expected string
+	enabled  bool
 }
 
 var testBlocks = []TestCase{
 	{
 		input:    "195633",
 		expected: "195633|1|[195633]...[195633]",
+		enabled:  true,
 	},
 	{
 		input:    "195633-200000",
@@ -73,38 +78,47 @@ var testBlocks = []TestCase{
 	{
 		input:    "195633-0x13ced9eaa49a522d4e7dcf80a739a57dbf08f4ce5efc4edbac86a66d8010f693",
 		expected: "195633-0x13ced9eaa49a522d4e7dcf80a739a57dbf08f4ce5efc4edbac86a66d8010f693|4367|[195633 195634 195635 195636 195637 195638 195639 195640 195641 195642]...[199997 199998 199999]",
+		enabled:  true,
 	},
 	{
 		input:    "195633-2015-09-07",
 		expected: "195633-2015-09-07|1|[195633]...[195633]",
+		enabled:  true,
 	},
 	{
 		input:    "195633-2015-09-07T21",
 		expected: "195633-2015-09-07T21|4256|[195633 195634 195635 195636 195637 195638 195639 195640 195641 195642]...[199886 199887 199888]",
+		enabled:  true,
 	},
 	{
 		input:    "195633-2015-09-07T21:33",
 		expected: "195633-2015-09-07T21:33|4365|[195633 195634 195635 195636 195637 195638 195639 195640 195641 195642]...[199995 199996 199997]",
+		enabled:  true,
 	},
 	{
 		input:    "195633-2015-09-07T21:33:09",
 		expected: "195633-2015-09-07T21:33:09|4367|[195633 195634 195635 195636 195637 195638 195639 195640 195641 195642]...[199997 199998 199999]",
+		enabled:  true,
 	},
 	{
 		input:    "195633-iceage",
 		expected: "195633-iceage|4367|[195633 195634 195635 195636 195637 195638 195639 195640 195641 195642]...[199997 199998 199999]",
+		enabled:  true,
 	},
 	{
 		input:    "195633-iceage:51",
 		expected: "195633-iceage:51|86|[195633 195684 195735 195786 195837 195888 195939 195990 196041 196092]...[199866 199917 199968]",
+		enabled:  true,
 	},
 	{
 		input:    "195433-iceage:hourly",
 		expected: "195433-iceage:hourly|23|[195433 195634 195845 196049 196249 196438 196646 196843 197031 197234]...[199494 199694 199889]",
+		enabled:  true,
 	},
 	{
 		input:    "1441583975",
 		expected: "1441583975|1|[195633]...[195633]",
+		enabled:  true,
 	},
 	{
 		input:    "1441583975-200000",
@@ -145,6 +159,7 @@ var testBlocks = []TestCase{
 	{
 		input:    "1440709168-iceage:daily",
 		expected: "1440709168-iceage:daily|12|[148428 153135 157788 162118 166272 170394 174332 177909 181292 185735]...[185735 190656 195634]",
+		enabled:  true,
 	},
 	{
 		input:    "0xf6bfe0a959330e01858c63512b9deb4c4308944584eb0080e2b85e90fcedd9f2",
@@ -161,6 +176,7 @@ var testBlocks = []TestCase{
 	{
 		input:    "0xf6bfe0a959330e01858c63512b9deb4c4308944584eb0080e2b85e90fcedd9f2-0x13ced9eaa49a522d4e7dcf80a739a57dbf08f4ce5efc4edbac86a66d8010f693",
 		expected: "0xf6bfe0a959330e01858c63512b9deb4c4308944584eb0080e2b85e90fcedd9f2-0x13ced9eaa49a522d4e7dcf80a739a57dbf08f4ce5efc4edbac86a66d8010f693|4367|[195633 195634 195635 195636 195637 195638 195639 195640 195641 195642]...[199997 199998 199999]",
+		enabled:  true,
 	},
 	{
 		input:    "0xf6bfe0a959330e01858c63512b9deb4c4308944584eb0080e2b85e90fcedd9f2-2015-09-07",
@@ -205,6 +221,7 @@ var testBlocks = []TestCase{
 	{
 		input:    "2015-09-06T23:59:35-0x13ced9eaa49a522d4e7dcf80a739a57dbf08f4ce5efc4edbac86a66d8010f693",
 		expected: "2015-09-06T23:59:35-0x13ced9eaa49a522d4e7dcf80a739a57dbf08f4ce5efc4edbac86a66d8010f693|4367|[195633 195634 195635 195636 195637 195638 195639 195640 195641 195642]...[199997 199998 199999]",
+		enabled:  true,
 	},
 	{
 		input:    "2015-09-06-2015-09-07",
@@ -217,6 +234,7 @@ var testBlocks = []TestCase{
 	{
 		input:    "2015-09-06T23:59-2015-09-07T21:33",
 		expected: "2015-09-06T23:59-2015-09-07T21:33|4367|[195631 195632 195633 195634 195635 195636 195637 195638 195639 195640]...[199995 199996 199997]",
+		enabled:  true,
 	},
 	{
 		input:    "2015-09-06T23:59:35-2015-09-07T21:33:09",
@@ -237,6 +255,7 @@ var testBlocks = []TestCase{
 	{
 		input:    "istanbul",
 		expected: "istanbul|1|[9069000]...[9069000]",
+		enabled:  true,
 	},
 	{
 		input:    "muirglacier-9200001",
@@ -273,6 +292,7 @@ var testBlocks = []TestCase{
 	{
 		input:    "istanbul-muirglacier:13001",
 		expected: "istanbul-muirglacier:13001|11|[9069000 9082001 9095002 9108003 9121004 9134005 9147006 9160007 9173008 9186009]...[9173008 9186009 9199010]",
+		enabled:  true,
 	},
 	{
 		input:    "daohack-muirglacier:6000",
@@ -285,5 +305,6 @@ var testBlocks = []TestCase{
 	{
 		input:    "0",
 		expected: "0|1|[0]...[0]",
+		enabled:  true,
 	},
 }
