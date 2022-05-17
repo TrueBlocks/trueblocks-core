@@ -20,20 +20,18 @@ int main(int argc, const char* argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    for (auto command : options.commandLines) {
-        if (!options.parseArguments(command))
-            return 0;
+    if (!options.parseArguments(options.commandLines[0]))
+        return 0;
 
-        if (options.firstOut)
-            cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CBlock));
+    if (options.firstOut)
+        cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CBlock));
 
-        ASSERT(options.timestamps);
-        if (!options.no_update)
-            getTimestampAt(options.latest.blockNumber);  // freshens timestamp file but otherwise ignored
-        forEveryTimestamp(visitBlock, &options);
+    ASSERT(options.timestamps);
+    if (!options.no_update)
+        getTimestampAt(options.latest.blockNumber);  // freshens timestamp file but otherwise ignored
+    forEveryTimestamp(visitBlock, &options);
 
-        cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
-    }
+    cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
 
     etherlib_cleanup();
     return 0;
