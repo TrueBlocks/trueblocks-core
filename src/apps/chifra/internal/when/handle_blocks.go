@@ -11,7 +11,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (opts *WhenOptions) HandleWhenBlocks() error {
+func (opts *WhenOptions) HandleWhenShowBlocks() error {
 	// TODO: Fix export without arrays
 	err := opts.Globals.RenderHeader(types.NamedBlock{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
 	defer opts.Globals.RenderFooter(opts.Globals.ApiMode || opts.Globals.Format == "api")

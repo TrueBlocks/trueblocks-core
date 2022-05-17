@@ -27,6 +27,7 @@ extern string_q clean_go_positionals(const string_q& in, bool hasEns);
 extern const char* STR_REQUEST_CASE1;
 extern const char* STR_REQUEST_CASE2;
 extern const char* STR_CHIFRA_HELP_END;
+extern const char* STR_TO_CMD_LINE;
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
     string_q source = asciiFileToString(getPathToTemplates("blank.go.tmpl"));
@@ -82,6 +83,11 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     bool hasEns = contains(asciiFileToString(fn), "ens.Convert");
 
     string_q source = asciiFileToString(getPathToTemplates("blank_options.go.tmpl"));
+    if (isFullyPorted(p.api_route)) {
+        replaceAll(source, "[{TOCMDLINE}]", "");
+    } else {
+        replaceAll(source, "[{TOCMDLINE}]", STR_TO_CMD_LINE);
+    }
     replaceAll(source, "[{ROUTE}]", p.api_route);
     replaceAll(source, "[{PROPER}]", toProper(p.api_route));
     replaceAll(source, "[{OPT_FIELDS}]", get_optfields(p));
@@ -96,6 +102,14 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     replaceAll(source, "[{POSITIONALS}]", get_positionals2(p));
     replaceAll(source, "opts.LastBlock != utils.NOPOS", "opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS");
     source = clean_go_positionals(source, hasEns);
+    if (isFullyPorted(p.api_route)) {
+        if (!contains(source, "fmt.")) {
+            replaceAll(source, "\t\"fmt\"\n", "");
+        }
+        if (!contains(source, "strings.")) {
+            replaceAll(source, "\t\"strings\"\n", "");
+        }
+    }
 
     codewrite_t cw(fn, source);
     cw.nSpaces = 0;
@@ -491,3 +505,10 @@ const char* STR_CHIFRA_HELP_END =
     "    -h, --help    display this help screen\n"
     "\n"
     "  Use \"chifra [command] --help\" for more information about a command.\n";
+
+const char* STR_TO_CMD_LINE =
+    "func (opts *[{PROPER}]Options) ToCmdLine() string {\n"
+    "\toptions := \"\"\n"
+    "[{DASH_STR}][{POSITIONALS}]\toptions += fmt.Sprintf(\"%s\", \"\") // silence go compiler for auto gen\n"
+    "\treturn options\n"
+    "}\n\n";

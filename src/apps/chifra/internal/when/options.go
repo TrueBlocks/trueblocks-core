@@ -8,7 +8,6 @@
 package whenPkg
 
 import (
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -38,13 +37,6 @@ func (opts *WhenOptions) TestLog() {
 	logger.TestLog(opts.Check, "Check: ", opts.Check)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	opts.Globals.TestLog()
-}
-
-func (opts *WhenOptions) ToCmdLine() string {
-	options := ""
-	options += " " + strings.Join(opts.Blocks, " ")
-	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
-	return options
 }
 
 func WhenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
