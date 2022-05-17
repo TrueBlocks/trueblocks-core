@@ -1,6 +1,6 @@
 when?timestamps&fix&check
 {
   "errors": [
-    "Please choose only one of --check or --fix."
+    "Invalid key (fix) in when route."
   ]
 }

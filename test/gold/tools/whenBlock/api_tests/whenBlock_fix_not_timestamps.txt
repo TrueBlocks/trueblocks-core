@@ -1,6 +1,6 @@
 when?blocks=1301000&fix
 {
   "errors": [
-    "The --check, --fix, and --count options are only available with the --timestamps option."
+    "Invalid key (fix) in when route."
   ]
 }

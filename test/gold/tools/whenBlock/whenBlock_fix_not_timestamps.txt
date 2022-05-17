@@ -1,8 +1,7 @@
 chifra when  1301000 --fix
-TEST[DATE|TIME] Blocks:  [1301000]
-TEST[DATE|TIME] Fix:  true
-TEST[DATE|TIME] Format:  txt
-Error: The --check, --fix, and --count options are only available with the --timestamps option.
+Error: 
+  unknown flag: --fix
+
 Usage:
   chifra when [flags] < block | date > [ block... | date... ]
 
@@ -13,7 +12,6 @@ Flags:
   -l, --list         export a list of the 'special' blocks
   -t, --timestamps   ignore other options and generate timestamps only
   -c, --check        available only with --timestamps, checks the validity of the timestamp data (hidden)
-  -f, --fix          available only with --timestamps, fixes incorrect timestamps if any (hidden)
   -u, --count        available only with --timestamps, returns the number of timestamps in the cache (hidden)
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
   -v, --verbose      enable verbose (increase detail with --log_level)
