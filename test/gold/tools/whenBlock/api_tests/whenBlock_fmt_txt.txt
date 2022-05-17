@@ -1,3 +1,3 @@
 when?blocks=1001001&fmt=txt
-blockNumber	timestamp	date	name
-1001001	1455421883	2016-02-14 03:51:23 UTC
+blockNumber	timeStamp	date	name
+1001001	1455421883	2016-02-14 03:51:23 UTC	

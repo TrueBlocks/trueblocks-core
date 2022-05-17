@@ -3,7 +3,9 @@ TEST[DATE|TIME] Timestamps:  true
 TEST[DATE|TIME] Count:  true
 TEST[DATE|TIME] Format:  json
 {
-  "data": {
-    "count": 5000000
-  }
+  "data": [
+    {
+      "count": 5000000
+    }
+  ]
 }

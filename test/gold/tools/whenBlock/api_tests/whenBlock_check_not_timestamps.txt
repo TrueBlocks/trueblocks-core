@@ -1,6 +1,6 @@
 when?blocks=1301000&check
 {
   "errors": [
-    "The --check, --fix, and --count option are only available with the --timestamps option."
+    "The --check, --fix, and --count options are only available with the --timestamps option."
   ]
 }

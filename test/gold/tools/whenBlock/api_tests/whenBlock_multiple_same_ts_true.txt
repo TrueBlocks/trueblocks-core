@@ -1,4 +1,4 @@
-when?blocks=12345&blocks=54321&blocks=2016-12-01&blocks=2016-12-01-01&timestamps
+when?blocks=12345&blocks=54321&blocks=2016-12-01&blocks=2016-12-01T01&timestamps
 {
   "errors": [
     "Please supply either block identifiers, the --list option, or the --timestamps option."

@@ -1,5 +1,5 @@
-chifra when  12345 54321 2016-12-01 2016-12-01-01 --timestamps
-TEST[DATE|TIME] Blocks:  [12345 54321 2016-12-01 2016-12-01-01]
+chifra when  12345 54321 2016-12-01 2016-12-01T01 --timestamps
+TEST[DATE|TIME] Blocks:  [12345 54321 2016-12-01 2016-12-01T01]
 TEST[DATE|TIME] Timestamps:  true
 TEST[DATE|TIME] Format:  txt
 Error: Please supply either block identifiers, the --list option, or the --timestamps option.

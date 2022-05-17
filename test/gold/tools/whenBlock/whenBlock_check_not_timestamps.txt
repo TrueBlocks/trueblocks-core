@@ -2,7 +2,7 @@ chifra when  1301000 --check
 TEST[DATE|TIME] Blocks:  [1301000]
 TEST[DATE|TIME] Check:  true
 TEST[DATE|TIME] Format:  txt
-Error: The --check, --fix, and --count option are only available with the --timestamps option.
+Error: The --check, --fix, and --count options are only available with the --timestamps option.
 Usage:
   chifra when [flags] < block | date > [ block... | date... ]
 

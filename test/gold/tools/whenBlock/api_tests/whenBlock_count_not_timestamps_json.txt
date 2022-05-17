@@ -1,6 +1,8 @@
 when?count&fmt=json&timestamps
 {
-  "data": {
-    "count": 5000000
-  }
+  "data": [
+    {
+      "count": 5000000
+    }
+  ]
 }
