@@ -59,17 +59,28 @@ func (opts *ScrapeOptions) ScrapeBlocks() error {
 func (opts *ScrapeOptions) processBlocks(rpcProvider string, blockChannel chan int, addressChannel chan ScrapedData, blockWG *sync.WaitGroup) {
 	for blockNum := range blockChannel {
 
+		// RPCPayload is used during to make calls to the RPC.
 		var traces rpcClient.Trace
-		tracePl := rpcClient.RPCPayload{"2.0", "trace_block", rpcClient.RPCParams{fmt.Sprintf("0x%x", blockNum)}, 1002}
-		err := rpcClient.FromRpc(rpcProvider, &tracePl, &traces)
+		tracePayload := rpcClient.RPCPayload{
+			Jsonrpc:   "2.0",
+			Method:    "trace_block",
+			RPCParams: rpcClient.RPCParams{fmt.Sprintf("0x%x", blockNum)},
+			ID:        1002,
+		}
+		err := rpcClient.FromRpc(rpcProvider, &tracePayload, &traces)
 		if err != nil {
 			fmt.Println("FromRpc(traces) returned error")
 			log.Fatal(err)
 		}
 
 		var logs rpcClient.Log
-		logsPl := rpcClient.RPCPayload{"2.0", "eth_getLogs", rpcClient.RPCParams{rpcClient.LogFilter{fmt.Sprintf("0x%x", blockNum), fmt.Sprintf("0x%x", blockNum)}}, 1003}
-		err = rpcClient.FromRpc(rpcProvider, &logsPl, &logs)
+		logsPayload := rpcClient.RPCPayload{
+			Jsonrpc:   "2.0",
+			Method:    "eth_getLogs",
+			RPCParams: rpcClient.RPCParams{rpcClient.LogFilter{Fromblock: fmt.Sprintf("0x%x", blockNum), Toblock: fmt.Sprintf("0x%x", blockNum)}},
+			ID:        1003,
+		}
+		err = rpcClient.FromRpc(rpcProvider, &logsPayload, &logs)
 		if err != nil {
 			fmt.Println("FromRpc(logs) returned error")
 			log.Fatal(err)
@@ -203,7 +214,12 @@ func (opts *ScrapeOptions) extractFromTraces(rpcProvider string, bn int, address
 				if traces.Result[i].Result.Address == "" {
 					if traces.Result[i].Error != "" {
 						var receipt rpcClient.Receipt
-						var txReceiptPl = rpcClient.RPCPayload{"2.0", "eth_getTransactionReceipt", rpcClient.RPCParams{traces.Result[i].TransactionHash}, 1005}
+						var txReceiptPl = rpcClient.RPCPayload{
+							Jsonrpc:   "2.0",
+							Method:    "eth_getTransactionReceipt",
+							RPCParams: rpcClient.RPCParams{traces.Result[i].TransactionHash},
+							ID:        1005,
+						}
 						err := rpcClient.FromRpc(rpcProvider, &txReceiptPl, &receipt)
 						if err != nil {
 							fmt.Println("FromRpc(transReceipt) returned error")

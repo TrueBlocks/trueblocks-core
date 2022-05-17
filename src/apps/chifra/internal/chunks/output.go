@@ -56,7 +56,15 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 			err = opts.HandleChunksExtractPins()
 
 		} else if opts.Extract == "stats" {
+			err := opts.Globals.RenderHeader(ChunkStats{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+			defer opts.Globals.RenderFooter(opts.Globals.ApiMode || opts.Globals.Format == "api")
+			if err != nil {
+				return err, true
+			}
 			err = opts.HandleChunksExtract(opts.showStats)
+			if err != nil {
+				return err, true
+			}
 
 		} else {
 			err = validate.Usage("Extractor for {0} not yet implemented.", opts.Extract)

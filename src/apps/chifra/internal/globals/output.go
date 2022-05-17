@@ -5,6 +5,7 @@
 package globals
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"log"
@@ -59,7 +60,7 @@ func RenderSlice[
 	case "api":
 		fallthrough
 	case "json":
-		return output.OutputObject(data, opts.Writer, opts.Format, opts.NoHeader, opts.ApiMode, meta)
+		return output.OutputSlice(data, opts.Writer, opts.Format, opts.NoHeader, opts.ApiMode, true, meta)
 	case "csv":
 		fallthrough
 	case "txt":
@@ -72,7 +73,7 @@ func RenderSlice[
 					}
 				}
 			}
-			err := output.OutputObject(item, opts.Writer, opts.Format, opts.NoHeader, opts.ApiMode, meta)
+			err := output.OutputObject(item, opts.Writer, opts.Format, opts.NoHeader, opts.ApiMode, false, meta)
 			if err != nil {
 				return err
 			}
@@ -83,13 +84,13 @@ func RenderSlice[
 	return fmt.Errorf("unsupported format %s", opts.Format)
 }
 
-func (opts *GlobalOptions) RenderObject(data interface{}) error {
+func (opts *GlobalOptions) RenderObject(data interface{}, showMeta, first bool) error {
 	if opts.Writer == nil {
 		log.Fatal("opts.Writer is nil")
 	}
 
 	var meta *rpcClient.MetaData = nil
-	if opts.Format == "api" {
+	if showMeta {
 		var err error
 		meta, err = rpcClient.GetMetaData(opts.Chain, opts.TestMode)
 		if err != nil {
@@ -97,7 +98,7 @@ func (opts *GlobalOptions) RenderObject(data interface{}) error {
 		}
 	}
 
-	return output.OutputObject(data, opts.Writer, opts.Format, opts.NoHeader, opts.ApiMode, meta)
+	return output.OutputObject(data, opts.Writer, opts.Format, opts.NoHeader, opts.ApiMode, first, meta)
 }
 
 func (opts *GlobalOptions) RenderHeader(data interface{}, w *io.Writer, format string, apiMode, hideHeader, first bool) error {
@@ -119,4 +120,21 @@ func (opts *GlobalOptions) RenderHeader(data interface{}, w *io.Writer, format s
 	}
 
 	return output.OutputHeader(data, *w, format, apiMode)
+}
+
+func (opts *GlobalOptions) RenderFooter(showMeta bool) error {
+	if opts.Format == "api" || opts.Format == "json" {
+		opts.Writer.Write([]byte("\n  ]"))
+		if showMeta {
+			meta, err := rpcClient.GetMetaData(opts.Chain, opts.TestMode)
+			if err != nil {
+				return err
+			}
+			opts.Writer.Write([]byte(",\n  \"meta\": "))
+			b, err := json.MarshalIndent(meta, "  ", "  ")
+			opts.Writer.Write(b)
+		}
+		opts.Writer.Write([]byte("\n}"))
+	}
+	return nil
 }

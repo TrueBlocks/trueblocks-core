@@ -10,11 +10,13 @@ import (
 	"log"
 	"math/big"
 	"os"
+	"strconv"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/ethclient"
@@ -222,4 +224,27 @@ func GetBlockTimestamp(provider string, bn uint64) uint64 {
 // DecodeHex decodes a string with hex into a slice of bytes
 func DecodeHex(hex string) []byte {
 	return hexutil.MustDecode(hex)
+}
+
+func GetBlockByNumber(chain string, bn uint64) types.NamedBlock {
+	var block BlockHeader
+	var payload = RPCPayload{
+		Jsonrpc:   "2.0",
+		Method:    "eth_getBlockByNumber",
+		RPCParams: RPCParams{bn, false},
+		ID:        1005,
+	}
+	rpcProvider := config.GetRpcProvider(chain)
+	// log.Println(v, payload)
+	err := FromRpc(rpcProvider, &payload, &block)
+	if err != nil {
+		fmt.Println("FromRpc(block) returned error")
+		log.Fatal(err)
+	}
+	n, _ := strconv.ParseUint(block.Result.Number[2:], 16, 64)
+	ts, _ := strconv.ParseUint(block.Result.Timestamp[2:], 16, 64)
+	return types.NamedBlock{
+		BlockNumber: n,
+		TimeStamp:   ts,
+	}
 }

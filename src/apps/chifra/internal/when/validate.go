@@ -25,16 +25,16 @@ func (opts *WhenOptions) ValidateWhen() error {
 		return validate.Usage("Please supply either block identifiers, the --list option, or the --timestamps option.")
 	}
 
-	if !opts.Timestamps {
-		if opts.Fix || opts.Check || opts.Count {
-			return validate.Usage("The {0} option are only available with the {1} option.", "--check, --fix, and --count", "--timestamps")
-		}
-	} else {
+	if opts.Timestamps {
 		if opts.List {
 			return validate.Usage("Please choose only one of {0}.", "--timestamps or --list")
 		}
 		if opts.Fix && opts.Check {
 			return validate.Usage("Please choose only one of {0}.", "--check or --fix")
+		}
+	} else {
+		if opts.Fix || opts.Check || opts.Count {
+			return validate.Usage("The {0} options are only available with the {1} option.", "--check, --fix, and --count", "--timestamps")
 		}
 	}
 
@@ -43,7 +43,7 @@ func (opts *WhenOptions) ValidateWhen() error {
 		opts.Blocks,
 		validate.ValidBlockIdWithRangeAndDate,
 		1,
-		nil,
+		&opts.BlockNums,
 	)
 	if err != nil {
 		if invalidLiteral, ok := err.(*validate.InvalidIdentifierLiteralError); ok {

@@ -44,12 +44,12 @@ func (opts *WhenOptions) WhenInternal() (err error, handled bool) {
 	// EXISTING_CODE
 	if opts.List {
 		return opts.HandleWhenList(), true
-	}
-
-	if opts.Timestamps {
+	} else if opts.Timestamps {
 		if opts.Count {
 			return opts.HandleWhenTimestampCount(), true
 		}
+	} else {
+		return opts.HandleWhenBlocks(), true
 	}
 
 	if opts.Globals.ApiMode {
