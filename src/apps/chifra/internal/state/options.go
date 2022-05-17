@@ -13,21 +13,23 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 type StateOptions struct {
-	Addrs    []string
-	Blocks   []string
-	Parts    []string
-	Changes  bool
-	NoZero   bool
-	Call     string
-	ProxyFor string
-	Globals  globals.GlobalOptions
-	BadFlag  error
+	Addrs     []string
+	Blocks    []string
+	BlockNums []blockRange.BlockRange
+	Parts     []string
+	Changes   bool
+	NoZero    bool
+	Call      string
+	ProxyFor  string
+	Globals   globals.GlobalOptions
+	BadFlag   error
 }
 
 var stateCmdLineOptions StateOptions

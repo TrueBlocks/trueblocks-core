@@ -13,17 +13,19 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 type ChunksOptions struct {
-	Blocks  []string
-	Extract string
-	Check   bool
-	Globals globals.GlobalOptions
-	BadFlag error
+	Blocks    []string
+	BlockNums []blockRange.BlockRange
+	Extract   string
+	Check     bool
+	Globals   globals.GlobalOptions
+	BadFlag   error
 }
 
 var chunksCmdLineOptions ChunksOptions

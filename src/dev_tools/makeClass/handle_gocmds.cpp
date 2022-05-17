@@ -277,7 +277,11 @@ string_q get_optfields(const CCommandOption& cmd) {
     size_t wid = 0;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         replace(p.longName, "deleteMe", "delete");
-        wid = max(p.Format("[{VARIABLE}]").length(), wid);
+        string_q v = p.Format("[{VARIABLE}]");
+        wid = max(v.length(), wid);
+        if (contains(v, "Blocks") && contains(p.go_type, "[]string")) {
+            wid = max(string_q("BlockNums").length(), wid);
+        }
     }
     wid = max(string_q("Globals").length(), wid);
     wid = max(string_q("BadFlag").length(), wid);
@@ -285,7 +289,11 @@ string_q get_optfields(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         replace(p.longName, "deleteMe", "delete");
-        os << "\t" << padRight(p.Format("[{VARIABLE}]"), wid) << " " << p.go_type << endl;
+        string_q v = p.Format("[{VARIABLE}]");
+        os << "\t" << padRight(v, wid) << " " << p.go_type << endl;
+        if (contains(v, "Blocks") && contains(p.go_type, "[]string")) {
+            os << "\t" << padRight("BlockNums", wid) << " []blockRange.BlockRange" << endl;
+        }
     }
     os << "\t" << padRight("Globals", wid) << " globals.GlobalOptions" << endl;
     os << "\t" << padRight("BadFlag", wid) << " error" << endl;
@@ -367,6 +375,8 @@ string_q clean_go_positionals(const string_q& in, bool hasEns) {
     replaceAll(ret, "opts.[]string{}", "[]string{}");
     if (!contains(ret, "utils."))
         replaceAll(ret, "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils\"\n", "");
+    if (!contains(ret, "blockRange."))
+        replaceAll(ret, "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange\"\n", "");
     if (!hasEns)
         replaceAll(ret, "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens\"\n", "");
     return ret;
