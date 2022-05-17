@@ -17,6 +17,10 @@ func (opts *WhenOptions) ValidateWhen() error {
 		return opts.BadFlag
 	}
 
+	if opts.Globals.TestMode && opts.Timestamps && !opts.Check && !opts.Fix && !opts.Count {
+		return validate.Usage("--timestamp option not tested in testMode")
+	}
+
 	if len(opts.Blocks) == 0 {
 		if !opts.List && !opts.Timestamps {
 			return validate.Usage("Please supply one or more block identifiers or one or more dates.")

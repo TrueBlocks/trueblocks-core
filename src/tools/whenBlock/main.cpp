@@ -131,8 +131,6 @@ bool COptions::parseArguments(string_q& commandIn) {
         }
     }
 
-    if (isTestMode() && !check && !fix)
-        return usage("--timestamp option not tested in testMode");
     return true;
 }
 

@@ -1,25 +1,23 @@
 chifra when  --timestamps
 TEST[DATE|TIME] Timestamps:  true
 TEST[DATE|TIME] Format:  txt
-
-  --timestamp option not tested in testMode Quitting...
-
-Purpose:
-  Find block(s) based on date, blockNum, timestamp, or 'special'.
-
+Error: --timestamp option not tested in testMode
 Usage:
-  whenBlock [flags]
+  chifra when [flags] < block | date > [ block... | date... ]
+
+Arguments:
+  blocks - one or more dates, block numbers, hashes, or special named blocks (see notes)
 
 Flags:
-  -c, --check       available only with --timestamps, checks the validity of the timestamp data (hidden)
-  -f, --fix         available only with --timestamps, fixes incorrect timestamps if any (hidden)
-
-Global Flags:
-  -x, --fmt string     export format, one of [none|json*|txt|csv|api]
-  -v, --verbose uint   set verbose level (optional level defaults to 1)
-  -h, --help           display this help screen
+  -l, --list         export a list of the 'special' blocks
+  -t, --timestamps   ignore other options and generate timestamps only
+  -c, --check        available only with --timestamps, checks the validity of the timestamp data (hidden)
+  -f, --fix          available only with --timestamps, fixes incorrect timestamps if any (hidden)
+  -u, --count        available only with --timestamps, returns the number of timestamps in the cache (hidden)
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -v, --verbose      enable verbose (increase detail with --log_level)
+  -h, --help         display this help screen
 
 Notes:
   - The block list may contain any combination of number, hash, date, special named blocks.
   - Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].
-

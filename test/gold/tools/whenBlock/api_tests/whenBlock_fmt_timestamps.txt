@@ -1,6 +1,6 @@
 when?timestamps
 {
   "errors": [
-    "chifra when - Invalid option: --timestamps"
+    "--timestamp option not tested in testMode"
   ]
 }
