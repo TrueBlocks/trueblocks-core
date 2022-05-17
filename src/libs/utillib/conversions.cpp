@@ -384,20 +384,6 @@ bool isAddress(const string_q& addrIn) {
 }
 
 //--------------------------------------------------------------------------------
-bool isTimestamp(const string_q& ts) {
-    // this is hokey, but it works for our purposes
-    return (isNumeral(ts) && str_2_Uint(ts) >= 1438269975 && str_2_Uint(ts) <= 2542852800);
-}
-
-//--------------------------------------------------------------------------------
-bool isDate(const string_q& date) {
-    // this is hokey, but it works for our purposes
-    if (str_2_Uint(date) < 2015 || str_2_Uint(date) > 2050)
-        return false;
-    return (containsAny(date, ":- ") && countOf(date, '-'));
-}
-
-//--------------------------------------------------------------------------------
 bool isHash(const hash_t& hashIn) {
     return (hashIn.length() == 66 && isHexStr(hashIn));
 }

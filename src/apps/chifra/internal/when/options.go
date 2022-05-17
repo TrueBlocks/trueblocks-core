@@ -46,9 +46,6 @@ func (opts *WhenOptions) TestLog() {
 
 func (opts *WhenOptions) ToCmdLine() string {
 	options := ""
-	if opts.Timestamps {
-		options += " --timestamps"
-	}
 	if opts.Check {
 		options += " --check"
 	}

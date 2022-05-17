@@ -30,7 +30,6 @@ bool checkTimestamp(CBlock& block, void* data) {
     if (block.timestamp <= c->prevTs) {
         CBlock fix;
         getBlockHeader(fix, c->prevBn);
-        opt->corrections.push_back(fix);
         reason = "ts > c->prevTs";
     }
 
@@ -40,31 +39,11 @@ bool checkTimestamp(CBlock& block, void* data) {
         getBlockHeader(blk, c->expected);
         LOG_WARN(reason, " at block ", c->expected, " ==> ", " sb:", block.blockNumber, ".", block.timestamp,
                  " is: ", blk.blockNumber, ".", blk.timestamp, " c: ", c->expected, ".", c->prevBn, ".", c->prevTs);
-        opt->corrections.push_back(blk);
     }
 
     c->expected++;
     c->prevBn = block.blockNumber;
     c->prevTs = block.timestamp;
-
-    return true;
-}
-
-//-----------------------------------------------------------------------
-bool COptions::applyCorrections(void) {
-    for (auto correction : corrections) {
-        LOG_INFO("Applying correction for block ", correction.blockNumber);
-        if (!correctTimestamp(correction.blockNumber, correction.timestamp))
-            return false;
-    }
-
-    checker.verbose = true;
-    for (auto correction : corrections) {
-        checker.expected = correction.blockNumber;
-        checker.prevBn = correction.blockNumber == 0 ? 0 : correction.blockNumber - 1;
-        checker.prevTs = correction.timestamp - 1;
-        checkTimestamp(correction, this);
-    }
 
     return true;
 }

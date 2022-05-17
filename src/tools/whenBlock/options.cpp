@@ -16,14 +16,10 @@
  */
 #include "options.h"
 
-extern bool parseRequestDates(COptionsBase* opt, CNameValueArray& blocks, const string_q& arg);
-extern bool parseRequestTs(COptionsBase* opt, CNameValueArray& blocks, timestamp_t ts);
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("blocks", "", "list<string>", OPT_POSITIONAL, "one or more dates, block numbers, hashes, or special named blocks (see notes)"),  // NOLINT
-    COption("timestamps", "t", "", OPT_SWITCH, "ignore other options and generate timestamps only"),
     COption("check", "c", "", OPT_HIDDEN | OPT_SWITCH, "available only with --timestamps, checks the validity of the timestamp data"),  // NOLINT
     COption("fix", "f", "", OPT_HIDDEN | OPT_SWITCH, "available only with --timestamps, fixes incorrect timestamps if any"),  // NOLINT
     COption("no_update", "n", "", OPT_HIDDEN | OPT_SWITCH, "do not update timestamps database prior to completing the task at hand"),  // NOLINT
@@ -33,7 +29,6 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-extern const char* STR_DISPLAY_WHEN;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& commandIn) {
     string_q command = commandIn;
@@ -41,8 +36,9 @@ bool COptions::parseArguments(string_q& commandIn) {
         return false;
 
     // BEG_CODE_LOCAL_INIT
-    CStringArray blocks;
     // END_CODE_LOCAL_INIT
+
+    commandIn = substitute(commandIn, "--timestamps", "");
 
     getBlockHeader(latest, "latest");
     Init();
@@ -53,9 +49,6 @@ bool COptions::parseArguments(string_q& commandIn) {
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
-        } else if (arg == "-t" || arg == "--timestamps") {
-            timestamps = true;
-
         } else if (arg == "-c" || arg == "--check") {
             check = true;
 
@@ -71,50 +64,12 @@ bool COptions::parseArguments(string_q& commandIn) {
                 return invalid_option(arg);
             }
 
-        } else {
-            if (!parseStringList2(this, blocks, arg))
-                return false;
-
             // END_CODE_AUTO
         }
     }
 
-    for (auto item : blocks) {
-        if (isDate(item)) {
-            if (!parseRequestDates(this, requests, item))
-                return false;
-
-        } else if (isTimestamp(item)) {
-            if (!parseRequestTs(this, requests, str_2_Ts(item)))
-                return false;
-
-        } else if (!parseBlockList2(this, CBlockOptions::blocks, item, latest.blockNumber)) {
-            return false;
-
-        } else {
-            CNameValue spec;
-            if (findSpecial(spec, item)) {
-                if (spec.first == "latest")
-                    spec.second = uint_2_Str(latest.blockNumber);
-                requests.push_back(CNameValue("block", spec.second + "|" + spec.first));
-
-            } else {
-                CBlockOptions::blocks.Init();  // clear out blocks
-                if (!parseBlockList2(this, CBlockOptions::blocks, item, latest.blockNumber))
-                    return false;
-                string_q blockList = getBlockNumList();  // get the list from blocks
-                CStringArray blks;
-                explode(blks, blockList, '|');
-                for (auto blk : blks)
-                    requests.push_back(CNameValue("block", blk));
-            }
-        }
-    }
-
-    string_q format = getGlobalConfig("whenBlock")->getConfigStr("display", "format", STR_DISPLAY_WHEN);
-    configureDisplay("whenBlock", "CBlock", format);
-    manageFields("CBlock:" + string_q(format));
-
+    if (isTestMode() && !check && !fix)
+        return usage("--timestamp option not tested in testMode");
     return true;
 }
 
@@ -125,16 +80,11 @@ void COptions::Init(void) {
     // END_CODE_GLOBALOPTS
 
     // BEG_CODE_INIT
-    timestamps = false;
     check = false;
     fix = false;
     no_update = false;
     // END_CODE_INIT
 
-    stop = 0;
-    isText = false;
-    cnt = 0;
-    requests.clear();
     blocks.Init();
 }
 
@@ -151,9 +101,6 @@ COptions::COptions(void) {
 
     // BEG_ERROR_STRINGS
     usageErrs[ERR_OPENINGTIMESTAMPS] = "Could not open timestamp file.";
-    usageErrs[ERR_INVALIDDATE1] = "Please supply either a JSON formatted date or a blockNumber.";
-    usageErrs[ERR_INVALIDDATE2] = "Invalid date '[{ARG}]'.";
-    usageErrs[ERR_INVALIDDATE3] = "The date you specified ([{ARG}]) is before the first block.";
     usageErrs[ERR_ONLYTS] = "The --check, --fix, and --count options are only available with the --timestamps option.";
     // END_ERROR_STRINGS
 
@@ -165,30 +112,3 @@ COptions::COptions(void) {
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
 }
-
-//-----------------------------------------------------------------------
-bool parseRequestTs(COptionsBase* opt, CNameValueArray& requests, timestamp_t ts) {
-    requests.push_back(CNameValue("date", int_2_Str(ts)));
-    return true;
-}
-
-//-----------------------------------------------------------------------
-bool parseRequestDates(COptionsBase* opt, CNameValueArray& requests, const string_q& arg) {
-    time_q date = str_2_Date(arg);
-    if (date == earliestDate) {
-        return opt->usage(substitute(opt->usageErrs[ERR_INVALIDDATE2], "[{ARG}]", arg));
-
-    } else if (date < time_q(2015, 7, 30, 15, 25, 00)) {
-        return opt->usage(substitute(opt->usageErrs[ERR_INVALIDDATE3], "[{ARG}]", arg));
-    }
-
-    requests.push_back(CNameValue("date", int_2_Str(date_2_Ts(date))));
-    return true;
-}
-
-//-----------------------------------------------------------------------
-const char* STR_DISPLAY_WHEN =
-    "[{BLOCKNUMBER}]\t"
-    "[{TIMESTAMP}]\t"
-    "[{DATE}]"
-    "[\t{NAME}]";

@@ -19,10 +19,7 @@
 
 // BEG_ERROR_DEFINES
 #define ERR_OPENINGTIMESTAMPS 1
-#define ERR_INVALIDDATE1 2
-#define ERR_INVALIDDATE2 3
-#define ERR_INVALIDDATE3 4
-#define ERR_ONLYTS 5
+#define ERR_ONLYTS 2
 // END_ERROR_DEFINES
 
 //-----------------------------------------------------------------------------
@@ -38,7 +35,6 @@ class CTimeStamper {
 class COptions : public CBlockOptions {
   public:
     // BEG_CODE_DECLARE
-    bool timestamps;
     bool check;
     bool fix;
     bool no_update;
@@ -46,20 +42,12 @@ class COptions : public CBlockOptions {
 
     CBlock latest;
     CTimeStamper checker;
-    CNameValueArray requests;
-    bool isText;
-    blknum_t stop;
-    blknum_t cnt;
-    CBlockArray corrections;
 
     COptions(void);
     ~COptions(void);
 
     bool parseArguments(string_q& command) override;
     void Init(void) override;
-
-    void applyFilter(void);
-    bool applyCorrections(void);
 };
 
 extern bool checkTimestamp(CBlock& block, void* data);
