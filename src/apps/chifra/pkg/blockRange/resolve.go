@@ -5,6 +5,8 @@
 package blockRange
 
 import (
+	"fmt"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	tslibPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
@@ -12,19 +14,23 @@ import (
 	"github.com/bykof/gostradamus"
 )
 
-func (br *BlockRange) Resolve(chain string) []uint64 {
-	meta, _ := rpcClient.GetMetaData(chain, false)
-	latest := meta.Latest
-	current, end := br.getBounds(chain)
+func (br *BlockRange) Resolve(chain string) ([]uint64, error) {
+	current, end, err := br.getBounds(chain)
+	if err != nil {
+		return []uint64{}, err
+	}
 	blocks := []uint64{}
 	for current < end {
 		blocks = append(blocks, current)
-		current = br.nextBlock(chain, current, latest)
+		current, err = br.nextBlock(chain, current)
+		if err != nil {
+			return []uint64{}, err
+		}
 	}
-	return blocks
+	return blocks, nil
 }
 
-func (br *BlockRange) getBounds(chain string) (uint64, uint64) {
+func (br *BlockRange) getBounds(chain string) (uint64, uint64, error) {
 	start := br.Start.resolvePoint(chain)
 	switch br.ModifierType {
 	case BlockRangePeriod:
@@ -36,7 +42,15 @@ func (br *BlockRange) getBounds(chain string) (uint64, uint64) {
 	if end == utils.NOPOS || end == 0 {
 		end = start + 1
 	}
-	return start, end
+
+	meta, _ := rpcClient.GetMetaData(chain, false)
+	if start > meta.Latest {
+		return start, end, fmt.Errorf("start block (%d) is in the future", start)
+	} else if end > meta.Latest {
+		return start, end, fmt.Errorf("end block (%d) is in the future", end)
+	}
+
+	return start, end, nil
 }
 
 func snapBnToPeriod(bn uint64, chain, period string) (uint64, error) {
@@ -70,7 +84,7 @@ func snapBnToPeriod(bn uint64, chain, period string) (uint64, error) {
 	return tslibPkg.FromTsToBn(chain, ts)
 }
 
-func (br *BlockRange) nextBlock(chain string, current, latest uint64) uint64 {
+func (br *BlockRange) nextBlock(chain string, current uint64) (uint64, error) {
 	bn := current
 
 	if br.ModifierType == BlockRangeStep {
@@ -79,7 +93,7 @@ func (br *BlockRange) nextBlock(chain string, current, latest uint64) uint64 {
 	} else if br.ModifierType == BlockRangePeriod {
 		dt, err := tslibPkg.FromBnToDate(chain, bn)
 		if err != nil {
-			bn = bn + 1
+			return bn, err
 		} else {
 			switch br.Modifier.Period {
 			case "hourly":
@@ -111,7 +125,7 @@ func (br *BlockRange) nextBlock(chain string, current, latest uint64) uint64 {
 			ts := uint64(dt.UnixTimestamp())
 			bn, err = tslibPkg.FromTsToBn(chain, ts)
 			if err != nil {
-				return utils.NOPOS
+				return bn, err
 			}
 		}
 
@@ -119,11 +133,7 @@ func (br *BlockRange) nextBlock(chain string, current, latest uint64) uint64 {
 		bn = bn + 1
 	}
 
-	if bn > latest {
-		bn = latest
-	}
-
-	return bn
+	return bn, nil
 }
 
 func (p *Point) resolvePoint(chain string) uint64 {

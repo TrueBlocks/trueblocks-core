@@ -21,7 +21,10 @@ func (opts *WhenOptions) HandleWhenBlocks() error {
 
 	first := true
 	for _, br := range opts.BlockNums {
-		vals := br.Resolve(opts.Globals.Chain)
+		vals, err := br.Resolve(opts.Globals.Chain)
+		if err != nil {
+			return err
+		}
 		for _, v := range vals {
 			block := rpcClient.GetBlockByNumber(opts.Globals.Chain, v)
 			if v == 0 {

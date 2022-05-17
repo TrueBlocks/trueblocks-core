@@ -16,7 +16,7 @@ func Test_BlockRanges(t *testing.T) {
 		if !item.enabled {
 			continue
 		}
-		fmt.Println("----------->", item.input)
+		// fmt.Println("----------->", item.input)
 		inputs := []string{item.input}
 		var results []blockRange.BlockRange
 		err := ValidateIdentifiers(
@@ -31,7 +31,10 @@ func Test_BlockRanges(t *testing.T) {
 			continue
 		}
 		for _, br := range results {
-			blockList := br.Resolve("mainnet")
+			blockList, err := br.Resolve("mainnet")
+			if err != nil {
+				t.Error(err)
+			}
 			if len(blockList) > 0 {
 				max := len(blockList)
 				min := 0
@@ -45,11 +48,11 @@ func Test_BlockRanges(t *testing.T) {
 				check := colors.Green
 				if str != item.expected {
 					check = colors.Red
-					fmt.Printf("got:    %s\nwanted: %s%s%s\n", str, check, item.expected, colors.Off)
+					// fmt.Printf("got:    %s\nwanted: %s%s%s\n", str, check, item.expected, colors.Off)
 					t.Errorf("got:    %s\nwanted: %s%s%s\n", str, check, item.expected, colors.Off)
 				}
-			} else {
-				fmt.Println("No blocks:", colors.Yellow, br, colors.Off)
+				// } else {
+				// 	fmt.Println("No blocks:", colors.Yellow, br, colors.Off)
 			}
 		}
 	}
