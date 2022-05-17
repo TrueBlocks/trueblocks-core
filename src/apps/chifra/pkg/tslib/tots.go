@@ -14,7 +14,7 @@ import (
 
 // FromBnToTs returns a chain-specific Linux timestamp given a block number
 func FromBnToTs(chain string, bn uint64) (uint64, error) {
-	ret, err := fromBn(chain, bn)
+	ret, err := FromBn(chain, bn)
 	return uint64(ret.Ts), err
 }
 

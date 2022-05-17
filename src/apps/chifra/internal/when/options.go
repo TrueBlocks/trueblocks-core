@@ -42,9 +42,6 @@ func (opts *WhenOptions) TestLog() {
 
 func (opts *WhenOptions) ToCmdLine() string {
 	options := ""
-	if opts.Check {
-		options += " --check"
-	}
 	options += " " + strings.Join(opts.Blocks, " ")
 	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options

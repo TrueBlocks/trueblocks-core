@@ -866,7 +866,7 @@ const char* STR_ONEROUTE2 =
 
 //---------------------------------------------------------------------------------------------------
 bool isFinishCmd(const string_q& a) {
-    CStringArray tools = {"list", "monitors", "chunks", "init"};
+    CStringArray tools = {"when", "list", "monitors", "chunks", "init"};
     for (auto tool : tools) {
         if (contains(a, tool))
             return true;

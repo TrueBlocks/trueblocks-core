@@ -77,9 +77,9 @@ func loadTimestamps(chain string) error {
 	return nil
 }
 
-// fromTs is a local function that returns a Timestamp record given a Unix timestamp. It
+// FromTs is a local function that returns a Timestamp record given a Unix timestamp. It
 // loads the timestamp file into memory if it isn't already
-func fromTs(chain string, ts uint64) (*Timestamp, error) {
+func FromTs(chain string, ts uint64) (*Timestamp, error) {
 	cnt, err := NTimestamps(chain)
 	if err != nil {
 		return &Timestamp{}, err
@@ -118,9 +118,9 @@ func fromTs(chain string, ts uint64) (*Timestamp, error) {
 	return &perChainTimestamps[chain].memory[index], nil
 }
 
-// fromTs is a local function that returns a Timestamp record given a blockNum. It
+// FromBn is a local function that returns a Timestamp record given a blockNum. It
 // loads the timestamp file into memory if it isn't already
-func fromBn(chain string, bn uint64) (*Timestamp, error) {
+func FromBn(chain string, bn uint64) (*Timestamp, error) {
 	cnt, err := NTimestamps(chain)
 	if err != nil {
 		return &Timestamp{}, err

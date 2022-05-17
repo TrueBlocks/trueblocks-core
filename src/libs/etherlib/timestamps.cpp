@@ -46,11 +46,6 @@ timestamp_t getTimestampAt(blknum_t blk) {
     return 0;
 }
 
-//-------------------------------------------------------------------------
-size_t nTimestamps(void) {
-    return isTestMode() ? 5000000 : ((fileSize(indexFolderBin_ts) / sizeof(uint32_t)) / 2);
-}
-
 //-----------------------------------------------------------------------
 bool establishTsFile(void) {
     if (fileExists(indexFolderBin_ts))

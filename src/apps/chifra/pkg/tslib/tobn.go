@@ -19,7 +19,7 @@ func FromDateToBn(chain, dateStr string) (uint64, error) {
 	if err != nil {
 		return 0, err
 	}
-	ret, err := fromTs(chain, ts)
+	ret, err := FromTs(chain, ts)
 	if err != nil {
 		return 0, err
 	}
@@ -45,7 +45,7 @@ func FromNameToBn(chain, name string) (uint64, error) {
 
 // FromTsToBn returns a chain-specific block number given a Linux timestamp.
 func FromTsToBn(chain string, ts uint64) (uint64, error) {
-	ret, err := fromTs(chain, ts)
+	ret, err := FromTs(chain, ts)
 	if err != nil {
 		return 0, err
 	}
