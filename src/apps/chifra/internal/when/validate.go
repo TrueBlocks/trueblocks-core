@@ -17,7 +17,7 @@ func (opts *WhenOptions) ValidateWhen() error {
 		return opts.BadFlag
 	}
 
-	if opts.Globals.TestMode && opts.Timestamps && !opts.Check && !opts.Fix && !opts.Count {
+	if opts.Globals.TestMode && opts.Timestamps && !opts.Check && !opts.Count {
 		return validate.Usage("--timestamp option not tested in testMode")
 	}
 
@@ -33,12 +33,9 @@ func (opts *WhenOptions) ValidateWhen() error {
 		if opts.List {
 			return validate.Usage("Please choose only one of {0}.", "--timestamps or --list")
 		}
-		if opts.Fix && opts.Check {
-			return validate.Usage("Please choose only one of {0}.", "--check or --fix")
-		}
 	} else {
-		if opts.Fix || opts.Check || opts.Count {
-			return validate.Usage("The {0} options are only available with the {1} option.", "--check, --fix, and --count", "--timestamps")
+		if opts.Check || opts.Count {
+			return validate.Usage("The {0} options are only available with the {1} option.", "--check and --count", "--timestamps")
 		}
 	}
 

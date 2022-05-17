@@ -19,7 +19,6 @@
 
 // BEG_ERROR_DEFINES
 #define ERR_OPENINGTIMESTAMPS 1
-#define ERR_ONLYTS 2
 // END_ERROR_DEFINES
 
 //-----------------------------------------------------------------------------
@@ -36,7 +35,6 @@ class COptions : public CBlockOptions {
   public:
     // BEG_CODE_DECLARE
     bool check;
-    bool fix;
     // END_CODE_DECLARE
 
     CBlock latest;

@@ -48,11 +48,9 @@ func init() {
 	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().List, "list", "l", false, "export a list of the 'special' blocks")
 	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Timestamps, "timestamps", "t", false, "ignore other options and generate timestamps only")
 	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Check, "check", "c", false, "available only with --timestamps, checks the validity of the timestamp data (hidden)")
-	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Fix, "fix", "f", false, "available only with --timestamps, fixes incorrect timestamps if any (hidden)")
 	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Count, "count", "u", false, "available only with --timestamps, returns the number of timestamps in the cache (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {
 		whenCmd.Flags().MarkHidden("check")
-		whenCmd.Flags().MarkHidden("fix")
 		whenCmd.Flags().MarkHidden("count")
 	}
 	globals.InitGlobals(whenCmd, &whenPkg.GetOptions().Globals)

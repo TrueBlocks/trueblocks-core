@@ -24,7 +24,6 @@ type WhenOptions struct {
 	List       bool
 	Timestamps bool
 	Check      bool
-	Fix        bool
 	Count      bool
 	Globals    globals.GlobalOptions
 	BadFlag    error
@@ -37,7 +36,6 @@ func (opts *WhenOptions) TestLog() {
 	logger.TestLog(opts.List, "List: ", opts.List)
 	logger.TestLog(opts.Timestamps, "Timestamps: ", opts.Timestamps)
 	logger.TestLog(opts.Check, "Check: ", opts.Check)
-	logger.TestLog(opts.Fix, "Fix: ", opts.Fix)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	opts.Globals.TestLog()
 }
@@ -46,9 +44,6 @@ func (opts *WhenOptions) ToCmdLine() string {
 	options := ""
 	if opts.Check {
 		options += " --check"
-	}
-	if opts.Fix {
-		options += " --fix"
 	}
 	options += " " + strings.Join(opts.Blocks, " ")
 	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
@@ -70,8 +65,6 @@ func WhenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
 			opts.Timestamps = true
 		case "check":
 			opts.Check = true
-		case "fix":
-			opts.Fix = true
 		case "count":
 			opts.Count = true
 		default:

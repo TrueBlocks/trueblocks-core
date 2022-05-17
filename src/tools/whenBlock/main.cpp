@@ -63,8 +63,8 @@ bool visitBlock(CBlock& block, void* data) {
     }
 
     if (block.timestamp <= c->prevTs) {
-        CBlock fix;
-        getBlockHeader(fix, c->prevBn);
+        CBlock ff;
+        getBlockHeader(ff, c->prevBn);
         reason = "ts > c->prevTs";
     }
 
@@ -88,7 +88,6 @@ static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
     COption("check", "c", "", OPT_HIDDEN | OPT_SWITCH, "available only with --timestamps, checks the validity of the timestamp data"),  // NOLINT
-    COption("fix", "f", "", OPT_HIDDEN | OPT_SWITCH, "available only with --timestamps, fixes incorrect timestamps if any"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Find block(s) based on date, blockNum, timestamp, or 'special'."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -118,9 +117,6 @@ bool COptions::parseArguments(string_q& commandIn) {
         } else if (arg == "-c" || arg == "--check") {
             check = true;
 
-        } else if (arg == "-f" || arg == "--fix") {
-            fix = true;
-
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -142,7 +138,6 @@ void COptions::Init(void) {
 
     // BEG_CODE_INIT
     check = false;
-    fix = false;
     // END_CODE_INIT
 
     blocks.Init();
@@ -161,7 +156,6 @@ COptions::COptions(void) {
 
     // BEG_ERROR_STRINGS
     usageErrs[ERR_OPENINGTIMESTAMPS] = "Could not open timestamp file.";
-    usageErrs[ERR_ONLYTS] = "The --check, --fix, and --count options are only available with the --timestamps option.";
     // END_ERROR_STRINGS
 
     // Differnt default for this software, but only change it if user hasn't already therefor not in Init
