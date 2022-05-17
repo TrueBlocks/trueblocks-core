@@ -212,21 +212,4 @@ bool correctTimestamp(blknum_t blk, timestamp_t ts) {
     return true;
 }
 
-//-------------------------------------------------------------------------
-bool forEveryTimestamp(BLOCKVISITFUNC func, void* data) {
-    if (!func)
-        return false;
-
-    size_t n = nTimestamps();
-    for (size_t index = 0; index < n; index++) {
-        CBlock block;
-        block.blockNumber = getTimestampBlockAt(index);
-        block.timestamp = getTimestampAt(index);
-        bool ret = (*func)(block, data);
-        if (!ret)
-            return false;
-    }
-    return true;
-}
-
 }  // namespace qblocks

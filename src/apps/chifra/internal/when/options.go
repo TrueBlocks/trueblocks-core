@@ -26,7 +26,6 @@ type WhenOptions struct {
 	Check      bool
 	Fix        bool
 	Count      bool
-	NoUpdate   bool
 	Globals    globals.GlobalOptions
 	BadFlag    error
 }
@@ -40,7 +39,6 @@ func (opts *WhenOptions) TestLog() {
 	logger.TestLog(opts.Check, "Check: ", opts.Check)
 	logger.TestLog(opts.Fix, "Fix: ", opts.Fix)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
-	logger.TestLog(opts.NoUpdate, "NoUpdate: ", opts.NoUpdate)
 	opts.Globals.TestLog()
 }
 
@@ -51,9 +49,6 @@ func (opts *WhenOptions) ToCmdLine() string {
 	}
 	if opts.Fix {
 		options += " --fix"
-	}
-	if opts.NoUpdate {
-		options += " --no_update"
 	}
 	options += " " + strings.Join(opts.Blocks, " ")
 	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
@@ -79,8 +74,6 @@ func WhenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
 			opts.Fix = true
 		case "count":
 			opts.Count = true
-		case "noUpdate":
-			opts.NoUpdate = true
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "when")

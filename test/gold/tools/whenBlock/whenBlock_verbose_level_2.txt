@@ -14,7 +14,6 @@ Flags:
   -c, --check        available only with --timestamps, checks the validity of the timestamp data (hidden)
   -f, --fix          available only with --timestamps, fixes incorrect timestamps if any (hidden)
   -u, --count        available only with --timestamps, returns the number of timestamps in the cache (hidden)
-  -n, --no_update    do not update timestamps database prior to completing the task at hand (hidden)
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
   -v, --verbose      enable verbose (increase detail with --log_level)
   -h, --help         display this help screen

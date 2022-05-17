@@ -37,7 +37,6 @@ class COptions : public CBlockOptions {
     // BEG_CODE_DECLARE
     bool check;
     bool fix;
-    bool no_update;
     // END_CODE_DECLARE
 
     CBlock latest;
