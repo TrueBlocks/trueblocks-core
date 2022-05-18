@@ -84,7 +84,7 @@ unclesCnt           	1018	0	8388635	T_UNUMBER TS_NUMERAL
 date                	1019	0	33554437	T_DATE TS_DATE
 age                 	1020	0	33554437	T_DATE TS_DATE
 {
-  "schema": 32000,
+  "schema": 35000,
   "deleted": false,
   "showing": true,
   "cname": "Block",
