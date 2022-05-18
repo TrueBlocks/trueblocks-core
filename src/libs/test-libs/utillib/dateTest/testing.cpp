@@ -127,17 +127,17 @@ TEST_F(CThisTest, TestTest_4) {
     ASSERT_EQ("BONY", BONY(theDate), time_q(2020, 1, 1, 0, 0, 0));
 
     CTimeArray res;
-    expandHourly(res, theDate, EOD(theDate), true);
+    expandHourly(res, theDate, EOD(theDate));
     SHOWEM("expandHourly");
-    expandDaily(res, theDate, EOM(theDate), true);
+    expandDaily(res, theDate, EOM(theDate));
     SHOWEM("expandDaily");
-    expandWeekly(res, BOY(theDate), EOQ(BOY(theDate)), true);
+    expandWeekly(res, BOY(theDate), EOQ(BOY(theDate)));
     SHOWEM("expandWeekly");
-    expandMonthly(res, BOY(theDate), EOY(theDate), true);
+    expandMonthly(res, BOY(theDate), EOY(theDate));
     SHOWEM("expandMonthly");
-    expandQuarterly(res, BOY(theDate), EOY(theDate), true);
+    expandQuarterly(res, BOY(theDate), EOY(theDate));
     SHOWEM("expandQuarterly");
-    expandAnnually(res, BOY(theDate), BONY(BONY(EOY(theDate))), true);
+    expandAnnually(res, BOY(theDate), BONY(BONY(EOY(theDate))));
     SHOWEM("expandAnnually");
 
     return true;

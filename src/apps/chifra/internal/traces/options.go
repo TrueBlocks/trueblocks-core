@@ -13,20 +13,22 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 type TracesOptions struct {
-	Transactions []string
-	Articulate   bool
-	Filter       string
-	Statediff    bool
-	Count        bool
-	SkipDdos     bool
-	Max          uint64
-	Globals      globals.GlobalOptions
-	BadFlag      error
+	Transactions   []string
+	TransactionIds []blockRange.Identifier
+	Articulate     bool
+	Filter         string
+	Statediff      bool
+	Count          bool
+	SkipDdos       bool
+	Max            uint64
+	Globals        globals.GlobalOptions
+	BadFlag        error
 }
 
 var tracesCmdLineOptions TracesOptions

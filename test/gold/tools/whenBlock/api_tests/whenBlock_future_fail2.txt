@@ -1,0 +1,19 @@
+when?blocks=1000000-50000000:5000000
+{
+  "data": [],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}
+{
+  "errors": [
+    "end block (50000000) is in the future"
+  ]
+}

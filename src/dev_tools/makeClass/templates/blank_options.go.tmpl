@@ -13,6 +13,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -29,13 +30,7 @@ func (opts *[{PROPER}]Options) TestLog() {
 [{TEST_LOGS}]	opts.Globals.TestLog()
 }
 
-func (opts *[{PROPER}]Options) ToCmdLine() string {
-	options := ""
-[{DASH_STR}][{POSITIONALS}]	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
-	return options
-}
-
-func [{PROPER}]FinishParseApi(w http.ResponseWriter, r *http.Request) *[{PROPER}]Options {
+[{TOCMDLINE}]func [{PROPER}]FinishParseApi(w http.ResponseWriter, r *http.Request) *[{PROPER}]Options {
 	opts := &[{PROPER}]Options{}
 [{DEFAULTS_API}]	for key, value := range r.URL.Query() {
 		switch key {

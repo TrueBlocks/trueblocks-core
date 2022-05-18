@@ -32,9 +32,9 @@ on      ,both ,slow  ,when  ,tools/whenBlock ,list_dates                  ,n    
 on      ,both ,slow  ,when  ,tools/whenBlock ,list_dates_long             ,y    ,list
 on      ,both ,fast  ,when  ,tools/whenBlock ,long_verbose_valid_block    ,y    ,verbose & blocks = 1000
 on      ,both ,slow  ,when  ,tools/whenBlock ,mixed_block_and_date        ,y    ,blocks = 2017-03-02 & blocks = 123123
-on      ,both ,slow  ,when  ,tools/whenBlock ,multiple_same               ,y    ,blocks = 12345 & blocks = 54321 & blocks = 2016-12-01 & blocks = 2016-12-01-01
-on      ,both ,slow  ,when  ,tools/whenBlock ,multiple_same_ts_true       ,y    ,blocks = 12345 & blocks = 54321 & blocks = 2016-12-01 & blocks = 2016-12-01-01 & timestamps
-on      ,both ,slow  ,when  ,tools/whenBlock ,multiple_same_ts_false      ,y    ,blocks = 12345 & blocks = 54321 & blocks = 2016-12-01 & blocks = 2016-12-01-01
+on      ,both ,slow  ,when  ,tools/whenBlock ,multiple_same               ,y    ,blocks = 12345 & blocks = 54321 & blocks = 2016-12-01 & blocks = 2016-12-01T01
+on      ,both ,slow  ,when  ,tools/whenBlock ,multiple_same_ts_true       ,y    ,blocks = 12345 & blocks = 54321 & blocks = 2016-12-01 & blocks = 2016-12-01T01 & timestamps
+on      ,both ,slow  ,when  ,tools/whenBlock ,multiple_same_ts_false      ,y    ,blocks = 12345 & blocks = 54321 & blocks = 2016-12-01 & blocks = 2016-12-01T01
 on      ,cmd  ,slow  ,when  ,tools/whenBlock ,mixed_options               ,y    ,@vl
 on      ,both ,fast  ,when  ,tools/whenBlock ,noparams                    ,y    ,
 on      ,both ,slow  ,when  ,tools/whenBlock ,not_present_block           ,y    ,blocks = 8000000
@@ -61,10 +61,15 @@ on      ,cmd  ,fast  ,when  ,tools/whenBlock ,fmt_junk                    ,y    
 on      ,both ,fast  ,when  ,tools/whenBlock ,fmt_timestamps              ,y    ,timestamps
 on      ,cmd  ,medi  ,when  ,tools/whenBlock ,skip_fail                   ,n    ,fmt = txt & blocks = 1301000-1301250:junk
 on      ,cmd  ,medi  ,when  ,tools/whenBlock ,skip_413                    ,n    ,fmt = txt & blocks = 1301000-1301250:73
+on      ,both ,fast  ,when  ,tools/whenBlock ,future_fail                 ,y    ,blocks = 50000000
+on      ,both ,fast  ,when  ,tools/whenBlock ,future_fail2                ,y    ,blocks = 1000000-50000000:5000000
 
 on      ,both ,fast  ,when  ,tools/whenBlock ,fix_not_timestamps          ,y    ,blocks = 1301000 & fix
 on      ,both ,fast  ,when  ,tools/whenBlock ,check_not_timestamps        ,y    ,blocks = 1301000 & check
 on      ,both ,fast  ,when  ,tools/whenBlock ,count_not_timestamps        ,y    ,blocks = 1301000 & count
+on      ,both ,fast  ,when  ,tools/whenBlock ,count_not_timestamps_csv    ,n    ,count & fmt = csv & timestamps
+on      ,both ,fast  ,when  ,tools/whenBlock ,count_not_timestamps_json   ,y    ,count & fmt = json & timestamps
+on      ,both ,fast  ,when  ,tools/whenBlock ,fix_and_check_bad           ,y    ,timestamps & fix & check
 
 local   ,both ,fast  ,when  ,tools/whenBlock ,to_file                     ,y    ,blocks = 1001001 & fmt = json & to_file
 local   ,cmd  ,medi  ,when  ,tools/whenBlock ,skip_hourly                 ,n    ,fmt = txt & blocks = 1125561-1130516:hourly

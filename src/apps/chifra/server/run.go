@@ -34,7 +34,7 @@ func RunServe(cmd *cobra.Command, args []string) error {
 	chainConfigPath := config.GetPathToChainConfig(chain) // order matters
 	indexPath := config.GetPathToIndex(chain)             // order matters
 	rpcProvider := config.GetRpcProvider(chain)
-	meta := rpcClient.GetMetaData(chain, false)
+	meta, _ := rpcClient.GetMetaData(chain, false)
 
 	log.Printf("%s%-18.18s%s%s\n", colors.Green, "Server URL:", colors.Off, apiUrl)
 	log.Printf("%s%-18.18s%s%s\n", colors.Green, "RootConfig Path:", colors.Off, configPath)

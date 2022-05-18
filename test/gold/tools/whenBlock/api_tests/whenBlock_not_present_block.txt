@@ -4,15 +4,17 @@ when?blocks=8000000
     {
       "blockNumber": 8000000,
       "timestamp": 1561100149,
-      "name": "",
       "date": "2019-06-21 06:55:49 UTC"
     }
   ],
   "meta": {
-    "unripe": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "staging": "0xdeadbeef",
+    "client": "0xdeadbeef",
     "finalized": "0xdeadbeef",
-    "client": "0xdeadbeef"
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
   }
 }

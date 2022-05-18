@@ -49,8 +49,6 @@ func convertToCommandLine(in string) string {
 		return "max_traces"
 	case "noHeader":
 		return "no_header"
-	case "noUpdate":
-		return "no_update"
 	case "noZero":
 		return "no_zero"
 	case "proxyFor":

@@ -17,21 +17,25 @@ func (opts *WhenOptions) ValidateWhen() error {
 		return opts.BadFlag
 	}
 
-	if len(opts.Blocks) == 0 && (!opts.List && !opts.Timestamps) {
-		return validate.Usage("Please supply one or more block identifiers or one or more dates.")
+	if opts.Globals.TestMode && opts.Timestamps && !opts.Check && !opts.Count {
+		return validate.Usage("--timestamp option not tested in testMode")
 	}
 
-	if len(opts.Blocks) > 0 && (opts.List || opts.Timestamps) {
-		return validate.Usage("Please use the --list or --timestamp option or supply block identifiers, not both.")
+	if len(opts.Blocks) == 0 {
+		if !opts.List && !opts.Timestamps {
+			return validate.Usage("Please supply one or more block identifiers or one or more dates.")
+		}
+	} else if opts.List || opts.Timestamps {
+		return validate.Usage("Please supply either block identifiers, the --list option, or the --timestamps option.")
 	}
 
-	if opts.List && opts.Timestamps {
-		return validate.Usage("Please use the --list or --timestamp option, not both.")
-	}
-
-	if !opts.Timestamps {
-		if opts.Fix || opts.Check || opts.Count {
-			return validate.Usage("The {0} option are only available with the {1} option.", "--check, --fix, and --count", "--timestamps")
+	if opts.Timestamps {
+		if opts.List {
+			return validate.Usage("Please choose only one of {0}.", "--timestamps or --list")
+		}
+	} else {
+		if opts.Check || opts.Count {
+			return validate.Usage("The {0} options are only available with the {1} option.", "--check and --count", "--timestamps")
 		}
 	}
 
@@ -40,6 +44,7 @@ func (opts *WhenOptions) ValidateWhen() error {
 		opts.Blocks,
 		validate.ValidBlockIdWithRangeAndDate,
 		1,
+		&opts.BlockIds,
 	)
 	if err != nil {
 		if invalidLiteral, ok := err.(*validate.InvalidIdentifierLiteralError); ok {

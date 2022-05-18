@@ -42,16 +42,19 @@ func (opts *WhenOptions) WhenInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	if opts.List {
-		return opts.HandleWhenList(), true
-	}
-
-	if opts.Globals.ApiMode {
-		return nil, false
-	}
-
 	handled = true
-	err = opts.Globals.PassItOn("whenBlock", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
+
+	if opts.List {
+		err = opts.HandleWhenList()
+	} else if opts.Timestamps {
+		if opts.Count {
+			err = opts.HandleWhenTimestampCount()
+		} else {
+			err = opts.HandleWhenShowTimestamps()
+		}
+	} else {
+		err = opts.HandleWhenShowBlocks()
+	}
 	// EXISTING_CODE
 
 	return

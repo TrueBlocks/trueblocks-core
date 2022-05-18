@@ -2,5 +2,5 @@ chifra when  1000 --log_level 3
 TEST[DATE|TIME] Blocks:  [1000]
 TEST[DATE|TIME] LogLevel:  3
 TEST[DATE|TIME] Format:  txt
-blockNumber	timestamp	date	name
-1000	1438272138	2015-07-30 16:02:18 UTC
+blockNumber	timeStamp	date	name
+1000	1438272138	2015-07-30 16:02:18 UTC	

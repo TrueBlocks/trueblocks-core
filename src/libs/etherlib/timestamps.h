@@ -15,7 +15,6 @@
 
 namespace qblocks {
 
-extern size_t nTimestamps(void);
 extern blknum_t getTimestampBlockAt(blknum_t blk);
 extern timestamp_t getTimestampAt(blknum_t bn);
 extern bool freshenTimestamps(blknum_t minBlock);

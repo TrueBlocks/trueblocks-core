@@ -22,15 +22,18 @@ func OutputHeader(data interface{}, w io.Writer, format string, apiMode bool) er
 		tt := reflect.TypeOf(data)
 		w.Write([]byte(GetHeader(&tt, format)))
 		w.Write([]byte("\n"))
+	} else {
+		w.Write([]byte("{\n  \"data\": [\n    "))
 	}
 	return nil
 }
 
 // TODO: Fix export without arrays
-func OutputObject(data interface{}, w io.Writer, format string, hideHeader, apiMode bool, meta *rpcClient.MetaData) error {
+func OutputSlice(data interface{}, w io.Writer, format string, hideHeader, apiMode, first bool, meta *rpcClient.MetaData) error {
 	var outputBytes []byte
 	var err error
 
+	preceeds := ""
 	switch format {
 	case "api":
 		fallthrough
@@ -40,6 +43,9 @@ func OutputObject(data interface{}, w io.Writer, format string, hideHeader, apiM
 			Meta *rpcClient.MetaData `json:"meta,omitempty"`
 		}{Data: data, Meta: meta}
 		outputBytes, err = json.MarshalIndent(result, "", "  ")
+		if !first {
+			preceeds = ","
+		}
 	case "csv":
 		fallthrough
 	case "txt":
@@ -56,6 +62,43 @@ func OutputObject(data interface{}, w io.Writer, format string, hideHeader, apiM
 	if err != nil {
 		return err
 	}
+	w.Write([]byte(preceeds))
+	w.Write(outputBytes)
+
+	return nil
+}
+
+// TODO: Fix export without arrays
+func OutputObject(data interface{}, w io.Writer, format string, hideHeader, apiMode, first bool, meta *rpcClient.MetaData) error {
+	var outputBytes []byte
+	var err error
+
+	preceeds := ""
+	switch format {
+	case "api":
+		fallthrough
+	case "json":
+		outputBytes, err = json.MarshalIndent(data, "    ", "  ")
+		if !first {
+			preceeds = ","
+		}
+	case "csv":
+		fallthrough
+	case "txt":
+		tt := reflect.TypeOf(data)
+		rowTemplate, err := GetRowTemplate(&tt, format)
+		if err != nil {
+			return err
+		}
+		return rowTemplate.Execute(w, data)
+	default:
+		return fmt.Errorf("unsupported format %s", format)
+	}
+
+	if err != nil {
+		return err
+	}
+	w.Write([]byte(preceeds))
 	w.Write(outputBytes)
 
 	return nil

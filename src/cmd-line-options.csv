@@ -164,21 +164,14 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13628,tools,ChainData,traces,getTraces,n5,,,false,false,false,false,--,note,,A state diff trace describes&#44; for each modified address&#44; what changed during that trace.
 13629,tools,ChainData,traces,getTraces,ERR_PROVIDEONETXID,,,false,false,false,false,--,error,,Please specify at least one transaction identifier.
 
-13940,tools,ChainData,when,whenBlock,blocks,,,false,false,true,true,local,positional,list<string>,one or more dates&#44; block numbers&#44; hashes&#44; or special named blocks (see notes)
-13960,tools,ChainData,when,whenBlock,list,l,,false,false,true,true,header,switch,<boolean>,export a list of the 'special' blocks
-13962,tools,ChainData,when,whenBlock,timestamps,t,,false,false,true,true,header,switch,<boolean>,ignore other options and generate timestamps only
-13963,tools,ChainData,when,whenBlock,check,c,,false,false,false,false,header,switch,<boolean>,available only with --timestamps&#44; checks the validity of the timestamp data
-13965,tools,ChainData,when,whenBlock,fix,f,,false,false,false,false,header,switch,<boolean>,available only with --timestamps&#44; fixes incorrect timestamps if any
-13966,tools,ChainData,when,whenBlock,count,u,,false,false,false,false,header,switch,<boolean>,available only with --timestamps&#44; returns the number of timestamps in the cache
-13966,tools,ChainData,when,whenBlock,no_update,n,,false,false,false,false,header,switch,<boolean>,do not update timestamps database prior to completing the task at hand
+13940,tools,ChainData,when,whenBlock,blocks,,,false,false,true,true,gocmd,positional,list<string>,one or more dates&#44; block numbers&#44; hashes&#44; or special named blocks (see notes)
+13960,tools,ChainData,when,whenBlock,list,l,,false,false,true,true,gocmd,switch,<boolean>,export a list of the 'special' blocks
+13962,tools,ChainData,when,whenBlock,timestamps,t,,false,false,true,true,gocmd,switch,<boolean>,ignore other options and generate timestamps only
+13963,tools,ChainData,when,whenBlock,check,c,,false,false,false,false,gocmd,switch,<boolean>,available only with --timestamps&#44; checks the validity of the timestamp data
+13966,tools,ChainData,when,whenBlock,count,u,,false,false,false,false,gocmd,switch,<boolean>,available only with --timestamps&#44; returns the number of timestamps in the cache
 13980,tools,ChainData,when,whenBlock,,,,false,false,true,false,--,description,,Find block(s) based on date&#44; blockNum&#44; timestamp&#44; or 'special'.
 13982,tools,ChainData,when,whenBlock,n1,,,false,false,false,false,--,note,,The block list may contain any combination of `number`&#44; `hash`&#44; `date`&#44; special `named` blocks.
 13984,tools,ChainData,when,whenBlock,n2,,,false,false,false,false,--,note,,Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].
-13987,tools,ChainData,when,whenBlock,ERR_OPENINGTIMESTAMPS,,,false,false,false,false,--,error,,Could not open timestamp file.
-13987,tools,ChainData,when,whenBlock,ERR_INVALIDDATE1,,,false,false,false,false,--,error,,Please supply either a JSON formatted date or a blockNumber.
-13987,tools,ChainData,when,whenBlock,ERR_INVALIDDATE2,,,false,false,false,false,--,error,,Invalid date '[{ARG}]'.
-13987,tools,ChainData,when,whenBlock,ERR_INVALIDDATE3,,,false,false,false,false,--,error,,The date you specified ([{ARG}]) is before the first block.
-13988,tools,ChainData,when,whenBlock,ERR_ONLYTS,,,false,false,false,false,--,error,,The --check&#44; --fix&#44; and --count options are only available with the --timestamps option.
 
 13100,tools,ChainState,state,getState,addrs,,,true,false,true,true,header,positional,list<addr>,one or more addresses (0x...) from which to retrieve balances
 13120,tools,ChainState,state,getState,blocks,,,false,false,true,true,header,positional,list<blknum>,an optional list of one or more blocks at which to report balances&#44; defaults to 'latest'

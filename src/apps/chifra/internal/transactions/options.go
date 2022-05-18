@@ -13,20 +13,22 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 type TransactionsOptions struct {
-	Transactions []string
-	Articulate   bool
-	Trace        bool
-	Uniq         bool
-	Reconcile    string
-	Cache        bool
-	Globals      globals.GlobalOptions
-	BadFlag      error
+	Transactions   []string
+	TransactionIds []blockRange.Identifier
+	Articulate     bool
+	Trace          bool
+	Uniq           bool
+	Reconcile      string
+	Cache          bool
+	Globals        globals.GlobalOptions
+	BadFlag        error
 }
 
 var transactionsCmdLineOptions TransactionsOptions

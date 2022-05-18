@@ -8,7 +8,6 @@
 package listPkg
 
 import (
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -40,13 +39,6 @@ func (opts *ListOptions) TestLog() {
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
 	opts.Globals.TestLog()
-}
-
-func (opts *ListOptions) ToCmdLine() string {
-	options := ""
-	options += " " + strings.Join(opts.Addrs, " ")
-	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
-	return options
 }
 
 func ListFinishParseApi(w http.ResponseWriter, r *http.Request) *ListOptions {

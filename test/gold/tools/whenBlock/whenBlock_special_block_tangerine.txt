@@ -2,5 +2,5 @@ chifra when  tangerine --verbose
 TEST[DATE|TIME] Blocks:  [tangerine]
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] Format:  txt
-blockNumber	timestamp	date	name
+blockNumber	timeStamp	date	name
 2463000	1476796771	2016-10-18 13:19:31 UTC	tangerine

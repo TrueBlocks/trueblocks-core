@@ -4,15 +4,17 @@ when?blocks=2677160
     {
       "blockNumber": 2677160,
       "timestamp": 1479863166,
-      "name": "",
       "date": "2016-11-23 01:06:06 UTC"
     }
   ],
   "meta": {
-    "unripe": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "staging": "0xdeadbeef",
+    "client": "0xdeadbeef",
     "finalized": "0xdeadbeef",
-    "client": "0xdeadbeef"
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
   }
 }

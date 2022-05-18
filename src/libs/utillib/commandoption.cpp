@@ -865,8 +865,8 @@ const char* STR_ONEROUTE2 =
     "}";
 
 //---------------------------------------------------------------------------------------------------
-bool isFinishCmd(const string_q& a) {
-    CStringArray tools = {"list", "monitors", "chunks", "init"};
+bool isFullyPorted(const string_q& a) {
+    CStringArray tools = {"when", "list", "monitors", "chunks", "init"};
     for (auto tool : tools) {
         if (contains(a, tool))
             return true;
@@ -880,7 +880,7 @@ string_q CCommandOption::toGoCall(void) const {
         return "";
 
     string_q format = STR_ONEROUTE;
-    if (isFinishCmd(api_route)) {
+    if (isFullyPorted(api_route)) {
         format = STR_ONEROUTE2;
     }
 

@@ -130,8 +130,6 @@ extern bool isNumeral(const string_q& test);
 extern bool isDouble(const string_q& test);
 extern bool isHexStr(const string_q& str);
 extern bool isAddress(const string_q& addr);
-extern bool isDate(const string_q& date);
-extern bool isTimestamp(const string_q& ts);
 extern bool isHash(const hash_t& hashIn);
 extern bool isFourByte(const fourbyte_t& encodingIn);
 extern bool isUnsigned(const string_q& in);

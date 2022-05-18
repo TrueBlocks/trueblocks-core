@@ -10,24 +10,27 @@ import (
 )
 
 func (opts *ChunksOptions) HandleChunksExtract(displayFunc func(path string, first bool) error) error {
-	blocks := validate.Convert(opts.Blocks)
+	blockNums := validate.Convert(opts.Blocks)
 	filenameChan := make(chan cache.IndexFileInfo)
 
 	var nRoutines int = 1
 	go cache.WalkCacheFolder(opts.Globals.Chain, cache.Index_Bloom, filenameChan)
 
-	i := 0
+	first := true
 	for result := range filenameChan {
 		switch result.Type {
 		case cache.Index_Bloom:
 			hit := false
-			for _, block := range blocks {
+			for _, block := range blockNums {
 				h := result.Range.BlockIntersects(block)
 				hit = hit || h
+				if hit {
+					break
+				}
 			}
-			if len(blocks) == 0 || hit {
-				displayFunc(result.Path, i == 0)
-				i++
+			if len(blockNums) == 0 || hit {
+				displayFunc(result.Path, first)
+				first = false
 			}
 		case cache.None:
 			nRoutines--
