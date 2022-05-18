@@ -2,7 +2,7 @@ chifra state  0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 fdfsdf
 TEST[DATE|TIME] Addrs:  [0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359]
 TEST[DATE|TIME] Blocks:  [fdfsdf]
 TEST[DATE|TIME] Format:  txt
-Error: The given value 'fdfsdf' is not a valid block identifier.
+Error: The given value 'fdfsdf' is not a valid identifier.
 Usage:
   chifra state [flags] <address> [address...] [block...]
 
