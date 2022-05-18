@@ -21,7 +21,7 @@ func (opts *WhenOptions) HandleWhenShowBlocks() error {
 
 	first := true
 	for _, br := range opts.BlockIds {
-		vals, err := br.Resolve(opts.Globals.Chain)
+		vals, err := br.ResolveBlocks(opts.Globals.Chain)
 		if err != nil {
 			return err
 		}
