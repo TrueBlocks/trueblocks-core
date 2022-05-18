@@ -20,7 +20,7 @@ func (opts *WhenOptions) HandleWhenShowBlocks() error {
 	}
 
 	first := true
-	for _, br := range opts.BlockNums {
+	for _, br := range opts.BlockIds {
 		vals, err := br.Resolve(opts.Globals.Chain)
 		if err != nil {
 			return err

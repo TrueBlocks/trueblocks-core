@@ -18,7 +18,7 @@ func Test_BlockRanges(t *testing.T) {
 		}
 		// fmt.Println("----------->", item.input)
 		inputs := []string{item.input}
-		var results []blockRange.BlockRange
+		var results []blockRange.Identifier
 		err := ValidateIdentifiers(
 			"mainnet",
 			inputs,

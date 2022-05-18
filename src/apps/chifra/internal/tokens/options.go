@@ -20,14 +20,14 @@ import (
 )
 
 type TokensOptions struct {
-	Addrs2    []string
-	Blocks    []string
-	BlockNums []blockRange.BlockRange
-	Parts     []string
-	ByAcct    bool
-	NoZero    bool
-	Globals   globals.GlobalOptions
-	BadFlag   error
+	Addrs2   []string
+	Blocks   []string
+	BlockIds []blockRange.Identifier
+	Parts    []string
+	ByAcct   bool
+	NoZero   bool
+	Globals  globals.GlobalOptions
+	BadFlag  error
 }
 
 var tokensCmdLineOptions TokensOptions

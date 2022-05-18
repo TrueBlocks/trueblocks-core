@@ -130,7 +130,7 @@ func TestHandleParserErrors(t *testing.T) {
 
 func TestBlockRange_UnmarshalJSON(t *testing.T) {
 	type SomeRecord struct {
-		Blocks BlockRange `json:"blocks"`
+		Blocks Identifier `json:"blocks"`
 	}
 
 	var record SomeRecord

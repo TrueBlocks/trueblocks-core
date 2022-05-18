@@ -19,12 +19,12 @@ import (
 )
 
 type ChunksOptions struct {
-	Blocks    []string
-	BlockNums []blockRange.BlockRange
-	Extract   string
-	Check     bool
-	Globals   globals.GlobalOptions
-	BadFlag   error
+	Blocks   []string
+	BlockIds []blockRange.Identifier
+	Extract  string
+	Check    bool
+	Globals  globals.GlobalOptions
+	BadFlag  error
 }
 
 var chunksCmdLineOptions ChunksOptions

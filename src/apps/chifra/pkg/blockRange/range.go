@@ -27,7 +27,7 @@ const (
 	BlockRangeNotDefined
 )
 
-type BlockRange struct {
+type Identifier struct {
 	StartType    BlockRangeValue `json:"startType,omitempty"`
 	Start        Point           `json:"start,omitempty"`
 	EndType      BlockRangeValue `json:"endType,omitempty"`
@@ -44,9 +44,9 @@ type BlockRange struct {
 // the values.
 //
 // Consult ./parser.go for the supported format
-func New(rangeStr string) (*BlockRange, error) {
+func New(rangeStr string) (*Identifier, error) {
 	parsed, err := Parse(rangeStr)
-	newBlockRange := &BlockRange{}
+	newBlockRange := &Identifier{}
 	if err != nil {
 		return nil, handleParserErrors(err)
 	}
@@ -85,7 +85,7 @@ func (brv BlockRangeValue) String() string {
 	}[brv]
 }
 
-func (br BlockRange) ToJSON() string {
+func (br Identifier) ToJSON() string {
 	str, err := json.Marshal(br)
 	if err != nil {
 		return ""
@@ -93,7 +93,7 @@ func (br BlockRange) ToJSON() string {
 	return string(str)
 }
 
-func (br *BlockRange) UnmarshalJSON(data []byte) error {
+func (br *Identifier) UnmarshalJSON(data []byte) error {
 	str, err := strconv.Unquote(string(data))
 	if err != nil {
 		return err
@@ -109,7 +109,7 @@ func (br *BlockRange) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (br *BlockRange) String() string {
+func (br *Identifier) String() string {
 	return br.ToJSON()
 }
 

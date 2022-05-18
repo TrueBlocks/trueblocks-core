@@ -294,7 +294,10 @@ string_q get_optfields(const CCommandOption& cmd) {
         string_q v = p.Format("[{VARIABLE}]");
         wid = max(v.length(), wid);
         if (contains(v, "Blocks") && contains(p.go_type, "[]string")) {
-            wid = max(string_q("BlockNums").length(), wid);
+            wid = max(string_q("BlockIds").length(), wid);
+        }
+        if (contains(v, "Transactions") && contains(p.go_type, "[]string")) {
+            wid = max(string_q("TransactionIds").length(), wid);
         }
     }
     wid = max(string_q("Globals").length(), wid);
@@ -306,7 +309,10 @@ string_q get_optfields(const CCommandOption& cmd) {
         string_q v = p.Format("[{VARIABLE}]");
         os << "\t" << padRight(v, wid) << " " << p.go_type << endl;
         if (contains(v, "Blocks") && contains(p.go_type, "[]string")) {
-            os << "\t" << padRight("BlockNums", wid) << " []blockRange.BlockRange" << endl;
+            os << "\t" << padRight("BlockIds", wid) << " []blockRange.Identifier" << endl;
+        }
+        if (contains(v, "Transactions") && contains(p.go_type, "[]string")) {
+            os << "\t" << padRight("TransactionIds", wid) << " []blockRange.Identifier" << endl;
         }
     }
     os << "\t" << padRight("Globals", wid) << " globals.GlobalOptions" << endl;

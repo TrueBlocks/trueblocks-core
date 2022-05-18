@@ -20,7 +20,7 @@ import (
 
 type BlocksOptions struct {
 	Blocks     []string
-	BlockNums  []blockRange.BlockRange
+	BlockIds   []blockRange.Identifier
 	Hashes     bool
 	Uncles     bool
 	Trace      bool

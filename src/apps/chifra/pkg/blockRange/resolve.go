@@ -14,7 +14,7 @@ import (
 	"github.com/bykof/gostradamus"
 )
 
-func (br *BlockRange) Resolve(chain string) ([]uint64, error) {
+func (br *Identifier) Resolve(chain string) ([]uint64, error) {
 	current, end, err := br.getBounds(chain)
 	if err != nil {
 		return []uint64{}, err
@@ -30,7 +30,7 @@ func (br *BlockRange) Resolve(chain string) ([]uint64, error) {
 	return blocks, nil
 }
 
-func (br *BlockRange) getBounds(chain string) (uint64, uint64, error) {
+func (br *Identifier) getBounds(chain string) (uint64, uint64, error) {
 	start := br.Start.resolvePoint(chain)
 	switch br.ModifierType {
 	case BlockRangePeriod:
@@ -84,7 +84,7 @@ func snapBnToPeriod(bn uint64, chain, period string) (uint64, error) {
 	return tslibPkg.FromTsToBn(chain, ts)
 }
 
-func (br *BlockRange) nextBlock(chain string, current uint64) (uint64, error) {
+func (br *Identifier) nextBlock(chain string, current uint64) (uint64, error) {
 	bn := current
 
 	if br.ModifierType == BlockRangeStep {

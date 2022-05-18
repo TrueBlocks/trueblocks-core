@@ -22,7 +22,7 @@ import (
 type SlurpOptions struct {
 	Addrs       []string
 	Blocks      []string
-	BlockNums   []blockRange.BlockRange
+	BlockIds    []blockRange.Identifier
 	Types       []string
 	Appearances bool
 	Globals     globals.GlobalOptions

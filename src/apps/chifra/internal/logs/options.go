@@ -13,15 +13,17 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 type LogsOptions struct {
-	Transactions []string
-	Articulate   bool
-	Globals      globals.GlobalOptions
-	BadFlag      error
+	Transactions   []string
+	TransactionIds []blockRange.Identifier
+	Articulate     bool
+	Globals        globals.GlobalOptions
+	BadFlag        error
 }
 
 var logsCmdLineOptions LogsOptions

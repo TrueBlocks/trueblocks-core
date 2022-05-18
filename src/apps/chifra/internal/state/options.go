@@ -20,16 +20,16 @@ import (
 )
 
 type StateOptions struct {
-	Addrs     []string
-	Blocks    []string
-	BlockNums []blockRange.BlockRange
-	Parts     []string
-	Changes   bool
-	NoZero    bool
-	Call      string
-	ProxyFor  string
-	Globals   globals.GlobalOptions
-	BadFlag   error
+	Addrs    []string
+	Blocks   []string
+	BlockIds []blockRange.Identifier
+	Parts    []string
+	Changes  bool
+	NoZero   bool
+	Call     string
+	ProxyFor string
+	Globals  globals.GlobalOptions
+	BadFlag  error
 }
 
 var stateCmdLineOptions StateOptions

@@ -19,7 +19,7 @@ import (
 
 type WhenOptions struct {
 	Blocks     []string
-	BlockNums  []blockRange.BlockRange
+	BlockIds   []blockRange.Identifier
 	List       bool
 	Timestamps bool
 	Check      bool
