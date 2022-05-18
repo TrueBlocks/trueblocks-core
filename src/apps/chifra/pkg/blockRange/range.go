@@ -17,16 +17,16 @@ import (
 type BlockRangeValue int64
 
 const (
-	BlockRangeBlockNumber BlockRangeValue = iota
-	BlockRangeTimestamp
-	BlockRangeHash
-	BlockRangeDate
-	BlockRangeSpecial
-	BlockRangePeriod
-	BlockRangeStep
-	BlockRangeNotDefined
+	BlockNumber BlockRangeValue = iota
+	BlockTimestamp
+	BlockHash
+	BlockDate
+	BlockSpecial
 	TransactionIndex
 	TransactionHash
+	Period
+	Step
+	NotDefined
 )
 
 type Identifier struct {
@@ -46,7 +46,7 @@ type Identifier struct {
 // the values.
 //
 // Consult ./parser.go for the supported format
-func New(rangeStr string) (*Identifier, error) {
+func NewBlockRange(rangeStr string) (*Identifier, error) {
 	parsed, err := Parse(rangeStr)
 	newBlockRange := &Identifier{}
 	if err != nil {
@@ -58,14 +58,42 @@ func New(rangeStr string) (*Identifier, error) {
 	newBlockRange.Start = *parsed.Points[0]
 
 	if len(parsed.Points) == 1 {
-		newBlockRange.EndType = BlockRangeNotDefined
+		newBlockRange.EndType = NotDefined
 	} else {
 		newBlockRange.EndType = getPointType(parsed.Points[1])
 		newBlockRange.End = *parsed.Points[1]
 	}
 
 	if parsed.Modifier == nil {
-		newBlockRange.ModifierType = BlockRangeNotDefined
+		newBlockRange.ModifierType = NotDefined
+	} else {
+		newBlockRange.ModifierType = getModifierType(parsed.Modifier)
+		newBlockRange.Modifier = *parsed.Modifier
+	}
+
+	return newBlockRange, nil
+}
+
+func NewTxRange(rangeStr string) (*Identifier, error) {
+	parsed, err := Parse(rangeStr)
+	newBlockRange := &Identifier{}
+	if err != nil {
+		return nil, handleParserErrors(err)
+	}
+
+	newBlockRange.Orig = rangeStr
+	newBlockRange.StartType = getPointType(parsed.Points[0])
+	newBlockRange.Start = *parsed.Points[0]
+
+	if len(parsed.Points) == 1 {
+		newBlockRange.EndType = NotDefined
+	} else {
+		newBlockRange.EndType = getPointType(parsed.Points[1])
+		newBlockRange.End = *parsed.Points[1]
+	}
+
+	if parsed.Modifier == nil {
+		newBlockRange.ModifierType = NotDefined
 	} else {
 		newBlockRange.ModifierType = getModifierType(parsed.Modifier)
 		newBlockRange.Modifier = *parsed.Modifier
@@ -76,14 +104,16 @@ func New(rangeStr string) (*Identifier, error) {
 
 func (brv BlockRangeValue) String() string {
 	return []string{
-		"BlockRangeBlockNumber",
-		"BlockRangeTimestamp",
-		"BlockRangeHash",
-		"BlockRangeDate",
-		"BlockRangeSpecial",
-		"BlockRangePeriod",
-		"BlockRangeStep",
-		"BlockRangeNotDefined",
+		"BlockNumber",
+		"BlockTimestamp",
+		"BlockHash",
+		"BlockDate",
+		"BlockSpecial",
+		"TransactionIndex",
+		"TransactionHash",
+		"Period",
+		"Step",
+		"NotDefined",
 	}[brv]
 }
 
@@ -101,7 +131,7 @@ func (br *Identifier) UnmarshalJSON(data []byte) error {
 		return err
 	}
 
-	newBlock, err := New(str)
+	newBlock, err := NewBlockRange(str)
 	if err != nil {
 		return err
 	}
@@ -117,38 +147,38 @@ func (br *Identifier) String() string {
 
 func getPointType(p *Point) BlockRangeValue {
 	if p == nil {
-		return BlockRangeNotDefined
+		return NotDefined
 	}
 
 	if p.Date != "" {
-		return BlockRangeDate
+		return BlockDate
 	}
 
 	if p.Special != "" {
-		return BlockRangeSpecial
+		return BlockSpecial
 	}
 
 	if p.Hash != "" {
-		return BlockRangeHash
+		return BlockHash
 	}
 
 	if p.Number >= utils.EarliestTs {
-		return BlockRangeTimestamp
+		return BlockTimestamp
 	}
 
-	return BlockRangeBlockNumber
+	return BlockNumber
 }
 
 func getModifierType(m *Modifier) BlockRangeValue {
 	if m == nil {
-		return BlockRangeStep
+		return Step
 	}
 
 	if m.Period != "" {
-		return BlockRangePeriod
+		return Period
 	}
 
-	return BlockRangeStep
+	return Step
 }
 
 type WrongModifierError struct {

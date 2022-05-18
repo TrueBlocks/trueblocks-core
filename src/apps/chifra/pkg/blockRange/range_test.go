@@ -15,7 +15,7 @@ func TestPointToPointTypeBlock(t *testing.T) {
 	point := &Point{Number: 100}
 	result := getPointType(point)
 
-	if result != BlockRangeBlockNumber {
+	if result != BlockNumber {
 		t.Error("Bad point type returned")
 	}
 }
@@ -24,7 +24,7 @@ func TestPointToPointTypeSpecial(t *testing.T) {
 	point := &Point{Special: "london"}
 	result := getPointType(point)
 
-	if result != BlockRangeSpecial {
+	if result != BlockSpecial {
 		t.Error("Bad point type returned")
 	}
 }
@@ -33,7 +33,7 @@ func TestPointToPointTypeDate(t *testing.T) {
 	point := &Point{Date: "2021-10-03"}
 	result := getPointType(point)
 
-	if result != BlockRangeDate {
+	if result != BlockDate {
 		t.Error("Bad point type returned")
 	}
 }
@@ -42,7 +42,7 @@ func TestModifierToModifierTypeStep(t *testing.T) {
 	modifier := &Modifier{Step: 15}
 	result := getModifierType(modifier)
 
-	if result != BlockRangeStep {
+	if result != Step {
 		t.Error("Bad modifier type returned")
 	}
 }
@@ -51,18 +51,18 @@ func TestModifierToModifierTypePeriod(t *testing.T) {
 	modifier := &Modifier{Period: "daily"}
 	result := getModifierType(modifier)
 
-	if result != BlockRangePeriod {
+	if result != Period {
 		t.Error("Bad modifier type returned")
 	}
 }
 
 func TestNewBlocks(t *testing.T) {
-	blockRange, err := New("10-1000:10")
+	blockRange, err := NewBlockRange("10-1000:10")
 	if err != nil {
 		t.Error(err)
 	}
 
-	if blockRange.StartType != BlockRangeBlockNumber {
+	if blockRange.StartType != BlockNumber {
 		t.Error("StartType is not block number")
 	}
 
@@ -70,7 +70,7 @@ func TestNewBlocks(t *testing.T) {
 		t.Errorf("Wrong start")
 	}
 
-	if blockRange.EndType != BlockRangeBlockNumber {
+	if blockRange.EndType != BlockNumber {
 		t.Error("EndType is not block number")
 	}
 
@@ -78,7 +78,7 @@ func TestNewBlocks(t *testing.T) {
 		t.Error("Wrong end")
 	}
 
-	if blockRange.ModifierType != BlockRangeStep {
+	if blockRange.ModifierType != Step {
 		t.Error("ModifierType is not step")
 	}
 
@@ -88,13 +88,13 @@ func TestNewBlocks(t *testing.T) {
 }
 
 func TestNewSpecial(t *testing.T) {
-	blockRange, err := New("london:weekly")
+	blockRange, err := NewBlockRange("london:weekly")
 
 	if err != nil {
 		t.Error(err)
 	}
 
-	if blockRange.StartType != BlockRangeSpecial {
+	if blockRange.StartType != BlockSpecial {
 		t.Error("StartType is not special")
 	}
 
@@ -102,11 +102,11 @@ func TestNewSpecial(t *testing.T) {
 		t.Errorf("Wrong start")
 	}
 
-	if blockRange.EndType != BlockRangeNotDefined {
+	if blockRange.EndType != NotDefined {
 		t.Error("EndType is not notdefined")
 	}
 
-	if blockRange.ModifierType != BlockRangePeriod {
+	if blockRange.ModifierType != Period {
 		t.Error("ModifierType is not period")
 	}
 
@@ -116,7 +116,7 @@ func TestNewSpecial(t *testing.T) {
 }
 
 func TestHandleParserErrors(t *testing.T) {
-	_, modifierErr := New("10-100:biweekly")
+	_, modifierErr := NewBlockRange("10-100:biweekly")
 
 	if me, ok := modifierErr.(*WrongModifierError); ok {
 		if me.Token != "biweekly" {
@@ -141,11 +141,11 @@ func TestBlockRange_UnmarshalJSON(t *testing.T) {
 		t.Error(err)
 	}
 
-	if record.Blocks.StartType != BlockRangeBlockNumber {
+	if record.Blocks.StartType != BlockNumber {
 		t.Errorf("Wrong StartType %d", record.Blocks.StartType)
 	}
 
-	if record.Blocks.EndType != BlockRangeBlockNumber {
+	if record.Blocks.EndType != BlockNumber {
 		t.Errorf("Wrong EndType %d", record.Blocks.EndType)
 	}
 
@@ -159,11 +159,11 @@ func TestBlockRange_UnmarshalJSON(t *testing.T) {
 }
 
 func TestToString(t *testing.T) {
-	br, err := New("1234")
+	br, err := NewBlockRange("1234")
 	if err != nil {
 		t.Errorf("Could not parse block")
 	}
-	expected := `{"start":{"number":1234},"endType":7,"end":{},"modifierType":7,"modifier":{}}`
+	expected := `{"start":{"number":1234},"endType":9,"end":{},"modifierType":9,"modifier":{}}`
 	got := fmt.Sprintf("%s", br.ToJSON())
 	if got != expected {
 		t.Errorf("String printer for blockRange not equal to expected:\n%s\n%s", got, expected)

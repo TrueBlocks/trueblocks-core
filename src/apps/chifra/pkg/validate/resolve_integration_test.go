@@ -21,33 +21,19 @@ func Test_BlockRanges(t *testing.T) {
 		inputs := strings.Split(item.input, " ")
 		var results []blockRange.Identifier
 		var err error
-		if strings.Contains(item.input, ".") {
-			err = ValidateIdentifiers(
-				"mainnet",
-				inputs,
-				ValidTransId,
-				100,
-				&results,
-			)
-			if err != nil {
-				fmt.Println(item.input, err)
-				continue
-			}
-		} else {
-			err = ValidateIdentifiers(
-				"mainnet",
-				inputs,
-				ValidBlockIdWithRangeAndDate,
-				100,
-				&results,
-			)
-			if err != nil {
-				fmt.Println(item.input, err)
-				continue
-			}
+		err = ValidateIdentifiers(
+			"mainnet",
+			inputs,
+			ValidBlockIdWithRangeAndDate,
+			100,
+			&results,
+		)
+		if err != nil {
+			fmt.Println(item.input, err)
+			continue
 		}
 		for _, br := range results {
-			blockList, err := br.Resolve("mainnet")
+			blockList, err := br.ResolveBlocks("mainnet")
 			if err != nil {
 				t.Error(br)
 				t.Error(err)
@@ -75,6 +61,41 @@ func Test_BlockRanges(t *testing.T) {
 	}
 }
 
+func Test_TransactionIds(t *testing.T) {
+	for _, item := range testTxs {
+		if !item.enabled {
+			continue
+		}
+		// fmt.Println("----------->", item.input)
+		inputs := strings.Split(item.input, " ")
+		var results []blockRange.Identifier
+		var err error
+		err = ValidateIdentifiers(
+			"mainnet",
+			inputs,
+			ValidTransId,
+			100,
+			&results,
+		)
+		if err != nil {
+			fmt.Println(item.input, err)
+			continue
+		}
+		for _, br := range results {
+			fmt.Println(br)
+			txList, err := br.ResolveTxs("mainnet")
+			if err != nil {
+				t.Error(br)
+				t.Error(err)
+			}
+			for _, tx := range txList {
+				fmt.Println(tx)
+			}
+			fmt.Println()
+		}
+	}
+}
+
 type TestCase struct {
 	input    string
 	expected string
@@ -82,6 +103,26 @@ type TestCase struct {
 }
 
 var testBlocks = []TestCase{
+	{
+		input:    "1001001.0 1001001.0:next 1001001.0:prev 1001001.2",
+		expected: "0x7307...db08 0xef2e...fb3a 0xc20a...49e6 0x5352...cc63",
+		// enabled:  true,
+	},
+	{
+		input:    "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.2",
+		expected: "0x5352...cc63",
+		// enabled:  true,
+	},
+	{
+		input:    "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.*",
+		expected: "0x7307...db08 0xef2e...fb3a 0x5352...cc63 0x060e...d521",
+		// enabled:  true,
+	},
+	{
+		input:    "0xc20a01b9d0bc87268376d189044e2c76cb2b34dda31e5525cbef45b3c30849e6 0xc20a01b9d0bc87268376d189044e2c76cb2b34dda31e5525cbef45b3c30849e6:next",
+		expected: "0xc20a....49e6 0x7307...db08",
+		// enabled:  true,
+	},
 	{
 		input:    "1001001.0",
 		expected: "1001001.0",
@@ -330,6 +371,45 @@ var testBlocks = []TestCase{
 	{
 		input:    "0",
 		expected: "0|1|[0]...[0]",
+		enabled:  true,
+	},
+}
+
+var testTxs = []TestCase{
+	// {
+	// 	input:    "1001001.0",
+	// 	expected: "1001001.0",
+	// 	testType: "tx",
+	// 	enabled:  true,
+	// },
+	// {
+	// 	input:    "1001001.0:next",
+	// 	expected: "1001001.1",
+	// 	enabled:  true,
+	// },
+	// {
+	// 	input:    "1001001.0:prev",
+	// 	expected: "1001000.2",
+	// 	enabled:  true,
+	// },
+	// {
+	// 	input:    "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.2",
+	// 	expected: "1001001.2",
+	// 	enabled:  true,
+	// },
+	// {
+	// 	input:    "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53:*",
+	// 	expected: "1001001.0 1001001.1 1001001.2 1001001.3",
+	// 	enabled:  true,
+	// },
+	{
+		input:    "0xc20a01b9d0bc87268376d189044e2c76cb2b34dda31e5525cbef45b3c30849e6",
+		expected: "1001000.2",
+		enabled:  true,
+	},
+	{
+		input:    "0xc20a01b9d0bc87268376d189044e2c76cb2b34dda31e5525cbef45b3c30849e6:next",
+		expected: "1001001.0",
 		enabled:  true,
 	},
 }

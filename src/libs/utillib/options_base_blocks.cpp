@@ -42,7 +42,7 @@ blknum_t COptionsBlockList::parseBlockOption(string_q& msg, blknum_t lastBlock, 
                 hasZero = true;
 
         } else {
-            msg = "The given value '" + arg + "' is not a valid block identifier." + (isApiMode() ? "" : "\n");
+            msg = "The given value '" + arg + "' is not a valid identifier." + (isApiMode() ? "" : "\n");
             return NOPOS;
         }
     }

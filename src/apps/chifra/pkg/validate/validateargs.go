@@ -56,6 +56,7 @@ func ValidateIdentifiers(chain string, identifiers []string, validTypes ValidArg
 	rangesFound := 0
 
 	for _, identifier := range identifiers {
+		// fmt.Println("------------->", identifier)
 		if isBitmaskSet(ValidArgumentBlockHash) && IsBlockHash(identifier) {
 			appendBlockId(results, identifier)
 			continue
@@ -131,7 +132,7 @@ func appendBlockId(results *[]blockRange.Identifier, identifier string) {
 	if results == nil {
 		return
 	}
-	br, _ := blockRange.New(identifier)
+	br, _ := blockRange.NewBlockRange(identifier)
 	if br != nil {
 		*results = append(*results, *br)
 	}
@@ -142,7 +143,7 @@ func appendTxId(results *[]blockRange.Identifier, identifier string) {
 		return
 	}
 	identifier = strings.Replace(identifier, ".", "-", -1)
-	br, _ := blockRange.New(identifier)
+	br, _ := blockRange.NewTxRange(identifier)
 	if br != nil {
 		br.EndType = blockRange.TransactionIndex
 		*results = append(*results, *br)
