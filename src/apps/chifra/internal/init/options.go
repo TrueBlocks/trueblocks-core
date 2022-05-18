@@ -8,9 +8,7 @@
 package initPkg
 
 import (
-	"fmt"
 	"net/http"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -28,16 +26,6 @@ var initCmdLineOptions InitOptions
 func (opts *InitOptions) TestLog() {
 	logger.TestLog(opts.All, "All: ", opts.All)
 	opts.Globals.TestLog()
-}
-
-func (opts *InitOptions) ToCmdLine() string {
-	options := ""
-	if opts.All {
-		options += " --all"
-	}
-	options += " " + strings.Join([]string{}, " ")
-	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
-	return options
 }
 
 func InitFinishParseApi(w http.ResponseWriter, r *http.Request) *InitOptions {

@@ -37,6 +37,7 @@ func (opts *BlocksOptions) ValidateBlocks() error {
 			opts.Blocks,
 			validate.ValidBlockIdWithRange,
 			1,
+			nil,
 		)
 		if err != nil {
 			if invalidLiteral, ok := err.(*validate.InvalidIdentifierLiteralError); ok {

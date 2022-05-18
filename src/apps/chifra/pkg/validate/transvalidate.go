@@ -58,6 +58,6 @@ func IsTransBlockHashAndId(str string) bool {
 }
 
 func IsValidTransId(chain string, ids []string, validTypes ValidArgumentType) (bool, error) {
-	err := ValidateIdentifiers(chain, ids, validTypes, 1)
+	err := ValidateIdentifiers(chain, ids, validTypes, 1, nil)
 	return err == nil, err
 }

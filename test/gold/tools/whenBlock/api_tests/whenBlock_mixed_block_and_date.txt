@@ -4,21 +4,22 @@ when?blocks=2017-03-02&blocks=123123
     {
       "blockNumber": 3275145,
       "timestamp": 1488412793,
-      "name": "",
       "date": "2017-03-01 23:59:53 UTC"
     },
     {
       "blockNumber": 123123,
       "timestamp": 1440206412,
-      "name": "",
       "date": "2015-08-22 01:20:12 UTC"
     }
   ],
   "meta": {
-    "unripe": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "staging": "0xdeadbeef",
+    "client": "0xdeadbeef",
     "finalized": "0xdeadbeef",
-    "client": "0xdeadbeef"
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
   }
 }

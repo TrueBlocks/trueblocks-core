@@ -6,7 +6,7 @@ package progress
 
 import (
 	"fmt"
-	"os"
+	"io"
 	"strings"
 	"syscall"
 	"unsafe"
@@ -18,13 +18,15 @@ type ScanBar struct {
 	Wanted  uint64
 	Max     uint64
 	Freq    uint64
+	WidPct  float64
 }
 
-func NewScanBar(want, freq, max uint64) *ScanBar {
+func NewScanBar(want, freq, max uint64, widPct float64) *ScanBar {
 	sp := &ScanBar{}
 	sp.Wanted = want
 	sp.Freq = freq
 	sp.Max = max
+	sp.WidPct = widPct
 	return sp
 }
 
@@ -42,12 +44,13 @@ func min(a, b int) int {
 	}
 	return b
 }
-func (v *ScanBar) Report(target *os.File, action, msg string) {
+
+func (v *ScanBar) Report(writer io.Writer, action, msg string) {
 	v.Visited++
 	if v.Visited%v.Freq != 0 {
 		return
 	}
-	width := 40
+	width := int(float64(screenWidth()) * v.WidPct)
 	done := int(float64(width) * v.Pct())
 	remains := width - done
 	if remains < 0 {
@@ -57,8 +60,9 @@ func (v *ScanBar) Report(target *os.File, action, msg string) {
 	x := fmt.Sprintf("%s [%s%s] %s", action, strings.Repeat(".", done), strings.Repeat(" ", remains), msg)
 	x = x[0:min(len(x), w)]
 	e := w - len(x)
-	var endPad string = strings.Repeat("-", e)
-	fmt.Fprintf(target, "%s%s\r", x, endPad) // , w, e, len(x))
+	var endPad string = strings.Repeat(" ", e)
+	str := fmt.Sprintf("%s%s\r", x, endPad)
+	writer.Write([]byte(str))
 }
 
 type winsize struct {

@@ -36,8 +36,8 @@ func TestIsStringSpecialBlock(t *testing.T) {
 }
 
 func TestGetNameByValue(t *testing.T) {
-	name, found := NameFromBn(GetTestChain(), 2463000)
-	if !found {
+	name, err := FromBnToName(GetTestChain(), 2463000)
+	if err != nil {
 		t.Error("Block name not found")
 	}
 	if name != "tangerine" {
@@ -46,15 +46,15 @@ func TestGetNameByValue(t *testing.T) {
 }
 
 func TestGetValueByName(t *testing.T) {
-	value, found := BnFromName(GetTestChain(), "tangerine")
-	if !found {
+	value, err := FromNameToBn(GetTestChain(), "tangerine")
+	if err != nil {
 		t.Error("Block not found by name")
 	}
 	if value != 2463000 {
 		t.Errorf("Wrong value: %d", value)
 	}
 
-	// _, found = BnFromName(GetTestChain(), "latest")
+	// _, found = FromNameToBn(GetTestChain(), "latest")
 	// if !found {
 	// 	t.Error("Latest block not found")
 	// }

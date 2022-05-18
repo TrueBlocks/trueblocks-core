@@ -6,14 +6,17 @@ package rpcClient
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"math/big"
 	"os"
+	"strconv"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/ethclient"
@@ -64,7 +67,7 @@ func CheckRpc(provider string) {
 }
 
 // GetIDs returns both chainId and networkId from the node
-func GetIDs(provider string) (uint64, uint64) {
+func GetIDs(provider string) (uint64, uint64, error) {
 	// We might need it, so create it
 	msg := noProvider
 	msg = strings.Replace(msg, "[{PROVIDER}]", provider, -1)
@@ -74,7 +77,7 @@ func GetIDs(provider string) (uint64, uint64) {
 	msg = strings.Replace(msg, "{O}", colors.Off, -1)
 	if provider == "https://" {
 		msg = strings.Replace(msg, "https://", "<empty>", -1)
-		log.Fatalln(msg)
+		return 0, 0, fmt.Errorf("%s", msg)
 	}
 
 	ec := GetClient(provider)
@@ -82,15 +85,15 @@ func GetIDs(provider string) (uint64, uint64) {
 
 	ch, err := ec.ChainID(context.Background())
 	if err != nil {
-		log.Fatalln(msg)
+		return 0, 0, err
 	}
 
 	n, err := ec.NetworkID(context.Background())
 	if err != nil {
-		log.Fatalln(msg)
+		return 0, 0, err
 	}
 
-	return ch.Uint64(), n.Uint64()
+	return ch.Uint64(), n.Uint64(), nil
 }
 
 // TxHashFromHash returns a transaction's hash if it's a valid transaction
@@ -148,6 +151,19 @@ func BlockHashFromHash(provider, hash string) (string, error) {
 	}
 
 	return block.Hash().Hex(), nil
+}
+
+// BlockNumberFromHash returns a block's hash if it's a valid block
+func BlockNumberFromHash(provider, hash string) (uint64, error) {
+	ec := GetClient(provider)
+	defer ec.Close()
+
+	block, err := ec.BlockByHash(context.Background(), common.HexToHash(hash))
+	if err != nil {
+		return 0, err
+	}
+
+	return block.NumberU64(), nil
 }
 
 // BlockHashFromNumber returns a block's hash if it's a valid block
@@ -208,4 +224,27 @@ func GetBlockTimestamp(provider string, bn uint64) uint64 {
 // DecodeHex decodes a string with hex into a slice of bytes
 func DecodeHex(hex string) []byte {
 	return hexutil.MustDecode(hex)
+}
+
+func GetBlockByNumber(chain string, bn uint64) types.NamedBlock {
+	var block BlockHeader
+	var payload = RPCPayload{
+		Jsonrpc:   "2.0",
+		Method:    "eth_getBlockByNumber",
+		RPCParams: RPCParams{bn, false},
+		ID:        1005,
+	}
+	rpcProvider := config.GetRpcProvider(chain)
+	// log.Println(v, payload)
+	err := FromRpc(rpcProvider, &payload, &block)
+	if err != nil {
+		fmt.Println("FromRpc(block) returned error")
+		log.Fatal(err)
+	}
+	n, _ := strconv.ParseUint(block.Result.Number[2:], 16, 64)
+	ts, _ := strconv.ParseUint(block.Result.Timestamp[2:], 16, 64)
+	return types.NamedBlock{
+		BlockNumber: n,
+		TimeStamp:   ts,
+	}
 }

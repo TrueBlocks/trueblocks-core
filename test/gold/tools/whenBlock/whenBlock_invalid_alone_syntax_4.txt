@@ -1,7 +1,7 @@
 chifra when  0pppppp
 TEST[DATE|TIME] Blocks:  [0pppppp]
 TEST[DATE|TIME] Format:  txt
-Error: The given value '0pppppp' is not a numeral or a special named block.
+Error: The given value '0pppppp' is not a valid block identifier.
 Usage:
   chifra when [flags] < block | date > [ block... | date... ]
 
@@ -12,9 +12,7 @@ Flags:
   -l, --list         export a list of the 'special' blocks
   -t, --timestamps   ignore other options and generate timestamps only
   -c, --check        available only with --timestamps, checks the validity of the timestamp data (hidden)
-  -f, --fix          available only with --timestamps, fixes incorrect timestamps if any (hidden)
   -u, --count        available only with --timestamps, returns the number of timestamps in the cache (hidden)
-  -n, --no_update    do not update timestamps database prior to completing the task at hand (hidden)
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
   -v, --verbose      enable verbose (increase detail with --log_level)
   -h, --help         display this help screen

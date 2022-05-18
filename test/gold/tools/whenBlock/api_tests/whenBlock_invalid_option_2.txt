@@ -1,6 +1,6 @@
 when?blocks=a
 {
   "errors": [
-    "The given value 'a' is not a numeral or a special named block."
+    "The given value 'a' is not a valid block identifier."
   ]
 }

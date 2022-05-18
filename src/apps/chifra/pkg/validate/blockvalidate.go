@@ -9,11 +9,12 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
-	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
 	tslibPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
-	"github.com/araddon/dateparse"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+
+	"github.com/bykof/gostradamus"
 )
 
 func IsBlockHash(str string) bool {
@@ -32,9 +33,17 @@ func IsBlockHash(str string) bool {
 	return true
 }
 
-type blockNum = uint32
+type blknum_t = uint32
 
-func IsBlockNumber(str string) (bool, blockNum) {
+func IsTimestamp(str string) (bool, blknum_t) {
+	ok, bn := IsBlockNumber(str)
+	if !ok {
+		return false, 0
+	}
+	return bn >= utils.EarliestTs, bn
+}
+
+func IsBlockNumber(str string) (bool, blknum_t) {
 	base := 10
 	source := str
 
@@ -48,11 +57,11 @@ func IsBlockNumber(str string) (bool, blockNum) {
 		return false, 0
 	}
 
-	return true, blockNum(value)
+	return true, blknum_t(value)
 }
 
-func IsBlockNumberList(strs []string) (bool, []blockNum) {
-	result := make([]blockNum, len(strs))
+func IsBlockNumberList(strs []string) (bool, []blknum_t) {
+	result := make([]blknum_t, len(strs))
 
 	for index, stringValue := range strs {
 		check, value := IsBlockNumber(stringValue)
@@ -67,6 +76,10 @@ func IsBlockNumberList(strs []string) (bool, []blockNum) {
 }
 
 func IsDateTimeString(str string) bool {
+	if strings.Count(str, "-") != 2 {
+		return false
+	}
+
 	bRange, err := blockRange.New(str)
 	if err != nil {
 		return false
@@ -74,15 +87,33 @@ func IsDateTimeString(str string) bool {
 	return bRange.StartType == blockRange.BlockRangeDate
 }
 
-func IsBeforeFirstBlock(chain, str string) bool {
-	if !IsDateTimeString(str) {
+// TODO: BOGUS
+func ToIsoDateStr2(dateStr string) string {
+	// assumes an already validated date string
+	str := strings.Replace(dateStr, "T", " ", -1)
+	if strings.Count(str, ":") == 0 {
+		if strings.Count(str, " ") == 1 {
+			str += ":00:00"
+		} else {
+			str += " 00:00:00"
+		}
+	} else if strings.Count(str, ":") == 1 {
+		str += ":00"
+	}
+	str = strings.Replace(str, " ", "T", -1)
+	str += ".000000"
+	return str
+}
+
+func isBeforeFirstBlock(chain, dateStr string) bool {
+	if !IsDateTimeString(dateStr) {
 		return false
 	}
 
-	// From https://github.com/araddon/dateparse
-	time.Local, _ = time.LoadLocation("UTC")
-	dt, _ := dateparse.ParseLocal(str) // already validated as a date
-	return dt.Before(tslibPkg.DateFromName(chain, "first"))
+	isoStr := ToIsoDateStr2(dateStr)
+	dt, _ := gostradamus.Parse(isoStr, gostradamus.Iso8601) // already validated as a date
+	firstDate, _ := tslibPkg.FromNameToDate(chain, "0")
+	return dt.Time().Before(firstDate.Time())
 }
 
 func IsRange(chain, str string) (bool, error) {
@@ -117,7 +148,7 @@ func IsRange(chain, str string) (bool, error) {
 		onlyNumbers := bRange.StartType == blockRange.BlockRangeBlockNumber &&
 			bRange.EndType == blockRange.BlockRangeBlockNumber
 
-		if onlyNumbers && bRange.Start.Block > bRange.End.Block {
+		if onlyNumbers && bRange.Start.BlockOrTs >= bRange.End.BlockOrTs {
 			return false, errors.New("'stop' must be strictly larger than 'start'")
 		}
 
@@ -142,12 +173,12 @@ type InvalidIdentifierLiteralError struct {
 
 func (e *InvalidIdentifierLiteralError) Error() string {
 	if len(e.Msg) == 0 {
-		e.Msg = "is not a numeral or a special named block."
+		e.Msg = "is not a valid block identifier."
 	}
 	return fmt.Sprintf("The given value '%s' %s", e.Value, e.Msg)
 }
 
 func IsValidBlockId(chain string, ids []string, validTypes ValidArgumentType) (bool, error) {
-	err := ValidateIdentifiers(chain, ids, validTypes, 1)
+	err := ValidateIdentifiers(chain, ids, validTypes, 1, nil)
 	return err == nil, err
 }

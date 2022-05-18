@@ -68,6 +68,7 @@ func (opts *StateOptions) ValidateState() error {
 			opts.Blocks,
 			validate.ValidBlockIdWithRange,
 			1,
+			nil,
 		)
 
 		if err != nil {

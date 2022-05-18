@@ -130,3 +130,9 @@ func MakeFirstUpperCase(s string) string {
 	rest := bts[1:]
 	return string(bytes.Join([][]byte{lc, rest}, nil))
 }
+
+// TODO: Multi-chain this is the earliest timestamp on mainnet. It's larger than any block on any EVM chain by an order of maginitude
+// TODO: but is not a legit way to distinguish between blocks and timestamps. Fix this when it becomes a problem. All other EVM based
+// TODO: chains have later first timestamps, so this works for other chains as well
+const EarliestTs = 1438269975
+const BlockOneTs = 1438269988

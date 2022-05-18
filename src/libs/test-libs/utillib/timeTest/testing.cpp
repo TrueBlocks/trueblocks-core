@@ -101,7 +101,7 @@ TEST_F(CThisTest, TestAdvance2) {
     cout << endl
          << string_q(120, '-') << endl
          << "20 weekly expansions no fallback from " << time1.Format(FMT_EXPORT) << endl;
-    expandWeekly(ta, time1, time_q(2018, 10, 14, 0, 0, 0), false);
+    expandWeekly(ta, time1, time_q(2018, 10, 14, 0, 0, 0));
     for (auto t : ta)
         cout << t << endl;
     ta.clear();

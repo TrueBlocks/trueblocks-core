@@ -22,8 +22,8 @@ type TimestampDatabase struct {
 
 var perChainTimestamps = map[string]TimestampDatabase{}
 
-// nRecords returns the number of records in the timestamp file
-func nRecords(chain string) (uint64, error) {
+// NTimestamps returns the number of records in the timestamp file
+func NTimestamps(chain string) (uint64, error) {
 	if perChainTimestamps[chain].count > 0 {
 		return perChainTimestamps[chain].count, nil
 	}
@@ -49,7 +49,7 @@ func loadTimestamps(chain string) error {
 		return nil
 	}
 
-	cnt, err := nRecords(chain)
+	cnt, err := NTimestamps(chain)
 	if err != nil {
 		return err
 	}
@@ -77,10 +77,10 @@ func loadTimestamps(chain string) error {
 	return nil
 }
 
-// fromTs is a local function that returns a Timestamp record given a Unix timestamp. It
+// FromTs is a local function that returns a Timestamp record given a Unix timestamp. It
 // loads the timestamp file into memory if it isn't already
-func fromTs(chain string, ts uint64) (*Timestamp, error) {
-	cnt, err := nRecords(chain)
+func FromTs(chain string, ts uint64) (*Timestamp, error) {
+	cnt, err := NTimestamps(chain)
 	if err != nil {
 		return &Timestamp{}, err
 	}
@@ -90,24 +90,38 @@ func fromTs(chain string, ts uint64) (*Timestamp, error) {
 		return &Timestamp{}, err
 	}
 
+	if ts > uint64(perChainTimestamps[chain].memory[cnt-1].Ts) {
+		last := perChainTimestamps[chain].memory[cnt-1]
+		secs := ts - uint64(last.Ts)
+		// TODO: Multi-chain specific
+		blks := uint32(float64(secs) / 13.3)
+		last.Bn = last.Bn + blks
+		last.Ts = uint32(ts)
+		return &last, errors.New("timestamp in the future")
+	}
+
 	// Go docs: Search uses binary search to find and return the smallest index i in [0, n) at which f(i) is true,
 	index := sort.Search(int(cnt), func(i int) bool {
 		d := perChainTimestamps[chain].memory[i]
 		v := uint64(d.Ts)
-		return v >= ts
+		return v > ts
 	})
 
-	if uint64(perChainTimestamps[chain].memory[index].Ts) != ts {
-		return &Timestamp{}, errors.New("timestamp not found")
+	// ts should not be before the first block
+	if index == 0 {
+		return nil, errors.New("timestamp is before the first block")
 	}
+
+	// The index is one past where we want to be because it's the first block larger
+	index--
 
 	return &perChainTimestamps[chain].memory[index], nil
 }
 
-// fromTs is a local function that returns a Timestamp record given a blockNum. It
+// FromBn is a local function that returns a Timestamp record given a blockNum. It
 // loads the timestamp file into memory if it isn't already
-func fromBn(chain string, bn uint64) (*Timestamp, error) {
-	cnt, err := nRecords(chain)
+func FromBn(chain string, bn uint64) (*Timestamp, error) {
+	cnt, err := NTimestamps(chain)
 	if err != nil {
 		return &Timestamp{}, err
 	}

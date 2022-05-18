@@ -50,7 +50,7 @@ func EditName(w http.ResponseWriter, r *http.Request) {
 	} else {
 		w.WriteHeader(http.StatusOK)
 	}
-	fmt.Fprintf(w, "{ \"data\": [ "+newName.ToJson()+" ]}")
+	fmt.Fprintf(w, "{ \"data\": [ "+newName.ToJson()+"\n  ]\n}")
 }
 
 type NamedAddress struct {

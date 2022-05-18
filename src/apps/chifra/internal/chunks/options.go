@@ -8,22 +8,23 @@
 package chunksPkg
 
 import (
-	"fmt"
 	"net/http"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 type ChunksOptions struct {
-	Blocks  []string
-	Extract string
-	Check   bool
-	Globals globals.GlobalOptions
-	BadFlag error
+	Blocks   []string
+	BlockIds []blockRange.Identifier
+	Extract  string
+	Check    bool
+	Globals  globals.GlobalOptions
+	BadFlag  error
 }
 
 var chunksCmdLineOptions ChunksOptions
@@ -33,16 +34,6 @@ func (opts *ChunksOptions) TestLog() {
 	logger.TestLog(len(opts.Extract) > 0, "Extract: ", opts.Extract)
 	logger.TestLog(opts.Check, "Check: ", opts.Check)
 	opts.Globals.TestLog()
-}
-
-func (opts *ChunksOptions) ToCmdLine() string {
-	options := ""
-	if len(opts.Extract) > 0 {
-		options += " --extract " + opts.Extract
-	}
-	options += " " + strings.Join(opts.Blocks, " ")
-	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
-	return options
 }
 
 func ChunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions {

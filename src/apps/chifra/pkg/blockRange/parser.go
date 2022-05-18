@@ -57,21 +57,23 @@ import (
 
 // Define "tokens" for our lexer
 var rangeLexer = lexer.MustSimple([]lexer.Rule{
-	{`Date`, `\d{4}-\d{2}-\d{2}(T[\d]{2}(:[\d]{2})?(:[\d]{2})?(UTC)?)?`, nil},
-	{`Special`, `[a-z_]+[0-9]*`, nil},
-	{`Hex`, `0x[a-f0-9]+`, nil},
-	{`Unsigned`, `^[0-9]+`, nil},
-	{`PointSeparator`, `-`, nil},
-	{`ModifierSeparator`, `:`, nil},
+	{Name: `Date`, Pattern: `\d{4}-\d{2}-\d{2}(T[\d]{2}(:[\d]{2})?(:[\d]{2})?(UTC)?)?`, Action: nil},
+	{Name: `Special`, Pattern: `[a-z_]+[0-9]*`, Action: nil},
+	{Name: `BlockHash`, Pattern: `0x[a-f0-9]{64}`, Action: nil},
+	{Name: `Hex`, Pattern: `0x[a-f0-9]+`, Action: nil},
+	{Name: `Unsigned`, Pattern: `^[0-9]+`, Action: nil},
+	{Name: `PointSeparator`, Pattern: `-`, Action: nil},
+	{Name: `ModifierSeparator`, Pattern: `:`, Action: nil},
 })
 
 // A Point carries information about when a range starts or ends. It can be
 // a block number, a date or special name (e.g. "london" is translated to
 // block 12965000)
 type Point struct {
-	Block   uint   `parser:"@Hex|@Unsigned"`
-	Date    string `parser:"| @Date"`
-	Special string `parser:"| @Special"`
+	BlockOrTs uint   `parser:"@Hex|@Unsigned" json:"blockOrTs,omitempty"`
+	BlockHash string `parser:"| @BlockHash" json:"blockHash,omitempty"`
+	Date      string `parser:"| @Date" json:"date,omitempty"`
+	Special   string `parser:"| @Special" json:"special,omitempty"`
 }
 
 // Modifier changes the meaning of the given range. For example, if step of
@@ -79,8 +81,8 @@ type Point struct {
 // anymore, but instead "every 10th block from start to end". Similarly
 // a period can be provided to get only blocks based on frequency (e.g. weekly)
 type Modifier struct {
-	Step   uint   `parser:"@Unsigned"`
-	Period string `parser:"| @('hourly'|'daily'|'weekly'|'monthly'|'quarterly'|'annually')"`
+	Step   uint   `parser:"@Unsigned" json:"step,omitempty"`
+	Period string `parser:"| @('hourly'|'daily'|'weekly'|'monthly'|'quarterly'|'annually')" json:"period,omitempty"`
 }
 
 // Having defined both Point and Modifier, we can construct our Range, which

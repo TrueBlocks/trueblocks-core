@@ -65,6 +65,6 @@ func GetSpecials(chain string) ([]types.NamedBlock, error) {
 
 // IsSpecialBlock returns true if the given chain-specific name is a special block
 func IsSpecialBlock(chain, needle string) bool {
-	_, found := BnFromName(chain, needle)
-	return found
+	_, err := FromNameToBn(chain, needle)
+	return err == nil
 }

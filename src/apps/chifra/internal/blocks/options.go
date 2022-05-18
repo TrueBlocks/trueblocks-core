@@ -13,12 +13,14 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 type BlocksOptions struct {
 	Blocks     []string
+	BlockIds   []blockRange.Identifier
 	Hashes     bool
 	Uncles     bool
 	Trace      bool

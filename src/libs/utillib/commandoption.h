@@ -286,5 +286,6 @@ extern bool forEveryEnum(APPLYFUNC func, const string_q& enumStr, void* data);
 // TODO: search for go-port
 extern bool goPortNewCode(const string_q& a);
 extern bool isApiRoute(const string_q& route);
+extern bool isFullyPorted(const string_q& a);
 // EXISTING_CODE
 }  // namespace qblocks

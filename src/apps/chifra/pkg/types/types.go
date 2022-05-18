@@ -4,7 +4,7 @@ type NamedBlock struct {
 	BlockNumber uint64 `json:"blockNumber"`
 	TimeStamp   uint64 `json:"timestamp"`
 	Date        string `json:"date"`
-	Name        string `json:"name"`
+	Name        string `json:"name,omitempty"`
 }
 
 type CleanReport struct {

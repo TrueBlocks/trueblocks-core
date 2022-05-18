@@ -1,6 +1,6 @@
 when?blocks=0-0
 {
   "errors": [
-    "chifra when - 'stop' must be strictly larger than 'start'"
+    "'stop' must be strictly larger than 'start'"
   ]
 }

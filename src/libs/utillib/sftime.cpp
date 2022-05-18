@@ -1007,9 +1007,8 @@ time_q BONQ(const time_q& date) {
 typedef time_q (*PTF)(const time_q& date);
 
 //------------------------------------------------------------------------
-bool expandTimeArray(CTimeArray& ta, const time_q& startIn, const time_q& stop, bool fallback, PTF pBOP, PTF pBONP) {
-    if (fallback)
-        ta.push_back(pBOP(startIn));
+bool expandTimeArray(CTimeArray& ta, const time_q& startIn, const time_q& stop, PTF pBOP, PTF pBONP) {
+    ta.push_back(pBOP(startIn));
     for (time_q t = pBONP(startIn); t <= pBONP(stop);) {
         ta.push_back(t);
         t = pBONP(t);
@@ -1018,33 +1017,33 @@ bool expandTimeArray(CTimeArray& ta, const time_q& startIn, const time_q& stop, 
 }
 
 //------------------------------------------------------------------------
-bool expandHourly(CTimeArray& ta, const time_q& start, const time_q& stop, bool fallback) {
-    return expandTimeArray(ta, start, stop, fallback, BOH, BONH);
+bool expandHourly(CTimeArray& ta, const time_q& start, const time_q& stop) {
+    return expandTimeArray(ta, start, stop, BOH, BONH);
 }
 
 //------------------------------------------------------------------------
-bool expandDaily(CTimeArray& ta, const time_q& start, const time_q& stop, bool fallback) {
-    return expandTimeArray(ta, start, stop, fallback, BOD, BOND);
+bool expandDaily(CTimeArray& ta, const time_q& start, const time_q& stop) {
+    return expandTimeArray(ta, start, stop, BOD, BOND);
 }
 
 //------------------------------------------------------------------------
-bool expandWeekly(CTimeArray& ta, const time_q& start, const time_q& stop, bool fallback) {
-    return expandTimeArray(ta, start, stop, fallback, BOW, BONW);
+bool expandWeekly(CTimeArray& ta, const time_q& start, const time_q& stop) {
+    return expandTimeArray(ta, start, stop, BOW, BONW);
 }
 
 //------------------------------------------------------------------------
-bool expandMonthly(CTimeArray& ta, const time_q& start, const time_q& stop, bool fallback) {
-    return expandTimeArray(ta, start, stop, fallback, BOM, BONM);
+bool expandMonthly(CTimeArray& ta, const time_q& start, const time_q& stop) {
+    return expandTimeArray(ta, start, stop, BOM, BONM);
 }
 
 //------------------------------------------------------------------------
-bool expandQuarterly(CTimeArray& ta, const time_q& start, const time_q& stop, bool fallback) {
-    return expandTimeArray(ta, start, stop, fallback, BOQ, BONQ);
+bool expandQuarterly(CTimeArray& ta, const time_q& start, const time_q& stop) {
+    return expandTimeArray(ta, start, stop, BOQ, BONQ);
 }
 
 //------------------------------------------------------------------------
-bool expandAnnually(CTimeArray& ta, const time_q& start, const time_q& stop, bool fallback) {
-    return expandTimeArray(ta, start, stop, fallback, BOY, BONY);
+bool expandAnnually(CTimeArray& ta, const time_q& start, const time_q& stop) {
+    return expandTimeArray(ta, start, stop, BOY, BONY);
 }
 
 //----------------------------------------------------------------------------------------------------

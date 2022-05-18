@@ -8,7 +8,6 @@
 package monitorsPkg
 
 import (
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -42,19 +41,6 @@ func (opts *MonitorsOptions) TestLog() {
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
 	opts.Globals.TestLog()
-}
-
-func (opts *MonitorsOptions) ToCmdLine() string {
-	options := ""
-	if opts.FirstBlock != 0 {
-		options += (" --first_block " + fmt.Sprintf("%d", opts.FirstBlock))
-	}
-	if opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS {
-		options += (" --last_block " + fmt.Sprintf("%d", opts.LastBlock))
-	}
-	options += " " + strings.Join(opts.Addrs, " ")
-	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
-	return options
 }
 
 func MonitorsFinishParseApi(w http.ResponseWriter, r *http.Request) *MonitorsOptions {

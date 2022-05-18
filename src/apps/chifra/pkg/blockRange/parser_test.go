@@ -15,12 +15,12 @@ func TestParseBlockNums(t *testing.T) {
 		t.Error(err)
 	}
 
-	if out.Points[0].Block != 10 {
-		t.Error("Mismatched start block:", out.Points[0].Block)
+	if out.Points[0].BlockOrTs != 10 {
+		t.Error("Mismatched start block:", out.Points[0].BlockOrTs)
 	}
 
-	if out.Points[1].Block != 1000 {
-		t.Error("Mismatched end block:", out.Points[1].Block)
+	if out.Points[1].BlockOrTs != 1000 {
+		t.Error("Mismatched end block:", out.Points[1].BlockOrTs)
 	}
 
 	if out.Modifier.Step != 25 {
@@ -35,8 +35,8 @@ func TestParseBlockNumsNoEnd(t *testing.T) {
 		t.Error(err)
 	}
 
-	if out.Points[0].Block != 10 {
-		t.Error("Mismatched start block:", out.Points[0].Block)
+	if out.Points[0].BlockOrTs != 10 {
+		t.Error("Mismatched start block:", out.Points[0].BlockOrTs)
 	}
 
 	if len(out.Points) > 1 {
@@ -55,12 +55,12 @@ func TestParseBlockNumsNoStep(t *testing.T) {
 		t.Error(err)
 	}
 
-	if out.Points[0].Block != 10 {
-		t.Error("Mismatched start block:", out.Points[0].Block)
+	if out.Points[0].BlockOrTs != 10 {
+		t.Error("Mismatched start block:", out.Points[0].BlockOrTs)
 	}
 
-	if out.Points[1].Block != 1000 {
-		t.Error("Mismatched end block:", out.Points[1].Block)
+	if out.Points[1].BlockOrTs != 1000 {
+		t.Error("Mismatched end block:", out.Points[1].BlockOrTs)
 	}
 
 	if out.Modifier != nil {
@@ -75,8 +75,8 @@ func TestParseBlockNumsNoEndNoStep(t *testing.T) {
 		t.Error(err)
 	}
 
-	if out.Points[0].Block != 10 {
-		t.Error("Mismatched start block:", out.Points[0].Block)
+	if out.Points[0].BlockOrTs != 10 {
+		t.Error("Mismatched start block:", out.Points[0].BlockOrTs)
 	}
 
 	if len(out.Points) > 1 {
@@ -95,12 +95,12 @@ func TestParseBlockNumsPeriod(t *testing.T) {
 		t.Error(err)
 	}
 
-	if out.Points[0].Block != 10 {
-		t.Error("Mismatched start block:", out.Points[0].Block)
+	if out.Points[0].BlockOrTs != 10 {
+		t.Error("Mismatched start block:", out.Points[0].BlockOrTs)
 	}
 
-	if out.Points[1].Block != 1000 {
-		t.Error("Mismatched end block:", out.Points[1].Block)
+	if out.Points[1].BlockOrTs != 1000 {
+		t.Error("Mismatched end block:", out.Points[1].BlockOrTs)
 	}
 
 	if out.Modifier.Period != "weekly" {
@@ -115,8 +115,8 @@ func TestParseBlockNumsPeriodNoEnd(t *testing.T) {
 		t.Error(err)
 	}
 
-	if out.Points[0].Block != 10 {
-		t.Error("Mismatched start block:", out.Points[0].Block)
+	if out.Points[0].BlockOrTs != 10 {
+		t.Error("Mismatched start block:", out.Points[0].BlockOrTs)
 	}
 
 	if len(out.Points) > 1 {
@@ -135,12 +135,12 @@ func TestParseBlockNumsHexStart(t *testing.T) {
 		t.Error(err)
 	}
 
-	if out.Points[0].Block != 4095 {
-		t.Error("Mismatched start block:", out.Points[0].Block)
+	if out.Points[0].BlockOrTs != 4095 {
+		t.Error("Mismatched start block:", out.Points[0].BlockOrTs)
 	}
 
-	if out.Points[1].Block != 1000 {
-		t.Error("Mismatched end block:", out.Points[1].Block)
+	if out.Points[1].BlockOrTs != 1000 {
+		t.Error("Mismatched end block:", out.Points[1].BlockOrTs)
 	}
 
 	if out.Modifier.Step != 25 {
@@ -159,8 +159,8 @@ func TestParseSpecialStart(t *testing.T) {
 		t.Error("Mismatched start special:", out.Points[0].Special)
 	}
 
-	if out.Points[1].Block != 1000 {
-		t.Error("Mismatched end block:", out.Points[1].Block)
+	if out.Points[1].BlockOrTs != 1000 {
+		t.Error("Mismatched end block:", out.Points[1].BlockOrTs)
 	}
 
 	if out.Modifier.Step != 10 {
@@ -175,8 +175,8 @@ func TestParseSpecialEnd(t *testing.T) {
 		t.Error(err)
 	}
 
-	if out.Points[0].Block != 0 {
-		t.Error("Mismatched start block:", out.Points[0].Block)
+	if out.Points[0].BlockOrTs != 0 {
+		t.Error("Mismatched start block:", out.Points[0].BlockOrTs)
 	}
 
 	if out.Points[1].Special != "devcon1" {
@@ -235,8 +235,8 @@ func TestParseDate(t *testing.T) {
 		t.Error(err)
 	}
 
-	if out.Points[0].Block != 10 {
-		t.Error("Mismatched start block:", out.Points[0].Block)
+	if out.Points[0].BlockOrTs != 10 {
+		t.Error("Mismatched start block:", out.Points[0].BlockOrTs)
 	}
 
 	if out.Points[1].Date != "2021-10-03T10:20:30" {
@@ -255,8 +255,8 @@ func TestParseDateUTC(t *testing.T) {
 		t.Error(err)
 	}
 
-	if out.Points[0].Block != 10 {
-		t.Error("Mismatched start block:", out.Points[0].Block)
+	if out.Points[0].BlockOrTs != 10 {
+		t.Error("Mismatched start block:", out.Points[0].BlockOrTs)
 	}
 
 	if out.Points[1].Date != "2021-10-03T10:20:30UTC" {
@@ -295,8 +295,8 @@ func TestParseDateShort(t *testing.T) {
 		t.Error(err)
 	}
 
-	if out.Points[0].Block != 10 {
-		t.Error("Mismatched start block:", out.Points[0].Block)
+	if out.Points[0].BlockOrTs != 10 {
+		t.Error("Mismatched start block:", out.Points[0].BlockOrTs)
 	}
 
 	if out.Points[1].Date != "2021-10-03" {
@@ -315,8 +315,8 @@ func TestParseDateOnlyHour(t *testing.T) {
 		t.Error(err)
 	}
 
-	if out.Points[0].Block != 10 {
-		t.Error("Mismatched start block:", out.Points[0].Block)
+	if out.Points[0].BlockOrTs != 10 {
+		t.Error("Mismatched start block:", out.Points[0].BlockOrTs)
 	}
 
 	if out.Points[1].Date != "2021-10-03T05" {
@@ -335,8 +335,8 @@ func TestParseDateOnlyHourAndMinutes(t *testing.T) {
 		t.Error(err)
 	}
 
-	if out.Points[0].Block != 10 {
-		t.Error("Mismatched start block:", out.Points[0].Block)
+	if out.Points[0].BlockOrTs != 10 {
+		t.Error("Mismatched start block:", out.Points[0].BlockOrTs)
 	}
 
 	if out.Points[1].Date != "2021-10-03T05:59" {
@@ -355,8 +355,8 @@ func TestParseDateNoModifier(t *testing.T) {
 		t.Error(err)
 	}
 
-	if out.Points[0].Block != 10 {
-		t.Error("Mismatched start block:", out.Points[0].Block)
+	if out.Points[0].BlockOrTs != 10 {
+		t.Error("Mismatched start block:", out.Points[0].BlockOrTs)
 	}
 
 	if out.Points[1].Date != "2021-10-03T05:59:29" {
@@ -419,8 +419,8 @@ func TestParseDateStart(t *testing.T) {
 		t.Error("Mismatched start block:", out.Points[0].Date)
 	}
 
-	if out.Points[1].Block != 1000 {
-		t.Error("Mismatched end date:", out.Points[1].Block)
+	if out.Points[1].BlockOrTs != 1000 {
+		t.Error("Mismatched end date:", out.Points[1].BlockOrTs)
 	}
 
 	if out.Modifier.Step != 25 {
@@ -439,8 +439,8 @@ func TestParseDateStartShort(t *testing.T) {
 		t.Error("Mismatched start block:", out.Points[0].Date)
 	}
 
-	if out.Points[1].Block != 1000 {
-		t.Error("Mismatched end date:", out.Points[1].Block)
+	if out.Points[1].BlockOrTs != 1000 {
+		t.Error("Mismatched end date:", out.Points[1].BlockOrTs)
 	}
 
 	if out.Modifier.Step != 25 {

@@ -27,6 +27,7 @@ extern string_q clean_go_positionals(const string_q& in, bool hasEns);
 extern const char* STR_REQUEST_CASE1;
 extern const char* STR_REQUEST_CASE2;
 extern const char* STR_CHIFRA_HELP_END;
+extern const char* STR_TO_CMD_LINE;
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
     string_q source = asciiFileToString(getPathToTemplates("blank.go.tmpl"));
@@ -82,6 +83,11 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     bool hasEns = contains(asciiFileToString(fn), "ens.Convert");
 
     string_q source = asciiFileToString(getPathToTemplates("blank_options.go.tmpl"));
+    if (isFullyPorted(p.api_route)) {
+        replaceAll(source, "[{TOCMDLINE}]", "");
+    } else {
+        replaceAll(source, "[{TOCMDLINE}]", STR_TO_CMD_LINE);
+    }
     replaceAll(source, "[{ROUTE}]", p.api_route);
     replaceAll(source, "[{PROPER}]", toProper(p.api_route));
     replaceAll(source, "[{OPT_FIELDS}]", get_optfields(p));
@@ -96,6 +102,14 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     replaceAll(source, "[{POSITIONALS}]", get_positionals2(p));
     replaceAll(source, "opts.LastBlock != utils.NOPOS", "opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS");
     source = clean_go_positionals(source, hasEns);
+    if (isFullyPorted(p.api_route)) {
+        if (!contains(source, "fmt.")) {
+            replaceAll(source, "\t\"fmt\"\n", "");
+        }
+        if (!contains(source, "strings.")) {
+            replaceAll(source, "\t\"strings\"\n", "");
+        }
+    }
 
     codewrite_t cw(fn, source);
     cw.nSpaces = 0;
@@ -277,7 +291,14 @@ string_q get_optfields(const CCommandOption& cmd) {
     size_t wid = 0;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         replace(p.longName, "deleteMe", "delete");
-        wid = max(p.Format("[{VARIABLE}]").length(), wid);
+        string_q v = p.Format("[{VARIABLE}]");
+        wid = max(v.length(), wid);
+        if (contains(v, "Blocks") && contains(p.go_type, "[]string")) {
+            wid = max(string_q("BlockIds").length(), wid);
+        }
+        if (contains(v, "Transactions") && contains(p.go_type, "[]string")) {
+            wid = max(string_q("TransactionIds").length(), wid);
+        }
     }
     wid = max(string_q("Globals").length(), wid);
     wid = max(string_q("BadFlag").length(), wid);
@@ -285,7 +306,14 @@ string_q get_optfields(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         replace(p.longName, "deleteMe", "delete");
-        os << "\t" << padRight(p.Format("[{VARIABLE}]"), wid) << " " << p.go_type << endl;
+        string_q v = p.Format("[{VARIABLE}]");
+        os << "\t" << padRight(v, wid) << " " << p.go_type << endl;
+        if (contains(v, "Blocks") && contains(p.go_type, "[]string")) {
+            os << "\t" << padRight("BlockIds", wid) << " []blockRange.Identifier" << endl;
+        }
+        if (contains(v, "Transactions") && contains(p.go_type, "[]string")) {
+            os << "\t" << padRight("TransactionIds", wid) << " []blockRange.Identifier" << endl;
+        }
     }
     os << "\t" << padRight("Globals", wid) << " globals.GlobalOptions" << endl;
     os << "\t" << padRight("BadFlag", wid) << " error" << endl;
@@ -367,6 +395,8 @@ string_q clean_go_positionals(const string_q& in, bool hasEns) {
     replaceAll(ret, "opts.[]string{}", "[]string{}");
     if (!contains(ret, "utils."))
         replaceAll(ret, "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils\"\n", "");
+    if (!contains(ret, "blockRange."))
+        replaceAll(ret, "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange\"\n", "");
     if (!hasEns)
         replaceAll(ret, "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens\"\n", "");
     return ret;
@@ -481,3 +511,10 @@ const char* STR_CHIFRA_HELP_END =
     "    -h, --help    display this help screen\n"
     "\n"
     "  Use \"chifra [command] --help\" for more information about a command.\n";
+
+const char* STR_TO_CMD_LINE =
+    "func (opts *[{PROPER}]Options) ToCmdLine() string {\n"
+    "\toptions := \"\"\n"
+    "[{DASH_STR}][{POSITIONALS}]\toptions += fmt.Sprintf(\"%s\", \"\") // silence go compiler for auto gen\n"
+    "\treturn options\n"
+    "}\n\n";

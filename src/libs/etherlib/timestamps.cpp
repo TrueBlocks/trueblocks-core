@@ -46,11 +46,6 @@ timestamp_t getTimestampAt(blknum_t blk) {
     return 0;
 }
 
-//-------------------------------------------------------------------------
-size_t nTimestamps(void) {
-    return ((fileSize(indexFolderBin_ts) / sizeof(uint32_t)) / 2);
-}
-
 //-----------------------------------------------------------------------
 bool establishTsFile(void) {
     if (fileExists(indexFolderBin_ts))
@@ -209,23 +204,6 @@ bool correctTimestamp(blknum_t blk, timestamp_t ts) {
     file.Release();
     delete[] buffer;
 
-    return true;
-}
-
-//-------------------------------------------------------------------------
-bool forEveryTimestamp(BLOCKVISITFUNC func, void* data) {
-    if (!func)
-        return false;
-
-    size_t n = nTimestamps();
-    for (size_t index = 0; index < n; index++) {
-        CBlock block;
-        block.blockNumber = getTimestampBlockAt(index);
-        block.timestamp = getTimestampAt(index);
-        bool ret = (*func)(block, data);
-        if (!ret)
-            return false;
-    }
     return true;
 }
 

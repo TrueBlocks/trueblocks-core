@@ -5,6 +5,7 @@ on      ,both ,fast  ,chunks ,apps/chunkMan ,no_params          ,y    ,
 
 on      ,both ,fast  ,chunks ,apps/chunkMan ,remote_fail        ,n    ,remote
 on      ,both ,fast  ,chunks ,apps/chunkMan ,extract_stats      ,n    ,extract = stats & fmt = csv
+on      ,both ,fast  ,chunks ,apps/chunkMan ,extract_stats2     ,y    ,extract = stats & fmt = json
 on      ,cmd  ,fast  ,chunks ,apps/chunkMan ,extract_blooms     ,n    ,extract = blooms & log_level = 5
 on      ,cmd  ,fast  ,chunks ,apps/chunkMan ,extract_blooms2    ,n    ,extract = blooms
 on      ,both ,fast  ,chunks ,apps/chunkMan ,extract_pins       ,n    ,extract = pins & fmt = csv

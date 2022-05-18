@@ -4,15 +4,18 @@ when?blocks=daofork&verbose
     {
       "blockNumber": 1920000,
       "timestamp": 1469020840,
-      "name": "daofork",
-      "date": "2016-07-20 13:20:40 UTC"
+      "date": "2016-07-20 13:20:40 UTC",
+      "name": "daofork"
     }
   ],
   "meta": {
-    "unripe": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "staging": "0xdeadbeef",
+    "client": "0xdeadbeef",
     "finalized": "0xdeadbeef",
-    "client": "0xdeadbeef"
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
   }
 }
