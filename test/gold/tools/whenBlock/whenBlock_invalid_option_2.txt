@@ -1,7 +1,7 @@
 chifra when  a
 TEST[DATE|TIME] Blocks:  [a]
 TEST[DATE|TIME] Format:  txt
-Error: The given value 'a' is not a valid block identifier.
+Error: The given value 'a' is not a valid identifier.
 Usage:
   chifra when [flags] < block | date > [ block... | date... ]
 

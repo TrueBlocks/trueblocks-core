@@ -1,6 +1,6 @@
 when?blocks=40000000000000000000000000000
 {
   "errors": [
-    "The given value '40000000000000000000000000000' is not a valid block identifier."
+    "The given value '40000000000000000000000000000' is not a valid identifier."
   ]
 }
