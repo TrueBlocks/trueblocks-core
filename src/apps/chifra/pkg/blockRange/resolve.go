@@ -138,17 +138,17 @@ func (br *Identifier) nextBlock(chain string, current uint64) (uint64, error) {
 
 func (p *Point) resolvePoint(chain string) uint64 {
 	var bn uint64
-	if p.BlockHash != "" {
+	if p.Hash != "" {
 		provider := config.GetRpcProvider(chain)
-		bn, _ = rpcClient.BlockNumberFromHash(provider, p.BlockHash)
+		bn, _ = rpcClient.BlockNumberFromHash(provider, p.Hash)
 	} else if p.Date != "" {
 		bn, _ = tslibPkg.FromDateToBn(chain, p.Date)
 	} else if p.Special != "" {
 		bn, _ = tslibPkg.FromNameToBn(chain, p.Special)
-	} else if p.BlockOrTs >= utils.EarliestTs {
-		bn, _ = tslibPkg.FromTsToBn(chain, uint64(p.BlockOrTs))
+	} else if p.Number >= utils.EarliestTs {
+		bn, _ = tslibPkg.FromTsToBn(chain, uint64(p.Number))
 	} else {
-		bn = uint64(p.BlockOrTs)
+		bn = uint64(p.Number)
 	}
 	return bn
 }

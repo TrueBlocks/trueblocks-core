@@ -148,7 +148,7 @@ func IsRange(chain, str string) (bool, error) {
 		onlyNumbers := bRange.StartType == blockRange.BlockRangeBlockNumber &&
 			bRange.EndType == blockRange.BlockRangeBlockNumber
 
-		if onlyNumbers && bRange.Start.BlockOrTs >= bRange.End.BlockOrTs {
+		if onlyNumbers && bRange.Start.Number >= bRange.End.Number {
 			return false, errors.New("'stop' must be strictly larger than 'start'")
 		}
 

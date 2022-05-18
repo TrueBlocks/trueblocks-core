@@ -6,6 +6,7 @@ package validate
 
 import (
 	"log"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
 	tslibPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
@@ -131,13 +132,19 @@ func appendBlockId(results *[]blockRange.Identifier, identifier string) {
 		return
 	}
 	br, _ := blockRange.New(identifier)
-	*results = append(*results, *br)
+	if br != nil {
+		*results = append(*results, *br)
+	}
 }
 
 func appendTxId(results *[]blockRange.Identifier, identifier string) {
 	if results == nil {
 		return
 	}
+	identifier = strings.Replace(identifier, ".", "-", -1)
 	br, _ := blockRange.New(identifier)
-	*results = append(*results, *br)
+	if br != nil {
+		br.EndType = blockRange.TransactionIndex
+		*results = append(*results, *br)
+	}
 }

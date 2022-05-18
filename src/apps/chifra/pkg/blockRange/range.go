@@ -25,6 +25,8 @@ const (
 	BlockRangePeriod
 	BlockRangeStep
 	BlockRangeNotDefined
+	TransactionIndex
+	TransactionHash
 )
 
 type Identifier struct {
@@ -126,11 +128,11 @@ func getPointType(p *Point) BlockRangeValue {
 		return BlockRangeSpecial
 	}
 
-	if p.BlockHash != "" {
+	if p.Hash != "" {
 		return BlockRangeHash
 	}
 
-	if p.BlockOrTs >= utils.EarliestTs {
+	if p.Number >= utils.EarliestTs {
 		return BlockRangeTimestamp
 	}
 

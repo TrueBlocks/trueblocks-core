@@ -59,7 +59,7 @@ import (
 var rangeLexer = lexer.MustSimple([]lexer.Rule{
 	{Name: `Date`, Pattern: `\d{4}-\d{2}-\d{2}(T[\d]{2}(:[\d]{2})?(:[\d]{2})?(UTC)?)?`, Action: nil},
 	{Name: `Special`, Pattern: `[a-z_]+[0-9]*`, Action: nil},
-	{Name: `BlockHash`, Pattern: `0x[a-f0-9]{64}`, Action: nil},
+	{Name: `Hash`, Pattern: `0x[a-f0-9]{64}`, Action: nil},
 	{Name: `Hex`, Pattern: `0x[a-f0-9]+`, Action: nil},
 	{Name: `Unsigned`, Pattern: `^[0-9]+`, Action: nil},
 	{Name: `PointSeparator`, Pattern: `-`, Action: nil},
@@ -70,10 +70,10 @@ var rangeLexer = lexer.MustSimple([]lexer.Rule{
 // a block number, a date or special name (e.g. "london" is translated to
 // block 12965000)
 type Point struct {
-	BlockOrTs uint   `parser:"@Hex|@Unsigned" json:"blockOrTs,omitempty"`
-	BlockHash string `parser:"| @BlockHash" json:"blockHash,omitempty"`
-	Date      string `parser:"| @Date" json:"date,omitempty"`
-	Special   string `parser:"| @Special" json:"special,omitempty"`
+	Number  uint   `parser:"@Hex|@Unsigned" json:"number,omitempty"`
+	Hash    string `parser:"| @Hash" json:"hash,omitempty"`
+	Date    string `parser:"| @Date" json:"date,omitempty"`
+	Special string `parser:"| @Special" json:"special,omitempty"`
 }
 
 // Modifier changes the meaning of the given range. For example, if step of
