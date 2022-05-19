@@ -37,6 +37,16 @@ func (br *Identifier) ResolveTxs(chain string) ([]types.SimpleAppearance, error)
 		app := types.SimpleAppearance{BlockNumber: uint32(br.Start.Number), TransactionIndex: uint32(br.End.Number)}
 		return append(txs, app), nil
 	}
+	if br.StartType == BlockHash && br.EndType == TransactionIndex {
+		app := types.SimpleAppearance{BlockNumber: 12, TransactionIndex: 12}
+		return append(txs, app), nil
+	}
+	if br.StartType == TransactionHash {
+		app := types.SimpleAppearance{BlockNumber: 22, TransactionIndex: 22}
+		return append(txs, app), nil
+	}
+	app := types.SimpleAppearance{BlockNumber: uint32(0), TransactionIndex: uint32(0)}
+	return append(txs, app), nil
 	// current, end, err := br.getBounds(chain)
 	// if err != nil {
 	// 	return []uint64{}, err

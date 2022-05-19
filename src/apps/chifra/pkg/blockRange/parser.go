@@ -51,6 +51,8 @@ package blockRange
 // 2021-10-03T10:30:59-1000:100
 
 import (
+	"encoding/json"
+
 	"github.com/alecthomas/participle/v2"
 	"github.com/alecthomas/participle/v2/lexer"
 )
@@ -74,6 +76,14 @@ type Point struct {
 	Hash    string `parser:"| @Hash" json:"hash,omitempty"`
 	Date    string `parser:"| @Date" json:"date,omitempty"`
 	Special string `parser:"| @Special" json:"special,omitempty"`
+}
+
+func (p Point) String() string {
+	str, err := json.Marshal(p)
+	if err != nil {
+		return ""
+	}
+	return string(str)
 }
 
 // Modifier changes the meaning of the given range. For example, if step of

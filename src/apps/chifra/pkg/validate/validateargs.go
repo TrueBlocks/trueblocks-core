@@ -144,6 +144,9 @@ func appendTxId(results *[]blockRange.Identifier, identifier string) {
 	identifier = strings.Replace(identifier, ".", "-", -1)
 	br, _ := blockRange.NewTxRange(identifier)
 	if br != nil {
+		if br.StartType == blockRange.BlockHash && br.EndType == blockRange.NotDefined {
+			br.StartType = blockRange.TransactionHash
+		}
 		br.EndType = blockRange.TransactionIndex
 		*results = append(*results, *br)
 	}

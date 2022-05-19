@@ -163,7 +163,7 @@ func TestToString(t *testing.T) {
 	if err != nil {
 		t.Errorf("Could not parse block")
 	}
-	expected := `{"start":{"number":1234},"endType":9,"end":{},"modifierType":9,"modifier":{}}`
+	expected := `{"startType":1,"start":{"number":1234},"end":{},"modifier":{}}`
 	got := fmt.Sprintf("%s", br.ToJSON())
 	if got != expected {
 		t.Errorf("String printer for blockRange not equal to expected:\n%s\n%s", got, expected)

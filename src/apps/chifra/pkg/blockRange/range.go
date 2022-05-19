@@ -17,7 +17,8 @@ import (
 type BlockRangeValue int64
 
 const (
-	BlockNumber BlockRangeValue = iota
+	NotDefined BlockRangeValue = iota
+	BlockNumber
 	BlockTimestamp
 	BlockHash
 	BlockDate
@@ -26,7 +27,6 @@ const (
 	TransactionHash
 	Period
 	Step
-	NotDefined
 )
 
 type Identifier struct {
