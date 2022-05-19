@@ -104,26 +104,6 @@ type TestCase struct {
 
 var testBlocks = []TestCase{
 	{
-		input:    "1001001.0 1001001.0:next 1001001.0:prev 1001001.2",
-		expected: "0x7307...db08 0xef2e...fb3a 0xc20a...49e6 0x5352...cc63",
-		// enabled:  true,
-	},
-	{
-		input:    "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.2",
-		expected: "0x5352...cc63",
-		// enabled:  true,
-	},
-	{
-		input:    "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.*",
-		expected: "0x7307...db08 0xef2e...fb3a 0x5352...cc63 0x060e...d521",
-		// enabled:  true,
-	},
-	{
-		input:    "0xc20a01b9d0bc87268376d189044e2c76cb2b34dda31e5525cbef45b3c30849e6 0xc20a01b9d0bc87268376d189044e2c76cb2b34dda31e5525cbef45b3c30849e6:next",
-		expected: "0xc20a....49e6 0x7307...db08",
-		// enabled:  true,
-	},
-	{
 		input:    "1001001.0",
 		expected: "1001001.0",
 		// enabled:  true,
@@ -377,9 +357,28 @@ var testBlocks = []TestCase{
 
 var testTxs = []TestCase{
 	// {
+	// 	input:    "1001001.0 1001001.0:next 1001001.0:prev 1001001.2",
+	// 	expected: "0x7307...db08 0xef2e...fb3a 0xc20a...49e6 0x5352...cc63",
+	// 	// enabled:  true,
+	// },
+	// {
+	// 	input:    "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.2",
+	// 	expected: "0x5352...cc63",
+	// 	// enabled:  true,
+	// },
+	// {
+	// 	input:    "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.*",
+	// 	expected: "0x7307...db08 0xef2e...fb3a 0x5352...cc63 0x060e...d521",
+	// 	// enabled:  true,
+	// },
+	// {
+	// 	input:    "0xc20a01b9d0bc87268376d189044e2c76cb2b34dda31e5525cbef45b3c30849e6 0xc20a01b9d0bc87268376d189044e2c76cb2b34dda31e5525cbef45b3c30849e6:next",
+	// 	expected: "0xc20a....49e6 0x7307...db08",
+	// enabled:  true,
+	// },
+	// {
 	// 	input:    "1001001.0",
 	// 	expected: "1001001.0",
-	// 	testType: "tx",
 	// 	enabled:  true,
 	// },
 	// {
@@ -405,11 +404,11 @@ var testTxs = []TestCase{
 	{
 		input:    "0xc20a01b9d0bc87268376d189044e2c76cb2b34dda31e5525cbef45b3c30849e6",
 		expected: "1001000.2",
-		enabled:  true,
+	// 	enabled:  true,
 	},
 	{
 		input:    "0xc20a01b9d0bc87268376d189044e2c76cb2b34dda31e5525cbef45b3c30849e6:next",
 		expected: "1001001.0",
-		enabled:  true,
+	// 	enabled:  true,
 	},
 }

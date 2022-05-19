@@ -56,7 +56,6 @@ func ValidateIdentifiers(chain string, identifiers []string, validTypes ValidArg
 	rangesFound := 0
 
 	for _, identifier := range identifiers {
-		// fmt.Println("------------->", identifier)
 		if isBitmaskSet(ValidArgumentBlockHash) && IsBlockHash(identifier) {
 			appendBlockId(results, identifier)
 			continue
