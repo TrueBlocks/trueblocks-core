@@ -42,8 +42,8 @@ func IsTransIndex(str string) bool {
 	return err == nil
 }
 
-func IsTransBlockNumAndId(str string) bool {
-	str = clearDirectional(str)
+func IsTransBlockNumAndId(strIn string) bool {
+	str := clearDirectional(strIn)
 
 	parts := strings.Split(str, ".")
 	if len(parts) != 2 {
@@ -51,6 +51,9 @@ func IsTransBlockNumAndId(str string) bool {
 	}
 
 	validBlockNumber, _ := IsBlockNumber(parts[0])
+	if parts[1] == "*" {
+		return validBlockNumber
+	}
 	return validBlockNumber && IsTransIndex(parts[1])
 }
 
@@ -62,7 +65,11 @@ func IsTransBlockHashAndId(str string) bool {
 		return false
 	}
 
-	return IsBlockHash(parts[0]) && IsTransIndex(parts[1])
+	validBlockHash := IsBlockHash(parts[0])
+	if parts[1] == "*" {
+		return validBlockHash
+	}
+	return validBlockHash && IsTransIndex(parts[1])
 }
 
 func IsValidTransId(chain string, ids []string, validTypes ValidArgumentType) (bool, error) {

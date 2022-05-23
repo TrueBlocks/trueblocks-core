@@ -92,7 +92,7 @@ func (p Point) String() string {
 // a period can be provided to get only blocks based on frequency (e.g. weekly)
 type Modifier struct {
 	Step   uint   `parser:"@Unsigned" json:"step,omitempty"`
-	Period string `parser:"| @('hourly'|'daily'|'weekly'|'monthly'|'quarterly'|'annually'|'next'|'prev'|'*')" json:"period,omitempty"`
+	Period string `parser:"| @('hourly'|'daily'|'weekly'|'monthly'|'quarterly'|'annually'|'next'|'prev'|'all')" json:"period,omitempty"`
 }
 
 // Having defined both Point and Modifier, we can construct our Range, which

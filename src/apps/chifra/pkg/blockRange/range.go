@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"regexp"
 	"strconv"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -75,6 +76,11 @@ func NewBlockRange(rangeStr string) (*Identifier, error) {
 }
 
 func NewTxRange(rangeStr string) (*Identifier, error) {
+	if strings.Count(rangeStr, "-") == 1 && strings.HasSuffix(rangeStr, "-*") {
+		parts := strings.Split(rangeStr, "-")
+		rangeStr = parts[0] + "-0:all"
+	}
+
 	parsed, err := Parse(rangeStr)
 	newBlockRange := &Identifier{}
 	if err != nil {
@@ -104,6 +110,7 @@ func NewTxRange(rangeStr string) (*Identifier, error) {
 
 func (brv BlockRangeValue) String() string {
 	return []string{
+		"NotDefined",
 		"BlockNumber",
 		"BlockTimestamp",
 		"BlockHash",
@@ -113,7 +120,6 @@ func (brv BlockRangeValue) String() string {
 		"TransactionHash",
 		"Period",
 		"Step",
-		"NotDefined",
 	}[brv]
 }
 
