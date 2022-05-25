@@ -45,6 +45,7 @@
 #include <bitset>
 #include <mutex>  // NOLINT
 #include <dlfcn.h>
+#include <memory>
 
 //-------------------------------------------------------------------------
 using namespace std;  // NOLINT - bad practice, but it's way too late now
