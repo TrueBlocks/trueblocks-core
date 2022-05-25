@@ -26,7 +26,10 @@ func (opts *WhenOptions) HandleWhenShowBlocks() error {
 			return err
 		}
 		for _, v := range vals {
-			block := rpcClient.GetBlockByNumber(opts.Globals.Chain, v)
+			block, err := rpcClient.GetBlockByNumber(opts.Globals.Chain, v)
+			if err != nil {
+				return err
+			}
 			if v == 0 {
 				block.TimeStamp = utils.EarliestTs
 			}
@@ -34,7 +37,7 @@ func (opts *WhenOptions) HandleWhenShowBlocks() error {
 			nm, _ := tslibPkg.FromBnToName(opts.Globals.Chain, block.BlockNumber)
 			block.Date = d.Format("YYYY-MM-DD HH:mm:ss UTC")
 			block.Name = nm
-			err := opts.Globals.RenderObject(block, false, first)
+			err = opts.Globals.RenderObject(block, false, first)
 			first = false
 			if err != nil {
 				return err
