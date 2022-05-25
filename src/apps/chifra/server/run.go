@@ -34,7 +34,7 @@ func RunServe(cmd *cobra.Command, args []string) error {
 	chainConfigPath := config.GetPathToChainConfig(chain) // order matters
 	indexPath := config.GetPathToIndex(chain)             // order matters
 	rpcProvider := config.GetRpcProvider(chain)
-	meta, _ := rpcClient.GetMetaData(chain, false)
+	meta, err := rpcClient.GetMetaData(chain, false)
 
 	log.Printf("%s%-18.18s%s%s\n", colors.Green, "Server URL:", colors.Off, apiUrl)
 	log.Printf("%s%-18.18s%s%s\n", colors.Green, "RootConfig Path:", colors.Off, configPath)
@@ -42,7 +42,11 @@ func RunServe(cmd *cobra.Command, args []string) error {
 	log.Printf("%s%-18.18s%s%s\n", colors.Green, "Cache Path:", colors.Off, cachePath)
 	log.Printf("%s%-18.18s%s%s\n", colors.Green, "Index Path:", colors.Off, indexPath)
 	log.Printf("%s%-18.18s%s%s\n", colors.Green, "RPC Provider:", colors.Off, rpcProvider)
-	log.Printf("%s%-18.18s%s%d, %d, %d, %d\n", colors.Green, "Progress:", colors.Off, meta.Latest, meta.Finalized, meta.Staging, meta.Unripe)
+	if err != nil {
+		log.Printf("%s%-18.18s%sCould not load RPC provider%s\n", colors.Green, "Progress:", colors.Red, colors.Off)
+	} else {
+		log.Printf("%s%-18.18s%s%d, %d, %d, %d\n", colors.Green, "Progress:", colors.Off, meta.Latest, meta.Finalized, meta.Staging, meta.Unripe)
+	}
 
 	log.Fatal(RunInternal(opts.Port))
 
