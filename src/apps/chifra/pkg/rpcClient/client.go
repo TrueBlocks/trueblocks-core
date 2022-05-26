@@ -140,6 +140,46 @@ func TxHashFromNumberAndId(provider string, blkNum, txId uint64) (string, error)
 	return tx.Hash().Hex(), nil
 }
 
+// TxNumberAndIdFromHash returns a transaction's blockNum and tx_id given its hash
+func TxNumberAndIdFromHash(provider string, hash string) (uint64, uint64, error) {
+	// RPCPayload is used during to make calls to the RPC.
+	var trans Transaction
+	transPayload := RPCPayload{
+		Jsonrpc:   "2.0",
+		Method:    "eth_getTransactionByHash",
+		RPCParams: RPCParams{fmt.Sprintf("%s", hash)},
+		ID:        1002,
+	}
+	err := FromRpc(provider, &transPayload, &trans)
+	if err != nil {
+		fmt.Println("FromRpc(traces) returned error")
+		log.Fatal(err)
+	}
+	bn, err := strconv.ParseUint(trans.Result.BlockNumber[2:], 16, 32)
+	if err != nil {
+		return 0, 0, err
+	}
+	txid, err := strconv.ParseUint(trans.Result.TransactionIndex[2:], 16, 32)
+	if err != nil {
+		return 0, 0, err
+	}
+	return bn, txid, nil
+}
+
+// TxCountByBlockNumber returns the number of transactions in a block
+func TxCountByBlockNumber(provider string, blkNum uint64) (uint64, error) {
+	ec := GetClient(provider)
+	defer ec.Close()
+
+	block, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(blkNum))
+	if err != nil {
+		return 0, err
+	}
+
+	cnt, err := ec.TransactionCount(context.Background(), block.Hash())
+	return uint64(cnt), nil
+}
+
 // BlockHashFromHash returns a block's hash if it's a valid block
 func BlockHashFromHash(provider, hash string) (string, error) {
 	ec := GetClient(provider)
