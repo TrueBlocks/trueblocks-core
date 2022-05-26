@@ -10,7 +10,6 @@ import (
 	"fmt"
 	"regexp"
 	"strconv"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -49,63 +48,56 @@ type Identifier struct {
 // Consult ./parser.go for the supported format
 func NewBlockRange(rangeStr string) (*Identifier, error) {
 	parsed, err := Parse(rangeStr)
-	newBlockRange := &Identifier{}
+	newRange := &Identifier{}
 	if err != nil {
 		return nil, handleParserErrors(err)
 	}
 
-	newBlockRange.Orig = rangeStr
-	newBlockRange.StartType = getPointType(parsed.Points[0])
-	newBlockRange.Start = *parsed.Points[0]
+	newRange.Orig = rangeStr
+	newRange.StartType = getPointType(parsed.Points[0])
+	newRange.Start = *parsed.Points[0]
 
 	if len(parsed.Points) == 1 {
-		newBlockRange.EndType = NotDefined
+		newRange.EndType = NotDefined
 	} else {
-		newBlockRange.EndType = getPointType(parsed.Points[1])
-		newBlockRange.End = *parsed.Points[1]
+		newRange.EndType = getPointType(parsed.Points[1])
+		newRange.End = *parsed.Points[1]
 	}
 
 	if parsed.Modifier == nil {
-		newBlockRange.ModifierType = NotDefined
+		newRange.ModifierType = NotDefined
 	} else {
-		newBlockRange.ModifierType = getModifierType(parsed.Modifier)
-		newBlockRange.Modifier = *parsed.Modifier
+		newRange.ModifierType = getModifierType(parsed.Modifier)
+		newRange.Modifier = *parsed.Modifier
 	}
 
-	return newBlockRange, nil
+	return newRange, nil
 }
 
 func NewTxRange(rangeStr string) (*Identifier, error) {
-	if strings.Count(rangeStr, "-") == 1 && strings.HasSuffix(rangeStr, "-*") {
-		parts := strings.Split(rangeStr, "-")
-		rangeStr = parts[0] + "-0:all"
-	}
-
 	parsed, err := Parse(rangeStr)
-	newBlockRange := &Identifier{}
 	if err != nil {
 		return nil, handleParserErrors(err)
 	}
 
-	newBlockRange.Orig = rangeStr
-	newBlockRange.StartType = getPointType(parsed.Points[0])
-	newBlockRange.Start = *parsed.Points[0]
-
-	if len(parsed.Points) == 1 {
-		newBlockRange.EndType = NotDefined
-	} else {
-		newBlockRange.EndType = getPointType(parsed.Points[1])
-		newBlockRange.End = *parsed.Points[1]
+	// returns at least one point
+	newRange := &Identifier{
+		Orig:      rangeStr,
+		StartType: getPointType(parsed.Points[0]),
+		Start:     *parsed.Points[0],
 	}
 
-	if parsed.Modifier == nil {
-		newBlockRange.ModifierType = NotDefined
-	} else {
-		newBlockRange.ModifierType = getModifierType(parsed.Modifier)
-		newBlockRange.Modifier = *parsed.Modifier
+	if len(parsed.Points) == 2 {
+		newRange.EndType = getPointType(parsed.Points[1])
+		newRange.End = *parsed.Points[1]
 	}
 
-	return newBlockRange, nil
+	if parsed.Modifier != nil {
+		newRange.ModifierType = getModifierType(parsed.Modifier)
+		newRange.Modifier = *parsed.Modifier
+	}
+
+	return newRange, nil
 }
 
 func (brv BlockRangeValue) String() string {

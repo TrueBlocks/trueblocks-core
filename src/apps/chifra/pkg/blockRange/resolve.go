@@ -5,6 +5,9 @@
 package blockRange
 
 import (
+	"errors"
+	"fmt"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	tslibPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
@@ -154,20 +157,58 @@ func (p *Point) resolvePoint(chain string) uint64 {
 
 func (br *Identifier) ResolveTxs(chain string) ([]types.SimpleAppearance, error) {
 	txs := []types.SimpleAppearance{}
-	if br.StartType == BlockNumber && br.EndType == TransactionIndex {
-		app := types.SimpleAppearance{BlockNumber: uint32(br.Start.Number), TransactionIndex: uint32(br.End.Number)}
-		return append(txs, app), nil
+
+	if br.StartType == BlockNumber {
+		if br.Modifier.Period == "all" {
+			provider := config.GetRpcProvider(chain)
+			cnt, err := rpcClient.TxCountByBlockNumber(provider, uint64(br.Start.Number))
+			if err != nil {
+				return txs, err
+			}
+			for i := uint32(0); i < uint32(cnt); i++ {
+				app := types.SimpleAppearance{BlockNumber: uint32(br.Start.Number), TransactionIndex: i}
+				txs = append(txs, app)
+			}
+			return txs, nil
+		}
+
+		if br.EndType == TransactionIndex {
+			app := types.SimpleAppearance{BlockNumber: uint32(br.Start.Number), TransactionIndex: uint32(br.End.Number)}
+			return append(txs, app), nil
+		}
+
+		msg := fmt.Sprintf("unknown transaction type: %s", br)
+		return txs, errors.New(msg)
 	}
+
 	if br.StartType == BlockHash && br.EndType == TransactionIndex {
-		app := types.SimpleAppearance{BlockNumber: 12, TransactionIndex: 12}
+		if br.Modifier.Period == "all" {
+			provider := config.GetRpcProvider(chain)
+			cnt, err := rpcClient.TxCountByBlockNumber(provider, uint64(br.Start.resolvePoint(chain)))
+			if err != nil {
+				return txs, err
+			}
+			for i := uint32(0); i < uint32(cnt); i++ {
+				app := types.SimpleAppearance{BlockNumber: uint32(br.Start.resolvePoint(chain)), TransactionIndex: i}
+				txs = append(txs, app)
+			}
+			return txs, nil
+		}
+
+		app := types.SimpleAppearance{BlockNumber: uint32(br.Start.resolvePoint(chain)), TransactionIndex: uint32(br.End.Number)}
 		return append(txs, app), nil
 	}
+
 	if br.StartType == TransactionHash {
-		app := types.SimpleAppearance{BlockNumber: 22, TransactionIndex: 22}
-		return append(txs, app), nil
+		provider := config.GetRpcProvider(chain)
+		bn, txid, err := rpcClient.TxNumberAndIdFromHash(provider, br.Start.Hash)
+		app := types.SimpleAppearance{BlockNumber: uint32(bn), TransactionIndex: uint32(txid)}
+		return append(txs, app), err
 	}
+
 	app := types.SimpleAppearance{BlockNumber: uint32(0), TransactionIndex: uint32(0)}
-	return append(txs, app), nil
+	msg := fmt.Sprintf("unknown transaction type %s", br)
+	return append(txs, app), errors.New(msg)
 }
 
 /*
