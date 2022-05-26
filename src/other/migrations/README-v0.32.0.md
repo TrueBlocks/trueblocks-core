@@ -63,4 +63,4 @@ Please report any problems by creating an issue.
 
 ## Previous Migration
 
-[Click here](./README-v0.27.0.md) for the previous migration.
+[Click here](./README-v0.30.0.md) for the previous migration.

@@ -1,7 +1,7 @@
 chifra when  idonotexist
 TEST[DATE|TIME] Blocks:  [idonotexist]
 TEST[DATE|TIME] Format:  txt
-Error: The given value 'idonotexist' is not a valid block identifier.
+Error: The given value 'idonotexist' is not a valid identifier.
 Usage:
   chifra when [flags] < block | date > [ block... | date... ]
 

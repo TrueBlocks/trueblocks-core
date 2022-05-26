@@ -14,6 +14,6 @@ when?blocks=50000000
 }
 {
   "errors": [
-    "start block (50000000) is in the future"
+    "block number or timestamp for 50000000 not found"
   ]
 }

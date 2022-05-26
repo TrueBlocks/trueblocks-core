@@ -1,8 +1,9 @@
-chifra when  1000000-50000000:5000000
-TEST[DATE|TIME] Blocks:  [1000000-50000000:5000000]
+chifra when  1000000-50000000:35000000
+TEST[DATE|TIME] Blocks:  [1000000-50000000:35000000]
 TEST[DATE|TIME] Format:  txt
 blockNumber	timeStamp	date	name
-Error: end block (50000000) is in the future
+1000000	1455404053	2016-02-13 22:54:13 UTC	
+Error: block number or timestamp for 36000000 not found
 Usage:
   chifra when [flags] < block | date > [ block... | date... ]
 

@@ -2,7 +2,7 @@ chifra when  50000000
 TEST[DATE|TIME] Blocks:  [50000000]
 TEST[DATE|TIME] Format:  txt
 blockNumber	timeStamp	date	name
-Error: start block (50000000) is in the future
+Error: block number or timestamp for 50000000 not found
 Usage:
   chifra when [flags] < block | date > [ block... | date... ]
 

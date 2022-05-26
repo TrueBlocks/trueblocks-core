@@ -151,7 +151,6 @@ COptions::COptions(void) {
     // END_CODE_NOTES
 
     // BEG_ERROR_STRINGS
-    usageErrs[ERR_PROVIDEONETXID] = "Please specify at least one transaction identifier.";
     // END_ERROR_STRINGS
 }
 

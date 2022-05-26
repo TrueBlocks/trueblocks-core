@@ -2,7 +2,7 @@ chifra logs  1718400-1718420 transactions 0xbb9bc244d798123fde783fcc1c72d3bb8c18
 TEST[DATE|TIME] Transactions:  [1718400-1718420 transactions 0xbb9bc244d798123fde783fcc1c72d3bb8c189413]
 TEST[DATE|TIME] Format:  txt
 
-  1718400-1718420 does not appear to be a valid transaction index. Quitting...
+  1718400-1718420 does not appear to be a valid transaction index (one part, not first or latest). Quitting...
 
 Purpose:
   Retrieve logs for the given transaction(s).

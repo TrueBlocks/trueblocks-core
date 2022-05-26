@@ -2,7 +2,7 @@ chifra logs  1233123
 TEST[DATE|TIME] Transactions:  [1233123]
 TEST[DATE|TIME] Format:  txt
 
-  1233123 does not appear to be a valid transaction index. Quitting...
+  1233123 does not appear to be a valid transaction index (one part, not first or latest). Quitting...
 
 Purpose:
   Retrieve logs for the given transaction(s).

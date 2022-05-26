@@ -146,7 +146,7 @@ string_q renameExportFields(const string_q& className, const string_q& inStr) {
             make_pair("totaloutlessgas", "totalOutLessGas"),
             make_pair("amountnet", "amountNet"),
             make_pair("endbal", "endBal"),
-            make_pair("begbaldiff", "begBZalDiff"),
+            make_pair("begbaldiff", "begBalDiff"),
             make_pair("endbalcalc", "endBalCalc"),
             make_pair("endbaldiff", "endBalDiff"),
             make_pair("spotprice", "spotPrice"),

@@ -5,6 +5,7 @@ package validate
 
 import (
 	"fmt"
+	"strings"
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
@@ -17,9 +18,10 @@ func Test_BlockRanges(t *testing.T) {
 			continue
 		}
 		// fmt.Println("----------->", item.input)
-		inputs := []string{item.input}
+		inputs := strings.Split(item.input, " ")
 		var results []blockRange.Identifier
-		err := ValidateIdentifiers(
+		var err error
+		err = ValidateIdentifiers(
 			"mainnet",
 			inputs,
 			ValidBlockIdWithRangeAndDate,
@@ -27,12 +29,15 @@ func Test_BlockRanges(t *testing.T) {
 			&results,
 		)
 		if err != nil {
+			// we're not testing validation here, so there won't be any errors here, but if
+			// there is we want to know about them so we can fix the test
 			fmt.Println(item.input, err)
 			continue
 		}
 		for _, br := range results {
-			blockList, err := br.Resolve("mainnet")
+			blockList, err := br.ResolveBlocks(GetTestChain())
 			if err != nil {
+				t.Error(br)
 				t.Error(err)
 			}
 			if len(blockList) > 0 {
@@ -65,6 +70,11 @@ type TestCase struct {
 }
 
 var testBlocks = []TestCase{
+	{
+		input:    "1001001.0",
+		expected: "1001001.0",
+		// enabled:  true,
+	},
 	{
 		input:    "195633",
 		expected: "195633|1|[195633]...[195633]",
