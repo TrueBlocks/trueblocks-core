@@ -19,6 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
+	ethTypes "github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
 )
 
@@ -122,6 +123,24 @@ func TxHashFromHashAndId(provider, hash string, txId uint64) (string, error) {
 	return tx.Hash().Hex(), nil
 }
 
+// TxFromNumberAndId returns a actual transaction
+func TxFromNumberAndId(provider string, blkNum, txId uint64) (ethTypes.Transaction, error) {
+	ec := GetClient(provider)
+	defer ec.Close()
+
+	block, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(blkNum))
+	if err != nil {
+		return ethTypes.Transaction{}, err
+	}
+
+	tx, err := ec.TransactionInBlock(context.Background(), block.Hash(), uint(txId))
+	if err != nil {
+		return ethTypes.Transaction{}, err
+	}
+
+	return *tx, nil
+}
+
 // TxHashFromNumberAndId returns a transaction's hash if it's a valid transaction
 func TxHashFromNumberAndId(provider string, blkNum, txId uint64) (string, error) {
 	ec := GetClient(provider)
@@ -142,7 +161,6 @@ func TxHashFromNumberAndId(provider string, blkNum, txId uint64) (string, error)
 
 // TxNumberAndIdFromHash returns a transaction's blockNum and tx_id given its hash
 func TxNumberAndIdFromHash(provider string, hash string) (uint64, uint64, error) {
-	// RPCPayload is used during to make calls to the RPC.
 	var trans Transaction
 	transPayload := RPCPayload{
 		Jsonrpc:   "2.0",
@@ -244,9 +262,63 @@ func (ec *Client) SuggestGasPrice(ctx context.Context) (*big.Int, error)
 func (ec *Client) SuggestGasTipCap(ctx context.Context) (*big.Int, error)
 func (ec *Client) SyncProgress(ctx context.Context) (*ethereum.SyncProgress, error)
 func (ec *Client) TransactionCount(ctx context.Context, blockHash common.Hash) (uint, error)
-func (ec *Client) TransactionReceipt(ctx context.Context, txHash common.Hash) (*types.Receipt, error)
 func (ec *Client) TransactionSender(ctx context.Context, tx *types.Transaction, block common.Hash, index uint) (common.Address, error)
 */
+
+func GetTransactionReceipt(provider string, bn uint64, txid uint64) (types.SimpleReceipt, error) {
+	// tx, err := TxFromNumberAndId(provider, bn, txid)
+	// if err != nil {
+	// 	return types.SimpleReceipt{}, err
+	// }
+
+	// var receipt Receipt
+	// var payload = RPCPayload{
+	// 	Jsonrpc:   "2.0",
+	// 	Method:    "eth_getTransactionReceipt",
+	// 	RPCParams: RPCParams{tx.Hash().Hex()},
+	// 	ID:        1005,
+	// }
+	// err = FromRpc(provider, &payload, &receipt)
+	// if err != nil {
+	// 	return types.SimpleReceipt{}, err
+	// }
+
+	// const Byzantium = 4370000
+	// var ret types.SimpleReceipt
+	// // ret.BlockNumber = uint32(receipt.BlockNumber.Uint64())
+	// // ret.TransactionIndex = uint32(receipt.TransactionIndex)
+	// // ret.Hash = receipt.TxHash.Hex()
+	// ret.GasUsed, err = strconv.ParseUint(receipt.Result.GasUsed, 10, 32)
+	// if err != nil {
+	// 	return ret, err
+	// }
+
+	// if receipt.Result.Status != nil {
+	// } else {
+	// }
+	// if err != nil {
+	// 	return ret, err
+	// }
+
+	// if receipt.BlockNumber.Uint64() > Byzantium {
+	// 	val := uint32(receipt.Status)
+	// 	ret.Status = &val
+	// 	ret.IsError = *ret.Status != 1
+	// }
+	// ret.ContractAddress = receipt.ContractAddress.Hex()
+	// ret.EffectiveGasPrice = tx.EffectiveGasPrice
+	// for _, l := range receipt.Logs {
+	// 	var log types.SimpleLog
+	// 	log.Address = l.Address.Hex()
+	// 	for _, t := range l.Topics {
+	// 		log.Topics = append(log.Topics, t.Hex())
+	// 	}
+	// 	log.Data = hex.EncodeToString(l.Data)
+	// 	ret.Logs = append(ret.Logs, log)
+	// }
+	// return ret, nil
+	return types.SimpleReceipt{}, nil
+}
 
 func GetBlockTimestamp(provider string, bn uint64) uint64 {
 	ec := GetClient(provider)

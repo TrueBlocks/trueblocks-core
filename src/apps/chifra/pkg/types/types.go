@@ -20,6 +20,29 @@ type SimpleAppearance struct {
 	TransactionIndex uint32 `json:"transactionIndex"`
 }
 
+type SimpleLog struct {
+	Address          string   `json:"address"`
+	LogIndex         uint32   `json:"logIndex"`
+	BlockNumber      uint32   `json:"blockNumber,omitempty"`
+	TransactionIndex uint32   `json:"transactionIndex,omitempty"`
+	Timestamp        uint64   `json:"timestamp,omitempty"`
+	Topics           []string `json:"topics"`
+	Data             string   `json:"data,omitempty"`
+	CompressedLog    string   `json:"compressedLog,omitempty"`
+}
+
+type SimpleReceipt struct {
+	// BlockNumber      uint32      `json:"blockNumber,omitempty"`
+	// TransactionIndex uint32      `json:"transactionIndex,omitempty"`
+	// Hash             string      `json:"hash,omitempty"`
+	ContractAddress   string      `json:"contractAddress"`
+	GasUsed           uint64      `json:"gasUsed"`
+	EffectiveGasPrice uint64      `json:"effectiveGasPrice"`
+	Logs              []SimpleLog `json:"logs,omitempty"`
+	Status            *uint32     `json:"status"`
+	IsError           bool        `json:"isError,omitempty"`
+}
+
 type Function struct {
 	Encoding  string `json:"encoding,omitempty"`
 	Signature string `json:"signature,omitempty"`

@@ -15,18 +15,19 @@ func (opts *ReceiptsOptions) ValidateReceipts() error {
 		return opts.BadFlag
 	}
 
-	// err := validate.ValidateIdentifiers(
-	// 	opts.Globals.Chain,
-	// 	opts.Transactions,
-	// 	validate.ValidTransId,
-	// 	-1,
-	// )
-	// if err != nil {
-	// 	if invalidLiteral, ok := err.(*validate.InvalidIdentifierLiteralError); ok {
-	// 		return invalidLiteral
-	// 	}
-	// 	return err
-	// }
+	err := validate.ValidateIdentifiers(
+		opts.Globals.Chain,
+		opts.Transactions,
+		validate.ValidTransId,
+		-1,
+		&opts.TransactionIds,
+	)
+	if err != nil {
+		if invalidLiteral, ok := err.(*validate.InvalidIdentifierLiteralError); ok {
+			return invalidLiteral
+		}
+		return err
+	}
 
 	if len(opts.Globals.File) > 0 {
 		// Do nothing

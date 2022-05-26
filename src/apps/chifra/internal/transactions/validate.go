@@ -13,13 +13,17 @@ func (opts *TransactionsOptions) ValidateTransactions() error {
 		return opts.BadFlag
 	}
 
-    if len(opts.Globals.File) > 0 {
-        // Do nothing
-    } else {
-        if len(opts.Transactions) == 0 {
-            return validate.Usage("Please supply one or more transaction identifiers.")
-        }
-    }
+	if len(opts.Globals.File) > 0 {
+		// Do nothing
+	} else {
+		if len(opts.Transactions) == 0 {
+			return validate.Usage("Please supply one or more transaction identifiers.")
+		}
+
+		if len(opts.Reconcile) > 0 && (opts.Cache || opts.Trace || opts.Articulate || opts.Uniq) {
+			return validate.Usage("Do not use other options with the --reconcile option.")
+		}
+	}
 
 	return opts.Globals.ValidateGlobals()
 }
