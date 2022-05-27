@@ -5,6 +5,8 @@
 package chunksPkg
 
 import (
+	"errors"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -15,17 +17,30 @@ func (opts *ChunksOptions) ValidateChunks() error {
 		return opts.BadFlag
 	}
 
-	err := validate.ValidateEnum("--extract", opts.Extract, "[stats|pins|blooms|index|header|addresses|appearances]")
+	if len(opts.Mode) == 0 {
+		return validate.Usage("Please choose at least one of {0}.", "[stats|pins|blooms|index|header|addresses|appearances]")
+	}
+
+	err := validate.ValidateEnum("mode", opts.Mode, "[stats|pins|blooms|index|header|addresses|appearances]")
 	if err != nil {
 		return err
 	}
 
-	if !opts.Check && len(opts.Extract) == 0 {
-		return validate.Usage("Please choose at least one of {0}.", "--extract or --check")
-	}
-
-	if opts.Check && len(opts.Extract) > 0 {
-		return validate.Usage("Please choose only one of {0}.", "--extract or --check")
+	err = validate.ValidateIdentifiers(
+		opts.Globals.Chain,
+		opts.Blocks,
+		validate.ValidBlockIdWithRangeAndDate,
+		1,
+		&opts.BlockIds,
+	)
+	if err != nil {
+		if invalidLiteral, ok := err.(*validate.InvalidIdentifierLiteralError); ok {
+			return invalidLiteral
+		}
+		if errors.Is(err, validate.ErrTooManyRanges) {
+			return validate.Usage("Specify only a single block range at a time.")
+		}
+		return err
 	}
 
 	return opts.Globals.ValidateGlobals()

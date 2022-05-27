@@ -12,6 +12,7 @@ package chunksPkg
 import (
 	"net/http"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
@@ -49,25 +50,30 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 		err = opts.HandleChunksCheck()
 
 	} else {
-		if opts.Extract == "blooms" {
-			err = opts.HandleChunksExtract(opts.showBloom)
+		blockNums, err := blockRange.GetBlockNumArray(opts.Globals.Chain, opts.BlockIds)
+		if err != nil {
+			return err, true
+		}
 
-		} else if opts.Extract == "pins" {
+		if opts.Mode == "blooms" {
+			err = opts.HandleChunksExtract(opts.showBloom, blockNums)
+
+		} else if opts.Mode == "pins" {
 			err = opts.HandleChunksExtractPins()
 
-		} else if opts.Extract == "stats" {
+		} else if opts.Mode == "stats" {
 			err := opts.Globals.RenderHeader(ChunkStats{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
 			defer opts.Globals.RenderFooter(opts.Globals.ApiMode || opts.Globals.Format == "api")
 			if err != nil {
 				return err, true
 			}
-			err = opts.HandleChunksExtract(opts.showStats)
+			err = opts.HandleChunksExtract(opts.showStats, blockNums)
 			if err != nil {
 				return err, true
 			}
 
 		} else {
-			err = validate.Usage("Extractor for {0} not yet implemented.", opts.Extract)
+			err = validate.Usage("Extractor for {0} not yet implemented.", opts.Mode)
 
 		}
 	}
