@@ -1,4 +1,4 @@
-chunks?mode=stats&fmt=json
+chunks?mode=stats
 {
   "data": [
     {
@@ -11,10 +11,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 320192,
-      "addrsPerBlock": "8893.000",
-      "appsPerBlock": "8893.000",
-      "appsPerAddr": "1.000",
-      "ratio": "2.443"
+      "addrsPerBlock": 8893,
+      "appsPerBlock": 8893,
+      "appsPerAddr": 1,
+      "ratio": 2.442722001830943
     },
     {
       "start": 1,
@@ -26,10 +26,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 16821292,
-      "addrsPerBlock": "0.050",
-      "appsPerBlock": "3.387",
-      "appsPerAddr": "68.190",
-      "ratio": "128.328"
+      "addrsPerBlock": 0.049669687265559245,
+      "appsPerBlock": 3.3869561609548504,
+      "appsPerAddr": 68.18960109103307,
+      "ratio": 128.32844064693316
     },
     {
       "start": 590502,
@@ -41,10 +41,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 524308,
       "chunkSz": 20604640,
-      "addrsPerBlock": "0.601",
-      "appsPerBlock": "7.304",
-      "appsPerAddr": "12.162",
-      "ratio": "39.299"
+      "addrsPerBlock": 0.6005492438766977,
+      "appsPerBlock": 7.303785911748487,
+      "appsPerAddr": 12.1618434894709,
+      "ratio": 39.298732805907974
     },
     {
       "start": 864333,
@@ -56,10 +56,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 262156,
       "chunkSz": 18268376,
-      "addrsPerBlock": "0.382",
-      "appsPerBlock": "9.436",
-      "appsPerAddr": "24.689",
-      "ratio": "69.685"
+      "addrsPerBlock": 0.3821697819461612,
+      "appsPerBlock": 9.43555570232962,
+      "appsPerAddr": 24.689434246423147,
+      "ratio": 69.68513404232594
     },
     {
       "start": 1076299,
@@ -71,10 +71,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 262156,
       "chunkSz": 18376332,
-      "addrsPerBlock": "0.553",
-      "appsPerBlock": "13.032",
-      "appsPerAddr": "23.568",
-      "ratio": "70.097"
+      "addrsPerBlock": 0.552951371920428,
+      "appsPerBlock": 13.031901792521063,
+      "appsPerAddr": 23.56789847045792,
+      "ratio": 70.09693464959796
     },
     {
       "start": 1229770,
@@ -86,10 +86,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 262156,
       "chunkSz": 17737464,
-      "addrsPerBlock": "0.438",
-      "appsPerBlock": "14.126",
-      "appsPerAddr": "32.233",
-      "ratio": "67.660"
+      "addrsPerBlock": 0.4382517675144615,
+      "appsPerBlock": 14.126032080122613,
+      "appsPerAddr": 32.23268706989637,
+      "ratio": 67.65995819283175
     },
     {
       "start": 1371353,
@@ -101,10 +101,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 262156,
       "chunkSz": 18186200,
-      "addrsPerBlock": "0.587",
-      "appsPerBlock": "15.040",
-      "appsPerAddr": "25.616",
-      "ratio": "69.372"
+      "addrsPerBlock": 0.5871510648538082,
+      "appsPerBlock": 15.040308025508363,
+      "appsPerAddr": 25.61573830961743,
+      "ratio": 69.37167182898732
     },
     {
       "start": 1504329,
@@ -116,10 +116,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 393232,
       "chunkSz": 19273504,
-      "addrsPerBlock": "1.075",
-      "appsPerBlock": "18.398",
-      "appsPerAddr": "17.107",
-      "ratio": "49.013"
+      "addrsPerBlock": 1.0754703095533784,
+      "appsPerBlock": 18.398426935283567,
+      "appsPerAddr": 17.10733134318145,
+      "ratio": 49.013060991984375
     },
     {
       "start": 1613034,
@@ -131,10 +131,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 393232,
       "chunkSz": 19733288,
-      "addrsPerBlock": "1.150",
-      "appsPerBlock": "17.245",
-      "appsPerAddr": "15.001",
-      "ratio": "50.182"
+      "addrsPerBlock": 1.1496356973485664,
+      "appsPerBlock": 17.245130416037938,
+      "appsPerAddr": 15.000517516819297,
+      "ratio": 50.18230459372584
     },
     {
       "start": 1729009,
@@ -146,10 +146,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 393232,
       "chunkSz": 19451020,
-      "addrsPerBlock": "1.035",
-      "appsPerBlock": "16.803",
-      "appsPerAddr": "16.241",
-      "ratio": "49.464"
+      "addrsPerBlock": 1.0345916704467182,
+      "appsPerBlock": 16.802731717151353,
+      "appsPerAddr": 16.24093079146504,
+      "ratio": 49.46448915652846
     },
     {
       "start": 1848055,
@@ -161,10 +161,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 393232,
       "chunkSz": 19880132,
-      "addrsPerBlock": "1.205",
-      "appsPerBlock": "17.386",
-      "appsPerAddr": "14.433",
-      "ratio": "50.556"
+      "addrsPerBlock": 1.2045968218644598,
+      "appsPerBlock": 17.385940053548456,
+      "appsPerAddr": 14.4329951216696,
+      "ratio": 50.55573300240062
     },
     {
       "start": 1963091,
@@ -176,10 +176,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 393232,
       "chunkSz": 18933576,
-      "addrsPerBlock": "1.001",
-      "appsPerBlock": "19.110",
-      "appsPerAddr": "19.091",
-      "ratio": "48.149"
+      "addrsPerBlock": 1.0010032677865046,
+      "appsPerBlock": 19.110063253645205,
+      "appsPerAddr": 19.090909958668615,
+      "ratio": 48.14861455832689
     },
     {
       "start": 2067749,
@@ -191,10 +191,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 262156,
       "chunkSz": 18301884,
-      "addrsPerBlock": "0.786",
-      "appsPerBlock": "19.123",
-      "appsPerAddr": "24.329",
-      "ratio": "69.813"
+      "addrsPerBlock": 0.7859908785818777,
+      "appsPerBlock": 19.12255590932125,
+      "appsPerAddr": 24.329233875872806,
+      "ratio": 69.81295106730344
     },
     {
       "start": 2172338,
@@ -206,10 +206,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 262156,
       "chunkSz": 18536336,
-      "addrsPerBlock": "0.928",
-      "appsPerBlock": "20.515",
-      "appsPerAddr": "22.111",
-      "ratio": "70.707"
+      "addrsPerBlock": 0.9277920213311456,
+      "appsPerBlock": 20.51476771613168,
+      "appsPerAddr": 22.11138622069438,
+      "ratio": 70.70727353179024
     },
     {
       "start": 2269848,
@@ -221,10 +221,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 262156,
       "chunkSz": 18282420,
-      "addrsPerBlock": "3.980",
-      "appsPerBlock": "109.660",
-      "appsPerAddr": "27.554",
-      "ratio": "69.739"
+      "addrsPerBlock": 3.9797739440809043,
+      "appsPerBlock": 109.66048347844898,
+      "appsPerAddr": 27.55445033292567,
+      "ratio": 69.73870519843148
     },
     {
       "start": 2288339,
@@ -236,10 +236,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 262156,
       "chunkSz": 4928068,
-      "addrsPerBlock": "5.826",
-      "appsPerBlock": "32.430",
-      "appsPerAddr": "5.566",
-      "ratio": "18.798"
+      "addrsPerBlock": 5.826101869319157,
+      "appsPerBlock": 32.43002915451895,
+      "appsPerAddr": 5.56633403979748,
+      "ratio": 18.798227009871983
     },
     {
       "start": 2300001,
@@ -251,10 +251,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 262156,
       "chunkSz": 18488932,
-      "addrsPerBlock": "3.099",
-      "appsPerBlock": "70.893",
-      "appsPerAddr": "22.877",
-      "ratio": "70.526"
+      "addrsPerBlock": 3.0989601754261864,
+      "appsPerBlock": 70.89343566527552,
+      "appsPerAddr": 22.87652362474321,
+      "ratio": 70.5264499000595
     },
     {
       "start": 2328275,
@@ -266,10 +266,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 16254832,
-      "addrsPerBlock": "9.582",
-      "appsPerBlock": "2990.048",
-      "appsPerAddr": "312.053",
-      "ratio": "124.007"
+      "addrsPerBlock": 9.581845238095237,
+      "appsPerBlock": 2990.0476190476193,
+      "appsPerAddr": 312.0534244447896,
+      "ratio": 124.00695758315533
     },
     {
       "start": 2328947,
@@ -281,10 +281,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 16268472,
-      "addrsPerBlock": "11.074",
-      "appsPerBlock": "3316.939",
-      "appsPerAddr": "299.518",
-      "ratio": "124.111"
+      "addrsPerBlock": 11.074257425742575,
+      "appsPerBlock": 3316.9389438943895,
+      "appsPerAddr": 299.5179555952913,
+      "ratio": 124.11101617332926
     },
     {
       "start": 2329553,
@@ -296,10 +296,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 16714252,
-      "addrsPerBlock": "4.398",
-      "appsPerBlock": "344.888",
-      "appsPerAddr": "78.413",
-      "ratio": "127.512"
+      "addrsPerBlock": 4.398344542162442,
+      "appsPerBlock": 344.88791170891534,
+      "appsPerAddr": 78.41311848192582,
+      "ratio": 127.51184009765029
     },
     {
       "start": 2335352,
@@ -311,10 +311,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 262156,
       "chunkSz": 18179224,
-      "addrsPerBlock": "1.892",
-      "appsPerBlock": "48.620",
-      "appsPerAddr": "25.698",
-      "ratio": "69.345"
+      "addrsPerBlock": 1.891989789716786,
+      "appsPerBlock": 48.620469186823875,
+      "appsPerAddr": 25.69806108419957,
+      "ratio": 69.34506171897648
     },
     {
       "start": 2376487,
@@ -326,10 +326,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 262156,
       "chunkSz": 17620200,
-      "addrsPerBlock": "11.352",
-      "appsPerBlock": "407.570",
-      "appsPerAddr": "35.902",
-      "ratio": "67.213"
+      "addrsPerBlock": 11.352355808285946,
+      "appsPerBlock": 407.56965881397235,
+      "appsPerAddr": 35.90176926241972,
+      "ratio": 67.21265200872763
     },
     {
       "start": 2381411,
@@ -341,10 +341,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 262156,
       "chunkSz": 17799104,
-      "addrsPerBlock": "45.962",
-      "appsPerBlock": "1503.219",
-      "appsPerAddr": "32.706",
-      "ratio": "67.895"
+      "addrsPerBlock": 45.96185489902767,
+      "appsPerBlock": 1503.2191473448017,
+      "appsPerAddr": 32.70579811557176,
+      "ratio": 67.89508536901693
     },
     {
       "start": 2382748,
@@ -356,10 +356,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 17325892,
-      "addrsPerBlock": "85.600",
-      "appsPerBlock": "3825.602",
-      "appsPerAddr": "44.692",
-      "ratio": "132.178"
+      "addrsPerBlock": 85.6,
+      "appsPerBlock": 3825.6019047619047,
+      "appsPerAddr": 44.69161103693814,
+      "ratio": 132.17799816905708
     },
     {
       "start": 2383273,
@@ -371,10 +371,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 17287356,
-      "addrsPerBlock": "106.178",
-      "appsPerBlock": "4689.066",
-      "appsPerAddr": "44.162",
-      "ratio": "131.884"
+      "addrsPerBlock": 106.17798594847775,
+      "appsPerBlock": 4689.065573770492,
+      "appsPerAddr": 44.162314173540956,
+      "ratio": 131.884009765029
     },
     {
       "start": 2383700,
@@ -386,10 +386,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 17329600,
-      "addrsPerBlock": "113.482",
-      "appsPerBlock": "5073.000",
-      "appsPerAddr": "44.703",
-      "ratio": "132.206"
+      "addrsPerBlock": 113.48232323232324,
+      "appsPerBlock": 5073,
+      "appsPerAddr": 44.70299739647077,
+      "ratio": 132.20628623741226
     },
     {
       "start": 2384096,
@@ -401,10 +401,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 17278840,
-      "addrsPerBlock": "126.632",
-      "appsPerBlock": "5623.781",
-      "appsPerAddr": "44.410",
-      "ratio": "131.819"
+      "addrsPerBlock": 126.63202247191012,
+      "appsPerBlock": 5623.7808988764045,
+      "appsPerAddr": 44.410416805306006,
+      "ratio": 131.81904180653035
     },
     {
       "start": 2384452,
@@ -416,10 +416,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 17304396,
-      "addrsPerBlock": "122.681",
-      "appsPerBlock": "5369.662",
-      "appsPerAddr": "43.769",
-      "ratio": "132.014"
+      "addrsPerBlock": 122.68096514745308,
+      "appsPerBlock": 5369.662198391421,
+      "appsPerAddr": 43.76931818181818,
+      "ratio": 132.01400671345743
     },
     {
       "start": 2384825,
@@ -431,10 +431,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 262156,
       "chunkSz": 17719488,
-      "addrsPerBlock": "116.014",
-      "appsPerBlock": "4059.536",
-      "appsPerAddr": "34.992",
-      "ratio": "67.591"
+      "addrsPerBlock": 116.01411290322581,
+      "appsPerBlock": 4059.5362903225805,
+      "appsPerAddr": 34.991745303512154,
+      "ratio": 67.59138833366393
     },
     {
       "start": 2385321,
@@ -446,10 +446,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 17370896,
-      "addrsPerBlock": "134.780",
-      "appsPerBlock": "5644.766",
-      "appsPerAddr": "41.881",
-      "ratio": "132.521"
+      "addrsPerBlock": 134.78028169014084,
+      "appsPerBlock": 5644.7661971830985,
+      "appsPerAddr": 41.88124647313311,
+      "ratio": 132.52133048519988
     },
     {
       "start": 2385676,
@@ -461,10 +461,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 17358408,
-      "addrsPerBlock": "152.176",
-      "appsPerBlock": "6421.856",
-      "appsPerAddr": "42.200",
-      "ratio": "132.426"
+      "addrsPerBlock": 152.17628205128204,
+      "appsPerBlock": 6421.8557692307695,
+      "appsPerAddr": 42.20010952210451,
+      "ratio": 132.4260604211169
     },
     {
       "start": 2385988,
@@ -476,10 +476,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 17437028,
-      "addrsPerBlock": "160.612",
-      "appsPerBlock": "6851.541",
-      "appsPerAddr": "42.659",
-      "ratio": "133.026"
+      "addrsPerBlock": 160.6122448979592,
+      "appsPerBlock": 6851.540816326531,
+      "appsPerAddr": 42.65889453621347,
+      "ratio": 133.02584681110773
     },
     {
       "start": 2386282,
@@ -491,10 +491,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 17401020,
-      "addrsPerBlock": "144.485",
-      "appsPerBlock": "6006.644",
-      "appsPerAddr": "41.573",
-      "ratio": "132.751"
+      "addrsPerBlock": 144.48502994011977,
+      "appsPerBlock": 6006.643712574851,
+      "appsPerAddr": 41.572775498362965,
+      "ratio": 132.75114433933476
     },
     {
       "start": 2386616,
@@ -506,10 +506,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 17359116,
-      "addrsPerBlock": "150.449",
-      "appsPerBlock": "6340.149",
-      "appsPerAddr": "42.141",
-      "ratio": "132.431"
+      "addrsPerBlock": 150.4493670886076,
+      "appsPerBlock": 6340.148734177215,
+      "appsPerAddr": 42.14141180429936,
+      "ratio": 132.43146170277694
     },
     {
       "start": 2386932,
@@ -521,10 +521,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 262156,
       "chunkSz": 18118048,
-      "addrsPerBlock": "11.211",
-      "appsPerBlock": "296.679",
-      "appsPerAddr": "26.464",
-      "ratio": "69.112"
+      "addrsPerBlock": 11.210768318006526,
+      "appsPerBlock": 296.679026994957,
+      "appsPerAddr": 26.4637550771999,
+      "ratio": 69.1117044813012
     },
     {
       "start": 2393674,
@@ -536,10 +536,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 262156,
       "chunkSz": 13087964,
-      "addrsPerBlock": "9.826",
-      "appsPerBlock": "224.180",
-      "appsPerAddr": "22.814",
-      "ratio": "49.924"
+      "addrsPerBlock": 9.826458036984352,
+      "appsPerBlock": 224.18018018018017,
+      "appsPerAddr": 22.813935533680755,
+      "ratio": 49.924335128702
     },
     {
       "start": 2400001,
@@ -551,10 +551,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 17013496,
-      "addrsPerBlock": "15.303",
-      "appsPerBlock": "882.891",
-      "appsPerAddr": "57.694",
-      "ratio": "129.795"
+      "addrsPerBlock": 15.30295024218406,
+      "appsPerBlock": 882.8912373403787,
+      "appsPerAddr": 57.69418467470434,
+      "ratio": 129.79475129691792
     },
     {
       "start": 2402272,
@@ -566,10 +566,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 16790220,
-      "addrsPerBlock": "14.612",
-      "appsPerBlock": "1109.040",
-      "appsPerAddr": "75.897",
-      "ratio": "128.091"
+      "addrsPerBlock": 14.61249309010503,
+      "appsPerBlock": 1109.039800995025,
+      "appsPerAddr": 75.89668608610123,
+      "ratio": 128.09139456820262
     },
     {
       "start": 2404081,
@@ -581,10 +581,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 16803776,
-      "addrsPerBlock": "58.627",
-      "appsPerBlock": "4198.300",
-      "appsPerAddr": "71.611",
-      "ratio": "128.195"
+      "addrsPerBlock": 58.62683438155136,
+      "appsPerBlock": 4198.299790356394,
+      "appsPerAddr": 71.61054890041123,
+      "ratio": 128.1948123283491
     },
     {
       "start": 2404558,
@@ -596,10 +596,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 16801868,
-      "addrsPerBlock": "64.168",
-      "appsPerBlock": "4682.486",
-      "appsPerAddr": "72.972",
-      "ratio": "128.180"
+      "addrsPerBlock": 64.16822429906541,
+      "appsPerBlock": 4682.485981308411,
+      "appsPerAddr": 72.97203612001165,
+      "ratio": 128.180256332011
     },
     {
       "start": 2404986,
@@ -611,10 +611,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 16696960,
-      "addrsPerBlock": "48.236",
-      "appsPerBlock": "4812.353",
-      "appsPerAddr": "99.766",
-      "ratio": "127.380"
+      "addrsPerBlock": 48.236276849642,
+      "appsPerBlock": 4812.353221957041,
+      "appsPerAddr": 99.76626589480976,
+      "ratio": 127.37992065913946
     },
     {
       "start": 2405405,
@@ -626,10 +626,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 16709168,
-      "addrsPerBlock": "46.252",
-      "appsPerBlock": "4585.027",
-      "appsPerAddr": "99.131",
-      "ratio": "127.473"
+      "addrsPerBlock": 46.252272727272725,
+      "appsPerBlock": 4585.027272727273,
+      "appsPerAddr": 99.13085352071151,
+      "ratio": 127.4730546231309
     },
     {
       "start": 2405845,
@@ -641,10 +641,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 16610412,
-      "addrsPerBlock": "45.188",
-      "appsPerBlock": "4278.372",
-      "appsPerAddr": "94.679",
-      "ratio": "126.720"
+      "addrsPerBlock": 45.18803418803419,
+      "appsPerBlock": 4278.371794871795,
+      "appsPerAddr": 94.67930773595612,
+      "ratio": 126.71965212084223
     },
     {
       "start": 2406313,
@@ -656,10 +656,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 16616548,
-      "addrsPerBlock": "43.302",
-      "appsPerBlock": "4036.069",
-      "appsPerAddr": "93.207",
-      "ratio": "126.766"
+      "addrsPerBlock": 43.30241935483871,
+      "appsPerBlock": 4036.0685483870966,
+      "appsPerAddr": 93.20653692150107,
+      "ratio": 126.76646322856271
     },
     {
       "start": 2406809,
@@ -671,10 +671,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 16903000,
-      "addrsPerBlock": "66.261",
-      "appsPerBlock": "4727.876",
-      "appsPerAddr": "71.353",
-      "ratio": "128.952"
+      "addrsPerBlock": 66.2605633802817,
+      "appsPerBlock": 4727.87558685446,
+      "appsPerAddr": 71.35278279661317,
+      "ratio": 128.9517851693622
     },
     {
       "start": 2407235,
@@ -686,10 +686,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 16908912,
-      "addrsPerBlock": "49.768",
-      "appsPerBlock": "3408.200",
-      "appsPerAddr": "68.482",
-      "ratio": "128.997"
+      "addrsPerBlock": 49.76779661016949,
+      "appsPerBlock": 3408.2,
+      "appsPerAddr": 68.48203521438545,
+      "ratio": 128.99688739700946
     },
     {
       "start": 2407825,
@@ -701,10 +701,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 16631512,
-      "addrsPerBlock": "45.811",
-      "appsPerBlock": "4244.180",
-      "appsPerAddr": "92.645",
-      "ratio": "126.881"
+      "addrsPerBlock": 45.811440677966104,
+      "appsPerBlock": 4244.1800847457625,
+      "appsPerAddr": 92.64454516024604,
+      "ratio": 126.88062252059811
     },
     {
       "start": 2408297,
@@ -716,10 +716,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 16857624,
-      "addrsPerBlock": "48.138",
-      "appsPerBlock": "3427.416",
-      "appsPerAddr": "71.199",
-      "ratio": "128.606"
+      "addrsPerBlock": 48.1382252559727,
+      "appsPerBlock": 3427.4163822525597,
+      "appsPerAddr": 71.19947534474812,
+      "ratio": 128.6056148916692
     },
     {
       "start": 2408883,
@@ -731,10 +731,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 16843104,
-      "addrsPerBlock": "55.547",
-      "appsPerBlock": "3933.786",
-      "appsPerAddr": "70.819",
-      "ratio": "128.495"
+      "addrsPerBlock": 55.54705882352941,
+      "appsPerBlock": 3933.786274509804,
+      "appsPerAddr": 70.81898407991811,
+      "ratio": 128.4948428440647
     },
     {
       "start": 2409393,
@@ -746,10 +746,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 16929832,
-      "addrsPerBlock": "51.758",
-      "appsPerBlock": "3673.536",
-      "appsPerAddr": "70.976",
-      "ratio": "129.156"
+      "addrsPerBlock": 51.75774134790528,
+      "appsPerBlock": 3673.535519125683,
+      "appsPerAddr": 70.97557628013374,
+      "ratio": 129.15648458956363
     },
     {
       "start": 2409942,
@@ -761,10 +761,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 16605856,
-      "addrsPerBlock": "34.038",
-      "appsPerBlock": "3272.578",
-      "appsPerAddr": "96.146",
-      "ratio": "126.685"
+      "addrsPerBlock": 34.037581699346404,
+      "appsPerBlock": 3272.578431372549,
+      "appsPerAddr": 96.14603235562383,
+      "ratio": 126.6848947207812
     },
     {
       "start": 2410554,
@@ -776,10 +776,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 16612068,
-      "addrsPerBlock": "35.157",
-      "appsPerBlock": "3390.491",
-      "appsPerAddr": "96.438",
-      "ratio": "126.732"
+      "addrsPerBlock": 35.15736040609137,
+      "appsPerBlock": 3390.490693739425,
+      "appsPerAddr": 96.43757820771971,
+      "ratio": 126.73228562709795
     },
     {
       "start": 2411145,
@@ -791,10 +791,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 16585444,
-      "addrsPerBlock": "39.833",
-      "appsPerBlock": "3982.205",
-      "appsPerAddr": "99.972",
-      "ratio": "126.529"
+      "addrsPerBlock": 39.83300198807157,
+      "appsPerBlock": 3982.2047713717693,
+      "appsPerAddr": 99.97249950089838,
+      "ratio": 126.52917302410742
     },
     {
       "start": 2411648,
@@ -806,10 +806,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 16693324,
-      "addrsPerBlock": "37.593",
-      "appsPerBlock": "3411.143",
-      "appsPerAddr": "90.740",
-      "ratio": "127.352"
+      "addrsPerBlock": 37.592529711375214,
+      "appsPerBlock": 3411.1426146010185,
+      "appsPerAddr": 90.73990606087978,
+      "ratio": 127.35218187366493
     },
     {
       "start": 2412237,
@@ -821,10 +821,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 16746536,
-      "addrsPerBlock": "30.677",
-      "appsPerBlock": "2665.229",
-      "appsPerAddr": "86.881",
-      "ratio": "127.758"
+      "addrsPerBlock": 30.67682119205298,
+      "appsPerBlock": 2665.229139072848,
+      "appsPerAddr": 86.88087733690256,
+      "ratio": 127.75813243820568
     },
     {
       "start": 2412992,
@@ -836,10 +836,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 16782084,
-      "addrsPerBlock": "21.732",
-      "appsPerBlock": "1873.523",
-      "appsPerAddr": "86.209",
-      "ratio": "128.029"
+      "addrsPerBlock": 21.732342007434944,
+      "appsPerBlock": 1873.5232342007434,
+      "appsPerAddr": 86.20898905234348,
+      "ratio": 128.0293256026854
     },
     {
       "start": 2414068,
@@ -851,10 +851,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 16681268,
-      "addrsPerBlock": "32.686",
-      "appsPerBlock": "3021.168",
-      "appsPerAddr": "92.431",
-      "ratio": "127.260"
+      "addrsPerBlock": 32.68571428571428,
+      "appsPerBlock": 3021.1684210526314,
+      "appsPerAddr": 92.43085204269414,
+      "ratio": 127.26020750686604
     },
     {
       "start": 2414733,
@@ -866,10 +866,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 16896376,
-      "addrsPerBlock": "16.303",
-      "appsPerBlock": "1197.119",
-      "appsPerAddr": "73.427",
-      "ratio": "128.901"
+      "addrsPerBlock": 16.303444180522565,
+      "appsPerBlock": 1197.1193586698337,
+      "appsPerAddr": 73.42739027499545,
+      "ratio": 128.90125114433934
     },
     {
       "start": 2416417,
@@ -881,10 +881,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 4194436,
       "chunkSz": 60224500,
-      "addrsPerBlock": "237.824",
-      "appsPerBlock": "301.529",
-      "appsPerAddr": "1.268",
-      "ratio": "14.358"
+      "addrsPerBlock": 237.82437114023196,
+      "appsPerBlock": 301.5289953306221,
+      "appsPerAddr": 1.2678641549012106,
+      "ratio": 14.358187846947718
     },
     {
       "start": 2423056,
@@ -896,10 +896,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 5111968,
       "chunkSz": 69479636,
-      "addrsPerBlock": "1376.717",
-      "appsPerBlock": "1443.171",
-      "appsPerAddr": "1.048",
-      "ratio": "13.592"
+      "addrsPerBlock": 1376.7166546503245,
+      "appsPerBlock": 1443.1708723864456,
+      "appsPerAddr": 1.0482700761348747,
+      "ratio": 13.591563170974466
     },
     {
       "start": 2424443,
@@ -911,10 +911,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 5243044,
       "chunkSz": 71582220,
-      "addrsPerBlock": "1236.459",
-      "appsPerBlock": "1247.331",
-      "appsPerAddr": "1.009",
-      "ratio": "13.653"
+      "addrsPerBlock": 1236.4585669781932,
+      "appsPerBlock": 1247.3308411214953,
+      "appsPerAddr": 1.0087930759943482,
+      "ratio": 13.65279787848433
     },
     {
       "start": 2426048,
@@ -926,10 +926,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 4587664,
       "chunkSz": 64289176,
-      "addrsPerBlock": "1108.938",
-      "appsPerBlock": "1289.981",
-      "appsPerAddr": "1.163",
-      "ratio": "14.013"
+      "addrsPerBlock": 1108.9375804375804,
+      "appsPerBlock": 1289.980694980695,
+      "appsPerAddr": 1.16325816505531,
+      "ratio": 14.013488346138688
     },
     {
       "start": 2427602,
@@ -941,10 +941,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 5243044,
       "chunkSz": 71728776,
-      "addrsPerBlock": "1327.822",
-      "appsPerBlock": "1337.999",
-      "appsPerAddr": "1.008",
-      "ratio": "13.681"
+      "addrsPerBlock": 1327.8217623497997,
+      "appsPerBlock": 1337.9986648865154,
+      "appsPerAddr": 1.0076643588961112,
+      "ratio": 13.680750342739827
     },
     {
       "start": 2429100,
@@ -956,10 +956,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 5243044,
       "chunkSz": 71482240,
-      "addrsPerBlock": "1105.751",
-      "appsPerBlock": "1116.075",
-      "appsPerAddr": "1.009",
-      "ratio": "13.634"
+      "addrsPerBlock": 1105.7505580357142,
+      "appsPerBlock": 1116.0753348214287,
+      "appsPerAddr": 1.0093373471174687,
+      "ratio": 13.633728803344011
     },
     {
       "start": 2430892,
@@ -971,10 +971,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 5243044,
       "chunkSz": 71436288,
-      "addrsPerBlock": "845.328",
-      "appsPerBlock": "855.760",
-      "appsPerAddr": "1.012",
-      "ratio": "13.625"
+      "addrsPerBlock": 845.3280649295173,
+      "appsPerBlock": 855.7603588210167,
+      "appsPerAddr": 1.0123411185837883,
+      "ratio": 13.624964429060675
     },
     {
       "start": 2433233,
@@ -986,10 +986,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 3407980,
       "chunkSz": 51847076,
-      "addrsPerBlock": "340.746",
-      "appsPerBlock": "534.244",
-      "appsPerAddr": "1.568",
-      "ratio": "15.213"
+      "addrsPerBlock": 340.74553690381026,
+      "appsPerBlock": 534.2435385025314,
+      "appsPerAddr": 1.5678665767920064,
+      "ratio": 15.21343317742475
     },
     {
       "start": 2436986,
@@ -1001,10 +1001,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 2097220,
       "chunkSz": 37564872,
-      "addrsPerBlock": "217.322",
-      "appsPerBlock": "565.067",
-      "appsPerAddr": "2.600",
-      "ratio": "17.912"
+      "addrsPerBlock": 217.3215697346132,
+      "appsPerBlock": 565.0671936758894,
+      "appsPerAddr": 2.6001431628067704,
+      "ratio": 17.91174602569115
     },
     {
       "start": 2440528,
@@ -1016,10 +1016,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 4849816,
       "chunkSz": 67452740,
-      "addrsPerBlock": "159.819",
-      "appsPerBlock": "174.008",
-      "appsPerAddr": "1.089",
-      "ratio": "13.908"
+      "addrsPerBlock": 159.81856136383405,
+      "appsPerBlock": 174.00782812907715,
+      "appsPerAddr": 1.0887835971251212,
+      "ratio": 13.908309098736941
     },
     {
       "start": 2452025,
@@ -1031,10 +1031,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 4980892,
       "chunkSz": 68314124,
-      "addrsPerBlock": "196.194",
-      "appsPerBlock": "210.208",
-      "appsPerAddr": "1.071",
-      "ratio": "13.715"
+      "addrsPerBlock": 196.19388719672304,
+      "appsPerBlock": 210.20827644155025,
+      "appsPerAddr": 1.071431324620094,
+      "ratio": 13.715238957198832
     },
     {
       "start": 2461546,
@@ -1046,10 +1046,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1179688,
       "chunkSz": 21042468,
-      "addrsPerBlock": "11.105",
-      "appsPerBlock": "29.532",
-      "appsPerAddr": "2.659",
-      "ratio": "17.837"
+      "addrsPerBlock": 11.105135873098426,
+      "appsPerBlock": 29.531530360161227,
+      "appsPerAddr": 2.659267810644237,
+      "ratio": 17.837316307362624
     },
     {
       "start": 2500001,
@@ -1061,10 +1061,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 262156,
       "chunkSz": 17000564,
-      "addrsPerBlock": "0.982",
-      "appsPerBlock": "17.813",
-      "appsPerAddr": "18.137",
-      "ratio": "64.849"
+      "addrsPerBlock": 0.98216,
+      "appsPerBlock": 17.81309,
+      "appsPerAddr": 18.136647796693005,
+      "ratio": 64.84903645157846
     },
     {
       "start": 2600001,
@@ -1076,10 +1076,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1703992,
       "chunkSz": 33477640,
-      "addrsPerBlock": "7.890",
-      "appsPerBlock": "25.285",
-      "appsPerAddr": "3.205",
-      "ratio": "19.647"
+      "addrsPerBlock": 7.889581331850129,
+      "appsPerBlock": 25.28502806290135,
+      "appsPerAddr": 3.204863097212275,
+      "ratio": 19.646594584951103
     },
     {
       "start": 2679109,
@@ -1091,10 +1091,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 5111968,
       "chunkSz": 70352380,
-      "addrsPerBlock": "483.732",
-      "appsPerBlock": "498.873",
-      "appsPerAddr": "1.031",
-      "ratio": "13.762"
+      "addrsPerBlock": 483.73180458624125,
+      "appsPerBlock": 498.87337986041877,
+      "appsPerAddr": 1.0313015913583121,
+      "ratio": 13.762288809319621
     },
     {
       "start": 2683121,
@@ -1106,10 +1106,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 4980892,
       "chunkSz": 68939480,
-      "addrsPerBlock": "245.202",
-      "appsPerBlock": "259.487",
-      "appsPerAddr": "1.058",
-      "ratio": "13.841"
+      "addrsPerBlock": 245.20246433203633,
+      "appsPerBlock": 259.48651102464333,
+      "appsPerAddr": 1.0582540910896578,
+      "ratio": 13.840789962922305
     },
     {
       "start": 2690831,
@@ -1121,10 +1121,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 4980892,
       "chunkSz": 68748016,
-      "addrsPerBlock": "275.555",
-      "appsPerBlock": "293.020",
-      "appsPerAddr": "1.063",
-      "ratio": "13.802"
+      "addrsPerBlock": 275.5550190225344,
+      "appsPerBlock": 293.01960784313724,
+      "appsPerAddr": 1.0633796796100987,
+      "ratio": 13.802350261760344
     },
     {
       "start": 2697665,
@@ -1136,10 +1136,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 3276904,
       "chunkSz": 43491940,
-      "addrsPerBlock": "513.787",
-      "appsPerBlock": "529.009",
-      "appsPerAddr": "1.030",
-      "ratio": "13.272"
+      "addrsPerBlock": 513.7868150684932,
+      "appsPerBlock": 529.0094178082192,
+      "appsPerAddr": 1.0296282471509057,
+      "ratio": 13.27226552868195
     },
     {
       "start": 2700001,
@@ -1151,10 +1151,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 5243044,
       "chunkSz": 70650908,
-      "addrsPerBlock": "618.230",
-      "appsPerBlock": "633.584",
-      "appsPerAddr": "1.025",
-      "ratio": "13.475"
+      "addrsPerBlock": 618.2299651567944,
+      "appsPerBlock": 633.5844155844156,
+      "appsPerAddr": 1.0248361472154248,
+      "ratio": 13.475169767791382
     },
     {
       "start": 2703158,
@@ -1166,10 +1166,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 5111968,
       "chunkSz": 70386880,
-      "addrsPerBlock": "697.647",
-      "appsPerBlock": "718.564",
-      "appsPerAddr": "1.030",
-      "ratio": "13.769"
+      "addrsPerBlock": 697.6469109195402,
+      "appsPerBlock": 718.5642959770115,
+      "appsPerAddr": 1.0299827674000603,
+      "ratio": 13.769037677857138
     },
     {
       "start": 2705942,
@@ -1181,10 +1181,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 5111968,
       "chunkSz": 70401788,
-      "addrsPerBlock": "687.997",
-      "appsPerBlock": "708.234",
-      "appsPerAddr": "1.029",
-      "ratio": "13.772"
+      "addrsPerBlock": 687.9971671388103,
+      "appsPerBlock": 708.2344192634561,
+      "appsPerAddr": 1.0294147317623517,
+      "ratio": 13.771953971542858
     },
     {
       "start": 2708766,
@@ -1196,10 +1196,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 5111968,
       "chunkSz": 70512196,
-      "addrsPerBlock": "745.168",
-      "appsPerBlock": "766.346",
-      "appsPerAddr": "1.028",
-      "ratio": "13.794"
+      "addrsPerBlock": 745.1676875957121,
+      "appsPerBlock": 766.3460949464012,
+      "appsPerAddr": 1.0284209953051258,
+      "ratio": 13.79355191581794
     },
     {
       "start": 2711378,
@@ -1211,10 +1211,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 5111968,
       "chunkSz": 70461908,
-      "addrsPerBlock": "761.624",
-      "appsPerBlock": "784.270",
-      "appsPerAddr": "1.030",
-      "ratio": "13.784"
+      "addrsPerBlock": 761.6239717978848,
+      "appsPerBlock": 784.2702702702703,
+      "appsPerAddr": 1.0297342249075048,
+      "ratio": 13.78371460854215
     },
     {
       "start": 2713931,
@@ -1226,10 +1226,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 5111968,
       "chunkSz": 70112356,
-      "addrsPerBlock": "569.242",
-      "appsPerBlock": "589.868",
-      "appsPerAddr": "1.036",
-      "ratio": "13.715"
+      "addrsPerBlock": 569.2421921037125,
+      "appsPerBlock": 589.867707719505,
+      "appsPerAddr": 1.036233286818688,
+      "ratio": 13.715335463758771
     },
     {
       "start": 2717325,
@@ -1241,10 +1241,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1310764,
       "chunkSz": 27868060,
-      "addrsPerBlock": "5.578",
-      "appsPerBlock": "22.610",
-      "appsPerAddr": "4.053",
-      "ratio": "21.261"
+      "addrsPerBlock": 5.578450820068702,
+      "appsPerBlock": 22.609802119115585,
+      "appsPerAddr": 4.053061118290388,
+      "ratio": 21.260928740795446
     },
     {
       "start": 2800001,
@@ -1256,10 +1256,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 262156,
       "chunkSz": 17155096,
-      "addrsPerBlock": "0.915",
-      "appsPerBlock": "18.242",
-      "appsPerAddr": "19.944",
-      "ratio": "65.439"
+      "addrsPerBlock": 0.91467,
+      "appsPerBlock": 18.24247,
+      "appsPerAddr": 19.944318716039664,
+      "ratio": 65.43850226582646
     },
     {
       "start": 2900001,
@@ -1271,10 +1271,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 262156,
       "chunkSz": 17687356,
-      "addrsPerBlock": "0.956",
-      "appsPerBlock": "18.762",
-      "appsPerAddr": "19.620",
-      "ratio": "67.469"
+      "addrsPerBlock": 0.95628,
+      "appsPerBlock": 18.76216,
+      "appsPerAddr": 19.619943949470866,
+      "ratio": 67.4688200918537
     },
     {
       "start": 3000001,
@@ -1286,10 +1286,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 262156,
       "chunkSz": 17844020,
-      "addrsPerBlock": "0.893",
-      "appsPerBlock": "19.179",
-      "appsPerAddr": "21.471",
-      "ratio": "68.066"
+      "addrsPerBlock": 0.89322,
+      "appsPerBlock": 19.1787,
+      "appsPerAddr": 21.471418015718413,
+      "ratio": 68.06641846839287
     },
     {
       "start": 3100001,
@@ -1301,10 +1301,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 262156,
       "chunkSz": 18493300,
-      "addrsPerBlock": "0.914",
-      "appsPerBlock": "20.531",
-      "appsPerAddr": "22.464",
-      "ratio": "70.543"
+      "addrsPerBlock": 0.9139267273679132,
+      "appsPerBlock": 20.53075951835922,
+      "appsPerAddr": 22.464338664749754,
+      "ratio": 70.54311173499748
     },
     {
       "start": 3197418,
@@ -1316,10 +1316,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 715116,
-      "addrsPerBlock": "4.014",
-      "appsPerBlock": "20.556",
-      "appsPerAddr": "5.121",
-      "ratio": "5.456"
+      "addrsPerBlock": 4.013937282229965,
+      "appsPerBlock": 20.555942702284167,
+      "appsPerAddr": 5.121141975308642,
+      "ratio": 5.455569118095819
     },
     {
       "start": 3200001,
@@ -1331,10 +1331,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 393232,
       "chunkSz": 19342168,
-      "addrsPerBlock": "1.356",
-      "appsPerBlock": "22.720",
-      "appsPerAddr": "16.761",
-      "ratio": "49.188"
+      "addrsPerBlock": 1.3555103709930254,
+      "appsPerBlock": 22.719710566372083,
+      "appsPerAddr": 16.761000913425683,
+      "ratio": 49.18767546893437
     },
     {
       "start": 3288035,
@@ -1346,10 +1346,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 3153052,
-      "addrsPerBlock": "3.045",
-      "appsPerBlock": "22.280",
-      "appsPerAddr": "7.317",
-      "ratio": "24.054"
+      "addrsPerBlock": 3.0449607220457966,
+      "appsPerBlock": 22.27979274611399,
+      "appsPerAddr": 7.316939290811286,
+      "ratio": 24.054409520903267
     },
     {
       "start": 3300001,
@@ -1361,10 +1361,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 524308,
       "chunkSz": 20638196,
-      "addrsPerBlock": "2.431",
-      "appsPerBlock": "29.356",
-      "appsPerAddr": "12.075",
-      "ratio": "39.363"
+      "addrsPerBlock": 2.43114000968722,
+      "appsPerBlock": 29.355843888978587,
+      "appsPerAddr": 12.074929363181917,
+      "ratio": 39.36273335520343
     },
     {
       "start": 3368132,
@@ -1376,10 +1376,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 393232,
       "chunkSz": 11705384,
-      "addrsPerBlock": "3.508",
-      "appsPerBlock": "33.635",
-      "appsPerAddr": "9.589",
-      "ratio": "29.767"
+      "addrsPerBlock": 3.5077661677492236,
+      "appsPerBlock": 33.63475477736986,
+      "appsPerAddr": 9.588653624238521,
+      "ratio": 29.767119664727183
     },
     {
       "start": 3400001,
@@ -1391,10 +1391,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 524308,
       "chunkSz": 21186264,
-      "addrsPerBlock": "3.393",
-      "appsPerBlock": "36.643",
-      "appsPerAddr": "10.798",
-      "ratio": "40.408"
+      "addrsPerBlock": 3.3934336124292335,
+      "appsPerBlock": 36.6431175683846,
+      "appsPerAddr": 10.798242062013745,
+      "ratio": 40.40805023001747
     },
     {
       "start": 3454582,
@@ -1406,10 +1406,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 524308,
       "chunkSz": 17627816,
-      "addrsPerBlock": "3.524",
-      "appsPerBlock": "36.179",
-      "appsPerAddr": "10.266",
-      "ratio": "33.621"
+      "addrsPerBlock": 3.5243180166890506,
+      "appsPerBlock": 36.17919813293996,
+      "appsPerAddr": 10.265588395149653,
+      "ratio": 33.621108203575
     },
     {
       "start": 3500001,
@@ -1421,10 +1421,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 524308,
       "chunkSz": 20530560,
-      "addrsPerBlock": "2.632",
-      "appsPerBlock": "32.539",
-      "appsPerAddr": "12.364",
-      "ratio": "39.157"
+      "addrsPerBlock": 2.631727077503742,
+      "appsPerBlock": 32.539370078740156,
+      "appsPerAddr": 12.36426465224675,
+      "ratio": 39.15744180901302
     },
     {
       "start": 3561469,
@@ -1436,10 +1436,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 393232,
       "chunkSz": 15111272,
-      "addrsPerBlock": "3.752",
-      "appsPerBlock": "35.890",
-      "appsPerAddr": "9.566",
-      "ratio": "38.428"
+      "addrsPerBlock": 3.751920481677567,
+      "appsPerBlock": 35.88996159036645,
+      "appsPerAddr": 9.5657575275474,
+      "ratio": 38.428388330552956
     },
     {
       "start": 3600001,
@@ -1451,10 +1451,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 655384,
       "chunkSz": 21977516,
-      "addrsPerBlock": "4.795",
-      "appsPerBlock": "44.935",
-      "appsPerAddr": "9.371",
-      "ratio": "33.534"
+      "addrsPerBlock": 4.7952012940330695,
+      "appsPerBlock": 44.93462437095614,
+      "appsPerAddr": 9.370748299319727,
+      "ratio": 33.53380003173712
     },
     {
       "start": 3644513,
@@ -1466,10 +1466,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 655384,
       "chunkSz": 22903768,
-      "addrsPerBlock": "5.809",
-      "appsPerBlock": "47.126",
-      "appsPerAddr": "8.112",
-      "ratio": "34.947"
+      "addrsPerBlock": 5.809495758718191,
+      "appsPerBlock": 47.12589538171536,
+      "appsPerAddr": 8.111873618462411,
+      "ratio": 34.94709666394053
     },
     {
       "start": 3686953,
@@ -1481,10 +1481,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 393232,
       "chunkSz": 8030176,
-      "addrsPerBlock": "7.952",
-      "appsPerBlock": "49.096",
-      "appsPerAddr": "6.174",
-      "ratio": "20.421"
+      "addrsPerBlock": 7.952099938687922,
+      "appsPerBlock": 49.09641324340895,
+      "appsPerAddr": 6.174018639346948,
+      "ratio": 20.42096268869268
     },
     {
       "start": 3700001,
@@ -1496,10 +1496,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 786460,
       "chunkSz": 23123048,
-      "addrsPerBlock": "7.447",
-      "appsPerBlock": "58.551",
-      "appsPerAddr": "7.862",
-      "ratio": "29.401"
+      "addrsPerBlock": 7.447027137796774,
+      "appsPerBlock": 58.550747972715826,
+      "appsPerAddr": 7.86229818816509,
+      "ratio": 29.401429189024235
     },
     {
       "start": 3734160,
@@ -1511,10 +1511,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 786460,
       "chunkSz": 24207296,
-      "addrsPerBlock": "11.043",
-      "appsPerBlock": "75.353",
-      "appsPerAddr": "6.824",
-      "ratio": "30.780"
+      "addrsPerBlock": 11.043139175646147,
+      "appsPerBlock": 75.35347750734685,
+      "appsPerAddr": 6.823555902793178,
+      "ratio": 30.780072730971696
     },
     {
       "start": 3760702,
@@ -1526,10 +1526,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 917536,
       "chunkSz": 24410476,
-      "addrsPerBlock": "11.201",
-      "appsPerBlock": "74.596",
-      "appsPerAddr": "6.660",
-      "ratio": "26.604"
+      "addrsPerBlock": 11.200984597023831,
+      "appsPerBlock": 74.59597956215269,
+      "appsPerAddr": 6.659769854694138,
+      "ratio": 26.60437955567956
     },
     {
       "start": 3787515,
@@ -1541,10 +1541,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 655384,
       "chunkSz": 14769152,
-      "addrsPerBlock": "17.115",
-      "appsPerBlock": "87.953",
-      "appsPerAddr": "5.139",
-      "ratio": "22.535"
+      "addrsPerBlock": 17.115249078968446,
+      "appsPerBlock": 87.95330770462918,
+      "appsPerAddr": 5.138885639281051,
+      "ratio": 22.53511223954201
     },
     {
       "start": 3800001,
@@ -1556,10 +1556,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 917536,
       "chunkSz": 24995876,
-      "addrsPerBlock": "15.377",
-      "appsPerBlock": "95.755",
-      "appsPerAddr": "6.227",
-      "ratio": "27.242"
+      "addrsPerBlock": 15.377184163914022,
+      "appsPerBlock": 95.75518215328641,
+      "appsPerAddr": 6.227094709446039,
+      "ratio": 27.242392669061488
     },
     {
       "start": 3820890,
@@ -1571,10 +1571,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 917536,
       "chunkSz": 25161016,
-      "addrsPerBlock": "15.681",
-      "appsPerBlock": "95.868",
-      "appsPerAddr": "6.114",
-      "ratio": "27.422"
+      "addrsPerBlock": 15.681014235728323,
+      "appsPerBlock": 95.86761251977184,
+      "appsPerAddr": 6.113610451379018,
+      "ratio": 27.422374707913367
     },
     {
       "start": 3841753,
@@ -1586,10 +1586,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1048612,
       "chunkSz": 25897912,
-      "addrsPerBlock": "18.834",
-      "appsPerBlock": "106.559",
-      "appsPerAddr": "5.658",
-      "ratio": "24.697"
+      "addrsPerBlock": 18.83387500665992,
+      "appsPerBlock": 106.55911343172252,
+      "appsPerAddr": 5.657843295341068,
+      "ratio": 24.69732560756505
     },
     {
       "start": 3860522,
@@ -1601,10 +1601,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1048612,
       "chunkSz": 26280304,
-      "addrsPerBlock": "23.682",
-      "appsPerBlock": "129.051",
-      "appsPerAddr": "5.449",
-      "ratio": "25.062"
+      "addrsPerBlock": 23.68174193548387,
+      "appsPerBlock": 129.05148387096773,
+      "appsPerAddr": 5.4494084186265725,
+      "ratio": 25.06199051698817
     },
     {
       "start": 3876022,
@@ -1616,10 +1616,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 917536,
       "chunkSz": 25579092,
-      "addrsPerBlock": "19.672",
-      "appsPerBlock": "115.023",
-      "appsPerAddr": "5.847",
-      "ratio": "27.878"
+      "addrsPerBlock": 19.6717465064121,
+      "appsPerBlock": 115.0226580021853,
+      "appsPerAddr": 5.847099441053346,
+      "ratio": 27.878025494367524
     },
     {
       "start": 3893411,
@@ -1631,10 +1631,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 524308,
       "chunkSz": 12135148,
-      "addrsPerBlock": "28.446",
-      "appsPerBlock": "130.618",
-      "appsPerAddr": "4.592",
-      "ratio": "23.145"
+      "addrsPerBlock": 28.446433990895297,
+      "appsPerBlock": 130.61775417298938,
+      "appsPerAddr": 4.59170925307529,
+      "ratio": 23.145075032232963
     },
     {
       "start": 3900001,
@@ -1646,10 +1646,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1048612,
       "chunkSz": 26111004,
-      "addrsPerBlock": "24.375",
-      "appsPerBlock": "135.012",
-      "appsPerAddr": "5.539",
-      "ratio": "24.901"
+      "addrsPerBlock": 24.374645605508302,
+      "appsPerBlock": 135.01208316457405,
+      "appsPerAddr": 5.539037791551043,
+      "ratio": 24.900538998218597
     },
     {
       "start": 3914815,
@@ -1661,10 +1661,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1048612,
       "chunkSz": 26308088,
-      "addrsPerBlock": "24.115",
-      "appsPerBlock": "131.025",
-      "appsPerAddr": "5.433",
-      "ratio": "25.088"
+      "addrsPerBlock": 24.11496888306584,
+      "appsPerBlock": 131.02541762201113,
+      "appsPerAddr": 5.433364573570759,
+      "ratio": 25.088486494528006
     },
     {
       "start": 3930080,
@@ -1676,10 +1676,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1048612,
       "chunkSz": 26234168,
-      "addrsPerBlock": "26.170",
-      "appsPerBlock": "143.226",
-      "appsPerAddr": "5.473",
-      "ratio": "25.018"
+      "addrsPerBlock": 26.169781596849266,
+      "appsPerBlock": 143.22606516290728,
+      "appsPerAddr": 5.472956074656393,
+      "ratio": 25.017993309250706
     },
     {
       "start": 3944045,
@@ -1691,10 +1691,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1048612,
       "chunkSz": 25806824,
-      "addrsPerBlock": "23.008",
-      "appsPerBlock": "131.406",
-      "appsPerAddr": "5.711",
-      "ratio": "24.610"
+      "addrsPerBlock": 23.00788384468826,
+      "appsPerBlock": 131.40641219367978,
+      "appsPerAddr": 5.711364551417321,
+      "ratio": 24.61046030371577
     },
     {
       "start": 3959266,
@@ -1706,10 +1706,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 917536,
       "chunkSz": 25251412,
-      "addrsPerBlock": "22.873",
-      "appsPerBlock": "138.471",
-      "appsPerAddr": "6.054",
-      "ratio": "27.521"
+      "addrsPerBlock": 22.873442259761838,
+      "appsPerBlock": 138.47112988091942,
+      "appsPerAddr": 6.053794977965034,
+      "ratio": 27.52089509294458
     },
     {
       "start": 3973710,
@@ -1721,10 +1721,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 917536,
       "chunkSz": 25578420,
-      "addrsPerBlock": "23.551",
-      "appsPerBlock": "137.725",
-      "appsPerAddr": "5.848",
-      "ratio": "27.877"
+      "addrsPerBlock": 23.55119465675136,
+      "appsPerBlock": 137.72485023755422,
+      "appsPerAddr": 5.847892314799114,
+      "ratio": 27.877293098036482
     },
     {
       "start": 3988233,
@@ -1736,10 +1736,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 786460,
       "chunkSz": 19711780,
-      "addrsPerBlock": "23.340",
-      "appsPerBlock": "127.689",
-      "appsPerAddr": "5.471",
-      "ratio": "25.064"
+      "addrsPerBlock": 23.33990482664854,
+      "appsPerBlock": 127.68890210740993,
+      "appsPerAddr": 5.470840736317828,
+      "ratio": 25.063932049945326
     },
     {
       "start": 4000001,
@@ -1751,10 +1751,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 917536,
       "chunkSz": 25281964,
-      "addrsPerBlock": "26.748",
-      "appsPerBlock": "161.383",
-      "appsPerAddr": "6.033",
-      "ratio": "27.554"
+      "addrsPerBlock": 26.748325667715648,
+      "appsPerBlock": 161.38287743080772,
+      "appsPerAddr": 6.033382404401916,
+      "ratio": 27.55419296899522
     },
     {
       "start": 4012394,
@@ -1766,10 +1766,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 917536,
       "chunkSz": 25238680,
-      "addrsPerBlock": "25.028",
-      "appsPerBlock": "151.750",
-      "appsPerAddr": "6.063",
-      "ratio": "27.507"
+      "addrsPerBlock": 25.027767240725286,
+      "appsPerBlock": 151.74956376602685,
+      "appsPerAddr": 6.063248163787433,
+      "ratio": 27.507018798172496
     },
     {
       "start": 4025575,
@@ -1781,10 +1781,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 917536,
       "chunkSz": 25156792,
-      "addrsPerBlock": "22.827",
-      "appsPerBlock": "139.653",
-      "appsPerAddr": "6.118",
-      "ratio": "27.418"
+      "addrsPerBlock": 22.827270823151576,
+      "appsPerBlock": 139.65307547301543,
+      "appsPerAddr": 6.117817436650304,
+      "ratio": 27.417771073832526
     },
     {
       "start": 4039898,
@@ -1796,10 +1796,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1048612,
       "chunkSz": 25808108,
-      "addrsPerBlock": "26.370",
-      "appsPerBlock": "150.592",
-      "appsPerAddr": "5.711",
-      "ratio": "24.612"
+      "addrsPerBlock": 26.36967324198163,
+      "appsPerBlock": 150.59185363650053,
+      "appsPerAddr": 5.710797106000993,
+      "ratio": 24.611684779498994
     },
     {
       "start": 4053180,
@@ -1811,10 +1811,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 917536,
       "chunkSz": 25262388,
-      "addrsPerBlock": "23.086",
-      "appsPerBlock": "139.606",
-      "appsPerAddr": "6.047",
-      "ratio": "27.533"
+      "addrsPerBlock": 23.08634047602429,
+      "appsPerBlock": 139.60633768409298,
+      "appsPerAddr": 6.047140205225573,
+      "ratio": 27.53285756635162
     },
     {
       "start": 4067507,
@@ -1826,10 +1826,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 917536,
       "chunkSz": 25512624,
-      "addrsPerBlock": "21.528",
-      "appsPerBlock": "126.797",
-      "appsPerAddr": "5.890",
-      "ratio": "27.806"
+      "addrsPerBlock": 21.528460953346855,
+      "appsPerBlock": 126.79747718052738,
+      "appsPerAddr": 5.889760417862811,
+      "ratio": 27.80558365012381
     },
     {
       "start": 4083283,
@@ -1841,10 +1841,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 917536,
       "chunkSz": 25671664,
-      "addrsPerBlock": "21.377",
-      "appsPerBlock": "123.778",
-      "appsPerAddr": "5.790",
-      "ratio": "27.979"
+      "addrsPerBlock": 21.37733630399802,
+      "appsPerBlock": 123.77769525931427,
+      "appsPerAddr": 5.790136502468045,
+      "ratio": 27.978917448470686
     },
     {
       "start": 4099441,
@@ -1856,10 +1856,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 1154436,
-      "addrsPerBlock": "36.454",
-      "appsPerBlock": "130.089",
-      "appsPerAddr": "3.569",
-      "ratio": "8.807"
+      "addrsPerBlock": 36.45357142857143,
+      "appsPerBlock": 130.08928571428572,
+      "appsPerAddr": 3.568629371999608,
+      "ratio": 8.807110161733293
     },
     {
       "start": 4100001,
@@ -1871,10 +1871,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 917536,
       "chunkSz": 25769032,
-      "addrsPerBlock": "26.659",
-      "appsPerBlock": "152.842",
-      "appsPerAddr": "5.733",
-      "ratio": "28.085"
+      "addrsPerBlock": 26.659406999847164,
+      "appsPerBlock": 152.84242702124408,
+      "appsPerAddr": 5.733151792240552,
+      "ratio": 28.085036445436472
     },
     {
       "start": 4113087,
@@ -1886,10 +1886,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 917536,
       "chunkSz": 25420440,
-      "addrsPerBlock": "28.586",
-      "appsPerBlock": "169.986",
-      "appsPerAddr": "5.946",
-      "ratio": "27.705"
+      "addrsPerBlock": 28.586470638225546,
+      "appsPerBlock": 169.98640265148296,
+      "appsPerAddr": 5.946393481123858,
+      "ratio": 27.705114567711785
     },
     {
       "start": 4124854,
@@ -1901,10 +1901,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1048612,
       "chunkSz": 25906304,
-      "addrsPerBlock": "34.719",
-      "appsPerBlock": "196.337",
-      "appsPerAddr": "5.655",
-      "ratio": "24.705"
+      "addrsPerBlock": 34.718786808009426,
+      "appsPerBlock": 196.33686690223792,
+      "appsPerAddr": 5.655061278147661,
+      "ratio": 24.7053285676685
     },
     {
       "start": 4135042,
@@ -1916,10 +1916,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1048612,
       "chunkSz": 25844468,
-      "addrsPerBlock": "37.295",
-      "appsPerBlock": "212.233",
-      "appsPerAddr": "5.691",
-      "ratio": "24.646"
+      "addrsPerBlock": 37.294641909814324,
+      "appsPerBlock": 212.2329973474801,
+      "appsPerAddr": 5.690710152431565,
+      "ratio": 24.64635918719221
     },
     {
       "start": 4144467,
@@ -1931,10 +1931,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 917536,
       "chunkSz": 25575740,
-      "addrsPerBlock": "38.365",
-      "appsPerBlock": "224.367",
-      "appsPerAddr": "5.848",
-      "ratio": "27.874"
+      "addrsPerBlock": 38.36526811756787,
+      "appsPerBlock": 224.36661431456136,
+      "appsPerAddr": 5.848170111231973,
+      "ratio": 27.874372231716247
     },
     {
       "start": 4153381,
@@ -1946,10 +1946,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1048612,
       "chunkSz": 26570152,
-      "addrsPerBlock": "50.616",
-      "appsPerBlock": "268.173",
-      "appsPerAddr": "5.298",
-      "ratio": "25.338"
+      "addrsPerBlock": 50.61611692142666,
+      "appsPerBlock": 268.1725663716814,
+      "appsPerAddr": 5.298165538616406,
+      "ratio": 25.338401620427767
     },
     {
       "start": 4160839,
@@ -1961,10 +1961,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 917536,
       "chunkSz": 24529376,
-      "addrsPerBlock": "43.499",
-      "appsPerBlock": "285.716",
-      "appsPerAddr": "6.568",
-      "ratio": "26.734"
+      "addrsPerBlock": 43.49850021425511,
+      "appsPerBlock": 285.7164690758463,
+      "appsPerAddr": 6.568421156327886,
+      "ratio": 26.73396575175252
     },
     {
       "start": 4167840,
@@ -1976,10 +1976,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 917536,
       "chunkSz": 25456724,
-      "addrsPerBlock": "47.207",
-      "appsPerBlock": "279.697",
-      "appsPerAddr": "5.925",
-      "ratio": "27.745"
+      "addrsPerBlock": 47.20721476510067,
+      "appsPerBlock": 279.69714765100673,
+      "appsPerAddr": 5.924881377619022,
+      "ratio": 27.744659610086142
     },
     {
       "start": 4174992,
@@ -1991,10 +1991,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1048612,
       "chunkSz": 26095160,
-      "addrsPerBlock": "40.241",
-      "appsPerBlock": "223.249",
-      "appsPerAddr": "5.548",
-      "ratio": "24.885"
+      "addrsPerBlock": 40.24054023886595,
+      "appsPerBlock": 223.2489117088961,
+      "appsPerAddr": 5.547860699277423,
+      "ratio": 24.885429501092872
     },
     {
       "start": 4183951,
@@ -2006,10 +2006,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1048612,
       "chunkSz": 26039108,
-      "addrsPerBlock": "43.575",
-      "appsPerBlock": "243.072",
-      "appsPerAddr": "5.578",
-      "ratio": "24.832"
+      "addrsPerBlock": 43.5753524550316,
+      "appsPerBlock": 243.07243558580456,
+      "appsPerAddr": 5.578209283255889,
+      "ratio": 24.83197598349056
     },
     {
       "start": 4192179,
@@ -2021,10 +2021,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 917536,
       "chunkSz": 24425868,
-      "addrsPerBlock": "44.592",
-      "appsPerBlock": "234.266",
-      "appsPerAddr": "5.254",
-      "ratio": "26.621"
+      "addrsPerBlock": 44.59217591408847,
+      "appsPerBlock": 234.26591664535925,
+      "appsPerAddr": 5.253520642201835,
+      "ratio": 26.621154919262022
     },
     {
       "start": 4200001,
@@ -2036,10 +2036,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 917536,
       "chunkSz": 25692584,
-      "addrsPerBlock": "42.436",
-      "appsPerBlock": "245.243",
-      "appsPerAddr": "5.779",
-      "ratio": "28.002"
+      "addrsPerBlock": 42.43563021088769,
+      "appsPerBlock": 245.242766061795,
+      "appsPerAddr": 5.779171060805247,
+      "ratio": 28.001717643776374
     },
     {
       "start": 4208157,
@@ -2051,10 +2051,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 917536,
       "chunkSz": 25683148,
-      "addrsPerBlock": "47.053",
-      "appsPerBlock": "272.281",
-      "appsPerAddr": "5.787",
-      "ratio": "27.991"
+      "addrsPerBlock": 47.05267456104532,
+      "appsPerBlock": 272.2814754321492,
+      "appsPerAddr": 5.786737480329538,
+      "ratio": 27.991433578627976
     },
     {
       "start": 4215504,
@@ -2066,10 +2066,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1048612,
       "chunkSz": 26309584,
-      "addrsPerBlock": "54.752",
-      "appsPerBlock": "297.464",
-      "appsPerAddr": "5.433",
-      "ratio": "25.090"
+      "addrsPerBlock": 54.752379535990485,
+      "appsPerBlock": 297.4643069601428,
+      "appsPerAddr": 5.432901902731187,
+      "ratio": 25.089913142325283
     },
     {
       "start": 4222228,
@@ -2081,10 +2081,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1048612,
       "chunkSz": 26448312,
-      "addrsPerBlock": "54.338",
-      "appsPerBlock": "291.255",
-      "appsPerAddr": "5.360",
-      "ratio": "25.222"
+      "addrsPerBlock": 54.33799330129605,
+      "appsPerBlock": 291.25484199796125,
+      "appsPerAddr": 5.3600588520631725,
+      "ratio": 25.222209930841913
     },
     {
       "start": 4229095,
@@ -2096,10 +2096,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1048612,
       "chunkSz": 26309784,
-      "addrsPerBlock": "45.967",
-      "appsPerBlock": "249.691",
-      "appsPerAddr": "5.432",
-      "ratio": "25.090"
+      "addrsPerBlock": 45.96716604244694,
+      "appsPerBlock": 249.69138576779025,
+      "appsPerAddr": 5.431950830669451,
+      "ratio": 25.090103870640426
     },
     {
       "start": 4237105,
@@ -2111,10 +2111,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1048612,
       "chunkSz": 26500500,
-      "addrsPerBlock": "64.734",
-      "appsPerBlock": "345.250",
-      "appsPerAddr": "5.333",
-      "ratio": "25.272"
+      "addrsPerBlock": 64.73433454168824,
+      "appsPerBlock": 345.25047471085793,
+      "appsPerAddr": 5.333343999829336,
+      "ratio": 25.271978577395643
     },
     {
       "start": 4242898,
@@ -2126,10 +2126,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1048612,
       "chunkSz": 26099436,
-      "addrsPerBlock": "67.718",
-      "appsPerBlock": "375.650",
-      "appsPerAddr": "5.547",
-      "ratio": "24.890"
+      "addrsPerBlock": 67.71755868544601,
+      "appsPerBlock": 375.6503286384976,
+      "appsPerAddr": 5.547310563622447,
+      "ratio": 24.889507272470656
     },
     {
       "start": 4248223,
@@ -2141,10 +2141,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1048612,
       "chunkSz": 26663528,
-      "addrsPerBlock": "65.468",
-      "appsPerBlock": "343.827",
-      "appsPerAddr": "5.252",
-      "ratio": "25.427"
+      "addrsPerBlock": 65.46793880006877,
+      "appsPerBlock": 343.8268867113633,
+      "appsPerAddr": 5.2518361355681185,
+      "ratio": 25.427448856202293
     },
     {
       "start": 4254040,
@@ -2156,10 +2156,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1048612,
       "chunkSz": 26521600,
-      "addrsPerBlock": "49.559",
-      "appsPerBlock": "263.848",
-      "appsPerAddr": "5.324",
-      "ratio": "25.292"
+      "addrsPerBlock": 49.55850151695027,
+      "appsPerBlock": 263.8483049729587,
+      "appsPerAddr": 5.323976651770148,
+      "ratio": 25.292100414643357
     },
     {
       "start": 4261621,
@@ -2171,10 +2171,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1179688,
       "chunkSz": 27336808,
-      "addrsPerBlock": "59.725",
-      "appsPerBlock": "295.107",
-      "appsPerAddr": "4.941",
-      "ratio": "23.173"
+      "addrsPerBlock": 59.72514015933904,
+      "appsPerBlock": 295.10711124225435,
+      "appsPerAddr": 4.941086960280818,
+      "ratio": 23.172913516116125
     },
     {
       "start": 4268399,
@@ -2186,10 +2186,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1179688,
       "chunkSz": 28324804,
-      "addrsPerBlock": "61.611",
-      "appsPerBlock": "279.965",
-      "appsPerAddr": "4.544",
-      "ratio": "24.010"
+      "addrsPerBlock": 61.61114221724524,
+      "appsPerBlock": 279.96500559910413,
+      "appsPerAddr": 4.544064523457912,
+      "ratio": 24.010419704192973
     },
     {
       "start": 4275543,
@@ -2201,10 +2201,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1048612,
       "chunkSz": 26757700,
-      "addrsPerBlock": "60.672",
-      "appsPerBlock": "315.956",
-      "appsPerAddr": "5.208",
-      "ratio": "25.517"
+      "addrsPerBlock": 60.671615858474176,
+      "appsPerBlock": 315.9556152266625,
+      "appsPerAddr": 5.2076347523638935,
+      "ratio": 25.517255190671097
     },
     {
       "start": 4281874,
@@ -2216,10 +2216,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1310764,
       "chunkSz": 29468332,
-      "addrsPerBlock": "62.488",
-      "appsPerBlock": "259.861",
-      "appsPerAddr": "4.159",
-      "ratio": "22.482"
+      "addrsPerBlock": 62.48772248928154,
+      "appsPerBlock": 259.86072495777574,
+      "appsPerAddr": 4.158588513165117,
+      "ratio": 22.481798401542918
     },
     {
       "start": 4289571,
@@ -2231,10 +2231,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1179688,
       "chunkSz": 28484160,
-      "addrsPerBlock": "59.706",
-      "appsPerBlock": "267.927",
-      "appsPerAddr": "4.487",
-      "ratio": "24.146"
+      "addrsPerBlock": 59.705732654701315,
+      "appsPerBlock": 267.92713635146,
+      "appsPerAddr": 4.487460825595664,
+      "ratio": 24.145502878727257
     },
     {
       "start": 4297037,
@@ -2246,10 +2246,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 655384,
       "chunkSz": 12073280,
-      "addrsPerBlock": "71.396",
-      "appsPerBlock": "259.276",
-      "appsPerAddr": "3.632",
-      "ratio": "18.422"
+      "addrsPerBlock": 71.39574898785425,
+      "appsPerBlock": 259.2763157894737,
+      "appsPerAddr": 3.631537163838444,
+      "ratio": 18.42168865886259
     },
     {
       "start": 4300001,
@@ -2261,10 +2261,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1179688,
       "chunkSz": 27537456,
-      "addrsPerBlock": "54.556",
-      "appsPerBlock": "264.850",
-      "appsPerAddr": "4.855",
-      "ratio": "23.343"
+      "addrsPerBlock": 54.556276483050844,
+      "appsPerBlock": 264.8497086864407,
+      "appsPerAddr": 4.854614826375152,
+      "ratio": 23.34299916588115
     },
     {
       "start": 4307553,
@@ -2276,10 +2276,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1048612,
       "chunkSz": 26681088,
-      "addrsPerBlock": "56.011",
-      "appsPerBlock": "293.701",
-      "appsPerAddr": "5.244",
-      "ratio": "25.444"
+      "addrsPerBlock": 56.01130690161527,
+      "appsPerBlock": 293.7005873715125,
+      "appsPerAddr": 5.243594617197598,
+      "ratio": 25.444194802271955
     },
     {
       "start": 4314363,
@@ -2291,10 +2291,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1048612,
       "chunkSz": 27101472,
-      "addrsPerBlock": "61.273",
-      "appsPerBlock": "309.141",
-      "appsPerAddr": "5.045",
-      "ratio": "25.845"
+      "addrsPerBlock": 61.27341576506955,
+      "appsPerBlock": 309.14095826893356,
+      "appsPerAddr": 5.045270520811525,
+      "ratio": 25.845090462439874
     },
     {
       "start": 4320833,
@@ -2306,10 +2306,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1048612,
       "chunkSz": 26385244,
-      "addrsPerBlock": "54.259",
-      "appsPerBlock": "292.701",
-      "appsPerAddr": "5.394",
-      "ratio": "25.162"
+      "addrsPerBlock": 54.259291776412056,
+      "appsPerBlock": 292.7014925373134,
+      "appsPerAddr": 5.39449526439559,
+      "ratio": 25.162065663944336
     },
     {
       "start": 4327667,
@@ -2321,10 +2321,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1048612,
       "chunkSz": 26209828,
-      "addrsPerBlock": "55.382",
-      "appsPerBlock": "303.919",
-      "appsPerAddr": "5.488",
-      "ratio": "24.995"
+      "addrsPerBlock": 55.381646915831055,
+      "appsPerBlock": 303.9191735034944,
+      "appsPerAddr": 5.487723649052732,
+      "ratio": 24.994781673297656
     },
     {
       "start": 4334249,
@@ -2336,10 +2336,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 917536,
       "chunkSz": 25307572,
-      "addrsPerBlock": "49.011",
-      "appsPerBlock": "294.976",
-      "appsPerAddr": "6.019",
-      "ratio": "27.582"
+      "addrsPerBlock": 49.011355257336675,
+      "appsPerBlock": 294.97566730570713,
+      "appsPerAddr": 6.0185168469005195,
+      "ratio": 27.58210250061033
     },
     {
       "start": 4341030,
@@ -2351,10 +2351,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 917536,
       "chunkSz": 25322508,
-      "addrsPerBlock": "48.929",
-      "appsPerBlock": "293.960",
-      "appsPerAddr": "6.008",
-      "ratio": "27.598"
+      "addrsPerBlock": 48.929453262786595,
+      "appsPerBlock": 293.9597295708407,
+      "appsPerAddr": 6.007827800406108,
+      "ratio": 27.598380880968158
     },
     {
       "start": 4347834,
@@ -2366,10 +2366,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1048612,
       "chunkSz": 26439796,
-      "addrsPerBlock": "58.463",
-      "appsPerBlock": "313.645",
-      "appsPerAddr": "5.365",
-      "ratio": "25.214"
+      "addrsPerBlock": 58.46259996863729,
+      "appsPerBlock": 313.64481731221576,
+      "appsPerAddr": 5.364879726192009,
+      "ratio": 25.21408871918307
     },
     {
       "start": 4354211,
@@ -2381,10 +2381,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1048612,
       "chunkSz": 26358060,
-      "addrsPerBlock": "60.164",
-      "appsPerBlock": "325.331",
-      "appsPerAddr": "5.407",
-      "ratio": "25.136"
+      "addrsPerBlock": 60.16428106701366,
+      "appsPerBlock": 325.33132726089787,
+      "appsPerAddr": 5.407383276109114,
+      "ratio": 25.13614187134994
     },
     {
       "start": 4360359,
@@ -2396,10 +2396,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1048612,
       "chunkSz": 26138284,
-      "addrsPerBlock": "61.190",
-      "appsPerBlock": "338.019",
-      "appsPerAddr": "5.524",
-      "ratio": "24.927"
+      "addrsPerBlock": 61.19046814263985,
+      "appsPerBlock": 338.01859050194355,
+      "appsPerAddr": 5.524039948738345,
+      "ratio": 24.926554340404266
     },
     {
       "start": 4366276,
@@ -2411,10 +2411,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1048612,
       "chunkSz": 26918952,
-      "addrsPerBlock": "55.950",
-      "appsPerBlock": "287.008",
-      "appsPerAddr": "5.130",
-      "ratio": "25.671"
+      "addrsPerBlock": 55.94992107906443,
+      "appsPerBlock": 287.00832257138757,
+      "appsPerAddr": 5.129735968095611,
+      "ratio": 25.671031802039266
     },
     {
       "start": 4373245,
@@ -2426,10 +2426,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1179688,
       "chunkSz": 27506696,
-      "addrsPerBlock": "45.503",
-      "appsPerBlock": "221.548",
-      "appsPerAddr": "4.869",
-      "ratio": "23.317"
+      "addrsPerBlock": 45.50326724997231,
+      "appsPerBlock": 221.54834422416658,
+      "appsPerAddr": 4.868844758049795,
+      "ratio": 23.316924474945917
     },
     {
       "start": 4382274,
@@ -2441,10 +2441,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 917536,
       "chunkSz": 25432392,
-      "addrsPerBlock": "37.246",
-      "appsPerBlock": "221.147",
-      "appsPerAddr": "5.937",
-      "ratio": "27.718"
+      "addrsPerBlock": 37.24624060150376,
+      "appsPerBlock": 221.14672711189738,
+      "appsPerAddr": 5.937424114233127,
+      "ratio": 27.718140759599624
     },
     {
       "start": 4391318,
@@ -2456,10 +2456,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 917536,
       "chunkSz": 25510316,
-      "addrsPerBlock": "39.924",
-      "appsPerBlock": "227.511",
-      "appsPerAddr": "5.699",
-      "ratio": "27.803"
+      "addrsPerBlock": 39.92398940458367,
+      "appsPerBlock": 227.51053783254636,
+      "appsPerAddr": 5.698592280620781,
+      "ratio": 27.803068217486835
     },
     {
       "start": 4400001,
@@ -2471,10 +2471,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 917536,
       "chunkSz": 25614916,
-      "addrsPerBlock": "31.211",
-      "appsPerBlock": "181.788",
-      "appsPerAddr": "5.825",
-      "ratio": "27.917"
+      "addrsPerBlock": 31.21068896564261,
+      "appsPerBlock": 181.7877658607526,
+      "appsPerAddr": 5.824535500029122,
+      "ratio": 27.917069194015276
     },
     {
       "start": 4411003,
@@ -2486,10 +2486,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1179688,
       "chunkSz": 27572716,
-      "addrsPerBlock": "44.977",
-      "appsPerBlock": "217.656",
-      "appsPerAddr": "4.839",
-      "ratio": "23.373"
+      "addrsPerBlock": 44.977473065621936,
+      "appsPerBlock": 217.65600174121232,
+      "appsPerAddr": 4.839222546443486,
+      "ratio": 23.372888424736033
     },
     {
       "start": 4420192,
@@ -2501,10 +2501,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1048612,
       "chunkSz": 26812596,
-      "addrsPerBlock": "43.668",
-      "appsPerBlock": "226.170",
-      "appsPerAddr": "5.179",
-      "ratio": "25.570"
+      "addrsPerBlock": 43.66798597760941,
+      "appsPerBlock": 226.17019111161372,
+      "appsPerAddr": 5.179313541677457,
+      "ratio": 25.56960629861188
     },
     {
       "start": 4429035,
@@ -2516,10 +2516,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1179688,
       "chunkSz": 27881604,
-      "addrsPerBlock": "46.783",
-      "appsPerBlock": "220.513",
-      "appsPerAddr": "4.713",
-      "ratio": "23.635"
+      "addrsPerBlock": 46.78346196251378,
+      "appsPerBlock": 220.51312017640572,
+      "appsPerAddr": 4.713484443564618,
+      "ratio": 23.634727148195115
     },
     {
       "start": 4438105,
@@ -2531,10 +2531,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1179688,
       "chunkSz": 28243280,
-      "addrsPerBlock": "49.144",
-      "appsPerBlock": "224.803",
-      "appsPerAddr": "4.574",
-      "ratio": "23.941"
+      "addrsPerBlock": 49.14431830954254,
+      "appsPerBlock": 224.80330448465776,
+      "appsPerAddr": 4.574349837731025,
+      "ratio": 23.941313296397013
     },
     {
       "start": 4447002,
@@ -2546,10 +2546,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1310764,
       "chunkSz": 28624940,
-      "addrsPerBlock": "51.951",
-      "appsPerBlock": "230.443",
-      "appsPerAddr": "4.436",
-      "ratio": "21.838"
+      "addrsPerBlock": 51.9513768867381,
+      "appsPerBlock": 230.4425625072013,
+      "appsPerAddr": 4.435735418708942,
+      "ratio": 21.838362969993074
     },
     {
       "start": 4455681,
@@ -2561,10 +2561,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1179688,
       "chunkSz": 28534928,
-      "addrsPerBlock": "55.719",
-      "appsPerBlock": "248.953",
-      "appsPerAddr": "4.468",
-      "ratio": "24.189"
+      "addrsPerBlock": 55.719317898929546,
+      "appsPerBlock": 248.95307443365695,
+      "appsPerAddr": 4.467984961431836,
+      "ratio": 24.188537986315026
     },
     {
       "start": 4463715,
@@ -2576,10 +2576,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1179688,
       "chunkSz": 28395504,
-      "addrsPerBlock": "54.333",
-      "appsPerBlock": "245.509",
-      "appsPerAddr": "4.519",
-      "ratio": "24.070"
+      "addrsPerBlock": 54.33276052534676,
+      "appsPerBlock": 245.50889898122009,
+      "appsPerAddr": 4.518616330320412,
+      "ratio": 24.070350804619526
     },
     {
       "start": 4471862,
@@ -2591,10 +2591,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1441840,
       "chunkSz": 30270592,
-      "addrsPerBlock": "62.410",
-      "appsPerBlock": "244.985",
-      "appsPerAddr": "3.925",
-      "ratio": "20.994"
+      "addrsPerBlock": 62.409675443968155,
+      "appsPerBlock": 244.9854255970606,
+      "appsPerAddr": 3.9254398273070694,
+      "ratio": 20.994418243355714
     },
     {
       "start": 4480027,
@@ -2606,10 +2606,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1572916,
       "chunkSz": 31403160,
-      "addrsPerBlock": "61.575",
-      "appsPerBlock": "223.865",
-      "appsPerAddr": "3.636",
-      "ratio": "19.965"
+      "addrsPerBlock": 61.574770539511974,
+      "appsPerBlock": 223.86478620998432,
+      "appsPerAddr": 3.635657660572723,
+      "ratio": 19.964931375864953
     },
     {
       "start": 4488961,
@@ -2621,10 +2621,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1179688,
       "chunkSz": 28067472,
-      "addrsPerBlock": "40.271",
-      "appsPerBlock": "186.940",
-      "appsPerAddr": "4.642",
-      "ratio": "23.792"
+      "addrsPerBlock": 40.271495327102805,
+      "appsPerBlock": 186.94028037383177,
+      "appsPerAddr": 4.641999976793029,
+      "ratio": 23.79228406154848
     },
     {
       "start": 4499661,
@@ -2636,10 +2636,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 131080,
       "chunkSz": 1286460,
-      "addrsPerBlock": "66.129",
-      "appsPerBlock": "241.494",
-      "appsPerAddr": "3.652",
-      "ratio": "9.814"
+      "addrsPerBlock": 66.12941176470588,
+      "appsPerBlock": 241.49411764705883,
+      "appsPerAddr": 3.651841309375556,
+      "ratio": 9.814311870613366
     },
     {
       "start": 4500001,
@@ -2651,10 +2651,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1048612,
       "chunkSz": 27179528,
-      "addrsPerBlock": "44.011",
-      "appsPerBlock": "220.500",
-      "appsPerAddr": "5.010",
-      "ratio": "25.920"
+      "addrsPerBlock": 44.01091390144416,
+      "appsPerBlock": 220.49994487928564,
+      "appsPerAddr": 5.010119657434567,
+      "ratio": 25.919527909274354
     },
     {
       "start": 4509072,
@@ -2666,10 +2666,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1048612,
       "chunkSz": 27165488,
-      "addrsPerBlock": "42.105",
-      "appsPerBlock": "211.244",
-      "appsPerAddr": "5.017",
-      "ratio": "25.906"
+      "addrsPerBlock": 42.10465730277748,
+      "appsPerBlock": 211.24395395501108,
+      "appsPerAddr": 5.017116098011232,
+      "ratio": 25.90613878155123
     },
     {
       "start": 4518541,
@@ -2681,10 +2681,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1048612,
       "chunkSz": 26406964,
-      "addrsPerBlock": "40.939",
-      "appsPerBlock": "220.364",
-      "appsPerAddr": "5.383",
-      "ratio": "25.183"
+      "addrsPerBlock": 40.93929712460064,
+      "appsPerBlock": 220.36399691528038,
+      "appsPerAddr": 5.3827010328143245,
+      "ratio": 25.182778758969
     },
     {
       "start": 4527618,
@@ -2696,10 +2696,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1310764,
       "chunkSz": 29953724,
-      "addrsPerBlock": "51.909",
-      "appsPerBlock": "208.422",
-      "appsPerAddr": "4.015",
-      "ratio": "22.852"
+      "addrsPerBlock": 51.90893936236716,
+      "appsPerBlock": 208.42185872056677,
+      "appsPerAddr": 4.015143851536062,
+      "ratio": 22.852110677436976
     },
     {
       "start": 4537216,
@@ -2711,10 +2711,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1310764,
       "chunkSz": 29956516,
-      "addrsPerBlock": "53.882",
-      "appsPerBlock": "216.232",
-      "appsPerAddr": "4.013",
-      "ratio": "22.854"
+      "addrsPerBlock": 53.88151351351351,
+      "appsPerBlock": 216.2318918918919,
+      "appsPerAddr": 4.013099814608229,
+      "ratio": 22.854240732885554
     },
     {
       "start": 4546466,
@@ -2726,10 +2726,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1179688,
       "chunkSz": 28415364,
-      "addrsPerBlock": "49.929",
-      "appsPerBlock": "225.240",
-      "appsPerAddr": "4.511",
-      "ratio": "24.087"
+      "addrsPerBlock": 49.92882882882883,
+      "appsPerBlock": 225.23952702702704,
+      "appsPerAddr": 4.511211905234478,
+      "ratio": 24.087185764371597
     },
     {
       "start": 4555346,
@@ -2741,10 +2741,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1179688,
       "chunkSz": 27251088,
-      "addrsPerBlock": "47.971",
-      "appsPerBlock": "238.832",
-      "appsPerAddr": "4.979",
-      "ratio": "23.100"
+      "addrsPerBlock": 47.971462686567165,
+      "appsPerBlock": 238.83188059701493,
+      "appsPerAddr": 4.978624107367315,
+      "ratio": 23.10025023565553
     },
     {
       "start": 4563721,
@@ -2756,10 +2756,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1179688,
       "chunkSz": 27349824,
-      "addrsPerBlock": "48.991",
-      "appsPerBlock": "241.772",
-      "appsPerAddr": "4.935",
-      "ratio": "23.184"
+      "addrsPerBlock": 48.990571739393204,
+      "appsPerBlock": 241.77154599298925,
+      "appsPerAddr": 4.935062756138061,
+      "ratio": 23.183946941903283
     },
     {
       "start": 4571994,
@@ -2771,10 +2771,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1310764,
       "chunkSz": 29254504,
-      "addrsPerBlock": "52.042",
-      "appsPerBlock": "219.878",
-      "appsPerAddr": "4.225",
-      "ratio": "22.319"
+      "addrsPerBlock": 52.041666666666664,
+      "appsPerBlock": 219.8778583992964,
+      "appsPerAddr": 4.2250349091938455,
+      "ratio": 22.318666060404468
     },
     {
       "start": 4581090,
@@ -2786,10 +2786,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1310764,
       "chunkSz": 28659816,
-      "addrsPerBlock": "52.221",
-      "appsPerBlock": "231.002",
-      "appsPerAddr": "4.424",
-      "ratio": "21.865"
+      "addrsPerBlock": 52.22118272118272,
+      "appsPerBlock": 231.0017325017325,
+      "appsPerAddr": 4.423525482658787,
+      "ratio": 21.864970353168076
     },
     {
       "start": 4589748,
@@ -2801,10 +2801,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1179688,
       "chunkSz": 28247408,
-      "addrsPerBlock": "52.150",
-      "appsPerBlock": "238.525",
-      "appsPerAddr": "4.574",
-      "ratio": "23.945"
+      "addrsPerBlock": 52.14989267827331,
+      "appsPerBlock": 238.52480324350108,
+      "appsPerAddr": 4.5738311431439485,
+      "ratio": 23.944812526701977
     },
     {
       "start": 4598134,
@@ -2816,10 +2816,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 393232,
       "chunkSz": 7171288,
-      "addrsPerBlock": "66.548",
-      "appsPerBlock": "247.214",
-      "appsPerAddr": "3.715",
-      "ratio": "18.237"
+      "addrsPerBlock": 66.54793786823781,
+      "appsPerBlock": 247.21371183717193,
+      "appsPerAddr": 3.7148215219928367,
+      "ratio": 18.236786426333563
     },
     {
       "start": 4600001,
@@ -2831,10 +2831,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1048612,
       "chunkSz": 27176360,
-      "addrsPerBlock": "48.623",
-      "appsPerBlock": "243.640",
-      "appsPerAddr": "5.011",
-      "ratio": "25.917"
+      "addrsPerBlock": 48.62260933122183,
+      "appsPerBlock": 243.63978560116945,
+      "appsPerAddr": 5.010833210152752,
+      "ratio": 25.91650677276247
     },
     {
       "start": 4608210,
@@ -2846,10 +2846,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1179688,
       "chunkSz": 27952592,
-      "addrsPerBlock": "50.148",
-      "appsPerBlock": "235.019",
-      "appsPerAddr": "4.687",
-      "ratio": "23.695"
+      "addrsPerBlock": 50.14769122312302,
+      "appsPerBlock": 235.0186817060275,
+      "appsPerAddr": 4.686530445845546,
+      "ratio": 23.69490238096853
     },
     {
       "start": 4616721,
@@ -2861,10 +2861,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1179688,
       "chunkSz": 28327528,
-      "addrsPerBlock": "53.913",
-      "appsPerBlock": "244.976",
-      "appsPerAddr": "4.544",
-      "ratio": "24.013"
+      "addrsPerBlock": 53.91341090018371,
+      "appsPerBlock": 244.97550520514392,
+      "appsPerAddr": 4.54386953292004,
+      "ratio": 24.012728789307005
     },
     {
       "start": 4624886,
@@ -2876,10 +2876,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1179688,
       "chunkSz": 28015424,
-      "addrsPerBlock": "60.735",
-      "appsPerBlock": "283.168",
-      "appsPerAddr": "4.662",
-      "ratio": "23.748"
+      "addrsPerBlock": 60.735419026047566,
+      "appsPerBlock": 283.16817667044165,
+      "appsPerAddr": 4.66232358665377,
+      "ratio": 23.748163921308006
     },
     {
       "start": 4631950,
@@ -2891,10 +2891,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 2883676,
       "chunkSz": 46621464,
-      "addrsPerBlock": "287.565",
-      "appsPerBlock": "525.911",
-      "appsPerAddr": "1.829",
-      "ratio": "16.167"
+      "addrsPerBlock": 287.5653431501446,
+      "appsPerBlock": 525.9108598474888,
+      "appsPerAddr": 1.828839505089104,
+      "ratio": 16.167372478738944
     },
     {
       "start": 4635753,
@@ -2906,10 +2906,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1179688,
       "chunkSz": 27868712,
-      "addrsPerBlock": "61.278",
-      "appsPerBlock": "289.155",
-      "appsPerAddr": "4.719",
-      "ratio": "23.624"
+      "addrsPerBlock": 61.277576984241726,
+      "appsPerBlock": 289.15483591152235,
+      "appsPerAddr": 4.718770717482547,
+      "ratio": 23.62379883494619
     },
     {
       "start": 4642670,
@@ -2921,10 +2921,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1179688,
       "chunkSz": 27417936,
-      "addrsPerBlock": "58.317",
-      "appsPerBlock": "286.056",
-      "appsPerAddr": "4.905",
-      "ratio": "23.242"
+      "addrsPerBlock": 58.317076659038904,
+      "appsPerBlock": 286.05563501144167,
+      "appsPerAddr": 4.905177889555687,
+      "ratio": 23.241684241935157
     },
     {
       "start": 4649662,
@@ -2936,10 +2936,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1179688,
       "chunkSz": 27256544,
-      "addrsPerBlock": "56.909",
-      "appsPerBlock": "283.199",
-      "appsPerAddr": "4.976",
-      "ratio": "23.105"
+      "addrsPerBlock": 56.90938694605692,
+      "appsPerBlock": 283.19892396998443,
+      "appsPerAddr": 4.976313033180661,
+      "ratio": 23.10487518733767
     },
     {
       "start": 4656725,
@@ -2951,10 +2951,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1179688,
       "chunkSz": 28079344,
-      "addrsPerBlock": "61.148",
-      "appsPerBlock": "283.490",
-      "appsPerAddr": "4.636",
-      "ratio": "23.802"
+      "addrsPerBlock": 61.14769666902906,
+      "appsPerBlock": 283.4901488306166,
+      "appsPerAddr": 4.63615416889779,
+      "ratio": 23.802347739402283
     },
     {
       "start": 4663780,
@@ -2966,10 +2966,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1048612,
       "chunkSz": 26655528,
-      "addrsPerBlock": "57.251",
-      "appsPerBlock": "300.964",
-      "appsPerAddr": "5.257",
-      "ratio": "25.420"
+      "addrsPerBlock": 57.251429431236836,
+      "appsPerBlock": 300.96448991874814,
+      "appsPerAddr": 5.256890402714373,
+      "ratio": 25.419819723596525
     },
     {
       "start": 4670426,
@@ -2981,10 +2981,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1048612,
       "chunkSz": 25987100,
-      "addrsPerBlock": "56.399",
-      "appsPerBlock": "316.346",
-      "appsPerAddr": "5.609",
-      "ratio": "24.782"
+      "addrsPerBlock": 56.39854499446465,
+      "appsPerBlock": 316.3457219674205,
+      "appsPerAddr": 5.609111405240488,
+      "ratio": 24.78237899242046
     },
     {
       "start": 4676749,
@@ -2996,10 +2996,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1048612,
       "chunkSz": 26826156,
-      "addrsPerBlock": "62.181",
-      "appsPerBlock": "321.648",
-      "appsPerAddr": "5.173",
-      "ratio": "25.583"
+      "addrsPerBlock": 62.18140881312319,
+      "appsPerBlock": 321.6484400128659,
+      "appsPerAddr": 5.172742884927737,
+      "ratio": 25.582537678378657
     },
     {
       "start": 4682967,
@@ -3011,10 +3011,10 @@ chunks?mode=stats&fmt=json
       "recWid": 131076,
       "bloomSz": 1179688,
       "chunkSz": 28448420,
-      "addrsPerBlock": "74.009",
-      "appsPerBlock": "333.051",
-      "appsPerAddr": "4.500",
-      "ratio": "24.115"
+      "addrsPerBlock": 74.008991008991,
+      "appsPerBlock": 333.05094905094904,
+      "appsPerAddr": 4.500141732921183,
+      "ratio": 24.11520673262761
     }
   ],
   "meta": {

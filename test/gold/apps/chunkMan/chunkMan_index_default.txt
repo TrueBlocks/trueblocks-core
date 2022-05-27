@@ -1,6 +1,7 @@
-chifra chunks  
+chifra chunks  index
+TEST[DATE|TIME] Mode:  index
 TEST[DATE|TIME] Format:  txt
-Error: Please choose at least one of [stats|pins|blooms|index|addresses|appearances].
+Error: Extractor for index not yet implemented.
 Usage:
   chifra chunks <mode> [flags] [blocks...]
 

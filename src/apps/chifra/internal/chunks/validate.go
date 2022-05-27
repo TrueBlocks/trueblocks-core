@@ -18,10 +18,10 @@ func (opts *ChunksOptions) ValidateChunks() error {
 	}
 
 	if len(opts.Mode) == 0 {
-		return validate.Usage("Please choose at least one of {0}.", "[stats|pins|blooms|index|header|addresses|appearances]")
+		return validate.Usage("Please choose at least one of {0}.", "[stats|pins|blooms|index|addresses|appearances]")
 	}
 
-	err := validate.ValidateEnum("mode", opts.Mode, "[stats|pins|blooms|index|header|addresses|appearances]")
+	err := validate.ValidateEnum("mode", opts.Mode, "[stats|pins|blooms|index|addresses|appearances]")
 	if err != nil {
 		return err
 	}

@@ -231,7 +231,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10840,apps,Admin,status,cacheStatus,last_block,L,NOPOS,false,false,false,false,local,flag,<blknum>,last block to process (inclusive -- testing only)
 10860,apps,Admin,status,cacheStatus,,,,false,false,true,true,--,description,,Report on the status of the TrueBlocks system.
 
-21950,apps,Admin,chunks,chunkMan,mode,,,true,false,true,true,local,positional,enum[stats*|pins|blooms|index|header|addresses|appearances],the type of chunk info to retrieve
+21950,apps,Admin,chunks,chunkMan,mode,,,true,false,true,true,local,positional,enum[stats*|pins|blooms|index|addresses|appearances],the type of chunk info to retrieve
 21955,apps,Admin,chunks,chunkMan,blocks,,,false,false,true,true,header,positional,list<blknum>,optional list of blocks to intersect with chunk ranges
 21960,apps,Admin,chunks,chunkMan,check,c,,false,false,true,true,gocmd,switch,<boolean>,depends on mode&#44; checks for internal consistency of the data type
 21965,apps,Admin,chunks,chunkMan,,,,false,false,true,true,--,description,,Manage and investigate chunks and bloom filters.

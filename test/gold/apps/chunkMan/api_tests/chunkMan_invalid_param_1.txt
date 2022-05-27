@@ -1,6 +1,6 @@
 chunks?mode=junk
 {
   "errors": [
-    "The mode option (junk) must be one of [ stats | pins | blooms | index | header | addresses | appearances ]"
+    "The mode option (junk) must be one of [ stats | pins | blooms | index | addresses | appearances ]"
   ]
 }

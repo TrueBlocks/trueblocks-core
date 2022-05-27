@@ -28,6 +28,14 @@ type ChunkBloom struct {
 	Blooms []BloomBytes
 }
 
+func (bl *ChunkBloom) String() string {
+	nInserted := uint32(0)
+	for i := uint32(0); i < bl.Count; i++ {
+		nInserted += bl.Blooms[i].NInserted
+	}
+	return fmt.Sprintf("%s\t%d\t%d\t%d", bl.Range, bl.Count, BLOOM_WIDTH_IN_BYTES, nInserted)
+}
+
 // BloomBytes store the actual bits of the bloom filter. There is at least one but likely more BloomBytes contained in
 // each ChunkBloom. The NInserted value, which is for statistical purposes only, records the number of addresses
 // inserted in the Bytes.

@@ -1,6 +1,6 @@
 chunks?check
 {
   "errors": [
-    "Please choose at least one of [stats|pins|blooms|index|header|addresses|appearances]."
+    "Please choose at least one of [stats|pins|blooms|index|addresses|appearances]."
   ]
 }

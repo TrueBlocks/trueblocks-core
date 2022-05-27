@@ -1,6 +1,7 @@
-chifra chunks  
-TEST[DATE|TIME] Format:  txt
-Error: Please choose at least one of [stats|pins|blooms|index|addresses|appearances].
+chifra chunks  header --fmt csv
+TEST[DATE|TIME] Mode:  header
+TEST[DATE|TIME] Format:  csv
+Error: The mode option (header) must be one of [ stats | pins | blooms | index | addresses | appearances ]
 Usage:
   chifra chunks <mode> [flags] [blocks...]
 

@@ -1,12 +1,12 @@
 chifra chunks  
 TEST[DATE|TIME] Format:  txt
-Error: Please choose at least one of [stats|pins|blooms|index|header|addresses|appearances].
+Error: Please choose at least one of [stats|pins|blooms|index|addresses|appearances].
 Usage:
   chifra chunks <mode> [flags] [blocks...]
 
 Arguments:
   mode - the type of chunk info to retrieve (required)
-	One of [ stats | pins | blooms | index | header | addresses | appearances ]
+	One of [ stats | pins | blooms | index | addresses | appearances ]
   blocks - optional list of blocks to intersect with chunk ranges
 
 Flags:

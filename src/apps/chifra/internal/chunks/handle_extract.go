@@ -33,7 +33,7 @@ func (opts *ChunksOptions) HandleChunksExtract(displayFunc func(path string, fir
 	for result := range filenameChan {
 		switch result.Type {
 		case cache.Index_Bloom:
-			skip := opts.Globals.TestMode && cnt > 200
+			skip := opts.Globals.TestMode && cnt > maxTestItems
 			if !skip && shouldDisplay(result, blockNums) {
 				displayFunc(result.Path, cnt == 0)
 				cnt++

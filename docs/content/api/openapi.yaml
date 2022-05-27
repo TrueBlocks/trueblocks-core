@@ -1531,7 +1531,6 @@ paths:
               - pins
               - blooms
               - index
-              - header
               - addresses
               - appearances
         - name: blocks

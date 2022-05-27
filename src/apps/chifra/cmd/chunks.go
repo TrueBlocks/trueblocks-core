@@ -31,7 +31,7 @@ var usageChunks = `chunks <mode> [flags] [blocks...]
 
 Arguments:
   mode - the type of chunk info to retrieve (required)
-	One of [ stats | pins | blooms | index | header | addresses | appearances ]
+	One of [ stats | pins | blooms | index | addresses | appearances ]
   blocks - optional list of blocks to intersect with chunk ranges`
 
 var shortChunks = "manage and investigate chunks and bloom filters"

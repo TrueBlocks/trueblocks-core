@@ -1,0 +1,6 @@
+chunks?mode=index
+{
+  "errors": [
+    "Extractor for index not yet implemented."
+  ]
+}

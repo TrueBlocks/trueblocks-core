@@ -1,0 +1,6 @@
+chunks?mode=index&fmt=json
+{
+  "errors": [
+    "Extractor for index not yet implemented."
+  ]
+}

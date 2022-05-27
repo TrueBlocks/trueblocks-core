@@ -58,9 +58,6 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 	if opts.Check {
 		return opts.HandleChunksCheck(blockNums), true
 
-	} else if opts.Mode == "blooms" {
-		return opts.HandleChunksExtract(opts.showBloom, blockNums), true
-
 	} else if opts.Mode == "index" || opts.Mode == "addresses" || opts.Mode == "appearances" {
 		return validate.Usage("Extractor for {0} not yet implemented.", opts.Mode), true
 
@@ -68,7 +65,6 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 		defer opts.Globals.RenderFooter(opts.Globals.ApiMode || opts.Globals.Format == "api")
 
 		if opts.Mode == "pins" {
-			opts.PrintManifestHeader()
 			err := opts.Globals.RenderHeader(types.SimplePinList{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
 			if err != nil {
 				return err, true
@@ -82,6 +78,14 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 			}
 			return opts.HandleChunksExtract(opts.showStats, blockNums), true
 
+		} else if opts.Mode == "blooms" {
+			maxTestItems = 10
+			err := opts.Globals.RenderHeader(types.SimpleBloom{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+			if err != nil {
+				return err, true
+			}
+			return opts.HandleChunksExtract(opts.showBloom, blockNums), true
+
 		}
 	}
 	// EXISTING_CODE
@@ -90,14 +94,6 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 }
 
 // EXISTING_CODE
-func (opts *ChunksOptions) showStats(path string, first bool) error {
-	// TODO: Fix export without arrays
-	obj := NewChunkStats(path)
-	err := opts.Globals.RenderObject(obj, false, first)
-	if err != nil {
-		return err
-	}
-	return nil
-}
+var maxTestItems = 100
 
 // EXISTING_CODE

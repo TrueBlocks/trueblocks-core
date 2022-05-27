@@ -1,0 +1,6 @@
+chunks?mode=appearances&fmt=txt
+{
+  "errors": [
+    "Extractor for appearances not yet implemented."
+  ]
+}

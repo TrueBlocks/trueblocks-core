@@ -1,6 +1,7 @@
-chifra chunks  
-TEST[DATE|TIME] Format:  txt
-Error: Please choose at least one of [stats|pins|blooms|index|addresses|appearances].
+chifra chunks  addresses --fmt json
+TEST[DATE|TIME] Mode:  addresses
+TEST[DATE|TIME] Format:  json
+Error: Extractor for addresses not yet implemented.
 Usage:
   chifra chunks <mode> [flags] [blocks...]
 

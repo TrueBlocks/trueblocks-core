@@ -1,13 +1,13 @@
 chifra chunks  remote
 TEST[DATE|TIME] Mode:  remote
 TEST[DATE|TIME] Format:  txt
-Error: The mode option (remote) must be one of [ stats | pins | blooms | index | header | addresses | appearances ]
+Error: The mode option (remote) must be one of [ stats | pins | blooms | index | addresses | appearances ]
 Usage:
   chifra chunks <mode> [flags] [blocks...]
 
 Arguments:
   mode - the type of chunk info to retrieve (required)
-	One of [ stats | pins | blooms | index | header | addresses | appearances ]
+	One of [ stats | pins | blooms | index | addresses | appearances ]
   blocks - optional list of blocks to intersect with chunk ranges
 
 Flags:
