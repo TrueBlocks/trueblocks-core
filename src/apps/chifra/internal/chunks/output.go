@@ -58,9 +58,6 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 	if opts.Check {
 		return opts.HandleChunksCheck(blockNums), true
 
-	} else if opts.Mode == "index" || opts.Mode == "addresses" || opts.Mode == "appearances" {
-		return validate.Usage("Extractor for {0} not yet implemented.", opts.Mode), true
-
 	} else {
 		defer opts.Globals.RenderFooter(opts.Globals.ApiMode || opts.Globals.Format == "api")
 
@@ -85,6 +82,30 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 				return err, true
 			}
 			return opts.HandleChunksExtract(opts.showBloom, blockNums), true
+
+		} else if opts.Mode == "index" {
+			err := opts.Globals.RenderHeader(types.SimpleIndex{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+			if err != nil {
+				return err, true
+			}
+			return opts.HandleChunksExtract(opts.showIndex, blockNums), true
+
+		} else if opts.Mode == "addresses" {
+			err := opts.Globals.RenderHeader(types.SimpleIndexAddress{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+			if err != nil {
+				return err, true
+			}
+			return opts.HandleChunksExtract(opts.showAddresses, blockNums), true
+
+		} else if opts.Mode == "appearances" {
+			err := opts.Globals.RenderHeader(types.SimpleIndexAppearance{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+			if err != nil {
+				return err, true
+			}
+			return opts.HandleChunksExtract(opts.showAppearances, blockNums), true
+
+		} else {
+			return validate.Usage("Extractor for {0} not yet implemented.", opts.Mode), true
 
 		}
 	}
