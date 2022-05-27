@@ -8,7 +8,6 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 )
@@ -56,24 +55,4 @@ func NewChunkStats(path string) ChunkStats {
 	ret.ChunkSz = file.FileSize(p)
 	ret.Ratio = fmt.Sprintf("%.3f", float64(ret.ChunkSz)/float64(ret.BloomSz))
 	return ret
-}
-
-func (opts *ChunksOptions) showStats(path string, first bool) error {
-	if opts.Globals.TestMode {
-		r, _ := cache.RangeFromFilename(path)
-		if r.First > 2000000 && r.First < 3000000 {
-			return nil
-		}
-		if r.First > 4000000 {
-			return nil
-		}
-	}
-
-	// TODO: Fix export without arrays
-	obj := NewChunkStats(path)
-	err := opts.Globals.RenderObject(obj, false, first)
-	if err != nil {
-		return err
-	}
-	return nil
 }

@@ -29,18 +29,20 @@ func (opts *ChunksOptions) HandleChunksExtract(displayFunc func(path string, fir
 	var nRoutines int = 1
 	go cache.WalkCacheFolder(opts.Globals.Chain, cache.Index_Bloom, filenameChan)
 
-	first := true
+	cnt := 0
 	for result := range filenameChan {
 		switch result.Type {
 		case cache.Index_Bloom:
-			if shouldDisplay(result, blockNums) {
-				displayFunc(result.Path, first)
-				first = false
+			skip := opts.Globals.TestMode && cnt > 200
+			if !skip && shouldDisplay(result, blockNums) {
+				displayFunc(result.Path, cnt == 0)
+				cnt++
 			}
 		case cache.None:
 			nRoutines--
 			if nRoutines == 0 {
 				close(filenameChan)
+				continue
 			}
 		}
 	}

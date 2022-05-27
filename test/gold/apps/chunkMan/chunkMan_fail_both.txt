@@ -1,8 +1,7 @@
-chifra chunks  pins --check
-TEST[DATE|TIME] Mode:  pins
+chifra chunks  --check
 TEST[DATE|TIME] Check:  true
 TEST[DATE|TIME] Format:  txt
-Error: Checking is not implemented.
+Error: Please choose at least one of [stats|pins|blooms|index|header|addresses|appearances].
 Usage:
   chifra chunks <mode> [flags] [blocks...]
 

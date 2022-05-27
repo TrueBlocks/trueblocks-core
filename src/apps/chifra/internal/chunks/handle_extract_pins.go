@@ -5,7 +5,6 @@
 package chunksPkg
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
@@ -22,8 +21,13 @@ func (opts *ChunksOptions) HandleChunksExtractPins() error {
 		results = results[:100]
 	}
 
-	opts.PrintManifestHeader()
-	return globals.RenderSlice(&opts.Globals, results)
+	for i, r := range results {
+		err := opts.Globals.RenderObject(r, false, i == 0)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func (opts *ChunksOptions) PrintManifestHeader() {

@@ -1,19 +1,19 @@
-enabled ,mode ,speed ,route  ,path/tool     ,filename        ,post ,options                ,opt_cmd ,has_env
-on      ,cmd  ,fast  ,chunks ,apps/chunkMan ,help            ,n    ,@h                     
-on      ,cmd  ,fast  ,chunks ,apps/chunkMan ,help_long       ,n    ,help                   
-on      ,both ,fast  ,chunks ,apps/chunkMan ,no_params       ,y    ,                       
-        
-on      ,both ,fast  ,chunks ,apps/chunkMan ,remote_fail     ,n    ,mode = remote                 
-on      ,both ,fast  ,chunks ,apps/chunkMan ,extract_stats   ,n    ,mode = stats & fmt = csv      
-on      ,both ,fast  ,chunks ,apps/chunkMan ,extract_stats2  ,y    ,mode = stats & fmt = json     
-on      ,cmd  ,fast  ,chunks ,apps/chunkMan ,extract_blooms  ,n    ,mode = blooms & log_level = 5 
-on      ,cmd  ,fast  ,chunks ,apps/chunkMan ,extract_blooms2 ,n    ,mode = blooms                 
-on      ,both ,fast  ,chunks ,apps/chunkMan ,extract_pins    ,n    ,mode = pins & fmt = csv       
-on      ,both ,fast  ,chunks ,apps/chunkMan ,extract_pins2   ,y    ,mode = pins                   
-on      ,both ,fast  ,chunks ,apps/chunkMan ,extract_pins3   ,y    ,mode = pins & fmt = api       
-        
-on      ,both ,fast  ,chunks ,apps/chunkMan ,fail_neither    ,y    ,                       
-on      ,both ,fast  ,chunks ,apps/chunkMan ,fail_both       ,y    ,mode = pins & check           
-        
-on      ,both ,fast  ,chunks ,apps/chunkMan ,invalid_param_1 ,y    ,mode = junk                   
-on      ,both ,fast  ,chunks ,apps/chunkMan ,list_check      ,y    ,check                  
+enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
+on,cmd,fast,chunks,apps/chunkMan,help,n,@h
+on,cmd,fast,chunks,apps/chunkMan,help_long,n,help
+on,both,fast,chunks,apps/chunkMan,no_params,y,
+
+on,both,fast,chunks,apps/chunkMan,remote_fail,n,mode = remote
+on,both,fast,chunks,apps/chunkMan,extract_stats,n,mode = stats & fmt = csv
+on,both,fast,chunks,apps/chunkMan,extract_stats2,y,mode = stats & fmt = json
+on,cmd,fast,chunks,apps/chunkMan,extract_blooms,n,mode = blooms & log_level = 5
+on,cmd,fast,chunks,apps/chunkMan,extract_blooms2,n,mode = blooms
+on,both,fast,chunks,apps/chunkMan,extract_pins,n,mode = pins & fmt = csv
+on,both,fast,chunks,apps/chunkMan,extract_pins2,y,mode = pins
+on,both,fast,chunks,apps/chunkMan,extract_pins3,y,mode = pins & fmt = api
+
+on,both,fast,chunks,apps/chunkMan,fail_neither,y,
+on,both,fast,chunks,apps/chunkMan,fail_both,y,check
+
+on,both,fast,chunks,apps/chunkMan,invalid_param_1,y,mode = junk
+on,both,fast,chunks,apps/chunkMan,list_check,y,mode = pins & check

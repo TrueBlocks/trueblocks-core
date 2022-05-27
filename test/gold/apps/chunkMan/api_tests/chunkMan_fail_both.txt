@@ -1,6 +1,6 @@
-chunks?mode=pins&check
+chunks?check
 {
   "errors": [
-    "Checking is not implemented."
+    "Please choose at least one of [stats|pins|blooms|index|header|addresses|appearances]."
   ]
 }
