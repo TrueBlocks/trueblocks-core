@@ -9,7 +9,7 @@ Purpose:
   Report on the status of the TrueBlocks system.
 
 Usage:
-  chifra status [flags] [mode...]
+  chifra status <mode> [mode...] [flags]
 
 Arguments:
   modes - the type of status info to retrieve

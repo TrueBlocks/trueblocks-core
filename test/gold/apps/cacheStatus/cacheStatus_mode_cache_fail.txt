@@ -4,7 +4,7 @@ TEST[DATE|TIME] Types:  [junk]
 TEST[DATE|TIME] Depth:  0
 Error: The --types option (junk) must be one of [ blocks | txs | traces | slurps | prices | all ]
 Usage:
-  chifra status [flags] [mode...]
+  chifra status <mode> [mode...] [flags]
 
 Arguments:
   modes - the type of status info to retrieve

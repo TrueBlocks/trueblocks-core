@@ -1,4 +1,4 @@
-chunks?extract=pins
+chunks?mode=pins
 {
   "data": [
     {

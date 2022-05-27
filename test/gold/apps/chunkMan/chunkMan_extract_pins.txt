@@ -1,5 +1,5 @@
-chifra chunks  --extract pins --fmt csv
-TEST[DATE|TIME] Extract:  pins
+chifra chunks  pins --fmt csv
+TEST[DATE|TIME] Mode:  pins
 TEST[DATE|TIME] Format:  csv
 INFO[DATE|TIME] hashToIndexFormatFile: Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2
 INFO[DATE|TIME] hashToBloomFormatFile: QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD

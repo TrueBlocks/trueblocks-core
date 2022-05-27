@@ -1,4 +1,4 @@
-chunks?extract=stats&fmt=csv
+chunks?mode=stats&fmt=csv
 "start","end","nAddrs","nApps","nBlocks","nBlooms","recWid","bloomSz","chunkSz","addrsPerBlock","appsPerBlock","appsPerAddr","ratio"
 "0","0","8893","8893","1","1","131076","131080","320192","8893.000","8893.000","1.000","2.443"
 "1","590501","29330","2000001","590501","1","131076","131080","16821292","0.050","3.387","68.190","128.328"

@@ -316,3 +316,17 @@ bool getDirectionalTxId(blknum_t bn, txnum_t txid, const string_q& dir, string_q
     return false;
 }
 */
+
+func GetBlockNumArray(chain string, ids []Identifier) ([]uint64, error) {
+	var blockNums []uint64
+	for _, br := range ids {
+		nums, err := br.ResolveBlocks(chain)
+		if err != nil {
+			return []uint64{}, err
+		}
+		for _, n := range nums {
+			blockNums = append(blockNums, n)
+		}
+	}
+	return blockNums, nil
+}

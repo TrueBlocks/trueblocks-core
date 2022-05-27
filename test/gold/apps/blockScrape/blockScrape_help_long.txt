@@ -3,7 +3,7 @@ Purpose:
   Scan the chain and update (and optionally pin) the TrueBlocks index of appearances.
 
 Usage:
-  chifra scrape [flags] [mode...]
+  chifra scrape <mode> [mode...] [flags]
 
 Arguments:
   modes - which scraper(s) to control (required)

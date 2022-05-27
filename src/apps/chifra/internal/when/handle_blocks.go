@@ -8,7 +8,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	tslibPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *WhenOptions) HandleWhenShowBlocks() error {
@@ -21,17 +20,14 @@ func (opts *WhenOptions) HandleWhenShowBlocks() error {
 
 	first := true
 	for _, br := range opts.BlockIds {
-		vals, err := br.ResolveBlocks(opts.Globals.Chain)
+		blockNums, err := br.ResolveBlocks(opts.Globals.Chain)
 		if err != nil {
 			return err
 		}
-		for _, v := range vals {
-			block, err := rpcClient.GetBlockByNumber(opts.Globals.Chain, v)
+		for _, bn := range blockNums {
+			block, err := rpcClient.GetBlockByNumber(opts.Globals.Chain, bn)
 			if err != nil {
 				return err
-			}
-			if v == 0 {
-				block.TimeStamp = utils.EarliestTs
 			}
 			d, _ := tslibPkg.FromTsToDate(block.TimeStamp)
 			nm, _ := tslibPkg.FromBnToName(opts.Globals.Chain, block.BlockNumber)

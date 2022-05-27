@@ -915,19 +915,30 @@ string_q clean_positionals(const string_q& progName, const string_q& strIn) {
         os << (startsWith(strIn, "list<addr> list<topic> list<fourbyte>")
                    ? "<address> [address...] [topics...] [fourbytes...]"
                    : "");
-        os << (startsWith(strIn, "list<enum") ? "[mode...]" : "");
-        if (contains(toLower(progName), "tokens"))
+        os << (startsWith(strIn, "list<enum") ? "<mode> [mode...]" : "");
+
+        if (contains(toLower(progName), "tokens")) {
             os << (strIn == "list<addr> list<blknum>" ? "<address> <address> [address...] [block...]" : "");
-        else
+
+        } else if (contains(toLower(progName), "chunks")) {
+            os << (strIn == "enum[stats*|pins|blooms|index|header|addresses|appearances] list<blknum>"
+                       ? "<mode> [blocks...]"
+                       : "");
+
+        } else {
             os << (strIn == "list<addr> list<blknum>" ? "<address> [address...] [block...]" : "");
+        }
+
         if (contains(toLower(progName), "when"))
             os << (strIn == "list<string>" ? "< block | date > [ block... | date... ]" : "");
         else
             os << (strIn == "list<string>" ? "<term> [term...]" : "");
+
         if (os.str().empty()) {
             cerr << "Could not convert " << strIn << " for tool " << progName << endl;
             os << strIn;
         }
+
         os << endl;
         return " " + os.str();
     }

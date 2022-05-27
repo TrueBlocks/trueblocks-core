@@ -1,5 +1,5 @@
-chifra chunks  --extract pins --fmt api
-TEST[DATE|TIME] Extract:  pins
+chifra chunks  pins --fmt api
+TEST[DATE|TIME] Mode:  pins
 TEST[DATE|TIME] Format:  api
 INFO[DATE|TIME] hashToIndexFormatFile: Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2
 INFO[DATE|TIME] hashToBloomFormatFile: QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD

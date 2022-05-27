@@ -1,5 +1,5 @@
-chifra chunks  --extract stats --fmt csv
-TEST[DATE|TIME] Extract:  stats
+chifra chunks  stats --fmt csv
+TEST[DATE|TIME] Mode:  stats
 TEST[DATE|TIME] Format:  csv
 "start","end","nAddrs","nApps","nBlocks","nBlooms","recWid","bloomSz","chunkSz","addrsPerBlock","appsPerBlock","appsPerAddr","ratio"
 "0","0","8893","8893","1","1","131076","131080","320192","8893.000","8893.000","1.000","2.443"

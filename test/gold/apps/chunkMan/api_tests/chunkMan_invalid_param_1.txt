@@ -1,5 +1,6 @@
+chunks?mode=junk
 {
   "errors": [
-    "chifra chunks - Invalid option: --junk"
+    "The mode option (junk) must be one of [ stats | pins | blooms | index | header | addresses | appearances ]"
   ]
 }

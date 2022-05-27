@@ -1,4 +1,4 @@
-chunks?extract=stats&fmt=json
+chunks?mode=stats&fmt=json
 {
   "data": [
     {

@@ -7,20 +7,22 @@ Purpose:
   Manage and investigate chunks and bloom filters.
 
 Usage:
-  chifra chunks [flags] <block> [block...]
+  chifra chunks <mode> [flags] [blocks...]
 
 Arguments:
+  mode - the type of chunk info to retrieve (required)
+	One of [ stats | pins | blooms | index | header | addresses | appearances ]
   blocks - optional list of blocks to intersect with chunk ranges
 
 Flags:
-  -e, --extract string   show some or all of the contents of the chunk or bloom filters
-                         One of [ stats | pins | blooms | index | header | addresses | appearances ]
-  -x, --fmt string       export format, one of [none|json*|txt|csv|api]
-  -v, --verbose          enable verbose (increase detail with --log_level)
-  -h, --help             display this help screen
+  -c, --check        depends on mode, checks for internal consistency of the data type
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -v, --verbose      enable verbose (increase detail with --log_level)
+  -h, --help         display this help screen
 
 Notes:
-  - Only a single block in a given chunk needs to be supplied.
+  - If blocks are provided, only chunks intersecting with those blocks are displayed.
+  - Only a single block in a given chunk needs to be supplied for a match.
 ```
 
 #### Other Options

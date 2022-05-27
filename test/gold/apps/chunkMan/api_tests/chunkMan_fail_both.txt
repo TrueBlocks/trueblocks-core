@@ -1,6 +1,6 @@
-chunks?extract=pins&check
+chunks?mode=pins&check
 {
   "errors": [
-    "Please choose only one of --extract or --check."
+    "Checking is not implemented."
   ]
 }

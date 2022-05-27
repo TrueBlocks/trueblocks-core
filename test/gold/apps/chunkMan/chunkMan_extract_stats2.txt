@@ -1,5 +1,5 @@
-chifra chunks  --extract stats --fmt json
-TEST[DATE|TIME] Extract:  stats
+chifra chunks  stats --fmt json
+TEST[DATE|TIME] Mode:  stats
 TEST[DATE|TIME] Format:  json
 {
   "data": [

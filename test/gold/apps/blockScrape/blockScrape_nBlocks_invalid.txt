@@ -3,7 +3,7 @@ Error:
   invalid argument "-12" for "-n, --block_cnt" flag: strconv.ParseUint: parsing "-12": invalid syntax
 
 Usage:
-  chifra scrape [flags] [mode...]
+  chifra scrape <mode> [mode...] [flags]
 
 Arguments:
   modes - which scraper(s) to control (required)
