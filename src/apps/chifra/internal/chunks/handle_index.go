@@ -33,9 +33,10 @@ func (opts *ChunksOptions) showIndex(path string, first bool) error {
 	}
 
 	// TODO: Fix export without arrays
-	err = opts.Globals.RenderObject(obj, false, first)
+	err = opts.Globals.RenderObject(obj, first)
 	if err != nil {
 		return err
 	}
+
 	return nil
 }

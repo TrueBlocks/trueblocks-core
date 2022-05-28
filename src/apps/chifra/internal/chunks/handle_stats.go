@@ -15,7 +15,7 @@ import (
 func (opts *ChunksOptions) showStats(path string, first bool) error {
 	// TODO: Fix export without arrays
 	obj := NewChunkStats(path)
-	err := opts.Globals.RenderObject(obj, false, first)
+	err := opts.Globals.RenderObject(obj, first)
 	if err != nil {
 		return err
 	}

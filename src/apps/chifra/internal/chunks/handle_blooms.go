@@ -21,7 +21,7 @@ func (opts *ChunksOptions) showBloom(path string, first bool) error {
 	// TODO: Fix export without arrays
 	stats := NewChunkStats(path)
 	obj := NewSimpleBloom(stats, bloom)
-	err := opts.Globals.RenderObject(obj, false, first)
+	err := opts.Globals.RenderObject(obj, first)
 	if err != nil {
 		return err
 	}

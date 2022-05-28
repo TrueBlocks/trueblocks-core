@@ -14,13 +14,11 @@ func (opts *ChunksOptions) HandleChunksExtractPins() error {
 		return err
 	}
 
-	if opts.Globals.TestMode {
-		// Shorten the array for testing
-		results = results[:maxTestItems]
-	}
-
 	for i, r := range results {
-		err := opts.Globals.RenderObject(r, false, i == 0)
+		if opts.Globals.TestMode && i > maxTestItems {
+			continue
+		}
+		err := opts.Globals.RenderObject(r, i == 0)
 		if err != nil {
 			return err
 		}

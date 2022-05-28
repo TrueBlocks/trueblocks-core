@@ -26,6 +26,10 @@ func (opts *ChunksOptions) ValidateChunks() error {
 		return err
 	}
 
+	if opts.Globals.LogLevel > 0 && opts.Mode == "addresses" && opts.Globals.Format == "json" {
+		return validate.Usage("You may not use --format json and log_level > 0 in addresses mode")
+	}
+
 	err = validate.ValidateIdentifiers(
 		opts.Globals.Chain,
 		opts.Blocks,
