@@ -79,6 +79,9 @@ func OutputObject(data interface{}, w io.Writer, format string, hideHeader, apiM
 		fallthrough
 	case "json":
 		outputBytes, err = json.MarshalIndent(data, "    ", "  ")
+		if err != nil {
+			return err
+		}
 		if !first {
 			preceeds = ","
 		}
