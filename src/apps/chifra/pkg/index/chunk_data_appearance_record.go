@@ -16,7 +16,7 @@ type AppearanceRecord struct {
 	TransactionId uint32 `json:"transactionIndex"`
 }
 
-func (chunk *ChunkData) readAppearanceRecords(addrRecord *AddressRecord) (apps []AppearanceRecord, err error) {
+func (chunk *ChunkData) ReadAppearanceRecords(addrRecord *AddressRecord) (apps []AppearanceRecord, err error) {
 	readLocation := int64(HeaderWidth + AddrRecordWidth*chunk.Header.AddressCount + AppRecordWidth*addrRecord.Offset)
 
 	_, err = chunk.File.Seek(readLocation, io.SeekStart)
@@ -27,5 +27,10 @@ func (chunk *ChunkData) readAppearanceRecords(addrRecord *AddressRecord) (apps [
 	apps = make([]AppearanceRecord, addrRecord.Count)
 	err = binary.Read(chunk.File, binary.LittleEndian, &apps)
 
+	return
+}
+
+func (chunk *ChunkData) ReadAppearanceRecord() (app AppearanceRecord, err error) {
+	err = binary.Read(chunk.File, binary.LittleEndian, &app)
 	return
 }
