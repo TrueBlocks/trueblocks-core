@@ -18,8 +18,7 @@ func (opts *WhenOptions) HandleWhenShowBlocks() error {
 		return err
 	}
 
-	first := true
-	for _, br := range opts.BlockIds {
+	for i, br := range opts.BlockIds {
 		blockNums, err := br.ResolveBlocks(opts.Globals.Chain)
 		if err != nil {
 			return err
@@ -33,8 +32,7 @@ func (opts *WhenOptions) HandleWhenShowBlocks() error {
 			nm, _ := tslibPkg.FromBnToName(opts.Globals.Chain, block.BlockNumber)
 			block.Date = d.Format("YYYY-MM-DD HH:mm:ss UTC")
 			block.Name = nm
-			err = opts.Globals.RenderObject(block, false, first)
-			first = false
+			err = opts.Globals.RenderObject(block, i == 0)
 			if err != nil {
 				return err
 			}

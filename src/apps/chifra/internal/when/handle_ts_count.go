@@ -29,5 +29,5 @@ func (opts *WhenOptions) HandleWhenTimestampCount() error {
 	if err != nil {
 		return err
 	}
-	return opts.Globals.RenderObject(obj, false, true)
+	return opts.Globals.RenderObject(obj, true)
 }

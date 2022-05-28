@@ -30,7 +30,7 @@ func (opts *WhenOptions) HandleWhenShowTimestamps() error {
 			if err != nil {
 				return err
 			}
-			err = opts.Globals.RenderObject(*obj, false, bn == 0)
+			err = opts.Globals.RenderObject(*obj, bn == 0)
 			if err != nil {
 				return err
 			}
@@ -38,7 +38,7 @@ func (opts *WhenOptions) HandleWhenShowTimestamps() error {
 		return nil
 	}
 
-	scanBar := progress.NewScanBar(cnt, cnt/500, cnt, (2. / 3.))
+	scanBar := progress.NewScanBar(cnt /* wanted */, cnt/500 /* freq */, cnt /* max */, (2. / 3.))
 	for bn := uint64(0); bn < cnt; bn++ {
 		item, err := tslibPkg.FromBn(opts.Globals.Chain, bn)
 		if err != nil {
