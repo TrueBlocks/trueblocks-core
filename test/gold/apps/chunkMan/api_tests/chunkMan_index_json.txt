@@ -1,6 +1,136 @@
 chunks?mode=index&fmt=json
 {
-  "errors": [
-    "Extractor for index not yet implemented."
-  ]
+  "data": [
+    {
+      "range": {
+        "First": 0,
+        "Last": 0
+      },
+      "magic": "0xdeadbeef",
+      "hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "nAddresses": 8893,
+      "nAppearances": 8893,
+      "fileSize": 320192
+    },
+    {
+      "range": {
+        "First": 1,
+        "Last": 590501
+      },
+      "magic": "0xdeadbeef",
+      "hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "nAddresses": 29330,
+      "nAppearances": 2000001,
+      "fileSize": 16821292
+    },
+    {
+      "range": {
+        "First": 590502,
+        "Last": 864332
+      },
+      "magic": "0xdeadbeef",
+      "hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "nAddresses": 164449,
+      "nAppearances": 2000003,
+      "fileSize": 20604640
+    },
+    {
+      "range": {
+        "First": 864333,
+        "Last": 1076298
+      },
+      "magic": "0xdeadbeef",
+      "hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "nAddresses": 81007,
+      "nAppearances": 2000017,
+      "fileSize": 18268376
+    },
+    {
+      "range": {
+        "First": 1076299,
+        "Last": 1229769
+      },
+      "magic": "0xdeadbeef",
+      "hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "nAddresses": 84862,
+      "nAppearances": 2000019,
+      "fileSize": 18376332
+    },
+    {
+      "range": {
+        "First": 1229770,
+        "Last": 1371352
+      },
+      "magic": "0xdeadbeef",
+      "hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "nAddresses": 62049,
+      "nAppearances": 2000006,
+      "fileSize": 17737464
+    },
+    {
+      "range": {
+        "First": 1371353,
+        "Last": 1504328
+      },
+      "magic": "0xdeadbeef",
+      "hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "nAddresses": 78077,
+      "nAppearances": 2000000,
+      "fileSize": 18186200
+    },
+    {
+      "range": {
+        "First": 1504329,
+        "Last": 1613033
+      },
+      "magic": "0xdeadbeef",
+      "hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "nAddresses": 116909,
+      "nAppearances": 2000001,
+      "fileSize": 19273504
+    },
+    {
+      "range": {
+        "First": 1613034,
+        "Last": 1729008
+      },
+      "magic": "0xdeadbeef",
+      "hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "nAddresses": 133329,
+      "nAppearances": 2000004,
+      "fileSize": 19733288
+    },
+    {
+      "range": {
+        "First": 1729009,
+        "Last": 1848054
+      },
+      "magic": "0xdeadbeef",
+      "hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "nAddresses": 123164,
+      "nAppearances": 2000298,
+      "fileSize": 19451020
+    },
+    {
+      "range": {
+        "First": 1848055,
+        "Last": 1963090
+      },
+      "magic": "0xdeadbeef",
+      "hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "nAddresses": 138572,
+      "nAppearances": 2000009,
+      "fileSize": 19880132
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
 }

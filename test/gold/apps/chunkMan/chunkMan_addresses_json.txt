@@ -1,21 +1,492 @@
 chifra chunks  addresses --fmt json
 TEST[DATE|TIME] Mode:  addresses
 TEST[DATE|TIME] Format:  json
-Error: Extractor for addresses not yet implemented.
-Usage:
-  chifra chunks <mode> [flags] [blocks...]
-
-Arguments:
-  mode - the type of chunk info to retrieve (required)
-	One of [ stats | pins | blooms | index | addresses | appearances ]
-  blocks - optional list of blocks to intersect with chunk ranges
-
-Flags:
-  -c, --check        depends on mode, checks for internal consistency of the data type
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -v, --verbose      enable verbose (increase detail with --log_level)
-  -h, --help         display this help screen
-
-Notes:
-  - If blocks are provided, only chunks intersecting with those blocks are displayed.
-  - Only a single block in a given chunk needs to be supplied for a match.
+{
+  "data": [
+    {
+      "Address": "0x000d836201318ec6899a67540690382780743280",
+      "Offset": 0,
+      "Count": 1
+    },{
+      "Address": "0x001762430ea9c3a26e5749afdb70da5f78ddbb8c",
+      "Offset": 1,
+      "Count": 1
+    },{
+      "Address": "0x001d14804b399c6ef80e64576f657660804fec0b",
+      "Offset": 2,
+      "Count": 1
+    },{
+      "Address": "0x0032403587947b9f15622a68d104d54d33dbd1cd",
+      "Offset": 3,
+      "Count": 1
+    },{
+      "Address": "0x00497e92cdc0e0b963d752b2296acb87da828b24",
+      "Offset": 4,
+      "Count": 1
+    },{
+      "Address": "0x004bfbe1546bc6c65b5c7eaa55304b38bbfec6d3",
+      "Offset": 5,
+      "Count": 1
+    },{
+      "Address": "0x005a9c03f69d17d66cbb8ad721008a9ebbb836fb",
+      "Offset": 6,
+      "Count": 1
+    },{
+      "Address": "0x005d0ee8155ec0a6ff6808552ca5f16bb5be323a",
+      "Offset": 7,
+      "Count": 1
+    },{
+      "Address": "0x007622d84a234bb8b078230fcf84b67ae9a8acae",
+      "Offset": 8,
+      "Count": 1
+    },{
+      "Address": "0x007b9fc31905b4994b04c9e2cfdc5e2770503f42",
+      "Offset": 9,
+      "Count": 1
+    },{
+      "Address": "0x007f4a23ca00cd043d25c2888c1aa5688f81a344",
+      "Offset": 10,
+      "Count": 1
+    },{
+      "Address": "0x000000000000000000000000000007329b54129c",
+      "Offset": 0,
+      "Count": 3
+    },{
+      "Address": "0x0000000000000214156104345760006001905490",
+      "Offset": 3,
+      "Count": 1
+    },{
+      "Address": "0x0000000000000260016000508381546001816001",
+      "Offset": 4,
+      "Count": 1
+    },{
+      "Address": "0x0000000000000281526001019250505060405180",
+      "Offset": 5,
+      "Count": 2
+    },{
+      "Address": "0x0000000000000281526004018080602001828103",
+      "Offset": 7,
+      "Count": 2
+    },{
+      "Address": "0x000000000000028152600401808273ffffffffff",
+      "Offset": 9,
+      "Count": 2
+    },{
+      "Address": "0x0000000000000281526004018082815260200180",
+      "Offset": 11,
+      "Count": 10
+    },{
+      "Address": "0x0000000000000281526004018082815260200191",
+      "Offset": 21,
+      "Count": 3
+    },{
+      "Address": "0x0000000000000281526004018083815260200180",
+      "Offset": 24,
+      "Count": 3
+    },{
+      "Address": "0x0000000000000281526004018085815260200180",
+      "Offset": 27,
+      "Count": 1
+    },{
+      "Address": "0x000000000000028152600401808773ffffffffff",
+      "Offset": 28,
+      "Count": 1
+    },{
+      "Address": "0x00000000000001416d65726963616e2053616d6f",
+      "Offset": 0,
+      "Count": 1
+    },{
+      "Address": "0x000000000000028152600401808473ffffffffff",
+      "Offset": 1,
+      "Count": 2
+    },{
+      "Address": "0x0000000000000281526004018090506000604051",
+      "Offset": 3,
+      "Count": 1
+    },{
+      "Address": "0x0000000000000d53686f657320617765736f6d65",
+      "Offset": 4,
+      "Count": 1
+    },{
+      "Address": "0x0000000000000f41666768616e697374616e0000",
+      "Offset": 5,
+      "Count": 1
+    },{
+      "Address": "0x0000000000001756657279207665727920617765",
+      "Offset": 6,
+      "Count": 1
+    },{
+      "Address": "0x0000000000001790556104b2836100a8565b9150",
+      "Offset": 7,
+      "Count": 1
+    },{
+      "Address": "0x0000000000002e516d51374d34687234636e7153",
+      "Offset": 8,
+      "Count": 4
+    },{
+      "Address": "0x00000000000042494f544543484e4f4c4f474945",
+      "Offset": 12,
+      "Count": 1
+    },{
+      "Address": "0x000000000000444956455254495353454d454e54",
+      "Offset": 13,
+      "Count": 1
+    },{
+      "Address": "0x000000000000464f5253414c4542594f574e4552",
+      "Offset": 14,
+      "Count": 2
+    },{
+      "Address": "0x000000000000028152600401808473ffffffffff",
+      "Offset": 0,
+      "Count": 2
+    },{
+      "Address": "0x0000000000000281526004018084815260200183",
+      "Offset": 2,
+      "Count": 2
+    },{
+      "Address": "0x000000000000028152600401808573ffffffffff",
+      "Offset": 4,
+      "Count": 2
+    },{
+      "Address": "0x00000000000007015560a060a059905901600090",
+      "Offset": 6,
+      "Count": 14
+    },{
+      "Address": "0x0000000000000c6d696a6e5a6f6e6e6564616b00",
+      "Offset": 20,
+      "Count": 1
+    },{
+      "Address": "0x000000000000191660a060020a1790555b565b61",
+      "Offset": 21,
+      "Count": 1
+    },{
+      "Address": "0x00000000000019169190911779ffffffff000000",
+      "Offset": 22,
+      "Count": 3
+    },{
+      "Address": "0x00000000000028e28c92e296bde28c9229e29886",
+      "Offset": 25,
+      "Count": 2
+    },{
+      "Address": "0x00000000000028e29480e280bfe280bfe2948029",
+      "Offset": 27,
+      "Count": 4
+    },{
+      "Address": "0x00000000000035312e3137342e3138352e313938",
+      "Offset": 31,
+      "Count": 1
+    },{
+      "Address": "0x000000000000414d414e44415345594652494544",
+      "Offset": 32,
+      "Count": 1
+    },{
+      "Address": "0x000000000000026101d1565b6100a560016100bd",
+      "Offset": 0,
+      "Count": 1
+    },{
+      "Address": "0x000000000000026101d1565b6100a560026100bd",
+      "Offset": 1,
+      "Count": 1
+    },{
+      "Address": "0x000000000000028152600401808373ffffffffff",
+      "Offset": 2,
+      "Count": 3
+    },{
+      "Address": "0x000000000000028152600401808473ffffffffff",
+      "Offset": 5,
+      "Count": 2
+    },{
+      "Address": "0x0000000000000281526004018084815260200183",
+      "Offset": 7,
+      "Count": 5
+    },{
+      "Address": "0x000000000000028152600401808573ffffffffff",
+      "Offset": 12,
+      "Count": 6
+    },{
+      "Address": "0x0000000000000281526004018090506020604051",
+      "Offset": 18,
+      "Count": 1
+    },{
+      "Address": "0x0000000000000500000000000000000000000081",
+      "Offset": 19,
+      "Count": 1
+    },{
+      "Address": "0x0000000000000a6d6f746f35746f6b656e000000",
+      "Offset": 20,
+      "Count": 1
+    },{
+      "Address": "0x0000000000001254657374696e67203239393236",
+      "Offset": 21,
+      "Count": 1
+    },{
+      "Address": "0x00000000000014156111ea57600191505b600101",
+      "Offset": 22,
+      "Count": 2
+    },{
+      "Address": "0x0000000000000281526004018080602001828103",
+      "Offset": 0,
+      "Count": 1
+    },{
+      "Address": "0x00000000000002815260040180807f6d696e546f",
+      "Offset": 1,
+      "Count": 1
+    },{
+      "Address": "0x0000000000000281526004018083815260200182",
+      "Offset": 2,
+      "Count": 1
+    },{
+      "Address": "0x000000000000028152600401808473ffffffffff",
+      "Offset": 3,
+      "Count": 1
+    },{
+      "Address": "0x0000000000000284828151811015610002579060",
+      "Offset": 4,
+      "Count": 1
+    },{
+      "Address": "0x0000000000000affffffffffffffffffffffffff",
+      "Offset": 5,
+      "Count": 10
+    },{
+      "Address": "0x0000000000001916949094178555865185820180",
+      "Offset": 15,
+      "Count": 1
+    },{
+      "Address": "0x0000000000001981169086900490941690920190",
+      "Offset": 16,
+      "Count": 2
+    },{
+      "Address": "0x0000000000001a53616e646d616e202d204d6173",
+      "Offset": 18,
+      "Count": 1
+    },{
+      "Address": "0x0000000000003941207072697374696e6520636f",
+      "Offset": 19,
+      "Count": 1
+    },{
+      "Address": "0x0000000000006020828101919091528251606081",
+      "Offset": 20,
+      "Count": 1
+    },{
+      "Address": "0x00000000000001000000000000000000000000a2",
+      "Offset": 0,
+      "Count": 1
+    },{
+      "Address": "0x00000000000001000904000000010000d8fa0000",
+      "Offset": 1,
+      "Count": 1
+    },{
+      "Address": "0x00000000000001000904000020020000640a0100",
+      "Offset": 2,
+      "Count": 1
+    },{
+      "Address": "0x0000000000000100090400002005000024260100",
+      "Offset": 3,
+      "Count": 1
+    },{
+      "Address": "0x0000000000000100090400004003000058100100",
+      "Offset": 4,
+      "Count": 1
+    },{
+      "Address": "0x00000000000001000904000080040000c41e0100",
+      "Offset": 5,
+      "Count": 1
+    },{
+      "Address": "0x000000000000010009040000c0050000bc280100",
+      "Offset": 6,
+      "Count": 1
+    },{
+      "Address": "0x000000000000010009040000e0030000c4190100",
+      "Offset": 7,
+      "Count": 1
+    },{
+      "Address": "0x0000000000000281526004018082600160a06002",
+      "Offset": 8,
+      "Count": 4
+    },{
+      "Address": "0x0000000000000281526004018083815260200182",
+      "Offset": 12,
+      "Count": 2
+    },{
+      "Address": "0x00000000000004ee2d6d415a623df2c444cc0000",
+      "Offset": 14,
+      "Count": 1
+    },{
+      "Address": "0x0000000000000281526004018082600160a06002",
+      "Offset": 0,
+      "Count": 23
+    },{
+      "Address": "0x0000000000000281526004018084815260200183",
+      "Offset": 23,
+      "Count": 4
+    },{
+      "Address": "0x0000000000000281526004018090506040604051",
+      "Offset": 27,
+      "Count": 4
+    },{
+      "Address": "0x00000000000014000000000000000000000000e1",
+      "Offset": 31,
+      "Count": 3
+    },{
+      "Address": "0x0000000000001916919091178255604083015180",
+      "Offset": 34,
+      "Count": 2
+    },{
+      "Address": "0x0000000000004155544f20494e535552414e4345",
+      "Offset": 36,
+      "Count": 1
+    },{
+      "Address": "0x000000000000474c4f42414c44454c4956455259",
+      "Offset": 37,
+      "Count": 1
+    },{
+      "Address": "0x00000000000050524f5045525459434c49454e54",
+      "Offset": 38,
+      "Count": 1
+    },{
+      "Address": "0x00000000000050524f50455254594d414e414745",
+      "Offset": 39,
+      "Count": 1
+    },{
+      "Address": "0x00000000000050524f5045525459545241444552",
+      "Offset": 40,
+      "Count": 1
+    },{
+      "Address": "0x0000000000006020918201908152600980546000",
+      "Offset": 41,
+      "Count": 2
+    },{
+      "Address": "0x000000000000027effffffffffffffffffffffff",
+      "Offset": 0,
+      "Count": 1
+    },{
+      "Address": "0x000000000000028152600401808273ffffffffff",
+      "Offset": 1,
+      "Count": 18
+    },{
+      "Address": "0x000000000000028152600401808473ffffffffff",
+      "Offset": 19,
+      "Count": 6
+    },{
+      "Address": "0x0000000000000281526004018084815260200183",
+      "Offset": 25,
+      "Count": 2
+    },{
+      "Address": "0x000000000000028152600401808573ffffffffff",
+      "Offset": 27,
+      "Count": 16
+    },{
+      "Address": "0x0000000000000281526004018090506020604051",
+      "Offset": 43,
+      "Count": 4
+    },{
+      "Address": "0x0000000000000283838060010194508151811015",
+      "Offset": 47,
+      "Count": 2
+    },{
+      "Address": "0x0000000000004449474954414c41535345535453",
+      "Offset": 49,
+      "Count": 1
+    },{
+      "Address": "0x00000000000050524f5045525459434c49454e54",
+      "Offset": 50,
+      "Count": 2
+    },{
+      "Address": "0x00000000000050524f50455254594d414e414745",
+      "Offset": 52,
+      "Count": 1
+    },{
+      "Address": "0x000000000000574845454c4f46464f5254554e45",
+      "Offset": 53,
+      "Count": 1
+    },{
+      "Address": "0x000000000000027effffffffffffffffffffffff",
+      "Offset": 0,
+      "Count": 1
+    },{
+      "Address": "0x000000000000028152600401808273ffffffffff",
+      "Offset": 1,
+      "Count": 11
+    },{
+      "Address": "0x000000000000028152600401808573ffffffffff",
+      "Offset": 12,
+      "Count": 8
+    },{
+      "Address": "0x0000000000000283838060010194508151811015",
+      "Offset": 20,
+      "Count": 2
+    },{
+      "Address": "0x0000000000000d3132372e32332e33352e323535",
+      "Offset": 22,
+      "Count": 3
+    },{
+      "Address": "0x000000000000106173646173647361646173646e",
+      "Offset": 25,
+      "Count": 2
+    },{
+      "Address": "0x000000000000112034312e34303333382c322e31",
+      "Offset": 27,
+      "Count": 3
+    },{
+      "Address": "0x0000000000001132633a36653a38353a31313a34",
+      "Offset": 30,
+      "Count": 3
+    },{
+      "Address": "0x000000000000163078306173647361643132336e",
+      "Offset": 33,
+      "Count": 1
+    },{
+      "Address": "0x000000000000179081905560a860020a900460ff",
+      "Offset": 34,
+      "Count": 2
+    },{
+      "Address": "0x000000000000191660a060020a1776ffff000000",
+      "Offset": 36,
+      "Count": 1
+    },{
+      "Address": "0x00000000000001a4b9cf15c92c8efa8055555555",
+      "Offset": 0,
+      "Count": 4
+    },{
+      "Address": "0x00000000000001a4b9cf15c92c8efa8055555597",
+      "Offset": 4,
+      "Count": 1
+    },{
+      "Address": "0x0000000000000281526001018260ff167f010000",
+      "Offset": 5,
+      "Count": 1
+    },{
+      "Address": "0x000000000000028152600401808273ffffffffff",
+      "Offset": 6,
+      "Count": 17
+    },{
+      "Address": "0x000000000000028152600401808373ffffffffff",
+      "Offset": 23,
+      "Count": 1
+    },{
+      "Address": "0x000000000000028152600401808573ffffffffff",
+      "Offset": 24,
+      "Count": 2
+    },{
+      "Address": "0x0000000000000281526004018085815260200180",
+      "Offset": 26,
+      "Count": 2
+    },{
+      "Address": "0x0000000000000281526004018090506020604051",
+      "Offset": 28,
+      "Count": 2
+    },{
+      "Address": "0x0000000000000461ef7d8f6dcc27f15638e38e38",
+      "Offset": 30,
+      "Count": 1
+    },{
+      "Address": "0x00000000000004ee2d6b00cfa2484ae80303b3a8",
+      "Offset": 31,
+      "Count": 1
+    },{
+      "Address": "0x00000000000004ee2d6d415b85acef80ffffffff",
+      "Offset": 32,
+      "Count": 1
+    }
+  ]
+}

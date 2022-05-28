@@ -1,21 +1,125 @@
 chifra chunks  appearances --fmt txt
 TEST[DATE|TIME] Mode:  appearances
 TEST[DATE|TIME] Format:  txt
-Error: Extractor for appearances not yet implemented.
-Usage:
-  chifra chunks <mode> [flags] [blocks...]
-
-Arguments:
-  mode - the type of chunk info to retrieve (required)
-	One of [ stats | pins | blooms | index | addresses | appearances ]
-  blocks - optional list of blocks to intersect with chunk ranges
-
-Flags:
-  -c, --check        depends on mode, checks for internal consistency of the data type
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -v, --verbose      enable verbose (increase detail with --log_level)
-  -h, --help         display this help screen
-
-Notes:
-  - If blocks are provided, only chunks intersecting with those blocks are displayed.
-  - Only a single block in a given chunk needs to be supplied for a match.
+blockNumber	transactionIndex
+0	0
+0	1
+0	2
+0	3
+0	4
+0	5
+0	6
+0	7
+0	8
+0	9
+0	10
+254277	0
+254299	1
+254331	2
+208380	0
+424564	0
+572093	0
+572353	0
+465872	0
+470247	4
+171181	0
+177535	3
+823067	1
+637240	0
+637256	0
+758076	0
+823067	1
+822661	2
+824297	0
+807562	2
+822661	2
+823067	1
+824297	0
+1059628	0
+1059941	8
+1059953	2
+1059963	0
+1059632	0
+1059947	21
+955488	1
+955620	2
+973999	0
+978016	0
+978018	0
+1131438	0
+1131386	1
+1204316	11
+1204367	12
+1204434	4
+1184095	3
+1184176	1
+1184103	0
+1184184	8
+1188523	0
+1190654	0
+1324454	1
+1281689	2
+1286062	2
+1329873	0
+1348862	2
+1301730	0
+1301739	0
+1301745	0
+1301762	0
+1301847	0
+1301862	0
+1499223	0
+1463809	0
+1463809	0
+1463809	0
+1463809	0
+1463809	0
+1463809	0
+1463809	0
+1483859	8
+1483895	12
+1483899	6
+1510493	7
+1510494	5
+1531606	4
+1531677	9
+1531698	6
+1537321	8
+1537414	8
+1537964	2
+1537965	2
+1537966	3
+1537966	7
+1678507	2
+1624656	1
+1624684	0
+1624747	5
+1624840	0
+1631991	7
+1631999	1
+1632046	5
+1632049	6
+1632062	9
+1632065	32
+1822777	0
+1776352	0
+1826577	2
+1826597	4
+1830089	5
+1830153	3
+1830166	1
+1830218	6
+1830226	2
+1830479	2
+1830651	6
+1922263	1
+1924632	1
+1932088	0
+1939241	0
+1925354	0
+1889951	0
+1861234	6
+1866644	0
+1871018	1
+1871797	5
+1871870	1
