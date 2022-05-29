@@ -30,6 +30,22 @@ func (opts *ChunksOptions) ValidateChunks() error {
 		return validate.Usage("You may not use --format json and log_level > 0 in addresses mode")
 	}
 
+	if opts.Belongs {
+		if opts.Mode != "addresses" && opts.Mode != "blooms" {
+			return validate.Usage("The --belongs option is only available with either the addresses or blooms mode")
+		}
+		if len(opts.Addrs) == 0 {
+			return validate.Usage("You must specifiy at least one address with the --belongs option")
+		}
+		if len(opts.Blocks) == 0 {
+			return validate.Usage("You must specifiy at least one block identifier with the --belongs option")
+		}
+	}
+
+	if len(opts.Addrs) > 0 && !opts.Belongs {
+		return validate.Usage("You may only specify an address with the --belongs option")
+	}
+
 	err = validate.ValidateIdentifiers(
 		opts.Globals.Chain,
 		opts.Blocks,

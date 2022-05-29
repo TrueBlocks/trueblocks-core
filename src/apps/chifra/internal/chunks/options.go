@@ -21,7 +21,9 @@ type ChunksOptions struct {
 	Mode     string
 	Blocks   []string
 	BlockIds []blockRange.Identifier
+	Addrs    []string
 	Check    bool
+	Belongs  bool
 	Globals  globals.GlobalOptions
 	BadFlag  error
 }
@@ -31,7 +33,9 @@ var chunksCmdLineOptions ChunksOptions
 func (opts *ChunksOptions) TestLog() {
 	logger.TestLog(len(opts.Mode) > 0, "Mode: ", opts.Mode)
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
+	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(opts.Check, "Check: ", opts.Check)
+	logger.TestLog(opts.Belongs, "Belongs: ", opts.Belongs)
 	opts.Globals.TestLog()
 }
 
@@ -46,8 +50,15 @@ func ChunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Blocks = append(opts.Blocks, s...)
 			}
+		case "addrs":
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Addrs = append(opts.Addrs, s...)
+			}
 		case "check":
 			opts.Check = true
+		case "belongs":
+			opts.Belongs = true
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "chunks")
@@ -71,7 +82,11 @@ func ChunksFinishParse(args []string) *ChunksOptions {
 		opts.Mode = args[0]
 		for i, arg := range args {
 			if i > 0 {
-				opts.Blocks = append(opts.Blocks, arg)
+				if validate.IsValidAddress(arg) {
+					opts.Addrs = append(opts.Addrs, arg)
+				} else {
+					opts.Blocks = append(opts.Blocks, arg)
+				}
 			}
 		}
 	}

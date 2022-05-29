@@ -55,6 +55,7 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 		return
 	}
 
+	maxTestItems = 100
 	if opts.Check {
 		return opts.HandleChunksCheck(blockNums), true
 
@@ -91,7 +92,11 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 			return opts.HandleChunksExtract(opts.showIndex, blockNums), true
 
 		} else if opts.Mode == "addresses" {
-			maxTestItems = 10
+			if opts.Belongs {
+				maxTestItems = 10000
+			} else {
+				maxTestItems = 10
+			}
 			err := opts.Globals.RenderHeader(types.SimpleIndexAddress{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
 			if err != nil {
 				return err, true

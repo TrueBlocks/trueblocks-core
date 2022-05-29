@@ -1,7 +1,9 @@
-chifra chunks  --check
-TEST[DATE|TIME] Check:  true
+chifra chunks  addresses --belongs 2287625
+TEST[DATE|TIME] Mode:  addresses
+TEST[DATE|TIME] Blocks:  [2287625]
+TEST[DATE|TIME] Belongs:  true
 TEST[DATE|TIME] Format:  txt
-Error: Please choose at least one of [stats|pins|blooms|index|addresses|appearances].
+Error: You must specifiy at least one address with the --belongs option
 Usage:
   chifra chunks <mode> [flags] [blocks...] [address...]
 

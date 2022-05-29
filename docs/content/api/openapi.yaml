@@ -1544,8 +1544,27 @@ paths:
             items:
               type: string
               format: blknum
+        - name: addrs
+          description: one or more addresses to use with --belongs option (see note)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: address
         - name: check
           description: depends on mode, checks for internal consistency of the data type
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: belongs
+          description: checks if the given address appears in the given chunk
           required: false
           style: form
           in: query
@@ -1727,7 +1746,7 @@ paths:
                 - uncles
                 - all
         - name: appearances
-          description: show only the blocknumer.tx_id appearances of the exported transactions
+          description: show only the blocknumber.tx_id appearances of the exported transactions
           required: false
           style: form
           in: query

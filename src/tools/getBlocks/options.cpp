@@ -272,7 +272,7 @@ COptions::COptions(void) {
     notes.push_back("`blocks` is a space-separated list of values, a start-end range, a `special`, or any combination.");  // NOLINT
     notes.push_back("`blocks` may be specified as either numbers or hashes.");
     notes.push_back("`special` blocks are detailed under `chifra when --list`.");
-    notes.push_back("With the --logs option, optionally specify one or more --emmitter, one or more --topics, either or both.");  // NOLINT
+    notes.push_back("With the --logs option, optionally specify one or more --emitter, one or more --topics, either or both.");  // NOLINT
     notes.push_back("The --logs option is significantly faster if you provide an --emitter and/or a --topic.");
     notes.push_back("Multiple topics match on topic0, topic1, and so on, not on different topic0's.");
     notes.push_back("Large block ranges may crash the node, use --big_range to specify a larger range.");
