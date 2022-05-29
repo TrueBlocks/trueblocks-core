@@ -17,6 +17,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/ethclient"
@@ -275,7 +276,6 @@ func GetBlockByNumber(chain string, bn uint64) (types.NamedBlock, error) {
 		ID:        1005,
 	}
 	rpcProvider := config.GetRpcProvider(chain)
-	// log.Println(v, payload)
 	err := FromRpc(rpcProvider, &payload, &block)
 	if err != nil {
 		return types.NamedBlock{}, err
@@ -286,6 +286,9 @@ func GetBlockByNumber(chain string, bn uint64) (types.NamedBlock, error) {
 	}
 	n, _ := strconv.ParseUint(block.Result.Number[2:], 16, 64)
 	ts, _ := strconv.ParseUint(block.Result.Timestamp[2:], 16, 64)
+	if n == 0 {
+		ts = utils.EarliestTs
+	}
 	return types.NamedBlock{
 		BlockNumber: n,
 		TimeStamp:   ts,

@@ -1,5 +1,10 @@
 package types
 
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/ethereum/go-ethereum/common"
+)
+
 type NamedBlock struct {
 	BlockNumber uint64 `json:"blockNumber"`
 	TimeStamp   uint64 `json:"timestamp"`
@@ -36,4 +41,32 @@ type SimplePinList struct {
 	FileName  string `json:"fileName"`
 	BloomHash string `json:"bloomHash"`
 	IndexHash string `json:"indexHash"`
+}
+
+type SimpleBloom struct {
+	Range     cache.FileRange `json:"range"`
+	Count     uint32          `json:"nBlooms"`
+	NInserted uint64          `json:"nInserted"`
+	Size      int64           `json:"size"`
+	Width     uint64          `json:"byteWidth"`
+}
+
+type SimpleIndex struct {
+	Range           cache.FileRange `json:"range"`
+	Magic           uint32          `json:"magic"`
+	Hash            common.Hash     `json:"hash"`
+	AddressCount    uint32          `json:"nAddresses"`
+	AppearanceCount uint32          `json:"nAppearances"`
+	Size            int64           `json:"fileSize"`
+}
+
+type SimpleIndexAddress struct {
+	Address string `json:"address"`
+	Offset  uint32 `json:"offset"`
+	Count   uint32 `json:"count"`
+}
+
+type SimpleIndexAppearance struct {
+	BlockNumber      uint32 `json:"blockNumber"`
+	TransactionIndex uint32 `json:"transactionIndex"`
 }

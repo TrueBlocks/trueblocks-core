@@ -32,7 +32,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10460,apps,Accounts,export,acctExport,,,,false,false,true,true,--,description,,Export full detail of transactions for one or more addresses.
 10470,apps,Accounts,export,acctExport,n1,,,false,false,false,false,--,note,,An `address` must start with '0x' and be forty-two characters long.
 10470,apps,Accounts,export,acctExport,n2,,,false,false,false,false,--,note,,Articulating the export means turn the EVM's byte data into human-readable text (if possible).
-10472,apps,Accounts,export,acctExport,n3,,,false,false,false,false,--,note,,For the --logs option&#44; you may optionally specify one or more --emmitter&#44; one or more --topics&#44; or both.
+10472,apps,Accounts,export,acctExport,n3,,,false,false,false,false,--,note,,For the --logs option&#44; you may optionally specify one or more --emitter&#44; one or more --topics&#44; or both.
 10474,apps,Accounts,export,acctExport,n4,,,false,false,false,false,--,note,,The --logs option is significantly faster if you provide an --emitter or a --topic.
 10476,apps,Accounts,export,acctExport,n5,,,false,false,false,false,--,note,,Neighbors include every address that appears in any transaction in which the export address also appears.
 
@@ -106,7 +106,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12600,tools,ChainData,blocks,getBlocks,n1,,,false,false,false,false,--,note,,`blocks` is a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
 12610,tools,ChainData,blocks,getBlocks,n2,,,false,false,false,false,--,note,,`blocks` may be specified as either numbers or hashes.
 12620,tools,ChainData,blocks,getBlocks,n3,,,false,false,false,false,--,note,,`special` blocks are detailed under `chifra when --list`.
-12622,tools,ChainData,blocks,getBlocks,n4,,,false,false,false,false,--,note,,With the --logs option&#44; optionally specify one or more --emmitter&#44; one or more --topics&#44; either or both.
+12622,tools,ChainData,blocks,getBlocks,n4,,,false,false,false,false,--,note,,With the --logs option&#44; optionally specify one or more --emitter&#44; one or more --topics&#44; either or both.
 12624,tools,ChainData,blocks,getBlocks,n5,,,false,false,false,false,--,note,,The --logs option is significantly faster if you provide an --emitter and/or a --topic.
 12625,tools,ChainData,blocks,getBlocks,n6,,,false,false,false,false,--,note,,Multiple topics match on topic0&#44; topic1&#44; and so on&#44; not on different topic0's.
 12627,tools,ChainData,blocks,getBlocks,n7,,,false,false,false,false,--,note,,Large block ranges may crash the node&#44; use --big_range to specify a larger range.
@@ -231,11 +231,17 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10840,apps,Admin,status,cacheStatus,last_block,L,NOPOS,false,false,false,false,local,flag,<blknum>,last block to process (inclusive -- testing only)
 10860,apps,Admin,status,cacheStatus,,,,false,false,true,true,--,description,,Report on the status of the TrueBlocks system.
 
-21950,apps,Admin,chunks,chunkMan,blocks,,,false,false,true,true,header,positional,list<blknum>,optional list of blocks to intersect with chunk ranges
-21956,apps,Admin,chunks,chunkMan,extract,e,,false,false,true,true,header,flag,enum[stats|pins|blooms|index|header|addresses|appearances],show some or all of the contents of the chunk or bloom filters
-21956,apps,Admin,chunks,chunkMan,check,c,,false,false,false,false,gocmd,switch,<boolean>,check the index for internal consistency
-21962,apps,Admin,chunks,chunkMan,,,,false,false,true,true,--,description,,Manage and investigate chunks and bloom filters.
-21964,apps,Admin,chunks,chunkMan,n1,,,false,false,false,false,--,note,,Only a single block in a given chunk needs to be supplied.
+21950,apps,Admin,chunks,chunkMan,mode,,,true,false,true,true,local,positional,enum[stats*|pins|blooms|index|addresses|appearances],the type of chunk info to retrieve
+21955,apps,Admin,chunks,chunkMan,blocks,,,false,false,true,true,header,positional,list<blknum>,optional list of blocks to intersect with chunk ranges
+21957,apps,Admin,chunks,chunkMan,addrs,,,false,false,true,true,header,positional,list<addr>,one or more addresses to use with --belongs option (see note)
+21960,apps,Admin,chunks,chunkMan,check,c,,false,false,true,true,gocmd,switch,<boolean>,depends on mode&#44; checks for internal consistency of the data type
+21960,apps,Admin,chunks,chunkMan,belongs,b,,false,false,true,true,gocmd,switch,<boolean>,checks if the given address appears in the given chunk
+21965,apps,Admin,chunks,chunkMan,,,,false,false,true,true,--,description,,Manage and investigate chunks and bloom filters.
+21970,apps,Admin,chunks,chunkMan,n1,,,false,false,false,false,--,note,,If blocks are provided&#44; only chunks intersecting with those blocks are displayed.
+21970,apps,Admin,chunks,chunkMan,n2,,,false,false,false,false,--,note,,Only a single block in a given chunk needs to be supplied for a match.
+21970,apps,Admin,chunks,chunkMan,n3,,,false,false,false,false,--,note,,The --belongs option is only available with the addresses or blooms mode.
+21970,apps,Admin,chunks,chunkMan,n4,,,false,false,false,false,--,note,,The --belongs option requires both an address and a block identifier.
+21970,apps,Admin,chunks,chunkMan,n5,,,false,false,false,false,--,note,,You may only specifiy an address when using the --belongs option.
 
 11905,apps,Admin,init,init,all,a,,false,false,true,true,header,switch,<boolean>,in addition to Bloom filters&#44; download full index chunks
 11910,apps,Admin,init,init,,,,false,false,true,true,--,description,,Initialize the TrueBlocks system by downloading from IPFS.
@@ -256,7 +262,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12120,tools,Other,slurp,ethslurp,addrs,,,true,false,true,true,header,positional,list<addr>,one or more addresses to slurp from Etherscan
 12140,tools,Other,slurp,ethslurp,blocks,,,false,false,true,true,header,positional,list<blknum>,an optional range of blocks to slurp
 12160,tools,Other,slurp,ethslurp,types,t,,false,false,true,true,local,flag,list<enum[ext*|int|token|nfts|miner|uncles|all]>,which types of transactions to request
-12180,tools,Other,slurp,ethslurp,appearances,p,,false,false,true,true,header,switch,<boolean>,show only the blocknumer.tx_id appearances of the exported transactions
+12180,tools,Other,slurp,ethslurp,appearances,p,,false,false,true,true,header,switch,<boolean>,show only the blocknumber.tx_id appearances of the exported transactions
 12220,tools,Other,slurp,ethslurp,,,,false,false,true,true,--,description,,Fetch data from EtherScan for any address.
 12222,tools,Other,slurp,ethslurp,n1,,,false,false,false,false,--,note,,Portions of this software are Powered by Etherscan.io APIs.
 

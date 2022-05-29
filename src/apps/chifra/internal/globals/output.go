@@ -84,21 +84,11 @@ func RenderSlice[
 	return fmt.Errorf("unsupported format %s", opts.Format)
 }
 
-func (opts *GlobalOptions) RenderObject(data interface{}, showMeta, first bool) error {
+func (opts *GlobalOptions) RenderObject(data interface{}, first bool) error {
 	if opts.Writer == nil {
 		log.Fatal("opts.Writer is nil")
 	}
-
-	var meta *rpcClient.MetaData = nil
-	if showMeta {
-		var err error
-		meta, err = rpcClient.GetMetaData(opts.Chain, opts.TestMode)
-		if err != nil {
-			return err
-		}
-	}
-
-	return output.OutputObject(data, opts.Writer, opts.Format, opts.NoHeader, opts.ApiMode, first, meta)
+	return output.OutputObject(data, opts.Writer, opts.Format, opts.NoHeader, opts.ApiMode, first, nil)
 }
 
 func (opts *GlobalOptions) RenderHeader(data interface{}, w *io.Writer, format string, apiMode, hideHeader, first bool) error {

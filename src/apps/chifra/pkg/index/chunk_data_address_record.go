@@ -22,7 +22,7 @@ type AddressRecord struct {
 	Count   uint32
 }
 
-func (chunk *ChunkData) readAddressRecord() (addressRec AddressRecord, err error) {
+func (chunk *ChunkData) ReadAddressRecord() (addressRec AddressRecord, err error) {
 	err = binary.Read(chunk.File, binary.LittleEndian, &addressRec)
 	return
 }
@@ -44,7 +44,7 @@ func (chunk *ChunkData) searchForAddressRecord(address common.Address) int {
 			return false
 		}
 
-		addressRec, err := chunk.readAddressRecord()
+		addressRec, err := chunk.ReadAddressRecord()
 		if err != nil {
 			fmt.Println(err)
 			return false
@@ -57,7 +57,7 @@ func (chunk *ChunkData) searchForAddressRecord(address common.Address) int {
 
 	readLocation := int64(HeaderWidth + pos*AddrRecordWidth)
 	chunk.File.Seek(readLocation, io.SeekStart)
-	rec, err := chunk.readAddressRecord()
+	rec, err := chunk.ReadAddressRecord()
 	if err != nil {
 		return -1
 	}

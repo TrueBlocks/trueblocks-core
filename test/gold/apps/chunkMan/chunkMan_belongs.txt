@@ -1,0 +1,8 @@
+chifra chunks  addresses --belongs 0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9 2287625 --fmt csv
+TEST[DATE|TIME] Mode:  addresses
+TEST[DATE|TIME] Blocks:  [2287625]
+TEST[DATE|TIME] Addrs:  [0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9]
+TEST[DATE|TIME] Belongs:  true
+TEST[DATE|TIME] Format:  csv
+"address","offset","count"
+"0x0101F3Be8Ebb4BbD39A2e3B9A3639d4259832FD9","8211","67"

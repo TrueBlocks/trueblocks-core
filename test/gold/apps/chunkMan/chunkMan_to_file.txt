@@ -1,3 +1,0 @@
-chifra chunks  --list --fmt json --to_file
-TIME ~ CLOCK - <INFO>  : list: true
-{ "outputFilename": "--output_filename--" }

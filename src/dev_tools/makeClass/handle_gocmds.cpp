@@ -233,6 +233,9 @@ string_q get_use(const CCommandOption& cmd) {
     string_q ret = "[{ROUTE}] [flags][{TYPES}][{POSITIONALS}]";
     replace(ret, "[{TYPES}]", clean_positionals(cmd.api_route, positionals.str()));
     replace(ret, "[{POSITIONALS}]", arguments.str());
+    replace(ret, "[flags] <mode> [blocks...]", "<mode> [flags] [blocks...]");
+    replace(ret, "[flags] <mode> [mode...]", "<mode> [mode...] [flags]");
+    replace(ret, "[flags] <mode>", "<mode> [flags]");
     return ret;
 }
 

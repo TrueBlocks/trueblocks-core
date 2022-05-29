@@ -27,7 +27,7 @@ var statusCmd = &cobra.Command{
 	RunE:    statusPkg.RunStatus,
 }
 
-var usageStatus = `status [flags] [mode...]
+var usageStatus = `status <mode> [mode...] [flags]
 
 Arguments:
   modes - the type of status info to retrieve

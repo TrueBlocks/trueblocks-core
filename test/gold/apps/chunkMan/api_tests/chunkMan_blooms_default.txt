@@ -1,0 +1,125 @@
+chunks?mode=blooms
+{
+  "data": [
+    {
+      "range": {
+        "First": 0,
+        "Last": 0
+      },
+      "nBlooms": 1,
+      "nInserted": 8893,
+      "size": 131080,
+      "byteWidth": 131072
+    },
+    {
+      "range": {
+        "First": 1,
+        "Last": 590501
+      },
+      "nBlooms": 1,
+      "nInserted": 29330,
+      "size": 131080,
+      "byteWidth": 131072
+    },
+    {
+      "range": {
+        "First": 590502,
+        "Last": 864332
+      },
+      "nBlooms": 4,
+      "nInserted": 164449,
+      "size": 524308,
+      "byteWidth": 131072
+    },
+    {
+      "range": {
+        "First": 864333,
+        "Last": 1076298
+      },
+      "nBlooms": 2,
+      "nInserted": 81007,
+      "size": 262156,
+      "byteWidth": 131072
+    },
+    {
+      "range": {
+        "First": 1076299,
+        "Last": 1229769
+      },
+      "nBlooms": 2,
+      "nInserted": 84862,
+      "size": 262156,
+      "byteWidth": 131072
+    },
+    {
+      "range": {
+        "First": 1229770,
+        "Last": 1371352
+      },
+      "nBlooms": 2,
+      "nInserted": 62049,
+      "size": 262156,
+      "byteWidth": 131072
+    },
+    {
+      "range": {
+        "First": 1371353,
+        "Last": 1504328
+      },
+      "nBlooms": 2,
+      "nInserted": 78077,
+      "size": 262156,
+      "byteWidth": 131072
+    },
+    {
+      "range": {
+        "First": 1504329,
+        "Last": 1613033
+      },
+      "nBlooms": 3,
+      "nInserted": 116909,
+      "size": 393232,
+      "byteWidth": 131072
+    },
+    {
+      "range": {
+        "First": 1613034,
+        "Last": 1729008
+      },
+      "nBlooms": 3,
+      "nInserted": 133329,
+      "size": 393232,
+      "byteWidth": 131072
+    },
+    {
+      "range": {
+        "First": 1729009,
+        "Last": 1848054
+      },
+      "nBlooms": 3,
+      "nInserted": 123164,
+      "size": 393232,
+      "byteWidth": 131072
+    },
+    {
+      "range": {
+        "First": 1848055,
+        "Last": 1963090
+      },
+      "nBlooms": 3,
+      "nInserted": 138572,
+      "size": 393232,
+      "byteWidth": 131072
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

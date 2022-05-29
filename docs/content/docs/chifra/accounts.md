@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2022-05-02T07:07:33
+date: 2022-05-29T07:16:47
 lastmod:
   - :git
   - lastmod
@@ -102,7 +102,7 @@ Flags:
 Notes:
   - An address must start with '0x' and be forty-two characters long.
   - Articulating the export means turn the EVM's byte data into human-readable text (if possible).
-  - For the --logs option, you may optionally specify one or more --emmitter, one or more --topics, or both.
+  - For the --logs option, you may optionally specify one or more --emitter, one or more --topics, or both.
   - The --logs option is significantly faster if you provide an --emitter or a --topic.
   - Neighbors include every address that appears in any transaction in which the export address also appears.
 ```

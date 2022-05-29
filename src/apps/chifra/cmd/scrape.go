@@ -27,7 +27,7 @@ var scrapeCmd = &cobra.Command{
 	RunE:    scrapePkg.RunScrape,
 }
 
-var usageScrape = `scrape [flags] [mode...]
+var usageScrape = `scrape <mode> [mode...] [flags]
 
 Arguments:
   modes - which scraper(s) to control (required)

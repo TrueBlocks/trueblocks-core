@@ -1,5 +1,0 @@
-{
-  "errors": [
-    "chifra chunks - The --fmt option (junk) must be one of [ json | txt | csv | api ]."
-  ]
-}

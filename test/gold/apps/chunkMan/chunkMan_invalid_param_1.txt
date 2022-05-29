@@ -1,16 +1,26 @@
-chifra chunks  --junk
-Error: 
-  unknown flag: --junk
-
+chifra chunks  junk
+TEST[DATE|TIME] Mode:  junk
+TEST[DATE|TIME] Format:  txt
+Error: The mode option (junk) must be one of [ stats | pins | blooms | index | addresses | appearances ]
 Usage:
-  chifra chunks [flags]
+  chifra chunks <mode> [flags] [blocks...] [address...]
+
+Arguments:
+  mode - the type of chunk info to retrieve (required)
+	One of [ stats | pins | blooms | index | addresses | appearances ]
+  blocks - optional list of blocks to intersect with chunk ranges
+  addrs - one or more addresses to use with --belongs option (see note)
 
 Flags:
-  -l, --list    list the bloom and index hashes from local cache or IPFS
-  -c, --check   for each chunk, put it to IPFS and verify its manifest hash
-
-Global Flags:
+  -c, --check        depends on mode, checks for internal consistency of the data type
+  -b, --belongs      checks if the given address appears in the given chunk
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
   -v, --verbose      enable verbose (increase detail with --log_level)
+  -h, --help         display this help screen
 
+Notes:
+  - If blocks are provided, only chunks intersecting with those blocks are displayed.
+  - Only a single block in a given chunk needs to be supplied for a match.
+  - The --belongs option is only available with the addresses or blooms mode.
+  - The --belongs option requires both an address and a block identifier.
+  - You may only specifiy an address when using the --belongs option.

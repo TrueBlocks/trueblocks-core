@@ -3,7 +3,7 @@ Error:
   unknown flag: --junk
 
 Usage:
-  chifra scrape [flags] [mode...]
+  chifra scrape <mode> [mode...] [flags]
 
 Arguments:
   modes - which scraper(s) to control (required)
