@@ -60,7 +60,7 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 		return opts.HandleChunksCheck(blockNums), true
 
 	} else {
-		defer opts.Globals.RenderFooter(opts.Globals.ApiMode || opts.Globals.Format == "api")
+		defer opts.Globals.RenderFooter()
 
 		if opts.Mode == "pins" {
 			err := opts.Globals.RenderHeader(types.SimplePinList{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)

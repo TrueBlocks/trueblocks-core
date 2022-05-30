@@ -25,7 +25,7 @@ func (opts *WhenOptions) HandleWhenTimestampCount() error {
 
 	// TODO: Fix export without arrays
 	err = opts.Globals.RenderHeader(obj, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
-	defer opts.Globals.RenderFooter(opts.Globals.ApiMode || opts.Globals.Format == "api")
+	defer opts.Globals.RenderFooter()
 	if err != nil {
 		return err
 	}

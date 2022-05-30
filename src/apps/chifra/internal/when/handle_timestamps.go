@@ -21,7 +21,7 @@ func (opts *WhenOptions) HandleWhenShowTimestamps() error {
 
 	if !opts.Check {
 		err = opts.Globals.RenderHeader(tslibPkg.Timestamp{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
-		defer opts.Globals.RenderFooter(opts.Globals.ApiMode || opts.Globals.Format == "api")
+		defer opts.Globals.RenderFooter()
 		if err != nil {
 			return err
 		}
