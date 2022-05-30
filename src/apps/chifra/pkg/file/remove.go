@@ -4,12 +4,18 @@
 
 package file
 
-import "os"
+import (
+	"os"
+	"sync"
+)
 
 func Remove(fileName string) bool {
 	if !FileExists(fileName) {
 		return true
 	}
+	mutex := sync.Mutex{}
+	mutex.Lock()
 	os.Remove(fileName)
+	mutex.Unlock()
 	return !FileExists(fileName)
 }
