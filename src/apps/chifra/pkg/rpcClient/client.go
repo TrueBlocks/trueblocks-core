@@ -12,6 +12,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -29,6 +30,8 @@ import (
 var perProviderClientMap = map[string]*ethclient.Client{}
 
 func GetClient(provider string) *ethclient.Client {
+	mutex := &sync.Mutex{}
+	mutex.Lock()
 	if perProviderClientMap[provider] == nil {
 		// TODO: I don't like the fact that we Dail In every time we want to us this
 		// TODO: If we make this a cached item, it needs to be cached per chain, see timestamps
@@ -39,7 +42,9 @@ func GetClient(provider string) *ethclient.Client {
 		}
 		perProviderClientMap[provider] = ec
 	}
-	return perProviderClientMap[provider]
+	ec := perProviderClientMap[provider]
+	mutex.Unlock()
+	return ec
 }
 
 // BlockNumber returns the block number at the front of the chain (i.e. latest)
