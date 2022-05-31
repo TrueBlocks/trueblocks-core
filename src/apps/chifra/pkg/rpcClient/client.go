@@ -28,23 +28,22 @@ import (
 // TODO: overran the number of TPC connection the OS would create (on a Mac). Since then, we now
 // TODO: open the connection once and just use it allowing the operating system to clean it up
 var perProviderClientMap = map[string]*ethclient.Client{}
+var clientMutex sync.Mutex
 
 func GetClient(provider string) *ethclient.Client {
-	mutex := &sync.Mutex{}
-	mutex.Lock()
 	if perProviderClientMap[provider] == nil {
 		// TODO: I don't like the fact that we Dail In every time we want to us this
 		// TODO: If we make this a cached item, it needs to be cached per chain, see timestamps
 		ec, err := ethclient.Dial(provider)
-		if err != nil {
-			log.Println("Missdial(" + os.Args[0] + "):")
+		if err != nil || ec == nil {
+			log.Println("Missdial(" + provider + "):")
 			log.Fatalln(err)
 		}
+		clientMutex.Lock()
 		perProviderClientMap[provider] = ec
+		clientMutex.Unlock()
 	}
-	ec := perProviderClientMap[provider]
-	mutex.Unlock()
-	return ec
+	return perProviderClientMap[provider]
 }
 
 // BlockNumber returns the block number at the front of the chain (i.e. latest)
@@ -277,7 +276,7 @@ func GetBlockByNumber(chain string, bn uint64) (types.NamedBlock, error) {
 	var payload = RPCPayload{
 		Jsonrpc:   "2.0",
 		Method:    "eth_getBlockByNumber",
-		RPCParams: RPCParams{bn, false},
+		RPCParams: RPCParams{fmt.Sprintf("0x%x", bn), false},
 		ID:        1005,
 	}
 	rpcProvider := config.GetRpcProvider(chain)
