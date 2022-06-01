@@ -77,6 +77,11 @@ func IsValidAddressE(val string) (bool, error) {
 	return IsValidHex("address", val, 20)
 }
 
+// TODO: Not right
+func IsSmartContract(addr string) bool {
+	return IsValidAddress(addr)
+}
+
 func IsZeroAddress(val string) bool {
 	v := strings.Replace(val, "0", "", -1)
 	return v == "x" || v == "X"

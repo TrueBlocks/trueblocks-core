@@ -1,6 +1,6 @@
 tokens?addrs2=a%20b%20c
 {
   "errors": [
-    "chifra tokens - Input argument appears to be invalid. No such skip marker: a:b"
+    "The value b is not a token contract."
   ]
 }

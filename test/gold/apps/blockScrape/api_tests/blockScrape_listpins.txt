@@ -1,1 +1,6 @@
-{ "errors": [ "chifra scrape - Invalid option: --listpins" ] }
+scrape?modes=both&listpins
+{
+  "errors": [
+    "Invalid key (listpins) in scrape route."
+  ]
+}

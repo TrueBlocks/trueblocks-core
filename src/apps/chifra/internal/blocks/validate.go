@@ -92,6 +92,9 @@ func (opts *BlocksOptions) ValidateBlocks() error {
 					return validate.Usage("The {0} option is not available{1}.", "--cache", " with the --apps option")
 				}
 			}
+			if opts.BigRange != 500 && !opts.Logs {
+				return validate.Usage("The {0} option is only available with the {1} option.", "--big_range", "--logs")
+			}
 		}
 	}
 

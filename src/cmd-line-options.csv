@@ -103,9 +103,9 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12582,tools,ChainData,blocks,getBlocks,list,l,0,false,false,false,true,local,flag,<blknum>,summary list of blocks running backwards from latest block minus num
 12584,tools,ChainData,blocks,getBlocks,list_count,C,0,false,false,false,true,header,flag,<blknum>,the number of blocks to report for --list option
 12590,tools,ChainData,blocks,getBlocks,,,,false,false,true,true,--,description,,Retrieve one or more blocks from the chain or local cache.
-12600,tools,ChainData,blocks,getBlocks,n1,,,false,false,false,false,--,note,,`blocks` is a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
-12610,tools,ChainData,blocks,getBlocks,n2,,,false,false,false,false,--,note,,`blocks` may be specified as either numbers or hashes.
-12620,tools,ChainData,blocks,getBlocks,n3,,,false,false,false,false,--,note,,`special` blocks are detailed under `chifra when --list`.
+12600,tools,ChainData,blocks,getBlocks,n1,,,false,false,false,false,--,note,,`Blocks` is a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
+12610,tools,ChainData,blocks,getBlocks,n2,,,false,false,false,false,--,note,,`Blocks` may be specified as either numbers or hashes.
+12620,tools,ChainData,blocks,getBlocks,n3,,,false,false,false,false,--,note,,`Special` blocks are detailed under `chifra when --list`.
 12622,tools,ChainData,blocks,getBlocks,n4,,,false,false,false,false,--,note,,With the --logs option&#44; optionally specify one or more --emitter&#44; one or more --topics&#44; either or both.
 12624,tools,ChainData,blocks,getBlocks,n5,,,false,false,false,false,--,note,,The --logs option is significantly faster if you provide an --emitter and/or a --topic.
 12625,tools,ChainData,blocks,getBlocks,n6,,,false,false,false,false,--,note,,Multiple topics match on topic0&#44; topic1&#44; and so on&#44; not on different topic0's.
@@ -118,7 +118,6 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12636,tools,ChainData,blocks,getBlocks,ERR_ATLEASTONEBLOCK,,,false,false,false,false,--,error,,You must specify at least one block.
 12638,tools,ChainData,blocks,getBlocks,ERR_EMTOPONLYWITHLOG,,,false,false,false,false,--,error,,The --emitter and --topic options are only available with the --log option.
 12640,tools,ChainData,blocks,getBlocks,ERR_ARTWITHOUTLOGS,,,false,false,false,false,--,error,,The --artcilate option is only available with the --logs option.
-12642,tools,ChainData,blocks,getBlocks,ERR_RANGENOLOGS,,,false,false,false,false,--,error,,The --big_range option is only available with the --logs option (min 50).
 
 13540,tools,ChainData,transactions,getTrans,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers
 13560,tools,ChainData,transactions,getTrans,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the retrieved data if ABIs can be found
@@ -178,10 +177,10 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13190,tools,ChainState,state,getState,proxy_for,r,,false,false,false,true,header,flag,<address>,for the --call option only&#44; redirects calls to this implementation
 13220,tools,ChainState,state,getState,,,,false,false,true,true,--,description,,Retrieve account balance(s) for one or more addresses at given block(s).
 13222,tools,ChainState,state,getState,n1,,,false,false,false,false,--,note,,An `address` must start with '0x' and be forty-two characters long.
-13224,tools,ChainState,state,getState,n2,,,false,false,false,false,--,note,,`blocks` may be a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
+13224,tools,ChainState,state,getState,n2,,,false,false,false,false,--,note,,`Blocks` is a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
 13228,tools,ChainState,state,getState,n3,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results are undefined.
-13230,tools,ChainState,state,getState,n4,,,false,false,false,false,--,note,,`special` blocks are detailed under `chifra when --list`.
-13232,tools,ChainState,state,getState,n5,,,false,false,false,false,--,note,,`balance` is the default mode. To select a single mode use `none` first&#44; followed by that mode.
+13230,tools,ChainState,state,getState,n4,,,false,false,false,false,--,note,,`Special` blocks are detailed under `chifra when --list`.
+13232,tools,ChainState,state,getState,n5,,,false,false,false,false,--,note,,`Balance` is the default mode. To select a single mode use `none` first&#44; followed by that mode.
 13234,tools,ChainState,state,getState,n6,,,false,false,false,false,--,note,,You may specify multiple `modes` on a single line.
 
 13260,tools,ChainState,tokens,getTokens,addrs2,,,true,false,true,true,header,positional,list<addr>,two or more addresses (0x...)&#44; the first is an ERC20 token&#44; balances for the rest are reported
@@ -191,10 +190,10 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13340,tools,ChainState,tokens,getTokens,no_zero,n,,false,false,true,true,header,switch,<boolean>,suppress the display of zero balance accounts
 13360,tools,ChainState,tokens,getTokens,,,,false,false,true,true,--,description,,Retrieve token balance(s) for one or more addresses at given block(s).
 13362,tools,ChainState,tokens,getTokens,n1,,,false,false,false,false,--,note,,An `address` must start with '0x' and be forty-two characters long.
-13364,tools,ChainState,tokens,getTokens,n2,,,false,false,false,false,--,note,,`blocks` may be a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
+13364,tools,ChainState,tokens,getTokens,n2,,,false,false,false,false,--,note,,`Blocks` is a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
 13368,tools,ChainState,tokens,getTokens,n3,,,false,false,false,false,--,note,,If the token contract(s) from which you request balances are not ERC20 compliant&#44; the results are undefined.
 13370,tools,ChainState,tokens,getTokens,n4,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results are undefined.
-13372,tools,ChainState,tokens,getTokens,n5,,,false,false,false,false,--,note,,`special` blocks are detailed under `chifra when --list`.
+13372,tools,ChainState,tokens,getTokens,n5,,,false,false,false,false,--,note,,`Special` blocks are detailed under `chifra when --list`.
 
 12110,apps,Admin,scrape,blockScrape,modes,,,true,false,true,true,gocmd,positional,list<enum[indexer|monitors|both]>,which scraper(s) to control
 12115,apps,Admin,scrape,blockScrape,sleep,s,14,false,false,true,true,gocmd,flag,<double>,seconds to sleep between scraper passes

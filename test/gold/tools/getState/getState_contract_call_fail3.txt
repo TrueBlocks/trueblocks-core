@@ -1,7 +1,8 @@
-chifra  state --help --log_level 2
-Purpose:
-  Retrieve account balance(s) for one or more addresses at given block(s).
-
+chifra state  --call 0xa4f29fc548856180f6b1e319ee4d86715875 6523977-6540000:2000
+TEST[DATE|TIME] Blocks:  [6523977-6540000:2000]
+TEST[DATE|TIME] Call:  0xa4f29fc548856180f6b1e319ee4d86715875
+TEST[DATE|TIME] Format:  txt
+Error: The first argument for the --call option must be a smart contract.
 Usage:
   chifra state [flags] <address> [address...] [block...]
 

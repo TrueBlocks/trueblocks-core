@@ -2,7 +2,7 @@
 title: "Chain state"
 description: ""
 lead: ""
-date: 2021-11-18T22:52:20
+date: 2022-06-01T15:21:39
 lastmod:
   - :git
   - lastmod
@@ -56,10 +56,10 @@ Flags:
 
 Notes:
   - An address must start with '0x' and be forty-two characters long.
-  - blocks may be a space-separated list of values, a start-end range, a special, or any combination.
+  - Blocks is a space-separated list of values, a start-end range, a special, or any combination.
   - If the queried node does not store historical state, the results are undefined.
-  - special blocks are detailed under chifra when --list.
-  - balance is the default mode. To select a single mode use none first, followed by that mode.
+  - Special blocks are detailed under chifra when --list.
+  - Balance is the default mode. To select a single mode use none first, followed by that mode.
   - You may specify multiple modes on a single line.
 ```
 
@@ -97,10 +97,10 @@ Flags:
 
 Notes:
   - An address must start with '0x' and be forty-two characters long.
-  - blocks may be a space-separated list of values, a start-end range, a special, or any combination.
+  - Blocks is a space-separated list of values, a start-end range, a special, or any combination.
   - If the token contract(s) from which you request balances are not ERC20 compliant, the results are undefined.
   - If the queried node does not store historical state, the results are undefined.
-  - special blocks are detailed under chifra when --list.
+  - Special blocks are detailed under chifra when --list.
 ```
 
 **Source code**: [`internal/tokens`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/tokens)

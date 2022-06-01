@@ -41,10 +41,10 @@ const longTokens = `Purpose:
 const notesTokens = `
 Notes:
   - An address must start with '0x' and be forty-two characters long.
-  - blocks may be a space-separated list of values, a start-end range, a special, or any combination.
+  - Blocks is a space-separated list of values, a start-end range, a special, or any combination.
   - If the token contract(s) from which you request balances are not ERC20 compliant, the results are undefined.
   - If the queried node does not store historical state, the results are undefined.
-  - special blocks are detailed under chifra when --list.`
+  - Special blocks are detailed under chifra when --list.`
 
 func init() {
 	tokensCmd.Flags().SortFlags = false

@@ -3,28 +3,31 @@ Error:
   unknown flag: --listpins
 
 Usage:
-  chifra scrape [flags] [mode...]
+  chifra scrape <mode> [mode...] [flags]
 
 Arguments:
-  modes - which scraper(s) to control (indexer is default)
+  modes - which scraper(s) to control (required)
 	One or more of [ indexer | monitors | both ]
 
 Flags:
-  -a, --action string         command to apply to the specified scrape
-                              One of [ toggle | run | restart | pause | quit ]
   -s, --sleep float           seconds to sleep between scraper passes (default 14)
   -p, --pin                   pin chunks (and blooms) to IPFS as they are created (requires pinning service)
-  -u, --publish               after pinning the chunk, publish it to UnchainedIndex
   -n, --block_cnt uint        maximum number of blocks to process per pass (default 2000)
+  -e, --reset uint            reset the scraper to the provided block (or end of earliest chunk prior to that block) (hidden)
+  -a, --action string         command to apply to the specified scrape (hidden)
+                              One of [ toggle | run | restart | pause | quit ]
+  -u, --publish               after pinning the chunk, publish it to UnchainedIndex (hidden)
+  -z, --blaze                 invoke the blaze scraper to process blocks (hidden)
   -b, --block_chan_cnt uint   number of concurrent block processing channels (hidden) (default 10)
   -d, --addr_chan_cnt uint    number of concurrent address processing channels (hidden) (default 20)
+      --apps_per_chunk uint   the number of appearances to build into a chunk before consolidating it (hidden) (default 200000)
+      --unripe_dist uint      the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe (hidden) (default 28)
+      --snap_to_grid uint     an override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index (hidden) (default 100000)
+      --first_snap uint       the first block at which snap_to_grid is enabled (hidden)
+      --allow_missing         do not report errors for blockchain that contain blocks with zero addresses (hidden)
+  -l, --start_block uint      first block to visit (available only for blaze scraper) (hidden)
+  -r, --ripe_block uint       blocks prior to this value are written to 'ripe' folder (available only for blaze scraper) (hidden)
+  -x, --fmt string            export format, one of [none|json*|txt|csv|api]
+  -v, --verbose               enable verbose (increase detail with --log_level)
+  -h, --help                  display this help screen
 
-Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
-
-Notes:
-  - if no mode is presented, chifra scrape indexer --action run is assumed.
-  - the --pin and --publish options require an API to the pinning service.
-  - the --n_* related options allow you to tune the scrapers.
