@@ -27,14 +27,14 @@ var quotesCmd = &cobra.Command{
 	RunE:    quotesPkg.RunQuotes,
 }
 
-var usageQuotes = `quotes [flags]`
+const usageQuotes = `quotes [flags]`
 
-var shortQuotes = "update or display Ethereum price data, this tool has been deprecated"
+const shortQuotes = "update or display Ethereum price data, this tool has been deprecated"
 
-var longQuotes = `Purpose:
+const longQuotes = `Purpose:
   Update or display Ethereum price data, this tool has been deprecated.`
 
-var notesQuotes = `
+const notesQuotes = `
 Notes:
   - Due to restrictions from Poloniex, this tool retrieves only 30 days of data at a time. You must repeatedly run this command until the data is up-to-date.`
 

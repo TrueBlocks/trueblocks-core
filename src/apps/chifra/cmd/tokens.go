@@ -27,18 +27,18 @@ var tokensCmd = &cobra.Command{
 	RunE:    tokensPkg.RunTokens,
 }
 
-var usageTokens = `tokens [flags] <address> <address> [address...] [block...]
+const usageTokens = `tokens [flags] <address> <address> [address...] [block...]
 
 Arguments:
   addrs - two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported (required)
   blocks - an optional list of one or more blocks at which to report balances, defaults to 'latest'`
 
-var shortTokens = "retrieve token balance(s) for one or more addresses at given block(s)"
+const shortTokens = "retrieve token balance(s) for one or more addresses at given block(s)"
 
-var longTokens = `Purpose:
+const longTokens = `Purpose:
   Retrieve token balance(s) for one or more addresses at given block(s).`
 
-var notesTokens = `
+const notesTokens = `
 Notes:
   - An address must start with '0x' and be forty-two characters long.
   - blocks may be a space-separated list of values, a start-end range, a special, or any combination.

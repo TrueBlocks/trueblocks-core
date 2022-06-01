@@ -27,18 +27,18 @@ var statusCmd = &cobra.Command{
 	RunE:    statusPkg.RunStatus,
 }
 
-var usageStatus = `status <mode> [mode...] [flags]
+const usageStatus = `status <mode> [mode...] [flags]
 
 Arguments:
   modes - the type of status info to retrieve
 	One or more of [ index | monitors | collections | names | abis | caches | some | all ]`
 
-var shortStatus = "report on the status of the TrueBlocks system"
+const shortStatus = "report on the status of the TrueBlocks system"
 
-var longStatus = `Purpose:
+const longStatus = `Purpose:
   Report on the status of the TrueBlocks system.`
 
-var notesStatus = ``
+const notesStatus = ``
 
 func init() {
 	statusCmd.Flags().SortFlags = false

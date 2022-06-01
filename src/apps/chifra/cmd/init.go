@@ -27,14 +27,14 @@ var initCmd = &cobra.Command{
 	RunE:    initPkg.RunInit,
 }
 
-var usageInit = `init [flags]`
+const usageInit = `init [flags]`
 
-var shortInit = "initialize the TrueBlocks system by downloading from IPFS"
+const shortInit = "initialize the TrueBlocks system by downloading from IPFS"
 
-var longInit = `Purpose:
+const longInit = `Purpose:
   Initialize the TrueBlocks system by downloading from IPFS.`
 
-var notesInit = `
+const notesInit = `
 Notes:
   - Re-run chifra init as often as you wish. It will repair or freshen the index.`
 
