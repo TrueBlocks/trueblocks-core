@@ -131,8 +131,9 @@ func MakeFirstUpperCase(s string) string {
 	return string(bytes.Join([][]byte{lc, rest}, nil))
 }
 
-// TODO: Multi-chain this is the earliest timestamp on mainnet. It's larger than any block on any EVM chain by an order of maginitude
-// TODO: but is not a legit way to distinguish between blocks and timestamps. Fix this when it becomes a problem. All other EVM based
-// TODO: chains have later first timestamps, so this works for other chains as well
-const EarliestTs = 1438269975
-const BlockOneTs = 1438269988
+// EarliestEvmTs - The timestamp of the first Ethereum block in summer 2015 was this value. Since Ethereum
+// was the first EVM based blockchain, all other EVM based block chains have timestamps after this. We can
+// use this fact to distinguish between block numbers and timestamps on the command line (any number in a block
+// range smaller than this is a blockNumber, anything larger than this is a timestamp). This breaks when the
+// block number gets larger than 1,4 billion, which may happen when the chain shards, but not until then.
+const EarliestEvmTs = 1438269971

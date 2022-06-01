@@ -8,9 +8,9 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	tslibPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *WhenOptions) HandleWhenShowTimestamps() error {
@@ -46,7 +46,7 @@ func (opts *WhenOptions) HandleWhenShowTimestamps() error {
 		}
 		block := types.NamedBlock{} //rpcClient.GetBlockByNumber(opts.Globals.Chain, bn)
 		if bn == 0 {
-			block.TimeStamp = utils.EarliestTs
+			block.TimeStamp, _ = rpcClient.GetBlockZeroTs(opts.Globals.Chain)
 		}
 		msg := fmt.Sprintf("%d-%d-%d-%d-%d", block.BlockNumber, block.TimeStamp, bn, item.Bn, item.Ts)
 		scanBar.Report(opts.Globals.Writer, "Checking", msg)

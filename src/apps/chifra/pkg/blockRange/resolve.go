@@ -78,7 +78,13 @@ func snapBnToPeriod(bn uint64, chain, period string) (uint64, error) {
 		dt = dt.ShiftMinutes(5)
 		dt = dt.FloorYear()
 	}
-	firstDate := gostradamus.FromUnixTimestamp(utils.EarliestTs)
+
+	blockZeroTs, err := rpcClient.GetBlockZeroTs(chain)
+	if err != nil {
+		return utils.EarliestEvmTs, err
+	}
+
+	firstDate := gostradamus.FromUnixTimestamp(int64(blockZeroTs))
 	if dt.Time().Before(firstDate.Time()) {
 		dt = firstDate
 	}
@@ -147,7 +153,7 @@ func (p *Point) resolvePoint(chain string) uint64 {
 		bn, _ = tslibPkg.FromDateToBn(chain, p.Date)
 	} else if p.Special != "" {
 		bn, _ = tslibPkg.FromNameToBn(chain, p.Special)
-	} else if p.Number >= utils.EarliestTs {
+	} else if p.Number >= utils.EarliestEvmTs {
 		bn, _ = tslibPkg.FromTsToBn(chain, uint64(p.Number))
 	} else {
 		bn = uint64(p.Number)
