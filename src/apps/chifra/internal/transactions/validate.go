@@ -19,6 +19,15 @@ func (opts *TransactionsOptions) ValidateTransactions() error {
 		if len(opts.Transactions) == 0 {
 			return validate.Usage("Please supply one or more transaction identifiers.")
 		}
+
+		if len(opts.Reconcile) > 0 {
+			if opts.Cache || opts.Trace || opts.Articulate {
+				return validate.Usage("Do not use other options with the --reconcile option.")
+			}
+			if !validate.IsValidAddress(opts.Reconcile) {
+				return validate.Usage("Invalid reconcilation address {0}.", opts.Reconcile)
+			}
+		}
 	}
 
 	err := validate.ValidateIdentifiers(

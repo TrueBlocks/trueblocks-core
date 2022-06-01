@@ -79,10 +79,6 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    bool isReconcile = !reconcile.empty();
-    if (isReconcile && (cache || trace || articulate))
-        return usage("Do not use other options with the --reconcile option.");
-
     if (isRaw)
         expContext().exportFmt = JSON1;
 

@@ -2,32 +2,24 @@ chifra transactions  0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b58
 TEST[DATE|TIME] Transactions:  [0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63]
 TEST[DATE|TIME] Reconcile:  0x12
 TEST[DATE|TIME] Format:  json
-
-  The provided value (0x12) is not a properly formatted address. Quitting...
-
-Purpose:
-  Retrieve one or more transactions from the chain or local cache.
-
+Error: Invalid reconcilation address 0x12.
 Usage:
-  getTrans [flags] <tx_id> [tx_id...]
+  chifra transactions [flags] <tx_id> [tx_id...]
 
 Arguments:
   transactions - a space-separated list of one or more transaction identifiers (required)
 
 Flags:
-  -a, --articulate            articulate the retrieved data if ABIs can be found
-  -t, --trace                 include the transaction's traces in the results
-  -u, --uniq                  display a list of uniq addresses found in the transaction
-  -r, --reconcile <address>   reconcile the transaction as per the provided address
-  -o, --cache                 force the results of the query into the tx cache (and the trace cache if applicable)
-
-Global Flags:
-  -x, --fmt string     export format, one of [none|json*|txt|csv|api]
-  -v, --verbose uint   set verbose level (optional level defaults to 1)
-  -h, --help           display this help screen
+  -a, --articulate         articulate the retrieved data if ABIs can be found
+  -t, --trace              include the transaction's traces in the results
+  -u, --uniq               display a list of uniq addresses found in the transaction
+  -r, --reconcile string   reconcile the transaction as per the provided address
+  -o, --cache              force the results of the query into the tx cache (and the trace cache if applicable)
+  -x, --fmt string         export format, one of [none|json*|txt|csv|api]
+  -v, --verbose            enable verbose (increase detail with --log_level)
+  -h, --help               display this help screen
 
 Notes:
   - The transactions list may be one or more transaction hashes, blockNumber.transactionID pairs, or a blockHash.transactionID pairs.
   - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
   - If the queried node does not store historical state, the results for most older transactions are undefined.
-
