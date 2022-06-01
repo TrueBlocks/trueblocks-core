@@ -1,11 +1,12 @@
 blog
 contact
 api/index.html
+
 data-model/_index.md
-data-model/data-model.png
-data-model/data-model-600.png
 data-model/intro.md
 data-model/the-index.md
+data-model/img/
+
 docs/img/
 docs/install/
 docs/prologue/
