@@ -27,17 +27,17 @@ var transactionsCmd = &cobra.Command{
 	RunE:    transactionsPkg.RunTransactions,
 }
 
-var usageTransactions = `transactions [flags] <tx_id> [tx_id...]
+const usageTransactions = `transactions [flags] <tx_id> [tx_id...]
 
 Arguments:
   transactions - a space-separated list of one or more transaction identifiers (required)`
 
-var shortTransactions = "retrieve one or more transactions from the chain or local cache"
+const shortTransactions = "retrieve one or more transactions from the chain or local cache"
 
-var longTransactions = `Purpose:
+const longTransactions = `Purpose:
   Retrieve one or more transactions from the chain or local cache.`
 
-var notesTransactions = `
+const notesTransactions = `
 Notes:
   - The transactions list may be one or more transaction hashes, blockNumber.transactionID pairs, or a blockHash.transactionID pairs.
   - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.

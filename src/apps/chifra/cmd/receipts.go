@@ -27,17 +27,17 @@ var receiptsCmd = &cobra.Command{
 	RunE:    receiptsPkg.RunReceipts,
 }
 
-var usageReceipts = `receipts [flags] <tx_id> [tx_id...]
+const usageReceipts = `receipts [flags] <tx_id> [tx_id...]
 
 Arguments:
   transactions - a space-separated list of one or more transaction identifiers (required)`
 
-var shortReceipts = "retrieve receipts for the given transaction(s)"
+const shortReceipts = "retrieve receipts for the given transaction(s)"
 
-var longReceipts = `Purpose:
+const longReceipts = `Purpose:
   Retrieve receipts for the given transaction(s).`
 
-var notesReceipts = `
+const notesReceipts = `
 Notes:
   - The transactions list may be one or more transaction hashes, blockNumber.transactionID pairs, or a blockHash.transactionID pairs.
   - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.

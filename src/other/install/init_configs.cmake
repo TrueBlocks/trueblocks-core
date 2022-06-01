@@ -5,9 +5,13 @@ if(NOT WIN32)
   # set(CColor  "${Esc}[1;37m") bright white
   set(CColor "${Esc}[1;35m") #magenta
 endif()
+
+# print a message
 function(PrintLine MSG1)
   message(STATUS ${MSG1})
 endfunction(PrintLine)
+
+# copy the file but only if its not present
 function(CopyNotPresent FROM_DIR IN_FILE TO_DIR)
 	if (NOT EXISTS "${TO_DIR}/${IN_FILE}")
 		PrintLine("   ${CColor}Copying ./${IN_FILE} to ${TO_DIR}${COff}")
@@ -16,10 +20,14 @@ function(CopyNotPresent FROM_DIR IN_FILE TO_DIR)
 		PrintLine("   ${CColor}Not copying ./${IN_FILE}, already present${COff}")
 	endif()
 endfunction(CopyNotPresent)
+
+# copy the file even if it's present (that is, replace it)
 function(CopyIgnorePresent FROM_DIR IN_FILE TO_DIR)
 	PrintLine("   ${CColor}Copying ./${IN_FILE} to ${TO_DIR}${COff}")
 	file(COPY "${FROM_DIR}/${IN_FILE}" DESTINATION "${TO_DIR}" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 endfunction(CopyIgnorePresent)
+
+# copy an entire folder, replacing even if existing
 function(CopyFolder FROM_DIR TO_DIR)
 	STRING(REGEX REPLACE ${INSTALL_SOURCE} "." FROM_STR ${FROM_DIR})
 	PrintLine("   ${CColor}Copying ${FROM_STR}* to ${TO_DIR}${COff}")
@@ -92,7 +100,7 @@ CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/rinkeby     "allocs.csv"         
 CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/ropsten     "allocs.csv"               ${INSTALL_DEST}/config/ropsten/        )
 CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/sepolia     "allocs.csv"               ${INSTALL_DEST}/config/sepolia/        )
 
-# CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/gnosis    "specials.csv"             ${INSTALL_DEST}/config/gnosis/         )
+CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/gnosis      "specials.csv"             ${INSTALL_DEST}/config/gnosis/         )
 CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/mainnet     "specials.csv"             ${INSTALL_DEST}/config/mainnet/        )
 CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/sepolia     "specials.csv"             ${INSTALL_DEST}/config/sepolia/        )
 

@@ -27,17 +27,17 @@ var blocksCmd = &cobra.Command{
 	RunE:    blocksPkg.RunBlocks,
 }
 
-var usageBlocks = `blocks [flags] <block> [block...]
+const usageBlocks = `blocks [flags] <block> [block...]
 
 Arguments:
   blocks - a space-separated list of one or more block identifiers (required)`
 
-var shortBlocks = "retrieve one or more blocks from the chain or local cache"
+const shortBlocks = "retrieve one or more blocks from the chain or local cache"
 
-var longBlocks = `Purpose:
+const longBlocks = `Purpose:
   Retrieve one or more blocks from the chain or local cache.`
 
-var notesBlocks = `
+const notesBlocks = `
 Notes:
   - blocks is a space-separated list of values, a start-end range, a special, or any combination.
   - blocks may be specified as either numbers or hashes.

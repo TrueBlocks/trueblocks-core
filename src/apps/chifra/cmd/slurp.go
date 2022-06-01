@@ -27,18 +27,18 @@ var slurpCmd = &cobra.Command{
 	RunE:    slurpPkg.RunSlurp,
 }
 
-var usageSlurp = `slurp [flags] <address> [address...] [block...]
+const usageSlurp = `slurp [flags] <address> [address...] [block...]
 
 Arguments:
   addrs - one or more addresses to slurp from Etherscan (required)
   blocks - an optional range of blocks to slurp`
 
-var shortSlurp = "fetch data from EtherScan for any address"
+const shortSlurp = "fetch data from EtherScan for any address"
 
-var longSlurp = `Purpose:
+const longSlurp = `Purpose:
   Fetch data from EtherScan for any address.`
 
-var notesSlurp = `
+const notesSlurp = `
 Notes:
   - Portions of this software are Powered by Etherscan.io APIs.`
 

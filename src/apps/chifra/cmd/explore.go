@@ -27,17 +27,17 @@ var exploreCmd = &cobra.Command{
 	RunE:    explorePkg.RunExplore,
 }
 
-var usageExplore = `explore [flags] <term> [term...]
+const usageExplore = `explore [flags] <term> [term...]
 
 Arguments:
   terms - one or more address, name, block, or transaction identifier`
 
-var shortExplore = "open a local or remote explorer for one or more addresses, blocks, or transactions"
+const shortExplore = "open a local or remote explorer for one or more addresses, blocks, or transactions"
 
-var longExplore = `Purpose:
+const longExplore = `Purpose:
   Open a local or remote explorer for one or more addresses, blocks, or transactions.`
 
-var notesExplore = ``
+const notesExplore = ``
 
 func init() {
 	exploreCmd.Flags().SortFlags = false

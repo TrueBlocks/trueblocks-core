@@ -290,10 +290,22 @@ func GetBlockByNumber(chain string, bn uint64) (types.NamedBlock, error) {
 	n, _ := strconv.ParseUint(block.Result.Number[2:], 16, 64)
 	ts, _ := strconv.ParseUint(block.Result.Timestamp[2:], 16, 64)
 	if n == 0 {
-		ts = utils.EarliestTs
+		ts, err = GetBlockZeroTs(chain)
+		if err != nil {
+			return types.NamedBlock{}, err
+		}
 	}
 	return types.NamedBlock{
 		BlockNumber: n,
 		TimeStamp:   ts,
 	}, nil
+}
+
+// GetBlockZeroTs for some reason block zero does not return a timestamp, so we assign block one's ts minus 14 seconds
+func GetBlockZeroTs(chain string) (uint64, error) {
+	blockOne, err := GetBlockByNumber(chain, 1)
+	if err != nil {
+		return utils.EarliestEvmTs, err
+	}
+	return blockOne.TimeStamp - 14, nil
 }

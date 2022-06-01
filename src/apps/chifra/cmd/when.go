@@ -27,17 +27,17 @@ var whenCmd = &cobra.Command{
 	RunE:    whenPkg.RunWhen,
 }
 
-var usageWhen = `when [flags] < block | date > [ block... | date... ]
+const usageWhen = `when [flags] < block | date > [ block... | date... ]
 
 Arguments:
   blocks - one or more dates, block numbers, hashes, or special named blocks (see notes)`
 
-var shortWhen = "find block(s) based on date, blockNum, timestamp, or 'special'"
+const shortWhen = "find block(s) based on date, blockNum, timestamp, or 'special'"
 
-var longWhen = `Purpose:
+const longWhen = `Purpose:
   Find block(s) based on date, blockNum, timestamp, or 'special'.`
 
-var notesWhen = `
+const notesWhen = `
 Notes:
   - The block list may contain any combination of number, hash, date, special named blocks.
   - Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].`

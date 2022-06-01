@@ -27,7 +27,7 @@ var chunksCmd = &cobra.Command{
 	RunE:    chunksPkg.RunChunks,
 }
 
-var usageChunks = `chunks <mode> [flags] [blocks...] [address...]
+const usageChunks = `chunks <mode> [flags] [blocks...] [address...]
 
 Arguments:
   mode - the type of chunk info to retrieve (required)
@@ -35,12 +35,12 @@ Arguments:
   blocks - optional list of blocks to intersect with chunk ranges
   addrs - one or more addresses to use with --belongs option (see note)`
 
-var shortChunks = "manage and investigate chunks and bloom filters"
+const shortChunks = "manage and investigate chunks and bloom filters"
 
-var longChunks = `Purpose:
+const longChunks = `Purpose:
   Manage and investigate chunks and bloom filters.`
 
-var notesChunks = `
+const notesChunks = `
 Notes:
   - If blocks are provided, only chunks intersecting with those blocks are displayed.
   - Only a single block in a given chunk needs to be supplied for a match.

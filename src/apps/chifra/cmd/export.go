@@ -27,19 +27,19 @@ var exportCmd = &cobra.Command{
 	RunE:    exportPkg.RunExport,
 }
 
-var usageExport = `export [flags] <address> [address...] [topics...] [fourbytes...]
+const usageExport = `export [flags] <address> [address...] [topics...] [fourbytes...]
 
 Arguments:
   addrs - one or more addresses (0x...) to export (required)
   topics - filter by one or more log topics (only for --logs option)
   fourbytes - filter by one or more fourbytes (only for transactions and trace options)`
 
-var shortExport = "export full detail of transactions for one or more addresses"
+const shortExport = "export full detail of transactions for one or more addresses"
 
-var longExport = `Purpose:
+const longExport = `Purpose:
   Export full detail of transactions for one or more addresses.`
 
-var notesExport = `
+const notesExport = `
 Notes:
   - An address must start with '0x' and be forty-two characters long.
   - Articulating the export means turn the EVM's byte data into human-readable text (if possible).

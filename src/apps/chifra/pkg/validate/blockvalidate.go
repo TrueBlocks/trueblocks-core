@@ -40,7 +40,7 @@ func IsTimestamp(str string) (bool, blknum_t) {
 	if !ok {
 		return false, 0
 	}
-	return bn >= utils.EarliestTs, bn
+	return bn >= utils.EarliestEvmTs, bn
 }
 
 func IsBlockNumber(str string) (bool, blknum_t) {
