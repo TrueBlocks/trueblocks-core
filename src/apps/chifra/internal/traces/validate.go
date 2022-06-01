@@ -21,5 +21,19 @@ func (opts *TracesOptions) ValidateTraces() error {
 		}
 	}
 
+	err := validate.ValidateIdentifiers(
+		opts.Globals.Chain,
+		opts.Transactions,
+		validate.ValidTransId,
+		-1,
+		&opts.TransactionIds,
+	)
+	if err != nil {
+		if invalidLiteral, ok := err.(*validate.InvalidIdentifierLiteralError); ok {
+			return invalidLiteral
+		}
+		return err
+	}
+
 	return opts.Globals.ValidateGlobals()
 }

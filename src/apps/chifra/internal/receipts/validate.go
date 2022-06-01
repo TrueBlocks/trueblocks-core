@@ -15,25 +15,26 @@ func (opts *ReceiptsOptions) ValidateReceipts() error {
 		return opts.BadFlag
 	}
 
-	// err := validate.ValidateIdentifiers(
-	// 	opts.Globals.Chain,
-	// 	opts.Transactions,
-	// 	validate.ValidTransId,
-	// 	-1,
-	// )
-	// if err != nil {
-	// 	if invalidLiteral, ok := err.(*validate.InvalidIdentifierLiteralError); ok {
-	// 		return invalidLiteral
-	// 	}
-	// 	return err
-	// }
-
 	if len(opts.Globals.File) > 0 {
 		// Do nothing
 	} else {
 		if len(opts.Transactions) == 0 {
 			return validate.Usage("Please supply one or more transaction identifiers.")
 		}
+	}
+
+	err := validate.ValidateIdentifiers(
+		opts.Globals.Chain,
+		opts.Transactions,
+		validate.ValidTransId,
+		-1,
+		&opts.TransactionIds,
+	)
+	if err != nil {
+		if invalidLiteral, ok := err.(*validate.InvalidIdentifierLiteralError); ok {
+			return invalidLiteral
+		}
+		return err
 	}
 
 	// for _, arg := range args {
