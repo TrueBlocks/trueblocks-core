@@ -1571,6 +1571,15 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: details
+          description: >
+            for the --addresses option only, display appearance records as well as address records
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
           description: returns the requested data

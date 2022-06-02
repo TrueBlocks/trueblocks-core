@@ -53,6 +53,7 @@ func init() {
 
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Check, "check", "c", false, "depends on mode, checks for internal consistency of the data type")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Belongs, "belongs", "b", false, "checks if the given address appears in the given chunk")
+	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Details, "details", "d", false, "for the --addresses option only, display appearance records as well as address records")
 	globals.InitGlobals(chunksCmd, &chunksPkg.GetOptions().Globals)
 
 	chunksCmd.SetUsageTemplate(UsageWithNotes(notesChunks))

@@ -94,14 +94,20 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 		} else if opts.Mode == "addresses" {
 			if opts.Belongs {
 				maxTestItems = 10000
+				err := opts.Globals.RenderHeader(types.SimpleIndexAddressBelongs{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+				if err != nil {
+					return err, true
+				}
+				return opts.HandleChunksExtract(opts.showAddressesBelongs, blockNums), true
+
 			} else {
 				maxTestItems = 10
+				err := opts.Globals.RenderHeader(types.SimpleIndexAddress{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+				if err != nil {
+					return err, true
+				}
+				return opts.HandleChunksExtract(opts.showAddresses, blockNums), true
 			}
-			err := opts.Globals.RenderHeader(types.SimpleIndexAddress{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
-			if err != nil {
-				return err, true
-			}
-			return opts.HandleChunksExtract(opts.showAddresses, blockNums), true
 
 		} else if opts.Mode == "appearances" {
 			maxTestItems = 10

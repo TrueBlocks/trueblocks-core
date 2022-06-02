@@ -1,7 +1,11 @@
-chifra chunks  junk
-TEST[DATE|TIME] Mode:  junk
+chifra chunks  addresses --belongs 0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9 2287625 --details
+TEST[DATE|TIME] Mode:  addresses
+TEST[DATE|TIME] Blocks:  [2287625]
+TEST[DATE|TIME] Addrs:  [0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9]
+TEST[DATE|TIME] Belongs:  true
+TEST[DATE|TIME] Details:  true
 TEST[DATE|TIME] Format:  txt
-Error: The mode option (junk) must be one of [ stats | pins | blooms | index | addresses | appearances ]
+Error: Choose either --details or --belongs, not both.
 Usage:
   chifra chunks <mode> [flags] [blocks...] [address...]
 

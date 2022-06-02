@@ -25,6 +25,7 @@ type ChunksOptions struct {
 	Addrs    []string
 	Check    bool
 	Belongs  bool
+	Details  bool
 	Globals  globals.GlobalOptions
 	BadFlag  error
 }
@@ -37,6 +38,7 @@ func (opts *ChunksOptions) TestLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(opts.Check, "Check: ", opts.Check)
 	logger.TestLog(opts.Belongs, "Belongs: ", opts.Belongs)
+	logger.TestLog(opts.Details, "Details: ", opts.Details)
 	opts.Globals.TestLog()
 }
 
@@ -60,6 +62,8 @@ func ChunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 			opts.Check = true
 		case "belongs":
 			opts.Belongs = true
+		case "details":
+			opts.Details = true
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "chunks")

@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-05-29T11:23:34
+date: 2022-06-02T07:06:13
 lastmod:
   - :git
   - lastmod
@@ -118,6 +118,7 @@ Arguments:
 Flags:
   -c, --check        depends on mode, checks for internal consistency of the data type
   -b, --belongs      checks if the given address appears in the given chunk
+  -d, --details      for the --addresses option only, display appearance records as well as address records
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
   -v, --verbose      enable verbose (increase detail with --log_level)
   -h, --help         display this help screen

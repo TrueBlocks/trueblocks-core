@@ -235,6 +235,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 21957,apps,Admin,chunks,chunkMan,addrs,,,false,false,true,true,header,positional,list<addr>,one or more addresses to use with --belongs option (see note)
 21960,apps,Admin,chunks,chunkMan,check,c,,false,false,true,true,gocmd,switch,<boolean>,depends on mode&#44; checks for internal consistency of the data type
 21960,apps,Admin,chunks,chunkMan,belongs,b,,false,false,true,true,gocmd,switch,<boolean>,checks if the given address appears in the given chunk
+21960,apps,Admin,chunks,chunkMan,details,d,,false,false,true,true,gocmd,switch,<boolean>,for the --addresses option only&#44; display appearance records as well as address records
 21965,apps,Admin,chunks,chunkMan,,,,false,false,true,true,--,description,,Manage and investigate chunks and bloom filters.
 21970,apps,Admin,chunks,chunkMan,n1,,,false,false,false,false,--,note,,If blocks are provided&#44; only chunks intersecting with those blocks are displayed.
 21970,apps,Admin,chunks,chunkMan,n2,,,false,false,false,false,--,note,,Only a single block in a given chunk needs to be supplied for a match.

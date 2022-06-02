@@ -6,11 +6,12 @@ package chunksPkg
 
 import (
 	"io"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 )
 
-func (opts *ChunksOptions) showAddresses(path string, first bool) (bool, error) {
+func (opts *ChunksOptions) showAddressesBelongs(path string, first bool) (bool, error) {
 	path = index.ToIndexPath(path)
 
 	indexChunk, err := index.NewChunkData(path)
@@ -35,12 +36,11 @@ func (opts *ChunksOptions) showAddresses(path string, first bool) (bool, error) 
 			return false, err
 		}
 
-		err = opts.Globals.RenderObject(obj, first && cnt == 0)
-		if err != nil {
-			return false, err
-		}
-
-		if opts.Details {
+		if opts.shouldShow(obj) {
+			err = opts.Globals.RenderObject(obj, first && cnt == 0)
+			if err != nil {
+				return false, err
+			}
 			apps, err := indexChunk.ReadAppearanceRecordsAndResetOffset(&obj)
 			if err != nil {
 				return false, err
@@ -51,9 +51,18 @@ func (opts *ChunksOptions) showAddresses(path string, first bool) (bool, error) 
 					return false, err
 				}
 			}
+			cnt++
 		}
-		cnt++
 	}
 
 	return true, nil
+}
+
+func (opts *ChunksOptions) shouldShow(obj index.AddressRecord) bool {
+	for _, addr := range opts.Addrs {
+		if strings.ToLower(obj.Address.Hex()) == addr {
+			return true
+		}
+	}
+	return false
 }
