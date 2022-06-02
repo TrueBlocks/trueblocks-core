@@ -6,7 +6,6 @@ package statePkg
 
 import (
 	"errors"
-	"fmt"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
@@ -62,17 +61,16 @@ func (opts *StateOptions) ValidateState() error {
 				// TODO: Remove this and present ABI in non-test mode
 				// non-test mode on the terminal does something we want to preserve in the C++ code -- it
 				// presents the abi for this contract. We can do that in Go, so we only fail during testing
-				fmt.Println(opts.Call, len(parts))
 				if opts.Globals.TestMode || opts.Globals.ApiMode {
 					return validate.Usage("You must provide either a four-byte code or a function signature for the smart contract.")
 				}
-			}
-
-			// command is either a fourbyte or a function signature
-			command := parts[1]
-			if !validate.IsValidFourByte(command) {
-				if !strings.Contains(command, "(") || !strings.Contains(command, ")") {
-					return validate.Usage("The provided value ({0}) must be either a four-byte nor a function signature.", command)
+			} else {
+				// command is either a fourbyte or a function signature
+				command := parts[1]
+				if !validate.IsValidFourByte(command) {
+					if !strings.Contains(command, "(") || !strings.Contains(command, ")") {
+						return validate.Usage("The provided value ({0}) must be either a four-byte nor a function signature.", command)
+					}
 				}
 			}
 
@@ -96,7 +94,7 @@ func (opts *StateOptions) ValidateState() error {
 			opts.Blocks,
 			validate.ValidBlockIdWithRange,
 			1,
-			nil,
+			&opts.BlockIds,
 		)
 
 		if err != nil {

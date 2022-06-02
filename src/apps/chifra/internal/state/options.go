@@ -128,6 +128,10 @@ func StateFinishParse(args []string) *StateOptions {
 	opts.Call = strings.Replace(opts.Call, "|", "!", -1)
 	opts.Call = strings.Replace(opts.Call, " !", "!", -1)
 	opts.Call = strings.Replace(opts.Call, "! ", "!", -1)
+	parts := strings.Split(opts.Call, "!")
+	if len(parts) > 0 {
+		opts.Call = strings.Replace(opts.Call, parts[0], ens.ConvertOneEns(opts.Globals.Chain, parts[0]), -1)
+	}
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt

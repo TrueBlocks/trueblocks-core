@@ -22,8 +22,20 @@ bool COptions::handle_call(void) {
 
     string_q contract = callVariables.size() > 0 ? callVariables[0] : "";
     contract = proxy_for.empty() ? contract : proxy_for;
-    // ASSERT(isContractAt(contract, latestBlock));
-    // ASSERT(callVariables.size() > 1);
+    if (contract.empty() || !isAddress(contract))
+        return usage("The first argument for the --call option must be a smart contract.");
+
+    if (callVariables.size() < 2) {
+        // a convienience to the user shows the ABI if running in terminal
+        if (!isTestMode() && !isApiMode()) {
+            ostringstream cmd;
+            cmd << "chifra abis " << contract;
+            if (system(cmd.str().c_str())) {
+            }  // Don't remove cruft. Silences compiler warnings
+            return false;
+        }
+        return usage("You must provide either a four-byte code or a function signature for the smart contract.");
+    }
 
     theCall.address = contract;
     theCall.abi_spec.loadAbisFromKnown();
