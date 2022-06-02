@@ -35,3 +35,4 @@ on      ,api  ,fast  ,scrape ,apps/blockScrape ,mode_toggle_both             ,n 
 off     ,both ,fast  ,export ,apps/blockScrape ,RESET2                       ,n    ,RESET
 off     ,both ,fast  ,scrape ,apps/blockScrape ,real_run                     ,n    ,modes = both & sleep = .5 & pin & log_level = 8
 off     ,both ,fast  ,scrape ,apps/blockScrape ,real_run2                    ,n    ,modes = both & sleep = .5
+on      ,api  ,fast  ,scrape ,apps/blockScrape ,no_tracing                   ,y    ,modes = indexer & chain = ropsten

@@ -1,0 +1,6 @@
+scrape?modes=indexer&chain=ropsten
+{
+  "errors": [
+    "chifra scrape is not available in API mode"
+  ]
+}

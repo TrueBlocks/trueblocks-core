@@ -7,6 +7,7 @@ package blocksPkg
 import (
 	"errors"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -94,6 +95,10 @@ func (opts *BlocksOptions) ValidateBlocks() error {
 			}
 			if opts.BigRange != 500 && !opts.Logs {
 				return validate.Usage("The {0} option is only available with the {1} option.", "--big_range", "--logs")
+			}
+
+			if opts.Trace && !rpcClient.IsTracingNode(opts.Globals.Chain) {
+				return validate.Usage("Tracing is required for this program to work properly.")
 			}
 		}
 	}

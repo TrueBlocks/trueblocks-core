@@ -4,7 +4,10 @@
 
 package transactionsPkg
 
-import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+)
 
 func (opts *TransactionsOptions) ValidateTransactions() error {
 	opts.TestLog()
@@ -27,6 +30,10 @@ func (opts *TransactionsOptions) ValidateTransactions() error {
 			if !validate.IsValidAddress(opts.Reconcile) {
 				return validate.Usage("Invalid reconcilation address {0}.", opts.Reconcile)
 			}
+		}
+
+		if opts.Trace && !rpcClient.IsTracingNode(opts.Globals.Chain) {
+			return validate.Usage("Tracing is required for this program to work properly.")
 		}
 	}
 
