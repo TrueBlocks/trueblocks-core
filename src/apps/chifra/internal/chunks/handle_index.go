@@ -13,11 +13,11 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *ChunksOptions) showIndex(path string, first bool) error {
+func (opts *ChunksOptions) showIndex(path string, first bool) (bool, error) {
 	path = index.ToIndexPath(path)
 	ff, err := os.Open(path)
 	if err != nil {
-		return err
+		return false, err
 	}
 	defer ff.Close()
 	header, err := index.ReadHeader(ff)
@@ -29,16 +29,16 @@ func (opts *ChunksOptions) showIndex(path string, first bool) error {
 	obj.AppearanceCount = header.AppearanceCount
 	obj.Size = file.FileSize(path)
 	if err != nil {
-		return err
+		return false, err
 	}
 
 	// TODO: Fix export without arrays
 	err = opts.Globals.RenderObject(obj, first)
 	if err != nil {
-		return err
+		return false, err
 	}
 
-	return nil
+	return true, nil
 }
 
 // TODO: Don't forget about this option (pushing to IPFS)

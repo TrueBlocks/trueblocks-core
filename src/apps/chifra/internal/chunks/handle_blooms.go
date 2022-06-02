@@ -10,7 +10,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *ChunksOptions) showBloom(path string, first bool) error {
+func (opts *ChunksOptions) showBloom(path string, first bool) (bool, error) {
 	var bloom index.ChunkBloom
 	index.ReadBloom(&bloom, path)
 
@@ -23,9 +23,9 @@ func (opts *ChunksOptions) showBloom(path string, first bool) error {
 	obj := NewSimpleBloom(stats, bloom)
 	err := opts.Globals.RenderObject(obj, first)
 	if err != nil {
-		return err
+		return false, err
 	}
-	return nil
+	return true, nil
 }
 
 func NewSimpleBloom(stats ChunkStats, bloom index.ChunkBloom) types.SimpleBloom {

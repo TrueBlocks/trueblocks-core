@@ -23,7 +23,7 @@ func shouldDisplay(result cache.IndexFileInfo, blockNums []uint64) bool {
 	return hit
 }
 
-func (opts *ChunksOptions) HandleChunksExtract(displayFunc func(path string, first bool) error, blockNums []uint64) error {
+func (opts *ChunksOptions) HandleChunksExtract(displayFunc func(path string, first bool) (bool, error), blockNums []uint64) error {
 	filenameChan := make(chan cache.IndexFileInfo)
 
 	var nRoutines int = 1
@@ -35,8 +35,10 @@ func (opts *ChunksOptions) HandleChunksExtract(displayFunc func(path string, fir
 		case cache.Index_Bloom:
 			skip := opts.Globals.TestMode && cnt > maxTestItems
 			if !skip && shouldDisplay(result, blockNums) {
-				displayFunc(result.Path, cnt == 0)
-				cnt++
+				ok, _ := displayFunc(result.Path, cnt == 0)
+				if ok {
+					cnt++
+				}
 			}
 		case cache.None:
 			nRoutines--

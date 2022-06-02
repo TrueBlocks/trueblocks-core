@@ -12,14 +12,14 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 )
 
-func (opts *ChunksOptions) showStats(path string, first bool) error {
+func (opts *ChunksOptions) showStats(path string, first bool) (bool, error) {
 	// TODO: Fix export without arrays
 	obj := NewChunkStats(path)
 	err := opts.Globals.RenderObject(obj, first)
 	if err != nil {
-		return err
+		return false, err
 	}
-	return nil
+	return true, nil
 }
 
 type ChunkStats struct {

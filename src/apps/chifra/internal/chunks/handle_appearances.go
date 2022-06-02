@@ -10,18 +10,18 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 )
 
-func (opts *ChunksOptions) showAppearances(path string, first bool) error {
+func (opts *ChunksOptions) showAppearances(path string, first bool) (bool, error) {
 	path = index.ToIndexPath(path)
 
 	indexChunk, err := index.NewChunkData(path)
 	if err != nil {
-		return err
+		return false, err
 	}
 	defer indexChunk.Close()
 
 	_, err = indexChunk.File.Seek(indexChunk.AppTableStart, io.SeekStart)
 	if err != nil {
-		return err
+		return false, err
 	}
 
 	for i := 0; i < int(indexChunk.Header.AppearanceCount); i++ {
@@ -30,12 +30,12 @@ func (opts *ChunksOptions) showAppearances(path string, first bool) error {
 		}
 		obj, err := indexChunk.ReadAppearanceRecord()
 		if err != nil {
-			return err
+			return false, err
 		}
 		err = opts.Globals.RenderObject(obj, first && i == 0)
 		if err != nil {
-			return err
+			return false, err
 		}
 	}
-	return nil
+	return true, nil
 }
