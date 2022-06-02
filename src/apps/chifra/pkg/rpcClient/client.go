@@ -225,8 +225,8 @@ func BlockHashFromNumber(provider string, blkNum uint64) (string, error) {
 
 // TODO: This is okay since Ropsten is dead as of the merge. We use it for testing
 // TODO: but we need this to actually work (for Geth for instance)
-func IsTracingNode(chain string) bool {
-	if chain == "ropsten" {
+func IsTracingNode(testMode bool, chain string) bool {
+	if testMode && chain == "ropsten" {
 		return false
 	}
 	return true

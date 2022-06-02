@@ -23,7 +23,7 @@ func (opts *TracesOptions) ValidateTraces() error {
 			return validate.Usage("Please supply one or more transaction identifiers or filters.")
 		}
 
-		if !rpcClient.IsTracingNode(opts.Globals.Chain) {
+		if !rpcClient.IsTracingNode(opts.Globals.TestMode, opts.Globals.Chain) {
 			return validate.Usage("Tracing is required for this program to work properly.")
 		}
 	}
