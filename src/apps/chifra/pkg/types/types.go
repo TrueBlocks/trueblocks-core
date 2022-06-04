@@ -70,3 +70,10 @@ type SimpleIndexAppearance struct {
 	BlockNumber      uint32 `json:"blockNumber"`
 	TransactionIndex uint32 `json:"transactionIndex"`
 }
+
+type SimpleIndexAddressBelongs struct {
+	Address string                  `json:"address"`
+	Offset  uint32                  `json:"offset"`
+	Count   uint32                  `json:"count"`
+	Apps    []SimpleIndexAppearance `json:"apps"`
+}

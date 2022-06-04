@@ -74,3 +74,5 @@ local   ,both ,slow  ,transactions ,tools/getTrans ,broken_unparseable   ,y    ,
 
 #,,,,,,,this test case should decode this string as a message (in this case, it's an IPFS hash)
 local   ,both ,fast  ,transactions ,tools/getTrans ,messages             ,y    ,transactions = 0x0f0171122023385b433a766e70c65928ea9f9e29e6a6c82a7330cb46b63334e7e9ba7a35c3 & articulate & fmt = json
+
+on      ,both ,fast  ,transactions ,tools/getTrans ,no_tracing           ,y    ,transactions = 0x0f0171122023385b433a766e70c65928ea9f9e29e6a6c82a7330cb46b63334e7e9ba7a35c3 & trace & chain = ropsten

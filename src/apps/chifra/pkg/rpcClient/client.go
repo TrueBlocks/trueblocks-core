@@ -223,6 +223,15 @@ func BlockHashFromNumber(provider string, blkNum uint64) (string, error) {
 	return block.Hash().Hex(), nil
 }
 
+// TODO: This is okay since Ropsten is dead as of the merge. We use it for testing
+// TODO: but we need this to actually work (for Geth for instance)
+func IsTracingNode(testMode bool, chain string) bool {
+	if testMode && chain == "ropsten" {
+		return false
+	}
+	return true
+}
+
 /*
 // Functions available in the client
 func NewClient(c *rpc.Client) *Client

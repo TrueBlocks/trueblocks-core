@@ -46,6 +46,10 @@ func (opts *ChunksOptions) ValidateChunks() error {
 		return validate.Usage("You may only specify an address with the --belongs option")
 	}
 
+	if opts.Details && opts.Belongs {
+		return validate.Usage("Choose either {0} or {1}, not both.", "--details", "--belongs")
+	}
+
 	err = validate.ValidateIdentifiers(
 		opts.Globals.Chain,
 		opts.Blocks,

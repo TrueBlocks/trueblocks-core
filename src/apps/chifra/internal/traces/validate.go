@@ -4,7 +4,10 @@
 
 package tracesPkg
 
-import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+)
 
 func (opts *TracesOptions) ValidateTraces() error {
 	opts.TestLog()
@@ -18,6 +21,10 @@ func (opts *TracesOptions) ValidateTraces() error {
 	} else {
 		if len(opts.Transactions) == 0 && len(opts.Filter) == 0 {
 			return validate.Usage("Please supply one or more transaction identifiers or filters.")
+		}
+
+		if !rpcClient.IsTracingNode(opts.Globals.TestMode, opts.Globals.Chain) {
+			return validate.Usage("Tracing is required for this program to work properly.")
 		}
 	}
 

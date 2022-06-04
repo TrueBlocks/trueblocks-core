@@ -25,5 +25,25 @@ func (opts *TokensOptions) ValidateTokens() error {
 		return validate.Usage("The {0} option is not available{1}.", "--dollars", " with this tool")
 	}
 
+	if len(opts.Addrs2) == 0 {
+		return validate.Usage("You must specifiy at least one address")
+	} else if len(opts.Addrs2) > 1 {
+		if opts.ByAcct {
+			// all but the last is assumed to be a token
+			for _, addr := range opts.Addrs2[:len(opts.Addrs2)-1] {
+				if !validate.IsSmartContract(addr) {
+					return validate.Usage("The value {0} is not a token contract.", addr)
+				}
+			}
+		} else {
+			// all but the first are assumed to be a token
+			for _, addr := range opts.Addrs2[1:] {
+				if !validate.IsSmartContract(addr) {
+					return validate.Usage("The value {0} is not a token contract.", addr)
+				}
+			}
+		}
+	}
+
 	return opts.Globals.ValidateGlobals()
 }

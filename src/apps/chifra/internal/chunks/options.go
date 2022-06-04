@@ -14,6 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -24,6 +25,7 @@ type ChunksOptions struct {
 	Addrs    []string
 	Check    bool
 	Belongs  bool
+	Details  bool
 	Globals  globals.GlobalOptions
 	BadFlag  error
 }
@@ -36,6 +38,7 @@ func (opts *ChunksOptions) TestLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(opts.Check, "Check: ", opts.Check)
 	logger.TestLog(opts.Belongs, "Belongs: ", opts.Belongs)
+	logger.TestLog(opts.Details, "Details: ", opts.Details)
 	opts.Globals.TestLog()
 }
 
@@ -59,6 +62,8 @@ func ChunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 			opts.Check = true
 		case "belongs":
 			opts.Belongs = true
+		case "details":
+			opts.Details = true
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "chunks")
@@ -68,6 +73,7 @@ func ChunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
+	opts.Addrs = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
 	// EXISTING_CODE
 
 	return opts
@@ -90,6 +96,7 @@ func ChunksFinishParse(args []string) *ChunksOptions {
 			}
 		}
 	}
+	opts.Addrs = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt

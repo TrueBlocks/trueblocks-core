@@ -79,12 +79,11 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    bool isReconcile = !reconcile.empty();
-    if (isReconcile && (cache || trace || articulate))
-        return usage("Do not use other options with the --reconcile option.");
-
     if (isRaw)
         expContext().exportFmt = JSON1;
+
+    if (trace && !isTracingNode())
+        return usage("Tracing is required for this program to work properly.");
 
     if (articulate) {
         // show certain fields and hide others

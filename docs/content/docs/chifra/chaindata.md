@@ -2,7 +2,7 @@
 title: "Chain data"
 description: ""
 lead: ""
-date: 2022-05-29T07:16:47
+date: 2022-06-01T15:21:39
 lastmod:
   - :git
   - lastmod
@@ -51,9 +51,9 @@ Flags:
   -h, --help         display this help screen
 
 Notes:
-  - blocks is a space-separated list of values, a start-end range, a special, or any combination.
-  - blocks may be specified as either numbers or hashes.
-  - special blocks are detailed under chifra when --list.
+  - Blocks is a space-separated list of values, a start-end range, a special, or any combination.
+  - Blocks may be specified as either numbers or hashes.
+  - Special blocks are detailed under chifra when --list.
   - With the --logs option, optionally specify one or more --emitter, one or more --topics, either or both.
   - The --logs option is significantly faster if you provide an --emitter and/or a --topic.
   - Multiple topics match on topic0, topic1, and so on, not on different topic0's.

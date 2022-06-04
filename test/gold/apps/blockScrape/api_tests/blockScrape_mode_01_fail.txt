@@ -1,1 +1,6 @@
-{ "errors": [ "chifra scrape - Invalid option 'badmode' for 'action'. One of [toggle|run|restart|pause|quit] required." ] }
+scrape?modes=both&action=badmode
+{
+  "errors": [
+    "The chifra scrape monitors command requires the --file option."
+  ]
+}

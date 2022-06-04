@@ -7,7 +7,7 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 0.35.0-beta
+  version: 0.36.0-beta
   description: >
 
     A REST layer over the TrueBlocks application. With `chifra serve`, you can
@@ -1565,6 +1565,15 @@ paths:
             type: boolean
         - name: belongs
           description: checks if the given address appears in the given chunk
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: details
+          description: >
+            for the --addresses option only, display appearance records as well as address records
           required: false
           style: form
           in: query
