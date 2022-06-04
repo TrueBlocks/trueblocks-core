@@ -30,6 +30,7 @@ var perProviderClientMap = map[string]*ethclient.Client{}
 var clientMutex sync.Mutex
 
 func GetClient(provider string) *ethclient.Client {
+	clientMutex.Lock()
 	if perProviderClientMap[provider] == nil {
 		// TODO: I don't like the fact that we Dail In every time we want to us this
 		// TODO: If we make this a cached item, it needs to be cached per chain, see timestamps
@@ -38,10 +39,9 @@ func GetClient(provider string) *ethclient.Client {
 			log.Println("Missdial(" + provider + "):")
 			log.Fatalln(err)
 		}
-		clientMutex.Lock()
 		perProviderClientMap[provider] = ec
-		clientMutex.Unlock()
 	}
+	clientMutex.Unlock()
 	return perProviderClientMap[provider]
 }
 

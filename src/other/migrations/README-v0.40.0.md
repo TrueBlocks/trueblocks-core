@@ -1,3 +1,5 @@
+DO NOT RUN THIS MIGRATION UNTIL INSTRUCTED
+
 # v0.36.0 Fix to UnchainedIndex
 
 (May 25, 2022)
