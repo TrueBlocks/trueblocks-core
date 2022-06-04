@@ -45,13 +45,6 @@ func (br *Identifier) getBounds(chain string) (uint64, uint64, error) {
 		end = start + 1
 	}
 
-	// meta, _ := rpcClient.GetMetaData(chain, false)
-	// if start > meta.Latest {
-	// 	return start, end, fmt.Errorf("start block (%d) is in the future", start)
-	// } else if end > meta.Latest {
-	// 	return start, end, fmt.Errorf("end block (%d) is in the future", end)
-	// }
-
 	return start, end, nil
 }
 
@@ -218,6 +211,7 @@ func (br *Identifier) ResolveTxs(chain string) ([]types.SimpleAppearance, error)
 }
 
 /*
+// TODO: next and previous skip markers - search for this to find other things related
 bool wrangleTxId(string_q& argOut, string_q& errorMsg) {
     if (contains(argOut, "0x"))
         return true;

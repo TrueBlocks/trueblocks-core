@@ -1,6 +1,6 @@
 tokens?blocks=21321321312321%200xd26114cd6ee289accf82350c8d8487fedb8a0c07
 {
   "errors": [
-    "You must specifiy at least one address"
+    "The given value '21321321312321' is not a valid identifier."
   ]
 }

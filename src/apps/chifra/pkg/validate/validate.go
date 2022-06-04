@@ -8,7 +8,9 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // TODO: check if ParseUint has better performance
@@ -77,14 +79,23 @@ func IsValidAddressE(val string) (bool, error) {
 	return IsValidHex("address", val, 20)
 }
 
-// TODO: Not right
-func IsSmartContract(addr string) bool {
-	return IsValidAddress(addr)
+func IsSmartContract(chain, addr string) (bool, error) {
+	bytes, err := rpcClient.GetCodeAt(chain, addr, utils.NOPOS)
+	return len(bytes) > 0, err
 }
 
 func IsZeroAddress(val string) bool {
 	v := strings.Replace(val, "0", "", -1)
 	return v == "x" || v == "X"
+}
+
+func ValidateAddresses(args []string) error {
+	for _, arg := range args {
+		if strings.HasPrefix(arg, "0x") && !IsValidAddress(arg) {
+			return Usage("The value {0} is not a valid address.", arg)
+		}
+	}
+	return nil
 }
 
 func ValidateAtLeastOneAddr(args []string) error {

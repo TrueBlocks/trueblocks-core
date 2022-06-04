@@ -1,6 +1,6 @@
 tokens?addrs2=0xd26114cd6ee289accf82350c8d8487fedb8a0c07%2021321321312321
 {
   "errors": [
-    "The value 21321321312321 is not a token contract."
+    "chifra tokens - Block 21321321312321 is later than the last valid block --."
   ]
 }

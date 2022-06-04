@@ -104,7 +104,7 @@ var testTxs = []TestCase{
 		expected: "1001001.0 1001001.1 1001001.2 1001001.3",
 		enabled:  true,
 	},
-	// TODO: next and previous skip markers
+	// TODO: next and previous skip markers - search for this to find other things related
 	// {
 	// 	input:    "1001001.0:next",
 	// 	expected: "1001001.1",

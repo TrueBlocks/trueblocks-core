@@ -30,6 +30,7 @@ var perProviderClientMap = map[string]*ethclient.Client{}
 var clientMutex sync.Mutex
 
 func GetClient(provider string) *ethclient.Client {
+	clientMutex.Lock()
 	if perProviderClientMap[provider] == nil {
 		// TODO: I don't like the fact that we Dail In every time we want to us this
 		// TODO: If we make this a cached item, it needs to be cached per chain, see timestamps
@@ -38,10 +39,9 @@ func GetClient(provider string) *ethclient.Client {
 			log.Println("Missdial(" + provider + "):")
 			log.Fatalln(err)
 		}
-		clientMutex.Lock()
 		perProviderClientMap[provider] = ec
-		clientMutex.Unlock()
 	}
+	clientMutex.Unlock()
 	return perProviderClientMap[provider]
 }
 
@@ -317,4 +317,13 @@ func GetBlockZeroTs(chain string) (uint64, error) {
 		return utils.EarliestEvmTs, err
 	}
 	return blockOne.TimeStamp - 14, nil
+}
+
+// TODO: use block number by converting it
+func GetCodeAt(chain, addr string, bn uint64) ([]byte, error) {
+	// return IsValidAddress(addr)
+	provider := config.GetRpcProvider(chain)
+	ec := GetClient(provider)
+	address := common.HexToAddress(addr)
+	return ec.CodeAt(context.Background(), address, nil) // nil is latest block
 }
