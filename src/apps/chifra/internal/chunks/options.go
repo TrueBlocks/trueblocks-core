@@ -19,10 +19,13 @@ import (
 )
 
 type ChunksOptions struct {
+	Mode     string
 	Blocks   []string
 	BlockIds []blockRange.Identifier
-	Extract  string
+	Addrs    []string
 	Check    bool
+	Belongs  bool
+	Details  bool
 	Globals  globals.GlobalOptions
 	BadFlag  error
 }
@@ -30,9 +33,12 @@ type ChunksOptions struct {
 var chunksCmdLineOptions ChunksOptions
 
 func (opts *ChunksOptions) TestLog() {
+	logger.TestLog(len(opts.Mode) > 0, "Mode: ", opts.Mode)
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
-	logger.TestLog(len(opts.Extract) > 0, "Extract: ", opts.Extract)
+	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(opts.Check, "Check: ", opts.Check)
+	logger.TestLog(opts.Belongs, "Belongs: ", opts.Belongs)
+	logger.TestLog(opts.Details, "Details: ", opts.Details)
 	opts.Globals.TestLog()
 }
 
@@ -40,15 +46,24 @@ func ChunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 	opts := &ChunksOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
+		case "mode":
+			opts.Mode = value[0]
 		case "blocks":
 			for _, val := range value {
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Blocks = append(opts.Blocks, s...)
 			}
-		case "extract":
-			opts.Extract = value[0]
+		case "addrs":
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Addrs = append(opts.Addrs, s...)
+			}
 		case "check":
 			opts.Check = true
+		case "belongs":
+			opts.Belongs = true
+		case "details":
+			opts.Details = true
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "chunks")
@@ -58,7 +73,7 @@ func ChunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
-	opts.Extract = ens.ConvertOneEns(opts.Globals.Chain, opts.Extract)
+	opts.Addrs = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
 	// EXISTING_CODE
 
 	return opts
@@ -69,8 +84,19 @@ func ChunksFinishParse(args []string) *ChunksOptions {
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
 	// EXISTING_CODE
-	opts.Blocks = args
-	opts.Extract = ens.ConvertOneEns(opts.Globals.Chain, opts.Extract)
+	if len(args) > 0 {
+		opts.Mode = args[0]
+		for i, arg := range args {
+			if i > 0 {
+				if validate.IsValidAddress(arg) {
+					opts.Addrs = append(opts.Addrs, arg)
+				} else {
+					opts.Blocks = append(opts.Blocks, arg)
+				}
+			}
+		}
+	}
+	opts.Addrs = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt

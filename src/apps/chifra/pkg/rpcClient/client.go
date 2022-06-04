@@ -9,14 +9,15 @@ import (
 	"fmt"
 	"log"
 	"math/big"
-	"os"
 	"strconv"
 	"strings"
+	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/ethclient"
@@ -26,18 +27,21 @@ import (
 // TODO: overran the number of TPC connection the OS would create (on a Mac). Since then, we now
 // TODO: open the connection once and just use it allowing the operating system to clean it up
 var perProviderClientMap = map[string]*ethclient.Client{}
+var clientMutex sync.Mutex
 
 func GetClient(provider string) *ethclient.Client {
+	clientMutex.Lock()
 	if perProviderClientMap[provider] == nil {
 		// TODO: I don't like the fact that we Dail In every time we want to us this
 		// TODO: If we make this a cached item, it needs to be cached per chain, see timestamps
 		ec, err := ethclient.Dial(provider)
-		if err != nil {
-			log.Println("Missdial(" + os.Args[0] + "):")
+		if err != nil || ec == nil {
+			log.Println("Missdial(" + provider + "):")
 			log.Fatalln(err)
 		}
 		perProviderClientMap[provider] = ec
 	}
+	clientMutex.Unlock()
 	return perProviderClientMap[provider]
 }
 
@@ -140,6 +144,46 @@ func TxHashFromNumberAndId(provider string, blkNum, txId uint64) (string, error)
 	return tx.Hash().Hex(), nil
 }
 
+// TxNumberAndIdFromHash returns a transaction's blockNum and tx_id given its hash
+func TxNumberAndIdFromHash(provider string, hash string) (uint64, uint64, error) {
+	// RPCPayload is used during to make calls to the RPC.
+	var trans Transaction
+	transPayload := RPCPayload{
+		Jsonrpc:   "2.0",
+		Method:    "eth_getTransactionByHash",
+		RPCParams: RPCParams{fmt.Sprintf("%s", hash)},
+		ID:        1002,
+	}
+	err := FromRpc(provider, &transPayload, &trans)
+	if err != nil {
+		fmt.Println("FromRpc(traces) returned error")
+		log.Fatal(err)
+	}
+	bn, err := strconv.ParseUint(trans.Result.BlockNumber[2:], 16, 32)
+	if err != nil {
+		return 0, 0, err
+	}
+	txid, err := strconv.ParseUint(trans.Result.TransactionIndex[2:], 16, 32)
+	if err != nil {
+		return 0, 0, err
+	}
+	return bn, txid, nil
+}
+
+// TxCountByBlockNumber returns the number of transactions in a block
+func TxCountByBlockNumber(provider string, blkNum uint64) (uint64, error) {
+	ec := GetClient(provider)
+	defer ec.Close()
+
+	block, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(blkNum))
+	if err != nil {
+		return 0, err
+	}
+
+	cnt, err := ec.TransactionCount(context.Background(), block.Hash())
+	return uint64(cnt), nil
+}
+
 // BlockHashFromHash returns a block's hash if it's a valid block
 func BlockHashFromHash(provider, hash string) (string, error) {
 	ec := GetClient(provider)
@@ -177,6 +221,15 @@ func BlockHashFromNumber(provider string, blkNum uint64) (string, error) {
 	}
 
 	return block.Hash().Hex(), nil
+}
+
+// TODO: This is okay since Ropsten is dead as of the merge. We use it for testing
+// TODO: but we need this to actually work (for Geth for instance)
+func IsTracingNode(testMode bool, chain string) bool {
+	if testMode && chain == "ropsten" {
+		return false
+	}
+	return true
 }
 
 /*
@@ -226,25 +279,51 @@ func DecodeHex(hex string) []byte {
 	return hexutil.MustDecode(hex)
 }
 
-func GetBlockByNumber(chain string, bn uint64) types.NamedBlock {
+func GetBlockByNumber(chain string, bn uint64) (types.NamedBlock, error) {
 	var block BlockHeader
 	var payload = RPCPayload{
 		Jsonrpc:   "2.0",
 		Method:    "eth_getBlockByNumber",
-		RPCParams: RPCParams{bn, false},
+		RPCParams: RPCParams{fmt.Sprintf("0x%x", bn), false},
 		ID:        1005,
 	}
 	rpcProvider := config.GetRpcProvider(chain)
-	// log.Println(v, payload)
 	err := FromRpc(rpcProvider, &payload, &block)
 	if err != nil {
-		fmt.Println("FromRpc(block) returned error")
-		log.Fatal(err)
+		return types.NamedBlock{}, err
+	}
+	if len(block.Result.Number) == 0 || len(block.Result.Timestamp) == 0 {
+		msg := fmt.Sprintf("block number or timestamp for %d not found", bn)
+		return types.NamedBlock{}, fmt.Errorf(msg)
 	}
 	n, _ := strconv.ParseUint(block.Result.Number[2:], 16, 64)
 	ts, _ := strconv.ParseUint(block.Result.Timestamp[2:], 16, 64)
+	if n == 0 {
+		ts, err = GetBlockZeroTs(chain)
+		if err != nil {
+			return types.NamedBlock{}, err
+		}
+	}
 	return types.NamedBlock{
 		BlockNumber: n,
 		TimeStamp:   ts,
+	}, nil
+}
+
+// GetBlockZeroTs for some reason block zero does not return a timestamp, so we assign block one's ts minus 14 seconds
+func GetBlockZeroTs(chain string) (uint64, error) {
+	blockOne, err := GetBlockByNumber(chain, 1)
+	if err != nil {
+		return utils.EarliestEvmTs, err
 	}
+	return blockOne.TimeStamp - 14, nil
+}
+
+// TODO: use block number by converting it
+func GetCodeAt(chain, addr string, bn uint64) ([]byte, error) {
+	// return IsValidAddress(addr)
+	provider := config.GetRpcProvider(chain)
+	ec := GetClient(provider)
+	address := common.HexToAddress(addr)
+	return ec.CodeAt(context.Background(), address, nil) // nil is latest block
 }

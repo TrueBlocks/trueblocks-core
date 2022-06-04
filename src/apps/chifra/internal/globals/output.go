@@ -67,7 +67,7 @@ func RenderSlice[
 		for i, item := range data {
 			if i == 0 {
 				if !opts.NoHeader {
-					err := output.OutputHeader(item, opts.Writer, opts.Format, opts.ApiMode)
+					err := output.OutputHeader(item, opts.Writer, opts.Format)
 					if err != nil {
 						return err
 					}
@@ -84,23 +84,15 @@ func RenderSlice[
 	return fmt.Errorf("unsupported format %s", opts.Format)
 }
 
-func (opts *GlobalOptions) RenderObject(data interface{}, showMeta, first bool) error {
+// TODO: Fix export without arrays
+func (opts *GlobalOptions) RenderObject(data interface{}, first bool) error {
 	if opts.Writer == nil {
 		log.Fatal("opts.Writer is nil")
 	}
-
-	var meta *rpcClient.MetaData = nil
-	if showMeta {
-		var err error
-		meta, err = rpcClient.GetMetaData(opts.Chain, opts.TestMode)
-		if err != nil {
-			return err
-		}
-	}
-
-	return output.OutputObject(data, opts.Writer, opts.Format, opts.NoHeader, opts.ApiMode, first, meta)
+	return output.OutputObject(data, opts.Writer, opts.Format, opts.NoHeader, opts.ApiMode, first, nil)
 }
 
+// TODO: Fix export without arrays
 func (opts *GlobalOptions) RenderHeader(data interface{}, w *io.Writer, format string, apiMode, hideHeader, first bool) error {
 	if apiMode {
 		// We could check this, but if it's not empty, we know it's type
@@ -119,12 +111,14 @@ func (opts *GlobalOptions) RenderHeader(data interface{}, w *io.Writer, format s
 		return nil
 	}
 
-	return output.OutputHeader(data, *w, format, apiMode)
+	return output.OutputHeader(data, *w, format)
 }
 
-func (opts *GlobalOptions) RenderFooter(showMeta bool) error {
+// TODO: Fix export without arrays
+func (opts *GlobalOptions) RenderFooter() error {
 	if opts.Format == "api" || opts.Format == "json" {
 		opts.Writer.Write([]byte("\n  ]"))
+		showMeta := opts.ApiMode || opts.Format == "api"
 		if showMeta {
 			meta, err := rpcClient.GetMetaData(opts.Chain, opts.TestMode)
 			if err != nil {

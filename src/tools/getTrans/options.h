@@ -18,7 +18,6 @@
 #include "etherlib.h"
 
 // BEG_ERROR_DEFINES
-#define ERR_PROVIDEONETXID 1
 // END_ERROR_DEFINES
 
 //-----------------------------------------------------------------------------

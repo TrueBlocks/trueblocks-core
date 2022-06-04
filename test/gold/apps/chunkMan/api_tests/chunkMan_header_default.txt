@@ -1,0 +1,6 @@
+chunks?mode=header
+{
+  "errors": [
+    "The mode option (header) must be one of [ stats | pins | blooms | index | addresses | appearances ]"
+  ]
+}

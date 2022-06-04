@@ -5,6 +5,7 @@ package scrapePkg
 // be found in the LICENSE file.
 
 import (
+	"log"
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -37,8 +38,13 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 				//
 				// If we're closeEnough and the user specified a sleep value less than
 				// 14 seconds, there's not reason to not sleep
-				meta, _ := rpcClient.GetMetaData(opts.Globals.Chain, false)
-				distanceFromHead := meta.Latest - meta.Staging
+				var distanceFromHead uint64 = 13
+				meta, err := rpcClient.GetMetaData(opts.Globals.Chain, false)
+				if err != nil {
+					log.Println("Error from node:", err)
+				} else {
+					distanceFromHead = meta.Latest - meta.Staging
+				}
 				closeEnough := distanceFromHead <= (2 * opts.UnripeDist)
 				// TODO: per chain data
 				if closeEnough {
@@ -47,9 +53,9 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 				isDefault := opts.Sleep == 14 || opts.Sleep == 13
 				if !isDefault || closeEnough {
 					if closeEnough {
-						logger.Log(logger.Info, "Close enough to head. Sleeping for", opts.Sleep, "seconds.")
+						logger.Log(logger.Info, "Close enough to head. Sleeping for", opts.Sleep, "seconds -", distanceFromHead, "away from head.")
 					} else {
-						logger.Log(logger.Info, "Sleeping for", opts.Sleep, "seconds.")
+						logger.Log(logger.Info, "Sleeping for", opts.Sleep, "seconds -", distanceFromHead, "away from head.")
 					}
 					s.Pause()
 				}

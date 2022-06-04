@@ -6,6 +6,7 @@ package validate
 
 import (
 	"log"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
 	tslibPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
@@ -53,7 +54,6 @@ func ValidateIdentifiers(chain string, identifiers []string, validTypes ValidArg
 	}
 
 	rangesFound := 0
-
 	for _, identifier := range identifiers {
 		if isBitmaskSet(ValidArgumentBlockHash) && IsBlockHash(identifier) {
 			appendBlockId(results, identifier)
@@ -130,14 +130,35 @@ func appendBlockId(results *[]blockRange.Identifier, identifier string) {
 	if results == nil {
 		return
 	}
-	br, _ := blockRange.New(identifier)
-	*results = append(*results, *br)
+	br, _ := blockRange.NewBlockRange(identifier)
+	if br != nil {
+		*results = append(*results, *br)
+	}
 }
 
 func appendTxId(results *[]blockRange.Identifier, identifier string) {
 	if results == nil {
 		return
 	}
-	br, _ := blockRange.New(identifier)
-	*results = append(*results, *br)
+
+	// so the parser works for both transaction identifiers and block identifiers
+	identifier = strings.Replace(identifier, ".", "-", -1)
+
+	// so the parser works for transaction identifiers with blockHashOrNumber.*
+	if strings.Count(identifier, "-") == 1 && strings.HasSuffix(identifier, "-*") {
+		parts := strings.Split(identifier, "-")
+		identifier = parts[0] + "-0:all"
+	}
+
+	br, _ := blockRange.NewTxRange(identifier)
+	if br != nil {
+		if br.StartType == blockRange.BlockHash && br.EndType == blockRange.NotDefined {
+			// We can't really distinguish hashes in the parser, but if there is
+			// a single hash and nothing following the separator and we know we're
+			// looking for transactions, this is a transaction hash
+			br.StartType = blockRange.TransactionHash
+		}
+		br.EndType = blockRange.TransactionIndex
+		*results = append(*results, *br)
+	}
 }

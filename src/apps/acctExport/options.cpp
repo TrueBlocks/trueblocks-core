@@ -218,7 +218,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (!isApiMode() && max_records == 250)
-        max_records = NOPOS;
+        max_records = (((size_t)-100000000));  // this is a very large number that won't wrap
 
     if (accounting && !isArchiveNode())
         return usage("The --accounting option requires historical balances which your RPC server does not provide.");
@@ -401,7 +401,7 @@ COptions::COptions(void) {
     // clang-format off
     notes.push_back("An `address` must start with '0x' and be forty-two characters long.");
     notes.push_back("Articulating the export means turn the EVM's byte data into human-readable text (if possible).");
-    notes.push_back("For the --logs option, you may optionally specify one or more --emmitter, one or more --topics, or both.");  // NOLINT
+    notes.push_back("For the --logs option, you may optionally specify one or more --emitter, one or more --topics, or both.");  // NOLINT
     notes.push_back("The --logs option is significantly faster if you provide an --emitter or a --topic.");
     notes.push_back("Neighbors include every address that appears in any transaction in which the export address also appears.");  // NOLINT
     // clang-format on

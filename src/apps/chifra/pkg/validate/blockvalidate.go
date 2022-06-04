@@ -40,7 +40,7 @@ func IsTimestamp(str string) (bool, blknum_t) {
 	if !ok {
 		return false, 0
 	}
-	return bn >= utils.EarliestTs, bn
+	return bn >= utils.EarliestEvmTs, bn
 }
 
 func IsBlockNumber(str string) (bool, blknum_t) {
@@ -80,11 +80,11 @@ func IsDateTimeString(str string) bool {
 		return false
 	}
 
-	bRange, err := blockRange.New(str)
+	bRange, err := blockRange.NewBlockRange(str)
 	if err != nil {
 		return false
 	}
-	return bRange.StartType == blockRange.BlockRangeDate
+	return bRange.StartType == blockRange.BlockDate
 }
 
 // TODO: BOGUS
@@ -124,31 +124,31 @@ func IsRange(chain, str string) (bool, error) {
 		}
 	}
 
-	bRange, err := blockRange.New(str)
+	bRange, err := blockRange.NewBlockRange(str)
 
 	if err == nil {
 		if bRange.Start.Special == "latest" {
 			return false, errors.New("cannot start range with 'latest'")
 		}
 
-		if bRange.StartType == blockRange.BlockRangeSpecial &&
+		if bRange.StartType == blockRange.BlockSpecial &&
 			!tslibPkg.IsSpecialBlock(chain, bRange.Start.Special) {
 			return false, &InvalidIdentifierLiteralError{
 				Value: bRange.Start.Special,
 			}
 		}
 
-		if bRange.EndType == blockRange.BlockRangeSpecial &&
+		if bRange.EndType == blockRange.BlockSpecial &&
 			!tslibPkg.IsSpecialBlock(chain, bRange.End.Special) {
 			return false, &InvalidIdentifierLiteralError{
 				Value: bRange.End.Special,
 			}
 		}
 
-		onlyNumbers := bRange.StartType == blockRange.BlockRangeBlockNumber &&
-			bRange.EndType == blockRange.BlockRangeBlockNumber
+		onlyNumbers := bRange.StartType == blockRange.BlockNumber &&
+			bRange.EndType == blockRange.BlockNumber
 
-		if onlyNumbers && bRange.Start.BlockOrTs >= bRange.End.BlockOrTs {
+		if onlyNumbers && bRange.Start.Number >= bRange.End.Number {
 			return false, errors.New("'stop' must be strictly larger than 'start'")
 		}
 
@@ -173,7 +173,7 @@ type InvalidIdentifierLiteralError struct {
 
 func (e *InvalidIdentifierLiteralError) Error() string {
 	if len(e.Msg) == 0 {
-		e.Msg = "is not a valid block identifier."
+		e.Msg = "is not a valid identifier."
 	}
 	return fmt.Sprintf("The given value '%s' %s", e.Value, e.Msg)
 }

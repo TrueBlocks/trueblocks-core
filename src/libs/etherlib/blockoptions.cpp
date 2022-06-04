@@ -66,6 +66,8 @@ bool wrangleTxId(string_q& argOut, string_q& errorMsg) {
         return true;
 
     // valid args are 'latest', 'bn.txid', 'bn.txid.next', or 'bn.txid.prev'
+    replaceReverse(argOut, ":", ".");
+
     CStringArray parts;
     explode(parts, argOut, '.');
 
@@ -78,15 +80,23 @@ bool wrangleTxId(string_q& argOut, string_q& errorMsg) {
         return true;
     }
 
-    // txnum_t txid;
-    if (parts.size() == 0 ||  // there are not enough
-        (parts.size() == 1 &&
-         (parts[0] != "latest" && parts[0] != "first")) ||  // there's only one and it's not 'latest'
-        ((parts.size() == 2 || parts.size() == 3) &&
-         (!isNumeral(parts[0]) || !isNumeral(parts[1]))) ||  // two or three, first two are not numbers
-        parts.size() > 3) {                                  // too many
-        errorMsg = argOut + " does not appear to be a valid transaction index.";
+    if (parts.size() == 0) {
+        errorMsg = argOut + " does not appear to be a valid transaction index (no parts).";
         return false;
+
+    } else if (parts.size() == 1 && (parts[0] != "latest" && parts[0] != "first")) {
+        errorMsg = argOut + " does not appear to be a valid transaction index (one part, not first or latest).";
+        return false;
+
+    } else if (parts.size() > 3) {
+        errorMsg = argOut + " does not appear to be a valid transaction index (too many).";
+        return false;
+    } else {
+        // two or three parts...
+        if (!isNumeral(parts[0]) || !isNumeral(parts[1])) {
+            errorMsg = argOut + " does not appear to be a valid transaction index.";
+            return false;
+        }
     }
 
     if (parts.size() == 2)
@@ -106,10 +116,12 @@ bool wrangleTxId(string_q& argOut, string_q& errorMsg) {
         parts[1] = "0";
         parts[2] = "prev";
     }
+
     if (parts[0] == "first") {
         argOut = "46147.0";
         return true;
     }
+
     ASSERT(parts[2] == "prev" || parts[2] == "next");
     return getDirectionalTxId(str_2_Uint(parts[0]), str_2_Uint(parts[1]), parts[2], argOut, errorMsg);
 }

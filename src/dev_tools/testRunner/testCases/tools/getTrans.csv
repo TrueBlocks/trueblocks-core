@@ -33,12 +33,12 @@ on      ,both ,fast  ,transactions ,tools/getTrans ,message              ,y    ,
 on      ,cmd  ,medi  ,transactions ,tools/getTrans ,core_dump_bug        ,y    ,transactions = 0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10 @ avt & fmt = api
 on      ,both ,fast  ,transactions ,tools/getTrans ,uniqAddrs_fail       ,y    ,transactions = 1301011.0 1301672.0 1301324.0 & broken & fmt = json
 on      ,both ,fast  ,transactions ,tools/getTrans ,uniqAddrs            ,y    ,transactions = 1301011.0 1301672.0 1301324.0 & uniq & fmt = json
-local   ,both ,fast  ,transactions ,tools/getTrans ,first                ,n    ,transactions = 40500.0.next & fmt = txt
+local   ,both ,fast  ,transactions ,tools/getTrans ,first                ,n    ,transactions = 40500.0:next & fmt = txt
 local   ,both ,fast  ,transactions ,tools/getTrans ,first2               ,n    ,transactions = first & fmt = txt
-on      ,both ,fast  ,transactions ,tools/getTrans ,nav_prev1            ,n    ,transactions = 1001001.1.prev & fmt = txt
-on      ,both ,fast  ,transactions ,tools/getTrans ,nav_prev2            ,n    ,transactions = 1001001.0.prev & fmt = txt & no_header
-on      ,both ,fast  ,transactions ,tools/getTrans ,nav_next1            ,n    ,transactions = 1001001.2.next & fmt = txt
-on      ,both ,fast  ,transactions ,tools/getTrans ,nav_next2            ,n    ,transactions = 1001001.1.next & fmt = txt
+on      ,both ,fast  ,transactions ,tools/getTrans ,nav_prev1            ,n    ,transactions = 1001001.1:prev & fmt = txt
+on      ,both ,fast  ,transactions ,tools/getTrans ,nav_prev2            ,n    ,transactions = 1001001.0:prev & fmt = txt & no_header
+on      ,both ,fast  ,transactions ,tools/getTrans ,nav_next1            ,n    ,transactions = 1001001.2:next & fmt = txt
+on      ,both ,fast  ,transactions ,tools/getTrans ,nav_next2            ,n    ,transactions = 1001001.1:next & fmt = txt
 on      ,both ,fast  ,transactions ,tools/getTrans ,fmt_default          ,y    ,transactions = 2222222.0 2332332.0
 on      ,both ,fast  ,transactions ,tools/getTrans ,star                 ,y    ,transactions = 2222221.* & fmt = api
 on      ,both ,fast  ,transactions ,tools/getTrans ,fmt_txt              ,n    ,transactions = 2222222.0 2332332.0 & fmt = txt
@@ -74,3 +74,5 @@ local   ,both ,slow  ,transactions ,tools/getTrans ,broken_unparseable   ,y    ,
 
 #,,,,,,,this test case should decode this string as a message (in this case, it's an IPFS hash)
 local   ,both ,fast  ,transactions ,tools/getTrans ,messages             ,y    ,transactions = 0x0f0171122023385b433a766e70c65928ea9f9e29e6a6c82a7330cb46b63334e7e9ba7a35c3 & articulate & fmt = json
+
+on      ,both ,fast  ,transactions ,tools/getTrans ,no_tracing           ,y    ,transactions = 0x0f0171122023385b433a766e70c65928ea9f9e29e6a6c82a7330cb46b63334e7e9ba7a35c3 & trace & chain = ropsten

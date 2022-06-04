@@ -27,22 +27,22 @@ var blocksCmd = &cobra.Command{
 	RunE:    blocksPkg.RunBlocks,
 }
 
-var usageBlocks = `blocks [flags] <block> [block...]
+const usageBlocks = `blocks [flags] <block> [block...]
 
 Arguments:
   blocks - a space-separated list of one or more block identifiers (required)`
 
-var shortBlocks = "retrieve one or more blocks from the chain or local cache"
+const shortBlocks = "retrieve one or more blocks from the chain or local cache"
 
-var longBlocks = `Purpose:
+const longBlocks = `Purpose:
   Retrieve one or more blocks from the chain or local cache.`
 
-var notesBlocks = `
+const notesBlocks = `
 Notes:
-  - blocks is a space-separated list of values, a start-end range, a special, or any combination.
-  - blocks may be specified as either numbers or hashes.
-  - special blocks are detailed under chifra when --list.
-  - With the --logs option, optionally specify one or more --emmitter, one or more --topics, either or both.
+  - Blocks is a space-separated list of values, a start-end range, a special, or any combination.
+  - Blocks may be specified as either numbers or hashes.
+  - Special blocks are detailed under chifra when --list.
+  - With the --logs option, optionally specify one or more --emitter, one or more --topics, either or both.
   - The --logs option is significantly faster if you provide an --emitter and/or a --topic.
   - Multiple topics match on topic0, topic1, and so on, not on different topic0's.
   - Large block ranges may crash the node, use --big_range to specify a larger range.`

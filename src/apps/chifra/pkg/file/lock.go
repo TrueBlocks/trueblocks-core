@@ -10,6 +10,8 @@ import (
 	"syscall"
 )
 
+// TODO: Why not use a mutex?
+
 // Lock asks the OS to lock a file for the current process
 func Lock(file *os.File) error {
 	// Lock configuration. We want both read (F_RDLCK) and

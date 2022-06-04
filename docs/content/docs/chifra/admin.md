@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-05-02T07:04:38
+date: 2022-06-02T07:06:13
 lastmod:
   - :git
   - lastmod
@@ -64,7 +64,7 @@ Purpose:
   Scan the chain and update (and optionally pin) the TrueBlocks index of appearances.
 
 Usage:
-  chifra scrape [flags] [mode...]
+  chifra scrape <mode> [mode...] [flags]
 
 Arguments:
   modes - which scraper(s) to control (required)
@@ -107,20 +107,28 @@ Purpose:
   Manage and investigate chunks and bloom filters.
 
 Usage:
-  chifra chunks [flags] <block> [block...]
+  chifra chunks <mode> [flags] [blocks...] [address...]
 
 Arguments:
+  mode - the type of chunk info to retrieve (required)
+	One of [ stats | pins | blooms | index | addresses | appearances ]
   blocks - optional list of blocks to intersect with chunk ranges
+  addrs - one or more addresses to use with --belongs option (see note)
 
 Flags:
-  -e, --extract string   show some or all of the contents of the chunk or bloom filters
-                         One of [ stats | pins | blooms | index | header | addresses | appearances ]
-  -x, --fmt string       export format, one of [none|json*|txt|csv|api]
-  -v, --verbose          enable verbose (increase detail with --log_level)
-  -h, --help             display this help screen
+  -c, --check        depends on mode, checks for internal consistency of the data type
+  -b, --belongs      checks if the given address appears in the given chunk
+  -d, --details      for the --addresses option only, display appearance records as well as address records
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -v, --verbose      enable verbose (increase detail with --log_level)
+  -h, --help         display this help screen
 
 Notes:
-  - Only a single block in a given chunk needs to be supplied.
+  - If blocks are provided, only chunks intersecting with those blocks are displayed.
+  - Only a single block in a given chunk needs to be supplied for a match.
+  - The --belongs option is only available with the addresses or blooms mode.
+  - The --belongs option requires both an address and a block identifier.
+  - You may only specifiy an address when using the --belongs option.
 ```
 
 **Source code**: [`internal/chunks`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/chunks)

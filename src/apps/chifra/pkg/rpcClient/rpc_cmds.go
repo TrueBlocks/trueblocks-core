@@ -141,6 +141,31 @@ type Receipt struct {
 	ID int `json:"id"`
 }
 
+// Transaction carries values returned by the eth_getTransacction RPC calls
+type Transaction struct {
+	Jsonrpc string `json:"jsonrpc"`
+	Result  struct {
+		Hash             string
+		Nonce            string
+		BlockHash        string
+		BlockNumber      string
+		TransactionIndex string
+		From             string
+		To               string
+		Value            string
+		GasPrice         string
+		Gas              string
+		Input            string
+		V                string
+		StandardV        string
+		R                string
+		Raw              string
+		Publickey        string
+		Chainid          string
+	} `json:"result"`
+	ID int `json:"id"`
+}
+
 // RPCParams are used during calls to the RPC.
 type RPCParams []interface{}
 

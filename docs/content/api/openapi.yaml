@@ -7,7 +7,7 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 0.35.0-beta
+  version: 0.36.0-beta
   description: >
 
     A REST layer over the TrueBlocks application. With `chifra serve`, you can
@@ -1518,6 +1518,21 @@ paths:
       description: Manage and investigate chunks and bloom filters.
       operationId: admin-chunks
       parameters:
+        - name: mode
+          description: the type of chunk info to retrieve
+          required: true
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+            enum:
+              - stats
+              - pins
+              - blooms
+              - index
+              - addresses
+              - appearances
         - name: blocks
           description: optional list of blocks to intersect with chunk ranges
           required: false
@@ -1529,22 +1544,42 @@ paths:
             items:
               type: string
               format: blknum
-        - name: extract
-          description: show some or all of the contents of the chunk or bloom filters
+        - name: addrs
+          description: one or more addresses to use with --belongs option (see note)
           required: false
           style: form
           in: query
           explode: true
           schema:
-            type: string
-            enum:
-              - stats
-              - pins
-              - blooms
-              - index
-              - header
-              - addresses
-              - appearances
+            type: array
+            items:
+              type: string
+              format: address
+        - name: check
+          description: depends on mode, checks for internal consistency of the data type
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: belongs
+          description: checks if the given address appears in the given chunk
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: details
+          description: >
+            for the --addresses option only, display appearance records as well as address records
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
           description: returns the requested data
@@ -1720,7 +1755,7 @@ paths:
                 - uncles
                 - all
         - name: appearances
-          description: show only the blocknumer.tx_id appearances of the exported transactions
+          description: show only the blocknumber.tx_id appearances of the exported transactions
           required: false
           style: form
           in: query

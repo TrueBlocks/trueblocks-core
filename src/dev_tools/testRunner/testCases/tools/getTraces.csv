@@ -43,11 +43,11 @@ on      ,cmd  ,fast  ,traces ,tools/getTraces ,redir_output        ,y    ,transa
 on      ,both ,fast  ,traces ,tools/getTraces ,to_file             ,y    ,transactions = 2222222.0 2332332.0 & fmt = json & to_file
 on      ,both ,fast  ,traces ,tools/getTraces ,ddos_supress        ,y    ,transactions = 0x37c469573ca24f538d91f39e9d0b8d49927a36d70496ef74521cbf5c44a056d4 & fmt = json
 on      ,cmd  ,fast  ,traces ,tools/getTraces ,ddos_show           ,n    ,transactions = 0x37c469573ca24f538d91f39e9d0b8d49927a36d70496ef74521cbf5c44a056d4 & fmt = json
-local   ,both ,fast  ,traces ,tools/getTraces ,first               ,y    ,transactions = 40500.0.next
-on      ,both ,fast  ,traces ,tools/getTraces ,nav_prev1           ,y    ,transactions = 1001001.1.prev
-on      ,both ,medi  ,traces ,tools/getTraces ,nav_prev2           ,y    ,transactions = 1001001.0.prev
-on      ,both ,fast  ,traces ,tools/getTraces ,nav_next1           ,y    ,transactions = 1001001.2.next
-on      ,both ,fast  ,traces ,tools/getTraces ,nav_next2           ,y    ,transactions = 1001001.3.next
+local   ,both ,fast  ,traces ,tools/getTraces ,first               ,y    ,transactions = 40500.0:next
+on      ,both ,fast  ,traces ,tools/getTraces ,nav_prev1           ,y    ,transactions = 1001001.1:prev
+on      ,both ,medi  ,traces ,tools/getTraces ,nav_prev2           ,y    ,transactions = 1001001.0:prev
+on      ,both ,fast  ,traces ,tools/getTraces ,nav_next1           ,y    ,transactions = 1001001.2:next
+on      ,both ,fast  ,traces ,tools/getTraces ,nav_next2           ,y    ,transactions = 1001001.3:next
 on      ,both ,fast  ,traces ,tools/getTraces ,star                ,y    ,transactions = 2222221.* & fmt = json
 on      ,both ,fast  ,traces ,tools/getTraces ,fmt_default         ,y    ,transactions = 2222222.0 2332332.0
 on      ,both ,fast  ,traces ,tools/getTraces ,fmt_txt             ,n    ,transactions = 2222222.0 2332332.0 & fmt = txt
@@ -72,3 +72,5 @@ local   ,both ,slow  ,traces ,tools/getTraces ,articulate_2        ,n    ,transa
 local   ,both ,fast  ,traces ,tools/getTraces ,multi_articulate    ,y    ,transactions = 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f & articulate & fmt = json
 local   ,both ,fast  ,traces ,tools/getTraces ,by_filter5          ,y    ,fmt = json & filter = 4370000!4370002
 local   ,both ,fast  ,traces ,tools/getTraces ,by_filter9          ,y    ,fmt = json & filter = 4370000!4370002!!!1!
+
+on      ,both ,fast  ,traces ,tools/getTraces ,no_tracing          ,y    ,transactions = 3648669.24 & chain = ropsten

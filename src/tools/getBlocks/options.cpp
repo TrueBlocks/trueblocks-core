@@ -159,8 +159,6 @@ bool COptions::parseArguments(string_q& command) {
     listOffset = contains(command, "list") ? list : NOPOS;
     filterType = (uniq ? "uniq" : (apps ? "apps" : ""));
 
-    if (big_range != 500 && !logs)
-        return usage(usageErrs[ERR_RANGENOLOGS]);
     big_range = max(big_range, uint64_t(50));
 
     if (trace && !isTracingNode())
@@ -269,10 +267,10 @@ COptions::COptions(void) {
 
     // BEG_CODE_NOTES
     // clang-format off
-    notes.push_back("`blocks` is a space-separated list of values, a start-end range, a `special`, or any combination.");  // NOLINT
-    notes.push_back("`blocks` may be specified as either numbers or hashes.");
-    notes.push_back("`special` blocks are detailed under `chifra when --list`.");
-    notes.push_back("With the --logs option, optionally specify one or more --emmitter, one or more --topics, either or both.");  // NOLINT
+    notes.push_back("`Blocks` is a space-separated list of values, a start-end range, a `special`, or any combination.");  // NOLINT
+    notes.push_back("`Blocks` may be specified as either numbers or hashes.");
+    notes.push_back("`Special` blocks are detailed under `chifra when --list`.");
+    notes.push_back("With the --logs option, optionally specify one or more --emitter, one or more --topics, either or both.");  // NOLINT
     notes.push_back("The --logs option is significantly faster if you provide an --emitter and/or a --topic.");
     notes.push_back("Multiple topics match on topic0, topic1, and so on, not on different topic0's.");
     notes.push_back("Large block ranges may crash the node, use --big_range to specify a larger range.");
@@ -288,7 +286,6 @@ COptions::COptions(void) {
     usageErrs[ERR_ATLEASTONEBLOCK] = "You must specify at least one block.";
     usageErrs[ERR_EMTOPONLYWITHLOG] = "The --emitter and --topic options are only available with the --log option.";
     usageErrs[ERR_ARTWITHOUTLOGS] = "The --artcilate option is only available with the --logs option.";
-    usageErrs[ERR_RANGENOLOGS] = "The --big_range option is only available with the --logs option (min 50).";
     // END_ERROR_STRINGS
 }
 

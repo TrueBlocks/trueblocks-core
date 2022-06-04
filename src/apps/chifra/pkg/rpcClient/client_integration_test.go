@@ -14,7 +14,6 @@ import (
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common"
 )
 
@@ -46,7 +45,8 @@ func Test_Client(t *testing.T) {
 	}
 
 	ts := GetBlockTimestamp(provider, 1)
-	if ts != utils.BlockOneTs {
+	blockOneTimestamp := uint64(1438269988)
+	if ts != blockOneTimestamp {
 		t.Error("timestamp for block 1 is not correct")
 	}
 

@@ -1,6 +1,6 @@
 traces?transactions=1233123
 {
   "errors": [
-    "chifra traces - 1233123 does not appear to be a valid transaction index."
+    "The given value '1233123' is not a valid identifier."
   ]
 }

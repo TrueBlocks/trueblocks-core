@@ -1,0 +1,5 @@
+Charting the total supply of a token
+
+chifra tokens <address> --parts totalSupply
+
+Weekly, Monthly, etc.

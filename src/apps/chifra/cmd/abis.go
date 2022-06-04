@@ -27,17 +27,17 @@ var abisCmd = &cobra.Command{
 	RunE:    abisPkg.RunAbis,
 }
 
-var usageAbis = `abis [flags] <address> [address...]
+const usageAbis = `abis [flags] <address> [address...]
 
 Arguments:
   addrs - a list of one or more smart contracts whose ABIs to display (required)`
 
-var shortAbis = "fetches the ABI for a smart contract"
+const shortAbis = "fetches the ABI for a smart contract"
 
-var longAbis = `Purpose:
+const longAbis = `Purpose:
   Fetches the ABI for a smart contract.`
 
-var notesAbis = `
+const notesAbis = `
 Notes:
   - For the --sol option, place the solidity files in the current working folder.
   - Search for either four byte signatures or event signatures with the --find option.`

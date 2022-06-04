@@ -51,6 +51,8 @@ package blockRange
 // 2021-10-03T10:30:59-1000:100
 
 import (
+	"encoding/json"
+
 	"github.com/alecthomas/participle/v2"
 	"github.com/alecthomas/participle/v2/lexer"
 )
@@ -59,7 +61,7 @@ import (
 var rangeLexer = lexer.MustSimple([]lexer.Rule{
 	{Name: `Date`, Pattern: `\d{4}-\d{2}-\d{2}(T[\d]{2}(:[\d]{2})?(:[\d]{2})?(UTC)?)?`, Action: nil},
 	{Name: `Special`, Pattern: `[a-z_]+[0-9]*`, Action: nil},
-	{Name: `BlockHash`, Pattern: `0x[a-f0-9]{64}`, Action: nil},
+	{Name: `Hash`, Pattern: `0x[a-f0-9]{64}`, Action: nil},
 	{Name: `Hex`, Pattern: `0x[a-f0-9]+`, Action: nil},
 	{Name: `Unsigned`, Pattern: `^[0-9]+`, Action: nil},
 	{Name: `PointSeparator`, Pattern: `-`, Action: nil},
@@ -70,10 +72,18 @@ var rangeLexer = lexer.MustSimple([]lexer.Rule{
 // a block number, a date or special name (e.g. "london" is translated to
 // block 12965000)
 type Point struct {
-	BlockOrTs uint   `parser:"@Hex|@Unsigned" json:"blockOrTs,omitempty"`
-	BlockHash string `parser:"| @BlockHash" json:"blockHash,omitempty"`
-	Date      string `parser:"| @Date" json:"date,omitempty"`
-	Special   string `parser:"| @Special" json:"special,omitempty"`
+	Number  uint   `parser:"@Hex|@Unsigned" json:"number,omitempty"`
+	Hash    string `parser:"| @Hash" json:"hash,omitempty"`
+	Date    string `parser:"| @Date" json:"date,omitempty"`
+	Special string `parser:"| @Special" json:"special,omitempty"`
+}
+
+func (p Point) String() string {
+	str, err := json.Marshal(p)
+	if err != nil {
+		return ""
+	}
+	return string(str)
 }
 
 // Modifier changes the meaning of the given range. For example, if step of
@@ -82,7 +92,7 @@ type Point struct {
 // a period can be provided to get only blocks based on frequency (e.g. weekly)
 type Modifier struct {
 	Step   uint   `parser:"@Unsigned" json:"step,omitempty"`
-	Period string `parser:"| @('hourly'|'daily'|'weekly'|'monthly'|'quarterly'|'annually')" json:"period,omitempty"`
+	Period string `parser:"| @('hourly'|'daily'|'weekly'|'monthly'|'quarterly'|'annually'|'next'|'prev'|'all')" json:"period,omitempty"`
 }
 
 // Having defined both Point and Modifier, we can construct our Range, which

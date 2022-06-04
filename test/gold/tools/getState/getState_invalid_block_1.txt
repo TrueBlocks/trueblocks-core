@@ -2,7 +2,7 @@ chifra state  0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 fdfsdf
 TEST[DATE|TIME] Addrs:  [0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359]
 TEST[DATE|TIME] Blocks:  [fdfsdf]
 TEST[DATE|TIME] Format:  txt
-Error: The given value 'fdfsdf' is not a valid block identifier.
+Error: The given value 'fdfsdf' is not a valid identifier.
 Usage:
   chifra state [flags] <address> [address...] [block...]
 
@@ -23,8 +23,8 @@ Flags:
 
 Notes:
   - An address must start with '0x' and be forty-two characters long.
-  - blocks may be a space-separated list of values, a start-end range, a special, or any combination.
+  - Blocks is a space-separated list of values, a start-end range, a special, or any combination.
   - If the queried node does not store historical state, the results are undefined.
-  - special blocks are detailed under chifra when --list.
-  - balance is the default mode. To select a single mode use none first, followed by that mode.
+  - Special blocks are detailed under chifra when --list.
+  - Balance is the default mode. To select a single mode use none first, followed by that mode.
   - You may specify multiple modes on a single line.

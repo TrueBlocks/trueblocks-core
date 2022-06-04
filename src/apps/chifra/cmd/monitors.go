@@ -27,17 +27,17 @@ var monitorsCmd = &cobra.Command{
 	RunE:    monitorsPkg.RunMonitors,
 }
 
-var usageMonitors = `monitors [flags] <address> [address...]
+const usageMonitors = `monitors [flags] <address> [address...]
 
 Arguments:
   addrs - one or more addresses (0x...) to process (required)`
 
-var shortMonitors = "add, remove, clean, and list address monitors"
+const shortMonitors = "add, remove, clean, and list address monitors"
 
-var longMonitors = `Purpose:
+const longMonitors = `Purpose:
   Add, remove, clean, and list address monitors.`
 
-var notesMonitors = `
+const notesMonitors = `
 Notes:
   - An address must start with '0x' and be forty-two characters long.
   - If no address is presented to the --clean command, all monitors will be cleaned.`

@@ -27,18 +27,18 @@ var scrapeCmd = &cobra.Command{
 	RunE:    scrapePkg.RunScrape,
 }
 
-var usageScrape = `scrape [flags] [mode...]
+const usageScrape = `scrape <mode> [mode...] [flags]
 
 Arguments:
   modes - which scraper(s) to control (required)
 	One or more of [ indexer | monitors | both ]`
 
-var shortScrape = "scan the chain and update (and optionally pin) the TrueBlocks index of appearances"
+const shortScrape = "scan the chain and update (and optionally pin) the TrueBlocks index of appearances"
 
-var longScrape = `Purpose:
+const longScrape = `Purpose:
   Scan the chain and update (and optionally pin) the TrueBlocks index of appearances.`
 
-var notesScrape = ``
+const notesScrape = ``
 
 func init() {
 	scrapeCmd.Flags().SortFlags = false
