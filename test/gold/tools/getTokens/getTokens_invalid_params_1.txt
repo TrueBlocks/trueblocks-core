@@ -1,7 +1,7 @@
 chifra tokens  a b c
 TEST[DATE|TIME] Blocks:  [a b c]
 TEST[DATE|TIME] Format:  txt
-Error: You must specifiy at least one address
+Error: The given value 'a' is not a valid identifier.
 Usage:
   chifra tokens [flags] <address> <address> [address...] [block...]
 

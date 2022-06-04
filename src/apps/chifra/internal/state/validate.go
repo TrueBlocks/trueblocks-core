@@ -53,7 +53,12 @@ func (opts *StateOptions) ValidateState() error {
 			if len(opts.ProxyFor) > 0 {
 				contract = opts.ProxyFor
 			}
-			if !validate.IsSmartContract(contract) {
+
+			ok, err := validate.IsSmartContract(opts.Globals.Chain, contract)
+			if err != nil {
+				return err
+			}
+			if !ok {
 				return validate.Usage("The first argument for the --call option must be a smart contract.")
 			}
 

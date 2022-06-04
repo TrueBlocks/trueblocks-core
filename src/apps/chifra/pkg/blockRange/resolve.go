@@ -211,6 +211,7 @@ func (br *Identifier) ResolveTxs(chain string) ([]types.SimpleAppearance, error)
 }
 
 /*
+// TODO: next and previous skip markers - search for this to find other things related
 bool wrangleTxId(string_q& argOut, string_q& errorMsg) {
     if (contains(argOut, "0x"))
         return true;

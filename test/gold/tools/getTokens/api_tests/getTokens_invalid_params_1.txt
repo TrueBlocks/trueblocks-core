@@ -1,6 +1,6 @@
 tokens?addrs2=a%20b%20c
 {
   "errors": [
-    "The value b is not a token contract."
+    "The value a is not a token contract."
   ]
 }

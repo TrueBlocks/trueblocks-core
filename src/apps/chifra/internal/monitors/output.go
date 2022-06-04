@@ -70,6 +70,7 @@ func (opts *MonitorsOptions) MonitorsInternal() (err error, handled bool) {
 
 	}
 	// EXISTING_CODE
+
 	return
 }
 

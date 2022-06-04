@@ -1,27 +1,6 @@
 tokens?addrs2=0xb9e7f8568e08d5659f5d29c4997173d84cdf2607%200x6b65353ac052f6c3a0c9688911b078bd025d6ab3%200xa25d04fa348f107428708ba19c95d1c79b3744bf&byAcct&blocks=4000000
 {
-  "data": [
-    {
-      "blockNumber": 4000000,
-      "holder": "0xa25d04fa348f107428708ba19c95d1c79b3744bf",
-      "balance": "435000",
-      "address": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607",
-      "name": "Swarm City Token",
-      "symbol": "SWT",
-      "decimals": 18,
-      "isContract": true,
-      "isErc20": true,
-      "isErc721": false
-    }
-  ],
   "errors": [
-    "Address '0x6b65353ac052f6c3a0c9688911b078bd025d6ab3' is not a token contract."
-  ],
-  "meta": {
-    "unripe": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "staging": "0xdeadbeef",
-    "finalized": "0xdeadbeef",
-    "client": "0xdeadbeef"
-  }
+    "The value 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3 is not a token contract."
+  ]
 }

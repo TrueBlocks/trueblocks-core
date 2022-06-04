@@ -318,3 +318,12 @@ func GetBlockZeroTs(chain string) (uint64, error) {
 	}
 	return blockOne.TimeStamp - 14, nil
 }
+
+// TODO: use block number by converting it
+func GetCodeAt(chain, addr string, bn uint64) ([]byte, error) {
+	// return IsValidAddress(addr)
+	provider := config.GetRpcProvider(chain)
+	ec := GetClient(provider)
+	address := common.HexToAddress(addr)
+	return ec.CodeAt(context.Background(), address, nil) // nil is latest block
+}
