@@ -112,10 +112,6 @@ inline CTrace::~CTrace(void) {
     // EXISTING_CODE
 }
 
-inline bool CTrace::isDelegateCall(void) const {
-    return action.callType == "delegatecall";
-}
-
 //--------------------------------------------------------------------------
 inline void CTrace::clear(void) {
     // EXISTING_CODE
@@ -205,5 +201,8 @@ extern const char* STR_DISPLAY_TRACE;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+inline bool CTrace::isDelegateCall(void) const {
+    return action.callType == "delegatecall";
+}
 // EXISTING_CODE
 }  // namespace qblocks
