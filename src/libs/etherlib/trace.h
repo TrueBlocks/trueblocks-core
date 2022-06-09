@@ -64,6 +64,7 @@ class CTrace : public CBaseNode {
 
     // EXISTING_CODE
     bool isErr(void) const;
+    bool isDelegateCall(void) const;
     const CTransaction* pTransaction;
     void loadTraceAsBlockReward(const CTransaction& trans, blknum_t bn, blknum_t txid);
     void loadTraceAsUncleReward(const CTransaction& trans, blknum_t bn, blknum_t uncleBn);
@@ -200,5 +201,8 @@ extern const char* STR_DISPLAY_TRACE;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+inline bool CTrace::isDelegateCall(void) const {
+    return action.callType == "delegatecall";
+}
 // EXISTING_CODE
 }  // namespace qblocks
