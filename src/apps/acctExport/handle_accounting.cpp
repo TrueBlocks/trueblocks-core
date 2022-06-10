@@ -48,6 +48,8 @@ bool COptions::process_reconciliation(CTraverser* trav) {
         getPathToBinaryCache(CT_RECONS, accountedFor.address, trav->trans.blockNumber, trav->trans.transactionIndex);
     establishFolder(path);
 
+    const string_q TRANSFER_EVENT_SIGNATURE = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
+
     trav->trans.statements.clear();
     if (!isTestMode() && fileExists(path)) {
         CArchive archive(READING_ARCHIVE);
@@ -143,12 +145,34 @@ bool COptions::process_reconciliation(CTraverser* trav) {
             tokStatement.prevBlk = prevStatements[psKey].blockNumber;
             tokStatement.prevBlkBal = prevStatements[psKey].endBal;
             tokStatement.begBal = prevStatements[psKey].endBal;
-            tokStatement.endBal = getTokenBalanceOf2(tokenName.address, accountedFor.address, trav->trans.blockNumber);
-            if (tokStatement.begBal > tokStatement.endBal) {
-                tokStatement.amountOut = (tokStatement.begBal - tokStatement.endBal);
-            } else {
-                tokStatement.amountIn = (tokStatement.endBal - tokStatement.begBal);
+
+            for (CLogEntry log : trav->trans.receipt.logs) {
+                if (log.address == tokenName.address && log.topics.size() > 0
+                        && log.topics[0] == TRANSFER_EVENT_SIGNATURE) { //Transfer
+                    bigint_t value = str_2_BigInt(log.data);
+                    if (str_2_Addr(topic_2_Str(log.topics[1])) == accountedFor.address) { //from
+                        tokStatement.amountOut += value;
+                    }
+
+                    if (str_2_Addr(topic_2_Str(log.topics[2])) == accountedFor.address) { //to
+                        tokStatement.amountIn += value;
+                    }
+                }
             }
+            //todo AJ: Ok, this is a bit hacky, but basically if previous appearance for this asset
+            //is in different block then override its end balance to what's coming from getBalance function
+            //this will make sure that reconciliation uses balances from that call at the end of block
+            //intra-block will use calculated balance, so they will always reconcile
+            if (tokStatement.prevBlk != trav->trans.blockNumber) {
+                prevStatements[psKey].endBal = getTokenBalanceOf2(
+                        tokenName.address, accountedFor.address,
+                        trav->trans.blockNumber);
+                tokStatement.prevBlkBal = prevStatements[psKey].endBal;
+                tokStatement.begBal = prevStatements[psKey].endBal;
+            }
+
+            tokStatement.endBal = tokStatement.endBalCalc();
+
             tokStatement.reconciliationType = "";
             if (tokStatement.amountNet() != 0) {
                 tokStatement.spotPrice =
