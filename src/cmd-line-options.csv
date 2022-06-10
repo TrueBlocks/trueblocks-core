@@ -89,7 +89,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 
 12500,tools,ChainData,blocks,getBlocks,blocks,,,true,false,true,true,local,positional,list<blknum>,a space-separated list of one or more block identifiers
 12510,tools,ChainData,blocks,getBlocks,hashes,e,,false,false,true,true,header,switch,<boolean>,display only transaction hashes&#44; default is to display full transaction detail
-12520,tools,ChainData,blocks,getBlocks,uncles,U,,false,false,true,true,header,switch,<boolean>,display uncle blocks (if any) instead of the requested block
+12520,tools,ChainData,blocks,getBlocks,uncles,c,,false,false,true,true,header,switch,<boolean>,display uncle blocks (if any) instead of the requested block
 12530,tools,ChainData,blocks,getBlocks,trace,t,,false,false,true,true,header,switch,<boolean>,export the traces from the block as opposed to the block data
 12540,tools,ChainData,blocks,getBlocks,apps,s,,false,false,true,true,local,switch,<boolean>,display a list of uniq address appearances in the block
 12560,tools,ChainData,blocks,getBlocks,uniq,u,,false,false,true,true,local,switch,<boolean>,display a list of uniq address appearances per transaction
@@ -98,7 +98,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12974,tools,ChainData,blocks,getBlocks,topic,p,,false,false,false,true,local,flag,list<topic>,for the --logs option only&#44; filter logs to show only those with this topic(s)
 12975,tools,ChainData,blocks,getBlocks,articulate,a,,false,false,false,false,header,switch,<boolean>,for the --logs option only&#44; articulate the retrieved data if ABIs can be found
 12976,tools,ChainData,blocks,getBlocks,big_range,r,500,false,false,false,false,header,flag,<uint64>,for the --logs option only&#44; allow for block ranges larger than 500
-12578,tools,ChainData,blocks,getBlocks,count,c,,false,false,true,true,header,switch,<boolean>,display the number of the lists of appearances for --addrs or --uniq
+12578,tools,ChainData,blocks,getBlocks,count,U,,false,false,true,true,header,switch,<boolean>,display the number of the lists of appearances for --addrs or --uniq
 12580,tools,ChainData,blocks,getBlocks,cache,o,,false,false,true,true,header,switch,<boolean>,force a write of the block to the cache
 12582,tools,ChainData,blocks,getBlocks,list,l,0,false,false,false,true,local,flag,<blknum>,summary list of blocks running backwards from latest block minus num
 12584,tools,ChainData,blocks,getBlocks,list_count,C,0,false,false,false,true,header,flag,<blknum>,the number of blocks to report for --list option
