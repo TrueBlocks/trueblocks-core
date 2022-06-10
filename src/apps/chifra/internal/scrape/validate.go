@@ -26,49 +26,43 @@ func (opts *ScrapeOptions) ValidateScrape() error {
 		return opts.BadFlag
 	}
 
-	if opts.Reset == 0 {
-		opts.Reset = utils.NOPOS
-	}
+	if len(opts.Modes) == 0 {
+		return validate.Usage("Please choose at least one of {0}.", "[indexer|monitors|both]")
 
-	if opts.Reset == utils.NOPOS {
-		if len(opts.Modes) == 0 {
-			return validate.Usage("Please choose at least one of {0}.", "[indexer|monitors|both]")
+	} else {
+		for _, arg := range opts.Modes {
+			err := validate.ValidateEnum("mode", arg, "[indexer|monitors|both]")
+			if err != nil {
+				return err
+			}
 
-		} else {
-			for _, arg := range opts.Modes {
-				err := validate.ValidateEnum("mode", arg, "[indexer|monitors|both]")
+			if arg == "monitors" || arg == "both" {
+				// phonied up just to make sure we have bloom for block zero
+				var expOpts exportPkg.ExportOptions
+				expOpts.Addrs = append(expOpts.Addrs, "0x0000000000000000000000000000000000000001")
+				expOpts.Globals.Chain = opts.Globals.Chain
+				err := expOpts.ValidateExport()
 				if err != nil {
-					return err
+					return validate.Usage(err.Error())
 				}
 
-				if arg == "monitors" || arg == "both" {
-					// phonied up just to make sure we have bloom for block zero
-					var expOpts exportPkg.ExportOptions
-					expOpts.Addrs = append(expOpts.Addrs, "0x0000000000000000000000000000000000000001")
-					expOpts.Globals.Chain = opts.Globals.Chain
-					err := expOpts.ValidateExport()
-					if err != nil {
-						return validate.Usage(err.Error())
-					}
+				if len(opts.Globals.File) == 0 {
+					return validate.Usage("The chifra scrape monitors command requires the --file option.")
+				}
 
-					if len(opts.Globals.File) == 0 {
-						return validate.Usage("The chifra scrape monitors command requires the --file option.")
-					}
+				cmdFile := opts.Globals.File
+				if !file.FileExists(cmdFile) {
+					dir, _ := os.Getwd()
+					cmdFile = filepath.Join(dir, opts.Globals.File)
+				}
 
-					cmdFile := opts.Globals.File
-					if !file.FileExists(cmdFile) {
-						dir, _ := os.Getwd()
-						cmdFile = filepath.Join(dir, opts.Globals.File)
-					}
-
-					if !file.FileExists(cmdFile) {
-						return validate.Usage("The command file you specified ({0}) for `chifra scrape monitors` was not found.", cmdFile)
-					} else {
-						contents := utils.AsciiFileToString(cmdFile)
-						cmds := strings.Split(contents, "\n")
-						if len(cmds) == 0 {
-							return validate.Usage("The command file you specified ({0}) was found but contained no commands.", cmdFile)
-						}
+				if !file.FileExists(cmdFile) {
+					return validate.Usage("The command file you specified ({0}) for `chifra scrape monitors` was not found.", cmdFile)
+				} else {
+					contents := utils.AsciiFileToString(cmdFile)
+					cmds := strings.Split(contents, "\n")
+					if len(cmds) == 0 {
+						return validate.Usage("The command file you specified ({0}) was found but contained no commands.", cmdFile)
 					}
 				}
 			}

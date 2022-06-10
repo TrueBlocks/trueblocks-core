@@ -1,6 +1,5 @@
 chifra scrape  both --action badmode
 TEST[DATE|TIME] Modes:  [both]
-TEST[DATE|TIME] Reset:  0
 TEST[DATE|TIME] Action:  badmode
 TEST[DATE|TIME] Format:  txt
 TEST[DATE|TIME] Addrs:  [0x0000000000000000000000000000000000000001]
@@ -18,7 +17,6 @@ Flags:
   -s, --sleep float           seconds to sleep between scraper passes (default 14)
   -p, --pin                   pin chunks (and blooms) to IPFS as they are created (requires pinning service)
   -n, --block_cnt uint        maximum number of blocks to process per pass (default 2000)
-  -e, --reset uint            reset the scraper to the provided block (or end of earliest chunk prior to that block) (hidden)
   -a, --action string         command to apply to the specified scrape (hidden)
                               One of [ toggle | run | restart | pause | quit ]
   -u, --publish               after pinning the chunk, publish it to UnchainedIndex (hidden)

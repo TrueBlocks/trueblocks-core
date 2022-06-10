@@ -23,7 +23,6 @@ static const COption params[] = {
     // clang-format off
     COption("pin", "p", "", OPT_SWITCH, "pin chunks (and blooms) to IPFS as they are created (requires pinning service)"),  // NOLINT
     COption("block_cnt", "n", "<uint64>", OPT_FLAG, "maximum number of blocks to process per pass"),
-    COption("reset", "e", "<blknum>", OPT_HIDDEN | OPT_FLAG, "reset the scraper to the provided block (or end of earliest chunk prior to that block)"),  // NOLINT
     COption("publish", "u", "", OPT_HIDDEN | OPT_SWITCH, "after pinning the chunk, publish it to UnchainedIndex"),
     COption("block_chan_cnt", "b", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of concurrent block processing channels"),
     COption("addr_chan_cnt", "d", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of concurrent address processing channels"),  // NOLINT
@@ -42,7 +41,6 @@ bool COptions::parseArguments(string_q& command) {
     Init();
 
     // BEG_CODE_LOCAL_INIT
-    blknum_t reset = NOPOS;
     // END_CODE_LOCAL_INIT
 
     blknum_t latest = getLatestBlock_client();
@@ -62,12 +60,6 @@ bool COptions::parseArguments(string_q& command) {
                 return false;
         } else if (arg == "-n" || arg == "--block_cnt") {
             return flag_required("block_cnt");
-
-        } else if (startsWith(arg, "-e:") || startsWith(arg, "--reset:")) {
-            if (!confirmBlockNum("reset", reset, arg, latest))
-                return false;
-        } else if (arg == "-e" || arg == "--reset") {
-            return flag_required("reset");
 
         } else if (arg == "-u" || arg == "--publish") {
             publish = true;
@@ -92,10 +84,6 @@ bool COptions::parseArguments(string_q& command) {
 
             // END_CODE_AUTO
         }
-    }
-
-    if (reset != NOPOS) {
-        return handle_reset();
     }
 
     if (pin && !getApiKey(lic)) {
