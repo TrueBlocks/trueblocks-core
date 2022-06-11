@@ -1482,9 +1482,8 @@ paths:
             items:
               type: string
               enum:
-                - indexer
-                - monitors
-                - both
+                - run
+                - stop
         - name: sleep
           description: seconds to sleep between scraper passes
           required: false

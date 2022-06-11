@@ -68,7 +68,7 @@ Usage:
 
 Arguments:
   modes - which scraper(s) to control (required)
-	One or more of [ indexer | monitors | both ]
+	One or more of [ run | stop ]
 
 Flags:
   -s, --sleep float      seconds to sleep between scraper passes (default 14)

@@ -31,7 +31,7 @@ const usageScrape = `scrape <mode> [mode...] [flags]
 
 Arguments:
   modes - which scraper(s) to control (required)
-	One or more of [ indexer | monitors | both ]`
+	One or more of [ run | stop ]`
 
 const shortScrape = "scan the chain and update (and optionally pin) the TrueBlocks index of appearances"
 

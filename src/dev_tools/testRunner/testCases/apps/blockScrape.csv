@@ -7,32 +7,34 @@ on      ,both ,fast  ,scrape ,apps/blockScrape ,nBlocks_invalid              ,n 
 on      ,both ,fast  ,scrape ,apps/blockScrape ,nBProcs_invalid              ,n    ,block_chan_cnt = -12
 on      ,both ,fast  ,scrape ,apps/blockScrape ,nAProcs_invalid              ,n    ,addr_chan_cnt = -12
 
-off     ,both ,fast  ,scrape ,apps/blockScrape ,nBlocks                      ,n    ,modes = both & block_cnt = 12
-on      ,both ,fast  ,scrape ,apps/blockScrape ,listpins                     ,n    ,modes = both & listpins
-off     ,both ,fast  ,scrape ,apps/blockScrape ,pin                          ,n    ,modes = both & pin
-off     ,both ,fast  ,scrape ,apps/blockScrape ,publish                      ,n    ,modes = both & publish
-off     ,both ,fast  ,scrape ,apps/blockScrape ,pin_publish                  ,n    ,modes = both & publish & pin
-off     ,both ,fast  ,scrape ,apps/blockScrape ,pin_publish_list             ,n    ,modes = both & publish & pin
-on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_01_fail                 ,n    ,modes = both & action = badmode
-off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_02_fail2                ,n    ,modes = both & action = run & action = quit
-off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_11_stopped_quit_fail    ,n    ,modes = both & action = quit
-off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_12_stopped_restart_fail ,n    ,modes = both & action = restart
-off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_13_stopped_pause_fail   ,n    ,modes = both & action = pause
-off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_14_stopped_run_okay     ,n    ,modes = both & action = run
-off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_21_running_run_fail     ,n    ,modes = both & action = run
-off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_22_running_restart_fail ,n    ,modes = both & action = restart
-off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_23_running_quit_okay    ,n    ,modes = both & action = quit
-off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_24_stopped_run_2_okay   ,n    ,modes = both & action = run
-off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_25_running_pause_okay   ,n    ,modes = both & action = pause
-off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_31_paused_run_okay      ,n    ,modes = both & action = run
-off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_32_running_pause_2_okay ,n    ,modes = both & action = pause
-off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_33_paused_restart_okay  ,n    ,modes = both & action = restart
-off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_34_running_pause_3_okay ,n    ,modes = both & action = pause
-off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_35_paused_quit_okay     ,n    ,modes = both & action = quit
-on      ,api  ,fast  ,scrape ,apps/blockScrape ,mode_toggle_indexer          ,n    ,modes = indexer & action = toggle
-on      ,api  ,fast  ,scrape ,apps/blockScrape ,mode_toggle_monitors         ,n    ,modes = monitors & action = toggle
-on      ,api  ,fast  ,scrape ,apps/blockScrape ,mode_toggle_both             ,n    ,modes = both & action = toggle
-off     ,both ,fast  ,export ,apps/blockScrape ,RESET2                       ,n    ,RESET
-off     ,both ,fast  ,scrape ,apps/blockScrape ,real_run                     ,n    ,modes = both & sleep = .5 & pin & log_level = 8
-off     ,both ,fast  ,scrape ,apps/blockScrape ,real_run2                    ,n    ,modes = both & sleep = .5
-on      ,api  ,fast  ,scrape ,apps/blockScrape ,no_tracing                   ,y    ,modes = indexer & chain = ropsten
+off     ,both ,fast  ,scrape ,apps/blockScrape ,nBlocks                      ,n    ,block_cnt = 12
+on      ,both ,fast  ,scrape ,apps/blockScrape ,listpins                     ,n    ,listpins
+off     ,both ,fast  ,scrape ,apps/blockScrape ,pin                          ,n    ,pin
+on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_01_fail                 ,n    ,action = badmode
+off     ,both ,fast  ,scrape ,apps/blockScrape ,real_run                     ,n    ,sleep = .5 & pin & log_level = 8
+off     ,both ,fast  ,scrape ,apps/blockScrape ,real_run2                    ,n    ,sleep = .5
+on      ,api  ,fast  ,scrape ,apps/blockScrape ,no_tracing                   ,y    ,chain = ropsten
+
+#off     ,both ,fast  ,scrape ,apps/blockScrape ,nBlocks                      ,n    ,modes = both & block_cnt = 12
+#off     ,both ,fast  ,scrape ,apps/blockScrape ,pin                          ,n    ,modes = both & pin
+#off     ,both ,fast  ,scrape ,apps/blockScrape ,publish                      ,n    ,modes = both & publish
+#off     ,both ,fast  ,scrape ,apps/blockScrape ,pin_publish                  ,n    ,modes = both & publish & pin
+#off     ,both ,fast  ,scrape ,apps/blockScrape ,pin_publish_list             ,n    ,modes = both & publish & pin
+#off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_02_fail2                ,n    ,modes = both & action = run & action = quit
+#off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_11_stopped_quit_fail    ,n    ,modes = both & action = quit
+#off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_12_stopped_restart_fail ,n    ,modes = both & action = restart
+#off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_13_stopped_pause_fail   ,n    ,modes = both & action = pause
+#off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_14_stopped_run_okay     ,n    ,modes = both & action = run
+#off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_21_running_run_fail     ,n    ,modes = both & action = run
+#off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_22_running_restart_fail ,n    ,modes = both & action = restart
+#off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_23_running_quit_okay    ,n    ,modes = both & action = quit
+#off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_24_stopped_run_2_okay   ,n    ,modes = both & action = run
+#off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_25_running_pause_okay   ,n    ,modes = both & action = pause
+#off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_31_paused_run_okay      ,n    ,modes = both & action = run
+#off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_32_running_pause_2_okay ,n    ,modes = both & action = pause
+#off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_33_paused_restart_okay  ,n    ,modes = both & action = restart
+#off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_34_running_pause_3_okay ,n    ,modes = both & action = pause
+#off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_35_paused_quit_okay     ,n    ,modes = both & action = quit
+#off     ,both ,fast  ,export ,apps/blockScrape ,RESET2                       ,n    ,RESET
+#off     ,both ,fast  ,scrape ,apps/blockScrape ,real_run                     ,n    ,modes = both & sleep = .5 & pin & log_level = 8
+#off     ,both ,fast  ,scrape ,apps/blockScrape ,real_run2                    ,n    ,modes = both & sleep = .5
