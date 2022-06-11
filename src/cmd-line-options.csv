@@ -42,6 +42,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 11093,apps,Accounts,monitors,acctExport,undelete,,,false,false,true,true,gocmd,switch,<boolean>,undelete a previously deleted monitor
 11091,apps,Accounts,monitors,acctExport,remove,,,false,false,true,true,gocmd,switch,<boolean>,remove a previously deleted monitor
 11294,apps,Accounts,monitors,acctExport,watch,,,false,false,true,true,gocmd,switch,<boolean>,continually scan for new blocks and extract data for monitored addresses
+11296,apps,Accounts,monitors,acctExport,sleep,E,14,false,false,true,true,gocmd,flag,<double>,seconds to sleep between monitor passes
 11440,apps,Accounts,monitors,acctExport,first_block,F,0,false,false,false,false,local,flag,<blknum>,first block to process (inclusive)
 11450,apps,Accounts,monitors,acctExport,last_block,L,NOPOS,false,false,false,false,local,flag,<blknum>,last block to process (inclusive)
 11095,apps,Accounts,monitors,acctExport,,,,false,false,true,true,--,description,,Add&#44; remove&#44; clean&#44; and list address monitors.

@@ -1,4 +1,4 @@
-package scrapePkg
+package monitorsPkg
 
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
@@ -19,23 +19,20 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/scraper"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func hasMonitorsFlag(mode string) bool {
-	return mode == "monitors" || mode == "both"
-}
-
-var MonitorScraper Scraper
+var MonitorScraper scraper.Scraper
 
 // RunMonitorScraper runs continually, never stopping and freshens any existing monitors
-func (opts *ScrapeOptions) RunMonitorScraper(wg *sync.WaitGroup) {
+func (opts *MonitorsOptions) RunMonitorScraper(wg *sync.WaitGroup) {
 	defer wg.Done()
 
 	chain := opts.Globals.Chain
 	establishExportPaths(chain)
 
-	var s *Scraper = &MonitorScraper
+	var s *scraper.Scraper = &MonitorScraper
 	s.ChangeState(true)
 
 	for {
@@ -89,7 +86,7 @@ func (sp SemiParse) String() string {
 
 const addrsPerBatch = 8
 
-func (opts *ScrapeOptions) Refresh(monitors []monitor.Monitor) error {
+func (opts *MonitorsOptions) Refresh(monitors []monitor.Monitor) error {
 	theCmds, _ := getCommandsFromFile(opts.Globals)
 
 	batches := batchMonitors(monitors, addrsPerBatch)

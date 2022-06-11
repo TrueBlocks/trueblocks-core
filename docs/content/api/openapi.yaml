@@ -471,6 +471,14 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: sleep
+          description: seconds to sleep between monitor passes
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
         - name: delete
           description: delete the item, but do not remove it
           required: false

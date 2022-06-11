@@ -50,6 +50,7 @@ func init() {
 	monitorsCmd.Flags().BoolVarP(&monitorsPkg.GetOptions().Undelete, "undelete", "", false, "undelete a previously deleted monitor")
 	monitorsCmd.Flags().BoolVarP(&monitorsPkg.GetOptions().Remove, "remove", "", false, "remove a previously deleted monitor")
 	monitorsCmd.Flags().BoolVarP(&monitorsPkg.GetOptions().Watch, "watch", "", false, "continually scan for new blocks and extract data for monitored addresses")
+	monitorsCmd.Flags().Float64VarP(&monitorsPkg.GetOptions().Sleep, "sleep", "E", 14, "seconds to sleep between monitor passes")
 	monitorsCmd.Flags().Uint64VarP(&monitorsPkg.GetOptions().FirstBlock, "first_block", "F", 0, "first block to process (inclusive) (hidden)")
 	monitorsCmd.Flags().Uint64VarP(&monitorsPkg.GetOptions().LastBlock, "last_block", "L", 0, "last block to process (inclusive) (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {

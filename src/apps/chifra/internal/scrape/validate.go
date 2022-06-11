@@ -42,9 +42,5 @@ func (opts *ScrapeOptions) ValidateScrape() error {
 		return validate.Usage("The {0} option ({1}) must {2}.", "--sleep", fmt.Sprintf("%f", opts.Sleep), "be at least .25")
 	}
 
-	if opts.Pin && !hasIndexerFlag(opts.Modes[0]) {
-		return validate.Usage("The {0} option is available only with {1}.", "--pin", "the indexer")
-	}
-
 	return opts.Globals.ValidateGlobals()
 }

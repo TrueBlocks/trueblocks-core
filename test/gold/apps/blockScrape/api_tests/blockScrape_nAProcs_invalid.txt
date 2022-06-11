@@ -1,6 +1,6 @@
 scrape?addrChanCnt=-12
 {
   "errors": [
-    "chifra scrape is not available in API mode"
+    "Please choose at least one of [run | stop]."
   ]
 }

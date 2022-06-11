@@ -7,7 +7,7 @@ Usage:
 
 Arguments:
   modes - which scraper(s) to control (required)
-	One or more of [ run ]
+	One or more of [ run | stop ]
 
 Flags:
   -s, --sleep float           seconds to sleep between scraper passes (default 14)
