@@ -24,6 +24,8 @@ type MonitorsOptions struct {
 	Delete     bool
 	Undelete   bool
 	Remove     bool
+	Watch      bool
+	Sleep      float64
 	FirstBlock uint64
 	LastBlock  uint64
 	Globals    globals.GlobalOptions
@@ -38,6 +40,8 @@ func (opts *MonitorsOptions) TestLog() {
 	logger.TestLog(opts.Delete, "Delete: ", opts.Delete)
 	logger.TestLog(opts.Undelete, "Undelete: ", opts.Undelete)
 	logger.TestLog(opts.Remove, "Remove: ", opts.Remove)
+	logger.TestLog(opts.Watch, "Watch: ", opts.Watch)
+	logger.TestLog(opts.Sleep != 14, "Sleep: ", opts.Sleep)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
 	opts.Globals.TestLog()
@@ -45,6 +49,7 @@ func (opts *MonitorsOptions) TestLog() {
 
 func MonitorsFinishParseApi(w http.ResponseWriter, r *http.Request) *MonitorsOptions {
 	opts := &MonitorsOptions{}
+	opts.Sleep = 14
 	opts.FirstBlock = 0
 	opts.LastBlock = utils.NOPOS
 	for key, value := range r.URL.Query() {
@@ -62,6 +67,10 @@ func MonitorsFinishParseApi(w http.ResponseWriter, r *http.Request) *MonitorsOpt
 			opts.Undelete = true
 		case "remove":
 			opts.Remove = true
+		case "watch":
+			opts.Watch = true
+		case "sleep":
+			opts.Sleep = globals.ToFloat64(value[0])
 		case "firstBlock":
 			opts.FirstBlock = globals.ToUint64(value[0])
 		case "lastBlock":

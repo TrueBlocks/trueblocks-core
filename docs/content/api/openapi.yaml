@@ -446,7 +446,7 @@ paths:
       parameters:
         - name: addrs
           description: one or more addresses (0x...) to process
-          required: true
+          required: false
           style: form
           in: query
           explode: true
@@ -463,6 +463,22 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: watch
+          description: continually scan for new blocks and extract data for monitored addresses
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: sleep
+          description: seconds to sleep between monitor passes
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
         - name: delete
           description: delete the item, but do not remove it
           required: false
