@@ -36,7 +36,38 @@ type MonitorUpdate struct {
 
 const maxTestingBlock = 5000000
 
+// mutexesPerAddress map stores mutex for each address that is being/has been freshened
+var mutexesPerAddress = make(map[string]*sync.Mutex)
+
+// lockForAddress locks the mutex for the given address
+func lockForAddress(address string) {
+	mutex, ok := mutexesPerAddress[address]
+	if ok {
+		mutex.Lock()
+		return
+	}
+
+	newMutex := &sync.Mutex{}
+	mutexesPerAddress[address] = newMutex
+	newMutex.Lock()
+}
+
+// unlockForAddress removes mutex lock for the given address
+func unlockForAddress(address string) {
+	mutex, ok := mutexesPerAddress[address]
+	if !ok {
+		panic("unlockForAddress called for address that has never been locked: " + address)
+	}
+
+	mutex.Unlock()
+}
+
 func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) error {
+	for _, address := range opts.Addrs {
+		lockForAddress(address)
+		defer unlockForAddress(address)
+	}
+
 	var updater = MonitorUpdate{
 		MaxTasks:   12,
 		MonitorMap: make(AddressMonitorMap, len(opts.Addrs)),
