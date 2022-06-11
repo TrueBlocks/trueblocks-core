@@ -1,6 +1,6 @@
 scrape?chain=ropsten
 {
   "errors": [
-    "Please choose at least one of [run | stop]."
+    "Please choose at least one of [run|stop]."
   ]
 }

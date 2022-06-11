@@ -21,7 +21,7 @@ func (opts *ScrapeOptions) ValidateScrape() error {
 	}
 
 	if len(opts.Modes) == 0 {
-		return validate.Usage("Please choose at least one of {0}.", "[run]")
+		return validate.Usage("Please choose at least one of {0}.", "[run|stop]")
 
 	} else {
 		for _, arg := range opts.Modes {
