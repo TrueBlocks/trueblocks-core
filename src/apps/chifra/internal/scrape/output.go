@@ -14,7 +14,6 @@ import (
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 
 	"github.com/spf13/cobra"
@@ -54,9 +53,6 @@ func (opts *ScrapeOptions) ScrapeInternal() (err error, handled bool) {
 	handled = true
 	if opts.Blaze {
 		err = opts.ScrapeBlocks()
-
-	} else if opts.Reset != utils.NOPOS {
-		err = opts.Globals.PassItOn("blockScrape", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
 
 	} else {
 		var wg sync.WaitGroup

@@ -199,9 +199,6 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12115,apps,Admin,scrape,blockScrape,sleep,s,14,false,false,true,true,gocmd,flag,<double>,seconds to sleep between scraper passes
 12120,apps,Admin,scrape,blockScrape,pin,p,,false,false,true,true,header,switch,<boolean>,pin chunks (and blooms) to IPFS as they are created (requires pinning service)
 12125,apps,Admin,scrape,blockScrape,block_cnt,n,2000,false,true,true,true,header,flag,<uint64>,maximum number of blocks to process per pass
-12130,apps,Admin,scrape,blockScrape,reset,e,NOPOS,false,false,false,false,local,flag,<blknum>,reset the scraper to the provided block (or end of earliest chunk prior to that block)
-12135,apps,Admin,scrape,blockScrape,action,a,,false,false,false,false,gocmd,flag,enum[toggle|run|restart|pause|quit],command to apply to the specified scrape
-12140,apps,Admin,scrape,blockScrape,publish,u,,false,false,false,false,header,switch,<boolean>,after pinning the chunk&#44; publish it to UnchainedIndex
 12145,apps,Admin,scrape,blockScrape,blaze,z,,false,false,false,false,gocmd,switch,<boolean>,invoke the blaze scraper to process blocks
 12150,apps,Admin,scrape,blockScrape,block_chan_cnt,b,10,false,true,false,false,header,flag,<uint64>,number of concurrent block processing channels
 12155,apps,Admin,scrape,blockScrape,addr_chan_cnt,d,20,false,true,false,false,header,flag,<uint64>,number of concurrent address processing channels
