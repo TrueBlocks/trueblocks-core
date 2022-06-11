@@ -1,6 +1,0 @@
-scrape?modes=monitors&action=toggle
-{
-  "errors": [
-    "Invalid key (action) in scrape route."
-  ]
-}

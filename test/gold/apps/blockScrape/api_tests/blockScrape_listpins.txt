@@ -1,4 +1,4 @@
-scrape?modes=both&listpins
+scrape?listpins
 {
   "errors": [
     "Invalid key (listpins) in scrape route."
