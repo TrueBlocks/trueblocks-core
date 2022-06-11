@@ -446,7 +446,7 @@ paths:
       parameters:
         - name: addrs
           description: one or more addresses (0x...) to process
-          required: true
+          required: false
           style: form
           in: query
           explode: true
@@ -457,6 +457,14 @@ paths:
               format: address
         - name: clean
           description: clean (i.e. remove duplicate appearances) from monitors
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: watch
+          description: continually scan for new blocks and extract data for monitored addresses
           required: false
           style: form
           in: query
@@ -1466,9 +1474,8 @@ paths:
             items:
               type: string
               enum:
-                - indexer
-                - monitors
-                - both
+                - run
+                - stop
         - name: sleep
           description: seconds to sleep between scraper passes
           required: false

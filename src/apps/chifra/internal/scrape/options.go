@@ -22,8 +22,6 @@ type ScrapeOptions struct {
 	Sleep        float64
 	Pin          bool
 	BlockCnt     uint64
-	Action       string
-	Publish      bool
 	Blaze        bool
 	BlockChanCnt uint64
 	AddrChanCnt  uint64
@@ -45,8 +43,6 @@ func (opts *ScrapeOptions) TestLog() {
 	logger.TestLog(opts.Sleep != 14, "Sleep: ", opts.Sleep)
 	logger.TestLog(opts.Pin, "Pin: ", opts.Pin)
 	logger.TestLog(opts.BlockCnt != 2000, "BlockCnt: ", opts.BlockCnt)
-	logger.TestLog(len(opts.Action) > 0, "Action: ", opts.Action)
-	logger.TestLog(opts.Publish, "Publish: ", opts.Publish)
 	logger.TestLog(opts.Blaze, "Blaze: ", opts.Blaze)
 	logger.TestLog(opts.BlockChanCnt != 10, "BlockChanCnt: ", opts.BlockChanCnt)
 	logger.TestLog(opts.AddrChanCnt != 20, "AddrChanCnt: ", opts.AddrChanCnt)
@@ -67,9 +63,6 @@ func (opts *ScrapeOptions) ToCmdLine() string {
 	}
 	if opts.BlockCnt != 2000 {
 		options += (" --block_cnt " + fmt.Sprintf("%d", opts.BlockCnt))
-	}
-	if opts.Publish {
-		options += " --publish"
 	}
 	if opts.BlockChanCnt != 10 {
 		options += (" --block_chan_cnt " + fmt.Sprintf("%d", opts.BlockChanCnt))
@@ -107,10 +100,6 @@ func ScrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 			opts.Pin = true
 		case "blockCnt":
 			opts.BlockCnt = globals.ToUint64(value[0])
-		case "action":
-			opts.Action = value[0]
-		case "publish":
-			opts.Publish = true
 		case "blaze":
 			opts.Blaze = true
 		case "blockChanCnt":

@@ -27,7 +27,6 @@ class COptions : public COptionsBase {
     // BEG_CODE_DECLARE
     bool pin;
     uint64_t block_cnt;
-    bool publish;
     uint64_t block_chan_cnt;
     uint64_t addr_chan_cnt;
     uint64_t apps_per_chunk;

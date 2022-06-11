@@ -1,6 +1,6 @@
-scrape?modes=indexer&chain=ropsten
+scrape?chain=ropsten
 {
   "errors": [
-    "Tracing is required for this program to work properly."
+    "chifra scrape is not available in API mode"
   ]
 }

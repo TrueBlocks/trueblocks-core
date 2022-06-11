@@ -1,7 +1,0 @@
-{
-  "message": "Testing only",
-  "block_cnt": 2000,
-  "block_chan_cnt": 10,
-  "addr_chan_cnt": 20,
-  "pin": 0,
-}
