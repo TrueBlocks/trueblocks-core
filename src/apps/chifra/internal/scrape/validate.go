@@ -6,6 +6,7 @@ package scrapePkg
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -25,6 +26,7 @@ func (opts *ScrapeOptions) ValidateScrape() error {
 
 	} else {
 		for _, arg := range opts.Modes {
+			arg = strings.Replace(arg, "indexer", "run", -1)
 			err := validate.ValidateEnum("mode", arg, "[run|stop]")
 			if err != nil {
 				return err
