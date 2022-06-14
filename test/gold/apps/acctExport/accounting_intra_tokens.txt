@@ -1,0 +1,407 @@
+{ "data": [
+{
+  "hash": "0x458ae31579274588f04850853ec71f67e1e21b2d4e72ada18fdc04352fc22295",
+  "blockHash": "0xe83164313d56dd57fd718123c311cd65d58f22761899bfb1710c77e2d7f67878",
+  "blockNumber": 14933657,
+  "transactionIndex": 303,
+  "timestamp": 1654793734,
+  "from": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
+  "to": "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
+  "value": 0,
+  "gas": 120000,
+  "gasPrice": 104646629487,
+  "maxFeePerGas": 185012912936,
+  "maxPriorityFeePerGas": 1012000000,
+  "input": "0xa9059cbb000000000000000000000000aca096d2e6492d7380c5d8e70d90e13eecc72dd4000000000000000000000000000000000000000000000000043998c6eeb4ec00",
+  "isError": 0,
+  "hasToken": 1,
+  "receipt": {
+    "contractAddress": "0x0",
+    "gasUsed": 34696,
+    "effectiveGasPrice": 104646629487,
+    "logs": [
+      {
+        "address": "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
+        "logIndex": 494,
+        "topics": [
+          "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+          "0x0000000000000000000000006aed588ca2052ccfc907db8c24df4b7b95a29a5e",
+          "0x000000000000000000000000aca096d2e6492d7380c5d8e70d90e13eecc72dd4"
+        ],
+        "data": "0x000000000000000000000000000000000000000000000000043998c6eeb4ec00",
+        "articulatedLog": {
+          "name": "Transfer",
+          "inputs": {
+            "_amount": "304442430000000000",
+            "_from": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
+            "_to": "0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4"
+          }
+        },
+        "compressedLog": "{name:Transfer|inputs:{_amount:304442430000000000|_from:0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e|_to:0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4}}"
+      }
+    ],
+    "status": 1
+  },
+  "traces": [],
+  "articulatedTx": {
+    "name": "transfer",
+    "inputs": {
+      "amount": "304442430000000000",
+      "recipient": "0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4"
+    },
+    "outputs": {
+      "val_0": ""
+    }
+  },
+  "compressedTx": "{name:transfer|inputs:{amount:304442430000000000|recipient:0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4}|outputs:{val_0:}}",
+  "statements": [
+    {
+      "blockNumber": 14933657,
+      "transactionIndex": 303,
+      "timestamp": 1654793734,
+      "assetAddr": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
+      "assetSymbol": "WEI",
+      "decimals": 18,
+      "prevBlk": 14933657,
+      "prevBlkBal": "568293581338250642905",
+      "begBal": "568293581338250642905",
+      "endBal": "568289950518793961953",
+      "amountIn": "",
+      "internalIn": "",
+      "selfDestructIn": "",
+      "minerBaseRewardIn": "",
+      "minerNephewRewardIn": "",
+      "minerTxFeeIn": "",
+      "minerUncleRewardIn": "",
+      "prefundIn": "",
+      "amountOut": "",
+      "internalOut": "",
+      "selfDestructOut": "",
+      "gasCostOut": "3630819456680952",
+      "reconciliationType": "partial-partial",
+      "spotPrice": 1801.80999,
+      "priceSource": "uniswap",
+      "begBalDiff": "",
+      "endBalCalc": "568289950518793961953",
+      "endBalDiff": "",
+      "totalIn": "",
+      "totalOut": "3630819456680952",
+      "totalOutLessGas": "",
+      "amountNet": "-3630819456680952",
+      "reconciled": true
+    },
+    {
+      "blockNumber": 14933657,
+      "transactionIndex": 303,
+      "timestamp": 1654793734,
+      "assetAddr": "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
+      "assetSymbol": "YFI",
+      "decimals": 18,
+      "prevBlk": 14933656,
+      "prevBlkBal": "17950072890000000000",
+      "begBal": "17950072890000000000",
+      "endBal": "17645630460000000000",
+      "amountIn": "",
+      "internalIn": "",
+      "selfDestructIn": "",
+      "minerBaseRewardIn": "",
+      "minerNephewRewardIn": "",
+      "minerTxFeeIn": "",
+      "minerUncleRewardIn": "",
+      "prefundIn": "",
+      "amountOut": "304442430000000000",
+      "internalOut": "",
+      "selfDestructOut": "",
+      "gasCostOut": "",
+      "reconciliationType": "",
+      "spotPrice": 7616.14451,
+      "priceSource": "uniswap",
+      "begBalDiff": "",
+      "endBalCalc": "17645630460000000000",
+      "endBalDiff": "",
+      "totalIn": "",
+      "totalOut": "304442430000000000",
+      "totalOutLessGas": "304442430000000000",
+      "amountNet": "-304442430000000000",
+      "reconciled": true
+    }
+  ],
+  "gasCost": 3630819456680952,
+  "etherGasCost": 0.003630819456680952,
+  "function": "transfer",
+  "gasUsed": 34696,
+  "date": "2022-06-09 16:55:34 UTC",
+  "ether": 0.000000000000000000,
+  "encoding": "0xa9059cbb"
+}
+, {
+  "hash": "0x9c07595dec64bb699ef24c1c5e5579edba940fb9596e38bd4465f5c840393aae",
+  "blockHash": "0xe83164313d56dd57fd718123c311cd65d58f22761899bfb1710c77e2d7f67878",
+  "blockNumber": 14933657,
+  "transactionIndex": 304,
+  "timestamp": 1654793734,
+  "from": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
+  "to": "0x3506424f91fd33084466f402d5d97f05f8e3b4af",
+  "value": 0,
+  "gas": 65226,
+  "gasPrice": 104634629487,
+  "maxFeePerGas": 197965383276,
+  "maxPriorityFeePerGas": 1000000000,
+  "input": "0xa9059cbb000000000000000000000000cc34cc875d2d052f5b1c19652b5e71d6f90c7f7d000000000000000000000000000000000000000000000010f34de690046d8400",
+  "isError": 0,
+  "hasToken": 1,
+  "receipt": {
+    "contractAddress": "0x0",
+    "gasUsed": 54355,
+    "effectiveGasPrice": 104634629487,
+    "logs": [
+      {
+        "address": "0x3506424f91fd33084466f402d5d97f05f8e3b4af",
+        "logIndex": 495,
+        "topics": [
+          "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+          "0x0000000000000000000000006aed588ca2052ccfc907db8c24df4b7b95a29a5e",
+          "0x000000000000000000000000cc34cc875d2d052f5b1c19652b5e71d6f90c7f7d"
+        ],
+        "data": "0x000000000000000000000000000000000000000000000010f34de690046d8400",
+        "articulatedLog": {
+          "name": "Transfer",
+          "inputs": {
+            "_amount": "312679827610000000000",
+            "_from": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
+            "_to": "0xcc34cc875d2d052f5b1c19652b5e71d6f90c7f7d"
+          }
+        },
+        "compressedLog": "{name:Transfer|inputs:{_amount:312679827610000000000|_from:0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e|_to:0xcc34cc875d2d052f5b1c19652b5e71d6f90c7f7d}}"
+      }
+    ],
+    "status": 1
+  },
+  "traces": [],
+  "articulatedTx": {
+    "name": "transfer",
+    "inputs": {
+      "amount": "312679827610000000000",
+      "recipient": "0xcc34cc875d2d052f5b1c19652b5e71d6f90c7f7d"
+    },
+    "outputs": {
+      "val_0": ""
+    }
+  },
+  "compressedTx": "{name:transfer|inputs:{amount:312679827610000000000|recipient:0xcc34cc875d2d052f5b1c19652b5e71d6f90c7f7d}|outputs:{val_0:}}",
+  "statements": [
+    {
+      "blockNumber": 14933657,
+      "transactionIndex": 304,
+      "timestamp": 1654793734,
+      "assetAddr": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
+      "assetSymbol": "WEI",
+      "decimals": 18,
+      "prevBlk": 14933657,
+      "prevBlkBal": "568289950518793961953",
+      "begBal": "568289950518793961953",
+      "endBal": "568271271877180349122",
+      "amountIn": "",
+      "internalIn": "",
+      "selfDestructIn": "",
+      "minerBaseRewardIn": "",
+      "minerNephewRewardIn": "",
+      "minerTxFeeIn": "",
+      "minerUncleRewardIn": "",
+      "prefundIn": "",
+      "amountOut": "",
+      "internalOut": "",
+      "selfDestructOut": "",
+      "gasCostOut": "5687415285765885",
+      "reconciliationType": "partial-nextdiff",
+      "spotPrice": 1801.80999,
+      "priceSource": "uniswap",
+      "begBalDiff": "",
+      "endBalCalc": "568284263103508196068",
+      "endBalDiff": "12991226327846946",
+      "totalIn": "",
+      "totalOut": "5687415285765885",
+      "totalOutLessGas": "",
+      "amountNet": "-5687415285765885",
+      "reconciled": false
+    },
+    {
+      "blockNumber": 14933657,
+      "transactionIndex": 304,
+      "timestamp": 1654793734,
+      "assetAddr": "0x3506424f91fd33084466f402d5d97f05f8e3b4af",
+      "assetSymbol": "0x35",
+      "decimals": 18,
+      "prevBlk": 14933656,
+      "prevBlkBal": "791184699027030000000000",
+      "begBal": "791184699027030000000000",
+      "endBal": "790872019199420000000000",
+      "amountIn": "",
+      "internalIn": "",
+      "selfDestructIn": "",
+      "minerBaseRewardIn": "",
+      "minerNephewRewardIn": "",
+      "minerTxFeeIn": "",
+      "minerUncleRewardIn": "",
+      "prefundIn": "",
+      "amountOut": "312679827610000000000",
+      "internalOut": "",
+      "selfDestructOut": "",
+      "gasCostOut": "",
+      "reconciliationType": "",
+      "spotPrice": 0.11947,
+      "priceSource": "uniswap",
+      "begBalDiff": "",
+      "endBalCalc": "790872019199420000000000",
+      "endBalDiff": "",
+      "totalIn": "",
+      "totalOut": "312679827610000000000",
+      "totalOutLessGas": "312679827610000000000",
+      "amountNet": "-312679827610000000000",
+      "reconciled": true
+    }
+  ],
+  "gasCost": 5687415285765885,
+  "etherGasCost": 0.005687415285765885,
+  "function": "transfer",
+  "gasUsed": 54355,
+  "date": "2022-06-09 16:55:34 UTC",
+  "ether": 0.000000000000000000,
+  "encoding": "0xa9059cbb"
+}
+, {
+  "hash": "0x8c1703f5dee17242784c912f208f55508cf003f2b3b0ca9070d9556a619df186",
+  "blockHash": "0xe83164313d56dd57fd718123c311cd65d58f22761899bfb1710c77e2d7f67878",
+  "blockNumber": 14933657,
+  "transactionIndex": 305,
+  "timestamp": 1654793734,
+  "from": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
+  "to": "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
+  "value": 0,
+  "gas": 120000,
+  "gasPrice": 104634629487,
+  "maxFeePerGas": 203165801707,
+  "maxPriorityFeePerGas": 1000000000,
+  "input": "0xa9059cbb000000000000000000000000cc34cc875d2d052f5b1c19652b5e71d6f90c7f7d00000000000000000000000000000000000000000000000000036a1b340c1400",
+  "isError": 0,
+  "hasToken": 1,
+  "receipt": {
+    "contractAddress": "0x0",
+    "gasUsed": 51784,
+    "effectiveGasPrice": 104634629487,
+    "logs": [
+      {
+        "address": "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
+        "logIndex": 496,
+        "topics": [
+          "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+          "0x0000000000000000000000006aed588ca2052ccfc907db8c24df4b7b95a29a5e",
+          "0x000000000000000000000000cc34cc875d2d052f5b1c19652b5e71d6f90c7f7d"
+        ],
+        "data": "0x00000000000000000000000000000000000000000000000000036a1b340c1400",
+        "articulatedLog": {
+          "name": "Transfer",
+          "inputs": {
+            "_amount": "961090000000000",
+            "_from": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
+            "_to": "0xcc34cc875d2d052f5b1c19652b5e71d6f90c7f7d"
+          }
+        },
+        "compressedLog": "{name:Transfer|inputs:{_amount:961090000000000|_from:0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e|_to:0xcc34cc875d2d052f5b1c19652b5e71d6f90c7f7d}}"
+      }
+    ],
+    "status": 1
+  },
+  "traces": [],
+  "articulatedTx": {
+    "name": "transfer",
+    "inputs": {
+      "amount": "961090000000000",
+      "recipient": "0xcc34cc875d2d052f5b1c19652b5e71d6f90c7f7d"
+    },
+    "outputs": {
+      "val_0": ""
+    }
+  },
+  "compressedTx": "{name:transfer|inputs:{amount:961090000000000|recipient:0xcc34cc875d2d052f5b1c19652b5e71d6f90c7f7d}|outputs:{val_0:}}",
+  "statements": [
+    {
+      "blockNumber": 14933657,
+      "transactionIndex": 305,
+      "timestamp": 1654793734,
+      "assetAddr": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
+      "assetSymbol": "WEI",
+      "decimals": 18,
+      "prevBlk": 14933657,
+      "prevBlkBal": "568302725253886882348",
+      "begBal": "568302725253886882348",
+      "endBal": "568271271877180349122",
+      "amountIn": "",
+      "internalIn": "",
+      "selfDestructIn": "",
+      "minerBaseRewardIn": "",
+      "minerNephewRewardIn": "",
+      "minerTxFeeIn": "",
+      "minerUncleRewardIn": "",
+      "prefundIn": "",
+      "amountOut": "",
+      "internalOut": "",
+      "selfDestructOut": "",
+      "gasCostOut": "5418399653354808",
+      "reconciliationType": "partial-nextdiff",
+      "spotPrice": 1801.80999,
+      "priceSource": "uniswap",
+      "begBalDiff": "",
+      "endBalCalc": "568297306854233527540",
+      "endBalDiff": "26034977053178418",
+      "totalIn": "",
+      "totalOut": "5418399653354808",
+      "totalOutLessGas": "",
+      "amountNet": "-5418399653354808",
+      "reconciled": false
+    },
+    {
+      "blockNumber": 14933657,
+      "transactionIndex": 305,
+      "timestamp": 1654793734,
+      "assetAddr": "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
+      "assetSymbol": "YFI",
+      "decimals": 18,
+      "prevBlk": 14933657,
+      "prevBlkBal": "17645630460000000000",
+      "begBal": "17645630460000000000",
+      "endBal": "17644669370000000000",
+      "amountIn": "",
+      "internalIn": "",
+      "selfDestructIn": "",
+      "minerBaseRewardIn": "",
+      "minerNephewRewardIn": "",
+      "minerTxFeeIn": "",
+      "minerUncleRewardIn": "",
+      "prefundIn": "",
+      "amountOut": "961090000000000",
+      "internalOut": "",
+      "selfDestructOut": "",
+      "gasCostOut": "",
+      "reconciliationType": "",
+      "spotPrice": 7616.14451,
+      "priceSource": "uniswap",
+      "begBalDiff": "",
+      "endBalCalc": "17644669370000000000",
+      "endBalDiff": "",
+      "totalIn": "",
+      "totalOut": "961090000000000",
+      "totalOutLessGas": "961090000000000",
+      "amountNet": "-961090000000000",
+      "reconciled": true
+    }
+  ],
+  "gasCost": 5418399653354808,
+  "etherGasCost": 0.005418399653354808,
+  "function": "transfer",
+  "gasUsed": 51784,
+  "date": "2022-06-09 16:55:34 UTC",
+  "ether": 0.000000000000000000,
+  "encoding": "0xa9059cbb"
+}
+] }
