@@ -36,6 +36,7 @@ bool COptions::articulateAll(CTransaction& trans) {
         // Do the same for the logs...
         for (size_t j = 0; j < trans.receipt.logs.size(); j++) {
             CLogEntry* log = (CLogEntry*)&trans.receipt.logs[j];  // NOLINT
+            trans.hasToken |= (log->topics.size() > 0 && isTokenRelated(log->topics[0]));
             string_q str = log->Format();
             if (contains(str, bytesOnly)) {
                 abiMap[log->address]++;
@@ -44,7 +45,6 @@ bool COptions::articulateAll(CTransaction& trans) {
                 }
                 abi_spec.articulateLog(log);
             }
-            trans.hasToken |= isTokenRelated(log->topics[0]);
         }
 
         // And the same for the traces...
@@ -63,7 +63,7 @@ bool COptions::articulateAll(CTransaction& trans) {
         trans.hasToken |= isTokenRelated(trans.input.substr(0, 10));
         for (size_t j = 0; j < trans.receipt.logs.size(); j++) {
             CLogEntry* log = (CLogEntry*)&trans.receipt.logs[j];  // NOLINT
-            trans.hasToken |= isTokenRelated(log->topics[0]);     // always has at least the topic
+            trans.hasToken |= (log->topics.size() > 0 && isTokenRelated(log->topics[0]));
         }
     }
     return true;
