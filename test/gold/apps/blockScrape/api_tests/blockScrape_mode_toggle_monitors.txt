@@ -1,6 +1,0 @@
-scrape?modes=monitors&action=toggle
-{
-  "errors": [
-    "The chifra scrape monitors command requires the --file option."
-  ]
-}

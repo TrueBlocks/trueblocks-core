@@ -10,6 +10,7 @@ import (
 	"io"
 	"os"
 	"sort"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -51,9 +52,21 @@ func BuildTabRange(descriptors []PinDescriptor) (ManifestRange, error) {
 		return ManifestRange{}, errors.New("invalid input: no pins")
 	}
 
-	firstPinRange, err := StringToManifestRange(descriptors[0].FileName)
-	if err != nil {
-		return ManifestRange{}, err
+	firstPinRange := ManifestRange{}
+	var err error
+	if !strings.Contains(descriptors[0].FileName, "-") {
+		if len(descriptors) == 1 {
+			return ManifestRange{}, errors.New("invalid input: header only, no pins")
+		}
+		firstPinRange, err = StringToManifestRange(descriptors[1].FileName)
+		if err != nil {
+			return ManifestRange{}, err
+		}
+	} else {
+		firstPinRange, err = StringToManifestRange(descriptors[0].FileName)
+		if err != nil {
+			return ManifestRange{}, err
+		}
 	}
 
 	lastPinRange, err := StringToManifestRange(descriptors[len(descriptors)-1].FileName)

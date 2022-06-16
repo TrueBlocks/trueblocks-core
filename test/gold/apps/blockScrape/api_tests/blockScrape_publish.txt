@@ -1,8 +1,0 @@
-{
-  "message": "Testing in blockScrape/options.cpp",
-  "block_cnt": 2000,
-  "block_chan_cnt": 10,
-  "addr_chan_cnt": 20,
-  "pin": 0,
-  "publish": 1,
-}
