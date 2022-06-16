@@ -204,7 +204,7 @@ bool COptions::token_list_from_logs(CAccountNameMap& tokenList, const CTraverser
         bool isToken = findToken(log.address, tokenName);
         if (tokenName.address.empty())
             tokenName.address = log.address;
-        if (isToken || isTokenRelated(log.topics[0]))
+        if (isToken || (log.topics.size() > 0 && isTokenRelated(log.topics[0])))
             tokenList[log.address] = tokenName;
     }
     return tokenList.size() > 0;
