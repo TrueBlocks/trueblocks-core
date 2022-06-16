@@ -22,9 +22,9 @@
 
 * Before submitting, read [Contributing](http://github.com/TrueBlocks/trueblocks-core/CONTRIBUTING.md). Please use our coding and testing guidelines.
 
-#### **Did make a formatting or cosmetic change?**
+#### **Did you make a formatting or cosmetic change?**
 
-We use an automatic formatter called `clang-format`, therefor formatting-only changes will generally be closed without merging.
+* We use an automatic formatter called `clang-format`, therefor formatting-only changes will generally be closed without merging.
 
 #### **Would do have a feature request?**
 

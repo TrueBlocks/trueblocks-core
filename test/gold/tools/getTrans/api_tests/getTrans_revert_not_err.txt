@@ -208,8 +208,8 @@ transactions?transactions=0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5
           },
           "result": {
             "newContract": "0x0",
-            "gasUsed": 0,
-            "output": ""
+            "gasUsed": 195,
+            "output": "0x"
           },
           "compressedTrace": ""
         },

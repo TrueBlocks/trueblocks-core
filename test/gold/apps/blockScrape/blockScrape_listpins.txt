@@ -1,4 +1,4 @@
-chifra scrape  both --listpins
+chifra scrape  --listpins
 Error: 
   unknown flag: --listpins
 
@@ -7,16 +7,12 @@ Usage:
 
 Arguments:
   modes - which scraper(s) to control (required)
-	One or more of [ indexer | monitors | both ]
+	One or more of [ run | stop ]
 
 Flags:
   -s, --sleep float           seconds to sleep between scraper passes (default 14)
   -p, --pin                   pin chunks (and blooms) to IPFS as they are created (requires pinning service)
   -n, --block_cnt uint        maximum number of blocks to process per pass (default 2000)
-  -e, --reset uint            reset the scraper to the provided block (or end of earliest chunk prior to that block) (hidden)
-  -a, --action string         command to apply to the specified scrape (hidden)
-                              One of [ toggle | run | restart | pause | quit ]
-  -u, --publish               after pinning the chunk, publish it to UnchainedIndex (hidden)
   -z, --blaze                 invoke the blaze scraper to process blocks (hidden)
   -b, --block_chan_cnt uint   number of concurrent block processing channels (hidden) (default 10)
   -d, --addr_chan_cnt uint    number of concurrent address processing channels (hidden) (default 20)

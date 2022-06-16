@@ -69,7 +69,7 @@ void COptions::verifyGoEnumValidators(void) {
             if (contains(contents, e)) {
                 // cout << cGreen << "HAS: " << fn << ": " << e << cOff << endl;
             } else {
-                LOG_WARN("\t", p.api_route, " has no an enum validator for ", e);
+                LOG_WARN("\t", p.api_route, " has no enum validator for ", e);
             }
         }
     }

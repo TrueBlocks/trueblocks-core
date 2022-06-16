@@ -27,7 +27,6 @@ class COptions : public COptionsBase {
     // BEG_CODE_DECLARE
     bool pin;
     uint64_t block_cnt;
-    bool publish;
     uint64_t block_chan_cnt;
     uint64_t addr_chan_cnt;
     uint64_t apps_per_chunk;
@@ -56,7 +55,6 @@ class COptions : public COptionsBase {
 
     bool start_scraper(void);
     bool scrape_blocks(void);
-    bool handle_reset(void);
     bool stage_chunks(const string_q& tmpFn);
     bool write_chunks(blknum_t chunkSize, bool snapped);
     bool isSnapToGrid(blknum_t bn) const {
