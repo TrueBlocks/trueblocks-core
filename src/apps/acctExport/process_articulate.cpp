@@ -13,70 +13,29 @@
 #include "options.h"
 
 //-----------------------------------------------------------------------
-bool isTokenFunc(const string_q& input) {
-    static CStringBoolMap sigs = {
-        make_pair("0x095ea7b3", true),  // approve(address spender, uint256 value)
-        make_pair("0xa9059cbb", true),  // transfer(address from, uint256 to);
-        make_pair("0x23b872dd", true),  // transferFrom(address from, address to, uint256 value)
-        make_pair("0xb3e1c718", true),  // _safeMint(address, uint256)
-        make_pair("0x6a4f832b", true),  // _safeMint(address, uint256, bytes)
-        make_pair("0xa1448194", true),  // safeMint(address, uint256)
-        make_pair("0x8832e6e3", true),  // safeMint(address, uint256, bytes)
-        make_pair("0x4e6ec247", true),  // _mint(address, uint256)
-        make_pair("0x4cd4edcb", true),  // _mint(address, uint256, bytes, bytes)
-        make_pair("0x40c10f19", true),  // mint(address, uint256)
-        make_pair("0xcfa84fc1", true),  // mint(uint256, address[], uint256[])
-        make_pair("0x278d9c41", true),  // mintEventToManyUsers(uint256, address[])
-        make_pair("0x78b27221", true),  // mintFungible(uint256, address[], uint256[])
-        make_pair("0xf9419088", true),  // mintNonFungible(uint256, address[])
-        make_pair("0xf190ac5f", true),  // mintToAddresses(address[], uint256)
-        make_pair("0xa140ae23", true),  // mintToken(uint256, address)
-        make_pair("0xf980f3dc", true),  // mintUserToManyEvents(uint256[], address)
-        make_pair("0x14004ef3", true),  // multimint(address[], uint256[])
-        make_pair("0x6a627842", true),  // mint(address)
-        make_pair("0xa0712d68", true),  // mint(uint256)
-    };
-    return sigs[input.substr(0, 10)];
-}
-
-//-----------------------------------------------------------------------
-#define CTopicBoolMap CStringBoolMap
-bool isTokenTopic(const CLogEntry* log) {
-    if (!log || log->topics.size() == 0)
-        return false;
-
-    static CTopicBoolMap topics = {
-        make_pair("0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
-                  true),  // Transfer(address from, address to, uint256 value)
-        make_pair("0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
-                  true),  // Approval(address owner, address spender, uint256 value)
-        make_pair("0xd4735d920b0f87494915f556dd9b54c8f309026070caea5c737245152564d266",
-                  true),  // Transfer(bytes32 node, address owner)
-        make_pair("0x30385c845b448a36257a6a1716e6ad2e1bc2cbe333cde1e69fe849ad6511adfe",
-                  true),  // Minted(address,uint256)
-    };
-
-    return topics[log->topics[0]];
-}
-
-//-----------------------------------------------------------------------
 bool COptions::articulateAll(CTransaction& trans) {
     if (articulate) {
         if (!trans.articulatedTx.name.empty()) {
-            // LOG_INFO("Short cuircut");
+            // Already articulated
             return false;
         }
+
+        // Note: here and below, we note that we've seen the 'to' address and if this is the
+        // first time we've seen it (or we have the ABI file locally), load it. Note the call to
+        // loadAbiFromEtherscan won't redunantly load the file if it's already loaded
         abiMap[trans.to]++;
         if (abiMap[trans.to] == 1 || fileExists(cacheFolder_abis + trans.to + ".json")) {
             abi_spec.loadAbiFromEtherscan(trans.to);
         }
         abi_spec.articulateTransaction(&trans);
-        trans.hasToken |= isTokenFunc(trans.input);
+        // we want to know if we're a token
+        trans.hasToken |= isTokenRelated(trans.input.substr(0, 10));
 
         string_q bytesOnly = substitute(accountedFor.address, "0x", "");
+
+        // Do the same for the logs...
         for (size_t j = 0; j < trans.receipt.logs.size(); j++) {
             CLogEntry* log = (CLogEntry*)&trans.receipt.logs[j];  // NOLINT
-            trans.hasToken |= isTokenTopic(log);
             string_q str = log->Format();
             if (contains(str, bytesOnly)) {
                 abiMap[log->address]++;
@@ -85,23 +44,26 @@ bool COptions::articulateAll(CTransaction& trans) {
                 }
                 abi_spec.articulateLog(log);
             }
+            trans.hasToken |= isTokenRelated(log->topics[0]);
         }
 
+        // And the same for the traces...
         for (size_t j = 0; j < trans.traces.size(); j++) {
             CTrace* trace = (CTrace*)&trans.traces[j];  // NOLINT
-            trans.hasToken |= isTokenFunc(trace->action.input);
+            trans.hasToken |= isTokenRelated(trace->action.input.substr(0, 10));
             abiMap[trace->action.to]++;
             if (abiMap[trace->action.to] == 1 || fileExists(cacheFolder_abis + trace->action.to + ".json")) {
                 abi_spec.loadAbiFromEtherscan(trace->action.to);
             }
             abi_spec.articulateTrace(trace);
         }
+
     } else {
         // Even if we're not articulating, we want to mark token-related transactions
-        trans.hasToken |= isTokenFunc(trans.input);
+        trans.hasToken |= isTokenRelated(trans.input.substr(0, 10));
         for (size_t j = 0; j < trans.receipt.logs.size(); j++) {
             CLogEntry* log = (CLogEntry*)&trans.receipt.logs[j];  // NOLINT
-            trans.hasToken |= isTokenTopic(log);
+            trans.hasToken |= isTokenRelated(log->topics[0]);     // always has at least the topic
         }
     }
     return true;

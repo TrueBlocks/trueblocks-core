@@ -99,3 +99,6 @@ local   ,both ,fast  ,monitors ,apps/acctExport ,monitors_to_file         ,y    
 local   ,both ,fast  ,export   ,apps/acctExport ,export_freshen_0-30      ,y    ,addrs = 0xbb7b8287f3f0a933474a79eae42cbca977791171 & first_block = 1 & last_block = 30 & appearances & freshen
 local   ,both ,fast  ,export   ,apps/acctExport ,export_freshen_31-60     ,y    ,addrs = 0xbb7b8287f3f0a933474a79eae42cbca977791171 & first_block = 31 & last_block = 60 & appearances & freshen
 local   ,both ,fast  ,export   ,apps/acctExport ,export_freshen_61-100    ,y    ,addrs = 0xbb7b8287f3f0a933474a79eae42cbca977791171 & first_block = 61 & last_block = 100 & appearances & freshen
+
+# user supplied test for token accounting
+on      ,both ,fast  ,export   ,apps/acctExport ,accounting_intra_tokens  ,n    ,addrs = 0x6aED588ca2052CCFC907Db8c24dF4B7B95A29A5E & first_record = 683 & max_records = 3 & accounting & fmt = json & log_level = 10 

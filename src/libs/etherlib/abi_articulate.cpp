@@ -53,13 +53,62 @@ bool CAbi::articulateTransaction(CTransaction* p) const {
     return false;
 }
 
-// Significant speed improvement if we handle these items without regular processing
+//-----------------------------------------------------------------------
+static CStringBoolMap tokenRelated = {
+    // functions
+    make_pair("0x095ea7b3", true),  // approve(address spender, uint256 value)
+    make_pair("0xa9059cbb", true),  // transfer(address from, uint256 to);
+    make_pair("0x23b872dd", true),  // transferFrom(address from, address to, uint256 value)
+    make_pair("0xb3e1c718", true),  // _safeMint(address, uint256)
+    make_pair("0x6a4f832b", true),  // _safeMint(address, uint256, bytes)
+    make_pair("0xa1448194", true),  // safeMint(address, uint256)
+    make_pair("0x8832e6e3", true),  // safeMint(address, uint256, bytes)
+    make_pair("0x4e6ec247", true),  // _mint(address, uint256)
+    make_pair("0x4cd4edcb", true),  // _mint(address, uint256, bytes, bytes)
+    make_pair("0x40c10f19", true),  // mint(address, uint256)
+    make_pair("0xcfa84fc1", true),  // mint(uint256, address[], uint256[])
+    make_pair("0x278d9c41", true),  // mintEventToManyUsers(uint256, address[])
+    make_pair("0x78b27221", true),  // mintFungible(uint256, address[], uint256[])
+    make_pair("0xf9419088", true),  // mintNonFungible(uint256, address[])
+    make_pair("0xf190ac5f", true),  // mintToAddresses(address[], uint256)
+    make_pair("0xa140ae23", true),  // mintToken(uint256, address)
+    make_pair("0xf980f3dc", true),  // mintUserToManyEvents(uint256[], address)
+    make_pair("0x14004ef3", true),  // multimint(address[], uint256[])
+    make_pair("0x6a627842", true),  // mint(address)
+    make_pair("0xa0712d68", true),  // mint(uint256)
+    // topics
+    make_pair("0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              true),  // Transfer(address from, address to, uint256 value)
+    make_pair("0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
+              true),  // Approval(address owner, address spender, uint256 value)
+    make_pair("0xd4735d920b0f87494915f556dd9b54c8f309026070caea5c737245152564d266",
+              true),  // Transfer(bytes32 node, address owner)
+    make_pair("0x30385c845b448a36257a6a1716e6ad2e1bc2cbe333cde1e69fe849ad6511adfe",
+              true),  // Minted(address,uint256)
+};
+
+//-----------------------------------------------------------------------
+// Because these three topics make up almost all of the logs in the entire history
+// of the chain, we get significant speed-ups if we handle these items without
+// regular processing.
 static const topic_t transferTopic = str_2_Topic("0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef");
 static const topic_t ensTransferTopic =
     str_2_Topic("0xd4735d920b0f87494915f556dd9b54c8f309026070caea5c737245152564d266");
 static const topic_t approvalTopic = str_2_Topic("0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925");
+
+//-----------------------------------------------------------------------
+bool isTokenRelated(const string_q& needle) {
+    return tokenRelated[needle];
+}
+
 //-----------------------------------------------------------------------
 bool parseTransferEvent(CLogEntry* p) {
+    if (p->topics[0] != transferTopic)
+        return false;
+
+    if (p->topics.size() < 3)
+        return false;
+
     static CFunction* evt = NULL;
     if (evt == NULL) {
         evt = new CFunction;
@@ -70,14 +119,23 @@ bool parseTransferEvent(CLogEntry* p) {
         evt->inputs.push_back(CParameter("_to", "address"));
         evt->inputs.push_back(CParameter("_amount", "uint256"));
     }
+
     p->articulatedLog = *evt;
     p->articulatedLog.inputs[0].value = str_2_Addr(topic_2_Str(p->topics[1]));
     p->articulatedLog.inputs[1].value = str_2_Addr(topic_2_Str(p->topics[2]));
     p->articulatedLog.inputs[2].value = bnu_2_Str(str_2_BigUint(p->data));
+
     return true;
 }
+
 //-----------------------------------------------------------------------
 bool parseENSTransferEvent(CLogEntry* p) {
+    if (p->topics[0] != transferTopic)
+        return false;
+
+    if (p->topics.size() < 2)
+        return false;
+
     static CFunction* evt = NULL;
     if (evt == NULL) {
         evt = new CFunction;
@@ -87,13 +145,21 @@ bool parseENSTransferEvent(CLogEntry* p) {
         evt->inputs.push_back(CParameter("_node", "bytes32"));
         evt->inputs.push_back(CParameter("_owner", "address"));
     }
+
     p->articulatedLog = *evt;
     p->articulatedLog.inputs[0].value = topic_2_Str(p->topics[1]);
     p->articulatedLog.inputs[1].value = str_2_Addr(topic_2_Str(p->data));
+
     return true;
 }
 //-----------------------------------------------------------------------
 bool parseApprovalEvent(CLogEntry* p) {
+    if (p->topics[0] != transferTopic)
+        return false;
+
+    if (p->topics.size() < 3)
+        return false;
+
     static CFunction* evt = NULL;
     if (evt == NULL) {
         evt = new CFunction;
@@ -104,10 +170,12 @@ bool parseApprovalEvent(CLogEntry* p) {
         evt->inputs.push_back(CParameter("_spender", "address"));
         evt->inputs.push_back(CParameter("_amount", "uint256"));
     }
+
     p->articulatedLog = *evt;
     p->articulatedLog.inputs[0].value = str_2_Addr(topic_2_Str(p->topics[1]));
     p->articulatedLog.inputs[1].value = str_2_Addr(topic_2_Str(p->topics[2]));
     p->articulatedLog.inputs[2].value = bnu_2_Str(str_2_BigUint(p->data));
+
     return true;
 }
 
@@ -119,12 +187,12 @@ bool CAbi::articulateLog(CLogEntry* p) const {
         return false;
 
     // Hacky shortcuts are way faster since these three events are about 90% of all events
-    if (p->topics[0] == transferTopic && p->topics.size() > 1)
-        return parseTransferEvent(p);
-    if (p->topics[0] == ensTransferTopic && p->topics.size() > 1)
-        return parseENSTransferEvent(p);
-    if (p->topics[0] == approvalTopic && p->topics.size() > 1)
-        return parseApprovalEvent(p);
+    if (parseTransferEvent(p))
+        return true;
+    if (parseENSTransferEvent(p))
+        return true;
+    if (parseApprovalEvent(p))
+        return true;
 
     // First, we spin looking for our event. When we find it, we copy it so we can fill it in. The topics are
     // all fixed length, so we can process them in place as we go. While we're spinning, we accumulate the
