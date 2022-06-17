@@ -6,7 +6,6 @@ TEST[DATE|TIME] Asset:  [0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359]
 TEST[DATE|TIME] FirstBlock:  8860513
 TEST[DATE|TIME] LastBlock:  8860531
 TEST[DATE|TIME] Format:  json
-TIME ~ CLOCK - <INFO>  : Loading names
 { "data": [
 
 level: 1

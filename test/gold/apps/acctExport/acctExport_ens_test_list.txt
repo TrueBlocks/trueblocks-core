@@ -1,15 +1,9 @@
-chifra list  rhyslindmark.eth --first_block 4037786 --last_block 4589473
+chifra list  rhyslindmark.eth --first_block 4037786 --last_block 4081406
 TEST[DATE|TIME] Addrs:  [0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3]
 TEST[DATE|TIME] FirstBlock:  4037786
-TEST[DATE|TIME] LastBlock:  4589473
+TEST[DATE|TIME] LastBlock:  4081406
 TEST[DATE|TIME] Format:  txt
 address	blockNumber	transactionIndex
 0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3	4037786	47
 0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3	4037800	77
 0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3	4081406	20
-0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3	4081451	4
-0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3	4133841	10
-0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3	4133841	17
-0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3	4565174	30
-0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3	4565215	48
-0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3	4589473	37

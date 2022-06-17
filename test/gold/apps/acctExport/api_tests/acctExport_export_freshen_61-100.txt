@@ -1,3 +1,4 @@
+export?addrs=0xbb7b8287f3f0a933474a79eae42cbca977791171&firstBlock=61&lastBlock=100&appearances
 {
   "data": [
     {
@@ -125,33 +126,6 @@
       "transactionIndex": 99999,
       "address": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
       "name": "Miner_025_000"
-    }
-  ],
-  "types": [
-    {
-      "type": "CAppearance",
-      "fields": [
-        {
-          "name": "bn",
-          "type": "blocknum"
-        },
-        {
-          "name": "tx",
-          "type": "blocknum"
-        },
-        {
-          "name": "tc",
-          "type": "blocknum"
-        },
-        {
-          "name": "addr",
-          "type": "address"
-        },
-        {
-          "name": "reason",
-          "type": "text"
-        }
-      ]
     }
   ],
   "meta": {

@@ -1,4 +1,4 @@
-chifra monitors  0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 9000000 --fmt json
+chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 9000000 --fmt json
 TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
 TEST[DATE|TIME] LastBlock:  9000000
 TEST[DATE|TIME] Format:  json
@@ -24,7 +24,7 @@ TEST[DATE|TIME] Format:  json
     "effectiveGasPrice": 10000000000,
     "status": 1
   },
-  "compressedTx": "0x ( )",
+  "compressedTx": "0x()",
   "gasCost": 210000000000000,
   "gasUsed": 21000,
   "date": "2019-11-01 20:18:58 UTC",
@@ -66,7 +66,7 @@ TEST[DATE|TIME] Format:  json
             "node": "0xb5cc13b0db8f3867b84d8e0362dd9aa9d4afa8b878a09ef60c72faf968f0c970"
           }
         },
-        "compressedLog": "AddressChanged(0xb5cc13b0db8f3867b84d8e0362dd9aa9d4afa8b878a09ef60c72faf968f0c970 /*node*/, 60 /*coinType*/, 0xf503017d7baf7fbc0fff7492b751025c6a78179b /*newAddress*/); "
+        "compressedLog": "{name:AddressChanged|inputs:{coinType:60|newAddress:0xf503017d7baf7fbc0fff7492b751025c6a78179b|node:0xb5cc13b0db8f3867b84d8e0362dd9aa9d4afa8b878a09ef60c72faf968f0c970}}"
       },
       {
         "address": "0x226159d592e2b063810a10ebf6dcbada94ed68b8",
@@ -83,7 +83,7 @@ TEST[DATE|TIME] Format:  json
             "node": "0xb5cc13b0db8f3867b84d8e0362dd9aa9d4afa8b878a09ef60c72faf968f0c970"
           }
         },
-        "compressedLog": "AddrChanged(0xb5cc13b0db8f3867b84d8e0362dd9aa9d4afa8b878a09ef60c72faf968f0c970 /*node*/, 0xf503017d7baf7fbc0fff7492b751025c6a78179b /*a*/); "
+        "compressedLog": "{name:AddrChanged|inputs:{a:0xf503017d7baf7fbc0fff7492b751025c6a78179b|node:0xb5cc13b0db8f3867b84d8e0362dd9aa9d4afa8b878a09ef60c72faf968f0c970}}"
       }
     ],
     "status": 1
@@ -95,7 +95,7 @@ TEST[DATE|TIME] Format:  json
       "node": "0xb5cc13b0db8f3867b84d8e0362dd9aa9d4afa8b878a09ef60c72faf968f0c970"
     }
   },
-  "compressedTx": "setAddr(0xb5cc13b0db8f3867b84d8e0362dd9aa9d4afa8b878a09ef60c72faf968f0c970 /*node*/, 0xf503017d7baf7fbc0fff7492b751025c6a78179b /*addr*/); ",
+  "compressedTx": "{name:setAddr|inputs:{addr:0xf503017d7baf7fbc0fff7492b751025c6a78179b|node:0xb5cc13b0db8f3867b84d8e0362dd9aa9d4afa8b878a09ef60c72faf968f0c970}}",
   "gasCost": 55144000000000,
   "gasUsed": 55144,
   "date": "2019-11-01 23:31:45 UTC",
@@ -122,7 +122,7 @@ TEST[DATE|TIME] Format:  json
     "effectiveGasPrice": 10000000000,
     "status": 1
   },
-  "compressedTx": "0x ( )",
+  "compressedTx": "0x()",
   "gasCost": 210000000000000,
   "gasUsed": 21000,
   "date": "2019-11-02 02:16:06 UTC",
@@ -149,7 +149,7 @@ TEST[DATE|TIME] Format:  json
     "effectiveGasPrice": 10000000000,
     "status": 1
   },
-  "compressedTx": "0x ( )",
+  "compressedTx": "0x()",
   "gasCost": 210000000000000,
   "gasUsed": 21000,
   "date": "2019-11-02 02:19:35 UTC",
@@ -192,7 +192,7 @@ TEST[DATE|TIME] Format:  json
             "_to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
           }
         },
-        "compressedLog": "Transfer(0xeba60d324c2546459e1e9dd4c7e740ca80134588 /*_from*/, 0xf503017d7baf7fbc0fff7492b751025c6a78179b /*_to*/, 1000000000000000000 /*_amount*/); "
+        "compressedLog": "{name:Transfer|inputs:{_amount:1000000000000000000|_from:0xeba60d324c2546459e1e9dd4c7e740ca80134588|_to:0xf503017d7baf7fbc0fff7492b751025c6a78179b}}"
       }
     ],
     "status": 1
@@ -207,7 +207,7 @@ TEST[DATE|TIME] Format:  json
       "_success": ""
     }
   },
-  "compressedTx": "transfer(0xf503017d7baf7fbc0fff7492b751025c6a78179b /*_to*/, 1000000000000000000 /*_value*/); ",
+  "compressedTx": "{name:transfer|inputs:{_to:0xf503017d7baf7fbc0fff7492b751025c6a78179b|_value:1000000000000000000}|outputs:{_success:}}",
   "gasCost": 149192000000000,
   "gasUsed": 37298,
   "date": "2019-11-02 02:56:10 UTC",
@@ -250,7 +250,7 @@ TEST[DATE|TIME] Format:  json
             "_to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
           }
         },
-        "compressedLog": "Transfer(0x8c492d5f763841767362d716e3e69511f0527791 /*_from*/, 0xf503017d7baf7fbc0fff7492b751025c6a78179b /*_to*/, 4999000000000000000000 /*_amount*/); "
+        "compressedLog": "{name:Transfer|inputs:{_amount:4999000000000000000000|_from:0x8c492d5f763841767362d716e3e69511f0527791|_to:0xf503017d7baf7fbc0fff7492b751025c6a78179b}}"
       }
     ],
     "status": 1
@@ -265,7 +265,7 @@ TEST[DATE|TIME] Format:  json
       "_success": ""
     }
   },
-  "compressedTx": "transfer(0xf503017d7baf7fbc0fff7492b751025c6a78179b /*_to*/, 4999000000000000000000 /*_value*/); ",
+  "compressedTx": "{name:transfer|inputs:{_to:0xf503017d7baf7fbc0fff7492b751025c6a78179b|_value:4999000000000000000000}|outputs:{_success:}}",
   "gasCost": 112130000000000,
   "gasUsed": 22426,
   "date": "2019-11-02 03:04:19 UTC",
@@ -308,7 +308,7 @@ TEST[DATE|TIME] Format:  json
             "_to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
           }
         },
-        "compressedLog": "Transfer(0x3f1c1e14fd919415010c03f9de29cbafd5866e81 /*_from*/, 0xf503017d7baf7fbc0fff7492b751025c6a78179b /*_to*/, 2500000000000000000000 /*_amount*/); "
+        "compressedLog": "{name:Transfer|inputs:{_amount:2500000000000000000000|_from:0x3f1c1e14fd919415010c03f9de29cbafd5866e81|_to:0xf503017d7baf7fbc0fff7492b751025c6a78179b}}"
       }
     ],
     "status": 1
@@ -323,7 +323,7 @@ TEST[DATE|TIME] Format:  json
       "_success": ""
     }
   },
-  "compressedTx": "transfer(0xf503017d7baf7fbc0fff7492b751025c6a78179b /*_to*/, 2500000000000000000000 /*_value*/); ",
+  "compressedTx": "{name:transfer|inputs:{_to:0xf503017d7baf7fbc0fff7492b751025c6a78179b|_value:2500000000000000000000}|outputs:{_success:}}",
   "gasCost": 223620000000000,
   "gasUsed": 22362,
   "date": "2019-11-02 18:23:31 UTC",
@@ -366,7 +366,7 @@ TEST[DATE|TIME] Format:  json
             "_spender": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7"
           }
         },
-        "compressedLog": "Approval(0xf503017d7baf7fbc0fff7492b751025c6a78179b /*_owner*/, 0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7 /*_spender*/, 500000000000000000000 /*_amount*/); "
+        "compressedLog": "{name:Approval|inputs:{_amount:500000000000000000000|_owner:0xf503017d7baf7fbc0fff7492b751025c6a78179b|_spender:0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7}}"
       }
     ],
     "status": 1
@@ -381,7 +381,7 @@ TEST[DATE|TIME] Format:  json
       "_success": ""
     }
   },
-  "compressedTx": "approve(0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7 /*_spender*/, 500000000000000000000 /*_value*/); ",
+  "compressedTx": "{name:approve|inputs:{_spender:0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7|_value:500000000000000000000}|outputs:{_success:}}",
   "gasCost": 45985000000000,
   "gasUsed": 45985,
   "date": "2019-11-02 18:41:43 UTC",
@@ -424,7 +424,7 @@ TEST[DATE|TIME] Format:  json
             "_to": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7"
           }
         },
-        "compressedLog": "Transfer(0xf503017d7baf7fbc0fff7492b751025c6a78179b /*_from*/, 0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7 /*_to*/, 500000000000000000000 /*_amount*/); "
+        "compressedLog": "{name:Transfer|inputs:{_amount:500000000000000000000|_from:0xf503017d7baf7fbc0fff7492b751025c6a78179b|_to:0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7}}"
       },
       {
         "address": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7",
@@ -442,7 +442,7 @@ TEST[DATE|TIME] Format:  json
             "token": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"
           }
         },
-        "compressedLog": "Donate(1945 /*giverId*/, 1402 /*receiverId*/, 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 /*token*/, 500000000000000000000 /*amount*/); "
+        "compressedLog": "{name:Donate|inputs:{amount:500000000000000000000|giverId:1945|receiverId:1402|token:0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359}}"
       }
     ],
     "status": 1
@@ -456,7 +456,7 @@ TEST[DATE|TIME] Format:  json
       "token": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"
     }
   },
-  "compressedTx": "donate(1945 /*giverId*/, 1402 /*receiverId*/, 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 /*token*/, 500000000000000000000 /*_amount*/); ",
+  "compressedTx": "{name:donate|inputs:{_amount:500000000000000000000|giverId:1945|receiverId:1402|token:0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359}}",
   "gasCost": 34017000000000,
   "gasUsed": 34017,
   "date": "2019-11-02 18:42:30 UTC",
@@ -499,7 +499,7 @@ TEST[DATE|TIME] Format:  json
             "_spender": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7"
           }
         },
-        "compressedLog": "Approval(0xf503017d7baf7fbc0fff7492b751025c6a78179b /*_owner*/, 0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7 /*_spender*/, 7000000000000000000000 /*_amount*/); "
+        "compressedLog": "{name:Approval|inputs:{_amount:7000000000000000000000|_owner:0xf503017d7baf7fbc0fff7492b751025c6a78179b|_spender:0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7}}"
       }
     ],
     "status": 1
@@ -514,7 +514,7 @@ TEST[DATE|TIME] Format:  json
       "_success": ""
     }
   },
-  "compressedTx": "approve(0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7 /*_spender*/, 7000000000000000000000 /*_value*/); ",
+  "compressedTx": "{name:approve|inputs:{_spender:0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7|_value:7000000000000000000000}|outputs:{_success:}}",
   "gasCost": 46049000000000,
   "gasUsed": 46049,
   "date": "2019-11-02 18:45:58 UTC",
@@ -548,7 +548,16 @@ TEST[DATE|TIME] Format:  json
           "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b",
           "0x00000000000000000000000030f938fed5de6e06a9a7cd2ac3517131c317b1e7"
         ],
-        "data": "0x00000000000000000000000000000000000000000000017b7883c06916600000"
+        "data": "0x00000000000000000000000000000000000000000000017b7883c06916600000",
+        "articulatedLog": {
+          "name": "Transfer",
+          "inputs": {
+            "_amount": "7000000000000000000000",
+            "_from": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+            "_to": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7"
+          }
+        },
+        "compressedLog": "{name:Transfer|inputs:{_amount:7000000000000000000000|_from:0xf503017d7baf7fbc0fff7492b751025c6a78179b|_to:0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7}}"
       },
       {
         "address": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7",
@@ -556,12 +565,31 @@ TEST[DATE|TIME] Format:  json
         "topics": [
           "0xc77b8feedf86922981aed41179f4a071d80467c7f17c5c13837269e363ac545b"
         ],
-        "data": "0x000000000000000000000000000000000000000000000000000000000000079a000000000000000000000000000000000000000000000000000000000000057a00000000000000000000000089d24a6b4ccb1b6faa2625fe562bdd9a2326035900000000000000000000000000000000000000000000017b7883c06916600000"
+        "data": "0x000000000000000000000000000000000000000000000000000000000000079a000000000000000000000000000000000000000000000000000000000000057a00000000000000000000000089d24a6b4ccb1b6faa2625fe562bdd9a2326035900000000000000000000000000000000000000000000017b7883c06916600000",
+        "articulatedLog": {
+          "name": "Donate",
+          "inputs": {
+            "amount": "7000000000000000000000",
+            "giverId": "1946",
+            "receiverId": "1402",
+            "token": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"
+          }
+        },
+        "compressedLog": "{name:Donate|inputs:{amount:7000000000000000000000|giverId:1946|receiverId:1402|token:0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359}}"
       }
     ],
     "status": 1
   },
-  "compressedTx": "0x4c4316c7 ( stub: 000000000000000000000000000000000000000000000000000000000000079a000000000000000000000000000000000000000000000000000000000000057a00000000000000000000000089d24a6b4ccb1b6faa2625fe562bdd9a2326035900000000000000000000000000000000000000000000017b7883c06916600000 )",
+  "articulatedTx": {
+    "name": "donate",
+    "inputs": {
+      "_amount": "7000000000000000000000",
+      "giverId": "1946",
+      "receiverId": "1402",
+      "token": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"
+    }
+  },
+  "compressedTx": "{name:donate|inputs:{_amount:7000000000000000000000|giverId:1946|receiverId:1402|token:0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359}}",
   "gasCost": 24541000000000,
   "gasUsed": 24541,
   "date": "2019-11-02 18:46:01 UTC",
@@ -604,7 +632,7 @@ TEST[DATE|TIME] Format:  json
             "_owner": "0x9062c0a6dbd6108336bcbe4593a3d1ce05512069"
           }
         },
-        "compressedLog": "NewOwner(0x91d1777781884d03a6757a803996e38de2a42967fb37eeaca72729271025a9e2 /*_node*/, 0x34d7d37af75afceaf725e564326d0d768ec97480c4b6df329e2abd04224bae81 /*_label*/, 0x9062c0a6dbd6108336bcbe4593a3d1ce05512069 /*_owner*/); "
+        "compressedLog": "{name:NewOwner|inputs:{_label:0x34d7d37af75afceaf725e564326d0d768ec97480c4b6df329e2abd04224bae81|_node:0x91d1777781884d03a6757a803996e38de2a42967fb37eeaca72729271025a9e2|_owner:0x9062c0a6dbd6108336bcbe4593a3d1ce05512069}}"
       },
       {
         "address": "0x314159265dd8dbb310642f98f50c066173c1259b",
@@ -621,7 +649,7 @@ TEST[DATE|TIME] Format:  json
             "_resolver": "0x5fbb459c49bb06083c33109fa4f14810ec2cf358"
           }
         },
-        "compressedLog": "NewResolver(0x454e891299c049b3fe9b52689501e9c2752298e8e7967fe82166577427b17dc9 /*_node*/, 0x5fbb459c49bb06083c33109fa4f14810ec2cf358 /*_resolver*/); "
+        "compressedLog": "{name:NewResolver|inputs:{_node:0x454e891299c049b3fe9b52689501e9c2752298e8e7967fe82166577427b17dc9|_resolver:0x5fbb459c49bb06083c33109fa4f14810ec2cf358}}"
       }
     ],
     "status": 1
@@ -635,7 +663,7 @@ TEST[DATE|TIME] Format:  json
       "node": ""
     }
   },
-  "compressedTx": "setName(trueblocks.eth /*name*/); ",
+  "compressedTx": "{name:setName|inputs:{name:trueblocks.eth}|outputs:{node:}}",
   "gasCost": 105208000000000,
   "gasUsed": 105208,
   "date": "2019-11-03 22:52:17 UTC",
@@ -679,7 +707,7 @@ TEST[DATE|TIME] Format:  json
             "src": "0x6bc08156f405519fd5254b450c83995fc7bc620b"
           }
         },
-        "compressedLog": "LogScriptCall(0xb3e43abf014cb2d8cf8dc3d8c2e62157e6093343 /*sender*/, 0x6bc08156f405519fd5254b450c83995fc7bc620b /*src*/, 0xac104c988ff9c90dafc7754b2fb9072e25f93507 /*dst*/); "
+        "compressedLog": "{name:LogScriptCall|inputs:{dst:0xac104c988ff9c90dafc7754b2fb9072e25f93507|sender:0xb3e43abf014cb2d8cf8dc3d8c2e62157e6093343|src:0x6bc08156f405519fd5254b450c83995fc7bc620b}}"
       },
       {
         "address": "0xac104c988ff9c90dafc7754b2fb9072e25f93507",
@@ -698,7 +726,7 @@ TEST[DATE|TIME] Format:  json
             "voteId": "23"
           }
         },
-        "compressedLog": "StartVote(23 /*voteId*/, 0x6bc08156f405519fd5254b450c83995fc7bc620b /*creator*/,  /*metadata*/); "
+        "compressedLog": "{name:StartVote|inputs:{creator:0x6bc08156f405519fd5254b450c83995fc7bc620b|metadata:|voteId:23}}"
       },
       {
         "address": "0x6bc08156f405519fd5254b450c83995fc7bc620b",
@@ -717,7 +745,7 @@ TEST[DATE|TIME] Format:  json
             "script": "0x00000001ac104c988ff9c90dafc7754b2fb9072e25f93507000000a4d948d4680000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000006000000001696e40ba67d890422421886633195013b62c9c440000004440c10f19000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b0000000000000000000000000000000000000000000004c3ba39c5e411100000"
           }
         },
-        "compressedLog": "ScriptResult(0x5ceb19e1890f677c3676d5ecdf7c501eba01a054 /*executor*/, 0x00000001ac104c988ff9c90dafc7754b2fb9072e25f93507000000a4d948d4680000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000006000000001696e40ba67d890422421886633195013b62c9c440000004440c10f19000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b0000000000000000000000000000000000000000000004c3ba39c5e411100000 /*script*/, 0x /*input*/, 0x /*returnData*/); "
+        "compressedLog": "{name:ScriptResult|inputs:{executor:0x5ceb19e1890f677c3676d5ecdf7c501eba01a054|input:0x|returnData:0x|script:0x00000001ac104c988ff9c90dafc7754b2fb9072e25f93507000000a4d948d4680000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000006000000001696e40ba67d890422421886633195013b62c9c440000004440c10f19000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b0000000000000000000000000000000000000000000004c3ba39c5e411100000}}"
       }
     ],
     "status": 1
@@ -728,7 +756,7 @@ TEST[DATE|TIME] Format:  json
       "evmCallScript": "0x00000001ac104c988ff9c90dafc7754b2fb9072e25f93507000000a4d948d4680000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000006000000001696e40ba67d890422421886633195013b62c9c440000004440c10f19000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b0000000000000000000000000000000000000000000004c3ba39c5e411100000"
     }
   },
-  "compressedTx": "forward(0x00000001ac104c988ff9c90dafc7754b2fb9072e25f93507000000a4d948d4680000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000006000000001696e40ba67d890422421886633195013b62c9c440000004440c10f19000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b0000000000000000000000000000000000000000000004c3ba39c5e411100000 /*evmCallScript*/); ",
+  "compressedTx": "{name:forward|inputs:{evmCallScript:0x00000001ac104c988ff9c90dafc7754b2fb9072e25f93507000000a4d948d4680000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000006000000001696e40ba67d890422421886633195013b62c9c440000004440c10f19000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b0000000000000000000000000000000000000000000004c3ba39c5e411100000}}",
   "gasCost": 769653000000000,
   "gasUsed": 256551,
   "date": "2019-11-05 05:13:50 UTC",
@@ -772,7 +800,7 @@ TEST[DATE|TIME] Format:  json
             "voter": "0xb3e43abf014cb2d8cf8dc3d8c2e62157e6093343"
           }
         },
-        "compressedLog": "CastVote(23 /*voteId*/, 0xb3e43abf014cb2d8cf8dc3d8c2e62157e6093343 /*voter*/, true /*supports*/, 1 /*stake*/); "
+        "compressedLog": "{name:CastVote|inputs:{stake:1|supports:true|voteId:23|voter:0xb3e43abf014cb2d8cf8dc3d8c2e62157e6093343}}"
       },
       {
         "address": "0xac104c988ff9c90dafc7754b2fb9072e25f93507",
@@ -792,7 +820,7 @@ TEST[DATE|TIME] Format:  json
             "src": "0xac104c988ff9c90dafc7754b2fb9072e25f93507"
           }
         },
-        "compressedLog": "LogScriptCall(0xb3e43abf014cb2d8cf8dc3d8c2e62157e6093343 /*sender*/, 0xac104c988ff9c90dafc7754b2fb9072e25f93507 /*src*/, 0x696e40ba67d890422421886633195013b62c9c44 /*dst*/); "
+        "compressedLog": "{name:LogScriptCall|inputs:{dst:0x696e40ba67d890422421886633195013b62c9c44|sender:0xb3e43abf014cb2d8cf8dc3d8c2e62157e6093343|src:0xac104c988ff9c90dafc7754b2fb9072e25f93507}}"
       },
       {
         "address": "0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3",
@@ -811,7 +839,7 @@ TEST[DATE|TIME] Format:  json
             "_to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
           }
         },
-        "compressedLog": "Transfer(0x0 /*_from*/, 0xf503017d7baf7fbc0fff7492b751025c6a78179b /*_to*/, 22500000000000000000000 /*_amount*/); "
+        "compressedLog": "{name:Transfer|inputs:{_amount:22500000000000000000000|_from:0x0|_to:0xf503017d7baf7fbc0fff7492b751025c6a78179b}}"
       },
       {
         "address": "0xac104c988ff9c90dafc7754b2fb9072e25f93507",
@@ -830,7 +858,7 @@ TEST[DATE|TIME] Format:  json
             "script": "0x00000001696e40ba67d890422421886633195013b62c9c440000004440c10f19000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b0000000000000000000000000000000000000000000004c3ba39c5e411100000"
           }
         },
-        "compressedLog": "ScriptResult(0x5ceb19e1890f677c3676d5ecdf7c501eba01a054 /*executor*/, 0x00000001696e40ba67d890422421886633195013b62c9c440000004440c10f19000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b0000000000000000000000000000000000000000000004c3ba39c5e411100000 /*script*/, 0x /*input*/, 0x /*returnData*/); "
+        "compressedLog": "{name:ScriptResult|inputs:{executor:0x5ceb19e1890f677c3676d5ecdf7c501eba01a054|input:0x|returnData:0x|script:0x00000001696e40ba67d890422421886633195013b62c9c440000004440c10f19000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b0000000000000000000000000000000000000000000004c3ba39c5e411100000}}"
       },
       {
         "address": "0xac104c988ff9c90dafc7754b2fb9072e25f93507",
@@ -846,7 +874,7 @@ TEST[DATE|TIME] Format:  json
             "voteId": "23"
           }
         },
-        "compressedLog": "ExecuteVote(23 /*voteId*/); "
+        "compressedLog": "{name:ExecuteVote|inputs:{voteId:23}}"
       }
     ],
     "status": 1
@@ -859,7 +887,7 @@ TEST[DATE|TIME] Format:  json
       "_voteId": "23"
     }
   },
-  "compressedTx": "vote(23 /*_voteId*/, true /*_supports*/, true /*_executesIfDecided*/); ",
+  "compressedTx": "{name:vote|inputs:{_executesIfDecided:true|_supports:true|_voteId:23}}",
   "gasCost": 560859000000000,
   "gasUsed": 186953,
   "date": "2019-11-05 07:18:48 UTC",

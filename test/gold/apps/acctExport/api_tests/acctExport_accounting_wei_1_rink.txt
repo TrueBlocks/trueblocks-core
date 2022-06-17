@@ -1,0 +1,6 @@
+export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&maxRecords=5&accounting&fmt=api&logLevel=10&chain=rinkeby
+{
+  "errors": [
+    "The bloom filter for block zero (000000000-000000000.bloom) was not found. You must run 'chifra init' (and allow it to complete) or 'chifra scrape' before using this command."
+  ]
+}
