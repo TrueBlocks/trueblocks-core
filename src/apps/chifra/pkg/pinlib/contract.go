@@ -67,6 +67,7 @@ func GetManifestCidFromContract(chain string) (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("while reading contract ABI: %w", err)
 	}
+	defer abiSource.Close()
 
 	contractAbi, err := abi.JSON(abiSource)
 	if err != nil {
