@@ -5,9 +5,7 @@
  * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
-package cmd
+package version
 
-import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
-
-// Make a copy of this so we don't have to import the version package in every file
-const versionText = version.LibraryVersion
+const LibraryVersion = "GHC-TrueBlocks//0.37.0-beta"
+const ManifestVersion = "trueblocks-core@v0.40.0"

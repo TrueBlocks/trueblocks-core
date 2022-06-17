@@ -13,6 +13,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
 // ReadPinDescriptors parses pin information and returns a slice of
@@ -54,7 +55,7 @@ func ReadTabManifest(chain string, r io.Reader) (*Manifest, error) {
 	}
 
 	return &Manifest{
-		Version:   "trueblocks-core@v0.40.0",
+		Version:   version.ManifestVersion,
 		Chain:     chain,
 		Schemas:   unchained.Schemas,
 		Databases: unchained.Databases,

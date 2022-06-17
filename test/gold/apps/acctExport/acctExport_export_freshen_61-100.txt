@@ -1,5 +1,10 @@
-chifra monitors  0xbb7b8287f3f0a933474a79eae42cbca977791171 --first_block 61 --last_block 100 --appearances
-address	blocknumber	transactionindex
+chifra export  0xbb7b8287f3f0a933474a79eae42cbca977791171 --first_block 61 --last_block 100 --appearances
+TEST[DATE|TIME] Addrs:  [0xbb7b8287f3f0a933474a79eae42cbca977791171]
+TEST[DATE|TIME] Appearances:  true
+TEST[DATE|TIME] FirstBlock:  61
+TEST[DATE|TIME] LastBlock:  100
+TEST[DATE|TIME] Format:  txt
+address	blockNumber	transactionIndex
 0xbb7b8287f3f0a933474a79eae42cbca977791171	62	99999
 0xbb7b8287f3f0a933474a79eae42cbca977791171	65	99999
 0xbb7b8287f3f0a933474a79eae42cbca977791171	66	99999

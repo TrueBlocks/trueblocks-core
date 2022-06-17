@@ -299,7 +299,7 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTA
     uint32_t offset = 0, nAddrs = 0, cnt = 0;
     CIndexedAppearanceArray blockTable;
 
-    hashbytes_t hash = hash_2_Bytes(versionHash);
+    hashbytes_t hash = hash_2_Bytes(manifestVersion);
 
     CArchive archive(WRITING_ARCHIVE);
     if (!archive.Lock(tmpFile2, modeWriteCreate, LOCK_NOWAIT)) {
