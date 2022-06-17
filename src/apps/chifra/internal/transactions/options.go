@@ -43,6 +43,13 @@ func (opts *TransactionsOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
+func (opts *TransactionsOptions) GetEnvStr() string {
+	envStr := ""
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return envStr
+}
+
 func (opts *TransactionsOptions) ToCmdLine() string {
 	options := ""
 	if opts.Articulate {
@@ -61,6 +68,8 @@ func (opts *TransactionsOptions) ToCmdLine() string {
 		options += " --cache"
 	}
 	options += " " + strings.Join(opts.Transactions, " ")
+	// EXISTING_CODE
+	// EXISTING_CODE
 	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }

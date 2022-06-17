@@ -53,6 +53,9 @@ names?tags
       "tags": "30-Contracts:Set Protocol"
     },
     {
+      "tags": "30-Contracts:Uniswap"
+    },
+    {
       "tags": "30-Contracts:dAppNode"
     },
     {

@@ -19,6 +19,7 @@ tags
 30-Contracts:Pasta
 30-Contracts:Pool Together
 30-Contracts:Set Protocol
+30-Contracts:Uniswap
 30-Contracts:dAppNode
 30-Contracts:theGraph
 31-Contracts:Giveth Project

@@ -25,77 +25,40 @@ extern bool app_Post(CTraverser* trav, void* data);
 extern bool app_Display(CTraverser* trav, void* data);
 class CAppearanceTraverser : public CTraverser {
   public:
-    CAppearanceTraverser(void) : CTraverser("appearances") {
-        filterFunc = filterByRange;
-        preFunc = pre_Func;
-        postFunc = app_Post;
-        dataFunc = noopFunc;
-        displayFunc = app_Display;
-    }
+    CAppearanceTraverser(void);
 };
 
 extern bool receipts_Display(CTraverser* trav, void* data);
 class CReceiptTraverser : public CTraverser {
   public:
-    CReceiptTraverser(void) : CTraverser("receipts") {
-        filterFunc = filterByRange;
-        preFunc = pre_Func;
-        postFunc = post_Func;
-        dataFunc = loadTx_Func;
-        displayFunc = receipts_Display;
-    }
+    CReceiptTraverser(void);
 };
 
 extern bool statements_Display(CTraverser* trav, void* data);
 class CStatementTraverser : public CTraverser {
   public:
-    CStatementTraverser(void) : CTraverser("statements") {
-        filterFunc = filterByRange;
-        preFunc = pre_Func;
-        postFunc = post_Func;
-        dataFunc = loadTx_Func;
-        displayFunc = statements_Display;
-    }
+    CStatementTraverser(void);
 };
 
 extern bool logs_Display(CTraverser* trav, void* data);
 extern size_t logs_Count(CTraverser* trav, void* data);
 class CLogTraverser : public CTraverser {
   public:
-    CLogTraverser(void) : CTraverser("logs") {
-        filterFunc = filterByRange;
-        postFunc = post_Func;
-        dataFunc = loadTx_Func;
-        displayFunc = logs_Display;
-        counterFunc = logs_Count;
-    }
+    CLogTraverser(void);
 };
 
 extern bool traces_Display(CTraverser* trav, void* data);
 extern size_t traces_Count(CTraverser* trav, void* data);
 class CTraceTraverser : public CTraverser {
   public:
-    CTraceTraverser(void) : CTraverser("traces") {
-        filterFunc = filterByRange;
-        preFunc = pre_Func;
-        postFunc = post_Func;
-        dataFunc = loadTx_Func;
-        displayFunc = traces_Display;
-        counterFunc = traces_Count;
-    }
+    CTraceTraverser(void);
 };
 
 extern bool acct_Display(CTraverser* trav, void* data);
 extern bool acct_PreFunc(CTraverser* trav, void* data);
 class CTransactionTraverser : public CTraverser {
   public:
-    CTransactionTraverser(void) : CTraverser("txs") {
-        filterFunc = filterByRange;
-        preFunc = acct_PreFunc;
-        postFunc = post_Func;
-        dataFunc = loadTx_Func;
-        displayFunc = acct_Display;
-    }
+    CTransactionTraverser(void);
     ~CTransactionTraverser(void) {
     }
 };
@@ -104,8 +67,5 @@ extern bool neighbors_Pre(CTraverser* trav, void* data);
 extern size_t neighbors_Count(CTraverser* trav, void* data);
 class CNeighborTraverser : public CTraverser {
   public:
-    CNeighborTraverser(void) : CTraverser("neighbors") {
-        preFunc = neighbors_Pre;
-        postFunc = post_Func;
-    }
+    CNeighborTraverser(void);
 };

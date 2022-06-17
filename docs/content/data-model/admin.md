@@ -111,13 +111,13 @@ The following commands produce and manage manifests:
 
 Manifest data is made of the following data fields:
 
-| Field       | Description                                                     | Type              |
-| ----------- | --------------------------------------------------------------- | ----------------- |
-| indexFormat | IPFS cid of file describing the file format of an index chunk   | string            |
-| bloomFormat | IPFS cid of file describing the associated bloom filter         | string            |
-| firstPin    | the block number of the first pin in the manifest (always zero) | blknum            |
-| lastPin     | the most recent block included in this manifest                 | blknum            |
-| pins        | a list of all the pins in the unchained index                   | CPinnedChunkArray |
+| Field     | Description                                                           | Type              |
+| --------- | --------------------------------------------------------------------- | ----------------- |
+| version   | the version string hashed into the chunk data                         | string            |
+| chain     | the chain to which this manifest belongs                              | string            |
+| schemas   | IPFS cid of file describing the schemas for the various databases     | ipfshash          |
+| databases | IPFS cid of file containing CIDs for the various databases            | ipfshash          |
+| chunks    | a list of the IPFS hashes of all of the chunks in the unchained index | CPinnedChunkArray |
 
 
 ## Chain

@@ -23,8 +23,17 @@ int main(int argc, const char* argv[]) {
     ASSERT(options.commandLines.size() == 1);
     if (!options.parseArguments(options.commandLines[0]))
         return 0;
-    options.scrape_blocks();
-
+    bool ret = options.scrape_blocks();
     pinlib_cleanup();
-    return 0;
+
+    if (!ret) {
+        // TODO: BOGUS - Blaze Quits Early
+        LOG_INFO("");
+        LOG_INFO("---------------------------------------");
+        LOG_INFO("Blaze returned without completing.");
+        LOG_INFO("---------------------------------------");
+        LOG_INFO("");
+    }
+
+    return ret;
 }

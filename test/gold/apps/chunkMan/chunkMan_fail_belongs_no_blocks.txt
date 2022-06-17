@@ -9,14 +9,17 @@ Usage:
 
 Arguments:
   mode - the type of chunk info to retrieve (required)
-	One of [ stats | pins | blooms | index | addresses | appearances ]
+	One of [ stats | manifest | pins | blooms | index | addresses | appearances ]
   blocks - optional list of blocks to intersect with chunk ranges
   addrs - one or more addresses to use with --belongs option (see note)
 
 Flags:
+  -d, --details      for manifest and addresses options only, display full details of the report
   -c, --check        depends on mode, checks for internal consistency of the data type
   -b, --belongs      checks if the given address appears in the given chunk
-  -d, --details      for the --addresses option only, display appearance records as well as address records
+  -p, --pin_chunks   gzip each chunk, push it to IPFS, and update and publish the manifest
+  -a, --pin_data     gzip the databases, push them to IPFS, and update and publish the manifest
+  -n, --clean        retrieve all pins on Pinata, compare to manifest, remove any extraneous remote pins
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
   -v, --verbose      enable verbose (increase detail with --log_level)
   -h, --help         display this help screen
@@ -27,3 +30,4 @@ Notes:
   - The --belongs option is only available with the addresses or blooms mode.
   - The --belongs option requires both an address and a block identifier.
   - You may only specifiy an address when using the --belongs option.
+  - The two --pin_ options, the --clean option, and the --check option are available only in manifest mode.

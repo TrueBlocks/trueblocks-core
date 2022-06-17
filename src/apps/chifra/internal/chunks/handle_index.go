@@ -5,8 +5,6 @@
 package chunksPkg
 
 import (
-	"os"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -15,23 +13,28 @@ import (
 
 func (opts *ChunksOptions) showIndex(path string, first bool) (bool, error) {
 	path = index.ToIndexPath(path)
-	ff, err := os.Open(path)
-	if err != nil {
-		return false, err
-	}
-	defer ff.Close()
-	header, err := index.ReadHeader(ff)
-	var obj types.SimpleIndex
-	obj.Range, _ = cache.RangeFromFilename(path)
-	obj.Magic = header.Magic
-	obj.Hash = header.Hash
-	obj.AddressCount = header.AddressCount
-	obj.AppearanceCount = header.AppearanceCount
-	obj.Size = file.FileSize(path)
+	header, err := index.ReadHeaderFromFilename(path)
 	if err != nil {
 		return false, err
 	}
 
+	rng, err := cache.RangeFromFilename(path)
+	if err != nil {
+		return false, err
+	}
+
+	obj := types.SimpleIndex{
+		Range:           rng,
+		Magic:           header.Magic,
+		Hash:            header.Hash,
+		AddressCount:    header.AddressCount,
+		AppearanceCount: header.AppearanceCount,
+		Size:            file.FileSize(path),
+	}
+
+	// TODO: Customize display strings
+	// opts.Globals.Format = "Magic,Hash,Size,AppearanceCount,AddressCount,Range"
+	// opts.Globals.Format = "Range\tAppearanceCount\tAddressCount"
 	// TODO: Fix export without arrays
 	err = opts.Globals.RenderObject(obj, first)
 	if err != nil {
@@ -57,3 +60,13 @@ if (share) {
 	(pin.bloomHash == newHash ? greenCheck : redX));
 }
 */
+
+func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
+	defer opts.Globals.RenderFooter()
+	err := opts.Globals.RenderHeader(types.SimpleIndex{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+	if err != nil {
+		return err
+	}
+
+	return opts.WalkChunkFiles(opts.showIndex, blockNums)
+}

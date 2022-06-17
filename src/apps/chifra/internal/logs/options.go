@@ -34,12 +34,21 @@ func (opts *LogsOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
+func (opts *LogsOptions) GetEnvStr() string {
+	envStr := ""
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return envStr
+}
+
 func (opts *LogsOptions) ToCmdLine() string {
 	options := ""
 	if opts.Articulate {
 		options += " --articulate"
 	}
 	options += " " + strings.Join(opts.Transactions, " ")
+	// EXISTING_CODE
+	// EXISTING_CODE
 	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }

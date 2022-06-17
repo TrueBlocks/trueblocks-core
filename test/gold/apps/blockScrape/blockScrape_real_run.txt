@@ -1,29 +1,31 @@
-chifra scrape  both --sleep .5 --pin --log_level 8
-<INFO> : hasIndexFlag Action:  both
-{
-  "message": "Testing in scrape_run.go",
-  "action": run,
-  "block_cnt": 2000,
-  "block_chan_cnt": 10,
-  "addr_chan_cnt": 20,
-  "sleep": 0.5,
-  "pin": true,
-  "publish": false,
-}
-%s {0 true false 0 [33m IndexScraper 0} [0m
-<INFO> : [33m IndexScraper : [ paused  -->  running ] [0m
-<INFO> : [33m IndexScraper : [ sleep  -->  wake ] [0m
-TIME ~ CLOCK - <INFO>  : pin: true
-TIME ~ CLOCK - <INFO>  : sleep: 0.5
-TIME ~ CLOCK - : 4-----
-pgrep -lfa "acctExport"
- 0
-{
-  "message": "Testing in blockScrape/options.cpp",
-  "block_cnt": 2000,
-  "block_chan_cnt": 10,
-  "addr_chan_cnt": 20,
-  "pin": 1,
-  "publish": 0,
-}
-<INFO> : [33m IndexScraper : [ wake  -->  sleep ] [0m
+chifra scrape  --sleep .5 --pin --log_level 8
+TEST[DATE|TIME] Sleep:  0.5
+TEST[DATE|TIME] Pin:  true
+TEST[DATE|TIME] LogLevel:  8
+TEST[DATE|TIME] Format:  txt
+Error: Please choose at least one of [run|stop].
+Usage:
+  chifra scrape <mode> [mode...] [flags]
+
+Arguments:
+  modes - which scraper(s) to control (required)
+	One or more of [ run | stop ]
+
+Flags:
+  -s, --sleep float           seconds to sleep between scraper passes (default 14)
+  -p, --pin                   pin chunks (and blooms) to IPFS as they are created (requires pinning service)
+  -n, --block_cnt uint        maximum number of blocks to process per pass (default 2000)
+  -z, --blaze                 invoke the blaze scraper to process blocks (hidden)
+  -b, --block_chan_cnt uint   number of concurrent block processing channels (hidden) (default 10)
+  -d, --addr_chan_cnt uint    number of concurrent address processing channels (hidden) (default 20)
+      --apps_per_chunk uint   the number of appearances to build into a chunk before consolidating it (hidden) (default 200000)
+      --unripe_dist uint      the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe (hidden) (default 28)
+      --snap_to_grid uint     an override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index (hidden) (default 100000)
+      --first_snap uint       the first block at which snap_to_grid is enabled (hidden)
+      --allow_missing         do not report errors for blockchain that contain blocks with zero addresses (hidden)
+  -l, --start_block uint      first block to visit (available only for blaze scraper) (hidden)
+  -r, --ripe_block uint       blocks prior to this value are written to 'ripe' folder (available only for blaze scraper) (hidden)
+  -x, --fmt string            export format, one of [none|json*|txt|csv|api]
+  -v, --verbose               enable verbose (increase detail with --log_level)
+  -h, --help                  display this help screen
+

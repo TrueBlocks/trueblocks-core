@@ -1,0 +1,65 @@
+chifra chunks  manifest
+TEST[DATE|TIME] Mode:  manifest
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "version": "trueblocks-core@v0.40.0",
+      "chain": "mainnet",
+      "schemas": "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2",
+      "databases": "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2",
+      "chunks": [
+        {
+          "fileName": "001848055-001963090",
+          "bloomHash": "QmQZd6fMdEkgpfbJy453T3KFufrNLFrrQ53j2wvLW24464",
+          "indexHash": "QmeDBqz5wxRP2EqrAvPk9QasyNMch4cymBDn6Miqn8WvHV"
+        },
+        {
+          "fileName": "001729009-001848054",
+          "bloomHash": "QmcrwCVVuBUo6CmtAYfXstPApoFhniPFjM1K2nEVKHir91",
+          "indexHash": "QmQbP6UjFuvZ3HMoQWfc2E8vXAJy22igkq578CuZWgjay8"
+        },
+        {
+          "fileName": "001613034-001729008",
+          "bloomHash": "Qma5dJRn3jmjsKRgmbLMhfuYAP2CCnFYwA1TcLeHfQE3UF",
+          "indexHash": "Qmf95ZNKDbKNy3FFEULtZ9qafWjNi4fGgcRFS1AV8VM1i8"
+        },
+        {
+          "fileName": "001504329-001613033",
+          "bloomHash": "QmSWLVGivBFFYEj7cRoTeyZK9s7goBfy5ygZUYQtLAXFk7",
+          "indexHash": "QmTX1nVLH3UrunuovoFe4ww5UsUnWHcgim7mSjVZodMnNL"
+        },
+        {
+          "fileName": "001371353-001504328",
+          "bloomHash": "QmSEZuTbpjGFMmpgeizWnwzhKGRvYseNiAGSVmWfLXDN2B",
+          "indexHash": "QmeHsRmHcPjNym2tMKkn8wftfVX9MM3eUWhdVPAjK4pTF5"
+        },
+        {
+          "fileName": "001229770-001371352",
+          "bloomHash": "QmW8GX1W9SJQRxDTXzwDmTReVt1Q8QqTYsywT7JkzXh7CP",
+          "indexHash": "QmV6qabbSsftjEHXDkLPWBa3VJBcATfMDZbMdgVhDv2tjE"
+        },
+        {
+          "fileName": "001076299-001229769",
+          "bloomHash": "Qmb5hPei6ELWKdjpNMXtyovzj9asbHCqq8X4bCS3EimxyQ",
+          "indexHash": "QmUyR8YDZ4mDGG8ZADK9Es4V5ndWVr8XHs2xtgtu3AEs7j"
+        },
+        {
+          "fileName": "000864333-001076298",
+          "bloomHash": "QmTDZ2vzpkV3BvssBoszPMGHAyeUbSZkhL98npHikQvHVv",
+          "indexHash": "QmU3wWKGQDpfRCVmv5bxy6zzGK6Ypb3QSJbr3NACgshCqv"
+        },
+        {
+          "fileName": "000590502-000864332",
+          "bloomHash": "QmTtHgpV1Bfd6eF2Wu5L2V5juAV3c8bWSnYVufiexBBAef",
+          "indexHash": "QmT8NCfsr181xocdqBvesWbKzj3tfFDU2kVQZJCGdUeHmK"
+        },
+        {
+          "fileName": "000000001-000590501",
+          "bloomHash": "QmSGuSQHgK4S9yiZQ3dKrykQVpLTmdFettY9sAwa537gPL",
+          "indexHash": "QmSaoxc3XA9DEaA3inhLW5ZKsk5C5LWvowSXpHwVHsMjQp"
+        }
+      ]
+    }
+  ]
+}

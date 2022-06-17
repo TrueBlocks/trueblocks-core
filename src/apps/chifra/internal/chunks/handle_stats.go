@@ -77,3 +77,13 @@ type float_p3 float64
 func (f float_p3) String() string {
 	return fmt.Sprintf("%.3f", f)
 }
+
+func (opts *ChunksOptions) HandleStats(blockNums []uint64) error {
+	defer opts.Globals.RenderFooter()
+	err := opts.Globals.RenderHeader(ChunkStats{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+	if err != nil {
+		return err
+	}
+
+	return opts.WalkChunkFiles(opts.showStats, blockNums)
+}

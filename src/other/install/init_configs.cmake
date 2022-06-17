@@ -81,6 +81,7 @@ PrintLine("Copying files and folder to config...")
 # Function        InFolder                                 InFile                     OutFolder
 CopyNotPresent    (${INSTALL_SOURCE}                       "trueBlocks.toml"          ${INSTALL_DEST}                        )
 CopyNotPresent    (${INSTALL_SOURCE}/manifest/             "manifest.txt"             ${INSTALL_DEST}/config/mainnet/        )
+CopyNotPresent    (${INSTALL_SOURCE}/manifest/             "manifest.json"            ${INSTALL_DEST}/config/mainnet/        )
 CopyNotPresent    (${INSTALL_SOURCE}/names/                "names_custom.tab"         ${INSTALL_DEST}/config/mainnet/        )
 CopyNotPresent    (${INSTALL_SOURCE}/names/                "collections.csv"          ${INSTALL_DEST}/config/mainnet/        )
 CopyNotPresent    (${INSTALL_SOURCE}/                      "ethslurp.toml"            ${INSTALL_DEST}/config/mainnet/        )

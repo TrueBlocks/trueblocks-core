@@ -13,7 +13,6 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
@@ -56,70 +55,49 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 	}
 
 	maxTestItems = 100
-	if opts.Check {
-		return opts.HandleChunksCheck(blockNums), true
+	if opts.Check || opts.PinChunks || opts.PinData {
+		if opts.Check {
+			err = opts.HandleChunksCheck(blockNums)
+			if err != nil {
+				return
+			}
+		}
+		// TODO: BOGUS - Complete this work
+		return
 
 	} else {
-		defer opts.Globals.RenderFooter()
+		switch opts.Mode {
+		case "stats":
+			err = opts.HandleStats(blockNums)
 
-		if opts.Mode == "pins" {
-			err := opts.Globals.RenderHeader(types.SimplePinList{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
-			if err != nil {
-				return err, true
-			}
-			return opts.HandleChunksExtractPins(), true
+		case "pins":
+			err = opts.HandlePins(blockNums)
 
-		} else if opts.Mode == "stats" {
-			err := opts.Globals.RenderHeader(ChunkStats{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
-			if err != nil {
-				return err, true
-			}
-			return opts.HandleChunksExtract(opts.showStats, blockNums), true
-
-		} else if opts.Mode == "blooms" {
-			maxTestItems = 10
-			err := opts.Globals.RenderHeader(types.SimpleBloom{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
-			if err != nil {
-				return err, true
-			}
-			return opts.HandleChunksExtract(opts.showBloom, blockNums), true
-
-		} else if opts.Mode == "index" {
-			err := opts.Globals.RenderHeader(types.SimpleIndex{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
-			if err != nil {
-				return err, true
-			}
-			return opts.HandleChunksExtract(opts.showIndex, blockNums), true
-
-		} else if opts.Mode == "addresses" {
-			if opts.Belongs {
-				maxTestItems = 10000
-				err := opts.Globals.RenderHeader(types.SimpleIndexAddressBelongs{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
-				if err != nil {
-					return err, true
-				}
-				return opts.HandleChunksExtract(opts.showAddressesBelongs, blockNums), true
-
+		case "manifest":
+			if opts.Globals.Format == "txt" || opts.Globals.Format == "csv" {
+				err = opts.HandlePins(blockNums)
 			} else {
-				maxTestItems = 10
-				err := opts.Globals.RenderHeader(types.SimpleIndexAddress{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
-				if err != nil {
-					return err, true
-				}
-				return opts.HandleChunksExtract(opts.showAddresses, blockNums), true
+				err = opts.HandleManifest(blockNums)
 			}
 
-		} else if opts.Mode == "appearances" {
-			maxTestItems = 10
-			err := opts.Globals.RenderHeader(types.SimpleIndexAppearance{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
-			if err != nil {
-				return err, true
+		case "blooms":
+			err = opts.HandleBlooms(blockNums)
+
+		case "index":
+			err = opts.HandleIndex(blockNums)
+
+		case "addresses":
+			if opts.Belongs {
+				err = opts.HandleAddressesBelongs(blockNums)
+			} else {
+				err = opts.HandleAddresses(blockNums)
 			}
-			return opts.HandleChunksExtract(opts.showAppearances, blockNums), true
 
-		} else {
-			return validate.Usage("Extractor for {0} not yet implemented.", opts.Mode), true
+		case "appearances":
+			err = opts.HandleAppearances(blockNums)
 
+		default:
+			err = validate.Usage("Extractor for {0} not yet implemented.", opts.Mode)
 		}
 	}
 	// EXISTING_CODE

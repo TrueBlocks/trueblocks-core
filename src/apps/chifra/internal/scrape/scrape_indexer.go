@@ -5,6 +5,7 @@ package scrapePkg
 // be found in the LICENSE file.
 
 import (
+	"fmt"
 	"log"
 	"sync"
 
@@ -26,7 +27,11 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 			s.Pause()
 
 		} else {
-			opts.Globals.PassItOn("blockScrape", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
+			err := opts.Globals.PassItOn("blockScrape", opts.Globals.Chain, opts.ToCmdLine(), opts.GetEnvStr())
+			if err != nil {
+				fmt.Println("Error returned from blockScape:", err)
+			}
+
 			if s.Running {
 				// We sleep under two conditions
 				//   1) the user has told us an explicit amount of time to Sleep
@@ -35,6 +40,7 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 				//
 				// If we're closeEnough and the user specified a sleep value less than
 				// 14 seconds, there's not reason to not sleep
+				// TODO: Multi-chain specific
 				var distanceFromHead uint64 = 13
 				meta, err := rpcClient.GetMetaData(opts.Globals.Chain, false)
 				if err != nil {
@@ -43,10 +49,12 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 					distanceFromHead = meta.Latest - meta.Staging
 				}
 				closeEnough := distanceFromHead <= (2 * opts.UnripeDist)
-				// TODO: per chain data
-				if closeEnough {
+				// TODO: Multi-chain specific
+				if closeEnough && opts.Sleep < 13 {
+					// TODO: Multi-chain specific
 					opts.Sleep = 13
 				}
+				// TODO: Multi-chain specific
 				isDefault := opts.Sleep == 14 || opts.Sleep == 13
 				if !isDefault || closeEnough {
 					if closeEnough {

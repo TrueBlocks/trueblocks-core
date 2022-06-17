@@ -1,3 +1,16 @@
+TELL THEM TO REMOVE THE CONTENTS OF CMAKE IF THERE'S AN ISSUE WITH CMAKE
+CMake was unable to find a build program corresponding to "Ninja"
+-- Using c++ standard c++17
+CMake Error: CMake was unable to find a build program corresponding to "Ninja".  CMAKE_MAKE_PROGRAM is not set.  You probably need to select a different build tool.
+CMake Error: CMAKE_C_COMPILER not set, after EnableLanguage
+CMake Error: CMAKE_CXX_COMPILER not set, after EnableLanguage
+-- Configuring incomplete, errors occurred!
+See also "/Users/jrush/Development/trueblocks-core/build/CMakeFiles/CMakeOutput.log".
+See also "/Users/jrush/Development/trueblocks-core/build/CMakeFiles/CMakeError.log".
+make: *** [cmake_check_build_system] Error 1
+brew install ninja on  Mac
+
+
 DO NOT RUN THIS MIGRATION UNTIL INSTRUCTED
 
 # v0.36.0 Fix to UnchainedIndex

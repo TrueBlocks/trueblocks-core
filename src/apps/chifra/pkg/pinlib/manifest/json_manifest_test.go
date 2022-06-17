@@ -13,14 +13,9 @@ var manifestSource = `
 {
   "version": "2",
   "chain": "mainnet",
-  "chainId": 1,
-  "indexFormat": "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2",
-  "bloomFormat": "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD",
-  "commitHash": "f29699d3281e41cb011ddfbe50b7f01bfe5e3c53",
-  "names": "QmP4i6ihnVrj8Tx7cTFw4aY6ungpaPYxDJEZ7Vg1RSNSdm",
-  "timestamps": "QmcvjroTiE95LWeiP8HHq1YA3ysRchLuVx8HLQui8WcSBV",
-  "blockRange": "000000000-000864336",
-  "pins": [
+  "schemas": "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2",
+  "databases": "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD",
+  "chunks": [
     {
       "fileName": "000000000-000000000",
       "bloomHash": "QmPQEgUm7nzQuW9HYyWp5Ff3aoUwg2rsxDngyuyddJTvrv",
@@ -65,7 +60,7 @@ func TestReadManifest(t *testing.T) {
 	cases := []TestCases{
 		{
 			name:     "Version",
-			field:    m.Version.String(),
+			field:    m.Version,
 			expected: "2",
 		},
 		{
@@ -74,34 +69,14 @@ func TestReadManifest(t *testing.T) {
 			expected: "mainnet",
 		},
 		{
-			name:     "ChainId",
-			field:    m.ChainId.String(),
-			expected: "1",
-		},
-		{
-			name:     "IndexFormat",
-			field:    m.IndexFormat,
+			name:     "Schemas",
+			field:    m.Schemas,
 			expected: "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2",
 		},
 		{
-			name:     "BloomFormat",
-			field:    m.BloomFormat,
+			name:     "Databases",
+			field:    m.Databases,
 			expected: "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD",
-		},
-		{
-			name:     "CommitHash",
-			field:    m.CommitHash,
-			expected: "f29699d3281e41cb011ddfbe50b7f01bfe5e3c53",
-		},
-		{
-			name:     "Names",
-			field:    m.Names,
-			expected: "QmP4i6ihnVrj8Tx7cTFw4aY6ungpaPYxDJEZ7Vg1RSNSdm",
-		},
-		{
-			name:     "Timestamps",
-			field:    m.Timestamps,
-			expected: "QmcvjroTiE95LWeiP8HHq1YA3ysRchLuVx8HLQui8WcSBV",
 		},
 	}
 
@@ -111,15 +86,7 @@ func TestReadManifest(t *testing.T) {
 		}
 	}
 
-	if m.BlockRange[0] != 0 {
-		t.Errorf("Wrong NewBlockRange[0]: %d", m.BlockRange[0])
-	}
-
-	if m.BlockRange[1] != 864336 {
-		t.Errorf("Wrong NewBlockRange[1]: %d", m.BlockRange[1])
-	}
-
-	newPins := m.Pins
+	newPins := m.Chunks
 
 	if len(newPins) != 5 {
 		t.Errorf("Incorrect NewPins length: %d", len(newPins))

@@ -56,6 +56,13 @@ func (opts *ScrapeOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
+func (opts *ScrapeOptions) GetEnvStr() string {
+	envStr := ""
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return envStr
+}
+
 func (opts *ScrapeOptions) ToCmdLine() string {
 	options := ""
 	if opts.Pin {
@@ -71,6 +78,8 @@ func (opts *ScrapeOptions) ToCmdLine() string {
 		options += (" --addr_chan_cnt " + fmt.Sprintf("%d", opts.AddrChanCnt))
 	}
 	options += " " + strings.Join(opts.Modes, " ")
+	// EXISTING_CODE
+	// EXISTING_CODE
 	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }

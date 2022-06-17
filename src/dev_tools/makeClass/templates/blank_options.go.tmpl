@@ -30,7 +30,7 @@ func (opts *[{PROPER}]Options) TestLog() {
 [{TEST_LOGS}]	opts.Globals.TestLog()
 }
 
-[{TOCMDLINE}]func [{PROPER}]FinishParseApi(w http.ResponseWriter, r *http.Request) *[{PROPER}]Options {
+[{GETENVSTR}][{TOCMDLINE}]func [{PROPER}]FinishParseApi(w http.ResponseWriter, r *http.Request) *[{PROPER}]Options {
 	opts := &[{PROPER}]Options{}
 [{DEFAULTS_API}]	for key, value := range r.URL.Query() {
 		switch key {

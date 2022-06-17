@@ -73,6 +73,8 @@ extern string_q getDefaultChain(void);
 #define chainConfigsTxt_namesCustom (chainConfigs + "names_custom.tab")
 #define chainConfigsTxt_collections (chainConfigs + "collections.csv")
 #define chainConfigsTxt_manifest (chainConfigs + "manifest.txt")
+// TODO: BOGUS - Complete this work - Writing JSON from C++ code
+#define chainConfigsJson_manifest (chainConfigs + "manifest.json")
 
 //---------------------------------------------------------------------------
 #define chainConfigsZip_prices (chainConfigs + "poloniex_USDT_ETH.bin.gz")

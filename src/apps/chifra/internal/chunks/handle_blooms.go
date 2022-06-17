@@ -43,3 +43,14 @@ func NewSimpleBloom(stats ChunkStats, bloom index.ChunkBloom) types.SimpleBloom 
 
 	return ret
 }
+
+func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
+	maxTestItems = 10
+
+	defer opts.Globals.RenderFooter()
+	err := opts.Globals.RenderHeader(types.SimpleBloom{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+	if err != nil {
+		return err
+	}
+	return opts.WalkChunkFiles(opts.showBloom, blockNums)
+}

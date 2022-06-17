@@ -1,0 +1,6 @@
+chunks?mode=addresses&check
+{
+  "errors": [
+    "The --check option is available only in manifest mode."
+  ]
+}

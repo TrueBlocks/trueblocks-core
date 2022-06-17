@@ -26,6 +26,7 @@ func (opts *ScrapeOptions) ValidateScrape() error {
 
 	} else {
 		for _, arg := range opts.Modes {
+			// TODO: BOGUS - this should be noted as deprecated somehow
 			arg = strings.Replace(arg, "indexer", "run", -1)
 			err := validate.ValidateEnum("mode", arg, "[run|stop]")
 			if err != nil {

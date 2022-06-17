@@ -36,6 +36,13 @@ func (opts *QuotesOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
+func (opts *QuotesOptions) GetEnvStr() string {
+	envStr := ""
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return envStr
+}
+
 func (opts *QuotesOptions) ToCmdLine() string {
 	options := ""
 	if opts.Update {
@@ -51,6 +58,8 @@ func (opts *QuotesOptions) ToCmdLine() string {
 		options += " --feed " + opts.Feed
 	}
 	options += " " + strings.Join([]string{}, " ")
+	// EXISTING_CODE
+	// EXISTING_CODE
 	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }

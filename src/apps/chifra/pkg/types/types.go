@@ -19,6 +19,16 @@ type CleanReport struct {
 	Dups     uint32 `json:"dupsRemoved"`
 }
 
+type CheckReport struct {
+	Reason     string   `json:"reason"`
+	VisitedCnt uint32   `json:"nVisited"`
+	CheckedCnt uint32   `json:"nChecked,omitempty"`
+	SkippedCnt uint32   `json:"nSkipped,omitempty"`
+	PassedCnt  uint32   `json:"nPassed,omitempty"`
+	FailedCnt  uint32   `json:"nFailed,omitempty"`
+	ErrorStrs  []string `json:"errorStrs,omitempty"`
+}
+
 type SimpleAppearance struct {
 	Address          string `json:"address"`
 	BlockNumber      uint32 `json:"blockNumber"`
@@ -37,7 +47,15 @@ type SimpleMonitor struct {
 	LastScanned uint32 `json:"lastScanned"`
 }
 
-type SimplePinList struct {
+type SimpleManifest struct {
+	Version   string        `json:"version"`
+	Chain     string        `json:"chain"`
+	Schemas   string        `json:"schemas"`
+	Databases string        `json:"databases"`
+	Chunks    []SimpleChunk `json:"chunks"`
+}
+
+type SimpleChunk struct {
 	FileName  string `json:"fileName"`
 	BloomHash string `json:"bloomHash"`
 	IndexHash string `json:"indexHash"`

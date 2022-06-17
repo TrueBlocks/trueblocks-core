@@ -6,10 +6,11 @@ package chunksPkg
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *ChunksOptions) HandleChunksExtractPins() error {
-	results, err := manifest.GetPinList(opts.Globals.Chain)
+func (opts *ChunksOptions) HandleChunksPins() error {
+	results, err := manifest.GetChunkList(opts.Globals.Chain)
 	if err != nil {
 		return err
 	}
@@ -24,4 +25,16 @@ func (opts *ChunksOptions) HandleChunksExtractPins() error {
 		}
 	}
 	return nil
+}
+
+func (opts *ChunksOptions) HandlePins(blockNums []uint64) error {
+	maxTestItems = 10
+
+	defer opts.Globals.RenderFooter()
+	err := opts.Globals.RenderHeader(types.SimpleChunk{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+	if err != nil {
+		return err
+	}
+
+	return opts.HandleChunksPins()
 }

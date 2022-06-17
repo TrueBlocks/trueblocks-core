@@ -28,8 +28,8 @@ func EstablishIndexChunk(chain string, fileRange cache.FileRange) (bool, error) 
 
 	// Find bloom filter's CID
 	// TODO(dawid): This can be a binary search since the pin list is always sorted
-	var matchedPin manifest.PinDescriptor
-	for _, pin := range localManifest.Pins {
+	var matchedPin manifest.Chunk
+	for _, pin := range localManifest.Chunks {
 		if strings.Contains(fileName, pin.FileName) {
 			matchedPin = pin
 			break
@@ -42,7 +42,7 @@ func EstablishIndexChunk(chain string, fileRange cache.FileRange) (bool, error) 
 	logger.Log(logger.Info, "Downloading", colors.Blue, fileRange, colors.Off, "from IPFS.")
 
 	// Start downloading the filter
-	pins := []manifest.PinDescriptor{matchedPin}
+	pins := []manifest.Chunk{matchedPin}
 	progressChannel := make(chan *progress.Progress)
 
 	go func() {

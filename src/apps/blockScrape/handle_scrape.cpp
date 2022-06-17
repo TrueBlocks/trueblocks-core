@@ -50,7 +50,7 @@ bool COptions::scrape_blocks(void) {
             sleep(3);
             return scrape_blocks();
         }
-        LOG_WARN(cYellow, "Blaze quit without finishing. Reprocessing...", cOff);
+        LOG_WARN(cYellow, "Blaze quit without finishing twice. Reprocessing...", cOff);
         return false;
     }
 
@@ -63,22 +63,33 @@ bool COptions::scrape_blocks(void) {
     string_q stageFn = getLastFileInFolder(indexFolder_staging, false);
     prev_block = path_2_Bn(stageFn);
     nRecsThen = fileSize(stageFn) / asciiAppearanceSize;
+    snapped = false;
     if (!forEveryFileInFolder(indexFolder_ripe, copyRipeToStage, this)) {
+        if (!snapped) {
+            LOG_WARN("copyRipeToStage failed...replaying...");
+        }
         cleanFolder(indexFolder_unripe);
         cleanFolder(indexFolder_ripe);
         tmpStagingStream.close();
         ::remove(tmpStagingFn.c_str());
-        return false;
+        return snapped;
     }
     tmpStagingStream.close();
 
-    if (!stage_chunks(tmpStagingFn))
+    if (!stage_chunks(tmpStagingFn)) {
+        LOG_WARN("stage_chunks failed...replaying...");
         return false;
-    if (!isTestMode())
+    }
+    // TODO: Remove this
+    bool no_update = getEnvStr("NOUPDATE") == "true";
+    if (!isTestMode() && !no_update)
         freshenTimestamps(blaze_start + block_cnt);
     report();
-    if (nRecsNow <= apps_per_chunk)
+    if (nRecsNow <= apps_per_chunk) {
+        // LOG_WARN("need more records...");
         return true;
+    }
+
     return write_chunks(apps_per_chunk, false /* snapped */);
 }
 
@@ -115,12 +126,15 @@ bool copyRipeToStage(const string_q& path, void* data) {
 
         if (opts->isSnapToGrid(bn)) {
             string_q tmpStagingFn = (indexFolder_staging + "000000000-temp.txt");
-            if (!opts->stage_chunks(tmpStagingFn))
+            if (!opts->stage_chunks(tmpStagingFn)) {
+                LOG_WARN("opts->stage_chunks(" + tmpStagingFn + ") returned false");
                 return false;
+            }
             opts->report();
             blknum_t nRecords = fileSize(opts->newStage) / asciiAppearanceSize;
             blknum_t chunkSize = min(nRecords, opts->apps_per_chunk);
             opts->write_chunks(chunkSize, true /* snapped */);
+            opts->snapped = true;
             return false;
         }
     }

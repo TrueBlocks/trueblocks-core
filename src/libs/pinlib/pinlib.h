@@ -20,12 +20,7 @@ namespace qblocks {
 
 extern void pinlib_init(QUITHANDLER qh);
 extern void pinlib_cleanup(void);
-
-extern bool pinlib_readManifest(CPinnedChunkArray& pList);
-extern bool pinlib_updateManifest(CPinnedChunkArray& pList);
-
 extern bool pinlib_pinChunk(CPinnedChunkArray& pList, const string_q& fn, CPinnedChunk& item);
-extern bool pinlib_findChunk(CPinnedChunkArray& pList, const string_q& fn, CPinnedChunk& item);
 
 }  // namespace qblocks
 

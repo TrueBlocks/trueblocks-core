@@ -88,6 +88,13 @@ func (opts *ExportOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
+func (opts *ExportOptions) GetEnvStr() string {
+	envStr := ""
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return envStr
+}
+
 func (opts *ExportOptions) ToCmdLine() string {
 	options := ""
 	if opts.Appearances {
@@ -159,6 +166,8 @@ func (opts *ExportOptions) ToCmdLine() string {
 	options += " " + strings.Join(opts.Addrs, " ")
 	options += " " + strings.Join(opts.Topics, " ")
 	options += " " + strings.Join(opts.Fourbytes, " ")
+	// EXISTING_CODE
+	// EXISTING_CODE
 	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }

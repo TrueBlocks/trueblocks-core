@@ -1,7 +1,6 @@
 name        ,type        ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
-fileName    ,string      ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
-indexFormat ,string      ,           ,       ,      ,        ,          ,        ,      ,         ,1   ,     ,        ,IPFS cid of file describing the file format of an index chunk
-bloomFormat ,string      ,           ,       ,      ,        ,          ,        ,      ,         ,2   ,     ,        ,IPFS cid of file describing the associated bloom filter
-firstPin    ,blknum      ,           ,       ,      ,        ,          ,        ,      ,         ,3   ,     ,        ,the block number of the first pin in the manifest (always zero)
-lastPin     ,blknum      ,           ,       ,      ,        ,          ,        ,      ,         ,4   ,     ,        ,the most recent block included in this manifest
-pins        ,pinnedChunk ,           ,true   ,true  ,        ,          ,        ,      ,         ,5   ,     ,        ,a list of all the pins in the unchained index
+version     ,string      ,           ,       ,      ,        ,          ,        ,      ,         ,1   ,     ,        ,the version string hashed into the chunk data
+chain       ,string      ,           ,       ,      ,        ,          ,        ,      ,         ,2   ,     ,        ,the chain to which this manifest belongs
+schemas     ,ipfshash    ,           ,       ,      ,        ,          ,        ,      ,         ,3   ,     ,        ,IPFS cid of file describing the schemas for the various databases
+databases   ,ipfshash    ,           ,       ,      ,        ,          ,        ,      ,         ,4   ,     ,        ,IPFS cid of file containing CIDs for the various databases
+chunks      ,pinnedChunk ,           ,true   ,true  ,        ,          ,        ,      ,         ,5   ,     ,        ,a list of the IPFS hashes of all of the chunks in the unchained index

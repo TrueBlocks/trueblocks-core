@@ -12,12 +12,10 @@
  *-------------------------------------------------------------------------------------------*/
 
 #include "pinlib.h"
-#include "classes/pinatalist.h"
 #include "classes/pinatapin.h"
 
 namespace qblocks {
 
-extern bool parseOneLine(const char* line, void* data);
 #define hashToEmptyFile "QmP4i6ihnVrj8Tx7cTFw4aY6ungpaPYxDJEZ7Vg1RSNSdm"
 
 //-------------------------------------------------------------------------
@@ -25,69 +23,12 @@ void pinlib_init(QUITHANDLER qh) {
     acctlib_init(qh);
     CPinnedChunk::registerClass();
     CPinataPin::registerClass();
-    CPinataPinlist::registerClass();
-    CPinataMetadata::registerClass();
-    CPinataRegion::registerClass();
-    CPinManifest::registerClass();
+    CManifest::registerClass();
 }
 
 //-------------------------------------------------------------------------
 void pinlib_cleanup(void) {
     acctlib_cleanup();
-}
-
-//---------------------------------------------------------------------------
-bool pinlib_readManifest(CPinnedChunkArray& pinArray) {
-    if (!pinArray.empty())
-        return true;
-
-    string_q binFile = cacheFolder_tmp + "pins.bin";
-    string_q textFile = chainConfigsTxt_manifest;
-
-    time_q binDate = fileLastModifyDate(binFile);
-    time_q textDate = fileLastModifyDate(textFile);
-
-    if (binDate > textDate && fileExists(binFile)) {
-        CArchive pinFile(READING_ARCHIVE);
-        if (!pinFile.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
-            LOG_ERR("Could not open pin file for reading.");
-            return false;
-        }
-        pinFile >> pinArray;
-        pinFile.Release();
-
-    } else if (!fileExists(textFile)) {
-        LOG_ERR("Pins file (", textFile, ") is required, but not found.");
-        return false;
-
-    } else {
-        pinArray.clear();  // redundant, but fine
-        forEveryLineInAsciiFile(textFile, parseOneLine, &pinArray);
-        LOG4("Done loading pins");
-        sort(pinArray.begin(), pinArray.end());
-        if (!isTestMode())
-            pinlib_updateManifest(pinArray);
-    }
-    return true;
-}
-
-//---------------------------------------------------------------------------
-bool pinlib_updateManifest(CPinnedChunkArray& pList) {
-    string_q binFile = cacheFolder_tmp + "pins.bin";
-    establishFolder(binFile);
-
-    lockSection();  // disallow control+C until we write both files
-    CArchive pinFile(WRITING_ARCHIVE);
-    if (!pinFile.Lock(binFile, modeWriteCreate, LOCK_WAIT)) {
-        cerr << "Could not lock pin file for writing." << endl;
-        unlockSection();  // enable control+C
-        return false;
-    }
-    pinFile << pList;
-    pinFile.Release();
-    unlockSection();  // enable control+C
-
-    return true;
 }
 
 //-------------------------------------------------------------------------
@@ -157,14 +98,6 @@ static string_q pinOneChunk(const string_q& fileName, const string_q& type) {
 
 //----------------------------------------------------------------
 bool pinlib_pinChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinnedChunk& item) {
-    // If already pinned, no reason to pin it again...
-    CPinnedChunk copy;
-    if (pinlib_findChunk(pList, fileName, copy)) {
-        LOG_WARN("Pin for blocks ", fileName, " already exists.");
-        item = copy;
-        return true;
-    }
-
     item.fileName = fileName;
     string_q indexStr = pinOneChunk(fileName, "finalized");
     if (!contains(indexStr, "IpfsHash")) {
@@ -203,40 +136,6 @@ bool pinlib_pinChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinned
 
     // write the array (after sorting it) to the database
     sort(pList.begin(), pList.end());
-    return pinlib_updateManifest(pList);
-}
-
-//---------------------------------------------------------------------------
-bool pinlib_findChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinnedChunk& item) {
-    if (!pinlib_readManifest(pList))
-        return false;
-
-    CPinnedChunk search;
-    search.fileName = fileName;
-    const vector<CPinnedChunk>::iterator it = find(pList.begin(), pList.end(), search);
-    if (it != pList.end()) {
-        item = *it;
-        return true;
-    }
-    return false;
-}
-
-//---------------------------------------------------------------------------
-bool parseOneLine(const char* line, void* data) {
-    if (isTestMode() && line > string_q("005000000"))
-        return true;
-
-    CPinnedChunkArray* pins = (CPinnedChunkArray*)data;
-    static CStringArray fields;
-    if (fields.empty()) {
-        string_q flds = "fileName,bloomHash,indexHash";
-        explode(fields, flds, ',');
-    }
-
-    CPinnedChunk pin;
-    string_q ln(line);
-    pin.parseCSV(fields, ln);
-    pins->push_back(pin);
     return true;
 }
 

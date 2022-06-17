@@ -19,11 +19,6 @@ type blockScrapeRequires struct {
 	Archive bool
 }
 
-type blockScrapeUnchainedIndex struct {
-	Address              string
-	ManifestHashEncoding string
-}
-
 // We should remove these underlined config entries in a migration some day
 type blockScrapeSettings struct {
 	// block_cnt      int
@@ -38,16 +33,13 @@ type blockScrapeSettings struct {
 }
 
 type BlockScrape struct {
-	Requires       blockScrapeRequires
-	UnchainedIndex blockScrapeUnchainedIndex
-	Settings       blockScrapeSettings
+	Requires blockScrapeRequires
+	Settings blockScrapeSettings
 }
 
 // init sets up default values for the given configuration
 func init() {
 	blockScrapeViper.SetConfigName("blockScrape")
-	blockScrapeViper.SetDefault("UnchainedIndex.Address", "0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd")
-	blockScrapeViper.SetDefault("UnchainedIndex.ManifestHashEncoding", "0x337f3f32")
 	blockScrapeViper.SetDefault("Requires.Tracing", true)
 	blockScrapeViper.SetDefault("Requires.Parity", true)
 }

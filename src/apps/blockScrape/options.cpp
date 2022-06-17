@@ -92,38 +92,7 @@ bool COptions::parseArguments(string_q& command) {
 
     // We can't really test this code, so we just report and quit
     if (isTestMode()) {
-        ostringstream os;
-        os << "{" << endl;
-        os << "  \"message\": \"Testing in blockScrape/options.cpp\"," << endl;
-        os << "  \"block_cnt\": " << block_cnt << "," << endl;
-        os << "  \"block_chan_cnt\": " << block_chan_cnt << "," << endl;
-        os << "  \"addr_chan_cnt\": " << addr_chan_cnt << "," << endl;
-        os << "  \"pin\": " << pin << "," << endl;
-        os << "}" << endl;
-        cout << os.str();
-        return false;
-    }
-
-    // Debugging data...
-    LOG_DIR8(indexFolder);
-    LOG_DIR8(indexFolder_finalized);
-    LOG_DIR8(indexFolder_blooms);
-    LOG_DIR8(indexFolder_staging);
-    LOG_DIR8(indexFolder_unripe);
-    LOG_DIR8(indexFolder_ripe);
-
-    // We need this below...
-    const CToml* config = getGlobalConfig("blockScrape");
-
-    // A tracing node is required. Otherwise, the index will be 'short' (i.e. it will
-    // be missing appearances). This is okay, if the user tells us it's okay. For
-    // example, if the user only wants an index of event emitters or something
-    bool needsTracing = config->getConfigBool("requires", "tracing", true);
-    if (needsTracing && !isTracingNode()) {
-        string_q errMsg = "Tracing is required for this program to work properly.";
-        if (isDockerMode())
-            errMsg += " If you're running docker, enable remote RPC endpoints.";
-        return usage(errMsg);
+        return usage("Cannot test block scraper");
     }
 
     if (!isArchiveNode())

@@ -21,8 +21,9 @@ func RenderSlice[
 	T types.NamedBlock |
 		types.Function |
 		types.CleanReport |
+		types.CheckReport |
 		types.SimpleMonitor |
-		types.SimplePinList |
+		types.SimpleChunk |
 		types.SimpleAppearance](opts *GlobalOptions, arr []T) error {
 
 	data := make([]interface{}, len(arr))

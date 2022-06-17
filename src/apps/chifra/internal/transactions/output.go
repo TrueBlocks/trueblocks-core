@@ -47,7 +47,7 @@ func (opts *TransactionsOptions) TransactionsInternal() (err error, handled bool
 	}
 
 	handled = true
-	err = opts.Globals.PassItOn("getTrans", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
+	err = opts.Globals.PassItOn("getTrans", opts.Globals.Chain, opts.ToCmdLine(), opts.GetEnvStr())
 	// EXISTING_CODE
 
 	return

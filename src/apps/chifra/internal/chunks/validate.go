@@ -18,16 +18,28 @@ func (opts *ChunksOptions) ValidateChunks() error {
 	}
 
 	if len(opts.Mode) == 0 {
-		return validate.Usage("Please choose at least one of {0}.", "[stats|pins|blooms|index|addresses|appearances]")
+		return validate.Usage("Please choose at least one of {0}.", "[stats|manifest|pins|blooms|index|addresses|appearances]")
 	}
 
-	err := validate.ValidateEnum("mode", opts.Mode, "[stats|pins|blooms|index|addresses|appearances]")
+	err := validate.ValidateEnum("mode", opts.Mode, "[stats|manifest|pins|blooms|index|addresses|appearances]")
 	if err != nil {
 		return err
 	}
 
 	if opts.Globals.LogLevel > 0 && opts.Mode == "addresses" && opts.Globals.Format == "json" {
 		return validate.Usage("You may not use --format json and log_level > 0 in addresses mode")
+	}
+
+	if opts.Mode != "manifest" {
+		if opts.PinChunks || opts.PinData {
+			return validate.Usage("The {0} and {1} options are available only in {2} mode.", "--pin_chunk", "--pin_data", "manifest")
+		}
+		if opts.Clean {
+			return validate.Usage("The {0} option is available only in {1} mode.", "--clean", "manifest")
+		}
+		if opts.Check {
+			return validate.Usage("The {0} option is available only in {1} mode.", "--check", "manifest")
+		}
 	}
 
 	if opts.Belongs {

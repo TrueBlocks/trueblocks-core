@@ -1543,6 +1543,7 @@ paths:
             type: string
             enum:
               - stats
+              - manifest
               - pins
               - blooms
               - index
@@ -1570,6 +1571,15 @@ paths:
             items:
               type: string
               format: address
+        - name: details
+          description: >
+            for manifest and addresses options only, display full details of the report
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: check
           description: depends on mode, checks for internal consistency of the data type
           required: false
@@ -1580,15 +1590,6 @@ paths:
             type: boolean
         - name: belongs
           description: checks if the given address appears in the given chunk
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: details
-          description: >
-            for the --addresses option only, display appearance records as well as address records
           required: false
           style: form
           in: query
@@ -2676,25 +2677,25 @@ components:
       description: "a manifest of the IPFS hashes created for the unchained index"
       type: object
       properties:
-        indexFormat:
+        version:
           type: string
-          description: "IPFS cid of file describing the file format of an index chunk"
-        bloomFormat:
+          description: "the version string hashed into the chunk data"
+        chain:
           type: string
-          description: "IPFS cid of file describing the associated bloom filter"
-        firstPin:
-          type: number
-          format: blknum
-          description: "the block number of the first pin in the manifest (always zero)"
-        lastPin:
-          type: number
-          format: blknum
-          description: "the most recent block included in this manifest"
-        pins:
+          description: "the chain to which this manifest belongs"
+        schemas:
+          type: string
+          format: ipfshash
+          description: "IPFS cid of file describing the schemas for the various databases"
+        databases:
+          type: string
+          format: ipfshash
+          description: "IPFS cid of file containing CIDs for the various databases"
+        chunks:
           type: array
           items:
             $ref: "#/components/schemas/pinnedChunk"
-          description: "a list of all the pins in the unchained index"
+          description: "a list of the IPFS hashes of all of the chunks in the unchained index"
     chain:
       description: "The chain data model carries information about configured chains"
       type: object

@@ -1,0 +1,6 @@
+chunks?mode=pins&pinData
+{
+  "errors": [
+    "The --pin_chunk and --pin_data options are available only in manifest mode."
+  ]
+}

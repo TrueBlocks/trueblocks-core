@@ -60,7 +60,6 @@ set (BASE_LIBS cache pin acct ether util ${CURL_LIBRARIES})
 # ----------------------------------------------------------------------------------------
 # Base included paths
 set (BASE_INCLUDE 
-     "${CMAKE_SOURCE_DIR}/libs/sqlite3lib"
      "${CMAKE_SOURCE_DIR}/libs/utillib"
      "${CMAKE_SOURCE_DIR}/libs/etherlib"
      "${CMAKE_SOURCE_DIR}/libs/acctlib"

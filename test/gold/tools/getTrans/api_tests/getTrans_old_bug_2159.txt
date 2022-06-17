@@ -1,0 +1,40 @@
+transactions?reconcile=0x7cfb89d6df1b89a678dcaf42b9c262593e881e22&transactions=0x20e4a5279519859c3b8af108fa9b3238f23d5522ceb0f7245080ec79ad8f97fd&fmt=json
+{
+  "data": [
+    {
+      "blockNumber": 13029304,
+      "transactionIndex": 63,
+      "timestamp": 1629024623,
+      "assetAddr": "0x7cfb89d6df1b89a678dcaf42b9c262593e881e22",
+      "assetSymbol": "WEI",
+      "decimals": 18,
+      "prevBlk": 0,
+      "prevBlkBal": "",
+      "begBal": "",
+      "endBal": "53712605193010669297",
+      "amountIn": "",
+      "internalIn": "53712605193010669297",
+      "selfDestructIn": "",
+      "minerBaseRewardIn": "",
+      "minerNephewRewardIn": "",
+      "minerTxFeeIn": "",
+      "minerUncleRewardIn": "",
+      "prefundIn": "",
+      "amountOut": "",
+      "internalOut": "",
+      "selfDestructOut": "",
+      "gasCostOut": "",
+      "reconciliationType": "by-trace",
+      "spotPrice": 3159.22552,
+      "priceSource": "uniswap",
+      "begBalDiff": "",
+      "endBalCalc": "53712605193010669297",
+      "endBalDiff": "",
+      "totalIn": "53712605193010669297",
+      "totalOut": "",
+      "totalOutLessGas": "",
+      "amountNet": "53712605193010669297",
+      "reconciled": true
+    }
+  ]
+}

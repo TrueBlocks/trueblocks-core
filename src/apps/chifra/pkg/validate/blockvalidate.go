@@ -87,7 +87,6 @@ func IsDateTimeString(str string) bool {
 	return bRange.StartType == blockRange.BlockDate
 }
 
-// TODO: BOGUS
 func ToIsoDateStr2(dateStr string) string {
 	// assumes an already validated date string
 	str := strings.Replace(dateStr, "T", " ", -1)

@@ -294,10 +294,46 @@ COptions::COptions(void) {
 COptions::~COptions(void) {
 }
 
+//---------------------------------------------------------------------------
+bool parseOneLine(const char* line, void* data) {
+    if (isTestMode() && line > string_q("005000000"))
+        return true;
+
+    CPinnedChunkArray* pins = (CPinnedChunkArray*)data;
+    static CStringArray fields;
+    if (fields.empty()) {
+        string_q flds = "fileName,bloomHash,indexHash";
+        explode(fields, flds, ',');
+    }
+
+    CPinnedChunk pin;
+    string_q ln(line);
+    pin.parseCSV(fields, ln);
+    pins->push_back(pin);
+    return true;
+}
+
+//---------------------------------------------------------------------------
+bool readManifest(CPinnedChunkArray& pinArray) {
+    if (!pinArray.empty())
+        return true;
+
+    if (!fileExists(chainConfigsTxt_manifest)) {
+        LOG_ERR("Chunks file (", chainConfigsTxt_manifest, ") is required, but not found.");
+        return false;
+    }
+
+    pinArray.clear();  // redundant, but fine
+    forEveryLineInAsciiFile(chainConfigsTxt_manifest, parseOneLine, &pinArray);
+    sort(pinArray.begin(), pinArray.end());
+
+    return true;
+}
+
 //--------------------------------------------------------------------------------
 void loadPinMaps(CIndexStringMap& filenameMap, CIndexHashMap& bloomMap, CIndexHashMap& indexMap) {
     CPinnedChunkArray pinList;
-    if (!pinlib_readManifest(pinList))
+    if (!readManifest(pinList))
         return;
 
     for (auto pin : pinList) {

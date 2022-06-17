@@ -316,6 +316,7 @@ func GetBlockZeroTs(chain string) (uint64, error) {
 	if err != nil {
 		return utils.EarliestEvmTs, err
 	}
+	// TODO: Multi-chain specific
 	return blockOne.TimeStamp - 14, nil
 }
 

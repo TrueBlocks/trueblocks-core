@@ -1,5 +1,5 @@
 [settings]
-class = CPinManifest
+class = CManifest
 fields = manifest.csv
 includes = etherlib.h|pinnedchunk.h
 doc_group = 04-Admin

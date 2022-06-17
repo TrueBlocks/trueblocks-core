@@ -75,4 +75,17 @@ bool filterByRange(CTraverser* trav, void* data) {
     return inRange(blknum_t(trav->app->blk), trav->traverserRange.first, trav->traverserRange.second);
 }
 
+//-------------------------------------------------------------------------
+ostream& operator<<(ostream& os, const CTraverser& it) {
+    os << "logging: " << it.logging << endl;
+    os << "index: " << it.index << endl;
+    os << "nProcessed: " << it.nProcessed << endl;
+    os << "searchType: " << it.searchType << endl;
+    os << "searchOp: " << it.searchOp << endl;
+    os << "curMonitor: " << it.curMonitor << endl;
+    // os << "monitorMap: " << it.monitorMap << endl;
+    os << "traverserRange: " << it.traverserRange << endl;
+    return os;
+}
+
 }  // namespace qblocks

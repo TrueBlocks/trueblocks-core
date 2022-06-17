@@ -5,16 +5,18 @@
 package initPkg
 
 import (
-	"net/url"
-	"path"
+	"fmt"
+	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 )
 
 // InitInternal initializes local copy of UnchainedIndex by downloading manifests and chunks
@@ -34,31 +36,12 @@ func (opts *InitOptions) HandleInit() error {
 
 	opts.PrintManifestHeader()
 
-	// Fetch manifest's CID
-	cid, err := pinlib.GetManifestCidFromContract(chain)
+	downloadedManifest, err := pinlib.DownloadRemoteManifest(chain)
+	err = opts.SaveManifest(chain, "txt", downloadedManifest)
 	if err != nil {
 		return err
 	}
-	logger.Log(logger.Info, "Unchained index returned CID", cid)
-
-	// Download the manifest
-	gatewayUrl := config.GetPinGateway(chain)
-	logger.Log(logger.Info, "IPFS gateway", gatewayUrl)
-
-	url, err := url.Parse(gatewayUrl)
-	if err != nil {
-		return err
-	}
-	url.Path = path.Join(url.Path, cid)
-	downloadedManifest, err := pinlib.DownloadManifest(url.String())
-
-	if err != nil {
-		return err
-	}
-
-	// Save manifest
-	manifestPath := config.GetPathToChainConfig(chain) + "manifest.txt"
-	err = pinlib.SaveManifest(manifestPath, downloadedManifest)
+	err = opts.SaveManifest(chain, "json", downloadedManifest)
 	if err != nil {
 		return err
 	}
@@ -72,7 +55,7 @@ func (opts *InitOptions) HandleInit() error {
 
 	getChunks := func(chunkType cache.CacheType) {
 		chunkPath := cache.NewCachePath(chain, chunkType)
-		failedChunks, cancelled := downloadAndReportProgress(chain, downloadedManifest.Pins, &chunkPath)
+		failedChunks, cancelled := downloadAndReportProgress(chain, downloadedManifest.Chunks, &chunkPath)
 
 		if cancelled {
 			// We don't want to retry if the user has cancelled
@@ -80,7 +63,7 @@ func (opts *InitOptions) HandleInit() error {
 		}
 
 		if len(failedChunks) > 0 {
-			retry(failedChunks, 3, func(pins []manifest.PinDescriptor) ([]manifest.PinDescriptor, bool) {
+			retry(failedChunks, 3, func(pins []manifest.Chunk) ([]manifest.Chunk, bool) {
 				logger.Log(logger.Info, "Retrying", len(pins), "bloom(s)")
 				return downloadAndReportProgress(chain, pins, &chunkPath)
 			})
@@ -106,15 +89,15 @@ func (opts *InitOptions) HandleInit() error {
 	return nil
 }
 
-type downloadFunc func(pins []manifest.PinDescriptor) (failed []manifest.PinDescriptor, cancelled bool)
+type downloadFunc func(pins []manifest.Chunk) (failed []manifest.Chunk, cancelled bool)
 
 // Downloads chunks and report progress
-func downloadAndReportProgress(chain string, pins []manifest.PinDescriptor, chunkPath *cache.CachePath) ([]manifest.PinDescriptor, bool) {
+func downloadAndReportProgress(chain string, pins []manifest.Chunk, chunkPath *cache.CachePath) ([]manifest.Chunk, bool) {
 	chunkTypeToDescription := map[cache.CacheType]string{
 		cache.Index_Bloom: "bloom",
 		cache.Index_Final: "index",
 	}
-	failed := []manifest.PinDescriptor{}
+	failed := []manifest.Chunk{}
 	cancelled := false
 	progressChannel := progress.MakeChan()
 	defer close(progressChannel)
@@ -124,13 +107,14 @@ func downloadAndReportProgress(chain string, pins []manifest.PinDescriptor, chun
 	var pinsDone uint
 
 	for event := range progressChannel {
-		pin, ok := event.Payload.(*manifest.PinDescriptor)
+		pin, ok := event.Payload.(*manifest.Chunk)
 		var fileName string
 		if ok {
 			fileName = pin.FileName
 		}
 
 		if event.Event == progress.AllDone {
+			// TODO: BOGUS - can we distinguish between blooms and chunks?
 			logger.Log(logger.Info, pinsDone, "pin(s) were (re)initialized")
 			break
 		}
@@ -165,7 +149,7 @@ func downloadAndReportProgress(chain string, pins []manifest.PinDescriptor, chun
 // This function is simple because: 1. it will never get a new failing pin (it only feeds in
 // the list of known, failed pins); 2. The maximum number of failing pins we can get equals
 // the length of `failedPins`.
-func retry(failedPins []manifest.PinDescriptor, times uint, downloadChunks downloadFunc) int {
+func retry(failedPins []manifest.Chunk, times uint, downloadChunks downloadFunc) int {
 	retryCount := uint(0)
 
 	pinsToRetry := failedPins
@@ -192,18 +176,29 @@ func retry(failedPins []manifest.PinDescriptor, times uint, downloadChunks downl
 }
 
 func (opts *InitOptions) PrintManifestHeader() {
-	// The following two values should be read the manifest, however right now only
-	// TSV format is available for download and it lacks this information
-	// TODO: These values should be in a config file
-	// TODO: We can add the "loaded" configuration file to Options
-	// TODO: This needs to be per chain data
 	chain := opts.Globals.Chain
-	logger.Log(logger.Info, "hashToIndexFormatFile:", "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2")
-	logger.Log(logger.Info, "hashToBloomFormatFile:", "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD")
-	logger.Log(logger.Info, "manifestHashEncoding:", config.ReadBlockScrape(chain).UnchainedIndex.ManifestHashEncoding)
-	logger.Log(logger.Info, "unchainedIndexAddr:", config.ReadBlockScrape(chain).UnchainedIndex.Address)
+	logger.Log(logger.Info, "schemas:", unchained.Schemas)
+	logger.Log(logger.Info, "databases:", unchained.Databases)
+	logger.Log(logger.Info, "unchainedAddress:", unchained.Address)
+	logger.Log(logger.Info, "unchainedReadHash:", unchained.ReadHash)
+	logger.Log(logger.Info, "unchainedPublishHash:", unchained.PublishHash)
 	if !opts.Globals.TestMode {
 		logger.Log(logger.Info, "manifestLocation:", config.GetPathToChainConfig(chain)) // order matters
 		logger.Log(logger.Info, "unchainedIndexFolder:", config.GetPathToIndex(chain))   // order matters
 	}
+}
+
+func (opts *InitOptions) SaveManifest(chain, fileType string, man *manifest.Manifest) error {
+	fileName := config.GetPathToChainConfig(chain) + "manifest." + fileType
+	w, err := os.Create(fileName)
+	if err != nil {
+		return fmt.Errorf("creating file: %s", err)
+	}
+	defer w.Close()
+	err = file.Lock(w)
+	if err != nil {
+		return fmt.Errorf("locking file: %s", err)
+	}
+
+	return opts.Globals.RenderManifest(w, fileType, man)
 }

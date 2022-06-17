@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-06-10T16:43:36
+date: 2022-06-12T16:52:13
 lastmod:
   - :git
   - lastmod
@@ -53,6 +53,8 @@ Notes:
 
 ## chifra scrape
 
+TODO: BOGUS - REVIEW HELP FILES
+
 The `chifra scrape` application creates TrueBlocks' index of address appearances -- the fundamental data structure of the entire system. It also, optionally, pins the index to IPFS.
 
 `chifra scrape` is a long running process, therefore we advise you run it as a service or in terminal multiplexer such as `tmux`. You may start and stop `chifra scrape` as needed, but doing so means the scraper will have to catch up to the front of the chain the next time it runs, a process that may take several hours depending on how long ago it was last run. See below for a more in depth explanation of how the scraping process works and prerequisites for it proper operation.
@@ -100,7 +102,7 @@ Please [see this article](https://trueblocks.io/blog/a-long-winded-explanation-o
 
 ## chifra chunks
 
-This tool is not yet ready for production use. Please return to this page later.
+TODO: BOGUS - REVIEW HELP FILES
 
 ```[plaintext]
 Purpose:
@@ -111,14 +113,17 @@ Usage:
 
 Arguments:
   mode - the type of chunk info to retrieve (required)
-	One of [ stats | pins | blooms | index | addresses | appearances ]
+	One of [ stats | manifest | pins | blooms | index | addresses | appearances ]
   blocks - optional list of blocks to intersect with chunk ranges
   addrs - one or more addresses to use with --belongs option (see note)
 
 Flags:
+  -d, --details      for manifest and addresses options only, display full details of the report
   -c, --check        depends on mode, checks for internal consistency of the data type
   -b, --belongs      checks if the given address appears in the given chunk
-  -d, --details      for the --addresses option only, display appearance records as well as address records
+  -p, --pin_chunks   gzip each chunk, push it to IPFS, and update and publish the manifest
+  -a, --pin_data     gzip the databases, push them to IPFS, and update and publish the manifest
+  -n, --clean        retrieve all pins on Pinata, compare to manifest, remove any extraneous remote pins
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
   -v, --verbose      enable verbose (increase detail with --log_level)
   -h, --help         display this help screen
@@ -129,11 +134,14 @@ Notes:
   - The --belongs option is only available with the addresses or blooms mode.
   - The --belongs option requires both an address and a block identifier.
   - You may only specifiy an address when using the --belongs option.
+  - The two --pin_ options, the --clean option, and the --check option are available only in manifest mode.
 ```
 
 **Source code**: [`internal/chunks`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/chunks)
 
 ## chifra init
+
+TODO: BOGUS - REVIEW HELP FILES
 
 When invoked, `chifra init` looks at a smart contract called **The Unchained Index** ([0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd](https://etherscan.io/address/0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd)). From this smart contract, it extracts a data item called `manifestHash`. The `manifestHash` is an IPFS hash that points to a file (a manifest) that contains every previously pinned Bloom filter and index chunk. TrueBlocks periodically publishes the manifest's hash to the smart contract. This makes the entire index both available for our software to use and impossible for us to withhold. Both of these aspects of the manifest are included by design.
 

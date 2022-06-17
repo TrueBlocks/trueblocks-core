@@ -252,8 +252,8 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 		// given a nil appearance list simply updates the header. Note we update for the
 		// start of the next chunk (plus 1 to current range).
 		for _, mon := range updater.MonitorMap {
-			// TODO: BOGUS - can we manage these file pointers so they aren't copied and
-			// TODO: BOGUS - therefore don't need to be Closed so or else it crashes
+			// TODO: Can we manage these file pointers so they aren't copied and
+			// TODO: therefore don't need to be Closed so or else it crashes
 			mon.Close()
 			err := mon.WriteAppearancesAppend(lastScanned, nil)
 			if err != nil {

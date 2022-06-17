@@ -7,18 +7,20 @@ package globals
 import (
 	"bufio"
 	"bytes"
+	"errors"
 	"fmt"
 	"io"
 	"os"
 	"os/exec"
+	"strconv"
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
 
-func (opts *GlobalOptions) PassItOn(path string, chain, flags, globalFlags string) error {
-	options := flags
-	options += globalFlags
+func (opts *GlobalOptions) PassItOn(path string, chain, cmdLine, envIn string) error {
+	options := cmdLine
+	options += opts.ToCmdLine()
 
 	var wg sync.WaitGroup
 	wg.Add(2)
@@ -36,6 +38,7 @@ func (opts *GlobalOptions) PassItOn(path string, chain, flags, globalFlags strin
 	cmd := exec.Command(config.GetPathToCommands(path), options)
 	cmd.Env = append(os.Environ(), "FROM_CHIFRA=true")
 	cmd.Env = append(cmd.Env, "TB_CONFIG_ENV="+envStr)
+	cmd.Env = append(cmd.Env, envIn)
 	if os.Getenv("TEST_MODE") == "true" {
 		cmd.Env = append(cmd.Env, "TEST_MODE=true")
 	}
@@ -51,6 +54,7 @@ func (opts *GlobalOptions) PassItOn(path string, chain, flags, globalFlags strin
 		}()
 	}
 
+	returnVal := int64(0)
 	stdout, err := cmd.StdoutPipe()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%s", err)
@@ -62,6 +66,8 @@ func (opts *GlobalOptions) PassItOn(path string, chain, flags, globalFlags strin
 			scanner.Buffer(buf, 1024*1024)
 			for scanner.Scan() {
 				m := scanner.Text()
+				// TODO: This is wrong -- it should check return status of the called routine - that does not appear on stdout
+				returnVal, _ = strconv.ParseInt(m, 10, 32)
 				fmt.Println(m)
 			}
 			wg.Done()
@@ -71,6 +77,10 @@ func (opts *GlobalOptions) PassItOn(path string, chain, flags, globalFlags strin
 	cmd.Wait()
 	// fmt.Fprintf(os.Stderr, "Calling: TB_CONFIG_ENV=\"%s\" %s %s\n", envStr, config.GetPathToCommands(path), options)
 	// time.Sleep(4 * time.Second)
+	if returnVal != 0 {
+		msg := fmt.Sprintf("call returned %d", returnVal)
+		return errors.New(msg)
+	}
 	return nil
 }
 

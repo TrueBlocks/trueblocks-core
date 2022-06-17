@@ -18,7 +18,8 @@ namespace qblocks {
 string_q GIT_COMMIT_BRANCH = D_COMMIT_BRANCH;
 string_q GIT_COMMIT_HASH = D_COMMIT_HASH;
 timestamp_t GIT_COMMIT_TS = D_COMMIT_TS;
-string_q PIN_HASH = "";
+extern string_q keccak256(const string& strIn);
+string_q PIN_HASH = keccak256("trueblocks-core@v0.40.0");
 string_q versionHash = "0x" + padLeft(PIN_HASH, 64, '0');
 
 }  // namespace qblocks

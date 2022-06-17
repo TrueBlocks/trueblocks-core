@@ -60,6 +60,13 @@ func (opts *BlocksOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
+func (opts *BlocksOptions) GetEnvStr() string {
+	envStr := ""
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return envStr
+}
+
 func (opts *BlocksOptions) ToCmdLine() string {
 	options := ""
 	if opts.Hashes {
@@ -105,6 +112,8 @@ func (opts *BlocksOptions) ToCmdLine() string {
 		options += (" --list_count " + fmt.Sprintf("%d", opts.ListCount))
 	}
 	options += " " + strings.Join(opts.Blocks, " ")
+	// EXISTING_CODE
+	// EXISTING_CODE
 	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }

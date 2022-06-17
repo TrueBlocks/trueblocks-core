@@ -18,7 +18,7 @@ func Test_exclude(t *testing.T) {
 		"013348862-013351760": true,
 	}
 
-	pins := []manifest.PinDescriptor{
+	pins := []manifest.Chunk{
 		{
 			FileName: "013337527-013340418",
 		},

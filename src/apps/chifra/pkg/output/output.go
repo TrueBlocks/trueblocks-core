@@ -57,6 +57,14 @@ func OutputSlice(data interface{}, w io.Writer, format string, hideHeader, apiMo
 		}
 		return rowTemplate.Execute(w, data)
 	default:
+		if strings.Contains(format, "\t") || strings.Contains(format, ",") {
+			tt := reflect.TypeOf(data)
+			rowTemplate, err := GetRowTemplate(&tt, format)
+			if err != nil {
+				return err
+			}
+			return rowTemplate.Execute(w, data)
+		}
 		return fmt.Errorf("unsupported format %s", format)
 	}
 
@@ -96,6 +104,14 @@ func OutputObject(data interface{}, w io.Writer, format string, hideHeader, apiM
 		}
 		return rowTemplate.Execute(w, data)
 	default:
+		if strings.Contains(format, "\t") || strings.Contains(format, ",") {
+			tt := reflect.TypeOf(data)
+			rowTemplate, err := GetRowTemplate(&tt, format)
+			if err != nil {
+				return err
+			}
+			return rowTemplate.Execute(w, data)
+		}
 		return fmt.Errorf("unsupported format %s", format)
 	}
 
@@ -110,23 +126,35 @@ func OutputObject(data interface{}, w io.Writer, format string, hideHeader, apiM
 
 // TODO: Fix export without arrays
 func getFields(t *reflect.Type, format string, header bool) (fields []string, sep string, quote string) {
-	if (*t).Kind() != reflect.Struct {
-		logger.Fatal((*t).Name() + " is not a structure")
-	}
-	for i := 0; i < (*t).NumField(); i++ {
-		fn := (*t).Field(i).Name
-		if header {
-			fields = append(fields, utils.MakeFirstLowerCase(fn))
-		} else {
-			fields = append(fields, fn)
-		}
-	}
 	sep = "\t"
 	quote = ""
-	if format == "csv" {
+	if format == "csv" || strings.Contains(format, ",") {
 		sep = ","
+	}
+
+	if format == "csv" || strings.Contains(format, "\"") {
 		quote = "\""
 	}
+
+	if strings.Contains(format, "\t") || strings.Contains(format, ",") {
+		custom := strings.Replace(format, "\t", ",", -1)
+		custom = strings.Replace(custom, "\"", ",", -1)
+		fields = strings.Split(custom, ",")
+
+	} else {
+		if (*t).Kind() != reflect.Struct {
+			logger.Fatal((*t).Name() + " is not a structure")
+		}
+		for i := 0; i < (*t).NumField(); i++ {
+			fn := (*t).Field(i).Name
+			if header {
+				fields = append(fields, utils.MakeFirstLowerCase(fn))
+			} else {
+				fields = append(fields, fn)
+			}
+		}
+	}
+
 	return fields, sep, quote
 }
 

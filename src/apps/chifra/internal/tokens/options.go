@@ -41,6 +41,13 @@ func (opts *TokensOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
+func (opts *TokensOptions) GetEnvStr() string {
+	envStr := ""
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return envStr
+}
+
 func (opts *TokensOptions) ToCmdLine() string {
 	options := ""
 	for _, part := range opts.Parts {
@@ -54,6 +61,8 @@ func (opts *TokensOptions) ToCmdLine() string {
 	}
 	options += " " + strings.Join(opts.Addrs2, " ")
 	options += " " + strings.Join(opts.Blocks, " ")
+	// EXISTING_CODE
+	// EXISTING_CODE
 	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }

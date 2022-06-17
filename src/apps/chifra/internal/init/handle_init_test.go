@@ -12,7 +12,7 @@ import (
 
 func Test_retry(t *testing.T) {
 	callCounter := 0
-	failingPins := []manifest.PinDescriptor{
+	failingPins := []manifest.Chunk{
 		{
 			FileName: "first",
 		},
@@ -23,7 +23,7 @@ func Test_retry(t *testing.T) {
 			FileName: "third",
 		},
 	}
-	fakeDownload := func(p []manifest.PinDescriptor) ([]manifest.PinDescriptor, bool) {
+	fakeDownload := func(p []manifest.Chunk) ([]manifest.Chunk, bool) {
 		defer func() { callCounter++ }()
 		switch callCounter {
 		case 0:
@@ -37,7 +37,7 @@ func Test_retry(t *testing.T) {
 			if len(p) != len(failingPins[2:]) {
 				t.Error("Wrong count for 3nd call", len(p))
 			}
-			return []manifest.PinDescriptor{}, false
+			return []manifest.Chunk{}, false
 		}
 
 		t.Fatal("Too many calls")

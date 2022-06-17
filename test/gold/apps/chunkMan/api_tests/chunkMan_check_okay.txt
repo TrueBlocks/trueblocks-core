@@ -1,0 +1,66 @@
+chunks?mode=manifest&check
+{
+  "data": [
+    {
+      "reason": "CheckSequential",
+      "nVisited": 11,
+      "nChecked": 11,
+      "nPassed": 11
+    },
+    {
+      "reason": "CheckInternal",
+      "nVisited": 11,
+      "nChecked": 11,
+      "nPassed": 8,
+      "nFailed": 3,
+      "errorStrs": [
+        "000000001-000590501: Magic number expected (0xdeadbeef) got (0xdeadbeef)",
+        "000590502-000864332: Header hash expected (0x0000000000000000000000000000000000000000000000000000000000000000) got (0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1)",
+        "000864333-001076298: Too many addresses? (2000017)"
+      ]
+    },
+    {
+      "reason": "CheckRemote2Local",
+      "nVisited": 5766,
+      "nChecked": 5766,
+      "nPassed": 5764,
+      "nFailed": 2,
+      "errorStrs": [
+        "000864333-001076298: The chunk is in the first but not the second array (testing) (3)",
+        "001076299-001229769: The chunk is in the second but not the first array (testing) (4)"
+      ]
+    },
+    {
+      "reason": "CheckDisc2Local",
+      "nVisited": 22,
+      "nChecked": 22,
+      "nPassed": 20,
+      "nFailed": 2,
+      "errorStrs": [
+        "000864333-001076298: The chunk is in the first but not the second array (testing) (3)",
+        "001076299-001229769: The chunk is in the second but not the first array (testing) (4)"
+      ]
+    },
+    {
+      "reason": "CheckDisc2Remote",
+      "nVisited": 22,
+      "nChecked": 22,
+      "nPassed": 20,
+      "nFailed": 2,
+      "errorStrs": [
+        "000864333-001076298: The chunk is in the first but not the second array (testing) (3)",
+        "001076299-001229769: The chunk is in the second but not the first array (testing) (4)"
+      ]
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}
