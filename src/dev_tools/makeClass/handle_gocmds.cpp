@@ -185,8 +185,11 @@ bool COptions::handle_gocmds(void) {
 
     string_q contents = asciiFileToString(getPathToTemplates("help_text.go.tmpl"));
     replace(contents, "[{HELP_TEXT}]", chifraHelpStream.str());
-    replace(contents, "[{VERSION}]", getVersionStr(true, false));
     stringToAsciiFile(getPathToSource("apps/chifra/cmd/help_text.go"), contents);
+
+    contents = asciiFileToString(getPathToTemplates("version.go.tmpl"));
+    replace(contents, "[{VERSION}]", getVersionStr(true, false));
+    stringToAsciiFile(getPathToSource("apps/chifra/cmd/version.go"), contents);
 
     LOG_INFO(cYellow, "makeClass --gocmds", cOff, " processed ", counter.nVisited, " files (changed ",
              counter.nProcessed, ").", string_q(40, ' '));

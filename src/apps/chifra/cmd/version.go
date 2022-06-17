@@ -7,4 +7,4 @@
 
 package cmd
 
-const helpText = `[{HELP_TEXT}]`
+const versionText = "GHC-TrueBlocks//0.37.0-beta"
