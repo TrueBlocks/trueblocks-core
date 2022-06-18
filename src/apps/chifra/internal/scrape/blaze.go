@@ -378,8 +378,8 @@ func (opts *ScrapeOptions) writeAddresses(bn int, addressMap map[string]bool) {
 		if opts.RipeBlock > uint64(bn) {
 			dist = (opts.RipeBlock - uint64(bn))
 		}
-		f := "-------- ( ------)- <PROG>  : Scraping %-04d of %-04d at block %s of %d (%d blocks from head)\r"
-		fmt.Fprintf(os.Stderr, f, nProcessed, opts.BlockCnt, blockNumStr, opts.RipeBlock, dist)
+		f := "-------- ( ------)- <PROG>  : Scraping %-04d of %-04d at block %d of %d (%d blocks from head)\r"
+		fmt.Fprintf(os.Stderr, f, nProcessed, opts.BlockCnt, bn, opts.RipeBlock, dist)
 	}
 	nProcessed++
 }
