@@ -9,7 +9,15 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *ChunksOptions) HandleChunksManifest() error {
+func (opts *ChunksOptions) HandleManifest(blockNums []uint64) error {
+	maxTestItems = 10
+
+	defer opts.Globals.RenderFooter()
+	err := opts.Globals.RenderHeader(types.SimpleManifest{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+	if err != nil {
+		return err
+	}
+
 	obj, err := manifest.FromLocalFile(opts.Globals.Chain)
 	if err != nil {
 		return err
@@ -23,16 +31,4 @@ func (opts *ChunksOptions) HandleChunksManifest() error {
 	}
 
 	return opts.Globals.RenderManifest(opts.Globals.Writer, opts.Globals.Format, obj)
-}
-
-func (opts *ChunksOptions) HandleManifest(blockNums []uint64) error {
-	maxTestItems = 10
-
-	defer opts.Globals.RenderFooter()
-	err := opts.Globals.RenderHeader(types.SimpleManifest{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
-	if err != nil {
-		return err
-	}
-
-	return opts.HandleChunksManifest()
 }

@@ -7,9 +7,13 @@ package scrapePkg
 import (
 	"fmt"
 	"log"
+	"os"
 	"sync"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/scraper"
 )
@@ -30,6 +34,10 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 			err := opts.Globals.PassItOn("blockScrape", opts.Globals.Chain, opts.ToCmdLine(), opts.GetEnvStr())
 			if err != nil {
 				fmt.Println("Error returned from blockScape:", err)
+			}
+			err = opts.publishManifast()
+			if err != nil {
+				fmt.Println("Error returned from publishManifast:", err)
 			}
 
 			if s.Running {
@@ -67,4 +75,23 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 			}
 		}
 	}
+}
+
+func (opts *ScrapeOptions) publishManifast() error {
+	localMan, err := manifest.FromLocalFile(opts.Globals.Chain)
+	if err != nil {
+		return err
+	}
+	fileName := config.GetPathToChainConfig(opts.Globals.Chain) + "manifest.json"
+	// TODO: See SaveManifest - consolidate it
+	w, err := os.Create(fileName)
+	if err != nil {
+		return fmt.Errorf("creating file: %s", err)
+	}
+	defer w.Close()
+	err = file.Lock(w)
+	if err != nil {
+		return fmt.Errorf("locking file: %s", err)
+	}
+	return opts.Globals.RenderManifest(w, "json", localMan)
 }
