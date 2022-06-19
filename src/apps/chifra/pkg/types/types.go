@@ -64,11 +64,11 @@ type SimpleMonitor struct {
 }
 
 type SimpleManifest struct {
-	Version   string        `json:"version"`
-	Chain     string        `json:"chain"`
-	Schemas   string        `json:"schemas"`
-	Databases string        `json:"databases"`
-	Chunks    []SimpleChunk `json:"chunks"`
+	Version   string              `json:"version"`
+	Chain     string              `json:"chain"`
+	Schemas   string              `json:"schemas"`
+	Databases string              `json:"databases"`
+	Chunks    []SimpleChunkRecord `json:"chunks"`
 }
 
 type SimpleChunkRecord struct {
