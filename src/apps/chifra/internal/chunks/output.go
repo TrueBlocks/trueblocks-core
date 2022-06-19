@@ -74,7 +74,7 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 			if err != nil {
 				return err, true
 			}
-			return opts.HandleChunksExtract(opts.showStats, blockNums), true
+			return opts.WalkChunkFiles(opts.showStats, blockNums), true
 
 		} else if opts.Mode == "blooms" {
 			maxTestItems = 10
@@ -82,14 +82,14 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 			if err != nil {
 				return err, true
 			}
-			return opts.HandleChunksExtract(opts.showBloom, blockNums), true
+			return opts.WalkChunkFiles(opts.showBloom, blockNums), true
 
 		} else if opts.Mode == "index" {
 			err := opts.Globals.RenderHeader(types.SimpleIndex{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
 			if err != nil {
 				return err, true
 			}
-			return opts.HandleChunksExtract(opts.showIndex, blockNums), true
+			return opts.WalkChunkFiles(opts.showIndex, blockNums), true
 
 		} else if opts.Mode == "addresses" {
 			if opts.Belongs {
@@ -98,7 +98,7 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 				if err != nil {
 					return err, true
 				}
-				return opts.HandleChunksExtract(opts.showAddressesBelongs, blockNums), true
+				return opts.WalkChunkFiles(opts.showAddressesBelongs, blockNums), true
 
 			} else {
 				maxTestItems = 10
@@ -106,7 +106,7 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 				if err != nil {
 					return err, true
 				}
-				return opts.HandleChunksExtract(opts.showAddresses, blockNums), true
+				return opts.WalkChunkFiles(opts.showAddresses, blockNums), true
 			}
 
 		} else if opts.Mode == "appearances" {
@@ -115,7 +115,7 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 			if err != nil {
 				return err, true
 			}
-			return opts.HandleChunksExtract(opts.showAppearances, blockNums), true
+			return opts.WalkChunkFiles(opts.showAppearances, blockNums), true
 
 		} else {
 			return validate.Usage("Extractor for {0} not yet implemented.", opts.Mode), true

@@ -23,7 +23,7 @@ func shouldDisplay(result cache.IndexFileInfo, blockNums []uint64) bool {
 	return hit
 }
 
-func (opts *ChunksOptions) HandleChunksExtract(displayFunc func(path string, first bool) (bool, error), blockNums []uint64) error {
+func (opts *ChunksOptions) WalkChunkFiles(displayFunc func(path string, first bool) (bool, error), blockNums []uint64) error {
 	filenameChan := make(chan cache.IndexFileInfo)
 
 	var nRoutines int = 1
