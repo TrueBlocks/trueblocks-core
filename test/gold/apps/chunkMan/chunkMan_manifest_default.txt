@@ -4,18 +4,10 @@ TEST[DATE|TIME] Format:  json
 {
   "data": [
     {
-      "version": 0,
-      "chain": "",
-      "chainId": 0,
-      "indexFormat": "",
-      "bloomFormat": "",
-      "commitHash": "",
-      "blockRange": [
-        14963683,
-        0
-      ],
-      "names": "",
-      "timestamps": "",
+      "version": "trueblocks-core@v0.40.0",
+      "chain": "mainnet",
+      "schemas": "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2",
+      "databases": "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2",
       "chunks": [
         {
           "fileName": "001848055-001963090",
