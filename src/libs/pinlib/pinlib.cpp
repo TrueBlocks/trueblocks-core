@@ -12,7 +12,6 @@
  *-------------------------------------------------------------------------------------------*/
 
 #include "pinlib.h"
-#include "classes/pinatalist.h"
 #include "classes/pinatapin.h"
 
 namespace qblocks {
@@ -25,9 +24,6 @@ void pinlib_init(QUITHANDLER qh) {
     acctlib_init(qh);
     CPinnedChunk::registerClass();
     CPinataPin::registerClass();
-    CPinataPinlist::registerClass();
-    CPinataMetadata::registerClass();
-    CPinataRegion::registerClass();
     CPinManifest::registerClass();
 }
 
