@@ -12,7 +12,7 @@ import (
 // DownloadManifest downloads manifest from the given gateway and parses it into
 // Manifest struct. Both JSON and TSV formats are supported, but the server has
 // to set the correct Content-Type header.
-func DownloadManifest(gatewayUrl string) (*Manifest, error) {
+func DownloadManifest(chain, gatewayUrl string) (*Manifest, error) {
 	response, err := http.Get(gatewayUrl)
 	if err != nil {
 		return nil, err
@@ -20,7 +20,7 @@ func DownloadManifest(gatewayUrl string) (*Manifest, error) {
 
 	switch response.Header.Get("content-type") {
 	case "text/tab-separated-values":
-		return ReadTabManifest(response.Body)
+		return ReadTabManifest(chain, response.Body)
 	case "application/json":
 		return ReadJSONManifest(response.Body)
 	default:

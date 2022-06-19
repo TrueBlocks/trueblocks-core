@@ -9,7 +9,7 @@ import (
 )
 
 func (opts *ChunksOptions) HandleChunksExtractPins() error {
-	results, err := manifest.GetPinList(opts.Globals.Chain)
+	results, err := manifest.GetChunkList(opts.Globals.Chain)
 	if err != nil {
 		return err
 	}

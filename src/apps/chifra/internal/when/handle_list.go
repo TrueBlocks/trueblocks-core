@@ -14,5 +14,6 @@ func (opts *WhenOptions) HandleWhenList() error {
 	if err != nil {
 		return err
 	}
+	// TODO: Fix export without arrays
 	return globals.RenderSlice(&opts.Globals, results)
 }

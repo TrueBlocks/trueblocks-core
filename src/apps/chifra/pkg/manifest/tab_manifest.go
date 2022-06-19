@@ -81,7 +81,7 @@ func BuildTabRange(descriptors []ChunkRecord) (ManifestRange, error) {
 }
 
 // ReadTabManifest parses TSV formatted manifest
-func ReadTabManifest(r io.Reader) (*Manifest, error) {
+func ReadTabManifest(chain string, r io.Reader) (*Manifest, error) {
 	descriptors, err := ReadPinDescriptors(r)
 	if err != nil {
 		return nil, err
@@ -108,26 +108,26 @@ func FromCache(chain string) (*Manifest, error) {
 	if err != nil {
 		return nil, err
 	}
-	return ReadTabManifest(file)
+	return ReadTabManifest(chain, file)
 }
 
-func GetPinList(chain string) ([]types.SimpleChunkRecord, error) {
-	manifestData, err := FromCache(chain)
+func GetChunkList(chain string) ([]types.SimpleChunkRecord, error) {
+	manFromCache, err := FromCache(chain)
 	if err != nil {
 		return []types.SimpleChunkRecord{}, err
 	}
 
-	sort.Slice(manifestData.Chunks, func(i, j int) bool {
-		iPin := manifestData.Chunks[i]
-		jPin := manifestData.Chunks[j]
+	sort.Slice(manFromCache.Chunks, func(i, j int) bool {
+		iPin := manFromCache.Chunks[i]
+		jPin := manFromCache.Chunks[j]
 		return iPin.FileName < jPin.FileName
 	})
 
-	pinList := make([]types.SimpleChunkRecord, len(manifestData.Chunks))
-	for i := range manifestData.Chunks {
-		pinList[i].FileName = manifestData.Chunks[i].FileName
-		pinList[i].BloomHash = string(manifestData.Chunks[i].BloomHash)
-		pinList[i].IndexHash = string(manifestData.Chunks[i].IndexHash)
+	pinList := make([]types.SimpleChunkRecord, len(manFromCache.Chunks))
+	for i := range manFromCache.Chunks {
+		pinList[i].FileName = manFromCache.Chunks[i].FileName
+		pinList[i].BloomHash = string(manFromCache.Chunks[i].BloomHash)
+		pinList[i].IndexHash = string(manFromCache.Chunks[i].IndexHash)
 	}
 	return pinList, nil
 }

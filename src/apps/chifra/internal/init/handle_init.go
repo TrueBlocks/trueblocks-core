@@ -47,7 +47,7 @@ func (opts *InitOptions) HandleInit() error {
 		return err
 	}
 	url.Path = path.Join(url.Path, cid)
-	downloadedManifest, err := manifest.DownloadManifest(url.String())
+	downloadedManifest, err := manifest.DownloadManifest(chain, url.String())
 
 	if err != nil {
 		return err
