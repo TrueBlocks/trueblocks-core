@@ -19,21 +19,21 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CPinManifest, CBaseNode);
+IMPLEMENT_NODE(CManifest, CBaseNode);
 
 //---------------------------------------------------------------------------
-extern string_q nextPinmanifestChunk(const string_q& fieldIn, const void* dataPtr);
-static string_q nextPinmanifestChunk_custom(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextManifestChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextManifestChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CPinManifest::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
+void CManifest::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
     // EXISTING_CODE
     // EXISTING_CODE
 
-    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["pinmanifest_fmt"] : fmtIn);
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["manifest_fmt"] : fmtIn);
     if (fmt.empty()) {
         if (expContext().exportFmt == YAML1) {
             toYaml(ctx);
@@ -47,13 +47,13 @@ void CPinManifest::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) co
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextPinmanifestChunk, this);
+        ctx << getNextChunk(fmt, nextManifestChunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextPinmanifestChunk(const string_q& fieldIn, const void* dataPtr) {
+string_q nextManifestChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CPinManifest*>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CManifest*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -62,9 +62,9 @@ string_q nextPinmanifestChunk(const string_q& fieldIn, const void* dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-string_q CPinManifest::getValueByName(const string_q& fieldName) const {
+string_q CManifest::getValueByName(const string_q& fieldName) const {
     // Give customized code a chance to override first
-    string_q ret = nextPinmanifestChunk_custom(fieldName, this);
+    string_q ret = nextManifestChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -76,6 +76,21 @@ string_q CPinManifest::getValueByName(const string_q& fieldName) const {
         case 'b':
             if (fieldName % "bloomFormat") {
                 return bloomFormat;
+            }
+            break;
+        case 'c':
+            if (fieldName % "chunks" || fieldName % "chunksCnt") {
+                size_t cnt = chunks.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt)
+                    return "";
+                string_q retS;
+                for (size_t i = 0; i < cnt; i++) {
+                    retS += chunks[i].Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
             }
             break;
         case 'f':
@@ -96,21 +111,6 @@ string_q CPinManifest::getValueByName(const string_q& fieldName) const {
                 return uint_2_Str(lastPin);
             }
             break;
-        case 'p':
-            if (fieldName % "pins" || fieldName % "pinsCnt") {
-                size_t cnt = pins.size();
-                if (endsWith(toLower(fieldName), "cnt"))
-                    return uint_2_Str(cnt);
-                if (!cnt)
-                    return "";
-                string_q retS;
-                for (size_t i = 0; i < cnt; i++) {
-                    retS += pins[i].Format();
-                    retS += ((i < cnt - 1) ? ",\n" : "\n");
-                }
-                return retS;
-            }
-            break;
         default:
             break;
     }
@@ -123,7 +123,7 @@ string_q CPinManifest::getValueByName(const string_q& fieldName) const {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPinManifest::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+bool CManifest::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
     string_q fieldValue = fieldValueIn;
 
@@ -134,6 +134,17 @@ bool CPinManifest::setValueByName(const string_q& fieldNameIn, const string_q& f
         case 'b':
             if (fieldName % "bloomFormat") {
                 bloomFormat = fieldValue;
+                return true;
+            }
+            break;
+        case 'c':
+            if (fieldName % "chunks") {
+                CPinnedChunk obj;
+                string_q str = fieldValue;
+                while (obj.parseJson3(str)) {
+                    chunks.push_back(obj);
+                    obj = CPinnedChunk();  // reset
+                }
                 return true;
             }
             break;
@@ -159,17 +170,6 @@ bool CPinManifest::setValueByName(const string_q& fieldNameIn, const string_q& f
                 return true;
             }
             break;
-        case 'p':
-            if (fieldName % "pins") {
-                CPinnedChunk obj;
-                string_q str = fieldValue;
-                while (obj.parseJson3(str)) {
-                    pins.push_back(obj);
-                    obj = CPinnedChunk();  // reset
-                }
-                return true;
-            }
-            break;
         default:
             break;
     }
@@ -177,13 +177,13 @@ bool CPinManifest::setValueByName(const string_q& fieldNameIn, const string_q& f
 }
 
 //---------------------------------------------------------------------------------------------------
-void CPinManifest::finishParse() {
+void CManifest::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPinManifest::Serialize(CArchive& archive) {
+bool CManifest::Serialize(CArchive& archive) {
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -200,7 +200,7 @@ bool CPinManifest::Serialize(CArchive& archive) {
     archive >> bloomFormat;
     archive >> firstPin;
     archive >> lastPin;
-    archive >> pins;
+    archive >> chunks;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -208,7 +208,7 @@ bool CPinManifest::Serialize(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPinManifest::SerializeC(CArchive& archive) const {
+bool CManifest::SerializeC(CArchive& archive) const {
     // Writing always writes the latest version of the data
     CBaseNode::SerializeC(archive);
 
@@ -219,17 +219,17 @@ bool CPinManifest::SerializeC(CArchive& archive) const {
     archive << bloomFormat;
     archive << firstPin;
     archive << lastPin;
-    archive << pins;
+    archive << chunks;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPinManifest::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
+bool CManifest::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
     ASSERT(archiveIn.isReading());
     ASSERT(archiveOut.isWriting());
-    CPinManifest copy;
+    CManifest copy;
     // EXISTING_CODE
     // EXISTING_CODE
     copy.Serialize(archiveIn);
@@ -238,7 +238,7 @@ bool CPinManifest::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CPinManifestArray& array) {
+CArchive& operator>>(CArchive& archive, CManifestArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -250,7 +250,7 @@ CArchive& operator>>(CArchive& archive, CPinManifestArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CPinManifestArray& array) {
+CArchive& operator<<(CArchive& archive, const CManifestArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0; i < array.size(); i++)
@@ -259,46 +259,46 @@ CArchive& operator<<(CArchive& archive, const CPinManifestArray& array) {
 }
 
 //---------------------------------------------------------------------------
-void CPinManifest::registerClass(void) {
+void CManifest::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CPinManifest, "schema"))
+    if (HAS_FIELD(CManifest, "schema"))
         return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CPinManifest, "schema", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CPinManifest, "deleted", T_BOOL, ++fieldNum);
-    ADD_FIELD(CPinManifest, "showing", T_BOOL, ++fieldNum);
-    ADD_FIELD(CPinManifest, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPinManifest, "fileName", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CPinManifest, "indexFormat", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CPinManifest, "bloomFormat", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CPinManifest, "firstPin", T_BLOCKNUM, ++fieldNum);
-    ADD_FIELD(CPinManifest, "lastPin", T_BLOCKNUM, ++fieldNum);
-    ADD_FIELD(CPinManifest, "pins", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CManifest, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CManifest, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CManifest, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CManifest, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CManifest, "fileName", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CManifest, "indexFormat", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CManifest, "bloomFormat", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CManifest, "firstPin", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CManifest, "lastPin", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CManifest, "chunks", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CPinManifest, "schema");
-    HIDE_FIELD(CPinManifest, "deleted");
-    HIDE_FIELD(CPinManifest, "showing");
-    HIDE_FIELD(CPinManifest, "cname");
+    HIDE_FIELD(CManifest, "schema");
+    HIDE_FIELD(CManifest, "deleted");
+    HIDE_FIELD(CManifest, "showing");
+    HIDE_FIELD(CManifest, "cname");
 
-    builtIns.push_back(_biCPinManifest);
+    builtIns.push_back(_biCManifest);
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-string_q nextPinmanifestChunk_custom(const string_q& fieldIn, const void* dataPtr) {
-    const CPinManifest* pin = reinterpret_cast<const CPinManifest*>(dataPtr);
-    if (pin) {
+string_q nextManifestChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CManifest* man = reinterpret_cast<const CManifest*>(dataPtr);
+    if (man) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if (fieldIn % "parsed")
-                    return nextBasenodeChunk(fieldIn, pin);
+                    return nextBasenodeChunk(fieldIn, man);
                 // EXISTING_CODE
                 // EXISTING_CODE
                 break;
@@ -315,7 +315,7 @@ string_q nextPinmanifestChunk_custom(const string_q& fieldIn, const void* dataPt
 // EXISTING_CODE
 
 //---------------------------------------------------------------------------
-bool CPinManifest::readBackLevel(CArchive& archive) {
+bool CManifest::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -323,19 +323,19 @@ bool CPinManifest::readBackLevel(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CPinManifest& pin) {
-    pin.SerializeC(archive);
+CArchive& operator<<(CArchive& archive, const CManifest& man) {
+    man.SerializeC(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CPinManifest& pin) {
-    pin.Serialize(archive);
+CArchive& operator>>(CArchive& archive, CManifest& man) {
+    man.Serialize(archive);
     return archive;
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CPinManifest& it) {
+ostream& operator<<(ostream& os, const CManifest& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -345,17 +345,17 @@ ostream& operator<<(ostream& os, const CPinManifest& it) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode* CPinManifest::getObjectAt(const string_q& fieldName, size_t index) const {
+const CBaseNode* CManifest::getObjectAt(const string_q& fieldName, size_t index) const {
     // EXISTING_CODE
     // EXISTING_CODE
-    if (fieldName % "pins") {
+    if (fieldName % "chunks") {
         if (index == NOPOS) {
             CPinnedChunk empty;
-            ((CPinManifest*)this)->pins.push_back(empty);  // NOLINT
-            index = pins.size() - 1;
+            ((CManifest*)this)->chunks.push_back(empty);  // NOLINT
+            index = chunks.size() - 1;
         }
-        if (index < pins.size())
-            return &pins[index];
+        if (index < chunks.size())
+            return &chunks[index];
     }
     // EXISTING_CODE
     // EXISTING_CODE
@@ -364,7 +364,7 @@ const CBaseNode* CPinManifest::getObjectAt(const string_q& fieldName, size_t ind
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_PINMANIFEST = "";
+const char* STR_DISPLAY_MANIFEST = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

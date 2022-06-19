@@ -16,7 +16,6 @@
 
 namespace qblocks {
 
-extern bool parseOneLine(const char* line, void* data);
 #define hashToEmptyFile "QmP4i6ihnVrj8Tx7cTFw4aY6ungpaPYxDJEZ7Vg1RSNSdm"
 
 //-------------------------------------------------------------------------
@@ -24,7 +23,7 @@ void pinlib_init(QUITHANDLER qh) {
     acctlib_init(qh);
     CPinnedChunk::registerClass();
     CPinataPin::registerClass();
-    CPinManifest::registerClass();
+    CManifest::registerClass();
 }
 
 //-------------------------------------------------------------------------

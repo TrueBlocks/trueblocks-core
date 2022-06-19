@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-05-02T07:09:41
+date: 2022-06-19T09:15:55
 lastmod:
   - :git
   - lastmod
@@ -117,7 +117,7 @@ Manifest data is made of the following data fields:
 | bloomFormat | IPFS cid of file describing the associated bloom filter         | string            |
 | firstPin    | the block number of the first pin in the manifest (always zero) | blknum            |
 | lastPin     | the most recent block included in this manifest                 | blknum            |
-| pins        | a list of all the pins in the unchained index                   | CPinnedChunkArray |
+| chunks      | a list of all the pins in the unchained index                   | CPinnedChunkArray |
 
 
 ## Chain

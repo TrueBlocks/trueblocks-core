@@ -873,7 +873,7 @@ components:
           type: number
           format: blknum
           description: "the most recent block included in this manifest"
-        pins:
+        chunks:
           type: array
           items:
             $ref: "#/components/schemas/pinnedChunk"
