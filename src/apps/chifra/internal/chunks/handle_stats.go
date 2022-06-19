@@ -10,6 +10,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 func (opts *ChunksOptions) showStats(path string, first bool) (bool, error) {
@@ -22,30 +23,14 @@ func (opts *ChunksOptions) showStats(path string, first bool) (bool, error) {
 	return true, nil
 }
 
-type ChunkStats struct {
-	Start         uint64   `json:"start"`
-	End           uint64   `json:"end"`
-	NAddrs        uint32   `json:"nAddrs"`
-	NApps         uint32   `json:"nApps"`
-	NBlocks       uint64   `json:"nBlocks"`
-	NBlooms       uint32   `json:"nBlooms"`
-	RecWid        uint64   `json:"recWid"`
-	BloomSz       int64    `json:"bloomSz"`
-	ChunkSz       int64    `json:"chunkSz"`
-	AddrsPerBlock float_p3 `json:"addrsPerBlock"`
-	AppsPerBlock  float_p3 `json:"appsPerBlock"`
-	AppsPerAddr   float_p3 `json:"appsPerAddr"`
-	Ratio         float_p3 `json:"ratio"`
-}
-
-func NewChunkStats(path string) ChunkStats {
+func NewChunkStats(path string) types.SimpleChunkStats {
 	chunk, err := index.NewChunk(path)
 	defer chunk.Close()
 
 	if err != nil {
 		fmt.Println(err)
 	}
-	var ret ChunkStats
+	var ret types.SimpleChunkStats
 	ret.Start = chunk.Range.First
 	ret.End = chunk.Range.Last
 	ret.NAddrs = chunk.Data.Header.AddressCount
@@ -54,12 +39,12 @@ func NewChunkStats(path string) ChunkStats {
 	ret.NBlooms = chunk.Bloom.Count
 
 	if ret.NBlocks > 0 {
-		ret.AddrsPerBlock = float_p3(ret.NAddrs) / float_p3(ret.NBlocks)
-		ret.AppsPerBlock = float_p3(ret.NApps) / float_p3(ret.NBlocks)
+		ret.AddrsPerBlock = float64(ret.NAddrs) / float64(ret.NBlocks)
+		ret.AppsPerBlock = float64(ret.NApps) / float64(ret.NBlocks)
 	}
 
 	if ret.NAddrs > 0 {
-		ret.AppsPerAddr = float_p3(ret.NApps) / float_p3(ret.NAddrs)
+		ret.AppsPerAddr = float64(ret.NApps) / float64(ret.NAddrs)
 	}
 
 	ret.RecWid = 4 + index.BLOOM_WIDTH_IN_BYTES
@@ -67,13 +52,17 @@ func NewChunkStats(path string) ChunkStats {
 	p := strings.Replace(strings.Replace(path, ".bloom", ".bin", -1), "blooms", "finalized", -1)
 	ret.BloomSz = file.FileSize(path)
 	ret.ChunkSz = file.FileSize(p)
-	ret.Ratio = float_p3(ret.ChunkSz) / float_p3(ret.BloomSz)
+	ret.Ratio = float64(ret.ChunkSz) / float64(ret.BloomSz)
 
 	return ret
 }
 
-type float_p3 float64
+func (opts *ChunksOptions) HandleStats(blockNums []uint64) error {
+	defer opts.Globals.RenderFooter()
+	err := opts.Globals.RenderHeader(types.SimpleChunkStats{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+	if err != nil {
+		return err
+	}
 
-func (f float_p3) String() string {
-	return fmt.Sprintf("%.3f", f)
+	return opts.WalkChunkFiles(opts.showStats, blockNums)
 }

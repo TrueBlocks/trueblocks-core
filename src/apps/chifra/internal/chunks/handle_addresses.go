@@ -8,6 +8,7 @@ import (
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 func (opts *ChunksOptions) showAddresses(path string, first bool) (bool, error) {
@@ -56,4 +57,16 @@ func (opts *ChunksOptions) showAddresses(path string, first bool) (bool, error) 
 	}
 
 	return true, nil
+}
+
+func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
+	maxTestItems = 10
+
+	defer opts.Globals.RenderFooter()
+	err := opts.Globals.RenderHeader(types.SimpleIndexAddress{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+	if err != nil {
+		return err
+	}
+
+	return opts.WalkChunkFiles(opts.showAddresses, blockNums)
 }

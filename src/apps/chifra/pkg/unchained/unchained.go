@@ -21,6 +21,8 @@ const (
 	ReadHashName_V2    = "manifestHashMap"
 	PublishHash_V2     = "0x1fee5cd2"
 	PreferredPublisher = "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
+	HeaderMagicHash    = "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1"
+	ZeroMagicHash      = "0x0000000000000000000000000000000000000000000000000000000000000000"
 )
 
 func PrintHeader(chain string, testMode bool) {

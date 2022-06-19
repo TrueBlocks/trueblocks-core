@@ -5,6 +5,8 @@
 package chunksPkg
 
 import (
+	"strings"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 )
 
@@ -33,9 +35,12 @@ func (opts *ChunksOptions) WalkChunkFiles(displayFunc func(path string, first bo
 	for result := range filenameChan {
 		switch result.Type {
 		case cache.Index_Bloom:
-			skip := opts.Globals.TestMode && cnt > maxTestItems
+			skip := (opts.Globals.TestMode && cnt > maxTestItems) || !strings.HasSuffix(result.Path, ".bloom")
 			if !skip && shouldDisplay(result, blockNums) {
-				ok, _ := displayFunc(result.Path, cnt == 0)
+				ok, err := displayFunc(result.Path, cnt == 0)
+				if err != nil {
+					return err
+				}
 				if ok {
 					cnt++
 				}

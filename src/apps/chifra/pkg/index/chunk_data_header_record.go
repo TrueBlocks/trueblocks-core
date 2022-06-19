@@ -4,8 +4,10 @@ import (
 	"encoding/binary"
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/ethereum/go-ethereum/common"
 )
 
@@ -29,5 +31,20 @@ func ReadHeader(fl *os.File) (header HeaderRecord, err error) {
 		return header, fmt.Errorf("magic number in file %s is incorrect, expected %d, got %d", fl.Name(), file.MagicNumber, header.Magic)
 	}
 
+	headerHash := strings.ToLower(header.Hash.Hex())
+	if headerHash != unchained.HeaderMagicHash && headerHash != unchained.ZeroMagicHash {
+		return header, fmt.Errorf("header hash does not agree in file %s, expected %s, got %s", fl.Name(), unchained.HeaderMagicHash, headerHash)
+	}
+
 	return
+}
+
+func ReadHeaderFromFilename(fileName string) (header HeaderRecord, err error) {
+	fileName = ToIndexPath(fileName)
+	ff, err := os.Open(fileName)
+	defer ff.Close()
+	if err != nil {
+		return HeaderRecord{}, err
+	}
+	return ReadHeader(ff)
 }

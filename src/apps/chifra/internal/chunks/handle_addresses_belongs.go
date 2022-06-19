@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 func (opts *ChunksOptions) showAddressesBelongs(path string, first bool) (bool, error) {
@@ -65,4 +66,16 @@ func (opts *ChunksOptions) shouldShow(obj index.AddressRecord) bool {
 		}
 	}
 	return false
+}
+
+func (opts *ChunksOptions) HandleAddressesBelongs(blockNums []uint64) error {
+	maxTestItems = 10000
+
+	defer opts.Globals.RenderFooter()
+	err := opts.Globals.RenderHeader(types.SimpleIndexAddressBelongs{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+	if err != nil {
+		return err
+	}
+
+	return opts.WalkChunkFiles(opts.showAddressesBelongs, blockNums)
 }

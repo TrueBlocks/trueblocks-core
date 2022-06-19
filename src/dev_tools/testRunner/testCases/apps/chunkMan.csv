@@ -10,9 +10,10 @@ on      ,both ,fast  ,chunks ,apps/chunkMan ,fail_both               ,y    ,chec
 on      ,both ,fast  ,chunks ,apps/chunkMan ,invalid_param_1         ,y    ,mode = junk
 on      ,both ,fast  ,chunks ,apps/chunkMan ,fail_detail_belong      ,y    ,mode = addresses & belongs & addrs = 0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9 & blocks = 2287625 & details
 
-local   ,both ,fast  ,chunks ,apps/chunkMan ,list_check              ,y    ,mode = pins & check
+local   ,both ,fast  ,chunks ,apps/chunkMan ,list_check              ,y    ,mode = monitors & check
 
 on      ,both ,fast  ,chunks ,apps/chunkMan ,stats_default           ,y    ,mode = stats
+on      ,both ,fast  ,chunks ,apps/chunkMan ,manifest_default        ,y    ,mode = manifest
 on      ,both ,fast  ,chunks ,apps/chunkMan ,pins_default            ,y    ,mode = pins
 on      ,both ,fast  ,chunks ,apps/chunkMan ,index_default           ,y    ,mode = index
 on      ,both ,fast  ,chunks ,apps/chunkMan ,blooms_default          ,y    ,mode = blooms
@@ -21,6 +22,7 @@ on      ,both ,fast  ,chunks ,apps/chunkMan ,addresses_default       ,y    ,mode
 on      ,both ,fast  ,chunks ,apps/chunkMan ,appearances_default     ,y    ,mode = appearances
 
 on      ,both ,fast  ,chunks ,apps/chunkMan ,stats_txt               ,n    ,mode = stats & fmt = txt
+on      ,both ,fast  ,chunks ,apps/chunkMan ,manifest_csv            ,n    ,mode = manifest & fmt = csv
 on      ,both ,fast  ,chunks ,apps/chunkMan ,pins_csv                ,n    ,mode = pins & fmt = csv
 on      ,both ,fast  ,chunks ,apps/chunkMan ,index_json              ,y    ,mode = index & fmt = json
 on      ,both ,fast  ,chunks ,apps/chunkMan ,blooms_txt              ,n    ,mode = blooms & fmt = txt
@@ -33,3 +35,13 @@ on      ,both ,fast  ,chunks ,apps/chunkMan ,fail_belongs_no_blocks  ,y    ,mode
 on      ,both ,fast  ,chunks ,apps/chunkMan ,fail_belongs_no_addr    ,y    ,mode = addresses & belongs & blocks = 2287625
 on      ,both ,fast  ,chunks ,apps/chunkMan ,fail_belongs_addr_wrong ,y    ,mode = index & addrs = 0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9
 on      ,both ,fast  ,chunks ,apps/chunkMan ,belongs                 ,n    ,mode = addresses & belongs & addrs = 0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9 & blocks = 2287625 & fmt = csv
+
+on      ,both ,fast  ,chunks ,apps/chunkMan ,pin_chunks_bad          ,y    ,mode = addresses & pin_chunks
+on      ,both ,fast  ,chunks ,apps/chunkMan ,pin_data_bad            ,y    ,mode = pins & pin_data
+
+on      ,both ,fast  ,chunks ,apps/chunkMan ,check_bad               ,y    ,mode = addresses & check
+on      ,both ,fast  ,chunks ,apps/chunkMan ,clean_bad               ,y    ,mode = addresses & clean
+on      ,both ,fast  ,chunks ,apps/chunkMan ,pin_chunks_bad2         ,y    ,mode = addresses & pin_chunks
+on      ,both ,fast  ,chunks ,apps/chunkMan ,pin_data_bad2           ,y    ,mode = addresses & pin_data
+
+local   ,both ,fast  ,chunks ,apps/chunkMan ,check_okay              ,y    ,mode = manifest & check

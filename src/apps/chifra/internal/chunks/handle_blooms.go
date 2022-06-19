@@ -28,7 +28,7 @@ func (opts *ChunksOptions) showBloom(path string, first bool) (bool, error) {
 	return true, nil
 }
 
-func NewSimpleBloom(stats ChunkStats, bloom index.ChunkBloom) types.SimpleBloom {
+func NewSimpleBloom(stats types.SimpleChunkStats, bloom index.ChunkBloom) types.SimpleBloom {
 	nInserted := 0
 	for _, bl := range bloom.Blooms {
 		nInserted += int(bl.NInserted)
@@ -42,4 +42,15 @@ func NewSimpleBloom(stats ChunkStats, bloom index.ChunkBloom) types.SimpleBloom 
 	ret.NInserted = uint64(nInserted)
 
 	return ret
+}
+
+func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
+	maxTestItems = 10
+
+	defer opts.Globals.RenderFooter()
+	err := opts.Globals.RenderHeader(types.SimpleBloom{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+	if err != nil {
+		return err
+	}
+	return opts.WalkChunkFiles(opts.showBloom, blockNums)
 }
