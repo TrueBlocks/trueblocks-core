@@ -5,7 +5,7 @@
 package chunksPkg
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -18,17 +18,17 @@ func (opts *ChunksOptions) HandleManifest(blockNums []uint64) error {
 		return err
 	}
 
-	obj, err := manifest.FromLocalFile(opts.Globals.Chain)
+	manFromCache, err := manifest.FromCache(opts.Globals.Chain)
 	if err != nil {
 		return err
 	}
 	if opts.Globals.TestMode {
-		if len(obj.Chunks) > maxTestItems {
-			s := len(obj.Chunks) - maxTestItems - 1
-			e := len(obj.Chunks) - 1
-			obj.Chunks = obj.Chunks[s:e]
+		if len(manFromCache.Chunks) > maxTestItems {
+			s := len(manFromCache.Chunks) - maxTestItems - 1
+			e := len(manFromCache.Chunks) - 1
+			manFromCache.Chunks = manFromCache.Chunks[s:e]
 		}
 	}
 
-	return opts.Globals.RenderManifest(opts.Globals.Writer, opts.Globals.Format, obj)
+	return opts.Globals.RenderManifest(opts.Globals.Writer, opts.Globals.Format, manFromCache)
 }

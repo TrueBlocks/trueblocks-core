@@ -7,7 +7,7 @@ package initPkg
 import (
 	"testing"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 )
 
 func Test_retry(t *testing.T) {

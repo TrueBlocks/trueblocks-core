@@ -7,7 +7,7 @@ package index
 import (
 	"testing"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 )
 
 func Test_exclude(t *testing.T) {

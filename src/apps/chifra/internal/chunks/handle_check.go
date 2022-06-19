@@ -13,8 +13,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -62,41 +61,35 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 	maxTestItems = 10
 	reports := []types.CheckReport{}
 
-	reports = append(reports, types.CheckReport{Reason: "CheckSequential"})
+	reports = append(reports, types.CheckReport{Reason: "Sequential"})
 	if err := opts.CheckSequential(fileNames, blockNums, &reports[0]); err != nil {
 		return err
 	}
 
-	reports = append(reports, types.CheckReport{Reason: "CheckInternal"})
+	reports = append(reports, types.CheckReport{Reason: "Internal"})
 	if err := opts.CheckInternal(fileNames, blockNums, &reports[1]); err != nil {
 		return err
 	}
 
-	localMan, err := manifest.FromLocalFile(opts.Globals.Chain)
+	manFromCache, err := manifest.FromCache(opts.Globals.Chain)
 	if err != nil {
 		return err
 	}
-	remoteMan, err := pinlib.DownloadRemoteManifest(opts.Globals.Chain)
+	remoteMan, err := manifest.DownloadRemoteManifest(opts.Globals.Chain)
 	if err != nil {
 		return err
 	}
 
 	// a string array of the ranges in the local manifest
-	localArray := []string{}
-	for _, chunk := range localMan.Chunks {
-		localArray = append(localArray, chunk.FileName)
+	cacheArray := []string{}
+	for _, chunk := range manFromCache.Chunks {
+		cacheArray = append(cacheArray, chunk.FileName)
 	}
 
 	// a string array of the ranges from the remote manifest
 	remoteArray := []string{}
 	for _, chunk := range remoteMan.Chunks {
 		remoteArray = append(remoteArray, chunk.FileName)
-	}
-
-	// compare the two
-	reports = append(reports, types.CheckReport{Reason: "CheckRemote2Local"})
-	if err := opts.CheckManifest(remoteArray, localArray, &reports[2]); err != nil {
-		return err
 	}
 
 	// a string array of the actual files in the index
@@ -106,14 +99,20 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 		fnArray = append(fnArray, rng.String())
 	}
 
-	// compare with local manifest
-	reports = append(reports, types.CheckReport{Reason: "CheckDisc2Local"})
-	if err := opts.CheckManifest(fnArray, localArray, &reports[3]); err != nil {
+	// compare remote manifest to cached manifest
+	reports = append(reports, types.CheckReport{Reason: "Remote2Cache"})
+	if err := opts.CheckManifest(remoteArray, cacheArray, &reports[2]); err != nil {
 		return err
 	}
 
-	// compare with remote manifest
-	reports = append(reports, types.CheckReport{Reason: "CheckDisc2Remote"})
+	// compare with çached manifest with files on disc
+	reports = append(reports, types.CheckReport{Reason: "Disc2Cache"})
+	if err := opts.CheckManifest(fnArray, cacheArray, &reports[3]); err != nil {
+		return err
+	}
+
+	// compare with remote manifest with files on disc
+	reports = append(reports, types.CheckReport{Reason: "Disc2Remote"})
 	if err := opts.CheckManifest(fnArray, remoteArray, &reports[4]); err != nil {
 		return err
 	}

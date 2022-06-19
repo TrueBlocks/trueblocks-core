@@ -2,7 +2,7 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package pinlib
+package manifest
 
 import (
 	"fmt"
@@ -52,7 +52,7 @@ func TestDownloadJSON(t *testing.T) {
 
 	defer ts.Close()
 
-	manifest, err := DownloadManifest("mainnet", ts.URL)
+	manifest, err := downloadManifest("mainnet", ts.URL)
 	if err != nil {
 		t.Error(err)
 	}
@@ -70,7 +70,7 @@ func TestDownloadTab(t *testing.T) {
 
 	defer ts.Close()
 
-	manifest, err := DownloadManifest("mainnet", ts.URL)
+	manifest, err := downloadManifest("mainnet", ts.URL)
 	if err != nil {
 		t.Error(err)
 	}

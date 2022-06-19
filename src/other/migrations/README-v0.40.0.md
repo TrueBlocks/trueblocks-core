@@ -1,3 +1,5 @@
+Remove anything but ipfs.unchainedindex.io/ipfs from config file (or change the name of the value)
+
 TELL THEM TO REMOVE THE CONTENTS OF CMAKE IF THERE'S AN ISSUE WITH CMAKE
 CMake was unable to find a build program corresponding to "Ninja"
 -- Using c++ standard c++17

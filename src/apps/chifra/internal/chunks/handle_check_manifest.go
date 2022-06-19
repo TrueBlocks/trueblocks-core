@@ -34,7 +34,7 @@ func (opts *ChunksOptions) CheckManifest(arrayA, arrayB []string, report *types.
 	comp := CompareState{
 		testMode: opts.Globals.TestMode,
 		details:  opts.Details,
-		msg:      "%s: The chunk is in the first but not the second array%s",
+		msg:      "%s: The chunk is in the %s array but not the %s array%s",
 		fail:     3,
 		arrayA:   arrayA,
 		arrayB:   arrayB,
@@ -45,7 +45,7 @@ func (opts *ChunksOptions) CheckManifest(arrayA, arrayB []string, report *types.
 	}
 
 	comp.arrayA, comp.arrayB = comp.arrayB, comp.arrayA
-	comp.msg = "%s: The chunk is in the second but not the first array%s"
+	comp.msg = "%s: The chunk is in the %s array but not the %s array%s"
 	comp.fail = 4
 
 	return comp.checkArrays(report)
@@ -76,6 +76,7 @@ func (comp *CompareState) checkArrays(report *types.CheckReport) error {
 		theMap[item] = true
 	}
 
+	parts := strings.Split(report.Reason, "2")
 	for testId, item := range comp.arrayB {
 		if testId > len(comp.arrayA)-1 {
 			continue
@@ -87,7 +88,7 @@ func (comp *CompareState) checkArrays(report *types.CheckReport) error {
 		report.CheckedCnt++
 		if !theMap[item] || testId == comp.fail {
 			if len(report.ErrorStrs) < 4 || comp.details {
-				msg := fmt.Sprintf(comp.msg, item, marker)
+				msg := fmt.Sprintf(comp.msg, item, parts[0], parts[1], marker)
 				report.ErrorStrs = append(report.ErrorStrs, msg)
 			}
 		} else {

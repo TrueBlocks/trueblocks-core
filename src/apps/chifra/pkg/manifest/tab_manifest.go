@@ -63,8 +63,8 @@ func ReadTabManifest(chain string, r io.Reader) (*Manifest, error) {
 	}, nil
 }
 
-// FromLocalFile loads the manifest saved in ConfigPath
-func FromLocalFile(chain string) (*Manifest, error) {
+// FromCache loads the manifest saved in ConfigPath
+func FromCache(chain string) (*Manifest, error) {
 	manifestPath := config.GetPathToChainConfig(chain) + "manifest.txt"
 	file, err := os.Open(manifestPath)
 	if err != nil {
@@ -74,22 +74,22 @@ func FromLocalFile(chain string) (*Manifest, error) {
 }
 
 func GetChunkList(chain string) ([]types.SimpleChunk, error) {
-	manifestData, err := FromLocalFile(chain)
+	manFromCache, err := FromCache(chain)
 	if err != nil {
 		return []types.SimpleChunk{}, err
 	}
 
-	sort.Slice(manifestData.Chunks, func(i, j int) bool {
-		iPin := manifestData.Chunks[i]
-		jPin := manifestData.Chunks[j]
+	sort.Slice(manFromCache.Chunks, func(i, j int) bool {
+		iPin := manFromCache.Chunks[i]
+		jPin := manFromCache.Chunks[j]
 		return iPin.FileName < jPin.FileName
 	})
 
-	pinList := make([]types.SimpleChunk, len(manifestData.Chunks))
-	for i := range manifestData.Chunks {
-		pinList[i].FileName = manifestData.Chunks[i].FileName
-		pinList[i].BloomHash = string(manifestData.Chunks[i].BloomHash)
-		pinList[i].IndexHash = string(manifestData.Chunks[i].IndexHash)
+	pinList := make([]types.SimpleChunk, len(manFromCache.Chunks))
+	for i := range manFromCache.Chunks {
+		pinList[i].FileName = manFromCache.Chunks[i].FileName
+		pinList[i].BloomHash = string(manFromCache.Chunks[i].BloomHash)
+		pinList[i].IndexHash = string(manFromCache.Chunks[i].IndexHash)
 	}
 	return pinList, nil
 }

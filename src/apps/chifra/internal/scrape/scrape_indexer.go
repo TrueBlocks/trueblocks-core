@@ -13,7 +13,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/scraper"
 )
@@ -78,7 +78,7 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 }
 
 func (opts *ScrapeOptions) publishManifast() error {
-	localMan, err := manifest.FromLocalFile(opts.Globals.Chain)
+	manFromCache, err := manifest.FromCache(opts.Globals.Chain)
 	if err != nil {
 		return err
 	}
@@ -93,5 +93,5 @@ func (opts *ScrapeOptions) publishManifast() error {
 	if err != nil {
 		return fmt.Errorf("locking file: %s", err)
 	}
-	return opts.Globals.RenderManifest(w, "json", localMan)
+	return opts.Globals.RenderManifest(w, "json", manFromCache)
 }

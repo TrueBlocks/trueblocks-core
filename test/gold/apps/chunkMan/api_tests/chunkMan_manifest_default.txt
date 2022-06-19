@@ -2,7 +2,7 @@ chunks?mode=manifest
 {
   "data": [
     {
-      "version": "trueblocks-core@v0.40.0",
+      "version": "trueblocks-core@v0.40.0-beta",
       "chain": "mainnet",
       "schemas": "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2",
       "databases": "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2",

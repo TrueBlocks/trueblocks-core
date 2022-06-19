@@ -13,8 +13,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 )
@@ -33,14 +32,18 @@ func (opts *InitOptions) HandleInit() error {
 	chain := opts.Globals.Chain
 
 	config.EstablishIndexPaths(config.GetPathToIndex(chain))
+	unchained.PrintHeader(opts.Globals.Chain, opts.Globals.TestMode)
 
-	opts.PrintManifestHeader()
+	downloadedManifest, err := manifest.DownloadRemoteManifest(chain)
+	if err != nil {
+		return err
+	}
 
-	downloadedManifest, err := pinlib.DownloadRemoteManifest(chain)
 	err = opts.SaveManifest(chain, "txt", downloadedManifest)
 	if err != nil {
 		return err
 	}
+
 	err = opts.SaveManifest(chain, "json", downloadedManifest)
 	if err != nil {
 		return err
@@ -173,19 +176,6 @@ func retry(failedPins []manifest.Chunk, times uint, downloadChunks downloadFunc)
 	}
 
 	return len(pinsToRetry)
-}
-
-func (opts *InitOptions) PrintManifestHeader() {
-	chain := opts.Globals.Chain
-	logger.Log(logger.Info, "schemas:", unchained.Schemas)
-	logger.Log(logger.Info, "databases:", unchained.Databases)
-	logger.Log(logger.Info, "unchainedAddress:", unchained.Address)
-	logger.Log(logger.Info, "unchainedReadHash:", unchained.ReadHash)
-	logger.Log(logger.Info, "unchainedPublishHash:", unchained.PublishHash)
-	if !opts.Globals.TestMode {
-		logger.Log(logger.Info, "manifestLocation:", config.GetPathToChainConfig(chain)) // order matters
-		logger.Log(logger.Info, "unchainedIndexFolder:", config.GetPathToIndex(chain))   // order matters
-	}
 }
 
 func (opts *InitOptions) SaveManifest(chain, fileType string, man *manifest.Manifest) error {

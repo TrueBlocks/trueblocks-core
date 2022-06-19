@@ -2,13 +2,13 @@ chunks?mode=manifest&check
 {
   "data": [
     {
-      "reason": "CheckSequential",
+      "reason": "Sequential",
       "nVisited": 11,
       "nChecked": 11,
       "nPassed": 11
     },
     {
-      "reason": "CheckInternal",
+      "reason": "Internal",
       "nVisited": 11,
       "nChecked": 11,
       "nPassed": 8,
@@ -20,7 +20,7 @@ chunks?mode=manifest&check
       ]
     },
     {
-      "reason": "CheckRemote2Local",
+      "reason": "Remote2Cache",
       "nVisited": 5766,
       "nChecked": 5766,
       "nPassed": 5764,
@@ -31,7 +31,7 @@ chunks?mode=manifest&check
       ]
     },
     {
-      "reason": "CheckDisc2Local",
+      "reason": "Disc2Cache",
       "nVisited": 22,
       "nChecked": 22,
       "nPassed": 20,
@@ -42,7 +42,7 @@ chunks?mode=manifest&check
       ]
     },
     {
-      "reason": "CheckDisc2Remote",
+      "reason": "Disc2Remote",
       "nVisited": 22,
       "nChecked": 22,
       "nPassed": 20,

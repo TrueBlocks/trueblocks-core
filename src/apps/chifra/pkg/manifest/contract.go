@@ -2,7 +2,7 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package pinlib
+package manifest
 
 import (
 	"context"
@@ -14,7 +14,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/ethereum/go-ethereum"
@@ -22,26 +21,67 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
-// GetManifestCidFromContract calls UnchainedIndex smart contract to get
-// the current manifest IPFS CID
-func GetManifestCidFromContract(chain string) (string, error) {
-	// TODO: BOGUS
-	newVersion := os.Getenv("NEW_UNCHAINED") == "true"
+func DownloadRemoteManifest(chain string) (*Manifest, error) {
+	// Fetch manifest's CID
+	cid, err := getManifestCidFromContract(chain)
+	if err != nil {
+		return nil, err
+	}
+	logger.Log(logger.Info, "Unchained index returned CID", cid)
 
-	provider := config.GetRpcProvider(chain)
+	// Download the manifest
+	gatewayUrl := config.GetPinGateway(chain)
+	logger.Log(logger.Info, "IPFS gateway", gatewayUrl)
+
+	url, err := url.Parse(gatewayUrl)
+	if err != nil {
+		return nil, err
+	}
+	url.Path = path.Join(url.Path, cid)
+
+	downloadedManifest, err := downloadManifest(chain, url.String())
+	if err != nil {
+		return nil, err
+	}
+
+	return downloadedManifest, nil
+}
+
+// getManifestCidFromContract calls UnchainedIndex smart contract to get
+// the current manifest IPFS CID
+func getManifestCidFromContract(chain string) (string, error) {
+	// TODO: BOGUS
+	newVersion := unchained.NewUnchained(chain)
+
+	// TODO: BOGUS -- where is the ultimate source of truth?
+	provider := config.GetRpcProvider("mainnet") // chain)
 	rpcClient.CheckRpc(provider)
 	ethClient := rpcClient.GetClient(provider)
 	defer ethClient.Close()
 
 	abiFn := config.GetPathToRootConfig() + "abis/known-000/unchained.json"
 	address := common.HexToAddress(unchained.Address)
-	callData := rpcClient.DecodeHex(unchained.ReadHash)
 	signature := unchained.ReadHashName
 	if newVersion {
 		abiFn = config.GetPathToRootConfig() + "abis/known-000/unchainedV2.json"
 		address = common.HexToAddress(unchained.Address_V2)
-		callData = rpcClient.DecodeHex(unchained.ReadHash_V2)
 		signature = unchained.ReadHashName_V2
+	}
+
+	abiSource, err := os.Open(abiFn)
+	if err != nil {
+		return "", fmt.Errorf("while reading contract ABI: %w", err)
+	}
+	defer abiSource.Close()
+
+	contractAbi, err := abi.JSON(abiSource)
+	if err != nil {
+		return "", fmt.Errorf("while parsing contract ABI: %w", err)
+	}
+
+	callData, err := contractAbi.Pack(signature)
+	if newVersion {
+		callData, err = contractAbi.Pack(signature, common.HexToAddress(unchained.PreferredPublisher), chain)
 	}
 
 	msg := ethereum.CallMsg{
@@ -63,17 +103,6 @@ func GetManifestCidFromContract(chain string) (string, error) {
 		return "", fmt.Errorf(msg)
 	}
 
-	abiSource, err := os.Open(abiFn)
-	if err != nil {
-		return "", fmt.Errorf("while reading contract ABI: %w", err)
-	}
-	defer abiSource.Close()
-
-	contractAbi, err := abi.JSON(abiSource)
-	if err != nil {
-		return "", fmt.Errorf("while parsing contract ABI: %w", err)
-	}
-
 	unpacked, err := contractAbi.Unpack(signature, response)
 	if err != nil {
 		return "", fmt.Errorf("while unpacking value: %w", err)
@@ -83,31 +112,10 @@ func GetManifestCidFromContract(chain string) (string, error) {
 		return "", errors.New("contract returned empty data")
 	}
 
-	return unpacked[0].(string), nil
-}
-
-func DownloadRemoteManifest(chain string) (*manifest.Manifest, error) {
-	// Fetch manifest's CID
-	cid, err := GetManifestCidFromContract(chain)
-	if err != nil {
-		return nil, err
-	}
-	logger.Log(logger.Info, "Unchained index returned CID", cid)
-
-	// Download the manifest
-	gatewayUrl := config.GetPinGateway(chain)
-	logger.Log(logger.Info, "IPFS gateway", gatewayUrl)
-
-	url, err := url.Parse(gatewayUrl)
-	if err != nil {
-		return nil, err
-	}
-	url.Path = path.Join(url.Path, cid)
-
-	downloadedManifest, err := DownloadManifest(chain, url.String())
-	if err != nil {
-		return nil, err
+	ret := unpacked[0].(string)
+	if len(ret) == 0 {
+		return "", errors.New("unchained index returned empty CID for the " + chain + " chain.")
 	}
 
-	return downloadedManifest, nil
+	return ret, nil
 }
