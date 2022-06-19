@@ -93,6 +93,7 @@ static string_q pinOneChunk(const string_q& fileName, const string_q& type) {
         curl_slist_free_all(headers);
     }
     curl_easy_cleanup(curl);
+    ::remove(zip.c_str());
     return result;
 }
 
