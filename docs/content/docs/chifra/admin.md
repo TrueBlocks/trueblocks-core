@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-06-10T16:43:36
+date: 2022-06-19T07:21:12
 lastmod:
   - :git
   - lastmod
@@ -53,6 +53,8 @@ Notes:
 
 ## chifra scrape
 
+TODO: BOGUS - REVIEW HELP FILES
+
 The `chifra scrape` application creates TrueBlocks' index of address appearances -- the fundamental data structure of the entire system. It also, optionally, pins the index to IPFS.
 
 `chifra scrape` is a long running process, therefore we advise you run it as a service or in terminal multiplexer such as `tmux`. You may start and stop `chifra scrape` as needed, but doing so means the scraper will have to catch up to the front of the chain the next time it runs, a process that may take several hours depending on how long ago it was last run. See below for a more in depth explanation of how the scraping process works and prerequisites for it proper operation.
@@ -100,7 +102,7 @@ Please [see this article](https://trueblocks.io/blog/a-long-winded-explanation-o
 
 ## chifra chunks
 
-This tool is not yet ready for production use. Please return to this page later.
+TODO: BOGUS - REVIEW HELP FILES
 
 ```[plaintext]
 Purpose:
@@ -134,6 +136,8 @@ Notes:
 **Source code**: [`internal/chunks`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/chunks)
 
 ## chifra init
+
+TODO: BOGUS - REVIEW HELP FILES
 
 When invoked, `chifra init` looks at a smart contract called **The Unchained Index** ([0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd](https://etherscan.io/address/0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd)). From this smart contract, it extracts a data item called `manifestHash`. The `manifestHash` is an IPFS hash that points to a file (a manifest) that contains every previously pinned Bloom filter and index chunk. TrueBlocks periodically publishes the manifest's hash to the smart contract. This makes the entire index both available for our software to use and impossible for us to withhold. Both of these aspects of the manifest are included by design.
 

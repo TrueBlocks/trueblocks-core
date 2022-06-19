@@ -1,6 +1,6 @@
 ## chifra chunks
 
-This tool is not yet ready for production use. Please return to this page later.
+TODO: BOGUS - REVIEW HELP FILES
 
 ```[plaintext]
 Purpose:
