@@ -15,9 +15,9 @@
 
 namespace qblocks {
 
-// TODO: BOGUS - It's okay for the two versions to be different - we don't
-// TODO: BOGUS - want to have to regenerate the index files when version changes
-string_q manifestVersion = "trueblocks@v0.40.0";
+// TODO: BOGUS - It's okay for the two versions to be different - we don't want
+// TODO: BOGUS - to have to regenerate the index files when version changes
+string_q manifestVersion = "trueblocks-core@v0.40.0";
 
 // Run make generate in order for this to take effect
 #define MAJOR 0

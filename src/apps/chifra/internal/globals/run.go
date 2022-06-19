@@ -7,14 +7,10 @@ package globals
 import (
 	"bufio"
 	"bytes"
-
-	// "errors"
 	"fmt"
 	"io"
 	"os"
 	"os/exec"
-
-	// "strconv"
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"

@@ -8,4 +8,4 @@
 package version
 
 const LibraryVersion = "GHC-TrueBlocks//0.37.0-beta"
-const ManifestVersion = "trueblocks@v0.40.0"
+const ManifestVersion = "trueblocks-core@v0.40.0"

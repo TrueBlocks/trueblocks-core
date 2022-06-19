@@ -101,8 +101,8 @@ func ReadTabManifest(r io.Reader) (*Manifest, error) {
 	}, nil
 }
 
-// FromLocalFile loads the manifest saved in ConfigPath
-func FromLocalFile(chain string) (*Manifest, error) {
+// FromCache loads the manifest saved in ConfigPath
+func FromCache(chain string) (*Manifest, error) {
 	manifestPath := config.GetPathToChainConfig(chain) + "manifest.txt"
 	file, err := os.Open(manifestPath)
 	if err != nil {
@@ -111,10 +111,10 @@ func FromLocalFile(chain string) (*Manifest, error) {
 	return ReadTabManifest(file)
 }
 
-func GetPinList(chain string) ([]types.SimplePinList, error) {
-	manifestData, err := FromLocalFile(chain)
+func GetPinList(chain string) ([]types.SimpleChunkRecord, error) {
+	manifestData, err := FromCache(chain)
 	if err != nil {
-		return []types.SimplePinList{}, err
+		return []types.SimpleChunkRecord{}, err
 	}
 
 	sort.Slice(manifestData.Chunks, func(i, j int) bool {
@@ -123,7 +123,7 @@ func GetPinList(chain string) ([]types.SimplePinList, error) {
 		return iPin.FileName < jPin.FileName
 	})
 
-	pinList := make([]types.SimplePinList, len(manifestData.Chunks))
+	pinList := make([]types.SimpleChunkRecord, len(manifestData.Chunks))
 	for i := range manifestData.Chunks {
 		pinList[i].FileName = manifestData.Chunks[i].FileName
 		pinList[i].BloomHash = string(manifestData.Chunks[i].BloomHash)

@@ -63,7 +63,7 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 		defer opts.Globals.RenderFooter()
 
 		if opts.Mode == "pins" {
-			err := opts.Globals.RenderHeader(types.SimplePinList{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+			err := opts.Globals.RenderHeader(types.SimpleChunkRecord{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
 			if err != nil {
 				return err, true
 			}

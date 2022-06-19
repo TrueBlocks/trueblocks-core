@@ -23,22 +23,9 @@ int main(int argc, const char* argv[]) {
     ASSERT(options.commandLines.size() == 1);
     if (!options.parseArguments(options.commandLines[0]))
         return 0;
-    // TODO: BOGUS - BLAZE RETURN VALUE
-    // bool ret =
-    options.scrape_blocks();
 
+    // TODO: BOGUS - BLAZE RETURN VALUE
+    bool ret = options.scrape_blocks();
     pinlib_cleanup();
-
-    // TODO: BOGUS - BLAZE RETURN VALUE
-    // if (!ret) {
-    //    // TODO: BOGUS - Blaze Quits Early
-    //    LOG_INFO("");
-    //    LOG_INFO("---------------------------------------");
-    //    LOG_INFO("Blaze returned without completing.");
-    //    LOG_INFO("---------------------------------------");
-    //    LOG_INFO("");
-    //    return EXIT_FAIL;
-    //}
-    // return EXIT_SUCESS;
-    return 0;
+    return ret ? EXIT_SUCCESS : EXIT_FAILURE;
 }
