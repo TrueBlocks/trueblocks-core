@@ -1,6 +1,6 @@
 chunks?mode=remote
 {
   "errors": [
-    "The mode option (remote) must be one of [ stats | pins | blooms | index | addresses | appearances ]"
+    "The mode option (remote) must be one of [ stats | manifest | pins | blooms | index | addresses | appearances ]"
   ]
 }

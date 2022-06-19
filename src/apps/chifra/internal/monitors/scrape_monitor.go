@@ -129,7 +129,7 @@ func (opts *MonitorsOptions) Refresh(monitors []monitor.Monitor) error {
 					cmd = strings.Replace(cmd, "  ", " ", -1)
 					o := opts
 					o.Globals.File = ""
-					o.Globals.PassItOn("acctExport", opts.Globals.Chain, cmd, opts.Globals.ToCmdLine())
+					o.Globals.PassItOn("acctExport", opts.Globals.Chain, cmd, "")
 					// fmt.Println("Processing:", colors.BrightYellow, outputFn, colors.BrightWhite, exists, countBefore, countAfter, colors.Off)
 					// } else {
 					// 	fmt.Println("Skipping:", colors.BrightYellow, outputFn, colors.BrightWhite, exists, countBefore, countAfter, colors.Off)

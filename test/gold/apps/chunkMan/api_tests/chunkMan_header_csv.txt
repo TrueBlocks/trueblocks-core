@@ -1,6 +1,6 @@
 chunks?mode=header&fmt=csv
 {
   "errors": [
-    "The mode option (header) must be one of [ stats | pins | blooms | index | addresses | appearances ]"
+    "The mode option (header) must be one of [ stats | manifest | pins | blooms | index | addresses | appearances ]"
   ]
 }

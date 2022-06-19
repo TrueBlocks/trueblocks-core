@@ -16,5 +16,9 @@
 namespace qblocks {
 
 extern double getPriceInUsd(blknum_t bn, string_q& priceSource, const address_t& address = "");
+inline double getPriceInUsd(blknum_t bn) {
+    string_q unused;
+    return getPriceInUsd(bn, unused);
+};
 
 }  // namespace qblocks

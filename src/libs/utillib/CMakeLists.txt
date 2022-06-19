@@ -1,8 +1,8 @@
 # minimum cmake version supported
-cmake_minimum_required (VERSION 3.0)
+cmake_minimum_required(VERSION 3.0)
 
 # library project
-project (util)
+project(util)
 
 # produce the version-git.cpp file with current git branch, hash and timestamp
 execute_process(
@@ -26,12 +26,12 @@ execute_process(
 set_property(
     SOURCE version_git.cpp
     PROPERTY COMPILE_DEFINITIONS
-        D_COMMIT_BRANCH=\"${COMMIT_BRANCH}\"
-        D_COMMIT_HASH=\"${COMMIT_HASH}\"
-        D_COMMIT_TS=${COMMIT_TS}
+    D_COMMIT_BRANCH=\"${COMMIT_BRANCH}\"
+    D_COMMIT_HASH=\"${COMMIT_HASH}\"
+    D_COMMIT_TS=${COMMIT_TS}
 )
 add_custom_target(git_version ALL DEPENDS version_git.cpp)
-message (STATUS "GIT: branch '${COMMIT_BRANCH}' commit '${COMMIT_HASH}' timestamp '${COMMIT_TS}'")
+message(STATUS "GIT: branch '${COMMIT_BRANCH}' commit '${COMMIT_HASH}' timestamp '${COMMIT_TS}'")
 
 # The sources to be used
 file(GLOB SOURCE_FILES "*.cpp")
@@ -41,6 +41,3 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/libs")
 
 # Define the executable to be generated
 add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES})
-
-# Headers require
-target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_SOURCE_DIR}/libs/sqlite3lib")

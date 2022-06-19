@@ -7,7 +7,7 @@ package index
 import (
 	"testing"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 )
 
 func Test_exclude(t *testing.T) {
@@ -18,7 +18,7 @@ func Test_exclude(t *testing.T) {
 		"013348862-013351760": true,
 	}
 
-	pins := []manifest.PinDescriptor{
+	pins := []manifest.ChunkRecord{
 		{
 			FileName: "013337527-013340418",
 		},
