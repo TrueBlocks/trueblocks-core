@@ -229,18 +229,22 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10840,apps,Admin,status,cacheStatus,last_block,L,NOPOS,false,false,false,false,local,flag,<blknum>,last block to process (inclusive -- testing only)
 10860,apps,Admin,status,cacheStatus,,,,false,false,true,true,--,description,,Report on the status of the TrueBlocks system.
 
-21950,apps,Admin,chunks,chunkMan,mode,,,true,false,true,true,local,positional,enum[stats*|pins|blooms|index|addresses|appearances],the type of chunk info to retrieve
+21950,apps,Admin,chunks,chunkMan,mode,,,true,false,true,true,local,positional,enum[stats*|manifest|pins|blooms|index|addresses|appearances],the type of chunk info to retrieve
 21955,apps,Admin,chunks,chunkMan,blocks,,,false,false,true,true,header,positional,list<blknum>,optional list of blocks to intersect with chunk ranges
 21957,apps,Admin,chunks,chunkMan,addrs,,,false,false,true,true,header,positional,list<addr>,one or more addresses to use with --belongs option (see note)
-21960,apps,Admin,chunks,chunkMan,check,c,,false,false,true,true,gocmd,switch,<boolean>,depends on mode&#44; checks for internal consistency of the data type
+21962,apps,Admin,chunks,chunkMan,details,d,,false,false,true,true,gocmd,switch,<boolean>,for manifest and addresses options only&#44; display full details of the report
+21970,apps,Admin,chunks,chunkMan,check,c,,false,false,true,true,gocmd,switch,<boolean>,depends on mode&#44; checks for internal consistency of the data type
 21960,apps,Admin,chunks,chunkMan,belongs,b,,false,false,true,true,gocmd,switch,<boolean>,checks if the given address appears in the given chunk
-21960,apps,Admin,chunks,chunkMan,details,d,,false,false,true,true,gocmd,switch,<boolean>,for the --addresses option only&#44; display appearance records as well as address records
-21965,apps,Admin,chunks,chunkMan,,,,false,false,true,true,--,description,,Manage and investigate chunks and bloom filters.
-21970,apps,Admin,chunks,chunkMan,n1,,,false,false,false,false,--,note,,If blocks are provided&#44; only chunks intersecting with those blocks are displayed.
-21970,apps,Admin,chunks,chunkMan,n2,,,false,false,false,false,--,note,,Only a single block in a given chunk needs to be supplied for a match.
-21970,apps,Admin,chunks,chunkMan,n3,,,false,false,false,false,--,note,,The --belongs option is only available with the addresses or blooms mode.
-21970,apps,Admin,chunks,chunkMan,n4,,,false,false,false,false,--,note,,The --belongs option requires both an address and a block identifier.
-21970,apps,Admin,chunks,chunkMan,n5,,,false,false,false,false,--,note,,You may only specifiy an address when using the --belongs option.
+21965,apps,Admin,chunks,chunkMan,pin_chunks,p,,false,false,true,false,gocmd,switch,<boolean>,gzip each chunk&#44; push it to IPFS&#44; and update and publish the manifest
+21967,apps,Admin,chunks,chunkMan,pin_data,a,,false,false,true,false,gocmd,switch,<boolean>,gzip the databases&#44; push them to IPFS&#44; and update and publish the manifest
+21970,apps,Admin,chunks,chunkMan,clean,n,,false,false,true,false,gocmd,switch,<boolean>,retrieve all pins on Pinata&#44; compare to manifest&#44; remove any extraneous remote pins
+21975,apps,Admin,chunks,chunkMan,,,,false,false,true,true,--,description,,Manage and investigate chunks and bloom filters.
+21980,apps,Admin,chunks,chunkMan,n1,,,false,false,false,false,--,note,,If blocks are provided&#44; only chunks intersecting with those blocks are displayed.
+21981,apps,Admin,chunks,chunkMan,n2,,,false,false,false,false,--,note,,Only a single block in a given chunk needs to be supplied for a match.
+21982,apps,Admin,chunks,chunkMan,n3,,,false,false,false,false,--,note,,The --belongs option is only available with the addresses or blooms mode.
+21983,apps,Admin,chunks,chunkMan,n4,,,false,false,false,false,--,note,,The --belongs option requires both an address and a block identifier.
+21984,apps,Admin,chunks,chunkMan,n5,,,false,false,false,false,--,note,,You may only specifiy an address when using the --belongs option.
+21985,apps,Admin,chunks,chunkMan,n6,,,false,false,false,false,--,note,,The two --pin_ options&#44; the --clean option&#44; and the --check option are available only in manifest mode.
 
 11905,apps,Admin,init,init,all,a,,false,false,true,true,header,switch,<boolean>,in addition to Bloom filters&#44; download full index chunks
 11910,apps,Admin,init,init,,,,false,false,true,true,--,description,,Initialize the TrueBlocks system by downloading from IPFS.

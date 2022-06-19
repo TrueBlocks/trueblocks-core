@@ -1543,6 +1543,7 @@ paths:
             type: string
             enum:
               - stats
+              - manifest
               - pins
               - blooms
               - index
@@ -1570,6 +1571,15 @@ paths:
             items:
               type: string
               format: address
+        - name: details
+          description: >
+            for manifest and addresses options only, display full details of the report
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: check
           description: depends on mode, checks for internal consistency of the data type
           required: false
@@ -1580,15 +1590,6 @@ paths:
             type: boolean
         - name: belongs
           description: checks if the given address appears in the given chunk
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: details
-          description: >
-            for the --addresses option only, display appearance records as well as address records
           required: false
           style: form
           in: query
