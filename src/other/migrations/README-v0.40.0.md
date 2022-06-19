@@ -1,3 +1,16 @@
+Needed to do:
+
+1. Publish databases
+2. Finish file format document
+3. Auto publish to smart contract (on Gnosis)
+4. Better understand the size of the index chunks on other chains
+5. Remove unused pins from Pinata
+    Gnosis, Sepolia, Old Mainnet, New Mainnet
+6. Download entire index from chifra init (both with and without --all)
+    Sepolia, Gnosis, Mainnet
+
+Currently allows sepolia and gnosis for chifra init and chifra chunks
+
 Remove anything but ipfs.unchainedindex.io/ipfs from config file (or change the name of the value)
 
 TELL THEM TO REMOVE THE CONTENTS OF CMAKE IF THERE'S AN ISSUE WITH CMAKE
