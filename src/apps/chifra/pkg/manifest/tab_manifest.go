@@ -6,14 +6,14 @@ package manifest
 
 import (
 	"encoding/csv"
-	"errors"
 	"io"
 	"os"
 	"sort"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
 // ReadPinDescriptors parses pin information and returns a slice of
@@ -33,6 +33,9 @@ func ReadPinDescriptors(r io.Reader) ([]ChunkRecord, error) {
 		if err != nil {
 			return nil, err
 		}
+		if record[0] == "fileName" {
+			continue
+		}
 
 		descriptors = append(descriptors, ChunkRecord{
 			FileName:  record[0],
@@ -44,42 +47,6 @@ func ReadPinDescriptors(r io.Reader) ([]ChunkRecord, error) {
 	return descriptors, nil
 }
 
-// BuildTabRange finds the first and last pin descriptor and returns
-// ManifestRange. We need this function, because TSV formatted manifest
-// does not carry this information explicitly
-func BuildTabRange(descriptors []ChunkRecord) (ManifestRange, error) {
-	if len(descriptors) == 0 {
-		return ManifestRange{}, errors.New("invalid input: no pins")
-	}
-
-	firstPinRange := ManifestRange{}
-	var err error
-	if !strings.Contains(descriptors[0].FileName, "-") {
-		if len(descriptors) == 1 {
-			return ManifestRange{}, errors.New("invalid input: header only, no pins")
-		}
-		firstPinRange, err = StringToManifestRange(descriptors[1].FileName)
-		if err != nil {
-			return ManifestRange{}, err
-		}
-	} else {
-		firstPinRange, err = StringToManifestRange(descriptors[0].FileName)
-		if err != nil {
-			return ManifestRange{}, err
-		}
-	}
-
-	lastPinRange, err := StringToManifestRange(descriptors[len(descriptors)-1].FileName)
-	if err != nil {
-		return ManifestRange{}, err
-	}
-
-	return ManifestRange{
-		firstPinRange[0],
-		lastPinRange[1],
-	}, nil
-}
-
 // ReadTabManifest parses TSV formatted manifest
 func ReadTabManifest(chain string, r io.Reader) (*Manifest, error) {
 	descriptors, err := ReadPinDescriptors(r)
@@ -87,17 +54,12 @@ func ReadTabManifest(chain string, r io.Reader) (*Manifest, error) {
 		return nil, err
 	}
 
-	newBlockRange, err := BuildTabRange(descriptors)
-	if err != nil {
-		return nil, err
-	}
-
 	return &Manifest{
-		IndexFormat: "",
-		BloomFormat: "",
-		CommitHash:  "",
-		BlockRange:  newBlockRange,
-		Chunks:      descriptors,
+		Version:   version.ManifestVersion,
+		Chain:     chain,
+		Schemas:   unchained.Schemas,
+		Databases: unchained.Databases,
+		Chunks:    descriptors,
 	}, nil
 }
 

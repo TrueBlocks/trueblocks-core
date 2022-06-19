@@ -15,13 +15,8 @@ var manifestJSONSource = `
 {
   "version": "2",
   "chain": "mainnet",
-  "chainId": 1,
-  "indexFormat": "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2",
-  "bloomFormat": "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD",
-  "commitHash": "f29699d3281e41cb011ddfbe50b7f01bfe5e3c53",
-  "names": "QmP4i6ihnVrj8Tx7cTFw4aY6ungpaPYxDJEZ7Vg1RSNSdm",
-  "timestamps": "QmcvjroTiE95LWeiP8HHq1YA3ysRchLuVx8HLQui8WcSBV",
-  "blockRange": "000000000-000864336",
+  "schemas": "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2",
+  "databases": "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD",
   "chunks": [
     {
       "fileName": "000000000-000000000",
