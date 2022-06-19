@@ -2,7 +2,7 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package pinlib
+package manifest
 
 import (
 	"encoding/csv"
@@ -10,11 +10,10 @@ import (
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
 )
 
 // SaveManifest saves the given manifest to the given file
-func SaveManifest(filepath string, manifest *manifest.Manifest) error {
+func SaveManifest(filepath string, manifest *Manifest) error {
 	targetFile, err := os.Create(filepath)
 	if err != nil {
 		return fmt.Errorf("creating file: %s", err)

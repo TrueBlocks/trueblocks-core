@@ -12,8 +12,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 )
 
@@ -35,7 +34,7 @@ func (opts *InitOptions) HandleInit() error {
 	opts.PrintManifestHeader()
 
 	// Fetch manifest's CID
-	cid, err := pinlib.GetManifestCidFromContract(chain)
+	cid, err := manifest.GetManifestCidFromContract(chain)
 	if err != nil {
 		return err
 	}
@@ -50,7 +49,7 @@ func (opts *InitOptions) HandleInit() error {
 		return err
 	}
 	url.Path = path.Join(url.Path, cid)
-	downloadedManifest, err := pinlib.DownloadManifest(url.String())
+	downloadedManifest, err := manifest.DownloadManifest(url.String())
 
 	if err != nil {
 		return err
@@ -58,7 +57,7 @@ func (opts *InitOptions) HandleInit() error {
 
 	// Save manifest
 	manifestPath := config.GetPathToChainConfig(chain) + "manifest.txt"
-	err = pinlib.SaveManifest(manifestPath, downloadedManifest)
+	err = manifest.SaveManifest(manifestPath, downloadedManifest)
 	if err != nil {
 		return err
 	}

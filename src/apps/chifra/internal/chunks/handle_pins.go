@@ -5,7 +5,7 @@
 package chunksPkg
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 )
 
 func (opts *ChunksOptions) HandleChunksExtractPins() error {
