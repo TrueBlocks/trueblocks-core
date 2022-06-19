@@ -5,10 +5,15 @@ package scrapePkg
 // be found in the LICENSE file.
 
 import (
+	"fmt"
 	"log"
+	// "os"
 	"sync"
 
+	// "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	// "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	// "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/scraper"
 )
@@ -26,7 +31,16 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 			s.Pause()
 
 		} else {
-			opts.Globals.PassItOn("blockScrape", opts.Globals.Chain, opts.ToCmdLine(), opts.GetEnvStr())
+			err := opts.Globals.PassItOn("blockScrape", opts.Globals.Chain, opts.ToCmdLine(), opts.GetEnvStr())
+			if err != nil {
+				fmt.Println("blockScrape returns an error:", err)
+			}
+			// TODO: BOGUS Complete this work - writing JSON manifest
+			// err = opts.publishManifast()
+			// if err != nil {
+			//	fmt.Println("Error returned from publishManifast:", err)
+			// }
+
 			if s.Running {
 				// We sleep under two conditions
 				//   1) the user has told us an explicit amount of time to Sleep
@@ -63,3 +77,23 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 		}
 	}
 }
+
+// TODO: BOGUS Complete this work - writing JSON manifest
+// func (opts *ScrapeOptions) publishManifast() error {
+//	manFromCache, err := manifest.FromCache(opts.Globals.Chain)
+//	if err != nil {
+//		return err
+//	}
+//	fileName := config.GetPathToChainConfig(opts.Globals.Chain) + "manifest.json"
+//	// TODO: See SaveManifest - consolidate it
+//	w, err := os.Create(fileName)
+//	if err != nil {
+//		return fmt.Errorf("creating file: %s", err)
+//	}
+//	defer w.Close()
+//	err = file.Lock(w)
+//	if err != nil {
+//		return fmt.Errorf("locking file: %s", err)
+//	}
+//	return opts.Globals.RenderManifest(w, "json", manFromCache)
+// }
