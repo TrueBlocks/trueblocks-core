@@ -7,4 +7,7 @@
 
 package cmd
 
-const helpText = `[{HELP_TEXT}]`
+import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
+
+// Make a copy of this so we don't have to import the version package in every file
+const versionText = version.LibraryVersion

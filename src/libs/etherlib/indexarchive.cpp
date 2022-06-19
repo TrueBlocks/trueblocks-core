@@ -73,7 +73,6 @@ bool CIndexArchive::ReadIndexFromBinary(const string_q& path, indexpart_t parts)
 
     header = *(reinterpret_cast<CIndexHeader*>(rawData));
     ASSERT(header.magic == MAGIC_NUMBER);
-    ASSERT(bytes_2_Hash(header.hash) == manifestVersion);
 
     size_t startOfAddrTable = sizeof(CIndexHeader);
     size_t addrTableSize = sizeof(CIndexedAddress) * header.nAddrs;
