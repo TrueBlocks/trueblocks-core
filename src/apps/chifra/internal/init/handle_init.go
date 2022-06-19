@@ -30,10 +30,8 @@ func (opts *InitOptions) HandleInit() error {
 	chain := opts.Globals.Chain
 
 	config.EstablishIndexPaths(config.GetPathToIndex(chain))
-
 	opts.PrintManifestHeader()
 
-	// Fetch manifest's CID
 	cid, err := manifest.GetManifestCidFromContract(chain)
 	if err != nil {
 		return err

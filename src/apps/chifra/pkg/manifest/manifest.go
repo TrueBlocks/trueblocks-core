@@ -8,14 +8,11 @@ import "encoding/json"
 
 type IpfsHash = string
 
+// TODO: If we included fileSize (pre-zip) here, we could do a check that the file is complete
 type ChunkRecord struct {
 	FileName  string   `json:"fileName"`
 	BloomHash IpfsHash `json:"bloomHash"`
 	IndexHash IpfsHash `json:"indexHash"`
-	// BloomChecksum string   `json:"bloomChecksum"`
-	// IndexChecksum string   `json:"indexChecksum"`
-	// file size (gzipped file)
-	// md5
 }
 
 type Manifest struct {
