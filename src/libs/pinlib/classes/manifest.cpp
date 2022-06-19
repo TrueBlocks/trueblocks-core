@@ -73,12 +73,10 @@ string_q CManifest::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
-        case 'b':
-            if (fieldName % "bloomFormat") {
-                return bloomFormat;
-            }
-            break;
         case 'c':
+            if (fieldName % "chain") {
+                return chain;
+            }
             if (fieldName % "chunks" || fieldName % "chunksCnt") {
                 size_t cnt = chunks.size();
                 if (endsWith(toLower(fieldName), "cnt"))
@@ -93,22 +91,19 @@ string_q CManifest::getValueByName(const string_q& fieldName) const {
                 return retS;
             }
             break;
-        case 'f':
-            if (fieldName % "fileName") {
-                return fileName;
-            }
-            if (fieldName % "firstPin") {
-                return uint_2_Str(firstPin);
+        case 'd':
+            if (fieldName % "databases") {
+                return databases;
             }
             break;
-        case 'i':
-            if (fieldName % "indexFormat") {
-                return indexFormat;
+        case 's':
+            if (fieldName % "schemas") {
+                return schemas;
             }
             break;
-        case 'l':
-            if (fieldName % "lastPin") {
-                return uint_2_Str(lastPin);
+        case 'v':
+            if (fieldName % "version") {
+                return version;
             }
             break;
         default:
@@ -131,13 +126,11 @@ bool CManifest::setValueByName(const string_q& fieldNameIn, const string_q& fiel
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
-        case 'b':
-            if (fieldName % "bloomFormat") {
-                bloomFormat = fieldValue;
+        case 'c':
+            if (fieldName % "chain") {
+                chain = fieldValue;
                 return true;
             }
-            break;
-        case 'c':
             if (fieldName % "chunks") {
                 CPinnedChunk obj;
                 string_q str = fieldValue;
@@ -148,25 +141,21 @@ bool CManifest::setValueByName(const string_q& fieldNameIn, const string_q& fiel
                 return true;
             }
             break;
-        case 'f':
-            if (fieldName % "fileName") {
-                fileName = fieldValue;
-                return true;
-            }
-            if (fieldName % "firstPin") {
-                firstPin = str_2_Uint(fieldValue);
+        case 'd':
+            if (fieldName % "databases") {
+                databases = fieldValue;
                 return true;
             }
             break;
-        case 'i':
-            if (fieldName % "indexFormat") {
-                indexFormat = fieldValue;
+        case 's':
+            if (fieldName % "schemas") {
+                schemas = fieldValue;
                 return true;
             }
             break;
-        case 'l':
-            if (fieldName % "lastPin") {
-                lastPin = str_2_Uint(fieldValue);
+        case 'v':
+            if (fieldName % "version") {
+                version = fieldValue;
                 return true;
             }
             break;
@@ -195,11 +184,10 @@ bool CManifest::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> fileName;
-    archive >> indexFormat;
-    archive >> bloomFormat;
-    archive >> firstPin;
-    archive >> lastPin;
+    archive >> version;
+    archive >> chain;
+    archive >> schemas;
+    archive >> databases;
     archive >> chunks;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -214,11 +202,10 @@ bool CManifest::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << fileName;
-    archive << indexFormat;
-    archive << bloomFormat;
-    archive << firstPin;
-    archive << lastPin;
+    archive << version;
+    archive << chain;
+    archive << schemas;
+    archive << databases;
     archive << chunks;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -269,11 +256,10 @@ void CManifest::registerClass(void) {
     ADD_FIELD(CManifest, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CManifest, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CManifest, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CManifest, "fileName", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CManifest, "indexFormat", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CManifest, "bloomFormat", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CManifest, "firstPin", T_BLOCKNUM, ++fieldNum);
-    ADD_FIELD(CManifest, "lastPin", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CManifest, "version", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CManifest, "chain", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CManifest, "schemas", T_IPFSHASH | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CManifest, "databases", T_IPFSHASH | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CManifest, "chunks", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

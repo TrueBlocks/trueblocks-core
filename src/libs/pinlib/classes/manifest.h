@@ -26,11 +26,10 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CManifest : public CBaseNode {
   public:
-    string_q fileName;
-    string_q indexFormat;
-    string_q bloomFormat;
-    blknum_t firstPin;
-    blknum_t lastPin;
+    string_q version;
+    string_q chain;
+    ipfshash_t schemas;
+    ipfshash_t databases;
     CPinnedChunkArray chunks;
 
   public:
@@ -96,11 +95,10 @@ inline void CManifest::clear(void) {
 inline void CManifest::initialize(void) {
     CBaseNode::initialize();
 
-    fileName = "";
-    indexFormat = "";
-    bloomFormat = "";
-    firstPin = 0;
-    lastPin = 0;
+    version = "";
+    chain = "";
+    schemas = "";
+    databases = "";
     chunks.clear();
 
     // EXISTING_CODE
@@ -112,11 +110,10 @@ inline void CManifest::duplicate(const CManifest& ma) {
     clear();
     CBaseNode::duplicate(ma);
 
-    fileName = ma.fileName;
-    indexFormat = ma.indexFormat;
-    bloomFormat = ma.bloomFormat;
-    firstPin = ma.firstPin;
-    lastPin = ma.lastPin;
+    version = ma.version;
+    chain = ma.chain;
+    schemas = ma.schemas;
+    databases = ma.databases;
     chunks = ma.chunks;
 
     // EXISTING_CODE
