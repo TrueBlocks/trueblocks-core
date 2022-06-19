@@ -46,6 +46,13 @@ func (opts *StatusOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
+func (opts *StatusOptions) GetEnvStr() string {
+	envStr := ""
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return envStr
+}
+
 func (opts *StatusOptions) ToCmdLine() string {
 	options := ""
 	if opts.Details {
@@ -70,6 +77,8 @@ func (opts *StatusOptions) ToCmdLine() string {
 		options += (" --last_block " + fmt.Sprintf("%d", opts.LastBlock))
 	}
 	options += " " + strings.Join(opts.Modes, " ")
+	// EXISTING_CODE
+	// EXISTING_CODE
 	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }

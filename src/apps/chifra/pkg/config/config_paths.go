@@ -38,7 +38,7 @@ func GetPathToChainConfig(chain string) string {
 	return cfgFolder
 }
 
-// GetPathToIndex returns the one and only cachePath
+// GetPathToIndex returns the one and only indexPath
 func GetPathToIndex(chain string) string {
 	// We need the index path from either XDG which dominates or the config file
 	indexPath, err := PathFromXDG("XDG_CACHE_HOME")
