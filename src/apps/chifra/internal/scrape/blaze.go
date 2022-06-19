@@ -3,7 +3,6 @@ package scrapePkg
 import (
 	"fmt"
 	"io/ioutil"
-	"log"
 	"os"
 	"sort"
 	"strconv"

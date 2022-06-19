@@ -24,13 +24,13 @@ int main(int argc, const char* argv[]) {
     if (!options.parseArguments(options.commandLines[0]))
         return 0;
     // TODO: BOGUS - BLAZE RETURN VALUE
-    // bool ret = 
+    // bool ret =
     options.scrape_blocks();
 
     pinlib_cleanup();
 
     // TODO: BOGUS - BLAZE RETURN VALUE
-    //if (!ret) {
+    // if (!ret) {
     //    // TODO: BOGUS - Blaze Quits Early
     //    LOG_INFO("");
     //    LOG_INFO("---------------------------------------");
