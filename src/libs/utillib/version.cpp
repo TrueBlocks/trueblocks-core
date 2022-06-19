@@ -15,6 +15,9 @@
 
 namespace qblocks {
 
+string_q PIN_HASH = "";
+string_q manifestVersion = "0x" + padLeft(PIN_HASH, 64, '0');
+
 // Run make generate in order for this to take effect
 #define MAJOR 0
 #define MINOR 37
