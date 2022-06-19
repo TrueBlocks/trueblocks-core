@@ -31,9 +31,5 @@ func (opts *GlobalOptions) RenderManifest(w io.Writer, fileType string, man *man
 		err = tmp.RenderObject(man, true)
 	}
 
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return err
 }
