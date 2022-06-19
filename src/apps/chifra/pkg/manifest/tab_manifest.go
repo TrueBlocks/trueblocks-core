@@ -17,13 +17,13 @@ import (
 )
 
 // ReadPinDescriptors parses pin information and returns a slice of
-// PinDescriptor or error
-func ReadPinDescriptors(r io.Reader) ([]PinDescriptor, error) {
+// ChunkRecord or error
+func ReadPinDescriptors(r io.Reader) ([]ChunkRecord, error) {
 	reader := csv.NewReader(r)
 	reader.Comma = '\t'
 	reader.FieldsPerRecord = 3
 
-	descriptors := []PinDescriptor{}
+	descriptors := []ChunkRecord{}
 
 	for {
 		record, err := reader.Read()
@@ -34,7 +34,7 @@ func ReadPinDescriptors(r io.Reader) ([]PinDescriptor, error) {
 			return nil, err
 		}
 
-		descriptors = append(descriptors, PinDescriptor{
+		descriptors = append(descriptors, ChunkRecord{
 			FileName:  record[0],
 			BloomHash: record[1],
 			IndexHash: record[2],
@@ -47,7 +47,7 @@ func ReadPinDescriptors(r io.Reader) ([]PinDescriptor, error) {
 // BuildTabRange finds the first and last pin descriptor and returns
 // ManifestRange. We need this function, because TSV formatted manifest
 // does not carry this information explicitly
-func BuildTabRange(descriptors []PinDescriptor) (ManifestRange, error) {
+func BuildTabRange(descriptors []ChunkRecord) (ManifestRange, error) {
 	if len(descriptors) == 0 {
 		return ManifestRange{}, errors.New("invalid input: no pins")
 	}
@@ -97,7 +97,7 @@ func ReadTabManifest(r io.Reader) (*Manifest, error) {
 		BloomFormat: "",
 		CommitHash:  "",
 		BlockRange:  newBlockRange,
-		Pins:        descriptors,
+		Chunks:      descriptors,
 	}, nil
 }
 
@@ -117,17 +117,17 @@ func GetPinList(chain string) ([]types.SimplePinList, error) {
 		return []types.SimplePinList{}, err
 	}
 
-	sort.Slice(manifestData.Pins, func(i, j int) bool {
-		iPin := manifestData.Pins[i]
-		jPin := manifestData.Pins[j]
+	sort.Slice(manifestData.Chunks, func(i, j int) bool {
+		iPin := manifestData.Chunks[i]
+		jPin := manifestData.Chunks[j]
 		return iPin.FileName < jPin.FileName
 	})
 
-	pinList := make([]types.SimplePinList, len(manifestData.Pins))
-	for i := range manifestData.Pins {
-		pinList[i].FileName = manifestData.Pins[i].FileName
-		pinList[i].BloomHash = string(manifestData.Pins[i].BloomHash)
-		pinList[i].IndexHash = string(manifestData.Pins[i].IndexHash)
+	pinList := make([]types.SimplePinList, len(manifestData.Chunks))
+	for i := range manifestData.Chunks {
+		pinList[i].FileName = manifestData.Chunks[i].FileName
+		pinList[i].BloomHash = string(manifestData.Chunks[i].BloomHash)
+		pinList[i].IndexHash = string(manifestData.Chunks[i].IndexHash)
 	}
 	return pinList, nil
 }

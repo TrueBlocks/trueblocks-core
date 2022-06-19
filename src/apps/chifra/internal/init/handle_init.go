@@ -71,7 +71,7 @@ func (opts *InitOptions) HandleInit() error {
 
 	getChunks := func(chunkType cache.CacheType) {
 		chunkPath := cache.NewCachePath(chain, chunkType)
-		failedChunks, cancelled := downloadAndReportProgress(chain, downloadedManifest.Pins, &chunkPath)
+		failedChunks, cancelled := downloadAndReportProgress(chain, downloadedManifest.Chunks, &chunkPath)
 
 		if cancelled {
 			// We don't want to retry if the user has cancelled
@@ -79,7 +79,7 @@ func (opts *InitOptions) HandleInit() error {
 		}
 
 		if len(failedChunks) > 0 {
-			retry(failedChunks, 3, func(pins []manifest.PinDescriptor) ([]manifest.PinDescriptor, bool) {
+			retry(failedChunks, 3, func(pins []manifest.ChunkRecord) ([]manifest.ChunkRecord, bool) {
 				logger.Log(logger.Info, "Retrying", len(pins), "bloom(s)")
 				return downloadAndReportProgress(chain, pins, &chunkPath)
 			})
@@ -105,15 +105,15 @@ func (opts *InitOptions) HandleInit() error {
 	return nil
 }
 
-type downloadFunc func(pins []manifest.PinDescriptor) (failed []manifest.PinDescriptor, cancelled bool)
+type downloadFunc func(pins []manifest.ChunkRecord) (failed []manifest.ChunkRecord, cancelled bool)
 
 // Downloads chunks and report progress
-func downloadAndReportProgress(chain string, pins []manifest.PinDescriptor, chunkPath *cache.CachePath) ([]manifest.PinDescriptor, bool) {
+func downloadAndReportProgress(chain string, pins []manifest.ChunkRecord, chunkPath *cache.CachePath) ([]manifest.ChunkRecord, bool) {
 	chunkTypeToDescription := map[cache.CacheType]string{
 		cache.Index_Bloom: "bloom",
 		cache.Index_Final: "index",
 	}
-	failed := []manifest.PinDescriptor{}
+	failed := []manifest.ChunkRecord{}
 	cancelled := false
 	progressChannel := progress.MakeChan()
 	defer close(progressChannel)
@@ -123,7 +123,7 @@ func downloadAndReportProgress(chain string, pins []manifest.PinDescriptor, chun
 	var pinsDone uint
 
 	for event := range progressChannel {
-		pin, ok := event.Payload.(*manifest.PinDescriptor)
+		pin, ok := event.Payload.(*manifest.ChunkRecord)
 		var fileName string
 		if ok {
 			fileName = pin.FileName
@@ -164,7 +164,7 @@ func downloadAndReportProgress(chain string, pins []manifest.PinDescriptor, chun
 // This function is simple because: 1. it will never get a new failing pin (it only feeds in
 // the list of known, failed pins); 2. The maximum number of failing pins we can get equals
 // the length of `failedPins`.
-func retry(failedPins []manifest.PinDescriptor, times uint, downloadChunks downloadFunc) int {
+func retry(failedPins []manifest.ChunkRecord, times uint, downloadChunks downloadFunc) int {
 	retryCount := uint(0)
 
 	pinsToRetry := failedPins

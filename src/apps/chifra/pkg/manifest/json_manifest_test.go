@@ -119,7 +119,7 @@ func TestReadManifest(t *testing.T) {
 		t.Errorf("Wrong NewBlockRange[1]: %d", m.BlockRange[1])
 	}
 
-	newPins := m.Pins
+	newPins := m.Chunks
 
 	if len(newPins) != 5 {
 		t.Errorf("Incorrect NewPins length: %d", len(newPins))

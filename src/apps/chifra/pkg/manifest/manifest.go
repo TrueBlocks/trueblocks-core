@@ -8,7 +8,7 @@ import "encoding/json"
 
 type IpfsHash = string
 
-type PinDescriptor struct {
+type ChunkRecord struct {
 	FileName  string   `json:"fileName"`
 	BloomHash IpfsHash `json:"bloomHash"`
 	IndexHash IpfsHash `json:"indexHash"`
@@ -28,36 +28,5 @@ type Manifest struct {
 	BlockRange  ManifestRange `json:"blockRange"`
 	Names       IpfsHash      `json:"names"`
 	Timestamps  IpfsHash      `json:"timestamps"`
-	Pins        PinsList      `json:"pins"`
-}
-
-// This type is used to carry CSV layout information
-type CsvFormatted struct {
-	Header  []string
-	Content [][]string
-}
-
-type PinsList []PinDescriptor
-
-// GetCsvOutput returns data for CSV and TSV formats
-func (pl *PinsList) GetCsvOutput() *CsvFormatted {
-	data := &CsvFormatted{
-		Header: []string{
-			"fileName", "bloomHash", "indexHash",
-		},
-	}
-
-	for _, pin := range *pl {
-		data.Content = append(data.Content, []string{
-			pin.FileName, pin.BloomHash, pin.IndexHash,
-		})
-	}
-
-	return data
-}
-
-// GetJsonOutput returns data for JSON format. In this case
-// we just return the whole slice of PinDescriptor
-func (pl *PinsList) GetJsonOutput() interface{} {
-	return *pl
+	Chunks      []ChunkRecord `json:"chunks"`
 }

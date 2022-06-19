@@ -26,7 +26,7 @@ func SaveManifest(filepath string, manifest *Manifest) error {
 
 	records := [][]string{}
 
-	for _, pin := range manifest.Pins {
+	for _, pin := range manifest.Chunks {
 		records = append(records, []string{
 			pin.FileName,
 			pin.BloomHash,
