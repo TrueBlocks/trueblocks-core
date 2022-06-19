@@ -1,0 +1,4 @@
+[settings]
+class = CPinataRegion
+fields = pinataregion.csv
+includes = utillib.h

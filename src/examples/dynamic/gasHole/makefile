@@ -35,7 +35,6 @@ all:
 	g++ $(cflags) -fPIC -shared -o $(out) $(libs) $(src)
 	@mkdir -p $(dest)
 	mv $(out) $(dest)
-	chifra export 0xDbD27635A534A3d3169Ef0498beB56Fb9c937489 --load gasHole | tee by_txs.csv
 
 clean:
 	-@$(RM) -fR $(dest)/$(out) 2> /dev/null

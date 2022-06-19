@@ -28,8 +28,6 @@ extern const char* STR_REQUEST_CASE1;
 extern const char* STR_REQUEST_CASE2;
 extern const char* STR_CHIFRA_HELP_END;
 extern const char* STR_TO_CMD_LINE;
-extern const char* STR_GET_ENV_STR;
-
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
     string_q source = asciiFileToString(getPathToTemplates("blank.go.tmpl"));
@@ -87,10 +85,8 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     string_q source = asciiFileToString(getPathToTemplates("blank_options.go.tmpl"));
     if (isFullyPorted(p.api_route)) {
         replaceAll(source, "[{TOCMDLINE}]", "");
-        replaceAll(source, "[{GETENVSTR}]", "");
     } else {
         replaceAll(source, "[{TOCMDLINE}]", STR_TO_CMD_LINE);
-        replaceAll(source, "[{GETENVSTR}]", STR_GET_ENV_STR);
     }
     replaceAll(source, "[{ROUTE}]", p.api_route);
     replaceAll(source, "[{PROPER}]", toProper(p.api_route));
@@ -185,12 +181,8 @@ bool COptions::handle_gocmds(void) {
 
     string_q contents = asciiFileToString(getPathToTemplates("help_text.go.tmpl"));
     replace(contents, "[{HELP_TEXT}]", chifraHelpStream.str());
-    stringToAsciiFile(getPathToSource("apps/chifra/cmd/help_text.go"), contents);
-
-    contents = asciiFileToString(getPathToTemplates("version.go.tmpl"));
     replace(contents, "[{VERSION}]", getVersionStr(true, false));
-    replace(contents, "[{MANIFEST_VERSION}]", manifestVersion);
-    stringToAsciiFile(getPathToSource("apps/chifra/pkg/version/version.go"), contents);
+    stringToAsciiFile(getPathToSource("apps/chifra/cmd/help_text.go"), contents);
 
     LOG_INFO(cYellow, "makeClass --gocmds", cOff, " processed ", counter.nVisited, " files (changed ",
              counter.nProcessed, ").", string_q(40, ' '));
@@ -526,17 +518,6 @@ const char* STR_CHIFRA_HELP_END =
 const char* STR_TO_CMD_LINE =
     "func (opts *[{PROPER}]Options) ToCmdLine() string {\n"
     "\toptions := \"\"\n"
-    "[{DASH_STR}][{POSITIONALS}]"
-    "\t// EXISTING_CODE\n"
-    "\t// EXISTING_CODE\n"
-    "\toptions += fmt.Sprintf(\"%s\", \"\") // silence go compiler for auto gen\n"
+    "[{DASH_STR}][{POSITIONALS}]\toptions += fmt.Sprintf(\"%s\", \"\") // silence go compiler for auto gen\n"
     "\treturn options\n"
-    "}\n\n";
-
-const char* STR_GET_ENV_STR =
-    "func (opts *[{PROPER}]Options) GetEnvStr() string {\n"
-    "\tenvStr := \"\"\n"
-    "\t// EXISTING_CODE\n"
-    "\t// EXISTING_CODE\n"
-    "\treturn envStr\n"
     "}\n\n";

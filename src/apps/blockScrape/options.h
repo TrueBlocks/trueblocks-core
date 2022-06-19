@@ -46,7 +46,6 @@ class COptions : public COptionsBase {
     CPinnedChunkArray pinList;
     CApiKey lic;
     CMetaData meta;
-    bool snapped{false};
 
     COptions(void);
     ~COptions(void);

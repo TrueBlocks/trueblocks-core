@@ -17,23 +17,6 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
-const (
-	// The number of bytes in a single BloomByte structure
-	BLOOM_WIDTH_IN_BYTES = (BLOOM_WIDTH_IN_BITS / 8)
-	// The number of bits in a single BloomByte structure
-	BLOOM_WIDTH_IN_BITS = (1048576)
-	// The maximum number of addresses to add to a BloomBytes before creating a new one
-	MAX_ADDRS_IN_BLOOM = 50000
-)
-
-// BloomBytes store the actual bits of the bloom filter. There is at least one but likely more BloomBytes contained in
-// each ChunkBloom. The NInserted value, which is for statistical purposes only, records the number of addresses
-// inserted in the Bytes.
-type BloomBytes struct {
-	NInserted uint32 // Do not change the size of this field, it's stored on disc
-	Bytes     []byte
-}
-
 // ChunkBloom structures contain an array of BloomBytes each BLOOM_WIDTH_IN_BYTES wide. A new BloomBytes is added to
 // the ChunkBloom when around MAX_ADDRS_IN_BLOOM addresses has been added. These Adaptive Bloom Filters allow us to
 // maintain a near-constant false-positive rate at the expense of slightly larger bloom filters than might be expected.
@@ -52,6 +35,23 @@ func (bl *ChunkBloom) String() string {
 	}
 	return fmt.Sprintf("%s\t%d\t%d\t%d", bl.Range, bl.Count, BLOOM_WIDTH_IN_BYTES, nInserted)
 }
+
+// BloomBytes store the actual bits of the bloom filter. There is at least one but likely more BloomBytes contained in
+// each ChunkBloom. The NInserted value, which is for statistical purposes only, records the number of addresses
+// inserted in the Bytes.
+type BloomBytes struct {
+	NInserted uint32 // Do not change the size of this field, it's stored on disc
+	Bytes     []byte
+}
+
+const (
+	// The number of bytes in a single BloomByte structure
+	BLOOM_WIDTH_IN_BYTES = (BLOOM_WIDTH_IN_BITS / 8)
+	// The number of bits in a single BloomByte structure
+	BLOOM_WIDTH_IN_BITS = (1048576)
+	// The maximum number of addresses to add to a BloomBytes before creating a new one
+	MAX_ADDRS_IN_BLOOM = 50000
+)
 
 // NewChunkBloom returns a newly initialized bloom filter. The bloom filter's file pointer is open (if there
 // have been no errors) and its header data has been read into memory. The array has been created with

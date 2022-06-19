@@ -72,18 +72,6 @@ const noChains string = `
 
 `
 
-const badIndex string = `
-
-	An Unchained Index file or Bloom filter was found that is stored using an
-	outdated file format. Please follow all migrations up to and including
-	{0} before proceeding.
-
-	See https://github.com/TrueBlocks/trueblocks-core/blob/develop/MIGRATIONS.md
-
-	[{VERSION}]
-
-`
-
 // VerifyMigrations will panic if the installation is not properly migrated
 func VerifyMigrations() {
 	user, _ := user.Current()
@@ -180,12 +168,4 @@ func VerifyMigrations() {
 		msg = strings.Replace(msg, "}", colors.Off, -1)
 		log.Fatalf(msg)
 	}
-
-	//if _, err := index.ReadHeaderFromFilename("shit"); err != nil {
-	//	msg := strings.Replace(badIndex, "{0}", "{v0.40.0-beta}", -1)
-	//	msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
-	//	msg = strings.Replace(msg, "{", colors.Green, -1)
-	//	msg = strings.Replace(msg, "}", colors.Off, -1)
-	//	log.Fatalf(msg)
-	//}
 }

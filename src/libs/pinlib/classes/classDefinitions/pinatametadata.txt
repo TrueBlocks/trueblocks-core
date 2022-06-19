@@ -1,0 +1,5 @@
+[settings]
+class = CPinataMetadata
+fields = pinatametadata.csv
+includes = utillib.h
+equals = (name == it.name)

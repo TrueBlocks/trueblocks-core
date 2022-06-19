@@ -69,13 +69,8 @@ func (opts *ScrapeOptions) processBlocks(rpcProvider string, blockChannel chan i
 		}
 		err := rpcClient.FromRpc(rpcProvider, &tracePayload, &traces)
 		if err != nil {
-			// TODO: BOGUS - Blaze Quits Early
-			fmt.Println("")
-			fmt.Println("------------------------------------------------------")
-			fmt.Println("FromRpc(traces) returned error", err)
-			fmt.Println("------------------------------------------------------")
+			fmt.Println("FromRpc(traces) returned error")
 			log.Fatal(err)
-			fmt.Println("should not happen")
 		}
 
 		var logs rpcClient.Log
@@ -87,13 +82,8 @@ func (opts *ScrapeOptions) processBlocks(rpcProvider string, blockChannel chan i
 		}
 		err = rpcClient.FromRpc(rpcProvider, &logsPayload, &logs)
 		if err != nil {
-			// TODO: BOGUS - Blaze Quits Early
-			fmt.Println("")
-			fmt.Println("------------------------------------------------------")
-			fmt.Println("FromRpc(logs) returned error", err)
-			fmt.Println("------------------------------------------------------")
+			fmt.Println("FromRpc(logs) returned error")
 			log.Fatal(err)
-			fmt.Println("should not happen")
 		}
 
 		ts := rpcClient.GetBlockTimestamp(rpcProvider, uint64(blockNum))
@@ -232,13 +222,8 @@ func (opts *ScrapeOptions) extractFromTraces(rpcProvider string, bn int, address
 						}
 						err := rpcClient.FromRpc(rpcProvider, &txReceiptPl, &receipt)
 						if err != nil {
-							// TODO: BOGUS - Blaze Quits Early
-							fmt.Println("")
-							fmt.Println("------------------------------------------------------")
-							fmt.Println("FromRpc(transReceipt) returned error", err)
-							fmt.Println("------------------------------------------------------")
+							fmt.Println("FromRpc(transReceipt) returned error")
 							log.Fatal(err)
-							fmt.Println("should not happen")
 						}
 						addr := receipt.Result.ContractAddress
 						if goodAddr(addr) {
@@ -250,13 +235,8 @@ func (opts *ScrapeOptions) extractFromTraces(rpcProvider string, bn int, address
 
 		} else {
 			err := "New trace type:" + traces.Result[i].Type
-			// TODO: BOGUS - Blaze Quits Early
-			fmt.Println("")
-			fmt.Println("------------------------------------------------------")
-			fmt.Println("extractFromTraces -->", err)
-			fmt.Println("------------------------------------------------------")
+			fmt.Println("extractFromTraces -->")
 			log.Fatal(err)
-			fmt.Println("should not happen")
 		}
 
 		// Try to get addresses from the input data
@@ -300,13 +280,8 @@ func (opts *ScrapeOptions) extractFromLogs(bn int, addressMap map[string]bool, l
 	for i := 0; i < len(logs.Result); i++ {
 		idxInt, err := strconv.ParseInt(logs.Result[i].TransactionIndex, 0, 32)
 		if err != nil {
-			// TODO: BOGUS - Blaze Quits Early
-			fmt.Println("")
-			fmt.Println("------------------------------------------------------")
-			fmt.Println("extractFromLogs --> strconv.ParseInt returned error", err)
-			fmt.Println("------------------------------------------------------")
+			fmt.Println("extractFromLogs --> strconv.ParseInt returned error")
 			log.Fatal(err)
-			fmt.Println("should not happen")
 		}
 		idx := utils.PadLeft(strconv.FormatInt(idxInt, 10), 5)
 
@@ -363,13 +338,8 @@ func (opts *ScrapeOptions) writeAddresses(bn int, addressMap map[string]bool) {
 
 	err := ioutil.WriteFile(fileName, toWrite, 0744)
 	if err != nil {
-		// TODO: BOGUS - Blaze Quits Early
-		fmt.Println("")
-		fmt.Println("------------------------------------------------------")
-		fmt.Println("writeAddresses --> ioutil.WriteFile returned error", err)
-		fmt.Println("------------------------------------------------------")
+		fmt.Println("writeAddresses --> ioutil.WriteFile returned error")
 		log.Fatal(err)
-		fmt.Println("should not happen")
 	}
 
 	step := uint64(7)
@@ -378,8 +348,8 @@ func (opts *ScrapeOptions) writeAddresses(bn int, addressMap map[string]bool) {
 		if opts.RipeBlock > uint64(bn) {
 			dist = (opts.RipeBlock - uint64(bn))
 		}
-		f := "-------- ( ------)- <PROG>  : Scraping %-04d of %-04d at block %d of %d (%d blocks from head)\r"
-		fmt.Fprintf(os.Stderr, f, nProcessed, opts.BlockCnt, bn, opts.RipeBlock, dist)
+		f := "-------- ( ------)- <PROG>  : Scraping %-04d of %-04d at block %s of %d (%d blocks from head)\r"
+		fmt.Fprintf(os.Stderr, f, nProcessed, opts.BlockCnt, blockNumStr, opts.RipeBlock, dist)
 	}
 	nProcessed++
 }

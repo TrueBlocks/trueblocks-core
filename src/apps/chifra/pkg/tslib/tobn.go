@@ -29,14 +29,11 @@ func FromDateToBn(chain, dateStr string) (uint64, error) {
 // FromNameToBn returns the chain-specific block number (if found) given the name of a special block. The list of special blocks is per-chain.
 func FromNameToBn(chain, name string) (uint64, error) {
 	if name == "latest" {
-		meta, err := rpcClient.GetMetaData(chain, false)
-		if err != nil {
-			return 0, err
-		}
+		meta, _ := rpcClient.GetMetaData(chain, false)
 		return meta.Latest, nil
 	}
 
-	specials, _ := GetSpecials(chain) // it's okay if it's empty
+	specials, _ := GetSpecials(chain)
 	for _, value := range specials {
 		if value.Name == name {
 			return value.BlockNumber, nil

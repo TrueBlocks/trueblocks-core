@@ -53,7 +53,7 @@ func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
 	}
 
 	handled = true
-	err = opts.Globals.PassItOn("acctExport", opts.Globals.Chain, opts.ToCmdLine(), opts.GetEnvStr())
+	err = opts.Globals.PassItOn("acctExport", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
 	// EXISTING_CODE
 
 	return

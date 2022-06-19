@@ -88,6 +88,11 @@ string_q CPinnedChunk::getValueByName(const string_q& fieldName) const {
                 return indexHash;
             }
             break;
+        case 'o':
+            if (fieldName % "onDisc") {
+                return bool_2_Str(onDisc);
+            }
+            break;
         default:
             break;
     }
@@ -126,6 +131,12 @@ bool CPinnedChunk::setValueByName(const string_q& fieldNameIn, const string_q& f
                 return true;
             }
             break;
+        case 'o':
+            if (fieldName % "onDisc") {
+                onDisc = str_2_Bool(fieldValue);
+                return true;
+            }
+            break;
         default:
             break;
     }
@@ -154,6 +165,7 @@ bool CPinnedChunk::Serialize(CArchive& archive) {
     archive >> fileName;
     archive >> bloomHash;
     archive >> indexHash;
+    // archive >> onDisc;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -170,6 +182,7 @@ bool CPinnedChunk::SerializeC(CArchive& archive) const {
     archive << fileName;
     archive << bloomHash;
     archive << indexHash;
+    // archive << onDisc;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -222,6 +235,8 @@ void CPinnedChunk::registerClass(void) {
     ADD_FIELD(CPinnedChunk, "fileName", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CPinnedChunk, "bloomHash", T_IPFSHASH | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CPinnedChunk, "indexHash", T_IPFSHASH | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CPinnedChunk, "onDisc", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CPinnedChunk, "onDisc");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CPinnedChunk, "schema");

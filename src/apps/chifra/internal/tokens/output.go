@@ -47,7 +47,7 @@ func (opts *TokensOptions) TokensInternal() (err error, handled bool) {
 	}
 
 	handled = true
-	err = opts.Globals.PassItOn("getTokens", opts.Globals.Chain, opts.ToCmdLine(), opts.GetEnvStr())
+	err = opts.Globals.PassItOn("getTokens", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
 	// EXISTING_CODE
 
 	return

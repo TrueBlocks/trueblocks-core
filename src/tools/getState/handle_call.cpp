@@ -75,10 +75,9 @@ bool COptions::handle_call(void) {
         }
     }
     if (theCall.bytes.length() % 64) {
-        uint64_t less = theCall.bytes.length() % 64;
         ostringstream os;
-        os << "Bytes data is the wrong length (" << (less * 32) << "-" << theCall.bytes.length() << "-"
-           << ((less + 1) * 32) << "). Not a multiple of 32 bytes.";
+        os << "The length (" << theCall.bytes.length() << ") of the bytes you presented (" << theCall.bytes
+           << ") is not a multiple of 32 bytes.";
         return usage(os.str());
     }
 

@@ -39,13 +39,6 @@ func (opts *AbisOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func (opts *AbisOptions) GetEnvStr() string {
-	envStr := ""
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return envStr
-}
-
 func (opts *AbisOptions) ToCmdLine() string {
 	options := ""
 	if opts.Known {
@@ -61,8 +54,6 @@ func (opts *AbisOptions) ToCmdLine() string {
 		options += " --classes"
 	}
 	options += " " + strings.Join(opts.Addrs, " ")
-	// EXISTING_CODE
-	// EXISTING_CODE
 	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }

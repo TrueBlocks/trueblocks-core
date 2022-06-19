@@ -65,13 +65,6 @@ func (opts *NamesOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func (opts *NamesOptions) GetEnvStr() string {
-	envStr := ""
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return envStr
-}
-
 func (opts *NamesOptions) ToCmdLine() string {
 	options := ""
 	if opts.Expand {
@@ -126,8 +119,6 @@ func (opts *NamesOptions) ToCmdLine() string {
 		options += " --remove"
 	}
 	options += " " + strings.Join(opts.Terms, " ")
-	// EXISTING_CODE
-	// EXISTING_CODE
 	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }

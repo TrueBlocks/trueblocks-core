@@ -38,3 +38,5 @@ const helpText = `  Accounts:
 
   Use "chifra [command] --help" for more information about a command.
 `
+
+const versionText = "GHC-TrueBlocks//0.37.0-beta"
