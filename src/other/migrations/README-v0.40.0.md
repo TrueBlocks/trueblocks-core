@@ -19,28 +19,19 @@ TODO: BOGUS
 - NEW UNCHAINED - CONFIG FILE
 - NEW UNCHAINED - FORK BLOCKS
 - NEW UNCHAINED - VERSIONS
+- TESTING - SEPOLIA,GNOSIS - chifra init, chifra chunks
+- 
 
-DO NOT RUN THIS MIGRATION UNTIL INSTRUCTED
-
-Testing
-Needed to do:
-
-
-Currently allows sepolia and gnosis for chifra init and chifra chunks
-
+Do `grep pinGateway $TB_CONFIG`
 Remove anything but ipfs.unchainedindex.io/ipfs from config file (or change the name of the value)
 
-TELL THEM TO REMOVE THE CONTENTS OF CMAKE IF THERE'S AN ISSUE WITH CMAKE
-CMake was unable to find a build program corresponding to "Ninja"
--- Using c++ standard c++17
-CMake Error: CMake was unable to find a build program corresponding to "Ninja".  CMAKE_MAKE_PROGRAM is not set.  You probably need to select a different build tool.
-CMake Error: CMAKE_C_COMPILER not set, after EnableLanguage
-CMake Error: CMAKE_CXX_COMPILER not set, after EnableLanguage
--- Configuring incomplete, errors occurred!
-See also "/Users/jrush/Development/trueblocks-core/build/CMakeFiles/CMakeOutput.log".
-See also "/Users/jrush/Development/trueblocks-core/build/CMakeFiles/CMakeError.log".
-make: *** [cmake_check_build_system] Error 1
-brew install ninja on  Mac
+We need to tell them to add a section to trueBlocks for sepolia which is not included otherwise
+
+Test -- fresh install --
+    chifra init --chain sepolia ==>
+    chifra chunks addresses (does this even work? -- how can it?)
+    chifra export address
+
 
 
 # v0.36.0 Fix to UnchainedIndex

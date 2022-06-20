@@ -15,6 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 	"github.com/spf13/viper"
 )
 
@@ -33,7 +34,7 @@ type versionGroup struct {
 type chainGroup struct {
 	ChainId        string `toml:"chainId"`
 	LocalExplorer  string `toml:"localExplorer"`
-	PinGateway     string `toml:"pinGateway"`
+	IPFSGateway    string `toml:"ipfsGateway"`
 	RemoteExplorer string `toml:"remoteExplorer"`
 	RpcProvider    string `toml:"rpcProvider"`
 	ApiProvider    string `toml:"apiProvider"`
@@ -102,6 +103,20 @@ func GetRootConfig() *ConfigFile {
 	}
 
 	return &trueBlocksConfig
+}
+
+func IsAtLeaseVersion(needle string) bool {
+	var current, test version.Version
+	var err error
+	if current, err = version.Parse(GetRootConfig().Version.Current); err != nil {
+		return true
+	}
+
+	if test, err = version.Parse(needle); err != nil {
+		return true
+	}
+
+	return test.IsBackLevel(current)
 }
 
 // GetPathToRootConfig returns the path where to find configuration files

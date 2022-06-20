@@ -31,10 +31,10 @@ func GetRemoteExplorer(chain string) string {
 	return cleanUrl(ch.RemoteExplorer)
 }
 
-// GetPinGateway returns the pin gateway for a chain
-func GetPinGateway(chain string) string {
+// GetIpfsGateway returns the ipfs gateway for a chain
+func GetIpfsGateway(chain string) string {
 	ch := GetRootConfig().Chains[chain]
-	return cleanUrl(ch.PinGateway)
+	return cleanUrl(ch.IPFSGateway)
 }
 
 // GetRpcProvider returns the RPC provider for a chain

@@ -52,7 +52,7 @@ func TestDownloadJSON(t *testing.T) {
 
 	defer ts.Close()
 
-	manifest, err := downloadManifest("mainnet", ts.URL)
+	manifest, err := downloadManifest("mainnet", ts.URL, "")
 	if err != nil {
 		t.Error(err)
 	}
@@ -70,7 +70,7 @@ func TestDownloadTab(t *testing.T) {
 
 	defer ts.Close()
 
-	manifest, err := downloadManifest("mainnet", ts.URL)
+	manifest, err := downloadManifest("mainnet", ts.URL, "")
 	if err != nil {
 		t.Error(err)
 	}

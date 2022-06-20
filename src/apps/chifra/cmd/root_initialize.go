@@ -72,11 +72,24 @@ const noChains string = `
 
 `
 
+const backVersion string = `
+
+	A back-version configration file was found. Please carefully follow all migrations
+	up to and including {0} before proceeding.
+
+	See https://github.com/TrueBlocks/trueblocks-core/blob/develop/MIGRATIONS.md
+
+	[{VERSION}]
+
+`
+
 const badIndex string = `
 
-	An Unchained Index file or Bloom filter was found that is stored using an
+	Error: {0}
+	
+	An Unchained Index file was either missing or found but is stored using an
 	outdated file format. Please follow all migrations up to and including
-	{0} before proceeding.
+	{1} before proceeding.
 
 	See https://github.com/TrueBlocks/trueblocks-core/blob/develop/MIGRATIONS.md
 
@@ -118,6 +131,7 @@ func VerifyMigrations() {
 		log.Fatalf(msg)
 	}
 
+	// ...and some chains...
 	if !config.HasChains() {
 		msg := strings.Replace(noChains, "{0}", "{"+configFile+"}", -1)
 		msg = strings.Replace(msg, "{1}", "{v0.25.0}", -1)
@@ -172,6 +186,7 @@ func VerifyMigrations() {
 		}
 	}
 
+	// We need to find the chain configuration path
 	chainConfigPath := config.GetPathToChainConfig("")
 	if _, err := os.Stat(chainConfigPath); err != nil {
 		msg := strings.Replace(notExist, "{0}", "{"+chainConfigPath+"}", -1)
@@ -181,12 +196,24 @@ func VerifyMigrations() {
 		log.Fatalf(msg)
 	}
 
-	// TODO: BOGUS - PRE_LOAD MIGRATION MESSAGE
-	//if _, err := index.ReadHeaderFromFilename("shit"); err != nil {
-	//	msg := strings.Replace(badIndex, "{0}", "{v0.40.0-beta}", -1)
-	//	msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
-	//	msg = strings.Replace(msg, "{", colors.Green, -1)
-	//	msg = strings.Replace(msg, "}", colors.Off, -1)
-	//	log.Fatalf(msg)
-	//}
+	// TODO: BOGUS - MIGRATION MESSAGE
+	// We need at least this version...
+	// if config.IsAtLeaseVersion("v0.40.0-beta") {
+	// 	msg := strings.Replace(backVersion, "{0}", "{v0.40.0-beta}", -1)
+	// 	msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
+	// 	msg = strings.Replace(msg, "{", colors.Green, -1)
+	// 	msg = strings.Replace(msg, "}", colors.Off, -1)
+	// 	log.Fatalf(msg)
+	// }
+
+	// We need to know that the index is not bogus
+	// if _, err := index.ReadHeaderFromFilename("013308630-013311677"); err != nil {
+	// 	e := "{" + err.Error() + "}"
+	// 	msg := strings.Replace(badIndex, "{0}", e, -1)
+	// 	msg = strings.Replace(msg, "{1}", "{v0.40.0-beta}", -1)
+	// 	msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
+	// 	msg = strings.Replace(msg, "{", colors.Green, -1)
+	// 	msg = strings.Replace(msg, "}", colors.Off, -1)
+	// 	log.Fatalf(msg)
+	// }
 }
