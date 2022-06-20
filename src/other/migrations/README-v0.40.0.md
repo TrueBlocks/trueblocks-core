@@ -1,16 +1,30 @@
+TODO: BOGUS
+
+- REVIEW HELP FILES
+- Publish databases
+- Finish file format document schemas
+- Auto publish to smart contract (on Gnosis)
+- Better understand the size of the index chunks on other chains
+- Remove unused pins from Pinata Gnosis, Sepolia, Old Mainnet, New Mainnet
+- Download entire index from chifra init (both with and without --all) Sepolia, Gnosis, Mainnet
+- HASHING IN VERSION TO INDEX
+- BLAZE RETURN VALUE
+- PRE_LOAD MIGRATION MESSAGE
+- RENDER MANIFEST
+- BLOOMS VS CHUNKS IN DOWNLOAD
+- NOT SURE - SOMETHING ABOUT NOT REVISITING BLOOMS
+- BLAZE QUITS EARY
+- WRITING JSON MANIFEST
+- NEW UNCHAINED - SOURCE OF TRUTH
+- NEW UNCHAINED - CONFIG FILE
+- NEW UNCHAINED - FORK BLOCKS
+- NEW UNCHAINED - VERSIONS
+
 DO NOT RUN THIS MIGRATION UNTIL INSTRUCTED
 
 Testing
 Needed to do:
 
-1. Publish databases
-2. Finish file format document
-3. Auto publish to smart contract (on Gnosis)
-4. Better understand the size of the index chunks on other chains
-5. Remove unused pins from Pinata
-    Gnosis, Sepolia, Old Mainnet, New Mainnet
-6. Download entire index from chifra init (both with and without --all)
-    Sepolia, Gnosis, Mainnet
 
 Currently allows sepolia and gnosis for chifra init and chifra chunks
 

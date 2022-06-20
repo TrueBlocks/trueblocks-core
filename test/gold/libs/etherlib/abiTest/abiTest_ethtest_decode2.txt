@@ -2158,9 +2158,9 @@ testName: decode complicated multi level tuple
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
 	000.003 test_3                           ==> 
-line: decode|an older example of arrays with bogus data|function multiTransfer(address[],uint256[])|0xdd2f1e6e498202e86d8f5442af596580a4f03c2c5088d623ba0fcf0131e0897a91734a4d83596aa0000000000000000000000000000000000000000000000000000000000bebc2000000000000000000000000000000000000000000000000000000000011e1a300|fail
+line: decode|an older example of arrays with bad data|function multiTransfer(address[],uint256[])|0xdd2f1e6e498202e86d8f5442af596580a4f03c2c5088d623ba0fcf0131e0897a91734a4d83596aa0000000000000000000000000000000000000000000000000000000000bebc2000000000000000000000000000000000000000000000000000000000011e1a300|fail
 testType: decode
-testName: an older example of arrays with bogus data
+testName: an older example of arrays with bad data
 testSig: function multiTransfer(address[],uint256[]) --> multiTransfer(address[],uint256[])
 
 --------------------------------------------------
@@ -2189,7 +2189,7 @@ params.size: 2
 
 expected: fail ?
 result:   fail ? 1
-testName: an older example of arrays with bogus data
+testName: an older example of arrays with bad data
 passed 'func.doTest(line)' is true
 ...passed
 
