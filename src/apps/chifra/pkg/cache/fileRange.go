@@ -12,6 +12,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 type FileRange struct {
@@ -19,6 +20,8 @@ type FileRange struct {
 	First uint64
 	Last  uint64
 }
+
+var NotARange = FileRange{First: utils.NOPOS, Last: utils.NOPOS}
 
 // RangeFromFilename returns a block range given a chunk filename. The format of filenames may be start-end.bin (start and end are nine digit
 // and zero-padded to the left) or start.txt

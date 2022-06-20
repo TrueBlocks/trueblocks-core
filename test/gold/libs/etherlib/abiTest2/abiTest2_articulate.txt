@@ -18,9 +18,9 @@ abiTest2
         "articulatedLog": {
           "name": "Approval",
           "inputs": {
-            "_amount": "5000000000000000000",
             "_owner": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-            "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
+            "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+            "_value": "5000000000000000000"
           }
         }
       }

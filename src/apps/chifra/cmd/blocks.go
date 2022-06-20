@@ -51,7 +51,7 @@ func init() {
 	blocksCmd.Flags().SortFlags = false
 
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Hashes, "hashes", "e", false, "display only transaction hashes, default is to display full transaction detail")
-	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Uncles, "uncles", "U", false, "display uncle blocks (if any) instead of the requested block")
+	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Uncles, "uncles", "c", false, "display uncle blocks (if any) instead of the requested block")
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Trace, "trace", "t", false, "export the traces from the block as opposed to the block data")
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Apps, "apps", "s", false, "display a list of uniq address appearances in the block")
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Uniq, "uniq", "u", false, "display a list of uniq address appearances per transaction")
@@ -60,7 +60,7 @@ func init() {
 	blocksCmd.Flags().StringSliceVarP(&blocksPkg.GetOptions().Topic, "topic", "p", nil, "for the --logs option only, filter logs to show only those with this topic(s) (hidden)")
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Articulate, "articulate", "a", false, "for the --logs option only, articulate the retrieved data if ABIs can be found (hidden)")
 	blocksCmd.Flags().Uint64VarP(&blocksPkg.GetOptions().BigRange, "big_range", "r", 500, "for the --logs option only, allow for block ranges larger than 500 (hidden)")
-	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Count, "count", "c", false, "display the number of the lists of appearances for --addrs or --uniq")
+	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Count, "count", "U", false, "display the number of the lists of appearances for --addrs or --uniq")
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Cache, "cache", "o", false, "force a write of the block to the cache")
 	blocksCmd.Flags().Uint64VarP(&blocksPkg.GetOptions().List, "list", "l", 0, "summary list of blocks running backwards from latest block minus num (hidden)")
 	blocksCmd.Flags().Uint64VarP(&blocksPkg.GetOptions().ListCount, "list_count", "C", 0, "the number of blocks to report for --list option (hidden)")

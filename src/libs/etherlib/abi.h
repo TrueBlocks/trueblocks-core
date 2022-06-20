@@ -189,5 +189,6 @@ extern bool fromDefinition(CParameter& parm, const string_q& input);
 extern bool decodeRLP(CParameterArray& ifaces, const string_q& desc, const string_q& input);
 extern bool sortByFuncName(const CFunction& f1, const CFunction& f2);
 bool isKnownAbi(const string_q& addr, string_q& path);
+bool isTokenRelated(const string_q& needle);
 // EXISTING_CODE
 }  // namespace qblocks

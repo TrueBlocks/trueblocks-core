@@ -1,6 +1,6 @@
-scrape?modes=both&action=badmode
+scrape?action=badmode
 {
   "errors": [
-    "The chifra scrape monitors command requires the --file option."
+    "Invalid key (action) in scrape route."
   ]
 }

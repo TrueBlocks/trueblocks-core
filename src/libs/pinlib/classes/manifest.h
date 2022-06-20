@@ -24,38 +24,37 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CPinManifest : public CBaseNode {
+class CManifest : public CBaseNode {
   public:
-    string_q fileName;
-    string_q indexFormat;
-    string_q bloomFormat;
-    blknum_t firstPin;
-    blknum_t lastPin;
-    CPinnedChunkArray pins;
+    string_q version;
+    string_q chain;
+    ipfshash_t schemas;
+    ipfshash_t databases;
+    CPinnedChunkArray chunks;
 
   public:
-    CPinManifest(void);
-    CPinManifest(const CPinManifest& pi);
-    virtual ~CPinManifest(void);
-    CPinManifest& operator=(const CPinManifest& pi);
+    CManifest(void);
+    CManifest(const CManifest& ma);
+    virtual ~CManifest(void);
+    CManifest& operator=(const CManifest& ma);
 
-    DECLARE_NODE(CPinManifest);
+    DECLARE_NODE(CManifest);
 
     const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CPinManifest& it) const;
-    bool operator!=(const CPinManifest& it) const {
+    bool operator==(const CManifest& it) const;
+    bool operator!=(const CManifest& it) const {
         return !operator==(it);
     }
-    friend bool operator<(const CPinManifest& v1, const CPinManifest& v2);
-    friend ostream& operator<<(ostream& os, const CPinManifest& it);
+    friend bool operator<(const CManifest& v1, const CManifest& v2);
+    friend ostream& operator<<(ostream& os, const CManifest& it);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CPinManifest& pi);
+    void duplicate(const CManifest& ma);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -63,76 +62,74 @@ class CPinManifest : public CBaseNode {
 };
 
 //--------------------------------------------------------------------------
-inline CPinManifest::CPinManifest(void) {
+inline CManifest::CManifest(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CPinManifest::CPinManifest(const CPinManifest& pi) {
+inline CManifest::CManifest(const CManifest& ma) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(pi);
+    duplicate(ma);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CPinManifest::~CPinManifest(void) {
+inline CManifest::~CManifest(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPinManifest::clear(void) {
+inline void CManifest::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPinManifest::initialize(void) {
+inline void CManifest::initialize(void) {
     CBaseNode::initialize();
 
-    fileName = "";
-    indexFormat = "";
-    bloomFormat = "";
-    firstPin = 0;
-    lastPin = 0;
-    pins.clear();
+    version = "";
+    chain = "";
+    schemas = "";
+    databases = "";
+    chunks.clear();
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPinManifest::duplicate(const CPinManifest& pi) {
+inline void CManifest::duplicate(const CManifest& ma) {
     clear();
-    CBaseNode::duplicate(pi);
+    CBaseNode::duplicate(ma);
 
-    fileName = pi.fileName;
-    indexFormat = pi.indexFormat;
-    bloomFormat = pi.bloomFormat;
-    firstPin = pi.firstPin;
-    lastPin = pi.lastPin;
-    pins = pi.pins;
+    version = ma.version;
+    chain = ma.chain;
+    schemas = ma.schemas;
+    databases = ma.databases;
+    chunks = ma.chunks;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CPinManifest& CPinManifest::operator=(const CPinManifest& pi) {
-    duplicate(pi);
+inline CManifest& CManifest::operator=(const CManifest& ma) {
+    duplicate(ma);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CPinManifest::operator==(const CPinManifest& it) const {
+inline bool CManifest::operator==(const CManifest& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -140,7 +137,7 @@ inline bool CPinManifest::operator==(const CPinManifest& it) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CPinManifest& v1, const CPinManifest& v2) {
+inline bool operator<(const CManifest& v1, const CManifest& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -148,16 +145,16 @@ inline bool operator<(const CPinManifest& v1, const CPinManifest& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CPinManifest> CPinManifestArray;
-extern CArchive& operator>>(CArchive& archive, CPinManifestArray& array);
-extern CArchive& operator<<(CArchive& archive, const CPinManifestArray& array);
+typedef vector<CManifest> CManifestArray;
+extern CArchive& operator>>(CArchive& archive, CManifestArray& array);
+extern CArchive& operator<<(CArchive& archive, const CManifestArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CPinManifest& pin);
-extern CArchive& operator>>(CArchive& archive, CPinManifest& pin);
+extern CArchive& operator<<(CArchive& archive, const CManifest& man);
+extern CArchive& operator>>(CArchive& archive, CManifest& man);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_PINMANIFEST;
+extern const char* STR_DISPLAY_MANIFEST;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

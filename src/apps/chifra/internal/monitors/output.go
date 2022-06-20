@@ -12,7 +12,10 @@ package monitorsPkg
 import (
 	"net/http"
 	"strings"
+	"sync"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/scraper"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
@@ -64,6 +67,16 @@ func (opts *MonitorsOptions) MonitorsInternal() (err error, handled bool) {
 
 	if opts.Clean {
 		err = opts.HandleClean()
+
+	} else if opts.Watch {
+		var wg sync.WaitGroup
+
+		wg.Add(1)
+		MonitorScraper = scraper.NewScraper(colors.Magenta, "MonitorScraper", opts.Sleep, opts.Globals.LogLevel)
+		// Note that this never returns
+		go opts.RunMonitorScraper(&wg)
+
+		wg.Wait()
 
 	} else {
 		err = opts.HandleCrudCommands()

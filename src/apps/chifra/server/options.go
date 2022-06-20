@@ -30,12 +30,21 @@ func (opts *ServeOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
+func (opts *ServeOptions) GetEnvStr() string {
+	envStr := ""
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return envStr
+}
+
 func (opts *ServeOptions) ToCmdLine() string {
 	options := ""
 	if len(opts.Port) > 0 {
 		options += " --port " + opts.Port
 	}
 	options += " " + strings.Join([]string{}, " ")
+	// EXISTING_CODE
+	// EXISTING_CODE
 	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }

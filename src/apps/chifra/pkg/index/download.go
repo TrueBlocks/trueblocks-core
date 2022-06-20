@@ -25,7 +25,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
 	ants "github.com/panjf2000/ants/v2"
@@ -37,7 +37,7 @@ type jobResult struct {
 	fileName string
 	fileSize int64
 	contents io.Reader
-	Pin      *manifest.PinDescriptor
+	Pin      *manifest.ChunkRecord
 }
 
 // fetchResult type make it easier to return both download content and
@@ -103,7 +103,7 @@ func getDownloadWorker(arguments downloadWorkerArguments) workerFunction {
 
 	return func(param interface{}) {
 		url, _ := url.Parse(arguments.gatewayUrl)
-		pin := param.(manifest.PinDescriptor)
+		pin := param.(manifest.ChunkRecord)
 
 		defer arguments.downloadWg.Done()
 
@@ -207,7 +207,7 @@ func getWriteWorker(arguments writeWorkerArguments) workerFunction {
 
 // GetChunksFromRemote downloads, unzips and saves the chunk of type indicated by chunkType
 // for each pin in pins. Progress is reported to progressChannel.
-func GetChunksFromRemote(chain string, pins []manifest.PinDescriptor, chunkPath *cache.CachePath, progressChannel chan<- *progress.Progress) {
+func GetChunksFromRemote(chain string, pins []manifest.ChunkRecord, chunkPath *cache.CachePath, progressChannel chan<- *progress.Progress) {
 	poolSize := runtime.NumCPU() * 2
 	// Downloaded content will wait for saving in this channel
 	writeChannel := make(chan *jobResult, poolSize)
@@ -322,8 +322,8 @@ func saveFileContents(res *jobResult, chunkPath *cache.CachePath) error {
 	return nil
 }
 
-// filterDownloadedChunks returns new []manifest.PinDescriptor slice with all pins from RootPath removed
-func filterDownloadedChunks(pins []manifest.PinDescriptor, chunkPath *cache.CachePath) []manifest.PinDescriptor {
+// filterDownloadedChunks returns new []manifest.ChunkRecord slice with all pins from RootPath removed
+func filterDownloadedChunks(pins []manifest.ChunkRecord, chunkPath *cache.CachePath) []manifest.ChunkRecord {
 	fileMap := make(map[string]bool)
 
 	files, err := ioutil.ReadDir(chunkPath.String())
@@ -341,8 +341,8 @@ func filterDownloadedChunks(pins []manifest.PinDescriptor, chunkPath *cache.Cach
 
 // exclude returns a copy of `from` slice with every pin with a file name present
 // in `what` map removed
-func exclude(what map[string]bool, from []manifest.PinDescriptor) []manifest.PinDescriptor {
-	result := make([]manifest.PinDescriptor, 0, len(from))
+func exclude(what map[string]bool, from []manifest.ChunkRecord) []manifest.ChunkRecord {
+	result := make([]manifest.ChunkRecord, 0, len(from))
 
 	for _, pin := range from {
 		if what[pin.FileName] {

@@ -582,7 +582,7 @@ bool COptions::isRelevant(const CLogEntry& log) const {
 
 //-----------------------------------------------------------------------
 bool fourByteFilter(const string_q& input, const COptions* opt) {
-    ASSERT(!opt->freshen);
+    ASSERT(!opt->watch);
     if (opt->fourbytes.empty())
         return true;
 

@@ -23,8 +23,6 @@ static const COption params[] = {
     // clang-format off
     COption("pin", "p", "", OPT_SWITCH, "pin chunks (and blooms) to IPFS as they are created (requires pinning service)"),  // NOLINT
     COption("block_cnt", "n", "<uint64>", OPT_FLAG, "maximum number of blocks to process per pass"),
-    COption("reset", "e", "<blknum>", OPT_HIDDEN | OPT_FLAG, "reset the scraper to the provided block (or end of earliest chunk prior to that block)"),  // NOLINT
-    COption("publish", "u", "", OPT_HIDDEN | OPT_SWITCH, "after pinning the chunk, publish it to UnchainedIndex"),
     COption("block_chan_cnt", "b", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of concurrent block processing channels"),
     COption("addr_chan_cnt", "d", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of concurrent address processing channels"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Scan the chain and update (and optionally pin) the TrueBlocks index of appearances."),  // NOLINT
@@ -42,7 +40,6 @@ bool COptions::parseArguments(string_q& command) {
     Init();
 
     // BEG_CODE_LOCAL_INIT
-    blknum_t reset = NOPOS;
     // END_CODE_LOCAL_INIT
 
     blknum_t latest = getLatestBlock_client();
@@ -62,15 +59,6 @@ bool COptions::parseArguments(string_q& command) {
                 return false;
         } else if (arg == "-n" || arg == "--block_cnt") {
             return flag_required("block_cnt");
-
-        } else if (startsWith(arg, "-e:") || startsWith(arg, "--reset:")) {
-            if (!confirmBlockNum("reset", reset, arg, latest))
-                return false;
-        } else if (arg == "-e" || arg == "--reset") {
-            return flag_required("reset");
-
-        } else if (arg == "-u" || arg == "--publish") {
-            publish = true;
 
         } else if (startsWith(arg, "-b:") || startsWith(arg, "--block_chan_cnt:")) {
             if (!confirmUint("block_chan_cnt", block_chan_cnt, arg))
@@ -94,10 +82,6 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (reset != NOPOS) {
-        return handle_reset();
-    }
-
     if (pin && !getApiKey(lic)) {
         if (!isTestMode()) {
             ostringstream os;
@@ -108,39 +92,7 @@ bool COptions::parseArguments(string_q& command) {
 
     // We can't really test this code, so we just report and quit
     if (isTestMode()) {
-        ostringstream os;
-        os << "{" << endl;
-        os << "  \"message\": \"Testing in blockScrape/options.cpp\"," << endl;
-        os << "  \"block_cnt\": " << block_cnt << "," << endl;
-        os << "  \"block_chan_cnt\": " << block_chan_cnt << "," << endl;
-        os << "  \"addr_chan_cnt\": " << addr_chan_cnt << "," << endl;
-        os << "  \"pin\": " << pin << "," << endl;
-        os << "  \"publish\": " << publish << "," << endl;
-        os << "}" << endl;
-        cout << os.str();
-        return false;
-    }
-
-    // Debugging data...
-    LOG_DIR8(indexFolder);
-    LOG_DIR8(indexFolder_finalized);
-    LOG_DIR8(indexFolder_blooms);
-    LOG_DIR8(indexFolder_staging);
-    LOG_DIR8(indexFolder_unripe);
-    LOG_DIR8(indexFolder_ripe);
-
-    // We need this below...
-    const CToml* config = getGlobalConfig("blockScrape");
-
-    // A tracing node is required. Otherwise, the index will be 'short' (i.e. it will
-    // be missing appearances). This is okay, if the user tells us it's okay. For
-    // example, if the user only wants an index of event emitters or something
-    bool needsTracing = config->getConfigBool("requires", "tracing", true);
-    if (needsTracing && !isTracingNode()) {
-        string_q errMsg = "Tracing is required for this program to work properly.";
-        if (isDockerMode())
-            errMsg += " If you're running docker, enable remote RPC endpoints.";
-        return usage(errMsg);
+        return usage("Cannot test block scraper");
     }
 
     if (!isArchiveNode())
@@ -188,9 +140,6 @@ void COptions::Init(void) {
     pin = false;
     // clang-format off
     block_cnt = getGlobalConfig("blockScrape")->getConfigInt("settings", "block_cnt", 2000);
-    // clang-format on
-    publish = false;
-    // clang-format off
     block_chan_cnt = getGlobalConfig("blockScrape")->getConfigInt("settings", "block_chan_cnt", 10);
     addr_chan_cnt = getGlobalConfig("blockScrape")->getConfigInt("settings", "addr_chan_cnt", 20);
     apps_per_chunk = getGlobalConfig("blockScrape")->getConfigInt("settings", "apps_per_chunk", 200000);

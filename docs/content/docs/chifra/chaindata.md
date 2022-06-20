@@ -2,7 +2,7 @@
 title: "Chain data"
 description: ""
 lead: ""
-date: 2022-06-01T15:21:39
+date: 2022-06-10T08:26:35
 lastmod:
   - :git
   - lastmod
@@ -40,11 +40,11 @@ Arguments:
 
 Flags:
   -e, --hashes       display only transaction hashes, default is to display full transaction detail
-  -U, --uncles       display uncle blocks (if any) instead of the requested block
+  -c, --uncles       display uncle blocks (if any) instead of the requested block
   -t, --trace        export the traces from the block as opposed to the block data
   -s, --apps         display a list of uniq address appearances in the block
   -u, --uniq         display a list of uniq address appearances per transaction
-  -c, --count        display the number of the lists of appearances for --addrs or --uniq
+  -U, --count        display the number of the lists of appearances for --addrs or --uniq
   -o, --cache        force a write of the block to the cache
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
   -v, --verbose      enable verbose (increase detail with --log_level)

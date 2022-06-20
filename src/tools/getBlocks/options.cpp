@@ -22,7 +22,7 @@ static const COption params[] = {
     // clang-format off
     COption("blocks", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more block identifiers"),  // NOLINT
     COption("hashes", "e", "", OPT_SWITCH, "display only transaction hashes, default is to display full transaction detail"),  // NOLINT
-    COption("uncles", "U", "", OPT_SWITCH, "display uncle blocks (if any) instead of the requested block"),
+    COption("uncles", "c", "", OPT_SWITCH, "display uncle blocks (if any) instead of the requested block"),
     COption("trace", "t", "", OPT_SWITCH, "export the traces from the block as opposed to the block data"),
     COption("apps", "s", "", OPT_SWITCH, "display a list of uniq address appearances in the block"),
     COption("uniq", "u", "", OPT_SWITCH, "display a list of uniq address appearances per transaction"),
@@ -31,7 +31,7 @@ static const COption params[] = {
     COption("topic", "p", "list<topic>", OPT_HIDDEN | OPT_FLAG, "for the --logs option only, filter logs to show only those with this topic(s)"),  // NOLINT
     COption("articulate", "a", "", OPT_HIDDEN | OPT_SWITCH, "for the --logs option only, articulate the retrieved data if ABIs can be found"),  // NOLINT
     COption("big_range", "r", "<uint64>", OPT_HIDDEN | OPT_FLAG, "for the --logs option only, allow for block ranges larger than 500"),  // NOLINT
-    COption("count", "c", "", OPT_SWITCH, "display the number of the lists of appearances for --addrs or --uniq"),
+    COption("count", "U", "", OPT_SWITCH, "display the number of the lists of appearances for --addrs or --uniq"),
     COption("cache", "o", "", OPT_SWITCH, "force a write of the block to the cache"),
     COption("list", "l", "<blknum>", OPT_HIDDEN | OPT_FLAG, "summary list of blocks running backwards from latest block minus num"),  // NOLINT
     COption("list_count", "C", "<blknum>", OPT_HIDDEN | OPT_FLAG, "the number of blocks to report for --list option"),
@@ -75,7 +75,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-e" || arg == "--hashes") {
             hashes = true;
 
-        } else if (arg == "-U" || arg == "--uncles") {
+        } else if (arg == "-c" || arg == "--uncles") {
             uncles = true;
 
         } else if (arg == "-t" || arg == "--trace") {
@@ -113,7 +113,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-r" || arg == "--big_range") {
             return flag_required("big_range");
 
-        } else if (arg == "-c" || arg == "--count") {
+        } else if (arg == "-U" || arg == "--count") {
             count = true;
 
         } else if (arg == "-o" || arg == "--cache") {

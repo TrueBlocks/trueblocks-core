@@ -49,6 +49,7 @@ class CTraverser {
     }
     virtual ~CTraverser(void) {
     }
+    friend ostream& operator<<(ostream& os, const CTraverser& it);
 
   public:
     TRAVERSERFUNC filterFunc = nullptr;

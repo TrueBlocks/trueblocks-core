@@ -73,14 +73,6 @@ string_q CPinataPin::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
-        case 'd':
-            if (fieldName % "date_pinned") {
-                return date_pinned;
-            }
-            if (fieldName % "date_unpinned") {
-                return date_unpinned;
-            }
-            break;
         case 'i':
             if (fieldName % "id") {
                 return id;
@@ -89,36 +81,9 @@ string_q CPinataPin::getValueByName(const string_q& fieldName) const {
                 return ipfs_pin_hash;
             }
             break;
-        case 'm':
-            if (fieldName % "metadata") {
-                if (metadata == CPinataMetadata())
-                    return "{}";
-                return metadata.Format();
-            }
-            break;
-        case 'r':
-            if (fieldName % "regions" || fieldName % "regionsCnt") {
-                size_t cnt = regions.size();
-                if (endsWith(toLower(fieldName), "cnt"))
-                    return uint_2_Str(cnt);
-                if (!cnt)
-                    return "";
-                string_q retS;
-                for (size_t i = 0; i < cnt; i++) {
-                    retS += regions[i].Format();
-                    retS += ((i < cnt - 1) ? ",\n" : "\n");
-                }
-                return retS;
-            }
-            break;
         case 's':
             if (fieldName % "size") {
                 return uint_2_Str(size);
-            }
-            break;
-        case 'u':
-            if (fieldName % "user_id") {
-                return user_id;
             }
             break;
         default:
@@ -127,12 +92,6 @@ string_q CPinataPin::getValueByName(const string_q& fieldName) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
-
-    // test for contained object field specifiers
-    string_q objSpec;
-    objSpec = toUpper("metadata") + "::";
-    if (contains(fieldName, objSpec))
-        return metadata.getValueByName(substitute(fieldName, objSpec, ""));
 
     // Finally, give the parent class a chance
     return CBaseNode::getValueByName(fieldName);
@@ -147,16 +106,6 @@ bool CPinataPin::setValueByName(const string_q& fieldNameIn, const string_q& fie
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
-        case 'd':
-            if (fieldName % "date_pinned") {
-                date_pinned = fieldValue;
-                return true;
-            }
-            if (fieldName % "date_unpinned") {
-                date_unpinned = fieldValue;
-                return true;
-            }
-            break;
         case 'i':
             if (fieldName % "id") {
                 id = fieldValue;
@@ -167,31 +116,9 @@ bool CPinataPin::setValueByName(const string_q& fieldNameIn, const string_q& fie
                 return true;
             }
             break;
-        case 'm':
-            if (fieldName % "metadata") {
-                return metadata.parseJson3(fieldValue);
-            }
-            break;
-        case 'r':
-            if (fieldName % "regions") {
-                CPinataRegion obj;
-                string_q str = fieldValue;
-                while (obj.parseJson3(str)) {
-                    regions.push_back(obj);
-                    obj = CPinataRegion();  // reset
-                }
-                return true;
-            }
-            break;
         case 's':
             if (fieldName % "size") {
                 size = str_2_Uint(fieldValue);
-                return true;
-            }
-            break;
-        case 'u':
-            if (fieldName % "user_id") {
-                user_id = fieldValue;
                 return true;
             }
             break;
@@ -223,11 +150,6 @@ bool CPinataPin::Serialize(CArchive& archive) {
     archive >> id;
     archive >> ipfs_pin_hash;
     archive >> size;
-    archive >> user_id;
-    archive >> date_pinned;
-    archive >> date_unpinned;
-    archive >> metadata;
-    archive >> regions;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -244,11 +166,6 @@ bool CPinataPin::SerializeC(CArchive& archive) const {
     archive << id;
     archive << ipfs_pin_hash;
     archive << size;
-    archive << user_id;
-    archive << date_pinned;
-    archive << date_unpinned;
-    archive << metadata;
-    archive << regions;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -301,11 +218,6 @@ void CPinataPin::registerClass(void) {
     ADD_FIELD(CPinataPin, "id", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CPinataPin, "ipfs_pin_hash", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CPinataPin, "size", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CPinataPin, "user_id", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CPinataPin, "date_pinned", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CPinataPin, "date_unpinned", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_OBJECT(CPinataPin, "metadata", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CPinataMetadata));
-    ADD_FIELD(CPinataPin, "regions", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CPinataPin, "schema");
@@ -373,27 +285,6 @@ ostream& operator<<(ostream& os, const CPinataPin& it) {
     it.Format(os, "", nullptr);
     os << "\n";
     return os;
-}
-
-//---------------------------------------------------------------------------
-const CBaseNode* CPinataPin::getObjectAt(const string_q& fieldName, size_t index) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    if (fieldName % "metadata")
-        return &metadata;
-    if (fieldName % "regions") {
-        if (index == NOPOS) {
-            CPinataRegion empty;
-            ((CPinataPin*)this)->regions.push_back(empty);  // NOLINT
-            index = regions.size() - 1;
-        }
-        if (index < regions.size())
-            return &regions[index];
-    }
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    return NULL;
 }
 
 //---------------------------------------------------------------------------

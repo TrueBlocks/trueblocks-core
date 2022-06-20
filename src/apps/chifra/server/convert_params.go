@@ -51,6 +51,10 @@ func convertToCommandLine(in string) string {
 		return "no_header"
 	case "noZero":
 		return "no_zero"
+	case "pinChunks":
+		return "pin_chunks"
+	case "pinData":
+		return "pin_data"
 	case "proxyFor":
 		return "proxy_for"
 	case "ripeBlock":

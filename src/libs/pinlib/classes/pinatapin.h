@@ -16,8 +16,6 @@
  * the code inside of 'EXISTING_CODE' tags.
  */
 #include "utillib.h"
-#include "pinatametadata.h"
-#include "pinataregion.h"
 
 namespace qblocks {
 
@@ -30,11 +28,6 @@ class CPinataPin : public CBaseNode {
     string_q id;
     string_q ipfs_pin_hash;
     uint64_t size;
-    string_q user_id;
-    string_q date_pinned;
-    string_q date_unpinned;
-    CPinataMetadata metadata;
-    CPinataRegionArray regions;
 
   public:
     CPinataPin(void);
@@ -43,8 +36,6 @@ class CPinataPin : public CBaseNode {
     CPinataPin& operator=(const CPinataPin& pi);
 
     DECLARE_NODE(CPinataPin);
-
-    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -102,11 +93,6 @@ inline void CPinataPin::initialize(void) {
     id = "";
     ipfs_pin_hash = "";
     size = 0;
-    user_id = "";
-    date_pinned = "";
-    date_unpinned = "";
-    metadata = CPinataMetadata();
-    regions.clear();
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -120,11 +106,6 @@ inline void CPinataPin::duplicate(const CPinataPin& pi) {
     id = pi.id;
     ipfs_pin_hash = pi.ipfs_pin_hash;
     size = pi.size;
-    user_id = pi.user_id;
-    date_pinned = pi.date_pinned;
-    date_unpinned = pi.date_unpinned;
-    metadata = pi.metadata;
-    regions = pi.regions;
 
     // EXISTING_CODE
     // EXISTING_CODE

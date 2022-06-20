@@ -1,6 +1,0 @@
-scrape?modes=indexer&action=toggle
-{
-  "errors": [
-    "chifra scrape is not available in API mode"
-  ]
-}

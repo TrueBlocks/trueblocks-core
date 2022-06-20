@@ -27,6 +27,7 @@ all:
 	@cd gasHole && make
 	@cd balances && make
 	@cd usdprice && make
+	@cd recirc && make
 #	@cd recons && make
 	@ls -l $(dest)
 
@@ -35,6 +36,7 @@ clean:
 	@cd gasHole && make clean
 	@cd balances && make clean
 	@cd usdprice && make clean
+	@cd recirc && make clean
 #	@cd recons && make clean
 	@ls -l $(dest)
 
@@ -49,4 +51,6 @@ test:
 	@chifra export --load balances 0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 11500000 >>testing/working 2>/dev/null
 	@echo "Testing usdprice"
 	@chifra export --load usdprice 0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 11500000 >>testing/working 2>/dev/null
+	@echo "Testing recirc"
+	@chifra export --load recirc 0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 11500000 >>testing/working 2>/dev/null
 	@diff testing/working testing/gold

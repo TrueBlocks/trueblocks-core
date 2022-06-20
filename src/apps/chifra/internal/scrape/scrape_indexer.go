@@ -10,18 +10,15 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/scraper"
 )
 
-func hasIndexerFlag(mode string) bool {
-	return mode == "indexer" || mode == "both"
-}
-
-var IndexScraper Scraper
+var IndexScraper scraper.Scraper
 
 func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 	defer wg.Done()
 
-	var s *Scraper = &IndexScraper
+	var s *scraper.Scraper = &IndexScraper
 	s.ChangeState(true)
 
 	for {
@@ -29,7 +26,7 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 			s.Pause()
 
 		} else {
-			opts.Globals.PassItOn("blockScrape", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
+			opts.Globals.PassItOn("blockScrape", opts.Globals.Chain, opts.ToCmdLine(), opts.GetEnvStr())
 			if s.Running {
 				// We sleep under two conditions
 				//   1) the user has told us an explicit amount of time to Sleep
@@ -38,6 +35,7 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 				//
 				// If we're closeEnough and the user specified a sleep value less than
 				// 14 seconds, there's not reason to not sleep
+				// TODO: Multi-chain specific
 				var distanceFromHead uint64 = 13
 				meta, err := rpcClient.GetMetaData(opts.Globals.Chain, false)
 				if err != nil {
@@ -46,10 +44,12 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 					distanceFromHead = meta.Latest - meta.Staging
 				}
 				closeEnough := distanceFromHead <= (2 * opts.UnripeDist)
-				// TODO: per chain data
-				if closeEnough {
+				// TODO: Multi-chain specific
+				if closeEnough && opts.Sleep < 13 {
+					// TODO: Multi-chain specific
 					opts.Sleep = 13
 				}
+				// TODO: Multi-chain specific
 				isDefault := opts.Sleep == 14 || opts.Sleep == 13
 				if !isDefault || closeEnough {
 					if closeEnough {

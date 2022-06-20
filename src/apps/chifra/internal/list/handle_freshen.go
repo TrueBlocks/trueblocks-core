@@ -36,7 +36,38 @@ type MonitorUpdate struct {
 
 const maxTestingBlock = 5000000
 
+// mutexesPerAddress map stores mutex for each address that is being/has been freshened
+var mutexesPerAddress = make(map[string]*sync.Mutex)
+
+// lockForAddress locks the mutex for the given address
+func lockForAddress(address string) {
+	mutex, ok := mutexesPerAddress[address]
+	if ok {
+		mutex.Lock()
+		return
+	}
+
+	newMutex := &sync.Mutex{}
+	mutexesPerAddress[address] = newMutex
+	newMutex.Lock()
+}
+
+// unlockForAddress removes mutex lock for the given address
+func unlockForAddress(address string) {
+	mutex, ok := mutexesPerAddress[address]
+	if !ok {
+		panic("unlockForAddress called for address that has never been locked: " + address)
+	}
+
+	mutex.Unlock()
+}
+
 func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) error {
+	for _, address := range opts.Addrs {
+		lockForAddress(address)
+		defer unlockForAddress(address)
+	}
+
 	var updater = MonitorUpdate{
 		MaxTasks:   12,
 		MonitorMap: make(AddressMonitorMap, len(opts.Addrs)),
@@ -221,8 +252,8 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 		// given a nil appearance list simply updates the header. Note we update for the
 		// start of the next chunk (plus 1 to current range).
 		for _, mon := range updater.MonitorMap {
-			// TODO: BOGUS - can we manage these file pointers so they aren't copied and
-			// TODO: BOGUS - therefore don't need to be Closed so or else it crashes
+			// TODO: Can we manage these file pointers so they aren't copied and
+			// TODO: therefore don't need to be Closed so or else it crashes
 			mon.Close()
 			err := mon.WriteAppearancesAppend(lastScanned, nil)
 			if err != nil {
