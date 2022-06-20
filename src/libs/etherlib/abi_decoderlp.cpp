@@ -228,7 +228,7 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                 uint64_t nBytes = str_2_Uint("0x" + dataArray[sizeLoc]);
                 uint64_t maxBytes = nBytes;
                 size_t nItems = (nBytes / 32) + 1;
-                if (nItems > dataArray.size()) {  // some of the data sent in may be bogus, so we protext ourselves
+                if (nItems > dataArray.size()) {  // some of the data sent in may be bad, so we protext ourselves
                     LOG_DECODE_ERR("4", "nItems too big --> nItems", nItems, ">", "dataArray.size", dataArray.size());
                     LOG_TEST_PARAMS(params);
                     level--;

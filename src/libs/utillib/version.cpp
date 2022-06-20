@@ -15,8 +15,8 @@
 
 namespace qblocks {
 
-// TODO: BOGUS - It's okay for the two versions to be different - we don't want
-// TODO: BOGUS - to have to regenerate the index files when version changes
+// TODO: BOGUS - NEW UNCHAINED - VERSIONS
+// TODO: BOGUS - HASHING IN VERSION TO INDEX
 string_q manifestVersion = "trueblocks-core@v0.40.0";
 
 // Run make generate in order for this to take effect

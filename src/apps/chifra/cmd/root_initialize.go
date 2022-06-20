@@ -181,7 +181,7 @@ func VerifyMigrations() {
 		log.Fatalf(msg)
 	}
 
-	// TODO: BOGUS - Finish this work
+	// TODO: BOGUS - PRE_LOAD MIGRATION MESSAGE
 	//if _, err := index.ReadHeaderFromFilename("shit"); err != nil {
 	//	msg := strings.Replace(badIndex, "{0}", "{v0.40.0-beta}", -1)
 	//	msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)

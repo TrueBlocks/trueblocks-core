@@ -39,7 +39,7 @@ func (opts *ChunksOptions) CheckInternal(fileNames []string, blockNums []uint64,
 				report.ErrorStrs = append(report.ErrorStrs, msg)
 
 			} else if rng.First > 3000000 && header.AppearanceCount > 2005000 || testId == 3 {
-				// TODO: Multi-chain specific -- this is a bogus test
+				// TODO: Multi-chain specific -- this is a bad test
 				msg := fmt.Sprintf("%s: Too many addresses? (%d)", rng, header.AppearanceCount)
 				report.ErrorStrs = append(report.ErrorStrs, msg)
 

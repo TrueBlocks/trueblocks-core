@@ -62,7 +62,7 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 				return
 			}
 		}
-		// TODO: BOGUS - Complete this work
+		// TODO: BOGUS - NEED TO COMPLETE PIN_CHUNKS AND PIN_DATA
 		return
 
 	} else {

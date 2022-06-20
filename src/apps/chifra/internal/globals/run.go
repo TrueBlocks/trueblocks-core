@@ -80,7 +80,7 @@ func (opts *GlobalOptions) PassItOn(path string, chain, cmdLine, envIn string) e
 			scanner.Buffer(buf, 1024*1024)
 			for scanner.Scan() {
 				m := scanner.Text()
-				// TODO: BOGUS This is wrong -- it should check return status of the called routine - that does not appear on stdout
+				// TODO: BOGUS - RETURN VALUE FROM BLAZE
 				// returnVal, _ = strconv.ParseInt(m, 10, 32)
 				fmt.Println(m)
 			}

@@ -7,8 +7,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// TODO: BOGUS - Complete this work - Once we go to fully using the JSON manifest
-// TODO: BOGUS - this whole function can dissapear
+// TODO: BOGUS - RENDER MANIFEST
 func (opts *GlobalOptions) RenderManifest(w io.Writer, fileType string, man *manifest.Manifest) error {
 	var err error
 	tmp := opts

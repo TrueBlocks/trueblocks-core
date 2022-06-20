@@ -21,10 +21,10 @@ import (
 // getManifestCidFromContract calls UnchainedIndex smart contract to get
 // the current manifest IPFS CID
 func getManifestCidFromContract(chain string) (string, error) {
-	// TODO: BOGUS
+	// TODO: BOGUS - NEW UNCHAINED
 	newVersion := unchained.NewUnchained(chain)
 
-	// TODO: BOGUS -- where is the ultimate source of truth?
+	// TODO: BOGUS -- NEW UNCHAINED - SOURCE OF TRUTH
 	provider := config.GetRpcProvider("mainnet") // chain)
 	rpcClient.CheckRpc(provider)
 	ethClient := rpcClient.GetClient(provider)

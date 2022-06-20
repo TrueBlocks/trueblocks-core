@@ -7,8 +7,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-// TODO: BOGUS Should these values be in a config file?
-// TODO: BOGUS Should these values be per chain?
+// TODO: BOGUS NEW UNCHAINED - CONFIG FILE
 const (
 	Schemas            = "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2"
 	Databases          = "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2"

@@ -171,7 +171,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 		resultChannel <- results
 	}()
 
-	// TODO: BOGUS - Should only scan if we're not already seen the block
+	// TODO: BOGUS - NOT SURE - SOMETHING ABOUT NOT REVISITING BLOOMS
 	bloomFilename := index.ToBloomPath(fileName)
 
 	// We open the bloom filter and read its header but we do not read any of the
