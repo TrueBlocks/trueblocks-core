@@ -92,17 +92,6 @@ func (bloom *ChunkBloom) Close() {
 	}
 }
 
-// ToBloomPath returns a path pointing to the bloom filter given either a path to itself or its associated index data
-func ToBloomPath(pathIn string) string {
-	if strings.HasSuffix(pathIn, ".bloom") {
-		return pathIn
-	}
-
-	ret := strings.Replace(pathIn, ".bin", ".bloom", -1)
-	ret = strings.Replace(ret, "/finalized/", "/blooms/", -1)
-	return ret
-}
-
 //---------------------------------------------------------------------------
 func ReadBloom(bloom *ChunkBloom, fileName string) (err error) {
 	bloom.Range, err = cache.RangeFromFilename(fileName)

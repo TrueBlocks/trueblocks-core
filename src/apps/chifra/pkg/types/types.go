@@ -11,6 +11,12 @@ func (h IpfsHash) String() string {
 	return string(h)
 }
 
+type SimpleTimestamp struct {
+	BlockNumber uint64 `json:"blockNumber"`
+	TimeStamp   uint64 `json:"timestamp"`
+	Diff        uint64 `json:"diff"`
+}
+
 type NamedBlock struct {
 	BlockNumber uint64 `json:"blockNumber"`
 	TimeStamp   uint64 `json:"timestamp"`
