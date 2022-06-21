@@ -1,84 +1,6 @@
-TODO: BOGUS
+# v0.40.0 Fixes Unchained Index
 
-- Finish file format document schemas
-
-
-- REVIEW HELP FILES
-- Publish databases
-- Auto publish to smart contract (on Gnosis)
-- Better understand the size of the index chunks on other chains
-- Remove unused pins from Pinata Gnosis, Sepolia, Old Mainnet, New Mainnet
-- Download entire index from chifra init (both with and without --all) Sepolia, Gnosis, Mainnet
-- HASHING IN VERSION TO INDEX
-- BLAZE RETURN VALUE
-- PRE_LOAD MIGRATION MESSAGE
-- RENDER MANIFEST
-- BLOOMS VS CHUNKS IN DOWNLOAD
-- NOT SURE - SOMETHING ABOUT NOT REVISITING BLOOMS
-- BLAZE QUITS EARY
-- WRITING JSON MANIFEST
-- NEW UNCHAINED - SOURCE OF TRUTH
-- NEW UNCHAINED - CONFIG FILE
-- NEW UNCHAINED - FORK BLOCKS
-- NEW UNCHAINED - VERSIONS
-- TESTING - SEPOLIA,GNOSIS - chifra init, chifra chunks
-
-Some test cases showing the old bad missing data and then the new data would be good.
-
-Issues related to this problem:
-
-https://github.com/TrueBlocks/trueblocks-core/issues/2181
-    After chifra init (with or without --all) finishes, remove files from staging, ripe, and unripe
-
-https://github.com/TrueBlocks/trueblocks-core/issues/1998
-    chifra scrape: The trouble with timestamps file and not scraping
-
-https://github.com/TrueBlocks/trueblocks-core/issues/1574
-    chifra chunks: init code
-
-https://github.com/TrueBlocks/trueblocks-core/issues/1872
-    chifra scrape: Epic Issue
-
-Smart Contract: Automate updating the pointer in the contract
-
-Automatically pin the manifest when it changes
-
-Checking: fileSize -- we should store pre-zip file size in the manifest -- won't work cross operating systems -- store os?
-Checking: fileSize -- can be calcualted from internal data, I think -- at least for blooms
-Checking: is the first block in the array the same as first block in range?
-Checking: is the last block in the array the same as last block in range?
-
-// TODO: manifest - are the chunks sequential?
-// TODO: manifest - 3 arrays (remote, local, disc) -- do they agree?
-// TODO: manifest - does pinned manifest agree with the smart contract?
-
-// TODO: manifest - Pinata list all, download one, upload one, remove from Pinata
-// TODO: manifest - Pinata manifest as per smart contract is king
-// TODO: manifest - Pinata multi chain matters since we share namespace
-
-// TODO: manifest - If I do any of the above, does it agree with the manifest?
-// TODO: manifest - Can I recreate a single chunk from the blockchain directly?
-// TODO: manifest - If the newly created chunk does not agree, how can I see where the disagreement happens?
-// TODO: manifest - Can I repair a chunk on disc and/or on Piñata?
-// TODO: manifest - Do the file on disc, when zipped and added to IPFS, result in the same CID stored in the manifest?
-
-// TODO: manifest - Is the file size of the downloaded pin the same as is in the manifest?
-
-Do `grep pinGateway $TB_CONFIG`
-Remove anything but ipfs.unchainedindex.io/ipfs from config file (or change the name of the value)
-
-We need to tell them to add a section to trueBlocks for sepolia which is not included otherwise
-
-Test -- fresh install --
-    chifra init --chain sepolia ==>
-    chifra chunks addresses (does this even work? -- how can it?)
-    chifra export address
-
-
-
-# v0.36.0 Fix to UnchainedIndex
-
-(May 25, 2022)
+(June 25, 2022)
 
 ## Why the Change
 
@@ -88,90 +10,121 @@ Somewhere between blocks 13,300,000 and 13,400,000 Erigon stopped reporting addr
 
 This results in missed transactions inside that block range.
 
-### What do you need to do?
+## What do I need to do?
 
-This migration is a four step process:
+This migration is a five step process:
 
-1. Stop any running processes
-2. Remove any incorrect index chunks from your existing index
-3. Use `chifra init` to replace those missing chunks
-4. Restart your processes
+1. Stop any long-running processes
+2. Edit the TrueBlocks configuration file
+3. Remove incorrect index chunks from your existing index
+4. Use `chifra init` to replace those removed files
+5. Restart your long-running processes
 
 Depending on your internet connection, this migration will take anywhere between a few minutes and about an hour.
 
 ### Before you start
 
-Stop any long running TrueBlocks processes (such as the `chifra scrape` or `chifra serve`). Do not restart them until the migration is complete.
+Stop any long running TrueBlocks processes (such as the `chifra scrape`, `chifra monitors --watch`, or `chifra serve`). Do not restart them until the migration is complete.
 
 You may wish to make a backup copy of your unchained index folder and/or cache. Find your `cachePath` and `indexPath` with `chifra status --terse`.
 
 ## Instructions
 
-In the following instructions any value surrounded by <> is to be replaced with the specific value from your installation.
+Follow these instructions carefully. You can find the value of `$configPath` with `chifra status --terse`.
 
-### Removing incorrect index chunks and bloom filters
+----
+### Correct entries in trueBlocks.toml related to Unchained Index
 
-Run this command:
+Edit `$configPath/trueBlocks.toml`
 
-```
-chifra status --terse
-```
+1. Remove any line in that file that contains `pinGateway`
+2. Add the following lines to the following chain configurations:
 
-Notice the `indexPath`. Change into that directory:
+```[toml]
+[mainnet]
+ipfsGateway="https://ipfs.unchainedindex.io/ipfs/"
 
-```
-cd <indexPath>
-```
+[gnosis]
+ipfsGateway="https://gnosis.unchainedindex.io/ipfs/"
 
-Make a backup of this folder if you wish.
-
-Next, run this command:
-
-```
-rm -fR unripe ripe staging
+[sepolia]
+ipfsGateway="https://sepolia.unchainedindex.io/ipfs/"
 ```
 
-This will remove any partially indexed portions.
+**Note:** If you're running your own ipfs gateway and you've pinned your own index, you may use those values above or for any other chain. TrueBlocks only indexes and pins the above chains.
 
-Next, run this:
+----
+### Replace incorrect index files with corrected index files
 
-```
-rm -fR */013*
-```
-
-### Replace deleted files
-
-You may replace deleted files with this command:
+In the following instructions you will need a value for `$indexPath` which you can find with `chira status --terse`.
 
 ```
-chifra init --all
+cd $indexPath
 ```
 
-Make sure to run this command. If you don't you will have an incomplete index. This is the only way to correct your index short of deleting it entirely and re-generating it from scratch.
+Make a backup of the contents of this folder if you wish.
 
-### What should I do if there's a problem
+List the subfolders in the `$indexPath` folder:
 
-In the worst case, you can always remove all files in the `indexPath` and re-generate the index from scratch with either
-
+```[bash]
+ls -l
 ```
-chifra init -all
+
+You should see the following subfolders: `blooms`, `finalized`, `staging`, `ripe`, `unripe` and `maps` and a single file, `ts.bin`. DO NOT remove `ts.bin`.
+
+In the next step, you will remove four (4) subfolders. In the next step, you will remove files in the other two folders.
+
+Do the following from the `$indexPath` folder (`pwd` shows current folder).
+
+First, remove unneeded folders:
+
+```[bash]
+rm -fR staging ripe unripe maps
+```
+
+Next, remove the damaged index chunks and Bloom filters.
+
+```[bash]
+rm -fR blooms/013*
+rm -fR blooms/014*
+rm -fR finalized/013*
+rm -fR finalized/014*
+```
+
+The final step is to replace the removed files with corrected files. You may use either `chifra init` or `chifra init -all`. Use the latter command if you want both the Bloom filters and each index chunk (bigger, takes longer, faster in the long run).
+
+Either:
+
+```[bash]
+chifra init             # if you want just Bloom filters
 ```
 
 or
 
+```[bash]
+chifra init --all       # if you want Blooms and Index chunks
 ```
-chifra scrape indexer
-```
-
-The former is way faster than the latter. The latter builds the index locally from your own node. Either method should arrive at the same index.
-
 
 ## You're finished!
 
-You may now restart any long-running processes you stopped earlier: `chifra scrape` or `chifra serve`.
+You're finished. Check to see that things worked correctly:
+
+```[bash]
+chifra chunks manifest --check
+```
+
+All the tests should pass. If they don't please contact us in our Discord.
+
+You may now restart any long-running processes you stopped earlier: `chifra scrape`, `chifra monitors --watch`, or `chifra serve`.
 
 Please report any problems by creating an issue.
 
+## What should I do if there's a problem
+
+In the worst case, you may always remove the entire contents of the $indexPath folder, then do `chifra init` or `chifra init --all` to replace the index from scratch.
+
+If you have any other problems, please contact us in our discord.
+
 ## Previous Migration
 
-[Click here](./README-v0.32.0.md) for the previous migration.
+[Click here](./README-v0.30.0.md) for the previous migration.
