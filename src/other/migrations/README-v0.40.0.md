@@ -41,35 +41,28 @@ https://github.com/TrueBlocks/trueblocks-core/issues/1872
 
 Smart Contract: Automate updating the pointer in the contract
 
+Automatically pin the manifest when it changes
+
 Checking: fileSize -- we should store pre-zip file size in the manifest -- won't work cross operating systems -- store os?
 Checking: fileSize -- can be calcualted from internal data, I think -- at least for blooms
 Checking: is the first block in the array the same as first block in range?
 Checking: is the last block in the array the same as last block in range?
 
-Checking the Manifest
-----------------------
-1. Does each record's endBlock equal the next record's startBlock?
-2. Do the file on disc, when zipped and added to IPFS, result in the same CID stored in the manifest?
-3. Is the file size of the downloaded pin the same as is in the manifest?
-4. Does the list of files on Piñata agree with the list of files on the hard drive?
-5. Does the list of files on Piñata agree with the list of files in the manifest?
-6. Does the list of files on the hard drive agree with the list of files on Piñata?
-7. Does the contents of the manifest, when added to IPFS agree with the manifest CID on Piñata?
-8. Does the contents of the manifest, when added to IPFS agree with the smart contract?
+// TODO: manifest - are the chunks sequential?
+// TODO: manifest - 3 arrays (remote, local, disc) -- do they agree?
+// TODO: manifest - does pinned manifest agree with the smart contract?
 
-Managing pins on Piñata
-------------------------
-1. Can I list the files on Piñata?
-2. Can I download a single file from Piñata?
-3. Can I upload a single file to Piñata?
-4. Can I remove a file from Piñata?
-5. If I do any of the above, does it agree with the manifest?
+// TODO: manifest - Pinata list all, download one, upload one, remove from Pinata
+// TODO: manifest - Pinata manifest as per smart contract is king
+// TODO: manifest - Pinata multi chain matters since we share namespace
 
-Debugging the Chunks:
-----------------------
-1. Can I recreate a single chunk from the blockchain directly?
-2. If the newly created chunk does not agree, how can I see where the disagreement happens?
-3. Can I repair a chunk on disc and/or on Piñata?
+// TODO: manifest - If I do any of the above, does it agree with the manifest?
+// TODO: manifest - Can I recreate a single chunk from the blockchain directly?
+// TODO: manifest - If the newly created chunk does not agree, how can I see where the disagreement happens?
+// TODO: manifest - Can I repair a chunk on disc and/or on Piñata?
+// TODO: manifest - Do the file on disc, when zipped and added to IPFS, result in the same CID stored in the manifest?
+
+// TODO: manifest - Is the file size of the downloaded pin the same as is in the manifest?
 
 Do `grep pinGateway $TB_CONFIG`
 Remove anything but ipfs.unchainedindex.io/ipfs from config file (or change the name of the value)

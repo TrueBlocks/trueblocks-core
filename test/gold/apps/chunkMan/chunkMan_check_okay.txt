@@ -2,7 +2,7 @@ chifra chunks  manifest --check
 TEST[DATE|TIME] Mode:  manifest
 TEST[DATE|TIME] Check:  true
 TEST[DATE|TIME] Format:  json
-INFO[DATE|TIME] Unchained index returned CID QmYQT63BD8XR7YEytKtUBJyNkAA278U9VBs5yCE391UfLr
+INFO[DATE|TIME] Unchained index returned CID --ipfs-hash--
 INFO[DATE|TIME] IPFS gateway https://ipfs.unchainedindex.io/ipfs/
 {
   "data": [

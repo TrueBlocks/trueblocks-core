@@ -12,7 +12,6 @@ status?details&firstBlock=1400000&lastBlock=2000000
       "host": "--hostname-- (--username--)",
       "isTesting": true,
       "isApi": true,
-      "isDocker": false,
       "isScraping": false,
       "isArchive": true,
       "isTracing": true,

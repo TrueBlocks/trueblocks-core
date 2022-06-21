@@ -12,7 +12,6 @@ status?modes=caches&types=txs&details&depth=0
       "host": "--hostname-- (--username--)",
       "isTesting": true,
       "isApi": true,
-      "isDocker": false,
       "isScraping": false,
       "isArchive": true,
       "isTracing": true,

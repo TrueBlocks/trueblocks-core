@@ -9,7 +9,6 @@ indexPath         ,string    ,                 ,       ,      ,        ,        
 host              ,string    ,                 ,       ,      ,        ,          ,        ,      ,         ,9   ,     ,        ,the host portion of the local API server
 isTesting         ,bool      ,                 ,       ,      ,        ,          ,        ,      ,         ,10  ,     ,        ,`true` if the server is running in test mode
 isApi             ,bool      ,                 ,       ,      ,        ,          ,        ,      ,         ,11  ,     ,        ,`true` if the server is running in API mode
-isDocker          ,bool      ,                 ,       ,      ,        ,          ,        ,      ,         ,12  ,     ,        ,`true` if running under a docker image
 isScraping        ,bool      ,                 ,       ,      ,        ,          ,        ,      ,         ,13  ,     ,        ,`true` if the index scraper is running
 isArchive         ,bool      ,                 ,       ,      ,        ,          ,        ,      ,         ,14  ,     ,        ,`true` if the rpcProvider is an archive node
 isTracing         ,bool      ,                 ,       ,      ,        ,          ,        ,      ,         ,15  ,     ,        ,`true` if the rpcProvider provides Parity traces
