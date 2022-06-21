@@ -1,8 +1,10 @@
 TODO: BOGUS
 
+- Finish file format document schemas
+
+
 - REVIEW HELP FILES
 - Publish databases
-- Finish file format document schemas
 - Auto publish to smart contract (on Gnosis)
 - Better understand the size of the index chunks on other chains
 - Remove unused pins from Pinata Gnosis, Sepolia, Old Mainnet, New Mainnet
@@ -20,7 +22,57 @@ TODO: BOGUS
 - NEW UNCHAINED - FORK BLOCKS
 - NEW UNCHAINED - VERSIONS
 - TESTING - SEPOLIA,GNOSIS - chifra init, chifra chunks
-- 
+
+
+Some test cases showing the old bad missing data and then the new data would be good.
+
+Issues related to this problem:
+
+https://github.com/TrueBlocks/trueblocks-core/issues/2127
+    chifra init: --all will sometimes download chunks past staging causing future problems when scraping
+
+https://github.com/TrueBlocks/trueblocks-core/issues/2091
+    chifra scrape: Current file does not sequentially follow previous file
+
+https://github.com/TrueBlocks/trueblocks-core/issues/1998
+    chifra scrape: The trouble with timestamps file and not scraping
+
+https://github.com/TrueBlocks/trueblocks-core/issues/2129
+    chifra scrape: Blaze does not print curl debugging data
+
+https://github.com/TrueBlocks/trueblocks-core/issues/2124
+    chifra scrape: Can you index the blockchain from a specific block?
+
+https://github.com/TrueBlocks/trueblocks-core/issues/2084
+    chifra scrape: Index contains old zip files, which causes errors when looping over files
+
+https://github.com/TrueBlocks/trueblocks-core/issues/1636
+    chifra scrape: Push the timestamp file to IPSFS whenever we consolidate
+
+https://github.com/TrueBlocks/trueblocks-core/issues/1872
+    chifra scrape: Epic Issue
+
+https://github.com/TrueBlocks/trueblocks-core/issues/1483
+    chifra scrape: pinning to Pinata 
+
+https://github.com/TrueBlocks/trueblocks-core/issues/1829
+    chifra scrape: Very easy way to speed up scrape (on hold)
+
+https://github.com/TrueBlocks/trueblocks-core/issues/2170
+    Make sure to remove the .gz file after downloading (or uploading) a chunk or bloom
+
+https://github.com/TrueBlocks/trueblocks-core/issues/1867
+    chifra init: Notes on pinMan
+
+https://github.com/TrueBlocks/trueblocks-core/issues/2041
+    chifra scrape: What is in the manifest?
+
+https://github.com/TrueBlocks/trueblocks-core/issues/1574
+    chifra chunks: init code
+
+
+
+
 
 Do `grep pinGateway $TB_CONFIG`
 Remove anything but ipfs.unchainedindex.io/ipfs from config file (or change the name of the value)
