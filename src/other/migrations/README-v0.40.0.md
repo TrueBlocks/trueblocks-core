@@ -39,7 +39,6 @@ https://github.com/TrueBlocks/trueblocks-core/issues/1574
 https://github.com/TrueBlocks/trueblocks-core/issues/1872
     chifra scrape: Epic Issue
 
-
 Smart Contract: Automate updating the pointer in the contract
 
 Checking: fileSize -- we should store pre-zip file size in the manifest -- won't work cross operating systems -- store os?
@@ -71,7 +70,6 @@ Debugging the Chunks:
 1. Can I recreate a single chunk from the blockchain directly?
 2. If the newly created chunk does not agree, how can I see where the disagreement happens?
 3. Can I repair a chunk on disc and/or on Piñata?
-chrome
 
 Do `grep pinGateway $TB_CONFIG`
 Remove anything but ipfs.unchainedindex.io/ipfs from config file (or change the name of the value)
