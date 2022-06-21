@@ -12,9 +12,6 @@ import (
 	"strings"
 )
 
-const LibraryVersion = "GHC-TrueBlocks//0.37.0-beta"
-const ManifestVersion = "trueblocks-core@v0.40.0"
-
 type Version struct {
 	Major  int64  `json:"major"`
 	Minor  int64  `json:"minor"`
@@ -22,7 +19,7 @@ type Version struct {
 	Aspect string `json:"aspect"`
 }
 
-func Parse(str string) (vers Version, err error) {
+func NewVersion(str string) (vers Version, err error) {
 	str = strings.Replace(strings.Replace(str, "-", ".", -1), "v", "", -1)
 	parts := strings.Split(str, ".")
 	if len(parts) > 0 {

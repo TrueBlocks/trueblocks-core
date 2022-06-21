@@ -19,9 +19,9 @@ func (opts *GlobalOptions) RenderManifest(w io.Writer, fileType string, man *man
 		var sc []types.SimpleChunkRecord
 		for _, c := range man.Chunks {
 			cc := types.SimpleChunkRecord{
-				FileName:  c.FileName,
-				BloomHash: c.BloomHash,
-				IndexHash: c.IndexHash,
+				Range:     c.Range,
+				BloomHash: string(c.BloomHash),
+				IndexHash: string(c.IndexHash),
 			}
 			sc = append(sc, cc)
 		}

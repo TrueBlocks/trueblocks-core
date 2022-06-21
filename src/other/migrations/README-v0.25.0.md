@@ -118,7 +118,7 @@ The `[chains.mainnet]` section of your file should look something like this:
 apiProvider = "http://localhost:8080"
 chainId = "1"
 localExplorer = "http://localhost:1234"
-pinGateway = "https://ipfs.unchainedindex.io/ipfs/"
+ipfsGateway = "https://ipfs.unchainedindex.io/ipfs/"
 remoteExplorer = "https://etherscan.io"
 rpcProvider = "<your_rpc_provider>"
 symbol = "ETH"

@@ -5,17 +5,19 @@
 package chunksPkg
 
 import (
+	"sort"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 func (opts *ChunksOptions) HandleChunksPins() error {
-	results, err := manifest.GetChunkList(opts.Globals.Chain)
+	results, err := GetChunks(opts.Globals.Chain)
 	if err != nil {
 		return err
 	}
 
-	for i, r := range results {
+	for i, r := range *results {
 		if opts.Globals.TestMode && i > maxTestItems {
 			continue
 		}
@@ -25,6 +27,27 @@ func (opts *ChunksOptions) HandleChunksPins() error {
 		}
 	}
 	return nil
+}
+
+func GetChunks(chain string) (*[]types.SimpleChunkRecord, error) {
+	manFromCache, err := manifest.ReadManifest(chain, manifest.FromCache)
+	if err != nil {
+		return nil, err
+	}
+
+	sort.Slice(manFromCache.Chunks, func(i, j int) bool {
+		iPin := manFromCache.Chunks[i]
+		jPin := manFromCache.Chunks[j]
+		return iPin.Range < jPin.Range
+	})
+
+	pinList := make([]types.SimpleChunkRecord, len(manFromCache.Chunks))
+	for i := range manFromCache.Chunks {
+		pinList[i].Range = manFromCache.Chunks[i].Range
+		pinList[i].BloomHash = string(manFromCache.Chunks[i].BloomHash)
+		pinList[i].IndexHash = string(manFromCache.Chunks[i].IndexHash)
+	}
+	return &pinList, nil
 }
 
 func (opts *ChunksOptions) HandlePins(blockNums []uint64) error {

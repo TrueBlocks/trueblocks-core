@@ -22,9 +22,9 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
-// DownloadRemoteManifest gets the CID from the smart contract, calls
+// fromRemote gets the CID from the smart contract, calls
 // the gateway and returns the parsed manifest
-func DownloadRemoteManifest(chain string) (*Manifest, error) {
+func fromRemote(chain string) (*Manifest, error) {
 	cid, err := getManifestCidFromContract(chain)
 	if err != nil {
 		return nil, err
@@ -126,9 +126,9 @@ func downloadManifest(chain, gatewayUrl, cid string) (*Manifest, error) {
 
 	switch response.Header.Get("content-type") {
 	case "text/tab-separated-values":
-		return ReadTabManifest(chain, response.Body)
+		return readTabManifest(chain, response.Body)
 	case "application/json":
-		return ReadJSONManifest(response.Body)
+		return readJSONManifest(response.Body)
 	default:
 		return nil, errors.New("unrecognized content type")
 	}

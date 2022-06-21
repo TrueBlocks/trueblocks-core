@@ -20,22 +20,22 @@ func Test_exclude(t *testing.T) {
 
 	pins := []manifest.ChunkRecord{
 		{
-			FileName: "013337527-013340418",
+			Range: "013337527-013340418",
 		},
 		{
-			FileName: "013340419-013343305",
+			Range: "013340419-013343305",
 		},
 		{
-			FileName: "013346064-013348861",
+			Range: "013346064-013348861",
 		},
 		{
-			FileName: "013348862-013351760",
+			Range: "013348862-013351760",
 		},
 		{
-			FileName: "013387069-013389874",
+			Range: "013387069-013389874",
 		},
 		{
-			FileName: "013389875-013392800",
+			Range: "013389875-013392800",
 		},
 	}
 
@@ -45,8 +45,8 @@ func Test_exclude(t *testing.T) {
 		t.Errorf("Wrong length: %d", len(result))
 	}
 
-	if result[0].FileName != "013387069-013389874" &&
-		result[1].FileName != "013389875-013392800" {
-		t.Errorf("Bad values: '%s' and '%s'", result[0].FileName, result[1].FileName)
+	if result[0].Range != "013387069-013389874" &&
+		result[1].Range != "013389875-013392800" {
+		t.Errorf("Bad values: '%s' and '%s'", result[0].Range, result[1].Range)
 	}
 }

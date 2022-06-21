@@ -34,7 +34,7 @@ type versionGroup struct {
 type chainGroup struct {
 	ChainId        string `toml:"chainId"`
 	LocalExplorer  string `toml:"localExplorer"`
-	IPFSGateway    string `toml:"ipfsGateway"`
+	IpfsGateway    string `toml:"ipfsGateway"`
 	RemoteExplorer string `toml:"remoteExplorer"`
 	RpcProvider    string `toml:"rpcProvider"`
 	ApiProvider    string `toml:"apiProvider"`
@@ -108,11 +108,11 @@ func GetRootConfig() *ConfigFile {
 func IsAtLeaseVersion(needle string) bool {
 	var current, test version.Version
 	var err error
-	if current, err = version.Parse(GetRootConfig().Version.Current); err != nil {
+	if current, err = version.NewVersion(GetRootConfig().Version.Current); err != nil {
 		return true
 	}
 
-	if test, err = version.Parse(needle); err != nil {
+	if test, err = version.NewVersion(needle); err != nil {
 		return true
 	}
 

@@ -34,7 +34,7 @@ func (opts *InitOptions) HandleInit() error {
 	config.EstablishIndexPaths(config.GetPathToIndex(chain))
 	unchained.PrintHeader(chain, opts.Globals.TestMode)
 
-	downloadedManifest, err := manifest.DownloadRemoteManifest(chain)
+	downloadedManifest, err := manifest.ReadManifest(chain, manifest.FromContract)
 	if err != nil {
 		return err
 	}
@@ -105,7 +105,7 @@ func downloadAndReportProgress(chain string, pins []manifest.ChunkRecord, chunkP
 	progressChannel := progress.MakeChan()
 	defer close(progressChannel)
 
-	go index.GetChunksFromRemote(chain, pins, chunkPath, progressChannel)
+	go index.DownloadChunks(chain, pins, chunkPath, progressChannel)
 
 	var pinsDone uint
 
@@ -113,7 +113,7 @@ func downloadAndReportProgress(chain string, pins []manifest.ChunkRecord, chunkP
 		pin, ok := event.Payload.(*manifest.ChunkRecord)
 		var fileName string
 		if ok {
-			fileName = pin.FileName
+			fileName = pin.Range
 		}
 
 		if event.Event == progress.AllDone {

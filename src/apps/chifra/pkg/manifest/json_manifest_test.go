@@ -46,7 +46,7 @@ var manifestSource = `
 `
 
 func TestReadManifest(t *testing.T) {
-	m, err := ReadJSONManifest(strings.NewReader(manifestSource))
+	m, err := readJSONManifest(strings.NewReader(manifestSource))
 	if err != nil {
 		t.Error(err)
 	}
@@ -70,12 +70,12 @@ func TestReadManifest(t *testing.T) {
 		},
 		{
 			name:     "Schemas",
-			field:    m.Schemas,
+			field:    m.Schemas.String(),
 			expected: "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2",
 		},
 		{
 			name:     "Databases",
-			field:    m.Databases,
+			field:    m.Databases.String(),
 			expected: "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD",
 		},
 	}

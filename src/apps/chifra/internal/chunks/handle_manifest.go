@@ -18,7 +18,7 @@ func (opts *ChunksOptions) HandleManifest(blockNums []uint64) error {
 		return err
 	}
 
-	manFromCache, err := manifest.FromCache(opts.Globals.Chain)
+	manFromCache, err := manifest.ReadManifest(opts.Globals.Chain, manifest.FromCache)
 	if err != nil {
 		return err
 	}

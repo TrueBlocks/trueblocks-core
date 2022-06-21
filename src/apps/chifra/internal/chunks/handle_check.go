@@ -71,11 +71,11 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 		return err
 	}
 
-	manFromCache, err := manifest.FromCache(opts.Globals.Chain)
+	manFromCache, err := manifest.ReadManifest(opts.Globals.Chain, manifest.FromCache)
 	if err != nil {
 		return err
 	}
-	remoteMan, err := manifest.DownloadRemoteManifest(opts.Globals.Chain)
+	remoteMan, err := manifest.ReadManifest(opts.Globals.Chain, manifest.FromContract)
 	if err != nil {
 		return err
 	}
@@ -83,13 +83,13 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 	// a string array of the ranges in the local manifest
 	cacheArray := []string{}
 	for _, chunk := range manFromCache.Chunks {
-		cacheArray = append(cacheArray, chunk.FileName)
+		cacheArray = append(cacheArray, chunk.Range)
 	}
 
 	// a string array of the ranges from the remote manifest
 	remoteArray := []string{}
 	for _, chunk := range remoteMan.Chunks {
-		remoteArray = append(remoteArray, chunk.FileName)
+		remoteArray = append(remoteArray, chunk.Range)
 	}
 
 	// a string array of the actual files in the index

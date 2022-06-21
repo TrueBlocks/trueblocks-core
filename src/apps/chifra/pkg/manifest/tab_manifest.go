@@ -7,18 +7,15 @@ package manifest
 import (
 	"encoding/csv"
 	"io"
-	"os"
-	"sort"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
-// ReadPinDescriptors parses pin information and returns a slice of
+// readPinDescriptors parses pin information and returns a slice of
 // ChunkRecord or error
-func ReadPinDescriptors(r io.Reader) ([]ChunkRecord, error) {
+func readPinDescriptors(r io.Reader) ([]ChunkRecord, error) {
 	reader := csv.NewReader(r)
 	reader.Comma = '\t'
 	reader.FieldsPerRecord = 3
@@ -38,18 +35,18 @@ func ReadPinDescriptors(r io.Reader) ([]ChunkRecord, error) {
 		}
 
 		descriptors = append(descriptors, ChunkRecord{
-			FileName:  record[0],
-			BloomHash: record[1],
-			IndexHash: record[2],
+			Range:     record[0],
+			BloomHash: types.IpfsHash(record[1]),
+			IndexHash: types.IpfsHash(record[2]),
 		})
 	}
 
 	return descriptors, nil
 }
 
-// ReadTabManifest parses TSV formatted manifest
-func ReadTabManifest(chain string, r io.Reader) (*Manifest, error) {
-	descriptors, err := ReadPinDescriptors(r)
+// readTabManifest parses TSV formatted manifest
+func readTabManifest(chain string, r io.Reader) (*Manifest, error) {
+	descriptors, err := readPinDescriptors(r)
 	if err != nil {
 		return nil, err
 	}
@@ -61,35 +58,4 @@ func ReadTabManifest(chain string, r io.Reader) (*Manifest, error) {
 		Databases: unchained.Databases,
 		Chunks:    descriptors,
 	}, nil
-}
-
-// FromCache loads the manifest saved in ConfigPath
-func FromCache(chain string) (*Manifest, error) {
-	manifestPath := config.GetPathToChainConfig(chain) + "manifest.txt"
-	file, err := os.Open(manifestPath)
-	if err != nil {
-		return nil, err
-	}
-	return ReadTabManifest(chain, file)
-}
-
-func GetChunkList(chain string) ([]types.SimpleChunkRecord, error) {
-	manFromCache, err := FromCache(chain)
-	if err != nil {
-		return []types.SimpleChunkRecord{}, err
-	}
-
-	sort.Slice(manFromCache.Chunks, func(i, j int) bool {
-		iPin := manFromCache.Chunks[i]
-		jPin := manFromCache.Chunks[j]
-		return iPin.FileName < jPin.FileName
-	})
-
-	pinList := make([]types.SimpleChunkRecord, len(manFromCache.Chunks))
-	for i := range manFromCache.Chunks {
-		pinList[i].FileName = manFromCache.Chunks[i].FileName
-		pinList[i].BloomHash = string(manFromCache.Chunks[i].BloomHash)
-		pinList[i].IndexHash = string(manFromCache.Chunks[i].IndexHash)
-	}
-	return pinList, nil
 }

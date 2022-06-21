@@ -14,13 +14,13 @@ func Test_retry(t *testing.T) {
 	callCounter := 0
 	failingPins := []manifest.ChunkRecord{
 		{
-			FileName: "first",
+			Range: "first",
 		},
 		{
-			FileName: "second",
+			Range: "second",
 		},
 		{
-			FileName: "third",
+			Range: "third",
 		},
 	}
 	fakeDownload := func(p []manifest.ChunkRecord) ([]manifest.ChunkRecord, bool) {

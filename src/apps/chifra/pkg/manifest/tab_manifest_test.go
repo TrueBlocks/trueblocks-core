@@ -20,7 +20,7 @@ var tabManifestSource = `
 `
 
 func TestReadTabManifest(t *testing.T) {
-	m, err := ReadTabManifest("mainnet", strings.NewReader(tabManifestSource))
+	m, err := readTabManifest("mainnet", strings.NewReader(tabManifestSource))
 	if err != nil {
 		t.Error(err)
 	}
@@ -29,8 +29,8 @@ func TestReadTabManifest(t *testing.T) {
 		t.Errorf("Wrong length: %d", len(m.Chunks))
 	}
 
-	if m.Chunks[0].FileName != "013326058-013328910" {
-		t.Errorf("Wrong FileName: %s", m.Chunks[0].FileName)
+	if m.Chunks[0].Range != "013326058-013328910" {
+		t.Errorf("Wrong FileName: %s", m.Chunks[0].Range)
 	}
 
 	if m.Chunks[3].BloomHash != "QmRxGboQht2ST1NMwkWdytsF1nL5FVrgfEhZ4ozBU1UZQU" {

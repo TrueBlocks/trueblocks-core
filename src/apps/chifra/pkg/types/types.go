@@ -5,6 +5,12 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
+type IpfsHash string
+
+func (h IpfsHash) String() string {
+	return string(h)
+}
+
 type NamedBlock struct {
 	BlockNumber uint64 `json:"blockNumber"`
 	TimeStamp   uint64 `json:"timestamp"`
@@ -72,7 +78,7 @@ type SimpleManifest struct {
 }
 
 type SimpleChunkRecord struct {
-	FileName  string `json:"fileName"`
+	Range     string `json:"range"`
 	BloomHash string `json:"bloomHash"`
 	IndexHash string `json:"indexHash"`
 }

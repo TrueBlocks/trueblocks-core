@@ -77,7 +77,7 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 
 // TODO: BOGUS WRITING JSON MANIFEST
 func (opts *ScrapeOptions) publishManifest() error {
-	// manFromCache, err := manifest.FromCache(opts.Globals.Chain)
+	// manFromCache, err := manifest.ReadManifest(opts.Globals.Chain,manifest.FromCache)
 	// if err != nil {
 	// 	return err
 	// }
