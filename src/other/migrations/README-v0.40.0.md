@@ -4,40 +4,43 @@
 
 ## Why the Change
 
-A few months ago, we made this announcement (https://discord.com/channels/570963863428661248/904527518948806686/955114745369854044) regarding trouble we were seeing with Erigon. I thought we protected ourselves from allowing incorrect data to enter the index, but I was wrong.
+A few months ago, we made [this announcement](https://discord.com/channels/570963863428661248/904527518948806686/955114745369854044) regarding a certain bug in Erigon (or TrueBlocks, or most likely both). I thought we had protected ourselves from this problem, but I was wrong.
 
-Somewhere between blocks 13,300,000 and 13,400,000 Erigon stopped reporting addresses correctly from it's RPC (or at least TrueBlocks stopped getting addresses).
+Somewhere between blocks 13,300,000 and 13,400,000 Erigon stopped reporting addresses accurately (and TrueBlocks didn't notice). This resulted in missing appearance records in that block range.
 
-This results in missed transactions inside that block range.
+This migration will correct those errors.
 
 ## What do I need to do?
 
-This migration is a five step process:
+The migration consists of five steps:
 
-1. Stop any long-running processes
-2. Edit the TrueBlocks configuration file
-3. Remove incorrect index chunks from your existing index
+1. Stop long-running processes
+2. Edit the primary TrueBlocks configuration file
+3. Remove incorrect index chunks from your hard drive
 4. Use `chifra init` to replace those removed files
-5. Restart your long-running processes
+5. Restart long-running processes
 
-Depending on your internet connection, this migration will take anywhere between a few minutes and about an hour.
+Depending on your internet connection and the machine you're working on, this migration will take
+anywhere between a few minutes and about an hour.
 
 ### Before you start
 
-Stop any long running TrueBlocks processes (such as the `chifra scrape`, `chifra monitors --watch`, or `chifra serve`). Do not restart them until the migration is complete.
+Stop any long running TrueBlocks processes (such as the `chifra scrape`, `chifra monitors --watch`, or `chifra serve`). Do not restart
+them until the migration is complete.
 
 You may wish to make a backup copy of your unchained index folder and/or cache. Find your `cachePath` and `indexPath` with `chifra status --terse`.
 
 ## Instructions
 
-Follow these instructions carefully. You can find the value of `$configPath` with `chifra status --terse`.
+You must complete these instructions in a certain folder called `$configPath`. You can find the value of `$configPath` by
+running `chifra status --terse`.
 
 ----
-### Correct entries in trueBlocks.toml related to Unchained Index
+### Correct Entries in trueBlocks.toml Related to the Unchained Index
 
 Edit `$configPath/trueBlocks.toml`
 
-1. Remove any line in that file that contains `pinGateway`
+1. Remove any line you find that contains the word `pinGateway`
 2. Add the following lines to the following chain configurations:
 
 ```[toml]
@@ -51,59 +54,87 @@ ipfsGateway="https://gnosis.unchainedindex.io/ipfs/"
 ipfsGateway="https://sepolia.unchainedindex.io/ipfs/"
 ```
 
-**Note:** If you're running your own ipfs gateway and you've pinned your own index, you may use those values above or for any other chain. TrueBlocks only indexes and pins the above chains.
+**Note:** If you're running your own ipfs gateway and you've pinned your own index, you may add those values above or for any other chain.
+
+**Note:** A careful reader will notice that we now support indexing on three chains: `mainnet`, `gnosis`, and `sepolia`.
 
 ----
 ### Replace incorrect index files with corrected index files
 
-In the following instructions you will need a value for `$indexPath` which you can find with `chira status --terse`.
+Having corrected the configuration file, you now need to remove the index portions that are in error. Here, you need a value for `$indexPath` which may also find with `chira status --terse`.
+
+Change into that directory. (Make a backup of the contents of this folder if you wish.)
 
 ```
 cd $indexPath
 ```
 
-Make a backup of the contents of this folder if you wish.
+Make sure you are where you think you are:
 
-List the subfolders in the `$indexPath` folder:
+```[bash]
+pwd
+```
+
+The current working path should end with `unchained`.
+
+List the contents of the `$indexPath` folder:
 
 ```[bash]
 ls -l
 ```
 
-You should see the following subfolders: `blooms`, `finalized`, `staging`, `ripe`, `unripe` and `maps` and a single file, `ts.bin`. DO NOT remove `ts.bin`.
+You should see the following subfolders `blooms`, `finalized`, `staging`, `ripe`, `unripe` and `maps` and a single file called `ts.bin`.
 
-In the next step, you will remove four (4) subfolders. In the next step, you will remove files in the other two folders.
+==> DO NOT remove the file `ts.bin`.
 
-Do the following from the `$indexPath` folder (`pwd` shows current folder).
+### Remove unneeded folders and incorrect files
 
-First, remove unneeded folders:
+In the next step, you will remove four (4) subfolders. In the step after that, you will remove certain files in the remaining folders.
+
+Do the following from the `$indexPath` folder.
+
+Remove unneeded folders:
 
 ```[bash]
 rm -fR staging ripe unripe maps
 ```
 
-Next, remove the damaged index chunks and Bloom filters.
+Remove the damaged index chunks and Bloom filters.
 
 ```[bash]
 rm -fR blooms/013*
 rm -fR blooms/014*
+rm -fR blooms/015*
 rm -fR finalized/013*
 rm -fR finalized/014*
+rm -fR finalized/015*
 ```
 
-The final step is to replace the removed files with corrected files. You may use either `chifra init` or `chifra init -all`. Use the latter command if you want both the Bloom filters and each index chunk (bigger, takes longer, faster in the long run).
+(This is basically removing all files after block 13,000,000 which is near where the error occured.)
+
+### Replace the removed files
+
+The final step is to replace the removed files. You may use either `chifra init`, `chifra init -all`, or `chifra scrape` depending on your preference. Use `chifra init -all` or `chifra scrape` if you want both the Bloom filters and each index chunk. Use `scrape` if you wish to create the files yourself as opposed to downloading them.
 
 Either:
 
 ```[bash]
-chifra init             # if you want just Bloom filters
+chifra init             # to download only Bloom filters
 ```
 
 or
 
 ```[bash]
-chifra init --all       # if you want Blooms and Index chunks
+chifra init --all       # to download Blooms and Index chunks
 ```
+
+or
+
+```[bash]
+chifra scrape           # to build Blooms and index yourself
+```
+
+Allow all of the above commands to run to completion. If the process stops, or you quit it, re-run it until it completes.
 
 ## You're finished!
 
@@ -121,7 +152,7 @@ Please report any problems by creating an issue.
 
 ## What should I do if there's a problem
 
-In the worst case, you may always remove the entire contents of the $indexPath folder, then do `chifra init` or `chifra init --all` to replace the index from scratch.
+In the worst case, you may always remove the entire contents of the `$indexPath` folder, then do `chifra init`, `chifra init --all`, or `chifra scrape` to replace the index from scratch.
 
 If you have any other problems, please contact us in our discord.
 
