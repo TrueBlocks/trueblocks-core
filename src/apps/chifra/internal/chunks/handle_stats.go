@@ -6,21 +6,72 @@ package chunksPkg
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *ChunksOptions) showStats(path string, first bool) (bool, error) {
+func (opts *ChunksOptions) showFinalizedStats(path string, first bool) (bool, error) {
 	// TODO: Fix export without arrays
 	obj := NewChunkStats(path)
 	err := opts.Globals.RenderObject(obj, first)
-	if err != nil {
-		return false, err
+	return err == nil, err
+}
+
+func (opts *ChunksOptions) showStagingStats(path string, first bool) (bool, error) {
+	// fmt.Println(path, first)
+	// fmt.Println(index.ToStagingPath(path), first)
+	lines := file.AsciiFileToLines(path)
+	// fmt.Println(len(lines))
+	ret := types.SimpleChunkStats{}
+	rng, err1 := cache.RangeFromFilename(path)
+	if err1 != nil {
+		return false, nil
 	}
-	return true, nil
+	ret.End = rng.Last
+	ret.NApps = uint32(len(lines))
+	addrMap := make(map[string]uint32, ret.NApps)
+	for _, line := range lines {
+		parts := strings.Split(line, "\t")
+		if len(parts) > 1 && ret.Start == 0 {
+			v, _ := strconv.ParseUint(parts[1], 10, 32)
+			ret.Start = uint64(v)
+		}
+		if len(parts) > 0 {
+			addrMap[parts[0]]++
+		}
+	}
+	ret.NAddrs = uint32(len(addrMap))
+	ret.NBlocks = ret.End - ret.Start + 1
+	ret.NBlooms = 1
+	ret.BloomSz = 1
+	ret.ChunkSz = 1
+	ret = finishStats(&ret)
+	err := opts.Globals.RenderObject(ret, first)
+	return err == nil, err
+}
+
+func finishStats(stats *types.SimpleChunkStats) types.SimpleChunkStats {
+	stats.NBlocks = stats.End - stats.Start + 1
+	if stats.NBlocks > 0 {
+		stats.AddrsPerBlock = float64(stats.NAddrs) / float64(stats.NBlocks)
+		stats.AppsPerBlock = float64(stats.NApps) / float64(stats.NBlocks)
+	}
+
+	if stats.NAddrs > 0 {
+		stats.AppsPerAddr = float64(stats.NApps) / float64(stats.NAddrs)
+	}
+
+	stats.RecWid = 4 + index.BLOOM_WIDTH_IN_BYTES
+	if stats.BloomSz > 0 {
+		stats.Ratio = float64(stats.ChunkSz) / float64(stats.BloomSz)
+	}
+
+	return *stats
 }
 
 func NewChunkStats(path string) types.SimpleChunkStats {
@@ -35,26 +86,11 @@ func NewChunkStats(path string) types.SimpleChunkStats {
 	ret.End = chunk.Range.Last
 	ret.NAddrs = chunk.Data.Header.AddressCount
 	ret.NApps = chunk.Data.Header.AppearanceCount
-	ret.NBlocks = chunk.Range.Last - chunk.Range.First + 1
 	ret.NBlooms = chunk.Bloom.Count
+	ret.BloomSz = file.FileSize(index.ToBloomPath(path))
+	ret.ChunkSz = file.FileSize(index.ToIndexPath(path))
 
-	if ret.NBlocks > 0 {
-		ret.AddrsPerBlock = float64(ret.NAddrs) / float64(ret.NBlocks)
-		ret.AppsPerBlock = float64(ret.NApps) / float64(ret.NBlocks)
-	}
-
-	if ret.NAddrs > 0 {
-		ret.AppsPerAddr = float64(ret.NApps) / float64(ret.NAddrs)
-	}
-
-	ret.RecWid = 4 + index.BLOOM_WIDTH_IN_BYTES
-
-	p := strings.Replace(strings.Replace(path, ".bloom", ".bin", -1), "blooms", "finalized", -1)
-	ret.BloomSz = file.FileSize(path)
-	ret.ChunkSz = file.FileSize(p)
-	ret.Ratio = float64(ret.ChunkSz) / float64(ret.BloomSz)
-
-	return ret
+	return finishStats(&ret)
 }
 
 func (opts *ChunksOptions) HandleStats(blockNums []uint64) error {
@@ -64,5 +100,15 @@ func (opts *ChunksOptions) HandleStats(blockNums []uint64) error {
 		return err
 	}
 
-	return opts.WalkChunkFiles(opts.showStats, blockNums)
+	err = opts.WalkIndexFiles(cache.Index_Bloom, opts.showFinalizedStats, blockNums)
+	if err != nil {
+		return err
+	}
+
+	err = opts.WalkIndexFiles(cache.Index_Staging, opts.showStagingStats, blockNums)
+	if err != nil {
+		return err
+	}
+
+	return err
 }

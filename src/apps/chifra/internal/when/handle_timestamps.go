@@ -25,15 +25,25 @@ func (opts *WhenOptions) HandleWhenShowTimestamps() error {
 		if err != nil {
 			return err
 		}
+		prev := types.SimpleTimestamp{}
 		for bn := uint64(0); bn < cnt; bn++ {
-			obj, err := tslib.FromBn(opts.Globals.Chain, bn)
+			ts, err := tslib.FromBn(opts.Globals.Chain, bn)
 			if err != nil {
 				return err
 			}
-			err = opts.Globals.RenderObject(*obj, bn == 0)
+			obj := types.SimpleTimestamp{
+				BlockNumber: uint64(ts.Bn),
+				TimeStamp:   uint64(ts.Ts),
+				Diff:        uint64(ts.Ts - uint32(prev.TimeStamp)),
+			}
+			if ts.Bn == 0 {
+				obj.Diff = 0
+			}
+			err = opts.Globals.RenderObject(obj, bn == 0)
 			if err != nil {
 				return err
 			}
+			prev = obj
 		}
 		return nil
 	}
