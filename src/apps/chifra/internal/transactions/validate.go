@@ -35,6 +35,10 @@ func (opts *TransactionsOptions) ValidateTransactions() error {
 		if opts.Trace && !rpcClient.IsTracingNode(opts.Globals.TestMode, opts.Globals.Chain) {
 			return validate.Usage("Tracing is required for this program to work properly.")
 		}
+
+		if !validate.CanArticulate(opts.Articulate) {
+			return validate.Usage("The {0} option requires an EtherScan API key.", "--articulate")
+		}
 	}
 
 	err := validate.ValidateIdentifiers(

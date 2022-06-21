@@ -21,6 +21,9 @@ func (opts *ReceiptsOptions) ValidateReceipts() error {
 		if len(opts.Transactions) == 0 {
 			return validate.Usage("Please supply one or more transaction identifiers.")
 		}
+		if !validate.CanArticulate(opts.Articulate) {
+			return validate.Usage("The {0} option requires an EtherScan API key.", "--articulate")
+		}
 	}
 
 	err := validate.ValidateIdentifiers(

@@ -73,6 +73,10 @@ func (opts *ExportOptions) ValidateExport() error {
 		return validate.Usage("You must provide at least one Ethereum address for this command.")
 	}
 
+	if !validate.CanArticulate(opts.Articulate) {
+		return validate.Usage("The {0} option requires an EtherScan API key.", "--articulate")
+	}
+
 	bloomZero := cache.NewCachePath(opts.Globals.Chain, cache.Index_Bloom)
 	path := bloomZero.GetFullPath("000000000-000000000")
 	if !file.FileExists(path) {
