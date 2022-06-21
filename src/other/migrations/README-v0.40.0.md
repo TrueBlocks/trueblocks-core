@@ -23,56 +23,55 @@ TODO: BOGUS
 - NEW UNCHAINED - VERSIONS
 - TESTING - SEPOLIA,GNOSIS - chifra init, chifra chunks
 
-
 Some test cases showing the old bad missing data and then the new data would be good.
 
 Issues related to this problem:
 
-https://github.com/TrueBlocks/trueblocks-core/issues/2127
-    chifra init: --all will sometimes download chunks past staging causing future problems when scraping
-
-https://github.com/TrueBlocks/trueblocks-core/issues/2091
-    chifra scrape: Current file does not sequentially follow previous file
+https://github.com/TrueBlocks/trueblocks-core/issues/2181
+    After chifra init (with or without --all) finishes, remove files from staging, ripe, and unripe
 
 https://github.com/TrueBlocks/trueblocks-core/issues/1998
     chifra scrape: The trouble with timestamps file and not scraping
 
-https://github.com/TrueBlocks/trueblocks-core/issues/2129
-    chifra scrape: Blaze does not print curl debugging data
-
-https://github.com/TrueBlocks/trueblocks-core/issues/2124
-    chifra scrape: Can you index the blockchain from a specific block?
-
-https://github.com/TrueBlocks/trueblocks-core/issues/2084
-    chifra scrape: Index contains old zip files, which causes errors when looping over files
-
-https://github.com/TrueBlocks/trueblocks-core/issues/1636
-    chifra scrape: Push the timestamp file to IPSFS whenever we consolidate
+https://github.com/TrueBlocks/trueblocks-core/issues/1574
+    chifra chunks: init code
 
 https://github.com/TrueBlocks/trueblocks-core/issues/1872
     chifra scrape: Epic Issue
 
-https://github.com/TrueBlocks/trueblocks-core/issues/1483
-    chifra scrape: pinning to Pinata 
 
-https://github.com/TrueBlocks/trueblocks-core/issues/1829
-    chifra scrape: Very easy way to speed up scrape (on hold)
+Smart Contract: Automate updating the pointer in the contract
 
-https://github.com/TrueBlocks/trueblocks-core/issues/2170
-    Make sure to remove the .gz file after downloading (or uploading) a chunk or bloom
+Checking: fileSize -- we should store pre-zip file size in the manifest -- won't work cross operating systems -- store os?
+Checking: fileSize -- can be calcualted from internal data, I think -- at least for blooms
+Checking: is the first block in the array the same as first block in range?
+Checking: is the last block in the array the same as last block in range?
 
-https://github.com/TrueBlocks/trueblocks-core/issues/1867
-    chifra init: Notes on pinMan
+Checking the Manifest
+----------------------
+1. Does each record's endBlock equal the next record's startBlock?
+2. Do the file on disc, when zipped and added to IPFS, result in the same CID stored in the manifest?
+3. Is the file size of the downloaded pin the same as is in the manifest?
+4. Does the list of files on Piñata agree with the list of files on the hard drive?
+5. Does the list of files on Piñata agree with the list of files in the manifest?
+6. Does the list of files on the hard drive agree with the list of files on Piñata?
+7. Does the contents of the manifest, when added to IPFS agree with the manifest CID on Piñata?
+8. Does the contents of the manifest, when added to IPFS agree with the smart contract?
 
-https://github.com/TrueBlocks/trueblocks-core/issues/2041
-    chifra scrape: What is in the manifest?
+Managing pins on Piñata
+------------------------
+1. Can I list the files on Piñata?
+2. Can I download a single file from Piñata?
+3. Can I upload a single file to Piñata?
+4. Can I remove a file from Piñata?
+5. If I do any of the above, does it agree with the manifest?
 
-https://github.com/TrueBlocks/trueblocks-core/issues/1574
-    chifra chunks: init code
-
-
-
-
+Debugging the Chunks:
+----------------------
+1. Can I recreate a single chunk from the blockchain directly?
+2. If the newly created chunk does not agree, how can I see where the disagreement happens?
+3. Can I repair a chunk on disc and/or on Piñata?
+chrome
 
 Do `grep pinGateway $TB_CONFIG`
 Remove anything but ipfs.unchainedindex.io/ipfs from config file (or change the name of the value)

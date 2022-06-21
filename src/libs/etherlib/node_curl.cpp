@@ -20,6 +20,7 @@ namespace qblocks {
 //-------------------------------------------------------------------------
 CCurlContext::CCurlContext(void) {
     baseURL = getRpcProvider();
+    // turn this on with DEV_DEBUG_CURL environment variable
     debugging = getGlobalConfig("")->getConfigBool("dev", "debug_curl", false);
     callBackFunc = writeCallback;
     curlNoteFunc = NULL;
