@@ -25,17 +25,28 @@ func shouldDisplay(result cache.IndexFileInfo, blockNums []uint64) bool {
 	return hit
 }
 
-func (opts *ChunksOptions) WalkChunkFiles(displayFunc func(path string, first bool) (bool, error), blockNums []uint64) error {
+func (opts *ChunksOptions) WalkIndexFiles(cacheType cache.CacheType, displayFunc func(path string, first bool) (bool, error), blockNums []uint64) error {
 	filenameChan := make(chan cache.IndexFileInfo)
 
 	var nRoutines int = 1
-	go cache.WalkCacheFolder(opts.Globals.Chain, cache.Index_Bloom, filenameChan)
+	go cache.WalkCacheFolder(opts.Globals.Chain, cacheType, filenameChan)
 
 	cnt := 0
 	for result := range filenameChan {
 		switch result.Type {
 		case cache.Index_Bloom:
 			skip := (opts.Globals.TestMode && cnt > maxTestItems) || !strings.HasSuffix(result.Path, ".bloom")
+			if !skip && shouldDisplay(result, blockNums) {
+				ok, err := displayFunc(result.Path, cnt == 0)
+				if err != nil {
+					return err
+				}
+				if ok {
+					cnt++
+				}
+			}
+		case cache.Index_Staging:
+			skip := (opts.Globals.TestMode)
 			if !skip && shouldDisplay(result, blockNums) {
 				ok, err := displayFunc(result.Path, cnt == 0)
 				if err != nil {

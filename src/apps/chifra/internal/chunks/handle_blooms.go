@@ -52,5 +52,5 @@ func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
 	if err != nil {
 		return err
 	}
-	return opts.WalkChunkFiles(opts.showBloom, blockNums)
+	return opts.WalkIndexFiles(cache.Index_Bloom, opts.showBloom, blockNums)
 }

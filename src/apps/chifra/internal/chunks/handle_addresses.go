@@ -7,6 +7,7 @@ package chunksPkg
 import (
 	"io"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -68,5 +69,5 @@ func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
 		return err
 	}
 
-	return opts.WalkChunkFiles(opts.showAddresses, blockNums)
+	return opts.WalkIndexFiles(cache.Index_Bloom, opts.showAddresses, blockNums)
 }

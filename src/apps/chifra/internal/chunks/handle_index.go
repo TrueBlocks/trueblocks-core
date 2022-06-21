@@ -68,5 +68,5 @@ func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
 		return err
 	}
 
-	return opts.WalkChunkFiles(opts.showIndex, blockNums)
+	return opts.WalkIndexFiles(cache.Index_Bloom, opts.showIndex, blockNums)
 }
