@@ -55,6 +55,11 @@ func (opts *InitOptions) HandleInit() error {
 	defer close(bloomsDoneChannel)
 	indexDoneChannel := make(chan bool)
 	defer close(indexDoneChannel)
+	defer func() {
+		// We want to make sure these folders are empty so the scraper
+		// starts at the proper place.
+		config.CleanIndexFolder(config.GetPathToIndex(chain))
+	}()
 
 	getChunks := func(chunkType cache.CacheType) {
 		chunkPath := cache.NewCachePath(chain, chunkType)

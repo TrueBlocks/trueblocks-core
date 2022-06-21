@@ -141,7 +141,7 @@ func EstablishIndexPaths(indexPath string) {
 
 // CleanIndexFolder removes any files that may be partial or incomplete
 func CleanIndexFolder(indexPath string) error {
-	for _, f := range []string{"ripe", "staging", "unripe"} {
+	for _, f := range []string{"ripe", "staging", "unripe", "maps"} {
 		folder := path.Join(indexPath, f)
 		err := os.RemoveAll(folder)
 		if err != nil {
