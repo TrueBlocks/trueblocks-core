@@ -1,4 +1,4 @@
-package tslibPkg
+package tslib
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"

@@ -11,7 +11,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
-	tslibPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 
 	"github.com/bykof/gostradamus"
@@ -111,7 +111,7 @@ func isBeforeFirstBlock(chain, dateStr string) bool {
 
 	isoStr := ToIsoDateStr2(dateStr)
 	dt, _ := gostradamus.Parse(isoStr, gostradamus.Iso8601) // already validated as a date
-	firstDate, _ := tslibPkg.FromNameToDate(chain, "0")
+	firstDate, _ := tslib.FromNameToDate(chain, "0")
 	return dt.Time().Before(firstDate.Time())
 }
 
@@ -131,14 +131,14 @@ func IsRange(chain, str string) (bool, error) {
 		}
 
 		if bRange.StartType == blockRange.BlockSpecial &&
-			!tslibPkg.IsSpecialBlock(chain, bRange.Start.Special) {
+			!tslib.IsSpecialBlock(chain, bRange.Start.Special) {
 			return false, &InvalidIdentifierLiteralError{
 				Value: bRange.Start.Special,
 			}
 		}
 
 		if bRange.EndType == blockRange.BlockSpecial &&
-			!tslibPkg.IsSpecialBlock(chain, bRange.End.Special) {
+			!tslib.IsSpecialBlock(chain, bRange.End.Special) {
 			return false, &InvalidIdentifierLiteralError{
 				Value: bRange.End.Special,
 			}

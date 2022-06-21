@@ -10,7 +10,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
-	tslibPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/bykof/gostradamus"
@@ -49,7 +49,7 @@ func (br *Identifier) getBounds(chain string) (uint64, uint64, error) {
 }
 
 func snapBnToPeriod(bn uint64, chain, period string) (uint64, error) {
-	dt, err := tslibPkg.FromBnToDate(chain, bn)
+	dt, err := tslib.FromBnToDate(chain, bn)
 	if err != nil {
 		return bn, err
 	}
@@ -82,7 +82,7 @@ func snapBnToPeriod(bn uint64, chain, period string) (uint64, error) {
 		dt = firstDate
 	}
 	ts := uint64(dt.UnixTimestamp())
-	return tslibPkg.FromTsToBn(chain, ts)
+	return tslib.FromTsToBn(chain, ts)
 }
 
 func (br *Identifier) nextBlock(chain string, current uint64) (uint64, error) {
@@ -92,7 +92,7 @@ func (br *Identifier) nextBlock(chain string, current uint64) (uint64, error) {
 		bn = bn + uint64(br.Modifier.Step)
 
 	} else if br.ModifierType == Period {
-		dt, err := tslibPkg.FromBnToDate(chain, bn)
+		dt, err := tslib.FromBnToDate(chain, bn)
 		if err != nil {
 			return bn, err
 		} else {
@@ -124,7 +124,7 @@ func (br *Identifier) nextBlock(chain string, current uint64) (uint64, error) {
 			}
 
 			ts := uint64(dt.UnixTimestamp())
-			bn, err = tslibPkg.FromTsToBn(chain, ts)
+			bn, err = tslib.FromTsToBn(chain, ts)
 			if err != nil {
 				return bn, err
 			}
@@ -143,11 +143,11 @@ func (p *Point) resolvePoint(chain string) uint64 {
 		provider := config.GetRpcProvider(chain)
 		bn, _ = rpcClient.BlockNumberFromHash(provider, p.Hash)
 	} else if p.Date != "" {
-		bn, _ = tslibPkg.FromDateToBn(chain, p.Date)
+		bn, _ = tslib.FromDateToBn(chain, p.Date)
 	} else if p.Special != "" {
-		bn, _ = tslibPkg.FromNameToBn(chain, p.Special)
+		bn, _ = tslib.FromNameToBn(chain, p.Special)
 	} else if p.Number >= utils.EarliestEvmTs {
-		bn, _ = tslibPkg.FromTsToBn(chain, uint64(p.Number))
+		bn, _ = tslib.FromTsToBn(chain, uint64(p.Number))
 	} else {
 		bn = uint64(p.Number)
 	}

@@ -1,4 +1,4 @@
-package tslibPkg
+package tslib
 
 import (
 	"strings"

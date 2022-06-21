@@ -9,7 +9,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
-	tslibPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 )
 
 // Let's define bitmasks to make it easier to validate multiple block identifiers
@@ -83,7 +83,7 @@ func ValidateIdentifiers(chain string, identifiers []string, validTypes ValidArg
 			continue
 		}
 
-		if isBitmaskSet(ValidArgumentSpecialBlock) && tslibPkg.IsSpecialBlock(chain, identifier) {
+		if isBitmaskSet(ValidArgumentSpecialBlock) && tslib.IsSpecialBlock(chain, identifier) {
 			appendBlockId(results, identifier)
 			continue
 		}

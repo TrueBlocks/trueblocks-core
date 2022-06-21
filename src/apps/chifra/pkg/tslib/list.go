@@ -2,7 +2,7 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package tslibPkg
+package tslib
 
 import (
 	"encoding/csv"
@@ -22,10 +22,10 @@ func GetSpecials(chain string) ([]types.NamedBlock, error) {
 	_, err := os.Stat(specialsPath)
 	if err != nil {
 		// It's okay if there are no specials for a certain chain
-		if (chain == "mainnet") {
-            // should not happen, but we want to know if it does
-            logger.Log(logger.Info, "No special block file found for chain ", chain)
-        }
+		if chain == "mainnet" {
+			// should not happen, but we want to know if it does
+			logger.Log(logger.Info, "No special block file found for chain ", chain)
+		}
 		return []types.NamedBlock{}, nil
 	}
 

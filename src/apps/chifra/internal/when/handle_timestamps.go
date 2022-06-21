@@ -9,24 +9,24 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
-	tslibPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 func (opts *WhenOptions) HandleWhenShowTimestamps() error {
-	cnt, err := tslibPkg.NTimestamps(opts.Globals.Chain)
+	cnt, err := tslib.NTimestamps(opts.Globals.Chain)
 	if err != nil {
 		return err
 	}
 
 	if !opts.Check {
-		err = opts.Globals.RenderHeader(tslibPkg.Timestamp{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+		err = opts.Globals.RenderHeader(tslib.Timestamp{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
 		defer opts.Globals.RenderFooter()
 		if err != nil {
 			return err
 		}
 		for bn := uint64(0); bn < cnt; bn++ {
-			obj, err := tslibPkg.FromBn(opts.Globals.Chain, bn)
+			obj, err := tslib.FromBn(opts.Globals.Chain, bn)
 			if err != nil {
 				return err
 			}
@@ -40,7 +40,7 @@ func (opts *WhenOptions) HandleWhenShowTimestamps() error {
 
 	scanBar := progress.NewScanBar(cnt /* wanted */, cnt/500 /* freq */, cnt /* max */, (2. / 3.))
 	for bn := uint64(0); bn < cnt; bn++ {
-		item, err := tslibPkg.FromBn(opts.Globals.Chain, bn)
+		item, err := tslib.FromBn(opts.Globals.Chain, bn)
 		if err != nil {
 			return err
 		}
