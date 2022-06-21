@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-06-20T19:11:15
+date: 2022-06-21T13:02:38
 lastmod:
   - :git
   - lastmod
@@ -137,9 +137,9 @@ Manifest data is made of the following data fields:
 
 
 | Field   | Description | Type    |
-| ------- | ----------- | ------- |
-| address |             | address |
-| name    |             | string  |
+| ------- | --- | ------- |
+| address |     | address |
+| name    |     | string  |
 
 ## Base types
 
