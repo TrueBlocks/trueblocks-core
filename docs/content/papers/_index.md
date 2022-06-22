@@ -2,9 +2,13 @@
 title: "TrueBlocks Papers"
 description: "Long form links to PDFs"
 lead: "The TrueBlocks whitepapers"
-date: 2021-09-06T13:06:08-03:00
+date: 2022-06-22T13:06:08-03:00
 draft: false
 ---
+
+2022
+
+* [Unchained Index File Format Spec](/papers/2022/file-format-spec-v0.40.0-beta.pdf)
 
 2021
 
