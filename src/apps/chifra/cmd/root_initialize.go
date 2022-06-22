@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 )
 
 // Initalize makes sure everything is ready to run. These routines don't return if they aren't
@@ -87,8 +88,8 @@ const badIndex string = `
 
 	Error: {0}
 	
-	An Unchained Index file was either missing or found but is stored using an
-	outdated file format. Please follow all migrations up to and including
+	An Unchained Index file is either missing or is stored using an outdated
+	file format. Please follow all migrations up to and including
 	{1} before proceeding.
 
 	See https://github.com/TrueBlocks/trueblocks-core/blob/develop/MIGRATIONS.md
@@ -198,22 +199,26 @@ func VerifyMigrations() {
 
 	// TODO: BOGUS - MIGRATION MESSAGE
 	// We need at least this version...
-	// if config.IsAtLeaseVersion("v0.40.0-beta") {
-	// 	msg := strings.Replace(backVersion, "{0}", "{v0.40.0-beta}", -1)
-	// 	msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
-	// 	msg = strings.Replace(msg, "{", colors.Green, -1)
-	// 	msg = strings.Replace(msg, "}", colors.Off, -1)
-	// 	log.Fatalf(msg)
-	// }
+	if os.Getenv("NEW_UNCHAINED") != "" {
+		if config.IsAtLeaseVersion("v0.40.0-beta") {
+			msg := strings.Replace(backVersion, "{0}", "{v0.40.0-beta}", -1)
+			msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
+			msg = strings.Replace(msg, "{", colors.Green, -1)
+			msg = strings.Replace(msg, "}", colors.Off, -1)
+			log.Fatalf(msg)
+		}
+	}
 
 	// We need to know that the index is not bogus
-	// if _, err := index.ReadHeaderFromFilename("013308630-013311677"); err != nil {
-	// 	e := "{" + err.Error() + "}"
-	// 	msg := strings.Replace(badIndex, "{0}", e, -1)
-	// 	msg = strings.Replace(msg, "{1}", "{v0.40.0-beta}", -1)
-	// 	msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
-	// 	msg = strings.Replace(msg, "{", colors.Green, -1)
-	// 	msg = strings.Replace(msg, "}", colors.Off, -1)
-	// 	log.Fatalf(msg)
-	// }
+	if os.Getenv("NEW_UNCHAINED") != "" {
+		if _, err := index.ReadHeaderFromFilename("013308630-013311677"); err != nil {
+			e := "{" + err.Error() + "}"
+			msg := strings.Replace(badIndex, "{0}", e, -1)
+			msg = strings.Replace(msg, "{1}", "{v0.40.0-beta}", -1)
+			msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
+			msg = strings.Replace(msg, "{", colors.Green, -1)
+			msg = strings.Replace(msg, "}", colors.Off, -1)
+			log.Fatalf(msg)
+		}
+	}
 }

@@ -1,6 +1,6 @@
 [version]
 # Do not edit this value
-current = "0.23.7-alpha"
+current = "0.40.0-beta"
 
 [settings]
 cachePath = ""
@@ -25,7 +25,7 @@ chainId = "100"
 ipfsGateway = "https://gnosis.unchainedindex.io/ipfs/"
 localExplorer = "http://localhost:1234"
 remoteExplorer = "https://blockscout.com/xdai/mainnet"
-rpcProvider = "https://rpc.gnosischain.com"
+rpcProvider = "https://gnosischain-rpc.gateway.pokt.network"
 symbol = "XDAI"
 
 [chains.sepolia]
@@ -33,7 +33,7 @@ apiProvider = "http://localhost:8080"
 chainId = "11155111"
 ipfsGateway = "https://sepolia.unchainedindex.io/ipfs/"
 localExplorer = "http://localhost:1234"
-remoteExplorer = "http://localhost:1234"
+remoteExplorer = "https://sepolia.etherscan.io/"
 rpcProvider = "http://localhost:8548"
 symbol = "ETH"
 

@@ -35,6 +35,7 @@ func (opts *ChunksOptions) CheckInternal(fileNames []string, blockNums []uint64,
 				report.ErrorStrs = append(report.ErrorStrs, msg)
 
 			} else if header.Hash.Hex() != unchained.ZeroMagicHash && header.Hash.Hex() != unchained.HeaderMagicHash || (testId == 2) {
+				// TODO: BOGUS Multi-chain specific -- should test for different header after 13000000
 				msg := fmt.Sprintf("%s: Header hash expected (%s) got (%s)", rng, header.Hash.Hex(), unchained.HeaderMagicHash)
 				report.ErrorStrs = append(report.ErrorStrs, msg)
 
