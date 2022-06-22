@@ -43,7 +43,7 @@ func RunServe(cmd *cobra.Command, args []string) error {
 	log.Printf("%s%-18.18s%s%s\n", colors.Green, "Index Path:", colors.Off, indexPath)
 	log.Printf("%s%-18.18s%s%s\n", colors.Green, "RPC Provider:", colors.Off, rpcProvider)
 	if err != nil {
-		log.Printf("%s%-18.18s%sCould not load RPC provider%s\n", colors.Green, "Progress:", colors.Red, colors.Off)
+		log.Fatalf("%s%-18.18s%sCould not load RPC provider. %s %s\n", colors.Green, "Progress:", colors.Red, err, colors.Off)
 	} else {
 		log.Printf("%s%-18.18s%s%d, %d, %d, %d\n", colors.Green, "Progress:", colors.Off, meta.Latest, meta.Finalized, meta.Staging, meta.Unripe)
 	}
