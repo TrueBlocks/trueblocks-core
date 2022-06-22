@@ -30,7 +30,7 @@ func (opts *InitOptions) TestLog() {
 
 func InitFinishParseApi(w http.ResponseWriter, r *http.Request) *InitOptions {
 	opts := &InitOptions{}
-	for key := range r.URL.Query() {
+	for key, _ := range r.URL.Query() {
 		switch key {
 		case "all":
 			opts.All = true

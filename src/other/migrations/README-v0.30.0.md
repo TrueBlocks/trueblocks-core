@@ -39,7 +39,7 @@ If the above command reports that no files need to be migrated, you are finished
 If the above command reports that files need to be migrated (likely), run the following command (after making a backup if you wish):
 
 ```
-chifra status --migrate all
+chifra status --migrate cache
 ```
 
 This will migrate all of your existing monitors. It should complete with no problems. If it does, you're finished.

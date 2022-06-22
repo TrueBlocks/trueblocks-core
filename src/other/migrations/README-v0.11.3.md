@@ -42,7 +42,7 @@ which checks to see if the cache needs to be migrated. If the above command repo
 If the above command reports that some parts of the cache need to be migrated, complete the following command:
 
 ```
-chifra status --migrate all
+chifra status --migrate cache
 ```
 
 ## What To Do if the Above Doesn't Work
