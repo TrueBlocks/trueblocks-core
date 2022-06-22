@@ -15,8 +15,8 @@ draft: false
 * [The Difference Between TrueBlocks and theGraph](/papers/2021/the-difference-between-trueBlocks-and-rotki-and-trueBlocks-and-thegraph.pdf)
 
 2020
-* [Index Chunk File Format](/papers/2020/index-chunk-file-format.pdf)
-* [Bloom Filter File Format](/papers/2020/bloom-filter-file-format.pdf)
+* [Index Chunk File Format (deprecated)](/papers/2020/index-chunk-file-format.pdf)
+* [Bloom Filter File Format (deprecated)](/papers/2020/bloom-filter-file-format.pdf)
 
 2018
 
