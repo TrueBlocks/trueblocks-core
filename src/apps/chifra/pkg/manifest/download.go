@@ -35,23 +35,15 @@ func fromRemote(chain string) (*Manifest, error) {
 // getManifestCidFromContract calls UnchainedIndex smart contract to get
 // the current manifest IPFS CID
 func getManifestCidFromContract(chain string) (string, error) {
-	// TODO: BOGUS - NEW UNCHAINED
-	newVersion := unchained.NewUnchained(chain)
-
 	// TODO: BOGUS -- NEW UNCHAINED - SOURCE OF TRUTH
 	provider := config.GetRpcProvider("mainnet") // chain)
 	rpcClient.CheckRpc(provider)
 	ethClient := rpcClient.GetClient(provider)
 	defer ethClient.Close()
 
-	abiFn := config.GetPathToRootConfig() + "abis/known-000/unchained.json"
-	address := common.HexToAddress(unchained.Address)
-	signature := unchained.ReadHashName
-	if newVersion {
-		abiFn = config.GetPathToRootConfig() + "abis/known-000/unchainedV2.json"
-		address = common.HexToAddress(unchained.Address_V2)
-		signature = unchained.ReadHashName_V2
-	}
+	abiFn := config.GetPathToRootConfig() + "abis/known-000/unchainedV2.json"
+	address := common.HexToAddress(unchained.Address_V2)
+	signature := unchained.ReadHashName_V2
 
 	abiSource, err := os.Open(abiFn)
 	if err != nil {
@@ -64,9 +56,9 @@ func getManifestCidFromContract(chain string) (string, error) {
 		return "", fmt.Errorf("while parsing contract ABI: %w", err)
 	}
 
-	callData, err := contractAbi.Pack(signature)
-	if newVersion {
-		callData, err = contractAbi.Pack(signature, common.HexToAddress(unchained.PreferredPublisher), chain)
+	callData, err := contractAbi.Pack(signature, common.HexToAddress(unchained.PreferredPublisher), chain)
+	if err != nil {
+		return "", fmt.Errorf("while building calldata: %w", err)
 	}
 
 	msg := ethereum.CallMsg{

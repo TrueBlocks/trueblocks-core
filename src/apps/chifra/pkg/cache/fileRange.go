@@ -44,16 +44,6 @@ func RangeFromFilename(path string) (blkRange FileRange, err error) {
 	return
 }
 
-// ChainFromFilename returns the chain found in the filename, if possible
-func ChainFromFilename(path string) (chain string, err error) {
-	dir, _ := filepath.Split(path)
-	parts := strings.Split(dir, "/")
-	if len(parts) > 2 {
-		chain = parts[len(parts)-3]
-	}
-	return
-}
-
 func (fR FileRange) String() string {
 	return fmt.Sprintf("%09d-%09d", fR.First, fR.Last)
 }

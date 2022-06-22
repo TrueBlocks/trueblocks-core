@@ -1,8 +1,6 @@
 package unchained
 
 import (
-	"os"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
@@ -27,23 +25,13 @@ const (
 func PrintHeader(chain string, testMode bool) {
 	logger.Log(logger.Info, "schemas:", Schemas)
 	logger.Log(logger.Info, "databases:", Databases)
-	if !NewUnchained(chain) {
-		logger.Log(logger.Info, "unchainedAddress:", Address)
-		logger.Log(logger.Info, "unchainedReadHash:", ReadHash)
-		logger.Log(logger.Info, "unchainedPublishHash:", PublishHash)
-	} else {
-		logger.Log(logger.Info, "unchainedAddress:", Address_V2)
-		logger.Log(logger.Info, "unchainedReadHash:", ReadHash_V2)
-		logger.Log(logger.Info, "unchainedPublishHash:", PublishHash_V2)
-	}
+	logger.Log(logger.Info, "unchainedAddress:", Address_V2)
+	logger.Log(logger.Info, "unchainedReadHash:", ReadHash_V2)
+	logger.Log(logger.Info, "unchainedPublishHash:", PublishHash_V2)
 	if !testMode {
 		logger.Log(logger.Info, "manifestLocation:", config.GetPathToChainConfig(chain)) // order matters
 		logger.Log(logger.Info, "unchainedIndexFolder:", config.GetPathToIndex(chain))   // order matters
 	}
-}
-
-func NewUnchained(chain string) bool {
-	return os.Getenv("NEW_UNCHAINED") == "true" || chain == "sepolia" || chain == "gnosis"
 }
 
 // dweb:/ipfs/QmUni86YFR1a322VjJhk1etqjTT6wMErTpijXMRQTfPaX7

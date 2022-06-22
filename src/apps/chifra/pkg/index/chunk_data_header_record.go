@@ -4,9 +4,9 @@ import (
 	"encoding/binary"
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/ethereum/go-ethereum/common"
@@ -37,7 +37,7 @@ func readHeader(fl *os.File) (header HeaderRecord, err error) {
 	return
 }
 
-func ReadHeaderFromFilename(fileName string) (header HeaderRecord, err error) {
+func ReadHeaderFromFilename(chain, fileName string) (header HeaderRecord, err error) {
 	fileName = ToIndexPath(fileName)
 	ff, err := os.Open(fileName)
 	defer ff.Close()
@@ -50,36 +50,26 @@ func ReadHeaderFromFilename(fileName string) (header HeaderRecord, err error) {
 	}
 
 	headerHash := strings.ToLower(header.Hash.Hex())
-	hasZeroHash := headerHash == unchained.ZeroMagicHash
+	// hasZeroHash := headerHash == unchained.ZeroMagicHash
+	hasMagicHash := headerHash == unchained.HeaderMagicHash
 
-	chain, err := cache.ChainFromFilename(fileName)
-	if err != nil {
-		return header, err
-	}
+	// Since moving to the new unchained index code, we look for magicHash in the index file
+	// with the following caveat. Index files on mainnet prior to block 13,000,000 have 0x000...000
+	// in their headers. This will change when we go to version 1.0.0 of the index spec later.
+	// rng, err := cache.RangeFromFilename(fileName)
+	// if err != nil {
+	// 	return header, err
+	// }
 
-	if !unchained.NewUnchained(chain) {
-		// Prior to upgrade the header hash was zero
-		if !hasZeroHash {
-			return header, fmt.Errorf("header has incorrect hash in %s, expected %s, got %s", fileName, unchained.ZeroMagicHash, headerHash)
+	// We did not correct index chunks prior to 13,000,000 on mainnet
+	if true { //chain == "mainnet" && rng.First <= 13000000 {
+		if true { // ! hasZeroHash {
+			_, fileName = filepath.Split(fileName)
+			return header, fmt.Errorf("Expected headerHash of %s got %s in file %s", unchained.ZeroMagicHash, headerHash, fileName)
 		}
 	} else {
-		hasMagicHash := headerHash == unchained.HeaderMagicHash
-
-		// We're in the new unchained era
-		rng, err := cache.RangeFromFilename(fileName)
-		if err != nil {
-			return header, err
-		}
-
-		// We did not correct index chunks prior to 13,000,000 on mainnet
-		if chain == "mainnet" && rng.First <= 13000000 {
-			if !hasZeroHash {
-				return header, fmt.Errorf("header has incorrect hash in %s, expected %s, got %s", fileName, unchained.ZeroMagicHash, headerHash)
-			}
-		} else {
-			if !hasMagicHash {
-				return header, fmt.Errorf("header has incorrect hash in %s, expected %s, got %s", fileName, unchained.HeaderMagicHash, headerHash)
-			}
+		if !hasMagicHash {
+			return header, fmt.Errorf("header has incorrect hash in %s, expected %s, got %s", fileName, unchained.HeaderMagicHash, headerHash)
 		}
 	}
 
