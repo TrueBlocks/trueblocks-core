@@ -129,9 +129,11 @@ bool COptions::parseArguments(string_q& command) {
         cacheFolder_txs,
     };
     if (migrate == "test") {
-        return handle_migrate_test(cachePaths);
+        handle_migrate_test(cachePaths);
+        return false;
     } else if (migrate == "all") {
-        return handle_migrate(cachePaths);
+        handle_migrate(cachePaths);
+        return false;
     } else if (!migrate.empty()) {
         return usage("Invalid migration: " + migrate);
     }
