@@ -11,45 +11,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *ChunksOptions) HandleChunksPins() error {
-	results, err := GetChunks(opts.Globals.Chain)
-	if err != nil {
-		return err
-	}
-
-	for i, r := range *results {
-		if opts.Globals.TestMode && i > maxTestItems {
-			continue
-		}
-		err := opts.Globals.RenderObject(r, i == 0)
-		if err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
-func GetChunks(chain string) (*[]types.SimpleChunkRecord, error) {
-	manFromCache, err := manifest.ReadManifest(chain, manifest.FromCache)
-	if err != nil {
-		return nil, err
-	}
-
-	sort.Slice(manFromCache.Chunks, func(i, j int) bool {
-		iPin := manFromCache.Chunks[i]
-		jPin := manFromCache.Chunks[j]
-		return iPin.Range < jPin.Range
-	})
-
-	pinList := make([]types.SimpleChunkRecord, len(manFromCache.Chunks))
-	for i := range manFromCache.Chunks {
-		pinList[i].Range = manFromCache.Chunks[i].Range
-		pinList[i].BloomHash = string(manFromCache.Chunks[i].BloomHash)
-		pinList[i].IndexHash = string(manFromCache.Chunks[i].IndexHash)
-	}
-	return &pinList, nil
-}
-
 func (opts *ChunksOptions) HandlePins(blockNums []uint64) error {
 	maxTestItems = 10
 
@@ -59,5 +20,38 @@ func (opts *ChunksOptions) HandlePins(blockNums []uint64) error {
 		return err
 	}
 
-	return opts.HandleChunksPins()
+	source := manifest.FromCache
+	if opts.Remote {
+		source = manifest.FromContract
+	}
+
+	man, err := manifest.ReadManifest(opts.Globals.Chain, source)
+	if err != nil {
+		return err
+	}
+
+	sort.Slice(man.Chunks, func(i, j int) bool {
+		iPin := man.Chunks[i]
+		jPin := man.Chunks[j]
+		return iPin.Range < jPin.Range
+	})
+
+	pinList := make([]types.SimpleChunkRecord, len(man.Chunks))
+	for i := range man.Chunks {
+		pinList[i].Range = man.Chunks[i].Range
+		pinList[i].BloomHash = string(man.Chunks[i].BloomHash)
+		pinList[i].IndexHash = string(man.Chunks[i].IndexHash)
+	}
+
+	for i, r := range pinList {
+		if opts.Globals.TestMode && i > maxTestItems {
+			continue
+		}
+		err := opts.Globals.RenderObject(r, i == 0)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
 }

@@ -238,7 +238,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 21965,apps,Admin,chunks,chunkMan,pin_chunks,p,,false,false,true,false,gocmd,switch,<boolean>,gzip each chunk&#44; push it to IPFS&#44; and update and publish the manifest
 21967,apps,Admin,chunks,chunkMan,pin_data,a,,false,false,true,false,gocmd,switch,<boolean>,gzip the databases&#44; push them to IPFS&#44; and update and publish the manifest
 21970,apps,Admin,chunks,chunkMan,clean,n,,false,false,true,false,gocmd,switch,<boolean>,retrieve all pins on Pinata&#44; compare to manifest&#44; remove any extraneous remote pins
-21970,apps,Admin,chunks,chunkMan,remote,r,,false,false,true,false,gocmd,switch,<boolean>,force query from the smart contract
+21970,apps,Admin,chunks,chunkMan,remote,r,,false,false,true,false,gocmd,switch,<boolean>,for some options&#44; force processing from remote data
 21975,apps,Admin,chunks,chunkMan,,,,false,false,true,true,--,description,,Manage and investigate chunks and bloom filters.
 21980,apps,Admin,chunks,chunkMan,n1,,,false,false,false,false,--,note,,If blocks are provided&#44; only chunks intersecting with those blocks are displayed.
 21981,apps,Admin,chunks,chunkMan,n2,,,false,false,false,false,--,note,,Only a single block in a given chunk needs to be supplied for a match.

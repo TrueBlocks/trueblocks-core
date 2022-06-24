@@ -66,6 +66,12 @@ func (opts *ChunksOptions) ValidateChunks() error {
 	// Note this does not return if a migration is needed
 	index.CheckBackLevelIndex(opts.Globals.Chain)
 
+	if opts.Remote {
+		if opts.Mode != "pins" && opts.Mode != "manifest" {
+			return validate.Usage("The {0} option is only available {1}.", "--remote", "in pins or manifest mode")
+		}
+	}
+
 	err = validate.ValidateIdentifiers(
 		opts.Globals.Chain,
 		opts.Blocks,

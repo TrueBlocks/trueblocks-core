@@ -18,17 +18,23 @@ func (opts *ChunksOptions) HandleManifest(blockNums []uint64) error {
 		return err
 	}
 
-	manFromCache, err := manifest.ReadManifest(opts.Globals.Chain, manifest.FromCache)
+	source := manifest.FromCache
+	if opts.Remote {
+		source = manifest.FromContract
+	}
+
+	man, err := manifest.ReadManifest(opts.Globals.Chain, source)
 	if err != nil {
 		return err
 	}
+
 	if opts.Globals.TestMode {
-		if len(manFromCache.Chunks) > maxTestItems {
-			s := len(manFromCache.Chunks) - maxTestItems - 1
-			e := len(manFromCache.Chunks) - 1
-			manFromCache.Chunks = manFromCache.Chunks[s:e]
+		if len(man.Chunks) > maxTestItems {
+			s := len(man.Chunks) - maxTestItems - 1
+			e := len(man.Chunks) - 1
+			man.Chunks = man.Chunks[s:e]
 		}
 	}
 
-	return opts.Globals.RenderManifest(opts.Globals.Writer, opts.Globals.Format, manFromCache)
+	return opts.Globals.RenderManifest(opts.Globals.Writer, opts.Globals.Format, man)
 }
