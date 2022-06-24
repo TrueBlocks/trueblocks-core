@@ -7,6 +7,7 @@ package chunksPkg
 import (
 	"errors"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -61,6 +62,9 @@ func (opts *ChunksOptions) ValidateChunks() error {
 	if opts.Details && opts.Belongs {
 		return validate.Usage("Choose either {0} or {1}, not both.", "--details", "--belongs")
 	}
+
+	// Note this does not return if a migration is needed
+	index.CheckBackLevelIndex(opts.Globals.Chain)
 
 	err = validate.ValidateIdentifiers(
 		opts.Globals.Chain,

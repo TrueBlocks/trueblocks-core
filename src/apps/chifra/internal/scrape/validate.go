@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -44,6 +45,9 @@ func (opts *ScrapeOptions) ValidateScrape() error {
 	if opts.Sleep < .25 {
 		return validate.Usage("The {0} option ({1}) must {2}.", "--sleep", fmt.Sprintf("%f", opts.Sleep), "be at least .25")
 	}
+
+	// Note this does not return if a migration is needed
+	index.CheckBackLevelIndex(opts.Globals.Chain)
 
 	return opts.Globals.ValidateGlobals()
 }

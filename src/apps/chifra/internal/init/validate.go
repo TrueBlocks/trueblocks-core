@@ -4,12 +4,17 @@
 
 package initPkg
 
+import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+
 func (opts *InitOptions) ValidateInit() error {
 	opts.TestLog()
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag
 	}
+
+	// Note this does not return if a migration is needed
+	index.CheckBackLevelIndex(opts.Globals.Chain)
 
 	return opts.Globals.ValidateGlobals()
 }
