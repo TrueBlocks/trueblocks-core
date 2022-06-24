@@ -20,7 +20,7 @@ Flags:
   -p, --pin_chunks   gzip each chunk, push it to IPFS, and update and publish the manifest
   -a, --pin_data     gzip the databases, push them to IPFS, and update and publish the manifest
   -n, --clean        retrieve all pins on Pinata, compare to manifest, remove any extraneous remote pins
-  -r, --remote       force query from the smart contract
+  -r, --remote       for some options, force processing from remote data
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
   -v, --verbose      enable verbose (increase detail with --log_level)
   -h, --help         display this help screen
