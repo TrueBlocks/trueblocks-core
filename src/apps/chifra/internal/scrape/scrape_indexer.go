@@ -7,9 +7,13 @@ package scrapePkg
 import (
 	"fmt"
 	"log"
+	"os"
 	"sync"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/scraper"
 )
@@ -77,20 +81,19 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 
 // TODO: BOGUS WRITING JSON MANIFEST
 func (opts *ScrapeOptions) publishManifest() error {
-	// manFromCache, err := manifest.ReadManifest(opts.Globals.Chain,manifest.FromCache)
-	// if err != nil {
-	// 	return err
-	// }
-	// fileName := config.GetPathToChainConfig(opts.Globals.Chain) + "manifest.json"
-	// w, err := os.Create(fileName)
-	// if err != nil {
-	// 	return fmt.Errorf("creating file: %s", err)
-	// }
-	// defer w.Close()
-	// err = file.Lock(w)
-	// if err != nil {
-	// 	return fmt.Errorf("locking file: %s", err)
-	// }
-	// return opts.Globals.RenderManifest(w, "json", manFromCache)
-	return nil
+	manFromCache, err := manifest.ReadManifest(opts.Globals.Chain, manifest.FromCache)
+	if err != nil {
+		return err
+	}
+	fileName := config.GetPathToChainConfig(opts.Globals.Chain) + "manifest.json"
+	w, err := os.Create(fileName)
+	if err != nil {
+		return fmt.Errorf("creating file: %s", err)
+	}
+	defer w.Close()
+	err = file.Lock(w)
+	if err != nil {
+		return fmt.Errorf("locking file: %s", err)
+	}
+	return opts.Globals.RenderManifest(w, "json", manFromCache)
 }
