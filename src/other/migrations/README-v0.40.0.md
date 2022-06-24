@@ -18,16 +18,14 @@ Find `$indexPath` with `chifra status --terse`. Sorry for the inconvienence.
 
 ## What do I need to do?
 
-The migration consists of five steps:
+The migration consists of four steps:
 
 1. Stop long-running processes
 2. Edit the TrueBlocks configuration file
-3. Remove incorrect index chunks from your hard drive
-4. Use `chifra init` to replace those removed files
-5. Restart long-running processes
+3. Run `chifra status --migrate index` to effecuate the migration
+6. Restart long-running processes
 
-Depending on your internet connection and the machine you're working on, this migration will take
-anywhere between a few minutes and about an hour.
+Depending on your internet connection and the machine you're working on, this migration will take anywhere between a few minutes and about an hour.
 
 ### Before you start
 
@@ -70,92 +68,42 @@ current = "0.40.0-beta"
 **Note:** A careful reader will notice that we now support indexing on three chains: `mainnet`, `gnosis`, and `sepolia`.
 
 ----
-### Replace incorrect index files with corrected index files
+### Run the migration
 
-Having corrected the configuration file, you now need to remove the index portions that are in error. Here, you need a value for `$indexPath` which you may find with `chifra status --terse`.
+Prior to completing this part of the migration, you may wish to make a backup of your existing `$cachePath/monitors` and `$indexPath` folders. Find the value for those folders with `chifra status --terse`.
 
-Change into the `$indexPath` directory. (Make a backup of the contents of this folder if you wish.)
+The migration will do a few things:
 
-```
-cd $indexPath
-```
+1. Remove unneeded folders in the `$indexPath` folder (The `staging`, `unripe`, `ripe`, and `maps` folders will be removed for the `$indexPath` folder.)
+2. Remove incorrect files from `$indexPath/finalized` and `$indexPath/blooms`.
+3. List any monitors that need to be removed (but it will not remove them -- removing these monitors will be your choice.)
 
-Make sure you are where you think you are:
-
-```[bash]
-pwd
-```
-
-The current working path should end with `unchained`.
-
-List the contents of the `$indexPath` folder:
+Run
 
 ```[bash]
-ls -l
+chifra status --migrate test
 ```
 
-You should see the following subfolders `blooms`, `finalized`, `staging`, `ripe`, `unripe` and `maps` and a single file called `ts.bin`.
-
-<font size="+1" color="red">➤</font> DO NOT remove the file `ts.bin`.
-
-### Remove unneeded folders and incorrect files
-
-In the next step, you will remove four (4) subfolders. In the step after that, you will remove certain files in the remaining folders.
-
-Do the following from the `$indexPath` folder.
-
-Remove unneeded folders:
+It should report that you need to migrate your index folder. If it does, do this:
 
 ```[bash]
-rm -fR staging ripe unripe maps
+chifra status --migrate index
 ```
 
-Remove the damaged index chunks and Bloom filters.
+Allow the above command to complete. This may should not take more than an hour, but it may depending on your machine. If the
+process stops mid-way, or if you quit it, you may re-run it until it completes.
 
-```[bash]
-rm -fR blooms/013*
-rm -fR blooms/014*
-rm -fR blooms/015*
-rm -fR finalized/013*
-rm -fR finalized/014*
-rm -fR finalized/015*
-```
-
-(This is basically removing all files after block 13,000,000 which is near where the error occured.)
-
-### Replace the removed files
-
-The final step is to replace the removed files. You may use either `chifra init`, `chifra init -all`, or `chifra scrape` depending on your preference. Use `chifra init -all` or `chifra scrape` if you want both the Bloom filters and each index chunk. Use `scrape` if you wish to create the files yourself as opposed to downloading them.
-
-Either:
-
-```[bash]
-chifra init             # to download only Bloom filters
-```
-
-or
-
-```[bash]
-chifra init --all       # to download Blooms and Index chunks
-```
-
-or
-
-```[bash]
-chifra scrape           # to build Blooms and index yourself
-```
-
-Allow all of the above commands to run to completion. This may take a few hours depending on your machine. If the process stops mid-way, or if you quit it, re-run it until it completes.
+You will know you're finished if `chifra status --migrate index` returns without doing anything.
 
 ## You're finished!
 
 You're finished. Check to see that things worked correctly:
 
 ```[bash]
-chifra chunks manifest --check
+chifra chunks manifest
 ```
 
-All of the checks should pass. If they don't please contact us in our Discord.
+You should get a valid response. Please contact us in our Discord if you have problems.
 
 You may now restart any long-running processes: `chifra scrape`, `chifra monitors --watch`, or `chifra serve`.
 

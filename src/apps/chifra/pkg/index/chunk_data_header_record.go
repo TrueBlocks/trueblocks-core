@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/ethereum/go-ethereum/common"
@@ -50,20 +51,20 @@ func ReadHeaderFromFilename(chain, fileName string) (header HeaderRecord, err er
 	}
 
 	headerHash := strings.ToLower(header.Hash.Hex())
-	// hasZeroHash := headerHash == unchained.ZeroMagicHash
+	hasZeroHash := headerHash == unchained.ZeroMagicHash
 	hasMagicHash := headerHash == unchained.HeaderMagicHash
 
 	// Since moving to the new unchained index code, we look for magicHash in the index file
 	// with the following caveat. Index files on mainnet prior to block 13,000,000 have 0x000...000
 	// in their headers. This will change when we go to version 1.0.0 of the index spec later.
-	// rng, err := cache.RangeFromFilename(fileName)
-	// if err != nil {
-	// 	return header, err
-	// }
+	rng, err := cache.RangeFromFilename(fileName)
+	if err != nil {
+		return header, err
+	}
 
 	// We did not correct index chunks prior to 13,000,000 on mainnet
-	if true { //chain == "mainnet" && rng.First <= 13000000 {
-		if true { // ! hasZeroHash {
+	if chain == "mainnet" && rng.First <= 13000000 {
+		if !hasZeroHash {
 			_, fileName = filepath.Split(fileName)
 			return header, fmt.Errorf("Expected headerHash of %s got %s in file %s", unchained.ZeroMagicHash, headerHash, fileName)
 		}
