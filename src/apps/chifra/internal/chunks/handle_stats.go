@@ -23,8 +23,10 @@ func (opts *ChunksOptions) showFinalizedStats(path string, first bool) (bool, er
 }
 
 func (opts *ChunksOptions) showStagingStats(path string, first bool) (bool, error) {
-	// fmt.Println(path, first)
-	// fmt.Println(index.ToStagingPath(path), first)
+	if strings.Contains(path, "000000000-temp.txt") {
+		return true, nil
+	}
+
 	lines := file.AsciiFileToLines(path)
 	// fmt.Println(len(lines))
 	ret := types.SimpleChunkStats{}

@@ -131,10 +131,12 @@ bool COptions::parseArguments(string_q& command) {
     if (migrate == "test") {
         handle_migrate_test(cachePaths);
         return false;
-    } else if (migrate == "cache" || migrate == "all") {  // 'all' is deprecated
+    } else if (migrate == "cache") {
         handle_migrate(cachePaths);
         return false;
     } else if (!migrate.empty()) {
+        // do nothing here for --migrate index. It's an error if
+        // it got this far. It should have been handled in the go code
         return usage("Invalid migration: " + migrate);
     }
 
