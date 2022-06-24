@@ -58,6 +58,7 @@ func init() {
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().PinChunks, "pin_chunks", "p", false, "gzip each chunk, push it to IPFS, and update and publish the manifest")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().PinData, "pin_data", "a", false, "gzip the databases, push them to IPFS, and update and publish the manifest")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Clean, "clean", "n", false, "retrieve all pins on Pinata, compare to manifest, remove any extraneous remote pins")
+	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Remote, "remote", "r", false, "force query from the smart contract")
 	globals.InitGlobals(chunksCmd, &chunksPkg.GetOptions().Globals)
 
 	chunksCmd.SetUsageTemplate(UsageWithNotes(notesChunks))

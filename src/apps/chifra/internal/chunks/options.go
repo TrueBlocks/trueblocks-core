@@ -29,6 +29,7 @@ type ChunksOptions struct {
 	PinChunks bool
 	PinData   bool
 	Clean     bool
+	Remote    bool
 	Globals   globals.GlobalOptions
 	BadFlag   error
 }
@@ -45,6 +46,7 @@ func (opts *ChunksOptions) TestLog() {
 	logger.TestLog(opts.PinChunks, "PinChunks: ", opts.PinChunks)
 	logger.TestLog(opts.PinData, "PinData: ", opts.PinData)
 	logger.TestLog(opts.Clean, "Clean: ", opts.Clean)
+	logger.TestLog(opts.Remote, "Remote: ", opts.Remote)
 	opts.Globals.TestLog()
 }
 
@@ -76,6 +78,8 @@ func ChunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 			opts.PinData = true
 		case "clean":
 			opts.Clean = true
+		case "remote":
+			opts.Remote = true
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "chunks")

@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-06-19T08:36:45
+date: 2022-06-23T20:52:35
 lastmod:
   - :git
   - lastmod
@@ -124,6 +124,7 @@ Flags:
   -p, --pin_chunks   gzip each chunk, push it to IPFS, and update and publish the manifest
   -a, --pin_data     gzip the databases, push them to IPFS, and update and publish the manifest
   -n, --clean        retrieve all pins on Pinata, compare to manifest, remove any extraneous remote pins
+  -r, --remote       force query from the smart contract
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
   -v, --verbose      enable verbose (increase detail with --log_level)
   -h, --help         display this help screen
