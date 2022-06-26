@@ -287,6 +287,11 @@ func (opts *ScrapeOptions) extractFromLogs(bn int, logs *rpcClient.Logs, address
 
 	blockNumStr := utils.PadLeft(strconv.Itoa(bn), 9)
 	for i := 0; i < len(logs.Result); i++ {
+		// Note: Maybe a bug? Does not process Log.Address (i.e., the emitter of the log)
+		// Probably captured by the trace processing, but would be missed if we were
+		// processing traces. Won't hurt to add (since the map removes dups) so it
+		// should be added. Would be interested to test.
+
 		idxInt, err := strconv.ParseInt(logs.Result[i].TransactionIndex, 0, 32)
 		if err != nil {
 			// TODO: BOGUS - BLAZE QUITS EARY
