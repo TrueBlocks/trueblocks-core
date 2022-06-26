@@ -17,10 +17,10 @@ import (
 
 // ScrapedData combines the block data, trace data, and log data into a single structure
 type ScrapedData struct {
-	block  int
-	ts     uint64
-	traces rpcClient.Trace
-	logs   rpcClient.Log
+	blockNumber int
+	timeStamp   uint64
+	traces      rpcClient.Traces
+	logs        rpcClient.Logs
 }
 
 func (opts *ScrapeOptions) ScrapeBlocks() error {
@@ -38,7 +38,7 @@ func (opts *ScrapeOptions) ScrapeBlocks() error {
 	var addressWG sync.WaitGroup
 	addressWG.Add(int(opts.AddrChanCnt))
 	for i := 0; i < int(opts.AddrChanCnt); i++ {
-		go opts.extractAddresses(rpcProvider, addressChannel, &addressWG)
+		go opts.processAddresses(rpcProvider, addressChannel, &addressWG)
 	}
 
 	for block := int(opts.StartBlock); block < int(opts.StartBlock+opts.BlockCnt); block++ {
@@ -59,7 +59,7 @@ func (opts *ScrapeOptions) processBlocks(rpcProvider string, blockChannel chan i
 	for blockNum := range blockChannel {
 
 		// RPCPayload is used during to make calls to the RPC.
-		var traces rpcClient.Trace
+		var traces rpcClient.Traces
 		tracePayload := rpcClient.RPCPayload{
 			Jsonrpc:   "2.0",
 			Method:    "trace_block",
@@ -73,7 +73,7 @@ func (opts *ScrapeOptions) processBlocks(rpcProvider string, blockChannel chan i
 			os.Exit(1)
 		}
 
-		var logs rpcClient.Log
+		var logs rpcClient.Logs
 		logsPayload := rpcClient.RPCPayload{
 			Jsonrpc:   "2.0",
 			Method:    "eth_getLogs",
@@ -87,27 +87,33 @@ func (opts *ScrapeOptions) processBlocks(rpcProvider string, blockChannel chan i
 			os.Exit(1)
 		}
 
+		// TODO: The timeStamp value is not used here (the Consolidation Loop calls into
+		// TODO: the same routine again). We should use this value here and remove the
+		// TODO: call from the Consolidation Loop
 		ts := rpcClient.GetBlockTimestamp(rpcProvider, uint64(blockNum))
-		addressChannel <- ScrapedData{blockNum, ts, traces, logs}
+		addressChannel <- ScrapedData{
+			blockNumber: blockNum,
+			timeStamp:   ts,
+			traces:      traces,
+			logs:        logs,
+		}
 	}
 
 	blockWG.Done()
 }
 
-func (opts *ScrapeOptions) extractAddresses(rpcProvider string, addressChannel chan ScrapedData, addressWG *sync.WaitGroup) {
-
-	for blockTraceAndLog := range addressChannel {
-		bn := blockTraceAndLog.block
+func (opts *ScrapeOptions) processAddresses(rpcProvider string, addressChannel chan ScrapedData, addressWG *sync.WaitGroup) {
+	for sData := range addressChannel {
 		addressMap := make(map[string]bool)
-		opts.extractFromTraces(rpcProvider, bn, addressMap, &blockTraceAndLog.traces)
-		opts.extractFromLogs(bn, addressMap, &blockTraceAndLog.logs)
-		opts.writeAddresses(bn, addressMap)
+		opts.extractFromTraces(rpcProvider, sData.blockNumber, &sData.traces, addressMap)
+		opts.extractFromLogs(sData.blockNumber, &sData.logs, addressMap)
+		opts.writeAddresses(sData.blockNumber, addressMap)
 	}
 
 	addressWG.Done()
 }
 
-func (opts *ScrapeOptions) extractFromTraces(rpcProvider string, bn int, addressMap map[string]bool, traces *rpcClient.Trace) {
+func (opts *ScrapeOptions) extractFromTraces(rpcProvider string, bn int, traces *rpcClient.Traces, addressMap map[string]bool) {
 	if traces.Result == nil || len(traces.Result) == 0 {
 		return
 	}
@@ -210,7 +216,7 @@ func (opts *ScrapeOptions) extractFromTraces(rpcProvider string, bn int, address
 				}
 			}
 
-			// Handle contract creations that error out
+			// Handle contract creations that may have errored out
 			if traces.Result[i].Action.To == "" {
 				if traces.Result[i].Result.Address == "" {
 					if traces.Result[i].Error != "" {
@@ -274,7 +280,7 @@ func (opts *ScrapeOptions) extractFromTraces(rpcProvider string, bn int, address
 }
 
 // extractFromLogs Extracts addresses from any part of the log data.
-func (opts *ScrapeOptions) extractFromLogs(bn int, addressMap map[string]bool, logs *rpcClient.Log) {
+func (opts *ScrapeOptions) extractFromLogs(bn int, logs *rpcClient.Logs, addressMap map[string]bool) {
 	if logs.Result == nil || len(logs.Result) == 0 {
 		return
 	}

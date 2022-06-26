@@ -66,8 +66,8 @@ type BlockHeader struct {
 	ID int `json:"id"`
 }
 
-// Trace carries values returned the `trace_block` RPC command
-type Trace struct {
+// Traces carries values returned the `trace_block` RPC command
+type Traces struct {
 	Jsonrpc string `json:"jsonrpc"`
 	Result  []struct {
 		Action struct {
@@ -101,8 +101,8 @@ type Trace struct {
 	ID int `json:"id"`
 }
 
-// Log carries values returned by the eth_getLogs RPC command
-type Log struct {
+// Logs carries values returned by the eth_getLogs RPC command
+type Logs struct {
 	Jsonrpc string `json:"jsonrpc"`
 	Result  []struct {
 		Address             string   `json:"address"`
