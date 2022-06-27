@@ -66,7 +66,9 @@ func (comp *CompareState) checkArrays(report *types.CheckReport) error {
 			}
 		}
 		if !alreadyReported {
-			msg := fmt.Sprintf("array lengths are different: arrayA(%d) arrayB(%d)", len(comp.arrayA), len(comp.arrayB))
+			parts := strings.Split(report.Reason, "2")
+			fmt.Println(parts)
+			msg := fmt.Sprintf("array lengths are different: %s(%d) %s(%d)", parts[0], len(comp.arrayA), parts[1], len(comp.arrayB))
 			report.ErrorStrs = append(report.ErrorStrs, msg)
 		}
 	}

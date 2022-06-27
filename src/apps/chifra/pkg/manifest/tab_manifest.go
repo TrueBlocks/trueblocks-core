@@ -30,7 +30,7 @@ func readPinDescriptors(r io.Reader) ([]ChunkRecord, error) {
 		if err != nil {
 			return nil, err
 		}
-		if record[0] == "fileName" {
+		if record[0] == "fileName" || record[0] == "range" {
 			continue
 		}
 
