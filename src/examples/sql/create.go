@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func main() {
-    fmt.Println("Temporarily disabled")
+	fmt.Println("Temporarily disabled")
 }
 
 /*
@@ -47,7 +47,7 @@ func createEmptyDatabase(databasePath string) {
 	CREATE UNIQUE INDEX idx_addresses_address on addresses(address);
 	CREATE TABLE IF NOT EXISTS txs (
 		txAddressID INTEGER,
-		blockIndex INT, 
+		blockIndex INT,
 		transactionIndex INT,
 		FOREIGN KEY(txAddressID) REFERENCES addresses(addressID)
 	);
@@ -70,7 +70,7 @@ type Appearance struct {
 // Given a TrueBlocks index file in the format to be found at the
 // link below, this file returns all the appearances that are in that
 // specific chunk of the index
-// https://gateway.pinata.cloud/ipfs/Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2
+// https://gateway.pinata.cloud/ipfs/QmUou7zX2g2tY58LP1A2GyP5RF9nbJsoxKTp299ah3svgb
 func readFile(path string) ([]Appearance, error) {
 	var appearances []Appearance
 

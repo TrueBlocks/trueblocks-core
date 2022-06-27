@@ -13,8 +13,8 @@ var manifestSource = `
 {
   "version": "2",
   "chain": "mainnet",
-  "schemas": "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2",
-  "databases": "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD",
+  "schemas": "QmUou7zX2g2tY58LP1A2GyP5RF9nbJsoxKTp299ah3svgb",
+  "databases": "QmTGdjLhWzGpGtmxVu73mzKyzva9JM4mSsZ93NceVU6Y5T",
   "chunks": [
     {
       "fileName": "000000000-000000000",
@@ -71,12 +71,12 @@ func TestReadManifest(t *testing.T) {
 		{
 			name:     "Schemas",
 			field:    m.Schemas.String(),
-			expected: "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2",
+			expected: "QmUou7zX2g2tY58LP1A2GyP5RF9nbJsoxKTp299ah3svgb",
 		},
 		{
 			name:     "Databases",
 			field:    m.Databases.String(),
-			expected: "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD",
+			expected: "QmTGdjLhWzGpGtmxVu73mzKyzva9JM4mSsZ93NceVU6Y5T",
 		},
 	}
 

@@ -7,8 +7,8 @@ import (
 
 // TODO: BOGUS NEW UNCHAINED - CONFIG FILE
 const (
-	Schemas            = "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2"
-	Databases          = "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2"
+	Schemas            = "QmUou7zX2g2tY58LP1A2GyP5RF9nbJsoxKTp299ah3svgb"
+	Databases          = "QmTGdjLhWzGpGtmxVu73mzKyzva9JM4mSsZ93NceVU6Y5T"
 	Address            = "0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd"
 	ReadHash           = "0x337f3f32"
 	ReadHashName       = "manifestHash"

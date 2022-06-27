@@ -1,8 +1,8 @@
 {
   "version": "trueblocks-core@v0.40.0",
   "chain": "mainnet",
-  "schemas": "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2",
-  "databases": "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2",
+  "schemas": "QmUou7zX2g2tY58LP1A2GyP5RF9nbJsoxKTp299ah3svgb",
+  "databases": "QmTGdjLhWzGpGtmxVu73mzKyzva9JM4mSsZ93NceVU6Y5T",
   "chunks": [
     {
       "fileName": "014956076-014958567",
