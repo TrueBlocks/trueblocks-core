@@ -23,11 +23,6 @@ string_q perf_fmt;
 
 //-----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
-    // TODO: BOGUS Turn on testing in remove environment
-    if (getEnvStr("DEV") != "/Users/jrush/Development/") {
-        return 0;
-    }
-
     loadEnvironmentPaths();
     etherlib_init(quickQuitHandler);
     CTestCase::registerClass();
