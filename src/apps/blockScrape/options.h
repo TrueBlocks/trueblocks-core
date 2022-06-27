@@ -15,8 +15,9 @@
  * Parts of this file were generated with makeClass --options. Edit only those parts of
  * the code outside of the BEG_CODE/END_CODE sections
  */
-#include "pinlib.h"
+
 #include "acctlib.h"
+#include "pinnedchunk.h"
 
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
@@ -69,3 +70,6 @@ extern bool copyRipeToStage(const string_q& path, void* data);
 extern bool visitToPin(const string_q& chunkId, void* data);
 extern bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTAPPLYFUNC pinFunc,
                                void* pinFuncData);
+extern void pinlib_init(QUITHANDLER qh);
+extern void pinlib_cleanup(void);
+extern bool pinlib_pinChunk(CPinnedChunkArray& pList, const string_q& fn, CPinnedChunk& item);

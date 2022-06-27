@@ -16,6 +16,7 @@
  * the code outside of the BEG_CODE/END_CODE sections
  */
 #include "cachelib.h"
+#include "pinnedchunk.h"
 
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES

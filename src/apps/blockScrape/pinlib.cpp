@@ -11,10 +11,9 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 
-#include "pinlib.h"
-#include "classes/pinatapin.h"
-
-namespace qblocks {
+#include "acctlib.h"
+#include "pinnedchunk.h"
+#include "pinatapin.h"
 
 #define hashToEmptyFile "QmP4i6ihnVrj8Tx7cTFw4aY6ungpaPYxDJEZ7Vg1RSNSdm"
 
@@ -138,8 +137,6 @@ bool pinlib_pinChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinned
     sort(pList.begin(), pList.end());
     return true;
 }
-
-}  // namespace qblocks
 
 /*
 //---------------------------------------------------------------------------
