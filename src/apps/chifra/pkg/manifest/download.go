@@ -91,7 +91,7 @@ func getManifestCidFromContract(chain string) (string, error) {
 
 	ret := unpacked[0].(string)
 	if len(ret) == 0 {
-		return "", errors.New("unchained index returned empty CID for the " + chain + " chain.")
+		return "", errors.New("The Unchained Index returned empty CID for " + chain + ". Has the index for that chain been published?")
 	}
 
 	return ret, nil

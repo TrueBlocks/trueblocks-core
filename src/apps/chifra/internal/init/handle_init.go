@@ -32,13 +32,12 @@ func (opts *InitOptions) HandleInit() error {
 	chain := opts.Globals.Chain
 
 	config.EstablishIndexPaths(config.GetPathToIndex(chain))
-	unchained.PrintHeader(chain, opts.Globals.TestMode)
-
 	downloadedManifest, err := manifest.ReadManifest(chain, manifest.FromContract)
 	if err != nil {
 		return err
 	}
 
+	unchained.PrintHeader(chain, opts.Globals.TestMode)
 	err = opts.SaveManifest(chain, "txt", downloadedManifest)
 	if err != nil {
 		return err
