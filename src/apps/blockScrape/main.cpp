@@ -24,7 +24,7 @@ int main(int argc, const char* argv[]) {
     if (!options.parseArguments(options.commandLines[0]))
         return 0;
 
-    // TODO: BOGUS - BLAZE RETURN VALUE
+    // TODO: BOGUS - RETURN VALUE FROM BLAZE
     bool ret = options.scrape_blocks();
     pinlib_cleanup();
     return ret ? EXIT_SUCCESS : EXIT_FAILURE;

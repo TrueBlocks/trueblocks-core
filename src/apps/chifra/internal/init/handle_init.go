@@ -121,7 +121,7 @@ func downloadAndReportProgress(chain string, pins []manifest.ChunkRecord, chunkP
 		}
 
 		if event.Event == progress.AllDone {
-			// TODO: BOGUS - BLOOMS VS CHUNKS IN DOWNLOAD
+			// TODO: BOGUS - FEATURE DISTINGUISH BLOOMS FROM CHUNKS IN DOWNLOAD
 			logger.Log(logger.Info, pinsDone, "pin(s) were (re)initialized")
 			break
 		}

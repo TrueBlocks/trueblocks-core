@@ -35,12 +35,12 @@ func (opts *ChunksOptions) CheckInternal(fileNames []string, blockNums []uint64,
 				report.ErrorStrs = append(report.ErrorStrs, msg)
 
 			} else if header.Hash.Hex() != unchained.ZeroMagicHash && header.Hash.Hex() != unchained.HeaderMagicHash || (testId == 2) {
-				// TODO: BOGUS Multi-chain specific -- should test for different header after 13000000
+				// TODO: BOGUS - MIGRATION CHECKING HASHES
 				msg := fmt.Sprintf("%s: Header hash expected (%s) got (%s)", rng, header.Hash.Hex(), unchained.HeaderMagicHash)
 				report.ErrorStrs = append(report.ErrorStrs, msg)
 
 			} else if rng.First > 3000000 && header.AppearanceCount > 2005000 || testId == 3 {
-				// TODO: BOGUS Multi-chain specific -- this is a bad test
+				// TODO: BOGUS - MIGRATION INVALID TEST
 				msg := fmt.Sprintf("%s: Too many addresses? (%d)", rng, header.AppearanceCount)
 				report.ErrorStrs = append(report.ErrorStrs, msg)
 

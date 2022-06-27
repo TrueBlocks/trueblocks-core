@@ -35,7 +35,7 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 			if err != nil {
 				fmt.Println("blockScrape returned an error:", err)
 			} else {
-				// TODO: BOGUS WRITING JSON MANIFEST
+				// TODO: BOGUS - MANIFEST WRITING THE MANIFEST
 				err = opts.publishManifest()
 				if err != nil {
 					fmt.Println("publishManifest returned an error:", err)
@@ -79,7 +79,7 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 	}
 }
 
-// TODO: BOGUS WRITING JSON MANIFEST
+// TODO: BOGUS - MANIFEST WRITING THE MANIFEST
 func (opts *ScrapeOptions) publishManifest() error {
 	manFromCache, err := manifest.ReadManifest(opts.Globals.Chain, manifest.FromCache)
 	if err != nil {

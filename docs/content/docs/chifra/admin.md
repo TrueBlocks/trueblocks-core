@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-06-23T21:41:57
+date: 2022-06-27T08:49:11
 lastmod:
   - :git
   - lastmod
@@ -102,7 +102,11 @@ Please [see this article](https://trueblocks.io/blog/a-long-winded-explanation-o
 
 ## chifra chunks
 
-TODO: BOGUS - REVIEW HELP FILES
+The chifra chunks routine provides tools for interacting with, checking the validity of,
+cleaning up, and analyizing the Unchained Index. It provides options to list pins,
+the Manifest, summary data on the index, Bloom filters, addresses, and appearances.
+While still in its early stages, this tool will eventually allow users to clean
+their local index, clean their remote index, study the indexes, etc. Stay tuned.
 
 ```[plaintext]
 Purpose:

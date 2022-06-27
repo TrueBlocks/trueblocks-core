@@ -5,7 +5,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-// TODO: BOGUS NEW UNCHAINED - CONFIG FILE
+// TODO: BOGUS - MANIFEST CONFIG FILE
 const (
 	Schemas            = "QmUou7zX2g2tY58LP1A2GyP5RF9nbJsoxKTp299ah3svgb"
 	Databases          = "QmTGdjLhWzGpGtmxVu73mzKyzva9JM4mSsZ93NceVU6Y5T"
@@ -33,11 +33,6 @@ func PrintHeader(chain string, testMode bool) {
 		logger.Log(logger.Info, "unchainedIndexFolder:", config.GetPathToIndex(chain))   // order matters
 	}
 }
-
-// dweb:/ipfs/QmUni86YFR1a322VjJhk1etqjTT6wMErTpijXMRQTfPaX7
-// Unchained_V1_Addr        = "0x0c316b7042b419d07d343f2f4f5bd54ff731183d"
-// Unchained_V1_ReadHash    = "0x7087e4bd"
-// Unchained_V1_PublishHash = "0x1fee5cd2"
 
 // Unchained Index Version 1.0
 // Address: 0x0c316b7042b419d07d343f2f4f5bd54ff731183d

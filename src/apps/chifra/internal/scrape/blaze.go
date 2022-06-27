@@ -68,7 +68,7 @@ func (opts *ScrapeOptions) processBlocks(rpcProvider string, blockChannel chan i
 		}
 		err := rpcClient.FromRpc(rpcProvider, &tracePayload, &traces)
 		if err != nil {
-			// TODO: BOGUS - BLAZE QUITS EARY
+			// TODO: BOGUS - RETURN VALUE FROM BLAZE
 			fmt.Println("FromRpc(traces) returned error", err)
 			os.Exit(1)
 		}
@@ -82,7 +82,7 @@ func (opts *ScrapeOptions) processBlocks(rpcProvider string, blockChannel chan i
 		}
 		err = rpcClient.FromRpc(rpcProvider, &logsPayload, &logs)
 		if err != nil {
-			// TODO: BOGUS - BLAZE QUITS EARY
+			// TODO: BOGUS - RETURN VALUE FROM BLAZE
 			fmt.Println("FromRpc(logs) returned error", err)
 			os.Exit(1)
 		}
@@ -229,7 +229,7 @@ func (opts *ScrapeOptions) extractFromTraces(rpcProvider string, bn int, traces 
 						}
 						err := rpcClient.FromRpc(rpcProvider, &txReceiptPl, &receipt)
 						if err != nil {
-							// TODO: BOGUS - BLAZE QUITS EARY
+							// TODO: BOGUS - RETURN VALUE FROM BLAZE
 							fmt.Println("FromRpc(transReceipt) returned error", err)
 							os.Exit(1)
 						}
@@ -243,7 +243,7 @@ func (opts *ScrapeOptions) extractFromTraces(rpcProvider string, bn int, traces 
 
 		} else {
 			err := "New trace type:" + traces.Result[i].Type
-			// TODO: BOGUS - BLAZE QUITS EARY
+			// TODO: BOGUS - RETURN VALUE FROM BLAZE
 			fmt.Println("extractFromTraces -->", err)
 			os.Exit(1)
 		}
@@ -294,7 +294,7 @@ func (opts *ScrapeOptions) extractFromLogs(bn int, logs *rpcClient.Logs, address
 
 		idxInt, err := strconv.ParseInt(logs.Result[i].TransactionIndex, 0, 32)
 		if err != nil {
-			// TODO: BOGUS - BLAZE QUITS EARY
+			// TODO: BOGUS - RETURN VALUE FROM BLAZE
 			fmt.Println("extractFromLogs --> strconv.ParseInt returned error", err)
 			os.Exit(1)
 		}
@@ -353,7 +353,7 @@ func (opts *ScrapeOptions) writeAddresses(bn int, addressMap map[string]bool) {
 
 	err := ioutil.WriteFile(fileName, toWrite, 0744)
 	if err != nil {
-		// TODO: BOGUS - BLAZE QUITS EARY
+		// TODO: BOGUS - RETURN VALUE FROM BLAZE
 		fmt.Println("writeAddresses --> ioutil.WriteFile returned error", err)
 		os.Exit(1)
 	}

@@ -23,7 +23,7 @@ import (
 )
 
 func (opts *StatusOptions) HandleIndexMigration() error {
-	// TODO: BOGUS - WHAT HAPPENS IF USER RUNS THIS TWICE? STARTS OVER? IS THAT OKAY?
+	// TODO: BOGUS - MIGRATION SENTINAL? REENTRANCY SAFE?
 	if !index.HasBackLevelIndex(opts.Globals.Chain) {
 		log.Println(colors.Yellow, "The index does not need to be migrated.", colors.Off)
 		return nil

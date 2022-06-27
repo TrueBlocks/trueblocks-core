@@ -292,7 +292,7 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTA
     uint32_t offset = 0, nAddrs = 0, cnt = 0;
     CIndexedAppearanceArray blockTable;
 
-    // TODO: BOGUS - HASHING IN VERSION TO INDEX
+    // TODO: BOGUS - MANIFEST WRITING HASH INTO INDEX
     hashbytes_t hash = hash_2_Bytes(padLeft(keccak256(manifestVersion), 64, '0'));
 
     CArchive archive(WRITING_ARCHIVE);

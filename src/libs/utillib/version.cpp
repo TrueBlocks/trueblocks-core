@@ -15,8 +15,7 @@
 
 namespace qblocks {
 
-// TODO: BOGUS - NEW UNCHAINED - VERSIONS
-// TODO: BOGUS - HASHING IN VERSION TO INDEX
+// TODO: BOGUS - MANIFEST WRITING THE MANIFEST
 string_q manifestVersion = "trueblocks-core@v0.40.0";
 
 // Run make generate in order for this to take effect

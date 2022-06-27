@@ -50,9 +50,7 @@ import (
 // 	return nil
 // }
 
-// TODO: BOGUS - IF USER STOPS PROCESSING, THIS FILE WILL BE GONE, AND NEXT TIME THIS TEST WILL PASS
-// TODO: BOGUS - DON'T REMOVE THIS SENTINAL FILE UNTIL WE'RE CLEAN - OR BETTER - WRITE A SENTINAL
-// TODO: BOGUS - AND TEST FOR IT HERE - AND DELETE IT WHEN WE'RE DONE.
+// TODO: BOGUS - MIGRATION SENTINAL? REENTRANCY SAFE?
 func HasBackLevelIndex(chain string) bool {
 	knownBadFile := config.GetPathToIndex(chain) + "/finalized/013308630-013321453.bin"
 	if file.FileExists(knownBadFile) {
