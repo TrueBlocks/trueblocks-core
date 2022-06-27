@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-06-27T08:49:11
+date: 2022-06-27T13:22:53
 lastmod:
   - :git
   - lastmod
@@ -146,9 +146,14 @@ Notes:
 
 ## chifra init
 
-TODO: BOGUS - REVIEW HELP FILES
+When invoked, `chifra init` reads a value from a smart contract called **The Unchained Index**
+([0x0c316b7042b419d07d343f2f4f5bd54ff731183d](https://etherscan.io/address/0x0c316b7042b419d07d343f2f4f5bd54ff731183d)).
 
-When invoked, `chifra init` looks at a smart contract called **The Unchained Index** ([0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd](https://etherscan.io/address/0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd)). From this smart contract, it extracts a data item called `manifestHash`. The `manifestHash` is an IPFS hash that points to a file (a manifest) that contains every previously pinned Bloom filter and index chunk. TrueBlocks periodically publishes the manifest's hash to the smart contract. This makes the entire index both available for our software to use and impossible for us to withhold. Both of these aspects of the manifest are included by design.
+This value (`manifestHashMap`) is an IPFS hash pointing to a pinned file (called the Manifest) that
+contains a large collection of other IPFS hashes. These other hashes point to each of the Bloom
+filter and Index Chunk. TrueBlocks periodically publishes the Manifest's hash to the smart contract.
+This makes the index available for our software to use and impossible for us to withhold. Both of these
+aspects of the manifest are by design.
 
 If you stop `chifra init` before it finishes, it will pick up again where it left off the next time you run it.
 

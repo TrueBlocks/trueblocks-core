@@ -23,6 +23,8 @@ var IndexScraper scraper.Scraper
 func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 	defer wg.Done()
 
+	// progressThen, _ := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
+
 	var s *scraper.Scraper = &IndexScraper
 	s.ChangeState(true)
 
@@ -40,6 +42,21 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 				if err != nil {
 					fmt.Println("publishManifest returned an error:", err)
 				}
+				// // TODO: BOGUS - MANIFEST WRITING THE MANIFEST AND PINNING
+				// progressNow, _ := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
+				// // fmt.Println(colors.BrightBlue, progressThen.Finalized, colors.BrightWhite, progressNow.Finalized, colors.Off, progressNow.Finalized > progressThen.Finalized)
+				// if progressNow.Finalized > progressThen.Finalized {
+				// 	fmt.Println(colors.Yellow, "Need to pin here if enabled", colors.Off)
+				// 	// time.Sleep(time.Second * 3)
+				// 	err = opts.publishManifest()
+				// 	if err != nil {
+				// 		fmt.Println("publishManifest returned an error:", err)
+				// 	}
+				// 	// } else {
+				// 	// 	fmt.Println(colors.Cyan, "Do not need to pin here", colors.Off)
+				// 	// 	time.Sleep(time.Second * 3)
+				// }
+				// progressThen = progressNow
 			}
 
 			if s.Running {

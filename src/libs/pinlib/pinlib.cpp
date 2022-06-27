@@ -23,7 +23,6 @@ void pinlib_init(QUITHANDLER qh) {
     acctlib_init(qh);
     CPinnedChunk::registerClass();
     CPinataPin::registerClass();
-    CManifest::registerClass();
 }
 
 //-------------------------------------------------------------------------

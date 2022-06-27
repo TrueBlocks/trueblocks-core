@@ -14,7 +14,7 @@
 
 //-----------------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
-    pinlib_init(quickQuitHandler);
+    acctlib_init(quickQuitHandler);
 
     COptions options;
     if (!options.prepareArguments(argc, argv))
@@ -26,6 +26,6 @@ int main(int argc, const char* argv[]) {
         cout << "Nothing to do" << endl;
     }
 
-    pinlib_cleanup();
+    acctlib_cleanup();
     return 0;
 }
