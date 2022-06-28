@@ -52,7 +52,7 @@ func NewChunkData(path string) (chunk ChunkData, err error) {
 	}
 	// Note, we don't defer closing here since we want the file to stay opened. Caller must close it.
 
-	header, err := readHeader(file)
+	header, err := ReadHeader(file)
 	if err != nil {
 		file.Close()
 		return ChunkData{}, err

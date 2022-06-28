@@ -1,0 +1,6 @@
+blocks?blocks=12&trace&chain=ropsten
+{
+  "errors": [
+    "Tracing is required for this program to work properly."
+  ]
+}

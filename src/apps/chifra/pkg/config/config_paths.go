@@ -38,7 +38,7 @@ func GetPathToChainConfig(chain string) string {
 	return cfgFolder
 }
 
-// GetPathToIndex returns the one and only cachePath
+// GetPathToIndex returns the one and only indexPath
 func GetPathToIndex(chain string) string {
 	// We need the index path from either XDG which dominates or the config file
 	indexPath, err := PathFromXDG("XDG_CACHE_HOME")
@@ -137,4 +137,16 @@ func EstablishIndexPaths(indexPath string) {
 	if err := file.EstablishFolders(indexPath, folders); err != nil {
 		log.Fatal(err)
 	}
+}
+
+// CleanIndexFolder removes any files that may be partial or incomplete
+func CleanIndexFolder(indexPath string) error {
+	for _, f := range []string{"ripe", "staging", "unripe"} {
+		folder := path.Join(indexPath, f)
+		err := os.RemoveAll(folder)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }

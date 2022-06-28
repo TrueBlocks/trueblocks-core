@@ -27,17 +27,17 @@ var logsCmd = &cobra.Command{
 	RunE:    logsPkg.RunLogs,
 }
 
-var usageLogs = `logs [flags] <tx_id> [tx_id...]
+const usageLogs = `logs [flags] <tx_id> [tx_id...]
 
 Arguments:
   transactions - a space-separated list of one or more transaction identifiers (required)`
 
-var shortLogs = "retrieve logs for the given transaction(s)"
+const shortLogs = "retrieve logs for the given transaction(s)"
 
-var longLogs = `Purpose:
+const longLogs = `Purpose:
   Retrieve logs for the given transaction(s).`
 
-var notesLogs = `
+const notesLogs = `
 Notes:
   - The transactions list may be one or more transaction hashes, blockNumber.transactionID pairs, or a blockHash.transactionID pairs.
   - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.

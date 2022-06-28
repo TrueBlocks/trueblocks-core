@@ -1,8 +1,6 @@
+scrape?pin
 {
-  "message": "Testing in blockScrape/options.cpp",
-  "block_cnt": 2000,
-  "block_chan_cnt": 10,
-  "addr_chan_cnt": 20,
-  "pin": 1,
-  "publish": 0,
+  "errors": [
+    "Please choose at least one of [run|stop]."
+  ]
 }

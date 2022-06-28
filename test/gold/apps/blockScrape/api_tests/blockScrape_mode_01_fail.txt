@@ -1,1 +1,6 @@
-{ "errors": [ "chifra scrape - Invalid option 'badmode' for 'action'. One of [toggle|run|restart|pause|quit] required." ] }
+scrape?action=badmode
+{
+  "errors": [
+    "Invalid key (action) in scrape route."
+  ]
+}

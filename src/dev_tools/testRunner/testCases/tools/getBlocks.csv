@@ -74,3 +74,5 @@ on      ,both ,fast  ,blocks ,tools/getBlocks ,list_block_fail      ,y    ,list 
 on      ,both ,fast  ,blocks ,tools/getBlocks ,list_all             ,y    ,list_count = 2 & list = 1030000 & blocks = 10010
 
 local   ,both ,fast  ,blocks ,tools/getBlocks ,to_file              ,y    ,blocks = 2222222 2332332 & fmt = json & to_file
+
+on      ,both ,fast  ,blocks ,tools/getBlocks ,no_tracing           ,y    ,blocks = 12 & trace & chain = ropsten

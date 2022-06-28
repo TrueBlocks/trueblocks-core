@@ -20,7 +20,7 @@ Arguments:
 Flags:
   -t, --types strings   which types of transactions to request
                         One or more of [ ext | int | token | nfts | miner | uncles | all ]
-  -p, --appearances     show only the blocknumer.tx_id appearances of the exported transactions
+  -p, --appearances     show only the blocknumber.tx_id appearances of the exported transactions
   -x, --fmt string      export format, one of [none|json*|txt|csv|api]
   -v, --verbose         enable verbose (increase detail with --log_level)
   -h, --help            display this help screen

@@ -44,6 +44,13 @@ func (opts *TracesOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
+func (opts *TracesOptions) GetEnvStr() string {
+	envStr := ""
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return envStr
+}
+
 func (opts *TracesOptions) ToCmdLine() string {
 	options := ""
 	if opts.Articulate {
@@ -65,6 +72,8 @@ func (opts *TracesOptions) ToCmdLine() string {
 		options += (" --max " + fmt.Sprintf("%d", opts.Max))
 	}
 	options += " " + strings.Join(opts.Transactions, " ")
+	// EXISTING_CODE
+	// EXISTING_CODE
 	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }

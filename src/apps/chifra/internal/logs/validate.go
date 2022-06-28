@@ -13,13 +13,27 @@ func (opts *LogsOptions) ValidateLogs() error {
 		return opts.BadFlag
 	}
 
-    if len(opts.Globals.File) > 0 {
-        // Do nothing
-    } else {
-        if len(opts.Transactions) == 0 {
-            return validate.Usage("Please supply one or more transaction identifiers.")
-        }
-    }
+	if len(opts.Globals.File) > 0 {
+		// Do nothing
+	} else {
+		if len(opts.Transactions) == 0 {
+			return validate.Usage("Please supply one or more transaction identifiers.")
+		}
+	}
+
+	err := validate.ValidateIdentifiers(
+		opts.Globals.Chain,
+		opts.Transactions,
+		validate.ValidTransId,
+		-1,
+		&opts.TransactionIds,
+	)
+	if err != nil {
+		if invalidLiteral, ok := err.(*validate.InvalidIdentifierLiteralError); ok {
+			return invalidLiteral
+		}
+		return err
+	}
 
 	return opts.Globals.ValidateGlobals()
 }

@@ -1,0 +1,6 @@
+chunks?mode=addresses&belongs&blocks=2287625
+{
+  "errors": [
+    "You must specifiy at least one address with the --belongs option"
+  ]
+}

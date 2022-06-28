@@ -1,6 +1,6 @@
 transactions?transactions=.clink
 {
   "errors": [
-    "chifra transactions - .clink does not appear to be a valid transaction index."
+    "The given value '.clink' is not a valid identifier."
   ]
 }

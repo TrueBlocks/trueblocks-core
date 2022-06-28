@@ -22,7 +22,7 @@ static const COption params[] = {
     // clang-format off
     COption("blocks", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more block identifiers"),  // NOLINT
     COption("hashes", "e", "", OPT_SWITCH, "display only transaction hashes, default is to display full transaction detail"),  // NOLINT
-    COption("uncles", "U", "", OPT_SWITCH, "display uncle blocks (if any) instead of the requested block"),
+    COption("uncles", "c", "", OPT_SWITCH, "display uncle blocks (if any) instead of the requested block"),
     COption("trace", "t", "", OPT_SWITCH, "export the traces from the block as opposed to the block data"),
     COption("apps", "s", "", OPT_SWITCH, "display a list of uniq address appearances in the block"),
     COption("uniq", "u", "", OPT_SWITCH, "display a list of uniq address appearances per transaction"),
@@ -31,7 +31,7 @@ static const COption params[] = {
     COption("topic", "p", "list<topic>", OPT_HIDDEN | OPT_FLAG, "for the --logs option only, filter logs to show only those with this topic(s)"),  // NOLINT
     COption("articulate", "a", "", OPT_HIDDEN | OPT_SWITCH, "for the --logs option only, articulate the retrieved data if ABIs can be found"),  // NOLINT
     COption("big_range", "r", "<uint64>", OPT_HIDDEN | OPT_FLAG, "for the --logs option only, allow for block ranges larger than 500"),  // NOLINT
-    COption("count", "c", "", OPT_SWITCH, "display the number of the lists of appearances for --addrs or --uniq"),
+    COption("count", "U", "", OPT_SWITCH, "display the number of the lists of appearances for --addrs or --uniq"),
     COption("cache", "o", "", OPT_SWITCH, "force a write of the block to the cache"),
     COption("list", "l", "<blknum>", OPT_HIDDEN | OPT_FLAG, "summary list of blocks running backwards from latest block minus num"),  // NOLINT
     COption("list_count", "C", "<blknum>", OPT_HIDDEN | OPT_FLAG, "the number of blocks to report for --list option"),
@@ -75,7 +75,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-e" || arg == "--hashes") {
             hashes = true;
 
-        } else if (arg == "-U" || arg == "--uncles") {
+        } else if (arg == "-c" || arg == "--uncles") {
             uncles = true;
 
         } else if (arg == "-t" || arg == "--trace") {
@@ -113,7 +113,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-r" || arg == "--big_range") {
             return flag_required("big_range");
 
-        } else if (arg == "-c" || arg == "--count") {
+        } else if (arg == "-U" || arg == "--count") {
             count = true;
 
         } else if (arg == "-o" || arg == "--cache") {
@@ -159,8 +159,6 @@ bool COptions::parseArguments(string_q& command) {
     listOffset = contains(command, "list") ? list : NOPOS;
     filterType = (uniq ? "uniq" : (apps ? "apps" : ""));
 
-    if (big_range != 500 && !logs)
-        return usage(usageErrs[ERR_RANGENOLOGS]);
     big_range = max(big_range, uint64_t(50));
 
     if (trace && !isTracingNode())
@@ -269,10 +267,10 @@ COptions::COptions(void) {
 
     // BEG_CODE_NOTES
     // clang-format off
-    notes.push_back("`blocks` is a space-separated list of values, a start-end range, a `special`, or any combination.");  // NOLINT
-    notes.push_back("`blocks` may be specified as either numbers or hashes.");
-    notes.push_back("`special` blocks are detailed under `chifra when --list`.");
-    notes.push_back("With the --logs option, optionally specify one or more --emmitter, one or more --topics, either or both.");  // NOLINT
+    notes.push_back("`Blocks` is a space-separated list of values, a start-end range, a `special`, or any combination.");  // NOLINT
+    notes.push_back("`Blocks` may be specified as either numbers or hashes.");
+    notes.push_back("`Special` blocks are detailed under `chifra when --list`.");
+    notes.push_back("With the --logs option, optionally specify one or more --emitter, one or more --topics, either or both.");  // NOLINT
     notes.push_back("The --logs option is significantly faster if you provide an --emitter and/or a --topic.");
     notes.push_back("Multiple topics match on topic0, topic1, and so on, not on different topic0's.");
     notes.push_back("Large block ranges may crash the node, use --big_range to specify a larger range.");
@@ -288,7 +286,6 @@ COptions::COptions(void) {
     usageErrs[ERR_ATLEASTONEBLOCK] = "You must specify at least one block.";
     usageErrs[ERR_EMTOPONLYWITHLOG] = "The --emitter and --topic options are only available with the --log option.";
     usageErrs[ERR_ARTWITHOUTLOGS] = "The --artcilate option is only available with the --logs option.";
-    usageErrs[ERR_RANGENOLOGS] = "The --big_range option is only available with the --logs option (min 50).";
     // END_ERROR_STRINGS
 }
 

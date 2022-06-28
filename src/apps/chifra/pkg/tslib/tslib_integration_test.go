@@ -9,8 +9,6 @@ package tslibPkg
 
 import (
 	"testing"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 type Expected struct {
@@ -22,7 +20,7 @@ type Expected struct {
 
 func TestLoadTimestampsPass(t *testing.T) {
 	expected := []Expected{
-		{name: "Block Zero", bn: 1, ts: utils.BlockOneTs, date: "2015-07-30 15:26:28"},
+		{name: "Block Zero", bn: 1, ts: 1438269988, date: "2015-07-30 15:26:28"},
 		{name: "Block 1 Mil", bn: 1000000, ts: 1455404053, date: "2016-02-13 22:54:13"},
 	}
 

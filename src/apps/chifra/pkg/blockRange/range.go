@@ -160,7 +160,7 @@ func getPointType(p *Point) BlockRangeValue {
 		return BlockHash
 	}
 
-	if p.Number >= utils.EarliestTs {
+	if p.Number >= utils.EarliestEvmTs {
 		return BlockTimestamp
 	}
 

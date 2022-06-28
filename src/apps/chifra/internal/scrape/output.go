@@ -14,7 +14,7 @@ import (
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/scraper"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 
 	"github.com/spf13/cobra"
@@ -55,25 +55,13 @@ func (opts *ScrapeOptions) ScrapeInternal() (err error, handled bool) {
 	if opts.Blaze {
 		err = opts.ScrapeBlocks()
 
-	} else if opts.Reset != utils.NOPOS {
-		err = opts.Globals.PassItOn("blockScrape", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
-
 	} else {
 		var wg sync.WaitGroup
 
-		if hasIndexerFlag(opts.Modes[0]) {
-			wg.Add(1)
-			IndexScraper = NewScraper(colors.Yellow, "IndexScraper", opts.Sleep, opts.Globals.LogLevel)
-			// Note that this never returns
-			go opts.RunIndexScraper(&wg)
-		}
-
-		if hasMonitorsFlag(opts.Modes[0]) {
-			wg.Add(1)
-			MonitorScraper = NewScraper(colors.Magenta, "MonitorScraper", opts.Sleep, opts.Globals.LogLevel)
-			// Note that this never returns
-			go opts.RunMonitorScraper(&wg)
-		}
+		wg.Add(1)
+		IndexScraper = scraper.NewScraper(colors.Yellow, "IndexScraper", opts.Sleep, opts.Globals.LogLevel)
+		// Note that this never returns
+		go opts.RunIndexScraper(&wg)
 
 		wg.Wait()
 	}

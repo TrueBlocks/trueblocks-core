@@ -1,0 +1,6 @@
+state?call=0xa4f29fc548856180f6b1e319ee4d86715875cce4!0x12065fe01&blocks=6523977-6540000:2000
+{
+  "errors": [
+    "The provided value (0x12065fe01) must be either a four-byte nor a function signature."
+  ]
+}

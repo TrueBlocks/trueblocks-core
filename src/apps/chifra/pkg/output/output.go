@@ -17,7 +17,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func OutputHeader(data interface{}, w io.Writer, format string, apiMode bool) error {
+// TODO: Fix export without arrays
+func OutputHeader(data interface{}, w io.Writer, format string) error {
 	if format == "txt" || format == "csv" {
 		tt := reflect.TypeOf(data)
 		w.Write([]byte(GetHeader(&tt, format)))
@@ -79,6 +80,9 @@ func OutputObject(data interface{}, w io.Writer, format string, hideHeader, apiM
 		fallthrough
 	case "json":
 		outputBytes, err = json.MarshalIndent(data, "    ", "  ")
+		if err != nil {
+			return err
+		}
 		if !first {
 			preceeds = ","
 		}
@@ -104,6 +108,7 @@ func OutputObject(data interface{}, w io.Writer, format string, hideHeader, apiM
 	return nil
 }
 
+// TODO: Fix export without arrays
 func getFields(t *reflect.Type, format string, header bool) (fields []string, sep string, quote string) {
 	if (*t).Kind() != reflect.Struct {
 		logger.Fatal((*t).Name() + " is not a structure")
@@ -125,6 +130,7 @@ func getFields(t *reflect.Type, format string, header bool) (fields []string, se
 	return fields, sep, quote
 }
 
+// TODO: Fix export without arrays
 func GetHeader(t *reflect.Type, format string) string {
 	fields, sep, quote := getFields(t, format, true)
 	var sb strings.Builder
@@ -137,6 +143,7 @@ func GetHeader(t *reflect.Type, format string) string {
 	return sb.String()
 }
 
+// TODO: Fix export without arrays
 func GetRowTemplate(t *reflect.Type, format string) (*template.Template, error) {
 	fields, sep, quote := getFields(t, format, false)
 	var sb strings.Builder

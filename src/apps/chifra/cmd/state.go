@@ -27,24 +27,24 @@ var stateCmd = &cobra.Command{
 	RunE:    statePkg.RunState,
 }
 
-var usageState = `state [flags] <address> [address...] [block...]
+const usageState = `state [flags] <address> [address...] [block...]
 
 Arguments:
   addrs - one or more addresses (0x...) from which to retrieve balances (required)
   blocks - an optional list of one or more blocks at which to report balances, defaults to 'latest'`
 
-var shortState = "retrieve account balance(s) for one or more addresses at given block(s)"
+const shortState = "retrieve account balance(s) for one or more addresses at given block(s)"
 
-var longState = `Purpose:
+const longState = `Purpose:
   Retrieve account balance(s) for one or more addresses at given block(s).`
 
-var notesState = `
+const notesState = `
 Notes:
   - An address must start with '0x' and be forty-two characters long.
-  - blocks may be a space-separated list of values, a start-end range, a special, or any combination.
+  - Blocks is a space-separated list of values, a start-end range, a special, or any combination.
   - If the queried node does not store historical state, the results are undefined.
-  - special blocks are detailed under chifra when --list.
-  - balance is the default mode. To select a single mode use none first, followed by that mode.
+  - Special blocks are detailed under chifra when --list.
+  - Balance is the default mode. To select a single mode use none first, followed by that mode.
   - You may specify multiple modes on a single line.`
 
 func init() {

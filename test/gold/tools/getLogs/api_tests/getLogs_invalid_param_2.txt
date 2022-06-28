@@ -1,6 +1,6 @@
 logs?transactions=1233123
 {
   "errors": [
-    "chifra logs - 1233123 does not appear to be a valid transaction index (one part, not first or latest)."
+    "The given value '1233123' is not a valid identifier."
   ]
 }

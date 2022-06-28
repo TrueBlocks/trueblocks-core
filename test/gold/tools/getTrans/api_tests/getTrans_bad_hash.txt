@@ -1,6 +1,6 @@
 transactions?transactions=0x0012
 {
   "errors": [
-    "chifra transactions - The argument '0x0012' is not properly formatted. Is it the right length?"
+    "The given value '0x0012' is not a valid identifier."
   ]
 }

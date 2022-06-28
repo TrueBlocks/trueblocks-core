@@ -35,6 +35,13 @@ func (opts *ExploreOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
+func (opts *ExploreOptions) GetEnvStr() string {
+	envStr := ""
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return envStr
+}
+
 func (opts *ExploreOptions) ToCmdLine() string {
 	options := ""
 	if opts.Local {
@@ -44,6 +51,8 @@ func (opts *ExploreOptions) ToCmdLine() string {
 		options += " --google"
 	}
 	options += " " + strings.Join(opts.Terms, " ")
+	// EXISTING_CODE
+	// EXISTING_CODE
 	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }

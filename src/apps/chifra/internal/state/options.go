@@ -45,6 +45,13 @@ func (opts *StateOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
+func (opts *StateOptions) GetEnvStr() string {
+	envStr := ""
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return envStr
+}
+
 func (opts *StateOptions) ToCmdLine() string {
 	options := ""
 	for _, part := range opts.Parts {
@@ -64,6 +71,8 @@ func (opts *StateOptions) ToCmdLine() string {
 	}
 	options += " " + strings.Join(opts.Addrs, " ")
 	options += " " + strings.Join(opts.Blocks, " ")
+	// EXISTING_CODE
+	// EXISTING_CODE
 	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }
@@ -125,6 +134,13 @@ func StateFinishParse(args []string) *StateOptions {
 	}
 	opts.Addrs = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
 	opts.ProxyFor = ens.ConvertOneEns(opts.Globals.Chain, opts.ProxyFor)
+	opts.Call = strings.Replace(opts.Call, "|", "!", -1)
+	opts.Call = strings.Replace(opts.Call, " !", "!", -1)
+	opts.Call = strings.Replace(opts.Call, "! ", "!", -1)
+	parts := strings.Split(opts.Call, "!")
+	if len(parts) > 0 {
+		opts.Call = strings.Replace(opts.Call, parts[0], ens.ConvertOneEns(opts.Globals.Chain, parts[0]), -1)
+	}
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt

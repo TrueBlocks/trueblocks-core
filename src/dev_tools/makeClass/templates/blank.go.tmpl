@@ -19,13 +19,13 @@ var [{ROUTE}]Cmd = &cobra.Command{
 	RunE:    [{ROUTE}]Pkg.Run[{PROPER}],
 }
 
-var usage[{PROPER}] = `[{USE}]`
+const usage[{PROPER}] = `[{USE}]`
 
-var short[{PROPER}] = "[{SHORT}]"
+const short[{PROPER}] = "[{SHORT}]"
 
-var long[{PROPER}] = `[{LONG}]`
+const long[{PROPER}] = `[{LONG}]`
 
-var notes[{PROPER}] = `[{POSTNOTES}]`
+const notes[{PROPER}] = `[{POSTNOTES}]`
 
 [{OPT_DEF}]func init() {
 	[{ROUTE}]Cmd.Flags().SortFlags = false

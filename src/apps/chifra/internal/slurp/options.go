@@ -39,6 +39,13 @@ func (opts *SlurpOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
+func (opts *SlurpOptions) GetEnvStr() string {
+	envStr := ""
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return envStr
+}
+
 func (opts *SlurpOptions) ToCmdLine() string {
 	options := ""
 	for _, types := range opts.Types {
@@ -49,6 +56,8 @@ func (opts *SlurpOptions) ToCmdLine() string {
 	}
 	options += " " + strings.Join(opts.Addrs, " ")
 	options += " " + strings.Join(opts.Blocks, " ")
+	// EXISTING_CODE
+	// EXISTING_CODE
 	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }

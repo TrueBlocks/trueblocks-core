@@ -74,22 +74,6 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 			}
 			return nil, true
 		}
-		// var receipt rpcClient.Receipt
-		// var txReceiptPl = rpcClient.RPCPayload{
-		// 	Jsonrpc:   "2.0",
-		// 	Method:    "eth_getTransactionReceipt",
-		// 	RPCParams: rpcClient.RPCParams{traces.Result[i].TransactionHash},
-		// 	ID:        1005,
-		// }
-		// err := rpcClient.FromRpc(rpcProvider, &txReceiptPl, &receipt)
-		// if err != nil {
-		// 	fmt.Println("FromRpc(transReceipt) returned error")
-		// 	log.Fatal(err)
-		// }
-		// addr := receipt.Result.ContractAddress
-		// if goodAddr(addr) {
-		// 	addressMap[addr+blockAndIdx] = true
-		// }
 	}
 
 	if opts.Globals.ApiMode {
@@ -97,7 +81,7 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 	}
 
 	handled = true
-	err = opts.Globals.PassItOn("getReceipts", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
+	err = opts.Globals.PassItOn("getReceipts", opts.Globals.Chain, opts.ToCmdLine(), opts.GetEnvStr())
 	// EXISTING_CODE
 
 	return

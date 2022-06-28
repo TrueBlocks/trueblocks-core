@@ -32,15 +32,17 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10460,apps,Accounts,export,acctExport,,,,false,false,true,true,--,description,,Export full detail of transactions for one or more addresses.
 10470,apps,Accounts,export,acctExport,n1,,,false,false,false,false,--,note,,An `address` must start with '0x' and be forty-two characters long.
 10470,apps,Accounts,export,acctExport,n2,,,false,false,false,false,--,note,,Articulating the export means turn the EVM's byte data into human-readable text (if possible).
-10472,apps,Accounts,export,acctExport,n3,,,false,false,false,false,--,note,,For the --logs option&#44; you may optionally specify one or more --emmitter&#44; one or more --topics&#44; or both.
+10472,apps,Accounts,export,acctExport,n3,,,false,false,false,false,--,note,,For the --logs option&#44; you may optionally specify one or more --emitter&#44; one or more --topics&#44; or both.
 10474,apps,Accounts,export,acctExport,n4,,,false,false,false,false,--,note,,The --logs option is significantly faster if you provide an --emitter or a --topic.
 10476,apps,Accounts,export,acctExport,n5,,,false,false,false,false,--,note,,Neighbors include every address that appears in any transaction in which the export address also appears.
 
-11200,apps,Accounts,monitors,acctExport,addrs,,,true,false,true,true,local,positional,list<addr>,one or more addresses (0x...) to process
+11200,apps,Accounts,monitors,acctExport,addrs,,,false,false,true,true,local,positional,list<addr>,one or more addresses (0x...) to process
 11085,apps,Accounts,monitors,acctExport,clean,,,false,false,true,true,gocmd,switch,<boolean>,clean (i.e. remove duplicate appearances) from monitors
 11087,apps,Accounts,monitors,acctExport,deleteMe,,,false,false,true,true,gocmd,switch,<boolean>,delete a monitor&#44; but do not remove it
 11093,apps,Accounts,monitors,acctExport,undelete,,,false,false,true,true,gocmd,switch,<boolean>,undelete a previously deleted monitor
 11091,apps,Accounts,monitors,acctExport,remove,,,false,false,true,true,gocmd,switch,<boolean>,remove a previously deleted monitor
+11294,apps,Accounts,monitors,acctExport,watch,,,false,false,true,true,gocmd,switch,<boolean>,continually scan for new blocks and extract data for monitored addresses
+11296,apps,Accounts,monitors,acctExport,sleep,E,14,false,false,true,true,gocmd,flag,<double>,seconds to sleep between monitor passes
 11440,apps,Accounts,monitors,acctExport,first_block,F,0,false,false,false,false,local,flag,<blknum>,first block to process (inclusive)
 11450,apps,Accounts,monitors,acctExport,last_block,L,NOPOS,false,false,false,false,local,flag,<blknum>,last block to process (inclusive)
 11095,apps,Accounts,monitors,acctExport,,,,false,false,true,true,--,description,,Add&#44; remove&#44; clean&#44; and list address monitors.
@@ -89,7 +91,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 
 12500,tools,ChainData,blocks,getBlocks,blocks,,,true,false,true,true,local,positional,list<blknum>,a space-separated list of one or more block identifiers
 12510,tools,ChainData,blocks,getBlocks,hashes,e,,false,false,true,true,header,switch,<boolean>,display only transaction hashes&#44; default is to display full transaction detail
-12520,tools,ChainData,blocks,getBlocks,uncles,U,,false,false,true,true,header,switch,<boolean>,display uncle blocks (if any) instead of the requested block
+12520,tools,ChainData,blocks,getBlocks,uncles,c,,false,false,true,true,header,switch,<boolean>,display uncle blocks (if any) instead of the requested block
 12530,tools,ChainData,blocks,getBlocks,trace,t,,false,false,true,true,header,switch,<boolean>,export the traces from the block as opposed to the block data
 12540,tools,ChainData,blocks,getBlocks,apps,s,,false,false,true,true,local,switch,<boolean>,display a list of uniq address appearances in the block
 12560,tools,ChainData,blocks,getBlocks,uniq,u,,false,false,true,true,local,switch,<boolean>,display a list of uniq address appearances per transaction
@@ -98,15 +100,15 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12974,tools,ChainData,blocks,getBlocks,topic,p,,false,false,false,true,local,flag,list<topic>,for the --logs option only&#44; filter logs to show only those with this topic(s)
 12975,tools,ChainData,blocks,getBlocks,articulate,a,,false,false,false,false,header,switch,<boolean>,for the --logs option only&#44; articulate the retrieved data if ABIs can be found
 12976,tools,ChainData,blocks,getBlocks,big_range,r,500,false,false,false,false,header,flag,<uint64>,for the --logs option only&#44; allow for block ranges larger than 500
-12578,tools,ChainData,blocks,getBlocks,count,c,,false,false,true,true,header,switch,<boolean>,display the number of the lists of appearances for --addrs or --uniq
+12578,tools,ChainData,blocks,getBlocks,count,U,,false,false,true,true,header,switch,<boolean>,display the number of the lists of appearances for --addrs or --uniq
 12580,tools,ChainData,blocks,getBlocks,cache,o,,false,false,true,true,header,switch,<boolean>,force a write of the block to the cache
 12582,tools,ChainData,blocks,getBlocks,list,l,0,false,false,false,true,local,flag,<blknum>,summary list of blocks running backwards from latest block minus num
 12584,tools,ChainData,blocks,getBlocks,list_count,C,0,false,false,false,true,header,flag,<blknum>,the number of blocks to report for --list option
 12590,tools,ChainData,blocks,getBlocks,,,,false,false,true,true,--,description,,Retrieve one or more blocks from the chain or local cache.
-12600,tools,ChainData,blocks,getBlocks,n1,,,false,false,false,false,--,note,,`blocks` is a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
-12610,tools,ChainData,blocks,getBlocks,n2,,,false,false,false,false,--,note,,`blocks` may be specified as either numbers or hashes.
-12620,tools,ChainData,blocks,getBlocks,n3,,,false,false,false,false,--,note,,`special` blocks are detailed under `chifra when --list`.
-12622,tools,ChainData,blocks,getBlocks,n4,,,false,false,false,false,--,note,,With the --logs option&#44; optionally specify one or more --emmitter&#44; one or more --topics&#44; either or both.
+12600,tools,ChainData,blocks,getBlocks,n1,,,false,false,false,false,--,note,,`Blocks` is a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
+12610,tools,ChainData,blocks,getBlocks,n2,,,false,false,false,false,--,note,,`Blocks` may be specified as either numbers or hashes.
+12620,tools,ChainData,blocks,getBlocks,n3,,,false,false,false,false,--,note,,`Special` blocks are detailed under `chifra when --list`.
+12622,tools,ChainData,blocks,getBlocks,n4,,,false,false,false,false,--,note,,With the --logs option&#44; optionally specify one or more --emitter&#44; one or more --topics&#44; either or both.
 12624,tools,ChainData,blocks,getBlocks,n5,,,false,false,false,false,--,note,,The --logs option is significantly faster if you provide an --emitter and/or a --topic.
 12625,tools,ChainData,blocks,getBlocks,n6,,,false,false,false,false,--,note,,Multiple topics match on topic0&#44; topic1&#44; and so on&#44; not on different topic0's.
 12627,tools,ChainData,blocks,getBlocks,n7,,,false,false,false,false,--,note,,Large block ranges may crash the node&#44; use --big_range to specify a larger range.
@@ -118,7 +120,6 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12636,tools,ChainData,blocks,getBlocks,ERR_ATLEASTONEBLOCK,,,false,false,false,false,--,error,,You must specify at least one block.
 12638,tools,ChainData,blocks,getBlocks,ERR_EMTOPONLYWITHLOG,,,false,false,false,false,--,error,,The --emitter and --topic options are only available with the --log option.
 12640,tools,ChainData,blocks,getBlocks,ERR_ARTWITHOUTLOGS,,,false,false,false,false,--,error,,The --artcilate option is only available with the --logs option.
-12642,tools,ChainData,blocks,getBlocks,ERR_RANGENOLOGS,,,false,false,false,false,--,error,,The --big_range option is only available with the --logs option (min 50).
 
 13540,tools,ChainData,transactions,getTrans,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers
 13560,tools,ChainData,transactions,getTrans,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the retrieved data if ABIs can be found
@@ -178,10 +179,10 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13190,tools,ChainState,state,getState,proxy_for,r,,false,false,false,true,header,flag,<address>,for the --call option only&#44; redirects calls to this implementation
 13220,tools,ChainState,state,getState,,,,false,false,true,true,--,description,,Retrieve account balance(s) for one or more addresses at given block(s).
 13222,tools,ChainState,state,getState,n1,,,false,false,false,false,--,note,,An `address` must start with '0x' and be forty-two characters long.
-13224,tools,ChainState,state,getState,n2,,,false,false,false,false,--,note,,`blocks` may be a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
+13224,tools,ChainState,state,getState,n2,,,false,false,false,false,--,note,,`Blocks` is a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
 13228,tools,ChainState,state,getState,n3,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results are undefined.
-13230,tools,ChainState,state,getState,n4,,,false,false,false,false,--,note,,`special` blocks are detailed under `chifra when --list`.
-13232,tools,ChainState,state,getState,n5,,,false,false,false,false,--,note,,`balance` is the default mode. To select a single mode use `none` first&#44; followed by that mode.
+13230,tools,ChainState,state,getState,n4,,,false,false,false,false,--,note,,`Special` blocks are detailed under `chifra when --list`.
+13232,tools,ChainState,state,getState,n5,,,false,false,false,false,--,note,,`Balance` is the default mode. To select a single mode use `none` first&#44; followed by that mode.
 13234,tools,ChainState,state,getState,n6,,,false,false,false,false,--,note,,You may specify multiple `modes` on a single line.
 
 13260,tools,ChainState,tokens,getTokens,addrs2,,,true,false,true,true,header,positional,list<addr>,two or more addresses (0x...)&#44; the first is an ERC20 token&#44; balances for the rest are reported
@@ -191,18 +192,15 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13340,tools,ChainState,tokens,getTokens,no_zero,n,,false,false,true,true,header,switch,<boolean>,suppress the display of zero balance accounts
 13360,tools,ChainState,tokens,getTokens,,,,false,false,true,true,--,description,,Retrieve token balance(s) for one or more addresses at given block(s).
 13362,tools,ChainState,tokens,getTokens,n1,,,false,false,false,false,--,note,,An `address` must start with '0x' and be forty-two characters long.
-13364,tools,ChainState,tokens,getTokens,n2,,,false,false,false,false,--,note,,`blocks` may be a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
+13364,tools,ChainState,tokens,getTokens,n2,,,false,false,false,false,--,note,,`Blocks` is a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
 13368,tools,ChainState,tokens,getTokens,n3,,,false,false,false,false,--,note,,If the token contract(s) from which you request balances are not ERC20 compliant&#44; the results are undefined.
 13370,tools,ChainState,tokens,getTokens,n4,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results are undefined.
-13372,tools,ChainState,tokens,getTokens,n5,,,false,false,false,false,--,note,,`special` blocks are detailed under `chifra when --list`.
+13372,tools,ChainState,tokens,getTokens,n5,,,false,false,false,false,--,note,,`Special` blocks are detailed under `chifra when --list`.
 
-12110,apps,Admin,scrape,blockScrape,modes,,,true,false,true,true,gocmd,positional,list<enum[indexer|monitors|both]>,which scraper(s) to control
+12110,apps,Admin,scrape,blockScrape,modes,,,true,false,true,true,gocmd,positional,list<enum[run|stop]>,which scraper(s) to control
 12115,apps,Admin,scrape,blockScrape,sleep,s,14,false,false,true,true,gocmd,flag,<double>,seconds to sleep between scraper passes
 12120,apps,Admin,scrape,blockScrape,pin,p,,false,false,true,true,header,switch,<boolean>,pin chunks (and blooms) to IPFS as they are created (requires pinning service)
 12125,apps,Admin,scrape,blockScrape,block_cnt,n,2000,false,true,true,true,header,flag,<uint64>,maximum number of blocks to process per pass
-12130,apps,Admin,scrape,blockScrape,reset,e,NOPOS,false,false,false,false,local,flag,<blknum>,reset the scraper to the provided block (or end of earliest chunk prior to that block)
-12135,apps,Admin,scrape,blockScrape,action,a,,false,false,false,false,gocmd,flag,enum[toggle|run|restart|pause|quit],command to apply to the specified scrape
-12140,apps,Admin,scrape,blockScrape,publish,u,,false,false,false,false,header,switch,<boolean>,after pinning the chunk&#44; publish it to UnchainedIndex
 12145,apps,Admin,scrape,blockScrape,blaze,z,,false,false,false,false,gocmd,switch,<boolean>,invoke the blaze scraper to process blocks
 12150,apps,Admin,scrape,blockScrape,block_chan_cnt,b,10,false,true,false,false,header,flag,<uint64>,number of concurrent block processing channels
 12155,apps,Admin,scrape,blockScrape,addr_chan_cnt,d,20,false,true,false,false,header,flag,<uint64>,number of concurrent address processing channels
@@ -231,11 +229,22 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10840,apps,Admin,status,cacheStatus,last_block,L,NOPOS,false,false,false,false,local,flag,<blknum>,last block to process (inclusive -- testing only)
 10860,apps,Admin,status,cacheStatus,,,,false,false,true,true,--,description,,Report on the status of the TrueBlocks system.
 
-21950,apps,Admin,chunks,chunkMan,blocks,,,false,false,true,true,header,positional,list<blknum>,optional list of blocks to intersect with chunk ranges
-21956,apps,Admin,chunks,chunkMan,extract,e,,false,false,true,true,header,flag,enum[stats|pins|blooms|index|header|addresses|appearances],show some or all of the contents of the chunk or bloom filters
-21956,apps,Admin,chunks,chunkMan,check,c,,false,false,false,false,gocmd,switch,<boolean>,check the index for internal consistency
-21962,apps,Admin,chunks,chunkMan,,,,false,false,true,true,--,description,,Manage and investigate chunks and bloom filters.
-21964,apps,Admin,chunks,chunkMan,n1,,,false,false,false,false,--,note,,Only a single block in a given chunk needs to be supplied.
+21950,apps,Admin,chunks,chunkMan,mode,,,true,false,true,true,local,positional,enum[stats*|manifest|pins|blooms|index|addresses|appearances],the type of chunk info to retrieve
+21955,apps,Admin,chunks,chunkMan,blocks,,,false,false,true,true,header,positional,list<blknum>,optional list of blocks to intersect with chunk ranges
+21957,apps,Admin,chunks,chunkMan,addrs,,,false,false,true,true,header,positional,list<addr>,one or more addresses to use with --belongs option (see note)
+21962,apps,Admin,chunks,chunkMan,details,d,,false,false,true,true,gocmd,switch,<boolean>,for manifest and addresses options only&#44; display full details of the report
+21970,apps,Admin,chunks,chunkMan,check,c,,false,false,true,true,gocmd,switch,<boolean>,depends on mode&#44; checks for internal consistency of the data type
+21960,apps,Admin,chunks,chunkMan,belongs,b,,false,false,true,true,gocmd,switch,<boolean>,checks if the given address appears in the given chunk
+21965,apps,Admin,chunks,chunkMan,pin_chunks,p,,false,false,true,false,gocmd,switch,<boolean>,gzip each chunk&#44; push it to IPFS&#44; and update and publish the manifest
+21967,apps,Admin,chunks,chunkMan,pin_data,a,,false,false,true,false,gocmd,switch,<boolean>,gzip the databases&#44; push them to IPFS&#44; and update and publish the manifest
+21970,apps,Admin,chunks,chunkMan,clean,n,,false,false,true,false,gocmd,switch,<boolean>,retrieve all pins on Pinata&#44; compare to manifest&#44; remove any extraneous remote pins
+21975,apps,Admin,chunks,chunkMan,,,,false,false,true,true,--,description,,Manage and investigate chunks and bloom filters.
+21980,apps,Admin,chunks,chunkMan,n1,,,false,false,false,false,--,note,,If blocks are provided&#44; only chunks intersecting with those blocks are displayed.
+21981,apps,Admin,chunks,chunkMan,n2,,,false,false,false,false,--,note,,Only a single block in a given chunk needs to be supplied for a match.
+21982,apps,Admin,chunks,chunkMan,n3,,,false,false,false,false,--,note,,The --belongs option is only available with the addresses or blooms mode.
+21983,apps,Admin,chunks,chunkMan,n4,,,false,false,false,false,--,note,,The --belongs option requires both an address and a block identifier.
+21984,apps,Admin,chunks,chunkMan,n5,,,false,false,false,false,--,note,,You may only specifiy an address when using the --belongs option.
+21985,apps,Admin,chunks,chunkMan,n6,,,false,false,false,false,--,note,,The two --pin_ options&#44; the --clean option&#44; and the --check option are available only in manifest mode.
 
 11905,apps,Admin,init,init,all,a,,false,false,true,true,header,switch,<boolean>,in addition to Bloom filters&#44; download full index chunks
 11910,apps,Admin,init,init,,,,false,false,true,true,--,description,,Initialize the TrueBlocks system by downloading from IPFS.
@@ -256,7 +265,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12120,tools,Other,slurp,ethslurp,addrs,,,true,false,true,true,header,positional,list<addr>,one or more addresses to slurp from Etherscan
 12140,tools,Other,slurp,ethslurp,blocks,,,false,false,true,true,header,positional,list<blknum>,an optional range of blocks to slurp
 12160,tools,Other,slurp,ethslurp,types,t,,false,false,true,true,local,flag,list<enum[ext*|int|token|nfts|miner|uncles|all]>,which types of transactions to request
-12180,tools,Other,slurp,ethslurp,appearances,p,,false,false,true,true,header,switch,<boolean>,show only the blocknumer.tx_id appearances of the exported transactions
+12180,tools,Other,slurp,ethslurp,appearances,p,,false,false,true,true,header,switch,<boolean>,show only the blocknumber.tx_id appearances of the exported transactions
 12220,tools,Other,slurp,ethslurp,,,,false,false,true,true,--,description,,Fetch data from EtherScan for any address.
 12222,tools,Other,slurp,ethslurp,n1,,,false,false,false,false,--,note,,Portions of this software are Powered by Etherscan.io APIs.
 

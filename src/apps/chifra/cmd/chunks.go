@@ -27,29 +27,37 @@ var chunksCmd = &cobra.Command{
 	RunE:    chunksPkg.RunChunks,
 }
 
-var usageChunks = `chunks [flags] <block> [block...]
+const usageChunks = `chunks <mode> [flags] [blocks...] [address...]
 
 Arguments:
-  blocks - optional list of blocks to intersect with chunk ranges`
+  mode - the type of chunk info to retrieve (required)
+	One of [ stats | manifest | pins | blooms | index | addresses | appearances ]
+  blocks - optional list of blocks to intersect with chunk ranges
+  addrs - one or more addresses to use with --belongs option (see note)`
 
-var shortChunks = "manage and investigate chunks and bloom filters"
+const shortChunks = "manage and investigate chunks and bloom filters"
 
-var longChunks = `Purpose:
+const longChunks = `Purpose:
   Manage and investigate chunks and bloom filters.`
 
-var notesChunks = `
+const notesChunks = `
 Notes:
-  - Only a single block in a given chunk needs to be supplied.`
+  - If blocks are provided, only chunks intersecting with those blocks are displayed.
+  - Only a single block in a given chunk needs to be supplied for a match.
+  - The --belongs option is only available with the addresses or blooms mode.
+  - The --belongs option requires both an address and a block identifier.
+  - You may only specifiy an address when using the --belongs option.
+  - The two --pin_ options, the --clean option, and the --check option are available only in manifest mode.`
 
 func init() {
 	chunksCmd.Flags().SortFlags = false
 
-	chunksCmd.Flags().StringVarP(&chunksPkg.GetOptions().Extract, "extract", "e", "", `show some or all of the contents of the chunk or bloom filters
-One of [ stats | pins | blooms | index | header | addresses | appearances ]`)
-	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Check, "check", "c", false, "check the index for internal consistency (hidden)")
-	if os.Getenv("TEST_MODE") != "true" {
-		chunksCmd.Flags().MarkHidden("check")
-	}
+	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Details, "details", "d", false, "for manifest and addresses options only, display full details of the report")
+	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Check, "check", "c", false, "depends on mode, checks for internal consistency of the data type")
+	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Belongs, "belongs", "b", false, "checks if the given address appears in the given chunk")
+	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().PinChunks, "pin_chunks", "p", false, "gzip each chunk, push it to IPFS, and update and publish the manifest")
+	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().PinData, "pin_data", "a", false, "gzip the databases, push them to IPFS, and update and publish the manifest")
+	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Clean, "clean", "n", false, "retrieve all pins on Pinata, compare to manifest, remove any extraneous remote pins")
 	globals.InitGlobals(chunksCmd, &chunksPkg.GetOptions().Globals)
 
 	chunksCmd.SetUsageTemplate(UsageWithNotes(notesChunks))

@@ -27,22 +27,22 @@ var blocksCmd = &cobra.Command{
 	RunE:    blocksPkg.RunBlocks,
 }
 
-var usageBlocks = `blocks [flags] <block> [block...]
+const usageBlocks = `blocks [flags] <block> [block...]
 
 Arguments:
   blocks - a space-separated list of one or more block identifiers (required)`
 
-var shortBlocks = "retrieve one or more blocks from the chain or local cache"
+const shortBlocks = "retrieve one or more blocks from the chain or local cache"
 
-var longBlocks = `Purpose:
+const longBlocks = `Purpose:
   Retrieve one or more blocks from the chain or local cache.`
 
-var notesBlocks = `
+const notesBlocks = `
 Notes:
-  - blocks is a space-separated list of values, a start-end range, a special, or any combination.
-  - blocks may be specified as either numbers or hashes.
-  - special blocks are detailed under chifra when --list.
-  - With the --logs option, optionally specify one or more --emmitter, one or more --topics, either or both.
+  - Blocks is a space-separated list of values, a start-end range, a special, or any combination.
+  - Blocks may be specified as either numbers or hashes.
+  - Special blocks are detailed under chifra when --list.
+  - With the --logs option, optionally specify one or more --emitter, one or more --topics, either or both.
   - The --logs option is significantly faster if you provide an --emitter and/or a --topic.
   - Multiple topics match on topic0, topic1, and so on, not on different topic0's.
   - Large block ranges may crash the node, use --big_range to specify a larger range.`
@@ -51,7 +51,7 @@ func init() {
 	blocksCmd.Flags().SortFlags = false
 
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Hashes, "hashes", "e", false, "display only transaction hashes, default is to display full transaction detail")
-	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Uncles, "uncles", "U", false, "display uncle blocks (if any) instead of the requested block")
+	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Uncles, "uncles", "c", false, "display uncle blocks (if any) instead of the requested block")
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Trace, "trace", "t", false, "export the traces from the block as opposed to the block data")
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Apps, "apps", "s", false, "display a list of uniq address appearances in the block")
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Uniq, "uniq", "u", false, "display a list of uniq address appearances per transaction")
@@ -60,7 +60,7 @@ func init() {
 	blocksCmd.Flags().StringSliceVarP(&blocksPkg.GetOptions().Topic, "topic", "p", nil, "for the --logs option only, filter logs to show only those with this topic(s) (hidden)")
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Articulate, "articulate", "a", false, "for the --logs option only, articulate the retrieved data if ABIs can be found (hidden)")
 	blocksCmd.Flags().Uint64VarP(&blocksPkg.GetOptions().BigRange, "big_range", "r", 500, "for the --logs option only, allow for block ranges larger than 500 (hidden)")
-	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Count, "count", "c", false, "display the number of the lists of appearances for --addrs or --uniq")
+	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Count, "count", "U", false, "display the number of the lists of appearances for --addrs or --uniq")
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Cache, "cache", "o", false, "force a write of the block to the cache")
 	blocksCmd.Flags().Uint64VarP(&blocksPkg.GetOptions().List, "list", "l", 0, "summary list of blocks running backwards from latest block minus num (hidden)")
 	blocksCmd.Flags().Uint64VarP(&blocksPkg.GetOptions().ListCount, "list_count", "C", 0, "the number of blocks to report for --list option (hidden)")

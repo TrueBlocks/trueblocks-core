@@ -1018,7 +1018,7 @@ bool CReconciliation::reconcileUsingTraces(bigint_t prevEndBal, const CTransacti
                 if (trace.action.selfDestructed == acctFor)
                     selfDestructOut += trace.action.balance;
             } else {
-                if (trace.action.from == acctFor) {
+                if (trace.action.from == acctFor && !trace.isDelegateCall()) {
                     // Sometimes, EOAs appear here, but there is no way
                     // that a trace can initiate an expenditure on an EOA
                     // TODO(tjayrush): unless it's the first trace?
@@ -1029,7 +1029,7 @@ bool CReconciliation::reconcileUsingTraces(bigint_t prevEndBal, const CTransacti
                     }
                 }
 
-                if (trace.action.to == acctFor) {
+                if (trace.action.to == acctFor && !trace.isDelegateCall()) {
                     if (trans->from == "0xPrefund") {
                         prefundIn = trans->value;
                     } else if (trans->from == "0xBlockReward") {

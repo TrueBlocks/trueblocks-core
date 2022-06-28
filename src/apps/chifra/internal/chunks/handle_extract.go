@@ -6,36 +6,45 @@ package chunksPkg
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-func (opts *ChunksOptions) HandleChunksExtract(displayFunc func(path string, first bool) error) error {
-	blockNums := validate.Convert(opts.Blocks)
+func shouldDisplay(result cache.IndexFileInfo, blockNums []uint64) bool {
+	if len(blockNums) == 0 {
+		return true
+	}
+	hit := false
+	for _, bn := range blockNums {
+		h := result.Range.BlockIntersects(bn)
+		hit = hit || h
+		if hit {
+			break
+		}
+	}
+	return hit
+}
+
+func (opts *ChunksOptions) HandleChunksExtract(displayFunc func(path string, first bool) (bool, error), blockNums []uint64) error {
 	filenameChan := make(chan cache.IndexFileInfo)
 
 	var nRoutines int = 1
 	go cache.WalkCacheFolder(opts.Globals.Chain, cache.Index_Bloom, filenameChan)
 
-	first := true
+	cnt := 0
 	for result := range filenameChan {
 		switch result.Type {
 		case cache.Index_Bloom:
-			hit := false
-			for _, block := range blockNums {
-				h := result.Range.BlockIntersects(block)
-				hit = hit || h
-				if hit {
-					break
+			skip := opts.Globals.TestMode && cnt > maxTestItems
+			if !skip && shouldDisplay(result, blockNums) {
+				ok, _ := displayFunc(result.Path, cnt == 0)
+				if ok {
+					cnt++
 				}
-			}
-			if len(blockNums) == 0 || hit {
-				displayFunc(result.Path, first)
-				first = false
 			}
 		case cache.None:
 			nRoutines--
 			if nRoutines == 0 {
 				close(filenameChan)
+				continue
 			}
 		}
 	}

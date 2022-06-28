@@ -47,7 +47,7 @@ func (opts *LogsOptions) LogsInternal() (err error, handled bool) {
 	}
 
 	handled = true
-	err = opts.Globals.PassItOn("getLogs", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
+	err = opts.Globals.PassItOn("getLogs", opts.Globals.Chain, opts.ToCmdLine(), opts.GetEnvStr())
 	// EXISTING_CODE
 
 	return

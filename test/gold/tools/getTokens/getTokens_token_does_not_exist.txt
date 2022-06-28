@@ -2,33 +2,26 @@ chifra tokens  0xd26114cd6EE289AccF82350c8d84870000000000 0x5e44c3e467a49c9ca029
 TEST[DATE|TIME] Addrs2:  [0xd26114cd6ee289accf82350c8d84870000000000 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28]
 TEST[DATE|TIME] Blocks:  [4000000]
 TEST[DATE|TIME] Format:  txt
-
-  Address '0xd26114cd6ee289accf82350c8d84870000000000' is not a token contract. You must provide at least one valid token address. Quitting...
-
-Purpose:
-  Retrieve token balance(s) for one or more addresses at given block(s).
-
+Error: The value 0xd26114cd6ee289accf82350c8d84870000000000 is not a token contract.
 Usage:
-  getTokens [flags] <address> <address> [address...] [block...]
+  chifra tokens [flags] <address> <address> [address...] [block...]
 
 Arguments:
   addrs - two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported (required)
   blocks - an optional list of one or more blocks at which to report balances, defaults to 'latest'
 
 Flags:
-  -p, --parts <val>   which parts of the token information to retrieve, one or more of [name|symbol|decimals|totalSupply|version|none|all*]
-  -b, --by_acct       consider each address an ERC20 token except the last, whose balance is reported for each token
-  -n, --no_zero       suppress the display of zero balance accounts
-
-Global Flags:
-  -x, --fmt string     export format, one of [none|json*|txt|csv|api]
-  -v, --verbose uint   set verbose level (optional level defaults to 1)
-  -h, --help           display this help screen
+  -p, --parts strings   which parts of the token information to retrieve
+                        One or more of [ name | symbol | decimals | totalSupply | version | none | all ]
+  -b, --by_acct         consider each address an ERC20 token except the last, whose balance is reported for each token
+  -n, --no_zero         suppress the display of zero balance accounts
+  -x, --fmt string      export format, one of [none|json*|txt|csv|api]
+  -v, --verbose         enable verbose (increase detail with --log_level)
+  -h, --help            display this help screen
 
 Notes:
   - An address must start with '0x' and be forty-two characters long.
-  - blocks may be a space-separated list of values, a start-end range, a special, or any combination.
+  - Blocks is a space-separated list of values, a start-end range, a special, or any combination.
   - If the token contract(s) from which you request balances are not ERC20 compliant, the results are undefined.
   - If the queried node does not store historical state, the results are undefined.
-  - special blocks are detailed under chifra when --list.
-
+  - Special blocks are detailed under chifra when --list.

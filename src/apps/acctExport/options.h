@@ -149,6 +149,4 @@ class COptions : public CAbiOptions {
 
 //--------------------------------------------------------------------------------
 extern bool visitOnLoad(CAppearance_mon& app, void* data);
-extern bool isTokenFunc(const string_q& input);
-extern bool isTokenTopic(const CLogEntry* log);
 extern bool fourByteFilter(const string_q& input, const COptions* opt);

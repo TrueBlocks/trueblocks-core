@@ -47,7 +47,7 @@ func (opts *NamesOptions) NamesInternal() (err error, handled bool) {
 	}
 
 	handled = true
-	err = opts.Globals.PassItOn("ethNames", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
+	err = opts.Globals.PassItOn("ethNames", opts.Globals.Chain, opts.ToCmdLine(), opts.GetEnvStr())
 	// EXISTING_CODE
 
 	return

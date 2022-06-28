@@ -27,17 +27,17 @@ var namesCmd = &cobra.Command{
 	RunE:    namesPkg.RunNames,
 }
 
-var usageNames = `names [flags] <term> [term...]
+const usageNames = `names [flags] <term> [term...]
 
 Arguments:
   terms - a space separated list of one or more search terms (required)`
 
-var shortNames = "query addresses or names of well known accounts"
+const shortNames = "query addresses or names of well known accounts"
 
-var longNames = `Purpose:
+const longNames = `Purpose:
   Query addresses or names of well known accounts.`
 
-var notesNames = `
+const notesNames = `
 Notes:
   - The tool will accept up to three terms, each of which must match against any field in the database.
   - The --match_case option enables case sensitive matching.`

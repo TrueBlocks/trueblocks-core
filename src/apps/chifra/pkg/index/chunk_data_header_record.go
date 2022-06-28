@@ -19,7 +19,7 @@ type HeaderRecord struct {
 	AppearanceCount uint32
 }
 
-func readHeader(fl *os.File) (header HeaderRecord, err error) {
+func ReadHeader(fl *os.File) (header HeaderRecord, err error) {
 	err = binary.Read(fl, binary.LittleEndian, &header)
 	if err != nil {
 		return

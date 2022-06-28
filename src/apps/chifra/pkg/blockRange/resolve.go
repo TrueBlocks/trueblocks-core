@@ -45,13 +45,6 @@ func (br *Identifier) getBounds(chain string) (uint64, uint64, error) {
 		end = start + 1
 	}
 
-	// meta, _ := rpcClient.GetMetaData(chain, false)
-	// if start > meta.Latest {
-	// 	return start, end, fmt.Errorf("start block (%d) is in the future", start)
-	// } else if end > meta.Latest {
-	// 	return start, end, fmt.Errorf("end block (%d) is in the future", end)
-	// }
-
 	return start, end, nil
 }
 
@@ -78,7 +71,13 @@ func snapBnToPeriod(bn uint64, chain, period string) (uint64, error) {
 		dt = dt.ShiftMinutes(5)
 		dt = dt.FloorYear()
 	}
-	firstDate := gostradamus.FromUnixTimestamp(utils.EarliestTs)
+
+	blockZeroTs, err := rpcClient.GetBlockZeroTs(chain)
+	if err != nil {
+		return utils.EarliestEvmTs, err
+	}
+
+	firstDate := gostradamus.FromUnixTimestamp(int64(blockZeroTs))
 	if dt.Time().Before(firstDate.Time()) {
 		dt = firstDate
 	}
@@ -147,7 +146,7 @@ func (p *Point) resolvePoint(chain string) uint64 {
 		bn, _ = tslibPkg.FromDateToBn(chain, p.Date)
 	} else if p.Special != "" {
 		bn, _ = tslibPkg.FromNameToBn(chain, p.Special)
-	} else if p.Number >= utils.EarliestTs {
+	} else if p.Number >= utils.EarliestEvmTs {
 		bn, _ = tslibPkg.FromTsToBn(chain, uint64(p.Number))
 	} else {
 		bn = uint64(p.Number)
@@ -212,6 +211,7 @@ func (br *Identifier) ResolveTxs(chain string) ([]types.SimpleAppearance, error)
 }
 
 /*
+// TODO: next and previous skip markers - search for this to find other things related
 bool wrangleTxId(string_q& argOut, string_q& errorMsg) {
     if (contains(argOut, "0x"))
         return true;
@@ -316,3 +316,17 @@ bool getDirectionalTxId(blknum_t bn, txnum_t txid, const string_q& dir, string_q
     return false;
 }
 */
+
+func GetBlockNumArray(chain string, ids []Identifier) ([]uint64, error) {
+	var blockNums []uint64
+	for _, br := range ids {
+		nums, err := br.ResolveBlocks(chain)
+		if err != nil {
+			return []uint64{}, err
+		}
+		for _, n := range nums {
+			blockNums = append(blockNums, n)
+		}
+	}
+	return blockNums, nil
+}

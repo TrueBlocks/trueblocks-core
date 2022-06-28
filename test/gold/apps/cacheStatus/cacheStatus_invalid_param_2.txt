@@ -3,7 +3,7 @@ Error:
   unknown shorthand flag: 'l' in -l
 
 Usage:
-  chifra status [flags] [mode...]
+  chifra status <mode> [mode...] [flags]
 
 Arguments:
   modes - the type of status info to retrieve

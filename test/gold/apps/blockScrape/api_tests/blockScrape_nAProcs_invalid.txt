@@ -1,6 +1,6 @@
 scrape?addrChanCnt=-12
 {
   "errors": [
-    "Please choose at least one of [indexer|monitors|both]."
+    "Please choose at least one of [run|stop]."
   ]
 }

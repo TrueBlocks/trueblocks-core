@@ -27,14 +27,14 @@ var serveCmd = &cobra.Command{
 	RunE:    servePkg.RunServe,
 }
 
-var usageServe = `serve [flags]`
+const usageServe = `serve [flags]`
 
-var shortServe = "serve the TrueBlocks API using the flame server"
+const shortServe = "serve the TrueBlocks API using the flame server"
 
-var longServe = `Purpose:
+const longServe = `Purpose:
   Serve the TrueBlocks API using the flame server.`
 
-var notesServe = `
+const notesServe = `
 Notes:
   - To start API open terminal window and run chifra serve.
   - See the API documentation for more information.`

@@ -1,0 +1,6 @@
+traces?transactions=3648669.24&chain=ropsten
+{
+  "errors": [
+    "Tracing is required for this program to work properly."
+  ]
+}

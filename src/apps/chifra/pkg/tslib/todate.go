@@ -16,7 +16,7 @@ import (
 func FromBnToDate(chain string, bn uint64) (gostradamus.DateTime, error) {
 	ts, err := FromBnToTs(chain, bn)
 	if err != nil {
-		dt, _ := FromTsToDate(utils.EarliestTs)
+		dt, _ := FromTsToDate(utils.EarliestEvmTs)
 		return dt, err
 	}
 	return FromTsToDate(ts)

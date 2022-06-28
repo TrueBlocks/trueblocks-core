@@ -27,17 +27,17 @@ var listCmd = &cobra.Command{
 	RunE:    listPkg.RunList,
 }
 
-var usageList = `list [flags] <address> [address...]
+const usageList = `list [flags] <address> [address...]
 
 Arguments:
   addrs - one or more addresses (0x...) to list (required)`
 
-var shortList = "list every appearance of an address anywhere on the chain"
+const shortList = "list every appearance of an address anywhere on the chain"
 
-var longList = `Purpose:
+const longList = `Purpose:
   List every appearance of an address anywhere on the chain.`
 
-var notesList = `
+const notesList = `
 Notes:
   - No other options are permitted when --silent is selected.`
 

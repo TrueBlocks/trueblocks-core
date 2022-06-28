@@ -31,7 +31,7 @@ bool COptions::scrape_blocks(void) {
     }
 
     ostringstream blazeCmd;
-    blazeCmd << "chifra scrape indexer --blaze ";
+    blazeCmd << "chifra scrape run --blaze ";
     blazeCmd << "--start_block " << blaze_start << " ";
     blazeCmd << "--ripe_block " << blaze_ripe << " ";
     blazeCmd << "--block_cnt " << block_cnt << " ";
@@ -50,7 +50,7 @@ bool COptions::scrape_blocks(void) {
             sleep(3);
             return scrape_blocks();
         }
-        LOG_WARN(cYellow, "Blaze quit without finishing. Reprocessing...", cOff);
+        LOG_WARN(cYellow, "Blaze quit without finishing twice. Reprocessing...", cOff);
         return false;
     }
 
@@ -63,12 +63,16 @@ bool COptions::scrape_blocks(void) {
     string_q stageFn = getLastFileInFolder(indexFolder_staging, false);
     prev_block = path_2_Bn(stageFn);
     nRecsThen = fileSize(stageFn) / asciiAppearanceSize;
+    snapped = false;
     if (!forEveryFileInFolder(indexFolder_ripe, copyRipeToStage, this)) {
+        if (!snapped) {
+            LOG_WARN("copyRipeToStage failed...replaying...");
+        }
         cleanFolder(indexFolder_unripe);
         cleanFolder(indexFolder_ripe);
         tmpStagingStream.close();
         ::remove(tmpStagingFn.c_str());
-        return false;
+        return snapped;
     }
     tmpStagingStream.close();
 
@@ -115,12 +119,15 @@ bool copyRipeToStage(const string_q& path, void* data) {
 
         if (opts->isSnapToGrid(bn)) {
             string_q tmpStagingFn = (indexFolder_staging + "000000000-temp.txt");
-            if (!opts->stage_chunks(tmpStagingFn))
+            if (!opts->stage_chunks(tmpStagingFn)) {
+                LOG_WARN("opts->stage_chunks(" + tmpStagingFn + ") returned false");
                 return false;
+            }
             opts->report();
             blknum_t nRecords = fileSize(opts->newStage) / asciiAppearanceSize;
             blknum_t chunkSize = min(nRecords, opts->apps_per_chunk);
             opts->write_chunks(chunkSize, true /* snapped */);
+            opts->snapped = true;
             return false;
         }
     }
@@ -285,7 +292,7 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTA
     uint32_t offset = 0, nAddrs = 0, cnt = 0;
     CIndexedAppearanceArray blockTable;
 
-    hashbytes_t hash = hash_2_Bytes(versionHash);
+    hashbytes_t hash = hash_2_Bytes(manifestVersion);
 
     CArchive archive(WRITING_ARCHIVE);
     if (!archive.Lock(tmpFile2, modeWriteCreate, LOCK_NOWAIT)) {

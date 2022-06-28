@@ -31,13 +31,13 @@ func (chunk *ChunkData) GetAppearanceRecords(address common.Address) *Appearance
 		return &ret
 	}
 
-	addressRecord, err := chunk.readAddressRecord()
+	addressRecord, err := chunk.ReadAddressRecord()
 	if err != nil {
 		ret.Err = err
 		return &ret
 	}
 
-	appearances, err := chunk.readAppearanceRecords(&addressRecord)
+	appearances, err := chunk.ReadAppearanceRecords(&addressRecord)
 	if err != nil {
 		ret.Err = err
 		return &ret

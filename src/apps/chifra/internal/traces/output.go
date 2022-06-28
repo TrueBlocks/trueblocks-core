@@ -47,7 +47,7 @@ func (opts *TracesOptions) TracesInternal() (err error, handled bool) {
 	}
 
 	handled = true
-	err = opts.Globals.PassItOn("getTraces", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
+	err = opts.Globals.PassItOn("getTraces", opts.Globals.Chain, opts.ToCmdLine(), opts.GetEnvStr())
 	// EXISTING_CODE
 
 	return

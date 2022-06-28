@@ -79,6 +79,14 @@ func (opts *ExploreOptions) ValidateExplore() error {
 				urls = append(urls, ExploreUrl{blockHash, ExploreBlock})
 				continue
 			}
+			// An error here is not okay because we have a valid hash but it's not a valid on-chain
+			// thingy, so we must have been told why by the node
+			msg := fmt.Sprintf("%s", err)
+			msgParts := strings.Split(msg, ":")
+			if strings.Contains(msg, "<html") {
+				msg = msgParts[0]
+			}
+			return fmt.Errorf("the node returned an error: %s", msg)
 		}
 
 		if validate.IsValidFourByte(arg) {

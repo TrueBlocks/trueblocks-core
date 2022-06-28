@@ -25,6 +25,9 @@ func NewScanBar(want, freq, max uint64, widPct float64) *ScanBar {
 	sp := &ScanBar{}
 	sp.Wanted = want
 	sp.Freq = freq
+	if sp.Freq == 0 {
+		sp.Freq = 1
+	}
 	sp.Max = max
 	sp.WidPct = widPct
 	return sp
@@ -74,13 +77,15 @@ type winsize struct {
 
 func screenWidth() uint {
 	ws := &winsize{}
-	retCode, _, errno := syscall.Syscall(syscall.SYS_IOCTL,
+	retCode, _, _ := syscall.Syscall(syscall.SYS_IOCTL,
 		uintptr(syscall.Stdin),
 		uintptr(syscall.TIOCGWINSZ),
 		uintptr(unsafe.Pointer(ws)))
 
 	if int(retCode) == -1 {
-		panic(errno)
+		// This is okay if we're debugging in VSCode for example
+		// log.Println("System call to syscall.SYS_IOCTL returned: ", errno)
+		return 120 // default reasonably
 	}
 	return uint(ws.Col)
 }

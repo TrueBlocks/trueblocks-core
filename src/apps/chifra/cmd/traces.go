@@ -27,17 +27,17 @@ var tracesCmd = &cobra.Command{
 	RunE:    tracesPkg.RunTraces,
 }
 
-var usageTraces = `traces [flags] <tx_id> [tx_id...]
+const usageTraces = `traces [flags] <tx_id> [tx_id...]
 
 Arguments:
   transactions - a space-separated list of one or more transaction identifiers (required)`
 
-var shortTraces = "retrieve traces for the given transaction(s)"
+const shortTraces = "retrieve traces for the given transaction(s)"
 
-var longTraces = `Purpose:
+const longTraces = `Purpose:
   Retrieve traces for the given transaction(s).`
 
-var notesTraces = `
+const notesTraces = `
 Notes:
   - The transactions list may be one or more transaction hashes, blockNumber.transactionID pairs, or a blockHash.transactionID pairs.
   - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.

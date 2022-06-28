@@ -9,14 +9,15 @@ import (
 	"fmt"
 	"log"
 	"math/big"
-	"os"
 	"strconv"
 	"strings"
+	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	ethTypes "github.com/ethereum/go-ethereum/core/types"
@@ -27,18 +28,21 @@ import (
 // TODO: overran the number of TPC connection the OS would create (on a Mac). Since then, we now
 // TODO: open the connection once and just use it allowing the operating system to clean it up
 var perProviderClientMap = map[string]*ethclient.Client{}
+var clientMutex sync.Mutex
 
 func GetClient(provider string) *ethclient.Client {
+	clientMutex.Lock()
 	if perProviderClientMap[provider] == nil {
 		// TODO: I don't like the fact that we Dail In every time we want to us this
 		// TODO: If we make this a cached item, it needs to be cached per chain, see timestamps
 		ec, err := ethclient.Dial(provider)
-		if err != nil {
-			log.Println("Missdial(" + os.Args[0] + "):")
+		if err != nil || ec == nil {
+			log.Println("Missdial(" + provider + "):")
 			log.Fatalln(err)
 		}
 		perProviderClientMap[provider] = ec
 	}
+	clientMutex.Unlock()
 	return perProviderClientMap[provider]
 }
 
@@ -237,6 +241,15 @@ func BlockHashFromNumber(provider string, blkNum uint64) (string, error) {
 	return block.Hash().Hex(), nil
 }
 
+// TODO: This is okay since Ropsten is dead as of the merge. We use it for testing
+// TODO: but we need this to actually work (for Geth for instance)
+func IsTracingNode(testMode bool, chain string) bool {
+	if testMode && chain == "ropsten" {
+		return false
+	}
+	return true
+}
+
 /*
 // Functions available in the client
 func NewClient(c *rpc.Client) *Client
@@ -317,7 +330,7 @@ func GetTransactionReceipt(provider string, bn uint64, txid uint64) (types.Simpl
 	// 	ret.Logs = append(ret.Logs, log)
 	// }
 	// return ret, nil
-	return types.SimpleReceipt{}, nil
+	return types.SimpleReceipt{GasUsed: 12}, nil
 }
 
 func GetBlockTimestamp(provider string, bn uint64) uint64 {
@@ -343,11 +356,10 @@ func GetBlockByNumber(chain string, bn uint64) (types.NamedBlock, error) {
 	var payload = RPCPayload{
 		Jsonrpc:   "2.0",
 		Method:    "eth_getBlockByNumber",
-		RPCParams: RPCParams{bn, false},
+		RPCParams: RPCParams{fmt.Sprintf("0x%x", bn), false},
 		ID:        1005,
 	}
 	rpcProvider := config.GetRpcProvider(chain)
-	// log.Println(v, payload)
 	err := FromRpc(rpcProvider, &payload, &block)
 	if err != nil {
 		return types.NamedBlock{}, err
@@ -358,8 +370,33 @@ func GetBlockByNumber(chain string, bn uint64) (types.NamedBlock, error) {
 	}
 	n, _ := strconv.ParseUint(block.Result.Number[2:], 16, 64)
 	ts, _ := strconv.ParseUint(block.Result.Timestamp[2:], 16, 64)
+	if n == 0 {
+		ts, err = GetBlockZeroTs(chain)
+		if err != nil {
+			return types.NamedBlock{}, err
+		}
+	}
 	return types.NamedBlock{
 		BlockNumber: n,
 		TimeStamp:   ts,
 	}, nil
+}
+
+// GetBlockZeroTs for some reason block zero does not return a timestamp, so we assign block one's ts minus 14 seconds
+func GetBlockZeroTs(chain string) (uint64, error) {
+	blockOne, err := GetBlockByNumber(chain, 1)
+	if err != nil {
+		return utils.EarliestEvmTs, err
+	}
+	// TODO: Multi-chain specific
+	return blockOne.TimeStamp - 14, nil
+}
+
+// TODO: use block number by converting it
+func GetCodeAt(chain, addr string, bn uint64) ([]byte, error) {
+	// return IsValidAddress(addr)
+	provider := config.GetRpcProvider(chain)
+	ec := GetClient(provider)
+	address := common.HexToAddress(addr)
+	return ec.CodeAt(context.Background(), address, nil) // nil is latest block
 }

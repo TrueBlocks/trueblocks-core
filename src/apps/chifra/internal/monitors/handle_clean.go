@@ -11,6 +11,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
+// HandleClean
 func (opts *MonitorsOptions) HandleClean() error {
 	monitorChan := make(chan monitor.Monitor)
 

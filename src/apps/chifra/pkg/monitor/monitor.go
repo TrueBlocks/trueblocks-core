@@ -13,6 +13,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -217,9 +218,9 @@ func ListMonitors(chain, folder string, monitorChan chan<- Monitor) {
 			if !strings.HasPrefix(line, "#") {
 				parts := strings.Split(line, "\t")
 				if len(parts) > 0 {
-					addr := parts[0]
-					if !addrMap[addr] && validate.IsValidAddress(parts[0]) && !validate.IsZeroAddress(parts[0]) {
-						monitorChan <- NewMonitor(chain, parts[0], true /* create */)
+					addr := strings.Trim(parts[0], " ")
+					if !addrMap[addr] && validate.IsValidAddress(addr) && !validate.IsZeroAddress(addr) {
+						monitorChan <- NewMonitor(chain, addr, true /* create */)
 					}
 					addrMap[addr] = true
 				} else {
@@ -264,5 +265,10 @@ func (mon *Monitor) MoveToProduction() error {
 
 	oldPath := mon.Path()
 	mon.Staged = false
-	return os.Rename(oldPath, mon.Path())
+	mutex := sync.Mutex{}
+	mutex.Lock()
+	err = os.Rename(oldPath, mon.Path())
+	mutex.Unlock()
+
+	return err
 }

@@ -1,0 +1,6 @@
+chunks?mode=index&belongs&addrs=0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9
+{
+  "errors": [
+    "The --belongs option is only available with either the addresses or blooms mode"
+  ]
+}

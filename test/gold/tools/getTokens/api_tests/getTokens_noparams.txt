@@ -1,6 +1,6 @@
 tokens?
 {
   "errors": [
-    "chifra tokens - Not enough arguments presented."
+    "You must specifiy at least one address"
   ]
 }

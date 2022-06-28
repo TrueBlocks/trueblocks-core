@@ -7,7 +7,7 @@
 
 package cmd
 
-var helpText = `  Accounts:
+const helpText = `  Accounts:
     list          list every appearance of an address anywhere on the chain
     export        export full detail of transactions for one or more addresses
     monitors      add, remove, clean, and list address monitors
@@ -38,5 +38,3 @@ var helpText = `  Accounts:
 
   Use "chifra [command] --help" for more information about a command.
 `
-
-var versionText = "GHC-TrueBlocks//0.35.0-beta"

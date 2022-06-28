@@ -5,7 +5,7 @@ TEST[DATE|TIME] Types:  [txs]
 TEST[DATE|TIME] Depth:  4
 Error: The --depth option (4) must be less than four (4).
 Usage:
-  chifra status [flags] [mode...]
+  chifra status <mode> [mode...] [flags]
 
 Arguments:
   modes - the type of status info to retrieve
