@@ -123,3 +123,19 @@ type SimpleIndexAddressBelongs struct {
 	Count   uint32                  `json:"count"`
 	Apps    []SimpleIndexAppearance `json:"apps"`
 }
+
+type SimpleReceipt struct {
+	BlockHash         common.Hash    `json:"blockHash"`
+	BlockNumber       uint64         `json:"blockNumber"`
+	ContractAddress   string         `json:"contractAddress,omitempty"`
+	CumulativeGasUsed string         `json:"cumulativeGasUsed"`
+	From              common.Address `json:"from"`
+	GasUsed           uint64         `json:"gasUsed"`
+	Logs              []interface{}  `json:"logs,omitempty"`
+	LogsBloom         string         `json:"-"`
+	Root              string         `json:"-"`
+	Status            interface{}    `json:"status"`
+	To                string         `json:"to,omitempty"`
+	TransactionHash   common.Hash    `json:"transactionHash"`
+	TransactionIndex  uint64         `json:"transactionIndex"`
+}
