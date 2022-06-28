@@ -35,21 +35,21 @@ func Test_BlockRanges(t *testing.T) {
 			continue
 		}
 		for _, br := range results {
-			blockList, err := br.ResolveBlocks(GetTestChain())
+			blockNums, err := br.ResolveBlocks(GetTestChain())
 			if err != nil {
 				t.Error(br)
 				t.Error(err)
 			}
-			if len(blockList) > 0 {
-				max := len(blockList)
+			if len(blockNums) > 0 {
+				max := len(blockNums)
 				min := 0
-				if len(blockList) > 10 {
+				if len(blockNums) > 10 {
 					max = 10
 				}
-				if len(blockList) > 3 {
-					min = len(blockList) - 3
+				if len(blockNums) > 3 {
+					min = len(blockNums) - 3
 				}
-				str := fmt.Sprintf("%s|%d|%v...%v", br.Orig, len(blockList), blockList[:max], blockList[min:])
+				str := fmt.Sprintf("%s|%d|%v...%v", br.Orig, len(blockNums), blockNums[:max], blockNums[min:])
 				check := colors.Green
 				if str != item.expected {
 					check = colors.Red

@@ -44,12 +44,12 @@ func Test_TransactionIds(t *testing.T) {
 
 		for i, br := range results {
 			fmt.Println(br)
-			txList, err := br.ResolveTxs(GetTestChain())
+			txIds, err := br.ResolveTxs(GetTestChain())
 			if err != nil {
 				t.Error(colors.Red, br)
 				t.Error(err, colors.Off)
 			}
-			for j, tx := range txList {
+			for j, tx := range txIds {
 				res := fmt.Sprintf("%d.%d", tx.BlockNumber, tx.TransactionIndex)
 				index := i
 				if len(expecteds) > 1 && j > 0 {
@@ -65,7 +65,7 @@ func Test_TransactionIds(t *testing.T) {
 					}
 				}
 			}
-			if len(txList) == 0 {
+			if len(txIds) == 0 {
 				fmt.Printf("%sgot: nothing expected: %s%s", colors.Red, expecteds[i], colors.Off)
 			}
 			fmt.Println()
