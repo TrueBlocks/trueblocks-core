@@ -328,3 +328,56 @@ func GetCodeAt(chain, addr string, bn uint64) ([]byte, error) {
 	address := common.HexToAddress(addr)
 	return ec.CodeAt(context.Background(), address, nil) // nil is latest block
 }
+
+// Id_2_TxHash takes a valid identifier (txHash/blockHash, blockHash.txId, blockNumber.txId)
+// and returns the transaction hash represented by that identifier. (If it's a valid transaction.
+// It may not be because transaction hashes and block hashes are both 32-byte hex)
+func Id_2_TxHash(chain, arg string, isBlockHash func(arg string) bool) (string, error) {
+	provider := config.GetRpcProvider(chain)
+	CheckRpc(provider)
+
+	// simple case first
+	if !strings.Contains(arg, ".") {
+		// We know it's a hash, but we want to know if it's a legitimate tx on chain
+		return TxHashFromHash(provider, arg)
+	}
+
+	parts := strings.Split(arg, ".")
+	if len(parts) != 2 {
+		panic("Programmer error - valid transaction identifiers with a `.` must have two and only two parts")
+	}
+
+	if isBlockHash(parts[0]) {
+		txId, err := strconv.ParseUint(parts[1], 10, 64)
+		if err != nil {
+			return "", nil
+		}
+		return TxHashFromHashAndId(provider, parts[0], txId)
+	}
+
+	blockNum, err := strconv.ParseUint(parts[0], 10, 64)
+	if err != nil {
+		return "", nil
+	}
+	txId, err := strconv.ParseUint(parts[1], 10, 64)
+	if err != nil {
+		return "", nil
+	}
+
+	return TxHashFromNumberAndId(provider, blockNum, txId)
+}
+
+func Id_2_BlockHash(chain, arg string, isBlockHash func(arg string) bool) (string, error) {
+	provider := config.GetRpcProvider(chain)
+	CheckRpc(provider)
+
+	if isBlockHash(arg) {
+		return BlockHashFromHash(provider, arg)
+	}
+
+	blockNum, err := strconv.ParseUint(arg, 10, 64)
+	if err != nil {
+		return "", nil
+	}
+	return BlockHashFromNumber(provider, blockNum)
+}

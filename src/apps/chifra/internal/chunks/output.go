@@ -46,7 +46,7 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 	// EXISTING_CODE
 	handled = true
 
-	blockNums, err := blockRange.GetBlockNumArray(opts.Globals.Chain, opts.BlockIds)
+	blockNums, err := blockRange.GetBlockNumberArray(opts.Globals.Chain, opts.BlockIds)
 	if opts.Globals.TestMode && len(blockNums) > 200 {
 		blockNums = blockNums[:200]
 	}
