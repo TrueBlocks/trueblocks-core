@@ -55,7 +55,7 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 			}
 			var header types.SimpleReceipt
 			err = opts.Globals.RenderHeader(header, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
-			defer opts.Globals.RenderFooter(opts.Globals.ApiMode || opts.Globals.Format == "api")
+			defer opts.Globals.RenderFooter()
 
 			if err != nil {
 				return err, true
@@ -67,7 +67,7 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 				if err != nil {
 					return err, true
 				}
-				err = opts.Globals.RenderObject(obj, false, i == 0)
+				err = opts.Globals.RenderObject(obj, i == 0)
 				if err != nil {
 					return err, true
 				}
