@@ -106,23 +106,20 @@ type SimpleIndex struct {
 	Size            int64           `json:"fileSize"`
 }
 
-type SimpleIndexAddress struct {
-	Address     string `json:"address"`
-	Offset      uint32 `json:"offset"`
-	Count       uint32 `json:"count"`
-	Cummulative uint32 `json:"cummulative"`
-}
-
 type SimpleIndexAppearance struct {
 	BlockNumber      uint32 `json:"blockNumber"`
 	TransactionIndex uint32 `json:"transactionIndex"`
 }
 
+type SimpleIndexAddress struct {
+	Address string `json:"address"`
+	Offset  uint32 `json:"offset"`
+	Count   uint32 `json:"count"`
+}
+
 type SimpleIndexAddressBelongs struct {
-	Address string                  `json:"address"`
-	Offset  uint32                  `json:"offset"`
-	Count   uint32                  `json:"count"`
-	Apps    []SimpleIndexAppearance `json:"apps"`
+	SimpleIndexAddress
+	Apps []SimpleIndexAppearance `json:"apps"`
 }
 
 type SimpleReceipt struct {
