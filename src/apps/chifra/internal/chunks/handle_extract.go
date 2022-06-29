@@ -26,11 +26,11 @@ func shouldDisplay(result cache.IndexFileInfo, blockNums []uint64) bool {
 }
 
 type WalkContext struct {
-	VisitFunc func(path string, data *interface{}, first bool) (bool, error)
-	Data      *interface{}
+	VisitFunc func(ctx *WalkContext, path string, first bool) (bool, error)
+	Data      interface{}
 }
 
-func (opts *ChunksOptions) WalkIndexFiles(cacheType cache.CacheType, ctx WalkContext, blockNums []uint64) error {
+func (opts *ChunksOptions) WalkIndexFiles(ctx *WalkContext, cacheType cache.CacheType, blockNums []uint64) error {
 	filenameChan := make(chan cache.IndexFileInfo)
 
 	var nRoutines int = 1
@@ -42,7 +42,7 @@ func (opts *ChunksOptions) WalkIndexFiles(cacheType cache.CacheType, ctx WalkCon
 		case cache.Index_Bloom:
 			skip := (opts.Globals.TestMode && cnt > maxTestItems) || !strings.HasSuffix(result.Path, ".bloom")
 			if !skip && shouldDisplay(result, blockNums) {
-				ok, err := ctx.VisitFunc(result.Path, ctx.Data, cnt == 0)
+				ok, err := ctx.VisitFunc(ctx, result.Path, cnt == 0)
 				if err != nil {
 					return err
 				}
@@ -53,7 +53,7 @@ func (opts *ChunksOptions) WalkIndexFiles(cacheType cache.CacheType, ctx WalkCon
 		case cache.Index_Staging:
 			skip := (opts.Globals.TestMode)
 			if !skip && shouldDisplay(result, blockNums) {
-				ok, err := ctx.VisitFunc(result.Path, ctx.Data, cnt == 0)
+				ok, err := ctx.VisitFunc(ctx, result.Path, cnt == 0)
 				if err != nil {
 					return err
 				}

@@ -13,7 +13,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *ChunksOptions) showAddressesBelongs(path string, data *interface{}, first bool) (bool, error) {
+func (opts *ChunksOptions) showAddressesBelongs(ctx *WalkContext, path string, first bool) (bool, error) {
 	path = index.ToIndexPath(path)
 
 	indexChunk, err := index.NewChunkData(path)
@@ -81,5 +81,5 @@ func (opts *ChunksOptions) HandleAddressesBelongs(blockNums []uint64) error {
 	ctx := WalkContext{
 		VisitFunc: opts.showAddressesBelongs,
 	}
-	return opts.WalkIndexFiles(cache.Index_Bloom, ctx, blockNums)
+	return opts.WalkIndexFiles(&ctx, cache.Index_Bloom, blockNums)
 }

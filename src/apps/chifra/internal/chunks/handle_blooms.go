@@ -10,7 +10,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *ChunksOptions) showBloom(path string, data *interface{}, first bool) (bool, error) {
+func (opts *ChunksOptions) showBloom(ctx *WalkContext, path string, first bool) (bool, error) {
 	var bloom index.ChunkBloom
 	index.ReadBloom(&bloom, path)
 
@@ -56,5 +56,5 @@ func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
 	ctx := WalkContext{
 		VisitFunc: opts.showBloom,
 	}
-	return opts.WalkIndexFiles(cache.Index_Bloom, ctx, blockNums)
+	return opts.WalkIndexFiles(&ctx, cache.Index_Bloom, blockNums)
 }
