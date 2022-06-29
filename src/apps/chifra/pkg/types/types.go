@@ -107,9 +107,10 @@ type SimpleIndex struct {
 }
 
 type SimpleIndexAddress struct {
-	Address string `json:"address"`
-	Offset  uint32 `json:"offset"`
-	Count   uint32 `json:"count"`
+	Address     string `json:"address"`
+	Offset      uint32 `json:"offset"`
+	Count       uint32 `json:"count"`
+	Cummulative uint32 `json:"cummulative"`
 }
 
 type SimpleIndexAppearance struct {
