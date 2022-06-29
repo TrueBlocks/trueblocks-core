@@ -15,14 +15,14 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *ChunksOptions) showFinalizedStats(path string, first bool) (bool, error) {
+func (opts *ChunksOptions) showFinalizedStats(path string, data *interface{}, first bool) (bool, error) {
 	// TODO: Fix export without arrays
 	obj := NewChunkStats(path)
 	err := opts.Globals.RenderObject(obj, first)
 	return err == nil, err
 }
 
-func (opts *ChunksOptions) showStagingStats(path string, first bool) (bool, error) {
+func (opts *ChunksOptions) showStagingStats(path string, data *interface{}, first bool) (bool, error) {
 	if strings.Contains(path, "000000000-temp.txt") {
 		return true, nil
 	}
@@ -102,12 +102,18 @@ func (opts *ChunksOptions) HandleStats(blockNums []uint64) error {
 		return err
 	}
 
-	err = opts.WalkIndexFiles(cache.Index_Bloom, opts.showFinalizedStats, blockNums)
+	ctx := WalkContext{
+		VisitFunc: opts.showFinalizedStats,
+	}
+	err = opts.WalkIndexFiles(cache.Index_Bloom, ctx, blockNums)
 	if err != nil {
 		return err
 	}
 
-	err = opts.WalkIndexFiles(cache.Index_Staging, opts.showStagingStats, blockNums)
+	ctx = WalkContext{
+		VisitFunc: opts.showStagingStats,
+	}
+	err = opts.WalkIndexFiles(cache.Index_Staging, ctx, blockNums)
 	if err != nil {
 		return err
 	}

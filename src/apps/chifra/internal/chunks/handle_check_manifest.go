@@ -66,8 +66,7 @@ func (comp *CompareState) checkArrays(report *types.CheckReport) error {
 			}
 		}
 		if !alreadyReported {
-			parts := strings.Split(report.Reason, "2")
-			fmt.Println(parts)
+			parts := strings.Split(report.Reason, " to ")
 			msg := fmt.Sprintf("array lengths are different: %s(%d) %s(%d)", parts[0], len(comp.arrayA), parts[1], len(comp.arrayB))
 			report.ErrorStrs = append(report.ErrorStrs, msg)
 		}
@@ -78,7 +77,7 @@ func (comp *CompareState) checkArrays(report *types.CheckReport) error {
 		theMap[item] = true
 	}
 
-	parts := strings.Split(report.Reason, "2")
+	parts := strings.Split(report.Reason, " to ")
 	for testId, item := range comp.arrayB {
 		if testId > len(comp.arrayA)-1 {
 			continue

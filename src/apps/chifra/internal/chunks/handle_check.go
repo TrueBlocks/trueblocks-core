@@ -66,7 +66,7 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 		return err
 	}
 
-	reports = append(reports, types.CheckReport{Reason: "Internal"})
+	reports = append(reports, types.CheckReport{Reason: "Internally consistent"})
 	if err := opts.CheckInternal(fileNames, blockNums, &reports[1]); err != nil {
 		return err
 	}
@@ -87,9 +87,24 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 	}
 
 	// a string array of the ranges from the remote manifest
+	reports = append(reports, types.CheckReport{Reason: "Consistent hashes"})
 	remoteArray := []string{}
 	for _, chunk := range remoteMan.Chunks {
 		remoteArray = append(remoteArray, chunk.Range)
+		if len(chunk.BloomHash) != 46 {
+			msg := fmt.Sprintf("%s: Invalid BloomHash (%s)", chunk.Range, chunk.BloomHash)
+			if len(chunk.BloomHash) == 0 {
+				msg = fmt.Sprintf("%s: Empty BloomHash", chunk.Range)
+			}
+			reports[2].ErrorStrs = append(reports[2].ErrorStrs, msg)
+		}
+		if len(chunk.IndexHash) != 46 {
+			msg := fmt.Sprintf("%s: Invalid IndexHash (%s)", chunk.Range, chunk.IndexHash)
+			if len(chunk.BloomHash) == 0 {
+				msg = fmt.Sprintf("%s: Empty IndexHash", chunk.Range)
+			}
+			reports[2].ErrorStrs = append(reports[2].ErrorStrs, msg)
+		}
 	}
 
 	// a string array of the actual files in the index
@@ -100,20 +115,20 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 	}
 
 	// compare remote manifest to cached manifest
-	reports = append(reports, types.CheckReport{Reason: "Remote2Cache"})
-	if err := opts.CheckManifest(remoteArray, cacheArray, &reports[2]); err != nil {
+	reports = append(reports, types.CheckReport{Reason: "Remote Manifest to Cached Manifest"})
+	if err := opts.CheckManifest(remoteArray, cacheArray, &reports[3]); err != nil {
 		return err
 	}
 
 	// compare with çached manifest with files on disc
-	reports = append(reports, types.CheckReport{Reason: "Disc2Cache"})
-	if err := opts.CheckManifest(fnArray, cacheArray, &reports[3]); err != nil {
+	reports = append(reports, types.CheckReport{Reason: "Disc Files to Cached Manifest"})
+	if err := opts.CheckManifest(fnArray, cacheArray, &reports[4]); err != nil {
 		return err
 	}
 
 	// compare with remote manifest with files on disc
-	reports = append(reports, types.CheckReport{Reason: "Disc2Remote"})
-	if err := opts.CheckManifest(fnArray, remoteArray, &reports[4]); err != nil {
+	reports = append(reports, types.CheckReport{Reason: "Disc Files to Remote Manifest"})
+	if err := opts.CheckManifest(fnArray, remoteArray, &reports[5]); err != nil {
 		return err
 	}
 
