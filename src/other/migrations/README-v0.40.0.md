@@ -1,3 +1,6 @@
+// TODO: BOGUS - WHAT HAPPENS TO OTHER CHAINS?
+// TODO: BOGUS - WHAT HAPPENS IF THE USER HAS CHANGED DEFAULT CHAIN
+
 # v0.40.0 Fixes Unchained Index
 
 (June 25, 2022)
@@ -76,6 +79,7 @@ This part of the migration does three things:
 Run
 
 ```[bash]
+// TODO: BOGUS - THIS DOES NOT WORK
 chifra status --migrate test
 ```
 
