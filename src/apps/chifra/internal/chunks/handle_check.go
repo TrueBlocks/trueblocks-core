@@ -62,12 +62,12 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 		return fileNames[i] < fileNames[j]
 	})
 
-	manFromCache, err := manifest.ReadManifest(opts.Globals.Chain, manifest.FromCache)
+	cacheManifest, err := manifest.ReadManifest(opts.Globals.Chain, manifest.FromCache)
 	if err != nil {
 		return err
 	}
 
-	manFromContract, err := manifest.ReadManifest(opts.Globals.Chain, manifest.FromContract)
+	remoteManifest, err := manifest.ReadManifest(opts.Globals.Chain, manifest.FromContract)
 	if err != nil {
 		return err
 	}
@@ -84,7 +84,7 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 
 	// a string array of the ranges in the local manifest
 	cacheArray := []string{}
-	for _, chunk := range manFromCache.Chunks {
+	for _, chunk := range cacheManifest.Chunks {
 		cacheArray = append(cacheArray, chunk.Range)
 	}
 	sort.Slice(cacheArray, func(i, j int) bool {
@@ -93,7 +93,7 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 
 	// a string array of the ranges from the remote manifest
 	remoteArray := []string{}
-	for _, chunk := range manFromContract.Chunks {
+	for _, chunk := range remoteManifest.Chunks {
 		remoteArray = append(remoteArray, chunk.Range)
 	}
 	sort.Slice(remoteArray, func(i, j int) bool {
@@ -115,7 +115,7 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 	reports = append(reports, int)
 
 	con := types.CheckReport{Reason: "Consistent hashes"}
-	if err := opts.CheckHashes(manFromCache, manFromContract, &con); err != nil {
+	if err := opts.CheckHashes(cacheManifest, remoteManifest, &con); err != nil {
 		return err
 	}
 	reports = append(reports, con)
