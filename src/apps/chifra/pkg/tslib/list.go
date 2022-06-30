@@ -17,7 +17,7 @@ import (
 )
 
 // GetSpecials returns a chain-specific list of special block names and numbers
-func GetSpecials(chain string) ([]types.NamedBlock, error) {
+func GetSpecials(chain string) ([]types.SimpleNamedBlock, error) {
 	specialsPath := config.GetPathToChainConfig(chain) + "specials.csv"
 	_, err := os.Stat(specialsPath)
 	if err != nil {
@@ -26,7 +26,7 @@ func GetSpecials(chain string) ([]types.NamedBlock, error) {
 			// should not happen, but we want to know if it does
 			logger.Log(logger.Info, "No special block file found for chain ", chain)
 		}
-		return []types.NamedBlock{}, nil
+		return []types.SimpleNamedBlock{}, nil
 	}
 
 	file, err := os.Open(specialsPath)
@@ -37,7 +37,7 @@ func GetSpecials(chain string) ([]types.NamedBlock, error) {
 	reader.FieldsPerRecord = 4
 
 	first := true
-	specials := []types.NamedBlock{}
+	specials := []types.SimpleNamedBlock{}
 	for {
 		record, err := reader.Read()
 		if err == io.EOF {
@@ -49,7 +49,7 @@ func GetSpecials(chain string) ([]types.NamedBlock, error) {
 		if !first {
 			bn, _ := strconv.ParseUint(record[0], 10, 64)
 			ts, _ := strconv.ParseUint(record[2], 10, 64)
-			specials = append(specials, types.NamedBlock{
+			specials = append(specials, types.SimpleNamedBlock{
 				BlockNumber: bn,
 				Name:        record[1],
 				TimeStamp:   ts,

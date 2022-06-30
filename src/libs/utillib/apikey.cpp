@@ -286,6 +286,13 @@ const char* STR_DISPLAY_APIKEY =
 // EXISTING_CODE
 //--------------------------------------------------------------------------------
 string_q getApiKey(const string_q& apiName, const string_q& signup) {
+    // Try to read the key from env variable
+    const char* STR_KEY_ENV = "TB_SETTINGS_[{API_NAME}]KEY";
+    string_q env_name = substitute(STR_KEY_ENV, "[{API_NAME}]", toUpper(apiName));
+    string_q env_value = getEnvStr(env_name);
+    if (!env_value.empty())
+        return env_value;
+
     string_q key = getGlobalConfig("")->getConfigStr("settings", toLower(apiName) + "_key", "<not_set>");
     if (!key.empty() && key != "<not_set>")
         return key;

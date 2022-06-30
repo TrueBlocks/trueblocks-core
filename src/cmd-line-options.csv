@@ -235,6 +235,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 21962,apps,Admin,chunks,chunkMan,details,d,,false,false,true,true,gocmd,switch,<boolean>,for manifest and addresses options only&#44; display full details of the report
 21970,apps,Admin,chunks,chunkMan,check,c,,false,false,true,true,gocmd,switch,<boolean>,depends on mode&#44; checks for internal consistency of the data type
 21960,apps,Admin,chunks,chunkMan,belongs,b,,false,false,true,true,gocmd,switch,<boolean>,checks if the given address appears in the given chunk
+21970,apps,Admin,chunks,chunkMan,repair,e,,false,false,false,false,gocmd,switch,<boolean>,valid for manifest option only&#44; repair the given chunk (requires block number)
 21965,apps,Admin,chunks,chunkMan,pin_chunks,p,,false,false,true,false,gocmd,switch,<boolean>,gzip each chunk&#44; push it to IPFS&#44; and update and publish the manifest
 21967,apps,Admin,chunks,chunkMan,pin_data,a,,false,false,true,false,gocmd,switch,<boolean>,gzip the databases&#44; push them to IPFS&#44; and update and publish the manifest
 21970,apps,Admin,chunks,chunkMan,clean,n,,false,false,true,false,gocmd,switch,<boolean>,retrieve all pins on Pinata&#44; compare to manifest&#44; remove any extraneous remote pins

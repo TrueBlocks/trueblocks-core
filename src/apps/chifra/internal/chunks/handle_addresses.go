@@ -12,7 +12,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *ChunksOptions) showAddresses(path string, first bool) (bool, error) {
+func (opts *ChunksOptions) showAddresses(ctx *WalkContext, path string, first bool) (bool, error) {
 	path = index.ToIndexPath(path)
 
 	indexChunk, err := index.NewChunkData(path)
@@ -41,6 +41,7 @@ func (opts *ChunksOptions) showAddresses(path string, first bool) (bool, error) 
 		if err != nil {
 			return false, err
 		}
+		cnt++
 
 		if opts.Details {
 			apps, err := indexChunk.ReadAppearanceRecordsAndResetOffset(&obj)
@@ -54,7 +55,6 @@ func (opts *ChunksOptions) showAddresses(path string, first bool) (bool, error) 
 				}
 			}
 		}
-		cnt++
 	}
 
 	return true, nil
@@ -69,5 +69,8 @@ func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
 		return err
 	}
 
-	return opts.WalkIndexFiles(cache.Index_Bloom, opts.showAddresses, blockNums)
+	ctx := WalkContext{
+		VisitFunc: opts.showAddresses,
+	}
+	return opts.WalkIndexFiles(&ctx, cache.Index_Bloom, blockNums)
 }

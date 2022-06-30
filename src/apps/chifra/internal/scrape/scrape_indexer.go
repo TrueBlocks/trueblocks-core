@@ -42,7 +42,8 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 				if err != nil {
 					fmt.Println("publishManifest returned an error:", err)
 				}
-				// // TODO: BOGUS - MANIFEST WRITING THE MANIFEST AND PINNING
+				// TODO: BOGUS -- PIN THE FILE TO PINATA -- REPORT THE IPFS HASH
+				// TODO: BOGUS - MANIFEST WRITING THE MANIFEST AND PINNING
 				// progressNow, _ := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
 				// // fmt.Println(colors.BrightBlue, progressThen.Finalized, colors.BrightWhite, progressNow.Finalized, colors.Off, progressNow.Finalized > progressThen.Finalized)
 				// if progressNow.Finalized > progressThen.Finalized {
@@ -98,10 +99,11 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 
 // TODO: BOGUS - MANIFEST WRITING THE MANIFEST
 func (opts *ScrapeOptions) publishManifest() error {
-	manFromCache, err := manifest.ReadManifest(opts.Globals.Chain, manifest.FromCache)
+	cacheManifest, err := manifest.ReadManifest(opts.Globals.Chain, manifest.FromCache)
 	if err != nil {
 		return err
 	}
+	// TODO: BOGUS DOES THIS DESTROY THE FILE ON DISC BEFORE WRITING TO IT? I THINK IT DOES.
 	fileName := config.GetPathToChainConfig(opts.Globals.Chain) + "manifest.json"
 	w, err := os.Create(fileName)
 	if err != nil {
@@ -112,5 +114,5 @@ func (opts *ScrapeOptions) publishManifest() error {
 	if err != nil {
 		return fmt.Errorf("locking file: %s", err)
 	}
-	return opts.Globals.RenderManifest(w, "json", manFromCache)
+	return opts.Globals.RenderManifest(w, "json", cacheManifest)
 }

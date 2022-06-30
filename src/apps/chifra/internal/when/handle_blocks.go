@@ -12,7 +12,7 @@ import (
 
 func (opts *WhenOptions) HandleWhenShowBlocks() error {
 	// TODO: Fix export without arrays
-	err := opts.Globals.RenderHeader(types.NamedBlock{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+	err := opts.Globals.RenderHeader(types.SimpleNamedBlock{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
 	defer opts.Globals.RenderFooter()
 	if err != nil {
 		return err

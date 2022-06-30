@@ -55,10 +55,14 @@ func init() {
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Details, "details", "d", false, "for manifest and addresses options only, display full details of the report")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Check, "check", "c", false, "depends on mode, checks for internal consistency of the data type")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Belongs, "belongs", "b", false, "checks if the given address appears in the given chunk")
+	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Repair, "repair", "e", false, "valid for manifest option only, repair the given chunk (requires block number) (hidden)")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().PinChunks, "pin_chunks", "p", false, "gzip each chunk, push it to IPFS, and update and publish the manifest")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().PinData, "pin_data", "a", false, "gzip the databases, push them to IPFS, and update and publish the manifest")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Clean, "clean", "n", false, "retrieve all pins on Pinata, compare to manifest, remove any extraneous remote pins")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Remote, "remote", "r", false, "for some options, force processing from remote data")
+	if os.Getenv("TEST_MODE") != "true" {
+		chunksCmd.Flags().MarkHidden("repair")
+	}
 	globals.InitGlobals(chunksCmd, &chunksPkg.GetOptions().Globals)
 
 	chunksCmd.SetUsageTemplate(UsageWithNotes(notesChunks))

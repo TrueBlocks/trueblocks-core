@@ -22,7 +22,7 @@ func (opts *ChunksOptions) CheckInternal(fileNames []string, blockNums []uint64,
 		report.CheckedCnt++
 		header, err := index.ReadHeaderFromFilename(opts.Globals.Chain, fileName)
 		if err != nil {
-			report.ErrorStrs = append(report.ErrorStrs, fmt.Sprint(err))
+			report.MsgStrings = append(report.MsgStrings, fmt.Sprint(err))
 
 		} else {
 			rng, _ := cache.RangeFromFilename(fileName)
@@ -32,17 +32,17 @@ func (opts *ChunksOptions) CheckInternal(fileNames []string, blockNums []uint64,
 
 			if header.Magic != file.MagicNumber || (testId == 1) {
 				msg := fmt.Sprintf("%s: Magic number expected (0x%x) got (0x%x)", rng, header.Magic, file.MagicNumber)
-				report.ErrorStrs = append(report.ErrorStrs, msg)
+				report.MsgStrings = append(report.MsgStrings, msg)
 
 			} else if header.Hash.Hex() != unchained.ZeroMagicHash && header.Hash.Hex() != unchained.HeaderMagicHash || (testId == 2) {
 				// TODO: BOGUS - MIGRATION CHECKING HASHES
 				msg := fmt.Sprintf("%s: Header hash expected (%s) got (%s)", rng, header.Hash.Hex(), unchained.HeaderMagicHash)
-				report.ErrorStrs = append(report.ErrorStrs, msg)
+				report.MsgStrings = append(report.MsgStrings, msg)
 
 			} else if rng.First > 3000000 && header.AppearanceCount > 2005000 || testId == 3 {
 				// TODO: BOGUS - MIGRATION INVALID TEST
 				msg := fmt.Sprintf("%s: Too many addresses? (%d)", rng, header.AppearanceCount)
-				report.ErrorStrs = append(report.ErrorStrs, msg)
+				report.MsgStrings = append(report.MsgStrings, msg)
 
 			} else {
 				report.PassedCnt++
@@ -50,8 +50,5 @@ func (opts *ChunksOptions) CheckInternal(fileNames []string, blockNums []uint64,
 			}
 		}
 	}
-
-	report.FailedCnt = report.CheckedCnt - report.PassedCnt
-	report.SkippedCnt = report.VisitedCnt - report.CheckedCnt
 	return nil
 }

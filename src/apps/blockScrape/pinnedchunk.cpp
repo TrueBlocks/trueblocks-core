@@ -87,6 +87,9 @@ string_q CPinnedChunk::getValueByName(const string_q& fieldName) const {
             if (fieldName % "indexHash") {
                 return indexHash;
             }
+            if (fieldName % "ipfs_pin_hash") {
+                return ipfs_pin_hash;
+            }
             break;
         default:
             break;
@@ -125,6 +128,10 @@ bool CPinnedChunk::setValueByName(const string_q& fieldNameIn, const string_q& f
                 indexHash = fieldValue;
                 return true;
             }
+            if (fieldName % "ipfs_pin_hash") {
+                ipfs_pin_hash = fieldValue;
+                return true;
+            }
             break;
         default:
             break;
@@ -154,6 +161,7 @@ bool CPinnedChunk::Serialize(CArchive& archive) {
     archive >> fileName;
     archive >> bloomHash;
     archive >> indexHash;
+    archive >> ipfs_pin_hash;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -170,6 +178,7 @@ bool CPinnedChunk::SerializeC(CArchive& archive) const {
     archive << fileName;
     archive << bloomHash;
     archive << indexHash;
+    archive << ipfs_pin_hash;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -222,6 +231,7 @@ void CPinnedChunk::registerClass(void) {
     ADD_FIELD(CPinnedChunk, "fileName", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CPinnedChunk, "bloomHash", T_IPFSHASH | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CPinnedChunk, "indexHash", T_IPFSHASH | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CPinnedChunk, "ipfs_pin_hash", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CPinnedChunk, "schema");

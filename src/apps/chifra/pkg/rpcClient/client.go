@@ -126,6 +126,80 @@ func TxHashFromHashAndId(provider, hash string, txId uint64) (string, error) {
 	return tx.Hash().Hex(), nil
 }
 
+// TxFromNumberAndId returns a actual transaction
+// func TxFromNumberAndId(provider string, blkNum, txId uint64) (ethTypes.Transaction, error) {
+// 	ec := GetClient(provider)
+// 	defer ec.Close()
+
+// 	block, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(blkNum))
+// 	if err != nil {
+// 		return ethTypes.Transaction{}, err
+// 	}
+
+// 	tx, err := ec.TransactionInBlock(context.Background(), block.Hash(), uint(txId))
+// 	if err != nil {
+// 		return ethTypes.Transaction{}, err
+// 	}
+
+// 	return *tx, nil
+// }
+
+func GetTransactionReceipt(provider string, bn uint64, txid uint64) (types.SimpleReceipt, error) {
+	// TODO: BOGUS THIS WORK IS INCOMPLETE
+	// tx, err := TxFromNumberAndId(provider, bn, txid)
+	// if err != nil {
+	// 	return types.SimpleReceipt{}, err
+	// }
+
+	// var receipt Receipt
+	// var payload = RPCPayload{
+	// 	Jsonrpc:   "2.0",
+	// 	Method:    "eth_getTransactionReceipt",
+	// 	RPCParams: RPCParams{tx.Hash().Hex()},
+	// 	ID:        1005,
+	// }
+	// err = FromRpc(provider, &payload, &receipt)
+	// if err != nil {
+	// 	return types.SimpleReceipt{}, err
+	// }
+
+	// const Byzantium = 4370000
+	// var ret types.SimpleReceipt
+	// // ret.BlockNumber = uint32(receipt.BlockNumber.Uint64())
+	// // ret.TransactionIndex = uint32(receipt.TransactionIndex)
+	// // ret.Hash = receipt.TxHash.Hex()
+	// ret.GasUsed, err = strconv.ParseUint(receipt.Result.GasUsed, 10, 32)
+	// if err != nil {
+	// 	return ret, err
+	// }
+
+	// if receipt.Result.Status != nil {
+	// } else {
+	// }
+	// if err != nil {
+	// 	return ret, err
+	// }
+
+	// if receipt.BlockNumber.Uint64() > Byzantium {
+	// 	val := uint32(receipt.Status)
+	// 	ret.Status = &val
+	// 	ret.IsError = *ret.Status != 1
+	// }
+	// ret.ContractAddress = receipt.ContractAddress.Hex()
+	// ret.EffectiveGasPrice = tx.EffectiveGasPrice
+	// for _, l := range receipt.Logs {
+	// 	var log types.SimpleLog
+	// 	log.Address = l.Address.Hex()
+	// 	for _, t := range l.Topics {
+	// 		log.Topics = append(log.Topics, t.Hex())
+	// 	}
+	// 	log.Data = hex.EncodeToString(l.Data)
+	// 	ret.Logs = append(ret.Logs, log)
+	// }
+	// return ret, nil
+	return types.SimpleReceipt{GasUsed: 12}, nil
+}
+
 // TxHashFromNumberAndId returns a transaction's hash if it's a valid transaction
 func TxHashFromNumberAndId(provider string, blkNum, txId uint64) (string, error) {
 	ec := GetClient(provider)
@@ -146,7 +220,6 @@ func TxHashFromNumberAndId(provider string, blkNum, txId uint64) (string, error)
 
 // TxNumberAndIdFromHash returns a transaction's blockNum and tx_id given its hash
 func TxNumberAndIdFromHash(provider string, hash string) (uint64, uint64, error) {
-	// RPCPayload is used during to make calls to the RPC.
 	var trans Transaction
 	transPayload := RPCPayload{
 		Jsonrpc:   "2.0",
@@ -257,7 +330,6 @@ func (ec *Client) SuggestGasPrice(ctx context.Context) (*big.Int, error)
 func (ec *Client) SuggestGasTipCap(ctx context.Context) (*big.Int, error)
 func (ec *Client) SyncProgress(ctx context.Context) (*ethereum.SyncProgress, error)
 func (ec *Client) TransactionCount(ctx context.Context, blockHash common.Hash) (uint, error)
-func (ec *Client) TransactionReceipt(ctx context.Context, txHash common.Hash) (*types.Receipt, error)
 func (ec *Client) TransactionSender(ctx context.Context, tx *types.Transaction, block common.Hash, index uint) (common.Address, error)
 */
 
@@ -279,7 +351,7 @@ func DecodeHex(hex string) []byte {
 	return hexutil.MustDecode(hex)
 }
 
-func GetBlockByNumber(chain string, bn uint64) (types.NamedBlock, error) {
+func GetBlockByNumber(chain string, bn uint64) (types.SimpleNamedBlock, error) {
 	var block BlockHeader
 	var payload = RPCPayload{
 		Jsonrpc:   "2.0",
@@ -290,21 +362,21 @@ func GetBlockByNumber(chain string, bn uint64) (types.NamedBlock, error) {
 	rpcProvider := config.GetRpcProvider(chain)
 	err := FromRpc(rpcProvider, &payload, &block)
 	if err != nil {
-		return types.NamedBlock{}, err
+		return types.SimpleNamedBlock{}, err
 	}
 	if len(block.Result.Number) == 0 || len(block.Result.Timestamp) == 0 {
 		msg := fmt.Sprintf("block number or timestamp for %d not found", bn)
-		return types.NamedBlock{}, fmt.Errorf(msg)
+		return types.SimpleNamedBlock{}, fmt.Errorf(msg)
 	}
 	n, _ := strconv.ParseUint(block.Result.Number[2:], 16, 64)
 	ts, _ := strconv.ParseUint(block.Result.Timestamp[2:], 16, 64)
 	if n == 0 {
 		ts, err = GetBlockZeroTs(chain)
 		if err != nil {
-			return types.NamedBlock{}, err
+			return types.SimpleNamedBlock{}, err
 		}
 	}
-	return types.NamedBlock{
+	return types.SimpleNamedBlock{
 		BlockNumber: n,
 		TimeStamp:   ts,
 	}, nil
@@ -327,4 +399,57 @@ func GetCodeAt(chain, addr string, bn uint64) ([]byte, error) {
 	ec := GetClient(provider)
 	address := common.HexToAddress(addr)
 	return ec.CodeAt(context.Background(), address, nil) // nil is latest block
+}
+
+// Id_2_TxHash takes a valid identifier (txHash/blockHash, blockHash.txId, blockNumber.txId)
+// and returns the transaction hash represented by that identifier. (If it's a valid transaction.
+// It may not be because transaction hashes and block hashes are both 32-byte hex)
+func Id_2_TxHash(chain, arg string, isBlockHash func(arg string) bool) (string, error) {
+	provider := config.GetRpcProvider(chain)
+	CheckRpc(provider)
+
+	// simple case first
+	if !strings.Contains(arg, ".") {
+		// We know it's a hash, but we want to know if it's a legitimate tx on chain
+		return TxHashFromHash(provider, arg)
+	}
+
+	parts := strings.Split(arg, ".")
+	if len(parts) != 2 {
+		panic("Programmer error - valid transaction identifiers with a `.` must have two and only two parts")
+	}
+
+	if isBlockHash(parts[0]) {
+		txId, err := strconv.ParseUint(parts[1], 10, 64)
+		if err != nil {
+			return "", nil
+		}
+		return TxHashFromHashAndId(provider, parts[0], txId)
+	}
+
+	blockNum, err := strconv.ParseUint(parts[0], 10, 64)
+	if err != nil {
+		return "", nil
+	}
+	txId, err := strconv.ParseUint(parts[1], 10, 64)
+	if err != nil {
+		return "", nil
+	}
+
+	return TxHashFromNumberAndId(provider, blockNum, txId)
+}
+
+func Id_2_BlockHash(chain, arg string, isBlockHash func(arg string) bool) (string, error) {
+	provider := config.GetRpcProvider(chain)
+	CheckRpc(provider)
+
+	if isBlockHash(arg) {
+		return BlockHashFromHash(provider, arg)
+	}
+
+	blockNum, err := strconv.ParseUint(arg, 10, 64)
+	if err != nil {
+		return "", nil
+	}
+	return BlockHashFromNumber(provider, blockNum)
 }

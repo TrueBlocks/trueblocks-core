@@ -6,7 +6,6 @@ package chunksPkg
 
 import (
 	"fmt"
-	"sort"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -24,13 +23,6 @@ type CompareState struct {
 }
 
 func (opts *ChunksOptions) CheckManifest(arrayA, arrayB []string, report *types.CheckReport) error {
-	sort.Slice(arrayA, func(i, j int) bool {
-		return arrayA[i] < arrayA[j]
-	})
-	sort.Slice(arrayB, func(i, j int) bool {
-		return arrayB[i] < arrayB[j]
-	})
-
 	comp := CompareState{
 		testMode: opts.Globals.TestMode,
 		details:  opts.Details,
@@ -60,16 +52,15 @@ func (comp *CompareState) checkArrays(report *types.CheckReport) error {
 
 	if !comp.testMode && len(comp.arrayA) != len(comp.arrayB) {
 		alreadyReported := false
-		for _, e := range report.ErrorStrs {
+		for _, e := range report.MsgStrings {
 			if strings.Contains(e, "array lengths are different") {
 				alreadyReported = true
 			}
 		}
 		if !alreadyReported {
-			parts := strings.Split(report.Reason, "2")
-			fmt.Println(parts)
+			parts := strings.Split(report.Reason, " to ")
 			msg := fmt.Sprintf("array lengths are different: %s(%d) %s(%d)", parts[0], len(comp.arrayA), parts[1], len(comp.arrayB))
-			report.ErrorStrs = append(report.ErrorStrs, msg)
+			report.MsgStrings = append(report.MsgStrings, msg)
 		}
 	}
 
@@ -78,7 +69,7 @@ func (comp *CompareState) checkArrays(report *types.CheckReport) error {
 		theMap[item] = true
 	}
 
-	parts := strings.Split(report.Reason, "2")
+	parts := strings.Split(report.Reason, " to ")
 	for testId, item := range comp.arrayB {
 		if testId > len(comp.arrayA)-1 {
 			continue
@@ -89,16 +80,13 @@ func (comp *CompareState) checkArrays(report *types.CheckReport) error {
 		report.VisitedCnt++
 		report.CheckedCnt++
 		if !theMap[item] || testId == comp.fail {
-			if len(report.ErrorStrs) < 4 || comp.details {
+			if len(report.MsgStrings) < 4 || comp.details {
 				msg := fmt.Sprintf(comp.msg, item, parts[0], parts[1], marker)
-				report.ErrorStrs = append(report.ErrorStrs, msg)
+				report.MsgStrings = append(report.MsgStrings, msg)
 			}
 		} else {
 			report.PassedCnt++
 		}
 	}
-
-	report.FailedCnt = report.CheckedCnt - report.PassedCnt
-	report.SkippedCnt = report.VisitedCnt - report.CheckedCnt
 	return nil
 }

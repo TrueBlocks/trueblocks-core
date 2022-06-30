@@ -46,7 +46,7 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 	// EXISTING_CODE
 	handled = true
 
-	blockNums, err := blockRange.GetBlockNumArray(opts.Globals.Chain, opts.BlockIds)
+	blockNums, err := blockRange.GetBlockNumberArray(opts.Globals.Chain, opts.BlockIds)
 	if opts.Globals.TestMode && len(blockNums) > 200 {
 		blockNums = blockNums[:200]
 	}
@@ -64,6 +64,8 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 		}
 		// TODO: BOGUS - FEATURE NEED TO COMPLETE PIN_CHUNKS AND PIN_DATA
 		return
+	} else if opts.Repair {
+		err = opts.HandleRepair(blockNums)
 
 	} else {
 		switch opts.Mode {

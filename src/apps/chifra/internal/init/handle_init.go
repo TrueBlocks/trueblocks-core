@@ -38,10 +38,6 @@ func (opts *InitOptions) HandleInit() error {
 	}
 
 	unchained.PrintHeader(chain, opts.Globals.TestMode)
-	err = opts.SaveManifest(chain, "txt", downloadedManifest)
-	if err != nil {
-		return err
-	}
 
 	err = opts.SaveManifest(chain, "json", downloadedManifest)
 	if err != nil {

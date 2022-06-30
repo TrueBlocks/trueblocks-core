@@ -26,6 +26,7 @@ type ChunksOptions struct {
 	Details   bool
 	Check     bool
 	Belongs   bool
+	Repair    bool
 	PinChunks bool
 	PinData   bool
 	Clean     bool
@@ -43,6 +44,7 @@ func (opts *ChunksOptions) TestLog() {
 	logger.TestLog(opts.Details, "Details: ", opts.Details)
 	logger.TestLog(opts.Check, "Check: ", opts.Check)
 	logger.TestLog(opts.Belongs, "Belongs: ", opts.Belongs)
+	logger.TestLog(opts.Repair, "Repair: ", opts.Repair)
 	logger.TestLog(opts.PinChunks, "PinChunks: ", opts.PinChunks)
 	logger.TestLog(opts.PinData, "PinData: ", opts.PinData)
 	logger.TestLog(opts.Clean, "Clean: ", opts.Clean)
@@ -72,6 +74,8 @@ func ChunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 			opts.Check = true
 		case "belongs":
 			opts.Belongs = true
+		case "repair":
+			opts.Repair = true
 		case "pinChunks":
 			opts.PinChunks = true
 		case "pinData":

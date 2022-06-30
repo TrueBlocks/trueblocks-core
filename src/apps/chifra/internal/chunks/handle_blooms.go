@@ -10,7 +10,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *ChunksOptions) showBloom(path string, first bool) (bool, error) {
+func (opts *ChunksOptions) showBloom(ctx *WalkContext, path string, first bool) (bool, error) {
 	var bloom index.ChunkBloom
 	index.ReadBloom(&bloom, path)
 
@@ -28,7 +28,7 @@ func (opts *ChunksOptions) showBloom(path string, first bool) (bool, error) {
 	return true, nil
 }
 
-func NewSimpleBloom(stats types.SimpleChunkStats, bloom index.ChunkBloom) types.SimpleBloom {
+func NewSimpleBloom(stats types.ChunksReport, bloom index.ChunkBloom) types.SimpleBloom {
 	nInserted := 0
 	for _, bl := range bloom.Blooms {
 		nInserted += int(bl.NInserted)
@@ -52,5 +52,9 @@ func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
 	if err != nil {
 		return err
 	}
-	return opts.WalkIndexFiles(cache.Index_Bloom, opts.showBloom, blockNums)
+
+	ctx := WalkContext{
+		VisitFunc: opts.showBloom,
+	}
+	return opts.WalkIndexFiles(&ctx, cache.Index_Bloom, blockNums)
 }

@@ -13,32 +13,40 @@ import (
 )
 
 // TODO: Concurrent?
-func (opts *ChunksOptions) CheckSequential(fileNames []string, blockNums []uint64, report *types.CheckReport) error {
+func (opts *ChunksOptions) CheckSequential(fnArray, cacheArray, remoteArray []string, report *types.CheckReport) error {
+	if err := opts.checkSequential("disc", fnArray, report); err != nil {
+		return err
+	}
+	if err := opts.checkSequential("cache", cacheArray, report); err != nil {
+		return err
+	}
+	if err := opts.checkSequential("contract", remoteArray, report); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (opts *ChunksOptions) checkSequential(which string, array []string, report *types.CheckReport) error {
 	// TODO: Technically, allow_missing means missing inside the file not in the filenames
 	allow_missing := config.ReadBlockScrape(opts.Globals.Chain).Settings.Allow_missing
 
-	// We don't check the first one since there's nothing before it
-	report.VisitedCnt++
-	report.CheckedCnt++
-	report.PassedCnt++
-
 	prev := cache.NotARange
-	for _, fileName := range fileNames {
-		fR, _ := cache.RangeFromFilename(fileName)
-		if prev != cache.NotARange && prev != fR {
+	for _, item := range array {
+		fR, _ := cache.RangeFromFilename(item)
+		if prev != cache.NotARange {
 			report.VisitedCnt++
 			report.CheckedCnt++
-			if !fR.Follows(prev, !allow_missing) {
-				report.FailedCnt++
-				report.ErrorStrs = append(report.ErrorStrs, fmt.Sprintf("%s does not sequentially follow %s", fR, prev))
-				report.FailedCnt++
+			if prev != fR {
+				if !fR.Follows(prev, !allow_missing) {
+					report.MsgStrings = append(report.MsgStrings, fmt.Sprintf("In %s array, not sequental %s:%s", which, prev, fR))
+				} else {
+					report.PassedCnt++
+				}
 			} else {
-				report.PassedCnt++
+				report.MsgStrings = append(report.MsgStrings, fmt.Sprintf("Duplicate at %s in %s array", fR, which))
 			}
 		}
 		prev = fR
 	}
-	report.FailedCnt = report.CheckedCnt - report.PassedCnt
-	report.SkippedCnt = report.VisitedCnt - report.CheckedCnt
 	return nil
 }

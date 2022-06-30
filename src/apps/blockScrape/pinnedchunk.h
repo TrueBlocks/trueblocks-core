@@ -28,6 +28,7 @@ class CPinnedChunk : public CBaseNode {
     string_q fileName;
     ipfshash_t bloomHash;
     ipfshash_t indexHash;
+    string_q ipfs_pin_hash;
 
   public:
     CPinnedChunk(void);
@@ -93,6 +94,7 @@ inline void CPinnedChunk::initialize(void) {
     fileName = "";
     bloomHash = "";
     indexHash = "";
+    ipfs_pin_hash = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -106,6 +108,7 @@ inline void CPinnedChunk::duplicate(const CPinnedChunk& pi) {
     fileName = pi.fileName;
     bloomHash = pi.bloomHash;
     indexHash = pi.indexHash;
+    ipfs_pin_hash = pi.ipfs_pin_hash;
 
     // EXISTING_CODE
     // EXISTING_CODE

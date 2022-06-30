@@ -11,7 +11,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *ChunksOptions) showIndex(path string, first bool) (bool, error) {
+func (opts *ChunksOptions) showIndex(ctx *WalkContext, path string, first bool) (bool, error) {
 	path = index.ToIndexPath(path)
 	header, err := index.ReadHeaderFromFilename(opts.Globals.Chain, path)
 	if err != nil {
@@ -68,5 +68,8 @@ func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
 		return err
 	}
 
-	return opts.WalkIndexFiles(cache.Index_Bloom, opts.showIndex, blockNums)
+	ctx := WalkContext{
+		VisitFunc: opts.showIndex,
+	}
+	return opts.WalkIndexFiles(&ctx, cache.Index_Bloom, blockNums)
 }

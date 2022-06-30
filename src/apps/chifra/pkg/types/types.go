@@ -17,44 +17,11 @@ type SimpleTimestamp struct {
 	Diff        uint64 `json:"diff"`
 }
 
-type NamedBlock struct {
+type SimpleNamedBlock struct {
 	BlockNumber uint64 `json:"blockNumber"`
 	TimeStamp   uint64 `json:"timestamp"`
 	Date        string `json:"date"`
 	Name        string `json:"name,omitempty"`
-}
-
-type CleanReport struct {
-	Addr     string `json:"addr"`
-	SizeThen uint32 `json:"sizeThen"`
-	SizeNow  uint32 `json:"sizeNow"`
-	Dups     uint32 `json:"dupsRemoved"`
-}
-
-type CheckReport struct {
-	Reason     string   `json:"reason"`
-	VisitedCnt uint32   `json:"nVisited"`
-	CheckedCnt uint32   `json:"nChecked,omitempty"`
-	SkippedCnt uint32   `json:"nSkipped,omitempty"`
-	PassedCnt  uint32   `json:"nPassed,omitempty"`
-	FailedCnt  uint32   `json:"nFailed,omitempty"`
-	ErrorStrs  []string `json:"errorStrs,omitempty"`
-}
-
-type SimpleChunkStats struct {
-	Start         uint64  `json:"start"`
-	End           uint64  `json:"end"`
-	NAddrs        uint32  `json:"nAddrs"`
-	NApps         uint32  `json:"nApps"`
-	NBlocks       uint64  `json:"nBlocks"`
-	NBlooms       uint32  `json:"nBlooms"`
-	RecWid        uint64  `json:"recWid"`
-	BloomSz       int64   `json:"bloomSz"`
-	ChunkSz       int64   `json:"chunkSz"`
-	AddrsPerBlock float64 `json:"addrsPerBlock"`
-	AppsPerBlock  float64 `json:"appsPerBlock"`
-	AppsPerAddr   float64 `json:"appsPerAddr"`
-	Ratio         float64 `json:"ratio"`
 }
 
 type SimpleAppearance struct {
@@ -106,15 +73,15 @@ type SimpleIndex struct {
 	Size            int64           `json:"fileSize"`
 }
 
+type SimpleIndexAppearance struct {
+	BlockNumber      uint32 `json:"blockNumber"`
+	TransactionIndex uint32 `json:"transactionIndex"`
+}
+
 type SimpleIndexAddress struct {
 	Address string `json:"address"`
 	Offset  uint32 `json:"offset"`
 	Count   uint32 `json:"count"`
-}
-
-type SimpleIndexAppearance struct {
-	BlockNumber      uint32 `json:"blockNumber"`
-	TransactionIndex uint32 `json:"transactionIndex"`
 }
 
 type SimpleIndexAddressBelongs struct {
@@ -122,4 +89,33 @@ type SimpleIndexAddressBelongs struct {
 	Offset  uint32                  `json:"offset"`
 	Count   uint32                  `json:"count"`
 	Apps    []SimpleIndexAppearance `json:"apps"`
+}
+
+type SimpleLog struct {
+	Address          string   `json:"address"`
+	LogIndex         uint32   `json:"logIndex"`
+	BlockNumber      uint32   `json:"blockNumber,omitempty"`
+	TransactionIndex uint32   `json:"transactionIndex,omitempty"`
+	Timestamp        uint64   `json:"timestamp,omitempty"`
+	Topics           []string `json:"topics"`
+	Data             string   `json:"data,omitempty"`
+	CompressedLog    string   `json:"compressedLog,omitempty"`
+}
+
+type SimpleReceipt struct {
+	BlockHash         common.Hash    `json:"blockHash"`
+	BlockNumber       uint64         `json:"blockNumber"`
+	ContractAddress   string         `json:"contractAddress,omitempty"`
+	CumulativeGasUsed string         `json:"cumulativeGasUsed"`
+	From              common.Address `json:"from"`
+	GasUsed           uint64         `json:"gasUsed"`
+	EffectiveGasPrice uint64         `json:"effectiveGasPrice"`
+	Logs              []SimpleLog    `json:"logs,omitempty"`
+	// LogsBloom         string         `json:"-"`
+	// Root              string         `json:"-"`
+	Status           *uint32     `json:"status"`
+	IsError          bool        `json:"isError,omitempty"`
+	To               string      `json:"to,omitempty"`
+	TransactionHash  common.Hash `json:"hash"`
+	TransactionIndex uint64      `json:"transactionIndex"`
 }

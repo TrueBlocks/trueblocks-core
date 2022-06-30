@@ -24,7 +24,7 @@ func (opts *TransactionsOptions) ValidateTransactions() error {
 		}
 
 		if len(opts.Reconcile) > 0 {
-			if opts.Cache || opts.Trace || opts.Articulate {
+			if opts.Cache || opts.Trace || opts.Articulate || opts.Uniq {
 				return validate.Usage("Do not use other options with the --reconcile option.")
 			}
 			if !validate.IsValidAddress(opts.Reconcile) {

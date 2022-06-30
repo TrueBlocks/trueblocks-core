@@ -13,7 +13,6 @@
 
 #include "acctlib.h"
 #include "pinnedchunk.h"
-#include "pinatapin.h"
 
 #define hashToEmptyFile "QmP4i6ihnVrj8Tx7cTFw4aY6ungpaPYxDJEZ7Vg1RSNSdm"
 
@@ -21,7 +20,6 @@
 void pinlib_init(QUITHANDLER qh) {
     acctlib_init(qh);
     CPinnedChunk::registerClass();
-    CPinataPin::registerClass();
 }
 
 //-------------------------------------------------------------------------
@@ -96,7 +94,7 @@ static string_q pinOneChunk(const string_q& fileName, const string_q& type) {
 }
 
 //----------------------------------------------------------------
-bool pinlib_pinChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinnedChunk& item) {
+bool pinlib_pinChunk(const string_q& fileName, CPinnedChunk& item) {
     item.fileName = fileName;
     string_q indexStr = pinOneChunk(fileName, "finalized");
     if (!contains(indexStr, "IpfsHash")) {
@@ -107,8 +105,7 @@ bool pinlib_pinChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinned
 
     replace(indexStr, "IpfsHash", "ipfs_pin_hash");
     replace(indexStr, "PinSize", "size");
-    replace(indexStr, "Timestamp", "date_pinned");
-    CPinataPin index;
+    CPinnedChunk index;
     index.parseJson3(indexStr);
     item.indexHash = index.ipfs_pin_hash;
     blknum_t end;
@@ -124,17 +121,10 @@ bool pinlib_pinChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinned
 
     replace(bloomStr, "IpfsHash", "ipfs_pin_hash");
     replace(bloomStr, "PinSize", "size");
-    replace(bloomStr, "Timestamp", "date_pinned");
-    CPinataPin bloom;
+    CPinnedChunk bloom;
     bloom.parseJson3(bloomStr);
     item.bloomHash = bloom.ipfs_pin_hash;
     LOG_INFO(bBlue, "  Pinned bloom for blocks ", start, " to ", end, " at ", item.bloomHash, cOff);
-
-    // add it to the array
-    pList.push_back(item);
-
-    // write the array (after sorting it) to the database
-    sort(pList.begin(), pList.end());
     return true;
 }
 
