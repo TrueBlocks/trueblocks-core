@@ -1,3 +1,10 @@
+// CPinnedChunkArray &pList,
+// CPinnedChunkArray unused;
+// CPinnedChunkArray& pList
+// add it to the array
+// pList.push_back(item);
+// write the array (after sorting it) to the database
+// sort(pList.begin(), pList.end());
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -186,7 +193,7 @@ bool COptions::write_chunks(blknum_t chunkSize, bool snapped) {
                 string_q chunkId = p1[1] + "-" + p2[1];
                 string_q chunkPath = indexFolder_finalized + chunkId + ".bin";
                 LOG_INFO("Writing...", string_q(80, ' '), "\r");
-                writeIndexAsBinary(chunkPath, consolidatedLines, (pin ? visitToPin : nullptr), &pinList);
+                writeIndexAsBinary(chunkPath, consolidatedLines, (pin ? visitToPin : nullptr), nullptr);
                 ostringstream os;
                 os << "Wrote " << consolidatedLines.size() << " records to " << cTeal << relativize(chunkPath);
                 if (snapped && (lines.size() - 1 == loc)) {
@@ -363,9 +370,8 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTA
 
 //---------------------------------------------------------------------------------------------------
 bool visitToPin(const string_q& chunkId, void* data) {
-    CPinnedChunkArray& pinList = *(CPinnedChunkArray*)data;  // NO_LINT
     CPinnedChunk pinRecord;
-    pinlib_pinChunk(pinList, chunkId, pinRecord);
+    pinlib_pinChunk(chunkId, pinRecord);
 
     // TODO: BOGUS - WRITING MANIFEST - NOTHING STOPS THIS FROM CORRUPTING THE MANIFEST
     // TODO: BOGUS - WRITING MANIFEST - WRITES ON TOP OF THE HEADER IN THE TEXT FILE

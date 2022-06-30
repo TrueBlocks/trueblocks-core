@@ -44,7 +44,7 @@ class COptions : public COptionsBase {
     blknum_t blaze_start{0};
     blknum_t nRecsThen{0};
     blknum_t nRecsNow{0};
-    CPinnedChunkArray pinList;
+    // CPinnedChunkArray pinList;
     CApiKey lic;
     CMetaData meta;
     bool snapped{false};
@@ -72,4 +72,4 @@ extern bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines,
                                void* pinFuncData);
 extern void pinlib_init(QUITHANDLER qh);
 extern void pinlib_cleanup(void);
-extern bool pinlib_pinChunk(CPinnedChunkArray& pList, const string_q& fn, CPinnedChunk& item);
+extern bool pinlib_pinChunk(const string_q& fn, CPinnedChunk& item);
