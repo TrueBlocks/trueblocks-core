@@ -24,20 +24,16 @@ func (opts *ChunksOptions) HandleRepair(blockNums []uint64) error {
 		rng, _ := cache.RangeFromFilename(chunk.Range + ".")
 		if rng.BlockIntersects(blockNums[0]) {
 			report := types.RepairReport{
-				Status: "Repaired Bloom",
-				Chunk: types.SimpleChunkRecord{
-					Range:     config.GetPathToIndex(opts.Globals.Chain) + "blooms/" + chunk.Range + ".bloom",
-					BloomHash: string(chunk.BloomHash),
-				},
+				Status:    "Repaired Bloom",
+				Range:     config.GetPathToIndex(opts.Globals.Chain) + "blooms/" + chunk.Range + ".bloom",
+				BloomHash: string(chunk.BloomHash),
 				// TODO: BOGUS -- PIN THE FILE TO PINATA -- REPORT THE IPFS HASH
 			}
 			reports = append(reports, report)
 			report = types.RepairReport{
-				Status: "Repaired Index",
-				Chunk: types.SimpleChunkRecord{
-					Range:     config.GetPathToIndex(opts.Globals.Chain) + "finalized/" + chunk.Range + ".bin",
-					BloomHash: string(chunk.BloomHash),
-				},
+				Status:    "Repaired Index",
+				Range:     config.GetPathToIndex(opts.Globals.Chain) + "finalized/" + chunk.Range + ".bin",
+				IndexHash: string(chunk.IndexHash),
 				// TODO: BOGUS -- PIN THE FILE TO PINATA -- REPORT THE IPFS HASH
 			}
 			reports = append(reports, report)

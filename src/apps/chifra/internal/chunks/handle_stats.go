@@ -29,7 +29,7 @@ func (opts *ChunksOptions) showStagingStats(ctx *WalkContext, path string, first
 
 	lines := file.AsciiFileToLines(path)
 	// fmt.Println(len(lines))
-	ret := types.SimpleChunkStats{}
+	ret := types.ChunksReport{}
 	rng, err1 := cache.RangeFromFilename(path)
 	if err1 != nil {
 		return false, nil
@@ -57,7 +57,7 @@ func (opts *ChunksOptions) showStagingStats(ctx *WalkContext, path string, first
 	return err == nil, err
 }
 
-func finishStats(stats *types.SimpleChunkStats) types.SimpleChunkStats {
+func finishStats(stats *types.ChunksReport) types.ChunksReport {
 	stats.NBlocks = stats.End - stats.Start + 1
 	if stats.NBlocks > 0 {
 		stats.AddrsPerBlock = float64(stats.NAddrs) / float64(stats.NBlocks)
@@ -76,14 +76,14 @@ func finishStats(stats *types.SimpleChunkStats) types.SimpleChunkStats {
 	return *stats
 }
 
-func NewChunkStats(path string) types.SimpleChunkStats {
+func NewChunkStats(path string) types.ChunksReport {
 	chunk, err := index.NewChunk(path)
 	defer chunk.Close()
 
 	if err != nil {
 		fmt.Println(err)
 	}
-	var ret types.SimpleChunkStats
+	var ret types.ChunksReport
 	ret.Start = chunk.Range.First
 	ret.End = chunk.Range.Last
 	ret.NAddrs = chunk.Data.Header.AddressCount
@@ -97,7 +97,7 @@ func NewChunkStats(path string) types.SimpleChunkStats {
 
 func (opts *ChunksOptions) HandleStats(blockNums []uint64) error {
 	defer opts.Globals.RenderFooter()
-	err := opts.Globals.RenderHeader(types.SimpleChunkStats{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+	err := opts.Globals.RenderHeader(types.ChunksReport{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
 	if err != nil {
 		return err
 	}

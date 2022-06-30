@@ -18,7 +18,7 @@ import (
 
 // TODO: Fix export without arrays
 func RenderSlice[
-	T types.NamedBlock |
+	T types.SimpleNamedBlock |
 		types.Function |
 		types.CleanReport |
 		types.CheckReport |

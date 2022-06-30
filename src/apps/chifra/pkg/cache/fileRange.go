@@ -8,6 +8,7 @@ import (
 	"errors"
 	"fmt"
 	"path/filepath"
+	"regexp"
 	"strconv"
 	"strings"
 
@@ -27,10 +28,14 @@ var NotARange = FileRange{First: utils.NOPOS, Last: utils.NOPOS}
 // and zero-padded to the left) or start.txt
 func RangeFromFilename(path string) (blkRange FileRange, err error) {
 	_, fn := filepath.Split(path)
-	if !strings.Contains(fn, ".") {
-		return blkRange, errors.New("invalid path does not contain extension:" + path)
+	if strings.Contains(fn, ".") {
+		fn = strings.Split(fn, ".")[0]
+	} else {
+		var digitCheck = regexp.MustCompile(`^[0-9]+$`)
+		if !digitCheck.MatchString(fn) {
+			return blkRange, errors.New("not a valid range " + fn)
+		}
 	}
-	fn = strings.Split(fn, ".")[0]
 
 	parts := strings.Split(fn, "-")
 	if len(parts) > 1 {
@@ -90,7 +95,7 @@ func (r *FileRange) RangeToFilename(chain string, mode CacheType) (bool, string)
 // the first block on the given range or if sequential is false, if last is
 // prev.smaller than curr.first
 func (curr *FileRange) Follows(prev FileRange, sequential bool) bool {
-	if sequential && false {
+	if sequential {
 		return curr.First == prev.Last+1
 	}
 	return curr.First > prev.Last

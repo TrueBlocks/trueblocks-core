@@ -4,10 +4,11 @@
 package manifest
 
 import (
-	"os"
+	"bytes"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // A data structure consisting of a list of chunk records (i.e. block ranges, Bloom filter hashes, and
@@ -54,10 +55,8 @@ func ReadManifest(chain string, source Source) (*Manifest, error) {
 		return fromRemote(chain)
 	}
 
-	manifestPath := config.GetPathToChainConfig(chain) + "manifest.txt"
-	file, err := os.Open(manifestPath)
-	if err != nil {
-		return nil, err
-	}
-	return readTabManifest(chain, file)
+	manifestPath := config.GetPathToChainConfig(chain) + "manifest.json"
+	contents := []byte(utils.AsciiFileToString(manifestPath))
+	reader := bytes.NewReader(contents)
+	return readJSONManifest(reader)
 }

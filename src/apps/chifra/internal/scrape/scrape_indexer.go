@@ -103,6 +103,7 @@ func (opts *ScrapeOptions) publishManifest() error {
 	if err != nil {
 		return err
 	}
+	// TODO: BOGUS DOES THIS DESTROY THE FILE ON DISC BEFORE WRITING TO IT? I THINK IT DOES.
 	fileName := config.GetPathToChainConfig(opts.Globals.Chain) + "manifest.json"
 	w, err := os.Create(fileName)
 	if err != nil {

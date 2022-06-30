@@ -6,7 +6,6 @@ package chunksPkg
 
 import (
 	"fmt"
-	"sort"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -24,13 +23,6 @@ type CompareState struct {
 }
 
 func (opts *ChunksOptions) CheckManifest(arrayA, arrayB []string, report *types.CheckReport) error {
-	sort.Slice(arrayA, func(i, j int) bool {
-		return arrayA[i] < arrayA[j]
-	})
-	sort.Slice(arrayB, func(i, j int) bool {
-		return arrayB[i] < arrayB[j]
-	})
-
 	comp := CompareState{
 		testMode: opts.Globals.TestMode,
 		details:  opts.Details,
@@ -96,8 +88,5 @@ func (comp *CompareState) checkArrays(report *types.CheckReport) error {
 			report.PassedCnt++
 		}
 	}
-
-	report.FailedCnt = report.CheckedCnt - report.PassedCnt
-	report.SkippedCnt = report.VisitedCnt - report.CheckedCnt
 	return nil
 }

@@ -50,8 +50,5 @@ func (opts *ChunksOptions) CheckInternal(fileNames []string, blockNums []uint64,
 			}
 		}
 	}
-
-	report.FailedCnt = report.CheckedCnt - report.PassedCnt
-	report.SkippedCnt = report.VisitedCnt - report.CheckedCnt
 	return nil
 }

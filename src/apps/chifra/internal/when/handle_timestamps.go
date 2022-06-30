@@ -54,7 +54,7 @@ func (opts *WhenOptions) HandleWhenShowTimestamps() error {
 		if err != nil {
 			return err
 		}
-		block := types.NamedBlock{} //rpcClient.GetBlockByNumber(opts.Globals.Chain, bn)
+		block := types.SimpleNamedBlock{} //rpcClient.GetBlockByNumber(opts.Globals.Chain, bn)
 		if bn == 0 {
 			block.TimeStamp, _ = rpcClient.GetBlockZeroTs(opts.Globals.Chain)
 		}
