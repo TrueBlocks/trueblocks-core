@@ -30,7 +30,7 @@ func (opts *ChunksOptions) checkHashes(which string, man *manifest.Manifest, rep
 			if len(chunk.BloomHash) == 0 {
 				msg = fmt.Sprintf("%s: Empty BloomHash in %s", chunk.Range, which)
 			}
-			report.ErrorStrs = append(report.ErrorStrs, msg)
+			report.MsgStrings = append(report.MsgStrings, msg)
 		} else {
 			report.PassedCnt++
 		}
@@ -41,7 +41,7 @@ func (opts *ChunksOptions) checkHashes(which string, man *manifest.Manifest, rep
 			if len(chunk.BloomHash) == 0 {
 				msg = fmt.Sprintf("%s: Empty IndexHash in %s", chunk.Range, which)
 			}
-			report.ErrorStrs = append(report.ErrorStrs, msg)
+			report.MsgStrings = append(report.MsgStrings, msg)
 		} else {
 			report.PassedCnt++
 		}

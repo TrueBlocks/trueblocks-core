@@ -38,12 +38,12 @@ func (opts *ChunksOptions) checkSequential(which string, array []string, report 
 			report.CheckedCnt++
 			if prev != fR {
 				if !fR.Follows(prev, !allow_missing) {
-					report.ErrorStrs = append(report.ErrorStrs, fmt.Sprintf("In %s array, not sequental %s:%s", which, prev, fR))
+					report.MsgStrings = append(report.MsgStrings, fmt.Sprintf("In %s array, not sequental %s:%s", which, prev, fR))
 				} else {
 					report.PassedCnt++
 				}
 			} else {
-				report.ErrorStrs = append(report.ErrorStrs, fmt.Sprintf("Duplicate at %s in %s array", fR, which))
+				report.MsgStrings = append(report.MsgStrings, fmt.Sprintf("Duplicate at %s in %s array", fR, which))
 			}
 		}
 		prev = fR

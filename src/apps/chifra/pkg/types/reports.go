@@ -21,8 +21,8 @@ type CheckReport struct {
 	SkippedCnt uint32   `json:"nSkipps,omitempty"`
 	PassedCnt  uint32   `json:"nPasses,omitempty"`
 	FailedCnt  uint32   `json:"nFails,omitempty"`
-	ErrorStrs  []string `json:"errorStrs,omitempty"`
 	Result     string   `json:"result,omitempty"`
+	MsgStrings []string `json:"msgStrings,omitempty"`
 }
 
 type ChunksReport struct {
