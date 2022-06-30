@@ -55,23 +55,6 @@ func (opts *ChunksOptions) ValidateChunks() error {
 		}
 	}
 
-	if len(opts.Addrs) > 0 && !opts.Belongs {
-		return validate.Usage("You may only specify an address with the --belongs option")
-	}
-
-	if opts.Details && opts.Belongs {
-		return validate.Usage("Choose either {0} or {1}, not both.", "--details", "--belongs")
-	}
-
-	// Note this does not return if a migration is needed
-	index.CheckBackLevelIndex(opts.Globals.Chain)
-
-	if opts.Remote {
-		if opts.Mode != "pins" && opts.Mode != "manifest" {
-			return validate.Usage("The {0} option is only available {1}.", "--remote", "in pins or manifest mode")
-		}
-	}
-
 	err = validate.ValidateIdentifiers(
 		opts.Globals.Chain,
 		opts.Blocks,
@@ -87,6 +70,45 @@ func (opts *ChunksOptions) ValidateChunks() error {
 			return validate.Usage("Specify only a single block range at a time.")
 		}
 		return err
+	}
+
+	if opts.Repair {
+		if opts.Mode != "manifest" {
+			return validate.Usage("The --repair option is only available in index mode")
+		}
+
+		if len(opts.BlockIds) != 1 {
+			return validate.Usage("You must supply exactly one block number with the --repair option")
+		}
+
+		blockNums, err := opts.BlockIds[0].ResolveBlocks(opts.Globals.Chain)
+		if err != nil {
+			return err
+		}
+		if len(blockNums) != 1 {
+			return validate.Usage("You must supply exactly one block number with the --repair option")
+		}
+
+		if opts.Globals.TestMode {
+			return validate.Usage("The --repair option is not available in test mode")
+		}
+	}
+
+	if len(opts.Addrs) > 0 && !opts.Belongs {
+		return validate.Usage("You may only specify an address with the --belongs option")
+	}
+
+	if opts.Details && opts.Belongs {
+		return validate.Usage("Choose either {0} or {1}, not both.", "--details", "--belongs")
+	}
+
+	// Note this does not return if a migration is needed
+	index.CheckBackLevelIndex(opts.Globals.Chain)
+
+	if opts.Remote {
+		if opts.Mode != "pins" && opts.Mode != "manifest" {
+			return validate.Usage("The {0} option is only available {1}.", "--remote", "in pins or manifest mode")
+		}
 	}
 
 	return opts.Globals.ValidateGlobals()

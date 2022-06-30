@@ -31,6 +31,11 @@ type CleanReport struct {
 	Dups     uint32 `json:"dupsRemoved"`
 }
 
+type RepairReport struct {
+	Status string            `json:"status"`
+	Chunk  SimpleChunkRecord `json:"chunk"`
+}
+
 type CheckReport struct {
 	Reason     string   `json:"reason"`
 	VisitedCnt uint32   `json:"nVisited"`
@@ -118,8 +123,21 @@ type SimpleIndexAddress struct {
 }
 
 type SimpleIndexAddressBelongs struct {
-	SimpleIndexAddress
-	Apps []SimpleIndexAppearance `json:"apps"`
+	Address string                  `json:"address"`
+	Offset  uint32                  `json:"offset"`
+	Count   uint32                  `json:"count"`
+	Apps    []SimpleIndexAppearance `json:"apps"`
+}
+
+type SimpleLog struct {
+	Address          string   `json:"address"`
+	LogIndex         uint32   `json:"logIndex"`
+	BlockNumber      uint32   `json:"blockNumber,omitempty"`
+	TransactionIndex uint32   `json:"transactionIndex,omitempty"`
+	Timestamp        uint64   `json:"timestamp,omitempty"`
+	Topics           []string `json:"topics"`
+	Data             string   `json:"data,omitempty"`
+	CompressedLog    string   `json:"compressedLog,omitempty"`
 }
 
 type SimpleReceipt struct {
@@ -129,11 +147,13 @@ type SimpleReceipt struct {
 	CumulativeGasUsed string         `json:"cumulativeGasUsed"`
 	From              common.Address `json:"from"`
 	GasUsed           uint64         `json:"gasUsed"`
-	Logs              []interface{}  `json:"logs,omitempty"`
-	LogsBloom         string         `json:"-"`
-	Root              string         `json:"-"`
-	Status            interface{}    `json:"status"`
-	To                string         `json:"to,omitempty"`
-	TransactionHash   common.Hash    `json:"transactionHash"`
-	TransactionIndex  uint64         `json:"transactionIndex"`
+	EffectiveGasPrice uint64         `json:"effectiveGasPrice"`
+	Logs              []SimpleLog    `json:"logs,omitempty"`
+	// LogsBloom         string         `json:"-"`
+	// Root              string         `json:"-"`
+	Status           *uint32     `json:"status"`
+	IsError          bool        `json:"isError,omitempty"`
+	To               string      `json:"to,omitempty"`
+	TransactionHash  common.Hash `json:"hash"`
+	TransactionIndex uint64      `json:"transactionIndex"`
 }

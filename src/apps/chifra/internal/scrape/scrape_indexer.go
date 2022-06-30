@@ -42,7 +42,8 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 				if err != nil {
 					fmt.Println("publishManifest returned an error:", err)
 				}
-				// // TODO: BOGUS - MANIFEST WRITING THE MANIFEST AND PINNING
+				// TODO: BOGUS -- PIN THE FILE TO PINATA -- REPORT THE IPFS HASH
+				// TODO: BOGUS - MANIFEST WRITING THE MANIFEST AND PINNING
 				// progressNow, _ := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
 				// // fmt.Println(colors.BrightBlue, progressThen.Finalized, colors.BrightWhite, progressNow.Finalized, colors.Off, progressNow.Finalized > progressThen.Finalized)
 				// if progressNow.Finalized > progressThen.Finalized {

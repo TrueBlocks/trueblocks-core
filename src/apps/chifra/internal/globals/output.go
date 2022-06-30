@@ -22,6 +22,7 @@ func RenderSlice[
 		types.Function |
 		types.CleanReport |
 		types.CheckReport |
+		types.RepairReport |
 		types.SimpleMonitor |
 		types.SimpleChunkRecord |
 		types.SimpleAppearance](opts *GlobalOptions, arr []T) error {

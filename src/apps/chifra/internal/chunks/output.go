@@ -64,6 +64,8 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 		}
 		// TODO: BOGUS - FEATURE NEED TO COMPLETE PIN_CHUNKS AND PIN_DATA
 		return
+	} else if opts.Repair {
+		err = opts.HandleRepair(blockNums)
 
 	} else {
 		switch opts.Mode {
