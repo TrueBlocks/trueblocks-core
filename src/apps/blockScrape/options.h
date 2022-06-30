@@ -44,7 +44,6 @@ class COptions : public COptionsBase {
     blknum_t blaze_start{0};
     blknum_t nRecsThen{0};
     blknum_t nRecsNow{0};
-    // CPinnedChunkArray pinList;
     CApiKey lic;
     CMetaData meta;
     bool snapped{false};
