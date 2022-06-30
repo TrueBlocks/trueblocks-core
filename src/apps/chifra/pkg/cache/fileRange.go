@@ -32,7 +32,7 @@ func RangeFromFilename(path string) (blkRange FileRange, err error) {
 		fn = strings.Split(fn, ".")[0]
 	} else {
 		var digitCheck = regexp.MustCompile(`^[0-9]+$`)
-		if !digitCheck.MatchString(fn) {
+		if !digitCheck.MatchString(strings.Replace(fn, "-", "", -1)) {
 			return blkRange, errors.New("not a valid range " + fn)
 		}
 	}

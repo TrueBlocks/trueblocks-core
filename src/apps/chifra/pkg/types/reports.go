@@ -16,11 +16,11 @@ type RepairReport struct {
 
 type CheckReport struct {
 	Reason     string   `json:"reason"`
-	VisitedCnt uint32   `json:"nVisited,omitempty"`
-	CheckedCnt uint32   `json:"nChecked,omitempty"`
-	SkippedCnt uint32   `json:"nSkipped,omitempty"`
-	PassedCnt  uint32   `json:"nPassed,omitempty"`
-	FailedCnt  uint32   `json:"nFailed,omitempty"`
+	VisitedCnt uint32   `json:"nVisits,omitempty"`
+	CheckedCnt uint32   `json:"nTests,omitempty"`
+	SkippedCnt uint32   `json:"nSkipps,omitempty"`
+	PassedCnt  uint32   `json:"nPasses,omitempty"`
+	FailedCnt  uint32   `json:"nFails,omitempty"`
 	ErrorStrs  []string `json:"errorStrs,omitempty"`
 	Result     string   `json:"result,omitempty"`
 }

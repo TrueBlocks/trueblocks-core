@@ -5,8 +5,10 @@ package manifest
 
 import (
 	"bytes"
+	"errors"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -56,7 +58,10 @@ func ReadManifest(chain string, source Source) (*Manifest, error) {
 	}
 
 	manifestPath := config.GetPathToChainConfig(chain) + "manifest.json"
-	contents := []byte(utils.AsciiFileToString(manifestPath))
-	reader := bytes.NewReader(contents)
+	contents := utils.AsciiFileToString(manifestPath)
+	if !file.FileExists(manifestPath) || len(contents) == 0 {
+		return nil, errors.New("Could not find manifest.json or it was empty")
+	}
+	reader := bytes.NewReader([]byte(contents))
 	return readJSONManifest(reader)
 }

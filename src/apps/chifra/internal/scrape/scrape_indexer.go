@@ -99,7 +99,7 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 
 // TODO: BOGUS - MANIFEST WRITING THE MANIFEST
 func (opts *ScrapeOptions) publishManifest() error {
-	manFromCache, err := manifest.ReadManifest(opts.Globals.Chain, manifest.FromCache)
+	cacheManifest, err := manifest.ReadManifest(opts.Globals.Chain, manifest.FromCache)
 	if err != nil {
 		return err
 	}
@@ -114,5 +114,5 @@ func (opts *ScrapeOptions) publishManifest() error {
 	if err != nil {
 		return fmt.Errorf("locking file: %s", err)
 	}
-	return opts.Globals.RenderManifest(w, "json", manFromCache)
+	return opts.Globals.RenderManifest(w, "json", cacheManifest)
 }
