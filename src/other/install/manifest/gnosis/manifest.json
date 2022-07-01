@@ -2431,8 +2431,8 @@
     },
     {
       "range": "020792463-020794618",
-      "bloomHash": "",
-      "indexHash": "QmQGrhUEnXi9xH3PFoNd57WPWbSXHexRc7yVZNdW9vdoXL"
+      "bloomHash": "QmdeuzdVxSbZtSV2vMkLKaNYYcmWsWhz3DS2dZRLWXpCgd",
+      "indexHash": "QmUNrHYnJtPwKK5g8VtfGKajXpXP74eW7H2mHD4EwZY12c"
     },
     {
       "range": "020790241-020792462",
@@ -4441,8 +4441,8 @@
     },
     {
       "range": "019548906-019550958",
-      "bloomHash": "",
-      "indexHash": "Qma9rmGR3wvyv9QXi44vKmUDp5uX4mhGw2KxHg9Eky8WWW"
+      "bloomHash": "QmSda7b5LZPQmm2oM4cojBpAi4jL2rq5Kig5484D9ZKsip",
+      "indexHash": "QmWzNXEye1PF78NAKBf76kZqvVs6Ar3HAZ7B4hM2G88XiC"
     },
     {
       "range": "019546623-019548905",
