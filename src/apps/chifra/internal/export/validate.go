@@ -5,6 +5,8 @@
 package exportPkg
 
 import (
+	"strings"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -78,6 +80,10 @@ func (opts *ExportOptions) ValidateExport() error {
 		return validate.Usage("The {0} option requires an EtherScan API key.", "--articulate")
 	}
 
+	if opts.Globals.Format == "ofx" && !opts.Accounting {
+		return validate.Usage("The {0} option is only available with the {1} option.", "--fmt ofx", "--accounting")
+	}
+
 	bloomZero := cache.NewCachePath(opts.Globals.Chain, cache.Index_Bloom)
 	path := bloomZero.GetFullPath("000000000-000000000")
 	if !file.FileExists(path) {
@@ -89,5 +95,10 @@ func (opts *ExportOptions) ValidateExport() error {
 	// Note this does not return if a migration is needed
 	index.CheckBackLevelIndex(opts.Globals.Chain)
 
-	return opts.Globals.ValidateGlobals()
+	err := opts.Globals.ValidateGlobals()
+	if err != nil && strings.Contains(err.Error(), "option (ofx) must be one of") {
+		// not an error
+		err = nil
+	}
+	return err
 }
