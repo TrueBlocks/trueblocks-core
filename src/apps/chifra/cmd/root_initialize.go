@@ -74,8 +74,8 @@ const noChains string = `
 
 const backVersion string = `
 
-	A back-version configration file was found. Please carefully follow all migrations
-	up to and including {0} before proceeding.
+	An outdated version of a configration file was found. Please carefully follow 
+	migration {0} before proceeding.
 
 	See https://github.com/TrueBlocks/trueblocks-core/blob/develop/MIGRATIONS.md
 
@@ -184,7 +184,7 @@ func VerifyMigrations() {
 
 	// We need at least this version...
 	requiredVersion := "v0.40.0-beta"
-	if config.IsAtLeaseVersion(requiredVersion) {
+	if !config.IsAtLeastVersion(requiredVersion) {
 		msg := strings.Replace(backVersion, "{0}", "{"+requiredVersion+"}", -1)
 		msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
 		msg = strings.Replace(msg, "{", colors.Green, -1)

@@ -40,7 +40,7 @@ type chainGroup struct {
 	ApiProvider    string `toml:"apiProvider"`
 	Symbol         string `toml:"symbol"`
 	// TODO: This is deprecated - it can be removed in the future
-	PinGateway     string `toml:"pinGateway"`
+	PinGateway string `toml:"pinGateway"`
 }
 
 type settingsGroup struct {
@@ -107,18 +107,18 @@ func GetRootConfig() *ConfigFile {
 	return &trueBlocksConfig
 }
 
-func IsAtLeaseVersion(needle string) bool {
-	var current, test version.Version
+func IsAtLeastVersion(needle string) bool {
+	var current, desired version.Version
 	var err error
 	if current, err = version.NewVersion(GetRootConfig().Version.Current); err != nil {
 		return true
 	}
 
-	if test, err = version.NewVersion(needle); err != nil {
+	if desired, err = version.NewVersion(needle); err != nil {
 		return true
 	}
 
-	return test.IsBackLevel(current)
+	return !current.IsEarlierThan(desired)
 }
 
 // GetPathToRootConfig returns the path where to find configuration files

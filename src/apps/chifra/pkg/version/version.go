@@ -44,7 +44,7 @@ func NewVersion(str string) (vers Version, err error) {
 	return vers, nil
 }
 
-func (ref *Version) IsBackLevel(test Version) bool {
+func (ref *Version) IsEarlierThan(test Version) bool {
 	if test.Major < ref.Major {
 		return true
 	}
