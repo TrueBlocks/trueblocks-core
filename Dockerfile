@@ -1,5 +1,5 @@
 # Build trueblocks-core in stock Go builder container
-FROM golang:1.17-alpine as builder
+FROM golang:1.18-alpine as builder
 
 # Install additional build depenedencies
 RUN apk --no-cache add g++ gcc make cmake git nano libcurl python3 python3-dev \
