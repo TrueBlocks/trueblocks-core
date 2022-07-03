@@ -15,7 +15,8 @@
  * Parts of this file were generated with makeClass --run. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
-#include "utillib.h"
+#include "etherlib.h"
+#include "pinnedchunk.h"
 
 namespace qblocks {
 
@@ -23,34 +24,37 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CPinnedChunk : public CBaseNode {
+class CManifest : public CBaseNode {
   public:
-    string_q range;
-    ipfshash_t bloomHash;
-    ipfshash_t indexHash;
-    string_q ipfs_pin_hash;
+    string_q version;
+    string_q chain;
+    ipfshash_t schemas;
+    ipfshash_t databases;
+    CPinnedChunkArray chunks;
 
   public:
-    CPinnedChunk(void);
-    CPinnedChunk(const CPinnedChunk& pi);
-    virtual ~CPinnedChunk(void);
-    CPinnedChunk& operator=(const CPinnedChunk& pi);
+    CManifest(void);
+    CManifest(const CManifest& ma);
+    virtual ~CManifest(void);
+    CManifest& operator=(const CManifest& ma);
 
-    DECLARE_NODE(CPinnedChunk);
+    DECLARE_NODE(CManifest);
+
+    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CPinnedChunk& it) const;
-    bool operator!=(const CPinnedChunk& it) const {
+    bool operator==(const CManifest& it) const;
+    bool operator!=(const CManifest& it) const {
         return !operator==(it);
     }
-    friend bool operator<(const CPinnedChunk& v1, const CPinnedChunk& v2);
-    friend ostream& operator<<(ostream& os, const CPinnedChunk& it);
+    friend bool operator<(const CManifest& v1, const CManifest& v2);
+    friend ostream& operator<<(ostream& os, const CManifest& it);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CPinnedChunk& pi);
+    void duplicate(const CManifest& ma);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -58,97 +62,99 @@ class CPinnedChunk : public CBaseNode {
 };
 
 //--------------------------------------------------------------------------
-inline CPinnedChunk::CPinnedChunk(void) {
+inline CManifest::CManifest(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CPinnedChunk::CPinnedChunk(const CPinnedChunk& pi) {
+inline CManifest::CManifest(const CManifest& ma) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(pi);
+    duplicate(ma);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CPinnedChunk::~CPinnedChunk(void) {
+inline CManifest::~CManifest(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPinnedChunk::clear(void) {
+inline void CManifest::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPinnedChunk::initialize(void) {
+inline void CManifest::initialize(void) {
     CBaseNode::initialize();
 
-    range = "";
-    bloomHash = "";
-    indexHash = "";
-    ipfs_pin_hash = "";
+    version = "";
+    chain = "";
+    schemas = "";
+    databases = "";
+    chunks.clear();
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPinnedChunk::duplicate(const CPinnedChunk& pi) {
+inline void CManifest::duplicate(const CManifest& ma) {
     clear();
-    CBaseNode::duplicate(pi);
+    CBaseNode::duplicate(ma);
 
-    range = pi.range;
-    bloomHash = pi.bloomHash;
-    indexHash = pi.indexHash;
-    ipfs_pin_hash = pi.ipfs_pin_hash;
+    version = ma.version;
+    chain = ma.chain;
+    schemas = ma.schemas;
+    databases = ma.databases;
+    chunks = ma.chunks;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CPinnedChunk& CPinnedChunk::operator=(const CPinnedChunk& pi) {
-    duplicate(pi);
+inline CManifest& CManifest::operator=(const CManifest& ma) {
+    duplicate(ma);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CPinnedChunk::operator==(const CPinnedChunk& it) const {
+inline bool CManifest::operator==(const CManifest& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
-    // Equality operator as defined in class definition
-    return range == it.range;
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CPinnedChunk& v1, const CPinnedChunk& v2) {
+inline bool operator<(const CManifest& v1, const CManifest& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // Default sort as defined in class definition
-    return v1.range < v2.range;
+    // No default sort defined in class definition, assume already sorted, preserve ordering
+    return true;
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CPinnedChunk> CPinnedChunkArray;
-extern CArchive& operator>>(CArchive& archive, CPinnedChunkArray& array);
-extern CArchive& operator<<(CArchive& archive, const CPinnedChunkArray& array);
+typedef vector<CManifest> CManifestArray;
+extern CArchive& operator>>(CArchive& archive, CManifestArray& array);
+extern CArchive& operator<<(CArchive& archive, const CManifestArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CPinnedChunk& pin);
-extern CArchive& operator>>(CArchive& archive, CPinnedChunk& pin);
+extern CArchive& operator<<(CArchive& archive, const CManifest& man);
+extern CArchive& operator>>(CArchive& archive, CManifest& man);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_PINNEDCHUNK;
+extern const char* STR_DISPLAY_MANIFEST;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

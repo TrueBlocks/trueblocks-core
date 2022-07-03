@@ -2,7 +2,7 @@
 class = CPinnedChunk
 fields = pinnedchunk.csv
 includes = utillib.h
-sort = v1.fileName < v2.fileName
-equals = fileName == it.fileName
+sort = v1.range < v2.range
+equals = range == it.range
 
 # YES - THIS IS DUPPED, BUT IT'S GOING TO REMOVED, SO NO BOTHER

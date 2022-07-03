@@ -78,14 +78,14 @@ string_q CPinnedChunk::getValueByName(const string_q& fieldName) const {
                 return bloomHash;
             }
             break;
-        case 'f':
-            if (fieldName % "fileName") {
-                return fileName;
-            }
-            break;
         case 'i':
             if (fieldName % "indexHash") {
                 return indexHash;
+            }
+            break;
+        case 'r':
+            if (fieldName % "range") {
+                return range;
             }
             break;
         default:
@@ -114,15 +114,15 @@ bool CPinnedChunk::setValueByName(const string_q& fieldNameIn, const string_q& f
                 return true;
             }
             break;
-        case 'f':
-            if (fieldName % "fileName") {
-                fileName = fieldValue;
-                return true;
-            }
-            break;
         case 'i':
             if (fieldName % "indexHash") {
                 indexHash = fieldValue;
+                return true;
+            }
+            break;
+        case 'r':
+            if (fieldName % "range") {
+                range = fieldValue;
                 return true;
             }
             break;
@@ -151,7 +151,7 @@ bool CPinnedChunk::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> fileName;
+    archive >> range;
     archive >> bloomHash;
     archive >> indexHash;
     // EXISTING_CODE
@@ -167,7 +167,7 @@ bool CPinnedChunk::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << fileName;
+    archive << range;
     archive << bloomHash;
     archive << indexHash;
     // EXISTING_CODE
@@ -219,7 +219,7 @@ void CPinnedChunk::registerClass(void) {
     ADD_FIELD(CPinnedChunk, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CPinnedChunk, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CPinnedChunk, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPinnedChunk, "fileName", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CPinnedChunk, "range", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CPinnedChunk, "bloomHash", T_IPFSHASH | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CPinnedChunk, "indexHash", T_IPFSHASH | TS_OMITEMPTY, ++fieldNum);
 
@@ -293,7 +293,7 @@ ostream& operator<<(ostream& os, const CPinnedChunk& it) {
 
 //---------------------------------------------------------------------------
 const char* STR_DISPLAY_PINNEDCHUNK =
-    "[{FILENAME}]\t"
+    "[{RANGE}]\t"
     "[{BLOOMHASH}]\t"
     "[{INDEXHASH}]\t"
     "[{FIRSTAPP}]\t"

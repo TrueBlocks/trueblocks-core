@@ -13,7 +13,6 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
@@ -44,10 +43,6 @@ func (opts *StatusOptions) StatusInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	if len(opts.Modes) == 0 {
-		return validate.Usage("Please choose at least one of {0}.", "[index|monitors|collections|names|abis|caches|some|all]"), true
-	}
-
 	if len(opts.Migrate) > 0 {
 		for _, m := range opts.Modes {
 			if m == "index" {

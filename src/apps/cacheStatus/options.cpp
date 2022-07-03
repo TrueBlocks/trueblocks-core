@@ -15,6 +15,7 @@
  * the code outside of the BEG_CODE/END_CODE sections
  */
 #include "options.h"
+#include "manifest.h"
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
@@ -298,51 +299,33 @@ COptions::~COptions(void) {
 }
 
 //---------------------------------------------------------------------------
-bool parseOneLine(const char* line, void* data) {
-    if (isTestMode() && line > string_q("005000000"))
+bool readManifest(CManifest& manifest) {
+    if (!manifest.chunks.empty())
         return true;
 
-    CPinnedChunkArray* pins = (CPinnedChunkArray*)data;
-    static CStringArray fields;
-    if (fields.empty()) {
-        string_q flds = "fileName,bloomHash,indexHash";
-        explode(fields, flds, ',');
-    }
-
-    CPinnedChunk pin;
-    string_q ln(line);
-    pin.parseCSV(fields, ln);
-    pins->push_back(pin);
-    return true;
-}
-
-//---------------------------------------------------------------------------
-bool readManifest(CPinnedChunkArray& pinArray) {
-    if (!pinArray.empty())
-        return true;
-
-    if (!fileExists(chainConfigsTxt_manifest)) {
-        LOG_ERR("Chunks file (", chainConfigsTxt_manifest, ") is required, but not found.");
+    string_q fileName = chainConfigsJson_manifest;
+    if (!fileExists(fileName)) {
+        LOG_ERR("Chunks file (", fileName, ") is required, but not found.");
         return false;
     }
 
-    pinArray.clear();  // redundant, but fine
-    forEveryLineInAsciiFile(chainConfigsTxt_manifest, parseOneLine, &pinArray);
-    sort(pinArray.begin(), pinArray.end());
+    string_q contents = asciiFileToString(fileName);
+    manifest.parseJson3(contents);
+    sort(manifest.chunks.begin(), manifest.chunks.end());
 
     return true;
 }
 
 //--------------------------------------------------------------------------------
 void loadPinMaps(CIndexStringMap& filenameMap, CIndexHashMap& bloomMap, CIndexHashMap& indexMap) {
-    CPinnedChunkArray pinList;
-    if (!readManifest(pinList))
+    CManifest manifest;
+    if (!readManifest(manifest))
         return;
 
-    for (auto pin : pinList) {
-        blknum_t num = str_2_Uint(pin.fileName);
-        filenameMap[num] = pin.fileName;
-        bloomMap[num] = pin.bloomHash;
-        indexMap[num] = pin.indexHash;
+    for (auto chunk : manifest.chunks) {
+        blknum_t num = str_2_Uint(chunk.range);
+        filenameMap[num] = chunk.range;
+        bloomMap[num] = chunk.bloomHash;
+        indexMap[num] = chunk.indexHash;
     }
 }

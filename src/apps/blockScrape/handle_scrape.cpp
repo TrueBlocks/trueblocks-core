@@ -368,7 +368,7 @@ bool visitToPin(const string_q& chunkId, void* data) {
 
     // TODO: BOGUS - WRITING MANIFEST - NOTHING STOPS THIS FROM CORRUPTING THE MANIFEST
     // TODO: BOGUS - WRITING MANIFEST - WRITES ON TOP OF THE HEADER IN THE TEXT FILE
-    string_q ci = substitute(pinRecord.fileName, indexFolder_finalized, "");
+    string_q ci = substitute(pinRecord.range, indexFolder_finalized, "");
     ci = substitute(ci, indexFolder_blooms, "");
     ci = substitute(ci, ".bin", "");
     ostringstream os;

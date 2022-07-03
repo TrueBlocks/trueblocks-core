@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-06-27T13:22:53
+date: 2022-07-03T09:59:18
 lastmod:
   - :git
   - lastmod
@@ -53,7 +53,7 @@ Notes:
 
 ## chifra scrape
 
-TODO: BOGUS - REVIEW HELP FILES
+TODO: BOGUS - REVIEW HELP FILES - INSTALL IPFS IF YOU'RE GOING TO SCRAPE AND PIN
 
 The `chifra scrape` application creates TrueBlocks' index of address appearances -- the fundamental data structure of the entire system. It also, optionally, pins the index to IPFS.
 

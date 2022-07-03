@@ -2,8 +2,8 @@
 class = CPinnedChunk
 fields = pinnedchunk.csv
 includes = utillib.h
-sort = v1.fileName < v2.fileName
-equals = fileName == it.fileName
+sort = v1.range < v2.range
+equals = range == it.range
 doc_group = 04-Admin
 doc_descr = the IPFS hashes of the index chunk and its associated Bloom filter for the given block range
 doc_api = 32-pinnedChunk

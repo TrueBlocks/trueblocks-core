@@ -14,26 +14,26 @@
  * Parts of this file were generated with makeClass --run. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
-#include "pinnedchunk.h"
+#include "manifest.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CPinnedChunk, CBaseNode);
+IMPLEMENT_NODE(CManifest, CBaseNode);
 
 //---------------------------------------------------------------------------
-extern string_q nextPinnedchunkChunk(const string_q& fieldIn, const void* dataPtr);
-static string_q nextPinnedchunkChunk_custom(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextManifestChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextManifestChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CPinnedChunk::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
+void CManifest::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
     // EXISTING_CODE
     // EXISTING_CODE
 
-    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["pinnedchunk_fmt"] : fmtIn);
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["manifest_fmt"] : fmtIn);
     if (fmt.empty()) {
         if (expContext().exportFmt == YAML1) {
             toYaml(ctx);
@@ -47,13 +47,13 @@ void CPinnedChunk::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) co
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextPinnedchunkChunk, this);
+        ctx << getNextChunk(fmt, nextManifestChunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextPinnedchunkChunk(const string_q& fieldIn, const void* dataPtr) {
+string_q nextManifestChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CPinnedChunk*>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CManifest*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -62,9 +62,9 @@ string_q nextPinnedchunkChunk(const string_q& fieldIn, const void* dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-string_q CPinnedChunk::getValueByName(const string_q& fieldName) const {
+string_q CManifest::getValueByName(const string_q& fieldName) const {
     // Give customized code a chance to override first
-    string_q ret = nextPinnedchunkChunk_custom(fieldName, this);
+    string_q ret = nextManifestChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -73,22 +73,37 @@ string_q CPinnedChunk::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
-        case 'b':
-            if (fieldName % "bloomHash") {
-                return bloomHash;
+        case 'c':
+            if (fieldName % "chain") {
+                return chain;
+            }
+            if (fieldName % "chunks" || fieldName % "chunksCnt") {
+                size_t cnt = chunks.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt)
+                    return "";
+                string_q retS;
+                for (size_t i = 0; i < cnt; i++) {
+                    retS += chunks[i].Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
             }
             break;
-        case 'i':
-            if (fieldName % "indexHash") {
-                return indexHash;
-            }
-            if (fieldName % "ipfs_pin_hash") {
-                return ipfs_pin_hash;
+        case 'd':
+            if (fieldName % "databases") {
+                return databases;
             }
             break;
-        case 'r':
-            if (fieldName % "range") {
-                return range;
+        case 's':
+            if (fieldName % "schemas") {
+                return schemas;
+            }
+            break;
+        case 'v':
+            if (fieldName % "version") {
+                return version;
             }
             break;
         default:
@@ -103,7 +118,7 @@ string_q CPinnedChunk::getValueByName(const string_q& fieldName) const {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPinnedChunk::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+bool CManifest::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
     string_q fieldValue = fieldValueIn;
 
@@ -111,25 +126,36 @@ bool CPinnedChunk::setValueByName(const string_q& fieldNameIn, const string_q& f
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
-        case 'b':
-            if (fieldName % "bloomHash") {
-                bloomHash = fieldValue;
+        case 'c':
+            if (fieldName % "chain") {
+                chain = fieldValue;
+                return true;
+            }
+            if (fieldName % "chunks") {
+                CPinnedChunk obj;
+                string_q str = fieldValue;
+                while (obj.parseJson3(str)) {
+                    chunks.push_back(obj);
+                    obj = CPinnedChunk();  // reset
+                }
                 return true;
             }
             break;
-        case 'i':
-            if (fieldName % "indexHash") {
-                indexHash = fieldValue;
-                return true;
-            }
-            if (fieldName % "ipfs_pin_hash") {
-                ipfs_pin_hash = fieldValue;
+        case 'd':
+            if (fieldName % "databases") {
+                databases = fieldValue;
                 return true;
             }
             break;
-        case 'r':
-            if (fieldName % "range") {
-                range = fieldValue;
+        case 's':
+            if (fieldName % "schemas") {
+                schemas = fieldValue;
+                return true;
+            }
+            break;
+        case 'v':
+            if (fieldName % "version") {
+                version = fieldValue;
                 return true;
             }
             break;
@@ -140,13 +166,13 @@ bool CPinnedChunk::setValueByName(const string_q& fieldNameIn, const string_q& f
 }
 
 //---------------------------------------------------------------------------------------------------
-void CPinnedChunk::finishParse() {
+void CManifest::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPinnedChunk::Serialize(CArchive& archive) {
+bool CManifest::Serialize(CArchive& archive) {
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -158,10 +184,11 @@ bool CPinnedChunk::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> range;
-    archive >> bloomHash;
-    archive >> indexHash;
-    archive >> ipfs_pin_hash;
+    archive >> version;
+    archive >> chain;
+    archive >> schemas;
+    archive >> databases;
+    archive >> chunks;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -169,26 +196,27 @@ bool CPinnedChunk::Serialize(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPinnedChunk::SerializeC(CArchive& archive) const {
+bool CManifest::SerializeC(CArchive& archive) const {
     // Writing always writes the latest version of the data
     CBaseNode::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << range;
-    archive << bloomHash;
-    archive << indexHash;
-    archive << ipfs_pin_hash;
+    archive << version;
+    archive << chain;
+    archive << schemas;
+    archive << databases;
+    archive << chunks;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPinnedChunk::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
+bool CManifest::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
     ASSERT(archiveIn.isReading());
     ASSERT(archiveOut.isWriting());
-    CPinnedChunk copy;
+    CManifest copy;
     // EXISTING_CODE
     // EXISTING_CODE
     copy.Serialize(archiveIn);
@@ -197,7 +225,7 @@ bool CPinnedChunk::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CPinnedChunkArray& array) {
+CArchive& operator>>(CArchive& archive, CManifestArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -209,7 +237,7 @@ CArchive& operator>>(CArchive& archive, CPinnedChunkArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CPinnedChunkArray& array) {
+CArchive& operator<<(CArchive& archive, const CManifestArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0; i < array.size(); i++)
@@ -218,44 +246,45 @@ CArchive& operator<<(CArchive& archive, const CPinnedChunkArray& array) {
 }
 
 //---------------------------------------------------------------------------
-void CPinnedChunk::registerClass(void) {
+void CManifest::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CPinnedChunk, "schema"))
+    if (HAS_FIELD(CManifest, "schema"))
         return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CPinnedChunk, "schema", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CPinnedChunk, "deleted", T_BOOL, ++fieldNum);
-    ADD_FIELD(CPinnedChunk, "showing", T_BOOL, ++fieldNum);
-    ADD_FIELD(CPinnedChunk, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPinnedChunk, "range", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CPinnedChunk, "bloomHash", T_IPFSHASH | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CPinnedChunk, "indexHash", T_IPFSHASH | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CPinnedChunk, "ipfs_pin_hash", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CManifest, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CManifest, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CManifest, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CManifest, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CManifest, "version", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CManifest, "chain", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CManifest, "schemas", T_IPFSHASH | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CManifest, "databases", T_IPFSHASH | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CManifest, "chunks", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CPinnedChunk, "schema");
-    HIDE_FIELD(CPinnedChunk, "deleted");
-    HIDE_FIELD(CPinnedChunk, "showing");
-    HIDE_FIELD(CPinnedChunk, "cname");
+    HIDE_FIELD(CManifest, "schema");
+    HIDE_FIELD(CManifest, "deleted");
+    HIDE_FIELD(CManifest, "showing");
+    HIDE_FIELD(CManifest, "cname");
 
-    builtIns.push_back(_biCPinnedChunk);
+    builtIns.push_back(_biCManifest);
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-string_q nextPinnedchunkChunk_custom(const string_q& fieldIn, const void* dataPtr) {
-    const CPinnedChunk* pin = reinterpret_cast<const CPinnedChunk*>(dataPtr);
-    if (pin) {
+string_q nextManifestChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CManifest* man = reinterpret_cast<const CManifest*>(dataPtr);
+    if (man) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if (fieldIn % "parsed")
-                    return nextBasenodeChunk(fieldIn, pin);
+                    return nextBasenodeChunk(fieldIn, man);
                 // EXISTING_CODE
                 // EXISTING_CODE
                 break;
@@ -272,7 +301,7 @@ string_q nextPinnedchunkChunk_custom(const string_q& fieldIn, const void* dataPt
 // EXISTING_CODE
 
 //---------------------------------------------------------------------------
-bool CPinnedChunk::readBackLevel(CArchive& archive) {
+bool CManifest::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -280,19 +309,19 @@ bool CPinnedChunk::readBackLevel(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CPinnedChunk& pin) {
-    pin.SerializeC(archive);
+CArchive& operator<<(CArchive& archive, const CManifest& man) {
+    man.SerializeC(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CPinnedChunk& pin) {
-    pin.Serialize(archive);
+CArchive& operator>>(CArchive& archive, CManifest& man) {
+    man.Serialize(archive);
     return archive;
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CPinnedChunk& it) {
+ostream& operator<<(ostream& os, const CManifest& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -302,12 +331,26 @@ ostream& operator<<(ostream& os, const CPinnedChunk& it) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_PINNEDCHUNK =
-    "[{RANGE}]\t"
-    "[{BLOOMHASH}]\t"
-    "[{INDEXHASH}]\t"
-    "[{FIRSTAPP}]\t"
-    "[{LATESTAPP}]";
+const CBaseNode* CManifest::getObjectAt(const string_q& fieldName, size_t index) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    if (fieldName % "chunks") {
+        if (index == NOPOS) {
+            CPinnedChunk empty;
+            ((CManifest*)this)->chunks.push_back(empty);  // NOLINT
+            index = chunks.size() - 1;
+        }
+        if (index < chunks.size())
+            return &chunks[index];
+    }
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    return NULL;
+}
+
+//---------------------------------------------------------------------------
+const char* STR_DISPLAY_MANIFEST = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

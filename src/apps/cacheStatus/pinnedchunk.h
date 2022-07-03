@@ -25,7 +25,7 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CPinnedChunk : public CBaseNode {
   public:
-    string_q fileName;
+    string_q range;
     ipfshash_t bloomHash;
     ipfshash_t indexHash;
 
@@ -90,7 +90,7 @@ inline void CPinnedChunk::clear(void) {
 inline void CPinnedChunk::initialize(void) {
     CBaseNode::initialize();
 
-    fileName = "";
+    range = "";
     bloomHash = "";
     indexHash = "";
 
@@ -103,7 +103,7 @@ inline void CPinnedChunk::duplicate(const CPinnedChunk& pi) {
     clear();
     CBaseNode::duplicate(pi);
 
-    fileName = pi.fileName;
+    range = pi.range;
     bloomHash = pi.bloomHash;
     indexHash = pi.indexHash;
 
@@ -124,7 +124,7 @@ inline bool CPinnedChunk::operator==(const CPinnedChunk& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // Equality operator as defined in class definition
-    return fileName == it.fileName;
+    return range == it.range;
 }
 
 //-------------------------------------------------------------------------
@@ -132,7 +132,7 @@ inline bool operator<(const CPinnedChunk& v1, const CPinnedChunk& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // Default sort as defined in class definition
-    return v1.fileName < v2.fileName;
+    return v1.range < v2.range;
 }
 
 //---------------------------------------------------------------------------

@@ -95,7 +95,7 @@ static string_q pinOneChunk(const string_q& fileName, const string_q& type) {
 
 //----------------------------------------------------------------
 bool pinlib_pinChunk(const string_q& fileName, CPinnedChunk& item) {
-    item.fileName = fileName;
+    item.range = fileName;
     string_q indexStr = pinOneChunk(fileName, "finalized");
     if (!contains(indexStr, "IpfsHash")) {
         // LOG_ERR("Could not pin index for blocks ", fileName, " file to Pinata. Quitting...");

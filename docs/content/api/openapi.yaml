@@ -2647,7 +2647,7 @@ components:
       description: "the IPFS hashes of the index chunk and its associated Bloom filter for the given block range"
       type: object
       properties:
-        fileName:
+        range:
           type: string
           example: "013142464-013145212"
           description: "for each chunk, the range of blocks contained in that chunk"
