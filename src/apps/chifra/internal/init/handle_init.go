@@ -39,7 +39,7 @@ func (opts *InitOptions) HandleInit() error {
 
 	unchained.PrintHeader(chain, opts.Globals.TestMode)
 
-	err = opts.SaveManifest(chain, "json", downloadedManifest)
+	err = opts.SaveManifest(chain, downloadedManifest)
 	if err != nil {
 		return err
 	}
@@ -178,8 +178,8 @@ func retry(failedPins []manifest.ChunkRecord, times uint, downloadChunks downloa
 	return len(pinsToRetry)
 }
 
-func (opts *InitOptions) SaveManifest(chain, fileType string, man *manifest.Manifest) error {
-	fileName := config.GetPathToChainConfig(chain) + "manifest." + fileType
+func (opts *InitOptions) SaveManifest(chain string, man *manifest.Manifest) error {
+	fileName := config.GetPathToChainConfig(chain) + "manifest.json"
 	w, err := os.Create(fileName)
 	if err != nil {
 		return fmt.Errorf("creating file: %s", err)
@@ -190,5 +190,10 @@ func (opts *InitOptions) SaveManifest(chain, fileType string, man *manifest.Mani
 		return fmt.Errorf("locking file: %s", err)
 	}
 
-	return opts.Globals.RenderManifest(w, fileType, man)
+	tmp := opts.Globals
+	tmp.Format = "json"
+	tmp.Writer = w
+	tmp.NoHeader = false
+	tmp.ApiMode = false
+	return tmp.RenderObject(man, true)
 }

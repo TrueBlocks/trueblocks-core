@@ -8,14 +8,13 @@ import (
 )
 
 // TODO: BOGUS - MANIFEST WRITING THE MANIFEST
-func (opts *GlobalOptions) RenderManifest(w io.Writer, fileType string, man *manifest.Manifest) error {
+func (opts *GlobalOptions) RenderManifest(w io.Writer, man *manifest.Manifest) error {
 	var err error
 	tmp := opts
-	tmp.Format = fileType
 	tmp.Writer = w
 	tmp.NoHeader = false
 	tmp.ApiMode = false
-	if fileType == "txt" {
+	if opts.Format == "txt" {
 		var sc []types.SimpleChunkRecord
 		for _, c := range man.Chunks {
 			cc := types.SimpleChunkRecord{

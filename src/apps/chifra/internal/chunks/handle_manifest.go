@@ -36,5 +36,5 @@ func (opts *ChunksOptions) HandleManifest(blockNums []uint64) error {
 		}
 	}
 
-	return opts.Globals.RenderManifest(opts.Globals.Writer, opts.Globals.Format, man)
+	return opts.Globals.RenderManifest(opts.Globals.Writer, man)
 }

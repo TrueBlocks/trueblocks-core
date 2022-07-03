@@ -21,15 +21,20 @@ bool visitToPin(const string_q& fullPath, void* unused) {
     CPinnedChunk pinRecord;
     pinlib_pinChunk(fullPath, pinRecord);
 
-    string_q ci = substitute(pinRecord.range, indexFolder_finalized, "");
-    ci = substitute(ci, indexFolder_blooms, "");
-    ci = substitute(ci, ".bin", "");
+    string_q range = substitute(pinRecord.range, indexFolder_finalized, "");
+    range = substitute(range, indexFolder_blooms, "");
+    range = substitute(range, ".bin", "");
 
     ostringstream os;
-    os << ci << "\t" << pinRecord.bloomHash << "\t" << pinRecord.indexHash << endl;
+    os << range << "\t" << pinRecord.bloomHash << "\t" << pinRecord.indexHash << endl;
     string_q manifestFile = chainConfigsTxt_manifest;
     os << asciiFileToString(manifestFile);
     stringToAsciiFile(manifestFile, os.str());
+
+    ostringstream rs;
+    rs << range << "\t" << pinRecord.Format("[{BLOOMHASH}]\t[{INDEXHASH}]") << endl;
+    appendToAsciiFile(cacheFolder_tmp + "newpins.txt", rs.str());
+    LOG_INFO("Pinned ", fullPath, " ", pinRecord.Format());
 
     return !shouldQuit();
 }

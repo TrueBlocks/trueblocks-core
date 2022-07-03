@@ -18,6 +18,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/scraper"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 
 	shell "github.com/ipfs/go-ipfs-api"
 )
@@ -121,14 +122,26 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 
 // TODO: BOGUS - MANIFEST WRITING THE MANIFEST
 func (opts *ScrapeOptions) publishManifest() error {
-	// newPins := config.GetPathToCache(opts.Globals.Chain) + "tmp/newpins.txt"
-	// lines := file.AsciiFileToLines(newPins)
-	// fmt.Println(newPins, lines)
-	// return nil
+	newPins := config.GetPathToCache(opts.Globals.Chain) + "tmp/newpins.txt"
+	lines := file.AsciiFileToLines(newPins)
+	for _, line := range lines {
+		parts := strings.Split(line, "\t")
+		if len(parts) == 3 {
+			record := manifest.ChunkRecord{
+				Range:     parts[0],
+				BloomHash: types.IpfsHash(parts[1]),
+				IndexHash: types.IpfsHash(parts[2]),
+			}
+			fmt.Println(colors.BrightGreen, record, colors.Off)
+		}
+	}
+	os.Remove(newPins)
+
 	cacheManifest, err := manifest.ReadManifest(opts.Globals.Chain, manifest.FromCache)
 	if err != nil {
 		return err
 	}
+
 	// TODO: BOGUS DOES THIS DESTROY THE FILE ON DISC BEFORE WRITING TO IT? I THINK IT DOES.
 	fileName := config.GetPathToChainConfig(opts.Globals.Chain) + "manifest.json"
 	w, err := os.Create(fileName)
@@ -140,5 +153,11 @@ func (opts *ScrapeOptions) publishManifest() error {
 	if err != nil {
 		return fmt.Errorf("locking file: %s", err)
 	}
-	return opts.Globals.RenderManifest(w, "json", cacheManifest)
+
+	tmp := opts.Globals
+	tmp.Format = "json"
+	tmp.Writer = w
+	tmp.NoHeader = false
+	tmp.ApiMode = false
+	return tmp.RenderObject(cacheManifest, true)
 }
