@@ -82,8 +82,11 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (pin && !getApiKey(lic)) {
-        if (!isTestMode()) {
+    if (pin && !isTestMode()) {
+        string_q key = getGlobalConfig("blockScrape")->getConfigStr("settings", "pinata_api_key", "<not_set>");
+        string_q secret =
+            getGlobalConfig("blockScrape")->getConfigStr("settings", "pinata_secret_api_key", "<not_set>");
+        if (key == "<not_set>" || secret == "<not_set>") {
             ostringstream os;
             os << "The --pin option requires you to have a Pinata key.";
             return usage(os.str());
