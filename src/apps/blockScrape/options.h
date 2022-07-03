@@ -69,6 +69,3 @@ extern bool copyRipeToStage(const string_q& path, void* data);
 extern bool visitToPin(const string_q& chunkId, void* data);
 extern bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTAPPLYFUNC pinFunc,
                                void* pinFuncData);
-extern void pinlib_init(QUITHANDLER qh);
-extern void pinlib_cleanup(void);
-extern bool pinlib_pinChunk(const string_q& fn, CPinnedChunk& item);

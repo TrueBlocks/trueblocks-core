@@ -14,7 +14,8 @@
 
 //----------------------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
-    pinlib_init(defaultQuitHandler);
+    acctlib_init(defaultQuitHandler);
+    CPinnedChunk::registerClass();
 
     COptions options;
     if (!options.prepareArguments(argc, argv))
@@ -26,6 +27,6 @@ int main(int argc, const char* argv[]) {
 
     // TODO: BOGUS - RETURN VALUE FROM BLAZE
     bool ret = options.scrape_blocks();
-    pinlib_cleanup();
+    acctlib_cleanup();
     return ret ? EXIT_SUCCESS : EXIT_FAILURE;
 }

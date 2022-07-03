@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
@@ -17,6 +18,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/scraper"
+
+	shell "github.com/ipfs/go-ipfs-api"
 )
 
 var IndexScraper scraper.Scraper
@@ -26,17 +29,18 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 
 	progressThen, _ := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
 
-	// ipfsAvail := false
-	// sh := shell.NewShell("localhost:5001")
-	// if opts.Pin {
-	// 	_, err := sh.Add(strings.NewReader("hello world!"))
-	// 	if err != nil {
-	// 		fmt.Fprintf(os.Stderr, "IPFS daemon not found. Error: %s", err)
-	// 		os.Exit(1)
-	// 	}
-	// 	ipfsAvail = true
-	// 	fmt.Println("IPFS daemon found.")
-	// }
+	ipfsAvail := false
+	sh := shell.NewShell("localhost:5001")
+	if opts.Pin {
+		_, err := sh.Add(strings.NewReader("hello world!"))
+		if err != nil {
+			logger.Log(logger.Warning, "IPFS daemon not found. Pinning to Pinata only.")
+			// os.Exit(1)
+		} else {
+			logger.Log(logger.Warning, "IPFS daemon not found. Pinning locally and to Pinata.")
+			ipfsAvail = true
+		}
+	}
 
 	var s *scraper.Scraper = &IndexScraper
 	s.ChangeState(true)
@@ -60,8 +64,8 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 				progressNow, _ := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
 				fmt.Println(colors.BrightBlue, progressThen.Finalized, colors.BrightWhite, progressNow.Finalized, colors.Off, progressNow.Finalized > progressThen.Finalized)
 				if progressNow.Finalized > progressThen.Finalized {
-					fmt.Println(colors.Yellow, "Need to pin here if enabled", colors.Off, progressNow.Finalized, progressThen.Finalized)
-					// fmt.Println(colors.Yellow, "Need to pin here if enabled", colors.Off, progressNow.Finalized, progressThen.Finalized, ipfsAvail)
+					// fmt.Println(colors.Yellow, "Need to pin here if enabled", colors.Off, progressNow.Finalized, progressThen.Finalized)
+					fmt.Println(colors.Yellow, "Need to pin here if enabled", colors.Off, progressNow.Finalized, progressThen.Finalized, ipfsAvail)
 					// time.Sleep(time.Second * 3)
 					err = opts.publishManifest()
 					if err != nil {
@@ -117,6 +121,10 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 
 // TODO: BOGUS - MANIFEST WRITING THE MANIFEST
 func (opts *ScrapeOptions) publishManifest() error {
+	// newPins := config.GetPathToCache(opts.Globals.Chain) + "tmp/newpins.txt"
+	// lines := file.AsciiFileToLines(newPins)
+	// fmt.Println(newPins, lines)
+	// return nil
 	cacheManifest, err := manifest.ReadManifest(opts.Globals.Chain, manifest.FromCache)
 	if err != nil {
 		return err
