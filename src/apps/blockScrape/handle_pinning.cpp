@@ -27,6 +27,7 @@ bool visitToPin(const string_q& fullPath, void* unused) {
 
     ostringstream os;
     os << range << "\t" << pinRecord.bloomHash << "\t" << pinRecord.indexHash << endl;
+    // TODO: BOGUS - REMOVE WRITING TO TXT FILE
     string_q manifestFile = chainConfigsTxt_manifest;
     os << asciiFileToString(manifestFile);
     stringToAsciiFile(manifestFile, os.str());
@@ -55,13 +56,14 @@ static size_t curlCallback(char* ptr, size_t size, size_t nmemb, void* userdata)
 //----------------------------------------------------------------
 bool pinlib_pinChunk(const string_q& fullPath, CPinnedChunk& item) {
     item.range = fullPath;
-    string_q indexStr = pinOneChunk(item.range, "finalized");
+
+    string_q indexFilename = item.range;
+    string_q indexStr = pinOneChunk(indexFilename, "finalized");
     if (!contains(indexStr, "IpfsHash")) {
         // LOG_ERR("Could not pin index for blocks ", item.range, " file to Pinata. Quitting...");
         LOG_ERR("Could not pin index for blocks file to Pinata. Quitting...");
         return false;
     }
-
     replace(indexStr, "IpfsHash", "ipfs_pin_hash");
     replace(indexStr, "PinSize", "size");
     CPinnedChunk index;
@@ -72,12 +74,12 @@ bool pinlib_pinChunk(const string_q& fullPath, CPinnedChunk& item) {
     blknum_t start = path_2_Bn(item.range, end, ts);
     LOG_INFO(bBlue, "  Pinned index for blocks ", start, " to ", end, " at ", item.indexHash, cOff);
 
-    string_q bloomStr = pinOneChunk(item.range, "blooms");
+    string_q bloomFilename = substitute(substitute(item.range, ".bin", ".bloom"), "/finalized/", "/blooms/");
+    string_q bloomStr = pinOneChunk(bloomFilename, "blooms");
     if (!contains(bloomStr, "IpfsHash")) {
         LOG_ERR("Could not pin bloom for blocks ", item.range, " file to Pinata. Quitting...");
         return false;
     }
-
     replace(bloomStr, "IpfsHash", "ipfs_pin_hash");
     replace(bloomStr, "PinSize", "size");
     CPinnedChunk bloom;
@@ -88,21 +90,20 @@ bool pinlib_pinChunk(const string_q& fullPath, CPinnedChunk& item) {
 }
 
 //----------------------------------------------------------------
-string_q pinOneChunk(const string_q& fileName, const string_q& type) {
-    string_q source =
-        (type == "blooms" ? substitute(substitute(fileName, ".bin", ".bloom"), "/finalized/", "/blooms/") : fileName);
-    string_q zip = source;
-    zip = source + ".gz";
+string_q pinOneChunk(const string_q& source, const string_q& type) {
+    string_q key = getGlobalConfig("blockScrape")->getConfigStr("settings", "pinata_api_key", "<not_set>");
+    string_q secret = getGlobalConfig("blockScrape")->getConfigStr("settings", "pinata_secret_api_key", "<not_set>");
+    if (key == "<not_set>" || secret == "<not_set>") {
+        cerr << "You need to put Pinata API keys in $CONFIG/blockScrape.toml" << endl;
+        return "";
+    }
+
     // clang-format off
     string_q cmd1 = "yes | gzip -n -k " + source; // + " 2>/dev/null";
     if (system(cmd1.c_str())) {}  // Don't remove cruft. Silences compiler warnings
     // clang-format on
 
-    CApiKey lic;
-    if (!getApiKey(lic)) {
-        cerr << "You need to put Pinata API keys in $CONFIG/blockScrape.toml" << endl;
-        return "";
-    }
+    string_q zip = source + ".gz";
 
     string_q result;
     CURL* curl;
@@ -113,8 +114,8 @@ string_q pinOneChunk(const string_q& fileName, const string_q& type) {
         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
         curl_easy_setopt(curl, CURLOPT_DEFAULT_PROTOCOL, "https");
         struct curl_slist* headers = NULL;
-        headers = curl_slist_append(headers, ("pinata_api_key: " + lic.key).c_str());
-        headers = curl_slist_append(headers, ("pinata_secret_api_key: " + lic.secret).c_str());
+        headers = curl_slist_append(headers, ("pinata_api_key: " + key).c_str());
+        headers = curl_slist_append(headers, ("pinata_secret_api_key: " + secret).c_str());
         headers = curl_slist_append(headers, "Content-Type: multipart/form-data");
         curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
