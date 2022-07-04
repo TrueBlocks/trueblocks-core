@@ -83,7 +83,7 @@ PrintLine("Copying files and folder to config...")
 # ---------------------------------------------------------------
 # Function        InFolder                                 InFile                     OutFolder
 CopyNotPresent    (${INSTALL_SOURCE}                       "trueBlocks.toml"          ${INSTALL_DEST}                        )
-CopyNotPresent    (${INSTALL_SOURCE}/manifest/             "manifest.txt"             ${INSTALL_DEST}/config/mainnet/        )
+
 CopyNotPresent    (${INSTALL_SOURCE}/manifest/             "manifest.json"            ${INSTALL_DEST}/config/mainnet/        )
 CopyNotPresent    (${INSTALL_SOURCE}/names/                "names_custom.tab"         ${INSTALL_DEST}/config/mainnet/        )
 CopyNotPresent    (${INSTALL_SOURCE}/names/                "collections.csv"          ${INSTALL_DEST}/config/mainnet/        )
@@ -121,3 +121,4 @@ file(REMOVE "${INSTALL_DEST}/cache/names/names.bin")
 file(REMOVE "${INSTALL_DEST}/cache/names/names_prefunds_bals.bin")
 file(REMOVE "${INSTALL_DEST}/cache/allocs.bin")
 file(REMOVE "${INSTALL_DEST}/cache/abis/known.bin")
+file(REMOVE "${INSTALL_DEST}/config/mainnet/manifest.txt")
