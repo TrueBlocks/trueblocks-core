@@ -33,8 +33,7 @@ message(STATUS "======== LOOKING FOR PYTHON ========================")
 
 # PYTHONINTERP_FOUND         - Was the Python executable found
 # PYTHON_EXECUTABLE          - path to the Python interpreter
-find_package(PythonInterp REQUIRED)
-find_package(PythonLibs REQUIRED)
+find_package(Python COMPONENTS Interpreter Development)
 
 # ----------------------------------------------------------------------------------------
 # We require the CURL library to be installed for most apps and tools
