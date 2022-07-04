@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -46,6 +47,14 @@ func (opts *ScrapeOptions) ValidateScrape() error {
 		return validate.Usage("The {0} option ({1}) must {2}.", "--sleep", fmt.Sprintf("%f", opts.Sleep), "be at least .25")
 	}
 
+	if opts.Pin {
+		if len(config.ReadBlockScrape().Settings.Pinata_api_key) == 0 {
+			return validate.Usage("The {0} option requires {1}", "--pin", "a pinata_api_key")
+		}
+		if len(config.ReadBlockScrape().Settings.Pinata_secret_api_key) == 0 {
+			return validate.Usage("The {0} option requires {1}", "--pin", "a pinata_secret_api_key")
+		}
+	}
 	// Note this does not return if a migration is needed
 	index.CheckBackLevelIndex(opts.Globals.Chain)
 
