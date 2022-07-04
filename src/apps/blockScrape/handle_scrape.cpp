@@ -360,21 +360,3 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTA
 
     return (pinFunc ? ((*pinFunc)(outFn, pinFuncData)) : true);
 }
-
-//---------------------------------------------------------------------------------------------------
-bool visitToPin(const string_q& chunkId, void* data) {
-    CPinnedChunk pinRecord;
-    pinlib_pinChunk(chunkId, pinRecord);
-
-    // TODO: BOGUS - WRITING MANIFEST - NOTHING STOPS THIS FROM CORRUPTING THE MANIFEST
-    // TODO: BOGUS - WRITING MANIFEST - WRITES ON TOP OF THE HEADER IN THE TEXT FILE
-    string_q ci = substitute(pinRecord.range, indexFolder_finalized, "");
-    ci = substitute(ci, indexFolder_blooms, "");
-    ci = substitute(ci, ".bin", "");
-    ostringstream os;
-    os << ci << "\t" << pinRecord.bloomHash << "\t" << pinRecord.indexHash << endl;
-    string_q manifestFile = chainConfigsTxt_manifest;
-    os << asciiFileToString(manifestFile);
-    stringToAsciiFile(manifestFile, os.str());
-    return !shouldQuit();
-}

@@ -27,15 +27,11 @@ bool visitToPin(const string_q& fullPath, void* unused) {
 
     ostringstream os;
     os << range << "\t" << pinRecord.bloomHash << "\t" << pinRecord.indexHash << endl;
-    // TODO: BOGUS - REMOVE WRITING TO TXT FILE
-    string_q manifestFile = chainConfigsTxt_manifest;
-    os << asciiFileToString(manifestFile);
-    stringToAsciiFile(manifestFile, os.str());
 
     ostringstream rs;
-    rs << range << "\t" << pinRecord.Format("[{BLOOMHASH}]\t[{INDEXHASH}]") << endl;
-    appendToAsciiFile(cacheFolder_tmp + "newpins.txt", rs.str());
-    LOG_INFO("Pinned ", fullPath, " ", pinRecord.Format());
+    rs << range << "\t" << pinRecord.Format("[{BLOOMHASH}]\t[{INDEXHASH}]");
+    LOG_INFO("In C++ --> ", rs.str());
+    appendToAsciiFile(cacheFolder_tmp + "newpins.txt", rs.str() + "\n");
 
     return !shouldQuit();
 }
@@ -58,23 +54,12 @@ bool pinlib_pinChunk(const string_q& fullPath, CPinnedChunk& item) {
     item.range = fullPath;
 
     string_q indexFilename = item.range;
-    string_q indexStr = pinOneChunk(indexFilename, "finalized");
-    if (!contains(indexStr, "IpfsHash")) {
-        // LOG_ERR("Could not pin index for blocks ", item.range, " file to Pinata. Quitting...");
-        LOG_ERR("Could not pin index for blocks file to Pinata. Quitting...");
-        return false;
-    }
-    replace(indexStr, "IpfsHash", "ipfs_pin_hash");
-    replace(indexStr, "PinSize", "size");
-    CPinnedChunk index;
-    index.parseJson3(indexStr);
-    item.indexHash = index.ipfs_pin_hash;
+    string_q bloomFilename = substitute(substitute(item.range, ".bin", ".bloom"), "/finalized/", "/blooms/");
+
     blknum_t end;
     timestamp_t ts;
     blknum_t start = path_2_Bn(item.range, end, ts);
-    LOG_INFO(bBlue, "  Pinned index for blocks ", start, " to ", end, " at ", item.indexHash, cOff);
 
-    string_q bloomFilename = substitute(substitute(item.range, ".bin", ".bloom"), "/finalized/", "/blooms/");
     string_q bloomStr = pinOneChunk(bloomFilename, "blooms");
     if (!contains(bloomStr, "IpfsHash")) {
         LOG_ERR("Could not pin bloom for blocks ", item.range, " file to Pinata. Quitting...");
@@ -86,6 +71,20 @@ bool pinlib_pinChunk(const string_q& fullPath, CPinnedChunk& item) {
     bloom.parseJson3(bloomStr);
     item.bloomHash = bloom.ipfs_pin_hash;
     LOG_INFO(bBlue, "  Pinned bloom for blocks ", start, " to ", end, " at ", item.bloomHash, cOff);
+
+    string_q indexStr = pinOneChunk(indexFilename, "finalized");
+    if (!contains(indexStr, "IpfsHash")) {
+        // LOG_ERR("Could not pin index for blocks ", item.range, " file to Pinata. Quitting...");
+        LOG_ERR("Could not pin index for blocks file to Pinata. Quitting...");
+        return false;
+    }
+    replace(indexStr, "IpfsHash", "ipfs_pin_hash");
+    replace(indexStr, "PinSize", "size");
+    CPinnedChunk index;
+    index.parseJson3(indexStr);
+    item.indexHash = index.ipfs_pin_hash;
+    LOG_INFO(bBlue, "  Pinned index for blocks ", start, " to ", end, " at ", item.indexHash, cOff);
+
     return true;
 }
 
@@ -98,12 +97,13 @@ string_q pinOneChunk(const string_q& source, const string_q& type) {
         return "";
     }
 
-    // clang-format off
-    string_q cmd1 = "yes | gzip -n -k " + source; // + " 2>/dev/null";
-    if (system(cmd1.c_str())) {}  // Don't remove cruft. Silences compiler warnings
-    // clang-format on
+    // TODO: BOGUS - DO I REALLY WANT TO TURN OFF GZIP?
+    // string_q cmd1 = "yes | gzip -n -k " + source;  // + " 2>/dev/null";
+    // if (system(cmd1.c_str())) {
+    // }  // Don't remove cruft. Silences compiler warnings
 
-    string_q zip = source + ".gz";
+    // TODO: BOGUS - DO I REALLY WANT TO TURN OFF GZIP?
+    string_q zip = source;  // + ".gz";
 
     string_q result;
     CURL* curl;
@@ -135,6 +135,7 @@ string_q pinOneChunk(const string_q& source, const string_q& type) {
         curl_slist_free_all(headers);
     }
     curl_easy_cleanup(curl);
-    ::remove(zip.c_str());
+    // TODO: BOGUS - DO I REALLY WANT TO TURN OFF GZIP?
+    // ::remove(zip.c_str());
     return result;
 }

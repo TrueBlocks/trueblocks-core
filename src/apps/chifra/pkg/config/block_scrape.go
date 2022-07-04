@@ -29,7 +29,10 @@ type blockScrapeSettings struct {
 	// snap_to_grid   int
 	// first_snap     int
 	// allow_missing  bool
-	Allow_missing bool
+	Allow_missing         bool
+	Pinata_api_key        string
+	Pinata_secret_api_key string
+	Pinata_jwt            string
 }
 
 type BlockScrape struct {

@@ -6,7 +6,6 @@ package scrapePkg
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"strings"
 	"sync"
@@ -14,8 +13,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinata"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/scraper"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -35,10 +34,10 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 	if opts.Pin {
 		_, err := sh.Add(strings.NewReader("hello world!"))
 		if err != nil {
-			logger.Log(logger.Warning, "IPFS daemon not found. Pinning to Pinata only.")
+			fmt.Println("IPFS daemon not found. Pinning to Pinata only.")
 			// os.Exit(1)
 		} else {
-			logger.Log(logger.Warning, "IPFS daemon not found. Pinning locally and to Pinata.")
+			fmt.Println("IPFS daemon not found. Pinning locally and to Pinata.")
 			ipfsAvail = true
 		}
 	}
@@ -95,7 +94,7 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 				var distanceFromHead uint64 = 13
 				meta, err := rpcClient.GetMetaData(opts.Globals.Chain, false)
 				if err != nil {
-					log.Println("Error from node:", err)
+					fmt.Println("Error from node:", err)
 				} else {
 					distanceFromHead = meta.Latest - meta.Staging
 				}
@@ -109,9 +108,9 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 				isDefault := opts.Sleep == 14 || opts.Sleep == 13
 				if !isDefault || closeEnough {
 					if closeEnough {
-						logger.Log(logger.Info, "Close enough to head. Sleeping for", opts.Sleep, "seconds -", distanceFromHead, "away from head.")
+						fmt.Println("Close enough to head. Sleeping for", opts.Sleep, "seconds -", distanceFromHead, "away from head.")
 					} else {
-						logger.Log(logger.Info, "Sleeping for", opts.Sleep, "seconds -", distanceFromHead, "away from head.")
+						fmt.Println("Sleeping for", opts.Sleep, "seconds -", distanceFromHead, "away from head.")
 					}
 					s.Pause()
 				}
@@ -132,7 +131,27 @@ func (opts *ScrapeOptions) publishManifest() error {
 				BloomHash: types.IpfsHash(parts[1]),
 				IndexHash: types.IpfsHash(parts[2]),
 			}
+			unchainedFolder := config.GetPathToIndex(opts.Globals.Chain)
+			indexPath := unchainedFolder + "finalized/" + record.Range + ".bin"
+			bloomPath := unchainedFolder + "blooms/" + record.Range + ".bloom"
 			fmt.Println(colors.BrightGreen, record, colors.Off)
+			fmt.Println(colors.BrightWhite, "Need to pin: ", indexPath, file.FileExists(indexPath), colors.Off)
+			fmt.Println(colors.BrightWhite, "Need to pin: ", bloomPath, file.FileExists(bloomPath), colors.Off)
+			pina := pinata.Pinata{
+				Apikey: config.ReadBlockScrape(opts.Globals.Chain).Settings.Pinata_api_key,
+				Secret: config.ReadBlockScrape(opts.Globals.Chain).Settings.Pinata_secret_api_key,
+			}
+			indexHash, err := pina.PinFile(indexPath)
+			if err != nil {
+				fmt.Println("Errored out on index ", err.Error())
+			} else {
+				bloomHash, err := pina.PinFile(bloomPath)
+				if err != nil {
+					fmt.Println("Errored out on bloom ", err.Error())
+				} else {
+					fmt.Println("In GoLang --> ", record.Range, bloomHash, indexHash)
+				}
+			}
 		}
 	}
 	os.Remove(newPins)
