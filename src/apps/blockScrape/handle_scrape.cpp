@@ -186,7 +186,7 @@ bool COptions::write_chunks(blknum_t chunkSize, bool snapped) {
                 string_q chunkId = p1[1] + "-" + p2[1];
                 string_q chunkPath = indexFolder_finalized + chunkId + ".bin";
                 LOG_INFO("Writing...", string_q(80, ' '), "\r");
-                writeIndexAsBinary(chunkPath, consolidatedLines, pin);
+                writeIndexAsBinary(chunkPath, consolidatedLines);
                 ostringstream os;
                 os << "Wrote " << consolidatedLines.size() << " records to " << cTeal << relativize(chunkPath);
                 if (snapped && (lines.size() - 1 == loc)) {
@@ -282,7 +282,7 @@ bool COptions::report(void) {
 }
 
 //----------------------------------------------------------------
-bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, bool pin) {
+bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines) {
     // ASSUMES THE ARRAY IS SORTED!
 
     ASSERT(!fileExists(outFn));
@@ -358,11 +358,9 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, bool p
     ::remove(tmpFile2.c_str());               // remove the tmp file
     unlockSection();
 
-    if (pin) {
-        string_q range = substitute(substitute(outFn, indexFolder_finalized, ""), indexFolder_blooms, "");
-        range = substitute(substitute(range, ".bin", ""), ".bloom", "");
-        appendToAsciiFile(cacheFolder_tmp + "pins_created.txt", range + "\n");
-    }
+    string_q range = substitute(substitute(outFn, indexFolder_finalized, ""), indexFolder_blooms, "");
+    range = substitute(substitute(range, ".bin", ""), ".bloom", "");
+    appendToAsciiFile(cacheFolder_tmp + "chunks_created.txt", range + "\n");
 
     return !shouldQuit();
 }

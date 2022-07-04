@@ -1,4 +1,4 @@
-package pinata
+package pinning
 
 import (
 	"bytes"
@@ -10,7 +10,10 @@ import (
 	"net/http"
 	"os"
 	fp "path/filepath"
+	"strings"
 	"time"
+
+	shell "github.com/ipfs/go-ipfs-api"
 )
 
 const (
@@ -117,6 +120,12 @@ func (p *Pinata) PinHash(hash string) (bool, error) {
 	}
 
 	return false, fmt.Errorf("Pin hash to Pinata failure.")
+}
+
+func LocalDaemonRunning() bool {
+	sh := shell.NewShell("localhost:5001")
+	_, err := sh.Add(strings.NewReader("hello world!"))
+	return err == nil
 }
 
 // TODO: BOGUS - OLD C++ CODE TO READ FROM PINATA

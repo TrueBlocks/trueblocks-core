@@ -28,7 +28,6 @@ type blockScrapeSettings struct {
 	// unripe_dist    int
 	// snap_to_grid   int
 	// first_snap     int
-	// allow_missing  bool
 	Allow_missing         bool
 	Pinata_api_key        string
 	Pinata_secret_api_key string
@@ -55,4 +54,9 @@ func ReadBlockScrape(chain string) *BlockScrape {
 	}
 
 	return &cachedBlockScrape
+}
+
+func GetPinataKeys(chain string) (string, string) {
+	// TODO: BOGUS - IT WOULD BE HELPFUL IF THIS MERGED IN DATA FROM THE MAINNET FILE FOR PIN APIS
+	return ReadBlockScrape(chain).Settings.Pinata_api_key, ReadBlockScrape(chain).Settings.Pinata_secret_api_key
 }

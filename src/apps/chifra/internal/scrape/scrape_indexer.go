@@ -14,8 +14,9 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinata"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/scraper"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -40,11 +41,11 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 		} else {
 			err := opts.Globals.PassItOn("blockScrape", opts.Globals.Chain, opts.ToCmdLine(), opts.GetEnvStr())
 			if err != nil {
-				fmt.Println("Call to blockScrape errored:", err)
+				logger.Log(logger.Error, "Call to blockScrape errored:", err)
 			} else {
 				err = opts.publishManifest(progress)
 				if err != nil {
-					fmt.Println("Call to publishManifest errored:", err)
+					logger.Log(logger.Error, "Call to publishManifest errored:", err)
 				}
 			}
 
@@ -66,7 +67,7 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 				var distanceFromHead uint64 = 13
 				meta, err := rpcClient.GetMetaData(opts.Globals.Chain, false)
 				if err != nil {
-					fmt.Println("Error from node:", err)
+					logger.Log(logger.Error, "Error from node:", err)
 				} else {
 					distanceFromHead = meta.Latest - meta.Staging
 				}
@@ -80,9 +81,9 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 				isDefault := opts.Sleep == 14 || opts.Sleep == 13
 				if !isDefault || closeEnough {
 					if closeEnough {
-						fmt.Println("Close enough to head. Sleeping for", opts.Sleep, "seconds -", distanceFromHead, "away from head.")
+						logger.Log(logger.Info, "Close enough to head. Sleeping for", opts.Sleep, "seconds -", distanceFromHead, "away from head.")
 					} else {
-						fmt.Println("Sleeping for", opts.Sleep, "seconds -", distanceFromHead, "away from head.")
+						logger.Log(logger.Info, "Sleeping for", opts.Sleep, "seconds -", distanceFromHead, "away from head.")
 					}
 					s.Pause()
 				}
@@ -104,14 +105,14 @@ func (opts *ScrapeOptions) publishManifest(progressThen *rpcClient.MetaData) err
 		return nil
 	}
 
-	newPinsFn := config.GetPathToCache(opts.Globals.Chain) + "tmp/pins_created.txt"
+	newPinsFn := config.GetPathToCache(opts.Globals.Chain) + "tmp/chunks_created.txt"
 	if !file.FileExists(newPinsFn) {
-		return errors.New("pins_created file not found, but there's been progress")
+		return errors.New("chunks_created file not found, but there's been progress")
 	}
 
 	lines := file.AsciiFileToLines(newPinsFn)
 	if len(lines) < 1 {
-		return errors.New("pins_created file found, but it was empty")
+		return errors.New("chunks_created file found, but it was empty")
 	}
 
 	for _, line := range lines {
@@ -120,7 +121,7 @@ func (opts *ScrapeOptions) publishManifest(progressThen *rpcClient.MetaData) err
 
 		record := manifest.ChunkRecord{}
 		if len(parts) < 1 {
-			return errors.New("Invalid record in pins_created.txt file: " + line)
+			return errors.New("Invalid record in chunks_created.txt file: " + line)
 		}
 		if len(parts) > 0 {
 			record.Range = parts[0]
@@ -131,15 +132,15 @@ func (opts *ScrapeOptions) publishManifest(progressThen *rpcClient.MetaData) err
 		if len(parts) > 2 {
 			record.IndexHash = types.IpfsHash(parts[2])
 		}
-		// fmt.Println(colors.BrightGreen, record, colors.Off)
 
 		unchainedFolder := config.GetPathToIndex(opts.Globals.Chain)
 		pathToIndex := unchainedFolder + "finalized/" + record.Range + ".bin"
 		bloomPath := unchainedFolder + "blooms/" + record.Range + ".bloom"
 
-		pina := pinata.Pinata{
-			Apikey: config.ReadBlockScrape(opts.Globals.Chain).Settings.Pinata_api_key,
-			Secret: config.ReadBlockScrape(opts.Globals.Chain).Settings.Pinata_secret_api_key,
+		key, secret := config.GetPinataKeys(opts.Globals.Chain)
+		pina := pinning.Pinata{
+			Apikey: key,
+			Secret: secret,
 		}
 
 		bloomHash, err := pina.PinFile(bloomPath)
@@ -147,43 +148,23 @@ func (opts *ScrapeOptions) publishManifest(progressThen *rpcClient.MetaData) err
 			return err
 		}
 		record.BloomHash = types.IpfsHash(bloomHash)
-		// if bloomHash != record.BloomHash.String() {
-		// 	msg := fmt.Sprintf("Hash mismatch between GoLang and C++ %s %s", bloomHash, record.BloomHash.String())
-		// 	// return errors.New(msg)
-		// 	fmt.Println(msg)
-		// }
 
 		indexHash, err := pina.PinFile(pathToIndex)
 		if err != nil {
 			return err
 		}
 		record.IndexHash = types.IpfsHash(indexHash)
-		// if indexHash != record.IndexHash.String() {
-		// 	msg := fmt.Sprintf("Hash mismatch between GoLang and C++ %s %s", indexHash, record.IndexHash.String())
-		// 	// return errors.New(msg)
-		// 	fmt.Println(msg)
-		// }
 
-		fmt.Println("In GoLang --> ", record.Range, bloomHash, indexHash)
+		logger.Log(logger.Info, "Pinned to pinning service ", record.Range, bloomHash, indexHash)
 		err = opts.UpdateManifest(record)
 		if err != nil {
 			return err
 		}
+
+		// ipfsAvail := pinning.LocalDaemonRunning()
 	}
 	os.Remove(newPinsFn)
 	*progressThen = *progressNow
-	// ipfsAvail := false
-	// sh := shell.NewShell("localhost:5001")
-	// if opts.Pin {
-	// 	_, err := sh.Add(strings.NewReader("hello world!"))
-	// 	if err != nil {
-	// 		fmt.Println("IPFS daemon not found. Pinning to Pinata only.")
-	// 		// os.Exit(1)
-	// 	} else {
-	// 		fmt.Println("IPFS daemon not found. Pinning locally and to Pinata.")
-	// 		ipfsAvail = true
-	// 	}
-	// }
 	return nil
 }
 
@@ -234,7 +215,7 @@ func (opts *ScrapeOptions) UpdateManifest(chunk manifest.ChunkRecord) error {
 	tmp.Writer = w
 	tmp.NoHeader = false
 	tmp.ApiMode = false
-
+	logger.Log(logger.Info, "Updated manifest with", len(man.Chunks), "chunks")
 	return tmp.RenderObject(man, true)
 }
 

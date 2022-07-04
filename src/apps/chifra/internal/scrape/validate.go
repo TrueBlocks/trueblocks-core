@@ -48,10 +48,11 @@ func (opts *ScrapeOptions) ValidateScrape() error {
 	}
 
 	if opts.Pin {
-		if len(config.ReadBlockScrape(opts.Globals.Chain).Settings.Pinata_api_key) == 0 {
+		key, secret := config.GetPinataKeys(opts.Globals.Chain)
+		if len(key) == 0 {
 			return validate.Usage("The {0} option requires {1}", "--pin", "a pinata_api_key")
 		}
-		if len(config.ReadBlockScrape(opts.Globals.Chain).Settings.Pinata_secret_api_key) == 0 {
+		if len(secret) == 0 {
 			return validate.Usage("The {0} option requires {1}", "--pin", "a pinata_secret_api_key")
 		}
 	}
