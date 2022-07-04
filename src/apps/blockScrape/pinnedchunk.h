@@ -28,7 +28,6 @@ class CPinnedChunk : public CBaseNode {
     string_q range;
     ipfshash_t bloomHash;
     ipfshash_t indexHash;
-    string_q ipfs_pin_hash;
 
   public:
     CPinnedChunk(void);
@@ -94,7 +93,6 @@ inline void CPinnedChunk::initialize(void) {
     range = "";
     bloomHash = "";
     indexHash = "";
-    ipfs_pin_hash = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -108,7 +106,6 @@ inline void CPinnedChunk::duplicate(const CPinnedChunk& pi) {
     range = pi.range;
     bloomHash = pi.bloomHash;
     indexHash = pi.indexHash;
-    ipfs_pin_hash = pi.ipfs_pin_hash;
 
     // EXISTING_CODE
     // EXISTING_CODE

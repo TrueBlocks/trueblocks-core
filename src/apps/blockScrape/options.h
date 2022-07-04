@@ -65,6 +65,4 @@ class COptions : public COptionsBase {
 
 //-----------------------------------------------------------------------------
 extern bool copyRipeToStage(const string_q& path, void* data);
-extern bool visitToPin(const string_q& chunkId, void* data);
-extern bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTAPPLYFUNC pinFunc,
-                               void* pinFuncData);
+extern bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, bool pin);

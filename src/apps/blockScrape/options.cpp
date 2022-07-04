@@ -116,7 +116,7 @@ bool COptions::parseArguments(string_q& command) {
 
         // Write the chunk and the bloom to the binary cache
         string_q chunkPath = indexFolder_finalized + chunkId + ".bin";
-        if (!writeIndexAsBinary(chunkPath, consolidatedLines, (pin ? visitToPin : nullptr), nullptr)) {
+        if (!writeIndexAsBinary(chunkPath, consolidatedLines, pin)) {
             LOG_ERR(cRed, "Failed to write index chunk for block zero.", cOff);
             return false;
         }

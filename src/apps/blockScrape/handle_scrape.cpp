@@ -186,7 +186,7 @@ bool COptions::write_chunks(blknum_t chunkSize, bool snapped) {
                 string_q chunkId = p1[1] + "-" + p2[1];
                 string_q chunkPath = indexFolder_finalized + chunkId + ".bin";
                 LOG_INFO("Writing...", string_q(80, ' '), "\r");
-                writeIndexAsBinary(chunkPath, consolidatedLines, (pin ? visitToPin : nullptr), nullptr);
+                writeIndexAsBinary(chunkPath, consolidatedLines, pin);
                 ostringstream os;
                 os << "Wrote " << consolidatedLines.size() << " records to " << cTeal << relativize(chunkPath);
                 if (snapped && (lines.size() - 1 == loc)) {
@@ -274,7 +274,7 @@ bool COptions::report(void) {
     replace(result, "{3}", "{" + double_2_Str(pct * 100.00, 1) + "%}");
     replace(result, "{4}", "{" + uint_2_Str(need) + "}");
     replace(result, "{5}", "{" + uint_2_Str(found) + "}");
-    replace(result, "{6}", "{" + double_2_Str(pBlk, 2) + " txs/blk}");
+    replace(result, "{6}", "{" + double_2_Str(pBlk, 2) + " apps/blk}");
     replaceAll(result, "{", cGreen);
     replaceAll(result, "}", cOff);
     LOG_INFO(result);
@@ -282,7 +282,7 @@ bool COptions::report(void) {
 }
 
 //----------------------------------------------------------------
-bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTAPPLYFUNC pinFunc, void* pinFuncData) {
+bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, bool pin) {
     // ASSUMES THE ARRAY IS SORTED!
 
     ASSERT(!fileExists(outFn));
@@ -358,5 +358,11 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTA
     ::remove(tmpFile2.c_str());               // remove the tmp file
     unlockSection();
 
-    return (pinFunc ? ((*pinFunc)(outFn, pinFuncData)) : true);
+    if (pin) {
+        string_q range = substitute(substitute(outFn, indexFolder_finalized, ""), indexFolder_blooms, "");
+        range = substitute(substitute(range, ".bin", ""), ".bloom", "");
+        appendToAsciiFile(cacheFolder_tmp + "pins_created.txt", range + "\n");
+    }
+
+    return !shouldQuit();
 }

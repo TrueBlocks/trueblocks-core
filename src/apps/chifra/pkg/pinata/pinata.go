@@ -123,7 +123,7 @@ func (p *Pinata) PinHash(hash string) (bool, error) {
 /*
 //---------------------------------------------------------------------------
 // Assumes the license is valid
-bool pinlib_getPinList(const CPinApiLicense& lic, string& result) {
+bool pin lib_getPinList(const CPinApiLicense& lic, string& result) {
     result = "";
     result.clear();
 

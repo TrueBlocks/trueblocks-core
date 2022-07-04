@@ -4,4 +4,3 @@ bloomHash     ,ipfshash ,           ,       ,      ,        ,          ,        
 indexHash     ,ipfshash ,           ,       ,      ,        ,          ,        ,      ,         ,  3 ,   3 ,QmTbYpR...qWLj44    ,the IPFS hash of the index chunk at that range
 firstApp      ,blknum   ,           ,       ,      ,        ,          ,true    ,      ,true     ,  4 ,   4 ,                    ,the first appearance in the chunk
 latestApp     ,blknum   ,           ,       ,      ,        ,          ,true    ,      ,true     ,  5 ,   5 ,                    ,the latest appearance in the chunk
-ipfs_pin_hash ,string   ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,                    ,
