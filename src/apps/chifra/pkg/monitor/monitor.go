@@ -265,6 +265,7 @@ func (mon *Monitor) MoveToProduction() error {
 
 	oldPath := mon.Path()
 	mon.Staged = false
+	// TODO: BOGUS THIS PROBABLY DOESN'T WORK SINCE IT'S LOCAL VARIABLE
 	mutex := sync.Mutex{}
 	mutex.Lock()
 	err = os.Rename(oldPath, mon.Path())

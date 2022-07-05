@@ -155,7 +155,7 @@ func (opts *ScrapeOptions) publishManifest(progressThen *rpcClient.MetaData) err
 		}
 		record.IndexHash = types.IpfsHash(indexHash)
 
-		logger.Log(logger.Info, "Pinned to pinning service ", record.Range, bloomHash, indexHash)
+		logger.Log(logger.Info, "Pinned:", record.Range, bloomHash, indexHash)
 		err = opts.UpdateManifest(record)
 		if err != nil {
 			return err
