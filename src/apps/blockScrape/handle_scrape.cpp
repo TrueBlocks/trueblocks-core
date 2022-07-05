@@ -80,6 +80,11 @@ bool COptions::scrape_blocks(void) {
         return false;
     if (!isTestMode())
         freshenTimestamps(blaze_start + block_cnt);
+    // CStringArray lines;
+    // asciiFileToLines(cacheFolder_tmp + "tempTsFile.txt", lines);
+    // sort(lines.begin(), lines.end());
+    // if (!isTestMode())
+    //     freshenTimestampsAppend(blaze_start + block_cnt, lines);
     report();
     if (nRecsNow <= apps_per_chunk)
         return true;

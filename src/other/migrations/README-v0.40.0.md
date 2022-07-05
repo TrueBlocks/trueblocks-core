@@ -1,3 +1,12 @@
+On chains that have missing blocks, timestamps were incorrect
+Doubled the speed of the scrape due to not repeating for timestamps
+Write the hash of the PDF spec into the data files
+Allow for pinning to local IPFS daemon and pinning service
+Support for mainnet, sepolia, gnosis, and we've seen BSC working
+Wrote the spec (finally)
+New version of the smart contract allows anyone to publish
+
+
 https://docs.ipfs.io/install/command-line/#command-line
 
 
