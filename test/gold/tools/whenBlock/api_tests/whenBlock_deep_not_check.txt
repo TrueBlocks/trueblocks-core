@@ -1,6 +1,6 @@
-when?blocks=1301000&timestamps&&deep
+when?blocks=1301000&timestamps&deep
 {
   "errors": [
-    --deep not --check
+    "The --deep option is only available with the --timestamps --check option."
   ]
 }
