@@ -7,6 +7,7 @@ package whenPkg
 import (
 	"errors"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -25,17 +26,31 @@ func (opts *WhenOptions) ValidateWhen() error {
 		if !opts.List && !opts.Timestamps {
 			return validate.Usage("Please supply one or more block identifiers or one or more dates.")
 		}
-	} else if opts.List || opts.Timestamps {
-		return validate.Usage("Please supply either block identifiers, the --list option, or the --timestamps option.")
+
+	} else if opts.List {
+		return validate.Usage("Please supply either block identifiers, the --list option.")
 	}
 
 	if opts.Timestamps {
 		if opts.List {
 			return validate.Usage("Please choose only one of {0}.", "--timestamps or --list")
 		}
+		if opts.Deep && !opts.Check {
+			return validate.Usage("The {0} option is only available with the {1} option.", "--deep", "--timestamps --check")
+		}
+
 	} else {
-		if opts.Check || opts.Count {
-			return validate.Usage("The {0} options are only available with the {1} option.", "--check and --count", "--timestamps")
+		if opts.Check {
+			return validate.Usage("The {0} option is only available with the {1} option.", "--check", "--timestamps")
+		}
+		if opts.Deep {
+			return validate.Usage("The {0} option is only available with the {1} option.", "--deep", "--timestamps --check")
+		}
+		if opts.Count {
+			return validate.Usage("The {0} option is only available with the {1} option.", "--count", "--timestamps")
+		}
+		if opts.Drop != utils.NOPOS {
+			return validate.Usage("The {0} option is only available with the {1} option.", "--drop", "--timestamps")
 		}
 	}
 

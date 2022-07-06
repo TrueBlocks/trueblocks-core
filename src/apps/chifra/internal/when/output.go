@@ -12,6 +12,7 @@ package whenPkg
 import (
 	"net/http"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -49,8 +50,14 @@ func (opts *WhenOptions) WhenInternal() (err error, handled bool) {
 	} else if opts.Timestamps {
 		if opts.Count {
 			err = opts.HandleWhenTimestampCount()
+		} else if opts.Drop != utils.NOPOS {
+			err = opts.HandleWhenDropTimestamps()
 		} else {
-			err = opts.HandleWhenShowTimestamps()
+			if opts.Check {
+				err = opts.HandleWhenCheckTimestamps()
+			} else {
+				err = opts.HandleWhenShowTimestamps()
+			}
 		}
 	} else {
 		err = opts.HandleWhenShowBlocks()

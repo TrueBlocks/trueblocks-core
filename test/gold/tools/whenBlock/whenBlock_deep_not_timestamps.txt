@@ -1,8 +1,8 @@
-chifra when  23123 --list --fmt txt
-TEST[DATE|TIME] Blocks:  [23123]
-TEST[DATE|TIME] List:  true
+chifra when  1301000 --deep
+TEST[DATE|TIME] Blocks:  [1301000]
+TEST[DATE|TIME] Deep:  true
 TEST[DATE|TIME] Format:  txt
-Error: Please supply either block identifiers, the --list option.
+Error: The --deep option is only available with the --timestamps --check option.
 Usage:
   chifra when [flags] < block | date > [ block... | date... ]
 

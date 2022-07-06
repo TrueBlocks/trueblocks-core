@@ -22,7 +22,6 @@
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
 
-typedef map<CAppearance_mon, CAddressArray> appAddrMap;
 typedef struct CReverseAppMapEntry {
   public:
     uint32_t n;

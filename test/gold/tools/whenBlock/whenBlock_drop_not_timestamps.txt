@@ -1,8 +1,7 @@
-chifra when  23123 --list --fmt txt
-TEST[DATE|TIME] Blocks:  [23123]
-TEST[DATE|TIME] List:  true
-TEST[DATE|TIME] Format:  txt
-Error: Please supply either block identifiers, the --list option.
+chifra when  1301000 --drop
+Error: 
+  flag needs an argument: --drop
+
 Usage:
   chifra when [flags] < block | date > [ block... | date... ]
 
