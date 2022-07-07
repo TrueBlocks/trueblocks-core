@@ -8,10 +8,12 @@ package tslib
 import (
 	"encoding/binary"
 	"errors"
+	"io"
 	"os"
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
 
 type Timestamp struct {
@@ -60,7 +62,6 @@ func loadTimestamps(chain string) error {
 	}
 
 	tsPath := config.GetPathToIndex(chain) + "ts.bin"
-
 	tsFile, err := os.Open(tsPath)
 	if err != nil {
 		return err
@@ -141,4 +142,61 @@ func FromBn(chain string, bn uint64) (*Timestamp, error) {
 	}
 
 	return &perChainTimestamps[chain].memory[bn], nil
+}
+
+func Reset(chain string, maxBn uint64) error {
+	cnt, err := NTimestamps(chain)
+	if err != nil {
+		return err
+	}
+
+	// It's already done
+	if maxBn >= cnt {
+		return nil
+	}
+
+	err = loadTimestamps(chain)
+	if err != nil {
+		return err
+	}
+
+	truncated := perChainTimestamps[chain].memory[0:maxBn]
+
+	truncPath := config.GetPathToCache(chain) + "tmp/truncated.bin"
+	f, err := os.OpenFile(truncPath, os.O_WRONLY|os.O_CREATE, 0644)
+	defer func() {
+		// Clear the cache in even in case of failure, causes a reload at worst
+		perChainTimestamps[chain] = TimestampDatabase{
+			loaded: false,
+			count:  0,
+			memory: nil,
+		}
+		if file.FileExists(truncPath) {
+			os.Remove(truncPath)
+		}
+	}()
+	if err != nil {
+		return err
+	}
+
+	f.Seek(0, io.SeekStart)
+	err = binary.Write(f, binary.LittleEndian, truncated)
+	if err != nil {
+		f.Close()
+		os.Remove(truncPath)
+		return err
+	}
+
+	f.Close()
+	// TODO: BOGUS - THIS IS NOT PROTECTIVE OF THE EXISTING FILE
+	// TODO: BOGUS - IT SHOULD BE UN-INTERUPTABLE
+	// TODO: BOGUS - IT MAY WANT TO MAKE A BACKUP AND RECOVER IF THE COPY OR REMOVAL FAILS
+	// TODO: BOGUS - IT SHOULD BE GENERALIZED INSIDE OF COPYFILE
+	tsPath := config.GetPathToIndex(chain) + "ts.bin"
+	os.Remove(tsPath)
+	_, err = file.Copy(truncPath, tsPath)
+	if err != nil {
+		return nil
+	}
+	return nil
 }

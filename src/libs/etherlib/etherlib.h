@@ -26,7 +26,6 @@
 #include "blockoptions.h"
 #include "appearance.h"
 #include "appearancedisplay.h"
-#include "bloom.h"
 #include "cacheentry.h"
 #include "prices.h"
 #include "reconciliation.h"

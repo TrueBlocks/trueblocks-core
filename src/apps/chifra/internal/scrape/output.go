@@ -11,10 +11,7 @@ package scrapePkg
 // EXISTING_CODE
 import (
 	"net/http"
-	"sync"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/scraper"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 
 	"github.com/spf13/cobra"
@@ -56,14 +53,9 @@ func (opts *ScrapeOptions) ScrapeInternal() (err error, handled bool) {
 		err = opts.ScrapeBlocks()
 
 	} else {
-		var wg sync.WaitGroup
+		// Note this never returns
+		opts.RunIndexScraper()
 
-		wg.Add(1)
-		IndexScraper = scraper.NewScraper(colors.Yellow, "IndexScraper", opts.Sleep, opts.Globals.LogLevel)
-		// Note that this never returns
-		go opts.RunIndexScraper(&wg)
-
-		wg.Wait()
 	}
 	// EXISTING_CODE
 

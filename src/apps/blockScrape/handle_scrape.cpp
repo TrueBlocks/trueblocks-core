@@ -11,6 +11,7 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
+#include "bloomwrite.h"
 
 //--------------------------------------------------------------------------
 bool COptions::scrape_blocks(void) {
@@ -79,12 +80,7 @@ bool COptions::scrape_blocks(void) {
     if (!stage_chunks(tmpStagingFn))
         return false;
     if (!isTestMode())
-        freshenTimestamps(blaze_start + block_cnt);
-    // CStringArray lines;
-    // asciiFileToLines(cacheFolder_tmp + "tempTsFile.txt", lines);
-    // sort(lines.begin(), lines.end());
-    // if (!isTestMode())
-    //     freshenTimestampsAppend(blaze_start + block_cnt, lines);
+        freshenTimestampsAppend(blaze_start, block_cnt);
     report();
     if (nRecsNow <= apps_per_chunk)
         return true;
@@ -312,7 +308,7 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines) {
     archive.Write(nAddrs);
     archive.Write((uint32_t)blockTable.size());  // not accurate yet
 
-    CBloomFilter bloomFilter;
+    CBloomFilterWrite bloomFilter;
     for (size_t l = 0; l < lines.size(); l++) {
         string_q line = lines[l];
         ASSERT(countOf(line, '\t') == 2);
@@ -369,3 +365,130 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines) {
 
     return !shouldQuit();
 }
+
+// TODO: BOGUS THIS DOES NOT WORK
+namespace qblocks {
+extern bool establishTsFile(void);
+}
+//-----------------------------------------------------------------------
+bool freshenTimestampsAppend(blknum_t firstBlock, blknum_t nBlocks) {
+    // This routine is called after Blaze finishes. Blaze will have written a text file containing
+    // blockNumber,timestamp pairs that it encountered during it's pass. The job of this
+    // routine is to append timestamps to the timestamps database up to but not
+    // including firstBlock + nBlocks (so 0 and 1, if firstBlock == 0 and nBlocks == 2)
+    // Note that the text file may not contain every block. In fact, on many chains
+    // it does not. This routine has to recitfy that. Plus -- if this routine does not
+    // complete, it may have to start prior to firstBlock the next time, so we have to
+    // check the invariant: sizeof(file) == bn[last].Bn * 2 and bn[i] == i.
+
+    if (isTestMode())
+        return true;
+
+    if (!establishTsFile())
+        return false;
+
+    if (fileExists(indexFolderBin_ts + ".lck")) {  // it's being updated elsewhere
+        LOG_ERR("Timestamp file ", indexFolderBin_ts, " is locked. Cannot update. Re-running...");
+        ::remove((indexFolderBin_ts + ".lck").c_str());
+        return false;
+    }
+
+    // If we're already there, we're finished
+    blknum_t lastBlock = firstBlock + nBlocks;
+    size_t nRecords = ((fileSize(indexFolderBin_ts) / sizeof(uint32_t)) / 2);
+
+    LOG_INFO("\n");
+    LOG_INFO(string_q(120, '-'), "\n", string_q(120, '-'));
+    LOG_INFO("ENTERING WITH firstBlock: ", firstBlock, "\tnBlocks:   ", nBlocks);
+    LOG_INFO("              nRecords:   ", firstBlock, "\tlastBlock: ", nBlocks);
+
+    if (nRecords >= lastBlock) {
+        LOG_INFO("LEAVING EARLY");
+        return true;
+    }
+    LOG_INFO("PROCESSING");
+
+    // We always start at one less than the number of blocks already in the file
+    // (i.e., if there's two we need to add block two next.)
+    firstBlock = nRecords;
+
+    // We need to fill blocks firstBlock to lastBlock (non-inclusive). Make note
+    // of which ones were processed by Blaze
+    string_q blazeTsFilename = cacheFolder_tmp + "tempTsFile.txt";
+    CStringArray lines;
+    asciiFileToLines(blazeTsFilename, lines);
+    // The strings are left-padded with zeros, so we can sort them as strings
+    sort(lines.begin(), lines.end());
+
+    typedef map<blknum_t, timestamp_t> bn_ts_map_t;
+    bn_ts_map_t theMap;
+    for (auto line : lines) {
+        if (shouldQuit())
+            break;
+        CStringArray parts;
+        explode(parts, line, '-');
+        if (parts.size() == 2) {
+            theMap[str_2_Uint(parts[0])] = str_2_Int(parts[1]);
+        } else {
+            LOG_ERR("Line without dash (-) in temporarty timestamp file. Cannot continue.");
+            break;
+        }
+    }
+
+    for (blknum_t bn = firstBlock; bn < (firstBlock + nBlocks) && !shouldQuit(); bn++) {
+        if (theMap[bn] == 0) {
+            CBlock block;
+            getBlockHeader(block, bn);
+            theMap[bn] = block.timestamp;
+        }
+        // LOG_INFO(bn, "\t", theMap[bn]);
+    }
+
+    lockSection();
+
+    // LOG_INFO("Updating");
+    CArchive file(WRITING_ARCHIVE);
+    if (!file.Lock(indexFolderBin_ts, modeWriteAppend, LOCK_NOWAIT)) {
+        LOG_ERR("Failed to open ", indexFolderBin_ts);
+        unlockSection();
+        return false;
+    }
+
+    for (auto item : theMap) {
+        if (shouldQuit())
+            break;
+        file << ((uint32_t)item.first) << ((uint32_t)item.second);
+        file.flush();
+        ostringstream post;
+        post << " (" << (lastBlock - item.first);
+        post << " " << item.second << " - " << ts_2_Date(item.second).Format(FMT_EXPORT) << ")";
+        post << "             \r";
+        LOG_INFO(UPDATE, item.first, lastBlock, post.str());
+    }
+    file.Release();
+    unlockSection();
+    return true;
+}
+
+/*
+    CBlock block;
+    for (blknum_t bn = nRecords; bn < (minBlock + 1) && !shouldQuit(); bn++) {
+        block = CBlock();  // reset
+        getBlockHeader(block, bn);
+        if (block.timestamp < blockZeroTs()) {
+            LOG_ERR("Bad data when requesting block '", bn, "'. ", block.Format("[{BLOCKNUMBER}].[{TIMESTAMP}]"),
+                    " Cannot continue.");
+            file.Release();
+            unlockSection();
+            return false;
+        } else {
+            file << ((uint32_t)block.blockNumber) << ((uint32_t)block.timestamp);
+            file.flush();
+            ostringstream post;
+            post << " (" << ((minBlock + 1) - block.blockNumber);
+            post << " " << block.timestamp << " - " << ts_2_Date(block.timestamp).Format(FMT_EXPORT) << ")";
+            post << "             \r";
+            LOG_PROGRESS(UPDATE, block.blockNumber, minBlock, post.str());
+        }
+    }
+*/

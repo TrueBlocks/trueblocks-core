@@ -3,6 +3,7 @@ package scrapePkg
 import (
 	"fmt"
 	"io/ioutil"
+	"log"
 	"os"
 	"sort"
 	"strconv"
@@ -10,7 +11,9 @@ import (
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -18,7 +21,6 @@ import (
 // ScrapedData combines the block data, trace data, and log data into a single structure
 type ScrapedData struct {
 	blockNumber int
-	timeStamp   uint64
 	traces      rpcClient.Traces
 	logs        rpcClient.Logs
 }
@@ -28,17 +30,35 @@ func (opts *ScrapeOptions) ScrapeBlocks() error {
 
 	blockChannel := make(chan int)
 	addressChannel := make(chan ScrapedData)
+	tsChannel := make(chan tslib.Timestamp)
 
 	var blockWG sync.WaitGroup
 	blockWG.Add(int(opts.BlockChanCnt))
 	for i := 0; i < int(opts.BlockChanCnt); i++ {
-		go opts.processBlocks(rpcProvider, blockChannel, addressChannel, &blockWG)
+		go opts.processBlocks(rpcProvider, blockChannel, addressChannel, tsChannel, &blockWG)
 	}
 
 	var addressWG sync.WaitGroup
 	addressWG.Add(int(opts.AddrChanCnt))
 	for i := 0; i < int(opts.AddrChanCnt); i++ {
 		go opts.processAddresses(rpcProvider, addressChannel, &addressWG)
+	}
+
+	// TODO: BOGUS IS USING THIS FILE THE BEST WAY - IS THIS A GOOD FILENAME
+	tsFilename := config.GetPathToCache(opts.Globals.Chain) + "tmp/tempTsFile.txt"
+	tsFile, err := os.Create(tsFilename)
+	if err != nil {
+		log.Fatalf("Unable to create file: %v", err)
+	}
+	defer func() {
+		tsFile.Close()
+		file.Copy(tsFilename, "./file.save")
+	}()
+
+	var tsWG sync.WaitGroup
+	tsWG.Add(int(opts.AddrChanCnt))
+	for i := 0; i < int(opts.AddrChanCnt); i++ {
+		go opts.processTimestamps(rpcProvider, tsChannel, tsFile, &tsWG)
 	}
 
 	for block := int(opts.StartBlock); block < int(opts.StartBlock+opts.BlockCnt); block++ {
@@ -51,11 +71,14 @@ func (opts *ScrapeOptions) ScrapeBlocks() error {
 	close(addressChannel)
 	addressWG.Wait()
 
+	close(tsChannel)
+	tsWG.Wait()
+
 	return nil
 }
 
 // processBlocks Process the block channel and for each block query the node for both traces and logs. Send results to addressChannel
-func (opts *ScrapeOptions) processBlocks(rpcProvider string, blockChannel chan int, addressChannel chan ScrapedData, blockWG *sync.WaitGroup) {
+func (opts *ScrapeOptions) processBlocks(rpcProvider string, blockChannel chan int, addressChannel chan ScrapedData, tsChannel chan tslib.Timestamp, blockWG *sync.WaitGroup) {
 	for blockNum := range blockChannel {
 
 		// RPCPayload is used during to make calls to the RPC.
@@ -87,15 +110,18 @@ func (opts *ScrapeOptions) processBlocks(rpcProvider string, blockChannel chan i
 			os.Exit(1)
 		}
 
-		// TODO: The timeStamp value is not used here (the Consolidation Loop calls into
-		// TODO: the same routine again). We should use this value here and remove the
-		// TODO: call from the Consolidation Loop
-		ts := rpcClient.GetBlockTimestamp(rpcProvider, uint64(blockNum))
 		addressChannel <- ScrapedData{
 			blockNumber: blockNum,
-			timeStamp:   ts,
 			traces:      traces,
 			logs:        logs,
+		}
+
+		// TODO: BOGUS The timeStamp value is not used here (the Consolidation Loop calls into
+		// TODO: BOGUS the same routine again). We should use this value here and remove the
+		// TODO: BOGUS call from the Consolidation Loop
+		tsChannel <- tslib.Timestamp{
+			Ts: uint32(rpcClient.GetBlockTimestamp(rpcProvider, uint64(blockNum))),
+			Bn: uint32(blockNum),
 		}
 	}
 
@@ -109,8 +135,18 @@ func (opts *ScrapeOptions) processAddresses(rpcProvider string, addressChannel c
 		opts.extractFromLogs(sData.blockNumber, &sData.logs, addressMap)
 		opts.writeAddresses(sData.blockNumber, addressMap)
 	}
-
 	addressWG.Done()
+}
+
+var blazeMutex sync.Mutex
+
+func (opts *ScrapeOptions) processTimestamps(rpcProvider string, tsChannel chan tslib.Timestamp, tsFile *os.File, tsWg *sync.WaitGroup) {
+	for ts := range tsChannel {
+		blazeMutex.Lock()
+		fmt.Fprintf(tsFile, "%s-%s\n", utils.PadLeft(strconv.Itoa(int(ts.Bn)), 9), utils.PadLeft(strconv.Itoa(int(ts.Ts)), 9))
+		blazeMutex.Unlock()
+	}
+	tsWg.Done()
 }
 
 func (opts *ScrapeOptions) extractFromTraces(rpcProvider string, bn int, traces *rpcClient.Traces, addressMap map[string]bool) {

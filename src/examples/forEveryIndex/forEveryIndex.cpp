@@ -11,6 +11,7 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
+#include "bloomread.h"
 
 extern void alterAddress(uint8_t bytes[20], int inc);
 //----------------------------------------------------------------
@@ -20,7 +21,7 @@ bool visitIndexChunk(CIndexArchive& chunk, void* data) {
     string_q indexPath = chunk.getFilename();
     string_q bloomPath = substitute(substitute(indexPath, ".bin", ".bloom"), "finalized", "blooms");
 
-    CBloomFilter bloomFilter;
+    CBloomFilterRead bloomFilter;
     if (!bloomFilter.readBloomFilter(bloomPath, true)) {
         LOG_WARN("Could not read bloom filter ", bloomPath);
         return false;
@@ -39,7 +40,7 @@ bool visitIndexChunk(CIndexArchive& chunk, void* data) {
         return false;
     }
 
-    CBloomFilter testBloom;
+    CBloomFilterRead testBloom;
     size_t missed = 0, nFp = 0;  // number of false positives
     for (size_t i = 0; i < chunk.header.nAddrs; i++) {
         bool hit = bloomFilter.isMemberOf(addrs[i].bytes);

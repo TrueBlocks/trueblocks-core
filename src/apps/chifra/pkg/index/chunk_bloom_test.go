@@ -152,3 +152,105 @@ func (bloom *ChunkBloom) getStats() (nBlooms uint64, nInserted uint64, nBitsLit 
 	}
 	return
 }
+
+/*
+OLD TEST CODE FROM C++ CODE BEFORE MOVING INDEX BUILDING TO GOLANG
+#include "etherlib.h"
+#include "testing.h"
+#include "bloomwrite.h"
+
+extern void getBloomParts(const address_t& addr, CStringArray& parts, CUintArray& values, CUintArray& litBits);
+//------------------------------------------------------------------------
+int main(int argc, const char* argv[]) {
+    loadEnvironmentPaths();
+    etherlib_init(quickQuitHandler);
+
+    CStringArray addrsInSet{"0x0371a82e4a9d0a4312f3ee2ac9c6958512891372", "0x3d493c51a916f86d6d1c04824b3a7431e61a3ca3",
+                            "0xe1c15164dcfe79431f8421b5a311a829cf0907f3", "0x1296d3bb6dc0efbae431a12939fc15b2823db49b",
+                            "0xd09022c48298f268c2c431dadb9ca4c2534d9c1c"};
+
+    CStringArray addrsNotInSet{
+        "0x1296d3bb6dc0efbae431a12939fc15b2823db79b", "0xd09022c48298f268c2c431dadb9ca4c2534d9c1e",
+        "0x0341a82e4a9d0a4312f3ee2ac9c6958512891342", "0x3d493c51a916f86d6d1c04824b3a4431e61a3ca3",
+        "0xe1c15164dcfe49431f8421b5a311a829cf0904f3"};
+
+    CStringArray allAddrs;
+    for (auto addr : addrsInSet) {
+        allAddrs.push_back(addr);
+    }
+    for (auto addr : addrsNotInSet) {
+        allAddrs.push_back(addr);
+    }
+
+    // First, we create a bloom filter and add each address in the addrsInSet set to it.
+    CBloomFilte rWrite bloomFilter;
+    for (auto addr : addrsInSet) {
+        bloomFilter.addToSet(addr);
+    }
+
+    // Next we show a few statistics about the bloom filter
+    cerr << bloomFilter << endl;
+
+    // Next we show each address being processed by the bloom filter algorithm and accumulate the list
+    // of all the bits that we expect to be lit in the bloom filter.
+    cout << endl;
+    for (auto addr : allAddrs) {
+        if (addr == "0x1296d3bb6dc0efbae431a12939fc15b2823db79b")
+            cout << endl;
+
+        CStringArray parts;
+        CUintArray values;
+        CUintArray bits;
+        getBloomParts(addr, parts, values, bits);
+        const char* STR_ADDR_AS_BLOOM =
+            "[{ADDR}]\n"
+            "\tParts:  [{PARTS}]\n"
+            "\tValues: [{VALUES}]\n"
+            "\tBits:   [{BITS}]";
+
+        ASSERT(parts.size() == values.size() && parts.size() == bits.size() && parts.size() == 5);
+        ostringstream pStream, vStream, bStream;
+        for (size_t i = 0; i < parts.size(); i++) {
+            pStream << parts[i] << ",";
+            vStream << values[i] << ",";
+            bStream << bits[i] << ",";
+        }
+        string_q line = STR_ADDR_AS_BLOOM;
+        replace(line, "[{ADDR}]", addr);
+        replace(line, "[{PARTS}]", substitute(trim(pStream.str(), ','), ",", ", "));
+        replace(line, "[{VALUES}]", substitute(trim(vStream.str(), ','), ",", ", "));
+        replace(line, "[{BITS}]", substitute(trim(bStream.str(), ','), ",", ", "));
+        cout << line << endl;
+    }
+
+    // Next, we test to see if the address we've put into the bloom filter reporting true when queried
+    cout << endl;
+    for (auto addr : addrsInSet) {
+        cout << addr << ": " << bloomFilter.isMemberOf(addr) << endl;
+    }
+
+    // Next, we test that those that were not put in the filter report false (even though they could report true)
+    for (auto addr : addrsNotInSet) {
+        cout << addr << ": " << bloomFilter.isMemberOf(addr) << endl;
+    }
+
+    etherlib_cleanup();
+    return 0;
+}
+
+//---------------------------------------------------------------------------
+void getBloomParts(const address_t& addr, CStringArray& fourBytesOut, CUintArray& valuesOut, CUintArray& litBitsOut) {
+    if (!isAddress(addr))
+        return;
+
+    getLitBits(addr, litBitsOut);
+
+#define BLOOM_K 5
+    for (size_t k = 0; k < BLOOM_K; k++) {
+        string_q fourByte = extract(addr, 2 + (k * EXTRACT_WID), EXTRACT_WID);
+        fourBytesOut.push_back(fourByte);
+        uint64_t value = str_2_Uint("0x" + fourByte);
+        valuesOut.push_back(value);
+    }
+}
+*/

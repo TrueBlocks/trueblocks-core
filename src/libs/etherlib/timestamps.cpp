@@ -75,61 +75,6 @@ bool establishTsFile(void) {
     return true;
 }
 
-// TODO: BOGUS THIS DOES NOT WORK
-//-----------------------------------------------------------------------
-bool freshenTimestampsAppend(blknum_t minBlock, const CStringArray& lines) {
-    if (isTestMode())
-        return true;
-
-    // LOG_INFO("Not test mode. minBlock: ", minBlock);
-    if (!establishTsFile())
-        return false;
-
-    if (fileExists(indexFolderBin_ts + ".lck")) {  // it's being updated elsewhere
-        LOG_ERR("Timestamp file ", indexFolderBin_ts, " is locked. Cannot update. Re-running...");
-        ::remove((indexFolderBin_ts + ".lck").c_str());
-        return false;
-    }
-
-    lockSection();
-
-    // LOG_INFO("Updating");
-    CArchive file(WRITING_ARCHIVE);
-    if (!file.Lock(indexFolderBin_ts, modeWriteAppend, LOCK_NOWAIT)) {
-        LOG_ERR("Failed to open ", indexFolderBin_ts);
-        unlockSection();
-        return false;
-    }
-
-    for (auto line : lines) {
-        if (shouldQuit())
-            break;
-        CStringArray parts;
-        explode(parts, line, '-');
-        if (parts.size() == 2) {
-            CBlock block;
-            block.blockNumber = str_2_Uint(parts[0]);
-            block.timestamp = str_2_Int(parts[1]);
-            file << ((uint32_t)block.blockNumber) << ((uint32_t)block.timestamp);
-            file.flush();
-
-            ostringstream post;
-            post << " (" << (minBlock - block.blockNumber);
-            post << " " << block.timestamp << " - " << ts_2_Date(block.timestamp).Format(FMT_EXPORT) << ")";
-            post << "             \r";
-            LOG_PROGRESS(UPDATE, block.blockNumber, minBlock, post.str());
-
-        } else {
-            LOG_ERR("Line without dash (-) in temporarty timestamp file. Cannot continue.");
-            break;
-        }
-    }
-
-    file.Release();
-    unlockSection();
-    return true;
-}
-
 //-----------------------------------------------------------------------
 bool freshenTimestamps(blknum_t minBlock) {
     if (isTestMode())

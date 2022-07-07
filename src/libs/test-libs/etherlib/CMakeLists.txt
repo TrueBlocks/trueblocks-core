@@ -1,8 +1,8 @@
 # minimum cmake version supported
-cmake_minimum_required (VERSION 3.0)
+cmake_minimum_required(VERSION 3.0)
 
 # folder project
-project (test-etherlib)
+project(test-etherlib)
 
 # messaging
 # message (WARNING  "*** Entering libs folder ***")
@@ -12,7 +12,6 @@ add_subdirectory(abiTest)
 add_subdirectory(abiTest2)
 add_subdirectory(binaryPathTest)
 add_subdirectory(blockTest)
-add_subdirectory(bloomTest)
 add_subdirectory(dataUpgradeTest)
 add_subdirectory(decodeAbiTest)
 add_subdirectory(displayStrsTest)

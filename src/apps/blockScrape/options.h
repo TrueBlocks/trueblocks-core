@@ -66,3 +66,4 @@ class COptions : public COptionsBase {
 //-----------------------------------------------------------------------------
 extern bool copyRipeToStage(const string_q& path, void* data);
 extern bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines);
+extern bool freshenTimestampsAppend(blknum_t firstBlock, blknum_t nBlocks);

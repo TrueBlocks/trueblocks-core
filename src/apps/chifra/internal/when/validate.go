@@ -18,17 +18,20 @@ func (opts *WhenOptions) ValidateWhen() error {
 		return opts.BadFlag
 	}
 
-	if opts.Globals.TestMode && opts.Timestamps && !opts.Check && !opts.Count {
-		return validate.Usage("--timestamp option not tested in testMode")
-	}
-
 	if len(opts.Blocks) == 0 {
 		if !opts.List && !opts.Timestamps {
 			return validate.Usage("Please supply one or more block identifiers or one or more dates.")
 		}
 
-	} else if opts.List {
-		return validate.Usage("Please supply either block identifiers, the --list option.")
+	} else {
+		if opts.List {
+			return validate.Usage("Please supply either {0} or the {1} option.", "block identifiers", "--list")
+
+		} else if opts.Timestamps {
+			if opts.Drop != utils.NOPOS {
+				return validate.Usage("Please supply either {0} or the {1} option.", "block identifiers", "--drop")
+			}
+		}
 	}
 
 	if opts.Timestamps {
@@ -52,6 +55,10 @@ func (opts *WhenOptions) ValidateWhen() error {
 		if opts.Drop != utils.NOPOS {
 			return validate.Usage("The {0} option is only available with the {1} option.", "--drop", "--timestamps")
 		}
+	}
+
+	if opts.Globals.TestMode && opts.Timestamps && !opts.Check && !opts.Count {
+		return validate.Usage("--timestamp option not tested in testMode")
 	}
 
 	err := validate.ValidateIdentifiers(

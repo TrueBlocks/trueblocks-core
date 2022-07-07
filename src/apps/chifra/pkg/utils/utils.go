@@ -96,7 +96,7 @@ func ToCamelCase(in string) string {
 const NOPOS = ^uint64(0)
 
 // Min calculates the minimum between two unsigned integers (golang has no such function)
-func Min(x, y uint64) uint64 {
+func Min[T float64 | uint64](x, y T) T {
 	if x < y {
 		return x
 	}
@@ -104,7 +104,7 @@ func Min(x, y uint64) uint64 {
 }
 
 // Max calculates the max between two unsigned integers (golang has no such function)
-func Max(x, y uint64) uint64 {
+func Max[T float64 | uint64](x, y T) T {
 	if x > y {
 		return x
 	}

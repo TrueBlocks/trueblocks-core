@@ -63,28 +63,6 @@ inline bloom_t& bloom_t::operator=(const bloom_t& b) {
 
 //---------------------------------------------------------------------------
 extern bool isBitLit(size_t bit, uint8_t* bits);
-
-//---------------------------------------------------------------------------
-class CBloomFilter {
-    typedef vector<bloom_t> CBloomArray;
-
-  public:
-    CBloomArray array;
-    bool writeBloomFilter(const string_q& fileName);
-    bool readBloomFilter(const string_q& fileName, bool readBits);
-    bool addToSet(const address_t& addr);
-    bool isMemberOf(uint8_t const bytes[20]);
-    bool isMemberOf(const address_t& addr);
-    bool operator==(const CBloomFilter& it) const;
-    bool operator!=(const CBloomFilter& it) const {
-        return !operator==(it);
-    }
-
-    friend ostream& operator<<(ostream& os, const CBloomFilter& bloomFilter);
-};
-
 extern void getLitBits(const address_t& addrIn, CUintArray& litBitsOut);
-
-#define EXTRACT_WID 8
 
 }  // namespace qblocks

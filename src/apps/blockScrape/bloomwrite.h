@@ -1,4 +1,3 @@
-#pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -11,14 +10,29 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "node.h"
+#pragma once
+
+#include "utillib.h"
+#include "bloom.h"
 
 namespace qblocks {
 
-extern blknum_t getTimestampBlockAt(blknum_t blk);
-extern timestamp_t getTimestampAt(blknum_t bn);
-extern bool freshenTimestamps(blknum_t minBlock);
-extern bool correctTimestamp(blknum_t blk, timestamp_t ts);
-extern bool loadTimestamps(uint32_t** theArray, size_t& cnt);
+//---------------------------------------------------------------------------
+class CBloomFilterWrite {
+    typedef vector<bloom_t> CBloomArray;
+
+  public:
+    CBloomArray array;
+    bool writeBloomFilter(const string_q& fileName);
+    bool addToSet(const address_t& addr);
+    bool isMemberOf(uint8_t const bytes[20]);
+    bool isMemberOf(const address_t& addr);
+    bool operator==(const CBloomFilterWrite& it) const;
+    bool operator!=(const CBloomFilterWrite& it) const {
+        return !operator==(it);
+    }
+
+    friend ostream& operator<<(ostream& os, const CBloomFilterWrite& bloomFilter);
+};
 
 }  // namespace qblocks
