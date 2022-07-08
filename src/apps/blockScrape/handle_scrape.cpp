@@ -11,7 +11,9 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
-#include "bloomwrite.h"
+#include "bloom.h"
+
+extern bool freshenTimestampsAppend(blknum_t firstBlock, blknum_t nBlocks);
 
 //--------------------------------------------------------------------------
 bool COptions::scrape_blocks(void) {
@@ -282,6 +284,76 @@ bool COptions::report(void) {
     return true;
 }
 
+//---------------------------------------------------------------------------
+class CBloomFilterWrite {
+    typedef vector<bloom_t> CBloomArray;
+
+  public:
+    CBloomArray array;
+    bool writeBloomFilter(const string_q& fileName);
+    bool addToSet(const address_t& addr);
+    bool isMemberOf(uint8_t const bytes[20]);
+    bool isMemberOf(const address_t& addr);
+};
+
+#define BLOOM_WIDTH_IN_BYTES (1048576 / 8)
+#define BLOOM_WIDTH_IN_BITS (BLOOM_WIDTH_IN_BYTES * 8)
+#define MAX_ADDRS_IN_BLOOM 50000
+#define BLOOM_K 5
+
+//----------------------------------------------------------------------
+bool CBloomFilterWrite::isMemberOf(const address_t& addr) {
+    CUintArray bitsLit;
+    getLitBits(addr, bitsLit);
+    for (auto bloom : array) {
+        if (bloom.isInBloom(bitsLit))
+            return true;
+    }
+    return false;
+}
+
+//---------------------------------------------------------------------------
+bool CBloomFilterWrite::isMemberOf(uint8_t const bytes[20]) {
+    return isMemberOf(bytes_2_Addr(bytes));
+}
+
+//----------------------------------------------------------------------
+bool CBloomFilterWrite::addToSet(const address_t& addr) {
+    if (array.size() == 0) {
+        array.push_back(bloom_t());  // so we have something to add to
+    }
+
+    CUintArray bitsLit;
+    getLitBits(addr, bitsLit);
+    for (auto bit : bitsLit) {
+        array[array.size() - 1].lightBit(bit);
+    }
+    array[array.size() - 1].nInserted++;
+
+    if (array[array.size() - 1].nInserted > MAX_ADDRS_IN_BLOOM)
+        array.push_back(bloom_t());
+
+    return true;
+}
+
+//----------------------------------------------------------------------
+bool CBloomFilterWrite::writeBloomFilter(const string_q& fileName) {
+    lockSection();
+    CArchive output(WRITING_ARCHIVE);
+    if (!output.Lock(fileName, modeWriteCreate, LOCK_NOWAIT)) {
+        unlockSection();
+        return false;
+    }
+    output.Write((uint32_t)array.size());
+    for (auto bloom : array) {
+        output.Write(bloom.nInserted);
+        output.Write(bloom.bits, sizeof(uint8_t), BLOOM_WIDTH_IN_BYTES);
+    }
+    output.Release();
+    unlockSection();
+    return true;
+}
+
 //----------------------------------------------------------------
 bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines) {
     // ASSUMES THE ARRAY IS SORTED!
@@ -459,11 +531,11 @@ bool freshenTimestampsAppend(blknum_t firstBlock, blknum_t nBlocks) {
             break;
         file << ((uint32_t)item.first) << ((uint32_t)item.second);
         file.flush();
-        ostringstream post;
-        post << " (" << (lastBlock - item.first);
-        post << " " << item.second << " - " << ts_2_Date(item.second).Format(FMT_EXPORT) << ")";
-        post << "             \r";
-        LOG_INFO(UPDATE, item.first, lastBlock, post.str());
+        // ostringstream post;
+        // post << " (" << (lastBlock - item.first);
+        // post << " " << item.second << " - " << ts_2_Date(item.second).Format(FMT_EXPORT) << ")";
+        // post << "             \r";
+        // LOG_INFO(UPDATE, item.first, lastBlock, post.str());
     }
     file.Release();
     unlockSection();

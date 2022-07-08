@@ -78,6 +78,10 @@ func (opts *ScrapeOptions) postScrape(progressThen *rpcClient.MetaData) error {
 
 	// If there's been no progress, do nothing
 	progressNow, _ := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
+	defer func() {
+		*progressThen = *progressNow
+	}()
+
 	if progressNow.Finalized <= progressThen.Finalized {
 		return nil
 	}
@@ -115,7 +119,8 @@ func (opts *ScrapeOptions) postScrape(progressThen *rpcClient.MetaData) error {
 		bloomPath := unchainedFolder + "blooms/" + record.Range + ".bloom"
 
 		key, secret := config.GetPinataKeys(opts.Globals.Chain)
-		pina := pinning.Pinata{
+		pina := pinning.Service{
+			Local:  true,
 			Apikey: key,
 			Secret: secret,
 		}
@@ -141,7 +146,6 @@ func (opts *ScrapeOptions) postScrape(progressThen *rpcClient.MetaData) error {
 		// ipfsAvail := pinning.LocalDaemonRunning()
 	}
 	os.Remove(newPinsFn)
-	*progressThen = *progressNow
 	return nil
 }
 

@@ -19,11 +19,10 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/scraper"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-var MonitorScraper scraper.Scraper
+var MonitorScraper Scraper
 
 // RunMonitorScraper runs continually, never stopping and freshens any existing monitors
 func (opts *MonitorsOptions) RunMonitorScraper(wg *sync.WaitGroup) {
@@ -32,7 +31,7 @@ func (opts *MonitorsOptions) RunMonitorScraper(wg *sync.WaitGroup) {
 	chain := opts.Globals.Chain
 	establishExportPaths(chain)
 
-	var s *scraper.Scraper = &MonitorScraper
+	var s *Scraper = &MonitorScraper
 	s.ChangeState(true)
 
 	for {

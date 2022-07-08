@@ -21,17 +21,27 @@ const (
 	PIN_HASH_URL = "https://api.pinata.cloud/pinning/pinByHash"
 )
 
-type Pinata struct {
+type Service struct {
+	Local  bool
 	Apikey string
 	Secret string
 }
 
-func (p *Pinata) PinFile(filepath string) (string, error) {
+func (p *Service) PinFile(filepath string) (string, error) {
 	file, err := os.Open(filepath)
 	if err != nil {
 		return "", err
 	}
 	defer file.Close()
+
+	if p.Local {
+		sh := shell.NewShell("localhost:5001")
+		cid, err := sh.Add(file)
+		if err != nil {
+			return "", err
+		}
+		return cid, nil
+	}
 
 	r, w := io.Pipe()
 	m := multipart.NewWriter(w)
@@ -84,7 +94,7 @@ func (p *Pinata) PinFile(filepath string) (string, error) {
 	return "", fmt.Errorf("Pin file to Pinata failure.")
 }
 
-func (p *Pinata) PinHash(hash string) (bool, error) {
+func (p *Service) PinHash(hash string) (bool, error) {
 	if hash == "" {
 		return false, fmt.Errorf("HASH: %s is invalid.", hash)
 	}
@@ -175,3 +185,5 @@ bool pin lib_getPinList(const CPinApiLicense& lic, string& result) {
     return true;
 }
 */
+/*
+ */
