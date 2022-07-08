@@ -14,7 +14,7 @@ Flags:
   -l, --list         export a list of the 'special' blocks
   -t, --timestamps   ignore other options and generate timestamps only
   -c, --check        available only with --timestamps, checks the validity of the timestamp data (hidden)
-  -d, --drop uint    available only with --timestamps option, drops all timestamp records from this block on (inclusive) (hidden)
+  -r, --reset uint   available only with --timestamps option, reset the timestamp file to this block (hidden)
   -u, --count        available only with --timestamps, returns the number of timestamps in the cache (hidden)
   -e, --deep         available only with --timestamps --check option, queries every timestamp on chain (slow) (hidden)
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
