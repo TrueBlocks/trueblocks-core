@@ -1,3 +1,4 @@
+Still not working
 On chains that have missing blocks, timestamps were incorrect
 Doubled the speed of the scrape due to not repeating for timestamps
 Write the hash of the PDF spec into the data files
