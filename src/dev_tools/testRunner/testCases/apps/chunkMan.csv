@@ -36,12 +36,12 @@ on      ,both ,fast  ,chunks ,apps/chunkMan ,fail_belongs_no_addr    ,y    ,mode
 on      ,both ,fast  ,chunks ,apps/chunkMan ,fail_belongs_addr_wrong ,y    ,mode = index & addrs = 0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9
 on      ,both ,fast  ,chunks ,apps/chunkMan ,belongs                 ,n    ,mode = addresses & belongs & addrs = 0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9 & blocks = 2287625 & fmt = csv
 
-on      ,both ,fast  ,chunks ,apps/chunkMan ,pin_chunks_bad          ,y    ,mode = addresses & pin_chunks
-on      ,both ,fast  ,chunks ,apps/chunkMan ,pin_data_bad            ,y    ,mode = pins & pin_data
+on      ,both ,fast  ,chunks ,apps/chunkMan ,pin_chunks_bad          ,y    ,mode = addresses & pin_remote
+on      ,both ,fast  ,chunks ,apps/chunkMan ,pin_data_bad            ,y    ,mode = pins & publish
 
 on      ,both ,fast  ,chunks ,apps/chunkMan ,check_bad               ,y    ,mode = addresses & check
 on      ,both ,fast  ,chunks ,apps/chunkMan ,clean_bad               ,y    ,mode = addresses & clean
-on      ,both ,fast  ,chunks ,apps/chunkMan ,pin_chunks_bad2         ,y    ,mode = addresses & pin_chunks
-on      ,both ,fast  ,chunks ,apps/chunkMan ,pin_data_bad2           ,y    ,mode = addresses & pin_data
+on      ,both ,fast  ,chunks ,apps/chunkMan ,pin_chunks_bad2         ,y    ,mode = addresses & pin_remote
+on      ,both ,fast  ,chunks ,apps/chunkMan ,pin_data_bad2           ,y    ,mode = addresses & publish
 
 local   ,both ,fast  ,chunks ,apps/chunkMan ,check_okay              ,y    ,mode = manifest & check
