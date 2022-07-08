@@ -202,7 +202,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12110,apps,Admin,scrape,blockScrape,modes,,,true,false,true,true,gocmd,positional,list<enum[run|stop]>,which scraper(s) to control
 12115,apps,Admin,scrape,blockScrape,sleep,s,14,false,false,true,true,gocmd,flag,<double>,seconds to sleep between scraper passes
 12120,apps,Admin,scrape,blockScrape,pin,p,,false,false,true,true,header,switch,<boolean>,pin chunks (and blooms) to IPFS as they are created (requires ipfs daemon)
-12125,apps,Admin,scrape,blockScrape,block_cnt,n,2000,false,true,true,true,header,flag,<uint64>,maximum number of blocks to process per pass (max 10&#44;000)
+12125,apps,Admin,scrape,blockScrape,block_cnt,n,2000,false,true,true,true,header,flag,<uint64>,maximum number of blocks to process per pass
 12145,apps,Admin,scrape,blockScrape,blaze,z,,false,false,false,false,gocmd,switch,<boolean>,invoke the blaze scraper to process blocks
 12150,apps,Admin,scrape,blockScrape,block_chan_cnt,b,10,false,true,false,false,header,flag,<uint64>,number of concurrent block processing channels
 12155,apps,Admin,scrape,blockScrape,addr_chan_cnt,d,20,false,true,false,false,header,flag,<uint64>,number of concurrent address processing channels
@@ -214,7 +214,6 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12185,apps,Admin,scrape,blockScrape,start_block,l,0,false,false,false,false,gocmd,flag,<uint64>,first block to visit (available only for blaze scraper)
 12190,apps,Admin,scrape,blockScrape,ripe_block,r,0,false,false,false,false,gocmd,flag,<uint64>,blocks prior to this value are written to 'ripe' folder (available only for blaze scraper)
 12195,apps,Admin,scrape,blockScrape,,,,false,false,true,true,--,description,,Scan the chain and update (and optionally pin) the TrueBlocks index of appearances.
-12196,apps,Admin,scrape,blockScrape,n1,,,false,false,false,false,--,note,,A maximum of 10&#44;000 blocks will be processed at a time.
 
 13111,apps,Admin,serve,flame,port,p,:8080,false,false,true,true,header,flag,<string>,specify the server's port
 13112,apps,Admin,serve,flame,,,,false,false,true,true,--,description,,Serve the TrueBlocks API using the flame server.

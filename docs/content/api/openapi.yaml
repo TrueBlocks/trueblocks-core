@@ -1492,8 +1492,7 @@ paths:
           schema:
             type: number
         - name: pin
-          description: >
-            pin chunks (and blooms) to IPFS as they are created (requires pinning service)
+          description: pin chunks (and blooms) to IPFS as they are created (requires ipfs daemon)
           required: false
           style: form
           in: query
@@ -2661,14 +2660,6 @@ components:
           format: ipfshash
           example: "QmTbYpR...qWLj44"
           description: "the IPFS hash of the index chunk at that range"
-        firstApp:
-          type: number
-          format: blknum
-          description: "the first appearance in the chunk"
-        latestApp:
-          type: number
-          format: blknum
-          description: "the latest appearance in the chunk"
     manifest:
       description: "a manifest of the IPFS hashes created for the unchained index"
       type: object

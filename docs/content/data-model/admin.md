@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-07-03T13:17:53
+date: 2022-07-07T21:20:03
 lastmod:
   - :git
   - lastmod
@@ -93,8 +93,6 @@ Pinnedchunk data is made of the following data fields:
 | range     | for each chunk, the range of blocks contained in that chunk | string   |
 | bloomHash | the IPFS hash of the bloom filter at that range             | ipfshash |
 | indexHash | the IPFS hash of the index chunk at that range              | ipfshash |
-| firstApp  | the first appearance in the chunk                           | blknum   |
-| latestApp | the latest appearance in the chunk                          | blknum   |
 
 
 ## Manifest
@@ -148,7 +146,6 @@ This documentation mentions the following basic data types.
 | Type      | Description                                     | Notes          |
 | --------- | ----------------------------------------------- | -------------- |
 | address   | a 20-byte hexadecimal string starting with '0x' | lowercase      |
-| blknum    | an alias for a uint64                           |                |
 | bool      | a value either `true`, `false`, `1`, or `0`     |                |
 | ipfshash  | a multi-hash produced by IPFS                   | mixed-case     |
 | string    | a normal character string                       |                |

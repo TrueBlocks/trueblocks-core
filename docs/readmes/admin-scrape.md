@@ -21,7 +21,7 @@ Arguments:
 
 Flags:
   -s, --sleep float      seconds to sleep between scraper passes (default 14)
-  -p, --pin              pin chunks (and blooms) to IPFS as they are created (requires pinning service)
+  -p, --pin              pin chunks (and blooms) to IPFS as they are created (requires ipfs daemon)
   -n, --block_cnt uint   maximum number of blocks to process per pass (default 2000)
   -x, --fmt string       export format, one of [none|json*|txt|csv|api]
   -v, --verbose          enable verbose (increase detail with --log_level)
