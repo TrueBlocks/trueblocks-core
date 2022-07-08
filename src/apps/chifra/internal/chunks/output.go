@@ -55,7 +55,7 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 	}
 
 	maxTestItems = 100
-	if opts.Check || opts.PinChunks || opts.PinData {
+	if opts.Check || opts.PinRemote || opts.Publish {
 		if opts.Check {
 			err = opts.HandleChunksCheck(blockNums)
 			if err != nil {

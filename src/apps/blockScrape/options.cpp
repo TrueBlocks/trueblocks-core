@@ -21,8 +21,8 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("pin", "p", "", OPT_SWITCH, "pin chunks (and blooms) to IPFS as they are created (requires pinning service)"),  // NOLINT
-    COption("block_cnt", "n", "<uint64>", OPT_FLAG, "maximum number of blocks to process per pass"),
+    COption("pin", "p", "", OPT_SWITCH, "pin chunks (and blooms) to IPFS as they are created (requires ipfs daemon)"),
+    COption("block_cnt", "n", "<uint64>", OPT_FLAG, "maximum number of blocks to process per pass (max 10,000)"),
     COption("block_chan_cnt", "b", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of concurrent block processing channels"),
     COption("addr_chan_cnt", "d", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of concurrent address processing channels"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Scan the chain and update (and optionally pin) the TrueBlocks index of appearances."),  // NOLINT
@@ -170,6 +170,7 @@ COptions::COptions(void) {
 
     // BEG_CODE_NOTES
     // clang-format off
+    notes.push_back("A maximum of 10,000 blocks will be processed at a time.");
     // clang-format on
     // END_CODE_NOTES
 

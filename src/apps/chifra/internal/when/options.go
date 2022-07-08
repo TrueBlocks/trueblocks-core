@@ -24,7 +24,7 @@ type WhenOptions struct {
 	List       bool
 	Timestamps bool
 	Check      bool
-	Drop       uint64
+	Reset      uint64
 	Count      bool
 	Deep       bool
 	Globals    globals.GlobalOptions
@@ -38,7 +38,7 @@ func (opts *WhenOptions) TestLog() {
 	logger.TestLog(opts.List, "List: ", opts.List)
 	logger.TestLog(opts.Timestamps, "Timestamps: ", opts.Timestamps)
 	logger.TestLog(opts.Check, "Check: ", opts.Check)
-	logger.TestLog(opts.Drop != utils.NOPOS, "Drop: ", opts.Drop)
+	logger.TestLog(opts.Reset != utils.NOPOS, "Reset: ", opts.Reset)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	logger.TestLog(opts.Deep, "Deep: ", opts.Deep)
 	opts.Globals.TestLog()
@@ -46,7 +46,7 @@ func (opts *WhenOptions) TestLog() {
 
 func WhenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
 	opts := &WhenOptions{}
-	opts.Drop = utils.NOPOS
+	opts.Reset = utils.NOPOS
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "blocks":
@@ -60,8 +60,8 @@ func WhenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
 			opts.Timestamps = true
 		case "check":
 			opts.Check = true
-		case "drop":
-			opts.Drop = globals.ToUint64(value[0])
+		case "reset":
+			opts.Reset = globals.ToUint64(value[0])
 		case "count":
 			opts.Count = true
 		case "deep":
@@ -86,8 +86,8 @@ func WhenFinishParse(args []string) *WhenOptions {
 	defFmt := "txt"
 	// EXISTING_CODE
 	opts.Blocks = args
-	if opts.Drop == 0 {
-		opts.Drop = utils.NOPOS
+	if opts.Reset == 0 {
+		opts.Reset = utils.NOPOS
 	}
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {

@@ -32,8 +32,8 @@ func (opts *ChunksOptions) ValidateChunks() error {
 	}
 
 	if opts.Mode != "manifest" {
-		if opts.PinChunks || opts.PinData {
-			return validate.Usage("The {0} and {1} options are available only in {2} mode.", "--pin_chunk", "--pin_data", "manifest")
+		if opts.PinRemote || opts.Publish {
+			return validate.Usage("The {0} and {1} options are available only in {2} mode.", "--pin_remote", "--publish", "manifest")
 		}
 		if opts.Clean {
 			return validate.Usage("The {0} option is available only in {1} mode.", "--clean", "manifest")

@@ -15,6 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -27,10 +28,11 @@ type ChunksOptions struct {
 	Check     bool
 	Belongs   bool
 	Repair    bool
-	PinChunks bool
-	PinData   bool
 	Clean     bool
 	Remote    bool
+	Reset     uint64
+	PinRemote bool
+	Publish   bool
 	Globals   globals.GlobalOptions
 	BadFlag   error
 }
@@ -45,15 +47,17 @@ func (opts *ChunksOptions) TestLog() {
 	logger.TestLog(opts.Check, "Check: ", opts.Check)
 	logger.TestLog(opts.Belongs, "Belongs: ", opts.Belongs)
 	logger.TestLog(opts.Repair, "Repair: ", opts.Repair)
-	logger.TestLog(opts.PinChunks, "PinChunks: ", opts.PinChunks)
-	logger.TestLog(opts.PinData, "PinData: ", opts.PinData)
 	logger.TestLog(opts.Clean, "Clean: ", opts.Clean)
 	logger.TestLog(opts.Remote, "Remote: ", opts.Remote)
+	logger.TestLog(opts.Reset != utils.NOPOS, "Reset: ", opts.Reset)
+	logger.TestLog(opts.PinRemote, "PinRemote: ", opts.PinRemote)
+	logger.TestLog(opts.Publish, "Publish: ", opts.Publish)
 	opts.Globals.TestLog()
 }
 
 func ChunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions {
 	opts := &ChunksOptions{}
+	opts.Reset = utils.NOPOS
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "mode":
@@ -76,14 +80,16 @@ func ChunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 			opts.Belongs = true
 		case "repair":
 			opts.Repair = true
-		case "pinChunks":
-			opts.PinChunks = true
-		case "pinData":
-			opts.PinData = true
 		case "clean":
 			opts.Clean = true
 		case "remote":
 			opts.Remote = true
+		case "reset":
+			opts.Reset = globals.ToUint64(value[0])
+		case "pinRemote":
+			opts.PinRemote = true
+		case "publish":
+			opts.Publish = true
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "chunks")

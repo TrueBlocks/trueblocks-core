@@ -9,12 +9,12 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 )
 
-// HandleWhenDropTimestamps handles chifra when --timestamps --drop <bn>
-func (opts *WhenOptions) HandleWhenDropTimestamps() error {
-	err := tslib.Reset(opts.Globals.Chain, opts.Drop)
+// HandleWhenTimestampsReset handles chifra when --timestamps --drop <bn>
+func (opts *WhenOptions) HandleWhenTimestampsReset() error {
+	err := tslib.Reset(opts.Globals.Chain, opts.Reset)
 	if err != nil {
 		return err
 	}
-	logger.Log(logger.Info, "The timestamps file was trucated to block", opts.Drop)
+	logger.Log(logger.Info, "The timestamps file was trucated to block", opts.Reset)
 	return nil
 }
