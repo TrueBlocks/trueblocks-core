@@ -15,7 +15,6 @@
 //----------------------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     acctlib_init(defaultQuitHandler);
-    CPinnedChunk::registerClass();
 
     COptions options;
     if (!options.prepareArguments(argc, argv))

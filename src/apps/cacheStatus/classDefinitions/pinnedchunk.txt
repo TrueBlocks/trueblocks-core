@@ -4,5 +4,7 @@ fields = pinnedchunk.csv
 includes = utillib.h
 sort = v1.range < v2.range
 equals = range == it.range
-
-# YES - THIS IS DUPPED, BUT IT'S GOING TO REMOVED, SO NO BOTHER
+doc_group = 04-Admin
+doc_descr = the IPFS hashes of the index chunk and its associated Bloom filter for the given block range
+doc_api = 32-pinnedChunk
+doc_producer = chunks, init, scrape
