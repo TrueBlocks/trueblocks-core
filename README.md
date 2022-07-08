@@ -42,7 +42,7 @@ If you need help with a step, see the [installation's troubleshooting section](h
 
 0. Install dependencies
     - &#9745; [Install the latest version of Go](https://golang.org/doc/install).
-    - &#9745; Install the other dependencies with your command line: `build-essential` `git` `cmake` `python` `python-dev` `libcurl3-dev` `clang-format` `jq`.
+    - &#9745; Install the other dependencies with your command line: `build-essential` `git` `cmake` `ninja` `python` `python-dev` `libcurl3-dev` `clang-format` `jq`.
 
 Alternatively, for nix users, you can drop into an isolated environment with necessary dependencies with `nix-shell`.
 
