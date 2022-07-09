@@ -58,13 +58,6 @@ func ReadBlockScrape(chain string) *BlockScrape {
 		MustReadConfig(blockScrapeViper, &cachedBlockScrape, GetPathToChainConfig(chain))
 		blockScrapeRead = true
 	}
-	// fmt.Println("Block_chan_cnt:", cachedBlockScrape.Settings.Block_chan_cnt)
-	// fmt.Println("Addr_chan_cnt:", cachedBlockScrape.Settings.Addr_chan_cnt)
-	// fmt.Println("Apps_per_chunk:", cachedBlockScrape.Settings.Apps_per_chunk)
-	// fmt.Println("Unripe_dist:", cachedBlockScrape.Settings.Unripe_dist)
-	// fmt.Println("Snap_to_grid:", cachedBlockScrape.Settings.Snap_to_grid)
-	// fmt.Println("First_snap:", cachedBlockScrape.Settings.First_snap)
-	// fmt.Println("Allow_missing:", cachedBlockScrape.Settings.Allow_missing)
 	return &cachedBlockScrape
 }
 
