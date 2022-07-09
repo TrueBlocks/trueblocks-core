@@ -8,7 +8,7 @@ import (
 	"log"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 )
 
@@ -43,7 +43,7 @@ const ValidBlockIdWithRangeAndDate = ValidBlockIdWithRange | ValidArgumentDate
 //     ValidateIdentifiers(identifiers, ValidArgumentRange, 1)
 //
 // This routine can be used for both block identifiers and transaction
-func ValidateIdentifiers(chain string, identifiers []string, validTypes ValidArgumentType, maxRanges int, results *[]blockRange.Identifier) error {
+func ValidateIdentifiers(chain string, ids []string, validTypes ValidArgumentType, maxRanges int, results *[]identifiers.Identifier) error {
 	// A helper function to check if bitmask is set
 	isBitmaskSet := func(flag ValidArgumentType) bool {
 		return validTypes&flag != 0
@@ -54,7 +54,7 @@ func ValidateIdentifiers(chain string, identifiers []string, validTypes ValidArg
 	}
 
 	rangesFound := 0
-	for _, identifier := range identifiers {
+	for _, identifier := range ids {
 		if isBitmaskSet(ValidArgumentBlockHash) && IsBlockHash(identifier) {
 			appendBlockId(results, identifier)
 			continue
@@ -126,17 +126,17 @@ func ValidateIdentifiers(chain string, identifiers []string, validTypes ValidArg
 	return nil
 }
 
-func appendBlockId(results *[]blockRange.Identifier, identifier string) {
+func appendBlockId(results *[]identifiers.Identifier, identifier string) {
 	if results == nil {
 		return
 	}
-	br, _ := blockRange.NewBlockRange(identifier)
+	br, _ := identifiers.NewBlockRange(identifier)
 	if br != nil {
 		*results = append(*results, *br)
 	}
 }
 
-func appendTxId(results *[]blockRange.Identifier, identifier string) {
+func appendTxId(results *[]identifiers.Identifier, identifier string) {
 	if results == nil {
 		return
 	}
@@ -150,15 +150,15 @@ func appendTxId(results *[]blockRange.Identifier, identifier string) {
 		identifier = parts[0] + "-0:all"
 	}
 
-	br, _ := blockRange.NewTxRange(identifier)
+	br, _ := identifiers.NewTxRange(identifier)
 	if br != nil {
-		if br.StartType == blockRange.BlockHash && br.EndType == blockRange.NotDefined {
+		if br.StartType == identifiers.BlockHash && br.EndType == identifiers.NotDefined {
 			// We can't really distinguish hashes in the parser, but if there is
 			// a single hash and nothing following the separator and we know we're
 			// looking for transactions, this is a transaction hash
-			br.StartType = blockRange.TransactionHash
+			br.StartType = identifiers.TransactionHash
 		}
-		br.EndType = blockRange.TransactionIndex
+		br.EndType = identifiers.TransactionIndex
 		*results = append(*results, *br)
 	}
 }

@@ -39,7 +39,7 @@ func (opts *InitOptions) HandleInit() error {
 		return err
 	}
 
-	unchained.PrintHeader(chain, opts.Globals.TestMode)
+	printHeader(chain, opts.Globals.TestMode)
 
 	err = opts.SaveManifest(chain, downloadedManifest)
 	if err != nil {
@@ -198,4 +198,16 @@ func (opts *InitOptions) SaveManifest(chain string, man *manifest.Manifest) erro
 	tmp.NoHeader = false
 	tmp.ApiMode = false
 	return tmp.RenderObject(man, true)
+}
+
+func printHeader(chain string, testMode bool) {
+	logger.Log(logger.Info, "schemas:", unchained.Schemas)
+	logger.Log(logger.Info, "databases:", unchained.Databases)
+	logger.Log(logger.Info, "unchainedAddress:", unchained.Address_V2)
+	logger.Log(logger.Info, "unchainedReadHash:", unchained.ReadHash_V2)
+	logger.Log(logger.Info, "unchainedPublishHash:", unchained.PublishHash_V2)
+	if !testMode {
+		logger.Log(logger.Info, "manifestLocation:", config.GetPathToChainConfig(chain)) // order matters
+		logger.Log(logger.Info, "unchainedIndexFolder:", config.GetPathToIndex(chain))   // order matters
+	}
 }

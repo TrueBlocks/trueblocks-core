@@ -32,7 +32,8 @@ func (opts *ChunksOptions) showAddresses(ctx *WalkContext, path string, first bo
 			continue
 		}
 
-		obj, err := indexChunk.ReadAddressRecord()
+		obj := index.AddressRecord{}
+		err := obj.ReadAddress(indexChunk.File)
 		if err != nil {
 			return false, err
 		}

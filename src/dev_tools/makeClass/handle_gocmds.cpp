@@ -320,10 +320,10 @@ string_q get_optfields(const CCommandOption& cmd) {
         string_q v = p.Format("[{VARIABLE}]");
         os << "\t" << padRight(v, wid) << " " << p.go_type << endl;
         if (contains(v, "Blocks") && contains(p.go_type, "[]string")) {
-            os << "\t" << padRight("BlockIds", wid) << " []blockRange.Identifier" << endl;
+            os << "\t" << padRight("BlockIds", wid) << " []identifiers.Identifier" << endl;
         }
         if (contains(v, "Transactions") && contains(p.go_type, "[]string")) {
-            os << "\t" << padRight("TransactionIds", wid) << " []blockRange.Identifier" << endl;
+            os << "\t" << padRight("TransactionIds", wid) << " []identifiers.Identifier" << endl;
         }
     }
     os << "\t" << padRight("Globals", wid) << " globals.GlobalOptions" << endl;
@@ -406,8 +406,8 @@ string_q clean_go_positionals(const string_q& in, bool hasEns) {
     replaceAll(ret, "opts.[]string{}", "[]string{}");
     if (!contains(ret, "utils."))
         replaceAll(ret, "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils\"\n", "");
-    if (!contains(ret, "blockRange."))
-        replaceAll(ret, "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange\"\n", "");
+    if (!contains(ret, "identifiers."))
+        replaceAll(ret, "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers\"\n", "");
     if (!hasEns)
         replaceAll(ret, "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens\"\n", "");
     return ret;

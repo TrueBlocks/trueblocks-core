@@ -10,7 +10,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 
@@ -80,11 +80,11 @@ func IsDateTimeString(str string) bool {
 		return false
 	}
 
-	bRange, err := blockRange.NewBlockRange(str)
+	bRange, err := identifiers.NewBlockRange(str)
 	if err != nil {
 		return false
 	}
-	return bRange.StartType == blockRange.BlockDate
+	return bRange.StartType == identifiers.BlockDate
 }
 
 func ToIsoDateStr2(dateStr string) string {
@@ -123,29 +123,29 @@ func IsRange(chain, str string) (bool, error) {
 		}
 	}
 
-	bRange, err := blockRange.NewBlockRange(str)
+	bRange, err := identifiers.NewBlockRange(str)
 
 	if err == nil {
 		if bRange.Start.Special == "latest" {
 			return false, errors.New("cannot start range with 'latest'")
 		}
 
-		if bRange.StartType == blockRange.BlockSpecial &&
+		if bRange.StartType == identifiers.BlockSpecial &&
 			!tslib.IsSpecialBlock(chain, bRange.Start.Special) {
 			return false, &InvalidIdentifierLiteralError{
 				Value: bRange.Start.Special,
 			}
 		}
 
-		if bRange.EndType == blockRange.BlockSpecial &&
+		if bRange.EndType == identifiers.BlockSpecial &&
 			!tslib.IsSpecialBlock(chain, bRange.End.Special) {
 			return false, &InvalidIdentifierLiteralError{
 				Value: bRange.End.Special,
 			}
 		}
 
-		onlyNumbers := bRange.StartType == blockRange.BlockNumber &&
-			bRange.EndType == blockRange.BlockNumber
+		onlyNumbers := bRange.StartType == identifiers.BlockNumber &&
+			bRange.EndType == identifiers.BlockNumber
 
 		if onlyNumbers && bRange.Start.Number >= bRange.End.Number {
 			return false, errors.New("'stop' must be strictly larger than 'start'")
@@ -154,7 +154,7 @@ func IsRange(chain, str string) (bool, error) {
 		return true, nil
 	}
 
-	if modifierErr, ok := err.(*blockRange.WrongModifierError); ok {
+	if modifierErr, ok := err.(*identifiers.WrongModifierError); ok {
 		return false, errors.New("Input argument appears to be invalid. No such skip marker: " + modifierErr.Token)
 	}
 

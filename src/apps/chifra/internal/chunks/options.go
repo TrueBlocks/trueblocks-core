@@ -13,7 +13,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -23,7 +23,7 @@ import (
 type ChunksOptions struct {
 	Mode      string
 	Blocks    []string
-	BlockIds  []blockRange.Identifier
+	BlockIds  []identifiers.Identifier
 	Addrs     []string
 	Details   bool
 	Check     bool

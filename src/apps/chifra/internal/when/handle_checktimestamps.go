@@ -7,7 +7,7 @@ package whenPkg
 import (
 	"fmt"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
@@ -30,7 +30,7 @@ func (opts *WhenOptions) HandleWhenTimestampsCheck() error {
 	}
 	scanBar := progress.NewScanBar(cnt /* wanted */, (cnt / skip) /* freq */, cnt /* max */, (2. / 3.))
 
-	blockNums, err := blockRange.GetBlockNumberArray(opts.Globals.Chain, opts.BlockIds)
+	blockNums, err := identifiers.GetBlockNumbers(opts.Globals.Chain, opts.BlockIds)
 	if err != nil {
 		return err
 	}

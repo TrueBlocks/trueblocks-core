@@ -5,7 +5,7 @@
 package whenPkg
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -24,7 +24,7 @@ func (opts *WhenOptions) HandleWhenTimestampsShow() error {
 	}
 
 	prev := types.SimpleTimestamp{}
-	blockNums, err := blockRange.GetBlockNumberArray(opts.Globals.Chain, opts.BlockIds)
+	blockNums, err := identifiers.GetBlockNumbers(opts.Globals.Chain, opts.BlockIds)
 	if err != nil {
 		return err
 	}

@@ -14,7 +14,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
@@ -23,7 +23,7 @@ import (
 type SlurpOptions struct {
 	Addrs       []string
 	Blocks      []string
-	BlockIds    []blockRange.Identifier
+	BlockIds    []identifiers.Identifier
 	Types       []string
 	Appearances bool
 	Globals     globals.GlobalOptions

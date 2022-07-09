@@ -2,7 +2,7 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package blockRange
+package identifiers
 
 import (
 	"errors"
@@ -16,15 +16,15 @@ import (
 	"github.com/bykof/gostradamus"
 )
 
-func (br *Identifier) ResolveBlocks(chain string) ([]uint64, error) {
-	current, end, err := br.getBounds(chain)
+func (id *Identifier) ResolveBlocks(chain string) ([]uint64, error) {
+	current, end, err := id.getBounds(chain)
 	if err != nil {
 		return []uint64{}, err
 	}
 	blocks := []uint64{}
 	for current < end {
 		blocks = append(blocks, current)
-		current, err = br.nextBlock(chain, current)
+		current, err = id.nextBlock(chain, current)
 		if err != nil {
 			return []uint64{}, err
 		}
@@ -32,15 +32,15 @@ func (br *Identifier) ResolveBlocks(chain string) ([]uint64, error) {
 	return blocks, nil
 }
 
-func (br *Identifier) getBounds(chain string) (uint64, uint64, error) {
-	start := br.Start.resolvePoint(chain)
-	switch br.ModifierType {
+func (id *Identifier) getBounds(chain string) (uint64, uint64, error) {
+	start := id.Start.resolvePoint(chain)
+	switch id.ModifierType {
 	case Period:
-		start, _ = snapBnToPeriod(start, chain, br.Modifier.Period)
+		start, _ = snapBnToPeriod(start, chain, id.Modifier.Period)
 	default:
 		// do nothing
 	}
-	end := br.End.resolvePoint(chain)
+	end := id.End.resolvePoint(chain)
 	if end == utils.NOPOS || end == 0 {
 		end = start + 1
 	}
@@ -85,18 +85,18 @@ func snapBnToPeriod(bn uint64, chain, period string) (uint64, error) {
 	return tslib.FromTsToBn(chain, ts)
 }
 
-func (br *Identifier) nextBlock(chain string, current uint64) (uint64, error) {
+func (id *Identifier) nextBlock(chain string, current uint64) (uint64, error) {
 	bn := current
 
-	if br.ModifierType == Step {
-		bn = bn + uint64(br.Modifier.Step)
+	if id.ModifierType == Step {
+		bn = bn + uint64(id.Modifier.Step)
 
-	} else if br.ModifierType == Period {
+	} else if id.ModifierType == Period {
 		dt, err := tslib.FromBnToDate(chain, bn)
 		if err != nil {
 			return bn, err
 		} else {
-			switch br.Modifier.Period {
+			switch id.Modifier.Period {
 			case "hourly":
 				dt = dt.ShiftMinutes(5)
 				dt = dt.ShiftHours(1)
@@ -154,59 +154,59 @@ func (p *Point) resolvePoint(chain string) uint64 {
 	return bn
 }
 
-func (br *Identifier) ResolveTxs(chain string) ([]types.SimpleAppearance, error) {
+func (id *Identifier) ResolveTxs(chain string) ([]types.SimpleAppearance, error) {
 	txs := []types.SimpleAppearance{}
 
-	if br.StartType == BlockNumber {
-		if br.Modifier.Period == "all" {
+	if id.StartType == BlockNumber {
+		if id.Modifier.Period == "all" {
 			provider := config.GetRpcProvider(chain)
-			cnt, err := rpcClient.TxCountByBlockNumber(provider, uint64(br.Start.Number))
+			cnt, err := rpcClient.TxCountByBlockNumber(provider, uint64(id.Start.Number))
 			if err != nil {
 				return txs, err
 			}
 			for i := uint32(0); i < uint32(cnt); i++ {
-				app := types.SimpleAppearance{BlockNumber: uint32(br.Start.Number), TransactionIndex: i}
+				app := types.SimpleAppearance{BlockNumber: uint32(id.Start.Number), TransactionIndex: i}
 				txs = append(txs, app)
 			}
 			return txs, nil
 		}
 
-		if br.EndType == TransactionIndex {
-			app := types.SimpleAppearance{BlockNumber: uint32(br.Start.Number), TransactionIndex: uint32(br.End.Number)}
+		if id.EndType == TransactionIndex {
+			app := types.SimpleAppearance{BlockNumber: uint32(id.Start.Number), TransactionIndex: uint32(id.End.Number)}
 			return append(txs, app), nil
 		}
 
-		msg := fmt.Sprintf("unknown transaction type: %s", br)
+		msg := fmt.Sprintf("unknown transaction type: %s", id)
 		return txs, errors.New(msg)
 	}
 
-	if br.StartType == BlockHash && br.EndType == TransactionIndex {
-		if br.Modifier.Period == "all" {
+	if id.StartType == BlockHash && id.EndType == TransactionIndex {
+		if id.Modifier.Period == "all" {
 			provider := config.GetRpcProvider(chain)
-			cnt, err := rpcClient.TxCountByBlockNumber(provider, uint64(br.Start.resolvePoint(chain)))
+			cnt, err := rpcClient.TxCountByBlockNumber(provider, uint64(id.Start.resolvePoint(chain)))
 			if err != nil {
 				return txs, err
 			}
 			for i := uint32(0); i < uint32(cnt); i++ {
-				app := types.SimpleAppearance{BlockNumber: uint32(br.Start.resolvePoint(chain)), TransactionIndex: i}
+				app := types.SimpleAppearance{BlockNumber: uint32(id.Start.resolvePoint(chain)), TransactionIndex: i}
 				txs = append(txs, app)
 			}
 			return txs, nil
 		}
 
-		app := types.SimpleAppearance{BlockNumber: uint32(br.Start.resolvePoint(chain)), TransactionIndex: uint32(br.End.Number)}
+		app := types.SimpleAppearance{BlockNumber: uint32(id.Start.resolvePoint(chain)), TransactionIndex: uint32(id.End.Number)}
 		return append(txs, app), nil
 	}
 
-	if br.StartType == TransactionHash {
+	if id.StartType == TransactionHash {
 		provider := config.GetRpcProvider(chain)
-		bn, txid, err := rpcClient.TxNumberAndIdFromHash(provider, br.Start.Hash)
+		bn, txid, err := rpcClient.TxNumberAndIdFromHash(provider, id.Start.Hash)
 		app := types.SimpleAppearance{BlockNumber: uint32(bn), TransactionIndex: uint32(txid)}
 		return append(txs, app), err
 	}
 
 	app := types.SimpleAppearance{BlockNumber: uint32(0), TransactionIndex: uint32(0)}
-	msg := fmt.Sprintf("unknown transaction type %s", br)
+	msg := fmt.Sprintf("unknown transaction type %s", id)
 	return append(txs, app), errors.New(msg)
 }
 
@@ -317,7 +317,7 @@ bool getDirectionalTxId(blknum_t bn, txnum_t txid, const string_q& dir, string_q
 }
 */
 
-func GetBlockNumberArray(chain string, ids []Identifier) ([]uint64, error) {
+func GetBlockNumbers(chain string, ids []Identifier) ([]uint64, error) {
 	var nums []uint64
 	for _, br := range ids {
 		blockNums, err := br.ResolveBlocks(chain)
@@ -329,4 +329,18 @@ func GetBlockNumberArray(chain string, ids []Identifier) ([]uint64, error) {
 		}
 	}
 	return nums, nil
+}
+
+func GetTransactionIds(chain string, ids []Identifier) ([]types.SimpleAppearance, error) {
+	var txids []types.SimpleAppearance
+	for _, br := range ids {
+		blockNums, err := br.ResolveTxs(chain)
+		if err != nil {
+			return []types.SimpleAppearance{}, err
+		}
+		for _, n := range blockNums {
+			txids = append(txids, n)
+		}
+	}
+	return txids, nil
 }

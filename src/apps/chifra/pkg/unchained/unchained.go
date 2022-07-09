@@ -1,38 +1,20 @@
 package unchained
 
-import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-)
-
-// TODO: BOGUS - MANIFEST CONFIG FILE
 const (
-	Schemas            = "QmUou7zX2g2tY58LP1A2GyP5RF9nbJsoxKTp299ah3svgb"
-	Databases          = "QmTGdjLhWzGpGtmxVu73mzKyzva9JM4mSsZ93NceVU6Y5T"
-	Address            = "0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd"
-	ReadHash           = "0x337f3f32"
-	ReadHashName       = "manifestHash"
-	PublishHash        = "0x8da5cb5b"
-	Address_V2         = "0x0c316b7042b419d07d343f2f4f5bd54ff731183d"
-	ReadHash_V2        = "0x7087e4bd"
-	ReadHashName_V2    = "manifestHashMap"
-	PublishHash_V2     = "0x1fee5cd2"
-	PreferredPublisher = "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
-	HeaderMagicHash    = "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1"
-	ZeroMagicHash      = "0x0000000000000000000000000000000000000000000000000000000000000000"
+	Schemas            = "QmUou7zX2g2tY58LP1A2GyP5RF9nbJsoxKTp299ah3svgb"                     // IPFS hash of the specification for the Unchained Index
+	Databases          = "QmTGdjLhWzGpGtmxVu73mzKyzva9JM4mSsZ93NceVU6Y5T"                     // IPFS hash to the extra database for names and timestamps
+	Address            = "0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd"                         // V1: The address of the current version of the Unchained Index
+	ReadHash           = "0x337f3f32"                                                         // V1: The fourbyte needed to read the current manifest hash from the smart contract
+	ReadHashName       = "manifestHash"                                                       // V1: The name of the function to read the hash
+	PublishHash        = "0x8da5cb5b"                                                         // V1: The fourbyte needed to publish the hash to the smart contract
+	ZeroMagicHash      = "0x0000000000000000000000000000000000000000000000000000000000000000" // V1: The internal hash in the index chunks
+	Address_V2         = "0x0c316b7042b419d07d343f2f4f5bd54ff731183d"                         // V2: The address of the current version of the Unchained Index
+	ReadHash_V2        = "0x7087e4bd"                                                         // V2: The fourbyte needed to read the current manifest hash from the smart contract
+	ReadHashName_V2    = "manifestHashMap"                                                    // V2: The name of the function to read the hash
+	PublishHash_V2     = "0x1fee5cd2"                                                         // V2: The fourbyte needed to publish the hash to the smart contract
+	PreferredPublisher = "0xf503017d7baf7fbc0fff7492b751025c6a78179b"                         // V2: Us
+	HeaderMagicHash    = "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1" // V2: Internal hash for the index chunks. The keccek256 of the manifest version
 )
-
-func PrintHeader(chain string, testMode bool) {
-	logger.Log(logger.Info, "schemas:", Schemas)
-	logger.Log(logger.Info, "databases:", Databases)
-	logger.Log(logger.Info, "unchainedAddress:", Address_V2)
-	logger.Log(logger.Info, "unchainedReadHash:", ReadHash_V2)
-	logger.Log(logger.Info, "unchainedPublishHash:", PublishHash_V2)
-	if !testMode {
-		logger.Log(logger.Info, "manifestLocation:", config.GetPathToChainConfig(chain)) // order matters
-		logger.Log(logger.Info, "unchainedIndexFolder:", config.GetPathToIndex(chain))   // order matters
-	}
-}
 
 // Unchained Index Version 1.0
 // Address: 0x0c316b7042b419d07d343f2f4f5bd54ff731183d

@@ -2,7 +2,7 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package blockRange
+package identifiers
 
 import (
 	"fmt"
@@ -57,60 +57,60 @@ func TestModifierToModifierTypePeriod(t *testing.T) {
 }
 
 func TestNewBlocks(t *testing.T) {
-	blockRange, err := NewBlockRange("10-1000:10")
+	br, err := NewBlockRange("10-1000:10")
 	if err != nil {
 		t.Error(err)
 	}
 
-	if blockRange.StartType != BlockNumber {
+	if br.StartType != BlockNumber {
 		t.Error("StartType is not block number")
 	}
 
-	if blockRange.Start.Number != 10 {
+	if br.Start.Number != 10 {
 		t.Errorf("Wrong start")
 	}
 
-	if blockRange.EndType != BlockNumber {
+	if br.EndType != BlockNumber {
 		t.Error("EndType is not block number")
 	}
 
-	if blockRange.End.Number != 1000 {
+	if br.End.Number != 1000 {
 		t.Error("Wrong end")
 	}
 
-	if blockRange.ModifierType != Step {
+	if br.ModifierType != Step {
 		t.Error("ModifierType is not step")
 	}
 
-	if blockRange.Modifier.Step != 10 {
+	if br.Modifier.Step != 10 {
 		t.Error("Wrong modifier")
 	}
 }
 
 func TestNewSpecial(t *testing.T) {
-	blockRange, err := NewBlockRange("london:weekly")
+	br, err := NewBlockRange("london:weekly")
 
 	if err != nil {
 		t.Error(err)
 	}
 
-	if blockRange.StartType != BlockSpecial {
+	if br.StartType != BlockSpecial {
 		t.Error("StartType is not special")
 	}
 
-	if blockRange.Start.Special != "london" {
+	if br.Start.Special != "london" {
 		t.Errorf("Wrong start")
 	}
 
-	if blockRange.EndType != NotDefined {
+	if br.EndType != NotDefined {
 		t.Error("EndType is not notdefined")
 	}
 
-	if blockRange.ModifierType != Period {
+	if br.ModifierType != Period {
 		t.Error("ModifierType is not period")
 	}
 
-	if blockRange.Modifier.Period != "weekly" {
+	if br.Modifier.Period != "weekly" {
 		t.Error("Wrong modifier")
 	}
 }
