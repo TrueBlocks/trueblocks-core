@@ -46,6 +46,7 @@ type Identifier struct {
 // the values.
 //
 // Consult ./parser.go for the supported format
+// TODO: This does not handle the zero block correctly
 func NewBlockRange(rangeStr string) (*Identifier, error) {
 	parsed, err := Parse(rangeStr)
 	newRange := &Identifier{}

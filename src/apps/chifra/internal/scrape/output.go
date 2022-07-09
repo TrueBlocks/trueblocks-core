@@ -56,7 +56,7 @@ func (opts *ScrapeOptions) ScrapeInternal() (err error, handled bool) {
 
 	} else {
 		// Note this never returns
-		opts.RunIndexScraper()
+		err = opts.HandleScrape()
 
 	}
 	// EXISTING_CODE

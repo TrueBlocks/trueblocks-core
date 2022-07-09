@@ -14,14 +14,50 @@
 #include "bloom.h"
 
 extern bool freshenTimestampsAppend(blknum_t firstBlock, blknum_t nBlocks);
+extern bool visitPrefund(const Allocation& prefund, void* data);
 
 //--------------------------------------------------------------------------
 bool COptions::scrape_blocks(void) {
-    string_q tmpStagingFn = indexFolder_staging + "000000000-temp.txt";
-    tmpStagingStream.open(tmpStagingFn, ios::out | ios::trunc);
-    if (!tmpStagingStream.is_open()) {
-        LOG_WARN("Could not open temporary staging file.");
-        return false;
+    block_cnt = str_2_Uint(getEnvStr("TB_SETTINGS_BLOCKCNT"));
+    block_chan_cnt = str_2_Uint(getEnvStr("TB_SETTINGS_BLOCKCHANCNT"));
+    addr_chan_cnt = str_2_Uint(getEnvStr("TB_SETTINGS_ADDRCHANCNT"));
+    apps_per_chunk = str_2_Uint(getEnvStr("TB_SETTINGS_APPSPERCHUNK"));
+    unripe_dist = str_2_Uint(getEnvStr("TB_SETTINGS_UNRIPEDIST"));
+    snap_to_grid = str_2_Uint(getEnvStr("TB_SETTINGS_SNAPTOGRID"));
+    first_snap = str_2_Uint(getEnvStr("TB_SETTINGS_FIRSTSNAP"));
+    allow_missing = getEnvStr("TB_SETTINGS_ALLOWMISSING") == "true";
+
+    if (getChain() == "mainnet") {
+        // different defaults for mainnet
+        apps_per_chunk = apps_per_chunk == 200000 ? 2000000 : apps_per_chunk;
+        first_snap = first_snap == 0 ? 2250000 : first_snap;
+    }
+
+    CMetaData meta;
+    meta = getMetaData();
+
+    // This may be the first time we've ever run. In that case, we need to build the zero block index file...
+    string chunkId = padNum9(0) + "-" + padNum9(0);
+    string_q bloomZeroPath = indexFolder_blooms + chunkId + ".bloom";
+    if (!fileExists(bloomZeroPath)) {
+        if (!loadPrefundBalances())
+            return usage("Could not load prefunds database.");
+
+        // Each chain must have it's own prefund addresses. Here, we scan the prefund list
+        // and add a psuedo-transaction (block: 0, txid: order-in-file) for each address.
+        // Tradition has it that the prefund list is sorted by address.
+        CStringArray consolidatedLines;
+        forEveryPrefund(visitPrefund, &consolidatedLines);
+
+        // Write the chunk and the bloom to the binary cache
+        string_q chunkPath = indexFolder_finalized + chunkId + ".bin";
+        if (!writeIndexAsBinary(chunkPath, consolidatedLines)) {
+            LOG_ERR(cRed, "Failed to write index chunk for block zero.", cOff);
+            return false;
+        }
+        ostringstream os;
+        os << "Wrote " << consolidatedLines.size() << " records to " << cTeal << relativize(chunkPath) << cOff;
+        LOG_INFO(os.str());
     }
 
     blaze_ripe = (meta.client < unripe_dist ? 0 : meta.client - unripe_dist);
@@ -76,6 +112,13 @@ bool COptions::scrape_blocks(void) {
     if (isRunning("acctExport")) {
         cleanFolder(indexFolder_ripe);
         LOG_WARN("'chifra export' is running. 'chifra scrape' cannot run at this time...");
+        return false;
+    }
+
+    string_q tmpStagingFn = indexFolder_staging + "000000000-temp.txt";
+    tmpStagingStream.open(tmpStagingFn, ios::out | ios::trunc);
+    if (!tmpStagingStream.is_open()) {
+        LOG_WARN("Could not open temporary staging file.");
         return false;
     }
 
@@ -580,3 +623,14 @@ bool freshenTimestampsAppend(blknum_t firstBlock, blknum_t nBlocks) {
         }
     }
 */
+
+//-----------------------------------------------------------------------
+bool visitPrefund(const Allocation& prefund, void* data) {
+    ostringstream os;
+
+    CStringArray* appearances = (CStringArray*)data;
+    os << prefund.address << "\t" << padNum9(0) << "\t" << padNum5((uint32_t)appearances->size()) << endl;
+    appearances->push_back(os.str());
+
+    return true;
+}
