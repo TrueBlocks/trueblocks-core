@@ -6,7 +6,6 @@ package servePkg
 
 import (
 	"log"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -24,9 +23,6 @@ func RunServe(cmd *cobra.Command, args []string) error {
 	}
 
 	apiUrl := opts.Port
-	if !strings.Contains(apiUrl, "http") {
-		apiUrl = "http://localhost" + apiUrl
-	}
 
 	chain := opts.Globals.Chain
 	configPath := config.GetPathToRootConfig()
