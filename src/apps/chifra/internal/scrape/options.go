@@ -65,14 +65,14 @@ func (opts *ScrapeOptions) String() string {
 func (opts *ScrapeOptions) GetEnvStr() []string {
 	envStr := []string{}
 	// EXISTING_CODE
-	envStr = append(envStr, "TB_SETTINGS_BLOCKCNT="+fmt.Sprintf("%d", opts.BlockCnt))
-	envStr = append(envStr, "TB_SETTINGS_BLOCKCHANCNT="+fmt.Sprintf("%d", config.ReadBlockScrape(opts.Globals.Chain).Settings.Block_chan_cnt))
-	envStr = append(envStr, "TB_SETTINGS_ADDRCHANCNT="+fmt.Sprintf("%d", config.ReadBlockScrape(opts.Globals.Chain).Settings.Addr_chan_cnt))
-	envStr = append(envStr, "TB_SETTINGS_APPSPERCHUNK="+fmt.Sprintf("%d", config.ReadBlockScrape(opts.Globals.Chain).Settings.Apps_per_chunk))
-	envStr = append(envStr, "TB_SETTINGS_UNRIPEDIST="+fmt.Sprintf("%d", config.ReadBlockScrape(opts.Globals.Chain).Settings.Unripe_dist))
-	envStr = append(envStr, "TB_SETTINGS_SNAPTOGRID="+fmt.Sprintf("%d", config.ReadBlockScrape(opts.Globals.Chain).Settings.Snap_to_grid))
-	envStr = append(envStr, "TB_SETTINGS_FIRSTSNAP="+fmt.Sprintf("%d", config.ReadBlockScrape(opts.Globals.Chain).Settings.First_snap))
-	envStr = append(envStr, "TB_SETTINGS_ALLOWMISSING="+fmt.Sprintf("%t", config.ReadBlockScrape(opts.Globals.Chain).Settings.Allow_missing))
+	envStr = append(envStr, opts.GetSettingsStr("TB_SETTINGS_BLOCKCNT"))
+	envStr = append(envStr, opts.GetSettingsStr("TB_SETTINGS_BLOCKCHANCNT"))
+	envStr = append(envStr, opts.GetSettingsStr("TB_SETTINGS_ADDRCHANCNT"))
+	envStr = append(envStr, opts.GetSettingsStr("TB_SETTINGS_APPSPERCHUNK"))
+	envStr = append(envStr, opts.GetSettingsStr("TB_SETTINGS_UNRIPEDIST"))
+	envStr = append(envStr, opts.GetSettingsStr("TB_SETTINGS_SNAPTOGRID"))
+	envStr = append(envStr, opts.GetSettingsStr("TB_SETTINGS_FIRSTSNAP"))
+	envStr = append(envStr, opts.GetSettingsStr("TB_SETTINGS_ALLOWMISSING"))
 	// EXISTING_CODE
 	return envStr
 }
