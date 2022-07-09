@@ -30,7 +30,8 @@ func (opts *ChunksOptions) showAppearances(ctx *WalkContext, path string, first 
 		if opts.Globals.TestMode && i > maxTestItems {
 			continue
 		}
-		obj, err := indexChunk.ReadAppearanceRecord()
+		obj := index.AppearanceRecord{}
+		err := obj.ReadAppearance(indexChunk.File)
 		if err != nil {
 			return false, err
 		}

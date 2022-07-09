@@ -12,7 +12,7 @@ import (
 
 func (opts *ChunksOptions) showBloom(ctx *WalkContext, path string, first bool) (bool, error) {
 	var bloom index.ChunkBloom
-	index.ReadBloom(&bloom, path)
+	bloom.ReadBloom(path)
 
 	if opts.Globals.Verbose {
 		bloom.Display(int(opts.Globals.LogLevel))

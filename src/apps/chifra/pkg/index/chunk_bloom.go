@@ -9,6 +9,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log"
 	"os"
 	"strings"
 
@@ -45,12 +46,12 @@ type ChunkBloom struct {
 	Blooms []BloomBytes
 }
 
-func (bl *ChunkBloom) String() string {
+func (bloom *ChunkBloom) String() string {
 	nInserted := uint32(0)
-	for i := uint32(0); i < bl.Count; i++ {
-		nInserted += bl.Blooms[i].NInserted
+	for i := uint32(0); i < bloom.Count; i++ {
+		nInserted += bloom.Blooms[i].NInserted
 	}
-	return fmt.Sprintf("%s\t%d\t%d\t%d", bl.Range, bl.Count, BLOOM_WIDTH_IN_BYTES, nInserted)
+	return fmt.Sprintf("%s\t%d\t%d\t%d", bloom.Range, bloom.Count, BLOOM_WIDTH_IN_BYTES, nInserted)
 }
 
 // NewChunkBloom returns a newly initialized bloom filter. The bloom filter's file pointer is open (if there
@@ -93,7 +94,7 @@ func (bloom *ChunkBloom) Close() {
 }
 
 //---------------------------------------------------------------------------
-func ReadBloom(bloom *ChunkBloom, fileName string) (err error) {
+func (bloom *ChunkBloom) ReadBloom(fileName string) (err error) {
 	bloom.Range, err = cache.RangeFromFilename(fileName)
 	if err != nil {
 		return err
@@ -170,7 +171,7 @@ func (bloom *ChunkBloom) AddToSet(addr common.Address) {
 	}
 
 	loc := len(bloom.Blooms) - 1
-	bits := WhichBits(addr)
+	bits := bloom.WhichBits(addr)
 	for _, bit := range bits {
 		which := (bit / 8)
 		whence := (bit % 8)
@@ -183,6 +184,25 @@ func (bloom *ChunkBloom) AddToSet(addr common.Address) {
 	if bloom.Blooms[loc].NInserted > MAX_ADDRS_IN_BLOOM {
 		bloom.Blooms = append(bloom.Blooms, BloomBytes{})
 	}
+}
+
+// WhichBits returns the five bits calculated from an address used to determine if the address is
+// in the bloom filter. We get the five bits by cutting the 20-byte address into five equal four-byte
+// parts, turning those four bytes into an 32-bit integer modulo the width of a bloom array item.
+func (bloom *ChunkBloom) WhichBits(addr common.Address) (bits [5]uint32) {
+	slice := addr.Bytes()
+	if len(slice) != 20 {
+		log.Fatal("address is not 20 bytes long - should not happen")
+	}
+
+	cnt := 0
+	for i := 0; i < len(slice); i += 4 {
+		bytes := slice[i : i+4]
+		bits[cnt] = (binary.BigEndian.Uint32(bytes) % uint32(BLOOM_WIDTH_IN_BITS))
+		cnt++
+	}
+
+	return
 }
 
 // writeBloom

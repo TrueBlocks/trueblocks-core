@@ -13,7 +13,7 @@ import (
 
 func (opts *ChunksOptions) showIndex(ctx *WalkContext, path string, first bool) (bool, error) {
 	path = index.ToIndexPath(path)
-	header, err := index.ReadHeaderFromFilename(opts.Globals.Chain, path)
+	header, err := index.ReadChunkHeader(opts.Globals.Chain, path)
 	if err != nil {
 		return false, err
 	}

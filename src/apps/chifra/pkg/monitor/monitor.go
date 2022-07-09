@@ -160,7 +160,7 @@ func (mon *Monitor) Close() {
 
 // IsDeleted returns true if the monitor has been deleted but not removed
 func (mon *Monitor) IsDeleted() bool {
-	mon.ReadHeader()
+	mon.ReadMonitorHeader()
 	return mon.Header.Deleted
 }
 

@@ -38,7 +38,7 @@ func readHeader(fl *os.File) (header HeaderRecord, err error) {
 	return
 }
 
-func ReadHeaderFromFilename(chain, fileName string) (header HeaderRecord, err error) {
+func ReadChunkHeader(chain, fileName string) (header HeaderRecord, err error) {
 	fileName = ToIndexPath(fileName)
 	ff, err := os.Open(fileName)
 	defer ff.Close()

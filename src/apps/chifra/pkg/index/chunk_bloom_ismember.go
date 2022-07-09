@@ -9,7 +9,7 @@ import (
 )
 
 func (bloom *ChunkBloom) IsMemberBytes(addr common.Address) bool {
-	whichBits := WhichBits(addr)
+	whichBits := bloom.WhichBits(addr)
 	for _, bb := range bloom.Blooms {
 		var tester = bitChecker{bytes: bb.Bytes, whichBits: whichBits}
 		if bloom.isMember(&tester) {
@@ -20,7 +20,7 @@ func (bloom *ChunkBloom) IsMemberBytes(addr common.Address) bool {
 }
 
 func (bloom *ChunkBloom) IsMember(addr common.Address) bool {
-	whichBits := WhichBits(addr)
+	whichBits := bloom.WhichBits(addr)
 	offset := uint32(4)
 	for j := 0; j < int(bloom.Count); j++ {
 		offset += uint32(4)

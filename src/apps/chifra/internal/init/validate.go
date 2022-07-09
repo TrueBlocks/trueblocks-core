@@ -4,7 +4,7 @@
 
 package initPkg
 
-import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/migrate"
 
 func (opts *InitOptions) ValidateInit() error {
 	opts.TestLog()
@@ -14,7 +14,7 @@ func (opts *InitOptions) ValidateInit() error {
 	}
 
 	// Note this does not return if a migration is needed
-	index.CheckBackLevelIndex(opts.Globals.Chain)
+	migrate.CheckBackLevelIndex(opts.Globals.Chain)
 
 	return opts.Globals.ValidateGlobals()
 }

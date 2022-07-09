@@ -16,6 +16,7 @@ import (
 	"strings"
 
 	initPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/init"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/migrate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -24,7 +25,7 @@ import (
 
 func (opts *StatusOptions) HandleIndexMigration() error {
 	// TODO: BOGUS - MIGRATION SENTINAL? REENTRANCY SAFE?
-	if !index.HasBackLevelIndex(opts.Globals.Chain) {
+	if !migrate.HasBackLevelIndex(opts.Globals.Chain) {
 		log.Println(colors.Yellow, "The index does not need to be migrated.", colors.Off)
 		return nil
 	}

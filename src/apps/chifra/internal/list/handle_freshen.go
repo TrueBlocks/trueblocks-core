@@ -85,7 +85,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 
 		if updater.MonitorMap[common.HexToAddress(addr)] == nil {
 			mon, _ := monitor.NewStagedMonitor(opts.Globals.Chain, addr)
-			mon.ReadHeader()
+			mon.ReadMonitorHeader()
 			if uint64(mon.LastScanned) < updater.FirstBlock {
 				updater.FirstBlock = uint64(mon.LastScanned)
 			}

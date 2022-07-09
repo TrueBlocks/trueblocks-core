@@ -7,9 +7,9 @@ package exportPkg
 import (
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/migrate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -93,7 +93,7 @@ func (opts *ExportOptions) ValidateExport() error {
 	}
 
 	// Note this does not return if a migration is needed
-	index.CheckBackLevelIndex(opts.Globals.Chain)
+	migrate.CheckBackLevelIndex(opts.Globals.Chain)
 
 	err := opts.Globals.ValidateGlobals()
 	if err != nil && strings.Contains(err.Error(), "option (ofx) must be one of") {

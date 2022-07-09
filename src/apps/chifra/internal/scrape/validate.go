@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/migrate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -57,7 +57,7 @@ func (opts *ScrapeOptions) ValidateScrape() error {
 	}
 
 	// Note this does not return if a migration is needed
-	index.CheckBackLevelIndex(opts.Globals.Chain)
+	migrate.CheckBackLevelIndex(opts.Globals.Chain)
 
 	return opts.Globals.ValidateGlobals()
 }
