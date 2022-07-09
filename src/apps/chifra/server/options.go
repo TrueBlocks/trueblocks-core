@@ -18,6 +18,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// ServeOptions provides all command options for the chifra serve command.
 type ServeOptions struct {
 	Port    string
 	Globals globals.GlobalOptions
@@ -26,24 +27,28 @@ type ServeOptions struct {
 
 var serveCmdLineOptions ServeOptions
 
+// TestLog is used only during testing to export the options for this test case.
 func (opts *ServeOptions) TestLog() {
 	logger.TestLog(len(opts.Port) > 0, "Port: ", opts.Port)
 	opts.Globals.TestLog()
 }
 
+// String implements the Stringer interface
 func (opts *ServeOptions) String() string {
 	b, _ := json.MarshalIndent(opts, "", "\t")
 	return string(b)
 }
 
-func (opts *ServeOptions) GetEnvStr() []string {
+// getEnvStr allows for adding custom environment strings when calling out to the command line (useful for debugging).
+func (opts *ServeOptions) getEnvStr() []string {
 	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return envStr
 }
 
-func (opts *ServeOptions) ToCmdLine() string {
+// toCmdLine converts the options object to a command line for calling out to the system.
+func (opts *ServeOptions) toCmdLine() string {
 	options := ""
 	if len(opts.Port) > 0 {
 		options += " --port " + opts.Port
@@ -55,7 +60,8 @@ func (opts *ServeOptions) ToCmdLine() string {
 	return options
 }
 
-func ServeFinishParseApi(w http.ResponseWriter, r *http.Request) *ServeOptions {
+// serveFinishParseApi finishes the parsing for server invocations. Returns a new ServeOptions.
+func serveFinishParseApi(w http.ResponseWriter, r *http.Request) *ServeOptions {
 	opts := &ServeOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -75,7 +81,8 @@ func ServeFinishParseApi(w http.ResponseWriter, r *http.Request) *ServeOptions {
 	return opts
 }
 
-func ServeFinishParse(args []string) *ServeOptions {
+// serveFinishParse finishes the parsing for command line invocations. Returns a new ServeOptions.
+func serveFinishParse(args []string) *ServeOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

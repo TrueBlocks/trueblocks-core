@@ -21,22 +21,28 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// [{PROPER}]Options provides all command options for the chifra [{LOWER}] command.
 type [{PROPER}]Options struct {
 [{OPT_FIELDS}]
 }
 
 var [{ROUTE}]CmdLineOptions [{PROPER}]Options
 
+// TestLog is used only during testing to export the options for this test case.
 func (opts *[{PROPER}]Options) TestLog() {
 [{TEST_LOGS}]	opts.Globals.TestLog()
 }
 
+// String implements the Stringer interface
 func (opts *[{PROPER}]Options) String() string {
 	b, _ := json.MarshalIndent(opts, "", "\t")
 	return string(b)
 }
 
-[{GETENVSTR}][{TOCMDLINE}]func [{PROPER}]FinishParseApi(w http.ResponseWriter, r *http.Request) *[{PROPER}]Options {
+// getEnvStr allows for adding custom environment strings when calling out to the command line (useful for debugging).
+[{GETENVSTR}]// toCmdLine converts the options object to a command line for calling out to the system.
+[{TOCMDLINE}]// [{LOWER}]FinishParseApi finishes the parsing for server invocations. Returns a new [{PROPER}]Options.
+func [{LOWER}]FinishParseApi(w http.ResponseWriter, r *http.Request) *[{PROPER}]Options {
 	opts := &[{PROPER}]Options{}
 [{DEFAULTS_API}]	for key, value := range r.URL.Query() {
 		switch key {
@@ -54,7 +60,8 @@ func (opts *[{PROPER}]Options) String() string {
 	return opts
 }
 
-func [{PROPER}]FinishParse(args []string) *[{PROPER}]Options {
+// [{LOWER}]FinishParse finishes the parsing for command line invocations. Returns a new [{PROPER}]Options.
+func [{LOWER}]FinishParse(args []string) *[{PROPER}]Options {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

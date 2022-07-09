@@ -19,6 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// NamesOptions provides all command options for the chifra names command.
 type NamesOptions struct {
 	Terms       []string
 	Expand      bool
@@ -44,6 +45,7 @@ type NamesOptions struct {
 
 var namesCmdLineOptions NamesOptions
 
+// TestLog is used only during testing to export the options for this test case.
 func (opts *NamesOptions) TestLog() {
 	logger.TestLog(len(opts.Terms) > 0, "Terms: ", opts.Terms)
 	logger.TestLog(opts.Expand, "Expand: ", opts.Expand)
@@ -66,19 +68,22 @@ func (opts *NamesOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
+// String implements the Stringer interface
 func (opts *NamesOptions) String() string {
 	b, _ := json.MarshalIndent(opts, "", "\t")
 	return string(b)
 }
 
-func (opts *NamesOptions) GetEnvStr() []string {
+// getEnvStr allows for adding custom environment strings when calling out to the command line (useful for debugging).
+func (opts *NamesOptions) getEnvStr() []string {
 	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return envStr
 }
 
-func (opts *NamesOptions) ToCmdLine() string {
+// toCmdLine converts the options object to a command line for calling out to the system.
+func (opts *NamesOptions) toCmdLine() string {
 	options := ""
 	if opts.Expand {
 		options += " --expand"
@@ -138,7 +143,8 @@ func (opts *NamesOptions) ToCmdLine() string {
 	return options
 }
 
-func NamesFinishParseApi(w http.ResponseWriter, r *http.Request) *NamesOptions {
+// namesFinishParseApi finishes the parsing for server invocations. Returns a new NamesOptions.
+func namesFinishParseApi(w http.ResponseWriter, r *http.Request) *NamesOptions {
 	opts := &NamesOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -196,7 +202,8 @@ func NamesFinishParseApi(w http.ResponseWriter, r *http.Request) *NamesOptions {
 	return opts
 }
 
-func NamesFinishParse(args []string) *NamesOptions {
+// namesFinishParse finishes the parsing for command line invocations. Returns a new NamesOptions.
+func namesFinishParse(args []string) *NamesOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

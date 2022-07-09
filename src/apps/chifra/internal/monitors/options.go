@@ -19,6 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// MonitorsOptions provides all command options for the chifra monitors command.
 type MonitorsOptions struct {
 	Addrs      []string
 	Clean      bool
@@ -35,6 +36,7 @@ type MonitorsOptions struct {
 
 var monitorsCmdLineOptions MonitorsOptions
 
+// TestLog is used only during testing to export the options for this test case.
 func (opts *MonitorsOptions) TestLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(opts.Clean, "Clean: ", opts.Clean)
@@ -48,12 +50,16 @@ func (opts *MonitorsOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
+// String implements the Stringer interface
 func (opts *MonitorsOptions) String() string {
 	b, _ := json.MarshalIndent(opts, "", "\t")
 	return string(b)
 }
 
-func MonitorsFinishParseApi(w http.ResponseWriter, r *http.Request) *MonitorsOptions {
+// getEnvStr allows for adding custom environment strings when calling out to the command line (useful for debugging).
+// toCmdLine converts the options object to a command line for calling out to the system.
+// monitorsFinishParseApi finishes the parsing for server invocations. Returns a new MonitorsOptions.
+func monitorsFinishParseApi(w http.ResponseWriter, r *http.Request) *MonitorsOptions {
 	opts := &MonitorsOptions{}
 	opts.Sleep = 14
 	opts.FirstBlock = 0
@@ -96,7 +102,8 @@ func MonitorsFinishParseApi(w http.ResponseWriter, r *http.Request) *MonitorsOpt
 	return opts
 }
 
-func MonitorsFinishParse(args []string) *MonitorsOptions {
+// monitorsFinishParse finishes the parsing for command line invocations. Returns a new MonitorsOptions.
+func monitorsFinishParse(args []string) *MonitorsOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

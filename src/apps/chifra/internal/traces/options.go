@@ -19,6 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// TracesOptions provides all command options for the chifra traces command.
 type TracesOptions struct {
 	Transactions   []string
 	TransactionIds []identifiers.Identifier
@@ -34,6 +35,7 @@ type TracesOptions struct {
 
 var tracesCmdLineOptions TracesOptions
 
+// TestLog is used only during testing to export the options for this test case.
 func (opts *TracesOptions) TestLog() {
 	logger.TestLog(len(opts.Transactions) > 0, "Transactions: ", opts.Transactions)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
@@ -45,19 +47,22 @@ func (opts *TracesOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
+// String implements the Stringer interface
 func (opts *TracesOptions) String() string {
 	b, _ := json.MarshalIndent(opts, "", "\t")
 	return string(b)
 }
 
-func (opts *TracesOptions) GetEnvStr() []string {
+// getEnvStr allows for adding custom environment strings when calling out to the command line (useful for debugging).
+func (opts *TracesOptions) getEnvStr() []string {
 	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return envStr
 }
 
-func (opts *TracesOptions) ToCmdLine() string {
+// toCmdLine converts the options object to a command line for calling out to the system.
+func (opts *TracesOptions) toCmdLine() string {
 	options := ""
 	if opts.Articulate {
 		options += " --articulate"
@@ -84,7 +89,8 @@ func (opts *TracesOptions) ToCmdLine() string {
 	return options
 }
 
-func TracesFinishParseApi(w http.ResponseWriter, r *http.Request) *TracesOptions {
+// tracesFinishParseApi finishes the parsing for server invocations. Returns a new TracesOptions.
+func tracesFinishParseApi(w http.ResponseWriter, r *http.Request) *TracesOptions {
 	opts := &TracesOptions{}
 	opts.Max = 250
 	for key, value := range r.URL.Query() {
@@ -120,7 +126,8 @@ func TracesFinishParseApi(w http.ResponseWriter, r *http.Request) *TracesOptions
 	return opts
 }
 
-func TracesFinishParse(args []string) *TracesOptions {
+// tracesFinishParse finishes the parsing for command line invocations. Returns a new TracesOptions.
+func tracesFinishParse(args []string) *TracesOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

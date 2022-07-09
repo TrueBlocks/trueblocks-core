@@ -19,6 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// ListOptions provides all command options for the chifra list command.
 type ListOptions struct {
 	Addrs       []string
 	Count       bool
@@ -32,6 +33,7 @@ type ListOptions struct {
 
 var listCmdLineOptions ListOptions
 
+// TestLog is used only during testing to export the options for this test case.
 func (opts *ListOptions) TestLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
@@ -42,12 +44,16 @@ func (opts *ListOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
+// String implements the Stringer interface
 func (opts *ListOptions) String() string {
 	b, _ := json.MarshalIndent(opts, "", "\t")
 	return string(b)
 }
 
-func ListFinishParseApi(w http.ResponseWriter, r *http.Request) *ListOptions {
+// getEnvStr allows for adding custom environment strings when calling out to the command line (useful for debugging).
+// toCmdLine converts the options object to a command line for calling out to the system.
+// listFinishParseApi finishes the parsing for server invocations. Returns a new ListOptions.
+func listFinishParseApi(w http.ResponseWriter, r *http.Request) *ListOptions {
 	opts := &ListOptions{}
 	opts.FirstBlock = 0
 	opts.LastBlock = utils.NOPOS
@@ -83,7 +89,8 @@ func ListFinishParseApi(w http.ResponseWriter, r *http.Request) *ListOptions {
 	return opts
 }
 
-func ListFinishParse(args []string) *ListOptions {
+// listFinishParse finishes the parsing for command line invocations. Returns a new ListOptions.
+func listFinishParse(args []string) *ListOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

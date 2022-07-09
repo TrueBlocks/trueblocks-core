@@ -19,6 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// BlocksOptions provides all command options for the chifra blocks command.
 type BlocksOptions struct {
 	Blocks     []string
 	BlockIds   []identifiers.Identifier
@@ -42,6 +43,7 @@ type BlocksOptions struct {
 
 var blocksCmdLineOptions BlocksOptions
 
+// TestLog is used only during testing to export the options for this test case.
 func (opts *BlocksOptions) TestLog() {
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
 	logger.TestLog(opts.Hashes, "Hashes: ", opts.Hashes)
@@ -61,19 +63,22 @@ func (opts *BlocksOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
+// String implements the Stringer interface
 func (opts *BlocksOptions) String() string {
 	b, _ := json.MarshalIndent(opts, "", "\t")
 	return string(b)
 }
 
-func (opts *BlocksOptions) GetEnvStr() []string {
+// getEnvStr allows for adding custom environment strings when calling out to the command line (useful for debugging).
+func (opts *BlocksOptions) getEnvStr() []string {
 	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return envStr
 }
 
-func (opts *BlocksOptions) ToCmdLine() string {
+// toCmdLine converts the options object to a command line for calling out to the system.
+func (opts *BlocksOptions) toCmdLine() string {
 	options := ""
 	if opts.Hashes {
 		options += " --hashes"
@@ -124,7 +129,8 @@ func (opts *BlocksOptions) ToCmdLine() string {
 	return options
 }
 
-func BlocksFinishParseApi(w http.ResponseWriter, r *http.Request) *BlocksOptions {
+// blocksFinishParseApi finishes the parsing for server invocations. Returns a new BlocksOptions.
+func blocksFinishParseApi(w http.ResponseWriter, r *http.Request) *BlocksOptions {
 	opts := &BlocksOptions{}
 	opts.BigRange = 500
 	opts.List = 0
@@ -184,7 +190,8 @@ func BlocksFinishParseApi(w http.ResponseWriter, r *http.Request) *BlocksOptions
 	return opts
 }
 
-func BlocksFinishParse(args []string) *BlocksOptions {
+// blocksFinishParse finishes the parsing for command line invocations. Returns a new BlocksOptions.
+func blocksFinishParse(args []string) *BlocksOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

@@ -19,6 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// StatusOptions provides all command options for the chifra status command.
 type StatusOptions struct {
 	Modes      []string
 	Details    bool
@@ -35,6 +36,7 @@ type StatusOptions struct {
 
 var statusCmdLineOptions StatusOptions
 
+// TestLog is used only during testing to export the options for this test case.
 func (opts *StatusOptions) TestLog() {
 	logger.TestLog(len(opts.Modes) > 0, "Modes: ", opts.Modes)
 	logger.TestLog(opts.Details, "Details: ", opts.Details)
@@ -47,19 +49,22 @@ func (opts *StatusOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
+// String implements the Stringer interface
 func (opts *StatusOptions) String() string {
 	b, _ := json.MarshalIndent(opts, "", "\t")
 	return string(b)
 }
 
-func (opts *StatusOptions) GetEnvStr() []string {
+// getEnvStr allows for adding custom environment strings when calling out to the command line (useful for debugging).
+func (opts *StatusOptions) getEnvStr() []string {
 	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return envStr
 }
 
-func (opts *StatusOptions) ToCmdLine() string {
+// toCmdLine converts the options object to a command line for calling out to the system.
+func (opts *StatusOptions) toCmdLine() string {
 	options := ""
 	if opts.Details {
 		options += " --details"
@@ -89,7 +94,8 @@ func (opts *StatusOptions) ToCmdLine() string {
 	return options
 }
 
-func StatusFinishParseApi(w http.ResponseWriter, r *http.Request) *StatusOptions {
+// statusFinishParseApi finishes the parsing for server invocations. Returns a new StatusOptions.
+func statusFinishParseApi(w http.ResponseWriter, r *http.Request) *StatusOptions {
 	opts := &StatusOptions{}
 	opts.Depth = utils.NOPOS
 	opts.FirstBlock = 0
@@ -134,7 +140,8 @@ func StatusFinishParseApi(w http.ResponseWriter, r *http.Request) *StatusOptions
 	return opts
 }
 
-func StatusFinishParse(args []string) *StatusOptions {
+// statusFinishParse finishes the parsing for command line invocations. Returns a new StatusOptions.
+func statusFinishParse(args []string) *StatusOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

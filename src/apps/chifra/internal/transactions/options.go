@@ -20,6 +20,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// TransactionsOptions provides all command options for the chifra transactions command.
 type TransactionsOptions struct {
 	Transactions   []string
 	TransactionIds []identifiers.Identifier
@@ -34,6 +35,7 @@ type TransactionsOptions struct {
 
 var transactionsCmdLineOptions TransactionsOptions
 
+// TestLog is used only during testing to export the options for this test case.
 func (opts *TransactionsOptions) TestLog() {
 	logger.TestLog(len(opts.Transactions) > 0, "Transactions: ", opts.Transactions)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
@@ -44,19 +46,22 @@ func (opts *TransactionsOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
+// String implements the Stringer interface
 func (opts *TransactionsOptions) String() string {
 	b, _ := json.MarshalIndent(opts, "", "\t")
 	return string(b)
 }
 
-func (opts *TransactionsOptions) GetEnvStr() []string {
+// getEnvStr allows for adding custom environment strings when calling out to the command line (useful for debugging).
+func (opts *TransactionsOptions) getEnvStr() []string {
 	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return envStr
 }
 
-func (opts *TransactionsOptions) ToCmdLine() string {
+// toCmdLine converts the options object to a command line for calling out to the system.
+func (opts *TransactionsOptions) toCmdLine() string {
 	options := ""
 	if opts.Articulate {
 		options += " --articulate"
@@ -80,7 +85,8 @@ func (opts *TransactionsOptions) ToCmdLine() string {
 	return options
 }
 
-func TransactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *TransactionsOptions {
+// transactionsFinishParseApi finishes the parsing for server invocations. Returns a new TransactionsOptions.
+func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *TransactionsOptions {
 	opts := &TransactionsOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -114,7 +120,8 @@ func TransactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *Transac
 	return opts
 }
 
-func TransactionsFinishParse(args []string) *TransactionsOptions {
+// transactionsFinishParse finishes the parsing for command line invocations. Returns a new TransactionsOptions.
+func transactionsFinishParse(args []string) *TransactionsOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

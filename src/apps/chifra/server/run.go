@@ -16,7 +16,7 @@ import (
 
 // Run runs serve command and sends any errors to log.Fatal
 func RunServe(cmd *cobra.Command, args []string) error {
-	opts := ServeFinishParse(args)
+	opts := serveFinishParse(args)
 
 	err := Validate(cmd, args)
 	if err != nil {

@@ -19,6 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// WhenOptions provides all command options for the chifra when command.
 type WhenOptions struct {
 	Blocks     []string
 	BlockIds   []identifiers.Identifier
@@ -34,6 +35,7 @@ type WhenOptions struct {
 
 var whenCmdLineOptions WhenOptions
 
+// TestLog is used only during testing to export the options for this test case.
 func (opts *WhenOptions) TestLog() {
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
 	logger.TestLog(opts.List, "List: ", opts.List)
@@ -45,12 +47,16 @@ func (opts *WhenOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
+// String implements the Stringer interface
 func (opts *WhenOptions) String() string {
 	b, _ := json.MarshalIndent(opts, "", "\t")
 	return string(b)
 }
 
-func WhenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
+// getEnvStr allows for adding custom environment strings when calling out to the command line (useful for debugging).
+// toCmdLine converts the options object to a command line for calling out to the system.
+// whenFinishParseApi finishes the parsing for server invocations. Returns a new WhenOptions.
+func whenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
 	opts := &WhenOptions{}
 	opts.Reset = utils.NOPOS
 	for key, value := range r.URL.Query() {
@@ -86,7 +92,8 @@ func WhenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
 	return opts
 }
 
-func WhenFinishParse(args []string) *WhenOptions {
+// whenFinishParse finishes the parsing for command line invocations. Returns a new WhenOptions.
+func whenFinishParse(args []string) *WhenOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

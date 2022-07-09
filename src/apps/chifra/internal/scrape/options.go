@@ -18,6 +18,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// ScrapeOptions provides all command options for the chifra scrape command.
 type ScrapeOptions struct {
 	Modes        []string
 	BlockCnt     uint64
@@ -39,6 +40,7 @@ type ScrapeOptions struct {
 
 var scrapeCmdLineOptions ScrapeOptions
 
+// TestLog is used only during testing to export the options for this test case.
 func (opts *ScrapeOptions) TestLog() {
 	logger.TestLog(len(opts.Modes) > 0, "Modes: ", opts.Modes)
 	logger.TestLog(opts.BlockCnt != 2000, "BlockCnt: ", opts.BlockCnt)
@@ -57,12 +59,14 @@ func (opts *ScrapeOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
+// String implements the Stringer interface
 func (opts *ScrapeOptions) String() string {
 	b, _ := json.MarshalIndent(opts, "", "\t")
 	return string(b)
 }
 
-func (opts *ScrapeOptions) GetEnvStr() []string {
+// getEnvStr allows for adding custom environment strings when calling out to the command line (useful for debugging).
+func (opts *ScrapeOptions) getEnvStr() []string {
 	envStr := []string{}
 	// EXISTING_CODE
 	envStr = append(envStr, opts.GetSettingsStr("TB_SETTINGS_BLOCKCNT"))
@@ -77,7 +81,8 @@ func (opts *ScrapeOptions) GetEnvStr() []string {
 	return envStr
 }
 
-func (opts *ScrapeOptions) ToCmdLine() string {
+// toCmdLine converts the options object to a command line for calling out to the system.
+func (opts *ScrapeOptions) toCmdLine() string {
 	options := ""
 	options += " " + strings.Join(opts.Modes, " ")
 	// EXISTING_CODE
@@ -86,7 +91,8 @@ func (opts *ScrapeOptions) ToCmdLine() string {
 	return options
 }
 
-func ScrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions {
+// scrapeFinishParseApi finishes the parsing for server invocations. Returns a new ScrapeOptions.
+func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions {
 	opts := &ScrapeOptions{}
 	opts.BlockCnt = 2000
 	opts.Sleep = 14
@@ -145,7 +151,8 @@ func ScrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 	return opts
 }
 
-func ScrapeFinishParse(args []string) *ScrapeOptions {
+// scrapeFinishParse finishes the parsing for command line invocations. Returns a new ScrapeOptions.
+func scrapeFinishParse(args []string) *ScrapeOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

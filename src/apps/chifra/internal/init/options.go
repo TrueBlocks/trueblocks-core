@@ -16,6 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// InitOptions provides all command options for the chifra init command.
 type InitOptions struct {
 	All     bool
 	Globals globals.GlobalOptions
@@ -24,17 +25,22 @@ type InitOptions struct {
 
 var initCmdLineOptions InitOptions
 
+// TestLog is used only during testing to export the options for this test case.
 func (opts *InitOptions) TestLog() {
 	logger.TestLog(opts.All, "All: ", opts.All)
 	opts.Globals.TestLog()
 }
 
+// String implements the Stringer interface
 func (opts *InitOptions) String() string {
 	b, _ := json.MarshalIndent(opts, "", "\t")
 	return string(b)
 }
 
-func InitFinishParseApi(w http.ResponseWriter, r *http.Request) *InitOptions {
+// getEnvStr allows for adding custom environment strings when calling out to the command line (useful for debugging).
+// toCmdLine converts the options object to a command line for calling out to the system.
+// initFinishParseApi finishes the parsing for server invocations. Returns a new InitOptions.
+func initFinishParseApi(w http.ResponseWriter, r *http.Request) *InitOptions {
 	opts := &InitOptions{}
 	for key, _ := range r.URL.Query() {
 		switch key {
@@ -54,7 +60,8 @@ func InitFinishParseApi(w http.ResponseWriter, r *http.Request) *InitOptions {
 	return opts
 }
 
-func InitFinishParse(args []string) *InitOptions {
+// initFinishParse finishes the parsing for command line invocations. Returns a new InitOptions.
+func initFinishParse(args []string) *InitOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

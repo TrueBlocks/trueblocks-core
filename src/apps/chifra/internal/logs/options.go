@@ -19,6 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// LogsOptions provides all command options for the chifra logs command.
 type LogsOptions struct {
 	Transactions   []string
 	TransactionIds []identifiers.Identifier
@@ -29,25 +30,29 @@ type LogsOptions struct {
 
 var logsCmdLineOptions LogsOptions
 
+// TestLog is used only during testing to export the options for this test case.
 func (opts *LogsOptions) TestLog() {
 	logger.TestLog(len(opts.Transactions) > 0, "Transactions: ", opts.Transactions)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	opts.Globals.TestLog()
 }
 
+// String implements the Stringer interface
 func (opts *LogsOptions) String() string {
 	b, _ := json.MarshalIndent(opts, "", "\t")
 	return string(b)
 }
 
-func (opts *LogsOptions) GetEnvStr() []string {
+// getEnvStr allows for adding custom environment strings when calling out to the command line (useful for debugging).
+func (opts *LogsOptions) getEnvStr() []string {
 	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return envStr
 }
 
-func (opts *LogsOptions) ToCmdLine() string {
+// toCmdLine converts the options object to a command line for calling out to the system.
+func (opts *LogsOptions) toCmdLine() string {
 	options := ""
 	if opts.Articulate {
 		options += " --articulate"
@@ -59,7 +64,8 @@ func (opts *LogsOptions) ToCmdLine() string {
 	return options
 }
 
-func LogsFinishParseApi(w http.ResponseWriter, r *http.Request) *LogsOptions {
+// logsFinishParseApi finishes the parsing for server invocations. Returns a new LogsOptions.
+func logsFinishParseApi(w http.ResponseWriter, r *http.Request) *LogsOptions {
 	opts := &LogsOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -84,7 +90,8 @@ func LogsFinishParseApi(w http.ResponseWriter, r *http.Request) *LogsOptions {
 	return opts
 }
 
-func LogsFinishParse(args []string) *LogsOptions {
+// logsFinishParse finishes the parsing for command line invocations. Returns a new LogsOptions.
+func logsFinishParse(args []string) *LogsOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

@@ -18,7 +18,7 @@ import (
 
 func (opts *GlobalOptions) PassItOn(path, chain, cmdLine string, envIn []string) error {
 	options := cmdLine
-	options += opts.ToCmdLine()
+	options += opts.toCmdLine()
 
 	var wg sync.WaitGroup
 	wg.Add(2)

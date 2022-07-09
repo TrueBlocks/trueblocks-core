@@ -21,7 +21,7 @@ import (
 
 // RunChunks handles the chunks command for the command line. Returns error only as per cobra.
 func RunChunks(cmd *cobra.Command, args []string) (err error) {
-	opts := ChunksFinishParse(args)
+	opts := chunksFinishParse(args)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.ChunksInternal()
@@ -30,7 +30,7 @@ func RunChunks(cmd *cobra.Command, args []string) (err error) {
 
 // ServeChunks handles the chunks command for the API. Returns error and a bool if handled
 func ServeChunks(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
-	opts := ChunksFinishParseApi(w, r)
+	opts := chunksFinishParseApi(w, r)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return opts.ChunksInternal()

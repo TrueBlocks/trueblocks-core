@@ -19,6 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// ReceiptsOptions provides all command options for the chifra receipts command.
 type ReceiptsOptions struct {
 	Transactions   []string
 	TransactionIds []identifiers.Identifier
@@ -29,25 +30,29 @@ type ReceiptsOptions struct {
 
 var receiptsCmdLineOptions ReceiptsOptions
 
+// TestLog is used only during testing to export the options for this test case.
 func (opts *ReceiptsOptions) TestLog() {
 	logger.TestLog(len(opts.Transactions) > 0, "Transactions: ", opts.Transactions)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	opts.Globals.TestLog()
 }
 
+// String implements the Stringer interface
 func (opts *ReceiptsOptions) String() string {
 	b, _ := json.MarshalIndent(opts, "", "\t")
 	return string(b)
 }
 
-func (opts *ReceiptsOptions) GetEnvStr() []string {
+// getEnvStr allows for adding custom environment strings when calling out to the command line (useful for debugging).
+func (opts *ReceiptsOptions) getEnvStr() []string {
 	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return envStr
 }
 
-func (opts *ReceiptsOptions) ToCmdLine() string {
+// toCmdLine converts the options object to a command line for calling out to the system.
+func (opts *ReceiptsOptions) toCmdLine() string {
 	options := ""
 	if opts.Articulate {
 		options += " --articulate"
@@ -59,7 +64,8 @@ func (opts *ReceiptsOptions) ToCmdLine() string {
 	return options
 }
 
-func ReceiptsFinishParseApi(w http.ResponseWriter, r *http.Request) *ReceiptsOptions {
+// receiptsFinishParseApi finishes the parsing for server invocations. Returns a new ReceiptsOptions.
+func receiptsFinishParseApi(w http.ResponseWriter, r *http.Request) *ReceiptsOptions {
 	opts := &ReceiptsOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -84,7 +90,8 @@ func ReceiptsFinishParseApi(w http.ResponseWriter, r *http.Request) *ReceiptsOpt
 	return opts
 }
 
-func ReceiptsFinishParse(args []string) *ReceiptsOptions {
+// receiptsFinishParse finishes the parsing for command line invocations. Returns a new ReceiptsOptions.
+func receiptsFinishParse(args []string) *ReceiptsOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

@@ -20,6 +20,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// StateOptions provides all command options for the chifra state command.
 type StateOptions struct {
 	Addrs    []string
 	Blocks   []string
@@ -35,6 +36,7 @@ type StateOptions struct {
 
 var stateCmdLineOptions StateOptions
 
+// TestLog is used only during testing to export the options for this test case.
 func (opts *StateOptions) TestLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
@@ -46,19 +48,22 @@ func (opts *StateOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
+// String implements the Stringer interface
 func (opts *StateOptions) String() string {
 	b, _ := json.MarshalIndent(opts, "", "\t")
 	return string(b)
 }
 
-func (opts *StateOptions) GetEnvStr() []string {
+// getEnvStr allows for adding custom environment strings when calling out to the command line (useful for debugging).
+func (opts *StateOptions) getEnvStr() []string {
 	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return envStr
 }
 
-func (opts *StateOptions) ToCmdLine() string {
+// toCmdLine converts the options object to a command line for calling out to the system.
+func (opts *StateOptions) toCmdLine() string {
 	options := ""
 	for _, part := range opts.Parts {
 		options += " --parts " + part
@@ -83,7 +88,8 @@ func (opts *StateOptions) ToCmdLine() string {
 	return options
 }
 
-func StateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
+// stateFinishParseApi finishes the parsing for server invocations. Returns a new StateOptions.
+func stateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
 	opts := &StateOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -126,7 +132,8 @@ func StateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
 	return opts
 }
 
-func StateFinishParse(args []string) *StateOptions {
+// stateFinishParse finishes the parsing for command line invocations. Returns a new StateOptions.
+func stateFinishParse(args []string) *StateOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

@@ -19,6 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// ExploreOptions provides all command options for the chifra explore command.
 type ExploreOptions struct {
 	Terms   []string
 	Local   bool
@@ -29,6 +30,7 @@ type ExploreOptions struct {
 
 var exploreCmdLineOptions ExploreOptions
 
+// TestLog is used only during testing to export the options for this test case.
 func (opts *ExploreOptions) TestLog() {
 	logger.TestLog(len(opts.Terms) > 0, "Terms: ", opts.Terms)
 	logger.TestLog(opts.Local, "Local: ", opts.Local)
@@ -36,19 +38,22 @@ func (opts *ExploreOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
+// String implements the Stringer interface
 func (opts *ExploreOptions) String() string {
 	b, _ := json.MarshalIndent(opts, "", "\t")
 	return string(b)
 }
 
-func (opts *ExploreOptions) GetEnvStr() []string {
+// getEnvStr allows for adding custom environment strings when calling out to the command line (useful for debugging).
+func (opts *ExploreOptions) getEnvStr() []string {
 	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return envStr
 }
 
-func (opts *ExploreOptions) ToCmdLine() string {
+// toCmdLine converts the options object to a command line for calling out to the system.
+func (opts *ExploreOptions) toCmdLine() string {
 	options := ""
 	if opts.Local {
 		options += " --local"
@@ -63,7 +68,8 @@ func (opts *ExploreOptions) ToCmdLine() string {
 	return options
 }
 
-func ExploreFinishParseApi(w http.ResponseWriter, r *http.Request) *ExploreOptions {
+// exploreFinishParseApi finishes the parsing for server invocations. Returns a new ExploreOptions.
+func exploreFinishParseApi(w http.ResponseWriter, r *http.Request) *ExploreOptions {
 	opts := &ExploreOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -91,7 +97,8 @@ func ExploreFinishParseApi(w http.ResponseWriter, r *http.Request) *ExploreOptio
 	return opts
 }
 
-func ExploreFinishParse(args []string) *ExploreOptions {
+// exploreFinishParse finishes the parsing for command line invocations. Returns a new ExploreOptions.
+func exploreFinishParse(args []string) *ExploreOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

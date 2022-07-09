@@ -20,6 +20,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// ChunksOptions provides all command options for the chifra chunks command.
 type ChunksOptions struct {
 	Mode      string
 	Blocks    []string
@@ -40,6 +41,7 @@ type ChunksOptions struct {
 
 var chunksCmdLineOptions ChunksOptions
 
+// TestLog is used only during testing to export the options for this test case.
 func (opts *ChunksOptions) TestLog() {
 	logger.TestLog(len(opts.Mode) > 0, "Mode: ", opts.Mode)
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
@@ -56,12 +58,16 @@ func (opts *ChunksOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
+// String implements the Stringer interface
 func (opts *ChunksOptions) String() string {
 	b, _ := json.MarshalIndent(opts, "", "\t")
 	return string(b)
 }
 
-func ChunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions {
+// getEnvStr allows for adding custom environment strings when calling out to the command line (useful for debugging).
+// toCmdLine converts the options object to a command line for calling out to the system.
+// chunksFinishParseApi finishes the parsing for server invocations. Returns a new ChunksOptions.
+func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions {
 	opts := &ChunksOptions{}
 	opts.Reset = utils.NOPOS
 	for key, value := range r.URL.Query() {
@@ -111,7 +117,8 @@ func ChunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 	return opts
 }
 
-func ChunksFinishParse(args []string) *ChunksOptions {
+// chunksFinishParse finishes the parsing for command line invocations. Returns a new ChunksOptions.
+func chunksFinishParse(args []string) *ChunksOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

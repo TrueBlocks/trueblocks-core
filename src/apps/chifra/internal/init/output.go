@@ -19,7 +19,7 @@ import (
 
 // RunInit handles the init command for the command line. Returns error only as per cobra.
 func RunInit(cmd *cobra.Command, args []string) (err error) {
-	opts := InitFinishParse(args)
+	opts := initFinishParse(args)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.InitInternal()
@@ -28,7 +28,7 @@ func RunInit(cmd *cobra.Command, args []string) (err error) {
 
 // ServeInit handles the init command for the API. Returns error and a bool if handled
 func ServeInit(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
-	opts := InitFinishParseApi(w, r)
+	opts := initFinishParseApi(w, r)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return opts.InitInternal()

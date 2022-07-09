@@ -19,6 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// AbisOptions provides all command options for the chifra abis command.
 type AbisOptions struct {
 	Addrs   []string
 	Known   bool
@@ -31,6 +32,7 @@ type AbisOptions struct {
 
 var abisCmdLineOptions AbisOptions
 
+// TestLog is used only during testing to export the options for this test case.
 func (opts *AbisOptions) TestLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(opts.Known, "Known: ", opts.Known)
@@ -40,19 +42,22 @@ func (opts *AbisOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
+// String implements the Stringer interface
 func (opts *AbisOptions) String() string {
 	b, _ := json.MarshalIndent(opts, "", "\t")
 	return string(b)
 }
 
-func (opts *AbisOptions) GetEnvStr() []string {
+// getEnvStr allows for adding custom environment strings when calling out to the command line (useful for debugging).
+func (opts *AbisOptions) getEnvStr() []string {
 	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return envStr
 }
 
-func (opts *AbisOptions) ToCmdLine() string {
+// toCmdLine converts the options object to a command line for calling out to the system.
+func (opts *AbisOptions) toCmdLine() string {
 	options := ""
 	if opts.Known {
 		options += " --known"
@@ -73,7 +78,8 @@ func (opts *AbisOptions) ToCmdLine() string {
 	return options
 }
 
-func AbisFinishParseApi(w http.ResponseWriter, r *http.Request) *AbisOptions {
+// abisFinishParseApi finishes the parsing for server invocations. Returns a new AbisOptions.
+func abisFinishParseApi(w http.ResponseWriter, r *http.Request) *AbisOptions {
 	opts := &AbisOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -108,7 +114,8 @@ func AbisFinishParseApi(w http.ResponseWriter, r *http.Request) *AbisOptions {
 	return opts
 }
 
-func AbisFinishParse(args []string) *AbisOptions {
+// abisFinishParse finishes the parsing for command line invocations. Returns a new AbisOptions.
+func abisFinishParse(args []string) *AbisOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

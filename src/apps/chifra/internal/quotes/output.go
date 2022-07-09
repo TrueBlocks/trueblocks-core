@@ -19,7 +19,7 @@ import (
 
 // RunQuotes handles the quotes command for the command line. Returns error only as per cobra.
 func RunQuotes(cmd *cobra.Command, args []string) (err error) {
-	opts := QuotesFinishParse(args)
+	opts := quotesFinishParse(args)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.QuotesInternal()
@@ -28,7 +28,7 @@ func RunQuotes(cmd *cobra.Command, args []string) (err error) {
 
 // ServeQuotes handles the quotes command for the API. Returns error and a bool if handled
 func ServeQuotes(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
-	opts := QuotesFinishParseApi(w, r)
+	opts := quotesFinishParseApi(w, r)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return opts.QuotesInternal()
@@ -47,7 +47,7 @@ func (opts *QuotesOptions) QuotesInternal() (err error, handled bool) {
 	}
 
 	handled = true
-	err = opts.Globals.PassItOn("getQuotes", opts.Globals.Chain, opts.ToCmdLine(), opts.GetEnvStr())
+	err = opts.Globals.PassItOn("getQuotes", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
 	// EXISTING_CODE
 
 	return

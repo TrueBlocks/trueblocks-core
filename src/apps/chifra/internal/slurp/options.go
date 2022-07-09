@@ -20,6 +20,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// SlurpOptions provides all command options for the chifra slurp command.
 type SlurpOptions struct {
 	Addrs       []string
 	Blocks      []string
@@ -32,6 +33,7 @@ type SlurpOptions struct {
 
 var slurpCmdLineOptions SlurpOptions
 
+// TestLog is used only during testing to export the options for this test case.
 func (opts *SlurpOptions) TestLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
@@ -40,19 +42,22 @@ func (opts *SlurpOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
+// String implements the Stringer interface
 func (opts *SlurpOptions) String() string {
 	b, _ := json.MarshalIndent(opts, "", "\t")
 	return string(b)
 }
 
-func (opts *SlurpOptions) GetEnvStr() []string {
+// getEnvStr allows for adding custom environment strings when calling out to the command line (useful for debugging).
+func (opts *SlurpOptions) getEnvStr() []string {
 	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return envStr
 }
 
-func (opts *SlurpOptions) ToCmdLine() string {
+// toCmdLine converts the options object to a command line for calling out to the system.
+func (opts *SlurpOptions) toCmdLine() string {
 	options := ""
 	for _, types := range opts.Types {
 		options += " --types " + types
@@ -68,7 +73,8 @@ func (opts *SlurpOptions) ToCmdLine() string {
 	return options
 }
 
-func SlurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
+// slurpFinishParseApi finishes the parsing for server invocations. Returns a new SlurpOptions.
+func slurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 	opts := &SlurpOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -104,7 +110,8 @@ func SlurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 	return opts
 }
 
-func SlurpFinishParse(args []string) *SlurpOptions {
+// slurpFinishParse finishes the parsing for command line invocations. Returns a new SlurpOptions.
+func slurpFinishParse(args []string) *SlurpOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

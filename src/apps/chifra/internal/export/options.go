@@ -20,6 +20,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// ExportOptions provides all command options for the chifra export command.
 type ExportOptions struct {
 	Addrs       []string
 	Topics      []string
@@ -54,6 +55,7 @@ type ExportOptions struct {
 
 var exportCmdLineOptions ExportOptions
 
+// TestLog is used only during testing to export the options for this test case.
 func (opts *ExportOptions) TestLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(len(opts.Topics) > 0, "Topics: ", opts.Topics)
@@ -85,19 +87,22 @@ func (opts *ExportOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
+// String implements the Stringer interface
 func (opts *ExportOptions) String() string {
 	b, _ := json.MarshalIndent(opts, "", "\t")
 	return string(b)
 }
 
-func (opts *ExportOptions) GetEnvStr() []string {
+// getEnvStr allows for adding custom environment strings when calling out to the command line (useful for debugging).
+func (opts *ExportOptions) getEnvStr() []string {
 	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return envStr
 }
 
-func (opts *ExportOptions) ToCmdLine() string {
+// toCmdLine converts the options object to a command line for calling out to the system.
+func (opts *ExportOptions) toCmdLine() string {
 	options := ""
 	if opts.Appearances {
 		options += " --appearances"
@@ -174,7 +179,8 @@ func (opts *ExportOptions) ToCmdLine() string {
 	return options
 }
 
-func ExportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions {
+// exportFinishParseApi finishes the parsing for server invocations. Returns a new ExportOptions.
+func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions {
 	opts := &ExportOptions{}
 	opts.FirstRecord = 0
 	opts.MaxRecords = 250
@@ -271,7 +277,8 @@ func ExportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 	return opts
 }
 
-func ExportFinishParse(args []string) *ExportOptions {
+// exportFinishParse finishes the parsing for command line invocations. Returns a new ExportOptions.
+func exportFinishParse(args []string) *ExportOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

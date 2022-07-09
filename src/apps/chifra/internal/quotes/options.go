@@ -18,6 +18,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// QuotesOptions provides all command options for the chifra quotes command.
 type QuotesOptions struct {
 	Update  bool
 	Period  string
@@ -29,6 +30,7 @@ type QuotesOptions struct {
 
 var quotesCmdLineOptions QuotesOptions
 
+// TestLog is used only during testing to export the options for this test case.
 func (opts *QuotesOptions) TestLog() {
 	logger.TestLog(opts.Update, "Update: ", opts.Update)
 	logger.TestLog(len(opts.Period) > 0, "Period: ", opts.Period)
@@ -37,19 +39,22 @@ func (opts *QuotesOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
+// String implements the Stringer interface
 func (opts *QuotesOptions) String() string {
 	b, _ := json.MarshalIndent(opts, "", "\t")
 	return string(b)
 }
 
-func (opts *QuotesOptions) GetEnvStr() []string {
+// getEnvStr allows for adding custom environment strings when calling out to the command line (useful for debugging).
+func (opts *QuotesOptions) getEnvStr() []string {
 	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return envStr
 }
 
-func (opts *QuotesOptions) ToCmdLine() string {
+// toCmdLine converts the options object to a command line for calling out to the system.
+func (opts *QuotesOptions) toCmdLine() string {
 	options := ""
 	if opts.Update {
 		options += " --update"
@@ -70,7 +75,8 @@ func (opts *QuotesOptions) ToCmdLine() string {
 	return options
 }
 
-func QuotesFinishParseApi(w http.ResponseWriter, r *http.Request) *QuotesOptions {
+// quotesFinishParseApi finishes the parsing for server invocations. Returns a new QuotesOptions.
+func quotesFinishParseApi(w http.ResponseWriter, r *http.Request) *QuotesOptions {
 	opts := &QuotesOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -96,7 +102,8 @@ func QuotesFinishParseApi(w http.ResponseWriter, r *http.Request) *QuotesOptions
 	return opts
 }
 
-func QuotesFinishParse(args []string) *QuotesOptions {
+// quotesFinishParse finishes the parsing for command line invocations. Returns a new QuotesOptions.
+func quotesFinishParse(args []string) *QuotesOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

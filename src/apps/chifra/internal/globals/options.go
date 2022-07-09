@@ -103,7 +103,7 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions) {
 	}
 }
 
-func (opts *GlobalOptions) ToCmdLine() string {
+func (opts *GlobalOptions) toCmdLine() string {
 	options := ""
 	if opts.Raw {
 		options += " --raw"

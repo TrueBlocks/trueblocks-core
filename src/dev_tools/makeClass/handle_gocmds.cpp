@@ -41,6 +41,7 @@ bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
     replaceAll(source, "[{HIDDEN}]", get_hidden(p));
     replaceAll(source, "[{USE}]", get_use(p));
     replaceAll(source, "[{ROUTE}]", toLower(p.api_route));
+    replaceAll(source, "[{LOWER}]", toLower(p.api_route));
     replaceAll(source, "[{PROPER}]", toProper(p.api_route));
     replaceAll(source, "[{POSTNOTES}]", get_notes2(p));
     string_q descr = firstLower(p.description);
@@ -93,6 +94,7 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
         replaceAll(source, "[{GETENVSTR}]", STR_GET_ENV_STR);
     }
     replaceAll(source, "[{ROUTE}]", p.api_route);
+    replaceAll(source, "[{LOWER}]", toLower(p.api_route));
     replaceAll(source, "[{PROPER}]", toProper(p.api_route));
     replaceAll(source, "[{OPT_FIELDS}]", get_optfields(p));
     replaceAll(source, "[{DEFAULTS_API}]", get_defaults_apis(p));
@@ -134,7 +136,7 @@ bool COptions::handle_gocmds_output(const CCommandOption& p) {
     if (contains(source, "\t// return nil\n\t// EXISTING_CODE\n")) {
         replaceAll(source,
                    "\n"
-                   "\treturn opts.Globals.PassItOn(\"[{TOOL}]\", opts.ToCmdLine())\n",
+                   "\treturn opts.Globals.PassItOn(\"[{TOOL}]\", opts.toCmdLine())\n",
                    "");
     }
 
@@ -524,7 +526,7 @@ const char* STR_CHIFRA_HELP_END =
     "  Use \"chifra [command] --help\" for more information about a command.\n";
 
 const char* STR_TO_CMD_LINE =
-    "func (opts *[{PROPER}]Options) ToCmdLine() string {\n"
+    "func (opts *[{PROPER}]Options) toCmdLine() string {\n"
     "\toptions := \"\"\n"
     "[{DASH_STR}][{POSITIONALS}]"
     "\t// EXISTING_CODE\n"
@@ -534,7 +536,7 @@ const char* STR_TO_CMD_LINE =
     "}\n\n";
 
 const char* STR_GET_ENV_STR =
-    "func (opts *[{PROPER}]Options) GetEnvStr() []string {\n"
+    "func (opts *[{PROPER}]Options) getEnvStr() []string {\n"
     "\tenvStr := []string{}\n"
     "\t// EXISTING_CODE\n"
     "\t// EXISTING_CODE\n"

@@ -36,8 +36,8 @@ func (opts *ScrapeOptions) HandleScrape() error {
 			goto PAUSE
 		}
 
-		fmt.Println("Calling with", opts.ToCmdLine(), opts.GetEnvStr())
-		err = opts.Globals.PassItOn("blockScrape", opts.Globals.Chain, opts.ToCmdLine(), opts.GetEnvStr())
+		fmt.Println("Calling with", opts.toCmdLine(), opts.getEnvStr())
+		err = opts.Globals.PassItOn("blockScrape", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
 		if err != nil {
 			logger.Log(logger.Error, "blockScrape", err)
 			goto PAUSE

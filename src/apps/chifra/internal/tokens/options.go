@@ -20,6 +20,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// TokensOptions provides all command options for the chifra tokens command.
 type TokensOptions struct {
 	Addrs2   []string
 	Blocks   []string
@@ -33,6 +34,7 @@ type TokensOptions struct {
 
 var tokensCmdLineOptions TokensOptions
 
+// TestLog is used only during testing to export the options for this test case.
 func (opts *TokensOptions) TestLog() {
 	logger.TestLog(len(opts.Addrs2) > 0, "Addrs2: ", opts.Addrs2)
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
@@ -42,19 +44,22 @@ func (opts *TokensOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
+// String implements the Stringer interface
 func (opts *TokensOptions) String() string {
 	b, _ := json.MarshalIndent(opts, "", "\t")
 	return string(b)
 }
 
-func (opts *TokensOptions) GetEnvStr() []string {
+// getEnvStr allows for adding custom environment strings when calling out to the command line (useful for debugging).
+func (opts *TokensOptions) getEnvStr() []string {
 	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return envStr
 }
 
-func (opts *TokensOptions) ToCmdLine() string {
+// toCmdLine converts the options object to a command line for calling out to the system.
+func (opts *TokensOptions) toCmdLine() string {
 	options := ""
 	for _, part := range opts.Parts {
 		options += " --parts " + part
@@ -73,7 +78,8 @@ func (opts *TokensOptions) ToCmdLine() string {
 	return options
 }
 
-func TokensFinishParseApi(w http.ResponseWriter, r *http.Request) *TokensOptions {
+// tokensFinishParseApi finishes the parsing for server invocations. Returns a new TokensOptions.
+func tokensFinishParseApi(w http.ResponseWriter, r *http.Request) *TokensOptions {
 	opts := &TokensOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -111,7 +117,8 @@ func TokensFinishParseApi(w http.ResponseWriter, r *http.Request) *TokensOptions
 	return opts
 }
 
-func TokensFinishParse(args []string) *TokensOptions {
+// tokensFinishParse finishes the parsing for command line invocations. Returns a new TokensOptions.
+func tokensFinishParse(args []string) *TokensOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
