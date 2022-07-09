@@ -50,8 +50,8 @@ func (opts *TracesOptions) String() string {
 	return string(b)
 }
 
-func (opts *TracesOptions) GetEnvStr() string {
-	envStr := ""
+func (opts *TracesOptions) GetEnvStr() []string {
+	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return envStr

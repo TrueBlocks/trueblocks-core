@@ -16,7 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
 
-func (opts *GlobalOptions) PassItOn(path string, chain, cmdLine, envIn string) error {
+func (opts *GlobalOptions) PassItOn(path, chain, cmdLine string, envIn []string) error {
 	options := cmdLine
 	options += opts.ToCmdLine()
 
@@ -36,7 +36,9 @@ func (opts *GlobalOptions) PassItOn(path string, chain, cmdLine, envIn string) e
 	cmd := exec.Command(config.GetPathToCommands(path), options)
 	cmd.Env = append(os.Environ(), "FROM_CHIFRA=true")
 	cmd.Env = append(cmd.Env, "TB_CONFIG_ENV="+envStr)
-	cmd.Env = append(cmd.Env, envIn)
+	for _, e := range envIn {
+		cmd.Env = append(cmd.Env, e)
+	}
 	if os.Getenv("TEST_MODE") == "true" {
 		cmd.Env = append(cmd.Env, "TEST_MODE=true")
 	}

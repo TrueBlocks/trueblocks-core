@@ -40,8 +40,8 @@ func (opts *LogsOptions) String() string {
 	return string(b)
 }
 
-func (opts *LogsOptions) GetEnvStr() string {
-	envStr := ""
+func (opts *LogsOptions) GetEnvStr() []string {
+	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return envStr

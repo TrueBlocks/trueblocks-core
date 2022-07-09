@@ -66,8 +66,8 @@ func (opts *BlocksOptions) String() string {
 	return string(b)
 }
 
-func (opts *BlocksOptions) GetEnvStr() string {
-	envStr := ""
+func (opts *BlocksOptions) GetEnvStr() []string {
+	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return envStr

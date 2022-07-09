@@ -43,7 +43,7 @@ func (opts *ScrapeOptions) RunIndexScraper() {
 
 		// Call out to the blockScraper (including back into Blaze)
 		// TODO: BOGUS - TESTING SCRAPING
-		fmt.Println("Calling with", opts.ToCmdLine())
+		fmt.Println("Calling with", opts.ToCmdLine(), opts.GetEnvStr())
 		err := opts.Globals.PassItOn("blockScrape", opts.Globals.Chain, opts.ToCmdLine(), opts.GetEnvStr())
 		if err != nil {
 			logger.Log(logger.Error, "blockScrape:", err)

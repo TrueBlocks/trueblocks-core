@@ -42,8 +42,8 @@ func (opts *QuotesOptions) String() string {
 	return string(b)
 }
 
-func (opts *QuotesOptions) GetEnvStr() string {
-	envStr := ""
+func (opts *QuotesOptions) GetEnvStr() []string {
+	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return envStr

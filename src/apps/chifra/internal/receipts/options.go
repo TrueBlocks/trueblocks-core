@@ -40,8 +40,8 @@ func (opts *ReceiptsOptions) String() string {
 	return string(b)
 }
 
-func (opts *ReceiptsOptions) GetEnvStr() string {
-	envStr := ""
+func (opts *ReceiptsOptions) GetEnvStr() []string {
+	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return envStr

@@ -45,8 +45,8 @@ func (opts *SlurpOptions) String() string {
 	return string(b)
 }
 
-func (opts *SlurpOptions) GetEnvStr() string {
-	envStr := ""
+func (opts *SlurpOptions) GetEnvStr() []string {
+	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return envStr

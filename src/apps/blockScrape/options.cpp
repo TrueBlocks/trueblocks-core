@@ -21,7 +21,6 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("block_cnt", "n", "<uint64>", OPT_FLAG, "maximum number of blocks to process per pass"),
     COption("", "", "", OPT_DESCRIPTION, "Scan the chain and update (and optionally pin) the TrueBlocks index of appearances."),  // NOLINT
     // clang-format on
     // END_CODE_OPTIONS
@@ -48,12 +47,6 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
-        } else if (startsWith(arg, "-n:") || startsWith(arg, "--block_cnt:")) {
-            if (!confirmUint("block_cnt", block_cnt, arg))
-                return false;
-        } else if (arg == "-n" || arg == "--block_cnt") {
-            return flag_required("block_cnt");
-
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -106,17 +99,16 @@ void COptions::Init(void) {
     // END_CODE_GLOBALOPTS
 
     // BEG_CODE_INIT
-    // clang-format off
-    block_cnt = getGlobalConfig("blockScrape")->getConfigInt("settings", "block_cnt", 2000);
-    block_chan_cnt = getGlobalConfig("blockScrape")->getConfigInt("settings", "block_chan_cnt", 10);
-    addr_chan_cnt = getGlobalConfig("blockScrape")->getConfigInt("settings", "addr_chan_cnt", 20);
-    apps_per_chunk = getGlobalConfig("blockScrape")->getConfigInt("settings", "apps_per_chunk", 200000);
-    unripe_dist = getGlobalConfig("blockScrape")->getConfigInt("settings", "unripe_dist", 28);
-    snap_to_grid = getGlobalConfig("blockScrape")->getConfigInt("settings", "snap_to_grid", 100000);
-    first_snap = getGlobalConfig("blockScrape")->getConfigInt("settings", "first_snap", 0);
-    allow_missing = getGlobalConfig("blockScrape")->getConfigBool("settings", "allow_missing", false);
-    // clang-format on
     // END_CODE_INIT
+
+    block_cnt = str_2_Uint(getEnvStr("TB_SETTINGS_BLOCKCNT"));
+    block_chan_cnt = str_2_Uint(getEnvStr("TB_SETTINGS_BLOCKCHANCNT"));
+    addr_chan_cnt = str_2_Uint(getEnvStr("TB_SETTINGS_ADDRCHANCNT"));
+    apps_per_chunk = str_2_Uint(getEnvStr("TB_SETTINGS_APPSPERCHUNK"));
+    unripe_dist = str_2_Uint(getEnvStr("TB_SETTINGS_UNRIPEDIST"));
+    snap_to_grid = str_2_Uint(getEnvStr("TB_SETTINGS_SNAPTOGRID"));
+    first_snap = str_2_Uint(getEnvStr("TB_SETTINGS_FIRSTSNAP"));
+    allow_missing = getEnvStr("TB_SETTINGS_ALLOWMISSING") == "true";
 
     if (getChain() == "mainnet") {
         // different defaults for mainnet

@@ -45,8 +45,8 @@ func (opts *AbisOptions) String() string {
 	return string(b)
 }
 
-func (opts *AbisOptions) GetEnvStr() string {
-	envStr := ""
+func (opts *AbisOptions) GetEnvStr() []string {
+	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return envStr

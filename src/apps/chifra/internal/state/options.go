@@ -51,8 +51,8 @@ func (opts *StateOptions) String() string {
 	return string(b)
 }
 
-func (opts *StateOptions) GetEnvStr() string {
-	envStr := ""
+func (opts *StateOptions) GetEnvStr() []string {
+	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return envStr

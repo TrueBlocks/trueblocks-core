@@ -534,8 +534,8 @@ const char* STR_TO_CMD_LINE =
     "}\n\n";
 
 const char* STR_GET_ENV_STR =
-    "func (opts *[{PROPER}]Options) GetEnvStr() string {\n"
-    "\tenvStr := \"\"\n"
+    "func (opts *[{PROPER}]Options) GetEnvStr() []string {\n"
+    "\tenvStr := []string{}\n"
     "\t// EXISTING_CODE\n"
     "\t// EXISTING_CODE\n"
     "\treturn envStr\n"

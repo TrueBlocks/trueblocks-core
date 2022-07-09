@@ -21,13 +21,12 @@ type blockScrapeRequires struct {
 
 // We should remove these underlined config entries in a migration some day
 type blockScrapeSettings struct {
-	// block_cnt      int
-	// block_chan_cnt int
-	// addr_chan_cnt  int
-	// apps_per_chunk int
-	// unripe_dist    int
-	// snap_to_grid   int
-	// first_snap     int
+	Block_chan_cnt        int
+	Addr_chan_cnt         int
+	Apps_per_chunk        int
+	Unripe_dist           int
+	Snap_to_grid          int
+	First_snap            int
 	Allow_missing         bool
 	Pinata_api_key        string
 	Pinata_secret_api_key string
@@ -44,6 +43,13 @@ func init() {
 	blockScrapeViper.SetConfigName("blockScrape")
 	blockScrapeViper.SetDefault("Requires.Tracing", true)
 	blockScrapeViper.SetDefault("Requires.Parity", true)
+	blockScrapeViper.SetDefault("Settings.Block_chan_cnt", 10)
+	blockScrapeViper.SetDefault("Settings.Addr_chan_cnt", 20)
+	blockScrapeViper.SetDefault("Settings.Apps_per_chunk", 200000)
+	blockScrapeViper.SetDefault("Settings.Unripe_dist", 28)
+	blockScrapeViper.SetDefault("Settings.Snap_to_grid", 100000)
+	blockScrapeViper.SetDefault("Settings.First_snap", 0)
+	blockScrapeViper.SetDefault("Settings.Allow_missing", false)
 }
 
 // ReadBlockScrape reads the configuration located in blockScrape.toml file
@@ -52,7 +58,13 @@ func ReadBlockScrape(chain string) *BlockScrape {
 		MustReadConfig(blockScrapeViper, &cachedBlockScrape, GetPathToChainConfig(chain))
 		blockScrapeRead = true
 	}
-
+	// fmt.Println("Block_chan_cnt:", cachedBlockScrape.Settings.Block_chan_cnt)
+	// fmt.Println("Addr_chan_cnt:", cachedBlockScrape.Settings.Addr_chan_cnt)
+	// fmt.Println("Apps_per_chunk:", cachedBlockScrape.Settings.Apps_per_chunk)
+	// fmt.Println("Unripe_dist:", cachedBlockScrape.Settings.Unripe_dist)
+	// fmt.Println("Snap_to_grid:", cachedBlockScrape.Settings.Snap_to_grid)
+	// fmt.Println("First_snap:", cachedBlockScrape.Settings.First_snap)
+	// fmt.Println("Allow_missing:", cachedBlockScrape.Settings.Allow_missing)
 	return &cachedBlockScrape
 }
 

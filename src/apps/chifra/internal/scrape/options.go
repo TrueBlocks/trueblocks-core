@@ -14,15 +14,16 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 type ScrapeOptions struct {
 	Modes        []string
-	Sleep        float64
-	Pin          bool
 	BlockCnt     uint64
+	Pin          bool
+	Sleep        float64
 	Blaze        bool
 	BlockChanCnt uint64
 	AddrChanCnt  uint64
@@ -41,9 +42,9 @@ var scrapeCmdLineOptions ScrapeOptions
 
 func (opts *ScrapeOptions) TestLog() {
 	logger.TestLog(len(opts.Modes) > 0, "Modes: ", opts.Modes)
-	logger.TestLog(opts.Sleep != 14, "Sleep: ", opts.Sleep)
-	logger.TestLog(opts.Pin, "Pin: ", opts.Pin)
 	logger.TestLog(opts.BlockCnt != 2000, "BlockCnt: ", opts.BlockCnt)
+	logger.TestLog(opts.Pin, "Pin: ", opts.Pin)
+	logger.TestLog(opts.Sleep != 14, "Sleep: ", opts.Sleep)
 	logger.TestLog(opts.Blaze, "Blaze: ", opts.Blaze)
 	logger.TestLog(opts.BlockChanCnt != 10, "BlockChanCnt: ", opts.BlockChanCnt)
 	logger.TestLog(opts.AddrChanCnt != 20, "AddrChanCnt: ", opts.AddrChanCnt)
@@ -62,18 +63,23 @@ func (opts *ScrapeOptions) String() string {
 	return string(b)
 }
 
-func (opts *ScrapeOptions) GetEnvStr() string {
-	envStr := ""
+func (opts *ScrapeOptions) GetEnvStr() []string {
+	envStr := []string{}
 	// EXISTING_CODE
+	envStr = append(envStr, "TB_SETTINGS_BLOCKCNT="+fmt.Sprintf("%d", opts.BlockCnt))
+	envStr = append(envStr, "TB_SETTINGS_BLOCKCHANCNT="+fmt.Sprintf("%d", config.ReadBlockScrape(opts.Globals.Chain).Settings.Block_chan_cnt))
+	envStr = append(envStr, "TB_SETTINGS_ADDRCHANCNT="+fmt.Sprintf("%d", config.ReadBlockScrape(opts.Globals.Chain).Settings.Addr_chan_cnt))
+	envStr = append(envStr, "TB_SETTINGS_APPSPERCHUNK="+fmt.Sprintf("%d", config.ReadBlockScrape(opts.Globals.Chain).Settings.Apps_per_chunk))
+	envStr = append(envStr, "TB_SETTINGS_UNRIPEDIST="+fmt.Sprintf("%d", config.ReadBlockScrape(opts.Globals.Chain).Settings.Unripe_dist))
+	envStr = append(envStr, "TB_SETTINGS_SNAPTOGRID="+fmt.Sprintf("%d", config.ReadBlockScrape(opts.Globals.Chain).Settings.Snap_to_grid))
+	envStr = append(envStr, "TB_SETTINGS_FIRSTSNAP="+fmt.Sprintf("%d", config.ReadBlockScrape(opts.Globals.Chain).Settings.First_snap))
+	envStr = append(envStr, "TB_SETTINGS_ALLOWMISSING="+fmt.Sprintf("%t", config.ReadBlockScrape(opts.Globals.Chain).Settings.Allow_missing))
 	// EXISTING_CODE
 	return envStr
 }
 
 func (opts *ScrapeOptions) ToCmdLine() string {
 	options := ""
-	if opts.BlockCnt != 2000 {
-		options += (" --block_cnt " + fmt.Sprintf("%d", opts.BlockCnt))
-	}
 	options += " " + strings.Join(opts.Modes, " ")
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -83,8 +89,8 @@ func (opts *ScrapeOptions) ToCmdLine() string {
 
 func ScrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions {
 	opts := &ScrapeOptions{}
-	opts.Sleep = 14
 	opts.BlockCnt = 2000
+	opts.Sleep = 14
 	opts.BlockChanCnt = 10
 	opts.AddrChanCnt = 20
 	opts.AppsPerChunk = 200000
@@ -100,12 +106,12 @@ func ScrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Modes = append(opts.Modes, s...)
 			}
-		case "sleep":
-			opts.Sleep = globals.ToFloat64(value[0])
-		case "pin":
-			opts.Pin = true
 		case "blockCnt":
 			opts.BlockCnt = globals.ToUint64(value[0])
+		case "pin":
+			opts.Pin = true
+		case "sleep":
+			opts.Sleep = globals.ToFloat64(value[0])
 		case "blaze":
 			opts.Blaze = true
 		case "blockChanCnt":

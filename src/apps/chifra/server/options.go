@@ -36,8 +36,8 @@ func (opts *ServeOptions) String() string {
 	return string(b)
 }
 
-func (opts *ServeOptions) GetEnvStr() string {
-	envStr := ""
+func (opts *ServeOptions) GetEnvStr() []string {
+	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return envStr

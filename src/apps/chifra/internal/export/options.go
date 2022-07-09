@@ -90,8 +90,8 @@ func (opts *ExportOptions) String() string {
 	return string(b)
 }
 
-func (opts *ExportOptions) GetEnvStr() string {
-	envStr := ""
+func (opts *ExportOptions) GetEnvStr() []string {
+	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return envStr

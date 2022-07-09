@@ -41,8 +41,8 @@ func (opts *ExploreOptions) String() string {
 	return string(b)
 }
 
-func (opts *ExploreOptions) GetEnvStr() string {
-	envStr := ""
+func (opts *ExploreOptions) GetEnvStr() []string {
+	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return envStr

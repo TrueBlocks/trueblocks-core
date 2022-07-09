@@ -49,8 +49,8 @@ func (opts *TransactionsOptions) String() string {
 	return string(b)
 }
 
-func (opts *TransactionsOptions) GetEnvStr() string {
-	envStr := ""
+func (opts *TransactionsOptions) GetEnvStr() []string {
+	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return envStr

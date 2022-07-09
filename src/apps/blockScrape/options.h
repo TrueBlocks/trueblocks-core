@@ -25,6 +25,8 @@
 class COptions : public COptionsBase {
   public:
     // BEG_CODE_DECLARE
+    // END_CODE_DECLARE
+
     uint64_t block_cnt;
     uint64_t block_chan_cnt;
     uint64_t addr_chan_cnt;
@@ -33,7 +35,6 @@ class COptions : public COptionsBase {
     uint64_t snap_to_grid;
     uint64_t first_snap;
     bool allow_missing;
-    // END_CODE_DECLARE
 
     string_q newStage;
     ofstream tmpStagingStream;

@@ -47,8 +47,8 @@ func (opts *TokensOptions) String() string {
 	return string(b)
 }
 
-func (opts *TokensOptions) GetEnvStr() string {
-	envStr := ""
+func (opts *TokensOptions) GetEnvStr() []string {
+	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return envStr
