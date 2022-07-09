@@ -25,7 +25,6 @@
 class COptions : public COptionsBase {
   public:
     // BEG_CODE_DECLARE
-    bool pin;
     uint64_t block_cnt;
     uint64_t block_chan_cnt;
     uint64_t addr_chan_cnt;
@@ -52,7 +51,6 @@ class COptions : public COptionsBase {
     bool parseArguments(string_q& command);
     void Init(void);
 
-    bool start_scraper(void);
     bool scrape_blocks(void);
     bool stage_chunks(const string_q& tmpFn);
     bool write_chunks(blknum_t chunkSize, bool snapped);

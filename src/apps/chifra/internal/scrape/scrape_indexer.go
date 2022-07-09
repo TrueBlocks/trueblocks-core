@@ -12,6 +12,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -25,6 +26,11 @@ import (
 )
 
 func (opts *ScrapeOptions) RunIndexScraper() {
+	// TODO: BOGUS - TESTING SCRAPING
+	if os.Getenv("NO_COLOR") == "true" {
+		colors.ColorsOff()
+	}
+
 	isDefaultSleep := opts.Sleep == 14 || opts.Sleep == 13
 	progress, _ := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
 
@@ -36,6 +42,8 @@ func (opts *ScrapeOptions) RunIndexScraper() {
 		}
 
 		// Call out to the blockScraper (including back into Blaze)
+		// TODO: BOGUS - TESTING SCRAPING
+		fmt.Println("Calling with", opts.ToCmdLine())
 		err := opts.Globals.PassItOn("blockScrape", opts.Globals.Chain, opts.ToCmdLine(), opts.GetEnvStr())
 		if err != nil {
 			logger.Log(logger.Error, "blockScrape:", err)

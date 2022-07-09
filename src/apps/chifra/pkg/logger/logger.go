@@ -52,7 +52,9 @@ func TestLog(notDefault bool, a ...interface{}) {
 func Log(sev severity, a ...interface{}) {
 
 	timeDatePart := "DATE|TIME"
-	if !testMode {
+	// TODO: BOGUS - TESTING SCRAPING
+	// if !testMode {
+	if false && !testMode {
 		now := time.Now()
 		timeDatePart = now.Format("02-01|15:04:05.000")
 	}

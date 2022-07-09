@@ -23,7 +23,9 @@ logger<log_policy_i>* eLogger = (logger<log_policy_i>*)&elog;
 template <>
 string_q logger<log_policy_i>::get_logline_header(void) {
     stringstream header;
-#define LOG_TIMING true
+// TODO: BOGUS - TESTING SCRAPING
+// #define LOG_TIMING true
+#define LOG_TIMING false
     if (LOG_TIMING) {
         if (isTestMode()) {
             header << "TIME ~ CLOCK - ";

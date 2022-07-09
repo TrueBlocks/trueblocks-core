@@ -21,10 +21,7 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("pin", "p", "", OPT_SWITCH, "pin chunks (and blooms) to IPFS as they are created (requires ipfs daemon)"),
     COption("block_cnt", "n", "<uint64>", OPT_FLAG, "maximum number of blocks to process per pass"),
-    COption("block_chan_cnt", "b", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of concurrent block processing channels"),
-    COption("addr_chan_cnt", "d", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of concurrent address processing channels"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Scan the chain and update (and optionally pin) the TrueBlocks index of appearances."),  // NOLINT
     // clang-format on
     // END_CODE_OPTIONS
@@ -51,26 +48,11 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
-        } else if (arg == "-p" || arg == "--pin") {
-            pin = true;
-
         } else if (startsWith(arg, "-n:") || startsWith(arg, "--block_cnt:")) {
             if (!confirmUint("block_cnt", block_cnt, arg))
                 return false;
         } else if (arg == "-n" || arg == "--block_cnt") {
             return flag_required("block_cnt");
-
-        } else if (startsWith(arg, "-b:") || startsWith(arg, "--block_chan_cnt:")) {
-            if (!confirmUint("block_chan_cnt", block_chan_cnt, arg))
-                return false;
-        } else if (arg == "-b" || arg == "--block_chan_cnt") {
-            return flag_required("block_chan_cnt");
-
-        } else if (startsWith(arg, "-d:") || startsWith(arg, "--addr_chan_cnt:")) {
-            if (!confirmUint("addr_chan_cnt", addr_chan_cnt, arg))
-                return false;
-        } else if (arg == "-d" || arg == "--addr_chan_cnt") {
-            return flag_required("addr_chan_cnt");
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -80,22 +62,6 @@ bool COptions::parseArguments(string_q& command) {
 
             // END_CODE_AUTO
         }
-    }
-
-    if (pin && !isTestMode()) {
-        string_q key = getGlobalConfig("blockScrape")->getConfigStr("settings", "pinata_api_key", "<not_set>");
-        string_q secret =
-            getGlobalConfig("blockScrape")->getConfigStr("settings", "pinata_secret_api_key", "<not_set>");
-        if (key == "<not_set>" || secret == "<not_set>") {
-            ostringstream os;
-            os << "The --pin option requires you to have a Pinata key.";
-            return usage(os.str());
-        }
-    }
-
-    // We can't really test this code, so we just report and quit
-    if (isTestMode()) {
-        return usage("Cannot test block scraper");
     }
 
     if (!isArchiveNode())
@@ -140,7 +106,6 @@ void COptions::Init(void) {
     // END_CODE_GLOBALOPTS
 
     // BEG_CODE_INIT
-    pin = false;
     // clang-format off
     block_cnt = getGlobalConfig("blockScrape")->getConfigInt("settings", "block_cnt", 2000);
     block_chan_cnt = getGlobalConfig("blockScrape")->getConfigInt("settings", "block_chan_cnt", 10);
@@ -153,13 +118,12 @@ void COptions::Init(void) {
     // clang-format on
     // END_CODE_INIT
 
-    meta = getMetaData();
-
     if (getChain() == "mainnet") {
         // different defaults for mainnet
         apps_per_chunk = apps_per_chunk == 200000 ? 2000000 : apps_per_chunk;
         first_snap = first_snap == 0 ? 2250000 : first_snap;
     }
+    meta = getMetaData();
 
     minArgs = 0;
 }
@@ -181,10 +145,6 @@ COptions::COptions(void) {
 
     // BEG_ERROR_STRINGS
     // END_ERROR_STRINGS
-
-    // Establish the folders that hold the data...
-    establishCacheFolders();
-    establishIndexFolders();
 }
 
 //--------------------------------------------------------------------------------

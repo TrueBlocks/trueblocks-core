@@ -72,10 +72,10 @@ class COptions : public CAbiOptions {
     bool factory;
     string_q load;
     bool reversed;
-    bool skip_ddos;
-    uint64_t max_traces;
     // END_CODE_DECLARE
 
+    bool skip_ddos{true};
+    uint64_t max_traces{250};
     CAppearanceArray_mon monApps;
     CMonitorArray allMonitors;
     const CMonitor* curMonitor;

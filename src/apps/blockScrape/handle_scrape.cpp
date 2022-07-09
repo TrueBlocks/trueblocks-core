@@ -44,6 +44,22 @@ bool COptions::scrape_blocks(void) {
     blazeCmd << (verbose ? ("--verbose " + uint_2_Str(verbose)) : "");
     // LOG_INFO(bWhite, blazeCmd.str(), cOff);
 
+    // TODO: BOGUS - TESTING SCRAPING
+    LOG_INFO("block_cnt: ", block_cnt);
+    LOG_INFO("block_chan_cnt: ", block_chan_cnt);
+    LOG_INFO("addr_chan_cnt: ", addr_chan_cnt);
+    LOG_INFO("apps_per_chunk: ", apps_per_chunk);
+    LOG_INFO("unripe_dist: ", unripe_dist);
+    LOG_INFO("snap_to_grid: ", snap_to_grid);
+    LOG_INFO("first_snap: ", first_snap);
+    LOG_INFO("allow_missing: ", allow_missing);
+    LOG_INFO("meta.ripe: ", meta.ripe);
+    LOG_INFO("meta.staging: ", meta.staging);
+    LOG_INFO("meta.finalized: ", meta.finalized);
+    LOG_INFO("meta.client: ", meta.client);
+    LOG_INFO("blaze_start: ", blaze_start);
+    LOG_INFO("blaze_ripe: ", blaze_ripe);
+    LOG_INFO("Calling blaze: ", substitute(blazeCmd.str(), "--", "\n\t--"));
     if (system(blazeCmd.str().c_str()) != 0) {
         cleanFolder(indexFolder_ripe);
         static bool failed_already = false;

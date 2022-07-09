@@ -110,7 +110,6 @@ func EstablishCachePaths(cachePath string) {
 		"abis", "blocks", "monitors", "monitors/staging", "names", "objs", "prices",
 		"recons", "slurps", "tmp", "traces", "txs",
 	}
-
 	_, err := os.Stat(path.Join(cachePath, folders[len(folders)-1]))
 	if err == nil {
 		// If the last path already exists, assume we've been here before
@@ -125,9 +124,8 @@ func EstablishCachePaths(cachePath string) {
 // EstablishIndexPaths sets up the index path and subfolders. It only returns if it succeeds.
 func EstablishIndexPaths(indexPath string) {
 	folders := []string{
-		"blooms", "finalized", "ripe", "staging", "unripe",
+		"blooms", "finalized", "map", "ripe", "staging", "unripe",
 	}
-
 	_, err := os.Stat(path.Join(indexPath, folders[len(folders)-1]))
 	if err == nil {
 		// If the last path already exists, assume we've been here before

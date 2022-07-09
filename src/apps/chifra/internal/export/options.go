@@ -46,8 +46,6 @@ type ExportOptions struct {
 	Unripe      bool
 	Load        string
 	Reversed    bool
-	SkipDdos    bool
-	MaxTraces   uint64
 	FirstBlock  uint64
 	LastBlock   uint64
 	Globals     globals.GlobalOptions
@@ -82,8 +80,6 @@ func (opts *ExportOptions) TestLog() {
 	logger.TestLog(opts.Unripe, "Unripe: ", opts.Unripe)
 	logger.TestLog(len(opts.Load) > 0, "Load: ", opts.Load)
 	logger.TestLog(opts.Reversed, "Reversed: ", opts.Reversed)
-	logger.TestLog(opts.SkipDdos, "SkipDdos: ", opts.SkipDdos)
-	logger.TestLog(opts.MaxTraces != 250, "MaxTraces: ", opts.MaxTraces)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
 	opts.Globals.TestLog()
@@ -182,7 +178,6 @@ func ExportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 	opts := &ExportOptions{}
 	opts.FirstRecord = 0
 	opts.MaxRecords = 250
-	opts.MaxTraces = 250
 	opts.FirstBlock = 0
 	opts.LastBlock = utils.NOPOS
 	for key, value := range r.URL.Query() {
@@ -255,10 +250,6 @@ func ExportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 			opts.Load = value[0]
 		case "reversed":
 			opts.Reversed = true
-		case "skipDdos":
-			opts.SkipDdos = true
-		case "maxTraces":
-			opts.MaxTraces = globals.ToUint64(value[0])
 		case "firstBlock":
 			opts.FirstBlock = globals.ToUint64(value[0])
 		case "lastBlock":

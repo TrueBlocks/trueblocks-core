@@ -71,17 +71,8 @@ func (opts *ScrapeOptions) GetEnvStr() string {
 
 func (opts *ScrapeOptions) ToCmdLine() string {
 	options := ""
-	if opts.Pin {
-		options += " --pin"
-	}
 	if opts.BlockCnt != 2000 {
 		options += (" --block_cnt " + fmt.Sprintf("%d", opts.BlockCnt))
-	}
-	if opts.BlockChanCnt != 10 {
-		options += (" --block_chan_cnt " + fmt.Sprintf("%d", opts.BlockChanCnt))
-	}
-	if opts.AddrChanCnt != 20 {
-		options += (" --addr_chan_cnt " + fmt.Sprintf("%d", opts.AddrChanCnt))
 	}
 	options += " " + strings.Join(opts.Modes, " ")
 	// EXISTING_CODE

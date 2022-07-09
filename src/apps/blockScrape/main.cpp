@@ -16,6 +16,8 @@
 int main(int argc, const char* argv[]) {
     acctlib_init(defaultQuitHandler);
 
+    // TODO: BOGUS - TESTING SCRAPING
+    colorsOff();
     COptions options;
     if (!options.prepareArguments(argc, argv))
         return 0;

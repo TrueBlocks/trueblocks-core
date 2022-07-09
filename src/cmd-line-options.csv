@@ -25,8 +25,6 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10080,apps,Accounts,export,acctExport,unripe,u,,false,false,true,true,gocmd,switch,<boolean>,export transactions labeled upripe (i.e. less than 28 blocks old)
 10092,apps,Accounts,export,acctExport,load,,,false,false,false,false,header,flag,<string>,a comma separated list of dynamic traversers to load
 10093,apps,Accounts,export,acctExport,reversed,,,false,false,false,false,header,switch,<boolean>,produce results in reverse chronological order
-10340,apps,Accounts,export,acctExport,skip_ddos,d,true,false,true,false,false,config,toggle,<boolean>,toggle skipping over 2016 dDos transactions ([{DEF}] by default)
-10350,apps,Accounts,export,acctExport,max_traces,m,250,false,true,false,false,config,flag,<uint64>,if --skip_ddos is on&#44; this many traces defines what a ddos transaction is
 10440,apps,Accounts,export,acctExport,first_block,F,0,false,false,true,true,local,flag,<blknum>,first block to process (inclusive)
 10450,apps,Accounts,export,acctExport,last_block,L,NOPOS,false,false,true,true,local,flag,<blknum>,last block to process (inclusive)
 10460,apps,Accounts,export,acctExport,,,,false,false,true,true,--,description,,Export full detail of transactions for one or more addresses.
@@ -201,11 +199,11 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 
 12110,apps,Admin,scrape,blockScrape,modes,,,true,false,true,true,gocmd,positional,list<enum[run|stop]>,which scraper(s) to control
 12115,apps,Admin,scrape,blockScrape,sleep,s,14,false,false,true,true,gocmd,flag,<double>,seconds to sleep between scraper passes
-12120,apps,Admin,scrape,blockScrape,pin,p,,false,false,true,true,header,switch,<boolean>,pin chunks (and blooms) to IPFS as they are created (requires ipfs daemon)
+12120,apps,Admin,scrape,blockScrape,pin,p,,false,false,true,true,gocmd,switch,<boolean>,pin chunks (and blooms) to IPFS as they are created (requires ipfs daemon)
 12125,apps,Admin,scrape,blockScrape,block_cnt,n,2000,false,true,true,true,header,flag,<uint64>,maximum number of blocks to process per pass
 12145,apps,Admin,scrape,blockScrape,blaze,z,,false,false,false,false,gocmd,switch,<boolean>,invoke the blaze scraper to process blocks
-12150,apps,Admin,scrape,blockScrape,block_chan_cnt,b,10,false,true,false,false,header,flag,<uint64>,number of concurrent block processing channels
-12155,apps,Admin,scrape,blockScrape,addr_chan_cnt,d,20,false,true,false,false,header,flag,<uint64>,number of concurrent address processing channels
+12150,apps,Admin,scrape,blockScrape,block_chan_cnt,b,10,false,true,false,false,config,flag,<uint64>,number of concurrent block processing channels
+12155,apps,Admin,scrape,blockScrape,addr_chan_cnt,d,20,false,true,false,false,config,flag,<uint64>,number of concurrent address processing channels
 12160,apps,Admin,scrape,blockScrape,apps_per_chunk,,200000,false,true,false,false,config,flag,<uint64>,the number of appearances to build into a chunk before consolidating it
 12165,apps,Admin,scrape,blockScrape,unripe_dist,,28,false,true,false,false,config,flag,<uint64>,the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe
 12170,apps,Admin,scrape,blockScrape,snap_to_grid,,100000,false,true,false,false,config,flag,<uint64>,an override to apps_per_chunk to snap-to-grid at every modulo of this value&#44; this allows easier corrections to the index

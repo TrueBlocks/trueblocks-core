@@ -394,15 +394,16 @@ func (opts *ScrapeOptions) writeAddresses(bn int, addressMap map[string]bool) {
 		os.Exit(1)
 	}
 
-	step := uint64(7)
-	if nProcessed%step == 0 {
-		dist := uint64(0)
-		if opts.RipeBlock > uint64(bn) {
-			dist = (opts.RipeBlock - uint64(bn))
-		}
-		f := "-------- ( ------)- <PROG>  : Scraping %-04d of %-04d at block %d of %d (%d blocks from head)\r"
-		fmt.Fprintf(os.Stderr, f, nProcessed, opts.BlockCnt, bn, opts.RipeBlock, dist)
-	}
+	// TODO: BOGUS - TESTING SCRAPING
+	// step := uint64(7)
+	// if nProcessed%step == 0 {
+	// 	dist := uint64(0)
+	// 	if opts.RipeBlock > uint64(bn) {
+	// 		dist = (opts.RipeBlock - uint64(bn))
+	// 	}
+	// 	f := "-------- ( ------)- <PROG>  : Scraping %-04d of %-04d at block %d of %d (%d blocks from head)\r"
+	// 	fmt.Fprintf(os.Stderr, f, nProcessed, opts.BlockCnt, bn, opts.RipeBlock, dist)
+	// }
 	nProcessed++
 }
 

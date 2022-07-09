@@ -50,6 +50,12 @@ func (opts *ScrapeOptions) ValidateScrape() error {
 	if opts.Pin && !pinning.LocalDaemonRunning() {
 		return validate.Usage("The {0} option requires {1}", "--pin", "a locally running IPFS daemon")
 	}
+
+	// We can't really test this code, so we just report and quit
+	if opts.Globals.TestMode {
+		return validate.Usage("Cannot test block scraper")
+	}
+
 	// Note this does not return if a migration is needed
 	index.CheckBackLevelIndex(opts.Globals.Chain)
 
