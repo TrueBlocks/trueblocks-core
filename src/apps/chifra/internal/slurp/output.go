@@ -36,7 +36,7 @@ func ServeSlurp(w http.ResponseWriter, r *http.Request) (err error, handled bool
 
 // SlurpInternal handles the internal workings of the slurp command.  Returns error and a bool if handled
 func (opts *SlurpOptions) SlurpInternal() (err error, handled bool) {
-	err = opts.ValidateSlurp()
+	err = opts.validateSlurp()
 	if err != nil {
 		return err, true
 	}

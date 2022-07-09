@@ -36,7 +36,7 @@ func ServeLogs(w http.ResponseWriter, r *http.Request) (err error, handled bool)
 
 // LogsInternal handles the internal workings of the logs command.  Returns error and a bool if handled
 func (opts *LogsOptions) LogsInternal() (err error, handled bool) {
-	err = opts.ValidateLogs()
+	err = opts.validateLogs()
 	if err != nil {
 		return err, true
 	}

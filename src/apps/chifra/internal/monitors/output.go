@@ -56,7 +56,7 @@ func ServeMonitors(w http.ResponseWriter, r *http.Request) (err error, handled b
 
 // MonitorsInternal handles the internal workings of the monitors command.  Returns error and a bool if handled
 func (opts *MonitorsOptions) MonitorsInternal() (err error, handled bool) {
-	err = opts.ValidateMonitors()
+	err = opts.validateMonitors()
 	if err != nil {
 		return err, true
 	}

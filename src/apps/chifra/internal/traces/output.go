@@ -36,7 +36,7 @@ func ServeTraces(w http.ResponseWriter, r *http.Request) (err error, handled boo
 
 // TracesInternal handles the internal workings of the traces command.  Returns error and a bool if handled
 func (opts *TracesOptions) TracesInternal() (err error, handled bool) {
-	err = opts.ValidateTraces()
+	err = opts.validateTraces()
 	if err != nil {
 		return err, true
 	}

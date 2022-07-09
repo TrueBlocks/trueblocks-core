@@ -33,8 +33,8 @@ type SlurpOptions struct {
 
 var slurpCmdLineOptions SlurpOptions
 
-// TestLog is used only during testing to export the options for this test case.
-func (opts *SlurpOptions) TestLog() {
+// testLog is used only during testing to export the options for this test case.
+func (opts *SlurpOptions) testLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
 	logger.TestLog(len(opts.Types) > 0, "Types: ", opts.Types)
@@ -48,7 +48,7 @@ func (opts *SlurpOptions) String() string {
 	return string(b)
 }
 
-// getEnvStr allows for adding custom environment strings when calling out to the command line (useful for debugging).
+// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
 func (opts *SlurpOptions) getEnvStr() []string {
 	envStr := []string{}
 	// EXISTING_CODE
@@ -56,7 +56,7 @@ func (opts *SlurpOptions) getEnvStr() []string {
 	return envStr
 }
 
-// toCmdLine converts the options object to a command line for calling out to the system.
+// toCmdLine converts the option to a command line for calling out to the system.
 func (opts *SlurpOptions) toCmdLine() string {
 	options := ""
 	for _, types := range opts.Types {

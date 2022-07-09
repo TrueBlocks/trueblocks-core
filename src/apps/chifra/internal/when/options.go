@@ -35,8 +35,8 @@ type WhenOptions struct {
 
 var whenCmdLineOptions WhenOptions
 
-// TestLog is used only during testing to export the options for this test case.
-func (opts *WhenOptions) TestLog() {
+// testLog is used only during testing to export the options for this test case.
+func (opts *WhenOptions) testLog() {
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
 	logger.TestLog(opts.List, "List: ", opts.List)
 	logger.TestLog(opts.Timestamps, "Timestamps: ", opts.Timestamps)
@@ -53,8 +53,6 @@ func (opts *WhenOptions) String() string {
 	return string(b)
 }
 
-// getEnvStr allows for adding custom environment strings when calling out to the command line (useful for debugging).
-// toCmdLine converts the options object to a command line for calling out to the system.
 // whenFinishParseApi finishes the parsing for server invocations. Returns a new WhenOptions.
 func whenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
 	opts := &WhenOptions{}

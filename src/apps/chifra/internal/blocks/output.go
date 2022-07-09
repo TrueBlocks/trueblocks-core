@@ -36,7 +36,7 @@ func ServeBlocks(w http.ResponseWriter, r *http.Request) (err error, handled boo
 
 // BlocksInternal handles the internal workings of the blocks command.  Returns error and a bool if handled
 func (opts *BlocksOptions) BlocksInternal() (err error, handled bool) {
-	err = opts.ValidateBlocks()
+	err = opts.validateBlocks()
 	if err != nil {
 		return err, true
 	}

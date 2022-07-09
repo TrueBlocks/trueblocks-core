@@ -55,8 +55,8 @@ type ExportOptions struct {
 
 var exportCmdLineOptions ExportOptions
 
-// TestLog is used only during testing to export the options for this test case.
-func (opts *ExportOptions) TestLog() {
+// testLog is used only during testing to export the options for this test case.
+func (opts *ExportOptions) testLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(len(opts.Topics) > 0, "Topics: ", opts.Topics)
 	logger.TestLog(len(opts.Fourbytes) > 0, "Fourbytes: ", opts.Fourbytes)
@@ -93,7 +93,7 @@ func (opts *ExportOptions) String() string {
 	return string(b)
 }
 
-// getEnvStr allows for adding custom environment strings when calling out to the command line (useful for debugging).
+// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
 func (opts *ExportOptions) getEnvStr() []string {
 	envStr := []string{}
 	// EXISTING_CODE
@@ -101,7 +101,7 @@ func (opts *ExportOptions) getEnvStr() []string {
 	return envStr
 }
 
-// toCmdLine converts the options object to a command line for calling out to the system.
+// toCmdLine converts the option to a command line for calling out to the system.
 func (opts *ExportOptions) toCmdLine() string {
 	options := ""
 	if opts.Appearances {

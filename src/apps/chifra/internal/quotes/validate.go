@@ -8,8 +8,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-func (opts *QuotesOptions) ValidateQuotes() error {
-	opts.TestLog()
+func (opts *QuotesOptions) validateQuotes() error {
+	opts.testLog()
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag
@@ -34,5 +34,5 @@ func (opts *QuotesOptions) ValidateQuotes() error {
 		return validate.Usage("Please specify at least one {0}.", "command line option")
 	}
 
-	return opts.Globals.ValidateGlobals()
+	return opts.Globals.Validate()
 }

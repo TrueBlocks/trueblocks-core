@@ -45,8 +45,8 @@ type NamesOptions struct {
 
 var namesCmdLineOptions NamesOptions
 
-// TestLog is used only during testing to export the options for this test case.
-func (opts *NamesOptions) TestLog() {
+// testLog is used only during testing to export the options for this test case.
+func (opts *NamesOptions) testLog() {
 	logger.TestLog(len(opts.Terms) > 0, "Terms: ", opts.Terms)
 	logger.TestLog(opts.Expand, "Expand: ", opts.Expand)
 	logger.TestLog(opts.MatchCase, "MatchCase: ", opts.MatchCase)
@@ -74,7 +74,7 @@ func (opts *NamesOptions) String() string {
 	return string(b)
 }
 
-// getEnvStr allows for adding custom environment strings when calling out to the command line (useful for debugging).
+// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
 func (opts *NamesOptions) getEnvStr() []string {
 	envStr := []string{}
 	// EXISTING_CODE
@@ -82,7 +82,7 @@ func (opts *NamesOptions) getEnvStr() []string {
 	return envStr
 }
 
-// toCmdLine converts the options object to a command line for calling out to the system.
+// toCmdLine converts the option to a command line for calling out to the system.
 func (opts *NamesOptions) toCmdLine() string {
 	options := ""
 	if opts.Expand {

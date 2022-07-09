@@ -36,8 +36,8 @@ type StatusOptions struct {
 
 var statusCmdLineOptions StatusOptions
 
-// TestLog is used only during testing to export the options for this test case.
-func (opts *StatusOptions) TestLog() {
+// testLog is used only during testing to export the options for this test case.
+func (opts *StatusOptions) testLog() {
 	logger.TestLog(len(opts.Modes) > 0, "Modes: ", opts.Modes)
 	logger.TestLog(opts.Details, "Details: ", opts.Details)
 	logger.TestLog(len(opts.Types) > 0, "Types: ", opts.Types)
@@ -55,7 +55,7 @@ func (opts *StatusOptions) String() string {
 	return string(b)
 }
 
-// getEnvStr allows for adding custom environment strings when calling out to the command line (useful for debugging).
+// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
 func (opts *StatusOptions) getEnvStr() []string {
 	envStr := []string{}
 	// EXISTING_CODE
@@ -63,7 +63,7 @@ func (opts *StatusOptions) getEnvStr() []string {
 	return envStr
 }
 
-// toCmdLine converts the options object to a command line for calling out to the system.
+// toCmdLine converts the option to a command line for calling out to the system.
 func (opts *StatusOptions) toCmdLine() string {
 	options := ""
 	if opts.Details {

@@ -41,8 +41,8 @@ type ChunksOptions struct {
 
 var chunksCmdLineOptions ChunksOptions
 
-// TestLog is used only during testing to export the options for this test case.
-func (opts *ChunksOptions) TestLog() {
+// testLog is used only during testing to export the options for this test case.
+func (opts *ChunksOptions) testLog() {
 	logger.TestLog(len(opts.Mode) > 0, "Mode: ", opts.Mode)
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
@@ -64,8 +64,6 @@ func (opts *ChunksOptions) String() string {
 	return string(b)
 }
 
-// getEnvStr allows for adding custom environment strings when calling out to the command line (useful for debugging).
-// toCmdLine converts the options object to a command line for calling out to the system.
 // chunksFinishParseApi finishes the parsing for server invocations. Returns a new ChunksOptions.
 func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions {
 	opts := &ChunksOptions{}

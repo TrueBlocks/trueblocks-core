@@ -36,7 +36,7 @@ func ServeQuotes(w http.ResponseWriter, r *http.Request) (err error, handled boo
 
 // QuotesInternal handles the internal workings of the quotes command.  Returns error and a bool if handled
 func (opts *QuotesOptions) QuotesInternal() (err error, handled bool) {
-	err = opts.ValidateQuotes()
+	err = opts.validateQuotes()
 	if err != nil {
 		return err, true
 	}

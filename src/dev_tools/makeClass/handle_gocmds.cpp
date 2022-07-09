@@ -130,6 +130,7 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
 bool COptions::handle_gocmds_output(const CCommandOption& p) {
     string_q source = asciiFileToString(getPathToTemplates("blank_output.go.tmpl"));
     replaceAll(source, "[{ROUTE}]", p.api_route);
+    replaceAll(source, "[{LOWER}]", toLower(p.api_route));
     source = substitute(source, "[]string", "++SAVED++");
     source = p.Format(source);
     replaceAll(source, "++SAVED++", "[]string");
@@ -526,6 +527,7 @@ const char* STR_CHIFRA_HELP_END =
     "  Use \"chifra [command] --help\" for more information about a command.\n";
 
 const char* STR_TO_CMD_LINE =
+    "// toCmdLine converts the option to a command line for calling out to the system.\n"
     "func (opts *[{PROPER}]Options) toCmdLine() string {\n"
     "\toptions := \"\"\n"
     "[{DASH_STR}][{POSITIONALS}]"
@@ -536,6 +538,7 @@ const char* STR_TO_CMD_LINE =
     "}\n\n";
 
 const char* STR_GET_ENV_STR =
+    "// getEnvStr allows for custom environment strings when calling to the system (helps debugging).\n"
     "func (opts *[{PROPER}]Options) getEnvStr() []string {\n"
     "\tenvStr := []string{}\n"
     "\t// EXISTING_CODE\n"

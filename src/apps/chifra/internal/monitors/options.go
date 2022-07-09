@@ -36,8 +36,8 @@ type MonitorsOptions struct {
 
 var monitorsCmdLineOptions MonitorsOptions
 
-// TestLog is used only during testing to export the options for this test case.
-func (opts *MonitorsOptions) TestLog() {
+// testLog is used only during testing to export the options for this test case.
+func (opts *MonitorsOptions) testLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(opts.Clean, "Clean: ", opts.Clean)
 	logger.TestLog(opts.Delete, "Delete: ", opts.Delete)
@@ -56,8 +56,6 @@ func (opts *MonitorsOptions) String() string {
 	return string(b)
 }
 
-// getEnvStr allows for adding custom environment strings when calling out to the command line (useful for debugging).
-// toCmdLine converts the options object to a command line for calling out to the system.
 // monitorsFinishParseApi finishes the parsing for server invocations. Returns a new MonitorsOptions.
 func monitorsFinishParseApi(w http.ResponseWriter, r *http.Request) *MonitorsOptions {
 	opts := &MonitorsOptions{}

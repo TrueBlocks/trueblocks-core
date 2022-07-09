@@ -36,7 +36,7 @@ func ServeExport(w http.ResponseWriter, r *http.Request) (err error, handled boo
 
 // ExportInternal handles the internal workings of the export command.  Returns error and a bool if handled
 func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
-	err = opts.ValidateExport()
+	err = opts.validateExport()
 	if err != nil {
 		return err, true
 	}
@@ -60,4 +60,8 @@ func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
 }
 
 // EXISTING_CODE
+func (opts *ExportOptions) Validate() error {
+	return opts.validateExport()
+}
+
 // EXISTING_CODE

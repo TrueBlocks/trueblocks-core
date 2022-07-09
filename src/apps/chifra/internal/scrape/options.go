@@ -40,8 +40,8 @@ type ScrapeOptions struct {
 
 var scrapeCmdLineOptions ScrapeOptions
 
-// TestLog is used only during testing to export the options for this test case.
-func (opts *ScrapeOptions) TestLog() {
+// testLog is used only during testing to export the options for this test case.
+func (opts *ScrapeOptions) testLog() {
 	logger.TestLog(len(opts.Modes) > 0, "Modes: ", opts.Modes)
 	logger.TestLog(opts.BlockCnt != 2000, "BlockCnt: ", opts.BlockCnt)
 	logger.TestLog(opts.Pin, "Pin: ", opts.Pin)
@@ -65,7 +65,7 @@ func (opts *ScrapeOptions) String() string {
 	return string(b)
 }
 
-// getEnvStr allows for adding custom environment strings when calling out to the command line (useful for debugging).
+// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
 func (opts *ScrapeOptions) getEnvStr() []string {
 	envStr := []string{}
 	// EXISTING_CODE
@@ -81,7 +81,7 @@ func (opts *ScrapeOptions) getEnvStr() []string {
 	return envStr
 }
 
-// toCmdLine converts the options object to a command line for calling out to the system.
+// toCmdLine converts the option to a command line for calling out to the system.
 func (opts *ScrapeOptions) toCmdLine() string {
 	options := ""
 	options += " " + strings.Join(opts.Modes, " ")

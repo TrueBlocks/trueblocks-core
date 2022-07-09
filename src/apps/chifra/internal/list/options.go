@@ -33,8 +33,8 @@ type ListOptions struct {
 
 var listCmdLineOptions ListOptions
 
-// TestLog is used only during testing to export the options for this test case.
-func (opts *ListOptions) TestLog() {
+// testLog is used only during testing to export the options for this test case.
+func (opts *ListOptions) testLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	logger.TestLog(opts.Appearances, "Appearances: ", opts.Appearances)
@@ -50,8 +50,6 @@ func (opts *ListOptions) String() string {
 	return string(b)
 }
 
-// getEnvStr allows for adding custom environment strings when calling out to the command line (useful for debugging).
-// toCmdLine converts the options object to a command line for calling out to the system.
 // listFinishParseApi finishes the parsing for server invocations. Returns a new ListOptions.
 func listFinishParseApi(w http.ResponseWriter, r *http.Request) *ListOptions {
 	opts := &ListOptions{}

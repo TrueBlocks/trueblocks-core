@@ -11,8 +11,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-func (opts *WhenOptions) ValidateWhen() error {
-	opts.TestLog()
+func (opts *WhenOptions) validateWhen() error {
+	opts.testLog()
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag
@@ -80,5 +80,5 @@ func (opts *WhenOptions) ValidateWhen() error {
 		return err
 	}
 
-	return opts.Globals.ValidateGlobals()
+	return opts.Globals.Validate()
 }

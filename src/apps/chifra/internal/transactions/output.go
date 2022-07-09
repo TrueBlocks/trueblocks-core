@@ -36,7 +36,7 @@ func ServeTransactions(w http.ResponseWriter, r *http.Request) (err error, handl
 
 // TransactionsInternal handles the internal workings of the transactions command.  Returns error and a bool if handled
 func (opts *TransactionsOptions) TransactionsInternal() (err error, handled bool) {
-	err = opts.ValidateTransactions()
+	err = opts.validateTransactions()
 	if err != nil {
 		return err, true
 	}

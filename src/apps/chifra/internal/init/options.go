@@ -25,8 +25,8 @@ type InitOptions struct {
 
 var initCmdLineOptions InitOptions
 
-// TestLog is used only during testing to export the options for this test case.
-func (opts *InitOptions) TestLog() {
+// testLog is used only during testing to export the options for this test case.
+func (opts *InitOptions) testLog() {
 	logger.TestLog(opts.All, "All: ", opts.All)
 	opts.Globals.TestLog()
 }
@@ -37,8 +37,6 @@ func (opts *InitOptions) String() string {
 	return string(b)
 }
 
-// getEnvStr allows for adding custom environment strings when calling out to the command line (useful for debugging).
-// toCmdLine converts the options object to a command line for calling out to the system.
 // initFinishParseApi finishes the parsing for server invocations. Returns a new InitOptions.
 func initFinishParseApi(w http.ResponseWriter, r *http.Request) *InitOptions {
 	opts := &InitOptions{}

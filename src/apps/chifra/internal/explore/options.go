@@ -30,8 +30,8 @@ type ExploreOptions struct {
 
 var exploreCmdLineOptions ExploreOptions
 
-// TestLog is used only during testing to export the options for this test case.
-func (opts *ExploreOptions) TestLog() {
+// testLog is used only during testing to export the options for this test case.
+func (opts *ExploreOptions) testLog() {
 	logger.TestLog(len(opts.Terms) > 0, "Terms: ", opts.Terms)
 	logger.TestLog(opts.Local, "Local: ", opts.Local)
 	logger.TestLog(opts.Google, "Google: ", opts.Google)
@@ -44,7 +44,7 @@ func (opts *ExploreOptions) String() string {
 	return string(b)
 }
 
-// getEnvStr allows for adding custom environment strings when calling out to the command line (useful for debugging).
+// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
 func (opts *ExploreOptions) getEnvStr() []string {
 	envStr := []string{}
 	// EXISTING_CODE
@@ -52,7 +52,7 @@ func (opts *ExploreOptions) getEnvStr() []string {
 	return envStr
 }
 
-// toCmdLine converts the options object to a command line for calling out to the system.
+// toCmdLine converts the option to a command line for calling out to the system.
 func (opts *ExploreOptions) toCmdLine() string {
 	options := ""
 	if opts.Local {

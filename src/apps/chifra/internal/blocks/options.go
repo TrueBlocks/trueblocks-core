@@ -43,8 +43,8 @@ type BlocksOptions struct {
 
 var blocksCmdLineOptions BlocksOptions
 
-// TestLog is used only during testing to export the options for this test case.
-func (opts *BlocksOptions) TestLog() {
+// testLog is used only during testing to export the options for this test case.
+func (opts *BlocksOptions) testLog() {
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
 	logger.TestLog(opts.Hashes, "Hashes: ", opts.Hashes)
 	logger.TestLog(opts.Uncles, "Uncles: ", opts.Uncles)
@@ -69,7 +69,7 @@ func (opts *BlocksOptions) String() string {
 	return string(b)
 }
 
-// getEnvStr allows for adding custom environment strings when calling out to the command line (useful for debugging).
+// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
 func (opts *BlocksOptions) getEnvStr() []string {
 	envStr := []string{}
 	// EXISTING_CODE
@@ -77,7 +77,7 @@ func (opts *BlocksOptions) getEnvStr() []string {
 	return envStr
 }
 
-// toCmdLine converts the options object to a command line for calling out to the system.
+// toCmdLine converts the option to a command line for calling out to the system.
 func (opts *BlocksOptions) toCmdLine() string {
 	options := ""
 	if opts.Hashes {

@@ -30,8 +30,8 @@ type ReceiptsOptions struct {
 
 var receiptsCmdLineOptions ReceiptsOptions
 
-// TestLog is used only during testing to export the options for this test case.
-func (opts *ReceiptsOptions) TestLog() {
+// testLog is used only during testing to export the options for this test case.
+func (opts *ReceiptsOptions) testLog() {
 	logger.TestLog(len(opts.Transactions) > 0, "Transactions: ", opts.Transactions)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	opts.Globals.TestLog()
@@ -43,7 +43,7 @@ func (opts *ReceiptsOptions) String() string {
 	return string(b)
 }
 
-// getEnvStr allows for adding custom environment strings when calling out to the command line (useful for debugging).
+// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
 func (opts *ReceiptsOptions) getEnvStr() []string {
 	envStr := []string{}
 	// EXISTING_CODE
@@ -51,7 +51,7 @@ func (opts *ReceiptsOptions) getEnvStr() []string {
 	return envStr
 }
 
-// toCmdLine converts the options object to a command line for calling out to the system.
+// toCmdLine converts the option to a command line for calling out to the system.
 func (opts *ReceiptsOptions) toCmdLine() string {
 	options := ""
 	if opts.Articulate {

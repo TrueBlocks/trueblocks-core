@@ -39,7 +39,7 @@ func ServeReceipts(w http.ResponseWriter, r *http.Request) (err error, handled b
 
 // ReceiptsInternal handles the internal workings of the receipts command.  Returns error and a bool if handled
 func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
-	err = opts.ValidateReceipts()
+	err = opts.validateReceipts()
 	if err != nil {
 		return err, true
 	}

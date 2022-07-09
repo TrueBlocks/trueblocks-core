@@ -36,7 +36,7 @@ func ServeState(w http.ResponseWriter, r *http.Request) (err error, handled bool
 
 // StateInternal handles the internal workings of the state command.  Returns error and a bool if handled
 func (opts *StateOptions) StateInternal() (err error, handled bool) {
-	err = opts.ValidateState()
+	err = opts.validateState()
 	if err != nil {
 		return err, true
 	}

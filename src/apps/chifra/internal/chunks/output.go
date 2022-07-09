@@ -38,7 +38,7 @@ func ServeChunks(w http.ResponseWriter, r *http.Request) (err error, handled boo
 
 // ChunksInternal handles the internal workings of the chunks command.  Returns error and a bool if handled
 func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
-	err = opts.ValidateChunks()
+	err = opts.validateChunks()
 	if err != nil {
 		return err, true
 	}

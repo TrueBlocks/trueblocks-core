@@ -34,8 +34,8 @@ type TokensOptions struct {
 
 var tokensCmdLineOptions TokensOptions
 
-// TestLog is used only during testing to export the options for this test case.
-func (opts *TokensOptions) TestLog() {
+// testLog is used only during testing to export the options for this test case.
+func (opts *TokensOptions) testLog() {
 	logger.TestLog(len(opts.Addrs2) > 0, "Addrs2: ", opts.Addrs2)
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
 	logger.TestLog(len(opts.Parts) > 0, "Parts: ", opts.Parts)
@@ -50,7 +50,7 @@ func (opts *TokensOptions) String() string {
 	return string(b)
 }
 
-// getEnvStr allows for adding custom environment strings when calling out to the command line (useful for debugging).
+// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
 func (opts *TokensOptions) getEnvStr() []string {
 	envStr := []string{}
 	// EXISTING_CODE
@@ -58,7 +58,7 @@ func (opts *TokensOptions) getEnvStr() []string {
 	return envStr
 }
 
-// toCmdLine converts the options object to a command line for calling out to the system.
+// toCmdLine converts the option to a command line for calling out to the system.
 func (opts *TokensOptions) toCmdLine() string {
 	options := ""
 	for _, part := range opts.Parts {

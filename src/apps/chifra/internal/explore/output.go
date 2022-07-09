@@ -41,7 +41,7 @@ func ServeExplore(w http.ResponseWriter, r *http.Request) (err error, handled bo
 
 // ExploreInternal handles the internal workings of the explore command.  Returns error and a bool if handled
 func (opts *ExploreOptions) ExploreInternal() (err error, handled bool) {
-	err = opts.ValidateExplore()
+	err = opts.validateExplore()
 	if err != nil {
 		return err, true
 	}

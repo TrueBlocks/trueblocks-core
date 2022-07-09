@@ -36,7 +36,7 @@ func ServeAbis(w http.ResponseWriter, r *http.Request) (err error, handled bool)
 
 // AbisInternal handles the internal workings of the abis command.  Returns error and a bool if handled
 func (opts *AbisOptions) AbisInternal() (err error, handled bool) {
-	err = opts.ValidateAbis()
+	err = opts.validateAbis()
 	if err != nil {
 		return err, true
 	}

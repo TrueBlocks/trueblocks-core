@@ -31,8 +31,8 @@ type ExploreUrl struct {
 
 var urls []ExploreUrl
 
-func (opts *ExploreOptions) ValidateExplore() error {
-	opts.TestLog()
+func (opts *ExploreOptions) validateExplore() error {
+	opts.testLog()
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag
@@ -99,7 +99,7 @@ func (opts *ExploreOptions) ValidateExplore() error {
 		urls = append(urls, ExploreUrl{"", ExploreNone})
 	}
 
-	return opts.Globals.ValidateGlobals()
+	return opts.Globals.Validate()
 }
 
 func (t ExploreType) String() string {

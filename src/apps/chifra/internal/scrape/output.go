@@ -40,7 +40,7 @@ func ServeScrape(w http.ResponseWriter, r *http.Request) (err error, handled boo
 
 // ScrapeInternal handles the internal workings of the scrape command.  Returns error and a bool if handled
 func (opts *ScrapeOptions) ScrapeInternal() (err error, handled bool) {
-	err = opts.ValidateScrape()
+	err = opts.validateScrape()
 	if err != nil {
 		return err, true
 	}

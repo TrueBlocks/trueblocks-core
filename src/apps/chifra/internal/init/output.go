@@ -36,7 +36,7 @@ func ServeInit(w http.ResponseWriter, r *http.Request) (err error, handled bool)
 
 // InitInternal handles the internal workings of the init command.  Returns error and a bool if handled
 func (opts *InitOptions) InitInternal() (err error, handled bool) {
-	err = opts.ValidateInit()
+	err = opts.validateInit()
 	if err != nil {
 		return err, true
 	}

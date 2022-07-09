@@ -30,8 +30,8 @@ type QuotesOptions struct {
 
 var quotesCmdLineOptions QuotesOptions
 
-// TestLog is used only during testing to export the options for this test case.
-func (opts *QuotesOptions) TestLog() {
+// testLog is used only during testing to export the options for this test case.
+func (opts *QuotesOptions) testLog() {
 	logger.TestLog(opts.Update, "Update: ", opts.Update)
 	logger.TestLog(len(opts.Period) > 0, "Period: ", opts.Period)
 	logger.TestLog(len(opts.Pair) > 0, "Pair: ", opts.Pair)
@@ -45,7 +45,7 @@ func (opts *QuotesOptions) String() string {
 	return string(b)
 }
 
-// getEnvStr allows for adding custom environment strings when calling out to the command line (useful for debugging).
+// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
 func (opts *QuotesOptions) getEnvStr() []string {
 	envStr := []string{}
 	// EXISTING_CODE
@@ -53,7 +53,7 @@ func (opts *QuotesOptions) getEnvStr() []string {
 	return envStr
 }
 
-// toCmdLine converts the options object to a command line for calling out to the system.
+// toCmdLine converts the option to a command line for calling out to the system.
 func (opts *QuotesOptions) toCmdLine() string {
 	options := ""
 	if opts.Update {

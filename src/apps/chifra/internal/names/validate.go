@@ -8,8 +8,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-func (opts *NamesOptions) ValidateNames() error {
-	opts.TestLog()
+func (opts *NamesOptions) validateNames() error {
+	opts.testLog()
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag
@@ -23,7 +23,7 @@ func (opts *NamesOptions) ValidateNames() error {
 		return validate.Usage("The {0} option is not available{1}.", "--collection", " with any other option")
 	}
 
-	return opts.Globals.ValidateGlobals()
+	return opts.Globals.Validate()
 }
 
 func (opts *NamesOptions) anyBase() bool {

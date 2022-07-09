@@ -8,8 +8,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-func (opts *LogsOptions) ValidateLogs() error {
-	opts.TestLog()
+func (opts *LogsOptions) validateLogs() error {
+	opts.testLog()
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag
@@ -40,5 +40,5 @@ func (opts *LogsOptions) ValidateLogs() error {
 		return err
 	}
 
-	return opts.Globals.ValidateGlobals()
+	return opts.Globals.Validate()
 }

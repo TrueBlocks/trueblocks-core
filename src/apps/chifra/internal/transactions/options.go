@@ -35,8 +35,8 @@ type TransactionsOptions struct {
 
 var transactionsCmdLineOptions TransactionsOptions
 
-// TestLog is used only during testing to export the options for this test case.
-func (opts *TransactionsOptions) TestLog() {
+// testLog is used only during testing to export the options for this test case.
+func (opts *TransactionsOptions) testLog() {
 	logger.TestLog(len(opts.Transactions) > 0, "Transactions: ", opts.Transactions)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	logger.TestLog(opts.Trace, "Trace: ", opts.Trace)
@@ -52,7 +52,7 @@ func (opts *TransactionsOptions) String() string {
 	return string(b)
 }
 
-// getEnvStr allows for adding custom environment strings when calling out to the command line (useful for debugging).
+// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
 func (opts *TransactionsOptions) getEnvStr() []string {
 	envStr := []string{}
 	// EXISTING_CODE
@@ -60,7 +60,7 @@ func (opts *TransactionsOptions) getEnvStr() []string {
 	return envStr
 }
 
-// toCmdLine converts the options object to a command line for calling out to the system.
+// toCmdLine converts the option to a command line for calling out to the system.
 func (opts *TransactionsOptions) toCmdLine() string {
 	options := ""
 	if opts.Articulate {

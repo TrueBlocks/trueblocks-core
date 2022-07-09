@@ -35,8 +35,8 @@ type TracesOptions struct {
 
 var tracesCmdLineOptions TracesOptions
 
-// TestLog is used only during testing to export the options for this test case.
-func (opts *TracesOptions) TestLog() {
+// testLog is used only during testing to export the options for this test case.
+func (opts *TracesOptions) testLog() {
 	logger.TestLog(len(opts.Transactions) > 0, "Transactions: ", opts.Transactions)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	logger.TestLog(len(opts.Filter) > 0, "Filter: ", opts.Filter)
@@ -53,7 +53,7 @@ func (opts *TracesOptions) String() string {
 	return string(b)
 }
 
-// getEnvStr allows for adding custom environment strings when calling out to the command line (useful for debugging).
+// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
 func (opts *TracesOptions) getEnvStr() []string {
 	envStr := []string{}
 	// EXISTING_CODE
@@ -61,7 +61,7 @@ func (opts *TracesOptions) getEnvStr() []string {
 	return envStr
 }
 
-// toCmdLine converts the options object to a command line for calling out to the system.
+// toCmdLine converts the option to a command line for calling out to the system.
 func (opts *TracesOptions) toCmdLine() string {
 	options := ""
 	if opts.Articulate {

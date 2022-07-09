@@ -36,7 +36,7 @@ func ServeNames(w http.ResponseWriter, r *http.Request) (err error, handled bool
 
 // NamesInternal handles the internal workings of the names command.  Returns error and a bool if handled
 func (opts *NamesOptions) NamesInternal() (err error, handled bool) {
-	err = opts.ValidateNames()
+	err = opts.validateNames()
 	if err != nil {
 		return err, true
 	}
