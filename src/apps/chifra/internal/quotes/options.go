@@ -8,6 +8,7 @@
 package quotesPkg
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
@@ -34,6 +35,11 @@ func (opts *QuotesOptions) TestLog() {
 	logger.TestLog(len(opts.Pair) > 0, "Pair: ", opts.Pair)
 	logger.TestLog(len(opts.Feed) > 0, "Feed: ", opts.Feed)
 	opts.Globals.TestLog()
+}
+
+func (opts *QuotesOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "\t")
+	return string(b)
 }
 
 func (opts *QuotesOptions) GetEnvStr() string {

@@ -8,6 +8,7 @@
 package receiptsPkg
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
@@ -32,6 +33,11 @@ func (opts *ReceiptsOptions) TestLog() {
 	logger.TestLog(len(opts.Transactions) > 0, "Transactions: ", opts.Transactions)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	opts.Globals.TestLog()
+}
+
+func (opts *ReceiptsOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "\t")
+	return string(b)
 }
 
 func (opts *ReceiptsOptions) GetEnvStr() string {

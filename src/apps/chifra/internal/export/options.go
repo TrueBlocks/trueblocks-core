@@ -8,6 +8,7 @@
 package exportPkg
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
@@ -86,6 +87,11 @@ func (opts *ExportOptions) TestLog() {
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
 	opts.Globals.TestLog()
+}
+
+func (opts *ExportOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "\t")
+	return string(b)
 }
 
 func (opts *ExportOptions) GetEnvStr() string {

@@ -8,6 +8,7 @@
 package scrapePkg
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
@@ -54,6 +55,11 @@ func (opts *ScrapeOptions) TestLog() {
 	logger.TestLog(opts.StartBlock != 0, "StartBlock: ", opts.StartBlock)
 	logger.TestLog(opts.RipeBlock != 0, "RipeBlock: ", opts.RipeBlock)
 	opts.Globals.TestLog()
+}
+
+func (opts *ScrapeOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "\t")
+	return string(b)
 }
 
 func (opts *ScrapeOptions) GetEnvStr() string {

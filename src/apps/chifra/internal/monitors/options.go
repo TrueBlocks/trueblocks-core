@@ -8,6 +8,7 @@
 package monitorsPkg
 
 import (
+	"encoding/json"
 	"net/http"
 	"strings"
 
@@ -45,6 +46,11 @@ func (opts *MonitorsOptions) TestLog() {
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
 	opts.Globals.TestLog()
+}
+
+func (opts *MonitorsOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "\t")
+	return string(b)
 }
 
 func MonitorsFinishParseApi(w http.ResponseWriter, r *http.Request) *MonitorsOptions {

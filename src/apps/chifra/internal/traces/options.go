@@ -8,6 +8,7 @@
 package tracesPkg
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
@@ -42,6 +43,11 @@ func (opts *TracesOptions) TestLog() {
 	logger.TestLog(opts.SkipDdos, "SkipDdos: ", opts.SkipDdos)
 	logger.TestLog(opts.Max != 250, "Max: ", opts.Max)
 	opts.Globals.TestLog()
+}
+
+func (opts *TracesOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "\t")
+	return string(b)
 }
 
 func (opts *TracesOptions) GetEnvStr() string {

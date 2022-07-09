@@ -8,6 +8,7 @@
 package blocksPkg
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
@@ -58,6 +59,11 @@ func (opts *BlocksOptions) TestLog() {
 	logger.TestLog(opts.List != 0, "List: ", opts.List)
 	logger.TestLog(opts.ListCount != 0, "ListCount: ", opts.ListCount)
 	opts.Globals.TestLog()
+}
+
+func (opts *BlocksOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "\t")
+	return string(b)
 }
 
 func (opts *BlocksOptions) GetEnvStr() string {

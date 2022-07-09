@@ -8,6 +8,7 @@
 package servePkg
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
@@ -28,6 +29,11 @@ var serveCmdLineOptions ServeOptions
 func (opts *ServeOptions) TestLog() {
 	logger.TestLog(len(opts.Port) > 0, "Port: ", opts.Port)
 	opts.Globals.TestLog()
+}
+
+func (opts *ServeOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "\t")
+	return string(b)
 }
 
 func (opts *ServeOptions) GetEnvStr() string {

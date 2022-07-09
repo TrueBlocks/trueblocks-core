@@ -8,6 +8,7 @@
 package whenPkg
 
 import (
+	"encoding/json"
 	"net/http"
 	"strings"
 
@@ -42,6 +43,11 @@ func (opts *WhenOptions) TestLog() {
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	logger.TestLog(opts.Deep, "Deep: ", opts.Deep)
 	opts.Globals.TestLog()
+}
+
+func (opts *WhenOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "\t")
+	return string(b)
 }
 
 func WhenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {

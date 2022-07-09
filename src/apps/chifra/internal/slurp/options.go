@@ -8,6 +8,7 @@
 package slurpPkg
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
@@ -37,6 +38,11 @@ func (opts *SlurpOptions) TestLog() {
 	logger.TestLog(len(opts.Types) > 0, "Types: ", opts.Types)
 	logger.TestLog(opts.Appearances, "Appearances: ", opts.Appearances)
 	opts.Globals.TestLog()
+}
+
+func (opts *SlurpOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "\t")
+	return string(b)
 }
 
 func (opts *SlurpOptions) GetEnvStr() string {

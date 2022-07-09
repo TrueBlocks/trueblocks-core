@@ -8,6 +8,7 @@
 package explorePkg
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
@@ -33,6 +34,11 @@ func (opts *ExploreOptions) TestLog() {
 	logger.TestLog(opts.Local, "Local: ", opts.Local)
 	logger.TestLog(opts.Google, "Google: ", opts.Google)
 	opts.Globals.TestLog()
+}
+
+func (opts *ExploreOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "\t")
+	return string(b)
 }
 
 func (opts *ExploreOptions) GetEnvStr() string {

@@ -8,6 +8,7 @@
 package namesPkg
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
@@ -63,6 +64,11 @@ func (opts *NamesOptions) TestLog() {
 	logger.TestLog(opts.Undelete, "Undelete: ", opts.Undelete)
 	logger.TestLog(opts.Remove, "Remove: ", opts.Remove)
 	opts.Globals.TestLog()
+}
+
+func (opts *NamesOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "\t")
+	return string(b)
 }
 
 func (opts *NamesOptions) GetEnvStr() string {

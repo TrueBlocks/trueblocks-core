@@ -8,6 +8,7 @@
 package abisPkg
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
@@ -37,6 +38,11 @@ func (opts *AbisOptions) TestLog() {
 	logger.TestLog(len(opts.Find) > 0, "Find: ", opts.Find)
 	logger.TestLog(opts.Classes, "Classes: ", opts.Classes)
 	opts.Globals.TestLog()
+}
+
+func (opts *AbisOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "\t")
+	return string(b)
 }
 
 func (opts *AbisOptions) GetEnvStr() string {

@@ -8,6 +8,7 @@
 package initPkg
 
 import (
+	"encoding/json"
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
@@ -26,6 +27,11 @@ var initCmdLineOptions InitOptions
 func (opts *InitOptions) TestLog() {
 	logger.TestLog(opts.All, "All: ", opts.All)
 	opts.Globals.TestLog()
+}
+
+func (opts *InitOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "\t")
+	return string(b)
 }
 
 func InitFinishParseApi(w http.ResponseWriter, r *http.Request) *InitOptions {

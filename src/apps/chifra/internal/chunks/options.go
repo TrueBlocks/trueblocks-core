@@ -8,6 +8,7 @@
 package chunksPkg
 
 import (
+	"encoding/json"
 	"net/http"
 	"strings"
 
@@ -53,6 +54,11 @@ func (opts *ChunksOptions) TestLog() {
 	logger.TestLog(opts.PinRemote, "PinRemote: ", opts.PinRemote)
 	logger.TestLog(opts.Publish, "Publish: ", opts.Publish)
 	opts.Globals.TestLog()
+}
+
+func (opts *ChunksOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "\t")
+	return string(b)
 }
 
 func ChunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions {

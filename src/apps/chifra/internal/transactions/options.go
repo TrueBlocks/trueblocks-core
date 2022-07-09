@@ -8,6 +8,7 @@
 package transactionsPkg
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
@@ -41,6 +42,11 @@ func (opts *TransactionsOptions) TestLog() {
 	logger.TestLog(len(opts.Reconcile) > 0, "Reconcile: ", opts.Reconcile)
 	logger.TestLog(opts.Cache, "Cache: ", opts.Cache)
 	opts.Globals.TestLog()
+}
+
+func (opts *TransactionsOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "\t")
+	return string(b)
 }
 
 func (opts *TransactionsOptions) GetEnvStr() string {

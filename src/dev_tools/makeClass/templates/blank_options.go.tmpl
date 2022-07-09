@@ -8,6 +8,7 @@
 package [{ROUTE}]Pkg
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
@@ -28,6 +29,11 @@ var [{ROUTE}]CmdLineOptions [{PROPER}]Options
 
 func (opts *[{PROPER}]Options) TestLog() {
 [{TEST_LOGS}]	opts.Globals.TestLog()
+}
+
+func (opts *[{PROPER}]Options) String() string {
+	b, _ := json.MarshalIndent(opts, "", "\t")
+	return string(b)
 }
 
 [{GETENVSTR}][{TOCMDLINE}]func [{PROPER}]FinishParseApi(w http.ResponseWriter, r *http.Request) *[{PROPER}]Options {

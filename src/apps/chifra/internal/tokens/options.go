@@ -8,6 +8,7 @@
 package tokensPkg
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
@@ -39,6 +40,11 @@ func (opts *TokensOptions) TestLog() {
 	logger.TestLog(opts.ByAcct, "ByAcct: ", opts.ByAcct)
 	logger.TestLog(opts.NoZero, "NoZero: ", opts.NoZero)
 	opts.Globals.TestLog()
+}
+
+func (opts *TokensOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "\t")
+	return string(b)
 }
 
 func (opts *TokensOptions) GetEnvStr() string {

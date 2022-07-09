@@ -8,6 +8,7 @@
 package statePkg
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
@@ -43,6 +44,11 @@ func (opts *StateOptions) TestLog() {
 	logger.TestLog(len(opts.Call) > 0, "Call: ", opts.Call)
 	logger.TestLog(len(opts.ProxyFor) > 0, "ProxyFor: ", opts.ProxyFor)
 	opts.Globals.TestLog()
+}
+
+func (opts *StateOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "\t")
+	return string(b)
 }
 
 func (opts *StateOptions) GetEnvStr() string {
