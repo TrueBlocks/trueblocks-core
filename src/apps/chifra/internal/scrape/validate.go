@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -47,14 +47,8 @@ func (opts *ScrapeOptions) ValidateScrape() error {
 		return validate.Usage("The {0} option ({1}) must {2}.", "--sleep", fmt.Sprintf("%f", opts.Sleep), "be at least .25")
 	}
 
-	if opts.Pin {
-		key, secret := config.GetPinataKeys(opts.Globals.Chain)
-		if len(key) == 0 {
-			return validate.Usage("The {0} option requires {1}", "--pin", "a pinata_api_key")
-		}
-		if len(secret) == 0 {
-			return validate.Usage("The {0} option requires {1}", "--pin", "a pinata_secret_api_key")
-		}
+	if opts.Pin && !pinning.LocalDaemonRunning() {
+		return validate.Usage("The {0} option requires {1}", "--pin", "a locally running IPFS daemon")
 	}
 	// Note this does not return if a migration is needed
 	index.CheckBackLevelIndex(opts.Globals.Chain)

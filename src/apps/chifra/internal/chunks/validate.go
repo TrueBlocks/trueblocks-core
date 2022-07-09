@@ -7,6 +7,7 @@ package chunksPkg
 import (
 	"errors"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -31,6 +32,10 @@ func (opts *ChunksOptions) ValidateChunks() error {
 		return validate.Usage("You may not use --format json and log_level > 0 in addresses mode")
 	}
 
+	if opts.Publish {
+		return validate.Usage("The {0} option is not yet enabled", "--publish")
+	}
+
 	if opts.Mode != "manifest" {
 		if opts.PinRemote || opts.Publish {
 			return validate.Usage("The {0} and {1} options are available only in {2} mode.", "--pin_remote", "--publish", "manifest")
@@ -40,6 +45,25 @@ func (opts *ChunksOptions) ValidateChunks() error {
 		}
 		if opts.Check {
 			return validate.Usage("The {0} option is available only in {1} mode.", "--check", "manifest")
+		}
+	} else {
+		if opts.PinRemote {
+			key, secret := config.GetPinataKeys(opts.Globals.Chain)
+			if len(key) == 0 {
+				return validate.Usage("The {0} option requires {1}", "--pin_remote", "a pinata_api_key")
+			}
+			if len(secret) == 0 {
+				return validate.Usage("The {0} option requires {1}", "--pin_remote", "a pinata_secret_api_key")
+			}
+			if opts.Publish {
+				key, secret := config.GetPinataKeys(opts.Globals.Chain)
+				if len(key) == 0 {
+					return validate.Usage("The {0} option requires {1}", "--pin_remote", "a pinata_api_key")
+				}
+				if len(secret) == 0 {
+					return validate.Usage("The {0} option requires {1}", "--pin_remote", "a pinata_secret_api_key")
+				}
+			}
 		}
 	}
 
