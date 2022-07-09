@@ -47,6 +47,9 @@ bool COptions::handle_options(void) {
 
     // For each tool...
     for (auto tool : toolMap) {
+        if (tool.first == "apps/blockScrape") {
+            continue;
+        }
         optionStream << "    // clang-format off" << endl;
         notesStream << "    // clang-format off" << endl;
         configStream << "    // clang-format off" << endl;

@@ -45,11 +45,19 @@ class COptions : public COptionsBase {
     blknum_t nRecsNow{0};
     bool snapped{false};
 
-    COptions(void);
-    ~COptions(void);
-
-    bool parseArguments(string_q& command);
-    void Init(void);
+    COptions(void) {
+        Init();
+    }
+    ~COptions(void) {
+    }
+    bool parseArguments(string_q& command) {
+        if (!standardOptions(command))
+            return false;
+        Init();
+        return true;
+    }
+    void Init(void) {
+    }
 
     bool scrape_blocks(void);
     bool stage_chunks(const string_q& tmpFn);

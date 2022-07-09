@@ -26,7 +26,6 @@ bool COptions::scrape_blocks(void) {
     snap_to_grid = str_2_Uint(getEnvStr("TB_SETTINGS_SNAPTOGRID"));
     first_snap = str_2_Uint(getEnvStr("TB_SETTINGS_FIRSTSNAP"));
     allow_missing = getEnvStr("TB_SETTINGS_ALLOWMISSING") == "true";
-
     if (getChain() == "mainnet") {
         // different defaults for mainnet
         apps_per_chunk = apps_per_chunk == 200000 ? 2000000 : apps_per_chunk;
@@ -78,9 +77,7 @@ bool COptions::scrape_blocks(void) {
     blazeCmd << "--addr_chan_cnt " << addr_chan_cnt << " ";
     blazeCmd << "--chain " << getChain() << " ";
     blazeCmd << (verbose ? ("--verbose " + uint_2_Str(verbose)) : "");
-    // LOG_INFO(bWhite, blazeCmd.str(), cOff);
 
-    // TODO: BOGUS - TESTING SCRAPING
     LOG_INFO("block_cnt: ", block_cnt);
     LOG_INFO("block_chan_cnt: ", block_chan_cnt);
     LOG_INFO("addr_chan_cnt: ", addr_chan_cnt);
@@ -109,12 +106,6 @@ bool COptions::scrape_blocks(void) {
         return false;
     }
 
-    if (isRunning("acctExport")) {
-        cleanFolder(indexFolder_ripe);
-        LOG_WARN("'chifra export' is running. 'chifra scrape' cannot run at this time...");
-        return false;
-    }
-
     string_q tmpStagingFn = indexFolder_staging + "000000000-temp.txt";
     tmpStagingStream.open(tmpStagingFn, ios::out | ios::trunc);
     if (!tmpStagingStream.is_open()) {
@@ -126,6 +117,7 @@ bool COptions::scrape_blocks(void) {
     prev_block = path_2_Bn(stageFn);
     nRecsThen = fileSize(stageFn) / asciiAppearanceSize;
     snapped = false;
+
     if (!forEveryFileInFolder(indexFolder_ripe, copyRipeToStage, this)) {
         if (!snapped) {
             LOG_WARN("copyRipeToStage failed...replaying...");
