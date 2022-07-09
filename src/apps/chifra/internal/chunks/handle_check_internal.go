@@ -15,7 +15,7 @@ import (
 )
 
 // TODO: Concurrent?
-func (opts *ChunksOptions) CheckInternal(fileNames []string, blockNums []uint64, report *types.CheckReport) error {
+func (opts *ChunksOptions) CheckInternal(fileNames []string, blockNums []uint64, report *types.ReportCheck) error {
 	// allow_missing := config.ReadBlockScrape(opts.Globals.Chain).Settings.Allow_missing
 	for testId, fileName := range fileNames {
 		report.VisitedCnt++

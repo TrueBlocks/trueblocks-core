@@ -13,7 +13,7 @@ import (
 )
 
 // TODO: Concurrent?
-func (opts *ChunksOptions) CheckSequential(fnArray, cacheArray, remoteArray []string, report *types.CheckReport) error {
+func (opts *ChunksOptions) CheckSequential(fnArray, cacheArray, remoteArray []string, report *types.ReportCheck) error {
 	if err := opts.checkSequential("disc", fnArray, report); err != nil {
 		return err
 	}
@@ -26,7 +26,7 @@ func (opts *ChunksOptions) CheckSequential(fnArray, cacheArray, remoteArray []st
 	return nil
 }
 
-func (opts *ChunksOptions) checkSequential(which string, array []string, report *types.CheckReport) error {
+func (opts *ChunksOptions) checkSequential(which string, array []string, report *types.ReportCheck) error {
 	// TODO: Technically, allow_missing means missing inside the file not in the filenames
 	allow_missing := config.ReadBlockScrape(opts.Globals.Chain).Settings.Allow_missing
 

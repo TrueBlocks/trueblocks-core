@@ -19,10 +19,10 @@ import (
 // TODO: Fix export without arrays
 func RenderSlice[
 	T types.SimpleNamedBlock |
-		types.Function |
-		types.CleanReport |
-		types.CheckReport |
-		types.RepairReport |
+		types.ReportClean |
+		types.ReportCheck |
+		types.ReportRepair |
+		types.SimpleFunction |
 		types.SimpleMonitor |
 		types.SimpleChunkRecord |
 		types.SimpleAppearance](opts *GlobalOptions, arr []T) error {

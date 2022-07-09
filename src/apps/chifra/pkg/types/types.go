@@ -30,7 +30,7 @@ type SimpleAppearance struct {
 	TransactionIndex uint32 `json:"transactionIndex"`
 }
 
-type Function struct {
+type SimpleFunction struct {
 	Encoding  string `json:"encoding,omitempty"`
 	Signature string `json:"signature,omitempty"`
 }

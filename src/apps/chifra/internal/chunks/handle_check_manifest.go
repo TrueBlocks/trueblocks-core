@@ -22,7 +22,7 @@ type CompareState struct {
 	// failB    int
 }
 
-func (opts *ChunksOptions) CheckManifest(arrayA, arrayB []string, report *types.CheckReport) error {
+func (opts *ChunksOptions) CheckManifest(arrayA, arrayB []string, report *types.ReportCheck) error {
 	comp := CompareState{
 		testMode: opts.Globals.TestMode,
 		details:  opts.Details,
@@ -44,7 +44,7 @@ func (opts *ChunksOptions) CheckManifest(arrayA, arrayB []string, report *types.
 }
 
 // TODO: Concurrent?
-func (comp *CompareState) checkArrays(report *types.CheckReport) error {
+func (comp *CompareState) checkArrays(report *types.ReportCheck) error {
 	marker := ""
 	if comp.testMode {
 		marker = " (testing)"

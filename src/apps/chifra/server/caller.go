@@ -16,7 +16,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -164,7 +163,7 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 		unused.Chain = chain
 		unused.TestMode = utils.IsTestModeServer(r)
 		unused.Writer = w
-		output.RespondWithError(w, http.StatusBadRequest, errors.New(parsed))
+		RespondWithError(w, http.StatusBadRequest, errors.New(parsed))
 		return
 	}
 	if strings.Contains(outp, "\"errors\":") {

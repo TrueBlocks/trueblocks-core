@@ -1,20 +1,20 @@
 package types
 
-type CleanReport struct {
+type ReportClean struct {
 	Addr     string `json:"addr"`
 	SizeThen uint32 `json:"sizeThen"`
 	SizeNow  uint32 `json:"sizeNow"`
 	Dups     uint32 `json:"dupsRemoved"`
 }
 
-type RepairReport struct {
+type ReportRepair struct {
 	Status    string `json:"status"`
 	Range     string `json:"range,omitempty"`
 	BloomHash string `json:"bloomHash,omitempty"`
 	IndexHash string `json:"indexHash,omitempty"`
 }
 
-type CheckReport struct {
+type ReportCheck struct {
 	Reason     string   `json:"reason"`
 	VisitedCnt uint32   `json:"nVisits,omitempty"`
 	CheckedCnt uint32   `json:"nTests,omitempty"`
@@ -25,7 +25,7 @@ type CheckReport struct {
 	MsgStrings []string `json:"msgStrings,omitempty"`
 }
 
-type ChunksReport struct {
+type ReportChunks struct {
 	Start         uint64  `json:"start"`
 	End           uint64  `json:"end"`
 	NAddrs        uint32  `json:"nAddrs"`

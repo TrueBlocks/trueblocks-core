@@ -100,42 +100,42 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 		return remoteArray[i] < remoteArray[j]
 	})
 
-	reports := []types.CheckReport{}
+	reports := []types.ReportCheck{}
 
-	seq := types.CheckReport{Reason: "Sequential"}
+	seq := types.ReportCheck{Reason: "Sequential"}
 	if err := opts.CheckSequential(fileNames, cacheArray, remoteArray, &seq); err != nil {
 		return err
 	}
 	reports = append(reports, seq)
 
-	int := types.CheckReport{Reason: "Internally consistent"}
+	int := types.ReportCheck{Reason: "Internally consistent"}
 	if err := opts.CheckInternal(fileNames, blockNums, &int); err != nil {
 		return err
 	}
 	reports = append(reports, int)
 
-	con := types.CheckReport{Reason: "Consistent hashes"}
+	con := types.ReportCheck{Reason: "Consistent hashes"}
 	if err := opts.CheckHashes(cacheManifest, remoteManifest, &con); err != nil {
 		return err
 	}
 	reports = append(reports, con)
 
 	// compare remote manifest to cached manifest
-	r2c := types.CheckReport{Reason: "Remote Manifest to Cached Manifest"}
+	r2c := types.ReportCheck{Reason: "Remote Manifest to Cached Manifest"}
 	if err := opts.CheckManifest(remoteArray, cacheArray, &r2c); err != nil {
 		return err
 	}
 	reports = append(reports, r2c)
 
 	// compare with çached manifest with files on disc
-	d2c := types.CheckReport{Reason: "Disc Files to Cached Manifest"}
+	d2c := types.ReportCheck{Reason: "Disc Files to Cached Manifest"}
 	if err := opts.CheckManifest(fnArray, cacheArray, &d2c); err != nil {
 		return err
 	}
 	reports = append(reports, d2c)
 
 	// compare with remote manifest with files on disc
-	d2r := types.CheckReport{Reason: "Disc Files to Remote Manifest"}
+	d2r := types.ReportCheck{Reason: "Disc Files to Remote Manifest"}
 	if err := opts.CheckManifest(fnArray, remoteArray, &d2r); err != nil {
 		return err
 	}

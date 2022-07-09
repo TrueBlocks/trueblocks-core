@@ -11,7 +11,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *ChunksOptions) CheckHashes(cacheMan *manifest.Manifest, contractMan *manifest.Manifest, report *types.CheckReport) error {
+func (opts *ChunksOptions) CheckHashes(cacheMan *manifest.Manifest, contractMan *manifest.Manifest, report *types.ReportCheck) error {
 	if err := opts.checkHashes("cache", cacheMan, report); err != nil {
 		return err
 	}
@@ -21,7 +21,7 @@ func (opts *ChunksOptions) CheckHashes(cacheMan *manifest.Manifest, contractMan 
 	return nil
 }
 
-func (opts *ChunksOptions) checkHashes(which string, man *manifest.Manifest, report *types.CheckReport) error {
+func (opts *ChunksOptions) checkHashes(which string, man *manifest.Manifest, report *types.ReportCheck) error {
 	for _, chunk := range man.Chunks {
 		report.VisitedCnt++
 		report.CheckedCnt++
