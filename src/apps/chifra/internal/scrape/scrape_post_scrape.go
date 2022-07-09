@@ -26,11 +26,11 @@ import (
 )
 
 // TODO: BOGUS - MANIFEST WRITING THE MANIFEST
-func (opts *ScrapeOptions) postScrape(progressThen *rpcClient.MetaData) error {
+func (opts *ScrapeOptions) postScrape(progressThen *rpcClient.MetaData) (bool, error) {
 	logger.Log(logger.Info, "PostScrape")
 	// If we're not pinning, do nothing
 	if !opts.Pin {
-		return nil
+		return true, nil
 	}
 
 	// If there's been no progress, do nothing
@@ -40,17 +40,17 @@ func (opts *ScrapeOptions) postScrape(progressThen *rpcClient.MetaData) error {
 	}()
 
 	if progressNow.Finalized <= progressThen.Finalized {
-		return nil
+		return true, nil
 	}
 
 	newPinsFn := config.GetPathToCache(opts.Globals.Chain) + "tmp/chunks_created.txt"
 	if !file.FileExists(newPinsFn) {
-		return errors.New("chunks_created file not found, but there's been progress")
+		return true, errors.New("chunks_created file not found, but there's been progress")
 	}
 
 	lines := file.AsciiFileToLines(newPinsFn)
 	if len(lines) < 1 {
-		return errors.New("chunks_created file found, but it was empty")
+		return true, errors.New("chunks_created file found, but it was empty")
 	}
 
 	for _, line := range lines {
@@ -59,7 +59,7 @@ func (opts *ScrapeOptions) postScrape(progressThen *rpcClient.MetaData) error {
 
 		record := manifest.ChunkRecord{}
 		if len(parts) < 1 {
-			return errors.New("Invalid record in chunks_created.txt file: " + line)
+			return true, errors.New("Invalid record in chunks_created.txt file: " + line)
 		}
 		if len(parts) > 0 {
 			record.Range = parts[0]
@@ -84,26 +84,26 @@ func (opts *ScrapeOptions) postScrape(progressThen *rpcClient.MetaData) error {
 
 		bloomHash, err := pina.PinFile(bloomPath)
 		if err != nil {
-			return err
+			return true, err
 		}
 		record.BloomHash = types.IpfsHash(bloomHash)
 
 		indexHash, err := pina.PinFile(pathToIndex)
 		if err != nil {
-			return err
+			return true, err
 		}
 		record.IndexHash = types.IpfsHash(indexHash)
 
 		logger.Log(logger.Info, "Pinned:", record.Range, bloomHash, indexHash)
 		err = opts.UpdateManifest(record)
 		if err != nil {
-			return err
+			return true, err
 		}
 
 		// ipfsAvail := pinning.LocalDaemonRunning()
 	}
 	os.Remove(newPinsFn)
-	return nil
+	return true, nil
 }
 
 func unique(chunks []manifest.ChunkRecord) []manifest.ChunkRecord {

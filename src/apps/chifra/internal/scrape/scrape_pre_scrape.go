@@ -9,11 +9,19 @@ package scrapePkg
 // be found in the LICENSE file.
 
 import (
+	"os"
+	"strconv"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 )
 
-func (opts *ScrapeOptions) preScrape(progressThen *rpcClient.MetaData) error {
+func (opts *ScrapeOptions) preScrape(progressThen *rpcClient.MetaData) (bool, error) {
 	logger.Log(logger.Info, "PreScrape")
-	return nil
+	e := os.Getenv("TEST_END_SCRAPE")
+	ee, _ := strconv.ParseUint(e, 10, 32)
+	if ee != 0 && progressThen.Finalized > ee {
+		return false, nil
+	}
+	return true, nil
 }

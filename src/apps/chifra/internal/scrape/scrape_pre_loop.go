@@ -10,18 +10,23 @@ package scrapePkg
 
 import (
 	"fmt"
+	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 )
 
-func (opts *ScrapeOptions) preLoop(progressThen *rpcClient.MetaData) error {
+func (opts *ScrapeOptions) preLoop(progressThen *rpcClient.MetaData) (bool, error) {
+	if os.Getenv("NO_COLOR") == "true" {
+		colors.ColorsOff()
+	}
 	logger.Log(logger.Info, "PreLoop")
 	chunkId := config.GetPathToIndex(opts.Globals.Chain) + fmt.Sprintf("finalized/%09d-%09d", 0, 0) + ".bin"
 	if !file.FileExists(chunkId) {
 		fmt.Println("Need to build zero block chunk", chunkId, file.FileExists(chunkId))
 	}
-	return nil
+	return true, nil
 }

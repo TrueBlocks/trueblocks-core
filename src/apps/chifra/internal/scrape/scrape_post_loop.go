@@ -13,7 +13,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 )
 
-func (opts *ScrapeOptions) postLoop(progressThen *rpcClient.MetaData) error {
+func (opts *ScrapeOptions) postLoop(progressThen *rpcClient.MetaData) (bool, error) {
 	logger.Log(logger.Info, "PostLoop")
-	return nil
+	return true, nil
 }
