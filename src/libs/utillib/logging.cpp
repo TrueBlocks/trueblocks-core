@@ -20,13 +20,21 @@ logger<log_policy_i>* dLogger = (logger<log_policy_i>*)&elog;
 logger<log_policy_i>* eLogger = (logger<log_policy_i>*)&elog;
 
 //----------------------------------------------------------------
+bool getLogTiming() {
+    static bool set = false;
+    static bool logTiming = true;
+    if (!set) {
+        logTiming = getEnvStr("LOG_TIMING_OFF").empty();
+        set = true;
+    }
+    return logTiming;
+}
+
+//----------------------------------------------------------------
 template <>
 string_q logger<log_policy_i>::get_logline_header(void) {
     stringstream header;
-// TODO: BOGUS - TESTING SCRAPING2
-#define LOG_TIMING true
-    // #define LOG_TIMING false
-    if (LOG_TIMING) {
+    if (getLogTiming()) {
         if (isTestMode()) {
             header << "TIME ~ CLOCK - ";
         } else {
