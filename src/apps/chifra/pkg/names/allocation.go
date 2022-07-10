@@ -6,10 +6,12 @@ import (
 	"io"
 	"math/big"
 	"os"
+	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 type Allocation struct {
@@ -17,6 +19,7 @@ type Allocation struct {
 	Balance big.Int
 }
 
+// TODO: BOGUS - SHOULD CACHE IN BINARY CACHE SINCE IT'S IMMUTABLE
 func LoadPrefunds(chain string) ([]Allocation, error) {
 	allocs := []Allocation{}
 
@@ -64,6 +67,12 @@ func LoadPrefunds(chain string) ([]Allocation, error) {
 	if len(allocs) == 0 {
 		return allocs, errors.New("found no allocs")
 	}
+
+	sort.Slice(allocs, func(i, j int) bool {
+		iAlloc := hexutil.Encode(allocs[i].Address.Bytes())
+		jAlloc := hexutil.Encode(allocs[j].Address.Bytes())
+		return iAlloc < jAlloc
+	})
 
 	return allocs, nil
 }

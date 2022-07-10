@@ -2,10 +2,10 @@ package namesPkg
 
 import (
 	"fmt"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 func (opts *NamesOptions) HandlePrefundOnly() error {
@@ -23,7 +23,7 @@ func (opts *NamesOptions) HandlePrefundOnly() error {
 	for i, alloc := range allocs {
 		a := types.SimpleName{
 			Tags:    "80-Prefund",
-			Address: strings.ToLower(alloc.Address.Hex()),
+			Address: hexutil.Encode(alloc.Address.Bytes()),
 			Name:    "Prefund_" + fmt.Sprintf("%04d", i),
 			Source:  "Genesis",
 		}

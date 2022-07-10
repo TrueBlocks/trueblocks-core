@@ -6,10 +6,10 @@ package index
 
 import (
 	"fmt"
-	"strings"
 	"testing"
 
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 func Test_Bloom(t *testing.T) {
@@ -128,7 +128,7 @@ func Test_Bloom(t *testing.T) {
 			t.Error("address should not be member, but is (ignores false positives)", tt.Addr.Hex())
 		}
 
-		fmt.Println(strings.ToLower(tt.Addr.Hex()), bloom.IsMemberBytes(tt.Addr))
+		fmt.Println(hexutil.Encode(tt.Addr.Bytes()), bloom.IsMemberBytes(tt.Addr))
 	}
 }
 

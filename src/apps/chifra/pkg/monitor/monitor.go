@@ -147,7 +147,7 @@ func (mon *Monitor) Count() uint32 {
 
 // GetAddrStr returns the Monitor's address as a string
 func (mon *Monitor) GetAddrStr() string {
-	return strings.ToLower(mon.Address.Hex())
+	return hexutil.Encode(mon.Address.Bytes())
 }
 
 // Close closes an open Monitor if it's open, does nothing otherwise

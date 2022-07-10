@@ -6,11 +6,11 @@ package chunksPkg
 
 import (
 	"io"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 func (opts *ChunksOptions) showAddresses(ctx *WalkContext, path string, first bool) (bool, error) {
@@ -40,7 +40,7 @@ func (opts *ChunksOptions) showAddresses(ctx *WalkContext, path string, first bo
 		}
 
 		r := types.SimpleIndexAddress{
-			Address: strings.ToLower(obj.Address.Hex()),
+			Address: hexutil.Encode(obj.Address.Bytes()),
 			Range:   indexChunk.Range.String(),
 			Offset:  obj.Offset,
 			Count:   obj.Count,

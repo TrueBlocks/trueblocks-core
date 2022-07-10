@@ -5,12 +5,12 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 // HeaderRecord is the first 44 bytes of an ChunkData. This structure carries a magic number (4 bytes),
@@ -50,7 +50,7 @@ func ReadChunkHeader(chain, fileName string) (header HeaderRecord, err error) {
 		return
 	}
 
-	headerHash := strings.ToLower(header.Hash.Hex())
+	headerHash := hexutil.Encode(header.Hash.Bytes())
 	hasZeroHash := headerHash == unchained.ZeroMagicHash
 	hasMagicHash := headerHash == unchained.HeaderMagicHash
 

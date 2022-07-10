@@ -20,7 +20,7 @@ extern bool visitPrefund(const Allocation& prefund, void* data);
 bool COptions::scrape_blocks(void) {
     // TODO: BOGUS - TESTING SCRAPING
     colorsOff();
-    colorsOn();
+    // colorsOn();
 
     // This may be the first time we've ever run. In that case, we need to build the zero block index file...
     string chunkId = padNum9(0) + "-" + padNum9(0);
@@ -411,7 +411,7 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines) {
 
     address_t prev;
     uint32_t offset = 0, nAddrs = 0, cnt = 0;
-    CIndexedAppearanceArray blockTable;
+    CIndexedAppearanceArray appTable;
 
     // TODO: BOGUS - MANIFEST WRITING HASH INTO INDEX
     hashbytes_t hash = hash_2_Bytes(padLeft(keccak256(manifestVersion), 64, '0'));
@@ -426,7 +426,7 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines) {
     archive.Write(MAGIC_NUMBER);
     archive.Write(hash.data(), hash.size(), sizeof(uint8_t));
     archive.Write(nAddrs);
-    archive.Write((uint32_t)blockTable.size());  // not accurate yet
+    archive.Write((uint32_t)appTable.size());  // not accurate yet
 
     CBloomFilterWrite bloomFilter;
     for (size_t l = 0; l < lines.size(); l++) {
@@ -435,7 +435,7 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines) {
         CStringArray parts;
         explode(parts, line, '\t');
         CIndexedAppearance rec(parts[1], parts[2]);
-        blockTable.push_back(rec);
+        appTable.push_back(rec);
         if (!prev.empty() && parts[0] != prev) {
             bloomFilter.addToSet(prev);
             addrbytes_t bytes = addr_2_Bytes(prev);
@@ -458,7 +458,7 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines) {
     archive.Write(cnt);
     nAddrs++;
 
-    for (auto record : blockTable) {
+    for (auto record : appTable) {
         archive.Write(record.blk);
         archive.Write(record.txid);
     }
@@ -467,7 +467,7 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines) {
     archive.Write(MAGIC_NUMBER);
     archive.Write(hash.data(), hash.size(), sizeof(uint8_t));
     archive.Write(nAddrs);
-    archive.Write((uint32_t)blockTable.size());
+    archive.Write((uint32_t)appTable.size());
     archive.Release();
 
     // We've built the data in a temporary file. We do this in case we're interrupted during the building of the

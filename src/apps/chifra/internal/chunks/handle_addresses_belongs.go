@@ -6,11 +6,11 @@ package chunksPkg
 
 import (
 	"io"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 func (opts *ChunksOptions) showAddressesBelongs(ctx *WalkContext, path string, first bool) (bool, error) {
@@ -63,7 +63,7 @@ func (opts *ChunksOptions) showAddressesBelongs(ctx *WalkContext, path string, f
 
 func (opts *ChunksOptions) shouldShow(obj index.AddressRecord) bool {
 	for _, addr := range opts.Addrs {
-		if strings.ToLower(obj.Address.Hex()) == addr {
+		if hexutil.Encode(obj.Address.Bytes()) == addr {
 			return true
 		}
 	}
