@@ -21,17 +21,28 @@ import (
 
 // MonitorsOptions provides all command options for the chifra monitors command.
 type MonitorsOptions struct {
-	Addrs      []string
-	Clean      bool
-	Delete     bool
-	Undelete   bool
-	Remove     bool
-	Watch      bool
-	Sleep      float64
-	FirstBlock uint64
-	LastBlock  uint64
-	Globals    globals.GlobalOptions
-	BadFlag    error
+	// one or more addresses (0x...) to process
+	Addrs []string `json:"addrs,omitempty"`
+	// clean (i.e. remove duplicate appearances) from monitors
+	Clean bool `json:"clean,omitempty"`
+	// delete a monitor, but do not remove it
+	Delete bool `json:"delete,omitempty"`
+	// undelete a previously deleted monitor
+	Undelete bool `json:"undelete,omitempty"`
+	// remove a previously deleted monitor
+	Remove bool `json:"remove,omitempty"`
+	// continually scan for new blocks and extract data for monitored addresses
+	Watch bool `json:"watch,omitempty"`
+	// seconds to sleep between monitor passes
+	Sleep float64 `json:"sleep,omitempty"`
+	// first block to process (inclusive)
+	FirstBlock uint64 `json:"firstBlock,omitempty"`
+	// last block to process (inclusive)
+	LastBlock uint64 `json:"lastBlock,omitempty"`
+	// the global options
+	Globals globals.GlobalOptions `json:"globals,omitempty"`
+	// an error flag if needed
+	BadFlag error `json:"badFlag,omitempty"`
 }
 
 var monitorsCmdLineOptions MonitorsOptions

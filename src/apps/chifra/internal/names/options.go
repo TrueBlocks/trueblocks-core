@@ -21,26 +21,46 @@ import (
 
 // NamesOptions provides all command options for the chifra names command.
 type NamesOptions struct {
-	Terms       []string
-	Expand      bool
-	MatchCase   bool
-	All         bool
-	Custom      bool
-	Prefund     bool
-	Named       bool
-	Addr        bool
-	Collections bool
-	Tags        bool
-	ToCustom    bool
-	Clean       bool
-	Autoname    string
-	Create      bool
-	Update      bool
-	Delete      bool
-	Undelete    bool
-	Remove      bool
-	Globals     globals.GlobalOptions
-	BadFlag     error
+	// a space separated list of one or more search terms
+	Terms []string `json:"terms,omitempty"`
+	// expand search to include all fields (search name, address, and symbol otherwise)
+	Expand bool `json:"expand,omitempty"`
+	// do case-sensitive search
+	MatchCase bool `json:"matchCase,omitempty"`
+	// include all accounts in the search
+	All bool `json:"all,omitempty"`
+	// include your custom named accounts
+	Custom bool `json:"custom,omitempty"`
+	// include prefund accounts
+	Prefund bool `json:"prefund,omitempty"`
+	// include well know token and airdrop addresses in the search
+	Named bool `json:"named,omitempty"`
+	// display only addresses in the results (useful for scripting)
+	Addr bool `json:"addr,omitempty"`
+	// display collections data
+	Collections bool `json:"collections,omitempty"`
+	// export the list of tags and subtags only
+	Tags bool `json:"tags,omitempty"`
+	// for editCmd only, is the edited name a custom name or not
+	ToCustom bool `json:"toCustom,omitempty"`
+	// clean the data (addrs to lower case, sort by addr)
+	Clean bool `json:"clean,omitempty"`
+	// an address assumed to be a token, added automatically to names database if true
+	Autoname string `json:"autoname,omitempty"`
+	// create a new name record
+	Create bool `json:"create,omitempty"`
+	// edit an existing name
+	Update bool `json:"update,omitempty"`
+	// delete a name, but do not remove it
+	Delete bool `json:"delete,omitempty"`
+	// undelete a previously deleted name
+	Undelete bool `json:"undelete,omitempty"`
+	// remove a previously deleted name
+	Remove bool `json:"remove,omitempty"`
+	// the global options
+	Globals globals.GlobalOptions `json:"globals,omitempty"`
+	// an error flag if needed
+	BadFlag error `json:"badFlag,omitempty"`
 }
 
 var namesCmdLineOptions NamesOptions

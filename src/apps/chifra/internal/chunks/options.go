@@ -22,21 +22,36 @@ import (
 
 // ChunksOptions provides all command options for the chifra chunks command.
 type ChunksOptions struct {
-	Mode      string
-	Blocks    []string
-	BlockIds  []identifiers.Identifier
-	Addrs     []string
-	Details   bool
-	Check     bool
-	Belongs   bool
-	Repair    bool
-	Clean     bool
-	Remote    bool
-	Reset     uint64
-	PinRemote bool
-	Publish   bool
-	Globals   globals.GlobalOptions
-	BadFlag   error
+	// the type of chunk info to retrieve
+	Mode string `json:"mode,omitempty"`
+	// optional list of blocks to intersect with chunk ranges
+	Blocks []string `json:"blocks,omitempty"`
+	// block identifiers
+	BlockIds []identifiers.Identifier `json:"blockIds,omitempty"`
+	// one or more addresses to use with --belongs option (see note)
+	Addrs []string `json:"addrs,omitempty"`
+	// for manifest and addresses options only, display full details of the report
+	Details bool `json:"details,omitempty"`
+	// depends on mode, checks for internal consistency of the data type
+	Check bool `json:"check,omitempty"`
+	// checks if the given address appears in the given chunk
+	Belongs bool `json:"belongs,omitempty"`
+	// valid for manifest option only, repair the given chunk (requires block number)
+	Repair bool `json:"repair,omitempty"`
+	// retrieve all pins on Pinata, compare to manifest, remove any extraneous remote pins
+	Clean bool `json:"clean,omitempty"`
+	// for some options, force processing from remote data
+	Remote bool `json:"remote,omitempty"`
+	// available only in chunks mode, remove all chunks inclusive of or after this block
+	Reset uint64 `json:"reset,omitempty"`
+	// pin any previously unpinned chunks and blooms to a remote pinning service
+	PinRemote bool `json:"pinRemote,omitempty"`
+	// update the manifest and publish it to the Unchained Index smart contract
+	Publish bool `json:"publish,omitempty"`
+	// the global options
+	Globals globals.GlobalOptions `json:"globals,omitempty"`
+	// an error flag if needed
+	BadFlag error `json:"badFlag,omitempty"`
 }
 
 var chunksCmdLineOptions ChunksOptions

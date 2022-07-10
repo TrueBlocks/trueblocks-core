@@ -22,14 +22,22 @@ import (
 
 // TokensOptions provides all command options for the chifra tokens command.
 type TokensOptions struct {
-	Addrs2   []string
-	Blocks   []string
-	BlockIds []identifiers.Identifier
-	Parts    []string
-	ByAcct   bool
-	NoZero   bool
-	Globals  globals.GlobalOptions
-	BadFlag  error
+	// two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported
+	Addrs2 []string `json:"addrs2,omitempty"`
+	// an optional list of one or more blocks at which to report balances, defaults to 'latest'
+	Blocks []string `json:"blocks,omitempty"`
+	// block identifiers
+	BlockIds []identifiers.Identifier `json:"blockIds,omitempty"`
+	// which parts of the token information to retrieve
+	Parts []string `json:"parts,omitempty"`
+	// consider each address an ERC20 token except the last, whose balance is reported for each token
+	ByAcct bool `json:"byAcct,omitempty"`
+	// suppress the display of zero balance accounts
+	NoZero bool `json:"noZero,omitempty"`
+	// the global options
+	Globals globals.GlobalOptions `json:"globals,omitempty"`
+	// an error flag if needed
+	BadFlag error `json:"badFlag,omitempty"`
 }
 
 var tokensCmdLineOptions TokensOptions

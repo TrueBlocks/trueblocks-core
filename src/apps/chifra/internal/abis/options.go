@@ -21,13 +21,20 @@ import (
 
 // AbisOptions provides all command options for the chifra abis command.
 type AbisOptions struct {
-	Addrs   []string
-	Known   bool
-	Sol     bool
-	Find    []string
-	Classes bool
-	Globals globals.GlobalOptions
-	BadFlag error
+	// a list of one or more smart contracts whose ABIs to display
+	Addrs []string `json:"addrs,omitempty"`
+	// load common 'known' ABIs from cache
+	Known bool `json:"known,omitempty"`
+	// extract the abi definition from the provided .sol file(s)
+	Sol bool `json:"sol,omitempty"`
+	// search for function or event declarations given a four- or 32-byte code(s)
+	Find []string `json:"find,omitempty"`
+	// generate classDefinitions folder and class definitions
+	Classes bool `json:"classes,omitempty"`
+	// the global options
+	Globals globals.GlobalOptions `json:"globals,omitempty"`
+	// an error flag if needed
+	BadFlag error `json:"badFlag,omitempty"`
 }
 
 var abisCmdLineOptions AbisOptions

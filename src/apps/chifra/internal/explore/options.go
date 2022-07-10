@@ -21,11 +21,16 @@ import (
 
 // ExploreOptions provides all command options for the chifra explore command.
 type ExploreOptions struct {
-	Terms   []string
-	Local   bool
-	Google  bool
-	Globals globals.GlobalOptions
-	BadFlag error
+	// one or more address, name, block, or transaction identifier
+	Terms []string `json:"terms,omitempty"`
+	// open the local TrueBlocks explorer
+	Local bool `json:"local,omitempty"`
+	// search google excluding popular blockchain explorers
+	Google bool `json:"google,omitempty"`
+	// the global options
+	Globals globals.GlobalOptions `json:"globals,omitempty"`
+	// an error flag if needed
+	BadFlag error `json:"badFlag,omitempty"`
 }
 
 var exploreCmdLineOptions ExploreOptions

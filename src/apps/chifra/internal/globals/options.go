@@ -16,26 +16,26 @@ import (
 )
 
 type GlobalOptions struct {
-	Verbose  bool
-	LogLevel uint64
-	NoHeader bool
-	Chain    string
-	Wei      bool
-	Ether    bool
-	Dollars  bool
-	Help     bool
-	Raw      bool
-	ToFile   bool
-	File     string
-	Version  bool
-	Noop     bool
-	NoColor  bool
-	OutputFn string
-	Append   bool
-	Format   string
-	TestMode bool
-	ApiMode  bool
-	Writer   io.Writer
+	Verbose  bool      `json:"verbose,omitempty"`
+	LogLevel uint64    `json:"logLevel,omitempty"`
+	NoHeader bool      `json:"noHeader,omitempty"`
+	Chain    string    `json:"chain,omitempty"`
+	Wei      bool      `json:"wei,omitempty"`
+	Ether    bool      `json:"ether,omitempty"`
+	Dollars  bool      `json:"dollars,omitempty"`
+	Help     bool      `json:"help,omitempty"`
+	Raw      bool      `json:"raw,omitempty"`
+	ToFile   bool      `json:"toFile,omitempty"`
+	File     string    `json:"file,omitempty"`
+	Version  bool      `json:"version,omitempty"`
+	Noop     bool      `json:"noop,omitempty"`
+	NoColor  bool      `json:"noColor,omitempty"`
+	OutputFn string    `json:"outputFn,omitempty"`
+	Append   bool      `json:"append,omitempty"`
+	Format   string    `json:"format,omitempty"`
+	TestMode bool      `json:"testMode,omitempty"`
+	ApiMode  bool      `json:"apiMode,omitempty"`
+	Writer   io.Writer `json:"writer,omitempty"`
 }
 
 func (opts *GlobalOptions) TestLog() {

@@ -302,35 +302,49 @@ string_q get_testlogs(const CCommandOption& cmd) {
 }
 
 string_q get_optfields(const CCommandOption& cmd) {
-    size_t wid = 0;
+    size_t varWidth = 0, typeWidth = 0;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         replace(p.longName, "deleteMe", "delete");
-        string_q v = p.Format("[{VARIABLE}]");
-        wid = max(v.length(), wid);
-        if (contains(v, "Blocks") && contains(p.go_type, "[]string")) {
-            wid = max(string_q("BlockIds").length(), wid);
+        string_q var = p.Format("[{VARIABLE}]");
+        varWidth = max(var.length(), varWidth);
+        string_q type = p.Format("[{GO_TYPE}]");
+        typeWidth = max(type.length(), typeWidth);
+        if (contains(var, "Blocks") && contains(p.go_type, "[]string")) {
+            varWidth = max(string_q("BlockIds").length(), varWidth);
+            typeWidth = max(string_q("[]identifiers.Identifier").length(), typeWidth);
         }
-        if (contains(v, "Transactions") && contains(p.go_type, "[]string")) {
-            wid = max(string_q("TransactionIds").length(), wid);
+        if (contains(var, "Transactions") && contains(p.go_type, "[]string")) {
+            varWidth = max(string_q("TransactionIds").length(), varWidth);
+            typeWidth = max(string_q("[]identifiers.Identifier").length(), typeWidth);
         }
     }
-    wid = max(string_q("Globals").length(), wid);
-    wid = max(string_q("BadFlag").length(), wid);
+    varWidth = max(string_q("Globals").length(), varWidth);
+    varWidth = max(string_q("BadFlag").length(), varWidth);
+    typeWidth = max(string_q("globals.GlobalOptions").length(), typeWidth);
+    typeWidth = max(string_q("error").length(), typeWidth);
+
+#define ONE(os, v1, w1, v2, w2, c)                                                                                     \
+    os << "\t// " << c << endl;                                                                                        \
+    os << "\t";                                                                                                        \
+    os << v1 << " ";                                                                                                   \
+    os << v2 << " ";                                                                                                   \
+    os << "`json:\"" + firstLower(v1) + ",omitempty\"`" << endl;
 
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         replace(p.longName, "deleteMe", "delete");
-        string_q v = p.Format("[{VARIABLE}]");
-        os << "\t" << padRight(v, wid) << " " << p.go_type << endl;
-        if (contains(v, "Blocks") && contains(p.go_type, "[]string")) {
-            os << "\t" << padRight("BlockIds", wid) << " []identifiers.Identifier" << endl;
+        string_q var = p.Format("[{VARIABLE}]");
+        string_q type = p.Format("[{GO_TYPE}]");
+        ONE(os, var, varWidth, type, typeWidth, p.description);
+        if (contains(var, "Blocks") && contains(p.go_type, "[]string")) {
+            ONE(os, "BlockIds", varWidth, "[]identifiers.Identifier", typeWidth, "block identifiers");
         }
-        if (contains(v, "Transactions") && contains(p.go_type, "[]string")) {
-            os << "\t" << padRight("TransactionIds", wid) << " []identifiers.Identifier" << endl;
+        if (contains(var, "Transactions") && contains(p.go_type, "[]string")) {
+            ONE(os, "TransactionIds", varWidth, "[]identifiers.Identifier", typeWidth, "transaction identifiers");
         }
     }
-    os << "\t" << padRight("Globals", wid) << " globals.GlobalOptions" << endl;
-    os << "\t" << padRight("BadFlag", wid) << " error" << endl;
+    ONE(os, "Globals", varWidth, "globals.GlobalOptions", typeWidth, "the global options");
+    ONE(os, "BadFlag", varWidth, "error", typeWidth, "an error flag if needed");
 
     return os.str();
 }

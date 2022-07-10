@@ -27,6 +27,7 @@ type ScrapedData struct {
 
 func (opts *ScrapeOptions) ScrapeBlocks() error {
 	rpcProvider := config.GetRpcProvider(opts.Globals.Chain)
+	fmt.Println(opts)
 
 	blockChannel := make(chan int)
 	addressChannel := make(chan ScrapedData)

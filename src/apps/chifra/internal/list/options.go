@@ -21,14 +21,22 @@ import (
 
 // ListOptions provides all command options for the chifra list command.
 type ListOptions struct {
-	Addrs       []string
-	Count       bool
-	Appearances bool
-	Silent      bool
-	FirstBlock  uint64
-	LastBlock   uint64
-	Globals     globals.GlobalOptions
-	BadFlag     error
+	// one or more addresses (0x...) to list
+	Addrs []string `json:"addrs,omitempty"`
+	// display only the count of records for each monitor
+	Count bool `json:"count,omitempty"`
+	// export each monitor's list of appearances (the default)
+	Appearances bool `json:"appearances,omitempty"`
+	// freshen the monitor only (no reporting)
+	Silent bool `json:"silent,omitempty"`
+	// first block to export (inclusive, ignored when counting or freshening)
+	FirstBlock uint64 `json:"firstBlock,omitempty"`
+	// last block to export (inclusive, ignored when counting or freshening)
+	LastBlock uint64 `json:"lastBlock,omitempty"`
+	// the global options
+	Globals globals.GlobalOptions `json:"globals,omitempty"`
+	// an error flag if needed
+	BadFlag error `json:"badFlag,omitempty"`
 }
 
 var listCmdLineOptions ListOptions

@@ -20,12 +20,18 @@ import (
 
 // QuotesOptions provides all command options for the chifra quotes command.
 type QuotesOptions struct {
-	Update  bool
-	Period  string
-	Pair    string
-	Feed    string
-	Globals globals.GlobalOptions
-	BadFlag error
+	// freshen price database
+	Update bool `json:"update,omitempty"`
+	// increment of display
+	Period string `json:"period,omitempty"`
+	// which price pair to freshen or list (see Poloniex)
+	Pair string `json:"pair,omitempty"`
+	// the feed for the price data
+	Feed string `json:"feed,omitempty"`
+	// the global options
+	Globals globals.GlobalOptions `json:"globals,omitempty"`
+	// an error flag if needed
+	BadFlag error `json:"badFlag,omitempty"`
 }
 
 var quotesCmdLineOptions QuotesOptions

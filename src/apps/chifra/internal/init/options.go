@@ -18,9 +18,12 @@ import (
 
 // InitOptions provides all command options for the chifra init command.
 type InitOptions struct {
-	All     bool
-	Globals globals.GlobalOptions
-	BadFlag error
+	// in addition to Bloom filters, download full index chunks
+	All bool `json:"all,omitempty"`
+	// the global options
+	Globals globals.GlobalOptions `json:"globals,omitempty"`
+	// an error flag if needed
+	BadFlag error `json:"badFlag,omitempty"`
 }
 
 var initCmdLineOptions InitOptions

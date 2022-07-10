@@ -21,17 +21,28 @@ import (
 
 // StatusOptions provides all command options for the chifra status command.
 type StatusOptions struct {
-	Modes      []string
-	Details    bool
-	Types      []string
-	Depth      uint64
-	Report     bool
-	Terse      bool
-	Migrate    string
-	FirstBlock uint64
-	LastBlock  uint64
-	Globals    globals.GlobalOptions
-	BadFlag    error
+	// the type of status info to retrieve
+	Modes []string `json:"modes,omitempty"`
+	// include details about items found in monitors, slurps, abis, or price caches
+	Details bool `json:"details,omitempty"`
+	// for caches mode only, which type(s) of cache to report
+	Types []string `json:"types,omitempty"`
+	// for cache mode only, number of levels deep to report
+	Depth uint64 `json:"depth,omitempty"`
+	// run the command with no options for the same result
+	Report bool `json:"report,omitempty"`
+	// show a terse summary report
+	Terse bool `json:"terse,omitempty"`
+	// either effectuate or test to see if a migration is necessary
+	Migrate string `json:"migrate,omitempty"`
+	// first block to process (inclusive -- testing only)
+	FirstBlock uint64 `json:"firstBlock,omitempty"`
+	// last block to process (inclusive -- testing only)
+	LastBlock uint64 `json:"lastBlock,omitempty"`
+	// the global options
+	Globals globals.GlobalOptions `json:"globals,omitempty"`
+	// an error flag if needed
+	BadFlag error `json:"badFlag,omitempty"`
 }
 
 var statusCmdLineOptions StatusOptions

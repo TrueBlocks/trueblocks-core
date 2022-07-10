@@ -22,16 +22,26 @@ import (
 
 // StateOptions provides all command options for the chifra state command.
 type StateOptions struct {
-	Addrs    []string
-	Blocks   []string
-	BlockIds []identifiers.Identifier
-	Parts    []string
-	Changes  bool
-	NoZero   bool
-	Call     string
-	ProxyFor string
-	Globals  globals.GlobalOptions
-	BadFlag  error
+	// one or more addresses (0x...) from which to retrieve balances
+	Addrs []string `json:"addrs,omitempty"`
+	// an optional list of one or more blocks at which to report balances, defaults to 'latest'
+	Blocks []string `json:"blocks,omitempty"`
+	// block identifiers
+	BlockIds []identifiers.Identifier `json:"blockIds,omitempty"`
+	// control which state to export
+	Parts []string `json:"parts,omitempty"`
+	// only report a balance when it changes from one block to the next
+	Changes bool `json:"changes,omitempty"`
+	// suppress the display of zero balance accounts
+	NoZero bool `json:"noZero,omitempty"`
+	// a bang-separated string consisting of address!4-byte!bytes
+	Call string `json:"call,omitempty"`
+	// for the --call option only, redirects calls to this implementation
+	ProxyFor string `json:"proxyFor,omitempty"`
+	// the global options
+	Globals globals.GlobalOptions `json:"globals,omitempty"`
+	// an error flag if needed
+	BadFlag error `json:"badFlag,omitempty"`
 }
 
 var stateCmdLineOptions StateOptions

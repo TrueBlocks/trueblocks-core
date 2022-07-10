@@ -21,16 +21,26 @@ import (
 
 // WhenOptions provides all command options for the chifra when command.
 type WhenOptions struct {
-	Blocks     []string
-	BlockIds   []identifiers.Identifier
-	List       bool
-	Timestamps bool
-	Check      bool
-	Reset      uint64
-	Count      bool
-	Deep       bool
-	Globals    globals.GlobalOptions
-	BadFlag    error
+	// one or more dates, block numbers, hashes, or special named blocks (see notes)
+	Blocks []string `json:"blocks,omitempty"`
+	// block identifiers
+	BlockIds []identifiers.Identifier `json:"blockIds,omitempty"`
+	// export a list of the 'special' blocks
+	List bool `json:"list,omitempty"`
+	// ignore other options and generate timestamps only
+	Timestamps bool `json:"timestamps,omitempty"`
+	// available only with --timestamps, checks the validity of the timestamp data
+	Check bool `json:"check,omitempty"`
+	// available only with --timestamps option, reset the timestamp file to this block
+	Reset uint64 `json:"reset,omitempty"`
+	// available only with --timestamps, returns the number of timestamps in the cache
+	Count bool `json:"count,omitempty"`
+	// available only with --timestamps --check option, queries every timestamp on chain (slow)
+	Deep bool `json:"deep,omitempty"`
+	// the global options
+	Globals globals.GlobalOptions `json:"globals,omitempty"`
+	// an error flag if needed
+	BadFlag error `json:"badFlag,omitempty"`
 }
 
 var whenCmdLineOptions WhenOptions

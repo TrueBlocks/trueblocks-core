@@ -20,22 +20,38 @@ import (
 
 // ScrapeOptions provides all command options for the chifra scrape command.
 type ScrapeOptions struct {
-	Modes        []string
-	BlockCnt     uint64
-	Pin          bool
-	Sleep        float64
-	Blaze        bool
-	BlockChanCnt uint64
-	AddrChanCnt  uint64
-	AppsPerChunk uint64
-	UnripeDist   uint64
-	SnapToGrid   uint64
-	FirstSnap    uint64
-	AllowMissing bool
-	StartBlock   uint64
-	RipeBlock    uint64
-	Globals      globals.GlobalOptions
-	BadFlag      error
+	// which scraper(s) to control
+	Modes []string `json:"modes,omitempty"`
+	// maximum number of blocks to process per pass
+	BlockCnt uint64 `json:"blockCnt,omitempty"`
+	// pin chunks (and blooms) to IPFS as they are created (requires ipfs daemon)
+	Pin bool `json:"pin,omitempty"`
+	// seconds to sleep between scraper passes
+	Sleep float64 `json:"sleep,omitempty"`
+	// invoke the blaze scraper to process blocks
+	Blaze bool `json:"blaze,omitempty"`
+	// number of concurrent block processing channels
+	BlockChanCnt uint64 `json:"blockChanCnt,omitempty"`
+	// number of concurrent address processing channels
+	AddrChanCnt uint64 `json:"addrChanCnt,omitempty"`
+	// the number of appearances to build into a chunk before consolidating it
+	AppsPerChunk uint64 `json:"appsPerChunk,omitempty"`
+	// the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe
+	UnripeDist uint64 `json:"unripeDist,omitempty"`
+	// an override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index
+	SnapToGrid uint64 `json:"snapToGrid,omitempty"`
+	// the first block at which snap_to_grid is enabled
+	FirstSnap uint64 `json:"firstSnap,omitempty"`
+	// do not report errors for blockchain that contain blocks with zero addresses
+	AllowMissing bool `json:"allowMissing,omitempty"`
+	// first block to visit (available only for blaze scraper)
+	StartBlock uint64 `json:"startBlock,omitempty"`
+	// blocks prior to this value are written to 'ripe' folder (available only for blaze scraper)
+	RipeBlock uint64 `json:"ripeBlock,omitempty"`
+	// the global options
+	Globals globals.GlobalOptions `json:"globals,omitempty"`
+	// an error flag if needed
+	BadFlag error `json:"badFlag,omitempty"`
 }
 
 var scrapeCmdLineOptions ScrapeOptions
