@@ -403,15 +403,15 @@ func (opts *ScrapeOptions) writeAddresses(meta *rpcClient.MetaData, bn int, addr
 	}
 
 	// TODO: BOGUS - TESTING SCRAPING
-	step := uint64(7)
-	if nProcessed%step == 0 {
-		dist := uint64(0)
-		if ripeBlock > uint64(bn) {
-			dist = (ripeBlock - uint64(bn))
-		}
-		f := "-------- ( ------)- <PROG>  : Scraping %-04d of %-04d at block %d of %d (%d blocks from head)\r"
-		fmt.Fprintf(os.Stderr, f, nProcessed, opts.BlockCnt, bn, ripeBlock, dist)
-	}
+	// step := uint64(7)
+	// if nProcessed%step == 0 {
+	// 	dist := uint64(0)
+	// 	if ripeBlock > uint64(bn) {
+	// 		dist = (ripeBlock - uint64(bn))
+	// 	}
+	// 	f := "-------- ( ------)- <PROG>  : Scraping %-04d of %-04d at block %d of %d (%d blocks from head)\r"
+	// 	fmt.Fprintf(os.Stderr, f, nProcessed, opts.BlockCnt, bn, ripeBlock, dist)
+	// }
 	nProcessed++
 }
 

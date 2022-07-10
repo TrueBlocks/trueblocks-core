@@ -120,3 +120,11 @@ type SimpleReceipt struct {
 	TransactionHash  common.Hash `json:"hash"`
 	TransactionIndex uint64      `json:"transactionIndex"`
 }
+
+type SimpleName struct {
+	Tags     string `json:"tags"`
+	Address  string `json:"address"`
+	Name     string `json:"name"`
+	Symbol   string `json:"symbol"`
+	Decimals uint32 `json:"decimals,omitempty"`
+}
