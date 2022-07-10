@@ -18,22 +18,9 @@ extern bool visitPrefund(const Allocation& prefund, void* data);
 
 //--------------------------------------------------------------------------
 bool COptions::scrape_blocks(void) {
-    block_cnt = str_2_Uint(getEnvStr("TB_SETTINGS_BLOCKCNT"));
-    block_chan_cnt = str_2_Uint(getEnvStr("TB_SETTINGS_BLOCKCHANCNT"));
-    addr_chan_cnt = str_2_Uint(getEnvStr("TB_SETTINGS_ADDRCHANCNT"));
-    apps_per_chunk = str_2_Uint(getEnvStr("TB_SETTINGS_APPSPERCHUNK"));
-    unripe_dist = str_2_Uint(getEnvStr("TB_SETTINGS_UNRIPEDIST"));
-    snap_to_grid = str_2_Uint(getEnvStr("TB_SETTINGS_SNAPTOGRID"));
-    first_snap = str_2_Uint(getEnvStr("TB_SETTINGS_FIRSTSNAP"));
-    allow_missing = getEnvStr("TB_SETTINGS_ALLOWMISSING") == "true";
-    if (getChain() == "mainnet") {
-        // different defaults for mainnet
-        apps_per_chunk = apps_per_chunk == 200000 ? 2000000 : apps_per_chunk;
-        first_snap = first_snap == 0 ? 2250000 : first_snap;
-    }
-
-    CMetaData meta;
-    meta = getMetaData();
+    // TODO: BOGUS - TESTING SCRAPING
+    colorsOff();
+    colorsOn();
 
     // This may be the first time we've ever run. In that case, we need to build the zero block index file...
     string chunkId = padNum9(0) + "-" + padNum9(0);
@@ -59,28 +46,39 @@ bool COptions::scrape_blocks(void) {
         LOG_INFO(os.str());
     }
 
-    blaze_ripe = (meta.client < unripe_dist ? 0 : meta.client - unripe_dist);
-    blaze_start = max(meta.ripe, max(meta.staging, meta.finalized)) + 1;
-    if ((blaze_start + block_cnt) > meta.client)
-        block_cnt = (meta.client - blaze_start);
-    if (blaze_start > meta.client) {
-        LOG_INFO("The index (", blaze_start, ") is ahead of the chain (", meta.client, ").");
+    block_cnt = str_2_Uint(getEnvStr("TB_SETTINGS_BLOCKCNT"));
+    // block_chan_cnt = str_2_Uint(getEnvStr("TB_SETTINGS_BLOCKCHANCNT"));
+    // addr_chan_cnt = str_2_Uint(getEnvStr("TB_SETTINGS_ADDRCHANCNT"));
+    apps_per_chunk = str_2_Uint(getEnvStr("TB_SETTINGS_APPSPERCHUNK"));
+    unripe_dist = str_2_Uint(getEnvStr("TB_SETTINGS_UNRIPEDIST"));
+    snap_to_grid = str_2_Uint(getEnvStr("TB_SETTINGS_SNAPTOGRID"));
+    first_snap = str_2_Uint(getEnvStr("TB_SETTINGS_FIRSTSNAP"));
+    allow_missing = getEnvStr("TB_SETTINGS_ALLOWMISSING") == "true";
+    if (getChain() == "mainnet") {
+        // different defaults for mainnet
+        apps_per_chunk = apps_per_chunk == 200000 ? 2000000 : apps_per_chunk;
+        first_snap = first_snap == 0 ? 2250000 : first_snap;
+    }
+
+    CMetaData meta;
+    meta = getMetaData();
+
+    start_block = max(meta.ripe, max(meta.staging, meta.finalized)) + 1;
+    if ((start_block + block_cnt) > meta.client)
+        block_cnt = (meta.client - start_block);
+    if (start_block > meta.client) {
+        LOG_INFO("The index (", start_block, ") is ahead of the chain (", meta.client, ").");
         return false;
     }
 
     ostringstream blazeCmd;
     blazeCmd << "chifra scrape run --blaze ";
-    blazeCmd << "--start_block " << blaze_start << " ";
-    blazeCmd << "--ripe_block " << blaze_ripe << " ";
+    blazeCmd << "--start_block " << start_block << " ";
     blazeCmd << "--block_cnt " << block_cnt << " ";
-    blazeCmd << "--block_chan_cnt " << block_chan_cnt << " ";
-    blazeCmd << "--addr_chan_cnt " << addr_chan_cnt << " ";
     blazeCmd << "--chain " << getChain() << " ";
     blazeCmd << (verbose ? ("--verbose " + uint_2_Str(verbose)) : "");
 
     LOG_INFO("block_cnt: ", block_cnt);
-    LOG_INFO("block_chan_cnt: ", block_chan_cnt);
-    LOG_INFO("addr_chan_cnt: ", addr_chan_cnt);
     LOG_INFO("apps_per_chunk: ", apps_per_chunk);
     LOG_INFO("unripe_dist: ", unripe_dist);
     LOG_INFO("snap_to_grid: ", snap_to_grid);
@@ -90,8 +88,7 @@ bool COptions::scrape_blocks(void) {
     LOG_INFO("meta.staging: ", meta.staging);
     LOG_INFO("meta.finalized: ", meta.finalized);
     LOG_INFO("meta.client: ", meta.client);
-    LOG_INFO("blaze_start: ", blaze_start);
-    LOG_INFO("blaze_ripe: ", blaze_ripe);
+    LOG_INFO("start_block: ", start_block);
     LOG_INFO("Calling blaze: ", substitute(blazeCmd.str(), "--", "\n\t--"));
     if (system(blazeCmd.str().c_str()) != 0) {
         cleanFolder(indexFolder_ripe);
@@ -133,7 +130,7 @@ bool COptions::scrape_blocks(void) {
     if (!stage_chunks(tmpStagingFn))
         return false;
     if (!isTestMode())
-        freshenTimestampsAppend(blaze_start, block_cnt);
+        freshenTimestampsAppend(start_block, block_cnt);
     report();
     if (nRecsNow <= apps_per_chunk)
         return true;
@@ -322,7 +319,7 @@ bool COptions::report(void) {
     double pBlk = double(found) / double(block_cnt);
 
     string_q result = "Block {0}: have {1} addrs of {2} ({3}). Need {4} more. Found {5} records ({6}).";
-    replace(result, "{0}", "{" + uint_2_Str(blaze_start + block_cnt) + "}");
+    replace(result, "{0}", "{" + uint_2_Str(start_block + block_cnt) + "}");
     replace(result, "{1}", "{" + uint_2_Str(nRecsNow) + "}");
     replace(result, "{2}", "{" + uint_2_Str(apps_per_chunk) + "}");
     replace(result, "{3}", "{" + double_2_Str(pct * 100.00, 1) + "%}");

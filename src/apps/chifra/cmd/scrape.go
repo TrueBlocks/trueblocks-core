@@ -55,7 +55,6 @@ func init() {
 	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().FirstSnap, "first_snap", "", 0, "the first block at which snap_to_grid is enabled (hidden)")
 	scrapeCmd.Flags().BoolVarP(&scrapePkg.GetOptions().AllowMissing, "allow_missing", "", false, "do not report errors for blockchain that contain blocks with zero addresses (hidden)")
 	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().StartBlock, "start_block", "l", 0, "first block to visit (available only for blaze scraper) (hidden)")
-	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().RipeBlock, "ripe_block", "r", 0, "blocks prior to this value are written to 'ripe' folder (available only for blaze scraper) (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {
 		scrapeCmd.Flags().MarkHidden("blaze")
 		scrapeCmd.Flags().MarkHidden("block_chan_cnt")
@@ -66,7 +65,6 @@ func init() {
 		scrapeCmd.Flags().MarkHidden("first_snap")
 		scrapeCmd.Flags().MarkHidden("allow_missing")
 		scrapeCmd.Flags().MarkHidden("start_block")
-		scrapeCmd.Flags().MarkHidden("ripe_block")
 	}
 	globals.InitGlobals(scrapeCmd, &scrapePkg.GetOptions().Globals)
 

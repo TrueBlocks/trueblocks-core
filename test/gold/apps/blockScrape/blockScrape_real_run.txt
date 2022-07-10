@@ -24,7 +24,6 @@ Flags:
       --first_snap uint       the first block at which snap_to_grid is enabled (hidden)
       --allow_missing         do not report errors for blockchain that contain blocks with zero addresses (hidden)
   -l, --start_block uint      first block to visit (available only for blaze scraper) (hidden)
-  -r, --ripe_block uint       blocks prior to this value are written to 'ripe' folder (available only for blaze scraper) (hidden)
   -x, --fmt string            export format, one of [none|json*|txt|csv|api]
   -v, --verbose               enable verbose (increase detail with --log_level)
   -h, --help                  display this help screen

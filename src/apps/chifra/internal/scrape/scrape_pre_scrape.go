@@ -17,7 +17,7 @@ import (
 )
 
 func (opts *ScrapeOptions) preScrape(progressThen *rpcClient.MetaData) (bool, error) {
-	logger.Log(logger.Info, "PreScrape")
+	logger.Log(logger.Info, "PreScrape", os.Getenv("TEST_END_SCRAPE"))
 	e := os.Getenv("TEST_END_SCRAPE")
 	ee, _ := strconv.ParseUint(e, 10, 32)
 	if ee != 0 && progressThen.Finalized > ee {

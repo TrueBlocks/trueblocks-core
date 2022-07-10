@@ -70,9 +70,17 @@ func (opts *ScrapeOptions) GetSettingsStr(which string) string {
 	case "TB_SETTINGS_BLOCKCNT":
 		return which + "=" + fmt.Sprintf("%d", opts.BlockCnt)
 	case "TB_SETTINGS_BLOCKCHANCNT":
-		return which + "=" + fmt.Sprintf("%d", config.ReadBlockScrape(opts.Globals.Chain).Settings.Block_chan_cnt)
+		val := uint64(config.ReadBlockScrape(opts.Globals.Chain).Settings.Block_chan_cnt)
+		if opts.BlockChanCnt != val {
+			val = opts.BlockChanCnt
+		}
+		return which + "=" + fmt.Sprintf("%d", val)
 	case "TB_SETTINGS_ADDRCHANCNT":
-		return which + "=" + fmt.Sprintf("%d", config.ReadBlockScrape(opts.Globals.Chain).Settings.Addr_chan_cnt)
+		val := uint64(config.ReadBlockScrape(opts.Globals.Chain).Settings.Addr_chan_cnt)
+		if opts.AddrChanCnt != val {
+			val = opts.AddrChanCnt
+		}
+		return which + "=" + fmt.Sprintf("%d", val)
 	case "TB_SETTINGS_APPSPERCHUNK":
 		return which + "=" + fmt.Sprintf("%d", config.ReadBlockScrape(opts.Globals.Chain).Settings.Apps_per_chunk)
 	case "TB_SETTINGS_UNRIPEDIST":

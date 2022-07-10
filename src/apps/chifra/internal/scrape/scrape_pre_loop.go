@@ -21,6 +21,7 @@ import (
 
 func (opts *ScrapeOptions) preLoop(progressThen *rpcClient.MetaData) (bool, error) {
 	if os.Getenv("NO_COLOR") == "true" {
+		// TODO: BOGUS - TESTING SCRAPING
 		colors.ColorsOff()
 	}
 	logger.Log(logger.Info, "PreLoop")

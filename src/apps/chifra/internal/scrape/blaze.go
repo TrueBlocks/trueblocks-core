@@ -26,6 +26,11 @@ type ScrapedData struct {
 }
 
 func (opts *ScrapeOptions) ScrapeBlocks() error {
+	meta, _ := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
+
+	opts.BlockChanCnt, _ = strconv.ParseUint(os.Getenv("TB_SETTINGS_BLOCKCHANCNT"), 10, 64)
+	opts.AddrChanCnt, _ = strconv.ParseUint(os.Getenv("TB_SETTINGS_ADDRCHANCNT"), 10, 64)
+
 	rpcProvider := config.GetRpcProvider(opts.Globals.Chain)
 	fmt.Println(opts)
 
@@ -36,13 +41,13 @@ func (opts *ScrapeOptions) ScrapeBlocks() error {
 	var blockWG sync.WaitGroup
 	blockWG.Add(int(opts.BlockChanCnt))
 	for i := 0; i < int(opts.BlockChanCnt); i++ {
-		go opts.processBlocks(rpcProvider, blockChannel, addressChannel, tsChannel, &blockWG)
+		go opts.processBlocks(meta, rpcProvider, blockChannel, addressChannel, tsChannel, &blockWG)
 	}
 
 	var addressWG sync.WaitGroup
 	addressWG.Add(int(opts.AddrChanCnt))
 	for i := 0; i < int(opts.AddrChanCnt); i++ {
-		go opts.processAddresses(rpcProvider, addressChannel, &addressWG)
+		go opts.processAddresses(meta, rpcProvider, addressChannel, &addressWG)
 	}
 
 	// TODO: BOGUS IS USING THIS FILE THE BEST WAY - IS THIS A GOOD FILENAME
@@ -79,7 +84,7 @@ func (opts *ScrapeOptions) ScrapeBlocks() error {
 }
 
 // processBlocks Process the block channel and for each block query the node for both traces and logs. Send results to addressChannel
-func (opts *ScrapeOptions) processBlocks(rpcProvider string, blockChannel chan int, addressChannel chan ScrapedData, tsChannel chan tslib.Timestamp, blockWG *sync.WaitGroup) {
+func (opts *ScrapeOptions) processBlocks(meta *rpcClient.MetaData, rpcProvider string, blockChannel chan int, addressChannel chan ScrapedData, tsChannel chan tslib.Timestamp, blockWG *sync.WaitGroup) {
 	for blockNum := range blockChannel {
 
 		// RPCPayload is used during to make calls to the RPC.
@@ -129,12 +134,12 @@ func (opts *ScrapeOptions) processBlocks(rpcProvider string, blockChannel chan i
 	blockWG.Done()
 }
 
-func (opts *ScrapeOptions) processAddresses(rpcProvider string, addressChannel chan ScrapedData, addressWG *sync.WaitGroup) {
+func (opts *ScrapeOptions) processAddresses(meta *rpcClient.MetaData, rpcProvider string, addressChannel chan ScrapedData, addressWG *sync.WaitGroup) {
 	for sData := range addressChannel {
 		addressMap := make(map[string]bool)
 		opts.extractFromTraces(rpcProvider, sData.blockNumber, &sData.traces, addressMap)
 		opts.extractFromLogs(sData.blockNumber, &sData.logs, addressMap)
-		opts.writeAddresses(sData.blockNumber, addressMap)
+		opts.writeAddresses(meta, sData.blockNumber, addressMap)
 	}
 	addressWG.Done()
 }
@@ -366,7 +371,7 @@ func (opts *ScrapeOptions) extractFromLogs(bn int, logs *rpcClient.Logs, address
 
 var nProcessed uint64 = 0
 
-func (opts *ScrapeOptions) writeAddresses(bn int, addressMap map[string]bool) {
+func (opts *ScrapeOptions) writeAddresses(meta *rpcClient.MetaData, bn int, addressMap map[string]bool) {
 	if len(addressMap) == 0 {
 		return
 	}
@@ -384,7 +389,9 @@ func (opts *ScrapeOptions) writeAddresses(bn int, addressMap map[string]bool) {
 
 	bn, _ = strconv.Atoi(blockNumStr)
 	fileName := config.GetPathToIndex(opts.Globals.Chain) + "ripe/" + blockNumStr + ".txt"
-	if bn > int(opts.RipeBlock) {
+
+	ripeBlock := meta.Latest - utils.Min(meta.Latest, opts.UnripeDist)
+	if bn > int(ripeBlock) {
 		fileName = config.GetPathToIndex(opts.Globals.Chain) + "unripe/" + blockNumStr + ".txt"
 	}
 
@@ -396,15 +403,15 @@ func (opts *ScrapeOptions) writeAddresses(bn int, addressMap map[string]bool) {
 	}
 
 	// TODO: BOGUS - TESTING SCRAPING
-	// step := uint64(7)
-	// if nProcessed%step == 0 {
-	// 	dist := uint64(0)
-	// 	if opts.RipeBlock > uint64(bn) {
-	// 		dist = (opts.RipeBlock - uint64(bn))
-	// 	}
-	// 	f := "-------- ( ------)- <PROG>  : Scraping %-04d of %-04d at block %d of %d (%d blocks from head)\r"
-	// 	fmt.Fprintf(os.Stderr, f, nProcessed, opts.BlockCnt, bn, opts.RipeBlock, dist)
-	// }
+	step := uint64(7)
+	if nProcessed%step == 0 {
+		dist := uint64(0)
+		if ripeBlock > uint64(bn) {
+			dist = (ripeBlock - uint64(bn))
+		}
+		f := "-------- ( ------)- <PROG>  : Scraping %-04d of %-04d at block %d of %d (%d blocks from head)\r"
+		fmt.Fprintf(os.Stderr, f, nProcessed, opts.BlockCnt, bn, ripeBlock, dist)
+	}
 	nProcessed++
 }
 

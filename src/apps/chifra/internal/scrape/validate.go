@@ -37,12 +37,6 @@ func (opts *ScrapeOptions) validateScrape() error {
 		}
 	}
 
-	// if opts.Blaze {
-	// 	// TODO: StartBlock and RipeBlock must be sent with the --blaze option
-	// } else {
-	// 	// TODO: StartBlock and RipeBlock can only be sent with the --blaze option
-	// }
-
 	if opts.Sleep < .25 {
 		return validate.Usage("The {0} option ({1}) must {2}.", "--sleep", fmt.Sprintf("%f", opts.Sleep), "be at least .25")
 	}

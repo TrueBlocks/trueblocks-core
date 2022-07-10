@@ -28,35 +28,28 @@ class COptions : public COptionsBase {
     // END_CODE_DECLARE
 
     uint64_t block_cnt;
-    uint64_t block_chan_cnt;
-    uint64_t addr_chan_cnt;
     uint64_t apps_per_chunk;
     uint64_t unripe_dist;
     uint64_t snap_to_grid;
     uint64_t first_snap;
     bool allow_missing;
+    blknum_t start_block{0};
 
     string_q newStage;
     ofstream tmpStagingStream;
     blknum_t prev_block{0};
-    blknum_t blaze_ripe{0};
-    blknum_t blaze_start{0};
     blknum_t nRecsThen{0};
     blknum_t nRecsNow{0};
     bool snapped{false};
 
     COptions(void) {
-        Init();
     }
     ~COptions(void) {
     }
-    bool parseArguments(string_q& command) {
-        if (!standardOptions(command))
-            return false;
-        Init();
-        return true;
-    }
     void Init(void) {
+    }
+    bool parseArguments(string_q& command) {
+        return true;
     }
 
     bool scrape_blocks(void);

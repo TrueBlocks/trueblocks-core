@@ -46,8 +46,6 @@ type ScrapeOptions struct {
 	AllowMissing bool `json:"allowMissing,omitempty"`
 	// first block to visit (available only for blaze scraper)
 	StartBlock uint64 `json:"startBlock,omitempty"`
-	// blocks prior to this value are written to 'ripe' folder (available only for blaze scraper)
-	RipeBlock uint64 `json:"ripeBlock,omitempty"`
 	// the global options
 	Globals globals.GlobalOptions `json:"globals,omitempty"`
 	// an error flag if needed
@@ -71,7 +69,6 @@ func (opts *ScrapeOptions) testLog() {
 	logger.TestLog(opts.FirstSnap != 0, "FirstSnap: ", opts.FirstSnap)
 	logger.TestLog(opts.AllowMissing, "AllowMissing: ", opts.AllowMissing)
 	logger.TestLog(opts.StartBlock != 0, "StartBlock: ", opts.StartBlock)
-	logger.TestLog(opts.RipeBlock != 0, "RipeBlock: ", opts.RipeBlock)
 	opts.Globals.TestLog()
 }
 
@@ -119,7 +116,6 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 	opts.SnapToGrid = 100000
 	opts.FirstSnap = 0
 	opts.StartBlock = 0
-	opts.RipeBlock = 0
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "modes":
@@ -151,8 +147,6 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 			opts.AllowMissing = true
 		case "startBlock":
 			opts.StartBlock = globals.ToUint64(value[0])
-		case "ripeBlock":
-			opts.RipeBlock = globals.ToUint64(value[0])
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "scrape")

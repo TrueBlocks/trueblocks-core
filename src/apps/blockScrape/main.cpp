@@ -15,19 +15,9 @@
 //----------------------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     acctlib_init(defaultQuitHandler);
-
-    // TODO: BOGUS - TESTING SCRAPING
-    colorsOff();
     COptions options;
-    if (!options.prepareArguments(argc, argv))
-        return 0;
-
-    ASSERT(options.commandLines.size() == 1);
-    if (!options.parseArguments(options.commandLines[0]))
-        return 0;
-
-    // TODO: BOGUS - RETURN VALUE FROM BLAZE
-    bool ret = options.scrape_blocks();
-    acctlib_cleanup();
-    return ret ? EXIT_SUCCESS : EXIT_FAILURE;
+    if (options.prepareArguments(argc, argv))
+        if (options.standardOptions(options.commandLines[0]))
+            return options.scrape_blocks() ? EXIT_SUCCESS : EXIT_FAILURE;
+    return EXIT_FAILURE;
 }

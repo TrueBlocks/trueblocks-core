@@ -6,6 +6,7 @@ package chunksPkg
 
 import (
 	"io"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -38,7 +39,13 @@ func (opts *ChunksOptions) showAddresses(ctx *WalkContext, path string, first bo
 			return false, err
 		}
 
-		err = opts.Globals.RenderObject(obj, first && cnt == 0)
+		r := types.SimpleIndexAddress{
+			Address: strings.ToLower(obj.Address.Hex()),
+			Range:   indexChunk.Range.String(),
+			Offset:  obj.Offset,
+			Count:   obj.Count,
+		}
+		err = opts.Globals.RenderObject(r, first && cnt == 0)
 		if err != nil {
 			return false, err
 		}
