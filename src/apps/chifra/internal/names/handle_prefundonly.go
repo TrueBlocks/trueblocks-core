@@ -25,6 +25,7 @@ func (opts *NamesOptions) HandlePrefundOnly() error {
 			Tags:    "80-Prefund",
 			Address: strings.ToLower(alloc.Address.Hex()),
 			Name:    "Prefund_" + fmt.Sprintf("%04d", i),
+			Source:  "Genesis",
 		}
 		err = opts.Globals.RenderObject(a, i == 0)
 		if err != nil {
@@ -32,4 +33,17 @@ func (opts *NamesOptions) HandlePrefundOnly() error {
 		}
 	}
 	return nil
+}
+
+func (opts *NamesOptions) PrefundOnly() bool {
+	if !opts.Prefund {
+		return false
+	}
+	if len(opts.Terms) > 0 || opts.Expand || opts.MatchCase || opts.All || opts.Custom || opts.Named ||
+		opts.Addr || opts.Collections || opts.Tags || opts.ToCustom ||
+		opts.Clean || len(opts.Autoname) > 0 || opts.Create || opts.Update ||
+		opts.Delete || opts.Undelete || opts.Remove {
+		return false
+	}
+	return true
 }

@@ -16,7 +16,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 )
 
@@ -34,9 +33,9 @@ func (opts *ScrapeOptions) preLoop(progressThen *rpcClient.MetaData) (bool, erro
 		// 	return true, err
 		// }
 		// for _, alloc := range allocs {
-			// fmt.Println(alloc.Address.Hex(), alloc.Balance.Text(10))
-			// os << "Wrote " << consolidatedLines.size() << " records to " << cTeal << relativize(chunkPath) << cOff
-			// LOG_INFO(os.str())
+		// fmt.Println(alloc.Address.Hex(), alloc.Balance.Text(10))
+		// os << "Wrote " << consolidatedLines.size() << " records to " << cTeal << relativize(chunkPath) << cOff
+		// LOG_INFO(os.str())
 		fmt.Println("Need to build zero block chunk", bloomZeroPath, file.FileExists(bloomZeroPath))
 		// }
 		/*

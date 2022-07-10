@@ -122,9 +122,11 @@ type SimpleReceipt struct {
 }
 
 type SimpleName struct {
-	Tags     string `json:"tags"`
-	Address  string `json:"address"`
-	Name     string `json:"name"`
-	Symbol   string `json:"symbol"`
-	Decimals uint32 `json:"decimals,omitempty"`
+	Tags        string `json:"tags"`
+	Address     string `json:"address"`
+	Name        string `json:"name"`
+	Symbol      string `json:"symbol,omitempty"`
+	Source      string `json:"source,omitempty"`
+	Decimals    string `json:"decimals,omitempty"`
+	Description string `json:"description,omitempty"`
 }
