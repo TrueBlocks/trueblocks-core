@@ -14,28 +14,24 @@
 
 //--------------------------------------------------------------------------
 bool COptions::scrape_blocks(void) {
-    uint64_t sb = str_2_Uint(getEnvStr("TB_SETTINGS_STARTBLOCK"));
-    uint64_t bc = str_2_Uint(getEnvStr("TB_SETTINGS_BLOCKCNT"));
-    uint64_t apc = str_2_Uint(getEnvStr("TB_SETTINGS_APPSPERCHUNK"));
-
-    LOG_INFO("start_block: ", sb);
-    LOG_INFO("block_cnt: ", bc);
-    LOG_INFO("apps_per_chunk: ", apc);
+    LOG_INFO("start_block: ", str_2_Uint(getEnvStr("TB_BLAZE_STARTBLOCK")));
+    LOG_INFO("block_cnt: ", str_2_Uint(getEnvStr("TB_BLAZE_BLOCKCNT")));
+    LOG_INFO("chain: ", getEnvStr("TB_BLAZE_CHAIN"));
 
     ostringstream blazeCmd;
     blazeCmd << "chifra scrape run --blaze "
-             << "--start_block " << sb << " "
-             << "--block_cnt " << bc << " "
-             << "--chain " << getChain() << " " << (verbose ? ("--verbose " + uint_2_Str(verbose)) : "");
+             << "--start_block " << str_2_Uint(getEnvStr("TB_BLAZE_STARTBLOCK")) << " "
+             << "--block_cnt " << str_2_Uint(getEnvStr("TB_BLAZE_BLOCKCNT")) << " "
+             << "--chain " << getEnvStr("TB_BLAZE_CHAIN");
 
-    LOG_INFO("Calling blaze: ", substitute(blazeCmd.str(), "--", "\n\t--"));
+    LOG_INFO("Calling blaze: ", blazeCmd.str());
     if (system(blazeCmd.str().c_str()) != 0) {
         cleanFolder(indexFolder_ripe);
         return false;
     }
 
-    start_block = str_2_Uint(getEnvStr("TB_SETTINGS_STARTBLOCK"));
-    block_cnt = str_2_Uint(getEnvStr("TB_SETTINGS_BLOCKCNT"));
+    start_block = str_2_Uint(getEnvStr("TB_BLAZE_STARTBLOCK"));
+    block_cnt = str_2_Uint(getEnvStr("TB_BLAZE_BLOCKCNT"));
     apps_per_chunk = str_2_Uint(getEnvStr("TB_SETTINGS_APPSPERCHUNK"));
     unripe_dist = str_2_Uint(getEnvStr("TB_SETTINGS_UNRIPEDIST"));
     snap_to_grid = str_2_Uint(getEnvStr("TB_SETTINGS_SNAPTOGRID"));
@@ -46,6 +42,7 @@ bool COptions::scrape_blocks(void) {
     LOG_INFO("snap_to_grid: ", snap_to_grid);
     LOG_INFO("first_snap: ", first_snap);
     LOG_INFO("allow_missing: ", allow_missing);
+    LOG_INFO("apps_per_chunk: ", apps_per_chunk);
 
     string_q tmpStagingFn = indexFolder_staging + "000000000-temp.txt";
     tmpStagingStream.open(tmpStagingFn, ios::out | ios::trunc);

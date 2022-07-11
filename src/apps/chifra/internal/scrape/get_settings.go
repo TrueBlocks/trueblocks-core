@@ -15,15 +15,18 @@ func (opts *ScrapeOptions) Z_8_getSetting(meta *rpcClient.MetaData, which string
 
 	switch which {
 
-	case "TB_SETTINGS_BLOCKCNT":
+	case "TB_BLAZE_BLOCKCNT":
 		blockCnt := opts.BlockCnt
 		if (start + blockCnt) > meta.Latest {
 			blockCnt = (meta.Latest - start)
 		}
 		value = fmt.Sprintf("%d", blockCnt)
 
-	case "TB_SETTINGS_STARTBLOCK":
+	case "TB_BLAZE_STARTBLOCK":
 		value = fmt.Sprintf("%d", start)
+
+	case "TB_BLAZE_CHAIN":
+		value = opts.Globals.Chain
 
 	case "TB_SETTINGS_BLOCKCHANCNT":
 		val := uint64(settings.Block_chan_cnt)
