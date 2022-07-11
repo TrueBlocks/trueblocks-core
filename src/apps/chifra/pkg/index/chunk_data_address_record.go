@@ -25,7 +25,6 @@ type AddressRecord struct {
 
 func (addressRec *AddressRecord) ReadAddress(file *os.File) (err error) {
 	return binary.Read(file, binary.LittleEndian, addressRec)
-	return
 }
 
 func (chunk *ChunkData) searchForAddressRecord(address common.Address) int {
