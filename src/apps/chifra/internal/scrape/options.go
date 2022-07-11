@@ -82,14 +82,6 @@ func (opts *ScrapeOptions) String() string {
 func (opts *ScrapeOptions) getEnvStr() []string {
 	envStr := []string{}
 	// EXISTING_CODE
-	envStr = append(envStr, opts.GetSettingsStr("TB_SETTINGS_BLOCKCNT"))
-	envStr = append(envStr, opts.GetSettingsStr("TB_SETTINGS_BLOCKCHANCNT"))
-	envStr = append(envStr, opts.GetSettingsStr("TB_SETTINGS_ADDRCHANCNT"))
-	envStr = append(envStr, opts.GetSettingsStr("TB_SETTINGS_APPSPERCHUNK"))
-	envStr = append(envStr, opts.GetSettingsStr("TB_SETTINGS_UNRIPEDIST"))
-	envStr = append(envStr, opts.GetSettingsStr("TB_SETTINGS_SNAPTOGRID"))
-	envStr = append(envStr, opts.GetSettingsStr("TB_SETTINGS_FIRSTSNAP"))
-	envStr = append(envStr, opts.GetSettingsStr("TB_SETTINGS_ALLOWMISSING"))
 	// EXISTING_CODE
 	return envStr
 }

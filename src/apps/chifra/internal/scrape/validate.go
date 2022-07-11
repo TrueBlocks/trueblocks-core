@@ -10,6 +10,8 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/migrate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -48,6 +50,14 @@ func (opts *ScrapeOptions) validateScrape() error {
 	// We can't really test this code, so we just report and quit
 	if opts.Globals.TestMode {
 		return validate.Usage("Cannot test block scraper")
+	}
+
+	meta, _ := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
+	m := utils.Max(meta.Ripe, utils.Max(meta.Staging, meta.Finalized)) + 1
+	if m > meta.Latest {
+		sb := fmt.Sprintf("%d", m)
+		c := fmt.Sprintf("%d", meta.Latest)
+		return validate.Usage("The index ({0}) is ahead of the chain ({1}).", sb, c)
 	}
 
 	// Note this does not return if a migration is needed

@@ -1,7 +1,3 @@
-// TODO: BOGUS - THINGS TO DO:
-// TODO: BOGUS - CLEANUP BETWEEN RUNS IF THINGS DON'T WORK OUT AND SOMETHING HAD TO QUIT EARLY
-// TODO: BOGUS - MAKE SURE WE'RE NOT RUNNING IF ACCTSCRAPE (OR ANYTHING ELSE?) IS RUNNINGs
-// TODO: BOGUS - RESPOND WELL TO RUNNING AGAINST NON-ARCHIVE NODES see isArchiveNode() in C++ code
 package scrapePkg
 
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
@@ -20,7 +16,8 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
-func (opts *ScrapeOptions) preLoop(progressThen *rpcClient.MetaData) (bool, error) {
+// preLoop does processing prior to entering the forever loop
+func (opts *ScrapeOptions) Y_1_preLoop(progressThen *rpcClient.MetaData) (bool, error) {
 	logger.Log(logger.Info, "PreLoop")
 	path := config.GetPathToIndex(opts.Globals.Chain) + fmt.Sprintf("finalized/%09d-%09d", 0, 0) + ".bin"
 	if !file.FileExists(path) {
@@ -38,11 +35,12 @@ func (opts *ScrapeOptions) preLoop(progressThen *rpcClient.MetaData) (bool, erro
 				TransactionId: uint32(i),
 			})
 		}
-		index.WriteChunk(opts.Globals.Chain, path, apps, len(allocs))
-		// TODO: BOGUS - PINNING WHEN WRITING IN GOLANG
-		// rng := "000000000-000000000"
-		// newPinsFn := config.GetPathToCache(opts.Globals.Chain) + "tmp/chunks_created.txt"
-		// file.AppendToAsciiFile(newPinsFn, rng+"\n")
+		// nWritten, err
+		_, err = index.WriteChunk(opts.Globals.Chain, path, apps, len(allocs), opts.Pin)
+		if err != nil {
+			return false, err
+		}
+		opts.Y_4_postScrape(progressThen)
 	}
 	return true, nil
 }

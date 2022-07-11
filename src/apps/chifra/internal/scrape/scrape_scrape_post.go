@@ -1,7 +1,3 @@
-// TODO: BOGUS - THINGS TO DO:
-// TODO: BOGUS - CLEANUP BETWEEN RUNS IF THINGS DON'T WORK OUT AND SOMETHING HAD TO QUIT EARLY
-// TODO: BOGUS - MAKE SURE WE'RE NOT RUNNING IF ACCTSCRAPE (OR ANYTHING ELSE?) IS RUNNINGs
-// TODO: BOGUS - RESPOND WELL TO RUNNING AGAINST NON-ARCHIVE NODES see isArchiveNode() in C++ code
 package scrapePkg
 
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
@@ -27,7 +23,7 @@ import (
 )
 
 // TODO: BOGUS - MANIFEST WRITING THE MANIFEST
-func (opts *ScrapeOptions) postScrape(progressThen *rpcClient.MetaData) (bool, error) {
+func (opts *ScrapeOptions) Y_4_postScrape(progressThen *rpcClient.MetaData) (bool, error) {
 
 	// If we're not pinning, do nothing
 	if !opts.Pin {
@@ -54,6 +50,7 @@ func (opts *ScrapeOptions) postScrape(progressThen *rpcClient.MetaData) (bool, e
 		return true, errors.New("chunks_created file not found, but there's been progress")
 	}
 
+	// TODO: BOGUS - TESTING SCRAPING
 	rel := strings.Replace(newPinsFn, config.GetPathToCache(opts.Globals.Chain), "$CACHE", -1)
 	fmt.Println()
 	fmt.Println("----------------------------------------------------------------------------------------------")
@@ -107,13 +104,15 @@ func (opts *ScrapeOptions) postScrape(progressThen *rpcClient.MetaData) (bool, e
 		record.IndexHash = types.IpfsHash(indexHash)
 
 		logger.Log(logger.Info, "Pinned:", record.Range, bloomHash, indexHash)
-		err = opts.UpdateManifest(record)
+		err = opts.Z_7_updateManifest(record)
 		if err != nil {
 			return true, err
 		}
 
 		// ipfsAvail := pinning.LocalDaemonRunning()
 	}
+
+	// TODO: BOGUS - TESTING SCRAPING
 	index.TestWrite(opts.Globals.Chain, pathToIndex, &opts.Globals)
 	os.Remove(newPinsFn)
 	return true, nil
@@ -131,7 +130,7 @@ func unique(chunks []manifest.ChunkRecord) []manifest.ChunkRecord {
 	return result
 }
 
-func (opts *ScrapeOptions) UpdateManifest(chunk manifest.ChunkRecord) error {
+func (opts *ScrapeOptions) Z_7_updateManifest(chunk manifest.ChunkRecord) error {
 	man, err := manifest.ReadManifest(opts.Globals.Chain, manifest.FromCache)
 	if err != nil {
 		if strings.Contains(err.Error(), "Could not find") {

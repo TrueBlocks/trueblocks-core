@@ -1,7 +1,3 @@
-// TODO: BOGUS - THINGS TO DO:
-// TODO: BOGUS - CLEANUP BETWEEN RUNS IF THINGS DON'T WORK OUT AND SOMETHING HAD TO QUIT EARLY
-// TODO: BOGUS - MAKE SURE WE'RE NOT RUNNING IF ACCTSCRAPE (OR ANYTHING ELSE?) IS RUNNINGs
-// TODO: BOGUS - RESPOND WELL TO RUNNING AGAINST NON-ARCHIVE NODES see isArchiveNode() in C++ code
 package scrapePkg
 
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
@@ -17,8 +13,9 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 )
 
-func (opts *ScrapeOptions) preScrape(progressThen *rpcClient.MetaData) (bool, error) {
+func (opts *ScrapeOptions) Y_2_preScrape(progressThen *rpcClient.MetaData) (bool, error) {
 
+	// TODO: BOGUS - TESTING SCRAPING
 	fmt.Println()
 	fmt.Println("----------------------------------------------------------------------------------------------")
 	logger.Log(logger.Info, "PreScrape", os.Getenv("TEST_END_SCRAPE"))

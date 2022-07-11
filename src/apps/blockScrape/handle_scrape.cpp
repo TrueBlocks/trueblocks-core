@@ -11,97 +11,41 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
-#include "bloom.h"
-
-extern bool freshenTimestampsAppend(blknum_t firstBlock, blknum_t nBlocks);
-extern bool visitPrefund(const Allocation& prefund, void* data);
 
 //--------------------------------------------------------------------------
 bool COptions::scrape_blocks(void) {
-    // TODO: BOGUS - TESTING SCRAPING
-    colorsOff();
-    // colorsOn();
+    uint64_t sb = str_2_Uint(getEnvStr("TB_SETTINGS_STARTBLOCK"));
+    uint64_t bc = str_2_Uint(getEnvStr("TB_SETTINGS_BLOCKCNT"));
+    uint64_t apc = str_2_Uint(getEnvStr("TB_SETTINGS_APPSPERCHUNK"));
 
-    // This may be the first time we've ever run. In that case, we need to build the zero block index file...
-    string chunkId = padNum9(0) + "-" + padNum9(0);
-    string_q bloomZeroPath = indexFolder_blooms + chunkId + ".bloom";
-    if (!fileExists(bloomZeroPath)) {
-        if (!loadPrefundBalances())
-            return usage("Could not load prefunds database.");
+    LOG_INFO("start_block: ", sb);
+    LOG_INFO("block_cnt: ", bc);
+    LOG_INFO("apps_per_chunk: ", apc);
 
-        // Each chain must have it's own prefund addresses. Here, we scan the prefund list
-        // and add a psuedo-transaction (block: 0, txid: order-in-file) for each address.
-        // Tradition has it that the prefund list is sorted by address.
-        CStringArray consolidatedLines;
-        forEveryPrefund(visitPrefund, &consolidatedLines);
+    ostringstream blazeCmd;
+    blazeCmd << "chifra scrape run --blaze "
+             << "--start_block " << sb << " "
+             << "--block_cnt " << bc << " "
+             << "--chain " << getChain() << " " << (verbose ? ("--verbose " + uint_2_Str(verbose)) : "");
 
-        // Write the chunk and the bloom to the binary cache
-        string_q chunkPath = indexFolder_finalized + chunkId + ".bin";
-        if (!writeIndexAsBinary(chunkPath, consolidatedLines)) {
-            LOG_ERR(cRed, "Failed to write index chunk for block zero.", cOff);
-            return false;
-        }
-        ostringstream os;
-        os << "Wrote " << consolidatedLines.size() << " records to " << cTeal << relativize(chunkPath) << cOff;
-        LOG_INFO(os.str());
+    LOG_INFO("Calling blaze: ", substitute(blazeCmd.str(), "--", "\n\t--"));
+    if (system(blazeCmd.str().c_str()) != 0) {
+        cleanFolder(indexFolder_ripe);
+        return false;
     }
 
+    start_block = str_2_Uint(getEnvStr("TB_SETTINGS_STARTBLOCK"));
     block_cnt = str_2_Uint(getEnvStr("TB_SETTINGS_BLOCKCNT"));
-    // block_chan_cnt = str_2_Uint(getEnvStr("TB_SETTINGS_BLOCKCHANCNT"));
-    // addr_chan_cnt = str_2_Uint(getEnvStr("TB_SETTINGS_ADDRCHANCNT"));
     apps_per_chunk = str_2_Uint(getEnvStr("TB_SETTINGS_APPSPERCHUNK"));
     unripe_dist = str_2_Uint(getEnvStr("TB_SETTINGS_UNRIPEDIST"));
     snap_to_grid = str_2_Uint(getEnvStr("TB_SETTINGS_SNAPTOGRID"));
     first_snap = str_2_Uint(getEnvStr("TB_SETTINGS_FIRSTSNAP"));
     allow_missing = getEnvStr("TB_SETTINGS_ALLOWMISSING") == "true";
-    if (getChain() == "mainnet") {
-        // different defaults for mainnet
-        apps_per_chunk = apps_per_chunk == 200000 ? 2000000 : apps_per_chunk;
-        first_snap = first_snap == 0 ? 2250000 : first_snap;
-    }
 
-    CMetaData meta;
-    meta = getMetaData();
-
-    start_block = max(meta.ripe, max(meta.staging, meta.finalized)) + 1;
-    if ((start_block + block_cnt) > meta.client)
-        block_cnt = (meta.client - start_block);
-    if (start_block > meta.client) {
-        LOG_INFO("The index (", start_block, ") is ahead of the chain (", meta.client, ").");
-        return false;
-    }
-
-    ostringstream blazeCmd;
-    blazeCmd << "chifra scrape run --blaze ";
-    blazeCmd << "--start_block " << start_block << " ";
-    blazeCmd << "--block_cnt " << block_cnt << " ";
-    blazeCmd << "--chain " << getChain() << " ";
-    blazeCmd << (verbose ? ("--verbose " + uint_2_Str(verbose)) : "");
-
-    LOG_INFO("block_cnt: ", block_cnt);
-    LOG_INFO("apps_per_chunk: ", apps_per_chunk);
     LOG_INFO("unripe_dist: ", unripe_dist);
     LOG_INFO("snap_to_grid: ", snap_to_grid);
     LOG_INFO("first_snap: ", first_snap);
     LOG_INFO("allow_missing: ", allow_missing);
-    LOG_INFO("meta.ripe: ", meta.ripe);
-    LOG_INFO("meta.staging: ", meta.staging);
-    LOG_INFO("meta.finalized: ", meta.finalized);
-    LOG_INFO("meta.client: ", meta.client);
-    LOG_INFO("start_block: ", start_block);
-    LOG_INFO("Calling blaze: ", substitute(blazeCmd.str(), "--", "\n\t--"));
-    if (system(blazeCmd.str().c_str()) != 0) {
-        cleanFolder(indexFolder_ripe);
-        static bool failed_already = false;
-        if (!failed_already) {
-            failed_already = true;
-            LOG_WARN(cYellow, "Blaze quit without finishing. Retrying...", cOff);
-            sleep(3);
-            return scrape_blocks();
-        }
-        LOG_WARN(cYellow, "Blaze quit without finishing twice. Reprocessing...", cOff);
-        return false;
-    }
 
     string_q tmpStagingFn = indexFolder_staging + "000000000-temp.txt";
     tmpStagingStream.open(tmpStagingFn, ios::out | ios::trunc);
@@ -607,12 +551,6 @@ bool freshenTimestampsAppend(blknum_t firstBlock, blknum_t nBlocks) {
 */
 
 //-----------------------------------------------------------------------
-bool visitPrefund(const Allocation& prefund, void* data) {
-    ostringstream os;
-
-    CStringArray* appearances = (CStringArray*)data;
-    os << prefund.address << "\t" << padNum9(0) << "\t" << padNum5((uint32_t)appearances->size()) << endl;
-    appearances->push_back(os.str());
-
-    return true;
+bool COptions::isSnapToGrid(blknum_t bn) const {
+    return bn > first_snap && !(bn % snap_to_grid);
 }

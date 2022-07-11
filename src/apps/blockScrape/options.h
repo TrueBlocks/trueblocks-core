@@ -17,6 +17,7 @@
  */
 
 #include "acctlib.h"
+#include "bloom.h"
 
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
@@ -55,12 +56,11 @@ class COptions : public COptionsBase {
     bool scrape_blocks(void);
     bool stage_chunks(const string_q& tmpFn);
     bool write_chunks(blknum_t chunkSize, bool snapped);
-    bool isSnapToGrid(blknum_t bn) const {
-        return bn > first_snap && !(bn % snap_to_grid);
-    }
+    bool isSnapToGrid(blknum_t bn) const;
     bool report(void);
 };
 
 //-----------------------------------------------------------------------------
 extern bool copyRipeToStage(const string_q& path, void* data);
 extern bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines);
+extern bool freshenTimestampsAppend(blknum_t firstBlock, blknum_t nBlocks);

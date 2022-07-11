@@ -18,6 +18,11 @@ import (
 
 // Initalize makes sure everything is ready to run. These routines don't return if they aren't
 func Initialize() bool {
+	if os.Getenv("NO_COLOR") == "true" {
+		// TODO: BOGUS - TESTING SCRAPING
+		colors.ColorsOff()
+	}
+
 	VerifyOs()
 	VerifyMigrations()
 

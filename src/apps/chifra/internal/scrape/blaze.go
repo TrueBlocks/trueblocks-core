@@ -25,7 +25,7 @@ type ScrapedData struct {
 	logs        rpcClient.Logs
 }
 
-func (opts *ScrapeOptions) ScrapeBlocks() error {
+func (opts *ScrapeOptions) HandleScrapeBlaze() error {
 	meta, _ := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
 
 	opts.BlockChanCnt, _ = strconv.ParseUint(os.Getenv("TB_SETTINGS_BLOCKCHANCNT"), 10, 64)
@@ -41,13 +41,13 @@ func (opts *ScrapeOptions) ScrapeBlocks() error {
 	var blockWG sync.WaitGroup
 	blockWG.Add(int(opts.BlockChanCnt))
 	for i := 0; i < int(opts.BlockChanCnt); i++ {
-		go opts.processBlocks(meta, rpcProvider, blockChannel, addressChannel, tsChannel, &blockWG)
+		go opts.Z_blaze_processBlocks(meta, rpcProvider, blockChannel, addressChannel, tsChannel, &blockWG)
 	}
 
 	var addressWG sync.WaitGroup
 	addressWG.Add(int(opts.AddrChanCnt))
 	for i := 0; i < int(opts.AddrChanCnt); i++ {
-		go opts.processAddresses(meta, rpcProvider, addressChannel, &addressWG)
+		go opts.Z_blaze_processAddresses(meta, rpcProvider, addressChannel, &addressWG)
 	}
 
 	// TODO: BOGUS IS USING THIS FILE THE BEST WAY - IS THIS A GOOD FILENAME
@@ -64,7 +64,7 @@ func (opts *ScrapeOptions) ScrapeBlocks() error {
 	var tsWG sync.WaitGroup
 	tsWG.Add(int(opts.AddrChanCnt))
 	for i := 0; i < int(opts.AddrChanCnt); i++ {
-		go opts.processTimestamps(rpcProvider, tsChannel, tsFile, &tsWG)
+		go opts.Z_blaze_processTimestamps(rpcProvider, tsChannel, tsFile, &tsWG)
 	}
 
 	for block := int(opts.StartBlock); block < int(opts.StartBlock+opts.BlockCnt); block++ {
@@ -84,7 +84,7 @@ func (opts *ScrapeOptions) ScrapeBlocks() error {
 }
 
 // processBlocks Process the block channel and for each block query the node for both traces and logs. Send results to addressChannel
-func (opts *ScrapeOptions) processBlocks(meta *rpcClient.MetaData, rpcProvider string, blockChannel chan int, addressChannel chan ScrapedData, tsChannel chan tslib.Timestamp, blockWG *sync.WaitGroup) {
+func (opts *ScrapeOptions) Z_blaze_processBlocks(meta *rpcClient.MetaData, rpcProvider string, blockChannel chan int, addressChannel chan ScrapedData, tsChannel chan tslib.Timestamp, blockWG *sync.WaitGroup) {
 	for blockNum := range blockChannel {
 
 		// RPCPayload is used during to make calls to the RPC.
@@ -134,28 +134,29 @@ func (opts *ScrapeOptions) processBlocks(meta *rpcClient.MetaData, rpcProvider s
 	blockWG.Done()
 }
 
-func (opts *ScrapeOptions) processAddresses(meta *rpcClient.MetaData, rpcProvider string, addressChannel chan ScrapedData, addressWG *sync.WaitGroup) {
+func (opts *ScrapeOptions) Z_blaze_processAddresses(meta *rpcClient.MetaData, rpcProvider string, addressChannel chan ScrapedData, addressWG *sync.WaitGroup) {
 	for sData := range addressChannel {
 		addressMap := make(map[string]bool)
-		opts.extractFromTraces(rpcProvider, sData.blockNumber, &sData.traces, addressMap)
-		opts.extractFromLogs(sData.blockNumber, &sData.logs, addressMap)
-		opts.writeAddresses(meta, sData.blockNumber, addressMap)
+		opts.Z_blaze_extractFromTraces(rpcProvider, sData.blockNumber, &sData.traces, addressMap)
+		opts.Z_blaze_extractFromLogs(sData.blockNumber, &sData.logs, addressMap)
+		opts.Z_blaze_writeAddresses(meta, sData.blockNumber, addressMap)
 	}
 	addressWG.Done()
 }
 
 var blazeMutex sync.Mutex
 
-func (opts *ScrapeOptions) processTimestamps(rpcProvider string, tsChannel chan tslib.Timestamp, tsFile *os.File, tsWg *sync.WaitGroup) {
+func (opts *ScrapeOptions) Z_blaze_processTimestamps(rpcProvider string, tsChannel chan tslib.Timestamp, tsFile *os.File, tsWg *sync.WaitGroup) {
 	for ts := range tsChannel {
 		blazeMutex.Lock()
+		// TODO: BOGUS - THIS COULD EASILY WRITE TO AN ARRAY NOT A FILE
 		fmt.Fprintf(tsFile, "%s-%s\n", utils.PadLeft(strconv.Itoa(int(ts.Bn)), 9), utils.PadLeft(strconv.Itoa(int(ts.Ts)), 9))
 		blazeMutex.Unlock()
 	}
 	tsWg.Done()
 }
 
-func (opts *ScrapeOptions) extractFromTraces(rpcProvider string, bn int, traces *rpcClient.Traces, addressMap map[string]bool) {
+func (opts *ScrapeOptions) Z_blaze_extractFromTraces(rpcProvider string, bn int, traces *rpcClient.Traces, addressMap map[string]bool) {
 	if traces.Result == nil || len(traces.Result) == 0 {
 		return
 	}
@@ -322,7 +323,7 @@ func (opts *ScrapeOptions) extractFromTraces(rpcProvider string, bn int, traces 
 }
 
 // extractFromLogs Extracts addresses from any part of the log data.
-func (opts *ScrapeOptions) extractFromLogs(bn int, logs *rpcClient.Logs, addressMap map[string]bool) {
+func (opts *ScrapeOptions) Z_blaze_extractFromLogs(bn int, logs *rpcClient.Logs, addressMap map[string]bool) {
 	if logs.Result == nil || len(logs.Result) == 0 {
 		return
 	}
@@ -371,7 +372,7 @@ func (opts *ScrapeOptions) extractFromLogs(bn int, logs *rpcClient.Logs, address
 
 var nProcessed uint64 = 0
 
-func (opts *ScrapeOptions) writeAddresses(meta *rpcClient.MetaData, bn int, addressMap map[string]bool) {
+func (opts *ScrapeOptions) Z_blaze_writeAddresses(meta *rpcClient.MetaData, bn int, addressMap map[string]bool) {
 	if len(addressMap) == 0 {
 		return
 	}

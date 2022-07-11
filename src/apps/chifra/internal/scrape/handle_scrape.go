@@ -1,19 +1,21 @@
+package scrapePkg
+
 // TODO: BOGUS - MULTI-CHAIN SPECIFIC SLEEPING IS
-// TODO: BOGUS - TESTING SCRAPING
-// TODO: BOGUS - TESTING SCRAPING
 // TODO: BOGUS - THINGS TO DO:
 // TODO: BOGUS - CLEANUP BETWEEN RUNS IF THINGS DON'T WORK OUT AND SOMETHING HAD TO QUIT EARLY
 // TODO: BOGUS - MAKE SURE WE'RE NOT RUNNING IF ACCTSCRAPE (OR ANYTHING ELSE?) IS RUNNINGs
 // TODO: BOGUS - RESPOND WELL TO RUNNING AGAINST NON-ARCHIVE NODES see isArchiveNode() in C++ code
-package scrapePkg
+// TODO: BOGUS - RETRY ON FAILURE OF BLAZE - SEE NOTES BELOW
+// TODO: BOGUS - THINGS TO DO:
+// TODO: BOGUS - CLEANUP BETWEEN RUNS IF THINGS DON'T WORK OUT AND SOMETHING HAD TO QUIT EARLY
+// TODO: BOGUS - MAKE SURE WE'RE NOT RUNNING IF ACCTSCRAPE (OR ANYTHING ELSE?) IS RUNNINGs
+// TODO: BOGUS - RESPOND WELL TO RUNNING AGAINST NON-ARCHIVE NODES see isArchiveNode() in C++ code
 
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
 import (
-	"fmt"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 )
@@ -24,14 +26,12 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		return err
 	}
 
-	ok, err := opts.preLoop(progress)
-	if !ok || err != nil {
+	if ok, err := opts.Y_1_preLoop(progress); !ok || err != nil {
 		return err
 	}
 
 	for {
-		ok, err := opts.preScrape(progress)
-		if !ok || err != nil {
+		if ok, err := opts.Y_2_preScrape(progress); !ok || err != nil {
 			if !ok {
 				break
 			}
@@ -39,16 +39,16 @@ func (opts *ScrapeOptions) HandleScrape() error {
 			goto PAUSE
 		}
 
-		fmt.Println("Calling with", opts.toCmdLine(), opts.getEnvStr())
-		err = opts.Globals.PassItOn("blockScrape", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
-		if err != nil {
+		if ok, err := opts.Y_3_scrape(progress); !ok || err != nil {
+			if !ok {
+				break
+			}
 			logger.Log(logger.Error, "blockScrape", err)
 			goto PAUSE
 		}
 
 		// Clean up after this run of the blockScraper
-		ok, err = opts.postScrape(progress)
-		if !ok || err != nil {
+		if ok, err := opts.Y_4_postScrape(progress); !ok || err != nil {
 			if !ok {
 				break
 			}
@@ -57,9 +57,20 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		}
 
 	PAUSE:
-		opts.pause(progress)
+		opts.Z_6_pause(progress)
 	}
 
-	_, err = opts.postLoop(progress)
+	_, err = opts.Y_5_postLoop(progress)
 	return err
 }
+
+// TODO: BOGUS - NOTES ON RE-RUN AFTER BLAZE FAILURE
+// cleanFolder(indexFolder_ripe);
+// static bool failed_already = false;
+// if (!failed_already) {
+// 	failed_already = true;
+// 	LOG_WARN(cYellow, "Blaze quit without finishing. Retrying...", cOff);
+// 	sleep(3);
+// 	return scrape_blocks();
+// }
+// LOG_WARN(cYellow, "Blaze quit without finishing twice. Reprocessing...", cOff);

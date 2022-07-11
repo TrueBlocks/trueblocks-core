@@ -1,8 +1,10 @@
 package index
 
 import (
+	"encoding/binary"
 	"fmt"
 	"io"
+	"os"
 	"sort"
 	"strings"
 
@@ -17,7 +19,7 @@ import (
 
 type AddressAppearanceMap map[string][]AppearanceRecord
 
-func WriteChunk(chain, path string, addAppMap AddressAppearanceMap, nApps int) (uint64, error) {
+func WriteChunk(chain, indexPath string, addAppMap AddressAppearanceMap, nApps int, pin bool) (uint64, error) {
 	addressTable := make([]AddressRecord, 0, len(addAppMap))
 	appearanceTable := make([]AppearanceRecord, 0, nApps)
 
@@ -47,7 +49,7 @@ func WriteChunk(chain, path string, addAppMap AddressAppearanceMap, nApps int) (
 		offset += uint32(len(apps))
 	}
 
-	rel := strings.Replace(path, config.GetPathToIndex(chain), "$INDEX/", -1)
+	rel := strings.Replace(indexPath, config.GetPathToIndex(chain), "$INDEX/", -1)
 	// We have everything we need here, properly sorted with all fields completed
 	fmt.Println("Writing", rel)
 	fmt.Printf("%x,%s,%d,%d\n", file.MagicNumber, hexutil.Encode(crypto.Keccak256([]byte(version.ManifestVersion))), len(addressTable), len(appearanceTable))
@@ -57,6 +59,44 @@ func WriteChunk(chain, path string, addAppMap AddressAppearanceMap, nApps int) (
 	for _, appRec := range appearanceTable {
 		fmt.Println(appRec.BlockNumber, appRec.TransactionId)
 	}
+
+	fmt.Println("In WriteIndex", indexPath)
+	tempPath := strings.Replace(indexPath, "unchained/sepolia/finalized/", "cache/sepolia/tmp/", -1)
+	fp, err := os.OpenFile(tempPath, os.O_WRONLY|os.O_CREATE, 0644)
+	defer func() {
+		os.Remove(tempPath)
+		// sigintTrap.Disable(trapCh)
+		// writeMutex.Lock()
+	}()
+	if err != nil {
+		return 0, err
+	}
+
+	fp.Seek(0, io.SeekStart)
+	header := HeaderRecord{
+		Magic:           file.MagicNumber,
+		Hash:            common.BytesToHash(crypto.Keccak256([]byte(version.ManifestVersion))),
+		AddressCount:    uint32(len(addressTable)),
+		AppearanceCount: uint32(len(appearanceTable)),
+	}
+	err = binary.Write(fp, binary.LittleEndian, header)
+	if err != nil {
+		fp.Close()
+		return 0, err
+	}
+	err = binary.Write(fp, binary.LittleEndian, addressTable)
+	if err != nil {
+		fp.Close()
+		return 0, err
+	}
+	err = binary.Write(fp, binary.LittleEndian, appearanceTable)
+	if err != nil {
+		fp.Close()
+		return 0, err
+	}
+	// Don't defer this because we want it to be closed before we copy it
+	fp.Close()
+
 	fmt.Println("Wrote", len(addAppMap), "records to", rel)
 
 	nBlooms, nInserted, nBitsLit, nBitsNotLit, sz, bitsLit := bl.GetStats()
@@ -66,10 +106,25 @@ func WriteChunk(chain, path string, addAppMap AddressAppearanceMap, nApps int) (
 	fmt.Println("nBitsNotLit:", nBitsNotLit)
 	fmt.Println("sz:         ", sz)
 	fmt.Println("bitsLit:    ", bitsLit)
-	err := bl.WriteBloom(chain, ToBloomPath(path))
+
+	os.Remove(indexPath)
+	_, err = file.Copy(tempPath, indexPath)
 	if err != nil {
 		return 0, err
 	}
+
+	err = bl.WriteBloom(chain, ToBloomPath(indexPath))
+	if err != nil {
+		return 0, err
+	}
+
+	if pin {
+		// TODO: BOGUS - PINNING WHEN WRITING IN GOLANG
+		rng := "000000000-000000000"
+		newPinsFn := config.GetPathToCache(chain) + "tmp/chunks_created.txt"
+		file.AppendToAsciiFile(newPinsFn, rng+"\n")
+	}
+
 	return 0, nil
 }
 
@@ -203,6 +258,6 @@ func TestWrite(chain, path string, rend Renderer) {
 			addrAppMap[addr] = append(addrAppMap[addr], app)
 		}
 	}
-	WriteChunk(chain, path, addrAppMap, len(addrAppMap))
+	WriteChunk(chain, path, addrAppMap, len(addrAppMap), false)
 	return
 }

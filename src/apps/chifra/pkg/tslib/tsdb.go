@@ -199,7 +199,7 @@ func Reset(chain string, maxBn uint64) error {
 	os.Remove(tsPath)
 	_, err = file.Copy(tempPath, tsPath)
 	if err != nil {
-		return nil
+		return err
 	}
 	return nil
 }
