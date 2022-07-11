@@ -12,7 +12,9 @@ package scrapePkg
 import (
 	"fmt"
 	"net/http"
+	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 
@@ -56,8 +58,11 @@ func (opts *ScrapeOptions) ScrapeInternal() (err error, handled bool) {
 
 	} else {
 		// Note this never returns
+		if os.Getenv("NO_COLOR") == "true" {
+			// TODO: BOGUS - TESTING SCRAPING
+			colors.ColorsOff()
+		}
 		err = opts.HandleScrape()
-
 	}
 	// EXISTING_CODE
 

@@ -377,11 +377,9 @@ func (opts *ScrapeOptions) writeAddresses(meta *rpcClient.MetaData, bn int, addr
 	}
 
 	blockNumStr := utils.PadLeft(strconv.Itoa(bn), 9)
-	addressArray := make([]string, len(addressMap))
-	idx := 0
-	for address := range addressMap {
-		addressArray[idx] = address
-		idx++
+	addressArray := make([]string, 0, len(addressMap))
+	for record := range addressMap {
+		addressArray = append(addressArray, record)
 	}
 	sort.Strings(addressArray)
 

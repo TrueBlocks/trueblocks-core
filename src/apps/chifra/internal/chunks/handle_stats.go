@@ -12,6 +12,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -68,7 +69,7 @@ func finishStats(stats *types.ReportChunks) types.ReportChunks {
 		stats.AppsPerAddr = float64(stats.NApps) / float64(stats.NAddrs)
 	}
 
-	stats.RecWid = 4 + index.BLOOM_WIDTH_IN_BYTES
+	stats.RecWid = 4 + bloom.BLOOM_WIDTH_IN_BYTES
 	if stats.BloomSz > 0 {
 		stats.Ratio = float64(stats.ChunkSz) / float64(stats.BloomSz)
 	}

@@ -517,16 +517,9 @@ bool freshenTimestampsAppend(blknum_t firstBlock, blknum_t nBlocks) {
     blknum_t lastBlock = firstBlock + nBlocks;
     size_t nRecords = ((fileSize(indexFolderBin_ts) / sizeof(uint32_t)) / 2);
 
-    LOG_INFO("\n");
-    LOG_INFO(string_q(120, '-'), "\n", string_q(120, '-'));
-    LOG_INFO("ENTERING WITH firstBlock: ", firstBlock, "\tnBlocks:   ", nBlocks);
-    LOG_INFO("              nRecords:   ", firstBlock, "\tlastBlock: ", nBlocks);
-
     if (nRecords >= lastBlock) {
-        LOG_INFO("LEAVING EARLY");
         return true;
     }
-    LOG_INFO("PROCESSING");
 
     // We always start at one less than the number of blocks already in the file
     // (i.e., if there's two we need to add block two next.)

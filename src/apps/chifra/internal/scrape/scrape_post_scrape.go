@@ -16,6 +16,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
@@ -27,16 +28,21 @@ import (
 
 // TODO: BOGUS - MANIFEST WRITING THE MANIFEST
 func (opts *ScrapeOptions) postScrape(progressThen *rpcClient.MetaData) (bool, error) {
-	logger.Log(logger.Info, "PostScrape")
+
 	// If we're not pinning, do nothing
 	if !opts.Pin {
 		return true, nil
 	}
 
 	// If there's been no progress, do nothing
-	progressNow, _ := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
+	progressNow, err := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
+	if err != nil {
+		return false, err
+	}
 	defer func() {
-		*progressThen = *progressNow
+		if progressNow != nil {
+			*progressThen = *progressNow
+		}
 	}()
 
 	if progressNow.Finalized <= progressThen.Finalized {
@@ -48,11 +54,17 @@ func (opts *ScrapeOptions) postScrape(progressThen *rpcClient.MetaData) (bool, e
 		return true, errors.New("chunks_created file not found, but there's been progress")
 	}
 
+	rel := strings.Replace(newPinsFn, config.GetPathToCache(opts.Globals.Chain), "$CACHE", -1)
+	fmt.Println()
+	fmt.Println("----------------------------------------------------------------------------------------------")
+	logger.Log(logger.Info, "PostScrape", rel, file.FileSize(newPinsFn))
+
 	lines := file.AsciiFileToLines(newPinsFn)
 	if len(lines) < 1 {
 		return true, errors.New("chunks_created file found, but it was empty")
 	}
 
+	var pathToIndex string
 	for _, line := range lines {
 
 		parts := strings.Split(line, "\t")
@@ -72,7 +84,7 @@ func (opts *ScrapeOptions) postScrape(progressThen *rpcClient.MetaData) (bool, e
 		}
 
 		unchainedFolder := config.GetPathToIndex(opts.Globals.Chain)
-		pathToIndex := unchainedFolder + "finalized/" + record.Range + ".bin"
+		pathToIndex = unchainedFolder + "finalized/" + record.Range + ".bin"
 		bloomPath := unchainedFolder + "blooms/" + record.Range + ".bloom"
 
 		key, secret := config.GetPinataKeys(opts.Globals.Chain)
@@ -102,6 +114,7 @@ func (opts *ScrapeOptions) postScrape(progressThen *rpcClient.MetaData) (bool, e
 
 		// ipfsAvail := pinning.LocalDaemonRunning()
 	}
+	index.TestWrite(opts.Globals.Chain, pathToIndex, &opts.Globals)
 	os.Remove(newPinsFn)
 	return true, nil
 }

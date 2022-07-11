@@ -9,6 +9,7 @@ package scrapePkg
 // be found in the LICENSE file.
 
 import (
+	"fmt"
 	"os"
 	"strconv"
 
@@ -17,11 +18,16 @@ import (
 )
 
 func (opts *ScrapeOptions) preScrape(progressThen *rpcClient.MetaData) (bool, error) {
+
+	fmt.Println()
+	fmt.Println("----------------------------------------------------------------------------------------------")
 	logger.Log(logger.Info, "PreScrape", os.Getenv("TEST_END_SCRAPE"))
+
 	e := os.Getenv("TEST_END_SCRAPE")
 	ee, _ := strconv.ParseUint(e, 10, 32)
 	if ee != 0 && progressThen.Finalized > ee {
 		return false, nil
 	}
+
 	return true, nil
 }

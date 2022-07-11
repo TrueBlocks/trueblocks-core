@@ -17,6 +17,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
@@ -176,17 +177,17 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 	// We open the bloom filter and read its header but we do not read any of the
 	// actual bits in the blooms. The IsMember function reads individual bytes to
 	// check individual bits.
-	bloom, err := index.NewChunkBloom(bloomFilename)
+	bl, err := bloom.NewChunkBloom(bloomFilename)
 	if err != nil {
-		results = append(results, index.AppearanceResult{Range: bloom.Range, Err: err})
-		bloom.Close()
+		results = append(results, index.AppearanceResult{Range: bl.Range, Err: err})
+		bl.Close()
 		return
 	}
 
 	// We check each address against the bloom to see if there are any hits...
 	var bloomHits = false
 	for _, mon := range updater.MonitorMap {
-		if bloom.IsMember(mon.Address) {
+		if bl.IsMember(mon.Address) {
 			bloomHits = true
 			break
 		}
@@ -196,29 +197,29 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 	// we don't defer this close, but close it right away -- otherwise too many files
 	// are open and we get an error).
 	// TODO: Must we always be closing these files?
-	bloom.Close()
+	bl.Close()
 
 	// If none of the addresses hit, we're finished with this index chunk. We want the
 	// caller to note this range even though there was no hit. In this way, we keep
 	// track of the last index portion we've seen. Because none of the addresses hit,
 	// we don't need to send a specific message.
 	if !bloomHits {
-		results = append(results, index.AppearanceResult{Range: bloom.Range})
+		results = append(results, index.AppearanceResult{Range: bl.Range})
 		return
 	}
 
 	indexFilename := index.ToIndexPath(fileName)
 	if !file.FileExists(indexFilename) {
-		_, err := index.EstablishIndexChunk(updater.Options.Globals.Chain, bloom.Range)
+		_, err := index.EstablishIndexChunk(updater.Options.Globals.Chain, bl.Range)
 		if err != nil {
-			results = append(results, index.AppearanceResult{Range: bloom.Range, Err: err})
+			results = append(results, index.AppearanceResult{Range: bl.Range, Err: err})
 			return
 		}
 	}
 
 	indexChunk, err := index.NewChunkData(indexFilename)
 	if err != nil {
-		results = append(results, index.AppearanceResult{Range: bloom.Range, Err: err})
+		results = append(results, index.AppearanceResult{Range: bl.Range, Err: err})
 		return
 	}
 	defer indexChunk.Close()

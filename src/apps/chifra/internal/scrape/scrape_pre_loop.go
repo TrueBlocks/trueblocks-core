@@ -10,9 +10,7 @@ package scrapePkg
 
 import (
 	"fmt"
-	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -23,14 +21,9 @@ import (
 )
 
 func (opts *ScrapeOptions) preLoop(progressThen *rpcClient.MetaData) (bool, error) {
-	if os.Getenv("NO_COLOR") == "true" {
-		// TODO: BOGUS - TESTING SCRAPING
-		colors.ColorsOff()
-	}
 	logger.Log(logger.Info, "PreLoop")
 	path := config.GetPathToIndex(opts.Globals.Chain) + fmt.Sprintf("finalized/%09d-%09d", 0, 0) + ".bin"
 	if !file.FileExists(path) {
-		fmt.Println("Need to build zero block chunk", path, file.FileExists(path))
 		allocs, err := names.LoadPrefunds(opts.Globals.Chain)
 		if err != nil {
 			return true, err
@@ -39,14 +32,17 @@ func (opts *ScrapeOptions) preLoop(progressThen *rpcClient.MetaData) (bool, erro
 		nExpected := opts.AppsPerChunk + uint64(float64(opts.AppsPerChunk)*1.2)
 		apps := make(index.AddressAppearanceMap, nExpected)
 		for i, alloc := range allocs {
-			// we need it sorted by lowercase string
-			addr := hexutil.Encode(alloc.Address.Bytes())
+			addr := hexutil.Encode(alloc.Address.Bytes()) // a lowercase string
 			apps[addr] = append(apps[addr], index.AppearanceRecord{
 				BlockNumber:   0,
 				TransactionId: uint32(i),
 			})
 		}
 		index.WriteChunk(opts.Globals.Chain, path, apps, len(allocs))
+		// TODO: BOGUS - PINNING WHEN WRITING IN GOLANG
+		// rng := "000000000-000000000"
+		// newPinsFn := config.GetPathToCache(opts.Globals.Chain) + "tmp/chunks_created.txt"
+		// file.AppendToAsciiFile(newPinsFn, rng+"\n")
 	}
 	return true, nil
 }

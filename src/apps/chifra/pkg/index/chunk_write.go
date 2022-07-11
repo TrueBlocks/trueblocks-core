@@ -2,11 +2,17 @@ package index
 
 import (
 	"fmt"
+	"io"
 	"sort"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/ethereum/go-ethereum/crypto"
 )
 
 type AddressAppearanceMap map[string][]AppearanceRecord
@@ -23,44 +29,51 @@ func WriteChunk(chain, path string, addAppMap AddressAppearanceMap, nApps int) (
 		return sorted[i] < sorted[j]
 	})
 
-	fmt.Println()
-	fmt.Println("In the map")
+	bl := bloom.ChunkBloom{}
+
 	offset := uint32(0)
-	for i, addrStr := range sorted {
+	for _, addrStr := range sorted {
 		apps := addAppMap[addrStr]
 		for _, app := range apps {
-			fmt.Println(i, addrStr, app.BlockNumber, app.TransactionId)
 			appearanceTable = append(appearanceTable, app)
 		}
+		address := common.HexToAddress(addrStr)
+		bl.AddToSet(address)
 		addressTable = append(addressTable, AddressRecord{
-			Address: common.HexToAddress(addrStr),
+			Address: address,
 			Offset:  offset,
 			Count:   uint32(len(apps)),
 		})
 		offset += uint32(len(apps))
 	}
 
-	fmt.Println()
-	fmt.Println("addressTable")
-	for i, addrRec := range addressTable {
-		fmt.Println(i, addrRec)
+	rel := strings.Replace(path, config.GetPathToIndex(chain), "$INDEX/", -1)
+	// We have everything we need here, properly sorted with all fields completed
+	fmt.Println("Writing", rel)
+	fmt.Printf("%x,%s,%d,%d\n", file.MagicNumber, hexutil.Encode(crypto.Keccak256([]byte(version.ManifestVersion))), len(addressTable), len(appearanceTable))
+	for _, addrRec := range addressTable {
+		fmt.Println(addrRec.Address, addrRec.Offset, addrRec.Count)
 	}
-
-	fmt.Println()
-	fmt.Println("appearanceTable")
-	for i, appRec := range appearanceTable {
-		fmt.Println(i, appRec)
+	for _, appRec := range appearanceTable {
+		fmt.Println(appRec.BlockNumber, appRec.TransactionId)
 	}
+	fmt.Println("Wrote", len(addAppMap), "records to", rel)
 
-	r := strings.Replace(path, config.GetPathToIndex(chain), "$INDEX/", -1)
-	fmt.Println("Wrote", len(addAppMap), "records to", r)
-
+	nBlooms, nInserted, nBitsLit, nBitsNotLit, sz, bitsLit := bl.GetStats()
+	fmt.Println("nBlooms:    ", nBlooms)
+	fmt.Println("nInserted:  ", nInserted)
+	fmt.Println("nBitsLit:   ", nBitsLit)
+	fmt.Println("nBitsNotLit:", nBitsNotLit)
+	fmt.Println("sz:         ", sz)
+	fmt.Println("bitsLit:    ", bitsLit)
+	err := bl.WriteBloom(chain, ToBloomPath(path))
+	if err != nil {
+		return 0, err
+	}
 	return 0, nil
 }
 
 /*
-	//----------------------------------------------------------------
-	bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines) {
 	    ASSERT(!fileExists(outFn));
 	    string_q tmpFile2 = substitute(outFn, ".bin", ".tmp");
 
@@ -134,7 +147,6 @@ func WriteChunk(chain, path string, addAppMap AddressAppearanceMap, nApps int) (
 	    appendToAsciiFile(cacheFolder_tmp + "chunks_created.txt", range + "\n");
 
 	    return !shouldQuit();
-	}
 	bool CBloomFilterRead::writeBloomFilter(const string_q& fileName) {
 	    lockSection();
 	    CArchive output(WRITING_ARCHIVE);
@@ -152,3 +164,45 @@ func WriteChunk(chain, path string, addAppMap AddressAppearanceMap, nApps int) (
 	    return true;
 	}
 */
+
+type Renderer interface {
+	RenderObject(data interface{}, first bool) error
+}
+
+func TestWrite(chain, path string, rend Renderer) {
+	path = ToIndexPath(path)
+
+	indexChunk, err := NewChunkData(path)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+	defer indexChunk.Close()
+
+	_, err = indexChunk.File.Seek(int64(HeaderWidth), io.SeekStart)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	addrAppMap := make(AddressAppearanceMap, indexChunk.Header.AddressCount)
+	for i := 0; i < int(indexChunk.Header.AddressCount); i++ {
+		obj := AddressRecord{}
+		err := obj.ReadAddress(indexChunk.File)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
+		apps, err := indexChunk.ReadAppearanceRecordsAndResetOffset(&obj)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
+		addr := hexutil.Encode(obj.Address.Bytes()) // a lowercase string
+		for _, app := range apps {
+			addrAppMap[addr] = append(addrAppMap[addr], app)
+		}
+	}
+	WriteChunk(chain, path, addrAppMap, len(addrAppMap))
+	return
+}

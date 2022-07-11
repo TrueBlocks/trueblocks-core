@@ -19,7 +19,10 @@ import (
 )
 
 func (opts *ScrapeOptions) HandleScrape() error {
-	progress, _ := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
+	progress, err := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
+	if err != nil {
+		return err
+	}
 
 	ok, err := opts.preLoop(progress)
 	if !ok || err != nil {
