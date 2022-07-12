@@ -26,12 +26,14 @@ type ScrapedData struct {
 }
 
 func (opts *ScrapeOptions) HandleScrapeBlaze() error {
-
+	nProcessed = 0
 	meta, _ := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
 
 	rpcProvider := config.GetRpcProvider(opts.Globals.Chain)
-	fmt.Println(opts)
-
+	// TODO: BOGUS - TESTING SCRAPING
+	if utils.OnOff {
+		fmt.Println(opts)
+	}
 	blockChannel := make(chan int)
 	addressChannel := make(chan ScrapedData)
 	tsChannel := make(chan tslib.Timestamp)
@@ -400,15 +402,17 @@ func (opts *ScrapeOptions) Z_blaze_writeAddresses(meta *rpcClient.MetaData, bn i
 	}
 
 	// TODO: BOGUS - TESTING SCRAPING
-	// step := uint64(7)
-	// if nProcessed%step == 0 {
-	// 	dist := uint64(0)
-	// 	if ripeBlock > uint64(bn) {
-	// 		dist = (ripeBlock - uint64(bn))
-	// 	}
-	// 	f := "-------- ( ------)- <PROG>  : Scraping %-04d of %-04d at block %d of %d (%d blocks from head)\r"
-	// 	fmt.Fprintf(os.Stderr, f, nProcessed, opts.BlockCnt, bn, ripeBlock, dist)
-	// }
+	if !utils.OnOff {
+		step := uint64(7)
+		if nProcessed%step == 0 {
+			dist := uint64(0)
+			if ripeBlock > uint64(bn) {
+				dist = (ripeBlock - uint64(bn))
+			}
+			f := "-------- ( ------)- <PROG>  : Scraping %-04d of %-04d at block %d of %d (%d blocks from head)\r"
+			fmt.Fprintf(os.Stderr, f, nProcessed, opts.BlockCnt, bn, ripeBlock, dist)
+		}
+	}
 	nProcessed++
 }
 

@@ -173,3 +173,5 @@ func GetFields(t *reflect.Type, format string, header bool) (fields []string, se
 
 	return fields, sep, quote
 }
+
+const OnOff = true

@@ -8,6 +8,8 @@ import (
 	"io/ioutil"
 	"log"
 	"time"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 var statusPath string = "/tmp/"
@@ -30,7 +32,7 @@ func (scraper *Scraper) ChangeState(onOff bool) bool {
 	prev := scraper.Running
 	scraper.Running = onOff
 	str := "false"
-	if onOff {
+	if utils.OnOff {
 		str = "true"
 	}
 	fileName := statusPath + scraper.Name + ".txt"

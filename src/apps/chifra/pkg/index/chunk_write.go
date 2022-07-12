@@ -11,6 +11,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
@@ -50,17 +51,20 @@ func WriteChunk(chain, indexPath string, addAppMap AddressAppearanceMap, nApps i
 	}
 
 	rel := strings.Replace(indexPath, config.GetPathToIndex(chain), "$INDEX/", -1)
-	// We have everything we need here, properly sorted with all fields completed
-	fmt.Println("Writing", rel)
-	fmt.Printf("%x,%s,%d,%d\n", file.MagicNumber, hexutil.Encode(crypto.Keccak256([]byte(version.ManifestVersion))), len(addressTable), len(appearanceTable))
-	for _, addrRec := range addressTable {
-		fmt.Println(addrRec.Address, addrRec.Offset, addrRec.Count)
-	}
-	for _, appRec := range appearanceTable {
-		fmt.Println(appRec.BlockNumber, appRec.TransactionId)
+	// TODO: BOGUS - TESTING SCRAPING
+	if utils.OnOff {
+		// We have everything we need here, properly sorted with all fields completed
+		fmt.Println("Writing", rel)
+		fmt.Printf("%x,%s,%d,%d\n", file.MagicNumber, hexutil.Encode(crypto.Keccak256([]byte(version.ManifestVersion))), len(addressTable), len(appearanceTable))
+		for _, addrRec := range addressTable {
+			fmt.Println(addrRec.Address, addrRec.Offset, addrRec.Count)
+		}
+		for _, appRec := range appearanceTable {
+			fmt.Println(appRec.BlockNumber, appRec.TransactionId)
+		}
+		fmt.Println("In WriteIndex", indexPath)
 	}
 
-	fmt.Println("In WriteIndex", indexPath)
 	tempPath := strings.Replace(indexPath, "unchained/sepolia/finalized/", "cache/sepolia/tmp/", -1)
 	fp, err := os.OpenFile(tempPath, os.O_WRONLY|os.O_CREATE, 0644)
 	defer func() {
@@ -98,14 +102,16 @@ func WriteChunk(chain, indexPath string, addAppMap AddressAppearanceMap, nApps i
 	fp.Close()
 
 	fmt.Println("Wrote", len(addAppMap), "records to", rel)
-
-	nBlooms, nInserted, nBitsLit, nBitsNotLit, sz, bitsLit := bl.GetStats()
-	fmt.Println("nBlooms:    ", nBlooms)
-	fmt.Println("nInserted:  ", nInserted)
-	fmt.Println("nBitsLit:   ", nBitsLit)
-	fmt.Println("nBitsNotLit:", nBitsNotLit)
-	fmt.Println("sz:         ", sz)
-	fmt.Println("bitsLit:    ", bitsLit)
+	// TODO: BOGUS - TESTING SCRAPING
+	if utils.OnOff {
+		nBlooms, nInserted, nBitsLit, nBitsNotLit, sz, bitsLit := bl.GetStats()
+		fmt.Println("nBlooms:    ", nBlooms)
+		fmt.Println("nInserted:  ", nInserted)
+		fmt.Println("nBitsLit:   ", nBitsLit)
+		fmt.Println("nBitsNotLit:", nBitsNotLit)
+		fmt.Println("sz:         ", sz)
+		fmt.Println("bitsLit:    ", bitsLit)
+	}
 
 	os.Remove(indexPath)
 	_, err = file.Copy(tempPath, indexPath)

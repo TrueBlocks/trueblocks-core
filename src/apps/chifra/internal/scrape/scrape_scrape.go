@@ -27,11 +27,13 @@ func (opts *ScrapeOptions) Y_3_scrape(progressThen *rpcClient.MetaData) (bool, e
 	envs = append(envs, opts.Z_8_getSetting(progressThen, "TB_SETTINGS_ALLOWMISSING"))
 
 	// TODO: BOGUS - TESTING SCRAPING
-	fmt.Println("Calling with", opts.toCmdLine())
-	for _, e := range envs {
-		fmt.Println(e)
+	if utils.OnOff {
+		fmt.Println("Calling with", opts.toCmdLine())
+		for _, e := range envs {
+			fmt.Println(e)
+		}
+		fmt.Println(progressThen)
 	}
-	fmt.Println(progressThen)
 
 	opts.Globals.Chain = strings.Replace(opts.Z_8_getSetting(progressThen, "TB_BLAZE_CHAIN"), "TB_BLAZE_CHAIN=", "", -1)
 	opts.StartBlock, _ = strconv.ParseUint(strings.Replace(opts.Z_8_getSetting(progressThen, "TB_BLAZE_STARTBLOCK"), "TB_BLAZE_STARTBLOCK=", "", -1), 10, 64)
@@ -39,11 +41,14 @@ func (opts *ScrapeOptions) Y_3_scrape(progressThen *rpcClient.MetaData) (bool, e
 	opts.BlockChanCnt, _ = strconv.ParseUint(strings.Replace(opts.Z_8_getSetting(progressThen, "TB_SETTINGS_BLOCKCHANCNT"), "TB_SETTINGS_BLOCKCHANCNT=", "", -1), 10, 64)
 	opts.AddrChanCnt, _ = strconv.ParseUint(strings.Replace(opts.Z_8_getSetting(progressThen, "TB_SETTINGS_ADDRCHANCNT"), "TB_SETTINGS_ADDRCHANCNT=", "", -1), 10, 64)
 
-	logger.Log(logger.Info, "chain:", opts.Globals.Chain)
-	logger.Log(logger.Info, "start_block:", opts.StartBlock)
-	logger.Log(logger.Info, "block_cnt:", opts.BlockCnt)
-	logger.Log(logger.Info, "block_chan_cnt:", opts.BlockChanCnt)
-	logger.Log(logger.Info, "addr_chan_cnt:", opts.AddrChanCnt)
+	// TODO: BOGUS - TESTING SCRAPING
+	if utils.OnOff {
+		logger.Log(logger.Info, "chain:", opts.Globals.Chain)
+		logger.Log(logger.Info, "start_block:", opts.StartBlock)
+		logger.Log(logger.Info, "block_cnt:", opts.BlockCnt)
+		logger.Log(logger.Info, "block_chan_cnt:", opts.BlockChanCnt)
+		logger.Log(logger.Info, "addr_chan_cnt:", opts.AddrChanCnt)
+	}
 
 	err := opts.HandleScrapeBlaze()
 	if err != nil {

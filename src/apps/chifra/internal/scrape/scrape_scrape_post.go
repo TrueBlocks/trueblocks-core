@@ -19,6 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
@@ -51,10 +52,12 @@ func (opts *ScrapeOptions) Y_4_postScrape(progressThen *rpcClient.MetaData) (boo
 	}
 
 	// TODO: BOGUS - TESTING SCRAPING
-	rel := strings.Replace(newPinsFn, config.GetPathToCache(opts.Globals.Chain), "$CACHE", -1)
-	fmt.Println()
-	fmt.Println("----------------------------------------------------------------------------------------------")
-	logger.Log(logger.Info, "PostScrape", rel, file.FileSize(newPinsFn))
+	if utils.OnOff {
+		rel := strings.Replace(newPinsFn, config.GetPathToCache(opts.Globals.Chain), "$CACHE", -1)
+		fmt.Println()
+		fmt.Println("----------------------------------------------------------------------------------------------")
+		logger.Log(logger.Info, "PostScrape", rel, file.FileSize(newPinsFn))
+	}
 
 	lines := file.AsciiFileToLines(newPinsFn)
 	if len(lines) < 1 {
@@ -114,7 +117,9 @@ func (opts *ScrapeOptions) Y_4_postScrape(progressThen *rpcClient.MetaData) (boo
 	}
 
 	// TODO: BOGUS - TESTING SCRAPING
-	index.TestWrite(opts.Globals.Chain, pathToIndex, &opts.Globals)
+	if utils.OnOff {
+		index.TestWrite(opts.Globals.Chain, pathToIndex, &opts.Globals)
+	}
 	os.Remove(newPinsFn)
 	return true, nil
 }

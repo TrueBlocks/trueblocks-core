@@ -22,13 +22,17 @@ bool COptions::scrape_blocks(void) {
     first_snap = str_2_Uint(getEnvStr("TB_SETTINGS_FIRSTSNAP"));
     allow_missing = getEnvStr("TB_SETTINGS_ALLOWMISSING") == "true";
 
-    LOG_INFO("bs-start_block: ", start_block);
-    LOG_INFO("bs-block_cnt: ", block_cnt);
-    LOG_INFO("bs-apps_per_chunk: ", apps_per_chunk);
-    LOG_INFO("bs-unripe_dist: ", unripe_dist);
-    LOG_INFO("bs-snap_to_grid: ", snap_to_grid);
-    LOG_INFO("bs-first_snap: ", first_snap);
-    LOG_INFO("bs-allow_missing: ", allow_missing);
+    // TODO: BOGUS - TESTING SCRAPING
+    bool onOff = true;
+    if (onOff) {
+        LOG_INFO("bs-start_block: ", start_block);
+        LOG_INFO("bs-block_cnt: ", block_cnt);
+        LOG_INFO("bs-apps_per_chunk: ", apps_per_chunk);
+        LOG_INFO("bs-unripe_dist: ", unripe_dist);
+        LOG_INFO("bs-snap_to_grid: ", snap_to_grid);
+        LOG_INFO("bs-first_snap: ", first_snap);
+        LOG_INFO("bs-allow_missing: ", allow_missing);
+    }
 
     string_q tmpStagingFn = indexFolder_staging + "000000000-temp.txt";
     tmpStagingStream.open(tmpStagingFn, ios::out | ios::trunc);

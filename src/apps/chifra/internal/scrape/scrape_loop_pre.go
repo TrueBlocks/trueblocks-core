@@ -13,12 +13,17 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 // preLoop does processing prior to entering the forever loop
 func (opts *ScrapeOptions) Y_1_preLoop(progressThen *rpcClient.MetaData) (bool, error) {
-	logger.Log(logger.Info, "PreLoop")
+	// TODO: BOGUS - TESTING SCRAPING
+	if utils.OnOff {
+		logger.Log(logger.Info, "PreLoop")
+	}
+
 	path := config.GetPathToIndex(opts.Globals.Chain) + fmt.Sprintf("finalized/%09d-%09d", 0, 0) + ".bin"
 	if !file.FileExists(path) {
 		allocs, err := names.LoadPrefunds(opts.Globals.Chain)
