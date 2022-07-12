@@ -15,11 +15,11 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
-// ScrapePreLoop performs actions that need to happen prior to entering the forever loop. Returns true
+// HandlePrepare performs actions that need to happen prior to entering the forever loop. Returns true
 // if the processing should continue, false otherwise
-func (opts *ScrapeOptions) ScrapePreLoop(progressThen *rpcClient.MetaData) (ok bool, err error) {
+func (opts *ScrapeOptions) HandlePrepare(progressThen *rpcClient.MetaData) (ok bool, err error) {
 	if utils.OnOff {
-		logger.Log(logger.Info, "ScrapePreLoop")
+		logger.Log(logger.Info, "HandlePrepare")
 	}
 
 	pathObj := cache.NewCachePath(opts.Globals.Chain, cache.Index_Bloom)
@@ -48,5 +48,5 @@ func (opts *ScrapeOptions) ScrapePreLoop(progressThen *rpcClient.MetaData) (ok b
 	}
 
 	// In this special case, we need to postScrape here since we've created an index file
-	return opts.ScrapePostScrape(progressThen)
+	return opts.HandleScrapePin(progressThen)
 }

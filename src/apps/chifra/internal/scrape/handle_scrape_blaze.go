@@ -1,5 +1,9 @@
 package scrapePkg
 
+// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
+
 import (
 	"fmt"
 	"os"
@@ -12,8 +16,22 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-// ScrapeScrape calls into the block scraper to (a) call Blaze and (b) consolidate if applicable
-func (opts *ScrapeOptions) ScrapeScrape(progressThen *rpcClient.MetaData) (ok bool, err error) {
+// HandleScrapeBlaze is called each time around the forever loop prior to calling into
+// Blaze to actually scrape the blocks.
+func (opts *ScrapeOptions) HandleScrapeBlaze(progressThen *rpcClient.MetaData) (ok bool, err error) {
+
+	if utils.OnOff {
+		fmt.Println()
+		fmt.Println("----------------------------------------------------------------------------------------------")
+		logger.Log(logger.Info, "HandleScrapeBlaze", os.Getenv("TEST_END_SCRAPE"))
+	}
+
+	tes := os.Getenv("TEST_END_SCRAPE")
+	val, err := strconv.ParseUint(tes, 10, 32)
+	if (val != 0 && progressThen.Finalized > val) || err != nil {
+		return false, err
+	}
+
 	envs := opts.getEnvStr()
 	envs = append(envs, opts.Z_8_getSetting(progressThen, "TB_BLAZE_BLOCKCNT"))
 	envs = append(envs, opts.Z_8_getSetting(progressThen, "TB_BLAZE_STARTBLOCK"))
@@ -50,72 +68,23 @@ func (opts *ScrapeOptions) ScrapeScrape(progressThen *rpcClient.MetaData) (ok bo
 		logger.Log(logger.Info, "addr_chan_cnt:", opts.AddrChanCnt)
 	}
 
-	err = opts.HandleBlaze()
+	meta, _ := rpcClient.GetMetaData(opts.Globals.Chain, false /* testMode */)
+	blazeOpts := BlazeOptions{
+		Chain:       opts.Globals.Chain,
+		NChannels:   utils.Max(opts.BlockChanCnt, opts.AddrChanCnt),
+		NProcessed:  0,
+		StartBlock:  opts.StartBlock,
+		BlockCount:  opts.BlockCnt,
+		RipeBlock:   meta.Latest - utils.Min(meta.Latest, opts.UnripeDist),
+		UnripeDist:  opts.UnripeDist,
+		RpcProvider: config.GetRpcProvider(opts.Globals.Chain),
+	}
+
+	err = blazeOpts.HandleBlaze(meta)
 	if err != nil {
 		os.RemoveAll(config.GetPathToIndex(opts.Globals.Chain) + "ripe")
 		return true, err
 	}
 
-	return true, opts.Globals.PassItOn("blockScrape", opts.Globals.Chain, opts.toCmdLine(), envs)
-}
-
-func (opts *ScrapeOptions) Z_8_getSetting(meta *rpcClient.MetaData, which string) string {
-	settings := config.GetBlockScrapeSettings(opts.Globals.Chain)
-	start := utils.Max(meta.Ripe, utils.Max(meta.Staging, meta.Finalized)) + 1
-	value := ""
-
-	switch which {
-
-	case "TB_BLAZE_BLOCKCNT":
-		blockCnt := opts.BlockCnt
-		if (start + blockCnt) > meta.Latest {
-			blockCnt = (meta.Latest - start)
-		}
-		value = fmt.Sprintf("%d", blockCnt)
-
-	case "TB_BLAZE_STARTBLOCK":
-		value = fmt.Sprintf("%d", start)
-
-	case "TB_BLAZE_CHAIN":
-		value = opts.Globals.Chain
-
-	case "TB_SETTINGS_BLOCKCHANCNT":
-		val := uint64(settings.Block_chan_cnt)
-		if opts.BlockChanCnt != val {
-			val = opts.BlockChanCnt
-		}
-		value = fmt.Sprintf("%d", val)
-
-	case "TB_SETTINGS_ADDRCHANCNT":
-		val := uint64(settings.Addr_chan_cnt)
-		if opts.AddrChanCnt != val {
-			val = opts.AddrChanCnt
-		}
-		value = fmt.Sprintf("%d", val)
-
-	case "TB_SETTINGS_APPSPERCHUNK":
-		perChunk := settings.Apps_per_chunk
-		if (opts.Globals.Chain == "mainnet") && perChunk == 200000 {
-			perChunk = 2000000
-		}
-		value = fmt.Sprintf("%d", perChunk)
-
-	case "TB_SETTINGS_FIRSTSNAP":
-		firstSnap := settings.First_snap
-		if opts.Globals.Chain == "mainnet" && firstSnap == 0 {
-			firstSnap = 2250000
-		}
-		value = fmt.Sprintf("%d", firstSnap)
-
-	case "TB_SETTINGS_UNRIPEDIST":
-		value = fmt.Sprintf("%d", settings.Unripe_dist)
-
-	case "TB_SETTINGS_SNAPTOGRID":
-		value = fmt.Sprintf("%d", settings.Snap_to_grid)
-
-	case "TB_SETTINGS_ALLOWMISSING":
-		value = fmt.Sprintf("%t", settings.Allow_missing)
-	}
-
-	return which + "=" + value
+	return true, nil
 }

@@ -23,7 +23,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
-func (opts *ScrapeOptions) ScrapePostScrape(progressThen *rpcClient.MetaData) (ok bool, err error) {
+// HandleScrapePin pins any newly chunks that are not yet pinned.
+func (opts *ScrapeOptions) HandleScrapePin(progressThen *rpcClient.MetaData) (ok bool, err error) {
 
 	if !opts.Pin {
 		// If we're not pinning, do nothing
