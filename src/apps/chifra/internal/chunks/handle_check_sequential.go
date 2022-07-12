@@ -28,8 +28,7 @@ func (opts *ChunksOptions) CheckSequential(fnArray, cacheArray, remoteArray []st
 
 func (opts *ChunksOptions) checkSequential(which string, array []string, report *types.ReportCheck) error {
 	// TODO: Technically, allow_missing means missing inside the file not in the filenames
-	allow_missing := config.ReadBlockScrape(opts.Globals.Chain).Settings.Allow_missing
-
+	allow_missing := config.GetBlockScrapeSettings(opts.Globals.Chain).Allow_missing
 	prev := cache.NotARange
 	for _, item := range array {
 		fR, _ := cache.RangeFromFilename(item)

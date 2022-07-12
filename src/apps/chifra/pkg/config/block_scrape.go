@@ -5,21 +5,16 @@
 package config
 
 import (
-	"github.com/spf13/viper"
+	"log"
+	"os"
+	"reflect"
+	"strconv"
+	"strings"
+
+	"github.com/BurntSushi/toml"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-// TODO: Multi-chain configure individual tools per chain (for example blockScrape)
-var blockScrapeViper = viper.New()
-var blockScrapeRead = false
-var cachedBlockScrape BlockScrape
-
-type blockScrapeRequires struct {
-	Tracing bool
-	Parity  bool
-	Archive bool
-}
-
-// We should remove these underlined config entries in a migration some day
 type blockScrapeSettings struct {
 	Block_chan_cnt        int
 	Addr_chan_cnt         int
@@ -33,35 +28,59 @@ type blockScrapeSettings struct {
 	Pinata_jwt            string
 }
 
+var defaultSettings = blockScrapeSettings{
+	Block_chan_cnt:        10,
+	Addr_chan_cnt:         20,
+	Apps_per_chunk:        200000,
+	Unripe_dist:           28,
+	Snap_to_grid:          100000,
+	First_snap:            0,
+	Allow_missing:         false,
+	Pinata_api_key:        "",
+	Pinata_secret_api_key: "",
+	Pinata_jwt:            "",
+}
+
 type BlockScrape struct {
-	Requires blockScrapeRequires
 	Settings blockScrapeSettings
 }
 
-// init sets up default values for the given configuration
-func init() {
-	blockScrapeViper.SetConfigName("blockScrape")
-	blockScrapeViper.SetDefault("Requires.Tracing", true)
-	blockScrapeViper.SetDefault("Requires.Parity", true)
-	blockScrapeViper.SetDefault("Settings.Block_chan_cnt", 10)
-	blockScrapeViper.SetDefault("Settings.Addr_chan_cnt", 20)
-	blockScrapeViper.SetDefault("Settings.Apps_per_chunk", 200000)
-	blockScrapeViper.SetDefault("Settings.Unripe_dist", 28)
-	blockScrapeViper.SetDefault("Settings.Snap_to_grid", 100000)
-	blockScrapeViper.SetDefault("Settings.First_snap", 0)
-	blockScrapeViper.SetDefault("Settings.Allow_missing", false)
-}
-
-// ReadBlockScrape reads the configuration located in blockScrape.toml file
-func ReadBlockScrape(chain string) *BlockScrape {
-	if !blockScrapeRead {
-		MustReadConfig(blockScrapeViper, &cachedBlockScrape, GetPathToChainConfig(chain))
-		blockScrapeRead = true
+func GetBlockScrapeSettings(chain string) blockScrapeSettings {
+	str := utils.AsciiFileToString(GetPathToChainConfig(chain) + "blockScrape.toml")
+	conf := BlockScrape{
+		Settings: defaultSettings,
 	}
-	return &cachedBlockScrape
+	if _, err := toml.Decode(str, &conf); err != nil {
+		// TODO: Don't panic here, just report and return defaults
+		log.Fatal(err)
+	}
+
+	tt := reflect.TypeOf(conf.Settings)
+	fields, _, _ := utils.GetFields(&tt, "txt", true)
+
+	for _, field := range fields {
+		key := "TB_SETTINGS_" + strings.ToUpper(field)
+		val := os.Getenv(key)
+		if val != "" {
+			if strings.HasPrefix(field, "pinata") {
+				reflect.ValueOf(&conf.Settings).Elem().FieldByName(utils.MakeFirstUpperCase(field)).SetString(val)
+			} else if field == "allow_missing" {
+				if val == "true" {
+					reflect.ValueOf(&conf.Settings).Elem().FieldByName(utils.MakeFirstUpperCase(field)).SetBool(true)
+				}
+			} else {
+				if v, err := strconv.ParseInt(val, 10, 32); err == nil {
+					reflect.ValueOf(&conf.Settings).Elem().FieldByName(utils.MakeFirstUpperCase(field)).SetInt(v)
+				}
+			}
+		}
+	}
+
+	return conf.Settings
 }
 
+// TODO: BOGUS - IT WOULD BE HELPFUL IF THIS MERGED IN DATA FROM THE MAINNET FILE FOR PIN APIS
 func GetPinataKeys(chain string) (string, string) {
-	// TODO: BOGUS - IT WOULD BE HELPFUL IF THIS MERGED IN DATA FROM THE MAINNET FILE FOR PIN APIS
-	return ReadBlockScrape(chain).Settings.Pinata_api_key, ReadBlockScrape(chain).Settings.Pinata_secret_api_key
+	settings := GetBlockScrapeSettings(chain)
+	return settings.Pinata_api_key, settings.Pinata_secret_api_key
 }
