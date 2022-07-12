@@ -23,15 +23,13 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
-// TODO: BOGUS - MANIFEST WRITING THE MANIFEST
-func (opts *ScrapeOptions) Y_4_postScrape(progressThen *rpcClient.MetaData) (bool, error) {
+func (opts *ScrapeOptions) ScrapePostScrape(progressThen *rpcClient.MetaData) (ok bool, err error) {
 
-	// If we're not pinning, do nothing
 	if !opts.Pin {
+		// If we're not pinning, do nothing
 		return true, nil
 	}
 
-	// If there's been no progress, do nothing
 	progressNow, err := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
 	if err != nil {
 		return false, err
@@ -43,6 +41,7 @@ func (opts *ScrapeOptions) Y_4_postScrape(progressThen *rpcClient.MetaData) (boo
 	}()
 
 	if progressNow.Finalized <= progressThen.Finalized {
+		// If there's been no progress, there's nothing to pin
 		return true, nil
 	}
 

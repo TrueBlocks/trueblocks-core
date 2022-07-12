@@ -26,20 +26,20 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		return err
 	}
 
-	if ok, err := opts.preLoop(progress); !ok || err != nil {
+	if ok, err := opts.ScrapePreLoop(progress); !ok || err != nil {
 		return err
 	}
 
 	for {
-		if ok, err := opts.Y_2_preScrape(progress); !ok || err != nil {
+		if ok, err := opts.ScrapePreScrape(progress); !ok || err != nil {
 			if !ok {
 				break
 			}
-			logger.Log(logger.Error, "preScrape", err)
+			logger.Log(logger.Error, "ScrapePreScrape", err)
 			goto PAUSE
 		}
 
-		if ok, err := opts.Y_3_scrape(progress); !ok || err != nil {
+		if ok, err := opts.ScrapeScrape(progress); !ok || err != nil {
 			if !ok {
 				break
 			}
@@ -48,7 +48,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		}
 
 		// Clean up after this run of the blockScraper
-		if ok, err := opts.Y_4_postScrape(progress); !ok || err != nil {
+		if ok, err := opts.ScrapePostScrape(progress); !ok || err != nil {
 			if !ok {
 				break
 			}
@@ -60,7 +60,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		opts.Z_6_pause(progress)
 	}
 
-	_, err = opts.Y_5_postLoop(progress)
+	_, err = opts.ScrapePostLoop(progress)
 	return err
 }
 

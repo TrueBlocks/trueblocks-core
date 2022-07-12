@@ -12,8 +12,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-// Scrape calls into the block scraper to (a) call Blaze and (b) consolidate if applicable
-func (opts *ScrapeOptions) Y_3_scrape(progressThen *rpcClient.MetaData) (bool, error) {
+// ScrapeScrape calls into the block scraper to (a) call Blaze and (b) consolidate if applicable
+func (opts *ScrapeOptions) ScrapeScrape(progressThen *rpcClient.MetaData) (ok bool, err error) {
 	envs := opts.getEnvStr()
 	envs = append(envs, opts.Z_8_getSetting(progressThen, "TB_BLAZE_BLOCKCNT"))
 	envs = append(envs, opts.Z_8_getSetting(progressThen, "TB_BLAZE_STARTBLOCK"))
@@ -50,7 +50,7 @@ func (opts *ScrapeOptions) Y_3_scrape(progressThen *rpcClient.MetaData) (bool, e
 		logger.Log(logger.Info, "addr_chan_cnt:", opts.AddrChanCnt)
 	}
 
-	err := opts.HandleBlaze()
+	err = opts.HandleBlaze()
 	if err != nil {
 		os.RemoveAll(config.GetPathToIndex(opts.Globals.Chain) + "ripe")
 		return true, err

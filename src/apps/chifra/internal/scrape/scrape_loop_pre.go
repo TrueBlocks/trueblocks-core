@@ -15,17 +15,16 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
-// preLoop performs actions that need to happen prior to entering the forever loop. Returns true
+// ScrapePreLoop performs actions that need to happen prior to entering the forever loop. Returns true
 // if the processing should continue, false otherwise
-func (opts *ScrapeOptions) preLoop(progressThen *rpcClient.MetaData) (cont bool, err error) {
-	// TODO: BOGUS - TESTING SCRAPING
+func (opts *ScrapeOptions) ScrapePreLoop(progressThen *rpcClient.MetaData) (ok bool, err error) {
 	if utils.OnOff {
-		logger.Log(logger.Info, "PreLoop")
+		logger.Log(logger.Info, "ScrapePreLoop")
 	}
 
-	bloomPath := cache.NewCachePath(opts.Globals.Chain, cache.Index_Bloom)
-	path := bloomPath.GetFullPath("000000000-000000000")
-	if file.FileExists(path) {
+	pathObj := cache.NewCachePath(opts.Globals.Chain, cache.Index_Bloom)
+	bloomPath := pathObj.GetFullPath("000000000-000000000")
+	if file.FileExists(bloomPath) {
 		// The file already exists, so continue
 		return true, nil
 	}
@@ -43,11 +42,11 @@ func (opts *ScrapeOptions) preLoop(progressThen *rpcClient.MetaData) (cont bool,
 			TransactionId: uint32(i),
 		})
 	}
-	_, err = index.WriteChunk(opts.Globals.Chain, path, appMap, len(allocs), opts.Pin)
+	_, err = index.WriteChunk(opts.Globals.Chain, index.ToIndexPath(bloomPath), appMap, len(allocs), opts.Pin)
 	if err != nil {
 		return false, err
 	}
 
 	// In this special case, we need to postScrape here since we've created an index file
-	return opts.Y_4_postScrape(progressThen)
+	return opts.ScrapePostScrape(progressThen)
 }

@@ -4,6 +4,7 @@ import (
 	"encoding/binary"
 	"fmt"
 	"io"
+	"log"
 	"os"
 	"sort"
 	"strings"
@@ -66,6 +67,9 @@ func WriteChunk(chain, indexPath string, addAppMap AddressAppearanceMap, nApps i
 	}
 
 	tempPath := strings.Replace(indexPath, "unchained/sepolia/finalized/", "cache/sepolia/tmp/", -1)
+	if indexPath == tempPath {
+		log.Fatal("Path should differ:", tempPath, indexPath)
+	}
 	fp, err := os.OpenFile(tempPath, os.O_WRONLY|os.O_CREATE, 0644)
 	defer func() {
 		os.Remove(tempPath)

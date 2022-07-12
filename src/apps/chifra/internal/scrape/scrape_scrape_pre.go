@@ -14,19 +14,20 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (opts *ScrapeOptions) Y_2_preScrape(progressThen *rpcClient.MetaData) (bool, error) {
+// ScrapePreScrape is called each time around the forever loop prior to calling into
+// Blaze to actually scrape the blocks.
+func (opts *ScrapeOptions) ScrapePreScrape(progressThen *rpcClient.MetaData) (ok bool, err error) {
 
-	// TODO: BOGUS - TESTING SCRAPING
 	if utils.OnOff {
 		fmt.Println()
 		fmt.Println("----------------------------------------------------------------------------------------------")
-		logger.Log(logger.Info, "PreScrape", os.Getenv("TEST_END_SCRAPE"))
+		logger.Log(logger.Info, "ScrapePreScrape", os.Getenv("TEST_END_SCRAPE"))
 	}
 
-	e := os.Getenv("TEST_END_SCRAPE")
-	ee, _ := strconv.ParseUint(e, 10, 32)
-	if ee != 0 && progressThen.Finalized > ee {
-		return false, nil
+	tes := os.Getenv("TEST_END_SCRAPE")
+	val, err := strconv.ParseUint(tes, 10, 32)
+	if (val != 0 && progressThen.Finalized > val) || err != nil {
+		return false, err
 	}
 
 	return true, nil
