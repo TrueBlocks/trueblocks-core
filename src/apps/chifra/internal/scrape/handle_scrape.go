@@ -26,7 +26,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		return err
 	}
 
-	if ok, err := opts.Y_1_preLoop(progress); !ok || err != nil {
+	if ok, err := opts.preLoop(progress); !ok || err != nil {
 		return err
 	}
 

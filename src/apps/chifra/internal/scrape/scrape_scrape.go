@@ -50,7 +50,7 @@ func (opts *ScrapeOptions) Y_3_scrape(progressThen *rpcClient.MetaData) (bool, e
 		logger.Log(logger.Info, "addr_chan_cnt:", opts.AddrChanCnt)
 	}
 
-	err := opts.HandleScrapeBlaze()
+	err := opts.HandleBlaze()
 	if err != nil {
 		os.RemoveAll(config.GetPathToIndex(opts.Globals.Chain) + "ripe")
 		return true, err

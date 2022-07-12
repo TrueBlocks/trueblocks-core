@@ -25,7 +25,9 @@ type ScrapedData struct {
 	logs        rpcClient.Logs
 }
 
-func (opts *ScrapeOptions) HandleScrapeBlaze() error {
+// HandleBlaze does the actual scraping, walking through block_cnt blocks and querying traces and logs
+// and then extracting addresses and timestamps from those data structures.
+func (opts *ScrapeOptions) HandleBlaze() error {
 	nProcessed = 0
 	meta, _ := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
 

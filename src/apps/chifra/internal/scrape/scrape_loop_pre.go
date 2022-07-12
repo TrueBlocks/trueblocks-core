@@ -5,9 +5,7 @@ package scrapePkg
 // be found in the LICENSE file.
 
 import (
-	"fmt"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -17,35 +15,39 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
-// preLoop does processing prior to entering the forever loop
-func (opts *ScrapeOptions) Y_1_preLoop(progressThen *rpcClient.MetaData) (bool, error) {
+// preLoop performs actions that need to happen prior to entering the forever loop. Returns true
+// if the processing should continue, false otherwise
+func (opts *ScrapeOptions) preLoop(progressThen *rpcClient.MetaData) (cont bool, err error) {
 	// TODO: BOGUS - TESTING SCRAPING
 	if utils.OnOff {
 		logger.Log(logger.Info, "PreLoop")
 	}
 
-	path := config.GetPathToIndex(opts.Globals.Chain) + fmt.Sprintf("finalized/%09d-%09d", 0, 0) + ".bin"
-	if !file.FileExists(path) {
-		allocs, err := names.LoadPrefunds(opts.Globals.Chain)
-		if err != nil {
-			return true, err
-		}
-
-		nExpected := opts.AppsPerChunk + uint64(float64(opts.AppsPerChunk)*1.2)
-		apps := make(index.AddressAppearanceMap, nExpected)
-		for i, alloc := range allocs {
-			addr := hexutil.Encode(alloc.Address.Bytes()) // a lowercase string
-			apps[addr] = append(apps[addr], index.AppearanceRecord{
-				BlockNumber:   0,
-				TransactionId: uint32(i),
-			})
-		}
-		// nWritten, err
-		_, err = index.WriteChunk(opts.Globals.Chain, path, apps, len(allocs), opts.Pin)
-		if err != nil {
-			return false, err
-		}
-		opts.Y_4_postScrape(progressThen)
+	bloomPath := cache.NewCachePath(opts.Globals.Chain, cache.Index_Bloom)
+	path := bloomPath.GetFullPath("000000000-000000000")
+	if file.FileExists(path) {
+		// The file already exists, so continue
+		return true, nil
 	}
-	return true, nil
+
+	allocs, err := names.LoadPrefunds(opts.Globals.Chain)
+	if err != nil {
+		return false, err
+	}
+
+	appMap := make(index.AddressAppearanceMap, len(allocs))
+	for i, alloc := range allocs {
+		addr := hexutil.Encode(alloc.Address.Bytes()) // a lowercase string
+		appMap[addr] = append(appMap[addr], index.AppearanceRecord{
+			BlockNumber:   0,
+			TransactionId: uint32(i),
+		})
+	}
+	_, err = index.WriteChunk(opts.Globals.Chain, path, appMap, len(allocs), opts.Pin)
+	if err != nil {
+		return false, err
+	}
+
+	// In this special case, we need to postScrape here since we've created an index file
+	return opts.Y_4_postScrape(progressThen)
 }
