@@ -12,7 +12,6 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -125,42 +124,8 @@ func OutputObject(data interface{}, w io.Writer, format string, hideHeader, apiM
 }
 
 // TODO: Fix export without arrays
-func getFields(t *reflect.Type, format string, header bool) (fields []string, sep string, quote string) {
-	sep = "\t"
-	quote = ""
-	if format == "csv" || strings.Contains(format, ",") {
-		sep = ","
-	}
-
-	if format == "csv" || strings.Contains(format, "\"") {
-		quote = "\""
-	}
-
-	if strings.Contains(format, "\t") || strings.Contains(format, ",") {
-		custom := strings.Replace(format, "\t", ",", -1)
-		custom = strings.Replace(custom, "\"", ",", -1)
-		fields = strings.Split(custom, ",")
-
-	} else {
-		if (*t).Kind() != reflect.Struct {
-			logger.Fatal((*t).Name() + " is not a structure")
-		}
-		for i := 0; i < (*t).NumField(); i++ {
-			fn := (*t).Field(i).Name
-			if header {
-				fields = append(fields, utils.MakeFirstLowerCase(fn))
-			} else {
-				fields = append(fields, fn)
-			}
-		}
-	}
-
-	return fields, sep, quote
-}
-
-// TODO: Fix export without arrays
 func GetHeader(t *reflect.Type, format string) string {
-	fields, sep, quote := getFields(t, format, true)
+	fields, sep, quote := utils.GetFields(t, format, true)
 	var sb strings.Builder
 	for i, field := range fields {
 		if i > 0 {
@@ -173,7 +138,7 @@ func GetHeader(t *reflect.Type, format string) string {
 
 // TODO: Fix export without arrays
 func GetRowTemplate(t *reflect.Type, format string) (*template.Template, error) {
-	fields, sep, quote := getFields(t, format, false)
+	fields, sep, quote := utils.GetFields(t, format, false)
 	var sb strings.Builder
 	for i, field := range fields {
 		if i > 0 {

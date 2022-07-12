@@ -12,10 +12,12 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"reflect"
 	"runtime"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"golang.org/x/crypto/ssh/terminal"
 )
 
@@ -137,3 +139,37 @@ func MakeFirstUpperCase(s string) string {
 // range smaller than this is a blockNumber, anything larger than this is a timestamp). This breaks when the
 // block number gets larger than 1,4 billion, which may happen when the chain shards, but not until then.
 const EarliestEvmTs = 1438269971
+
+// TODO: Fix export without arrays
+func GetFields(t *reflect.Type, format string, header bool) (fields []string, sep string, quote string) {
+	sep = "\t"
+	quote = ""
+	if format == "csv" || strings.Contains(format, ",") {
+		sep = ","
+	}
+
+	if format == "csv" || strings.Contains(format, "\"") {
+		quote = "\""
+	}
+
+	if strings.Contains(format, "\t") || strings.Contains(format, ",") {
+		custom := strings.Replace(format, "\t", ",", -1)
+		custom = strings.Replace(custom, "\"", ",", -1)
+		fields = strings.Split(custom, ",")
+
+	} else {
+		if (*t).Kind() != reflect.Struct {
+			logger.Fatal((*t).Name() + " is not a structure")
+		}
+		for i := 0; i < (*t).NumField(); i++ {
+			fn := (*t).Field(i).Name
+			if header {
+				fields = append(fields, MakeFirstLowerCase(fn))
+			} else {
+				fields = append(fields, fn)
+			}
+		}
+	}
+
+	return fields, sep, quote
+}
