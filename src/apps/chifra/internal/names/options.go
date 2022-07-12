@@ -21,46 +21,26 @@ import (
 
 // NamesOptions provides all command options for the chifra names command.
 type NamesOptions struct {
-	// a space separated list of one or more search terms
-	Terms []string `json:"terms,omitempty"`
-	// expand search to include all fields (search name, address, and symbol otherwise)
-	Expand bool `json:"expand,omitempty"`
-	// do case-sensitive search
-	MatchCase bool `json:"matchCase,omitempty"`
-	// include all accounts in the search
-	All bool `json:"all,omitempty"`
-	// include your custom named accounts
-	Custom bool `json:"custom,omitempty"`
-	// include prefund accounts
-	Prefund bool `json:"prefund,omitempty"`
-	// include well know token and airdrop addresses in the search
-	Named bool `json:"named,omitempty"`
-	// display only addresses in the results (useful for scripting)
-	Addr bool `json:"addr,omitempty"`
-	// display collections data
-	Collections bool `json:"collections,omitempty"`
-	// export the list of tags and subtags only
-	Tags bool `json:"tags,omitempty"`
-	// for editCmd only, is the edited name a custom name or not
-	ToCustom bool `json:"toCustom,omitempty"`
-	// clean the data (addrs to lower case, sort by addr)
-	Clean bool `json:"clean,omitempty"`
-	// an address assumed to be a token, added automatically to names database if true
-	Autoname string `json:"autoname,omitempty"`
-	// create a new name record
-	Create bool `json:"create,omitempty"`
-	// edit an existing name
-	Update bool `json:"update,omitempty"`
-	// delete a name, but do not remove it
-	Delete bool `json:"delete,omitempty"`
-	// undelete a previously deleted name
-	Undelete bool `json:"undelete,omitempty"`
-	// remove a previously deleted name
-	Remove bool `json:"remove,omitempty"`
-	// the global options
-	Globals globals.GlobalOptions `json:"globals,omitempty"`
-	// an error flag if needed
-	BadFlag error `json:"badFlag,omitempty"`
+	Terms       []string              `json:"terms,omitempty"`       // A space separated list of one or more search terms
+	Expand      bool                  `json:"expand,omitempty"`      // Expand search to include all fields (search name, address, and symbol otherwise)
+	MatchCase   bool                  `json:"matchCase,omitempty"`   // Do case-sensitive search
+	All         bool                  `json:"all,omitempty"`         // Include all accounts in the search
+	Custom      bool                  `json:"custom,omitempty"`      // Include your custom named accounts
+	Prefund     bool                  `json:"prefund,omitempty"`     // Include prefund accounts
+	Named       bool                  `json:"named,omitempty"`       // Include well know token and airdrop addresses in the search
+	Addr        bool                  `json:"addr,omitempty"`        // Display only addresses in the results (useful for scripting)
+	Collections bool                  `json:"collections,omitempty"` // Display collections data
+	Tags        bool                  `json:"tags,omitempty"`        // Export the list of tags and subtags only
+	ToCustom    bool                  `json:"toCustom,omitempty"`    // For editCmd only, is the edited name a custom name or not
+	Clean       bool                  `json:"clean,omitempty"`       // Clean the data (addrs to lower case, sort by addr)
+	Autoname    string                `json:"autoname,omitempty"`    // An address assumed to be a token, added automatically to names database if true
+	Create      bool                  `json:"create,omitempty"`      // Create a new name record
+	Update      bool                  `json:"update,omitempty"`      // Edit an existing name
+	Delete      bool                  `json:"delete,omitempty"`      // Delete a name, but do not remove it
+	Undelete    bool                  `json:"undelete,omitempty"`    // Undelete a previously deleted name
+	Remove      bool                  `json:"remove,omitempty"`      // Remove a previously deleted name
+	Globals     globals.GlobalOptions `json:"globals,omitempty"`     // The global options
+	BadFlag     error                 `json:"badFlag,omitempty"`     // An error flag if needed
 }
 
 var namesCmdLineOptions NamesOptions

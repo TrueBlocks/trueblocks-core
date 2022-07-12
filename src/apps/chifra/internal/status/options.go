@@ -21,28 +21,17 @@ import (
 
 // StatusOptions provides all command options for the chifra status command.
 type StatusOptions struct {
-	// the type of status info to retrieve
-	Modes []string `json:"modes,omitempty"`
-	// include details about items found in monitors, slurps, abis, or price caches
-	Details bool `json:"details,omitempty"`
-	// for caches mode only, which type(s) of cache to report
-	Types []string `json:"types,omitempty"`
-	// for cache mode only, number of levels deep to report
-	Depth uint64 `json:"depth,omitempty"`
-	// run the command with no options for the same result
-	Report bool `json:"report,omitempty"`
-	// show a terse summary report
-	Terse bool `json:"terse,omitempty"`
-	// either effectuate or test to see if a migration is necessary
-	Migrate string `json:"migrate,omitempty"`
-	// first block to process (inclusive -- testing only)
-	FirstBlock uint64 `json:"firstBlock,omitempty"`
-	// last block to process (inclusive -- testing only)
-	LastBlock uint64 `json:"lastBlock,omitempty"`
-	// the global options
-	Globals globals.GlobalOptions `json:"globals,omitempty"`
-	// an error flag if needed
-	BadFlag error `json:"badFlag,omitempty"`
+	Modes      []string              `json:"modes,omitempty"`      // The type of status info to retrieve
+	Details    bool                  `json:"details,omitempty"`    // Include details about items found in monitors, slurps, abis, or price caches
+	Types      []string              `json:"types,omitempty"`      // For caches mode only, which type(s) of cache to report
+	Depth      uint64                `json:"depth,omitempty"`      // For cache mode only, number of levels deep to report
+	Report     bool                  `json:"report,omitempty"`     // Run the command with no options for the same result
+	Terse      bool                  `json:"terse,omitempty"`      // Show a terse summary report
+	Migrate    string                `json:"migrate,omitempty"`    // Either effectuate or test to see if a migration is necessary
+	FirstBlock uint64                `json:"firstBlock,omitempty"` // First block to process (inclusive -- testing only)
+	LastBlock  uint64                `json:"lastBlock,omitempty"`  // Last block to process (inclusive -- testing only)
+	Globals    globals.GlobalOptions `json:"globals,omitempty"`    // The global options
+	BadFlag    error                 `json:"badFlag,omitempty"`    // An error flag if needed
 }
 
 var statusCmdLineOptions StatusOptions

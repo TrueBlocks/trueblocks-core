@@ -20,34 +20,20 @@ import (
 
 // ScrapeOptions provides all command options for the chifra scrape command.
 type ScrapeOptions struct {
-	// which scraper(s) to control
-	Modes []string `json:"modes,omitempty"`
-	// maximum number of blocks to process per pass
-	BlockCnt uint64 `json:"blockCnt,omitempty"`
-	// pin chunks (and blooms) to IPFS as they are created (requires ipfs daemon)
-	Pin bool `json:"pin,omitempty"`
-	// seconds to sleep between scraper passes
-	Sleep float64 `json:"sleep,omitempty"`
-	// number of concurrent block processing channels
-	BlockChanCnt uint64 `json:"blockChanCnt,omitempty"`
-	// number of concurrent address processing channels
-	AddrChanCnt uint64 `json:"addrChanCnt,omitempty"`
-	// the number of appearances to build into a chunk before consolidating it
-	AppsPerChunk uint64 `json:"appsPerChunk,omitempty"`
-	// the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe
-	UnripeDist uint64 `json:"unripeDist,omitempty"`
-	// an override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index
-	SnapToGrid uint64 `json:"snapToGrid,omitempty"`
-	// the first block at which snap_to_grid is enabled
-	FirstSnap uint64 `json:"firstSnap,omitempty"`
-	// do not report errors for blockchain that contain blocks with zero addresses
-	AllowMissing bool `json:"allowMissing,omitempty"`
-	// first block to visit (available only for blaze scraper)
-	StartBlock uint64 `json:"startBlock,omitempty"`
-	// the global options
-	Globals globals.GlobalOptions `json:"globals,omitempty"`
-	// an error flag if needed
-	BadFlag error `json:"badFlag,omitempty"`
+	Modes        []string              `json:"modes,omitempty"`        // Which scraper(s) to control
+	BlockCnt     uint64                `json:"blockCnt,omitempty"`     // Maximum number of blocks to process per pass
+	Pin          bool                  `json:"pin,omitempty"`          // Pin chunks (and blooms) to IPFS as they are created (requires ipfs daemon)
+	Sleep        float64               `json:"sleep,omitempty"`        // Seconds to sleep between scraper passes
+	BlockChanCnt uint64                `json:"blockChanCnt,omitempty"` // Number of concurrent block processing channels
+	AddrChanCnt  uint64                `json:"addrChanCnt,omitempty"`  // Number of concurrent address processing channels
+	AppsPerChunk uint64                `json:"appsPerChunk,omitempty"` // The number of appearances to build into a chunk before consolidating it
+	UnripeDist   uint64                `json:"unripeDist,omitempty"`   // The distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe
+	SnapToGrid   uint64                `json:"snapToGrid,omitempty"`   // An override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index
+	FirstSnap    uint64                `json:"firstSnap,omitempty"`    // The first block at which snap_to_grid is enabled
+	AllowMissing bool                  `json:"allowMissing,omitempty"` // Do not report errors for blockchain that contain blocks with zero addresses
+	StartBlock   uint64                `json:"startBlock,omitempty"`   // First block to visit (available only for blaze scraper)
+	Globals      globals.GlobalOptions `json:"globals,omitempty"`      // The global options
+	BadFlag      error                 `json:"badFlag,omitempty"`      // An error flag if needed
 }
 
 var scrapeCmdLineOptions ScrapeOptions

@@ -21,26 +21,16 @@ import (
 
 // WhenOptions provides all command options for the chifra when command.
 type WhenOptions struct {
-	// one or more dates, block numbers, hashes, or special named blocks (see notes)
-	Blocks []string `json:"blocks,omitempty"`
-	// block identifiers
-	BlockIds []identifiers.Identifier `json:"blockIds,omitempty"`
-	// export a list of the 'special' blocks
-	List bool `json:"list,omitempty"`
-	// ignore other options and generate timestamps only
-	Timestamps bool `json:"timestamps,omitempty"`
-	// available only with --timestamps, checks the validity of the timestamp data
-	Check bool `json:"check,omitempty"`
-	// available only with --timestamps option, reset the timestamp file to this block
-	Reset uint64 `json:"reset,omitempty"`
-	// available only with --timestamps, returns the number of timestamps in the cache
-	Count bool `json:"count,omitempty"`
-	// available only with --timestamps --check option, queries every timestamp on chain (slow)
-	Deep bool `json:"deep,omitempty"`
-	// the global options
-	Globals globals.GlobalOptions `json:"globals,omitempty"`
-	// an error flag if needed
-	BadFlag error `json:"badFlag,omitempty"`
+	Blocks     []string                 `json:"blocks,omitempty"`     // One or more dates, block numbers, hashes, or special named blocks (see notes)
+	BlockIds   []identifiers.Identifier `json:"blockIds,omitempty"`   // Block identifiers
+	List       bool                     `json:"list,omitempty"`       // Export a list of the 'special' blocks
+	Timestamps bool                     `json:"timestamps,omitempty"` // Ignore other options and generate timestamps only
+	Check      bool                     `json:"check,omitempty"`      // Available only with --timestamps, checks the validity of the timestamp data
+	Reset      uint64                   `json:"reset,omitempty"`      // Available only with --timestamps option, reset the timestamp file to this block
+	Count      bool                     `json:"count,omitempty"`      // Available only with --timestamps, returns the number of timestamps in the cache
+	Deep       bool                     `json:"deep,omitempty"`       // Available only with --timestamps --check option, queries every timestamp on chain (slow)
+	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
+	BadFlag    error                    `json:"badFlag,omitempty"`    // An error flag if needed
 }
 
 var whenCmdLineOptions WhenOptions

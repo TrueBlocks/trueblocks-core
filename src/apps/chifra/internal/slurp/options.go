@@ -22,20 +22,13 @@ import (
 
 // SlurpOptions provides all command options for the chifra slurp command.
 type SlurpOptions struct {
-	// one or more addresses to slurp from Etherscan
-	Addrs []string `json:"addrs,omitempty"`
-	// an optional range of blocks to slurp
-	Blocks []string `json:"blocks,omitempty"`
-	// block identifiers
-	BlockIds []identifiers.Identifier `json:"blockIds,omitempty"`
-	// which types of transactions to request
-	Types []string `json:"types,omitempty"`
-	// show only the blocknumber.tx_id appearances of the exported transactions
-	Appearances bool `json:"appearances,omitempty"`
-	// the global options
-	Globals globals.GlobalOptions `json:"globals,omitempty"`
-	// an error flag if needed
-	BadFlag error `json:"badFlag,omitempty"`
+	Addrs       []string                 `json:"addrs,omitempty"`       // One or more addresses to slurp from Etherscan
+	Blocks      []string                 `json:"blocks,omitempty"`      // An optional range of blocks to slurp
+	BlockIds    []identifiers.Identifier `json:"blockIds,omitempty"`    // Block identifiers
+	Types       []string                 `json:"types,omitempty"`       // Which types of transactions to request
+	Appearances bool                     `json:"appearances,omitempty"` // Show only the blocknumber.tx_id appearances of the exported transactions
+	Globals     globals.GlobalOptions    `json:"globals,omitempty"`     // The global options
+	BadFlag     error                    `json:"badFlag,omitempty"`     // An error flag if needed
 }
 
 var slurpCmdLineOptions SlurpOptions

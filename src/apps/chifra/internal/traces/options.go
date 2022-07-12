@@ -21,26 +21,16 @@ import (
 
 // TracesOptions provides all command options for the chifra traces command.
 type TracesOptions struct {
-	// a space-separated list of one or more transaction identifiers
-	Transactions []string `json:"transactions,omitempty"`
-	// transaction identifiers
-	TransactionIds []identifiers.Identifier `json:"transactionIds,omitempty"`
-	// articulate the retrieved data if ABIs can be found
-	Articulate bool `json:"articulate,omitempty"`
-	// call the node's trace_filter routine with bang-separated filter
-	Filter string `json:"filter,omitempty"`
-	// export state diff traces (not implemented)
-	Statediff bool `json:"statediff,omitempty"`
-	// show the number of traces for the transaction only (fast)
-	Count bool `json:"count,omitempty"`
-	// skip over the 2016 ddos during export ('on' by default)
-	SkipDdos bool `json:"skipDdos,omitempty"`
-	// if --skip_ddos is on, this many traces defines what a ddos transaction is
-	Max uint64 `json:"max,omitempty"`
-	// the global options
-	Globals globals.GlobalOptions `json:"globals,omitempty"`
-	// an error flag if needed
-	BadFlag error `json:"badFlag,omitempty"`
+	Transactions   []string                 `json:"transactions,omitempty"`   // A space-separated list of one or more transaction identifiers
+	TransactionIds []identifiers.Identifier `json:"transactionIds,omitempty"` // Transaction identifiers
+	Articulate     bool                     `json:"articulate,omitempty"`     // Articulate the retrieved data if ABIs can be found
+	Filter         string                   `json:"filter,omitempty"`         // Call the node's trace_filter routine with bang-separated filter
+	Statediff      bool                     `json:"statediff,omitempty"`      // Export state diff traces (not implemented)
+	Count          bool                     `json:"count,omitempty"`          // Show the number of traces for the transaction only (fast)
+	SkipDdos       bool                     `json:"skipDdos,omitempty"`       // Skip over the 2016 ddos during export ('on' by default)
+	Max            uint64                   `json:"max,omitempty"`            // If --skip_ddos is on, this many traces defines what a ddos transaction is
+	Globals        globals.GlobalOptions    `json:"globals,omitempty"`        // The global options
+	BadFlag        error                    `json:"badFlag,omitempty"`        // An error flag if needed
 }
 
 var tracesCmdLineOptions TracesOptions

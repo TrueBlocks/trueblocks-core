@@ -21,28 +21,17 @@ import (
 
 // MonitorsOptions provides all command options for the chifra monitors command.
 type MonitorsOptions struct {
-	// one or more addresses (0x...) to process
-	Addrs []string `json:"addrs,omitempty"`
-	// clean (i.e. remove duplicate appearances) from monitors
-	Clean bool `json:"clean,omitempty"`
-	// delete a monitor, but do not remove it
-	Delete bool `json:"delete,omitempty"`
-	// undelete a previously deleted monitor
-	Undelete bool `json:"undelete,omitempty"`
-	// remove a previously deleted monitor
-	Remove bool `json:"remove,omitempty"`
-	// continually scan for new blocks and extract data for monitored addresses
-	Watch bool `json:"watch,omitempty"`
-	// seconds to sleep between monitor passes
-	Sleep float64 `json:"sleep,omitempty"`
-	// first block to process (inclusive)
-	FirstBlock uint64 `json:"firstBlock,omitempty"`
-	// last block to process (inclusive)
-	LastBlock uint64 `json:"lastBlock,omitempty"`
-	// the global options
-	Globals globals.GlobalOptions `json:"globals,omitempty"`
-	// an error flag if needed
-	BadFlag error `json:"badFlag,omitempty"`
+	Addrs      []string              `json:"addrs,omitempty"`      // One or more addresses (0x...) to process
+	Clean      bool                  `json:"clean,omitempty"`      // Clean (i.e. remove duplicate appearances) from monitors
+	Delete     bool                  `json:"delete,omitempty"`     // Delete a monitor, but do not remove it
+	Undelete   bool                  `json:"undelete,omitempty"`   // Undelete a previously deleted monitor
+	Remove     bool                  `json:"remove,omitempty"`     // Remove a previously deleted monitor
+	Watch      bool                  `json:"watch,omitempty"`      // Continually scan for new blocks and extract data for monitored addresses
+	Sleep      float64               `json:"sleep,omitempty"`      // Seconds to sleep between monitor passes
+	FirstBlock uint64                `json:"firstBlock,omitempty"` // First block to process (inclusive)
+	LastBlock  uint64                `json:"lastBlock,omitempty"`  // Last block to process (inclusive)
+	Globals    globals.GlobalOptions `json:"globals,omitempty"`    // The global options
+	BadFlag    error                 `json:"badFlag,omitempty"`    // An error flag if needed
 }
 
 var monitorsCmdLineOptions MonitorsOptions

@@ -322,13 +322,15 @@ string_q get_optfields(const CCommandOption& cmd) {
     varWidth = max(string_q("BadFlag").length(), varWidth);
     typeWidth = max(string_q("globals.GlobalOptions").length(), typeWidth);
     typeWidth = max(string_q("error").length(), typeWidth);
+    varWidth++;
+    typeWidth++;
 
 #define ONE(os, v1, w1, v2, w2, c)                                                                                     \
-    os << "\t// " << c << endl;                                                                                        \
     os << "\t";                                                                                                        \
-    os << v1 << " ";                                                                                                   \
-    os << v2 << " ";                                                                                                   \
-    os << "`json:\"" + firstLower(v1) + ",omitempty\"`" << endl;
+    os << padRight(v1, (w1));                                                                                          \
+    os << padRight(v2, (w2));                                                                                          \
+    os << padRight("`json:\"" + firstLower(v1) + ",omitempty\"`", (w1) + 19);                                          \
+    os << "// " << firstUpper(c) << endl;
 
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {

@@ -20,12 +20,9 @@ import (
 
 // ServeOptions provides all command options for the chifra serve command.
 type ServeOptions struct {
-	// specify the server's port
-	Port string `json:"port,omitempty"`
-	// the global options
-	Globals globals.GlobalOptions `json:"globals,omitempty"`
-	// an error flag if needed
-	BadFlag error `json:"badFlag,omitempty"`
+	Port    string                `json:"port,omitempty"`    // Specify the server's port
+	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
+	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
 }
 
 var serveCmdLineOptions ServeOptions

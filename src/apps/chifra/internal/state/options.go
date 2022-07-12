@@ -22,26 +22,16 @@ import (
 
 // StateOptions provides all command options for the chifra state command.
 type StateOptions struct {
-	// one or more addresses (0x...) from which to retrieve balances
-	Addrs []string `json:"addrs,omitempty"`
-	// an optional list of one or more blocks at which to report balances, defaults to 'latest'
-	Blocks []string `json:"blocks,omitempty"`
-	// block identifiers
-	BlockIds []identifiers.Identifier `json:"blockIds,omitempty"`
-	// control which state to export
-	Parts []string `json:"parts,omitempty"`
-	// only report a balance when it changes from one block to the next
-	Changes bool `json:"changes,omitempty"`
-	// suppress the display of zero balance accounts
-	NoZero bool `json:"noZero,omitempty"`
-	// a bang-separated string consisting of address!4-byte!bytes
-	Call string `json:"call,omitempty"`
-	// for the --call option only, redirects calls to this implementation
-	ProxyFor string `json:"proxyFor,omitempty"`
-	// the global options
-	Globals globals.GlobalOptions `json:"globals,omitempty"`
-	// an error flag if needed
-	BadFlag error `json:"badFlag,omitempty"`
+	Addrs    []string                 `json:"addrs,omitempty"`    // One or more addresses (0x...) from which to retrieve balances
+	Blocks   []string                 `json:"blocks,omitempty"`   // An optional list of one or more blocks at which to report balances, defaults to 'latest'
+	BlockIds []identifiers.Identifier `json:"blockIds,omitempty"` // Block identifiers
+	Parts    []string                 `json:"parts,omitempty"`    // Control which state to export
+	Changes  bool                     `json:"changes,omitempty"`  // Only report a balance when it changes from one block to the next
+	NoZero   bool                     `json:"noZero,omitempty"`   // Suppress the display of zero balance accounts
+	Call     string                   `json:"call,omitempty"`     // A bang-separated string consisting of address!4-byte!bytes
+	ProxyFor string                   `json:"proxyFor,omitempty"` // For the --call option only, redirects calls to this implementation
+	Globals  globals.GlobalOptions    `json:"globals,omitempty"`  // The global options
+	BadFlag  error                    `json:"badFlag,omitempty"`  // An error flag if needed
 }
 
 var stateCmdLineOptions StateOptions

@@ -22,24 +22,15 @@ import (
 
 // TransactionsOptions provides all command options for the chifra transactions command.
 type TransactionsOptions struct {
-	// a space-separated list of one or more transaction identifiers
-	Transactions []string `json:"transactions,omitempty"`
-	// transaction identifiers
-	TransactionIds []identifiers.Identifier `json:"transactionIds,omitempty"`
-	// articulate the retrieved data if ABIs can be found
-	Articulate bool `json:"articulate,omitempty"`
-	// include the transaction's traces in the results
-	Trace bool `json:"trace,omitempty"`
-	// display a list of uniq addresses found in the transaction
-	Uniq bool `json:"uniq,omitempty"`
-	// reconcile the transaction as per the provided address
-	Reconcile string `json:"reconcile,omitempty"`
-	// force the results of the query into the tx cache (and the trace cache if applicable)
-	Cache bool `json:"cache,omitempty"`
-	// the global options
-	Globals globals.GlobalOptions `json:"globals,omitempty"`
-	// an error flag if needed
-	BadFlag error `json:"badFlag,omitempty"`
+	Transactions   []string                 `json:"transactions,omitempty"`   // A space-separated list of one or more transaction identifiers
+	TransactionIds []identifiers.Identifier `json:"transactionIds,omitempty"` // Transaction identifiers
+	Articulate     bool                     `json:"articulate,omitempty"`     // Articulate the retrieved data if ABIs can be found
+	Trace          bool                     `json:"trace,omitempty"`          // Include the transaction's traces in the results
+	Uniq           bool                     `json:"uniq,omitempty"`           // Display a list of uniq addresses found in the transaction
+	Reconcile      string                   `json:"reconcile,omitempty"`      // Reconcile the transaction as per the provided address
+	Cache          bool                     `json:"cache,omitempty"`          // Force the results of the query into the tx cache (and the trace cache if applicable)
+	Globals        globals.GlobalOptions    `json:"globals,omitempty"`        // The global options
+	BadFlag        error                    `json:"badFlag,omitempty"`        // An error flag if needed
 }
 
 var transactionsCmdLineOptions TransactionsOptions

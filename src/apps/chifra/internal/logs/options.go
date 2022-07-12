@@ -21,16 +21,11 @@ import (
 
 // LogsOptions provides all command options for the chifra logs command.
 type LogsOptions struct {
-	// a space-separated list of one or more transaction identifiers
-	Transactions []string `json:"transactions,omitempty"`
-	// transaction identifiers
-	TransactionIds []identifiers.Identifier `json:"transactionIds,omitempty"`
-	// articulate the retrieved data if ABIs can be found
-	Articulate bool `json:"articulate,omitempty"`
-	// the global options
-	Globals globals.GlobalOptions `json:"globals,omitempty"`
-	// an error flag if needed
-	BadFlag error `json:"badFlag,omitempty"`
+	Transactions   []string                 `json:"transactions,omitempty"`   // A space-separated list of one or more transaction identifiers
+	TransactionIds []identifiers.Identifier `json:"transactionIds,omitempty"` // Transaction identifiers
+	Articulate     bool                     `json:"articulate,omitempty"`     // Articulate the retrieved data if ABIs can be found
+	Globals        globals.GlobalOptions    `json:"globals,omitempty"`        // The global options
+	BadFlag        error                    `json:"badFlag,omitempty"`        // An error flag if needed
 }
 
 var logsCmdLineOptions LogsOptions

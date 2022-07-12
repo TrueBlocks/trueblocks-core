@@ -21,42 +21,24 @@ import (
 
 // BlocksOptions provides all command options for the chifra blocks command.
 type BlocksOptions struct {
-	// a space-separated list of one or more block identifiers
-	Blocks []string `json:"blocks,omitempty"`
-	// block identifiers
-	BlockIds []identifiers.Identifier `json:"blockIds,omitempty"`
-	// display only transaction hashes, default is to display full transaction detail
-	Hashes bool `json:"hashes,omitempty"`
-	// display uncle blocks (if any) instead of the requested block
-	Uncles bool `json:"uncles,omitempty"`
-	// export the traces from the block as opposed to the block data
-	Trace bool `json:"trace,omitempty"`
-	// display a list of uniq address appearances in the block
-	Apps bool `json:"apps,omitempty"`
-	// display a list of uniq address appearances per transaction
-	Uniq bool `json:"uniq,omitempty"`
-	// display only the logs found in the block(s)
-	Logs bool `json:"logs,omitempty"`
-	// for the --logs option only, filter logs to show only those logs emitted by the given address(es)
-	Emitter []string `json:"emitter,omitempty"`
-	// for the --logs option only, filter logs to show only those with this topic(s)
-	Topic []string `json:"topic,omitempty"`
-	// for the --logs option only, articulate the retrieved data if ABIs can be found
-	Articulate bool `json:"articulate,omitempty"`
-	// for the --logs option only, allow for block ranges larger than 500
-	BigRange uint64 `json:"bigRange,omitempty"`
-	// display the number of the lists of appearances for --addrs or --uniq
-	Count bool `json:"count,omitempty"`
-	// force a write of the block to the cache
-	Cache bool `json:"cache,omitempty"`
-	// summary list of blocks running backwards from latest block minus num
-	List uint64 `json:"list,omitempty"`
-	// the number of blocks to report for --list option
-	ListCount uint64 `json:"listCount,omitempty"`
-	// the global options
-	Globals globals.GlobalOptions `json:"globals,omitempty"`
-	// an error flag if needed
-	BadFlag error `json:"badFlag,omitempty"`
+	Blocks     []string                 `json:"blocks,omitempty"`     // A space-separated list of one or more block identifiers
+	BlockIds   []identifiers.Identifier `json:"blockIds,omitempty"`   // Block identifiers
+	Hashes     bool                     `json:"hashes,omitempty"`     // Display only transaction hashes, default is to display full transaction detail
+	Uncles     bool                     `json:"uncles,omitempty"`     // Display uncle blocks (if any) instead of the requested block
+	Trace      bool                     `json:"trace,omitempty"`      // Export the traces from the block as opposed to the block data
+	Apps       bool                     `json:"apps,omitempty"`       // Display a list of uniq address appearances in the block
+	Uniq       bool                     `json:"uniq,omitempty"`       // Display a list of uniq address appearances per transaction
+	Logs       bool                     `json:"logs,omitempty"`       // Display only the logs found in the block(s)
+	Emitter    []string                 `json:"emitter,omitempty"`    // For the --logs option only, filter logs to show only those logs emitted by the given address(es)
+	Topic      []string                 `json:"topic,omitempty"`      // For the --logs option only, filter logs to show only those with this topic(s)
+	Articulate bool                     `json:"articulate,omitempty"` // For the --logs option only, articulate the retrieved data if ABIs can be found
+	BigRange   uint64                   `json:"bigRange,omitempty"`   // For the --logs option only, allow for block ranges larger than 500
+	Count      bool                     `json:"count,omitempty"`      // Display the number of the lists of appearances for --addrs or --uniq
+	Cache      bool                     `json:"cache,omitempty"`      // Force a write of the block to the cache
+	List       uint64                   `json:"list,omitempty"`       // Summary list of blocks running backwards from latest block minus num
+	ListCount  uint64                   `json:"listCount,omitempty"`  // The number of blocks to report for --list option
+	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
+	BadFlag    error                    `json:"badFlag,omitempty"`    // An error flag if needed
 }
 
 var blocksCmdLineOptions BlocksOptions

@@ -22,64 +22,35 @@ import (
 
 // ExportOptions provides all command options for the chifra export command.
 type ExportOptions struct {
-	// one or more addresses (0x...) to export
-	Addrs []string `json:"addrs,omitempty"`
-	// filter by one or more log topics (only for --logs option)
-	Topics []string `json:"topics,omitempty"`
-	// filter by one or more fourbytes (only for transactions and trace options)
-	Fourbytes []string `json:"fourbytes,omitempty"`
-	// export a list of appearances
-	Appearances bool `json:"appearances,omitempty"`
-	// export receipts instead of transactional data
-	Receipts bool `json:"receipts,omitempty"`
-	// export logs instead of transactional data
-	Logs bool `json:"logs,omitempty"`
-	// export traces instead of transactional data
-	Traces bool `json:"traces,omitempty"`
-	// export reconciliations instead of transactional data (requires --accounting option)
-	Statements bool `json:"statements,omitempty"`
-	// export the neighbors of the given address
-	Neighbors bool `json:"neighbors,omitempty"`
-	// attach accounting records to the exported data (applies to transactions export only)
-	Accounting bool `json:"accounting,omitempty"`
-	// articulate transactions, traces, logs, and outputs
-	Articulate bool `json:"articulate,omitempty"`
-	// write transactions to the cache (see notes)
-	Cache bool `json:"cache,omitempty"`
-	// write traces to the cache (see notes)
-	CacheTraces bool `json:"cacheTraces,omitempty"`
-	// only available for --appearances mode, if present, return only the number of records
-	Count bool `json:"count,omitempty"`
-	// the first record to process
-	FirstRecord uint64 `json:"firstRecord,omitempty"`
-	// the maximum number of records to process before reporting
-	MaxRecords uint64 `json:"maxRecords,omitempty"`
-	// for log and accounting export only, export only logs relevant to one of the given export addresses
-	Relevant bool `json:"relevant,omitempty"`
-	// for log export only, export only logs if emitted by one of these address(es)
-	Emitter []string `json:"emitter,omitempty"`
-	// for log export only, export only logs with this topic(s)
-	Topic []string `json:"topic,omitempty"`
-	// for the statements option only, export only reconciliations for this asset
-	Asset []string `json:"asset,omitempty"`
-	// scan for contract creations from the given address(es) and report address of those contracts
-	Factory bool `json:"factory,omitempty"`
-	// export transactions labeled staging (i.e. older than 28 blocks but not yet consolidated)
-	Staging bool `json:"staging,omitempty"`
-	// export transactions labeled upripe (i.e. less than 28 blocks old)
-	Unripe bool `json:"unripe,omitempty"`
-	// a comma separated list of dynamic traversers to load
-	Load string `json:"load,omitempty"`
-	// produce results in reverse chronological order
-	Reversed bool `json:"reversed,omitempty"`
-	// first block to process (inclusive)
-	FirstBlock uint64 `json:"firstBlock,omitempty"`
-	// last block to process (inclusive)
-	LastBlock uint64 `json:"lastBlock,omitempty"`
-	// the global options
-	Globals globals.GlobalOptions `json:"globals,omitempty"`
-	// an error flag if needed
-	BadFlag error `json:"badFlag,omitempty"`
+	Addrs       []string              `json:"addrs,omitempty"`       // One or more addresses (0x...) to export
+	Topics      []string              `json:"topics,omitempty"`      // Filter by one or more log topics (only for --logs option)
+	Fourbytes   []string              `json:"fourbytes,omitempty"`   // Filter by one or more fourbytes (only for transactions and trace options)
+	Appearances bool                  `json:"appearances,omitempty"` // Export a list of appearances
+	Receipts    bool                  `json:"receipts,omitempty"`    // Export receipts instead of transactional data
+	Logs        bool                  `json:"logs,omitempty"`        // Export logs instead of transactional data
+	Traces      bool                  `json:"traces,omitempty"`      // Export traces instead of transactional data
+	Statements  bool                  `json:"statements,omitempty"`  // Export reconciliations instead of transactional data (requires --accounting option)
+	Neighbors   bool                  `json:"neighbors,omitempty"`   // Export the neighbors of the given address
+	Accounting  bool                  `json:"accounting,omitempty"`  // Attach accounting records to the exported data (applies to transactions export only)
+	Articulate  bool                  `json:"articulate,omitempty"`  // Articulate transactions, traces, logs, and outputs
+	Cache       bool                  `json:"cache,omitempty"`       // Write transactions to the cache (see notes)
+	CacheTraces bool                  `json:"cacheTraces,omitempty"` // Write traces to the cache (see notes)
+	Count       bool                  `json:"count,omitempty"`       // Only available for --appearances mode, if present, return only the number of records
+	FirstRecord uint64                `json:"firstRecord,omitempty"` // The first record to process
+	MaxRecords  uint64                `json:"maxRecords,omitempty"`  // The maximum number of records to process before reporting
+	Relevant    bool                  `json:"relevant,omitempty"`    // For log and accounting export only, export only logs relevant to one of the given export addresses
+	Emitter     []string              `json:"emitter,omitempty"`     // For log export only, export only logs if emitted by one of these address(es)
+	Topic       []string              `json:"topic,omitempty"`       // For log export only, export only logs with this topic(s)
+	Asset       []string              `json:"asset,omitempty"`       // For the statements option only, export only reconciliations for this asset
+	Factory     bool                  `json:"factory,omitempty"`     // Scan for contract creations from the given address(es) and report address of those contracts
+	Staging     bool                  `json:"staging,omitempty"`     // Export transactions labeled staging (i.e. older than 28 blocks but not yet consolidated)
+	Unripe      bool                  `json:"unripe,omitempty"`      // Export transactions labeled upripe (i.e. less than 28 blocks old)
+	Load        string                `json:"load,omitempty"`        // A comma separated list of dynamic traversers to load
+	Reversed    bool                  `json:"reversed,omitempty"`    // Produce results in reverse chronological order
+	FirstBlock  uint64                `json:"firstBlock,omitempty"`  // First block to process (inclusive)
+	LastBlock   uint64                `json:"lastBlock,omitempty"`   // Last block to process (inclusive)
+	Globals     globals.GlobalOptions `json:"globals,omitempty"`     // The global options
+	BadFlag     error                 `json:"badFlag,omitempty"`     // An error flag if needed
 }
 
 var exportCmdLineOptions ExportOptions
