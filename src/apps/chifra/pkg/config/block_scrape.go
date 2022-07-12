@@ -78,9 +78,3 @@ func GetBlockScrapeSettings(chain string) blockScrapeSettings {
 
 	return conf.Settings
 }
-
-// TODO: BOGUS - IT WOULD BE HELPFUL IF THIS MERGED IN DATA FROM THE MAINNET FILE FOR PIN APIS
-func GetPinataKeys(chain string) (string, string) {
-	settings := GetBlockScrapeSettings(chain)
-	return settings.Pinata_api_key, settings.Pinata_secret_api_key
-}

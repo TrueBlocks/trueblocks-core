@@ -16,7 +16,6 @@ import (
 
 // TODO: Concurrent?
 func (opts *ChunksOptions) CheckInternal(fileNames []string, blockNums []uint64, report *types.ReportCheck) error {
-	// allow_missing := GetBlockScrapeSettings(opts.Globals.Chain).Allow_missing
 	for testId, fileName := range fileNames {
 		report.VisitedCnt++
 		report.CheckedCnt++
@@ -46,7 +45,6 @@ func (opts *ChunksOptions) CheckInternal(fileNames []string, blockNums []uint64,
 
 			} else {
 				report.PassedCnt++
-				// fmt.Println(header)
 			}
 		}
 	}

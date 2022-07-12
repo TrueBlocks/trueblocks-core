@@ -84,7 +84,8 @@ func (opts *ScrapeOptions) Y_4_postScrape(progressThen *rpcClient.MetaData) (boo
 		pathToIndex = unchainedFolder + "finalized/" + record.Range + ".bin"
 		bloomPath := unchainedFolder + "blooms/" + record.Range + ".bloom"
 
-		key, secret := config.GetPinataKeys(opts.Globals.Chain)
+		settings := config.GetBlockScrapeSettings(opts.Globals.Chain)
+		key, secret := settings.Pinata_api_key, settings.Pinata_secret_api_key
 		pina := pinning.Service{
 			Local:  true,
 			Apikey: key,
