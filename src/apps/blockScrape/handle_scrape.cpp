@@ -14,22 +14,6 @@
 
 //--------------------------------------------------------------------------
 bool COptions::scrape_blocks(void) {
-    LOG_INFO("start_block: ", str_2_Uint(getEnvStr("TB_BLAZE_STARTBLOCK")));
-    LOG_INFO("block_cnt: ", str_2_Uint(getEnvStr("TB_BLAZE_BLOCKCNT")));
-    LOG_INFO("chain: ", getEnvStr("TB_BLAZE_CHAIN"));
-
-    ostringstream blazeCmd;
-    blazeCmd << "chifra scrape run --blaze "
-             << "--start_block " << str_2_Uint(getEnvStr("TB_BLAZE_STARTBLOCK")) << " "
-             << "--block_cnt " << str_2_Uint(getEnvStr("TB_BLAZE_BLOCKCNT")) << " "
-             << "--chain " << getEnvStr("TB_BLAZE_CHAIN");
-
-    LOG_INFO("Calling blaze: ", blazeCmd.str());
-    if (system(blazeCmd.str().c_str()) != 0) {
-        cleanFolder(indexFolder_ripe);
-        return false;
-    }
-
     start_block = str_2_Uint(getEnvStr("TB_BLAZE_STARTBLOCK"));
     block_cnt = str_2_Uint(getEnvStr("TB_BLAZE_BLOCKCNT"));
     apps_per_chunk = str_2_Uint(getEnvStr("TB_SETTINGS_APPSPERCHUNK"));
@@ -38,11 +22,13 @@ bool COptions::scrape_blocks(void) {
     first_snap = str_2_Uint(getEnvStr("TB_SETTINGS_FIRSTSNAP"));
     allow_missing = getEnvStr("TB_SETTINGS_ALLOWMISSING") == "true";
 
-    LOG_INFO("unripe_dist: ", unripe_dist);
-    LOG_INFO("snap_to_grid: ", snap_to_grid);
-    LOG_INFO("first_snap: ", first_snap);
-    LOG_INFO("allow_missing: ", allow_missing);
-    LOG_INFO("apps_per_chunk: ", apps_per_chunk);
+    LOG_INFO("bs-start_block: ", start_block);
+    LOG_INFO("bs-block_cnt: ", block_cnt);
+    LOG_INFO("bs-apps_per_chunk: ", apps_per_chunk);
+    LOG_INFO("bs-unripe_dist: ", unripe_dist);
+    LOG_INFO("bs-snap_to_grid: ", snap_to_grid);
+    LOG_INFO("bs-first_snap: ", first_snap);
+    LOG_INFO("bs-allow_missing: ", allow_missing);
 
     string_q tmpStagingFn = indexFolder_staging + "000000000-temp.txt";
     tmpStagingStream.open(tmpStagingFn, ios::out | ios::trunc);

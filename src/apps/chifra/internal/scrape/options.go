@@ -28,8 +28,6 @@ type ScrapeOptions struct {
 	Pin bool `json:"pin,omitempty"`
 	// seconds to sleep between scraper passes
 	Sleep float64 `json:"sleep,omitempty"`
-	// invoke the blaze scraper to process blocks
-	Blaze bool `json:"blaze,omitempty"`
 	// number of concurrent block processing channels
 	BlockChanCnt uint64 `json:"blockChanCnt,omitempty"`
 	// number of concurrent address processing channels
@@ -60,7 +58,6 @@ func (opts *ScrapeOptions) testLog() {
 	logger.TestLog(opts.BlockCnt != 2000, "BlockCnt: ", opts.BlockCnt)
 	logger.TestLog(opts.Pin, "Pin: ", opts.Pin)
 	logger.TestLog(opts.Sleep != 14, "Sleep: ", opts.Sleep)
-	logger.TestLog(opts.Blaze, "Blaze: ", opts.Blaze)
 	logger.TestLog(opts.BlockChanCnt != 10, "BlockChanCnt: ", opts.BlockChanCnt)
 	logger.TestLog(opts.AddrChanCnt != 20, "AddrChanCnt: ", opts.AddrChanCnt)
 	logger.TestLog(opts.AppsPerChunk != 200000, "AppsPerChunk: ", opts.AppsPerChunk)
@@ -121,8 +118,6 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 			opts.Pin = true
 		case "sleep":
 			opts.Sleep = globals.ToFloat64(value[0])
-		case "blaze":
-			opts.Blaze = true
 		case "blockChanCnt":
 			opts.BlockChanCnt = globals.ToUint64(value[0])
 		case "addrChanCnt":

@@ -49,13 +49,7 @@ func (opts *ScrapeOptions) ScrapeInternal() (err error, handled bool) {
 	}
 
 	handled = true
-	if opts.Blaze {
-		err = opts.HandleScrapeBlaze()
-
-	} else {
-		// Note this never returns
-		err = opts.HandleScrape()
-	}
+	err = opts.HandleScrape() // Note this never returns
 	// EXISTING_CODE
 
 	return

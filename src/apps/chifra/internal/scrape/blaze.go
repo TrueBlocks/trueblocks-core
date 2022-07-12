@@ -26,10 +26,8 @@ type ScrapedData struct {
 }
 
 func (opts *ScrapeOptions) HandleScrapeBlaze() error {
-	meta, _ := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
 
-	opts.BlockChanCnt, _ = strconv.ParseUint(os.Getenv("TB_SETTINGS_BLOCKCHANCNT"), 10, 64)
-	opts.AddrChanCnt, _ = strconv.ParseUint(os.Getenv("TB_SETTINGS_ADDRCHANCNT"), 10, 64)
+	meta, _ := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
 
 	rpcProvider := config.GetRpcProvider(opts.Globals.Chain)
 	fmt.Println(opts)
