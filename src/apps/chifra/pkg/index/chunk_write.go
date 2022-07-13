@@ -161,7 +161,7 @@ func WriteChunk(chain, indexPath string, addAppMap AddressAppearanceMap, nApps i
 	    archive.Write(nAddrs);
 	    archive.Write((uint32_t)appTable.size());  // not accurate yet
 
-	    CBloomFilterWrite bloomFilter;
+	    CBloomFilterWrit e bloomFilter;
 	    for (size_t l = 0; l < lines.size(); l++) {
 	        string_q line = lines[l];
 	        ASSERT(countOf(line, '\t') == 2);

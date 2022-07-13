@@ -39,7 +39,7 @@ func (opts *WhenOptions) HandleWhenTimestampsShow() error {
 			return err
 		}
 		obj := types.SimpleTimestamp{
-			BlockNumber: uint64(bn*100000000) + uint64(ts.Bn),
+			BlockNumber: uint64(ts.Bn),
 			TimeStamp:   uint64(ts.Ts),
 			Diff:        uint64(ts.Ts - uint32(prev.TimeStamp)),
 		}

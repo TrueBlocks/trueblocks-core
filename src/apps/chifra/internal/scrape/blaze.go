@@ -113,6 +113,7 @@ func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChan
 		}
 		err := rpcClient.FromRpc(opts.RpcProvider, &tracePayload, &traces)
 		if err != nil {
+			// TODO: BOGUS - RETURN VALUE FROM BLAZE
 			fmt.Println("FromRpc(traces) returned error", err)
 			os.Exit(1)
 		}
@@ -400,7 +401,7 @@ func (opts *BlazeOptions) BlazeWriteAddresses(meta *rpcClient.MetaData, bn int, 
 
 	// TODO: BOGUS - TESTING SCRAPING
 	if !utils.OnOff {
-		step := uint64(1)
+		step := uint64(7)
 		if opts.NProcessed%step == 0 {
 			dist := uint64(0)
 			if opts.RipeBlock > uint64(bn) {

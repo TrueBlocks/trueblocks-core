@@ -23,7 +23,7 @@ bool COptions::scrape_blocks(void) {
     allow_missing = getEnvStr("TB_SETTINGS_ALLOWMISSING") == "true";
 
     // TODO: BOGUS - TESTING SCRAPING
-    bool OnOff = false;
+    bool OnOff = true;
     if (OnOff) {
         LOG_INFO("bs-start_block: ", start_block);
         LOG_INFO("bs-block_cnt: ", block_cnt);
@@ -44,78 +44,91 @@ bool COptions::scrape_blocks(void) {
     string_q stageFn = getLastFileInFolder(indexFolder_staging, false);
     prev_block = path_2_Bn(stageFn);
     nRecsThen = fileSize(stageFn) / asciiAppearanceSize;
-    snapped = false;
 
-    if (!forEveryFileInFolder(indexFolder_ripe, copyRipeToStage, this)) {
-        if (!snapped) {
-            LOG_WARN("copyRipeToStage failed...replaying...");
-        }
+    CStringArray files;
+    if (!listFilesInFolder(files, indexFolder_ripe, false)) {
+        LOG_ERR("Could not list files in ripe folder.");
         cleanFolder(indexFolder_unripe);
         cleanFolder(indexFolder_ripe);
         tmpStagingStream.close();
         ::remove(tmpStagingFn.c_str());
-        return snapped;
+        return false;
+    }
+
+    bool snapped = false;
+    for (auto file : files) {
+        if (!copyRipeToStage(file, snapped)) {
+            cleanFolder(indexFolder_unripe);
+            cleanFolder(indexFolder_ripe);
+            tmpStagingStream.close();
+            ::remove(tmpStagingFn.c_str());
+            if (!snapped) {
+                LOG_WARN("copyRipeToStage failed...");
+            }
+            return snapped;
+        }
     }
     tmpStagingStream.close();
 
     if (!stage_chunks(tmpStagingFn))
         return false;
-    if (!isTestMode())
-        freshenTimestampsAppend(start_block, block_cnt);
-    report();
+    if (!isTestMode()) {
+        // TODO: BOGUS - USE THE NEW TIMESTAMP PROCESSOR?
+        // freshenTimestampsAppend(start_block, block_cnt);
+        freshenTimestamps(start_block + block_cnt);
+    }
+
+    nRecsNow = fileSize(newStage) / asciiAppearanceSize;
+    report(nRecsThen, nRecsNow);
     if (nRecsNow <= apps_per_chunk)
         return true;
+
     return write_chunks(apps_per_chunk, false /* snapped */);
 }
 
 //--------------------------------------------------------------------------
-bool copyRipeToStage(const string_q& path, void* data) {
-    if (endsWith(path, '/')) {
-        return forEveryFileInFolder(path + "*", copyRipeToStage, data);
+bool COptions::copyRipeToStage(const string_q& path, bool& snapped) {
+    COptions* opts = this;
+    blknum_t bn = path_2_Bn(path);
+    bool allow = opts->allow_missing;
+    bool sequential = (opts->prev_block + 1) == bn;
+    bool less_than = (opts->prev_block < bn);
+    if (opts->prev_block != 0 && ((!allow && !sequential) || (allow && !less_than))) {
+        LOG_WARN("opts->prev_block: ", opts->prev_block);
+        LOG_WARN("allow: ", allow, opts->allow_missing);
+        LOG_WARN("sequential: ", sequential, " ", opts->prev_block + 1, " ", bn, " ", (opts->prev_block + 1 == bn));
+        LOG_WARN("less_than: ", less_than, " ", opts->prev_block, " ", bn, " ", opts->prev_block < bn);
+        LOG_WARN("Current file (", path, ") does not sequentially follow previous file ", opts->prev_block, ".");
+        return false;
+    }
 
-    } else {
-        COptions* opts = reinterpret_cast<COptions*>(data);
+    ifstream inputStream(path, ios::in);
+    if (!inputStream.is_open()) {
+        LOG_WARN("Could not open input stream ", path);
+        return false;
+    }
 
-        blknum_t bn = path_2_Bn(path);
-        bool allow = opts->allow_missing;
-        bool sequential = (opts->prev_block + 1) == bn;
-        bool less_than = (opts->prev_block < bn);
-        if (opts->prev_block != 0 && ((!allow && !sequential) || (allow && !less_than))) {
-            LOG_WARN("opts->prev_block: ", opts->prev_block);
-            LOG_WARN("allow: ", allow, opts->allow_missing);
-            LOG_WARN("sequential: ", sequential, " ", opts->prev_block + 1, " ", bn, " ", (opts->prev_block + 1 == bn));
-            LOG_WARN("less_than: ", less_than, " ", opts->prev_block, " ", bn, " ", opts->prev_block < bn);
-            LOG_WARN("Current file (", path, ") does not sequentially follow previous file ", opts->prev_block, ".");
+    lockSection();
+    opts->tmpStagingStream << inputStream.rdbuf();
+    opts->tmpStagingStream.flush();
+    inputStream.close();
+    ::remove(path.c_str());
+    opts->prev_block = bn;
+    unlockSection();
+
+    bool isSnapToGrid = (bn > first_snap && !(bn % snap_to_grid));
+    if (isSnapToGrid) {
+        string_q tmpStagingFn = (indexFolder_staging + "000000000-temp.txt");
+        if (!opts->stage_chunks(tmpStagingFn)) {
+            LOG_WARN("opts->stage_chunks(" + tmpStagingFn + ") returned false");
             return false;
         }
-
-        ifstream inputStream(path, ios::in);
-        if (!inputStream.is_open()) {
-            LOG_WARN("Could not open input stream ", path);
-            return false;
-        }
-
-        lockSection();
-        opts->tmpStagingStream << inputStream.rdbuf();
-        opts->tmpStagingStream.flush();
-        inputStream.close();
-        ::remove(path.c_str());
-        opts->prev_block = bn;
-        unlockSection();
-
-        if (opts->isSnapToGrid(bn)) {
-            string_q tmpStagingFn = (indexFolder_staging + "000000000-temp.txt");
-            if (!opts->stage_chunks(tmpStagingFn)) {
-                LOG_WARN("opts->stage_chunks(" + tmpStagingFn + ") returned false");
-                return false;
-            }
-            opts->report();
-            blknum_t nRecords = fileSize(opts->newStage) / asciiAppearanceSize;
-            blknum_t chunkSize = min(nRecords, opts->apps_per_chunk);
-            opts->write_chunks(chunkSize, true /* snapped */);
-            opts->snapped = true;
-            return false;
-        }
+        nRecsNow = fileSize(opts->newStage) / asciiAppearanceSize;
+        opts->report(nRecsThen, nRecsNow);
+        blknum_t chunkSize = min(nRecsNow, opts->apps_per_chunk);
+        opts->write_chunks(chunkSize, true /* snapped */);
+        snapped = true;
+        return false;
     }
     return !shouldQuit();
 }
@@ -241,29 +254,29 @@ bool COptions::stage_chunks(const string_q& tmpFn) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool COptions::report(void) {
-    nRecsNow = fileSize(newStage) / asciiAppearanceSize;
-    blknum_t found = nRecsNow - nRecsThen;
-    if (!found) {
+bool COptions::report(uint64_t nRecsThen2, uint64_t nRecsNow2) const {
+    blknum_t found2 = nRecsNow2 - nRecsThen2;
+    if (!found2) {
         LOG_INFO("No new blocks...", string_q(80, ' '), "\r");
         return true;
     }
 
-    blknum_t need = apps_per_chunk >= nRecsNow ? apps_per_chunk - nRecsNow : 0;
-    double pct = double(nRecsNow) / double(apps_per_chunk);
-    double pBlk = double(found) / double(block_cnt);
+    blknum_t need = apps_per_chunk >= nRecsNow2 ? apps_per_chunk - nRecsNow2 : 0;
+    double pct = double(nRecsNow2) / double(apps_per_chunk);
+    double pBlk = double(found2) / double(block_cnt);
 
     string_q result = "Block {0}: have {1} addrs of {2} ({3}). Need {4} more. Found {5} records ({6}).";
     replace(result, "{0}", "{" + uint_2_Str(start_block + block_cnt - 1) + "}");
-    replace(result, "{1}", "{" + uint_2_Str(nRecsNow) + "}");
+    replace(result, "{1}", "{" + uint_2_Str(nRecsNow2) + "}");
     replace(result, "{2}", "{" + uint_2_Str(apps_per_chunk) + "}");
     replace(result, "{3}", "{" + double_2_Str(pct * 100.00, 1) + "%}");
     replace(result, "{4}", "{" + uint_2_Str(need) + "}");
-    replace(result, "{5}", "{" + uint_2_Str(found) + "}");
+    replace(result, "{5}", "{" + uint_2_Str(found2) + "}");
     replace(result, "{6}", "{" + double_2_Str(pBlk, 2) + " apps/blk}");
     replaceAll(result, "{", cGreen);
     replaceAll(result, "}", cOff);
     LOG_INFO(result);
+
     return true;
 }
 
@@ -275,30 +288,12 @@ class CBloomFilterWrite {
     CBloomArray array;
     bool writeBloomFilter(const string_q& fileName);
     bool addToSet(const address_t& addr);
-    bool isMemberOf(uint8_t const bytes[20]);
-    bool isMemberOf(const address_t& addr);
 };
 
 #define BLOOM_WIDTH_IN_BYTES (1048576 / 8)
 #define BLOOM_WIDTH_IN_BITS (BLOOM_WIDTH_IN_BYTES * 8)
 #define MAX_ADDRS_IN_BLOOM 50000
 #define BLOOM_K 5
-
-//----------------------------------------------------------------------
-bool CBloomFilterWrite::isMemberOf(const address_t& addr) {
-    CUintArray bitsLit;
-    getLitBits(addr, bitsLit);
-    for (auto bloom : array) {
-        if (bloom.isInBloom(bitsLit))
-            return true;
-    }
-    return false;
-}
-
-//---------------------------------------------------------------------------
-bool CBloomFilterWrite::isMemberOf(uint8_t const bytes[20]) {
-    return isMemberOf(bytes_2_Addr(bytes));
-}
 
 //----------------------------------------------------------------------
 bool CBloomFilterWrite::addToSet(const address_t& addr) {
@@ -540,8 +535,3 @@ bool freshenTimestampsAppend(blknum_t firstBlock, blknum_t nBlocks) {
         }
     }
 */
-
-//-----------------------------------------------------------------------
-bool COptions::isSnapToGrid(blknum_t bn) const {
-    return bn > first_snap && !(bn % snap_to_grid);
-}

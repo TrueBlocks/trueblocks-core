@@ -41,7 +41,6 @@ class COptions : public COptionsBase {
     blknum_t prev_block{0};
     blknum_t nRecsThen{0};
     blknum_t nRecsNow{0};
-    bool snapped{false};
 
     COptions(void) {
     }
@@ -56,11 +55,10 @@ class COptions : public COptionsBase {
     bool scrape_blocks(void);
     bool stage_chunks(const string_q& tmpFn);
     bool write_chunks(blknum_t chunkSize, bool snapped);
-    bool isSnapToGrid(blknum_t bn) const;
-    bool report(void);
+    bool copyRipeToStage(const string_q& path, bool& snapped);
+    bool report(uint64_t nRecsThen, uint64_t nRecsNow) const;
 };
 
 //-----------------------------------------------------------------------------
-extern bool copyRipeToStage(const string_q& path, void* data);
 extern bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines);
 extern bool freshenTimestampsAppend(blknum_t firstBlock, blknum_t nBlocks);
