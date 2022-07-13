@@ -26,11 +26,6 @@ import (
 // HandleScrapePin pins any newly chunks that are not yet pinned.
 func (opts *ScrapeOptions) HandleScrapePin(progressThen *rpcClient.MetaData) (ok bool, err error) {
 
-	if !opts.Pin {
-		// If we're not pinning, do nothing
-		return true, nil
-	}
-
 	progressNow, err := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
 	if err != nil {
 		return false, err
@@ -40,6 +35,11 @@ func (opts *ScrapeOptions) HandleScrapePin(progressThen *rpcClient.MetaData) (ok
 			*progressThen = *progressNow
 		}
 	}()
+
+	if !opts.Pin {
+		// If we're not pinning, do nothing
+		return true, nil
+	}
 
 	if progressNow.Finalized <= progressThen.Finalized {
 		// If there's been no progress, there's nothing to pin

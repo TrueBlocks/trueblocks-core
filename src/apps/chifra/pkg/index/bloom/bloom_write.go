@@ -6,19 +6,21 @@ import (
 	"io"
 	"os"
 	"strings"
-	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
 
-var writeMutex sync.Mutex
+// var writeMutex sync.Mutex
 
 func (bl *ChunkBloom) WriteBloom(chain, bloomPath string) error {
 	// writeMutex.Lock()
 	// trapCh := sigintTrap.Enable(context.WithCancel(context.Background()))
 
 	fmt.Println("In WriteBloom", bloomPath)
+	// TODO: BOGUS - YIKES
 	tempPath := strings.Replace(bloomPath, "unchained/sepolia/blooms/", "cache/sepolia/tmp/", -1)
+	tempPath = strings.Replace(tempPath, "unchained/gnosis/blooms/", "cache/gnosis/tmp/", -1)
+
 	fp, err := os.OpenFile(tempPath, os.O_WRONLY|os.O_CREATE, 0644)
 	defer func() {
 		os.Remove(tempPath)

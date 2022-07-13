@@ -4,16 +4,17 @@ import (
 	"strings"
 )
 
-// goodAddr Returns true if the address is not a precompile and not the zero address
-func goodAddr(addr string) bool {
+// isAddress Returns true if the address is not a precompile and not the zero address
+func isAddress(addr string) bool {
 	// As per EIP 1352, all addresses less or equal to the following value are reserved for pre-compiles.
 	// We don't index precompiles. https://eips.ethereum.org/EIPS/eip-1352
 	return addr > "0x000000000000000000000000000000000000ffff"
 }
 
-// potentialAddress processes a transaction's 'input' data and 'output' data or an event's data field. We call anything
-// with 12 bytes of leading zeros but not more than 19 leading zeros (24 and 38 characters respectively).
-func potentialAddress(addr string) bool {
+// isImplicitAddress processes a transaction's 'input' data and 'output' data or an event's data field.
+// Anything with 12 bytes of leading zeros but not more than 19 leading zeros (24 and 38 characters
+// respectively).
+func isImplicitAddress(addr string) bool {
 	// Any 32-byte value smaller than this number is assumed to be a 'value'. We call them baddresses.
 	// While this may seem like a lot of addresses being labeled as baddresses, it's not very many:
 	// ---> 2 out of every 10000000000000000000000000000000000000000000000 are baddresses.
@@ -35,7 +36,9 @@ func potentialAddress(addr string) bool {
 	if strings.HasSuffix(addr, "00000000") {
 		return false
 	}
-	return true
+
+	// extract the potential address
+	return isAddress("0x" + string(addr[24:]))
 }
 
 // TODO:

@@ -23,8 +23,8 @@ bool COptions::scrape_blocks(void) {
     allow_missing = getEnvStr("TB_SETTINGS_ALLOWMISSING") == "true";
 
     // TODO: BOGUS - TESTING SCRAPING
-    bool onOff = true;
-    if (onOff) {
+    bool OnOff = false;
+    if (OnOff) {
         LOG_INFO("bs-start_block: ", start_block);
         LOG_INFO("bs-block_cnt: ", block_cnt);
         LOG_INFO("bs-apps_per_chunk: ", apps_per_chunk);
@@ -81,6 +81,10 @@ bool copyRipeToStage(const string_q& path, void* data) {
         bool sequential = (opts->prev_block + 1) == bn;
         bool less_than = (opts->prev_block < bn);
         if (opts->prev_block != 0 && ((!allow && !sequential) || (allow && !less_than))) {
+            LOG_WARN("opts->prev_block: ", opts->prev_block);
+            LOG_WARN("allow: ", allow, opts->allow_missing);
+            LOG_WARN("sequential: ", sequential, " ", opts->prev_block + 1, " ", bn, " ", (opts->prev_block + 1 == bn));
+            LOG_WARN("less_than: ", less_than, " ", opts->prev_block, " ", bn, " ", opts->prev_block < bn);
             LOG_WARN("Current file (", path, ") does not sequentially follow previous file ", opts->prev_block, ".");
             return false;
         }
@@ -250,7 +254,7 @@ bool COptions::report(void) {
     double pBlk = double(found) / double(block_cnt);
 
     string_q result = "Block {0}: have {1} addrs of {2} ({3}). Need {4} more. Found {5} records ({6}).";
-    replace(result, "{0}", "{" + uint_2_Str(start_block + block_cnt) + "}");
+    replace(result, "{0}", "{" + uint_2_Str(start_block + block_cnt - 1) + "}");
     replace(result, "{1}", "{" + uint_2_Str(nRecsNow) + "}");
     replace(result, "{2}", "{" + uint_2_Str(apps_per_chunk) + "}");
     replace(result, "{3}", "{" + double_2_Str(pct * 100.00, 1) + "%}");

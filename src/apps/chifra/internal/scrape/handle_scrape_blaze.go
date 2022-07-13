@@ -27,9 +27,11 @@ func (opts *ScrapeOptions) HandleScrapeBlaze(progressThen *rpcClient.MetaData) (
 	}
 
 	tes := os.Getenv("TEST_END_SCRAPE")
-	val, err := strconv.ParseUint(tes, 10, 32)
-	if (val != 0 && progressThen.Finalized > val) || err != nil {
-		return false, err
+	if tes != "" {
+		val, err := strconv.ParseUint(tes, 10, 32)
+		if (val != 0 && progressThen.Staging > val) || err != nil {
+			return false, err
+		}
 	}
 
 	envs := opts.getEnvStr()
@@ -80,7 +82,7 @@ func (opts *ScrapeOptions) HandleScrapeBlaze(progressThen *rpcClient.MetaData) (
 		RpcProvider: config.GetRpcProvider(opts.Globals.Chain),
 	}
 
-	err = blazeOpts.HandleBlaze(meta)
+	_, err = blazeOpts.HandleBlaze(meta)
 	if err != nil {
 		os.RemoveAll(config.GetPathToIndex(opts.Globals.Chain) + "ripe")
 		return true, err

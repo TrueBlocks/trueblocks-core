@@ -48,7 +48,7 @@ func (opts *BlazeOptions) String() string {
 
 // HandleBlaze does the actual scraping, walking through block_cnt blocks and querying traces and logs
 // and then extracting addresses and timestamps from those data structures.
-func (opts *BlazeOptions) HandleBlaze(meta *rpcClient.MetaData) error {
+func (opts *BlazeOptions) HandleBlaze(meta *rpcClient.MetaData) (ok bool, err error) {
 
 	if utils.OnOff {
 		fmt.Println(opts.String())
@@ -96,7 +96,7 @@ func (opts *BlazeOptions) HandleBlaze(meta *rpcClient.MetaData) error {
 	close(tsChannel)
 	opts.TsWG.Wait()
 
-	return nil
+	return true, nil
 }
 
 // BlazeProcessBlocks Processes the block channel and for each block query the node for both traces and logs. Send results down addressChannel.
@@ -113,7 +113,6 @@ func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChan
 		}
 		err := rpcClient.FromRpc(opts.RpcProvider, &tracePayload, &traces)
 		if err != nil {
-			// TODO: BOGUS - RETURN VALUE FROM BLAZE
 			fmt.Println("FromRpc(traces) returned error", err)
 			os.Exit(1)
 		}
@@ -188,11 +187,11 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 		if traces.Result[i].Type == "call" {
 			// If it's a call, get the to and from
 			from := traces.Result[i].Action.From
-			if goodAddr(from) {
+			if isAddress(from) {
 				addressMap[from+blockAndIdx] = true
 			}
 			to := traces.Result[i].Action.To
-			if goodAddr(to) {
+			if isAddress(to) {
 				addressMap[to+blockAndIdx] = true
 			}
 
@@ -207,7 +206,7 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 					addressMap[author+"\t"+blockNumStr+"\t"+"99997"] = true
 
 				} else {
-					if goodAddr(author) {
+					if isAddress(author) {
 						addressMap[author+"\t"+blockNumStr+"\t"+"99999"] = true
 					}
 				}
@@ -222,7 +221,7 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 					addressMap[author+"\t"+blockNumStr+"\t"+"99998"] = true
 
 				} else {
-					if goodAddr(author) {
+					if isAddress(author) {
 						addressMap[author+"\t"+blockNumStr+"\t"+"99998"] = true
 					}
 				}
@@ -230,7 +229,7 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 			} else if traces.Result[i].Action.RewardType == "external" {
 				// This only happens in xDai as far as we know...
 				author := traces.Result[i].Action.Author
-				if goodAddr(author) {
+				if isAddress(author) {
 					addressMap[author+"\t"+blockNumStr+"\t"+"99996"] = true
 				}
 
@@ -241,22 +240,22 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 		} else if traces.Result[i].Type == "suicide" {
 			// add the contract that died, and where it sent it's money
 			address := traces.Result[i].Action.Address
-			if goodAddr(address) {
+			if isAddress(address) {
 				addressMap[address+blockAndIdx] = true
 			}
 			refundAddress := traces.Result[i].Action.RefundAddress
-			if goodAddr(refundAddress) {
+			if isAddress(refundAddress) {
 				addressMap[refundAddress+blockAndIdx] = true
 			}
 
 		} else if traces.Result[i].Type == "create" {
 			// add the creator, and the new address name
 			from := traces.Result[i].Action.From
-			if goodAddr(from) {
+			if isAddress(from) {
 				addressMap[from+blockAndIdx] = true
 			}
 			address := traces.Result[i].Result.Address
-			if goodAddr(address) {
+			if isAddress(address) {
 				addressMap[address+blockAndIdx] = true
 			}
 
@@ -267,11 +266,8 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 					initData := traces.Result[i].Action.Init[10:]
 					for i := 0; i < len(initData)/64; i++ {
 						addr := string(initData[i*64 : (i+1)*64])
-						if potentialAddress(addr) {
-							addr = "0x" + string(addr[24:])
-							if goodAddr(addr) {
-								addressMap[addr+blockAndIdx] = true
-							}
+						if isImplicitAddress(addr) {
+							addressMap[addr+blockAndIdx] = true
 						}
 					}
 				}
@@ -295,7 +291,7 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 							os.Exit(1)
 						}
 						addr := receipt.Result.ContractAddress
-						if goodAddr(addr) {
+						if isAddress(addr) {
 							addressMap[addr+blockAndIdx] = true
 						}
 					}
@@ -315,11 +311,8 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 			//fmt.Println("Input data:", inputData, len(inputData))
 			for i := 0; i < len(inputData)/64; i++ {
 				addr := string(inputData[i*64 : (i+1)*64])
-				if potentialAddress(addr) {
-					addr = "0x" + string(addr[24:])
-					if goodAddr(addr) {
-						addressMap[addr+blockAndIdx] = true
-					}
+				if isImplicitAddress(addr) {
+					addressMap[addr+blockAndIdx] = true
 				}
 			}
 		}
@@ -329,11 +322,8 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 			outputData := traces.Result[i].Result.Output[2:]
 			for i := 0; i < len(outputData)/64; i++ {
 				addr := string(outputData[i*64 : (i+1)*64])
-				if potentialAddress(addr) {
-					addr = "0x" + string(addr[24:])
-					if goodAddr(addr) {
-						addressMap[addr+blockAndIdx] = true
-					}
+				if isImplicitAddress(addr) {
+					addressMap[addr+blockAndIdx] = true
 				}
 			}
 		}
@@ -365,11 +355,8 @@ func (opts *BlazeOptions) BlazeExtractFromLogs(bn int, logs *rpcClient.Logs, add
 
 		for j := 0; j < len(logs.Result[i].Topics); j++ {
 			addr := string(logs.Result[i].Topics[j][2:])
-			if potentialAddress(addr) {
-				addr = "0x" + string(addr[24:])
-				if goodAddr(addr) {
-					addressMap[addr+blockAndIdx] = true
-				}
+			if isImplicitAddress(addr) {
+				addressMap[addr+blockAndIdx] = true
 			}
 		}
 
@@ -377,11 +364,8 @@ func (opts *BlazeOptions) BlazeExtractFromLogs(bn int, logs *rpcClient.Logs, add
 			inputData := logs.Result[i].Data[2:]
 			for i := 0; i < len(inputData)/64; i++ {
 				addr := string(inputData[i*64 : (i+1)*64])
-				if potentialAddress(addr) {
-					addr = "0x" + string(addr[24:])
-					if goodAddr(addr) {
-						addressMap[addr+blockAndIdx] = true
-					}
+				if isImplicitAddress(addr) {
+					addressMap[addr+blockAndIdx] = true
 				}
 			}
 		}
@@ -416,7 +400,7 @@ func (opts *BlazeOptions) BlazeWriteAddresses(meta *rpcClient.MetaData, bn int, 
 
 	// TODO: BOGUS - TESTING SCRAPING
 	if !utils.OnOff {
-		step := uint64(7)
+		step := uint64(1)
 		if opts.NProcessed%step == 0 {
 			dist := uint64(0)
 			if opts.RipeBlock > uint64(bn) {
