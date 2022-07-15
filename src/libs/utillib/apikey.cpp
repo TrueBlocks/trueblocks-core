@@ -288,6 +288,7 @@ const char* STR_DISPLAY_APIKEY =
 string_q getApiKey(const string_q& apiName, const string_q& signup) {
     // Try to read the key from env variable
     const char* STR_KEY_ENV = "TB_SETTINGS_[{API_NAME}]KEY";
+    printf("--->> %s", env_name);
     string_q env_name = substitute(STR_KEY_ENV, "[{API_NAME}]", toUpper(apiName));
     string_q env_value = getEnvStr(env_name);
     if (!env_value.empty())
