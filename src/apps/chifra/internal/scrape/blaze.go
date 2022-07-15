@@ -13,6 +13,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -27,17 +28,18 @@ type ScrapedData struct {
 }
 
 type BlazeOptions struct {
-	Chain       string         `json:"chain"`
-	NChannels   uint64         `json:"nChannels"`
-	NProcessed  uint64         `json:"nProcessed"`
-	StartBlock  uint64         `json:"startBlock"`
-	BlockCount  uint64         `json:"blockCnt"`
-	RipeBlock   uint64         `json:"ripeBlock"`
-	UnripeDist  uint64         `json:"unripe"`
-	RpcProvider string         `json:"rpcProvider"`
-	BlockWG     sync.WaitGroup `json:"-"`
-	AddressWG   sync.WaitGroup `json:"-"`
-	TsWG        sync.WaitGroup `json:"-"`
+	Chain       string                     `json:"chain"`
+	NChannels   uint64                     `json:"nChannels"`
+	NProcessed  uint64                     `json:"nProcessed"`
+	StartBlock  uint64                     `json:"startBlock"`
+	BlockCount  uint64                     `json:"blockCnt"`
+	RipeBlock   uint64                     `json:"ripeBlock"`
+	UnripeDist  uint64                     `json:"unripe"`
+	RpcProvider string                     `json:"rpcProvider"`
+	BlockWG     sync.WaitGroup             `json:"-"`
+	AddressWG   sync.WaitGroup             `json:"-"`
+	TsWG        sync.WaitGroup             `json:"-"`
+	AppMap      index.AddressAppearanceMap `json:"-"`
 }
 
 // String implements the stringer interface
@@ -174,26 +176,36 @@ func (opts *BlazeOptions) BlazeProcessTimestamps(tsChannel chan tslib.Timestamp,
 	opts.TsWG.Done()
 }
 
+var mapSync sync.Mutex
+
+func (opts *BlazeOptions) AddToMaps(address string, bn, txid int, addressMap map[string]bool) {
+	key := fmt.Sprintf("%s\t%09d\t%05d", address, bn, txid)
+	addressMap[key] = true
+	mapSync.Lock()
+	opts.AppMap[address] = append(opts.AppMap[address], index.AppearanceRecord{
+		BlockNumber:   uint32(bn),
+		TransactionId: uint32(txid),
+	})
+	mapSync.Unlock()
+}
+
 func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Traces, addressMap map[string]bool) {
 	if traces.Result == nil || len(traces.Result) == 0 {
 		return
 	}
 
-	blockNumStr := utils.PadLeft(strconv.Itoa(bn), 9)
 	for i := 0; i < len(traces.Result); i++ {
-
-		idx := utils.PadLeft(strconv.Itoa(traces.Result[i].TransactionPosition), 5)
-		blockAndIdx := "\t" + blockNumStr + "\t" + idx
+		txid := traces.Result[i].TransactionPosition
 
 		if traces.Result[i].Type == "call" {
 			// If it's a call, get the to and from
 			from := traces.Result[i].Action.From
 			if isAddress(from) {
-				addressMap[from+blockAndIdx] = true
+				opts.AddToMaps(from, bn, txid, addressMap)
 			}
 			to := traces.Result[i].Action.To
 			if isAddress(to) {
-				addressMap[to+blockAndIdx] = true
+				opts.AddToMaps(to, bn, txid, addressMap)
 			}
 
 		} else if traces.Result[i].Type == "reward" {
@@ -204,11 +216,11 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 					// 0x0 (reward got burned). We enter a false record with a false tx_id
 					// to account for this.
 					author = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
-					addressMap[author+"\t"+blockNumStr+"\t"+"99997"] = true
+					opts.AddToMaps(author, bn, 99997, addressMap)
 
 				} else {
 					if isAddress(author) {
-						addressMap[author+"\t"+blockNumStr+"\t"+"99999"] = true
+						opts.AddToMaps(author, bn, 99999, addressMap)
 					}
 				}
 
@@ -219,11 +231,11 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 					// 0x0 (reward got burned). We enter a false record with a false tx_id
 					// to account for this.
 					author = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
-					addressMap[author+"\t"+blockNumStr+"\t"+"99998"] = true
+					opts.AddToMaps(author, bn, 99998, addressMap)
 
 				} else {
 					if isAddress(author) {
-						addressMap[author+"\t"+blockNumStr+"\t"+"99998"] = true
+						opts.AddToMaps(author, bn, 99998, addressMap)
 					}
 				}
 
@@ -231,7 +243,7 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 				// This only happens in xDai as far as we know...
 				author := traces.Result[i].Action.Author
 				if isAddress(author) {
-					addressMap[author+"\t"+blockNumStr+"\t"+"99996"] = true
+					opts.AddToMaps(author, bn, 99996, addressMap)
 				}
 
 			} else {
@@ -242,22 +254,22 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 			// add the contract that died, and where it sent it's money
 			address := traces.Result[i].Action.Address
 			if isAddress(address) {
-				addressMap[address+blockAndIdx] = true
+				opts.AddToMaps(address, bn, txid, addressMap)
 			}
 			refundAddress := traces.Result[i].Action.RefundAddress
 			if isAddress(refundAddress) {
-				addressMap[refundAddress+blockAndIdx] = true
+				opts.AddToMaps(refundAddress, bn, txid, addressMap)
 			}
 
 		} else if traces.Result[i].Type == "create" {
 			// add the creator, and the new address name
 			from := traces.Result[i].Action.From
 			if isAddress(from) {
-				addressMap[from+blockAndIdx] = true
+				opts.AddToMaps(from, bn, txid, addressMap)
 			}
 			address := traces.Result[i].Result.Address
 			if isAddress(address) {
-				addressMap[address+blockAndIdx] = true
+				opts.AddToMaps(address, bn, txid, addressMap)
 			}
 
 			// If it's a top level trace, then the call data is the init,
@@ -268,7 +280,7 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 					for i := 0; i < len(initData)/64; i++ {
 						addr := string(initData[i*64 : (i+1)*64])
 						if isImplicitAddress(addr) {
-							addressMap[addr+blockAndIdx] = true
+							opts.AddToMaps(addr, bn, txid, addressMap)
 						}
 					}
 				}
@@ -293,7 +305,7 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 						}
 						addr := receipt.Result.ContractAddress
 						if isAddress(addr) {
-							addressMap[addr+blockAndIdx] = true
+							opts.AddToMaps(addr, bn, txid, addressMap)
 						}
 					}
 				}
@@ -313,7 +325,7 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 			for i := 0; i < len(inputData)/64; i++ {
 				addr := string(inputData[i*64 : (i+1)*64])
 				if isImplicitAddress(addr) {
-					addressMap[addr+blockAndIdx] = true
+					opts.AddToMaps(addr, bn, txid, addressMap)
 				}
 			}
 		}
@@ -324,7 +336,7 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 			for i := 0; i < len(outputData)/64; i++ {
 				addr := string(outputData[i*64 : (i+1)*64])
 				if isImplicitAddress(addr) {
-					addressMap[addr+blockAndIdx] = true
+					opts.AddToMaps(addr, bn, txid, addressMap)
 				}
 			}
 		}
@@ -337,27 +349,12 @@ func (opts *BlazeOptions) BlazeExtractFromLogs(bn int, logs *rpcClient.Logs, add
 		return
 	}
 
-	blockNumStr := utils.PadLeft(strconv.Itoa(bn), 9)
 	for i := 0; i < len(logs.Result); i++ {
-		// Note: Maybe a bug? Does not process Log.Address (i.e., the emitter of the log)
-		// Probably captured by the trace processing, but would be missed if we were
-		// processing traces. Won't hurt to add (since the map removes dups) so it
-		// should be added. Would be interested to test.
-
-		idxInt, err := strconv.ParseInt(logs.Result[i].TransactionIndex, 0, 32)
-		if err != nil {
-			// TODO: BOGUS - RETURN VALUE FROM BLAZE
-			fmt.Println("extractFromLogs --> strconv.ParseInt returned error", err)
-			os.Exit(1)
-		}
-		idx := utils.PadLeft(strconv.FormatInt(idxInt, 10), 5)
-
-		blockAndIdx := "\t" + blockNumStr + "\t" + idx
-
+		txid, _ := strconv.ParseInt(logs.Result[i].TransactionIndex, 0, 32)
 		for j := 0; j < len(logs.Result[i].Topics); j++ {
 			addr := string(logs.Result[i].Topics[j][2:])
 			if isImplicitAddress(addr) {
-				addressMap[addr+blockAndIdx] = true
+				opts.AddToMaps(addr, bn, int(txid), addressMap)
 			}
 		}
 
@@ -366,7 +363,7 @@ func (opts *BlazeOptions) BlazeExtractFromLogs(bn int, logs *rpcClient.Logs, add
 			for i := 0; i < len(inputData)/64; i++ {
 				addr := string(inputData[i*64 : (i+1)*64])
 				if isImplicitAddress(addr) {
-					addressMap[addr+blockAndIdx] = true
+					opts.AddToMaps(addr, bn, int(txid), addressMap)
 				}
 			}
 		}
@@ -374,29 +371,27 @@ func (opts *BlazeOptions) BlazeExtractFromLogs(bn int, logs *rpcClient.Logs, add
 }
 
 func (opts *BlazeOptions) BlazeWriteAddresses(meta *rpcClient.MetaData, bn int, addressMap map[string]bool) {
-	if len(addressMap) == 0 {
-		return
-	}
+	if len(addressMap) > 0 {
+		addressArray := make([]string, 0, len(addressMap))
+		for record := range addressMap {
+			addressArray = append(addressArray, record)
+		}
+		sort.Strings(addressArray)
 
-	blockNumStr := utils.PadLeft(strconv.Itoa(bn), 9)
-	addressArray := make([]string, 0, len(addressMap))
-	for record := range addressMap {
-		addressArray = append(addressArray, record)
-	}
-	sort.Strings(addressArray)
+		toWrite := []byte(strings.Join(addressArray[:], "\n") + "\n")
 
-	toWrite := []byte(strings.Join(addressArray[:], "\n") + "\n")
+		blockNumStr := utils.PadLeft(strconv.Itoa(bn), 9)
+		fileName := config.GetPathToIndex(opts.Chain) + "ripe/" + blockNumStr + ".txt"
+		if bn > int(opts.RipeBlock) {
+			fileName = config.GetPathToIndex(opts.Chain) + "unripe/" + blockNumStr + ".txt"
+		}
 
-	fileName := config.GetPathToIndex(opts.Chain) + "ripe/" + blockNumStr + ".txt"
-	if bn > int(opts.RipeBlock) {
-		fileName = config.GetPathToIndex(opts.Chain) + "unripe/" + blockNumStr + ".txt"
-	}
-
-	err := ioutil.WriteFile(fileName, toWrite, 0744)
-	if err != nil {
-		// TODO: BOGUS - RETURN VALUE FROM BLAZE
-		fmt.Println("writeAddresses --> ioutil.WriteFile returned error", err)
-		os.Exit(1)
+		err := ioutil.WriteFile(fileName, toWrite, 0744)
+		if err != nil {
+			// TODO: BOGUS - RETURN VALUE FROM BLAZE
+			fmt.Println("writeAddresses --> ioutil.WriteFile returned error", err)
+			os.Exit(1)
+		}
 	}
 
 	// TODO: BOGUS - TESTING SCRAPING

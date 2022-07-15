@@ -247,6 +247,8 @@ func ListMonitors(chain, folder string, monitorChan chan<- Monitor) {
 	})
 }
 
+var monitorMutex sync.Mutex
+
 // MoveToProduction moves a previously staged monitor to the monitors folder.
 func (mon *Monitor) MoveToProduction() error {
 	if !mon.Staged {
@@ -265,11 +267,9 @@ func (mon *Monitor) MoveToProduction() error {
 
 	oldPath := mon.Path()
 	mon.Staged = false
-	// TODO: BOGUS THIS PROBABLY DOESN'T WORK SINCE IT'S LOCAL VARIABLE
-	mutex := sync.Mutex{}
-	mutex.Lock()
+	monitorMutex.Lock()
 	err = os.Rename(oldPath, mon.Path())
-	mutex.Unlock()
+	monitorMutex.Unlock()
 
 	return err
 }

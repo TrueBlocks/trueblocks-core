@@ -14,6 +14,7 @@
 
 //--------------------------------------------------------------------------
 bool COptions::scrape_blocks(void) {
+    LOG_INFO("scrape_blocks");
     start_block = str_2_Uint(getEnvStr("TB_BLAZE_STARTBLOCK"));
     block_cnt = str_2_Uint(getEnvStr("TB_BLAZE_BLOCKCNT"));
     apps_per_chunk = str_2_Uint(getEnvStr("TB_SETTINGS_APPSPERCHUNK"));
@@ -65,17 +66,21 @@ bool COptions::scrape_blocks(void) {
             if (!snapped) {
                 LOG_WARN("copyRipeToStage failed...");
             }
+            LOG_INFO("snapped: ", snapped);
             return snapped;
         }
     }
+    LOG_INFO("snapped: ", snapped);
     tmpStagingStream.close();
 
     if (!stage_chunks(tmpStagingFn))
         return false;
     if (!isTestMode()) {
         // TODO: BOGUS - USE THE NEW TIMESTAMP PROCESSOR?
+        LOG_INFO("pre-freshenTimestamps");
         // freshenTimestampsAppend(start_block, block_cnt);
         freshenTimestamps(start_block + block_cnt);
+        LOG_INFO("post-freshenTimestamps");
     }
 
     nRecsNow = fileSize(newStage) / asciiAppearanceSize;
@@ -123,6 +128,13 @@ bool COptions::copyRipeToStage(const string_q& path, bool& snapped) {
             LOG_WARN("opts->stage_chunks(" + tmpStagingFn + ") returned false");
             return false;
         }
+        if (!isTestMode()) {
+            // TODO: BOGUS - USE THE NEW TIMESTAMP PROCESSOR?
+            LOG_INFO("pre-freshenTimestamps");
+            // freshenTimestampsAppend(start_block, block_cnt);
+            freshenTimestamps(start_block + block_cnt);
+            LOG_INFO("post-freshenTimestamps");
+        }
         nRecsNow = fileSize(opts->newStage) / asciiAppearanceSize;
         opts->report(nRecsThen, nRecsNow);
         blknum_t chunkSize = min(nRecsNow, opts->apps_per_chunk);
@@ -135,6 +147,7 @@ bool COptions::copyRipeToStage(const string_q& path, bool& snapped) {
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::write_chunks(blknum_t chunkSize, bool snapped) {
+    LOG_INFO("write_chunks");
     blknum_t nRecords = fileSize(newStage) / asciiAppearanceSize;
     while ((snapped || nRecords > chunkSize) && !shouldQuit()) {
         lockSection();
@@ -219,6 +232,7 @@ bool COptions::write_chunks(blknum_t chunkSize, bool snapped) {
 
 //--------------------------------------------------------------------------
 bool COptions::stage_chunks(const string_q& tmpFn) {
+    LOG_INFO("stage_chunks");
     string_q prevStage = getLastFileInFolder(indexFolder_staging, false);
     newStage = indexFolder_staging + padNum9(prev_block) + ".txt";
     if (prevStage == newStage) {
@@ -236,6 +250,7 @@ bool COptions::stage_chunks(const string_q& tmpFn) {
         }
     }
 
+    LOG_INFO("pre-append");
     if (!appendFile(tmpFile /* to */, tmpFn /* from */)) {
         cleanFolder(indexFolder_unripe);
         cleanFolder(indexFolder_ripe);
@@ -243,6 +258,7 @@ bool COptions::stage_chunks(const string_q& tmpFn) {
         ::remove(tmpFn.c_str());
         return false;
     }
+    LOG_INFO("post-append");
 
     lockSection();
     ::rename(tmpFile.c_str(), newStage.c_str());
@@ -250,6 +266,7 @@ bool COptions::stage_chunks(const string_q& tmpFn) {
     if (fileExists(prevStage) && prevStage != newStage)
         ::remove(prevStage.c_str());
     unlockSection();
+    LOG_INFO("post-lock");
     return !shouldQuit();
 }
 
@@ -316,6 +333,7 @@ bool CBloomFilterWrite::addToSet(const address_t& addr) {
 
 //----------------------------------------------------------------------
 bool CBloomFilterWrite::writeBloomFilter(const string_q& fileName) {
+    LOG_INFO("writeBloomFilter");
     lockSection();
     CArchive output(WRITING_ARCHIVE);
     if (!output.Lock(fileName, modeWriteCreate, LOCK_NOWAIT)) {
@@ -334,6 +352,7 @@ bool CBloomFilterWrite::writeBloomFilter(const string_q& fileName) {
 
 //----------------------------------------------------------------
 bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines) {
+    LOG_INFO("writeIndexAsBinary");
     // ASSUMES THE ARRAY IS SORTED!
 
     ASSERT(!fileExists(outFn));

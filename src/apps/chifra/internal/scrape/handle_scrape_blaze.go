@@ -11,6 +11,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -80,9 +81,11 @@ func (opts *ScrapeOptions) HandleScrapeBlaze(progressThen *rpcClient.MetaData) (
 		RipeBlock:   meta.Latest - utils.Min(meta.Latest, opts.UnripeDist),
 		UnripeDist:  opts.UnripeDist,
 		RpcProvider: config.GetRpcProvider(opts.Globals.Chain),
+		AppMap:      make(index.AddressAppearanceMap, 500000),
 	}
 
 	_, err = blazeOpts.HandleBlaze(meta)
+	logger.Log(logger.Info, "Size of AppMap:", len(blazeOpts.AppMap))
 	if err != nil {
 		os.RemoveAll(config.GetPathToIndex(opts.Globals.Chain) + "ripe")
 		return true, err

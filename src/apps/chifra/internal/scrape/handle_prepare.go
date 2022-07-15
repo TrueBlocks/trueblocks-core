@@ -46,6 +46,7 @@ func (opts *ScrapeOptions) HandlePrepare(progressThen *rpcClient.MetaData) (ok b
 	if err != nil {
 		return false, err
 	}
+	logger.Log(logger.Info, "Size of appMap:", len(appMap))
 
 	// In this special case, we need to postScrape here since we've created an index file
 	return opts.HandleScrapePin(progressThen)

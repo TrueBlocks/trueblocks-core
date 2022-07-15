@@ -337,13 +337,13 @@ func GetBlockTimestamp(provider string, bn uint64) uint64 {
 	ec := GetClient(provider)
 	defer ec.Close()
 
-	r, err := ec.BlockByNumber(context.Background(), big.NewInt(int64(bn)))
+	r, err := ec.HeaderByNumber(context.Background(), big.NewInt(int64(bn)))
 	if err != nil {
 		logger.Log(logger.Error, "Could not connect to RPC client")
 		return 0
 	}
 
-	return r.Time()
+	return r.Time
 }
 
 // DecodeHex decodes a string with hex into a slice of bytes
