@@ -288,7 +288,6 @@ const char* STR_DISPLAY_APIKEY =
 string_q getApiKey(const string_q& apiName, const string_q& signup) {
     // Try to read the key from env variable
     const char* STR_KEY_ENV = "TB_SETTINGS_[{API_NAME}]KEY";
-    printf("--->> %s", STR_KEY_ENV);
     string_q env_name = substitute(STR_KEY_ENV, "[{API_NAME}]", toUpper(apiName));
     string_q env_value = getEnvStr(env_name);
     if (!env_value.empty())
@@ -302,7 +301,7 @@ string_q getApiKey(const string_q& apiName, const string_q& signup) {
     bzero(buffer, sizeof(buffer));
 
     const char* STR_ERROR_NOKEY = "Articulation requires an api_key from `[APINAME]`. See `[SIGNUP]`.";
-    errorMessage(substitute(substitute(STR_ERROR_NOKEY, "[APINAME]", apiName), "[SIGNUP]", signup));
+    errorMessage(substitute(substitute(STR_ERROR_NOKEY, "[APINAME]", env_name), "[SIGNUP]", signup));
     quickQuitHandler(0);
 
     return "";
