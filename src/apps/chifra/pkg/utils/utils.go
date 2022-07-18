@@ -7,7 +7,6 @@ package utils
 import (
 	"bytes"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -35,21 +34,11 @@ func IsTerminal() bool {
 }
 
 func AsciiFileToString(fileName string) string {
-	if !file.FileExists(fileName) {
-		return ""
-	}
-
-	contents, err := ioutil.ReadFile(fileName)
-	if err != nil {
-		log.Println(err)
-		return ""
-	}
-	return string(contents)
+	return file.AsciiFileToString(fileName)
 }
 
 func AsciiFileToLines(fileName string) []string {
-	contents := AsciiFileToString(fileName)
-	return strings.Split(contents, "\n")
+	return file.AsciiFileToLines(fileName)
 }
 
 func OpenBrowser(url string) {
@@ -98,7 +87,7 @@ func ToCamelCase(in string) string {
 const NOPOS = ^uint64(0)
 
 // Min calculates the minimum between two unsigned integers (golang has no such function)
-func Min[T float64 | uint64](x, y T) T {
+func Min[T int | float64 | uint64](x, y T) T {
 	if x < y {
 		return x
 	}
@@ -106,7 +95,7 @@ func Min[T float64 | uint64](x, y T) T {
 }
 
 // Max calculates the max between two unsigned integers (golang has no such function)
-func Max[T float64 | uint64](x, y T) T {
+func Max[T int | float64 | uint64](x, y T) T {
 	if x > y {
 		return x
 	}
