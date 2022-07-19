@@ -4,8 +4,10 @@ package file
 // to the tar writer will write to the gzip writer which in turn will write to the "buf" writer
 // func CreateArchive(files []string, buf io.Writer, remove bool, relativeTo string) error {
 // 	gw := gzip.NewWriter(buf)
+//  Note: need to call gw.Flush()
 // 	defer gw.Close()
 // 	tw := tar.NewWriter(gw)
+//  Note: need to call tw.Flush()
 // 	defer tw.Close()
 
 // 	// Iterate over files and add them to the tar archive
