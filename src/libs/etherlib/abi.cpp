@@ -542,10 +542,7 @@ bool CAbi::loadAbiFromEtherscan(const address_t& addr) {
         "http://api.etherscan.io/api?module=contract&action=getabi&address=[{ADDRESS}]&apikey=[{KEY}]";
     if (!isTestMode())
         LOG4("Reading ABI for address ", addr, " from ", (isTestMode() ? "--" : "EtherScan"), "\r");
-    string_q url = substitute(substitute(STR_CONTRACT_API, "[{ADDRESS}]", addr), "[{KEY}]",
-                              getApiKey("Etherscan",
-                                        "http:/"
-                                        "/api.etherscan.io/apis"));
+    string_q url = substitute(substitute(STR_CONTRACT_API, "[{ADDRESS}]", addr), "[{KEY}]", getEtherscanKey());
     string_q fromES = urlToString(url);
 
     // some of etherscan's data kind of sucks, so clean it
@@ -650,6 +647,23 @@ bool CAbi::loadAbisKnown(const string_q& addr) {
         return false;
     loadAbiFromFile(path);
     return true;
+}
+
+//-----------------------------------------------------------------------
+string_q getEtherscanKey(void) {
+    // Try to read the key from env variable
+    const char* STR_KEY_ENV = "TB_SETTINGS_ETHERSCANKEY";
+    string_q env_value = getEnvStr(STR_KEY_ENV);
+    if (!env_value.empty())
+        return env_value;
+
+    string_q key = getGlobalConfig("")->getConfigStr("settings", "etherscan_key", "<not_set>");
+    if (!key.empty() && key != "<not_set>")
+        return key;
+
+    errorMessage("Articulation requires an api_key from `Etherscan`. See `http://api.etherscan.io/apis`.");
+    quickQuitHandler(0);
+    return "";
 }
 // EXISTING_CODE
 }  // namespace qblocks

@@ -86,10 +86,8 @@ bool Slurp(CCachedAccount& theAccount, COptions& options) {
         while (!done) {
             string_q url = string_q("https://api.etherscan.io/api?module=account&sort=asc") +
                            "&action=" + toEtherscan(type) + "&address=" + theAccount.addr +
-                           "&page=" + uint_2_Str(theAccount.latestPage) + "&offset=" + uint_2_Str(5000) + "&apikey=" +
-                           getApiKey("Etherscan",
-                                     "http:/"
-                                     "/api.etherscan.io/apis");
+                           "&page=" + uint_2_Str(theAccount.latestPage) + "&offset=" + uint_2_Str(5000) +
+                           "&apikey=" + getEtherscanKey();
 
             string_q responseStr = urlToString(url);
             if (getGlobalConfig("")->getConfigBool("dev", "debug_curl", false)) {
