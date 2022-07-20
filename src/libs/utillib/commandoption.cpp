@@ -849,7 +849,7 @@ const char* STR_ONEROUTE =
     "// [{GOROUTEFUNC}] [{DESCRIPTION}]\n"
     "func [{GOROUTEFUNC}](w http.ResponseWriter, r *http.Request) {\n"
     "\tif err, handled := [{API_ROUTE}]Pkg.Serve[{PROPER}](w, r); err != nil {\n"
-    "\t\toutput.RespondWithError(w, http.StatusInternalServerError, err)\n"
+    "\t\tRespondWithError(w, http.StatusInternalServerError, err)\n"
     "\t} else if !handled {\n"
     "\t\tCallOne(w, r, config.GetPathToCommands(\"[{TOOL}]\"), \"\", \"[{API_ROUTE}]\")\n"
     "\t}\n"
@@ -860,7 +860,7 @@ const char* STR_ONEROUTE2 =
     "// [{GOROUTEFUNC}] [{DESCRIPTION}]\n"
     "func [{GOROUTEFUNC}](w http.ResponseWriter, r *http.Request) {\n"
     "\tif err, _ := [{API_ROUTE}]Pkg.Serve[{PROPER}](w, r); err != nil {\n"
-    "\t\toutput.RespondWithError(w, http.StatusInternalServerError, err)\n"
+    "\t\tRespondWithError(w, http.StatusInternalServerError, err)\n"
     "\t}\n"
     "}";
 
