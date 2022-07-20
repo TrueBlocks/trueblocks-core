@@ -1,4 +1,4 @@
-package tslibPkg
+package tslib
 
 import (
 	"encoding/binary"
@@ -55,7 +55,6 @@ func loadTimestamps(chain string) error {
 	}
 
 	tsPath := config.GetPathToIndex(chain) + "ts.bin"
-
 	tsFile, err := os.Open(tsPath)
 	if err != nil {
 		return err
