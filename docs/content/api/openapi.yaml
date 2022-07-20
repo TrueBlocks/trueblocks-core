@@ -1452,7 +1452,7 @@ paths:
                           "cachePath": "~/Library/Application Support/TrueBlocks/cache/",
                           "indexPath": "~/Library/Application Support/TrueBlocks/unchained/",
                           "isTesting": false,
-                                              "isArchive": true,
+                          "isArchive": true,
                           "isTracing": true,
                           "hasEskey": true,
                           "hasPinkey": true,
