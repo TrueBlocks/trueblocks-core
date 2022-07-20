@@ -9,6 +9,7 @@
 package servePkg
 
 import (
+	"encoding/json"
 	"net/http"
 
 	// BEG_ROUTE_PKGS
@@ -34,7 +35,6 @@ import (
 	transactionsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/transactions"
 	whenPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/when"
 	config "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	output "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	// END_ROUTE_PKGS
 )
 
@@ -250,3 +250,14 @@ var routes = Routes{
 // By removing, inserting into, or altering any lines of code in this
 // repo without preserving the license, you are violating the terms of
 // our usage license. Don't do it.
+
+// RespondWithError marshals an err into JSON and returns the bytes
+// back to the caller httpStatus HTTP error status code
+func RespondWithError(w http.ResponseWriter, httpStatus int, err error) {
+	type ErrorResponse struct {
+		Errors []string `json:"errors,omitempty"`
+	}
+	marshalled, _ := json.MarshalIndent(ErrorResponse{Errors: []string{err.Error()}}, "", "  ")
+	w.WriteHeader(httpStatus)
+	w.Write(marshalled)
+}

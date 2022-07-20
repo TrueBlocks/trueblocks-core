@@ -26,7 +26,7 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 			s.Pause()
 
 		} else {
-			opts.Globals.PassItOn("blockScrape", opts.Globals.Chain, opts.ToCmdLine(), opts.GetEnvStr())
+			opts.Globals.PassItOn("blockScrape", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
 			if s.Running {
 				// We sleep under two conditions
 				//   1) the user has told us an explicit amount of time to Sleep
