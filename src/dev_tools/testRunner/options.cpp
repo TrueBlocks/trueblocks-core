@@ -89,7 +89,6 @@ bool COptions::parseArguments(string_q& command) {
                 tests.push_back("libs/utillib");
                 tests.push_back("libs/etherlib");
                 tests.push_back("libs/acctlib");
-                tests.push_back("libs/pinlib");
 
             } else if (arg == "dev_tools" || arg == "dev_tools/") {
                 static bool been_here = false;
@@ -153,7 +152,6 @@ bool COptions::parseArguments(string_q& command) {
         tests.push_back("libs/utillib");
         tests.push_back("libs/etherlib");
         tests.push_back("libs/acctlib");
-        tests.push_back("libs/pinlib");
         if (makeClassOn)
             tests.push_back("dev_tools/makeClass");
         tests.push_back("tools/ethNames");

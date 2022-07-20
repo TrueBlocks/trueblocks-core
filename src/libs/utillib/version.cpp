@@ -20,7 +20,7 @@ string_q manifestVersion = padLeft("", 64, '0');
 // Run make generate in order for this to take effect
 #define MAJOR 0
 #define MINOR 37
-#define BUILD 0
+#define BUILD 1
 // Run make generate in order for this to take effect
 
 #define SUBVERS "beta"

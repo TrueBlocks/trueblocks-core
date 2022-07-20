@@ -1092,7 +1092,7 @@ class FileInfo(object):
     the name so that we get header guards that don't include things like
     "C:\Documents and Settings\..." or "/home/username/..." in them and thus
     people on different computers who have checked the source out to different
-    locations won't see bogus errors.
+    locations won't see bo gus errors.
     """
     fullname = self.FullName()
 

@@ -151,7 +151,7 @@ bool COptions::cleanNames(const string_q& sourceIn, const string_q& destIn) {
 
     address_t prev;
     for (auto item : names) {
-        if (item.address != prev && item.decimals <= 18)  // some bogus data here not sure why
+        if (item.address != prev && item.decimals <= 18)  // some bad data here not sure why
             deduped.push_back(item);
         prev = item.address;
     }
