@@ -59,7 +59,6 @@ bool COptions::writeOpenApiFile(void) {
     for (auto pkg : pkgs)
         goPkgStream << pkg.first << " " << pkg.second << endl;
     goPkgStream << "\tconfig \"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config\"" << endl;
-    goPkgStream << "\toutput \"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output\"" << endl;
 
     converts["logLevel"] = "log_level";
     converts["noHeader"] = "no_header";

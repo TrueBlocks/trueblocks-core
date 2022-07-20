@@ -33,8 +33,8 @@ type ExploreUrl struct {
 
 var urls []ExploreUrl
 
-func (opts *ExploreOptions) ValidateExplore() error {
-	opts.TestLog()
+func (opts *ExploreOptions) validateExplore() error {
+	opts.testLog()
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag

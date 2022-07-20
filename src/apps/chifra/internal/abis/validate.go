@@ -11,8 +11,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-func (opts *AbisOptions) ValidateAbis() error {
-	opts.TestLog()
+func (opts *AbisOptions) validateAbis() error {
+	opts.testLog()
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag

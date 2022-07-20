@@ -9,8 +9,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-func (opts *TracesOptions) ValidateTraces() error {
-	opts.TestLog()
+func (opts *TracesOptions) validateTraces() error {
+	opts.testLog()
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag

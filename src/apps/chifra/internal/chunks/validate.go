@@ -10,8 +10,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-func (opts *ChunksOptions) ValidateChunks() error {
-	opts.TestLog()
+func (opts *ChunksOptions) validateChunks() error {
+	opts.testLog()
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag

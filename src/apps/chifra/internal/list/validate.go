@@ -13,8 +13,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-func (opts *ListOptions) ValidateList() error {
-	opts.TestLog()
+func (opts *ListOptions) validateList() error {
+	opts.testLog()
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag

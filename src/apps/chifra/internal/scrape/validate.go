@@ -14,8 +14,8 @@ import (
 // TODO: this is a much more elegant way to do error strings:
 // TODO: https://github.com/storj/uplink/blob/v1.7.0/bucket.go#L19
 
-func (opts *ScrapeOptions) ValidateScrape() error {
-	opts.TestLog()
+func (opts *ScrapeOptions) validateScrape() error {
+	opts.testLog()
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag

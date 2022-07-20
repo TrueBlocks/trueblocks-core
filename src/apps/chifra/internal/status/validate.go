@@ -10,8 +10,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-func (opts *StatusOptions) ValidateStatus() error {
-	opts.TestLog()
+func (opts *StatusOptions) validateStatus() error {
+	opts.testLog()
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag

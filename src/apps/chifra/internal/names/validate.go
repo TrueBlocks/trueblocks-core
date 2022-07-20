@@ -8,8 +8,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-func (opts *NamesOptions) ValidateNames() error {
-	opts.TestLog()
+func (opts *NamesOptions) validateNames() error {
+	opts.testLog()
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag

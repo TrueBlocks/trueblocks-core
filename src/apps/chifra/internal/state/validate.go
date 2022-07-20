@@ -11,8 +11,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-func (opts *StateOptions) ValidateState() error {
-	opts.TestLog()
+func (opts *StateOptions) validateState() error {
+	opts.testLog()
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag

@@ -10,8 +10,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-func (opts *TokensOptions) ValidateTokens() error {
-	opts.TestLog()
+func (opts *TokensOptions) validateTokens() error {
+	opts.testLog()
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag

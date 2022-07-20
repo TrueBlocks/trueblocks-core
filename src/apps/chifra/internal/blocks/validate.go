@@ -11,8 +11,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-func (opts *BlocksOptions) ValidateBlocks() error {
-	opts.TestLog()
+func (opts *BlocksOptions) validateBlocks() error {
+	opts.testLog()
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag

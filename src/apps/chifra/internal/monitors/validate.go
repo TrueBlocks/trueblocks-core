@@ -15,8 +15,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-func (opts *MonitorsOptions) ValidateMonitors() error {
-	opts.TestLog()
+func (opts *MonitorsOptions) validateMonitors() error {
+	opts.testLog()
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag

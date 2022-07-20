@@ -8,8 +8,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-func (opts *ReceiptsOptions) ValidateReceipts() error {
-	opts.TestLog()
+func (opts *ReceiptsOptions) validateReceipts() error {
+	opts.testLog()
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag
