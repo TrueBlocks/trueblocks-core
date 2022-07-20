@@ -2,7 +2,7 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package blockRange
+package identifiers
 
 import (
 	"encoding/json"
@@ -14,10 +14,10 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-type BlockRangeValue int64
+type IdentifierType int64
 
 const (
-	NotDefined BlockRangeValue = iota
+	NotDefined IdentifierType = iota
 	BlockNumber
 	BlockTimestamp
 	BlockHash
@@ -30,13 +30,13 @@ const (
 )
 
 type Identifier struct {
-	StartType    BlockRangeValue `json:"startType,omitempty"`
-	Start        Point           `json:"start,omitempty"`
-	EndType      BlockRangeValue `json:"endType,omitempty"`
-	End          Point           `json:"end,omitempty"`
-	ModifierType BlockRangeValue `json:"modifierType,omitempty"`
-	Modifier     Modifier        `json:"modifier,omitempty"`
-	Orig         string          `json:"-"`
+	StartType    IdentifierType `json:"startType,omitempty"`
+	Start        Point          `json:"start,omitempty"`
+	EndType      IdentifierType `json:"endType,omitempty"`
+	End          Point          `json:"end,omitempty"`
+	ModifierType IdentifierType `json:"modifierType,omitempty"`
+	Modifier     Modifier       `json:"modifier,omitempty"`
+	Orig         string         `json:"-"`
 }
 
 // Parses a string containing block range and returns a struct
@@ -46,6 +46,7 @@ type Identifier struct {
 // the values.
 //
 // Consult ./parser.go for the supported format
+// TODO: This does not handle the zero block correctly
 func NewBlockRange(rangeStr string) (*Identifier, error) {
 	parsed, err := Parse(rangeStr)
 	newRange := &Identifier{}
@@ -100,7 +101,7 @@ func NewTxRange(rangeStr string) (*Identifier, error) {
 	return newRange, nil
 }
 
-func (brv BlockRangeValue) String() string {
+func (id IdentifierType) String() string {
 	return []string{
 		"NotDefined",
 		"BlockNumber",
@@ -112,7 +113,7 @@ func (brv BlockRangeValue) String() string {
 		"TransactionHash",
 		"Period",
 		"Step",
-	}[brv]
+	}[id]
 }
 
 func (br Identifier) ToJSON() string {
@@ -123,7 +124,7 @@ func (br Identifier) ToJSON() string {
 	return string(str)
 }
 
-func (br *Identifier) UnmarshalJSON(data []byte) error {
+func (id *Identifier) UnmarshalJSON(data []byte) error {
 	str, err := strconv.Unquote(string(data))
 	if err != nil {
 		return err
@@ -134,16 +135,16 @@ func (br *Identifier) UnmarshalJSON(data []byte) error {
 		return err
 	}
 
-	*br = *newBlock
+	*id = *newBlock
 
 	return nil
 }
 
-func (br *Identifier) String() string {
-	return br.ToJSON()
+func (id *Identifier) String() string {
+	return id.ToJSON()
 }
 
-func getPointType(p *Point) BlockRangeValue {
+func getPointType(p *Point) IdentifierType {
 	if p == nil {
 		return NotDefined
 	}
@@ -167,7 +168,7 @@ func getPointType(p *Point) BlockRangeValue {
 	return BlockNumber
 }
 
-func getModifierType(m *Modifier) BlockRangeValue {
+func getModifierType(m *Modifier) IdentifierType {
 	if m == nil {
 		return Step
 	}

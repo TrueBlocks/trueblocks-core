@@ -8,8 +8,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 )
 
 func Test_BlockRanges(t *testing.T) {
@@ -19,7 +19,7 @@ func Test_BlockRanges(t *testing.T) {
 		}
 		// fmt.Println("----------->", item.input)
 		inputs := strings.Split(item.input, " ")
-		var results []blockRange.Identifier
+		var results []identifiers.Identifier
 		var err error
 		err = ValidateIdentifiers(
 			"mainnet",

@@ -8,8 +8,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 )
 
 func Test_TransactionIds(t *testing.T) {
@@ -26,7 +26,7 @@ func Test_TransactionIds(t *testing.T) {
 		for i, e := range expecteds {
 			fmt.Println(i, e)
 		}
-		var results []blockRange.Identifier
+		var results []identifiers.Identifier
 		var err error
 		err = ValidateIdentifiers(
 			"mainnet",

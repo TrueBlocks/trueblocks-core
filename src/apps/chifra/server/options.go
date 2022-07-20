@@ -8,6 +8,7 @@
 package servePkg
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
@@ -17,27 +18,37 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// ServeOptions provides all command options for the chifra serve command.
 type ServeOptions struct {
-	Port    string
-	Globals globals.GlobalOptions
-	BadFlag error
+	Port    string                `json:"port,omitempty"`    // Specify the server's port
+	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
+	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
 }
 
 var serveCmdLineOptions ServeOptions
 
-func (opts *ServeOptions) TestLog() {
+// testLog is used only during testing to export the options for this test case.
+func (opts *ServeOptions) testLog() {
 	logger.TestLog(len(opts.Port) > 0, "Port: ", opts.Port)
 	opts.Globals.TestLog()
 }
 
-func (opts *ServeOptions) GetEnvStr() string {
-	envStr := ""
+// String implements the Stringer interface
+func (opts *ServeOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "\t")
+	return string(b)
+}
+
+// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
+func (opts *ServeOptions) getEnvStr() []string {
+	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return envStr
 }
 
-func (opts *ServeOptions) ToCmdLine() string {
+// toCmdLine converts the option to a command line for calling out to the system.
+func (opts *ServeOptions) toCmdLine() string {
 	options := ""
 	if len(opts.Port) > 0 {
 		options += " --port " + opts.Port
@@ -49,7 +60,8 @@ func (opts *ServeOptions) ToCmdLine() string {
 	return options
 }
 
-func ServeFinishParseApi(w http.ResponseWriter, r *http.Request) *ServeOptions {
+// serveFinishParseApi finishes the parsing for server invocations. Returns a new ServeOptions.
+func serveFinishParseApi(w http.ResponseWriter, r *http.Request) *ServeOptions {
 	opts := &ServeOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -69,7 +81,8 @@ func ServeFinishParseApi(w http.ResponseWriter, r *http.Request) *ServeOptions {
 	return opts
 }
 
-func ServeFinishParse(args []string) *ServeOptions {
+// serveFinishParse finishes the parsing for command line invocations. Returns a new ServeOptions.
+func serveFinishParse(args []string) *ServeOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
