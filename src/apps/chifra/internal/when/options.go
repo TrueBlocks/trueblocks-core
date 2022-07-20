@@ -8,29 +8,32 @@
 package whenPkg
 
 import (
+	"encoding/json"
 	"net/http"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// WhenOptions provides all command options for the chifra when command.
 type WhenOptions struct {
-	Blocks     []string
-	BlockIds   []blockRange.Identifier
-	List       bool
-	Timestamps bool
-	Check      bool
-	Count      bool
-	Globals    globals.GlobalOptions
-	BadFlag    error
+	Blocks     []string                 `json:"blocks,omitempty"`     // One or more dates, block numbers, hashes, or special named blocks (see notes)
+	BlockIds   []identifiers.Identifier `json:"blockIds,omitempty"`   // Block identifiers
+	List       bool                     `json:"list,omitempty"`       // Export a list of the 'special' blocks
+	Timestamps bool                     `json:"timestamps,omitempty"` // Ignore other options and generate timestamps only
+	Check      bool                     `json:"check,omitempty"`      // Available only with --timestamps, checks the validity of the timestamp data
+	Count      bool                     `json:"count,omitempty"`      // Available only with --timestamps, returns the number of timestamps in the cache
+	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
+	BadFlag    error                    `json:"badFlag,omitempty"`    // An error flag if needed
 }
 
 var whenCmdLineOptions WhenOptions
 
-func (opts *WhenOptions) TestLog() {
+// testLog is used only during testing to export the options for this test case.
+func (opts *WhenOptions) testLog() {
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
 	logger.TestLog(opts.List, "List: ", opts.List)
 	logger.TestLog(opts.Timestamps, "Timestamps: ", opts.Timestamps)
@@ -39,7 +42,14 @@ func (opts *WhenOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func WhenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
+// String implements the Stringer interface
+func (opts *WhenOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "\t")
+	return string(b)
+}
+
+// whenFinishParseApi finishes the parsing for server invocations. Returns a new WhenOptions.
+func whenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
 	opts := &WhenOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -70,7 +80,8 @@ func WhenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
 	return opts
 }
 
-func WhenFinishParse(args []string) *WhenOptions {
+// whenFinishParse finishes the parsing for command line invocations. Returns a new WhenOptions.
+func whenFinishParse(args []string) *WhenOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

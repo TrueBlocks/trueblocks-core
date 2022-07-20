@@ -8,32 +8,35 @@
 package tracesPkg
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// TracesOptions provides all command options for the chifra traces command.
 type TracesOptions struct {
-	Transactions   []string
-	TransactionIds []blockRange.Identifier
-	Articulate     bool
-	Filter         string
-	Statediff      bool
-	Count          bool
-	SkipDdos       bool
-	Max            uint64
-	Globals        globals.GlobalOptions
-	BadFlag        error
+	Transactions   []string                 `json:"transactions,omitempty"`   // A space-separated list of one or more transaction identifiers
+	TransactionIds []identifiers.Identifier `json:"transactionIds,omitempty"` // Transaction identifiers
+	Articulate     bool                     `json:"articulate,omitempty"`     // Articulate the retrieved data if ABIs can be found
+	Filter         string                   `json:"filter,omitempty"`         // Call the node's trace_filter routine with bang-separated filter
+	Statediff      bool                     `json:"statediff,omitempty"`      // Export state diff traces (not implemented)
+	Count          bool                     `json:"count,omitempty"`          // Show the number of traces for the transaction only (fast)
+	SkipDdos       bool                     `json:"skipDdos,omitempty"`       // Skip over the 2016 ddos during export ('on' by default)
+	Max            uint64                   `json:"max,omitempty"`            // If --skip_ddos is on, this many traces defines what a ddos transaction is
+	Globals        globals.GlobalOptions    `json:"globals,omitempty"`        // The global options
+	BadFlag        error                    `json:"badFlag,omitempty"`        // An error flag if needed
 }
 
 var tracesCmdLineOptions TracesOptions
 
-func (opts *TracesOptions) TestLog() {
+// testLog is used only during testing to export the options for this test case.
+func (opts *TracesOptions) testLog() {
 	logger.TestLog(len(opts.Transactions) > 0, "Transactions: ", opts.Transactions)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	logger.TestLog(len(opts.Filter) > 0, "Filter: ", opts.Filter)
@@ -44,14 +47,22 @@ func (opts *TracesOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func (opts *TracesOptions) GetEnvStr() string {
-	envStr := ""
+// String implements the Stringer interface
+func (opts *TracesOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "\t")
+	return string(b)
+}
+
+// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
+func (opts *TracesOptions) getEnvStr() []string {
+	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return envStr
 }
 
-func (opts *TracesOptions) ToCmdLine() string {
+// toCmdLine converts the option to a command line for calling out to the system.
+func (opts *TracesOptions) toCmdLine() string {
 	options := ""
 	if opts.Articulate {
 		options += " --articulate"
@@ -78,7 +89,8 @@ func (opts *TracesOptions) ToCmdLine() string {
 	return options
 }
 
-func TracesFinishParseApi(w http.ResponseWriter, r *http.Request) *TracesOptions {
+// tracesFinishParseApi finishes the parsing for server invocations. Returns a new TracesOptions.
+func tracesFinishParseApi(w http.ResponseWriter, r *http.Request) *TracesOptions {
 	opts := &TracesOptions{}
 	opts.Max = 250
 	for key, value := range r.URL.Query() {
@@ -114,7 +126,8 @@ func TracesFinishParseApi(w http.ResponseWriter, r *http.Request) *TracesOptions
 	return opts
 }
 
-func TracesFinishParse(args []string) *TracesOptions {
+// tracesFinishParse finishes the parsing for command line invocations. Returns a new TracesOptions.
+func tracesFinishParse(args []string) *TracesOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

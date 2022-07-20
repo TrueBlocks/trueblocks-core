@@ -8,31 +8,34 @@
 package tokensPkg
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// TokensOptions provides all command options for the chifra tokens command.
 type TokensOptions struct {
-	Addrs2   []string
-	Blocks   []string
-	BlockIds []blockRange.Identifier
-	Parts    []string
-	ByAcct   bool
-	NoZero   bool
-	Globals  globals.GlobalOptions
-	BadFlag  error
+	Addrs2   []string                 `json:"addrs2,omitempty"`   // Two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported
+	Blocks   []string                 `json:"blocks,omitempty"`   // An optional list of one or more blocks at which to report balances, defaults to 'latest'
+	BlockIds []identifiers.Identifier `json:"blockIds,omitempty"` // Block identifiers
+	Parts    []string                 `json:"parts,omitempty"`    // Which parts of the token information to retrieve
+	ByAcct   bool                     `json:"byAcct,omitempty"`   // Consider each address an ERC20 token except the last, whose balance is reported for each token
+	NoZero   bool                     `json:"noZero,omitempty"`   // Suppress the display of zero balance accounts
+	Globals  globals.GlobalOptions    `json:"globals,omitempty"`  // The global options
+	BadFlag  error                    `json:"badFlag,omitempty"`  // An error flag if needed
 }
 
 var tokensCmdLineOptions TokensOptions
 
-func (opts *TokensOptions) TestLog() {
+// testLog is used only during testing to export the options for this test case.
+func (opts *TokensOptions) testLog() {
 	logger.TestLog(len(opts.Addrs2) > 0, "Addrs2: ", opts.Addrs2)
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
 	logger.TestLog(len(opts.Parts) > 0, "Parts: ", opts.Parts)
@@ -41,14 +44,22 @@ func (opts *TokensOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func (opts *TokensOptions) GetEnvStr() string {
-	envStr := ""
+// String implements the Stringer interface
+func (opts *TokensOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "\t")
+	return string(b)
+}
+
+// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
+func (opts *TokensOptions) getEnvStr() []string {
+	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return envStr
 }
 
-func (opts *TokensOptions) ToCmdLine() string {
+// toCmdLine converts the option to a command line for calling out to the system.
+func (opts *TokensOptions) toCmdLine() string {
 	options := ""
 	for _, part := range opts.Parts {
 		options += " --parts " + part
@@ -67,7 +78,8 @@ func (opts *TokensOptions) ToCmdLine() string {
 	return options
 }
 
-func TokensFinishParseApi(w http.ResponseWriter, r *http.Request) *TokensOptions {
+// tokensFinishParseApi finishes the parsing for server invocations. Returns a new TokensOptions.
+func tokensFinishParseApi(w http.ResponseWriter, r *http.Request) *TokensOptions {
 	opts := &TokensOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -105,7 +117,8 @@ func TokensFinishParseApi(w http.ResponseWriter, r *http.Request) *TokensOptions
 	return opts
 }
 
-func TokensFinishParse(args []string) *TokensOptions {
+// tokensFinishParse finishes the parsing for command line invocations. Returns a new TokensOptions.
+func tokensFinishParse(args []string) *TokensOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

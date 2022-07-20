@@ -8,32 +8,35 @@
 package transactionsPkg
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// TransactionsOptions provides all command options for the chifra transactions command.
 type TransactionsOptions struct {
-	Transactions   []string
-	TransactionIds []blockRange.Identifier
-	Articulate     bool
-	Trace          bool
-	Uniq           bool
-	Reconcile      string
-	Cache          bool
-	Globals        globals.GlobalOptions
-	BadFlag        error
+	Transactions   []string                 `json:"transactions,omitempty"`   // A space-separated list of one or more transaction identifiers
+	TransactionIds []identifiers.Identifier `json:"transactionIds,omitempty"` // Transaction identifiers
+	Articulate     bool                     `json:"articulate,omitempty"`     // Articulate the retrieved data if ABIs can be found
+	Trace          bool                     `json:"trace,omitempty"`          // Include the transaction's traces in the results
+	Uniq           bool                     `json:"uniq,omitempty"`           // Display a list of uniq addresses found in the transaction
+	Reconcile      string                   `json:"reconcile,omitempty"`      // Reconcile the transaction as per the provided address
+	Cache          bool                     `json:"cache,omitempty"`          // Force the results of the query into the tx cache (and the trace cache if applicable)
+	Globals        globals.GlobalOptions    `json:"globals,omitempty"`        // The global options
+	BadFlag        error                    `json:"badFlag,omitempty"`        // An error flag if needed
 }
 
 var transactionsCmdLineOptions TransactionsOptions
 
-func (opts *TransactionsOptions) TestLog() {
+// testLog is used only during testing to export the options for this test case.
+func (opts *TransactionsOptions) testLog() {
 	logger.TestLog(len(opts.Transactions) > 0, "Transactions: ", opts.Transactions)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	logger.TestLog(opts.Trace, "Trace: ", opts.Trace)
@@ -43,14 +46,22 @@ func (opts *TransactionsOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func (opts *TransactionsOptions) GetEnvStr() string {
-	envStr := ""
+// String implements the Stringer interface
+func (opts *TransactionsOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "\t")
+	return string(b)
+}
+
+// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
+func (opts *TransactionsOptions) getEnvStr() []string {
+	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return envStr
 }
 
-func (opts *TransactionsOptions) ToCmdLine() string {
+// toCmdLine converts the option to a command line for calling out to the system.
+func (opts *TransactionsOptions) toCmdLine() string {
 	options := ""
 	if opts.Articulate {
 		options += " --articulate"
@@ -74,7 +85,8 @@ func (opts *TransactionsOptions) ToCmdLine() string {
 	return options
 }
 
-func TransactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *TransactionsOptions {
+// transactionsFinishParseApi finishes the parsing for server invocations. Returns a new TransactionsOptions.
+func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *TransactionsOptions {
 	opts := &TransactionsOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -108,7 +120,8 @@ func TransactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *Transac
 	return opts
 }
 
-func TransactionsFinishParse(args []string) *TransactionsOptions {
+// transactionsFinishParse finishes the parsing for command line invocations. Returns a new TransactionsOptions.
+func transactionsFinishParse(args []string) *TransactionsOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

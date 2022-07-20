@@ -8,34 +8,37 @@
 package chunksPkg
 
 import (
+	"encoding/json"
 	"net/http"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// ChunksOptions provides all command options for the chifra chunks command.
 type ChunksOptions struct {
-	Mode      string
-	Blocks    []string
-	BlockIds  []blockRange.Identifier
-	Addrs     []string
-	Details   bool
-	Check     bool
-	Belongs   bool
-	PinChunks bool
-	PinData   bool
-	Clean     bool
-	Globals   globals.GlobalOptions
-	BadFlag   error
+	Mode      string                   `json:"mode,omitempty"`      // The type of chunk info to retrieve
+	Blocks    []string                 `json:"blocks,omitempty"`    // Optional list of blocks to intersect with chunk ranges
+	BlockIds  []identifiers.Identifier `json:"blockIds,omitempty"`  // Block identifiers
+	Addrs     []string                 `json:"addrs,omitempty"`     // One or more addresses to use with --belongs option (see note)
+	Details   bool                     `json:"details,omitempty"`   // For manifest and addresses options only, display full details of the report
+	Check     bool                     `json:"check,omitempty"`     // Depends on mode, checks for internal consistency of the data type
+	Belongs   bool                     `json:"belongs,omitempty"`   // Checks if the given address appears in the given chunk
+	PinChunks bool                     `json:"pinChunks,omitempty"` // Gzip each chunk, push it to IPFS, and update and publish the manifest
+	PinData   bool                     `json:"pinData,omitempty"`   // Gzip the databases, push them to IPFS, and update and publish the manifest
+	Clean     bool                     `json:"clean,omitempty"`     // Retrieve all pins on Pinata, compare to manifest, remove any extraneous remote pins
+	Globals   globals.GlobalOptions    `json:"globals,omitempty"`   // The global options
+	BadFlag   error                    `json:"badFlag,omitempty"`   // An error flag if needed
 }
 
 var chunksCmdLineOptions ChunksOptions
 
-func (opts *ChunksOptions) TestLog() {
+// testLog is used only during testing to export the options for this test case.
+func (opts *ChunksOptions) testLog() {
 	logger.TestLog(len(opts.Mode) > 0, "Mode: ", opts.Mode)
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
@@ -48,7 +51,14 @@ func (opts *ChunksOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func ChunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions {
+// String implements the Stringer interface
+func (opts *ChunksOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "\t")
+	return string(b)
+}
+
+// chunksFinishParseApi finishes the parsing for server invocations. Returns a new ChunksOptions.
+func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions {
 	opts := &ChunksOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -91,7 +101,8 @@ func ChunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 	return opts
 }
 
-func ChunksFinishParse(args []string) *ChunksOptions {
+// chunksFinishParse finishes the parsing for command line invocations. Returns a new ChunksOptions.
+func chunksFinishParse(args []string) *ChunksOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

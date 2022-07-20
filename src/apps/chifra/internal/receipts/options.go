@@ -8,40 +8,51 @@
 package receiptsPkg
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// ReceiptsOptions provides all command options for the chifra receipts command.
 type ReceiptsOptions struct {
-	Transactions   []string
-	TransactionIds []blockRange.Identifier
-	Articulate     bool
-	Globals        globals.GlobalOptions
-	BadFlag        error
+	Transactions   []string                 `json:"transactions,omitempty"`   // A space-separated list of one or more transaction identifiers
+	TransactionIds []identifiers.Identifier `json:"transactionIds,omitempty"` // Transaction identifiers
+	Articulate     bool                     `json:"articulate,omitempty"`     // Articulate the retrieved data if ABIs can be found
+	Globals        globals.GlobalOptions    `json:"globals,omitempty"`        // The global options
+	BadFlag        error                    `json:"badFlag,omitempty"`        // An error flag if needed
 }
 
 var receiptsCmdLineOptions ReceiptsOptions
 
-func (opts *ReceiptsOptions) TestLog() {
+// testLog is used only during testing to export the options for this test case.
+func (opts *ReceiptsOptions) testLog() {
 	logger.TestLog(len(opts.Transactions) > 0, "Transactions: ", opts.Transactions)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	opts.Globals.TestLog()
 }
 
-func (opts *ReceiptsOptions) GetEnvStr() string {
-	envStr := ""
+// String implements the Stringer interface
+func (opts *ReceiptsOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "\t")
+	return string(b)
+}
+
+// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
+func (opts *ReceiptsOptions) getEnvStr() []string {
+	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return envStr
 }
 
-func (opts *ReceiptsOptions) ToCmdLine() string {
+// toCmdLine converts the option to a command line for calling out to the system.
+func (opts *ReceiptsOptions) toCmdLine() string {
 	options := ""
 	if opts.Articulate {
 		options += " --articulate"
@@ -53,7 +64,8 @@ func (opts *ReceiptsOptions) ToCmdLine() string {
 	return options
 }
 
-func ReceiptsFinishParseApi(w http.ResponseWriter, r *http.Request) *ReceiptsOptions {
+// receiptsFinishParseApi finishes the parsing for server invocations. Returns a new ReceiptsOptions.
+func receiptsFinishParseApi(w http.ResponseWriter, r *http.Request) *ReceiptsOptions {
 	opts := &ReceiptsOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -78,7 +90,8 @@ func ReceiptsFinishParseApi(w http.ResponseWriter, r *http.Request) *ReceiptsOpt
 	return opts
 }
 
-func ReceiptsFinishParse(args []string) *ReceiptsOptions {
+// receiptsFinishParse finishes the parsing for command line invocations. Returns a new ReceiptsOptions.
+func receiptsFinishParse(args []string) *ReceiptsOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
