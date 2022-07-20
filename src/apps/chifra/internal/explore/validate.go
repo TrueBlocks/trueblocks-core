@@ -101,7 +101,7 @@ func (opts *ExploreOptions) validateExplore() error {
 		urls = append(urls, ExploreUrl{"", ExploreNone})
 	}
 
-	return opts.Globals.ValidateGlobals()
+	return opts.Globals.Validate()
 }
 
 // id_2_TxHash takes a valid identifier (txHash/blockHash, blockHash.txId, blockNumber.txId)

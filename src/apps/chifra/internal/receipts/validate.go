@@ -44,5 +44,5 @@ func (opts *ReceiptsOptions) validateReceipts() error {
 	// 	}
 	// }
 
-	return opts.Globals.ValidateGlobals()
+	return opts.Globals.Validate()
 }

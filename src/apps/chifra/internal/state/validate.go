@@ -115,5 +115,5 @@ func (opts *StateOptions) validateState() error {
 		}
 	}
 
-	return opts.Globals.ValidateGlobals()
+	return opts.Globals.Validate()
 }

@@ -79,5 +79,5 @@ func (opts *ChunksOptions) validateChunks() error {
 		return err
 	}
 
-	return opts.Globals.ValidateGlobals()
+	return opts.Globals.Validate()
 }

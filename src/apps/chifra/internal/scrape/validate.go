@@ -45,5 +45,5 @@ func (opts *ScrapeOptions) validateScrape() error {
 		return validate.Usage("The {0} option ({1}) must {2}.", "--sleep", fmt.Sprintf("%f", opts.Sleep), "be at least .25")
 	}
 
-	return opts.Globals.ValidateGlobals()
+	return opts.Globals.Validate()
 }

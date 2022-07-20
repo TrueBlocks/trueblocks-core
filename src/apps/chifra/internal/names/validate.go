@@ -23,7 +23,7 @@ func (opts *NamesOptions) validateNames() error {
 		return validate.Usage("The {0} option is not available{1}.", "--collection", " with any other option")
 	}
 
-	return opts.Globals.ValidateGlobals()
+	return opts.Globals.Validate()
 }
 
 func (opts *NamesOptions) anyBase() bool {

@@ -36,5 +36,5 @@ func (opts *StatusOptions) validateStatus() error {
 		return err
 	}
 
-	return opts.Globals.ValidateGlobals()
+	return opts.Globals.Validate()
 }

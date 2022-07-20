@@ -58,5 +58,5 @@ func (opts *WhenOptions) validateWhen() error {
 		return err
 	}
 
-	return opts.Globals.ValidateGlobals()
+	return opts.Globals.Validate()
 }

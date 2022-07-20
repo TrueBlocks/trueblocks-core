@@ -82,5 +82,5 @@ func (opts *TokensOptions) validateTokens() error {
 		return err
 	}
 
-	return opts.Globals.ValidateGlobals()
+	return opts.Globals.Validate()
 }

@@ -103,5 +103,5 @@ func (opts *BlocksOptions) validateBlocks() error {
 		}
 	}
 
-	return opts.Globals.ValidateGlobals()
+	return opts.Globals.Validate()
 }

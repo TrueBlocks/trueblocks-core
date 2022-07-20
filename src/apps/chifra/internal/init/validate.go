@@ -20,5 +20,5 @@ func (opts *InitOptions) validateInit() error {
 		return validate.Usage("The {0} command is currently available only on the {1} chain.", "init", "mainnet")
 	}
 
-	return opts.Globals.ValidateGlobals()
+	return opts.Globals.Validate()
 }

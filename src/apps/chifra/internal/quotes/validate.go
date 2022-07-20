@@ -34,5 +34,5 @@ func (opts *QuotesOptions) validateQuotes() error {
 		return validate.Usage("Please specify at least one {0}.", "command line option")
 	}
 
-	return opts.Globals.ValidateGlobals()
+	return opts.Globals.Validate()
 }

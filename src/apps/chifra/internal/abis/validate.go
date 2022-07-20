@@ -65,5 +65,5 @@ func (opts *AbisOptions) validateAbis() error {
 
 	}
 
-	return opts.Globals.ValidateGlobals()
+	return opts.Globals.Validate()
 }

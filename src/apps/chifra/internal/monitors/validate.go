@@ -73,5 +73,5 @@ func (opts *MonitorsOptions) validateMonitors() error {
 		}
 	}
 
-	return opts.Globals.ValidateGlobals()
+	return opts.Globals.Validate()
 }

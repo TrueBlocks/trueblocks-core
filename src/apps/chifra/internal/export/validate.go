@@ -81,5 +81,5 @@ func (opts *ExportOptions) validateExport() error {
 		return validate.Usage(msg)
 	}
 
-	return opts.Globals.ValidateGlobals()
+	return opts.Globals.Validate()
 }

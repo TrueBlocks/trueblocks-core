@@ -51,5 +51,5 @@ func (opts *TransactionsOptions) validateTransactions() error {
 		return err
 	}
 
-	return opts.Globals.ValidateGlobals()
+	return opts.Globals.Validate()
 }
