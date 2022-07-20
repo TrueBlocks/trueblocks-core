@@ -19,9 +19,9 @@ import (
 
 type ScrapeOptions struct {
 	Modes        []string
-	Sleep        float64
-	Pin          bool
 	BlockCnt     uint64
+	Pin          bool
+	Sleep        float64
 	Blaze        bool
 	BlockChanCnt uint64
 	AddrChanCnt  uint64
@@ -40,9 +40,9 @@ var scrapeCmdLineOptions ScrapeOptions
 
 func (opts *ScrapeOptions) TestLog() {
 	logger.TestLog(len(opts.Modes) > 0, "Modes: ", opts.Modes)
-	logger.TestLog(opts.Sleep != 14, "Sleep: ", opts.Sleep)
-	logger.TestLog(opts.Pin, "Pin: ", opts.Pin)
 	logger.TestLog(opts.BlockCnt != 2000, "BlockCnt: ", opts.BlockCnt)
+	logger.TestLog(opts.Pin, "Pin: ", opts.Pin)
+	logger.TestLog(opts.Sleep != 14, "Sleep: ", opts.Sleep)
 	logger.TestLog(opts.Blaze, "Blaze: ", opts.Blaze)
 	logger.TestLog(opts.BlockChanCnt != 10, "BlockChanCnt: ", opts.BlockChanCnt)
 	logger.TestLog(opts.AddrChanCnt != 20, "AddrChanCnt: ", opts.AddrChanCnt)
@@ -65,11 +65,11 @@ func (opts *ScrapeOptions) GetEnvStr() string {
 
 func (opts *ScrapeOptions) ToCmdLine() string {
 	options := ""
-	if opts.Pin {
-		options += " --pin"
-	}
 	if opts.BlockCnt != 2000 {
 		options += (" --block_cnt " + fmt.Sprintf("%d", opts.BlockCnt))
+	}
+	if opts.Pin {
+		options += " --pin"
 	}
 	if opts.BlockChanCnt != 10 {
 		options += (" --block_chan_cnt " + fmt.Sprintf("%d", opts.BlockChanCnt))
@@ -86,8 +86,8 @@ func (opts *ScrapeOptions) ToCmdLine() string {
 
 func ScrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions {
 	opts := &ScrapeOptions{}
-	opts.Sleep = 14
 	opts.BlockCnt = 2000
+	opts.Sleep = 14
 	opts.BlockChanCnt = 10
 	opts.AddrChanCnt = 20
 	opts.AppsPerChunk = 200000
@@ -103,12 +103,12 @@ func ScrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Modes = append(opts.Modes, s...)
 			}
-		case "sleep":
-			opts.Sleep = globals.ToFloat64(value[0])
-		case "pin":
-			opts.Pin = true
 		case "blockCnt":
 			opts.BlockCnt = globals.ToUint64(value[0])
+		case "pin":
+			opts.Pin = true
+		case "sleep":
+			opts.Sleep = globals.ToFloat64(value[0])
 		case "blaze":
 			opts.Blaze = true
 		case "blockChanCnt":

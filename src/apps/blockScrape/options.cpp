@@ -21,8 +21,8 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("pin", "p", "", OPT_SWITCH, "pin chunks (and blooms) to IPFS as they are created (requires pinning service)"),  // NOLINT
     COption("block_cnt", "n", "<uint64>", OPT_FLAG, "maximum number of blocks to process per pass"),
+    COption("pin", "p", "", OPT_SWITCH, "pin chunks (and blooms) to IPFS as they are created (requires ipfs)"),
     COption("block_chan_cnt", "b", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of concurrent block processing channels"),
     COption("addr_chan_cnt", "d", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of concurrent address processing channels"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Scan the chain and update (and optionally pin) the TrueBlocks index of appearances."),  // NOLINT
@@ -51,14 +51,14 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
-        } else if (arg == "-p" || arg == "--pin") {
-            pin = true;
-
         } else if (startsWith(arg, "-n:") || startsWith(arg, "--block_cnt:")) {
             if (!confirmUint("block_cnt", block_cnt, arg))
                 return false;
         } else if (arg == "-n" || arg == "--block_cnt") {
             return flag_required("block_cnt");
+
+        } else if (arg == "-p" || arg == "--pin") {
+            pin = true;
 
         } else if (startsWith(arg, "-b:") || startsWith(arg, "--block_chan_cnt:")) {
             if (!confirmUint("block_chan_cnt", block_chan_cnt, arg))
@@ -137,9 +137,11 @@ void COptions::Init(void) {
     // END_CODE_GLOBALOPTS
 
     // BEG_CODE_INIT
-    pin = false;
     // clang-format off
     block_cnt = getGlobalConfig("blockScrape")->getConfigInt("settings", "block_cnt", 2000);
+    // clang-format on
+    pin = false;
+    // clang-format off
     block_chan_cnt = getGlobalConfig("blockScrape")->getConfigInt("settings", "block_chan_cnt", 10);
     addr_chan_cnt = getGlobalConfig("blockScrape")->getConfigInt("settings", "addr_chan_cnt", 20);
     apps_per_chunk = getGlobalConfig("blockScrape")->getConfigInt("settings", "apps_per_chunk", 200000);

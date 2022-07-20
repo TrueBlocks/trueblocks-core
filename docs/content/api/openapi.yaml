@@ -1484,8 +1484,8 @@ paths:
               enum:
                 - run
                 - stop
-        - name: sleep
-          description: seconds to sleep between scraper passes
+        - name: blockCnt
+          description: maximum number of blocks to process per pass
           required: false
           style: form
           in: query
@@ -1493,16 +1493,15 @@ paths:
           schema:
             type: number
         - name: pin
-          description: >
-            pin chunks (and blooms) to IPFS as they are created (requires pinning service)
+          description: pin chunks (and blooms) to IPFS as they are created (requires ipfs)
           required: false
           style: form
           in: query
           explode: true
           schema:
             type: boolean
-        - name: blockCnt
-          description: maximum number of blocks to process per pass
+        - name: sleep
+          description: seconds to sleep between scraper passes
           required: false
           style: form
           in: query
