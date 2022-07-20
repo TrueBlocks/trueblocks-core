@@ -50,6 +50,7 @@ func ReadChunkHeader(chain, fileName string) (header HeaderRecord, err error) {
 		return
 	}
 
+	// TODO: BOGUS - DOES CHECKING FOR OLD INDEXES WORK?
 	headerHash := hexutil.Encode(header.Hash.Bytes())
 	hasZeroHash := headerHash == unchained.ZeroMagicHash
 	hasMagicHash := headerHash == unchained.HeaderMagicHash

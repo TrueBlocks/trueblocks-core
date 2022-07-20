@@ -339,7 +339,7 @@ func GetBlockTimestamp(provider string, bn uint64) uint64 {
 
 	r, err := ec.HeaderByNumber(context.Background(), big.NewInt(int64(bn)))
 	if err != nil {
-		logger.Log(logger.Error, "Could not connect to RPC client")
+		logger.Log(logger.Error, "Could not connect to RPC client", err)
 		return 0
 	}
 

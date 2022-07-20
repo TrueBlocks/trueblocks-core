@@ -13,6 +13,10 @@ import (
 
 // TODO: BOGUS - MIGRATION SENTINAL? REENTRANCY SAFE?
 func HasBackLevelIndex(chain string) bool {
+	// TODO: BOGUS - THIS IS NOT CHAIN SAFE AT ALL!!!
+	if chain == "mainnet" {
+		return false
+	}
 	knownBadFile := config.GetPathToIndex(chain) + "/finalized/013308630-013321453.bin"
 	if file.FileExists(knownBadFile) {
 		return true
@@ -21,6 +25,7 @@ func HasBackLevelIndex(chain string) bool {
 }
 
 func CheckBackLevelIndex(chain string) {
+	// TODO: BOGUS - DOES CHECKING FOR OLD INDEXES WORK?
 	if !HasBackLevelIndex(chain) {
 		return
 	}

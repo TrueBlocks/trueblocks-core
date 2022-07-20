@@ -14,6 +14,7 @@ func (opts *InitOptions) validateInit() error {
 	}
 
 	// Note this does not return if a migration is needed
+	// TODO: BOGUS - SHOULD INIT BE ALLOWED NO MATTER WHAT?
 	migrate.CheckBackLevelIndex(opts.Globals.Chain)
 
 	return opts.Globals.Validate()

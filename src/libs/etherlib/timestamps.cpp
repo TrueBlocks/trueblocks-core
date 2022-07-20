@@ -125,6 +125,7 @@ bool freshenTimestamps(blknum_t minBlock) {
         } else {
             file << ((uint32_t)block.blockNumber) << ((uint32_t)block.timestamp);
             file.flush();
+            // TODO: BOGUS - TESTING SCRAPING
             bool OnOff = false;
             if (OnOff) {
                 ostringstream post;

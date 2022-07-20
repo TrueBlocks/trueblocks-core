@@ -69,8 +69,9 @@ func WriteChunk(chain, indexPath string, addAppMap AddressAppearanceMap, nApps i
 	// TODO: BOGUS - YIKES!
 	tempPath := strings.Replace(indexPath, "unchained/sepolia/finalized/", "cache/sepolia/tmp/", -1)
 	tempPath = strings.Replace(tempPath, "unchained/gnosis/finalized/", "cache/gnosis/tmp/", -1)
+	tempPath = strings.Replace(tempPath, "unchained/polygon/finalized/", "cache/polygon/tmp/", -1)
 	if indexPath == tempPath {
-		log.Fatal("Path should differ:", tempPath, indexPath)
+		log.Fatal("Paths should differ:", tempPath, indexPath)
 	}
 	fp, err := os.OpenFile(tempPath, os.O_WRONLY|os.O_CREATE, 0644)
 	defer func() {

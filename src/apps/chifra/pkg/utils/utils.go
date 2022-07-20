@@ -163,4 +163,5 @@ func GetFields(t *reflect.Type, format string, header bool) (fields []string, se
 	return fields, sep, quote
 }
 
+// TODO: BOGUS - TESTING SCRAPING
 const OnOff = true

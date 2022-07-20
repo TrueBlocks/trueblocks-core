@@ -127,6 +127,7 @@ func (opts *ChunksOptions) validateChunks() error {
 	}
 
 	// Note this does not return if a migration is needed
+	// TODO: BOGUS - DO WE REALLY WANT TO DISALLOW INVESTIGATION OF OLDER INSTALLATIONS?
 	migrate.CheckBackLevelIndex(opts.Globals.Chain)
 
 	if opts.Remote {
