@@ -170,10 +170,15 @@ func getCommandsFromFile(globals globals.GlobalOptions) ([]SemiParse, error) {
 	ret := []SemiParse{}
 	cmdLines := []string{}
 
-	if !file.FileExists(globals.File) {
+	commandFile := globals.File
+	if commandFile == "" && file.FileExists("./commands.fil") {
+		commandFile = "./commands.fil"
+	}
+	if !file.FileExists(commandFile) {
+		logger.Log(logger.Warning, "No --file option supplied. Using default.")
 		cmdLines = append(cmdLines, "export --appearances")
 	} else {
-		cmdLines = utils.AsciiFileToLines(globals.File)
+		cmdLines = utils.AsciiFileToLines(commandFile)
 	}
 
 	for _, cmd := range cmdLines {
