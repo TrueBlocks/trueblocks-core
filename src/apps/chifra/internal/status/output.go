@@ -19,7 +19,7 @@ import (
 
 // RunStatus handles the status command for the command line. Returns error only as per cobra.
 func RunStatus(cmd *cobra.Command, args []string) (err error) {
-	opts := StatusFinishParse(args)
+	opts := statusFinishParse(args)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.StatusInternal()
@@ -28,7 +28,7 @@ func RunStatus(cmd *cobra.Command, args []string) (err error) {
 
 // ServeStatus handles the status command for the API. Returns error and a bool if handled
 func ServeStatus(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
-	opts := StatusFinishParseApi(w, r)
+	opts := statusFinishParseApi(w, r)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return opts.StatusInternal()
@@ -36,7 +36,7 @@ func ServeStatus(w http.ResponseWriter, r *http.Request) (err error, handled boo
 
 // StatusInternal handles the internal workings of the status command.  Returns error and a bool if handled
 func (opts *StatusOptions) StatusInternal() (err error, handled bool) {
-	err = opts.ValidateStatus()
+	err = opts.validateStatus()
 	if err != nil {
 		return err, true
 	}
@@ -47,7 +47,7 @@ func (opts *StatusOptions) StatusInternal() (err error, handled bool) {
 	}
 
 	handled = true
-	err = opts.Globals.PassItOn("cacheStatus", opts.Globals.Chain, opts.ToCmdLine(), opts.GetEnvStr())
+	err = opts.Globals.PassItOn("cacheStatus", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
 	// EXISTING_CODE
 
 	return

@@ -8,6 +8,7 @@
 package scrapePkg
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
@@ -17,28 +18,30 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// ScrapeOptions provides all command options for the chifra scrape command.
 type ScrapeOptions struct {
-	Modes        []string
-	BlockCnt     uint64
-	Pin          bool
-	Sleep        float64
-	Blaze        bool
-	BlockChanCnt uint64
-	AddrChanCnt  uint64
-	AppsPerChunk uint64
-	UnripeDist   uint64
-	SnapToGrid   uint64
-	FirstSnap    uint64
-	AllowMissing bool
-	StartBlock   uint64
-	RipeBlock    uint64
-	Globals      globals.GlobalOptions
-	BadFlag      error
+	Modes        []string              `json:"modes,omitempty"`        // Which scraper(s) to control
+	BlockCnt     uint64                `json:"blockCnt,omitempty"`     // Maximum number of blocks to process per pass
+	Pin          bool                  `json:"pin,omitempty"`          // Pin chunks (and blooms) to IPFS as they are created (requires ipfs)
+	Sleep        float64               `json:"sleep,omitempty"`        // Seconds to sleep between scraper passes
+	Blaze        bool                  `json:"blaze,omitempty"`        // Invoke the blaze scraper to process blocks
+	BlockChanCnt uint64                `json:"blockChanCnt,omitempty"` // Number of concurrent block processing channels
+	AddrChanCnt  uint64                `json:"addrChanCnt,omitempty"`  // Number of concurrent address processing channels
+	AppsPerChunk uint64                `json:"appsPerChunk,omitempty"` // The number of appearances to build into a chunk before consolidating it
+	UnripeDist   uint64                `json:"unripeDist,omitempty"`   // The distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe
+	SnapToGrid   uint64                `json:"snapToGrid,omitempty"`   // An override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index
+	FirstSnap    uint64                `json:"firstSnap,omitempty"`    // The first block at which snap_to_grid is enabled
+	AllowMissing bool                  `json:"allowMissing,omitempty"` // Do not report errors for blockchain that contain blocks with zero addresses
+	StartBlock   uint64                `json:"startBlock,omitempty"`   // First block to visit (available only for blaze scraper)
+	RipeBlock    uint64                `json:"ripeBlock,omitempty"`    // Blocks prior to this value are written to 'ripe' folder (available only for blaze scraper)
+	Globals      globals.GlobalOptions `json:"globals,omitempty"`      // The global options
+	BadFlag      error                 `json:"badFlag,omitempty"`      // An error flag if needed
 }
 
 var scrapeCmdLineOptions ScrapeOptions
 
-func (opts *ScrapeOptions) TestLog() {
+// testLog is used only during testing to export the options for this test case.
+func (opts *ScrapeOptions) testLog() {
 	logger.TestLog(len(opts.Modes) > 0, "Modes: ", opts.Modes)
 	logger.TestLog(opts.BlockCnt != 2000, "BlockCnt: ", opts.BlockCnt)
 	logger.TestLog(opts.Pin, "Pin: ", opts.Pin)
@@ -56,14 +59,22 @@ func (opts *ScrapeOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func (opts *ScrapeOptions) GetEnvStr() string {
-	envStr := ""
+// String implements the Stringer interface
+func (opts *ScrapeOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "\t")
+	return string(b)
+}
+
+// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
+func (opts *ScrapeOptions) getEnvStr() []string {
+	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return envStr
 }
 
-func (opts *ScrapeOptions) ToCmdLine() string {
+// toCmdLine converts the option to a command line for calling out to the system.
+func (opts *ScrapeOptions) toCmdLine() string {
 	options := ""
 	if opts.BlockCnt != 2000 {
 		options += (" --block_cnt " + fmt.Sprintf("%d", opts.BlockCnt))
@@ -84,7 +95,8 @@ func (opts *ScrapeOptions) ToCmdLine() string {
 	return options
 }
 
-func ScrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions {
+// scrapeFinishParseApi finishes the parsing for server invocations. Returns a new ScrapeOptions.
+func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions {
 	opts := &ScrapeOptions{}
 	opts.BlockCnt = 2000
 	opts.Sleep = 14
@@ -143,7 +155,8 @@ func ScrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 	return opts
 }
 
-func ScrapeFinishParse(args []string) *ScrapeOptions {
+// scrapeFinishParse finishes the parsing for command line invocations. Returns a new ScrapeOptions.
+func scrapeFinishParse(args []string) *ScrapeOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

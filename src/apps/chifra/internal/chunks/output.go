@@ -12,7 +12,7 @@ package chunksPkg
 import (
 	"net/http"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
@@ -22,7 +22,7 @@ import (
 
 // RunChunks handles the chunks command for the command line. Returns error only as per cobra.
 func RunChunks(cmd *cobra.Command, args []string) (err error) {
-	opts := ChunksFinishParse(args)
+	opts := chunksFinishParse(args)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.ChunksInternal()
@@ -31,7 +31,7 @@ func RunChunks(cmd *cobra.Command, args []string) (err error) {
 
 // ServeChunks handles the chunks command for the API. Returns error and a bool if handled
 func ServeChunks(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
-	opts := ChunksFinishParseApi(w, r)
+	opts := chunksFinishParseApi(w, r)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return opts.ChunksInternal()
@@ -39,7 +39,7 @@ func ServeChunks(w http.ResponseWriter, r *http.Request) (err error, handled boo
 
 // ChunksInternal handles the internal workings of the chunks command.  Returns error and a bool if handled
 func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
-	err = opts.ValidateChunks()
+	err = opts.validateChunks()
 	if err != nil {
 		return err, true
 	}
@@ -47,7 +47,7 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 	// EXISTING_CODE
 	handled = true
 
-	blockNums, err := blockRange.GetBlockNumArray(opts.Globals.Chain, opts.BlockIds)
+	blockNums, err := identifiers.GetBlockNumbers(opts.Globals.Chain, opts.BlockIds)
 	if opts.Globals.TestMode && len(blockNums) > 200 {
 		blockNums = blockNums[:200]
 	}

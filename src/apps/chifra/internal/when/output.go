@@ -19,7 +19,7 @@ import (
 
 // RunWhen handles the when command for the command line. Returns error only as per cobra.
 func RunWhen(cmd *cobra.Command, args []string) (err error) {
-	opts := WhenFinishParse(args)
+	opts := whenFinishParse(args)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.WhenInternal()
@@ -28,7 +28,7 @@ func RunWhen(cmd *cobra.Command, args []string) (err error) {
 
 // ServeWhen handles the when command for the API. Returns error and a bool if handled
 func ServeWhen(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
-	opts := WhenFinishParseApi(w, r)
+	opts := whenFinishParseApi(w, r)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return opts.WhenInternal()
@@ -36,7 +36,7 @@ func ServeWhen(w http.ResponseWriter, r *http.Request) (err error, handled bool)
 
 // WhenInternal handles the internal workings of the when command.  Returns error and a bool if handled
 func (opts *WhenOptions) WhenInternal() (err error, handled bool) {
-	err = opts.ValidateWhen()
+	err = opts.validateWhen()
 	if err != nil {
 		return err, true
 	}
