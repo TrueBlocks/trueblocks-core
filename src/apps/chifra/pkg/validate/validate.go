@@ -141,3 +141,14 @@ func ValidateEnumSlice(field string, values []string, valid string) error {
 	}
 	return nil
 }
+
+// TODO: For now, we don't use this, but once we are articulating in the Go code,
+// TODO: we can use this to decide. But, do so way down the call stack, so if the
+// TODO: ABI is present, and the EtherScan key is not, we can still articulate.
+// TODO: Only fail this if we're at the last resort.
+func CanArticulate(on bool) bool {
+	// if !on {
+	return true
+	// }
+	// return len(config.GetRootConfig().Settings.EtherscanKey) > 0
+}

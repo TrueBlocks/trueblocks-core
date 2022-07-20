@@ -27,7 +27,7 @@ func (opts *MonitorsOptions) validateMonitors() error {
 		var expOpts exportPkg.ExportOptions
 		expOpts.Addrs = append(expOpts.Addrs, "0x0000000000000000000000000000000000000001")
 		expOpts.Globals.Chain = opts.Globals.Chain
-		err := expOpts.ValidateExport()
+		err := expOpts.Validate()
 		if err != nil {
 			return validate.Usage(err.Error())
 		}

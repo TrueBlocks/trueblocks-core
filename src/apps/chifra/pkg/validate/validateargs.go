@@ -43,7 +43,7 @@ const ValidBlockIdWithRangeAndDate = ValidBlockIdWithRange | ValidArgumentDate
 //     ValidateIdentifiers(identifiers, ValidArgumentRange, 1)
 //
 // This routine can be used for both block identifiers and transaction
-func ValidateIdentifiers(chain string, identifiers []string, validTypes ValidArgumentType, maxRanges int, results *[]identifiers.Identifier) error {
+func ValidateIdentifiers(chain string, ids []string, validTypes ValidArgumentType, maxRanges int, results *[]identifiers.Identifier) error {
 	// A helper function to check if bitmask is set
 	isBitmaskSet := func(flag ValidArgumentType) bool {
 		return validTypes&flag != 0
@@ -54,7 +54,7 @@ func ValidateIdentifiers(chain string, identifiers []string, validTypes ValidArg
 	}
 
 	rangesFound := 0
-	for _, identifier := range identifiers {
+	for _, identifier := range ids {
 		if isBitmaskSet(ValidArgumentBlockHash) && IsBlockHash(identifier) {
 			appendBlockId(results, identifier)
 			continue

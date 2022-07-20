@@ -73,7 +73,7 @@ func NewStagedMonitor(chain, addr string) (Monitor, error) {
 
 	// either copy the existing monitor or create a new one
 	if file.FileExists(prodPath) {
-		_, err := file.Copy(stagedPath, prodPath)
+		_, err := file.Copy(prodPath, stagedPath)
 		if err != nil {
 			return mon, err
 		}
@@ -147,7 +147,7 @@ func (mon *Monitor) Count() uint32 {
 
 // GetAddrStr returns the Monitor's address as a string
 func (mon *Monitor) GetAddrStr() string {
-	return strings.ToLower(mon.Address.Hex())
+	return hexutil.Encode(mon.Address.Bytes())
 }
 
 // Close closes an open Monitor if it's open, does nothing otherwise
@@ -160,7 +160,7 @@ func (mon *Monitor) Close() {
 
 // IsDeleted returns true if the monitor has been deleted but not removed
 func (mon *Monitor) IsDeleted() bool {
-	mon.ReadHeader()
+	mon.ReadMonitorHeader()
 	return mon.Header.Deleted
 }
 
@@ -247,6 +247,8 @@ func ListMonitors(chain, folder string, monitorChan chan<- Monitor) {
 	})
 }
 
+var monitorMutex sync.Mutex
+
 // MoveToProduction moves a previously staged monitor to the monitors folder.
 func (mon *Monitor) MoveToProduction() error {
 	if !mon.Staged {
@@ -265,10 +267,9 @@ func (mon *Monitor) MoveToProduction() error {
 
 	oldPath := mon.Path()
 	mon.Staged = false
-	mutex := sync.Mutex{}
-	mutex.Lock()
+	monitorMutex.Lock()
 	err = os.Rename(oldPath, mon.Path())
-	mutex.Unlock()
+	monitorMutex.Unlock()
 
 	return err
 }

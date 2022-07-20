@@ -26,7 +26,7 @@ func (opts *ScrapeOptions) validateScrape() error {
 
 	} else {
 		for _, arg := range opts.Modes {
-			// TODO: BOGUS - this should be noted as deprecated somehow
+			// TODO: BOGUS - FEATURE NOTE THIS AS DEPRECATED
 			arg = strings.Replace(arg, "indexer", "run", -1)
 			err := validate.ValidateEnum("mode", arg, "[run|stop]")
 			if err != nil {
@@ -34,12 +34,6 @@ func (opts *ScrapeOptions) validateScrape() error {
 			}
 		}
 	}
-
-	// if opts.Blaze {
-	// 	// TODO: StartBlock and RipeBlock must be sent with the --blaze option
-	// } else {
-	// 	// TODO: StartBlock and RipeBlock can only be sent with the --blaze option
-	// }
 
 	if opts.Sleep < .25 {
 		return validate.Usage("The {0} option ({1}) must {2}.", "--sleep", fmt.Sprintf("%f", opts.Sleep), "be at least .25")

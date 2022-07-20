@@ -85,7 +85,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 
 		if updater.MonitorMap[common.HexToAddress(addr)] == nil {
 			mon, _ := monitor.NewStagedMonitor(opts.Globals.Chain, addr)
-			mon.ReadHeader()
+			mon.ReadMonitorHeader()
 			if uint64(mon.LastScanned) < updater.FirstBlock {
 				updater.FirstBlock = uint64(mon.LastScanned)
 			}
@@ -285,7 +285,7 @@ func needsMigration(addr string) error {
 	path := strings.Replace(mon.Path(), ".mon.bin", ".acct.bin", -1)
 	if file.FileExists(path) {
 		path = strings.Replace(path, config.GetPathToCache(mon.Chain), "./", -1)
-		return validate.Usage("Old style monitor found at {0}. Please run '{1}'", path, "chifra status --migrate [test|all]")
+		return validate.Usage("Old style monitor found at {0}. Please run '{1}'", path, "chifra status --migrate [test|cache|index]")
 	}
 	return nil
 }

@@ -24,7 +24,7 @@ func (opts *TransactionsOptions) validateTransactions() error {
 		}
 
 		if len(opts.Reconcile) > 0 {
-			if opts.Cache || opts.Trace || opts.Articulate {
+			if opts.Cache || opts.Trace || opts.Articulate || opts.Uniq {
 				return validate.Usage("Do not use other options with the --reconcile option.")
 			}
 			if !validate.IsValidAddress(opts.Reconcile) {
@@ -34,6 +34,10 @@ func (opts *TransactionsOptions) validateTransactions() error {
 
 		if opts.Trace && !rpcClient.IsTracingNode(opts.Globals.TestMode, opts.Globals.Chain) {
 			return validate.Usage("Tracing is required for this program to work properly.")
+		}
+
+		if !validate.CanArticulate(opts.Articulate) {
+			return validate.Usage("The {0} option requires an EtherScan API key.", "--articulate")
 		}
 	}
 

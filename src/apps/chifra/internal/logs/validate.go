@@ -4,7 +4,9 @@
 
 package logsPkg
 
-import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+)
 
 func (opts *LogsOptions) validateLogs() error {
 	opts.testLog()
@@ -18,6 +20,9 @@ func (opts *LogsOptions) validateLogs() error {
 	} else {
 		if len(opts.Transactions) == 0 {
 			return validate.Usage("Please supply one or more transaction identifiers.")
+		}
+		if !validate.CanArticulate(opts.Articulate) {
+			return validate.Usage("The {0} option requires an EtherScan API key.", "--articulate")
 		}
 	}
 

@@ -15,8 +15,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 )
 
-// ReadHeader reads the monitor's header and returns without closing the file
-func (mon *Monitor) ReadHeader() (err error) {
+// ReadMonitorHeader reads the monitor's header and returns without closing the file
+func (mon *Monitor) ReadMonitorHeader() (err error) {
 	if mon.ReadFp == nil {
 		mon.ReadFp, err = os.OpenFile(mon.Path(), os.O_RDONLY, 0644)
 		if err != nil {

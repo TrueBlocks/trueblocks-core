@@ -89,7 +89,7 @@ func Test_Monitor_ReadApps(t *testing.T) {
 		t.Error("Number of records in monitor", mon.Count(), "is not as expected", nTests)
 	}
 
-	err := mon.ReadHeader()
+	err := mon.ReadMonitorHeader()
 	if err != nil {
 		t.Error(err)
 	}

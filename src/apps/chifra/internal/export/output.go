@@ -60,7 +60,7 @@ func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
 }
 
 // EXISTING_CODE
-func (opts *ExportOptions) ValidateExport() error {
+func (opts *ExportOptions) Validate() error {
 	return opts.validateExport()
 }
 

@@ -5,6 +5,8 @@
 package exportPkg
 
 import (
+	"strings"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -73,6 +75,14 @@ func (opts *ExportOptions) validateExport() error {
 		return validate.Usage("You must provide at least one Ethereum address for this command.")
 	}
 
+	if !validate.CanArticulate(opts.Articulate) {
+		return validate.Usage("The {0} option requires an EtherScan API key.", "--articulate")
+	}
+
+	if opts.Globals.Format == "ofx" && !opts.Accounting {
+		return validate.Usage("The {0} option is only available with the {1} option.", "--fmt ofx", "--accounting")
+	}
+
 	bloomZero := cache.NewCachePath(opts.Globals.Chain, cache.Index_Bloom)
 	path := bloomZero.GetFullPath("000000000-000000000")
 	if !file.FileExists(path) {
@@ -81,5 +91,10 @@ func (opts *ExportOptions) validateExport() error {
 		return validate.Usage(msg)
 	}
 
-	return opts.Globals.Validate()
+	err := opts.Globals.Validate()
+	if err != nil && strings.Contains(err.Error(), "option (ofx) must be one of") {
+		// not an error
+		err = nil
+	}
+	return err
 }
