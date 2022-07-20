@@ -15,6 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -25,7 +26,9 @@ type WhenOptions struct {
 	List       bool                     `json:"list,omitempty"`       // Export a list of the 'special' blocks
 	Timestamps bool                     `json:"timestamps,omitempty"` // Ignore other options and generate timestamps only
 	Check      bool                     `json:"check,omitempty"`      // Available only with --timestamps, checks the validity of the timestamp data
+	Reset      uint64                   `json:"reset,omitempty"`      // Available only with --timestamps option, reset the timestamp file to this block
 	Count      bool                     `json:"count,omitempty"`      // Available only with --timestamps, returns the number of timestamps in the cache
+	Deep       bool                     `json:"deep,omitempty"`       // Available only with --timestamps --check option, queries every timestamp on chain (slow)
 	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
 	BadFlag    error                    `json:"badFlag,omitempty"`    // An error flag if needed
 }
@@ -38,7 +41,9 @@ func (opts *WhenOptions) testLog() {
 	logger.TestLog(opts.List, "List: ", opts.List)
 	logger.TestLog(opts.Timestamps, "Timestamps: ", opts.Timestamps)
 	logger.TestLog(opts.Check, "Check: ", opts.Check)
+	logger.TestLog(opts.Reset != utils.NOPOS, "Reset: ", opts.Reset)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
+	logger.TestLog(opts.Deep, "Deep: ", opts.Deep)
 	opts.Globals.TestLog()
 }
 
@@ -51,6 +56,7 @@ func (opts *WhenOptions) String() string {
 // whenFinishParseApi finishes the parsing for server invocations. Returns a new WhenOptions.
 func whenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
 	opts := &WhenOptions{}
+	opts.Reset = utils.NOPOS
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "blocks":
@@ -64,8 +70,12 @@ func whenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
 			opts.Timestamps = true
 		case "check":
 			opts.Check = true
+		case "reset":
+			opts.Reset = globals.ToUint64(value[0])
 		case "count":
 			opts.Count = true
+		case "deep":
+			opts.Deep = true
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "when")
@@ -87,6 +97,9 @@ func whenFinishParse(args []string) *WhenOptions {
 	defFmt := "txt"
 	// EXISTING_CODE
 	opts.Blocks = args
+	if opts.Reset == 0 {
+		opts.Reset = utils.NOPOS
+	}
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt

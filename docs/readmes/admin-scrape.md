@@ -1,6 +1,6 @@
 ## chifra scrape
 
-TODO: BOGUS - REVIEW HELP FILES
+TODO: BOGUS - REVIEW HELP FILES - INSTALL IPFS IF YOU'RE GOING TO SCRAPE AND PIN
 
 The `chifra scrape` application creates TrueBlocks' index of address appearances -- the fundamental data structure of the entire system. It also, optionally, pins the index to IPFS.
 

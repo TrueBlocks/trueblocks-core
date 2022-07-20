@@ -13,7 +13,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *WhenOptions) HandleWhenShowTimestamps() error {
+func (opts *WhenOptions) HandleWhenTimestampsShow() error {
 	cnt, err := tslibPkg.NTimestamps(opts.Globals.Chain)
 	if err != nil {
 		return err
@@ -44,7 +44,7 @@ func (opts *WhenOptions) HandleWhenShowTimestamps() error {
 		if err != nil {
 			return err
 		}
-		block := types.NamedBlock{} //rpcClient.GetBlockByNumber(opts.Globals.Chain, bn)
+		block := types.SimpleNamedBlock{} //rpcClient.GetBlockByNumber(opts.Globals.Chain, bn)
 		if bn == 0 {
 			block.TimeStamp, _ = rpcClient.GetBlockZeroTs(opts.Globals.Chain)
 		}
