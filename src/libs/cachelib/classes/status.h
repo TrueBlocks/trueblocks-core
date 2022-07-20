@@ -37,7 +37,6 @@ class CStatus : public CBaseNode {
     string_q host;
     bool isTesting;
     bool isApi;
-    bool isDocker;
     bool isScraping;
     bool isArchive;
     bool isTracing;
@@ -120,7 +119,6 @@ inline void CStatus::initialize(void) {
     host = "";
     isTesting = false;
     isApi = false;
-    isDocker = false;
     isScraping = false;
     isArchive = false;
     isTracing = false;
@@ -155,7 +153,6 @@ inline void CStatus::duplicate(const CStatus& st) {
     host = st.host;
     isTesting = st.isTesting;
     isApi = st.isApi;
-    isDocker = st.isDocker;
     isScraping = st.isScraping;
     isArchive = st.isArchive;
     isTracing = st.isTracing;

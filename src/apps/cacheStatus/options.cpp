@@ -217,7 +217,7 @@ void COptions::Init(void) {
     char hostname[HOST_NAME_MAX + 1] = {0};
     gethostname(hostname, HOST_NAME_MAX);
     char username[LOGIN_NAME_MAX + 1] = {0};
-    if (getlogin_r(username, LOGIN_NAME_MAX) != 0 || isDockerMode())
+    if (getlogin_r(username, LOGIN_NAME_MAX) != 0)
         strncpy(username, "nobody", 7);
 
     if (isTestMode()) {
@@ -242,7 +242,6 @@ void COptions::Init(void) {
     status.isScraping = isTestMode() ? false : (isRunning("chifra scrape") || isRunning("blockScrape"));
     status.isTesting = isTestMode();
     status.isApi = isApiMode();
-    status.isDocker = isDockerMode();
     status.isArchive = isArchiveNode();
     status.isTracing = isTracingNode();
     status.hasEskey = getGlobalConfig("")->getConfigStr("settings", "etherscan_key", "<not_set>") != "<not_set>";

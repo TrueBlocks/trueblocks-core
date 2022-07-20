@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-06-19T11:46:59
+date: 2022-07-20T16:33:24
 lastmod:
   - :git
   - lastmod
@@ -43,7 +43,6 @@ Status data is made of the following data fields:
 | host              | the host portion of the local API server                 | string         |
 | isTesting         | `true` if the server is running in test mode             | bool           |
 | isApi             | `true` if the server is running in API mode              | bool           |
-| isDocker          | `true` if running under a docker image                   | bool           |
 | isScraping        | `true` if the index scraper is running                   | bool           |
 | isArchive         | `true` if the rpcProvider is an archive node             | bool           |
 | isTracing         | `true` if the rpcProvider provides Parity traces         | bool           |

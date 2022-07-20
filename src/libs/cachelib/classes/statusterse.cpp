@@ -288,7 +288,6 @@ CStatusTerse::CStatusTerse(const CStatus& it) {
     isTesting = it.isTesting;
     isArchive = it.isArchive;
     isTracing = it.isTracing;
-    isDocker = it.isDocker;
     hasEskey = it.hasEskey;
     hasPinkey = it.hasPinkey;
     configPath = it.configPath;
@@ -298,7 +297,6 @@ CStatusTerse::CStatusTerse(const CStatus& it) {
     modes1 += string_q(it.isTesting ? "testing|" : "");
     modes1 += string_q(it.isArchive ? "" : "not ") + "archive|";
     modes1 += string_q(it.isTracing ? "" : "not ") + "tracing|";
-    modes1 += string_q(it.isDocker ? "docker|" : "");
     modes1 = (modes1.empty() ? "" : " (" + substitute(trim(modes1, '|'), "|", ", ") + ")");
     modes2 += string_q(it.hasEskey ? "" : "no ") + "eskey|";
     modes2 += string_q(it.hasPinkey ? "" : "no ") + "pinkey|";
