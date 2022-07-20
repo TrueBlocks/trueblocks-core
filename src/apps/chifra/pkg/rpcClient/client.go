@@ -279,7 +279,7 @@ func DecodeHex(hex string) []byte {
 	return hexutil.MustDecode(hex)
 }
 
-func GetBlockByNumber(chain string, bn uint64) (types.NamedBlock, error) {
+func GetBlockByNumber(chain string, bn uint64) (types.SimpleNamedBlock, error) {
 	var block BlockHeader
 	var payload = RPCPayload{
 		Jsonrpc:   "2.0",
@@ -290,21 +290,21 @@ func GetBlockByNumber(chain string, bn uint64) (types.NamedBlock, error) {
 	rpcProvider := config.GetRpcProvider(chain)
 	err := FromRpc(rpcProvider, &payload, &block)
 	if err != nil {
-		return types.NamedBlock{}, err
+		return types.SimpleNamedBlock{}, err
 	}
 	if len(block.Result.Number) == 0 || len(block.Result.Timestamp) == 0 {
 		msg := fmt.Sprintf("block number or timestamp for %d not found", bn)
-		return types.NamedBlock{}, fmt.Errorf(msg)
+		return types.SimpleNamedBlock{}, fmt.Errorf(msg)
 	}
 	n, _ := strconv.ParseUint(block.Result.Number[2:], 16, 64)
 	ts, _ := strconv.ParseUint(block.Result.Timestamp[2:], 16, 64)
 	if n == 0 {
 		ts, err = GetBlockZeroTs(chain)
 		if err != nil {
-			return types.NamedBlock{}, err
+			return types.SimpleNamedBlock{}, err
 		}
 	}
-	return types.NamedBlock{
+	return types.SimpleNamedBlock{
 		BlockNumber: n,
 		TimeStamp:   ts,
 	}, nil

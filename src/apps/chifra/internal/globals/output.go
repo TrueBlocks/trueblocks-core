@@ -18,11 +18,11 @@ import (
 
 // TODO: Fix export without arrays
 func RenderSlice[
-	T types.NamedBlock |
-		types.Function |
-		types.CleanReport |
+	T types.SimpleNamedBlock |
+		types.SimpleFunction |
+		types.ReportClean |
 		types.SimpleMonitor |
-		types.SimplePinList |
+		types.SimpleChunkRecord |
 		types.SimpleAppearance](opts *GlobalOptions, arr []T) error {
 
 	data := make([]interface{}, len(arr))

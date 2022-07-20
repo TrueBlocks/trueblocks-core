@@ -5,18 +5,23 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
-type NamedBlock struct {
+type IpfsHash string
+
+func (h IpfsHash) String() string {
+	return string(h)
+}
+
+type SimpleTimestamp struct {
+	BlockNumber uint64 `json:"blockNumber"`
+	TimeStamp   uint64 `json:"timestamp"`
+	Diff        uint64 `json:"diff"`
+}
+
+type SimpleNamedBlock struct {
 	BlockNumber uint64 `json:"blockNumber"`
 	TimeStamp   uint64 `json:"timestamp"`
 	Date        string `json:"date"`
 	Name        string `json:"name,omitempty"`
-}
-
-type CleanReport struct {
-	Addr     string `json:"addr"`
-	SizeThen uint32 `json:"sizeThen"`
-	SizeNow  uint32 `json:"sizeNow"`
-	Dups     uint32 `json:"dupsRemoved"`
 }
 
 type SimpleAppearance struct {
@@ -25,7 +30,7 @@ type SimpleAppearance struct {
 	TransactionIndex uint32 `json:"transactionIndex"`
 }
 
-type Function struct {
+type SimpleFunction struct {
 	Encoding  string `json:"encoding,omitempty"`
 	Signature string `json:"signature,omitempty"`
 }
@@ -37,7 +42,7 @@ type SimpleMonitor struct {
 	LastScanned uint32 `json:"lastScanned"`
 }
 
-type SimplePinList struct {
+type SimpleChunkRecord struct {
 	FileName  string `json:"fileName"`
 	BloomHash string `json:"bloomHash"`
 	IndexHash string `json:"indexHash"`
@@ -60,15 +65,15 @@ type SimpleIndex struct {
 	Size            int64           `json:"fileSize"`
 }
 
+type SimpleIndexAppearance struct {
+	BlockNumber      uint32 `json:"blockNumber"`
+	TransactionIndex uint32 `json:"transactionIndex"`
+}
+
 type SimpleIndexAddress struct {
 	Address string `json:"address"`
 	Offset  uint32 `json:"offset"`
 	Count   uint32 `json:"count"`
-}
-
-type SimpleIndexAppearance struct {
-	BlockNumber      uint32 `json:"blockNumber"`
-	TransactionIndex uint32 `json:"transactionIndex"`
 }
 
 type SimpleIndexAddressBelongs struct {

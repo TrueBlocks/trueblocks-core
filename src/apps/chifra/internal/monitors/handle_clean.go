@@ -27,13 +27,13 @@ func (opts *MonitorsOptions) HandleClean() error {
 		}
 	}
 
-	objs := []types.CleanReport{}
+	objs := []types.ReportClean{}
 	for _, mon := range monitors {
 		if opts.Globals.TestMode {
 			addr := mon.GetAddrStr()
 			if addr == "0x001d14804b399c6ef80e64576f657660804fec0b" ||
 				addr == "0x0029218e1dab069656bfb8a75947825e7989b987" {
-				objs = append(objs, types.CleanReport{
+				objs = append(objs, types.ReportClean{
 					Addr:     addr,
 					SizeThen: 10,
 					SizeNow:  8,
@@ -41,7 +41,7 @@ func (opts *MonitorsOptions) HandleClean() error {
 				})
 			}
 		} else {
-			obj := types.CleanReport{
+			obj := types.ReportClean{
 				Addr: mon.GetAddrStr(),
 			}
 			logger.Log(logger.Info, "Cleaning", obj.Addr, mon.Count())
