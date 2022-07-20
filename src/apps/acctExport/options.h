@@ -15,14 +15,13 @@
  * Parts of this file were generated with makeClass --options. Edit only those parts of
  * the code outside of the BEG_CODE/END_CODE sections
  */
-#include "pinlib.h"
+#include "acctlib.h"
 #include "scrapestatistics.h"
 #include "traversers.h"
 
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
 
-typedef map<CAppearance_mon, CAddressArray> appAddrMap;
 typedef struct CReverseAppMapEntry {
   public:
     uint32_t n;
@@ -73,10 +72,10 @@ class COptions : public CAbiOptions {
     bool factory;
     string_q load;
     bool reversed;
-    bool skip_ddos;
-    uint64_t max_traces;
     // END_CODE_DECLARE
 
+    bool skip_ddos{true};
+    uint64_t max_traces{250};
     CAppearanceArray_mon monApps;
     CMonitorArray allMonitors;
     const CMonitor* curMonitor;

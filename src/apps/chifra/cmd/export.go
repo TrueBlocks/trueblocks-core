@@ -72,15 +72,11 @@ func init() {
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Unripe, "unripe", "u", false, "export transactions labeled upripe (i.e. less than 28 blocks old)")
 	exportCmd.Flags().StringVarP(&exportPkg.GetOptions().Load, "load", "", "", "a comma separated list of dynamic traversers to load (hidden)")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Reversed, "reversed", "", false, "produce results in reverse chronological order (hidden)")
-	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().SkipDdos, "skip_ddos", "d", false, "toggle skipping over 2016 dDos transactions ('on' by default) (hidden)")
-	exportCmd.Flags().Uint64VarP(&exportPkg.GetOptions().MaxTraces, "max_traces", "m", 250, "if --skip_ddos is on, this many traces defines what a ddos transaction is (hidden)")
 	exportCmd.Flags().Uint64VarP(&exportPkg.GetOptions().FirstBlock, "first_block", "F", 0, "first block to process (inclusive)")
 	exportCmd.Flags().Uint64VarP(&exportPkg.GetOptions().LastBlock, "last_block", "L", 0, "last block to process (inclusive)")
 	if os.Getenv("TEST_MODE") != "true" {
 		exportCmd.Flags().MarkHidden("load")
 		exportCmd.Flags().MarkHidden("reversed")
-		exportCmd.Flags().MarkHidden("skip_ddos")
-		exportCmd.Flags().MarkHidden("max_traces")
 	}
 	globals.InitGlobals(exportCmd, &exportPkg.GetOptions().Globals)
 
