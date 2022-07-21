@@ -42,7 +42,7 @@ If you need help with a step, see the [installation's troubleshooting section](h
 
 0. Install dependencies
     - &#9745; [Install the latest version of Go](https://golang.org/doc/install).
-    - &#9745; Install the other dependencies with your command line: `build-essential` `git` `cmake` `python` `python-dev` `libcurl3-dev` `clang-format` `jq`.
+    - &#9745; Install the other dependencies with your command line: `build-essential` `git` `cmake` `ninja` `python` `python-dev` `libcurl3-dev` `clang-format` `jq`.
 
 Alternatively, for nix users, you can drop into an isolated environment with necessary dependencies with `nix-shell`.
 
@@ -134,7 +134,7 @@ Hit `Control+C` to stop the processing.
 
 The primary data structure produced by TrueBlocks is an index of address appearances. This index provides very quick access to transaction histories for a given address.
 
-You may either build the entire index from scratch (requires a tracing, archive node) or download part of the index and build it from there.
+You may either build the entire index from scratch (requires a tracing, archive node) or download part of the index and build from there.
 
 This process is described in this article [Indexing Addresses](https://trueblocks.io/docs/install/get-the-index/).
 
@@ -142,34 +142,9 @@ This process is described in this article [Indexing Addresses](https://trueblock
 
 Our official docker version is in a [separate repo](https://github.com/TrueBlocks/trueblocks-docker). Please see that repo for more information.
 
-### Below is the old docker instructions. This section will be moved shortly.
+## Documentation
 
-A `Dockerfile` is included in this repo as an example for creating a Docker image.
-
-1. Build a docker image (example tagged with `latest`)
-  ```bash
-  docker build . --tag=trueblocks-core:latest
-  ```
-
-2. Run a docker container (Examples:)
-  ```bash
-  # Running a simple chifra command
-  docker run trueblocks-core:latest chifra status
-
-  # Mounting separate config, cache, and index folders and running chifra init
-  docker run \
-    -v ./trueblocks:/root/.local/share/trueblocks \
-    -v ./cache:/root/.local/share/trueblocks/cache \
-    -v ./unchained:/root/.local/share/trueblocks/unchained \
-    trueblocks-core:latest chifra init
-
-  # Mounting those same folders and starting the chifra serve
-  docker run \
-    -v ./trueblocks:/root/.local/share/trueblocks \
-    -v ./cache:/root/.local/share/trueblocks/cache \
-    -v ./unchained:/root/.local/share/trueblocks/unchained \
-    trueblocks-core:latest chifra serve --port 0.0.0.0:8080
-  ```
+See our [documentation repo](https://github.com/TrueBlocks/trueblocks-docker) for the TrueBlocks website.
 
 ## Contributing to TrueBlocks
 
