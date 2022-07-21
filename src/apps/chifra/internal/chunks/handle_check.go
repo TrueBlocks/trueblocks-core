@@ -46,7 +46,7 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 		return filenames[i] < filenames[j]
 	})
 
-	allow_missing := config.ReadBlockScrape(opts.Globals.Chain).Settings.Allow_missing
+	allow_missing := config.GetBlockScrapeSettings(opts.Globals.Chain).Allow_missing
 
 	nChecks := 0
 	nChecksFailed := 0
@@ -71,3 +71,9 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 
 	return nil
 }
+
+// TODO: BOGUS We don't check blooms
+// TODO: BOGUS We don't check internal consistency of the data files
+// TODO: BOGUS - is every address in the index, in the bloom?
+// TODO: BOGUS - are there missing blocks (if allow_missing is off)
+// TODO: BOGUS We don't check if Pinata has files that aren't needed

@@ -41,6 +41,7 @@ bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
     replaceAll(source, "[{HIDDEN}]", get_hidden(p));
     replaceAll(source, "[{USE}]", get_use(p));
     replaceAll(source, "[{ROUTE}]", toLower(p.api_route));
+    replaceAll(source, "[{LOWER}]", toLower(p.api_route));
     replaceAll(source, "[{PROPER}]", toProper(p.api_route));
     replaceAll(source, "[{POSTNOTES}]", get_notes2(p));
     string_q descr = firstLower(p.description);
@@ -93,6 +94,7 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
         replaceAll(source, "[{GETENVSTR}]", STR_GET_ENV_STR);
     }
     replaceAll(source, "[{ROUTE}]", p.api_route);
+    replaceAll(source, "[{LOWER}]", toLower(p.api_route));
     replaceAll(source, "[{PROPER}]", toProper(p.api_route));
     replaceAll(source, "[{OPT_FIELDS}]", get_optfields(p));
     replaceAll(source, "[{DEFAULTS_API}]", get_defaults_apis(p));
@@ -128,13 +130,14 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
 bool COptions::handle_gocmds_output(const CCommandOption& p) {
     string_q source = asciiFileToString(getPathToTemplates("blank_output.go.tmpl"));
     replaceAll(source, "[{ROUTE}]", p.api_route);
+    replaceAll(source, "[{LOWER}]", toLower(p.api_route));
     source = substitute(source, "[]string", "++SAVED++");
     source = p.Format(source);
     replaceAll(source, "++SAVED++", "[]string");
     if (contains(source, "\t// return nil\n\t// EXISTING_CODE\n")) {
         replaceAll(source,
                    "\n"
-                   "\treturn opts.Globals.PassItOn(\"[{TOOL}]\", opts.ToCmdLine())\n",
+                   "\treturn opts.Globals.PassItOn(\"[{TOOL}]\", opts.toCmdLine())\n",
                    "");
     }
 
@@ -190,7 +193,7 @@ bool COptions::handle_gocmds(void) {
     contents = asciiFileToString(getPathToTemplates("version.go.tmpl"));
     replace(contents, "[{VERSION}]", getVersionStr(true, false));
     replace(contents, "[{MANIFEST_VERSION}]", manifestVersion);
-    stringToAsciiFile(getPathToSource("apps/chifra/pkg/version/version.go"), contents);
+    stringToAsciiFile(getPathToSource("apps/chifra/pkg/version/version_strings.go"), contents);
 
     LOG_INFO(cYellow, "makeClass --gocmds", cOff, " processed ", counter.nVisited, " files (changed ",
              counter.nProcessed, ").", string_q(40, ' '));
@@ -299,35 +302,51 @@ string_q get_testlogs(const CCommandOption& cmd) {
 }
 
 string_q get_optfields(const CCommandOption& cmd) {
-    size_t wid = 0;
+    size_t varWidth = 0, typeWidth = 0;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         replace(p.longName, "deleteMe", "delete");
-        string_q v = p.Format("[{VARIABLE}]");
-        wid = max(v.length(), wid);
-        if (contains(v, "Blocks") && contains(p.go_type, "[]string")) {
-            wid = max(string_q("BlockIds").length(), wid);
+        string_q var = p.Format("[{VARIABLE}]");
+        varWidth = max(var.length(), varWidth);
+        string_q type = p.Format("[{GO_TYPE}]");
+        typeWidth = max(type.length(), typeWidth);
+        if (contains(var, "Blocks") && contains(p.go_type, "[]string")) {
+            varWidth = max(string_q("BlockIds").length(), varWidth);
+            typeWidth = max(string_q("[]identifiers.Identifier").length(), typeWidth);
         }
-        if (contains(v, "Transactions") && contains(p.go_type, "[]string")) {
-            wid = max(string_q("TransactionIds").length(), wid);
+        if (contains(var, "Transactions") && contains(p.go_type, "[]string")) {
+            varWidth = max(string_q("TransactionIds").length(), varWidth);
+            typeWidth = max(string_q("[]identifiers.Identifier").length(), typeWidth);
         }
     }
-    wid = max(string_q("Globals").length(), wid);
-    wid = max(string_q("BadFlag").length(), wid);
+    varWidth = max(string_q("Globals").length(), varWidth);
+    varWidth = max(string_q("BadFlag").length(), varWidth);
+    typeWidth = max(string_q("globals.GlobalOptions").length(), typeWidth);
+    typeWidth = max(string_q("error").length(), typeWidth);
+    varWidth++;
+    typeWidth++;
+
+#define ONE(os, v1, w1, v2, w2, c)                                                                                     \
+    os << "\t";                                                                                                        \
+    os << padRight(v1, (w1));                                                                                          \
+    os << padRight(v2, (w2));                                                                                          \
+    os << padRight("`json:\"" + firstLower(v1) + ",omitempty\"`", (w1) + 19);                                          \
+    os << "// " << firstUpper(c) << endl;
 
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         replace(p.longName, "deleteMe", "delete");
-        string_q v = p.Format("[{VARIABLE}]");
-        os << "\t" << padRight(v, wid) << " " << p.go_type << endl;
-        if (contains(v, "Blocks") && contains(p.go_type, "[]string")) {
-            os << "\t" << padRight("BlockIds", wid) << " []blockRange.Identifier" << endl;
+        string_q var = p.Format("[{VARIABLE}]");
+        string_q type = p.Format("[{GO_TYPE}]");
+        ONE(os, var, varWidth, type, typeWidth, p.description);
+        if (contains(var, "Blocks") && contains(p.go_type, "[]string")) {
+            ONE(os, "BlockIds", varWidth, "[]identifiers.Identifier", typeWidth, "block identifiers");
         }
-        if (contains(v, "Transactions") && contains(p.go_type, "[]string")) {
-            os << "\t" << padRight("TransactionIds", wid) << " []blockRange.Identifier" << endl;
+        if (contains(var, "Transactions") && contains(p.go_type, "[]string")) {
+            ONE(os, "TransactionIds", varWidth, "[]identifiers.Identifier", typeWidth, "transaction identifiers");
         }
     }
-    os << "\t" << padRight("Globals", wid) << " globals.GlobalOptions" << endl;
-    os << "\t" << padRight("BadFlag", wid) << " error" << endl;
+    ONE(os, "Globals", varWidth, "globals.GlobalOptions", typeWidth, "the global options");
+    ONE(os, "BadFlag", varWidth, "error", typeWidth, "an error flag if needed");
 
     return os.str();
 }
@@ -406,8 +425,8 @@ string_q clean_go_positionals(const string_q& in, bool hasEns) {
     replaceAll(ret, "opts.[]string{}", "[]string{}");
     if (!contains(ret, "utils."))
         replaceAll(ret, "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils\"\n", "");
-    if (!contains(ret, "blockRange."))
-        replaceAll(ret, "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange\"\n", "");
+    if (!contains(ret, "identifiers."))
+        replaceAll(ret, "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers\"\n", "");
     if (!hasEns)
         replaceAll(ret, "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens\"\n", "");
     return ret;
@@ -524,7 +543,8 @@ const char* STR_CHIFRA_HELP_END =
     "  Use \"chifra [command] --help\" for more information about a command.\n";
 
 const char* STR_TO_CMD_LINE =
-    "func (opts *[{PROPER}]Options) ToCmdLine() string {\n"
+    "// toCmdLine converts the option to a command line for calling out to the system.\n"
+    "func (opts *[{PROPER}]Options) toCmdLine() string {\n"
     "\toptions := \"\"\n"
     "[{DASH_STR}][{POSITIONALS}]"
     "\t// EXISTING_CODE\n"
@@ -534,8 +554,9 @@ const char* STR_TO_CMD_LINE =
     "}\n\n";
 
 const char* STR_GET_ENV_STR =
-    "func (opts *[{PROPER}]Options) GetEnvStr() string {\n"
-    "\tenvStr := \"\"\n"
+    "// getEnvStr allows for custom environment strings when calling to the system (helps debugging).\n"
+    "func (opts *[{PROPER}]Options) getEnvStr() []string {\n"
+    "\tenvStr := []string{}\n"
     "\t// EXISTING_CODE\n"
     "\t// EXISTING_CODE\n"
     "\treturn envStr\n"

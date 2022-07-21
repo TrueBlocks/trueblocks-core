@@ -1,10 +1,4 @@
-// Package `tslibPkg` provides conversions between four entities: block numbers, dates, Linux
-// timestamps, and special named blocks. The function names are self-explanitory.
-//
-// Note: because the relationship between block numbers and dates or timestamps is a per-chain
-// value, some of these functions require a `chain` name. Any chain name is permissable, but
-// they all require proper configuration in the TrueBlocks config files.
-package tslibPkg
+package tslib
 
 import (
 	"errors"
@@ -29,11 +23,14 @@ func FromDateToBn(chain, dateStr string) (uint64, error) {
 // FromNameToBn returns the chain-specific block number (if found) given the name of a special block. The list of special blocks is per-chain.
 func FromNameToBn(chain, name string) (uint64, error) {
 	if name == "latest" {
-		meta, _ := rpcClient.GetMetaData(chain, false)
+		meta, err := rpcClient.GetMetaData(chain, false)
+		if err != nil {
+			return 0, err
+		}
 		return meta.Latest, nil
 	}
 
-	specials, _ := GetSpecials(chain)
+	specials, _ := GetSpecials(chain) // it's okay if it's empty
 	for _, value := range specials {
 		if value.Name == name {
 			return value.BlockNumber, nil

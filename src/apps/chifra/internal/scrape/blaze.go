@@ -20,8 +20,8 @@ import (
 type ScrapedData struct {
 	block  int
 	ts     uint64
-	traces rpcClient.Trace
-	logs   rpcClient.Log
+	traces rpcClient.Traces
+	logs   rpcClient.Logs
 }
 
 func (opts *ScrapeOptions) ScrapeBlocks() error {
@@ -60,7 +60,7 @@ func (opts *ScrapeOptions) processBlocks(rpcProvider string, blockChannel chan i
 	for blockNum := range blockChannel {
 
 		// RPCPayload is used during to make calls to the RPC.
-		var traces rpcClient.Trace
+		var traces rpcClient.Traces
 		tracePayload := rpcClient.RPCPayload{
 			Jsonrpc:   "2.0",
 			Method:    "trace_block",
@@ -73,7 +73,7 @@ func (opts *ScrapeOptions) processBlocks(rpcProvider string, blockChannel chan i
 			log.Fatal(err)
 		}
 
-		var logs rpcClient.Log
+		var logs rpcClient.Logs
 		logsPayload := rpcClient.RPCPayload{
 			Jsonrpc:   "2.0",
 			Method:    "eth_getLogs",
@@ -106,7 +106,7 @@ func (opts *ScrapeOptions) extractAddresses(rpcProvider string, addressChannel c
 	addressWG.Done()
 }
 
-func (opts *ScrapeOptions) extractFromTraces(rpcProvider string, bn int, addressMap map[string]bool, traces *rpcClient.Trace) {
+func (opts *ScrapeOptions) extractFromTraces(rpcProvider string, bn int, addressMap map[string]bool, traces *rpcClient.Traces) {
 	if traces.Result == nil || len(traces.Result) == 0 {
 		return
 	}
@@ -271,7 +271,7 @@ func (opts *ScrapeOptions) extractFromTraces(rpcProvider string, bn int, address
 }
 
 // extractFromLogs Extracts addresses from any part of the log data.
-func (opts *ScrapeOptions) extractFromLogs(bn int, addressMap map[string]bool, logs *rpcClient.Log) {
+func (opts *ScrapeOptions) extractFromLogs(bn int, addressMap map[string]bool, logs *rpcClient.Logs) {
 	if logs.Result == nil || len(logs.Result) == 0 {
 		return
 	}

@@ -6,13 +6,13 @@ package whenPkg
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
-	tslibPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 func (opts *WhenOptions) HandleWhenShowBlocks() error {
 	// TODO: Fix export without arrays
-	err := opts.Globals.RenderHeader(types.NamedBlock{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+	err := opts.Globals.RenderHeader(types.SimpleNamedBlock{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
 	defer opts.Globals.RenderFooter()
 	if err != nil {
 		return err
@@ -28,8 +28,8 @@ func (opts *WhenOptions) HandleWhenShowBlocks() error {
 			if err != nil {
 				return err
 			}
-			d, _ := tslibPkg.FromTsToDate(block.TimeStamp)
-			nm, _ := tslibPkg.FromBnToName(opts.Globals.Chain, block.BlockNumber)
+			d, _ := tslib.FromTsToDate(block.TimeStamp)
+			nm, _ := tslib.FromBnToName(opts.Globals.Chain, block.BlockNumber)
 			block.Date = d.Format("YYYY-MM-DD HH:mm:ss UTC")
 			block.Name = nm
 			err = opts.Globals.RenderObject(block, i == 0)

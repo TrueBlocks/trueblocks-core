@@ -19,7 +19,7 @@ import (
 
 // RunBlocks handles the blocks command for the command line. Returns error only as per cobra.
 func RunBlocks(cmd *cobra.Command, args []string) (err error) {
-	opts := BlocksFinishParse(args)
+	opts := blocksFinishParse(args)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.BlocksInternal()
@@ -28,7 +28,7 @@ func RunBlocks(cmd *cobra.Command, args []string) (err error) {
 
 // ServeBlocks handles the blocks command for the API. Returns error and a bool if handled
 func ServeBlocks(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
-	opts := BlocksFinishParseApi(w, r)
+	opts := blocksFinishParseApi(w, r)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return opts.BlocksInternal()
@@ -36,7 +36,7 @@ func ServeBlocks(w http.ResponseWriter, r *http.Request) (err error, handled boo
 
 // BlocksInternal handles the internal workings of the blocks command.  Returns error and a bool if handled
 func (opts *BlocksOptions) BlocksInternal() (err error, handled bool) {
-	err = opts.ValidateBlocks()
+	err = opts.validateBlocks()
 	if err != nil {
 		return err, true
 	}
@@ -47,7 +47,7 @@ func (opts *BlocksOptions) BlocksInternal() (err error, handled bool) {
 	}
 
 	handled = true
-	err = opts.Globals.PassItOn("getBlocks", opts.Globals.Chain, opts.ToCmdLine(), opts.GetEnvStr())
+	err = opts.Globals.PassItOn("getBlocks", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
 	// EXISTING_CODE
 
 	return

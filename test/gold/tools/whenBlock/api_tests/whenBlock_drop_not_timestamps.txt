@@ -1,0 +1,6 @@
+when?blocks=1301000&reset
+{
+  "errors": [
+    "The --drop option is only available with the --timestamps option."
+  ]
+}

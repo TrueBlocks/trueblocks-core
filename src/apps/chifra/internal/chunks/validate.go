@@ -7,11 +7,12 @@ package chunksPkg
 import (
 	"errors"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-func (opts *ChunksOptions) ValidateChunks() error {
-	opts.TestLog()
+func (opts *ChunksOptions) validateChunks() error {
+	opts.testLog()
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag
@@ -30,15 +31,38 @@ func (opts *ChunksOptions) ValidateChunks() error {
 		return validate.Usage("You may not use --format json and log_level > 0 in addresses mode")
 	}
 
+	if opts.Publish {
+		return validate.Usage("The {0} option is not yet enabled", "--publish")
+	}
+
 	if opts.Mode != "manifest" {
-		if opts.PinChunks || opts.PinData {
-			return validate.Usage("The {0} and {1} options are available only in {2} mode.", "--pin_chunk", "--pin_data", "manifest")
+		if opts.PinRemote || opts.Publish {
+			return validate.Usage("The {0} and {1} options are available only in {2} mode.", "--pin_remote", "--publish", "manifest")
 		}
 		if opts.Clean {
 			return validate.Usage("The {0} option is available only in {1} mode.", "--clean", "manifest")
 		}
 		if opts.Check {
 			return validate.Usage("The {0} option is available only in {1} mode.", "--check", "manifest")
+		}
+	} else {
+		settings := config.GetBlockScrapeSettings(opts.Globals.Chain)
+		key, secret := settings.Pinata_api_key, settings.Pinata_secret_api_key
+		if opts.PinRemote {
+			if len(key) == 0 {
+				return validate.Usage("The {0} option requires {1}", "--pin_remote", "a pinata_api_key")
+			}
+			if len(secret) == 0 {
+				return validate.Usage("The {0} option requires {1}", "--pin_remote", "a pinata_secret_api_key")
+			}
+		}
+		if opts.Publish {
+			if len(key) == 0 {
+				return validate.Usage("The {0} option requires {1}", "--pin_remote", "a pinata_api_key")
+			}
+			if len(secret) == 0 {
+				return validate.Usage("The {0} option requires {1}", "--pin_remote", "a pinata_secret_api_key")
+			}
 		}
 	}
 
@@ -52,14 +76,6 @@ func (opts *ChunksOptions) ValidateChunks() error {
 		if len(opts.Blocks) == 0 {
 			return validate.Usage("You must specifiy at least one block identifier with the --belongs option")
 		}
-	}
-
-	if len(opts.Addrs) > 0 && !opts.Belongs {
-		return validate.Usage("You may only specify an address with the --belongs option")
-	}
-
-	if opts.Details && opts.Belongs {
-		return validate.Usage("Choose either {0} or {1}, not both.", "--details", "--belongs")
 	}
 
 	err = validate.ValidateIdentifiers(
@@ -79,5 +95,45 @@ func (opts *ChunksOptions) ValidateChunks() error {
 		return err
 	}
 
-	return opts.Globals.ValidateGlobals()
+	if opts.Repair {
+		if opts.Mode != "manifest" {
+			return validate.Usage("The --repair option is only available in index mode")
+		}
+
+		if len(opts.BlockIds) != 1 {
+			return validate.Usage("You must supply exactly one block number with the --repair option")
+		}
+
+		blockNums, err := opts.BlockIds[0].ResolveBlocks(opts.Globals.Chain)
+		if err != nil {
+			return err
+		}
+		if len(blockNums) != 1 {
+			return validate.Usage("You must supply exactly one block number with the --repair option")
+		}
+
+		if opts.Globals.TestMode {
+			return validate.Usage("The --repair option is not available in test mode")
+		}
+	}
+
+	if len(opts.Addrs) > 0 && !opts.Belongs {
+		return validate.Usage("You may only specify an address with the --belongs option")
+	}
+
+	if opts.Details && opts.Belongs {
+		return validate.Usage("Choose either {0} or {1}, not both.", "--details", "--belongs")
+	}
+
+	// Note this does not return if a migration is needed
+	// TODO: BOGUS - DO WE WANT TO DISALLOW INVESTIGATION OF OLDER INSTALLATIONS?
+	// migrate.CheckBackLevelIndex(opts.Globals.Chain)
+
+	if opts.Remote {
+		if opts.Mode != "pins" && opts.Mode != "manifest" {
+			return validate.Usage("The {0} option is only available {1}.", "--remote", "in pins or manifest mode")
+		}
+	}
+
+	return opts.Globals.Validate()
 }

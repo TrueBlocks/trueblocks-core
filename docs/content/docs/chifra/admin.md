@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-06-19T08:36:45
+date: 2022-07-20T22:51:41
 lastmod:
   - :git
   - lastmod
@@ -53,7 +53,7 @@ Notes:
 
 ## chifra scrape
 
-TODO: BOGUS - REVIEW HELP FILES
+TODO: BOGUS - REVIEW HELP FILES - INSTALL IPFS IF YOU'RE GOING TO SCRAPE AND PIN
 
 The `chifra scrape` application creates TrueBlocks' index of address appearances -- the fundamental data structure of the entire system. It also, optionally, pins the index to IPFS.
 
@@ -73,9 +73,9 @@ Arguments:
 	One or more of [ run | stop ]
 
 Flags:
-  -s, --sleep float      seconds to sleep between scraper passes (default 14)
-  -p, --pin              pin chunks (and blooms) to IPFS as they are created (requires pinning service)
   -n, --block_cnt uint   maximum number of blocks to process per pass (default 2000)
+  -p, --pin              pin chunks (and blooms) to IPFS as they are created (requires ipfs)
+  -s, --sleep float      seconds to sleep between scraper passes (default 14)
   -x, --fmt string       export format, one of [none|json*|txt|csv|api]
   -v, --verbose          enable verbose (increase detail with --log_level)
   -h, --help             display this help screen
@@ -102,7 +102,11 @@ Please [see this article](https://trueblocks.io/blog/a-long-winded-explanation-o
 
 ## chifra chunks
 
-TODO: BOGUS - REVIEW HELP FILES
+The chifra chunks routine provides tools for interacting with, checking the validity of,
+cleaning up, and analyizing the Unchained Index. It provides options to list pins,
+the Manifest, summary data on the index, Bloom filters, addresses, and appearances.
+While still in its early stages, this tool will eventually allow users to clean
+their local index, clean their remote index, study the indexes, etc. Stay tuned.
 
 ```[plaintext]
 Purpose:
@@ -121,9 +125,10 @@ Flags:
   -d, --details      for manifest and addresses options only, display full details of the report
   -c, --check        depends on mode, checks for internal consistency of the data type
   -b, --belongs      checks if the given address appears in the given chunk
-  -p, --pin_chunks   gzip each chunk, push it to IPFS, and update and publish the manifest
-  -a, --pin_data     gzip the databases, push them to IPFS, and update and publish the manifest
   -n, --clean        retrieve all pins on Pinata, compare to manifest, remove any extraneous remote pins
+  -m, --remote       for some options, force processing from remote data
+  -i, --pin_remote   pin any previously unpinned chunks and blooms to a remote pinning service
+  -p, --publish      update the manifest and publish it to the Unchained Index smart contract
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
   -v, --verbose      enable verbose (increase detail with --log_level)
   -h, --help         display this help screen
@@ -141,9 +146,14 @@ Notes:
 
 ## chifra init
 
-TODO: BOGUS - REVIEW HELP FILES
+When invoked, `chifra init` reads a value from a smart contract called **The Unchained Index**
+([0x0c316b7042b419d07d343f2f4f5bd54ff731183d](https://etherscan.io/address/0x0c316b7042b419d07d343f2f4f5bd54ff731183d)).
 
-When invoked, `chifra init` looks at a smart contract called **The Unchained Index** ([0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd](https://etherscan.io/address/0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd)). From this smart contract, it extracts a data item called `manifestHash`. The `manifestHash` is an IPFS hash that points to a file (a manifest) that contains every previously pinned Bloom filter and index chunk. TrueBlocks periodically publishes the manifest's hash to the smart contract. This makes the entire index both available for our software to use and impossible for us to withhold. Both of these aspects of the manifest are included by design.
+This value (`manifestHashMap`) is an IPFS hash pointing to a pinned file (called the Manifest) that
+contains a large collection of other IPFS hashes. These other hashes point to each of the Bloom
+filter and Index Chunk. TrueBlocks periodically publishes the Manifest's hash to the smart contract.
+This makes the index available for our software to use and impossible for us to withhold. Both of these
+aspects of the manifest are by design.
 
 If you stop `chifra init` before it finishes, it will pick up again where it left off the next time you run it.
 

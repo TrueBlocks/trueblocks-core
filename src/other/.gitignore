@@ -4,7 +4,6 @@ golang
 all_abis
 queries
 thing
-abis
 go-test*
 names/*
 addresses

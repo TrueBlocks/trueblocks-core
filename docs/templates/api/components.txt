@@ -771,9 +771,6 @@ components:
         isApi:
           type: boolean
           description: "`true` if the server is running in API mode"
-        isDocker:
-          type: boolean
-          description: "`true` if running under a docker image"
         isScraping:
           type: boolean
           description: "`true` if the index scraper is running"

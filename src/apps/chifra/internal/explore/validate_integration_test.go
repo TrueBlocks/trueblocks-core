@@ -15,7 +15,7 @@ func Test_Explore_Validate(t *testing.T) {
 	var opts ExploreOptions
 	opts.Terms = append(opts.Terms, "1001001.0")
 	opts.Globals.Chain = "mainnet"
-	err := opts.ValidateExplore()
+	err := opts.validateExplore()
 	if err != nil {
 		t.Error("1001001.1 did not validate on mainnet")
 	}
@@ -30,7 +30,7 @@ func Test_Explore_Validate(t *testing.T) {
 
 	opts.Terms = append([]string{}, "1001001")
 	opts.Globals.Chain = "mainnet"
-	err = opts.ValidateExplore()
+	err = opts.validateExplore()
 	if err != nil {
 		t.Error("1001001 did not validate on mainnet")
 	}

@@ -1,6 +1,6 @@
 ## chifra scrape
 
-TODO: BOGUS - REVIEW HELP FILES
+TODO: BOGUS - REVIEW HELP FILES - INSTALL IPFS IF YOU'RE GOING TO SCRAPE AND PIN
 
 The `chifra scrape` application creates TrueBlocks' index of address appearances -- the fundamental data structure of the entire system. It also, optionally, pins the index to IPFS.
 
@@ -20,9 +20,9 @@ Arguments:
 	One or more of [ run | stop ]
 
 Flags:
-  -s, --sleep float      seconds to sleep between scraper passes (default 14)
-  -p, --pin              pin chunks (and blooms) to IPFS as they are created (requires pinning service)
   -n, --block_cnt uint   maximum number of blocks to process per pass (default 2000)
+  -p, --pin              pin chunks (and blooms) to IPFS as they are created (requires ipfs)
+  -s, --sleep float      seconds to sleep between scraper passes (default 14)
   -x, --fmt string       export format, one of [none|json*|txt|csv|api]
   -v, --verbose          enable verbose (increase detail with --log_level)
   -h, --help             display this help screen

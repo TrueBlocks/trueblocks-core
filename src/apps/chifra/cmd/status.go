@@ -50,7 +50,7 @@ One or more of [ blocks | txs | traces | slurps | prices | all ]`)
 	statusCmd.Flags().BoolVarP(&statusPkg.GetOptions().Report, "report", "r", false, "run the command with no options for the same result (hidden)")
 	statusCmd.Flags().BoolVarP(&statusPkg.GetOptions().Terse, "terse", "e", false, "show a terse summary report (hidden)")
 	statusCmd.Flags().StringVarP(&statusPkg.GetOptions().Migrate, "migrate", "m", "", `either effectuate or test to see if a migration is necessary (hidden)
-One of [ test | all ]`)
+One of [ test | cache | index ]`)
 	statusCmd.Flags().Uint64VarP(&statusPkg.GetOptions().FirstBlock, "first_block", "F", 0, "first block to process (inclusive -- testing only) (hidden)")
 	statusCmd.Flags().Uint64VarP(&statusPkg.GetOptions().LastBlock, "last_block", "L", 0, "last block to process (inclusive -- testing only) (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {

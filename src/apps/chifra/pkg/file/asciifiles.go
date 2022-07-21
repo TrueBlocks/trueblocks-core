@@ -6,6 +6,9 @@ package file
 
 import (
 	"bufio"
+	"io"
+	"io/ioutil"
+	"log"
 	"os"
 )
 
@@ -22,4 +25,32 @@ func AsciiFileToLines(filename string) []string {
 	}
 	file.Close()
 	return ret
+}
+
+func AsciiFileToString(fileName string) string {
+	if !FileExists(fileName) {
+		return ""
+	}
+
+	contents, err := ioutil.ReadFile(fileName)
+	if err != nil {
+		log.Println(err)
+		return ""
+	}
+
+	return string(contents)
+}
+
+func AppendToAsciiFile(filename, value string) error {
+	file, err := os.Create(filename)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	_, err = io.WriteString(file, value)
+	if err != nil {
+		return err
+	}
+	return file.Sync()
 }

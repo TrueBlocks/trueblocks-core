@@ -142,7 +142,7 @@ func getDownloadWorker(arguments downloadWorkerArguments) workerFunction {
 			}
 			if err == nil {
 				arguments.writeChannel <- &jobResult{
-					fileName: pin.FileName,
+					fileName: pin.Range,
 					fileSize: download.totalSize,
 					contents: download.body,
 					Pin:      &pin,
@@ -205,9 +205,9 @@ func getWriteWorker(arguments writeWorkerArguments) workerFunction {
 	}
 }
 
-// GetChunksFromRemote downloads, unzips and saves the chunk of type indicated by chunkType
+// DownloadChunks downloads, unzips and saves the chunk of type indicated by chunkType
 // for each pin in pins. Progress is reported to progressChannel.
-func GetChunksFromRemote(chain string, pins []manifest.ChunkRecord, chunkPath *cache.CachePath, progressChannel chan<- *progress.Progress) {
+func DownloadChunks(chain string, pins []manifest.ChunkRecord, chunkPath *cache.CachePath, progressChannel chan<- *progress.Progress) {
 	poolSize := runtime.NumCPU() * 2
 	// Downloaded content will wait for saving in this channel
 	writeChannel := make(chan *jobResult, poolSize)
@@ -224,7 +224,7 @@ func GetChunksFromRemote(chain string, pins []manifest.ChunkRecord, chunkPath *c
 		chunkPath:       chunkPath,
 		ctx:             ctx,
 		downloadWg:      &downloadWg,
-		gatewayUrl:      config.GetPinGateway(chain),
+		gatewayUrl:      config.GetIpfsGateway(chain),
 		progressChannel: progressChannel,
 		writeChannel:    writeChannel,
 	}
@@ -345,7 +345,7 @@ func exclude(what map[string]bool, from []manifest.ChunkRecord) []manifest.Chunk
 	result := make([]manifest.ChunkRecord, 0, len(from))
 
 	for _, pin := range from {
-		if what[pin.FileName] {
+		if what[pin.Range] {
 			continue
 		}
 

@@ -354,11 +354,12 @@ void COptions::Init(void) {
     factory = false;
     load = "";
     reversed = false;
+    // END_CODE_INIT
+
     // clang-format off
     skip_ddos = getGlobalConfig("acctExport")->getConfigBool("settings", "skip_ddos", true);
     max_traces = getGlobalConfig("acctExport")->getConfigInt("settings", "max_traces", 250);
     // clang-format on
-    // END_CODE_INIT
 
     if (!cache && getGlobalConfig("acctExport")->getConfigBool("settings", "cache_txs", false))
         cache = true;  // backwards compat

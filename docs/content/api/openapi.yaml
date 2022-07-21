@@ -7,7 +7,7 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 0.37.0-beta
+  version: 0.37.1-beta
   description: >
 
     A REST layer over the TrueBlocks application. With `chifra serve`, you can
@@ -1452,7 +1452,6 @@ paths:
                           "cachePath": "~/Library/Application Support/TrueBlocks/cache/",
                           "indexPath": "~/Library/Application Support/TrueBlocks/unchained/",
                           "isTesting": false,
-                          "isDocker": false,
                           "isArchive": true,
                           "isTracing": true,
                           "hasEskey": true,
@@ -1484,8 +1483,8 @@ paths:
               enum:
                 - run
                 - stop
-        - name: sleep
-          description: seconds to sleep between scraper passes
+        - name: blockCnt
+          description: maximum number of blocks to process per pass
           required: false
           style: form
           in: query
@@ -1493,16 +1492,15 @@ paths:
           schema:
             type: number
         - name: pin
-          description: >
-            pin chunks (and blooms) to IPFS as they are created (requires pinning service)
+          description: pin chunks (and blooms) to IPFS as they are created (requires ipfs)
           required: false
           style: form
           in: query
           explode: true
           schema:
             type: boolean
-        - name: blockCnt
-          description: maximum number of blocks to process per pass
+        - name: sleep
+          description: seconds to sleep between scraper passes
           required: false
           style: form
           in: query
@@ -2589,9 +2587,6 @@ components:
         isApi:
           type: boolean
           description: "`true` if the server is running in API mode"
-        isDocker:
-          type: boolean
-          description: "`true` if running under a docker image"
         isScraping:
           type: boolean
           description: "`true` if the index scraper is running"

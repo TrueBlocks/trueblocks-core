@@ -19,11 +19,10 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/scraper"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-var MonitorScraper scraper.Scraper
+var MonitorScraper Scraper
 
 // RunMonitorScraper runs continually, never stopping and freshens any existing monitors
 func (opts *MonitorsOptions) RunMonitorScraper(wg *sync.WaitGroup) {
@@ -32,7 +31,7 @@ func (opts *MonitorsOptions) RunMonitorScraper(wg *sync.WaitGroup) {
 	chain := opts.Globals.Chain
 	establishExportPaths(chain)
 
-	var s *scraper.Scraper = &MonitorScraper
+	var s *Scraper = &MonitorScraper
 	s.ChangeState(true)
 
 	for {
@@ -129,7 +128,7 @@ func (opts *MonitorsOptions) Refresh(monitors []monitor.Monitor) error {
 					cmd = strings.Replace(cmd, "  ", " ", -1)
 					o := opts
 					o.Globals.File = ""
-					o.Globals.PassItOn("acctExport", opts.Globals.Chain, cmd, "")
+					o.Globals.PassItOn("acctExport", opts.Globals.Chain, cmd, []string{})
 					// fmt.Println("Processing:", colors.BrightYellow, outputFn, colors.BrightWhite, exists, countBefore, countAfter, colors.Off)
 					// } else {
 					// 	fmt.Println("Skipping:", colors.BrightYellow, outputFn, colors.BrightWhite, exists, countBefore, countAfter, colors.Off)
@@ -171,10 +170,15 @@ func getCommandsFromFile(globals globals.GlobalOptions) ([]SemiParse, error) {
 	ret := []SemiParse{}
 	cmdLines := []string{}
 
-	if !file.FileExists(globals.File) {
+	commandFile := globals.File
+	if commandFile == "" && file.FileExists("./commands.fil") {
+		commandFile = "./commands.fil"
+	}
+	if !file.FileExists(commandFile) {
+		logger.Log(logger.Warning, "No --file option supplied. Using default.")
 		cmdLines = append(cmdLines, "export --appearances")
 	} else {
-		cmdLines = utils.AsciiFileToLines(globals.File)
+		cmdLines = utils.AsciiFileToLines(commandFile)
 	}
 
 	for _, cmd := range cmdLines {

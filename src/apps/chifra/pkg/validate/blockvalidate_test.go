@@ -8,7 +8,7 @@ import (
 	"reflect"
 	"testing"
 
-	tslibPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 )
 
 func TestIsBlockHash(t *testing.T) {
@@ -106,27 +106,27 @@ func TestIsBlockNumberList(t *testing.T) {
 }
 
 func TestIsSpecialBlock(t *testing.T) {
-	if tslibPkg.IsSpecialBlock(GetTestChain(), "london byzantium") {
+	if tslib.IsSpecialBlock(GetTestChain(), "london byzantium") {
 		t.Error("Passes for invalid string (space)")
 	}
 
-	if tslibPkg.IsSpecialBlock(GetTestChain(), "lądon") {
+	if tslib.IsSpecialBlock(GetTestChain(), "lądon") {
 		t.Error("Passes for string with invalid characters")
 	}
 
-	if tslibPkg.IsSpecialBlock(GetTestChain(), "123") {
+	if tslib.IsSpecialBlock(GetTestChain(), "123") {
 		t.Error("Passes for number")
 	}
 
-	if tslibPkg.IsSpecialBlock(GetTestChain(), "ab") {
+	if tslib.IsSpecialBlock(GetTestChain(), "ab") {
 		t.Error("Passes for too short strings")
 	}
 
-	if !tslibPkg.IsSpecialBlock(GetTestChain(), "london") {
+	if !tslib.IsSpecialBlock(GetTestChain(), "london") {
 		t.Error("Fails for valid block name")
 	}
 
-	if !tslibPkg.IsSpecialBlock(GetTestChain(), "devcon1") {
+	if !tslib.IsSpecialBlock(GetTestChain(), "devcon1") {
 		t.Error("Fails for valid block name with a number")
 	}
 }

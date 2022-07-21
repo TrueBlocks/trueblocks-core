@@ -35,7 +35,7 @@ func ReadPinDescriptors(r io.Reader) ([]ChunkRecord, error) {
 		}
 
 		descriptors = append(descriptors, ChunkRecord{
-			FileName:  record[0],
+			Range:     record[0],
 			BloomHash: record[1],
 			IndexHash: record[2],
 		})
@@ -54,22 +54,22 @@ func BuildTabRange(descriptors []ChunkRecord) (ManifestRange, error) {
 
 	firstPinRange := ManifestRange{}
 	var err error
-	if !strings.Contains(descriptors[0].FileName, "-") {
+	if !strings.Contains(descriptors[0].Range, "-") {
 		if len(descriptors) == 1 {
 			return ManifestRange{}, errors.New("invalid input: header only, no pins")
 		}
-		firstPinRange, err = StringToManifestRange(descriptors[1].FileName)
+		firstPinRange, err = StringToManifestRange(descriptors[1].Range)
 		if err != nil {
 			return ManifestRange{}, err
 		}
 	} else {
-		firstPinRange, err = StringToManifestRange(descriptors[0].FileName)
+		firstPinRange, err = StringToManifestRange(descriptors[0].Range)
 		if err != nil {
 			return ManifestRange{}, err
 		}
 	}
 
-	lastPinRange, err := StringToManifestRange(descriptors[len(descriptors)-1].FileName)
+	lastPinRange, err := StringToManifestRange(descriptors[len(descriptors)-1].Range)
 	if err != nil {
 		return ManifestRange{}, err
 	}
@@ -111,21 +111,21 @@ func FromLocalFile(chain string) (*Manifest, error) {
 	return ReadTabManifest(file)
 }
 
-func GetPinList(chain string) ([]types.SimplePinList, error) {
+func GetPinList(chain string) ([]types.SimpleChunkRecord, error) {
 	manifestData, err := FromLocalFile(chain)
 	if err != nil {
-		return []types.SimplePinList{}, err
+		return []types.SimpleChunkRecord{}, err
 	}
 
 	sort.Slice(manifestData.Chunks, func(i, j int) bool {
 		iPin := manifestData.Chunks[i]
 		jPin := manifestData.Chunks[j]
-		return iPin.FileName < jPin.FileName
+		return iPin.Range < jPin.Range
 	})
 
-	pinList := make([]types.SimplePinList, len(manifestData.Chunks))
+	pinList := make([]types.SimpleChunkRecord, len(manifestData.Chunks))
 	for i := range manifestData.Chunks {
-		pinList[i].FileName = manifestData.Chunks[i].FileName
+		pinList[i].Range = manifestData.Chunks[i].Range
 		pinList[i].BloomHash = string(manifestData.Chunks[i].BloomHash)
 		pinList[i].IndexHash = string(manifestData.Chunks[i].IndexHash)
 	}

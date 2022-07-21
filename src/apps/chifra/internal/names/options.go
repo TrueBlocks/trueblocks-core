@@ -8,6 +8,7 @@
 package namesPkg
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
@@ -18,32 +19,34 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// NamesOptions provides all command options for the chifra names command.
 type NamesOptions struct {
-	Terms       []string
-	Expand      bool
-	MatchCase   bool
-	All         bool
-	Custom      bool
-	Prefund     bool
-	Named       bool
-	Addr        bool
-	Collections bool
-	Tags        bool
-	ToCustom    bool
-	Clean       bool
-	Autoname    string
-	Create      bool
-	Update      bool
-	Delete      bool
-	Undelete    bool
-	Remove      bool
-	Globals     globals.GlobalOptions
-	BadFlag     error
+	Terms       []string              `json:"terms,omitempty"`       // A space separated list of one or more search terms
+	Expand      bool                  `json:"expand,omitempty"`      // Expand search to include all fields (search name, address, and symbol otherwise)
+	MatchCase   bool                  `json:"matchCase,omitempty"`   // Do case-sensitive search
+	All         bool                  `json:"all,omitempty"`         // Include all accounts in the search
+	Custom      bool                  `json:"custom,omitempty"`      // Include your custom named accounts
+	Prefund     bool                  `json:"prefund,omitempty"`     // Include prefund accounts
+	Named       bool                  `json:"named,omitempty"`       // Include well know token and airdrop addresses in the search
+	Addr        bool                  `json:"addr,omitempty"`        // Display only addresses in the results (useful for scripting)
+	Collections bool                  `json:"collections,omitempty"` // Display collections data
+	Tags        bool                  `json:"tags,omitempty"`        // Export the list of tags and subtags only
+	ToCustom    bool                  `json:"toCustom,omitempty"`    // For editCmd only, is the edited name a custom name or not
+	Clean       bool                  `json:"clean,omitempty"`       // Clean the data (addrs to lower case, sort by addr)
+	Autoname    string                `json:"autoname,omitempty"`    // An address assumed to be a token, added automatically to names database if true
+	Create      bool                  `json:"create,omitempty"`      // Create a new name record
+	Update      bool                  `json:"update,omitempty"`      // Edit an existing name
+	Delete      bool                  `json:"delete,omitempty"`      // Delete a name, but do not remove it
+	Undelete    bool                  `json:"undelete,omitempty"`    // Undelete a previously deleted name
+	Remove      bool                  `json:"remove,omitempty"`      // Remove a previously deleted name
+	Globals     globals.GlobalOptions `json:"globals,omitempty"`     // The global options
+	BadFlag     error                 `json:"badFlag,omitempty"`     // An error flag if needed
 }
 
 var namesCmdLineOptions NamesOptions
 
-func (opts *NamesOptions) TestLog() {
+// testLog is used only during testing to export the options for this test case.
+func (opts *NamesOptions) testLog() {
 	logger.TestLog(len(opts.Terms) > 0, "Terms: ", opts.Terms)
 	logger.TestLog(opts.Expand, "Expand: ", opts.Expand)
 	logger.TestLog(opts.MatchCase, "MatchCase: ", opts.MatchCase)
@@ -65,14 +68,22 @@ func (opts *NamesOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func (opts *NamesOptions) GetEnvStr() string {
-	envStr := ""
+// String implements the Stringer interface
+func (opts *NamesOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "\t")
+	return string(b)
+}
+
+// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
+func (opts *NamesOptions) getEnvStr() []string {
+	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return envStr
 }
 
-func (opts *NamesOptions) ToCmdLine() string {
+// toCmdLine converts the option to a command line for calling out to the system.
+func (opts *NamesOptions) toCmdLine() string {
 	options := ""
 	if opts.Expand {
 		options += " --expand"
@@ -132,7 +143,8 @@ func (opts *NamesOptions) ToCmdLine() string {
 	return options
 }
 
-func NamesFinishParseApi(w http.ResponseWriter, r *http.Request) *NamesOptions {
+// namesFinishParseApi finishes the parsing for server invocations. Returns a new NamesOptions.
+func namesFinishParseApi(w http.ResponseWriter, r *http.Request) *NamesOptions {
 	opts := &NamesOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -190,7 +202,8 @@ func NamesFinishParseApi(w http.ResponseWriter, r *http.Request) *NamesOptions {
 	return opts
 }
 
-func NamesFinishParse(args []string) *NamesOptions {
+// namesFinishParse finishes the parsing for command line invocations. Returns a new NamesOptions.
+func namesFinishParse(args []string) *NamesOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

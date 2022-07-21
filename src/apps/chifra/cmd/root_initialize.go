@@ -18,6 +18,10 @@ import (
 
 // Initalize makes sure everything is ready to run. These routines don't return if they aren't
 func Initialize() bool {
+	if os.Getenv("NO_COLOR") == "true" {
+		colors.ColorsOff()
+	}
+
 	VerifyOs()
 	VerifyMigrations()
 
@@ -72,6 +76,17 @@ const noChains string = `
 
 `
 
+const backVersion string = `
+
+	An outdated version of a configration file was found. Please carefully follow 
+	migration {0} before proceeding.
+
+	See https://github.com/TrueBlocks/trueblocks-core/blob/develop/MIGRATIONS.md
+
+	[{VERSION}]
+
+`
+
 // VerifyMigrations will panic if the installation is not properly migrated
 func VerifyMigrations() {
 	user, _ := user.Current()
@@ -106,6 +121,7 @@ func VerifyMigrations() {
 		log.Fatalf(msg)
 	}
 
+	// ...and some chains...
 	if !config.HasChains() {
 		msg := strings.Replace(noChains, "{0}", "{"+configFile+"}", -1)
 		msg = strings.Replace(msg, "{1}", "{v0.25.0}", -1)
@@ -160,9 +176,21 @@ func VerifyMigrations() {
 		}
 	}
 
+	// We need to find the chain configuration path
 	chainConfigPath := config.GetPathToChainConfig("")
 	if _, err := os.Stat(chainConfigPath); err != nil {
 		msg := strings.Replace(notExist, "{0}", "{"+chainConfigPath+"}", -1)
+		msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
+		msg = strings.Replace(msg, "{", colors.Green, -1)
+		msg = strings.Replace(msg, "}", colors.Off, -1)
+		log.Fatalf(msg)
+	}
+
+	// We need at least this version...
+	requiredVersion := "v0.40.0-beta"
+	// TODO: BOGUS - NOT COMPLETED
+	if false && !config.IsAtLeastVersion(requiredVersion) {
+		msg := strings.Replace(backVersion, "{0}", "{"+requiredVersion+"}", -1)
 		msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
 		msg = strings.Replace(msg, "{", colors.Green, -1)
 		msg = strings.Replace(msg, "}", colors.Off, -1)

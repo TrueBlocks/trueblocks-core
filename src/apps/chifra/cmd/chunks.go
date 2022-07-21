@@ -55,9 +55,16 @@ func init() {
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Details, "details", "d", false, "for manifest and addresses options only, display full details of the report")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Check, "check", "c", false, "depends on mode, checks for internal consistency of the data type")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Belongs, "belongs", "b", false, "checks if the given address appears in the given chunk")
-	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().PinChunks, "pin_chunks", "p", false, "gzip each chunk, push it to IPFS, and update and publish the manifest")
-	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().PinData, "pin_data", "a", false, "gzip the databases, push them to IPFS, and update and publish the manifest")
+	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Repair, "repair", "e", false, "valid for manifest option only, repair the given chunk (requires block number) (hidden)")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Clean, "clean", "n", false, "retrieve all pins on Pinata, compare to manifest, remove any extraneous remote pins")
+	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Remote, "remote", "m", false, "for some options, force processing from remote data")
+	chunksCmd.Flags().Uint64VarP(&chunksPkg.GetOptions().Reset, "reset", "r", 0, "available only in chunks mode, remove all chunks inclusive of or after this block (hidden)")
+	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().PinRemote, "pin_remote", "i", false, "pin any previously unpinned chunks and blooms to a remote pinning service")
+	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Publish, "publish", "p", false, "update the manifest and publish it to the Unchained Index smart contract")
+	if os.Getenv("TEST_MODE") != "true" {
+		chunksCmd.Flags().MarkHidden("repair")
+		chunksCmd.Flags().MarkHidden("reset")
+	}
 	globals.InitGlobals(chunksCmd, &chunksPkg.GetOptions().Globals)
 
 	chunksCmd.SetUsageTemplate(UsageWithNotes(notesChunks))

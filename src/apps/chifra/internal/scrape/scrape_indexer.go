@@ -10,15 +10,14 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/scraper"
 )
 
-var IndexScraper scraper.Scraper
+var IndexScraper Scraper
 
 func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 	defer wg.Done()
 
-	var s *scraper.Scraper = &IndexScraper
+	var s *Scraper = &IndexScraper
 	s.ChangeState(true)
 
 	for {
@@ -26,7 +25,7 @@ func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 			s.Pause()
 
 		} else {
-			opts.Globals.PassItOn("blockScrape", opts.Globals.Chain, opts.ToCmdLine(), opts.GetEnvStr())
+			opts.Globals.PassItOn("blockScrape", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
 			if s.Running {
 				// We sleep under two conditions
 				//   1) the user has told us an explicit amount of time to Sleep

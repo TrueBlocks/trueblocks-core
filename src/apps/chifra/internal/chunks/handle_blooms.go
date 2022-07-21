@@ -5,22 +5,25 @@
 package chunksPkg
 
 import (
+	"fmt"
+	"strings"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 func (opts *ChunksOptions) showBloom(path string, first bool) (bool, error) {
-	var bloom index.ChunkBloom
-	index.ReadBloom(&bloom, path)
+	var bl bloom.ChunkBloom
+	bloom.ReadBloom(&bl, path)
 
 	if opts.Globals.Verbose {
-		bloom.Display(int(opts.Globals.LogLevel))
+		Display(&bl, int(opts.Globals.LogLevel))
 	}
 
 	// TODO: Fix export without arrays
 	stats := NewChunkStats(path)
-	obj := NewSimpleBloom(stats, bloom)
+	obj := NewSimpleBloom(stats, bl)
 	err := opts.Globals.RenderObject(obj, first)
 	if err != nil {
 		return false, err
@@ -28,9 +31,9 @@ func (opts *ChunksOptions) showBloom(path string, first bool) (bool, error) {
 	return true, nil
 }
 
-func NewSimpleBloom(stats ChunkStats, bloom index.ChunkBloom) types.SimpleBloom {
+func NewSimpleBloom(stats types.ReportChunks, bl bloom.ChunkBloom) types.SimpleBloom {
 	nInserted := 0
-	for _, bl := range bloom.Blooms {
+	for _, bl := range bl.Blooms {
 		nInserted += int(bl.NInserted)
 	}
 
@@ -38,8 +41,39 @@ func NewSimpleBloom(stats ChunkStats, bloom index.ChunkBloom) types.SimpleBloom 
 	ret.Size = stats.BloomSz
 	ret.Range = cache.FileRange{First: stats.Start, Last: stats.End}
 	ret.Count = stats.NBlooms
-	ret.Width = index.BLOOM_WIDTH_IN_BYTES
+	ret.Width = bloom.BLOOM_WIDTH_IN_BYTES
 	ret.NInserted = uint64(nInserted)
 
 	return ret
+}
+
+func Display(bl *bloom.ChunkBloom, verbose int) {
+	var bytesPerLine = (2048 / 16) /* 128 */
+	if verbose > 0 && verbose <= 4 {
+		bytesPerLine = 32
+	}
+
+	nInserted := uint32(0)
+	for i := uint32(0); i < bl.Count; i++ {
+		nInserted += bl.Blooms[i].NInserted
+	}
+	fmt.Println("range:", bl.Range)
+	fmt.Println("nBlooms:", bl.Count)
+	fmt.Println("byteWidth:", bloom.BLOOM_WIDTH_IN_BYTES)
+	fmt.Println("nInserted:", nInserted)
+	if verbose > 0 {
+		for i := uint32(0); i < bl.Count; i++ {
+			for j := 0; j < len(bl.Blooms[i].Bytes); j++ {
+				if (j % bytesPerLine) == 0 {
+					if j != 0 {
+						fmt.Println()
+					}
+				}
+				ch := bl.Blooms[i].Bytes[j]
+				str := fmt.Sprintf("%08b", ch)
+				fmt.Printf("%s ", strings.Replace(str, "0", ".", -1))
+			}
+		}
+		fmt.Println()
+	}
 }

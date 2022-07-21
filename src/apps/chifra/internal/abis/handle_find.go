@@ -26,7 +26,7 @@ import (
 func (opts *AbisOptions) HandleAbiFind() error {
 	scanBar := progress.NewScanBar(uint64(len(opts.Find)) /* wanted */, 13919 /* freq */, 50000000 /* max */, .5)
 
-	var results []types.Function
+	var results []types.SimpleFunction
 
 	var wg sync.WaitGroup
 	checkOne, _ := ants.NewPoolWithFunc(runtime.NumCPU()*2, func(testSig interface{}) {
@@ -41,7 +41,7 @@ func (opts *AbisOptions) HandleAbiFind() error {
 			if bytes.Equal(sigBytes[:len(str)], str) {
 				scanBar.Found++
 				logger.Log(logger.Progress, "Found ", scanBar.Found, " of ", scanBar.Wanted, arg, testSig)
-				results = append(results, types.Function{Encoding: arg, Signature: testSig.(string)})
+				results = append(results, types.SimpleFunction{Encoding: arg, Signature: testSig.(string)})
 				return
 			}
 		}

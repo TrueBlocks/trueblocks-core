@@ -25,8 +25,8 @@ func GetManifestCidFromContract(chain string) (string, error) {
 	ethClient := rpcClient.GetClient(provider)
 	defer ethClient.Close()
 
-	address := common.HexToAddress(config.ReadBlockScrape(chain).UnchainedIndex.Address)
-	data := rpcClient.DecodeHex(config.ReadBlockScrape(chain).UnchainedIndex.ManifestHashEncoding)
+	address := common.HexToAddress("0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd")
+	data := rpcClient.DecodeHex("0x337f3f32")
 
 	response, err := ethClient.CallContract(
 		context.Background(),

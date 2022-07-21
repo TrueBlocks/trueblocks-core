@@ -8,6 +8,7 @@
 package initPkg
 
 import (
+	"encoding/json"
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
@@ -15,20 +16,29 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// InitOptions provides all command options for the chifra init command.
 type InitOptions struct {
-	All     bool
-	Globals globals.GlobalOptions
-	BadFlag error
+	All     bool                  `json:"all,omitempty"`     // In addition to Bloom filters, download full index chunks
+	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
+	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
 }
 
 var initCmdLineOptions InitOptions
 
-func (opts *InitOptions) TestLog() {
+// testLog is used only during testing to export the options for this test case.
+func (opts *InitOptions) testLog() {
 	logger.TestLog(opts.All, "All: ", opts.All)
 	opts.Globals.TestLog()
 }
 
-func InitFinishParseApi(w http.ResponseWriter, r *http.Request) *InitOptions {
+// String implements the Stringer interface
+func (opts *InitOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "\t")
+	return string(b)
+}
+
+// initFinishParseApi finishes the parsing for server invocations. Returns a new InitOptions.
+func initFinishParseApi(w http.ResponseWriter, r *http.Request) *InitOptions {
 	opts := &InitOptions{}
 	for key, _ := range r.URL.Query() {
 		switch key {
@@ -48,7 +58,8 @@ func InitFinishParseApi(w http.ResponseWriter, r *http.Request) *InitOptions {
 	return opts
 }
 
-func InitFinishParse(args []string) *InitOptions {
+// initFinishParse finishes the parsing for command line invocations. Returns a new InitOptions.
+func initFinishParse(args []string) *InitOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

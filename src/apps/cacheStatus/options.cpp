@@ -25,7 +25,7 @@ static const COption params[] = {
     COption("types", "t", "list<enum[blocks|txs|traces|slurps|prices|all*]>", OPT_FLAG, "for caches mode only, which type(s) of cache to report"),  // NOLINT
     COption("depth", "p", "<uint64>", OPT_HIDDEN | OPT_FLAG, "for cache mode only, number of levels deep to report"),
     COption("terse", "e", "", OPT_HIDDEN | OPT_SWITCH, "show a terse summary report"),
-    COption("migrate", "m", "enum[test|all]", OPT_HIDDEN | OPT_FLAG, "either effectuate or test to see if a migration is necessary"),  // NOLINT
+    COption("migrate", "m", "enum[test|cache|index]", OPT_HIDDEN | OPT_FLAG, "either effectuate or test to see if a migration is necessary"),  // NOLINT
     COption("first_block", "F", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive -- testing only)"),  // NOLINT
     COption("last_block", "L", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive -- testing only)"),
     COption("", "", "", OPT_DESCRIPTION, "Report on the status of the TrueBlocks system."),
@@ -217,7 +217,7 @@ void COptions::Init(void) {
     char hostname[HOST_NAME_MAX + 1] = {0};
     gethostname(hostname, HOST_NAME_MAX);
     char username[LOGIN_NAME_MAX + 1] = {0};
-    if (getlogin_r(username, LOGIN_NAME_MAX) != 0 || isDockerMode())
+    if (getlogin_r(username, LOGIN_NAME_MAX) != 0)
         strncpy(username, "nobody", 7);
 
     if (isTestMode()) {
@@ -242,7 +242,6 @@ void COptions::Init(void) {
     status.isScraping = isTestMode() ? false : (isRunning("chifra scrape") || isRunning("blockScrape"));
     status.isTesting = isTestMode();
     status.isApi = isApiMode();
-    status.isDocker = isDockerMode();
     status.isArchive = isArchiveNode();
     status.isTracing = isTracingNode();
     status.hasEskey = getGlobalConfig("")->getConfigStr("settings", "etherscan_key", "<not_set>") != "<not_set>";

@@ -6,10 +6,8 @@ package explorePkg
 
 import (
 	"fmt"
-	"strconv"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -33,8 +31,8 @@ type ExploreUrl struct {
 
 var urls []ExploreUrl
 
-func (opts *ExploreOptions) ValidateExplore() error {
-	opts.TestLog()
+func (opts *ExploreOptions) validateExplore() error {
+	opts.testLog()
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag
@@ -64,7 +62,7 @@ func (opts *ExploreOptions) ValidateExplore() error {
 
 		valid, _ := validate.IsValidTransId(opts.Globals.Chain, []string{arg}, validate.ValidTransId)
 		if valid {
-			txHash, err := id_2_TxHash(opts.Globals.Chain, arg)
+			txHash, err := rpcClient.Id_2_TxHash(opts.Globals.Chain, arg, validate.IsBlockHash)
 			if err == nil {
 				urls = append(urls, ExploreUrl{txHash, ExploreTx})
 				continue
@@ -74,7 +72,7 @@ func (opts *ExploreOptions) ValidateExplore() error {
 
 		valid, _ = validate.IsValidBlockId(opts.Globals.Chain, []string{arg}, validate.ValidBlockIdWithRangeAndDate)
 		if valid {
-			blockHash, err := id_2_BlockHash(opts.Globals.Chain, arg)
+			blockHash, err := rpcClient.Id_2_BlockHash(opts.Globals.Chain, arg, validate.IsBlockHash)
 			if err == nil {
 				urls = append(urls, ExploreUrl{blockHash, ExploreBlock})
 				continue
@@ -101,60 +99,7 @@ func (opts *ExploreOptions) ValidateExplore() error {
 		urls = append(urls, ExploreUrl{"", ExploreNone})
 	}
 
-	return opts.Globals.ValidateGlobals()
-}
-
-// id_2_TxHash takes a valid identifier (txHash/blockHash, blockHash.txId, blockNumber.txId)
-// and returns the transaction hash represented by that identifier. (If it's a valid transaction.
-// It may not be becuase transaction hashes and block hashes are both 32-byte hex)
-func id_2_TxHash(chain, arg string) (string, error) {
-	provider := config.GetRpcProvider(chain)
-	rpcClient.CheckRpc(provider)
-
-	// simple case first
-	if !strings.Contains(arg, ".") {
-		// We know it's a hash, but we want to know if it's a legitimate tx on chain
-		return rpcClient.TxHashFromHash(provider, arg)
-	}
-
-	parts := strings.Split(arg, ".")
-	if len(parts) != 2 {
-		panic("Programmer error - valid transaction identifiers with a `.` must have two and only two parts")
-	}
-
-	if validate.IsBlockHash(parts[0]) {
-		txId, err := strconv.ParseUint(parts[1], 10, 64)
-		if err != nil {
-			return "", nil
-		}
-		return rpcClient.TxHashFromHashAndId(provider, parts[0], txId)
-	}
-
-	blockNum, err := strconv.ParseUint(parts[0], 10, 64)
-	if err != nil {
-		return "", nil
-	}
-	txId, err := strconv.ParseUint(parts[1], 10, 64)
-	if err != nil {
-		return "", nil
-	}
-
-	return rpcClient.TxHashFromNumberAndId(provider, blockNum, txId)
-}
-
-func id_2_BlockHash(chain, arg string) (string, error) {
-	provider := config.GetRpcProvider(chain)
-	rpcClient.CheckRpc(provider)
-
-	if validate.IsBlockHash(arg) {
-		return rpcClient.BlockHashFromHash(provider, arg)
-	}
-
-	blockNum, err := strconv.ParseUint(arg, 10, 64)
-	if err != nil {
-		return "", nil
-	}
-	return rpcClient.BlockHashFromNumber(provider, blockNum)
+	return opts.Globals.Validate()
 }
 
 func (t ExploreType) String() string {

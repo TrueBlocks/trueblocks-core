@@ -14,7 +14,6 @@ import (
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/scraper"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 
 	"github.com/spf13/cobra"
@@ -24,7 +23,7 @@ import (
 
 // RunScrape handles the scrape command for the command line. Returns error only as per cobra.
 func RunScrape(cmd *cobra.Command, args []string) (err error) {
-	opts := ScrapeFinishParse(args)
+	opts := scrapeFinishParse(args)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.ScrapeInternal()
@@ -33,7 +32,7 @@ func RunScrape(cmd *cobra.Command, args []string) (err error) {
 
 // ServeScrape handles the scrape command for the API. Returns error and a bool if handled
 func ServeScrape(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
-	opts := ScrapeFinishParseApi(w, r)
+	opts := scrapeFinishParseApi(w, r)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return opts.ScrapeInternal()
@@ -41,7 +40,7 @@ func ServeScrape(w http.ResponseWriter, r *http.Request) (err error, handled boo
 
 // ScrapeInternal handles the internal workings of the scrape command.  Returns error and a bool if handled
 func (opts *ScrapeOptions) ScrapeInternal() (err error, handled bool) {
-	err = opts.ValidateScrape()
+	err = opts.validateScrape()
 	if err != nil {
 		return err, true
 	}
@@ -59,7 +58,7 @@ func (opts *ScrapeOptions) ScrapeInternal() (err error, handled bool) {
 		var wg sync.WaitGroup
 
 		wg.Add(1)
-		IndexScraper = scraper.NewScraper(colors.Yellow, "IndexScraper", opts.Sleep, opts.Globals.LogLevel)
+		IndexScraper = NewScraper(colors.Yellow, "IndexScraper", opts.Sleep, opts.Globals.LogLevel)
 		// Note that this never returns
 		go opts.RunIndexScraper(&wg)
 

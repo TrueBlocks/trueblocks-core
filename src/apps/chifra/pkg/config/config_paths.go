@@ -107,10 +107,9 @@ func GetPathToCommands(part string) string {
 // EstablishCachePaths sets up the cache folders and subfolders. It only returns if it succeeds.
 func EstablishCachePaths(cachePath string) {
 	folders := []string{
-		"abis", "blocks", "monitors", "monitors/staging", "names", "objs", "prices",
-		"recons", "slurps", "tmp", "traces", "txs",
+		"abis", "blocks", "monitors", "monitors/staging", "objs", "prices",
+		"recons", "slurps", "tmp", "traces", "txs", "names",
 	}
-
 	_, err := os.Stat(path.Join(cachePath, folders[len(folders)-1]))
 	if err == nil {
 		// If the last path already exists, assume we've been here before
@@ -125,9 +124,8 @@ func EstablishCachePaths(cachePath string) {
 // EstablishIndexPaths sets up the index path and subfolders. It only returns if it succeeds.
 func EstablishIndexPaths(indexPath string) {
 	folders := []string{
-		"blooms", "finalized", "ripe", "staging", "unripe",
+		"blooms", "finalized", "map", "ripe", "staging", "unripe",
 	}
-
 	_, err := os.Stat(path.Join(indexPath, folders[len(folders)-1]))
 	if err == nil {
 		// If the last path already exists, assume we've been here before
@@ -141,7 +139,7 @@ func EstablishIndexPaths(indexPath string) {
 
 // CleanIndexFolder removes any files that may be partial or incomplete
 func CleanIndexFolder(indexPath string) error {
-	for _, f := range []string{"ripe", "staging", "unripe"} {
+	for _, f := range []string{"ripe", "staging", "unripe", "maps"} {
 		folder := path.Join(indexPath, f)
 		err := os.RemoveAll(folder)
 		if err != nil {

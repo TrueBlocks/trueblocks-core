@@ -8,6 +8,7 @@
 package abisPkg
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
@@ -18,19 +19,21 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// AbisOptions provides all command options for the chifra abis command.
 type AbisOptions struct {
-	Addrs   []string
-	Known   bool
-	Sol     bool
-	Find    []string
-	Classes bool
-	Globals globals.GlobalOptions
-	BadFlag error
+	Addrs   []string              `json:"addrs,omitempty"`   // A list of one or more smart contracts whose ABIs to display
+	Known   bool                  `json:"known,omitempty"`   // Load common 'known' ABIs from cache
+	Sol     bool                  `json:"sol,omitempty"`     // Extract the abi definition from the provided .sol file(s)
+	Find    []string              `json:"find,omitempty"`    // Search for function or event declarations given a four- or 32-byte code(s)
+	Classes bool                  `json:"classes,omitempty"` // Generate classDefinitions folder and class definitions
+	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
+	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
 }
 
 var abisCmdLineOptions AbisOptions
 
-func (opts *AbisOptions) TestLog() {
+// testLog is used only during testing to export the options for this test case.
+func (opts *AbisOptions) testLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(opts.Known, "Known: ", opts.Known)
 	logger.TestLog(opts.Sol, "Sol: ", opts.Sol)
@@ -39,14 +42,22 @@ func (opts *AbisOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func (opts *AbisOptions) GetEnvStr() string {
-	envStr := ""
+// String implements the Stringer interface
+func (opts *AbisOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "\t")
+	return string(b)
+}
+
+// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
+func (opts *AbisOptions) getEnvStr() []string {
+	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return envStr
 }
 
-func (opts *AbisOptions) ToCmdLine() string {
+// toCmdLine converts the option to a command line for calling out to the system.
+func (opts *AbisOptions) toCmdLine() string {
 	options := ""
 	if opts.Known {
 		options += " --known"
@@ -67,7 +78,8 @@ func (opts *AbisOptions) ToCmdLine() string {
 	return options
 }
 
-func AbisFinishParseApi(w http.ResponseWriter, r *http.Request) *AbisOptions {
+// abisFinishParseApi finishes the parsing for server invocations. Returns a new AbisOptions.
+func abisFinishParseApi(w http.ResponseWriter, r *http.Request) *AbisOptions {
 	opts := &AbisOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -102,7 +114,8 @@ func AbisFinishParseApi(w http.ResponseWriter, r *http.Request) *AbisOptions {
 	return opts
 }
 
-func AbisFinishParse(args []string) *AbisOptions {
+// abisFinishParse finishes the parsing for command line invocations. Returns a new AbisOptions.
+func abisFinishParse(args []string) *AbisOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

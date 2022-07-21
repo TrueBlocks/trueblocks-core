@@ -8,6 +8,7 @@
 package exportPkg
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
@@ -19,43 +20,43 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// ExportOptions provides all command options for the chifra export command.
 type ExportOptions struct {
-	Addrs       []string
-	Topics      []string
-	Fourbytes   []string
-	Appearances bool
-	Receipts    bool
-	Logs        bool
-	Traces      bool
-	Statements  bool
-	Neighbors   bool
-	Accounting  bool
-	Articulate  bool
-	Cache       bool
-	CacheTraces bool
-	Count       bool
-	FirstRecord uint64
-	MaxRecords  uint64
-	Relevant    bool
-	Emitter     []string
-	Topic       []string
-	Asset       []string
-	Factory     bool
-	Staging     bool
-	Unripe      bool
-	Load        string
-	Reversed    bool
-	SkipDdos    bool
-	MaxTraces   uint64
-	FirstBlock  uint64
-	LastBlock   uint64
-	Globals     globals.GlobalOptions
-	BadFlag     error
+	Addrs       []string              `json:"addrs,omitempty"`       // One or more addresses (0x...) to export
+	Topics      []string              `json:"topics,omitempty"`      // Filter by one or more log topics (only for --logs option)
+	Fourbytes   []string              `json:"fourbytes,omitempty"`   // Filter by one or more fourbytes (only for transactions and trace options)
+	Appearances bool                  `json:"appearances,omitempty"` // Export a list of appearances
+	Receipts    bool                  `json:"receipts,omitempty"`    // Export receipts instead of transactional data
+	Logs        bool                  `json:"logs,omitempty"`        // Export logs instead of transactional data
+	Traces      bool                  `json:"traces,omitempty"`      // Export traces instead of transactional data
+	Statements  bool                  `json:"statements,omitempty"`  // Export reconciliations instead of transactional data (requires --accounting option)
+	Neighbors   bool                  `json:"neighbors,omitempty"`   // Export the neighbors of the given address
+	Accounting  bool                  `json:"accounting,omitempty"`  // Attach accounting records to the exported data (applies to transactions export only)
+	Articulate  bool                  `json:"articulate,omitempty"`  // Articulate transactions, traces, logs, and outputs
+	Cache       bool                  `json:"cache,omitempty"`       // Write transactions to the cache (see notes)
+	CacheTraces bool                  `json:"cacheTraces,omitempty"` // Write traces to the cache (see notes)
+	Count       bool                  `json:"count,omitempty"`       // Only available for --appearances mode, if present, return only the number of records
+	FirstRecord uint64                `json:"firstRecord,omitempty"` // The first record to process
+	MaxRecords  uint64                `json:"maxRecords,omitempty"`  // The maximum number of records to process before reporting
+	Relevant    bool                  `json:"relevant,omitempty"`    // For log and accounting export only, export only logs relevant to one of the given export addresses
+	Emitter     []string              `json:"emitter,omitempty"`     // For log export only, export only logs if emitted by one of these address(es)
+	Topic       []string              `json:"topic,omitempty"`       // For log export only, export only logs with this topic(s)
+	Asset       []string              `json:"asset,omitempty"`       // For the statements option only, export only reconciliations for this asset
+	Factory     bool                  `json:"factory,omitempty"`     // Scan for contract creations from the given address(es) and report address of those contracts
+	Staging     bool                  `json:"staging,omitempty"`     // Export transactions labeled staging (i.e. older than 28 blocks but not yet consolidated)
+	Unripe      bool                  `json:"unripe,omitempty"`      // Export transactions labeled upripe (i.e. less than 28 blocks old)
+	Load        string                `json:"load,omitempty"`        // A comma separated list of dynamic traversers to load
+	Reversed    bool                  `json:"reversed,omitempty"`    // Produce results in reverse chronological order
+	FirstBlock  uint64                `json:"firstBlock,omitempty"`  // First block to process (inclusive)
+	LastBlock   uint64                `json:"lastBlock,omitempty"`   // Last block to process (inclusive)
+	Globals     globals.GlobalOptions `json:"globals,omitempty"`     // The global options
+	BadFlag     error                 `json:"badFlag,omitempty"`     // An error flag if needed
 }
 
 var exportCmdLineOptions ExportOptions
 
-func (opts *ExportOptions) TestLog() {
+// testLog is used only during testing to export the options for this test case.
+func (opts *ExportOptions) testLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(len(opts.Topics) > 0, "Topics: ", opts.Topics)
 	logger.TestLog(len(opts.Fourbytes) > 0, "Fourbytes: ", opts.Fourbytes)
@@ -81,21 +82,27 @@ func (opts *ExportOptions) TestLog() {
 	logger.TestLog(opts.Unripe, "Unripe: ", opts.Unripe)
 	logger.TestLog(len(opts.Load) > 0, "Load: ", opts.Load)
 	logger.TestLog(opts.Reversed, "Reversed: ", opts.Reversed)
-	logger.TestLog(opts.SkipDdos, "SkipDdos: ", opts.SkipDdos)
-	logger.TestLog(opts.MaxTraces != 250, "MaxTraces: ", opts.MaxTraces)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
 	opts.Globals.TestLog()
 }
 
-func (opts *ExportOptions) GetEnvStr() string {
-	envStr := ""
+// String implements the Stringer interface
+func (opts *ExportOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "\t")
+	return string(b)
+}
+
+// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
+func (opts *ExportOptions) getEnvStr() []string {
+	envStr := []string{}
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return envStr
 }
 
-func (opts *ExportOptions) ToCmdLine() string {
+// toCmdLine converts the option to a command line for calling out to the system.
+func (opts *ExportOptions) toCmdLine() string {
 	options := ""
 	if opts.Appearances {
 		options += " --appearances"
@@ -172,11 +179,11 @@ func (opts *ExportOptions) ToCmdLine() string {
 	return options
 }
 
-func ExportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions {
+// exportFinishParseApi finishes the parsing for server invocations. Returns a new ExportOptions.
+func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions {
 	opts := &ExportOptions{}
 	opts.FirstRecord = 0
 	opts.MaxRecords = 250
-	opts.MaxTraces = 250
 	opts.FirstBlock = 0
 	opts.LastBlock = utils.NOPOS
 	for key, value := range r.URL.Query() {
@@ -249,10 +256,6 @@ func ExportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 			opts.Load = value[0]
 		case "reversed":
 			opts.Reversed = true
-		case "skipDdos":
-			opts.SkipDdos = true
-		case "maxTraces":
-			opts.MaxTraces = globals.ToUint64(value[0])
 		case "firstBlock":
 			opts.FirstBlock = globals.ToUint64(value[0])
 		case "lastBlock":
@@ -274,7 +277,8 @@ func ExportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 	return opts
 }
 
-func ExportFinishParse(args []string) *ExportOptions {
+// exportFinishParse finishes the parsing for command line invocations. Returns a new ExportOptions.
+func exportFinishParse(args []string) *ExportOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

@@ -4,21 +4,18 @@
 
 package initPkg
 
-import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
-)
+import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/migrate"
 
-func (opts *InitOptions) ValidateInit() error {
-	opts.TestLog()
+func (opts *InitOptions) validateInit() error {
+	opts.testLog()
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag
 	}
 
-	// TODO: Multi-chain missing feature on other chains
-	if opts.Globals.Chain != "mainnet" {
-		return validate.Usage("The {0} command is currently available only on the {1} chain.", "init", "mainnet")
-	}
+	// Note this does not return if a migration is needed
+	// TODO: BOGUS - SHOULD INIT BE ALLOWED NO MATTER WHAT?
+	migrate.CheckBackLevelIndex(opts.Globals.Chain)
 
-	return opts.Globals.ValidateGlobals()
+	return opts.Globals.Validate()
 }

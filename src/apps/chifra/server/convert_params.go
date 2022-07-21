@@ -45,16 +45,12 @@ func convertToCommandLine(in string) string {
 		return "match_case"
 	case "maxRecords":
 		return "max_records"
-	case "maxTraces":
-		return "max_traces"
 	case "noHeader":
 		return "no_header"
 	case "noZero":
 		return "no_zero"
-	case "pinChunks":
-		return "pin_chunks"
-	case "pinData":
-		return "pin_data"
+	case "pinRemote":
+		return "pin_remote"
 	case "proxyFor":
 		return "proxy_for"
 	case "ripeBlock":

@@ -1,6 +1,10 @@
 ## chifra chunks
 
-TODO: BOGUS - REVIEW HELP FILES
+The chifra chunks routine provides tools for interacting with, checking the validity of,
+cleaning up, and analyizing the Unchained Index. It provides options to list pins,
+the Manifest, summary data on the index, Bloom filters, addresses, and appearances.
+While still in its early stages, this tool will eventually allow users to clean
+their local index, clean their remote index, study the indexes, etc. Stay tuned.
 
 ```[plaintext]
 Purpose:
@@ -19,9 +23,10 @@ Flags:
   -d, --details      for manifest and addresses options only, display full details of the report
   -c, --check        depends on mode, checks for internal consistency of the data type
   -b, --belongs      checks if the given address appears in the given chunk
-  -p, --pin_chunks   gzip each chunk, push it to IPFS, and update and publish the manifest
-  -a, --pin_data     gzip the databases, push them to IPFS, and update and publish the manifest
   -n, --clean        retrieve all pins on Pinata, compare to manifest, remove any extraneous remote pins
+  -m, --remote       for some options, force processing from remote data
+  -i, --pin_remote   pin any previously unpinned chunks and blooms to a remote pinning service
+  -p, --publish      update the manifest and publish it to the Unchained Index smart contract
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
   -v, --verbose      enable verbose (increase detail with --log_level)
   -h, --help         display this help screen
