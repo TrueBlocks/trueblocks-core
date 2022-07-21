@@ -224,7 +224,7 @@ func DownloadChunks(chain string, pins []manifest.ChunkRecord, chunkPath *cache.
 		chunkPath:       chunkPath,
 		ctx:             ctx,
 		downloadWg:      &downloadWg,
-		gatewayUrl:      config.GetPinGateway(chain),
+		gatewayUrl:      config.GetIpfsGateway(chain),
 		progressChannel: progressChannel,
 		writeChannel:    writeChannel,
 	}

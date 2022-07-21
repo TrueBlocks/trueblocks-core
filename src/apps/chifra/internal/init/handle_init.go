@@ -39,7 +39,7 @@ func (opts *InitOptions) HandleInit() error {
 	logger.Log(logger.Info, "Unchained index returned CID", cid)
 
 	// Download the manifest
-	gatewayUrl := config.GetPinGateway(chain)
+	gatewayUrl := config.GetIpfsGateway(chain)
 	logger.Log(logger.Info, "IPFS gateway", gatewayUrl)
 
 	url, err := url.Parse(gatewayUrl)
@@ -197,8 +197,8 @@ func (opts *InitOptions) PrintManifestHeader() {
 	chain := opts.Globals.Chain
 	logger.Log(logger.Info, "hashToIndexFormatFile:", "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2")
 	logger.Log(logger.Info, "hashToBloomFormatFile:", "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD")
-	logger.Log(logger.Info, "manifestHashEncoding:", config.ReadBlockScrape(chain).UnchainedIndex.ManifestHashEncoding)
-	logger.Log(logger.Info, "unchainedIndexAddr:", config.ReadBlockScrape(chain).UnchainedIndex.Address)
+	logger.Log(logger.Info, "manifestHashEncoding:", "0x337f3f32")
+	logger.Log(logger.Info, "unchainedIndexAddr:", "0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd")
 	if !opts.Globals.TestMode {
 		logger.Log(logger.Info, "manifestLocation:", config.GetPathToChainConfig(chain)) // order matters
 		logger.Log(logger.Info, "unchainedIndexFolder:", config.GetPathToIndex(chain))   // order matters
