@@ -10,6 +10,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -47,7 +48,7 @@ func NewChunkStats(path string) types.ReportChunks {
 		ret.AppsPerAddr = float64(ret.NApps) / float64(ret.NAddrs)
 	}
 
-	ret.RecWid = 4 + index.BLOOM_WIDTH_IN_BYTES
+	ret.RecWid = 4 + bloom.BLOOM_WIDTH_IN_BYTES
 
 	p := strings.Replace(strings.Replace(path, ".bloom", ".bin", -1), "blooms", "finalized", -1)
 	ret.BloomSz = file.FileSize(path)

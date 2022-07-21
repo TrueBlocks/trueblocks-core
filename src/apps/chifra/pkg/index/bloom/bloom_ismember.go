@@ -1,4 +1,4 @@
-package index
+package bloom
 
 import (
 	"encoding/binary"

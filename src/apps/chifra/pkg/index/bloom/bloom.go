@@ -2,15 +2,15 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package index
+package bloom
 
 import (
 	"encoding/binary"
 	"errors"
 	"fmt"
 	"io"
+	"log"
 	"os"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -92,17 +92,6 @@ func (bloom *ChunkBloom) Close() {
 	}
 }
 
-// ToBloomPath returns a path pointing to the bloom filter given either a path to itself or its associated index data
-func ToBloomPath(pathIn string) string {
-	if strings.HasSuffix(pathIn, ".bloom") {
-		return pathIn
-	}
-
-	ret := strings.Replace(pathIn, ".bin", ".bloom", -1)
-	ret = strings.Replace(ret, "/finalized/", "/blooms/", -1)
-	return ret
-}
-
 //---------------------------------------------------------------------------
 func ReadBloom(bloom *ChunkBloom, fileName string) (err error) {
 	bloom.Range, err = cache.RangeFromFilename(fileName)
@@ -140,37 +129,6 @@ func ReadBloom(bloom *ChunkBloom, fileName string) (err error) {
 	}
 
 	return nil
-}
-
-func (bloom *ChunkBloom) Display(verbose int) {
-	var bytesPerLine = (2048 / 16) /* 128 */
-	if verbose > 0 && verbose <= 4 {
-		bytesPerLine = 32
-	}
-
-	nInserted := uint32(0)
-	for i := uint32(0); i < bloom.Count; i++ {
-		nInserted += bloom.Blooms[i].NInserted
-	}
-	fmt.Println("range:", bloom.Range)
-	fmt.Println("nBlooms:", bloom.Count)
-	fmt.Println("byteWidth:", BLOOM_WIDTH_IN_BYTES)
-	fmt.Println("nInserted:", nInserted)
-	if verbose > 0 {
-		for i := uint32(0); i < bloom.Count; i++ {
-			for j := 0; j < len(bloom.Blooms[i].Bytes); j++ {
-				if (j % bytesPerLine) == 0 {
-					if j != 0 {
-						fmt.Println()
-					}
-				}
-				ch := bloom.Blooms[i].Bytes[j]
-				str := fmt.Sprintf("%08b", ch)
-				fmt.Printf("%s ", strings.Replace(str, "0", ".", -1))
-			}
-		}
-		fmt.Println()
-	}
 }
 
 // AddToSet adds an address to a bloom filter
@@ -212,3 +170,22 @@ func (bloom *ChunkBloom) AddToSet(addr common.Address) {
 //     unlockSection();
 //     return true;
 // }
+
+// WhichBits returns the five bits calculated from an address used to determine if the address is
+// in the bloom filter. We get the five bits by cutting the 20-byte address into five equal four-byte
+// parts, turning those four bytes into an 32-bit integer modulo the width of a bloom array item.
+func WhichBits(addr common.Address) (bits [5]uint32) {
+	slice := addr.Bytes()
+	if len(slice) != 20 {
+		log.Fatal("address is not 20 bytes long - should not happen")
+	}
+
+	cnt := 0
+	for i := 0; i < len(slice); i += 4 {
+		bytes := slice[i : i+4]
+		bits[cnt] = (binary.BigEndian.Uint32(bytes) % uint32(BLOOM_WIDTH_IN_BITS))
+		cnt++
+	}
+
+	return
+}

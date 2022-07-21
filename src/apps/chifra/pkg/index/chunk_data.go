@@ -88,3 +88,14 @@ func ToIndexPath(pathIn string) string {
 	ret = strings.Replace(ret, "/blooms/", "/finalized/", -1)
 	return ret
 }
+
+// ToBloomPath returns a path pointing to the bloom filter given either a path to itself or its associated index data
+func ToBloomPath(pathIn string) string {
+	if strings.HasSuffix(pathIn, ".bloom") {
+		return pathIn
+	}
+
+	ret := strings.Replace(pathIn, ".bin", ".bloom", -1)
+	ret = strings.Replace(ret, "/finalized/", "/blooms/", -1)
+	return ret
+}
