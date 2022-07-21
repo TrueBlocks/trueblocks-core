@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-07-09T07:27:31
+date: 2022-07-20T23:22:15
 lastmod:
   - :git
   - lastmod
@@ -74,7 +74,7 @@ Arguments:
 
 Flags:
   -n, --block_cnt uint   maximum number of blocks to process per pass (default 2000)
-  -p, --pin              pin chunks (and blooms) to IPFS as they are created (requires ipfs)
+  -p, --pin              pin chunks (and blooms) to IPFS as they are created (requires ipfs daemon)
   -s, --sleep float      seconds to sleep between scraper passes (default 14)
   -x, --fmt string       export format, one of [none|json*|txt|csv|api]
   -v, --verbose          enable verbose (increase detail with --log_level)
