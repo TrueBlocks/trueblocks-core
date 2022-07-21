@@ -70,7 +70,7 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 			return opts.HandleChunksExtractPins(), true
 
 		} else if opts.Mode == "stats" {
-			err := opts.Globals.RenderHeader(ChunkStats{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+			err := opts.Globals.RenderHeader(types.ReportChunks{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
 			if err != nil {
 				return err, true
 			}

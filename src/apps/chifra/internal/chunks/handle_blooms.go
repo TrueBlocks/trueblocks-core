@@ -28,7 +28,7 @@ func (opts *ChunksOptions) showBloom(path string, first bool) (bool, error) {
 	return true, nil
 }
 
-func NewSimpleBloom(stats ChunkStats, bloom index.ChunkBloom) types.SimpleBloom {
+func NewSimpleBloom(stats types.ReportChunks, bloom index.ChunkBloom) types.SimpleBloom {
 	nInserted := 0
 	for _, bl := range bloom.Blooms {
 		nInserted += int(bl.NInserted)

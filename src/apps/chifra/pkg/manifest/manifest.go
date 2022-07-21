@@ -10,7 +10,7 @@ type IpfsHash = string
 
 // TODO: If we included fileSize (pre-zip) here, we could do a check that the file is complete
 type ChunkRecord struct {
-	FileName  string   `json:"fileName"`
+	Range     string   `json:"fileName"`
 	BloomHash IpfsHash `json:"bloomHash"`
 	IndexHash IpfsHash `json:"indexHash"`
 }

@@ -116,7 +116,7 @@ func downloadAndReportProgress(chain string, pins []manifest.ChunkRecord, chunkP
 	progressChannel := progress.MakeChan()
 	defer close(progressChannel)
 
-	go index.GetChunksFromRemote(chain, pins, chunkPath, progressChannel)
+	go index.DownloadChunks(chain, pins, chunkPath, progressChannel)
 
 	var pinsDone uint
 
@@ -124,7 +124,7 @@ func downloadAndReportProgress(chain string, pins []manifest.ChunkRecord, chunkP
 		pin, ok := event.Payload.(*manifest.ChunkRecord)
 		var fileName string
 		if ok {
-			fileName = pin.FileName
+			fileName = pin.Range
 		}
 
 		if event.Event == progress.AllDone {

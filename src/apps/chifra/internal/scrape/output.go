@@ -14,7 +14,6 @@ import (
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/scraper"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 
 	"github.com/spf13/cobra"
@@ -59,7 +58,7 @@ func (opts *ScrapeOptions) ScrapeInternal() (err error, handled bool) {
 		var wg sync.WaitGroup
 
 		wg.Add(1)
-		IndexScraper = scraper.NewScraper(colors.Yellow, "IndexScraper", opts.Sleep, opts.Globals.LogLevel)
+		IndexScraper = NewScraper(colors.Yellow, "IndexScraper", opts.Sleep, opts.Globals.LogLevel)
 		// Note that this never returns
 		go opts.RunIndexScraper(&wg)
 

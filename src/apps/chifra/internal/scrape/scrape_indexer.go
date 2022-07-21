@@ -10,15 +10,14 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/scraper"
 )
 
-var IndexScraper scraper.Scraper
+var IndexScraper Scraper
 
 func (opts *ScrapeOptions) RunIndexScraper(wg *sync.WaitGroup) {
 	defer wg.Done()
 
-	var s *scraper.Scraper = &IndexScraper
+	var s *Scraper = &IndexScraper
 	s.ChangeState(true)
 
 	for {

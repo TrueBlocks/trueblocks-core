@@ -7,6 +7,7 @@ package exportPkg
 import (
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/migrate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -90,6 +91,9 @@ func (opts *ExportOptions) validateExport() error {
 		msg += "'chifra init' (and allow it to complete) or 'chifra scrape' before using this command."
 		return validate.Usage(msg)
 	}
+
+	// Note this does not return if a migration is needed
+	migrate.CheckBackLevelIndex(opts.Globals.Chain)
 
 	err := opts.Globals.Validate()
 	if err != nil && strings.Contains(err.Error(), "option (ofx) must be one of") {
