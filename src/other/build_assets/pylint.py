@@ -1782,7 +1782,7 @@ def GetHeaderGuardCPPVariable(filename):
   if _root:
     suffix = os.sep
     # On Windows using directory separator will leave us with
-    # "bogus escape error" unless we properly escape regex.
+    # "bo gus escape error" unless we properly escape regex.
     if suffix == '\\':
       suffix += '\\'
     file_path_from_root = re.sub('^' + _root + suffix, '', file_path_from_root)
@@ -1985,7 +1985,7 @@ def CheckForMultilineCommentsAndStrings(filename, clean_lines, linenum, error):
   if line.count('/*') > line.count('*/'):
     error(filename, linenum, 'readability/multiline_comment', 5,
           'Complex multi-line /*...*/-style comment found. '
-          'Lint may give bogus warnings.  '
+          'Lint may give bo gus warnings.  '
           'Consider replacing these with //-style comments, '
           'with #if 0...#endif, '
           'or with more clearly structured multi-line comments.')
@@ -1993,7 +1993,7 @@ def CheckForMultilineCommentsAndStrings(filename, clean_lines, linenum, error):
   if (line.count('"') - line.count('\\"')) % 2:
     error(filename, linenum, 'readability/multiline_string', 5,
           'Multi-line string ("...") found.  This lint script doesn\'t '
-          'do well with such strings, and may give bogus warnings.  '
+          'do well with such strings, and may give bo gus warnings.  '
           'Use C++11 raw strings or concatenation instead.')
 
 

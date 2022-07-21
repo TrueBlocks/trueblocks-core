@@ -46,7 +46,7 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 		return filenames[i] < filenames[j]
 	})
 
-	allow_missing := config.ReadBlockScrape(opts.Globals.Chain).Settings.Allow_missing
+	allow_missing := config.GetBlockScrapeSettings(opts.Globals.Chain).Allow_missing
 
 	nChecks := 0
 	nChecksFailed := 0
