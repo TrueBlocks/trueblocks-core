@@ -31,8 +31,6 @@ set_property(GLOBAL PROPERTY ALLOW_DUPLICATE_CUSTOM_TARGETS 1)
 # Mandatory python interpret, the directive PythonInterp sets the following variables
 message(STATUS "======== LOOKING FOR PYTHON ========================")
 
-# PYTHONINTERP_FOUND         - Was the Python executable found
-# PYTHON_EXECUTABLE          - path to the Python interpreter
 find_package(Python COMPONENTS Interpreter Development)
 
 # ----------------------------------------------------------------------------------------

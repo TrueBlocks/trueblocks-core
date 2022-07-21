@@ -56,13 +56,13 @@ func (opts *ChunksOptions) validateChunks() error {
 			if len(secret) == 0 {
 				return validate.Usage("The {0} option requires {1}", "--pin_remote", "a pinata_secret_api_key")
 			}
-			if opts.Publish {
-				if len(key) == 0 {
-					return validate.Usage("The {0} option requires {1}", "--pin_remote", "a pinata_api_key")
-				}
-				if len(secret) == 0 {
-					return validate.Usage("The {0} option requires {1}", "--pin_remote", "a pinata_secret_api_key")
-				}
+		}
+		if opts.Publish {
+			if len(key) == 0 {
+				return validate.Usage("The {0} option requires {1}", "--pin_remote", "a pinata_api_key")
+			}
+			if len(secret) == 0 {
+				return validate.Usage("The {0} option requires {1}", "--pin_remote", "a pinata_secret_api_key")
 			}
 		}
 	}
