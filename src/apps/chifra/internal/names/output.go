@@ -42,6 +42,12 @@ func (opts *NamesOptions) NamesInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
+	if opts.PrefundOnly() {
+		handled = true
+		err = opts.HandlePrefundOnly()
+		return
+	}
+
 	if opts.Globals.ApiMode {
 		return nil, false
 	}
