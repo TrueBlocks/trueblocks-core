@@ -213,7 +213,7 @@ func WriteChunk(chain, indexPath string, addAppMap AddressAppearanceMap, nApps i
 	    appendToAsciiFile(cacheFolder_tmp + "chunks_created.txt", range + "\n");
 
 	    return !shouldQuit();
-	bool CBloomFilterRead::write BloomFilter(const string_q& fileName) {
+	bool CBloomFi lterRead::write BloomFilter(const string_q& fileName) {
 	    lockSection();
 	    CArchive output(WRITING_ARCHIVE);
 	    if (!output.Lock(fileName, modeWriteCreate, LOCK_NOWAIT)) {

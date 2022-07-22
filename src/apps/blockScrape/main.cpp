@@ -151,10 +151,8 @@ bool COptions::report(uint64_t nRecsThen2, uint64_t nRecsNow2) const {
 
 //---------------------------------------------------------------------------
 class CBloomFilterWrite {
-    typedef vector<bloom_t> CBloomArray;
-
   public:
-    CBloomArray array;
+    vector<bloom_t> array;
     bool addToSet(const address_t& addr);
 };
 

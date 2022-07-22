@@ -30,8 +30,6 @@ class bloom_t {
     bool operator==(const bloom_t& item) const;
 
     void lightBit(size_t bit);
-    bool isInBloom(const bloom_t& test) const;
-    bool isInBloom(const CUintArray& bitsLit) const;
 
   private:
     void copy(const bloom_t& b);
