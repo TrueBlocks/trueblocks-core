@@ -15,8 +15,8 @@
 
 namespace qblocks {
 
-extern blknum_t getTimestampBlockAt(blknum_t blk);
-extern timestamp_t getTimestampAt(blknum_t bn);
+extern blknum_t ts_2_blockNumber(blknum_t blk);
+extern timestamp_t bn_2_Timestamp(blknum_t bn);
 extern bool freshenTimestamps(blknum_t minBlock);
 extern bool correctTimestamp(blknum_t blk, timestamp_t ts);
 extern bool loadTimestamps(uint32_t** theArray, size_t& cnt);

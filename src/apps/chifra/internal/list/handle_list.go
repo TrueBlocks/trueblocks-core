@@ -12,7 +12,9 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/bykof/gostradamus"
 )
 
 func (opts *ListOptions) HandleListAppearances(monitorArray []monitor.Monitor) error {
@@ -38,21 +40,45 @@ func (opts *ListOptions) HandleListAppearances(monitorArray []monitor.Monitor) e
 
 		exportRange := cache.FileRange{First: opts.FirstBlock, Last: opts.LastBlock}
 		results := make([]types.SimpleAppearance, 0, mon.Count())
+		verboseResults := make([]types.VerboseAppearance, 0, mon.Count())
 		for _, app := range apps {
 			appRange := cache.FileRange{First: uint64(app.BlockNumber), Last: uint64(app.BlockNumber)}
 			if appRange.Intersects(exportRange) {
-				var s types.SimpleAppearance
-				s.Address = mon.GetAddrStr()
-				s.BlockNumber = app.BlockNumber
-				s.TransactionIndex = app.TransactionId
-				results = append(results, s)
+				if opts.Globals.Verbose {
+					ts, err := tslib.FromBnToTs(opts.Globals.Chain, uint64(app.BlockNumber))
+					if err != nil {
+						return err
+					}
+					s := types.VerboseAppearance{
+						Address:          mon.GetAddrStr(),
+						BlockNumber:      app.BlockNumber,
+						TransactionIndex: app.TransactionId,
+						Timestamp:        ts,
+						Date:             gostradamus.FromUnixTimestamp(int64(ts)),
+					}
+					verboseResults = append(verboseResults, s)
+				} else {
+					s := types.SimpleAppearance{
+						Address:          mon.GetAddrStr(),
+						BlockNumber:      app.BlockNumber,
+						TransactionIndex: app.TransactionId,
+					}
+					results = append(results, s)
+				}
 			}
 		}
 
 		// TODO: Fix export without arrays
-		err = globals.RenderSlice(&opts.Globals, results)
-		if err != nil {
-			return err
+		if opts.Globals.Verbose {
+			err = globals.RenderSlice(&opts.Globals, verboseResults)
+			if err != nil {
+				return err
+			}
+		} else {
+			err = globals.RenderSlice(&opts.Globals, results)
+			if err != nil {
+				return err
+			}
 		}
 	}
 	return nil

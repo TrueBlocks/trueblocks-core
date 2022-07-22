@@ -208,7 +208,7 @@ bool COptions::parseArguments(string_q& command) {
 
     abi_spec.loadAbisFromKnown(true);
 
-    if (!getTimestampAt(1))  // loads the timestamp file and returns non-zero on success
+    if (!bn_2_Timestamp(1))  // loads the timestamp file and returns non-zero on success
         return usage("Could not open timestamp file.");
 
     if (isTestMode())
