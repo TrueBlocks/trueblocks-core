@@ -4,9 +4,13 @@ import (
 	"encoding/binary"
 	"fmt"
 	"os"
+	"path/filepath"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 // HeaderRecord is the first 44 bytes of an ChunkData. This structure carries a magic number (4 bytes),
