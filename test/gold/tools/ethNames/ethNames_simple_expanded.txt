@@ -5,6 +5,7 @@ TEST[DATE|TIME] NoHeader:  true
 TEST[DATE|TIME] Format:  txt
 50-Tokens:ERC20	0x00c4b398500645eb5da00a1a379a88b11683ba01	Eximchain Token	EXC	On chain	18	Eximchain‚Äö√Ñ√¥s public blockchain network enables privacy, scalability and security for the supply chain.	false	false	false	true	true	false
 31-Gitcoin:Grants	0x011c2c1433b36a524b548444ae2f20c015427d04	Grant 0491 - Tokamak Network: Decentralized, Scalable, Turing Complete Layer 2 Plasma		https://gitcoin.co/grants/491/tokamak-network-decentralized-scalable-turing-com			false	false	false	false	false	false
+31-Giveth:Project	0x035495b687850f79cb1652f416ea7ec19907557c	Bees network		Tokenomics			false	false	false	false	false	false
 31-Gitcoin:Grants	0x03c2bc72a3e007179e54ffb4563cc235bec8151a	Grant 0600 Synthereum: Synthetic Assets with Liquidity Pools to Bridge Traditional and Digital Finance		https://gitcoin.co/grants/600/synthereum-synthetic-assets-with-liquidity-pools-t		https://jarvis.network	false	false	false	false	false	false
 50-Tokens:ERC20	0x04c62019ab478bff5874e7b7d9bc84fcf7e30025	POA Network: MultiSig		EtherScan.io			false	false	false	true	false	false
 31-Gitcoin:Grants	0x067f2bef6a1f929544253b9fb95f99bae77b2518	Grant 1753 Resetdao ― Web 3.0 Programmable Social Network		https://gitcoin.co/grants/1753/resetdao-web-30-programmable-social-network			false	false	false	false	false	false
@@ -75,10 +76,11 @@ TEST[DATE|TIME] Format:  txt
 50-Tokens:ERC20	0x57ab1e02fee23774580c119740129eac7081e9d3	Synth sUSD	sUSD	On chain	18	sUSD is part of the Synethix network.	false	false	false	true	false	false
 30-Contracts:Kyber Network	0x57f8160e1c59d16c01bbe181fd94db4e56b60495	Kyber Weth Reserve		TrueBlocks.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x5b26c5d0772e5bbac8b3182ae9a13f9bb2d03765	Education	EDU	On chain	8	A decentralized peer-to-peer project learning network for teaching people how to build complete products.	false	false	false	true	true	false
+31-Giveth:Project	0x5bb21dbb7b2876b0524530c8666969ac9eaf9ede	Cryptolink Network		Tokenomics			false	false	false	false	false	false
 50-Tokens:ERC20	0x5cf04716ba20127f1e2297addcf4b5035000c9eb	NKN	NKN	On chain	18	NKN is the new kind of P2P network connectivity protocol ecosystem powered by a novel public blockchain.	false	false	false	true	true	false
 50-Tokens:ERC20	0x5f3789907b35dce5605b00c0be0a7ecdbfa8a841	Content and Ad Network	CAN	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x607f4c5bb672230e8672085532f7e901544a7375	iEx.ec Network Token	RLC	On chain	9	Blockchain Based distributed cloud computing	false	false	false	true	true	false
-31-Contracts:Giveth Project	0x629224fc7ce36163040454cd51b37acc550b77cb	Rainforest Action Network		Giveth Website			false	false	false	false	false	false
+31-Giveth:Project	0x629224fc7ce36163040454cd51b37acc550b77cb	Rainforest Action Network		Tokenomics			false	false	false	false	false	false
 50-Tokens:ERC20	0x62a8aa7a0b58b6f2e275796f84ba5ad48c65d36d	CovidFree Network	COVIDFREE	On chain	18		false	false	false	true	true	false
 30-Contracts:Kyber Network	0x63825c174ab367968ec60f061753d3bbd36a0d8f	Kyber Reserve		0xTracker			false	false	false	true	false	false
 50-Tokens:ERC20	0x63e634330a20150dbb61b15648bc73855d6ccf07	Lancer Token	LNC	On chain	18	Collection of the systems which facilitate the inter-transaction between Linker Coin and various economic networks built on crypto-currency market, financial market, e-commerce market, etc.	false	false	false	true	true	false
@@ -97,7 +99,7 @@ TEST[DATE|TIME] Format:  txt
 50-Tokens:ERC20	0x6fb3e0a217407efff7ca062d46c26e5d60a14d69	IoTeX Network	IOTX	On chain	18	IoTeX is the next generation of the IoT-oriented blockchain platform with vast scalability, privacy, isolatability, and developability. IoTeX connects the physical world, block by block.	false	false	false	true	true	false
 50-Tokens:ERC20	0x6fff3806bbac52a20e0d79bc538d527f6a22c96b	Network		On chain	18	Aims to be a disruptive ad network of creative minds who speak out against the powers that be.	false	false	false	true	true	false
 50-Tokens:ERC20	0x70861e862e1ac0c96f853c8231826e469ead37b1	DOS Network Token	DOS	On chain	18		false	false	false	true	true	false
-31-Giveth:Project	0x70a68a29bac0b3c85bed4b47bb3a639f0f245e70	Allergy & Asthma Network		Tokenomics			false	false	false	false	false	false
+31-Giveth:Project	0x70a68a29bac0b3c85bed4b47bb3a639f0f245e70	Allergy &amp; Asthma Network		Tokenomics			false	false	false	false	false	false
 50-Tokens:ERC20	0x70c621f949b6556c4545707a2d5d73a776b98359	Skychain Global Token	SKCH	On chain	6	Skychain is an open infrastructure, based on blockchain, which provides the possibility to create, train and use high-quality medical neural networks.	false	false	false	true	true	false
 50-Tokens:ERC20	0x71d01db8d6a2fbea7f8d434599c237980c234e4c	Gladius Token	GLA	On chain	8	DDoS protection network and DCN.	false	false	false	true	true	false
 31-Gitcoin:Grants	0x7293edfbe890854cb698119cc31441b063f44878	Grant 0822 Lukso: the Blockchain for New Digital Lifestyle		https://gitcoin.co/grants/822/lukso-the-blockchain-for-new-digital-lifestyle		https://www.lukso.network/	false	false	false	false	false	false
@@ -202,5 +204,3 @@ TEST[DATE|TIME] Format:  txt
 31-Gitcoin:Grants	0xe302ca18c14ab31a002ac14a0889560d99e54633	Grant 1827 Fission Network		https://gitcoin.co/grants/1827/fission-network			false	false	false	false	false	false
 50-Tokens:ERC20	0xe34e1944e776f39b9252790a0527ebda647ae668	Helbiz Token	HBZ	On chain	18	HBZ is a cryptocurrency and blockchain based transportation ecosystem to seamlessly offer transportation globally from scooters and cars to tolls and international flights through a partner network with ease, full transparency while users maintain full ow	false	false	false	true	true	false
 31-Giveth:Project	0xe3f738ff9fa4e157cab12ee6f1847f680495229a	Permaculture Action Network		Tokenomics			false	false	false	false	false	false
-50-Tokens:ERC20	0xe469c4473af82217b30cf17b10bcdb6c8c796e75	EXRP Network	EXRN	On chain	18	Connecting the blockchains using crosschain gateway built with smart contracts.	false	false	false	true	true	false
-50-Tokens:ERC20	0xe530441f4f73bdb6dc2fa5af7c3fc5fd551ec838	GSENetwork	GSE	On chain	4		false	false	false	true	true	false

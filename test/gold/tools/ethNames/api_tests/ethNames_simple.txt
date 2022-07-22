@@ -11,6 +11,15 @@ names?terms=etwork
       "description": ""
     },
     {
+      "tags": "31-Giveth:Project",
+      "address": "0x035495b687850f79cb1652f416ea7ec19907557c",
+      "name": "Bees network",
+      "symbol": "",
+      "source": "Tokenomics",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "50-Tokens:ERC20",
       "address": "0x04c62019ab478bff5874e7b7d9bc84fcf7e30025",
       "name": "POA Network: MultiSig",
@@ -371,6 +380,15 @@ names?terms=etwork
       "description": ""
     },
     {
+      "tags": "31-Giveth:Project",
+      "address": "0x5bb21dbb7b2876b0524530c8666969ac9eaf9ede",
+      "name": "Cryptolink Network",
+      "symbol": "",
+      "source": "Tokenomics",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "50-Tokens:ERC20",
       "address": "0x5f3789907b35dce5605b00c0be0a7ecdbfa8a841",
       "name": "Content and Ad Network",
@@ -389,11 +407,11 @@ names?terms=etwork
       "description": "Blockchain Based distributed cloud computing"
     },
     {
-      "tags": "31-Contracts:Giveth Project",
+      "tags": "31-Giveth:Project",
       "address": "0x629224fc7ce36163040454cd51b37acc550b77cb",
       "name": "Rainforest Action Network",
       "symbol": "",
-      "source": "Giveth Website",
+      "source": "Tokenomics",
       "decimals": 0,
       "description": ""
     },
@@ -508,7 +526,7 @@ names?terms=etwork
     {
       "tags": "31-Giveth:Project",
       "address": "0x70a68a29bac0b3c85bed4b47bb3a639f0f245e70",
-      "name": "Allergy & Asthma Network",
+      "name": "Allergy &amp; Asthma Network",
       "symbol": "",
       "source": "Tokenomics",
       "decimals": 0,
