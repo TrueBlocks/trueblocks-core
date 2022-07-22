@@ -101,8 +101,8 @@ bool header(CTraverser* trav, void* data) {
 bool display(CTraverser* trav, void* data) {
     CTestTraverser* tt = (CTestTraverser*)trav;
     // tt->uni.blockNumber = tt->app->blk;
-    tt->trans.timestamp = getTimestampAt(tt->app->blk);
-    tt->block.timestamp = getTimestampAt(tt->app->blk);
+    tt->trans.timestamp = bn_2_Timestamp(tt->app->blk);
+    tt->block.timestamp = bn_2_Timestamp(tt->app->blk);
 
     cerr << tt->searchType << " ";
     if (doEthCall(tt->uni) && !tt->uni.result.outputs.empty()) {

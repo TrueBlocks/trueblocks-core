@@ -57,7 +57,7 @@ const vector<marker_t> bals = {{TOK_BALANCE, "balanceOf"}};
 bool processPair(uint64_t blockNum, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
     opt->curToken.blockNumber = blockNum;
-    opt->curToken.date = getTimestampAt(blockNum) ? ts_2_Date(getTimestampAt(blockNum)).Format(FMT_JSON) : "";
+    opt->curToken.date = bn_2_Timestamp(blockNum) ? ts_2_Date(bn_2_Timestamp(blockNum)).Format(FMT_JSON) : "";
     if ((opt->modeBits & TOK_TOTALSUPPLY) || !findName(opt->curToken.address, opt->curToken)) {
         for (auto marker : base) {
             if (opt->modeBits & marker.bits) {

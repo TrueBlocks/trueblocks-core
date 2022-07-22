@@ -2,6 +2,7 @@ package types
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/bykof/gostradamus"
 	"github.com/ethereum/go-ethereum/common"
 )
 
@@ -28,6 +29,14 @@ type SimpleAppearance struct {
 	Address          string `json:"address"`
 	BlockNumber      uint32 `json:"blockNumber"`
 	TransactionIndex uint32 `json:"transactionIndex"`
+}
+
+type VerboseAppearance struct {
+	Address          string               `json:"address"`
+	BlockNumber      uint32               `json:"blockNumber"`
+	TransactionIndex uint32               `json:"transactionIndex"`
+	Timestamp        uint64               `json:"timestamp"`
+	Date             gostradamus.DateTime `json:"date"`
 }
 
 type SimpleFunction struct {
