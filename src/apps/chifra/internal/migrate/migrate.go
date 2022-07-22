@@ -12,36 +12,39 @@ import (
 )
 
 // TODO: BOGUS - MIGRATION SENTINAL? REENTRANCY SAFE?
-func HasBackLevelIndex(chain string) bool {
+func HasBackLevelIndex(chain string, v *string) bool {
 	// TODO: BOGUS - THIS IS NOT CHAIN SAFE AT ALL!!!
-	if chain == "mainnet" {
-		return false
-	}
-	knownBadFile := config.GetPathToIndex(chain) + "/finalized/013308630-013321453.bin"
-	if file.FileExists(knownBadFile) {
+	*v = config.GetPathToIndex(chain) + "/finalized/013308630-013321453.bin"
+	if file.FileExists(*v) {
 		return true
 	}
-	return file.FileExists(index.ToBloomPath(knownBadFile))
+	return file.FileExists(index.ToBloomPath(*v))
 }
 
 func CheckBackLevelIndex(chain string) {
 	// TODO: BOGUS - DOES CHECKING FOR OLD INDEXES WORK?
-	if !HasBackLevelIndex(chain) {
+	v := ""
+	if !HasBackLevelIndex(chain, &v) {
 		return
 	}
 
 	const BackLevelVersion string = `
 
-	A back-level version of an index file was found. Please carefully follow all
-	migrations up to and including {0} before proceeding.
+  A back-level version of an index file was found at
 
-	See https://github.com/TrueBlocks/trueblocks-core/blob/develop/MIGRATIONS.md
+    {[{FILE}]}
+	
+  Please carefully follow all migrations up to and including {0}
+  before proceeding.
 
-	[{VERSION}]
+  See https://github.com/TrueBlocks/trueblocks-core/blob/develop/MIGRATIONS.md
+
+  [{VERSION}]
 
 `
 	msg := strings.Replace(BackLevelVersion, "{0}", "{v0.40.0-beta}", -1)
 	msg = strings.Replace(msg, "[{VERSION}]", version.LibraryVersion, -1)
+	msg = strings.Replace(msg, "[{FILE}]", v, -1)
 	msg = strings.Replace(msg, "{", colors.Green, -1)
 	msg = strings.Replace(msg, "}", colors.Off, -1)
 	log.Fatalf(msg)

@@ -26,7 +26,8 @@ import (
 
 func (opts *StatusOptions) HandleIndexMigration() error {
 	// TODO: BOGUS - MIGRATION SENTINAL? REENTRANCY SAFE?
-	if !migrate.HasBackLevelIndex(opts.Globals.Chain) {
+	unused := ""
+	if !migrate.HasBackLevelIndex(opts.Globals.Chain, &unused) {
 		log.Println(colors.Yellow, "The index does not need to be migrated.", colors.Off)
 		return nil
 	}
