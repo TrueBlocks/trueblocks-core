@@ -27,7 +27,7 @@ bool freshenAndLoad(blknum_t minBlk) {
 }
 
 //-------------------------------------------------------------------------
-blknum_t ts_2_blockNumber(blknum_t blk) {
+blknum_t ts_2_Blocknumber(blknum_t blk) {
     if (!expContext().tsMemMap)
         if (!freshenAndLoad(blk))
             return 0;
