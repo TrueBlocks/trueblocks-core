@@ -53,8 +53,6 @@ func convertToCommandLine(in string) string {
 		return "pin_remote"
 	case "proxyFor":
 		return "proxy_for"
-	case "ripeBlock":
-		return "ripe_block"
 	case "skipDdos":
 		return "skip_ddos"
 	case "snapToGrid":

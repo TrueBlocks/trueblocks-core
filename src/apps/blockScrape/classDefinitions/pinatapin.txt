@@ -1,4 +1,0 @@
-[settings]
-class = CPinataPin
-fields = pinatapin.csv
-includes = utillib.h

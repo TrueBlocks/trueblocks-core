@@ -7,11 +7,13 @@ package chunksPkg
 import (
 	"io"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
-func (opts *ChunksOptions) showAddressesBelongs(path string, first bool) (bool, error) {
+func (opts *ChunksOptions) showAddressesBelongs(ctx *WalkContext, path string, first bool) (bool, error) {
 	path = index.ToIndexPath(path)
 
 	indexChunk, err := index.NewChunkData(path)
@@ -66,4 +68,19 @@ func (opts *ChunksOptions) shouldShow(obj index.AddressRecord) bool {
 		}
 	}
 	return false
+}
+
+func (opts *ChunksOptions) HandleAddressesBelongs(blockNums []uint64) error {
+	maxTestItems = 10000
+
+	defer opts.Globals.RenderFooter()
+	err := opts.Globals.RenderHeader(types.SimpleIndexAddressBelongs{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+	if err != nil {
+		return err
+	}
+
+	ctx := WalkContext{
+		VisitFunc: opts.showAddressesBelongs,
+	}
+	return opts.WalkIndexFiles(&ctx, cache.Index_Bloom, blockNums)
 }

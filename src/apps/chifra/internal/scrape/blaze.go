@@ -1,6 +1,7 @@
 package scrapePkg
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -11,52 +12,97 @@ import (
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 // ScrapedData combines the block data, trace data, and log data into a single structure
 type ScrapedData struct {
-	block  int
-	ts     uint64
-	traces rpcClient.Traces
-	logs   rpcClient.Logs
+	blockNumber int
+	traces      rpcClient.Traces
+	logs        rpcClient.Logs
 }
 
-func (opts *ScrapeOptions) ScrapeBlocks() error {
-	rpcProvider := config.GetRpcProvider(opts.Globals.Chain)
+type BlazeOptions struct {
+	Chain       string                     `json:"chain"`
+	NChannels   uint64                     `json:"nChannels"`
+	NProcessed  uint64                     `json:"nProcessed"`
+	StartBlock  uint64                     `json:"startBlock"`
+	BlockCount  uint64                     `json:"blockCnt"`
+	RipeBlock   uint64                     `json:"ripeBlock"`
+	UnripeDist  uint64                     `json:"unripe"`
+	RpcProvider string                     `json:"rpcProvider"`
+	BlockWG     sync.WaitGroup             `json:"-"`
+	AddressWG   sync.WaitGroup             `json:"-"`
+	TsWG        sync.WaitGroup             `json:"-"`
+	AppMap      index.AddressAppearanceMap `json:"-"`
+}
 
+// String implements the stringer interface
+func (opts *BlazeOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "\t")
+	return string(b)
+}
+
+// HandleBlaze does the actual scraping, walking through block_cnt blocks and querying traces and logs
+// and then extracting addresses and timestamps from those data structures.
+func (opts *BlazeOptions) HandleBlaze(meta *rpcClient.MetaData) (ok bool, err error) {
+
+	if utils.OnOff {
+		fmt.Println(opts.String())
+	}
 	blockChannel := make(chan int)
 	addressChannel := make(chan ScrapedData)
+	tsChannel := make(chan tslib.Timestamp)
 
-	var blockWG sync.WaitGroup
-	blockWG.Add(int(opts.BlockChanCnt))
-	for i := 0; i < int(opts.BlockChanCnt); i++ {
-		go opts.processBlocks(rpcProvider, blockChannel, addressChannel, &blockWG)
+	opts.BlockWG.Add(int(opts.NChannels))
+	for i := 0; i < int(opts.NChannels); i++ {
+		go opts.BlazeProcessBlocks(meta, blockChannel, addressChannel, tsChannel)
 	}
 
-	var addressWG sync.WaitGroup
-	addressWG.Add(int(opts.AddrChanCnt))
-	for i := 0; i < int(opts.AddrChanCnt); i++ {
-		go opts.extractAddresses(rpcProvider, addressChannel, &addressWG)
+	opts.AddressWG.Add(int(opts.NChannels))
+	for i := 0; i < int(opts.NChannels); i++ {
+		go opts.BlazeProcessAddresses(meta, addressChannel)
 	}
 
-	for block := int(opts.StartBlock); block < int(opts.StartBlock+opts.BlockCnt); block++ {
+	// TODO: BOGUS IS USING THIS FILE THE BEST WAY - IS THIS A GOOD FILENAME
+	tsFilename := config.GetPathToCache(opts.Chain) + "tmp/tempTsFile.txt"
+	tsFile, err := os.Create(tsFilename)
+	if err != nil {
+		log.Fatalf("Unable to create file: %v", err)
+	}
+	defer func() {
+		tsFile.Close()
+		file.Copy(tsFilename, "./file.save")
+	}()
+
+	opts.TsWG.Add(int(opts.NChannels))
+	for i := 0; i < int(opts.NChannels); i++ {
+		go opts.BlazeProcessTimestamps(tsChannel, tsFile)
+	}
+
+	for block := int(opts.StartBlock); block < int(opts.StartBlock+opts.BlockCount); block++ {
 		blockChannel <- block
 	}
 
 	close(blockChannel)
-	blockWG.Wait()
+	opts.BlockWG.Wait()
 
 	close(addressChannel)
-	addressWG.Wait()
+	opts.AddressWG.Wait()
 
-	return nil
+	close(tsChannel)
+	opts.TsWG.Wait()
+
+	return true, nil
 }
 
-// processBlocks Process the block channel and for each block query the node for both traces and logs. Send results to addressChannel
-func (opts *ScrapeOptions) processBlocks(rpcProvider string, blockChannel chan int, addressChannel chan ScrapedData, blockWG *sync.WaitGroup) {
+// BlazeProcessBlocks Processes the block channel and for each block query the node for both traces and logs. Send results down addressChannel.
+func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChannel chan int, addressChannel chan ScrapedData, tsChannel chan tslib.Timestamp) {
 	for blockNum := range blockChannel {
 
 		// RPCPayload is used during to make calls to the RPC.
@@ -67,10 +113,11 @@ func (opts *ScrapeOptions) processBlocks(rpcProvider string, blockChannel chan i
 			RPCParams: rpcClient.RPCParams{fmt.Sprintf("0x%x", blockNum)},
 			ID:        1002,
 		}
-		err := rpcClient.FromRpc(rpcProvider, &tracePayload, &traces)
+		err := rpcClient.FromRpc(opts.RpcProvider, &tracePayload, &traces)
 		if err != nil {
-			fmt.Println("FromRpc(traces) returned error")
-			log.Fatal(err)
+			// TODO: BOGUS - RETURN VALUE FROM BLAZE
+			fmt.Println("FromRpc(traces) returned error", err)
+			os.Exit(1)
 		}
 
 		var logs rpcClient.Logs
@@ -80,52 +127,85 @@ func (opts *ScrapeOptions) processBlocks(rpcProvider string, blockChannel chan i
 			RPCParams: rpcClient.RPCParams{rpcClient.LogFilter{Fromblock: fmt.Sprintf("0x%x", blockNum), Toblock: fmt.Sprintf("0x%x", blockNum)}},
 			ID:        1003,
 		}
-		err = rpcClient.FromRpc(rpcProvider, &logsPayload, &logs)
+		err = rpcClient.FromRpc(opts.RpcProvider, &logsPayload, &logs)
 		if err != nil {
-			fmt.Println("FromRpc(logs) returned error")
-			log.Fatal(err)
+			// TODO: BOGUS - RETURN VALUE FROM BLAZE
+			fmt.Println("FromRpc(logs) returned error", err)
+			os.Exit(1)
 		}
 
-		ts := rpcClient.GetBlockTimestamp(rpcProvider, uint64(blockNum))
-		addressChannel <- ScrapedData{blockNum, ts, traces, logs}
+		addressChannel <- ScrapedData{
+			blockNumber: blockNum,
+			traces:      traces,
+			logs:        logs,
+		}
+
+		// TODO: BOGUS The timeStamp value is not used here (the Consolidation Loop calls into
+		// TODO: BOGUS the same routine again). We should use this value here and remove the
+		// TODO: BOGUS call from the Consolidation Loop
+		tsChannel <- tslib.Timestamp{
+			Ts: uint32(rpcClient.GetBlockTimestamp(opts.RpcProvider, uint64(blockNum))),
+			Bn: uint32(blockNum),
+		}
 	}
 
-	blockWG.Done()
+	opts.BlockWG.Done()
 }
 
-func (opts *ScrapeOptions) extractAddresses(rpcProvider string, addressChannel chan ScrapedData, addressWG *sync.WaitGroup) {
-
-	for blockTraceAndLog := range addressChannel {
-		bn := blockTraceAndLog.block
+// BlazeProcessAddresses processes ScrapedData objects shoved down the addressChannel
+func (opts *BlazeOptions) BlazeProcessAddresses(meta *rpcClient.MetaData, addressChannel chan ScrapedData) {
+	for sData := range addressChannel {
 		addressMap := make(map[string]bool)
-		opts.extractFromTraces(rpcProvider, bn, addressMap, &blockTraceAndLog.traces)
-		opts.extractFromLogs(bn, addressMap, &blockTraceAndLog.logs)
-		opts.writeAddresses(bn, addressMap)
+		opts.BlazeExtractFromTraces(sData.blockNumber, &sData.traces, addressMap)
+		opts.BlazeExtractFromLogs(sData.blockNumber, &sData.logs, addressMap)
+		opts.BlazeWriteAddresses(meta, sData.blockNumber, addressMap)
 	}
-
-	addressWG.Done()
+	opts.AddressWG.Done()
 }
 
-func (opts *ScrapeOptions) extractFromTraces(rpcProvider string, bn int, addressMap map[string]bool, traces *rpcClient.Traces) {
+var blazeMutex sync.Mutex
+
+// BlazeProcessTimestamps processes timestamp data (currently by printing to a temporary file)
+func (opts *BlazeOptions) BlazeProcessTimestamps(tsChannel chan tslib.Timestamp, tsFile *os.File) {
+	for ts := range tsChannel {
+		blazeMutex.Lock()
+		// TODO: BOGUS - THIS COULD EASILY WRITE TO AN ARRAY NOT A FILE
+		fmt.Fprintf(tsFile, "%s-%s\n", utils.PadLeft(strconv.Itoa(int(ts.Bn)), 9), utils.PadLeft(strconv.Itoa(int(ts.Ts)), 9))
+		blazeMutex.Unlock()
+	}
+	opts.TsWG.Done()
+}
+
+var mapSync sync.Mutex
+
+func (opts *BlazeOptions) AddToMaps(address string, bn, txid int, addressMap map[string]bool) {
+	key := fmt.Sprintf("%s\t%09d\t%05d", address, bn, txid)
+	addressMap[key] = true
+	mapSync.Lock()
+	opts.AppMap[address] = append(opts.AppMap[address], index.AppearanceRecord{
+		BlockNumber:   uint32(bn),
+		TransactionId: uint32(txid),
+	})
+	mapSync.Unlock()
+}
+
+func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Traces, addressMap map[string]bool) {
 	if traces.Result == nil || len(traces.Result) == 0 {
 		return
 	}
 
-	blockNumStr := utils.PadLeft(strconv.Itoa(bn), 9)
 	for i := 0; i < len(traces.Result); i++ {
-
-		idx := utils.PadLeft(strconv.Itoa(traces.Result[i].TransactionPosition), 5)
-		blockAndIdx := "\t" + blockNumStr + "\t" + idx
+		txid := traces.Result[i].TransactionPosition
 
 		if traces.Result[i].Type == "call" {
 			// If it's a call, get the to and from
 			from := traces.Result[i].Action.From
-			if goodAddr(from) {
-				addressMap[from+blockAndIdx] = true
+			if isAddress(from) {
+				opts.AddToMaps(from, bn, txid, addressMap)
 			}
 			to := traces.Result[i].Action.To
-			if goodAddr(to) {
-				addressMap[to+blockAndIdx] = true
+			if isAddress(to) {
+				opts.AddToMaps(to, bn, txid, addressMap)
 			}
 
 		} else if traces.Result[i].Type == "reward" {
@@ -136,11 +216,11 @@ func (opts *ScrapeOptions) extractFromTraces(rpcProvider string, bn int, address
 					// 0x0 (reward got burned). We enter a false record with a false tx_id
 					// to account for this.
 					author = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
-					addressMap[author+"\t"+blockNumStr+"\t"+"99997"] = true
+					opts.AddToMaps(author, bn, 99997, addressMap)
 
 				} else {
-					if goodAddr(author) {
-						addressMap[author+"\t"+blockNumStr+"\t"+"99999"] = true
+					if isAddress(author) {
+						opts.AddToMaps(author, bn, 99999, addressMap)
 					}
 				}
 
@@ -151,19 +231,19 @@ func (opts *ScrapeOptions) extractFromTraces(rpcProvider string, bn int, address
 					// 0x0 (reward got burned). We enter a false record with a false tx_id
 					// to account for this.
 					author = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
-					addressMap[author+"\t"+blockNumStr+"\t"+"99998"] = true
+					opts.AddToMaps(author, bn, 99998, addressMap)
 
 				} else {
-					if goodAddr(author) {
-						addressMap[author+"\t"+blockNumStr+"\t"+"99998"] = true
+					if isAddress(author) {
+						opts.AddToMaps(author, bn, 99998, addressMap)
 					}
 				}
 
 			} else if traces.Result[i].Action.RewardType == "external" {
 				// This only happens in xDai as far as we know...
 				author := traces.Result[i].Action.Author
-				if goodAddr(author) {
-					addressMap[author+"\t"+blockNumStr+"\t"+"99996"] = true
+				if isAddress(author) {
+					opts.AddToMaps(author, bn, 99996, addressMap)
 				}
 
 			} else {
@@ -173,23 +253,23 @@ func (opts *ScrapeOptions) extractFromTraces(rpcProvider string, bn int, address
 		} else if traces.Result[i].Type == "suicide" {
 			// add the contract that died, and where it sent it's money
 			address := traces.Result[i].Action.Address
-			if goodAddr(address) {
-				addressMap[address+blockAndIdx] = true
+			if isAddress(address) {
+				opts.AddToMaps(address, bn, txid, addressMap)
 			}
 			refundAddress := traces.Result[i].Action.RefundAddress
-			if goodAddr(refundAddress) {
-				addressMap[refundAddress+blockAndIdx] = true
+			if isAddress(refundAddress) {
+				opts.AddToMaps(refundAddress, bn, txid, addressMap)
 			}
 
 		} else if traces.Result[i].Type == "create" {
 			// add the creator, and the new address name
 			from := traces.Result[i].Action.From
-			if goodAddr(from) {
-				addressMap[from+blockAndIdx] = true
+			if isAddress(from) {
+				opts.AddToMaps(from, bn, txid, addressMap)
 			}
 			address := traces.Result[i].Result.Address
-			if goodAddr(address) {
-				addressMap[address+blockAndIdx] = true
+			if isAddress(address) {
+				opts.AddToMaps(address, bn, txid, addressMap)
 			}
 
 			// If it's a top level trace, then the call data is the init,
@@ -199,17 +279,14 @@ func (opts *ScrapeOptions) extractFromTraces(rpcProvider string, bn int, address
 					initData := traces.Result[i].Action.Init[10:]
 					for i := 0; i < len(initData)/64; i++ {
 						addr := string(initData[i*64 : (i+1)*64])
-						if potentialAddress(addr) {
-							addr = "0x" + string(addr[24:])
-							if goodAddr(addr) {
-								addressMap[addr+blockAndIdx] = true
-							}
+						if isImplicitAddress(addr) {
+							opts.AddToMaps(addr, bn, txid, addressMap)
 						}
 					}
 				}
 			}
 
-			// Handle contract creations that error out
+			// Handle contract creations that may have errored out
 			if traces.Result[i].Action.To == "" {
 				if traces.Result[i].Result.Address == "" {
 					if traces.Result[i].Error != "" {
@@ -220,14 +297,15 @@ func (opts *ScrapeOptions) extractFromTraces(rpcProvider string, bn int, address
 							RPCParams: rpcClient.RPCParams{traces.Result[i].TransactionHash},
 							ID:        1005,
 						}
-						err := rpcClient.FromRpc(rpcProvider, &txReceiptPl, &receipt)
+						err := rpcClient.FromRpc(opts.RpcProvider, &txReceiptPl, &receipt)
 						if err != nil {
-							fmt.Println("FromRpc(transReceipt) returned error")
-							log.Fatal(err)
+							// TODO: BOGUS - RETURN VALUE FROM BLAZE
+							fmt.Println("FromRpc(transReceipt) returned error", err)
+							os.Exit(1)
 						}
 						addr := receipt.Result.ContractAddress
-						if goodAddr(addr) {
-							addressMap[addr+blockAndIdx] = true
+						if isAddress(addr) {
+							opts.AddToMaps(addr, bn, txid, addressMap)
 						}
 					}
 				}
@@ -235,8 +313,9 @@ func (opts *ScrapeOptions) extractFromTraces(rpcProvider string, bn int, address
 
 		} else {
 			err := "New trace type:" + traces.Result[i].Type
-			fmt.Println("extractFromTraces -->")
-			log.Fatal(err)
+			// TODO: BOGUS - RETURN VALUE FROM BLAZE
+			fmt.Println("extractFromTraces -->", err)
+			os.Exit(1)
 		}
 
 		// Try to get addresses from the input data
@@ -245,11 +324,8 @@ func (opts *ScrapeOptions) extractFromTraces(rpcProvider string, bn int, address
 			//fmt.Println("Input data:", inputData, len(inputData))
 			for i := 0; i < len(inputData)/64; i++ {
 				addr := string(inputData[i*64 : (i+1)*64])
-				if potentialAddress(addr) {
-					addr = "0x" + string(addr[24:])
-					if goodAddr(addr) {
-						addressMap[addr+blockAndIdx] = true
-					}
+				if isImplicitAddress(addr) {
+					opts.AddToMaps(addr, bn, txid, addressMap)
 				}
 			}
 		}
@@ -259,11 +335,8 @@ func (opts *ScrapeOptions) extractFromTraces(rpcProvider string, bn int, address
 			outputData := traces.Result[i].Result.Output[2:]
 			for i := 0; i < len(outputData)/64; i++ {
 				addr := string(outputData[i*64 : (i+1)*64])
-				if potentialAddress(addr) {
-					addr = "0x" + string(addr[24:])
-					if goodAddr(addr) {
-						addressMap[addr+blockAndIdx] = true
-					}
+				if isImplicitAddress(addr) {
+					opts.AddToMaps(addr, bn, txid, addressMap)
 				}
 			}
 		}
@@ -271,29 +344,17 @@ func (opts *ScrapeOptions) extractFromTraces(rpcProvider string, bn int, address
 }
 
 // extractFromLogs Extracts addresses from any part of the log data.
-func (opts *ScrapeOptions) extractFromLogs(bn int, addressMap map[string]bool, logs *rpcClient.Logs) {
+func (opts *BlazeOptions) BlazeExtractFromLogs(bn int, logs *rpcClient.Logs, addressMap map[string]bool) {
 	if logs.Result == nil || len(logs.Result) == 0 {
 		return
 	}
 
-	blockNumStr := utils.PadLeft(strconv.Itoa(bn), 9)
 	for i := 0; i < len(logs.Result); i++ {
-		idxInt, err := strconv.ParseInt(logs.Result[i].TransactionIndex, 0, 32)
-		if err != nil {
-			fmt.Println("extractFromLogs --> strconv.ParseInt returned error")
-			log.Fatal(err)
-		}
-		idx := utils.PadLeft(strconv.FormatInt(idxInt, 10), 5)
-
-		blockAndIdx := "\t" + blockNumStr + "\t" + idx
-
+		txid, _ := strconv.ParseInt(logs.Result[i].TransactionIndex, 0, 32)
 		for j := 0; j < len(logs.Result[i].Topics); j++ {
 			addr := string(logs.Result[i].Topics[j][2:])
-			if potentialAddress(addr) {
-				addr = "0x" + string(addr[24:])
-				if goodAddr(addr) {
-					addressMap[addr+blockAndIdx] = true
-				}
+			if isImplicitAddress(addr) {
+				opts.AddToMaps(addr, bn, int(txid), addressMap)
 			}
 		}
 
@@ -301,118 +362,49 @@ func (opts *ScrapeOptions) extractFromLogs(bn int, addressMap map[string]bool, l
 			inputData := logs.Result[i].Data[2:]
 			for i := 0; i < len(inputData)/64; i++ {
 				addr := string(inputData[i*64 : (i+1)*64])
-				if potentialAddress(addr) {
-					addr = "0x" + string(addr[24:])
-					if goodAddr(addr) {
-						addressMap[addr+blockAndIdx] = true
-					}
+				if isImplicitAddress(addr) {
+					opts.AddToMaps(addr, bn, int(txid), addressMap)
 				}
 			}
 		}
 	}
 }
 
-var nProcessed uint64 = 0
-
-func (opts *ScrapeOptions) writeAddresses(bn int, addressMap map[string]bool) {
-	if len(addressMap) == 0 {
-		return
-	}
-
-	blockNumStr := utils.PadLeft(strconv.Itoa(bn), 9)
-	addressArray := make([]string, len(addressMap))
-	idx := 0
-	for address := range addressMap {
-		addressArray[idx] = address
-		idx++
-	}
-	sort.Strings(addressArray)
-
-	toWrite := []byte(strings.Join(addressArray[:], "\n") + "\n")
-
-	bn, _ = strconv.Atoi(blockNumStr)
-	fileName := config.GetPathToIndex(opts.Globals.Chain) + "ripe/" + blockNumStr + ".txt"
-	if bn > int(opts.RipeBlock) {
-		fileName = config.GetPathToIndex(opts.Globals.Chain) + "unripe/" + blockNumStr + ".txt"
-	}
-
-	err := ioutil.WriteFile(fileName, toWrite, 0744)
-	if err != nil {
-		fmt.Println("writeAddresses --> ioutil.WriteFile returned error")
-		log.Fatal(err)
-	}
-
-	step := uint64(7)
-	if nProcessed%step == 0 {
-		dist := uint64(0)
-		if opts.RipeBlock > uint64(bn) {
-			dist = (opts.RipeBlock - uint64(bn))
+func (opts *BlazeOptions) BlazeWriteAddresses(meta *rpcClient.MetaData, bn int, addressMap map[string]bool) {
+	if len(addressMap) > 0 {
+		addressArray := make([]string, 0, len(addressMap))
+		for record := range addressMap {
+			addressArray = append(addressArray, record)
 		}
-		f := "-------- ( ------)- <PROG>  : Scraping %-04d of %-04d at block %s of %d (%d blocks from head)\r"
-		fmt.Fprintf(os.Stderr, f, nProcessed, opts.BlockCnt, blockNumStr, opts.RipeBlock, dist)
+		sort.Strings(addressArray)
+
+		toWrite := []byte(strings.Join(addressArray[:], "\n") + "\n")
+
+		blockNumStr := utils.PadLeft(strconv.Itoa(bn), 9)
+		fileName := config.GetPathToIndex(opts.Chain) + "ripe/" + blockNumStr + ".txt"
+		if bn > int(opts.RipeBlock) {
+			fileName = config.GetPathToIndex(opts.Chain) + "unripe/" + blockNumStr + ".txt"
+		}
+
+		err := ioutil.WriteFile(fileName, toWrite, 0744)
+		if err != nil {
+			// TODO: BOGUS - RETURN VALUE FROM BLAZE
+			fmt.Println("writeAddresses --> ioutil.WriteFile returned error", err)
+			os.Exit(1)
+		}
 	}
-	nProcessed++
+
+	// TODO: BOGUS - TESTING SCRAPING
+	if !utils.OnOff {
+		step := uint64(7)
+		if opts.NProcessed%step == 0 {
+			dist := uint64(0)
+			if opts.RipeBlock > uint64(bn) {
+				dist = (opts.RipeBlock - uint64(bn))
+			}
+			f := "-------- ( ------)- <PROG>  : Scraping %-04d of %-04d at block %d of %d (%d blocks from head)\r"
+			fmt.Fprintf(os.Stderr, f, opts.NProcessed, opts.BlockCount, bn, opts.RipeBlock, dist)
+		}
+	}
+	opts.NProcessed++
 }
-
-// goodAddr Returns true if the address is not a precompile and not the zero address
-func goodAddr(addr string) bool {
-	// As per EIP 1352, all addresses less or equal to the following value are reserved for pre-compiles.
-	// We don't index precompiles. https://eips.ethereum.org/EIPS/eip-1352
-	return addr > "0x000000000000000000000000000000000000ffff"
-}
-
-// potentialAddress processes a transaction's 'input' data and 'output' data or an event's data field. We call anything
-// with 12 bytes of leading zeros but not more than 19 leading zeros (24 and 38 characters respectively).
-func potentialAddress(addr string) bool {
-	// Any 32-byte value smaller than this number is assumed to be a 'value'. We call them baddresses.
-	// While this may seem like a lot of addresses being labeled as baddresses, it's not very many:
-	// ---> 2 out of every 10000000000000000000000000000000000000000000000 are baddresses.
-	small := "00000000000000000000000000000000000000ffffffffffffffffffffffffff"
-	//        -------+-------+-------+-------+-------+-------+-------+-------+
-	if addr <= small {
-		return false
-	}
-
-	// Any 32-byte value with less than this many leading zeros is not an address (address are 20-bytes and
-	// zero padded to the left)
-	largePrefix := "000000000000000000000000"
-	//              -------+-------+-------+
-	if !strings.HasPrefix(addr, largePrefix) {
-		return false
-	}
-
-	// Of the valid addresses, we assume any ending with this many trailing zeros is also a baddress.
-	if strings.HasSuffix(addr, "00000000") {
-		return false
-	}
-	return true
-}
-
-// TODO:
-// TODO: This "baddress"
-// TODO:
-// TODO: 0x00000000000004ee2d6d415371e298f092cc0000
-// TODO:
-// TODO: appears in the index but it is not an actual address. It appears only four times in the entire index.
-// TODO: We know this is not an address because it only appears the event 'data' section for Transfers or Approvals
-// TODO: which we know to be the value, not an address.
-// TODO:
-// TODO: The trouble is knowing this is a "non-chain knowledge leak." The chain itself knows nothing about
-// TODO: ERC20 tokens. I'm not sure how many 'false records' (or baddresses) this would remove, but it may
-// TODO: be significant given that Transfers and Approvals dominate the chain data.
-// TODO:
-// TODO: What we could do is this:
-// TODO:
-// TODO: If we're scraping a log, and
-// TODO:
-// TODO: 	If we see certain topics (topic[0] is a Transfer or Approval, we do not include the value
-// TODO:	even if it looks like an address. This is a very slippery slope. What does 'well known' mean?
-// TODO:
-// TODO: Another downside; implementing this would require a full re-generation of the index and would
-// TODO: change the hashes and the underlying files. In order to do this, we would require a migration that
-// TODO: removes the 'old' index from the end user's machine and then downloads the new index. We can do this,
-// TODO: but it feels quite precarious.
-// TODO:
-// TODO: My expectation is that we will eventually have to re-generate the index at some point (version 1.0?).
-// TODO: We can this then.
-// TODO:

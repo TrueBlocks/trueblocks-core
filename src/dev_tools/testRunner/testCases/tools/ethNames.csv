@@ -42,7 +42,7 @@ on      ,both ,medi  ,names ,tools/ethNames ,duplicated_option_1    ,n    ,terms
 on      ,both ,medi  ,names ,tools/ethNames ,name_match             ,n    ,noop & terms = torj & fmt = csv
 on      ,cmd  ,fast  ,names ,tools/ethNames ,show_version           ,n    ,version
 on      ,cmd  ,slow  ,names ,tools/ethNames ,fromFile               ,n    ,file = names.txt
-on      ,cmd  ,fast  ,names ,tools/ethNames ,prefund_output         ,n    ,output = test_file & prefund
+local   ,cmd  ,fast  ,names ,tools/ethNames ,prefund_output         ,n    ,output = test_file & prefund
 on      ,both ,fast  ,names ,tools/ethNames ,edit_invalid           ,y    ,invalid & log_level = 10 & fmt = api & expand
 on      ,both ,fast  ,names ,tools/ethNames ,edit_add               ,y    ,create & log_level = 10 & fmt = api & expand
 on      ,both ,fast  ,names ,tools/ethNames ,show_add               ,y    ,terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = api & expand

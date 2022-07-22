@@ -21,7 +21,7 @@ import (
 func EstablishIndexChunk(chain string, fileRange cache.FileRange) (bool, error) {
 	exists, fileName := fileRange.RangeToFilename(chain, cache.Index_Final)
 
-	chunkManifest, err := manifest.FromLocalFile(chain)
+	chunkManifest, err := manifest.ReadManifest(chain, manifest.FromCache)
 	if err != nil {
 		return exists, err
 	}

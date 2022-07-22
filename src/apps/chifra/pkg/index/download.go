@@ -118,12 +118,12 @@ func getDownloadWorker(arguments downloadWorkerArguments) workerFunction {
 				hash = pin.IndexHash
 			}
 
-			url.Path = path.Join(url.Path, hash) // .String())
+			url.Path = path.Join(url.Path, hash.String())
 
 			progressChannel <- &progress.Progress{
 				Payload: &pin,
 				Event:   progress.Start,
-				Message: hash, //.String(),
+				Message: hash.String(),
 			}
 
 			download, err := fetchChunk(ctx, url.String())

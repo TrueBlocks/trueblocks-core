@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-07-21T22:59:30
+date: 2022-07-22T00:50:43
 lastmod:
   - :git
   - lastmod
@@ -90,11 +90,9 @@ Pinnedchunk data is made of the following data fields:
 
 | Field     | Description                                                 | Type     |
 | --------- | ----------------------------------------------------------- | -------- |
-| fileName  | for each chunk, the range of blocks contained in that chunk | string   |
+| range     | for each chunk, the range of blocks contained in that chunk | string   |
 | bloomHash | the IPFS hash of the bloom filter at that range             | ipfshash |
 | indexHash | the IPFS hash of the index chunk at that range              | ipfshash |
-| firstApp  | the first appearance in the chunk                           | blknum   |
-| latestApp | the latest appearance in the chunk                          | blknum   |
 
 
 ## Manifest
@@ -131,7 +129,7 @@ Manifest data is made of the following data fields:
 | apiProvider    | A valid API provider for the explorer                            | string |
 | remoteExplorer | A remote explorer for the chain such as EtherScan                | string |
 | localExplorer  | The local explorer for the chain (typically TrueBlocks Explorer) | string |
-| pinGateway     | An IPFS gateway for pinning the index if enabled                 | string |
+| ipfsGateway    | An IPFS gateway for pinning the index if enabled                 | string |
 
 ## CacheEntry
 
@@ -148,7 +146,6 @@ This documentation mentions the following basic data types.
 | Type      | Description                                     | Notes          |
 | --------- | ----------------------------------------------- | -------------- |
 | address   | a 20-byte hexadecimal string starting with '0x' | lowercase      |
-| blknum    | an alias for a uint64                           |                |
 | bool      | a value either `true`, `false`, `1`, or `0`     |                |
 | ipfshash  | a multi-hash produced by IPFS                   | mixed-case     |
 | string    | a normal character string                       |                |

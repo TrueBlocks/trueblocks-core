@@ -168,7 +168,7 @@ export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&maxRecords=5&accounting&
         "status": null
       },
       "traces": [],
-      "compressedTx": "0x ( )",
+      "compressedTx": "0x()",
       "statements": [
         {
           "blockNumber": 1501459,

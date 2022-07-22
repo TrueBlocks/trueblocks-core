@@ -24,7 +24,6 @@ type ScrapeOptions struct {
 	BlockCnt     uint64                `json:"blockCnt,omitempty"`     // Maximum number of blocks to process per pass
 	Pin          bool                  `json:"pin,omitempty"`          // Pin chunks (and blooms) to IPFS as they are created (requires ipfs)
 	Sleep        float64               `json:"sleep,omitempty"`        // Seconds to sleep between scraper passes
-	Blaze        bool                  `json:"blaze,omitempty"`        // Invoke the blaze scraper to process blocks
 	BlockChanCnt uint64                `json:"blockChanCnt,omitempty"` // Number of concurrent block processing channels
 	AddrChanCnt  uint64                `json:"addrChanCnt,omitempty"`  // Number of concurrent address processing channels
 	AppsPerChunk uint64                `json:"appsPerChunk,omitempty"` // The number of appearances to build into a chunk before consolidating it
@@ -33,7 +32,6 @@ type ScrapeOptions struct {
 	FirstSnap    uint64                `json:"firstSnap,omitempty"`    // The first block at which snap_to_grid is enabled
 	AllowMissing bool                  `json:"allowMissing,omitempty"` // Do not report errors for blockchain that contain blocks with zero addresses
 	StartBlock   uint64                `json:"startBlock,omitempty"`   // First block to visit (available only for blaze scraper)
-	RipeBlock    uint64                `json:"ripeBlock,omitempty"`    // Blocks prior to this value are written to 'ripe' folder (available only for blaze scraper)
 	Globals      globals.GlobalOptions `json:"globals,omitempty"`      // The global options
 	BadFlag      error                 `json:"badFlag,omitempty"`      // An error flag if needed
 }
@@ -46,7 +44,6 @@ func (opts *ScrapeOptions) testLog() {
 	logger.TestLog(opts.BlockCnt != 2000, "BlockCnt: ", opts.BlockCnt)
 	logger.TestLog(opts.Pin, "Pin: ", opts.Pin)
 	logger.TestLog(opts.Sleep != 14, "Sleep: ", opts.Sleep)
-	logger.TestLog(opts.Blaze, "Blaze: ", opts.Blaze)
 	logger.TestLog(opts.BlockChanCnt != 10, "BlockChanCnt: ", opts.BlockChanCnt)
 	logger.TestLog(opts.AddrChanCnt != 20, "AddrChanCnt: ", opts.AddrChanCnt)
 	logger.TestLog(opts.AppsPerChunk != 200000, "AppsPerChunk: ", opts.AppsPerChunk)
@@ -55,7 +52,6 @@ func (opts *ScrapeOptions) testLog() {
 	logger.TestLog(opts.FirstSnap != 0, "FirstSnap: ", opts.FirstSnap)
 	logger.TestLog(opts.AllowMissing, "AllowMissing: ", opts.AllowMissing)
 	logger.TestLog(opts.StartBlock != 0, "StartBlock: ", opts.StartBlock)
-	logger.TestLog(opts.RipeBlock != 0, "RipeBlock: ", opts.RipeBlock)
 	opts.Globals.TestLog()
 }
 
@@ -76,18 +72,6 @@ func (opts *ScrapeOptions) getEnvStr() []string {
 // toCmdLine converts the option to a command line for calling out to the system.
 func (opts *ScrapeOptions) toCmdLine() string {
 	options := ""
-	if opts.BlockCnt != 2000 {
-		options += (" --block_cnt " + fmt.Sprintf("%d", opts.BlockCnt))
-	}
-	if opts.Pin {
-		options += " --pin"
-	}
-	if opts.BlockChanCnt != 10 {
-		options += (" --block_chan_cnt " + fmt.Sprintf("%d", opts.BlockChanCnt))
-	}
-	if opts.AddrChanCnt != 20 {
-		options += (" --addr_chan_cnt " + fmt.Sprintf("%d", opts.AddrChanCnt))
-	}
 	options += " " + strings.Join(opts.Modes, " ")
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -107,7 +91,6 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 	opts.SnapToGrid = 100000
 	opts.FirstSnap = 0
 	opts.StartBlock = 0
-	opts.RipeBlock = 0
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "modes":
@@ -121,8 +104,6 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 			opts.Pin = true
 		case "sleep":
 			opts.Sleep = globals.ToFloat64(value[0])
-		case "blaze":
-			opts.Blaze = true
 		case "blockChanCnt":
 			opts.BlockChanCnt = globals.ToUint64(value[0])
 		case "addrChanCnt":
@@ -139,8 +120,6 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 			opts.AllowMissing = true
 		case "startBlock":
 			opts.StartBlock = globals.ToUint64(value[0])
-		case "ripeBlock":
-			opts.RipeBlock = globals.ToUint64(value[0])
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "scrape")

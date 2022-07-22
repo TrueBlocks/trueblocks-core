@@ -20,7 +20,7 @@ var tabManifestSource = `
 `
 
 func TestReadTabManifest(t *testing.T) {
-	m, err := ReadTabManifest(strings.NewReader(tabManifestSource))
+	m, err := readTabManifest("mainnet", strings.NewReader(tabManifestSource))
 	if err != nil {
 		t.Error(err)
 	}

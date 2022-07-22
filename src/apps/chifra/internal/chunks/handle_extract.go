@@ -5,6 +5,8 @@
 package chunksPkg
 
 import (
+	"strings"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 )
 
@@ -23,19 +25,38 @@ func shouldDisplay(result cache.IndexFileInfo, blockNums []uint64) bool {
 	return hit
 }
 
-func (opts *ChunksOptions) HandleChunksExtract(displayFunc func(path string, first bool) (bool, error), blockNums []uint64) error {
+type WalkContext struct {
+	VisitFunc func(ctx *WalkContext, path string, first bool) (bool, error)
+	Data      interface{}
+}
+
+func (opts *ChunksOptions) WalkIndexFiles(ctx *WalkContext, cacheType cache.CacheType, blockNums []uint64) error {
 	filenameChan := make(chan cache.IndexFileInfo)
 
 	var nRoutines int = 1
-	go cache.WalkCacheFolder(opts.Globals.Chain, cache.Index_Bloom, filenameChan)
+	go cache.WalkCacheFolder(opts.Globals.Chain, cacheType, filenameChan)
 
 	cnt := 0
 	for result := range filenameChan {
 		switch result.Type {
 		case cache.Index_Bloom:
-			skip := opts.Globals.TestMode && cnt > maxTestItems
+			skip := (opts.Globals.TestMode && cnt > maxTestItems) || !strings.HasSuffix(result.Path, ".bloom")
 			if !skip && shouldDisplay(result, blockNums) {
-				ok, _ := displayFunc(result.Path, cnt == 0)
+				ok, err := ctx.VisitFunc(ctx, result.Path, cnt == 0)
+				if err != nil {
+					return err
+				}
+				if ok {
+					cnt++
+				}
+			}
+		case cache.Index_Staging:
+			skip := (opts.Globals.TestMode)
+			if !skip && shouldDisplay(result, blockNums) {
+				ok, err := ctx.VisitFunc(ctx, result.Path, cnt == 0)
+				if err != nil {
+					return err
+				}
 				if ok {
 					cnt++
 				}

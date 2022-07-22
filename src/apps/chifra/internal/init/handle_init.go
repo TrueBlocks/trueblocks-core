@@ -7,15 +7,17 @@
 package initPkg
 
 import (
-	"net/url"
-	"path"
+	"fmt"
+	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 )
 
 // InitInternal initializes local copy of UnchainedIndex by downloading manifests and chunks
@@ -32,32 +34,14 @@ func (opts *InitOptions) HandleInit() error {
 	chain := opts.Globals.Chain
 
 	config.EstablishIndexPaths(config.GetPathToIndex(chain))
-	opts.PrintManifestHeader()
-
-	cid, err := manifest.GetManifestCidFromContract(chain)
-	if err != nil {
-		return err
-	}
-	logger.Log(logger.Info, "Unchained index returned CID", cid)
-
-	// Download the manifest
-	gatewayUrl := config.GetIpfsGateway(chain)
-	logger.Log(logger.Info, "IPFS gateway", gatewayUrl)
-
-	url, err := url.Parse(gatewayUrl)
-	if err != nil {
-		return err
-	}
-	url.Path = path.Join(url.Path, cid)
-	downloadedManifest, err := manifest.DownloadManifest(url.String())
-
+	downloadedManifest, err := manifest.ReadManifest(chain, manifest.FromContract)
 	if err != nil {
 		return err
 	}
 
-	// Save manifest
-	manifestPath := config.GetPathToChainConfig(chain) + "manifest.txt"
-	err = manifest.SaveManifest(manifestPath, downloadedManifest)
+	printHeader(chain, opts.Globals.TestMode)
+
+	err = opts.SaveManifest(chain, downloadedManifest)
 	if err != nil {
 		return err
 	}
@@ -68,6 +52,11 @@ func (opts *InitOptions) HandleInit() error {
 	defer close(bloomsDoneChannel)
 	indexDoneChannel := make(chan bool)
 	defer close(indexDoneChannel)
+	defer func() {
+		// We want to make sure these folders are empty so the scraper
+		// starts at the proper place.
+		config.CleanIndexFolder(config.GetPathToIndex(chain))
+	}()
 
 	getChunks := func(chunkType cache.CacheType) {
 		chunkPath := cache.NewCachePath(chain, chunkType)
@@ -130,6 +119,7 @@ func downloadAndReportProgress(chain string, pins []manifest.ChunkRecord, chunkP
 		}
 
 		if event.Event == progress.AllDone {
+			// TODO: BOGUS - FEATURE DISTINGUISH BLOOMS FROM CHUNKS IN DOWNLOAD
 			logger.Log(logger.Info, pinsDone, "pin(s) were (re)initialized")
 			break
 		}
@@ -190,18 +180,33 @@ func retry(failedPins []manifest.ChunkRecord, times uint, downloadChunks downloa
 	return len(pinsToRetry)
 }
 
-func (opts *InitOptions) PrintManifestHeader() {
-	// The following two values should be read the manifest, however right now only
-	// TSV format is available for download and it lacks this information
-	// TODO: These values should be in a config file
-	// TODO: We can add the "loaded" configuration file to Options
-	// TODO: This needs to be per chain data
-	chain := opts.Globals.Chain
-	logger.Log(logger.Info, "hashToIndexFormatFile:", "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2")
-	logger.Log(logger.Info, "hashToBloomFormatFile:", "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD")
-	logger.Log(logger.Info, "manifestHashEncoding:", "0x337f3f32")
-	logger.Log(logger.Info, "unchainedIndexAddr:", "0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd")
-	if !opts.Globals.TestMode {
+func (opts *InitOptions) SaveManifest(chain string, man *manifest.Manifest) error {
+	fileName := config.GetPathToChainConfig(chain) + "manifest.json"
+	w, err := os.Create(fileName)
+	if err != nil {
+		return fmt.Errorf("creating file: %s", err)
+	}
+	defer w.Close()
+	err = file.Lock(w)
+	if err != nil {
+		return fmt.Errorf("locking file: %s", err)
+	}
+
+	tmp := opts.Globals
+	tmp.Format = "json"
+	tmp.Writer = w
+	tmp.NoHeader = false
+	tmp.ApiMode = false
+	return tmp.RenderObject(man, true)
+}
+
+func printHeader(chain string, testMode bool) {
+	logger.Log(logger.Info, "schemas:", unchained.Schemas)
+	logger.Log(logger.Info, "databases:", unchained.Databases)
+	logger.Log(logger.Info, "unchainedAddress:", unchained.Address_V2)
+	logger.Log(logger.Info, "unchainedReadHash:", unchained.ReadHash_V2)
+	logger.Log(logger.Info, "unchainedPublishHash:", unchained.PublishHash_V2)
+	if !testMode {
 		logger.Log(logger.Info, "manifestLocation:", config.GetPathToChainConfig(chain)) // order matters
 		logger.Log(logger.Info, "unchainedIndexFolder:", config.GetPathToIndex(chain))   // order matters
 	}

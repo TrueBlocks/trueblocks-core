@@ -32,7 +32,7 @@ class CChain : public CBaseNode {
     string_q apiProvider;
     string_q remoteExplorer;
     string_q localExplorer;
-    string_q pinGateway;
+    string_q ipfsGateway;
 
   public:
     CChain(void);
@@ -102,7 +102,7 @@ inline void CChain::initialize(void) {
     apiProvider = "http://localhost:8080";
     remoteExplorer = "http://etherscan.io";
     localExplorer = "http://localhost:1234";
-    pinGateway = "http://gateway.ipfs.io/ipfs";
+    ipfsGateway = "http://gateway.ipfs.io/ipfs";
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -120,7 +120,7 @@ inline void CChain::duplicate(const CChain& ch) {
     apiProvider = ch.apiProvider;
     remoteExplorer = ch.remoteExplorer;
     localExplorer = ch.localExplorer;
-    pinGateway = ch.pinGateway;
+    ipfsGateway = ch.ipfsGateway;
 
     // EXISTING_CODE
     // EXISTING_CODE

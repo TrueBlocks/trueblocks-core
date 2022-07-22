@@ -14,17 +14,10 @@
 
 //----------------------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
-    pinlib_init(defaultQuitHandler);
-
+    acctlib_init(defaultQuitHandler);
     COptions options;
-    if (!options.prepareArguments(argc, argv))
-        return 0;
-
-    ASSERT(options.commandLines.size() == 1);
-    if (!options.parseArguments(options.commandLines[0]))
-        return 0;
-    options.scrape_blocks();
-
-    pinlib_cleanup();
-    return 0;
+    if (options.prepareArguments(argc, argv))
+        if (options.standardOptions(options.commandLines[0]))
+            return options.scrape_blocks() ? EXIT_SUCCESS : EXIT_FAILURE;
+    return EXIT_FAILURE;
 }

@@ -7,6 +7,7 @@ package chunksPkg
 import (
 	"errors"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/migrate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -126,8 +127,8 @@ func (opts *ChunksOptions) validateChunks() error {
 	}
 
 	// Note this does not return if a migration is needed
-	// TODO: BOGUS - DO WE WANT TO DISALLOW INVESTIGATION OF OLDER INSTALLATIONS?
-	// migrate.CheckBackLevelIndex(opts.Globals.Chain)
+	// TODO: BOGUS - DO WE REALLY WANT TO DISALLOW INVESTIGATION OF OLDER INSTALLATIONS?
+	migrate.CheckBackLevelIndex(opts.Globals.Chain)
 
 	if opts.Remote {
 		if opts.Mode != "pins" && opts.Mode != "manifest" {

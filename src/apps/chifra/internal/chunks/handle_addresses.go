@@ -7,10 +7,13 @@ package chunksPkg
 import (
 	"io"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
-func (opts *ChunksOptions) showAddresses(path string, first bool) (bool, error) {
+func (opts *ChunksOptions) showAddresses(ctx *WalkContext, path string, first bool) (bool, error) {
 	path = index.ToIndexPath(path)
 
 	indexChunk, err := index.NewChunkData(path)
@@ -36,10 +39,17 @@ func (opts *ChunksOptions) showAddresses(path string, first bool) (bool, error) 
 			return false, err
 		}
 
-		err = opts.Globals.RenderObject(obj, first && cnt == 0)
+		r := types.SimpleIndexAddress{
+			Address: hexutil.Encode(obj.Address.Bytes()),
+			Range:   indexChunk.Range.String(),
+			Offset:  obj.Offset,
+			Count:   obj.Count,
+		}
+		err = opts.Globals.RenderObject(r, first && cnt == 0)
 		if err != nil {
 			return false, err
 		}
+		cnt++
 
 		if opts.Details {
 			apps, err := indexChunk.ReadAppearanceRecordsAndResetOffset(&obj)
@@ -53,8 +63,22 @@ func (opts *ChunksOptions) showAddresses(path string, first bool) (bool, error) 
 				}
 			}
 		}
-		cnt++
 	}
 
 	return true, nil
+}
+
+func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
+	maxTestItems = 10
+
+	defer opts.Globals.RenderFooter()
+	err := opts.Globals.RenderHeader(types.SimpleIndexAddress{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+	if err != nil {
+		return err
+	}
+
+	ctx := WalkContext{
+		VisitFunc: opts.showAddresses,
+	}
+	return opts.WalkIndexFiles(&ctx, cache.Index_Bloom, blockNums)
 }

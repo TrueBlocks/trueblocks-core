@@ -92,7 +92,7 @@ TEST[DATE|TIME] LastBlock:  3100000
       "apiProvider": "--provider-mainnet--",
       "remoteExplorer": "--explorer-mainnet--",
       "localExplorer": "--explorer-mainnet--",
-      "pinGateway": "--gateway-mainnet--"
+      "ipfsGateway": "--gateway-mainnet--"
     },
     {
       "chain": "gnosis",
@@ -102,7 +102,7 @@ TEST[DATE|TIME] LastBlock:  3100000
       "apiProvider": "--provider-gnosis--",
       "remoteExplorer": "--explorer-gnosis--",
       "localExplorer": "--explorer-gnosis--",
-      "pinGateway": "--gateway-gnosis--"
+      "ipfsGateway": "--gateway-gnosis--"
     }
   ],
   "date": "--date--"

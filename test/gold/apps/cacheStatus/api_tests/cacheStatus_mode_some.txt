@@ -75,7 +75,7 @@ status?modes=some
           "apiProvider": "--provider-mainnet--",
           "remoteExplorer": "--explorer-mainnet--",
           "localExplorer": "--explorer-mainnet--",
-          "pinGateway": "--gateway-mainnet--"
+          "ipfsGateway": "--gateway-mainnet--"
         },
         {
           "chain": "gnosis",
@@ -85,7 +85,7 @@ status?modes=some
           "apiProvider": "--provider-gnosis--",
           "remoteExplorer": "--explorer-gnosis--",
           "localExplorer": "--explorer-gnosis--",
-          "pinGateway": "--gateway-gnosis--"
+          "ipfsGateway": "--gateway-gnosis--"
         }
       ],
       "date": "--date--"

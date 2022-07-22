@@ -830,7 +830,7 @@ components:
       description: "the IPFS hashes of the index chunk and its associated Bloom filter for the given block range"
       type: object
       properties:
-        fileName:
+        range:
           type: string
           example: "013142464-013145212"
           description: "for each chunk, the range of blocks contained in that chunk"
@@ -844,14 +844,6 @@ components:
           format: ipfshash
           example: "QmTbYpR...qWLj44"
           description: "the IPFS hash of the index chunk at that range"
-        firstApp:
-          type: number
-          format: blknum
-          description: "the first appearance in the chunk"
-        latestApp:
-          type: number
-          format: blknum
-          description: "the latest appearance in the chunk"
     manifest:
       description: "a manifest of the IPFS hashes created for the unchained index"
       type: object
@@ -901,7 +893,7 @@ components:
         localExplorer:
           type: string
           description: "The local explorer for the chain (typically TrueBlocks Explorer)"
-        pinGateway:
+        ipfsGateway:
           type: string
           description: "An IPFS gateway for pinning the index if enabled"
     cacheEntry:

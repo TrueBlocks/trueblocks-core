@@ -1,0 +1,6 @@
+chunks?mode=addresses&clean
+{
+  "errors": [
+    "The --clean option is available only in manifest mode."
+  ]
+}

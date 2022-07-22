@@ -11,23 +11,30 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *ChunksOptions) showIndex(path string, first bool) (bool, error) {
+func (opts *ChunksOptions) showIndex(ctx *WalkContext, path string, first bool) (bool, error) {
 	path = index.ToIndexPath(path)
 	header, err := index.ReadChunkHeader(opts.Globals.Chain, path)
 	if err != nil {
 		return false, err
 	}
-	var obj types.SimpleIndex
-	obj.Range, _ = cache.RangeFromFilename(path)
-	obj.Magic = header.Magic
-	obj.Hash = header.Hash
-	obj.AddressCount = header.AddressCount
-	obj.AppearanceCount = header.AppearanceCount
-	obj.Size = file.FileSize(path)
+
+	rng, err := cache.RangeFromFilename(path)
 	if err != nil {
 		return false, err
 	}
 
+	obj := types.SimpleIndex{
+		Range:           rng,
+		Magic:           header.Magic,
+		Hash:            header.Hash,
+		AddressCount:    header.AddressCount,
+		AppearanceCount: header.AppearanceCount,
+		Size:            file.FileSize(path),
+	}
+
+	// TODO: BOGUS - FEATURE CUSTOMIZE DISPLAY STRINGS
+	// opts.Globals.Format = "Magic,Hash,Size,AppearanceCount,AddressCount,Range"
+	// opts.Globals.Format = "Range\tAppearanceCount\tAddressCount"
 	// TODO: Fix export without arrays
 	err = opts.Globals.RenderObject(obj, first)
 	if err != nil {
@@ -53,3 +60,16 @@ if (share) {
 	(pin.bloomHash == newHash ? greenCheck : redX));
 }
 */
+
+func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
+	defer opts.Globals.RenderFooter()
+	err := opts.Globals.RenderHeader(types.SimpleIndex{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+	if err != nil {
+		return err
+	}
+
+	ctx := WalkContext{
+		VisitFunc: opts.showIndex,
+	}
+	return opts.WalkIndexFiles(&ctx, cache.Index_Bloom, blockNums)
+}

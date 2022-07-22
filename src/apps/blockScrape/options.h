@@ -15,8 +15,9 @@
  * Parts of this file were generated with makeClass --options. Edit only those parts of
  * the code outside of the BEG_CODE/END_CODE sections
  */
-#include "pinlib.h"
+
 #include "acctlib.h"
+#include "bloom.h"
 
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
@@ -25,47 +26,39 @@
 class COptions : public COptionsBase {
   public:
     // BEG_CODE_DECLARE
+    // END_CODE_DECLARE
+
     uint64_t block_cnt;
-    bool pin;
-    uint64_t block_chan_cnt;
-    uint64_t addr_chan_cnt;
     uint64_t apps_per_chunk;
     uint64_t unripe_dist;
     uint64_t snap_to_grid;
     uint64_t first_snap;
     bool allow_missing;
-    // END_CODE_DECLARE
+    blknum_t start_block{0};
 
     string_q newStage;
     ofstream tmpStagingStream;
     blknum_t prev_block{0};
-    blknum_t blaze_ripe{0};
-    blknum_t blaze_start{0};
     blknum_t nRecsThen{0};
     blknum_t nRecsNow{0};
-    CPinnedChunkArray pinList;
-    CApiKey lic;
-    CMetaData meta;
-    bool snapped{false};
 
-    COptions(void);
-    ~COptions(void);
+    COptions(void) {
+    }
+    ~COptions(void) {
+    }
+    void Init(void) {
+    }
+    bool parseArguments(string_q& command) {
+        return true;
+    }
 
-    bool parseArguments(string_q& command);
-    void Init(void);
-
-    bool start_scraper(void);
     bool scrape_blocks(void);
     bool stage_chunks(const string_q& tmpFn);
     bool write_chunks(blknum_t chunkSize, bool snapped);
-    bool isSnapToGrid(blknum_t bn) const {
-        return bn > first_snap && !(bn % snap_to_grid);
-    }
-    bool report(void);
+    bool copyRipeToStage(const string_q& path, bool& snapped);
+    bool report(uint64_t nRecsThen, uint64_t nRecsNow) const;
 };
 
 //-----------------------------------------------------------------------------
-extern bool copyRipeToStage(const string_q& path, void* data);
-extern bool visitToPin(const string_q& chunkId, void* data);
-extern bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTAPPLYFUNC pinFunc,
-                               void* pinFuncData);
+extern bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines);
+extern bool freshenTimestampsAppend(blknum_t firstBlock, blknum_t nBlocks);

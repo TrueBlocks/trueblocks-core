@@ -6,19 +6,16 @@ package manifest
 
 import (
 	"encoding/csv"
-	"errors"
 	"io"
-	"os"
-	"sort"
-	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
-// ReadPinDescriptors parses pin information and returns a slice of
+// readPinDescriptors parses pin information and returns a slice of
 // ChunkRecord or error
-func ReadPinDescriptors(r io.Reader) ([]ChunkRecord, error) {
+func readPinDescriptors(r io.Reader) ([]ChunkRecord, error) {
 	reader := csv.NewReader(r)
 	reader.Comma = '\t'
 	reader.FieldsPerRecord = 3
@@ -33,101 +30,32 @@ func ReadPinDescriptors(r io.Reader) ([]ChunkRecord, error) {
 		if err != nil {
 			return nil, err
 		}
+		if record[0] == "fileName" || record[0] == "range" {
+			continue
+		}
 
 		descriptors = append(descriptors, ChunkRecord{
 			Range:     record[0],
-			BloomHash: record[1],
-			IndexHash: record[2],
+			BloomHash: types.IpfsHash(record[1]),
+			IndexHash: types.IpfsHash(record[2]),
 		})
 	}
 
 	return descriptors, nil
 }
 
-// BuildTabRange finds the first and last pin descriptor and returns
-// ManifestRange. We need this function, because TSV formatted manifest
-// does not carry this information explicitly
-func BuildTabRange(descriptors []ChunkRecord) (ManifestRange, error) {
-	if len(descriptors) == 0 {
-		return ManifestRange{}, errors.New("invalid input: no pins")
-	}
-
-	firstPinRange := ManifestRange{}
-	var err error
-	if !strings.Contains(descriptors[0].Range, "-") {
-		if len(descriptors) == 1 {
-			return ManifestRange{}, errors.New("invalid input: header only, no pins")
-		}
-		firstPinRange, err = StringToManifestRange(descriptors[1].Range)
-		if err != nil {
-			return ManifestRange{}, err
-		}
-	} else {
-		firstPinRange, err = StringToManifestRange(descriptors[0].Range)
-		if err != nil {
-			return ManifestRange{}, err
-		}
-	}
-
-	lastPinRange, err := StringToManifestRange(descriptors[len(descriptors)-1].Range)
-	if err != nil {
-		return ManifestRange{}, err
-	}
-
-	return ManifestRange{
-		firstPinRange[0],
-		lastPinRange[1],
-	}, nil
-}
-
-// ReadTabManifest parses TSV formatted manifest
-func ReadTabManifest(r io.Reader) (*Manifest, error) {
-	descriptors, err := ReadPinDescriptors(r)
-	if err != nil {
-		return nil, err
-	}
-
-	newBlockRange, err := BuildTabRange(descriptors)
+// readTabManifest parses TSV formatted manifest
+func readTabManifest(chain string, r io.Reader) (*Manifest, error) {
+	descriptors, err := readPinDescriptors(r)
 	if err != nil {
 		return nil, err
 	}
 
 	return &Manifest{
-		IndexFormat: "",
-		BloomFormat: "",
-		CommitHash:  "",
-		BlockRange:  newBlockRange,
-		Chunks:      descriptors,
+		Version:   version.ManifestVersion,
+		Chain:     chain,
+		Schemas:   unchained.Schemas,
+		Databases: unchained.Databases,
+		Chunks:    descriptors,
 	}, nil
-}
-
-// FromLocalFile loads the manifest saved in ConfigPath
-func FromLocalFile(chain string) (*Manifest, error) {
-	manifestPath := config.GetPathToChainConfig(chain) + "manifest.txt"
-	file, err := os.Open(manifestPath)
-	if err != nil {
-		return nil, err
-	}
-	return ReadTabManifest(file)
-}
-
-func GetPinList(chain string) ([]types.SimpleChunkRecord, error) {
-	manifestData, err := FromLocalFile(chain)
-	if err != nil {
-		return []types.SimpleChunkRecord{}, err
-	}
-
-	sort.Slice(manifestData.Chunks, func(i, j int) bool {
-		iPin := manifestData.Chunks[i]
-		jPin := manifestData.Chunks[j]
-		return iPin.Range < jPin.Range
-	})
-
-	pinList := make([]types.SimpleChunkRecord, len(manifestData.Chunks))
-	for i := range manifestData.Chunks {
-		pinList[i].Range = manifestData.Chunks[i].Range
-		pinList[i].BloomHash = string(manifestData.Chunks[i].BloomHash)
-		pinList[i].IndexHash = string(manifestData.Chunks[i].IndexHash)
-	}
-	return pinList, nil
 }

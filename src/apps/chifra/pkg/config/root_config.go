@@ -34,11 +34,13 @@ type versionGroup struct {
 type chainGroup struct {
 	ChainId        string `toml:"chainId"`
 	LocalExplorer  string `toml:"localExplorer"`
-	PinGateway     string `toml:"pinGateway"`
+	IpfsGateway    string `toml:"ipfsGateway"`
 	RemoteExplorer string `toml:"remoteExplorer"`
 	RpcProvider    string `toml:"rpcProvider"`
 	ApiProvider    string `toml:"apiProvider"`
 	Symbol         string `toml:"symbol"`
+	// TODO: This is deprecated - it can be removed in the future
+	PinGateway string `toml:"pinGateway"`
 }
 
 type settingsGroup struct {

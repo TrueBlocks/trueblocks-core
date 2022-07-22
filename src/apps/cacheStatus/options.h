@@ -15,26 +15,7 @@
  * Parts of this file were generated with makeClass --options. Edit only those parts of
  * the code outside of the BEG_CODE/END_CODE sections
  */
-#include "acctlib.h"
-#include "classes/cachebase.h"
-#include "classes/cache.h"
-
-#include "classes/chaincache.h"
-#include "classes/abicacheitem.h"
-#include "classes/abicache.h"
-#include "classes/collectioncacheitem.h"
-#include "classes/collectioncache.h"
-#include "classes/monitorcacheitem.h"
-#include "classes/monitorcache.h"
-#include "classes/indexcacheitem.h"
-#include "classes/indexcache.h"
-#include "classes/pricecacheitem.h"
-#include "classes/pricecache.h"
-#include "classes/namecache.h"
-#include "classes/slurpcache.h"
-
-#include "classes/status.h"
-#include "classes/statusterse.h"
+#include "cachelib.h"
 #include "pinnedchunk.h"
 
 // BEG_ERROR_DEFINES
@@ -145,7 +126,3 @@ class CMigrationChecker {
 };
 
 bool needsMigration(const string_q& path, void* data);
-namespace qblocks {
-extern bool countFiles(const string_q& path, void* data);
-extern bool countFilesInCache(const string_q& path, void* data);
-}  // namespace qblocks

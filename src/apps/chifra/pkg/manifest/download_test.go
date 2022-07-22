@@ -15,13 +15,8 @@ var manifestJSONSource = `
 {
   "version": "2",
   "chain": "mainnet",
-  "chainId": 1,
-  "indexFormat": "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2",
-  "bloomFormat": "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD",
-  "commitHash": "f29699d3281e41cb011ddfbe50b7f01bfe5e3c53",
-  "names": "QmP4i6ihnVrj8Tx7cTFw4aY6ungpaPYxDJEZ7Vg1RSNSdm",
-  "timestamps": "QmcvjroTiE95LWeiP8HHq1YA3ysRchLuVx8HLQui8WcSBV",
-  "blockRange": "000000000-000864336",
+  "schemas": "QmUou7zX2g2tY58LP1A2GyP5RF9nbJsoxKTp299ah3svgb",
+  "databases": "QmTGdjLhWzGpGtmxVu73mzKyzva9JM4mSsZ93NceVU6Y5T",
   "chunks": [
     {
       "fileName": "000000000-000000000",
@@ -57,7 +52,7 @@ func TestDownloadJSON(t *testing.T) {
 
 	defer ts.Close()
 
-	manifest, err := DownloadManifest(ts.URL)
+	manifest, err := downloadManifest("mainnet", ts.URL, "")
 	if err != nil {
 		t.Error(err)
 	}
@@ -75,7 +70,7 @@ func TestDownloadTab(t *testing.T) {
 
 	defer ts.Close()
 
-	manifest, err := DownloadManifest(ts.URL)
+	manifest, err := downloadManifest("mainnet", ts.URL, "")
 	if err != nil {
 		t.Error(err)
 	}
