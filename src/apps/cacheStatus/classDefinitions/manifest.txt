@@ -1,0 +1,4 @@
+[settings]
+class = CManifest
+fields = manifest.csv
+includes = etherlib.h|pinnedchunk.h

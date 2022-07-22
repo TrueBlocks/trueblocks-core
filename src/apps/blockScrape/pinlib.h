@@ -13,8 +13,8 @@
  *-------------------------------------------------------------------------------------------*/
 #include "acctlib.h"
 
-#include "classes/pinnedchunk.h"
-#include "classes/manifest.h"
+#include "pinnedchunk.h"
+#include "manifest.h"
 
 namespace qblocks {
 

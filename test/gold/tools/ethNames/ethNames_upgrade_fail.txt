@@ -376,6 +376,12 @@ TEST[DATE|TIME] Format:  json
     "source": "TrueBlocks.io"
   },
   {
+    "tags": "31-Giveth:Project",
+    "address": "0x0072d5887bc9979168835d8ac37ca1c2f6a4dac9",
+    "name": "Ultimate Unicorns",
+    "source": "Tokenomics"
+  },
+  {
     "tags": "50-Tokens:ERC20",
     "address": "0x0077cd5eca22e86177cc465633227652ff02f32d",
     "name": "BrightID_Main_DAO",
@@ -532,6 +538,12 @@ TEST[DATE|TIME] Format:  json
     "source": "Giveth Docs"
   },
   {
+    "tags": "31-Giveth:Project",
+    "address": "0x00ca33970150dff4fdd16f4992810117296768dd",
+    "name": "Creative Development Collective",
+    "source": "Tokenomics"
+  },
+  {
     "tags": "31-Gitcoin:Grants",
     "address": "0x00cf36853aa4024fb5bf5cc377dfd85844b411a0",
     "name": "Grant 0143 Dappnode - Panvala League",
@@ -623,8 +635,14 @@ TEST[DATE|TIME] Format:  json
   },
   {
     "tags": "31-Giveth:Project",
+    "address": "0x0109295ece0afa326f651d455c7aed0cb31c9685",
+    "name": "Bring a stop to global poverty and alleviate hunger",
+    "source": "Tokenomics"
+  },
+  {
+    "tags": "31-Giveth:Project",
     "address": "0x0109c0faae3f358bce232dff482e2d6eca1f4dab",
-    "name": "FARE - Food Allergy Research & Education",
+    "name": "FARE - Food Allergy Research &amp; Education",
     "source": "Tokenomics"
   },
   {
@@ -736,6 +754,12 @@ TEST[DATE|TIME] Format:  json
     "address": "0x015c7c7a7d65bbdb117c573007219107bd7486f9",
     "name": "Infura Transactions Contract",
     "source": "Infura.io"
+  },
+  {
+    "tags": "31-Giveth:Project",
+    "address": "0x015f2ec49adc333cd4e0f348c39c506eb3b1837f",
+    "name": "NFT Artist Funding",
+    "source": "Tokenomics"
   },
   {
     "tags": "90-Individuals:Gitcoin Grants",
@@ -997,6 +1021,12 @@ TEST[DATE|TIME] Format:  json
     "description": "CanonChain will be triggered from the protocol layer and the chip layer of the communication to provide a robust foundation for the entire blockchain industry."
   },
   {
+    "tags": "31-Giveth:Project",
+    "address": "0x0225d43b588e69154ec98f710249d9ff2aed4527",
+    "name": "DeHealth",
+    "source": "Tokenomics"
+  },
+  {
     "tags": "91-Early:Addresses",
     "address": "0x02268047f5c77a6a533619773474d1a6e510443f",
     "name": "Creator",
@@ -1188,6 +1218,12 @@ TEST[DATE|TIME] Format:  json
     "description": "https://twitter.com/EthCatHerders"
   },
   {
+    "tags": "31-Giveth:Project",
+    "address": "0x02d17f0e3c1cadfa4e480a3e6bdb8ed6d3203614",
+    "name": "Swarm City Reboot",
+    "source": "Tokenomics"
+  },
+  {
     "tags": "37-SelfDestructed",
     "address": "0x02d5c618dbc591544b19d0bf13543c0728a3c4ec",
     "name": "Chainlink CHF-USD Aggregator",
@@ -1322,47 +1358,4 @@ TEST[DATE|TIME] Format:  json
     "symbol": "ZUNK",
     "source": "On chain",
     "decimals": 18
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x0327112423f3a68efdf1fcf402f6c5cb9f7c33fd",
-    "name": "PieDAO BTC++",
-    "symbol": "BTC++",
-    "source": "On chain",
-    "decimals": 18
-  },
-  {
-    "tags": "91-Early:Addresses",
-    "address": "0x032747313c4e914b5fce356ab8dc4df551972dcd",
-    "name": "Trusteth",
-    "source": "EtherScan.io"
-  },
-  {
-    "tags": "50-Tokens:ERC721",
-    "address": "0x032dd2a3c6d234aa9620d65eb618fcdc72be3dbb",
-    "name": "HashDemons",
-    "symbol": "HASHDEMONS",
-    "source": "On chain",
-    "decimals": 18
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x033030feebd93e3178487c35a9c8ca80874353c9",
-    "name": "BDT Token",
-    "symbol": "BDT",
-    "source": "On chain",
-    "decimals": 18,
-    "description": "The ICO market is becoming more regulated, but this isn‚Äö√Ñ√¥t stopping scams from penetrating the cryptocurrency community. That is why we created the Founding Community Bitdepositary with integrated payment systems."
-  },
-  {
-    "tags": "31-Giveth:Project",
-    "address": "0x033618a08649300184ec221c6d825416dbee8f92",
-    "name": "World Vision",
-    "source": "Tokenomics"
-  },
-  {
-    "tags": "31-Gitcoin:Grants",
-    "address": "0x035032655b5b3784d359b56eb82c803bd971c582",
-    "name": "Grant 2800 - LogicBeach Explainer Series",
-    "source": "https://gitcoin.co/grants/2800/logicbeach-explainer-series"
   }] }

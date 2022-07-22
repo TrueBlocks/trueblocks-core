@@ -65,6 +65,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x006bea43baa3f7a6f765f14f10a1a1b08334ef45	Stox	STX		18
 31-Giveth:Project	0x006cfc89e7f521ce3290b200df9530dce911b896	St. Ignatius Martyr Catholic Church
 80-Malicious:Shanghai	0x006e61aa7e7ce25b8dad331d5181f2fbe5c23a54	Shanghai Cleaner Contract
+31-Giveth:Project	0x0072d5887bc9979168835d8ac37ca1c2f6a4dac9	Ultimate Unicorns
 50-Tokens:ERC20	0x0077cd5eca22e86177cc465633227652ff02f32d	BrightID_Main_DAO	BMAIN		18
 31-Gitcoin:Grants	0x007b003c4d0145b512286494d5ae123aeef29d9e	Grant 0845 Remote Developer Bootcamp
 91-Early:Addresses	0x007d42b9192b8c087b0d3e6ef73aae48e74b41c1	Ethventures4
@@ -88,6 +89,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x00c4b398500645eb5da00a1a379a88b11683ba01	Eximchain Token	EXC		18
 90-Individuals:Gitcoin Grants	0x00c50c2f356130b1f65ac3e60afe40a6c348f1c9	Name 0x00c50c2f
 50-Tokens:ERC20	0x00c83aecc790e8a4453e5dd3b0b4b3680501a7a7	Skale	18
+31-Giveth:Project	0x00ca33970150dff4fdd16f4992810117296768dd	Creative Development Collective
 31-Gitcoin:Grants	0x00cf36853aa4024fb5bf5cc377dfd85844b411a0	Grant 0143 Dappnode - Panvala League
 90-Individuals:Other	0x00cfbbaf7ddb3a1476767101c12a0162e241fbad	Name 0x00cfbbaf
 50-Tokens:ERC20	0x00d0f137b51692d0ac708bde7b367a373865cffe	Zapper.Fi : Balancer Remove
@@ -102,7 +104,8 @@ tags	address	name	symbol	decimals
 80-Malicious:DaoDrain	0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9	DAO Drain 075			1
 50-Tokens:ERC20	0x010496d8f3269ee9b05060bdf40c2d66e83e61dd	Digg	DIGG		18
 50-Tokens:ERC20	0x010589b7c33034b802f7dba2c88cc9cec0f46673	SoundMoneyCoin	SOV		8
-31-Giveth:Project	0x0109c0faae3f358bce232dff482e2d6eca1f4dab	FARE - Food Allergy Research & Education
+31-Giveth:Project	0x0109295ece0afa326f651d455c7aed0cb31c9685	Bring a stop to global poverty and alleviate hunger
+31-Giveth:Project	0x0109c0faae3f358bce232dff482e2d6eca1f4dab	FARE - Food Allergy Research &amp; Education
 90-Individuals:Gitcoin Grants	0x010afb8548a5d1a3a3d62f58ca0a5a1329974206	Name 0x010afb85
 31-Giveth:Project	0x010f0c8b31ba0cefe2764c373fa23e8635becb60	Lutheran World Relief
 50-Tokens:ERC20	0x01112a60f427205dca6e229425306923c3cc2073	FARM_UNI-V2	fUNI-V2		18
@@ -120,6 +123,7 @@ tags	address	name	symbol	decimals
 30-Contracts	0x015531a044bae03bf4dab1ceabfc232a969b7175	GU: Rare Pack
 31-Gitcoin:Grants	0x015bf68ef11bd55e43a119b5752c4b3becae7f24	Grant 0627 Veridex
 30-Contracts	0x015c7c7a7d65bbdb117c573007219107bd7486f9	Infura Transactions Contract
+31-Giveth:Project	0x015f2ec49adc333cd4e0f348c39c506eb3b1837f	NFT Artist Funding
 90-Individuals:Gitcoin Grants	0x015f9e50dc7b2a41ab8cc0b2b58763287dd3dd81	Name 0x015f9e50
 50-Tokens:ERC20	0x016396044709eb3edc69c44f4d5fa6996917e4e8	KingXChain	KXC		18
 50-Tokens:ERC20	0x0168703872fa06741ecaa9dff7803168e83f7ae0	MIRO Token	MIRO		8
@@ -157,6 +161,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x0208fb0af6652bdbc3ea010d5026ed92ff252a53	Ethereum Hot	EHOT		18
 90-Individuals:Other	0x020ca66c30bec2c4fe3861a94e4db4a498a35872	Name 0x020ca66c
 50-Tokens:ERC20	0x0223fc70574214f65813fe336d870ac47e147fae	CZR	CZR		18
+31-Giveth:Project	0x0225d43b588e69154ec98f710249d9ff2aed4527	DeHealth
 91-Early:Addresses	0x02268047f5c77a6a533619773474d1a6e510443f	Creator
 50-Tokens:ERC20	0x022cc93b66a7d28ad6887d1d5a60642d5b02837b	Narutocoin	NARUTO		18
 50-Tokens:ERC20	0x022fc445fd3ec66cc48e0975265ec825245cd7a9	Uniswap V2	UNI-V2		18
@@ -184,6 +189,7 @@ tags	address	name	symbol	decimals
 31-Giveth:Project	0x02c2ec416601daf7eb2c69c8ed3000457945fa20	Merijaan — for a plastic free world
 50-Tokens:ERC20	0x02c4c78c462e32cca4a90bc499bf411fb7bc6afb	InvestDigital Token	IDT		18
 31-Gitcoin:Grants	0x02cb3c150bedca124d0ae8cccb72fefbe705c953	Grant 0782 Ethereum Cat Herders Community Fund
+31-Giveth:Project	0x02d17f0e3c1cadfa4e480a3e6bdb8ed6d3203614	Swarm City Reboot
 37-SelfDestructed	0x02d5c618dbc591544b19d0bf13543c0728a3c4ec	Chainlink CHF-USD Aggregator
 50-Tokens:ERC20	0x02d7703097c9bdf0d973470239df3b9cc1589b01	Uniswap V2	UNI-V2		18
 90-Individuals:Gitcoin Grants	0x02d9cc72bc796d2128e58c04b6e50a4e101c0be1	Name 0x02d9cc72
@@ -199,9 +205,3 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x02f2d4a04e6e01ace88bd2cd632875543b2ef577	PKG Token	PKG		18
 50-Tokens:ERC20	0x02f61fd266da6e8b102d4121f5ce7b992640cf98	LikeCoin	LIKE		18
 50-Tokens:ERC20	0x0306e522cefd3cdc3ce63a60686eb1a0c0e6f467	Akita Doge	ADOGE		18
-50-Tokens:ERC20	0x030ba81f1c18d280636f32af80b9aad02cf0854e	Aave interest bearing WETH	aWETH		18
-91-Early:Addresses	0x0312855bb6e548578a36fa8de63b8f0d3d7d7dc2	Betonhashv84
-91-Early:Addresses	0x0318179601a70085aeb488f178b081295b65ecc9	Self_Store
-50-Tokens:ERC721	0x031920cc2d9f5c10b444fd44009cd64f829e7be2	CryptoZunks	ZUNK		18
-50-Tokens:ERC20	0x0327112423f3a68efdf1fcf402f6c5cb9f7c33fd	PieDAO BTC++	BTC++		18
-91-Early:Addresses	0x032747313c4e914b5fce356ab8dc4df551972dcd	Trusteth

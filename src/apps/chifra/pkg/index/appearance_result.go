@@ -31,7 +31,8 @@ func (chunk *ChunkData) GetAppearanceRecords(address common.Address) *Appearance
 		return &ret
 	}
 
-	addressRecord, err := chunk.ReadAddressRecord()
+	addressRecord := AddressRecord{}
+	err = addressRecord.ReadAddress(chunk.File)
 	if err != nil {
 		ret.Err = err
 		return &ret

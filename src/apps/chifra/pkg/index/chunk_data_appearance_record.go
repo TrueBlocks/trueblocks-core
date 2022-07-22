@@ -3,6 +3,7 @@ package index
 import (
 	"encoding/binary"
 	"io"
+	"os"
 )
 
 const (
@@ -49,7 +50,6 @@ func (chunk *ChunkData) ReadAppearanceRecords(addrRecord *AddressRecord) (apps [
 	return
 }
 
-func (chunk *ChunkData) ReadAppearanceRecord() (app AppearanceRecord, err error) {
-	err = binary.Read(chunk.File, binary.LittleEndian, &app)
-	return
+func (app *AppearanceRecord) ReadAppearance(file *os.File) (err error) {
+	return binary.Read(file, binary.LittleEndian, app)
 }

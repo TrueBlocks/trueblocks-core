@@ -8,24 +8,24 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
-func (bloom *ChunkBloom) IsMemberBytes(addr common.Address) bool {
-	whichBits := WhichBits(addr)
-	for _, bb := range bloom.Blooms {
+func (bl *ChunkBloom) isMemberBytes(addr common.Address) bool {
+	whichBits := bl.WhichBits(addr)
+	for _, bb := range bl.Blooms {
 		var tester = bitChecker{bytes: bb.Bytes, whichBits: whichBits}
-		if bloom.isMember(&tester) {
+		if bl.isMember(&tester) {
 			return true
 		}
 	}
 	return false
 }
 
-func (bloom *ChunkBloom) IsMember(addr common.Address) bool {
-	whichBits := WhichBits(addr)
+func (bl *ChunkBloom) IsMember(addr common.Address) bool {
+	whichBits := bl.WhichBits(addr)
 	offset := uint32(4)
-	for j := 0; j < int(bloom.Count); j++ {
+	for j := 0; j < int(bl.Count); j++ {
 		offset += uint32(4)
 		var tester = bitChecker{offset: offset, whichBits: whichBits}
-		if bloom.isMember(&tester) {
+		if bl.isMember(&tester) {
 			return true
 		}
 		offset += BLOOM_WIDTH_IN_BYTES
@@ -33,10 +33,10 @@ func (bloom *ChunkBloom) IsMember(addr common.Address) bool {
 	return false
 }
 
-func (bloom *ChunkBloom) isMember(tester *bitChecker) bool {
+func (bl *ChunkBloom) isMember(tester *bitChecker) bool {
 	for _, bit := range tester.whichBits {
 		tester.bit = bit
-		if !bloom.isBitLit(tester) {
+		if !bl.isBitLit(tester) {
 			return false
 		}
 	}
@@ -51,7 +51,7 @@ type bitChecker struct {
 }
 
 // isBitLit returns true if the given bit is lit in the given byte array
-func (bloom *ChunkBloom) isBitLit(tester *bitChecker) bool {
+func (bl *ChunkBloom) isBitLit(tester *bitChecker) bool {
 	which := uint32(tester.bit / 8)
 	index := uint32(BLOOM_WIDTH_IN_BYTES - which - 1)
 
@@ -66,13 +66,13 @@ func (bloom *ChunkBloom) isBitLit(tester *bitChecker) bool {
 
 	} else {
 		var byt uint8
-		_, err := bloom.File.Seek(int64(tester.offset+index), io.SeekStart)
+		_, err := bl.File.Seek(int64(tester.offset+index), io.SeekStart)
 		if err != nil {
 			fmt.Println("Seek error:", err)
 			return false
 		}
 
-		err = binary.Read(bloom.File, binary.LittleEndian, &byt)
+		err = binary.Read(bl.File, binary.LittleEndian, &byt)
 		if err != nil {
 			fmt.Println("Read error:", err)
 			return false

@@ -5,8 +5,6 @@
 package chunksPkg
 
 import (
-	"os"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -15,12 +13,10 @@ import (
 
 func (opts *ChunksOptions) showIndex(path string, first bool) (bool, error) {
 	path = index.ToIndexPath(path)
-	ff, err := os.Open(path)
+	header, err := index.ReadChunkHeader(opts.Globals.Chain, path)
 	if err != nil {
 		return false, err
 	}
-	defer ff.Close()
-	header, err := index.ReadHeader(ff)
 	var obj types.SimpleIndex
 	obj.Range, _ = cache.RangeFromFilename(path)
 	obj.Magic = header.Magic

@@ -30,7 +30,8 @@ func (opts *ChunksOptions) showAddresses(path string, first bool) (bool, error) 
 			continue
 		}
 
-		obj, err := indexChunk.ReadAddressRecord()
+		obj := index.AddressRecord{}
+		err := obj.ReadAddress(indexChunk.File)
 		if err != nil {
 			return false, err
 		}
