@@ -12,7 +12,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
@@ -117,9 +116,9 @@ func (opts *ScrapeOptions) HandleScrapePin(progressThen *rpcClient.MetaData) (ok
 	}
 
 	// TODO: BOGUS - TESTING SCRAPING
-	if utils.OnOff {
-		index.TestWrite(opts.Globals.Chain, pathToIndex, &opts.Globals)
-	}
+	// if utils.OnOff {
+	// 	index.TestWrite(opts.Globals.Chain, pathToIndex, &opts.Globals)
+	// }
 	os.Remove(newPinsFn)
 	return true, nil
 }
