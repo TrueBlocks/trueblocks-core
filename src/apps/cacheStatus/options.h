@@ -126,3 +126,7 @@ class CMigrationChecker {
 };
 
 bool needsMigration(const string_q& path, void* data);
+namespace qblocks {
+extern bool countFiles(const string_q& path, void* data);
+extern bool countFilesInCache(const string_q& path, void* data);
+}  // namespace qblocks
