@@ -15,6 +15,7 @@
  * the code outside of the BEG_CODE/END_CODE sections
  */
 #include "options.h"
+#include "manifest.h"
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
@@ -129,10 +130,14 @@ bool COptions::parseArguments(string_q& command) {
         cacheFolder_txs,
     };
     if (migrate == "test") {
-        return handle_migrate_test(cachePaths);
-    } else if (migrate == "all") {
-        return handle_migrate(cachePaths);
+        handle_migrate_test(cachePaths);
+        return false;
+    } else if (migrate == "cache") {
+        handle_migrate(cachePaths);
+        return false;
     } else if (!migrate.empty()) {
+        // do nothing here for --migrate index. It's an error if
+        // it got this far. It should have been handled in the go code
         return usage("Invalid migration: " + migrate);
     }
 
@@ -313,8 +318,8 @@ bool parseOneLine(const char* line, void* data) {
 }
 
 //---------------------------------------------------------------------------
-bool readManifest(CPinnedChunkArray& pinArray) {
-    if (!pinArray.empty())
+bool readManifest(CPinnedChunkArray& manifest) {
+    if (!manifest.empty())
         return true;
 
     if (!fileExists(chainConfigsTxt_manifest)) {
@@ -322,23 +327,23 @@ bool readManifest(CPinnedChunkArray& pinArray) {
         return false;
     }
 
-    pinArray.clear();  // redundant, but fine
-    forEveryLineInAsciiFile(chainConfigsTxt_manifest, parseOneLine, &pinArray);
-    sort(pinArray.begin(), pinArray.end());
+    manifest.clear();  // redundant, but fine
+    forEveryLineInAsciiFile(chainConfigsTxt_manifest, parseOneLine, &manifest);
+    sort(manifest.begin(), manifest.end());
 
     return true;
 }
 
 //--------------------------------------------------------------------------------
 void loadPinMaps(CIndexStringMap& filenameMap, CIndexHashMap& bloomMap, CIndexHashMap& indexMap) {
-    CPinnedChunkArray pinList;
-    if (!readManifest(pinList))
+    CPinnedChunkArray manifest;
+    if (!readManifest(manifest))
         return;
 
-    for (auto pin : pinList) {
-        blknum_t num = str_2_Uint(pin.fileName);
-        filenameMap[num] = pin.fileName;
-        bloomMap[num] = pin.bloomHash;
-        indexMap[num] = pin.indexHash;
+    for (auto chunk : manifest) {
+        blknum_t num = str_2_Uint(chunk.range);
+        filenameMap[num] = chunk.range;
+        bloomMap[num] = chunk.bloomHash;
+        indexMap[num] = chunk.indexHash;
     }
 }

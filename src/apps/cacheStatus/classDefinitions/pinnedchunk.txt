@@ -1,0 +1,6 @@
+[settings]
+class = CPinnedChunk
+fields = pinnedchunk.csv
+includes = utillib.h
+sort = v1.range < v2.range
+equals = range == it.range
