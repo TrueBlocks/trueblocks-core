@@ -135,9 +135,9 @@ Manifest data is made of the following data fields:
 
 
 | Field   | Description | Type    |
-| ------- | --- | ------- |
-| address |     | address |
-| name    |     | string  |
+| ------- | ----------- | ------- |
+| address |             | address |
+| name    |             | string  |
 
 ## Base types
 

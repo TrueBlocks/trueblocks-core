@@ -237,40 +237,40 @@ type Renderer interface {
 	RenderObject(data interface{}, first bool) error
 }
 
-func TestWrite(chain, path string, rend Renderer) {
-	path = ToIndexPath(path)
+// func TestWrite(chain, path string, rend Renderer) {
+// 	path = ToIndexPath(path)
 
-	indexChunk, err := NewChunkData(path)
-	if err != nil {
-		fmt.Println(err.Error())
-		return
-	}
-	defer indexChunk.Close()
+// 	indexChunk, err := NewChunkData(path)
+// 	if err != nil {
+// 		fmt.Println(err.Error())
+// 		return
+// 	}
+// 	defer indexChunk.Close()
 
-	_, err = indexChunk.File.Seek(int64(HeaderWidth), io.SeekStart)
-	if err != nil {
-		fmt.Println(err.Error())
-		return
-	}
+// 	_, err = indexChunk.File.Seek(int64(HeaderWidth), io.SeekStart)
+// 	if err != nil {
+// 		fmt.Println(err.Error())
+// 		return
+// 	}
 
-	addrAppMap := make(AddressAppearanceMap, indexChunk.Header.AddressCount)
-	for i := 0; i < int(indexChunk.Header.AddressCount); i++ {
-		obj := AddressRecord{}
-		err := obj.ReadAddress(indexChunk.File)
-		if err != nil {
-			fmt.Println(err.Error())
-			return
-		}
-		apps, err := indexChunk.ReadAppearanceRecordsAndResetOffset(&obj)
-		if err != nil {
-			fmt.Println(err.Error())
-			return
-		}
-		addr := hexutil.Encode(obj.Address.Bytes()) // a lowercase string
-		for _, app := range apps {
-			addrAppMap[addr] = append(addrAppMap[addr], app)
-		}
-	}
-	WriteChunk(chain, path, addrAppMap, len(addrAppMap), false)
-	return
-}
+// 	addrAppMap := make(AddressAppearanceMap, indexChunk.Header.AddressCount)
+// 	for i := 0; i < int(indexChunk.Header.AddressCount); i++ {
+// 		obj := AddressRecord{}
+// 		err := obj.ReadAddress(indexChunk.File)
+// 		if err != nil {
+// 			fmt.Println(err.Error())
+// 			return
+// 		}
+// 		apps, err := indexChunk.ReadAppearanceRecordsAndResetOffset(&obj)
+// 		if err != nil {
+// 			fmt.Println(err.Error())
+// 			return
+// 		}
+// 		addr := hexutil.Encode(obj.Address.Bytes()) // a lowercase string
+// 		for _, app := range apps {
+// 			addrAppMap[addr] = append(addrAppMap[addr], app)
+// 		}
+// 	}
+// 	WriteChunk(chain, path, addrAppMap, len(addrAppMap), false)
+// 	return
+// }
