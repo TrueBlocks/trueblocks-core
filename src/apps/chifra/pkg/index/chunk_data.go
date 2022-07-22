@@ -1,6 +1,7 @@
 package index
 
 import (
+	"encoding/json"
 	"os"
 	"strings"
 
@@ -69,6 +70,12 @@ func NewChunkData(path string) (chunk ChunkData, err error) {
 	return
 }
 
+// String returns a JSON representation of the Chunk
+func (cd ChunkData) String() string {
+	s, _ := json.MarshalIndent(cd, "", " ")
+	return string(s)
+}
+
 // Close closes the ChunkData's associated File pointer (if opened)
 func (chunk *ChunkData) Close() error {
 	if chunk.File != nil {
@@ -88,19 +95,6 @@ func ToIndexPath(pathIn string) string {
 	ret = strings.Replace(ret, ".txt", ".bin", -1)
 	ret = strings.Replace(ret, "/blooms/", "/finalized/", -1)
 	ret = strings.Replace(ret, "/staging/", "/finalized/", -1)
-	return ret
-}
-
-// ToBloomPath returns a path pointing to the bloom filter given either a path to itself or its associated index data
-func ToBloomPath(pathIn string) string {
-	if strings.HasSuffix(pathIn, ".bloom") {
-		return pathIn
-	}
-
-	ret := strings.Replace(pathIn, ".bin", ".bloom", -1)
-	ret = strings.Replace(ret, ".txt", ".bloom", -1)
-	ret = strings.Replace(ret, "/finalized/", "/blooms/", -1)
-	ret = strings.Replace(ret, "/staging/", "/blooms/", -1)
 	return ret
 }
 

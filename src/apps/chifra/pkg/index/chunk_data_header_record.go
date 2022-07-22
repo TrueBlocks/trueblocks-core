@@ -41,10 +41,10 @@ func readHeader(fl *os.File) (header HeaderRecord, err error) {
 func ReadChunkHeader(chain, fileName string) (header HeaderRecord, err error) {
 	fileName = ToIndexPath(fileName)
 	ff, err := os.Open(fileName)
-	defer ff.Close()
 	if err != nil {
 		return HeaderRecord{}, err
 	}
+	defer ff.Close()
 
 	if header, err = readHeader(ff); err != nil {
 		return
@@ -67,7 +67,7 @@ func ReadChunkHeader(chain, fileName string) (header HeaderRecord, err error) {
 	if chain == "mainnet" && rng.First <= 13000000 {
 		if !hasZeroHash {
 			_, fileName = filepath.Split(fileName)
-			return header, fmt.Errorf("Expected headerHash of %s got %s in file %s", unchained.ZeroMagicHash, headerHash, fileName)
+			return header, fmt.Errorf("expected headerHash of %s got %s in file %s", unchained.ZeroMagicHash, headerHash, fileName)
 		}
 	} else {
 		if !hasMagicHash {

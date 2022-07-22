@@ -15,34 +15,23 @@
 namespace qblocks {
 
 //-------------------------------------------------------------------------
-bool freshenAndLoad(blknum_t minBlk) {
-    if (!isTestMode() && !isApiMode())
-        freshenTimestamps(minBlk);  // opens, freshens, and closes the file
-    if (!loadTimestamps(&expContext().tsMemMap, expContext().tsCnt)) {
-        LOG_WARN("Could not load timestamp file");
-        return false;
-    }
-    LOG4("Loaded timestamp file");
-    return true;
-}
-
-//-------------------------------------------------------------------------
-blknum_t ts_2_Blocknumber(blknum_t blk) {
-    if (!expContext().tsMemMap)
-        if (!freshenAndLoad(blk))
-            return 0;
-    if (expContext().tsMemMap && blk < expContext().tsCnt)
-        return expContext().tsMemMap[(blk * 2)];
-    return 0;
-}
-
-//-------------------------------------------------------------------------
 timestamp_t bn_2_Timestamp(blknum_t blk) {
-    if (!expContext().tsMemMap)
-        if (!freshenAndLoad(blk))
+    if (!expContext().tsMemMap) {
+        if (!isTestMode() && !isApiMode()) {
+            freshenTimestamps(blk);
+        }
+
+        if (!loadTimestamps(&expContext().tsMemMap, expContext().tsCnt)) {
+            LOG_WARN("Could not load timestamp file");
             return 0;
-    if (expContext().tsMemMap && blk < expContext().tsCnt)
+        }
+        LOG4("Loaded timestamp file");
+    }
+
+    if (expContext().tsMemMap && blk < expContext().tsCnt) {
         return timestamp_t(expContext().tsMemMap[(blk * 2) + 1]);
+    }
+
     return 0;
 }
 

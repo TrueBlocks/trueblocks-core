@@ -172,7 +172,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 		resultChannel <- results
 	}()
 
-	bloomFilename := index.ToBloomPath(fileName)
+	bloomFilename := bloom.ToBloomPath(fileName)
 
 	// We open the bloom filter and read its header but we do not read any of the
 	// actual bits in the blooms. The IsMember function reads individual bytes to

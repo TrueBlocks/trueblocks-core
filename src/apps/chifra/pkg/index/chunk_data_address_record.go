@@ -64,7 +64,7 @@ func (chunk *ChunkData) searchForAddressRecord(address common.Address) int {
 		return -1
 	}
 
-	if bytes.Compare(rec.Address[:], address[:]) != 0 {
+	if !bytes.Equal(rec.Address[:], address[:]) {
 		return -1
 	}
 

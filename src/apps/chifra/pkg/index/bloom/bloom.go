@@ -11,6 +11,7 @@ import (
 	"io"
 	"log"
 	"os"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -58,6 +59,7 @@ func (bl *ChunkBloom) String() string {
 // enough space for Count blooms but has not been read from disc. The file remains open for reading (if
 // there is no error) and is positioned at the start of the file.
 func NewChunkBloom(path string) (bl ChunkBloom, err error) {
+	path = ToBloomPath(path)
 	if !file.FileExists(path) {
 		return bl, errors.New("required bloom file (" + path + ") not found")
 	}
@@ -194,4 +196,17 @@ func (bl *ChunkBloom) GetStats() (nBlooms uint64, nInserted uint64, nBitsLit uin
 		}
 	}
 	return
+}
+
+// ToBloomPath returns a path pointing to the bloom filter given either a path to itself or its associated index data
+func ToBloomPath(pathIn string) string {
+	if strings.HasSuffix(pathIn, ".bloom") {
+		return pathIn
+	}
+
+	ret := strings.Replace(pathIn, ".bin", ".bloom", -1)
+	ret = strings.Replace(ret, ".txt", ".bloom", -1)
+	ret = strings.Replace(ret, "/finalized/", "/blooms/", -1)
+	ret = strings.Replace(ret, "/staging/", "/blooms/", -1)
+	return ret
 }

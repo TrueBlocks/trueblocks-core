@@ -90,7 +90,7 @@ func NewChunkStats(path string) types.ReportChunks {
 	ret.NAddrs = chunk.Data.Header.AddressCount
 	ret.NApps = chunk.Data.Header.AppearanceCount
 	ret.NBlooms = chunk.Bloom.Count
-	ret.BloomSz = file.FileSize(index.ToBloomPath(path))
+	ret.BloomSz = file.FileSize(bloom.ToBloomPath(path))
 	ret.ChunkSz = file.FileSize(index.ToIndexPath(path))
 
 	return finishStats(&ret)

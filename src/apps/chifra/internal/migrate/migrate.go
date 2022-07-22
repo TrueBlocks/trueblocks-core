@@ -7,7 +7,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
@@ -18,7 +18,7 @@ func HasBackLevelIndex(chain string, v *string) bool {
 	if file.FileExists(*v) {
 		return true
 	}
-	return file.FileExists(index.ToBloomPath(*v))
+	return file.FileExists(bloom.ToBloomPath(*v))
 }
 
 func CheckBackLevelIndex(chain string) {

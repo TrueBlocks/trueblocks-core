@@ -38,9 +38,7 @@ func WriteChunk(chain, indexPath string, addAppMap AddressAppearanceMap, nApps i
 	offset := uint32(0)
 	for _, addrStr := range sorted {
 		apps := addAppMap[addrStr]
-		for _, app := range apps {
-			appearanceTable = append(appearanceTable, app)
-		}
+		appearanceTable = append(appearanceTable, apps...)
 		address := common.HexToAddress(addrStr)
 		bl.AddToSet(address)
 		addressTable = append(addressTable, AddressRecord{
@@ -126,7 +124,7 @@ func WriteChunk(chain, indexPath string, addAppMap AddressAppearanceMap, nApps i
 		return 0, err
 	}
 
-	err = bl.WriteBloom(chain, ToBloomPath(indexPath))
+	err = bl.WriteBloom(chain, bloom.ToBloomPath(indexPath))
 	if err != nil {
 		return 0, err
 	}
@@ -205,7 +203,7 @@ func WriteChunk(chain, indexPath string, addAppMap AddressAppearanceMap, nApps i
 
 	    string_q bloomFile = substitute(substitute(outFn, "/finalized/", "/blooms/"), ".bin", ".bloom");
 	    lockSection();                            // disallow control+c
-	    bloomFilter.writeBloomFilter(bloomFile);  // write the bloom file
+	    bloomFilter.write BloomFilter(bloomFile);  // write the bloom file
 	    copyFile(tmpFile2, outFn);                // move the index file
 	    ::remove(tmpFile2.c_str());               // remove the tmp file
 	    unlockSection();
@@ -215,7 +213,7 @@ func WriteChunk(chain, indexPath string, addAppMap AddressAppearanceMap, nApps i
 	    appendToAsciiFile(cacheFolder_tmp + "chunks_created.txt", range + "\n");
 
 	    return !shouldQuit();
-	bool CBloomFilterRead::writeBloomFilter(const string_q& fileName) {
+	bool CBloomFilterRead::write BloomFilter(const string_q& fileName) {
 	    lockSection();
 	    CArchive output(WRITING_ARCHIVE);
 	    if (!output.Lock(fileName, modeWriteCreate, LOCK_NOWAIT)) {
@@ -267,10 +265,7 @@ func TestWrite(chain, path string, rend Renderer) {
 			return
 		}
 		addr := hexutil.Encode(obj.Address.Bytes()) // a lowercase string
-		for _, app := range apps {
-			addrAppMap[addr] = append(addrAppMap[addr], app)
-		}
+		addrAppMap[addr] = append(addrAppMap[addr], apps...)
 	}
 	WriteChunk(chain, path, addrAppMap, len(addrAppMap), false)
-	return
 }
