@@ -45,7 +45,7 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	// TODO: BOGUS THIS WORK IS INCOMPLETE
+	// TODO: BOGUS THIS WORK IS INCOMPLETE -- ONLY WORKS IF THE ENV VAR IS EXPORTED
 	newnew := os.Getenv("NEW") == "true"
 	if !opts.Articulate && newnew {
 		defer opts.Globals.RenderFooter()

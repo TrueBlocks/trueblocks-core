@@ -14,6 +14,7 @@ import (
 // TODO: BOGUS - MIGRATION SENTINAL? REENTRANCY SAFE?
 func HasBackLevelIndex(chain string) bool {
 	// TODO: BOGUS - THIS IS NOT CHAIN SAFE AT ALL!!!
+	return false
 	if chain == "mainnet" {
 		return false
 	}

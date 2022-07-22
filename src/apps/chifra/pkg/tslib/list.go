@@ -17,11 +17,9 @@ import (
 )
 
 // GetSpecials returns a chain-specific list of special block names and numbers
-func GetSpecials(chain string) ([]types.SimpleNamedBlock, error) {
-	specials := []types.SimpleNamedBlock{}
-
+func GetSpecials(chain string) (specials []types.SimpleNamedBlock, err error) {
 	specialsPath := config.GetPathToChainConfig(chain) + "specials.csv"
-	_, err := os.Stat(specialsPath)
+	_, err = os.Stat(specialsPath)
 	if err != nil {
 		// It's okay if there are no specials for a certain chain
 		if chain == "mainnet" {
@@ -33,18 +31,18 @@ func GetSpecials(chain string) ([]types.SimpleNamedBlock, error) {
 
 	file, err := os.Open(specialsPath)
 	if err != nil {
-		return specials, err
+		return
 	}
 	reader := csv.NewReader(file)
 	reader.FieldsPerRecord = 4
 
 	for {
-		record, err := reader.Read()
-		if err == io.EOF {
+		record, err1 := reader.Read()
+		if err1 == io.EOF {
 			break
 		}
-		if err != nil {
-			return specials, err
+		if err1 != nil {
+			return specials, err1
 		}
 		if len(record) == 4 {
 			if bn, err := strconv.ParseUint(record[0], 10, 64); err == nil {
@@ -61,10 +59,10 @@ func GetSpecials(chain string) ([]types.SimpleNamedBlock, error) {
 	}
 
 	if len(specials) == 0 {
-		return specials, errors.New("found no special blocks")
+		err = errors.New("found no special blocks")
 	}
 
-	return specials, nil
+	return
 }
 
 // IsSpecialBlock returns true if the given chain-specific name is a special block

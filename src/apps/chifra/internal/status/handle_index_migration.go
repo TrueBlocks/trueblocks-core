@@ -6,6 +6,7 @@
  * the code inside of 'EXISTING_CODE' tags.
  */
 
+// TODO: BOGUS - THIS WORK NEEDS WAY MORE TESTING AND IS INCOMPLETE
 package statusPkg
 
 import (
