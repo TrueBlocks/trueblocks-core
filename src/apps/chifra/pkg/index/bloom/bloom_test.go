@@ -6,10 +6,10 @@ package bloom
 
 import (
 	"fmt"
-	"strings"
 	"testing"
 
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 func Test_Bloom(t *testing.T) {
@@ -106,7 +106,7 @@ func Test_Bloom(t *testing.T) {
 		854595, 891932, 898203, 948547,
 	}
 
-	nBlooms, nInserted, nBitsLit, nBitsNotLit, sz, bitsLit := bloom.getStats()
+	nBlooms, nInserted, nBitsLit, nBitsNotLit, sz, bitsLit := bloom.GetStats()
 	fmt.Println(nBlooms, nInserted, nBitsLit, nBitsNotLit, sz, bitsLit)
 
 	if len(bitsLit) != len(expectedLit) {
@@ -121,34 +121,13 @@ func Test_Bloom(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		if tt.AddToSet && !bloom.IsMemberBytes(tt.Addr) {
+		if tt.AddToSet && !bloom.isMemberBytes(tt.Addr) {
 			t.Error("address should be member, but isn't", tt.Addr.Hex())
 
-		} else if !tt.AddToSet && bloom.IsMemberBytes(tt.Addr) { // && !tt.FalsePositive {
+		} else if !tt.AddToSet && bloom.isMemberBytes(tt.Addr) { // && !tt.FalsePositive {
 			t.Error("address should not be member, but is (ignores false positives)", tt.Addr.Hex())
 		}
 
-		fmt.Println(strings.ToLower(tt.Addr.Hex()), bloom.IsMemberBytes(tt.Addr))
+		fmt.Println(hexutil.Encode(tt.Addr.Bytes()), bloom.isMemberBytes(tt.Addr))
 	}
-}
-
-func (bloom *ChunkBloom) getStats() (nBlooms uint64, nInserted uint64, nBitsLit uint64, nBitsNotLit uint64, sz uint64, bitsLit []uint64) {
-	bitsLit = []uint64{}
-	sz += 4
-	nBlooms = uint64(bloom.Count)
-	for _, bf := range bloom.Blooms {
-		nInserted += uint64(bf.NInserted)
-		sz += 4 + uint64(len(bf.Bytes))
-		for bitPos := 0; bitPos < len(bf.Bytes)*8; bitPos++ {
-			tester := bitChecker{bit: uint32(bitPos), bytes: bf.Bytes}
-			if bloom.isBitLit(&tester) {
-				nBitsLit++
-				bitsLit = append(bitsLit, uint64(bitPos))
-			} else {
-				nBitsNotLit++
-				// fmt.Printf("%d", b)
-			}
-		}
-	}
-	return
 }

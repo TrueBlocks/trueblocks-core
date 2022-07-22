@@ -1,7 +1,7 @@
 chifra chunks  addresses
 TEST[DATE|TIME] Mode:  addresses
 TEST[DATE|TIME] Format:  txt
-address	offset	count
+address	range	offset	count
 0x000D836201318Ec6899a67540690382780743280	0	1
 0x001762430ea9C3A26e5749afdB70da5F78DDBB8C	1	1
 0x001D14804B399c6EF80E64576F657660804feC0b	2	1

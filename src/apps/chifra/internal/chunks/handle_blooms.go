@@ -15,7 +15,7 @@ import (
 
 func (opts *ChunksOptions) showBloom(path string, first bool) (bool, error) {
 	var bl bloom.ChunkBloom
-	bloom.ReadBloom(&bl, path)
+	bl.ReadBloom(path)
 
 	if opts.Globals.Verbose {
 		Display(&bl, int(opts.Globals.LogLevel))

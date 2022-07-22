@@ -1,8 +1,8 @@
+package bloom
+
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
-
-package bloom
 
 import (
 	"encoding/binary"
@@ -57,72 +57,72 @@ func (bl *ChunkBloom) String() string {
 // have been no errors) and its header data has been read into memory. The array has been created with
 // enough space for Count blooms but has not been read from disc. The file remains open for reading (if
 // there is no error) and is positioned at the start of the file.
-func NewChunkBloom(path string) (bloom ChunkBloom, err error) {
+func NewChunkBloom(path string) (bl ChunkBloom, err error) {
 	if !file.FileExists(path) {
-		return bloom, errors.New("required bloom file (" + path + ") not found")
+		return bl, errors.New("required bloom file (" + path + ") not found")
 	}
 
-	bloom.Size = file.FileSize(path)
+	bl.Size = file.FileSize(path)
 
-	bloom.Range, err = cache.RangeFromFilename(path)
+	bl.Range, err = cache.RangeFromFilename(path)
 	if err != nil {
 		return
 	}
 
-	bloom.File, err = os.OpenFile(path, os.O_RDONLY, 0644)
+	bl.File, err = os.OpenFile(path, os.O_RDONLY, 0644)
 	if err != nil {
 		return
 	}
 
-	err = binary.Read(bloom.File, binary.LittleEndian, &bloom.Count)
+	err = binary.Read(bl.File, binary.LittleEndian, &bl.Count)
 	if err != nil {
 		return
 	}
-	bloom.Blooms = make([]BloomBytes, 0, bloom.Count)
-	bloom.File.Seek(0, io.SeekStart)
+	bl.Blooms = make([]BloomBytes, 0, bl.Count)
+	bl.File.Seek(0, io.SeekStart)
 
 	return
 }
 
 // Close closes the file if it's opened
-func (bloom *ChunkBloom) Close() {
-	if bloom.File != nil {
-		bloom.File.Close()
-		bloom.File = nil
+func (bl *ChunkBloom) Close() {
+	if bl.File != nil {
+		bl.File.Close()
+		bl.File = nil
 	}
 }
 
 //---------------------------------------------------------------------------
-func ReadBloom(bloom *ChunkBloom, fileName string) (err error) {
-	bloom.Range, err = cache.RangeFromFilename(fileName)
+func (bl *ChunkBloom) ReadBloom(fileName string) (err error) {
+	bl.Range, err = cache.RangeFromFilename(fileName)
 	if err != nil {
 		return err
 	}
 
-	bloom.File, err = os.OpenFile(fileName, os.O_RDONLY, 0644)
+	bl.File, err = os.OpenFile(fileName, os.O_RDONLY, 0644)
 	if err != nil {
 		return err
 	}
 	defer func() {
-		bloom.File.Close()
-		bloom.File = nil
+		bl.File.Close()
+		bl.File = nil
 	}()
 
-	err = binary.Read(bloom.File, binary.LittleEndian, &bloom.Count)
+	err = binary.Read(bl.File, binary.LittleEndian, &bl.Count)
 	if err != nil {
 		return err
 	}
 
-	bloom.Blooms = make([]BloomBytes, bloom.Count)
-	for i := uint32(0); i < bloom.Count; i++ {
-		// fmt.Println("nBlooms:", bloom.Count)
-		err = binary.Read(bloom.File, binary.LittleEndian, &bloom.Blooms[i].NInserted)
+	bl.Blooms = make([]BloomBytes, bl.Count)
+	for i := uint32(0); i < bl.Count; i++ {
+		// fmt.Println("nBlooms:", bl.Count)
+		err = binary.Read(bl.File, binary.LittleEndian, &bl.Blooms[i].NInserted)
 		if err != nil {
 			return err
 		}
-		// fmt.Println("nInserted:", bloom.Blooms[i].NInserted)
-		bloom.Blooms[i].Bytes = make([]byte, BLOOM_WIDTH_IN_BYTES)
-		err = binary.Read(bloom.File, binary.LittleEndian, &bloom.Blooms[i].Bytes)
+		// fmt.Println("nInserted:", bl.Blooms[i].NInserted)
+		bl.Blooms[i].Bytes = make([]byte, BLOOM_WIDTH_IN_BYTES)
+		err = binary.Read(bl.File, binary.LittleEndian, &bl.Blooms[i].Bytes)
 		if err != nil {
 			return err
 		}
@@ -132,49 +132,34 @@ func ReadBloom(bloom *ChunkBloom, fileName string) (err error) {
 }
 
 // AddToSet adds an address to a bloom filter
-func (bloom *ChunkBloom) AddToSet(addr common.Address) {
-	if len(bloom.Blooms) == 0 {
-		bloom.Blooms = append(bloom.Blooms, BloomBytes{})
-		bloom.Blooms[0].Bytes = make([]byte, BLOOM_WIDTH_IN_BYTES)
+func (bl *ChunkBloom) AddToSet(addr common.Address) {
+	if len(bl.Blooms) == 0 {
+		bl.Blooms = append(bl.Blooms, BloomBytes{})
+		bl.Blooms[bl.Count].Bytes = make([]byte, BLOOM_WIDTH_IN_BYTES)
+		bl.Count++
 	}
 
-	loc := len(bloom.Blooms) - 1
-	bits := WhichBits(addr)
+	loc := len(bl.Blooms) - 1
+	bits := bl.WhichBits(addr)
 	for _, bit := range bits {
 		which := (bit / 8)
 		whence := (bit % 8)
 		index := BLOOM_WIDTH_IN_BYTES - which - 1
 		mask := uint8(1 << whence)
-		bloom.Blooms[loc].Bytes[index] |= mask
+		bl.Blooms[loc].Bytes[index] |= mask
 	}
-	bloom.Blooms[loc].NInserted++
+	bl.Blooms[loc].NInserted++
 
-	if bloom.Blooms[loc].NInserted > MAX_ADDRS_IN_BLOOM {
-		bloom.Blooms = append(bloom.Blooms, BloomBytes{})
+	if bl.Blooms[loc].NInserted > MAX_ADDRS_IN_BLOOM {
+		bl.Blooms = append(bl.Blooms, BloomBytes{})
+		bl.Count++
 	}
 }
-
-// writeBloom
-//     lockSection();
-//     CArchive output(WRITING_ARCHIVE);
-//     if (!output.Lock(fileName, modeWriteCreate, LOCK_NOWAIT)) {
-//         unlockSection();
-//         return false;
-//     }
-//     output.Write((uint32_t)blooms.size());
-//     for (auto bloom : blooms) {
-//         output.Write(bloom.nInserted);
-//         output.Write(bloom.bits, sizeof(uint8_t), BLOOM_WIDTH_IN_BYTES);
-//     }
-//     output.Release();
-//     unlockSection();
-//     return true;
-// }
 
 // WhichBits returns the five bits calculated from an address used to determine if the address is
 // in the bloom filter. We get the five bits by cutting the 20-byte address into five equal four-byte
 // parts, turning those four bytes into an 32-bit integer modulo the width of a bloom array item.
-func WhichBits(addr common.Address) (bits [5]uint32) {
+func (bl *ChunkBloom) WhichBits(addr common.Address) (bits [5]uint32) {
 	slice := addr.Bytes()
 	if len(slice) != 20 {
 		log.Fatal("address is not 20 bytes long - should not happen")
@@ -187,5 +172,26 @@ func WhichBits(addr common.Address) (bits [5]uint32) {
 		cnt++
 	}
 
+	return
+}
+
+func (bl *ChunkBloom) GetStats() (nBlooms uint64, nInserted uint64, nBitsLit uint64, nBitsNotLit uint64, sz uint64, bitsLit []uint64) {
+	bitsLit = []uint64{}
+	sz += 4
+	nBlooms = uint64(bl.Count)
+	for _, bf := range bl.Blooms {
+		nInserted += uint64(bf.NInserted)
+		sz += 4 + uint64(len(bf.Bytes))
+		for bitPos := 0; bitPos < len(bf.Bytes)*8; bitPos++ {
+			tester := bitChecker{bit: uint32(bitPos), bytes: bf.Bytes}
+			if bl.isBitLit(&tester) {
+				nBitsLit++
+				bitsLit = append(bitsLit, uint64(bitPos))
+			} else {
+				nBitsNotLit++
+				// fmt.Printf("%d", b)
+			}
+		}
+	}
 	return
 }

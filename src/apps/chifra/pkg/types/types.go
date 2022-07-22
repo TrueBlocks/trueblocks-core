@@ -51,8 +51,16 @@ type SimpleMonitor struct {
 	LastScanned uint32 `json:"lastScanned"`
 }
 
+type SimpleManifest struct {
+	Version   string              `json:"version"`
+	Chain     string              `json:"chain"`
+	Schemas   string              `json:"schemas"`
+	Databases string              `json:"databases"`
+	Chunks    []SimpleChunkRecord `json:"chunks"`
+}
+
 type SimpleChunkRecord struct {
-	Range     string `json:"fileName"`
+	Range     string `json:"range"`
 	BloomHash string `json:"bloomHash"`
 	IndexHash string `json:"indexHash"`
 }
@@ -81,6 +89,7 @@ type SimpleIndexAppearance struct {
 
 type SimpleIndexAddress struct {
 	Address string `json:"address"`
+	Range   string `json:"range"`
 	Offset  uint32 `json:"offset"`
 	Count   uint32 `json:"count"`
 }
