@@ -3,6 +3,7 @@ package tslib
 import (
 	"encoding/binary"
 	"errors"
+	"fmt"
 	"io"
 	"os"
 	"sort"
@@ -129,7 +130,7 @@ func FromBn(chain string, bn uint64) (*Timestamp, error) {
 	}
 
 	if bn > cnt {
-		return &Timestamp{}, errors.New("invalid block number")
+		return &Timestamp{}, errors.New("invalid block number " + fmt.Sprintf("%d of %d", bn, cnt))
 	}
 
 	err = loadTimestamps(chain)

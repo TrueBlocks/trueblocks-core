@@ -27,7 +27,7 @@ bool freshenAndLoad(blknum_t minBlk) {
 }
 
 //-------------------------------------------------------------------------
-blknum_t getTimestampBlockAt(blknum_t blk) {
+blknum_t ts_2_Blocknumber(blknum_t blk) {
     if (!expContext().tsMemMap)
         if (!freshenAndLoad(blk))
             return 0;
@@ -37,7 +37,7 @@ blknum_t getTimestampBlockAt(blknum_t blk) {
 }
 
 //-------------------------------------------------------------------------
-timestamp_t getTimestampAt(blknum_t blk) {
+timestamp_t bn_2_Timestamp(blknum_t blk) {
     if (!expContext().tsMemMap)
         if (!freshenAndLoad(blk))
             return 0;

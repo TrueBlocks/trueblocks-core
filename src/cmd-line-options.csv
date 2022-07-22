@@ -199,7 +199,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 
 12110,apps,Admin,scrape,blockScrape,modes,,,true,false,true,true,gocmd,positional,list<enum[run|stop]>,which scraper(s) to control
 12125,apps,Admin,scrape,blockScrape,block_cnt,n,2000,false,true,true,true,gocmd,flag,<uint64>,maximum number of blocks to process per pass
-12120,apps,Admin,scrape,blockScrape,pin,p,,false,false,true,true,gocmd,switch,<boolean>,pin chunks (and blooms) to IPFS as they are created (requires ipfs daemon)
+12120,apps,Admin,scrape,blockScrape,pin,p,,false,false,true,true,gocmd,switch,<boolean>,pin chunks (and blooms) to IPFS as they are created (requires ipfs)
 12115,apps,Admin,scrape,blockScrape,sleep,s,14,false,false,true,true,gocmd,flag,<double>,seconds to sleep between scraper passes
 12150,apps,Admin,scrape,blockScrape,block_chan_cnt,b,10,false,true,false,false,gocmd,flag,<uint64>,number of concurrent block processing channels
 12155,apps,Admin,scrape,blockScrape,addr_chan_cnt,d,20,false,true,false,false,gocmd,flag,<uint64>,number of concurrent address processing channels

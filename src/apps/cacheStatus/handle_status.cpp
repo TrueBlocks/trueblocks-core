@@ -415,8 +415,8 @@ bool noteIndex(const string_q& path, void* data) {
             aci.indexSizeBytes = (uint32_t)fileSize(path);
         }
 
-        aci.firstTs = getTimestampAt(aci.firstApp);
-        aci.latestTs = getTimestampAt(aci.latestApp);
+        aci.firstTs = bn_2_Timestamp(aci.firstApp);
+        aci.latestTs = bn_2_Timestamp(aci.latestApp);
 
         CIndexArchive index(READING_ARCHIVE);
         if (index.ReadIndexFromBinary(path, IP_HEADER)) {

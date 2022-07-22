@@ -237,13 +237,13 @@ string_q nextAppearancedisplayChunk_custom(const string_q& fieldIn, const void* 
             // EXISTING_CODE
             case 'd':
                 if (fieldIn % "date") {
-                    timestamp_t ts = getTimestampAt(app->blockNumber);
+                    timestamp_t ts = bn_2_Timestamp(app->blockNumber);
                     return ts_2_Date(ts).Format(FMT_JSON);
                 }
                 break;
             case 't':
                 if (fieldIn % "timestamp")
-                    return ts_2_Str(getTimestampAt(app->blockNumber));
+                    return ts_2_Str(bn_2_Timestamp(app->blockNumber));
                 break;
             // EXISTING_CODE
             case 'p':
