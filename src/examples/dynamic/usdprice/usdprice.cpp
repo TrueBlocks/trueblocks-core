@@ -60,8 +60,8 @@ bool header(CTraverser* trav, void* data) {
 bool display(CTraverser* trav, void* data) {
     CTestTraverser* tt = (CTestTraverser*)trav;
     tt->perTxCall.blockNumber = tt->app->blk;
-    tt->trans.timestamp = getTimestampAt(tt->app->blk);
-    tt->block.timestamp = getTimestampAt(tt->app->blk);
+    tt->trans.timestamp = bn_2_Timestamp(tt->app->blk);
+    tt->block.timestamp = bn_2_Timestamp(tt->app->blk);
 
     cerr << tt->searchType << " ";
     if (doEthCall(tt->perTxCall) && !tt->perTxCall.callResult.outputs.empty()) {

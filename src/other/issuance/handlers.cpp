@@ -28,7 +28,7 @@ bool COptions::model_issuance(void) {
             if (true) {
                 CReconciliation rec;
                 rec.blockNum = bn;
-                rec.timestamp = getTimestampAt(bn);
+                rec.timestamp = bn_2_Timestamp(bn);
                 if (bn == 0) {
                     cout << STR_HEADER_EXPORT << endl;
                     for (auto prefund : prefund BalMap)  // USE forEvery Prefund instead
