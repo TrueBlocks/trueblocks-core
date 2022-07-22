@@ -94,6 +94,10 @@ names?terms=0xb6&addr
       "decimals": 0
     },
     {
+      "address": "0xb65facf8fafd25c5a204dd4eecddc6f6e22be60f",
+      "decimals": 0
+    },
+    {
       "address": "0xb6615ebc95cb072774af1a346c522ed8d8b541b2",
       "decimals": 0
     },
@@ -203,6 +207,10 @@ names?terms=0xb6&addr
     },
     {
       "address": "0xb6bccce9cfe99d4b593aba72f3a36028d1ade4c5",
+      "decimals": 0
+    },
+    {
+      "address": "0xb6c36ef814de02ee059fdb22071d9a6201e2df79",
       "decimals": 0
     },
     {

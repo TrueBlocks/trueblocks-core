@@ -362,11 +362,11 @@ const char* STR_DISPLAY_CHAIN = "";
 static void replaceNames(const string_q& chain, string_q& key, string_q& value) {
     if (!isTestMode())
         return;
-    if (contains(key, "Explorer"))
+    if (containsI(key, "Explorer"))
         value = "--explorer-" + chain + "--";
-    else if (contains(key, "Provider"))
+    else if (containsI(key, "Provider"))
         value = "--provider-" + chain + "--";
-    else if (contains(key, "Gateway"))
+    else if (containsI(key, "Gateway"))
         value = "--gateway-" + chain + "--";
 }
 

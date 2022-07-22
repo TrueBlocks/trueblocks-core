@@ -2,6 +2,15 @@ names?terms=network&matchCase
 {
   "data": [
     {
+      "tags": "31-Giveth:Project",
+      "address": "0x035495b687850f79cb1652f416ea7ec19907557c",
+      "name": "Bees network",
+      "symbol": "",
+      "source": "Tokenomics",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "50-Tokens:ERC20",
       "address": "0x069d653038db2f9d84e9620be140b3d404a40258",
       "name": "Jarvis network Smart Relay Token",

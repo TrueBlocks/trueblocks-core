@@ -4,6 +4,7 @@ TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] Format:  txt
 tags	address	name	symbol	decimals	source
 31-Gitcoin:Grants	0x011c2c1433b36a524b548444ae2f20c015427d04	Grant 0491 - Tokamak Network: Decentralized, Scalable, Turing Complete Layer 2 Plasma				https://gitcoin.co/grants/491/tokamak-network-decentralized-scalable-turing-com
+31-Giveth:Project	0x035495b687850f79cb1652f416ea7ec19907557c	Bees network				Tokenomics
 50-Tokens:ERC20	0x04c62019ab478bff5874e7b7d9bc84fcf7e30025	POA Network: MultiSig				EtherScan.io
 31-Gitcoin:Grants	0x067f2bef6a1f929544253b9fb95f99bae77b2518	Grant 1753 Resetdao ― Web 3.0 Programmable Social Network				https://gitcoin.co/grants/1753/resetdao-web-30-programmable-social-network
 50-Tokens:ERC20	0x069d653038db2f9d84e9620be140b3d404a40258	Jarvis network Smart Relay Token	JRTBNT		18	On chain
@@ -44,9 +45,10 @@ tags	address	name	symbol	decimals	source
 31-Giveth:Project	0x538f022f50038994f7a04a58f5004c1b98ed41a4	Alexander Youth Network				Tokenomics
 31-Gitcoin:Grants	0x55b23ed53fe13060183b92979c737a8ef9a73b73	Grant 4201 - Spect Network				https://gitcoin.co/grants/4201/spect-network
 30-Contracts:Kyber Network	0x57f8160e1c59d16c01bbe181fd94db4e56b60495	Kyber Weth Reserve				TrueBlocks.io
+31-Giveth:Project	0x5bb21dbb7b2876b0524530c8666969ac9eaf9ede	Cryptolink Network				Tokenomics
 50-Tokens:ERC20	0x5f3789907b35dce5605b00c0be0a7ecdbfa8a841	Content and Ad Network	CAN		18	On chain
 50-Tokens:ERC20	0x607f4c5bb672230e8672085532f7e901544a7375	iEx.ec Network Token	RLC		9	On chain
-31-Contracts:Giveth Project	0x629224fc7ce36163040454cd51b37acc550b77cb	Rainforest Action Network				Giveth Website
+31-Giveth:Project	0x629224fc7ce36163040454cd51b37acc550b77cb	Rainforest Action Network				Tokenomics
 50-Tokens:ERC20	0x62a8aa7a0b58b6f2e275796f84ba5ad48c65d36d	CovidFree Network	COVIDFREE		18	On chain
 30-Contracts:Kyber Network	0x63825c174ab367968ec60f061753d3bbd36a0d8f	Kyber Reserve				0xTracker
 31-Gitcoin:Grants	0x641845407bc5b9920ee786270ab25b73bcc88a19	Grant 2108 - SkyFeed • Decentralized Social Network				https://gitcoin.co/grants/2108/skyfeed-decentralized-social-network
@@ -59,7 +61,7 @@ tags	address	name	symbol	decimals	source
 50-Tokens:ERC20	0x6fb3e0a217407efff7ca062d46c26e5d60a14d69	IoTeX Network	IOTX		18	On chain
 50-Tokens:ERC20	0x6fff3806bbac52a20e0d79bc538d527f6a22c96b	Network			18	On chain
 50-Tokens:ERC20	0x70861e862e1ac0c96f853c8231826e469ead37b1	DOS Network Token	DOS		18	On chain
-31-Giveth:Project	0x70a68a29bac0b3c85bed4b47bb3a639f0f245e70	Allergy & Asthma Network				Tokenomics
+31-Giveth:Project	0x70a68a29bac0b3c85bed4b47bb3a639f0f245e70	Allergy &amp; Asthma Network				Tokenomics
 50-Tokens:ERC20	0x744d70fdbe2ba4cf95131626614a1763df805b9e	Status Network Token	SNT		18	On chain
 30-Contracts:Kyber Network	0x798abda6cc246d0edba912092a2a3dbd3d11191b	Kyber Conversion Rates				TrueBlocks.io
 50-Tokens:ERC20	0x7b0c06043468469967dba22d1af33d77d44056c8	Morpheus.Network	MRPH		4	On chain

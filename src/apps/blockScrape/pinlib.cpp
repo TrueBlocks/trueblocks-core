@@ -12,7 +12,7 @@
  *-------------------------------------------------------------------------------------------*/
 
 #include "pinlib.h"
-#include "classes/pinatapin.h"
+#include "pinatapin.h"
 
 namespace qblocks {
 

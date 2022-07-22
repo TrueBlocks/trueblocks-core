@@ -1,8 +1,8 @@
 # minimum cmake version supported
-cmake_minimum_required (VERSION 3.0)
+cmake_minimum_required(VERSION 3.0)
 
 # folder project
-project (libs)
+project(libs)
 
 # messaging
 # message (WARNING  "*** Entering libs folder ***")
@@ -11,6 +11,5 @@ project (libs)
 add_subdirectory(utillib)
 add_subdirectory(etherlib)
 add_subdirectory(acctlib)
-add_subdirectory(pinlib)
 add_subdirectory(cachelib)
 add_subdirectory(test-libs)
