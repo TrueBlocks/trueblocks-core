@@ -44,7 +44,7 @@ func init() {
 	scrapeCmd.Flags().SortFlags = false
 
 	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().BlockCnt, "block_cnt", "n", 2000, "maximum number of blocks to process per pass")
-	scrapeCmd.Flags().BoolVarP(&scrapePkg.GetOptions().Pin, "pin", "p", false, "pin chunks (and blooms) to IPFS as they are created (requires ipfs daemon)")
+	scrapeCmd.Flags().BoolVarP(&scrapePkg.GetOptions().Pin, "pin", "p", false, "pin chunks (and blooms) to IPFS as they are created (requires ipfs)")
 	scrapeCmd.Flags().Float64VarP(&scrapePkg.GetOptions().Sleep, "sleep", "s", 14, "seconds to sleep between scraper passes")
 	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().BlockChanCnt, "block_chan_cnt", "b", 10, "number of concurrent block processing channels (hidden)")
 	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().AddrChanCnt, "addr_chan_cnt", "d", 20, "number of concurrent address processing channels (hidden)")

@@ -1492,7 +1492,7 @@ paths:
           schema:
             type: number
         - name: pin
-          description: pin chunks (and blooms) to IPFS as they are created (requires ipfs daemon)
+          description: pin chunks (and blooms) to IPFS as they are created (requires ipfs)
           required: false
           style: form
           in: query

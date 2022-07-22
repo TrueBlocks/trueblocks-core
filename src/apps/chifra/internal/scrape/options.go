@@ -22,7 +22,7 @@ import (
 type ScrapeOptions struct {
 	Modes        []string              `json:"modes,omitempty"`        // Which scraper(s) to control
 	BlockCnt     uint64                `json:"blockCnt,omitempty"`     // Maximum number of blocks to process per pass
-	Pin          bool                  `json:"pin,omitempty"`          // Pin chunks (and blooms) to IPFS as they are created (requires ipfs daemon)
+	Pin          bool                  `json:"pin,omitempty"`          // Pin chunks (and blooms) to IPFS as they are created (requires ipfs)
 	Sleep        float64               `json:"sleep,omitempty"`        // Seconds to sleep between scraper passes
 	BlockChanCnt uint64                `json:"blockChanCnt,omitempty"` // Number of concurrent block processing channels
 	AddrChanCnt  uint64                `json:"addrChanCnt,omitempty"`  // Number of concurrent address processing channels
