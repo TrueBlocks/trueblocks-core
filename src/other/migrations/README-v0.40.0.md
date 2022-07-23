@@ -1,3 +1,7 @@
+chan_cnt and block_chan_cnt are not longer options as are not other things - they are env variables
+run and indexer are both invalid options on chifra scrape now
+
+
 - Still not working 
 - On chains that have missing blocks, timestamps were incorrect 
 - Doubled the speed of the scrape due to not repeating for timestamps 
