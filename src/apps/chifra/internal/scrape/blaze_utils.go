@@ -40,32 +40,3 @@ func isImplicitAddress(addr string) bool {
 	// extract the potential address
 	return isAddress("0x" + string(addr[24:]))
 }
-
-// TODO:
-// TODO: This "baddress"
-// TODO:
-// TODO: 0x00000000000004ee2d6d415371e298f092cc0000
-// TODO:
-// TODO: appears in the index but it is not an actual address. It appears only four times in the entire index.
-// TODO: We know this is not an address because it only appears the event 'data' section for Transfers or Approvals
-// TODO: which we know to be the value, not an address.
-// TODO:
-// TODO: The trouble is knowing this is a "non-chain knowledge leak." The chain itself knows nothing about
-// TODO: ERC20 tokens. I'm not sure how many 'false records' (or baddresses) this would remove, but it may
-// TODO: be significant given that Transfers and Approvals dominate the chain data.
-// TODO:
-// TODO: What we could do is this:
-// TODO:
-// TODO: If we're scraping a log, and
-// TODO:
-// TODO: 	If we see certain topics (topic[0] is a Transfer or Approval, we do not include the value
-// TODO:	even if it looks like an address. This is a very slippery slope. What does 'well known' mean?
-// TODO:
-// TODO: Another downside; implementing this would require a full re-generation of the index and would
-// TODO: change the hashes and the underlying files. In order to do this, we would require a migration that
-// TODO: removes the 'old' index from the end user's machine and then downloads the new index. We can do this,
-// TODO: but it feels quite precarious.
-// TODO:
-// TODO: My expectation is that we will eventually have to re-generate the index at some point (version 1.0?).
-// TODO: We can this then.
-// TODO:

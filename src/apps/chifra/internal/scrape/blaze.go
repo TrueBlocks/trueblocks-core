@@ -1,7 +1,6 @@
 package scrapePkg
 
 import (
-	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -40,12 +39,6 @@ type BlazeOptions struct {
 	AddressWG   sync.WaitGroup             `json:"-"`
 	TsWG        sync.WaitGroup             `json:"-"`
 	AppMap      index.AddressAppearanceMap `json:"-"`
-}
-
-// String implements the stringer interface
-func (opts *BlazeOptions) String() string {
-	b, _ := json.MarshalIndent(opts, "", "\t")
-	return string(b)
 }
 
 // HandleBlaze does the actual scraping, walking through block_cnt blocks and querying traces and logs

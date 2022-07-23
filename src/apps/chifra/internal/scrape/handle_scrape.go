@@ -43,7 +43,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 			if !ok {
 				break
 			}
-			logger.Log(logger.Error, "blockScrape", err)
+			logger.Log(logger.Error, "HandleScrapeConsolidate", err)
 			goto PAUSE
 		}
 
@@ -52,7 +52,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 			if !ok {
 				break
 			}
-			logger.Log(logger.Error, "postScrape", err)
+			logger.Log(logger.Error, "HandleScrapePin", err)
 			goto PAUSE
 		}
 
@@ -60,8 +60,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		opts.Z_6_pause(progress)
 	}
 
-	_, err = opts.HandleCleanup(progress)
-	return err
+	return nil
 }
 
 // TODO: BOGUS - NOTES ON RE-RUN AFTER BLAZE FAILURE
