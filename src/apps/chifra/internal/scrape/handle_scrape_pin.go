@@ -117,7 +117,7 @@ func (opts *ScrapeOptions) HandleScrapePin(progressThen *rpcClient.MetaData) (ok
 	}
 
 	// TODO: BOGUS - TESTING SCRAPING
-	if utils.OnOff {
+	if file.FileExists("./testwrite") {
 		index.TestWrite(opts.Globals.Chain, pathToIndex, &opts.Globals)
 	}
 	os.Remove(newPinsFn)
