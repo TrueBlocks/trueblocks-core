@@ -8,7 +8,7 @@ import (
 	"errors"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/migrate"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrape"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -47,8 +47,7 @@ func (opts *ChunksOptions) validateChunks() error {
 			return validate.Usage("The {0} option is available only in {1} mode.", "--check", "manifest")
 		}
 	} else {
-		settings := config.GetBlockScrapeSettings(opts.Globals.Chain)
-		key, secret := settings.Pinata_api_key, settings.Pinata_secret_api_key
+		key, secret := scrape.PinataKeys(opts.Globals.Chain)
 		if opts.PinRemote {
 			if len(key) == 0 {
 				return validate.Usage("The {0} option requires {1}", "--pin_remote", "a pinata_api_key")

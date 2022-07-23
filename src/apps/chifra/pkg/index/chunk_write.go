@@ -51,7 +51,7 @@ func WriteChunk(chain, indexPath string, addAppMap AddressAppearanceMap, nApps i
 
 	rel := strings.Replace(indexPath, config.GetPathToIndex(chain), "$INDEX/", -1)
 	// TODO: BOGUS - TESTING SCRAPING
-	if utils.OnOff {
+	if utils.DebuggingOn {
 		// We have everything we need here, properly sorted with all fields completed
 		fmt.Println("Writing", rel)
 		fmt.Printf("%x,%s,%d,%d\n", file.MagicNumber, hexutil.Encode(crypto.Keccak256([]byte(version.ManifestVersion))), len(addressTable), len(appearanceTable))
@@ -108,7 +108,7 @@ func WriteChunk(chain, indexPath string, addAppMap AddressAppearanceMap, nApps i
 
 	fmt.Println("Wrote", len(addAppMap), "records to", rel)
 	// TODO: BOGUS - TESTING SCRAPING
-	if utils.OnOff {
+	if utils.DebuggingOn {
 		nBlooms, nInserted, nBitsLit, nBitsNotLit, sz, bitsLit := bl.GetStats()
 		fmt.Println("nBlooms:    ", nBlooms)
 		fmt.Println("nInserted:  ", nInserted)

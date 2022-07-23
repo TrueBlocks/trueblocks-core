@@ -52,7 +52,7 @@ func (opts *BlazeOptions) String() string {
 // and then extracting addresses and timestamps from those data structures.
 func (opts *BlazeOptions) HandleBlaze(meta *rpcClient.MetaData) (ok bool, err error) {
 
-	if utils.OnOff {
+	if utils.DebuggingOn {
 		fmt.Println(opts.String())
 	}
 	blockChannel := make(chan int)
@@ -395,7 +395,7 @@ func (opts *BlazeOptions) BlazeWriteAddresses(meta *rpcClient.MetaData, bn int, 
 	}
 
 	// TODO: BOGUS - TESTING SCRAPING
-	if !utils.OnOff {
+	if !utils.DebuggingOn {
 		step := uint64(7)
 		if opts.NProcessed%step == 0 {
 			dist := uint64(0)

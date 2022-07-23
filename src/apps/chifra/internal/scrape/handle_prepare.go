@@ -18,7 +18,7 @@ import (
 // HandlePrepare performs actions that need to happen prior to entering the forever loop. Returns true
 // if the processing should continue, false otherwise
 func (opts *ScrapeOptions) HandlePrepare(progressThen *rpcClient.MetaData) (ok bool, err error) {
-	if utils.OnOff {
+	if utils.DebuggingOn {
 		logger.Log(logger.Info, "HandlePrepare")
 	}
 

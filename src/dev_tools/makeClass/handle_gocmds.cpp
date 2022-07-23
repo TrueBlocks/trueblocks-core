@@ -242,6 +242,8 @@ string_q get_use(const CCommandOption& cmd) {
         }
     }
     string_q ret = "[{ROUTE}] [flags][{TYPES}][{POSITIONALS}]";
+    if (contains(toLower(cmd.tool), "scrape"))
+        ret = "[{ROUTE}] [flags]";
     replace(ret, "[{TYPES}]", clean_positionals(cmd.api_route, positionals.str()));
     replace(ret, "[{POSITIONALS}]", arguments.str());
     replace(ret, "[flags] <mode> [blocks...]", "<mode> [flags] [blocks...]");
@@ -448,7 +450,7 @@ string_q get_hidden(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         replace(p.longName, "deleteMe", "delete");
-        if (!p.is_visible) {
+        if (!p.is_visible && !p.isConfig) {
             os << "\t\t[{ROUTE}]Cmd.Flags().MarkHidden(\"" + p.Format("[{LONGNAME}]") + "\")" << endl;
         }
     }
@@ -467,9 +469,8 @@ string_q get_hidden(const CCommandOption& cmd) {
 string_q get_setopts(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
-        if (p.option_type != "positional") {
+        if (p.option_type != "positional" && !p.isConfig) {
             replace(p.longName, "deleteMe", "delete");
-
             os << "\t[{ROUTE}]Cmd.Flags().";
             os << p.go_flagtype;
             os << "(&[{ROUTE}]Pkg.GetOptions().";

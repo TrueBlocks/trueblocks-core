@@ -11,6 +11,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrape"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -52,7 +53,7 @@ func (opts *ScrapeOptions) HandleScrapePin(progressThen *rpcClient.MetaData) (ok
 	}
 
 	// TODO: BOGUS - TESTING SCRAPING
-	if utils.OnOff {
+	if utils.DebuggingOn {
 		rel := strings.Replace(newPinsFn, config.GetPathToCache(opts.Globals.Chain), "$CACHE", -1)
 		fmt.Println()
 		fmt.Println("----------------------------------------------------------------------------------------------")
@@ -87,8 +88,7 @@ func (opts *ScrapeOptions) HandleScrapePin(progressThen *rpcClient.MetaData) (ok
 		pathToIndex = unchainedFolder + "finalized/" + record.Range + ".bin"
 		bloomPath := unchainedFolder + "blooms/" + record.Range + ".bloom"
 
-		settings := config.GetBlockScrapeSettings(opts.Globals.Chain)
-		key, secret := settings.Pinata_api_key, settings.Pinata_secret_api_key
+		key, secret := scrape.PinataKeys(opts.Globals.Chain)
 		pina := pinning.Service{
 			Local:  true,
 			Apikey: key,

@@ -8,7 +8,7 @@ import (
 
 // HandleCleanup processes after the forever loop has exited. Currently does nothing but may be needed in the future.
 func (opts *ScrapeOptions) HandleCleanup(progressThen *rpcClient.MetaData) (ok bool, err error) {
-	if utils.OnOff {
+	if utils.DebuggingOn {
 		logger.Log(logger.Info, "PostLoop")
 	}
 	return true, nil

@@ -2,7 +2,45 @@
 #include "bloom.h"
 
 // TODO: BOGUS - TESTING SCRAPING
-bool OnOff = fileExists("./testing");
+bool DebuggingOn = fileExists("./testing");
+
+class CScrapeState {
+  public:
+    blknum_t startBlock{0};
+    blknum_t nRecsNow{0};
+    blknum_t nRecsThen{0};
+    uint64_t nAppsPerChunk{0};
+    uint64_t blockCount{0};
+    CScrapeState(blknum_t sB, blknum_t nN, blknum_t nT, uint64_t nA, uint64_t bC)
+        : startBlock(sB), nRecsNow(nN), nRecsThen(nT), nAppsPerChunk(nA), blockCount(bC) {
+    }
+    void Report(void) const;
+};
+
+//---------------------------------------------------------------------------------------------------
+void CScrapeState::Report(void) const {
+    if (nRecsNow == nRecsThen) {
+        LOG_INFO("No new blocks...", string_q(80, ' '), "\r");
+    } else {
+        blknum_t need = nAppsPerChunk >= nRecsNow ? nAppsPerChunk - nRecsNow : 0;
+        blknum_t seen = nRecsNow - nRecsThen;
+        double pct = double(nRecsNow) / double(nAppsPerChunk);
+        double pBlk = double(seen) / double(blockCount);
+        string_q result = "Block {0}: have {1} addrs of {2} ({3}). Need {4} more. Found {5} records ({6}).";
+        replace(result, "{0}", "{" + uint_2_Str(startBlock + blockCount - 1) + "}");
+        replace(result, "{1}", "{" + uint_2_Str(nRecsNow) + "}");
+        replace(result, "{2}", "{" + uint_2_Str(nAppsPerChunk) + "}");
+        replace(result, "{3}", "{" + double_2_Str(pct * 100.00, 1) + "%}");
+        replace(result, "{4}", "{" + uint_2_Str(need) + "}");
+        replace(result, "{5}", "{" + uint_2_Str(seen) + "}");
+        replace(result, "{6}", "{" + double_2_Str(pBlk, 2) + " apps/blk}");
+        replaceAll(result, "{", cGreen);
+        replaceAll(result, "}", cOff);
+        LOG_INFO(result);
+    }
+
+    return;
+}
 
 //-----------------------------------------------------------------------------
 class COptions {
@@ -15,15 +53,12 @@ class COptions {
     bool allow_missing{false};
     blknum_t start_block{0};
 
+    string_q tmpStagingFn{""};
     string_q newStage{""};
     blknum_t prev_block{0};
     blknum_t nRecsThen{0};
     blknum_t nRecsNow{0};
     ofstream tmpStagingStream;
-
-    bool write_chunks(blknum_t chunkSize, bool snapped);
-
-    string_q tmpStagingFn;
 
     COptions(void) {
         start_block = str_2_Uint(getEnvStr("TB_BLAZE_STARTBLOCK"));
@@ -33,7 +68,7 @@ class COptions {
         snap_to_grid = str_2_Uint(getEnvStr("TB_SETTINGS_SNAPTOGRID"));
         first_snap = str_2_Uint(getEnvStr("TB_SETTINGS_FIRSTSNAP"));
         allow_missing = getEnvStr("TB_SETTINGS_ALLOWMISSING") == "true";
-        if (OnOff) {
+        if (DebuggingOn) {
             LOG_INFO("bs-start_block: ", start_block);
             LOG_INFO("bs-block_cnt: ", block_cnt);
             LOG_INFO("bs-apps_per_chunk: ", apps_per_chunk);
@@ -55,9 +90,9 @@ class COptions {
         tmpStagingStream.close();
         ::remove(tmpStagingFn.c_str());
     }
+    bool write_chunks(blknum_t chunkSize, bool snapped);
 };
 
-extern bool report(COptions* opts);
 extern bool stage_chunks(COptions* options);
 extern bool processSnap(COptions* options, const string_q& path, bool& snapped);
 extern bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines);
@@ -112,7 +147,9 @@ int main(int argc, const char* argv[]) {
 
     freshenTimestamps2(options.start_block, options.block_cnt);
     options.nRecsNow = fileSize(options.newStage) / asciiAppearanceSize;
-    report(&options);
+    CScrapeState ss(options.start_block, options.nRecsNow, options.nRecsThen, options.apps_per_chunk,
+                    options.block_cnt);
+    ss.Report();
     if (options.nRecsNow <= options.apps_per_chunk)
         return EXIT_SUCCESS;
     return options.write_chunks(options.apps_per_chunk, false /* snapped */) ? EXIT_SUCCESS : EXIT_FAILURE;
@@ -144,7 +181,8 @@ bool processSnap(COptions* opts, const string_q& file, bool& snapped) {
         }
         freshenTimestamps2(opts->start_block, opts->block_cnt);
         opts->nRecsNow = fileSize(opts->newStage) / asciiAppearanceSize;
-        report(opts);
+        CScrapeState ss(opts->start_block, opts->nRecsNow, opts->nRecsThen, opts->apps_per_chunk, opts->block_cnt);
+        ss.Report();
         blknum_t chunkSize = min(opts->nRecsNow, opts->apps_per_chunk);
         opts->write_chunks(chunkSize, true /* snapped */);
         snapped = true;
@@ -206,33 +244,6 @@ bool stage_chunks(COptions* opts) {
     unlockSection();
 
     return !shouldQuit();
-}
-
-//---------------------------------------------------------------------------------------------------
-bool report(COptions* opts) {
-    blknum_t found2 = opts->nRecsNow - opts->nRecsThen;
-    if (!found2) {
-        LOG_INFO("No new blocks...", string_q(80, ' '), "\r");
-        return true;
-    }
-
-    blknum_t need = opts->apps_per_chunk >= opts->nRecsNow ? opts->apps_per_chunk - opts->nRecsNow : 0;
-    double pct = double(opts->nRecsNow) / double(opts->apps_per_chunk);
-    double pBlk = double(found2) / double(opts->block_cnt);
-
-    string_q result = "Block {0}: have {1} addrs of {2} ({3}). Need {4} more. Found {5} records ({6}).";
-    replace(result, "{0}", "{" + uint_2_Str(opts->start_block + opts->block_cnt - 1) + "}");
-    replace(result, "{1}", "{" + uint_2_Str(opts->nRecsNow) + "}");
-    replace(result, "{2}", "{" + uint_2_Str(opts->apps_per_chunk) + "}");
-    replace(result, "{3}", "{" + double_2_Str(pct * 100.00, 1) + "%}");
-    replace(result, "{4}", "{" + uint_2_Str(need) + "}");
-    replace(result, "{5}", "{" + uint_2_Str(found2) + "}");
-    replace(result, "{6}", "{" + double_2_Str(pBlk, 2) + " apps/blk}");
-    replaceAll(result, "{", cGreen);
-    replaceAll(result, "}", cOff);
-    LOG_INFO(result);
-
-    return true;
 }
 
 //---------------------------------------------------------------------------
@@ -533,7 +544,7 @@ void freshenTimestamps2(blknum_t firstBlock, blknum_t nBlocks) {
 //             break;
 //         file << ((uint32_t)item.first) << ((uint32_t)item.second);
 //         file.flush();
-//         if (!OnOff) {
+//         if (!DebuggingOn) {
 //             ostringstream post;
 //             post << " (" << (lastBlock - item.first);
 //             post << " " << item.second << " - " << ts_2_Date(item.second).Format(FMT_EXPORT) << ")";

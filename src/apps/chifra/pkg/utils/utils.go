@@ -164,4 +164,4 @@ func GetFields(t *reflect.Type, format string, header bool) (fields []string, se
 }
 
 // TODO: BOGUS - TESTING SCRAPING
-var OnOff = file.FileExists("./testing")
+var DebuggingOn = file.FileExists("./testing")
