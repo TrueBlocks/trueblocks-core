@@ -46,7 +46,7 @@ type BlazeOptions struct {
 func (opts *BlazeOptions) HandleBlaze(meta *rpcClient.MetaData) (ok bool, err error) {
 
 	if utils.DebuggingOn {
-		fmt.Println(opts.String())
+		fmt.Println(opts)
 	}
 	blockChannel := make(chan int)
 	addressChannel := make(chan ScrapedData)
