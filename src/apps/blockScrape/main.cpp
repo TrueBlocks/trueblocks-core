@@ -2,7 +2,7 @@
 #include "bloom.h"
 
 // TODO: BOGUS - TESTING SCRAPING
-bool OnOff = false;
+bool OnOff = fileExists("./testing");
 
 //-----------------------------------------------------------------------------
 class COptions {
@@ -521,13 +521,11 @@ int main(int argc, const char* argv[]) {
     if (!options.stage_chunks(tmpStagingFn))
         return EXIT_FAILURE;
 
-    if (!isTestMode()) {
-        // TODO: BOGUS - USE THE NEW TIMESTAMP PROCESSOR?
-        LOG_INFO("pre-freshenTimestamps");
-        // freshenTimestampsAppend(start_block, block_cnt);
-        freshenTimestamps(options.start_block + options.block_cnt);
-        LOG_INFO("post-freshenTimestamps");
-    }
+    // TODO: BOGUS - USE THE NEW TIMESTAMP PROCESSOR?
+    LOG_INFO("pre-freshenTimestamps");
+    // freshenTimestampsAppend(start_block, block_cnt);
+    freshenTimestamps(options.start_block + options.block_cnt);
+    LOG_INFO("post-freshenTimestamps");
 
     options.nRecsNow = fileSize(options.newStage) / asciiAppearanceSize;
     options.report(options.nRecsThen, options.nRecsNow);
