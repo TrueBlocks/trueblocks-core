@@ -21,123 +21,209 @@ class COptions {
     blknum_t nRecsNow{0};
     ofstream tmpStagingStream;
 
-    bool stage_chunks(const string_q& tmpFn);
     bool write_chunks(blknum_t chunkSize, bool snapped);
-    bool copyRipeToStage(const string_q& path, bool& snapped);
-    bool report(uint64_t nRecsThen, uint64_t nRecsNow) const;
+
+    string_q tmpStagingFn;
 
     COptions(void) {
+        start_block = str_2_Uint(getEnvStr("TB_BLAZE_STARTBLOCK"));
+        block_cnt = str_2_Uint(getEnvStr("TB_BLAZE_BLOCKCNT"));
+        apps_per_chunk = str_2_Uint(getEnvStr("TB_SETTINGS_APPSPERCHUNK"));
+        unripe_dist = str_2_Uint(getEnvStr("TB_SETTINGS_UNRIPEDIST"));
+        snap_to_grid = str_2_Uint(getEnvStr("TB_SETTINGS_SNAPTOGRID"));
+        first_snap = str_2_Uint(getEnvStr("TB_SETTINGS_FIRSTSNAP"));
+        allow_missing = getEnvStr("TB_SETTINGS_ALLOWMISSING") == "true";
+        if (OnOff) {
+            LOG_INFO("bs-start_block: ", start_block);
+            LOG_INFO("bs-block_cnt: ", block_cnt);
+            LOG_INFO("bs-apps_per_chunk: ", apps_per_chunk);
+            LOG_INFO("bs-unripe_dist: ", unripe_dist);
+            LOG_INFO("bs-snap_to_grid: ", snap_to_grid);
+            LOG_INFO("bs-first_snap: ", first_snap);
+            LOG_INFO("bs-allow_missing: ", allow_missing);
+        }
+        tmpStagingFn = indexFolder_staging + "000000000-temp.txt";
+        tmpStagingStream.open(tmpStagingFn, ios::out | ios::trunc);
+
+        string_q stageFn = getLastFileInFolder(indexFolder_staging, false);
+        prev_block = path_2_Bn(stageFn);
+        nRecsThen = fileSize(stageFn) / asciiAppearanceSize;
+    }
+    void Cleanup(void) {
+        cleanFolder(indexFolder_unripe);
+        cleanFolder(indexFolder_ripe);
+        tmpStagingStream.close();
+        ::remove(tmpStagingFn.c_str());
     }
 };
 
-//--------------------------------------------------------------------------
-bool COptions::copyRipeToStage(const string_q& path, bool& snapped) {
-    blknum_t bn = path_2_Bn(path);
-    bool allow = allow_missing;
-    bool sequential = (prev_block + 1) == bn;
-    bool less_than = (prev_block < bn);
-    if (prev_block != 0 && ((!allow && !sequential) || (allow && !less_than))) {
-        LOG_WARN("prev_block: ", prev_block);
-        LOG_WARN("allow: ", allow, allow_missing);
-        LOG_WARN("sequential: ", sequential, " ", prev_block + 1, " ", bn, " ", (prev_block + 1 == bn));
-        LOG_WARN("less_than: ", less_than, " ", prev_block, " ", bn, " ", prev_block < bn);
-        LOG_WARN("Current file (", path, ") does not sequentially follow previous file ", prev_block, ".");
-        return false;
+extern bool report(COptions* opts);
+extern bool stage_chunks(COptions* options);
+extern bool processSnap(COptions* options, const string_q& path, bool& snapped);
+extern bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines);
+extern void freshenTimestamps2(blknum_t firstBlock, blknum_t nBlocks);
+extern bool appendToStage(COptions* options, const string_q& file);
+
+//----------------------------------------------------------------------------------
+int main(int argc, const char* argv[]) {
+    colorsOff();
+    LOG_INFO("scrape_blocks");
+
+    COptions options;
+    string_q tmpStagingFn = indexFolder_staging + "000000000-temp.txt";
+    if (!options.tmpStagingStream.is_open()) {
+        LOG_WARN("Could not open temporary staging file.");
+        return EXIT_FAILURE;
     }
 
-    ifstream inputStream(path, ios::in);
+    CStringArray files;
+    if (!listFilesInFolder(files, indexFolder_ripe, false)) {
+        LOG_ERR("Could not list files in ripe folder.");
+        options.Cleanup();
+        return EXIT_FAILURE;
+    }
+
+    for (auto file : files) {
+        if (shouldQuit()) {
+            options.Cleanup();
+            return EXIT_FAILURE;
+        }
+
+        if (!appendToStage(&options, file)) {
+            LOG_WARN("Could not open input stream ", file);
+            options.Cleanup();
+            return EXIT_FAILURE;
+        }
+
+        bool snapped = false;
+        if (!processSnap(&options, file, snapped)) {
+            LOG_INFO("snapped: ", snapped);
+            options.Cleanup();
+            return snapped ? EXIT_SUCCESS : EXIT_FAILURE;
+        }
+    }
+
+    options.tmpStagingStream.close();
+    if (!stage_chunks(&options)) {
+        LOG_ERR("stage_chunks returned false");
+        options.Cleanup();
+        return EXIT_FAILURE;
+    }
+
+    freshenTimestamps2(options.start_block, options.block_cnt);
+    options.nRecsNow = fileSize(options.newStage) / asciiAppearanceSize;
+    report(&options);
+    if (options.nRecsNow <= options.apps_per_chunk)
+        return EXIT_SUCCESS;
+    return options.write_chunks(options.apps_per_chunk, false /* snapped */) ? EXIT_SUCCESS : EXIT_FAILURE;
+}
+
+bool appendToStage(COptions* opts, const string_q& file) {
+    ifstream inputStream(file, ios::in);
     if (!inputStream.is_open()) {
-        LOG_WARN("Could not open input stream ", path);
         return false;
     }
-
     lockSection();
-    tmpStagingStream << inputStream.rdbuf();
-    tmpStagingStream.flush();
+    opts->tmpStagingStream << inputStream.rdbuf();
+    opts->tmpStagingStream.flush();
     inputStream.close();
-    ::remove(path.c_str());
-    prev_block = bn;
+    ::remove(file.c_str());
     unlockSection();
-
-    bool isSnapToGrid = (bn > first_snap && !(bn % snap_to_grid));
-    if (isSnapToGrid) {
-        string_q tmpStagingFn = (indexFolder_staging + "000000000-temp.txt");
-        if (!stage_chunks(tmpStagingFn)) {
-            return false;
-        }
-
-        if (!isTestMode()) {
-            // TODO: BOGUS - USE THE NEW TIMESTAMP PROCESSOR?
-            LOG_INFO("pre-freshenTimestamps");
-            // freshenTimestampsAppend(start_block, block_cnt);
-            freshenTimestamps(start_block + block_cnt);
-            LOG_INFO("post-freshenTimestamps");
-        }
-        nRecsNow = fileSize(newStage) / asciiAppearanceSize;
-        report(nRecsThen, nRecsNow);
-        blknum_t chunkSize = min(nRecsNow, apps_per_chunk);
-        write_chunks(chunkSize, true /* snapped */);
-        snapped = true;
-        return false;
-    }
-    return !shouldQuit();
+    return true;
 }
 
 //--------------------------------------------------------------------------
-bool COptions::stage_chunks(const string_q& tmpFn) {
+bool processSnap(COptions* opts, const string_q& file, bool& snapped) {
+    blknum_t bn = path_2_Bn(file);
+    opts->prev_block = bn;
+    bool isSnapToGrid = (bn > opts->first_snap && !(bn % opts->snap_to_grid));
+    if (isSnapToGrid) {
+        if (!stage_chunks(opts)) {
+            LOG_ERR("stage_chunks returned false");
+            return false;
+        }
+        freshenTimestamps2(opts->start_block, opts->block_cnt);
+        opts->nRecsNow = fileSize(opts->newStage) / asciiAppearanceSize;
+        report(opts);
+        blknum_t chunkSize = min(opts->nRecsNow, opts->apps_per_chunk);
+        opts->write_chunks(chunkSize, true /* snapped */);
+        snapped = true;
+        return false;
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------
+bool appendFile(const string_q& toFile, const string_q& fromFile) {
+    ofstream output;
+    output.open(toFile, ios::out | ios::app);
+    if (!output.is_open())
+        return false;
+
+    ifstream input(fromFile, ios::in);
+    if (!input.is_open()) {
+        output.close();
+        return false;
+    }
+
+    output << input.rdbuf();
+    output.flush();
+    input.close();
+
+    return true;
+}
+
+//--------------------------------------------------------------------------
+bool stage_chunks(COptions* opts) {
     string_q prevStage = getLastFileInFolder(indexFolder_staging, false);
-    newStage = indexFolder_staging + padNum9(prev_block) + ".txt";
-    if (prevStage == newStage) {
+    LOG_INFO("prevStage: ", prevStage);
+    opts->newStage = indexFolder_staging + padNum9(opts->prev_block) + ".txt";
+    if (prevStage == opts->newStage) {
         return !shouldQuit();
     }
 
     string_q tmpFile = indexFolder + "temp.txt";
-    if (prevStage != tmpFn) {
+    if (prevStage != opts->tmpStagingFn) {
         if (!appendFile(tmpFile /* to */, prevStage /* from */)) {
-            cleanFolder(indexFolder_unripe);
-            cleanFolder(indexFolder_ripe);
+            opts->Cleanup();
             ::remove(tmpFile.c_str());
-            ::remove(tmpFn.c_str());
             return false;
         }
     }
 
-    LOG_INFO("pre-append");
-    if (!appendFile(tmpFile /* to */, tmpFn /* from */)) {
-        cleanFolder(indexFolder_unripe);
-        cleanFolder(indexFolder_ripe);
+    if (!appendFile(tmpFile /* to */, opts->tmpStagingFn /* from */)) {
+        opts->Cleanup();
         ::remove(tmpFile.c_str());
-        ::remove(tmpFn.c_str());
         return false;
     }
-    LOG_INFO("post-append");
 
     lockSection();
-    ::rename(tmpFile.c_str(), newStage.c_str());
-    ::remove(tmpFn.c_str());
-    if (fileExists(prevStage) && prevStage != newStage)
+    ::rename(tmpFile.c_str(), opts->newStage.c_str());
+    ::remove(opts->tmpStagingFn.c_str());
+    if (fileExists(prevStage) && prevStage != opts->newStage) {
         ::remove(prevStage.c_str());
+    }
     unlockSection();
-    LOG_INFO("post-lock");
+
     return !shouldQuit();
 }
 
 //---------------------------------------------------------------------------------------------------
-bool COptions::report(uint64_t nRecsThen2, uint64_t nRecsNow2) const {
-    blknum_t found2 = nRecsNow2 - nRecsThen2;
+bool report(COptions* opts) {
+    blknum_t found2 = opts->nRecsNow - opts->nRecsThen;
     if (!found2) {
         LOG_INFO("No new blocks...", string_q(80, ' '), "\r");
         return true;
     }
 
-    blknum_t need = apps_per_chunk >= nRecsNow2 ? apps_per_chunk - nRecsNow2 : 0;
-    double pct = double(nRecsNow2) / double(apps_per_chunk);
-    double pBlk = double(found2) / double(block_cnt);
+    blknum_t need = opts->apps_per_chunk >= opts->nRecsNow ? opts->apps_per_chunk - opts->nRecsNow : 0;
+    double pct = double(opts->nRecsNow) / double(opts->apps_per_chunk);
+    double pBlk = double(found2) / double(opts->block_cnt);
 
     string_q result = "Block {0}: have {1} addrs of {2} ({3}). Need {4} more. Found {5} records ({6}).";
-    replace(result, "{0}", "{" + uint_2_Str(start_block + block_cnt - 1) + "}");
-    replace(result, "{1}", "{" + uint_2_Str(nRecsNow2) + "}");
-    replace(result, "{2}", "{" + uint_2_Str(apps_per_chunk) + "}");
+    replace(result, "{0}", "{" + uint_2_Str(opts->start_block + opts->block_cnt - 1) + "}");
+    replace(result, "{1}", "{" + uint_2_Str(opts->nRecsNow) + "}");
+    replace(result, "{2}", "{" + uint_2_Str(opts->apps_per_chunk) + "}");
     replace(result, "{3}", "{" + double_2_Str(pct * 100.00, 1) + "%}");
     replace(result, "{4}", "{" + uint_2_Str(need) + "}");
     replace(result, "{5}", "{" + uint_2_Str(found2) + "}");
@@ -257,10 +343,8 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines) {
             output.Write(bloom.bits, sizeof(uint8_t), BLOOM_WIDTH_IN_BYTES);
         }
         output.Release();
-
         copyFile(tmpFile2, outFn);
         ::remove(tmpFile2.c_str());
-
         string_q range = substitute(substitute(outFn, indexFolder_finalized, ""), indexFolder_blooms, "");
         range = substitute(substitute(range, ".bin", ""), ".bloom", "");
         appendToAsciiFile(cacheFolder_tmp + "chunks_created.txt", range + "\n");
@@ -280,7 +364,6 @@ bool COptions::write_chunks(blknum_t chunkSize, bool snapped) {
         CStringArray lines;
         lines.reserve(nRecords + 100);
         asciiFileToLines(newStage, lines);
-
         string_q prvBlock;
         size_t loc = NOPOS;
         for (uint64_t record = (chunkSize - 1); record < lines.size() && loc == NOPOS; record++) {
@@ -356,181 +439,110 @@ bool COptions::write_chunks(blknum_t chunkSize, bool snapped) {
 }
 
 //-----------------------------------------------------------------------
-bool freshenTimestampsAppend(blknum_t firstBlock, blknum_t nBlocks) {
-    // This routine is called after Blaze finishes. Blaze will have written a text file containing
-    // blockNumber,timestamp pairs that it encountered during it's pass. The job of this
-    // routine is to append timestamps to the timestamps database up to but not
-    // including firstBlock + nBlocks (so 0 and 1, if firstBlock == 0 and nBlocks == 2)
-    // Note that the text file may not contain every block. In fact, on many chains
-    // it does not. This routine has to recitfy that. Plus -- if this routine does not
-    // complete, it may have to start prior to firstBlock the next time, so we have to
-    // check the invariant: sizeof(file) == bn[last].Bn * 2 and bn[i] == i.
-
-    if (isTestMode())
-        return true;
-
-    if (!fileExists(indexFolderBin_ts)) {
-        ostringstream cmd;
-        cmd << "cd \"" << indexFolder << "\" ; ";
-        cmd << "cp \"" << chainConfigsZip_ts << "\" . ; ";
-        cmd << "gunzip ts.bin.gz";
-
-        establishFolder(indexFolder);
-        doCommand(cmd.str());
-        if (!fileExists(indexFolderBin_ts)) {
-            return false;
-        }
-    }
-
-    if (fileExists(indexFolderBin_ts + ".lck")) {  // it's being updated elsewhere
-        LOG_ERR("Timestamp file ", indexFolderBin_ts, " is locked. Cannot update. Re-running...");
-        ::remove((indexFolderBin_ts + ".lck").c_str());
-        return false;
-    }
-
-    // If we're already there, we're finished
-    blknum_t lastBlock = firstBlock + nBlocks;
-    size_t nRecords = ((fileSize(indexFolderBin_ts) / sizeof(uint32_t)) / 2);
-    if (nRecords >= lastBlock) {
-        return true;
-    }
-
-    // We always start at one less than the number of blocks already in the file
-    // (i.e., if there's two we need to add block two next.)
-    firstBlock = nRecords;
-
-    // We need to fill blocks firstBlock to lastBlock (non-inclusive). Make note
-    // of which ones were processed by Blaze
-    string_q blazeTsFilename = cacheFolder_tmp + "tempTsFile.txt";
-    CStringArray lines;
-    asciiFileToLines(blazeTsFilename, lines);
-    // The strings are left-padded with zeros, so we can sort them as strings
-    sort(lines.begin(), lines.end());
-
-    typedef map<blknum_t, timestamp_t> bn_ts_map_t;
-    bn_ts_map_t theMap;
-    for (auto line : lines) {
-        if (shouldQuit())
-            break;
-        CStringArray parts;
-        explode(parts, line, '-');
-        if (parts.size() == 2) {
-            theMap[str_2_Uint(parts[0])] = str_2_Int(parts[1]);
-        } else {
-            LOG_ERR("Line without dash (-) in temporarty timestamp file. Cannot continue.");
-            break;
-        }
-    }
-
-    for (blknum_t bn = firstBlock; bn < (firstBlock + nBlocks) && !shouldQuit(); bn++) {
-        if (theMap[bn] == 0) {
-            CBlock block;
-            getBlockHeader(block, bn);
-            theMap[bn] = block.timestamp;
-        }
-    }
-
-    lockSection();
-    CArchive file(WRITING_ARCHIVE);
-    if (!file.Lock(indexFolderBin_ts, modeWriteAppend, LOCK_NOWAIT)) {
-        LOG_ERR("Failed to open ", indexFolderBin_ts);
-        unlockSection();
-        return false;
-    }
-
-    for (auto item : theMap) {
-        if (shouldQuit())
-            break;
-        file << ((uint32_t)item.first) << ((uint32_t)item.second);
-        file.flush();
-        if (!OnOff) {
-            ostringstream post;
-            post << " (" << (lastBlock - item.first);
-            post << " " << item.second << " - " << ts_2_Date(item.second).Format(FMT_EXPORT) << ")";
-            post << "             \r";
-            LOG_INFO(UPDATE, item.first, lastBlock, post.str());
-        }
-    }
-    file.Release();
-    unlockSection();
-
-    return true;
-}
-
-//----------------------------------------------------------------------------------
-int main(int argc, const char* argv[]) {
-    colorsOff();
-    COptions options;
-    LOG_INFO("scrape_blocks");
-    options.start_block = str_2_Uint(getEnvStr("TB_BLAZE_STARTBLOCK"));
-    options.block_cnt = str_2_Uint(getEnvStr("TB_BLAZE_BLOCKCNT"));
-    options.apps_per_chunk = str_2_Uint(getEnvStr("TB_SETTINGS_APPSPERCHUNK"));
-    options.unripe_dist = str_2_Uint(getEnvStr("TB_SETTINGS_UNRIPEDIST"));
-    options.snap_to_grid = str_2_Uint(getEnvStr("TB_SETTINGS_SNAPTOGRID"));
-    options.first_snap = str_2_Uint(getEnvStr("TB_SETTINGS_FIRSTSNAP"));
-    options.allow_missing = getEnvStr("TB_SETTINGS_ALLOWMISSING") == "true";
-
-    if (OnOff) {
-        LOG_INFO("bs-start_block: ", options.start_block);
-        LOG_INFO("bs-block_cnt: ", options.block_cnt);
-        LOG_INFO("bs-apps_per_chunk: ", options.apps_per_chunk);
-        LOG_INFO("bs-unripe_dist: ", options.unripe_dist);
-        LOG_INFO("bs-snap_to_grid: ", options.snap_to_grid);
-        LOG_INFO("bs-first_snap: ", options.first_snap);
-        LOG_INFO("bs-allow_missing: ", options.allow_missing);
-    }
-
-    string_q tmpStagingFn = indexFolder_staging + "000000000-temp.txt";
-    options.tmpStagingStream.open(tmpStagingFn, ios::out | ios::trunc);
-    if (!options.tmpStagingStream.is_open()) {
-        LOG_WARN("Could not open temporary staging file.");
-        return EXIT_FAILURE;
-    }
-
-    string_q stageFn = getLastFileInFolder(indexFolder_staging, false);
-    options.prev_block = path_2_Bn(stageFn);
-    options.nRecsThen = fileSize(stageFn) / asciiAppearanceSize;
-
-    CStringArray files;
-    if (!listFilesInFolder(files, indexFolder_ripe, false)) {
-        LOG_ERR("Could not list files in ripe folder.");
-        cleanFolder(indexFolder_unripe);
-        cleanFolder(indexFolder_ripe);
-        options.tmpStagingStream.close();
-        ::remove(tmpStagingFn.c_str());
-        return EXIT_FAILURE;
-    }
-
-    bool snapped = false;
-    for (auto file : files) {
-        if (!options.copyRipeToStage(file, snapped)) {
-            cleanFolder(indexFolder_unripe);
-            cleanFolder(indexFolder_ripe);
-            options.tmpStagingStream.close();
-            ::remove(tmpStagingFn.c_str());
-            if (!snapped) {
-                LOG_WARN("copyRipeToStage failed...");
-            }
-            LOG_INFO("snapped: ", snapped);
-            return snapped;
-        }
-    }
-    LOG_INFO("snapped: ", snapped);
-    options.tmpStagingStream.close();
-
-    if (!options.stage_chunks(tmpStagingFn))
-        return EXIT_FAILURE;
-
-    // TODO: BOGUS - USE THE NEW TIMESTAMP PROCESSOR?
+// TODO: BOGUS - USE THE NEW TIMESTAMP PROCESSOR?
+void freshenTimestamps2(blknum_t firstBlock, blknum_t nBlocks) {
     LOG_INFO("pre-freshenTimestamps");
-    // freshenTimestampsAppend(start_block, block_cnt);
-    freshenTimestamps(options.start_block + options.block_cnt);
+    freshenTimestamps(firstBlock + nBlocks);
     LOG_INFO("post-freshenTimestamps");
-
-    options.nRecsNow = fileSize(options.newStage) / asciiAppearanceSize;
-    options.report(options.nRecsThen, options.nRecsNow);
-    if (options.nRecsNow <= options.apps_per_chunk)
-        return EXIT_SUCCESS;
-
-    return options.write_chunks(options.apps_per_chunk, false /* snapped */) ? EXIT_SUCCESS : EXIT_FAILURE;
 }
+
+// bool freshenTimestampsAppend(blknum_t firstBlock, blknum_t nBlocks) {
+//     // This routine is called after Blaze finishes. Blaze will have written a text file containing
+//     // blockNumber,timestamp pairs that it encountered during it's pass. The job of this
+//     // routine is to append timestamps to the timestamps database up to but not
+//     // including firstBlock + nBlocks (so 0 and 1, if firstBlock == 0 and nBlocks == 2)
+//     // Note that the text file may not contain every block. In fact, on many chains
+//     // it does not. This routine has to recitfy that. Plus -- if this routine does not
+//     // complete, it may have to start prior to firstBlock the next time, so we have to
+//     // check the invariant: sizeof(file) == bn[last].Bn * 2 and bn[i] == i.
+
+//     if (isTestMode())
+//         return true;
+
+//     if (!fileExists(indexFolderBin_ts)) {
+//         ostringstream cmd;
+//         cmd << "cd \"" << indexFolder << "\" ; ";
+//         cmd << "cp \"" << chainConfigsZip_ts << "\" . ; ";
+//         cmd << "gunzip ts.bin.gz";
+
+//         establishFolder(indexFolder);
+//         doCommand(cmd.str());
+//         if (!fileExists(indexFolderBin_ts)) {
+//             return false;
+//         }
+//     }
+
+//     if (fileExists(indexFolderBin_ts + ".lck")) {  // it's being updated elsewhere
+//         LOG_ERR("Timestamp file ", indexFolderBin_ts, " is locked. Cannot update. Re-running...");
+//         ::remove((indexFolderBin_ts + ".lck").c_str());
+//         return false;
+//     }
+
+//     // If we're already there, we're finished
+//     blknum_t lastBlock = firstBlock + nBlocks;
+//     size_t nRecords = ((fileSize(indexFolderBin_ts) / sizeof(uint32_t)) / 2);
+//     if (nRecords >= lastBlock) {
+//         return true;
+//     }
+
+//     // We always start at one less than the number of blocks already in the file
+//     // (i.e., if there's two we need to add block two next.)
+//     firstBlock = nRecords;
+
+//     // We need to fill blocks firstBlock to lastBlock (non-inclusive). Make note
+//     // of which ones were processed by Blaze
+//     string_q blazeTsFilename = cacheFolder_tmp + "tempTsFile.txt";
+//     CStringArray lines;
+//     asciiFileToLines(blazeTsFilename, lines);
+//     // The strings are left-padded with zeros, so we can sort them as strings
+//     sort(lines.begin(), lines.end());
+
+//     typedef map<blknum_t, timestamp_t> bn_ts_map_t;
+//     bn_ts_map_t theMap;
+//     for (auto line : lines) {
+//         if (shouldQuit())
+//             break;
+//         CStringArray parts;
+//         explode(parts, line, '-');
+//         if (parts.size() == 2) {
+//             theMap[str_2_Uint(parts[0])] = str_2_Int(parts[1]);
+//         } else {
+//             LOG_ERR("Line without dash (-) in temporarty timestamp file. Cannot continue.");
+//             break;
+//         }
+//     }
+
+//     for (blknum_t bn = firstBlock; bn < (firstBlock + nBlocks) && !shouldQuit(); bn++) {
+//         if (theMap[bn] == 0) {
+//             CBlock block;
+//             getBlockHeader(block, bn);
+//             theMap[bn] = block.timestamp;
+//         }
+//     }
+
+//     lockSection();
+//     CArchive file(WRITING_ARCHIVE);
+//     if (!file.Lock(indexFolderBin_ts, modeWriteAppend, LOCK_NOWAIT)) {
+//         LOG_ERR("Failed to open ", indexFolderBin_ts);
+//         unlockSection();
+//         return false;
+//     }
+
+//     for (auto item : theMap) {
+//         if (shouldQuit())
+//             break;
+//         file << ((uint32_t)item.first) << ((uint32_t)item.second);
+//         file.flush();
+//         if (!OnOff) {
+//             ostringstream post;
+//             post << " (" << (lastBlock - item.first);
+//             post << " " << item.second << " - " << ts_2_Date(item.second).Format(FMT_EXPORT) << ")";
+//             post << "             \r";
+//             LOG_INFO(UPDATE, item.first, lastBlock, post.str());
+//         }
+//     }
+//     file.Release();
+//     unlockSection();
+
+//     return true;
+// }

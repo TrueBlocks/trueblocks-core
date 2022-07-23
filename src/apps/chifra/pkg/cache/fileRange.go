@@ -42,8 +42,8 @@ func RangeFromFilename(path string) (blkRange FileRange, err error) {
 		blkRange.First, _ = strconv.ParseUint(parts[0], 10, 32)
 		blkRange.Last, _ = strconv.ParseUint(parts[1], 10, 32)
 	} else {
-		blkRange.First = 0
-		blkRange.Last, _ = strconv.ParseUint(parts[0], 10, 32)
+		blkRange.First, _ = strconv.ParseUint(parts[0], 10, 32)
+		blkRange.Last = blkRange.First
 	}
 
 	return
