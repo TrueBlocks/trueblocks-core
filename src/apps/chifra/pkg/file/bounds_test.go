@@ -2,6 +2,7 @@ package file
 
 import (
 	"fmt"
+	"strings"
 	"testing"
 )
 
@@ -34,12 +35,12 @@ func Test_Latest(t *testing.T) {
 		t.Error("error fetching latest file")
 	}
 
-	if earliest != files[0] {
+	if !strings.Contains(earliest, files[0]) {
 		msg := fmt.Sprintf("Expected '%s', Got '%s'", files[0], earliest)
 		t.Error(msg)
 	}
 
-	if latest != files[1] {
+	if !strings.Contains(latest, files[1]) {
 		msg := fmt.Sprintf("Expected '%s', Got '%s'", files[1], latest)
 		t.Error(msg)
 	}

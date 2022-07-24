@@ -7,27 +7,11 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrape"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *ScrapeOptions) verifyRipeFiles() bool {
 	indexPath := config.GetPathToIndex(opts.Globals.Chain)
-
-	if utils.DebuggingOn {
-		folders := []string{
-			"finalized/",
-			"blooms/",
-			"staging/",
-			"unripe/",
-			"ripe/",
-		}
-		for _, folder := range folders {
-			fmt.Println("Found", file.NFilesInFolder(indexPath+folder), "files in", indexPath+folder)
-		}
-	}
-
 	files, err := os.ReadDir(indexPath + "ripe/")
 	if err != nil {
 		fmt.Println(err.Error())

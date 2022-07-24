@@ -4,29 +4,28 @@
 // TODO: BOGUS - TESTING SCRAPING
 bool DebuggingOn = fileExists("./testing");
 
-class CScrapeState {
-  public:
-    blknum_t startBlock{0};
-    blknum_t nRecsNow{0};
-    blknum_t nRecsThen{0};
-    uint64_t nAppsPerChunk{0};
-    uint64_t blockCount{0};
-    CScrapeState(blknum_t sB, blknum_t nN, blknum_t nT, uint64_t nA, uint64_t bC)
-        : startBlock(sB), nRecsNow(nN), nRecsThen(nT), nAppsPerChunk(nA), blockCount(bC) {
-    }
-    void Report(void) const;
-};
-
 //---------------------------------------------------------------------------------------------------
-void CScrapeState::Report(void) const {
+void Report(const string_q& msg, blknum_t startBlock, uint64_t nAppsPerChunk, uint64_t blockCount, blknum_t nRecsThen,
+            blknum_t nRecsNow, bool hide) {
+    cerr << "Report: " << string_q(60, '-') << endl << msg << endl;
+    cerr << "startBlock:    " << startBlock << endl;
+    cerr << "nAppsPerChunk: " << nAppsPerChunk << endl;
+    cerr << "blockCount:    " << blockCount << endl;
+    cerr << "nRecsThen:     " << nRecsThen << endl;
+    cerr << "nRecsNow:      " << nRecsNow << endl;
+
+    if (hide) {
+        return;
+    }
+
     if (nRecsNow == nRecsThen) {
-        LOG_INFO("No new blocks...", string_q(80, ' '), "\r");
+        // LOG_INFO("No new blocks...", string_q(80, ' '), "\r");
     } else {
         blknum_t need = nAppsPerChunk >= nRecsNow ? nAppsPerChunk - nRecsNow : 0;
         blknum_t seen = nRecsNow - nRecsThen;
         double pct = double(nRecsNow) / double(nAppsPerChunk);
         double pBlk = double(seen) / double(blockCount);
-        string_q result = "Block {0}: have {1} addrs of {2} ({3}). Need {4} more. Found {5} records ({6}).";
+        string_q result = "C++ --> Block {0}: have {1} addrs of {2} ({3}). Need {4} more. Found {5} records ({6}).";
         replace(result, "{0}", "{" + uint_2_Str(startBlock + blockCount - 1) + "}");
         replace(result, "{1}", "{" + uint_2_Str(nRecsNow) + "}");
         replace(result, "{2}", "{" + uint_2_Str(nAppsPerChunk) + "}");
@@ -81,8 +80,11 @@ class COptions {
         tmpStagingStream.open(tmpStagingFn, ios::out | ios::trunc);
 
         string_q stageFn = getLastFileInFolder(indexFolder_staging, false);
+        LOG_INFO("In constructor: ", stageFn);
         prev_block = path_2_Bn(stageFn);
+        LOG_INFO("In constructor: ", prev_block);
         nRecsThen = fileSize(stageFn) / asciiAppearanceSize;
+        LOG_INFO("In constructor: ", nRecsThen);
     }
     void Cleanup(void) {
         cleanFolder(indexFolder_unripe);
@@ -105,6 +107,7 @@ int main(int argc, const char* argv[]) {
     LOG_INFO("scrape_blocks");
 
     COptions options;
+    COptions* opts = &options;
     string_q tmpStagingFn = indexFolder_staging + "000000000-temp.txt";
     if (!options.tmpStagingStream.is_open()) {
         LOG_WARN("Could not open temporary staging file.");
@@ -118,6 +121,8 @@ int main(int argc, const char* argv[]) {
         return EXIT_FAILURE;
     }
 
+    Report("Prior --> ", opts->start_block, opts->apps_per_chunk, opts->block_cnt, opts->nRecsThen, opts->nRecsNow,
+           true);
     for (auto file : files) {
         if (shouldQuit()) {
             options.Cleanup();
@@ -138,6 +143,9 @@ int main(int argc, const char* argv[]) {
         }
     }
 
+    Report("Gafter --> ", opts->start_block, opts->apps_per_chunk, opts->block_cnt, opts->nRecsThen, opts->nRecsNow,
+           true);
+
     options.tmpStagingStream.close();
     if (!stage_chunks(&options)) {
         LOG_ERR("stage_chunks returned false");
@@ -147,12 +155,25 @@ int main(int argc, const char* argv[]) {
 
     freshenTimestamps2(options.start_block, options.block_cnt);
     options.nRecsNow = fileSize(options.newStage) / asciiAppearanceSize;
-    CScrapeState ss(options.start_block, options.nRecsNow, options.nRecsThen, options.apps_per_chunk,
-                    options.block_cnt);
-    ss.Report();
-    if (options.nRecsNow <= options.apps_per_chunk)
-        return EXIT_SUCCESS;
-    return options.write_chunks(options.apps_per_chunk, false /* snapped */) ? EXIT_SUCCESS : EXIT_FAILURE;
+    uint64_t szBeforeWrite = fileSize(options.newStage);
+
+    int ret = EXIT_SUCCESS;
+    if (options.nRecsNow <= options.apps_per_chunk) {
+        // do nothing
+    } else {
+        ret = options.write_chunks(options.apps_per_chunk, false /* snapped */) ? EXIT_SUCCESS : EXIT_FAILURE;
+    }
+
+    cerr << "C++" << endl;
+    cerr << "fileName:         " << options.newStage << endl;
+    cerr << "szBeforeWrite:    " << szBeforeWrite << endl;
+    cerr << "recordSize:       " << asciiAppearanceSize << endl;
+    cerr << "options.nRecsNow: " << options.nRecsNow << endl;
+    cerr << "szAfterWrite:     " << fileSize(options.newStage) << endl;
+    Report("Finished --> ", opts->start_block, opts->apps_per_chunk, opts->block_cnt, opts->nRecsThen, opts->nRecsNow,
+           false);
+
+    return ret;
 }
 
 bool appendToStage(COptions* opts, const string_q& file) {
@@ -181,10 +202,19 @@ bool processSnap(COptions* opts, const string_q& file, bool& snapped) {
         }
         freshenTimestamps2(opts->start_block, opts->block_cnt);
         opts->nRecsNow = fileSize(opts->newStage) / asciiAppearanceSize;
-        CScrapeState ss(opts->start_block, opts->nRecsNow, opts->nRecsThen, opts->apps_per_chunk, opts->block_cnt);
-        ss.Report();
+        uint64_t szBeforeWrite = fileSize(opts->newStage);
+
         blknum_t chunkSize = min(opts->nRecsNow, opts->apps_per_chunk);
         opts->write_chunks(chunkSize, true /* snapped */);
+
+        cerr << "C++" << endl;
+        cerr << "fileName:         " << opts->newStage << endl;
+        cerr << "szBeforeWrite:    " << szBeforeWrite << endl;
+        cerr << "recordSize:       " << asciiAppearanceSize << endl;
+        cerr << "options.nRecsNow: " << opts->nRecsNow << endl;
+        cerr << "szAfterWrite:     " << fileSize(opts->newStage) << endl;
+        Report("In Snap --> ", opts->start_block, opts->apps_per_chunk, opts->block_cnt, opts->nRecsThen,
+               opts->nRecsNow, false);
         snapped = true;
         return false;
     }
@@ -416,7 +446,7 @@ bool COptions::write_chunks(blknum_t chunkSize, bool snapped) {
                 sort(consolidatedLines.begin(), consolidatedLines.end());
                 string_q chunkId = p1[1] + "-" + p2[1];
                 string_q chunkPath = indexFolder_finalized + chunkId + ".bin";
-                LOG_INFO("Writing...", string_q(80, ' '), "\r");
+                // LOG_INFO("Writing...", string_q(80, ' '), "\r");
                 writeIndexAsBinary(chunkPath, consolidatedLines);
                 ostringstream os;
                 os << "Wrote " << consolidatedLines.size() << " records to " << cTeal << relativize(chunkPath);
