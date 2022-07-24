@@ -2,8 +2,10 @@ package scrapePkg
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -27,7 +29,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 	cnt := file.FileSize(stageFn) / 59
 	logger.Log(logger.Info, cnt)
 
-	Report("Before Call --> ", opts.StartBlock, opts.AppsPerChunk, opts.BlockCnt, uint64(cnt), 0)
+	Report("Before Call --> ", opts.StartBlock, opts.AppsPerChunk, opts.BlockCnt, uint64(cnt), 0, true)
 
 	err = opts.Globals.PassItOn("blockScrape", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStrings(progressThen))
 	meta, _ := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
@@ -39,7 +41,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 	fmt.Println("cntBeforeCall:", cntBeforeCall)
 	fmt.Println("cntAfterCall:", cntAfterCall)
 	fmt.Println("diff", (cntAfterCall - cntBeforeCall))
-	Report("After All --> ", opts.StartBlock, opts.AppsPerChunk, opts.BlockCnt, uint64(cnt), cntAfterCall-cntBeforeCall+uint64(cnt))
+	Report("After All --> ", opts.StartBlock, opts.AppsPerChunk, opts.BlockCnt, uint64(cnt), cntAfterCall-cntBeforeCall+uint64(cnt), false)
 
 	return true, err
 }
@@ -59,28 +61,33 @@ func FileCounts(indexPath string) {
 	}
 }
 
-func Report(msg string, startBlock, nAppsPerChunk, blockCount, nRecsThen, nRecsNow uint64) {
+func Report(msg string, startBlock, nAppsPerChunk, blockCount, nRecsThen, nRecsNow uint64, hide bool) {
 	if false { // ss.NRecsNow == ss.NRecsThen {
 		// logger.Log(logger.Info, "No new blocks...")
 	} else {
-		// need := uint64(0)
-		// if ss.NAppsPerChunk >= ss.NRecsNow {
-		// 	need = ss.NAppsPerChunk - ss.NRecsNow
-		// }
-		// seen := ss.NRecsNow - ss.NRecsThen
-		// pct := float64(ss.NRecsNow) / float64(ss.NAppsPerChunk)
-		// pBlk := float64(seen) / float64(ss.BlockCount)
-		// format := "GoLang --> Block {%d}: have {%d} addrs of {%d} ({%0.1f%%}). Need {%d} more. Found {%d} records ({%0.2f} apps/blk)."
-		// msg := fmt.Sprintf(format, (ss.StartBlock + ss.BlockCount - 1), ss.NRecsNow, ss.NAppsPerChunk, (pct * 100.00), need, seen, pBlk)
-		// msg = strings.Replace(msg, "{", colors.Green, -1)
-		// msg = strings.Replace(msg, "}", colors.Off, -1)
-		// logger.Log(logger.Info, msg)
-		fmt.Println("------------------------------------------------------------\n", msg)
+		fmt.Println("-- golang --------------------------------------------------\n", msg)
 		fmt.Println("startBlock:   ", startBlock)
 		fmt.Println("nAppsPerChunk:", nAppsPerChunk)
 		fmt.Println("blockCount:   ", blockCount)
 		fmt.Println("nRecsThen:    ", nRecsThen)
 		fmt.Println("nRecsNow:     ", nRecsNow)
+
+		if hide {
+			return
+		}
+
+		need := uint64(0)
+		if nAppsPerChunk >= nRecsNow {
+			need = nAppsPerChunk - nRecsNow
+		}
+		seen := nRecsNow - nRecsThen
+		pct := float64(nRecsNow) / float64(nAppsPerChunk)
+		pBlk := float64(seen) / float64(blockCount)
+		height := startBlock + blockCount - 1
+		msg := "Golang ---> Block {%d}: have {%d} addrs of {%d} ({%0.1f}%%). Need {%d} more. Found {%d} records ({%0.2f} apps/blk)."
+		msg = strings.Replace(msg, "{", colors.Green, -1)
+		msg = strings.Replace(msg, "}", colors.Off, -1)
+		logger.Log(logger.Info, fmt.Sprintf(msg, height, nRecsNow, nAppsPerChunk, pct*100, need, seen, pBlk))
 	}
 }
 
