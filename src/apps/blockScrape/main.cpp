@@ -12,14 +12,14 @@ class COptions {
     uint64_t unripe_dist{0};
     uint64_t snap_to_grid{0};
     uint64_t first_snap{0};
+    uint64_t start_block{0};
+    uint64_t prev_block{0};
+    uint64_t nRecsThen{0};
+    uint64_t nRecsNow{0};
     bool allow_missing{false};
-    blknum_t start_block{0};
 
     string_q tmpStagingFn{""};
     string_q newStage{""};
-    blknum_t prev_block{0};
-    blknum_t nRecsThen{0};
-    blknum_t nRecsNow{0};
     ofstream tmpStagingStream;
 
     COptions(void) {
@@ -30,6 +30,13 @@ class COptions {
         snap_to_grid = str_2_Uint(getEnvStr("TB_SETTINGS_SNAPTOGRID"));
         first_snap = str_2_Uint(getEnvStr("TB_SETTINGS_FIRSTSNAP"));
         allow_missing = getEnvStr("TB_SETTINGS_ALLOWMISSING") == "true";
+        tmpStagingFn = indexFolder_staging + "000000000-temp.txt";
+        tmpStagingStream.open(tmpStagingFn, ios::out | ios::trunc);
+
+        string_q stageFn = getLastFileInFolder(indexFolder_staging, false);
+        prev_block = path_2_Bn(stageFn);
+        nRecsThen = fileSize(stageFn) / asciiAppearanceSize;
+
         if (DebuggingOn) {
             LOG_INFO("bs-start_block: ", start_block);
             LOG_INFO("bs-block_cnt: ", block_cnt);
@@ -38,23 +45,25 @@ class COptions {
             LOG_INFO("bs-snap_to_grid: ", snap_to_grid);
             LOG_INFO("bs-first_snap: ", first_snap);
             LOG_INFO("bs-allow_missing: ", allow_missing);
+            LOG_INFO("In constructor: ", stageFn);
+            LOG_INFO("In constructor: ", prev_block);
+            LOG_INFO("In constructor: ", nRecsThen);
         }
-        tmpStagingFn = indexFolder_staging + "000000000-temp.txt";
-        tmpStagingStream.open(tmpStagingFn, ios::out | ios::trunc);
-
-        string_q stageFn = getLastFileInFolder(indexFolder_staging, false);
-        LOG_INFO("In constructor: ", stageFn);
-        prev_block = path_2_Bn(stageFn);
-        LOG_INFO("In constructor: ", prev_block);
-        nRecsThen = fileSize(stageFn) / asciiAppearanceSize;
-        LOG_INFO("In constructor: ", nRecsThen);
     }
+
     void Cleanup(void) {
+        if (DebuggingOn) {
+            LOG_INFO("Cleanup");
+            LOG_INFO("\tcleanFolder(indexFolder_unripe): ", indexFolder_unripe);
+            LOG_INFO("\tcleanFolder(indexFolder_ripe):   ", indexFolder_ripe);
+            LOG_INFO("\t::remove(tmpStagingFn.c_str()):  ", tmpStagingFn);
+        }
         cleanFolder(indexFolder_unripe);
         cleanFolder(indexFolder_ripe);
         tmpStagingStream.close();
         ::remove(tmpStagingFn.c_str());
     }
+
     bool write_chunks(blknum_t chunkSize, bool snapped);
 };
 
@@ -70,7 +79,7 @@ int main(int argc, const char* argv[]) {
     COptions options;
     COptions* opts = &options;
     string_q tmpStagingFn = indexFolder_staging + "000000000-temp.txt";
-    if (!options.tmpStagingStream.is_open()) {
+    if (!opts->tmpStagingStream.is_open()) {
         LOG_WARN("Could not open temporary staging file.");
         return EXIT_FAILURE;
     }
@@ -78,82 +87,87 @@ int main(int argc, const char* argv[]) {
     CStringArray files;
     if (!listFilesInFolder(files, indexFolder_ripe, false)) {
         LOG_ERR("Could not list files in ripe folder.");
-        options.Cleanup();
+        opts->Cleanup();
         return EXIT_FAILURE;
     }
 
     for (auto file : files) {
         if (shouldQuit()) {
-            options.Cleanup();
+            opts->Cleanup();
             return EXIT_FAILURE;
         }
 
-        if (!appendToStage(&options, file)) {
+        if (!appendToStage(opts, file)) {
             LOG_WARN("Could not open input stream ", file);
-            options.Cleanup();
+            opts->Cleanup();
             return EXIT_FAILURE;
         }
 
         blknum_t bn = path_2_Bn(file);
-        options.prev_block = bn;
-        bool isSnapToGrid = (bn > options.first_snap && !(bn % options.snap_to_grid));
+        opts->prev_block = bn;
+        bool isSnapToGrid = (bn > opts->first_snap && !(bn % opts->snap_to_grid));
         if (isSnapToGrid) {
             LOG_INFO("Calling stage_chunks in snapToGrid");
             if (!stage_chunks(opts)) {
-                // options.Cleanup();
                 LOG_ERR("stage_chunks returned false");
+                opts->Cleanup();
                 return EXIT_FAILURE;
             }
 
-            LOG_INFO("pre-freshenTimestamps");
-            freshenTimestamps(opts->start_block + opts->block_cnt);
-            LOG_INFO("post-freshenTimestamps");
+            // TODO: BOGUS TURN ON TIMESTAMPS
+            LOG_INFO("freshenTimestamps");
+            // freshenTimestamps(opts->start_block + opts->block_cnt);
 
             opts->nRecsNow = fileSize(opts->newStage) / asciiAppearanceSize;
             uint64_t szBeforeWrite = fileSize(opts->newStage);
             blknum_t chunkSize = min(opts->nRecsNow, opts->apps_per_chunk);
-            opts->write_chunks(chunkSize, true /* snapped */);
-
+            LOG_INFO("chunkSize: ", chunkSize);
+            opts->write_chunks(chunkSize, true);
             cerr << "C++" << endl;
             cerr << "fileName:         " << opts->newStage << endl;
             cerr << "szBeforeWrite:    " << szBeforeWrite << endl;
             cerr << "recordSize:       " << asciiAppearanceSize << endl;
-            cerr << "options.nRecsNow: " << opts->nRecsNow << endl;
+            cerr << "opts->nRecsNow:   " << opts->nRecsNow << endl;
             cerr << "szAfterWrite:     " << fileSize(opts->newStage) << endl;
-            options.Cleanup();
-            return EXIT_SUCCESS;
         }
     }
 
-    options.tmpStagingStream.close();
+    opts->tmpStagingStream.close();
+
     LOG_INFO("Calling stage_chunks in regular processing");
-    if (!stage_chunks(&options)) {
+    if (!stage_chunks(opts)) {
         LOG_ERR("stage_chunks returned false");
-        options.Cleanup();
+        opts->Cleanup();
         return EXIT_FAILURE;
     }
 
-    LOG_INFO("pre-freshenTimestamps");
-    freshenTimestamps(options.start_block + options.block_cnt);
-    LOG_INFO("post-freshenTimestamps");
-    options.nRecsNow = fileSize(options.newStage) / asciiAppearanceSize;
-    uint64_t szBeforeWrite = fileSize(options.newStage);
+    // TODO: BOGUS TURN ON TIMESTAMPS
+    LOG_INFO("freshenTimestamps");
+    // freshenTimestamps(opts->start_block + opts->block_cnt);
 
-    int ret = EXIT_SUCCESS;
-    if (options.nRecsNow <= options.apps_per_chunk) {
-        // do nothing
-    } else {
-        ret = options.write_chunks(options.apps_per_chunk, false /* snapped */) ? EXIT_SUCCESS : EXIT_FAILURE;
+    opts->nRecsNow = fileSize(opts->newStage) / asciiAppearanceSize;
+    uint64_t szBeforeWrite = fileSize(opts->newStage);
+    blknum_t chunkSize = min(opts->nRecsNow, opts->apps_per_chunk);
+    LOG_INFO("chunkSize: ", chunkSize);
+
+    if (opts->nRecsNow <= opts->apps_per_chunk) {
+        cerr << "C++" << endl;
+        cerr << "fileName:         " << opts->newStage << endl;
+        cerr << "szBeforeWrite:    " << szBeforeWrite << endl;
+        cerr << "recordSize:       " << asciiAppearanceSize << endl;
+        cerr << "opts->nRecsNow:   " << opts->nRecsNow << endl;
+        cerr << "szAfterWrite:     " << fileSize(opts->newStage) << endl;
+        return EXIT_SUCCESS;
     }
 
+    bool ret = opts->write_chunks(opts->apps_per_chunk, false);
     cerr << "C++" << endl;
-    cerr << "fileName:         " << options.newStage << endl;
+    cerr << "fileName:         " << opts->newStage << endl;
     cerr << "szBeforeWrite:    " << szBeforeWrite << endl;
     cerr << "recordSize:       " << asciiAppearanceSize << endl;
-    cerr << "options.nRecsNow: " << options.nRecsNow << endl;
-    cerr << "szAfterWrite:     " << fileSize(options.newStage) << endl;
-
-    return ret;
+    cerr << "opts->nRecsNow:   " << opts->nRecsNow << endl;
+    cerr << "szAfterWrite:     " << fileSize(opts->newStage) << endl;
+    return ret ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 
 bool appendToStage(COptions* opts, const string_q& file) {
@@ -442,106 +456,5 @@ bool COptions::write_chunks(blknum_t chunkSize, bool snapped) {
         chunkSize = min(apps_per_chunk, nRecords);
     }
 
-    return !shouldQuit();
+    return true;
 }
-
-// bool freshenTimestampsAppend(blknum_t firstBlock, blknum_t nBlocks) {
-//     // This routine is called after Blaze finishes. Blaze will have written a text file containing
-//     // blockNumber,timestamp pairs that it encountered during it's pass. The job of this
-//     // routine is to append timestamps to the timestamps database up to but not
-//     // including firstBlock + nBlocks (so 0 and 1, if firstBlock == 0 and nBlocks == 2)
-//     // Note that the text file may not contain every block. In fact, on many chains
-//     // it does not. This routine has to recitfy that. Plus -- if this routine does not
-//     // complete, it may have to start prior to firstBlock the next time, so we have to
-//     // check the invariant: sizeof(file) == bn[last].Bn * 2 and bn[i] == i.
-
-//     if (isTestMode())
-//         return true;
-
-//     if (!fileExists(indexFolderBin_ts)) {
-//         ostringstream cmd;
-//         cmd << "cd \"" << indexFolder << "\" ; ";
-//         cmd << "cp \"" << chainConfigsZip_ts << "\" . ; ";
-//         cmd << "gunzip ts.bin.gz";
-
-//         establishFolder(indexFolder);
-//         doCommand(cmd.str());
-//         if (!fileExists(indexFolderBin_ts)) {
-//             return false;
-//         }
-//     }
-
-//     if (fileExists(indexFolderBin_ts + ".lck")) {  // it's being updated elsewhere
-//         LOG_ERR("Timestamp file ", indexFolderBin_ts, " is locked. Cannot update. Re-running...");
-//         ::remove((indexFolderBin_ts + ".lck").c_str());
-//         return false;
-//     }
-
-//     // If we're already there, we're finished
-//     blknum_t lastBlock = firstBlock + nBlocks;
-//     size_t nRecords = ((fileSize(indexFolderBin_ts) / sizeof(uint32_t)) / 2);
-//     if (nRecords >= lastBlock) {
-//         return true;
-//     }
-
-//     // We always start at one less than the number of blocks already in the file
-//     // (i.e., if there's two we need to add block two next.)
-//     firstBlock = nRecords;
-
-//     // We need to fill blocks firstBlock to lastBlock (non-inclusive). Make note
-//     // of which ones were processed by Blaze
-//     string_q blazeTsFilename = cacheFolder_tmp + "tempTsFile.txt";
-//     CStringArray lines;
-//     asciiFileToLines(blazeTsFilename, lines);
-//     // The strings are left-padded with zeros, so we can sort them as strings
-//     sort(lines.begin(), lines.end());
-
-//     typedef map<blknum_t, timestamp_t> bn_ts_map_t;
-//     bn_ts_map_t theMap;
-//     for (auto line : lines) {
-//         if (shouldQuit())
-//             break;
-//         CStringArray parts;
-//         explode(parts, line, '-');
-//         if (parts.size() == 2) {
-//             theMap[str_2_Uint(parts[0])] = str_2_Int(parts[1]);
-//         } else {
-//             LOG_ERR("Line without dash (-) in temporarty timestamp file. Cannot continue.");
-//             break;
-//         }
-//     }
-
-//     for (blknum_t bn = firstBlock; bn < (firstBlock + nBlocks) && !shouldQuit(); bn++) {
-//         if (theMap[bn] == 0) {
-//             CBlock block;
-//             getBlockHeader(block, bn);
-//             theMap[bn] = block.timestamp;
-//         }
-//     }
-
-//     lockSection();
-//     CArchive file(WRITING_ARCHIVE);
-//     if (!file.Lock(indexFolderBin_ts, modeWriteAppend, LOCK_NOWAIT)) {
-//         LOG_ERR("Failed to open ", indexFolderBin_ts);
-//         unlockSection();
-//         return false;
-//     }
-
-//     for (auto item : theMap) {
-//         if (shouldQuit())
-//             break;
-//         file << ((uint32_t)item.first) << ((uint32_t)item.second);
-//         file.flush();
-//         if (!DebuggingOn) {
-//             ostringstream post;
-//             post << " (" << (lastBlock - item.first);
-//             post << " " << item.second << " - " << ts_2_Date(item.second).Format(FMT_EXPORT) << ")";
-//             post << "             \r";
-//             LOG_INFO(UPDATE, item.first, lastBlock, post.str());
-//         }
-//     }
-//     file.Release();
-//     unlockSection();
-
-//     return true;
-// }

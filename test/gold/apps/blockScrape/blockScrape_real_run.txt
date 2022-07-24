@@ -3,7 +3,7 @@ TEST[DATE|TIME] Pin:  true
 TEST[DATE|TIME] Sleep:  0.5
 TEST[DATE|TIME] LogLevel:  8
 TEST[DATE|TIME] Format:  txt
-Error: Please choose at least one of [run|stop].
+Error: The --pin option requires a locally running IPFS daemon
 Usage:
   chifra scrape [flags]
 

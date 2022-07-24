@@ -13,6 +13,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -70,7 +71,7 @@ func (opts *BlazeOptions) HandleBlaze(meta *rpcClient.MetaData) (ok bool, err er
 	}
 	defer func() {
 		tsFile.Close()
-		file.Copy(tsFilename, "./file.save")
+		logger.Log(logger.Info, "Wrote", file.FileSize(tsFilename), "bytes to", tsFilename)
 	}()
 
 	opts.TsWG.Add(int(opts.NChannels))

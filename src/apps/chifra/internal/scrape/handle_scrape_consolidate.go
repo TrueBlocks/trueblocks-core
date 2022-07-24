@@ -20,8 +20,6 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 	}
 
 	indexPath := config.GetPathToIndex(opts.Globals.Chain)
-	FileCounts(indexPath)
-
 	stageFn, _ := file.LatestFileInFolder(indexPath + "staging/")
 	logger.Log(logger.Info, "In constructor: ", stageFn)
 	r, _ := cache.RangeFromFilename(stageFn)

@@ -204,3 +204,45 @@ func Reset(chain string, maxBn uint64) error {
 	}
 	return nil
 }
+
+func Append(chain string, tsArray []Timestamp) error {
+	tmpFilename := config.GetPathToCache(chain) + "tmp/ts.bin"
+	fp, err := os.OpenFile(tmpFilename, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0644)
+	defer func() {
+		perChainTimestamps[chain] = TimestampDatabase{
+			loaded: false,
+			count:  0,
+			memory: nil,
+		}
+		os.Remove(tmpFilename)
+		// sigintTrap.Disable(trapCh)
+		// writeMutex.Unlock()
+	}()
+	if err != nil {
+		return err
+	}
+
+	// fp.Seek(0, io.SeekStart)
+	err = binary.Write(fp, binary.LittleEndian, tsArray)
+	if err != nil {
+		fp.Close()
+		os.Remove(tmpFilename)
+		return err
+	}
+
+	// Don't defer this because we want it to be closed before we copy it
+	fp.Close()
+
+	// TODO: BOGUS - THIS IS NOT PROTECTIVE OF THE EXISTING FILE
+	// TODO: BOGUS - IT SHOULD BE UN-INTERUPTABLE
+	// TODO: BOGUS - IT MAY WANT TO MAKE A BACKUP AND RECOVER IF THE COPY OR REMOVAL FAILS
+	// TODO: BOGUS - IT SHOULD BE GENERALIZED INSIDE OF COPYFILE
+	tsPath := config.GetPathToIndex(chain) + "ts.bin"
+	os.Remove(tsPath)
+	_, err = file.Copy(tmpFilename, tsPath)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

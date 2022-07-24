@@ -1,7 +1,7 @@
 chifra scrape  --pin
 TEST[DATE|TIME] Pin:  true
 TEST[DATE|TIME] Format:  txt
-Error: Please choose at least one of [run|stop].
+Error: The --pin option requires a locally running IPFS daemon
 Usage:
   chifra scrape [flags]
 

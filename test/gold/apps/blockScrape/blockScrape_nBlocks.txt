@@ -1,7 +1,7 @@
 chifra scrape  --block_cnt 12
 TEST[DATE|TIME] BlockCnt:  12
 TEST[DATE|TIME] Format:  txt
-Error: Please choose at least one of [run|stop].
+Error: Cannot test block scraper
 Usage:
   chifra scrape [flags]
 
