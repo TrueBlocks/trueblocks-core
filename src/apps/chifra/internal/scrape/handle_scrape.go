@@ -32,7 +32,6 @@ func (opts *ScrapeOptions) HandleScrape() error {
 	}
 
 	for {
-		indexPath := config.GetPathToIndex(opts.Globals.Chain)
 		if ok, err := opts.HandleScrapeBlaze(progress); !ok || err != nil {
 			if !ok {
 				break
@@ -41,7 +40,6 @@ func (opts *ScrapeOptions) HandleScrape() error {
 			goto PAUSE
 		}
 
-		FileCounts(indexPath)
 		if ok, err := opts.HandleScrapeConsolidate(progress); !ok || err != nil {
 			if !ok {
 				break

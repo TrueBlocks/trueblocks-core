@@ -15,11 +15,13 @@ import (
 
 // HandleScrapeConsolidate calls into the block scraper to (a) call Blaze and (b) consolidate if applicable
 func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaData) (ok bool, err error) {
+	indexPath := config.GetPathToIndex(opts.Globals.Chain)
+	FileCounts(indexPath)
+
 	if !opts.verifyRipeFiles() {
 		return true, nil
 	}
 
-	indexPath := config.GetPathToIndex(opts.Globals.Chain)
 	stageFn, _ := file.LatestFileInFolder(indexPath + "staging/")
 	logger.Log(logger.Info, "In constructor: ", stageFn)
 	r, _ := cache.RangeFromFilename(stageFn)

@@ -25,6 +25,7 @@ import (
 // Blaze to actually scrape the blocks.
 func (opts *ScrapeOptions) HandleScrapeBlaze(progressThen *rpcClient.MetaData) (ok bool, err error) {
 
+	// Quit early if we're testing... TODO: BOGUS - REMOVE THIS
 	tes := os.Getenv("TEST_END_SCRAPE")
 	if tes != "" {
 		val, err := strconv.ParseUint(tes, 10, 32)

@@ -21,7 +21,7 @@ import (
 
 type AddressAppearanceMap map[string][]AppearanceRecord
 
-func WriteChunk(chain, indexPath string, addAppMap AddressAppearanceMap, nApps int, pin bool) (uint64, error) {
+func WriteChunk(chain, indexPath string, addAppMap AddressAppearanceMap, nApps int) (uint64, error) {
 	addressTable := make([]AddressRecord, 0, len(addAppMap))
 	appearanceTable := make([]AppearanceRecord, 0, nApps)
 
@@ -127,13 +127,6 @@ func WriteChunk(chain, indexPath string, addAppMap AddressAppearanceMap, nApps i
 	err = bl.WriteBloom(chain, bloom.ToBloomPath(indexPath))
 	if err != nil {
 		return 0, err
-	}
-
-	if pin {
-		// TODO: BOGUS - PINNING WHEN WRITING IN GOLANG
-		rng := "000000000-000000000"
-		newPinsFn := config.GetPathToCache(chain) + "tmp/chunks_created.txt"
-		file.AppendToAsciiFile(newPinsFn, rng+"\n")
 	}
 
 	return 0, nil
@@ -267,5 +260,13 @@ func TestWrite(chain, path string, rend Renderer) {
 		addr := hexutil.Encode(obj.Address.Bytes()) // a lowercase string
 		addrAppMap[addr] = append(addrAppMap[addr], apps...)
 	}
-	WriteChunk(chain, path, addrAppMap, len(addrAppMap), false)
+
+	WriteChunk(chain, path, addrAppMap, len(addrAppMap))
+
+	// TODO: BOGUS - PINNING WHEN WRITING IN GOLANG
+	// if false {
+	// 	rng := RangeFromPath(path)
+	// 	newPinsFn := config.GetPathToCache(opts.Globals.Chain) + "tmp/chunks_created.txt"
+	// 	file.AppendToAsciiFile(newPinsFn, rng+"\n")
+	// }
 }

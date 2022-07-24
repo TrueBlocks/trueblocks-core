@@ -8,6 +8,7 @@ import (
 	"bytes"
 	"fmt"
 	"log"
+	"math/big"
 	"net/http"
 	"os"
 	"os/exec"
@@ -161,6 +162,16 @@ func GetFields(t *reflect.Type, format string, header bool) (fields []string, se
 	}
 
 	return fields, sep, quote
+}
+
+func ToBigInt(str string) big.Int {
+	ret := big.Int{}
+	if len(str) > 2 && str[:2] == "0x" {
+		ret.SetString(str[2:], 16)
+	} else {
+		ret.SetString(str, 10)
+	}
+	return ret
 }
 
 // TODO: BOGUS - TESTING SCRAPING
