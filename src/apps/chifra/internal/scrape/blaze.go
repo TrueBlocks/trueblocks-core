@@ -11,6 +11,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -25,19 +26,19 @@ type ScrapedData struct {
 }
 
 type BlazeOptions struct {
-	Chain           string                     `json:"chain"`
-	NChannels       uint64                     `json:"nChannels"`
-	NProcessed      uint64                     `json:"nProcessed"`
-	StartBlock      uint64                     `json:"startBlock"`
-	BlockCount      uint64                     `json:"blockCnt"`
-	RipeBlock       uint64                     `json:"ripeBlock"`
-	UnripeDist      uint64                     `json:"unripe"`
-	RpcProvider     string                     `json:"rpcProvider"`
-	AppearanceMap   index.AddressAppearanceMap `json:"-"`
-	TsArray         []tslib.Timestamp          `json:"-"`
-	BlockWg         sync.WaitGroup             `json:"-"`
-	AppearanceWg    sync.WaitGroup             `json:"-"`
-	TsWg            sync.WaitGroup             `json:"-"`
+	Chain         string                     `json:"chain"`
+	NChannels     uint64                     `json:"nChannels"`
+	NProcessed    uint64                     `json:"nProcessed"`
+	StartBlock    uint64                     `json:"startBlock"`
+	BlockCount    uint64                     `json:"blockCnt"`
+	RipeBlock     uint64                     `json:"ripeBlock"`
+	UnripeDist    uint64                     `json:"unripe"`
+	RpcProvider   string                     `json:"rpcProvider"`
+	AppearanceMap index.AddressAppearanceMap `json:"-"`
+	TsArray       []tslib.Timestamp          `json:"-"`
+	BlockWg       sync.WaitGroup             `json:"-"`
+	AppearanceWg  sync.WaitGroup             `json:"-"`
+	TsWg          sync.WaitGroup             `json:"-"`
 }
 
 // HandleBlaze does the actual scraping, walking through block_cnt blocks and querying traces and logs
@@ -56,15 +57,18 @@ func (opts *BlazeOptions) HandleBlaze(meta *rpcClient.MetaData) (ok bool, err er
 
 	opts.AppearanceWg.Add(int(opts.NChannels))
 	for i := 0; i < int(opts.NChannels); i++ {
+		// TODO: BOGUS - HOW DOES ONE HANDLE ERRORS INSIDE OF GO ROUTINES?
 		go opts.BlazeProcessAppearances(meta, appearanceChannel)
 	}
 
 	opts.TsWg.Add(int(opts.NChannels))
 	for i := 0; i < int(opts.NChannels); i++ {
+		// TODO: BOGUS - HOW DOES ONE HANDLE ERRORS INSIDE OF GO ROUTINES?
 		go opts.BlazeProcessTimestamps(tsChannel)
 	}
 
 	for block := int(opts.StartBlock); block < int(opts.StartBlock+opts.BlockCount); block++ {
+		// TODO: BOGUS - HOW DOES ONE HANDLE ERRORS INSIDE OF GO ROUTINES?
 		blockChannel <- block
 	}
 
@@ -81,7 +85,9 @@ func (opts *BlazeOptions) HandleBlaze(meta *rpcClient.MetaData) (ok bool, err er
 }
 
 // BlazeProcessBlocks Processes the block channel and for each block query the node for both traces and logs. Send results down appearanceChannel.
-func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChannel chan int, appearanceChannel chan ScrapedData, tsChannel chan tslib.Timestamp) {
+func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChannel chan int, appearanceChannel chan ScrapedData, tsChannel chan tslib.Timestamp) (err error) {
+	defer opts.BlockWg.Done()
+
 	for blockNum := range blockChannel {
 
 		// RPCPayload is used during to make calls to the RPC.
@@ -92,11 +98,9 @@ func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChan
 			RPCParams: rpcClient.RPCParams{fmt.Sprintf("0x%x", blockNum)},
 			ID:        1002,
 		}
-		err := rpcClient.FromRpc(opts.RpcProvider, &tracePayload, &traces)
+		err = rpcClient.FromRpc(opts.RpcProvider, &tracePayload, &traces)
 		if err != nil {
-			// TODO: BOGUS - RETURN VALUE FROM BLAZE
-			fmt.Println("FromRpc(traces) returned error", err)
-			os.Exit(1)
+			return fmt.Errorf("call to trace_block returned error: %s", err)
 		}
 
 		var logs rpcClient.Logs
@@ -108,9 +112,7 @@ func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChan
 		}
 		err = rpcClient.FromRpc(opts.RpcProvider, &logsPayload, &logs)
 		if err != nil {
-			// TODO: BOGUS - RETURN VALUE FROM BLAZE
-			fmt.Println("FromRpc(logs) returned error", err)
-			os.Exit(1)
+			return fmt.Errorf("call to eth_getLogs returned error: %s", err)
 		}
 
 		appearanceChannel <- ScrapedData{
@@ -119,47 +121,57 @@ func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChan
 			logs:        logs,
 		}
 
-		// TODO: BOGUS The timeStamp value is not used here (the Consolidation Loop calls into
-		// TODO: BOGUS the same routine again). We should use this value here and remove the
-		// TODO: BOGUS call from the Consolidation Loop
 		tsChannel <- tslib.Timestamp{
 			Ts: uint32(rpcClient.GetBlockTimestamp(opts.RpcProvider, uint64(blockNum))),
 			Bn: uint32(blockNum),
 		}
 	}
 
-	opts.BlockWg.Done()
+	return
 }
 
 var blazeMutex sync.Mutex
 
 // BlazeProcessAppearances processes ScrapedData objects shoved down the appearanceChannel
-func (opts *BlazeOptions) BlazeProcessAppearances(meta *rpcClient.MetaData, appearanceChannel chan ScrapedData) {
+func (opts *BlazeOptions) BlazeProcessAppearances(meta *rpcClient.MetaData, appearanceChannel chan ScrapedData) (err error) {
+	defer opts.AppearanceWg.Done()
 	for sData := range appearanceChannel {
 		addressMap := make(map[string]bool)
-		opts.BlazeExtractFromTraces(sData.blockNumber, &sData.traces, addressMap)
-		opts.BlazeExtractFromLogs(sData.blockNumber, &sData.logs, addressMap)
-		opts.WriteAppearances(meta, sData.blockNumber, addressMap)
+		err = opts.BlazeExtractFromTraces(sData.blockNumber, &sData.traces, addressMap)
+		if err != nil {
+			return
+		}
+
+		err = opts.BlazeExtractFromLogs(sData.blockNumber, &sData.logs, addressMap)
+		if err != nil {
+			return
+		}
+
+		err = opts.WriteAppearances(meta, sData.blockNumber, addressMap)
+		if err != nil {
+			return
+		}
 	}
-	opts.AppearanceWg.Done()
+	return
 }
 
 // BlazeProcessTimestamps processes timestamp data (currently by printing to a temporary file)
-func (opts *BlazeOptions) BlazeProcessTimestamps(tsChannel chan tslib.Timestamp) {
+func (opts *BlazeOptions) BlazeProcessTimestamps(tsChannel chan tslib.Timestamp) (err error) {
+	defer opts.TsWg.Done()
 	for ts := range tsChannel {
 		blazeMutex.Lock()
 		opts.TsArray = append(opts.TsArray, ts)
 		blazeMutex.Unlock()
 	}
-	opts.TsWg.Done()
+	return
 }
 
 var mapSync sync.Mutex
 
 func (opts *BlazeOptions) AddToMaps(address string, bn, txid int, addressMap map[string]bool) {
+	mapSync.Lock()
 	key := fmt.Sprintf("%s\t%09d\t%05d", address, bn, txid)
 	addressMap[key] = true
-	mapSync.Lock()
 	opts.AppearanceMap[address] = append(opts.AppearanceMap[address], index.AppearanceRecord{
 		BlockNumber:   uint32(bn),
 		TransactionId: uint32(txid),
@@ -168,7 +180,7 @@ func (opts *BlazeOptions) AddToMaps(address string, bn, txid int, addressMap map
 	mapSync.Unlock()
 }
 
-func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Traces, addressMap map[string]bool) {
+func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Traces, addressMap map[string]bool) (err error) {
 	if traces.Result == nil || len(traces.Result) == 0 {
 		return
 	}
@@ -226,7 +238,7 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 				}
 
 			} else {
-				fmt.Println("New type of reward", traces.Result[i].Action.RewardType)
+				logger.Log(logger.Error, "Unknown reward type:", traces.Result[i].Action.RewardType)
 			}
 
 		} else if traces.Result[i].Type == "suicide" {
@@ -276,11 +288,9 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 							RPCParams: rpcClient.RPCParams{traces.Result[i].TransactionHash},
 							ID:        1005,
 						}
-						err := rpcClient.FromRpc(opts.RpcProvider, &txReceiptPl, &receipt)
+						err = rpcClient.FromRpc(opts.RpcProvider, &txReceiptPl, &receipt)
 						if err != nil {
-							// TODO: BOGUS - RETURN VALUE FROM BLAZE
-							fmt.Println("FromRpc(transReceipt) returned error", err)
-							os.Exit(1)
+							return fmt.Errorf("call to eth_getTransactionReceipt returned error: %s", err)
 						}
 						addr := receipt.Result.ContractAddress
 						if isAddress(addr) {
@@ -291,10 +301,7 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 			}
 
 		} else {
-			err := "New trace type:" + traces.Result[i].Type
-			// TODO: BOGUS - RETURN VALUE FROM BLAZE
-			fmt.Println("extractFromTraces -->", err)
-			os.Exit(1)
+			logger.Log(logger.Error, "Unknown trace type:", traces.Result[i].Type)
 		}
 
 		// Try to get addresses from the input data
@@ -320,10 +327,12 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 			}
 		}
 	}
+
+	return
 }
 
 // extractFromLogs Extracts addresses from any part of the log data.
-func (opts *BlazeOptions) BlazeExtractFromLogs(bn int, logs *rpcClient.Logs, addressMap map[string]bool) {
+func (opts *BlazeOptions) BlazeExtractFromLogs(bn int, logs *rpcClient.Logs, addressMap map[string]bool) (err error) {
 	if logs.Result == nil || len(logs.Result) == 0 {
 		return
 	}
@@ -347,9 +356,11 @@ func (opts *BlazeOptions) BlazeExtractFromLogs(bn int, logs *rpcClient.Logs, add
 			}
 		}
 	}
+
+	return
 }
 
-func (opts *BlazeOptions) WriteAppearances(meta *rpcClient.MetaData, bn int, addressMap map[string]bool) {
+func (opts *BlazeOptions) WriteAppearances(meta *rpcClient.MetaData, bn int, addressMap map[string]bool) (err error) {
 	if len(addressMap) > 0 {
 		appearanceArray := make([]string, 0, len(addressMap))
 		for record := range addressMap {
@@ -357,25 +368,22 @@ func (opts *BlazeOptions) WriteAppearances(meta *rpcClient.MetaData, bn int, add
 		}
 		sort.Strings(appearanceArray)
 
-		toWrite := []byte(strings.Join(appearanceArray[:], "\n") + "\n")
-
 		blockNumStr := utils.PadLeft(strconv.Itoa(bn), 9)
 		fileName := config.GetPathToIndex(opts.Chain) + "ripe/" + blockNumStr + ".txt"
 		if bn > int(opts.RipeBlock) {
 			fileName = config.GetPathToIndex(opts.Chain) + "unripe/" + blockNumStr + ".txt"
 		}
 
-		err := ioutil.WriteFile(fileName, toWrite, 0744)
-
+		toWrite := []byte(strings.Join(appearanceArray[:], "\n") + "\n")
+		err = ioutil.WriteFile(fileName, toWrite, 0744)
 		if err != nil {
-			// TODO: BOGUS - RETURN VALUE FROM BLAZE
-			fmt.Println("writeAddresses --> ioutil.WriteFile returned error", err)
-			os.Exit(1)
+			return fmt.Errorf("call to WriteFile returned error: %s", err)
 		}
 	}
 
 	// TODO: BOGUS - TESTING SCRAPING
 	if !utils.DebuggingOn {
+		// TODO: THIS IS A PERFORMANCE ISSUE PRINTING EVERY BLOCK
 		step := uint64(7)
 		if opts.NProcessed%step == 0 {
 			dist := uint64(0)
@@ -387,6 +395,7 @@ func (opts *BlazeOptions) WriteAppearances(meta *rpcClient.MetaData, bn int, add
 		}
 	}
 	opts.NProcessed++
+	return
 }
 
 // isAddress Returns true if the address is not a precompile and not the zero address
