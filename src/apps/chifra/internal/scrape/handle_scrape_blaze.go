@@ -9,15 +9,11 @@ import (
 	"os"
 	"sort"
 	"strconv"
-	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
@@ -59,22 +55,22 @@ func (opts *ScrapeOptions) HandleScrapeBlaze(progressThen *rpcClient.MetaData) (
 
 	meta, _ := rpcClient.GetMetaData(opts.Globals.Chain, false /* testMode */)
 	blazeOpts := BlazeOptions{
-		Chain:       opts.Globals.Chain,
-		NChannels:   utils.Max(opts.BlockChanCnt, opts.AddrChanCnt),
-		NProcessed:  0,
-		StartBlock:  opts.StartBlock,
-		BlockCount:  opts.BlockCnt,
-		RipeBlock:   meta.Latest - utils.Min(meta.Latest, opts.UnripeDist),
-		UnripeDist:  opts.UnripeDist,
-		RpcProvider: config.GetRpcProvider(opts.Globals.Chain),
-		AppMap:      make(index.AddressAppearanceMap, 500000),
+		Chain:         opts.Globals.Chain,
+		NChannels:     utils.Max(opts.BlockChanCnt, opts.AddrChanCnt),
+		NProcessed:    0,
+		StartBlock:    opts.StartBlock,
+		BlockCount:    opts.BlockCnt,
+		RipeBlock:     meta.Latest - utils.Min(meta.Latest, opts.UnripeDist),
+		UnripeDist:    opts.UnripeDist,
+		RpcProvider:   config.GetRpcProvider(opts.Globals.Chain),
+		AppearanceMap: make(index.AddressAppearanceMap, 500000),
 	}
 
 	_, err = blazeOpts.HandleBlaze(meta)
 	// Even though we may have errored, we want to process whatever data we know we
 	// have and is in a "good" state, such as timestamps
 	blazeOpts.CleanupPostScrape()
-	logger.Log(logger.Info, "Size of AppMap:", len(blazeOpts.AppMap))
+	logger.Log(logger.Info, "Size of AppMap:", len(blazeOpts.AppearanceMap))
 	if err != nil {
 		os.RemoveAll(config.GetPathToIndex(opts.Globals.Chain) + "ripe")
 		return true, err
@@ -173,22 +169,10 @@ func (opts *ScrapeOptions) HandleScrapeBlaze(progressThen *rpcClient.MetaData) (
 // }
 
 func (opts *BlazeOptions) CleanupPostScrape() {
-	tsFilename := config.GetPathToCache(opts.Chain) + "tmp/tempTsFile.txt"
-	lines := file.AsciiFileToLines(tsFilename)
-	sort.Slice(lines, func(i, j int) bool {
-		return lines[i] < lines[j]
+	sort.Slice(opts.TsArray, func(i, j int) bool {
+		return opts.TsArray[i].Bn < opts.TsArray[j].Bn
 	})
-
-	// tsArray := make([]tslib.Timestamp, len(lines))
-	for _, line := range lines {
-		parts := strings.Split(line, "-")
-		ts := tslib.Timestamp{
-			Bn: uint32(globals.ToUint64(strings.TrimLeft(parts[0], "0"))),
-			Ts: uint32(globals.ToUint64(strings.TrimLeft(parts[1], "0"))),
-		}
+	for _, ts := range opts.TsArray {
 		fmt.Println(ts)
-		// tsArray = append(tsArray, ts)
 	}
-	fmt.Println(tsFilename, file.FileSize(tsFilename))
-	// tslib.Append(opts.Chain, tsArray)
 }

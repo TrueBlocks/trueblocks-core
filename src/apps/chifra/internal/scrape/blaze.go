@@ -3,7 +3,6 @@ package scrapePkg
 import (
 	"fmt"
 	"io/ioutil"
-	"log"
 	"os"
 	"sort"
 	"strconv"
@@ -11,9 +10,7 @@ import (
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -28,55 +25,43 @@ type ScrapedData struct {
 }
 
 type BlazeOptions struct {
-	Chain       string                     `json:"chain"`
-	NChannels   uint64                     `json:"nChannels"`
-	NProcessed  uint64                     `json:"nProcessed"`
-	StartBlock  uint64                     `json:"startBlock"`
-	BlockCount  uint64                     `json:"blockCnt"`
-	RipeBlock   uint64                     `json:"ripeBlock"`
-	UnripeDist  uint64                     `json:"unripe"`
-	RpcProvider string                     `json:"rpcProvider"`
-	BlockWG     sync.WaitGroup             `json:"-"`
-	AddressWG   sync.WaitGroup             `json:"-"`
-	TsWG        sync.WaitGroup             `json:"-"`
-	AppMap      index.AddressAppearanceMap `json:"-"`
+	Chain           string                     `json:"chain"`
+	NChannels       uint64                     `json:"nChannels"`
+	NProcessed      uint64                     `json:"nProcessed"`
+	StartBlock      uint64                     `json:"startBlock"`
+	BlockCount      uint64                     `json:"blockCnt"`
+	RipeBlock       uint64                     `json:"ripeBlock"`
+	UnripeDist      uint64                     `json:"unripe"`
+	RpcProvider     string                     `json:"rpcProvider"`
+	AppearanceMap   index.AddressAppearanceMap `json:"-"`
+	TsArray         []tslib.Timestamp          `json:"-"`
+	BlockWg         sync.WaitGroup             `json:"-"`
+	AppearanceWg    sync.WaitGroup             `json:"-"`
+	TsWg            sync.WaitGroup             `json:"-"`
 }
 
 // HandleBlaze does the actual scraping, walking through block_cnt blocks and querying traces and logs
 // and then extracting addresses and timestamps from those data structures.
 func (opts *BlazeOptions) HandleBlaze(meta *rpcClient.MetaData) (ok bool, err error) {
 
-	if utils.DebuggingOn {
-		fmt.Println(opts)
-	}
+	// Prepare three channels to process first blocks, then appearances and timestamps
 	blockChannel := make(chan int)
-	addressChannel := make(chan ScrapedData)
+	appearanceChannel := make(chan ScrapedData)
 	tsChannel := make(chan tslib.Timestamp)
 
-	opts.BlockWG.Add(int(opts.NChannels))
+	opts.BlockWg.Add(int(opts.NChannels))
 	for i := 0; i < int(opts.NChannels); i++ {
-		go opts.BlazeProcessBlocks(meta, blockChannel, addressChannel, tsChannel)
+		go opts.BlazeProcessBlocks(meta, blockChannel, appearanceChannel, tsChannel)
 	}
 
-	opts.AddressWG.Add(int(opts.NChannels))
+	opts.AppearanceWg.Add(int(opts.NChannels))
 	for i := 0; i < int(opts.NChannels); i++ {
-		go opts.BlazeProcessAddresses(meta, addressChannel)
+		go opts.BlazeProcessAppearances(meta, appearanceChannel)
 	}
 
-	// TODO: BOGUS IS USING THIS FILE THE BEST WAY - IS THIS A GOOD FILENAME
-	tsFilename := config.GetPathToCache(opts.Chain) + "tmp/tempTsFile.txt"
-	tsFile, err := os.Create(tsFilename)
-	if err != nil {
-		log.Fatalf("Unable to create file: %v", err)
-	}
-	defer func() {
-		tsFile.Close()
-		logger.Log(logger.Info, "Wrote", file.FileSize(tsFilename), "bytes to", tsFilename)
-	}()
-
-	opts.TsWG.Add(int(opts.NChannels))
+	opts.TsWg.Add(int(opts.NChannels))
 	for i := 0; i < int(opts.NChannels); i++ {
-		go opts.BlazeProcessTimestamps(tsChannel, tsFile)
+		go opts.BlazeProcessTimestamps(tsChannel)
 	}
 
 	for block := int(opts.StartBlock); block < int(opts.StartBlock+opts.BlockCount); block++ {
@@ -84,19 +69,19 @@ func (opts *BlazeOptions) HandleBlaze(meta *rpcClient.MetaData) (ok bool, err er
 	}
 
 	close(blockChannel)
-	opts.BlockWG.Wait()
+	opts.BlockWg.Wait()
 
-	close(addressChannel)
-	opts.AddressWG.Wait()
+	close(appearanceChannel)
+	opts.AppearanceWg.Wait()
 
 	close(tsChannel)
-	opts.TsWG.Wait()
+	opts.TsWg.Wait()
 
 	return true, nil
 }
 
-// BlazeProcessBlocks Processes the block channel and for each block query the node for both traces and logs. Send results down addressChannel.
-func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChannel chan int, addressChannel chan ScrapedData, tsChannel chan tslib.Timestamp) {
+// BlazeProcessBlocks Processes the block channel and for each block query the node for both traces and logs. Send results down appearanceChannel.
+func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChannel chan int, appearanceChannel chan ScrapedData, tsChannel chan tslib.Timestamp) {
 	for blockNum := range blockChannel {
 
 		// RPCPayload is used during to make calls to the RPC.
@@ -128,7 +113,7 @@ func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChan
 			os.Exit(1)
 		}
 
-		addressChannel <- ScrapedData{
+		appearanceChannel <- ScrapedData{
 			blockNumber: blockNum,
 			traces:      traces,
 			logs:        logs,
@@ -143,31 +128,30 @@ func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChan
 		}
 	}
 
-	opts.BlockWG.Done()
-}
-
-// BlazeProcessAddresses processes ScrapedData objects shoved down the addressChannel
-func (opts *BlazeOptions) BlazeProcessAddresses(meta *rpcClient.MetaData, addressChannel chan ScrapedData) {
-	for sData := range addressChannel {
-		addressMap := make(map[string]bool)
-		opts.BlazeExtractFromTraces(sData.blockNumber, &sData.traces, addressMap)
-		opts.BlazeExtractFromLogs(sData.blockNumber, &sData.logs, addressMap)
-		opts.BlazeWriteAddresses(meta, sData.blockNumber, addressMap)
-	}
-	opts.AddressWG.Done()
+	opts.BlockWg.Done()
 }
 
 var blazeMutex sync.Mutex
 
+// BlazeProcessAppearances processes ScrapedData objects shoved down the appearanceChannel
+func (opts *BlazeOptions) BlazeProcessAppearances(meta *rpcClient.MetaData, appearanceChannel chan ScrapedData) {
+	for sData := range appearanceChannel {
+		addressMap := make(map[string]bool)
+		opts.BlazeExtractFromTraces(sData.blockNumber, &sData.traces, addressMap)
+		opts.BlazeExtractFromLogs(sData.blockNumber, &sData.logs, addressMap)
+		opts.WriteAppearances(meta, sData.blockNumber, addressMap)
+	}
+	opts.AppearanceWg.Done()
+}
+
 // BlazeProcessTimestamps processes timestamp data (currently by printing to a temporary file)
-func (opts *BlazeOptions) BlazeProcessTimestamps(tsChannel chan tslib.Timestamp, tsFile *os.File) {
+func (opts *BlazeOptions) BlazeProcessTimestamps(tsChannel chan tslib.Timestamp) {
 	for ts := range tsChannel {
 		blazeMutex.Lock()
-		// TODO: BOGUS - THIS COULD EASILY WRITE TO AN ARRAY NOT A FILE
-		fmt.Fprintf(tsFile, "%s-%s\n", utils.PadLeft(strconv.Itoa(int(ts.Bn)), 9), utils.PadLeft(strconv.Itoa(int(ts.Ts)), 9))
+		opts.TsArray = append(opts.TsArray, ts)
 		blazeMutex.Unlock()
 	}
-	opts.TsWG.Done()
+	opts.TsWg.Done()
 }
 
 var mapSync sync.Mutex
@@ -176,10 +160,11 @@ func (opts *BlazeOptions) AddToMaps(address string, bn, txid int, addressMap map
 	key := fmt.Sprintf("%s\t%09d\t%05d", address, bn, txid)
 	addressMap[key] = true
 	mapSync.Lock()
-	opts.AppMap[address] = append(opts.AppMap[address], index.AppearanceRecord{
+	opts.AppearanceMap[address] = append(opts.AppearanceMap[address], index.AppearanceRecord{
 		BlockNumber:   uint32(bn),
 		TransactionId: uint32(txid),
 	})
+
 	mapSync.Unlock()
 }
 
@@ -364,15 +349,15 @@ func (opts *BlazeOptions) BlazeExtractFromLogs(bn int, logs *rpcClient.Logs, add
 	}
 }
 
-func (opts *BlazeOptions) BlazeWriteAddresses(meta *rpcClient.MetaData, bn int, addressMap map[string]bool) {
+func (opts *BlazeOptions) WriteAppearances(meta *rpcClient.MetaData, bn int, addressMap map[string]bool) {
 	if len(addressMap) > 0 {
-		addressArray := make([]string, 0, len(addressMap))
+		appearanceArray := make([]string, 0, len(addressMap))
 		for record := range addressMap {
-			addressArray = append(addressArray, record)
+			appearanceArray = append(appearanceArray, record)
 		}
-		sort.Strings(addressArray)
+		sort.Strings(appearanceArray)
 
-		toWrite := []byte(strings.Join(addressArray[:], "\n") + "\n")
+		toWrite := []byte(strings.Join(appearanceArray[:], "\n") + "\n")
 
 		blockNumStr := utils.PadLeft(strconv.Itoa(bn), 9)
 		fileName := config.GetPathToIndex(opts.Chain) + "ripe/" + blockNumStr + ".txt"
@@ -381,6 +366,7 @@ func (opts *BlazeOptions) BlazeWriteAddresses(meta *rpcClient.MetaData, bn int, 
 		}
 
 		err := ioutil.WriteFile(fileName, toWrite, 0744)
+
 		if err != nil {
 			// TODO: BOGUS - RETURN VALUE FROM BLAZE
 			fmt.Println("writeAddresses --> ioutil.WriteFile returned error", err)
