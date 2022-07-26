@@ -89,6 +89,9 @@ names?tags
       "tags": "31-Giveth:Project"
     },
     {
+      "tags": "31-Giveth:Whitelist"
+    },
+    {
       "tags": "34-ENS"
     },
     {

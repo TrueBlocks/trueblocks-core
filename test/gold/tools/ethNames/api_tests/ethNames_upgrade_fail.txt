@@ -722,11 +722,11 @@ names?fmt=json
       "description": ""
     },
     {
-      "tags": "50-Tokens:ERC20",
+      "tags": "31-Giveth:Whitelist",
       "address": "0x00c83aecc790e8a4453e5dd3b0b4b3680501a7a7",
       "name": "Skale",
-      "symbol": "18",
-      "source": "Giveth Docs",
+      "symbol": "",
+      "source": "Giveth.io",
       "decimals": 0,
       "description": ""
     },
