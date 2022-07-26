@@ -16,6 +16,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 // ScrapedData combines the block data, trace data, and log data into a single structure
@@ -122,8 +124,8 @@ func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChan
 		}
 
 		tsChannel <- tslib.Timestamp{
-			Ts: uint32(rpcClient.GetBlockTimestamp(opts.RpcProvider, uint64(blockNum))),
 			Bn: uint32(blockNum),
+			Ts: uint32(rpcClient.GetBlockTimestamp(opts.RpcProvider, uint64(blockNum))),
 		}
 	}
 
@@ -169,6 +171,10 @@ func (opts *BlazeOptions) BlazeProcessTimestamps(tsChannel chan tslib.Timestamp)
 var mapSync sync.Mutex
 
 func (opts *BlazeOptions) AddToMaps(address string, bn, txid int, addressMap map[string]bool) {
+	// Make sure we have a 20 byte '0x' prefixed string (implicit strings come in as 32-byte, non-0x-prefixed strings)
+	if !strings.HasPrefix(address, "0x") {
+		address = hexutil.Encode(common.HexToAddress(address).Bytes())
+	}
 	mapSync.Lock()
 	key := fmt.Sprintf("%s\t%09d\t%05d", address, bn, txid)
 	addressMap[key] = true
