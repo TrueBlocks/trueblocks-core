@@ -2,7 +2,7 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package config
+package scrape
 
 import (
 	"log"
@@ -12,10 +12,11 @@ import (
 	"strings"
 
 	"github.com/BurntSushi/toml"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-type blockScrapeSettings struct {
+type scrapeSettings struct {
 	Block_chan_cnt        int
 	Addr_chan_cnt         int
 	Apps_per_chunk        int
@@ -28,7 +29,7 @@ type blockScrapeSettings struct {
 	Pinata_jwt            string
 }
 
-var defaultSettings = blockScrapeSettings{
+var defaultSettings = scrapeSettings{
 	Block_chan_cnt:        10,
 	Addr_chan_cnt:         20,
 	Apps_per_chunk:        200000,
@@ -41,13 +42,13 @@ var defaultSettings = blockScrapeSettings{
 	Pinata_jwt:            "",
 }
 
-type BlockScrape struct {
-	Settings blockScrapeSettings
+type ScrapeConfig struct {
+	Settings scrapeSettings
 }
 
-func GetBlockScrapeSettings(chain string) blockScrapeSettings {
-	str := utils.AsciiFileToString(GetPathToChainConfig(chain) + "blockScrape.toml")
-	conf := BlockScrape{
+func GetSettings(chain string) scrapeSettings {
+	str := utils.AsciiFileToString(config.GetPathToChainConfig(chain) + "blockScrape.toml")
+	conf := ScrapeConfig{
 		Settings: defaultSettings,
 	}
 	if _, err := toml.Decode(str, &conf); err != nil {
@@ -62,19 +63,28 @@ func GetBlockScrapeSettings(chain string) blockScrapeSettings {
 		key := "TB_SETTINGS_" + strings.ToUpper(field)
 		val := os.Getenv(key)
 		if val != "" {
+			ff := utils.MakeFirstUpperCase(field)
 			if strings.HasPrefix(field, "pinata") {
-				reflect.ValueOf(&conf.Settings).Elem().FieldByName(utils.MakeFirstUpperCase(field)).SetString(val)
+				reflect.ValueOf(&conf.Settings).Elem().FieldByName(ff).SetString(val)
 			} else if field == "allow_missing" {
 				if val == "true" {
-					reflect.ValueOf(&conf.Settings).Elem().FieldByName(utils.MakeFirstUpperCase(field)).SetBool(true)
+					reflect.ValueOf(&conf.Settings).Elem().FieldByName(ff).SetBool(true)
 				}
 			} else {
 				if v, err := strconv.ParseInt(val, 10, 32); err == nil {
-					reflect.ValueOf(&conf.Settings).Elem().FieldByName(utils.MakeFirstUpperCase(field)).SetInt(v)
+					reflect.ValueOf(&conf.Settings).Elem().FieldByName(ff).SetInt(v)
 				}
 			}
 		}
 	}
 
 	return conf.Settings
+}
+
+func AllowMissing(chain string) bool {
+	return GetSettings(chain).Allow_missing
+}
+
+func PinataKeys(chain string) (string, string) {
+	return GetSettings(chain).Pinata_api_key, GetSettings(chain).Pinata_secret_api_key
 }

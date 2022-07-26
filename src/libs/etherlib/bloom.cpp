@@ -63,23 +63,6 @@ bool isBitLit(size_t bit, uint8_t* bits) {
 }
 
 //---------------------------------------------------------------------------
-bool bloom_t::isInBloom(const bloom_t& test) const {
-    for (size_t b = 0; b < BLOOM_WIDTH_IN_BITS; b++)
-        if (isBitLit(b, test.bits) && !isBitLit(b, bits))
-            return false;
-    return true;
-}
-
-//---------------------------------------------------------------------------
-bool bloom_t::isInBloom(const CUintArray& bitsLit) const {
-    for (auto bit : bitsLit) {
-        if (!isBitLit(bit, bits))
-            return false;
-    }
-    return true;
-}
-
-//---------------------------------------------------------------------------
 void getLitBits(const address_t& addrIn, CUintArray& litBitsOut) {
 #define EXTRACT_WID 8
     for (size_t k = 0; k < BLOOM_K; k++) {

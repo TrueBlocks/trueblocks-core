@@ -16,6 +16,7 @@ package scrapePkg
 // be found in the LICENSE file.
 
 import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 )
@@ -43,7 +44,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 			if !ok {
 				break
 			}
-			logger.Log(logger.Error, "blockScrape", err)
+			logger.Log(logger.Error, "HandleScrapeConsolidate", err)
 			goto PAUSE
 		}
 
@@ -52,7 +53,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 			if !ok {
 				break
 			}
-			logger.Log(logger.Error, "postScrape", err)
+			logger.Log(logger.Error, "HandleScrapePin", err)
 			goto PAUSE
 		}
 
@@ -60,8 +61,10 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		opts.Z_6_pause(progress)
 	}
 
-	_, err = opts.HandleCleanup(progress)
-	return err
+	indexPath := config.GetPathToIndex(opts.Globals.Chain)
+	FileCounts(indexPath)
+
+	return nil
 }
 
 // TODO: BOGUS - NOTES ON RE-RUN AFTER BLAZE FAILURE

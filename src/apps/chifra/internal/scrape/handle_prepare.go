@@ -6,6 +6,7 @@ package scrapePkg
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -15,17 +16,18 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
-// HandlePrepare performs actions that need to happen prior to entering the forever loop. Returns true
-// if the processing should continue, false otherwise
+// HandlePrepare performs actions that need to happen prior to entering the forever loop. Returns
+// true if the processing should continue, false otherwise. Currently, the only thing to do
+// is write the zero block Index Chunk / Bloom filter pair if it doesn't exist.
 func (opts *ScrapeOptions) HandlePrepare(progressThen *rpcClient.MetaData) (ok bool, err error) {
-	if utils.OnOff {
+	if utils.DebuggingOn {
 		logger.Log(logger.Info, "HandlePrepare")
 	}
 
 	pathObj := cache.NewCachePath(opts.Globals.Chain, cache.Index_Bloom)
 	bloomPath := pathObj.GetFullPath("000000000-000000000")
 	if file.FileExists(bloomPath) {
-		// The file already exists, so continue
+		// The file already exists, nothing to do
 		return true, nil
 	}
 
@@ -42,11 +44,18 @@ func (opts *ScrapeOptions) HandlePrepare(progressThen *rpcClient.MetaData) (ok b
 			TransactionId: uint32(i),
 		})
 	}
-	_, err = index.WriteChunk(opts.Globals.Chain, index.ToIndexPath(bloomPath), appMap, len(allocs), opts.Pin)
+	_, err = index.WriteChunk(opts.Globals.Chain, index.ToIndexPath(bloomPath), appMap, len(allocs))
 	if err != nil {
 		return false, err
 	}
 	logger.Log(logger.Info, "Size of appMap:", len(appMap))
+
+	// TODO: BOGUS - PINNING WHEN WRITING IN GOLANG
+	if opts.Pin {
+		rng := "000000000-000000000"
+		newPinsFn := config.GetPathToCache(opts.Globals.Chain) + "tmp/chunks_created.txt"
+		file.AppendToAsciiFile(newPinsFn, rng+"\n")
+	}
 
 	// In this special case, we need to postScrape here since we've created an index file
 	return opts.HandleScrapePin(progressThen)

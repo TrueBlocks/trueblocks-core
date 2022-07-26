@@ -1470,27 +1470,6 @@ paths:
       description: Scan the chain and update (and optionally pin) the TrueBlocks index of appearances.
       operationId: admin-scrape
       parameters:
-        - name: modes
-          description: which scraper(s) to control
-          required: true
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-              enum:
-                - run
-                - stop
-        - name: blockCnt
-          description: maximum number of blocks to process per pass
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: number
         - name: pin
           description: pin chunks (and blooms) to IPFS as they are created (requires ipfs)
           required: false
@@ -1499,6 +1478,14 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: blockCnt
+          description: maximum number of blocks to process per pass
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
         - name: sleep
           description: seconds to sleep between scraper passes
           required: false

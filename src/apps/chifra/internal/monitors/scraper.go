@@ -32,7 +32,7 @@ func (scraper *Scraper) ChangeState(onOff bool) bool {
 	prev := scraper.Running
 	scraper.Running = onOff
 	str := "false"
-	if utils.OnOff {
+	if utils.DebuggingOn {
 		str = "true"
 	}
 	fileName := statusPath + scraper.Name + ".txt"

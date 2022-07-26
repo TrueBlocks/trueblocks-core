@@ -115,8 +115,8 @@ bool freshenTimestamps(blknum_t minBlock) {
             file << ((uint32_t)block.blockNumber) << ((uint32_t)block.timestamp);
             file.flush();
             // TODO: BOGUS - TESTING SCRAPING
-            bool OnOff = false;
-            if (OnOff) {
+            bool DebuggingOn = fileExists("./testing");
+            if (!DebuggingOn) {
                 ostringstream post;
                 post << " (" << ((minBlock + 1) - block.blockNumber);
                 post << " " << block.timestamp << " - " << ts_2_Date(block.timestamp).Format(FMT_EXPORT) << ")";

@@ -8,6 +8,7 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
+// HandlePrefundOnly handles chifra names --prefund
 func (opts *NamesOptions) HandlePrefundOnly() error {
 	err := opts.Globals.RenderHeader(types.SimpleName{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
 	defer opts.Globals.RenderFooter()
@@ -35,6 +36,8 @@ func (opts *NamesOptions) HandlePrefundOnly() error {
 	return nil
 }
 
+// PrefundOnly is a temporary function used to distinguish chifra names calls with only the --prefund option.
+// Once we are fully ported to GoLang, this will go away.
 func (opts *NamesOptions) PrefundOnly() bool {
 	if !opts.Prefund {
 		return false

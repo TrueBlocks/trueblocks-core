@@ -20,9 +20,8 @@ import (
 
 // ScrapeOptions provides all command options for the chifra scrape command.
 type ScrapeOptions struct {
-	Modes        []string              `json:"modes,omitempty"`        // Which scraper(s) to control
-	BlockCnt     uint64                `json:"blockCnt,omitempty"`     // Maximum number of blocks to process per pass
 	Pin          bool                  `json:"pin,omitempty"`          // Pin chunks (and blooms) to IPFS as they are created (requires ipfs)
+	BlockCnt     uint64                `json:"blockCnt,omitempty"`     // Maximum number of blocks to process per pass
 	Sleep        float64               `json:"sleep,omitempty"`        // Seconds to sleep between scraper passes
 	BlockChanCnt uint64                `json:"blockChanCnt,omitempty"` // Number of concurrent block processing channels
 	AddrChanCnt  uint64                `json:"addrChanCnt,omitempty"`  // Number of concurrent address processing channels
@@ -32,6 +31,7 @@ type ScrapeOptions struct {
 	FirstSnap    uint64                `json:"firstSnap,omitempty"`    // The first block at which snap_to_grid is enabled
 	AllowMissing bool                  `json:"allowMissing,omitempty"` // Do not report errors for blockchain that contain blocks with zero addresses
 	StartBlock   uint64                `json:"startBlock,omitempty"`   // First block to visit (available only for blaze scraper)
+	Modes        []string              `json:"modes,omitempty"`        // Which scraper(s) to control
 	Globals      globals.GlobalOptions `json:"globals,omitempty"`      // The global options
 	BadFlag      error                 `json:"badFlag,omitempty"`      // An error flag if needed
 }
@@ -40,9 +40,8 @@ var scrapeCmdLineOptions ScrapeOptions
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *ScrapeOptions) testLog() {
-	logger.TestLog(len(opts.Modes) > 0, "Modes: ", opts.Modes)
-	logger.TestLog(opts.BlockCnt != 2000, "BlockCnt: ", opts.BlockCnt)
 	logger.TestLog(opts.Pin, "Pin: ", opts.Pin)
+	logger.TestLog(opts.BlockCnt != 2000, "BlockCnt: ", opts.BlockCnt)
 	logger.TestLog(opts.Sleep != 14, "Sleep: ", opts.Sleep)
 	logger.TestLog(opts.BlockChanCnt != 10, "BlockChanCnt: ", opts.BlockChanCnt)
 	logger.TestLog(opts.AddrChanCnt != 20, "AddrChanCnt: ", opts.AddrChanCnt)
@@ -52,6 +51,7 @@ func (opts *ScrapeOptions) testLog() {
 	logger.TestLog(opts.FirstSnap != 0, "FirstSnap: ", opts.FirstSnap)
 	logger.TestLog(opts.AllowMissing, "AllowMissing: ", opts.AllowMissing)
 	logger.TestLog(opts.StartBlock != 0, "StartBlock: ", opts.StartBlock)
+	logger.TestLog(len(opts.Modes) > 0, "Modes: ", opts.Modes)
 	opts.Globals.TestLog()
 }
 
@@ -93,15 +93,10 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 	opts.StartBlock = 0
 	for key, value := range r.URL.Query() {
 		switch key {
-		case "modes":
-			for _, val := range value {
-				s := strings.Split(val, " ") // may contain space separated items
-				opts.Modes = append(opts.Modes, s...)
-			}
-		case "blockCnt":
-			opts.BlockCnt = globals.ToUint64(value[0])
 		case "pin":
 			opts.Pin = true
+		case "blockCnt":
+			opts.BlockCnt = globals.ToUint64(value[0])
 		case "sleep":
 			opts.Sleep = globals.ToFloat64(value[0])
 		case "blockChanCnt":
@@ -120,6 +115,11 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 			opts.AllowMissing = true
 		case "startBlock":
 			opts.StartBlock = globals.ToUint64(value[0])
+		case "modes":
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Modes = append(opts.Modes, s...)
+			}
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "scrape")
@@ -141,6 +141,7 @@ func scrapeFinishParse(args []string) *ScrapeOptions {
 	defFmt := "txt"
 	// EXISTING_CODE
 	opts.Modes = args
+	opts.setDefaultsFromConfig()
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt

@@ -124,7 +124,7 @@ func EstablishCachePaths(cachePath string) {
 // EstablishIndexPaths sets up the index path and subfolders. It only returns if it succeeds.
 func EstablishIndexPaths(indexPath string) {
 	folders := []string{
-		"blooms", "finalized", "map", "ripe", "staging", "unripe",
+		"blooms", "finalized", "maps", "ripe", "staging", "unripe",
 	}
 	_, err := os.Stat(path.Join(indexPath, folders[len(folders)-1]))
 	if err == nil {

@@ -21,7 +21,7 @@ import (
 
 type AddressAppearanceMap map[string][]AppearanceRecord
 
-func WriteChunk(chain, indexPath string, addAppMap AddressAppearanceMap, nApps int, pin bool) (uint64, error) {
+func WriteChunk(chain, indexPath string, addAppMap AddressAppearanceMap, nApps int) (uint64, error) {
 	addressTable := make([]AddressRecord, 0, len(addAppMap))
 	appearanceTable := make([]AppearanceRecord, 0, nApps)
 
@@ -51,7 +51,7 @@ func WriteChunk(chain, indexPath string, addAppMap AddressAppearanceMap, nApps i
 
 	rel := strings.Replace(indexPath, config.GetPathToIndex(chain), "$INDEX/", -1)
 	// TODO: BOGUS - TESTING SCRAPING
-	if utils.OnOff {
+	if utils.DebuggingOn {
 		// We have everything we need here, properly sorted with all fields completed
 		fmt.Println("Writing", rel)
 		fmt.Printf("%x,%s,%d,%d\n", file.MagicNumber, hexutil.Encode(crypto.Keccak256([]byte(version.ManifestVersion))), len(addressTable), len(appearanceTable))
@@ -108,7 +108,7 @@ func WriteChunk(chain, indexPath string, addAppMap AddressAppearanceMap, nApps i
 
 	fmt.Println("Wrote", len(addAppMap), "records to", rel)
 	// TODO: BOGUS - TESTING SCRAPING
-	if utils.OnOff {
+	if utils.DebuggingOn {
 		nBlooms, nInserted, nBitsLit, nBitsNotLit, sz, bitsLit := bl.GetStats()
 		fmt.Println("nBlooms:    ", nBlooms)
 		fmt.Println("nInserted:  ", nInserted)
@@ -127,13 +127,6 @@ func WriteChunk(chain, indexPath string, addAppMap AddressAppearanceMap, nApps i
 	err = bl.WriteBloom(chain, bloom.ToBloomPath(indexPath))
 	if err != nil {
 		return 0, err
-	}
-
-	if pin {
-		// TODO: BOGUS - PINNING WHEN WRITING IN GOLANG
-		rng := "000000000-000000000"
-		newPinsFn := config.GetPathToCache(chain) + "tmp/chunks_created.txt"
-		file.AppendToAsciiFile(newPinsFn, rng+"\n")
 	}
 
 	return 0, nil
@@ -213,7 +206,7 @@ func WriteChunk(chain, indexPath string, addAppMap AddressAppearanceMap, nApps i
 	    appendToAsciiFile(cacheFolder_tmp + "chunks_created.txt", range + "\n");
 
 	    return !shouldQuit();
-	bool CBloomFilterRead::write BloomFilter(const string_q& fileName) {
+	bool CBloomFi lterRead::write BloomFilter(const string_q& fileName) {
 	    lockSection();
 	    CArchive output(WRITING_ARCHIVE);
 	    if (!output.Lock(fileName, modeWriteCreate, LOCK_NOWAIT)) {
@@ -267,5 +260,13 @@ func TestWrite(chain, path string, rend Renderer) {
 		addr := hexutil.Encode(obj.Address.Bytes()) // a lowercase string
 		addrAppMap[addr] = append(addrAppMap[addr], apps...)
 	}
-	WriteChunk(chain, path, addrAppMap, len(addrAppMap), false)
+
+	WriteChunk(chain, path, addrAppMap, len(addrAppMap))
+
+	// TODO: BOGUS - PINNING WHEN WRITING IN GOLANG
+	// if false {
+	// 	rng := RangeFromPath(path)
+	// 	newPinsFn := config.GetPathToCache(opts.Globals.Chain) + "tmp/chunks_created.txt"
+	// 	file.AppendToAsciiFile(newPinsFn, rng+"\n")
+	// }
 }

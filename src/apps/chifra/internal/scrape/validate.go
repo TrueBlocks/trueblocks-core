@@ -25,17 +25,12 @@ func (opts *ScrapeOptions) validateScrape() error {
 		return opts.BadFlag
 	}
 
-	if len(opts.Modes) == 0 {
-		return validate.Usage("Please choose at least one of {0}.", "[run|stop]")
-
-	} else {
-		for _, arg := range opts.Modes {
-			// TODO: BOGUS - FEATURE NOTE THIS AS DEPRECATED
-			arg = strings.Replace(arg, "indexer", "run", -1)
-			err := validate.ValidateEnum("mode", arg, "[run|stop]")
-			if err != nil {
-				return err
-			}
+	for _, arg := range opts.Modes {
+		// TODO: BOGUS - FEATURE NOTE THIS AS DEPRECATED
+		arg = strings.Replace(arg, "indexer", "run", -1)
+		err := validate.ValidateEnum("mode", arg, "[run|stop]")
+		if err != nil {
+			return err
 		}
 	}
 
