@@ -23,24 +23,30 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 	}
 
 	stageFn, _ := file.LatestFileInFolder(indexPath + "staging/")
-	logger.Log(logger.Info, "In constructor: ", stageFn)
 	r, _ := cache.RangeFromFilename(stageFn)
-	logger.Log(logger.Info, r)
 	cnt := file.FileSize(stageFn) / 59
-	logger.Log(logger.Info, cnt)
 
-	Report("Before Call --> ", opts.StartBlock, opts.AppsPerChunk, opts.BlockCnt, uint64(cnt), 0, true)
+	if utils.DebuggingOn {
+		logger.Log(logger.Info, "In constructor: ", stageFn)
+		logger.Log(logger.Info, r)
+		logger.Log(logger.Info, cnt)
+		Report("Before Call --> ", opts.StartBlock, opts.AppsPerChunk, opts.BlockCnt, uint64(cnt), 0, true)
+	}
 
 	err = opts.Globals.PassItOn("blockScrape", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStrings(progressThen))
 	meta, _ := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
-	fmt.Println(meta)
+	if utils.DebuggingOn {
+		fmt.Println(meta)
+	}
 
 	FileCounts(indexPath)
 	cntBeforeCall := utils.Max(progressThen.Ripe, utils.Max(progressThen.Staging, progressThen.Finalized))
 	cntAfterCall := utils.Max(meta.Ripe, utils.Max(meta.Staging, meta.Finalized))
-	fmt.Println("cntBeforeCall:", cntBeforeCall)
-	fmt.Println("cntAfterCall:", cntAfterCall)
-	fmt.Println("diff", (cntAfterCall - cntBeforeCall))
+	if utils.DebuggingOn {
+		fmt.Println("cntBeforeCall:", cntBeforeCall)
+		fmt.Println("cntAfterCall:", cntAfterCall)
+		fmt.Println("diff", (cntAfterCall - cntBeforeCall))
+	}
 	Report("After All --> ", opts.StartBlock, opts.AppsPerChunk, opts.BlockCnt, uint64(cnt), cntAfterCall-cntBeforeCall+uint64(cnt), false)
 
 	return true, err
@@ -65,12 +71,14 @@ func Report(msg string, startBlock, nAppsPerChunk, blockCount, nRecsThen, nRecsN
 	if false { // ss.NRecsNow == ss.NRecsThen {
 		// logger.Log(logger.Info, "No new blocks...")
 	} else {
-		fmt.Println("-- golang --------------------------------------------------\n", msg)
-		fmt.Println("startBlock:   ", startBlock)
-		fmt.Println("nAppsPerChunk:", nAppsPerChunk)
-		fmt.Println("blockCount:   ", blockCount)
-		fmt.Println("nRecsThen:    ", nRecsThen)
-		fmt.Println("nRecsNow:     ", nRecsNow)
+		if utils.DebuggingOn {
+			fmt.Println("-- golang --------------------------------------------------\n", msg)
+			fmt.Println("startBlock:   ", startBlock)
+			fmt.Println("nAppsPerChunk:", nAppsPerChunk)
+			fmt.Println("blockCount:   ", blockCount)
+			fmt.Println("nRecsThen:    ", nRecsThen)
+			fmt.Println("nRecsNow:     ", nRecsNow)
+		}
 
 		if hide {
 			return
@@ -84,7 +92,7 @@ func Report(msg string, startBlock, nAppsPerChunk, blockCount, nRecsThen, nRecsN
 		pct := float64(nRecsNow) / float64(nAppsPerChunk)
 		pBlk := float64(seen) / float64(blockCount)
 		height := startBlock + blockCount - 1
-		msg := "Golang ---> Block {%d}: have {%d} addrs of {%d} ({%0.1f}%%). Need {%d} more. Found {%d} records ({%0.2f} apps/blk)."
+		msg := "Block {%d}: have {%d} addrs of {%d} ({%0.1f}%%). Need {%d} more. Found {%d} records ({%0.2f} apps/blk)."
 		msg = strings.Replace(msg, "{", colors.Green, -1)
 		msg = strings.Replace(msg, "}", colors.Off, -1)
 		logger.Log(logger.Info, fmt.Sprintf(msg, height, nRecsNow, nAppsPerChunk, pct*100, need, seen, pBlk))

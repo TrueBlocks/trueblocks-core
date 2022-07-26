@@ -77,10 +77,12 @@ func (opts *WhenOptions) HandleWhenTimestampsCheck() error {
 				check2 = true
 				check4 = bn == onDisc.BlockNumber
 
-				fmt.Println("row#:", bn, prev.TimeStamp, onDisc.TimeStamp, onDisc.TimeStamp-prev.TimeStamp, check1)
-				fmt.Println("row#:", bn, 0, 0, 0, check2)
-				fmt.Println("row#:", bn, prev.BlockNumber, onDisc.BlockNumber, onDisc.BlockNumber-prev.BlockNumber, check3)
-				fmt.Println("row#:", bn, bn, onDisc.BlockNumber, onDisc.BlockNumber-bn, check4)
+				if utils.DebuggingOn {
+					fmt.Println("row#:", bn, prev.TimeStamp, onDisc.TimeStamp, onDisc.TimeStamp-prev.TimeStamp, check1)
+					fmt.Println("row#:", bn, 0, 0, 0, check2)
+					fmt.Println("row#:", bn, prev.BlockNumber, onDisc.BlockNumber, onDisc.BlockNumber-prev.BlockNumber, check3)
+					fmt.Println("row#:", bn, bn, onDisc.BlockNumber, onDisc.BlockNumber-bn, check4)
+				}
 			}
 
 			status := "Okay "
@@ -90,16 +92,19 @@ func (opts *WhenOptions) HandleWhenTimestampsCheck() error {
 				status = "Error"
 			}
 			if !check4 {
-				msg := fmt.Sprint("bn mismatch", "bn:", bn, "item.Bn:", itemOnDisc.Bn, "block.BlockNumber:", block.BlockNumber)
+				msg := fmt.Sprint("bn mismatch bn: ", bn, " item.Bn: ", itemOnDisc.Bn, " block.BlockNumber: ", block.BlockNumber)
 				logger.Log(logger.Error, msg)
 				status = "Error"
 			}
 			if !check2 {
-				msg := fmt.Sprint("ts mismatch", "bn:", bn, "item.Ts:", itemOnDisc.Ts, "block.TimeStamp:", block.TimeStamp)
+				msg := fmt.Sprint("ts mismatch bn: ", bn, " item.Ts: ", itemOnDisc.Ts, " block.TimeStamp: ", block.TimeStamp)
 				logger.Log(logger.Error, msg)
 				status = "Error"
 			}
-			scanBar.Report(opts.Globals.Writer, status, fmt.Sprintf("%d.%d", block.BlockNumber, block.TimeStamp))
+
+			if !utils.DebuggingOn {
+				scanBar.Report(opts.Globals.Writer, status, fmt.Sprintf("%d.%d", block.BlockNumber, block.TimeStamp))
+			}
 		}
 
 		prev = onDisc
