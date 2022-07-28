@@ -13,12 +13,14 @@ char x = '-';
         LOG_INFO("");                                                                                                  \
         LOG_INFO("");                                                                                                  \
         LOG_INFO("");                                                                                                  \
+        LOG_INFO("");                                                                                                  \
     }                                                                                                                  \
     LOG_INFO(string_q(12, (a)), " in ", (nm), " ", string_q(fff, (a)));
 
-#define LOG_OUT(a)                                                                                                     \
-    LOG_INFO(string_q(12, (a)), " out ", (nm), " ", string_q(fff, (a)));                                               \
+#define LOG_OUT(a, b)                                                                                                  \
+    LOG_INFO(string_q(12, (a)), " out ", (nm), " ", (b), " ", string_q(fff, (a)));                                     \
     if ((a) != x) {                                                                                                    \
+        LOG_INFO("");                                                                                                  \
         LOG_INFO("");                                                                                                  \
         LOG_INFO("");                                                                                                  \
         LOG_INFO("");                                                                                                  \
@@ -36,12 +38,10 @@ class COptions {
     uint64_t first_snap{0};
     uint64_t start_block{0};
     uint64_t prev_block{0};
-    uint64_t nRecsThen{0};
-    uint64_t nRecsNow{0};
 
-    string_q tmpStagingFn{""};
     string_q newStage{""};
-    ofstream tmpStagingStream;
+    string_q stageStreamFn{""};
+    ofstream stageStream;
 
     COptions(void) {
         start_block = str_2_Uint(getEnvStr("TB_BLAZE_STARTBLOCK"));
@@ -49,12 +49,8 @@ class COptions {
         unripe_dist = str_2_Uint(getEnvStr("TB_SETTINGS_UNRIPEDIST"));
         snap_to_grid = str_2_Uint(getEnvStr("TB_SETTINGS_SNAPTOGRID"));
         first_snap = str_2_Uint(getEnvStr("TB_SETTINGS_FIRSTSNAP"));
-        tmpStagingFn = indexFolder_staging + "000000000-temp.txt";
-        tmpStagingStream.open(tmpStagingFn, ios::out | ios::trunc);
-
-        string_q stageFn = getLastFileInFolder(indexFolder_staging, false);
-        prev_block = path_2_Bn(stageFn);
-        nRecsThen = fileSize(stageFn) / asciiAppearanceSize;
+        stageStreamFn = indexFolder_staging + "000000000-temp.txt";
+        prev_block = start_block - 1;
 
         if (DebuggingOn) {
             LOG_INFO("startBlock:          ", start_block);
@@ -62,10 +58,8 @@ class COptions {
             LOG_INFO("unripeDist:          ", unripe_dist);
             LOG_INFO("snapToGrid:          ", snap_to_grid);
             LOG_INFO("firstSnap:           ", first_snap);
-            LOG_FILE("tmpStagingFn:        ", tmpStagingFn);
-            LOG_FILE("stageFn:             ", stageFn);
+            LOG_FILE("stageStreamFn:       ", stageStreamFn);
             LOG_INFO("prevBlocks:          ", prev_block);
-            LOG_INFO("nRecsThen:           ", nRecsThen);
         }
     }
 
@@ -74,20 +68,20 @@ class COptions {
             LOG_INFO("Clean folders");
             LOG_INFO("  index_unripe:      ", indexFolder_unripe);
             LOG_INFO("  index_ripe:        ", indexFolder_ripe);
-            LOG_FILE("  tmpStagingFn:      ", tmpStagingFn);
+            LOG_FILE("  stageStreamFn:     ", stageStreamFn);
         }
         cleanFolder(indexFolder_unripe);
         cleanFolder(indexFolder_ripe);
-        tmpStagingStream.close();
-        ::remove(tmpStagingFn.c_str());
+
+        stageStream.close();
+        ::remove(stageStreamFn.c_str());
     }
 
     bool write_chunks(blknum_t chunkSize, bool snapped);
 };
 
-extern bool stage_chunks(COptions* options);
+extern bool stage_chunks(COptions* options, bool snappy);
 extern bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines);
-extern bool appendToStage(COptions* options, const string_q& file);
 
 //----------------------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
@@ -97,116 +91,87 @@ int main(int argc, const char* argv[]) {
     LOG_IN('=', "main")
 
     COptions options;
-    COptions* opts = &options;
-    string_q tmpStagingFn = indexFolder_staging + "000000000-temp.txt";
-    if (!opts->tmpStagingStream.is_open()) {
-        LOG_WARN("Could not open temporary staging file.");
-        LOG_OUT('=')
-        return EXIT_FAILURE;
-    }
 
     CStringArray files;
     if (!listFilesInFolder(files, indexFolder_ripe, false)) {
         // There is nothing to process, not an error - we're at the front of the chain
-        opts->Cleanup();
-        LOG_OUT('=')
+        options.Cleanup();
+        LOG_OUT('=', "")
         return EXIT_FAILURE;
     }
 
+    options.stageStream.open(options.stageStreamFn, ios::out | ios::trunc);
+    if (!options.stageStream.is_open()) {
+        LOG_OUT('=', "Could not open temporary staging file.")
+        return EXIT_FAILURE;
+    }
+
+    uint32_t seen = 0;
     for (auto file : files) {
         if (shouldQuit()) {
-            opts->Cleanup();
-            LOG_OUT('=')
+            options.Cleanup();
+            LOG_OUT('=', "Control+C hit")
             return EXIT_FAILURE;
         }
 
-        if (!appendToStage(opts, file)) {
-            LOG_WARN("Could not open input stream ", file);
-            opts->Cleanup();
-            LOG_OUT('=')
+        ifstream inputStream(file, ios::in);
+        if (inputStream.is_open()) {
+            lockSection();
+            options.stageStream << inputStream.rdbuf();
+            options.stageStream.flush();
+            inputStream.close();
+            ::remove(file.c_str());
+            unlockSection();
+
+            options.prev_block = path_2_Bn(file);
+            uint64_t nRecsInStream = fileSize(options.stageStreamFn) / asciiAppearanceSize;
+
+            bool isSnapToGrid =
+                (options.prev_block > options.first_snap && !(options.prev_block % options.snap_to_grid));
+            bool overtops = (nRecsInStream > options.apps_per_chunk);
+            bool finished = seen == (files.size() - 1);
+
+            if (isSnapToGrid || overtops || finished) {
+                options.stageStream.close();
+                if (stage_chunks(&options, isSnapToGrid)) {
+                    uint64_t nRecsNow = fileSize(options.newStage) / asciiAppearanceSize;
+                    blknum_t chunkSize = min(nRecsNow, options.apps_per_chunk);
+                    options.write_chunks(chunkSize, isSnapToGrid);
+                    if (DebuggingOn) {
+                        LOG_FILE("newStage:             ", options.newStage);
+                        LOG_INFO("snapPoint:            ",
+                                 uint64_t((nRecsInStream + options.prev_block - 1) / options.snap_to_grid) *
+                                     options.snap_to_grid);
+                        LOG_INFO("chunkSize:            ", min(nRecsNow, options.apps_per_chunk));
+                        LOG_INFO("nRecsInStreamPre:     ", nRecsInStream);
+                        LOG_INFO("nRecsInStreamPost:    ", fileSize(options.stageStreamFn) / asciiAppearanceSize);
+                        LOG_INFO("nRecsNow:             ", nRecsNow);
+                    }
+
+                    options.stageStream.open(options.stageStreamFn, ios::out | ios::trunc);
+                    if (!options.stageStream.is_open()) {
+                        LOG_OUT('=', "Could not open temporary staging file.")
+                        return EXIT_FAILURE;
+                    }
+
+                } else {
+                    options.Cleanup();
+                    LOG_OUT('=', "Stage_chunks returned false")
+                    return EXIT_FAILURE;
+                }
+            }
+
+        } else {
+            options.Cleanup();
+            LOG_OUT('=', "Could not open input stream " + file)
             return EXIT_FAILURE;
         }
-
-        blknum_t bn = path_2_Bn(file);
-        opts->prev_block = bn;
-        bool isSnapToGrid = (bn > opts->first_snap && !(bn % opts->snap_to_grid));
-        if (isSnapToGrid) {
-            if (DebuggingOn) {
-                LOG_INFO("Calling stage_chunks in snapToGrid");
-            }
-            if (!stage_chunks(opts)) {
-                LOG_ERR("stage_chunks returned false");
-                opts->Cleanup();
-                LOG_OUT('=')
-                return EXIT_FAILURE;
-            }
-
-            opts->nRecsNow = fileSize(opts->newStage) / asciiAppearanceSize;
-            uint64_t szBeforeWrite = fileSize(opts->newStage);
-            blknum_t chunkSize = min(opts->nRecsNow, opts->apps_per_chunk);
-            opts->write_chunks(chunkSize, true);
-            if (DebuggingOn) {
-                LOG_INFO("chunkSize:            ", min(opts->nRecsNow, opts->apps_per_chunk));
-                LOG_FILE("fileName:             ", opts->newStage);
-                LOG_INFO("szBeforeWrite:        ", szBeforeWrite);
-                LOG_INFO("recordSize:           ", asciiAppearanceSize);
-                LOG_INFO("opts->nRecsNow:       ", opts->nRecsNow);
-                LOG_INFO("szAfterWrite:         ", fileSize(opts->newStage));
-            }
-        }
+        seen++;
     }
 
-    opts->tmpStagingStream.close();
-
-    if (!stage_chunks(opts)) {
-        LOG_ERR("stage_chunks returned false");
-        opts->Cleanup();
-        LOG_OUT('=')
-        return EXIT_FAILURE;
-    }
-
-    opts->nRecsNow = fileSize(opts->newStage) / asciiAppearanceSize;
-    uint64_t szBeforeWrite = fileSize(opts->newStage);
-    if (opts->nRecsNow <= opts->apps_per_chunk) {
-        if (DebuggingOn) {
-            LOG_INFO("chunkSize:            ", min(opts->nRecsNow, opts->apps_per_chunk));
-            LOG_FILE("fileName:             ", opts->newStage);
-            LOG_INFO("szBeforeWrite:        ", szBeforeWrite);
-            LOG_INFO("recordSize:           ", asciiAppearanceSize);
-            LOG_INFO("opts->nRecsNow:       ", opts->nRecsNow);
-            LOG_INFO("szAfterWrite:         ", fileSize(opts->newStage));
-        }
-        LOG_OUT('=')
-        return EXIT_SUCCESS;
-    }
-
-    bool ret = opts->write_chunks(opts->apps_per_chunk, false);
-    if (DebuggingOn) {
-        LOG_INFO("chunkSize:            ", min(opts->nRecsNow, opts->apps_per_chunk));
-        LOG_FILE("fileName:             ", opts->newStage);
-        LOG_INFO("szBeforeWrite:        ", szBeforeWrite);
-        LOG_INFO("recordSize:           ", asciiAppearanceSize);
-        LOG_INFO("opts->nRecsNow:       ", opts->nRecsNow);
-        LOG_INFO("szAfterWrite:         ", fileSize(opts->newStage));
-    }
-    LOG_OUT('=')
-    return ret ? EXIT_SUCCESS : EXIT_FAILURE;
-}
-
-//--------------------------------------------------------------------------
-bool appendToStage(COptions* opts, const string_q& file) {
-    // LOG_IN('-', "appendToStage");
-    ifstream inputStream(file, ios::in);
-    if (!inputStream.is_open()) {
-        return false;
-    }
-    lockSection();
-    opts->tmpStagingStream << inputStream.rdbuf();
-    opts->tmpStagingStream.flush();
-    inputStream.close();
-    ::remove(file.c_str());
-    unlockSection();
-    return true;
+    options.stageStream.close();
+    LOG_OUT('=', "");
+    return EXIT_SUCCESS;
 }
 
 //--------------------------------------------------------------------------
@@ -231,67 +196,61 @@ bool appendFile(const string_q& toFile, const string_q& fromFile) {
 }
 
 //--------------------------------------------------------------------------
-bool stage_chunks(COptions* opts) {
-    LOG_IN('-', "stage_chunks");
-    string_q prevStage = getLastFileInFolder(indexFolder_staging, false);
+bool stage_chunks(COptions* opts, bool snappy) {
+    LOG_IN('-', "stage_chunks " + bool_2_Str(snappy));
+
+    string_q lastFileInStage = getLastFileInFolder(indexFolder_staging, false);
     opts->newStage = indexFolder_staging + padNum9(opts->prev_block) + ".txt";
     if (DebuggingOn) {
-        LOG_FILE("\tprevStage:          ", prevStage);
+        LOG_FILE("\tlastFileInStage:    ", lastFileInStage);
         LOG_FILE("\topts->newStage:     ", opts->newStage);
     }
 
-    if (prevStage == opts->newStage) {
-        LOG_INFO("prevStage == opts->newStage - No Cleanup");
-        LOG_OUT('-')
+    if (lastFileInStage == opts->newStage) {
+        LOG_OUT('-', "prevStage == opts->newStage - No Cleanup")
         return true;
     }
 
     string_q tmpFile = indexFolder + "temp.txt";
     if (DebuggingOn) {
         LOG_FILE("\ttmpFile:            ", tmpFile);
-        LOG_FILE("\topts->tmpStagingFn: ", opts->tmpStagingFn);
+        LOG_FILE("\topts->stageStreamFn:", opts->stageStreamFn);
     }
-    if (prevStage != opts->tmpStagingFn) {
+    if (lastFileInStage != opts->stageStreamFn) {
         if (DebuggingOn) {
-            LOG_INFO("prevStage != opts->tmpStagingFn");
+            LOG_INFO("prevStage != opts->stageStreamFn");
         }
-        if (!appendFile(tmpFile /* to */, prevStage /* from */)) {
-            if (DebuggingOn) {
-                LOG_INFO("!appendFile1 -- remove(tmpFile)");
-            }
+        if (!appendFile(tmpFile /* to */, lastFileInStage /* from */)) {
             ::remove(tmpFile.c_str());
-            LOG_OUT('-')
+            LOG_OUT('-', "!appendFile1 -- remove(tmpFile)")
             return false;
         }
     }
 
-    if (!appendFile(tmpFile /* to */, opts->tmpStagingFn /* from */)) {
-        LOG_INFO("!appendFile2 -- remove(tmpFile)");
+    if (!appendFile(tmpFile /* to */, opts->stageStreamFn /* from */)) {
         ::remove(tmpFile.c_str());
-        LOG_OUT('-')
+        LOG_OUT('-', "!appendFile2 -- remove(tmpFile)")
         return false;
     }
 
-    lockSection();
     if (DebuggingOn) {
-        LOG_FILE("\topts->tmpStagingFn: ", opts->tmpStagingFn);
         LOG_FILE("\trename              ", tmpFile);
         LOG_FILE("\t  to                ", opts->newStage);
+        LOG_FILE("\tremove stageStreamFn", opts->stageStreamFn);
     }
+
+    lockSection();
     ::rename(tmpFile.c_str(), opts->newStage.c_str());
-    if (DebuggingOn) {
-        LOG_FILE("\tremove tmpStagingFn ", opts->tmpStagingFn);
-    }
-    ::remove(opts->tmpStagingFn.c_str());
-    if (fileExists(prevStage) && prevStage != opts->newStage) {
+    ::remove(opts->stageStreamFn.c_str());
+    if (fileExists(lastFileInStage) && lastFileInStage != opts->newStage) {
         if (DebuggingOn) {
             LOG_INFO("!appendFile1 -- Cleanup -- remove(tmpFile)");
         }
-        ::remove(prevStage.c_str());
+        ::remove(lastFileInStage.c_str());
     }
     unlockSection();
 
-    LOG_OUT('-')
+    LOG_OUT('-', "")
     return true;
 }
 
@@ -341,8 +300,7 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines) {
     CArchive archive(WRITING_ARCHIVE);
     string_q tmpFile2 = substitute(outFn, ".bin", ".tmp");
     if (!archive.Lock(tmpFile2, modeWriteCreate, LOCK_NOWAIT)) {
-        LOG_ERR("Could not lock index file: ", tmpFile2);
-        LOG_OUT('-')
+        LOG_OUT('-', "Could not lock index file: " + tmpFile2)
         return false;
     }
 
@@ -413,8 +371,8 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines) {
     }
 
     unlockSection();
-    LOG_OUT('-')
-    return !shouldQuit();
+    LOG_OUT('-', "")
+    return true;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -474,7 +432,7 @@ bool COptions::write_chunks(blknum_t chunkSize, bool snapped) {
                 ostringstream os;
                 os << "Wrote " << consolidatedLines.size() << " records to " << cTeal << relativize(chunkPath);
                 if (snapped && (lines.size() - 1 == loc)) {
-                    os << cYellow << " (snapped to " << snap_to_grid << " blocks)";
+                    os << cYellow << " (snapped to modulo " << snap_to_grid << " blocks)";
                 }
                 os << cOff;
                 LOG_INFO(os.str());
@@ -500,6 +458,6 @@ bool COptions::write_chunks(blknum_t chunkSize, bool snapped) {
         chunkSize = min(apps_per_chunk, nRecords);
     }
 
-    LOG_OUT('-')
+    LOG_OUT('-', "")
     return true;
 }
