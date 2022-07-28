@@ -138,11 +138,13 @@ int main(int argc, const char* argv[]) {
 
                     options.stageStream.open(options.stageStreamFn, ios::out | ios::trunc);
                     if (!options.stageStream.is_open()) {
+                        unlockSection();
                         LOG_OUT('=', "Could not open temporary staging file.")
                         return EXIT_FAILURE;
                     }
 
                 } else {
+                    unlockSection();
                     options.stageStream.close();
                     options.Cleanup();
                     LOG_OUT('=', "Stage_chunks returned false")
