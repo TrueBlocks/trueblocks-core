@@ -1,5 +1,4 @@
 #include "acctlib.h"
-#include "bloom.h"
 
 // TODO: BOGUS - TESTING SCRAPING
 bool DebuggingOn = fileExists("./testing");
@@ -76,13 +75,10 @@ class COptions {
         stageStream.close();
         ::remove(stageStreamFn.c_str());
     }
-
-    bool write_chunks(blknum_t chunkSize, bool snapped);
 };
 
+extern bool write_chunks(COptions* options, blknum_t chunkSize, bool snapped);
 extern bool stage_chunks(COptions* options, bool snappy);
-extern bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines);
-
 //----------------------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     if (DebuggingOn) {
@@ -110,11 +106,11 @@ int main(int argc, const char* argv[]) {
         ifstream inputStream(file, ios::in);
         if (inputStream.is_open()) {
             lockSection();
+
             options.stageStream << inputStream.rdbuf();
             options.stageStream.flush();
             inputStream.close();
             ::remove(file.c_str());
-            unlockSection();
 
             options.prev_block = path_2_Bn(file);
             uint64_t nRecsInStream = fileSize(options.stageStreamFn) / asciiAppearanceSize;
@@ -128,7 +124,7 @@ int main(int argc, const char* argv[]) {
                 if (stage_chunks(&options, isSnapToGrid)) {
                     uint64_t nRecsNow = fileSize(options.newStage) / asciiAppearanceSize;
                     blknum_t chunkSize = min(nRecsNow, options.apps_per_chunk);
-                    options.write_chunks(chunkSize, isSnapToGrid);
+                    write_chunks(&options, chunkSize, isSnapToGrid);
                     if (DebuggingOn) {
                         LOG_FILE("newStage:             ", options.newStage);
                         LOG_INFO("snapPoint:            ",
@@ -147,19 +143,23 @@ int main(int argc, const char* argv[]) {
                     }
 
                 } else {
+                    options.stageStream.close();
                     options.Cleanup();
                     LOG_OUT('=', "Stage_chunks returned false")
                     return EXIT_FAILURE;
                 }
             }
+            unlockSection();
 
         } else {
+            options.stageStream.close();
             options.Cleanup();
             LOG_OUT('=', "Could not open input stream " + file)
             return EXIT_FAILURE;
         }
 
         if (shouldQuit()) {
+            options.stageStream.close();
             options.Cleanup();
             LOG_OUT('=', "Control+C hit")
             return EXIT_FAILURE;
@@ -236,7 +236,6 @@ bool stage_chunks(COptions* opts, bool snappy) {
         LOG_FILE("\tremove stageStreamFn", opts->stageStreamFn);
     }
 
-    lockSection();
     ::rename(tmpFile.c_str(), opts->newStage.c_str());
     ::remove(opts->stageStreamFn.c_str());
     if (fileExists(lastFileInStage) && lastFileInStage != opts->newStage) {
@@ -245,26 +244,115 @@ bool stage_chunks(COptions* opts, bool snappy) {
         }
         ::remove(lastFileInStage.c_str());
     }
-    unlockSection();
 
     LOG_OUT('-', "")
     return true;
 }
 
 //---------------------------------------------------------------------------
-class CBloomFilterWrite {
+class bloom_t {
   public:
-    vector<bloom_t> array;
-    bool addToSet(const address_t& addr);
+    uint32_t nInserted;
+    uint8_t* bits;
+
+  public:
+    bloom_t(void);
+    ~bloom_t(void);
+    bloom_t(const bloom_t& b);
+    bloom_t& operator=(const bloom_t& b);
+    bool operator==(const bloom_t& item) const;
+
+    void lightBit(size_t bit);
+
+  private:
+    void copy(const bloom_t& b);
+    void init(void);
 };
+
+//---------------------------------------------------------------------------
+inline bloom_t::bloom_t(void) {
+    init();
+}
+
+//---------------------------------------------------------------------------
+inline bloom_t::~bloom_t(void) {
+    if (bits)
+        delete[] bits;
+}
+
+//---------------------------------------------------------------------------
+inline bloom_t::bloom_t(const bloom_t& b) {
+    init();
+    copy(b);
+}
+
+//---------------------------------------------------------------------------
+inline bloom_t& bloom_t::operator=(const bloom_t& b) {
+    copy(b);
+    return *this;
+}
 
 #define BLOOM_WIDTH_IN_BYTES (1048576 / 8)
 #define BLOOM_WIDTH_IN_BITS (BLOOM_WIDTH_IN_BYTES * 8)
 #define MAX_ADDRS_IN_BLOOM 50000
 #define BLOOM_K 5
+//---------------------------------------------------------------------------
+void bloom_t::init(void) {
+    nInserted = 0;
+    bits = new uint8_t[BLOOM_WIDTH_IN_BYTES];
+    bzero(bits, BLOOM_WIDTH_IN_BYTES * sizeof(uint8_t));
+}
+
+//---------------------------------------------------------------------------
+void bloom_t::copy(const bloom_t& b) {
+    nInserted = b.nInserted;
+    memcpy(bits, b.bits, BLOOM_WIDTH_IN_BYTES);
+}
+
+//---------------------------------------------------------------------------
+bool bloom_t::operator==(const bloom_t& test) const {
+    if (nInserted != test.nInserted)
+        return false;
+    for (size_t i = 0; i < BLOOM_WIDTH_IN_BYTES; i++) {
+        if (bits[i] != test.bits[i])
+            return false;
+    }
+    return true;
+}
+
+//---------------------------------------------------------------------------
+void bloom_t::lightBit(size_t bit) {
+    size_t which = (bit / 8);
+    size_t whence = (bit % 8);
+    size_t index = BLOOM_WIDTH_IN_BYTES - which - 1;
+    uint8_t mask = uint8_t(1 << whence);
+    bits[index] |= mask;
+}
+
+//---------------------------------------------------------------------------
+bool isBitLit(size_t bit, uint8_t* bits) {
+    size_t whence = (bit % 8);
+    uint8_t mask = uint8_t(1 << whence);
+
+    size_t which = (bit / 8);
+    size_t index = BLOOM_WIDTH_IN_BYTES - which - 1;
+
+    return (bits[index] & mask);
+}
+
+//---------------------------------------------------------------------------
+void getLitBits(const address_t& addrIn, CUintArray& litBitsOut) {
+#define EXTRACT_WID 8
+    for (size_t k = 0; k < BLOOM_K; k++) {
+        string_q fourByte = ("0x" + extract(addrIn, 2 + (k * EXTRACT_WID), EXTRACT_WID));
+        uint64_t bit = (str_2_Uint(fourByte) % BLOOM_WIDTH_IN_BITS);
+        litBitsOut.push_back(bit);
+    }
+    return;
+}
 
 //----------------------------------------------------------------------
-bool CBloomFilterWrite::addToSet(const address_t& addr) {
+bool addToSet(vector<bloom_t>& array, const address_t& addr) {
     if (array.size() == 0) {
         array.push_back(bloom_t());  // so we have something to add to
     }
@@ -282,107 +370,15 @@ bool CBloomFilterWrite::addToSet(const address_t& addr) {
     return true;
 }
 
-//----------------------------------------------------------------
-bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines) {
-    LOG_IN('-', "writeIndexAsBinary");
-    ASSERT(!fileExists(outFn));
-
-    address_t prev;
-    uint32_t offset = 0, nAddrs = 0, cnt = 0;
-    CIndexedAppearanceArray appTable;
-
-    // TODO: BOGUS - MANIFEST WRITING HASH INTO INDEX
-    hashbytes_t hash = hash_2_Bytes(padLeft(keccak256(manifestVersion), 64, '0'));
-
-    CArchive archive(WRITING_ARCHIVE);
-    string_q tmpFile2 = substitute(outFn, ".bin", ".tmp");
-    if (!archive.Lock(tmpFile2, modeWriteCreate, LOCK_NOWAIT)) {
-        LOG_OUT('-', "Could not lock index file: " + tmpFile2)
-        return false;
-    }
-
-    archive.Seek(0, SEEK_SET);  // write the header even though it's not fully detailed to preserve the space
-    archive.Write(MAGIC_NUMBER);
-    archive.Write(hash.data(), hash.size(), sizeof(uint8_t));
-    archive.Write(nAddrs);
-    archive.Write((uint32_t)appTable.size());  // not accurate yet
-
-    CBloomFilterWrite bloomFilter;
-    for (size_t l = 0; l < lines.size(); l++) {
-        string_q line = lines[l];
-        ASSERT(countOf(line, '\t') == 2);
-        CStringArray parts;
-        explode(parts, line, '\t');
-        CIndexedAppearance rec(parts[1], parts[2]);
-        appTable.push_back(rec);
-        if (!prev.empty() && parts[0] != prev) {
-            bloomFilter.addToSet(prev);
-            addrbytes_t bytes = addr_2_Bytes(prev);
-            archive.Write(bytes.data(), bytes.size(), sizeof(uint8_t));
-            archive.Write(offset);
-            archive.Write(cnt);
-            offset += cnt;
-            cnt = 0;
-            nAddrs++;
-        }
-        cnt++;
-        prev = parts[0];
-    }
-
-    // The above algo always misses the last address, so we add it here
-    bloomFilter.addToSet(prev);
-    addrbytes_t bytes = addr_2_Bytes(prev);
-    archive.Write(bytes.data(), bytes.size(), sizeof(uint8_t));
-    archive.Write(offset);
-    archive.Write(cnt);
-    nAddrs++;
-
-    for (auto record : appTable) {
-        archive.Write(record.blk);
-        archive.Write(record.txid);
-    }
-
-    archive.Seek(0, SEEK_SET);  // re-write the header now that we have full data
-    archive.Write(MAGIC_NUMBER);
-    archive.Write(hash.data(), hash.size(), sizeof(uint8_t));
-    archive.Write(nAddrs);
-    archive.Write((uint32_t)appTable.size());
-    archive.Release();
-
-    lockSection();
-
-    CArchive output(WRITING_ARCHIVE);
-    string_q bloomFile = substitute(substitute(outFn, "/finalized/", "/blooms/"), ".bin", ".bloom");
-    if (output.Lock(bloomFile, modeWriteCreate, LOCK_NOWAIT)) {
-        output.Write((uint32_t)bloomFilter.array.size());
-        for (auto bloom : bloomFilter.array) {
-            output.Write(bloom.nInserted);
-            output.Write(bloom.bits, sizeof(uint8_t), BLOOM_WIDTH_IN_BYTES);
-        }
-        output.Release();
-        copyFile(tmpFile2, outFn);
-        ::remove(tmpFile2.c_str());
-        string_q range = substitute(substitute(outFn, indexFolder_finalized, ""), indexFolder_blooms, "");
-        range = substitute(substitute(range, ".bin", ""), ".bloom", "");
-        appendToAsciiFile(cacheFolder_tmp + "chunks_created.txt", range + "\n");
-    }
-
-    unlockSection();
-    LOG_OUT('-', "")
-    return true;
-}
-
 //---------------------------------------------------------------------------------------------------
-bool COptions::write_chunks(blknum_t chunkSize, bool snapped) {
+bool write_chunks(COptions* opts, blknum_t chunkSize, bool snapped) {
     LOG_IN('-', "write_chunks");
 
-    blknum_t nRecords = fileSize(newStage) / asciiAppearanceSize;
-    while ((snapped || nRecords > chunkSize) && !shouldQuit()) {
-        lockSection();
-
+    blknum_t nRecords = fileSize(opts->newStage) / asciiAppearanceSize;
+    while ((snapped || nRecords > chunkSize)) {
         CStringArray lines;
         lines.reserve(nRecords + 100);
-        asciiFileToLines(newStage, lines);
+        asciiFileToLines(opts->newStage, lines);
         string_q prvBlock;
         size_t loc = NOPOS;
         for (uint64_t record = (chunkSize - 1); record < lines.size() && loc == NOPOS; record++) {
@@ -424,12 +420,94 @@ bool COptions::write_chunks(blknum_t chunkSize, bool snapped) {
                 sort(consolidatedLines.begin(), consolidatedLines.end());
                 string_q chunkId = p1[1] + "-" + p2[1];
                 string_q chunkPath = indexFolder_finalized + chunkId + ".bin";
-                // LOG_INFO("Writing...", string_q(80, ' '), "\r");
-                writeIndexAsBinary(chunkPath, consolidatedLines);
+                LOG_IN('-', "writeIndexAsBinary");
+                ASSERT(!fileExists(chunkPath));
+
+                address_t prev;
+                uint32_t offset = 0, nAddrs = 0, cnt = 0;
+                CIndexedAppearanceArray appTable;
+
+                // TODO: BOGUS - MANIFEST WRITING HASH INTO INDEX
+                hashbytes_t hash = hash_2_Bytes(padLeft(keccak256(manifestVersion), 64, '0'));
+
+                CArchive archive(WRITING_ARCHIVE);
+                string_q tmpFile2 = substitute(chunkPath, ".bin", ".tmp");
+                if (!archive.Lock(tmpFile2, modeWriteCreate, LOCK_NOWAIT)) {
+                    LOG_OUT('-', "Could not lock index file: " + tmpFile2)
+                    return false;
+                }
+
+                archive.Seek(0,
+                             SEEK_SET);  // write the header even though it's not fully detailed to preserve the space
+                archive.Write(MAGIC_NUMBER);
+                archive.Write(hash.data(), hash.size(), sizeof(uint8_t));
+                archive.Write(nAddrs);
+                archive.Write((uint32_t)appTable.size());  // not accurate yet
+
+                vector<bloom_t> ar;
+                for (size_t l = 0; l < consolidatedLines.size(); l++) {
+                    string_q line = consolidatedLines[l];
+                    ASSERT(countOf(line, '\t') == 2);
+                    CStringArray parts;
+                    explode(parts, line, '\t');
+                    CIndexedAppearance rec(parts[1], parts[2]);
+                    appTable.push_back(rec);
+                    if (!prev.empty() && parts[0] != prev) {
+                        addToSet(ar, prev);
+                        addrbytes_t bytes = addr_2_Bytes(prev);
+                        archive.Write(bytes.data(), bytes.size(), sizeof(uint8_t));
+                        archive.Write(offset);
+                        archive.Write(cnt);
+                        offset += cnt;
+                        cnt = 0;
+                        nAddrs++;
+                    }
+                    cnt++;
+                    prev = parts[0];
+                }
+
+                // The above algo always misses the last address, so we add it here
+                addToSet(ar, prev);
+                addrbytes_t bytes = addr_2_Bytes(prev);
+                archive.Write(bytes.data(), bytes.size(), sizeof(uint8_t));
+                archive.Write(offset);
+                archive.Write(cnt);
+                nAddrs++;
+
+                for (auto record : appTable) {
+                    archive.Write(record.blk);
+                    archive.Write(record.txid);
+                }
+
+                archive.Seek(0, SEEK_SET);  // re-write the header now that we have full data
+                archive.Write(MAGIC_NUMBER);
+                archive.Write(hash.data(), hash.size(), sizeof(uint8_t));
+                archive.Write(nAddrs);
+                archive.Write((uint32_t)appTable.size());
+                archive.Release();
+
+                CArchive output(WRITING_ARCHIVE);
+                string_q bloomFile = substitute(substitute(chunkPath, "/finalized/", "/blooms/"), ".bin", ".bloom");
+                if (output.Lock(bloomFile, modeWriteCreate, LOCK_NOWAIT)) {
+                    output.Write((uint32_t)ar.size());
+                    for (auto bloom : ar) {
+                        output.Write(bloom.nInserted);
+                        output.Write(bloom.bits, sizeof(uint8_t), BLOOM_WIDTH_IN_BYTES);
+                    }
+                    output.Release();
+                    copyFile(tmpFile2, chunkPath);
+                    ::remove(tmpFile2.c_str());
+                    string_q range =
+                        substitute(substitute(chunkPath, indexFolder_finalized, ""), indexFolder_blooms, "");
+                    range = substitute(substitute(range, ".bin", ""), ".bloom", "");
+                    appendToAsciiFile(cacheFolder_tmp + "chunks_created.txt", range + "\n");
+                }
+
+                LOG_OUT('-', "")
                 ostringstream os;
                 os << "Wrote " << consolidatedLines.size() << " records to " << cTeal << relativize(chunkPath);
                 if (snapped && (lines.size() - 1 == loc)) {
-                    os << cYellow << " (snapped to modulo " << snap_to_grid << " blocks)";
+                    os << cYellow << " (snapped to modulo " << opts->snap_to_grid << " blocks)";
                 }
                 os << cOff;
                 LOG_INFO(os.str());
@@ -439,20 +517,18 @@ bool COptions::write_chunks(blknum_t chunkSize, bool snapped) {
                 for (uint64_t record = loc; record < lines.size(); record++) {
                     remainingLines.push_back(lines[record]);
                 }
-                ::remove(newStage.c_str());
+                ::remove(opts->newStage.c_str());
             }
         }
 
         if (remainingLines.size()) {
-            linesToAsciiFile(newStage, remainingLines);
+            linesToAsciiFile(opts->newStage, remainingLines);
         }
 
-        unlockSection();
-
-        nRecords = fileSize(newStage) / asciiAppearanceSize;
+        nRecords = fileSize(opts->newStage) / asciiAppearanceSize;
         if (snapped)
             snapped = nRecords > 0;
-        chunkSize = min(apps_per_chunk, nRecords);
+        chunkSize = min(opts->apps_per_chunk, nRecords);
     }
 
     LOG_OUT('-', "")
