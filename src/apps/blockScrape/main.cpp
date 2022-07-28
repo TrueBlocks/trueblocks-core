@@ -106,14 +106,7 @@ int main(int argc, const char* argv[]) {
         return EXIT_FAILURE;
     }
 
-    uint32_t seen = 0;
     for (auto file : files) {
-        if (shouldQuit()) {
-            options.Cleanup();
-            LOG_OUT('=', "Control+C hit")
-            return EXIT_FAILURE;
-        }
-
         ifstream inputStream(file, ios::in);
         if (inputStream.is_open()) {
             lockSection();
@@ -129,9 +122,8 @@ int main(int argc, const char* argv[]) {
             bool isSnapToGrid =
                 (options.prev_block > options.first_snap && !(options.prev_block % options.snap_to_grid));
             bool overtops = (nRecsInStream > options.apps_per_chunk);
-            bool finished = seen == (files.size() - 1);
 
-            if (isSnapToGrid || overtops || finished) {
+            if (isSnapToGrid || overtops) {
                 options.stageStream.close();
                 if (stage_chunks(&options, isSnapToGrid)) {
                     uint64_t nRecsNow = fileSize(options.newStage) / asciiAppearanceSize;
@@ -166,7 +158,12 @@ int main(int argc, const char* argv[]) {
             LOG_OUT('=', "Could not open input stream " + file)
             return EXIT_FAILURE;
         }
-        seen++;
+
+        if (shouldQuit()) {
+            options.Cleanup();
+            LOG_OUT('=', "Control+C hit")
+            return EXIT_FAILURE;
+        }
     }
 
     options.stageStream.close();
