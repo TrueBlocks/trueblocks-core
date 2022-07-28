@@ -72,12 +72,12 @@ func Report(msg string, startBlock, nAppsPerChunk, blockCount, nRecsThen, nRecsN
 		// logger.Log(logger.Info, "No new blocks...")
 	} else {
 		if utils.DebuggingOn {
-			fmt.Println("-- golang --------------------------------------------------\n", msg)
-			fmt.Println("startBlock:   ", startBlock)
-			fmt.Println("nAppsPerChunk:", nAppsPerChunk)
-			fmt.Println("blockCount:   ", blockCount)
-			fmt.Println("nRecsThen:    ", nRecsThen)
-			fmt.Println("nRecsNow:     ", nRecsNow)
+			logger.Log(logger.Info, "-- golang --------------------------------------------------\n", msg)
+			logger.Log(logger.Info, "startBlock:   ", startBlock)
+			logger.Log(logger.Info, "nAppsPerChunk:", nAppsPerChunk)
+			logger.Log(logger.Info, "blockCount:   ", blockCount)
+			logger.Log(logger.Info, "nRecsThen:    ", nRecsThen)
+			logger.Log(logger.Info, "nRecsNow:     ", nRecsNow)
 		}
 
 		if hide {

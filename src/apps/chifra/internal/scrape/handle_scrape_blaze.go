@@ -106,12 +106,5 @@ func (opts *BlazeOptions) CleanupPostScrape() {
 		}
 	}
 
-	// TODO: CLEAN THIS UP
-	if utils.DebuggingOn {
-		for _, ts := range opts.TsArray[first:] {
-			fmt.Println(ts)
-		}
-	}
-
 	tslib.Append(opts.Chain, opts.TsArray[first:])
 }

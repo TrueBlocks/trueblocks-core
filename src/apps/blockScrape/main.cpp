@@ -4,6 +4,29 @@
 // TODO: BOGUS - TESTING SCRAPING
 bool DebuggingOn = fileExists("./testing");
 
+size_t fff = 52;
+char x = '-';
+#define LOG_IN(a, f)                                                                                                   \
+    string_q nm = (f);                                                                                                 \
+    if ((a) != x) {                                                                                                    \
+        LOG_INFO("");                                                                                                  \
+        LOG_INFO("");                                                                                                  \
+        LOG_INFO("");                                                                                                  \
+        LOG_INFO("");                                                                                                  \
+    }                                                                                                                  \
+    LOG_INFO(string_q(12, (a)), " in ", (nm), " ", string_q(fff, (a)));
+
+#define LOG_OUT(a)                                                                                                     \
+    LOG_INFO(string_q(12, (a)), " out ", (nm), " ", string_q(fff, (a)));                                               \
+    if ((a) != x) {                                                                                                    \
+        LOG_INFO("");                                                                                                  \
+        LOG_INFO("");                                                                                                  \
+        LOG_INFO("");                                                                                                  \
+        LOG_INFO("");                                                                                                  \
+    }
+
+#define LOG_FILE(a, b) LOG_INFO((a), substitute((b), "/Users/jrush/Data/trueblocks/unchained/", "./"))
+
 //-----------------------------------------------------------------------------
 class COptions {
   public:
@@ -34,23 +57,24 @@ class COptions {
         nRecsThen = fileSize(stageFn) / asciiAppearanceSize;
 
         if (DebuggingOn) {
-            LOG_INFO("bs-start_block: ", start_block);
-            LOG_INFO("bs-apps_per_chunk: ", apps_per_chunk);
-            LOG_INFO("bs-unripe_dist: ", unripe_dist);
-            LOG_INFO("bs-snap_to_grid: ", snap_to_grid);
-            LOG_INFO("bs-first_snap: ", first_snap);
-            LOG_INFO("In constructor: ", stageFn);
-            LOG_INFO("In constructor: ", prev_block);
-            LOG_INFO("In constructor: ", nRecsThen);
+            LOG_INFO("startBlock:          ", start_block);
+            LOG_INFO("nAppsPerChunk:       ", apps_per_chunk);
+            LOG_INFO("unripeDist:          ", unripe_dist);
+            LOG_INFO("snapToGrid:          ", snap_to_grid);
+            LOG_INFO("firstSnap:           ", first_snap);
+            LOG_FILE("tmpStagingFn:        ", tmpStagingFn);
+            LOG_FILE("stageFn:             ", stageFn);
+            LOG_INFO("prevBlocks:          ", prev_block);
+            LOG_INFO("nRecsThen:           ", nRecsThen);
         }
     }
 
     void Cleanup(void) {
         if (DebuggingOn) {
-            LOG_INFO("Cleanup");
-            LOG_INFO("\tcleanFolder(indexFolder_unripe): ", indexFolder_unripe);
-            LOG_INFO("\tcleanFolder(indexFolder_ripe):   ", indexFolder_ripe);
-            LOG_INFO("\t::remove(tmpStagingFn.c_str()):  ", tmpStagingFn);
+            LOG_INFO("Clean folders");
+            LOG_INFO("  index_unripe:      ", indexFolder_unripe);
+            LOG_INFO("  index_ripe:        ", indexFolder_ripe);
+            LOG_FILE("  tmpStagingFn:      ", tmpStagingFn);
         }
         cleanFolder(indexFolder_unripe);
         cleanFolder(indexFolder_ripe);
@@ -70,12 +94,14 @@ int main(int argc, const char* argv[]) {
     if (DebuggingOn) {
         colorsOff();
     }
+    LOG_IN('=', "main")
 
     COptions options;
     COptions* opts = &options;
     string_q tmpStagingFn = indexFolder_staging + "000000000-temp.txt";
     if (!opts->tmpStagingStream.is_open()) {
         LOG_WARN("Could not open temporary staging file.");
+        LOG_OUT('=')
         return EXIT_FAILURE;
     }
 
@@ -83,18 +109,21 @@ int main(int argc, const char* argv[]) {
     if (!listFilesInFolder(files, indexFolder_ripe, false)) {
         // There is nothing to process, not an error - we're at the front of the chain
         opts->Cleanup();
+        LOG_OUT('=')
         return EXIT_FAILURE;
     }
 
     for (auto file : files) {
         if (shouldQuit()) {
             opts->Cleanup();
+            LOG_OUT('=')
             return EXIT_FAILURE;
         }
 
         if (!appendToStage(opts, file)) {
             LOG_WARN("Could not open input stream ", file);
             opts->Cleanup();
+            LOG_OUT('=')
             return EXIT_FAILURE;
         }
 
@@ -108,6 +137,7 @@ int main(int argc, const char* argv[]) {
             if (!stage_chunks(opts)) {
                 LOG_ERR("stage_chunks returned false");
                 opts->Cleanup();
+                LOG_OUT('=')
                 return EXIT_FAILURE;
             }
 
@@ -116,12 +146,12 @@ int main(int argc, const char* argv[]) {
             blknum_t chunkSize = min(opts->nRecsNow, opts->apps_per_chunk);
             opts->write_chunks(chunkSize, true);
             if (DebuggingOn) {
-                LOG_INFO("chunkSize:        ", min(opts->nRecsNow, opts->apps_per_chunk));
-                LOG_INFO("fileName:         ", opts->newStage);
-                LOG_INFO("szBeforeWrite:    ", szBeforeWrite);
-                LOG_INFO("recordSize:       ", asciiAppearanceSize);
-                LOG_INFO("opts->nRecsNow:   ", opts->nRecsNow);
-                LOG_INFO("szAfterWrite:     ", fileSize(opts->newStage));
+                LOG_INFO("chunkSize:            ", min(opts->nRecsNow, opts->apps_per_chunk));
+                LOG_FILE("fileName:             ", opts->newStage);
+                LOG_INFO("szBeforeWrite:        ", szBeforeWrite);
+                LOG_INFO("recordSize:           ", asciiAppearanceSize);
+                LOG_INFO("opts->nRecsNow:       ", opts->nRecsNow);
+                LOG_INFO("szAfterWrite:         ", fileSize(opts->newStage));
             }
         }
     }
@@ -131,6 +161,7 @@ int main(int argc, const char* argv[]) {
     if (!stage_chunks(opts)) {
         LOG_ERR("stage_chunks returned false");
         opts->Cleanup();
+        LOG_OUT('=')
         return EXIT_FAILURE;
     }
 
@@ -138,30 +169,33 @@ int main(int argc, const char* argv[]) {
     uint64_t szBeforeWrite = fileSize(opts->newStage);
     if (opts->nRecsNow <= opts->apps_per_chunk) {
         if (DebuggingOn) {
-            LOG_INFO("chunkSize:        ", min(opts->nRecsNow, opts->apps_per_chunk));
-            LOG_INFO("fileName:         ", opts->newStage);
-            LOG_INFO("szBeforeWrite:    ", szBeforeWrite);
-            LOG_INFO("recordSize:       ", asciiAppearanceSize);
-            LOG_INFO("opts->nRecsNow:   ", opts->nRecsNow);
-            LOG_INFO("szAfterWrite:     ", fileSize(opts->newStage));
+            LOG_INFO("chunkSize:            ", min(opts->nRecsNow, opts->apps_per_chunk));
+            LOG_FILE("fileName:             ", opts->newStage);
+            LOG_INFO("szBeforeWrite:        ", szBeforeWrite);
+            LOG_INFO("recordSize:           ", asciiAppearanceSize);
+            LOG_INFO("opts->nRecsNow:       ", opts->nRecsNow);
+            LOG_INFO("szAfterWrite:         ", fileSize(opts->newStage));
         }
+        LOG_OUT('=')
         return EXIT_SUCCESS;
     }
 
     bool ret = opts->write_chunks(opts->apps_per_chunk, false);
     if (DebuggingOn) {
-        LOG_INFO("chunkSize:        ", min(opts->nRecsNow, opts->apps_per_chunk));
-        LOG_INFO("fileName:         ", opts->newStage);
-        LOG_INFO("szBeforeWrite:    ", szBeforeWrite);
-        LOG_INFO("recordSize:       ", asciiAppearanceSize);
-        LOG_INFO("opts->nRecsNow:   ", opts->nRecsNow);
-        LOG_INFO("szAfterWrite:     ", fileSize(opts->newStage));
+        LOG_INFO("chunkSize:            ", min(opts->nRecsNow, opts->apps_per_chunk));
+        LOG_FILE("fileName:             ", opts->newStage);
+        LOG_INFO("szBeforeWrite:        ", szBeforeWrite);
+        LOG_INFO("recordSize:           ", asciiAppearanceSize);
+        LOG_INFO("opts->nRecsNow:       ", opts->nRecsNow);
+        LOG_INFO("szAfterWrite:         ", fileSize(opts->newStage));
     }
+    LOG_OUT('=')
     return ret ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 
 //--------------------------------------------------------------------------
 bool appendToStage(COptions* opts, const string_q& file) {
+    // LOG_IN('-', "appendToStage");
     ifstream inputStream(file, ios::in);
     if (!inputStream.is_open()) {
         return false;
@@ -177,6 +211,7 @@ bool appendToStage(COptions* opts, const string_q& file) {
 
 //--------------------------------------------------------------------------
 bool appendFile(const string_q& toFile, const string_q& fromFile) {
+    // LOG_IN('-', "appendFile");
     ofstream output;
     output.open(toFile, ios::out | ios::app);
     if (!output.is_open())
@@ -195,26 +230,26 @@ bool appendFile(const string_q& toFile, const string_q& fromFile) {
     return true;
 }
 
-#define LOG_INFO1(a, b) LOG_INFO("\t", a, b)
-#define LOG_INFO2(a, b, c) LOG_INFO("\t", a, b, c)
 //--------------------------------------------------------------------------
 bool stage_chunks(COptions* opts) {
+    LOG_IN('-', "stage_chunks");
     string_q prevStage = getLastFileInFolder(indexFolder_staging, false);
     opts->newStage = indexFolder_staging + padNum9(opts->prev_block) + ".txt";
     if (DebuggingOn) {
-        LOG_INFO1("prevStage:          ", prevStage);
-        LOG_INFO1("opts->newStage:     ", opts->newStage);
+        LOG_FILE("\tprevStage:          ", prevStage);
+        LOG_FILE("\topts->newStage:     ", opts->newStage);
     }
 
     if (prevStage == opts->newStage) {
         LOG_INFO("prevStage == opts->newStage - No Cleanup");
+        LOG_OUT('-')
         return true;
     }
 
     string_q tmpFile = indexFolder + "temp.txt";
     if (DebuggingOn) {
-        LOG_INFO1("tmpFile:            ", tmpFile);
-        LOG_INFO("opts->tmpStagingFn: ", opts->tmpStagingFn);
+        LOG_FILE("\ttmpFile:            ", tmpFile);
+        LOG_FILE("\topts->tmpStagingFn: ", opts->tmpStagingFn);
     }
     if (prevStage != opts->tmpStagingFn) {
         if (DebuggingOn) {
@@ -222,32 +257,30 @@ bool stage_chunks(COptions* opts) {
         }
         if (!appendFile(tmpFile /* to */, prevStage /* from */)) {
             if (DebuggingOn) {
-                LOG_INFO("!appendFile1 -- Cleanup -- remove(tmpFile)");
+                LOG_INFO("!appendFile1 -- remove(tmpFile)");
             }
-            opts->Cleanup();
             ::remove(tmpFile.c_str());
+            LOG_OUT('-')
             return false;
         }
     }
 
     if (!appendFile(tmpFile /* to */, opts->tmpStagingFn /* from */)) {
-        LOG_INFO("!appendFile1 -- Cleanup -- remove(tmpFile)");
-        opts->Cleanup();
+        LOG_INFO("!appendFile2 -- remove(tmpFile)");
         ::remove(tmpFile.c_str());
+        LOG_OUT('-')
         return false;
     }
 
     lockSection();
     if (DebuggingOn) {
-        LOG_INFO1("opts->tmpStagingFn: ", opts->tmpStagingFn);
-        LOG_INFO1("rename tmpFile to opts->newStage", "");
-        LOG_INFO1("                    ", tmpFile);
-        LOG_INFO1("                    ", opts->newStage);
+        LOG_FILE("\topts->tmpStagingFn: ", opts->tmpStagingFn);
+        LOG_FILE("\trename              ", tmpFile);
+        LOG_FILE("\t  to                ", opts->newStage);
     }
     ::rename(tmpFile.c_str(), opts->newStage.c_str());
     if (DebuggingOn) {
-        LOG_INFO1("remove tmpStagingFn", "");
-        LOG_INFO1("                    ", opts->tmpStagingFn);
+        LOG_FILE("\tremove tmpStagingFn ", opts->tmpStagingFn);
     }
     ::remove(opts->tmpStagingFn.c_str());
     if (fileExists(prevStage) && prevStage != opts->newStage) {
@@ -258,6 +291,7 @@ bool stage_chunks(COptions* opts) {
     }
     unlockSection();
 
+    LOG_OUT('-')
     return true;
 }
 
@@ -294,6 +328,7 @@ bool CBloomFilterWrite::addToSet(const address_t& addr) {
 
 //----------------------------------------------------------------
 bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines) {
+    LOG_IN('-', "writeIndexAsBinary");
     ASSERT(!fileExists(outFn));
 
     address_t prev;
@@ -307,6 +342,7 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines) {
     string_q tmpFile2 = substitute(outFn, ".bin", ".tmp");
     if (!archive.Lock(tmpFile2, modeWriteCreate, LOCK_NOWAIT)) {
         LOG_ERR("Could not lock index file: ", tmpFile2);
+        LOG_OUT('-')
         return false;
     }
 
@@ -377,14 +413,14 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines) {
     }
 
     unlockSection();
+    LOG_OUT('-')
     return !shouldQuit();
 }
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::write_chunks(blknum_t chunkSize, bool snapped) {
-    if (DebuggingOn) {
-        LOG_INFO("write_chunks");
-    }
+    LOG_IN('-', "write_chunks");
+
     blknum_t nRecords = fileSize(newStage) / asciiAppearanceSize;
     while ((snapped || nRecords > chunkSize) && !shouldQuit()) {
         lockSection();
@@ -445,9 +481,9 @@ bool COptions::write_chunks(blknum_t chunkSize, bool snapped) {
 
                 loc++;
 
-                for (uint64_t record = loc; record < lines.size(); record++)
+                for (uint64_t record = loc; record < lines.size(); record++) {
                     remainingLines.push_back(lines[record]);
-
+                }
                 ::remove(newStage.c_str());
             }
         }
@@ -455,6 +491,7 @@ bool COptions::write_chunks(blknum_t chunkSize, bool snapped) {
         if (remainingLines.size()) {
             linesToAsciiFile(newStage, remainingLines);
         }
+
         unlockSection();
 
         nRecords = fileSize(newStage) / asciiAppearanceSize;
@@ -463,5 +500,6 @@ bool COptions::write_chunks(blknum_t chunkSize, bool snapped) {
         chunkSize = min(apps_per_chunk, nRecords);
     }
 
+    LOG_OUT('-')
     return true;
 }

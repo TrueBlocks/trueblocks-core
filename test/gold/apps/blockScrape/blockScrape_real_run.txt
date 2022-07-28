@@ -1,6 +1,8 @@
 chifra scrape  --sleep .5 --pin --log_level 8
 TEST[DATE|TIME] Pin:  true
 TEST[DATE|TIME] Sleep:  0.5
+TEST[DATE|TIME] AppsPerChunk:  2000000
+TEST[DATE|TIME] FirstSnap:  2000000
 TEST[DATE|TIME] LogLevel:  8
 TEST[DATE|TIME] Format:  txt
 Error: The --pin option requires a locally running IPFS daemon
