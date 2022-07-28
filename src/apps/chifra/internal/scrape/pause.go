@@ -5,7 +5,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *ScrapeOptions) Z_6_pause(progressThen *rpcClient.MetaData) {
@@ -15,10 +14,13 @@ func (opts *ScrapeOptions) Z_6_pause(progressThen *rpcClient.MetaData) {
 
 	if shouldSleep {
 		sleep := opts.Sleep
-		if shouldSleep {
-			sleep = utils.Max(sleep, 13)
+		// TODO: BOGUS THIS DOESN'T WORK
+		// if shouldSleep {
+		// 	sleep = utils.Max(sleep, 13)
+		// }
+		if sleep > 1 {
+			logger.Log(logger.Info, "Sleeping for", sleep, "seconds -", distanceFromHead, "away from head.")
 		}
-		logger.Log(logger.Info, "Sleeping for", sleep, "seconds -", distanceFromHead, "away from head.")
 		halfSecs := sleep * 2
 		for i := 0; i < int(halfSecs); i++ {
 			time.Sleep(time.Duration(500) * time.Millisecond)

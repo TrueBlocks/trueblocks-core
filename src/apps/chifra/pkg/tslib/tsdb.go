@@ -7,7 +7,6 @@ import (
 	"io"
 	"os"
 	"sort"
-	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -121,6 +120,14 @@ func FromTs(chain string, ts uint64) (*Timestamp, error) {
 	return &perChainTimestamps[chain].memory[index], nil
 }
 
+func DeCache(chain string) {
+	perChainTimestamps[chain] = TimestampDatabase{
+		loaded: false,
+		count:  0,
+		memory: nil,
+	}
+}
+
 // FromBn is a local function that returns a Timestamp record given a blockNum. It
 // loads the timestamp file into memory if it isn't already
 func FromBn(chain string, bn uint64) (*Timestamp, error) {
@@ -141,7 +148,7 @@ func FromBn(chain string, bn uint64) (*Timestamp, error) {
 	return &perChainTimestamps[chain].memory[bn], nil
 }
 
-var writeMutex sync.Mutex
+// var writeMutex sync.Mutex
 
 func Reset(chain string, maxBn uint64) error {
 	cnt, err := NTimestamps(chain)
@@ -169,11 +176,7 @@ func Reset(chain string, maxBn uint64) error {
 	fp, err := os.OpenFile(tempPath, os.O_WRONLY|os.O_CREATE, 0644)
 	defer func() {
 		// Clear the cache in even in case of failure, causes a reload at worst
-		perChainTimestamps[chain] = TimestampDatabase{
-			loaded: false,
-			count:  0,
-			memory: nil,
-		}
+		DeCache(chain)
 		os.Remove(tempPath)
 		// sigintTrap.Disable(trapCh)
 		// writeMutex.Unlock()
@@ -205,16 +208,13 @@ func Reset(chain string, maxBn uint64) error {
 	return nil
 }
 
+// TODO: BOGUS WE WANT TO AVOID HITTING CONTROL+C
 func Append(chain string, tsArray []Timestamp) error {
-	tmpFilename := config.GetPathToCache(chain) + "tmp/ts.bin"
-	fp, err := os.OpenFile(tmpFilename, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0644)
+	tsPath := config.GetPathToIndex(chain) + "ts.bin"
+	fp, err := os.OpenFile(tsPath, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0644)
 	defer func() {
-		perChainTimestamps[chain] = TimestampDatabase{
-			loaded: false,
-			count:  0,
-			memory: nil,
-		}
-		os.Remove(tmpFilename)
+		DeCache(chain)
+		fp.Close()
 		// sigintTrap.Disable(trapCh)
 		// writeMutex.Unlock()
 	}()
@@ -224,22 +224,6 @@ func Append(chain string, tsArray []Timestamp) error {
 
 	// fp.Seek(0, io.SeekStart)
 	err = binary.Write(fp, binary.LittleEndian, tsArray)
-	if err != nil {
-		fp.Close()
-		os.Remove(tmpFilename)
-		return err
-	}
-
-	// Don't defer this because we want it to be closed before we copy it
-	fp.Close()
-
-	// TODO: BOGUS - THIS IS NOT PROTECTIVE OF THE EXISTING FILE
-	// TODO: BOGUS - IT SHOULD BE UN-INTERUPTABLE
-	// TODO: BOGUS - IT MAY WANT TO MAKE A BACKUP AND RECOVER IF THE COPY OR REMOVAL FAILS
-	// TODO: BOGUS - IT SHOULD BE GENERALIZED INSIDE OF COPYFILE
-	tsPath := config.GetPathToIndex(chain) + "ts.bin"
-	os.Remove(tsPath)
-	_, err = file.Copy(tmpFilename, tsPath)
 	if err != nil {
 		return err
 	}

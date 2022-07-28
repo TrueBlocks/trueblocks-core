@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // var writeMutex sync.Mutex
@@ -16,7 +17,9 @@ func (bl *ChunkBloom) WriteBloom(chain, bloomPath string) error {
 	// writeMutex.Lock()
 	// trapCh := sigintTrap.Enable(context.WithCancel(context.Background()))
 
-	fmt.Println("In WriteBloom", bloomPath)
+	if utils.DebuggingOn {
+		fmt.Println("In WriteBloom", bloomPath)
+	}
 	// TODO: BOGUS - YIKES
 	tempPath := strings.Replace(bloomPath, "unchained/sepolia/blooms/", "cache/sepolia/tmp/", -1)
 	tempPath = strings.Replace(tempPath, "unchained/gnosis/blooms/", "cache/gnosis/tmp/", -1)

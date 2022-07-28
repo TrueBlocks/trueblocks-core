@@ -12,6 +12,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
@@ -48,7 +49,15 @@ func (opts *ScrapeOptions) HandlePrepare(progressThen *rpcClient.MetaData) (ok b
 	if err != nil {
 		return false, err
 	}
-	logger.Log(logger.Info, "Size of appMap:", len(appMap))
+	if utils.DebuggingOn {
+		logger.Log(logger.Info, "Size of appMap:", len(appMap))
+	}
+	array := []tslib.Timestamp{}
+	array = append(array, tslib.Timestamp{
+		Bn: uint32(0),
+		Ts: uint32(rpcClient.GetBlockTimestamp(config.GetRpcProvider(opts.Globals.Chain), uint64(0))),
+	})
+	tslib.Append(opts.Globals.Chain, array)
 
 	// TODO: BOGUS - PINNING WHEN WRITING IN GOLANG
 	if opts.Pin {

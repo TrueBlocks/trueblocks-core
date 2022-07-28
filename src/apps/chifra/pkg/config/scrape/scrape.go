@@ -51,16 +51,20 @@ func GetSettings(chain string) scrapeSettings {
 	conf := ScrapeConfig{
 		Settings: defaultSettings,
 	}
+	if chain == "mainnet" {
+		conf.Settings.Apps_per_chunk = 2000000
+		conf.Settings.First_snap = 2000000
+	}
 	if _, err := toml.Decode(str, &conf); err != nil {
-		// TODO: Don't panic here, just report and return defaults
-		log.Fatal(err)
+		log.Println(err)
+		return conf.Settings
 	}
 
 	tt := reflect.TypeOf(conf.Settings)
 	fields, _, _ := utils.GetFields(&tt, "txt", true)
 
 	for _, field := range fields {
-		key := "TB_SETTINGS_" + strings.ToUpper(field)
+		key := "TB_SETTINGS_" + strings.ToUpper(strings.Replace(field, "_", "", -1))
 		val := os.Getenv(key)
 		if val != "" {
 			ff := utils.MakeFirstUpperCase(field)

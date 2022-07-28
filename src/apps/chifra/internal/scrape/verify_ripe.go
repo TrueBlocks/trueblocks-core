@@ -3,6 +3,7 @@ package scrapePkg
 import (
 	"fmt"
 	"os"
+	"path"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -26,6 +27,14 @@ func (opts *ScrapeOptions) verifyRipeFiles() bool {
 				// fmt.Println("fR:", fR.First, fR.Last, "prev:", prev.First, prev.Last)
 				if !fR.Follows(prev, !scrape.AllowMissing(opts.Globals.Chain)) {
 					logger.Log(logger.Error, "Current file (", file.Name(), ") does not sequentially follow previous file ", prev.First, ".")
+					// TODO: BOGUS THIS IS NEARLY IDENTICAL TO CleanIndexFolder BUT DOESN'T REMOVE STAGING - MAKE CLEANING ON FAILED PROCESSING CONSISTENET
+					for _, f := range []string{"ripe", "unripe", "maps"} {
+						folder := path.Join(indexPath, f)
+						err := os.RemoveAll(folder)
+						if err != nil {
+							return false
+						}
+					}
 					return false
 				}
 			}
