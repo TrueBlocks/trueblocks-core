@@ -37,9 +37,6 @@ class COptions {
     uint64_t first_snap{0};
     uint64_t start_block{0};
 
-    string_q newStage{""};
-    ofstream stageStream;
-
     COptions(void) {
         start_block = str_2_Uint(getEnvStr("TB_BLAZE_STARTBLOCK"));
         apps_per_chunk = str_2_Uint(getEnvStr("TB_SETTINGS_APPSPERCHUNK"));
@@ -56,17 +53,7 @@ class COptions {
         }
     }
 
-    void Cleanup(void) {
-        if (DebuggingOn) {
-            LOG_INFO("Clean folders");
-            LOG_INFO("  index_unripe:      ", indexFolder_unripe);
-            LOG_INFO("  index_ripe:        ", indexFolder_ripe);
-        }
-        cleanFolder(indexFolder_unripe);
-        cleanFolder(indexFolder_ripe);
-
-        stageStream.close();
-    }
+    void Cleanup(const string_q& stageStreamFn);
 };
 
 #define BLOOM_WIDTH_IN_BYTES (1048576 / 8)
@@ -149,12 +136,12 @@ bool addToSet(vector<bloom_t>& array, const address_t& addr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool write_chunks(COptions* opts, blknum_t chunkSize, bool isSnapToGrid) {
-    blknum_t nRecords = fileSize(opts->newStage) / asciiAppearanceSize;
+bool write_chunks(COptions* opts, const string_q& newStage, blknum_t chunkSize, bool isSnapToGrid) {
+    blknum_t nRecords = fileSize(newStage) / asciiAppearanceSize;
     while ((isSnapToGrid || nRecords > chunkSize)) {
         CStringArray lines;
         lines.reserve(nRecords + 100);
-        asciiFileToLines(opts->newStage, lines);
+        asciiFileToLines(newStage, lines);
 
         string_q prvBlock;
         size_t loc = NOPOS;
@@ -285,20 +272,32 @@ bool write_chunks(COptions* opts, blknum_t chunkSize, bool isSnapToGrid) {
                 for (uint64_t record = loc; record < lines.size(); record++) {
                     remainingLines.push_back(lines[record]);
                 }
-                ::remove(opts->newStage.c_str());
+                ::remove(newStage.c_str());
             }
         }
 
         if (remainingLines.size()) {
-            linesToAsciiFile(opts->newStage, remainingLines);
+            linesToAsciiFile(newStage, remainingLines);
         }
-        nRecords = fileSize(opts->newStage) / asciiAppearanceSize;
+        nRecords = fileSize(newStage) / asciiAppearanceSize;
         if (isSnapToGrid)
             isSnapToGrid = nRecords > 0;
         chunkSize = min(opts->apps_per_chunk, nRecords);
     }
 
     return true;
+}
+
+void COptions::Cleanup(const string_q& stageStreamFn) {
+    if (DebuggingOn) {
+        LOG_INFO("Clean folders");
+        LOG_INFO("  index_unripe:      ", indexFolder_unripe);
+        LOG_INFO("  index_ripe:        ", indexFolder_ripe);
+    }
+    cleanFolder(indexFolder_unripe);
+    cleanFolder(indexFolder_ripe);
+    ::remove(stageStreamFn.c_str());
+    return;
 }
 
 //----------------------------------------------------------------------------------
@@ -309,88 +308,88 @@ int main(int argc, const char* argv[]) {
     LOG_IN('=', "main")
 
     COptions options;
-    string_q stageStreamFn = indexFolder_staging + "000000000-temp.txt";
 
     CStringArray files;
-    listFilesInFolder(files, indexFolder_ripe, false);
-    if (files.size() > 0) {
-        options.stageStream.open(stageStreamFn, ios::out | ios::trunc);
-        if (options.stageStream.is_open()) {
-            for (auto file : files) {
-                ifstream inputStream(file, ios::in);
-                if (inputStream.is_open()) {
-                    lockSection();
+    if (!listFilesInFolder(files, indexFolder_ripe, false)) {
+        LOG_OUT('=', "");
+        return EXIT_SUCCESS;
+    }
 
-                    options.stageStream << inputStream.rdbuf();
-                    options.stageStream.flush();
-                    inputStream.close();
-                    ::remove(file.c_str());
+    string_q stageStreamFn = indexFolder_staging + "000000000-temp.txt";
 
-                    uint64_t prev_block = path_2_Bn(file);
-                    uint64_t nRecsInStream = fileSize(stageStreamFn) / asciiAppearanceSize;
+    ofstream stageStream;
+    stageStream.open(stageStreamFn, ios::out | ios::trunc);
+    if (stageStream.is_open()) {
+        for (auto file : files) {
+            if (shouldQuit()) {
+                stageStream.close();
+                options.Cleanup(stageStreamFn);
+                LOG_OUT('=', "Control+C hit")
+                return EXIT_FAILURE;
+            }
 
-                    bool isSnapToGrid = (prev_block > options.first_snap && !(prev_block % options.snap_to_grid));
-                    bool overtops = (nRecsInStream > options.apps_per_chunk);
+            ifstream inputStream(file, ios::in);
+            if (!inputStream.is_open()) {
+                stageStream.close();
+                options.Cleanup(stageStreamFn);
+                LOG_OUT('=', "Could not open input stream " + file)
+                return EXIT_FAILURE;
+            }
 
-                    if (isSnapToGrid || overtops) {
-                        options.stageStream.close();
-                        COptions* opts = &options;
-                        string_q lastFileInStage = getLastFileInFolder(indexFolder_staging, false);
-                        opts->newStage = indexFolder_staging + padNum9(prev_block) + ".txt";
-                        if (lastFileInStage != opts->newStage) {
-                            string_q tmpFile = indexFolder + "temp.txt";
-                            if (lastFileInStage != stageStreamFn) {
-                                appendToAsciiFile(tmpFile, asciiFileToString(lastFileInStage));
-                            }
-                            appendToAsciiFile(tmpFile, asciiFileToString(stageStreamFn));
-                            ::rename(tmpFile.c_str(), opts->newStage.c_str());
-                            ::remove(stageStreamFn.c_str());
-                            if (fileExists(lastFileInStage) && lastFileInStage != opts->newStage) {
-                                ::remove(lastFileInStage.c_str());
-                            }
-                        }
-                        uint64_t nRecsNow = fileSize(options.newStage) / asciiAppearanceSize;
-                        blknum_t chunkSize = min(nRecsNow, options.apps_per_chunk);
-                        write_chunks(opts, chunkSize, isSnapToGrid);
-                        if (DebuggingOn) {
-                            LOG_FILE("newStage:             ", options.newStage);
-                            LOG_INFO("snapPoint:            ",
-                                     uint64_t((nRecsInStream + prev_block - 1) / options.snap_to_grid) *
-                                         options.snap_to_grid);
-                            LOG_INFO("chunkSize:            ", min(nRecsNow, options.apps_per_chunk));
-                            LOG_INFO("nRecsInStreamPre:     ", nRecsInStream);
-                            LOG_INFO("nRecsInStreamPost:    ", fileSize(stageStreamFn) / asciiAppearanceSize);
-                            LOG_INFO("nRecsNow:             ", nRecsNow);
-                        }
+            lockSection();
 
-                        options.stageStream.open(stageStreamFn, ios::out | ios::trunc);
-                        if (!options.stageStream.is_open()) {
-                            unlockSection();
-                            LOG_OUT('=', "Could not open temporary staging file.")
-                            return EXIT_FAILURE;
-                        }
+            stageStream << inputStream.rdbuf();
+            stageStream.flush();
+            inputStream.close();
+            ::remove(file.c_str());
+
+            uint64_t nRecsInStream = fileSize(stageStreamFn) / asciiAppearanceSize;
+
+            uint64_t prev_block = path_2_Bn(file);
+            bool isSnapToGrid = (prev_block > options.first_snap && !(prev_block % options.snap_to_grid));
+            bool overtops = (nRecsInStream > options.apps_per_chunk);
+
+            if (isSnapToGrid || overtops) {
+                stageStream.close();
+                COptions* opts = &options;
+                string_q lastFileInStage = getLastFileInFolder(indexFolder_staging, false);
+                string_q newStage = indexFolder_staging + padNum9(prev_block) + ".txt";
+                if (lastFileInStage != newStage) {
+                    string_q tmpFile = indexFolder + "temp.txt";
+                    if (lastFileInStage != stageStreamFn) {
+                        appendToAsciiFile(tmpFile, asciiFileToString(lastFileInStage));
                     }
-                    unlockSection();
-
-                } else {
-                    options.stageStream.close();
-                    options.Cleanup();
+                    appendToAsciiFile(tmpFile, asciiFileToString(stageStreamFn));
+                    ::rename(tmpFile.c_str(), newStage.c_str());
                     ::remove(stageStreamFn.c_str());
-                    LOG_OUT('=', "Could not open input stream " + file)
-                    return EXIT_FAILURE;
+                    if (fileExists(lastFileInStage) && lastFileInStage != newStage) {
+                        ::remove(lastFileInStage.c_str());
+                    }
                 }
 
-                if (shouldQuit()) {
-                    options.stageStream.close();
-                    options.Cleanup();
-                    ::remove(stageStreamFn.c_str());
-                    LOG_OUT('=', "Control+C hit")
+                uint64_t nRecsNow = fileSize(newStage) / asciiAppearanceSize;
+                blknum_t chunkSize = min(nRecsNow, options.apps_per_chunk);
+                write_chunks(opts, newStage, chunkSize, isSnapToGrid);
+                if (DebuggingOn) {
+                    LOG_FILE("newStage:             ", newStage);
+                    LOG_INFO("snapPoint:            ",
+                             uint64_t((nRecsInStream + prev_block - 1) / options.snap_to_grid) * options.snap_to_grid);
+                    LOG_INFO("chunkSize:            ", min(nRecsNow, options.apps_per_chunk));
+                    LOG_INFO("nRecsInStreamPre:     ", nRecsInStream);
+                    LOG_INFO("nRecsInStreamPost:    ", fileSize(stageStreamFn) / asciiAppearanceSize);
+                    LOG_INFO("nRecsNow:             ", nRecsNow);
+                }
+
+                stageStream.open(stageStreamFn, ios::out | ios::trunc);
+                if (!stageStream.is_open()) {
+                    unlockSection();
+                    LOG_OUT('=', "Could not open temporary staging file.")
                     return EXIT_FAILURE;
                 }
             }
+            unlockSection();
         }
     }
-    options.stageStream.close();
     LOG_OUT('=', "");
     return EXIT_SUCCESS;
 }
