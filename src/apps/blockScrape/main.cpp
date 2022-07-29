@@ -36,7 +36,6 @@ class COptions {
     uint64_t snap_to_grid{0};
     uint64_t first_snap{0};
     uint64_t start_block{0};
-    uint64_t prev_block{0};
 
     string_q newStage{""};
     ofstream stageStream;
@@ -47,7 +46,6 @@ class COptions {
         unripe_dist = str_2_Uint(getEnvStr("TB_SETTINGS_UNRIPEDIST"));
         snap_to_grid = str_2_Uint(getEnvStr("TB_SETTINGS_SNAPTOGRID"));
         first_snap = str_2_Uint(getEnvStr("TB_SETTINGS_FIRSTSNAP"));
-        prev_block = start_block - 1;
 
         if (DebuggingOn) {
             LOG_INFO("startBlock:          ", start_block);
@@ -55,7 +53,6 @@ class COptions {
             LOG_INFO("unripeDist:          ", unripe_dist);
             LOG_INFO("snapToGrid:          ", snap_to_grid);
             LOG_INFO("firstSnap:           ", first_snap);
-            LOG_INFO("prevBlocks:          ", prev_block);
         }
     }
 
@@ -329,18 +326,17 @@ int main(int argc, const char* argv[]) {
                     inputStream.close();
                     ::remove(file.c_str());
 
-                    options.prev_block = path_2_Bn(file);
+                    uint64_t prev_block = path_2_Bn(file);
                     uint64_t nRecsInStream = fileSize(stageStreamFn) / asciiAppearanceSize;
 
-                    bool isSnapToGrid =
-                        (options.prev_block > options.first_snap && !(options.prev_block % options.snap_to_grid));
+                    bool isSnapToGrid = (prev_block > options.first_snap && !(prev_block % options.snap_to_grid));
                     bool overtops = (nRecsInStream > options.apps_per_chunk);
 
                     if (isSnapToGrid || overtops) {
                         options.stageStream.close();
                         COptions* opts = &options;
                         string_q lastFileInStage = getLastFileInFolder(indexFolder_staging, false);
-                        opts->newStage = indexFolder_staging + padNum9(opts->prev_block) + ".txt";
+                        opts->newStage = indexFolder_staging + padNum9(prev_block) + ".txt";
                         if (lastFileInStage != opts->newStage) {
                             string_q tmpFile = indexFolder + "temp.txt";
                             if (lastFileInStage != stageStreamFn) {
@@ -359,7 +355,7 @@ int main(int argc, const char* argv[]) {
                         if (DebuggingOn) {
                             LOG_FILE("newStage:             ", options.newStage);
                             LOG_INFO("snapPoint:            ",
-                                     uint64_t((nRecsInStream + options.prev_block - 1) / options.snap_to_grid) *
+                                     uint64_t((nRecsInStream + prev_block - 1) / options.snap_to_grid) *
                                          options.snap_to_grid);
                             LOG_INFO("chunkSize:            ", min(nRecsNow, options.apps_per_chunk));
                             LOG_INFO("nRecsInStreamPre:     ", nRecsInStream);
