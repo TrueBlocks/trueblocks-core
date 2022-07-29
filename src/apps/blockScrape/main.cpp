@@ -28,19 +28,6 @@ char x = '-';
 
 #define LOG_FILE(a, b) LOG_INFO((a), substitute((b), "/Users/jrush/Data/trueblocks/unchained/", "./"))
 
-//---------------------------------------------------------------------------
-class bloom_t {
-  public:
-    uint32_t nInserted;
-    uint8_t* bits;
-
-  public:
-    bloom_t(void);
-    ~bloom_t(void);
-    bloom_t(const bloom_t& b);
-    void lightBit(size_t bit);
-};
-
 //-----------------------------------------------------------------------------
 class COptions {
   public:
@@ -94,6 +81,50 @@ class COptions {
 #define BLOOM_WIDTH_IN_BITS (BLOOM_WIDTH_IN_BYTES * 8)
 #define MAX_ADDRS_IN_BLOOM 50000
 #define BLOOM_K 5
+
+//---------------------------------------------------------------------------
+class bloom_t {
+  public:
+    uint32_t nInserted;
+    uint8_t* bits;
+
+  public:
+    bloom_t(void);
+    ~bloom_t(void);
+    bloom_t(const bloom_t& b);
+    void lightBit(size_t bit);
+};
+
+//---------------------------------------------------------------------------
+bloom_t::bloom_t(void) {
+    nInserted = 0;
+    bits = new uint8_t[BLOOM_WIDTH_IN_BYTES];
+    bzero(bits, BLOOM_WIDTH_IN_BYTES * sizeof(uint8_t));
+}
+
+//---------------------------------------------------------------------------
+bloom_t::~bloom_t(void) {
+    if (bits)
+        delete[] bits;
+}
+
+//---------------------------------------------------------------------------
+bloom_t::bloom_t(const bloom_t& b) {
+    nInserted = 0;
+    bits = new uint8_t[BLOOM_WIDTH_IN_BYTES];
+    bzero(bits, BLOOM_WIDTH_IN_BYTES * sizeof(uint8_t));
+    nInserted = b.nInserted;
+    memcpy(bits, b.bits, BLOOM_WIDTH_IN_BYTES);
+}
+
+//---------------------------------------------------------------------------
+void bloom_t::lightBit(size_t bit) {
+    size_t which = (bit / 8);
+    size_t whence = (bit % 8);
+    size_t index = BLOOM_WIDTH_IN_BYTES - which - 1;
+    uint8_t mask = uint8_t(1 << whence);
+    bits[index] |= mask;
+}
 
 //---------------------------------------------------------------------------
 void getLitBits(const address_t& addrIn, CUintArray& litBitsOut) {
@@ -276,80 +307,43 @@ bool write_chunks(COptions* opts, blknum_t chunkSize, bool isSnapToGrid) {
 }
 
 //--------------------------------------------------------------------------
-bool appendFile(const string_q& toFile, const string_q& fromFile) {
-    // LOG_IN('-', "appendFile");
+void appendFile(const string_q& toFile, const string_q& fromFile) {
+#if 1
+    appendToAsciiFile(toFile, asciiFileToString(fromFile));
+#else
     ofstream output;
     output.open(toFile, ios::out | ios::app);
     if (!output.is_open())
-        return false;
+        return;
 
     ifstream input(fromFile, ios::in);
     if (!input.is_open()) {
         output.close();
-        return false;
+        return;
     }
 
     output << input.rdbuf();
     output.flush();
     input.close();
-
-    return true;
+#endif
 }
 
 //--------------------------------------------------------------------------
 bool stage_chunks(COptions* opts, bool snappy) {
-    LOG_IN('-', "stage_chunks " + bool_2_Str(snappy));
-
     string_q lastFileInStage = getLastFileInFolder(indexFolder_staging, false);
     opts->newStage = indexFolder_staging + padNum9(opts->prev_block) + ".txt";
-    if (DebuggingOn) {
-        LOG_FILE("\tlastFileInStage:    ", lastFileInStage);
-        LOG_FILE("\topts->newStage:     ", opts->newStage);
-    }
-
-    if (lastFileInStage == opts->newStage) {
-        LOG_OUT('-', "prevStage == opts->newStage - No Cleanup")
-        return true;
-    }
-
-    string_q tmpFile = indexFolder + "temp.txt";
-    if (DebuggingOn) {
-        LOG_FILE("\ttmpFile:            ", tmpFile);
-        LOG_FILE("\topts->stageStreamFn:", opts->stageStreamFn);
-    }
-    if (lastFileInStage != opts->stageStreamFn) {
-        if (DebuggingOn) {
-            LOG_INFO("prevStage != opts->stageStreamFn");
+    if (lastFileInStage != opts->newStage) {
+        string_q tmpFile = indexFolder + "temp.txt";
+        if (lastFileInStage != opts->stageStreamFn) {
+            appendToAsciiFile(tmpFile, asciiFileToString(lastFileInStage));
         }
-        if (!appendFile(tmpFile /* to */, lastFileInStage /* from */)) {
-            ::remove(tmpFile.c_str());
-            LOG_OUT('-', "!appendFile1 -- remove(tmpFile)")
-            return false;
+        appendToAsciiFile(tmpFile, asciiFileToString(opts->stageStreamFn));
+        ::rename(tmpFile.c_str(), opts->newStage.c_str());
+        ::remove(opts->stageStreamFn.c_str());
+        if (fileExists(lastFileInStage) && lastFileInStage != opts->newStage) {
+            ::remove(lastFileInStage.c_str());
         }
     }
-
-    if (!appendFile(tmpFile /* to */, opts->stageStreamFn /* from */)) {
-        ::remove(tmpFile.c_str());
-        LOG_OUT('-', "!appendFile2 -- remove(tmpFile)")
-        return false;
-    }
-
-    if (DebuggingOn) {
-        LOG_FILE("\trename              ", tmpFile);
-        LOG_FILE("\t  to                ", opts->newStage);
-        LOG_FILE("\tremove stageStreamFn", opts->stageStreamFn);
-    }
-
-    ::rename(tmpFile.c_str(), opts->newStage.c_str());
-    ::remove(opts->stageStreamFn.c_str());
-    if (fileExists(lastFileInStage) && lastFileInStage != opts->newStage) {
-        if (DebuggingOn) {
-            LOG_INFO("!appendFile1 -- Cleanup -- remove(tmpFile)");
-        }
-        ::remove(lastFileInStage.c_str());
-    }
-
-    LOG_OUT('-', "")
     return true;
 }
 
@@ -395,33 +389,25 @@ int main(int argc, const char* argv[]) {
 
             if (isSnapToGrid || overtops) {
                 options.stageStream.close();
-                if (stage_chunks(&options, isSnapToGrid)) {
-                    uint64_t nRecsNow = fileSize(options.newStage) / asciiAppearanceSize;
-                    blknum_t chunkSize = min(nRecsNow, options.apps_per_chunk);
-                    write_chunks(&options, chunkSize, isSnapToGrid);
-                    if (DebuggingOn) {
-                        LOG_FILE("newStage:             ", options.newStage);
-                        LOG_INFO("snapPoint:            ",
-                                 uint64_t((nRecsInStream + options.prev_block - 1) / options.snap_to_grid) *
-                                     options.snap_to_grid);
-                        LOG_INFO("chunkSize:            ", min(nRecsNow, options.apps_per_chunk));
-                        LOG_INFO("nRecsInStreamPre:     ", nRecsInStream);
-                        LOG_INFO("nRecsInStreamPost:    ", fileSize(options.stageStreamFn) / asciiAppearanceSize);
-                        LOG_INFO("nRecsNow:             ", nRecsNow);
-                    }
+                stage_chunks(&options, isSnapToGrid);
+                uint64_t nRecsNow = fileSize(options.newStage) / asciiAppearanceSize;
+                blknum_t chunkSize = min(nRecsNow, options.apps_per_chunk);
+                write_chunks(&options, chunkSize, isSnapToGrid);
+                if (DebuggingOn) {
+                    LOG_FILE("newStage:             ", options.newStage);
+                    LOG_INFO("snapPoint:            ",
+                             uint64_t((nRecsInStream + options.prev_block - 1) / options.snap_to_grid) *
+                                 options.snap_to_grid);
+                    LOG_INFO("chunkSize:            ", min(nRecsNow, options.apps_per_chunk));
+                    LOG_INFO("nRecsInStreamPre:     ", nRecsInStream);
+                    LOG_INFO("nRecsInStreamPost:    ", fileSize(options.stageStreamFn) / asciiAppearanceSize);
+                    LOG_INFO("nRecsNow:             ", nRecsNow);
+                }
 
-                    options.stageStream.open(options.stageStreamFn, ios::out | ios::trunc);
-                    if (!options.stageStream.is_open()) {
-                        unlockSection();
-                        LOG_OUT('=', "Could not open temporary staging file.")
-                        return EXIT_FAILURE;
-                    }
-
-                } else {
+                options.stageStream.open(options.stageStreamFn, ios::out | ios::trunc);
+                if (!options.stageStream.is_open()) {
                     unlockSection();
-                    options.stageStream.close();
-                    options.Cleanup();
-                    LOG_OUT('=', "Stage_chunks returned false")
+                    LOG_OUT('=', "Could not open temporary staging file.")
                     return EXIT_FAILURE;
                 }
             }
@@ -445,35 +431,4 @@ int main(int argc, const char* argv[]) {
     options.stageStream.close();
     LOG_OUT('=', "");
     return EXIT_SUCCESS;
-}
-
-//---------------------------------------------------------------------------
-bloom_t::bloom_t(void) {
-    nInserted = 0;
-    bits = new uint8_t[BLOOM_WIDTH_IN_BYTES];
-    bzero(bits, BLOOM_WIDTH_IN_BYTES * sizeof(uint8_t));
-}
-
-//---------------------------------------------------------------------------
-bloom_t::~bloom_t(void) {
-    if (bits)
-        delete[] bits;
-}
-
-//---------------------------------------------------------------------------
-bloom_t::bloom_t(const bloom_t& b) {
-    nInserted = 0;
-    bits = new uint8_t[BLOOM_WIDTH_IN_BYTES];
-    bzero(bits, BLOOM_WIDTH_IN_BYTES * sizeof(uint8_t));
-    nInserted = b.nInserted;
-    memcpy(bits, b.bits, BLOOM_WIDTH_IN_BYTES);
-}
-
-//---------------------------------------------------------------------------
-void bloom_t::lightBit(size_t bit) {
-    size_t which = (bit / 8);
-    size_t whence = (bit % 8);
-    size_t index = BLOOM_WIDTH_IN_BYTES - which - 1;
-    uint8_t mask = uint8_t(1 << whence);
-    bits[index] |= mask;
 }
