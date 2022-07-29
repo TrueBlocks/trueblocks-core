@@ -28,6 +28,19 @@ char x = '-';
 
 #define LOG_FILE(a, b) LOG_INFO((a), substitute((b), "/Users/jrush/Data/trueblocks/unchained/", "./"))
 
+//---------------------------------------------------------------------------
+class bloom_t {
+  public:
+    uint32_t nInserted;
+    uint8_t* bits;
+
+  public:
+    bloom_t(void);
+    ~bloom_t(void);
+    bloom_t(const bloom_t& b);
+    void lightBit(size_t bit);
+};
+
 //-----------------------------------------------------------------------------
 class COptions {
   public:
@@ -77,8 +90,269 @@ class COptions {
     }
 };
 
-extern bool write_chunks(COptions* options, blknum_t chunkSize, bool isSnapToGrid);
-extern bool stage_chunks(COptions* options, bool snappy);
+#define BLOOM_WIDTH_IN_BYTES (1048576 / 8)
+#define BLOOM_WIDTH_IN_BITS (BLOOM_WIDTH_IN_BYTES * 8)
+#define MAX_ADDRS_IN_BLOOM 50000
+#define BLOOM_K 5
+
+//---------------------------------------------------------------------------
+void getLitBits(const address_t& addrIn, CUintArray& litBitsOut) {
+#define EXTRACT_WID 8
+    for (size_t k = 0; k < BLOOM_K; k++) {
+        string_q fourByte = ("0x" + extract(addrIn, 2 + (k * EXTRACT_WID), EXTRACT_WID));
+        uint64_t bit = (str_2_Uint(fourByte) % BLOOM_WIDTH_IN_BITS);
+        litBitsOut.push_back(bit);
+    }
+    return;
+}
+
+//----------------------------------------------------------------------
+bool addToSet(vector<bloom_t>& array, const address_t& addr) {
+    if (array.size() == 0) {
+        array.push_back(bloom_t());  // so we have something to add to
+    }
+
+    CUintArray bitsLit;
+    getLitBits(addr, bitsLit);
+    for (auto bit : bitsLit) {
+        array[array.size() - 1].lightBit(bit);
+    }
+    array[array.size() - 1].nInserted++;
+
+    if (array[array.size() - 1].nInserted > MAX_ADDRS_IN_BLOOM)
+        array.push_back(bloom_t());
+
+    return true;
+}
+
+//---------------------------------------------------------------------------------------------------
+bool write_chunks(COptions* opts, blknum_t chunkSize, bool isSnapToGrid) {
+    blknum_t nRecords = fileSize(opts->newStage) / asciiAppearanceSize;
+    while ((isSnapToGrid || nRecords > chunkSize)) {
+        CStringArray lines;
+        lines.reserve(nRecords + 100);
+        asciiFileToLines(opts->newStage, lines);
+        string_q prvBlock;
+        size_t loc = NOPOS;
+        for (uint64_t record = (chunkSize - 1); record < lines.size() && loc == NOPOS; record++) {
+            CStringArray pParts;
+            explode(pParts, lines[record], '\t');
+            if (prvBlock != pParts[1]) {
+                if (!prvBlock.empty())
+                    loc = record - 1;
+                prvBlock = pParts[1];
+            }
+        }
+        if (loc == NOPOS) {
+            loc = lines.size() ? lines.size() - 1 : 0;
+        }
+
+        CStringArray remainingLines;
+        remainingLines.reserve(chunkSize + 100);
+        if (lines.size() > 0) {
+            CStringArray consolidatedLines;
+            consolidatedLines.reserve(lines.size());
+            for (uint64_t record = 0; record <= loc; record++) {
+                consolidatedLines.push_back(lines[record]);
+            }
+
+            if (consolidatedLines.size() > 0) {
+                CStringArray p1;
+                explode(p1, consolidatedLines[0], '\t');
+                CStringArray p2;
+                explode(p2, consolidatedLines[consolidatedLines.size() - 1], '\t');
+
+                sort(consolidatedLines.begin(), consolidatedLines.end());
+                string_q chunkId = p1[1] + "-" + p2[1];
+                string_q chunkPath = indexFolder_finalized + chunkId + ".bin";
+                ASSERT(!fileExists(chunkPath));
+
+                address_t prev;
+                uint32_t offset = 0, nAddrs = 0, cnt = 0;
+                CIndexedAppearanceArray appTable;
+
+                // TODO: BOGUS - MANIFEST WRITING HASH INTO INDEX
+                hashbytes_t hash = hash_2_Bytes(padLeft(keccak256(manifestVersion), 64, '0'));
+
+                CArchive archive(WRITING_ARCHIVE);
+                string_q tmpFile2 = substitute(chunkPath, ".bin", ".tmp");
+                if (!archive.Lock(tmpFile2, modeWriteCreate, LOCK_NOWAIT)) {
+                    return false;
+                }
+
+                archive.Seek(0, SEEK_SET);
+                archive.Write(MAGIC_NUMBER);
+                archive.Write(hash.data(), hash.size(), sizeof(uint8_t));
+                archive.Write(nAddrs);
+                archive.Write((uint32_t)appTable.size());  // not accurate yet
+
+                vector<bloom_t> ar;
+                for (size_t l = 0; l < consolidatedLines.size(); l++) {
+                    string_q line = consolidatedLines[l];
+                    ASSERT(countOf(line, '\t') == 2);
+                    CStringArray parts;
+                    explode(parts, line, '\t');
+                    CIndexedAppearance rec(parts[1], parts[2]);
+                    appTable.push_back(rec);
+                    if (!prev.empty() && parts[0] != prev) {
+                        addToSet(ar, prev);
+                        addrbytes_t bytes = addr_2_Bytes(prev);
+                        archive.Write(bytes.data(), bytes.size(), sizeof(uint8_t));
+                        archive.Write(offset);
+                        archive.Write(cnt);
+                        offset += cnt;
+                        cnt = 0;
+                        nAddrs++;
+                    }
+                    cnt++;
+                    prev = parts[0];
+                }
+
+                // The above algo always misses the last address, so we add it here
+                addToSet(ar, prev);
+                addrbytes_t bytes = addr_2_Bytes(prev);
+                archive.Write(bytes.data(), bytes.size(), sizeof(uint8_t));
+                archive.Write(offset);
+                archive.Write(cnt);
+                nAddrs++;
+
+                for (auto record : appTable) {
+                    archive.Write(record.blk);
+                    archive.Write(record.txid);
+                }
+
+                archive.Seek(0, SEEK_SET);  // re-write the header now that we have full data
+                archive.Write(MAGIC_NUMBER);
+                archive.Write(hash.data(), hash.size(), sizeof(uint8_t));
+                archive.Write(nAddrs);
+                archive.Write((uint32_t)appTable.size());
+                archive.Release();
+
+                CArchive output(WRITING_ARCHIVE);
+                string_q bloomFile = substitute(substitute(chunkPath, "/finalized/", "/blooms/"), ".bin", ".bloom");
+                if (output.Lock(bloomFile, modeWriteCreate, LOCK_NOWAIT)) {
+                    output.Write((uint32_t)ar.size());
+                    for (auto bloom : ar) {
+                        output.Write(bloom.nInserted);
+                        output.Write(bloom.bits, sizeof(uint8_t), BLOOM_WIDTH_IN_BYTES);
+                    }
+                    output.Release();
+                    copyFile(tmpFile2, chunkPath);
+                    ::remove(tmpFile2.c_str());
+                    string_q range =
+                        substitute(substitute(chunkPath, indexFolder_finalized, ""), indexFolder_blooms, "");
+                    range = substitute(substitute(range, ".bin", ""), ".bloom", "");
+                    appendToAsciiFile(cacheFolder_tmp + "chunks_created.txt", range + "\n");
+                }
+
+                ostringstream os;
+                os << "Wrote " << consolidatedLines.size() << " records to " << cTeal << relativize(chunkPath);
+                if (isSnapToGrid && (lines.size() - 1 == loc)) {
+                    os << cYellow << " (isSnapToGrid to modulo " << opts->snap_to_grid << " blocks)";
+                }
+                os << cOff;
+                LOG_INFO(os.str());
+
+                loc++;
+
+                for (uint64_t record = loc; record < lines.size(); record++) {
+                    remainingLines.push_back(lines[record]);
+                }
+                ::remove(opts->newStage.c_str());
+            }
+        }
+
+        if (remainingLines.size()) {
+            linesToAsciiFile(opts->newStage, remainingLines);
+        }
+
+        nRecords = fileSize(opts->newStage) / asciiAppearanceSize;
+        if (isSnapToGrid)
+            isSnapToGrid = nRecords > 0;
+        chunkSize = min(opts->apps_per_chunk, nRecords);
+    }
+
+    return true;
+}
+
+//--------------------------------------------------------------------------
+bool appendFile(const string_q& toFile, const string_q& fromFile) {
+    // LOG_IN('-', "appendFile");
+    ofstream output;
+    output.open(toFile, ios::out | ios::app);
+    if (!output.is_open())
+        return false;
+
+    ifstream input(fromFile, ios::in);
+    if (!input.is_open()) {
+        output.close();
+        return false;
+    }
+
+    output << input.rdbuf();
+    output.flush();
+    input.close();
+
+    return true;
+}
+
+//--------------------------------------------------------------------------
+bool stage_chunks(COptions* opts, bool snappy) {
+    LOG_IN('-', "stage_chunks " + bool_2_Str(snappy));
+
+    string_q lastFileInStage = getLastFileInFolder(indexFolder_staging, false);
+    opts->newStage = indexFolder_staging + padNum9(opts->prev_block) + ".txt";
+    if (DebuggingOn) {
+        LOG_FILE("\tlastFileInStage:    ", lastFileInStage);
+        LOG_FILE("\topts->newStage:     ", opts->newStage);
+    }
+
+    if (lastFileInStage == opts->newStage) {
+        LOG_OUT('-', "prevStage == opts->newStage - No Cleanup")
+        return true;
+    }
+
+    string_q tmpFile = indexFolder + "temp.txt";
+    if (DebuggingOn) {
+        LOG_FILE("\ttmpFile:            ", tmpFile);
+        LOG_FILE("\topts->stageStreamFn:", opts->stageStreamFn);
+    }
+    if (lastFileInStage != opts->stageStreamFn) {
+        if (DebuggingOn) {
+            LOG_INFO("prevStage != opts->stageStreamFn");
+        }
+        if (!appendFile(tmpFile /* to */, lastFileInStage /* from */)) {
+            ::remove(tmpFile.c_str());
+            LOG_OUT('-', "!appendFile1 -- remove(tmpFile)")
+            return false;
+        }
+    }
+
+    if (!appendFile(tmpFile /* to */, opts->stageStreamFn /* from */)) {
+        ::remove(tmpFile.c_str());
+        LOG_OUT('-', "!appendFile2 -- remove(tmpFile)")
+        return false;
+    }
+
+    if (DebuggingOn) {
+        LOG_FILE("\trename              ", tmpFile);
+        LOG_FILE("\t  to                ", opts->newStage);
+        LOG_FILE("\tremove stageStreamFn", opts->stageStreamFn);
+    }
+
+    ::rename(tmpFile.c_str(), opts->newStage.c_str());
+    ::remove(opts->stageStreamFn.c_str());
+    if (fileExists(lastFileInStage) && lastFileInStage != opts->newStage) {
+        if (DebuggingOn) {
+            LOG_INFO("!appendFile1 -- Cleanup -- remove(tmpFile)");
+        }
+        ::remove(lastFileInStage.c_str());
+    }
+
+    LOG_OUT('-', "")
+    return true;
+}
+
 //----------------------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     if (DebuggingOn) {
@@ -173,153 +447,26 @@ int main(int argc, const char* argv[]) {
     return EXIT_SUCCESS;
 }
 
-//--------------------------------------------------------------------------
-bool appendFile(const string_q& toFile, const string_q& fromFile) {
-    // LOG_IN('-', "appendFile");
-    ofstream output;
-    output.open(toFile, ios::out | ios::app);
-    if (!output.is_open())
-        return false;
-
-    ifstream input(fromFile, ios::in);
-    if (!input.is_open()) {
-        output.close();
-        return false;
-    }
-
-    output << input.rdbuf();
-    output.flush();
-    input.close();
-
-    return true;
-}
-
-//--------------------------------------------------------------------------
-bool stage_chunks(COptions* opts, bool snappy) {
-    LOG_IN('-', "stage_chunks " + bool_2_Str(snappy));
-
-    string_q lastFileInStage = getLastFileInFolder(indexFolder_staging, false);
-    opts->newStage = indexFolder_staging + padNum9(opts->prev_block) + ".txt";
-    if (DebuggingOn) {
-        LOG_FILE("\tlastFileInStage:    ", lastFileInStage);
-        LOG_FILE("\topts->newStage:     ", opts->newStage);
-    }
-
-    if (lastFileInStage == opts->newStage) {
-        LOG_OUT('-', "prevStage == opts->newStage - No Cleanup")
-        return true;
-    }
-
-    string_q tmpFile = indexFolder + "temp.txt";
-    if (DebuggingOn) {
-        LOG_FILE("\ttmpFile:            ", tmpFile);
-        LOG_FILE("\topts->stageStreamFn:", opts->stageStreamFn);
-    }
-    if (lastFileInStage != opts->stageStreamFn) {
-        if (DebuggingOn) {
-            LOG_INFO("prevStage != opts->stageStreamFn");
-        }
-        if (!appendFile(tmpFile /* to */, lastFileInStage /* from */)) {
-            ::remove(tmpFile.c_str());
-            LOG_OUT('-', "!appendFile1 -- remove(tmpFile)")
-            return false;
-        }
-    }
-
-    if (!appendFile(tmpFile /* to */, opts->stageStreamFn /* from */)) {
-        ::remove(tmpFile.c_str());
-        LOG_OUT('-', "!appendFile2 -- remove(tmpFile)")
-        return false;
-    }
-
-    if (DebuggingOn) {
-        LOG_FILE("\trename              ", tmpFile);
-        LOG_FILE("\t  to                ", opts->newStage);
-        LOG_FILE("\tremove stageStreamFn", opts->stageStreamFn);
-    }
-
-    ::rename(tmpFile.c_str(), opts->newStage.c_str());
-    ::remove(opts->stageStreamFn.c_str());
-    if (fileExists(lastFileInStage) && lastFileInStage != opts->newStage) {
-        if (DebuggingOn) {
-            LOG_INFO("!appendFile1 -- Cleanup -- remove(tmpFile)");
-        }
-        ::remove(lastFileInStage.c_str());
-    }
-
-    LOG_OUT('-', "")
-    return true;
-}
-
 //---------------------------------------------------------------------------
-class bloom_t {
-  public:
-    uint32_t nInserted;
-    uint8_t* bits;
-
-  public:
-    bloom_t(void);
-    ~bloom_t(void);
-    bloom_t(const bloom_t& b);
-    bloom_t& operator=(const bloom_t& b);
-    bool operator==(const bloom_t& item) const;
-
-    void lightBit(size_t bit);
-
-  private:
-    void copy(const bloom_t& b);
-    void init(void);
-};
-
-//---------------------------------------------------------------------------
-inline bloom_t::bloom_t(void) {
-    init();
-}
-
-//---------------------------------------------------------------------------
-inline bloom_t::~bloom_t(void) {
-    if (bits)
-        delete[] bits;
-}
-
-//---------------------------------------------------------------------------
-inline bloom_t::bloom_t(const bloom_t& b) {
-    init();
-    copy(b);
-}
-
-//---------------------------------------------------------------------------
-inline bloom_t& bloom_t::operator=(const bloom_t& b) {
-    copy(b);
-    return *this;
-}
-
-#define BLOOM_WIDTH_IN_BYTES (1048576 / 8)
-#define BLOOM_WIDTH_IN_BITS (BLOOM_WIDTH_IN_BYTES * 8)
-#define MAX_ADDRS_IN_BLOOM 50000
-#define BLOOM_K 5
-//---------------------------------------------------------------------------
-void bloom_t::init(void) {
+bloom_t::bloom_t(void) {
     nInserted = 0;
     bits = new uint8_t[BLOOM_WIDTH_IN_BYTES];
     bzero(bits, BLOOM_WIDTH_IN_BYTES * sizeof(uint8_t));
 }
 
 //---------------------------------------------------------------------------
-void bloom_t::copy(const bloom_t& b) {
-    nInserted = b.nInserted;
-    memcpy(bits, b.bits, BLOOM_WIDTH_IN_BYTES);
+bloom_t::~bloom_t(void) {
+    if (bits)
+        delete[] bits;
 }
 
 //---------------------------------------------------------------------------
-bool bloom_t::operator==(const bloom_t& test) const {
-    if (nInserted != test.nInserted)
-        return false;
-    for (size_t i = 0; i < BLOOM_WIDTH_IN_BYTES; i++) {
-        if (bits[i] != test.bits[i])
-            return false;
-    }
-    return true;
+bloom_t::bloom_t(const bloom_t& b) {
+    nInserted = 0;
+    bits = new uint8_t[BLOOM_WIDTH_IN_BYTES];
+    bzero(bits, BLOOM_WIDTH_IN_BYTES * sizeof(uint8_t));
+    nInserted = b.nInserted;
+    memcpy(bits, b.bits, BLOOM_WIDTH_IN_BYTES);
 }
 
 //---------------------------------------------------------------------------
@@ -329,210 +476,4 @@ void bloom_t::lightBit(size_t bit) {
     size_t index = BLOOM_WIDTH_IN_BYTES - which - 1;
     uint8_t mask = uint8_t(1 << whence);
     bits[index] |= mask;
-}
-
-//---------------------------------------------------------------------------
-bool isBitLit(size_t bit, uint8_t* bits) {
-    size_t whence = (bit % 8);
-    uint8_t mask = uint8_t(1 << whence);
-
-    size_t which = (bit / 8);
-    size_t index = BLOOM_WIDTH_IN_BYTES - which - 1;
-
-    return (bits[index] & mask);
-}
-
-//---------------------------------------------------------------------------
-void getLitBits(const address_t& addrIn, CUintArray& litBitsOut) {
-#define EXTRACT_WID 8
-    for (size_t k = 0; k < BLOOM_K; k++) {
-        string_q fourByte = ("0x" + extract(addrIn, 2 + (k * EXTRACT_WID), EXTRACT_WID));
-        uint64_t bit = (str_2_Uint(fourByte) % BLOOM_WIDTH_IN_BITS);
-        litBitsOut.push_back(bit);
-    }
-    return;
-}
-
-//----------------------------------------------------------------------
-bool addToSet(vector<bloom_t>& array, const address_t& addr) {
-    if (array.size() == 0) {
-        array.push_back(bloom_t());  // so we have something to add to
-    }
-
-    CUintArray bitsLit;
-    getLitBits(addr, bitsLit);
-    for (auto bit : bitsLit) {
-        array[array.size() - 1].lightBit(bit);
-    }
-    array[array.size() - 1].nInserted++;
-
-    if (array[array.size() - 1].nInserted > MAX_ADDRS_IN_BLOOM)
-        array.push_back(bloom_t());
-
-    return true;
-}
-
-//---------------------------------------------------------------------------------------------------
-bool write_chunks(COptions* opts, blknum_t chunkSize, bool isSnapToGrid) {
-    LOG_IN('-', "write_chunks");
-
-    blknum_t nRecords = fileSize(opts->newStage) / asciiAppearanceSize;
-    while ((isSnapToGrid || nRecords > chunkSize)) {
-        CStringArray lines;
-        lines.reserve(nRecords + 100);
-        asciiFileToLines(opts->newStage, lines);
-        string_q prvBlock;
-        size_t loc = NOPOS;
-        for (uint64_t record = (chunkSize - 1); record < lines.size() && loc == NOPOS; record++) {
-            CStringArray pParts;
-            explode(pParts, lines[record], '\t');
-            if (prvBlock != pParts[1]) {
-                if (!prvBlock.empty())
-                    loc = record - 1;
-                prvBlock = pParts[1];
-            }
-        }
-
-        if (loc == NOPOS) {
-            loc = lines.size() ? lines.size() - 1 : 0;
-        }
-
-        CStringArray remainingLines;
-        remainingLines.reserve(chunkSize + 100);
-        if (lines.size() > 0) {
-            CStringArray consolidatedLines;
-            consolidatedLines.reserve(lines.size());
-            for (uint64_t record = 0; record <= loc; record++) {
-                if (countOf(lines[record], '\t') != 2) {
-                    LOG_WARN("Found a record with less than two tabs.");
-                    LOG_WARN("preceeding line:\t[", ((record > 0) ? lines[record - 1] : "N/A"), "]");
-                    LOG_WARN("offending line:\t[", lines[record], "]");
-                    LOG_WARN("following line:\t[", ((record < loc) ? lines[record + 1] : "N/A"), "]");
-                    return false;
-                }
-                consolidatedLines.push_back(lines[record]);
-            }
-
-            if (consolidatedLines.size() > 0) {
-                CStringArray p1;
-                explode(p1, consolidatedLines[0], '\t');
-                CStringArray p2;
-                explode(p2, consolidatedLines[consolidatedLines.size() - 1], '\t');
-
-                sort(consolidatedLines.begin(), consolidatedLines.end());
-                string_q chunkId = p1[1] + "-" + p2[1];
-                string_q chunkPath = indexFolder_finalized + chunkId + ".bin";
-                LOG_IN('-', "writeIndexAsBinary");
-                ASSERT(!fileExists(chunkPath));
-
-                address_t prev;
-                uint32_t offset = 0, nAddrs = 0, cnt = 0;
-                CIndexedAppearanceArray appTable;
-
-                // TODO: BOGUS - MANIFEST WRITING HASH INTO INDEX
-                hashbytes_t hash = hash_2_Bytes(padLeft(keccak256(manifestVersion), 64, '0'));
-
-                CArchive archive(WRITING_ARCHIVE);
-                string_q tmpFile2 = substitute(chunkPath, ".bin", ".tmp");
-                if (!archive.Lock(tmpFile2, modeWriteCreate, LOCK_NOWAIT)) {
-                    LOG_OUT('-', "Could not lock index file: " + tmpFile2)
-                    return false;
-                }
-
-                archive.Seek(0,
-                             SEEK_SET);  // write the header even though it's not fully detailed to preserve the space
-                archive.Write(MAGIC_NUMBER);
-                archive.Write(hash.data(), hash.size(), sizeof(uint8_t));
-                archive.Write(nAddrs);
-                archive.Write((uint32_t)appTable.size());  // not accurate yet
-
-                vector<bloom_t> ar;
-                for (size_t l = 0; l < consolidatedLines.size(); l++) {
-                    string_q line = consolidatedLines[l];
-                    ASSERT(countOf(line, '\t') == 2);
-                    CStringArray parts;
-                    explode(parts, line, '\t');
-                    CIndexedAppearance rec(parts[1], parts[2]);
-                    appTable.push_back(rec);
-                    if (!prev.empty() && parts[0] != prev) {
-                        addToSet(ar, prev);
-                        addrbytes_t bytes = addr_2_Bytes(prev);
-                        archive.Write(bytes.data(), bytes.size(), sizeof(uint8_t));
-                        archive.Write(offset);
-                        archive.Write(cnt);
-                        offset += cnt;
-                        cnt = 0;
-                        nAddrs++;
-                    }
-                    cnt++;
-                    prev = parts[0];
-                }
-
-                // The above algo always misses the last address, so we add it here
-                addToSet(ar, prev);
-                addrbytes_t bytes = addr_2_Bytes(prev);
-                archive.Write(bytes.data(), bytes.size(), sizeof(uint8_t));
-                archive.Write(offset);
-                archive.Write(cnt);
-                nAddrs++;
-
-                for (auto record : appTable) {
-                    archive.Write(record.blk);
-                    archive.Write(record.txid);
-                }
-
-                archive.Seek(0, SEEK_SET);  // re-write the header now that we have full data
-                archive.Write(MAGIC_NUMBER);
-                archive.Write(hash.data(), hash.size(), sizeof(uint8_t));
-                archive.Write(nAddrs);
-                archive.Write((uint32_t)appTable.size());
-                archive.Release();
-
-                CArchive output(WRITING_ARCHIVE);
-                string_q bloomFile = substitute(substitute(chunkPath, "/finalized/", "/blooms/"), ".bin", ".bloom");
-                if (output.Lock(bloomFile, modeWriteCreate, LOCK_NOWAIT)) {
-                    output.Write((uint32_t)ar.size());
-                    for (auto bloom : ar) {
-                        output.Write(bloom.nInserted);
-                        output.Write(bloom.bits, sizeof(uint8_t), BLOOM_WIDTH_IN_BYTES);
-                    }
-                    output.Release();
-                    copyFile(tmpFile2, chunkPath);
-                    ::remove(tmpFile2.c_str());
-                    string_q range =
-                        substitute(substitute(chunkPath, indexFolder_finalized, ""), indexFolder_blooms, "");
-                    range = substitute(substitute(range, ".bin", ""), ".bloom", "");
-                    appendToAsciiFile(cacheFolder_tmp + "chunks_created.txt", range + "\n");
-                }
-
-                LOG_OUT('-', "")
-                ostringstream os;
-                os << "Wrote " << consolidatedLines.size() << " records to " << cTeal << relativize(chunkPath);
-                if (isSnapToGrid && (lines.size() - 1 == loc)) {
-                    os << cYellow << " (isSnapToGrid to modulo " << opts->snap_to_grid << " blocks)";
-                }
-                os << cOff;
-                LOG_INFO(os.str());
-
-                loc++;
-
-                for (uint64_t record = loc; record < lines.size(); record++) {
-                    remainingLines.push_back(lines[record]);
-                }
-                ::remove(opts->newStage.c_str());
-            }
-        }
-
-        if (remainingLines.size()) {
-            linesToAsciiFile(opts->newStage, remainingLines);
-        }
-
-        nRecords = fileSize(opts->newStage) / asciiAppearanceSize;
-        if (isSnapToGrid)
-            isSnapToGrid = nRecords > 0;
-        chunkSize = min(opts->apps_per_chunk, nRecords);
-    }
-
-    LOG_OUT('-', "")
-    return true;
 }
