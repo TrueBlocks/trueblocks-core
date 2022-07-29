@@ -77,7 +77,7 @@ class COptions {
     }
 };
 
-extern bool write_chunks(COptions* options, blknum_t chunkSize, bool snapped);
+extern bool write_chunks(COptions* options, blknum_t chunkSize, bool isSnapToGrid);
 extern bool stage_chunks(COptions* options, bool snappy);
 //----------------------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
@@ -373,11 +373,11 @@ bool addToSet(vector<bloom_t>& array, const address_t& addr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool write_chunks(COptions* opts, blknum_t chunkSize, bool snapped) {
+bool write_chunks(COptions* opts, blknum_t chunkSize, bool isSnapToGrid) {
     LOG_IN('-', "write_chunks");
 
     blknum_t nRecords = fileSize(opts->newStage) / asciiAppearanceSize;
-    while ((snapped || nRecords > chunkSize)) {
+    while ((isSnapToGrid || nRecords > chunkSize)) {
         CStringArray lines;
         lines.reserve(nRecords + 100);
         asciiFileToLines(opts->newStage, lines);
@@ -508,8 +508,8 @@ bool write_chunks(COptions* opts, blknum_t chunkSize, bool snapped) {
                 LOG_OUT('-', "")
                 ostringstream os;
                 os << "Wrote " << consolidatedLines.size() << " records to " << cTeal << relativize(chunkPath);
-                if (snapped && (lines.size() - 1 == loc)) {
-                    os << cYellow << " (snapped to modulo " << opts->snap_to_grid << " blocks)";
+                if (isSnapToGrid && (lines.size() - 1 == loc)) {
+                    os << cYellow << " (isSnapToGrid to modulo " << opts->snap_to_grid << " blocks)";
                 }
                 os << cOff;
                 LOG_INFO(os.str());
@@ -528,8 +528,8 @@ bool write_chunks(COptions* opts, blknum_t chunkSize, bool snapped) {
         }
 
         nRecords = fileSize(opts->newStage) / asciiAppearanceSize;
-        if (snapped)
-            snapped = nRecords > 0;
+        if (isSnapToGrid)
+            isSnapToGrid = nRecords > 0;
         chunkSize = min(opts->apps_per_chunk, nRecords);
     }
 
