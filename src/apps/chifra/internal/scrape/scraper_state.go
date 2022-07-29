@@ -12,7 +12,6 @@ func (opts *ScrapeOptions) getEnvStrings(progressThen *rpcClient.MetaData) []str
 	envs := opts.getEnvStr()
 	envs = append(envs, opts.Z_8_getSetting(progressThen, "TB_BLAZE_STARTBLOCK"))
 	envs = append(envs, opts.Z_8_getSetting(progressThen, "TB_SETTINGS_APPSPERCHUNK"))
-	envs = append(envs, opts.Z_8_getSetting(progressThen, "TB_SETTINGS_UNRIPEDIST"))
 	envs = append(envs, opts.Z_8_getSetting(progressThen, "TB_SETTINGS_SNAPTOGRID"))
 	envs = append(envs, opts.Z_8_getSetting(progressThen, "TB_SETTINGS_FIRSTSNAP"))
 	return envs
@@ -30,9 +29,6 @@ func (opts *ScrapeOptions) Z_8_getSetting(progressThen *rpcClient.MetaData, whic
 
 	case "TB_SETTINGS_FIRSTSNAP":
 		return which + "=" + fmt.Sprintf("%d", settings.First_snap)
-
-	case "TB_SETTINGS_UNRIPEDIST":
-		return which + "=" + fmt.Sprintf("%d", settings.Unripe_dist)
 
 	case "TB_SETTINGS_SNAPTOGRID":
 		return which + "=" + fmt.Sprintf("%d", settings.Snap_to_grid)

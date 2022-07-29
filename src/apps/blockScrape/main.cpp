@@ -31,23 +31,17 @@ char x = '-';
 //-----------------------------------------------------------------------------
 class COptions {
   public:
-    uint64_t apps_per_chunk{0};
-    uint64_t unripe_dist{0};
     uint64_t snap_to_grid{0};
     uint64_t first_snap{0};
     uint64_t start_block{0};
 
     COptions(void) {
         start_block = str_2_Uint(getEnvStr("TB_BLAZE_STARTBLOCK"));
-        apps_per_chunk = str_2_Uint(getEnvStr("TB_SETTINGS_APPSPERCHUNK"));
-        unripe_dist = str_2_Uint(getEnvStr("TB_SETTINGS_UNRIPEDIST"));
         snap_to_grid = str_2_Uint(getEnvStr("TB_SETTINGS_SNAPTOGRID"));
         first_snap = str_2_Uint(getEnvStr("TB_SETTINGS_FIRSTSNAP"));
 
         if (DebuggingOn) {
             LOG_INFO("startBlock:          ", start_block);
-            LOG_INFO("nAppsPerChunk:       ", apps_per_chunk);
-            LOG_INFO("unripeDist:          ", unripe_dist);
             LOG_INFO("snapToGrid:          ", snap_to_grid);
             LOG_INFO("firstSnap:           ", first_snap);
         }
@@ -308,6 +302,9 @@ int main(int argc, const char* argv[]) {
     }
     LOG_IN('=', "main")
 
+    uint64_t apps_per_chunk = str_2_Uint(getEnvStr("TB_SETTINGS_APPSPERCHUNK"));
+    LOG_INFO("apps_per_chunk:      ", apps_per_chunk);
+
     COptions options;
     string_q stageStreamFn = indexFolder_staging + "000000000-temp.txt";
 
@@ -328,17 +325,18 @@ int main(int argc, const char* argv[]) {
 
         lockSection();
 
+        uint64_t bn = path_2_Bn(file);
+
         appendToAsciiFile(stageStreamFn, asciiFileToString(file));
         ::remove(file.c_str());
 
-        uint64_t nRecsInStream = fileSize(stageStreamFn) / asciiAppearanceSize;
-        uint64_t prev_block = path_2_Bn(file);
-        bool isSnapToGrid = (prev_block > options.first_snap && !(prev_block % options.snap_to_grid));
-        bool overtops = (nRecsInStream > options.apps_per_chunk);
+        uint64_t streamSize = fileSize(stageStreamFn) / asciiAppearanceSize;
+        bool isSnapToGrid = (bn > options.first_snap && !(bn % options.snap_to_grid));
+        bool overtops = (streamSize > apps_per_chunk);
 
         if (isSnapToGrid || overtops) {
             string_q lastFileInStage = getLastFileInFolder(indexFolder_staging, false);
-            string_q newStage = indexFolder_staging + padNum9(prev_block) + ".txt";
+            string_q newStage = indexFolder_staging + padNum9(bn) + ".txt";
             if (lastFileInStage != newStage) {
                 if (lastFileInStage != stageStreamFn) {
                     appendToAsciiFile(newStage, asciiFileToString(lastFileInStage));
@@ -349,15 +347,13 @@ int main(int argc, const char* argv[]) {
             }
 
             uint64_t nRecsNow = fileSize(newStage) / asciiAppearanceSize;
-            blknum_t chunkSize = min(nRecsNow, options.apps_per_chunk);
-            write_chunks(options.apps_per_chunk, options.snap_to_grid, newStage, chunkSize, isSnapToGrid);
+            blknum_t chunkSize = min(nRecsNow, apps_per_chunk);
+            write_chunks(apps_per_chunk, options.snap_to_grid, newStage, chunkSize, isSnapToGrid);
             if (DebuggingOn) {
                 LOG_FILE("newStage:             ", newStage);
-                LOG_INFO("snapPoint:            ",
-                         uint64_t((nRecsInStream + prev_block - 1) / options.snap_to_grid) * options.snap_to_grid);
-                LOG_INFO("chunkSize:            ", min(nRecsNow, options.apps_per_chunk));
-                LOG_INFO("nRecsInStreamPre:     ", nRecsInStream);
-                LOG_INFO("nRecsInStreamPost:    ", fileSize(stageStreamFn) / asciiAppearanceSize);
+                LOG_INFO("chunkSize:            ", min(nRecsNow, apps_per_chunk));
+                LOG_INFO("streamSizePre:        ", streamSize);
+                LOG_INFO("streamSizePost:       ", fileSize(stageStreamFn) / asciiAppearanceSize);
                 LOG_INFO("nRecsNow:             ", nRecsNow);
             }
         }
