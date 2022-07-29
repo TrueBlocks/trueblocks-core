@@ -31,20 +31,7 @@ char x = '-';
 //-----------------------------------------------------------------------------
 class COptions {
   public:
-    uint64_t snap_to_grid{0};
-    uint64_t first_snap{0};
-    uint64_t start_block{0};
-
     COptions(void) {
-        start_block = str_2_Uint(getEnvStr("TB_BLAZE_STARTBLOCK"));
-        snap_to_grid = str_2_Uint(getEnvStr("TB_SETTINGS_SNAPTOGRID"));
-        first_snap = str_2_Uint(getEnvStr("TB_SETTINGS_FIRSTSNAP"));
-
-        if (DebuggingOn) {
-            LOG_INFO("startBlock:          ", start_block);
-            LOG_INFO("snapToGrid:          ", snap_to_grid);
-            LOG_INFO("firstSnap:           ", first_snap);
-        }
     }
 
     void Cleanup(const string_q& stageStreamFn);
@@ -303,7 +290,13 @@ int main(int argc, const char* argv[]) {
     LOG_IN('=', "main")
 
     uint64_t apps_per_chunk = str_2_Uint(getEnvStr("TB_SETTINGS_APPSPERCHUNK"));
-    LOG_INFO("apps_per_chunk:      ", apps_per_chunk);
+    uint64_t first_snap = str_2_Uint(getEnvStr("TB_SETTINGS_FIRSTSNAP"));
+    uint64_t snap_to_grid = str_2_Uint(getEnvStr("TB_SETTINGS_SNAPTOGRID"));
+    if (DebuggingOn) {
+        LOG_INFO("apps_per_chunk:      ", apps_per_chunk);
+        LOG_INFO("firstSnap:           ", first_snap);
+        LOG_INFO("snapToGrid:          ", snap_to_grid);
+    }
 
     COptions options;
     string_q stageStreamFn = indexFolder_staging + "000000000-temp.txt";
@@ -331,7 +324,7 @@ int main(int argc, const char* argv[]) {
         ::remove(file.c_str());
 
         uint64_t streamSize = fileSize(stageStreamFn) / asciiAppearanceSize;
-        bool isSnapToGrid = (bn > options.first_snap && !(bn % options.snap_to_grid));
+        bool isSnapToGrid = (bn > first_snap && !(bn % snap_to_grid));
         bool overtops = (streamSize > apps_per_chunk);
 
         if (isSnapToGrid || overtops) {
@@ -348,7 +341,7 @@ int main(int argc, const char* argv[]) {
 
             uint64_t nRecsNow = fileSize(newStage) / asciiAppearanceSize;
             blknum_t chunkSize = min(nRecsNow, apps_per_chunk);
-            write_chunks(apps_per_chunk, options.snap_to_grid, newStage, chunkSize, isSnapToGrid);
+            write_chunks(apps_per_chunk, snap_to_grid, newStage, chunkSize, isSnapToGrid);
             if (DebuggingOn) {
                 LOG_FILE("newStage:             ", newStage);
                 LOG_INFO("chunkSize:            ", min(nRecsNow, apps_per_chunk));
