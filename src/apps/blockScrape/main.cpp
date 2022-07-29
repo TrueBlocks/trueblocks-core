@@ -1,120 +1,4 @@
-#include "acctlib.h"
-
-// TODO: BOGUS - TESTING SCRAPING
-bool DebuggingOn = fileExists("./testing");
-
-size_t fff = 52;
-char x = '-';
-#define LOG_IN(a, f)                                                                                                   \
-    string_q nm = (f);                                                                                                 \
-    if ((a) != x) {                                                                                                    \
-        LOG_INFO("");                                                                                                  \
-        LOG_INFO("");                                                                                                  \
-        LOG_INFO("");                                                                                                  \
-        LOG_INFO("");                                                                                                  \
-        LOG_INFO("");                                                                                                  \
-    }                                                                                                                  \
-    LOG_INFO(string_q(12, (a)), " in ", (nm), " ", string_q(fff, (a)));
-
-#define LOG_OUT(a, b)                                                                                                  \
-    LOG_INFO(string_q(12, (a)), " out ", (nm), " ", (b), " ", string_q(fff, (a)));                                     \
-    if ((a) != x) {                                                                                                    \
-        LOG_INFO("");                                                                                                  \
-        LOG_INFO("");                                                                                                  \
-        LOG_INFO("");                                                                                                  \
-        LOG_INFO("");                                                                                                  \
-        LOG_INFO("");                                                                                                  \
-    }
-
-#define LOG_FILE(a, b) LOG_INFO((a), substitute((b), "/Users/jrush/Data/trueblocks/unchained/", "./"))
-
-//-----------------------------------------------------------------------------
-class COptions {
-  public:
-    COptions(void) {
-    }
-
-    void Cleanup(const string_q& stageStreamFn);
-};
-
-#define BLOOM_WIDTH_IN_BYTES (1048576 / 8)
-#define BLOOM_WIDTH_IN_BITS (BLOOM_WIDTH_IN_BYTES * 8)
-#define MAX_ADDRS_IN_BLOOM 50000
-#define BLOOM_K 5
-
-//---------------------------------------------------------------------------
-class bloom_t {
-  public:
-    uint32_t nInserted;
-    uint8_t* bits;
-
-  public:
-    bloom_t(void);
-    ~bloom_t(void);
-    bloom_t(const bloom_t& b);
-    void lightBit(size_t bit);
-};
-
-//---------------------------------------------------------------------------
-bloom_t::bloom_t(void) {
-    nInserted = 0;
-    bits = new uint8_t[BLOOM_WIDTH_IN_BYTES];
-    bzero(bits, BLOOM_WIDTH_IN_BYTES * sizeof(uint8_t));
-}
-
-//---------------------------------------------------------------------------
-bloom_t::~bloom_t(void) {
-    if (bits)
-        delete[] bits;
-}
-
-//---------------------------------------------------------------------------
-bloom_t::bloom_t(const bloom_t& b) {
-    nInserted = 0;
-    bits = new uint8_t[BLOOM_WIDTH_IN_BYTES];
-    bzero(bits, BLOOM_WIDTH_IN_BYTES * sizeof(uint8_t));
-    nInserted = b.nInserted;
-    memcpy(bits, b.bits, BLOOM_WIDTH_IN_BYTES);
-}
-
-//---------------------------------------------------------------------------
-void bloom_t::lightBit(size_t bit) {
-    size_t which = (bit / 8);
-    size_t whence = (bit % 8);
-    size_t index = BLOOM_WIDTH_IN_BYTES - which - 1;
-    uint8_t mask = uint8_t(1 << whence);
-    bits[index] |= mask;
-}
-
-//---------------------------------------------------------------------------
-void getLitBits(const address_t& addrIn, CUintArray& litBitsOut) {
-#define EXTRACT_WID 8
-    for (size_t k = 0; k < BLOOM_K; k++) {
-        string_q fourByte = ("0x" + extract(addrIn, 2 + (k * EXTRACT_WID), EXTRACT_WID));
-        uint64_t bit = (str_2_Uint(fourByte) % BLOOM_WIDTH_IN_BITS);
-        litBitsOut.push_back(bit);
-    }
-    return;
-}
-
-//----------------------------------------------------------------------
-bool addToSet(vector<bloom_t>& array, const address_t& addr) {
-    if (array.size() == 0) {
-        array.push_back(bloom_t());  // so we have something to add to
-    }
-
-    CUintArray bitsLit;
-    getLitBits(addr, bitsLit);
-    for (auto bit : bitsLit) {
-        array[array.size() - 1].lightBit(bit);
-    }
-    array[array.size() - 1].nInserted++;
-
-    if (array[array.size() - 1].nInserted > MAX_ADDRS_IN_BLOOM)
-        array.push_back(bloom_t());
-
-    return true;
-}
+#include "bloom.h"
 
 //---------------------------------------------------------------------------------------------------
 bool write_chunks(uint64_t apps_per_chunk, uint64_t snap_to_grid, const string_q& newStage, blknum_t chunkSize,
@@ -270,18 +154,6 @@ bool write_chunks(uint64_t apps_per_chunk, uint64_t snap_to_grid, const string_q
     return true;
 }
 
-void COptions::Cleanup(const string_q& stageStreamFn) {
-    if (DebuggingOn) {
-        LOG_INFO("Clean folders");
-        LOG_INFO("  index_unripe:      ", indexFolder_unripe);
-        LOG_INFO("  index_ripe:        ", indexFolder_ripe);
-    }
-    cleanFolder(indexFolder_unripe);
-    cleanFolder(indexFolder_ripe);
-    ::remove(stageStreamFn.c_str());
-    return;
-}
-
 //----------------------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     if (DebuggingOn) {
@@ -298,7 +170,6 @@ int main(int argc, const char* argv[]) {
         LOG_INFO("snapToGrid:          ", snap_to_grid);
     }
 
-    COptions options;
     string_q stageStreamFn = indexFolder_staging + "000000000-temp.txt";
 
     CStringArray files;
@@ -311,7 +182,9 @@ int main(int argc, const char* argv[]) {
     for (auto file : files) {
         if (shouldQuit()) {
             ::remove(stageStreamFn.c_str());
-            options.Cleanup(stageStreamFn);
+            cleanFolder(indexFolder_unripe);
+            cleanFolder(indexFolder_ripe);
+            ::remove(stageStreamFn.c_str());
             LOG_OUT('=', "Control+C hit")
             return EXIT_FAILURE;
         }
@@ -333,10 +206,13 @@ int main(int argc, const char* argv[]) {
             if (lastFileInStage != newStage) {
                 if (lastFileInStage != stageStreamFn) {
                     appendToAsciiFile(newStage, asciiFileToString(lastFileInStage));
+                    ::remove(lastFileInStage.c_str());
                 }
                 appendToAsciiFile(newStage, asciiFileToString(stageStreamFn));
                 ::remove(stageStreamFn.c_str());
-                ::remove(lastFileInStage.c_str());
+
+            } else {
+                LOG_INFO(lastFileInStage, " ", stageStreamFn, " ", lastFileInStage != stageStreamFn);
             }
 
             uint64_t nRecsNow = fileSize(newStage) / asciiAppearanceSize;
