@@ -357,77 +357,69 @@ int main(int argc, const char* argv[]) {
     COptions options;
 
     CStringArray files;
-    if (!listFilesInFolder(files, indexFolder_ripe, false)) {
-        // There is nothing to process, not an error - we're at the front of the chain
-        options.Cleanup();
-        LOG_OUT('=', "")
-        return EXIT_FAILURE;
-    }
+    listFilesInFolder(files, indexFolder_ripe, false);
+    if (files.size() > 0) {
+        options.stageStream.open(options.stageStreamFn, ios::out | ios::trunc);
+        if (options.stageStream.is_open()) {
+            for (auto file : files) {
+                ifstream inputStream(file, ios::in);
+                if (inputStream.is_open()) {
+                    lockSection();
 
-    options.stageStream.open(options.stageStreamFn, ios::out | ios::trunc);
-    if (!options.stageStream.is_open()) {
-        LOG_OUT('=', "Could not open temporary staging file.")
-        return EXIT_FAILURE;
-    }
+                    options.stageStream << inputStream.rdbuf();
+                    options.stageStream.flush();
+                    inputStream.close();
+                    ::remove(file.c_str());
 
-    for (auto file : files) {
-        ifstream inputStream(file, ios::in);
-        if (inputStream.is_open()) {
-            lockSection();
+                    options.prev_block = path_2_Bn(file);
+                    uint64_t nRecsInStream = fileSize(options.stageStreamFn) / asciiAppearanceSize;
 
-            options.stageStream << inputStream.rdbuf();
-            options.stageStream.flush();
-            inputStream.close();
-            ::remove(file.c_str());
+                    bool isSnapToGrid =
+                        (options.prev_block > options.first_snap && !(options.prev_block % options.snap_to_grid));
+                    bool overtops = (nRecsInStream > options.apps_per_chunk);
 
-            options.prev_block = path_2_Bn(file);
-            uint64_t nRecsInStream = fileSize(options.stageStreamFn) / asciiAppearanceSize;
+                    if (isSnapToGrid || overtops) {
+                        options.stageStream.close();
+                        stage_chunks(&options, isSnapToGrid);
+                        uint64_t nRecsNow = fileSize(options.newStage) / asciiAppearanceSize;
+                        blknum_t chunkSize = min(nRecsNow, options.apps_per_chunk);
+                        write_chunks(&options, chunkSize, isSnapToGrid);
+                        if (DebuggingOn) {
+                            LOG_FILE("newStage:             ", options.newStage);
+                            LOG_INFO("snapPoint:            ",
+                                     uint64_t((nRecsInStream + options.prev_block - 1) / options.snap_to_grid) *
+                                         options.snap_to_grid);
+                            LOG_INFO("chunkSize:            ", min(nRecsNow, options.apps_per_chunk));
+                            LOG_INFO("nRecsInStreamPre:     ", nRecsInStream);
+                            LOG_INFO("nRecsInStreamPost:    ", fileSize(options.stageStreamFn) / asciiAppearanceSize);
+                            LOG_INFO("nRecsNow:             ", nRecsNow);
+                        }
 
-            bool isSnapToGrid =
-                (options.prev_block > options.first_snap && !(options.prev_block % options.snap_to_grid));
-            bool overtops = (nRecsInStream > options.apps_per_chunk);
+                        options.stageStream.open(options.stageStreamFn, ios::out | ios::trunc);
+                        if (!options.stageStream.is_open()) {
+                            unlockSection();
+                            LOG_OUT('=', "Could not open temporary staging file.")
+                            return EXIT_FAILURE;
+                        }
+                    }
+                    unlockSection();
 
-            if (isSnapToGrid || overtops) {
-                options.stageStream.close();
-                stage_chunks(&options, isSnapToGrid);
-                uint64_t nRecsNow = fileSize(options.newStage) / asciiAppearanceSize;
-                blknum_t chunkSize = min(nRecsNow, options.apps_per_chunk);
-                write_chunks(&options, chunkSize, isSnapToGrid);
-                if (DebuggingOn) {
-                    LOG_FILE("newStage:             ", options.newStage);
-                    LOG_INFO("snapPoint:            ",
-                             uint64_t((nRecsInStream + options.prev_block - 1) / options.snap_to_grid) *
-                                 options.snap_to_grid);
-                    LOG_INFO("chunkSize:            ", min(nRecsNow, options.apps_per_chunk));
-                    LOG_INFO("nRecsInStreamPre:     ", nRecsInStream);
-                    LOG_INFO("nRecsInStreamPost:    ", fileSize(options.stageStreamFn) / asciiAppearanceSize);
-                    LOG_INFO("nRecsNow:             ", nRecsNow);
+                } else {
+                    options.stageStream.close();
+                    options.Cleanup();
+                    LOG_OUT('=', "Could not open input stream " + file)
+                    return EXIT_FAILURE;
                 }
 
-                options.stageStream.open(options.stageStreamFn, ios::out | ios::trunc);
-                if (!options.stageStream.is_open()) {
-                    unlockSection();
-                    LOG_OUT('=', "Could not open temporary staging file.")
+                if (shouldQuit()) {
+                    options.stageStream.close();
+                    options.Cleanup();
+                    LOG_OUT('=', "Control+C hit")
                     return EXIT_FAILURE;
                 }
             }
-            unlockSection();
-
-        } else {
-            options.stageStream.close();
-            options.Cleanup();
-            LOG_OUT('=', "Could not open input stream " + file)
-            return EXIT_FAILURE;
-        }
-
-        if (shouldQuit()) {
-            options.stageStream.close();
-            options.Cleanup();
-            LOG_OUT('=', "Control+C hit")
-            return EXIT_FAILURE;
         }
     }
-
     options.stageStream.close();
     LOG_OUT('=', "");
     return EXIT_SUCCESS;
