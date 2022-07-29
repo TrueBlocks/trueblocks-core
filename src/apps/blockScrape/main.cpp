@@ -39,7 +39,6 @@ class COptions {
     uint64_t prev_block{0};
 
     string_q newStage{""};
-    string_q stageStreamFn{""};
     ofstream stageStream;
 
     COptions(void) {
@@ -48,7 +47,6 @@ class COptions {
         unripe_dist = str_2_Uint(getEnvStr("TB_SETTINGS_UNRIPEDIST"));
         snap_to_grid = str_2_Uint(getEnvStr("TB_SETTINGS_SNAPTOGRID"));
         first_snap = str_2_Uint(getEnvStr("TB_SETTINGS_FIRSTSNAP"));
-        stageStreamFn = indexFolder_staging + "000000000-temp.txt";
         prev_block = start_block - 1;
 
         if (DebuggingOn) {
@@ -57,7 +55,6 @@ class COptions {
             LOG_INFO("unripeDist:          ", unripe_dist);
             LOG_INFO("snapToGrid:          ", snap_to_grid);
             LOG_INFO("firstSnap:           ", first_snap);
-            LOG_FILE("stageStreamFn:       ", stageStreamFn);
             LOG_INFO("prevBlocks:          ", prev_block);
         }
     }
@@ -67,13 +64,11 @@ class COptions {
             LOG_INFO("Clean folders");
             LOG_INFO("  index_unripe:      ", indexFolder_unripe);
             LOG_INFO("  index_ripe:        ", indexFolder_ripe);
-            LOG_FILE("  stageStreamFn:     ", stageStreamFn);
         }
         cleanFolder(indexFolder_unripe);
         cleanFolder(indexFolder_ripe);
 
         stageStream.close();
-        ::remove(stageStreamFn.c_str());
     }
 };
 
@@ -163,6 +158,7 @@ bool write_chunks(COptions* opts, blknum_t chunkSize, bool isSnapToGrid) {
         CStringArray lines;
         lines.reserve(nRecords + 100);
         asciiFileToLines(opts->newStage, lines);
+
         string_q prvBlock;
         size_t loc = NOPOS;
         for (uint64_t record = (chunkSize - 1); record < lines.size() && loc == NOPOS; record++) {
@@ -273,6 +269,9 @@ bool write_chunks(COptions* opts, blknum_t chunkSize, bool isSnapToGrid) {
                     string_q range =
                         substitute(substitute(chunkPath, indexFolder_finalized, ""), indexFolder_blooms, "");
                     range = substitute(substitute(range, ".bin", ""), ".bloom", "");
+                    if (DebuggingOn) {
+                        LOG_INFO("Writing to chunks_created.txt: ", range);
+                    }
                     appendToAsciiFile(cacheFolder_tmp + "chunks_created.txt", range + "\n");
                 }
 
@@ -296,54 +295,12 @@ bool write_chunks(COptions* opts, blknum_t chunkSize, bool isSnapToGrid) {
         if (remainingLines.size()) {
             linesToAsciiFile(opts->newStage, remainingLines);
         }
-
         nRecords = fileSize(opts->newStage) / asciiAppearanceSize;
         if (isSnapToGrid)
             isSnapToGrid = nRecords > 0;
         chunkSize = min(opts->apps_per_chunk, nRecords);
     }
 
-    return true;
-}
-
-//--------------------------------------------------------------------------
-void appendFile(const string_q& toFile, const string_q& fromFile) {
-#if 1
-    appendToAsciiFile(toFile, asciiFileToString(fromFile));
-#else
-    ofstream output;
-    output.open(toFile, ios::out | ios::app);
-    if (!output.is_open())
-        return;
-
-    ifstream input(fromFile, ios::in);
-    if (!input.is_open()) {
-        output.close();
-        return;
-    }
-
-    output << input.rdbuf();
-    output.flush();
-    input.close();
-#endif
-}
-
-//--------------------------------------------------------------------------
-bool stage_chunks(COptions* opts, bool snappy) {
-    string_q lastFileInStage = getLastFileInFolder(indexFolder_staging, false);
-    opts->newStage = indexFolder_staging + padNum9(opts->prev_block) + ".txt";
-    if (lastFileInStage != opts->newStage) {
-        string_q tmpFile = indexFolder + "temp.txt";
-        if (lastFileInStage != opts->stageStreamFn) {
-            appendToAsciiFile(tmpFile, asciiFileToString(lastFileInStage));
-        }
-        appendToAsciiFile(tmpFile, asciiFileToString(opts->stageStreamFn));
-        ::rename(tmpFile.c_str(), opts->newStage.c_str());
-        ::remove(opts->stageStreamFn.c_str());
-        if (fileExists(lastFileInStage) && lastFileInStage != opts->newStage) {
-            ::remove(lastFileInStage.c_str());
-        }
-    }
     return true;
 }
 
@@ -355,11 +312,12 @@ int main(int argc, const char* argv[]) {
     LOG_IN('=', "main")
 
     COptions options;
+    string_q stageStreamFn = indexFolder_staging + "000000000-temp.txt";
 
     CStringArray files;
     listFilesInFolder(files, indexFolder_ripe, false);
     if (files.size() > 0) {
-        options.stageStream.open(options.stageStreamFn, ios::out | ios::trunc);
+        options.stageStream.open(stageStreamFn, ios::out | ios::trunc);
         if (options.stageStream.is_open()) {
             for (auto file : files) {
                 ifstream inputStream(file, ios::in);
@@ -372,7 +330,7 @@ int main(int argc, const char* argv[]) {
                     ::remove(file.c_str());
 
                     options.prev_block = path_2_Bn(file);
-                    uint64_t nRecsInStream = fileSize(options.stageStreamFn) / asciiAppearanceSize;
+                    uint64_t nRecsInStream = fileSize(stageStreamFn) / asciiAppearanceSize;
 
                     bool isSnapToGrid =
                         (options.prev_block > options.first_snap && !(options.prev_block % options.snap_to_grid));
@@ -380,10 +338,24 @@ int main(int argc, const char* argv[]) {
 
                     if (isSnapToGrid || overtops) {
                         options.stageStream.close();
-                        stage_chunks(&options, isSnapToGrid);
+                        COptions* opts = &options;
+                        string_q lastFileInStage = getLastFileInFolder(indexFolder_staging, false);
+                        opts->newStage = indexFolder_staging + padNum9(opts->prev_block) + ".txt";
+                        if (lastFileInStage != opts->newStage) {
+                            string_q tmpFile = indexFolder + "temp.txt";
+                            if (lastFileInStage != stageStreamFn) {
+                                appendToAsciiFile(tmpFile, asciiFileToString(lastFileInStage));
+                            }
+                            appendToAsciiFile(tmpFile, asciiFileToString(stageStreamFn));
+                            ::rename(tmpFile.c_str(), opts->newStage.c_str());
+                            ::remove(stageStreamFn.c_str());
+                            if (fileExists(lastFileInStage) && lastFileInStage != opts->newStage) {
+                                ::remove(lastFileInStage.c_str());
+                            }
+                        }
                         uint64_t nRecsNow = fileSize(options.newStage) / asciiAppearanceSize;
                         blknum_t chunkSize = min(nRecsNow, options.apps_per_chunk);
-                        write_chunks(&options, chunkSize, isSnapToGrid);
+                        write_chunks(opts, chunkSize, isSnapToGrid);
                         if (DebuggingOn) {
                             LOG_FILE("newStage:             ", options.newStage);
                             LOG_INFO("snapPoint:            ",
@@ -391,11 +363,11 @@ int main(int argc, const char* argv[]) {
                                          options.snap_to_grid);
                             LOG_INFO("chunkSize:            ", min(nRecsNow, options.apps_per_chunk));
                             LOG_INFO("nRecsInStreamPre:     ", nRecsInStream);
-                            LOG_INFO("nRecsInStreamPost:    ", fileSize(options.stageStreamFn) / asciiAppearanceSize);
+                            LOG_INFO("nRecsInStreamPost:    ", fileSize(stageStreamFn) / asciiAppearanceSize);
                             LOG_INFO("nRecsNow:             ", nRecsNow);
                         }
 
-                        options.stageStream.open(options.stageStreamFn, ios::out | ios::trunc);
+                        options.stageStream.open(stageStreamFn, ios::out | ios::trunc);
                         if (!options.stageStream.is_open()) {
                             unlockSection();
                             LOG_OUT('=', "Could not open temporary staging file.")
@@ -407,6 +379,7 @@ int main(int argc, const char* argv[]) {
                 } else {
                     options.stageStream.close();
                     options.Cleanup();
+                    ::remove(stageStreamFn.c_str());
                     LOG_OUT('=', "Could not open input stream " + file)
                     return EXIT_FAILURE;
                 }
@@ -414,6 +387,7 @@ int main(int argc, const char* argv[]) {
                 if (shouldQuit()) {
                     options.stageStream.close();
                     options.Cleanup();
+                    ::remove(stageStreamFn.c_str());
                     LOG_OUT('=', "Control+C hit")
                     return EXIT_FAILURE;
                 }

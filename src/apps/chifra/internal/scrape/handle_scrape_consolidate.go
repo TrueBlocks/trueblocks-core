@@ -34,6 +34,11 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 	}
 
 	err = opts.Globals.PassItOn("blockScrape", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStrings(progressThen))
+	if utils.DebuggingOn {
+		newPinsFn := config.GetPathToCache(opts.Globals.Chain) + "tmp/chunks_created.txt"
+		fmt.Println(newPinsFn)
+		fmt.Println(file.AsciiFileToString(newPinsFn))
+	}
 	meta, _ := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
 	if utils.DebuggingOn {
 		fmt.Println(meta)
