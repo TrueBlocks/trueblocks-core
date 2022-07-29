@@ -192,15 +192,15 @@ int main(int argc, const char* argv[]) {
         lockSection();
 
         uint64_t bn = path_2_Bn(file);
-
         appendToAsciiFile(stageStreamFn, asciiFileToString(file));
         ::remove(file.c_str());
 
         uint64_t streamSize = fileSize(stageStreamFn) / asciiAppearanceSize;
         bool isSnapToGrid = (bn > first_snap && !(bn % snap_to_grid));
         bool overtops = (streamSize > apps_per_chunk);
+        bool final = (file == files[files.size() - 1]);
 
-        if (isSnapToGrid || overtops) {
+        if (isSnapToGrid || overtops || final) {
             string_q lastFileInStage = getLastFileInFolder(indexFolder_staging, false);
             string_q newStage = indexFolder_staging + padNum9(bn) + ".txt";
             if (lastFileInStage != newStage) {
@@ -215,19 +215,22 @@ int main(int argc, const char* argv[]) {
                 LOG_INFO(lastFileInStage, " ", stageStreamFn, " ", lastFileInStage != stageStreamFn);
             }
 
-            uint64_t nRecsNow = fileSize(newStage) / asciiAppearanceSize;
-            blknum_t chunkSize = min(nRecsNow, apps_per_chunk);
-            write_chunks(apps_per_chunk, snap_to_grid, newStage, chunkSize, isSnapToGrid);
-            if (DebuggingOn) {
-                LOG_FILE("newStage:             ", newStage);
-                LOG_INFO("chunkSize:            ", min(nRecsNow, apps_per_chunk));
-                LOG_INFO("streamSizePre:        ", streamSize);
-                LOG_INFO("streamSizePost:       ", fileSize(stageStreamFn) / asciiAppearanceSize);
-                LOG_INFO("nRecsNow:             ", nRecsNow);
+            if (isSnapToGrid || overtops) {
+                uint64_t nRecsNow = fileSize(newStage) / asciiAppearanceSize;
+                blknum_t chunkSize = min(nRecsNow, apps_per_chunk);
+                write_chunks(apps_per_chunk, snap_to_grid, newStage, chunkSize, isSnapToGrid);
+                if (DebuggingOn) {
+                    LOG_FILE("newStage:             ", newStage);
+                    LOG_INFO("chunkSize:            ", min(nRecsNow, apps_per_chunk));
+                    LOG_INFO("streamSizePre:        ", streamSize);
+                    LOG_INFO("streamSizePost:       ", fileSize(stageStreamFn) / asciiAppearanceSize);
+                    LOG_INFO("nRecsNow:             ", nRecsNow);
+                }
             }
         }
         unlockSection();
     }
+
     ::remove(stageStreamFn.c_str());
     LOG_OUT('=', "");
     return EXIT_SUCCESS;

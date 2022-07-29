@@ -84,6 +84,7 @@ inline bool addToSet(vector<bloom_t>& array, const address_t& addr) {
 // TODO: BOGUS - TESTING SCRAPING
 bool DebuggingOn = fileExists("./testing");
 
+#if 1
 size_t fff = 52;
 char x = '-';
 #define LOG_IN(a, f)                                                                                                   \
@@ -108,3 +109,8 @@ char x = '-';
     }
 
 #define LOG_FILE(a, b) LOG_INFO((a), substitute((b), "/Users/jrush/Data/trueblocks/unchained/", "./"))
+#else
+#define LOG_IN(a, f)
+#define LOG_OUT(a, b)
+#define LOG_FILE(a, b)
+#endif
