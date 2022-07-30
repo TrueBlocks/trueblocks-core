@@ -62,25 +62,6 @@ inline void getLitBits(const address_t& addrIn, CUintArray& litBitsOut) {
     return;
 }
 
-//----------------------------------------------------------------------
-inline bool addToSet(vector<bloom_t>& array, const address_t& addr) {
-    if (array.size() == 0) {
-        array.push_back(bloom_t());  // so we have something to add to
-    }
-
-    CUintArray bitsLit;
-    getLitBits(addr, bitsLit);
-    for (auto bit : bitsLit) {
-        array[array.size() - 1].lightBit(bit);
-    }
-    array[array.size() - 1].nInserted++;
-
-    if (array[array.size() - 1].nInserted > MAX_ADDRS_IN_BLOOM)
-        array.push_back(bloom_t());
-
-    return true;
-}
-
 // TODO: BOGUS - TESTING SCRAPING
 bool DebuggingOn = fileExists("./testing");
 

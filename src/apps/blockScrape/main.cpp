@@ -1,8 +1,33 @@
 #include "bloom.h"
 
+//----------------------------------------------------------------------
+bool addToSet(vector<bloom_t>& array, const address_t& addr) {
+    if (array.size() == 0) {
+        array.push_back(bloom_t());  // so we have something to add to
+    }
+
+    CUintArray bitsLit;
+    getLitBits(addr, bitsLit);
+    for (auto bit : bitsLit) {
+        array[array.size() - 1].lightBit(bit);
+    }
+    array[array.size() - 1].nInserted++;
+
+    if (array[array.size() - 1].nInserted > MAX_ADDRS_IN_BLOOM)
+        array.push_back(bloom_t());
+
+    return true;
+}
+
 //---------------------------------------------------------------------------------------------------
-bool write_chunks(uint64_t apps_per_chunk, uint64_t snap_to_grid, const string_q& newStage, blknum_t chunkSize,
-                  bool isSnapToGrid) {
+bool write_chunks(uint64_t apps_per_chunk, uint64_t snap_to_grid, const string_q& newStage, bool isSnapToGrid) {
+    uint64_t nRecsNow = fileSize(newStage) / asciiAppearanceSize;
+    blknum_t chunkSize = min(nRecsNow, apps_per_chunk);
+    if (DebuggingOn) {
+        LOG_INFO("chunkSize:            ", chunkSize);
+        LOG_INFO("nRecsNow:             ", nRecsNow);
+    }
+
     blknum_t nRecords = fileSize(newStage) / asciiAppearanceSize;
     while ((isSnapToGrid || nRecords > chunkSize)) {
         CStringArray lines;
@@ -63,7 +88,7 @@ bool write_chunks(uint64_t apps_per_chunk, uint64_t snap_to_grid, const string_q
                 archive.Write(nAddrs);
                 archive.Write((uint32_t)appTable.size());  // not accurate yet
 
-                vector<bloom_t> ar;
+                vector<bloom_t> theBloom;
                 for (size_t l = 0; l < consolidatedLines.size(); l++) {
                     string_q line = consolidatedLines[l];
                     ASSERT(countOf(line, '\t') == 2);
@@ -72,7 +97,7 @@ bool write_chunks(uint64_t apps_per_chunk, uint64_t snap_to_grid, const string_q
                     CIndexedAppearance rec(parts[1], parts[2]);
                     appTable.push_back(rec);
                     if (!prev.empty() && parts[0] != prev) {
-                        addToSet(ar, prev);
+                        addToSet(theBloom, prev);
                         addrbytes_t bytes = addr_2_Bytes(prev);
                         archive.Write(bytes.data(), bytes.size(), sizeof(uint8_t));
                         archive.Write(offset);
@@ -86,7 +111,7 @@ bool write_chunks(uint64_t apps_per_chunk, uint64_t snap_to_grid, const string_q
                 }
 
                 // The above algo always misses the last address, so we add it here
-                addToSet(ar, prev);
+                addToSet(theBloom, prev);
                 addrbytes_t bytes = addr_2_Bytes(prev);
                 archive.Write(bytes.data(), bytes.size(), sizeof(uint8_t));
                 archive.Write(offset);
@@ -108,8 +133,8 @@ bool write_chunks(uint64_t apps_per_chunk, uint64_t snap_to_grid, const string_q
                 CArchive output(WRITING_ARCHIVE);
                 string_q bloomFile = substitute(substitute(chunkPath, "/finalized/", "/blooms/"), ".bin", ".bloom");
                 if (output.Lock(bloomFile, modeWriteCreate, LOCK_NOWAIT)) {
-                    output.Write((uint32_t)ar.size());
-                    for (auto bloom : ar) {
+                    output.Write((uint32_t)theBloom.size());
+                    for (auto bloom : theBloom) {
                         output.Write(bloom.nInserted);
                         output.Write(bloom.bits, sizeof(uint8_t), BLOOM_WIDTH_IN_BYTES);
                     }
@@ -170,15 +195,13 @@ int main(int argc, const char* argv[]) {
         LOG_INFO("snapToGrid:          ", snap_to_grid);
     }
 
-    string_q stageStreamFn = indexFolder_staging + "000000000-temp.txt";
-
     CStringArray files;
     if (!listFilesInFolder(files, indexFolder_ripe, false)) {
-        ::remove(stageStreamFn.c_str());
         LOG_OUT('=', "");
         return EXIT_SUCCESS;
     }
 
+    string_q stageStreamFn = indexFolder_staging + "000000000-temp.txt";
     for (auto file : files) {
         if (shouldQuit()) {
             ::remove(stageStreamFn.c_str());
@@ -216,15 +239,11 @@ int main(int argc, const char* argv[]) {
             }
 
             if (isSnapToGrid || overtops) {
-                uint64_t nRecsNow = fileSize(newStage) / asciiAppearanceSize;
-                blknum_t chunkSize = min(nRecsNow, apps_per_chunk);
-                write_chunks(apps_per_chunk, snap_to_grid, newStage, chunkSize, isSnapToGrid);
+                write_chunks(apps_per_chunk, snap_to_grid, newStage, isSnapToGrid);
                 if (DebuggingOn) {
                     LOG_FILE("newStage:             ", newStage);
-                    LOG_INFO("chunkSize:            ", min(nRecsNow, apps_per_chunk));
                     LOG_INFO("streamSizePre:        ", streamSize);
                     LOG_INFO("streamSizePost:       ", fileSize(stageStreamFn) / asciiAppearanceSize);
-                    LOG_INFO("nRecsNow:             ", nRecsNow);
                 }
             }
         }
