@@ -1,5 +1,168 @@
 #include "bloom.h"
 
+extern bool write_chunks(uint64_t apps_per_chunk, uint64_t snap_to_grid, const string_q& newStage, bool isSnapToGrid,
+                         uint64_t nRecsNow, uint64_t chunkSize);
+
+//----------------------------------------------------------------------------------
+int main(int argc, const char* argv[]) {
+    etherlib_init(defaultQuitHandler);
+    if (getEnvStr("NO_COLOR") == "true") {
+        colorsOff();
+    }
+
+    uint64_t apps_per_chunk = str_2_Uint(getEnvStr("TB_SETTINGS_APPSPERCHUNK"));
+    uint64_t first_snap = str_2_Uint(getEnvStr("TB_SETTINGS_FIRSTSNAP"));
+    uint64_t snap_to_grid = str_2_Uint(getEnvStr("TB_SETTINGS_SNAPTOGRID"));
+
+    CStringArray filesA;
+    listFilesInFolder(filesA, indexFolder_ripe, false);
+    string_q firstFile = getFirstFileInFolder(indexFolder_staging, false);
+    uint64_t first = NOPOS;
+
+    uint64_t recordCount = fileSize(firstFile) / asciiAppearanceSize;
+    if (recordCount > 0) {
+        CStringArray records;
+        records.reserve(uint64_t(recordCount * 1.2));
+        asciiFileToLines(firstFile, records);
+        CUintArray parts;
+        explode(parts, records[0], '\t');
+        first = parts[1];
+    } else {
+        first = 1;
+    }
+
+    cerr << "Found " << filesA.size() << " filesA in " << indexFolder_ripe << endl;
+    cerr << string_q(120, '=') << endl;
+    cerr << "first file:     " << firstFile << endl;
+    cerr << "recordCount:    " << recordCount << endl;
+    cerr << "apps_per_chunk: " << apps_per_chunk << endl;
+    cerr << "first_snap:     " << first_snap << endl;
+    cerr << "snap_to_grid:   " << snap_to_grid << endl;
+    cerr << "first block:    " << first << endl;
+    cerr << string_q(120, '=') << endl;
+
+    blkrange_t curRange{first, 0};
+    CBlockRangeArray cuts;
+    for (auto file : filesA) {
+        blknum_t bn = path_2_Bn(file);
+        recordCount += fileSize(file) / asciiAppearanceSize;
+        bool isSnap = (bn > first_snap && !(bn % snap_to_grid));
+        bool isOvertop = (recordCount >= apps_per_chunk);
+
+        if (isSnap || isOvertop) {
+            curRange.second = max(curRange.second, bn);
+            if (isSnap) {
+                cerr << "Snap at " << curRange << endl;
+            } else {
+                cerr << "Overtops at " << curRange << endl;
+            }
+            cuts.push_back(curRange);
+            curRange.first = curRange.second + 1;
+            recordCount = 0;
+        }
+        // ::remove(file.c_str());
+    }
+
+    cerr << string_q(120, '~') << endl;
+    for (auto cut : cuts) {
+        bool isSnap = !(cut.second % snap_to_grid);
+        cerr << cut << " " << !isSnap << " " << (isSnap) << endl;
+    }
+    cerr << string_q(120, '~') << endl;
+
+#if 1
+    cerr << "Old loop" << endl;
+    string_q stageStreamFn = indexFolder_staging + "000000000-temp.txt";
+    CStringArray files;
+    listFilesInFolder(files, indexFolder_ripe, false);
+    if (DebuggingOn) {
+        LOG_INFO("Found ", files.size(), " files in ", indexFolder_ripe);
+    }
+
+    cerr << string_q(120, '_') << endl;
+    string_q firstFileInStage = getFirstFileInFolder(indexFolder_staging, false);
+    cerr << "firstFileInStage1: " << firstFileInStage << endl;
+    string_q lastFileInStage = getLastFileInFolder(indexFolder_staging, false);
+    cerr << "lastFileInStage: " << lastFileInStage << endl;
+    cerr << string_q(120, '-') << endl;
+    for (auto file : files) {
+        lockSection();
+
+        uint64_t bn = path_2_Bn(file);
+        appendToAsciiFile(stageStreamFn, asciiFileToString(file));
+        ::remove(file.c_str());
+
+        uint64_t streamSize = fileSize(stageStreamFn) / asciiAppearanceSize;
+        bool isSnap = (bn > first_snap && !(bn % snap_to_grid));
+        bool isOvertop = (streamSize > apps_per_chunk);
+        bool final = (file == files[files.size() - 1]);
+
+        if (isSnap || isOvertop || final) {
+            firstFileInStage = getFirstFileInFolder(indexFolder_staging, false);
+            cerr << "firstFileInStage2: " << firstFileInStage << endl;
+            lastFileInStage = getLastFileInFolder(indexFolder_staging, false);
+            cerr << "lastFileInStage: " << lastFileInStage << endl;
+            string_q newStage = indexFolder_staging + padNum9(bn) + ".txt";
+            if (lastFileInStage != newStage) {
+                if (lastFileInStage != stageStreamFn) {
+                    appendToAsciiFile(newStage, asciiFileToString(lastFileInStage));
+                    ::remove(lastFileInStage.c_str());
+                }
+                appendToAsciiFile(newStage, asciiFileToString(stageStreamFn));
+                ::remove(stageStreamFn.c_str());
+
+            } else {
+                LOG_INFO(lastFileInStage, " ", stageStreamFn, " ", lastFileInStage != stageStreamFn);
+            }
+
+            if (isSnap || isOvertop) {
+                uint64_t nRecsNow = fileSize(newStage) / asciiAppearanceSize;
+                blknum_t chunkSize = min(nRecsNow, apps_per_chunk);
+                bool con = (isSnap || nRecsNow > chunkSize);
+                while (con) {
+                    // if (DebuggingOn) {
+                    //     LOG_INFO("chunkSize:            ", chunkSize);
+                    //     LOG_INFO("nRecsNow:             ", nRecsNow);
+                    //     LOG_INFO("lastFileInStaging:    ", getLastFileInFolder(indexFolder_staging, false));
+                    //     LOG_INFO("rowsInStaging:        ",
+                    //              fileSize(getLastFileInFolder(indexFolder_staging, false)) / asciiAppearanceSize);
+                    // }
+
+                    write_chunks(apps_per_chunk, snap_to_grid, newStage, isSnap, nRecsNow, chunkSize);
+
+                    // if (DebuggingOn) {
+                    //     LOG_INFO("lastFileInStaging:    ", getLastFileInFolder(indexFolder_staging, false));
+                    //     LOG_INFO("rowsInStaging:        ",
+                    //              fileSize(getLastFileInFolder(indexFolder_staging, false)) / asciiAppearanceSize);
+                    // }
+                    nRecsNow = fileSize(newStage) / asciiAppearanceSize;
+                    chunkSize = min(apps_per_chunk, nRecsNow);
+                    if (isSnap)
+                        isSnap = nRecsNow > 0;
+                    con = (isSnap || nRecsNow > chunkSize);
+                }
+
+                // if (DebuggingOn) {
+                //     LOG_FILE("newStage:             ", newStage);
+                //     LOG_INFO("streamSizePre:        ", streamSize);
+                //     LOG_INFO("streamSizePost:       ", fileSize(stageStreamFn) / asciiAppearanceSize);
+                // }
+            }
+        }
+        unlockSection();
+    }
+    cerr << string_q(120, '=') << endl;
+    firstFileInStage = getFirstFileInFolder(indexFolder_staging, false);
+    cerr << "firstFileInStage3: " << firstFileInStage << endl;
+    lastFileInStage = getLastFileInFolder(indexFolder_staging, false);
+    cerr << "lastFileInStage: " << lastFileInStage << endl;
+    ::remove(stageStreamFn.c_str());
+    cerr << string_q(120, '+') << endl;
+#endif
+
+    return shouldQuit() ? EXIT_FAILURE : EXIT_SUCCESS;
+}
+
 //----------------------------------------------------------------------
 bool addToSet(vector<bloom_t>& array, const address_t& addr) {
     if (array.size() == 0) {
@@ -20,7 +183,7 @@ bool addToSet(vector<bloom_t>& array, const address_t& addr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool write_chunks(uint64_t apps_per_chunk, uint64_t snap_to_grid, const string_q& newStage, bool isSnapToGrid,
+bool write_chunks(uint64_t apps_per_chunk, uint64_t snap_to_grid, const string_q& newStage, bool isSnap,
                   uint64_t nRecsNow, uint64_t chunkSize) {
     CStringArray lines;
     lines.reserve(nRecsNow + 100);
@@ -135,16 +298,16 @@ bool write_chunks(uint64_t apps_per_chunk, uint64_t snap_to_grid, const string_q
                 ::remove(tmpFile2.c_str());
                 string_q range = substitute(substitute(chunkPath, indexFolder_finalized, ""), indexFolder_blooms, "");
                 range = substitute(substitute(range, ".bin", ""), ".bloom", "");
-                if (DebuggingOn) {
-                    LOG_INFO("Writing to chunks_created.txt: ", range);
-                }
+                // if (DebuggingOn) {
+                //     LOG_INFO("Writing to chunks_created.txt: ", range);
+                // }
                 appendToAsciiFile(cacheFolder_tmp + "chunks_created.txt", range + "\n");
             }
 
             ostringstream os;
             os << "Wrote " << consolidatedLines.size() << " records to " << cTeal << relativize(chunkPath);
-            if (isSnapToGrid && (lines.size() - 1 == loc)) {
-                os << cYellow << " (isSnapToGrid to modulo " << snap_to_grid << " blocks)";
+            if (isSnap && (lines.size() - 1 == loc)) {
+                os << cYellow << " (isSnap to modulo " << snap_to_grid << " blocks)";
             }
             os << cOff;
             LOG_INFO(os.str());
@@ -163,92 +326,4 @@ bool write_chunks(uint64_t apps_per_chunk, uint64_t snap_to_grid, const string_q
     }
 
     return true;
-}
-
-//----------------------------------------------------------------------------------
-int main(int argc, const char* argv[]) {
-    etherlib_init(defaultQuitHandler);
-    if (getEnvStr("NO_COLOR") == "true") {
-        colorsOff();
-    }
-
-    uint64_t apps_per_chunk = str_2_Uint(getEnvStr("TB_SETTINGS_APPSPERCHUNK"));
-    uint64_t first_snap = str_2_Uint(getEnvStr("TB_SETTINGS_FIRSTSNAP"));
-    uint64_t snap_to_grid = str_2_Uint(getEnvStr("TB_SETTINGS_SNAPTOGRID"));
-
-    CStringArray files;
-    listFilesInFolder(files, indexFolder_ripe, false);
-    string_q stageStreamFn = indexFolder_staging + "000000000-temp.txt";
-    if (DebuggingOn) {
-        LOG_INFO("Found ", files.size(), " files in ", indexFolder_ripe, " ", stageStreamFn);
-    }
-
-    for (auto file : files) {
-        lockSection();
-
-        uint64_t bn = path_2_Bn(file);
-        appendToAsciiFile(stageStreamFn, asciiFileToString(file));
-        ::remove(file.c_str());
-
-        uint64_t streamSize = fileSize(stageStreamFn) / asciiAppearanceSize;
-        bool isSnapToGrid = (bn > first_snap && !(bn % snap_to_grid));
-        bool overtops = (streamSize > apps_per_chunk);
-        bool final = (file == files[files.size() - 1]);
-
-        if (isSnapToGrid || overtops || final) {
-            string_q lastFileInStage = getLastFileInFolder(indexFolder_staging, false);
-            string_q newStage = indexFolder_staging + padNum9(bn) + ".txt";
-            if (lastFileInStage != newStage) {
-                if (lastFileInStage != stageStreamFn) {
-                    appendToAsciiFile(newStage, asciiFileToString(lastFileInStage));
-                    ::remove(lastFileInStage.c_str());
-                }
-                appendToAsciiFile(newStage, asciiFileToString(stageStreamFn));
-                ::remove(stageStreamFn.c_str());
-
-            } else {
-                LOG_INFO(lastFileInStage, " ", stageStreamFn, " ", lastFileInStage != stageStreamFn);
-            }
-
-            if (isSnapToGrid || overtops) {
-                uint64_t timesThrough = 0;
-                uint64_t nRecsNow = fileSize(newStage) / asciiAppearanceSize;
-                blknum_t chunkSize = min(nRecsNow, apps_per_chunk);
-                bool con = (isSnapToGrid || nRecsNow > chunkSize);
-                while (con) {
-                    if (DebuggingOn) {
-                        LOG_INFO("chunkSize:            ", chunkSize);
-                        LOG_INFO("nRecsNow:             ", nRecsNow);
-                        LOG_INFO("timesThrough:         ", ++timesThrough);
-                        LOG_INFO("lastFileInStaging:    ", getLastFileInFolder(indexFolder_staging, false));
-                        LOG_INFO("rowsInStaging:        ",
-                                 fileSize(getLastFileInFolder(indexFolder_staging, false)) / asciiAppearanceSize);
-                    }
-
-                    write_chunks(apps_per_chunk, snap_to_grid, newStage, isSnapToGrid, nRecsNow, chunkSize);
-
-                    if (DebuggingOn) {
-                        LOG_INFO("lastFileInStaging:    ", getLastFileInFolder(indexFolder_staging, false));
-                        LOG_INFO("rowsInStaging:        ",
-                                 fileSize(getLastFileInFolder(indexFolder_staging, false)) / asciiAppearanceSize);
-                    }
-                    nRecsNow = fileSize(newStage) / asciiAppearanceSize;
-                    chunkSize = min(apps_per_chunk, nRecsNow);
-                    if (isSnapToGrid)
-                        isSnapToGrid = nRecsNow > 0;
-                    con = (isSnapToGrid || nRecsNow > chunkSize);
-                }
-
-                if (DebuggingOn) {
-                    LOG_FILE("newStage:             ", newStage);
-                    LOG_INFO("streamSizePre:        ", streamSize);
-                    LOG_INFO("streamSizePost:       ", fileSize(stageStreamFn) / asciiAppearanceSize);
-                }
-            }
-        }
-        unlockSection();
-    }
-
-    ::remove(stageStreamFn.c_str());
-    return shouldQuit() ? EXIT_FAILURE : EXIT_SUCCESS;
 }

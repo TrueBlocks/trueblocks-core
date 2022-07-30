@@ -39,8 +39,9 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 	}
 
 	logger.Log(logger.Info, "======================= Entering main =======================")
-	err = opts.Globals.PassItOn("blockScrape", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStrings(progressThen))
+	opts.Globals.PassItOn("blockScrape", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStrings(progressThen))
 	logger.Log(logger.Info, "======================= Leaving main =======================")
+	// return false, errors.New("X")
 	if utils.DebuggingOn {
 		newPinsFn := config.GetPathToCache(opts.Globals.Chain) + "tmp/chunks_created.txt"
 		fmt.Println(newPinsFn)
