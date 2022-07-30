@@ -66,32 +66,7 @@ inline void getLitBits(const address_t& addrIn, CUintArray& litBitsOut) {
 bool DebuggingOn = fileExists("./testing");
 
 #if 1
-size_t fff = 52;
-char x = '-';
-#define LOG_IN(a, f)                                                                                                   \
-    string_q nm = (f);                                                                                                 \
-    if ((a) != x) {                                                                                                    \
-        LOG_INFO("");                                                                                                  \
-        LOG_INFO("");                                                                                                  \
-        LOG_INFO("");                                                                                                  \
-        LOG_INFO("");                                                                                                  \
-        LOG_INFO("");                                                                                                  \
-    }                                                                                                                  \
-    LOG_INFO(string_q(12, (a)), " in ", (nm), " ", string_q(fff, (a)));
-
-#define LOG_OUT(a, b)                                                                                                  \
-    LOG_INFO(string_q(12, (a)), " out ", (nm), " ", (b), " ", string_q(fff, (a)));                                     \
-    if ((a) != x) {                                                                                                    \
-        LOG_INFO("");                                                                                                  \
-        LOG_INFO("");                                                                                                  \
-        LOG_INFO("");                                                                                                  \
-        LOG_INFO("");                                                                                                  \
-        LOG_INFO("");                                                                                                  \
-    }
-
 #define LOG_FILE(a, b) LOG_INFO((a), substitute((b), "/Users/jrush/Data/trueblocks/unchained/", "./"))
 #else
-#define LOG_IN(a, f)
-#define LOG_OUT(a, b)
 #define LOG_FILE(a, b)
 #endif

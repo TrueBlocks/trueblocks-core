@@ -7,6 +7,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrape"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
@@ -31,14 +32,21 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 		logger.Log(logger.Info, r)
 		logger.Log(logger.Info, cnt)
 		Report("Before Call --> ", opts.StartBlock, opts.AppsPerChunk, opts.BlockCnt, uint64(cnt), 0, true)
+		settings := scrape.GetSettings(opts.Globals.Chain)
+		logger.Log(logger.Info, "apps_per_chunk:      ", settings.Apps_per_chunk)
+		logger.Log(logger.Info, "firstSnap:           ", settings.First_snap)
+		logger.Log(logger.Info, "snapToGrid:          ", settings.Snap_to_grid)
 	}
 
+	logger.Log(logger.Info, "======================= Entering main =======================")
 	err = opts.Globals.PassItOn("blockScrape", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStrings(progressThen))
+	logger.Log(logger.Info, "======================= Leaving main =======================")
 	if utils.DebuggingOn {
 		newPinsFn := config.GetPathToCache(opts.Globals.Chain) + "tmp/chunks_created.txt"
 		fmt.Println(newPinsFn)
 		fmt.Println(file.AsciiFileToString(newPinsFn))
 	}
+
 	meta, _ := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
 	if utils.DebuggingOn {
 		fmt.Println(meta)
@@ -73,8 +81,9 @@ func FileCounts(indexPath string) {
 }
 
 func Report(msg string, startBlock, nAppsPerChunk, blockCount, nRecsThen, nRecsNow uint64, hide bool) {
-	if false { // ss.NRecsNow == ss.NRecsThen {
-		// logger.Log(logger.Info, "No new blocks...")
+	if nRecsNow == nRecsThen {
+		logger.Log(logger.Info, "No new blocks...")
+
 	} else {
 		if utils.DebuggingOn {
 			logger.Log(logger.Info, "-- golang --------------------------------------------------\n", msg)
