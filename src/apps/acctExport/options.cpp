@@ -137,13 +137,13 @@ bool COptions::parseArguments(string_q& command) {
             count = true;
 
         } else if (startsWith(arg, "-c:") || startsWith(arg, "--first_record:")) {
-            if (!confirmBlockNum("first_record", first_record, arg, latest))
+            if (!confirmUint("first_record", first_record, arg))
                 return false;
         } else if (arg == "-c" || arg == "--first_record") {
             return flag_required("first_record");
 
         } else if (startsWith(arg, "-e:") || startsWith(arg, "--max_records:")) {
-            if (!confirmBlockNum("max_records", max_records, arg, latest))
+            if (!confirmUint("max_records", max_records, arg))
                 return false;
         } else if (arg == "-e" || arg == "--max_records") {
             return flag_required("max_records");
