@@ -125,6 +125,10 @@ func (opts *ChunksOptions) validateChunks() error {
 		return validate.Usage("Choose either {0} or {1}, not both.", "--details", "--belongs")
 	}
 
+	if !opts.Details && opts.Globals.ToFile {
+		return validate.Usage("You may not use the {0} option without {1}.", "--to_file", "--details")
+	}
+
 	// Note this does not return if a migration is needed
 	// TODO: BOGUS - DO WE REALLY WANT TO DISALLOW INVESTIGATION OF OLDER INSTALLATIONS?
 	migrate.CheckBackLevelIndex(opts.Globals.Chain)

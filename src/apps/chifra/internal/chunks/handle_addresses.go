@@ -5,9 +5,13 @@
 package chunksPkg
 
 import (
+	"fmt"
 	"io"
+	"path/filepath"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/common/hexutil"
@@ -45,26 +49,55 @@ func (opts *ChunksOptions) showAddresses(ctx *WalkContext, path string, first bo
 			Offset:  obj.Offset,
 			Count:   obj.Count,
 		}
-		err = opts.Globals.RenderObject(r, first && cnt == 0)
-		if err != nil {
-			return false, err
+		if !opts.Globals.ToFile {
+			err = opts.Globals.RenderObject(r, first && cnt == 0)
+			if err != nil {
+				return false, err
+			}
 		}
 		cnt++
 
 		if opts.Details {
-			apps, err := indexChunk.ReadAppearanceRecordsAndResetOffset(&obj)
-			if err != nil {
-				return false, err
-			}
-			for _, app := range apps {
-				err = opts.Globals.RenderObject(app, false)
-				if err != nil {
-					return false, err
-				}
-			}
+			opts.HandleDetails(&indexChunk, &obj)
 		}
 	}
 
+	return true, nil
+}
+
+func (opts *ChunksOptions) HandleDetails(indexChunk *index.ChunkData, record *index.AddressRecord) (bool, error) {
+	apps, err := indexChunk.ReadAppearanceRecordsAndResetOffset(record)
+	if err != nil {
+		return false, err
+	}
+
+	if !opts.Globals.ToFile {
+		for _, app := range apps {
+			err = opts.Globals.RenderObject(app, false)
+			if err != nil {
+				return false, err
+			}
+		}
+		return true, nil
+	}
+
+	save := opts.Globals.Writer
+	defer func() {
+		opts.Globals.Writer = save
+	}()
+
+	b := strings.Builder{}
+	opts.Globals.Writer = &b
+	for _, app := range apps {
+		err = opts.Globals.RenderObject(app, false)
+		if err != nil {
+			return false, err
+		}
+	}
+
+	outFn := filepath.Join(opts.Globals.OutputFn, indexChunk.Range.String(), hexutil.Encode(record.Address.Bytes())) + ".txt"
+	fmt.Println("Wrote", len(apps), "to", outFn)
+	file.AppendToAsciiFile(outFn, b.String())
 	return true, nil
 }
 
