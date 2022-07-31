@@ -2,6 +2,7 @@ package index
 
 import (
 	"encoding/binary"
+	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -21,6 +22,11 @@ type HeaderRecord struct {
 	Hash            common.Hash
 	AddressCount    uint32
 	AppearanceCount uint32
+}
+
+func (h *HeaderRecord) String() string {
+	b, _ := json.Marshal(h)
+	return string(b)
 }
 
 func readHeader(fl *os.File) (header HeaderRecord, err error) {

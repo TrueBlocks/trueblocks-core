@@ -20,7 +20,7 @@ import (
 
 // HandleScrapeBlaze is called each time around the forever loop prior to calling into
 // Blaze to actually scrape the blocks.
-func (opts *ScrapeOptions) HandleScrapeBlaze(progressThen *rpcClient.MetaData) (ok bool, err error) {
+func (opts *ScrapeOptions) HandleScrapeBlaze(progressThen *rpcClient.MetaData, blazeOpts *BlazeOptions) (ok bool, err error) {
 
 	// Quit early if we're testing... TODO: BOGUS - REMOVE THIS
 	tes := os.Getenv("TEST_END_SCRAPE")
@@ -43,11 +43,6 @@ func (opts *ScrapeOptions) HandleScrapeBlaze(progressThen *rpcClient.MetaData) (
 		fmt.Println("----------------------------------------------------------------------------------------------")
 		logger.Log(logger.Info, "Handle ScrapeBlaze", os.Getenv("TEST_END_SCRAPE"))
 
-		envs := opts.getEnvStrings(progressThen)
-		fmt.Println("Calling with", opts.toCmdLine())
-		for _, e := range envs {
-			fmt.Println(e)
-		}
 		fmt.Println(progressThen)
 
 		logger.Log(logger.Info, "chain:", opts.Globals.Chain)
@@ -58,29 +53,36 @@ func (opts *ScrapeOptions) HandleScrapeBlaze(progressThen *rpcClient.MetaData) (
 	}
 
 	meta, _ := rpcClient.GetMetaData(opts.Globals.Chain, false /* testMode */)
-	blazeOpts := BlazeOptions{
+
+	// '28' behind head unless head is less or equal to than '28', then head
+	ripe := meta.Latest
+	if ripe > opts.UnripeDist {
+		ripe = meta.Latest - opts.UnripeDist
+	}
+
+	*blazeOpts = BlazeOptions{
 		Chain:         opts.Globals.Chain,
 		NChannels:     utils.Max(opts.BlockChanCnt, opts.AddrChanCnt),
 		NProcessed:    0,
 		StartBlock:    opts.StartBlock,
 		BlockCount:    opts.BlockCnt,
-		RipeBlock:     meta.Latest - utils.Min(meta.Latest, opts.UnripeDist),
+		RipeBlock:     ripe,
 		UnripeDist:    opts.UnripeDist,
 		RpcProvider:   config.GetRpcProvider(opts.Globals.Chain),
 		AppearanceMap: make(index.AddressAppearanceMap, 500000),
-		TsArray:       make([]tslib.Timestamp, opts.BlockCnt),
+		TsArray:       make([]tslib.Timestamp, 0, opts.BlockCnt),
 	}
 
 	_, err = blazeOpts.HandleBlaze(meta)
-	// Even though we may have errored, we want to process whatever data we know we
-	// have and is in a "good" state, such as timestamps
+	if err != nil {
+		logger.Log(logger.Info, "Error in call to Blaze", err)
+		os.RemoveAll(config.GetPathToIndex(opts.Globals.Chain) + "ripe")
+		return true, err
+	}
+	logger.Log(logger.Info, "Writing timestamps", len(blazeOpts.TsArray))
 	blazeOpts.CleanupPostScrape()
 	if utils.DebuggingOn {
 		logger.Log(logger.Info, "Size of AppMap:", len(blazeOpts.AppearanceMap))
-	}
-	if err != nil {
-		os.RemoveAll(config.GetPathToIndex(opts.Globals.Chain) + "ripe")
-		return true, err
 	}
 
 	return true, nil

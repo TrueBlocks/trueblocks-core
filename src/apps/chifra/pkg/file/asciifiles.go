@@ -10,6 +10,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"strings"
 )
 
 func AsciiFileToLines(filename string) []string {
@@ -52,5 +53,21 @@ func AppendToAsciiFile(filename, value string) error {
 	if err != nil {
 		return err
 	}
+	return file.Sync()
+}
+
+func LinesToAsciiFile(filename string, value []string) error {
+	file, err := os.Create(filename)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	lines := strings.Join(value, "\n") + "\n"
+	_, err = io.WriteString(file, lines)
+	if err != nil {
+		return err
+	}
+
 	return file.Sync()
 }

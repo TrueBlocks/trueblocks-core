@@ -32,7 +32,10 @@ func (opts *ScrapeOptions) HandleScrape() error {
 	}
 
 	for {
-		if ok, err := opts.HandleScrapeBlaze(progress); !ok || err != nil {
+		opts.ListIndexFolder(config.GetPathToIndex(opts.Globals.Chain), "Prior to the Loop")
+
+		blazeOpts := BlazeOptions{}
+		if ok, err := opts.HandleScrapeBlaze(progress, &blazeOpts); !ok || err != nil {
 			if !ok {
 				break
 			}
@@ -40,7 +43,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 			goto PAUSE
 		}
 
-		if ok, err := opts.HandleScrapeConsolidate(progress); !ok || err != nil {
+		if ok, err := opts.HandleScrapeConsolidate(progress, &blazeOpts); !ok || err != nil {
 			if !ok {
 				break
 			}

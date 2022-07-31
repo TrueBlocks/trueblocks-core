@@ -2,13 +2,11 @@ package bloom
 
 import (
 	"encoding/binary"
-	"fmt"
 	"io"
 	"os"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // var writeMutex sync.Mutex
@@ -17,9 +15,6 @@ func (bl *ChunkBloom) WriteBloom(chain, bloomPath string) error {
 	// writeMutex.Lock()
 	// trapCh := sigintTrap.Enable(context.WithCancel(context.Background()))
 
-	if utils.DebuggingOn {
-		fmt.Println("In WriteBloom", bloomPath)
-	}
 	// TODO: BOGUS - YIKES
 	tempPath := strings.Replace(bloomPath, "unchained/sepolia/blooms/", "cache/sepolia/tmp/", -1)
 	tempPath = strings.Replace(tempPath, "unchained/gnosis/blooms/", "cache/gnosis/tmp/", -1)
@@ -56,8 +51,6 @@ func (bl *ChunkBloom) WriteBloom(chain, bloomPath string) error {
 	}
 	// Don't defer this because we want it to be closed before we copy it
 	fp.Close()
-	// *bl = ChunkBloom{}
-	// bl.ReadBloom(tempPath)
 
 	os.Remove(bloomPath)
 	_, err = file.Copy(tempPath, bloomPath)
@@ -66,14 +59,3 @@ func (bl *ChunkBloom) WriteBloom(chain, bloomPath string) error {
 	}
 	return nil
 }
-
-// writeBloom
-//     output.Write((uint32_t)blooms.size());
-//     for (auto bl : blooms) {
-//         output.Write(bl.nInserted);
-//         output.Write(bl.bits, sizeof(uint8_t), BLOOM_WIDTH_IN_BYTES);
-//     }
-//     output.Release();
-//     unlockSection();
-//     return true;
-// }

@@ -45,12 +45,12 @@ func (opts *ScrapeOptions) HandlePrepare(progressThen *rpcClient.MetaData) (ok b
 			TransactionId: uint32(i),
 		})
 	}
-	_, err = index.WriteChunk(opts.Globals.Chain, index.ToIndexPath(bloomPath), appMap, len(allocs))
+	_, err = index.WriteChunk(opts.Globals.Chain, index.ToIndexPath(bloomPath), appMap, len(allocs), -1)
 	if err != nil {
 		return false, err
 	}
 	if utils.DebuggingOn {
-		logger.Log(logger.Info, "Size of appMap:", len(appMap))
+		logger.Log(logger.Info, "Wrote chunk for block zero:", len(appMap))
 	}
 	array := []tslib.Timestamp{}
 	array = append(array, tslib.Timestamp{

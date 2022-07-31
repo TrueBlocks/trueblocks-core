@@ -1,6 +1,7 @@
 package scrapePkg
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -41,6 +42,14 @@ type BlazeOptions struct {
 	BlockWg       sync.WaitGroup             `json:"-"`
 	AppearanceWg  sync.WaitGroup             `json:"-"`
 	TsWg          sync.WaitGroup             `json:"-"`
+}
+
+func (opts *BlazeOptions) String() string {
+	copy := *opts
+	copy.AppearanceMap = index.AddressAppearanceMap{}
+	copy.TsArray = []tslib.Timestamp{}
+	b, _ := json.MarshalIndent(copy, "", "  ")
+	return string(b)
 }
 
 // HandleBlaze does the actual scraping, walking through block_cnt blocks and querying traces and logs
@@ -123,10 +132,11 @@ func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChan
 			logs:        logs,
 		}
 
-		tsChannel <- tslib.Timestamp{
+		ts := tslib.Timestamp{
 			Bn: uint32(blockNum),
 			Ts: uint32(rpcClient.GetBlockTimestamp(opts.RpcProvider, uint64(blockNum))),
 		}
+		tsChannel <- ts
 	}
 
 	return

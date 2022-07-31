@@ -17,7 +17,6 @@ import (
 )
 
 type FileRange struct {
-	// TODO I don't like using uint64s and uint32s everywhere - can't we use just ints sometimes?
 	First uint64
 	Last  uint64
 }

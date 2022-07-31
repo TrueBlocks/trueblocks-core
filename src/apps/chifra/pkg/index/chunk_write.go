@@ -12,16 +12,15 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/crypto"
 )
 
 type AddressAppearanceMap map[string][]AppearanceRecord
 
-func WriteChunk(chain, indexPath string, addAppMap AddressAppearanceMap, nApps int) (uint64, error) {
+func WriteChunk(chain, indexPath string, addAppMap AddressAppearanceMap, nApps, snapper int) (uint64, error) {
 	addressTable := make([]AddressRecord, 0, len(addAppMap))
 	appearanceTable := make([]AppearanceRecord, 0, nApps)
 
@@ -50,19 +49,6 @@ func WriteChunk(chain, indexPath string, addAppMap AddressAppearanceMap, nApps i
 	}
 
 	rel := strings.Replace(indexPath, config.GetPathToIndex(chain), "$INDEX/", -1)
-	// TODO: BOGUS - TESTING SCRAPING
-	if utils.DebuggingOn {
-		// We have everything we need here, properly sorted with all fields completed
-		fmt.Println("Writing", rel)
-		fmt.Printf("%x,%s,%d,%d\n", file.MagicNumber, hexutil.Encode(crypto.Keccak256([]byte(version.ManifestVersion))), len(addressTable), len(appearanceTable))
-		for _, addrRec := range addressTable {
-			fmt.Println(addrRec.Address, addrRec.Offset, addrRec.Count)
-		}
-		for _, appRec := range appearanceTable {
-			fmt.Println(appRec.BlockNumber, appRec.TransactionId)
-		}
-		fmt.Println("In WriteIndex", indexPath)
-	}
 
 	// TODO: BOGUS - YIKES!
 	tempPath := strings.Replace(indexPath, "unchained/sepolia/finalized/", "cache/sepolia/tmp/", -1)
@@ -106,17 +92,11 @@ func WriteChunk(chain, indexPath string, addAppMap AddressAppearanceMap, nApps i
 	// Don't defer this because we want it to be closed before we copy it
 	fp.Close()
 
-	fmt.Println("Wrote", len(addAppMap), "records to", rel)
-	// TODO: BOGUS - TESTING SCRAPING
-	if utils.DebuggingOn {
-		nBlooms, nInserted, nBitsLit, nBitsNotLit, sz, bitsLit := bl.GetStats()
-		fmt.Println("nBlooms:    ", nBlooms)
-		fmt.Println("nInserted:  ", nInserted)
-		fmt.Println("nBitsLit:   ", nBitsLit)
-		fmt.Println("nBitsNotLit:", nBitsNotLit)
-		fmt.Println("sz:         ", sz)
-		fmt.Println("bitsLit:    ", bitsLit)
+	snapMsg := ""
+	if snapper != -1 {
+		snapMsg = fmt.Sprintf("(isSnap to modulo %d blocks)", snapper)
 	}
+	logger.Log(logger.Info, "Wrote", len(appearanceTable), "records to", rel, snapMsg)
 
 	os.Remove(indexPath)
 	_, err = file.Copy(tempPath, indexPath)
@@ -228,45 +208,8 @@ type Renderer interface {
 	RenderObject(data interface{}, first bool) error
 }
 
-func TestWrite(chain, path string, rend Renderer) {
-	path = ToIndexPath(path)
-
-	indexChunk, err := NewChunkData(path)
-	if err != nil {
-		fmt.Println(err.Error())
-		return
-	}
-	defer indexChunk.Close()
-
-	_, err = indexChunk.File.Seek(int64(HeaderWidth), io.SeekStart)
-	if err != nil {
-		fmt.Println(err.Error())
-		return
-	}
-
-	addrAppMap := make(AddressAppearanceMap, indexChunk.Header.AddressCount)
-	for i := 0; i < int(indexChunk.Header.AddressCount); i++ {
-		obj := AddressRecord{}
-		err := obj.ReadAddress(indexChunk.File)
-		if err != nil {
-			fmt.Println(err.Error())
-			return
-		}
-		apps, err := indexChunk.ReadAppearanceRecordsAndResetOffset(&obj)
-		if err != nil {
-			fmt.Println(err.Error())
-			return
-		}
-		addr := hexutil.Encode(obj.Address.Bytes()) // a lowercase string
-		addrAppMap[addr] = append(addrAppMap[addr], apps...)
-	}
-
-	WriteChunk(chain, path, addrAppMap, len(addrAppMap))
-
-	// TODO: BOGUS - PINNING WHEN WRITING IN GOLANG
-	// if false {
-	// 	rng := RangeFromPath(path)
-	// 	newPinsFn := config.GetPathToCache(opts.Globals.Chain) + "tmp/chunks_created.txt"
-	// 	file.AppendToAsciiFile(newPinsFn, rng+"\n")
-	// }
-}
+// TODO: BOGUS - PINNING WHEN WRITING IN GOLANG
+// if false {
+// 	rng := RangeFromPath(path)
+// 	newPinsFn := config.GetPathToCache(opts.Globals.Chain) + "tmp/chunks_created.txt"
+// 	file.AppendToAsciiFile(newPinsFn, rng+"\n")
