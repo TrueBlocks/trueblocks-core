@@ -398,17 +398,15 @@ func (opts *BlazeOptions) WriteAppearances(meta *rpcClient.MetaData, bn int, add
 	}
 
 	// TODO: BOGUS - TESTING SCRAPING
-	if false {
-		// TODO: THIS IS A PERFORMANCE ISSUE PRINTING EVERY BLOCK
-		step := uint64(7)
-		if opts.NProcessed%step == 0 {
-			dist := uint64(0)
-			if opts.RipeBlock > uint64(bn) {
-				dist = (opts.RipeBlock - uint64(bn))
-			}
-			f := "-------- ( ------)- <PROG>  : Scraping %-04d of %-04d at block %d of %d (%d blocks from head)\r"
-			fmt.Fprintf(os.Stderr, f, opts.NProcessed, opts.BlockCount, bn, opts.RipeBlock, dist)
+	// TODO: THIS IS A PERFORMANCE ISSUE PRINTING EVERY BLOCK
+	step := uint64(7)
+	if opts.NProcessed%step == 0 {
+		dist := uint64(0)
+		if opts.RipeBlock > uint64(bn) {
+			dist = (opts.RipeBlock - uint64(bn))
 		}
+		f := "-------- ( ------)- <PROG>  : Scraping %-04d of %-04d at block %d of %d (%d blocks from head)\r"
+		fmt.Fprintf(os.Stderr, f, opts.NProcessed, opts.BlockCount, bn, opts.RipeBlock, dist)
 	}
 	opts.NProcessed++
 	return

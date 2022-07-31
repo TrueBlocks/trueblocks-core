@@ -51,11 +51,9 @@ func (opts *ScrapeOptions) HandlePrepare(progressThen *rpcClient.MetaData) (ok b
 	tslib.Append(opts.Globals.Chain, array)
 
 	// TODO: BOGUS - PINNING WHEN WRITING IN GOLANG
-	if opts.Pin {
-		rng := "000000000-000000000"
-		newPinsFn := config.GetPathToCache(opts.Globals.Chain) + "tmp/chunks_created.txt"
-		file.AppendToAsciiFile(newPinsFn, rng+"\n")
-	}
+	rng := "000000000-000000000"
+	newPinsFn := config.GetPathToCache(opts.Globals.Chain) + "tmp/chunks_created.txt"
+	file.AppendToAsciiFile(newPinsFn, rng+"\n")
 
 	// In this special case, we need to postScrape here since we've created an index file
 	return opts.HandleScrapePin(progressThen)

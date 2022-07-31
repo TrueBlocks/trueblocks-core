@@ -9,6 +9,7 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
@@ -111,15 +112,15 @@ func WriteChunk(chain, indexPath string, addAppMap AddressAppearanceMap, nApps, 
 	}
 
 	// TODO: BOGUS - IF WE PINNED HERE, WE COULD TELL IF THE WHOLE THING WAS OKAY
+	rng, _ := cache.RangeFromFilename(indexPath)
+	newPinsFn := config.GetPathToCache(chain) + "tmp/chunks_created.txt"
+	cur := file.AsciiFileToString(newPinsFn)
+	cur += rng.String() + "\n"
+	file.AppendToAsciiFile(newPinsFn, cur)
+
 	return 0, nil
 }
 
 type Renderer interface {
 	RenderObject(data interface{}, first bool) error
 }
-
-// TODO: BOGUS - PINNING WHEN WRITING IN GOLANG
-// if false {
-// 	rng := RangeFromPath(path)
-// 	newPinsFn := config.GetPathToCache(opts.Globals.Chain) + "tmp/chunks_created.txt"
-// 	file.AppendToAsciiFile(newPinsFn, rng+"\n")
