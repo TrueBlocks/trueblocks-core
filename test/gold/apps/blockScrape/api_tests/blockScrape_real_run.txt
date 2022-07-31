@@ -1,6 +1,6 @@
 scrape?sleep=.5&pin&logLevel=8
 {
   "errors": [
-    "The --pin option requires a locally running IPFS daemon"
+    "Cannot test block scraper"
   ]
 }

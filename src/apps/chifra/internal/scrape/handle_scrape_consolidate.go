@@ -19,6 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
+const DebuggingOn = true
 const asciiAppearanceSize = 59
 
 // HandleScrapeConsolidate calls into the block scraper to (a) call Blaze and (b) consolidate if applicable
@@ -35,7 +36,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 	cnt := file.FileSize(stageFn) / asciiAppearanceSize
 
 	settings := scrape.GetSettings(opts.Globals.Chain)
-	if utils.DebuggingOn {
+	if DebuggingOn {
 		logger.Log(logger.Info, "In constructor: ", stageFn)
 		logger.Log(logger.Info, r)
 		logger.Log(logger.Info, cnt)
@@ -50,21 +51,21 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 	opts.ListIndexFolder(indexPath, "After Consolidate")
 	logger.Log(logger.Info, "======================= Leaving main =======================")
 
-	if utils.DebuggingOn {
+	if DebuggingOn {
 		newPinsFn := config.GetPathToCache(opts.Globals.Chain) + "tmp/chunks_created.txt"
 		fmt.Println(newPinsFn)
 		fmt.Println(file.AsciiFileToString(newPinsFn))
 	}
 
 	meta, _ := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
-	if utils.DebuggingOn {
+	if DebuggingOn {
 		fmt.Println(meta)
 	}
 
 	FileCounts(indexPath)
 	cntBeforeCall := utils.Max(progressThen.Ripe, utils.Max(progressThen.Staging, progressThen.Finalized))
 	cntAfterCall := utils.Max(meta.Ripe, utils.Max(meta.Staging, meta.Finalized))
-	if utils.DebuggingOn {
+	if DebuggingOn {
 		fmt.Println("cntBeforeCall:", cntBeforeCall)
 		fmt.Println("cntAfterCall:", cntAfterCall)
 		fmt.Println("diff", (cntAfterCall - cntBeforeCall))
@@ -75,7 +76,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 }
 
 func FileCounts(indexPath string) {
-	if utils.DebuggingOn {
+	if DebuggingOn {
 		folders := []string{
 			"finalized/",
 			"blooms/",
@@ -94,7 +95,7 @@ func Report(msg string, startBlock, nAppsPerChunk, blockCount, nRecsThen, nRecsN
 		logger.Log(logger.Info, "No new blocks...")
 
 	} else {
-		if utils.DebuggingOn {
+		if DebuggingOn {
 			logger.Log(logger.Info, "-- golang --------------------------------------------------\n", msg)
 			logger.Log(logger.Info, "startBlock:   ", startBlock)
 			logger.Log(logger.Info, "nAppsPerChunk:", nAppsPerChunk)

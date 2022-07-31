@@ -9,11 +9,9 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
@@ -21,10 +19,6 @@ import (
 // true if the processing should continue, false otherwise. Currently, the only thing to do
 // is write the zero block Index Chunk / Bloom filter pair if it doesn't exist.
 func (opts *ScrapeOptions) HandlePrepare(progressThen *rpcClient.MetaData) (ok bool, err error) {
-	if utils.DebuggingOn {
-		logger.Log(logger.Info, "HandlePrepare")
-	}
-
 	pathObj := cache.NewCachePath(opts.Globals.Chain, cache.Index_Bloom)
 	bloomPath := pathObj.GetFullPath("000000000-000000000")
 	if file.FileExists(bloomPath) {
@@ -48,9 +42,6 @@ func (opts *ScrapeOptions) HandlePrepare(progressThen *rpcClient.MetaData) (ok b
 	_, err = index.WriteChunk(opts.Globals.Chain, index.ToIndexPath(bloomPath), appMap, len(allocs), -1)
 	if err != nil {
 		return false, err
-	}
-	if utils.DebuggingOn {
-		logger.Log(logger.Info, "Wrote chunk for block zero:", len(appMap))
 	}
 	array := []tslib.Timestamp{}
 	array = append(array, tslib.Timestamp{

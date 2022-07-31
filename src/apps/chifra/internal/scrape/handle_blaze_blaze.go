@@ -398,7 +398,7 @@ func (opts *BlazeOptions) WriteAppearances(meta *rpcClient.MetaData, bn int, add
 	}
 
 	// TODO: BOGUS - TESTING SCRAPING
-	if !utils.DebuggingOn {
+	if false {
 		// TODO: THIS IS A PERFORMANCE ISSUE PRINTING EVERY BLOCK
 		step := uint64(7)
 		if opts.NProcessed%step == 0 {

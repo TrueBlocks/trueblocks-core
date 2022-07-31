@@ -76,13 +76,6 @@ func (opts *WhenOptions) HandleWhenTimestampsCheck() error {
 
 				check2 = true
 				check4 = bn == onDisc.BlockNumber
-
-				if utils.DebuggingOn {
-					fmt.Println("row#:", bn, prev.TimeStamp, onDisc.TimeStamp, onDisc.TimeStamp-prev.TimeStamp, check1)
-					fmt.Println("row#:", bn, 0, 0, 0, check2)
-					fmt.Println("row#:", bn, prev.BlockNumber, onDisc.BlockNumber, onDisc.BlockNumber-prev.BlockNumber, check3)
-					fmt.Println("row#:", bn, bn, onDisc.BlockNumber, onDisc.BlockNumber-bn, check4)
-				}
 			}
 
 			status := "Okay "
@@ -102,7 +95,7 @@ func (opts *WhenOptions) HandleWhenTimestampsCheck() error {
 				status = "Error"
 			}
 
-			if !utils.DebuggingOn {
+			if false { // !utils.DebuggingOn {
 				scanBar.Report(opts.Globals.Writer, status, fmt.Sprintf("%d.%d", block.BlockNumber, block.TimeStamp))
 			}
 		}

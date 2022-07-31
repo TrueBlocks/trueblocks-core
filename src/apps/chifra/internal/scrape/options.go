@@ -112,7 +112,7 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 		case "firstSnap":
 			opts.FirstSnap = globals.ToUint64(value[0])
 		case "allowMissing":
-			opts.AllowMissing = false
+			opts.AllowMissing = true
 		case "startBlock":
 			opts.StartBlock = globals.ToUint64(value[0])
 		case "modes":

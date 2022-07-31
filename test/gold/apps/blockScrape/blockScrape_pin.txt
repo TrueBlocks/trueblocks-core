@@ -3,7 +3,7 @@ TEST[DATE|TIME] Pin:  true
 TEST[DATE|TIME] AppsPerChunk:  2000000
 TEST[DATE|TIME] FirstSnap:  2000000
 TEST[DATE|TIME] Format:  txt
-Error: The --pin option requires a locally running IPFS daemon
+Error: Cannot test block scraper
 Usage:
   chifra scrape [flags]
 

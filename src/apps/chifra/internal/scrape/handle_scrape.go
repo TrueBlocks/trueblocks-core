@@ -16,7 +16,6 @@ package scrapePkg
 // be found in the LICENSE file.
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 )
@@ -32,8 +31,6 @@ func (opts *ScrapeOptions) HandleScrape() error {
 	}
 
 	for {
-		opts.ListIndexFolder(config.GetPathToIndex(opts.Globals.Chain), "Prior to the Loop")
-
 		blazeOpts := BlazeOptions{}
 		if ok, err := opts.HandleScrapeBlaze(progress, &blazeOpts); !ok || err != nil {
 			if !ok {
@@ -63,9 +60,6 @@ func (opts *ScrapeOptions) HandleScrape() error {
 	PAUSE:
 		opts.Z_6_pause(progress)
 	}
-
-	indexPath := config.GetPathToIndex(opts.Globals.Chain)
-	FileCounts(indexPath)
 
 	return nil
 }

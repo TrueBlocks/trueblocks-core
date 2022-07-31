@@ -173,6 +173,3 @@ func ToBigInt(str string) big.Int {
 	}
 	return ret
 }
-
-// TODO: BOGUS - TESTING SCRAPING
-var DebuggingOn = file.FileExists("./testing")

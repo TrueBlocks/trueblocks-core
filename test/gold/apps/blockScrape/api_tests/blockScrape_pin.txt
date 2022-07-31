@@ -1,6 +1,6 @@
 scrape?pin
 {
   "errors": [
-    "The --pin option requires a locally running IPFS daemon"
+    "Cannot test block scraper"
   ]
 }

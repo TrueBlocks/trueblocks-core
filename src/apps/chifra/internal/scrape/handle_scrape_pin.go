@@ -19,7 +19,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
@@ -49,14 +48,6 @@ func (opts *ScrapeOptions) HandleScrapePin(progressThen *rpcClient.MetaData) (ok
 	newPinsFn := config.GetPathToCache(opts.Globals.Chain) + "tmp/chunks_created.txt"
 	if !file.FileExists(newPinsFn) {
 		return true, errors.New("chunks_created file not found, but there's been progress")
-	}
-
-	// TODO: BOGUS - TESTING SCRAPING
-	if utils.DebuggingOn {
-		rel := strings.Replace(newPinsFn, config.GetPathToCache(opts.Globals.Chain), "$CACHE", -1)
-		fmt.Println()
-		fmt.Println("----------------------------------------------------------------------------------------------")
-		logger.Log(logger.Info, "PostScrape", rel, file.FileSize(newPinsFn))
 	}
 
 	lines := file.AsciiFileToLines(newPinsFn)

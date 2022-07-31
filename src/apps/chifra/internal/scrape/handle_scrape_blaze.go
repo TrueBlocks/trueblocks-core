@@ -5,7 +5,6 @@ package scrapePkg
 // be found in the LICENSE file.
 
 import (
-	"fmt"
 	"os"
 	"sort"
 	"strconv"
@@ -38,20 +37,6 @@ func (opts *ScrapeOptions) HandleScrapeBlaze(progressThen *rpcClient.MetaData, b
 	}
 
 	// TODO: BOGUS - TESTING SCRAPING
-	if utils.DebuggingOn {
-		fmt.Println()
-		fmt.Println("----------------------------------------------------------------------------------------------")
-		logger.Log(logger.Info, "Handle ScrapeBlaze", os.Getenv("TEST_END_SCRAPE"))
-
-		fmt.Println(progressThen)
-
-		logger.Log(logger.Info, "chain:", opts.Globals.Chain)
-		logger.Log(logger.Info, "start_block:", opts.StartBlock)
-		logger.Log(logger.Info, "block_cnt:", opts.BlockCnt)
-		logger.Log(logger.Info, "block_chan_cnt:", opts.BlockChanCnt)
-		logger.Log(logger.Info, "addr_chan_cnt:", opts.AddrChanCnt)
-	}
-
 	meta, _ := rpcClient.GetMetaData(opts.Globals.Chain, false /* testMode */)
 
 	// '28' behind head unless head is less or equal to than '28', then head
@@ -81,7 +66,7 @@ func (opts *ScrapeOptions) HandleScrapeBlaze(progressThen *rpcClient.MetaData, b
 	}
 	logger.Log(logger.Info, "Writing timestamps", len(blazeOpts.TsArray))
 	blazeOpts.CleanupPostScrape()
-	if utils.DebuggingOn {
+	if DebuggingOn {
 		logger.Log(logger.Info, "Size of AppMap:", len(blazeOpts.AppearanceMap))
 	}
 

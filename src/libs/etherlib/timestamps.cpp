@@ -114,15 +114,11 @@ bool freshenTimestamps(blknum_t minBlock) {
         } else {
             file << ((uint32_t)block.blockNumber) << ((uint32_t)block.timestamp);
             file.flush();
-            // TODO: BOGUS - TESTING SCRAPING
-            bool DebuggingOn = fileExists("./testing");
-            if (!DebuggingOn) {
-                ostringstream post;
-                post << " (" << ((minBlock + 1) - block.blockNumber);
-                post << " " << block.timestamp << " - " << ts_2_Date(block.timestamp).Format(FMT_EXPORT) << ")";
-                post << "             \r";
-                LOG_PROGRESS(UPDATE, block.blockNumber, minBlock, post.str());
-            }
+            ostringstream post;
+            post << " (" << ((minBlock + 1) - block.blockNumber);
+            post << " " << block.timestamp << " - " << ts_2_Date(block.timestamp).Format(FMT_EXPORT) << ")";
+            post << "             \r";
+            LOG_PROGRESS(UPDATE, block.blockNumber, minBlock, post.str());
         }
     }
     // LOG_PROGRESS(COMPLETE, block.blockNumber, minBlock, string_q(80, ' '));
