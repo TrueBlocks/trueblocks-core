@@ -14,61 +14,58 @@ int main(int argc, const char* argv[]) {
     uint64_t first_snap = str_2_Uint(getEnvStr("TB_SETTINGS_FIRSTSNAP"));
     uint64_t snap_to_grid = str_2_Uint(getEnvStr("TB_SETTINGS_SNAPTOGRID"));
 
-    CStringArray filesA;
-    listFilesInFolder(filesA, indexFolder_ripe, false);
-    string_q firstFile = getFirstFileInFolder(indexFolder_staging, false);
-    uint64_t first = NOPOS;
+    {
+        CStringArray filesX;
+        listFilesInFolder(filesX, indexFolder_ripe, false);
+        string_q firstFile = getFirstFileInFolder(indexFolder_staging, false);
+        uint64_t first = NOPOS;
 
-    uint64_t recordCount = fileSize(firstFile) / asciiAppearanceSize;
-    if (recordCount > 0) {
-        CStringArray records;
-        records.reserve(uint64_t(recordCount * 1.2));
-        asciiFileToLines(firstFile, records);
-        CUintArray parts;
-        explode(parts, records[0], '\t');
-        first = parts[1];
-    } else {
-        first = 1;
-    }
-
-    cerr << "Found " << filesA.size() << " filesA in " << indexFolder_ripe << endl;
-    cerr << string_q(120, '=') << endl;
-    cerr << "first file:     " << firstFile << endl;
-    cerr << "recordCount:    " << recordCount << endl;
-    cerr << "apps_per_chunk: " << apps_per_chunk << endl;
-    cerr << "first_snap:     " << first_snap << endl;
-    cerr << "snap_to_grid:   " << snap_to_grid << endl;
-    cerr << "first block:    " << first << endl;
-    cerr << string_q(120, '=') << endl;
-
-    blkrange_t curRange{first, 0};
-    CBlockRangeArray cuts;
-    for (auto file : filesA) {
-        blknum_t bn = path_2_Bn(file);
-        recordCount += fileSize(file) / asciiAppearanceSize;
-        bool isSnap = (bn > first_snap && !(bn % snap_to_grid));
-        bool isOvertop = (recordCount >= apps_per_chunk);
-
-        if (isSnap || isOvertop) {
-            curRange.second = max(curRange.second, bn);
-            if (isSnap) {
-                cerr << "Snap at " << curRange << endl;
-            } else {
-                cerr << "Overtops at " << curRange << endl;
-            }
-            cuts.push_back(curRange);
-            curRange.first = curRange.second + 1;
-            recordCount = 0;
+        uint64_t recordCount = fileSize(firstFile) / asciiAppearanceSize;
+        if (recordCount > 0) {
+            CStringArray records;
+            records.reserve(uint64_t(recordCount * 1.2));
+            asciiFileToLines(firstFile, records);
+            CUintArray parts;
+            explode(parts, records[0], '\t');
+            first = parts[1];
+        } else {
+            first = 1;
         }
-        // ::remove(file.c_str());
-    }
 
-    cerr << string_q(120, '~') << endl;
-    for (auto cut : cuts) {
-        bool isSnap = !(cut.second % snap_to_grid);
-        cerr << cut << " " << !isSnap << " " << (isSnap) << endl;
+        cerr << "Found " << filesX.size() << " filesX in " << indexFolder_ripe << endl;
+        cerr << string_q(120, '=') << endl;
+        cerr << "first file:     " << firstFile << endl;
+        cerr << "recordCount:    " << recordCount << endl;
+        cerr << "first block:    " << first << endl;
+        cerr << string_q(120, '=') << endl;
+
+        blkrange_t curRange{first, 0};
+        CBlockRangeArray cuts;
+        for (auto file : filesX) {
+            blknum_t bn = path_2_Bn(file);
+            recordCount += fileSize(file) / asciiAppearanceSize;
+            bool isSnap = (bn > first_snap && !(bn % snap_to_grid));
+            bool isOvertop = (recordCount >= apps_per_chunk);
+
+            if (isSnap || isOvertop) {
+                curRange.second = max(curRange.second, bn);
+                if (isSnap) {
+                    cerr << "Snap at " << curRange << endl;
+                } else {
+                    cerr << "Overtops at " << curRange << endl;
+                }
+                cuts.push_back(curRange);
+                curRange.first = curRange.second + 1;
+                recordCount = 0;
+            }
+            // ::remove(file.c_str());
+        }
+
+        for (auto cut : cuts) {
+            bool isSnap = !(cut.second % snap_to_grid);
+            cerr << cut << " " << !isSnap << " " << (isSnap) << endl;
+        }
     }
-    cerr << string_q(120, '~') << endl;
 
 #if 1
     cerr << "Old loop" << endl;
@@ -86,6 +83,16 @@ int main(int argc, const char* argv[]) {
     cerr << "lastFileInStage: " << lastFileInStage << endl;
     cerr << string_q(120, '-') << endl;
     for (auto file : files) {
+        if (shouldQuit()) {
+            cleanFolder(indexFolder_ripe);
+            cleanFolder(indexFolder_unripe);
+            ::remove(stageStreamFn.c_str());
+            cerr << string_q(120, '=') << endl;
+            cerr << "Leaving because of Control+C" << endl;
+            cerr << string_q(120, '=') << endl;
+            return EXIT_FAILURE;
+        }
+
         lockSection();
 
         uint64_t bn = path_2_Bn(file);

@@ -1,6 +1,7 @@
 package scrapePkg
 
 import (
+	"errors"
 	"fmt"
 	"strings"
 
@@ -20,7 +21,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 	FileCounts(indexPath)
 
 	if !opts.verifyRipeFiles() {
-		return true, nil
+		return true, errors.New("non-sequential files")
 	}
 
 	stageFn, _ := file.LatestFileInFolder(indexPath + "staging/")
@@ -107,7 +108,7 @@ func Report(msg string, startBlock, nAppsPerChunk, blockCount, nRecsThen, nRecsN
 		pct := float64(nRecsNow) / float64(nAppsPerChunk)
 		pBlk := float64(seen) / float64(blockCount)
 		height := startBlock + blockCount - 1
-		msg := "Block {%d}: have {%d} addrs of {%d} ({%0.1f}%%). Need {%d} more. Found {%d} records ({%0.2f} apps/blk)."
+		msg := "Block {%d}: have {%d} addrs of {%d} ({%0.1f%%}). Need {%d} more. Found {%d} records ({%0.2f} apps/blk)."
 		msg = strings.Replace(msg, "{", colors.Green, -1)
 		msg = strings.Replace(msg, "}", colors.Off, -1)
 		logger.Log(logger.Info, fmt.Sprintf(msg, height, nRecsNow, nAppsPerChunk, pct*100, need, seen, pBlk))
