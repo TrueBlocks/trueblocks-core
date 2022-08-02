@@ -113,10 +113,7 @@ func WriteChunk(chain, indexPath string, addAppMap AddressAppearanceMap, nApps, 
 
 	// TODO: BOGUS - IF WE PINNED HERE, WE COULD TELL IF THE WHOLE THING WAS OKAY
 	rng, _ := cache.RangeFromFilename(indexPath)
-	newPinsFn := config.GetPathToCache(chain) + "tmp/chunks_created.txt"
-	cur := file.AsciiFileToString(newPinsFn)
-	cur += rng.String() + "\n"
-	file.AppendToAsciiFile(newPinsFn, cur)
+	file.AppendToAsciiFile(config.GetPathToCache(chain)+"tmp/chunks_created.txt", rng.String()+"\n")
 
 	return 0, nil
 }

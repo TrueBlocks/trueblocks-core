@@ -95,9 +95,9 @@ func (opts *ChunksOptions) HandleDetails(indexChunk *index.ChunkData, record *in
 		}
 	}
 
-	outFn := filepath.Join(opts.Globals.OutputFn, indexChunk.Range.String(), hexutil.Encode(record.Address.Bytes())) + ".txt"
+	outFn := filepath.Join(opts.Globals.OutputFn, indexChunk.Range.String()+"_"+hexutil.Encode(record.Address.Bytes())) + ".txt"
 	fmt.Println("Wrote", len(apps), "to", outFn)
-	file.AppendToAsciiFile(outFn, b.String())
+	file.StringToAsciiFile(outFn, b.String())
 	return true, nil
 }
 

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"os"
 	"sort"
 	"strconv"
@@ -12,7 +13,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -111,7 +111,8 @@ func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChan
 		}
 		err = rpcClient.FromRpc(opts.RpcProvider, &tracePayload, &traces)
 		if err != nil {
-			return fmt.Errorf("call to trace_block returned error: %s", err)
+			log.Println("rpcCall failed at block", blockNum, err)
+			return err
 		}
 
 		var logs rpcClient.Logs
@@ -123,7 +124,8 @@ func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChan
 		}
 		err = rpcClient.FromRpc(opts.RpcProvider, &logsPayload, &logs)
 		if err != nil {
-			return fmt.Errorf("call to eth_getLogs returned error: %s", err)
+			log.Println("rpcCall failed at block", blockNum, err)
+			return err
 		}
 
 		appearanceChannel <- ScrapedData{
@@ -151,17 +153,20 @@ func (opts *BlazeOptions) BlazeProcessAppearances(meta *rpcClient.MetaData, appe
 		addressMap := make(map[string]bool)
 		err = opts.BlazeExtractFromTraces(sData.blockNumber, &sData.traces, addressMap)
 		if err != nil {
-			return
+			log.Println("BlazeExtractFromTraces returned error", sData.blockNumber, err)
+			return err
 		}
 
 		err = opts.BlazeExtractFromLogs(sData.blockNumber, &sData.logs, addressMap)
 		if err != nil {
-			return
+			log.Println("BlazeExtractFromLogs returned error", sData.blockNumber, err)
+			return err
 		}
 
 		err = opts.WriteAppearances(meta, sData.blockNumber, addressMap)
 		if err != nil {
-			return
+			log.Println("WriteAppearances returned error", sData.blockNumber, err)
+			return err
 		}
 	}
 	return
@@ -187,12 +192,13 @@ func (opts *BlazeOptions) AddToMaps(address string, bn, txid int, addressMap map
 	}
 	mapSync.Lock()
 	key := fmt.Sprintf("%s\t%09d\t%05d", address, bn, txid)
+	if !addressMap[key] {
+		opts.AppearanceMap[address] = append(opts.AppearanceMap[address], index.AppearanceRecord{
+			BlockNumber:   uint32(bn),
+			TransactionId: uint32(txid),
+		})
+	}
 	addressMap[key] = true
-	opts.AppearanceMap[address] = append(opts.AppearanceMap[address], index.AppearanceRecord{
-		BlockNumber:   uint32(bn),
-		TransactionId: uint32(txid),
-	})
-
 	mapSync.Unlock()
 }
 
@@ -254,7 +260,8 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 				}
 
 			} else {
-				logger.Log(logger.Error, "Unknown reward type:", traces.Result[i].Action.RewardType)
+				log.Println("Unknown reward type", traces.Result[i].Action.RewardType)
+				return err
 			}
 
 		} else if traces.Result[i].Type == "suicide" {
@@ -306,7 +313,8 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 						}
 						err = rpcClient.FromRpc(opts.RpcProvider, &txReceiptPl, &receipt)
 						if err != nil {
-							return fmt.Errorf("call to eth_getTransactionReceipt returned error: %s", err)
+							log.Println("rpcCall failed at block", traces.Result[i].TransactionHash, err)
+							return err
 						}
 						addr := receipt.Result.ContractAddress
 						if isAddress(addr) {
@@ -317,7 +325,8 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 			}
 
 		} else {
-			logger.Log(logger.Error, "Unknown trace type:", traces.Result[i].Type)
+			log.Println("Unknown trace type", traces.Result[i].Type)
+			return err
 		}
 
 		// Try to get addresses from the input data
@@ -393,7 +402,8 @@ func (opts *BlazeOptions) WriteAppearances(meta *rpcClient.MetaData, bn int, add
 		toWrite := []byte(strings.Join(appearanceArray[:], "\n") + "\n")
 		err = ioutil.WriteFile(fileName, toWrite, 0744)
 		if err != nil {
-			return fmt.Errorf("call to WriteFile returned error: %s", err)
+			log.Println("call to WriteFile returned error", err)
+			return err
 		}
 	}
 

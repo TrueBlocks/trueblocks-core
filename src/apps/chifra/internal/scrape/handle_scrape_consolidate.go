@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"path"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -25,11 +26,8 @@ const asciiAppearanceSize = 59
 // HandleScrapeConsolidate calls into the block scraper to (a) call Blaze and (b) consolidate if applicable
 func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaData, blazeOpts *BlazeOptions) (ok bool, err error) {
 	indexPath := config.GetPathToIndex(opts.Globals.Chain)
-	FileCounts(indexPath)
-
-	if !opts.verifyRipeFiles() {
-		return true, errors.New("non-sequential files")
-	}
+	cachePath := config.GetPathToCache(opts.Globals.Chain)
+	FileCounts(indexPath, cachePath)
 
 	stageFn, _ := file.LatestFileInFolder(indexPath + "staging/")
 	r, _ := cache.RangeFromFilename(stageFn)
@@ -44,6 +42,11 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 		logger.Log(logger.Info, "apps_per_chunk:      ", settings.Apps_per_chunk)
 		logger.Log(logger.Info, "firstSnap:           ", settings.First_snap)
 		logger.Log(logger.Info, "snapToGrid:          ", settings.Snap_to_grid)
+	}
+
+	if !opts.verifyRipeFiles(opts.StartBlock) {
+		config.CleanIndexFolder(config.GetPathToCache(opts.Globals.Chain))
+		return true, errors.New("non-sequential files")
 	}
 
 	logger.Log(logger.Info, "======================= Entering main =======================")
@@ -62,7 +65,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 		fmt.Println(meta)
 	}
 
-	FileCounts(indexPath)
+	FileCounts(indexPath, cachePath)
 	cntBeforeCall := utils.Max(progressThen.Ripe, utils.Max(progressThen.Staging, progressThen.Finalized))
 	cntAfterCall := utils.Max(meta.Ripe, utils.Max(meta.Staging, meta.Finalized))
 	if DebuggingOn {
@@ -75,7 +78,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 	return true, err
 }
 
-func FileCounts(indexPath string) {
+func FileCounts(indexPath, cachePath string) {
 	if DebuggingOn {
 		folders := []string{
 			"finalized/",
@@ -87,6 +90,7 @@ func FileCounts(indexPath string) {
 		for _, folder := range folders {
 			fmt.Println("Found", file.NFilesInFolder(indexPath+folder), "files in", indexPath+folder)
 		}
+		fmt.Println("Found", file.NFilesInFolder(cachePath+"tmp/"), "files in", cachePath+"tmp/")
 	}
 }
 
@@ -131,16 +135,6 @@ type ScraperState struct {
 	BlockCount    uint64
 }
 
-func NewScraperState(sB, nN, nT, nA, bC uint64) ScraperState {
-	ss := ScraperState{}
-	ss.StartBlock = sB
-	ss.NRecsNow = nN
-	ss.NRecsThen = nT
-	ss.NAppsPerChunk = nA
-	ss.BlockCount = bC
-	return ss
-}
-
 func (opts *ScrapeOptions) Consolidate(blazeOpts *BlazeOptions) error {
 	ripeFolder := config.GetPathToIndex(opts.Globals.Chain) + "ripe/"
 	files, err := os.ReadDir(ripeFolder)
@@ -165,7 +159,9 @@ func (opts *ScrapeOptions) Consolidate(blazeOpts *BlazeOptions) error {
 	if recordCount > 0 {
 		records := file.AsciiFileToLines(firstFile)
 		parts := strings.Split(records[0], "\t")
-		first, _ = strconv.ParseUint(parts[1], 10, 64)
+		if len(parts) > 1 {
+			first, _ = strconv.ParseUint(parts[1], 10, 64)
+		}
 	}
 	logger.Log(logger.Info, "first block:", first)
 	logger.Log(logger.Info, strings.Repeat("=", 120))
@@ -256,4 +252,37 @@ func (opts *ScrapeOptions) ListIndexFolder(indexPath, msg string) {
 		return nil
 	})
 	logger.Log(logger.Info, "======================= Exit", msg, "=======================")
+}
+
+func (opts *ScrapeOptions) verifyRipeFiles(start uint64) bool {
+	ripePath := filepath.Join(config.GetPathToIndex(opts.Globals.Chain), "ripe")
+	files, err := os.ReadDir(ripePath)
+	if err != nil {
+		fmt.Println(err.Error())
+		return false
+	}
+	logger.Log(logger.Info, "verifyRipeFiles", ripePath, "nFiles:", len(files), scrape.AllowMissing(opts.Globals.Chain))
+
+	prev := cache.FileRange{First: start, Last: start}
+	for _, file := range files {
+		fR, _ := cache.RangeFromFilename(file.Name())
+		if prev != fR {
+			if !fR.Follows(prev, !scrape.AllowMissing(opts.Globals.Chain)) {
+				logger.Log(logger.Error, "Current file (", file.Name(), ") does not sequentially follow previous file ", prev.First, ".")
+				// TODO: BOGUS THIS IS NEARLY IDENTICAL TO CleanIndexFolder BUT DOESN'T REMOVE STAGING - MAKE CLEANING ON FAILED PROCESSING CONSISTENET
+				for _, f := range []string{"ripe", "unripe", "maps"} {
+					folder := path.Join(config.GetPathToIndex(opts.Globals.Chain), f)
+					err := os.RemoveAll(folder)
+					if err != nil {
+						logger.Log(logger.Error, "Cannot delete folder (", folder, ").")
+						return false
+					}
+				}
+				return false
+			}
+		}
+		prev = fR
+	}
+
+	return true
 }

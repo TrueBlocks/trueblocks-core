@@ -42,15 +42,26 @@ func AsciiFileToString(fileName string) string {
 	return string(contents)
 }
 
-func AppendToAsciiFile(filename, value string) error {
+func StringToAsciiFile(filename, value string) error {
 	file, err := os.Create(filename)
 	if err != nil {
 		return err
 	}
 	defer file.Close()
-
 	_, err = io.WriteString(file, value)
 	if err != nil {
+		return err
+	}
+	return file.Sync()
+}
+
+func AppendToAsciiFile(filename, value string) error {
+	file, err := os.OpenFile(filename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+	if _, err := file.Write([]byte(value)); err != nil {
 		return err
 	}
 	return file.Sync()
