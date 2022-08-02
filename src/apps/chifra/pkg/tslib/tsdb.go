@@ -79,6 +79,8 @@ func loadTimestamps(chain string) error {
 	return nil
 }
 
+var TsErrInTheFuture = errors.New("timestamp in the future")
+
 // FromTs is a local function that returns a Timestamp record given a Unix timestamp. It
 // loads the timestamp file into memory if it isn't already
 func FromTs(chain string, ts uint64) (*Timestamp, error) {
@@ -99,7 +101,7 @@ func FromTs(chain string, ts uint64) (*Timestamp, error) {
 		blks := uint32(float64(secs) / 13.3)
 		last.Bn = last.Bn + blks
 		last.Ts = uint32(ts)
-		return &last, errors.New("timestamp in the future")
+		return &last, TsErrInTheFuture
 	}
 
 	// Go docs: Search uses binary search to find and return the smallest index i in [0, n) at which f(i) is true,

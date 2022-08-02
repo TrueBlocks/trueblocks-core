@@ -25,6 +25,7 @@ Flags:
 
 Notes:
   - The block list may contain any combination of number, hash, date, special named blocks.
+  - Block numbers, timestamps, or dates in the future are estimated with 13 second blocks.
   - Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].
 ```
 
