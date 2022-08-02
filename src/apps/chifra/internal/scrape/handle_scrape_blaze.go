@@ -5,6 +5,7 @@ package scrapePkg
 // be found in the LICENSE file.
 
 import (
+	"encoding/binary"
 	"os"
 	"sort"
 	"strconv"
@@ -73,25 +74,60 @@ func (opts *ScrapeOptions) HandleScrapeBlaze(progressThen *rpcClient.MetaData, b
 	return true, nil
 }
 
-func (opts *BlazeOptions) CleanupPostScrape() {
+func (opts *BlazeOptions) CleanupPostScrape() error {
 	sort.Slice(opts.TsArray, func(i, j int) bool {
 		return opts.TsArray[i].Bn < opts.TsArray[j].Bn
 	})
 
-	tslib.DeCache(opts.Chain)
-	nTimestamps, _ := tslib.NTimestamps(opts.Chain)
-	height := uint32(nTimestamps - 1)
-	if nTimestamps == 0 {
-		height = 0
+	// Assume that the timestamps file always contains valid timestamps
+	tsPath := config.GetPathToIndex(opts.Chain) + "ts.bin"
+	fp, err := os.OpenFile(tsPath, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0644)
+	if err != nil {
+		return err
 	}
 
-	first := 0
-	for i, ts := range opts.TsArray {
-		if ts.Bn > height {
-			first = i
-			break
+	defer func() {
+		tslib.DeCache(opts.Chain)
+		fp.Close()
+		// TODO: BOGUS - DOn'T ALLOW CONTROL+C and ONE WRITER
+		// sigintTrap.Disable(trapCh)
+		// writeMutex.Unlock()
+	}()
+
+	// Add, to the end of the timestamps file, all the timestamps in the array with the
+	// following caveat: fill in any missing timestamps including those that may be
+	// missing from the front of the array
+	cnt := 0
+	nTs, _ := tslib.NTimestamps(opts.Chain)
+	start := uint32(nTs)
+	stop := opts.TsArray[len(opts.TsArray)-1].Bn + 1
+	// fmt.Println("start:", start, "stop:", stop)
+	for bn := start; bn < stop; bn++ {
+		ts := tslib.Timestamp{}
+		if cnt >= len(opts.TsArray) {
+			ts = tslib.Timestamp{
+				Bn: bn,
+				Ts: uint32(rpcClient.GetBlockTimestamp(config.GetRpcProvider(opts.Chain), uint64(bn))),
+			}
+			// logger.Log(logger.Info, "missing ts after", ts)
+		} else {
+			ts = opts.TsArray[cnt]
+			if opts.TsArray[cnt].Bn != bn {
+				ts = tslib.Timestamp{
+					Bn: bn,
+					Ts: uint32(rpcClient.GetBlockTimestamp(config.GetRpcProvider(opts.Chain), uint64(bn))),
+				}
+				// logger.Log(logger.Info, "missing ts in or before", ts)
+				cnt-- // set it back
+			} else {
+				// logger.Log(logger.Info, "okay ts", ts)
+			}
 		}
+		err = binary.Write(fp, binary.LittleEndian, &ts)
+		if err != nil {
+			return err
+		}
+		cnt++
 	}
-
-	tslib.Append(opts.Chain, opts.TsArray[first:])
+	return nil
 }

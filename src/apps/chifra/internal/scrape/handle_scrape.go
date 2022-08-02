@@ -16,6 +16,8 @@ package scrapePkg
 // be found in the LICENSE file.
 
 import (
+	"strings"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 )
@@ -32,6 +34,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 
 	for {
 		blazeOpts := BlazeOptions{}
+		logger.Log(logger.Info, strings.Repeat("-", 20), "HandleScrapeBlaze", strings.Repeat("-", 20))
 		if ok, err := opts.HandleScrapeBlaze(progress, &blazeOpts); !ok || err != nil {
 			if !ok {
 				break
@@ -40,6 +43,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 			goto PAUSE
 		}
 
+		logger.Log(logger.Info, strings.Repeat("-", 20), "HandleScrapeConsolidate", strings.Repeat("-", 20))
 		if ok, err := opts.HandleScrapeConsolidate(progress, &blazeOpts); !ok || err != nil {
 			if !ok {
 				break
@@ -49,6 +53,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		}
 
 		// Clean up after this run of the blockScraper
+		logger.Log(logger.Info, strings.Repeat("-", 20), "HandleScrapePin", strings.Repeat("-", 20))
 		if ok, err := opts.HandleScrapePin(progress); !ok || err != nil {
 			if !ok {
 				break

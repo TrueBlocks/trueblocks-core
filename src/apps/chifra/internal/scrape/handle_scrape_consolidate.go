@@ -44,11 +44,6 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 		logger.Log(logger.Info, "snapToGrid:          ", settings.Snap_to_grid)
 	}
 
-	if !opts.verifyRipeFiles(opts.StartBlock) {
-		config.CleanIndexFolder(config.GetPathToCache(opts.Globals.Chain))
-		return true, errors.New("non-sequential files")
-	}
-
 	logger.Log(logger.Info, "======================= Entering main =======================")
 	opts.Consolidate(blazeOpts)
 	opts.ListIndexFolder(indexPath, "After Consolidate")
@@ -136,6 +131,13 @@ type ScraperState struct {
 }
 
 func (opts *ScrapeOptions) Consolidate(blazeOpts *BlazeOptions) error {
+	if !opts.verifyRipeFiles(opts.StartBlock) {
+		// logger.Log(logger.Error, "verifyRipeFiles failed")
+		config.CleanIndexFolder(config.GetPathToCache(opts.Globals.Chain))
+		return errors.New("non-sequential files -- rescanning")
+	}
+	// logger.Log(logger.Error, "verifyRipeFiles okay")
+
 	ripeFolder := config.GetPathToIndex(opts.Globals.Chain) + "ripe/"
 	files, err := os.ReadDir(ripeFolder)
 	if err != nil {
