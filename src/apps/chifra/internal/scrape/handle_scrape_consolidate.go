@@ -132,7 +132,7 @@ type ScraperState struct {
 
 func (opts *ScrapeOptions) Consolidate(blazeOpts *BlazeOptions) error {
 	if !opts.verifyRipeFiles(opts.StartBlock) {
-		// logger.Log(logger.Error, "verifyRipeFiles failed")
+		logger.Log(logger.Error, "verifyRipeFiles failed")
 		config.CleanIndexFolder(config.GetPathToCache(opts.Globals.Chain))
 		return errors.New("non-sequential files -- rescanning")
 	}

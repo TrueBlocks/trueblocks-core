@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"os"
 	"sort"
 	"strconv"
@@ -111,7 +110,7 @@ func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChan
 		}
 		err = rpcClient.FromRpc(opts.RpcProvider, &tracePayload, &traces)
 		if err != nil {
-			log.Println("rpcCall failed at block", blockNum, err)
+			fmt.Println("rpcCall failed at block", blockNum, err)
 			return err
 		}
 
@@ -124,7 +123,7 @@ func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChan
 		}
 		err = rpcClient.FromRpc(opts.RpcProvider, &logsPayload, &logs)
 		if err != nil {
-			log.Println("rpcCall failed at block", blockNum, err)
+			fmt.Println("rpcCall failed at block", blockNum, err)
 			return err
 		}
 
@@ -153,19 +152,19 @@ func (opts *BlazeOptions) BlazeProcessAppearances(meta *rpcClient.MetaData, appe
 		addressMap := make(map[string]bool)
 		err = opts.BlazeExtractFromTraces(sData.blockNumber, &sData.traces, addressMap)
 		if err != nil {
-			log.Println("BlazeExtractFromTraces returned error", sData.blockNumber, err)
+			fmt.Println("BlazeExtractFromTraces returned error", sData.blockNumber, err)
 			return err
 		}
 
 		err = opts.BlazeExtractFromLogs(sData.blockNumber, &sData.logs, addressMap)
 		if err != nil {
-			log.Println("BlazeExtractFromLogs returned error", sData.blockNumber, err)
+			fmt.Println("BlazeExtractFromLogs returned error", sData.blockNumber, err)
 			return err
 		}
 
 		err = opts.WriteAppearances(meta, sData.blockNumber, addressMap)
 		if err != nil {
-			log.Println("WriteAppearances returned error", sData.blockNumber, err)
+			fmt.Println("WriteAppearances returned error", sData.blockNumber, err)
 			return err
 		}
 	}
@@ -260,7 +259,7 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 				}
 
 			} else {
-				log.Println("Unknown reward type", traces.Result[i].Action.RewardType)
+				fmt.Println("Unknown reward type", traces.Result[i].Action.RewardType)
 				return err
 			}
 
@@ -313,7 +312,7 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 						}
 						err = rpcClient.FromRpc(opts.RpcProvider, &txReceiptPl, &receipt)
 						if err != nil {
-							log.Println("rpcCall failed at block", traces.Result[i].TransactionHash, err)
+							fmt.Println("rpcCall failed at block", traces.Result[i].TransactionHash, err)
 							return err
 						}
 						addr := receipt.Result.ContractAddress
@@ -325,7 +324,7 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 			}
 
 		} else {
-			log.Println("Unknown trace type", traces.Result[i].Type)
+			fmt.Println("Unknown trace type", traces.Result[i].Type)
 			return err
 		}
 
@@ -402,7 +401,7 @@ func (opts *BlazeOptions) WriteAppearances(meta *rpcClient.MetaData, bn int, add
 		toWrite := []byte(strings.Join(appearanceArray[:], "\n") + "\n")
 		err = ioutil.WriteFile(fileName, toWrite, 0744)
 		if err != nil {
-			log.Println("call to WriteFile returned error", err)
+			fmt.Println("call to WriteFile returned error", err)
 			return err
 		}
 	}
