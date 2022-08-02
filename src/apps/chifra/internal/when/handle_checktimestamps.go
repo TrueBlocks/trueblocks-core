@@ -95,9 +95,7 @@ func (opts *WhenOptions) HandleWhenTimestampsCheck() error {
 				status = "Error"
 			}
 
-			if false { // !utils.DebuggingOn {
-				scanBar.Report(opts.Globals.Writer, status, fmt.Sprintf("%d.%d", block.BlockNumber, block.TimeStamp))
-			}
+			scanBar.Report(opts.Globals.Writer, status, fmt.Sprintf("%d.%d", block.BlockNumber, block.TimeStamp))
 		}
 
 		prev = onDisc

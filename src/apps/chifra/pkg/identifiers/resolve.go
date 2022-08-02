@@ -147,7 +147,19 @@ func (p *Point) resolvePoint(chain string) uint64 {
 	} else if p.Special != "" {
 		bn, _ = tslib.FromNameToBn(chain, p.Special)
 	} else if p.Number >= utils.EarliestEvmTs {
-		bn, _ = tslib.FromTsToBn(chain, uint64(p.Number))
+		var err error
+		bn, err = tslib.FromTsToBn(chain, uint64(p.Number))
+		if err == tslib.TsErrInTheFuture {
+			provider := config.GetRpcProvider(chain)
+			latest := rpcClient.BlockNumber(provider)
+			tsFuture := rpcClient.GetBlockTimestamp(provider, latest)
+			secs := (tsFuture - uint64(p.Number))
+			blks := (secs / 13)
+			// TODO: BOGUS - CHAIN SPECIFIC
+			bn = latest + blks
+			// fmt.Println(p.Number, tsFuture, secs, latest, blks, bn)
+			// fmt.Println()
+		}
 	} else {
 		bn = uint64(p.Number)
 	}

@@ -20,6 +20,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
+// TODO: BOGUS
 const DebuggingOn = true
 const asciiAppearanceSize = 59
 
@@ -34,6 +35,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 	cnt := file.FileSize(stageFn) / asciiAppearanceSize
 
 	settings := scrape.GetSettings(opts.Globals.Chain)
+	// TODO: BOGUS
 	if DebuggingOn {
 		logger.Log(logger.Info, "In constructor: ", stageFn)
 		logger.Log(logger.Info, r)
