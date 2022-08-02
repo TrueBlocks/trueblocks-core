@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
-	"sync"
+//	"sync"
 	"time"
 )
 
@@ -79,25 +79,25 @@ func Fatal(a ...interface{}) {
 	os.Exit(1)
 }
 
-var logMutex sync.Mutex
+//var logMutex sync.Mutex
 
 func Enter(msg string, a ...interface{}) {
 	marker := strings.Repeat("-", 20)
-	logMutex.Lock()
+	//logMutex.Lock()
 	Log(Progress, marker, "In", msg, a, marker)
-	logMutex.Unlock()
+	//logMutex.Unlock()
 }
 
 func Exit(msg string, a ...interface{}) {
 	marker := strings.Repeat("-", 20)
-	logMutex.Lock()
+	//logMutex.Lock()
 	Log(Progress, marker, "Out", msg, a, marker)
-	logMutex.Unlock()
+	//logMutex.Unlock()
 }
 
 func ExitError(msg string, a ...interface{}) {
 	marker := strings.Repeat("-", 20)
-	logMutex.Lock()
+	//logMutex.Lock()
 	Log(Error, marker, "Out with Error", msg, a, marker)
-	logMutex.Unlock()
+	//logMutex.Unlock()
 }

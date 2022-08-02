@@ -59,7 +59,7 @@ func ReadChunkHeader(chain, fileName string) (header HeaderRecord, err error) {
 	// TODO: BOGUS - DOES CHECKING FOR OLD INDEXES WORK?
 	headerHash := hexutil.Encode(header.Hash.Bytes())
 	hasZeroHash := headerHash == unchained.ZeroMagicHash
-	hasMagicHash := headerHash == unchained.HeaderMagicHash
+	// hasMagicHash := headerHash == unchained.HeaderMagicHash
 
 	// Since moving to the new unchained index code, we look for magicHash in the index file
 	// with the following caveat. Index files on mainnet prior to block 13,000,000 have 0x000...000
@@ -76,9 +76,9 @@ func ReadChunkHeader(chain, fileName string) (header HeaderRecord, err error) {
 			return header, fmt.Errorf("expected headerHash of %s got %s in file %s", unchained.ZeroMagicHash, headerHash, fileName)
 		}
 	} else {
-		if !hasMagicHash {
-			return header, fmt.Errorf("header has incorrect hash in %s, expected %s, got %s", fileName, unchained.HeaderMagicHash, headerHash)
-		}
+		// if !hasMagicHash {
+		// 	return header, fmt.Errorf("header has incorrect hash in %s, expected %s, got %s", fileName, unchained.HeaderMagicHash, headerHash)
+		// }
 	}
 
 	return

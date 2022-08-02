@@ -2,7 +2,7 @@ package scrapePkg
 
 import (
 	"encoding/json"
-	"errors"
+//	"errors"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -13,7 +13,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+//	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -56,8 +56,8 @@ func (opts *BlazeOptions) String() string {
 // HandleBlaze does the actual scraping, walking through block_cnt blocks and querying traces and logs
 // and then extracting addresses and timestamps from those data structures.
 func (opts *BlazeOptions) HandleBlaze(meta *rpcClient.MetaData) (ok bool, err error) {
-	logger.Enter("HandleBlaze", opts)
-	defer logger.Exit("HandleBlaze", opts.NProcessed)
+	//logger.Enter("HandleBlaze", opts)
+	//defer logger.Exit("HandleBlaze", opts.NProcessed)
 
 	// Prepare three channels to process first blocks, then appearances and timestamps
 	blockChannel := make(chan int)
@@ -102,17 +102,17 @@ var beenHere = false
 
 // BlazeProcessBlocks Processes the block channel and for each block query the node for both traces and logs. Send results down appearanceChannel.
 func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChannel chan int, appearanceChannel chan ScrapedData, tsChannel chan tslib.Timestamp) (err error) {
-	logger.Enter("BlazeProcessBlocks")
-	defer logger.Exit("BlazeProcessBlocks")
+	//logger.Enter("BlazeProcessBlocks")
+	//defer logger.Exit("BlazeProcessBlocks")
 	defer opts.BlockWg.Done()
 
 	for blockNum := range blockChannel {
 
-		if ForceFail && !beenHere && blockNum == 802 {
-			beenHere = true
-			fmt.Println("Forcing failure for block", blockNum)
-			return errors.New("Forcing failure")
-		}
+		//if ForceFail && !beenHere && blockNum == 802 {
+		//	beenHere = true
+		//	fmt.Println("Forcing failure for block", blockNum)
+		//	return errors.New("Forcing failure")
+		//}
 		// RPCPayload is used during to make calls to the RPC.
 		var traces rpcClient.Traces
 		tracePayload := rpcClient.RPCPayload{
