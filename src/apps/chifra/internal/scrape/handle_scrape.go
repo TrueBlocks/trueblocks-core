@@ -16,8 +16,7 @@ package scrapePkg
 // be found in the LICENSE file.
 
 import (
-	"strings"
-
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 )
@@ -34,33 +33,33 @@ func (opts *ScrapeOptions) HandleScrape() error {
 
 	for {
 		blazeOpts := BlazeOptions{}
-		logger.Log(logger.Info, strings.Repeat("-", 20), "HandleScrapeBlaze", strings.Repeat("-", 20))
 		if ok, err := opts.HandleScrapeBlaze(progress, &blazeOpts); !ok || err != nil {
 			if !ok {
 				break
 			}
-			logger.Log(logger.Error, "HandleScrapeBlaze", err)
 			goto PAUSE
 		}
 
-		logger.Log(logger.Info, strings.Repeat("-", 20), "HandleScrapeConsolidate", strings.Repeat("-", 20))
+		logger.Enter("HandleScrapeConsolidate")
 		if ok, err := opts.HandleScrapeConsolidate(progress, &blazeOpts); !ok || err != nil {
+			logger.ExitError("HandleScrapeConsolidate", err)
 			if !ok {
 				break
 			}
-			logger.Log(logger.Error, "HandleScrapeConsolidate", err)
 			goto PAUSE
 		}
+		logger.Exit("HandleScrapeConsolidate")
 
 		// Clean up after this run of the blockScraper
-		logger.Log(logger.Info, strings.Repeat("-", 20), "HandleScrapePin", strings.Repeat("-", 20))
+		logger.Enter("HandleScrapePin")
 		if ok, err := opts.HandleScrapePin(progress); !ok || err != nil {
+			logger.ExitError("HandleScrapePin", err)
 			if !ok {
 				break
 			}
-			logger.Log(logger.Error, "HandleScrapePin", err)
 			goto PAUSE
 		}
+		logger.Exit("HandleScrapePin")
 
 	PAUSE:
 		opts.Z_6_pause(progress)
@@ -79,3 +78,6 @@ func (opts *ScrapeOptions) HandleScrape() error {
 // 	return scrape_blocks();
 // }
 // LOG_WARN(cYellow, "Blaze quit without finishing twice. Reprocessing...", cOff);
+
+var Debugging = file.FileExists("./testing")
+var ForceFail = file.FileExists("./forcefail")

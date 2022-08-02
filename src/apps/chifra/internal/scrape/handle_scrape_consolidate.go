@@ -44,10 +44,8 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 		logger.Log(logger.Info, "snapToGrid:          ", settings.Snap_to_grid)
 	}
 
-	logger.Log(logger.Info, "======================= Entering main =======================")
 	opts.Consolidate(blazeOpts)
 	opts.ListIndexFolder(indexPath, "After Consolidate")
-	logger.Log(logger.Info, "======================= Leaving main =======================")
 
 	if DebuggingOn {
 		newPinsFn := config.GetPathToCache(opts.Globals.Chain) + "tmp/chunks_created.txt"

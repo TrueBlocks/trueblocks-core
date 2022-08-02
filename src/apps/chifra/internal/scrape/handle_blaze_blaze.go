@@ -2,6 +2,7 @@ package scrapePkg
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -12,6 +13,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -54,6 +56,8 @@ func (opts *BlazeOptions) String() string {
 // HandleBlaze does the actual scraping, walking through block_cnt blocks and querying traces and logs
 // and then extracting addresses and timestamps from those data structures.
 func (opts *BlazeOptions) HandleBlaze(meta *rpcClient.MetaData) (ok bool, err error) {
+	logger.Enter("HandleBlaze", opts)
+	defer logger.Exit("HandleBlaze", opts.NProcessed)
 
 	// Prepare three channels to process first blocks, then appearances and timestamps
 	blockChannel := make(chan int)
@@ -94,12 +98,21 @@ func (opts *BlazeOptions) HandleBlaze(meta *rpcClient.MetaData) (ok bool, err er
 	return true, nil
 }
 
+var beenHere = false
+
 // BlazeProcessBlocks Processes the block channel and for each block query the node for both traces and logs. Send results down appearanceChannel.
 func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChannel chan int, appearanceChannel chan ScrapedData, tsChannel chan tslib.Timestamp) (err error) {
+	logger.Enter("BlazeProcessBlocks")
+	defer logger.Exit("BlazeProcessBlocks")
 	defer opts.BlockWg.Done()
 
 	for blockNum := range blockChannel {
 
+		if ForceFail && !beenHere && blockNum == 802 {
+			beenHere = true
+			fmt.Println("Forcing failure for block", blockNum)
+			return errors.New("Forcing failure")
+		}
 		// RPCPayload is used during to make calls to the RPC.
 		var traces rpcClient.Traces
 		tracePayload := rpcClient.RPCPayload{
@@ -148,6 +161,7 @@ var blazeMutex sync.Mutex
 // BlazeProcessAppearances processes ScrapedData objects shoved down the appearanceChannel
 func (opts *BlazeOptions) BlazeProcessAppearances(meta *rpcClient.MetaData, appearanceChannel chan ScrapedData) (err error) {
 	defer opts.AppearanceWg.Done()
+
 	for sData := range appearanceChannel {
 		addressMap := make(map[string]bool)
 		err = opts.BlazeExtractFromTraces(sData.blockNumber, &sData.traces, addressMap)
@@ -174,6 +188,7 @@ func (opts *BlazeOptions) BlazeProcessAppearances(meta *rpcClient.MetaData, appe
 // BlazeProcessTimestamps processes timestamp data (currently by printing to a temporary file)
 func (opts *BlazeOptions) BlazeProcessTimestamps(tsChannel chan tslib.Timestamp) (err error) {
 	defer opts.TsWg.Done()
+
 	for ts := range tsChannel {
 		blazeMutex.Lock()
 		opts.TsArray = append(opts.TsArray, ts)
@@ -408,14 +423,16 @@ func (opts *BlazeOptions) WriteAppearances(meta *rpcClient.MetaData, bn int, add
 
 	// TODO: BOGUS - TESTING SCRAPING
 	// TODO: THIS IS A PERFORMANCE ISSUE PRINTING EVERY BLOCK
-	step := uint64(7)
-	if opts.NProcessed%step == 0 {
-		dist := uint64(0)
-		if opts.RipeBlock > uint64(bn) {
-			dist = (opts.RipeBlock - uint64(bn))
+	if !Debugging {
+		step := uint64(7)
+		if opts.NProcessed%step == 0 {
+			dist := uint64(0)
+			if opts.RipeBlock > uint64(bn) {
+				dist = (opts.RipeBlock - uint64(bn))
+			}
+			f := "-------- ( ------)- <PROG>  : Scraping %-04d of %-04d at block %d of %d (%d blocks from head)\r"
+			fmt.Fprintf(os.Stderr, f, opts.NProcessed, opts.BlockCount, bn, opts.RipeBlock, dist)
 		}
-		f := "-------- ( ------)- <PROG>  : Scraping %-04d of %-04d at block %d of %d (%d blocks from head)\r"
-		fmt.Fprintf(os.Stderr, f, opts.NProcessed, opts.BlockCount, bn, opts.RipeBlock, dist)
 	}
 	opts.NProcessed++
 	return

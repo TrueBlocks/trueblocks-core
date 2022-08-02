@@ -5,20 +5,18 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
 // TODO: BOGUS - MIGRATION SENTINAL? REENTRANCY SAFE?
 func HasBackLevelIndex(chain string, v *string) bool {
-	// TODO: BOGUS - THIS IS NOT CHAIN SAFE AT ALL!!!
-	*v = config.GetPathToIndex(chain) + "/finalized/013308630-013321453.bin"
-	if file.FileExists(*v) {
-		return true
-	}
-	return file.FileExists(bloom.ToBloomPath(*v))
+	return false
+	// // TODO: BOGUS - THIS IS NOT CHAIN SAFE AT ALL!!!
+	// *v = config.GetPathToIndex(chain) + "/finalized/013308630-013321453.bin"
+	// if file.FileExists(*v) {
+	// 	return true
+	// }
+	// return file.FileExists(bloom.ToBloomPath(*v))
 }
 
 func CheckBackLevelIndex(chain string) {

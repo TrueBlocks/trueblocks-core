@@ -21,12 +21,14 @@ import (
 // HandleScrapeBlaze is called each time around the forever loop prior to calling into
 // Blaze to actually scrape the blocks.
 func (opts *ScrapeOptions) HandleScrapeBlaze(progressThen *rpcClient.MetaData, blazeOpts *BlazeOptions) (ok bool, err error) {
+	logger.Enter("HandleScrapeBlaze")
 
 	// Quit early if we're testing... TODO: BOGUS - REMOVE THIS
 	tes := os.Getenv("TEST_END_SCRAPE")
 	if tes != "" {
 		val, err := strconv.ParseUint(tes, 10, 32)
 		if (val != 0 && progressThen.Staging > val) || err != nil {
+			logger.ExitError("HandleScrapeBlaze - Quitting early", err)
 			return false, err
 		}
 	}
@@ -61,16 +63,14 @@ func (opts *ScrapeOptions) HandleScrapeBlaze(progressThen *rpcClient.MetaData, b
 
 	_, err = blazeOpts.HandleBlaze(meta)
 	if err != nil {
-		logger.Log(logger.Info, "Error in call to Blaze", err)
 		os.RemoveAll(config.GetPathToIndex(opts.Globals.Chain) + "ripe")
+		logger.ExitError("HandleScrapeBlaze returned error", err, ". Cleaned up.")
 		return true, err
 	}
-	logger.Log(logger.Info, "Writing timestamps", len(blazeOpts.TsArray))
-	blazeOpts.CleanupPostScrape()
-	if DebuggingOn {
-		logger.Log(logger.Info, "Size of AppMap:", len(blazeOpts.AppearanceMap))
-	}
 
+	blazeOpts.CleanupPostScrape()
+
+	logger.Exit("HandleScrapeBlaze")
 	return true, nil
 }
 
