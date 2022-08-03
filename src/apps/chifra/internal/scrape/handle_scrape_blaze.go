@@ -6,71 +6,46 @@ package scrapePkg
 
 import (
 	"encoding/binary"
+	"errors"
+	"fmt"
 	"os"
 	"sort"
-	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // HandleScrapeBlaze is called each time around the forever loop prior to calling into
 // Blaze to actually scrape the blocks.
-func (opts *ScrapeOptions) HandleScrapeBlaze(progressThen *rpcClient.MetaData, blazeOpts *BlazeOptions) (ok bool, err error) {
-	logger.Enter("HandleScrapeBlaze")
-
-	// Quit early if we're testing... TODO: BOGUS - REMOVE THIS
-	tes := os.Getenv("TEST_END_SCRAPE")
-	if tes != "" {
-		val, err := strconv.ParseUint(tes, 10, 32)
-		if (val != 0 && progressThen.Staging > val) || err != nil {
-			logger.ExitError("HandleScrapeBlaze - Quitting early", err)
-			return false, err
-		}
-	}
-
-	// We always start one after where we last left off
-	opts.StartBlock = utils.Max(progressThen.Ripe, utils.Max(progressThen.Staging, progressThen.Finalized)) + 1
-	if (opts.StartBlock + opts.BlockCnt) > progressThen.Latest {
-		opts.BlockCnt = (progressThen.Latest - opts.StartBlock)
-	}
-
-	// TODO: BOGUS - TESTING SCRAPING
-	meta, _ := rpcClient.GetMetaData(opts.Globals.Chain, false /* testMode */)
-
-	// '28' behind head unless head is less or equal to than '28', then head
-	ripe := meta.Latest
-	if ripe > opts.UnripeDist {
-		ripe = meta.Latest - opts.UnripeDist
-	}
-
-	*blazeOpts = BlazeOptions{
-		Chain:         opts.Globals.Chain,
-		NChannels:     utils.Max(opts.BlockChanCnt, opts.AddrChanCnt),
-		NProcessed:    0,
-		StartBlock:    opts.StartBlock,
-		BlockCount:    opts.BlockCnt,
-		RipeBlock:     ripe,
-		UnripeDist:    opts.UnripeDist,
-		RpcProvider:   config.GetRpcProvider(opts.Globals.Chain),
-		AppearanceMap: make(index.AddressAppearanceMap, 500000),
-		TsArray:       make([]tslib.Timestamp, 0, opts.BlockCnt),
-	}
-
-	_, err = blazeOpts.HandleBlaze(meta)
+func (opts *ScrapeOptions) HandleScrapeBlaze(progress *rpcClient.MetaData, blazeOpts *BlazeOptions) (ok bool, err error) {
+	_, err = blazeOpts.HandleBlaze(progress)
 	if err != nil {
 		os.RemoveAll(config.GetPathToIndex(opts.Globals.Chain) + "ripe")
+		os.RemoveAll(config.GetPathToIndex(opts.Globals.Chain) + "unripe")
 		logger.ExitError("HandleScrapeBlaze returned error", err, ". Cleaned up.")
 		return true, err
+	}
+	cnt := 0
+	for i := int(opts.StartBlock); i < int(opts.StartBlock+opts.BlockCnt); i++ {
+		if !blazeOpts.ProcessedMap[i] {
+			logger.Log(logger.Info, "block", i, "not processed")
+			cnt++
+		}
+	}
+	if cnt > 0 {
+		msg := fmt.Sprintf("%d items were not processed", cnt)
+		logger.Log(logger.Info, msg)
+		os.RemoveAll(config.GetPathToIndex(opts.Globals.Chain) + "ripe")
+		os.RemoveAll(config.GetPathToIndex(opts.Globals.Chain) + "unripe")
+		logger.ExitError("HandleScrapeBlaze returned error", err, ". Cleaned up.")
+		return true, errors.New(msg)
 	}
 
 	blazeOpts.CleanupPostScrape()
 
-	logger.Exit("HandleScrapeBlaze")
+	// logger.Exit("HandleScrapeBlaze")
 	return true, nil
 }
 

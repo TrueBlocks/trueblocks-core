@@ -2,7 +2,6 @@ package scrapePkg
 
 import (
 	"encoding/json"
-//	"errors"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -13,7 +12,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
-//	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -40,6 +38,7 @@ type BlazeOptions struct {
 	RpcProvider   string                     `json:"rpcProvider"`
 	AppearanceMap index.AddressAppearanceMap `json:"-"`
 	TsArray       []tslib.Timestamp          `json:"-"`
+	ProcessedMap  map[int]bool               `json:"-"`
 	BlockWg       sync.WaitGroup             `json:"-"`
 	AppearanceWg  sync.WaitGroup             `json:"-"`
 	TsWg          sync.WaitGroup             `json:"-"`
@@ -49,6 +48,7 @@ func (opts *BlazeOptions) String() string {
 	copy := *opts
 	copy.AppearanceMap = index.AddressAppearanceMap{}
 	copy.TsArray = []tslib.Timestamp{}
+	copy.ProcessedMap = make(map[int]bool)
 	b, _ := json.MarshalIndent(copy, "", "  ")
 	return string(b)
 }
@@ -81,8 +81,8 @@ func (opts *BlazeOptions) HandleBlaze(meta *rpcClient.MetaData) (ok bool, err er
 		go opts.BlazeProcessTimestamps(tsChannel)
 	}
 
+	// TODO: BOGUS - HOW DOES ONE HANDLE ERRORS INSIDE OF GO ROUTINES?
 	for block := int(opts.StartBlock); block < int(opts.StartBlock+opts.BlockCount); block++ {
-		// TODO: BOGUS - HOW DOES ONE HANDLE ERRORS INSIDE OF GO ROUTINES?
 		blockChannel <- block
 	}
 
@@ -399,6 +399,8 @@ func (opts *BlazeOptions) BlazeExtractFromLogs(bn int, logs *rpcClient.Logs, add
 	return
 }
 
+var writeMutex sync.Mutex
+
 func (opts *BlazeOptions) WriteAppearances(meta *rpcClient.MetaData, bn int, addressMap map[string]bool) (err error) {
 	if len(addressMap) > 0 {
 		appearanceArray := make([]string, 0, len(addressMap))
@@ -434,6 +436,10 @@ func (opts *BlazeOptions) WriteAppearances(meta *rpcClient.MetaData, bn int, add
 			fmt.Fprintf(os.Stderr, f, opts.NProcessed, opts.BlockCount, bn, opts.RipeBlock, dist)
 		}
 	}
+
+	writeMutex.Lock()
+	opts.ProcessedMap[bn] = true
+	writeMutex.Unlock()
 	opts.NProcessed++
 	return
 }

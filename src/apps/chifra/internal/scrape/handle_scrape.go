@@ -16,23 +16,65 @@ package scrapePkg
 // be found in the LICENSE file.
 
 import (
+	"os"
+	"strconv"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *ScrapeOptions) HandleScrape() error {
-	progress, err := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
-	if err != nil {
-		return err
-	}
-
-	if ok, err := opts.HandlePrepare(progress); !ok || err != nil {
+	if ok, err := opts.HandlePrepare(); !ok || err != nil {
 		return err
 	}
 
 	for {
-		blazeOpts := BlazeOptions{}
+		progress, err := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
+		if err != nil {
+			return err
+		}
+
+		// Quit early if we're testing... TODO: BOGUS - REMOVE THIS
+		tes := os.Getenv("TEST_END_SCRAPE")
+		if tes != "" {
+			val, err := strconv.ParseUint(tes, 10, 32)
+			if (val != 0 && progress.Staging > val) || err != nil {
+				logger.Exit("HandleScrapeBlaze - Quitting early", err)
+				return err
+			}
+		}
+
+		// We always start one after where we last left off
+		opts.StartBlock = utils.Max(progress.Ripe, utils.Max(progress.Staging, progress.Finalized)) + 1
+		if (opts.StartBlock + opts.BlockCnt) > progress.Latest {
+			opts.BlockCnt = (progress.Latest - opts.StartBlock)
+		}
+
+		// '28' behind head unless head is less or equal to than '28', then head
+		ripe := progress.Latest
+		if ripe > opts.UnripeDist {
+			ripe = progress.Latest - opts.UnripeDist
+		}
+
+		blazeOpts := BlazeOptions{
+			Chain:         opts.Globals.Chain,
+			NChannels:     utils.Max(opts.BlockChanCnt, opts.AddrChanCnt),
+			NProcessed:    0,
+			StartBlock:    opts.StartBlock,
+			BlockCount:    opts.BlockCnt,
+			RipeBlock:     ripe,
+			UnripeDist:    opts.UnripeDist,
+			RpcProvider:   config.GetRpcProvider(opts.Globals.Chain),
+			AppearanceMap: make(index.AddressAppearanceMap, opts.AppsPerChunk),
+			TsArray:       make([]tslib.Timestamp, 0, opts.BlockCnt),
+			ProcessedMap:  make(map[int]bool, opts.BlockCnt),
+		}
+
 		if ok, err := opts.HandleScrapeBlaze(progress, &blazeOpts); !ok || err != nil {
 			if !ok {
 				break
@@ -40,44 +82,28 @@ func (opts *ScrapeOptions) HandleScrape() error {
 			goto PAUSE
 		}
 
-		logger.Enter("HandleScrapeConsolidate")
 		if ok, err := opts.HandleScrapeConsolidate(progress, &blazeOpts); !ok || err != nil {
-			logger.ExitError("HandleScrapeConsolidate", err)
 			if !ok {
 				break
 			}
 			goto PAUSE
 		}
-		logger.Exit("HandleScrapeConsolidate")
 
 		// Clean up after this run of the blockScraper
-		logger.Enter("HandleScrapePin")
-		if ok, err := opts.HandleScrapePin(progress); !ok || err != nil {
-			logger.ExitError("HandleScrapePin", err)
+		if ok, err := opts.HandleScrapePin(); !ok || err != nil {
 			if !ok {
 				break
 			}
 			goto PAUSE
 		}
-		logger.Exit("HandleScrapePin")
 
 	PAUSE:
-		opts.Z_6_pause(progress)
+		opts.Pause(progress)
 	}
 
 	return nil
 }
 
-// TODO: BOGUS - NOTES ON RE-RUN AFTER BLAZE FAILURE
-// cleanFolder(indexFolder_ripe);
-// static bool failed_already = false;
-// if (!failed_already) {
-// 	failed_already = true;
-// 	LOG_WARN(cYellow, "Blaze quit without finishing. Retrying...", cOff);
-// 	sleep(3);
-// 	return scrape_blocks();
-// }
-// LOG_WARN(cYellow, "Blaze quit without finishing twice. Reprocessing...", cOff);
-
+// Used for debugging, will be removed
 var Debugging = file.FileExists("./testing")
 var ForceFail = file.FileExists("./forcefail")

@@ -18,7 +18,7 @@ import (
 // HandlePrepare performs actions that need to happen prior to entering the forever loop. Returns
 // true if the processing should continue, false otherwise. Currently, the only thing to do
 // is write the zero block Index Chunk / Bloom filter pair if it doesn't exist.
-func (opts *ScrapeOptions) HandlePrepare(progressThen *rpcClient.MetaData) (ok bool, err error) {
+func (opts *ScrapeOptions) HandlePrepare() (ok bool, err error) {
 	pathObj := cache.NewCachePath(opts.Globals.Chain, cache.Index_Bloom)
 	bloomPath := pathObj.GetFullPath("000000000-000000000")
 	if file.FileExists(bloomPath) {
@@ -39,10 +39,12 @@ func (opts *ScrapeOptions) HandlePrepare(progressThen *rpcClient.MetaData) (ok b
 			TransactionId: uint32(i),
 		})
 	}
+
 	_, err = index.WriteChunk(opts.Globals.Chain, index.ToIndexPath(bloomPath), appMap, len(allocs), -1)
 	if err != nil {
 		return false, err
 	}
+
 	array := []tslib.Timestamp{}
 	array = append(array, tslib.Timestamp{
 		Bn: uint32(0),
@@ -51,5 +53,5 @@ func (opts *ScrapeOptions) HandlePrepare(progressThen *rpcClient.MetaData) (ok b
 	tslib.Append(opts.Globals.Chain, array)
 
 	// In this special case, we need to postScrape here since we've created an index file
-	return opts.HandleScrapePin(progressThen)
+	return opts.HandleScrapePin()
 }

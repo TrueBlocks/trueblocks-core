@@ -7,7 +7,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 )
 
-func (opts *ScrapeOptions) Z_6_pause(progressThen *rpcClient.MetaData) {
+func (opts *ScrapeOptions) Pause(progressThen *rpcClient.MetaData) {
 	distanceFromHead := progressThen.Latest - progressThen.Staging
 	isDefaultSleep := opts.Sleep == 14 || opts.Sleep == 13
 	shouldSleep := !isDefaultSleep || distanceFromHead <= (2*opts.UnripeDist)
