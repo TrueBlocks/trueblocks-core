@@ -21,6 +21,7 @@ import (
 // Blaze to actually scrape the blocks.
 func (opts *ScrapeOptions) HandleScrapeBlaze(progress *rpcClient.MetaData, blazeOpts *BlazeOptions) (ok bool, err error) {
 	_, err = blazeOpts.HandleBlaze(progress)
+
 	if err != nil {
 		os.RemoveAll(config.GetPathToIndex(opts.Globals.Chain) + "ripe")
 		os.RemoveAll(config.GetPathToIndex(opts.Globals.Chain) + "unripe")
@@ -75,9 +76,11 @@ func (opts *BlazeOptions) CleanupPostScrape() error {
 	cnt := 0
 	nTs, _ := tslib.NTimestamps(opts.Chain)
 	start := uint32(nTs)
-	stop := opts.TsArray[len(opts.TsArray)-1].Bn + 1
-	// fmt.Println("start:", start, "stop:", stop)
+	stop := uint32(opts.StartBlock + opts.BlockCount)
+
 	for bn := start; bn < stop; bn++ {
+		f := "-------- ( ------)- <PROG>  : Checking timestamps %-04d of %-04d\r"
+		fmt.Fprintf(os.Stderr, f, bn, stop)
 		ts := tslib.Timestamp{}
 		if cnt >= len(opts.TsArray) {
 			ts = tslib.Timestamp{
@@ -94,8 +97,8 @@ func (opts *BlazeOptions) CleanupPostScrape() error {
 				}
 				// logger.Log(logger.Info, "missing ts in or before", ts)
 				cnt-- // set it back
-			} else {
-				// logger.Log(logger.Info, "okay ts", ts)
+				// } else {
+				// 	logger.Log(logger.Info, "okay ts", ts)
 			}
 		}
 		err = binary.Write(fp, binary.LittleEndian, &ts)
