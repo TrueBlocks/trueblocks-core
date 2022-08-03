@@ -55,7 +55,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 			opts.BlockCnt = (progress.Latest - opts.StartBlock)
 		}
 
-		// '28' behind head unless head is less or equal to than '28', then head
+		// 'UnripeDist' behind head unless head is less or equal to than 'UnripeDist', then head
 		ripe := progress.Latest
 		if ripe > opts.UnripeDist {
 			ripe = progress.Latest - opts.UnripeDist

@@ -8,6 +8,9 @@ import (
 )
 
 func (opts *ScrapeOptions) Pause(progressThen *rpcClient.MetaData) {
+	//we always pause at least half a second
+	time.Sleep(500 * time.Millisecond)
+
 	distanceFromHead := progressThen.Latest - progressThen.Staging
 	isDefaultSleep := opts.Sleep == 14 || opts.Sleep == 13
 	shouldSleep := !isDefaultSleep || distanceFromHead <= (2*opts.UnripeDist)
@@ -21,7 +24,7 @@ func (opts *ScrapeOptions) Pause(progressThen *rpcClient.MetaData) {
 		if sleep > 1 {
 			logger.Log(logger.Info, "Sleeping for", sleep, "seconds -", distanceFromHead, "away from head.")
 		}
-		halfSecs := sleep * 2
+		halfSecs := (sleep * 2) - 1 // we already slept one half second
 		for i := 0; i < int(halfSecs); i++ {
 			time.Sleep(time.Duration(500) * time.Millisecond)
 		}

@@ -24,12 +24,7 @@ func (opts *ChunksOptions) showFinalizedStats(ctx *WalkContext, path string, fir
 }
 
 func (opts *ChunksOptions) showStagingStats(ctx *WalkContext, path string, first bool) (bool, error) {
-	if strings.Contains(path, "000000000-temp.txt") {
-		return true, nil
-	}
-
 	lines := file.AsciiFileToLines(path)
-	// fmt.Println(len(lines))
 	ret := types.ReportChunks{}
 	rng, err1 := cache.RangeFromFilename(path)
 	if err1 != nil {
@@ -54,6 +49,7 @@ func (opts *ChunksOptions) showStagingStats(ctx *WalkContext, path string, first
 	ret.BloomSz = 1
 	ret.ChunkSz = 1
 	ret = finishStats(&ret)
+	// TODO: Fix export without arrays
 	err := opts.Globals.RenderObject(ret, first)
 	return err == nil, err
 }
@@ -111,12 +107,14 @@ func (opts *ChunksOptions) HandleStats(blockNums []uint64) error {
 		return err
 	}
 
-	ctx = WalkContext{
-		VisitFunc: opts.showStagingStats,
-	}
-	err = opts.WalkIndexFiles(&ctx, cache.Index_Staging, blockNums)
-	if err != nil {
-		return err
+	if opts.Globals.Verbose {
+		ctx = WalkContext{
+			VisitFunc: opts.showStagingStats,
+		}
+		err = opts.WalkIndexFiles(&ctx, cache.Index_Staging, blockNums)
+		if err != nil {
+			return err
+		}
 	}
 
 	return err

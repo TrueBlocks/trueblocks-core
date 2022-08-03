@@ -56,9 +56,14 @@ func (opts *BlazeOptions) String() string {
 // HandleBlaze does the actual scraping, walking through block_cnt blocks and querying traces and logs
 // and then extracting addresses and timestamps from those data structures.
 func (opts *BlazeOptions) HandleBlaze(meta *rpcClient.MetaData) (ok bool, err error) {
-	//logger.Enter("HandleBlaze", opts)
-	//defer logger.Exit("HandleBlaze", opts.NProcessed)
+	blocks := []int{}
+	for block := int(opts.StartBlock); block < int(opts.StartBlock+opts.BlockCount); block++ {
+		blocks = append(blocks, block)
+	}
+	return opts.HandleBlaze1(meta, blocks)
+}
 
+func (opts *BlazeOptions) HandleBlaze1(meta *rpcClient.MetaData, blocks []int) (ok bool, err error) {
 	// Prepare three channels to process first blocks, then appearances and timestamps
 	blockChannel := make(chan int)
 	appearanceChannel := make(chan ScrapedData)
@@ -82,7 +87,7 @@ func (opts *BlazeOptions) HandleBlaze(meta *rpcClient.MetaData) (ok bool, err er
 	}
 
 	// TODO: BOGUS - HOW DOES ONE HANDLE ERRORS INSIDE OF GO ROUTINES?
-	for block := int(opts.StartBlock); block < int(opts.StartBlock+opts.BlockCount); block++ {
+	for _, block := range blocks {
 		blockChannel <- block
 	}
 
@@ -102,8 +107,6 @@ var beenHere = false
 
 // BlazeProcessBlocks Processes the block channel and for each block query the node for both traces and logs. Send results down appearanceChannel.
 func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChannel chan int, appearanceChannel chan ScrapedData, tsChannel chan tslib.Timestamp) (err error) {
-	//logger.Enter("BlazeProcessBlocks")
-	//defer logger.Exit("BlazeProcessBlocks")
 	defer opts.BlockWg.Done()
 
 	for blockNum := range blockChannel {
@@ -123,7 +126,7 @@ func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChan
 		}
 		err = rpcClient.FromRpc(opts.RpcProvider, &tracePayload, &traces)
 		if err != nil {
-			fmt.Println("rpcCall failed at block", blockNum, err)
+			// fmt.Println("rpcCall failed at block", blockNum, err)
 			return err
 		}
 
@@ -136,7 +139,7 @@ func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChan
 		}
 		err = rpcClient.FromRpc(opts.RpcProvider, &logsPayload, &logs)
 		if err != nil {
-			fmt.Println("rpcCall failed at block", blockNum, err)
+			// fmt.Println("rpcCall failed at block", blockNum, err)
 			return err
 		}
 
@@ -166,19 +169,19 @@ func (opts *BlazeOptions) BlazeProcessAppearances(meta *rpcClient.MetaData, appe
 		addressMap := make(map[string]bool)
 		err = opts.BlazeExtractFromTraces(sData.blockNumber, &sData.traces, addressMap)
 		if err != nil {
-			fmt.Println("BlazeExtractFromTraces returned error", sData.blockNumber, err)
+			// fmt.Println("BlazeExtractFromTraces returned error", sData.blockNumber, err)
 			return err
 		}
 
 		err = opts.BlazeExtractFromLogs(sData.blockNumber, &sData.logs, addressMap)
 		if err != nil {
-			fmt.Println("BlazeExtractFromLogs returned error", sData.blockNumber, err)
+			// fmt.Println("BlazeExtractFromLogs returned error", sData.blockNumber, err)
 			return err
 		}
 
 		err = opts.WriteAppearances(meta, sData.blockNumber, addressMap)
 		if err != nil {
-			fmt.Println("WriteAppearances returned error", sData.blockNumber, err)
+			// fmt.Println("WriteAppearances returned error", sData.blockNumber, err)
 			return err
 		}
 	}
@@ -327,7 +330,7 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 						}
 						err = rpcClient.FromRpc(opts.RpcProvider, &txReceiptPl, &receipt)
 						if err != nil {
-							fmt.Println("rpcCall failed at block", traces.Result[i].TransactionHash, err)
+							// fmt.Println("rpcCall failed at block", traces.Result[i].TransactionHash, err)
 							return err
 						}
 						addr := receipt.Result.ContractAddress
@@ -418,7 +421,7 @@ func (opts *BlazeOptions) WriteAppearances(meta *rpcClient.MetaData, bn int, add
 		toWrite := []byte(strings.Join(appearanceArray[:], "\n") + "\n")
 		err = ioutil.WriteFile(fileName, toWrite, 0744)
 		if err != nil {
-			fmt.Println("call to WriteFile returned error", err)
+			fmt.Println("call1 to WriteFile returned error", err)
 			return err
 		}
 	}

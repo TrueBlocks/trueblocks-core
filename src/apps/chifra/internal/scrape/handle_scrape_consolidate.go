@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"os"
-	"path"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -26,55 +25,118 @@ const asciiAppearanceSize = 59
 
 // HandleScrapeConsolidate calls into the block scraper to (a) call Blaze and (b) consolidate if applicable
 func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaData, blazeOpts *BlazeOptions) (ok bool, err error) {
-	indexPath := config.GetPathToIndex(opts.Globals.Chain)
-	cachePath := config.GetPathToCache(opts.Globals.Chain)
-	FileCounts(indexPath, cachePath)
+	ripePath := filepath.Join(config.GetPathToIndex(opts.Globals.Chain), "ripe")
+	ripeFiles, err := os.ReadDir(ripePath)
+	if err != nil {
+		return true, err
+	}
 
-	stageFn, _ := file.LatestFileInFolder(indexPath + "staging/")
-	// r, _ := cache.RangeFromFilename(stageFn)
+	allow_missing := scrape.AllowMissing(opts.Globals.Chain)
+
+	prev := cache.NotARange
+	for _, file := range ripeFiles {
+		fileRange, _ := cache.RangeFromFilename(file.Name())
+		if prev != cache.NotARange && prev != fileRange {
+			if !fileRange.Follows(prev, !allow_missing) {
+				msg := fmt.Sprintf("Current file (%s) does not sequentially follow previous file (%09d.txt).\n", file.Name(), prev.First)
+				logger.Log(logger.Error, msg)
+				err = config.CleanIndexFolder(config.GetPathToCache(opts.Globals.Chain), false)
+				if err != nil {
+					return true, err
+				}
+				return true, errors.New(msg)
+			}
+		}
+		prev = fileRange
+	}
+
+	stageFn, _ := file.LatestFileInFolder(filepath.Join(config.GetPathToIndex(opts.Globals.Chain), "staging"))
 	cnt := file.FileSize(stageFn) / asciiAppearanceSize
+	stagingFolder := filepath.Join(config.GetPathToIndex(opts.Globals.Chain), "staging")
+	firstFile, err := file.EarliestFileInFolder(stagingFolder)
+	if err != nil {
+		logger.Log(logger.Info, "earliest file not found, it's okay", err)
+	}
 
-	opts.Consolidate(blazeOpts)
-	// opts.ListIndexFolder(indexPath, "After Consolidate")
+	recordCount := uint64(file.FileSize(firstFile) / asciiAppearanceSize)
 
-	// if DebuggingOn {
-	// 	newPinsFn := config.GetPathToCache(opts.Globals.Chain) + "tmp/chunks_created.txt"
-	// 	fmt.Println(newPinsFn)
-	// 	fmt.Println(file.AsciiFileToString(newPinsFn))
-	// }
+	first := uint64(1)
+	if recordCount > 0 {
+		records := file.AsciiFileToLines(firstFile)
+		parts := strings.Split(records[0], "\t")
+		if len(parts) > 1 {
+			first, _ = strconv.ParseUint(parts[1], 10, 64)
+		}
+	}
+
+	settings := scrape.GetSettings(opts.Globals.Chain)
+
+	allApps := file.AsciiFileToLines(firstFile)
+	os.Remove(firstFile)
+	curRange := cache.FileRange{First: first, Last: 0}
+	bn := 0
+	for _, ff := range ripeFiles {
+		path := filepath.Join(ripePath, ff.Name())
+		allApps = append(allApps, file.AsciiFileToLines(path)...)
+		os.Remove(path)
+
+		fR, _ := cache.RangeFromFilename(ff.Name())
+		bn = int(fR.First)
+		isSnap := (bn > settings.First_snap && (bn%settings.Snap_to_grid) == 0)
+
+		recordCount1 := uint64(len(allApps))
+		isOvertop := (recordCount1 >= uint64(settings.Apps_per_chunk))
+
+		curRange.Last = utils.Max(curRange.Last, uint64(bn))
+		if isSnap || isOvertop {
+			appMap := make(index.AddressAppearanceMap, len(allApps))
+			for _, line := range allApps {
+				parts := strings.Split(line, "\t")
+				if len(parts) == 3 {
+					addr := strings.ToLower(parts[0])
+					bn, _ := strconv.ParseUint(parts[1], 10, 32)
+					txid, _ := strconv.ParseUint(parts[2], 10, 32)
+					appMap[addr] = append(appMap[addr], index.AppearanceRecord{
+						BlockNumber:   uint32(bn),
+						TransactionId: uint32(txid),
+					})
+				}
+			}
+			filename := cache.NewCachePath(opts.Globals.Chain, cache.Index_Final)
+			path := filename.GetFullPath(curRange.String())
+			snapper := -1
+			if isSnap {
+				snapper = int(settings.Snap_to_grid)
+			}
+			_, err = index.WriteChunk(opts.Globals.Chain, path, appMap, len(allApps), snapper)
+			if err != nil {
+				return true, err
+			}
+			curRange.First = curRange.Last + 1
+			allApps = []string{}
+		}
+	}
+
+	if len(allApps) > 0 {
+		line := allApps[len(allApps)-1]
+		parts := strings.Split(line, "\t")
+		if len(parts) > 1 {
+			bn, _ := strconv.ParseUint(parts[1], 10, 32)
+			f := fmt.Sprintf("%09d.txt", bn)
+			fileName := filepath.Join(config.GetPathToIndex(opts.Globals.Chain), "staging", f)
+			err = file.LinesToAsciiFile(fileName, allApps)
+			if err != nil {
+				return true, err
+			}
+		}
+	}
 
 	meta, _ := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
-	// if DebuggingOn {
-	// 	fmt.Println(meta)
-	// }
-
-	// FileCounts(indexPath, cachePath)
 	cntBeforeCall := utils.Max(progressThen.Ripe, utils.Max(progressThen.Staging, progressThen.Finalized))
 	cntAfterCall := utils.Max(meta.Ripe, utils.Max(meta.Staging, meta.Finalized))
-	// if DebuggingOn {
-	// 	fmt.Println("cntBeforeCall:", cntBeforeCall)
-	// 	fmt.Println("cntAfterCall:", cntAfterCall)
-	// 	fmt.Println("diff", (cntAfterCall - cntBeforeCall))
-	// }
 	Report("After All --> ", opts.StartBlock, opts.AppsPerChunk, opts.BlockCnt, uint64(cnt), cntAfterCall-cntBeforeCall+uint64(cnt), false)
 
 	return true, err
-}
-
-func FileCounts(indexPath, cachePath string) {
-	// if DebuggingOn {
-	// 	folders := []string{
-	// 		"finalized/",
-	// 		"blooms/",
-	// 		"staging/",
-	// 		"unripe/",
-	// 		"ripe/",
-	// 	}
-	// 	for _, folder := range folders {
-	// 		fmt.Println("Found", file.NFilesInFolder(indexPath+folder), "files in", indexPath+folder)
-	// 	}
-	// 	fmt.Println("Found", file.NFilesInFolder(cachePath+"tmp/"), "files in", cachePath+"tmp/")
-	// }
 }
 
 func Report(msg string, startBlock, nAppsPerChunk, blockCount, nRecsThen, nRecsNow uint64, hide bool) {
@@ -109,106 +171,6 @@ type ScraperState struct {
 	BlockCount    uint64
 }
 
-func (opts *ScrapeOptions) Consolidate(blazeOpts *BlazeOptions) error {
-	if !opts.verifyRipeFiles(opts.StartBlock) {
-		logger.Log(logger.Error, "verifyRipeFiles failed")
-		config.CleanIndexFolder(config.GetPathToCache(opts.Globals.Chain))
-		return errors.New("non-sequential files -- rescanning")
-	}
-
-	ripeFolder := config.GetPathToIndex(opts.Globals.Chain) + "ripe/"
-	files, err := os.ReadDir(ripeFolder)
-	if err != nil {
-		return err
-	}
-
-	settings := scrape.GetSettings(opts.Globals.Chain)
-	stagingFolder := config.GetPathToIndex(opts.Globals.Chain) + "staging/"
-	firstFile, err := file.EarliestFileInFolder(stagingFolder)
-	if err != nil {
-		logger.Log(logger.Info, "earliest file not found, it's okay", err)
-	}
-
-	recordCount := uint64(file.FileSize(firstFile) / asciiAppearanceSize)
-
-	first := uint64(1)
-	if recordCount > 0 {
-		records := file.AsciiFileToLines(firstFile)
-		parts := strings.Split(records[0], "\t")
-		if len(parts) > 1 {
-			first, _ = strconv.ParseUint(parts[1], 10, 64)
-		}
-	}
-
-	allApps := file.AsciiFileToLines(firstFile)
-	os.Remove(firstFile)
-	curRange := cache.FileRange{First: first, Last: 0}
-	bn := 0
-	for _, ff := range files {
-		path := filepath.Join(ripeFolder, ff.Name())
-		allApps = append(allApps, file.AsciiFileToLines(path)...)
-		os.Remove(path)
-
-		fR, _ := cache.RangeFromFilename(ff.Name())
-		bn = int(fR.First)
-		isSnap := (bn > settings.First_snap && (bn%settings.Snap_to_grid) == 0)
-
-		recordCount1 := uint64(len(allApps))
-		isOvertop := (recordCount1 >= uint64(settings.Apps_per_chunk))
-
-		// final := (ff.Name() == files[len(files)-1].Name())
-		curRange.Last = utils.Max(curRange.Last, uint64(bn))
-
-		// if isSnap {
-		// 	curRange.Last = utils.Max(curRange.Last, uint64(bn))
-		// logger.Log(logger.Info, strings.Repeat("~", 100))
-		// logger.Log(logger.Info, "Snap at", curRange.First, curRange.Last)
-		// } else if isOvertop {
-		// 	curRange.Last = utils.Max(curRange.Last, uint64(bn))
-		// logger.Log(logger.Info, strings.Repeat("~", 100))
-		// logger.Log(logger.Info, "Overtops at", curRange.First, curRange.Last)
-		// } else {
-		// 	if final {
-		// 		logger.Log(logger.Info, strings.Repeat("~", 100))
-		// 		logger.Log(logger.Info, "Final", curRange.First, curRange.Last)
-		// 	}
-		// }
-
-		if isSnap || isOvertop {
-			appMap := make(index.AddressAppearanceMap, len(allApps))
-			for _, line := range allApps {
-				parts := strings.Split(line, "\t")
-				if len(parts) == 3 {
-					addr := strings.ToLower(parts[0])
-					bn, _ := strconv.ParseUint(parts[1], 10, 32)
-					txid, _ := strconv.ParseUint(parts[2], 10, 32)
-					appMap[addr] = append(appMap[addr], index.AppearanceRecord{
-						BlockNumber:   uint32(bn),
-						TransactionId: uint32(txid),
-					})
-				}
-			}
-			// logger.Log(logger.Info, "Would have written:", len(allApps), "records and", len(appMap), "addresses to", curRange)
-			filename := cache.NewCachePath(opts.Globals.Chain, cache.Index_Final)
-			path := filename.GetFullPath(curRange.String())
-			snapper := -1
-			if isSnap {
-				snapper = int(settings.Snap_to_grid)
-			}
-			_, err = index.WriteChunk(opts.Globals.Chain, path, appMap, len(allApps), snapper)
-			if err != nil {
-				return err
-			}
-			curRange.First = curRange.Last + 1
-			allApps = []string{}
-		}
-	}
-	f := fmt.Sprintf("%09d.txt", (curRange.First + uint64(len(allApps)) - 1))
-	fileName := filepath.Join(config.GetPathToIndex(opts.Globals.Chain), "staging", f)
-	// logger.Log(logger.Info, "Left over:", len(allApps), "written to", fileName)
-	return file.LinesToAsciiFile(fileName, allApps)
-}
-
 func (opts *ScrapeOptions) ListIndexFolder(indexPath, msg string) {
 	// logger.Log(logger.Info, "======================= Enter", msg, "=======================")
 	// filepath.Walk(indexPath, func(fullPath string, info os.FileInfo, err error) error {
@@ -227,37 +189,4 @@ func (opts *ScrapeOptions) ListIndexFolder(indexPath, msg string) {
 	// 	return nil
 	// })
 	// logger.Log(logger.Info, "======================= Exit", msg, "=======================")
-}
-
-func (opts *ScrapeOptions) verifyRipeFiles(start uint64) bool {
-	ripePath := filepath.Join(config.GetPathToIndex(opts.Globals.Chain), "ripe")
-	files, err := os.ReadDir(ripePath)
-	if err != nil {
-		fmt.Println(err.Error())
-		return false
-	}
-	// logger.Log(logger.Info, "verifyRipeFiles", ripePath, "nFiles:", len(files), scrape.AllowMissing(opts.Globals.Chain))
-
-	prev := cache.FileRange{First: start, Last: start}
-	for _, file := range files {
-		fR, _ := cache.RangeFromFilename(file.Name())
-		if prev != fR {
-			if !fR.Follows(prev, !scrape.AllowMissing(opts.Globals.Chain)) {
-				logger.Log(logger.Error, "Current file (", file.Name(), ") does not sequentially follow previous file ", prev.First, ".")
-				// TODO: BOGUS THIS IS NEARLY IDENTICAL TO CleanIndexFolder BUT DOESN'T REMOVE STAGING - MAKE CLEANING ON FAILED PROCESSING CONSISTENET
-				for _, f := range []string{"ripe", "unripe", "maps"} {
-					folder := path.Join(config.GetPathToIndex(opts.Globals.Chain), f)
-					err := os.RemoveAll(folder)
-					if err != nil {
-						logger.Log(logger.Error, "Cannot delete folder (", folder, ").")
-						return false
-					}
-				}
-				return false
-			}
-		}
-		prev = fR
-	}
-
-	return true
 }
