@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-07-23T12:50:47
+date: 2022-08-03T14:11:16
 lastmod:
   - :git
   - lastmod
@@ -113,7 +113,7 @@ Usage:
 
 Arguments:
   mode - the type of chunk info to retrieve (required)
-	One of [ stats | manifest | pins | blooms | index | addresses | appearances ]
+	One of [ stats | manifest | pins | blooms | index | addresses | appearances | dump ]
   blocks - optional list of blocks to intersect with chunk ranges
   addrs - one or more addresses to use with --belongs option (see note)
 

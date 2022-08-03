@@ -1,13 +1,13 @@
 chifra chunks  header --fmt csv
 TEST[DATE|TIME] Mode:  header
 TEST[DATE|TIME] Format:  csv
-Error: The mode option (header) must be one of [ stats | manifest | pins | blooms | index | addresses | appearances ]
+Error: The mode option (header) must be one of [ stats | manifest | pins | blooms | index | addresses | appearances | dump ]
 Usage:
   chifra chunks <mode> [flags] [blocks...] [address...]
 
 Arguments:
   mode - the type of chunk info to retrieve (required)
-	One of [ stats | manifest | pins | blooms | index | addresses | appearances ]
+	One of [ stats | manifest | pins | blooms | index | addresses | appearances | dump ]
   blocks - optional list of blocks to intersect with chunk ranges
   addrs - one or more addresses to use with --belongs option (see note)
 

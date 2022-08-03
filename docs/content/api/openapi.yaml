@@ -1534,6 +1534,7 @@ paths:
               - index
               - addresses
               - appearances
+              - dump
         - name: blocks
           description: optional list of blocks to intersect with chunk ranges
           required: false
