@@ -44,13 +44,12 @@ func (opts *ScrapeOptions) HandleScrapeBlaze(progress *rpcClient.MetaData, blaze
 		return true, errors.New(msg)
 	}
 
-	blazeOpts.CleanupPostScrape()
+	blazeOpts.WriteTimestamps()
 
-	// logger.Exit("HandleScrapeBlaze")
 	return true, nil
 }
 
-func (opts *BlazeOptions) CleanupPostScrape() error {
+func (opts *BlazeOptions) WriteTimestamps() error {
 	sort.Slice(opts.TsArray, func(i, j int) bool {
 		return opts.TsArray[i].Bn < opts.TsArray[j].Bn
 	})

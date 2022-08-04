@@ -45,10 +45,17 @@ func (opts *ScrapeOptions) HandlePrepare() (ok bool, err error) {
 		return false, err
 	}
 
+	ts := uint32(rpcClient.GetBlockTimestamp(config.GetRpcProvider(opts.Globals.Chain), uint64(0)))
+	if ts == 0 {
+		// some node return a zero timestamp for the zero block, use block 1 minus 13 in that case
+		ts = uint32(rpcClient.GetBlockTimestamp(config.GetRpcProvider(opts.Globals.Chain), uint64(1)))
+		// TODO: BOGUS - CHAIN SPECIFIC
+		ts -= 13
+	}
 	array := []tslib.Timestamp{}
 	array = append(array, tslib.Timestamp{
 		Bn: uint32(0),
-		Ts: uint32(rpcClient.GetBlockTimestamp(config.GetRpcProvider(opts.Globals.Chain), uint64(0))),
+		Ts: ts,
 	})
 	tslib.Append(opts.Globals.Chain, array)
 
