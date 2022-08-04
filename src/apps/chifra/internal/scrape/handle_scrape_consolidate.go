@@ -40,7 +40,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 			if !fileRange.Follows(prev, !allow_missing) {
 				msg := fmt.Sprintf("Current file (%s) does not sequentially follow previous file (%09d.txt).\n", file.Name(), prev.First)
 				logger.Log(logger.Error, msg)
-				err = config.CleanIndexFolder(config.GetPathToCache(opts.Globals.Chain), false)
+				err = index.CleanTemporaryFolders(config.GetPathToCache(opts.Globals.Chain), false)
 				if err != nil {
 					return true, err
 				}
@@ -60,7 +60,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 
 	recordCount := uint64(file.FileSize(firstFile) / asciiAppearanceSize)
 
-	first := uint64(1)
+	first := uint64(opts.StartBlock)
 	if recordCount > 0 {
 		records := file.AsciiFileToLines(firstFile)
 		parts := strings.Split(records[0], "\t")

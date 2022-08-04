@@ -9,6 +9,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/migrate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrape"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -139,5 +140,10 @@ func (opts *ChunksOptions) validateChunks() error {
 		}
 	}
 
+	if opts.Reset != utils.NOPOS {
+		if opts.Mode != "index" {
+			return validate.Usage("The {0} option is only available {1}.", "--reset", "in index mode")
+		}
+	}
 	return opts.Globals.Validate()
 }

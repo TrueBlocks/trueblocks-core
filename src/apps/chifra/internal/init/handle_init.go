@@ -54,7 +54,7 @@ func (opts *InitOptions) HandleInit() error {
 	defer close(indexDoneChannel)
 	defer func() {
 		// We want to make sure these folders are empty so the scraper starts at the proper place.
-		config.CleanIndexFolder(config.GetPathToIndex(chain), true)
+		index.CleanTemporaryFolders(config.GetPathToIndex(chain), true)
 	}()
 
 	getChunks := func(chunkType cache.CacheType) {

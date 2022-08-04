@@ -136,24 +136,3 @@ func EstablishIndexPaths(indexPath string) {
 		log.Fatal(err)
 	}
 }
-
-// CleanIndexFolder removes any files that may be partial or incomplete
-func CleanIndexFolder(indexPath string, incStaging bool) error {
-	for _, f := range []string{"ripe", "unripe", "maps"} {
-		folder := path.Join(indexPath, f)
-		err := os.RemoveAll(folder)
-		if err != nil {
-			return err
-		}
-	}
-
-	if incStaging {
-		folder := path.Join(indexPath, "staging")
-		err := os.RemoveAll(folder)
-		if err != nil {
-			return err
-		}
-	}
-
-	return nil
-}

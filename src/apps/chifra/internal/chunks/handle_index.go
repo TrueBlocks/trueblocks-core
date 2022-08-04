@@ -44,23 +44,6 @@ func (opts *ChunksOptions) showIndex(ctx *WalkContext, path string, first bool) 
 	return true, nil
 }
 
-// TODO: Don't forget about this option (pushing to IPFS)
-/*
-if (share) {
-	string_q res := doCommand("which ipfs");
-	if (res.empty()) {
-		return usa ge("Could not find ipfs in your $PATH. You must install ipfs for the --share command to work.");
-	}
-}
-if (share) {
-	ostringstream os;
-	os << "ipfs add -Q --pin \"" << bloomFn + "\"";
-	string_q newHash = doCommand(os.str());
-	LOG_INFO(cGreen, "Re-pinning ", pin.fileName, cOff, " ==> ", newHash, " ",
-	(pin.bloomHash == newHash ? greenCheck : redX));
-}
-*/
-
 func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
 	defer opts.Globals.RenderFooter()
 	err := opts.Globals.RenderHeader(types.SimpleIndex{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)

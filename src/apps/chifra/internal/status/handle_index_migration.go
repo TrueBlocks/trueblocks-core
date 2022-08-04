@@ -66,7 +66,7 @@ func (opts *StatusOptions) checkTrueBlocksFile() {
 
 func (opts *StatusOptions) removeUnusedFolders() {
 	log.Println(colors.Yellow + "Removing temporary folders (staging, unripe, ripe, maps)" + colors.Off)
-	config.CleanIndexFolder(config.GetPathToIndex(opts.Globals.Chain), true)
+	index.CleanTemporaryFolders(config.GetPathToIndex(opts.Globals.Chain), true)
 	done()
 }
 

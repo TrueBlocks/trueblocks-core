@@ -78,8 +78,10 @@ func (opts *BlazeOptions) WriteTimestamps() error {
 	stop := uint32(opts.StartBlock + opts.BlockCount)
 
 	for bn := start; bn < stop; bn++ {
-		f := "-------- ( ------)- <PROG>  : Checking timestamps %-04d of %-04d\r"
-		fmt.Fprintf(os.Stderr, f, bn, stop)
+		if (bn % 13) == 0 {
+			f := "-------- ( ------)- <PROG>  : Checking timestamps %-04d of %-04d\r"
+			fmt.Fprintf(os.Stderr, f, bn, stop)
+		}
 		ts := tslib.Timestamp{}
 		if cnt >= len(opts.TsArray) {
 			ts = tslib.Timestamp{

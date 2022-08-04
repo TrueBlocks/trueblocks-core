@@ -6,6 +6,8 @@ package index
 
 import (
 	"fmt"
+	"os"
+	"path"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
@@ -62,4 +64,22 @@ func EstablishIndexChunk(chain string, fileRange cache.FileRange) (bool, error) 
 		}
 	}
 	return file.FileExists(fileName), nil
+}
+
+// CleanTemporaryFolders removes any files that may be partial or incomplete
+func CleanTemporaryFolders(indexPath string, incStaging bool) error {
+	folders := []string{"ripe", "unripe", "maps", "staging"}
+	if !incStaging {
+		folders = folders[:len(folders)-2]
+	}
+
+	for _, f := range folders {
+		folder := path.Join(indexPath, f)
+		err := os.RemoveAll(folder)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
 }

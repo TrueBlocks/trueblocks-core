@@ -13,6 +13,7 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
@@ -55,15 +56,24 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 	}
 
 	maxTestItems = 100
-	if opts.Check || opts.PinRemote || opts.Publish {
-		if opts.Check {
-			err = opts.HandleChunksCheck(blockNums)
-			if err != nil {
-				return
-			}
+	if opts.PinRemote {
+		err = opts.HandleRemote(blockNums)
+
+	} else if opts.Publish {
+		err = opts.HandlePublish(blockNums)
+
+	} else if opts.Status {
+		err = opts.HandleStatus(blockNums)
+
+	} else if opts.Reset != utils.NOPOS {
+		err = opts.HandleReset(blockNums)
+
+	} else if opts.Check {
+		err = opts.HandleChunksCheck(blockNums)
+		if err != nil {
+			return
 		}
-		// TODO: BOGUS - FEATURE NEED TO COMPLETE PIN_CHUNKS AND PIN_DATA
-		return
+
 	} else if opts.Repair {
 		err = opts.HandleRepair(blockNums)
 
@@ -97,6 +107,9 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 
 		case "appearances":
 			err = opts.HandleAppearances(blockNums)
+
+		case "dump":
+			err = opts.HandleDump(blockNums)
 
 		default:
 			err = validate.Usage("Extractor for {0} not yet implemented.", opts.Mode)

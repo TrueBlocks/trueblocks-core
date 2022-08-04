@@ -5,6 +5,7 @@
 package chunksPkg
 
 import (
+	"log"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
@@ -67,6 +68,8 @@ func (opts *ChunksOptions) WalkIndexFiles(ctx *WalkContext, cacheType cache.Cach
 				close(filenameChan)
 				continue
 			}
+		default:
+			log.Fatal("You may only traverse bloom or stage folders")
 		}
 	}
 

@@ -237,7 +237,8 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 21970,apps,Admin,chunks,chunkMan,repair,e,,false,false,false,false,gocmd,switch,<boolean>,valid for manifest option only&#44; repair the given chunk (requires block number)
 21970,apps,Admin,chunks,chunkMan,clean,n,,false,false,true,false,gocmd,switch,<boolean>,retrieve all pins on Pinata&#44; compare to manifest&#44; remove any extraneous remote pins
 21972,apps,Admin,chunks,chunkMan,remote,m,,false,false,true,false,gocmd,switch,<boolean>,for some options&#44; force processing from remote data
-21974,apps,Admin,chunks,chunkMan,reset,r,,false,false,false,false,gocmd,flag,<blknum>,available only in chunks mode&#44; remove all chunks inclusive of or after this block
+21974,apps,Admin,chunks,chunkMan,reset,r,,false,false,false,false,gocmd,flag,<blknum>,available only in index mode&#44; remove all chunks inclusive of or after this block
+21975,apps,Admin,chunks,chunkMan,status,u,,false,false,false,false,gocmd,switch,<boolean>,show the status of unripe&#44; ripe&#44; staging&#44; blooms&#44; and finalized folders
 21965,apps,Admin,chunks,chunkMan,pin_remote,i,,false,false,true,false,gocmd,switch,<boolean>,pin any previously unpinned chunks and blooms to a remote pinning service
 21967,apps,Admin,chunks,chunkMan,publish,p,,false,false,true,false,gocmd,switch,<boolean>,update the manifest and publish it to the Unchained Index smart contract
 21975,apps,Admin,chunks,chunkMan,,,,false,false,true,true,--,description,,Manage and investigate chunks and bloom filters.

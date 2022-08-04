@@ -154,6 +154,7 @@ func (bl *ChunkBloom) AddToSet(addr common.Address) {
 
 	if bl.Blooms[loc].NInserted > MAX_ADDRS_IN_BLOOM {
 		bl.Blooms = append(bl.Blooms, BloomBytes{})
+		bl.Blooms[bl.Count].Bytes = make([]byte, BLOOM_WIDTH_IN_BYTES)
 		bl.Count++
 	}
 }

@@ -44,7 +44,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		tes := os.Getenv("TEST_END_SCRAPE")
 		if tes != "" {
 			val, err := strconv.ParseUint(tes, 10, 32)
-    		fmt.Println("tes:", tes, "val:", val, "stage:", progress.Staging)
+			fmt.Println("tes:", tes, "val:", val, "stage:", progress.Staging)
 			if (val != 0 && progress.Staging > val) || err != nil {
 				logger.Exit("HandleScrapeBlaze - Quitting early", err)
 				return err

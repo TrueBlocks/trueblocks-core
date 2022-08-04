@@ -32,7 +32,8 @@ type ChunksOptions struct {
 	Repair    bool                     `json:"repair,omitempty"`    // Valid for manifest option only, repair the given chunk (requires block number)
 	Clean     bool                     `json:"clean,omitempty"`     // Retrieve all pins on Pinata, compare to manifest, remove any extraneous remote pins
 	Remote    bool                     `json:"remote,omitempty"`    // For some options, force processing from remote data
-	Reset     uint64                   `json:"reset,omitempty"`     // Available only in chunks mode, remove all chunks inclusive of or after this block
+	Reset     uint64                   `json:"reset,omitempty"`     // Available only in index mode, remove all chunks inclusive of or after this block
+	Status    bool                     `json:"status,omitempty"`    // Show the status of unripe, ripe, staging, blooms, and finalized folders
 	PinRemote bool                     `json:"pinRemote,omitempty"` // Pin any previously unpinned chunks and blooms to a remote pinning service
 	Publish   bool                     `json:"publish,omitempty"`   // Update the manifest and publish it to the Unchained Index smart contract
 	Globals   globals.GlobalOptions    `json:"globals,omitempty"`   // The global options
@@ -53,6 +54,7 @@ func (opts *ChunksOptions) testLog() {
 	logger.TestLog(opts.Clean, "Clean: ", opts.Clean)
 	logger.TestLog(opts.Remote, "Remote: ", opts.Remote)
 	logger.TestLog(opts.Reset != utils.NOPOS, "Reset: ", opts.Reset)
+	logger.TestLog(opts.Status, "Status: ", opts.Status)
 	logger.TestLog(opts.PinRemote, "PinRemote: ", opts.PinRemote)
 	logger.TestLog(opts.Publish, "Publish: ", opts.Publish)
 	opts.Globals.TestLog()
@@ -96,6 +98,8 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 			opts.Remote = true
 		case "reset":
 			opts.Reset = globals.ToUint64(value[0])
+		case "status":
+			opts.Status = true
 		case "pinRemote":
 			opts.PinRemote = true
 		case "publish":
@@ -134,7 +138,7 @@ func chunksFinishParse(args []string) *ChunksOptions {
 		}
 	}
 	opts.Addrs = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
-	if opts.Mode == "manifest" {
+	if opts.Mode == "manifest" || opts.Reset != utils.NOPOS || opts.Status {
 		defFmt = "json"
 	}
 	if opts.Reset == 0 {
