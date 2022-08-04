@@ -66,8 +66,8 @@ class COptions : public CAbiOptions {
     bool cache;
     bool cache_traces;
     bool count;
-    blknum_t first_record;
-    blknum_t max_records;
+    uint64_t first_record;
+    uint64_t max_records;
     bool relevant;
     bool factory;
     string_q load;
