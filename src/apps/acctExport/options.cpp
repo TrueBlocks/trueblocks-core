@@ -45,8 +45,8 @@ static const COption params[] = {
     COption("cache", "i", "", OPT_SWITCH, "write transactions to the cache (see notes)"),
     COption("cache_traces", "R", "", OPT_SWITCH, "write traces to the cache (see notes)"),
     COption("count", "U", "", OPT_SWITCH, "only available for --appearances mode, if present, return only the number of records"),  // NOLINT
-    COption("first_record", "c", "<blknum>", OPT_FLAG, "the first record to process"),
-    COption("max_records", "e", "<blknum>", OPT_FLAG, "the maximum number of records to process before reporting"),
+    COption("first_record", "c", "<uint64>", OPT_FLAG, "the first record to process"),
+    COption("max_records", "e", "<uint64>", OPT_FLAG, "the maximum number of records to process before reporting"),
     COption("relevant", "", "", OPT_SWITCH, "for log and accounting export only, export only logs relevant to one of the given export addresses"),  // NOLINT
     COption("emitter", "", "list<addr>", OPT_FLAG, "for log export only, export only logs if emitted by one of these address(es)"),  // NOLINT
     COption("topic", "", "list<topic>", OPT_FLAG, "for log export only, export only logs with this topic(s)"),
@@ -137,13 +137,13 @@ bool COptions::parseArguments(string_q& command) {
             count = true;
 
         } else if (startsWith(arg, "-c:") || startsWith(arg, "--first_record:")) {
-            if (!confirmBlockNum("first_record", first_record, arg, latest))
+            if (!confirmUint("first_record", first_record, arg))
                 return false;
         } else if (arg == "-c" || arg == "--first_record") {
             return flag_required("first_record");
 
         } else if (startsWith(arg, "-e:") || startsWith(arg, "--max_records:")) {
-            if (!confirmBlockNum("max_records", max_records, arg, latest))
+            if (!confirmUint("max_records", max_records, arg))
                 return false;
         } else if (arg == "-e" || arg == "--max_records") {
             return flag_required("max_records");
