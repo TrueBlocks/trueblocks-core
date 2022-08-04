@@ -18,7 +18,8 @@ Flags:
   -e, --repair       valid for manifest option only, repair the given chunk (requires block number) (hidden)
   -n, --clean        retrieve all pins on Pinata, compare to manifest, remove any extraneous remote pins
   -m, --remote       for some options, force processing from remote data
-  -r, --reset uint   available only in chunks mode, remove all chunks inclusive of or after this block (hidden)
+  -r, --reset uint   available only in index mode, remove all chunks inclusive of or after this block (hidden)
+  -u, --status       show the status of unripe, ripe, staging, blooms, and finalized folders (hidden)
   -i, --pin_remote   pin any previously unpinned chunks and blooms to a remote pinning service
   -p, --publish      update the manifest and publish it to the Unchained Index smart contract
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]

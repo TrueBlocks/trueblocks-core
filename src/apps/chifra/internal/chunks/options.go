@@ -138,11 +138,11 @@ func chunksFinishParse(args []string) *ChunksOptions {
 		}
 	}
 	opts.Addrs = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
-	if opts.Mode == "manifest" || opts.Reset != utils.NOPOS || opts.Status {
-		defFmt = "json"
-	}
 	if opts.Reset == 0 {
 		opts.Reset = utils.NOPOS
+	}
+	if opts.Mode == "manifest" || opts.Reset != utils.NOPOS || opts.Status {
+		defFmt = "json"
 	}
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
