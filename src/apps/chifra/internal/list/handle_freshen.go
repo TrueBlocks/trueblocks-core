@@ -168,8 +168,8 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultChannel chan<- []index.AppearanceResult, wg *sync.WaitGroup) {
 	var results []index.AppearanceResult
 	defer func() {
-		wg.Done()
 		resultChannel <- results
+		wg.Done()
 	}()
 
 	bloomFilename := index.ToBloomPath(fileName)
