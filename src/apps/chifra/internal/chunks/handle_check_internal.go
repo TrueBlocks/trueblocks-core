@@ -14,7 +14,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 )
 
-// TODO: Concurrent?
 func (opts *ChunksOptions) CheckInternal(fileNames []string, blockNums []uint64, report *types.ReportCheck) error {
 	for testId, fileName := range fileNames {
 		report.VisitedCnt++
@@ -33,14 +32,8 @@ func (opts *ChunksOptions) CheckInternal(fileNames []string, blockNums []uint64,
 				msg := fmt.Sprintf("%s: Magic number expected (0x%x) got (0x%x)", rng, header.Magic, file.MagicNumber)
 				report.MsgStrings = append(report.MsgStrings, msg)
 
-			} else if header.Hash.Hex() != unchained.ZeroMagicHash && header.Hash.Hex() != unchained.HeaderMagicHash || (testId == 2) {
-				// TODO: BOGUS - MIGRATION CHECKING HASHES
+			} else if header.Hash.Hex() != unchained.HeaderMagicHash || (testId == 2) {
 				msg := fmt.Sprintf("%s: Header hash expected (%s) got (%s)", rng, header.Hash.Hex(), unchained.HeaderMagicHash)
-				report.MsgStrings = append(report.MsgStrings, msg)
-
-			} else if rng.First > 3000000 && header.AppearanceCount > 2005000 || testId == 3 {
-				// TODO: BOGUS - MIGRATION INVALID TEST
-				msg := fmt.Sprintf("%s: Too many addresses? (%d)", rng, header.AppearanceCount)
 				report.MsgStrings = append(report.MsgStrings, msg)
 
 			} else {

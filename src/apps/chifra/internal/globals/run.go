@@ -54,23 +54,6 @@ func (opts *GlobalOptions) PassItOn(path, chain, cmdLine string, envIn []string)
 		}()
 	}
 
-	// TODO: BOGUS - RETURN VALUE FROM BLAZE
-	// cmd := exec.Command("git", "blub")
-	// if err := cmd.Start(); err != nil {
-	// 	log.Fatalf("cmd.Start: %v", err)
-	// }
-	// if err := cmd.Wait(); err != nil {
-	// 	if exiterr, ok := err.(*exec.ExitError); ok {
-	// 		if status, ok := exiterr.Sys().(syscall.WaitStatus); ok {
-	// 			log.Printf("Exit Status: %d", status.ExitStatus())
-	// 		}
-	// 	} else {
-	// 		log.Fatalf("cmd.Wait: %v", err)
-	// 	}
-	// }
-
-	// TODO: BOGUS - RETURN VALUE FROM BLAZE
-	// returnVal := int64(0)
 	stdout, err := cmd.StdoutPipe()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%s", err)
@@ -82,8 +65,6 @@ func (opts *GlobalOptions) PassItOn(path, chain, cmdLine string, envIn []string)
 			scanner.Buffer(buf, 1024*1024)
 			for scanner.Scan() {
 				m := scanner.Text()
-				// TODO: BOGUS - RETURN VALUE FROM BLAZE
-				// returnVal, _ = strconv.ParseInt(m, 10, 32)
 				fmt.Println(m)
 			}
 			wg.Done()
@@ -91,13 +72,6 @@ func (opts *GlobalOptions) PassItOn(path, chain, cmdLine string, envIn []string)
 	}
 	wg.Wait()
 	cmd.Wait()
-	// fmt.Fprintf(os.Stderr, "Calling: TB_CONFIG_ENV=\"%s\" %s %s\n", envStr, config.GetPathToCommands(path), options)
-	// time.Sleep(4 * time.Second)
-	// TODO: BOGUS - RETURN VALUE FROM BLAZE
-	// if returnVal != 0 {
-	//	msg := fmt.Sprintf("call returned %d", returnVal)
-	//	return errors.New(msg)
-	// }
 	return nil
 }
 

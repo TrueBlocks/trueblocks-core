@@ -82,7 +82,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 
 		fR, _ := cache.RangeFromFilename(ff.Name())
 		bn = int(fR.First)
-		isSnap := (bn > settings.First_snap && (bn%settings.Snap_to_grid) == 0)
+		isSnap := (bn >= settings.First_snap && (bn%settings.Snap_to_grid) == 0)
 
 		recordCount1 := uint64(len(allApps))
 		isOvertop := (recordCount1 >= uint64(settings.Apps_per_chunk))

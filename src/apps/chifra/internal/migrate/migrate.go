@@ -5,24 +5,15 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
-// TODO: BOGUS - MIGRATION SENTINAL? REENTRANCY SAFE?
-func HasBackLevelIndex(chain string, v *string) bool {
-	return false
-	// // TODO: BOGUS - THIS IS NOT CHAIN SAFE AT ALL!!!
-	// *v = config.GetPathToIndex(chain) + "/finalized/013308630-013321453.bin"
-	// if file.FileExists(*v) {
-	// 	return true
-	// }
-	// return file.FileExists(bloom.ToBloomPath(*v))
-}
-
 func CheckBackLevelIndex(chain string) {
-	// TODO: BOGUS - DOES CHECKING FOR OLD INDEXES WORK?
-	v := ""
-	if !HasBackLevelIndex(chain, &v) {
+	fileName := config.GetPathToIndex(chain) + "finalized/000000000-000000000.bin"
+	ok, err := index.HasValidHeader(chain, fileName)
+	if ok && err == nil {
 		return
 	}
 
@@ -42,7 +33,7 @@ func CheckBackLevelIndex(chain string) {
 `
 	msg := strings.Replace(BackLevelVersion, "{0}", "{v0.40.0-beta}", -1)
 	msg = strings.Replace(msg, "[{VERSION}]", version.LibraryVersion, -1)
-	msg = strings.Replace(msg, "[{FILE}]", v, -1)
+	msg = strings.Replace(msg, "[{FILE}]", fileName, -1)
 	msg = strings.Replace(msg, "{", colors.Green, -1)
 	msg = strings.Replace(msg, "}", colors.Off, -1)
 	log.Fatalf(msg)

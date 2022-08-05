@@ -53,7 +53,7 @@ func GetSettings(chain string) scrapeSettings {
 	}
 	if chain == "mainnet" {
 		conf.Settings.Apps_per_chunk = 2000000
-		conf.Settings.First_snap = 2000000
+		conf.Settings.First_snap = 2300000
 	}
 	if _, err := toml.Decode(str, &conf); err != nil {
 		log.Println(err)

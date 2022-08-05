@@ -1,10 +1,6 @@
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
-/*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
- * the code inside of 'EXISTING_CODE' tags.
- */
 
 // TODO: BOGUS - THIS WORK NEEDS WAY MORE TESTING AND IS INCOMPLETE
 package statusPkg
@@ -17,7 +13,6 @@ import (
 	"strings"
 
 	initPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/init"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/migrate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -25,9 +20,9 @@ import (
 )
 
 func (opts *StatusOptions) HandleIndexMigration() error {
-	// TODO: BOGUS - MIGRATION SENTINAL? REENTRANCY SAFE?
-	unused := ""
-	if !migrate.HasBackLevelIndex(opts.Globals.Chain, &unused) {
+	fileName := config.GetPathToIndex(opts.Globals.Chain) + "finalized/000000000-000000000.bin"
+	ok, _ := index.HasValidHeader(opts.Globals.Chain, fileName)
+	if ok {
 		log.Println(colors.Yellow, "The index does not need to be migrated.", colors.Off)
 		return nil
 	}

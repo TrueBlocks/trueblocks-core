@@ -19,6 +19,9 @@ import (
 // true if the processing should continue, false otherwise. Currently, the only thing to do
 // is write the zero block Index Chunk / Bloom filter pair if it doesn't exist.
 func (opts *ScrapeOptions) HandlePrepare() (ok bool, err error) {
+	// We always clean the temporary folders (other than staging) when starting
+	index.CleanTemporaryFolders(config.GetPathToIndex(opts.Globals.Chain), false)
+
 	pathObj := cache.NewCachePath(opts.Globals.Chain, cache.Index_Bloom)
 	bloomPath := pathObj.GetFullPath("000000000-000000000")
 	if file.FileExists(bloomPath) {
