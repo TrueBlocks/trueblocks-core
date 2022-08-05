@@ -145,7 +145,7 @@ func TxHashFromHashAndId(provider, hash string, txId uint64) (string, error) {
 // }
 
 func GetTransactionReceipt(provider string, bn uint64, txid uint64) (types.SimpleReceipt, error) {
-	// TODO: BOGUS THIS WORK IS INCOMPLETE
+	// TODO: BOGUS - THIS WORK IS INCOMPLETE
 	// tx, err := TxFromNumberAndId(provider, bn, txid)
 	// if err != nil {
 	// 	return types.SimpleReceipt{}, err

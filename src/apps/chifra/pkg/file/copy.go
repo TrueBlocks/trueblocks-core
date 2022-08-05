@@ -9,8 +9,7 @@ import (
 	"os"
 )
 
-// TODO: BOGUS - FOR SOME REASON, GOLANG CHOSE TO REVERSE THE COMMAND LINE SEMANTICS - WE SHOULD BE GO-LIKE HERE AND REVERSE OUR SEMANTICS
-func Copy(sourcePath, destPath string) (int64, error) {
+func Copy(destPath, sourcePath string) (int64, error) {
 	source, err := os.Open(sourcePath)
 	if err != nil {
 		return 0, err
@@ -23,6 +22,5 @@ func Copy(sourcePath, destPath string) (int64, error) {
 	}
 	defer dest.Close()
 
-	// TODO: BOGUS - FOR SOME REASON, GOLANG CHOSE TO REVERSE THE COMMAND LINE SEMANTICS - WE SHOULD BE GO-LIKE HERE AND REVERSE OUR SEMANTICS
 	return io.Copy(dest, source)
 }

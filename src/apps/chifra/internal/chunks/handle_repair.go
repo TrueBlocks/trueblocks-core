@@ -27,14 +27,14 @@ func (opts *ChunksOptions) HandleRepair(blockNums []uint64) error {
 				Status:    "Repaired Bloom",
 				Range:     config.GetPathToIndex(opts.Globals.Chain) + "blooms/" + chunk.Range + ".bloom",
 				BloomHash: string(chunk.BloomHash),
-				// TODO: BOGUS -- PIN THE FILE TO PINATA -- REPORT THE IPFS HASH
+				// TODO: BOGUS - PIN THE FILE TO PINATA -- REPORT THE IPFS HASH
 			}
 			reports = append(reports, report)
 			report = types.ReportRepair{
 				Status:    "Repaired Index",
 				Range:     config.GetPathToIndex(opts.Globals.Chain) + "finalized/" + chunk.Range + ".bin",
 				IndexHash: string(chunk.IndexHash),
-				// TODO: BOGUS -- PIN THE FILE TO PINATA -- REPORT THE IPFS HASH
+				// TODO: BOGUS - PIN THE FILE TO PINATA -- REPORT THE IPFS HASH
 			}
 			reports = append(reports, report)
 		}

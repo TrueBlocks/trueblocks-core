@@ -50,7 +50,7 @@ func (bl *ChunkBloom) WriteBloom(chain, bloomPath string) error {
 	fp.Close()
 
 	os.Remove(bloomPath)
-	_, err = file.Copy(tempPath, bloomPath)
+	_, err = file.Copy(bloomPath, tempPath)
 	if err != nil {
 		return err
 	}

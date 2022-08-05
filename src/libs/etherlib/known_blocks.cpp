@@ -37,7 +37,7 @@ blknum_t firstTransactionBlock(void) {
 
 // This data was taken from Geth ./params/config.go
 blknum_t hardForkBlock(const string_q& hf) {
-    // TODO: BOGUS - FEATURE FORK BLOCKS IN MANIFEST
+    // TODO: - FEATURE FORK BLOCKS IN MANIFEST
     if (hf == "byzantium") {
         map<string_q, blknum_t> theMap = {
             make_pair("kovan", 5067000),

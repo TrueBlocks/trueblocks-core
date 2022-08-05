@@ -13,7 +13,7 @@ func Remove(fileName string) bool {
 	if !FileExists(fileName) {
 		return true
 	}
-	// TODO: BOGUS THIS PROBABLY DOESN'T WORK SINCE IT'S LOCAL VARIABLE
+	// TODO: BOGUS - THIS PROBABLY DOESN'T WORK SINCE IT'S LOCAL VARIABLE
 	mutex := sync.Mutex{}
 	mutex.Lock()
 	os.Remove(fileName)

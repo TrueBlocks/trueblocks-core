@@ -203,14 +203,14 @@ func Reset(chain string, maxBn uint64) error {
 	// TODO: BOGUS - IT SHOULD BE GENERALIZED INSIDE OF COPYFILE
 	tsPath := config.GetPathToIndex(chain) + "ts.bin"
 	os.Remove(tsPath)
-	_, err = file.Copy(tempPath, tsPath)
+	_, err = file.Copy(tsPath, tempPath)
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-// TODO: BOGUS WE WANT TO AVOID HITTING CONTROL+C
+// TODO: BOGUS - WE WANT TO AVOID HITTING CONTROL+C
 func Append(chain string, tsArray []Timestamp) error {
 	tsPath := config.GetPathToIndex(chain) + "ts.bin"
 	fp, err := os.OpenFile(tsPath, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0644)

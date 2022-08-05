@@ -99,7 +99,7 @@ func WriteChunk(chain, indexPath string, addAppMap AddressAppearanceMap, nApps, 
 	logger.Log(logger.Info, "Wrote", len(appearanceTable), "records to", rel, snapMsg)
 
 	os.Remove(indexPath)
-	_, err = file.Copy(tempPath, indexPath)
+	_, err = file.Copy(indexPath, tempPath)
 	if err != nil {
 		return 0, err
 	}

@@ -137,7 +137,7 @@ func (opts *ScrapeOptions) Z_7_updateManifest(chunk manifest.ChunkRecord) error 
 	}
 	man.Chunks = unique(append(man.Chunks, chunk))
 
-	// TODO: BOGUS DOES THIS DESTROY THE FILE ON DISC BEFORE WRITING TO IT? I THINK IT DOES.
+	// TODO: BOGUS - DOES THIS DESTROY THE FILE ON DISC BEFORE WRITING TO IT? I THINK IT DOES.
 	fileName := config.GetPathToChainConfig(opts.Globals.Chain) + "manifest.json"
 	w, err := os.Create(fileName)
 	if err != nil {

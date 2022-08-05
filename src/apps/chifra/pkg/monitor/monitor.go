@@ -73,7 +73,7 @@ func NewStagedMonitor(chain, addr string) (Monitor, error) {
 
 	// either copy the existing monitor or create a new one
 	if file.FileExists(prodPath) {
-		_, err := file.Copy(prodPath, stagedPath)
+		_, err := file.Copy(stagedPath, prodPath)
 		if err != nil {
 			return mon, err
 		}
