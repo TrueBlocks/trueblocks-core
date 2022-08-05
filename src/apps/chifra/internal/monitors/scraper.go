@@ -10,8 +10,6 @@ import (
 	"time"
 )
 
-var statusPath string = "/tmp/"
-
 type Scraper struct {
 	Running   bool    `json:"Running"`
 	SleepSecs float64 `json:"SleepSecs"`
@@ -26,11 +24,11 @@ func NewScraper(color, name string, secs float64, logLev uint64) Scraper {
 	return *scraper
 }
 
-func (scraper *Scraper) ChangeState(onOff bool) bool {
+func (scraper *Scraper) ChangeState(onOff bool, tmpPath string) bool {
 	prev := scraper.Running
 	scraper.Running = onOff
 	str := "false"
-	fileName := statusPath + scraper.Name + ".txt"
+	fileName := tmpPath + scraper.Name + ".txt"
 	err := ioutil.WriteFile(fileName, []byte(str), 0644)
 	if err != nil {
 		log.Fatal(err)

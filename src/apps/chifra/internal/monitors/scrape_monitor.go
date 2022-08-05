@@ -16,6 +16,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
@@ -31,8 +32,10 @@ func (opts *MonitorsOptions) RunMonitorScraper(wg *sync.WaitGroup) {
 	chain := opts.Globals.Chain
 	establishExportPaths(chain)
 
+	tmpPath := config.GetPathToCache(opts.Globals.Chain) + "tmp/"
+
 	var s *Scraper = &MonitorScraper
-	s.ChangeState(true)
+	s.ChangeState(true, tmpPath)
 
 	for {
 		if !s.Running {
