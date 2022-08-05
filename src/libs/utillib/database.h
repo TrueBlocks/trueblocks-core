@@ -157,12 +157,6 @@ extern size_t appendToAsciiFile(const string_q& fileName, const string_q& addCon
 extern bool forEveryLineInAsciiFile(const string_q& filename, CHARPTRFUNC func, void* data);
 
 //----------------------------------------------------------------------
-extern string_q docxToString(const string_q& filename);
-extern size_t stringToDocxFile(const string_q& fileName, const string_q& contents);
-extern size_t stringToPDF(const string_q& fileName, const string_q& contents);
-extern string_q excelFileToString(const string_q& filename);
-
-//----------------------------------------------------------------------
 typedef void (*QUITHANDLER)(int s);
 extern void defaultQuitHandler(int s);
 extern void quickQuitHandler(int signum);
