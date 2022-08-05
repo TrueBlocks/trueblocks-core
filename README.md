@@ -144,7 +144,7 @@ Our official docker version is in a [separate repo](https://github.com/TrueBlock
 
 ## Documentation
 
-See our [documentation repo](https://github.com/TrueBlocks/trueblocks-docker) for the TrueBlocks website.
+See our [documentation repo](https://github.com/TrueBlocks/trueblocks-docs) for the TrueBlocks website.
 
 ## Contributing to TrueBlocks
 
