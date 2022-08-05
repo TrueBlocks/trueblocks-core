@@ -87,6 +87,9 @@ func (opts *BlocksOptions) validateBlocks() error {
 				if opts.Cache {
 					return validate.Usage("The {0} option is not available{1}.", "--cache", " with the --uniq option")
 				}
+				if opts.Uncles {
+					return validate.Usage("The {0} option is not available{1}.", "--uncles", " with the --uniq option")
+				}
 			}
 			if opts.Apps {
 				if opts.Trace {
