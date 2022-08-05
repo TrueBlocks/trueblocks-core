@@ -1,9 +1,6 @@
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
-/*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
- */
 
 package version
 
@@ -45,13 +42,13 @@ func NewVersion(str string) (vers Version, err error) {
 }
 
 func (ref *Version) IsEarlierThan(test Version) bool {
-	if test.Major < ref.Major {
+	if ref.Major < test.Major {
 		return true
 	}
-	if test.Minor < ref.Minor {
+	if ref.Minor < test.Minor {
 		return true
 	}
-	if test.Build < ref.Build {
+	if ref.Build < test.Build {
 		return true
 	}
 	return false
