@@ -9,8 +9,6 @@ import (
 	"os"
 	"strings"
 	"time"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 )
 
 type severity int
@@ -69,15 +67,9 @@ func Log(sev severity, a ...interface{}) {
 	} else {
 		timeDatePart = "DATE|TIME"
 	}
-	color := ""
-	if sev == Warning {
-		color = colors.BrightYellow
-	} else if sev == Error || sev == ErrorFatal {
-		color = colors.BrightRed
-	}
 
-	msg := fmt.Sprintln(a...)
-	fmt.Fprintf(os.Stderr, "%s[%s] %s%s%s\n", severityToLabel[sev], timeDatePart, color, msg, colors.Off)
+	fmt.Fprintf(os.Stderr, "%s[%s] ", severityToLabel[sev], timeDatePart)
+	fmt.Fprintln(os.Stderr, a...)
 }
 
 // Fatal prints its arguments to stderr and calls os.Exit(1)
