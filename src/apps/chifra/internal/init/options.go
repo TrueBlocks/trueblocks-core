@@ -64,6 +64,9 @@ func initFinishParse(args []string) *InitOptions {
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
 	// EXISTING_CODE
+	if len(args) > 0 {
+		opts.BadFlag = validate.Usage("Invalid argument ({0}).", args[0])
+	}
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
