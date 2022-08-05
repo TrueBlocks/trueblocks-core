@@ -18,7 +18,7 @@ func (bl *ChunkBloom) WriteBloom(chain, bloomPath string) error {
 	// TODO: BOGUS - YIKES
 	tempPath := strings.Replace(bloomPath, "unchained/sepolia/blooms/", "cache/sepolia/tmp/", -1)
 	tempPath = strings.Replace(tempPath, "unchained/gnosis/blooms/", "cache/gnosis/tmp/", -1)
-	tempPath = strings.Replace(tempPath, "unchained/mainnet/finalized/", "cache/mainnet/tmp/", -1)
+	tempPath = strings.Replace(tempPath, "unchained/mainnet/blooms/", "cache/mainnet/tmp/", -1)
 	tempPath = strings.Replace(tempPath, "unchained/polygon/blooms/", "cache/polygon/tmp/", -1)
 	fp, err := os.OpenFile(tempPath, os.O_WRONLY|os.O_CREATE, 0644)
 	defer func() {
