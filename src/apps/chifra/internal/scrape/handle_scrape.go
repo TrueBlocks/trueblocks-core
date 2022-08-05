@@ -13,7 +13,6 @@ import (
 	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
@@ -96,7 +95,3 @@ func (opts *ScrapeOptions) HandleScrape() error {
 
 	return nil
 }
-
-// Used for debugging, will be removed
-var Debugging = file.FileExists("./testing")
-var ForceFail = file.FileExists("./forcefail")

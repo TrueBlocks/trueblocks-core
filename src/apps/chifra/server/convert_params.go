@@ -49,8 +49,6 @@ func convertToCommandLine(in string) string {
 		return "no_header"
 	case "noZero":
 		return "no_zero"
-	case "pinRemote":
-		return "pin_remote"
 	case "proxyFor":
 		return "proxy_for"
 	case "skipDdos":

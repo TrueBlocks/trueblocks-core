@@ -1,6 +1,6 @@
-chunks?mode=addresses&pinRemote
+chunks?mode=addresses&pin
 {
   "errors": [
-    "The --pin_remote and --publish options are available only in manifest mode."
+    "The --pin and --publish options are available only in manifest mode."
   ]
 }

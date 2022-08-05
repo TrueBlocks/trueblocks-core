@@ -38,8 +38,8 @@ func (opts *ChunksOptions) validateChunks() error {
 	}
 
 	if opts.Mode != "manifest" {
-		if opts.PinRemote || opts.Publish {
-			return validate.Usage("The {0} and {1} options are available only in {2} mode.", "--pin_remote", "--publish", "manifest")
+		if opts.Pin || opts.Publish {
+			return validate.Usage("The {0} and {1} options are available only in {2} mode.", "--pin", "--publish", "manifest")
 		}
 		if opts.Clean {
 			return validate.Usage("The {0} option is available only in {1} mode.", "--clean", "manifest")
@@ -49,20 +49,20 @@ func (opts *ChunksOptions) validateChunks() error {
 		}
 	} else {
 		key, secret := scrape.PinataKeys(opts.Globals.Chain)
-		if opts.PinRemote {
+		if opts.Pin {
 			if len(key) == 0 {
-				return validate.Usage("The {0} option requires {1}", "--pin_remote", "a pinata_api_key")
+				return validate.Usage("The {0} option requires {1}", "--pin", "a pinata_api_key")
 			}
 			if len(secret) == 0 {
-				return validate.Usage("The {0} option requires {1}", "--pin_remote", "a pinata_secret_api_key")
+				return validate.Usage("The {0} option requires {1}", "--pin", "a pinata_secret_api_key")
 			}
 		}
 		if opts.Publish {
 			if len(key) == 0 {
-				return validate.Usage("The {0} option requires {1}", "--pin_remote", "a pinata_api_key")
+				return validate.Usage("The {0} option requires {1}", "--pin", "a pinata_api_key")
 			}
 			if len(secret) == 0 {
-				return validate.Usage("The {0} option requires {1}", "--pin_remote", "a pinata_secret_api_key")
+				return validate.Usage("The {0} option requires {1}", "--pin", "a pinata_secret_api_key")
 			}
 		}
 	}
@@ -131,7 +131,6 @@ func (opts *ChunksOptions) validateChunks() error {
 	}
 
 	// Note this does not return if a migration is needed
-	// TODO: BOGUS - DO WE REALLY WANT TO DISALLOW INVESTIGATION OF OLDER INSTALLATIONS?
 	migrate.CheckBackLevelIndex(opts.Globals.Chain)
 
 	if opts.Remote {
@@ -147,3 +146,8 @@ func (opts *ChunksOptions) validateChunks() error {
 	}
 	return opts.Globals.Validate()
 }
+
+// TODO: BOGUS If Pin and not remote, ipfs must be running
+// if opts.Pin && !pinning.LocalDaemonRunning() {
+// 	return validate.Usage("The {0} option requires {1}", "--pin", "a locally running IPFS daemon")
+// }

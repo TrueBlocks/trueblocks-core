@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-08-03T14:11:16
+date: 2022-08-05T17:25:51
 lastmod:
   - :git
   - lastmod
@@ -69,7 +69,6 @@ Usage:
   chifra scrape [flags]
 
 Flags:
-  -p, --pin              pin chunks (and blooms) to IPFS as they are created (requires ipfs)
   -n, --block_cnt uint   maximum number of blocks to process per pass (default 2000)
   -s, --sleep float      seconds to sleep between scraper passes (default 14)
   -x, --fmt string       export format, one of [none|json*|txt|csv|api]
@@ -123,7 +122,7 @@ Flags:
   -b, --belongs      checks if the given address appears in the given chunk
   -n, --clean        retrieve all pins on Pinata, compare to manifest, remove any extraneous remote pins
   -m, --remote       for some options, force processing from remote data
-  -i, --pin_remote   pin any previously unpinned chunks and blooms to a remote pinning service
+  -i, --pin          make sure all chunks are pinned (locally if IPFS daemon is running, remotely with --remote flag)
   -p, --publish      update the manifest and publish it to the Unchained Index smart contract
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
   -v, --verbose      enable verbose (increase detail with --log_level)

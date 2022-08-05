@@ -22,22 +22,22 @@ import (
 
 // ChunksOptions provides all command options for the chifra chunks command.
 type ChunksOptions struct {
-	Mode      string                   `json:"mode,omitempty"`      // The type of chunk info to retrieve
-	Blocks    []string                 `json:"blocks,omitempty"`    // Optional list of blocks to intersect with chunk ranges
-	BlockIds  []identifiers.Identifier `json:"blockIds,omitempty"`  // Block identifiers
-	Addrs     []string                 `json:"addrs,omitempty"`     // One or more addresses to use with --belongs option (see note)
-	Details   bool                     `json:"details,omitempty"`   // For manifest and addresses options only, display full details of the report
-	Check     bool                     `json:"check,omitempty"`     // Depends on mode, checks for internal consistency of the data type
-	Belongs   bool                     `json:"belongs,omitempty"`   // Checks if the given address appears in the given chunk
-	Repair    bool                     `json:"repair,omitempty"`    // Valid for manifest option only, repair the given chunk (requires block number)
-	Clean     bool                     `json:"clean,omitempty"`     // Retrieve all pins on Pinata, compare to manifest, remove any extraneous remote pins
-	Remote    bool                     `json:"remote,omitempty"`    // For some options, force processing from remote data
-	Reset     uint64                   `json:"reset,omitempty"`     // Available only in index mode, remove all chunks inclusive of or after this block
-	Status    bool                     `json:"status,omitempty"`    // Show the status of unripe, ripe, staging, blooms, and finalized folders
-	PinRemote bool                     `json:"pinRemote,omitempty"` // Pin any previously unpinned chunks and blooms to a remote pinning service
-	Publish   bool                     `json:"publish,omitempty"`   // Update the manifest and publish it to the Unchained Index smart contract
-	Globals   globals.GlobalOptions    `json:"globals,omitempty"`   // The global options
-	BadFlag   error                    `json:"badFlag,omitempty"`   // An error flag if needed
+	Mode     string                   `json:"mode,omitempty"`     // The type of chunk info to retrieve
+	Blocks   []string                 `json:"blocks,omitempty"`   // Optional list of blocks to intersect with chunk ranges
+	BlockIds []identifiers.Identifier `json:"blockIds,omitempty"` // Block identifiers
+	Addrs    []string                 `json:"addrs,omitempty"`    // One or more addresses to use with --belongs option (see note)
+	Details  bool                     `json:"details,omitempty"`  // For manifest and addresses options only, display full details of the report
+	Check    bool                     `json:"check,omitempty"`    // Depends on mode, checks for internal consistency of the data type
+	Belongs  bool                     `json:"belongs,omitempty"`  // Checks if the given address appears in the given chunk
+	Repair   bool                     `json:"repair,omitempty"`   // Valid for manifest option only, repair the given chunk (requires block number)
+	Clean    bool                     `json:"clean,omitempty"`    // Retrieve all pins on Pinata, compare to manifest, remove any extraneous remote pins
+	Remote   bool                     `json:"remote,omitempty"`   // For some options, force processing from remote data
+	Reset    uint64                   `json:"reset,omitempty"`    // Available only in index mode, remove all chunks inclusive of or after this block
+	Status   bool                     `json:"status,omitempty"`   // Show the status of unripe, ripe, staging, blooms, and finalized folders
+	Pin      bool                     `json:"pin,omitempty"`      // Make sure all chunks are pinned (locally if IPFS daemon is running, remotely with --remote flag)
+	Publish  bool                     `json:"publish,omitempty"`  // Update the manifest and publish it to the Unchained Index smart contract
+	Globals  globals.GlobalOptions    `json:"globals,omitempty"`  // The global options
+	BadFlag  error                    `json:"badFlag,omitempty"`  // An error flag if needed
 }
 
 var chunksCmdLineOptions ChunksOptions
@@ -55,7 +55,7 @@ func (opts *ChunksOptions) testLog() {
 	logger.TestLog(opts.Remote, "Remote: ", opts.Remote)
 	logger.TestLog(opts.Reset != utils.NOPOS, "Reset: ", opts.Reset)
 	logger.TestLog(opts.Status, "Status: ", opts.Status)
-	logger.TestLog(opts.PinRemote, "PinRemote: ", opts.PinRemote)
+	logger.TestLog(opts.Pin, "Pin: ", opts.Pin)
 	logger.TestLog(opts.Publish, "Publish: ", opts.Publish)
 	opts.Globals.TestLog()
 }
@@ -100,8 +100,8 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 			opts.Reset = globals.ToUint64(value[0])
 		case "status":
 			opts.Status = true
-		case "pinRemote":
-			opts.PinRemote = true
+		case "pin":
+			opts.Pin = true
 		case "publish":
 			opts.Publish = true
 		default:

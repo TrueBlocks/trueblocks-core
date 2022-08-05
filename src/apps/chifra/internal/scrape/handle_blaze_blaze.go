@@ -63,6 +63,8 @@ func (opts *BlazeOptions) HandleBlaze(meta *rpcClient.MetaData) (ok bool, err er
 	return opts.HandleBlaze1(meta, blocks)
 }
 
+// TODO: We could, if we wished, use getLogs with a block range to retrieve all of the logs in the range
+// TODO: with a single query. See closed issue #1829
 func (opts *BlazeOptions) HandleBlaze1(meta *rpcClient.MetaData, blocks []int) (ok bool, err error) {
 	// Prepare three channels to process first blocks, then appearances and timestamps
 	blockChannel := make(chan int)
@@ -74,19 +76,17 @@ func (opts *BlazeOptions) HandleBlaze1(meta *rpcClient.MetaData, blocks []int) (
 		go opts.BlazeProcessBlocks(meta, blockChannel, appearanceChannel, tsChannel)
 	}
 
+	// TODO: These go routines may fail. Question -- how does one respond to an error inside a go routine?
 	opts.AppearanceWg.Add(int(opts.NChannels))
 	for i := 0; i < int(opts.NChannels); i++ {
-		// TODO: BOGUS - HOW DOES ONE HANDLE ERRORS INSIDE OF GO ROUTINES?
 		go opts.BlazeProcessAppearances(meta, appearanceChannel)
 	}
 
 	opts.TsWg.Add(int(opts.NChannels))
 	for i := 0; i < int(opts.NChannels); i++ {
-		// TODO: BOGUS - HOW DOES ONE HANDLE ERRORS INSIDE OF GO ROUTINES?
 		go opts.BlazeProcessTimestamps(tsChannel)
 	}
 
-	// TODO: BOGUS - HOW DOES ONE HANDLE ERRORS INSIDE OF GO ROUTINES?
 	for _, block := range blocks {
 		blockChannel <- block
 	}
@@ -426,10 +426,8 @@ func (opts *BlazeOptions) WriteAppearances(meta *rpcClient.MetaData, bn int, add
 		}
 	}
 
-	// TODO: BOGUS - TESTING SCRAPING
 	// TODO: THIS IS A PERFORMANCE ISSUE PRINTING EVERY BLOCK
-	// if !Debugging {
-	step := uint64(7)
+	step := uint64(17)
 	if opts.NProcessed%step == 0 {
 		dist := uint64(0)
 		if opts.RipeBlock > uint64(bn) {
@@ -438,7 +436,6 @@ func (opts *BlazeOptions) WriteAppearances(meta *rpcClient.MetaData, bn int, add
 		f := "-------- ( ------)- <PROG>  : Scraping %-04d of %-04d at block %d of %d (%d blocks from head)\r"
 		fmt.Fprintf(os.Stderr, f, opts.NProcessed, opts.BlockCount, bn, opts.RipeBlock, dist)
 	}
-	// }
 
 	writeMutex.Lock()
 	opts.ProcessedMap[bn] = true

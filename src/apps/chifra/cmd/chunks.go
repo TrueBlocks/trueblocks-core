@@ -60,7 +60,7 @@ func init() {
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Remote, "remote", "m", false, "for some options, force processing from remote data")
 	chunksCmd.Flags().Uint64VarP(&chunksPkg.GetOptions().Reset, "reset", "r", 0, "available only in index mode, remove all chunks inclusive of or after this block (hidden)")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Status, "status", "u", false, "show the status of unripe, ripe, staging, blooms, and finalized folders (hidden)")
-	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().PinRemote, "pin_remote", "i", false, "pin any previously unpinned chunks and blooms to a remote pinning service")
+	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Pin, "pin", "i", false, "make sure all chunks are pinned (locally if IPFS daemon is running, remotely with --remote flag)")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Publish, "publish", "p", false, "update the manifest and publish it to the Unchained Index smart contract")
 	if os.Getenv("TEST_MODE") != "true" {
 		chunksCmd.Flags().MarkHidden("repair")

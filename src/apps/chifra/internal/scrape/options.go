@@ -20,7 +20,6 @@ import (
 
 // ScrapeOptions provides all command options for the chifra scrape command.
 type ScrapeOptions struct {
-	Pin          bool                  `json:"pin,omitempty"`          // Pin chunks (and blooms) to IPFS as they are created (requires ipfs)
 	BlockCnt     uint64                `json:"blockCnt,omitempty"`     // Maximum number of blocks to process per pass
 	Sleep        float64               `json:"sleep,omitempty"`        // Seconds to sleep between scraper passes
 	BlockChanCnt uint64                `json:"blockChanCnt,omitempty"` // Number of concurrent block processing channels
@@ -40,7 +39,6 @@ var scrapeCmdLineOptions ScrapeOptions
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *ScrapeOptions) testLog() {
-	logger.TestLog(opts.Pin, "Pin: ", opts.Pin)
 	logger.TestLog(opts.BlockCnt != 2000, "BlockCnt: ", opts.BlockCnt)
 	logger.TestLog(opts.Sleep != 14, "Sleep: ", opts.Sleep)
 	logger.TestLog(opts.BlockChanCnt != 10, "BlockChanCnt: ", opts.BlockChanCnt)
@@ -93,8 +91,6 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 	opts.StartBlock = 0
 	for key, value := range r.URL.Query() {
 		switch key {
-		case "pin":
-			opts.Pin = true
 		case "blockCnt":
 			opts.BlockCnt = globals.ToUint64(value[0])
 		case "sleep":

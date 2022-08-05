@@ -16,7 +16,6 @@ Usage:
   chifra scrape [flags]
 
 Flags:
-  -p, --pin              pin chunks (and blooms) to IPFS as they are created (requires ipfs)
   -n, --block_cnt uint   maximum number of blocks to process per pass (default 2000)
   -s, --sleep float      seconds to sleep between scraper passes (default 14)
   -x, --fmt string       export format, one of [none|json*|txt|csv|api]

@@ -1470,14 +1470,6 @@ paths:
       description: Scan the chain and update (and optionally pin) the TrueBlocks index of appearances.
       operationId: admin-scrape
       parameters:
-        - name: pin
-          description: pin chunks (and blooms) to IPFS as they are created (requires ipfs)
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: blockCnt
           description: maximum number of blocks to process per pass
           required: false
