@@ -1,6 +1,6 @@
 chifra scrape   -h
 Purpose:
-  Scan the chain and update (and optionally pin) the TrueBlocks index of appearances.
+  Scan the chain and update the TrueBlocks index of appearances.
 
 Usage:
   chifra scrape [flags]
