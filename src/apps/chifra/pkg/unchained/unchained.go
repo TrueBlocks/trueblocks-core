@@ -3,10 +3,6 @@ package unchained
 const (
 	Schemas            = "QmUou7zX2g2tY58LP1A2GyP5RF9nbJsoxKTp299ah3svgb"                     // IPFS hash of the specification for the Unchained Index
 	Databases          = "QmTGdjLhWzGpGtmxVu73mzKyzva9JM4mSsZ93NceVU6Y5T"                     // IPFS hash to the extra database for names and timestamps
-	Address            = "0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd"                         // V1: The address of the current version of the Unchained Index
-	ReadHash           = "0x337f3f32"                                                         // V1: The fourbyte needed to read the current manifest hash from the smart contract
-	ReadHashName       = "manifestHash"                                                       // V1: The name of the function to read the hash
-	PublishHash        = "0x8da5cb5b"                                                         // V1: The fourbyte needed to publish the hash to the smart contract
 	Address_V2         = "0x0c316b7042b419d07d343f2f4f5bd54ff731183d"                         // V2: The address of the current version of the Unchained Index
 	ReadHash_V2        = "0x7087e4bd"                                                         // V2: The fourbyte needed to read the current manifest hash from the smart contract
 	ReadHashName_V2    = "manifestHashMap"                                                    // V2: The name of the function to read the hash
@@ -34,7 +30,10 @@ const (
 
 //
 // Unchained Index Version 0.3
-// Address: 0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd
+// Address      = "0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd" // V1: The address of the current version of the Unchained Index
+// ReadHash     = "0x337f3f32"                                 // V1: The fourbyte needed to read the current manifest hash from the smart contract
+// ReadHashName = "manifestHash"                               // V1: The name of the function to read the hash
+// PublishHash  = "0x8da5cb5b"                                 // V1: The fourbyte needed to publish the hash to the smart contract
 //
 // encoding		name			params						       returns
 // ---------------------------------------------------------------------------------------------------
