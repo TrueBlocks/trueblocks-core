@@ -97,19 +97,11 @@ func (opts *ChunksOptions) validateChunks() error {
 	}
 
 	if opts.Repair {
-		if opts.Mode != "manifest" {
-			return validate.Usage("The --repair option is only available in index mode")
+		if opts.Mode != "index" && opts.Mode != "manifest" {
+			return validate.Usage("The {0} option is only available in {1} mode", "--repair", "index or manifest")
 		}
 
 		if len(opts.BlockIds) != 1 {
-			return validate.Usage("You must supply exactly one block number with the --repair option")
-		}
-
-		blockNums, err := opts.BlockIds[0].ResolveBlocks(opts.Globals.Chain)
-		if err != nil {
-			return err
-		}
-		if len(blockNums) != 1 {
 			return validate.Usage("You must supply exactly one block number with the --repair option")
 		}
 
@@ -131,7 +123,7 @@ func (opts *ChunksOptions) validateChunks() error {
 	}
 
 	// Note this does not return if a migration is needed
-	migrate.CheckBackLevelIndex(opts.Globals.Chain)
+	migrate.CheckBackLevelIndex(opts.Globals.Chain, true)
 
 	if opts.Remote {
 		if opts.Mode != "pins" && opts.Mode != "manifest" {

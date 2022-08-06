@@ -93,7 +93,7 @@ func (opts *ExportOptions) validateExport() error {
 	}
 
 	// Note this does not return if a migration is needed
-	migrate.CheckBackLevelIndex(opts.Globals.Chain)
+	migrate.CheckBackLevelIndex(opts.Globals.Chain, true)
 
 	err := opts.Globals.Validate()
 	if err != nil && strings.Contains(err.Error(), "option (ofx) must be one of") {

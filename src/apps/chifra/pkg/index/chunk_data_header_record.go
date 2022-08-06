@@ -5,9 +5,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"os"
+	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/ethereum/go-ethereum/common"
@@ -44,7 +47,7 @@ func readHeader(fl *os.File) (header HeaderRecord, err error) {
 	return
 }
 
-func ReadChunkHeader(chain, fileName string) (header HeaderRecord, err error) {
+func ReadChunkHeader(chain, fileName string, checkHash bool) (header HeaderRecord, err error) {
 	fileName = ToIndexPath(fileName)
 	ff, err := os.Open(fileName)
 	if err != nil {
@@ -53,6 +56,10 @@ func ReadChunkHeader(chain, fileName string) (header HeaderRecord, err error) {
 	defer ff.Close()
 
 	if header, err = readHeader(ff); err != nil {
+		return
+	}
+
+	if !checkHash {
 		return
 	}
 
@@ -65,8 +72,51 @@ func ReadChunkHeader(chain, fileName string) (header HeaderRecord, err error) {
 	return
 }
 
+func WriteChunkHeaderHash(chain, fileName string, headerHash common.Hash) (changed bool, err error) {
+	// We want to write into this file...
+	indexPath := ToIndexPath(fileName)
+
+	// First, make a backup of the file just in case
+	tmpPath := filepath.Join(config.GetPathToCache(chain), "tmp")
+	backupFn, err := file.MakeBackup(indexPath, tmpPath)
+	if err != nil {
+		return false, err
+	}
+	defer os.Remove(backupFn)
+
+	fp, err := os.OpenFile(indexPath, os.O_RDWR, 0644)
+	if err != nil {
+		return
+	}
+	defer fp.Close() // may already be closed, but it's okay becuase we ignore error return
+
+	fp.Seek(0, io.SeekStart) // already true, but can't hurt
+	header, err := readHeader(fp)
+	if err != nil {
+		fp.Close() // defensively close the file so the copy doesn't get overwritten
+		file.Copy(indexPath, backupFn)
+		return
+	}
+
+	if header.Hash == headerHash {
+		// nothing to do
+		return
+	}
+
+	header.Hash = headerHash
+	err = binary.Write(fp, binary.LittleEndian, header)
+	if err != nil {
+		fp.Close() // defensively close the file so the copy doesn't get overwritten
+		file.Copy(indexPath, backupFn)
+		return
+	}
+
+	changed = true
+	return
+}
+
 func HasValidHeader(chain, fileName string) (bool, error) {
-	header, err := ReadChunkHeader(chain, fileName)
+	header, err := ReadChunkHeader(chain, fileName, true)
 	if err != nil {
 		return false, err
 	}

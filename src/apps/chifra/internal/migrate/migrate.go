@@ -6,12 +6,16 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
-func CheckBackLevelIndex(chain string) {
+func CheckBackLevelIndex(chain string, missingOkay bool) {
 	fileName := config.GetPathToIndex(chain) + "finalized/000000000-000000000.bin"
+	if !file.FileExists(fileName) && missingOkay {
+		return
+	}
 	ok, err := index.HasValidHeader(chain, fileName)
 	if ok && err == nil {
 		return

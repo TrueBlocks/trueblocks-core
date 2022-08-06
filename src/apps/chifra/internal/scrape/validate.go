@@ -44,7 +44,7 @@ func (opts *ScrapeOptions) validateScrape() error {
 	}
 
 	// Note this does not return if a migration is needed
-	migrate.CheckBackLevelIndex(opts.Globals.Chain)
+	migrate.CheckBackLevelIndex(opts.Globals.Chain, true)
 
 	return opts.Globals.Validate()
 }

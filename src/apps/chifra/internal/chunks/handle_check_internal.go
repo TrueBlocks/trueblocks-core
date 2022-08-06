@@ -18,7 +18,7 @@ func (opts *ChunksOptions) CheckInternal(fileNames []string, blockNums []uint64,
 	for testId, fileName := range fileNames {
 		report.VisitedCnt++
 		report.CheckedCnt++
-		header, err := index.ReadChunkHeader(opts.Globals.Chain, fileName)
+		header, err := index.ReadChunkHeader(opts.Globals.Chain, fileName, true)
 		if err != nil {
 			report.MsgStrings = append(report.MsgStrings, fmt.Sprint(err))
 
