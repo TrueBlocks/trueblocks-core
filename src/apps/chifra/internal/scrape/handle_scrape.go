@@ -1,9 +1,5 @@
 package scrapePkg
 
-// TODO: BOGUS - MULTI-CHAIN SPECIFIC SLEEPING IS
-// TODO: BOGUS - MAKE SURE WE'RE NOT RUNNING IF ACCTSCRAPE (OR ANYTHING ELSE?) IS RUNNINGs
-// TODO: BOGUS - RESPOND WELL TO RUNNING AGAINST NON-ARCHIVE NODES see isArchiveNode() in C++ code
-
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
@@ -20,6 +16,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
+// TODO: We should repond to non-tracing (i.e. Geth) nodes better
+// TODO: Make sure we're not running acctScrape and/or pause if it's running
 func (opts *ScrapeOptions) HandleScrape() error {
 	if ok, err := opts.HandlePrepare(); !ok || err != nil {
 		return err
@@ -31,13 +29,14 @@ func (opts *ScrapeOptions) HandleScrape() error {
 			return err
 		}
 
-		// Quit early if we're testing... TODO: BOGUS - REMOVE THIS
-		tes := os.Getenv("TEST_END_SCRAPE")
-		if tes != "" {
-			val, err := strconv.ParseUint(tes, 10, 32)
-			if (val != 0 && progress.Staging > val) || err != nil {
-				logger.Exit("HandleScrapeBlaze - Quitting early", err)
+		// TODO: This can be removed at some point in the future
+		if os.Getenv("TEST_END_SCRAPE") != "" {
+			val, err := strconv.ParseUint(os.Getenv("TEST_END_SCRAPE"), 10, 32)
+			if err != nil {
 				return err
+			}
+			if val > 0 && progress.Staging > val {
+				logger.Exit("Finished processing for testing")
 			}
 		}
 

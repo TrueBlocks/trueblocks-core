@@ -11,8 +11,6 @@ run and indexer are both invalid options on chifra scrape now
 - Wrote the spec (finally) 
 - New version of the smart contract allows anyone to publish 
 - https://docs.ipfs.io/install/command-line/#command-line
-- // TODO: BOGUS - WHAT HAPPENS TO OTHER CHAINS?
-- // TODO: BOGUS - WHAT HAPPENS IF THE USER HAS CHANGED DEFAULT CHAIN
 
 # v0.40.0 Fixes Unchained Index
 

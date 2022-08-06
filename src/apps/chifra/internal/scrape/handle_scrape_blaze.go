@@ -64,7 +64,7 @@ func (opts *BlazeOptions) WriteTimestamps() error {
 	defer func() {
 		tslib.DeCache(opts.Chain)
 		fp.Close()
-		// TODO: BOGUS - DOn'T ALLOW CONTROL+C and ONE WRITER
+		// TODO: BOGUS - PROTECT AGAINST FAILURE WHEN WRITING
 		// sigintTrap.Disable(trapCh)
 		// writeMutex.Unlock()
 	}()

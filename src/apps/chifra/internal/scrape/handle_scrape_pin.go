@@ -137,7 +137,7 @@ func (opts *ScrapeOptions) Z_7_updateManifest(chunk manifest.ChunkRecord) error 
 	}
 	man.Chunks = unique(append(man.Chunks, chunk))
 
-	// TODO: BOGUS - DOES THIS DESTROY THE FILE ON DISC BEFORE WRITING TO IT? I THINK IT DOES.
+	// TODO: BOGUS - PROTECT AGAINST FAILURE WHEN WRITING
 	fileName := config.GetPathToChainConfig(opts.Globals.Chain) + "manifest.json"
 	w, err := os.Create(fileName)
 	if err != nil {
@@ -157,6 +157,3 @@ func (opts *ScrapeOptions) Z_7_updateManifest(chunk manifest.ChunkRecord) error 
 	logger.Log(logger.Info, "Updated manifest with", len(man.Chunks), "chunks")
 	return tmp.RenderObject(man, true)
 }
-
-// TODO: BOGUS - DO I REALLY WANT TO TURN OFF GZIP?
-// TODO: BOGUS - LOG_INFO(bBlue, "  Pinned index for blocks ", start, " to ", end, " at ", item.indexHash, cOff);

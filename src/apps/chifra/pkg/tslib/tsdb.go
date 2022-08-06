@@ -170,7 +170,7 @@ func Reset(chain string, maxBn uint64) error {
 
 	truncated := perChainTimestamps[chain].memory[0:maxBn]
 
-	// TODO: BOGUS - PROTECT WRITING AGAINST CONTROL+C AND DOUBLE ENTRY
+	// TODO: BOGUS - PROTECT AGAINST FAILURE WHEN WRITING
 	// writeMutex.Lock()
 	// trapCh := sigintTrap.Enable(context.WithCancel(context.Background()))
 
@@ -197,10 +197,7 @@ func Reset(chain string, maxBn uint64) error {
 	// Don't defer this because we want it to be closed before we copy it
 	fp.Close()
 
-	// TODO: BOGUS - THIS IS NOT PROTECTIVE OF THE EXISTING FILE
-	// TODO: BOGUS - IT SHOULD BE UN-INTERUPTABLE
-	// TODO: BOGUS - IT MAY WANT TO MAKE A BACKUP AND RECOVER IF THE COPY OR REMOVAL FAILS
-	// TODO: BOGUS - IT SHOULD BE GENERALIZED INSIDE OF COPYFILE
+	// TODO: BOGUS - PROTECT AGAINST FAILURE WHEN WRITING
 	tsPath := config.GetPathToIndex(chain) + "ts.bin"
 	os.Remove(tsPath)
 	_, err = file.Copy(tsPath, tempPath)
@@ -210,7 +207,7 @@ func Reset(chain string, maxBn uint64) error {
 	return nil
 }
 
-// TODO: BOGUS - WE WANT TO AVOID HITTING CONTROL+C
+// TODO: BOGUS - PROTECT AGAINST FAILURE WHEN WRITING
 func Append(chain string, tsArray []Timestamp) error {
 	tsPath := config.GetPathToIndex(chain) + "ts.bin"
 	fp, err := os.OpenFile(tsPath, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0644)

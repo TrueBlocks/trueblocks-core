@@ -15,7 +15,7 @@
 
 namespace qblocks {
 
-// TODO: BOGUS - MANIFEST WRITING THE MANIFEST
+// TODO: BOGUS - PINNING TO PINATA AND WRITING MANIFEST FILE
 string_q manifestVersion = "trueblocks-core@v0.40.0";
 
 // Run make generate in order for this to take effect

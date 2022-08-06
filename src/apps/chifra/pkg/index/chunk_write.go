@@ -21,7 +21,7 @@ import (
 
 type AddressAppearanceMap map[string][]AppearanceRecord
 
-// TODO: BOGUS - WE MIGHT WANT TO SEND PIN IN TO THE CALL AND PIN IF WE'RE WRITING AND ONLY RETURN TRUE IF ALL THINGS WORK
+// TODO: BOGUS - PINNING TO PINATA AND WRITING MANIFEST FILE
 func WriteChunk(chain, indexPath string, addAppMap AddressAppearanceMap, nApps, snapper int) (uint64, error) {
 	addressTable := make([]AddressRecord, 0, len(addAppMap))
 	appearanceTable := make([]AppearanceRecord, 0, nApps)
@@ -109,7 +109,7 @@ func WriteChunk(chain, indexPath string, addAppMap AddressAppearanceMap, nApps, 
 		return 0, err
 	}
 
-	// TODO: BOGUS - IF WE PINNED HERE, WE COULD TELL IF THE WHOLE THING WAS OKAY
+	// TODO: BOGUS - PINNING TO PINATA AND WRITING MANIFEST FILE
 	rng, _ := cache.RangeFromFilename(indexPath)
 	file.AppendToAsciiFile(config.GetPathToCache(chain)+"tmp/chunks_created.txt", rng.String()+"\n")
 

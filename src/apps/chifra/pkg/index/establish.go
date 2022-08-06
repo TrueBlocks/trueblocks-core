@@ -29,7 +29,6 @@ func EstablishIndexChunk(chain string, fileRange cache.FileRange) (bool, error) 
 	}
 
 	// Find bloom filter's CID
-	// TODO(dawid): This can be a binary search since the pin list is always sorted
 	var matchedPin manifest.ChunkRecord
 	for _, pin := range chunkManifest.Chunks {
 		if strings.Contains(fileName, pin.Range) {

@@ -17,7 +17,7 @@ type Allocation struct {
 	Balance big.Int
 }
 
-// TODO: BOGUS - SHOULD CACHE IN BINARY CACHE SINCE IT'S IMMUTABLE
+// TODO: Cache prefunds in binary names cache
 func LoadPrefunds(chain string) ([]Allocation, error) {
 
 	allocsPath := config.GetPathToChainConfig(chain) + "allocs.csv"

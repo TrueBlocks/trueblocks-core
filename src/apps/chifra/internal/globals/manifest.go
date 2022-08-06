@@ -7,7 +7,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// TODO: BOGUS - MANIFEST WRITING THE MANIFEST
+// TODO: BOGUS - PINNING TO PINATA AND WRITING MANIFEST FILE
 func (opts *GlobalOptions) RenderManifest(w io.Writer, man *manifest.Manifest) error {
 	var err error
 	tmp := opts

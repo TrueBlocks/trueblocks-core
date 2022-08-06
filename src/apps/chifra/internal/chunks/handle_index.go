@@ -32,7 +32,7 @@ func (opts *ChunksOptions) showIndex(ctx *WalkContext, path string, first bool) 
 		Size:            file.FileSize(path),
 	}
 
-	// TODO: BOGUS - FEATURE CUSTOMIZE DISPLAY STRINGS
+	// TODO: Feature - customize display strings
 	// opts.Globals.Format = "Magic,Hash,Size,AppearanceCount,AddressCount,Range"
 	// opts.Globals.Format = "Range\tAppearanceCount\tAddressCount"
 	// TODO: Fix export without arrays

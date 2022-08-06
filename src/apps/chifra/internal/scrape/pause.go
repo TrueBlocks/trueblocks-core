@@ -17,7 +17,8 @@ func (opts *ScrapeOptions) Pause(progressThen *rpcClient.MetaData) {
 
 	if shouldSleep {
 		sleep := opts.Sleep
-		// TODO: BOGUS - THIS DOESN'T WORK
+		// TODO: BOGUS - THIS WORK IS INCOMPLETE
+		// TODO: BOGUS - CHAIN SPECIFIC
 		// if shouldSleep {
 		// 	sleep = utils.Max(sleep, 13)
 		// }

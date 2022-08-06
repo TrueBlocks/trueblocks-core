@@ -147,7 +147,7 @@ func (opts *ChunksOptions) validateChunks() error {
 	return opts.Globals.Validate()
 }
 
-// TODO: BOGUS If Pin and not remote, ipfs must be running
+// TODO: BOGUS - PINNING TO PINATA AND WRITING MANIFEST FILE
 // if opts.Pin && !pinning.LocalDaemonRunning() {
 // 	return validate.Usage("The {0} option requires {1}", "--pin", "a locally running IPFS daemon")
 // }
