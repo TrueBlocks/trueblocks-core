@@ -29,10 +29,10 @@ var scrapeCmd = &cobra.Command{
 
 const usageScrape = `scrape [flags]`
 
-const shortScrape = "scan the chain and update (and optionally pin) the TrueBlocks index of appearances"
+const shortScrape = "scan the chain and update the TrueBlocks index of appearances"
 
 const longScrape = `Purpose:
-  Scan the chain and update (and optionally pin) the TrueBlocks index of appearances.`
+  Scan the chain and update the TrueBlocks index of appearances.`
 
 const notesScrape = ``
 

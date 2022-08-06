@@ -8,7 +8,7 @@ You may adjust the speed of the index creation with the `--sleep` and `--block_c
 
 ```[plaintext]
 Purpose:
-  Scan the chain and update (and optionally pin) the TrueBlocks index of appearances.
+  Scan the chain and update the TrueBlocks index of appearances.
 
 Usage:
   chifra scrape [flags]

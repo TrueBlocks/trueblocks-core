@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-08-05T17:25:51
+date: 2022-08-06T17:52:48
 lastmod:
   - :git
   - lastmod
@@ -61,7 +61,7 @@ You may adjust the speed of the index creation with the `--sleep` and `--block_c
 
 ```[plaintext]
 Purpose:
-  Scan the chain and update (and optionally pin) the TrueBlocks index of appearances.
+  Scan the chain and update the TrueBlocks index of appearances.
 
 Usage:
   chifra scrape [flags]

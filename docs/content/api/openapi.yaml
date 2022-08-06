@@ -1467,7 +1467,7 @@ paths:
       tags:
         - Admin
       summary: Scrape index
-      description: Scan the chain and update (and optionally pin) the TrueBlocks index of appearances.
+      description: Scan the chain and update the TrueBlocks index of appearances.
       operationId: admin-scrape
       parameters:
         - name: blockCnt
