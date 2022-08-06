@@ -30,7 +30,6 @@ type ScrapeOptions struct {
 	FirstSnap    uint64                `json:"firstSnap,omitempty"`    // The first block at which snap_to_grid is enabled
 	AllowMissing bool                  `json:"allowMissing,omitempty"` // Do not report errors for blockchain that contain blocks with zero addresses
 	StartBlock   uint64                `json:"startBlock,omitempty"`   // First block to visit (available only for blaze scraper)
-	Modes        []string              `json:"modes,omitempty"`        // Which scraper(s) to control
 	Globals      globals.GlobalOptions `json:"globals,omitempty"`      // The global options
 	BadFlag      error                 `json:"badFlag,omitempty"`      // An error flag if needed
 }
@@ -49,7 +48,6 @@ func (opts *ScrapeOptions) testLog() {
 	logger.TestLog(opts.FirstSnap != 0, "FirstSnap: ", opts.FirstSnap)
 	logger.TestLog(opts.AllowMissing, "AllowMissing: ", opts.AllowMissing)
 	logger.TestLog(opts.StartBlock != 0, "StartBlock: ", opts.StartBlock)
-	logger.TestLog(len(opts.Modes) > 0, "Modes: ", opts.Modes)
 	opts.Globals.TestLog()
 }
 
@@ -70,7 +68,7 @@ func (opts *ScrapeOptions) getEnvStr() []string {
 // toCmdLine converts the option to a command line for calling out to the system.
 func (opts *ScrapeOptions) toCmdLine() string {
 	options := ""
-	options += " " + strings.Join(opts.Modes, " ")
+	options += " " + strings.Join([]string{}, " ")
 	// EXISTING_CODE
 	// EXISTING_CODE
 	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
@@ -111,11 +109,6 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 			opts.AllowMissing = true
 		case "startBlock":
 			opts.StartBlock = globals.ToUint64(value[0])
-		case "modes":
-			for _, val := range value {
-				s := strings.Split(val, " ") // may contain space separated items
-				opts.Modes = append(opts.Modes, s...)
-			}
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "scrape")
@@ -136,7 +129,11 @@ func scrapeFinishParse(args []string) *ScrapeOptions {
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
 	// EXISTING_CODE
-	opts.Modes = args
+	if len(args) == 1 && (args[0] == "run" || args[0] == "indexer") {
+		// do nothing
+	} else if len(args) > 1 {
+		opts.BadFlag = validate.Usage("Invalid argument {0}", args[0])
+	}
 	opts.setDefaultsFromConfig()
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {

@@ -41,9 +41,6 @@ func init() {
 
 	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().BlockCnt, "block_cnt", "n", 2000, "maximum number of blocks to process per pass")
 	scrapeCmd.Flags().Float64VarP(&scrapePkg.GetOptions().Sleep, "sleep", "s", 14, "seconds to sleep between scraper passes")
-	if os.Getenv("TEST_MODE") != "true" {
-		scrapeCmd.Flags().MarkHidden("modes")
-	}
 	globals.InitGlobals(scrapeCmd, &scrapePkg.GetOptions().Globals)
 
 	scrapeCmd.SetUsageTemplate(UsageWithNotes(notesScrape))

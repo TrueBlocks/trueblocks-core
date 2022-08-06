@@ -6,7 +6,6 @@ package scrapePkg
 
 import (
 	"fmt"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/migrate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
@@ -22,15 +21,6 @@ func (opts *ScrapeOptions) validateScrape() error {
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag
-	}
-
-	for _, arg := range opts.Modes {
-		// TODO: BOGUS - FEATURE NOTE THIS AS DEPRECATED
-		arg = strings.Replace(arg, "indexer", "run", -1)
-		err := validate.ValidateEnum("mode", arg, "[run|stop]")
-		if err != nil {
-			return err
-		}
 	}
 
 	if opts.Sleep < .25 {
