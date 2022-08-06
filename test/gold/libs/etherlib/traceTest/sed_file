@@ -12,7 +12,7 @@ s/Invalid params\: Invalid block number\: number too large to fit in target type
 s/the method trace_junk12 does not exist\/is not available/Method not found/
 
 s/,\"traceAddress\":null/,\"traceAddress\":[]/g
-s/\"0x0000000000000000000000000000000000000000000000000000000000000000\"/\"0x\"/g
+s/\"0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1\"/\"0x\"/g
 s/\"transactionHash\":\"0x\",\"transactionPosition\":0/\"transactionHash\":null,\"transactionPosition\":null/g
 s/\"result\":null/\"result\":[]/g
 

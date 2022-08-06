@@ -19,7 +19,7 @@ tests/random.json
   "result": {
     "newContract": "0x0",
     "gasUsed": "0x16e23",
-    "output": "0x0000000000000000000000000000000000000000000000000000000000000000"
+    "output": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1"
   },
   "subtraces": "0x1",
   "traceAddress": null,
@@ -44,7 +44,7 @@ tests/random.json
   "result": {
     "newContract": "0x0",
     "gasUsed": "0x16d9e",
-    "output": "0x0000000000000000000000000000000000000000000000000000000000000000"
+    "output": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1"
   },
   "subtraces": "0x1",
   "traceAddress": "0",

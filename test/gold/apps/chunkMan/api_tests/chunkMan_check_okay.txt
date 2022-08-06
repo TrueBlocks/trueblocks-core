@@ -15,7 +15,7 @@ chunks?mode=manifest&check
       "nFailed": 3,
       "errorStrs": [
         "000000001-000590501: Magic number expected (0xdeadbeef) got (0xdeadbeef)",
-        "000590502-000864332: Header hash expected (0x0000000000000000000000000000000000000000000000000000000000000000) got (0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1)",
+        "000590502-000864332: Header hash expected (0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1) got (0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1)",
         "000864333-001076298: Too many addresses? (2000017)"
       ]
     },

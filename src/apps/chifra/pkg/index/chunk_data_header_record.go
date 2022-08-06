@@ -56,9 +56,8 @@ func ReadChunkHeader(chain, fileName string) (header HeaderRecord, err error) {
 		return
 	}
 
-	// TODO: BOGUS - DOES CHECKING FOR OLD INDEXES WORK?
 	headerHash := hexutil.Encode(header.Hash.Bytes())
-	hasMagicHash := headerHash == unchained.ZeroMagicHash || headerHash == unchained.HeaderMagicHash
+	hasMagicHash := headerHash == unchained.HeaderMagicHash
 	if !hasMagicHash {
 		return header, fmt.Errorf("header has incorrect hash in %s, expected %s, got %s", fileName, unchained.HeaderMagicHash, headerHash)
 	}
@@ -77,7 +76,7 @@ func HasValidHeader(chain, fileName string) (bool, error) {
 		msg := fmt.Sprintf("%s: Magic number expected (0x%x) got (0x%x)", rng, header.Magic, file.MagicNumber)
 		return false, errors.New(msg)
 
-	} else if header.Hash.Hex() != unchained.ZeroMagicHash && header.Hash.Hex() != unchained.HeaderMagicHash {
+	} else if header.Hash.Hex() != unchained.HeaderMagicHash {
 		msg := fmt.Sprintf("%s: Header hash expected (%s) got (%s)", rng, header.Hash.Hex(), unchained.HeaderMagicHash)
 		return false, errors.New(msg)
 	}

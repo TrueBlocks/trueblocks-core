@@ -870,7 +870,7 @@ testName: Corrected data from above (fifth row was bad above)
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
 	000.004 test_4                           ==> 
-line: decode|decoding void  |function baz()      |0x0000000000000000000000000000000000000000000000000000000000000000|<empty>
+line: decode|decoding void  |function baz()      |0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1|<empty>
 testType: decode
 testName: decoding void
 testSig: function baz() --> baz()

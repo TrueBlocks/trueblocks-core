@@ -7,7 +7,6 @@ const (
 	ReadHash           = "0x337f3f32"                                                         // V1: The fourbyte needed to read the current manifest hash from the smart contract
 	ReadHashName       = "manifestHash"                                                       // V1: The name of the function to read the hash
 	PublishHash        = "0x8da5cb5b"                                                         // V1: The fourbyte needed to publish the hash to the smart contract
-	ZeroMagicHash      = "0x0000000000000000000000000000000000000000000000000000000000000000" // V1: The internal hash in the index chunks
 	Address_V2         = "0x0c316b7042b419d07d343f2f4f5bd54ff731183d"                         // V2: The address of the current version of the Unchained Index
 	ReadHash_V2        = "0x7087e4bd"                                                         // V2: The fourbyte needed to read the current manifest hash from the smart contract
 	ReadHashName_V2    = "manifestHashMap"                                                    // V2: The name of the function to read the hash

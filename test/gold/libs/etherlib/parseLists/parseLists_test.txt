@@ -67,7 +67,7 @@ Testing parseTopicList
   Powered by TrueBlocks
 the list:
 	0xdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef
-	0x0000000000000000000000000000000000000000000000000000000000000000
+	0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1
 Testing parseAddressList
 
   Invalid address '0xnotanaddress'. Length (14) is not equal to 40 characters (20 bytes). Quitting...
@@ -94,7 +94,7 @@ Testing parseAddressList
 
   Powered by TrueBlocks
 
-  Invalid address '0x0000000000000000000000000000000000000000000000000000000000000000'. Length (66) is not equal to 40 characters (20 bytes). Quitting...
+  Invalid address '0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1'. Length (66) is not equal to 40 characters (20 bytes). Quitting...
 
   Usage:    trueBlocks [-v|-h]  
   Purpose:  

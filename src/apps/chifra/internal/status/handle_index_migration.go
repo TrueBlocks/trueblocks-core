@@ -1,8 +1,3 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
-// Use of this source code is governed by a license that can
-// be found in the LICENSE file.
-
-// TODO: BOGUS - THIS WORK NEEDS WAY MORE TESTING AND IS INCOMPLETE
 package statusPkg
 
 import (
@@ -28,9 +23,15 @@ func (opts *StatusOptions) HandleIndexMigration() error {
 	}
 
 	opts.checkTrueBlocksFile()
-	opts.removeUnusedFolders()
-	opts.removeTaintedData("v0.40.0-beta")
-	opts.cleanMonitors("v0.40.0-beta")
+
+	log.Println(colors.Yellow + "Removing temporary folders (staging, unripe, ripe, maps)" + colors.Off)
+	index.CleanTemporaryFolders(config.GetPathToIndex(opts.Globals.Chain), true)
+	done()
+
+	opts.replaceOldIndex()
+
+	log.Println("To complete the migration, you must remove all monitors from the cache")
+	done()
 
 	return nil
 }
@@ -59,42 +60,28 @@ func (opts *StatusOptions) checkTrueBlocksFile() {
 	done()
 }
 
-func (opts *StatusOptions) removeUnusedFolders() {
-	log.Println(colors.Yellow + "Removing temporary folders (staging, unripe, ripe, maps)" + colors.Off)
-	index.CleanTemporaryFolders(config.GetPathToIndex(opts.Globals.Chain), true)
-	done()
-}
-
-func (opts *StatusOptions) removeTaintedData(vers string) error {
+func (opts *StatusOptions) replaceOldIndex() error {
 	isPartial := false
 
-	globs := []string{}
-	switch vers {
-	case "v0.40.0-beta":
-		globs = []string{"013*", "014*", "015*"}
+	files, err := filepath.Glob(filepath.Join(config.GetPathToIndex(opts.Globals.Chain), "blooms", "0*"))
+	if err != nil {
+		panic(err)
 	}
-
-	for _, glob := range globs {
-		files, err := filepath.Glob(filepath.Join(config.GetPathToIndex(opts.Globals.Chain), "blooms", glob))
+	for _, ff := range files {
+		fmt.Println("===>", ff)
+		err := os.Remove(ff)
 		if err != nil {
-			panic(err)
+			log.Panic(err)
 		}
-		for _, ff := range files {
+		ff = index.ToIndexPath(ff)
+		if file.FileExists(ff) {
 			fmt.Println("===>", ff)
 			err := os.Remove(ff)
 			if err != nil {
 				log.Panic(err)
 			}
-			ff = index.ToIndexPath(ff)
-			if file.FileExists(ff) {
-				fmt.Println("===>", ff)
-				err := os.Remove(ff)
-				if err != nil {
-					log.Panic(err)
-				}
-			} else {
-				isPartial = true
-			}
+		} else {
+			isPartial = true
 		}
 	}
 
@@ -104,17 +91,11 @@ func (opts *StatusOptions) removeTaintedData(vers string) error {
 	if !isPartial {
 		initOpts.All = true
 	}
-	err := initOpts.HandleInit()
+	err = initOpts.HandleInit()
 	if err != nil {
 		return err
 	}
-
 	done()
-	return nil
-}
-
-func (opts *StatusOptions) cleanMonitors(vers string) error {
-	log.Println("Remove records in any mainnet monitor file after block 13,000,000")
 	return nil
 }
 
