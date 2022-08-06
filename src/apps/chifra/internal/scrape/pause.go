@@ -8,7 +8,7 @@ import (
 )
 
 func (opts *ScrapeOptions) Pause(progressThen *rpcClient.MetaData) {
-	//we always pause at least a quarter of a second to allow the node to 'rest'
+	// we always pause at least a quarter of a second to allow the node to 'rest'
 	time.Sleep(250 * time.Millisecond)
 
 	distanceFromHead := progressThen.Latest - progressThen.Staging
