@@ -4,55 +4,53 @@ import (
 	"encoding/binary"
 	"io"
 	"os"
-	"strings"
+	"path/filepath"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
 
-// var writeMutex sync.Mutex
+// TODO: Protect against Control+C (search of all of these file open calls)
+// TODO: Protect against concurrent entry
+func (bl *ChunkBloom) WriteBloom(chain, fileName string) ( /* changed */ bool, error) {
+	var err error
 
-func (bl *ChunkBloom) WriteBloom(chain, bloomPath string) error {
-	// writeMutex.Lock()
-	// trapCh := sigintTrap.Enable(context.WithCancel(context.Background()))
+	fileName = ToBloomPath(fileName)
+	tmpPath := filepath.Join(config.GetPathToCache(chain), "tmp")
 
-	tempPath := strings.Replace(bloomPath, "/unchained/", "/cache/", -1)
-	tempPath = strings.Replace(tempPath, "/blooms/", "/tmp/", -1)
-	fp, err := os.OpenFile(tempPath, os.O_WRONLY|os.O_CREATE, 0644)
-	defer func() {
-		os.Remove(tempPath)
-		// sigintTrap.Disable(trapCh)
-		// writeMutex.Lock()
-	}()
-	if err != nil {
-		return err
-	}
+	// Make a backup copy of the file in case the write fails so we can replace it...
+	var backupFn string
+	if backupFn, err = file.MakeBackup(fileName, tmpPath); err == nil {
+		defer func() {
+			if file.FileExists(backupFn) {
+				// If the backup file exists, something failed, so we replace the original file.
+				os.Rename(fileName, backupFn)
+			}
+		}()
 
-	fp.Seek(0, io.SeekStart)
-	err = binary.Write(fp, binary.LittleEndian, bl.Count)
-	if err != nil {
-		fp.Close()
-		return err
-	}
+		var fp *os.File
+		if fp, err = os.OpenFile(fileName, os.O_RDWR|os.O_CREATE, 0644); err == nil {
+			defer fp.Close() // defers are last in, first out
 
-	for _, bb := range bl.Blooms {
-		err = binary.Write(fp, binary.LittleEndian, bb.NInserted)
-		if err != nil {
-			fp.Close()
-			return err
+			fp.Seek(0, io.SeekStart) // already true, but can't hurt
+			if err = binary.Write(fp, binary.LittleEndian, bl.Count); err != nil {
+				return false, err
+			}
+
+			for _, bb := range bl.Blooms {
+				if err = binary.Write(fp, binary.LittleEndian, bb.NInserted); err != nil {
+					return false, err
+				}
+				if err = binary.Write(fp, binary.LittleEndian, bb.Bytes); err != nil {
+					return false, err
+				}
+			}
+
+			// Success. Remove the backup so it doesn't replace the orignal
+			os.Remove(backupFn)
+			return true, nil
 		}
-		err = binary.Write(fp, binary.LittleEndian, bb.Bytes)
-		if err != nil {
-			fp.Close()
-			return err
-		}
 	}
-	// Don't defer this because we want it to be closed before we copy it
-	fp.Close()
 
-	os.Remove(bloomPath)
-	_, err = file.Copy(bloomPath, tempPath)
-	if err != nil {
-		return err
-	}
-	return nil
+	return false, err
 }

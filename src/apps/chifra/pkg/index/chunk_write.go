@@ -4,8 +4,8 @@ import (
 	"encoding/binary"
 	"fmt"
 	"io"
-	"log"
 	"os"
+	"path/filepath"
 	"sort"
 	"strings"
 
@@ -22,10 +22,9 @@ import (
 type AddressAppearanceMap map[string][]AppearanceRecord
 
 // TODO: BOGUS - PINNING TO PINATA AND WRITING MANIFEST FILE
-func WriteChunk(chain, indexPath string, addAppMap AddressAppearanceMap, nApps, snapper int) (uint64, error) {
+func WriteChunk(chain, fileName string, addAppMap AddressAppearanceMap, nApps, snapper int) (bool, error) {
 	addressTable := make([]AddressRecord, 0, len(addAppMap))
 	appearanceTable := make([]AppearanceRecord, 0, nApps)
-
 	sorted := []string{}
 	for address := range addAppMap {
 		sorted = append(sorted, address)
@@ -50,70 +49,64 @@ func WriteChunk(chain, indexPath string, addAppMap AddressAppearanceMap, nApps, 
 		offset += uint32(len(apps))
 	}
 
-	rel := strings.Replace(indexPath, config.GetPathToIndex(chain), "$INDEX/", -1)
+	var err error
 
-	tempPath := strings.Replace(indexPath, "/unchained/", "/cache/", -1)
-	tempPath = strings.Replace(tempPath, "/finalized/", "/tmp/", -1)
-	if indexPath == tempPath {
-		log.Fatal("Paths should differ:", tempPath, indexPath)
-	}
-	fp, err := os.OpenFile(tempPath, os.O_WRONLY|os.O_CREATE, 0644)
-	defer func() {
-		os.Remove(tempPath)
-		// sigintTrap.Disable(trapCh)
-		// writeMutex.Lock()
-	}()
-	if err != nil {
-		return 0, err
-	}
+	fileName = ToIndexPath(fileName)
+	tmpPath := filepath.Join(config.GetPathToCache(chain), "tmp")
+	// Make a backup copy of the file in case the write fails so we can replace it...
+	if backupFn, err := file.MakeBackup(fileName, tmpPath); err == nil {
+		defer func() {
+			if file.FileExists(backupFn) {
+				// If the backup file exists, something failed, so we replace the original file.
+				os.Rename(fileName, backupFn)
+			}
+		}()
 
-	fp.Seek(0, io.SeekStart)
-	header := HeaderRecord{
-		Magic:           file.MagicNumber,
-		Hash:            common.BytesToHash(crypto.Keccak256([]byte(version.ManifestVersion))),
-		AddressCount:    uint32(len(addressTable)),
-		AppearanceCount: uint32(len(appearanceTable)),
-	}
-	err = binary.Write(fp, binary.LittleEndian, header)
-	if err != nil {
-		fp.Close()
-		return 0, err
-	}
-	err = binary.Write(fp, binary.LittleEndian, addressTable)
-	if err != nil {
-		fp.Close()
-		return 0, err
-	}
-	err = binary.Write(fp, binary.LittleEndian, appearanceTable)
-	if err != nil {
-		fp.Close()
-		return 0, err
-	}
-	// Don't defer this because we want it to be closed before we copy it
-	fp.Close()
+		var fp *os.File
+		if fp, err = os.OpenFile(fileName, os.O_WRONLY|os.O_CREATE, 0644); err == nil {
+			defer fp.Close() // defers are last in, first out
 
-	snapMsg := ""
-	if snapper != -1 {
-		snapMsg = fmt.Sprintf("(isSnap to modulo %d blocks)", snapper)
-	}
-	logger.Log(logger.Info, "Wrote", len(appearanceTable), "records to", rel, snapMsg)
+			fp.Seek(0, io.SeekStart) // already true, but can't hurt
+			header := HeaderRecord{
+				Magic:           file.MagicNumber,
+				Hash:            common.BytesToHash(crypto.Keccak256([]byte(version.ManifestVersion))),
+				AddressCount:    uint32(len(addressTable)),
+				AppearanceCount: uint32(len(appearanceTable)),
+			}
+			if err = binary.Write(fp, binary.LittleEndian, header); err != nil {
+				return false, err
+			}
 
-	os.Remove(indexPath)
-	_, err = file.Copy(indexPath, tempPath)
-	if err != nil {
-		return 0, err
-	}
+			if binary.Write(fp, binary.LittleEndian, addressTable); err != nil {
+				return false, err
+			}
 
-	err = bl.WriteBloom(chain, bloom.ToBloomPath(indexPath))
-	if err != nil {
-		return 0, err
+			if binary.Write(fp, binary.LittleEndian, appearanceTable); err != nil {
+				return false, err
+			}
+
+			if _, err = bl.WriteBloom(chain, bloom.ToBloomPath(fileName)); err != nil {
+				return false, err
+			}
+
+			// TODO: BOGUS - PINNING TO PINATA AND WRITING MANIFEST FILE
+			rng, _ := cache.RangeFromFilename(fileName)
+			file.AppendToAsciiFile(config.GetPathToCache(chain)+"tmp/chunks_created.txt", rng.String()+"\n")
+
+			rel := strings.Replace(fileName, config.GetPathToIndex(chain), "$INDEX/", -1)
+			result := fmt.Sprintf("Wrote %d records to %s", len(appearanceTable), rel)
+			if snapper != -1 {
+				result = fmt.Sprintf("Wrote %d records to %s (snapped to %d blocks)", len(appearanceTable), rel, snapper)
+			}
+			logger.Log(logger.Info, result)
+
+			// Success. Remove the backup so it doesn't replace the orignal
+			os.Remove(backupFn)
+			return true, nil
+		}
 	}
 
-	// TODO: BOGUS - PINNING TO PINATA AND WRITING MANIFEST FILE
-	rng, _ := cache.RangeFromFilename(indexPath)
-	file.AppendToAsciiFile(config.GetPathToCache(chain)+"tmp/chunks_created.txt", rng.String()+"\n")
-
-	return 0, nil
+	return false, err
 }
 
 type Renderer interface {

@@ -72,47 +72,50 @@ func ReadChunkHeader(chain, fileName string, checkHash bool) (header HeaderRecor
 	return
 }
 
-func WriteChunkHeaderHash(chain, fileName string, headerHash common.Hash) (changed bool, err error) {
-	// We want to write into this file...
-	indexPath := ToIndexPath(fileName)
+func WriteChunkHeaderHash(chain, fileName string, headerHash common.Hash) ( /* changed */ bool, error) {
+	var err error
 
-	// First, make a backup of the file just in case
 	tmpPath := filepath.Join(config.GetPathToCache(chain), "tmp")
-	backupFn, err := file.MakeBackup(indexPath, tmpPath)
-	if err != nil {
-		return false, err
-	}
-	defer os.Remove(backupFn)
-
-	fp, err := os.OpenFile(indexPath, os.O_RDWR, 0644)
-	if err != nil {
-		return
-	}
-	defer fp.Close() // may already be closed, but it's okay becuase we ignore error return
-
-	fp.Seek(0, io.SeekStart) // already true, but can't hurt
-	header, err := readHeader(fp)
-	if err != nil {
-		fp.Close() // defensively close the file so the copy doesn't get overwritten
-		file.Copy(indexPath, backupFn)
-		return
+	fileName = ToIndexPath(fileName)
+	if !file.FileExists(fileName) {
+		return false, nil
 	}
 
-	if header.Hash == headerHash {
-		// nothing to do
-		return
+	// Make a backup copy of the file in case the write fails so we can replace it...
+	if backupFn, err := file.MakeBackup(fileName, tmpPath); err == nil {
+		defer func() {
+			if file.FileExists(backupFn) {
+				// If the backup file exists, something failed, so we replace the original file.
+				os.Rename(fileName, backupFn)
+			}
+		}()
+
+		if fp, err := os.OpenFile(fileName, os.O_RDWR, 0644); err == nil {
+			defer fp.Close() // defers are last in, first out
+
+			fp.Seek(0, io.SeekStart) // already true, but can't hurt
+			header, err := readHeader(fp)
+			if err != nil {
+				return false, err
+			}
+
+			if header.Hash == headerHash {
+				return false, nil
+			}
+
+			header.Hash = headerHash
+			err = binary.Write(fp, binary.LittleEndian, header)
+			if err != nil {
+				return false, err
+			}
+
+			// Success. Remove the backup so it doesn't replace the orignal
+			os.Remove(backupFn)
+			return true, nil
+		}
 	}
 
-	header.Hash = headerHash
-	err = binary.Write(fp, binary.LittleEndian, header)
-	if err != nil {
-		fp.Close() // defensively close the file so the copy doesn't get overwritten
-		file.Copy(indexPath, backupFn)
-		return
-	}
-
-	changed = true
-	return
+	return false, err
 }
 
 func HasValidHeader(chain, fileName string) (bool, error) {
