@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
@@ -55,10 +56,13 @@ func WriteChunk(chain, fileName string, addAppMap AddressAppearanceMap, nApps, s
 	tmpPath := filepath.Join(config.GetPathToCache(chain), "tmp")
 	// Make a backup copy of the file in case the write fails so we can replace it...
 	if backupFn, err := file.MakeBackup(fileName, tmpPath); err == nil {
+		logger.Log(logger.Info, colors.BrightBlue, "Backup file created at", backupFn, colors.Off)
 		defer func() {
 			if file.FileExists(backupFn) {
+				logger.Log(logger.Info, colors.BrightBlue, "Recovering from failure", backupFn, colors.Off)
 				// If the backup file exists, something failed, so we replace the original file.
-				os.Rename(fileName, backupFn)
+				os.Rename(backupFn, fileName)
+				os.Remove(backupFn) // seems redundant, but may not be on some operating systems
 			}
 		}()
 
@@ -106,6 +110,7 @@ func WriteChunk(chain, fileName string, addAppMap AddressAppearanceMap, nApps, s
 		}
 	}
 
+	logger.Log(logger.Info, colors.BrightRed, "Backup file creation failed", colors.Off)
 	return false, err
 }
 

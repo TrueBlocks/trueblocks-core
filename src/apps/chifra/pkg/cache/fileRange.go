@@ -48,6 +48,11 @@ func RangeFromFilename(path string) (blkRange FileRange, err error) {
 	return
 }
 
+func BnsFromFilename(path string) (uint64, uint64) {
+	rng, _ := RangeFromFilename(path)
+	return rng.First, rng.Last
+}
+
 func (fR FileRange) String() string {
 	return fmt.Sprintf("%09d-%09d", fR.First, fR.Last)
 }

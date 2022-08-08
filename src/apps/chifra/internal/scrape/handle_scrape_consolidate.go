@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
@@ -23,70 +24,92 @@ const asciiAppearanceSize = 59
 
 // HandleScrapeConsolidate calls into the block scraper to (a) call Blaze and (b) consolidate if applicable
 func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaData, blazeOpts *BlazeOptions) (ok bool, err error) {
-	ripePath := filepath.Join(config.GetPathToIndex(opts.Globals.Chain), "ripe")
-	ripeFiles, err := os.ReadDir(ripePath)
+	ripeFolder := filepath.Join(config.GetPathToIndex(opts.Globals.Chain), "ripe")
+
+	ripeFileList, err := os.ReadDir(ripeFolder)
 	if err != nil {
 		return true, err
 	}
+	if len(ripeFileList) == 0 {
+		logger.Log(logger.Info, "No new blocks...")
+		return true, nil
+	}
 
-	prev := cache.NotARange
-	for _, file := range ripeFiles {
-		fileRange, _ := cache.RangeFromFilename(file.Name())
-		if prev != cache.NotARange && prev != fileRange {
-			if !fileRange.Follows(prev, !scrape.AllowMissing(opts.Globals.Chain)) {
-				msg := fmt.Sprintf("Current file (%s) does not sequentially follow previous file (%09d.txt).\n", file.Name(), prev.First)
-				logger.Log(logger.Error, msg)
-				err = index.CleanTemporaryFolders(config.GetPathToCache(opts.Globals.Chain), false)
-				if err != nil {
-					return true, err
-				}
-				return true, errors.New(msg)
-			}
+	// If we got as many as we asked for, we can assume there are no gaps...
+	if uint64(len(ripeFileList)) != opts.BlockCnt {
+		// Otherwise, if we have either more or less files that we scraped this round
+		// something went wrong -- either this round or the preivous. In either
+		// case, we can continue if the files are sequential.
+		if err := IsListSequential(opts.Globals.Chain, ripeFileList); !ok || err != nil {
+			// The ripe files are no sequential, clean up and try again
+			index.CleanTemporaryFolders(config.GetPathToCache(opts.Globals.Chain), false)
+			return true, err // 'true' means continue processing
 		}
-		prev = fileRange
 	}
+	// f, _ := cache.BnsFromFilename(ripeFileList[0].Name())
+	// _, l := cache.BnsFromFilename(ripeFileList[len(ripeFileList)-1].Name())
+	// ripeRange := cache.FileRange{First: f, Last: l}
+	// fmt.Println()
+	// fmt.Println("ripeRange: ", ripeRange, index.GetStatus(opts.Globals.Chain))
+	// time.Sleep(4 * time.Second)
 
-	stageFn, _ := file.LatestFileInFolder(filepath.Join(config.GetPathToIndex(opts.Globals.Chain), "staging"))
-	cnt := file.FileSize(stageFn) / asciiAppearanceSize
-	stagingFolder := filepath.Join(config.GetPathToIndex(opts.Globals.Chain), "staging")
-	firstFile, err := file.EarliestFileInFolder(stagingFolder)
-	if err != nil {
-		logger.Log(logger.Info, "earliest file not found, it's okay", err)
-	}
+	stageFolder := filepath.Join(config.GetPathToIndex(opts.Globals.Chain), "staging")
+	curRange := cache.FileRange{First: opts.StartBlock, Last: opts.StartBlock + opts.BlockCnt - 1}
 
-	recordCount := uint64(file.FileSize(firstFile) / asciiAppearanceSize)
+	// first := uint64(opts.StartBlock)
+	appearances := []string{}
 
-	first := uint64(opts.StartBlock)
-	if recordCount > 0 {
-		records := file.AsciiFileToLines(firstFile)
+	stageFn, _ := file.LatestFileInFolder(stageFolder) // it's okay if it doesn't exist
+	recordCount := uint64(0)
+
+	logger.Log(logger.Info, "nFiles in ripe:", len(ripeFileList))
+	logger.Log(logger.Info, "StageFn:", stageFn)
+	logger.Log(logger.Info, "CurRange:", curRange)
+
+	if file.FileExists(stageFn) {
+		recordCount = uint64(file.FileSize(stageFn) / asciiAppearanceSize)
+		records := file.AsciiFileToLines(stageFn)
 		parts := strings.Split(records[0], "\t")
 		if len(parts) > 1 {
-			first, _ = strconv.ParseUint(parts[1], 10, 64)
+			first, _ := strconv.ParseUint(parts[1], 10, 64)
+			rng, _ := cache.RangeFromFilename(stageFn)
+			curRange = cache.FileRange{First: first, Last: rng.Last}
 		}
 	}
 
-	settings, _ := scrape.GetSettings(opts.Globals.Chain, nil)
+	logger.Log(logger.Info, "CurRange:", curRange)
+	// fmt.Println()
 
-	allApps := file.AsciiFileToLines(firstFile)
-	os.Remove(firstFile)
-	curRange := cache.FileRange{First: first, Last: 0}
-	bn := uint64(0)
-	for _, ff := range ripeFiles {
-		path := filepath.Join(ripePath, ff.Name())
-		allApps = append(allApps, file.AsciiFileToLines(path)...)
-		os.Remove(path)
+	// Note, this file may be empty or non-existant
+	backupFn, err := file.MakeBackup(stageFn, filepath.Join(config.GetPathToCache(opts.Globals.Chain)+"tmp"))
+	if err != nil {
+		return true, errors.New("Could not create backup file: " + err.Error())
+	}
+	defer func() {
+		if backupFn != "" && file.FileExists(backupFn) {
+			// If the backup file exists, something failed, so we replace the original file.
+			os.Rename(backupFn, stageFn)
+			os.Remove(backupFn) // seems redundant, but may not be on some operating systems
+		}
+	}()
 
-		fR, _ := cache.RangeFromFilename(ff.Name())
-		bn = fR.First
-		isSnap := (bn >= settings.First_snap && (bn%settings.Snap_to_grid) == 0)
+	appearances = file.AsciiFileToLines(stageFn)
+	os.Remove(stageFn)
+	for _, ripeFile := range ripeFileList {
+		ripePath := filepath.Join(ripeFolder, ripeFile.Name())
+		appearances = append(appearances, file.AsciiFileToLines(ripePath)...)
+		os.Remove(ripePath)
+		curCount := uint64(len(appearances))
 
-		recordCount1 := uint64(len(allApps))
-		isOvertop := (recordCount1 >= uint64(settings.Apps_per_chunk))
+		ripeRange, _ := cache.RangeFromFilename(ripePath)
+		curRange.Last = ripeRange.Last
 
-		curRange.Last = utils.Max(curRange.Last, uint64(bn))
+		isSnap := (curRange.Last >= opts.Settings.First_snap && (curRange.Last%opts.Settings.Snap_to_grid) == 0)
+		isOvertop := (curCount >= uint64(opts.Settings.Apps_per_chunk))
+
 		if isSnap || isOvertop {
-			appMap := make(index.AddressAppearanceMap, len(allApps))
-			for _, line := range allApps {
+			appMap := make(index.AddressAppearanceMap, len(appearances))
+			for _, line := range appearances {
 				parts := strings.Split(line, "\t")
 				if len(parts) == 3 {
 					addr := strings.ToLower(parts[0])
@@ -98,39 +121,61 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 					})
 				}
 			}
+
 			filename := cache.NewCachePath(opts.Globals.Chain, cache.Index_Final)
 			path := filename.GetFullPath(curRange.String())
+
 			snapper := -1
 			if isSnap {
-				snapper = int(settings.Snap_to_grid)
+				snapper = int(opts.Settings.Snap_to_grid)
 			}
-			_, err = index.WriteChunk(opts.Globals.Chain, path, appMap, len(allApps), snapper)
+
+			logger.Log(logger.Info, colors.BrightYellow, "Writing to", path, colors.Off)
+			_, err = index.WriteChunk(opts.Globals.Chain, path, appMap, len(appearances), snapper)
 			if err != nil {
 				return true, err
 			}
+
 			curRange.First = curRange.Last + 1
-			allApps = []string{}
+			appearances = []string{}
 		}
 	}
 
-	if len(allApps) > 0 {
-		line := allApps[len(allApps)-1]
-		parts := strings.Split(line, "\t")
+	logger.Log(logger.Info, colors.BrightYellow, "curRange", curRange, len(appearances), colors.Off)
+	if len(appearances) > 0 {
+		var rng cache.FileRange
+		line0 := appearances[0]
+		parts := strings.Split(line0, "\t")
 		if len(parts) > 1 {
-			bn, _ := strconv.ParseUint(parts[1], 10, 32)
-			f := fmt.Sprintf("%09d.txt", bn)
-			fileName := filepath.Join(config.GetPathToIndex(opts.Globals.Chain), "staging", f)
-			err = file.LinesToAsciiFile(fileName, allApps)
-			if err != nil {
-				return true, err
-			}
+			rng.First, _ = strconv.ParseUint(parts[1], 10, 32)
+		} else {
+			return true, errors.New("Cannot find first block number at line 0 in consolidate: " + line0)
 		}
+		lineLast := appearances[len(appearances)-1]
+		parts = strings.Split(lineLast, "\t")
+		if len(parts) > 1 {
+			rng.Last, _ = strconv.ParseUint(parts[1], 10, 32)
+		} else {
+			return true, errors.New("Cannot find last block number at lineLast in consolidate: " + lineLast)
+		}
+		f := fmt.Sprintf("%s.txt", rng)
+		fileName := filepath.Join(config.GetPathToIndex(opts.Globals.Chain), "staging", f)
+		err = file.LinesToAsciiFile(fileName, appearances)
+		if err != nil {
+			os.Remove(fileName) // cleans up by replacing the previous stage
+			return true, err
+		}
+		logger.Log(logger.Info, colors.Red, "fileName:", fileName, colors.Off)
+		logger.Log(logger.Info, colors.Red, "curRange:", curRange, colors.Off)
 	}
 
+	time.Sleep(2 * time.Second)
 	meta, _ := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
 	cntBeforeCall := utils.Max(progressThen.Ripe, utils.Max(progressThen.Staging, progressThen.Finalized))
 	cntAfterCall := utils.Max(meta.Ripe, utils.Max(meta.Staging, meta.Finalized))
-	Report("After All --> ", opts.StartBlock, settings.Apps_per_chunk, opts.BlockCnt, uint64(cnt), cntAfterCall-cntBeforeCall+uint64(cnt), false)
+	Report("After All --> ", opts.StartBlock, opts.Settings.Apps_per_chunk, opts.BlockCnt, uint64(recordCount), cntAfterCall-cntBeforeCall+uint64(recordCount), false)
+
+	os.Remove(backupFn) // commits the change
 
 	return true, err
 }
@@ -185,4 +230,19 @@ func (opts *ScrapeOptions) ListIndexFolder(indexPath, msg string) {
 	// 	return nil
 	// })
 	// logger.Log(logger.Info, "======================= Exit", msg, "=======================")
+}
+
+func IsListSequential(chain string, ripeFileList []os.DirEntry) error {
+	prev := cache.NotARange
+	for _, file := range ripeFileList {
+		fileRange, _ := cache.RangeFromFilename(file.Name())
+		if prev != cache.NotARange && prev != fileRange {
+			if !fileRange.Follows(prev, !scrape.AllowMissing(chain)) {
+				msg := fmt.Sprintf("Ripe files are not sequential (%s ==> %s)", prev, fileRange)
+				return errors.New(msg)
+			}
+		}
+		prev = fileRange
+	}
+	return nil
 }

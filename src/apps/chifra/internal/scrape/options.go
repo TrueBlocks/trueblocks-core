@@ -130,7 +130,9 @@ func scrapeFinishParse(args []string) *ScrapeOptions {
 
 func GetOptions() *ScrapeOptions {
 	// EXISTING_CODE
-	scrapeCmdLineOptions.Settings = scrape.GetDefault("mainnet")
+	if scrapeCmdLineOptions.Settings.Apps_per_chunk == 0 {
+		scrapeCmdLineOptions.Settings = scrape.GetDefault("mainnet")
+	}
 	// EXISTING_CODE
 	return &scrapeCmdLineOptions
 }

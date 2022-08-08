@@ -15,9 +15,13 @@ package index
 
 import (
 	"encoding/json"
+	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 )
 
 // The Chunk data structure consists of three parts. A FileRange, a ChunkData structure, and a ChunkBloom that
@@ -65,4 +69,23 @@ func (chunk *Chunk) Close() {
 		chunk.Data.File.Close()
 		chunk.Data.File = nil
 	}
+}
+
+func GetStatus(chain string) rpcClient.MetaData {
+	meta := rpcClient.MetaData{}
+	indexPath := config.GetPathToIndex(chain)
+
+	fn, _ := file.LatestFileInFolder(filepath.Join(indexPath, "finalized"))
+	_, meta.Finalized = cache.BnsFromFilename(fn)
+
+	fn, _ = file.LatestFileInFolder(filepath.Join(indexPath, "staging"))
+	_, meta.Staging = cache.BnsFromFilename(fn)
+
+	fn, _ = file.LatestFileInFolder(filepath.Join(indexPath, "ripe"))
+	_, meta.Ripe = cache.BnsFromFilename(fn)
+
+	fn, _ = file.LatestFileInFolder(filepath.Join(indexPath, "unripe"))
+	_, meta.Unripe = cache.BnsFromFilename(fn)
+
+	return meta
 }

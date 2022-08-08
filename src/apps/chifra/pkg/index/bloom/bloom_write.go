@@ -24,7 +24,8 @@ func (bl *ChunkBloom) WriteBloom(chain, fileName string) ( /* changed */ bool, e
 		defer func() {
 			if file.FileExists(backupFn) {
 				// If the backup file exists, something failed, so we replace the original file.
-				os.Rename(fileName, backupFn)
+				os.Rename(backupFn, fileName)
+				os.Remove(backupFn) // seems redundant, but may not be on some operating systems
 			}
 		}()
 
