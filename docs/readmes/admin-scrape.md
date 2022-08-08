@@ -21,6 +21,29 @@ Flags:
   -h, --help             display this help screen
 ```
 
+### configuration
+
+Each of the following additional configurable command line options are available.
+
+**Configuration file:** `$CONFIG/$CHAIN/blockScrape.toml`  
+**Configuration group:** `[settings]`  
+
+| Item               | Type         | Default      | Description / Default |
+| ------------------ | ------------ | ------------ | --------- |
+| apps&lowbar;per&lowbar;chunk | uint64       | 200000       | the number of appearances to build into a chunk before consolidating it |
+| snap&lowbar;to&lowbar;grid | uint64       | 100000       | an override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index |
+| first&lowbar;snap  | uint64       | 0            | the first block at which snap_to_grid is enabled |
+| unripe&lowbar;dist | uint64       | 28           | the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe |
+| channel&lowbar;count | uint64       | 20           | number of concurrent processing channels |
+| allow&lowbar;missing | bool         | false        | do not report errors for blockchains that contain blocks with zero addresses |
+
+
+These items may be set in three ways, each overridding the preceeding method:
+
+-- in the above configuration file under the `[settings]` group,  
+-- in the environment by exporting the configuration item as UPPER&lowbar;CASE, without underbars, and prepended with TB_SETTINGS&lowbar;, or  
+-- on the command line using the configuration item with leading dashes (i.e., `--name`).  
+
 ### explainer
 
 Each time `chifra scrape` runs, it begins at the last block it completed processing (plus one). With each pass, it descends as deeply as it can into the block's data. (This is why the indexer requires a `--tracing` node.) As addresses appear in the blocks, the system adds the appearance to a binary index. Periodically (at the end of the block containing the 2,000,000th appearance), the system consolidates a **chunk**.

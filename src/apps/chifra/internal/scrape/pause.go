@@ -13,7 +13,7 @@ func (opts *ScrapeOptions) Pause(progressThen *rpcClient.MetaData) {
 
 	distanceFromHead := progressThen.Latest - progressThen.Staging
 	isDefaultSleep := opts.Sleep == 14 || opts.Sleep == 13
-	shouldSleep := !isDefaultSleep || distanceFromHead <= (2*opts.UnripeDist)
+	shouldSleep := !isDefaultSleep || distanceFromHead <= (2*opts.Settings.Unripe_dist)
 
 	if shouldSleep {
 		sleep := opts.Sleep

@@ -14,24 +14,19 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrape"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 // ScrapeOptions provides all command options for the chifra scrape command.
 type ScrapeOptions struct {
-	BlockCnt     uint64                `json:"blockCnt,omitempty"`     // Maximum number of blocks to process per pass
-	Sleep        float64               `json:"sleep,omitempty"`        // Seconds to sleep between scraper passes
-	BlockChanCnt uint64                `json:"blockChanCnt,omitempty"` // Number of concurrent block processing channels
-	AddrChanCnt  uint64                `json:"addrChanCnt,omitempty"`  // Number of concurrent address processing channels
-	AppsPerChunk uint64                `json:"appsPerChunk,omitempty"` // The number of appearances to build into a chunk before consolidating it
-	UnripeDist   uint64                `json:"unripeDist,omitempty"`   // The distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe
-	SnapToGrid   uint64                `json:"snapToGrid,omitempty"`   // An override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index
-	FirstSnap    uint64                `json:"firstSnap,omitempty"`    // The first block at which snap_to_grid is enabled
-	AllowMissing bool                  `json:"allowMissing,omitempty"` // Do not report errors for blockchain that contain blocks with zero addresses
-	StartBlock   uint64                `json:"startBlock,omitempty"`   // First block to visit (available only for blaze scraper)
-	Globals      globals.GlobalOptions `json:"globals,omitempty"`      // The global options
-	BadFlag      error                 `json:"badFlag,omitempty"`      // An error flag if needed
+	BlockCnt   uint64                `json:"blockCnt,omitempty"`   // Maximum number of blocks to process per pass
+	Sleep      float64               `json:"sleep,omitempty"`      // Seconds to sleep between scraper passes
+	StartBlock uint64                `json:"startBlock,omitempty"` // First block to visit (available only for blaze scraper)
+	Settings   scrape.ScrapeSettings `json:"settings,omitempty"`   // Configuration items for the scrape
+	Globals    globals.GlobalOptions `json:"globals,omitempty"`    // The global options
+	BadFlag    error                 `json:"badFlag,omitempty"`    // An error flag if needed
 }
 
 var scrapeCmdLineOptions ScrapeOptions
@@ -40,14 +35,8 @@ var scrapeCmdLineOptions ScrapeOptions
 func (opts *ScrapeOptions) testLog() {
 	logger.TestLog(opts.BlockCnt != 2000, "BlockCnt: ", opts.BlockCnt)
 	logger.TestLog(opts.Sleep != 14, "Sleep: ", opts.Sleep)
-	logger.TestLog(opts.BlockChanCnt != 10, "BlockChanCnt: ", opts.BlockChanCnt)
-	logger.TestLog(opts.AddrChanCnt != 20, "AddrChanCnt: ", opts.AddrChanCnt)
-	logger.TestLog(opts.AppsPerChunk != 200000, "AppsPerChunk: ", opts.AppsPerChunk)
-	logger.TestLog(opts.UnripeDist != 28, "UnripeDist: ", opts.UnripeDist)
-	logger.TestLog(opts.SnapToGrid != 100000, "SnapToGrid: ", opts.SnapToGrid)
-	logger.TestLog(opts.FirstSnap != 0, "FirstSnap: ", opts.FirstSnap)
-	logger.TestLog(opts.AllowMissing, "AllowMissing: ", opts.AllowMissing)
 	logger.TestLog(opts.StartBlock != 0, "StartBlock: ", opts.StartBlock)
+	opts.Settings.TestLog(opts.Globals.Chain)
 	opts.Globals.TestLog()
 }
 
@@ -80,35 +69,32 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 	opts := &ScrapeOptions{}
 	opts.BlockCnt = 2000
 	opts.Sleep = 14
-	opts.BlockChanCnt = 10
-	opts.AddrChanCnt = 20
-	opts.AppsPerChunk = 200000
-	opts.UnripeDist = 28
-	opts.SnapToGrid = 100000
-	opts.FirstSnap = 0
 	opts.StartBlock = 0
+	opts.Settings.Apps_per_chunk = 200000
+	opts.Settings.Snap_to_grid = 100000
+	opts.Settings.First_snap = 0
+	opts.Settings.Unripe_dist = 28
+	opts.Settings.Channel_count = 20
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "blockCnt":
 			opts.BlockCnt = globals.ToUint64(value[0])
 		case "sleep":
 			opts.Sleep = globals.ToFloat64(value[0])
-		case "blockChanCnt":
-			opts.BlockChanCnt = globals.ToUint64(value[0])
-		case "addrChanCnt":
-			opts.AddrChanCnt = globals.ToUint64(value[0])
-		case "appsPerChunk":
-			opts.AppsPerChunk = globals.ToUint64(value[0])
-		case "unripeDist":
-			opts.UnripeDist = globals.ToUint64(value[0])
-		case "snapToGrid":
-			opts.SnapToGrid = globals.ToUint64(value[0])
-		case "firstSnap":
-			opts.FirstSnap = globals.ToUint64(value[0])
-		case "allowMissing":
-			opts.AllowMissing = true
 		case "startBlock":
 			opts.StartBlock = globals.ToUint64(value[0])
+		case "appsPerChunk":
+			opts.Settings.Apps_per_chunk = globals.ToUint64(value[0])
+		case "snapToGrid":
+			opts.Settings.Snap_to_grid = globals.ToUint64(value[0])
+		case "firstSnap":
+			opts.Settings.First_snap = globals.ToUint64(value[0])
+		case "unripeDist":
+			opts.Settings.Unripe_dist = globals.ToUint64(value[0])
+		case "channelCount":
+			opts.Settings.Channel_count = globals.ToUint64(value[0])
+		case "allowMissing":
+			opts.Settings.Allow_missing = true
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "scrape")
@@ -127,14 +113,14 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 func scrapeFinishParse(args []string) *ScrapeOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
+	opts.Settings, _ = scrape.GetSettings(opts.Globals.Chain, &opts.Settings)
 	defFmt := "txt"
 	// EXISTING_CODE
 	if len(args) == 1 && (args[0] == "run" || args[0] == "indexer") {
-		// do nothing
+		// these options have been deprecated, so do nothing
 	} else if len(args) > 1 {
 		opts.BadFlag = validate.Usage("Invalid argument {0}", args[0])
 	}
-	opts.setDefaultsFromConfig()
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
@@ -144,6 +130,7 @@ func scrapeFinishParse(args []string) *ScrapeOptions {
 
 func GetOptions() *ScrapeOptions {
 	// EXISTING_CODE
+	scrapeCmdLineOptions.Settings = scrape.GetDefault("mainnet")
 	// EXISTING_CODE
 	return &scrapeCmdLineOptions
 }

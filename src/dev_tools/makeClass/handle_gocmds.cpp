@@ -17,6 +17,8 @@ extern string_q get_notes2(const CCommandOption& cmd);
 extern string_q get_optfields(const CCommandOption& cmd);
 extern string_q get_requestopts(const CCommandOption& cmd);
 extern string_q get_defaults_apis(const CCommandOption& cmd);
+extern string_q get_config_override(const CCommandOption& cmd);
+extern string_q get_config_package(const CCommandOption& cmd);
 extern string_q get_setopts(const CCommandOption& cmd);
 extern string_q get_testlogs(const CCommandOption& cmd);
 extern string_q get_copyopts(const CCommandOption& cmd);
@@ -98,6 +100,9 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     replaceAll(source, "[{PROPER}]", toProper(p.api_route));
     replaceAll(source, "[{OPT_FIELDS}]", get_optfields(p));
     replaceAll(source, "[{DEFAULTS_API}]", get_defaults_apis(p));
+    replaceAll(source, "[{CONFIG_OVERRIDE}]", get_config_override(p));
+    replaceAll(source, "[{CONFIGPKG}]", get_config_package(p));
+
     string_q req = get_requestopts(p);
     replaceAll(source, "[{REQUEST_OPTS}]", req);
     if (!contains(substitute(req, "for key, value := range r.URL.Query() {", ""), "value")) {
@@ -272,11 +277,15 @@ string_q noUnderbars(const string_q& in) {
 }
 
 string_q get_testlogs(const CCommandOption& cmd) {
+    bool hasConfig = false;
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
+        if (p.generate == "config") {
+            hasConfig = true;
+            continue;
+        }
         replace(p.longName, "deleteMe", "delete");
         p.def_val = substitute(p.def_val, "NOPOS", "utils.NOPOS");
-
         if (!p.isDeprecated) {
             if (p.data_type == "<boolean>") {
                 const char* STR_TESTLOG_BOOL =
@@ -300,12 +309,22 @@ string_q get_testlogs(const CCommandOption& cmd) {
             }
         }
     }
+    if (hasConfig) {
+        os << cmd.Format("\topts.Settings.TestLog(opts.Globals.Chain)\n");
+    }
     return os.str();
 }
 
 string_q get_optfields(const CCommandOption& cmd) {
+    string_q configDocs = getDocsPathReadmes(substitute(toLower(cmd.group), " ", "") + "-" + cmd.api_route + ".config");
+    ::remove(configDocs.c_str());
+
+    bool hasConfig = 0;
     size_t varWidth = 0, typeWidth = 0;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
+        if (p.generate == "config") {
+            continue;
+        }
         replace(p.longName, "deleteMe", "delete");
         string_q var = p.Format("[{VARIABLE}]");
         varWidth = max(var.length(), varWidth);
@@ -336,6 +355,21 @@ string_q get_optfields(const CCommandOption& cmd) {
 
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
+        if (p.generate == "config") {
+            ostringstream dd;
+            if (!hasConfig) {
+                dd << "| " << padRight("Item", 18) << " | " << padRight("Type", 12) << " | " << padRight("Default", 12)
+                   << " | Description / Default |" << endl;
+                dd << "| " << string_q(18, '-') << " | " << string_q(12, '-') << " | " << string_q(12, '-')
+                   << " | --------- |" << endl;
+            }
+            string_q x = substitute(p.Format("[{LONGNAME}]"), "_", "&lowbar;");
+            dd << "| " << padRight(x, 18) << " | " << padRight(p.Format("[{GO_TYPE}]"), 12) << " | "
+               << padRight(p.Format("[{DEF_VAL}]"), 12) << " | " << p.Format("[{DESCRIPTION}]") << " |" << endl;
+            appendToAsciiFile(configDocs, dd.str());
+            hasConfig = true;
+            continue;
+        }
         replace(p.longName, "deleteMe", "delete");
         string_q var = p.Format("[{VARIABLE}]");
         string_q type = p.Format("[{GO_TYPE}]");
@@ -347,10 +381,30 @@ string_q get_optfields(const CCommandOption& cmd) {
             ONE(os, "TransactionIds", varWidth, "[]identifiers.Identifier", typeWidth, "transaction identifiers");
         }
     }
+
+    if (hasConfig) {
+        string type = cmd.Format("[{API_ROUTE}].[{PROPER}]Settings");
+        ONE(os, "Settings", varWidth, type, typeWidth, "Configuration items for the " + cmd.api_route);
+    }
+
     ONE(os, "Globals", varWidth, "globals.GlobalOptions", typeWidth, "the global options");
     ONE(os, "BadFlag", varWidth, "error", typeWidth, "an error flag if needed");
 
     return os.str();
+}
+
+string_q get_config_override(const CCommandOption& cmd) {
+    for (auto p : *((CCommandOptionArray*)cmd.params))
+        if (p.generate == "config")
+            return "\topts.Settings, _ = " + cmd.api_route + ".GetSettings(opts.Globals.Chain, &opts.Settings)\n";
+    return "";
+}
+
+string_q get_config_package(const CCommandOption& cmd) {
+    for (auto p : *((CCommandOptionArray*)cmd.params))
+        if (p.generate == "config")
+            return "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/" + cmd.api_route + "\"\n";
+    return "";
 }
 
 string_q get_defaults_apis(const CCommandOption& cmd) {
@@ -358,7 +412,11 @@ string_q get_defaults_apis(const CCommandOption& cmd) {
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         p.def_val = substitute(p.def_val, "NOPOS", "utils.NOPOS");
         if (!p.isDeprecated && (p.data_type == "<blknum>" || p.data_type == "<uint64>" || p.data_type == "<double>")) {
-            os << p.Format("\topts.[{VARIABLE}] = [{DEF_VAL}]") << endl;
+            string_q fmt = "\topts.[{VARIABLE}] = [{DEF_VAL}]";
+            if (p.generate == "config") {
+                fmt = "\topts.Settings.[{VARIABLE}] = [{DEF_VAL}]";
+            }
+            os << p.Format(fmt) << endl;
         }
     }
     return os.str();
@@ -369,11 +427,16 @@ string_q get_requestopts(const CCommandOption& cmd) {
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         replace(p.longName, "deleteMe", "delete");
         string_q low = toCamelCase(p.Format("[{LOWER}]"));
+        string_q fmt;
         if (startsWith(p.data_type, "list<")) {
-            os << p.Format(substitute(STR_REQUEST_CASE2, "++LOWER++", low)) << endl;
+            fmt = substitute(STR_REQUEST_CASE2, "++LOWER++", low);
         } else {
-            os << p.Format(substitute(STR_REQUEST_CASE1, "++LOWER++", low)) << endl;
+            fmt = substitute(STR_REQUEST_CASE1, "++LOWER++", low);
         }
+        if (p.generate == "config") {
+            fmt = substitute(fmt, "opts.", "opts.Settings.");
+        }
+        os << p.Format(fmt) << endl;
     }
     return os.str();
 }
@@ -450,7 +513,7 @@ string_q get_hidden(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         replace(p.longName, "deleteMe", "delete");
-        if (!p.is_visible && !p.isConfig) {
+        if (!p.is_visible) {
             os << "\t\t[{ROUTE}]Cmd.Flags().MarkHidden(\"" + p.Format("[{LONGNAME}]") + "\")" << endl;
         }
     }
@@ -469,11 +532,11 @@ string_q get_hidden(const CCommandOption& cmd) {
 string_q get_setopts(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
-        if (p.option_type != "positional" && !p.isConfig) {
+        if (p.option_type != "positional") {
             replace(p.longName, "deleteMe", "delete");
             os << "\t[{ROUTE}]Cmd.Flags().";
             os << p.go_flagtype;
-            os << "(&[{ROUTE}]Pkg.GetOptions().";
+            os << "(&[{ROUTE}]Pkg.GetOptions()." << (p.isConfig ? "Settings." : "");
             os << p.Format("[{VARIABLE}]") << ", ";
             os << p.Format("\"[{LONGNAME}]\", ");
             os << p.Format("\"[{HOTKEY}]\", ");

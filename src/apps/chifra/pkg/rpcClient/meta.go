@@ -18,9 +18,9 @@ type MetaData struct {
 	Staging   uint64 `json:"staging"`
 	Ripe      uint64 `json:"ripe"`
 	Unripe    uint64 `json:"unripe"`
-	ChainId   uint64 `json:"chainId"`
-	NetworkId uint64 `json:"networkId"`
-	Chain     string `json:"chain"`
+	ChainId   uint64 `json:"chainId,omitempty"`
+	NetworkId uint64 `json:"networkId,omitempty"`
+	Chain     string `json:"chain,omitempty"`
 }
 
 func (m MetaData) String() string {

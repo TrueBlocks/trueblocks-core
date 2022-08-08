@@ -34,7 +34,6 @@ func (opts *ChunksOptions) checkSequential(which string, array []string, report 
 			report.VisitedCnt++
 			report.CheckedCnt++
 			if prev != fR {
-				// TODO: Technically, allow_missing means missing inside the file not in the filenames
 				if !fR.Follows(prev, !scrape.AllowMissing(opts.Globals.Chain)) {
 					report.MsgStrings = append(report.MsgStrings, fmt.Sprintf("In %s array, not sequental %s:%s", which, prev, fR))
 				} else {

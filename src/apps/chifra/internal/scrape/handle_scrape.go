@@ -46,22 +46,24 @@ func (opts *ScrapeOptions) HandleScrape() error {
 			opts.BlockCnt = (progress.Latest - opts.StartBlock)
 		}
 
+		settings := opts.Settings
+
 		// 'UnripeDist' behind head unless head is less or equal to than 'UnripeDist', then head
 		ripe := progress.Latest
-		if ripe > opts.UnripeDist {
-			ripe = progress.Latest - opts.UnripeDist
+		if ripe > settings.Unripe_dist {
+			ripe = progress.Latest - settings.Unripe_dist
 		}
 
 		blazeOpts := BlazeOptions{
 			Chain:         opts.Globals.Chain,
-			NChannels:     utils.Max(opts.BlockChanCnt, opts.AddrChanCnt),
+			NChannels:     settings.Channel_count,
 			NProcessed:    0,
 			StartBlock:    opts.StartBlock,
 			BlockCount:    opts.BlockCnt,
 			RipeBlock:     ripe,
-			UnripeDist:    opts.UnripeDist,
+			UnripeDist:    settings.Unripe_dist,
 			RpcProvider:   config.GetRpcProvider(opts.Globals.Chain),
-			AppearanceMap: make(index.AddressAppearanceMap, opts.AppsPerChunk),
+			AppearanceMap: make(index.AddressAppearanceMap, settings.Apps_per_chunk),
 			TsArray:       make([]tslib.Timestamp, 0, opts.BlockCnt),
 			ProcessedMap:  make(map[int]bool, opts.BlockCnt),
 		}

@@ -30,7 +30,6 @@
 #include "prices.h"
 #include "reconciliation.h"
 #include "timestamps.h"
-#include "classdefinition.h"
 #include "indexarchive.h"
 
 using namespace qblocks;  // NOLINT

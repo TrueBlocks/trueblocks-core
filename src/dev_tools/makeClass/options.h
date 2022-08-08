@@ -17,6 +17,7 @@
  */
 #include "etherlib.h"
 #include "commandoption.h"
+#include "classdefinition.h"
 
 // BEG_ERROR_DEFINES
 #define ERR_CLASSDEFNOTEXIST 1

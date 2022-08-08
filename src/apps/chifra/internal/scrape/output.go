@@ -12,7 +12,6 @@ package scrapePkg
 import (
 	"net/http"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrape"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 
 	"github.com/spf13/cobra"
@@ -57,15 +56,4 @@ func (opts *ScrapeOptions) ScrapeInternal() (err error, handled bool) {
 }
 
 // EXISTING_CODE
-func (opts *ScrapeOptions) setDefaultsFromConfig() {
-	settings := scrape.GetSettings(opts.Globals.Chain)
-	opts.BlockChanCnt = uint64(settings.Block_chan_cnt)
-	opts.AddrChanCnt = uint64(settings.Addr_chan_cnt)
-	opts.AppsPerChunk = uint64(settings.Apps_per_chunk)
-	opts.UnripeDist = uint64(settings.Unripe_dist)
-	opts.SnapToGrid = uint64(settings.Snap_to_grid)
-	opts.FirstSnap = uint64(settings.First_snap)
-	opts.AllowMissing = settings.Allow_missing
-}
-
 // EXISTING_CODE

@@ -14,7 +14,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
+[{CONFIGPKG}]	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -62,7 +62,7 @@ func [{LOWER}]FinishParseApi(w http.ResponseWriter, r *http.Request) *[{PROPER}]
 func [{LOWER}]FinishParse(args []string) *[{PROPER}]Options {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
-	defFmt := "txt"
+[{CONFIG_OVERRIDE}]	defFmt := "txt"
 	// EXISTING_CODE
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {

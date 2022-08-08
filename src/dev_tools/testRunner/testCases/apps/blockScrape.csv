@@ -4,8 +4,8 @@ on      ,cmd  ,fast  ,scrape ,apps/blockScrape ,help                         ,n 
 on      ,cmd  ,fast  ,scrape ,apps/blockScrape ,help_long                    ,n    ,help
 on      ,both ,fast  ,scrape ,apps/blockScrape ,invalid                      ,n    ,junk
 on      ,both ,fast  ,scrape ,apps/blockScrape ,nBlocks_invalid              ,n    ,block_cnt = -12
-on      ,both ,fast  ,scrape ,apps/blockScrape ,nBProcs_invalid              ,n    ,block_chan_cnt = -12
-on      ,both ,fast  ,scrape ,apps/blockScrape ,nAProcs_invalid              ,n    ,addr_chan_cnt = -12
+on      ,both ,fast  ,scrape ,apps/blockScrape ,nBProcs_invalid              ,n    ,channel_count = -12
+on      ,both ,fast  ,scrape ,apps/blockScrape ,nAProcs_invalid              ,n    ,channel_count = -12
 
 on      ,both ,fast  ,scrape ,apps/blockScrape ,nBlocks                      ,n    ,block_cnt = 12
 on      ,both ,fast  ,scrape ,apps/blockScrape ,listpins                     ,n    ,listpins

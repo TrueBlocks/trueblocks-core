@@ -6,7 +6,7 @@ The `[{NAME}]` application creates TrueBlocks' index of address appearances -- t
 
 You may adjust the speed of the index creation with the `--sleep` and `--block_cnt` options. On some machines, or when running against some EVM node software, you may overburden the hardware. Slowing things down will ensure proper operation. Finally, you may optionally `--pin` each new chunk to IPFS which naturally shards the database among all users.
 
-[{USAGE}]
+[{USAGE}][{CONFIG}]
 
 ### explainer
 

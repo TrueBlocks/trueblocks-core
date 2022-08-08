@@ -29,13 +29,11 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 		return true, err
 	}
 
-	allow_missing := scrape.AllowMissing(opts.Globals.Chain)
-
 	prev := cache.NotARange
 	for _, file := range ripeFiles {
 		fileRange, _ := cache.RangeFromFilename(file.Name())
 		if prev != cache.NotARange && prev != fileRange {
-			if !fileRange.Follows(prev, !allow_missing) {
+			if !fileRange.Follows(prev, !scrape.AllowMissing(opts.Globals.Chain)) {
 				msg := fmt.Sprintf("Current file (%s) does not sequentially follow previous file (%09d.txt).\n", file.Name(), prev.First)
 				logger.Log(logger.Error, msg)
 				err = index.CleanTemporaryFolders(config.GetPathToCache(opts.Globals.Chain), false)
@@ -67,19 +65,19 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 		}
 	}
 
-	settings := scrape.GetSettings(opts.Globals.Chain)
+	settings, _ := scrape.GetSettings(opts.Globals.Chain, nil)
 
 	allApps := file.AsciiFileToLines(firstFile)
 	os.Remove(firstFile)
 	curRange := cache.FileRange{First: first, Last: 0}
-	bn := 0
+	bn := uint64(0)
 	for _, ff := range ripeFiles {
 		path := filepath.Join(ripePath, ff.Name())
 		allApps = append(allApps, file.AsciiFileToLines(path)...)
 		os.Remove(path)
 
 		fR, _ := cache.RangeFromFilename(ff.Name())
-		bn = int(fR.First)
+		bn = fR.First
 		isSnap := (bn >= settings.First_snap && (bn%settings.Snap_to_grid) == 0)
 
 		recordCount1 := uint64(len(allApps))
@@ -132,7 +130,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 	meta, _ := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
 	cntBeforeCall := utils.Max(progressThen.Ripe, utils.Max(progressThen.Staging, progressThen.Finalized))
 	cntAfterCall := utils.Max(meta.Ripe, utils.Max(meta.Staging, meta.Finalized))
-	Report("After All --> ", opts.StartBlock, opts.AppsPerChunk, opts.BlockCnt, uint64(cnt), cntAfterCall-cntBeforeCall+uint64(cnt), false)
+	Report("After All --> ", opts.StartBlock, settings.Apps_per_chunk, opts.BlockCnt, uint64(cnt), cntAfterCall-cntBeforeCall+uint64(cnt), false)
 
 	return true, err
 }

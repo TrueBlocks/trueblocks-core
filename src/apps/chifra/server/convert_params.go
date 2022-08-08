@@ -13,22 +13,20 @@ package servePkg
 func convertToCommandLine(in string) string {
 	// BEG_CONVERT_CODE
 	switch in {
-	case "addrChanCnt":
-		return "addr_chan_cnt"
 	case "allowMissing":
 		return "allow_missing"
 	case "appsPerChunk":
 		return "apps_per_chunk"
 	case "bigRange":
 		return "big_range"
-	case "blockChanCnt":
-		return "block_chan_cnt"
 	case "blockCnt":
 		return "block_cnt"
 	case "byAcct":
 		return "by_acct"
 	case "cacheTraces":
 		return "cache_traces"
+	case "channelCount":
+		return "channel_count"
 	case "firstBlock":
 		return "first_block"
 	case "firstRecord":
