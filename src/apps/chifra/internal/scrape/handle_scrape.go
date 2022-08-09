@@ -26,6 +26,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 	logger.Log(logger.Info, "Blooms:  ", file.NFilesInFolder(filepath.Join(indexPath, "blooms")))
 	logger.Log(logger.Info, "Staging: ", file.NFilesInFolder(filepath.Join(indexPath, "staging")))
 	logger.Log(logger.Info, "Ripe:    ", file.NFilesInFolder(filepath.Join(indexPath, "ripe")))
+	logger.Log(logger.Info, "Ripe:    ", file.NFilesInFolder(filepath.Join(indexPath, "unripe")))
 	fmt.Println()
 
 	if ok, err := opts.HandlePrepare(); !ok || err != nil {
@@ -36,6 +37,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		logger.Log(logger.Info, "Blooms:  ", file.NFilesInFolder(filepath.Join(indexPath, "blooms")))
 		logger.Log(logger.Info, "Staging: ", file.NFilesInFolder(filepath.Join(indexPath, "staging")))
 		logger.Log(logger.Info, "Ripe:    ", file.NFilesInFolder(filepath.Join(indexPath, "ripe")))
+		logger.Log(logger.Info, "Ripe:    ", file.NFilesInFolder(filepath.Join(indexPath, "unripe")))
 		fmt.Println()
 
 		progress, err := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
