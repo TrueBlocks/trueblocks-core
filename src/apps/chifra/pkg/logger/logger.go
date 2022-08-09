@@ -7,7 +7,6 @@ package logger
 import (
 	"fmt"
 	"os"
-	"strings"
 	"time"
 )
 
@@ -76,27 +75,4 @@ func Log(sev severity, a ...interface{}) {
 func Fatal(a ...interface{}) {
 	Log(ErrorFatal, a...)
 	os.Exit(1)
-}
-
-//var logMutex sync.Mutex
-
-func Enter(msg string, a ...interface{}) {
-	marker := strings.Repeat("-", 20)
-	//logMutex.Lock()
-	Log(Progress, marker, "In", msg, a, marker)
-	//logMutex.Unlock()
-}
-
-func Exit(msg string, a ...interface{}) {
-	marker := strings.Repeat("-", 20)
-	//logMutex.Lock()
-	Log(Progress, marker, "Out", msg, a, marker)
-	//logMutex.Unlock()
-}
-
-func ExitError(msg string, a ...interface{}) {
-	marker := strings.Repeat("-", 20)
-	//logMutex.Lock()
-	Log(Error, marker, "Out with Error", msg, a, marker)
-	//logMutex.Unlock()
 }

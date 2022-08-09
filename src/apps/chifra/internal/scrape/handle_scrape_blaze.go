@@ -12,6 +12,7 @@ import (
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
@@ -22,10 +23,9 @@ import (
 func (opts *ScrapeOptions) HandleScrapeBlaze(progress *rpcClient.MetaData, blazeOpts *BlazeOptions) (ok bool, err error) {
 	_, err = blazeOpts.HandleBlaze(progress)
 
+	indexPath := config.GetPathToIndex(opts.Globals.Chain)
 	if err != nil {
-		os.RemoveAll(config.GetPathToIndex(opts.Globals.Chain) + "ripe")
-		os.RemoveAll(config.GetPathToIndex(opts.Globals.Chain) + "unripe")
-		logger.ExitError("HandleScrapeBlaze returned error", err, ". Cleaned up.")
+		index.CleanTemporaryFolders(indexPath, false)
 		return true, err
 	}
 	cnt := 0
@@ -38,9 +38,7 @@ func (opts *ScrapeOptions) HandleScrapeBlaze(progress *rpcClient.MetaData, blaze
 	if cnt > 0 {
 		msg := fmt.Sprintf("%d items were not processed", cnt)
 		logger.Log(logger.Info, msg)
-		os.RemoveAll(config.GetPathToIndex(opts.Globals.Chain) + "ripe")
-		os.RemoveAll(config.GetPathToIndex(opts.Globals.Chain) + "unripe")
-		logger.ExitError("HandleScrapeBlaze returned error", err, ". Cleaned up.")
+		index.CleanTemporaryFolders(indexPath, false)
 		return true, errors.New(msg)
 	}
 
