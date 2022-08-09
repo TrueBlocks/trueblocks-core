@@ -25,8 +25,8 @@ const asciiAppearanceSize = 59
 func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaData, blazeOpts *BlazeOptions) (ok bool, err error) {
 	settings, _ := scrape.GetSettings(opts.Globals.Chain, &opts.Settings)
 
+	// Get a sorted list of files in the ripe folder
 	ripeFolder := filepath.Join(config.GetPathToIndex(opts.Globals.Chain), "ripe")
-
 	ripeFileList, err := os.ReadDir(ripeFolder)
 	if err != nil {
 		return true, err
@@ -36,38 +36,33 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 		return true, nil
 	}
 
-	// If we got as many as we asked for, we can assume there are no gaps...
+	// If we didn't get as many ripe files as we were looking for...
 	if uint64(len(ripeFileList)) != opts.BlockCnt {
-		// Otherwise, if we have either more or less files that we scraped this round
-		// something went wrong -- either this round or the preivous. In either
-		// case, we can continue if the files are sequential.
-		if err := IsListSequential(opts.Globals.Chain, ripeFileList); !ok || err != nil {
-			// The ripe files are no sequential, clean up and try again
+		// Then, if they are not at least sequential, clean up and try again...
+		if err := isListSequential(opts.Globals.Chain, ripeFileList); !ok || err != nil {
 			index.CleanTemporaryFolders(config.GetPathToCache(opts.Globals.Chain), false)
-			return true, err // 'true' means continue processing
+			return true, err
 		}
 	}
-	// f, _ := cache.BnsFromFilename(ripeFileList[0].Name())
-	// _, l := cache.BnsFromFilename(ripeFileList[len(ripeFileList)-1].Name())
-	// ripeRange := cache.FileRange{First: f, Last: l}
-	// fmt.Println()
-	// fmt.Println("ripeRange: ", ripeRange, index.GetStatus(opts.Globals.Chain))
-	// time.Sleep(4 * time.Second)
 
 	stageFolder := filepath.Join(config.GetPathToIndex(opts.Globals.Chain), "staging")
+	stageFn, _ := file.LatestFileInFolder(stageFolder) // it may not exist...
+
+	ripeRange := rangeFromFileList(ripeFileList)
 	curRange := cache.FileRange{First: opts.StartBlock, Last: opts.StartBlock + opts.BlockCnt - 1}
+	stageRange, _ := cache.RangeFromFilename(stageFn)
 
-	// first := uint64(opts.StartBlock)
-	appearances := []string{}
+	logger.Log(logger.Info, "ripeFolder: ", ripeFolder)
+	logger.Log(logger.Info, "stageFolder:", stageFolder)
+	logger.Log(logger.Info, "nRipes:     ", len(ripeFileList))
+	logger.Log(logger.Info, "stageFn:    ", stageFn)
+	logger.Log(logger.Info, "stageRange: ", stageRange)
+	logger.Log(logger.Info, "ripeRange:  ", ripeRange)
+	logger.Log(logger.Info, "curRange:   ", curRange)
 
-	stageFn, _ := file.LatestFileInFolder(stageFolder) // it's okay if it doesn't exist
 	recordCount := uint64(0)
-
-	logger.Log(logger.Info, "nFiles in ripe:", len(ripeFileList))
-	logger.Log(logger.Info, "StageFn:", stageFn)
-	logger.Log(logger.Info, "CurRange:", curRange)
-
 	if file.FileExists(stageFn) {
+		// curRange = stageRange
 		recordCount = uint64(file.FileSize(stageFn) / asciiAppearanceSize)
 		records := file.AsciiFileToLines(stageFn)
 		parts := strings.Split(records[0], "\t")
@@ -78,8 +73,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 		}
 	}
 
-	logger.Log(logger.Info, "CurRange:", curRange)
-	// fmt.Println()
+	appearances := make([]string, 0, settings.Apps_per_chunk)
 
 	// Note, this file may be empty or non-existant
 	backupFn, err := file.MakeBackup(stageFn, filepath.Join(config.GetPathToCache(opts.Globals.Chain)+"tmp"))
@@ -89,6 +83,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 	defer func() {
 		if backupFn != "" && file.FileExists(backupFn) {
 			// If the backup file exists, something failed, so we replace the original file.
+			logger.Log(logger.Info, "Replacing backed up staging file")
 			os.Rename(backupFn, stageFn)
 			os.Remove(backupFn) // seems redundant, but may not be on some operating systems
 		}
@@ -233,7 +228,7 @@ func (opts *ScrapeOptions) ListIndexFolder(indexPath, msg string) {
 	// logger.Log(logger.Info, "======================= Exit", msg, "=======================")
 }
 
-func IsListSequential(chain string, ripeFileList []os.DirEntry) error {
+func isListSequential(chain string, ripeFileList []os.DirEntry) error {
 	prev := cache.NotARange
 	for _, file := range ripeFileList {
 		fileRange, _ := cache.RangeFromFilename(file.Name())
@@ -246,4 +241,13 @@ func IsListSequential(chain string, ripeFileList []os.DirEntry) error {
 		prev = fileRange
 	}
 	return nil
+}
+
+func rangeFromFileList(list []os.DirEntry) cache.FileRange {
+	if len(list) == 0 {
+		return cache.FileRange{}
+	}
+	f, _ := cache.BnsFromFilename(list[0].Name())
+	_, l := cache.BnsFromFilename(list[len(list)-1].Name())
+	return cache.FileRange{First: f, Last: l}
 }

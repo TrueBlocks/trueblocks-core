@@ -38,7 +38,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 				return err
 			}
 			if val > 0 && progress.Staging > val {
-				index.CleanTemporaryFolders(config.GetPathToIndex(opts.Globals.Chain), true)
+				index.CleanTemporaryFolders(config.GetPathToIndex(opts.Globals.Chain), false)
 				logger.Log(logger.Info, "Finished processing for testing")
 				return nil
 			}
