@@ -16,15 +16,12 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 const asciiAppearanceSize = 59
 
 // HandleScrapeConsolidate calls into the block scraper to (a) call Blaze and (b) consolidate if applicable
 func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaData, blazeOpts *BlazeOptions) (ok bool, err error) {
-	settings, _ := scrape.GetSettings(opts.Globals.Chain, &opts.Settings)
-
 	// Get a sorted list of files in the ripe folder
 	ripeFolder := filepath.Join(config.GetPathToIndex(opts.Globals.Chain), "ripe")
 	ripeFileList, err := os.ReadDir(ripeFolder)
@@ -66,7 +63,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 	logger.Log(logger.Info, "ripeRange:  ", ripeRange)
 	logger.Log(logger.Info, "curRange:   ", curRange)
 
-	appearances := make([]string, 0, settings.Apps_per_chunk)
+	appearances := make([]string, 0, opts.Settings.Apps_per_chunk)
 
 	// Note, this file may be empty or non-existant
 	backupFn, err := file.MakeBackup(stageFn, filepath.Join(config.GetPathToCache(opts.Globals.Chain)+"tmp"))
@@ -96,8 +93,8 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 		ripeRange, _ := cache.RangeFromFilename(ripePath)
 		curRange.Last = ripeRange.Last
 
-		isSnap := (curRange.Last >= settings.First_snap && (curRange.Last%settings.Snap_to_grid) == 0)
-		isOvertop := (curCount >= uint64(settings.Apps_per_chunk))
+		isSnap := (curRange.Last >= opts.Settings.First_snap && (curRange.Last%opts.Settings.Snap_to_grid) == 0)
+		isOvertop := (curCount >= uint64(opts.Settings.Apps_per_chunk))
 
 		if isSnap || isOvertop {
 			appMap := make(index.AddressAppearanceMap, len(appearances))
@@ -119,7 +116,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 
 			snapper := -1
 			if isSnap {
-				snapper = int(settings.Snap_to_grid)
+				snapper = int(opts.Settings.Snap_to_grid)
 			}
 
 			logger.Log(logger.Info, colors.BrightYellow, "Writing to", path, colors.Off)
@@ -165,7 +162,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 
 	// TODO: BOGUS - THIS PROBABLY DOESN'T WORK - NOT SURE WHAT IT'S SUPPOSED TO DO
 	nRecsNow := nRecsThen + nAdded
-	Report(opts.StartBlock, settings.Apps_per_chunk, opts.BlockCnt, nRecsThen, nRecsNow, false)
+	Report(opts.StartBlock, opts.Settings.Apps_per_chunk, opts.BlockCnt, nRecsThen, nRecsNow, false)
 
 	logger.Log(logger.Info, "Removing backup file as it's not needed.")
 	os.Remove(backupFn) // commits the change

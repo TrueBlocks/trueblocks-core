@@ -9,7 +9,6 @@ import (
 	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrape"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
@@ -20,7 +19,6 @@ import (
 // TODO: We should repond to non-tracing (i.e. Geth) nodes better
 // TODO: Make sure we're not running acctScrape and/or pause if it's running
 func (opts *ScrapeOptions) HandleScrape() error {
-	settings, _ := scrape.GetSettings(opts.Globals.Chain, &opts.Settings)
 	if ok, err := opts.HandlePrepare(); !ok || err != nil {
 		return err
 	}
@@ -52,20 +50,20 @@ func (opts *ScrapeOptions) HandleScrape() error {
 
 		// 'UnripeDist' behind head unless head is less or equal to than 'UnripeDist', then head
 		ripe := progress.Latest
-		if ripe > settings.Unripe_dist {
-			ripe = progress.Latest - settings.Unripe_dist
+		if ripe > opts.Settings.Unripe_dist {
+			ripe = progress.Latest - opts.Settings.Unripe_dist
 		}
 
 		blazeOpts := BlazeOptions{
 			Chain:         opts.Globals.Chain,
-			NChannels:     settings.Channel_count,
+			NChannels:     opts.Settings.Channel_count,
 			NProcessed:    0,
 			StartBlock:    opts.StartBlock,
 			BlockCount:    opts.BlockCnt,
 			RipeBlock:     ripe,
-			UnripeDist:    settings.Unripe_dist,
+			UnripeDist:    opts.Settings.Unripe_dist,
 			RpcProvider:   config.GetRpcProvider(opts.Globals.Chain),
-			AppearanceMap: make(index.AddressAppearanceMap, settings.Apps_per_chunk),
+			AppearanceMap: make(index.AddressAppearanceMap, opts.Settings.Apps_per_chunk),
 			TsArray:       make([]tslib.Timestamp, 0, opts.BlockCnt),
 			ProcessedMap:  make(map[int]bool, opts.BlockCnt),
 		}
