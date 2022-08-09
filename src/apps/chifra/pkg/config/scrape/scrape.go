@@ -155,19 +155,19 @@ func GetSettings(chain string, cmdLine *ScrapeSettings) (ScrapeSettings, error) 
 }
 
 func (base *ScrapeSettings) overlay(chain string, overlay ScrapeSettings) {
-	if !overlay.isDefault(chain, "Apps_per_chunk") && overlay.Apps_per_chunk != 0 {
+	if !overlay.isDefault(chain, "Apps_per_chunk") && overlay.Apps_per_chunk != 0 && overlay.Apps_per_chunk != utils.NOPOS {
 		base.Apps_per_chunk = overlay.Apps_per_chunk
 	}
-	if !overlay.isDefault(chain, "Snap_to_grid") && overlay.Snap_to_grid != 0 {
+	if !overlay.isDefault(chain, "Snap_to_grid") && overlay.Snap_to_grid != 0 && overlay.Snap_to_grid != utils.NOPOS {
 		base.Snap_to_grid = overlay.Snap_to_grid
 	}
-	if !overlay.isDefault(chain, "First_snap") && overlay.First_snap != 0 {
+	if !overlay.isDefault(chain, "First_snap") && overlay.First_snap != 0 && overlay.First_snap != utils.NOPOS {
 		base.First_snap = overlay.First_snap
 	}
-	if !overlay.isDefault(chain, "Unripe_dist") && overlay.Unripe_dist != 0 {
+	if !overlay.isDefault(chain, "Unripe_dist") && overlay.Unripe_dist != 0 && overlay.Unripe_dist != utils.NOPOS {
 		base.Unripe_dist = overlay.Unripe_dist
 	}
-	if !overlay.isDefault(chain, "Channel_count") && overlay.Channel_count != 0 {
+	if !overlay.isDefault(chain, "Channel_count") && overlay.Channel_count != 0 && overlay.Channel_count != utils.NOPOS {
 		base.Channel_count = overlay.Channel_count
 	}
 	if !overlay.isDefault(chain, "Allow_missing") && overlay.Allow_missing {

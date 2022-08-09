@@ -76,6 +76,8 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 		}
 	}
 
+	settings, _ := scrape.GetSettings(opts.Globals.Chain, &opts.Settings)
+
 	logger.Log(logger.Info, "CurRange:", curRange)
 	// fmt.Println()
 
@@ -103,8 +105,8 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 		ripeRange, _ := cache.RangeFromFilename(ripePath)
 		curRange.Last = ripeRange.Last
 
-		isSnap := (curRange.Last >= opts.Settings.First_snap && (curRange.Last%opts.Settings.Snap_to_grid) == 0)
-		isOvertop := (curCount >= uint64(opts.Settings.Apps_per_chunk))
+		isSnap := (curRange.Last >= settings.First_snap && (curRange.Last%settings.Snap_to_grid) == 0)
+		isOvertop := (curCount >= uint64(settings.Apps_per_chunk))
 
 		if isSnap || isOvertop {
 			appMap := make(index.AddressAppearanceMap, len(appearances))
@@ -126,7 +128,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 
 			snapper := -1
 			if isSnap {
-				snapper = int(opts.Settings.Snap_to_grid)
+				snapper = int(settings.Snap_to_grid)
 			}
 
 			logger.Log(logger.Info, colors.BrightYellow, "Writing to", path, colors.Off)
@@ -172,7 +174,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 	meta, _ := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
 	cntBeforeCall := utils.Max(progressThen.Ripe, utils.Max(progressThen.Staging, progressThen.Finalized))
 	cntAfterCall := utils.Max(meta.Ripe, utils.Max(meta.Staging, meta.Finalized))
-	Report("After All --> ", opts.StartBlock, opts.Settings.Apps_per_chunk, opts.BlockCnt, uint64(recordCount), cntAfterCall-cntBeforeCall+uint64(recordCount), false)
+	Report("After All --> ", opts.StartBlock, settings.Apps_per_chunk, opts.BlockCnt, uint64(recordCount), cntAfterCall-cntBeforeCall+uint64(recordCount), false)
 
 	os.Remove(backupFn) // commits the change
 

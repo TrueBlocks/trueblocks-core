@@ -13,6 +13,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	scrapePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/scrape"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -42,11 +43,11 @@ func init() {
 	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().BlockCnt, "block_cnt", "n", 2000, "maximum number of blocks to process per pass")
 	scrapeCmd.Flags().Float64VarP(&scrapePkg.GetOptions().Sleep, "sleep", "s", 14, "seconds to sleep between scraper passes")
 	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().StartBlock, "start_block", "l", 0, "first block to visit (available only for blaze scraper) (hidden)")
-	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().Settings.Apps_per_chunk, "apps_per_chunk", "", 200000, "the number of appearances to build into a chunk before consolidating it (hidden)")
-	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().Settings.Snap_to_grid, "snap_to_grid", "", 100000, "an override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index (hidden)")
-	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().Settings.First_snap, "first_snap", "", 0, "the first block at which snap_to_grid is enabled (hidden)")
-	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().Settings.Unripe_dist, "unripe_dist", "", 28, "the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe (hidden)")
-	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().Settings.Channel_count, "channel_count", "", 20, "number of concurrent processing channels (hidden)")
+	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().Settings.Apps_per_chunk, "apps_per_chunk", "", utils.NOPOS, "the number of appearances to build into a chunk before consolidating it (hidden)")
+	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().Settings.Snap_to_grid, "snap_to_grid", "", utils.NOPOS, "an override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index (hidden)")
+	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().Settings.First_snap, "first_snap", "", utils.NOPOS, "the first block at which snap_to_grid is enabled (hidden)")
+	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().Settings.Unripe_dist, "unripe_dist", "", utils.NOPOS, "the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe (hidden)")
+	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().Settings.Channel_count, "channel_count", "", utils.NOPOS, "number of concurrent processing channels (hidden)")
 	scrapeCmd.Flags().BoolVarP(&scrapePkg.GetOptions().Settings.Allow_missing, "allow_missing", "", false, "do not report errors for blockchains that contain blocks with zero addresses (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {
 		scrapeCmd.Flags().MarkHidden("start_block")
