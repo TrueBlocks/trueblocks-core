@@ -3,17 +3,20 @@ package scrapePkg
 import (
 	"time"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrape"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 )
 
 func (opts *ScrapeOptions) Pause(progressThen *rpcClient.MetaData) {
+	settings, _ := scrape.GetSettings(opts.Globals.Chain, &opts.Settings)
+
 	// we always pause at least a quarter of a second to allow the node to 'rest'
 	time.Sleep(250 * time.Millisecond)
 
 	distanceFromHead := progressThen.Latest - progressThen.Staging
 	isDefaultSleep := opts.Sleep == 14 || opts.Sleep == 13
-	shouldSleep := !isDefaultSleep || distanceFromHead <= (2*opts.Settings.Unripe_dist)
+	shouldSleep := !isDefaultSleep || distanceFromHead <= (2*settings.Unripe_dist)
 
 	if shouldSleep {
 		sleep := opts.Sleep

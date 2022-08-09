@@ -451,7 +451,9 @@ string_q get_goDefault(const CCommandOption& p) {
     } else if (p.go_type == "string") {
         return p.def_val;
     } else if (p.go_type == "uint64") {
-        if (p.def_val == "NOPOS")
+        if (p.isConfig) {
+            return "utils.NOPOS";
+        } else if (p.def_val == "NOPOS")
             return "0";
         else if (!p.def_val.empty() && !startsWith(p.def_val, "("))
             return p.def_val;

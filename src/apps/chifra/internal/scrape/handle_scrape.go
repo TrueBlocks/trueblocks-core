@@ -11,6 +11,7 @@ import (
 	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrape"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -22,6 +23,8 @@ import (
 // TODO: We should repond to non-tracing (i.e. Geth) nodes better
 // TODO: Make sure we're not running acctScrape and/or pause if it's running
 func (opts *ScrapeOptions) HandleScrape() error {
+	settings, _ := scrape.GetSettings(opts.Globals.Chain, &opts.Settings)
+
 	indexPath := config.GetPathToIndex(opts.Globals.Chain)
 	logger.Log(logger.Info, "Blooms:  ", file.NFilesInFolder(filepath.Join(indexPath, "blooms")))
 	logger.Log(logger.Info, "Staging: ", file.NFilesInFolder(filepath.Join(indexPath, "staging")))
@@ -61,8 +64,6 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		if (opts.StartBlock + opts.BlockCnt) > progress.Latest {
 			opts.BlockCnt = (progress.Latest - opts.StartBlock)
 		}
-
-		settings := opts.Settings
 
 		// 'UnripeDist' behind head unless head is less or equal to than 'UnripeDist', then head
 		ripe := progress.Latest

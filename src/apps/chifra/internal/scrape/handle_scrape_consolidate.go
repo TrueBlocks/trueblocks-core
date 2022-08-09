@@ -23,6 +23,8 @@ const asciiAppearanceSize = 59
 
 // HandleScrapeConsolidate calls into the block scraper to (a) call Blaze and (b) consolidate if applicable
 func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaData, blazeOpts *BlazeOptions) (ok bool, err error) {
+	settings, _ := scrape.GetSettings(opts.Globals.Chain, &opts.Settings)
+
 	ripeFolder := filepath.Join(config.GetPathToIndex(opts.Globals.Chain), "ripe")
 
 	ripeFileList, err := os.ReadDir(ripeFolder)
@@ -75,8 +77,6 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 			curRange = cache.FileRange{First: first, Last: rng.Last}
 		}
 	}
-
-	settings, _ := scrape.GetSettings(opts.Globals.Chain, &opts.Settings)
 
 	logger.Log(logger.Info, "CurRange:", curRange)
 	// fmt.Println()
