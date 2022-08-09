@@ -8,6 +8,7 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/migrate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrape"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
@@ -17,6 +18,9 @@ import (
 // TODO: https://github.com/storj/uplink/blob/v1.7.0/bucket.go#L19
 
 func (opts *ScrapeOptions) validateScrape() error {
+	// First, we need to pick up the settings TODO: Should be auto-generated code somehow
+	opts.Settings, _ = scrape.GetSettings(opts.Globals.Chain, &opts.Settings)
+
 	opts.testLog()
 
 	if opts.BadFlag != nil {

@@ -52,6 +52,12 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 	curRange := cache.FileRange{First: opts.StartBlock, Last: opts.StartBlock + opts.BlockCnt - 1}
 	stageRange, _ := cache.RangeFromFilename(stageFn)
 
+	nRecsThen := uint64(0)
+	if file.FileExists(stageFn) {
+		curRange = stageRange
+		nRecsThen = uint64(file.FileSize(stageFn) / asciiAppearanceSize)
+	}
+
 	logger.Log(logger.Info, "ripeFolder: ", ripeFolder)
 	logger.Log(logger.Info, "stageFolder:", stageFolder)
 	logger.Log(logger.Info, "nRipes:     ", len(ripeFileList))
@@ -60,19 +66,6 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 	logger.Log(logger.Info, "ripeRange:  ", ripeRange)
 	logger.Log(logger.Info, "curRange:   ", curRange)
 
-	recordCount := uint64(0)
-	if file.FileExists(stageFn) {
-		// curRange = stageRange
-		recordCount = uint64(file.FileSize(stageFn) / asciiAppearanceSize)
-		records := file.AsciiFileToLines(stageFn)
-		parts := strings.Split(records[0], "\t")
-		if len(parts) > 1 {
-			first, _ := strconv.ParseUint(parts[1], 10, 64)
-			rng, _ := cache.RangeFromFilename(stageFn)
-			curRange = cache.FileRange{First: first, Last: rng.Last}
-		}
-	}
-
 	appearances := make([]string, 0, settings.Apps_per_chunk)
 
 	// Note, this file may be empty or non-existant
@@ -80,6 +73,8 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 	if err != nil {
 		return true, errors.New("Could not create backup file: " + err.Error())
 	}
+
+	logger.Log(logger.Info, "Created backup file for stage")
 	defer func() {
 		if backupFn != "" && file.FileExists(backupFn) {
 			// If the backup file exists, something failed, so we replace the original file.
@@ -89,6 +84,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 		}
 	}()
 
+	nAdded := uint64(0)
 	appearances = file.AsciiFileToLines(stageFn)
 	os.Remove(stageFn)
 	for _, ripeFile := range ripeFileList {
@@ -131,6 +127,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 			if err != nil {
 				return true, err
 			}
+			nAdded += uint64(len(appearances))
 
 			curRange.First = curRange.Last + 1
 			appearances = []string{}
@@ -139,6 +136,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 
 	logger.Log(logger.Info, colors.BrightYellow, "curRange", curRange, len(appearances), colors.Off)
 	if len(appearances) > 0 {
+		nAdded += uint64(len(appearances))
 		var rng cache.FileRange
 		line0 := appearances[0]
 		parts := strings.Split(line0, "\t")
@@ -165,18 +163,17 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 		logger.Log(logger.Info, colors.Red, "curRange:", curRange, colors.Off)
 	}
 
-	// time.Sleep(2 * time.Second)
-	meta, _ := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
-	cntBeforeCall := utils.Max(progressThen.Ripe, utils.Max(progressThen.Staging, progressThen.Finalized))
-	cntAfterCall := utils.Max(meta.Ripe, utils.Max(meta.Staging, meta.Finalized))
-	Report("After All --> ", opts.StartBlock, settings.Apps_per_chunk, opts.BlockCnt, uint64(recordCount), cntAfterCall-cntBeforeCall+uint64(recordCount), false)
+	// TODO: BOGUS - THIS PROBABLY DOESN'T WORK - NOT SURE WHAT IT'S SUPPOSED TO DO
+	nRecsNow := nRecsThen + nAdded
+	Report(opts.StartBlock, settings.Apps_per_chunk, opts.BlockCnt, nRecsThen, nRecsNow, false)
 
+	logger.Log(logger.Info, "Removing backup file as it's not needed.")
 	os.Remove(backupFn) // commits the change
 
 	return true, err
 }
 
-func Report(msg string, startBlock, nAppsPerChunk, blockCount, nRecsThen, nRecsNow uint64, hide bool) {
+func Report(startBlock, nAppsPerChunk, blockCount, nRecsThen, nRecsNow uint64, hide bool) {
 	if nRecsNow == nRecsThen {
 		logger.Log(logger.Info, "No new blocks...")
 
