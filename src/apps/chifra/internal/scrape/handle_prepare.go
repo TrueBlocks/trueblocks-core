@@ -21,24 +21,19 @@ import (
 // is write the zero block Index Chunk / Bloom filter pair if it doesn't exist.
 func (opts *ScrapeOptions) HandlePrepare() (ok bool, err error) {
 	// We always clean the temporary folders (other than staging) when starting
-	logger.Log(logger.Info, "Cleaning temporary folders.")
 	index.CleanTemporaryFolders(config.GetPathToIndex(opts.Globals.Chain), false)
 
 	pathObj := cache.NewCachePath(opts.Globals.Chain, cache.Index_Bloom)
 	bloomPath := pathObj.GetFullPath("000000000-000000000")
-	logger.Log(logger.Info, "Checking bloom zero path exists:", bloomPath, file.FileExists(bloomPath), ".")
 	if file.FileExists(bloomPath) {
-		logger.Log(logger.Info, "Zero bloom found, no need to build it.")
 		// The file already exists, nothing to do
 		return true, nil
 	}
-	logger.Log(logger.Info, "Not found, have to build it.")
 
 	allocs, err := names.LoadPrefunds(opts.Globals.Chain)
 	if err != nil {
 		return false, err
 	}
-	logger.Log(logger.Info, "Loaded", len(allocs), "allocations.")
 
 	appMap := make(index.AddressAppearanceMap, len(allocs))
 	for i, alloc := range allocs {
@@ -68,11 +63,10 @@ func (opts *ScrapeOptions) HandlePrepare() (ok bool, err error) {
 	if err != nil {
 		return false, err
 	}
-	logger.Log(logger.Info, "Writing one timestamp", len(array))
 	tslib.Append(opts.Globals.Chain, array)
 
 	// In this special case, we need to postScrape here since we've created an index file
-	logger.Log(logger.Info, "Would process pins here if enabled")
+	// TODO: BOGUS - DOES BLOCK ZERO CHUNK GET PINNED?
 	ok, err = opts.HandleScrapePin()
 	return ok, err
 }

@@ -16,6 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 const asciiAppearanceSize = 59
@@ -44,24 +45,23 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 
 	stageFolder := filepath.Join(config.GetPathToIndex(opts.Globals.Chain), "staging")
 	stageFn, _ := file.LatestFileInFolder(stageFolder) // it may not exist...
+	nAppsThen := int(file.FileSize(stageFn) / asciiAppearanceSize)
 
-	ripeRange := rangeFromFileList(ripeFileList)
-	curRange := cache.FileRange{First: opts.StartBlock, Last: opts.StartBlock + opts.BlockCnt - 1}
+	// ripeRange := rangeFromFileList(ripeFileList)
 	stageRange, _ := cache.RangeFromFilename(stageFn)
 
-	nRecsThen := uint64(0)
+	curRange := cache.FileRange{First: opts.StartBlock, Last: opts.StartBlock + opts.BlockCnt - 1}
 	if file.FileExists(stageFn) {
 		curRange = stageRange
-		nRecsThen = uint64(file.FileSize(stageFn) / asciiAppearanceSize)
 	}
 
-	logger.Log(logger.Info, "ripeFolder: ", ripeFolder)
-	logger.Log(logger.Info, "stageFolder:", stageFolder)
-	logger.Log(logger.Info, "nRipes:     ", len(ripeFileList))
-	logger.Log(logger.Info, "stageFn:    ", stageFn)
-	logger.Log(logger.Info, "stageRange: ", stageRange)
-	logger.Log(logger.Info, "ripeRange:  ", ripeRange)
-	logger.Log(logger.Info, "curRange:   ", curRange)
+	// logger.Log(logger.Info, "ripeFolder: ", ripeFolder)
+	// logger.Log(logger.Info, "stageFolder:", stageFolder)
+	// logger.Log(logger.Info, "nRipes:     ", len(ripeFileList))
+	// logger.Log(logger.Info, "stageFn:    ", stageFn)
+	// logger.Log(logger.Info, "stageRange: ", stageRange)
+	// logger.Log(logger.Info, "ripeRange:  ", ripeRange)
+	// logger.Log(logger.Info, "curRange:   ", curRange)
 
 	// Note, this file may be empty or non-existant
 	backupFn, err := file.MakeBackup(stageFn, filepath.Join(config.GetPathToCache(opts.Globals.Chain)+"tmp"))
@@ -69,17 +69,16 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 		return true, errors.New("Could not create backup file: " + err.Error())
 	}
 
-	logger.Log(logger.Info, "Created backup file for stage")
+	// logger.Log(logger.Info, "Created backup file for stage")
 	defer func() {
 		if backupFn != "" && file.FileExists(backupFn) {
 			// If the backup file exists, something failed, so we replace the original file.
-			logger.Log(logger.Info, "Replacing backed up staging file")
+			// logger.Log(logger.Info, "Replacing backed up staging file")
 			os.Rename(backupFn, stageFn)
 			os.Remove(backupFn) // seems redundant, but may not be on some operating systems
 		}
 	}()
 
-	nAdded := uint64(0)
 	appearances := file.AsciiFileToLines(stageFn)
 	os.Remove(stageFn)
 	for _, ripeFile := range ripeFileList {
@@ -117,21 +116,19 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 				snapper = int(opts.Settings.Snap_to_grid)
 			}
 
-			logger.Log(logger.Info, colors.BrightYellow, "Writing to", path, colors.Off)
+			// logger.Log(logger.Info, colors.BrightBlue, "Writing to", path, colors.Off)
 			_, err = index.WriteChunk(opts.Globals.Chain, path, appMap, len(appearances), snapper)
 			if err != nil {
 				return true, err
 			}
-			nAdded += uint64(len(appearances))
 
 			curRange.First = curRange.Last + 1
 			appearances = []string{}
 		}
 	}
 
-	logger.Log(logger.Info, colors.BrightYellow, "curRange", curRange, len(appearances), colors.Off)
+	// logger.Log(logger.Info, colors.BrightYellow, "curRange", curRange, len(appearances), colors.Off)
 	if len(appearances) > 0 {
-		nAdded += uint64(len(appearances))
 		var rng cache.FileRange
 		line0 := appearances[0]
 		parts := strings.Split(line0, "\t")
@@ -154,42 +151,31 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 			os.Remove(fileName) // cleans up by replacing the previous stage
 			return true, err
 		}
-		logger.Log(logger.Info, colors.Red, "fileName:", fileName, colors.Off)
-		logger.Log(logger.Info, colors.Red, "curRange:", curRange, colors.Off)
+		// logger.Log(logger.Info, colors.Red, "fileName:", fileName, colors.Off)
+		// logger.Log(logger.Info, colors.Red, "curRange:", curRange, colors.Off)
 	}
 
 	// TODO: BOGUS - THIS PROBABLY DOESN'T WORK - NOT SURE WHAT IT'S SUPPOSED TO DO
-	nRecsNow := nRecsThen + nAdded
-	Report(opts.StartBlock, opts.Settings.Apps_per_chunk, opts.BlockCnt, nRecsThen, nRecsNow, false)
+	stageFn, _ = file.LatestFileInFolder(stageFolder) // it may not exist...
+	nAppsNow := int(file.FileSize(stageFn) / asciiAppearanceSize)
+	opts.Report(nAppsThen, nAppsNow)
 
-	logger.Log(logger.Info, "Removing backup file as it's not needed.")
+	// logger.Log(logger.Info, "Removing backup file as it's not needed.")
 	os.Remove(backupFn) // commits the change
 
 	return true, err
 }
 
-func Report(startBlock, nAppsPerChunk, blockCount, nRecsThen, nRecsNow uint64, hide bool) {
-	if nRecsNow == nRecsThen {
-		logger.Log(logger.Info, "No new blocks...")
-
-	} else {
-		if hide {
-			return
-		}
-
-		need := uint64(0)
-		if nAppsPerChunk >= nRecsNow {
-			need = nAppsPerChunk - nRecsNow
-		}
-		seen := nRecsNow - nRecsThen
-		pct := float64(nRecsNow) / float64(nAppsPerChunk)
-		pBlk := float64(seen) / float64(blockCount)
-		height := startBlock + blockCount - 1
-		msg := "Block {%d}: have {%d} addrs of {%d} ({%0.1f%%}). Need {%d} more. Found {%d} records ({%0.2f} apps/blk)."
-		msg = strings.Replace(msg, "{", colors.Green, -1)
-		msg = strings.Replace(msg, "}", colors.Off, -1)
-		logger.Log(logger.Info, fmt.Sprintf(msg, height, nRecsNow, nAppsPerChunk, pct*100, need, seen, pBlk))
-	}
+func (opts *ScrapeOptions) Report(nAppsThen, nRecsNow int) {
+	msg := "Block={%d} have {%d} appearances of {%d} ({%0.1f%%}). Need {%d} more. Added {%d} records ({%0.2f} apps/blk)."
+	need := opts.Settings.Apps_per_chunk - utils.Min(opts.Settings.Apps_per_chunk, uint64(nRecsNow))
+	seen := nRecsNow - nAppsThen
+	pct := float64(nRecsNow) / float64(opts.Settings.Apps_per_chunk)
+	pBlk := float64(seen) / float64(opts.BlockCnt)
+	height := opts.StartBlock + opts.BlockCnt - 1
+	msg = strings.Replace(msg, "{", colors.Green, -1)
+	msg = strings.Replace(msg, "}", colors.Off, -1)
+	logger.Log(logger.Info, fmt.Sprintf(msg, height, nRecsNow, opts.Settings.Apps_per_chunk, pct*100, need, seen, pBlk))
 }
 
 type ScraperState struct {

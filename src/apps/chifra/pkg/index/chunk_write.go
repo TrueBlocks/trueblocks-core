@@ -56,7 +56,6 @@ func WriteChunk(chain, fileName string, addAppMap AddressAppearanceMap, nApps, s
 	tmpPath := filepath.Join(config.GetPathToCache(chain), "tmp")
 	// Make a backup copy of the file in case the write fails so we can replace it...
 	if backupFn, err := file.MakeBackup(fileName, tmpPath); err == nil {
-		logger.Log(logger.Info, colors.BrightBlue, "Backup file created at", backupFn, colors.Off)
 		defer func() {
 			if file.FileExists(backupFn) {
 				logger.Log(logger.Info, colors.BrightBlue, "Recovering from failure", backupFn, colors.Off)
@@ -98,9 +97,9 @@ func WriteChunk(chain, fileName string, addAppMap AddressAppearanceMap, nApps, s
 			file.AppendToAsciiFile(config.GetPathToCache(chain)+"tmp/chunks_created.txt", rng.String()+"\n")
 
 			rel := strings.Replace(fileName, config.GetPathToIndex(chain), "$INDEX/", -1)
-			result := fmt.Sprintf("Wrote %d records to %s", len(appearanceTable), rel)
+			result := fmt.Sprintf("%sWrote %d records to %s%s%s", colors.BrightBlue, len(appearanceTable), rel, colors.Off, strings.Repeat(" ", 20))
 			if snapper != -1 {
-				result = fmt.Sprintf("Wrote %d records to %s (snapped to %d blocks)", len(appearanceTable), rel, snapper)
+				result = fmt.Sprintf("%sWrote %d records to %s %s(snapped to %d blocks)%s", colors.BrightBlue, len(appearanceTable), rel, colors.Yellow, snapper, colors.Off)
 			}
 			logger.Log(logger.Info, result)
 
@@ -110,7 +109,6 @@ func WriteChunk(chain, fileName string, addAppMap AddressAppearanceMap, nApps, s
 		}
 	}
 
-	logger.Log(logger.Info, colors.BrightRed, "Backup file creation failed", colors.Off)
 	return false, err
 }
 

@@ -4,9 +4,6 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 func MakeBackup(origFn, path string) (string, error) {
@@ -15,9 +12,7 @@ func MakeBackup(origFn, path string) (string, error) {
 	}
 
 	_, name := filepath.Split(origFn)
-	logger.Log(logger.Info, colors.BrightGreen, "name:", name, colors.Off)
 	pattern := strings.Replace(name, ".", ".*.", -1)
-	logger.Log(logger.Info, colors.BrightGreen, "pattern:", pattern, colors.Off)
 	tmpFile, err := os.CreateTemp(path, pattern)
 	if err != nil {
 		return "", err

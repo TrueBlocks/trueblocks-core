@@ -31,15 +31,15 @@ func (opts *ScrapeOptions) HandleScrapeBlaze(progress *rpcClient.MetaData, blaze
 	cnt := 0
 	for i := int(opts.StartBlock); i < int(opts.StartBlock+opts.BlockCnt); i++ {
 		if !blazeOpts.ProcessedMap[i] {
-			logger.Log(logger.Info, "block", i, "not processed")
 			cnt++
 		}
 	}
 	if cnt > 0 {
-		msg := fmt.Sprintf("%d items were not processed", cnt)
-		logger.Log(logger.Info, msg)
 		index.CleanTemporaryFolders(indexPath, false)
-		return true, errors.New(msg)
+		msg := fmt.Sprintf("%d items were not processed", cnt)
+		err := errors.New(msg)
+		logger.Log(logger.Error, err.Error())
+		return true, err
 	}
 
 	blazeOpts.WriteTimestamps()
@@ -52,7 +52,8 @@ func (opts *BlazeOptions) WriteTimestamps() error {
 		return opts.TsArray[i].Bn < opts.TsArray[j].Bn
 	})
 
-	// Assume that the timestamps file always contains valid timestamps
+	// TODO: BOGUS - NEEDS TO USE THE BACKUP FACILITY
+	// Assume that the existing timestamps file always contains valid timestamps
 	tsPath := config.GetPathToIndex(opts.Chain) + "ts.bin"
 	fp, err := os.OpenFile(tsPath, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0644)
 	if err != nil {
@@ -86,7 +87,6 @@ func (opts *BlazeOptions) WriteTimestamps() error {
 				Bn: bn,
 				Ts: uint32(rpcClient.GetBlockTimestamp(config.GetRpcProvider(opts.Chain), uint64(bn))),
 			}
-			// logger.Log(logger.Info, "missing ts after", ts)
 		} else {
 			ts = opts.TsArray[cnt]
 			if opts.TsArray[cnt].Bn != bn {
@@ -94,10 +94,7 @@ func (opts *BlazeOptions) WriteTimestamps() error {
 					Bn: bn,
 					Ts: uint32(rpcClient.GetBlockTimestamp(config.GetRpcProvider(opts.Chain), uint64(bn))),
 				}
-				// logger.Log(logger.Info, "missing ts in or before", ts)
 				cnt-- // set it back
-				// } else {
-				// 	logger.Log(logger.Info, "okay ts", ts)
 			}
 		}
 		err = binary.Write(fp, binary.LittleEndian, &ts)

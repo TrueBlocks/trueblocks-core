@@ -68,7 +68,14 @@ func Log(sev severity, a ...interface{}) {
 	}
 
 	fmt.Fprintf(os.Stderr, "%s[%s] ", severityToLabel[sev], timeDatePart)
-	fmt.Fprintln(os.Stderr, a...)
+	if sev == Progress {
+		for _, aa := range a {
+			fmt.Fprint(os.Stderr, aa)
+		}
+		fmt.Fprint(os.Stderr, "\r")
+	} else {
+		fmt.Fprintln(os.Stderr, a...)
+	}
 }
 
 // Fatal prints its arguments to stderr and calls os.Exit(1)

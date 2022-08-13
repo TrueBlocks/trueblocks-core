@@ -1,7 +1,5 @@
 chifra scrape  --sleep .5
 TEST[DATE|TIME] Sleep:  0.5
-TEST[DATE|TIME] Apps_per_chunk:  1000
-TEST[DATE|TIME] Snap_to_grid:  50
 TEST[DATE|TIME] Format:  txt
 Error: Cannot test block scraper
 Usage:

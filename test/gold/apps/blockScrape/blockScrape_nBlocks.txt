@@ -1,7 +1,5 @@
 chifra scrape  --block_cnt 12
 TEST[DATE|TIME] BlockCnt:  12
-TEST[DATE|TIME] Apps_per_chunk:  1000
-TEST[DATE|TIME] Snap_to_grid:  50
 TEST[DATE|TIME] Format:  txt
 Error: Cannot test block scraper
 Usage:
