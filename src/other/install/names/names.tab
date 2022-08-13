@@ -245,6 +245,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 31-Gitcoin:Grants	0x0384610bf8e9292ec499145cb126e32a17e7ccd6	Grant 3475 - Nectar: L2 + Healthcare		https://gitcoin.co/grants/3475/nectar-l2-healthcare			false	false	false	false	false	false
 90-Individuals:Kickback	0x038490efa54ea1be7d6ff14883d1ff1e0c01a0a7	radotzki		https://kickback.events/			false	false	false	false	false	false
 90-Individuals:Other	0x0385b3f162a0e001b60ecb84d3cb06199d78f666	Argent: Relayer 2		EtherScan.io			false	false	false	false	false	false
+55-Sactioned:OFAC SDN List	0x03893a7c7463ae47d46bc7f091665f1893656003	Tornado Cash Addr 37		USDOT			false	false	false	true	false	false
 31-Gitcoin:Grants	0x0389836416d1d46724f0913eeee42622950b20c1	Grant 1488 Ercgraph		https://gitcoin.co/grants/1488/ercgraph			false	false	false	false	false	false
 91-Early:Addresses	0x0389a06b028526b05966c287370bebefa0082176	Dividend		EtherScan.io			false	false	false	true	false	false
 31-Giveth:Whitelist	0x0391d2021f89dc339f60fff84546ea23e337750f	BarnBridge Governance Token		Giveth.io			false	false	false	true	false	false
@@ -439,6 +440,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0x075b1bb99792c9e1041ba13afef80c91a1e70fb3	Curve.fi renBTC/wBTC/sBTC	crvRenWSBTC	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x076641af1b8f06b7f8c92587156143c109002cbe	SoPay	SOP	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0766e79a6fd74469733e8330b3b461c0320ff059	EXN	EXN	On chain	18		false	false	false	true	true	false
+55-Sactioned:OFAC SDN List	0x07687e702b410fa43f4cb4af7fa097918ffd2730	Tornado Cash Addr 26		USDOT			false	false	false	true	false	false
 50-Tokens:ERC20	0x076a93a40bf9e0d21d3f75dd1e0584ddbe0f9d1a	Qurito	QURO	On chain	18	The online community where you earn for sharing knowledge ideas.	false	false	false	true	true	false
 50-Tokens:ERC20	0x076c97e1c869072ee22f8c91978c99b4bcb02591	CommerceBlock Token	CBT	On chain	18	Infrastructure company that provides a suite of tools for traditional asset markets to leverage the highly flexible and powerful qualities of blockchain based digital asset protocols	false	false	false	true	true	false
 50-Tokens:ERC20	0x0775c81a273b355e6a5b76e240bf708701f00279	Bulleon	BUL	On chain	18	Revolutionizing the way of Financial Transactions	false	false	false	true	true	false
@@ -482,6 +484,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 31-Gitcoin:Grants	0x0811909993f580014caf7db50937ca5dfba6a4a2	Grant 2790 - LinkFit		https://gitcoin.co/grants/2790/linkfit			false	false	false	false	false	false
 50-Tokens:ERC20	0x08130635368aa28b217a4dfb68e1bf8dc525621c	AfroDex	AfroX	On chain	4		false	false	false	true	true	false
 31-Giveth:Project	0x08184ab84d6debc12ee0f5630ff4011b67228685	Tree of Light Membership		Tokenomics			false	false	false	false	false	false
+55-Sactioned:OFAC SDN List	0x0836222f2b2b24a3f36f98668ed8f0b38d1a872f	Tornado Cash Addr 22		USDOT			false	false	false	true	false	false
 50-Tokens:ERC20	0x083a077d6db05f856be4a8dc3eaf2628721e9830	SHIBACOIN	SHIBACOIN	On chain	18		false	false	false	true	true	false
 31-Giveth:Project	0x083d0ff690af8acde7df721a1d1f62f7f8645a90	Habitat for Humanity Maui		Tokenomics			false	false	false	false	false	false
 90-Individuals:Gitcoin Grants	0x083fc10ce7e97cafbae0fe332a9c4384c5f54e45	k06a		Gitcoin Website			false	false	false	false	false	false
@@ -1048,7 +1051,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0x12c765e05146414fa948b9dcf934277247a59ef1	baseprotocol.org	BASE	On chain	18		false	false	false	true	true	false
 90-Individuals:Gitcoin Grants	0x12d062b19a2df1920eb9fc28bd6e9a7e936de4c2	vince0656		Gitcoin Website			false	false	false	false	false	false
 50-Tokens:ERC20	0x12d21ffbec92bb37668191d73794eb0c4f70d96b	Akita Cookies	AOOKIES🍪	On chain	18		false	false	false	true	true	false
-50-Tokens:ERC20	0x12d66f87a04a9e220743712ce6d9bb1b5616b8fc	Tornado.Cash: 0.1 ETH		EtherScan.io			false	false	false	true	false	false
+55-Sactioned:OFAC SDN List	0x12d66f87a04a9e220743712ce6d9bb1b5616b8fc	Tornado.Cash: 0.1 ETH		USDOT			false	false	false	true	false	false
 50-Tokens:ERC20	0x12dbe9e7bbb34fe0e41d866414dc19ef432d3311	Elon Musk Rocket Balls	BALLS	On chain	6		false	false	false	true	true	false
 30-Contracts	0x12dfc577544d002c57fbb02c389511a37bc4490c	Set Kyber Wrapper		0xTracker			false	false	false	true	false	false
 90-Individuals:Gitcoin Grants	0x12e41855befd2fafe1b3fb15381fdf2c89f726a2	papa6669		Gitcoin Website			false	false	false	false	false	false
@@ -1074,6 +1077,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 31-Giveth:Project	0x1350fb6f2f4d6955970af6e44f7cd31e01b68663	Cats and Dogs Better Life Charity		Tokenomics			false	false	false	false	false	false
 31-Gitcoin:Grants	0x1352400bf96d73d41e033f5a14416357a5e0b6bf	Grant 0120 Nori		https://gitcoin.co/grants/120/nori			false	false	false	false	false	false
 31-Gitcoin:Grants	0x13541d356bcc7156e234ff15091ba9b8f1d9b2dd	Grant 1261 Guer - Empowering Data Custody for Web3 Through Security and Access		https://gitcoin.co/grants/1261/guer-empowering-data-custody-for-web3-through-sec			false	false	false	false	false	false
+55-Sactioned:OFAC SDN List	0x1356c899d8c9467c7f71c195612f8a395abf2f0a	Tornado Cash Addr 19		USDOT			false	false	false	true	false	false
 31-Gitcoin:Grants	0x13586f8425544865372ebb5db71bd52bc8ce06f2	Grant 1598 Eth123.org		https://gitcoin.co/grants/1598/eth123org			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x1359238ce5a47ecd399f6836acfaf47d707ea42a	daxdax89		https://www.humanitydao.org/humans			false	false	false	false	false	false
 50-Tokens:ERC20	0x13648ee70f9ab68ec480d30c8f311a5e850deea6	FUDcoin	FUD	On chain	18		false	false	false	true	true	false
@@ -1258,6 +1262,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0x1694058dd8e7fbbb052ad9ff1cd8d36eeeb84de8	Giveth Expenses Donation Token	GED	On chain	16		false	false	false	true	true	false
 50-Tokens:ERC20	0x1698cd22278ef6e7c0df45a8dea72edbea9e42aa	Levin	LEVIN	On chain	18		false	false	false	true	true	false
 90-Individuals:Gitcoin Grants	0x16990619b3ee302d82a0f6f8b9c6bd204b058be5	followthechain		Gitcoin Website			false	false	false	false	false	false
+55-Sactioned:OFAC SDN List	0x169ad27a470d064dede56a2d3ff727986b15d52b	Tornado Cash Addr 21		USDOT			false	false	false	true	false	false
 31-Giveth:Project	0x16a03f29d029e14fdebc1c559ea04f26116e6472	Rainforest Foundation US		Tokenomics			false	false	false	false	false	false
 31-Giveth:Project	0x16a4d61ddf615204a9627644dcedcce08a704fcc	ECONOVORTEX		Tokenomics			false	false	false	false	false	false
 91-Early:Addresses	0x16a4ff536001405f2b0d7ddafc79f6a10d024640	Plusoneponzi		EtherScan.io			false	false	false	true	false	false
@@ -1306,6 +1311,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 31-Giveth:Whitelist	0x1776e1f26f98b1a5df9cd347953a26dd3cb46671	Numeraire		Giveth.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x177d39ac676ed1c67a2b268ad7f1e58826e5b0af	CoinDash Token	CDT	On chain	18	Get insight about your crypto portfolio. Benchmark it against the market and other traders. Follow the best performing investors and invest exactly like them with the copy trade feature. Discover new opportunities, and new tools.	false	false	false	true	true	false
 80-Malicious:DaoDrain	0x17802f43a0137c506ba92291391a8a8f207f487d	DAO Drain 096		GethSource			false	false	false	true	false	false
+55-Sactioned:OFAC SDN List	0x178169b423a011fff22b9e3f3abea13414ddd0f1	Tornado Cash Addr 34		USDOT			false	false	false	true	false	false
 50-Tokens:ERC20	0x17857222bfe3a80abddf0ecaba6c4d7a7659006f	FlokiElon	FlokiElon	On chain	9		false	false	false	true	true	false
 90-Individuals:Kickback	0x179d283a44dcb68ffa8dd59fbf32687d6f694c33	ptrwtts		https://kickback.events/			false	false	false	false	false	false
 31-Giveth:Project	0x17a0b025990a324dba1b4d74c4cccad8e4b749a2	Kennedy Children&#39;s Center		Tokenomics			false	false	false	false	false	false
@@ -1886,6 +1892,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 31-Gitcoin:Grants	0x229e63b972f476b75987b03b3dc96be5dd0cf80b	Grant 1574 Gas Price Extension		https://gitcoin.co/grants/1574/gas-price-extension			false	false	false	false	false	false
 31-Giveth:Project	0x22a261f96c1d4df680493b2fe9b38d35a81c3bc1	National Black Chamber of Commerce		Tokenomics			false	false	false	false	false	false
 50-Tokens:ERC20	0x22a39c2dd54b71ac884657bb3e37308abe2d02e1	USD	USD	On chain	18		false	false	false	true	true	false
+55-Sactioned:OFAC SDN List	0x22aaa7720ddd5388a3c0a3333430953c68f1849b	Tornado Cash Addr 12		USDOT			false	false	false	true	false	false
 31-Giveth:Project	0x22b09dd2a068c531823869d2bd0b3a1d9f407262	Help kids in Vietnam		Tokenomics			false	false	false	false	false	false
 50-Tokens:ERC20	0x22b48e1f20043d1db5f2a11cbf1d520a4f20b198	Okuru Token	XOT	On chain	18		false	false	false	true	true	false
 31-Gitcoin:Grants	0x22b5de197d8a8ca13e361c268f58baf088ac4dc0	Grant 0443 Cretter - Solving Critical Thinking and Debates on the Internet		https://gitcoin.co/grants/443/cretter-solving-critical-thinking-and-debates-on-		https://cretter.org	false	false	false	false	false	false
@@ -1928,6 +1935,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 90-Individuals:Gitcoin Grants	0x236b76e5d51a622923619095bd464fc536b6fd32	lucawint		Gitcoin Website			false	false	false	false	false	false
 50-Tokens:ERC20	0x236d53148f83706c3d670064809577385f923a75	Siberian Husky	SHUSKY	On chain	9		false	false	false	true	true	false
 31-Giveth:Project	0x236daa98f115caa9991a3894ae387cdc13eaad1b	GRACEaid		Tokenomics			false	false	false	false	false	false
+55-Sactioned:OFAC SDN List	0x23773e65ed146a459791799d01336db287f25334	Tornado Cash Addr 31		USDOT			false	false	false	true	false	false
 90-Individuals:Gitcoin Grants	0x237855f2cd7732e48660b00d6661c9c8ca254207	pankajrathor		Gitcoin Website			false	false	false	false	false	false
 91-Early:Addresses	0x237f29bbfd52c768a02980ea8d4d983a1d234edc	SimpleDice_id97		EtherScan.io			false	false	false	true	false	false
 31-Gitcoin:Grants	0x237f7ac9cd5787e60aff3f318e97420e8d934e71	Grant 0559 Coronavirus Tech Handbook		https://gitcoin.co/grants/559/coronavirus-tech-handbook			false	false	false	false	false	false
@@ -2127,6 +2135,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0x27054b13b1b798b345b591a4d22e6562d47ea75a	AirSwap Token	AST	On chain	4	AirSwap is based on the Swap protocol, a peer-to-peer protocol for trading Ethereum tokens	false	false	false	true	true	false
 31-Gitcoin:Grants	0x2711d75a8a691d5b0bdda0920117e524a9156456	Grant 0520 Us4warriors		https://gitcoin.co/grants/520/us4warriors			false	false	false	false	false	false
 31-Gitcoin:Grants	0x2713acb015bdb0b5b824fd0509f7590b7f0e9806	Grant 2047 - Cooling Earth Down by Improving its Albedo		https://gitcoin.co/grants/2047/cooling-earth-down-by-improving-its-albedo			false	false	false	false	false	false
+55-Sactioned:OFAC SDN List	0x2717c5e28cf931547b621a5dddb772ab6a35b701	Tornado Cash Addr 36		USDOT			false	false	false	true	false	false
 31-Giveth:Project	0x271cd5391016eb621ab3f9c0c70f5cf91dfd3fb0	GoodDollar		Tokenomics			false	false	false	false	false	false
 31-Gitcoin:Grants	0x271e77d35df9936e1111718810c9182808b549c7	Grant 2906 - Babel - Compiler for next generation JavaScript		https://gitcoin.co/grants/2906/babel-compiler-for-next-generation-javascript			false	false	false	true	false	false
 50-Tokens:ERC20	0x27231e4b135b2930442c04d28e4a1aa030ec1926	$YUMMY COIN	YUMMY	On chain	18		false	false	false	true	true	false
@@ -3787,6 +3796,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 31-Giveth:Project	0x472ca54d214883f1a4d38bfd17547d52d0dfd52e	Jewish Community Foundation of San Diego		Tokenomics			false	false	false	false	false	false
 31-Gitcoin:Grants	0x473051be5d6aa04c0ada7b0418fd529cf9a8aad4	Grant 1455 Budbo.io		https://gitcoin.co/grants/1455/budboio			false	false	false	false	false	false
 50-Tokens:ERC20	0x47344e0f522746d4dab519379f7fd3dd69eadc78	Elon Inu	iELON	On chain	9		false	false	false	true	true	false
+55-Sactioned:OFAC SDN List	0x4736dcf1b7a3d580672cce6e7c65cd5cc9cfba9d	Tornado Cash Addr 45 USDC		USDOT			false	false	false	true	false	false
 90-Individuals:DAO Whales	0x4739928c37159f55689981b10524a62397a65d77	Dao Whale 29		WhaleWatch.io			false	false	false	false	false	false
 90-Individuals:Gitcoin Grants	0x4744cda32be7b3e75b9334001da9ed21789d4c0d	stamfordh		Gitcoin Website			false	false	false	false	false	false
 31-Gitcoin:Grants	0x474764be5ad5518b95cea6ee98ef2bab93bf6cd2	Grant 1823 Unishare		https://gitcoin.co/grants/1823/unishare			false	false	false	false	false	false
@@ -3818,7 +3828,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0x47bc01597798dcd7506dcca36ac4302fc93a8cfb	Crowd Machine Compute Token	CMCT	On chain	8	Cyber Movie Chain is a project base on ERC-20 platform to develop a comprehensive block chain technology solution consisting of its Cyber Movie Chain Platform.	false	false	false	true	true	false
 31-Gitcoin:Grants	0x47c10ce3c2bfe7f45974f0475730d8aed4b42513	Grant 4287 - ZK Chat and Guild System in Dark Forest		https://gitcoin.co/grants/4287/zk-chat-and-guild-system-in-dark-forest			false	false	false	false	false	false
 50-Tokens:ERC20	0x47c258a764e94bc5352b1d8695a7f37521b4c1df	Free Elon	FREELON	On chain	9		false	false	false	true	true	false
-50-Tokens:ERC20	0x47ce0c6ed5b0ce3d3a51fdb1c52dc66a7c3c2936	Tornado.Cash: 1 ETH		EtherScan.io			false	false	false	true	false	false
+55-Sactioned:OFAC SDN List	0x47ce0c6ed5b0ce3d3a51fdb1c52dc66a7c3c2936	Tornado.Cash: 1 ETH		USDOT			false	false	false	true	false	false
 50-Tokens:ERC20	0x47d1a59cbdd19aee060c859c0009277e245328ae	Sonder	SNR	On chain	18	Overcome the barriers to integration of blockchain-technologies into e-commerce market.	false	false	false	true	true	false
 50-Tokens:ERC20	0x47d6c79fe61311e1f7a01ed936d938594194a4b1	Captain Doge	CDOGE	On chain	18		false	false	false	true	true	false
 31-Gitcoin:Grants	0x47d7ac22636c5e8b81d93a65df6617db72e74ce4	Grant 3410 - Arweave PermPic		https://gitcoin.co/grants/3410/arweave-permpic			false	false	false	false	false	false
@@ -4410,6 +4420,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 30-Contracts	0x526af336d614ade5cc252a407062b8861af998f5	Maker: Sai Proxy 2		EtherScan.io			false	false	false	true	false	false
 30-Contracts:Humanity DAO	0x5270f251012eef27d30d5c7f7dba431c836e256e	ZiackeChen aya08167856		https://www.humanitydao.org/humans			false	false	false	false	false	false
 31-Gitcoin:Grants	0x527621278422fff45a66f7086baeac770cf12b69	Grant 0293 Planet A		https://gitcoin.co/grants/293/planet-a		https://gitcoin.co/grants/127/planet-a	false	false	false	true	false	false
+55-Sactioned:OFAC SDN List	0x527653ea119f3e6a1f5bd18fbf4714081d7b31ce	Tornado Cash Addr 15		USDOT			false	false	false	true	false	false
 50-Tokens:ERC20	0x528851996ad173313eb71f1d0ce7f4bed6a49a32	mELON.finance	mELON	On chain	9		false	false	false	true	true	false
 90-Individuals:Other	0x52903256dd18d85c2dc4a6c999907c9793ea61e3	INSP Airdrop	INSP	TrueBlocks.io			false	false	false	false	true	false
 90-Individuals:Kickback	0x529104532a9779ea9eae0c1e325b3368e0f8add4	wbobeirne		https://kickback.events/			false	false	false	false	false	false
@@ -4737,6 +4748,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 31-Gitcoin:Grants	0x58ce73b485dcbd36dd7b331718345d86e6f27dbe	Grant 1842 Ohreee		https://gitcoin.co/grants/1842/ohreee			false	false	false	false	false	false
 91-Early:Addresses	0x58dd96aa829353032a21c95733ce484b949b2849	Carbon Vote No		CarbonVote			false	false	false	true	false	false
 31-Giveth:Project	0x58e275e069782a27c3f2e20466e67a3d245419cf	The Community Foundation of Southern New Mexico		Tokenomics			false	false	false	false	false	false
+55-Sactioned:OFAC SDN List	0x58e8dcc13be9780fc42e8723d8ead4cf46943df2	Tornado Cash Addr 39		USDOT			false	false	false	true	false	false
 30-Contracts:Humanity DAO	0x58e92c4128a4c231e3af7daf205682e37689a759	Frances83106525		https://www.humanitydao.org/humans			false	false	false	false	false	false
 31-Gitcoin:Grants	0x58ee26e304b965258c3b7b680315b56c3c4a1204	Grant 1326 Introducing the Babo Socio Economic Ecosystem Project		https://gitcoin.co/grants/1326/introducing-the-babo-socio-economic-ecosystem-pro			false	false	false	false	false	false
 31-Gitcoin:Grants	0x58f123bd4261ea25955b362be57d89f4b6e7110a	Grant 0365 Govrn		https://gitcoin.co/grants/365/govrn		https://www.govrn.io/	false	false	false	false	false	false
@@ -5191,6 +5203,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0x6108663901b97499f73f6e195610ce560be6720a	PITBULL INU	PITINU	On chain	18		false	false	false	true	true	false
 34-ENS	0x6109dd117aa5486605fc85e040ab00163a75c662	ENS: Registrar Migration		EtherScan.io			false	false	false	true	false	false
 30-Contracts	0x610aebd620437b4b4e88801abd0c8ba0d009df5c	ValidatorShareProxy3					false	false	false	true	false	false
+55-Sactioned:OFAC SDN List	0x610b717796ad172b316836ac95a2ffad065ceab4	Tornado Cash Addr 33		USDOT			false	false	false	true	false	false
 30-Contracts	0x611eee5ef33c90a1cb2da72eb3f6cda5c6bf5dd2	CAN Airdrop		TrueBlocks.io			false	false	false	true	false	false
 90-Individuals:DevCon2	0x6123b01abd38bdb7ddd6da9be60f2f9d4bb51270	jbenet		DevCon2 Token Contract			false	false	false	false	false	false
 50-Tokens:ERC20	0x61266424b904d65ceb2945a1413ac322185187d5	YFIDapp	YFID	On chain	18		false	false	false	true	true	false
@@ -6051,6 +6064,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 31-Giveth:Project	0x7215f6e08cf96f024369d35c084290daa21aba9d	Vukani		Tokenomics			false	false	false	false	false	false
 90-Individuals:Kickback	0x72200574ce62be6b9a3c36a0d63aa9f07102b4af	yogotron		https://kickback.events/			false	false	false	false	false	false
 31-Gitcoin:Grants	0x72208fc3e466969dc81bdea471a3de7b2d379ac6	Grant 2040 - Ethprofit - Ethereum Accelerator profit through Knowledge and Education		https://gitcoin.co/grants/2040/ethprofit-ethereum-accelerator-profit-through-kno			false	false	false	false	false	false
+55-Sactioned:OFAC SDN List	0x722122df12d4e14e13ac3b6895a86e84145b6967	Tornado Cash Addr 41 USDC		USDOT			false	false	false	true	false	false
 50-Tokens:ERC20	0x72249c6fa4e66c1a819f345b96a03e95bfde0e7f	DOGEHOGE	DOHO	On chain	18		false	false	false	true	true	false
 31-Gitcoin:Grants	0x722ce03c15670c313f9596544cdb582c19f810e2	Grant 1865 Convert Erc-1155 <-> Erc-20 (need Pay Contract Deployment)		https://gitcoin.co/grants/1865/convert-erc-1155-erc-20-need-pay-contract-deploym			false	false	false	false	false	false
 50-Tokens:ERC20	0x722f2f3eac7e9597c73a593f7cf3de33fbfc3308	CoinUs	CNUS	On chain	18	CoinUs is a integrated business platform with focus on individual's value and experience to provide Human-to-Blockchain Interface.	false	false	false	true	true	false
@@ -7076,6 +7090,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0x857be3415c12d150c562ca019422df82198f6079	Ethereum Pig	EPIG 🐖	On chain	18		false	false	false	true	true	false
 91-Early:Miners	0x858079e02403b10748b71a02195b6608abaf6b8f	Miner_0075_76		OnChain			false	false	false	false	false	false
 90-Individuals:Kickback	0x8584e54df79d9ea3216195ce034977968f01457c	roz		https://kickback.events/			false	false	false	false	false	false
+55-Sactioned:OFAC SDN List	0x8589427373d6d84e98730d7795d8f6f8731fda16	Tornado Cash Addr 40 USDC		USDOT			false	false	false	false	false	false
 91-Early:Addresses	0x85905760cd4f380849208a3745526a5832331989	NameReg_id53_cnt1_5mo		Ether Camp			false	false	false	true	false	false
 31-Giveth:Project	0x8592611175d47fd7f733866eb76060faa79e8899	Save Ukrainian People		Tokenomics			false	false	false	false	false	false
 31-Gitcoin:Grants	0x85958051ca48e28909577c82b49f78336ef95382	Grant 2289 - CT Analysis Produced by CRYPTO TIMES		https://gitcoin.co/grants/2289/ct-analysis-produced-by-crypto-times			false	false	false	false	false	false
@@ -7607,6 +7622,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 31-Giveth:Project	0x904d6dd1602369e40f7214545c881243120bb03d	Rethink Food		Tokenomics			false	false	false	false	false	false
 50-Tokens:ERC20	0x90528aeb3a2b736b780fd1b6c478bb7e1d643170	XPlay Token	XPA	On chain	18	XPA aims to seamlessly bridges the gap between cryptocurrency and real world assets	false	false	false	true	true	false
 50-Tokens:ERC20	0x90550025729f5b525597124520edbfda8b4fd487	Claws Zero Exchange	Claws Zero	On chain	6		false	false	false	true	true	false
+55-Sactioned:OFAC SDN List	0x905b63fff465b9ffbf41dea908ceb12478ec7601	Tornado Cash Addr 25		USDOT			false	false	false	true	false	false
 50-Tokens:ERC20	0x905e337c6c8645263d3521205aa37bf4d034e745	Medical Token Currency	MTC	On chain	18	MTC is an utility token that fuels a healthcare platform providing healthcare information to interested parties on a secure blockchain supported environment.	false	false	false	true	true	false
 31-Gitcoin:Grants	0x905e81b391810dcd61f949484b5430b6297a6ae4	Grant 1384 on Time - Schedule Your Transactions		https://gitcoin.co/grants/1384/on-time-schedule-your-transactions			false	false	false	false	false	false
 34-ENS	0x9062c0a6dbd6108336bcbe4593a3d1ce05512069	ENS: Old Reverse Registrar		EtherScan.io			false	false	false	true	false	false
@@ -7634,6 +7650,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 91-Early:Addresses	0x90f03154b866b6b47c7b2d4e34dbab85c75b8790	Digx_Presale_Whale_12		SlackNation			false	false	false	false	false	false
 90-Individuals:Gitcoin Grants	0x90f9f22dd034da42defcb6866b854ecb45ed6d16	arthur0x		Gitcoin Website			false	false	false	false	false	false
 31-Gitcoin:Grants	0x910119d96fcc68fc898a02b07b3a6316992af800	Grant 0153 Mailchain - Email-like Messaging Built on Blockchain Protocols and Decentralized Storage.		https://gitcoin.co/grants/153/mailchain-email-like-messaging-built-on-blockchai			false	false	false	false	false	false
+55-Sactioned:OFAC SDN List	0x910cbd523d972eb0a6f4cae4618ad62622b39dbf	Tornado Cash Addr 08		USDOT			false	false	false	true	false	false
 50-Tokens:ERC20	0x910dfc18d6ea3d6a7124a6f8b5458f281060fa4c	X8XToken	X8X	On chain	18	X8C is a secure store of value Ethereum token.	false	false	false	true	true	false
 31-Gitcoin:Grants	0x910e7e559e7cb4e6888bfdd7b1261226bb2bf328	Grant 1121 Integrate Bitski Wallet Support on Gnosis Safe with Onboard.js		https://gitcoin.co/grants/1121/integrate-bitski-wallet-support-on-gnosis-safe-wi			false	false	false	false	false	false
 90-Individuals:Gitcoin Grants	0x910f4734b7651983b1dce16597082b3304d76309	arf-66		Gitcoin Website			false	false	false	false	false	false
@@ -7818,6 +7835,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 90-Individuals:Gitcoin Grants	0x949bba9f1c13f2461835366aebcb53c852dd4308	solsista		Gitcoin Website			false	false	false	false	false	false
 90-Individuals:Gitcoin Grants	0x949bbabf2232ba2b67ae78a8a12c251617d6bcf0	miapenningway		Gitcoin Website			false	false	false	false	false	false
 50-Tokens:ERC20	0x949bed886c739f1a3273629b3320db0c5024c719	AMIS	AMIS	On chain	9		false	false	false	true	true	false
+55-Sactioned:OFAC SDN List	0x94a1b5cdb22c43faab4abeb5c74999895464ddaf	Tornado Cash Addr 27		USDOT			false	false	false	true	false	false
 50-Tokens:ERC20	0x94a2aaa374a8f2d52dad24330c8a0ec2934700ae	FutureCarbon1 Smart Relay Token	FCOUSDB	On chain	18		false	false	false	true	true	false
 31-Gitcoin:Grants	0x94c1401b0e351eeecd82e344bd58fd42bd68d5c3	Grant 3574 - BAD 2.0 (Blockchain Art Directory)		https://gitcoin.co/grants/3574/bad-20-blockchain-art-directory			false	false	false	false	false	false
 90-Individuals:DAO Whales	0x94c742fd7a8b7906b3bfe4f8904fc0be5c768033	Dao Whale 30 (Prefund_5088)		WhaleWatch.io			false	false	false	false	false	false
@@ -8123,6 +8141,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 30-Contracts:theGraph	0x9ac758ab77733b4150a901ebd659cbf8cb93ed66	Rewards Manager		https://graphscan.io/			false	false	false	true	false	false
 31-Gitcoin:Grants	0x9ac9c636404c8d46d9eb966d7179983ba5a3941a	Grant 0482 DAOsquare		https://gitcoin.co/grants/482/daosquare			false	false	false	false	false	false
 90-Individuals:Gitcoin Grants	0x9ace976f2f06f2d2815a93f1866011007171fdb2	Scott Moore ceresstation		Gitcoin Website			false	false	false	false	false	false
+55-Sactioned:OFAC SDN List	0x9ad122c22b14202b4490edaf288fdb3c7cb3ff5e	Tornado Cash Addr 24		USDOT			false	false	false	true	false	false
 90-Individuals:Gitcoin Grants	0x9ad1fb1b520684757db823f24f2e113bc04ded3c	kryptobillah		Gitcoin Website			false	false	false	false	false	false
 50-Tokens:ERC20	0x9ae099a26c0b54fbb9329c10b71ed6d072ac6ea3	Bengal Cat	BNGL	On chain	4		false	false	false	true	true	false
 30-Contracts:Kyber Network	0x9ae49c0d7f8f9ef4b864e004fe86ac8294e20950	Kyber Network		0xTracker			false	false	false	true	false	false
@@ -8465,6 +8484,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 31-Giveth:Whitelist	0xa15c7ebe1f07caf6bff097d8a589fb8ac49ae5b3	Pundi X		Giveth.io			false	false	false	true	false	false
 90-Individuals:Gitcoin Grants	0xa15ca74e65bf72730811abf95163e89ad9b9dff6	arsena21		Gitcoin Website			false	false	false	false	false	false
 50-Tokens:ERC20	0xa16001dd47f505b7b7c5639c710a52209e4e8904	Alpha Fund	AVA	On chain	18		false	false	false	true	true	false
+55-Sactioned:OFAC SDN List	0xa160cdab225685da1d56aa342ad8841c3b53f291	Tornado Cash Addr 09		USDOT			false	false	false	true	false	false
 91-Early:Miners	0xa1623430350c5df1b52b0b57483a5bb45d1796da	Miner_0016_400		OnChain			false	false	false	false	false	false
 31-Giveth:Project	0xa167f02d75eda0cc6520935ae9d085d266509f3e	DoinGud		Tokenomics			false	false	false	false	false	false
 90-Individuals:Other	0xa1907d33b417155faaecce2779b52df84928e28a	Minereum Sender Airdrop		EtherScan.io			false	false	false	false	false	false
@@ -8696,6 +8716,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0xa5fd1a791c4dfcaacc963d4f73c6ae5824149ea7	Jibrel Network Token	JNT	On chain	18	The Jibrel Network provides currencies, equities, commodities and other financial assets and instruments as standard ERC-20 tokens on the Ethereum blockchain.	false	false	false	true	true	false
 31-Gitcoin:Grants	0xa603499e8a0ec43590a8870e0e201cda2c5de017	Grant 0778 Blockchain Research: Open-source Research for Everyone		https://gitcoin.co/grants/778/blockchain-research-open-source-research-for-ever		https://blockchainresearch.in	false	false	false	false	false	false
 90-Individuals:Kickback	0xa6068255971b95e5baf17dd68eee045ee22199da	roargh		https://kickback.events/			false	false	false	false	false	false
+55-Sactioned:OFAC SDN List	0xa60c772958a3ed56c1f15dd055ba37ac8e523a0d	Tornado Cash Addr 20		USDOT			false	false	false	true	false	false
 90-Individuals	0xa619a7c8f89a6338756a428b710bbcd7a094d140	MDG Yes Voter 2					false	false	false	false	false	false
 50-Tokens:ERC20	0xa6218644a294e611213dc5629bc4cc48053f739f	Queen Jin Token	QJT	On chain	2		false	false	false	true	true	false
 91-Early:Addresses	0xa623bca1460bb9207aa8b4ad00faea3f30f0c549	CSGOBets		EtherScan.io			false	false	false	true	false	false
@@ -9145,6 +9166,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 31-Giveth:Project	0xaea1c50a04c05cc338414879ca41d7f4e75c53ab	Financial Coordinator For DBC and DLuz		Tokenomics			false	false	false	false	false	false
 31-Giveth:Whitelist	0xaea46a60368a7bd060eec7df8cba43b7ef41ad85	Fetch		Giveth.io			false	false	false	true	false	false
 50-Tokens:ERC20	0xaea5e11e22e447fa9837738a0cd2848857748adf	SocialFinance	SOFI	On chain	18		false	false	false	true	true	false
+55-Sactioned:OFAC SDN List	0xaeaac358560e11f52454d997aaff2c5731b6f8a6	Tornado Cash Addr 18		USDOT			false	false	false	true	false	false
 31-Gitcoin:Grants	0xaeaf140b72aef87a097b67797b711863833534ea	Grant 1779 Selectfund		https://gitcoin.co/grants/1779/selectfund			false	false	false	false	false	false
 50-Tokens:ERC20	0xaeb7c9a5b5717c235e4ae88ab2ae8fa4893ca233	Superior Inu	SUPIN	On chain	18		false	false	false	true	true	false
 30-Contracts:Humanity DAO	0xaeb7ddbfafba1cf33142bc06bf11f1b327a6053e	Chowsp1		https://www.humanitydao.org/humans			false	false	false	false	false	false
@@ -9320,6 +9342,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 31-Gitcoin:Grants	0xb1b6e377aa6ec6928a1d499ae58483b2b99658ec	Grant 0401 Solui - Generate Dapps for Smart Contracts		https://gitcoin.co/grants/401/solui-generate-dapps-for-smart-contracts			false	false	false	false	false	false
 90-Individuals:Gitcoin Grants	0xb1b7586656116d546033e3baff69bfcd6592225e	dorgjelli		Gitcoin Website			false	false	false	false	false	false
 50-Tokens:ERC20	0xb1c7c44d344c92b9a96a00327b1a1fd5208b8cce	POGEFI	POGEFI	On chain	18		false	false	false	true	true	false
+55-Sactioned:OFAC SDN List	0xb1c8094b234dce6e03f10a5b673c1d8c69739a00	Tornado Cash Addr 14		USDOT			false	false	false	true	false	false
 50-Tokens:ERC20	0xb1c98a1982b66758d5964a4d7f6e2c3e4eecc5e4	EthereumMax	eMaxSWAP	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0xb1cd6e4153b2a390cf00a6556b0fc1458c4a5533	BNT Smart Token Relay	ETHBNT	On chain	18		false	false	false	true	true	false
 90-Individuals:Gitcoin Grants	0xb1d0e62102adb70452bdd98fc23ed07a4509d5e6	hanzoh1		Gitcoin Website			false	false	false	false	false	false
@@ -9501,7 +9524,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0xb53a96bcbdd9cf78dff20bab6c2be7baec8f00f8	ETHGAS	eGAS	On chain	8	Airdrop Service	false	false	false	true	true	false
 31-Gitcoin:Grants	0xb53b0255895c4f9e3a185e484e5b674bccfbc076	Grant 0213 Metagame		https://gitcoin.co/grants/213/metagame		https://gitcoin.co/grants/213/metagame	false	false	false	false	false	false
 91-Early:Addresses	0xb5409036f98c121b91f28dce7b855737c3aed5c7	Matching_Finneys_id160_cnt1_4mo		Ether Camp			false	false	false	true	false	false
-30-Contracts	0xb541fc07bc7619fd4062a54d96268525cbc6ffef	Tornado.Cash Mixer 2		EtherScan.io			false	false	false	true	false	false
+55-Sactioned:OFAC SDN List	0xb541fc07bc7619fd4062a54d96268525cbc6ffef	Tornado.Cash Mixer 2		USDOT			false	false	false	true	false	false
 30-Contracts	0xb5572c64f2dd352e68d7c708473838f1ac218d90	Blockport Crowdsale Airdrop		TrueBlocks.io			false	false	false	true	false	false
 90-Individuals	0xb55b33a590058c26bd5aeda4cf89382665f49d26	Giveth Wallet Owner 3		TrueBlocks.io			false	false	false	false	false	false
 50-Tokens:ERC721	0xb55c5cac5014c662fdbf21a2c59cd45403c482fd	Clovers	CLV	On chain	18		false	false	false	true	true	true
@@ -9764,6 +9787,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 31-Giveth:Project	0xba15846086102cfc630ea3b33ef2926bc66b07a1	GRACE INTERNATIONAL, INC.		Tokenomics			false	false	false	false	false	false
 50-Tokens:ERC721	0xba15eb922feb96d017e1b2ac0d6ff04044a611bb	GLICPIXXXVER001 - PROGRAMMABLE CANVAS	GLICPIXXXVER001	On chain	18		false	false	false	true	true	true
 50-Tokens:ERC20	0xba1aea5383189b30b32472b78aa1b8e1905f4471	HapbrCash V1.0	HCH	On chain	18		false	false	false	true	true	false
+55-Sactioned:OFAC SDN List	0xba214c1c1928a32bffe790263e38b4af9bfcd659	Tornado Cash Addr 13		USDOT			false	false	false	true	false	false
 50-Tokens:ERC20	0xba2184520a1cc49a6159c57e61e1844e085615b6	HelloGold Token	HGT	On chain	8	HelloGold is a start-up that creates simple and accessible gold products for everyone, providing access to gold as a form of savings, loan collateral and remittance	false	false	false	true	true	false
 50-Tokens:ERC20	0xba21bb85adf23025642ec7fe28414519a8f43508	Doge Viper	DogeV	On chain	9		false	false	false	true	true	false
 31-Giveth:Project	0xba2a09d35f596846e8f39e6121b6560fde625115	Students For Liberty, Inc.		Tokenomics			false	false	false	false	false	false
@@ -9867,6 +9891,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0xbb824f2dfb75e15199077d106872c9aa47bd93b4	Elastic LiteCoin	eLTC	On chain	18		false	false	false	true	true	false
 90-Individuals:DevCon2	0xbb834721db0674f8b4021cd0202e09e0e2ee5e5f	minhwan		DevCon2 Token Contract			false	false	false	false	false	false
 50-Tokens:ERC20	0xbb92579de560a2d7d300648a3e7c685e80a757d0	Neutron	NTN	On chain	8		false	false	false	true	true	false
+55-Sactioned:OFAC SDN List	0xbb93e510bbcd0b7beb5a853875f9ec60275cf498	Tornado Cash Addr 35		USDOT			false	false	false	true	false	false
 91-Early:Addresses	0xbb9854bfd082c48b4d426ac6a2a152b01326f46f	X3		EtherScan.io			false	false	false	true	false	false
 90-Individuals:Gitcoin Grants	0xbb9a5f5c112f6ed889b1c3f0ace6bf0d34d3cea1	a0114301		Gitcoin Website			false	false	false	false	false	false
 91-Early:Addresses	0xbb9aa47ea51695591a0b1c44c74d17a33ffde5b4	SkillBeatsLuck_id223_cnt19_2mo		Ether Camp			false	false	false	true	false	false
@@ -10607,6 +10632,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0xc9f63d4952e2d17b42a31bb5ef669ca1aefae3d5	CANELO	CANELO	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0xca00bc15f67ebea4b20dfaaa847cace113cc5501	CapdaxToken	XCD	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC721	0xca04d260356d19f0d7255041542c9cbc866f2cb3	Voting_Proxy_0xca04d2		The DAO	1		false	false	false	true	true	true
+55-Sactioned:OFAC SDN List	0xca0840578f57fe71599d29375e16783424023357	Tornado Cash Addr 38		USDOT			false	false	false	true	false	false
 31-Giveth:Project	0xca09f1f9d0560bf9879711e62f191ea2ffedf079	University of Austin		Tokenomics			false	false	false	false	false	false
 50-Tokens:ERC20	0xca0e7269600d353f70b14ad118a49575455c0f2f	AMLT	AMLT	On chain	18		false	false	false	true	true	false
 31-Gitcoin:Grants	0xca1d22a140d12b5e9d38b46f3f350cf469ba4fe7	Grant 0272 Blockshop - Washington Dc's Blockchain Incubator		https://gitcoin.co/grants/272/blockshop-washington-dcs-blockchain-incubator			false	false	false	false	false	false
@@ -11008,6 +11034,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 31-Giveth:Project	0xd20813c5aef25a62e5e5265eb7b5b07ea0f1466e	Making first 100K		Tokenomics			false	false	false	false	false	false
 50-Tokens:ERC20	0xd20bcbd56d9d551cac10a6bc2a83635bfb72f3f4	FUND	FUND	On chain	6		false	false	false	true	true	false
 50-Tokens:ERC721	0xd21a23606d2746f086f6528cd6873bad3307b903	Sewer Rat Social Club	SRSC	On chain	18		false	false	false	true	true	true
+55-Sactioned:OFAC SDN List	0xd21be7248e0197ee08e0c20d4a96debdac3d20af	Tornado Cash Addr 32		USDOT			false	false	false	true	false	false
 31-Giveth:Project	0xd21ecb54d06de29cd111728a8cdd7e590c23f820	Chaos Programming Language		Tokenomics			false	false	false	false	false	false
 50-Tokens:ERC20	0xd234bf2410a0009df9c3c63b610c09738f18ccd7	Dynamic Trading Rights	DTR	On chain	8		false	false	false	true	true	false
 91-Early:Addresses	0xd24400ae8bfebb18ca49be86258a3c749cf46853	Gemini		CarbonVote			false	false	false	false	false	false
@@ -11139,6 +11166,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0xd49ff13661451313ca1553fd6954bd1d9b6e02b9	ElectrifyAsia	ELEC	On chain	18	ELECTRIFY aims to be a retail electricity marketplace in Southeast-Asia addressing the need for transparency and security in the consumption of energy	false	false	false	true	true	false
 90-Individuals:Gitcoin Grants	0xd4a3ef753c8059af4fddf340f5c41fa0f996b441	vitaminy		Gitcoin Website			false	false	false	false	false	false
 50-Tokens:ERC20	0xd4ae0807740df6fbaa7a258907132a2ac8d52fbc	KEOSToken	KEOS	On chain	18		false	false	false	true	true	false
+55-Sactioned:OFAC SDN List	0xd4b88df4d29f5cedd6857912842cff3b20c8cfa3	Tornado Cash Addr 07		USDOT			false	false	false	true	false	false
 50-Tokens:ERC20	0xd4c435f5b09f855c3317c8524cb1f586e42795fa	Cindicator Token	CND	On chain	18	Hybrid Intelligence for effective asset management.	false	false	false	true	true	false
 50-Tokens:ERC20	0xd4ca98c88928dcd5eb8b565f820209cf40b48211	Shiba Elon Inu	SHIBLON	On chain	18		false	false	false	true	true	false
 90-Individuals:Gitcoin Grants	0xd4cad2e8d9d6734fb247ab373695ff928087d0f3	taenacious		Gitcoin Website			false	false	false	false	false	false
@@ -11228,6 +11256,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 31-Giveth:Project	0xd6848dc8a7d48ae6483bfbb3ddf8daaaf32993d0	Air Force Association		Tokenomics			false	false	false	false	false	false
 30-Contracts	0xd6878c9974359cbb67e8583e7a6cafb0fa20a286	KernelProxy CS		TrueBlocks.io			false	false	false	true	false	false
 90-Individuals:DevCon2	0xd68ba7734753e2ee54103116323aba2d94c78dc5	Alexey Akhunov		DevCon2 Token Contract			false	false	false	false	false	false
+55-Sactioned:OFAC SDN List	0xd691f27f38b395864ea86cfc7253969b409c362d	Tornado Cash Addr 17		USDOT			false	false	false	true	false	false
 31-Gitcoin:Grants	0xd69bc49879da4a74adbfcf46388127fad28f1fe4	Grant 1892 Coin98 Insights & Analytics		https://gitcoin.co/grants/1892/coin98-insights-analytics			false	false	false	false	false	false
 50-Tokens:ERC20	0xd69cfe9eb47a82d6cde897c82873b6ba3ee8cdc6	PayPal Official Toke Launch	PayPal	On chain	18		false	false	false	true	true	false
 30-Contracts:Humanity DAO	0xd69d35150e5dbc0738bc7987233c55d72446188d	@Pchonpimai		https://www.humanitydao.org/humans			false	false	false	false	false	false
@@ -11352,6 +11381,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 30-Contracts	0xd908be352a7e838f545581afdb95e37017cb5f99	DSProxy #102944		On chain			false	false	false	true	false	false
 31-Gitcoin:Grants	0xd90981ee801ea9ccfdc4aeffbd14a81989463c95	Grant 2322 - Zero Utility Token : Creatively Pushing NFT Technology		https://gitcoin.co/grants/2322/zero-utility-token-creatively-pushing-nft-technol			false	false	false	true	false	false
 50-Tokens:ERC20	0xd90d77b0c7cdace43f5a4bca0c7d1d323eb7c06a	Border Collie Dog	BORDER	On chain	18		false	false	false	true	true	false
+55-Sactioned:OFAC SDN List	0xd90e2f925da726b50c4ed8d0fb90ad053324f31b	Tornado Cash Addr 43 USDC		USDOT			false	false	false	true	false	false
 31-Gitcoin:Grants	0xd90f471958a7ee68ffbe585eefcb990c41bf600f	Grant 3670 - JanusXR		https://gitcoin.co/grants/3670/janusxr			false	false	false	false	false	false
 50-Tokens:ERC20	0xd9113e8286ec2d7697399a1843bcd63272838284	SHIBArmy	SHIBARMY	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0xd9194d9ffc638b4b406d899fe6fff211e9ab029d	GIL	GP	On chain	18		false	false	false	true	true	false
@@ -11371,6 +11401,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0xd96b9fd7586d9ea24c950d24399be4fb65372fdd	Bitcoin Silver	BTCS	On chain	18		false	false	false	true	true	false
 31-Giveth:Project	0xd96dd54f1b888e1aa84334a00e88c2b3d43c7ee1	Cadets Arts &amp; Entertainment, Inc.		Tokenomics			false	false	false	false	false	false
 31-Giveth:Project	0xd96e692f20b13304ba236b47376f833006e043e7	Turlock Christian School		Tokenomics			false	false	false	false	false	false
+55-Sactioned:OFAC SDN List	0xd96f2b1c14db8458374d9aca76e26c3d18364307	Tornado Cash Addr 44 USDC		USDOT			false	false	false	true	false	false
 31-Giveth:Project	0xd970e12cc5e9b37705366cb9044636ba8bbe73e4	Wise Crowds Liberating Structures		Tokenomics			false	false	false	false	false	false
 31-Gitcoin:Grants	0xd971bd451619aabf184df49e2af25acdaa9a04d5	Grant 1324 Blockchain Registry		https://gitcoin.co/grants/1324/blockchain-registry			false	false	false	false	false	false
 50-Tokens:ERC20	0xd97579cea3fe2473682a4c42648134bb982433b9	Lightcoin	Light	On chain	8		false	false	false	true	true	false
@@ -11577,7 +11608,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 30-Contracts:Humanity DAO	0xdd3a8d23636ea43ccf065f25024ac4bad381b041	steven_phelps		https://www.humanitydao.org/humans			false	false	false	false	false	false
 80-Malicious	0xdd3b6ae71ff420375fefaa2448046a37beeed800	HammerBot00		https://blog.blocknative.com/blog/mempool-forensics			false	false	false	false	false	false
 90-Individuals:DevCon2	0xdd431f8a0f2b956a1a6e7633a8665b945066881b	Roman		DevCon2 Token Contract			false	false	false	false	false	false
-31-Gitcoin:Grants	0xdd4c48c0b24039969fc16d1cdf626eab821d3384	Grant 0198 Tornado.cash		https://gitcoin.co/grants/198/tornadocash			false	false	false	true	false	false
+55-Sactioned:OFAC SDN List	0xdd4c48c0b24039969fc16d1cdf626eab821d3384	Grant 0198 Tornado.cash		USDOT			false	false	false	true	false	false
 31-Giveth:Project	0xdd4e5c73004bf5bbd865337d104cebbcd1e72587	Learn Fresh		Tokenomics			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0xdd53204e587f8165f9bcd20347195082bb18f9d4	xanderzhao5		https://www.humanitydao.org/humans			false	false	false	false	false	false
 90-Individuals:Gitcoin Grants	0xdd5848e1fd62a6e8e27e7130d2582496f6ffe5f4	shadowmistx		Gitcoin Website			false	false	false	false	false	false
@@ -12858,6 +12889,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 90-Individuals:Gitcoin Grants	0xf5fe364d18f4a5a53badce9a046ba74cfc97f6fb	coinmandeer		Gitcoin Website			false	false	false	false	false	false
 37-SelfDestructed	0xf5fff180082d6017036b771ba883025c654bc935	Chainlink BTC-USD Aggregator		EtherScan.io			false	false	false	true	false	false
 31-Gitcoin:Grants	0xf60865656e44123afb08e4e562cfb10eba432bec	Grant 0388 Parkour x Ethereum = Coloradical		https://gitcoin.co/grants/388/parkour-x-ethereum-coloradical		https://parkouredu.org/blog/	false	false	false	false	false	false
+55-Sactioned:OFAC SDN List	0xf60dd140cff0706bae9cd734ac3ae76ad9ebc32a	Tornado Cash Addr 11		USDOT			false	false	false	true	false	false
 50-Tokens:ERC20	0xf61718057901f84c4eec4339ef8f0d86d2b45600	iearn SUSD	ySUSD	On chain	18		false	false	false	true	true	false
 90-Individuals:Kickback	0xf61a411d6bc2f84b30a0ceeb6e6854c842aa3da0	weilei		https://kickback.events/			false	false	false	false	false	false
 50-Tokens:ERC20	0xf6276830c265a779a2225b9d2fcbab790cbeb92b	XCELTOKEN	XCEL	On chain	18	XcelToken is digital general purpose utility token based on the ERC20 Ethereum protocol . It helps hotels, restaurants and marketing partners earn while participating, while travelers enjoy the benefits of a leaner eco-system.	false	false	false	true	true	false
@@ -12889,6 +12921,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0xf67451dc8421f0e0afeb52faa8101034ed081ed9	Gambit	GAM	On chain	8		false	false	false	true	true	false
 50-Tokens:ERC20	0xf67491f61a6db5551dcc6372609dc73293adfca3	Ethereum Yield X	ETHYX	On chain	18		false	false	false	true	true	false
 31-Giveth:Project	0xf67504175d84d2cf8904d26d992b40d29931f1c6	s		Tokenomics			false	false	false	false	false	false
+55-Sactioned:OFAC SDN List	0xf67721a2d8f736e75a49fdd7fad2e31d8676542a	Tornado Cash Addr 23		USDOT			false	false	false	true	false	false
 31-Gitcoin:Grants	0xf685b27654e63b64ec631028ae20f7a98298f5d6	Grant 0509 Community Platform		https://gitcoin.co/grants/509/community-platform		https://community.preciousplastic.com	false	false	false	false	false	false
 50-Tokens:ERC20	0xf68ed2cd5973fa4db8a873d6e5a0409f3c197ec4	New Reputation GIV	NRGIV	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0xf6912d7ab160aa1645206f6725a0f57840839799	Cryptoween a pre-DEVCON4 get-together		https://kickback.events/event/[{ADDRESS}]	18		false	false	false	true	true	false
@@ -13276,6 +13309,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0xfd79c2aa42ab4bfbd7c03c1e6866491172917b32	CryptoBotsBattle	CBTB	On chain	18		false	false	false	true	true	false
 30-Contract:Optimism Kovan	0xfd7b9268e790837d393fd371ddeb42fe5ec45b54	OVM_StateTransitionerFactory		Optimism Website			false	false	false	false	false	false
 31-Gitcoin:Grants	0xfd7caa452f24357ad9c43bcf04aba59ef413f738	Grant 2132 - BlockEsports		https://gitcoin.co/grants/2132/blockesports			false	false	false	false	false	false
+55-Sactioned:OFAC SDN List	0xfd8610d20aa15b7b2e3be39b396a1bc3516c7144	Tornado Cash Addr 10		USDOT			false	false	false	true	false	false
 50-Tokens:ERC20	0xfd8971d5e8e1740ce2d0a84095fca4de729d0c16	Zilla Token	ZLA	On chain	18	Aims to create an ICO purchasing platform.	false	false	false	true	true	false
 90-Individuals:Gitcoin Grants	0xfd89d3831c6973fb5ba0b82022142b54ad9e8d46	beaudelair		Gitcoin Website			false	false	false	false	false	false
 50-Tokens:ERC20	0xfd9477130930902d19c26893ddd5765848da479c	Kaenu Inu	KAENU	On chain	18		false	false	false	true	true	false
