@@ -21,7 +21,7 @@ import (
 const asciiAppearanceSize = 59
 
 // HandleScrapeConsolidate calls into the block scraper to (a) call Blaze and (b) consolidate if applicable
-func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaData, blazeOpts *BlazeOptions) (ok bool, err error) {
+func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaData, blazeOpts *BlazeOptions) (bool, error) {
 	// Get a sorted list of files in the ripe folder
 	ripeFolder := filepath.Join(config.GetPathToIndex(opts.Globals.Chain), "ripe")
 	ripeFileList, err := os.ReadDir(ripeFolder)
@@ -36,7 +36,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 	// If we didn't get as many ripe files as we were looking for...
 	if uint64(len(ripeFileList)) != opts.BlockCnt {
 		// Then, if they are not at least sequential, clean up and try again...
-		if err := isListSequential(opts.Globals.Chain, ripeFileList); !ok || err != nil {
+		if err := isListSequential(opts.Globals.Chain, ripeFileList); err != nil {
 			index.CleanTemporaryFolders(config.GetPathToCache(opts.Globals.Chain), false)
 			return true, err
 		}
@@ -63,8 +63,6 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 	logger.Log(logger.Info, "ripeRange:  ", ripeRange)
 	logger.Log(logger.Info, "curRange:   ", curRange)
 
-	appearances := make([]string, 0, opts.Settings.Apps_per_chunk)
-
 	// Note, this file may be empty or non-existant
 	backupFn, err := file.MakeBackup(stageFn, filepath.Join(config.GetPathToCache(opts.Globals.Chain)+"tmp"))
 	if err != nil {
@@ -82,7 +80,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 	}()
 
 	nAdded := uint64(0)
-	appearances = file.AsciiFileToLines(stageFn)
+	appearances := file.AsciiFileToLines(stageFn)
 	os.Remove(stageFn)
 	for _, ripeFile := range ripeFileList {
 		ripePath := filepath.Join(ripeFolder, ripeFile.Name())
@@ -200,26 +198,6 @@ type ScraperState struct {
 	NRecsThen     uint64
 	NAppsPerChunk uint64
 	BlockCount    uint64
-}
-
-func (opts *ScrapeOptions) ListIndexFolder(indexPath, msg string) {
-	// logger.Log(logger.Info, "======================= Enter", msg, "=======================")
-	// filepath.Walk(indexPath, func(fullPath string, info os.FileInfo, err error) error {
-	// 	if err != nil {
-	// 		return err
-	// 	}
-	// 	rel := strings.Replace(fullPath, indexPath, "./", -1)
-	// 	if strings.Contains(fullPath, "finalized") && strings.HasSuffix(fullPath, ".bin") {
-	// 		header, _ := index.ReadChunkHeader(opts.Globals.Chain, fullPath)
-	// 		logger.Log(logger.Info, rel, strings.Replace(header.String(), "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1", "0x81ae...1da1", -1))
-	// 	} else if strings.HasSuffix(fullPath, ".bin") || strings.HasSuffix(fullPath, ".bloom") {
-	// 		logger.Log(logger.Info, rel, info.Size())
-	// 	} else if strings.HasSuffix(fullPath, ".txt") {
-	// 		logger.Log(logger.Info, rel, info.Size()/asciiAppearanceSize)
-	// 	}
-	// 	return nil
-	// })
-	// logger.Log(logger.Info, "======================= Exit", msg, "=======================")
 }
 
 func isListSequential(chain string, ripeFileList []os.DirEntry) error {
