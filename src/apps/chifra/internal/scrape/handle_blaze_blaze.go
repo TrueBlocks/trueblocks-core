@@ -10,7 +10,6 @@ import (
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
@@ -46,11 +45,16 @@ type BlazeOptions struct {
 }
 
 func (opts *BlazeOptions) String() string {
-	copy := *opts
-	copy.AppearanceMap = index.AddressAppearanceMap{}
-	copy.TsArray = []tslib.Timestamp{}
-	copy.ProcessedMap = make(map[int]bool)
-	b, _ := json.MarshalIndent(copy, "", "  ")
+	copy := BlazeOptions{
+		Chain:      opts.Chain,
+		NChannels:  opts.NChannels,
+		NProcessed: opts.NProcessed,
+		StartBlock: opts.StartBlock,
+		BlockCount: opts.BlockCount,
+		RipeBlock:  opts.RipeBlock,
+		UnripeDist: opts.UnripeDist,
+	}
+	b, _ := json.MarshalIndent(&copy, "", "  ")
 	return string(b)
 }
 
@@ -104,7 +108,7 @@ func (opts *BlazeOptions) HandleBlaze1(meta *rpcClient.MetaData, blocks []int) (
 	return true, nil
 }
 
-var beenHere = false
+// var beenHere = false
 
 // BlazeProcessBlocks Processes the block channel and for each block query the node for both traces and logs. Send results down appearanceChannel.
 func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChannel chan int, appearanceChannel chan ScrapedData, tsChannel chan tslib.Timestamp) (err error) {
@@ -428,16 +432,14 @@ func (opts *BlazeOptions) WriteAppearances(meta *rpcClient.MetaData, bn int, add
 	}
 
 	// TODO: THIS IS A PERFORMANCE ISSUE PRINTING EVERY BLOCK
-	if !Debugging {
-		step := uint64(17)
-		if opts.NProcessed%step == 0 {
-			dist := uint64(0)
-			if opts.RipeBlock > uint64(bn) {
-				dist = (opts.RipeBlock - uint64(bn))
-			}
-			msg := fmt.Sprintf("Scraping %-04d of %-04d at block %d of %d (%d blocks from head)", opts.NProcessed, opts.BlockCount, bn, opts.RipeBlock, dist)
-			logger.Log(logger.Progress, msg)
+	step := uint64(17)
+	if opts.NProcessed%step == 0 {
+		dist := uint64(0)
+		if opts.RipeBlock > uint64(bn) {
+			dist = (opts.RipeBlock - uint64(bn))
 		}
+		msg := fmt.Sprintf("Scraping %-04d of %-04d at block %d of %d (%d blocks from head)", opts.NProcessed, opts.BlockCount, bn, opts.RipeBlock, dist)
+		logger.Log(logger.Progress, msg)
 	}
 
 	writeMutex.Lock()
@@ -483,5 +485,3 @@ func isImplicitAddress(addr string) bool {
 	// extract the potential address
 	return isAddress("0x" + string(addr[24:]))
 }
-
-var Debugging = file.FileExists("./testing")

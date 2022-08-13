@@ -129,21 +129,16 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 
 	// logger.Log(logger.Info, colors.BrightYellow, "curRange", curRange, len(appearances), colors.Off)
 	if len(appearances) > 0 {
-		var rng cache.FileRange
-		line0 := appearances[0]
-		parts := strings.Split(line0, "\t")
-		if len(parts) > 1 {
-			rng.First, _ = strconv.ParseUint(parts[1], 10, 32)
-		} else {
-			return true, errors.New("Cannot find first block number at line 0 in consolidate: " + line0)
-		}
 		lineLast := appearances[len(appearances)-1]
-		parts = strings.Split(lineLast, "\t")
+		parts := strings.Split(lineLast, "\t")
+		Last := uint64(0)
 		if len(parts) > 1 {
-			rng.Last, _ = strconv.ParseUint(parts[1], 10, 32)
+			Last, _ = strconv.ParseUint(parts[1], 10, 32)
 		} else {
 			return true, errors.New("Cannot find last block number at lineLast in consolidate: " + lineLast)
 		}
+		m, _ := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
+		rng := cache.FileRange{First: m.Finalized + 1, Last: Last}
 		f := fmt.Sprintf("%s.txt", rng)
 		fileName := filepath.Join(config.GetPathToIndex(opts.Globals.Chain), "staging", f)
 		err = file.LinesToAsciiFile(fileName, appearances)
@@ -199,13 +194,4 @@ func isListSequential(chain string, ripeFileList []os.DirEntry) error {
 		prev = fileRange
 	}
 	return nil
-}
-
-func rangeFromFileList(list []os.DirEntry) cache.FileRange {
-	if len(list) == 0 {
-		return cache.FileRange{}
-	}
-	f, _ := cache.BnsFromFilename(list[0].Name())
-	_, l := cache.BnsFromFilename(list[len(list)-1].Name())
-	return cache.FileRange{First: f, Last: l}
 }
