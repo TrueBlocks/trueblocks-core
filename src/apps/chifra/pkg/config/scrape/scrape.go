@@ -46,6 +46,20 @@ var defaultSettings = ScrapeSettings{
 	// EXISTING_CODE
 }
 
+var Unset = ScrapeSettings{
+	Apps_per_chunk: utils.NOPOS,
+	Snap_to_grid:   utils.NOPOS,
+	First_snap:     utils.NOPOS,
+	Unripe_dist:    utils.NOPOS,
+	Channel_count:  utils.NOPOS,
+	Allow_missing:  false,
+	// EXISTING_CODE
+	Pinata_api_key:        "",
+	Pinata_secret_api_key: "",
+	Pinata_jwt:            "",
+	// EXISTING_CODE
+}
+
 func (s *ScrapeSettings) isDefault(chain, fldName string) bool {
 	def := GetDefault(chain)
 	switch fldName {

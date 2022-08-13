@@ -113,7 +113,6 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 func scrapeFinishParse(args []string) *ScrapeOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
-	opts.Settings, _ = scrape.GetSettings(opts.Globals.Chain, &opts.Settings)
 	defFmt := "txt"
 	// EXISTING_CODE
 	if len(args) == 1 && (args[0] == "run" || args[0] == "indexer") {
@@ -122,6 +121,7 @@ func scrapeFinishParse(args []string) *ScrapeOptions {
 		opts.BadFlag = validate.Usage("Invalid argument {0}", args[0])
 	}
 	// EXISTING_CODE
+	opts.Settings, _ = scrape.GetSettings(opts.Globals.Chain, &scrape.Unset)
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}

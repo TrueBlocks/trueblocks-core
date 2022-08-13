@@ -113,6 +113,9 @@ names?tags
       "tags": "55-Defi"
     },
     {
+      "tags": "55-Sactioned:OFAC SDN List"
+    },
+    {
       "tags": "70-Vendors"
     },
     {
