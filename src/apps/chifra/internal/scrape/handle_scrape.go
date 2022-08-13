@@ -5,7 +5,9 @@ package scrapePkg
 // be found in the LICENSE file.
 
 import (
+	"fmt"
 	"os"
+	"path"
 	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -14,6 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 // TODO: We should repond to non-tracing (i.e. Geth) nodes better
@@ -66,6 +69,19 @@ func (opts *ScrapeOptions) HandleScrape() error {
 			AppearanceMap: make(index.AddressAppearanceMap, opts.Settings.Apps_per_chunk),
 			TsArray:       make([]tslib.Timestamp, 0, opts.BlockCnt),
 			ProcessedMap:  make(map[int]bool, opts.BlockCnt),
+		}
+
+		// Remove whatever's in the unripe folder since the chain may have forked
+		indexPath := config.GetPathToIndex(opts.Globals.Chain)
+		err = os.RemoveAll(path.Join(indexPath, "unripe"))
+		if err != nil {
+			return err
+		}
+
+		m := utils.Max(progress.Ripe, utils.Max(progress.Staging, progress.Finalized)) + 1
+		if m > progress.Latest {
+			fmt.Println(validate.Usage("The index ({0}) is ahead of the chain ({1}).", fmt.Sprintf("%d", m), fmt.Sprintf("%d", progress.Latest)))
+			goto PAUSE
 		}
 
 		if ok, err := opts.HandleScrapeBlaze(progress, &blazeOpts); !ok || err != nil {

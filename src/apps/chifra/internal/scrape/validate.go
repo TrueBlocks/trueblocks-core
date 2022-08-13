@@ -42,9 +42,7 @@ func (opts *ScrapeOptions) validateScrape() error {
 	}
 	m := utils.Max(meta.Ripe, utils.Max(meta.Staging, meta.Finalized)) + 1
 	if m > meta.Latest {
-		sb := fmt.Sprintf("%d", m)
-		c := fmt.Sprintf("%d", meta.Latest)
-		return validate.Usage("The index ({0}) is ahead of the chain ({1}).", sb, c)
+		fmt.Println(validate.Usage("The index ({0}) is ahead of the chain ({1}).", fmt.Sprintf("%d", m), fmt.Sprintf("%d", meta.Latest)))
 	}
 
 	// Note this does not return if a migration is needed
