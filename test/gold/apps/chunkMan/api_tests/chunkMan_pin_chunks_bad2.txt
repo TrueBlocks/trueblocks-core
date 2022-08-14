@@ -1,6 +1,6 @@
 chunks?mode=addresses&pin
 {
   "errors": [
-    "Invalid key (pin) in chunks route."
+    "The --pin and --publish options are available only in manifest mode."
   ]
 }

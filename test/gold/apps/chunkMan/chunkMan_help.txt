@@ -17,6 +17,7 @@ Flags:
   -b, --belongs      checks if the given address appears in the given chunk
   -e, --repair       valid for manifest option only, repair the given chunk (requires block number) (hidden)
   -n, --clean        retrieve all pins on Pinata, compare to manifest, remove any extraneous remote pins
+  -i, --pin          make sure all chunks are pinned (locally if IPFS daemon is running, remotely with --remote flag)
   -m, --remote       for some options, force processing from remote data
   -r, --reset uint   available only in index mode, remove all chunks inclusive of or after this block (hidden)
   -u, --status       show the status of unripe, ripe, staging, blooms, and finalized folders (hidden)

@@ -31,6 +31,7 @@ type ChunksOptions struct {
 	Belongs  bool                     `json:"belongs,omitempty"`  // Checks if the given address appears in the given chunk
 	Repair   bool                     `json:"repair,omitempty"`   // Valid for manifest option only, repair the given chunk (requires block number)
 	Clean    bool                     `json:"clean,omitempty"`    // Retrieve all pins on Pinata, compare to manifest, remove any extraneous remote pins
+	Pin      bool                     `json:"pin,omitempty"`      // Make sure all chunks are pinned (locally if IPFS daemon is running, remotely with --remote flag)
 	Remote   bool                     `json:"remote,omitempty"`   // For some options, force processing from remote data
 	Reset    uint64                   `json:"reset,omitempty"`    // Available only in index mode, remove all chunks inclusive of or after this block
 	Status   bool                     `json:"status,omitempty"`   // Show the status of unripe, ripe, staging, blooms, and finalized folders
@@ -51,6 +52,7 @@ func (opts *ChunksOptions) testLog() {
 	logger.TestLog(opts.Belongs, "Belongs: ", opts.Belongs)
 	logger.TestLog(opts.Repair, "Repair: ", opts.Repair)
 	logger.TestLog(opts.Clean, "Clean: ", opts.Clean)
+	logger.TestLog(opts.Pin, "Pin: ", opts.Pin)
 	logger.TestLog(opts.Remote, "Remote: ", opts.Remote)
 	logger.TestLog(opts.Reset != utils.NOPOS, "Reset: ", opts.Reset)
 	logger.TestLog(opts.Status, "Status: ", opts.Status)
@@ -92,6 +94,8 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 			opts.Repair = true
 		case "clean":
 			opts.Clean = true
+		case "pin":
+			opts.Pin = true
 		case "remote":
 			opts.Remote = true
 		case "reset":

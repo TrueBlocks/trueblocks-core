@@ -57,6 +57,7 @@ func init() {
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Belongs, "belongs", "b", false, "checks if the given address appears in the given chunk")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Repair, "repair", "e", false, "valid for manifest option only, repair the given chunk (requires block number) (hidden)")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Clean, "clean", "n", false, "retrieve all pins on Pinata, compare to manifest, remove any extraneous remote pins")
+	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Pin, "pin", "i", false, "make sure all chunks are pinned (locally if IPFS daemon is running, remotely with --remote flag)")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Remote, "remote", "m", false, "for some options, force processing from remote data")
 	chunksCmd.Flags().Uint64VarP(&chunksPkg.GetOptions().Reset, "reset", "r", 0, "available only in index mode, remove all chunks inclusive of or after this block (hidden)")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Status, "status", "u", false, "show the status of unripe, ripe, staging, blooms, and finalized folders (hidden)")

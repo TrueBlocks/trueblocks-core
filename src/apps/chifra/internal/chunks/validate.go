@@ -38,7 +38,7 @@ func (opts *ChunksOptions) validateChunks() error {
 	}
 
 	if opts.Mode != "manifest" {
-		if opts.Publish {
+		if opts.Pin || opts.Publish {
 			return validate.Usage("The {0} and {1} options are available only in {2} mode.", "--pin", "--publish", "manifest")
 		}
 		if opts.Clean {
@@ -93,10 +93,6 @@ func (opts *ChunksOptions) validateChunks() error {
 		if opts.Mode != "index" && opts.Mode != "manifest" {
 			return validate.Usage("The {0} option is only available in {1} mode", "--repair", "index or manifest")
 		}
-
-		// if len(opts.BlockIds) != 1 {
-		// 	return validate.Usage("You must supply exactly one block number with the --repair option")
-		// }
 
 		if opts.Globals.TestMode {
 			return validate.Usage("The --repair option is not available in test mode")

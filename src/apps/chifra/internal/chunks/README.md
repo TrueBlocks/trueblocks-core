@@ -24,6 +24,7 @@ Flags:
   -c, --check        depends on mode, checks for internal consistency of the data type
   -b, --belongs      checks if the given address appears in the given chunk
   -n, --clean        retrieve all pins on Pinata, compare to manifest, remove any extraneous remote pins
+  -i, --pin          make sure all chunks are pinned (locally if IPFS daemon is running, remotely with --remote flag)
   -m, --remote       for some options, force processing from remote data
   -p, --publish      update the manifest and publish it to the Unchained Index smart contract
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
