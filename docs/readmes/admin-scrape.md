@@ -15,6 +15,7 @@ Usage:
 
 Flags:
   -n, --block_cnt uint   maximum number of blocks to process per pass (default 2000)
+  -i, --pin              pin new chunks (requires locally-running IPFS daemon)
   -s, --sleep float      seconds to sleep between scraper passes (default 14)
   -x, --fmt string       export format, one of [none|json*|txt|csv|api]
   -v, --verbose          enable verbose (increase detail with --log_level)

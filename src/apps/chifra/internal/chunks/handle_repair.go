@@ -15,20 +15,22 @@ import (
 )
 
 func (opts *ChunksOptions) repairIndex(ctx *WalkContext, path string, first bool) (bool, error) {
+	path = index.ToIndexPath(path)
 	changed, err := index.WriteChunkHeaderHash(opts.Globals.Chain, path, common.BytesToHash(crypto.Keccak256([]byte(version.ManifestVersion))))
 	if err != nil {
 		return false, err
 	}
 
 	if !changed {
-		logger.Log(logger.Info, "Chunk okay", index.ToIndexPath(path))
+		logger.Log(logger.Info, "Chunk okay", path)
 		return true, nil
 	}
 
-	logger.Log(logger.Info, "Repaired chunk", index.ToIndexPath(path))
+	logger.Log(logger.Info, "Repaired chunk", path)
 	return true, nil
 }
 
+// TODO: BOGUS - PINNING TO PINATA AND WRITING MANIFEST FILE SHOULD BE ATOMIC AND PROTECTED FROM CANCEL
 func (opts *ChunksOptions) repairManifest(ctx *WalkContext, path string, first bool) (bool, error) {
 	// man, err := manifest.ReadManifest(opts.Globals.Chain, manifest.FromCache)
 	// if err != nil {
@@ -39,7 +41,6 @@ func (opts *ChunksOptions) repairManifest(ctx *WalkContext, path string, first b
 	// for _, chunk := range man.Chunks {
 	// 	rng, _ := cache.RangeFromFilename(chunk.Range + ".")
 	// 	if rng.BlockIntersects(blockNums[0]) {
-	// 		// TODO: BOGUS - PINNING TO PINATA AND WRITING MANIFEST FILE
 	// 		report := types.ReportRepair{
 	// 			Status:    "Repaired Bloom",
 	// 			Range:     config.GetPathToIndex(opts.Globals.Chain) + "blooms/" + chunk.Range + ".bloom",

@@ -38,7 +38,7 @@ func (opts *ChunksOptions) validateChunks() error {
 	}
 
 	if opts.Mode != "manifest" {
-		if opts.Pin || opts.Publish {
+		if opts.Publish {
 			return validate.Usage("The {0} and {1} options are available only in {2} mode.", "--pin", "--publish", "manifest")
 		}
 		if opts.Clean {
@@ -47,16 +47,9 @@ func (opts *ChunksOptions) validateChunks() error {
 		if opts.Check {
 			return validate.Usage("The {0} option is available only in {1} mode.", "--check", "manifest")
 		}
+
 	} else {
 		key, secret := scrape.PinataKeys(opts.Globals.Chain)
-		if opts.Pin {
-			if len(key) == 0 {
-				return validate.Usage("The {0} option requires {1}", "--pin", "a pinata_api_key")
-			}
-			if len(secret) == 0 {
-				return validate.Usage("The {0} option requires {1}", "--pin", "a pinata_secret_api_key")
-			}
-		}
 		if opts.Publish {
 			if len(key) == 0 {
 				return validate.Usage("The {0} option requires {1}", "--pin", "a pinata_api_key")
@@ -101,9 +94,9 @@ func (opts *ChunksOptions) validateChunks() error {
 			return validate.Usage("The {0} option is only available in {1} mode", "--repair", "index or manifest")
 		}
 
-		if len(opts.BlockIds) != 1 {
-			return validate.Usage("You must supply exactly one block number with the --repair option")
-		}
+		// if len(opts.BlockIds) != 1 {
+		// 	return validate.Usage("You must supply exactly one block number with the --repair option")
+		// }
 
 		if opts.Globals.TestMode {
 			return validate.Usage("The --repair option is not available in test mode")
@@ -138,8 +131,3 @@ func (opts *ChunksOptions) validateChunks() error {
 	}
 	return opts.Globals.Validate()
 }
-
-// TODO: BOGUS - PINNING TO PINATA AND WRITING MANIFEST FILE
-// if opts.Pin && !pinning.LocalDaemonRunning() {
-// 	return validate.Usage("The {0} option requires {1}", "--pin", "a locally running IPFS daemon")
-// }

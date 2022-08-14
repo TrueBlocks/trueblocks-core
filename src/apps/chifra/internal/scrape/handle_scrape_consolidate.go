@@ -150,7 +150,6 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 		// logger.Log(logger.Info, colors.Red, "curRange:", curRange, colors.Off)
 	}
 
-	// TODO: BOGUS - THIS PROBABLY DOESN'T WORK - NOT SURE WHAT IT'S SUPPOSED TO DO
 	stageFn, _ = file.LatestFileInFolder(stageFolder) // it may not exist...
 	nAppsNow := int(file.FileSize(stageFn) / asciiAppearanceSize)
 	opts.Report(nAppsThen, nAppsNow)

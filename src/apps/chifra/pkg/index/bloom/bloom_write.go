@@ -10,8 +10,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
 
-// TODO: Protect against Control+C (search of all of these file open calls)
-// TODO: Protect against concurrent entry
+// TODO: BOGUS - PROTECT AGAINST CONTROL+C (SEARCH OF ALL OF THESE FILE OPEN CALLS)
 func (bl *ChunkBloom) WriteBloom(chain, fileName string) ( /* changed */ bool, error) {
 	var err error
 

@@ -152,6 +152,7 @@ func FromBn(chain string, bn uint64) (*Timestamp, error) {
 
 // var writeMutex sync.Mutex
 
+// TODO: BOGUS - PROTECT AGAINST FAILURE WHEN WRITING
 func Reset(chain string, maxBn uint64) error {
 	cnt, err := NTimestamps(chain)
 	if err != nil {
@@ -170,7 +171,6 @@ func Reset(chain string, maxBn uint64) error {
 
 	truncated := perChainTimestamps[chain].memory[0:maxBn]
 
-	// TODO: BOGUS - PROTECT AGAINST FAILURE WHEN WRITING
 	// writeMutex.Lock()
 	// trapCh := sigintTrap.Enable(context.WithCancel(context.Background()))
 
@@ -197,7 +197,6 @@ func Reset(chain string, maxBn uint64) error {
 	// Don't defer this because we want it to be closed before we copy it
 	fp.Close()
 
-	// TODO: BOGUS - PROTECT AGAINST FAILURE WHEN WRITING
 	tsPath := config.GetPathToIndex(chain) + "ts.bin"
 	os.Remove(tsPath)
 	_, err = file.Copy(tsPath, tempPath)

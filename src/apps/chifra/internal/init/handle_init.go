@@ -1,4 +1,4 @@
-// TODO: BOGUS - IF USER DOES SCAPE FROM SCRATCH, THEN INIT, THE TIMESTAMP FILE IS INCOMPLETE
+// TODO: BOGUS - IF USER DOES SCRAPE FROM SCRATCH, THEN INIT, THE TIMESTAMP FILE IS INCOMPLETE
 
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can

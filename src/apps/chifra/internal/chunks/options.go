@@ -34,7 +34,6 @@ type ChunksOptions struct {
 	Remote   bool                     `json:"remote,omitempty"`   // For some options, force processing from remote data
 	Reset    uint64                   `json:"reset,omitempty"`    // Available only in index mode, remove all chunks inclusive of or after this block
 	Status   bool                     `json:"status,omitempty"`   // Show the status of unripe, ripe, staging, blooms, and finalized folders
-	Pin      bool                     `json:"pin,omitempty"`      // Make sure all chunks are pinned (locally if IPFS daemon is running, remotely with --remote flag)
 	Publish  bool                     `json:"publish,omitempty"`  // Update the manifest and publish it to the Unchained Index smart contract
 	Globals  globals.GlobalOptions    `json:"globals,omitempty"`  // The global options
 	BadFlag  error                    `json:"badFlag,omitempty"`  // An error flag if needed
@@ -55,7 +54,6 @@ func (opts *ChunksOptions) testLog() {
 	logger.TestLog(opts.Remote, "Remote: ", opts.Remote)
 	logger.TestLog(opts.Reset != utils.NOPOS, "Reset: ", opts.Reset)
 	logger.TestLog(opts.Status, "Status: ", opts.Status)
-	logger.TestLog(opts.Pin, "Pin: ", opts.Pin)
 	logger.TestLog(opts.Publish, "Publish: ", opts.Publish)
 	opts.Globals.TestLog()
 }
@@ -100,8 +98,6 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 			opts.Reset = globals.ToUint64(value[0])
 		case "status":
 			opts.Status = true
-		case "pin":
-			opts.Pin = true
 		case "publish":
 			opts.Publish = true
 		default:

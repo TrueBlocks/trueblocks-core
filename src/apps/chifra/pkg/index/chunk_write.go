@@ -22,7 +22,7 @@ import (
 
 type AddressAppearanceMap map[string][]AppearanceRecord
 
-// TODO: BOGUS - PINNING TO PINATA AND WRITING MANIFEST FILE
+// TODO: BOGUS - PINNING TO PINATA AND WRITING MANIFEST FILE SHOULD BE ATOMIC AND PROTECTED FROM CANCEL
 func WriteChunk(chain, fileName string, addAppMap AddressAppearanceMap, nApps, snapper int) (bool, error) {
 	addressTable := make([]AddressRecord, 0, len(addAppMap))
 	appearanceTable := make([]AppearanceRecord, 0, nApps)
@@ -92,7 +92,7 @@ func WriteChunk(chain, fileName string, addAppMap AddressAppearanceMap, nApps, s
 				return false, err
 			}
 
-			// TODO: BOGUS - PINNING TO PINATA AND WRITING MANIFEST FILE
+			// TODO: BOGUS - PINNING TO PINATA AND WRITING MANIFEST FILE SHOULD BE ATOMIC AND PROTECTED FROM CANCEL
 			rng, _ := cache.RangeFromFilename(fileName)
 			file.AppendToAsciiFile(config.GetPathToCache(chain)+"tmp/chunks_created.txt", rng.String()+"\n")
 

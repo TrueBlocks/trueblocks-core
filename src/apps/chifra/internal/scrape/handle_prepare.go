@@ -51,22 +51,20 @@ func (opts *ScrapeOptions) HandlePrepare() (ok bool, err error) {
 		// TODO: BOGUS - CHAIN SPECIFIC
 		ts -= 13
 	}
-	array := []tslib.Timestamp{}
-	array = append(array, tslib.Timestamp{
-		Bn: uint32(0),
-		Ts: ts,
-	})
 
-	// TODO: BOGUS - Writing the chunk and pinning should be atomic. Writing timestamps can be separate
 	logger.Log(logger.Info, "Writing block zero allocations for", len(allocs), "allocs, nAddresses:", len(appMap))
 	_, err = index.WriteChunk(opts.Globals.Chain, index.ToIndexPath(bloomPath), appMap, len(allocs), -1)
 	if err != nil {
 		return false, err
 	}
+
+	array := []tslib.Timestamp{}
+	array = append(array, tslib.Timestamp{
+		Bn: uint32(0),
+		Ts: ts,
+	})
 	tslib.Append(opts.Globals.Chain, array)
 
-	// In this special case, we need to postScrape here since we've created an index file
-	// TODO: BOGUS - DOES BLOCK ZERO CHUNK GET PINNED?
-	ok, err = opts.HandleScrapePin()
-	return ok, err
+	// Note, we used to call HandleScrapePin here, but we don't need to. It will get picked up when the pin file is processed
+	return true, nil
 }

@@ -40,6 +40,7 @@ func init() {
 	scrapeCmd.Flags().SortFlags = false
 
 	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().BlockCnt, "block_cnt", "n", 2000, "maximum number of blocks to process per pass")
+	scrapeCmd.Flags().BoolVarP(&scrapePkg.GetOptions().Pin, "pin", "i", false, "pin new chunks (requires locally-running IPFS daemon)")
 	scrapeCmd.Flags().Float64VarP(&scrapePkg.GetOptions().Sleep, "sleep", "s", 14, "seconds to sleep between scraper passes")
 	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().StartBlock, "start_block", "l", 0, "first block to visit (available only for blaze scraper) (hidden)")
 	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().Settings.Apps_per_chunk, "apps_per_chunk", "", 200000, "the number of appearances to build into a chunk before consolidating it (hidden)")

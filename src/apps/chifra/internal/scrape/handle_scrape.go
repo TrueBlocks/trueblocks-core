@@ -99,7 +99,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		}
 
 		// Clean up after this run of the blockScraper
-		if ok, err := opts.HandleScrapePin(); !ok || err != nil {
+		if ok, err := opts.HandleScrapePin(progress, &blazeOpts); !ok || err != nil {
 			if !ok {
 				break
 			}

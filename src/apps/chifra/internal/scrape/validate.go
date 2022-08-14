@@ -9,6 +9,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/migrate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrape"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
@@ -43,6 +44,19 @@ func (opts *ScrapeOptions) validateScrape() error {
 	m := utils.Max(meta.Ripe, utils.Max(meta.Staging, meta.Finalized)) + 1
 	if m > meta.Latest {
 		fmt.Println(validate.Usage("The index ({0}) is ahead of the chain ({1}).", fmt.Sprintf("%d", m), fmt.Sprintf("%d", meta.Latest)))
+	}
+
+	if opts.Pin {
+		key, secret := scrape.PinataKeys(opts.Globals.Chain)
+		if len(key) == 0 {
+			return validate.Usage("The {0} option requires {1}", "--pin", "a pinata_api_key")
+		}
+		if len(secret) == 0 {
+			return validate.Usage("The {0} option requires {1}", "--pin", "a pinata_secret_api_key")
+		}
+		if !pinning.LocalDaemonRunning() {
+			return validate.Usage("The {0} option requires {1}", "--pin", "a locally running IPFS daemon")
+		}
 	}
 
 	// Note this does not return if a migration is needed

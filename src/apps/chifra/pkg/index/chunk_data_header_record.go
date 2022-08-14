@@ -8,6 +8,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"unsafe"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -104,11 +105,13 @@ func WriteChunkHeaderHash(chain, fileName string, headerHash common.Hash) ( /* c
 				return false, nil
 			}
 
-			header.Hash = headerHash
-			err = binary.Write(fp, binary.LittleEndian, header)
+			// We want to write the slice
+			fp.Seek(int64(unsafe.Sizeof(header.Magic)), io.SeekStart)
+			err = binary.Write(fp, binary.LittleEndian, headerHash)
 			if err != nil {
 				return false, err
 			}
+			fp.Sync() // probably redundant
 
 			// Success. Remove the backup so it doesn't replace the orignal
 			os.Remove(backupFn)

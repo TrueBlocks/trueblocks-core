@@ -13,25 +13,16 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
 // HandleScrapePin pins any newly chunks that are not yet pinned.
-func (opts *ScrapeOptions) HandleScrapePin() (ok bool, err error) {
+func (opts *ScrapeOptions) HandleScrapePin(progressThen *rpcClient.MetaData, blazeOpts *BlazeOptions) (ok bool, err error) {
 	return true, nil
 
 	/*
-		progressNow, err := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
-		if err != nil {
-			return false, err
-		}
-		defer func() {
-			if progressNow != nil {
-				*progressThen = *progressNow
-			}
-		}()
-
 		if !opts.Pin {
 			// If we're not pinning, do nothing
 			return true, nil
@@ -95,7 +86,7 @@ func (opts *ScrapeOptions) HandleScrapePin() (ok bool, err error) {
 			record.IndexHash = types.IpfsHash(indexHash)
 
 			logger.Log(logger.Info, "Pinned:", record.Range, bloomHash, indexHash)
-			err = opts.Z_7_updateManifest(record)
+			err = opts.updateManifest(record)
 			if err != nil {
 				return true, err
 			}
@@ -119,7 +110,7 @@ func unique(chunks []manifest.ChunkRecord) []manifest.ChunkRecord {
 	return result
 }
 
-func (opts *ScrapeOptions) Z_7_updateManifest(chunk manifest.ChunkRecord) error {
+func (opts *ScrapeOptions) updateManifest(chunk manifest.ChunkRecord) error {
 	man, err := manifest.ReadManifest(opts.Globals.Chain, manifest.FromCache)
 	if err != nil {
 		if strings.Contains(err.Error(), "Could not find") {
