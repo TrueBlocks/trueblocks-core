@@ -24,12 +24,12 @@ type WhenOptions struct {
 	Blocks     []string                 `json:"blocks,omitempty"`     // One or more dates, block numbers, hashes, or special named blocks (see notes)
 	BlockIds   []identifiers.Identifier `json:"blockIds,omitempty"`   // Block identifiers
 	List       bool                     `json:"list,omitempty"`       // Export a list of the 'special' blocks
-	Timestamps bool                     `json:"timestamps,omitempty"` // Ignore other options and generate timestamps only
-	Check      bool                     `json:"check,omitempty"`      // Available only with --timestamps, checks the validity of the timestamp data
-	Reset      uint64                   `json:"reset,omitempty"`      // Available only with --timestamps option, resets a single timestamp
-	Truncate   uint64                   `json:"truncate,omitempty"`   // Available only with --timestamps option, truncates the timestamp file to this block
-	Count      bool                     `json:"count,omitempty"`      // Available only with --timestamps, returns the number of timestamps in the cache
-	Deep       bool                     `json:"deep,omitempty"`       // Available only with --timestamps --check option, queries every timestamp on chain (slow)
+	Timestamps bool                     `json:"timestamps,omitempty"` // Display or process timestamps
+	Count      bool                     `json:"count,omitempty"`      // With --timestamps only, returns the number of timestamps in the cache
+	Truncate   uint64                   `json:"truncate,omitempty"`   // With --timestamps only, truncates the timestamp file at this block
+	Reset      uint64                   `json:"reset,omitempty"`      // With --timestamps only, resets a single timestamp from on chain
+	Check      bool                     `json:"check,omitempty"`      // With --timestamps only, checks the validity of the timestamp data
+	Deep       bool                     `json:"deep,omitempty"`       // With --timestamps --check only, verifies timestamps from on chain (slow)
 	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
 	BadFlag    error                    `json:"badFlag,omitempty"`    // An error flag if needed
 }
@@ -41,10 +41,10 @@ func (opts *WhenOptions) testLog() {
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
 	logger.TestLog(opts.List, "List: ", opts.List)
 	logger.TestLog(opts.Timestamps, "Timestamps: ", opts.Timestamps)
-	logger.TestLog(opts.Check, "Check: ", opts.Check)
-	logger.TestLog(opts.Reset != utils.NOPOS, "Reset: ", opts.Reset)
-	logger.TestLog(opts.Truncate != utils.NOPOS, "Truncate: ", opts.Truncate)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
+	logger.TestLog(opts.Truncate != utils.NOPOS, "Truncate: ", opts.Truncate)
+	logger.TestLog(opts.Reset != utils.NOPOS, "Reset: ", opts.Reset)
+	logger.TestLog(opts.Check, "Check: ", opts.Check)
 	logger.TestLog(opts.Deep, "Deep: ", opts.Deep)
 	opts.Globals.TestLog()
 }
@@ -58,8 +58,8 @@ func (opts *WhenOptions) String() string {
 // whenFinishParseApi finishes the parsing for server invocations. Returns a new WhenOptions.
 func whenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
 	opts := &WhenOptions{}
-	opts.Reset = utils.NOPOS
 	opts.Truncate = utils.NOPOS
+	opts.Reset = utils.NOPOS
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "blocks":
@@ -71,14 +71,14 @@ func whenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
 			opts.List = true
 		case "timestamps":
 			opts.Timestamps = true
-		case "check":
-			opts.Check = true
-		case "reset":
-			opts.Reset = globals.ToUint64(value[0])
-		case "truncate":
-			opts.Truncate = globals.ToUint64(value[0])
 		case "count":
 			opts.Count = true
+		case "truncate":
+			opts.Truncate = globals.ToUint64(value[0])
+		case "reset":
+			opts.Reset = globals.ToUint64(value[0])
+		case "check":
+			opts.Check = true
 		case "deep":
 			opts.Deep = true
 		default:

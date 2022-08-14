@@ -47,17 +47,17 @@ func init() {
 	whenCmd.Flags().SortFlags = false
 
 	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().List, "list", "l", false, "export a list of the 'special' blocks")
-	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Timestamps, "timestamps", "t", false, "ignore other options and generate timestamps only")
-	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Check, "check", "c", false, "available only with --timestamps, checks the validity of the timestamp data (hidden)")
-	whenCmd.Flags().Uint64VarP(&whenPkg.GetOptions().Reset, "reset", "r", 0, "available only with --timestamps option, resets a single timestamp (hidden)")
-	whenCmd.Flags().Uint64VarP(&whenPkg.GetOptions().Truncate, "truncate", "n", 0, "available only with --timestamps option, truncates the timestamp file to this block (hidden)")
-	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Count, "count", "u", false, "available only with --timestamps, returns the number of timestamps in the cache (hidden)")
-	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Deep, "deep", "e", false, "available only with --timestamps --check option, queries every timestamp on chain (slow) (hidden)")
+	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Timestamps, "timestamps", "t", false, "display or process timestamps")
+	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Count, "count", "u", false, "with --timestamps only, returns the number of timestamps in the cache (hidden)")
+	whenCmd.Flags().Uint64VarP(&whenPkg.GetOptions().Truncate, "truncate", "n", 0, "with --timestamps only, truncates the timestamp file at this block (hidden)")
+	whenCmd.Flags().Uint64VarP(&whenPkg.GetOptions().Reset, "reset", "r", 0, "with --timestamps only, resets a single timestamp from on chain (hidden)")
+	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Check, "check", "c", false, "with --timestamps only, checks the validity of the timestamp data (hidden)")
+	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Deep, "deep", "e", false, "with --timestamps --check only, verifies timestamps from on chain (slow) (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {
-		whenCmd.Flags().MarkHidden("check")
-		whenCmd.Flags().MarkHidden("reset")
-		whenCmd.Flags().MarkHidden("truncate")
 		whenCmd.Flags().MarkHidden("count")
+		whenCmd.Flags().MarkHidden("truncate")
+		whenCmd.Flags().MarkHidden("reset")
+		whenCmd.Flags().MarkHidden("check")
 		whenCmd.Flags().MarkHidden("deep")
 	}
 	globals.InitGlobals(whenCmd, &whenPkg.GetOptions().Globals)

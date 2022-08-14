@@ -9,8 +9,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 )
 
-// HandleWhenTimestampsTruncate handles chifra when --timestamps --drop <bn>
-func (opts *WhenOptions) HandleWhenTimestampsTruncate() error {
+// HandleTimestampsTruncate handles chifra when --timestamps --drop <bn>
+func (opts *WhenOptions) HandleTimestampsTruncate() error {
 	err := tslib.Truncate(opts.Globals.Chain, opts.Truncate)
 	if err != nil {
 		return err

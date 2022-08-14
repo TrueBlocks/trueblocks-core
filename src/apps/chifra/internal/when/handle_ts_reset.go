@@ -8,8 +8,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-// HandleWhenTimestampsTruncate handles chifra when --timestamps --drop <bn>
-func (opts *WhenOptions) HandleWhenTimestampsReset() error {
+// HandleTimestampsReset handles chifra when --timestamps --drop <bn>
+func (opts *WhenOptions) HandleTimestampsReset() error {
 	// err := tslib.Truncate(opts.Globals.Chain, opts.Truncate)
 	// if err != nil {
 	// 	return err

@@ -18,7 +18,7 @@ Arguments:
 
 Flags:
   -l, --list         export a list of the 'special' blocks
-  -t, --timestamps   ignore other options and generate timestamps only
+  -t, --timestamps   display or process timestamps
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
   -v, --verbose      enable verbose (increase detail with --log_level)
   -h, --help         display this help screen

@@ -1150,7 +1150,7 @@ paths:
           schema:
             type: boolean
         - name: timestamps
-          description: ignore other options and generate timestamps only
+          description: display or process timestamps
           required: false
           style: form
           in: query

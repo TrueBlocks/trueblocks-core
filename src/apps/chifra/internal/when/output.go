@@ -46,21 +46,26 @@ func (opts *WhenOptions) WhenInternal() (err error, handled bool) {
 	handled = true
 
 	if opts.List {
-		err = opts.HandleWhenList()
+		err = opts.HandleList()
+
 	} else if opts.Timestamps {
 		if opts.Count {
-			err = opts.HandleWhenTimestampCount()
+			err = opts.HandleTimestampCount()
+
 		} else if opts.Truncate != utils.NOPOS {
-			err = opts.HandleWhenTimestampsTruncate()
+			err = opts.HandleTimestampsTruncate()
+
 		} else {
 			if opts.Check {
-				err = opts.HandleWhenTimestampsCheck()
+				err = opts.HandleTimestampsCheck()
+
 			} else {
-				err = opts.HandleWhenTimestampsShow()
+				err = opts.HandleTimestampsShow()
 			}
 		}
+
 	} else {
-		err = opts.HandleWhenShowBlocks()
+		err = opts.HandleShowBlocks()
 	}
 	// EXISTING_CODE
 

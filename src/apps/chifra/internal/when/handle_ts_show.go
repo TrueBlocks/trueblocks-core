@@ -10,8 +10,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// HandleWhenTimestampsShow handles chifra when --timestamps
-func (opts *WhenOptions) HandleWhenTimestampsShow() error {
+// HandleTimestampsShow handles chifra when --timestamps
+func (opts *WhenOptions) HandleTimestampsShow() error {
 	cnt, err := tslib.NTimestamps(opts.Globals.Chain)
 	if err != nil {
 		return err
