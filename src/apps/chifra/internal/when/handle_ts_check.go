@@ -71,14 +71,14 @@ func (opts *WhenOptions) HandleTimestampsCheck() error {
 
 			bnSequential := prev.BlockNumber < onDisc.BlockNumber
 			if !bnSequential {
-				msg := fmt.Sprintf("Block number %d is not one plus %d.%s\n", onDisc.BlockNumber, prev.BlockNumber, clear)
+				msg := fmt.Sprintf("Block number %d is not one plus %d.%s", onDisc.BlockNumber, prev.BlockNumber, clear)
 				logger.Log(logger.Error, msg)
 				status = "Error"
 			}
 
 			tsSequential := prev.TimeStamp < onDisc.TimeStamp
 			if !tsSequential {
-				msg := fmt.Sprintf("At block %d, timestamp %d does not increase over previous %d%s\n", onDisc.BlockNumber, onDisc.TimeStamp, prev.TimeStamp, clear)
+				msg := fmt.Sprintf("At block %d, timestamp %d does not increase over previous %d%s", onDisc.BlockNumber, onDisc.TimeStamp, prev.TimeStamp, clear)
 				logger.Log(logger.Error, msg)
 				status = "Error"
 			}
