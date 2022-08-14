@@ -19,7 +19,6 @@ Flags:
   -m, --remote       for some options, force processing from remote data
   -r, --reset uint   available only in index mode, remove all chunks inclusive of or after this block (hidden)
   -u, --status       show the status of unripe, ripe, staging, blooms, and finalized folders (hidden)
-  -i, --pin          make sure all chunks are pinned (locally if IPFS daemon is running, remotely with --remote flag)
   -p, --publish      update the manifest and publish it to the Unchained Index smart contract
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
   -v, --verbose      enable verbose (increase detail with --log_level)
