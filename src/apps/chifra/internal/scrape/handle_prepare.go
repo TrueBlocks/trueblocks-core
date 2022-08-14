@@ -65,5 +65,6 @@ func (opts *ScrapeOptions) HandlePrepare() (ok bool, err error) {
 	})
 	tslib.Append(opts.Globals.Chain, array)
 
-	return opts.HandleScrapePin()
+	// TODO: BOGUS - CAN'T SEND NILS
+	return opts.HandleScrapePin(nil, nil)
 }
