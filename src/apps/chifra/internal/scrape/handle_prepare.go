@@ -65,6 +65,5 @@ func (opts *ScrapeOptions) HandlePrepare() (ok bool, err error) {
 	})
 	tslib.Append(opts.Globals.Chain, array)
 
-	// Note, we used to call HandleScrapePin here, but we don't need to. It will get picked up when the pin file is processed
-	return true, nil
+	return opts.HandleScrapePin()
 }

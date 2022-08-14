@@ -35,6 +35,7 @@ func (opts *WhenOptions) HandleWhenTimestampsCheck() error {
 	end := uint64(cnt)
 	if len(blockNums) > 0 {
 		start = blockNums[0]
+		end = start
 		if len(blockNums) > 1 {
 			end = blockNums[len(blockNums)-1]
 		}

@@ -153,7 +153,7 @@ func FromBn(chain string, bn uint64) (*Timestamp, error) {
 // var writeMutex sync.Mutex
 
 // TODO: BOGUS - PROTECT AGAINST FAILURE WHEN WRITING
-func Reset(chain string, maxBn uint64) error {
+func Truncate(chain string, maxBn uint64) error {
 	cnt, err := NTimestamps(chain)
 	if err != nil {
 		return err

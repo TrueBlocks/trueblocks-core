@@ -17,7 +17,7 @@ func (opts *WhenOptions) HandleWhenTimestampsShow() error {
 		return err
 	}
 
-	err = opts.Globals.RenderHeader(tslib.Timestamp{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+	err = opts.Globals.RenderHeader(types.SimpleTimestamp{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
 	defer opts.Globals.RenderFooter()
 	if err != nil {
 		return err
@@ -30,28 +30,41 @@ func (opts *WhenOptions) HandleWhenTimestampsShow() error {
 	}
 	// We use the first block as the starting point. The user may have added additional blocks, but we ignore them
 	if len(blockNums) > 0 {
-		prev.BlockNumber = blockNums[0]
+		for i, bn := range blockNums {
+			if err = opts.doOneBlock(&prev, bn, i == 0); err != nil {
+				return err
+			}
+		}
+	} else {
+		for bn := uint64(0); bn < cnt; bn++ {
+			if err = opts.doOneBlock(&prev, bn, bn == 0); err != nil {
+				return err
+			}
+		}
 	}
 
-	for bn := prev.BlockNumber; bn < cnt; bn++ {
-		ts, err := tslib.FromBn(opts.Globals.Chain, bn)
-		if err != nil {
-			return err
-		}
-		obj := types.SimpleTimestamp{
-			BlockNumber: uint64(ts.Bn),
-			TimeStamp:   uint64(ts.Ts),
-			Diff:        uint64(ts.Ts - uint32(prev.TimeStamp)),
-		}
-		if bn == prev.BlockNumber {
-			// Report zero diff at first block
-			obj.Diff = 0
-		}
-		err = opts.Globals.RenderObject(obj, bn == 0)
-		if err != nil {
-			return err
-		}
-		prev = obj
+	return nil
+}
+
+func (opts *WhenOptions) doOneBlock(prev *types.SimpleTimestamp, bn uint64, first bool) error {
+	ts, err := tslib.FromBn(opts.Globals.Chain, bn)
+	if err != nil {
+		return err
 	}
+	obj := types.SimpleTimestamp{
+		BlockNumber: uint64(ts.Bn),
+		TimeStamp:   uint64(ts.Ts),
+		Diff:        uint64(ts.Ts - uint32(prev.TimeStamp)),
+	}
+	if first {
+		// Report zero diff at first block
+		obj.Diff = 0
+	}
+	err = opts.Globals.RenderObject(obj, bn == 0)
+	if err != nil {
+		return err
+	}
+	*prev = obj
+
 	return nil
 }

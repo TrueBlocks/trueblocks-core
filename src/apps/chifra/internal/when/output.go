@@ -50,8 +50,8 @@ func (opts *WhenOptions) WhenInternal() (err error, handled bool) {
 	} else if opts.Timestamps {
 		if opts.Count {
 			err = opts.HandleWhenTimestampCount()
-		} else if opts.Reset != utils.NOPOS {
-			err = opts.HandleWhenTimestampsReset()
+		} else if opts.Truncate != utils.NOPOS {
+			err = opts.HandleWhenTimestampsTruncate()
 		} else {
 			if opts.Check {
 				err = opts.HandleWhenTimestampsCheck()

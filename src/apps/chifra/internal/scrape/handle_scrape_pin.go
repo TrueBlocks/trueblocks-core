@@ -23,6 +23,16 @@ func (opts *ScrapeOptions) HandleScrapePin(progressThen *rpcClient.MetaData, bla
 	return true, nil
 
 	/*
+		progressNow, err := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
+		if err != nil {
+			return false, err
+		}
+		defer func() {
+			if progressNow != nil {
+				*progressThen = *progressNow
+			}
+		}()
+
 		if !opts.Pin {
 			// If we're not pinning, do nothing
 			return true, nil

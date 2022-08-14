@@ -28,8 +28,8 @@ func (opts *WhenOptions) validateWhen() error {
 			return validate.Usage("Please supply either {0} or the {1} option.", "block identifiers", "--list")
 
 		} else if opts.Timestamps {
-			if opts.Reset != utils.NOPOS {
-				return validate.Usage("Please supply either {0} or the {1} option.", "block identifiers", "--drop")
+			if opts.Truncate != utils.NOPOS {
+				return validate.Usage("Please supply {0} with the {1} option.", "one or more block identifiers", "--reset")
 			}
 		}
 	}
@@ -52,7 +52,7 @@ func (opts *WhenOptions) validateWhen() error {
 		if opts.Count {
 			return validate.Usage("The {0} option is only available with the {1} option.", "--count", "--timestamps")
 		}
-		if opts.Reset != utils.NOPOS {
+		if opts.Truncate != utils.NOPOS {
 			return validate.Usage("The {0} option is only available with the {1} option.", "--drop", "--timestamps")
 		}
 	}

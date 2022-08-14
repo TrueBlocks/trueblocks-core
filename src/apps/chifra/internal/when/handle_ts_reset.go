@@ -6,15 +6,14 @@ package whenPkg
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 )
 
 // HandleWhenTimestampsTruncate handles chifra when --timestamps --drop <bn>
-func (opts *WhenOptions) HandleWhenTimestampsTruncate() error {
-	err := tslib.Truncate(opts.Globals.Chain, opts.Truncate)
-	if err != nil {
-		return err
-	}
-	logger.Log(logger.Info, "The timestamps file was trucated to block", opts.Truncate)
+func (opts *WhenOptions) HandleWhenTimestampsReset() error {
+	// err := tslib.Truncate(opts.Globals.Chain, opts.Truncate)
+	// if err != nil {
+	// 	return err
+	// }
+	logger.Log(logger.Info, "The timestamps --reset option is not ready yet.", opts.Reset)
 	return nil
 }

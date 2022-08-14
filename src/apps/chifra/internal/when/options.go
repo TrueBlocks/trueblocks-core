@@ -26,7 +26,8 @@ type WhenOptions struct {
 	List       bool                     `json:"list,omitempty"`       // Export a list of the 'special' blocks
 	Timestamps bool                     `json:"timestamps,omitempty"` // Ignore other options and generate timestamps only
 	Check      bool                     `json:"check,omitempty"`      // Available only with --timestamps, checks the validity of the timestamp data
-	Reset      uint64                   `json:"reset,omitempty"`      // Available only with --timestamps option, reset the timestamp file to this block
+	Reset      uint64                   `json:"reset,omitempty"`      // Available only with --timestamps option, resets a single timestamp
+	Truncate   uint64                   `json:"truncate,omitempty"`   // Available only with --timestamps option, truncates the timestamp file to this block
 	Count      bool                     `json:"count,omitempty"`      // Available only with --timestamps, returns the number of timestamps in the cache
 	Deep       bool                     `json:"deep,omitempty"`       // Available only with --timestamps --check option, queries every timestamp on chain (slow)
 	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
@@ -42,6 +43,7 @@ func (opts *WhenOptions) testLog() {
 	logger.TestLog(opts.Timestamps, "Timestamps: ", opts.Timestamps)
 	logger.TestLog(opts.Check, "Check: ", opts.Check)
 	logger.TestLog(opts.Reset != utils.NOPOS, "Reset: ", opts.Reset)
+	logger.TestLog(opts.Truncate != utils.NOPOS, "Truncate: ", opts.Truncate)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	logger.TestLog(opts.Deep, "Deep: ", opts.Deep)
 	opts.Globals.TestLog()
@@ -57,6 +59,7 @@ func (opts *WhenOptions) String() string {
 func whenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
 	opts := &WhenOptions{}
 	opts.Reset = utils.NOPOS
+	opts.Truncate = utils.NOPOS
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "blocks":
@@ -72,6 +75,8 @@ func whenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
 			opts.Check = true
 		case "reset":
 			opts.Reset = globals.ToUint64(value[0])
+		case "truncate":
+			opts.Truncate = globals.ToUint64(value[0])
 		case "count":
 			opts.Count = true
 		case "deep":
@@ -97,6 +102,9 @@ func whenFinishParse(args []string) *WhenOptions {
 	defFmt := "txt"
 	// EXISTING_CODE
 	opts.Blocks = args
+	if opts.Truncate == 0 {
+		opts.Truncate = utils.NOPOS
+	}
 	if opts.Reset == 0 {
 		opts.Reset = utils.NOPOS
 	}
