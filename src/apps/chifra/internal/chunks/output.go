@@ -62,8 +62,8 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 	} else if opts.Publish {
 		err = opts.HandlePublish(blockNums)
 
-	} else if opts.Reset != utils.NOPOS {
-		err = opts.HandleReset(blockNums)
+	} else if opts.Truncate != utils.NOPOS {
+		err = opts.HandleTruncate(blockNums)
 
 	} else if opts.Check {
 		err = opts.HandleChunksCheck(blockNums)

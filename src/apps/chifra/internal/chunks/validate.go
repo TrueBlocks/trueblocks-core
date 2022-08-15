@@ -125,9 +125,9 @@ func (opts *ChunksOptions) validateChunks() error {
 		}
 	}
 
-	if opts.Reset != utils.NOPOS {
+	if opts.Truncate != utils.NOPOS {
 		if opts.Mode != "index" {
-			return validate.Usage("The {0} option is only available {1}.", "--reset", "in index mode")
+			return validate.Usage("The {0} option is only available {1}.", "--truncate", "in index mode")
 		}
 	}
 	return opts.Globals.Validate()

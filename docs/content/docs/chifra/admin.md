@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-08-14T22:42:16
+date: 2022-08-14T23:16:14
 lastmod:
   - :git
   - lastmod
@@ -142,8 +142,8 @@ Flags:
   -i, --pin          pin all chunks (locally if IPFS daemon is running, and/or remotely with --remote flag)
   -m, --remote       for some options, forces processing to use remote data
   -p, --publish      repin chunks, pin the manifest, and publish to the Unchained Index smart contract
-  -c, --check        depends on mode, checks for internal consistency of the given type
   -b, --belongs      in index mode only, checks if the given address appears in the given chunk
+  -c, --check        in index mode only, checks for internal consistency of the index, blooms, and manifest
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
   -v, --verbose      enable verbose (increase detail with --log_level)
   -h, --help         display this help screen
@@ -155,7 +155,7 @@ Notes:
   - The --belongs option requires both an address and a block identifier.
   - You may only specifiy an address when using the --belongs option.
   - The two --pin_ options, the --clean option, and the --check option are available only in manifest mode.
-  - The --repair and --reset options also update the manifest, but do not publish it.
+  - The --repair and --truncate options also update the manifest, but do not publish it.
 ```
 
 **Source code**: [`internal/chunks`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/chunks)
