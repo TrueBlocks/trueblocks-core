@@ -1,4 +1,4 @@
-chunks?mode=pins&publish
+chunks?mode=manifest&publish
 {
   "errors": [
     "The --publish option is not yet enabled"

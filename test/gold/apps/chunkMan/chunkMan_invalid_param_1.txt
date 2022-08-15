@@ -1,27 +1,24 @@
 chifra chunks  junk
 TEST[DATE|TIME] Mode:  junk
 TEST[DATE|TIME] Format:  txt
-Error: The mode option (junk) must be one of [ stats | manifest | pins | blooms | index | addresses | appearances | dump ]
+Error: The mode option (junk) must be one of [ status | index | blooms | manifest | stats | addresses | appearances ]
 Usage:
   chifra chunks <mode> [flags] [blocks...] [address...]
 
 Arguments:
-  mode - the type of chunk info to retrieve (required)
-	One of [ stats | manifest | pins | blooms | index | addresses | appearances | dump ]
-  blocks - optional list of blocks to intersect with chunk ranges
-  addrs - one or more addresses to use with --belongs option (see note)
+  mode - the type of information to retrieve (required)
+	One of [ status | index | blooms | manifest | stats | addresses | appearances ]
+  blocks - optional list of blocks used to intersect with chunk ranges
+  addrs - optional list of addresses for use with --belongs option (see notes)
 
 Flags:
-  -d, --details      for manifest and addresses options only, display full details of the report
-  -c, --check        depends on mode, checks for internal consistency of the data type
+  -i, --pin          pin all chunks (locally if IPFS daemon is running, and/or remotely with --remote flag)
+  -m, --remote       for some options, forces processing to use remote data
+  -p, --publish      repin chunks, pin the manifest, and publish to the Unchained Index smart contract
   -b, --belongs      checks if the given address appears in the given chunk
-  -e, --repair       valid for manifest option only, repair the given chunk (requires block number) (hidden)
-  -n, --clean        retrieve all pins on Pinata, compare to manifest, remove any extraneous remote pins
-  -i, --pin          make sure all chunks are pinned (locally if IPFS daemon is running, remotely with --remote flag)
-  -m, --remote       for some options, force processing from remote data
-  -r, --reset uint   available only in index mode, remove all chunks inclusive of or after this block (hidden)
-  -u, --status       show the status of unripe, ripe, staging, blooms, and finalized folders (hidden)
-  -p, --publish      update the manifest and publish it to the Unchained Index smart contract
+  -c, --check        depends on mode, checks for internal consistency of the given type
+  -r, --reset uint   in index and manifest mode, removes chunks inclusive of or after this block identifier (hidden)
+  -e, --repair       in index and manifest mode, repair a chunk (requires block identifier) (hidden)
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
   -v, --verbose      enable verbose (increase detail with --log_level)
   -h, --help         display this help screen
