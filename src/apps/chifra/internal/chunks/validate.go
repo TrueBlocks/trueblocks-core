@@ -21,10 +21,10 @@ func (opts *ChunksOptions) validateChunks() error {
 	}
 
 	if len(opts.Mode) == 0 {
-		return validate.Usage("Please choose at least one of {0}.", "[stats|manifest|pins|blooms|index|addresses|appearances|dump]")
+		return validate.Usage("Please choose at least one of {0}.", "[status|index|blooms|manifest|stats|addresses|appearances]")
 	}
 
-	err := validate.ValidateEnum("mode", opts.Mode, "[stats|manifest|pins|blooms|index|addresses|appearances|dump]")
+	err := validate.ValidateEnum("mode", opts.Mode, "[status|index|blooms|manifest|stats|addresses|appearances]")
 	if err != nil {
 		return err
 	}
@@ -40,9 +40,6 @@ func (opts *ChunksOptions) validateChunks() error {
 	if opts.Mode != "manifest" {
 		if opts.Pin || opts.Publish {
 			return validate.Usage("The {0} and {1} options are available only in {2} mode.", "--pin", "--publish", "manifest")
-		}
-		if opts.Clean {
-			return validate.Usage("The {0} option is available only in {1} mode.", "--clean", "manifest")
 		}
 		if opts.Check {
 			return validate.Usage("The {0} option is available only in {1} mode.", "--check", "manifest")
@@ -111,12 +108,12 @@ func (opts *ChunksOptions) validateChunks() error {
 		return validate.Usage("You may only specify an address with the --belongs option")
 	}
 
-	if opts.Details && opts.Belongs {
-		return validate.Usage("Choose either {0} or {1}, not both.", "--details", "--belongs")
+	if opts.Globals.Verbose && opts.Belongs {
+		return validate.Usage("Choose either {0} or {1}, not both.", "--verbose", "--belongs")
 	}
 
-	if !opts.Details && opts.Globals.ToFile {
-		return validate.Usage("You may not use the {0} option without {1}.", "--to_file", "--details")
+	if !opts.Globals.Verbose && opts.Globals.ToFile {
+		return validate.Usage("You may not use the {0} option without {1}.", "--to_file", "--verbose")
 	}
 
 	// Note this does not return if a migration is needed

@@ -30,10 +30,10 @@ var chunksCmd = &cobra.Command{
 const usageChunks = `chunks <mode> [flags] [blocks...] [address...]
 
 Arguments:
-  mode - the type of chunk info to retrieve (required)
-	One of [ stats | manifest | pins | blooms | index | addresses | appearances | dump ]
-  blocks - optional list of blocks to intersect with chunk ranges
-  addrs - one or more addresses to use with --belongs option (see note)`
+  mode - the type of information to retrieve (required)
+	One of [ status | index | blooms | manifest | stats | addresses | appearances ]
+  blocks - optional list of blocks used to intersect with chunk ranges
+  addrs - optional list of addresses for use with --belongs option (see notes)`
 
 const shortChunks = "manage and investigate chunks and bloom filters"
 
@@ -52,20 +52,16 @@ Notes:
 func init() {
 	chunksCmd.Flags().SortFlags = false
 
-	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Details, "details", "d", false, "for manifest and addresses options only, display full details of the report")
-	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Check, "check", "c", false, "depends on mode, checks for internal consistency of the data type")
+	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Pin, "pin", "i", false, "pin all chunks (locally if IPFS daemon is running, and/or remotely with --remote flag)")
+	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Remote, "remote", "m", false, "for some options, forces processing to use remote data")
+	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Publish, "publish", "p", false, "repin chunks, pin the manifest, and publish to the Unchained Index smart contract")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Belongs, "belongs", "b", false, "checks if the given address appears in the given chunk")
-	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Repair, "repair", "e", false, "valid for manifest option only, repair the given chunk (requires block number) (hidden)")
-	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Clean, "clean", "n", false, "retrieve all pins on Pinata, compare to manifest, remove any extraneous remote pins")
-	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Pin, "pin", "i", false, "make sure all chunks are pinned (locally if IPFS daemon is running, remotely with --remote flag)")
-	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Remote, "remote", "m", false, "for some options, force processing from remote data")
-	chunksCmd.Flags().Uint64VarP(&chunksPkg.GetOptions().Reset, "reset", "r", 0, "available only in index mode, remove all chunks inclusive of or after this block (hidden)")
-	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Status, "status", "u", false, "show the status of unripe, ripe, staging, blooms, and finalized folders (hidden)")
-	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Publish, "publish", "p", false, "update the manifest and publish it to the Unchained Index smart contract")
+	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Check, "check", "c", false, "depends on mode, checks for internal consistency of the given type")
+	chunksCmd.Flags().Uint64VarP(&chunksPkg.GetOptions().Reset, "reset", "r", 0, "in index and manifest mode, removes chunks inclusive of or after this block identifier (hidden)")
+	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Repair, "repair", "e", false, "in index and manifest mode, repair a chunk (requires block identifier) (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {
-		chunksCmd.Flags().MarkHidden("repair")
 		chunksCmd.Flags().MarkHidden("reset")
-		chunksCmd.Flags().MarkHidden("status")
+		chunksCmd.Flags().MarkHidden("repair")
 	}
 	globals.InitGlobals(chunksCmd, &chunksPkg.GetOptions().Globals)
 

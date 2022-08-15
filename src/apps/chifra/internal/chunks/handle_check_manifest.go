@@ -25,7 +25,7 @@ type CompareState struct {
 func (opts *ChunksOptions) CheckManifest(arrayA, arrayB []string, report *types.ReportCheck) error {
 	comp := CompareState{
 		testMode: opts.Globals.TestMode,
-		details:  opts.Details,
+		details:  opts.Globals.Verbose,
 		msg:      "%s: The chunk is in the %s array but not the %s array%s",
 		fail:     3,
 		arrayA:   arrayA,

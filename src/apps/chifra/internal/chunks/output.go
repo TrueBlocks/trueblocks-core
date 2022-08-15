@@ -62,9 +62,6 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 	} else if opts.Publish {
 		err = opts.HandlePublish(blockNums)
 
-	} else if opts.Status {
-		err = opts.HandleStatus(blockNums)
-
 	} else if opts.Reset != utils.NOPOS {
 		err = opts.HandleReset(blockNums)
 
@@ -79,6 +76,9 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 
 	} else {
 		switch opts.Mode {
+		case "status":
+			err = opts.HandleStatus(blockNums)
+
 		case "stats":
 			err = opts.HandleStats(blockNums)
 
