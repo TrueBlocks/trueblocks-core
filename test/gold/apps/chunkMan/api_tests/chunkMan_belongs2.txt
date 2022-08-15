@@ -1,4 +1,4 @@
-chunks?mode=addresses&belongs&addrs=0x0000000000000214156104345760006001905490&blocks=0x12
+chunks?mode=index&belongs&addrs=0x0000000000000214156104345760006001905490&blocks=0x12
 {
   "data": [
     {

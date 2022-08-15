@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-08-14T22:17:43
+date: 2022-08-14T22:42:16
 lastmod:
   - :git
   - lastmod
@@ -142,8 +142,8 @@ Flags:
   -i, --pin          pin all chunks (locally if IPFS daemon is running, and/or remotely with --remote flag)
   -m, --remote       for some options, forces processing to use remote data
   -p, --publish      repin chunks, pin the manifest, and publish to the Unchained Index smart contract
-  -b, --belongs      checks if the given address appears in the given chunk
   -c, --check        depends on mode, checks for internal consistency of the given type
+  -b, --belongs      in index mode only, checks if the given address appears in the given chunk
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
   -v, --verbose      enable verbose (increase detail with --log_level)
   -h, --help         display this help screen

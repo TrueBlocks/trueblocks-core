@@ -66,14 +66,14 @@ func (opts *ChunksOptions) validateChunks() error {
 	}
 
 	if opts.Belongs {
-		if opts.Mode != "addresses" && opts.Mode != "blooms" {
-			return validate.Usage("The --belongs option is only available with either the addresses or blooms mode")
+		if opts.Mode != "index" {
+			return validate.Usage("The {0} option requires {1}", "--belongs", "the --index option")
 		}
 		if len(opts.Addrs) == 0 {
-			return validate.Usage("You must specifiy at least one address with the --belongs option")
+			return validate.Usage("You must specifiy at least one {0} with the {1} option", "address", "--belongs")
 		}
 		if len(opts.Blocks) == 0 {
-			return validate.Usage("You must specifiy at least one block identifier with the --belongs option")
+			return validate.Usage("You must specifiy at least one {0} with the {1} option", "block identifier", "--belongs")
 		}
 	}
 

@@ -56,10 +56,10 @@ func init() {
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Pin, "pin", "i", false, "pin all chunks (locally if IPFS daemon is running, and/or remotely with --remote flag)")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Remote, "remote", "m", false, "for some options, forces processing to use remote data")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Publish, "publish", "p", false, "repin chunks, pin the manifest, and publish to the Unchained Index smart contract")
-	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Belongs, "belongs", "b", false, "checks if the given address appears in the given chunk")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Check, "check", "c", false, "depends on mode, checks for internal consistency of the given type")
 	chunksCmd.Flags().Uint64VarP(&chunksPkg.GetOptions().Reset, "reset", "r", 0, "in index mode only, removes chunks inclusive of or after this block identifier (hidden)")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Repair, "repair", "e", false, "in index mode only, repair a chunk (requires block identifier) (hidden)")
+	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Belongs, "belongs", "b", false, "in index mode only, checks if the given address appears in the given chunk")
 	if os.Getenv("TEST_MODE") != "true" {
 		chunksCmd.Flags().MarkHidden("reset")
 		chunksCmd.Flags().MarkHidden("repair")

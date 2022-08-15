@@ -1548,16 +1548,16 @@ paths:
             items:
               type: string
               format: address
-        - name: belongs
-          description: checks if the given address appears in the given chunk
+        - name: check
+          description: depends on mode, checks for internal consistency of the given type
           required: false
           style: form
           in: query
           explode: true
           schema:
             type: boolean
-        - name: check
-          description: depends on mode, checks for internal consistency of the given type
+        - name: belongs
+          description: in index mode only, checks if the given address appears in the given chunk
           required: false
           style: form
           in: query

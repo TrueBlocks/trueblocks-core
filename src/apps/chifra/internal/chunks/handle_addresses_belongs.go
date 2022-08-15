@@ -70,7 +70,7 @@ func (opts *ChunksOptions) shouldShow(obj index.AddressRecord) bool {
 	return false
 }
 
-func (opts *ChunksOptions) HandleAddressesBelongs(blockNums []uint64) error {
+func (opts *ChunksOptions) HandleIndexBelongs(blockNums []uint64) error {
 	maxTestItems = 10000
 
 	defer opts.Globals.RenderFooter()

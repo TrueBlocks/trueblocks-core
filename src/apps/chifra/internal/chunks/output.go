@@ -96,14 +96,14 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 			err = opts.HandleBlooms(blockNums)
 
 		case "index":
-			err = opts.HandleIndex(blockNums)
+			if opts.Belongs {
+				err = opts.HandleIndexBelongs(blockNums)
+			} else {
+				err = opts.HandleIndex(blockNums)
+			}
 
 		case "addresses":
-			if opts.Belongs {
-				err = opts.HandleAddressesBelongs(blockNums)
-			} else {
-				err = opts.HandleAddresses(blockNums)
-			}
+			err = opts.HandleAddresses(blockNums)
 
 		case "appearances":
 			err = opts.HandleAppearances(blockNums)

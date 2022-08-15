@@ -29,10 +29,10 @@ type ChunksOptions struct {
 	Pin      bool                     `json:"pin,omitempty"`      // Pin all chunks (locally if IPFS daemon is running, and/or remotely with --remote flag)
 	Remote   bool                     `json:"remote,omitempty"`   // For some options, forces processing to use remote data
 	Publish  bool                     `json:"publish,omitempty"`  // Repin chunks, pin the manifest, and publish to the Unchained Index smart contract
-	Belongs  bool                     `json:"belongs,omitempty"`  // Checks if the given address appears in the given chunk
 	Check    bool                     `json:"check,omitempty"`    // Depends on mode, checks for internal consistency of the given type
 	Reset    uint64                   `json:"reset,omitempty"`    // In index mode only, removes chunks inclusive of or after this block identifier
 	Repair   bool                     `json:"repair,omitempty"`   // In index mode only, repair a chunk (requires block identifier)
+	Belongs  bool                     `json:"belongs,omitempty"`  // In index mode only, checks if the given address appears in the given chunk
 	Globals  globals.GlobalOptions    `json:"globals,omitempty"`  // The global options
 	BadFlag  error                    `json:"badFlag,omitempty"`  // An error flag if needed
 }
@@ -47,10 +47,10 @@ func (opts *ChunksOptions) testLog() {
 	logger.TestLog(opts.Pin, "Pin: ", opts.Pin)
 	logger.TestLog(opts.Remote, "Remote: ", opts.Remote)
 	logger.TestLog(opts.Publish, "Publish: ", opts.Publish)
-	logger.TestLog(opts.Belongs, "Belongs: ", opts.Belongs)
 	logger.TestLog(opts.Check, "Check: ", opts.Check)
 	logger.TestLog(opts.Reset != utils.NOPOS, "Reset: ", opts.Reset)
 	logger.TestLog(opts.Repair, "Repair: ", opts.Repair)
+	logger.TestLog(opts.Belongs, "Belongs: ", opts.Belongs)
 	opts.Globals.TestLog()
 }
 
@@ -84,14 +84,14 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 			opts.Remote = true
 		case "publish":
 			opts.Publish = true
-		case "belongs":
-			opts.Belongs = true
 		case "check":
 			opts.Check = true
 		case "reset":
 			opts.Reset = globals.ToUint64(value[0])
 		case "repair":
 			opts.Repair = true
+		case "belongs":
+			opts.Belongs = true
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "chunks")

@@ -1,5 +1,5 @@
-chifra chunks  addresses --belongs 0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9 2287625 --verbose
-TEST[DATE|TIME] Mode:  addresses
+chifra chunks  index --belongs 0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9 2287625 --verbose
+TEST[DATE|TIME] Mode:  index
 TEST[DATE|TIME] Blocks:  [2287625]
 TEST[DATE|TIME] Addrs:  [0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9]
 TEST[DATE|TIME] Belongs:  true
@@ -19,10 +19,10 @@ Flags:
   -i, --pin          pin all chunks (locally if IPFS daemon is running, and/or remotely with --remote flag)
   -m, --remote       for some options, forces processing to use remote data
   -p, --publish      repin chunks, pin the manifest, and publish to the Unchained Index smart contract
-  -b, --belongs      checks if the given address appears in the given chunk
   -c, --check        depends on mode, checks for internal consistency of the given type
   -r, --reset uint   in index mode only, removes chunks inclusive of or after this block identifier (hidden)
   -e, --repair       in index mode only, repair a chunk (requires block identifier) (hidden)
+  -b, --belongs      in index mode only, checks if the given address appears in the given chunk
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
   -v, --verbose      enable verbose (increase detail with --log_level)
   -h, --help         display this help screen
