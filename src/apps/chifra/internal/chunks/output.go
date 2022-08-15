@@ -65,35 +65,16 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 	} else if opts.Truncate != utils.NOPOS {
 		err = opts.HandleTruncate(blockNums)
 
-	} else if opts.Check {
-		err = opts.HandleChunksCheck(blockNums)
-		if err != nil {
-			return
-		}
-
 	} else if opts.Repair {
 		err = opts.HandleRepair(blockNums)
+
+	} else if opts.Check {
+		err = opts.HandleChunksCheck(blockNums)
 
 	} else {
 		switch opts.Mode {
 		case "status":
 			err = opts.HandleStatus(blockNums)
-
-		case "stats":
-			err = opts.HandleStats(blockNums)
-
-		case "pins":
-			err = opts.HandlePins(blockNums)
-
-		case "manifest":
-			if opts.Globals.Format == "txt" || opts.Globals.Format == "csv" {
-				err = opts.HandlePins(blockNums)
-			} else {
-				err = opts.HandleManifest(blockNums)
-			}
-
-		case "blooms":
-			err = opts.HandleBlooms(blockNums)
 
 		case "index":
 			if opts.Belongs {
@@ -102,14 +83,24 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 				err = opts.HandleIndex(blockNums)
 			}
 
+		case "blooms":
+			err = opts.HandleBlooms(blockNums)
+
+		case "manifest":
+			if opts.Globals.Format == "txt" || opts.Globals.Format == "csv" {
+				err = opts.HandlePins(blockNums)
+			} else {
+				err = opts.HandleManifest(blockNums)
+			}
+
+		case "stats":
+			err = opts.HandleStats(blockNums)
+
 		case "addresses":
 			err = opts.HandleAddresses(blockNums)
 
 		case "appearances":
 			err = opts.HandleAppearances(blockNums)
-
-		case "dump":
-			err = opts.HandleDump(blockNums)
 
 		default:
 			err = validate.Usage("Extractor for {0} not yet implemented.", opts.Mode)
@@ -122,5 +113,15 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 
 // EXISTING_CODE
 var maxTestItems = 100
+
+func (opts *ChunksOptions) defaultFormat(def string) string {
+	if opts.Mode == "manifest" ||
+		opts.Mode == "status" ||
+		(opts.Mode == "index" && opts.Check) ||
+		opts.Truncate != utils.NOPOS {
+		return "json"
+	}
+	return def
+}
 
 // EXISTING_CODE

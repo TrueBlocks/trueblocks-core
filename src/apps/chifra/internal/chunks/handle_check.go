@@ -154,6 +154,7 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 	return globals.RenderSlice(&opts.Globals, reports)
 }
 
+// TODO: BOGUS - THINGS WE COULD CHECK IF WE WANTED TO IN THE INDEX
 // TODO: We don't check blooms
 // TODO: We don't check internal consistency of the data files
 // TODO:	- is every address in the index, in the bloom?

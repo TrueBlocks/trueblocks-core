@@ -129,9 +129,7 @@ func chunksFinishParse(args []string) *ChunksOptions {
 	if opts.Truncate == 0 {
 		opts.Truncate = utils.NOPOS
 	}
-	if opts.Mode == "manifest" || opts.Mode == "status" || opts.Truncate != utils.NOPOS {
-		defFmt = "json"
-	}
+	defFmt = opts.defaultFormat(defFmt)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt

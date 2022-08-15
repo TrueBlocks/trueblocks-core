@@ -12,6 +12,7 @@ import (
 	"net/url"
 	"os"
 	"path"
+	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -34,12 +35,13 @@ func fromRemote(chain string) (*Manifest, error) {
 
 // getManifestCidFromContract calls UnchainedIndex smart contract to get the current manifest IPFS CID
 func getManifestCidFromContract(chain string) (string, error) {
+	// TODO: BOGUS - WHERE DOES THE UNCHAINED INDEX SMART CONTRACT LIVE?
 	provider := config.GetRpcProvider("mainnet") // chain)
 	rpcClient.CheckRpc(provider)
 	ethClient := rpcClient.GetClient(provider)
 	defer ethClient.Close()
 
-	abiFn := config.GetPathToRootConfig() + "abis/known-000/unchainedV2.json"
+	abiFn := filepath.Join(config.GetPathToRootConfig(), "abis/known-000/unchainedV2.json")
 	address := common.HexToAddress(unchained.Address_V2)
 	signature := unchained.ReadHashName_V2
 

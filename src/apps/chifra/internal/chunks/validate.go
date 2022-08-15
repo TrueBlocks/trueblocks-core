@@ -116,9 +116,6 @@ func (opts *ChunksOptions) validateChunks() error {
 		return validate.Usage("You may not use the {0} option without {1}.", "--to_file", "--verbose")
 	}
 
-	// Note this does not return if a migration is needed
-	migrate.CheckBackLevelIndex(opts.Globals.Chain, true)
-
 	if opts.Mode != "index" {
 		if opts.Remote {
 			return validate.Usage("The {0} option is only available {1}.", "--remote", "in index mode")
@@ -128,6 +125,9 @@ func (opts *ChunksOptions) validateChunks() error {
 			return validate.Usage("The {0} option is only available {1}.", "--truncate", "in index mode")
 		}
 	}
+
+	// Note this does not return if a migration is needed
+	migrate.CheckBackLevelIndex(opts.Globals.Chain, true)
 
 	return opts.Globals.Validate()
 }

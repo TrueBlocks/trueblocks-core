@@ -3,6 +3,7 @@ package manifest
 import (
 	"bytes"
 	"errors"
+	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -54,7 +55,7 @@ func ReadManifest(chain string, source Source) (*Manifest, error) {
 		return fromRemote(chain)
 	}
 
-	manifestPath := config.GetPathToChainConfig(chain) + "manifest.json"
+	manifestPath := filepath.Join(config.GetPathToChainConfig(chain), "manifest.json")
 	contents := utils.AsciiFileToString(manifestPath)
 	if !file.FileExists(manifestPath) || len(contents) == 0 {
 		return nil, errors.New("Could not find manifest.json or it was empty")
