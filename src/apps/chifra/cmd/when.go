@@ -50,13 +50,13 @@ func init() {
 	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Timestamps, "timestamps", "t", false, "display or process timestamps")
 	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Count, "count", "u", false, "with --timestamps only, returns the number of timestamps in the cache (hidden)")
 	whenCmd.Flags().Uint64VarP(&whenPkg.GetOptions().Truncate, "truncate", "n", 0, "with --timestamps only, truncates the timestamp file at this block (hidden)")
-	whenCmd.Flags().Uint64VarP(&whenPkg.GetOptions().Reset, "reset", "r", 0, "with --timestamps only, resets a single timestamp from on chain (hidden)")
+	whenCmd.Flags().Uint64VarP(&whenPkg.GetOptions().Repair, "repair", "r", 0, "with --timestamps only, repair a single timestamp by querying the chain (hidden)")
 	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Check, "check", "c", false, "with --timestamps only, checks the validity of the timestamp data (hidden)")
 	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Deep, "deep", "e", false, "with --timestamps --check only, verifies timestamps from on chain (slow) (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {
 		whenCmd.Flags().MarkHidden("count")
 		whenCmd.Flags().MarkHidden("truncate")
-		whenCmd.Flags().MarkHidden("reset")
+		whenCmd.Flags().MarkHidden("repair")
 		whenCmd.Flags().MarkHidden("check")
 		whenCmd.Flags().MarkHidden("deep")
 	}

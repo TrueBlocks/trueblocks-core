@@ -27,7 +27,7 @@ type WhenOptions struct {
 	Timestamps bool                     `json:"timestamps,omitempty"` // Display or process timestamps
 	Count      bool                     `json:"count,omitempty"`      // With --timestamps only, returns the number of timestamps in the cache
 	Truncate   uint64                   `json:"truncate,omitempty"`   // With --timestamps only, truncates the timestamp file at this block
-	Reset      uint64                   `json:"reset,omitempty"`      // With --timestamps only, resets a single timestamp from on chain
+	Repair     uint64                   `json:"repair,omitempty"`     // With --timestamps only, repair a single timestamp by querying the chain
 	Check      bool                     `json:"check,omitempty"`      // With --timestamps only, checks the validity of the timestamp data
 	Deep       bool                     `json:"deep,omitempty"`       // With --timestamps --check only, verifies timestamps from on chain (slow)
 	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
@@ -43,7 +43,7 @@ func (opts *WhenOptions) testLog() {
 	logger.TestLog(opts.Timestamps, "Timestamps: ", opts.Timestamps)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	logger.TestLog(opts.Truncate != utils.NOPOS, "Truncate: ", opts.Truncate)
-	logger.TestLog(opts.Reset != utils.NOPOS, "Reset: ", opts.Reset)
+	logger.TestLog(opts.Repair != utils.NOPOS, "Repair: ", opts.Repair)
 	logger.TestLog(opts.Check, "Check: ", opts.Check)
 	logger.TestLog(opts.Deep, "Deep: ", opts.Deep)
 	opts.Globals.TestLog()
@@ -59,7 +59,7 @@ func (opts *WhenOptions) String() string {
 func whenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
 	opts := &WhenOptions{}
 	opts.Truncate = utils.NOPOS
-	opts.Reset = utils.NOPOS
+	opts.Repair = utils.NOPOS
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "blocks":
@@ -75,8 +75,8 @@ func whenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
 			opts.Count = true
 		case "truncate":
 			opts.Truncate = globals.ToUint64(value[0])
-		case "reset":
-			opts.Reset = globals.ToUint64(value[0])
+		case "repair":
+			opts.Repair = globals.ToUint64(value[0])
 		case "check":
 			opts.Check = true
 		case "deep":
@@ -105,8 +105,8 @@ func whenFinishParse(args []string) *WhenOptions {
 	if opts.Truncate == 0 {
 		opts.Truncate = utils.NOPOS
 	}
-	if opts.Reset == 0 {
-		opts.Reset = utils.NOPOS
+	if opts.Repair == 0 {
+		opts.Repair = utils.NOPOS
 	}
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {

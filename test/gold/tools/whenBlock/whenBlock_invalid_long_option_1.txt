@@ -13,7 +13,7 @@ Flags:
   -t, --timestamps      display or process timestamps
   -u, --count           with --timestamps only, returns the number of timestamps in the cache (hidden)
   -n, --truncate uint   with --timestamps only, truncates the timestamp file at this block (hidden)
-  -r, --reset uint      with --timestamps only, resets a single timestamp from on chain (hidden)
+  -r, --repair uint     with --timestamps only, repair a single timestamp by querying the chain (hidden)
   -c, --check           with --timestamps only, checks the validity of the timestamp data (hidden)
   -e, --deep            with --timestamps --check only, verifies timestamps from on chain (slow) (hidden)
   -x, --fmt string      export format, one of [none|json*|txt|csv|api]

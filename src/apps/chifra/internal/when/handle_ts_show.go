@@ -28,16 +28,16 @@ func (opts *WhenOptions) HandleTimestampsShow() error {
 	if err != nil {
 		return err
 	}
-	// We use the first block as the starting point. The user may have added additional blocks, but we ignore them
+
 	if len(blockNums) > 0 {
 		for i, bn := range blockNums {
-			if err = opts.doOneBlock(&prev, bn, i == 0); err != nil {
+			if err = opts.showOneBlock(&prev, bn, i == 0); err != nil {
 				return err
 			}
 		}
 	} else {
 		for bn := uint64(0); bn < cnt; bn++ {
-			if err = opts.doOneBlock(&prev, bn, bn == 0); err != nil {
+			if err = opts.showOneBlock(&prev, bn, bn == 0); err != nil {
 				return err
 			}
 		}
@@ -46,7 +46,7 @@ func (opts *WhenOptions) HandleTimestampsShow() error {
 	return nil
 }
 
-func (opts *WhenOptions) doOneBlock(prev *types.SimpleTimestamp, bn uint64, first bool) error {
+func (opts *WhenOptions) showOneBlock(prev *types.SimpleTimestamp, bn uint64, first bool) error {
 	ts, err := tslib.FromBn(opts.Globals.Chain, bn)
 	if err != nil {
 		return err

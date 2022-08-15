@@ -56,7 +56,7 @@ func StringToAsciiFile(filename, value string) error {
 }
 
 func AppendToAsciiFile(filename, value string) error {
-	file, err := os.OpenFile(filename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	file, err := os.OpenFile(filename, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0644)
 	if err != nil {
 		return err
 	}

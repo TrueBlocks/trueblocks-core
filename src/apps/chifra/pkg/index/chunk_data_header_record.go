@@ -92,7 +92,7 @@ func WriteChunkHeaderHash(chain, fileName string, headerHash common.Hash) ( /* c
 			}
 		}()
 
-		if fp, err := os.OpenFile(fileName, os.O_RDWR, 0644); err == nil {
+		if fp, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE, 0644); err == nil {
 			defer fp.Close() // defers are last in, first out
 
 			fp.Seek(0, io.SeekStart) // already true, but can't hurt

@@ -18,35 +18,12 @@ func (opts *WhenOptions) validateWhen() error {
 		return opts.BadFlag
 	}
 
-	if len(opts.Blocks) == 0 {
-		// If no identifier, then must be either --list or --timestamps
-		if !opts.List && !opts.Timestamps {
-			return validate.Usage("Please supply one or more block identifiers or one or more dates.")
-		}
-
-	} else {
-		if opts.List && opts.Timestamps {
-			// Cannot have both --list and --timestamps
-			return validate.Usage("Please use either {0} or {1}.", "--list", "--timestamps")
-
-		} else if opts.List {
-			// Cannot have both block identifiers and --list
-			return validate.Usage("Please supply either {0} or the {1} option.", "block identifiers", "--list")
-
-		}
-	}
-
 	if opts.Timestamps {
 		if opts.List {
 			return validate.Usage("Please choose only one of {0}.", "--timestamps or --list")
 		}
-		if opts.Truncate != utils.NOPOS {
-			return validate.Usage("Please supply {0} with the {1} option.", "a block identifier", "--truncate")
 
-		} else if opts.Reset != utils.NOPOS {
-			return validate.Usage("Please supply {0} with the {1} option.", "a block identifier", "--reset")
-
-		} else if opts.Deep && !opts.Check {
+		if opts.Deep && !opts.Check {
 			return validate.Usage("The {0} option is only available with the {1} option.", "--deep", "--timestamps --check")
 		}
 
@@ -68,8 +45,26 @@ func (opts *WhenOptions) validateWhen() error {
 			return validate.Usage("The {0} option is only available with the {1} option.", "--truncate", "--timestamps")
 		}
 
-		if opts.Reset != utils.NOPOS {
-			return validate.Usage("The {0} option is only available with the {1} option.", "--reset", "--timestamps")
+		if opts.Repair != utils.NOPOS {
+			return validate.Usage("The {0} option is only available with the {1} option.", "--repair", "--timestamps")
+		}
+	}
+
+	if len(opts.Blocks) == 0 {
+		// If no identifier, then must be either --list or --timestamps
+		if !opts.List && !opts.Timestamps {
+			return validate.Usage("Please supply one or more block identifiers or one or more dates.")
+		}
+
+	} else {
+		if opts.List && opts.Timestamps {
+			// Cannot have both --list and --timestamps
+			return validate.Usage("Please use either {0} or {1}.", "--list", "--timestamps")
+
+		} else if opts.List {
+			// Cannot have both block identifiers and --list
+			return validate.Usage("Please supply either {0} or the {1} option.", "block identifiers", "--list")
+
 		}
 	}
 

@@ -431,6 +431,27 @@ func (opts *BlazeOptions) WriteAppearances(meta *rpcClient.MetaData, bn int, add
 		}
 	}
 
+	// TODO: BOGUS - THIS WON'T ALLOW THE PROGRESS REPORT TO OVERWRITE ITSELF
+	//var (
+	//    locker    uint32
+	//    errLocked = errors.New("Locked out buddy")
+	//)
+	//
+	//func OneAtATime(d time.Duration) error {
+	//    if !atomic.CompareAndSwapUint32(&locker, 0, 1) { // <-----------------------------
+	//        return errLocked                             //   All logic in these         |
+	//    }                                                //   four lines                 |
+	//    defer atomic.StoreUint32(&locker, 0)             // <-----------------------------
+	//
+	//    // logic here, but we will sleep
+	//    time.Sleep(d)
+	//
+	//    return nil
+	//}
+	//
+	//
+	//exit
+
 	// TODO: THIS IS A PERFORMANCE ISSUE PRINTING EVERY BLOCK
 	step := uint64(17)
 	if opts.NProcessed%step == 0 {

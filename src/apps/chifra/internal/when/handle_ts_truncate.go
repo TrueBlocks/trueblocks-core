@@ -11,10 +11,10 @@ import (
 
 // HandleTimestampsTruncate handles chifra when --timestamps --drop <bn>
 func (opts *WhenOptions) HandleTimestampsTruncate() error {
-	err := tslib.Truncate(opts.Globals.Chain, opts.Truncate)
-	if err != nil {
+	if err := tslib.Truncate(opts.Globals.Chain, opts.Truncate); err != nil {
 		return err
 	}
+
 	logger.Log(logger.Info, "The timestamps file was trucated to block", opts.Truncate)
 	return nil
 }
