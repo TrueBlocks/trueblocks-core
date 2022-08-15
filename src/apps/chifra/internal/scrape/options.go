@@ -38,7 +38,7 @@ func (opts *ScrapeOptions) testLog() {
 	logger.TestLog(opts.Pin, "Pin: ", opts.Pin)
 	logger.TestLog(opts.Sleep != 14, "Sleep: ", opts.Sleep)
 	logger.TestLog(opts.StartBlock != 0, "StartBlock: ", opts.StartBlock)
-	opts.Settings.TestLog(opts.Globals.Chain)
+	opts.Settings.TestLog(opts.Globals.Chain, opts.Globals.TestMode)
 	opts.Globals.TestLog()
 }
 

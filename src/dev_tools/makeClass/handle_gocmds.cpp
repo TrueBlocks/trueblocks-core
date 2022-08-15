@@ -310,7 +310,7 @@ string_q get_testlogs(const CCommandOption& cmd) {
         }
     }
     if (hasConfig) {
-        os << cmd.Format("\topts.Settings.TestLog(opts.Globals.Chain)\n");
+        os << cmd.Format("\topts.Settings.TestLog(opts.Globals.Chain, opts.Globals.TestMode)\n");
     }
     return os.str();
 }

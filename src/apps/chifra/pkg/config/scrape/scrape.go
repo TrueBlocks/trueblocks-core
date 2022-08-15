@@ -91,7 +91,7 @@ func (s *ScrapeSettings) isDefault(chain, fldName string) bool {
 	return false
 }
 
-func (s *ScrapeSettings) TestLog(chain string) {
+func (s *ScrapeSettings) TestLog(chain string, test bool) {
 	logger.TestLog(!s.isDefault(chain, "Apps_per_chunk"), "Apps_per_chunk: ", s.Apps_per_chunk)
 	logger.TestLog(!s.isDefault(chain, "Snap_to_grid"), "Snap_to_grid: ", s.Snap_to_grid)
 	logger.TestLog(!s.isDefault(chain, "First_snap"), "First_snap: ", s.First_snap)
@@ -99,9 +99,11 @@ func (s *ScrapeSettings) TestLog(chain string) {
 	logger.TestLog(!s.isDefault(chain, "Channel_count"), "Channel_count: ", s.Channel_count)
 	logger.TestLog(!s.isDefault(chain, "Allow_missing"), "Allow_missing: ", s.Allow_missing)
 	// EXISTING_CODE
-	logger.TestLog(!s.isDefault(chain, "Pinata_api_key"), "Pinata_api_key: ", s.Pinata_api_key)
-	logger.TestLog(!s.isDefault(chain, "Pinata_secret_api_key"), "Pinata_secret_api_key: ", s.Pinata_secret_api_key)
-	logger.TestLog(!s.isDefault(chain, "Pinata_jwt"), "Pinata_jwt: ", s.Pinata_jwt)
+	if !test {
+		logger.TestLog(!s.isDefault(chain, "Pinata_api_key"), "Pinata_api_key: ", s.Pinata_api_key)
+		logger.TestLog(!s.isDefault(chain, "Pinata_secret_api_key"), "Pinata_secret_api_key: ", s.Pinata_secret_api_key)
+		logger.TestLog(!s.isDefault(chain, "Pinata_jwt"), "Pinata_jwt: ", s.Pinata_jwt)
+	}
 	// EXISTING_CODE
 }
 
