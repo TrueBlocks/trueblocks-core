@@ -50,6 +50,11 @@ func (opts *ChunksOptions) resetIndex(ctx *WalkContext, path string, first bool)
 }
 
 func (opts *ChunksOptions) HandleReset(blockNums []uint64) error {
+	if opts.Globals.TestMode {
+		logger.Log(logger.Warning, "Reset option not tested.")
+		return nil
+	}
+
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Printf("%s ", strings.Replace(warning, "{0}", fmt.Sprintf("%d", opts.Reset), -1))
 	text, _ := reader.ReadString('\n')
