@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-08-14T21:51:29
+date: 2022-08-14T22:17:43
 lastmod:
   - :git
   - lastmod
@@ -155,6 +155,7 @@ Notes:
   - The --belongs option requires both an address and a block identifier.
   - You may only specifiy an address when using the --belongs option.
   - The two --pin_ options, the --clean option, and the --check option are available only in manifest mode.
+  - The --repair and --reset options also update the manifest, but do not publish it.
 ```
 
 **Source code**: [`internal/chunks`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/chunks)
