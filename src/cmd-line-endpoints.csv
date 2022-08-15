@@ -22,7 +22,7 @@ num ,group       ,is_visible ,is_visible_docs ,api_group ,api_route    ,tool    
 04  ,Admin       ,true       ,true            ,apps      ,status       ,cacheStatus              ,Report status        ,Report on the status of the TrueBlocks system.
 04  ,Admin       ,true       ,true            ,go-apps   ,serve        ,flame                    ,                     ,Serve the TrueBlocks API using the flame server.
 04  ,Admin       ,true       ,true            ,apps      ,scrape       ,blockScrape              ,Scrape index         ,Scan the chain and update the TrueBlocks index of appearances.
-04  ,Admin       ,true       ,true            ,apps      ,chunks       ,chunkMan                 ,Manage chunks        ,Manage and investigate chunks and bloom filters.
+04  ,Admin       ,true       ,true            ,apps      ,chunks       ,chunkMan                 ,Manage chunks        ,Manage&#44; investigate&#44; and display the Unchained Index.
 04  ,Admin       ,true       ,true            ,apps      ,init         ,init                     ,Initialize index     ,Initialize the TrueBlocks system by downloading from IPFS.
 
 05  ,Other       ,false      ,true            ,          ,             ,                         ,                     ,Access to other and external data

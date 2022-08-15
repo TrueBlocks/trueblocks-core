@@ -37,7 +37,7 @@ func (opts *ChunksOptions) validateChunks() error {
 		return validate.Usage("The {0} option is not yet enabled", "--publish")
 	}
 
-	if opts.Mode != "manifest" {
+	if opts.Mode != "index" {
 		if opts.Pin || opts.Publish {
 			return validate.Usage("The {0} and {1} options are available only in {2} mode.", "--pin", "--publish", "manifest")
 		}
@@ -95,8 +95,8 @@ func (opts *ChunksOptions) validateChunks() error {
 	}
 
 	if opts.Repair {
-		if opts.Mode != "index" && opts.Mode != "manifest" {
-			return validate.Usage("The {0} option is only available in {1} mode", "--repair", "index or manifest")
+		if opts.Mode != "index" {
+			return validate.Usage("The {0} option is only available in {1} mode", "--repair", "index")
 		}
 
 		if opts.Globals.TestMode {
@@ -119,16 +119,15 @@ func (opts *ChunksOptions) validateChunks() error {
 	// Note this does not return if a migration is needed
 	migrate.CheckBackLevelIndex(opts.Globals.Chain, true)
 
-	if opts.Remote {
-		if opts.Mode != "pins" && opts.Mode != "manifest" {
-			return validate.Usage("The {0} option is only available {1}.", "--remote", "in pins or manifest mode")
+	if opts.Mode != "index" {
+		if opts.Remote {
+			return validate.Usage("The {0} option is only available {1}.", "--remote", "in index mode")
 		}
-	}
 
-	if opts.Truncate != utils.NOPOS {
-		if opts.Mode != "index" {
+		if opts.Truncate != utils.NOPOS {
 			return validate.Usage("The {0} option is only available {1}.", "--truncate", "in index mode")
 		}
 	}
+
 	return opts.Globals.Validate()
 }

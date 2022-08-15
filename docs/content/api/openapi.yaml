@@ -1507,7 +1507,7 @@ paths:
       tags:
         - Admin
       summary: Manage chunks
-      description: Manage and investigate chunks and bloom filters.
+      description: Manage, investigate, and display the Unchained Index.
       operationId: admin-chunks
       parameters:
         - name: mode

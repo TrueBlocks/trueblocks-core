@@ -8,7 +8,7 @@ their local index, clean their remote index, study the indexes, etc. Stay tuned.
 
 ```[plaintext]
 Purpose:
-  Manage and investigate chunks and bloom filters.
+  Manage, investigate, and display the Unchained Index.
 
 Usage:
   chifra chunks <mode> [flags] [blocks...] [address...]
@@ -35,8 +35,8 @@ Notes:
   - The --belongs option is only available with the addresses or blooms mode.
   - The --belongs option requires both an address and a block identifier.
   - You may only specifiy an address when using the --belongs option.
-  - The two --pin_ options, the --clean option, and the --check option are available only in manifest mode.
-  - The --repair and --truncate options also update the manifest, but do not publish it.
+  - The --pin, --publish, --truncate, --repair, and --check option are available only in index mode.
+  - The --repair and --truncate options update the manifest, but do not publish it.
 ```
 
 #### Other Options

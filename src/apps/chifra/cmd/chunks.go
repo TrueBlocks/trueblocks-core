@@ -35,10 +35,10 @@ Arguments:
   blocks - optional list of blocks used to intersect with chunk ranges
   addrs - optional list of addresses for use with --belongs option (see notes)`
 
-const shortChunks = "manage and investigate chunks and bloom filters"
+const shortChunks = "manage, investigate, and display the Unchained Index"
 
 const longChunks = `Purpose:
-  Manage and investigate chunks and bloom filters.`
+  Manage, investigate, and display the Unchained Index.`
 
 const notesChunks = `
 Notes:
@@ -47,8 +47,8 @@ Notes:
   - The --belongs option is only available with the addresses or blooms mode.
   - The --belongs option requires both an address and a block identifier.
   - You may only specifiy an address when using the --belongs option.
-  - The two --pin_ options, the --clean option, and the --check option are available only in manifest mode.
-  - The --repair and --truncate options also update the manifest, but do not publish it.`
+  - The --pin, --publish, --truncate, --repair, and --check option are available only in index mode.
+  - The --repair and --truncate options update the manifest, but do not publish it.`
 
 func init() {
 	chunksCmd.Flags().SortFlags = false

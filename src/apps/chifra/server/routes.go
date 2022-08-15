@@ -169,7 +169,7 @@ func RouteScrape(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// RouteChunks Manage and investigate chunks and bloom filters.
+// RouteChunks Manage, investigate, and display the Unchained Index.
 func RouteChunks(w http.ResponseWriter, r *http.Request) {
 	if err, _ := chunksPkg.ServeChunks(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
