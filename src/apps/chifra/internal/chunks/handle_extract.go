@@ -17,7 +17,7 @@ func shouldDisplay(result cache.IndexFileInfo, blockNums []uint64) bool {
 	}
 	hit := false
 	for _, bn := range blockNums {
-		h := result.Range.BlockIntersects(bn)
+		h := result.Range.IntersectsB(bn)
 		hit = hit || h
 		if hit {
 			break

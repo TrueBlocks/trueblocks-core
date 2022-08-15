@@ -67,26 +67,6 @@ func FilenameFromRange(fileRange FileRange, extension string) string {
 	return fileName
 }
 
-// Intersects returns true if the two ranges intersect
-func (r *FileRange) Intersects(r2 FileRange) bool {
-	return !(r.Last < r2.First || r.First > r2.Last)
-}
-
-// BlockIntersects returns true if block is inside the range (inclusive on both ends)
-func (r *FileRange) BlockIntersects(blk uint64) bool {
-	return !(blk < r.First || blk > r.Last)
-}
-
-// EarlierThan returns true if the last block in the file is less than the given block
-func (r *FileRange) EarlierThan(blk uint64) bool {
-	return r.Last < blk
-}
-
-// LaterThan returns true if the first block in the file is greater than the given block
-func (r *FileRange) LaterThan(blk uint64) bool {
-	return r.First > blk
-}
-
 // RangeToFilename returns a fileName and and existance bool given a file range and a type
 func (r *FileRange) RangeToFilename(chain string, mode CacheType) (bool, string) {
 	rangeStr := FilenameFromRange(*r, "")
@@ -95,12 +75,56 @@ func (r *FileRange) RangeToFilename(chain string, mode CacheType) (bool, string)
 	return file.FileExists(fileName), fileName
 }
 
-// Follows returns true if the last block in the previous range is one less than
-// the first block on the given range or if sequential is false, if last is
-// prev.smaller than curr.first
-func (curr *FileRange) Follows(prev FileRange, sequential bool) bool {
+// Follows returns true if the range is strictly after the test range.
+// (If 'sequential' is true, then the first block in the range must be
+// one more than the last block in the test range.)
+func (r *FileRange) Follows(test FileRange, sequential bool) bool {
 	if sequential {
-		return curr.First == prev.Last+1
+		return r.First == test.Last+1
 	}
-	return curr.First > prev.Last
+	return r.LaterThan(test)
+}
+
+// Preceeds returns true if the range is strictly before the test range.
+// (If 'sequential' is true, then the last block in the range must be
+// one less than the first block in the test range.) If the test range
+// starts at zero, returns false (nothing is before the first range)
+func (r *FileRange) Preceeds(test FileRange, sequential bool) bool {
+	if sequential {
+		if test.First == 0 {
+			return false
+		}
+		return r.Last == test.First-1
+	}
+	return r.EarlierThan(test)
+}
+
+// Intersects returns true if the two ranges intersect
+func (r *FileRange) Intersects(test FileRange) bool {
+	return !r.EarlierThan(test) && !r.LaterThan(test)
+}
+
+// EarlierThan returns true if range is strictly before the given test range
+func (r *FileRange) EarlierThan(test FileRange) bool {
+	return r.Last < test.First
+}
+
+// LaterThan returns true if range is strictly after the given test range
+func (r *FileRange) LaterThan(test FileRange) bool {
+	return r.First > test.Last
+}
+
+// IntersectsB returns true if the block is inside the range (inclusive on both ends)
+func (r *FileRange) IntersectsB(blk uint64) bool {
+	return r.Intersects(FileRange{First: blk, Last: blk})
+}
+
+// EarlierThanB returns true if the range is strictly before the given block
+func (r *FileRange) EarlierThanB(blk uint64) bool {
+	return r.EarlierThan(FileRange{First: blk, Last: blk})
+}
+
+// LaterThanB returns true if the range is strictly after the given block
+func (r *FileRange) LaterThanB(blk uint64) bool {
+	return r.LaterThan(FileRange{First: blk, Last: blk})
 }

@@ -13,6 +13,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrape"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -35,7 +36,7 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 			if !skip {
 				hit := false
 				for _, block := range blockNums {
-					h := result.Range.BlockIntersects(block)
+					h := result.Range.IntersectsB(block)
 					hit = hit || h
 					if hit {
 						break
@@ -102,8 +103,9 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 
 	reports := []types.ReportCheck{}
 
-	seq := types.ReportCheck{Reason: "Sequential"}
-	if err := opts.CheckSequential(fileNames, cacheArray, remoteArray, &seq); err != nil {
+	allowMissing := scrape.AllowMissing(opts.Globals.Chain)
+	seq := types.ReportCheck{Reason: "Filenames sequential"}
+	if err := opts.CheckSequential(fileNames, cacheArray, remoteArray, allowMissing, &seq); err != nil {
 		return err
 	}
 	reports = append(reports, seq)

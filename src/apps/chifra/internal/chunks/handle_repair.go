@@ -40,7 +40,7 @@ func (opts *ChunksOptions) repairManifest(ctx *WalkContext, path string, first b
 	// reports := []types.ReportRepair{}
 	// for _, chunk := range man.Chunks {
 	// 	rng, _ := cache.RangeFromFilename(chunk.Range + ".")
-	// 	if rng.BlockIntersects(blockNums[0]) {
+	// 	if rng.IntersectsB(blockNums[0]) {
 	// 		report := types.ReportRepair{
 	// 			Status:    "Repaired Bloom",
 	// 			Range:     config.GetPathToIndex(opts.Globals.Chain) + "blooms/" + chunk.Range + ".bloom",

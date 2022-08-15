@@ -20,87 +20,82 @@ import (
 
 // HandleScrapeBlaze is called each time around the forever loop prior to calling into
 // Blaze to actually scrape the blocks.
-func (opts *ScrapeOptions) HandleScrapeBlaze(progress *rpcClient.MetaData, blazeOpts *BlazeOptions) (ok bool, err error) {
-	_, err = blazeOpts.HandleBlaze(progress)
+func (opts *ScrapeOptions) HandleScrapeBlaze(progress *rpcClient.MetaData, blazeOpts *BlazeOptions) error {
 
-	indexPath := config.GetPathToIndex(opts.Globals.Chain)
-	if err != nil {
-		index.CleanTemporaryFolders(indexPath, false)
-		return true, err
+	// Do the actual scrape, wait until it finishes, clean up and return on failure
+	if _, err := blazeOpts.HandleBlaze(progress); err != nil {
+		index.CleanTemporaryFolders(config.GetPathToIndex(opts.Globals.Chain), false)
+		return err
 	}
-	cnt := 0
-	for i := int(opts.StartBlock); i < int(opts.StartBlock+opts.BlockCnt); i++ {
-		if !blazeOpts.ProcessedMap[i] {
-			cnt++
+
+	for bn := int(opts.StartBlock); bn < int(opts.StartBlock+opts.BlockCnt); bn++ {
+		if !blazeOpts.ProcessedMap[bn] {
+			// A block was not processed, clean up, report the error and return
+			index.CleanTemporaryFolders(config.GetPathToIndex(opts.Globals.Chain), false)
+			msg := fmt.Sprintf("Block %d was not processed", bn)
+			return errors.New(msg)
 		}
 	}
-	if cnt > 0 {
-		index.CleanTemporaryFolders(indexPath, false)
-		msg := fmt.Sprintf("%d items were not processed", cnt)
-		err := errors.New(msg)
-		logger.Log(logger.Error, err.Error())
-		return true, err
-	}
 
-	blazeOpts.WriteTimestamps()
+	blazeOpts.WriteTimestamps(blazeOpts.Chain)
 
-	return true, nil
+	return nil
 }
 
-func (opts *BlazeOptions) WriteTimestamps() error {
+func (opts *BlazeOptions) WriteTimestamps(chain string) error {
 	sort.Slice(opts.TsArray, func(i, j int) bool {
 		return opts.TsArray[i].Bn < opts.TsArray[j].Bn
 	})
 
 	// TODO: BOGUS - NEEDS TO USE THE BACKUP FACILITY
 	// Assume that the existing timestamps file always contains valid timestamps
-	tsPath := config.GetPathToIndex(opts.Chain) + "ts.bin"
+	tsPath := config.GetPathToIndex(chain) + "ts.bin"
 	fp, err := os.OpenFile(tsPath, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0644)
 	if err != nil {
 		return err
 	}
 
 	defer func() {
-		tslib.DeCache(opts.Chain)
+		tslib.DeCache(chain)
 		fp.Close()
 		// TODO: BOGUS - PROTECT AGAINST FAILURE WHEN WRITING
 		// sigintTrap.Disable(trapCh)
 		// writeMutex.Unlock()
 	}()
 
-	// Add, to the end of the timestamps file, all the timestamps in the array with the
-	// following caveat: fill in any missing timestamps including those that may be
-	// missing from the front of the array
-	cnt := 0
-	nTs, _ := tslib.NTimestamps(opts.Chain)
-	start := uint32(nTs)
-	stop := uint32(opts.StartBlock + opts.BlockCount)
+	nTs, _ := tslib.NTimestamps(chain)
 
-	for bn := start; bn < stop; bn++ {
-		if (bn % 13) == 0 {
-			f := "-------- ( ------)- <PROG>  : Checking timestamps %-04d of %-04d\r"
-			fmt.Fprintf(os.Stderr, f, bn, stop)
-		}
+	cnt := 0
+	for bn := nTs; bn < opts.StartBlock+opts.BlockCount; bn++ {
+		// Append to the timestamps file all the new timestamps but as we do that make sure we're
+		// not skipping anything at the front, in the middle, or at the end of the list
+
 		ts := tslib.Timestamp{}
 		if cnt >= len(opts.TsArray) {
 			ts = tslib.Timestamp{
-				Bn: bn,
-				Ts: uint32(rpcClient.GetBlockTimestamp(config.GetRpcProvider(opts.Chain), uint64(bn))),
+				Bn: uint32(bn),
+				Ts: uint32(rpcClient.GetBlockTimestamp(config.GetRpcProvider(chain), bn)),
 			}
 		} else {
 			ts = opts.TsArray[cnt]
-			if opts.TsArray[cnt].Bn != bn {
+			if opts.TsArray[cnt].Bn != uint32(bn) {
 				ts = tslib.Timestamp{
-					Bn: bn,
-					Ts: uint32(rpcClient.GetBlockTimestamp(config.GetRpcProvider(opts.Chain), uint64(bn))),
+					Bn: uint32(bn),
+					Ts: uint32(rpcClient.GetBlockTimestamp(config.GetRpcProvider(chain), bn)),
 				}
 				cnt-- // set it back
 			}
 		}
-		err = binary.Write(fp, binary.LittleEndian, &ts)
-		if err != nil {
+
+		if (bn % 13) == 0 {
+			msg := fmt.Sprintf("Checking timestamps %-04d of %-04d", bn, opts.StartBlock+opts.BlockCount)
+			logger.Log(logger.Progress, msg)
+		}
+
+		if err = binary.Write(fp, binary.LittleEndian, &ts); err != nil {
 			return err
 		}
+
 		cnt++
 	}
 	return nil

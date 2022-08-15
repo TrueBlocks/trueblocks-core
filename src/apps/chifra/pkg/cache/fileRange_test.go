@@ -185,21 +185,21 @@ func Test_RangeRangeIntersect(t *testing.T) {
 		if s != tt.want[0] {
 			t.Error("Test", tt.name, "failed Intersects.")
 		}
-		s = tt.r1.BlockIntersects(tt.r2.First)
+		s = tt.r1.IntersectsB(tt.r2.First)
 		if s != tt.want[1] {
-			t.Error("Test", tt.name, "failed BlockIntersects1.")
+			t.Error("Test", tt.name, "failed IntersectsB 1.")
 		}
-		s = tt.r1.BlockIntersects(tt.r2.Last)
+		s = tt.r1.IntersectsB(tt.r2.Last)
 		if s != tt.want[2] {
-			t.Error("Test", tt.name, "failed BlockIntersects2.")
+			t.Error("Test", tt.name, "failed IntersectsB 2.")
 		}
-		s = tt.r1.LaterThan(tt.r2.First)
+		s = tt.r1.LaterThanB(tt.r2.First)
 		if s != tt.want[3] {
-			t.Error("Test", tt.name, "failed LaterThan.")
+			t.Error("Test", tt.name, "failed LaterThanB.")
 		}
-		s = tt.r1.EarlierThan(tt.r2.Last)
+		s = tt.r1.EarlierThanB(tt.r2.Last)
 		if s != tt.want[4] {
-			t.Error("Test", tt.name, "failed EarlierThan.")
+			t.Error("Test", tt.name, "failed EarlierThanB.")
 		}
 	}
 }

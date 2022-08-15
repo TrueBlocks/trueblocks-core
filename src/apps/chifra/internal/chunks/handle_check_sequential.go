@@ -8,34 +8,44 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrape"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-// TODO: Concurrent?
-func (opts *ChunksOptions) CheckSequential(fnArray, cacheArray, remoteArray []string, report *types.ReportCheck) error {
-	if err := opts.checkSequential("disc", fnArray, report); err != nil {
+// TODO: Can this be concurrent?
+func (opts *ChunksOptions) CheckSequential(fnArray, cacheArray, remoteArray []string, allowMissing bool, report *types.ReportCheck) error {
+	if err := opts.checkSequential("disc", fnArray, allowMissing, report); err != nil {
 		return err
 	}
-	if err := opts.checkSequential("cache", cacheArray, report); err != nil {
+
+	report.MsgStrings = append(report.MsgStrings, "")
+	if err := opts.checkSequential("cache", cacheArray, allowMissing, report); err != nil {
 		return err
 	}
-	if err := opts.checkSequential("contract", remoteArray, report); err != nil {
+
+	report.MsgStrings = append(report.MsgStrings, "")
+	if err := opts.checkSequential("contract", remoteArray, allowMissing, report); err != nil {
 		return err
 	}
+
 	return nil
 }
 
-func (opts *ChunksOptions) checkSequential(which string, array []string, report *types.ReportCheck) error {
+func (opts *ChunksOptions) checkSequential(which string, array []string, allowMissing bool, report *types.ReportCheck) error {
 	prev := cache.NotARange
 	for _, item := range array {
-		fR, _ := cache.RangeFromFilename(item)
+		var fR cache.FileRange
+		var err error
+		if fR, err = cache.RangeFromFilename(item); err != nil {
+			return err
+		}
+
 		if prev != cache.NotARange {
 			report.VisitedCnt++
 			report.CheckedCnt++
 			if prev != fR {
-				if !fR.Follows(prev, !scrape.AllowMissing(opts.Globals.Chain)) {
-					report.MsgStrings = append(report.MsgStrings, fmt.Sprintf("In %s array, not sequental %s:%s", which, prev, fR))
+				if !prev.Preceeds(fR, !allowMissing) {
+					report.MsgStrings = append(report.MsgStrings, fmt.Sprintf("%s: files not sequental %s:%s", utils.MakeFirstUpperCase(which), prev, fR))
 				} else {
 					report.PassedCnt++
 				}

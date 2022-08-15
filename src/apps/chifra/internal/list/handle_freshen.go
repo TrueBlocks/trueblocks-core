@@ -132,7 +132,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 				continue
 			}
 
-			if fileRange.EarlierThan(updater.FirstBlock) {
+			if fileRange.EarlierThanB(updater.FirstBlock) {
 				continue
 			}
 

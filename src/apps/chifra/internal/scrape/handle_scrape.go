@@ -26,6 +26,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		return err
 	}
 
+	origBlockCnt := opts.BlockCnt
 	for {
 		progress, err := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
 		if err != nil {
@@ -47,11 +48,13 @@ func (opts *ScrapeOptions) HandleScrape() error {
 
 		// We always start one after where we last left off
 		opts.StartBlock = utils.Max(progress.Ripe, utils.Max(progress.Staging, progress.Finalized)) + 1
+		opts.BlockCnt = origBlockCnt
 		if (opts.StartBlock + opts.BlockCnt) > progress.Latest {
 			opts.BlockCnt = (progress.Latest - opts.StartBlock)
 		}
 
-		// 'UnripeDist' behind head unless head is less or equal to than 'UnripeDist', then head
+		// The ripe block is the head of the chain unless the chain is more than 'UnripeDist' from the
+		// first block, then it's 'UnripeDist' behind the head (i.e., 28 blocks usually - six minutes)
 		ripe := progress.Latest
 		if ripe > opts.Settings.Unripe_dist {
 			ripe = progress.Latest - opts.Settings.Unripe_dist
@@ -71,7 +74,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 			ProcessedMap:  make(map[int]bool, opts.BlockCnt),
 		}
 
-		// Remove whatever's in the unripe folder since the chain may have forked
+		// Remove whatever's in the unripe folder each round since the chain may have forked
 		indexPath := config.GetPathToIndex(opts.Globals.Chain)
 		err = os.RemoveAll(path.Join(indexPath, "unripe"))
 		if err != nil {
@@ -84,10 +87,8 @@ func (opts *ScrapeOptions) HandleScrape() error {
 			goto PAUSE
 		}
 
-		if ok, err := opts.HandleScrapeBlaze(progress, &blazeOpts); !ok || err != nil {
-			if !ok {
-				break
-			}
+		if err := opts.HandleScrapeBlaze(progress, &blazeOpts); err != nil {
+			logger.Log(logger.Error, err)
 			goto PAUSE
 		}
 
