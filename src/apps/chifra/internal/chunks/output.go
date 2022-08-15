@@ -115,8 +115,7 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 var maxTestItems = 100
 
 func (opts *ChunksOptions) defaultFormat(def string) string {
-	if opts.Mode == "manifest" ||
-		opts.Mode == "status" ||
+	if opts.Mode == "status" ||
 		(opts.Mode == "index" && opts.Check) ||
 		opts.Truncate != utils.NOPOS {
 		return "json"

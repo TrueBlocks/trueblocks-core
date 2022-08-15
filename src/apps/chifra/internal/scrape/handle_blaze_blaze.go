@@ -2,12 +2,14 @@ package scrapePkg
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"sort"
 	"strconv"
 	"strings"
 	"sync"
+	"sync/atomic"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -431,42 +433,12 @@ func (opts *BlazeOptions) WriteAppearances(meta *rpcClient.MetaData, bn int, add
 		}
 	}
 
-	// TODO: BOGUS - THIS WON'T ALLOW THE PROGRESS REPORT TO OVERWRITE ITSELF
-	//var (
-	//    locker    uint32
-	//    errLocked = errors.New("Locked out buddy")
-	//)
-	//
-	//func OneAtATime(d time.Duration) error {
-	//    if !atomic.CompareAndSwapUint32(&locker, 0, 1) { // <-----------------------------
-	//        return errLocked                             //   All logic in these         |
-	//    }                                                //   four lines                 |
-	//    defer atomic.StoreUint32(&locker, 0)             // <-----------------------------
-	//
-	//    // logic here, but we will sleep
-	//    time.Sleep(d)
-	//
-	//    return nil
-	//}
-	//
-	//
-	//exit
-
-	// TODO: THIS IS A PERFORMANCE ISSUE PRINTING EVERY BLOCK
-	step := uint64(17)
-	if opts.NProcessed%step == 0 {
-		dist := uint64(0)
-		if opts.RipeBlock > uint64(bn) {
-			dist = (opts.RipeBlock - uint64(bn))
-		}
-		msg := fmt.Sprintf("Scraping %-04d of %-04d at block %d of %d (%d blocks from head)", opts.NProcessed, opts.BlockCount, bn, opts.RipeBlock, dist)
-		logger.Log(logger.Progress, msg)
-	}
-
+	opts.syncedReporting(bn)
 	writeMutex.Lock()
 	opts.ProcessedMap[bn] = true
 	writeMutex.Unlock()
 	opts.NProcessed++
+
 	return
 }
 
@@ -505,4 +477,29 @@ func isImplicitAddress(addr string) bool {
 
 	// extract the potential address
 	return isAddress("0x" + string(addr[24:]))
+}
+
+var (
+	locker    uint32
+	errLocked = errors.New("Locked out buddy")
+)
+
+func (opts *BlazeOptions) syncedReporting(bn int) {
+	if !atomic.CompareAndSwapUint32(&locker, 0, 1) {
+		// Simply skip the update if someone else is already reporting
+		return
+	}
+	// Make sure to clear the lock on exit
+	defer atomic.StoreUint32(&locker, 0)
+
+	// TODO: BOGUS - THIS IS A PERFORMANCE ISSUE PRINTING EVERY BLOCK PLUS IN DOCKER MODE TOO MANY LOGS
+	step := uint64(17)
+	if opts.NProcessed%step == 0 {
+		dist := uint64(0)
+		if opts.RipeBlock > uint64(bn) {
+			dist = (opts.RipeBlock - uint64(bn))
+		}
+		msg := fmt.Sprintf("Scraping %-04d of %-04d at block %d of %d (%d blocks from head)", opts.NProcessed, opts.BlockCount, bn, opts.RipeBlock, dist)
+		logger.Log(logger.Progress, msg)
+	}
 }

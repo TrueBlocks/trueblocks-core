@@ -28,6 +28,7 @@ func GetProgress(chain string) (SimpleProgress, error) {
 	ret.Ripe = folderProgress(filepath.Join(indexPath, "ripe"))
 	ret.Unripe = folderProgress(filepath.Join(indexPath, "unripe"))
 	ret.Maps = folderProgress(filepath.Join(indexPath, "maps"))
+	ret.Chain = chain
 	return ret, nil
 }
 

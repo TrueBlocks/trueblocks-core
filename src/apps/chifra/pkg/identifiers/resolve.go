@@ -155,10 +155,7 @@ func (p *Point) resolvePoint(chain string) uint64 {
 			tsFuture := rpcClient.GetBlockTimestamp(provider, latest)
 			secs := (tsFuture - uint64(p.Number))
 			blks := (secs / 13)
-			// TODO: BOGUS - CHAIN SPECIFIC
 			bn = latest + blks
-			// fmt.Println(p.Number, tsFuture, secs, latest, blks, bn)
-			// fmt.Println()
 		}
 	} else {
 		bn = uint64(p.Number)

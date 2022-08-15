@@ -12,6 +12,7 @@ func (opts *ScrapeOptions) Pause(progressThen *rpcClient.MetaData) {
 	time.Sleep(250 * time.Millisecond)
 
 	distanceFromHead := progressThen.Latest - progressThen.Staging
+	// TODO: BOGUS - CHAIN SPECIFIC
 	isDefaultSleep := opts.Sleep == 14 || opts.Sleep == 13
 	shouldSleep := !isDefaultSleep || distanceFromHead <= (2*opts.Settings.Unripe_dist)
 
