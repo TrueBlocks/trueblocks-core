@@ -47,12 +47,9 @@ func (opts *ScrapeOptions) validateScrape() error {
 	}
 
 	if opts.Pin {
-		key, secret := scrape.PinataKeys(opts.Globals.Chain)
-		if len(key) == 0 {
-			return validate.Usage("The {0} option requires {1}", "--pin", "a pinata_api_key")
-		}
-		if len(secret) == 0 {
-			return validate.Usage("The {0} option requires {1}", "--pin", "a pinata_secret_api_key")
+		pinataKey, pinataSecret, estuaryKey := scrape.PinningKeys(opts.Globals.Chain)
+		if (pinataKey == "" || pinataSecret == "") && estuaryKey == "" {
+			return validate.Usage("The {0} option requires {1}", "--pin", "your pinning service's api key")
 		}
 		if !pinning.LocalDaemonRunning() {
 			return validate.Usage("The {0} option requires {1}", "--pin", "a locally running IPFS daemon")

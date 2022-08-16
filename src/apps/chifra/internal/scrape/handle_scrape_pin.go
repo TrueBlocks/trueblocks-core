@@ -81,6 +81,8 @@ func (opts *ScrapeOptions) HandleScrapePin(progressThen *rpcClient.MetaData, bla
 				Local:  true,
 				Apikey: key,
 				Secret: secret,
+				PinUrl: "https://api.pinata.cloud/pinning/pinFileToIPFS",
+				HeaderFunc: PinataHeaders
 			}
 
 			bloomHash, err := pina.PinFile(bloomPath)
@@ -107,6 +109,16 @@ func (opts *ScrapeOptions) HandleScrapePin(progressThen *rpcClient.MetaData, bla
 		return true, nil
 	*/
 }
+
+/*
+func PinataHeaders(s *Service, contentType string) map[string]string {
+	headers := make(map[string]string)
+	headers["Content-Type"] = contentType
+	headers["pinata_secret_api_key"] = s.Secret
+	headers["pinata_api_key"] = s.Apikey
+	return headers
+}
+*/
 
 func unique(chunks []manifest.ChunkRecord) []manifest.ChunkRecord {
 	inResult := make(map[string]bool)

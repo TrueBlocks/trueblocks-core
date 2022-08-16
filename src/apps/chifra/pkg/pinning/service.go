@@ -7,17 +7,11 @@ import (
 )
 
 type Service struct {
-	Local  bool
-	Apikey string
-	Secret string
-}
-
-func (s *Service) Headers(contentType string) map[string]string {
-	headers := make(map[string]string)
-	headers["Content-Type"] = contentType
-	headers["pinata_secret_api_key"] = s.Secret
-	headers["pinata_api_key"] = s.Apikey
-	return headers
+	Apikey     string
+	Secret     string
+	PinUrl     string
+	ResultName string
+	HeaderFunc func(s *Service, contentType string) map[string]string
 }
 
 func LocalDaemonRunning() bool {

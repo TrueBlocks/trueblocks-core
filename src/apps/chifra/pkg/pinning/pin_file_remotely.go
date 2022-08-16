@@ -12,11 +12,7 @@ import (
 	"time"
 )
 
-const (
-	PIN_FILE_URL = "https://api.pinata.cloud/pinning/pinFileToIPFS"
-)
-
-func (p *Service) pinFileRemotely(filepath string) (string, error) {
+func (s *Service) pinFileRemotely(filepath string) (string, error) {
 	file, err := os.Open(filepath)
 	if err != nil {
 		return "", err
@@ -44,13 +40,16 @@ func (p *Service) pinFileRemotely(filepath string) (string, error) {
 		Timeout: 30 * time.Second,
 	}
 
-	req, err := http.NewRequest(http.MethodPost, PIN_FILE_URL, r)
+	req, err := http.NewRequest(http.MethodPost, s.PinUrl, r)
 	if err != nil {
 		return "", err
 	}
 
-	for key, value := range p.Headers(m.FormDataContentType()) {
-		req.Header.Add(key, value)
+	if s.HeaderFunc != nil {
+		headers := s.HeaderFunc(s, m.FormDataContentType())
+		for key, value := range headers {
+			req.Header.Add(key, value)
+		}
 	}
 
 	resp, err := client.Do(req)
@@ -69,12 +68,13 @@ func (p *Service) pinFileRemotely(filepath string) (string, error) {
 		return "", err
 	}
 
-	if out, pass := dat["error"].(string); pass {
+	if out, castOk := dat["error"].(string); castOk {
 		return "", fmt.Errorf(out)
 	}
 
-	if hash, ok := dat["IpfsHash"].(string); ok {
-		return hash, nil
+	if ipfsHash, castOk := dat[s.ResultName].(string); castOk {
+		return ipfsHash, nil
 	}
+
 	return "", fmt.Errorf("Pin file to Pinata failure.")
 }

@@ -9,6 +9,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/migrate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrape"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -45,23 +46,13 @@ func (opts *ChunksOptions) validateChunks() error {
 			return validate.Usage("The {0} option is available only in {1} mode.", "--check", "manifest")
 		}
 
-	} else {
-		key, secret := scrape.PinataKeys(opts.Globals.Chain)
-		if opts.Pin {
-			if len(key) == 0 {
-				return validate.Usage("The {0} option requires {1}", "--pin", "a pinata_api_key")
-			}
-			if len(secret) == 0 {
-				return validate.Usage("The {0} option requires {1}", "--pin", "a pinata_secret_api_key")
-			}
+	} else if opts.Pin {
+		pinataKey, pinataSecret, estuaryKey := scrape.PinningKeys(opts.Globals.Chain)
+		if (pinataKey == "" || pinataSecret == "") && estuaryKey == "" {
+			return validate.Usage("The {0} option requires {1}", "--pin", "your pinning service's api key")
 		}
-		if opts.Publish {
-			if len(key) == 0 {
-				return validate.Usage("The {0} option requires {1}", "--pin", "a pinata_api_key")
-			}
-			if len(secret) == 0 {
-				return validate.Usage("The {0} option requires {1}", "--pin", "a pinata_secret_api_key")
-			}
+		if !pinning.LocalDaemonRunning() {
+			return validate.Usage("The {0} option requires {1}", "--pin", "a locally running IPFS daemon")
 		}
 	}
 

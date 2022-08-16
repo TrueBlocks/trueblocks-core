@@ -1,7 +1,7 @@
 package pinning
 
-func (p *Service) PinFile(filepath string) (string, error) {
-	if p.Local {
+func (p *Service) PinFile(filepath string, local bool) (string, error) {
+	if local {
 		return p.pinFileLocally(filepath)
 	}
 	return p.pinFileRemotely(filepath)

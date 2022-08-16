@@ -29,6 +29,7 @@ type ScrapeSettings struct {
 	Pinata_api_key        string `json:"pinataApiKey,omitempty"`
 	Pinata_secret_api_key string `json:"pinataSecretApiKey,omitempty"`
 	Pinata_jwt            string `json:"pinataJwt,omitempty"`
+	Estuary_key           string `json:"estuaryKey,omitempty"`
 	// EXISTING_CODE
 }
 
@@ -43,6 +44,7 @@ var defaultSettings = ScrapeSettings{
 	Pinata_api_key:        "",
 	Pinata_secret_api_key: "",
 	Pinata_jwt:            "",
+	Estuary_key:           "",
 	// EXISTING_CODE
 }
 
@@ -57,6 +59,7 @@ var Unset = ScrapeSettings{
 	Pinata_api_key:        "",
 	Pinata_secret_api_key: "",
 	Pinata_jwt:            "",
+	Estuary_key:           "",
 	// EXISTING_CODE
 }
 
@@ -85,6 +88,8 @@ func (s *ScrapeSettings) isDefault(chain, fldName string) bool {
 		return s.Pinata_secret_api_key == def.Pinata_secret_api_key
 	case "Pinata_jwt":
 		return s.Pinata_jwt == def.Pinata_jwt
+	case "Estuary_key":
+		return s.Estuary_key == def.Estuary_key
 	}
 	// EXISTING_CODE
 
@@ -103,6 +108,7 @@ func (s *ScrapeSettings) TestLog(chain string, test bool) {
 		logger.TestLog(!s.isDefault(chain, "Pinata_api_key"), "Pinata_api_key: ", s.Pinata_api_key)
 		logger.TestLog(!s.isDefault(chain, "Pinata_secret_api_key"), "Pinata_secret_api_key: ", s.Pinata_secret_api_key)
 		logger.TestLog(!s.isDefault(chain, "Pinata_jwt"), "Pinata_jwt: ", s.Pinata_jwt)
+		logger.TestLog(!s.isDefault(chain, "Estuary_key"), "Estuary_key: ", s.Estuary_key)
 	}
 	// EXISTING_CODE
 }
@@ -200,6 +206,9 @@ func (base *ScrapeSettings) overlay(chain string, overlay ScrapeSettings) {
 	if !overlay.isDefault(chain, "Pinata_jwt") && overlay.Pinata_jwt != "" {
 		base.Pinata_jwt = overlay.Pinata_jwt
 	}
+	if !overlay.isDefault(chain, "Estuary_key") && overlay.Estuary_key != "" {
+		base.Estuary_key = overlay.Estuary_key
+	}
 	// EXISTING_CODE
 
 	return
@@ -211,9 +220,9 @@ func AllowMissing(chain string) bool {
 	return s.Allow_missing
 }
 
-func PinataKeys(chain string) (string, string) {
+func PinningKeys(chain string) (string, string, string) {
 	s, _ := GetSettings(chain, nil)
-	return s.Pinata_api_key, s.Pinata_secret_api_key
+	return s.Pinata_api_key, s.Pinata_secret_api_key, s.Estuary_key
 }
 
 func toEnvStr(name string) string {
