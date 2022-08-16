@@ -87,11 +87,7 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 			err = opts.HandleBlooms(blockNums)
 
 		case "manifest":
-			if opts.Globals.Format == "txt" || opts.Globals.Format == "csv" {
-				err = opts.HandlePins(blockNums)
-			} else {
-				err = opts.HandleManifest(blockNums)
-			}
+			err = opts.HandleManifest(blockNums)
 
 		case "stats":
 			err = opts.HandleStats(blockNums)
