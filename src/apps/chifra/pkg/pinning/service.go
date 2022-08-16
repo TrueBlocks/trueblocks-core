@@ -6,13 +6,13 @@ import (
 	shell "github.com/ipfs/go-ipfs-api"
 )
 
-type PinningService struct {
+type Service struct {
 	Local  bool
 	Apikey string
 	Secret string
 }
 
-func (s *PinningService) Headers(contentType string) map[string]string {
+func (s *Service) Headers(contentType string) map[string]string {
 	headers := make(map[string]string)
 	headers["Content-Type"] = contentType
 	headers["pinata_secret_api_key"] = s.Secret

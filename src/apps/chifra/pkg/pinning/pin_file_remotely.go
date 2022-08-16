@@ -16,7 +16,7 @@ const (
 	PIN_FILE_URL = "https://api.pinata.cloud/pinning/pinFileToIPFS"
 )
 
-func (p *PinningService) pinFileRemotely(filepath string) (string, error) {
+func (p *Service) pinFileRemotely(filepath string) (string, error) {
 	file, err := os.Open(filepath)
 	if err != nil {
 		return "", err
