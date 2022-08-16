@@ -40,17 +40,27 @@ func (opts *ChunksOptions) checkSequential(which string, array []string, allowMi
 			return err
 		}
 
+		w := utils.MakeFirstUpperCase(which)
 		if prev != cache.NotARange {
 			report.VisitedCnt++
 			report.CheckedCnt++
 			if prev != fR {
 				if !prev.Preceeds(fR, !allowMissing) {
-					report.MsgStrings = append(report.MsgStrings, fmt.Sprintf("%s: files not sequental %s:%s", utils.MakeFirstUpperCase(which), prev, fR))
+					// try to figure out why
+					if prev.Intersects(fR) {
+						report.MsgStrings = append(report.MsgStrings, fmt.Sprintf("%s: file ranges intersect %s:%s", w, prev, fR))
+					} else if prev.Follows(fR, !allowMissing) {
+						report.MsgStrings = append(report.MsgStrings, fmt.Sprintf("%s: previous range is after current %s:%s", w, prev, fR))
+					} else if prev.Preceeds(fR, false) {
+						report.MsgStrings = append(report.MsgStrings, fmt.Sprintf("%s: gap in sequence %d to %d skips %d", w, prev.Last, fR.First, (fR.First-prev.Last-1)))
+					} else {
+						report.MsgStrings = append(report.MsgStrings, fmt.Sprintf("%s: files not sequental %s:%s", w, prev, fR))
+					}
 				} else {
 					report.PassedCnt++
 				}
 			} else {
-				report.MsgStrings = append(report.MsgStrings, fmt.Sprintf("Duplicate at %s in %s array", fR, which))
+				report.MsgStrings = append(report.MsgStrings, fmt.Sprintf("%s: duplicate at %s", w, fR))
 			}
 		}
 		prev = fR

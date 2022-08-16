@@ -235,7 +235,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 31925,apps,Admin,chunks,chunkMan,publish,p,,false,false,true,false,gocmd,switch,<boolean>,repin chunks&#44; pin the manifest&#44; and publish to the Unchained Index smart contract
 31930,apps,Admin,chunks,chunkMan,belongs,b,,false,false,true,true,gocmd,switch,<boolean>,in index mode only&#44; checks if the given address appears in the given chunk
 31940,apps,Admin,chunks,chunkMan,truncate,n,,false,false,false,false,gocmd,flag,<blknum>,in index mode only&#44; tuncates the index at this block
-31945,apps,Admin,chunks,chunkMan,repair,r,,false,false,false,false,gocmd,switch,<boolean>,in index mode only&#44; repair a chunk (requires block identifier)
+31945,apps,Admin,chunks,chunkMan,repair,r,,false,false,false,false,gocmd,switch,<boolean>,in index mode only&#44; repair a single chunk (requires block identifier)
 31935,apps,Admin,chunks,chunkMan,check,c,,false,false,true,true,gocmd,switch,<boolean>,in index mode only&#44; checks for internal consistency of the index&#44; blooms&#44; and manifest
 31950,apps,Admin,chunks,chunkMan,,,,false,false,true,true,--,description,,Manage&#44; investigate&#44; and display the Unchained Index.
 31955,apps,Admin,chunks,chunkMan,n1,,,false,false,false,false,--,note,,If blocks are provided&#44; only chunks intersecting with those blocks are displayed.

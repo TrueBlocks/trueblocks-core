@@ -58,7 +58,7 @@ func init() {
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Publish, "publish", "p", false, "repin chunks, pin the manifest, and publish to the Unchained Index smart contract")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Belongs, "belongs", "b", false, "in index mode only, checks if the given address appears in the given chunk")
 	chunksCmd.Flags().Uint64VarP(&chunksPkg.GetOptions().Truncate, "truncate", "n", 0, "in index mode only, tuncates the index at this block (hidden)")
-	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Repair, "repair", "r", false, "in index mode only, repair a chunk (requires block identifier) (hidden)")
+	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Repair, "repair", "r", false, "in index mode only, repair a single chunk (requires block identifier) (hidden)")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Check, "check", "c", false, "in index mode only, checks for internal consistency of the index, blooms, and manifest")
 	if os.Getenv("TEST_MODE") != "true" {
 		chunksCmd.Flags().MarkHidden("truncate")

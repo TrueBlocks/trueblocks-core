@@ -16,7 +16,7 @@ Flags:
   -p, --publish         repin chunks, pin the manifest, and publish to the Unchained Index smart contract
   -b, --belongs         in index mode only, checks if the given address appears in the given chunk
   -n, --truncate uint   in index mode only, tuncates the index at this block (hidden)
-  -r, --repair          in index mode only, repair a chunk (requires block identifier) (hidden)
+  -r, --repair          in index mode only, repair a single chunk (requires block identifier) (hidden)
   -c, --check           in index mode only, checks for internal consistency of the index, blooms, and manifest
   -x, --fmt string      export format, one of [none|json*|txt|csv|api]
   -v, --verbose         enable verbose (increase detail with --log_level)

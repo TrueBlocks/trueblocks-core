@@ -31,7 +31,7 @@ type ChunksOptions struct {
 	Publish  bool                     `json:"publish,omitempty"`  // Repin chunks, pin the manifest, and publish to the Unchained Index smart contract
 	Belongs  bool                     `json:"belongs,omitempty"`  // In index mode only, checks if the given address appears in the given chunk
 	Truncate uint64                   `json:"truncate,omitempty"` // In index mode only, tuncates the index at this block
-	Repair   bool                     `json:"repair,omitempty"`   // In index mode only, repair a chunk (requires block identifier)
+	Repair   bool                     `json:"repair,omitempty"`   // In index mode only, repair a single chunk (requires block identifier)
 	Check    bool                     `json:"check,omitempty"`    // In index mode only, checks for internal consistency of the index, blooms, and manifest
 	Globals  globals.GlobalOptions    `json:"globals,omitempty"`  // The global options
 	BadFlag  error                    `json:"badFlag,omitempty"`  // An error flag if needed

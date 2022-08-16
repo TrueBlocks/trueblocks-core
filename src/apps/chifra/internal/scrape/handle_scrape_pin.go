@@ -77,7 +77,7 @@ func (opts *ScrapeOptions) HandleScrapePin(progressThen *rpcClient.MetaData, bla
 			bloomPath := unchainedFolder + "blooms/" + record.Range + ".bloom"
 
 			key, secret := scrape.PinataKeys(opts.Globals.Chain)
-			pina := pinning.Service{
+			pina := pinning.PinningService{
 				Local:  true,
 				Apikey: key,
 				Secret: secret,

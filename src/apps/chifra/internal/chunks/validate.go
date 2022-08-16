@@ -116,11 +116,13 @@ func (opts *ChunksOptions) validateChunks() error {
 		return validate.Usage("You may not use the {0} option without {1}.", "--to_file", "--verbose")
 	}
 
-	if opts.Mode != "index" {
+	if opts.Mode != "index" && opts.Mode != "manifest" {
 		if opts.Remote {
 			return validate.Usage("The {0} option is only available {1}.", "--remote", "in index mode")
 		}
+	}
 
+	if opts.Mode != "index" {
 		if opts.Truncate != utils.NOPOS {
 			return validate.Usage("The {0} option is only available {1}.", "--truncate", "in index mode")
 		}
