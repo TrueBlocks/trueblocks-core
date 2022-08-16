@@ -210,8 +210,6 @@ func (base *ScrapeSettings) overlay(chain string, overlay ScrapeSettings) {
 		base.Estuary_key = overlay.Estuary_key
 	}
 	// EXISTING_CODE
-
-	return
 }
 
 // EXISTING_CODE

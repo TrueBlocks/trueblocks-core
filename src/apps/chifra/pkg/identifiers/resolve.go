@@ -333,9 +333,7 @@ func GetBlockNumbers(chain string, ids []Identifier) ([]uint64, error) {
 		if err != nil {
 			return []uint64{}, err
 		}
-		for _, n := range blockNums {
-			nums = append(nums, n)
-		}
+		nums = append(nums, blockNums...)
 	}
 	return nums, nil
 }
@@ -347,9 +345,7 @@ func GetTransactionIds(chain string, ids []Identifier) ([]types.SimpleAppearance
 		if err != nil {
 			return []types.SimpleAppearance{}, err
 		}
-		for _, n := range blockNums {
-			txids = append(txids, n)
-		}
+		txids = append(txids, blockNums...)
 	}
 	return txids, nil
 }

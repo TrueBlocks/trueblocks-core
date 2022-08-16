@@ -58,7 +58,9 @@ func (opts *ChunksOptions) showAddresses(ctx *WalkContext, path string, first bo
 		cnt++
 
 		if opts.Globals.Verbose {
-			opts.HandleDetails(&indexChunk, &obj)
+			if _, err = opts.HandleDetails(&indexChunk, &obj); err != nil {
+				return false, err
+			}
 		}
 	}
 

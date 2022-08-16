@@ -63,8 +63,6 @@ func Log(sev severity, a ...interface{}) {
 	if getLogTiming() {
 		now := time.Now()
 		timeDatePart = now.Format("02-01|15:04:05.000")
-	} else {
-		timeDatePart = "DATE|TIME"
 	}
 
 	fmt.Fprintf(os.Stderr, "%s[%s] ", severityToLabel[sev], timeDatePart)

@@ -124,8 +124,7 @@ func (opts *MonitorsOptions) Refresh(monitors []monitor.Monitor) error {
 					if exists {
 						add += fmt.Sprintf(" --first_record %d", uint64(countBefore+1))
 						add += fmt.Sprintf(" --max_records %d", uint64(countAfter-countBefore+1)) // extra space won't hurt
-						add += fmt.Sprintf(" --append")
-						add += fmt.Sprintf(" --no_header")
+						add += " --append --no_header"
 					}
 					cmd += add + " " + mon.GetAddrStr()
 					cmd = strings.Replace(cmd, "  ", " ", -1)

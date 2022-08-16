@@ -20,7 +20,7 @@ import (
 func (opts *ListOptions) HandleListAppearances(monitorArray []monitor.Monitor) error {
 	for _, mon := range monitorArray {
 		count := mon.Count()
-		apps := make([]index.AppearanceRecord, count, count)
+		apps := make([]index.AppearanceRecord, count)
 		err := mon.ReadAppearances(&apps)
 		if err != nil {
 			return err

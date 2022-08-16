@@ -54,7 +54,10 @@ func NewMonitor(chain, addr string, create bool) Monitor {
 	mon.Header = Header{Magic: file.SmallMagicNumber}
 	mon.Address = common.HexToAddress(addr)
 	mon.Chain = chain
-	mon.Reload(create)
+	_, err := mon.Reload(create)
+	if err != nil {
+		logger.Log(logger.Error, err)
+	}
 	return *mon
 }
 
