@@ -47,12 +47,15 @@ func (opts *ChunksOptions) validateChunks() error {
 		}
 
 	} else if opts.Pin {
-		pinataKey, pinataSecret, estuaryKey := scrape.PinningKeys(opts.Globals.Chain)
-		if (pinataKey == "" || pinataSecret == "") && estuaryKey == "" {
-			return validate.Usage("The {0} option requires {1}", "--pin", "your pinning service's api key")
-		}
-		if !pinning.LocalDaemonRunning() {
+		if opts.Remote {
+			pinataKey, pinataSecret, estuaryKey := scrape.PinningKeys(opts.Globals.Chain)
+			if (pinataKey == "" || pinataSecret == "") && estuaryKey == "" {
+				return validate.Usage("The {0} option requires {1}", "--pin", "your pinning service's api key")
+			}
+
+		} else if !pinning.LocalDaemonRunning() {
 			return validate.Usage("The {0} option requires {1}", "--pin", "a locally running IPFS daemon")
+
 		}
 	}
 

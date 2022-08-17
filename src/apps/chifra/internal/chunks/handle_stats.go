@@ -102,8 +102,8 @@ func (opts *ChunksOptions) HandleStats(blockNums []uint64) error {
 	ctx := WalkContext{
 		VisitFunc: opts.showFinalizedStats,
 	}
-	err = opts.WalkIndexFiles(&ctx, cache.Index_Bloom, blockNums)
-	if err != nil {
+
+	if err = opts.WalkIndexFiles(&ctx, cache.Index_Bloom, blockNums); err != nil {
 		return err
 	}
 
@@ -111,10 +111,8 @@ func (opts *ChunksOptions) HandleStats(blockNums []uint64) error {
 		ctx = WalkContext{
 			VisitFunc: opts.showStagingStats,
 		}
+
 		err = opts.WalkIndexFiles(&ctx, cache.Index_Staging, blockNums)
-		if err != nil {
-			return err
-		}
 	}
 
 	return err

@@ -60,9 +60,9 @@ type SimpleManifest struct {
 }
 
 type SimpleChunkRecord struct {
-	Range     string `json:"range"`
-	BloomHash string `json:"bloomHash"`
-	IndexHash string `json:"indexHash"`
+	Range     string `json:"range,omitempty"`
+	BloomHash string `json:"bloomHash,omitempty"`
+	IndexHash string `json:"indexHash,omitempty"`
 }
 
 type SimpleBloom struct {

@@ -54,5 +54,6 @@ func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
 	ctx := WalkContext{
 		VisitFunc: opts.showIndex,
 	}
+
 	return opts.WalkIndexFiles(&ctx, cache.Index_Bloom, blockNums)
 }

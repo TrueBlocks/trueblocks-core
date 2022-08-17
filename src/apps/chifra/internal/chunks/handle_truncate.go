@@ -53,8 +53,8 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 	ctx := WalkContext{
 		VisitFunc: opts.truncateIndex,
 	}
-	err := opts.WalkIndexFiles(&ctx, cache.Index_Bloom, blockNums)
-	if err != nil {
+
+	if err := opts.WalkIndexFiles(&ctx, cache.Index_Bloom, blockNums); err != nil {
 		return err
 	}
 

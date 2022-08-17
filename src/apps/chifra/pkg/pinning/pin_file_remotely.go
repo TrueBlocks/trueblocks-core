@@ -13,6 +13,14 @@ import (
 )
 
 func (s *Service) pinFileRemotely(filepath string) (string, error) {
+	if s.PinUrl == "" {
+		return "", fmt.Errorf("empty remote pinning URL")
+	}
+
+	if s.HeaderFunc == nil {
+		return "", fmt.Errorf("header function is nil")
+	}
+
 	file, err := os.Open(filepath)
 	if err != nil {
 		return "", err

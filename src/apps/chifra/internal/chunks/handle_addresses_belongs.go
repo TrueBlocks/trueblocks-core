@@ -82,5 +82,6 @@ func (opts *ChunksOptions) HandleIndexBelongs(blockNums []uint64) error {
 	ctx := WalkContext{
 		VisitFunc: opts.showAddressesBelongs,
 	}
+
 	return opts.WalkIndexFiles(&ctx, cache.Index_Bloom, blockNums)
 }
