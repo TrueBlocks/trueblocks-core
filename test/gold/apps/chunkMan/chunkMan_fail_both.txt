@@ -1,7 +1,7 @@
 chifra chunks  --check
 TEST[DATE|TIME] Check:  true
 TEST[DATE|TIME] Format:  txt
-Error: Please choose at least one of [status|index|blooms|manifest|stats|addresses|appearances].
+Error: Please choose at least one of [status|index|manifest|blooms|stats|addresses|appearances].
 Usage:
   chifra chunks <mode> [flags] [blocks...] [address...]
 

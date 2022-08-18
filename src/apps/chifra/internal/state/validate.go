@@ -18,11 +18,9 @@ func (opts *StateOptions) validateState() error {
 		return opts.BadFlag
 	}
 
-	for _, part := range opts.Parts {
-		err := validate.ValidateEnum("--parts", part, "[none|some|all|balance|nonce|code|storage|deployed|accttype]")
-		if err != nil {
-			return err
-		}
+	err := validate.ValidateEnumSlice("--parts", opts.Parts, "[none|some|all|balance|nonce|code|storage|deployed|accttype]")
+	if err != nil {
+		return err
 	}
 
 	if len(opts.Globals.File) > 0 {

@@ -226,7 +226,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10840,apps,Admin,status,cacheStatus,last_block,L,NOPOS,false,false,false,false,local,flag,<blknum>,last block to process (inclusive -- testing only)
 10860,apps,Admin,status,cacheStatus,,,,false,false,true,true,--,description,,Report on the status of the TrueBlocks system.
 
-31900,apps,Admin,chunks,chunkMan,mode,,,true,false,true,true,local,positional,enum[status|index|blooms|manifest|stats|addresses|appearances],the type of information to retrieve
+31900,apps,Admin,chunks,chunkMan,mode,,,true,false,true,true,local,positional,enum[status|index|manifest|blooms|stats|addresses|appearances],the type of information to retrieve
 31905,apps,Admin,chunks,chunkMan,blocks,,,false,false,true,true,header,positional,list<blknum>,optional list of blocks used to intersect with chunk ranges
 31910,apps,Admin,chunks,chunkMan,addrs,,,false,false,true,true,header,positional,list<addr>,optional list of addresses for use with --belongs option (see notes)
 31915,apps,Admin,chunks,chunkMan,pin,i,,false,false,true,false,gocmd,switch,<boolean>,pin all chunks (locally if IPFS daemon is running&#44; and/or remotely with --remote flag)
