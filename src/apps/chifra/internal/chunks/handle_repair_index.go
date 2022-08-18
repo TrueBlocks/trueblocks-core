@@ -60,7 +60,7 @@ func (opts *ChunksOptions) repairManifest(ctx *WalkContext, path string, first b
 	return true, nil
 }
 
-func (opts *ChunksOptions) HandleRepair(blockNums []uint64) error {
+func (opts *ChunksOptions) HandleRepairIndex(blockNums []uint64) error {
 	defer opts.Globals.RenderFooter()
 	err := opts.Globals.RenderHeader(types.SimpleIndex{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
 	if err != nil {

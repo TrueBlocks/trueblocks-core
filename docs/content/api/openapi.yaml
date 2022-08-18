@@ -1511,7 +1511,7 @@ paths:
       operationId: admin-chunks
       parameters:
         - name: mode
-          description: the type of information to retrieve
+          description: the type of data to process
           required: true
           style: form
           in: query
@@ -1520,14 +1520,14 @@ paths:
             type: string
             enum:
               - status
+              - manifest
               - index
               - blooms
-              - manifest
-              - stats
               - addresses
               - appearances
+              - stats
         - name: blocks
-          description: optional list of blocks used to intersect with chunk ranges
+          description: an optional list of blocks to intersect with chunk ranges
           required: false
           style: form
           in: query
@@ -1537,8 +1537,42 @@ paths:
             items:
               type: string
               format: blknum
-        - name: addrs
-          description: optional list of addresses for use with --belongs option (see notes)
+        - name: check
+          description: check the manifest, index, or blooms for internal consistency
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: pin
+          description: pin the manifest or each index chunk and bloom
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: publish
+          description: publish the manifest to the Unchained Index smart contract
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: remote
+          description: >
+            prior to processing, retreive the manifest from the Unchained Index smart contract
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: belongs
+          description: >
+            in index mode only, checks the address(es) for inclusion in the given index chunk
           required: false
           style: form
           in: query
@@ -1548,23 +1582,6 @@ paths:
             items:
               type: string
               format: address
-        - name: belongs
-          description: in index mode only, checks if the given address appears in the given chunk
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: check
-          description: >
-            in index mode only, checks for internal consistency of the index, blooms, and manifest
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
       responses:
         "200":
           description: returns the requested data

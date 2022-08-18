@@ -1,6 +1,6 @@
 chunks?mode=addresses&pin
 {
   "errors": [
-    "The --pin and --publish options are available only in manifest mode."
+    "The --pin option is available only in index or manifest mode."
   ]
 }

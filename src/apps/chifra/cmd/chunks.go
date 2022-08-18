@@ -30,10 +30,9 @@ var chunksCmd = &cobra.Command{
 const usageChunks = `chunks <mode> [flags] [blocks...] [address...]
 
 Arguments:
-  mode - the type of information to retrieve (required)
-	One of [ status | index | blooms | manifest | stats | addresses | appearances ]
-  blocks - optional list of blocks used to intersect with chunk ranges
-  addrs - optional list of addresses for use with --belongs option (see notes)`
+  mode - the type of data to process (required)
+	One of [ status | manifest | index | blooms | addresses | appearances | stats ]
+  blocks - an optional list of blocks to intersect with chunk ranges`
 
 const shortChunks = "manage, investigate, and display the Unchained Index"
 
@@ -42,28 +41,23 @@ const longChunks = `Purpose:
 
 const notesChunks = `
 Notes:
+  - Mode determines which type of data to display or process.
+  - Certain options are only available in certain modes.
   - If blocks are provided, only chunks intersecting with those blocks are displayed.
-  - Only a single block in a given chunk needs to be supplied for a match.
-  - The --belongs option is only available with the addresses or blooms mode.
-  - The --belongs option requires both an address and a block identifier.
-  - You may only specifiy an address when using the --belongs option.
-  - The --pin, --publish, --truncate, --repair, and --check option are available only in index mode.
-  - The --repair and --truncate options update the manifest, but do not publish it.`
+  - The --repair and --truncate options update data, but do not --pin or --publish.
+  - You may combine the --pin and --publish options.
+  - The --belongs option is only available in the index mode.`
 
 func init() {
 	chunksCmd.Flags().SortFlags = false
 
-	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Pin, "pin", "i", false, "pin all chunks (locally if IPFS daemon is running, and/or remotely with --remote flag)")
-	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Remote, "remote", "m", false, "for some options, forces processing to use remote data")
-	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Publish, "publish", "p", false, "repin chunks, pin the manifest, and publish to the Unchained Index smart contract")
-	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Belongs, "belongs", "b", false, "in index mode only, checks if the given address appears in the given chunk")
-	chunksCmd.Flags().Uint64VarP(&chunksPkg.GetOptions().Truncate, "truncate", "n", 0, "in index mode only, tuncates the index at this block (hidden)")
-	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Repair, "repair", "r", false, "in index mode only, repair a single chunk (requires block identifier) (hidden)")
-	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Check, "check", "c", false, "in index mode only, checks for internal consistency of the index, blooms, and manifest")
-	if os.Getenv("TEST_MODE") != "true" {
-		chunksCmd.Flags().MarkHidden("truncate")
-		chunksCmd.Flags().MarkHidden("repair")
-	}
+	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Check, "check", "c", false, "check the manifest, index, or blooms for internal consistency")
+	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Repair, "repair", "r", false, "repair the manifest or a single index chunk (index repair requires a block identifier)")
+	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Pin, "pin", "i", false, "pin the manifest or each index chunk and bloom")
+	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Publish, "publish", "p", false, "publish the manifest to the Unchained Index smart contract")
+	chunksCmd.Flags().Uint64VarP(&chunksPkg.GetOptions().Truncate, "truncate", "n", 0, "truncate the entire index at this block (requires a block identifier)")
+	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Remote, "remote", "m", false, "prior to processing, retreive the manifest from the Unchained Index smart contract")
+	chunksCmd.Flags().StringSliceVarP(&chunksPkg.GetOptions().Belongs, "belongs", "b", nil, "in index mode only, checks the address(es) for inclusion in the given index chunk")
 	globals.InitGlobals(chunksCmd, &chunksPkg.GetOptions().Globals)
 
 	chunksCmd.SetUsageTemplate(UsageWithNotes(notesChunks))

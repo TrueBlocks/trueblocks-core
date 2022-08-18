@@ -72,7 +72,7 @@ func (opts *ChunksOptions) pinFile(ctx *WalkContext, path string, first bool) (b
 	return true, nil
 }
 
-func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
+func (opts *ChunksOptions) HandlePinIndex(blockNums []uint64) error {
 	defer opts.Globals.RenderFooter()
 	err := opts.Globals.RenderHeader(types.SimpleChunkRecord{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
 	if err != nil {

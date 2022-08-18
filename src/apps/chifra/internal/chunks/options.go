@@ -22,17 +22,16 @@ import (
 
 // ChunksOptions provides all command options for the chifra chunks command.
 type ChunksOptions struct {
-	Mode     string                   `json:"mode,omitempty"`     // The type of information to retrieve
-	Blocks   []string                 `json:"blocks,omitempty"`   // Optional list of blocks used to intersect with chunk ranges
+	Mode     string                   `json:"mode,omitempty"`     // The type of data to process
+	Blocks   []string                 `json:"blocks,omitempty"`   // An optional list of blocks to intersect with chunk ranges
 	BlockIds []identifiers.Identifier `json:"blockIds,omitempty"` // Block identifiers
-	Addrs    []string                 `json:"addrs,omitempty"`    // Optional list of addresses for use with --belongs option (see notes)
-	Pin      bool                     `json:"pin,omitempty"`      // Pin all chunks (locally if IPFS daemon is running, and/or remotely with --remote flag)
-	Remote   bool                     `json:"remote,omitempty"`   // For some options, forces processing to use remote data
-	Publish  bool                     `json:"publish,omitempty"`  // Repin chunks, pin the manifest, and publish to the Unchained Index smart contract
-	Belongs  bool                     `json:"belongs,omitempty"`  // In index mode only, checks if the given address appears in the given chunk
-	Truncate uint64                   `json:"truncate,omitempty"` // In index mode only, tuncates the index at this block
-	Repair   bool                     `json:"repair,omitempty"`   // In index mode only, repair a single chunk (requires block identifier)
-	Check    bool                     `json:"check,omitempty"`    // In index mode only, checks for internal consistency of the index, blooms, and manifest
+	Check    bool                     `json:"check,omitempty"`    // Check the manifest, index, or blooms for internal consistency
+	Repair   bool                     `json:"repair,omitempty"`   // Repair the manifest or a single index chunk (index repair requires a block identifier)
+	Pin      bool                     `json:"pin,omitempty"`      // Pin the manifest or each index chunk and bloom
+	Publish  bool                     `json:"publish,omitempty"`  // Publish the manifest to the Unchained Index smart contract
+	Truncate uint64                   `json:"truncate,omitempty"` // Truncate the entire index at this block (requires a block identifier)
+	Remote   bool                     `json:"remote,omitempty"`   // Prior to processing, retreive the manifest from the Unchained Index smart contract
+	Belongs  []string                 `json:"belongs,omitempty"`  // In index mode only, checks the address(es) for inclusion in the given index chunk
 	Globals  globals.GlobalOptions    `json:"globals,omitempty"`  // The global options
 	BadFlag  error                    `json:"badFlag,omitempty"`  // An error flag if needed
 }
@@ -43,14 +42,13 @@ var chunksCmdLineOptions ChunksOptions
 func (opts *ChunksOptions) testLog() {
 	logger.TestLog(len(opts.Mode) > 0, "Mode: ", opts.Mode)
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
-	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
-	logger.TestLog(opts.Pin, "Pin: ", opts.Pin)
-	logger.TestLog(opts.Remote, "Remote: ", opts.Remote)
-	logger.TestLog(opts.Publish, "Publish: ", opts.Publish)
-	logger.TestLog(opts.Belongs, "Belongs: ", opts.Belongs)
-	logger.TestLog(opts.Truncate != utils.NOPOS, "Truncate: ", opts.Truncate)
-	logger.TestLog(opts.Repair, "Repair: ", opts.Repair)
 	logger.TestLog(opts.Check, "Check: ", opts.Check)
+	logger.TestLog(opts.Repair, "Repair: ", opts.Repair)
+	logger.TestLog(opts.Pin, "Pin: ", opts.Pin)
+	logger.TestLog(opts.Publish, "Publish: ", opts.Publish)
+	logger.TestLog(opts.Truncate != utils.NOPOS, "Truncate: ", opts.Truncate)
+	logger.TestLog(opts.Remote, "Remote: ", opts.Remote)
+	logger.TestLog(len(opts.Belongs) > 0, "Belongs: ", opts.Belongs)
 	opts.Globals.TestLog()
 }
 
@@ -73,25 +71,23 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Blocks = append(opts.Blocks, s...)
 			}
-		case "addrs":
-			for _, val := range value {
-				s := strings.Split(val, " ") // may contain space separated items
-				opts.Addrs = append(opts.Addrs, s...)
-			}
-		case "pin":
-			opts.Pin = true
-		case "remote":
-			opts.Remote = true
-		case "publish":
-			opts.Publish = true
-		case "belongs":
-			opts.Belongs = true
-		case "truncate":
-			opts.Truncate = globals.ToUint64(value[0])
-		case "repair":
-			opts.Repair = true
 		case "check":
 			opts.Check = true
+		case "repair":
+			opts.Repair = true
+		case "pin":
+			opts.Pin = true
+		case "publish":
+			opts.Publish = true
+		case "truncate":
+			opts.Truncate = globals.ToUint64(value[0])
+		case "remote":
+			opts.Remote = true
+		case "belongs":
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Belongs = append(opts.Belongs, s...)
+			}
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "chunks")
@@ -101,7 +97,7 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
-	opts.Addrs = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
+	opts.Belongs = ens.ConvertEns(opts.Globals.Chain, opts.Belongs)
 	// EXISTING_CODE
 
 	return opts
@@ -118,14 +114,14 @@ func chunksFinishParse(args []string) *ChunksOptions {
 		for i, arg := range args {
 			if i > 0 {
 				if validate.IsValidAddress(arg) {
-					opts.Addrs = append(opts.Addrs, arg)
+					opts.Belongs = append(opts.Belongs, arg)
 				} else {
 					opts.Blocks = append(opts.Blocks, arg)
 				}
 			}
 		}
 	}
-	opts.Addrs = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
+	opts.Belongs = ens.ConvertEns(opts.Globals.Chain, opts.Belongs)
 	if opts.Truncate == 0 {
 		opts.Truncate = utils.NOPOS
 	}

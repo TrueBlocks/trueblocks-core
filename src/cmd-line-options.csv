@@ -226,24 +226,23 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10840,apps,Admin,status,cacheStatus,last_block,L,NOPOS,false,false,false,false,local,flag,<blknum>,last block to process (inclusive -- testing only)
 10860,apps,Admin,status,cacheStatus,,,,false,false,true,true,--,description,,Report on the status of the TrueBlocks system.
 
-31900,apps,Admin,chunks,chunkMan,mode,,,true,false,true,true,local,positional,enum[status|index|manifest|blooms|stats|addresses|appearances],the type of information to retrieve
-31905,apps,Admin,chunks,chunkMan,blocks,,,false,false,true,true,header,positional,list<blknum>,optional list of blocks used to intersect with chunk ranges
-31910,apps,Admin,chunks,chunkMan,addrs,,,false,false,true,true,header,positional,list<addr>,optional list of addresses for use with --belongs option (see notes)
-31915,apps,Admin,chunks,chunkMan,pin,i,,false,false,true,false,gocmd,switch,<boolean>,pin all chunks (locally if IPFS daemon is running&#44; and/or remotely with --remote flag)
-31920,apps,Admin,chunks,chunkMan,remote,m,,false,false,true,false,gocmd,switch,<boolean>,for some options&#44; forces processing to use remote data
-31925,apps,Admin,chunks,chunkMan,publish,p,,false,false,true,false,gocmd,switch,<boolean>,repin chunks&#44; pin the manifest&#44; and publish to the Unchained Index smart contract
-31930,apps,Admin,chunks,chunkMan,belongs,b,,false,false,true,true,gocmd,switch,<boolean>,in index mode only&#44; checks if the given address appears in the given chunk
-31940,apps,Admin,chunks,chunkMan,truncate,n,,false,false,false,false,gocmd,flag,<blknum>,in index mode only&#44; tuncates the index at this block
-31945,apps,Admin,chunks,chunkMan,repair,r,,false,false,false,false,gocmd,switch,<boolean>,in index mode only&#44; repair a single chunk (requires block identifier)
-31935,apps,Admin,chunks,chunkMan,check,c,,false,false,true,true,gocmd,switch,<boolean>,in index mode only&#44; checks for internal consistency of the index&#44; blooms&#44; and manifest
-31950,apps,Admin,chunks,chunkMan,,,,false,false,true,true,--,description,,Manage&#44; investigate&#44; and display the Unchained Index.
-31955,apps,Admin,chunks,chunkMan,n1,,,false,false,false,false,--,note,,If blocks are provided&#44; only chunks intersecting with those blocks are displayed.
-31960,apps,Admin,chunks,chunkMan,n2,,,false,false,false,false,--,note,,Only a single block in a given chunk needs to be supplied for a match.
-31965,apps,Admin,chunks,chunkMan,n3,,,false,false,false,false,--,note,,The --belongs option is only available with the addresses or blooms mode.
-31970,apps,Admin,chunks,chunkMan,n4,,,false,false,false,false,--,note,,The --belongs option requires both an address and a block identifier.
-31975,apps,Admin,chunks,chunkMan,n5,,,false,false,false,false,--,note,,You may only specifiy an address when using the --belongs option.
-31980,apps,Admin,chunks,chunkMan,n6,,,false,false,false,false,--,note,,The --pin&#44; --publish&#44; --truncate&#44; --repair&#44; and --check option are available only in index mode.
-31985,apps,Admin,chunks,chunkMan,n7,,,false,false,false,false,--,note,,The --repair and --truncate options update the manifest&#44; but do not publish it.
+num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizable,is_visible,is_visible_docs,generate,option_type,data_type,description
+31900,apps,Admin,chunks,chunkMan,mode,,,true,false,true,true,local,positional,enum[status|manifest|index|blooms|addresses|appearances|stats],the type of data to process
+31905,apps,Admin,chunks,chunkMan,blocks,,,false,false,true,true,header,positional,list<blknum>,an optional list of blocks to intersect with chunk ranges
+31920,apps,Admin,chunks,chunkMan,check,c,,false,false,true,true,gocmd,switch,<boolean>,check the manifest&#44; index&#44; or blooms for internal consistency
+31930,apps,Admin,chunks,chunkMan,repair,r,,false,false,true,false,gocmd,switch,<boolean>,repair the manifest or a single index chunk (index repair requires a block identifier)
+31935,apps,Admin,chunks,chunkMan,pin,i,,false,false,true,true,gocmd,switch,<boolean>,pin the manifest or each index chunk and bloom
+31940,apps,Admin,chunks,chunkMan,publish,p,,false,false,true,true,gocmd,switch,<boolean>,publish the manifest to the Unchained Index smart contract
+31925,apps,Admin,chunks,chunkMan,truncate,n,,false,false,true,false,gocmd,flag,<blknum>,truncate the entire index at this block (requires a block identifier)
+31945,apps,Admin,chunks,chunkMan,remote,m,,false,false,true,true,gocmd,switch,<boolean>,prior to processing&#44; retreive the manifest from the Unchained Index smart contract
+31950,apps,Admin,chunks,chunkMan,belongs,b,,false,false,true,true,gocmd,flag,list<addr>,in index mode only&#44; checks the address(es) for inclusion in the given index chunk
+31955,apps,Admin,chunks,chunkMan,,,,false,false,true,true,--,description,,Manage&#44; investigate&#44; and display the Unchained Index.
+31960,apps,Admin,chunks,chunkMan,n1,,,false,false,false,false,--,note,,Mode determines which type of data to display or process.
+31965,apps,Admin,chunks,chunkMan,n2,,,false,false,false,false,--,note,,Certain options are only available in certain modes.
+31970,apps,Admin,chunks,chunkMan,n3,,,false,false,false,false,--,note,,If blocks are provided&#44; only chunks intersecting with those blocks are displayed.
+31980,apps,Admin,chunks,chunkMan,n5,,,false,false,false,false,--,note,,The --repair and --truncate options update data&#44; but do not --pin or --publish.
+31985,apps,Admin,chunks,chunkMan,n6,,,false,false,false,false,--,note,,You may combine the --pin and --publish options.
+31990,apps,Admin,chunks,chunkMan,n7,,,false,false,false,false,--,note,,The --belongs option is only available in the index mode.
 
 11905,apps,Admin,init,init,all,a,,false,false,true,true,header,switch,<boolean>,in addition to Bloom filters&#44; download full index chunks
 11910,apps,Admin,init,init,,,,false,false,true,true,--,description,,Initialize the TrueBlocks system by downloading from IPFS.

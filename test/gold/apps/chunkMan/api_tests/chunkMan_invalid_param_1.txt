@@ -1,6 +1,6 @@
 chunks?mode=junk
 {
   "errors": [
-    "The mode option (junk) must be one of [ status | index | blooms | manifest | stats | addresses | appearances ]"
+    "The mode option (junk) must be one of [ status | manifest | index | blooms | addresses | appearances | stats ]"
   ]
 }

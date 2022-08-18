@@ -62,7 +62,7 @@ func (opts *ChunksOptions) showAddressesBelongs(ctx *WalkContext, path string, f
 }
 
 func (opts *ChunksOptions) shouldShow(obj index.AddressRecord) bool {
-	for _, addr := range opts.Addrs {
+	for _, addr := range opts.Belongs {
 		if hexutil.Encode(obj.Address.Bytes()) == addr {
 			return true
 		}
