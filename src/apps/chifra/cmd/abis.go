@@ -48,10 +48,6 @@ func init() {
 	abisCmd.Flags().BoolVarP(&abisPkg.GetOptions().Known, "known", "k", false, "load common 'known' ABIs from cache")
 	abisCmd.Flags().BoolVarP(&abisPkg.GetOptions().Sol, "sol", "s", false, "extract the abi definition from the provided .sol file(s)")
 	abisCmd.Flags().StringSliceVarP(&abisPkg.GetOptions().Find, "find", "f", nil, "search for function or event declarations given a four- or 32-byte code(s)")
-	abisCmd.Flags().BoolVarP(&abisPkg.GetOptions().Classes, "classes", "c", false, "generate classDefinitions folder and class definitions (hidden)")
-	if os.Getenv("TEST_MODE") != "true" {
-		abisCmd.Flags().MarkHidden("classes")
-	}
 	globals.InitGlobals(abisCmd, &abisPkg.GetOptions().Globals)
 
 	abisCmd.SetUsageTemplate(UsageWithNotes(notesAbis))

@@ -25,7 +25,6 @@ type AbisOptions struct {
 	Known   bool                  `json:"known,omitempty"`   // Load common 'known' ABIs from cache
 	Sol     bool                  `json:"sol,omitempty"`     // Extract the abi definition from the provided .sol file(s)
 	Find    []string              `json:"find,omitempty"`    // Search for function or event declarations given a four- or 32-byte code(s)
-	Classes bool                  `json:"classes,omitempty"` // Generate classDefinitions folder and class definitions
 	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
 	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
 }
@@ -38,7 +37,6 @@ func (opts *AbisOptions) testLog() {
 	logger.TestLog(opts.Known, "Known: ", opts.Known)
 	logger.TestLog(opts.Sol, "Sol: ", opts.Sol)
 	logger.TestLog(len(opts.Find) > 0, "Find: ", opts.Find)
-	logger.TestLog(opts.Classes, "Classes: ", opts.Classes)
 	opts.Globals.TestLog()
 }
 
@@ -68,9 +66,6 @@ func (opts *AbisOptions) toCmdLine() string {
 	for _, find := range opts.Find {
 		options += " --find " + find
 	}
-	if opts.Classes {
-		options += " --classes"
-	}
 	options += " " + strings.Join(opts.Addrs, " ")
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -97,8 +92,6 @@ func abisFinishParseApi(w http.ResponseWriter, r *http.Request) *AbisOptions {
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Find = append(opts.Find, s...)
 			}
-		case "classes":
-			opts.Classes = true
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "abis")
