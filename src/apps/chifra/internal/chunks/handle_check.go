@@ -22,6 +22,9 @@ import (
 // and manifest in the smart contract. It tries to check these three sources for
 // cosnsistency. Smart contract rules, so it is checked more thoroughly.
 func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
+	// Checking only reports in JSON Mode
+	opts.Globals.Format = "json"
+
 	maxTestItems = 10
 	filenameChan := make(chan cache.IndexFileInfo)
 

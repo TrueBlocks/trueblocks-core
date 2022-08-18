@@ -90,8 +90,9 @@ func (opts *ChunksOptions) validateChunks() error {
 		}
 	} else {
 		if len(opts.Belongs) > 0 {
-			if opts.Belongs[0] == "" {
-				return validate.Usage("The {0} option requires {1}.", "--belongs", "an address")
+			err := validate.ValidateAtLeastOneAddr(opts.Belongs)
+			if err != nil {
+				return err
 			}
 			if opts.Globals.Verbose {
 				return validate.Usage("Choose either {0} or {1}, not both.", "--verbose", "--belongs")
@@ -118,11 +119,12 @@ func (opts *ChunksOptions) validateChunks() error {
 	}
 
 	if opts.Globals.Verbose || opts.Globals.LogLevel > 0 {
-		if opts.Globals.ToFile {
-			return validate.Usage("You may not use the {0} option without {1}.", "--to_file", "--verbose")
-		}
 		if opts.Mode == "addresses" && opts.Globals.Format == "json" {
 			return validate.Usage("Do not use {0} with {1}", "--format json", "--verbose in the addresses mode")
+		}
+	} else {
+		if opts.Globals.ToFile {
+			return validate.Usage("You may not use the {0} option without {1}.", "--to_file", "--verbose")
 		}
 	}
 

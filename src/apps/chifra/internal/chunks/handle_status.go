@@ -13,6 +13,11 @@ type SimpleChunkReport struct {
 
 func (opts *ChunksOptions) HandleStatus(blockNums []uint64) error {
 	settings, _ := scrape.GetSettings(opts.Globals.Chain, nil)
+	// Let's not expose keys
+	settings.Pinata_api_key = ""
+	settings.Pinata_secret_api_key = ""
+	settings.Pinata_jwt = ""
+	settings.Estuary_key = ""
 	m := SimpleChunkReport{
 		Config: settings,
 	}
