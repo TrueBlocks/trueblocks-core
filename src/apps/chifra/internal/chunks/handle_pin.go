@@ -4,16 +4,10 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrape"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-)
-
-const (
-	ESTUARY_URL = "https://shuttle-4.estuary.tech/content/add"
-	PINATA_URL  = "https://api.pinata.cloud/pinning/pinFileToIPFS"
 )
 
 func (opts *ChunksOptions) pinFile(ctx *WalkContext, path string, first bool) (bool, error) {
@@ -32,15 +26,8 @@ func (opts *ChunksOptions) pinFile(ctx *WalkContext, path string, first bool) (b
 		Remote: types.SimpleChunkRecord{Range: rng.String()},
 	}
 
-	pinataKey, pinataSecret, _ := scrape.PinningKeys(opts.Globals.Chain)
-	localService := pinning.Service{}
-	remoteService := pinning.Service{
-		PinUrl:     PINATA_URL,
-		Apikey:     pinataKey,
-		Secret:     pinataSecret,
-		ResultName: "IpfsHash",
-		HeaderFunc: PinataHeaders,
-	}
+	localService, _ := pinning.NewPinningService(opts.Globals.Chain, pinning.Local)
+	remoteService, _ := pinning.NewPinningService(opts.Globals.Chain, pinning.Pinata)
 
 	bloomFile := bloom.ToBloomPath(path)
 	indexFile := index.ToIndexPath(path)
@@ -69,9 +56,6 @@ func (opts *ChunksOptions) pinFile(ctx *WalkContext, path string, first bool) (b
 		result.Matches = true
 	}
 
-	// msg := fmt.Sprintf("Pinning chunk: %s %t", result.Range, result.Matches)
-	// logger.Log(logger.Progress, msg)
-
 	if ctx.Data != nil {
 		ptr, castOk := ctx.Data.(*int)
 		if !castOk {
@@ -88,8 +72,6 @@ func (opts *ChunksOptions) pinFile(ctx *WalkContext, path string, first bool) (b
 	return true, nil
 }
 
-type PinList []types.SimpleChunkRecord
-
 func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 	defer opts.Globals.RenderFooter()
 	err := opts.Globals.RenderHeader(types.SimpleChunkRecord{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
@@ -104,20 +86,4 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 	}
 
 	return opts.WalkIndexFiles(&ctx, cache.Index_Bloom, blockNums)
-}
-
-func PinataHeaders(s *pinning.Service, contentType string) map[string]string {
-	headers := make(map[string]string)
-	headers["Content-Type"] = contentType
-	headers["pinata_secret_api_key"] = s.Secret
-	headers["pinata_api_key"] = s.Apikey
-	return headers
-}
-
-func EstuaryHeaders(s *pinning.Service, contentType string) map[string]string {
-	headers := make(map[string]string)
-	headers["Content-Type"] = contentType
-	headers["Accept"] = "application/json"
-	headers["Authorization"] = "Bearer " + s.Apikey
-	return headers
 }

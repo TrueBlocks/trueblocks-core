@@ -84,5 +84,5 @@ func (s *Service) pinFileRemotely(filepath string) (string, error) {
 		return ipfsHash, nil
 	}
 
-	return "", fmt.Errorf("Pin file to Pinata failure.")
+	return "", fmt.Errorf("pinning to remote pinning service failed")
 }
