@@ -49,6 +49,8 @@ func (opts *ChunksOptions) WalkIndexFiles(ctx *WalkContext, cacheType cache.Cach
 				}
 				if ok {
 					cnt++
+				} else {
+					return nil
 				}
 			}
 		case cache.Index_Staging:
@@ -60,6 +62,8 @@ func (opts *ChunksOptions) WalkIndexFiles(ctx *WalkContext, cacheType cache.Cach
 				}
 				if ok {
 					cnt++
+				} else {
+					return nil
 				}
 			}
 		case cache.None:

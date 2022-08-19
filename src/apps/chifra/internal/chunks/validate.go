@@ -30,6 +30,24 @@ func (opts *ChunksOptions) validateChunks() error {
 		return err
 	}
 
+	if opts.Globals.ApiMode {
+		if opts.Repair {
+			return validate.Usage("The {0} option is not available in API mode", "--repair")
+		}
+		if opts.Pin {
+			return validate.Usage("The {0} option is not available in API mode", "--pin")
+		}
+		if opts.Publish {
+			return validate.Usage("The {0} option is not available in API mode", "--publish")
+		}
+		if opts.Remote {
+			return validate.Usage("The {0} option is not available in API mode", "--remote")
+		}
+		if opts.Truncate != utils.NOPOS {
+			return validate.Usage("The {0} option is not available in API mode", "--truncate")
+		}
+	}
+
 	if opts.Publish {
 		return validate.Usage("The {0} option is not yet enabled", "--publish")
 	}
@@ -63,14 +81,8 @@ func (opts *ChunksOptions) validateChunks() error {
 		}
 
 		if opts.Repair {
-			if opts.Mode == "manifest" {
-				if opts.Globals.Format != "json" {
-					return validate.Usage("The {0} option requires {1}.", "manifest --repair", "--fmt json")
-				}
-			} else { // mode == "index"
-				if len(opts.Blocks) == 0 {
-					return validate.Usage("The {0} option requires {1}.", "index --repair", "at least one block identifier")
-				}
+			if opts.Mode == "index" && len(opts.Blocks) == 0 {
+				return validate.Usage("The {0} option requires {1}.", "index --repair", "at least one block identifier")
 			}
 		}
 	}

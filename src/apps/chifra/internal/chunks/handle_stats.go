@@ -75,11 +75,11 @@ func finishStats(stats *types.ReportChunks) types.ReportChunks {
 
 func NewChunkStats(path string) types.ReportChunks {
 	chunk, err := index.NewChunk(path)
-	defer chunk.Close()
-
 	if err != nil {
 		fmt.Println(err)
 	}
+	defer chunk.Close()
+
 	var ret types.ReportChunks
 	ret.Start = chunk.Range.First
 	ret.End = chunk.Range.Last

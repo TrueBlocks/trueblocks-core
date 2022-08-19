@@ -1,6 +1,6 @@
 chunks?mode=addresses&pin
 {
   "errors": [
-    "The --pin option is available only in index or manifest mode."
+    "The --pin option is not available in API mode"
   ]
 }

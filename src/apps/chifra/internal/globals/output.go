@@ -129,6 +129,9 @@ func (opts *GlobalOptions) RenderFooter() error {
 			}
 			opts.Writer.Write([]byte(",\n  \"meta\": "))
 			b, err := json.MarshalIndent(meta, "  ", "  ")
+			if err != nil {
+				return err
+			}
 			opts.Writer.Write(b)
 		}
 		opts.Writer.Write([]byte("\n}"))

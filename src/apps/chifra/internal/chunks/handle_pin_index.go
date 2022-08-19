@@ -57,15 +57,15 @@ func (opts *ChunksOptions) pinFile(ctx *WalkContext, path string, first bool) (b
 	}
 
 	if ctx.Data != nil {
-		ptr, castOk := ctx.Data.(*int)
+		count, castOk := ctx.Data.(*int)
 		if !castOk {
 			return true, fmt.Errorf("could not case pinList")
 		}
-		*ptr = *ptr + 1
+		*count = *count + 1
 		if pinning.LocalDaemonRunning() {
-			return true, opts.Globals.RenderObject(result.Local, *ptr == 1)
+			return *count < 2, opts.Globals.RenderObject(result.Local, *count == 1)
 		} else {
-			return true, opts.Globals.RenderObject(result.Remote, *ptr == 1)
+			return *count < 2, opts.Globals.RenderObject(result.Remote, *count == 1)
 		}
 	}
 
