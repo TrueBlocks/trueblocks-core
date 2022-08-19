@@ -372,6 +372,8 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
                                                 "\"type\":\"\"",
                                                 "\"type\":\"0x0\"",
                                                 "\"type\": \"0x0\"",
+                                                "\"timestamp\":\"0x0\"",
+                                                "\"timestamp\": \"0x0\"",
                                                 "\"status\":\"0x1\"",
                                                 "\"status\": \"0x1\""};
                         for (auto r : removes)
