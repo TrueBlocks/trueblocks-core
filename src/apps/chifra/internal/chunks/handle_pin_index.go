@@ -63,9 +63,9 @@ func (opts *ChunksOptions) pinFile(ctx *WalkContext, path string, first bool) (b
 		}
 		*count = *count + 1
 		if pinning.LocalDaemonRunning() {
-			return *count < 2, opts.Globals.RenderObject(result.Local, *count == 1)
+			return true, opts.Globals.RenderObject(result.Local, *count == 1)
 		} else {
-			return *count < 2, opts.Globals.RenderObject(result.Remote, *count == 1)
+			return true, opts.Globals.RenderObject(result.Remote, *count == 1)
 		}
 	}
 
