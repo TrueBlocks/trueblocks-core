@@ -65,6 +65,7 @@ type writeWorkerArguments struct {
 	ctx             context.Context
 	progressChannel chan<- *progress.Progress
 	writeWg         *sync.WaitGroup
+	isCompressed    bool
 }
 
 // worker function type as accepted by Ants
@@ -180,7 +181,7 @@ func getWriteWorker(arguments writeWorkerArguments) workerFunction {
 			}
 
 			trapChannel := sigintTrap.Enable(ctx, arguments.cancel)
-			err := saveFileContents(res, arguments.chunkPath)
+			err := saveFileContents(arguments, res)
 			sigintTrap.Disable(trapChannel)
 
 			if errors.Is(ctx.Err(), context.Canceled) {
@@ -240,6 +241,7 @@ func DownloadChunks(chain string, pins []manifest.ChunkRecord, chunkPath *cache.
 		ctx:             ctx,
 		progressChannel: progressChannel,
 		writeWg:         &writeWg,
+		isCompressed:    chain != "sepolia",
 	}
 	writePool, err := ants.NewPoolWithFunc(poolSize, getWriteWorker(writeWorkerArgs))
 	defer writePool.Release()
@@ -290,31 +292,40 @@ func DownloadChunks(chain string, pins []manifest.ChunkRecord, chunkPath *cache.
 }
 
 // saveFileContents decompresses the downloaded data and saves it to files
-func saveFileContents(res *jobResult, chunkPath *cache.CachePath) error {
-	// We load content to the buffer first to check its size
-	buffer := &bytes.Buffer{}
-	read, err := buffer.ReadFrom(res.contents)
-	if err != nil {
-		return err
-	}
-	if read != res.fileSize {
-		return &errSavingCorruptedDownload{res.fileName, res.fileSize, read}
+func saveFileContents(arguments writeWorkerArguments, res *jobResult) error {
+	var in io.Reader
+
+	if arguments.isCompressed {
+		// We load content to the buffer first to check its size
+		buffer := &bytes.Buffer{}
+		read, err := buffer.ReadFrom(res.contents)
+		if err != nil {
+			return err
+		}
+		if read != res.fileSize {
+			return &errSavingCorruptedDownload{res.fileName, res.fileSize, read}
+		}
+
+		archive, err := gzip.NewReader(buffer)
+		if err != nil {
+			return &errSavingCannotDecompress{res.fileName, err}
+		}
+		defer archive.Close()
+		in = archive
+
+	} else {
+		in = res.contents
+
 	}
 
-	archive, err := gzip.NewReader(buffer)
-	if err != nil {
-		return &errSavingCannotDecompress{res.fileName, err}
-	}
-	defer archive.Close()
-
-	outputFile, err := os.Create(chunkPath.GetFullPath(res.fileName))
+	outputFile, err := os.Create(arguments.chunkPath.GetFullPath(res.fileName))
 	if err != nil {
 		return &errSavingCreateFile{res.fileName, err}
 	}
 	defer outputFile.Close()
 
 	// Unzip and save content to a file
-	_, werr := io.Copy(outputFile, archive)
+	_, werr := io.Copy(outputFile, in)
 	if werr != nil {
 		return &errSavingCopy{res.fileName, werr}
 	}
