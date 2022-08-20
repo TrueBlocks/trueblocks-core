@@ -8,44 +8,14 @@ chunks?mode=manifest
       "databases": "QmTGdjLhWzGpGtmxVu73mzKyzva9JM4mSsZ93NceVU6Y5T",
       "chunks": [
         {
-          "range": "001848055-001963090",
-          "bloomHash": "QmQZd6fMdEkgpfbJy453T3KFufrNLFrrQ53j2wvLW24464",
-          "indexHash": "QmeDBqz5wxRP2EqrAvPk9QasyNMch4cymBDn6Miqn8WvHV"
+          "range": "000000000-000000000",
+          "bloomHash": "QmbCQaYmfTR3sGNAvASoVjPynaY9UD31Hfxv7dGtzsptkb",
+          "indexHash": "QmPmfSrYT5HDpfjj4uYSycaFECo9EqPSuADQ3YPbVp3yu4"
         },
         {
-          "range": "001729009-001848054",
-          "bloomHash": "QmcrwCVVuBUo6CmtAYfXstPApoFhniPFjM1K2nEVKHir91",
-          "indexHash": "QmQbP6UjFuvZ3HMoQWfc2E8vXAJy22igkq578CuZWgjay8"
-        },
-        {
-          "range": "001613034-001729008",
-          "bloomHash": "Qma5dJRn3jmjsKRgmbLMhfuYAP2CCnFYwA1TcLeHfQE3UF",
-          "indexHash": "Qmf95ZNKDbKNy3FFEULtZ9qafWjNi4fGgcRFS1AV8VM1i8"
-        },
-        {
-          "range": "001504329-001613033",
-          "bloomHash": "QmSWLVGivBFFYEj7cRoTeyZK9s7goBfy5ygZUYQtLAXFk7",
-          "indexHash": "QmTX1nVLH3UrunuovoFe4ww5UsUnWHcgim7mSjVZodMnNL"
-        },
-        {
-          "range": "001371353-001504328",
-          "bloomHash": "QmSEZuTbpjGFMmpgeizWnwzhKGRvYseNiAGSVmWfLXDN2B",
-          "indexHash": "QmeHsRmHcPjNym2tMKkn8wftfVX9MM3eUWhdVPAjK4pTF5"
-        },
-        {
-          "range": "001229770-001371352",
-          "bloomHash": "QmW8GX1W9SJQRxDTXzwDmTReVt1Q8QqTYsywT7JkzXh7CP",
-          "indexHash": "QmV6qabbSsftjEHXDkLPWBa3VJBcATfMDZbMdgVhDv2tjE"
-        },
-        {
-          "range": "001076299-001229769",
-          "bloomHash": "Qmb5hPei6ELWKdjpNMXtyovzj9asbHCqq8X4bCS3EimxyQ",
-          "indexHash": "QmUyR8YDZ4mDGG8ZADK9Es4V5ndWVr8XHs2xtgtu3AEs7j"
-        },
-        {
-          "range": "000864333-001076298",
-          "bloomHash": "QmTDZ2vzpkV3BvssBoszPMGHAyeUbSZkhL98npHikQvHVv",
-          "indexHash": "QmU3wWKGQDpfRCVmv5bxy6zzGK6Ypb3QSJbr3NACgshCqv"
+          "range": "000000001-000590501",
+          "bloomHash": "QmSGuSQHgK4S9yiZQ3dKrykQVpLTmdFettY9sAwa537gPL",
+          "indexHash": "QmSaoxc3XA9DEaA3inhLW5ZKsk5C5LWvowSXpHwVHsMjQp"
         },
         {
           "range": "000590502-000864332",
@@ -53,9 +23,39 @@ chunks?mode=manifest
           "indexHash": "QmT8NCfsr181xocdqBvesWbKzj3tfFDU2kVQZJCGdUeHmK"
         },
         {
-          "range": "000000001-000590501",
-          "bloomHash": "QmSGuSQHgK4S9yiZQ3dKrykQVpLTmdFettY9sAwa537gPL",
-          "indexHash": "QmSaoxc3XA9DEaA3inhLW5ZKsk5C5LWvowSXpHwVHsMjQp"
+          "range": "000864333-001076298",
+          "bloomHash": "QmTDZ2vzpkV3BvssBoszPMGHAyeUbSZkhL98npHikQvHVv",
+          "indexHash": "QmU3wWKGQDpfRCVmv5bxy6zzGK6Ypb3QSJbr3NACgshCqv"
+        },
+        {
+          "range": "001076299-001229769",
+          "bloomHash": "Qmb5hPei6ELWKdjpNMXtyovzj9asbHCqq8X4bCS3EimxyQ",
+          "indexHash": "QmUyR8YDZ4mDGG8ZADK9Es4V5ndWVr8XHs2xtgtu3AEs7j"
+        },
+        {
+          "range": "001229770-001371352",
+          "bloomHash": "QmW8GX1W9SJQRxDTXzwDmTReVt1Q8QqTYsywT7JkzXh7CP",
+          "indexHash": "QmV6qabbSsftjEHXDkLPWBa3VJBcATfMDZbMdgVhDv2tjE"
+        },
+        {
+          "range": "001371353-001504328",
+          "bloomHash": "QmSEZuTbpjGFMmpgeizWnwzhKGRvYseNiAGSVmWfLXDN2B",
+          "indexHash": "QmeHsRmHcPjNym2tMKkn8wftfVX9MM3eUWhdVPAjK4pTF5"
+        },
+        {
+          "range": "001504329-001613033",
+          "bloomHash": "QmSWLVGivBFFYEj7cRoTeyZK9s7goBfy5ygZUYQtLAXFk7",
+          "indexHash": "QmTX1nVLH3UrunuovoFe4ww5UsUnWHcgim7mSjVZodMnNL"
+        },
+        {
+          "range": "001613034-001729008",
+          "bloomHash": "Qma5dJRn3jmjsKRgmbLMhfuYAP2CCnFYwA1TcLeHfQE3UF",
+          "indexHash": "Qmf95ZNKDbKNy3FFEULtZ9qafWjNi4fGgcRFS1AV8VM1i8"
+        },
+        {
+          "range": "001729009-001848054",
+          "bloomHash": "QmcrwCVVuBUo6CmtAYfXstPApoFhniPFjM1K2nEVKHir91",
+          "indexHash": "QmQbP6UjFuvZ3HMoQWfc2E8vXAJy22igkq578CuZWgjay8"
         }
       ]
     }

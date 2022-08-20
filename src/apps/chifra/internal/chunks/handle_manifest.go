@@ -65,9 +65,7 @@ func (opts *ChunksOptions) HandleManifest(blockNums []uint64) error {
 
 		if opts.Globals.TestMode {
 			if len(man.Chunks) > maxTestItems {
-				s := len(man.Chunks) - maxTestItems - 1
-				e := len(man.Chunks) - 1
-				man.Chunks = man.Chunks[s:e]
+				man.Chunks = man.Chunks[:maxTestItems]
 			}
 		}
 
