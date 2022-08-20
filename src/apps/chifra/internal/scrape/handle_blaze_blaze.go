@@ -2,7 +2,6 @@ package scrapePkg
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 	"io/ioutil"
 	"sort"
@@ -480,8 +479,7 @@ func isImplicitAddress(addr string) bool {
 }
 
 var (
-	locker    uint32
-	errLocked = errors.New("Locked out buddy")
+	locker uint32
 )
 
 func (opts *BlazeOptions) syncedReporting(bn int) {

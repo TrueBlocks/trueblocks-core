@@ -5,17 +5,7 @@ package scrapePkg
 // be found in the LICENSE file.
 
 import (
-	"fmt"
-	"os"
-	"strings"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
 // HandleScrapePin pins any newly chunks that are not yet pinned.
@@ -120,53 +110,53 @@ func PinataHeaders(s *Service, contentType string) map[string]string {
 }
 */
 
-func unique(chunks []manifest.ChunkRecord) []manifest.ChunkRecord {
-	inResult := make(map[string]bool)
-	var result []manifest.ChunkRecord
-	for _, chunk := range chunks {
-		if _, ok := inResult[chunk.Range]; !ok {
-			inResult[chunk.Range] = true
-			result = append(result, chunk)
-		}
-	}
-	return result
-}
+// func unique(chunks []manifest.ChunkRecord) []manifest.ChunkRecord {
+// 	inResult := make(map[string]bool)
+// 	var result []manifest.ChunkRecord
+// 	for _, chunk := range chunks {
+// 		if _, ok := inResult[chunk.Range]; !ok {
+// 			inResult[chunk.Range] = true
+// 			result = append(result, chunk)
+// 		}
+// 	}
+// 	return result
+// }
 
-func (opts *ScrapeOptions) updateManifest(chunk manifest.ChunkRecord) error {
-	man, err := manifest.ReadManifest(opts.Globals.Chain, manifest.FromCache)
-	if err != nil {
-		if strings.Contains(err.Error(), "Could not find") {
-			man = &manifest.Manifest{
-				Version:   version.ManifestVersion,
-				Chain:     opts.Globals.Chain,
-				Schemas:   unchained.Schemas,
-				Databases: unchained.Databases,
-				Chunks:    []manifest.ChunkRecord{},
-			}
+// func (opts *ScrapeOptions) updateManifest(chunk manifest.ChunkRecord) error {
+// 	man, err := manifest.ReadManifest(opts.Globals.Chain, manifest.FromCache)
+// 	if err != nil {
+// 		if strings.Contains(err.Error(), "Could not find") {
+// 			man = &manifest.Manifest{
+// 				Version:   version.ManifestVersion,
+// 				Chain:     opts.Globals.Chain,
+// 				Schemas:   unchained.Schemas,
+// 				Databases: unchained.Databases,
+// 				Chunks:    []manifest.ChunkRecord{},
+// 			}
 
-		} else {
-			return err
-		}
-	}
-	man.Chunks = unique(append(man.Chunks, chunk))
+// 		} else {
+// 			return err
+// 		}
+// 	}
+// 	man.Chunks = unique(append(man.Chunks, chunk))
 
-	// TODO: BOGUS - PROTECT AGAINST FAILURE WHEN WRITING
-	fileName := config.GetPathToChainConfig(opts.Globals.Chain) + "manifest.json"
-	w, err := os.Create(fileName)
-	if err != nil {
-		return fmt.Errorf("creating file: %s", err)
-	}
-	defer w.Close()
-	err = file.Lock(w)
-	if err != nil {
-		return fmt.Errorf("locking file: %s", err)
-	}
+// 	// TODO: BOGUS - PROTECT AGAINST FAILURE WHEN WRITING
+// 	fileName := config.GetPathToChainConfig(opts.Globals.Chain) + "manifest.json"
+// 	w, err := os.Create(fileName)
+// 	if err != nil {
+// 		return fmt.Errorf("creating file: %s", err)
+// 	}
+// 	defer w.Close()
+// 	err = file.Lock(w)
+// 	if err != nil {
+// 		return fmt.Errorf("locking file: %s", err)
+// 	}
 
-	tmp := opts.Globals
-	tmp.Format = "json"
-	tmp.Writer = w
-	tmp.NoHeader = false
-	tmp.ApiMode = false
-	logger.Log(logger.Info, "Updated manifest with", len(man.Chunks), "chunks")
-	return tmp.RenderObject(man, true)
-}
+// 	tmp := opts.Globals
+// 	tmp.Format = "json"
+// 	tmp.Writer = w
+// 	tmp.NoHeader = false
+// 	tmp.ApiMode = false
+// 	logger.Log(logger.Info, "Updated manifest with", len(man.Chunks), "chunks")
+// 	return tmp.RenderObject(man, true)
+// }

@@ -117,8 +117,6 @@ func downloadManifest(chain, gatewayUrl, cid string) (*Manifest, error) {
 	}
 
 	switch response.Header.Get("content-type") {
-	case "text/tab-separated-values":
-		return readTabManifest(chain, response.Body)
 	case "application/json":
 		return readJSONManifest(response.Body)
 	default:
