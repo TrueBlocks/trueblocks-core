@@ -174,11 +174,15 @@ func getWriteWorker(arguments writeWorkerArguments) workerFunction {
 		case <-ctx.Done():
 			return
 		default:
-			progressChannel <- &progress.Progress{
+			msg := &progress.Progress{
 				Payload: res.Pin,
 				Event:   progress.Update,
 				Message: "Unzipping",
 			}
+			if !arguments.isCompressed {
+				msg.Message = "Downloading"
+			}
+			progressChannel <- msg
 
 			trapChannel := sigintTrap.Enable(ctx, arguments.cancel)
 			err := saveFileContents(arguments, res)
