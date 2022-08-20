@@ -32,6 +32,9 @@ func (opts *ChunksOptions) pinChunk(ctx *WalkContext, path string, first bool) (
 			logger.Log(logger.Progress, "Pinning: ", result.Remote, spaces)
 		}
 	}
+	if opts.Globals.Verbose {
+		logger.Log(logger.Progress, "Pinning", path)
+	}
 
 	return true, nil
 }

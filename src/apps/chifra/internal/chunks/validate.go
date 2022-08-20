@@ -30,43 +30,9 @@ func (opts *ChunksOptions) validateChunks() error {
 		return err
 	}
 
-	if opts.Globals.ApiMode {
-		if opts.Repair {
-			return validate.Usage("The {0} option is not available in API mode", "--repair")
-		}
-		if opts.Pin {
-			return validate.Usage("The {0} option is not available in API mode", "--pin")
-		}
-		if opts.Publish {
-			return validate.Usage("The {0} option is not available in API mode", "--publish")
-		}
-		if opts.Remote {
-			return validate.Usage("The {0} option is not available in API mode", "--remote")
-		}
-		if opts.Truncate != utils.NOPOS {
-			return validate.Usage("The {0} option is not available in API mode", "--truncate")
-		}
-	}
+	isIndexOrManifest := opts.Mode == "index" || opts.Mode == "manifest"
 
-	if opts.Publish {
-		return validate.Usage("The {0} option is not yet enabled", "--publish")
-	}
-
-	if opts.Mode != "index" && opts.Mode != "manifest" {
-		if opts.Pin {
-			return validate.Usage("The {0} option is available only in {1} mode.", "--pin", "index or manifest")
-		}
-		if opts.Remote {
-			return validate.Usage("The {0} option is available only in {1} mode.", "--remote", "index or manifest")
-		}
-		if opts.Check {
-			return validate.Usage("The {0} option is available only in {1} mode.", "--check", "index or manifest")
-		}
-		if opts.Repair {
-			return validate.Usage("The {0} option is only available in {1} mode", "--repair", "index or manifest")
-		}
-
-	} else {
+	if isIndexOrManifest {
 		if opts.Pin {
 			if opts.Remote {
 				pinataKey, pinataSecret, estuaryKey := scrape.PinningKeys(opts.Globals.Chain)
@@ -85,6 +51,15 @@ func (opts *ChunksOptions) validateChunks() error {
 				return validate.Usage("The {0} option requires {1}.", "index --repair", "at least one block identifier")
 			}
 		}
+
+	} else {
+		if err = opts.isDisallowed(!isIndexOrManifest /* i.e., true */, opts.Mode); err != nil {
+			return err
+		}
+
+		if opts.Check {
+			return validate.Usage("The {0} option is not available in {1} mode.", "--check", opts.Mode)
+		}
 	}
 
 	if opts.Mode != "manifest" {
@@ -100,6 +75,7 @@ func (opts *ChunksOptions) validateChunks() error {
 		if len(opts.Belongs) > 0 {
 			return validate.Usage("The {0} option requires {1}.", "--belongs", "the index mode")
 		}
+
 	} else {
 		if len(opts.Belongs) > 0 {
 			err := validate.ValidateAtLeastOneAddr(opts.Belongs)
@@ -115,19 +91,12 @@ func (opts *ChunksOptions) validateChunks() error {
 		}
 	}
 
-	if opts.Globals.TestMode {
-		if opts.Repair {
-			return validate.Usage("The --repair option is not available in test mode")
-		}
-		if opts.Pin {
-			return validate.Usage("The --pin option is not available in test mode")
-		}
-		if opts.Publish {
-			return validate.Usage("The --publish option is not available in test mode")
-		}
-		if opts.Truncate != utils.NOPOS {
-			return validate.Usage("The --truncate option is not available in test mode")
-		}
+	if err = opts.isDisallowed(opts.Globals.ApiMode, "API"); err != nil {
+		return err
+	}
+
+	if err = opts.isDisallowed(opts.Globals.TestMode, "test"); err != nil {
+		return err
 	}
 
 	if opts.Globals.Verbose || opts.Globals.LogLevel > 0 {
@@ -161,4 +130,25 @@ func (opts *ChunksOptions) validateChunks() error {
 	migrate.CheckBackLevelIndex(opts.Globals.Chain, true)
 
 	return opts.Globals.Validate()
+}
+
+func (opts *ChunksOptions) isDisallowed(test bool, mode string) error {
+	if test {
+		if opts.Repair {
+			return validate.Usage("The {0} option is not available in {1} mode", "--repair", mode)
+		}
+		if opts.Pin {
+			return validate.Usage("The {0} option is not available in {1} mode.", "--pin", mode)
+		}
+		if opts.Publish {
+			return validate.Usage("The {0} option is not available in {1} mode.", "--publish", mode)
+		}
+		if opts.Remote {
+			return validate.Usage("The {0} option is not available in {1} mode.", "--remote", mode)
+		}
+		if opts.Truncate != utils.NOPOS {
+			return validate.Usage("The {0} option is not available in {1} mode.", "--truncate", mode)
+		}
+	}
+	return nil
 }
