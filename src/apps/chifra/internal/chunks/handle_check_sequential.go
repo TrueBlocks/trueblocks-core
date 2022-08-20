@@ -18,12 +18,10 @@ func (opts *ChunksOptions) CheckSequential(fnArray, cacheArray, remoteArray []st
 		return err
 	}
 
-	report.MsgStrings = append(report.MsgStrings, "")
 	if err := opts.checkSequential("cache", cacheArray, allowMissing, report); err != nil {
 		return err
 	}
 
-	report.MsgStrings = append(report.MsgStrings, "")
 	if err := opts.checkSequential("contract", remoteArray, allowMissing, report); err != nil {
 		return err
 	}
