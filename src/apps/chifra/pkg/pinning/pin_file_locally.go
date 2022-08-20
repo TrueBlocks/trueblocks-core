@@ -14,7 +14,7 @@ func (p *Service) pinFileLocally(filepath string) (string, error) {
 	defer file.Close()
 
 	sh := shell.NewShell("localhost:5001")
-	cid, err := sh.Add(file)
+	cid, err := sh.Add(file, shell.Pin(true))
 	if err != nil {
 		return "", err
 	}

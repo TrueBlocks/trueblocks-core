@@ -2,6 +2,7 @@ package chunksPkg
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -25,11 +26,12 @@ func (opts *ChunksOptions) pinChunk(ctx *WalkContext, path string, first bool) (
 		}
 		if pinning.LocalDaemonRunning() {
 			m.Chunks = append(m.Chunks, result.Local)
+			logger.Log(logger.Progress, "Pinning: ", result.Local, spaces)
 		} else {
 			m.Chunks = append(m.Chunks, result.Remote)
+			logger.Log(logger.Progress, "Pinning: ", result.Remote, spaces)
 		}
 	}
-	logger.Log(logger.Progress, "Pinning: ", result.Range)
 
 	return true, nil
 }
@@ -71,3 +73,5 @@ func (opts *ChunksOptions) HandlePinManifest(blockNums []uint64) error {
 
 	return opts.Globals.RenderObject(m, true)
 }
+
+var spaces = strings.Repeat(" ", 20)
