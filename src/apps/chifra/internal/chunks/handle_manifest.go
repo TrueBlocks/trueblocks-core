@@ -24,13 +24,13 @@ func (opts *ChunksOptions) HandleManifest(blockNums []uint64) error {
 		return err
 	}
 
-	if opts.Globals.Format == "txt" || opts.Globals.Format == "csv" {
-		sort.Slice(man.Chunks, func(i, j int) bool {
-			iPin := man.Chunks[i]
-			jPin := man.Chunks[j]
-			return iPin.Range < jPin.Range
-		})
+	sort.Slice(man.Chunks, func(i, j int) bool {
+		iPin := man.Chunks[i]
+		jPin := man.Chunks[j]
+		return iPin.Range < jPin.Range
+	})
 
+	if opts.Globals.Format == "txt" || opts.Globals.Format == "csv" {
 		defer opts.Globals.RenderFooter()
 		err := opts.Globals.RenderHeader(types.SimpleChunkRecord{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
 		if err != nil {
