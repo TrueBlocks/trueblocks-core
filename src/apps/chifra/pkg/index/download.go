@@ -245,7 +245,7 @@ func DownloadChunks(chain string, pins []manifest.ChunkRecord, chunkPath *cache.
 		ctx:             ctx,
 		progressChannel: progressChannel,
 		writeWg:         &writeWg,
-		isCompressed:    chain != "sepolia",
+		isCompressed:    false,
 	}
 	writePool, err := ants.NewPoolWithFunc(poolSize, getWriteWorker(writeWorkerArgs))
 	defer writePool.Release()
