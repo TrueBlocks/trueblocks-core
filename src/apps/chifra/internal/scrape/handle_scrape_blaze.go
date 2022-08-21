@@ -88,7 +88,7 @@ func (opts *BlazeOptions) WriteTimestamps(chain string) error {
 		}
 
 		if (bn % 13) == 0 {
-			msg := fmt.Sprintf("Checking timestamps %-04d of %-04d", bn, opts.StartBlock+opts.BlockCount)
+			msg := fmt.Sprintf("Checking or updating timestamps %-04d of %-04d (%d remaining)%s", bn, opts.StartBlock+opts.BlockCount, (opts.StartBlock+opts.BlockCount)-bn, spaces)
 			logger.Log(logger.Progress, msg)
 		}
 

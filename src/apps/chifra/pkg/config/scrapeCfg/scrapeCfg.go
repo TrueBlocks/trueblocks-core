@@ -2,7 +2,7 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package scrape
+package scrapeCfg
 
 import (
 	"os"
@@ -26,10 +26,6 @@ type ScrapeSettings struct {
 	Channel_count  uint64 `json:"blockChanCnt"` // Number of concurrent block processing channels
 	Allow_missing  bool   `json:"allowMissing"` // Do not report errors for blockchain that contain blocks with zero addresses
 	// EXISTING_CODE
-	Pinata_api_key        string `json:"pinataApiKey,omitempty"`
-	Pinata_secret_api_key string `json:"pinataSecretApiKey,omitempty"`
-	Pinata_jwt            string `json:"pinataJwt,omitempty"`
-	Estuary_key           string `json:"estuaryKey,omitempty"`
 	// EXISTING_CODE
 }
 
@@ -41,10 +37,6 @@ var defaultSettings = ScrapeSettings{
 	Channel_count:  20,
 	Allow_missing:  false,
 	// EXISTING_CODE
-	Pinata_api_key:        "",
-	Pinata_secret_api_key: "",
-	Pinata_jwt:            "",
-	Estuary_key:           "",
 	// EXISTING_CODE
 }
 
@@ -56,10 +48,6 @@ var Unset = ScrapeSettings{
 	Channel_count:  utils.NOPOS,
 	Allow_missing:  false,
 	// EXISTING_CODE
-	Pinata_api_key:        "",
-	Pinata_secret_api_key: "",
-	Pinata_jwt:            "",
-	Estuary_key:           "",
 	// EXISTING_CODE
 }
 
@@ -81,16 +69,6 @@ func (s *ScrapeSettings) isDefault(chain, fldName string) bool {
 	}
 
 	// EXISTING_CODE
-	switch fldName {
-	case "Pinata_api_key":
-		return s.Pinata_api_key == def.Pinata_api_key
-	case "Pinata_secret_api_key":
-		return s.Pinata_secret_api_key == def.Pinata_secret_api_key
-	case "Pinata_jwt":
-		return s.Pinata_jwt == def.Pinata_jwt
-	case "Estuary_key":
-		return s.Estuary_key == def.Estuary_key
-	}
 	// EXISTING_CODE
 
 	return false
@@ -104,12 +82,6 @@ func (s *ScrapeSettings) TestLog(chain string, test bool) {
 	logger.TestLog(!s.isDefault(chain, "Channel_count"), "Channel_count: ", s.Channel_count)
 	logger.TestLog(!s.isDefault(chain, "Allow_missing"), "Allow_missing: ", s.Allow_missing)
 	// EXISTING_CODE
-	if !test {
-		logger.TestLog(!s.isDefault(chain, "Pinata_api_key"), "Pinata_api_key: ", s.Pinata_api_key)
-		logger.TestLog(!s.isDefault(chain, "Pinata_secret_api_key"), "Pinata_secret_api_key: ", s.Pinata_secret_api_key)
-		logger.TestLog(!s.isDefault(chain, "Pinata_jwt"), "Pinata_jwt: ", s.Pinata_jwt)
-		logger.TestLog(!s.isDefault(chain, "Estuary_key"), "Estuary_key: ", s.Estuary_key)
-	}
 	// EXISTING_CODE
 }
 
@@ -197,18 +169,6 @@ func (base *ScrapeSettings) overlay(chain string, overlay ScrapeSettings) {
 	}
 
 	// EXISTING_CODE
-	if !overlay.isDefault(chain, "Pinata_api_key") && overlay.Pinata_api_key != "" {
-		base.Pinata_api_key = overlay.Pinata_api_key
-	}
-	if !overlay.isDefault(chain, "Pinata_secret_api_key") && overlay.Pinata_secret_api_key != "" {
-		base.Pinata_secret_api_key = overlay.Pinata_secret_api_key
-	}
-	if !overlay.isDefault(chain, "Pinata_jwt") && overlay.Pinata_jwt != "" {
-		base.Pinata_jwt = overlay.Pinata_jwt
-	}
-	if !overlay.isDefault(chain, "Estuary_key") && overlay.Estuary_key != "" {
-		base.Estuary_key = overlay.Estuary_key
-	}
 	// EXISTING_CODE
 }
 
@@ -216,11 +176,6 @@ func (base *ScrapeSettings) overlay(chain string, overlay ScrapeSettings) {
 func AllowMissing(chain string) bool {
 	s, _ := GetSettings(chain, nil)
 	return s.Allow_missing
-}
-
-func PinningKeys(chain string) (string, string, string) {
-	s, _ := GetSettings(chain, nil)
-	return s.Pinata_api_key, s.Pinata_secret_api_key, s.Estuary_key
 }
 
 func toEnvStr(name string) string {

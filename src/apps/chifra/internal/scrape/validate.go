@@ -8,7 +8,8 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/migrate"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrape"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/pinCfg"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -20,7 +21,7 @@ import (
 
 func (opts *ScrapeOptions) validateScrape() error {
 	// First, we need to pick up the settings TODO: Should be auto-generated code somehow
-	opts.Settings, _ = scrape.GetSettings(opts.Globals.Chain, &opts.Settings)
+	opts.Settings, _ = scrapeCfg.GetSettings(opts.Globals.Chain, &opts.Settings)
 
 	opts.testLog()
 
@@ -47,7 +48,7 @@ func (opts *ScrapeOptions) validateScrape() error {
 	}
 
 	if opts.Pin {
-		pinataKey, pinataSecret, estuaryKey := scrape.PinningKeys(opts.Globals.Chain)
+		pinataKey, pinataSecret, estuaryKey := pinCfg.PinningKeys(opts.Globals.Chain)
 		if (pinataKey == "" || pinataSecret == "") && estuaryKey == "" {
 			return validate.Usage("The {0} option requires {1}", "--pin", "your pinning service's api key")
 

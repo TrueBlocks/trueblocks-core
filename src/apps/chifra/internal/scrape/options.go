@@ -14,20 +14,20 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrape"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 // ScrapeOptions provides all command options for the chifra scrape command.
 type ScrapeOptions struct {
-	BlockCnt   uint64                `json:"blockCnt,omitempty"`   // Maximum number of blocks to process per pass
-	Pin        bool                  `json:"pin,omitempty"`        // Pin new chunks (requires locally-running IPFS daemon)
-	Sleep      float64               `json:"sleep,omitempty"`      // Seconds to sleep between scraper passes
-	StartBlock uint64                `json:"startBlock,omitempty"` // First block to visit (available only for blaze scraper)
-	Settings   scrape.ScrapeSettings `json:"settings,omitempty"`   // Configuration items for the scrape
-	Globals    globals.GlobalOptions `json:"globals,omitempty"`    // The global options
-	BadFlag    error                 `json:"badFlag,omitempty"`    // An error flag if needed
+	BlockCnt   uint64                   `json:"blockCnt,omitempty"`   // Maximum number of blocks to process per pass
+	Pin        bool                     `json:"pin,omitempty"`        // Pin new chunks (requires locally-running IPFS daemon)
+	Sleep      float64                  `json:"sleep,omitempty"`      // Seconds to sleep between scraper passes
+	StartBlock uint64                   `json:"startBlock,omitempty"` // First block to visit (available only for blaze scraper)
+	Settings   scrapeCfg.ScrapeSettings `json:"settings,omitempty"`   // Configuration items for the scrape
+	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
+	BadFlag    error                    `json:"badFlag,omitempty"`    // An error flag if needed
 }
 
 var scrapeCmdLineOptions ScrapeOptions
@@ -125,7 +125,7 @@ func scrapeFinishParse(args []string) *ScrapeOptions {
 		opts.BadFlag = validate.Usage("Invalid argument {0}", args[0])
 	}
 	// EXISTING_CODE
-	opts.Settings, _ = scrape.GetSettings(opts.Globals.Chain, &scrape.Unset)
+	opts.Settings, _ = scrapeCfg.GetSettings(opts.Globals.Chain, &scrapeCfg.Unset)
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}

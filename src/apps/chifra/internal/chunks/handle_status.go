@@ -1,23 +1,18 @@
 package chunksPkg
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrape"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 )
 
 type SimpleChunkReport struct {
 	Progress index.SimpleProgress
-	Config   scrape.ScrapeSettings
+	Config   scrapeCfg.ScrapeSettings
 }
 
 func (opts *ChunksOptions) HandleStatus(blockNums []uint64) error {
-	settings, _ := scrape.GetSettings(opts.Globals.Chain, nil)
-	// Let's not expose keys
-	settings.Pinata_api_key = ""
-	settings.Pinata_secret_api_key = ""
-	settings.Pinata_jwt = ""
-	settings.Estuary_key = ""
+	settings, _ := scrapeCfg.GetSettings(opts.Globals.Chain, nil)
 	m := SimpleChunkReport{
 		Config: settings,
 	}

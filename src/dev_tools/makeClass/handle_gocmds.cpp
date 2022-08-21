@@ -323,6 +323,10 @@ string_q get_optfields(const CCommandOption& cmd) {
     size_t varWidth = 0, typeWidth = 0;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         if (p.generate == "config") {
+            string_q var = p.Format("Settings");
+            varWidth = max(var.length(), varWidth);
+            string_q type = cmd.Format("[{API_ROUTE}]Cfg.[{PROPER}]Settings");
+            typeWidth = max(type.length(), typeWidth);
             continue;
         }
         replace(p.longName, "deleteMe", "delete");
@@ -383,7 +387,7 @@ string_q get_optfields(const CCommandOption& cmd) {
     }
 
     if (hasConfig) {
-        string type = cmd.Format("[{API_ROUTE}].[{PROPER}]Settings");
+        string type = cmd.Format("[{API_ROUTE}]Cfg.[{PROPER}]Settings");
         ONE(os, "Settings", varWidth, type, typeWidth, "Configuration items for the " + cmd.api_route);
     }
 
@@ -396,15 +400,15 @@ string_q get_optfields(const CCommandOption& cmd) {
 string_q get_config_override(const CCommandOption& cmd) {
     for (auto p : *((CCommandOptionArray*)cmd.params))
         if (p.generate == "config")
-            return "\topts.Settings, _ = " + cmd.api_route + ".GetSettings(opts.Globals.Chain, &" + cmd.api_route +
-                   ".Unset)\n";
+            return "\topts.Settings, _ = " + cmd.api_route + "Cfg.GetSettings(opts.Globals.Chain, &" + cmd.api_route +
+                   "Cfg.Unset)\n";
     return "";
 }
 
 string_q get_config_package(const CCommandOption& cmd) {
     for (auto p : *((CCommandOptionArray*)cmd.params))
         if (p.generate == "config")
-            return "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/" + cmd.api_route + "\"\n";
+            return "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/" + cmd.api_route + "Cfg\"\n";
     return "";
 }
 

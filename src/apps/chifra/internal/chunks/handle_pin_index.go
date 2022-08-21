@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -12,6 +13,10 @@ func (opts *ChunksOptions) pinFile(ctx *WalkContext, path string, first bool) (b
 	result, err := pinning.PinChunk(opts.Globals.Chain, path, opts.Remote)
 	if err != nil {
 		return false, err
+	}
+
+	if !result.Matches {
+		logger.Log(logger.Error, "Remote and local pins don't match", result)
 	}
 
 	if ctx.Data != nil {

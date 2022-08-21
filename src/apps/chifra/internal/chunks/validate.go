@@ -1,3 +1,5 @@
+//https://pkg.go.dev/github.com/ipfs/go-ipfs-http-client
+
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
@@ -8,7 +10,7 @@ import (
 	"errors"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/migrate"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrape"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/pinCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
@@ -35,7 +37,7 @@ func (opts *ChunksOptions) validateChunks() error {
 	if isIndexOrManifest {
 		if opts.Pin {
 			if opts.Remote {
-				pinataKey, pinataSecret, estuaryKey := scrape.PinningKeys(opts.Globals.Chain)
+				pinataKey, pinataSecret, estuaryKey := pinCfg.PinningKeys(opts.Globals.Chain)
 				if (pinataKey == "" || pinataSecret == "") && estuaryKey == "" {
 					return validate.Usage("The {0} option requires {1}.", "--pin --remote", "an api key")
 				}

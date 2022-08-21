@@ -11,7 +11,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrape"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -179,7 +179,7 @@ func (opts *ScrapeOptions) Report(nAppsThen, nAppsNow int) {
 
 func isListSequential(chain string, ripeFileList []os.DirEntry) error {
 	prev := cache.NotARange
-	allowMissing := scrape.AllowMissing(chain)
+	allowMissing := scrapeCfg.AllowMissing(chain)
 	for _, file := range ripeFileList {
 		fileRange, _ := cache.RangeFromFilename(file.Name())
 		if prev != cache.NotARange && prev != fileRange {
