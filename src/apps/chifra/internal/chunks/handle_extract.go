@@ -11,6 +11,15 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 )
 
+// TODO: This routine accepts the 'resolved' block numbers. If, instead, it
+// TODO: it received the unresolved block ranges from the command line, it
+// TODO: would be much more efficient. Using resolved block numbers means we
+// TODO: have to provide a block range that is fine-grained enough to hit
+// TODO: on every file inside the range. For example, if there are 100 files
+// TODO: in the range 100000-200000, we need to create block numbers that
+// TODO: cover every eventuallity. If on of the files has a two block range, we
+// TODO: need to generate 50,000 block numbers. If we used the range on the command
+// TODO: line instead we'd only have to intersect one range.
 func shouldDisplay(result cache.IndexFileInfo, blockNums []uint64) bool {
 	if len(blockNums) == 0 {
 		return true
