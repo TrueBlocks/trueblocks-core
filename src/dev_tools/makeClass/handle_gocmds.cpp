@@ -280,12 +280,12 @@ string_q get_testlogs(const CCommandOption& cmd) {
     bool hasConfig = false;
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
+        replace(p.longName, "deleteMe", "delete");
+        p.def_val = substitute(p.def_val, "NOPOS", "utils.NOPOS");
         if (p.generate == "config") {
             hasConfig = true;
             continue;
         }
-        replace(p.longName, "deleteMe", "delete");
-        p.def_val = substitute(p.def_val, "NOPOS", "utils.NOPOS");
         if (!p.isDeprecated) {
             if (p.data_type == "<boolean>") {
                 const char* STR_TESTLOG_BOOL =
@@ -419,7 +419,11 @@ string_q get_defaults_apis(const CCommandOption& cmd) {
         if (!p.isDeprecated && (p.data_type == "<blknum>" || p.data_type == "<uint64>" || p.data_type == "<double>")) {
             string_q fmt = "\topts.[{VARIABLE}] = [{DEF_VAL}]";
             if (p.generate == "config") {
-                fmt = "\topts.Settings.[{VARIABLE}] = [{DEF_VAL}]";
+                if (p.go_type == "float64") {
+                    fmt = "\topts.Settings.[{VARIABLE}] = float64([{DEF_VAL}])";
+                } else {
+                    fmt = "\topts.Settings.[{VARIABLE}] = [{DEF_VAL}]";
+                }
             }
             os << p.Format(fmt) << endl;
         }
@@ -450,7 +454,9 @@ string_q get_goDefault(const CCommandOption& p) {
     if (p.go_type == "[]string") {
         return "nil";
     } else if (p.go_type == "float64") {
-        if (!p.def_val.empty())
+        if (p.def_val == "NOPOS") {
+            return "float64(utils.NOPOS)";
+        } else if (!p.def_val.empty())
             return p.def_val;
         return "0.0";
     } else if (p.go_type == "string") {

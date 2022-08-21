@@ -13,6 +13,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/chunksCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
@@ -32,6 +33,7 @@ type ChunksOptions struct {
 	Truncate uint64                   `json:"truncate,omitempty"` // Truncate the entire index at this block (requires a block identifier)
 	Remote   bool                     `json:"remote,omitempty"`   // Prior to processing, retreive the manifest from the Unchained Index smart contract
 	Belongs  []string                 `json:"belongs,omitempty"`  // In index mode only, checks the address(es) for inclusion in the given index chunk
+	Settings chunksCfg.ChunksSettings `json:"settings,omitempty"` // Configuration items for the chunks
 	Globals  globals.GlobalOptions    `json:"globals,omitempty"`  // The global options
 	BadFlag  error                    `json:"badFlag,omitempty"`  // An error flag if needed
 }
@@ -49,6 +51,7 @@ func (opts *ChunksOptions) testLog() {
 	logger.TestLog(opts.Truncate != utils.NOPOS, "Truncate: ", opts.Truncate)
 	logger.TestLog(opts.Remote, "Remote: ", opts.Remote)
 	logger.TestLog(len(opts.Belongs) > 0, "Belongs: ", opts.Belongs)
+	opts.Settings.TestLog(opts.Globals.Chain, opts.Globals.TestMode)
 	opts.Globals.TestLog()
 }
 
@@ -62,6 +65,7 @@ func (opts *ChunksOptions) String() string {
 func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions {
 	opts := &ChunksOptions{}
 	opts.Truncate = utils.NOPOS
+	opts.Settings.Sleep = float64(utils.NOPOS)
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "mode":
@@ -88,6 +92,8 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Belongs = append(opts.Belongs, s...)
 			}
+		case "sleep":
+			opts.Settings.Sleep = globals.ToFloat64(value[0])
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "chunks")
@@ -127,6 +133,7 @@ func chunksFinishParse(args []string) *ChunksOptions {
 	}
 	defFmt = opts.defaultFormat(defFmt)
 	// EXISTING_CODE
+	opts.Settings, _ = chunksCfg.GetSettings(opts.Globals.Chain, &chunksCfg.Unset)
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}

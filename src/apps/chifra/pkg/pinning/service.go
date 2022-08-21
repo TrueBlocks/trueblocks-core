@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/pinCfg"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/chunksCfg"
 	shell "github.com/ipfs/go-ipfs-api"
 )
 
@@ -37,7 +37,7 @@ const (
 )
 
 func NewPinningService(chain string, which ServiceType) (Service, error) {
-	pinataKey, pinataSecret, estuaryKey := pinCfg.PinningKeys(chain)
+	pinataKey, pinataSecret, estuaryKey := chunksCfg.PinningKeys(chain)
 
 	switch which {
 	case Local:
