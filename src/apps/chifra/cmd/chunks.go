@@ -13,7 +13,6 @@ import (
 
 	chunksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/chunks"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -59,7 +58,7 @@ func init() {
 	chunksCmd.Flags().Uint64VarP(&chunksPkg.GetOptions().Truncate, "truncate", "n", 0, "truncate the entire index at this block (requires a block identifier)")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Remote, "remote", "m", false, "prior to processing, retreive the manifest from the Unchained Index smart contract")
 	chunksCmd.Flags().StringSliceVarP(&chunksPkg.GetOptions().Belongs, "belongs", "b", nil, "in index mode only, checks the address(es) for inclusion in the given index chunk")
-	chunksCmd.Flags().Float64VarP(&chunksPkg.GetOptions().Settings.Sleep, "sleep", "", float64(utils.NOPOS), "for --remote pinning only, seconds to sleep between calls to the endpoint (hidden)")
+	chunksCmd.Flags().Float64VarP(&chunksPkg.GetOptions().Settings.Sleep, "sleep", "", 0.0, "for --remote pinning only, seconds to sleep between API calls (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {
 		chunksCmd.Flags().MarkHidden("sleep")
 	}

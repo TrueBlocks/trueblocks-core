@@ -455,7 +455,7 @@ string_q get_goDefault(const CCommandOption& p) {
         return "nil";
     } else if (p.go_type == "float64") {
         if (p.def_val == "NOPOS") {
-            return "float64(utils.NOPOS)";
+            return "0.0";
         } else if (!p.def_val.empty())
             return p.def_val;
         return "0.0";
