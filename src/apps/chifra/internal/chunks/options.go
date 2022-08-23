@@ -27,7 +27,6 @@ type ChunksOptions struct {
 	Blocks   []string                 `json:"blocks,omitempty"`   // An optional list of blocks to intersect with chunk ranges
 	BlockIds []identifiers.Identifier `json:"blockIds,omitempty"` // Block identifiers
 	Check    bool                     `json:"check,omitempty"`    // Check the manifest, index, or blooms for internal consistency
-	Repair   bool                     `json:"repair,omitempty"`   // Repair the manifest or a single index chunk (index repair requires a block identifier)
 	Pin      bool                     `json:"pin,omitempty"`      // Pin the manifest or each index chunk and bloom
 	Publish  bool                     `json:"publish,omitempty"`  // Publish the manifest to the Unchained Index smart contract
 	Truncate uint64                   `json:"truncate,omitempty"` // Truncate the entire index at this block (requires a block identifier)
@@ -45,7 +44,6 @@ func (opts *ChunksOptions) testLog() {
 	logger.TestLog(len(opts.Mode) > 0, "Mode: ", opts.Mode)
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
 	logger.TestLog(opts.Check, "Check: ", opts.Check)
-	logger.TestLog(opts.Repair, "Repair: ", opts.Repair)
 	logger.TestLog(opts.Pin, "Pin: ", opts.Pin)
 	logger.TestLog(opts.Publish, "Publish: ", opts.Publish)
 	logger.TestLog(opts.Truncate != utils.NOPOS, "Truncate: ", opts.Truncate)
@@ -77,8 +75,6 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 			}
 		case "check":
 			opts.Check = true
-		case "repair":
-			opts.Repair = true
 		case "pin":
 			opts.Pin = true
 		case "publish":

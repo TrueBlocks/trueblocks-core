@@ -23,7 +23,7 @@ import (
 type AddressAppearanceMap map[string][]AppearanceRecord
 
 // TODO: BOGUS - PINNING TO PINATA AND WRITING MANIFEST FILE SHOULD BE ATOMIC AND PROTECTED FROM CANCEL
-func WriteChunk(chain, fileName string, addAppMap AddressAppearanceMap, nApps, snapper int) (bool, error) {
+func WriteChunk(chain, fileName string, addAppMap AddressAppearanceMap, nApps, snapper int) error {
 	addressTable := make([]AddressRecord, 0, len(addAppMap))
 	appearanceTable := make([]AppearanceRecord, 0, nApps)
 	sorted := []string{}
@@ -77,19 +77,19 @@ func WriteChunk(chain, fileName string, addAppMap AddressAppearanceMap, nApps, s
 				AppearanceCount: uint32(len(appearanceTable)),
 			}
 			if err = binary.Write(fp, binary.LittleEndian, header); err != nil {
-				return false, err
+				return err
 			}
 
 			if binary.Write(fp, binary.LittleEndian, addressTable); err != nil {
-				return false, err
+				return err
 			}
 
 			if binary.Write(fp, binary.LittleEndian, appearanceTable); err != nil {
-				return false, err
+				return err
 			}
 
 			if _, err = bl.WriteBloom(chain, bloom.ToBloomPath(fileName)); err != nil {
-				return false, err
+				return err
 			}
 
 			// TODO: BOGUS - PINNING TO PINATA AND WRITING MANIFEST FILE SHOULD BE ATOMIC AND PROTECTED FROM CANCEL
@@ -105,11 +105,10 @@ func WriteChunk(chain, fileName string, addAppMap AddressAppearanceMap, nApps, s
 
 			// Success. Remove the backup so it doesn't replace the orignal
 			os.Remove(backupFn)
-			return true, nil
+			return nil
 		}
 	}
-
-	return false, err
+	return err
 }
 
 type Renderer interface {

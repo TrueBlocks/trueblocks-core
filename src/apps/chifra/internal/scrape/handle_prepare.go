@@ -53,7 +53,7 @@ func (opts *ScrapeOptions) HandlePrepare() (ok bool, err error) {
 	}
 
 	logger.Log(logger.Info, "Writing block zero allocations for", len(allocs), "allocs, nAddresses:", len(appMap))
-	_, err = index.WriteChunk(opts.Globals.Chain, index.ToIndexPath(bloomPath), appMap, len(allocs), -1)
+	err = index.WriteChunk(opts.Globals.Chain, index.ToIndexPath(bloomPath), appMap, len(allocs), -1)
 	if err != nil {
 		return false, err
 	}

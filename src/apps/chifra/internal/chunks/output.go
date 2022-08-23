@@ -56,19 +56,8 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 	}
 
 	maxTestItems = 100
-	if opts.Repair {
-		if opts.Mode == "index" {
-			err = opts.HandleRepairIndex(blockNums)
-		} else {
-			err = opts.HandleRepairManifest(blockNums)
-		}
-
-	} else if opts.Pin {
-		if opts.Mode == "index" {
-			err = opts.HandlePinIndex(blockNums)
-		} else {
-			err = opts.HandlePinManifest(blockNums)
-		}
+	if opts.Pin {
+		err = opts.HandlePinManifest(blockNums)
 
 	} else if opts.Publish {
 		err = opts.HandlePublish(blockNums)

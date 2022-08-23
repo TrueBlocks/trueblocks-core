@@ -34,8 +34,17 @@ func (opts *ChunksOptions) validateChunks() error {
 	}
 
 	isIndexOrManifest := opts.Mode == "index" || opts.Mode == "manifest"
+	if !isIndexOrManifest {
+		if err = opts.isDisallowed(!isIndexOrManifest /* i.e., true */, opts.Mode); err != nil {
+			return err
+		}
 
-	if isIndexOrManifest {
+		if opts.Check {
+			return validate.Usage("The {0} option is not available in {1} mode.", "--check", opts.Mode)
+		}
+	}
+
+	if opts.Mode == "manifest" {
 		if opts.Pin {
 			if opts.Remote {
 				pinataKey, pinataSecret, estuaryKey := chunksCfg.PinningKeys(opts.Globals.Chain)
@@ -48,24 +57,7 @@ func (opts *ChunksOptions) validateChunks() error {
 
 			}
 		}
-
-		if opts.Repair {
-			if opts.Mode == "index" && len(opts.Blocks) == 0 {
-				return validate.Usage("The {0} option requires {1}.", "index --repair", "at least one block identifier")
-			}
-		}
-
 	} else {
-		if err = opts.isDisallowed(!isIndexOrManifest /* i.e., true */, opts.Mode); err != nil {
-			return err
-		}
-
-		if opts.Check {
-			return validate.Usage("The {0} option is not available in {1} mode.", "--check", opts.Mode)
-		}
-	}
-
-	if opts.Mode != "manifest" {
 		if opts.Publish {
 			return validate.Usage("The {0} option is available only in {1} mode.", "--publish", "index or manifest")
 		}
@@ -137,9 +129,6 @@ func (opts *ChunksOptions) validateChunks() error {
 
 func (opts *ChunksOptions) isDisallowed(test bool, mode string) error {
 	if test {
-		if opts.Repair {
-			return validate.Usage("The {0} option is not available in {1} mode", "--repair", mode)
-		}
 		if opts.Pin {
 			return validate.Usage("The {0} option is not available in {1} mode.", "--pin", mode)
 		}

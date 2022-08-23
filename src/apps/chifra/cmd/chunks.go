@@ -44,7 +44,7 @@ Notes:
   - Mode determines which type of data to display or process.
   - Certain options are only available in certain modes.
   - If blocks are provided, only chunks intersecting with those blocks are displayed.
-  - The --repair and --truncate options update data, but do not --pin or --publish.
+  - The --truncate option updates data, but does not --pin or --publish.
   - You may combine the --pin and --publish options.
   - The --belongs option is only available in the index mode.`
 
@@ -52,7 +52,6 @@ func init() {
 	chunksCmd.Flags().SortFlags = false
 
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Check, "check", "c", false, "check the manifest, index, or blooms for internal consistency")
-	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Repair, "repair", "r", false, "repair the manifest or a single index chunk (index repair requires a block identifier)")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Pin, "pin", "i", false, "pin the manifest or each index chunk and bloom")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Publish, "publish", "p", false, "publish the manifest to the Unchained Index smart contract")
 	chunksCmd.Flags().Uint64VarP(&chunksPkg.GetOptions().Truncate, "truncate", "n", 0, "truncate the entire index at this block (requires a block identifier)")

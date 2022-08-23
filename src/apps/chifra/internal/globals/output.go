@@ -21,7 +21,6 @@ func RenderSlice[
 	T types.SimpleNamedBlock |
 		types.ReportClean |
 		types.ReportCheck |
-		types.ReportRepair |
 		types.SimpleFunction |
 		types.SimpleMonitor |
 		types.SimpleChunkRecord |

@@ -37,7 +37,7 @@ type jobResult struct {
 	fileName string
 	fileSize int64
 	contents io.Reader
-	Pin      *manifest.ChunkRecord
+	theChunk *manifest.ChunkRecord
 }
 
 // fetchResult type make it easier to return both download content and
@@ -146,7 +146,7 @@ func getDownloadWorker(arguments downloadWorkerArguments) workerFunction {
 					fileName: pin.Range,
 					fileSize: download.totalSize,
 					contents: download.body,
-					Pin:      &pin,
+					theChunk: &pin,
 				}
 			} else {
 				progressChannel <- &progress.Progress{
@@ -175,7 +175,7 @@ func getWriteWorker(arguments writeWorkerArguments) workerFunction {
 			return
 		default:
 			msg := &progress.Progress{
-				Payload: res.Pin,
+				Payload: res.theChunk,
 				Event:   progress.Update,
 				Message: "Unzipping",
 			}
@@ -195,7 +195,7 @@ func getWriteWorker(arguments writeWorkerArguments) workerFunction {
 
 			if err != nil {
 				progressChannel <- &progress.Progress{
-					Payload: res.Pin,
+					Payload: res.theChunk,
 					Event:   progress.Error,
 					Message: err.Error(),
 				}
@@ -203,7 +203,7 @@ func getWriteWorker(arguments writeWorkerArguments) workerFunction {
 			}
 
 			progressChannel <- &progress.Progress{
-				Payload: res.Pin,
+				Payload: res.theChunk,
 				Event:   progress.Done,
 			}
 		}

@@ -119,7 +119,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 			}
 
 			// logger.Log(logger.Info, colors.BrightBlue, "Writing to", path, colors.Off)
-			_, err = index.WriteChunk(blazeOpts.Chain, path, appMap, len(appearances), snapper)
+			err = index.WriteChunk(blazeOpts.Chain, path, appMap, len(appearances), snapper)
 			if err != nil {
 				return true, err
 			}

@@ -48,6 +48,7 @@ func PinChunk(chain, path string, isRemote bool) (PinResult, error) {
 		}
 	}
 
+	// TODO: We used to use this to report an error between local and remote pinning, but it got turned off. Turn it back on
 	if isLocal && isRemote {
 		result.Matches = result.Local.IndexHash == result.Remote.IndexHash && result.Local.BloomHash == result.Remote.BloomHash
 	} else {
