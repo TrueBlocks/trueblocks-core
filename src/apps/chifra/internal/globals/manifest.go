@@ -7,7 +7,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// TODO: BOGUS - PINNING TO PINATA AND WRITING MANIFEST FILE SHOULD BE ATOMIC AND PROTECTED FROM CANCEL
+// TODO: Why does this have a separate render routine? Why not just a RenderObject?
 func (opts *GlobalOptions) RenderManifest(w io.Writer, man *manifest.Manifest) error {
 	var err error
 	tmp := opts

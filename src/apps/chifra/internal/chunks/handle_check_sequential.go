@@ -12,7 +12,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-// TODO: Can this be concurrent?
+// CheckSequential checks that the range of blocks in each of three arrays (onDisc, LocalManifest, RemoteManifest)
+// "cover" the range without gaps. (There may be a bug for allow_missing chains where gaps are allowed.)
 func (opts *ChunksOptions) CheckSequential(fnArray, cacheArray, remoteArray []string, allowMissing bool, report *types.ReportCheck) error {
 	if err := opts.checkSequential("disc", fnArray, allowMissing, report); err != nil {
 		return err
@@ -29,6 +30,7 @@ func (opts *ChunksOptions) CheckSequential(fnArray, cacheArray, remoteArray []st
 	return nil
 }
 
+// TODO: Can this be concurrent?
 func (opts *ChunksOptions) checkSequential(which string, array []string, allowMissing bool, report *types.ReportCheck) error {
 	prev := cache.NotARange
 	for _, item := range array {

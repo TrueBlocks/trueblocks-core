@@ -111,15 +111,26 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 			}
 
 			filename := cache.NewCachePath(blazeOpts.Chain, cache.Index_Final)
-			path := filename.GetFullPath(curRange.String())
+			indexPath := filename.GetFullPath(curRange.String())
 
 			snapper := -1
 			if isSnap {
 				snapper = int(opts.Settings.Snap_to_grid)
 			}
 
-			// logger.Log(logger.Info, colors.BrightBlue, "Writing to", path, colors.Off)
-			err = index.WriteChunk(blazeOpts.Chain, path, appMap, len(appearances), snapper)
+			err := index.WriteChunk(blazeOpts.Chain, indexPath, appMap, len(appearances))
+			if err != nil {
+				return true, err
+			}
+			rel := strings.Replace(indexPath, config.GetPathToIndex(opts.Globals.Chain), "$INDEX/", -1)
+			result := fmt.Sprintf("%sWrote %d records to %s%s%s", colors.BrightBlue, len(appearances), rel, colors.Off, strings.Repeat(" ", 20))
+			if snapper != -1 {
+				result = fmt.Sprintf("%sWrote %d records to %s %s(snapped to %d blocks)%s", colors.BrightBlue, len(appearances), rel, colors.Yellow, snapper, colors.Off)
+			}
+			logger.Log(logger.Info, result)
+
+			// TODO: BOGUS - PINNING
+			_, err = opts.HandleScrapePin(nil, nil)
 			if err != nil {
 				return true, err
 			}
@@ -129,7 +140,6 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 		}
 	}
 
-	// logger.Log(logger.Info, colors.BrightYellow, "curRange", curRange, len(appearances), colors.Off)
 	if len(appearances) > 0 {
 		lineLast := appearances[len(appearances)-1]
 		parts := strings.Split(lineLast, "\t")

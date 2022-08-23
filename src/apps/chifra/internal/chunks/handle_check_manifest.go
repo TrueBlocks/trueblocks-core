@@ -22,6 +22,9 @@ type CompareState struct {
 	// failB    int
 }
 
+// CheckManifest takes two arrays (either onDisc vs. LocalManifest, onDisc vs. RemoteManifest, or LocalManifest
+// vs. RemoteManifest) and compares them for equality. If everything is up to date, all three arrays should
+// be identical. Only the block ranges are in the arrays.
 func (opts *ChunksOptions) CheckManifest(arrayA, arrayB []string, report *types.ReportCheck) error {
 	comp := CompareState{
 		testMode: opts.Globals.TestMode,

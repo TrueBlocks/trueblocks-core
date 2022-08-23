@@ -47,7 +47,7 @@ func (opts *BlazeOptions) WriteTimestamps(chain string) error {
 		return opts.TsArray[i].Bn < opts.TsArray[j].Bn
 	})
 
-	// TODO: BOGUS - NEEDS TO USE THE BACKUP FACILITY
+	// TODO: BOGUS - PROTECT AGAINST FAILURE WHEN WRITING
 	// Assume that the existing timestamps file always contains valid timestamps
 	tsPath := config.GetPathToIndex(chain) + "ts.bin"
 	fp, err := os.OpenFile(tsPath, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0644)

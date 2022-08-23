@@ -2,14 +2,11 @@ package index
 
 import (
 	"encoding/binary"
-	"fmt"
 	"io"
 	"os"
 	"path/filepath"
 	"sort"
-	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -22,8 +19,7 @@ import (
 
 type AddressAppearanceMap map[string][]AppearanceRecord
 
-// TODO: BOGUS - PINNING TO PINATA AND WRITING MANIFEST FILE SHOULD BE ATOMIC AND PROTECTED FROM CANCEL
-func WriteChunk(chain, fileName string, addAppMap AddressAppearanceMap, nApps, snapper int) error {
+func WriteChunk(chain, fileName string, addAppMap AddressAppearanceMap, nApps int) error {
 	addressTable := make([]AddressRecord, 0, len(addAppMap))
 	appearanceTable := make([]AppearanceRecord, 0, nApps)
 	sorted := []string{}
@@ -91,17 +87,6 @@ func WriteChunk(chain, fileName string, addAppMap AddressAppearanceMap, nApps, s
 			if _, err = bl.WriteBloom(chain, bloom.ToBloomPath(fileName)); err != nil {
 				return err
 			}
-
-			// TODO: BOGUS - PINNING TO PINATA AND WRITING MANIFEST FILE SHOULD BE ATOMIC AND PROTECTED FROM CANCEL
-			rng, _ := cache.RangeFromFilename(fileName)
-			file.AppendToAsciiFile(config.GetPathToCache(chain)+"tmp/chunks_created.txt", rng.String()+"\n")
-
-			rel := strings.Replace(fileName, config.GetPathToIndex(chain), "$INDEX/", -1)
-			result := fmt.Sprintf("%sWrote %d records to %s%s%s", colors.BrightBlue, len(appearanceTable), rel, colors.Off, strings.Repeat(" ", 20))
-			if snapper != -1 {
-				result = fmt.Sprintf("%sWrote %d records to %s %s(snapped to %d blocks)%s", colors.BrightBlue, len(appearanceTable), rel, colors.Yellow, snapper, colors.Off)
-			}
-			logger.Log(logger.Info, result)
 
 			// Success. Remove the backup so it doesn't replace the orignal
 			os.Remove(backupFn)

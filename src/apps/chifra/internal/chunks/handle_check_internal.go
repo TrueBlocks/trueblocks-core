@@ -14,6 +14,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 )
 
+// CheckInternal reads the header of each chunk on disc looking for the Magic number and
+// the HeaderMagicHash for expected values.
 func (opts *ChunksOptions) CheckInternal(fileNames []string, blockNums []uint64, report *types.ReportCheck) error {
 	for testId, fileName := range fileNames {
 		report.VisitedCnt++

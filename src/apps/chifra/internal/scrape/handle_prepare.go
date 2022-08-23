@@ -5,7 +5,11 @@ package scrapePkg
 // be found in the LICENSE file.
 
 import (
+	"fmt"
+	"strings"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -53,9 +57,19 @@ func (opts *ScrapeOptions) HandlePrepare() (ok bool, err error) {
 	}
 
 	logger.Log(logger.Info, "Writing block zero allocations for", len(allocs), "allocs, nAddresses:", len(appMap))
-	err = index.WriteChunk(opts.Globals.Chain, index.ToIndexPath(bloomPath), appMap, len(allocs), -1)
+	indexPath := index.ToIndexPath(bloomPath)
+	err = index.WriteChunk(opts.Globals.Chain, indexPath, appMap, len(allocs))
 	if err != nil {
 		return false, err
+	}
+	rel := strings.Replace(indexPath, config.GetPathToIndex(opts.Globals.Chain), "$INDEX/", -1)
+	result := fmt.Sprintf("%sWrote %d records to %s%s%s", colors.BrightBlue, len(allocs), rel, colors.Off, strings.Repeat(" ", 20))
+	logger.Log(logger.Info, result)
+
+	// TODO: BOGUS - PINNING
+	_, err = opts.HandleScrapePin(nil, nil)
+	if err != nil {
+		return true, err
 	}
 
 	array := []tslib.Timestamp{}
@@ -65,6 +79,5 @@ func (opts *ScrapeOptions) HandlePrepare() (ok bool, err error) {
 	})
 	tslib.Append(opts.Globals.Chain, array)
 
-	// TODO: BOGUS - CAN'T SEND NILS
-	return opts.HandleScrapePin(nil, nil)
+	return true, nil
 }

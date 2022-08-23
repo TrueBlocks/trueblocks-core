@@ -1,6 +1,3 @@
-// TODO: BOGUS - Sending Ether https://www.youtube.com/watch?v=lwF6-BkRgwc
-// TODO: BOGUS - IPFS Client code https://pkg.go.dev/github.com/ipfs/go-ipfs-http-client
-
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.

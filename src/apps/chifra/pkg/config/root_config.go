@@ -39,7 +39,7 @@ type chainGroup struct {
 	RpcProvider    string `toml:"rpcProvider"`
 	ApiProvider    string `toml:"apiProvider"`
 	Symbol         string `toml:"symbol"`
-	// TODO: This is deprecated - it can be removed in the future
+	// TODO: BOGUS - OLD PINGATEWAY OPTION
 	PinGateway string `toml:"pinGateway"`
 }
 

@@ -35,7 +35,6 @@ func fromRemote(chain string) (*Manifest, error) {
 
 // getManifestCidFromContract calls UnchainedIndex smart contract to get the current manifest IPFS CID
 func getManifestCidFromContract(chain string) (string, error) {
-	// TODO: BOGUS - WHERE DOES THE UNCHAINED INDEX SMART CONTRACT LIVE?
 	provider := config.GetRpcProvider("mainnet") // chain)
 	rpcClient.CheckRpc(provider)
 	ethClient := rpcClient.GetClient(provider)
