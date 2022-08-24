@@ -129,10 +129,8 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 			}
 			logger.Log(logger.Info, result)
 
-			// TODO: BOGUS - PINNING
-			_, err = opts.HandleScrapePin(nil, nil)
-			if err != nil {
-				return true, err
+			if ok, err := opts.HandleScrapePin(progressThen, blazeOpts); !ok || err != nil {
+				return ok, err
 			}
 
 			curRange.First = curRange.Last + 1

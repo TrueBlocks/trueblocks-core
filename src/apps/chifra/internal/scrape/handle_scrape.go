@@ -22,13 +22,31 @@ import (
 // TODO: We should repond to non-tracing (i.e. Geth) nodes better
 // TODO: Make sure we're not running acctScrape and/or pause if it's running
 func (opts *ScrapeOptions) HandleScrape() error {
-	if ok, err := opts.HandlePrepare(); !ok || err != nil {
+	progress, err := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
+	if err != nil {
+		return err
+	}
+
+	blazeOpts := BlazeOptions{
+		Chain:         opts.Globals.Chain,
+		NChannels:     opts.Settings.Channel_count,
+		NProcessed:    0,
+		StartBlock:    opts.StartBlock,
+		BlockCount:    opts.BlockCnt,
+		UnripeDist:    opts.Settings.Unripe_dist,
+		RpcProvider:   config.GetRpcProvider(opts.Globals.Chain),
+		AppearanceMap: make(index.AddressAppearanceMap, opts.Settings.Apps_per_chunk),
+		TsArray:       make([]tslib.Timestamp, 0, opts.BlockCnt),
+		ProcessedMap:  make(map[int]bool, opts.BlockCnt),
+	}
+
+	if ok, err := opts.HandlePrepare(progress, &blazeOpts); !ok || err != nil {
 		return err
 	}
 
 	origBlockCnt := opts.BlockCnt
 	for {
-		progress, err := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
+		progress, err = rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
 		if err != nil {
 			return err
 		}
@@ -63,7 +81,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 			ripeBlock = progress.Latest - opts.Settings.Unripe_dist
 		}
 
-		blazeOpts := BlazeOptions{
+		blazeOpts = BlazeOptions{
 			Chain:         opts.Globals.Chain,
 			NChannels:     opts.Settings.Channel_count,
 			NProcessed:    0,
@@ -105,14 +123,6 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		}
 
 		if ok, err := opts.HandleScrapeConsolidate(progress, &blazeOpts); !ok || err != nil {
-			if !ok {
-				break
-			}
-			goto PAUSE
-		}
-
-		// Clean up after this run of the blockScraper
-		if ok, err := opts.HandleScrapePin(progress, &blazeOpts); !ok || err != nil {
 			if !ok {
 				break
 			}

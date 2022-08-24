@@ -23,7 +23,7 @@ import (
 // HandlePrepare performs actions that need to happen prior to entering the forever loop. Returns
 // true if the processing should continue, false otherwise. Currently, the only thing to do
 // is write the zero block Index Chunk / Bloom filter pair if it doesn't exist.
-func (opts *ScrapeOptions) HandlePrepare() (ok bool, err error) {
+func (opts *ScrapeOptions) HandlePrepare(progressThen *rpcClient.MetaData, blazeOpts *BlazeOptions) (ok bool, err error) {
 	// We always clean the temporary folders (other than staging) when starting
 	index.CleanTemporaryFolders(config.GetPathToIndex(opts.Globals.Chain), false)
 
@@ -66,10 +66,8 @@ func (opts *ScrapeOptions) HandlePrepare() (ok bool, err error) {
 	result := fmt.Sprintf("%sWrote %d records to %s%s%s", colors.BrightBlue, len(allocs), rel, colors.Off, strings.Repeat(" ", 20))
 	logger.Log(logger.Info, result)
 
-	// TODO: BOGUS - PINNING
-	_, err = opts.HandleScrapePin(nil, nil)
-	if err != nil {
-		return true, err
+	if ok, err := opts.HandleScrapePin(progressThen, blazeOpts); !ok || err != nil {
+		return ok, err
 	}
 
 	array := []tslib.Timestamp{}

@@ -8,6 +8,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 )
 
+// TODO: BOGUS - PINNING
+// TODO: BOGUS - SHOULD WE PIN IN WRITECHUNK OR AS A SEPERATE STAGE AFTER CONSOLIDATION?
 // HandleScrapePin pins any newly chunks that are not yet pinned.
 func (opts *ScrapeOptions) HandleScrapePin(progressThen *rpcClient.MetaData, blazeOpts *BlazeOptions) (ok bool, err error) {
 	return true, nil
