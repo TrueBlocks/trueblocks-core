@@ -6,14 +6,14 @@ import (
 	"strings"
 )
 
-func MakeBackup(origFn, path string) (string, error) {
+func MakeBackup(tmpPath, origFn string) (string, error) {
 	if !FileExists(origFn) {
 		return "", nil
 	}
 
 	_, name := filepath.Split(origFn)
 	pattern := strings.Replace(name, ".", ".*.", -1)
-	tmpFile, err := os.CreateTemp(path, pattern)
+	tmpFile, err := os.CreateTemp(tmpPath, pattern)
 	if err != nil {
 		return "", err
 	}

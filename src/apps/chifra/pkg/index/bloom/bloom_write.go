@@ -14,22 +14,22 @@ import (
 func (bl *ChunkBloom) WriteBloom(chain, fileName string) ( /* changed */ bool, error) {
 	var err error
 
-	fileName = ToBloomPath(fileName)
+	bloomFn := ToBloomPath(fileName)
 	tmpPath := filepath.Join(config.GetPathToCache(chain), "tmp")
 
 	// Make a backup copy of the file in case the write fails so we can replace it...
 	var backupFn string
-	if backupFn, err = file.MakeBackup(fileName, tmpPath); err == nil {
+	if backupFn, err = file.MakeBackup(tmpPath, bloomFn); err == nil {
 		defer func() {
 			if file.FileExists(backupFn) {
 				// If the backup file exists, something failed, so we replace the original file.
-				os.Rename(backupFn, fileName)
+				os.Rename(backupFn, bloomFn)
 				os.Remove(backupFn) // seems redundant, but may not be on some operating systems
 			}
 		}()
 
 		var fp *os.File
-		if fp, err = os.OpenFile(fileName, os.O_RDWR|os.O_CREATE, 0644); err == nil {
+		if fp, err = os.OpenFile(bloomFn, os.O_RDWR|os.O_CREATE, 0644); err == nil {
 			defer fp.Close() // defers are last in, first out
 
 			fp.Seek(0, io.SeekStart) // already true, but can't hurt

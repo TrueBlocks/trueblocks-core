@@ -26,20 +26,20 @@ func Freshen(chain string, bn uint64) error {
 	}
 
 	tmpPath := filepath.Join(config.GetPathToCache(chain), "tmp")
-	fileName := filepath.Join(config.GetPathToIndex(chain), "ts.bin")
+	tsFn := filepath.Join(config.GetPathToIndex(chain), "ts.bin")
 
 	// Make a backup copy of the file in case the write fails so we can replace it...
-	if backupFn, err := file.MakeBackup(fileName, tmpPath); err == nil {
+	if backupFn, err := file.MakeBackup(tmpPath, tsFn); err == nil {
 		defer func() {
 			DeCache(chain)
 			if file.FileExists(backupFn) {
 				// If the backup file exists, something failed, so we replace the original file.
-				os.Rename(backupFn, fileName)
+				os.Rename(backupFn, tsFn)
 				os.Remove(backupFn) // seems redundant, but may not be on some operating systems
 			}
 		}()
 
-		if fp, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE, 0644); err == nil {
+		if fp, err := os.OpenFile(tsFn, os.O_RDWR|os.O_CREATE, 0644); err == nil {
 			if err != nil {
 				return err
 			}

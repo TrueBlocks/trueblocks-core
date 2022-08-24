@@ -77,22 +77,22 @@ func WriteChunkHeaderHash(chain, fileName string, headerHash common.Hash) ( /* c
 	var err error
 
 	tmpPath := filepath.Join(config.GetPathToCache(chain), "tmp")
-	fileName = ToIndexPath(fileName)
-	if !file.FileExists(fileName) {
+	indexFn := ToIndexPath(fileName)
+	if !file.FileExists(indexFn) {
 		return false, nil
 	}
 
 	// Make a backup copy of the file in case the write fails so we can replace it...
-	if backupFn, err := file.MakeBackup(fileName, tmpPath); err == nil {
+	if backupFn, err := file.MakeBackup(tmpPath, indexFn); err == nil {
 		defer func() {
 			if file.FileExists(backupFn) {
 				// If the backup file exists, something failed, so we replace the original file.
-				os.Rename(backupFn, fileName)
+				os.Rename(backupFn, indexFn)
 				os.Remove(backupFn) // seems redundant, but may not be on some operating systems
 			}
 		}()
 
-		if fp, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE, 0644); err == nil {
+		if fp, err := os.OpenFile(indexFn, os.O_RDWR|os.O_CREATE, 0644); err == nil {
 			defer fp.Close() // defers are last in, first out
 
 			fp.Seek(0, io.SeekStart) // already true, but can't hurt
