@@ -22,8 +22,13 @@ func (opts *ExportOptions) validateExport() error {
 	}
 
 	if len(opts.Globals.File) == 0 {
-		err := validate.ValidateAtLeastOneAddr(opts.Addrs)
-		if err != nil {
+		if err := validate.ValidateAtLeastOneAddr(opts.Addrs); err != nil {
+			return err
+		}
+	}
+
+	if len(opts.Flow) > 0 {
+		if err := validate.ValidateEnum("--flow", opts.Flow, "[in|out]"); err != nil {
 			return err
 		}
 	}

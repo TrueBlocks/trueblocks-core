@@ -69,6 +69,7 @@ class COptions : public CAbiOptions {
     uint64_t first_record;
     uint64_t max_records;
     bool relevant;
+    string_q flow;
     bool factory;
     string_q load;
     bool reversed;

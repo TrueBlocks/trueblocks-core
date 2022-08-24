@@ -107,8 +107,11 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 			os.Remove(backupFn)
 			return nil
 		}
+	} else {
+		return err
 	}
-	return err
+
+	return nil
 }
 
 type Renderer interface {

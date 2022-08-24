@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2022-06-10T21:58:15
+date: 2022-08-24T13:10:35
 lastmod:
   - :git
   - lastmod
@@ -77,7 +77,7 @@ Flags:
   -r, --receipts            export receipts instead of transactional data
   -l, --logs                export logs instead of transactional data
   -t, --traces              export traces instead of transactional data
-  -A, --statements          export reconciliations instead of transactional data (requires --accounting option)
+  -A, --statements          export reconciliations instead of transactional data (assumes --accounting option)
   -n, --neighbors           export the neighbors of the given address
   -C, --accounting          attach accounting records to the exported data (applies to transactions export only)
   -a, --articulate          articulate transactions, traces, logs, and outputs
@@ -90,6 +90,8 @@ Flags:
       --emitter strings     for log export only, export only logs if emitted by one of these address(es)
       --topic strings       for log export only, export only logs with this topic(s)
       --asset strings       for the statements option only, export only reconciliations for this asset
+      --flow string         for the statements option only, export only statements with incoming value or outgoing value
+                            One of [ in | out ]
   -y, --factory             scan for contract creations from the given address(es) and report address of those contracts
   -s, --staging             export transactions labeled staging (i.e. older than 28 blocks but not yet consolidated)
   -u, --unripe              export transactions labeled upripe (i.e. less than 28 blocks old)

@@ -54,7 +54,7 @@ func init() {
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Receipts, "receipts", "r", false, "export receipts instead of transactional data")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Logs, "logs", "l", false, "export logs instead of transactional data")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Traces, "traces", "t", false, "export traces instead of transactional data")
-	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Statements, "statements", "A", false, "export reconciliations instead of transactional data (requires --accounting option)")
+	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Statements, "statements", "A", false, "export reconciliations instead of transactional data (assumes --accounting option)")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Neighbors, "neighbors", "n", false, "export the neighbors of the given address")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Accounting, "accounting", "C", false, "attach accounting records to the exported data (applies to transactions export only)")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Articulate, "articulate", "a", false, "articulate transactions, traces, logs, and outputs")
@@ -67,6 +67,8 @@ func init() {
 	exportCmd.Flags().StringSliceVarP(&exportPkg.GetOptions().Emitter, "emitter", "", nil, "for log export only, export only logs if emitted by one of these address(es)")
 	exportCmd.Flags().StringSliceVarP(&exportPkg.GetOptions().Topic, "topic", "", nil, "for log export only, export only logs with this topic(s)")
 	exportCmd.Flags().StringSliceVarP(&exportPkg.GetOptions().Asset, "asset", "", nil, "for the statements option only, export only reconciliations for this asset")
+	exportCmd.Flags().StringVarP(&exportPkg.GetOptions().Flow, "flow", "", "", `for the statements option only, export only statements with incoming value or outgoing value
+One of [ in | out ]`)
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Factory, "factory", "y", false, "scan for contract creations from the given address(es) and report address of those contracts")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Staging, "staging", "s", false, "export transactions labeled staging (i.e. older than 28 blocks but not yet consolidated)")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Unripe, "unripe", "u", false, "export transactions labeled upripe (i.e. less than 28 blocks old)")
