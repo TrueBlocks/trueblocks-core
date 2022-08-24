@@ -40,8 +40,10 @@ func (opts *ChunksOptions) HandleManifest(blockNums []uint64) error {
 		pinList := make([]types.SimpleChunkRecord, len(man.Chunks))
 		for i := range man.Chunks {
 			pinList[i].Range = man.Chunks[i].Range
-			pinList[i].BloomHash = string(man.Chunks[i].BloomHash)
-			pinList[i].IndexHash = string(man.Chunks[i].IndexHash)
+			pinList[i].BloomHash = man.Chunks[i].BloomHash
+			pinList[i].BloomSize = man.Chunks[i].BloomSize
+			pinList[i].IndexHash = man.Chunks[i].IndexHash
+			pinList[i].IndexSize = man.Chunks[i].IndexSize
 		}
 
 		for i, r := range pinList {

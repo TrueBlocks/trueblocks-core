@@ -19,8 +19,10 @@ func (opts *GlobalOptions) RenderManifest(w io.Writer, man *manifest.Manifest) e
 		for _, c := range man.Chunks {
 			cc := types.SimpleChunkRecord{
 				Range:     c.Range,
-				BloomHash: string(c.BloomHash),
-				IndexHash: string(c.IndexHash),
+				BloomHash: c.BloomHash,
+				BloomSize: c.BloomSize,
+				IndexHash: c.IndexHash,
+				IndexSize: c.IndexSize,
 			}
 			sc = append(sc, cc)
 		}

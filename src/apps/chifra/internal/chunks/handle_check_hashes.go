@@ -40,7 +40,7 @@ func (opts *ChunksOptions) checkHashes(which string, man *manifest.Manifest, rep
 		report.CheckedCnt++
 		if len(chunk.IndexHash) != 46 {
 			msg := fmt.Sprintf("%s: Invalid IndexHash (%s) in %s", chunk.Range, chunk.IndexHash, which)
-			if len(chunk.BloomHash) == 0 {
+			if len(chunk.IndexHash) == 0 {
 				msg = fmt.Sprintf("%s: Empty IndexHash in %s", chunk.Range, which)
 			}
 			report.MsgStrings = append(report.MsgStrings, msg)

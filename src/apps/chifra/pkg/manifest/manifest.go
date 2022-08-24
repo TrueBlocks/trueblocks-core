@@ -37,7 +37,9 @@ type Manifest struct {
 type ChunkRecord struct {
 	Range     string         `json:"range"`
 	BloomHash types.IpfsHash `json:"bloomHash"`
+	BloomSize int64          `json:"bloomSize"`
 	IndexHash types.IpfsHash `json:"indexHash"`
+	IndexSize int64          `json:"indexSize"`
 }
 
 // TODO: If we included fileSize (pre-zip) here, we could do a check that the file is complete

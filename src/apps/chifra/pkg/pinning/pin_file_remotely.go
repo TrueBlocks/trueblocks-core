@@ -4,15 +4,16 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"mime/multipart"
 	"net/http"
 	"os"
 	fp "path/filepath"
 	"time"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (s *Service) pinFileRemotely(filepath string) (string, error) {
+func (s *Service) pinFileRemotely(filepath string) (types.IpfsHash, error) {
 	if s.PinUrl == "" {
 		return "", fmt.Errorf("empty remote pinning URL")
 	}
@@ -66,7 +67,7 @@ func (s *Service) pinFileRemotely(filepath string) (string, error) {
 	}
 	defer resp.Body.Close()
 
-	data, err := ioutil.ReadAll(resp.Body)
+	data, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return "", err
 	}
@@ -80,7 +81,7 @@ func (s *Service) pinFileRemotely(filepath string) (string, error) {
 		return "", fmt.Errorf(out)
 	}
 
-	if ipfsHash, castOk := dat[s.ResultName].(string); castOk {
+	if ipfsHash, castOk := dat[s.ResultName].(types.IpfsHash); castOk {
 		return ipfsHash, nil
 	}
 

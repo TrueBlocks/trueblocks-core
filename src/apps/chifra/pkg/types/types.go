@@ -54,15 +54,17 @@ type SimpleMonitor struct {
 type SimpleManifest struct {
 	Version   string              `json:"version"`
 	Chain     string              `json:"chain"`
-	Schemas   string              `json:"schemas"`
-	Databases string              `json:"databases"`
+	Schemas   IpfsHash            `json:"schemas"`
+	Databases IpfsHash            `json:"databases"`
 	Chunks    []SimpleChunkRecord `json:"chunks"`
 }
 
 type SimpleChunkRecord struct {
-	Range     string `json:"range,omitempty"`
-	BloomHash string `json:"bloomHash,omitempty"`
-	IndexHash string `json:"indexHash,omitempty"`
+	Range     string   `json:"range,omitempty"`
+	BloomHash IpfsHash `json:"bloomHash,omitempty"`
+	BloomSize int64    `json:"bloomSize,omitempty"`
+	IndexHash IpfsHash `json:"indexHash,omitempty"`
+	IndexSize int64    `json:"indexSize,omitempty"`
 }
 
 type SimpleBloom struct {

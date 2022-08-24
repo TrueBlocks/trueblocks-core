@@ -2,6 +2,7 @@ package pinning
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -34,18 +35,22 @@ func PinChunk(chain, path string, isRemote bool) (PinResult, error) {
 		if result.Local.BloomHash, result.err = localService.PinFile(bloomFile, true); result.err != nil {
 			return PinResult{}, result.err
 		}
+		result.Local.BloomSize = file.FileSize(bloomFile)
 		if result.Local.IndexHash, result.err = localService.PinFile(indexFile, true); result.err != nil {
 			return PinResult{}, result.err
 		}
+		result.Local.IndexSize = file.FileSize(indexFile)
 	}
 
 	if isRemote {
 		if result.Remote.BloomHash, result.err = remoteService.PinFile(bloomFile, false); result.err != nil {
 			return PinResult{}, result.err
 		}
+		result.Remote.BloomSize = file.FileSize(bloomFile)
 		if result.Remote.IndexHash, result.err = remoteService.PinFile(indexFile, false); result.err != nil {
 			return PinResult{}, result.err
 		}
+		result.Remote.IndexSize = file.FileSize(indexFile)
 	}
 
 	// TODO: We used to use this to report an error between local and remote pinning, but it got turned off. Turn it back on
@@ -58,7 +63,7 @@ func PinChunk(chain, path string, isRemote bool) (PinResult, error) {
 	return result, nil
 }
 
-func (p *Service) PinFile(filepath string, local bool) (string, error) {
+func (p *Service) PinFile(filepath string, local bool) (types.IpfsHash, error) {
 	if local {
 		return p.pinFileLocally(filepath)
 	}
