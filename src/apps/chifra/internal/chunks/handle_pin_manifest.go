@@ -3,6 +3,7 @@ package chunksPkg
 import (
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -34,6 +35,9 @@ func (opts *ChunksOptions) pinChunk(ctx *WalkContext, path string, first bool) (
 	}
 	if opts.Globals.Verbose {
 		logger.Log(logger.Progress, "Pinning", path)
+	}
+	if opts.Settings.Sleep > 0 {
+		time.Sleep(time.Duration(opts.Settings.Sleep) * time.Second)
 	}
 
 	return true, nil
