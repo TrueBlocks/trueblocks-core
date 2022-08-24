@@ -58,7 +58,6 @@ func (opts *BlazeOptions) WriteTimestamps(chain string) error {
 	defer func() {
 		tslib.DeCache(chain)
 		fp.Close()
-		// TODO: BOGUS - PROTECT AGAINST FAILURE WHEN WRITING
 		// sigintTrap.Disable(trapCh)
 		// writeMutex.Unlock()
 	}()

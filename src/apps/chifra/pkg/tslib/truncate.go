@@ -64,3 +64,39 @@ func Truncate(chain string, maxBn uint64) error {
 	}
 	return nil
 }
+
+/*
+	bloomFn := ToBloomPath(fileName)
+	tmpPath := filepath.Join(config.GetPathToCache(chain), "tmp")
+	if backupFn, err := file.MakeBackup(tmpPath, bloomFn); err == nil {
+		defer func() {
+			if file.FileExists(backupFn) {
+				os.Rename(backupFn, bloomFn)
+				os.Remove(backupFn) // seems redundant, but may not be on some operating systems
+			}
+		}()
+		if fp, err := os.OpenFile(bloomFn, os.O_RDWR|os.O_CREATE, 0644); err == nil {
+			defer fp.Close() // defers are last in, first out
+
+			fp.Seek(0, io.SeekStart) // already true, but can't hurt
+			if err = binary.Write(fp, binary.LittleEndian, bl.Count); err != nil {
+				return false, err
+			}
+
+			for _, bb := range bl.Blooms {
+				if err = binary.Write(fp, binary.LittleEndian, bb.NInserted); err != nil {
+					return false, err
+				}
+				if err = binary.Write(fp, binary.LittleEndian, bb.Bytes); err != nil {
+					return false, err
+				}
+			}
+
+			os.Remove(backupFn)
+			return true, nil
+		}
+	} else {
+		return false, err
+	}
+	return false, nil
+*/

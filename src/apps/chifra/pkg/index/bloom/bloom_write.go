@@ -10,16 +10,13 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
 
-// TODO: BOGUS - PROTECT AGAINST FAILURE WHEN WRITING
+// WriteBloom writes a single bloom filter to file
 func (bl *ChunkBloom) WriteBloom(chain, fileName string) ( /* changed */ bool, error) {
-	var err error
-
 	bloomFn := ToBloomPath(fileName)
 	tmpPath := filepath.Join(config.GetPathToCache(chain), "tmp")
 
 	// Make a backup copy of the file in case the write fails so we can replace it...
-	var backupFn string
-	if backupFn, err = file.MakeBackup(tmpPath, bloomFn); err == nil {
+	if backupFn, err := file.MakeBackup(tmpPath, bloomFn); err == nil {
 		defer func() {
 			if file.FileExists(backupFn) {
 				// If the backup file exists, something failed, so we replace the original file.
@@ -28,8 +25,7 @@ func (bl *ChunkBloom) WriteBloom(chain, fileName string) ( /* changed */ bool, e
 			}
 		}()
 
-		var fp *os.File
-		if fp, err = os.OpenFile(bloomFn, os.O_RDWR|os.O_CREATE, 0644); err == nil {
+		if fp, err := os.OpenFile(bloomFn, os.O_RDWR|os.O_CREATE, 0644); err == nil {
 			defer fp.Close() // defers are last in, first out
 
 			fp.Seek(0, io.SeekStart) // already true, but can't hurt
@@ -50,7 +46,9 @@ func (bl *ChunkBloom) WriteBloom(chain, fileName string) ( /* changed */ bool, e
 			os.Remove(backupFn)
 			return true, nil
 		}
+	} else {
+		return false, err
 	}
 
-	return false, err
+	return false, nil
 }

@@ -168,7 +168,7 @@ func PinataHeaders(s *Service, contentType string) map[string]string {
 // 	}
 // 	man.Chunks = unique(append(man.Chunks, chunk))
 
-// 	// TODO: BOGUS - PROTECT AGAINST FAILURE WHEN WRITING
+// TODO: BOGUS - PROTECT AGAINST FAILURE WHEN WRITING
 // 	fileName := config.GetPathToChainConfig(opts.Globals.Chain) + "manifest.json"
 // 	w, err := os.Create(fileName)
 // 	if err != nil {
