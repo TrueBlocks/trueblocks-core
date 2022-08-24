@@ -470,11 +470,11 @@ names?terms=etwork&verbose
       "description": ""
     },
     {
-      "tags": "31-Giveth:Whitelist",
+      "tags": "50-Tokens:ERC20",
       "address": "0x69af81e73a73b40adf4f3d4223cd9b1ece623074",
       "name": "Mask Network",
       "symbol": "",
-      "source": "Giveth.io",
+      "source": "Giveth website",
       "decimals": 0,
       "description": ""
     },
@@ -578,11 +578,11 @@ names?terms=etwork&verbose
       "description": ""
     },
     {
-      "tags": "31-Giveth:Whitelist",
+      "tags": "50-Tokens:ERC20",
       "address": "0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0",
       "name": "Matic Network",
       "symbol": "",
-      "source": "Giveth.io",
+      "source": "Giveth website",
       "decimals": 0,
       "description": ""
     },
@@ -596,11 +596,11 @@ names?terms=etwork&verbose
       "description": ""
     },
     {
-      "tags": "31-Giveth:Whitelist",
+      "tags": "50-Tokens:ERC20",
       "address": "0x8290333cef9e6d528dd5618fb97a76f268f3edd4",
       "name": "Ankr Network",
       "symbol": "",
-      "source": "Giveth.io",
+      "source": "Giveth website",
       "decimals": 0,
       "description": ""
     },
@@ -893,11 +893,11 @@ names?terms=etwork&verbose
       "description": "Synthetix is a cryptoasset-backed network that enables the creation of on-chain synthetic assets."
     },
     {
-      "tags": "31-Giveth:Whitelist",
+      "tags": "50-Tokens:ERC20",
       "address": "0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f",
       "name": "Synthetix Network Token",
       "symbol": "",
-      "source": "Giveth.io",
+      "source": "Giveth website",
       "decimals": 0,
       "description": ""
     },
@@ -1010,11 +1010,11 @@ names?terms=etwork&verbose
       "description": "A Browser-based Blockchain Ecosystem"
     },
     {
-      "tags": "31-Giveth:Whitelist",
+      "tags": "50-Tokens:ERC20",
       "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
       "name": "OMG Network",
       "symbol": "",
-      "source": "Giveth.io",
+      "source": "Giveth website",
       "decimals": 0,
       "description": ""
     },
@@ -1100,11 +1100,11 @@ names?terms=etwork&verbose
       "description": "BrokerNeko Network provides rational, quick and easy solutions for individual and institutional transactions with its own unique system."
     },
     {
-      "tags": "31-Giveth:Whitelist",
+      "tags": "50-Tokens:ERC20",
       "address": "0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
       "name": "Kyber Network",
       "symbol": "",
-      "source": "Giveth.io",
+      "source": "Giveth website",
       "decimals": 0,
       "description": ""
     },
@@ -1271,11 +1271,11 @@ names?terms=etwork&verbose
       "description": ""
     },
     {
-      "tags": "31-Giveth:Whitelist",
+      "tags": "50-Tokens:ERC20",
       "address": "0xf970b8e36e23f7fc3fd752eea86f8be8d83375a6",
       "name": "Ripio Credit Network",
       "symbol": "",
-      "source": "Giveth.io",
+      "source": "Giveth website",
       "decimals": 0,
       "description": ""
     },

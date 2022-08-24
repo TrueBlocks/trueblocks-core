@@ -531,10 +531,10 @@ TEST[DATE|TIME] Format:  json
     "source": "Gitcoin Website"
   },
   {
-    "tags": "31-Giveth:Whitelist",
+    "tags": "50-Tokens:ERC20",
     "address": "0x00c83aecc790e8a4453e5dd3b0b4b3680501a7a7",
     "name": "Skale",
-    "source": "Giveth.io"
+    "source": "Giveth website"
   },
   {
     "tags": "31-Giveth:Project",

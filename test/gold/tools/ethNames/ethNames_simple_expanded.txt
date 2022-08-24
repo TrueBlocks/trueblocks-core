@@ -86,7 +86,7 @@ TEST[DATE|TIME] Format:  txt
 50-Tokens:ERC20	0x6758b7d441a9739b98552b373703d8d3d14f9e62	POA ERC20 on Foundation	POA20	On chain	18	POA Network is an Ethereum-based platform that offers an open-source framework for smart contracts.	false	false	false	true	true	false
 50-Tokens:ERC20	0x679131f591b4f369acb8cd8c51e68596806c3916	Trustlines Network Token	TLN	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x67b6d479c7bb412c54e03dca8e1bc6740ce6b99c	Kylin Network	KYL	On chain	18		false	false	false	true	true	false
-31-Giveth:Whitelist	0x69af81e73a73b40adf4f3d4223cd9b1ece623074	Mask Network		Giveth.io			false	false	false	true	false	false
+50-Tokens:ERC20	0x69af81e73a73b40adf4f3d4223cd9b1ece623074	Mask Network		Giveth website			false	false	false	true	false	false
 50-Tokens:ERC20	0x6b193e107a773967bd821bcf8218f3548cfa2503	Posscoin	POSS	On chain	18	Posscoin is an innovative payment network and a new kind of money.	false	false	false	true	true	false
 50-Tokens:ERC20	0x6ba460ab75cd2c56343b3517ffeba60748654d26	UpToken	UP	On chain	8	crypto ATM network	false	false	false	true	true	false
 50-Tokens:ERC20	0x6ec8a24cabdc339a06a172f8223ea557055adaa5	Genaro X	GNX	On chain	9	The Genaro Network is the first Turing-complete public blockchain combining peer-to-peer storage with a sustainable consensus mechanism. Genaro's mixed consensus uses SPoR and PoS, ensuring stronger performance and security.	false	false	false	true	true	false
@@ -105,10 +105,10 @@ TEST[DATE|TIME] Format:  txt
 50-Tokens:ERC20	0x7c5a0ce9267ed19b22f8cae653f198e3e8daf098	SANtiment network token	SAN	On chain	18	A Better Way to Trade Crypto-Markets - Market Datafeeds, Newswires, and Crowd Sentiment Insights for the Blockchain World	false	false	false	true	true	false
 50-Tokens:ERC20	0x7c5d5100b339fe7d995a893af6cb496b9474373c	Loon Network	LOON	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x7c6c3b4e91923f080d6cc847a68d7330400a95d7	Union Network Dollar Token	UNDT	On chain	18		false	false	false	true	true	false
-31-Giveth:Whitelist	0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0	Matic Network		Giveth.io			false	false	false	true	false	false
+50-Tokens:ERC20	0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0	Matic Network		Giveth website			false	false	false	true	false	false
 50-Tokens:ERC20	0x8069080a922834460c3a092fb2c1510224dc066b	SpaceChain	SPC	On chain	18	SpaceChain is a community-based space platform that combines space and blockchain technologies to build the world‚Äö√Ñ√¥s first open-source blockchain-based satellite network.	false	false	false	true	true	false
 30-Contracts:Set Protocol	0x818e6fecd516ecc3849daf6845e3ec868087b755	Kyber Network Proxy		https://github.com/SetProtocol/set-protocol-contracts			false	false	false	true	false	false
-31-Giveth:Whitelist	0x8290333cef9e6d528dd5618fb97a76f268f3edd4	Ankr Network		Giveth.io			false	false	false	true	false	false
+50-Tokens:ERC20	0x8290333cef9e6d528dd5618fb97a76f268f3edd4	Ankr Network		Giveth website			false	false	false	true	false	false
 31-Gitcoin:Grants	0x863199c0a7eb5c6e70e0889a93242445ee998cf4	Grant 0762 Community Based Audit		https://gitcoin.co/grants/762/community-based-audit		https://github.com/SmartAuditNetwork	false	false	false	false	false	false
 31-Gitcoin:Grants	0x8767aacd8ae48e6a23077548c24121e46dca0696	Grant 2728 - Using social networks for fun, affordable, and lucrative delivery.		https://gitcoin.co/grants/2728/using-social-networks-for-fun-affordable-and-lucr			false	false	false	false	false	false
 50-Tokens:ERC20	0x877c7deb5eb1fc5faad30c71e3a6e39dc8b1519f	HeartBout	HB	On chain	18	HeartBout is a social network based on the blockchain technology with a decentralized system to encourage user activity.	false	false	false	true	true	false
@@ -155,7 +155,7 @@ TEST[DATE|TIME] Format:  txt
 50-Tokens:ERC20	0xbac7a1798350cdf2dbfe0c210c2c9861223f4b31	Moneynet Coin	MNC	On chain	18	Incentive Social Network Service	false	false	false	true	true	false
 50-Tokens:ERC20	0xbbc2045d335cb224228f1850b29173d9d7d7b989	HELP	HELP	On chain	18	Decentralized Fundraising Platform Advanced Distributed Edge Network	false	false	false	true	true	false
 50-Tokens:ERC20	0xc011a72400e58ecd99ee497cf89e3775d4bd732f	Synthetix Network Token	SNX	EtherScan.io		Synthetix is a cryptoasset-backed network that enables the creation of on-chain synthetic assets.	false	false	false	true	false	false
-31-Giveth:Whitelist	0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f	Synthetix Network Token		Giveth.io			false	false	false	true	false	false
+50-Tokens:ERC20	0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f	Synthetix Network Token		Giveth website			false	false	false	true	false	false
 30-Contracts:Kyber Network	0xc0d3e654676b117663143eac33b45b620171244b	Kyber Order List		TrueBlocks.io			false	false	false	true	false	false
 31-Gitcoin:Grants	0xc0dd8e21a31f62861e668833f47770592d379a4c	Grant 2694 - Matrix2 - An aggregated Layer 2 network		https://gitcoin.co/grants/2694/matrix2-an-aggregated-layer-2-network			false	false	false	false	false	false
 31-Gitcoin:Grants	0xc22e8d32d3146efc54088f39ec9c29eaf3905b1d	Grant 3090 - Atelio : creating open , blockchain based digital supply network.		https://gitcoin.co/grants/3090/atelio-creating-open-blockchain-based-digital-sup			false	false	false	false	false	false
@@ -170,7 +170,7 @@ TEST[DATE|TIME] Format:  txt
 50-Tokens:ERC20	0xcd62b1c403fa761baadfc74c525ce2b51780b184	Aragon Network Juror	ANJ	On chain	18		false	false	false	true	true	false
 31-Gitcoin:Grants	0xcfb3c2dc81718ff0087d46e4d7b1c4692ded1586	Grant 1323 Resource Network		https://gitcoin.co/grants/1323/resource-network			false	false	false	false	false	false
 50-Tokens:ERC20	0xcfb98637bcae43c13323eaa1731ced2b716962fd	Nimiq Network Interim Token	NET	On chain	18	A Browser-based Blockchain Ecosystem	false	false	false	true	true	false
-31-Giveth:Whitelist	0xd26114cd6ee289accf82350c8d8487fedb8a0c07	OMG Network		Giveth.io			false	false	false	true	false	false
+50-Tokens:ERC20	0xd26114cd6ee289accf82350c8d8487fedb8a0c07	OMG Network		Giveth website			false	false	false	true	false	false
 50-Tokens:ERC20	0xd29f0b5b3f50b07fe9a9511f7d86f4f4bac3f8c4	Liquidity.Network Token	LQD	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0xd2fa8f92ea72abb35dbd6deca57173d22db2ba49	Origami Network	ORI	On chain	18	A protocol for building decentralized marketplaces using the Ethereum blockchain	false	false	false	true	true	false
 50-Tokens:ERC20	0xd341d1680eeee3255b8c4c75bcce7eb57f144dae	onG	ONG	On chain	18	SoMee allows you to connect and build a community on a social network where you have the control of private data, information and monetization of your social media channels.	false	false	false	true	true	false
@@ -186,7 +186,7 @@ TEST[DATE|TIME] Format:  txt
 50-Tokens:ERC20	0xda80b20038bdf968c7307bb5907a469482cf6251	BrokerNekoNetwork	BNN	On chain	8	BrokerNeko Network provides rational, quick and easy solutions for individual and institutional transactions with its own unique system.	false	false	false	true	true	false
 50-Tokens:ERC20	0xdb8646f5b487b5dd979fac618350e85018f557d4	BitcoinToken	BTK	On chain	18	Bitcoin Token BTK is a digital currency. It uses peer-to-peer technology to operate with no central authority or banks managing transactions are carried out collectively by the network.	false	false	false	true	true	false
 50-Tokens:ERC20	0xdbfb423e9bbf16294388e07696a5120e4ceba0c5	Ethereum Dark	ETHD	On chain	18	Aims to allow anyone to send transactions through P2P network	false	false	false	true	true	false
-31-Giveth:Whitelist	0xdd974d5c2e2928dea5f71b9825b8b646686bd200	Kyber Network		Giveth.io			false	false	false	true	false	false
+50-Tokens:ERC20	0xdd974d5c2e2928dea5f71b9825b8b646686bd200	Kyber Network		Giveth website			false	false	false	true	false	false
 31-Gitcoin:Grants	0xddb5eb5b0ba08601af1feff591bf5be6b59ba5f6	Grant 1505 Moip Network: Send Ethereum or Erc20 Tokens Through Email		https://gitcoin.co/grants/1505/moip-network-send-ethereum-or-erc20-tokens-throug			false	false	false	false	false	false
 50-Tokens:ERC20	0xdf2c7238198ad8b389666574f2d8bc411a4b7428	Mainframe Token	MFT	On chain	18	A decentralized network for censorship-resistant message routing.	false	false	false	true	true	false
 30-Contracts:Kyber Network	0xdfc85c08d5e5924ab49750e006cf8a826ffb7b13	Kyber Sanity Rates		TrueBlocks.io			false	false	false	true	false	false

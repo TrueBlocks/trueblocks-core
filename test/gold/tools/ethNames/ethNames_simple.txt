@@ -54,7 +54,7 @@ tags	address	name	symbol	decimals
 31-Gitcoin:Grants	0x66aa8bee5366b6b48811ae0dac9fe5e1eefe1621	Grant 0049 Blockchain Education Network (ben)
 50-Tokens:ERC20	0x679131f591b4f369acb8cd8c51e68596806c3916	Trustlines Network Token	TLN		18
 50-Tokens:ERC20	0x67b6d479c7bb412c54e03dca8e1bc6740ce6b99c	Kylin Network	KYL		18
-31-Giveth:Whitelist	0x69af81e73a73b40adf4f3d4223cd9b1ece623074	Mask Network
+50-Tokens:ERC20	0x69af81e73a73b40adf4f3d4223cd9b1ece623074	Mask Network
 50-Tokens:ERC20	0x6fb3e0a217407efff7ca062d46c26e5d60a14d69	IoTeX Network	IOTX		18
 50-Tokens:ERC20	0x6fff3806bbac52a20e0d79bc538d527f6a22c96b	Network			18
 50-Tokens:ERC20	0x70861e862e1ac0c96f853c8231826e469ead37b1	DOS Network Token	DOS		18
@@ -66,9 +66,9 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x7c5a0ce9267ed19b22f8cae653f198e3e8daf098	SANtiment network token	SAN		18
 50-Tokens:ERC20	0x7c5d5100b339fe7d995a893af6cb496b9474373c	Loon Network	LOON		18
 50-Tokens:ERC20	0x7c6c3b4e91923f080d6cc847a68d7330400a95d7	Union Network Dollar Token	UNDT		18
-31-Giveth:Whitelist	0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0	Matic Network
+50-Tokens:ERC20	0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0	Matic Network
 30-Contracts:Set Protocol	0x818e6fecd516ecc3849daf6845e3ec868087b755	Kyber Network Proxy
-31-Giveth:Whitelist	0x8290333cef9e6d528dd5618fb97a76f268f3edd4	Ankr Network
+50-Tokens:ERC20	0x8290333cef9e6d528dd5618fb97a76f268f3edd4	Ankr Network
 31-Gitcoin:Grants	0x8767aacd8ae48e6a23077548c24121e46dca0696	Grant 2728 - Using social networks for fun, affordable, and lucrative delivery.
 50-Tokens:ERC20	0x881ef48211982d01e2cb7092c915e647cd40d85c	Open Trading Network	OTN		18
 31-Gitcoin:Grants	0x887a26839d9e33b1536857a24f91f192ce9d4732	Grant 2776 - pulp-network
@@ -101,7 +101,7 @@ tags	address	name	symbol	decimals
 31-Gitcoin:Grants	0xb64850fe701fb64667b6cc762aa2c12f2e02193c	Grant 0742 Crypto Community Ventures Network
 31-Gitcoin:Grants	0xb9c5ed064288dc62adb6e6a0d8106fd6e71ac2a2	Grant 4294 - Frontpage Ping: Decentralized Real-Time Collaboration Network Protocol for Web3
 50-Tokens:ERC20	0xc011a72400e58ecd99ee497cf89e3775d4bd732f	Synthetix Network Token	SNX
-31-Giveth:Whitelist	0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f	Synthetix Network Token
+50-Tokens:ERC20	0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f	Synthetix Network Token
 30-Contracts:Kyber Network	0xc0d3e654676b117663143eac33b45b620171244b	Kyber Order List
 31-Gitcoin:Grants	0xc0dd8e21a31f62861e668833f47770592d379a4c	Grant 2694 - Matrix2 - An aggregated Layer 2 network
 31-Gitcoin:Grants	0xc22e8d32d3146efc54088f39ec9c29eaf3905b1d	Grant 3090 - Atelio : creating open , blockchain based digital supply network.
@@ -114,7 +114,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0xcd62b1c403fa761baadfc74c525ce2b51780b184	Aragon Network Juror	ANJ		18
 31-Gitcoin:Grants	0xcfb3c2dc81718ff0087d46e4d7b1c4692ded1586	Grant 1323 Resource Network
 50-Tokens:ERC20	0xcfb98637bcae43c13323eaa1731ced2b716962fd	Nimiq Network Interim Token	NET		18
-31-Giveth:Whitelist	0xd26114cd6ee289accf82350c8d8487fedb8a0c07	OMG Network
+50-Tokens:ERC20	0xd26114cd6ee289accf82350c8d8487fedb8a0c07	OMG Network
 50-Tokens:ERC20	0xd29f0b5b3f50b07fe9a9511f7d86f4f4bac3f8c4	Liquidity.Network Token	LQD		18
 50-Tokens:ERC20	0xd2fa8f92ea72abb35dbd6deca57173d22db2ba49	Origami Network	ORI		18
 31-Giveth:Project	0xd3a8518a8e75a6c9317027abd29847ea1965f2b1	Strengthening the Citizen Water Observatories Network
@@ -124,7 +124,7 @@ tags	address	name	symbol	decimals
 31-Giveth:Project	0xda503eef0326db7b28c0962a5a45af3bf7e0c1d8	The Lantern Network
 31-Gitcoin:Grants	0xda72e4f2f86cc4114844c5894241616c82667c48	Grant 1229 Pulp Network
 50-Tokens:ERC20	0xda80b20038bdf968c7307bb5907a469482cf6251	BrokerNekoNetwork	BNN		8
-31-Giveth:Whitelist	0xdd974d5c2e2928dea5f71b9825b8b646686bd200	Kyber Network
+50-Tokens:ERC20	0xdd974d5c2e2928dea5f71b9825b8b646686bd200	Kyber Network
 31-Gitcoin:Grants	0xddb5eb5b0ba08601af1feff591bf5be6b59ba5f6	Grant 1505 Moip Network: Send Ethereum or Erc20 Tokens Through Email
 30-Contracts:Kyber Network	0xdfc85c08d5e5924ab49750e006cf8a826ffb7b13	Kyber Sanity Rates
 50-Tokens:ERC20	0xdfdc0d82d96f8fd40ca0cfb4a288955becec2088	MTC Mesh Network	MTC		18
@@ -143,7 +143,7 @@ tags	address	name	symbol	decimals
 31-Gitcoin:Grants	0xf458533d1ac15af5237a16252eb317bbc7981f19	Grant 2039 - Decentralized Anonymous Messaging Network [DAMN]
 31-Gitcoin:Grants	0xf64bbc221f89cc882fba507908bbe4ae3ad2f470	Grant 1595 Bloom Network - Panvala League
 31-Gitcoin:Grants	0xf6c1eb87f4ee1330f061a14ca245d70c1f79c5a4	Grant 3058 - Open Social Network
-31-Giveth:Whitelist	0xf970b8e36e23f7fc3fd752eea86f8be8d83375a6	Ripio Credit Network
+50-Tokens:ERC20	0xf970b8e36e23f7fc3fd752eea86f8be8d83375a6	Ripio Credit Network
 30-Contracts:Kyber Network	0xfa71b63935cf9878e009ba6595da08f6d75c4aa1	Kyber Pay Wrapper
 31-Gitcoin:Grants	0xfcd819c8a13de2d9e409fdf7d61161091f58dd63	Grant 0044 Chainid Network
 50-Tokens:ERC20	0xfedae5642668f8636a11987ff386bfd215f942ee	PolicyPal Network Token	PAL		18
