@@ -19,9 +19,15 @@ bool statements_Display(CTraverser* trav, void* data) {
 
     for (auto statement : trav->trans.statements) {
         if (opt->assetFilter.size() == 0 || opt->assetFilter[statement.assetAddr]) {
-            cout << ((isJson() && !opt->firstOut) ? ", " : "");
-            cout << statement;
-            opt->firstOut = false;
+            bool checkFlow = !opt->flow.empty();
+            bool in = opt->flow == "in" && statement.amountNet() > 0;
+            bool out = opt->flow == "out" && statement.amountNet() < 0;
+            bool zero = opt->flow == "zero" && statement.amountNet() == 0;
+            if (!checkFlow || in || out || zero) {
+                cout << ((isJson() && !opt->firstOut) ? ", " : "");
+                cout << statement;
+                opt->firstOut = false;
+            }
         }
     }
 

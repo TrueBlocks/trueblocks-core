@@ -51,7 +51,7 @@ static const COption params[] = {
     COption("emitter", "", "list<addr>", OPT_FLAG, "for log export only, export only logs if emitted by one of these address(es)"),  // NOLINT
     COption("topic", "", "list<topic>", OPT_FLAG, "for log export only, export only logs with this topic(s)"),
     COption("asset", "", "list<addr>", OPT_FLAG, "for the statements option only, export only reconciliations for this asset"),  // NOLINT
-    COption("flow", "", "enum[in|out]", OPT_FLAG, "for the statements option only, export only statements with incoming value or outgoing value"),  // NOLINT
+    COption("flow", "", "enum[in|out|zero]", OPT_FLAG, "for the statements option only, export only statements with incoming value or outgoing value"),  // NOLINT
     COption("factory", "y", "", OPT_SWITCH, "scan for contract creations from the given address(es) and report address of those contracts"),  // NOLINT
     COption("load", "", "<string>", OPT_HIDDEN | OPT_FLAG, "a comma separated list of dynamic traversers to load"),
     COption("reversed", "", "", OPT_HIDDEN | OPT_SWITCH, "produce results in reverse chronological order"),

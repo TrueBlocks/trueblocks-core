@@ -28,8 +28,11 @@ func (opts *ExportOptions) validateExport() error {
 	}
 
 	if len(opts.Flow) > 0 {
-		if err := validate.ValidateEnum("--flow", opts.Flow, "[in|out]"); err != nil {
+		if err := validate.ValidateEnum("--flow", opts.Flow, "[in|out|zero]"); err != nil {
 			return err
+		}
+		if !opts.Statements {
+			return validate.Usage("The {0} option is only available with {1} option.", "--flow", "--statements")
 		}
 	}
 

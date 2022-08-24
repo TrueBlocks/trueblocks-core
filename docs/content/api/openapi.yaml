@@ -360,6 +360,7 @@ paths:
             enum:
               - in
               - out
+              - zero
         - name: staging
           description: >
             export transactions labeled staging (i.e. older than 28 blocks but not yet consolidated)

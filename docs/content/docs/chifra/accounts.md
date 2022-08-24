@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2022-08-24T13:10:35
+date: 2022-08-24T16:28:22
 lastmod:
   - :git
   - lastmod
@@ -91,7 +91,7 @@ Flags:
       --topic strings       for log export only, export only logs with this topic(s)
       --asset strings       for the statements option only, export only reconciliations for this asset
       --flow string         for the statements option only, export only statements with incoming value or outgoing value
-                            One of [ in | out ]
+                            One of [ in | out | zero ]
   -y, --factory             scan for contract creations from the given address(es) and report address of those contracts
   -s, --staging             export transactions labeled staging (i.e. older than 28 blocks but not yet consolidated)
   -u, --unripe              export transactions labeled upripe (i.e. less than 28 blocks old)
