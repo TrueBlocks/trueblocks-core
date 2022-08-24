@@ -1,5 +1,5 @@
 chunks?mode=manifest&fmt=csv
-"range","bloomHash12","bloomSize","indexHash","indexSize"
+"range","bloomHash","bloomSize","indexHash","indexSize"
 "000000000-000000000","QmStMtMSpQpjZUzDx3Z9gYmUNcdY7U4wbQpEo77XpozUEJ","131080","QmaKUsfH5AXqPJgjGAQFZWRheF1jtc5PqGi8cYrwmMCXdu","320192"
 "000000001-000590502","QmQgQFPYBTL2x8YHDjBdF51ZrVCMP2dP8bSdgU7Lqbe51S","131080","Qmehw7ebshWsBQV4ZZLaEqETkttguRAonoQKMqVeumP9Fy","16821060"
 "000590503-000864335","QmSZdwNzhLKUmj79ZtPJeq3nyPgjWUojLykzCdpAJp4xa1","524308","Qmce2u6VUG2A8Dsa6cPRtnNausU6JFAZ2FYz4b3NnMViVx","20604588"
