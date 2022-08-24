@@ -109,7 +109,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 			if err != nil {
 				return true, err
 			}
-			// TODO: BOGUS - REPORT ON WRITE AND PIN OF CHUNK
+			// TODO: BOGUS - PINNING REPORT ON WRITE AND PIN OF CHUNK
 
 			curRange.First = curRange.Last + 1
 			appearances = []string{}

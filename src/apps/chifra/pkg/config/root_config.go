@@ -32,14 +32,15 @@ type versionGroup struct {
 }
 
 type chainGroup struct {
-	ChainId        string `toml:"chainId"`
-	LocalExplorer  string `toml:"localExplorer"`
+	ChainId       string `toml:"chainId"`
+	LocalExplorer string `toml:"localExplorer"`
+	// TODO: BOGUS - PINNING THIS SHOULD BE IN THE PINNING SERVICE CONFIG AREA
 	IpfsGateway    string `toml:"ipfsGateway"`
 	RemoteExplorer string `toml:"remoteExplorer"`
 	RpcProvider    string `toml:"rpcProvider"`
 	ApiProvider    string `toml:"apiProvider"`
 	Symbol         string `toml:"symbol"`
-	// TODO: BOGUS - OLD PINGATEWAY OPTION
+	// TODO: BOGUS - PINNING OLD PINGATEWAY OPTION
 	PinGateway string `toml:"pinGateway"`
 }
 

@@ -165,3 +165,4 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 // TODO:	- is every address in the index, in the bloom?
 // TODO:	- are there missing blocks (if allow_missing is off)
 // TODO: We don't check if Pinata has files that aren't needed
+// TODO: File sizes which are now stored in the manifest

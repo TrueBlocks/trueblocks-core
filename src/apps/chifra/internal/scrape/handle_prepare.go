@@ -65,7 +65,7 @@ func (opts *ScrapeOptions) HandlePrepare(progressThen *rpcClient.MetaData, blaze
 	if err != nil {
 		return false, err
 	}
-	// TODO: BOGUS - REPORT ON WRITE AND PIN OF CHUNK
+	// TODO: BOGUS - PINNING REPORT ON WRITE AND PIN OF CHUNK
 
 	return true, nil
 }

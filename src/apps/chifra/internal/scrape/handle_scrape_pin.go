@@ -15,13 +15,12 @@ import (
 	}
 */
 
-// TODO: BOGUS - PINNING
-// TODO: BOGUS - SHOULD WE PIN IN WRITECHUNK OR AS A SEPERATE STAGE AFTER CONSOLIDATION?
+// TODO: BOGUS - PINNING SHOULD WE PIN IN WRITECHUNK OR AS A SEPERATE STAGE AFTER CONSOLIDATION?
 // HandleScrapePin pins any newly chunks that are not yet pinned.
 func (opts *ScrapeOptions) HandleScrapePin(progressThen *rpcClient.MetaData, blazeOpts *BlazeOptions) (ok bool, err error) {
 	return true, nil
 
-	// TODO: BOGUS - REPORT ON WRITE AND PIN OF CHUNK
+	// TODO: BOGUS - PINNING REPORT ON WRITE AND PIN OF CHUNK
 	/*
 			rel := strings.Replace(indexPath, config.GetPathToIndex(opts.Globals.Chain), "$INDEX/", -1)
 		result := fmt.Sprintf("%sWrote %d records to %s%s%s", colors.BrightBlue, len(appearances), rel, colors.Off, strings.Repeat(" ", 20))
