@@ -57,16 +57,9 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 		curRange = stageRange
 	}
 
-	// logger.Log(logger.Info, "ripeFolder: ", ripeFolder)
-	// logger.Log(logger.Info, "stageFolder:", stageFolder)
-	// logger.Log(logger.Info, "nRipes:     ", len(ripeFileList))
-	// logger.Log(logger.Info, "stageFn:    ", stageFn)
-	// logger.Log(logger.Info, "stageRange: ", stageRange)
-	// logger.Log(logger.Info, "ripeRange:  ", ripeRange)
-	// logger.Log(logger.Info, "curRange:   ", curRange)
-
 	// Note, this file may be empty or non-existant
-	backupFn, err := file.MakeBackup(stageFn, filepath.Join(config.GetPathToCache(blazeOpts.Chain)+"tmp"))
+	tmpPath := filepath.Join(config.GetPathToCache(blazeOpts.Chain) + "tmp")
+	backupFn, err := file.MakeBackup(tmpPath, stageFn)
 	if err != nil {
 		return true, errors.New("Could not create backup file: " + err.Error())
 	}
@@ -112,26 +105,11 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 
 			filename := cache.NewCachePath(blazeOpts.Chain, cache.Index_Final)
 			indexPath := filename.GetFullPath(curRange.String())
-
-			snapper := -1
-			if isSnap {
-				snapper = int(opts.Settings.Snap_to_grid)
-			}
-
 			err := index.WriteChunk(blazeOpts.Chain, indexPath, appMap, len(appearances))
 			if err != nil {
 				return true, err
 			}
-			rel := strings.Replace(indexPath, config.GetPathToIndex(opts.Globals.Chain), "$INDEX/", -1)
-			result := fmt.Sprintf("%sWrote %d records to %s%s%s", colors.BrightBlue, len(appearances), rel, colors.Off, strings.Repeat(" ", 20))
-			if snapper != -1 {
-				result = fmt.Sprintf("%sWrote %d records to %s %s(snapped to %d blocks)%s", colors.BrightBlue, len(appearances), rel, colors.Yellow, snapper, colors.Off)
-			}
-			logger.Log(logger.Info, result)
-
-			if ok, err := opts.HandleScrapePin(progressThen, blazeOpts); !ok || err != nil {
-				return ok, err
-			}
+			// TODO: BOGUS - REPORT ON WRITE AND PIN OF CHUNK
 
 			curRange.First = curRange.Last + 1
 			appearances = []string{}
