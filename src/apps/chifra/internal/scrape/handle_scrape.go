@@ -7,7 +7,7 @@ package scrapePkg
 import (
 	"fmt"
 	"os"
-	"path"
+	"path/filepath"
 	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -46,18 +46,21 @@ func (opts *ScrapeOptions) HandleScrape() error {
 			}
 		}
 
-		// We always start one after where we last left off
+		// We start the current round one block past the end of the previous round
 		opts.StartBlock = utils.Max(progress.Ripe, utils.Max(progress.Staging, progress.Finalized)) + 1
+		// And each round we assume we're going to process this many blocks...
 		opts.BlockCnt = origBlockCnt
 		if (opts.StartBlock + opts.BlockCnt) > progress.Latest {
+			// ...unless we're too close to the head, then we shorten the number of blocks to process
 			opts.BlockCnt = (progress.Latest - opts.StartBlock)
 		}
 
-		// The ripe block is the head of the chain unless the chain is more than 'UnripeDist' from the
-		// first block, then it's 'UnripeDist' behind the head (i.e., 28 blocks usually - six minutes)
-		ripe := progress.Latest
-		if ripe > opts.Settings.Unripe_dist {
-			ripe = progress.Latest - opts.Settings.Unripe_dist
+		// The 'ripeBlock' is the head of the chain unless the chain is further along
+		// than 'UnripeDist.' If it is, the `ripeBlock` is 'UnripeDist' behind the
+		// head (i.e., 28 blocks usually - six minutes)
+		ripeBlock := progress.Latest
+		if ripeBlock > opts.Settings.Unripe_dist {
+			ripeBlock = progress.Latest - opts.Settings.Unripe_dist
 		}
 
 		blazeOpts := BlazeOptions{
@@ -66,7 +69,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 			NProcessed:    0,
 			StartBlock:    opts.StartBlock,
 			BlockCount:    opts.BlockCnt,
-			RipeBlock:     ripe,
+			RipeBlock:     ripeBlock,
 			UnripeDist:    opts.Settings.Unripe_dist,
 			RpcProvider:   config.GetRpcProvider(opts.Globals.Chain),
 			AppearanceMap: make(index.AddressAppearanceMap, opts.Settings.Apps_per_chunk),
@@ -74,19 +77,28 @@ func (opts *ScrapeOptions) HandleScrape() error {
 			ProcessedMap:  make(map[int]bool, opts.BlockCnt),
 		}
 
-		// Remove whatever's in the unripe folder each round since the chain may have forked
-		indexPath := config.GetPathToIndex(opts.Globals.Chain)
-		err = os.RemoveAll(path.Join(indexPath, "unripe"))
+		// Remove whatever's in the unripePath before running each round. We do this
+		// because the chain may have re-organized (which it does frequently). This is
+		// why we have an unripePath.
+		unripePath := filepath.Join(config.GetPathToIndex(opts.Globals.Chain), "unripe")
+		err = os.RemoveAll(unripePath)
 		if err != nil {
 			return err
 		}
 
+		// In some cases, the index may be already ahead of the chain tip. (For example,
+		// we may be dealing with a node installation that is being re-synced, but the
+		// index already exists.) In this case, we sleep for a while to allow the chain
+		// to catch up.
 		m := utils.Max(progress.Ripe, utils.Max(progress.Staging, progress.Finalized)) + 1
 		if m > progress.Latest {
 			fmt.Println(validate.Usage("The index ({0}) is ahead of the chain ({1}).", fmt.Sprintf("%d", m), fmt.Sprintf("%d", progress.Latest)))
 			goto PAUSE
 		}
 
+		// Here we do the actual scrape for this round. If anything goes wrong, the
+		// function will have cleaned up (i.e. remove the unstaged ripe blocks). Note
+		// that we don't quit, instead we sleep and we retry continually.
 		if err := opts.HandleScrapeBlaze(progress, &blazeOpts); err != nil {
 			logger.Log(logger.Error, err)
 			goto PAUSE

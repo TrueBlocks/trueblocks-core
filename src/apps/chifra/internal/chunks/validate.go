@@ -1,4 +1,5 @@
-//https://pkg.go.dev/github.com/ipfs/go-ipfs-http-client
+// TODO: BOGUS - Sending Ether https://www.youtube.com/watch?v=lwF6-BkRgwc
+// TODO: BOGUS - IPFS Client code https://pkg.go.dev/github.com/ipfs/go-ipfs-http-client
 
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
@@ -10,7 +11,7 @@ import (
 	"errors"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/migrate"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/pinCfg"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/chunksCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
@@ -37,7 +38,7 @@ func (opts *ChunksOptions) validateChunks() error {
 	if isIndexOrManifest {
 		if opts.Pin {
 			if opts.Remote {
-				pinataKey, pinataSecret, estuaryKey := pinCfg.PinningKeys(opts.Globals.Chain)
+				pinataKey, pinataSecret, estuaryKey := chunksCfg.PinningKeys(opts.Globals.Chain)
 				if (pinataKey == "" || pinataSecret == "") && estuaryKey == "" {
 					return validate.Usage("The {0} option requires {1}.", "--pin --remote", "an api key")
 				}
