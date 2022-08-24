@@ -20,7 +20,6 @@ Arguments:
 
 Flags:
   -c, --check             check the manifest, index, or blooms for internal consistency
-  -r, --repair            repair the manifest or a single index chunk (index repair requires a block identifier)
   -i, --pin               pin the manifest or each index chunk and bloom
   -p, --publish           publish the manifest to the Unchained Index smart contract
   -n, --truncate uint     truncate the entire index at this block (requires a block identifier)
@@ -34,7 +33,7 @@ Notes:
   - Mode determines which type of data to display or process.
   - Certain options are only available in certain modes.
   - If blocks are provided, only chunks intersecting with those blocks are displayed.
-  - The --repair and --truncate options update data, but do not --pin or --publish.
+  - The --truncate option updates data, but does not --pin or --publish.
   - You may combine the --pin and --publish options.
   - The --belongs option is only available in the index mode.
 ```
