@@ -13,7 +13,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"os"
@@ -341,7 +340,7 @@ func saveFileContents(arguments writeWorkerArguments, res *jobResult) error {
 func filterDownloadedChunks(pins []manifest.ChunkRecord, chunkPath *cache.CachePath) []manifest.ChunkRecord {
 	fileMap := make(map[string]bool)
 
-	files, err := ioutil.ReadDir(chunkPath.String())
+	files, err := os.ReadDir(chunkPath.String())
 	if err != nil {
 		return pins
 	}

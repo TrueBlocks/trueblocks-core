@@ -12,7 +12,6 @@ import (
 	"encoding/binary"
 	"encoding/hex"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -144,7 +143,7 @@ func fillDatabase(databasePath string, indexFolderPath string) {
 	}
 	defer txsInsertStmt.Close()
 
-	files, err := ioutil.ReadDir(indexFolderPath)
+	files, err := os.ReadDir(indexFolderPath)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -5,8 +5,8 @@ package monitorsPkg
 // be found in the LICENSE file.
 
 import (
-	"io/ioutil"
 	"log"
+	"os"
 	"time"
 )
 
@@ -29,7 +29,7 @@ func (scraper *Scraper) ChangeState(onOff bool, tmpPath string) bool {
 	scraper.Running = onOff
 	str := "false"
 	fileName := tmpPath + scraper.Name + ".txt"
-	err := ioutil.WriteFile(fileName, []byte(str), 0644)
+	err := os.WriteFile(fileName, []byte(str), 0644)
 	if err != nil {
 		log.Fatal(err)
 	}

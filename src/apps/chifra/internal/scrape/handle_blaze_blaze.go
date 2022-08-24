@@ -3,7 +3,7 @@ package scrapePkg
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"os"
 	"sort"
 	"strconv"
 	"strings"
@@ -425,7 +425,7 @@ func (opts *BlazeOptions) WriteAppearances(meta *rpcClient.MetaData, bn int, add
 		}
 
 		toWrite := []byte(strings.Join(appearanceArray[:], "\n") + "\n")
-		err = ioutil.WriteFile(fileName, toWrite, 0744)
+		err = os.WriteFile(fileName, toWrite, 0744)
 		if err != nil {
 			fmt.Println("call1 to WriteFile returned error", err)
 			return err

@@ -6,7 +6,6 @@ package listPkg
 
 import (
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"strconv"
@@ -98,7 +97,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 
 	chain := opts.Globals.Chain
 	bloomPath := config.GetPathToIndex(chain) + "blooms/"
-	files, err := ioutil.ReadDir(bloomPath)
+	files, err := os.ReadDir(bloomPath)
 	if err != nil {
 		return err
 	}

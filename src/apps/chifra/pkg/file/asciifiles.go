@@ -7,7 +7,6 @@ package file
 import (
 	"bufio"
 	"io"
-	"io/ioutil"
 	"log"
 	"os"
 	"strings"
@@ -33,7 +32,7 @@ func AsciiFileToString(fileName string) string {
 		return ""
 	}
 
-	contents, err := ioutil.ReadFile(fileName)
+	contents, err := os.ReadFile(fileName)
 	if err != nil {
 		log.Println(err)
 		return ""
