@@ -4,8 +4,8 @@ chunks?mode=manifest
     {
       "version": "trueblocks-core@v0.40.0",
       "chain": "mainnet",
-      "schemas": "QmUou7zX2g2tY58LP1A2GyP5RF9nbJsoxKTp299ah3svgb",
-      "databases": "QmdbneNfc71x8QpPMXqYxEcyiEheGgd3mv5wwHEoX2VjEs",
+      "schemas": "--testing-hash--",
+      "databases": "--testing-hash--",
       "chunks": [
         {
           "range": "000000000-000000000",
