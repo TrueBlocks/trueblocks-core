@@ -3,6 +3,7 @@ package scrapePkg
 import (
 	"errors"
 	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -105,11 +106,15 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 
 			filename := cache.NewCachePath(blazeOpts.Chain, cache.Index_Final)
 			indexPath := filename.GetFullPath(curRange.String())
-			err := index.WriteChunk(blazeOpts.Chain, indexPath, appMap, len(appearances))
-			if err != nil {
-				return true, err
+			if report, err := index.WriteChunk(blazeOpts.Chain, indexPath, appMap, len(appearances)); err != nil {
+				return false, err
+			} else if report == nil {
+				log.Fatal("Should not happen, write chunk returned empty report")
+			} else {
+				report.Snapped = false
+				report.Pinned = false
+				report.Report()
 			}
-			// TODO: BOGUS - PINNING REPORT ON WRITE AND PIN OF CHUNK
 
 			curRange.First = curRange.Last + 1
 			appearances = []string{}

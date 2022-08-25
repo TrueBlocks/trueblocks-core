@@ -2,7 +2,7 @@
   "version": "trueblocks-core@v0.40.0",
   "chain": "sepolia",
   "schemas": "QmUou7zX2g2tY58LP1A2GyP5RF9nbJsoxKTp299ah3svgb",
-  "databases": "QmYKU3WZXZrSJ1tqYjfT9rXUzr4CEzskGLgw98L8jRuh6R",
+  "databases": "Qma3FXEBy6fW3m3pehNqEAPKqMbW6ESMVRmuZbh28qnx7n",
   "chunks": [
     {
       "range": "000000000-000000000",

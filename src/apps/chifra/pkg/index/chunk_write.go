@@ -2,11 +2,14 @@ package index
 
 import (
 	"encoding/binary"
+	"fmt"
 	"io"
 	"os"
 	"path/filepath"
 	"sort"
+	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -19,7 +22,24 @@ import (
 
 type AddressAppearanceMap map[string][]AppearanceRecord
 
-func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, nApps int) error {
+type WriteChunkReport struct {
+	Range        cache.FileRange
+	nAddresses   int
+	nAppearances int
+	Snapped      bool
+	Pinned       bool
+}
+
+func (c *WriteChunkReport) Report() {
+	str := fmt.Sprintf("%sWrote %d address and %d appearance records to $INDEX/%s.bin%s%s", colors.BrightBlue, c.nAddresses, c.nAppearances, c.Range, colors.Off, spaces20)
+	logger.Log(logger.Info, str)
+	if c.Pinned {
+		str := fmt.Sprintf("%sPinned chunk $INDEX/%s.bin%s%s", colors.BrightBlue, c.Range, colors.Off, spaces20)
+		logger.Log(logger.Info, str)
+	}
+}
+
+func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, nApps int) (*WriteChunkReport, error) {
 	// We're going to build two tables. An addressTable and an appearanceTable. We do this as we spin
 	// through the map
 
@@ -69,15 +89,13 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 	if backupFn, err := file.MakeBackup(tmpPath, indexFn); err == nil {
 		defer func() {
 			if file.FileExists(backupFn) {
-				logger.Log(logger.Info, colors.BrightBlue, "Recovering from failure", backupFn, colors.Off)
 				// If the backup file exists, something failed, so we replace the original file.
 				os.Rename(backupFn, indexFn)
 				os.Remove(backupFn) // seems redundant, but may not be on some operating systems
 			}
 		}()
 
-		var fp *os.File
-		if fp, err = os.OpenFile(indexFn, os.O_WRONLY|os.O_CREATE, 0644); err == nil {
+		if fp, err := os.OpenFile(indexFn, os.O_WRONLY|os.O_CREATE, 0644); err == nil {
 			defer fp.Close() // defers are last in, first out
 
 			fp.Seek(0, io.SeekStart) // already true, but can't hurt
@@ -88,32 +106,41 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 				AppearanceCount: uint32(len(appearanceTable)),
 			}
 			if err = binary.Write(fp, binary.LittleEndian, header); err != nil {
-				return err
+				return nil, err
 			}
 
 			if binary.Write(fp, binary.LittleEndian, addressTable); err != nil {
-				return err
+				return nil, err
 			}
 
 			if binary.Write(fp, binary.LittleEndian, appearanceTable); err != nil {
-				return err
+				return nil, err
 			}
 
 			if _, err = bl.WriteBloom(chain, bloom.ToBloomPath(indexFn)); err != nil {
-				return err
+				return nil, err
 			}
 
 			// Success. Remove the backup so it doesn't replace the orignal
 			os.Remove(backupFn)
-			return nil
-		}
-	} else {
-		return err
-	}
+			rng, _ := cache.RangeFromFilename(indexFn)
+			return &WriteChunkReport{
+				Range:        rng,
+				nAddresses:   len(addressTable),
+				nAppearances: len(appearanceTable),
+			}, nil
 
-	return nil
+		} else {
+			return nil, err
+		}
+
+	} else {
+		return nil, err
+	}
 }
 
 type Renderer interface {
 	RenderObject(data interface{}, first bool) error
 }
+
+var spaces20 = strings.Repeat(" ", 20)

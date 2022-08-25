@@ -5,6 +5,8 @@ package scrapePkg
 // be found in the LICENSE file.
 
 import (
+	"log"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -61,11 +63,15 @@ func (opts *ScrapeOptions) HandlePrepare(progressThen *rpcClient.MetaData, blaze
 
 	logger.Log(logger.Info, "Writing block zero allocations for", len(allocs), "allocs, nAddresses:", len(appMap))
 	indexPath := index.ToIndexPath(bloomPath)
-	err = index.WriteChunk(opts.Globals.Chain, indexPath, appMap, len(allocs))
-	if err != nil {
+	if report, err := index.WriteChunk(opts.Globals.Chain, indexPath, appMap, len(allocs)); err != nil {
 		return false, err
+	} else if report == nil {
+		log.Fatal("Should not happen, write chunk returned empty report")
+	} else {
+		report.Snapped = false
+		report.Pinned = false
+		report.Report()
 	}
-	// TODO: BOGUS - PINNING REPORT ON WRITE AND PIN OF CHUNK
 
 	return true, nil
 }

@@ -490,7 +490,7 @@ func (opts *BlazeOptions) syncedReporting(bn int) {
 	// Make sure to clear the lock on exit
 	defer atomic.StoreUint32(&locker, 0)
 
-	// TODO: BOGUS - THIS IS A PERFORMANCE ISSUE PRINTING EVERY BLOCK PLUS IN DOCKER MODE TOO MANY LOGS
+	// TODO: See issue https://github.com/TrueBlocks/trueblocks-core/issues/2238
 	step := uint64(17)
 	if opts.NProcessed%step == 0 {
 		dist := uint64(0)

@@ -3,29 +3,41 @@ package tslib
 import (
 	"encoding/binary"
 	"os"
+	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
 
-// TODO: BOGUS - PROTECT AGAINST FAILURE WHEN WRITING
 func Append(chain string, tsArray []Timestamp) error {
-	tsPath := config.GetPathToIndex(chain) + "ts.bin"
-	fp, err := os.OpenFile(tsPath, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0644)
-	defer func() {
+	tsFn := config.GetPathToIndex(chain) + "ts.bin"
+	tmpPath := filepath.Join(config.GetPathToCache(chain), "tmp")
+	if backupFn, err := file.MakeBackup(tmpPath, tsFn); err == nil {
 		DeCache(chain)
-		fp.Close()
-		// sigintTrap.Disable(trapCh)
-		// writeMutex.Unlock()
-	}()
-	if err != nil {
+		defer func() {
+			if file.FileExists(backupFn) {
+				os.Rename(backupFn, tsFn)
+				os.Remove(backupFn) // seems redundant, but may not be on some operating systems
+			}
+		}()
+
+		fp, err := os.OpenFile(tsFn, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0644)
+		if err != nil {
+			return err
+		}
+		defer func() {
+			fp.Close()
+		}()
+
+		err = binary.Write(fp, binary.LittleEndian, tsArray)
+		if err != nil {
+			return err
+		}
+
+		os.Remove(backupFn)
+		return nil
+
+	} else {
 		return err
 	}
-
-	// fp.Seek(0, io.SeekStart)
-	err = binary.Write(fp, binary.LittleEndian, tsArray)
-	if err != nil {
-		return err
-	}
-
-	return nil
 }

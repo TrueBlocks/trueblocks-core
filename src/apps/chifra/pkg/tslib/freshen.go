@@ -14,7 +14,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 )
 
-// TODO: BOGUS - PROTECT AGAINST FAILURE WHEN WRITING
 func Freshen(chain string, bn uint64) error {
 	cnt, err := NTimestamps(chain)
 	if err != nil {
@@ -25,10 +24,8 @@ func Freshen(chain string, bn uint64) error {
 		return errors.New(msg)
 	}
 
-	tmpPath := filepath.Join(config.GetPathToCache(chain), "tmp")
 	tsFn := filepath.Join(config.GetPathToIndex(chain), "ts.bin")
-
-	// Make a backup copy of the file in case the write fails so we can replace it...
+	tmpPath := filepath.Join(config.GetPathToCache(chain), "tmp")
 	if backupFn, err := file.MakeBackup(tmpPath, tsFn); err == nil {
 		defer func() {
 			DeCache(chain)
@@ -40,16 +37,12 @@ func Freshen(chain string, bn uint64) error {
 		}()
 
 		if fp, err := os.OpenFile(tsFn, os.O_RDWR|os.O_CREATE, 0644); err == nil {
-			if err != nil {
-				return err
-			}
 			defer func() { // defers are last in, first out
 				fp.Close()
 				// sigintTrap.Disable(trapCh)
 				// writeMutex.Unlock()
 			}()
 
-			// TODO: Not in love with this
 			recordSize := int64(unsafe.Sizeof(uint32(0))) * 2
 			pos := (recordSize * int64(bn))
 			fp.Seek(pos, io.SeekStart)
@@ -62,10 +55,12 @@ func Freshen(chain string, bn uint64) error {
 			}
 			fp.Sync() // probably redundant
 
-			// Success. Remove the backup so it doesn't replace the orignal
 			os.Remove(backupFn)
 			return nil
+		} else {
+			return err
 		}
+	} else {
+		return err
 	}
-	return err
 }
