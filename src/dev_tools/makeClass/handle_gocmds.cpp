@@ -399,9 +399,13 @@ string_q get_optfields(const CCommandOption& cmd) {
 
 string_q get_config_override(const CCommandOption& cmd) {
     for (auto p : *((CCommandOptionArray*)cmd.params))
-        if (p.generate == "config")
-            return "\topts.Settings, _ = " + cmd.api_route + "Cfg.GetSettings(opts.Globals.Chain, &" + cmd.api_route +
-                   "Cfg.Unset)\n";
+        if (p.generate == "config") {
+            ostringstream os;
+            os << "\t"
+               << "opts.Settings, _ = " << cmd.api_route
+               << "Cfg.GetSettings(opts.Globals.Chain, configFn, &" + cmd.api_route + "Cfg.Unset)\n";
+            return os.str();
+        }
     return "";
 }
 

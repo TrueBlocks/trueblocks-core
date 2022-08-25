@@ -82,29 +82,28 @@ func (s *ChunksSettings) TestLog(chain string, test bool) {
 }
 
 func GetDefault(chain string) ChunksSettings {
-	ret := defaultSettings
+	base := defaultSettings
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return ret
+	return base
 }
 
-const configFilename = "trueBlocks.toml"
-
 // GetSettings retrieves config from (in order) default, config, environment, optionally provided cmdLine
-func GetSettings(chain string, cmdLine *ChunksSettings) (ChunksSettings, error) {
+func GetSettings(chain, configFn string, cmdLine *ChunksSettings) (ChunksSettings, error) {
 	type TomlFile struct {
 		Settings ChunksSettings
 	}
 
 	// Start with the defalt values...
-	ret := GetDefault(chain)
+	base := GetDefault(chain)
 
 	tt := reflect.TypeOf(defaultSettings)
 	fieldList, _, _ := utils.GetFields(&tt, "txt", true)
 
-	configFn := filepath.Join(config.GetPathToChainConfig(chain), configFilename)
 	if strings.Contains(configFn, "trueBlocks.toml") {
-		configFn = filepath.Join(config.GetPathToRootConfig(), configFilename)
+		configFn = filepath.Join(config.GetPathToRootConfig(), configFn)
+	} else {
+		configFn = filepath.Join(config.GetPathToChainConfig(chain), configFn)
 	}
 
 	if file.FileExists(configFn) {
@@ -113,7 +112,7 @@ func GetSettings(chain string, cmdLine *ChunksSettings) (ChunksSettings, error) 
 		if _, err := toml.Decode(utils.AsciiFileToString(configFn), &t); err != nil {
 			return ChunksSettings{}, err
 		}
-		ret.overlay(chain, t.Settings)
+		base.overlay(chain, t.Settings)
 	}
 
 	// ...check the environment...
@@ -122,7 +121,7 @@ func GetSettings(chain string, cmdLine *ChunksSettings) (ChunksSettings, error) 
 		envValue := os.Getenv(envKey)
 		if envValue != "" {
 			fName := utils.MakeFirstUpperCase(field)
-			fld := reflect.ValueOf(&ret).Elem().FieldByName(fName)
+			fld := reflect.ValueOf(&base).Elem().FieldByName(fName)
 			if fld.Kind() == reflect.String {
 				fld.SetString(envValue)
 			} else if fld.Kind() == reflect.Bool {
@@ -138,10 +137,10 @@ func GetSettings(chain string, cmdLine *ChunksSettings) (ChunksSettings, error) 
 	}
 
 	if cmdLine != nil {
-		ret.overlay(chain, *cmdLine)
+		base.overlay(chain, *cmdLine)
 	}
 
-	return ret, nil
+	return base, nil
 }
 
 func (base *ChunksSettings) overlay(chain string, overlay ChunksSettings) {
@@ -166,7 +165,7 @@ func (base *ChunksSettings) overlay(chain string, overlay ChunksSettings) {
 
 // EXISTING_CODE
 func PinningKeys(chain string) (string, string, string) {
-	s, _ := GetSettings(chain, nil)
+	s, _ := GetSettings(chain, "trueBlocks.toml", nil)
 	return s.Pinata_api_key, s.Pinata_secret_api_key, s.Estuary_key
 }
 

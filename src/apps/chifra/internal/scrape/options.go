@@ -124,8 +124,9 @@ func scrapeFinishParse(args []string) *ScrapeOptions {
 	} else if len(args) > 1 {
 		opts.BadFlag = validate.Usage("Invalid argument {0}", args[0])
 	}
+	configFn := "blockScrape.toml"
 	// EXISTING_CODE
-	opts.Settings, _ = scrapeCfg.GetSettings(opts.Globals.Chain, &scrapeCfg.Unset)
+	opts.Settings, _ = scrapeCfg.GetSettings(opts.Globals.Chain, configFn, &scrapeCfg.Unset)
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}

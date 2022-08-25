@@ -12,7 +12,7 @@ type SimpleChunkReport struct {
 }
 
 func (opts *ChunksOptions) HandleStatus(blockNums []uint64) error {
-	settings, _ := scrapeCfg.GetSettings(opts.Globals.Chain, nil)
+	settings, _ := scrapeCfg.GetSettings(opts.Globals.Chain, "blockScrape.toml", nil)
 	m := SimpleChunkReport{
 		Config: settings,
 	}

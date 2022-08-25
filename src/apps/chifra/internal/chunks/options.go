@@ -128,8 +128,9 @@ func chunksFinishParse(args []string) *ChunksOptions {
 		opts.Truncate = utils.NOPOS
 	}
 	defFmt = opts.defaultFormat(defFmt)
+	configFn := "trueBlocks.toml"
 	// EXISTING_CODE
-	opts.Settings, _ = chunksCfg.GetSettings(opts.Globals.Chain, &chunksCfg.Unset)
+	opts.Settings, _ = chunksCfg.GetSettings(opts.Globals.Chain, configFn, &chunksCfg.Unset)
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}

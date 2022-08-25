@@ -21,7 +21,7 @@ import (
 
 func (opts *ScrapeOptions) validateScrape() error {
 	// First, we need to pick up the settings TODO: Should be auto-generated code somehow
-	opts.Settings, _ = scrapeCfg.GetSettings(opts.Globals.Chain, &opts.Settings)
+	opts.Settings, _ = scrapeCfg.GetSettings(opts.Globals.Chain, "blockScrape.toml", &opts.Settings)
 
 	opts.testLog()
 

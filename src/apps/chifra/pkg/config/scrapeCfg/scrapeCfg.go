@@ -86,38 +86,41 @@ func (s *ScrapeSettings) TestLog(chain string, test bool) {
 }
 
 func GetDefault(chain string) ScrapeSettings {
-	ret := defaultSettings
+	base := defaultSettings
 	// EXISTING_CODE
 	if chain == "mainnet" {
-		ret.Apps_per_chunk = 2000000
-		ret.First_snap = 2300000
+		base.Apps_per_chunk = 2000000
+		base.First_snap = 2300000
 	}
 	// EXISTING_CODE
-	return ret
+	return base
 }
 
-const configFilename = "blockScrape.toml"
-
 // GetSettings retrieves scrape config from (in order) default, config, environment, optionally provided cmdLine
-func GetSettings(chain string, cmdLine *ScrapeSettings) (ScrapeSettings, error) {
+func GetSettings(chain, configFn string, cmdLine *ScrapeSettings) (ScrapeSettings, error) {
 	type TomlFile struct {
 		Settings ScrapeSettings
 	}
 
 	// Start with the defalt values...
-	ret := GetDefault(chain)
+	base := GetDefault(chain)
 
 	tt := reflect.TypeOf(defaultSettings)
 	fieldList, _, _ := utils.GetFields(&tt, "txt", true)
 
-	configFn := filepath.Join(config.GetPathToChainConfig(chain), configFilename)
+	if strings.Contains(configFn, "trueBlocks.toml") {
+		configFn = filepath.Join(config.GetPathToRootConfig(), configFn)
+	} else {
+		configFn = filepath.Join(config.GetPathToChainConfig(chain), configFn)
+	}
+
 	if file.FileExists(configFn) {
 		var t TomlFile
 		// ...pick up values from toml file...
 		if _, err := toml.Decode(utils.AsciiFileToString(configFn), &t); err != nil {
 			return ScrapeSettings{}, err
 		}
-		ret.overlay(chain, t.Settings)
+		base.overlay(chain, t.Settings)
 	}
 
 	// ...check the environment...
@@ -126,7 +129,7 @@ func GetSettings(chain string, cmdLine *ScrapeSettings) (ScrapeSettings, error) 
 		envValue := os.Getenv(envKey)
 		if envValue != "" {
 			fName := utils.MakeFirstUpperCase(field)
-			fld := reflect.ValueOf(&ret).Elem().FieldByName(fName)
+			fld := reflect.ValueOf(&base).Elem().FieldByName(fName)
 			if fld.Kind() == reflect.String {
 				fld.SetString(envValue)
 			} else if fld.Kind() == reflect.Bool {
@@ -142,10 +145,10 @@ func GetSettings(chain string, cmdLine *ScrapeSettings) (ScrapeSettings, error) 
 	}
 
 	if cmdLine != nil {
-		ret.overlay(chain, *cmdLine)
+		base.overlay(chain, *cmdLine)
 	}
 
-	return ret, nil
+	return base, nil
 }
 
 func (base *ScrapeSettings) overlay(chain string, overlay ScrapeSettings) {
@@ -174,7 +177,7 @@ func (base *ScrapeSettings) overlay(chain string, overlay ScrapeSettings) {
 
 // EXISTING_CODE
 func AllowMissing(chain string) bool {
-	s, _ := GetSettings(chain, nil)
+	s, _ := GetSettings(chain, "blockScrape.toml", nil)
 	return s.Allow_missing
 }
 
