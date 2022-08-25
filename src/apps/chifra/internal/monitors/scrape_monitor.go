@@ -95,7 +95,7 @@ func (opts *MonitorsOptions) Refresh(monitors []monitor.Monitor) error {
 	for i := 0; i < len(batches); i++ {
 		addrs, countsBefore := preProcessBatch(batches[i], i, len(monitors))
 
-		err := opts.FreshenMonitorsScrape(addrs)
+		err := opts.FreshenMonitorsForWatch(addrs)
 		if err != nil {
 			return err
 		}

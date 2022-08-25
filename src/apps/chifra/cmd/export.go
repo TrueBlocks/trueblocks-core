@@ -70,7 +70,6 @@ func init() {
 	exportCmd.Flags().StringVarP(&exportPkg.GetOptions().Flow, "flow", "", "", `for the statements option only, export only statements with incoming value or outgoing value
 One of [ in | out | zero ]`)
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Factory, "factory", "y", false, "scan for contract creations from the given address(es) and report address of those contracts")
-	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Staging, "staging", "s", false, "export transactions labeled staging (i.e. older than 28 blocks but not yet consolidated)")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Unripe, "unripe", "u", false, "export transactions labeled upripe (i.e. less than 28 blocks old)")
 	exportCmd.Flags().StringVarP(&exportPkg.GetOptions().Load, "load", "", "", "a comma separated list of dynamic traversers to load (hidden)")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Reversed, "reversed", "", false, "produce results in reverse chronological order (hidden)")

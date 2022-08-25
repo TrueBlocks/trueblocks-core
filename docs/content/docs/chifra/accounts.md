@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2022-08-24T16:28:22
+date: 2022-08-25T16:00:07
 lastmod:
   - :git
   - lastmod
@@ -93,7 +93,6 @@ Flags:
       --flow string         for the statements option only, export only statements with incoming value or outgoing value
                             One of [ in | out | zero ]
   -y, --factory             scan for contract creations from the given address(es) and report address of those contracts
-  -s, --staging             export transactions labeled staging (i.e. older than 28 blocks but not yet consolidated)
   -u, --unripe              export transactions labeled upripe (i.e. less than 28 blocks old)
   -F, --first_block uint    first block to process (inclusive)
   -L, --last_block uint     last block to process (inclusive)

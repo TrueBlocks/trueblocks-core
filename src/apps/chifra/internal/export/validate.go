@@ -36,12 +36,8 @@ func (opts *ExportOptions) validateExport() error {
 		}
 	}
 
-	if opts.Unripe && opts.Staging {
-		return validate.Usage("Please choose only one of {0} or {1}", "--staging", "--unripe")
-	}
-
-	if opts.Globals.TestMode && (opts.Staging || opts.Unripe) {
-		return validate.Usage("--staging and --unripe are disabled for testing.")
+	if opts.Globals.TestMode && opts.Unripe {
+		return validate.Usage("--unripe are disabled for testing.")
 	}
 
 	if opts.Count && (opts.Logs || opts.Receipts || opts.Traces || opts.Statements || opts.Neighbors) {

@@ -1,10 +1,7 @@
 chifra export  0x001d14804b399c6ef80e64576f657660804fec0b --first_record 0 --max_records 1 --staging --unripe
-TEST[DATE|TIME] Addrs:  [0x001d14804b399c6ef80e64576f657660804fec0b]
-TEST[DATE|TIME] MaxRecords:  1
-TEST[DATE|TIME] Staging:  true
-TEST[DATE|TIME] Unripe:  true
-TEST[DATE|TIME] Format:  txt
-Error: Please choose only one of --staging or --unripe
+Error: 
+  unknown flag: --staging
+
 Usage:
   chifra export [flags] <address> [address...] [topics...] [fourbytes...]
 
@@ -34,7 +31,6 @@ Flags:
       --flow string         for the statements option only, export only statements with incoming value or outgoing value
                             One of [ in | out | zero ]
   -y, --factory             scan for contract creations from the given address(es) and report address of those contracts
-  -s, --staging             export transactions labeled staging (i.e. older than 28 blocks but not yet consolidated)
   -u, --unripe              export transactions labeled upripe (i.e. less than 28 blocks old)
       --load string         a comma separated list of dynamic traversers to load (hidden)
       --reversed            produce results in reverse chronological order (hidden)
