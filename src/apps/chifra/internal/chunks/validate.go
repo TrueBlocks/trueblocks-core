@@ -8,7 +8,7 @@ import (
 	"errors"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/migrate"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/chunksCfg"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
@@ -44,7 +44,7 @@ func (opts *ChunksOptions) validateChunks() error {
 	if opts.Mode == "manifest" {
 		if opts.Pin {
 			if opts.Remote {
-				pinataKey, pinataSecret, estuaryKey := chunksCfg.GetPinningKeys(opts.Globals.Chain)
+				pinataKey, pinataSecret, estuaryKey := config.GetPinningKeys(opts.Globals.Chain)
 				if (pinataKey == "" || pinataSecret == "") && estuaryKey == "" {
 					return validate.Usage("The {0} option requires {1}.", "--pin --remote", "an api key")
 				}

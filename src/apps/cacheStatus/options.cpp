@@ -249,9 +249,9 @@ void COptions::Init(void) {
     status.isApi = isApiMode();
     status.isArchive = isArchiveNode();
     status.isTracing = isTracingNode();
-    status.hasEskey = getGlobalConfig("")->getConfigStr("settings", "etherscan_key", "<not_set>") != "<not_set>";
+    status.hasEskey = getGlobalConfig("")->getConfigStr("keys.etherscan", "apiKey", "<not_set>") != "<not_set>";
     status.hasPinkey =
-        getGlobalConfig("blockScrape")->getConfigStr("settings", "pinata_api_key", "<not_set>") != "<not_set>";
+        getGlobalConfig("blockScrape")->getConfigStr("keys.pinata", "apiKey", "<not_set>") != "<not_set>";
     if (isTestMode())
         status.hasPinkey = false;
 }

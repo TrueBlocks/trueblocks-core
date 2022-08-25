@@ -8,7 +8,7 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/migrate"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/chunksCfg"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
@@ -48,7 +48,7 @@ func (opts *ScrapeOptions) validateScrape() error {
 	}
 
 	if opts.Pin {
-		pinataKey, pinataSecret, estuaryKey := chunksCfg.GetPinningKeys(opts.Globals.Chain)
+		pinataKey, pinataSecret, estuaryKey := config.GetPinningKeys(opts.Globals.Chain)
 		if (pinataKey == "" || pinataSecret == "") && estuaryKey == "" {
 			return validate.Usage("The {0} option requires {1}", "--pin", "your pinning service's api key")
 

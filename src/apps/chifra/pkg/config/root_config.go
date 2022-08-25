@@ -32,28 +32,31 @@ type versionGroup struct {
 }
 
 type chainGroup struct {
-	ChainId       string `toml:"chainId"`
-	LocalExplorer string `toml:"localExplorer"`
-	// TODO: BOGUS - PINNING THIS SHOULD BE IN THE PINNING SERVICE CONFIG AREA
-	IpfsGateway    string `toml:"ipfsGateway"`
+	ChainId        string `toml:"chainId"`
+	LocalExplorer  string `toml:"localExplorer"`
 	RemoteExplorer string `toml:"remoteExplorer"`
 	RpcProvider    string `toml:"rpcProvider"`
 	ApiProvider    string `toml:"apiProvider"`
 	Symbol         string `toml:"symbol"`
-	// TODO: BOGUS - PINNING OLD PINGATEWAY OPTION
-	PinGateway string `toml:"pinGateway"`
+}
+
+type keyGroup struct {
+	ApiKey string `toml:"apiKey"`
+	Secret string `toml:"secret"`
+	Jwt    string `toml:"jwt"`
 }
 
 type settingsGroup struct {
 	CachePath    string `toml:"cachePath"`
 	IndexPath    string `toml:"indexPath"`
 	DefaultChain string `toml:"defaultChain"`
-	EtherscanKey string `toml:"etherscanKey"`
+	IpfsGateway  string `toml:"ipfsGateway"`
 }
 
 type ConfigFile struct {
 	Version  versionGroup
 	Settings settingsGroup
+	Keys     map[string]keyGroup
 	Chains   map[string]chainGroup
 }
 
@@ -63,7 +66,7 @@ func init() {
 	trueBlocksViper.SetDefault("Settings.CachePath", GetPathToRootConfig()+"cache/")
 	trueBlocksViper.SetDefault("Settings.IndexPath", GetPathToRootConfig()+"unchained/")
 	trueBlocksViper.SetDefault("Settings.DefaultChain", "mainnet")
-	trueBlocksViper.SetDefault("Settings.EtherscanKey", "")
+	trueBlocksViper.SetDefault("Settings.IpfsGateway", "https://ipfs.unchainedindex.io/ipfs")
 }
 
 // GetRootConfig reads and the configuration located in trueBlocks.toml file. Note
@@ -189,4 +192,12 @@ func MustReadConfig(v *viper.Viper, targetStruct interface{}, path string) {
 	if err != nil {
 		logger.Fatal(err)
 	}
+}
+
+func GetPinningKeys(chain string) (string, string, string) {
+	keys := GetRootConfig().Keys
+	a := keys["keys.pinata"].ApiKey
+	b := keys["keys.pinata"].Secret
+	c := keys["keys.estuary"].ApiKey
+	return a, b, c
 }

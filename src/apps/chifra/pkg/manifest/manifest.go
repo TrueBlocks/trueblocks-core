@@ -60,7 +60,7 @@ func ReadManifest(chain string, source Source) (*Manifest, error) {
 	manifestPath := filepath.Join(config.GetPathToChainConfig(chain), "manifest.json")
 	contents := utils.AsciiFileToString(manifestPath)
 	if !file.FileExists(manifestPath) || len(contents) == 0 {
-		return nil, errors.New("Could not find manifest.json or it was empty")
+		return nil, errors.New("could not find manifest.json or it was empty")
 	}
 	reader := bytes.NewReader([]byte(contents))
 	return readJSONManifest(reader)
