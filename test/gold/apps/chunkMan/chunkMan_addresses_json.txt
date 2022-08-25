@@ -1,5 +1,6 @@
 chifra chunks  addresses --fmt json
 TEST[DATE|TIME] Mode:  addresses
+TEST[DATE|TIME] Sleep:  0
 TEST[DATE|TIME] Format:  json
 {
   "data": [

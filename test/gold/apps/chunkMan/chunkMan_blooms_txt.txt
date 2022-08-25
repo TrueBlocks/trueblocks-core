@@ -1,5 +1,6 @@
 chifra chunks  blooms --fmt txt
 TEST[DATE|TIME] Mode:  blooms
+TEST[DATE|TIME] Sleep:  0
 TEST[DATE|TIME] Format:  txt
 range	count	nInserted	size	width
 000000000-000000000	1	8893	131080	131072

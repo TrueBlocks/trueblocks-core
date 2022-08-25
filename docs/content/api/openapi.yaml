@@ -1595,6 +1595,14 @@ paths:
             items:
               type: string
               format: address
+        - name: sleep
+          description: for --remote pinning only, seconds to sleep between API calls
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
       responses:
         "200":
           description: returns the requested data

@@ -1,5 +1,6 @@
 chifra chunks  appearances
 TEST[DATE|TIME] Mode:  appearances
+TEST[DATE|TIME] Sleep:  0
 TEST[DATE|TIME] Format:  txt
 blockNumber	transactionIndex
 0	0

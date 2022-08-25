@@ -68,7 +68,7 @@ TEST[DATE|TIME] Depth:  0
       "apiProvider": "--provider-mainnet--",
       "remoteExplorer": "--explorer-mainnet--",
       "localExplorer": "--explorer-mainnet--",
-      "ipfsGateway": "--gateway-mainnet--"
+      "ipfsGateway": "http://gateway.ipfs.io/ipfs"
     },
     {
       "chain": "gnosis",
@@ -78,7 +78,7 @@ TEST[DATE|TIME] Depth:  0
       "apiProvider": "--provider-gnosis--",
       "remoteExplorer": "--explorer-gnosis--",
       "localExplorer": "--explorer-gnosis--",
-      "ipfsGateway": "--gateway-gnosis--"
+      "ipfsGateway": "http://gateway.ipfs.io/ipfs"
     }
   ],
   "date": "--date--"
