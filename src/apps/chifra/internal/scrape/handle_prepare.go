@@ -50,7 +50,7 @@ func (opts *ScrapeOptions) HandlePrepare(progressThen *rpcClient.MetaData, blaze
 	if ts == 0 {
 		// some node return a zero timestamp for the zero block, use block 1 minus 13 in that case
 		ts = uint32(rpcClient.GetBlockTimestamp(config.GetRpcProvider(opts.Globals.Chain), uint64(1)))
-		// TODO: BOGUS - CHAIN SPECIFIC
+		// TODO: BOGUS - WORK - Chain specific
 		ts -= 13
 	}
 

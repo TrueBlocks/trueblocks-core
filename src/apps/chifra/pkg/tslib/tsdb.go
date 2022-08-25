@@ -95,7 +95,7 @@ func FromTs(chain string, ts uint64) (*Timestamp, error) {
 	if ts > uint64(perChainTimestamps[chain].memory[cnt-1].Ts) {
 		last := perChainTimestamps[chain].memory[cnt-1]
 		secs := ts - uint64(last.Ts)
-		// TODO: BOGUS - CHAIN SPECIFIC
+		// TODO: BOGUS - WORK - Chain specific
 		blks := uint32(float64(secs) / 13.3)
 		last.Bn = last.Bn + blks
 		last.Ts = uint32(ts)

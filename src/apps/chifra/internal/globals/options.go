@@ -108,9 +108,6 @@ func (opts *GlobalOptions) toCmdLine() string {
 	if opts.Raw {
 		options += " --raw"
 	}
-	// if opts.Noop {
-	// 	options += " --noop"
-	// }
 	if opts.Version {
 		options += " --version"
 	}
@@ -132,11 +129,6 @@ func (opts *GlobalOptions) toCmdLine() string {
 	}
 	if opts.NoHeader {
 		options += " --no_header"
-	}
-	if len(opts.Chain) > 0 {
-		// TODO: Do we need --chain in the c++ code?
-		// fmt.Fprintf(os.Stderr, "chain: %s\n", opts.Chain)
-		// options += " --chain" + opts.Chain
 	}
 	if opts.Wei {
 		options += " --wei"

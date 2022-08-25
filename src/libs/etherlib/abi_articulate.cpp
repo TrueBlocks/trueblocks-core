@@ -251,7 +251,7 @@ bool CAbi::articulateLog(CLogEntry* p) const {
     // Upshot: Topics are always fixed length. They can be parsed as fixed length. The data field needs to be parsed
     // as potentially variable length RLP encoded. Since the indexed event args and the non-indexed event args can
     // be interleaved in the function interface, we need to decode them separately
-    // TODO(jayrush): SEARCH FOR ISSUE #1013
+    // TODO(tjayrush): SEARCH FOR ISSUE #1013
 }
 
 //-----------------------------------------------------------------------

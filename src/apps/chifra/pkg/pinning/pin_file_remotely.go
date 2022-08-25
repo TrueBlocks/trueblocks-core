@@ -1,3 +1,5 @@
+// IPFS Client code https://pkg.go.dev/github.com/ipfs/go-ipfs-http-client for pinning directly
+
 package pinning
 
 import (

@@ -15,12 +15,11 @@ import (
 	}
 */
 
-// TODO: BOGUS - PINNING SHOULD WE PIN IN WRITECHUNK OR AS A SEPERATE STAGE AFTER CONSOLIDATION?
+// TODO: BOGUS - WORK - Pin during scraping
 // HandleScrapePin pins any newly chunks that are not yet pinned.
 func (opts *ScrapeOptions) HandleScrapePin(progressThen *rpcClient.MetaData, blazeOpts *BlazeOptions) (ok bool, err error) {
 	return true, nil
 
-	// TODO: BOGUS - PINNING REPORT ON WRITE AND PIN OF CHUNK
 	/*
 			rel := strings.Replace(indexPath, config.GetPathToIndex(opts.Globals.Chain), "$INDEX/", -1)
 		result := fmt.Sprintf("%sWrote %d records to %s%s%s", colors.BrightBlue, len(appearances), rel, colors.Off, strings.Repeat(" ", 20))
@@ -168,7 +167,7 @@ func PinataHeaders(s *Service, contentType string) map[string]string {
 // 	}
 // 	man.Chunks = unique(append(man.Chunks, chunk))
 
-// TODO: BOGUS - PROTECT AGAINST FAILURE WHEN WRITING
+// TODO: BOGUS - WORK - Protect against failure while writing
 // 	fileName := config.GetPathToChainConfig(opts.Globals.Chain) + "manifest.json"
 // 	w, err := os.Create(fileName)
 // 	if err != nil {
