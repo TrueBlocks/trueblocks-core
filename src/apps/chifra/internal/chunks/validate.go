@@ -44,7 +44,7 @@ func (opts *ChunksOptions) validateChunks() error {
 	if opts.Mode == "manifest" {
 		if opts.Pin {
 			if opts.Remote {
-				pinataKey, pinataSecret, estuaryKey := chunksCfg.PinningKeys(opts.Globals.Chain)
+				pinataKey, pinataSecret, estuaryKey := chunksCfg.GetPinningKeys(opts.Globals.Chain)
 				if (pinataKey == "" || pinataSecret == "") && estuaryKey == "" {
 					return validate.Usage("The {0} option requires {1}.", "--pin --remote", "an api key")
 				}

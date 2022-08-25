@@ -48,7 +48,7 @@ func (opts *ScrapeOptions) validateScrape() error {
 	}
 
 	if opts.Pin {
-		pinataKey, pinataSecret, estuaryKey := chunksCfg.PinningKeys(opts.Globals.Chain)
+		pinataKey, pinataSecret, estuaryKey := chunksCfg.GetPinningKeys(opts.Globals.Chain)
 		if (pinataKey == "" || pinataSecret == "") && estuaryKey == "" {
 			return validate.Usage("The {0} option requires {1}", "--pin", "your pinning service's api key")
 

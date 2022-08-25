@@ -37,7 +37,7 @@ const (
 )
 
 func NewPinningService(chain string, which ServiceType) (Service, error) {
-	pinataKey, pinataSecret, estuaryKey := chunksCfg.PinningKeys(chain)
+	pinataKey, pinataSecret, estuaryKey := chunksCfg.GetPinningKeys(chain)
 
 	switch which {
 	case Local:

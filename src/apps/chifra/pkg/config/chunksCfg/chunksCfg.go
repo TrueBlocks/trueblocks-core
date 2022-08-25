@@ -22,7 +22,7 @@ type ChunksSettings struct {
 	Pinata_api_key        string  `json:"pinataApiKey,omitempty"`
 	Pinata_secret_api_key string  `json:"pinataSecretApiKey,omitempty"`
 	Pinata_jwt            string  `json:"pinataJwt,omitempty"`
-	Estuary_key           string  `json:"estuaryKey,omitempty"`
+	Estuary_api_key       string  `json:"estuaryApiKey,omitempty"`
 	Sleep                 float64 `json:"sleep"`
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -32,7 +32,7 @@ var defaultSettings = ChunksSettings{
 	Pinata_api_key:        "",
 	Pinata_secret_api_key: "",
 	Pinata_jwt:            "",
-	Estuary_key:           "",
+	Estuary_api_key:       "",
 	Sleep:                 float64(utils.NOPOS),
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -42,7 +42,7 @@ var Unset = ChunksSettings{
 	Pinata_api_key:        "",
 	Pinata_secret_api_key: "",
 	Pinata_jwt:            "",
-	Estuary_key:           "",
+	Estuary_api_key:       "",
 	Sleep:                 0.0,
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -57,8 +57,8 @@ func (s *ChunksSettings) isDefault(chain, fldName string) bool {
 		return s.Pinata_secret_api_key == def.Pinata_secret_api_key
 	case "Pinata_jwt":
 		return s.Pinata_jwt == def.Pinata_jwt
-	case "Estuary_key":
-		return s.Estuary_key == def.Estuary_key
+	case "Estuary_api_key":
+		return s.Estuary_api_key == def.Estuary_api_key
 	case "Sleep":
 		return s.Sleep == def.Sleep
 	}
@@ -74,7 +74,7 @@ func (s *ChunksSettings) TestLog(chain string, test bool) {
 		logger.TestLog(!s.isDefault(chain, "Pinata_api_key"), "Pinata_api_key: ", s.Pinata_api_key)
 		logger.TestLog(!s.isDefault(chain, "Pinata_secret_api_key"), "Pinata_secret_api_key: ", s.Pinata_secret_api_key)
 		logger.TestLog(!s.isDefault(chain, "Pinata_jwt"), "Pinata_jwt: ", s.Pinata_jwt)
-		logger.TestLog(!s.isDefault(chain, "Estuary_key"), "Estuary_key: ", s.Estuary_key)
+		logger.TestLog(!s.isDefault(chain, "Estuary_api_key"), "Estuary_api_key: ", s.Estuary_api_key)
 		logger.TestLog(!s.isDefault(chain, "Sleep"), "Sleep: ", s.Sleep)
 	}
 	// EXISTING_CODE
@@ -153,8 +153,8 @@ func (base *ChunksSettings) overlay(chain string, overlay ChunksSettings) {
 	if !overlay.isDefault(chain, "Pinata_jwt") && overlay.Pinata_jwt != "" {
 		base.Pinata_jwt = overlay.Pinata_jwt
 	}
-	if !overlay.isDefault(chain, "Estuary_key") && overlay.Estuary_key != "" {
-		base.Estuary_key = overlay.Estuary_key
+	if !overlay.isDefault(chain, "Estuary_api_key") && overlay.Estuary_api_key != "" {
+		base.Estuary_api_key = overlay.Estuary_api_key
 	}
 	if !overlay.isDefault(chain, "Sleep") && overlay.Sleep != 0.0 {
 		base.Sleep = overlay.Sleep
@@ -164,9 +164,9 @@ func (base *ChunksSettings) overlay(chain string, overlay ChunksSettings) {
 }
 
 // EXISTING_CODE
-func PinningKeys(chain string) (string, string, string) {
+func GetPinningKeys(chain string) (string, string, string) {
 	s, _ := GetSettings(chain, "trueBlocks.toml", nil)
-	return s.Pinata_api_key, s.Pinata_secret_api_key, s.Estuary_key
+	return s.Pinata_api_key, s.Pinata_secret_api_key, s.Estuary_api_key
 }
 
 func toEnvStr(name string) string {
