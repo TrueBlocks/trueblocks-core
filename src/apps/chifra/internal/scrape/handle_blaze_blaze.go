@@ -185,9 +185,9 @@ func (opts *BlazeOptions) BlazeProcessAppearances(meta *rpcClient.MetaData, appe
 			return err
 		}
 
+		// TODO: BOGUS - WORK - Protect against failure while writing
 		err = opts.WriteAppearances(meta, sData.blockNumber, addressMap)
 		if err != nil {
-			// fmt.Println("WriteAppearances returned error", sData.blockNumber, err)
 			return err
 		}
 	}
@@ -410,6 +410,7 @@ func (opts *BlazeOptions) BlazeExtractFromLogs(bn int, logs *rpcClient.Logs, add
 
 var writeMutex sync.Mutex
 
+// TODO: BOGUS - WORK - Protect against failure while writing
 func (opts *BlazeOptions) WriteAppearances(meta *rpcClient.MetaData, bn int, addressMap map[string]bool) (err error) {
 	if len(addressMap) > 0 {
 		appearanceArray := make([]string, 0, len(addressMap))

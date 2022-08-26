@@ -36,6 +36,7 @@ func Freshen(chain string, bn uint64) error {
 			}
 		}()
 
+		// TODO: BOGUS - WORK - Protect against failure while writing
 		if fp, err := os.OpenFile(tsFn, os.O_RDWR|os.O_CREATE, 0644); err == nil {
 			defer func() { // defers are last in, first out
 				fp.Close()

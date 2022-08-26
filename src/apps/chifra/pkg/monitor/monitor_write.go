@@ -15,6 +15,7 @@ import (
 
 // WriteMonHeader reads the monitor's header
 func (mon *Monitor) WriteMonHeader(deleted bool, lastScanned uint32) (err error) {
+	// TODO: BOGUS - WORK - Protect against failure while writing
 	f, err := os.OpenFile(mon.Path(), os.O_WRONLY|os.O_CREATE, 0644)
 	if err != nil {
 		return
@@ -49,6 +50,7 @@ func (mon *Monitor) WriteAppearancesAppend(lastScanned uint32, apps *[]index.App
 
 	if apps != nil {
 		if len(*apps) > 0 {
+			// TODO: BOGUS - WORK - Protect against failure while writing
 			_, err := mon.WriteAppearances(*apps, os.O_WRONLY|os.O_APPEND)
 			if err != nil {
 				return err
@@ -59,6 +61,7 @@ func (mon *Monitor) WriteAppearancesAppend(lastScanned uint32, apps *[]index.App
 	return nil
 }
 
+// TODO: BOGUS - WORK - Protect against failure while writing
 // WriteAppearances writes appearances to a Monitor
 func (mon *Monitor) WriteAppearances(apps []index.AppearanceRecord, mode int) (uint32, error) {
 

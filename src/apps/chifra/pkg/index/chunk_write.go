@@ -32,6 +32,9 @@ type WriteChunkReport struct {
 
 func (c *WriteChunkReport) Report() {
 	str := fmt.Sprintf("%sWrote %d address and %d appearance records to $INDEX/%s.bin%s%s", colors.BrightBlue, c.nAddresses, c.nAppearances, c.Range, colors.Off, spaces20)
+	if c.Snapped {
+		str = fmt.Sprintf("%sWrote %d address and %d appearance records to $INDEX/%s.bin%s%s%s", colors.BrightBlue, c.nAddresses, c.nAppearances, c.Range, colors.Yellow, "(snapped to grid)", colors.Off)
+	}
 	logger.Log(logger.Info, str)
 	if c.Pinned {
 		str := fmt.Sprintf("%sPinned chunk $INDEX/%s.bin%s%s", colors.BrightBlue, c.Range, colors.Off, spaces20)
@@ -95,6 +98,7 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 			}
 		}()
 
+		// TODO: BOGUS - WORK - Protect against failure while writing
 		if fp, err := os.OpenFile(indexFn, os.O_WRONLY|os.O_CREATE, 0644); err == nil {
 			defer fp.Close() // defers are last in, first out
 
