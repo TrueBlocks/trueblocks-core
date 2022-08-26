@@ -15,6 +15,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
@@ -149,3 +151,81 @@ type Renderer interface {
 }
 
 var spaces20 = strings.Repeat(" ", 20)
+
+// TODO: BOGUS - WORK - Pin during scraping
+// unchainedFolder := config.GetPathToIndex(opts.Globals.Chain)
+// pathToIndex = unchainedFolder + "finalized/" + record.Range + ".bin"
+// bloomPath := unchainedFolder + "blooms/" + record.Range + ".bloom"
+// record := manifest.ChunkRecord{
+// 	Range: range,
+// 	BloomHash: bloomHash,
+// 	IndexHash: indexHash,
+// }
+// record.BloomHash, err := pina.PinFile(bloomPath)
+// if err != nil {
+// 	return true, err
+// }
+// record.IndexHash, err := pina.PinFile(pathToIndex)
+// if err != nil {
+// 	return true, err
+// }
+// err = opts.updateManifest(record)
+// if err != nil {
+// 	return true, err
+// }
+
+func unique(chunks []manifest.ChunkRecord) []manifest.ChunkRecord {
+	inResult := make(map[string]bool)
+	var result []manifest.ChunkRecord
+	for _, chunk := range chunks {
+		if _, ok := inResult[chunk.Range]; !ok {
+			inResult[chunk.Range] = true
+			result = append(result, chunk)
+		}
+	}
+	return result
+}
+
+func updateManifest(chain string, chunk manifest.ChunkRecord) error {
+	man, err := manifest.ReadManifest(chain, manifest.FromCache)
+	if err != nil {
+		if err != manifest.ErrManifestNotFound {
+			return err
+		}
+
+		// This is okay. Create an empty manifest
+		man = &manifest.Manifest{
+			Version:   version.ManifestVersion,
+			Chain:     chain,
+			Schemas:   unchained.Schemas,
+			Databases: unchained.Databases,
+			Chunks:    []manifest.ChunkRecord{},
+		}
+	}
+
+	// Make sure this chunk is only added once
+	man.Chunks = unique(append(man.Chunks, chunk))
+
+	fileName := config.GetPathToChainConfig(chain) + "manifest.json"
+	w, err := os.Create(fileName)
+	if err != nil {
+		return fmt.Errorf("creating file: %s", err)
+	}
+	defer w.Close()
+
+	err = file.Lock(w)
+	if err != nil {
+		return fmt.Errorf("locking file: %s", err)
+	}
+	defer file.Unlock(w)
+
+	logger.Log(logger.Info, "Updated manifest with", len(man.Chunks), "chunks")
+
+	// tmp := opts.Globals
+	// tmp.Format = "json"
+	// tmp.Writer = w
+	// tmp.NoHeader = false
+	// tmp.ApiMode = false
+	// return tmp.RenderObject(man, true /* first */)
+	return nil
+}

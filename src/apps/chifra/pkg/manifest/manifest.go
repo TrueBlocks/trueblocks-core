@@ -2,6 +2,7 @@ package manifest
 
 import (
 	"bytes"
+	"encoding/json"
 	"errors"
 	"path/filepath"
 
@@ -49,6 +50,8 @@ const (
 	FromContract
 )
 
+var ErrManifestNotFound = errors.New("could not find manifest.json or it was empty")
+
 // ReadManifest reads the manifest from either the local cache or the Unchained Index smart contract
 func ReadManifest(chain string, source Source) (*Manifest, error) {
 	if source == FromContract {
@@ -58,8 +61,12 @@ func ReadManifest(chain string, source Source) (*Manifest, error) {
 	manifestPath := filepath.Join(config.GetPathToChainConfig(chain), "manifest.json")
 	contents := utils.AsciiFileToString(manifestPath)
 	if !file.FileExists(manifestPath) || len(contents) == 0 {
-		return nil, errors.New("could not find manifest.json or it was empty")
+		return nil, ErrManifestNotFound
 	}
+
 	reader := bytes.NewReader([]byte(contents))
-	return readJSONManifest(reader)
+	decoder := json.NewDecoder(reader)
+	manifest := &Manifest{}
+	err := decoder.Decode(manifest)
+	return manifest, err
 }

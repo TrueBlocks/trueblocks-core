@@ -48,12 +48,14 @@ func (opts *ScrapeOptions) validateScrape() error {
 	}
 
 	if opts.Pin {
-		pinataKey, pinataSecret, estuaryKey := config.GetPinningKeys(opts.Globals.Chain)
-		if (pinataKey == "" || pinataSecret == "") && estuaryKey == "" {
-			return validate.Usage("The {0} option requires {1}", "--pin", "your pinning service's api key")
+		if opts.Remote {
+			pinataKey, pinataSecret, estuaryKey := config.GetPinningKeys(opts.Globals.Chain)
+			if (pinataKey == "" || pinataSecret == "") && estuaryKey == "" {
+				return validate.Usage("The {0} option requires {1}.", "--pin --remote", "an api key")
+			}
 
 		} else if !pinning.LocalDaemonRunning() {
-			return validate.Usage("The {0} option requires {1}", "--pin", "a locally running IPFS daemon or --remote")
+			return validate.Usage("The {0} option requires {1}.", "--pin", "a locally running IPFS daemon or --remote")
 
 		}
 	}
