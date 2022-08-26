@@ -303,7 +303,6 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 		if result.AppRecords != nil {
 			nWritten := len(*result.AppRecords)
 			if nWritten > 0 {
-				// TODO: BOGUS - WORK - Protect against failure while writing
 				_, err := mon.WriteAppearances(*result.AppRecords, os.O_WRONLY|os.O_APPEND)
 				if err != nil {
 					log.Println(err)

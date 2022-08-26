@@ -98,7 +98,6 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 			}
 		}()
 
-		// TODO: BOGUS - WORK - Protect against failure while writing
 		if fp, err := os.OpenFile(indexFn, os.O_WRONLY|os.O_CREATE, 0644); err == nil {
 			defer fp.Close() // defers are last in, first out
 

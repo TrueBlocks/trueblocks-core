@@ -55,7 +55,6 @@ func StringToAsciiFile(filename, value string) error {
 }
 
 func AppendToAsciiFile(filename, value string) error {
-	// TODO: BOGUS - WORK - Protect against failure while writing
 	file, err := os.OpenFile(filename, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 	if err != nil {
 		return err

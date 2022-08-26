@@ -42,6 +42,7 @@ func (opts *ScrapeOptions) HandleScrapeBlaze(progress *rpcClient.MetaData, blaze
 	return nil
 }
 
+// TODO: BOGUS - WORK - Protect against failure while writing
 func (opts *BlazeOptions) WriteTimestamps(chain string) error {
 	sort.Slice(opts.TsArray, func(i, j int) bool {
 		return opts.TsArray[i].Bn < opts.TsArray[j].Bn
@@ -49,7 +50,6 @@ func (opts *BlazeOptions) WriteTimestamps(chain string) error {
 
 	// Assume that the existing timestamps file always contains valid timestamps
 	tsPath := config.GetPathToIndex(chain) + "ts.bin"
-	// TODO: BOGUS - WORK - Protect against failure while writing
 	fp, err := os.OpenFile(tsPath, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 	if err != nil {
 		return err

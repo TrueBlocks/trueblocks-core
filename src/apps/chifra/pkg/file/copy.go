@@ -16,7 +16,6 @@ func Copy(destPath, sourcePath string) (int64, error) {
 	}
 	defer source.Close()
 
-	// TODO: BOGUS - WORK - Protect against failure while writing
 	dest, err := os.OpenFile(destPath, os.O_WRONLY|os.O_CREATE, 0644)
 	if err != nil {
 		return 0, err

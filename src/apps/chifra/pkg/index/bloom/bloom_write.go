@@ -25,7 +25,6 @@ func (bl *ChunkBloom) WriteBloom(chain, fileName string) ( /* changed */ bool, e
 			}
 		}()
 
-		// TODO: BOGUS - WORK - Protect against failure while writing
 		if fp, err := os.OpenFile(bloomFn, os.O_RDWR|os.O_CREATE, 0644); err == nil {
 			defer fp.Close() // defers are last in, first out
 

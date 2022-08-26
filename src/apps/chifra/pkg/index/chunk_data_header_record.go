@@ -92,7 +92,6 @@ func WriteChunkHeaderHash(chain, fileName string, headerHash common.Hash) ( /* c
 			}
 		}()
 
-		// TODO: BOGUS - WORK - Protect against failure while writing
 		if fp, err := os.OpenFile(indexFn, os.O_RDWR|os.O_CREATE, 0644); err == nil {
 			defer fp.Close() // defers are last in, first out
 
