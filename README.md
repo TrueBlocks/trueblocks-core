@@ -23,7 +23,7 @@ Complete any applicable [Migrations](https://github.com/TrueBlocks/trueblocks-co
 
 ## Introduction
 
-TrueBlocks is a collection of libraries, tools, and applications that improve access to the Ethereum data while remaining fully local. The interface is similar to the Ethereum RPC, but offers a number of improvements:
+TrueBlocks is a collection of libraries, tools, and applications that improve access to Ethereum data while remaining entirely local. The interface is similar to the Ethereum RPC but offers several improvements:
 
 1) TrueBlocks allows you to scrape the chain to build an index of address appearances. This index enables lightning-fast access to transactional histories for a given address (something not available from the node itself),
 
