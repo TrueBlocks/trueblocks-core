@@ -393,7 +393,6 @@ COption::COption(const string_q& ln, const string_q& sn, const string_q& t, size
         replace(description, " [X]", (contains(option_type, "list") ? " or more" : ""));
         permitted = "<val>";
     }
-    // TODO(tjayrush): chifra-new weird conversions needed?
     if (permitted == "<str>" || permitted == "<hash>" || permitted == "<addr>")
         permitted = "string";
 

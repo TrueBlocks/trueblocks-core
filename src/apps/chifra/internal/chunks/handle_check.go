@@ -164,11 +164,3 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 	}
 	return globals.RenderSlice(&opts.Globals, reports)
 }
-
-// TODO: THINGS WE COULD CHECK IF WE WANTED TO IN THE INDEX
-// TODO: We could check that all addresses in the index report 'yes' when checked against bloom
-// TODO: We don't check internal consistency of the data files
-// TODO:	- is every address in the index, in the bloom?
-// TODO:	- are there missing blocks (if allow_missing is off)
-// TODO: We don't check to see if Pinata has files that aren't needed
-// TODO: We could check file sizes which are now stored in the manifest against downloaded files

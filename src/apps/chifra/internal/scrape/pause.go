@@ -10,9 +10,7 @@ import (
 func (opts *ScrapeOptions) Pause(progressThen *rpcClient.MetaData) {
 	// we always pause at least a quarter of a second to allow the node to 'rest'
 	time.Sleep(250 * time.Millisecond)
-
-	// TODO: Chain specific
-	isDefaultSleep := opts.Sleep == 14 || opts.Sleep == 13
+	isDefaultSleep := opts.Sleep >= 13 && opts.Sleep <= 14
 	distanceFromHead := progressThen.Latest - progressThen.Staging
 	shouldSleep := !isDefaultSleep || distanceFromHead <= (2*opts.Settings.Unripe_dist)
 	if shouldSleep {

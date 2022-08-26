@@ -8,7 +8,6 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -49,19 +48,6 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		progress, err = rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
 		if err != nil {
 			return err
-		}
-
-		// TODO: This can be removed at some point in the future
-		if os.Getenv("TEST_END_SCRAPE") != "" {
-			val, err := strconv.ParseUint(os.Getenv("TEST_END_SCRAPE"), 10, 32)
-			if err != nil {
-				return err
-			}
-			if val > 0 && progress.Staging > val {
-				index.CleanTemporaryFolders(config.GetPathToIndex(opts.Globals.Chain), false)
-				logger.Log(logger.Info, "Finished processing for testing")
-				return nil
-			}
 		}
 
 		// We start the current round one block past the end of the previous round

@@ -149,7 +149,7 @@ func (p *Point) resolvePoint(chain string) uint64 {
 	} else if p.Number >= utils.EarliestEvmTs {
 		var err error
 		bn, err = tslib.FromTsToBn(chain, uint64(p.Number))
-		if err == tslib.TsErrInTheFuture {
+		if err == tslib.ErrInTheFuture {
 			provider := config.GetRpcProvider(chain)
 			latest := rpcClient.BlockNumber(provider)
 			tsFuture := rpcClient.GetBlockTimestamp(provider, latest)

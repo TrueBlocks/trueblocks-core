@@ -43,7 +43,7 @@ Using Format
   "baseFeePerGas": 0
 }
 ------------------------------------------------------------------------------------------------------------------------
-Using Format(fmt) - TODO(tjayrush): should report missing field, does not.
+Using Format(fmt) - should report missing field, does not.
 ------------------------------------------------------------------------------------------------------------------------
 {
   "gasLimit": 5000,

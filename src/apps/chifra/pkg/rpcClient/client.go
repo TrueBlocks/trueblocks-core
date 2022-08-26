@@ -17,7 +17,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/ethclient"
@@ -310,20 +309,19 @@ func GetBlockByNumber(chain string, bn uint64) (types.SimpleNamedBlock, error) {
 
 // GetBlockZeroTs for some reason block zero does not return a timestamp, so we assign block one's ts minus 14 seconds
 func GetBlockZeroTs(chain string) (uint64, error) {
-	blockOne, err := GetBlockByNumber(chain, 1)
-	if err != nil {
-		return utils.EarliestEvmTs, err
+	ts := GetBlockTimestamp(config.GetRpcProvider(chain), 0)
+	if ts == 0 {
+		ts = GetBlockTimestamp(config.GetRpcProvider(chain), 1) - 13
 	}
-	// TODO: BOGUS - WORK - Chain specific
-	return blockOne.TimeStamp - 14, nil
+	return ts, nil
 }
 
-// TODO: use block number by converting it
 func GetCodeAt(chain, addr string, bn uint64) ([]byte, error) {
 	// return IsValidAddress(addr)
 	provider := config.GetRpcProvider(chain)
 	ec := GetClient(provider)
 	address := common.HexToAddress(addr)
+	// TODO: we don't use block number, but we should - we need to convert it
 	return ec.CodeAt(context.Background(), address, nil) // nil is latest block
 }
 

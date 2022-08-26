@@ -68,8 +68,6 @@ func (u *ExploreUrl) getUrl(opts *ExploreOptions) string {
 
 	var chain = opts.Globals.Chain
 
-	// TODO: Multi-chain customize remote explorer strings per chain
-
 	if opts.Google {
 		var query = "https://www.google.com/search?q=[{TERM}]"
 		query = strings.Replace(query, "[{TERM}]", u.term, -1)

@@ -46,7 +46,7 @@ func (opts *ChunksOptions) CheckManifest(arrayA, arrayB []string, report *types.
 	return comp.checkArrays(report)
 }
 
-// TODO: Concurrent?
+// TODO: Can this be made concurrent?
 func (comp *CompareState) checkArrays(report *types.ReportCheck) error {
 	marker := ""
 	if comp.testMode {

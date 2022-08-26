@@ -19,11 +19,6 @@ import (
 	"github.com/spf13/viper"
 )
 
-// We keep a map of per-chain configs. Before reading the chain specific
-// config, we read the global (top-level) config at trueBlocks.toml. Chain
-// config files (if present) appear in ./configs/<chain>/<chain>.toml
-// and are merged into the defaults.
-// TODO: is the above comment still true?
 var trueBlocksViper = viper.New()
 var trueBlocksConfig ConfigFile
 

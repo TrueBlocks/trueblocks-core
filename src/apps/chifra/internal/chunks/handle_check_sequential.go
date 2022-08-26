@@ -30,7 +30,7 @@ func (opts *ChunksOptions) CheckSequential(fnArray, cacheArray, remoteArray []st
 	return nil
 }
 
-// TODO: Can this be concurrent?
+// TODO: Can this be made concurrent?
 func (opts *ChunksOptions) checkSequential(which string, array []string, allowMissing bool, report *types.ReportCheck) error {
 	prev := cache.NotARange
 	for _, item := range array {

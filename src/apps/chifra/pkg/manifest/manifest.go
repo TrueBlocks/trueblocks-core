@@ -42,8 +42,6 @@ type ChunkRecord struct {
 	IndexSize int64          `json:"indexSize"`
 }
 
-// TODO: If we included fileSize (pre-zip) here, we could do a check that the file is complete
-
 type Source uint
 
 const (

@@ -134,9 +134,7 @@ void testFormatting(CBlock& block) {
     cout << block1.Format() << endl;
 
     verbose = 5;
-    cout << sep << endl
-         << "Using Format(fmt) - TODO(tjayrush): should report missing field, does not." << endl
-         << sep << endl;
+    cout << sep << endl << "Using Format(fmt) - should report missing field, does not." << endl << sep << endl;
     cout << block1.Format("[{PARSED}]\t[{BLOCKNUMBER}]\t[{HASH}]\t[{MINER}]\t[{NOT_A_FIELD}]") << endl;
 
     QTransferFrom tf;

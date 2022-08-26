@@ -23,7 +23,7 @@ package index
 
 // func Test_EstablishChunk(t *testing.T) {
 
-// 	// TODO: This kills real data. Do we really want to do that?
+// 	// TODO: This kills real data. Do we really want to do that? Remove this test.
 // 	fileRange := cache.FileRange{First: 1, Last: 590501}
 // 	path, err := IndexPathFromRange(fileRange)
 // 	if err != nil {

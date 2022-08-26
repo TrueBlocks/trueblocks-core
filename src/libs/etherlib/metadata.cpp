@@ -61,7 +61,6 @@ blknum_t getLatestBlock_client(void) {
     static blknum_t lastBlock = NOPOS;
     static timestamp_t lastTime = timestamp_t(NOPOS);
     timestamp_t thisTime = date_2_Ts(Now());
-    // TODO: BOGUS - WORK - Chain specific
     if (thisTime != timestamp_t(NOPOS) && thisTime < timestamp_t(lastTime + 13)) {
         return lastBlock;
     }
@@ -86,7 +85,6 @@ CMetaData getMetaData(void) {
     static CMetaData lastMeta;
     static timestamp_t lastTime = timestamp_t(NOPOS);
     timestamp_t thisTime = date_2_Ts(Now());
-    // TODO: BOGUS - WORK - Chain specific
     if (thisTime != timestamp_t(NOPOS) && thisTime < timestamp_t(lastTime + 13)) {
         return lastMeta;
     }

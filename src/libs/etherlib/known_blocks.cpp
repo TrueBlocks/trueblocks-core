@@ -27,7 +27,6 @@ timestamp_t blockZeroTs(void) {
     return ts;
 }
 
-// TODO: Multi-chain allow for specifying first transaction block
 blknum_t firstTransactionBlock(void) {
     map<string_q, blknum_t> theMap = {
         make_pair("mainnet", 46147),
@@ -37,7 +36,6 @@ blknum_t firstTransactionBlock(void) {
 
 // This data was taken from Geth ./params/config.go
 blknum_t hardForkBlock(const string_q& hf) {
-    // TODO: - FEATURE FORK BLOCKS IN MANIFEST
     if (hf == "byzantium") {
         map<string_q, blknum_t> theMap = {
             make_pair("kovan", 5067000),
