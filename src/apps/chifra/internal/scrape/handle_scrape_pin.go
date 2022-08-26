@@ -21,19 +21,6 @@ func (opts *ScrapeOptions) HandleScrapePin(progressThen *rpcClient.MetaData, bla
 	return true, nil
 
 	/*
-			rel := strings.Replace(indexPath, config.GetPathToIndex(opts.Globals.Chain), "$INDEX/", -1)
-		result := fmt.Sprintf("%sWrote %d records to %s%s%s", colors.BrightBlue, len(appearances), rel, colors.Off, strings.Repeat(" ", 20))
-		if snapper != -1 {
-			result = fmt.Sprintf("%sWrote %d records to %s %s(snapped to %d blocks)%s", colors.BrightBlue, len(appearances), rel, colors.Yellow, snapper, colors.Off)
-		}
-		logger.Log(logger.Info, result)
-
-		if ok, err := opts.HandleScrapePin(progressThen, blazeOpts); !ok || err != nil {
-			return ok, err
-		}
-		rel := strings.Replace(indexPath, config.GetPathToIndex(opts.Globals.Chain), "$INDEX/", -1)
-		result := fmt.Sprintf("%sWrote %d records to %s%s%s", colors.BrightBlue, len(allocs), rel, colors.Off, strings.Repeat(" ", 20))
-		logger.Log(logger.Info, result)
 		if opts.Pin {
 			logger.Log(logger.Info, "Pinned:", record.Range, bloomHash, indexHash)
 			err = opts.updateManifest(record)

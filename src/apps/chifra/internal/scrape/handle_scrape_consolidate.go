@@ -106,13 +106,12 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 
 			filename := cache.NewCachePath(blazeOpts.Chain, cache.Index_Final)
 			indexPath := filename.GetFullPath(curRange.String())
-			if report, err := index.WriteChunk(blazeOpts.Chain, indexPath, appMap, len(appearances)); err != nil {
+			if report, err := index.WriteChunk(blazeOpts.Chain, indexPath, appMap, len(appearances), opts.Pin, opts.Remote); err != nil {
 				return false, err
 			} else if report == nil {
 				log.Fatal("Should not happen, write chunk returned empty report")
 			} else {
-				report.Snapped = false
-				report.Pinned = false
+				report.Snapped = isSnap
 				report.Report()
 			}
 

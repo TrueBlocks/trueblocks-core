@@ -42,7 +42,7 @@ func (c *WriteChunkReport) Report() {
 	}
 }
 
-func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, nApps int) (*WriteChunkReport, error) {
+func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, nApps int, pin, remote bool) (*WriteChunkReport, error) {
 	// We're going to build two tables. An addressTable and an appearanceTable. We do this as we spin
 	// through the map
 
@@ -123,6 +123,8 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 			if _, err = bl.WriteBloom(chain, bloom.ToBloomPath(indexFn)); err != nil {
 				return nil, err
 			}
+
+			// TODO: BOGUS - Pin during scraping - we should pin right here if we're pinning
 
 			// Success. Remove the backup so it doesn't replace the orignal
 			os.Remove(backupFn)

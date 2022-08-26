@@ -22,7 +22,8 @@ import (
 // ScrapeOptions provides all command options for the chifra scrape command.
 type ScrapeOptions struct {
 	BlockCnt   uint64                   `json:"blockCnt,omitempty"`   // Maximum number of blocks to process per pass
-	Pin        bool                     `json:"pin,omitempty"`        // Pin new chunks (requires locally-running IPFS daemon)
+	Pin        bool                     `json:"pin,omitempty"`        // Pin new chunks (requires locally-running IPFS daemon or --remote)
+	Remote     bool                     `json:"remote,omitempty"`     // Pin new chunks to the gateway (requires pinning service keys)
 	Sleep      float64                  `json:"sleep,omitempty"`      // Seconds to sleep between scraper passes
 	StartBlock uint64                   `json:"startBlock,omitempty"` // First block to visit (available only for blaze scraper)
 	Settings   scrapeCfg.ScrapeSettings `json:"settings,omitempty"`   // Configuration items for the scrape
@@ -36,6 +37,7 @@ var scrapeCmdLineOptions ScrapeOptions
 func (opts *ScrapeOptions) testLog() {
 	logger.TestLog(opts.BlockCnt != 2000, "BlockCnt: ", opts.BlockCnt)
 	logger.TestLog(opts.Pin, "Pin: ", opts.Pin)
+	logger.TestLog(opts.Remote, "Remote: ", opts.Remote)
 	logger.TestLog(opts.Sleep != 14, "Sleep: ", opts.Sleep)
 	logger.TestLog(opts.StartBlock != 0, "StartBlock: ", opts.StartBlock)
 	opts.Settings.TestLog(opts.Globals.Chain, opts.Globals.TestMode)
@@ -83,6 +85,8 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 			opts.BlockCnt = globals.ToUint64(value[0])
 		case "pin":
 			opts.Pin = true
+		case "remote":
+			opts.Remote = true
 		case "sleep":
 			opts.Sleep = globals.ToFloat64(value[0])
 		case "startBlock":
