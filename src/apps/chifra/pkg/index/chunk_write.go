@@ -30,6 +30,7 @@ type WriteChunkReport struct {
 	nAppearances int
 	Snapped      bool
 	Pinned       bool
+	PinRecord    manifest.ChunkRecord
 }
 
 func (c *WriteChunkReport) Report() {
@@ -101,7 +102,7 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 		}()
 
 		if fp, err := os.OpenFile(indexFn, os.O_WRONLY|os.O_CREATE, 0644); err == nil {
-			defer fp.Close() // defers are last in, first out
+			// defer fp.Close() // Note -- we don't defer because we want to close the file and possibly pin it below...
 
 			fp.Seek(0, io.SeekStart) // already true, but can't hurt
 			header := HeaderRecord{
@@ -126,16 +127,34 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 				return nil, err
 			}
 
-			// TODO: BOGUS - Pin during scraping - we should pin right here if we're pinning
+			if err := fp.Sync(); err != nil {
+				return nil, err
+			}
 
-			// Success. Remove the backup so it doesn't replace the orignal
+			if err := fp.Close(); err != nil { // Close the file so we can pin it
+				return nil, err
+			}
+
+			// We're sucessfully written the chunk, so we don't need this any more. If the pin
+			// fails we don't want to have to re-do this chunk, so remove this here.
 			os.Remove(backupFn)
+
 			rng, _ := cache.RangeFromFilename(indexFn)
-			return &WriteChunkReport{
+			report := WriteChunkReport{
 				Range:        rng,
 				nAddresses:   len(addressTable),
 				nAppearances: len(appearanceTable),
-			}, nil
+				Pinned:       pin,
+			}
+
+			if pin {
+				if err := pinTheChunk(rng, &report.PinRecord); err != nil {
+					return nil, err
+				}
+			}
+
+			// Success. Remove the backup so it doesn't replace the orignal
+			return &report, nil
 
 		} else {
 			return nil, err
@@ -146,33 +165,38 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 	}
 }
 
-type Renderer interface {
-	RenderObject(data interface{}, first bool) error
-}
-
-var spaces20 = strings.Repeat(" ", 20)
-
 // TODO: BOGUS - WORK - Pin during scraping
-// unchainedFolder := config.GetPathToIndex(opts.Globals.Chain)
-// pathToIndex = unchainedFolder + "finalized/" + record.Range + ".bin"
-// bloomPath := unchainedFolder + "blooms/" + record.Range + ".bloom"
-// record := manifest.ChunkRecord{
-// 	Range: range,
-// 	BloomHash: bloomHash,
-// 	IndexHash: indexHash,
-// }
-// record.BloomHash, err := pina.PinFile(bloomPath)
-// if err != nil {
-// 	return true, err
-// }
-// record.IndexHash, err := pina.PinFile(pathToIndex)
-// if err != nil {
-// 	return true, err
-// }
-// err = opts.updateManifest(record)
-// if err != nil {
-// 	return true, err
-// }
+func pinTheChunk(rng cache.FileRange, pinRecord *manifest.ChunkRecord) error {
+	pinRecord.Range = rng.String()
+	return nil
+	// unchainedFolder := config.GetPathToIndex(chain)
+	// pathToIndex = unchainedFolder + "finalized/" + record.Range + ".bin"
+	// bloomPath := unchainedFolder + "blooms/" + record.Range + ".bloom"
+
+	// record := manifest.ChunkRecord{
+	// 	Range: rng,
+	// 	BloomHash: bloomHash,
+	// 	IndexHash: indexHash,
+	// }
+
+	// record.BloomHash, err := pina.PinFile(bloomPath)
+
+	// if err != nil {
+	// 	return true, err
+	// }
+
+	// record.IndexHash, err := pina.PinFile(pathToIndex)
+
+	// if err != nil {
+	// 	return true, err
+	// }
+
+	// err = opts.updateManifest(record)
+
+	//	if err != nil {
+	//		return true, err
+	//	}
+}
 
 func unique(chunks []manifest.ChunkRecord) []manifest.ChunkRecord {
 	inResult := make(map[string]bool)
@@ -221,6 +245,8 @@ func updateManifest(chain string, chunk manifest.ChunkRecord) error {
 
 	logger.Log(logger.Info, "Updated manifest with", len(man.Chunks), "chunks")
 
+
+	// TODO: BOGUS - I DON'T THING WE NEED TO SHOW THE RESULT HERE
 	// tmp := opts.Globals
 	// tmp.Format = "json"
 	// tmp.Writer = w
@@ -229,3 +255,9 @@ func updateManifest(chain string, chunk manifest.ChunkRecord) error {
 	// return tmp.RenderObject(man, true /* first */)
 	return nil
 }
+
+type Renderer interface {
+	RenderObject(data interface{}, first bool) error
+}
+
+var spaces20 = strings.Repeat(" ", 20)

@@ -65,8 +65,7 @@ func ReadManifest(chain string, source Source) (*Manifest, error) {
 	}
 
 	reader := bytes.NewReader([]byte(contents))
-	decoder := json.NewDecoder(reader)
 	manifest := &Manifest{}
-	err := decoder.Decode(manifest)
+	err := json.NewDecoder(reader).Decode(manifest)
 	return manifest, err
 }

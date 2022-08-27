@@ -5,6 +5,7 @@
 package manifest
 
 import (
+	"encoding/json"
 	"strings"
 	"testing"
 )
@@ -46,7 +47,8 @@ var manifestSource = `
 `
 
 func TestReadManifest(t *testing.T) {
-	m, err := readJSONManifest(strings.NewReader(manifestSource))
+	m := &Manifest{}
+	err := json.NewDecoder(strings.NewReader(manifestSource)).Decode(m)
 	if err != nil {
 		t.Error(err)
 	}

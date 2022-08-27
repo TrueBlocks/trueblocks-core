@@ -6,6 +6,7 @@ package manifest
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
@@ -117,7 +118,9 @@ func downloadManifest(chain, gatewayUrl, cid string) (*Manifest, error) {
 
 	switch response.Header.Get("content-type") {
 	case "application/json":
-		return readJSONManifest(response.Body)
+		m := &Manifest{}
+		err := json.NewDecoder(response.Body).Decode(m)
+		return m, err
 	default:
 		return nil, errors.New("unrecognized content type")
 	}
