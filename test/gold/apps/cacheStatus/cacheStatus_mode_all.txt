@@ -97,7 +97,8 @@ TEST[DATE|TIME] Depth:  0
       "rpcProvider": "--provider-mainnet--",
       "apiProvider": "--provider-mainnet--",
       "remoteExplorer": "--explorer-mainnet--",
-      "localExplorer": "--explorer-mainnet--"
+      "localExplorer": "--explorer-mainnet--",
+      "ipfsGateway": "--gateway-mainnet--"
     },
     {
       "chain": "gnosis",
@@ -106,7 +107,8 @@ TEST[DATE|TIME] Depth:  0
       "rpcProvider": "--provider-gnosis--",
       "apiProvider": "--provider-gnosis--",
       "remoteExplorer": "--explorer-gnosis--",
-      "localExplorer": "--explorer-gnosis--"
+      "localExplorer": "--explorer-gnosis--",
+      "ipfsGateway": "http://gateway.ipfs.io/ipfs"
     }
   ],
   "date": "--date--"

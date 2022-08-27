@@ -106,7 +106,8 @@ status?modes=all
           "rpcProvider": "--provider-mainnet--",
           "apiProvider": "--provider-mainnet--",
           "remoteExplorer": "--explorer-mainnet--",
-          "localExplorer": "--explorer-mainnet--"
+          "localExplorer": "--explorer-mainnet--",
+          "ipfsGateway": "--gateway-mainnet--"
         },
         {
           "chain": "gnosis",
@@ -115,7 +116,8 @@ status?modes=all
           "rpcProvider": "--provider-gnosis--",
           "apiProvider": "--provider-gnosis--",
           "remoteExplorer": "--explorer-gnosis--",
-          "localExplorer": "--explorer-gnosis--"
+          "localExplorer": "--explorer-gnosis--",
+          "ipfsGateway": "http://gateway.ipfs.io/ipfs"
         }
       ],
       "date": "--date--"
