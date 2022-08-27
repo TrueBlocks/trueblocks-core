@@ -118,7 +118,8 @@ status?details&firstBlock=1400000&lastBlock=2000000
           "apiProvider": "--provider-mainnet--",
           "remoteExplorer": "--explorer-mainnet--",
           "localExplorer": "--explorer-mainnet--",
-            },
+          "ipfsGateway": "--gateway-mainnet--"
+        },
         {
           "chain": "gnosis",
           "chainId": 100,
@@ -127,7 +128,8 @@ status?details&firstBlock=1400000&lastBlock=2000000
           "apiProvider": "--provider-gnosis--",
           "remoteExplorer": "--explorer-gnosis--",
           "localExplorer": "--explorer-gnosis--",
-            }
+          "ipfsGateway": "--gateway-gnosis--"
+        }
       ],
       "date": "--date--"
     }

@@ -117,7 +117,7 @@ status?modes=all
           "apiProvider": "--provider-gnosis--",
           "remoteExplorer": "--explorer-gnosis--",
           "localExplorer": "--explorer-gnosis--",
-          "ipfsGateway": "http://gateway.ipfs.io/ipfs"
+          "ipfsGateway": "--gateway-gnosis--"
         }
       ],
       "date": "--date--"
