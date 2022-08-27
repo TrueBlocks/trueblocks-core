@@ -67,7 +67,7 @@ TEST[DATE|TIME] Depth:  0
       "rpcProvider": "--provider-mainnet--",
       "apiProvider": "--provider-mainnet--",
       "remoteExplorer": "--explorer-mainnet--",
-      "localExplorer": "--explorer-mainnet--",
+      "localExplorer": "--explorer-mainnet--"
     },
     {
       "chain": "gnosis",
@@ -76,7 +76,7 @@ TEST[DATE|TIME] Depth:  0
       "rpcProvider": "--provider-gnosis--",
       "apiProvider": "--provider-gnosis--",
       "remoteExplorer": "--explorer-gnosis--",
-      "localExplorer": "--explorer-gnosis--",
+      "localExplorer": "--explorer-gnosis--"
     }
   ],
   "date": "--date--"

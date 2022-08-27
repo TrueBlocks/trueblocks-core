@@ -106,8 +106,8 @@ status?modes=all
           "rpcProvider": "--provider-mainnet--",
           "apiProvider": "--provider-mainnet--",
           "remoteExplorer": "--explorer-mainnet--",
-          "localExplorer": "--explorer-mainnet--",
-            },
+          "localExplorer": "--explorer-mainnet--"
+        },
         {
           "chain": "gnosis",
           "chainId": 100,
@@ -115,8 +115,8 @@ status?modes=all
           "rpcProvider": "--provider-gnosis--",
           "apiProvider": "--provider-gnosis--",
           "remoteExplorer": "--explorer-gnosis--",
-          "localExplorer": "--explorer-gnosis--",
-            }
+          "localExplorer": "--explorer-gnosis--"
+        }
       ],
       "date": "--date--"
     }
