@@ -103,8 +103,8 @@ bool COptions::parseArguments(string_q& command) {
                 if (been_here)
                     break;
                 been_here = true;
-                tests.push_back("tools/ethNames");
                 tests.push_back("tools/ethslurp");
+                tests.push_back("tools/ethNames");
                 tests.push_back("tools/getBlocks");
                 tests.push_back("tools/getLogs");
                 tests.push_back("tools/getQuotes");
@@ -125,8 +125,8 @@ bool COptions::parseArguments(string_q& command) {
                 tests.push_back("apps/blockScrape");
                 tests.push_back("apps/cacheStatus");
                 tests.push_back("apps/chunkMan");
-                tests.push_back("apps/fireStorm");
                 tests.push_back("apps/chifra");
+                tests.push_back("apps/fireStorm");
                 tests.push_back("apps/init");
 
             } else {
@@ -154,8 +154,8 @@ bool COptions::parseArguments(string_q& command) {
         tests.push_back("libs/acctlib");
         if (makeClassOn)
             tests.push_back("dev_tools/makeClass");
-        tests.push_back("tools/ethNames");
         tests.push_back("tools/ethslurp");
+        tests.push_back("tools/ethNames");
         tests.push_back("tools/getBlocks");
         tests.push_back("tools/getLogs");
         tests.push_back("tools/getQuotes");
@@ -170,8 +170,8 @@ bool COptions::parseArguments(string_q& command) {
         tests.push_back("apps/blockScrape");
         tests.push_back("apps/cacheStatus");
         tests.push_back("apps/chunkMan");
-        tests.push_back("apps/fireStorm");
         tests.push_back("apps/chifra");
+        tests.push_back("apps/fireStorm");
         tests.push_back("apps/init");
     }
 

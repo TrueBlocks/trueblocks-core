@@ -146,6 +146,8 @@ int main(int argc, const char* argv[]) {
     // We've run through all the tests. We know how many we've run and we know how
     // many have passed, so we know if all of them passed.
     total.allPassed = total.nTests == total.nPassed;
+    ::sleep(1);
+    total.date = Now().Format(FMT_EXPORT);
     if (options.report && options.skip == 1) {
         // Write performance data to a file and results to the screen
         perf << total.Format(perf_fmt) << endl;
