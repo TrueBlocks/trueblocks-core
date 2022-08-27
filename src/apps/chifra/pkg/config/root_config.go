@@ -192,8 +192,8 @@ func MustReadConfig(v *viper.Viper, targetStruct interface{}, path string) {
 
 func GetPinningKeys(chain string) (string, string, string) {
 	keys := GetRootConfig().Keys
-	a := keys["keys.pinata"].ApiKey
-	b := keys["keys.pinata"].Secret
-	c := keys["keys.estuary"].ApiKey
+	a := keys["pinata"].ApiKey
+	b := keys["pinata"].Secret
+	c := keys["estuary"].ApiKey
 	return a, b, c
 }
