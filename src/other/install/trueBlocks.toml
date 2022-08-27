@@ -5,7 +5,7 @@ current = "0.40.0-beta"
 cachePath = ""
 defaultChain = "mainnet"
 indexPath = ""
-ipfsGateway = "https://[{CHAIN}].unchainedindex.io/ipfs/"
+defaultGateway = "https://[{CHAIN}].unchainedindex.io/ipfs/"
 
 [keys]
 
@@ -28,6 +28,7 @@ chainId = "1"
 localExplorer = "http://localhost:1234"
 remoteExplorer = "https://etherscan.io"
 rpcProvider = "http://localhost:8545"
+ipfsGateway = "https://ipfs.unchainedindex.io/ipfs/"
 symbol = "ETH"
 
 [chains.gnosis]

@@ -129,6 +129,7 @@ Manifest data is made of the following data fields:
 | apiProvider    | A valid API provider for the explorer                            | string |
 | remoteExplorer | A remote explorer for the chain such as EtherScan                | string |
 | localExplorer  | The local explorer for the chain (typically TrueBlocks Explorer) | string |
+| ipfsGateway    | An IPFS gateway for pinning the index if enabled                 | string |
 
 ## CacheEntry
 

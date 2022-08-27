@@ -32,6 +32,7 @@ type chainGroup struct {
 	RemoteExplorer string `toml:"remoteExplorer"`
 	RpcProvider    string `toml:"rpcProvider"`
 	ApiProvider    string `toml:"apiProvider"`
+	IpfsGateway    string `toml:"ipfsGateway"`
 	Symbol         string `toml:"symbol"`
 }
 
@@ -42,10 +43,10 @@ type keyGroup struct {
 }
 
 type settingsGroup struct {
-	CachePath    string `toml:"cachePath"`
-	IndexPath    string `toml:"indexPath"`
-	DefaultChain string `toml:"defaultChain"`
-	IpfsGateway  string `toml:"ipfsGateway"`
+	CachePath      string `toml:"cachePath"`
+	IndexPath      string `toml:"indexPath"`
+	DefaultChain   string `toml:"defaultChain"`
+	DefaultGateway string `toml:"defaultGateway"`
 }
 
 type ConfigFile struct {
@@ -61,7 +62,7 @@ func init() {
 	trueBlocksViper.SetDefault("Settings.CachePath", GetPathToRootConfig()+"cache/")
 	trueBlocksViper.SetDefault("Settings.IndexPath", GetPathToRootConfig()+"unchained/")
 	trueBlocksViper.SetDefault("Settings.DefaultChain", "mainnet")
-	trueBlocksViper.SetDefault("Settings.IpfsGateway", "https://ipfs.unchainedindex.io/ipfs")
+	trueBlocksViper.SetDefault("Settings.DefaultGateway", "https://[{CHAIN}].unchainedindex.io/ipfs")
 }
 
 // GetRootConfig reads and the configuration located in trueBlocks.toml file. Note

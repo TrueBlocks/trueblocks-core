@@ -2717,6 +2717,9 @@ components:
         localExplorer:
           type: string
           description: "The local explorer for the chain (typically TrueBlocks Explorer)"
+        ipfsGateway:
+          type: string
+          description: "An IPFS gateway for pinning the index if enabled"
     cacheEntry:
       description: "an entry in one of the caches"
       type: object

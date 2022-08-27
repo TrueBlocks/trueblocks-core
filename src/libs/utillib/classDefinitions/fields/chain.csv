@@ -6,3 +6,4 @@ rpcProvider    ,string ,http://localhost:8545       ,       ,      ,        ,   
 apiProvider    ,string ,http://localhost:8080       ,       ,      ,        ,          ,        ,      ,         ,5   ,     ,        ,A valid API provider for the explorer
 remoteExplorer ,string ,http://etherscan.io         ,       ,      ,        ,          ,        ,      ,         ,6   ,     ,        ,A remote explorer for the chain such as EtherScan
 localExplorer  ,string ,http://localhost:1234       ,       ,      ,        ,          ,        ,      ,         ,7   ,     ,        ,The local explorer for the chain (typically TrueBlocks Explorer)
+ipfsGateway    ,string ,http://gateway.ipfs.io/ipfs ,       ,      ,        ,          ,        ,      ,         ,8   ,     ,        ,An IPFS gateway for pinning the index if enabled
