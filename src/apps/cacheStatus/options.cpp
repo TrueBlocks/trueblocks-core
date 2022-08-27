@@ -191,6 +191,9 @@ bool COptions::parseArguments(string_q& command) {
         CIndexStringMap unused;
         loadPinMaps(unused, bloomHashes, indexHashes);
     }
+    if (isTestMode()) {
+        HIDE_FIELD(CChain, "ipfsGateway");
+    }
     HIDE_FIELD(CChainCache, "max_depth");
 
     return true;
