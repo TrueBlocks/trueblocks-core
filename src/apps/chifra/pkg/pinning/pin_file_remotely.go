@@ -74,18 +74,14 @@ func (s *Service) pinFileRemotely(filepath string) (types.IpfsHash, error) {
 		return "", err
 	}
 
-	var dat map[string]interface{}
+	var dat = struct {
+		IpfsHash string
+		PinSize  int64
+		Date     string
+	}{}
+
 	if err := json.Unmarshal(data, &dat); err != nil {
 		return "", err
 	}
-
-	if out, castOk := dat["error"].(string); castOk {
-		return "", fmt.Errorf(out)
-	}
-
-	if ipfsHash, castOk := dat[s.ResultName].(types.IpfsHash); castOk {
-		return ipfsHash, nil
-	}
-
-	return "", fmt.Errorf("pinning to remote pinning service failed")
+	return types.IpfsHash(dat.IpfsHash), nil
 }

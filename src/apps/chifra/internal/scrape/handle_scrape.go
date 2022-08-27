@@ -109,6 +109,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		}
 
 		if ok, err := opts.HandleScrapeConsolidate(progress, &blazeOpts); !ok || err != nil {
+			logger.Log(logger.Error, err)
 			if !ok {
 				break
 			}

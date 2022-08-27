@@ -42,7 +42,7 @@ func (c *WriteChunkReport) Report() {
 	}
 	logger.Log(logger.Info, str)
 	if c.Pinned {
-		str := fmt.Sprintf("%sPinned chunk $INDEX/%s.bin%s%s", colors.BrightBlue, c.Range, colors.Off, spaces20)
+		str := fmt.Sprintf("%sPinned chunk $INDEX/%s.bin (%s,%s)%s", colors.BrightBlue, c.Range, c.PinRecord.IndexHash, c.PinRecord.BloomHash, colors.Off)
 		logger.Log(logger.Info, str)
 	}
 }
@@ -158,7 +158,12 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 				return &report, err
 			}
 
-			return &report, updateManifest(chain, resultToRecord(&result))
+			rec := resultToRecord(&result)
+			report.PinRecord.IndexHash = rec.IndexHash
+			report.PinRecord.BloomHash = rec.BloomHash
+			report.PinRecord.IndexSize = rec.IndexSize
+			report.PinRecord.BloomSize = rec.BloomSize
+			return &report, updateManifest(chain, rec)
 
 		} else {
 			return nil, err
