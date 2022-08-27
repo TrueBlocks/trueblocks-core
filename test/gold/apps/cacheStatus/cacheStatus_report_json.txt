@@ -70,7 +70,7 @@ TEST[DATE|TIME] Format:  json
       "apiProvider": "--provider-mainnet--",
       "remoteExplorer": "--explorer-mainnet--",
       "localExplorer": "--explorer-mainnet--",
-      "ipfsGateway": "http://gateway.ipfs.io/ipfs"
+      "ipfsGateway": "--gateway-mainnet--"
     },
     {
       "chain": "gnosis",
@@ -80,7 +80,7 @@ TEST[DATE|TIME] Format:  json
       "apiProvider": "--provider-gnosis--",
       "remoteExplorer": "--explorer-gnosis--",
       "localExplorer": "--explorer-gnosis--",
-      "ipfsGateway": "http://gateway.ipfs.io/ipfs"
+      "ipfsGateway": "--gateway-gnosis--"
     }
   ],
   "date": "--date--"
