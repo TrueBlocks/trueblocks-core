@@ -16,6 +16,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 	"github.com/ethereum/go-ethereum/common"
@@ -140,21 +142,23 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 			os.Remove(backupFn)
 
 			rng, _ := cache.RangeFromFilename(indexFn)
-			report := WriteChunkReport{
+			report := WriteChunkReport{ // For use in reporting...
 				Range:        rng,
 				nAddresses:   len(addressTable),
 				nAppearances: len(appearanceTable),
 				Pinned:       pin,
 			}
 
-			if pin {
-				if err := pinTheChunk(rng, &report.PinRecord); err != nil {
-					return nil, err
-				}
+			if !pin {
+				return &report, nil
 			}
 
-			// Success. Remove the backup so it doesn't replace the orignal
-			return &report, nil
+			result, err := pinning.PinChunk(chain, indexFn, remote)
+			if err != nil {
+				return &report, err
+			}
+
+			return &report, updateManifest(chain, resultToRecord(&result))
 
 		} else {
 			return nil, err
@@ -163,39 +167,6 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 	} else {
 		return nil, err
 	}
-}
-
-// TODO: BOGUS - WORK - Pin during scraping
-func pinTheChunk(rng cache.FileRange, pinRecord *manifest.ChunkRecord) error {
-	pinRecord.Range = rng.String()
-	return nil
-	// unchainedFolder := config.GetPathToIndex(chain)
-	// pathToIndex = unchainedFolder + "finalized/" + record.Range + ".bin"
-	// bloomPath := unchainedFolder + "blooms/" + record.Range + ".bloom"
-
-	// record := manifest.ChunkRecord{
-	// 	Range: rng,
-	// 	BloomHash: bloomHash,
-	// 	IndexHash: indexHash,
-	// }
-
-	// record.BloomHash, err := pina.PinFile(bloomPath)
-
-	// if err != nil {
-	// 	return true, err
-	// }
-
-	// record.IndexHash, err := pina.PinFile(pathToIndex)
-
-	// if err != nil {
-	// 	return true, err
-	// }
-
-	// err = opts.updateManifest(record)
-
-	//	if err != nil {
-	//		return true, err
-	//	}
 }
 
 func unique(chunks []manifest.ChunkRecord) []manifest.ChunkRecord {
@@ -231,7 +202,7 @@ func updateManifest(chain string, chunk manifest.ChunkRecord) error {
 	man.Chunks = unique(append(man.Chunks, chunk))
 
 	fileName := config.GetPathToChainConfig(chain) + "manifest.json"
-	w, err := os.Create(fileName)
+	w, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)
 	if err != nil {
 		return fmt.Errorf("creating file: %s", err)
 	}
@@ -243,17 +214,8 @@ func updateManifest(chain string, chunk manifest.ChunkRecord) error {
 	}
 	defer file.Unlock(w)
 
-	logger.Log(logger.Info, "Updated manifest with", len(man.Chunks), "chunks")
-
-
-	// TODO: BOGUS - I DON'T THING WE NEED TO SHOW THE RESULT HERE
-	// tmp := opts.Globals
-	// tmp.Format = "json"
-	// tmp.Writer = w
-	// tmp.NoHeader = false
-	// tmp.ApiMode = false
-	// return tmp.RenderObject(man, true /* first */)
-	return nil
+	logger.Log(logger.Info, "Updating manifest with", len(man.Chunks), "chunks")
+	return output.OutputObject(man, w, "json", false, false, true, nil)
 }
 
 type Renderer interface {
@@ -261,3 +223,22 @@ type Renderer interface {
 }
 
 var spaces20 = strings.Repeat(" ", 20)
+
+func resultToRecord(result *pinning.PinResult) manifest.ChunkRecord {
+	if len(result.Local.BloomHash) > 0 {
+		return manifest.ChunkRecord{
+			Range:     result.Range.String(),
+			IndexHash: result.Local.IndexHash,
+			IndexSize: result.Local.IndexSize,
+			BloomHash: result.Local.BloomHash,
+			BloomSize: result.Local.BloomSize,
+		}
+	}
+	return manifest.ChunkRecord{
+		Range:     result.Range.String(),
+		IndexHash: result.Remote.IndexHash,
+		IndexSize: result.Remote.IndexSize,
+		BloomHash: result.Remote.BloomHash,
+		BloomSize: result.Remote.BloomSize,
+	}
+}
