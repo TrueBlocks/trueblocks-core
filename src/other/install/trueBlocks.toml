@@ -1,5 +1,4 @@
 [version]
-# Do not edit this value
 current = "0.40.0-beta"
 
 [settings]
@@ -17,6 +16,9 @@ apiKey = ""
 apiKey = ""
 jwt = ""
 secret = ""
+
+#[dev]
+#debug_curl=true
 
 [chains]
 
@@ -40,7 +42,7 @@ symbol = "XDAI"
 apiProvider = "http://localhost:8080"
 chainId = "11155111"
 localExplorer = "http://localhost:1234"
-remoteExplorer = "https://sepolia.etherscan.io/"
+remoteExplorer = "https://sepolia.otterscan.io/"
 rpcProvider = "http://localhost:8548"
 symbol = "ETH"
 
@@ -50,14 +52,6 @@ chainId = "5"
 localExplorer = "http://localhost:1234"
 remoteExplorer = "https://goerli.etherscan.io"
 rpcProvider = "https://goerli-light.eth.linkpool.io"
-symbol = "ETH"
-
-[chains.kovan]
-apiProvider = "http://localhost:8080"
-chainId = "42"
-localExplorer = "http://localhost:1234"
-remoteExplorer = "https://kovan.etherscan.io"
-rpcProvider = "https://kovan.poa.network"
 symbol = "ETH"
 
 [chains.optimism]
@@ -75,19 +69,3 @@ localExplorer = "http://localhost:1234"
 remoteExplorer = "https://mumbai.polygonscan.com"
 rpcProvider = "https://rpc-mumbai.maticvigil.com"
 symbol = "MATIC"
-
-[chains.rinkeby]
-apiProvider = "http://localhost:8080"
-chainId = "4"
-localExplorer = "http://localhost:1234"
-remoteExplorer = "https://rinkeby.etherscan.io"
-rpcProvider = "https://rinkeby-light.eth.linkpool.io"
-symbol = "ETH"
-
-[chains.ropsten]
-apiProvider = "http://localhost:8080"
-chainId = "3"
-localExplorer = "http://localhost:1234"
-remoteExplorer = "https://ropsten.etherscan.io"
-rpcProvider = "https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161"
-symbol = "ETH"
