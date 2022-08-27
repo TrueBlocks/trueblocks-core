@@ -1,3 +1,4 @@
+Working
 chan_cnt and block_chan_cnt are not longer options as are not other things - they are env variables
 run and indexer are both invalid options on chifra scrape now
 
