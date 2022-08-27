@@ -44,7 +44,6 @@ type ExportOptions struct {
 	Asset       []string              `json:"asset,omitempty"`       // For the statements option only, export only reconciliations for this asset
 	Flow        string                `json:"flow,omitempty"`        // For the statements option only, export only statements with incoming value or outgoing value
 	Factory     bool                  `json:"factory,omitempty"`     // Scan for contract creations from the given address(es) and report address of those contracts
-	Staging     bool                  `json:"staging,omitempty"`     // Export transactions labeled staging (i.e. older than 28 blocks but not yet consolidated)
 	Unripe      bool                  `json:"unripe,omitempty"`      // Export transactions labeled upripe (i.e. less than 28 blocks old)
 	Load        string                `json:"load,omitempty"`        // A comma separated list of dynamic traversers to load
 	Reversed    bool                  `json:"reversed,omitempty"`    // Produce results in reverse chronological order
@@ -80,7 +79,6 @@ func (opts *ExportOptions) testLog() {
 	logger.TestLog(len(opts.Asset) > 0, "Asset: ", opts.Asset)
 	logger.TestLog(len(opts.Flow) > 0, "Flow: ", opts.Flow)
 	logger.TestLog(opts.Factory, "Factory: ", opts.Factory)
-	logger.TestLog(opts.Staging, "Staging: ", opts.Staging)
 	logger.TestLog(opts.Unripe, "Unripe: ", opts.Unripe)
 	logger.TestLog(len(opts.Load) > 0, "Load: ", opts.Load)
 	logger.TestLog(opts.Reversed, "Reversed: ", opts.Reversed)
@@ -255,8 +253,6 @@ func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 			opts.Flow = value[0]
 		case "factory":
 			opts.Factory = true
-		case "staging":
-			opts.Staging = true
 		case "unripe":
 			opts.Unripe = true
 		case "load":

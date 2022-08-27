@@ -5,7 +5,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 )
 
-func (opts *MonitorsOptions) FreshenMonitorsScrape(addrs []string) error {
+func (opts *MonitorsOptions) FreshenMonitorsForWatch(addrs []string) error {
 	listOpts := listPkg.ListOptions{
 		Addrs:   addrs,
 		Silent:  true,

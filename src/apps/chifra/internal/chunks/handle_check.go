@@ -113,17 +113,23 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 	}
 	reports = append(reports, seq)
 
-	int := types.ReportCheck{Reason: "Internally consistent"}
-	if err := opts.CheckInternal(fileNames, blockNums, &int); err != nil {
+	intern := types.ReportCheck{Reason: "Internally consistent"}
+	if err := opts.CheckInternal(fileNames, blockNums, &intern); err != nil {
 		return err
 	}
-	reports = append(reports, int)
+	reports = append(reports, intern)
 
 	con := types.ReportCheck{Reason: "Consistent hashes"}
 	if err := opts.CheckHashes(cacheManifest, remoteManifest, &con); err != nil {
 		return err
 	}
 	reports = append(reports, con)
+
+	sizes := types.ReportCheck{Reason: "Check file sizes"}
+	if err := opts.CheckSizes(fileNames, blockNums, cacheManifest, remoteManifest, &sizes); err != nil {
+		return err
+	}
+	reports = append(reports, sizes)
 
 	// compare remote manifest to cached manifest
 	r2c := types.ReportCheck{Reason: "Remote Manifest to Cached Manifest"}

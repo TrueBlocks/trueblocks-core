@@ -361,15 +361,6 @@ paths:
               - in
               - out
               - zero
-        - name: staging
-          description: >
-            export transactions labeled staging (i.e. older than 28 blocks but not yet consolidated)
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: unripe
           description: export transactions labeled upripe (i.e. less than 28 blocks old)
           required: false

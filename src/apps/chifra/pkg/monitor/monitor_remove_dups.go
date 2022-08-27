@@ -46,6 +46,7 @@ func (mon *Monitor) RemoveDups() (uint32, uint32, error) {
 
 	if len(apps) != len(deDupped) {
 		mon.Close() // so when we open it, it gets replaced
+		// TODO: BOGUS - WORK - Protect against failure while writing
 		cntAfter, err = mon.WriteAppearances(deDupped, os.O_WRONLY|os.O_CREATE|os.O_TRUNC)
 		if err != nil {
 			return cntBefore, cntAfter, err

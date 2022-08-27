@@ -41,6 +41,7 @@ func Truncate(chain string, maxBn uint64) error {
 				os.Remove(backupFn) // seems redundant, but may not be on some operating systems
 			}
 		}()
+		// TODO: BOGUS - WORK - Protect against failure while writing
 		if fp, err := os.OpenFile(tsFn, os.O_WRONLY|os.O_CREATE, 0644); err == nil {
 			defer func() {
 				fp.Close()

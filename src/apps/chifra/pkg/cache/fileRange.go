@@ -12,6 +12,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -22,6 +23,11 @@ type FileRange struct {
 }
 
 var NotARange = FileRange{First: utils.NOPOS, Last: utils.NOPOS}
+
+// RangeFromRangeString returns a file range from a string
+func RangeFromRangeString(rngStr string) (FileRange, error) {
+	return RangeFromFilename(config.GetPathToIndex("mainnet") + "finalized/" + rngStr + ".bin") // okay to use mainnet since we're only interest in range
+}
 
 // RangeFromFilename returns a block range given a chunk filename. The format of filenames may be start-end.bin (start and end are nine digit
 // and zero-padded to the left) or start.txt

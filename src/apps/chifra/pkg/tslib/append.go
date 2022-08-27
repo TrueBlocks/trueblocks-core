@@ -21,7 +21,8 @@ func Append(chain string, tsArray []Timestamp) error {
 			}
 		}()
 
-		fp, err := os.OpenFile(tsFn, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0644)
+		// TODO: BOGUS - WORK - Protect against failure while writing
+		fp, err := os.OpenFile(tsFn, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 		if err != nil {
 			return err
 		}

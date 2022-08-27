@@ -30,7 +30,7 @@ func fromRemote(chain string) (*Manifest, error) {
 	if err != nil {
 		return nil, err
 	}
-	return downloadManifest(chain, config.GetIpfsGateway(), cid)
+	return downloadManifest(chain, config.GetIpfsGateway(chain), cid)
 }
 
 // getManifestCidFromContract calls UnchainedIndex smart contract to get the current manifest IPFS CID
