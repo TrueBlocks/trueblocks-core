@@ -8,7 +8,7 @@ import (
 )
 
 func (p *Service) pinFileLocally(filepath string) (types.IpfsHash, error) {
-	file, err := os.Open(filepath)
+	file, err := os.OpenFile(filepath, os.O_RDONLY, 0)
 	if err != nil {
 		return "", err
 	}

@@ -10,7 +10,7 @@ import (
 )
 
 func Copy(destPath, sourcePath string) (int64, error) {
-	source, err := os.Open(sourcePath)
+	source, err := os.OpenFile(sourcePath, os.O_RDONLY, 0)
 	if err != nil {
 		return 0, err
 	}

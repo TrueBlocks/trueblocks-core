@@ -29,7 +29,7 @@ func GetSpecials(chain string) (specials []types.SimpleNamedBlock, err error) {
 		return specials, nil
 	}
 
-	file, err := os.Open(specialsPath)
+	file, err := os.OpenFile(specialsPath, os.O_RDONLY, 0)
 	if err != nil {
 		return
 	}

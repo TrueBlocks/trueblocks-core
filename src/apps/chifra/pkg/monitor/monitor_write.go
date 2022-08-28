@@ -13,7 +13,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 )
 
-// WriteMonHeader reads the monitor's header
+// WriteMonHeader writes the monitor's header
+// TODO: BOGUS - WORK - Protect against failure while writing
 func (mon *Monitor) WriteMonHeader(deleted bool, lastScanned uint32) (err error) {
 	f, err := os.OpenFile(mon.Path(), os.O_WRONLY|os.O_CREATE, 0644)
 	if err != nil {
@@ -49,7 +50,7 @@ func (mon *Monitor) WriteAppearancesAppend(lastScanned uint32, apps *[]index.App
 
 	if apps != nil {
 		if len(*apps) > 0 {
-			_, err := mon.WriteAppearances(*apps, os.O_WRONLY|os.O_APPEND)
+			_, err := mon.WriteAppearances(*apps, true /* append */)
 			if err != nil {
 				return err
 			}
@@ -59,11 +60,17 @@ func (mon *Monitor) WriteAppearancesAppend(lastScanned uint32, apps *[]index.App
 	return nil
 }
 
+// TODO: BOGUS - WORK - Protect against failure while writing
 // WriteAppearances writes appearances to a Monitor
-func (mon *Monitor) WriteAppearances(apps []index.AppearanceRecord, mode int) (uint32, error) {
-
+func (mon *Monitor) WriteAppearances(apps []index.AppearanceRecord, append bool) (uint32, error) {
+	var f *os.File
+	var err error
 	path := mon.Path()
-	f, err := os.OpenFile(path, mode, 0644)
+	if append {
+		f, err = os.OpenFile(path, os.O_WRONLY|os.O_APPEND, 0644)
+	} else {
+		f, err = os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
+	}
 	if err != nil {
 		return 0, err
 	}

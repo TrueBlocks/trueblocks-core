@@ -186,6 +186,7 @@ func unique(chunks []manifest.ChunkRecord) []manifest.ChunkRecord {
 	return result
 }
 
+// TODO: BOGUS - WORK - Protect against failure while writing
 func updateManifest(chain string, chunk manifest.ChunkRecord) error {
 	man, err := manifest.ReadManifest(chain, manifest.FromCache)
 	if err != nil {

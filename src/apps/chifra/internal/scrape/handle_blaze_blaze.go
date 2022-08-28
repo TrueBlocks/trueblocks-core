@@ -185,7 +185,7 @@ func (opts *BlazeOptions) BlazeProcessAppearances(meta *rpcClient.MetaData, appe
 			return err
 		}
 
-		err = opts.WriteAppearances(meta, sData.blockNumber, addressMap)
+		err = opts.WriteAppearancesBlaze(meta, sData.blockNumber, addressMap)
 		if err != nil {
 			return err
 		}
@@ -409,7 +409,7 @@ func (opts *BlazeOptions) BlazeExtractFromLogs(bn int, logs *rpcClient.Logs, add
 
 var writeMutex sync.Mutex
 
-func (opts *BlazeOptions) WriteAppearances(meta *rpcClient.MetaData, bn int, addressMap map[string]bool) (err error) {
+func (opts *BlazeOptions) WriteAppearancesBlaze(meta *rpcClient.MetaData, bn int, addressMap map[string]bool) (err error) {
 	if len(addressMap) > 0 {
 		appearanceArray := make([]string, 0, len(addressMap))
 		for record := range addressMap {
@@ -424,7 +424,7 @@ func (opts *BlazeOptions) WriteAppearances(meta *rpcClient.MetaData, bn int, add
 		}
 
 		toWrite := []byte(strings.Join(appearanceArray[:], "\n") + "\n")
-		err = os.WriteFile(fileName, toWrite, 0744)
+		err = os.WriteFile(fileName, toWrite, 0744) // Uses os.O_WRONLY|os.O_CREATE|os.O_TRUNC
 		if err != nil {
 			fmt.Println("call1 to WriteFile returned error", err)
 			return err

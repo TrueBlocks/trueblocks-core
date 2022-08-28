@@ -24,7 +24,7 @@ func (s *Service) pinFileRemotely(filepath string) (types.IpfsHash, error) {
 		return "", fmt.Errorf("header function is nil")
 	}
 
-	file, err := os.Open(filepath)
+	file, err := os.OpenFile(filepath, os.O_RDONLY, 0)
 	if err != nil {
 		return "", err
 	}

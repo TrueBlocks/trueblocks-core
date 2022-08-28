@@ -321,7 +321,7 @@ func saveFileContents(arguments writeWorkerArguments, res *jobResult) error {
 
 	}
 
-	outputFile, err := os.Create(arguments.chunkPath.GetFullPath(res.fileName))
+	outputFile, err := os.OpenFile(arguments.chunkPath.GetFullPath(res.fileName), os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
 	if err != nil {
 		return &errSavingCreateFile{res.fileName, err}
 	}

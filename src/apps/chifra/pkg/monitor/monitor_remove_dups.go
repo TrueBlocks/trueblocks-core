@@ -1,7 +1,6 @@
 package monitor
 
 import (
-	"os"
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -46,7 +45,7 @@ func (mon *Monitor) RemoveDups() (uint32, uint32, error) {
 
 	if len(apps) != len(deDupped) {
 		mon.Close() // so when we open it, it gets replaced
-		cntAfter, err = mon.WriteAppearances(deDupped, os.O_WRONLY|os.O_CREATE|os.O_TRUNC)
+		cntAfter, err = mon.WriteAppearances(deDupped, false /* append */)
 		if err != nil {
 			return cntBefore, cntAfter, err
 		}

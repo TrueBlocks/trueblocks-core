@@ -45,7 +45,7 @@ func getManifestCidFromContract(chain string) (string, error) {
 	address := common.HexToAddress(unchained.Address_V2)
 	signature := unchained.ReadHashName_V2
 
-	abiSource, err := os.Open(abiFn)
+	abiSource, err := os.OpenFile(abiFn, os.O_RDONLY, 0)
 	if err != nil {
 		return "", fmt.Errorf("while reading contract ABI: %w", err)
 	}

@@ -73,7 +73,7 @@ type Appearance struct {
 func readFile(path string) ([]Appearance, error) {
 	var appearances []Appearance
 
-	f, err := os.Open(path)
+	f, err := os.OpenFile(path, os.O_RDONLY, 0)
 	if err != nil {
 		panic(err)
 	}

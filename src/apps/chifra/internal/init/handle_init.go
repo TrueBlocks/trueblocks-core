@@ -178,7 +178,7 @@ func retry(failedPins []manifest.ChunkRecord, times uint, downloadChunks downloa
 
 func (opts *InitOptions) SaveManifest(chain string, man *manifest.Manifest) error {
 	fileName := config.GetPathToChainConfig(chain) + "manifest.json"
-	w, err := os.Create(fileName)
+	w, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
 	if err != nil {
 		return fmt.Errorf("creating file: %s", err)
 	}

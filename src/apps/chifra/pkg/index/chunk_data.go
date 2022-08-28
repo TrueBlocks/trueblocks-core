@@ -47,7 +47,7 @@ func NewChunkData(path string) (chunk ChunkData, err error) {
 		return ChunkData{}, err
 	}
 
-	file, err := os.Open(indexPath)
+	file, err := os.OpenFile(indexPath, os.O_RDONLY, 0)
 	if err != nil {
 		return ChunkData{}, err
 	}

@@ -11,7 +11,7 @@ func WordCount(fileName string, ignoreHeader bool) (int, error) {
 	// fmt.Println("-------------------------------------------")
 	// fmt.Println(fileName, FileExists(fileName))
 	// fmt.Println("-------------------------------------------")
-	r, _ := os.Open(fileName)
+	r, _ := os.OpenFile(fileName, os.O_RDONLY, 0)
 	defer r.Close()
 
 	var count int

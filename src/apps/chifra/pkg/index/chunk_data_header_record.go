@@ -50,7 +50,7 @@ func readHeader(fl *os.File) (header HeaderRecord, err error) {
 
 func ReadChunkHeader(chain, fileName string, checkHash bool) (header HeaderRecord, err error) {
 	fileName = ToIndexPath(fileName)
-	ff, err := os.Open(fileName)
+	ff, err := os.OpenFile(fileName, os.O_RDONLY, 0)
 	if err != nil {
 		return HeaderRecord{}, err
 	}

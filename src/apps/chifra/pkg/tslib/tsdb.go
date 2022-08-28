@@ -56,7 +56,7 @@ func loadTimestamps(chain string) error {
 	}
 
 	tsPath := config.GetPathToIndex(chain) + "ts.bin"
-	tsFile, err := os.Open(tsPath)
+	tsFile, err := os.OpenFile(tsPath, os.O_RDONLY, 0)
 	if err != nil {
 		return err
 	}

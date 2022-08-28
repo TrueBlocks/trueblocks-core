@@ -13,7 +13,7 @@ import (
 )
 
 func AsciiFileToLines(filename string) []string {
-	file, err := os.Open(filename)
+	file, err := os.OpenFile(filename, os.O_RDONLY, 0)
 	if err != nil {
 		return []string{}
 	}
@@ -42,7 +42,7 @@ func AsciiFileToString(fileName string) string {
 }
 
 func StringToAsciiFile(filename, value string) error {
-	file, err := os.Create(filename)
+	file, err := os.OpenFile(filename, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
 	if err != nil {
 		return err
 	}
@@ -67,7 +67,7 @@ func AppendToAsciiFile(filename, value string) error {
 }
 
 func LinesToAsciiFile(filename string, value []string) error {
-	file, err := os.Create(filename)
+	file, err := os.OpenFile(filename, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
 	if err != nil {
 		return err
 	}
