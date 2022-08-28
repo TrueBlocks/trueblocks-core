@@ -3,7 +3,7 @@ on      ,cmd  ,fast  ,abis  ,tools/grabABI ,help                ,n    ,@h
 on      ,cmd  ,fast  ,abis  ,tools/grabABI ,help_long           ,n    ,help
 on      ,both ,fast  ,abis  ,tools/grabABI ,invalid_1           ,y    ,addrs = 0x00001
 on      ,both ,fast  ,abis  ,tools/grabABI ,not_a_contract      ,y    ,addrs = 0xf1aa581f353005ba3765b81bf52d6b1c488c2101
-on      ,both ,fast  ,abis  ,tools/grabABI ,invalid_option      ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 @ vne
+on      ,both ,fast  ,abis  ,tools/grabABI ,invalid_option      ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 @ vbe
 on      ,both ,fast  ,abis  ,tools/grabABI ,no_abi1             ,y    ,addrs = 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0
 on      ,both ,fast  ,abis  ,tools/grabABI ,no_abi2             ,y    ,addrs = 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0
 on      ,both ,fast  ,abis  ,tools/grabABI ,const               ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413

@@ -25,6 +25,7 @@ type AbisOptions struct {
 	Known   bool                  `json:"known,omitempty"`   // Load common 'known' ABIs from cache
 	Sol     bool                  `json:"sol,omitempty"`     // Extract the abi definition from the provided .sol file(s)
 	Find    []string              `json:"find,omitempty"`    // Search for function or event declarations given a four- or 32-byte code(s)
+	Hint    []string              `json:"hint,omitempty"`    // For the --find option only, provide hints to speed up the search
 	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
 	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
 }
@@ -37,6 +38,7 @@ func (opts *AbisOptions) testLog() {
 	logger.TestLog(opts.Known, "Known: ", opts.Known)
 	logger.TestLog(opts.Sol, "Sol: ", opts.Sol)
 	logger.TestLog(len(opts.Find) > 0, "Find: ", opts.Find)
+	logger.TestLog(len(opts.Hint) > 0, "Hint: ", opts.Hint)
 	opts.Globals.TestLog()
 }
 
@@ -63,9 +65,6 @@ func (opts *AbisOptions) toCmdLine() string {
 	if opts.Sol {
 		options += " --sol"
 	}
-	for _, find := range opts.Find {
-		options += " --find " + find
-	}
 	options += " " + strings.Join(opts.Addrs, " ")
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -91,6 +90,11 @@ func abisFinishParseApi(w http.ResponseWriter, r *http.Request) *AbisOptions {
 			for _, val := range value {
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Find = append(opts.Find, s...)
+			}
+		case "hint":
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Hint = append(opts.Hint, s...)
 			}
 		default:
 			if !globals.IsGlobalOption(key) {

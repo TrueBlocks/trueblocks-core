@@ -709,6 +709,17 @@ paths:
             items:
               type: string
               format: string
+        - name: hint
+          description: for the --find option only, provide hints to speed up the search
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: string
       responses:
         "200":
           description: returns the requested data
