@@ -27,9 +27,10 @@ on      ,both ,fast  ,abis  ,tools/grabABI ,findSig_tooshort    ,y    ,find = 0x
 on      ,both ,fast  ,abis  ,tools/grabABI ,findSig_toolong     ,y    ,find = 0x1aa3a00800
 on      ,both ,fast  ,abis  ,tools/grabABI ,findSig_toolongevt1 ,y    ,find = 0x1aa3a00800000000000000000
 on      ,both ,fast  ,abis  ,tools/grabABI ,findSig_toolongevt2 ,y    ,find = 0x1aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a008000
-local   ,both ,fast  ,abis  ,tools/grabABI ,findSig_json        ,y    ,find = 0x1aa3a008
-local   ,both ,fast  ,abis  ,tools/grabABI ,findSig_csv         ,n    ,find = 0x1aa3a008 & fmt = csv
-local   ,both ,fast  ,abis  ,tools/grabABI ,findSig_txt         ,n    ,find = 0x1aa3a008 & fmt = txt
+on      ,both ,fast  ,abis  ,tools/grabABI ,findSig_json        ,y    ,find = 0x1aa3a008
+on      ,both ,fast  ,abis  ,tools/grabABI ,findSig_hint        ,y    ,find = 0xdbde1988 & hint = Reward
+on      ,both ,fast  ,abis  ,tools/grabABI ,findSig_csv         ,n    ,find = 0x1aa3a008 & fmt = csv
+on      ,both ,fast  ,abis  ,tools/grabABI ,findSig_txt         ,n    ,find = 0x1aa3a008 & fmt = txt
 on      ,both ,fast  ,abis  ,tools/grabABI ,findSig_junk        ,y    ,find = 0x1aa3a008 & fmt = junk
 
 local      ,both ,fast  ,abis  ,tools/grabABI ,known_alone         ,y    ,known

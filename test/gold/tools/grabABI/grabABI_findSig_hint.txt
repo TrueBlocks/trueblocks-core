@@ -1,0 +1,6 @@
+chifra abis  --find 0xdbde1988 --hint Reward
+TEST[DATE|TIME] Find:  [0xdbde1988]
+TEST[DATE|TIME] Hint:  [Reward]
+TEST[DATE|TIME] Format:  txt
+PROG[DATE|TIME] Found 1 of 10xdbde1988transferFromWithoutReward(address,address,uint256)encoding	signature
+0xdbde1988	transferFromWithoutReward(address,address,uint256)

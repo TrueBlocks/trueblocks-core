@@ -11,6 +11,7 @@ import (
 	"io"
 	"os"
 	"runtime"
+	"strings"
 	"sync"
 
 	"github.com/ethereum/go-ethereum/crypto"
@@ -48,7 +49,7 @@ func (opts *AbisOptions) HandleAbiFind() error {
 	})
 	defer checkOne.Release()
 
-	// TODO: UnchainedIndex --> This could be part of unchained index
+	// TODO: BOGUS - UnchainedIndex --> This could be part of unchained index
 	sigsFile, err := os.OpenFile(config.GetPathToRootConfig()+"abis/known-000/uniq_sigs.tab", os.O_RDONLY, 0)
 	if err != nil {
 		return err
@@ -60,7 +61,7 @@ func (opts *AbisOptions) HandleAbiFind() error {
 	sigsScanner := bufio.NewScanner(sigsFile)
 	sigsScanner.Split(bufio.ScanLines)
 
-	// TODO: UnchainedIndex --> This could be part of unchained index
+	// TODO: BOGUS - UnchainedIndex --> This could be part of unchained index
 	funcsFile, _ := os.OpenFile(config.GetPathToRootConfig()+"abis/known-000/uniq_funcs.tab", os.O_RDONLY, 0)
 	defer func() {
 		funcsFile.Close()
@@ -68,16 +69,20 @@ func (opts *AbisOptions) HandleAbiFind() error {
 
 	for sigsScanner.Scan() {
 		s := sigsScanner.Text()
+		hitsSignature := opts.hitsHint(s)
 
 		funcsFile.Seek(0, io.SeekStart)
 		funcsScanner := bufio.NewScanner(funcsFile)
 		funcsScanner.Split(bufio.ScanLines)
 
 		for funcsScanner.Scan() {
-			wg.Add(1)
 			f := funcsScanner.Text()
-			call := f + "(" + s + ")"
-			_ = checkOne.Invoke(call)
+			hitsFunction := opts.hitsHint(f)
+			if hitsSignature || hitsFunction {
+				wg.Add(1)
+				call := f + "(" + s + ")"
+				_ = checkOne.Invoke(call)
+			}
 		}
 
 		if scanBar.Satisfied() {
@@ -91,6 +96,14 @@ func (opts *AbisOptions) HandleAbiFind() error {
 	return globals.RenderSlice(&opts.Globals, results)
 }
 
-// TODO: These are not implemented
-// TODO: if Root.to_file == true, write the output to a filename
-// TODO: if Root.output == <fn>, write the output to a <fn>
+func (opts *AbisOptions) hitsHint(test string) bool {
+	hits := len(opts.Hint) == 0
+	if !hits {
+		for _, hint := range opts.Hint {
+			if strings.Contains(test, hint) {
+				return true
+			}
+		}
+	}
+	return hits
+}
