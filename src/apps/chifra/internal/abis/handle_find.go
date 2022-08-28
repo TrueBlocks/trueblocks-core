@@ -11,6 +11,7 @@ import (
 	"io"
 	"os"
 	"runtime"
+	"sort"
 	"strings"
 	"sync"
 
@@ -41,7 +42,9 @@ func (opts *AbisOptions) HandleAbiFind() error {
 			str, _ := hex.DecodeString(arg[2:])
 			if bytes.Equal(sigBytes[:len(str)], str) {
 				scanBar.Found++
-				logger.Log(logger.Progress, "Found ", scanBar.Found, " of ", scanBar.Wanted, arg, testSig)
+				if len(opts.Find) < 2 || !opts.Globals.TestMode {
+					logger.Log(logger.Progress, "Found ", scanBar.Found, " of ", scanBar.Wanted, arg, testSig)
+				}
 				results = append(results, types.SimpleFunction{Encoding: arg, Signature: testSig.(string)})
 				return
 			}
@@ -92,6 +95,13 @@ func (opts *AbisOptions) HandleAbiFind() error {
 
 	defer wg.Wait()
 
+	if opts.Globals.TestMode {
+		// Otherwise the test is not reproducable
+		sort.Slice(results, func(i, j int) bool {
+			return results[i].Signature < results[j].Signature
+		})
+	}
+
 	// TODO: Fix export without arrays
 	return globals.RenderSlice(&opts.Globals, results)
 }
@@ -99,7 +109,9 @@ func (opts *AbisOptions) HandleAbiFind() error {
 func (opts *AbisOptions) hitsHint(test string) bool {
 	hits := len(opts.Hint) == 0
 	if !hits {
+		// test = strings.ToLower(test)
 		for _, hint := range opts.Hint {
+			// hint = strings.ToLower(hint)
 			if strings.Contains(test, hint) {
 				return true
 			}
