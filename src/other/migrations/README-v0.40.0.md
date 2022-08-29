@@ -1,3 +1,8 @@
+TIMESTAMPS BOGUS
+
+chifra chunks index --truncate  should remove the staging, ripe, unripe, and map folders even if there are no blooms or finalized because they've already been removed
+chifra chunks index --truncate 0 --chain mainnet should work even if there are old-fashioned index files in place so we can use it for migration
+
 Working
 chan_cnt and block_chan_cnt are not longer options as are not other things - they are env variables
 run and indexer are both invalid options on chifra scrape now
