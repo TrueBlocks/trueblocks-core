@@ -49,7 +49,7 @@ func readHeader(fl *os.File) (header HeaderRecord, err error) {
 }
 
 func ReadChunkHeader(chain, fileName string, checkHash bool) (header HeaderRecord, err error) {
-	fileName = ToIndexPath(fileName)
+	fileName = config.ToIndexPath(fileName)
 	ff, err := os.OpenFile(fileName, os.O_RDONLY, 0)
 	if err != nil {
 		return HeaderRecord{}, err
@@ -77,7 +77,7 @@ func WriteChunkHeaderHash(chain, fileName string, headerHash common.Hash) ( /* c
 	var err error
 
 	tmpPath := filepath.Join(config.GetPathToCache(chain), "tmp")
-	indexFn := ToIndexPath(fileName)
+	indexFn := config.ToIndexPath(fileName)
 	if !file.FileExists(indexFn) {
 		return false, nil
 	}

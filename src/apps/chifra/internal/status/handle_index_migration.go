@@ -73,7 +73,7 @@ func (opts *StatusOptions) replaceOldIndex() error {
 		if err != nil {
 			log.Panic(err)
 		}
-		ff = index.ToIndexPath(ff)
+		ff = config.ToIndexPath(ff)
 		if file.FileExists(ff) {
 			fmt.Println("===>", ff)
 			err := os.Remove(ff)

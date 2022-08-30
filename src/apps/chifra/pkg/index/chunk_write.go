@@ -92,7 +92,7 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 	// At this point, the two tables and the bloom filter are fully populated. We're ready to write to disc...
 
 	// First, we backup the existing chunk if there is one...
-	indexFn := ToIndexPath(fileName)
+	indexFn := config.ToIndexPath(fileName)
 	tmpPath := filepath.Join(config.GetPathToCache(chain), "tmp")
 	if backupFn, err := file.MakeBackup(tmpPath, indexFn); err == nil {
 		defer func() {
@@ -125,7 +125,7 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 				return nil, err
 			}
 
-			if _, err = bl.WriteBloom(chain, bloom.ToBloomPath(indexFn)); err != nil {
+			if _, err = bl.WriteBloom(chain, config.ToBloomPath(indexFn)); err != nil {
 				return nil, err
 			}
 

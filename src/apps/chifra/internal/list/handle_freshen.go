@@ -162,7 +162,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 	}
 
 	if !opts.Globals.TestMode {
-		stagePath := index.ToStagingPath(config.GetPathToIndex(opts.Globals.Chain) + "staging")
+		stagePath := config.ToStagingPath(config.GetPathToIndex(opts.Globals.Chain) + "staging")
 		stageFn, _ := file.LatestFileInFolder(stagePath)
 		rng, _ := cache.RangeFromFilename(stageFn)
 		lines := []string{}
@@ -206,7 +206,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 		wg.Done()
 	}()
 
-	bloomFilename := bloom.ToBloomPath(fileName)
+	bloomFilename := config.ToBloomPath(fileName)
 
 	// We open the bloom filter and read its header but we do not read any of the
 	// actual bits in the blooms. The IsMember function reads individual bytes to
@@ -242,7 +242,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 		return
 	}
 
-	indexFilename := index.ToIndexPath(fileName)
+	indexFilename := config.ToIndexPath(fileName)
 	if !file.FileExists(indexFilename) {
 		_, err := index.EstablishIndexChunk(updater.Options.Globals.Chain, bl.Range)
 		if err != nil {

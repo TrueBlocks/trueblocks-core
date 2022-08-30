@@ -6,13 +6,14 @@ package chunksPkg
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 func (opts *ChunksOptions) showIndex(ctx *WalkContext, path string, first bool) (bool, error) {
-	path = index.ToIndexPath(path)
+	path = config.ToIndexPath(path)
 	header, err := index.ReadChunkHeader(opts.Globals.Chain, path, true)
 	if err != nil {
 		return false, err

@@ -8,9 +8,8 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -35,13 +34,13 @@ func (opts *ChunksOptions) CheckSizes(fileNames []string, blockNums []uint64, ca
 	for _, fileName := range fileNames {
 		report.VisitedCnt++
 		report.CheckedCnt++
-		indexFn := index.ToIndexPath(fileName)
+		indexFn := config.ToIndexPath(fileName)
 		rng, _ := cache.RangeFromFilename(indexFn)
 		indexSize := file.FileSize(indexFn)
 		if indexSize != indexSizeMap[rng] {
 			report.MsgStrings = append(report.MsgStrings, fmt.Sprintf("Size of index %s (%d) not as expected in manifest (%d)", rng, indexSize, indexSizeMap[rng]))
 		} else {
-			bloomFn := bloom.ToBloomPath(fileName)
+			bloomFn := config.ToBloomPath(fileName)
 			bloomSize := file.FileSize(bloomFn)
 			if bloomSize != bloomSizeMap[rng] {
 				report.MsgStrings = append(report.MsgStrings, fmt.Sprintf("Size of bloom %s (%d) not as expected in manifest (%d)", rng, bloomSize, bloomSizeMap[rng]))

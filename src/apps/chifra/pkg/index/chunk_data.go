@@ -3,9 +3,9 @@ package index
 import (
 	"encoding/json"
 	"os"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
 
 const (
@@ -40,7 +40,7 @@ type ChunkData struct {
 // NewChunkData returns an ChunkData with an opened file pointer to the given fileName. The HeaderRecord
 // for the chunk has been populated and the file position to the two tables are ready for use.
 func NewChunkData(path string) (chunk ChunkData, err error) {
-	indexPath := ToIndexPath(path)
+	indexPath := config.ToIndexPath(path)
 
 	blkRange, err := cache.RangeFromFilename(indexPath)
 	if err != nil {
@@ -83,30 +83,4 @@ func (chunk *ChunkData) Close() error {
 		chunk.File = nil
 	}
 	return nil
-}
-
-// ToIndexPath returns a path pointing to the bloom filter
-func ToIndexPath(pathIn string) string {
-	if strings.HasSuffix(pathIn, ".bin") {
-		return pathIn
-	}
-
-	ret := strings.Replace(pathIn, ".bloom", ".bin", -1)
-	ret = strings.Replace(ret, ".txt", ".bin", -1)
-	ret = strings.Replace(ret, "/blooms/", "/finalized/", -1)
-	ret = strings.Replace(ret, "/staging/", "/finalized/", -1)
-	return ret
-}
-
-// ToStagingPath returns a path pointing to the staging folder given either a neighboring path
-func ToStagingPath(pathIn string) string {
-	if strings.HasSuffix(pathIn, ".txt") {
-		return pathIn
-	}
-
-	ret := strings.Replace(pathIn, ".bin", ".txt", -1)
-	ret = strings.Replace(ret, ".bloom", ".txt", -1)
-	ret = strings.Replace(ret, "/finalized/", "/staging/", -1)
-	ret = strings.Replace(ret, "/blooms/", "/staging/", -1)
-	return ret
 }

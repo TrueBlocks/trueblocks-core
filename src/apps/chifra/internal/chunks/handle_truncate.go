@@ -9,7 +9,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -26,8 +25,8 @@ func (opts *ChunksOptions) truncateIndex(ctx *WalkContext, path string, first bo
 	}
 	testRange := cache.FileRange{First: opts.Truncate, Last: utils.NOPOS}
 	if rng.Intersects(testRange) {
-		os.Remove(index.ToIndexPath(path))
-		os.Remove(bloom.ToBloomPath(path))
+		os.Remove(config.ToIndexPath(path))
+		os.Remove(config.ToBloomPath(path))
 	}
 
 	return true, nil

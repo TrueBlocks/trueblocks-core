@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
@@ -86,8 +87,8 @@ func NewChunkStats(path string) types.ReportChunks {
 	ret.NAddrs = chunk.Data.Header.AddressCount
 	ret.NApps = chunk.Data.Header.AppearanceCount
 	ret.NBlooms = chunk.Bloom.Count
-	ret.BloomSz = file.FileSize(bloom.ToBloomPath(path))
-	ret.ChunkSz = file.FileSize(index.ToIndexPath(path))
+	ret.BloomSz = file.FileSize(config.ToBloomPath(path))
+	ret.ChunkSz = file.FileSize(config.ToIndexPath(path))
 
 	return finishStats(&ret)
 }

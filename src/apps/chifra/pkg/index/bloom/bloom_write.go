@@ -12,7 +12,7 @@ import (
 
 // WriteBloom writes a single bloom filter to file
 func (bl *ChunkBloom) WriteBloom(chain, fileName string) ( /* changed */ bool, error) {
-	bloomFn := ToBloomPath(fileName)
+	bloomFn := config.ToBloomPath(fileName)
 	tmpPath := filepath.Join(config.GetPathToCache(chain), "tmp")
 
 	// Make a backup copy of the file in case the write fails so we can replace it...

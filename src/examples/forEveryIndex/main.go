@@ -29,7 +29,7 @@ func main() {
 			fmt.Println("---------------------------------------------------------")
 			fmt.Println()
 
-			b, _ := bloom.NewChunkBloom(bloom.ToBloomPath(indexPath))
+			b, _ := bloom.NewChunkBloom(config.ToBloomPath(indexPath))
 			fmt.Println(b)
 			fmt.Println("---------------------------------------------------------")
 			fmt.Println()

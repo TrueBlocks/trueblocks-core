@@ -8,13 +8,14 @@ import (
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 func (opts *ChunksOptions) showAddressesBelongs(ctx *WalkContext, path string, first bool) (bool, error) {
-	path = index.ToIndexPath(path)
+	path = config.ToIndexPath(path)
 
 	indexChunk, err := index.NewChunkData(path)
 	if err != nil {

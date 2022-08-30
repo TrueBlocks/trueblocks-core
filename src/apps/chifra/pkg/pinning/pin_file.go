@@ -1,11 +1,9 @@
 package pinning
 
 import (
-	"strings"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -18,8 +16,8 @@ type PinResult struct {
 }
 
 func PinChunk(chain, path string, isRemote bool) (PinResult, error) {
-	bloomFile := bloom.ToBloomPath(path)
-	indexFile := toIndexPath(path)
+	bloomFile := config.ToBloomPath(path)
+	indexFile := config.ToIndexPath(path)
 
 	rng, _ := cache.RangeFromFilename(path)
 	result := PinResult{
@@ -69,18 +67,4 @@ func (p *Service) PinFile(filepath string, local bool) (types.IpfsHash, error) {
 		return p.pinFileLocally(filepath)
 	}
 	return p.pinFileRemotely(filepath)
-}
-
-// TODO: This is a duplicate of index.ToIndexPath to remove cycles
-// toIndexPath returns a path pointing to the bloom filter
-func toIndexPath(pathIn string) string {
-	if strings.HasSuffix(pathIn, ".bin") {
-		return pathIn
-	}
-
-	ret := strings.Replace(pathIn, ".bloom", ".bin", -1)
-	ret = strings.Replace(ret, ".txt", ".bin", -1)
-	ret = strings.Replace(ret, "/blooms/", "/finalized/", -1)
-	ret = strings.Replace(ret, "/staging/", "/finalized/", -1)
-	return ret
 }

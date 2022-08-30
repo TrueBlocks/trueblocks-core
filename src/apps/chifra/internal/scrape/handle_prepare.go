@@ -55,7 +55,7 @@ func (opts *ScrapeOptions) HandlePrepare(progressThen *rpcClient.MetaData, blaze
 	tslib.Append(opts.Globals.Chain, array)
 
 	logger.Log(logger.Info, "Writing block zero allocations for", len(allocs), "allocs, nAddresses:", len(appMap))
-	indexPath := index.ToIndexPath(bloomPath)
+	indexPath := config.ToIndexPath(bloomPath)
 	if report, err := index.WriteChunk(opts.Globals.Chain, indexPath, appMap, len(allocs), opts.Pin, opts.Remote); err != nil {
 		return false, err
 	} else if report == nil {

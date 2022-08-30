@@ -43,12 +43,12 @@ func NewChunk(path string) (chunk Chunk, err error) {
 		return
 	}
 
-	chunk.Bloom, err = bloom.NewChunkBloom(bloom.ToBloomPath(path))
+	chunk.Bloom, err = bloom.NewChunkBloom(config.ToBloomPath(path))
 	if err != nil {
 		return
 	}
 
-	chunk.Data, err = NewChunkData(ToIndexPath(path))
+	chunk.Data, err = NewChunkData(config.ToIndexPath(path))
 	return
 }
 
