@@ -1645,6 +1645,14 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: sleep
+          description: seconds to sleep between downloads
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
       responses:
         "200":
           description: returns the requested data

@@ -21,9 +21,13 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
@@ -103,7 +107,7 @@ func getDownloadWorker(arguments downloadWorkerArguments) workerFunction {
 
 	return func(param interface{}) {
 		url, _ := url.Parse(arguments.gatewayUrl)
-		pin := param.(manifest.ChunkRecord)
+		chunk := param.(manifest.ChunkRecord)
 
 		defer arguments.downloadWg.Done()
 
@@ -113,28 +117,42 @@ func getDownloadWorker(arguments downloadWorkerArguments) workerFunction {
 			return
 		default:
 			// Perform download => unzip-and-save
-			hash := pin.BloomHash
+			hash := chunk.BloomHash
 			if arguments.chunkPath.Type == cache.Index_Final {
-				hash = pin.IndexHash
+				hash = chunk.IndexHash
 			}
 
 			url.Path = path.Join(url.Path, hash.String())
 
 			progressChannel <- &progress.Progress{
-				Payload: &pin,
+				Payload: &chunk,
 				Event:   progress.Start,
 				Message: hash.String(),
 			}
 
 			download, err := fetchChunk(ctx, url.String())
+			time.Sleep(250 * time.Millisecond) // we need to slow things down, otherwise the endpoint rate limits
 			if errors.Is(ctx.Err(), context.Canceled) {
 				// The request to fetch the chunk was cancelled, because user has
 				// pressed Ctrl-C
 				return
 			}
 			if ctx.Err() != nil {
+				// TODO: BOGUS - Should remove any partially downloaded file
+				indexPath := config.ToIndexPath(arguments.chunkPath.GetFullPath(chunk.Range))
+				bloomPath := config.ToIndexPath(arguments.chunkPath.GetFullPath(chunk.Range))
+				if file.FileExists(indexPath) || file.FileExists(bloomPath) {
+					logger.Log(logger.Warning, colors.Yellow, "Removing failed download", indexPath, colors.Off)
+					time.Sleep(1 * time.Second)
+					if file.FileExists(indexPath) {
+						os.Remove(indexPath)
+					}
+					if file.FileExists(bloomPath) {
+						os.Remove(bloomPath)
+					}
+				}
 				progressChannel <- &progress.Progress{
-					Payload: &pin,
+					Payload: &chunk,
 					Event:   progress.Error,
 					Message: ctx.Err().Error(),
 				}
@@ -142,14 +160,14 @@ func getDownloadWorker(arguments downloadWorkerArguments) workerFunction {
 			}
 			if err == nil {
 				arguments.writeChannel <- &jobResult{
-					fileName: pin.Range,
+					fileName: chunk.Range,
 					fileSize: download.totalSize,
 					contents: download.body,
-					theChunk: &pin,
+					theChunk: &chunk,
 				}
 			} else {
 				progressChannel <- &progress.Progress{
-					Payload: &pin,
+					Payload: &chunk,
 					Event:   progress.Error,
 					Message: err.Error(),
 				}
@@ -173,16 +191,6 @@ func getWriteWorker(arguments writeWorkerArguments) workerFunction {
 		case <-ctx.Done():
 			return
 		default:
-			msg := &progress.Progress{
-				Payload: res.theChunk,
-				Event:   progress.Update,
-				Message: "Unzipping",
-			}
-			if !arguments.isCompressed {
-				msg.Message = "Downloading"
-			}
-			progressChannel <- msg
-
 			trapChannel := sigintTrap.Enable(ctx, arguments.cancel)
 			err := saveFileContents(arguments, res)
 			sigintTrap.Disable(trapChannel)
@@ -199,6 +207,17 @@ func getWriteWorker(arguments writeWorkerArguments) workerFunction {
 					Message: err.Error(),
 				}
 				return
+			}
+
+			msg := "Download Completed"
+			if arguments.isCompressed {
+				msg = "Unzipped"
+			}
+
+			progressChannel <- &progress.Progress{
+				Payload: res.theChunk,
+				Event:   progress.Update,
+				Message: msg,
 			}
 
 			progressChannel <- &progress.Progress{
@@ -325,14 +344,22 @@ func saveFileContents(arguments writeWorkerArguments, res *jobResult) error {
 	if err != nil {
 		return &errSavingCreateFile{res.fileName, err}
 	}
-	defer outputFile.Close()
 
 	// Unzip and save content to a file
 	_, werr := io.Copy(outputFile, in)
 	if werr != nil {
-		return &errSavingCopy{res.fileName, werr}
+		if file.FileExists(outputFile.Name()) {
+			// TODO: BOGUS - Should remove any partially downloaded file
+			outputFile.Close()
+			os.Remove(outputFile.Name())
+			logger.Log(logger.Warning, "Failed download", colors.Magenta, res.fileName, colors.Off, "(will retry)", strings.Repeat(" ", 30))
+			time.Sleep(1 * time.Second)
+		}
+		err := &errSavingCopy{res.fileName, werr}
+		return err
 	}
 
+	outputFile.Close()
 	return nil
 }
 

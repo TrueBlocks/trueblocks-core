@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-08-26T04:11:29
+date: 2022-08-31T06:48:48
 lastmod:
   - :git
   - lastmod
@@ -145,7 +145,7 @@ Flags:
   -n, --truncate uint     truncate the entire index at this block (requires a block identifier)
   -m, --remote            prior to processing, retreive the manifest from the Unchained Index smart contract
   -b, --belongs strings   in index mode only, checks the address(es) for inclusion in the given index chunk
-      --sleep uint        for --remote pinning only, seconds to sleep between API calls
+  -s, --sleep float       for --remote pinning only, seconds to sleep between API calls
   -x, --fmt string        export format, one of [none|json*|txt|csv|api]
   -v, --verbose           enable verbose (increase detail with --log_level)
   -h, --help              display this help screen
@@ -186,10 +186,11 @@ Usage:
   chifra init [flags]
 
 Flags:
-  -a, --all          in addition to Bloom filters, download full index chunks
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -v, --verbose      enable verbose (increase detail with --log_level)
-  -h, --help         display this help screen
+  -a, --all           in addition to Bloom filters, download full index chunks
+  -s, --sleep float   seconds to sleep between downloads
+  -x, --fmt string    export format, one of [none|json*|txt|csv|api]
+  -v, --verbose       enable verbose (increase detail with --log_level)
+  -h, --help          display this help screen
 
 Notes:
   - Re-run chifra init as often as you wish. It will repair or freshen the index.

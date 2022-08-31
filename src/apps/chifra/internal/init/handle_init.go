@@ -7,8 +7,11 @@ package initPkg
 import (
 	"fmt"
 	"os"
+	"sort"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -44,6 +47,10 @@ func (opts *InitOptions) HandleInit() error {
 		return err
 	}
 	logger.Log(logger.Info, "Freshened manifest")
+
+	sort.Slice(downloadedManifest.Chunks, func(i, j int) bool {
+		return downloadedManifest.Chunks[i].Range > downloadedManifest.Chunks[j].Range
+	})
 
 	// Fetch chunks
 	bloomsDoneChannel := make(chan bool)
@@ -95,10 +102,11 @@ type downloadFunc func(pins []manifest.ChunkRecord) (failed []manifest.ChunkReco
 
 // Downloads chunks and report progress
 func downloadAndReportProgress(chain string, pins []manifest.ChunkRecord, chunkPath *cache.CachePath) ([]manifest.ChunkRecord, bool) {
-	chunkTypeToDescription := map[cache.CacheType]string{
-		cache.Index_Bloom: "bloom",
-		cache.Index_Final: "index",
-	}
+	// TODO: BOGUS - CLEAN THIS UP?
+	// chunkTypeToDescription := map[cache.CacheType]string{
+	// 	cache.Index_Bloom: "bloom",
+	// 	cache.Index_Final: "index",
+	// }
 	failed := []manifest.ChunkRecord{}
 	cancelled := false
 	progressChannel := progress.MakeChan()
@@ -116,7 +124,7 @@ func downloadAndReportProgress(chain string, pins []manifest.ChunkRecord, chunkP
 		}
 
 		if event.Event == progress.AllDone {
-			logger.Log(logger.Info, pinsDone, "pin(s) were (re)initialized")
+			logger.Log(logger.Info, pinsDone, "pin(s) were (re)initialized", strings.Repeat(" ", 60))
 			break
 		}
 
@@ -132,9 +140,9 @@ func downloadAndReportProgress(chain string, pins []manifest.ChunkRecord, chunkP
 				failed = append(failed, *pin)
 			}
 		case progress.Start:
-			logger.Log(logger.Info, "Unchaining", chunkTypeToDescription[chunkPath.Type], event.Message, "to", fileName)
+			logger.Log(logger.Progress, "Starting download of ", event.Message, " to ", fileName)
 		case progress.Update:
-			logger.Log(logger.Info, event.Message, fileName)
+			logger.Log(logger.Info, event.Message, colors.BrightBlue, fileName, colors.Off, strings.Repeat(" ", 55))
 		case progress.Done:
 			pinsDone++
 		default:
@@ -145,15 +153,15 @@ func downloadAndReportProgress(chain string, pins []manifest.ChunkRecord, chunkP
 	return failed, cancelled
 }
 
-// Retries downloading `failedPins` for `times` times by calling `downloadChunks` function.
+// Retries downloading `failedChunks` for `times` times by calling `downloadChunks` function.
 // Returns number of pins that we were unable to fetch.
 // This function is simple because: 1. it will never get a new failing pin (it only feeds in
 // the list of known, failed pins); 2. The maximum number of failing pins we can get equals
-// the length of `failedPins`.
-func retry(failedPins []manifest.ChunkRecord, times uint, downloadChunks downloadFunc) int {
+// the length of `failedChunks`.
+func retry(failedChunks []manifest.ChunkRecord, times uint, downloadChunks downloadFunc) int {
 	retryCount := uint(0)
 
-	pinsToRetry := failedPins
+	pinsToRetry := failedChunks
 	cancelled := false
 
 	for {
@@ -165,6 +173,7 @@ func retry(failedPins []manifest.ChunkRecord, times uint, downloadChunks downloa
 			break
 		}
 
+		logger.Log(logger.Warning, colors.Yellow, "Retrying", len(pinsToRetry), "downloads", colors.Off)
 		pinsToRetry, cancelled = downloadChunks(pinsToRetry)
 		if cancelled {
 			break
