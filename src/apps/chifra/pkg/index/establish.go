@@ -47,8 +47,7 @@ func EstablishIndexChunk(chain string, fileRange cache.FileRange) (bool, error) 
 	progressChannel := make(chan *progress.Progress)
 
 	go func() {
-		chunkPath := cache.NewCachePath(chain, cache.Index_Final)
-		DownloadChunks(chain, chunks, &chunkPath, progressChannel)
+		DownloadChunks(chain, chunks, cache.Index_Final, progressChannel)
 		close(progressChannel)
 	}()
 

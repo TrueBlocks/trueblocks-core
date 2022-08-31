@@ -9,6 +9,7 @@ import (
 	"sort"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
@@ -64,7 +65,7 @@ func (opts *InitOptions) HandleInit() error {
 	defer close(indexDoneChannel)
 
 	getChunks := func(chunkType cache.CacheType) {
-		failedChunks, cancelled := downloadAndReportProgress(chain, remoteManifest.Chunks, chunkType)
+		failedChunks, cancelled := downloadAndReportProgress(chain, opts.Sleep, remoteManifest.Chunks, chunkType)
 		if cancelled {
 			// The user hit the control+c, we don't want to continue...
 			return
@@ -75,7 +76,7 @@ func (opts *InitOptions) HandleInit() error {
 			// ...if there were failed downloads, try them again (3 times if necessary)...
 			retry(failedChunks, 3, func(items []manifest.ChunkRecord) ([]manifest.ChunkRecord, bool) {
 				logger.Log(logger.Info, "Retrying", len(items), "bloom(s)")
-				return downloadAndReportProgress(chain, items, chunkType)
+				return downloadAndReportProgress(chain, opts.Sleep, items, chunkType)
 			})
 		}
 	}
@@ -106,9 +107,7 @@ func (opts *InitOptions) HandleInit() error {
 var m sync.Mutex
 
 // downloadAndReportProgress Downloads the chunks and reports progress to the progressChannel
-func downloadAndReportProgress(chain string, chunks []manifest.ChunkRecord, chunkType cache.CacheType) ([]manifest.ChunkRecord, bool) {
-	path := cache.NewCachePath(chain, chunkType)
-
+func downloadAndReportProgress(chain string, sleep float64, chunks []manifest.ChunkRecord, chunkType cache.CacheType) ([]manifest.ChunkRecord, bool) {
 	failed := []manifest.ChunkRecord{}
 	cancelled := false
 
@@ -117,7 +116,7 @@ func downloadAndReportProgress(chain string, chunks []manifest.ChunkRecord, chun
 	defer close(progressChannel)
 
 	// Start the go routine that downloads the chunks. This sends messages through the progressChannel
-	go index.DownloadChunks(chain, chunks, &path, progressChannel)
+	go index.DownloadChunks(chain, chunks, chunkType, progressChannel)
 
 	var nProcessed uint
 	for event := range progressChannel {
@@ -157,6 +156,12 @@ func downloadAndReportProgress(chain string, chunks []manifest.ChunkRecord, chun
 
 		default:
 			logger.Log(logger.Info, event.Message, rng)
+		}
+
+		if sleep != 0.0 {
+			logger.Log(logger.Info, "")
+			logger.Log(logger.Info, "Sleeping between downloads for", sleep, "seconds")
+			time.Sleep(time.Duration(sleep*1000) * time.Millisecond)
 		}
 	}
 
