@@ -31,7 +31,7 @@ type ChunksOptions struct {
 	Truncate uint64                   `json:"truncate,omitempty"` // Truncate the entire index at this block (requires a block identifier)
 	Remote   bool                     `json:"remote,omitempty"`   // Prior to processing, retreive the manifest from the Unchained Index smart contract
 	Belongs  []string                 `json:"belongs,omitempty"`  // In index mode only, checks the address(es) for inclusion in the given index chunk
-	Sleep    uint64                   `json:"sleep,omitempty"`    // For --remote pinning only, seconds to sleep between API calls
+	Sleep    float64                  `json:"sleep,omitempty"`    // For --remote pinning only, seconds to sleep between API calls
 	Globals  globals.GlobalOptions    `json:"globals,omitempty"`  // The global options
 	BadFlag  error                    `json:"badFlag,omitempty"`  // An error flag if needed
 }
@@ -48,7 +48,7 @@ func (opts *ChunksOptions) testLog() {
 	logger.TestLog(opts.Truncate != utils.NOPOS, "Truncate: ", opts.Truncate)
 	logger.TestLog(opts.Remote, "Remote: ", opts.Remote)
 	logger.TestLog(len(opts.Belongs) > 0, "Belongs: ", opts.Belongs)
-	logger.TestLog(opts.Sleep != utils.NOPOS, "Sleep: ", opts.Sleep)
+	logger.TestLog(opts.Sleep != float64(0.0), "Sleep: ", opts.Sleep)
 	opts.Globals.TestLog()
 }
 
@@ -62,7 +62,7 @@ func (opts *ChunksOptions) String() string {
 func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions {
 	opts := &ChunksOptions{}
 	opts.Truncate = utils.NOPOS
-	opts.Sleep = utils.NOPOS
+	opts.Sleep = 0.0
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "mode":
@@ -88,7 +88,7 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 				opts.Belongs = append(opts.Belongs, s...)
 			}
 		case "sleep":
-			opts.Sleep = globals.ToUint64(value[0])
+			opts.Sleep = globals.ToFloat64(value[0])
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "chunks")

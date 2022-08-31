@@ -298,10 +298,16 @@ string_q get_testlogs(const CCommandOption& cmd) {
                     "\tlogger.TestLog(len(opts.[{VARIABLE}]) > 0, \"[{VARIABLE}]: \", opts.[{VARIABLE}])";
                 os << p.Format(STR_TESTLOG_STRING) << endl;
 
-            } else if (p.data_type == "<blknum>" || p.data_type == "<uint64>" || p.data_type == "<double>") {
+            } else if (p.data_type == "<blknum>" || p.data_type == "<uint64>") {
                 const char* STR_TESTLOG_UINT =
                     "\tlogger.TestLog(opts.[{VARIABLE}] != [{DEF_VAL}], \"[{VARIABLE}]: \", opts.[{VARIABLE}])";
                 os << p.Format(STR_TESTLOG_UINT) << endl;
+
+            } else if (p.data_type == "<double>") {
+                const char* STR_TESTLOG_DOUBLE =
+                    "\tlogger.TestLog(opts.[{VARIABLE}] != float64([{DEF_VAL}]), \"[{VARIABLE}]: \", "
+                    "opts.[{VARIABLE}])";
+                os << p.Format(STR_TESTLOG_DOUBLE) << endl;
 
             } else {
                 cerr << "Unknown type: " << padRight(p.data_type, 30) << p.def_val << endl;
@@ -419,8 +425,15 @@ string_q get_config_package(const CCommandOption& cmd) {
 string_q get_defaults_apis(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
+        if (p.isDeprecated) {
+            continue;
+        }
+        if (p.def_val == "") {
+            continue;
+        }
+
         p.def_val = substitute(p.def_val, "NOPOS", "utils.NOPOS");
-        if (!p.isDeprecated && (p.data_type == "<blknum>" || p.data_type == "<uint64>" || p.data_type == "<double>")) {
+        if (p.data_type == "<blknum>" || p.data_type == "<uint64>" || p.data_type == "<double>") {
             string_q fmt = "\topts.[{VARIABLE}] = [{DEF_VAL}]";
             if (p.generate == "config") {
                 if (p.go_type == "float64") {
@@ -458,7 +471,7 @@ string_q get_goDefault(const CCommandOption& p) {
     if (p.go_type == "[]string") {
         return "nil";
     } else if (p.go_type == "float64") {
-        if (p.def_val == "NOPOS") {
+        if (contains(p.def_val, "NOPOS")) {
             return "0.0";
         } else if (!p.def_val.empty())
             return p.def_val;
@@ -466,10 +479,11 @@ string_q get_goDefault(const CCommandOption& p) {
     } else if (p.go_type == "string") {
         return p.def_val;
     } else if (p.go_type == "uint64") {
-        if (p.def_val == "NOPOS")
+        if (contains(p.def_val, "NOPOS")) {
             return "0";
-        else if (!p.def_val.empty() && !startsWith(p.def_val, "("))
+        } else if (!p.def_val.empty() && !startsWith(p.def_val, "(")) {
             return p.def_val;
+        }
         return "0";
     }
     return "false";

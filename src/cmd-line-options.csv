@@ -237,7 +237,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 31925,apps,Admin,chunks,chunkMan,truncate,n,,false,false,true,false,gocmd,flag,<blknum>,truncate the entire index at this block (requires a block identifier)
 31945,apps,Admin,chunks,chunkMan,remote,m,,false,false,true,true,gocmd,switch,<boolean>,prior to processing&#44; retreive the manifest from the Unchained Index smart contract
 31950,apps,Admin,chunks,chunkMan,belongs,b,,false,false,true,true,gocmd,flag,list<addr>,in index mode only&#44; checks the address(es) for inclusion in the given index chunk
-31952,apps,Admin,chunks,chunkMan,sleep,s,,false,false,true,true,gocmd,flag,<double>,for --remote pinning only&#44; seconds to sleep between API calls
+31952,apps,Admin,chunks,chunkMan,sleep,s,0.0,false,false,true,true,gocmd,flag,<double>,for --remote pinning only&#44; seconds to sleep between API calls
 31955,apps,Admin,chunks,chunkMan,,,,false,false,true,true,--,description,,Manage&#44; investigate&#44; and display the Unchained Index.
 31960,apps,Admin,chunks,chunkMan,n1,,,false,false,false,false,--,note,,Mode determines which type of data to display or process.
 31965,apps,Admin,chunks,chunkMan,n2,,,false,false,false,false,--,note,,Certain options are only available in certain modes.
@@ -248,7 +248,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 
 11905,apps,Admin,init,init,all,a,,false,false,true,true,gocmd,switch,<boolean>,in addition to Bloom filters&#44; download full index chunks
 11905,apps,Admin,init,init,first_block,F,0,false,false,false,false,gocmd,flag,<blknum>,do not download any chunks earlier than this block
-11908,apps,Admin,init,init,sleep,s,,false,false,true,true,gocmd,flag,<double>,seconds to sleep between downloads
+11908,apps,Admin,init,init,sleep,s,0.0,false,false,true,true,gocmd,flag,<double>,seconds to sleep between downloads
 11910,apps,Admin,init,init,,,,false,false,true,true,--,description,,Initialize the TrueBlocks system by downloading from IPFS.
 10974,apps,Admin,init,init,n1,,,false,false,false,false,--,note,,Re-run `chifra init` as often as you wish. It will repair or freshen the index.
 

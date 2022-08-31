@@ -1,6 +1,5 @@
 chifra chunks  manifest
 TEST[DATE|TIME] Mode:  manifest
-TEST[DATE|TIME] Sleep:  0
 TEST[DATE|TIME] Format:  txt
 range	bloomHash	bloomSize	indexHash	indexSize
 000000000-000000000	QmStMtMSpQpjZUzDx3Z9gYmUNcdY7U4wbQpEo77XpozUEJ	131080	QmaKUsfH5AXqPJgjGAQFZWRheF1jtc5PqGi8cYrwmMCXdu	320192

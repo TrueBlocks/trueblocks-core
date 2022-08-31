@@ -172,8 +172,9 @@ bool CCommandOption::setValueByName(const string_q& fieldNameIn, const string_q&
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
-    if (fieldName % "description")
+    if (fieldName % "description") {
         fieldValue = substitute(fieldValue, "&#44;", ",");
+    }
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {

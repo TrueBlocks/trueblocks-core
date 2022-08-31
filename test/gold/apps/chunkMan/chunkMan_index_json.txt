@@ -1,6 +1,5 @@
 chifra chunks  index --fmt json
 TEST[DATE|TIME] Mode:  index
-TEST[DATE|TIME] Sleep:  0
 TEST[DATE|TIME] Format:  json
 {
   "data": [

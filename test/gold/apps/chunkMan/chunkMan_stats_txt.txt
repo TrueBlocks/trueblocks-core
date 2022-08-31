@@ -1,6 +1,5 @@
 chifra chunks  stats --fmt txt
 TEST[DATE|TIME] Mode:  stats
-TEST[DATE|TIME] Sleep:  0
 TEST[DATE|TIME] Format:  txt
 start	end	nAddrs	nApps	nBlocks	nBlooms	recWid	bloomSz	chunkSz	addrsPerBlock	appsPerBlock	appsPerAddr	ratio
 0	0	8893	8893	1	1	131076	131080	320192	8893	8893	1	2.442722001830943
