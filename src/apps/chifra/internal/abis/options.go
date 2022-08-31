@@ -68,7 +68,7 @@ func (opts *AbisOptions) toCmdLine() string {
 	options += " " + strings.Join(opts.Addrs, " ")
 	// EXISTING_CODE
 	// EXISTING_CODE
-	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
+	options += fmt.Sprintf("%s", "") // silence compiler warning for auto gen
 	return options
 }
 

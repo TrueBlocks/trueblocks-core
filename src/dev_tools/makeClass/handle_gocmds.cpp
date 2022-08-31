@@ -642,7 +642,7 @@ const char* STR_TO_CMD_LINE =
     "[{DASH_STR}][{POSITIONALS}]"
     "\t// EXISTING_CODE\n"
     "\t// EXISTING_CODE\n"
-    "\toptions += fmt.Sprintf(\"%s\", \"\") // silence go compiler for auto gen\n"
+    "\toptions += fmt.Sprintf(\"%s\", \"\") // silence compiler warning for auto gen\n"
     "\treturn options\n"
     "}\n\n";
 

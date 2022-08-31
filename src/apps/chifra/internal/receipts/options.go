@@ -60,7 +60,7 @@ func (opts *ReceiptsOptions) toCmdLine() string {
 	options += " " + strings.Join(opts.Transactions, " ")
 	// EXISTING_CODE
 	// EXISTING_CODE
-	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
+	options += fmt.Sprintf("%s", "") // silence compiler warning for auto gen
 	return options
 }
 
