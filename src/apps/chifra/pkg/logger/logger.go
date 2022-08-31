@@ -8,6 +8,8 @@ import (
 	"fmt"
 	"os"
 	"time"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 )
 
 type severity int
@@ -15,6 +17,7 @@ type severity int
 const (
 	Progress severity = iota
 	Info
+	InfoC // colored table
 	Test
 	Warning
 	Error
@@ -24,6 +27,7 @@ const (
 var severityToLabel = map[severity]string{
 	Progress:   "PROG",
 	Info:       "INFO",
+	InfoC:      "INFO",
 	Test:       "TEST",
 	Warning:    "WARNG",
 	Error:      "ERROR",
@@ -71,6 +75,12 @@ func Log(sev severity, a ...interface{}) {
 			fmt.Fprint(os.Stderr, aa)
 		}
 		fmt.Fprint(os.Stderr, "\r")
+	} else if sev == InfoC {
+		fmt.Fprintf(os.Stderr, "%s%s%s ", colors.Green, a[0], colors.Off)
+		for _, aa := range a[1:] {
+			fmt.Fprintf(os.Stderr, "%s", aa)
+		}
+		fmt.Fprintln(os.Stderr, "")
 	} else {
 		fmt.Fprintln(os.Stderr, a...)
 	}

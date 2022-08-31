@@ -27,8 +27,25 @@ const (
 	Cache_Recon
 )
 
-// CachePath helps to keep track of cache paths and extensions depending on
-// chunk type
+func (ct CacheType) String() string {
+	descrs := map[CacheType]string{
+		None:           "unknown",
+		Index_Bloom:    "bloom",
+		Index_Final:    "index",
+		Index_Staging:  "staging",
+		Index_Ripe:     "ripe",
+		Index_Unripe:   "unripe",
+		Cache_Block:    "block",
+		Cache_Tx:       "transaction",
+		Cache_Trace:    "trace",
+		Cache_Monitor:  "monitor",
+		Cache_Neighbor: "neighbor",
+		Cache_Recon:    "reconciliation",
+	}
+	return descrs[ct]
+}
+
+// CachePath helps to keep track of cache paths and extensions depending on chunk type
 type CachePath struct {
 	Type      CacheType
 	RootPath  string

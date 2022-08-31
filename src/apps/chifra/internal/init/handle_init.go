@@ -6,14 +6,13 @@ package initPkg
 
 import (
 	"fmt"
-	"os"
 	"sort"
 	"strings"
+	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
@@ -24,108 +23,108 @@ import (
 // InitInternal initializes local copy of UnchainedIndex by downloading manifests and chunks
 func (opts *InitOptions) HandleInit() error {
 	if opts.Globals.TestMode {
-		if opts.Globals.ApiMode {
-			opts.Globals.Writer.Write([]byte("{ \"msg\": \"chifra init is not processed in test mode.\" }"))
-		} else {
-			logger.Log(logger.Info, "chifra init is not processed in test mode.")
-		}
-		return nil
+		return fmt.Errorf("chifra init can not be tested in test mode")
 	}
 
+	// Make the code below cleaner...
 	chain := opts.Globals.Chain
 
-	config.EstablishIndexPaths(config.GetPathToIndex(chain))
-	downloadedManifest, err := manifest.ReadManifest(chain, manifest.FromContract)
+	// Make sure that the temporary scraper folders are empty, so that, when the
+	// scraper starts, it starts on the correct block.
+	index.CleanTemporaryFolders(config.GetPathToIndex(chain), true)
+
+	remoteManifest, err := manifest.ReadManifest(chain, manifest.FromContract)
+	if err != nil {
+		return err
+	}
+	err = remoteManifest.SaveManifest(chain)
 	if err != nil {
 		return err
 	}
 
-	printHeader(chain, opts.Globals.TestMode)
-
-	err = opts.SaveManifest(chain, downloadedManifest)
-	if err != nil {
-		return err
-	}
-	logger.Log(logger.Info, "Freshened manifest")
-
-	sort.Slice(downloadedManifest.Chunks, func(i, j int) bool {
-		return downloadedManifest.Chunks[i].Range > downloadedManifest.Chunks[j].Range
+	// We sort so the download happens from latest block to earliest
+	sort.Slice(remoteManifest.Chunks, func(i, j int) bool {
+		return remoteManifest.Chunks[i].Range > remoteManifest.Chunks[j].Range
 	})
 
-	// Fetch chunks
+	// Tell the user what we're doing
+	logger.Log(logger.InfoC, "Unchained Index:", unchained.Address_V2)
+	logger.Log(logger.InfoC, "Schemas:", unchained.Schemas)
+	logger.Log(logger.InfoC, "Databases:", unchained.Databases)
+	logger.Log(logger.InfoC, "Config Folder:", config.GetPathToChainConfig(chain))
+	logger.Log(logger.InfoC, "Index Folder:", config.GetPathToIndex(chain))
+	logger.Log(logger.InfoC, "Number of Chunks:", fmt.Sprintf("%d", len(remoteManifest.Chunks)))
+
+	// Open a channel to receive a message when all the blooms have been downloaded...
 	bloomsDoneChannel := make(chan bool)
 	defer close(bloomsDoneChannel)
+
+	// Open a channel to receive a message when all the indexes have been downloaded (if we're downloading them)
 	indexDoneChannel := make(chan bool)
 	defer close(indexDoneChannel)
-	defer func() {
-		// We want to make sure these folders are empty so the scraper starts at the proper place.
-		index.CleanTemporaryFolders(config.GetPathToIndex(chain), true)
-	}()
 
 	getChunks := func(chunkType cache.CacheType) {
-		chunkPath := cache.NewCachePath(chain, chunkType)
-		failedChunks, cancelled := downloadAndReportProgress(chain, downloadedManifest.Chunks, &chunkPath)
-
+		failedChunks, cancelled := downloadAndReportProgress(chain, remoteManifest.Chunks, chunkType)
 		if cancelled {
-			// We don't want to retry if the user has cancelled
+			// The user hit the control+c, we don't want to continue...
 			return
 		}
 
+		// The download finished...
 		if len(failedChunks) > 0 {
-			retry(failedChunks, 3, func(pins []manifest.ChunkRecord) ([]manifest.ChunkRecord, bool) {
-				logger.Log(logger.Info, "Retrying", len(pins), "bloom(s)")
-				return downloadAndReportProgress(chain, pins, &chunkPath)
+			// ...if there were failed downloads, try them again (3 times if necessary)...
+			retry(failedChunks, 3, func(items []manifest.ChunkRecord) ([]manifest.ChunkRecord, bool) {
+				logger.Log(logger.Info, "Retrying", len(items), "bloom(s)")
+				return downloadAndReportProgress(chain, items, chunkType)
 			})
 		}
 	}
 
+	// Set up a go routine to download the bloom filters...
 	go func() {
 		getChunks(cache.Index_Bloom)
-
 		bloomsDoneChannel <- true
 	}()
 
 	if opts.All {
+		// Set up another go routine to download the index chunks if the user told us to...
 		go func() {
 			getChunks(cache.Index_Final)
-
 			indexDoneChannel <- true
 		}()
+
+		// Wait for the index to download. This will block until getChunks for index chunks returns
 		<-indexDoneChannel
 	}
 
+	// Wait for the bloom filters to download. This will block until getChunks for blooms returns
 	<-bloomsDoneChannel
+
 	return nil
 }
 
-type downloadFunc func(pins []manifest.ChunkRecord) (failed []manifest.ChunkRecord, cancelled bool)
+var m sync.Mutex
 
-// Downloads chunks and report progress
-func downloadAndReportProgress(chain string, pins []manifest.ChunkRecord, chunkPath *cache.CachePath) ([]manifest.ChunkRecord, bool) {
-	// TODO: BOGUS - CLEAN THIS UP?
-	// chunkTypeToDescription := map[cache.CacheType]string{
-	// 	cache.Index_Bloom: "bloom",
-	// 	cache.Index_Final: "index",
-	// }
+// downloadAndReportProgress Downloads the chunks and reports progress to the progressChannel
+func downloadAndReportProgress(chain string, chunks []manifest.ChunkRecord, chunkType cache.CacheType) ([]manifest.ChunkRecord, bool) {
+	path := cache.NewCachePath(chain, chunkType)
+
 	failed := []manifest.ChunkRecord{}
 	cancelled := false
+
+	// Establish a channel to listen for progress messages
 	progressChannel := progress.MakeChan()
 	defer close(progressChannel)
 
-	go index.DownloadChunks(chain, pins, chunkPath, progressChannel)
+	// Start the go routine that downloads the chunks. This sends messages through the progressChannel
+	go index.DownloadChunks(chain, chunks, &path, progressChannel)
 
-	var pinsDone uint
-
+	var nProcessed uint
 	for event := range progressChannel {
-		pin, ok := event.Payload.(*manifest.ChunkRecord)
-		var fileName string
+		chunk, ok := event.Payload.(*manifest.ChunkRecord)
+		var rng string
 		if ok {
-			fileName = pin.Range
-		}
-
-		if event.Event == progress.AllDone {
-			logger.Log(logger.Info, pinsDone, "pin(s) were (re)initialized", strings.Repeat(" ", 60))
-			break
+			rng = chunk.Range
 		}
 
 		if event.Event == progress.Cancelled {
@@ -133,86 +132,64 @@ func downloadAndReportProgress(chain string, pins []manifest.ChunkRecord, chunkP
 			break
 		}
 
+		if event.Event == progress.AllDone {
+			logger.Log(logger.Info, "Completed processing", nProcessed, chunkType, "files.", strings.Repeat(" ", 60))
+			break
+		}
+
 		switch event.Event {
 		case progress.Error:
 			logger.Log(logger.Error, event.Message)
 			if ok {
-				failed = append(failed, *pin)
+				failed = append(failed, *chunk)
 			}
+
 		case progress.Start:
-			logger.Log(logger.Progress, "Starting download of ", event.Message, " to ", fileName)
+			m.Lock()
+			logger.Log(logger.Progress, "Starting download of ", event.Message, " to ", rng)
+			m.Unlock()
+
 		case progress.Update:
-			logger.Log(logger.Info, event.Message, colors.BrightBlue, fileName, colors.Off, strings.Repeat(" ", 55))
+			logger.Log(logger.Info, event.Message, colors.BrightBlue, rng, colors.Off, strings.Repeat(" ", 55))
+
 		case progress.Done:
-			pinsDone++
+			nProcessed++
+
 		default:
-			logger.Log(logger.Info, event.Message, fileName)
+			logger.Log(logger.Info, event.Message, rng)
 		}
 	}
 
 	return failed, cancelled
 }
 
-// Retries downloading `failedChunks` for `times` times by calling `downloadChunks` function.
-// Returns number of pins that we were unable to fetch.
-// This function is simple because: 1. it will never get a new failing pin (it only feeds in
-// the list of known, failed pins); 2. The maximum number of failing pins we can get equals
-// the length of `failedChunks`.
-func retry(failedChunks []manifest.ChunkRecord, times uint, downloadChunks downloadFunc) int {
-	retryCount := uint(0)
+// retry retries downloading any `failedChunks`. It repeats `nTimes` times by calling `downloadChunks` function.
+//
+// Returns number of chunks that we were unable to fetch. This function is simple because:
+//  1. it will never get a new failing chunk (it only feeds in the list of known, failed chunks)
+//  2. The maximum number of failing chunks we can get equals the length of `failedChunks`.
+func retry(failedChunks []manifest.ChunkRecord, nTimes int, downloadChunksFunc func(chunks []manifest.ChunkRecord) (failed []manifest.ChunkRecord, cancelled bool)) int {
+	count := 0
 
-	pinsToRetry := failedChunks
+	chunksToRetry := failedChunks
 	cancelled := false
 
 	for {
-		if len(pinsToRetry) == 0 {
+		if len(chunksToRetry) == 0 {
 			break
 		}
 
-		if retryCount >= times {
+		if count >= nTimes {
 			break
 		}
 
-		logger.Log(logger.Warning, colors.Yellow, "Retrying", len(pinsToRetry), "downloads", colors.Off)
-		pinsToRetry, cancelled = downloadChunks(pinsToRetry)
-		if cancelled {
+		logger.Log(logger.Warning, colors.Yellow, "Retrying", len(chunksToRetry), "downloads", colors.Off)
+		if chunksToRetry, cancelled = downloadChunksFunc(chunksToRetry); cancelled {
 			break
 		}
 
-		retryCount++
+		count++
 	}
 
-	return len(pinsToRetry)
-}
-
-func (opts *InitOptions) SaveManifest(chain string, man *manifest.Manifest) error {
-	fileName := config.GetPathToChainConfig(chain) + "manifest.json"
-	w, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
-	if err != nil {
-		return fmt.Errorf("creating file: %s", err)
-	}
-	defer w.Close()
-	err = file.Lock(w)
-	if err != nil {
-		return fmt.Errorf("locking file: %s", err)
-	}
-
-	tmp := opts.Globals
-	tmp.Format = "json"
-	tmp.Writer = w
-	tmp.NoHeader = false
-	tmp.ApiMode = false
-	return tmp.RenderObject(man, true)
-}
-
-func printHeader(chain string, testMode bool) {
-	logger.Log(logger.Info, "schemas:", unchained.Schemas)
-	logger.Log(logger.Info, "databases:", unchained.Databases)
-	logger.Log(logger.Info, "unchainedAddress:", unchained.Address_V2)
-	logger.Log(logger.Info, "unchainedReadHash:", unchained.ReadHash_V2)
-	logger.Log(logger.Info, "unchainedPublishHash:", unchained.PublishHash_V2)
-	if !testMode {
-		logger.Log(logger.Info, "manifestLocation:", config.GetPathToChainConfig(chain)) // order matters
-		logger.Log(logger.Info, "unchainedIndexFolder:", config.GetPathToIndex(chain))   // order matters
-	}
+	return len(chunksToRetry)
 }

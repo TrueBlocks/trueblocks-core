@@ -4,10 +4,13 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"fmt"
+	"os"
 	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -68,4 +71,19 @@ func ReadManifest(chain string, source Source) (*Manifest, error) {
 	manifest := &Manifest{}
 	err := json.NewDecoder(reader).Decode(manifest)
 	return manifest, err
+}
+
+func (m *Manifest) SaveManifest(chain string) error {
+	fileName := config.GetPathToChainConfig(chain) + "manifest.json"
+	w, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
+	if err != nil {
+		return fmt.Errorf("creating file: %s", err)
+	}
+	defer w.Close()
+	err = file.Lock(w)
+	if err != nil {
+		return fmt.Errorf("locking file: %s", err)
+	}
+
+	return output.OutputObject(&m, w, "json", false, false, true, nil)
 }

@@ -37,18 +37,18 @@ func EstablishIndexChunk(chain string, fileRange cache.FileRange) (bool, error) 
 		}
 	}
 	if matchedPin.Range == "" {
-		return exists, fmt.Errorf("filename not found in pins: %s", fileRange)
+		return exists, fmt.Errorf("filename not found in chunks: %s", fileRange)
 	}
 
 	logger.Log(logger.Info, "Downloading", colors.Blue, fileRange, colors.Off, "from IPFS.")
 
 	// Start downloading the filter
-	pins := []manifest.ChunkRecord{matchedPin}
+	chunks := []manifest.ChunkRecord{matchedPin}
 	progressChannel := make(chan *progress.Progress)
 
 	go func() {
 		chunkPath := cache.NewCachePath(chain, cache.Index_Final)
-		DownloadChunks(chain, pins, &chunkPath, progressChannel)
+		DownloadChunks(chain, chunks, &chunkPath, progressChannel)
 		close(progressChannel)
 	}()
 

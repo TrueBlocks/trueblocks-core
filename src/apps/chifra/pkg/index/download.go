@@ -313,7 +313,8 @@ func DownloadChunks(chain string, pins []manifest.ChunkRecord, chunkPath *cache.
 	}
 }
 
-// saveFileContents decompresses the downloaded data and saves it to files
+// saveFileContents save the downloaded file and possibly decompress it on the way out
+// TODO: The IPFS files are no longer compressed, so the isCompressed code could be deleted.
 func saveFileContents(arguments writeWorkerArguments, res *jobResult) error {
 	var in io.Reader
 
@@ -363,35 +364,37 @@ func saveFileContents(arguments writeWorkerArguments, res *jobResult) error {
 	return nil
 }
 
-// filterDownloadedChunks returns new []manifest.ChunkRecord slice with all pins from RootPath removed
-func filterDownloadedChunks(pins []manifest.ChunkRecord, chunkPath *cache.CachePath) []manifest.ChunkRecord {
+// filterDownloadedChunks returns new []manifest.ChunkRecord slice with all chunks from RootPath removed
+func filterDownloadedChunks(chunks []manifest.ChunkRecord, chunkPath *cache.CachePath) []manifest.ChunkRecord {
 	fileMap := make(map[string]bool)
 
 	files, err := os.ReadDir(chunkPath.String())
 	if err != nil {
-		return pins
+		return chunks
 	}
 
 	for _, file := range files {
-		pinFileName := strings.Replace(file.Name(), chunkPath.Extension, "", -1)
-		fileMap[pinFileName] = true
+		itemFn := strings.Replace(file.Name(), chunkPath.Extension, "", -1)
+		fileMap[itemFn] = true
 	}
 
-	return exclude(fileMap, pins)
+	return exclude(fileMap, chunks)
 }
 
-// exclude returns a copy of `from` slice with every pin with a file name present
-// in `what` map removed
-func exclude(what map[string]bool, from []manifest.ChunkRecord) []manifest.ChunkRecord {
+// exclude returns a copy of `from` slice with every item with a file name present in `what` map removed
+func exclude(exclusions map[string]bool, from []manifest.ChunkRecord) []manifest.ChunkRecord {
 	result := make([]manifest.ChunkRecord, 0, len(from))
-
-	for _, pin := range from {
-		if what[pin.Range] {
+	for _, item := range from {
+		if exclusions[item.Range] {
 			continue
 		}
-
-		result = append(result, pin)
+		// TODO: BOGUS -- EVEN THOUGH WE TRY TO PROTECT AGAINST INCOMPLETE FILES ON DISC, IF THE FILE SIZE IS WRONG, DO NOT EXCLUDE (THAT IS, RE-DOWNLOAD)
+		// fn := get the filename
+		// size := get the file's size
+		// if (size == item.IndexSize or BloomSize) {
+		// 	continue
+		// }
+		result = append(result, item)
 	}
-
 	return result
 }
