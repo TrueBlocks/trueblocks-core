@@ -394,10 +394,8 @@ func exclude(chain string, chunkType cache.CacheType, onDiscMap map[string]bool,
 			}
 		} else {
 			logger.Log(logger.Info, i, chunkType, "file for range", item.Range, "does not exist.")
-			fmt.Println()
 		}
 		need = append(need, item)
-		fmt.Println()
 	}
 	mm.Unlock()
 
@@ -418,7 +416,7 @@ func exclude(chain string, chunkType cache.CacheType, onDiscMap map[string]bool,
 		}
 	}
 
-	logger.Log(logger.InfoC, "Number of needed files", len(need))
+	logger.Log(logger.InfoC, fmt.Sprintf("Number of files to download %d", len(need)))
 	return need
 }
 
