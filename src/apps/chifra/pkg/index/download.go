@@ -354,6 +354,7 @@ func filterDownloadedChunks(chain string, chunks []manifest.ChunkRecord, chunkTy
 		if !strings.HasSuffix(name, ".bin") && !strings.HasSuffix(name, ".bloom") {
 			fullPath = filepath.Join(chunkPath.GetFullPath(""), name)
 		}
+		file.AppendToAsciiFile("./onDisc.txt", fullPath+"\n")
 		onDiscMap[fullPath] = true
 	}
 
@@ -389,15 +390,16 @@ func exclude(chain string, chunkType cache.CacheType, onDiscMap map[string]bool,
 	}
 
 	// Any file still in this list is not in the manifest and should be removed
-	for path, b := range onDiscMap {
+	for fullPath, b := range onDiscMap {
 		if b {
-			removeLocalFile(path, "unknown file", progressChannel)
+			file.AppendToAsciiFile("./onDiscRemovals.txt", fullPath+"\n")
+			removeLocalFile(fullPath, "unknown file", progressChannel)
 		}
 	}
 
 	progressChannel <- &progress.Progress{
 		Event:   progress.Update,
-		Message: fmt.Sprintf("Number of files to download %d", len(chunksNeeded)),
+		Message: fmt.Sprintf("Number of %s files to download %d", chunkType, len(chunksNeeded)),
 	}
 	return chunksNeeded
 }

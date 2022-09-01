@@ -134,7 +134,7 @@ func downloadAndReportProgress(chain string, sleep float64, chunks []manifest.Ch
 		}
 
 		if event.Event == progress.AllDone {
-			msg := fmt.Sprintf("Completed updating %s files.", chunkType)
+			msg := fmt.Sprintf("Completed downloading %s files.", chunkType)
 			logger.Log(logger.Info, msg, strings.Repeat(" ", 60))
 			break
 		}
