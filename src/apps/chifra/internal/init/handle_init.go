@@ -149,7 +149,9 @@ func downloadAndReportProgress(chain string, sleep float64, chunks []manifest.Ch
 
 		case progress.Start:
 			nStarted++
-			logger.Log(logger.Progress, "Started download ", nStarted, " of ", nTotal, " ", event.Message, " to ", rng, spaces)
+			if nProcessed < 20 { // we don't need too many of these
+				logger.Log(logger.Progress, "Started download ", nStarted, " of ", nTotal, " ", event.Message, " to ", rng, spaces)
+			}
 
 		case progress.Statistics:
 			n, _ := event.Payload.(int)
