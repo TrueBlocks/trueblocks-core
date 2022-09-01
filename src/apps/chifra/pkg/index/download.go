@@ -104,7 +104,7 @@ func getDownloadWorker(dlwArgs downloadWorkerArguments) workerFunction {
 			download, err := pinning.FetchFromGateway(ctx, url.String())
 			time.Sleep(250 * time.Millisecond) // we need to slow things down, otherwise the endpoint rate limits
 			if errors.Is(ctx.Err(), context.Canceled) {
-				log.Fatalln("User hit Control+C in downloadWorker", url)
+				// log.Fatalln("User hit Control+C in downloadWorker", url)
 				// The request to fetch the chunk was cancelled, because user has
 				// pressed Ctrl-C
 				return
@@ -126,7 +126,7 @@ func getDownloadWorker(dlwArgs downloadWorkerArguments) workerFunction {
 						os.Remove(bloomPath)
 					}
 				}
-				log.Fatalln("Error returned by FetchFromGateway in downloadWorker", url, err)
+				// log.Fatalln("Error returned by FetchFromGateway in downloadWorker", url, err)
 				progressChannel <- &progress.Progress{
 					Payload: &chunk,
 					Event:   progress.Error,
@@ -142,7 +142,7 @@ func getDownloadWorker(dlwArgs downloadWorkerArguments) workerFunction {
 					theChunk: &chunk,
 				}
 			} else {
-				log.Fatalln("Error returned by FetchFromGateway in downloadWorker", url, err)
+				// log.Fatalln("Error returned by FetchFromGateway in downloadWorker", url, err)
 				progressChannel <- &progress.Progress{
 					Payload: &chunk,
 					Event:   progress.Error,
@@ -336,7 +336,7 @@ func saveFileContents(wwArgs writeWorkerArguments, res *jobResult) error {
 			// TODO: BOGUS - Should remove any partially downloaded file
 			outputFile.Close()
 			os.Remove(outputFile.Name())
-			log.Fatal("Failed download", colors.Magenta, res.rng, colors.Off, "(will retry)", strings.Repeat(" ", 30))
+			log.Println("Failed download", colors.Magenta, res.rng, colors.Off, "(will retry)", strings.Repeat(" ", 30))
 			time.Sleep(1 * time.Second)
 		}
 		return fmt.Errorf("error copying %s: %s", res.rng, werr)
