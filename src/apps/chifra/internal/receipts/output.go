@@ -10,8 +10,12 @@ package receiptsPkg
 
 // EXISTING_CODE
 import (
+	"fmt"
 	"net/http"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/spf13/cobra"
 )
 
@@ -45,12 +49,43 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 	if opts.Globals.ApiMode {
 		return nil, false
 	}
+	if opts.Articulate {
+		err = opts.Globals.PassItOn("getReceipts", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
+		return err, true
+	}
 
-	handled = true
-	err = opts.Globals.PassItOn("getReceipts", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
-	// EXISTING_CODE
+	getTransaction := func(models chan types.Modeler[types.RawReceipt], errors chan error) {
+		for idIndex, rng := range opts.TransactionIds {
+			txList, err := rng.ResolveTxs(opts.Globals.Chain)
+			if err != nil {
+				errors <- err
+				return
+			}
+			for _, tx := range txList {
+				receipt, err := rpcClient.GetTransactionReceipt(opts.Globals.Chain, uint64(tx.BlockNumber), uint64(tx.TransactionIndex))
+				if err != nil && err.Error() == "not found" {
+					errors <- fmt.Errorf("transaction %s not found", opts.Transactions[idIndex])
+					return
+				}
+				if err != nil {
+					errors <- err
+					return
+				}
 
-	return
+				models <- &receipt
+			}
+		}
+	}
+	err = output.StreamMany(opts.Globals.Writer, getTransaction, output.OutputOptions{
+		ShowKeys:   !opts.Globals.NoHeader,
+		ShowRaw:    opts.Globals.Raw,
+		ShowHidden: opts.Globals.Verbose,
+		Format:     opts.Globals.Format,
+	})
+	if err != nil {
+		return err, true
+	}
+	return nil, true
 }
 
 // EXISTING_CODE

@@ -2,5 +2,21 @@ chifra receipts  0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeac
 TEST[DATE|TIME] Transactions:  [0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5]
 TEST[DATE|TIME] Format:  txt
 blockNumber	transactionIndex	hash	gasUsed	status	isError
-1001001	1	0xef2ea39c20ba09553b2f3cf02380406ac766039ca56612937eed5e7f3503fb3a	21000	null	0
-"Transaction 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5 not found."
+1001001	1	0xef2ea39c20ba09553b2f3cf02380406ac766039ca56612937eed5e7f3503fb3a	21000	1	false
+Error: transaction 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5 not found
+Usage:
+  chifra receipts [flags] <tx_id> [tx_id...]
+
+Arguments:
+  transactions - a space-separated list of one or more transaction identifiers (required)
+
+Flags:
+  -a, --articulate   articulate the retrieved data if ABIs can be found
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -v, --verbose      enable verbose (increase detail with --log_level)
+  -h, --help         display this help screen
+
+Notes:
+  - The transactions list may be one or more transaction hashes, blockNumber.transactionID pairs, or a blockHash.transactionID pairs.
+  - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
+  - If the queried node does not store historical state, the results for most older transactions are undefined.

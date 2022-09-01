@@ -6,6 +6,20 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
+type Modeler[Raw RawData] interface {
+	Model(showHidden bool, format string) Model
+	Raw() *Raw
+}
+
+type RawData interface {
+	RawReceipt
+}
+
+type Model struct {
+	Data  map[string]interface{}
+	Order []string
+}
+
 type IpfsHash string
 
 func (h IpfsHash) String() string {
@@ -105,20 +119,20 @@ type SimpleIndexAddressBelongs struct {
 }
 
 type SimpleLog struct {
-	Address          string   `json:"address"`
-	LogIndex         uint32   `json:"logIndex"`
-	BlockNumber      uint32   `json:"blockNumber,omitempty"`
-	TransactionIndex uint32   `json:"transactionIndex,omitempty"`
-	Timestamp        uint64   `json:"timestamp,omitempty"`
-	Topics           []string `json:"topics"`
-	Data             string   `json:"data,omitempty"`
-	CompressedLog    string   `json:"compressedLog,omitempty"`
+	Address          common.Address `json:"address"`
+	LogIndex         uint32         `json:"logIndex"`
+	BlockNumber      uint64         `json:"blockNumber,omitempty"`
+	TransactionIndex uint32         `json:"transactionIndex,omitempty"`
+	Timestamp        uint64         `json:"timestamp,omitempty"`
+	Topics           []common.Hash  `json:"topics"`
+	Data             string         `json:"data,omitempty"`
+	CompressedLog    string         `json:"compressedLog,omitempty"`
 }
 
 type SimpleReceipt struct {
 	BlockHash         common.Hash    `json:"blockHash"`
 	BlockNumber       uint64         `json:"blockNumber"`
-	ContractAddress   string         `json:"contractAddress,omitempty"`
+	ContractAddress   common.Address `json:"contractAddress,omitempty"`
 	CumulativeGasUsed string         `json:"cumulativeGasUsed"`
 	From              common.Address `json:"from"`
 	GasUsed           uint64         `json:"gasUsed"`
@@ -126,11 +140,65 @@ type SimpleReceipt struct {
 	Logs              []SimpleLog    `json:"logs,omitempty"`
 	// LogsBloom         string         `json:"-"`
 	// Root              string         `json:"-"`
-	Status           *uint32     `json:"status"`
-	IsError          bool        `json:"isError,omitempty"`
-	To               string      `json:"to,omitempty"`
-	TransactionHash  common.Hash `json:"hash"`
-	TransactionIndex uint64      `json:"transactionIndex"`
+	Status           uint64         `json:"status"`
+	IsError          bool           `json:"isError,omitempty"`
+	To               common.Address `json:"to,omitempty"`
+	TransactionHash  common.Hash    `json:"hash"`
+	TransactionIndex uint64         `json:"transactionIndex"`
+	raw              *RawReceipt
+}
+
+func (r *SimpleReceipt) Raw() *RawReceipt {
+	return r.raw
+}
+
+func (r *SimpleReceipt) SetRaw(rawReceipt RawReceipt) {
+	r.raw = &rawReceipt
+}
+
+// To support custom format: just execute template on the output of Model
+func (r *SimpleReceipt) Model(showHidden bool, format string) Model {
+	model := map[string]interface{}{
+		"blockNumber":      r.BlockNumber,
+		"transactionIndex": r.TransactionIndex,
+		"hash":             r.TransactionHash,
+		"gasUsed":          r.GasUsed,
+		"status":           r.Status,
+		"isError":          r.IsError,
+	}
+	order := []string{
+		"blockNumber",
+		"transactionIndex",
+		"hash",
+		"gasUsed",
+		"status",
+		"isError",
+	}
+
+	if showHidden && format == "json" {
+		model["blockHash"] = r.BlockHash
+		model["contractAddress"] = r.ContractAddress
+		model["cumulativeGasUsed"] = r.CumulativeGasUsed
+		model["from"] = r.From
+		model["effectiveGasPrice"] = r.EffectiveGasPrice
+		model["logs"] = r.Logs
+		model["to"] = r.To
+
+		order = append(order, []string{
+			"blockHash",
+			"contractAddress",
+			"cumulativeGasUsed",
+			"from",
+			"effectiveGasPrice",
+			"logs",
+			"to",
+		}...)
+	}
+
+	return Model{
+		Data:  model,
+		Order: order,
+	}
 }
 
 type SimpleName struct {
