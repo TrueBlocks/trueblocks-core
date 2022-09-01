@@ -31,6 +31,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	ants "github.com/panjf2000/ants/v2"
 )
 
@@ -63,7 +64,6 @@ type writeWorkerArguments struct {
 	ctx             context.Context
 	progressChannel chan<- *progress.Progress
 	cancel          context.CancelFunc
-	chunkPath2      *cache.CachePath
 	writeWg         *sync.WaitGroup
 	isCompressed    bool
 }
@@ -186,15 +186,10 @@ func getWriteWorker(wwArgs writeWorkerArguments) workerFunction {
 				return
 			}
 
-			msg := fmt.Sprintf("Downloaded %s%s%s file", colors.Yellow, wwArgs.chunkType, colors.Off)
-			if wwArgs.isCompressed {
-				msg = fmt.Sprintf("Downloaded and unzipped %s%s%s file", colors.Yellow, wwArgs.chunkType, colors.Off)
-			}
-
 			progressChannel <- &progress.Progress{
 				Payload: res.theChunk,
 				Event:   progress.Update,
-				Message: msg,
+				Message: wwArgs.chunkType.String(),
 			}
 
 			progressChannel <- &progress.Progress{
@@ -208,9 +203,8 @@ func getWriteWorker(wwArgs writeWorkerArguments) workerFunction {
 // DownloadChunks downloads, unzips and saves the chunk of type indicated by chunkType
 // for each pin in pins. Progress is reported to progressChannel.
 func DownloadChunks(chain string, pins []manifest.ChunkRecord, chunkType cache.CacheType, progressChannel chan<- *progress.Progress) {
-	chunkPath := cache.NewCachePath(chain, chunkType)
-
-	poolSize := runtime.NumCPU() * 2
+	// If we make this too big, the pinning service chokes
+	poolSize := utils.Min(8, (runtime.NumCPU()*3)/4)
 	// Downloaded content will wait for saving in this channel
 	writeChannel := make(chan *jobResult, poolSize)
 	// Context lets us handle Ctrl-C easily
@@ -244,7 +238,6 @@ func DownloadChunks(chain string, pins []manifest.ChunkRecord, chunkType cache.C
 		ctx:             ctx,
 		progressChannel: progressChannel,
 		cancel:          cancel,
-		chunkPath2:      &chunkPath,
 		writeWg:         &writeWg,
 		isCompressed:    false,
 	}
@@ -274,6 +267,10 @@ func DownloadChunks(chain string, pins []manifest.ChunkRecord, chunkType cache.C
 	}()
 
 	itemsToDownload := filterDownloadedChunks(chain, pins, chunkType)
+	progressChannel <- &progress.Progress{
+		Event:   progress.Stats,
+		Payload: len(itemsToDownload),
+	}
 	for _, item := range itemsToDownload {
 		downloadWg.Add(1)
 		downloadPool.Invoke(item)
@@ -324,7 +321,8 @@ func saveFileContents(wwArgs writeWorkerArguments, res *jobResult) error {
 
 	}
 
-	outputFile, err := os.OpenFile(wwArgs.chunkPath2.GetFullPath(res.rng), os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
+	chunkPath := cache.NewCachePath(wwArgs.chain, wwArgs.chunkType)
+	outputFile, err := os.OpenFile(chunkPath.GetFullPath(res.rng), os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
 	if err != nil {
 		return fmt.Errorf("error creating file %s: %s", res.rng, err)
 	}
@@ -339,6 +337,9 @@ func saveFileContents(wwArgs writeWorkerArguments, res *jobResult) error {
 			log.Println("Failed download", colors.Magenta, res.rng, colors.Off, "(will retry)", strings.Repeat(" ", 30))
 			time.Sleep(1 * time.Second)
 		}
+		// Information about this error
+		// https://community.k6.io/t/warn-0040-request-failed-error-stream-error-stream-id-3-internal-error/777/2
+		logger.Log(logger.Info, "Error copying:[", werr, "]")
 		return fmt.Errorf("error copying %s: %s", res.rng, werr)
 	}
 
@@ -349,7 +350,7 @@ func saveFileContents(wwArgs writeWorkerArguments, res *jobResult) error {
 // filterDownloadedChunks returns new []manifest.ChunkRecord slice with all chunks from RootPath removed
 func filterDownloadedChunks(chain string, chunks []manifest.ChunkRecord, chunkType cache.CacheType) []manifest.ChunkRecord {
 	chunkPath := cache.NewCachePath(chain, chunkType)
-	fileMap := make(map[string]bool)
+	onDiscMap := make(map[string]bool)
 
 	files, err := os.ReadDir(chunkPath.String())
 	if err != nil {
@@ -358,40 +359,76 @@ func filterDownloadedChunks(chain string, chunks []manifest.ChunkRecord, chunkTy
 
 	for _, file := range files {
 		itemFn := strings.Replace(file.Name(), chunkPath.Extension, "", -1)
-		fileMap[itemFn] = true
+		onDiscMap[itemFn] = true
 	}
 
-	return exclude(chain, chunkType, fileMap, chunks)
+	return exclude(chain, chunkType, onDiscMap, chunks)
 }
 
 var mm sync.Mutex
 
 // exclude returns a copy of `from` slice with every item with a file name present in `what` map removed
-func exclude(chain string, chunkType cache.CacheType, exclusions map[string]bool, chunks []manifest.ChunkRecord) []manifest.ChunkRecord {
+func exclude(chain string, chunkType cache.CacheType, onDiscMap map[string]bool, chunks []manifest.ChunkRecord) []manifest.ChunkRecord {
+	chunkPath := cache.NewCachePath(chain, chunkType)
+
 	mm.Lock()
-	result := make([]manifest.ChunkRecord, 0, len(chunks))
-	for _, item := range chunks {
-		if exclusions[item.Range] {
-			chunkPath := cache.NewCachePath(chain, chunkType)
+	need := make([]manifest.ChunkRecord, 0, len(chunks))
+	for i, item := range chunks {
+		if onDiscMap[item.Range] {
 			path := chunkPath.GetFullPath(item.Range)
-			expectedSize := item.BloomSize
-			if chunkType == cache.Index_Final {
-				expectedSize = item.IndexSize
+
+			hashOk, _ := HasValidHeader(chain, path)
+			sizeOk := expectedSize(chunkType, item, path)
+
+			if !hashOk {
+				logger.Log(logger.Info, i, chunkType, "file for range", item.Range, "exists, but has an invalid header.")
+				os.Remove(path)
+
+			} else if !sizeOk {
+				logger.Log(logger.Info, i, chunkType, "file for range", item.Range, "exists, but is the wrong size.")
+				os.Remove(path)
+
+			} else {
+				onDiscMap[item.Range] = false
+				continue
 			}
-			if file.FileExists(path) {
-				if file.FileSize(path) == expectedSize {
-					// logger.Log(logger.Info, "Range", item.Range, "exists and is okay. Skipping.")
-					continue
-				} else {
-					logger.Log(logger.Info, chunkType, "file for range", item.Range, "exists but is the wrong size", file.FileSize(path), "-", expectedSize, ". Re-downloading...")
-					os.Remove(path)
-				}
-			}
-			// } else {
-			// 	logger.Log(logger.Info, chunkType, "file for range", item.Range, "does not exist. Downloading...")
+		} else {
+			logger.Log(logger.Info, i, chunkType, "file for range", item.Range, "does not exist.")
+			fmt.Println()
 		}
-		result = append(result, item)
+		need = append(need, item)
+		fmt.Println()
 	}
 	mm.Unlock()
-	return result
+
+	// Any file still in this list needs to be removed, either because it's incorrect (wrong size or
+	// wrong header), or because it's a file with a range name not found in the manifest
+	for k, v := range onDiscMap {
+		if v {
+			chunkPath := cache.NewCachePath(chain, chunkType)
+			path := chunkPath.GetFullPath(k)
+			if file.FileExists(path) {
+				err := os.Remove(path)
+				if err != nil {
+					logger.Log(logger.Info, "Failed to delete: ", err)
+				} else {
+					fmt.Println(path, "is on disc but not in the manifest, it was removed", file.FileExists(path))
+				}
+			}
+		}
+	}
+
+	logger.Log(logger.InfoC, "Number of needed files", len(need))
+	return need
+}
+
+func expectedSize(chunkType cache.CacheType, chunk manifest.ChunkRecord, path string) bool {
+	if !file.FileExists(path) {
+		return false
+	}
+	expectedSize := chunk.BloomSize
+	if chunkType == cache.Index_Final {
+		expectedSize = chunk.IndexSize
+	}
+	return file.FileSize(path) == expectedSize
 }

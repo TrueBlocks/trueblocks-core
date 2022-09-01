@@ -8,6 +8,7 @@ type Event uint
 
 const (
 	BeforeStart Event = iota
+	Stats
 	Start
 	Update
 	Done

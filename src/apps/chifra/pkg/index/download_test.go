@@ -7,18 +7,20 @@ package index
 import (
 	"testing"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 )
 
 func Test_exclude(t *testing.T) {
-	fileNames := map[string]bool{
+	onDisc := map[string]bool{
 		"013337527-013340418": true,
 		"013340419-013343305": true,
 		"013346064-013348861": true,
 		"013348862-013351760": true,
 	}
 
-	pins := []manifest.ChunkRecord{
+	inManifest := []manifest.ChunkRecord{
 		{
 			Range: "013337527-013340418",
 		},
@@ -39,8 +41,7 @@ func Test_exclude(t *testing.T) {
 		},
 	}
 
-	result := exclude(fileNames, pins)
-
+	result := exclude(config.GetTestChain(), cache.Index_Final, onDisc, inManifest)
 	if len(result) != 2 {
 		t.Errorf("Wrong length: %d", len(result))
 	}

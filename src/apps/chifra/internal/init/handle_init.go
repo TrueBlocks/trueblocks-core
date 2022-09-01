@@ -105,6 +105,10 @@ func (opts *InitOptions) HandleInit() error {
 }
 
 var m sync.Mutex
+var nTotal int
+var nProcessed int
+var nStarted int
+var nUpdated int
 
 // downloadAndReportProgress Downloads the chunks and reports progress to the progressChannel
 func downloadAndReportProgress(chain string, sleep float64, chunks []manifest.ChunkRecord, chunkType cache.CacheType) ([]manifest.ChunkRecord, bool) {
@@ -118,12 +122,14 @@ func downloadAndReportProgress(chain string, sleep float64, chunks []manifest.Ch
 	// Start the go routine that downloads the chunks. This sends messages through the progressChannel
 	go index.DownloadChunks(chain, chunks, chunkType, progressChannel)
 
-	var nProcessed uint
 	for event := range progressChannel {
 		chunk, ok := event.Payload.(*manifest.ChunkRecord)
 		var rng string
 		if ok {
 			rng = chunk.Range
+		} else if event.Event == progress.Stats {
+			n, _ := event.Payload.(int)
+			nTotal += n
 		}
 
 		if event.Event == progress.Cancelled {
@@ -145,11 +151,17 @@ func downloadAndReportProgress(chain string, sleep float64, chunks []manifest.Ch
 
 		case progress.Start:
 			m.Lock()
-			logger.Log(logger.Progress, "Starting download of ", event.Message, " to ", rng)
+			nStarted++
+			logger.Log(logger.Progress, "Started download ", nStarted, " of ", nTotal, " ", event.Message, " to ", rng)
 			m.Unlock()
 
 		case progress.Update:
-			logger.Log(logger.Info, event.Message, colors.BrightBlue, rng, colors.Off, strings.Repeat(" ", 55))
+			nUpdated++
+			t := colors.Yellow + event.Message + colors.Off
+			if event.Message == "bloom" {
+				t = colors.Magenta + event.Message + colors.Off
+			}
+			logger.Log(logger.Info, "Downloaded", t, "file:", colors.BrightBlue, rng, colors.Off, fmt.Sprintf("(% 4d of % 4d)", nUpdated, nTotal), strings.Repeat(" ", 55))
 
 		case progress.Done:
 			nProcessed++
