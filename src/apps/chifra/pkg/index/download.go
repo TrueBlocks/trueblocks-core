@@ -44,6 +44,8 @@ type jobResult struct {
 	theChunk *manifest.ChunkRecord
 }
 
+type progressChan chan<- *progress.Progress
+
 // WorkerArguments are types meant to hold worker function arguments. We cannot
 // pass the arguments directly, because a worker function is expected to take one
 // parameter of type interface{}.
@@ -51,7 +53,7 @@ type downloadWorkerArguments struct {
 	chain           string
 	chunkType       cache.CacheType
 	ctx             context.Context
-	progressChannel chan<- *progress.Progress
+	progressChannel progressChan
 	gatewayUrl      string
 	downloadWg      *sync.WaitGroup
 	writeChannel    chan *jobResult
@@ -62,7 +64,7 @@ type writeWorkerArguments struct {
 	chain           string
 	chunkType       cache.CacheType
 	ctx             context.Context
-	progressChannel chan<- *progress.Progress
+	progressChannel progressChan
 	cancel          context.CancelFunc
 	writeWg         *sync.WaitGroup
 	isCompressed    bool
@@ -110,25 +112,15 @@ func getDownloadWorker(dlwArgs downloadWorkerArguments) workerFunction {
 			}
 
 			if ctx.Err() != nil {
-				// TODO: BOGUS - Should remove any partially downloaded file
 				chunkPath := cache.NewCachePath(dlwArgs.chain, cache.Index_Final)
-				indexPath := config.ToIndexPath(chunkPath.GetFullPath(chunk.Range))
-				bloomPath := config.ToBloomPath(chunkPath.GetFullPath(chunk.Range))
-				if file.FileExists(indexPath) || file.FileExists(bloomPath) {
-					logger.Log(logger.Warning, colors.Yellow, "Removing failed download", indexPath, colors.Off)
-					time.Sleep(1 * time.Second)
-					if file.FileExists(indexPath) {
-						os.Remove(indexPath)
-					}
-					if file.FileExists(bloomPath) {
-						os.Remove(bloomPath)
-					}
-				}
+				removeLocalFile(config.ToIndexPath(chunkPath.GetFullPath(chunk.Range)), "failed download", progressChannel)
+				removeLocalFile(config.ToBloomPath(chunkPath.GetFullPath(chunk.Range)), "failed download", progressChannel)
 				progressChannel <- &progress.Progress{
 					Payload: &chunk,
 					Event:   progress.Error,
 					Message: ctx.Err().Error(),
 				}
+				time.Sleep(1 * time.Second)
 				return
 			}
 			if err == nil {
@@ -193,7 +185,7 @@ func getWriteWorker(wwArgs writeWorkerArguments) workerFunction {
 
 // DownloadChunks downloads, unzips and saves the chunk of type indicated by chunkType
 // for each pin in pins. Progress is reported to progressChannel.
-func DownloadChunks(chain string, pins []manifest.ChunkRecord, chunkType cache.CacheType, progressChannel chan<- *progress.Progress) {
+func DownloadChunks(chain string, pins []manifest.ChunkRecord, chunkType cache.CacheType, progressChannel progressChan) {
 	// If we make this too big, the pinning service chokes
 	poolSize := utils.Min(10, runtime.NumCPU())
 	// Downloaded content will wait for saving in this channel
@@ -322,7 +314,7 @@ func saveFileContents(wwArgs writeWorkerArguments, res *jobResult) error {
 	_, werr := io.Copy(outputFile, in)
 	if werr != nil {
 		if file.FileExists(outputFile.Name()) {
-			// TODO: BOGUS - Should remove any partially downloaded file
+			// TODO: BOGUS - Should remove any partially downloaded file and logging -- use progressChannel
 			outputFile.Close()
 			os.Remove(outputFile.Name())
 			logger.Log(logger.Warning, "Failed download", colors.Magenta, res.rng, colors.Off, "(will retry)", strings.Repeat(" ", 30))
@@ -339,7 +331,7 @@ func saveFileContents(wwArgs writeWorkerArguments, res *jobResult) error {
 }
 
 // filterDownloadedChunks returns new []manifest.ChunkRecord slice with all chunks from RootPath removed
-func filterDownloadedChunks(chain string, chunks []manifest.ChunkRecord, chunkType cache.CacheType, progressChannel chan<- *progress.Progress) []manifest.ChunkRecord {
+func filterDownloadedChunks(chain string, chunks []manifest.ChunkRecord, chunkType cache.CacheType, progressChannel progressChan) []manifest.ChunkRecord {
 	chunkPath := cache.NewCachePath(chain, chunkType)
 	onDiscMap := make(map[string]bool)
 
@@ -361,7 +353,7 @@ func filterDownloadedChunks(chain string, chunks []manifest.ChunkRecord, chunkTy
 }
 
 // exclude returns a copy of `from` slice with every item with a file name present in `what` map removed
-func exclude(chain string, chunkType cache.CacheType, onDiscMap map[string]bool, chunks []manifest.ChunkRecord, progressChannel chan<- *progress.Progress) []manifest.ChunkRecord {
+func exclude(chain string, chunkType cache.CacheType, onDiscMap map[string]bool, chunks []manifest.ChunkRecord, progressChannel progressChan) []manifest.ChunkRecord {
 	chunksNeeded := make([]manifest.ChunkRecord, 0, len(chunks))
 	for _, item := range chunks {
 		fullPath := item.GetFullPath(chain, chunkType)
@@ -413,7 +405,7 @@ func expectedSize(chunkType cache.CacheType, chunk manifest.ChunkRecord, path st
 	return file.FileSize(path) == expectedSize
 }
 
-func removeLocalFile(fullPath, reason string, progressChannel chan<- *progress.Progress) bool {
+func removeLocalFile(fullPath, reason string, progressChannel progressChan) bool {
 	if file.FileExists(fullPath) {
 		err := os.Remove(fullPath)
 		if err != nil {

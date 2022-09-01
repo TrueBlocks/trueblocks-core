@@ -153,9 +153,10 @@ func downloadAndReportProgress(chain string, sleep float64, chunks []manifest.Ch
 				logger.Log(logger.Progress, "Started download ", nStarted, " of ", nTotal, " ", event.Message, " to ", rng, spaces)
 			}
 
-		case progress.Statistics:
-			n, _ := event.Payload.(int)
-			nTotal += n
+		case progress.Update:
+			msg := fmt.Sprintf("%s%s%s", colors.Yellow, event.Message, colors.Off)
+			logger.Log(logger.Info, msg, spaces)
+			nUpdated++
 
 		case progress.Finished:
 			nProcessed++
@@ -166,10 +167,9 @@ func downloadAndReportProgress(chain string, sleep float64, chunks []manifest.Ch
 			msg := fmt.Sprintf("Unchained %s%s%s file for range %s%s%s (% 4d of %4d)", col, event.Message, colors.Off, colors.BrightBlue, rng, colors.Off, nProcessed, nTotal)
 			logger.Log(logger.Info, msg, spaces)
 
-		case progress.Update:
-			msg := fmt.Sprintf("%s%s%s", colors.Yellow, event.Message, colors.Off)
-			logger.Log(logger.Info, msg, spaces)
-			nUpdated++
+		case progress.Statistics:
+			n, _ := event.Payload.(int)
+			nTotal += n
 
 		default:
 			logger.Log(logger.Info, event.Message, rng, spaces)
