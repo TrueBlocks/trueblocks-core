@@ -409,6 +409,7 @@ func expectedSize(chunkType cache.CacheType, chunk manifest.ChunkRecord, path st
 
 func removeLocalFile(fullPath, reason string, progressChannel progressChan) bool {
 	if file.FileExists(fullPath) {
+		file.AppendToAsciiFile("./onDiscRemovalReasons.txt", fullPath+"\t"+reason+"\n")
 		err := os.Remove(fullPath)
 		if err != nil {
 			progressChannel <- &progress.Progress{
