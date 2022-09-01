@@ -6,6 +6,7 @@ package cache
 
 import (
 	"path"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
@@ -94,7 +95,11 @@ func (cl *CachePath) GetFullPath(name string) string {
 	if name == "" {
 		return path.Join(cl.RootPath, cl.Subdir)
 	}
-	return path.Join(cl.RootPath, cl.Subdir, name+cl.Extension)
+	ext := cl.Extension
+	if strings.Contains(name, ext) {
+		ext = ""
+	}
+	return path.Join(cl.RootPath, cl.Subdir, name+ext)
 }
 
 // String turns cachePath data (RootPath and Subdir) into a path

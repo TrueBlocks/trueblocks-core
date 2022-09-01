@@ -13,10 +13,10 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"log"
 	"net/url"
 	"os"
 	"path"
+	"path/filepath"
 	"runtime"
 	"strings"
 	"sync"
@@ -104,7 +104,6 @@ func getDownloadWorker(dlwArgs downloadWorkerArguments) workerFunction {
 			download, err := pinning.FetchFromGateway(ctx, url.String())
 			time.Sleep(250 * time.Millisecond) // we need to slow things down, otherwise the endpoint rate limits
 			if errors.Is(ctx.Err(), context.Canceled) {
-				// log.Fatalln("User hit Control+C in downloadWorker", url)
 				// The request to fetch the chunk was cancelled, because user has
 				// pressed Ctrl-C
 				return
@@ -112,10 +111,9 @@ func getDownloadWorker(dlwArgs downloadWorkerArguments) workerFunction {
 
 			if ctx.Err() != nil {
 				// TODO: BOGUS - Should remove any partially downloaded file
-				indexChunkPath := cache.NewCachePath(dlwArgs.chain, cache.Index_Final)
-				indexPath := config.ToIndexPath(indexChunkPath.GetFullPath(chunk.Range))
-				bloomChunkPath := cache.NewCachePath(dlwArgs.chain, cache.Index_Bloom)
-				bloomPath := config.ToIndexPath(bloomChunkPath.GetFullPath(chunk.Range))
+				chunkPath := cache.NewCachePath(dlwArgs.chain, cache.Index_Final)
+				indexPath := config.ToIndexPath(chunkPath.GetFullPath(chunk.Range))
+				bloomPath := config.ToBloomPath(chunkPath.GetFullPath(chunk.Range))
 				if file.FileExists(indexPath) || file.FileExists(bloomPath) {
 					logger.Log(logger.Warning, colors.Yellow, "Removing failed download", indexPath, colors.Off)
 					time.Sleep(1 * time.Second)
@@ -126,7 +124,6 @@ func getDownloadWorker(dlwArgs downloadWorkerArguments) workerFunction {
 						os.Remove(bloomPath)
 					}
 				}
-				// log.Fatalln("Error returned by FetchFromGateway in downloadWorker", url, err)
 				progressChannel <- &progress.Progress{
 					Payload: &chunk,
 					Event:   progress.Error,
@@ -142,7 +139,6 @@ func getDownloadWorker(dlwArgs downloadWorkerArguments) workerFunction {
 					theChunk: &chunk,
 				}
 			} else {
-				// log.Fatalln("Error returned by FetchFromGateway in downloadWorker", url, err)
 				progressChannel <- &progress.Progress{
 					Payload: &chunk,
 					Event:   progress.Error,
@@ -188,13 +184,8 @@ func getWriteWorker(wwArgs writeWorkerArguments) workerFunction {
 
 			progressChannel <- &progress.Progress{
 				Payload: res.theChunk,
-				Event:   progress.Update,
+				Event:   progress.Finished,
 				Message: wwArgs.chunkType.String(),
-			}
-
-			progressChannel <- &progress.Progress{
-				Payload: res.theChunk,
-				Event:   progress.Done,
 			}
 		}
 	}
@@ -204,7 +195,7 @@ func getWriteWorker(wwArgs writeWorkerArguments) workerFunction {
 // for each pin in pins. Progress is reported to progressChannel.
 func DownloadChunks(chain string, pins []manifest.ChunkRecord, chunkType cache.CacheType, progressChannel chan<- *progress.Progress) {
 	// If we make this too big, the pinning service chokes
-	poolSize := utils.Min(8, (runtime.NumCPU()*3)/4)
+	poolSize := utils.Min(10, runtime.NumCPU())
 	// Downloaded content will wait for saving in this channel
 	writeChannel := make(chan *jobResult, poolSize)
 	// Context lets us handle Ctrl-C easily
@@ -266,9 +257,9 @@ func DownloadChunks(chain string, pins []manifest.ChunkRecord, chunkType cache.C
 		writeWg.Done()
 	}()
 
-	itemsToDownload := filterDownloadedChunks(chain, pins, chunkType)
+	itemsToDownload := filterDownloadedChunks(chain, pins, chunkType, progressChannel)
 	progressChannel <- &progress.Progress{
-		Event:   progress.Stats,
+		Event:   progress.Statistics,
 		Payload: len(itemsToDownload),
 	}
 	for _, item := range itemsToDownload {
@@ -334,7 +325,7 @@ func saveFileContents(wwArgs writeWorkerArguments, res *jobResult) error {
 			// TODO: BOGUS - Should remove any partially downloaded file
 			outputFile.Close()
 			os.Remove(outputFile.Name())
-			log.Println("Failed download", colors.Magenta, res.rng, colors.Off, "(will retry)", strings.Repeat(" ", 30))
+			logger.Log(logger.Warning, "Failed download", colors.Magenta, res.rng, colors.Off, "(will retry)", strings.Repeat(" ", 30))
 			time.Sleep(1 * time.Second)
 		}
 		// Information about this error
@@ -348,7 +339,7 @@ func saveFileContents(wwArgs writeWorkerArguments, res *jobResult) error {
 }
 
 // filterDownloadedChunks returns new []manifest.ChunkRecord slice with all chunks from RootPath removed
-func filterDownloadedChunks(chain string, chunks []manifest.ChunkRecord, chunkType cache.CacheType) []manifest.ChunkRecord {
+func filterDownloadedChunks(chain string, chunks []manifest.ChunkRecord, chunkType cache.CacheType, progressChannel chan<- *progress.Progress) []manifest.ChunkRecord {
 	chunkPath := cache.NewCachePath(chain, chunkType)
 	onDiscMap := make(map[string]bool)
 
@@ -357,67 +348,58 @@ func filterDownloadedChunks(chain string, chunks []manifest.ChunkRecord, chunkTy
 		return chunks
 	}
 
-	for _, file := range files {
-		itemFn := strings.Replace(file.Name(), chunkPath.Extension, "", -1)
-		onDiscMap[itemFn] = true
+	for _, ff := range files {
+		name := ff.Name()
+		fullPath := chunkPath.GetFullPath(name)
+		if !strings.HasSuffix(name, ".bin") && !strings.HasSuffix(name, ".bloom") {
+			fullPath = filepath.Join(chunkPath.GetFullPath(""), name)
+		}
+		onDiscMap[fullPath] = true
 	}
 
-	return exclude(chain, chunkType, onDiscMap, chunks)
+	return exclude(chain, chunkType, onDiscMap, chunks, progressChannel)
 }
 
-var mm sync.Mutex
-
 // exclude returns a copy of `from` slice with every item with a file name present in `what` map removed
-func exclude(chain string, chunkType cache.CacheType, onDiscMap map[string]bool, chunks []manifest.ChunkRecord) []manifest.ChunkRecord {
-	chunkPath := cache.NewCachePath(chain, chunkType)
-
-	mm.Lock()
-	need := make([]manifest.ChunkRecord, 0, len(chunks))
-	for i, item := range chunks {
-		if onDiscMap[item.Range] {
-			path := chunkPath.GetFullPath(item.Range)
-
-			hashOk, _ := HasValidHeader(chain, path)
-			sizeOk := expectedSize(chunkType, item, path)
+func exclude(chain string, chunkType cache.CacheType, onDiscMap map[string]bool, chunks []manifest.ChunkRecord, progressChannel chan<- *progress.Progress) []manifest.ChunkRecord {
+	chunksNeeded := make([]manifest.ChunkRecord, 0, len(chunks))
+	for _, item := range chunks {
+		fullPath := item.GetFullPath(chain, chunkType)
+		if onDiscMap[fullPath] {
+			var hashOk bool = true
+			if chunkType == cache.Index_Final {
+				hashOk, _ = HasValidHeader(chain, fullPath)
+			}
+			sizeOk := expectedSize(chunkType, item, fullPath)
 
 			if !hashOk {
-				logger.Log(logger.Info, i, chunkType, "file for range", item.Range, "exists, but has an invalid header.")
-				os.Remove(path)
-
+				if removeLocalFile(fullPath, "invalid header", progressChannel) {
+					onDiscMap[fullPath] = false
+				}
 			} else if !sizeOk {
-				logger.Log(logger.Info, i, chunkType, "file for range", item.Range, "exists, but is the wrong size.")
-				os.Remove(path)
-
+				if removeLocalFile(fullPath, "unexpected size", progressChannel) {
+					onDiscMap[fullPath] = false
+				}
 			} else {
-				onDiscMap[item.Range] = false
+				onDiscMap[fullPath] = false
 				continue
 			}
-		} else {
-			logger.Log(logger.Info, i, chunkType, "file for range", item.Range, "does not exist.")
 		}
-		need = append(need, item)
+		chunksNeeded = append(chunksNeeded, item)
 	}
-	mm.Unlock()
 
-	// Any file still in this list needs to be removed, either because it's incorrect (wrong size or
-	// wrong header), or because it's a file with a range name not found in the manifest
-	for k, v := range onDiscMap {
-		if v {
-			chunkPath := cache.NewCachePath(chain, chunkType)
-			path := chunkPath.GetFullPath(k)
-			if file.FileExists(path) {
-				err := os.Remove(path)
-				if err != nil {
-					logger.Log(logger.Info, "Failed to delete: ", err)
-				} else {
-					fmt.Println(path, "is on disc but not in the manifest, it was removed", file.FileExists(path))
-				}
-			}
+	// Any file still in this list is not in the manifest and should be removed
+	for path, b := range onDiscMap {
+		if b {
+			removeLocalFile(path, "unknown file", progressChannel)
 		}
 	}
 
-	logger.Log(logger.InfoC, fmt.Sprintf("Number of files to download %d", len(need)))
-	return need
+	progressChannel <- &progress.Progress{
+		Event:   progress.Update,
+		Message: fmt.Sprintf("Number of files to download %d", len(chunksNeeded)),
+	}
+	return chunksNeeded
 }
 
 func expectedSize(chunkType cache.CacheType, chunk manifest.ChunkRecord, path string) bool {
@@ -429,4 +411,22 @@ func expectedSize(chunkType cache.CacheType, chunk manifest.ChunkRecord, path st
 		expectedSize = chunk.IndexSize
 	}
 	return file.FileSize(path) == expectedSize
+}
+
+func removeLocalFile(fullPath, reason string, progressChannel chan<- *progress.Progress) bool {
+	if file.FileExists(fullPath) {
+		err := os.Remove(fullPath)
+		if err != nil {
+			progressChannel <- &progress.Progress{
+				Event:   progress.Error,
+				Message: fmt.Sprintf("Failed to remove file %s [%s]", fullPath, err.Error()),
+			}
+		} else {
+			progressChannel <- &progress.Progress{
+				Event:   progress.Update,
+				Message: fmt.Sprintf("File %s removed [%s]", fullPath, reason),
+			}
+		}
+	}
+	return file.FileExists(fullPath)
 }

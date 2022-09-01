@@ -5,9 +5,11 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -44,6 +46,17 @@ type ChunkRecord struct {
 	BloomSize int64          `json:"bloomSize"`
 	IndexHash types.IpfsHash `json:"indexHash"`
 	IndexSize int64          `json:"indexSize"`
+}
+
+func (ch *ChunkRecord) GetFullPath(chain string, cacheType cache.CacheType) string {
+	switch cacheType {
+	case cache.Index_Bloom:
+		return fmt.Sprintf("%s.bloom", filepath.Join(config.GetPathToIndex(chain), "blooms", ch.Range))
+	case cache.Index_Final:
+		return fmt.Sprintf("%s.bin", filepath.Join(config.GetPathToIndex(chain), "finalized", ch.Range))
+	}
+	log.Fatal("Should not happen.")
+	return ""
 }
 
 type Source uint

@@ -8,13 +8,13 @@ type Event uint
 
 const (
 	BeforeStart Event = iota
-	Stats
 	Start
 	Update
-	Done
+	Finished
 	Error
 	AllDone
 	Cancelled
+	Statistics
 )
 
 type Progress struct {

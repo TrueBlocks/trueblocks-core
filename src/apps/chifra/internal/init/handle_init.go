@@ -127,9 +127,6 @@ func downloadAndReportProgress(chain string, sleep float64, chunks []manifest.Ch
 		var rng string
 		if ok {
 			rng = chunk.Range
-		} else if event.Event == progress.Stats {
-			n, _ := event.Payload.(int)
-			nTotal += n
 		}
 
 		if event.Event == progress.Cancelled {
@@ -138,10 +135,12 @@ func downloadAndReportProgress(chain string, sleep float64, chunks []manifest.Ch
 		}
 
 		if event.Event == progress.AllDone {
-			logger.Log(logger.Info, "Completed processing", nProcessed, chunkType, "files.", strings.Repeat(" ", 60))
+			msg := fmt.Sprintf("Completed updating %s files.", chunkType)
+			logger.Log(logger.Info, msg, strings.Repeat(" ", 60))
 			break
 		}
 
+		m.Lock()
 		switch event.Event {
 		case progress.Error:
 			logger.Log(logger.Error, event.Message)
@@ -150,32 +149,37 @@ func downloadAndReportProgress(chain string, sleep float64, chunks []manifest.Ch
 			}
 
 		case progress.Start:
-			m.Lock()
 			nStarted++
-			logger.Log(logger.Progress, "Started download ", nStarted, " of ", nTotal, " ", event.Message, " to ", rng)
-			m.Unlock()
+			logger.Log(logger.Progress, "Started download ", nStarted, " of ", nTotal, " ", event.Message, " to ", rng, spaces)
+
+		case progress.Statistics:
+			n, _ := event.Payload.(int)
+			nTotal += n
+
+		case progress.Finished:
+			nProcessed++
+			col := colors.Yellow
+			if event.Message == "bloom" {
+				col = colors.Magenta
+			}
+			msg := fmt.Sprintf("Unchained %s%s%s file for range %s%s%s (% 4d of %4d)", col, event.Message, colors.Off, colors.BrightBlue, rng, colors.Off, nProcessed, nTotal)
+			logger.Log(logger.Info, msg, spaces)
 
 		case progress.Update:
+			msg := fmt.Sprintf("%s%s%s", colors.Yellow, event.Message, colors.Off)
+			logger.Log(logger.Info, msg, spaces)
 			nUpdated++
-			t := colors.Yellow + event.Message + colors.Off
-			if event.Message == "bloom" {
-				t = colors.Magenta + event.Message + colors.Off
-			}
-			rng = colors.BrightBlue + rng + colors.Off
-			logger.Log(logger.Info, "Unchained", t, "file for range", rng, fmt.Sprintf("(% 4d of % 4d)", nUpdated, nTotal), strings.Repeat(" ", 55))
-
-		case progress.Done:
-			nProcessed++
 
 		default:
-			logger.Log(logger.Info, event.Message, rng)
+			logger.Log(logger.Info, event.Message, rng, spaces)
 		}
+		m.Unlock()
 
-		if sleep != 0.0 {
-			logger.Log(logger.Info, "")
-			logger.Log(logger.Info, "Sleeping between downloads for", sleep, "seconds")
-			time.Sleep(time.Duration(sleep*1000) * time.Millisecond)
-		}
+		// if sleep != 0.0 {
+		// 	logger.Log(logger.Info, "")
+		// 	logger.Log(logger.Info, "Sleeping between downloads for", sleep, "seconds")
+		// 	time.Sleep(time.Duration(sleep*1000) * time.Millisecond)
+		// }
 	}
 
 	return failed, cancelled
@@ -211,3 +215,5 @@ func retry(failedChunks []manifest.ChunkRecord, nTimes int, downloadChunksFunc f
 
 	return len(chunksToRetry)
 }
+
+var spaces = strings.Repeat(" ", 55)

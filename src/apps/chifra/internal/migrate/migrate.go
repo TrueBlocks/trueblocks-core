@@ -1,36 +1,44 @@
 package migrate
 
+import (
+	"log"
+	"strings"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
+)
+
 func CheckBackLevelIndex(chain string, missingOkay bool) {
-    // TODO: BOGUS - NEEDS WORK
-	return
-	// 	fileName := config.GetPathToIndex(chain) + "finalized/000000000-000000000.bin"
-	// 	if !file.FileExists(fileName) && missingOkay {
-	// 		return
-	// 	}
-	// 	ok, err := index.HasValidHeader(chain, fileName)
-	// 	if ok && err == nil {
-	// 		return
-	// 	}
+	fileName := config.GetPathToIndex(chain) + "finalized/000000000-000000000.bin"
+	if !file.FileExists(fileName) && missingOkay {
+		return
+	}
+	ok, err := index.HasValidHeader(chain, fileName)
+	if ok && err == nil {
+		return
+	}
 
-	// 	const BackLevelVersion string = `
+	const BackLevelVersion string = `
 
-	//   A back-level version of an index file was found at
+  A back-level version of an index file was found at
 
-	//     {[{FILE}]}
+    {[{FILE}]}
+	
+  Please carefully follow all migrations up to and including {0}
+  before proceeding.
 
-	//   Please carefully follow all migrations up to and including {0}
-	//   before proceeding.
+  See https://github.com/TrueBlocks/trueblocks-core/blob/develop/MIGRATIONS.md
 
-	//   See https://github.com/TrueBlocks/trueblocks-core/blob/develop/MIGRATIONS.md
+  [{VERSION}]
 
-	//   [{VERSION}]
-
-	// `
-	//
-	//	msg := strings.Replace(BackLevelVersion, "{0}", "{v0.40.0-beta}", -1)
-	//	msg = strings.Replace(msg, "[{VERSION}]", version.LibraryVersion, -1)
-	//	msg = strings.Replace(msg, "[{FILE}]", fileName, -1)
-	//	msg = strings.Replace(msg, "{", colors.Green, -1)
-	//	msg = strings.Replace(msg, "}", colors.Off, -1)
-	//	log.Fatalf(msg)
+`
+	msg := strings.Replace(BackLevelVersion, "{0}", "{v0.40.0-beta}", -1)
+	msg = strings.Replace(msg, "[{VERSION}]", version.LibraryVersion, -1)
+	msg = strings.Replace(msg, "[{FILE}]", fileName, -1)
+	msg = strings.Replace(msg, "{", colors.Green, -1)
+	msg = strings.Replace(msg, "}", colors.Off, -1)
+	log.Fatalf(msg)
 }

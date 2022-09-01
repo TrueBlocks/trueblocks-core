@@ -101,9 +101,9 @@ func getManifestCidFromContract(chain string) (string, error) {
 // Manifest struct. Both JSON and TSV formats are supported, but the server has
 // to set the correct Content-Type header.
 func downloadManifest(chain, gatewayUrl, cid string) (*Manifest, error) {
-	logger.Log(logger.Info, "Chain:", chain)
-	logger.Log(logger.Info, "Gateway:", gatewayUrl)
-	logger.Log(logger.Info, "CID:", cid)
+	logger.Log(logger.InfoC, "Chain:", chain)
+	logger.Log(logger.InfoC, "Gateway:", gatewayUrl)
+	logger.Log(logger.InfoC, "CID:", cid)
 
 	url, err := url.Parse(gatewayUrl)
 	if err != nil {
