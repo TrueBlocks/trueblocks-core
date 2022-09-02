@@ -13,9 +13,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"net/url"
 	"os"
-	"path"
 	"path/filepath"
 	"runtime"
 	"strings"
@@ -79,7 +77,6 @@ func getDownloadWorker(dlwArgs downloadWorkerArguments) workerFunction {
 	ctx := dlwArgs.ctx
 
 	return func(param interface{}) {
-		url, _ := url.Parse(dlwArgs.gatewayUrl)
 		chunk := param.(manifest.ChunkRecord)
 
 		defer dlwArgs.downloadWg.Done()
@@ -88,14 +85,12 @@ func getDownloadWorker(dlwArgs downloadWorkerArguments) workerFunction {
 		case <-ctx.Done():
 			// Cancel
 			return
+
 		default:
-			// Perform download => unzip-and-save
 			hash := chunk.BloomHash
 			if dlwArgs.chunkType == cache.Index_Final {
 				hash = chunk.IndexHash
 			}
-
-			url.Path = path.Join(url.Path, hash.String())
 
 			progressChannel <- &progress.Progress{
 				Payload: &chunk,
@@ -103,7 +98,7 @@ func getDownloadWorker(dlwArgs downloadWorkerArguments) workerFunction {
 				Message: hash.String(),
 			}
 
-			download, err := pinning.FetchFromGateway(ctx, url.String())
+			download, err := pinning.FetchFromGateway(ctx, dlwArgs.gatewayUrl, hash.String())
 			time.Sleep(250 * time.Millisecond) // we need to slow things down, otherwise the endpoint rate limits
 			if errors.Is(ctx.Err(), context.Canceled) {
 				// The request to fetch the chunk was cancelled, because user has

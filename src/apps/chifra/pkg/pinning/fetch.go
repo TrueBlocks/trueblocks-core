@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/url"
+	"path"
 	"strconv"
 )
 
@@ -16,8 +18,10 @@ type FetchResult struct {
 }
 
 // FetchFromGateway downloads a chunk from an IPFS gateway using HTTP
-func FetchFromGateway(ctx context.Context, url string) (*FetchResult, error) {
-	request, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+func FetchFromGateway(ctx context.Context, gateway, hash string) (*FetchResult, error) {
+	url, _ := url.Parse(gateway)
+	url.Path = path.Join(url.Path, hash)
+	request, err := http.NewRequestWithContext(ctx, "GET", url.String(), nil)
 	if err != nil {
 		// log.Fatalln("NewRequestWithContext failed in FetFromGateway with", url)
 		return nil, err
