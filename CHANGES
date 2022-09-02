@@ -1,0 +1,18 @@
+# Changes for Each Version
+
+This file lists changes per version (starting with version v0.40.0).
+
+## v0.40.0 - September 4, 2022
+
+- Complete re-write of the scraper
+  - removes all C++ code related to the scraper -- all GoLang now
+  - doubles the speed of the scraper by reading timestamps in Blaze
+  - more robust error handling
+  - writes the IPFS hash of the spec into the header of each index file
+- Wrote the version v0.40.0 of the [Unchained Index Specification](https://trueblocks.io/papers/2022/file-format-spec-v0.40.0-beta.pdf)
+- Enables pinning to locally running IPFS node
+- Expands the idea of Pinning Service to allow for non-Pinata providers
+- Adds capability to index any chain (although we only support mainnet, sepolia, and gnosis)
+- Re-wrote the Unchained Index smart contract to allow anyone to publish IPFS hashes with reasons
+- Added `chifra chunks` routines to manage, clean, verify, and export index chunk data
+- A lot of preparation for eventual removal of all C++ code from the code base

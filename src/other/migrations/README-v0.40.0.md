@@ -12,19 +12,12 @@ This resulted in corrupted data somewhere between blocks 13,300,000 and 13,400,0
 reporting addresses accurately (and TrueBlocks didn't notice). This resulted in missing appearance records for
 some block ranges.
 
-This migration corrects those errors, but it does a whole lot more than that. This update also accomplishes the following major revisions:
-
-- Doubled the speed of the scrape due to not repeating for timestamps 
-- Write the hash of the PDF spec into the data files 
-- Allow for pinning to local IPFS daemon and pinning service 
-- Support for mainnet, sepolia, gnosis. Other chains are supported, but TrueBlocks does not produce or pin other indexes
-- Wrote the spec (finally) 
-- New version of the smart contract allows anyone to publish 
-
-The following instructions apply only to Mainnet Ethereum. You may adjust for other chains by adding the `--chain` option. See the note
-below if you're running against other chains.
+This migration corrects those errors, but it does [a WHOLE LOT of other things as well](../../../CHANGES).
 
 ## What do I need to do?
+
+The following migration instructions apply only to Mainnet Ethereum. You may adjust for other chains by adding the `--chain` option. See the note
+below if you're running against other chains.
 
 The migration consists of the following steps:
 
@@ -33,7 +26,7 @@ The migration consists of the following steps:
 - Run and test the migration commands
 - Restart long-running processes
 
-Depending on the machine you're on and your internet connection, the migration may take anywhere between a few minutes and a few hours.
+Depending on your internet connection, the migration may take anywhere between a few minutes and a few hours.
 
 ### Before you start
 
@@ -44,9 +37,10 @@ Stop any long running TrueBlocks processes (such as the `chifra scrape`, `chifra
 You will need the following folder locations to proceed. Get these values by running `chifra status --terse`:
 
 1. `$configPath`
+2. `$cachePath`
 3. `$indexPath`
 
-Backup these folders if you wish (but note that `$indexPath` can be rebuilt if things go wrong, so this step is optional.)
+Backup these folders if you wish (but note that folders are caches, so they can be reproduced.)
 
 ### Instruction
 
@@ -57,32 +51,38 @@ Change directory into the `$configPath`: `cd <configPath>`
 
 Edit `$configPath/trueBlocks.toml`
 
-1. Remove all lines that contains the word `pinGateway`
-2. Add the following three lines in the suggested chain configurations:
+1. Remove all lines in this file that contain the word `pinGateway`
+2. Add the following three lines in the suggested chain configuration sections:
 
 ```[toml]
-[mainnet]
+[chains.mainnet]
+...
 ipfsGateway="https://ipfs.unchainedindex.io/ipfs/"
+...
 
-[gnosis]
+[chains.gnosis]
+...
 ipfsGateway="https://gnosis.unchainedindex.io/ipfs/"
+...
 
-[sepolia]
+[chains.sepolia]
+...
 ipfsGateway="https://sepolia.unchainedindex.io/ipfs/"
+...
 ```
 
-3. Tell the system that you've completed this part of the migration by changing the version string in the TOML file. If the `[version]` section does not exist, add it.
+3. Tell the system that you've made these changes by changing the version string in the TOML file. If the `[version]` section does not exist, add it.
 
 ```[toml]
 [version]
 current = "0.40.0-beta"
 ```
 
-Ignore the note in **trueBlocks.toml** telling you not to edit this value if it's present.
+Ignore the note in **trueBlocks.toml** telling you not to edit this value, if it's present.
 
-**Note:** If you're running your own ipfs gateways and you're pinning your own index, adjust the `ipfsGateway` values as necessary.
+**Note:** If you're running your own ipfs gateways and you're pinning the index yourself, adjust the `ipfsGateway` values as necessary.
 
-**Note:** The careful reader will notice that TrueBlocks now supports indexing three chains: `mainnet`, `gnosis`, and `sepolia`. You may add your own chains. See the documentation.
+**Note:** The careful reader will notice that TrueBlocks now indexes and publishes the index for three chains: `mainnet`, `gnosis`, and `sepolia`. You may add your own chains. See the documentation.
 
 ----
 ### Run the migration command
