@@ -76,11 +76,10 @@ func getManifestCidFromContract(chain string) (string, error) {
 	}
 
 	if len(response) == 0 {
-		msg := fmt.Sprintf("empty response %sfrom provider %s on chain %s", response, provider, chain)
-		// TODO Check if syncing=false
-		//response, err := rpcClient.IsSyncing(context.Background())
-		response, err := ethClient.SyncProgress(
-			context.Background())
+		msg := fmt.Sprintf("empty response %sfrom provider %s on chain %s",
+			response, provider, chain)
+		// Node may be syncing
+		response, err := ethClient.SyncProgress(context.Background())
 		// If synced, return the empty response message.
 		if response == nil {
 			return "", fmt.Errorf(msg)
@@ -89,7 +88,8 @@ func getManifestCidFromContract(chain string) (string, error) {
 				return "", fmt.Errorf("assessing sync progress: %w", err)
 			}
 			// Syncing
-			msg := fmt.Sprintf("chain %s on provider %s is syncing. Please wait until this is finished.", chain, provider)
+			msg := fmt.Sprintf("chain %s on provider %s is syncing. \
+				Please wait until this is finished.", chain, provider)
 			return "", fmt.Errorf(msg)
 		}
 	}
