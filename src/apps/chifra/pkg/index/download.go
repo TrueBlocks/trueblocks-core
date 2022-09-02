@@ -187,7 +187,7 @@ func getWriteWorker(wwArgs writeWorkerArguments) workerFunction {
 // for each pin in pins. Progress is reported to progressChannel.
 func DownloadChunks(chain string, pins []manifest.ChunkRecord, chunkType cache.CacheType, progressChannel progressChan) {
 	// If we make this too big, the pinning service chokes
-	poolSize := utils.Min(10, runtime.NumCPU())
+	poolSize := utils.Min(10, (runtime.NumCPU()*3)/2)
 	// Downloaded content will wait for saving in this channel
 	writeChannel := make(chan *jobResult, poolSize)
 	// Context lets us handle Ctrl-C easily
@@ -346,7 +346,6 @@ func filterDownloadedChunks(chain string, chunks []manifest.ChunkRecord, chunkTy
 		if !strings.HasSuffix(name, ".bin") && !strings.HasSuffix(name, ".bloom") {
 			fullPath = filepath.Join(chunkPath.GetFullPath(""), name)
 		}
-		file.AppendToAsciiFile("./onDisc.txt", fullPath+"\n")
 		onDiscMap[fullPath] = true
 	}
 
@@ -384,7 +383,6 @@ func exclude(chain string, chunkType cache.CacheType, onDiscMap map[string]bool,
 	// Any file still in this list is not in the manifest and should be removed
 	for fullPath, b := range onDiscMap {
 		if b {
-			file.AppendToAsciiFile("./onDiscRemovals.txt", fullPath+"\n")
 			removeLocalFile(fullPath, "unknown file", progressChannel)
 		}
 	}
@@ -409,7 +407,6 @@ func expectedSize(chunkType cache.CacheType, chunk manifest.ChunkRecord, path st
 
 func removeLocalFile(fullPath, reason string, progressChannel progressChan) bool {
 	if file.FileExists(fullPath) {
-		file.AppendToAsciiFile("./onDiscRemovalReasons.txt", fullPath+"\t"+reason+"\n")
 		err := os.Remove(fullPath)
 		if err != nil {
 			progressChannel <- &progress.Progress{

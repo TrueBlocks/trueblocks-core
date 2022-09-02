@@ -1,4 +1,6 @@
 init?
 {
-  "msg": "chifra init is not processed in test mode."
+  "errors": [
+    "chifra init can not be tested in test mode"
+  ]
 }
