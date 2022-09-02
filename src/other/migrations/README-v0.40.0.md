@@ -1,6 +1,6 @@
 # v0.40.0 Unchained Index Version 2.0
 
-(September 2, 2022)
+(September 4, 2022)
 
 ## Why the Change
 
