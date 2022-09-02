@@ -11,6 +11,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
+// TODO: BOGUS - MIGRATION STUFF
 func CheckBackLevelIndex(chain string, missingOkay bool) {
 	fileName := config.GetPathToIndex(chain) + "finalized/000000000-000000000.bin"
 	if !file.FileExists(fileName) && missingOkay {

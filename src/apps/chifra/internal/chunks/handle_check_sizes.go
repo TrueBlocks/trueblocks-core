@@ -14,8 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// CheckInternal reads the header of each chunk on disc looking for the Magic number and
-// the HeaderMagicHash for expected values.
+// CheckSizes compares the file on disc to the file size suggested in the manifest
 func (opts *ChunksOptions) CheckSizes(fileNames []string, blockNums []uint64, cacheManifest *manifest.Manifest, remoteManifest *manifest.Manifest, report *types.ReportCheck) error {
 
 	theManifest := cacheManifest

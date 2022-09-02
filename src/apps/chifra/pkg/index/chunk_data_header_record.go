@@ -41,6 +41,7 @@ func readHeader(fl *os.File) (header HeaderRecord, err error) {
 
 	// Because we call this frequently, we only check that the magic number is correct
 	// we let the caller check the hash if needed
+	// TODO: BOGUS - MIGRATION STUFF
 	if header.Magic != file.MagicNumber {
 		return header, fmt.Errorf("magic number in file %s is incorrect, expected %d, got %d", fl.Name(), file.MagicNumber, header.Magic)
 	}
@@ -64,6 +65,7 @@ func ReadChunkHeader(chain, fileName string, checkHash bool) (header HeaderRecor
 		return
 	}
 
+	// TODO: BOGUS - MIGRATION STUFF
 	headerHash := hexutil.Encode(header.Hash.Bytes())
 	hasMagicHash := headerHash == unchained.HeaderMagicHash
 	if !hasMagicHash {
@@ -123,6 +125,7 @@ func WriteChunkHeaderHash(chain, fileName string, headerHash common.Hash) ( /* c
 	return false, err
 }
 
+// TODO: BOGUS - MIGRATION STUFF
 func HasValidHeader(chain, fileName string) (bool, error) {
 	header, err := ReadChunkHeader(chain, fileName, true)
 	if err != nil {
