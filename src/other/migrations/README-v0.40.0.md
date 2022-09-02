@@ -87,6 +87,39 @@ Ignore the note in **trueBlocks.toml** telling you not to edit this value, if it
 ----
 ### Run the migration command
 
+# THE FOLLOWING IS INCOMPLETE
+# DO THIS PART
+
+After building the `feature/new-unchained-index-2.0` branch, run
+
+```
+chifra chunks index --check 2>&1 | tee file.1
+```
+
+You should get a bunch of errors.
+
+Then run
+
+```
+chifra index --all 2>&1 | tee file.2
+```
+
+This may take a very long time, let it run.
+
+Then do
+
+```
+chifra chunks index --check 2>&1 | tee -a file.3
+```
+
+If this works without errors, we are ready. If this reports errors, repeat the `chifra init --all` until you get no more errors on the above command.
+----
+
+# YOU CAN STOP HERE
+# YOU CAN STOP HERE
+----
+
+# DO NOT DO THE BELOW PART
 Prior to completing the next part of the migration, you may wish to make a backup of `$cachePath/monitors` and `$indexPath`. However, these folders are caches, so they can be re-created if something goes wrong.
 
 In the section, you will
@@ -116,6 +149,7 @@ You will know you're finished if the command `chifra status index --migrate inde
 **Note:** If you experience problems with a monitored addresses, you can always start fresh by removing it and re-running `chifra list` on that address. To remove a monitor, run `chifra monitors --delete --remove <address>`. 
 
 **Note:** If you experience problems with these steps, you can always just remove the entire `$indexPath` folder. It will be re-built with `chifra init --all`. If you do this, also remove the `$cachePath/monitors` folder. Your monitors can be re-built as well with `chifra list`.
+# DO NOT DO THE ABOVE PART
 
 ## You're finished!
 
