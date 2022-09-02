@@ -1,40 +1,28 @@
-TIMESTAMPS BOGUS
+# v0.40.0 Unchained Index Version 2.0
 
-chifra chunks index --truncate  should remove the staging, ripe, unripe, and map folders even if there are no blooms or finalized because they've already been removed
-chifra chunks index --truncate 0 --chain mainnet should work even if there are old-fashioned index files in place so we can use it for migration
-
-Working
-chan_cnt and block_chan_cnt are not longer options as are not other things - they are env variables
-run and indexer are both invalid options on chifra scrape now
-
-
-- Still not working 
-- On chains that have missing blocks, timestamps were incorrect 
-- Doubled the speed of the scrape due to not repeating for timestamps 
-- Write the hash of the PDF spec into the data files 
-- Allow for pinning to local IPFS daemon and pinning service 
-- Support for mainnet, sepolia, gnosis, and we've seen BSC working 
-- Wrote the spec (finally) 
-- New version of the smart contract allows anyone to publish 
-- https://docs.ipfs.io/install/command-line/#command-line
-
-# v0.40.0 Fixes Unchained Index
-
-(July 4, 2022)
+(September 2, 2022)
 
 ## Why the Change
 
 A few months ago, we made [this announcement](https://discord.com/channels/570963863428661248/904527518948806686/955114745369854044)
-regarding a certain bug in Erigon (or TrueBlocks, or most likely both). We thought we had protected ourselves from this problem,
+regarding a certain bug in Erigon (or TrueBlocks, or more likely both). We thought we had protected ourselves from this problem,
 but we were wrong.
 
 This resulted in corrupted data somewhere between blocks 13,300,000 and 13,400,000 (and elsewhere).  Erigon stopped
 reporting addresses accurately (and TrueBlocks didn't notice). This resulted in missing appearance records for
 some block ranges.
 
-This migration corrects those errors.
+This migration corrects those errors, but it does a whole lot more than that. This update also accomplishes the following major revisions:
 
-These instructions apply only to Mainnet Ethereum. See the note below if you're running against other chains.
+- Doubled the speed of the scrape due to not repeating for timestamps 
+- Write the hash of the PDF spec into the data files 
+- Allow for pinning to local IPFS daemon and pinning service 
+- Support for mainnet, sepolia, gnosis. Other chains are supported, but TrueBlocks does not produce or pin other indexes
+- Wrote the spec (finally) 
+- New version of the smart contract allows anyone to publish 
+
+The following instructions apply only to Mainnet Ethereum. You may adjust for other chains by adding the `--chain` option. See the note
+below if you're running against other chains.
 
 ## What do I need to do?
 
@@ -42,8 +30,7 @@ The migration consists of the following steps:
 
 - Stop long-running processes
 - Edit a configuration file
-- Run migration commands
-- Test the migration
+- Run and test the migration commands
 - Restart long-running processes
 
 Depending on the machine you're on and your internet connection, the migration may take anywhere between a few minutes and a few hours.
@@ -57,10 +44,9 @@ Stop any long running TrueBlocks processes (such as the `chifra scrape`, `chifra
 You will need the following folder locations to proceed. Get these values by running `chifra status --terse`:
 
 1. `$configPath`
-2. `$cachePath`
 3. `$indexPath`
 
-Backup these folders if you wish (but note that they can be rebuilt or recovered if things go wrong, so this step is optional.)
+Backup these folders if you wish (but note that `$indexPath` can be rebuilt if things go wrong, so this step is optional.)
 
 ### Instruction
 
@@ -103,11 +89,11 @@ Ignore the note in **trueBlocks.toml** telling you not to edit this value if it'
 
 Prior to completing the next part of the migration, you may wish to make a backup of `$cachePath/monitors` and `$indexPath`. However, these folders are caches, so they can be re-created if something goes wrong.
 
-This part of the migration does three things:
+In the section, you will
 
-1. Removes temporary folders in `$indexPath` (`staging`, `unripe`, `ripe`, and `maps`)
-2. Removes incorrect Index and Bloom files from `$indexPath/finalized/` and `$indexPath/blooms/`.
-3. Removes incorrect values from existing monitors (see the note below).
+1. Remove temporary folders in `$indexPath` (`staging`, `unripe`, `ripe`, and `maps`)
+2. Remove incorrect Index and Bloom files from `$indexPath/finalized/` and `$indexPath/blooms/`.
+3. Remove incorrect values from existing monitors (see the note below).
 
 First, confirm that you need to run the migration
 
@@ -156,3 +142,11 @@ Prior to version 0.40.0-beta, we only supported Ethereum mainnet. With this upda
 ## Previous Migration
 
 [Click here](./README-v0.30.0.md) for the previous migration.
+
+
+
+## Breaking Changes
+
+Working
+chan_cnt and block_chan_cnt are not longer options as are not other things - they are env variables
+run and indexer are both invalid options on chifra scrape now
