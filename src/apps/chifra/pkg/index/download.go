@@ -7,8 +7,6 @@ package index
 // Fetching, unzipping, validating and saving both index and bloom chunks
 
 import (
-	"bytes"
-	"compress/gzip"
 	"context"
 	"errors"
 	"fmt"
@@ -48,8 +46,6 @@ type progressChan chan<- *progress.Progress
 // pass the arguments directly, because a worker function is expected to take one
 // parameter of type interface{}.
 type downloadWorkerArguments struct {
-	chain           string
-	chunkType       cache.CacheType
 	ctx             context.Context
 	progressChannel progressChan
 	gatewayUrl      string
@@ -59,20 +55,17 @@ type downloadWorkerArguments struct {
 }
 
 type writeWorkerArguments struct {
-	chain           string
-	chunkType       cache.CacheType
 	ctx             context.Context
 	progressChannel progressChan
 	cancel          context.CancelFunc
 	writeWg         *sync.WaitGroup
-	isCompressed    bool
 }
 
 // worker function type as accepted by Ants
 type workerFunction func(interface{})
 
 // getDownloadWorker returns a worker function that downloads a chunk
-func getDownloadWorker(dlwArgs downloadWorkerArguments) workerFunction {
+func getDownloadWorker(dlwArgs downloadWorkerArguments, chain string, chunkType cache.CacheType) workerFunction {
 	progressChannel := dlwArgs.progressChannel
 	ctx := dlwArgs.ctx
 
@@ -88,7 +81,7 @@ func getDownloadWorker(dlwArgs downloadWorkerArguments) workerFunction {
 
 		default:
 			hash := chunk.BloomHash
-			if dlwArgs.chunkType == cache.Index_Final {
+			if chunkType == cache.Index_Final {
 				hash = chunk.IndexHash
 			}
 
@@ -107,7 +100,7 @@ func getDownloadWorker(dlwArgs downloadWorkerArguments) workerFunction {
 			}
 
 			if ctx.Err() != nil {
-				chunkPath := cache.NewCachePath(dlwArgs.chain, cache.Index_Final)
+				chunkPath := cache.NewCachePath(chain, cache.Index_Final)
 				removeLocalFile(config.ToIndexPath(chunkPath.GetFullPath(chunk.Range)), "failed download", progressChannel)
 				removeLocalFile(config.ToBloomPath(chunkPath.GetFullPath(chunk.Range)), "failed download", progressChannel)
 				progressChannel <- &progress.Progress{
@@ -137,7 +130,7 @@ func getDownloadWorker(dlwArgs downloadWorkerArguments) workerFunction {
 }
 
 // getWriteWorker returns a worker function that writes chunk to disk
-func getWriteWorker(wwArgs writeWorkerArguments) workerFunction {
+func getWriteWorker(wwArgs writeWorkerArguments, chain string, chunkType cache.CacheType) workerFunction {
 	progressChannel := wwArgs.progressChannel
 	ctx := wwArgs.ctx
 
@@ -152,9 +145,8 @@ func getWriteWorker(wwArgs writeWorkerArguments) workerFunction {
 			return
 		default:
 			trapChannel := sigintTrap.Enable(ctx, wwArgs.cancel)
-			err := saveFileContents(wwArgs, res)
+			err := writeBytesToDisc(wwArgs, chain, chunkType, res)
 			sigintTrap.Disable(trapChannel)
-
 			if errors.Is(ctx.Err(), context.Canceled) {
 				// Ctrl-C was pressed, cancel
 				return
@@ -172,21 +164,22 @@ func getWriteWorker(wwArgs writeWorkerArguments) workerFunction {
 			progressChannel <- &progress.Progress{
 				Payload: res.theChunk,
 				Event:   progress.Finished,
-				Message: wwArgs.chunkType.String(),
+				Message: chunkType.String(),
 			}
 		}
 	}
 }
 
 // DownloadChunks downloads, unzips and saves the chunk of type indicated by chunkType
-// for each pin in pins. Progress is reported to progressChannel.
-func DownloadChunks(chain string, pins []manifest.ChunkRecord, chunkType cache.CacheType, progressChannel progressChan) {
+// for each chunk in chunks. Progress is reported to progressChannel.
+func DownloadChunks(chain string, chunks []manifest.ChunkRecord, chunkType cache.CacheType, progressChannel progressChan) {
 	// If we make this too big, the pinning service chokes
 	poolSize := utils.Min(10, (runtime.NumCPU()*3)/2)
 	// Downloaded content will wait for saving in this channel
 	writeChannel := make(chan *jobResult, poolSize)
 	// Context lets us handle Ctrl-C easily
 	ctx, cancel := context.WithCancel(context.Background())
+
 	var downloadWg sync.WaitGroup
 	var writeWg sync.WaitGroup
 
@@ -195,8 +188,6 @@ func DownloadChunks(chain string, pins []manifest.ChunkRecord, chunkType cache.C
 	}()
 
 	dlwArgs := downloadWorkerArguments{
-		chain:           chain,
-		chunkType:       chunkType,
 		ctx:             ctx,
 		progressChannel: progressChannel,
 		downloadWg:      &downloadWg,
@@ -204,28 +195,25 @@ func DownloadChunks(chain string, pins []manifest.ChunkRecord, chunkType cache.C
 		writeChannel:    writeChannel,
 		nRetries:        8,
 	}
-	downloadPool, err := ants.NewPoolWithFunc(poolSize, getDownloadWorker(dlwArgs))
+	downloadPool, err := ants.NewPoolWithFunc(poolSize, getDownloadWorker(dlwArgs, chain, chunkType))
 	defer downloadPool.Release()
 	if err != nil {
 		panic(err)
 	}
 
 	wwArgs := writeWorkerArguments{
-		chain:           chain,
-		chunkType:       chunkType,
 		ctx:             ctx,
 		progressChannel: progressChannel,
 		cancel:          cancel,
 		writeWg:         &writeWg,
-		isCompressed:    false,
 	}
-	writePool, err := ants.NewPoolWithFunc(poolSize, getWriteWorker(wwArgs))
+	writePool, err := ants.NewPoolWithFunc(poolSize, getWriteWorker(wwArgs, chain, chunkType))
 	defer writePool.Release()
 	if err != nil {
 		panic(err)
 	}
 
-	// Increasing wait group counter to make sure we finished saving all downloaded pins
+	// Increasing wait group counter to make sure we finished saving all downloaded chunks
 	writeWg.Add(1)
 	go func() {
 		for result := range writeChannel {
@@ -235,16 +223,17 @@ func DownloadChunks(chain string, pins []manifest.ChunkRecord, chunkType cache.C
 				continue
 			}
 			// It would be simpler to call Add where we start downloads, but we have no guarantee that
-			// we will be saving the same number of pins (e.g. if download failed)
+			// we will be saving the same number of chunks (e.g. if download failed)
 			writeWg.Add(1)
 			writePool.Invoke(result)
 		}
 		// Range over a channel is blocking, so the following line will be executed only
-		// when we finished saving pins
+		// when we finished saving chunks
 		writeWg.Done()
 	}()
 
-	itemsToDownload := filterDownloadedChunks(chain, pins, chunkType, progressChannel)
+	logger.Log(logger.Info, chain, len(chunks), chunkType)
+	itemsToDownload := filterDownloadedChunks(chain, chunks, chunkType, progressChannel)
 	progressChannel <- &progress.Progress{
 		Event:   progress.Statistics,
 		Payload: len(itemsToDownload),
@@ -271,43 +260,18 @@ func DownloadChunks(chain string, pins []manifest.ChunkRecord, chunkType cache.C
 	}
 }
 
-// saveFileContents save the downloaded file and possibly decompress it on the way out
-// TODO: The IPFS files are no longer compressed, so the isCompressed code could be deleted.
-func saveFileContents(wwArgs writeWorkerArguments, res *jobResult) error {
-	var in io.Reader
-
-	if wwArgs.isCompressed {
-		// We load content to the buffer first to check its size
-		buffer := &bytes.Buffer{}
-		read, err := buffer.ReadFrom(res.contents)
-		if err != nil {
-			return err
-		}
-		if read != res.fileSize {
-			return fmt.Errorf("file corrupted: %s (expected %d but got %d bytes)", res.rng, res.fileSize, read)
-		}
-
-		archive, err := gzip.NewReader(buffer)
-		if err != nil {
-			return fmt.Errorf("error unpacking %s: %s", res.rng, err)
-		}
-		defer archive.Close()
-		in = archive
-
-	} else {
-		in = res.contents
-
-	}
-
-	chunkPath := cache.NewCachePath(wwArgs.chain, wwArgs.chunkType)
-	outputFile, err := os.OpenFile(chunkPath.GetFullPath(res.rng), os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
+// writeBytesToDisc save the downloaded bytes to disc
+func writeBytesToDisc(wwArgs writeWorkerArguments, chain string, chunkType cache.CacheType, res *jobResult) error {
+	chunkPath := cache.NewCachePath(chain, chunkType)
+	fullPath := chunkPath.GetFullPath(res.rng)
+	outputFile, err := os.OpenFile(fullPath, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
 	if err != nil {
-		return fmt.Errorf("error creating file %s: %s", res.rng, err)
+		return fmt.Errorf("error creating output file file %s in writeBytesToDisc: [%s]", res.rng, err)
 	}
 
 	// Unzip and save content to a file
-	_, werr := io.Copy(outputFile, in)
-	if werr != nil {
+	_, err = io.Copy(outputFile, res.contents)
+	if err != nil {
 		if file.FileExists(outputFile.Name()) {
 			// TODO: BOGUS - CHIFRA INIT - PARTIAL FILES
 			outputFile.Close()
@@ -317,8 +281,7 @@ func saveFileContents(wwArgs writeWorkerArguments, res *jobResult) error {
 		}
 		// Information about this error
 		// https://community.k6.io/t/warn-0040-request-failed-error-stream-error-stream-id-3-internal-error/777/2
-		logger.Log(logger.Info, "Error copying:[", werr, "]")
-		return fmt.Errorf("error copying %s: %s", res.rng, werr)
+		return fmt.Errorf("error copying %s file in writeBytesToDisc: [%s]", res.rng, err)
 	}
 
 	outputFile.Close()
@@ -349,15 +312,19 @@ func filterDownloadedChunks(chain string, chunks []manifest.ChunkRecord, chunkTy
 
 // exclude returns a copy of `from` slice with every item with a file name present in `what` map removed
 func exclude(chain string, chunkType cache.CacheType, onDiscMap map[string]bool, chunks []manifest.ChunkRecord, progressChannel progressChan) []manifest.ChunkRecord {
+	ct := manifest.Bloom
+	if chunkType == cache.Index_Final {
+		ct = manifest.Index
+	}
 	chunksNeeded := make([]manifest.ChunkRecord, 0, len(chunks))
 	for _, item := range chunks {
-		fullPath := item.GetFullPath(chain, chunkType)
+		fullPath := item.GetFullPath(chain, ct)
 		if onDiscMap[fullPath] {
 			var hashOk bool = true
 			if chunkType == cache.Index_Final {
 				hashOk, _ = HasValidHeader(chain, fullPath)
 			}
-			sizeOk := expectedSize(chunkType, item, fullPath)
+			sizeOk := item.IsExpectedSize(fullPath, ct)
 
 			if !hashOk {
 				if removeLocalFile(fullPath, "invalid header", progressChannel) {
@@ -387,17 +354,6 @@ func exclude(chain string, chunkType cache.CacheType, onDiscMap map[string]bool,
 		Message: fmt.Sprintf("Number of %s files to download %d", chunkType, len(chunksNeeded)),
 	}
 	return chunksNeeded
-}
-
-func expectedSize(chunkType cache.CacheType, chunk manifest.ChunkRecord, path string) bool {
-	if !file.FileExists(path) {
-		return false
-	}
-	expectedSize := chunk.BloomSize
-	if chunkType == cache.Index_Final {
-		expectedSize = chunk.IndexSize
-	}
-	return file.FileSize(path) == expectedSize
 }
 
 func removeLocalFile(fullPath, reason string, progressChannel progressChan) bool {

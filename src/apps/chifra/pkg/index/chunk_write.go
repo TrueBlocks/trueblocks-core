@@ -16,9 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
@@ -163,7 +161,7 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 			report.PinRecord.BloomHash = rec.BloomHash
 			report.PinRecord.IndexSize = rec.IndexSize
 			report.PinRecord.BloomSize = rec.BloomSize
-			return &report, updateManifest(chain, rec)
+			return &report, manifest.UpdateManifest(chain, rec)
 
 		} else {
 			return nil, err
@@ -172,56 +170,6 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 	} else {
 		return nil, err
 	}
-}
-
-func unique(chunks []manifest.ChunkRecord) []manifest.ChunkRecord {
-	inResult := make(map[string]bool)
-	var result []manifest.ChunkRecord
-	for _, chunk := range chunks {
-		if _, ok := inResult[chunk.Range]; !ok {
-			inResult[chunk.Range] = true
-			result = append(result, chunk)
-		}
-	}
-	return result
-}
-
-// TODO: BOGUS - WORK - Protect against failure while writing
-func updateManifest(chain string, chunk manifest.ChunkRecord) error {
-	man, err := manifest.ReadManifest(chain, manifest.FromCache)
-	if err != nil {
-		if err != manifest.ErrManifestNotFound {
-			return err
-		}
-
-		// This is okay. Create an empty manifest
-		man = &manifest.Manifest{
-			Version:   version.ManifestVersion,
-			Chain:     chain,
-			Schemas:   unchained.Schemas,
-			Databases: unchained.Databases,
-			Chunks:    []manifest.ChunkRecord{},
-		}
-	}
-
-	// Make sure this chunk is only added once
-	man.Chunks = unique(append(man.Chunks, chunk))
-
-	fileName := config.GetPathToChainConfig(chain) + "manifest.json"
-	w, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)
-	if err != nil {
-		return fmt.Errorf("creating file: %s", err)
-	}
-	defer w.Close()
-
-	err = file.Lock(w)
-	if err != nil {
-		return fmt.Errorf("locking file: %s", err)
-	}
-	defer file.Unlock(w)
-
-	logger.Log(logger.Info, "Updating manifest with", len(man.Chunks), "chunks", spaces)
-	return output.OutputObject(man, w, "json", false, false, true, nil)
 }
 
 type Renderer interface {
@@ -248,5 +196,3 @@ func resultToRecord(result *pinning.PinResult) manifest.ChunkRecord {
 		BloomSize: result.Remote.BloomSize,
 	}
 }
-
-var spaces = strings.Repeat(" ", 40)
