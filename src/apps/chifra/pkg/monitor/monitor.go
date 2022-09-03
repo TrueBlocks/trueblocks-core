@@ -98,6 +98,7 @@ func (mon Monitor) String() string {
 }
 
 func NewSimpleMonitor(mon Monitor) types.SimpleMonitor {
+	// TODO: BOGUS - This can be removed
 	return types.SimpleMonitor{
 		Address:     mon.GetAddrStr(),
 		NRecords:    int(mon.Count()),
@@ -108,6 +109,7 @@ func NewSimpleMonitor(mon Monitor) types.SimpleMonitor {
 
 // ToJSON returns a JSON object from a Monitor
 func (mon Monitor) ToJSON() string {
+	// TODO: BOGUS - USE INDENT IGNORE ERRORS
 	sm := NewSimpleMonitor(mon)
 	bytes, err := json.Marshal(sm)
 	if err != nil {

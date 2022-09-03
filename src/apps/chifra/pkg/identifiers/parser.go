@@ -79,6 +79,7 @@ type Point struct {
 }
 
 func (p Point) String() string {
+	// TODO: BOGUS - USE INDENT IGNORE ERRORS
 	str, err := json.Marshal(p)
 	if err != nil {
 		return ""

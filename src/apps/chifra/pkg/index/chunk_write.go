@@ -38,7 +38,7 @@ type WriteChunkReport struct {
 func (c *WriteChunkReport) Report() {
 	str := fmt.Sprintf("%sWrote %d address and %d appearance records to $INDEX/%s.bin%s%s", colors.BrightBlue, c.nAddresses, c.nAppearances, c.Range, colors.Off, spaces20)
 	if c.Snapped {
-		str = fmt.Sprintf("%sWrote %d address and %d appearance records to $INDEX/%s.bin%s%s%s", colors.BrightBlue, c.nAddresses, c.nAppearances, c.Range, colors.Yellow, "(snapped to grid)", colors.Off)
+		str = fmt.Sprintf("%sWrote %d address and %d appearance records to $INDEX/%s.bin %s%s%s", colors.BrightBlue, c.nAddresses, c.nAppearances, c.Range, colors.Yellow, "(snapped to grid)", colors.Off)
 	}
 	logger.Log(logger.Info, str)
 	if c.Pinned {
@@ -220,7 +220,7 @@ func updateManifest(chain string, chunk manifest.ChunkRecord) error {
 	}
 	defer file.Unlock(w)
 
-	logger.Log(logger.Info, "Updating manifest with", len(man.Chunks), "chunks")
+	logger.Log(logger.Info, "Updating manifest with", len(man.Chunks), "chunks", spaces)
 	return output.OutputObject(man, w, "json", false, false, true, nil)
 }
 
@@ -248,3 +248,5 @@ func resultToRecord(result *pinning.PinResult) manifest.ChunkRecord {
 		BloomSize: result.Remote.BloomSize,
 	}
 }
+
+var spaces = strings.Repeat(" ", 40)

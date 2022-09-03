@@ -117,6 +117,7 @@ func (id IdentifierType) String() string {
 }
 
 func (br Identifier) ToJSON() string {
+	// TODO: BOGUS - USE INDENT IGNORE ERRORS - Why not String()?
 	str, err := json.Marshal(br)
 	if err != nil {
 		return ""

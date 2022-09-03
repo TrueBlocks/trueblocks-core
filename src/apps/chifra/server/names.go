@@ -80,6 +80,7 @@ func NewNamedAddress() NamedAddress {
 }
 
 func (name *NamedAddress) ToJson() string {
+	// TODO: BOGUS - USE INDENT IGNORE ERRORS
 	e, err := json.Marshal(name)
 	if err != nil {
 		fmt.Printf("%s", err)
