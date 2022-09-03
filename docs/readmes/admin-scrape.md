@@ -1,7 +1,5 @@
 ## chifra scrape
 
-TODO: BOGUS - REVIEW HELP FILES - INSTALL IPFS IF YOU'RE GOING TO SCRAPE AND PIN
-
 The `chifra scrape` application creates TrueBlocks' index of address appearances -- the fundamental data structure of the entire system. It also, optionally, pins the index to IPFS.
 
 `chifra scrape` is a long running process, therefore we advise you run it as a service or in terminal multiplexer such as `tmux`. You may start and stop `chifra scrape` as needed, but doing so means the scraper will have to catch up to the front of the chain the next time it runs, a process that may take several hours depending on how long ago it was last run. See below for a more in depth explanation of how the scraping process works and prerequisites for it proper operation.
@@ -32,14 +30,14 @@ Each of the following additional configurable command line options are available
 **Configuration file:** `$CONFIG/$CHAIN/blockScrape.toml`  
 **Configuration group:** `[settings]`  
 
-| Item               | Type         | Default      | Description / Default |
-| ------------------ | ------------ | ------------ | --------- |
-| apps&lowbar;per&lowbar;chunk | uint64       | 200000       | the number of appearances to build into a chunk before consolidating it |
-| snap&lowbar;to&lowbar;grid | uint64       | 100000       | an override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index |
-| first&lowbar;snap  | uint64       | 0            | the first block at which snap_to_grid is enabled |
-| unripe&lowbar;dist | uint64       | 28           | the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe |
-| channel&lowbar;count | uint64       | 20           | number of concurrent processing channels |
-| allow&lowbar;missing | bool         | false        | do not report errors for blockchains that contain blocks with zero addresses |
+| Item                         | Type   | Default | Description / Default                                                                                                    |
+| ---------------------------- | ------ | ------- | ------------------------------------------------------------------------------------------------------------------------ |
+| apps&lowbar;per&lowbar;chunk | uint64 | 200000  | the number of appearances to build into a chunk before consolidating it                                                  |
+| snap&lowbar;to&lowbar;grid   | uint64 | 100000  | an override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index |
+| first&lowbar;snap            | uint64 | 0       | the first block at which snap_to_grid is enabled                                                                         |
+| unripe&lowbar;dist           | uint64 | 28      | the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe                |
+| channel&lowbar;count         | uint64 | 20      | number of concurrent processing channels                                                                                 |
+| allow&lowbar;missing         | bool   | false   | do not report errors for blockchains that contain blocks with zero addresses                                             |
 
 
 These items may be set in three ways, each overridding the preceeding method:

@@ -21,7 +21,6 @@ import (
 
 func (opts *ScrapeOptions) validateScrape() error {
 	// First, we need to pick up the settings TODO: Should be auto-generated code somehow
-	// TODO: BOGUS - BLOCKSCRAPE CONFIG FILE
 	opts.Settings, _ = scrapeCfg.GetSettings(opts.Globals.Chain, "blockScrape.toml", &opts.Settings)
 
 	opts.testLog()

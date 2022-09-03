@@ -18,6 +18,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
+// TODO: We need a better way to handle configuration files
+// TODO: See issue #2259 and OLD_BLOCKSCRAPE_CONFIG_CODE below
 type ScrapeSettings struct {
 	Apps_per_chunk uint64 `json:"appsPerChunk"` // The number of appearances to build into a chunk before consolidating it
 	Snap_to_grid   uint64 `json:"snapToGrid"`   // An override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index
@@ -186,7 +188,7 @@ func toEnvStr(name string) string {
 }
 
 /*
-OLD CODE
+OLD_BLOCKSCRAPE_CONFIG_CODE
 type blockScrapeSettings struct {
 	Block_chan_cnt        int
 	Addr_chan_cnt         int

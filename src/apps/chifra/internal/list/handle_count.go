@@ -6,6 +6,7 @@ package listPkg
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -13,7 +14,12 @@ import (
 func (opts *ListOptions) HandleListCount(monitorArray []monitor.Monitor) error {
 	results := make([]types.SimpleMonitor, 0, len(monitorArray))
 	for _, mon := range monitorArray {
-		simp := monitor.NewSimpleMonitor(mon)
+		simp := types.SimpleMonitor{
+			Address:     mon.GetAddrStr(),
+			NRecords:    int(mon.Count()),
+			FileSize:    file.FileSize(mon.Path()),
+			LastScanned: mon.Header.LastScanned,
+		}
 		if opts.Globals.TestMode {
 			simp.LastScanned = maxTestingBlock
 		}
