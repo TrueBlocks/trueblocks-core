@@ -76,8 +76,22 @@ func getManifestCidFromContract(chain string) (string, error) {
 	}
 
 	if len(response) == 0 {
-		msg := fmt.Sprintf("empty response %s from provider %s on chain %s", response, provider, chain)
-		return "", fmt.Errorf(msg)
+		msg := fmt.Sprintf("empty response %sfrom provider %s on chain %s",
+			response, provider, chain)
+		// Node may be syncing
+		response, err := ethClient.SyncProgress(context.Background())
+		// If synced, return the empty response message.
+		if response == nil {
+			return "", fmt.Errorf(msg)
+		} else {
+			if err != nil {
+				return "", fmt.Errorf("assessing sync progress: %w", err)
+			}
+			// Syncing
+			msg := fmt.Sprintf("chain %s on provider %s is syncing. \
+				Please wait until this is finished.", chain, provider)
+			return "", fmt.Errorf(msg)
+		}
 	}
 
 	unpacked, err := contractAbi.Unpack(signature, response)
