@@ -309,7 +309,7 @@ func saveFileContents(wwArgs writeWorkerArguments, res *jobResult) error {
 	_, werr := io.Copy(outputFile, in)
 	if werr != nil {
 		if file.FileExists(outputFile.Name()) {
-			// TODO: BOGUS - Should remove any partially downloaded file and logging -- use progressChannel
+			// TODO: BOGUS - CHIFRA INIT - PARTIAL FILES
 			outputFile.Close()
 			os.Remove(outputFile.Name())
 			logger.Log(logger.Warning, "Failed download", colors.Magenta, res.rng, colors.Off, "(will retry)", strings.Repeat(" ", 30))

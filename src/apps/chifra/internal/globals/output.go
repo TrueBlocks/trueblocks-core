@@ -1,7 +1,3 @@
-// TODO: These are not implemented
-// TODO: if Globals.to_file == true, write the output to a filename
-// TODO: if Globals.output == <fn>, write the output to a <fn>
-
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.

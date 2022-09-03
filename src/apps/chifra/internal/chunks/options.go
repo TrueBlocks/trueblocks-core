@@ -98,6 +98,7 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
+	// TODO: Do we know if an option is an address? If yes, we could automate this
 	opts.Belongs = ens.ConvertEns(opts.Globals.Chain, opts.Belongs)
 	// EXISTING_CODE
 

@@ -1,5 +1,7 @@
 package statusPkg
 
+// TODO: BOGUS - MIGRATION
+
 import (
 	"fmt"
 	"log"
@@ -14,6 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 )
 
+// TODO: MIGRATION
 func (opts *StatusOptions) HandleIndexMigration() error {
 	fileName := config.GetPathToIndex(opts.Globals.Chain) + "finalized/000000000-000000000.bin"
 	ok, _ := index.HasValidHeader(opts.Globals.Chain, fileName)

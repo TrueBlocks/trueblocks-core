@@ -1,6 +1,6 @@
 package migrate
 
-// TODO: BOGUS - MIGRATION STUFF
+// TODO: BOGUS - MIGRATION
 func CheckBackLevelIndex(chain string, missingOkay bool) {
 	// fileName := config.GetPathToIndex(chain) + "finalized/000000000-000000000.bin"
 	// 	if !file.FileExists(fileName) && missingOkay {

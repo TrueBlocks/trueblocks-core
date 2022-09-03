@@ -130,6 +130,7 @@ func scrapeFinishParse(args []string) *ScrapeOptions {
 	}
 	configFn := "blockScrape.toml"
 	// EXISTING_CODE
+	// TODO: BOGUS - BLOCKSCRAPE CONFIG FILE
 	opts.Settings, _ = scrapeCfg.GetSettings(opts.Globals.Chain, configFn, &scrapeCfg.Unset)
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt

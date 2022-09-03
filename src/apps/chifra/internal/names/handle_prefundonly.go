@@ -36,7 +36,7 @@ func (opts *NamesOptions) HandlePrefundOnly() error {
 	return nil
 }
 
-// PrefundOnly is a temporary function used to distinguish chifra names calls with only the --prefund option.
+// TODO: PrefundOnly is a temporary function used to distinguish chifra names calls with only the --prefund option.
 // Once we are fully ported to GoLang, this will go away.
 func (opts *NamesOptions) PrefundOnly() bool {
 	if !opts.Prefund {

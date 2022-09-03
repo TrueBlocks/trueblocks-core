@@ -9,7 +9,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 )
 
-// HandleTimestampsRepair handles chifra when --timestamps --drop <bn>
+// HandleTimestampsRepair handles chifra when --timestamps --reset <bn> to reset a single block's timestamps (call repeatedly if needed)
 func (opts *WhenOptions) HandleTimestampsRepair() error {
 	if err := tslib.Freshen(opts.Globals.Chain, opts.Repair); err != nil {
 		return err

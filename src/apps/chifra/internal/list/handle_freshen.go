@@ -162,6 +162,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 	}
 
 	if !opts.Globals.TestMode {
+		// TODO: Note we could actually test this if we had the concept of a FAKE_HEAD block
 		stagePath := config.ToStagingPath(config.GetPathToIndex(opts.Globals.Chain) + "staging")
 		stageFn, _ := file.LatestFileInFolder(stagePath)
 		rng, _ := cache.RangeFromFilename(stageFn)
@@ -324,6 +325,7 @@ func needsMigration(addr string) error {
 	return nil
 }
 
+// TODO: Somewhat iffy code here
 const (
 	asciiAddressSize    = 42
 	asciiBlockNumSize   = 9
