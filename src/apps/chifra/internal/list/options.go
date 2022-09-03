@@ -46,7 +46,7 @@ func (opts *ListOptions) testLog() {
 
 // String implements the Stringer interface
 func (opts *ListOptions) String() string {
-	b, _ := json.MarshalIndent(opts, "", "\t")
+	b, _ := json.MarshalIndent(opts, "", "  ")
 	return string(b)
 }
 

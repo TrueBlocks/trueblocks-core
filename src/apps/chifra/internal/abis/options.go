@@ -44,7 +44,7 @@ func (opts *AbisOptions) testLog() {
 
 // String implements the Stringer interface
 func (opts *AbisOptions) String() string {
-	b, _ := json.MarshalIndent(opts, "", "\t")
+	b, _ := json.MarshalIndent(opts, "", "  ")
 	return string(b)
 }
 

@@ -40,7 +40,7 @@ func (opts *ExploreOptions) testLog() {
 
 // String implements the Stringer interface
 func (opts *ExploreOptions) String() string {
-	b, _ := json.MarshalIndent(opts, "", "\t")
+	b, _ := json.MarshalIndent(opts, "", "  ")
 	return string(b)
 }
 

@@ -54,7 +54,7 @@ func (opts *ChunksOptions) testLog() {
 
 // String implements the Stringer interface
 func (opts *ChunksOptions) String() string {
-	b, _ := json.MarshalIndent(opts, "", "\t")
+	b, _ := json.MarshalIndent(opts, "", "  ")
 	return string(b)
 }
 

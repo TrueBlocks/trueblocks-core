@@ -44,7 +44,7 @@ func (opts *SlurpOptions) testLog() {
 
 // String implements the Stringer interface
 func (opts *SlurpOptions) String() string {
-	b, _ := json.MarshalIndent(opts, "", "\t")
+	b, _ := json.MarshalIndent(opts, "", "  ")
 	return string(b)
 }
 

@@ -49,7 +49,7 @@ func (opts *TracesOptions) testLog() {
 
 // String implements the Stringer interface
 func (opts *TracesOptions) String() string {
-	b, _ := json.MarshalIndent(opts, "", "\t")
+	b, _ := json.MarshalIndent(opts, "", "  ")
 	return string(b)
 }
 
