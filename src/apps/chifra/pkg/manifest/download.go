@@ -88,8 +88,8 @@ func getManifestCidFromContract(chain string) (string, error) {
 				return "", fmt.Errorf("assessing sync progress: %w", err)
 			}
 			// Syncing
-			msg := fmt.Sprintf("chain %s on provider %s is syncing. \
-				Please wait until this is finished.", chain, provider)
+			// TODO: This should be broadened to handle all queries to the node that end with no response
+			msg := fmt.Sprintf("chain %s on provider %s is syncing. Please wait until this is finished.", chain, provider)
 			return "", fmt.Errorf(msg)
 		}
 	}
