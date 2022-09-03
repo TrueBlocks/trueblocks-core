@@ -29,8 +29,7 @@ type HeaderRecord struct {
 }
 
 func (h *HeaderRecord) String() string {
-	// TODO: BOGUS - USE INDENT IGNORE ERRORS
-	b, _ := json.Marshal(h)
+	b, _ := json.MarshalIndent(h, "", " ")
 	return string(b)
 }
 

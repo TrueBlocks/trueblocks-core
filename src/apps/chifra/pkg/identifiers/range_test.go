@@ -5,8 +5,6 @@
 package identifiers
 
 import (
-	"fmt"
-
 	"encoding/json"
 	"testing"
 )
@@ -163,8 +161,15 @@ func TestToString(t *testing.T) {
 	if err != nil {
 		t.Errorf("Could not parse block")
 	}
-	expected := `{"startType":1,"start":{"number":1234},"end":{},"modifier":{}}`
-	got := fmt.Sprintf("%s", br.ToJSON())
+	expected := `{
+  "startType": 1,
+  "start": {
+    "number": 1234
+  },
+  "end": {},
+  "modifier": {}
+}`
+	got := br.String()
 	if got != expected {
 		t.Errorf("String printer for blockRange not equal to expected:\n%s\n%s", got, expected)
 	}

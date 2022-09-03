@@ -109,12 +109,8 @@ func NewSimpleMonitor(mon Monitor) types.SimpleMonitor {
 
 // ToJSON returns a JSON object from a Monitor
 func (mon Monitor) ToJSON() string {
-	// TODO: BOGUS - USE INDENT IGNORE ERRORS
 	sm := NewSimpleMonitor(mon)
-	bytes, err := json.Marshal(sm)
-	if err != nil {
-		return ""
-	}
+	bytes, _ := json.MarshalIndent(sm, "", "  ")
 	return string(bytes)
 }
 

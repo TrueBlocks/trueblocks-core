@@ -23,7 +23,7 @@ func EditName(w http.ResponseWriter, r *http.Request) {
 	for k := range r.Form {
 		json.Unmarshal([]byte(k), &newName)
 	}
-	log.Print(colors.Yellow, "Adding name: ", newName.ToJson(), colors.Off)
+	log.Print(colors.Yellow, "Adding name: ", newName, colors.Off)
 
 	// Do the actual call
 	cmd := exec.Command(config.GetPathToCommands("ethNames"), "--create")
@@ -50,7 +50,7 @@ func EditName(w http.ResponseWriter, r *http.Request) {
 	} else {
 		w.WriteHeader(http.StatusOK)
 	}
-	fmt.Fprintf(w, "{ \"data\": [ "+newName.ToJson()+"\n  ]\n}")
+	fmt.Fprintf(w, "{ \"data\": [ "+newName.String()+"\n  ]\n}")
 }
 
 type NamedAddress struct {
@@ -79,12 +79,7 @@ func NewNamedAddress() NamedAddress {
 	return *ret
 }
 
-func (name *NamedAddress) ToJson() string {
-	// TODO: BOGUS - USE INDENT IGNORE ERRORS
-	e, err := json.Marshal(name)
-	if err != nil {
-		fmt.Printf("%s", err)
-		return ""
-	}
-	return string(e)
+func (name *NamedAddress) String() string {
+	bytes, _ := json.MarshalIndent(name, "", "  ")
+	return string(bytes)
 }
