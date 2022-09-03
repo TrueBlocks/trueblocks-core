@@ -11,6 +11,7 @@ import (
 	"io"
 	"log"
 	"os"
+	"unsafe"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -35,15 +36,22 @@ type BloomBytes struct {
 	Bytes     []byte
 }
 
+type BloomHeader struct {
+	Magic uint16      `json:"magic"`
+	Hash  common.Hash `json:"hash"`
+}
+
 // ChunkBloom structures contain an array of BloomBytes each BLOOM_WIDTH_IN_BYTES wide. A new BloomBytes is added to
 // the ChunkBloom when around MAX_ADDRS_IN_BLOOM addresses has been added. These Adaptive Bloom Filters allow us to
 // maintain a near-constant false-positive rate at the expense of slightly larger bloom filters than might be expected.
 type ChunkBloom struct {
-	File   *os.File
-	Size   int64
-	Range  cache.FileRange
-	Count  uint32 // Do not change the size of this field, it's stored on disc
-	Blooms []BloomBytes
+	File       *os.File
+	SizeOnDisc int64
+	Range      cache.FileRange
+	HeaderSize int64
+	Header     BloomHeader
+	Count      uint32 // Do not change the size of this field, it's stored on disc
+	Blooms     []BloomBytes
 }
 
 func (bl *ChunkBloom) String() string {
@@ -64,8 +72,7 @@ func NewChunkBloom(path string) (bl ChunkBloom, err error) {
 		return bl, errors.New("required bloom file (" + path + ") not found")
 	}
 
-	bl.Size = file.FileSize(path)
-
+	bl.SizeOnDisc = file.FileSize(path)
 	bl.Range, err = cache.RangeFromFilename(path)
 	if err != nil {
 		return
@@ -76,12 +83,22 @@ func NewChunkBloom(path string) (bl ChunkBloom, err error) {
 		return
 	}
 
-	err = binary.Read(bl.File, binary.LittleEndian, &bl.Count)
-	if err != nil {
+	var isVersioned bool
+	bl.File.Seek(0, io.SeekStart)                       // already true, but can't hurt
+	if isVersioned, err = bl.ReadHeader(); err != nil { // Note that it may not find a header, but it leaves the file pointer pointing to the count
+		return
+	}
+	if isVersioned {
+		header := BloomHeader{}
+		header.Magic = file.SmallMagicNumber
+		bl.HeaderSize = int64(unsafe.Sizeof(header))
+	}
+
+	if err = binary.Read(bl.File, binary.LittleEndian, &bl.Count); err != nil {
 		return
 	}
 	bl.Blooms = make([]BloomBytes, 0, bl.Count)
-	bl.File.Seek(0, io.SeekStart)
+	bl.File.Seek(int64(bl.HeaderSize), io.SeekStart) // Point to the start of Count
 
 	return
 }
@@ -94,7 +111,7 @@ func (bl *ChunkBloom) Close() {
 	}
 }
 
-// ---------------------------------------------------------------------------
+// ReadBloom reads the entire contents of the bloom filter
 func (bl *ChunkBloom) ReadBloom(fileName string) (err error) {
 	bl.Range, err = cache.RangeFromFilename(fileName)
 	if err != nil {
@@ -110,27 +127,50 @@ func (bl *ChunkBloom) ReadBloom(fileName string) (err error) {
 		bl.File = nil
 	}()
 
-	err = binary.Read(bl.File, binary.LittleEndian, &bl.Count)
-	if err != nil {
+	var isVersioned bool
+	bl.File.Seek(0, io.SeekStart)                       // already true, but can't hurt
+	if isVersioned, err = bl.ReadHeader(); err != nil { // Note that it may not find a header, but it leaves the file pointer pointing to the count
+		return err
+	}
+	if isVersioned {
+		header := BloomHeader{}
+		header.Magic = file.SmallMagicNumber
+		bl.HeaderSize = int64(unsafe.Sizeof(header))
+	}
+
+	if err = binary.Read(bl.File, binary.LittleEndian, &bl.Count); err != nil {
 		return err
 	}
 
 	bl.Blooms = make([]BloomBytes, bl.Count)
 	for i := uint32(0); i < bl.Count; i++ {
-		// fmt.Println("nBlooms:", bl.Count)
-		err = binary.Read(bl.File, binary.LittleEndian, &bl.Blooms[i].NInserted)
-		if err != nil {
+		if err = binary.Read(bl.File, binary.LittleEndian, &bl.Blooms[i].NInserted); err != nil {
 			return err
 		}
-		// fmt.Println("nInserted:", bl.Blooms[i].NInserted)
+
 		bl.Blooms[i].Bytes = make([]byte, BLOOM_WIDTH_IN_BYTES)
-		err = binary.Read(bl.File, binary.LittleEndian, &bl.Blooms[i].Bytes)
-		if err != nil {
+		if err = binary.Read(bl.File, binary.LittleEndian, &bl.Blooms[i].Bytes); err != nil {
 			return err
 		}
 	}
 
 	return nil
+}
+
+func (bl *ChunkBloom) ReadHeader() (bool, error) {
+	var magic uint16
+	err := binary.Read(bl.File, binary.LittleEndian, &magic)
+	if err != nil {
+		bl.File.Seek(0, io.SeekStart)
+		return false, err
+	}
+	if magic != file.SmallMagicNumber {
+		// This is an unversioned bloom filter, set back to start of file
+		bl.File.Seek(0, io.SeekStart)
+		return false, err
+	}
+
+	return true, nil
 }
 
 // AddToSet adds an address to a bloom filter
