@@ -5,16 +5,18 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"log"
 	"os"
 	"path/filepath"
+	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
 // A data structure consisting of a list of chunk records (i.e. block ranges, Bloom filter hashes, and
@@ -48,15 +50,37 @@ type ChunkRecord struct {
 	IndexSize int64          `json:"indexSize"`
 }
 
-func (ch *ChunkRecord) GetFullPath(chain string, cacheType cache.CacheType) string {
+type ChunkType int
+
+const (
+	None ChunkType = iota
+	Bloom
+	Index
+)
+
+func (ch *ChunkRecord) GetFullPath(chain string, cacheType ChunkType) string {
 	switch cacheType {
-	case cache.Index_Bloom:
+	case Bloom:
 		return fmt.Sprintf("%s.bloom", filepath.Join(config.GetPathToIndex(chain), "blooms", ch.Range))
-	case cache.Index_Final:
+	case Index:
 		return fmt.Sprintf("%s.bin", filepath.Join(config.GetPathToIndex(chain), "finalized", ch.Range))
 	}
-	log.Fatal("Should not happen.")
+	logger.Fatal("unexpected chunkType in GetFullPath")
 	return ""
+}
+
+// func isExpectedMd5(path string) bool {
+// }
+
+func (ch *ChunkRecord) IsExpectedSize(path string, chunkType ChunkType) bool {
+	switch chunkType {
+	case Bloom:
+		return file.FileExists(path) && file.FileSize(path) == ch.BloomSize
+	case Index:
+		return file.FileExists(path) && file.FileSize(path) == ch.IndexSize
+	}
+	logger.Fatal("unexpected chunkType in IsExpectedSize")
+	return false
 }
 
 type Source uint
@@ -86,6 +110,7 @@ func ReadManifest(chain string, source Source) (*Manifest, error) {
 	return manifest, err
 }
 
+// TODO: BOGUS - Protect against overwriting files
 func (m *Manifest) SaveManifest(chain string) error {
 	fileName := config.GetPathToChainConfig(chain) + "manifest.json"
 	w, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
@@ -100,3 +125,56 @@ func (m *Manifest) SaveManifest(chain string) error {
 
 	return output.OutputObject(&m, w, "json", false, false, true, nil)
 }
+
+func unique(chunks []ChunkRecord) []ChunkRecord {
+	inResult := make(map[string]bool)
+	var result []ChunkRecord
+	for _, chunk := range chunks {
+		if _, ok := inResult[chunk.Range]; !ok {
+			inResult[chunk.Range] = true
+			result = append(result, chunk)
+		}
+	}
+	return result
+}
+
+// TODO: BOGUS - WORK - Protect against failure while writing
+func UpdateManifest(chain string, chunk ChunkRecord) error {
+	man, err := ReadManifest(chain, FromCache)
+	if err != nil {
+		if err != ErrManifestNotFound {
+			return err
+		}
+
+		// This is okay. Create an empty manifest
+		man = &Manifest{
+			Version:   version.ManifestVersion,
+			Chain:     chain,
+			Schemas:   unchained.Schemas,
+			Databases: unchained.Databases,
+			Chunks:    []ChunkRecord{},
+		}
+	}
+
+	// Make sure this chunk is only added once
+	man.Chunks = unique(append(man.Chunks, chunk))
+
+	fileName := config.GetPathToChainConfig(chain) + "json"
+	w, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)
+	if err != nil {
+		return fmt.Errorf("creating file: %s", err)
+	}
+	defer w.Close()
+
+	err = file.Lock(w)
+	if err != nil {
+		return fmt.Errorf("locking file: %s", err)
+	}
+	defer file.Unlock(w)
+
+	logger.Log(logger.Info, "Updating manifest with", len(man.Chunks), "chunks", spaces)
+	return output.OutputObject(man, w, "json", false, false, true, nil)
+}
+
+// TODO: There's got to be a better way
+var spaces = strings.Repeat(" ", 40)

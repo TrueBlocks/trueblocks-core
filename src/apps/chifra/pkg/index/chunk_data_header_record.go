@@ -108,7 +108,7 @@ func WriteChunkHeaderHash(chain, fileName string, headerHash common.Hash) ( /* c
 			}
 
 			// We want to write the slice
-			// TODO: Not in love with this
+			// TODO: I do not like this code
 			fp.Seek(int64(unsafe.Sizeof(header.Magic)), io.SeekStart)
 			err = binary.Write(fp, binary.LittleEndian, headerHash)
 			if err != nil {
