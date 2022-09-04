@@ -163,7 +163,7 @@ func downloadAndReportProgress(chain string, sleep float64, chunks []manifest.Ch
 			if event.Message == "bloom" {
 				col = colors.Magenta
 			}
-			msg := fmt.Sprintf("Unchained %s%s%s file for range %s%s%s (% 4d of %4d)", col, event.Message, colors.Off, colors.BrightBlue, rng, colors.Off, nProcessed, nTotal)
+			msg := fmt.Sprintf("Unchained %s%s%s file for range %s%s%s (% 4d of %4d)", col, event.Message, colors.Off, col, rng, colors.Off, nProcessed, nTotal)
 			logger.Log(logger.Info, msg, spaces)
 
 		case progress.Statistics:

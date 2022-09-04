@@ -9,6 +9,7 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -104,10 +105,10 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		// function will have cleaned up (i.e. remove the unstaged ripe blocks). Note
 		// that we don't quit, instead we sleep and we retry continually.
 		if err := opts.HandleScrapeBlaze(progress, &blazeOpts); err != nil {
-			logger.Log(logger.Error, err)
+			logger.Log(logger.Error, colors.BrightRed, err, colors.Off)
 			goto PAUSE
 		}
-		blazeOpts.syncedReporting(int(blazeOpts.StartBlock + blazeOpts.BlockCount))
+		blazeOpts.syncedReporting(int(blazeOpts.StartBlock+blazeOpts.BlockCount), true /* force */)
 
 		if ok, err := opts.HandleScrapeConsolidate(progress, &blazeOpts); !ok || err != nil {
 			logger.Log(logger.Error, err)
