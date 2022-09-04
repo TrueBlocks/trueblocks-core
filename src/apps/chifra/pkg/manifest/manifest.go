@@ -118,7 +118,7 @@ func ReadManifest(chain string, source Source) (*Manifest, error) {
 	if err := json.NewDecoder(reader).Decode(man); err != nil {
 		return man, err
 	}
-	man.ChunkMap = make(map[string]*ChunkRecord, len(man.Chunks))
+	man.ChunkMap = make(map[string]*ChunkRecord)
 	for i := range man.Chunks {
 		man.ChunkMap[man.Chunks[i].Range] = &man.Chunks[i]
 	}
@@ -156,18 +156,18 @@ func UpdateManifest(chain string, chunk ChunkRecord) error {
 			Chain:   chain,
 			Schemas: unchained.Schemas,
 			// Databases: unchained.Databases,
-			Chunks: []ChunkRecord{},
+			Chunks:   []ChunkRecord{},
+			ChunkMap: make(map[string]*ChunkRecord),
 		}
 	}
 
 	// Make sure this chunk is only added once
-	empty := len(man.Chunks) == 0
-	belongs := !empty && man.ChunkMap[chunk.Range].Range == chunk.Range
-	if belongs {
-		*man.ChunkMap[chunk.Range] = chunk
-	} else {
-		man.Chunks = append(man.Chunks, chunk)
+	_, ok := man.ChunkMap[chunk.Range]
+	if !ok {
+		n := &ChunkRecord{}
+		man.ChunkMap[chunk.Range] = n
 	}
+	*man.ChunkMap[chunk.Range] = chunk
 
 	fileName := config.GetPathToChainConfig(chain) + "manifest.json"
 	w, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)
