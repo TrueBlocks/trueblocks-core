@@ -84,10 +84,11 @@ func NewChunkBloom(path string) (bl ChunkBloom, err error) {
 	}
 
 	var isVersioned bool
-	bl.File.Seek(0, io.SeekStart)                       // already true, but can't hurt
-	if isVersioned, err = bl.ReadHeader(); err != nil { // Note that it may not find a header, but it leaves the file pointer pointing to the count
+	bl.File.Seek(0, io.SeekStart)                            // already true, but can't hurt
+	if isVersioned, err = bl.ReadBloomHeader(); err != nil { // Note that it may not find a header, but it leaves the file pointer pointing to the count
 		return
 	}
+	bl.HeaderSize = 0 // already true, but just to make it explicit, if the file is not versioned, it has no header
 	if isVersioned {
 		header := BloomHeader{}
 		header.Magic = file.SmallMagicNumber
@@ -128,10 +129,11 @@ func (bl *ChunkBloom) ReadBloom(fileName string) (err error) {
 	}()
 
 	var isVersioned bool
-	bl.File.Seek(0, io.SeekStart)                       // already true, but can't hurt
-	if isVersioned, err = bl.ReadHeader(); err != nil { // Note that it may not find a header, but it leaves the file pointer pointing to the count
+	bl.File.Seek(0, io.SeekStart)                            // already true, but can't hurt
+	if isVersioned, err = bl.ReadBloomHeader(); err != nil { // Note that it may not find a header, but it leaves the file pointer pointing to the count
 		return err
 	}
+	bl.HeaderSize = 0 // already true, but it makes it explicit
 	if isVersioned {
 		header := BloomHeader{}
 		header.Magic = file.SmallMagicNumber
@@ -157,20 +159,38 @@ func (bl *ChunkBloom) ReadBloom(fileName string) (err error) {
 	return nil
 }
 
-func (bl *ChunkBloom) ReadHeader() (bool, error) {
-	var magic uint16
-	err := binary.Read(bl.File, binary.LittleEndian, &magic)
+func (bl *ChunkBloom) ReadBloomHeader() (bool, error) {
+	err := binary.Read(bl.File, binary.LittleEndian, &bl.Header)
 	if err != nil {
 		bl.File.Seek(0, io.SeekStart)
 		return false, err
 	}
-	if magic != file.SmallMagicNumber {
+	if bl.Header.Magic != file.SmallMagicNumber {
 		// This is an unversioned bloom filter, set back to start of file
 		bl.File.Seek(0, io.SeekStart)
-		return false, err
+		return false, nil
 	}
 
 	return true, nil
+}
+
+// TODO: BOGUS - MIGRATION
+func HasValidBloomHeader(chain, fileName string) (bool, error) {
+	bl, err := NewChunkBloom(fileName)
+	if err != nil {
+		return false, err
+	}
+
+	bl.File, err = os.OpenFile(fileName, os.O_RDONLY, 0644)
+	if err != nil {
+		return false, err
+	}
+	defer func() {
+		bl.File.Close()
+	}()
+
+	bl.File.Seek(0, io.SeekStart) // already true, but can't hurt
+	return bl.ReadBloomHeader()
 }
 
 // AddToSet adds an address to a bloom filter

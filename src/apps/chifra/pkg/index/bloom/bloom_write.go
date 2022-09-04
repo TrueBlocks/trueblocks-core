@@ -29,6 +29,10 @@ func (bl *ChunkBloom) WriteBloom(chain, fileName string) ( /* changed */ bool, e
 			defer fp.Close() // defers are last in, first out
 
 			fp.Seek(0, io.SeekStart) // already true, but can't hurt
+			if err = binary.Write(fp, binary.LittleEndian, bl.Header); err != nil {
+				return false, err
+			}
+
 			if err = binary.Write(fp, binary.LittleEndian, bl.Count); err != nil {
 				return false, err
 			}

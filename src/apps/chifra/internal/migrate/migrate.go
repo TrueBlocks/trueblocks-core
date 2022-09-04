@@ -6,7 +6,7 @@ func CheckBackLevelIndex(chain string, missingOkay bool) {
 	// 	if !file.FileExists(fileName) && missingOkay {
 	// 		return
 	// 	}
-	// 	ok, err := index.HasValidHeader(chain, fileName)
+	// 	ok, err := index.HasValidIndexHeader(chain, fileName)
 	// 	if ok && err == nil {
 	// 		return
 	// 	}

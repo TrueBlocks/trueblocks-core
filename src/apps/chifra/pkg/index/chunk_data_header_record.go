@@ -126,7 +126,7 @@ func WriteChunkHeaderHash(chain, fileName string, headerHash common.Hash) ( /* c
 }
 
 // TODO: BOGUS - MIGRATION
-func HasValidHeader(chain, fileName string) (bool, error) {
+func HasValidIndexHeader(chain, fileName string) (bool, error) {
 	header, err := ReadChunkHeader(chain, fileName, true)
 	if err != nil {
 		return false, err

@@ -22,6 +22,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
@@ -307,24 +308,30 @@ func filterDownloadedChunks(chain string, chunks []manifest.ChunkRecord, chunkTy
 		onDiscMap[fullPath] = true
 	}
 
-	return exclude(chain, chunkType, onDiscMap, chunks, progressChannel)
-}
-
-// exclude returns a copy of `from` slice with every item with a file name present in `what` map removed
-func exclude(chain string, chunkType cache.CacheType, onDiscMap map[string]bool, chunks []manifest.ChunkRecord, progressChannel progressChan) []manifest.ChunkRecord {
 	ct := manifest.Bloom
 	if chunkType == cache.Index_Final {
 		ct = manifest.Index
 	}
+	return listRequiredDownloads(chain, ct, onDiscMap, chunks, progressChannel)
+}
+
+// listRequiredDownloads returns a copy of `from` slice with every item with a file name present in `what` map removed
+func listRequiredDownloads(chain string, ct manifest.ChunkType, onDiscMap map[string]bool, chunks []manifest.ChunkRecord, progressChannel progressChan) []manifest.ChunkRecord {
 	chunksNeeded := make([]manifest.ChunkRecord, 0, len(chunks))
 	for _, item := range chunks {
 		fullPath := item.GetFullPath(chain, ct)
 		if onDiscMap[fullPath] {
-			var hashOk bool = true
-			if chunkType == cache.Index_Final {
-				hashOk, _ = HasValidHeader(chain, fullPath)
-			}
 			sizeOk := item.IsExpectedSize(fullPath, ct)
+
+			var hashOk bool
+			switch ct {
+			case manifest.Bloom:
+				hashOk, _ = bloom.HasValidBloomHeader(chain, fullPath)
+			case manifest.Index:
+				hashOk, _ = HasValidIndexHeader(chain, fullPath)
+			default:
+				logger.Fatal("Unknown chunk type in listRequiredDownloads", ct)
+			}
 
 			if !hashOk {
 				if removeLocalFile(fullPath, "invalid header", progressChannel) {
@@ -351,7 +358,8 @@ func exclude(chain string, chunkType cache.CacheType, onDiscMap map[string]bool,
 
 	progressChannel <- &progress.Progress{
 		Event:   progress.Update,
-		Message: fmt.Sprintf("Number of %s files to download %d", chunkType, len(chunksNeeded)),
+		Message: fmt.Sprintf("Number of %s files to download %d", ct, len(chunksNeeded)),
+		// TODO: BOGUS - CHANGE THIS TO CHUNKTYPE WHEN CACHE.CHUNKTYPE IS GONE
 	}
 	return chunksNeeded
 }

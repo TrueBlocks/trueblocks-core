@@ -19,7 +19,7 @@ import (
 // TODO: MIGRATION
 func (opts *StatusOptions) HandleIndexMigration() error {
 	fileName := config.GetPathToIndex(opts.Globals.Chain) + "finalized/000000000-000000000.bin"
-	ok, _ := index.HasValidHeader(opts.Globals.Chain, fileName)
+	ok, _ := index.HasValidIndexHeader(opts.Globals.Chain, fileName)
 	if ok {
 		log.Println(colors.Yellow, "The index does not need to be migrated.", colors.Off)
 		return nil
