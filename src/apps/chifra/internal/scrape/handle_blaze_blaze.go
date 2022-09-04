@@ -431,7 +431,7 @@ func (opts *BlazeOptions) WriteAppearancesBlaze(meta *rpcClient.MetaData, bn int
 		}
 	}
 
-	opts.syncedReporting(bn)
+	opts.syncedReporting(bn, false /* force */)
 	writeMutex.Lock()
 	opts.ProcessedMap[bn] = true
 	writeMutex.Unlock()
@@ -481,7 +481,7 @@ var (
 	locker uint32
 )
 
-func (opts *BlazeOptions) syncedReporting(bn int) {
+func (opts *BlazeOptions) syncedReporting(bn int, force bool) {
 	if !atomic.CompareAndSwapUint32(&locker, 0, 1) {
 		// Simply skip the update if someone else is already reporting
 		return
@@ -491,7 +491,7 @@ func (opts *BlazeOptions) syncedReporting(bn int) {
 
 	// TODO: See issue https://github.com/TrueBlocks/trueblocks-core/issues/2238
 	step := uint64(17)
-	if opts.NProcessed%step == 0 || bn == int(opts.StartBlock+opts.BlockCount) {
+	if opts.NProcessed%step == 0 || force {
 		dist := uint64(0)
 		if opts.RipeBlock > uint64(bn) {
 			dist = (opts.RipeBlock - uint64(bn))

@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"os"
 	"sort"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -32,7 +33,7 @@ func (opts *ScrapeOptions) HandleScrapeBlaze(progress *rpcClient.MetaData, blaze
 		if !blazeOpts.ProcessedMap[bn] {
 			// A block was not processed, clean up, report the error and return
 			index.CleanTemporaryFolders(config.GetPathToIndex(opts.Globals.Chain), false)
-			msg := fmt.Sprintf("Block %d was not processed", bn)
+			msg := fmt.Sprintf("Block %d was not processed%s", bn, strings.Repeat(" ", 50))
 			return errors.New(msg)
 		}
 	}
