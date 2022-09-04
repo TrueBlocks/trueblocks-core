@@ -107,6 +107,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 			logger.Log(logger.Error, err)
 			goto PAUSE
 		}
+		blazeOpts.syncedReporting(int(blazeOpts.StartBlock + blazeOpts.BlockCount))
 
 		if ok, err := opts.HandleScrapeConsolidate(progress, &blazeOpts); !ok || err != nil {
 			logger.Log(logger.Error, err)
