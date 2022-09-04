@@ -5,7 +5,6 @@ chunks?mode=manifest
       "version": "trueblocks-core@v0.40.0",
       "chain": "mainnet",
       "schemas": "--testing-hash--",
-      "databases": "--testing-hash--",
       "chunks": [
         {
           "range": "000000000-000000000",

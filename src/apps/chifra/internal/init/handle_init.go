@@ -50,7 +50,6 @@ func (opts *InitOptions) HandleInit() error {
 	// Tell the user what we're doing
 	logger.Log(logger.InfoC, "Unchained Index:", unchained.Address_V2)
 	logger.Log(logger.InfoC, "Schemas:", unchained.Schemas)
-	logger.Log(logger.InfoC, "Databases:", unchained.Databases)
 	logger.Log(logger.InfoC, "Config Folder:", config.GetPathToChainConfig(chain))
 	logger.Log(logger.InfoC, "Index Folder:", config.GetPathToIndex(chain))
 	logger.Log(logger.InfoC, "Number of Chunks:", fmt.Sprintf("%d", len(remoteManifest.Chunks)))

@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -56,19 +55,20 @@ func (opts *ChunksOptions) HandlePinManifest(blockNums []uint64) error {
 		Schemas: unchained.Schemas,
 	}
 
-	tsPath := config.GetPathToIndex(opts.Globals.Chain) + "ts.bin"
-	if pinning.LocalDaemonRunning() {
-		localService, _ := pinning.NewPinningService(opts.Globals.Chain, pinning.Local)
-		if m.Databases, err = localService.PinFile(tsPath, true); err != nil {
-			return err
-		}
-	}
-	if opts.Remote {
-		remoteService, _ := pinning.NewPinningService(opts.Globals.Chain, pinning.Pinata)
-		if m.Databases, err = remoteService.PinFile(tsPath, true); err != nil {
-			return err
-		}
-	}
+	// TODO: BOGUS - WE HAVE TO HAVE A SOLUTION FOR THE TIMESTAMP FILE --PIN --REMOTE ON THE CHIFRA WHEN ROUTINES?
+	// tsPath := config.GetPathToIndex(opts.Globals.Chain) + "ts.bin"
+	// if pinning.LocalDaemonRunning() {
+	// 	localService, _ := pinning.NewPinningService(opts.Globals.Chain, pinning.Local)
+	// 	if m.Databases, err = localService.PinFile(tsPath, true); err != nil {
+	// 		return err
+	// 	}
+	// }
+	// if opts.Remote {
+	// 	remoteService, _ := pinning.NewPinningService(opts.Globals.Chain, pinning.Pinata)
+	// 	if m.Databases, err = remoteService.PinFile(tsPath, true); err != nil {
+	// 		return err
+	// 	}
+	// }
 
 	ctx := WalkContext{
 		VisitFunc: opts.pinChunk,

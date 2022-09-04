@@ -70,7 +70,6 @@ func (opts *ChunksOptions) HandleManifest(blockNums []uint64) error {
 				man.Chunks = man.Chunks[:maxTestItems]
 			}
 			man.Schemas = "--testing-hash--"
-			man.Databases = "--testing-hash--"
 		}
 
 		return opts.Globals.RenderManifest(opts.Globals.Writer, man)

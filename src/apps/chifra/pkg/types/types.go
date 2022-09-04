@@ -52,11 +52,10 @@ type SimpleMonitor struct {
 }
 
 type SimpleManifest struct {
-	Version   string              `json:"version"`
-	Chain     string              `json:"chain"`
-	Schemas   IpfsHash            `json:"schemas"`
-	Databases IpfsHash            `json:"databases"`
-	Chunks    []SimpleChunkRecord `json:"chunks"`
+	Version string              `json:"version"`
+	Chain   string              `json:"chain"`
+	Schemas IpfsHash            `json:"schemas"`
+	Chunks  []SimpleChunkRecord `json:"chunks"`
 }
 
 type SimpleChunkRecord struct {

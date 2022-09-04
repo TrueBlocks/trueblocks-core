@@ -75,11 +75,6 @@ func TestReadManifest(t *testing.T) {
 			field:    m.Schemas.String(),
 			expected: "QmUou7zX2g2tY58LP1A2GyP5RF9nbJsoxKTp299ah3svgb",
 		},
-		{
-			name:     "Databases",
-			field:    m.Databases.String(),
-			expected: "QmTGdjLhWzGpGtmxVu73mzKyzva9JM4mSsZ93NceVU6Y5T",
-		},
 	}
 
 	for _, tc := range cases {

@@ -32,11 +32,11 @@ type Manifest struct {
 	// An IPFS hash pointing to documentation describing the binary format of the files in the index
 	Schemas types.IpfsHash `json:"schemas"`
 
-	// An IPFS hash pointing a file (for example, tar.gz) containing additional databases such as names and timestamps
-	Databases types.IpfsHash `json:"databases"`
-
 	// A list of pinned chunks (see ChunkRecord) detailing the location of all chunks in the index and associated bloom filters
 	Chunks []ChunkRecord `json:"chunks"`
+
+	// A map to make set membership easier
+	ChunkMap map[string]*ChunkRecord `json:"-"`
 }
 
 // A single record in the Manifest's Chunks table. It associates a block range, an IPFS hash of the chunk
@@ -58,6 +58,18 @@ const (
 	Index
 )
 
+func (ch ChunkType) String() string {
+	switch ch {
+	case Bloom:
+		return "bloom"
+	case Index:
+		return "index"
+	default:
+		logger.Fatal("Unknown type in ChunkType String")
+		return ""
+	}
+}
+
 func (ch *ChunkRecord) GetFullPath(chain string, cacheType ChunkType) string {
 	switch cacheType {
 	case Bloom:
@@ -68,9 +80,6 @@ func (ch *ChunkRecord) GetFullPath(chain string, cacheType ChunkType) string {
 	logger.Fatal("unexpected chunkType in GetFullPath")
 	return ""
 }
-
-// func isExpectedMd5(path string) bool {
-// }
 
 func (ch *ChunkRecord) IsExpectedSize(path string, chunkType ChunkType) bool {
 	switch chunkType {
@@ -105,9 +114,16 @@ func ReadManifest(chain string, source Source) (*Manifest, error) {
 	}
 
 	reader := bytes.NewReader([]byte(contents))
-	manifest := &Manifest{}
-	err := json.NewDecoder(reader).Decode(manifest)
-	return manifest, err
+	man := &Manifest{}
+	if err := json.NewDecoder(reader).Decode(man); err != nil {
+		return man, err
+	}
+	man.ChunkMap = make(map[string]*ChunkRecord, len(man.Chunks))
+	for i := range man.Chunks {
+		man.ChunkMap[man.Chunks[i].Range] = &man.Chunks[i]
+	}
+
+	return man, nil
 }
 
 // TODO: BOGUS - Protect against overwriting files
@@ -126,18 +142,6 @@ func (m *Manifest) SaveManifest(chain string) error {
 	return output.OutputObject(&m, w, "json", false, false, true, nil)
 }
 
-func unique(chunks []ChunkRecord) []ChunkRecord {
-	inResult := make(map[string]bool)
-	var result []ChunkRecord
-	for _, chunk := range chunks {
-		if _, ok := inResult[chunk.Range]; !ok {
-			inResult[chunk.Range] = true
-			result = append(result, chunk)
-		}
-	}
-	return result
-}
-
 // TODO: BOGUS - WORK - Protect against failure while writing
 func UpdateManifest(chain string, chunk ChunkRecord) error {
 	man, err := ReadManifest(chain, FromCache)
@@ -148,18 +152,24 @@ func UpdateManifest(chain string, chunk ChunkRecord) error {
 
 		// This is okay. Create an empty manifest
 		man = &Manifest{
-			Version:   version.ManifestVersion,
-			Chain:     chain,
-			Schemas:   unchained.Schemas,
-			Databases: unchained.Databases,
-			Chunks:    []ChunkRecord{},
+			Version: version.ManifestVersion,
+			Chain:   chain,
+			Schemas: unchained.Schemas,
+			// Databases: unchained.Databases,
+			Chunks: []ChunkRecord{},
 		}
 	}
 
 	// Make sure this chunk is only added once
-	man.Chunks = unique(append(man.Chunks, chunk))
+	empty := len(man.Chunks) == 0
+	belongs := !empty && man.ChunkMap[chunk.Range].Range == chunk.Range
+	if belongs {
+		*man.ChunkMap[chunk.Range] = chunk
+	} else {
+		man.Chunks = append(man.Chunks, chunk)
+	}
 
-	fileName := config.GetPathToChainConfig(chain) + "json"
+	fileName := config.GetPathToChainConfig(chain) + "manifest.json"
 	w, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)
 	if err != nil {
 		return fmt.Errorf("creating file: %s", err)
