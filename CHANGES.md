@@ -27,44 +27,25 @@ This file details changes made to TrueBlocks per version (starting with version 
 - **Unchained Index Smart Contract:**
   - to make it more broadly useful (for not only ourselves, but for anyone who chooses to use it). Previously, the contract allowed publication from a single known address (ours) and only accepted a single IPFS hash. With this release, we've chosen to allow any publisher to publish any IPFS hash for any reason. (In the case of our software, we know that we're interested in the hashes that we publish, so this is no less secure than the previous smart contract.) The smart contract is much better explained in the [Unchained Index Spec](https://trueblocks.io/papers/2022/file-format-spec-v0.40.0-beta.pdf).
 - **chifra scrape:**
-  - COMPLETE REMOVAL OF ALL C++ CODE FOR CHIFRA SCRAPE
-  - FIRST BLOCK OPTION ADDED BUT NOT IMPLEMENTED
-  - SLEEP OPTION ADDED
-  - REMOVES [ run | stop ] from chifra scrape
-  - Adds --remote option to chifra scrape
-  - OLD VALUES THAT WERE CONFIGUABLE IN BLOCK SCRAPE
-    - block_cnt             | The number of blocks to process with each round of the scraper<br />2000                                                     |
-    - block_chan_cnt        | The number of go routines to devote to block processors<br />10                                                              |
-    - addr_chan_cnt         | The number of go routines to devote to address processors<br />20                                                            |
-    - n_blocks_fallback     | The number of blocks to process during dDos or other busy block ranges<br />500                                              |
-    - apps_per_chunk        | the number of appearances to build into a chunk before consolidating it                                                      |
-    - unripe_dist           | The distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe                    |
-    - snap_to_grid          | An override to apps_per_chunk to snap-to-grid at every modulo of this value&#44; this allows easier corrections to the index |
-    - first_snap            | The first block at which snap_to_grid is enabled                                                                             |
-    - allow_missing         | Do not report errors for blockchain that contain blocks with zero addresses                                                  |
-    - n_test_runs           | In live testing mode&#44; the number of test runs to process before quitting                                                 |
-    - pinata_api_key        | If --pin is on, the key to Pinata at which to pin                                                                            |
-    - pinata_secret_api_key | If --pin is on, the secret key to Pinata at which to pin                                                                     |
-    - [requires]            | (this section will be removed when full multi-chain support is finished)                                                     |
-    - tracing               | If true, require the node to be able to produce traces<br />true                                                             |
-    - archive               | If true, require the node to be an archive node<br />true                                                                    |
-    - parity                | If true, require the node to be parity (deprecated)<br />true                                                                |
-    - [dev]                 | (this section will be removed when full multi-chain support is finished)                                                     |
-    - ipfs_gateway          | The default IPFS gateway endpoint for `chifra init`<br />https://ipfs.unchainedindex.io/ipfs/                                |
-  - NEW VALUES
-    - apps_per_chunk | uint64 | 200000  | the number of appearances to build into a chunk before consolidating it                                                  |
-    - snap_to_grid   | uint64 | 100000  | an override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index |
-    - first_snap     | uint64 | 0       | the first block at which snap_to_grid is enabled                                                                         |
-    - unripe_dist    | uint64 | 28      | the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe                |
-    - channel_count  | uint64 | 20      | number of concurrent processing channels                                                                                 |
-    - allow_missing  | bool   | false   | do not report errors for blockchains that contain blocks with zero addresses                                             |
-  - Remove all C++ code,
-  - Speed up processing by 2x (removes seperate loop for querying timestamps),
-  - Prepare for much better documentation.
-  - Writes the Sha256 hash of the Unchained Index Spec into each index header
-  - Adds versioning to the index files which allows for auto-correction and future migrations
-  - Much more robust error handling
-  - Converted the manifest to JSON to support structured data
+  - Removed all C++ code from the scraper allowing much better GoLang concurrency resulting in 2x speedup of scraper.
+  - Now writes the Sha256 hash of the Unchained Index Spec into each index header as a versioning mechanism.
+  - Adds versioning to the index files and blooms which allows for auto-correction and future migrations.
+  - Added `--first_block` option (enabled but not implemented).
+  - Added `--sleep` option to better respond to slower node endpoints.
+  - Added `--remote` option to `--pin` allowing for pinning locally as well as to an arbitrary pinning service.
+  - Makes `--block_cnt` a command-line only option (removes ability to use configuration file setting).
+  - Removed `mode` option which means user no longer needs to specify `run` sub-command.
+  - Prepares the code for much better documentation including auto-generation of GoDocs code for packages.
+  - Disallows running against non-archive, non-tracing nodes (including Geth).
+  - Removes configuration items for `[settings]block_chan_cnt` and `[settings]addr_chan_cnt` replacing both with `[settings]channel_count`
+  - Removes configuration items for:
+    - `[settings]n_blocks` (not used),
+    - `[settings]n_test_runs` (not used),
+    - `[settings]pinata_api_key` and `[settings]pinata_secret_api_key` (moved to `trueBlocks.toml` under the `[pins.pinata]` section),
+    - `[requires]tracing`, `[requires]archive`, and `[requires]parity` (no longer supported),
+    - `[dev]ipfs_gateway` (moved to `trueBlocks.toml` under the `[settings]defaultGateway` and per-chain sections),
+  - Converted the manifest to JSON to support structured data.
+  - Much more robust error handling.
 - **chifra export:**
   - Added new command line option, `--flow`, which allows for exporting `[ in | out | zero ]` transactions (that is, incoming value, outgoing value, or zero value transactions).
   - Removes `--staging` option since it is no longer needed as `chifra list` now includes staged transactions by default (see below).
