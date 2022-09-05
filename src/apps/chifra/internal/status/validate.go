@@ -31,7 +31,6 @@ func (opts *StatusOptions) validateStatus() error {
 		return err
 	}
 
-	// TODO: BOGUSM - MIGRATION
 	err = validate.ValidateEnum("--migrate", opts.Migrate, "[test|cache|index]")
 	if err != nil {
 		return err

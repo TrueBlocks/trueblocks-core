@@ -188,7 +188,6 @@ func VerifyMigrations() {
 
 	// We need at least this version...
 	requiredVersion := "v0.40.0-beta"
-	// TODO: BOGUSM - MIGRATION
 	if !config.IsAtLeastVersion(requiredVersion) {
 		msg := strings.Replace(backVersion, "{0}", "{"+requiredVersion+"}", -1)
 		msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
@@ -197,6 +196,3 @@ func VerifyMigrations() {
 		log.Fatalf(msg)
 	}
 }
-
-// TODO: BOGUSM - MIGRATION
-// search for CheckBackLevelIndex

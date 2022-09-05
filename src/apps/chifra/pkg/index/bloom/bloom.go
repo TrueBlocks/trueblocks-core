@@ -174,7 +174,6 @@ func (bl *ChunkBloom) ReadBloomHeader() (bool, error) {
 	return true, nil
 }
 
-// TODO: BOGUSM - MIGRATION
 func HasValidBloomHeader(chain, fileName string) (bool, error) {
 	bl, err := NewChunkBloom(fileName)
 	if err != nil {

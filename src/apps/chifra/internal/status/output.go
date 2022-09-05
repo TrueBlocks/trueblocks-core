@@ -48,11 +48,9 @@ func (opts *StatusOptions) StatusInternal() (err error, handled bool) {
 			if m == "index" {
 				if opts.Migrate == "test" {
 					// Note this does not return if a migration is needed
-					migrate.CheckBackLevelIndex(opts.Globals.Chain, true)
-
-				} else if opts.Migrate == "index" {
-					return opts.HandleIndexMigration(), true
-
+					migrate.CheckBackLevelIndex(opts.Globals.Chain)
+					// } else if opts.Migrate == "index" {
+					// return opts.HandleIndexMigration(), true
 				}
 			}
 		}

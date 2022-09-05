@@ -14,7 +14,7 @@ func (opts *InitOptions) validateInit() error {
 	}
 
 	// Note this does not return if a migration is needed
-	migrate.CheckBackLevelIndex(opts.Globals.Chain, true)
+	migrate.CheckBackLevelIndex(opts.Globals.Chain)
 
 	return opts.Globals.Validate()
 }
