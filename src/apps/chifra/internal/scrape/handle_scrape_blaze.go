@@ -43,7 +43,7 @@ func (opts *ScrapeOptions) HandleScrapeBlaze(progress *rpcClient.MetaData, blaze
 	return nil
 }
 
-// TODO: BOGUS - WORK - Protect against failure while writing
+// TODO: BOGUSW - WORK - Protect against failure while writing
 func (opts *BlazeOptions) WriteTimestamps(chain string) error {
 	sort.Slice(opts.TsArray, func(i, j int) bool {
 		return opts.TsArray[i].Bn < opts.TsArray[j].Bn

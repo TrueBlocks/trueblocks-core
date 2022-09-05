@@ -48,7 +48,6 @@ func (opts *StatusOptions) StatusInternal() (err error, handled bool) {
 			if m == "index" {
 				if opts.Migrate == "test" {
 					// Note this does not return if a migration is needed
-					// TODO: BOGUS - MIGRATION
 					migrate.CheckBackLevelIndex(opts.Globals.Chain, true)
 
 				} else if opts.Migrate == "index" {

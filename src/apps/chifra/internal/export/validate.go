@@ -97,7 +97,6 @@ func (opts *ExportOptions) validateExport() error {
 	}
 
 	// Note this does not return if a migration is needed
-	// TODO: BOGUS - MIGRATION
 	migrate.CheckBackLevelIndex(opts.Globals.Chain, true)
 
 	err := opts.Globals.Validate()
