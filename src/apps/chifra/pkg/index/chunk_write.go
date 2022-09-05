@@ -105,7 +105,7 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 			// defer fp.Close() // Note -- we don't defer because we want to close the file and possibly pin it below...
 
 			fp.Seek(0, io.SeekStart) // already true, but can't hurt
-			header := HeaderRecord{
+			header := IndexHeaderRecord{
 				Magic:           file.MagicNumber,
 				Hash:            common.BytesToHash(crypto.Keccak256([]byte(version.ManifestVersion))),
 				AddressCount:    uint32(len(addressTable)),

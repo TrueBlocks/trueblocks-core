@@ -21,19 +21,19 @@ import (
 // HeaderRecord is the first 44 bytes of an ChunkData. This structure carries a magic number (4 bytes),
 // a version specifier (32 bytes), and two four-byte integers representing the number of records in each
 // of the two tables.
-type HeaderRecord struct {
+type IndexHeaderRecord struct {
 	Magic           uint32
 	Hash            common.Hash
 	AddressCount    uint32
 	AppearanceCount uint32
 }
 
-func (h *HeaderRecord) String() string {
+func (h *IndexHeaderRecord) String() string {
 	b, _ := json.MarshalIndent(h, "", " ")
 	return string(b)
 }
 
-func readHeader(fl *os.File) (header HeaderRecord, err error) {
+func readIndexHeader(fl *os.File) (header IndexHeaderRecord, err error) {
 	err = binary.Read(fl, binary.LittleEndian, &header)
 	if err != nil {
 		return
@@ -48,15 +48,15 @@ func readHeader(fl *os.File) (header HeaderRecord, err error) {
 	return
 }
 
-func ReadChunkHeader(chain, fileName string, checkHash bool) (header HeaderRecord, err error) {
+func ReadChunkHeader(chain, fileName string, checkHash bool) (header IndexHeaderRecord, err error) {
 	fileName = config.ToIndexPath(fileName)
 	ff, err := os.OpenFile(fileName, os.O_RDONLY, 0)
 	if err != nil {
-		return HeaderRecord{}, err
+		return IndexHeaderRecord{}, err
 	}
 	defer ff.Close()
 
-	if header, err = readHeader(ff); err != nil {
+	if header, err = readIndexHeader(ff); err != nil {
 		return
 	}
 
@@ -96,7 +96,7 @@ func WriteChunkHeaderHash(chain, fileName string, headerHash common.Hash) ( /* c
 			defer fp.Close() // defers are last in, first out
 
 			fp.Seek(0, io.SeekStart) // already true, but can't hurt
-			header, err := readHeader(fp)
+			header, err := readIndexHeader(fp)
 			if err != nil {
 				return false, err
 			}

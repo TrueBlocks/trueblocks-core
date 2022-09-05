@@ -352,7 +352,7 @@ bool noteMonitor(const string_q& path, void* data) {
         CMonitor m;
         m.address = mdi.address;
         CMonitorHeader header;
-        m.readHeader(header);
+        m.readMonitorHeader(header);
         mdi.deleted = header.deleted;
 
         CItemCounter* counter = reinterpret_cast<CItemCounter*>(data);

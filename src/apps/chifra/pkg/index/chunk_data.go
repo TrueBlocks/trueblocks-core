@@ -31,7 +31,7 @@ const (
 // and Count pairs found in the corresponding AddressTable records.
 type ChunkData struct {
 	File           *os.File
-	Header         HeaderRecord
+	Header         IndexHeaderRecord
 	Range          cache.FileRange
 	AddrTableStart int64
 	AppTableStart  int64
@@ -53,7 +53,7 @@ func NewChunkData(path string) (chunk ChunkData, err error) {
 	}
 	// Note, we don't defer closing here since we want the file to stay opened. Caller must close it.
 
-	header, err := readHeader(file)
+	header, err := readIndexHeader(file)
 	if err != nil {
 		file.Close()
 		return ChunkData{}, err

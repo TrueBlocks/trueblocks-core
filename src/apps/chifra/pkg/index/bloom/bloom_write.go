@@ -8,6 +8,9 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/crypto"
 )
 
 // WriteBloom writes a single bloom filter to file
@@ -29,6 +32,8 @@ func (bl *ChunkBloom) WriteBloom(chain, fileName string) ( /* changed */ bool, e
 			defer fp.Close() // defers are last in, first out
 
 			fp.Seek(0, io.SeekStart) // already true, but can't hurt
+			bl.Header.Magic = file.SmallMagicNumber
+			bl.Header.Hash = common.BytesToHash(crypto.Keccak256([]byte(version.ManifestVersion)))
 			if err = binary.Write(fp, binary.LittleEndian, bl.Header); err != nil {
 				return false, err
 			}

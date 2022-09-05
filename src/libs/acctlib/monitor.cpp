@@ -404,7 +404,7 @@ string_q CMonitor::getPathToMonitor(const address_t& addr, bool staging) const {
 }
 
 //--------------------------------------------------------------------------------
-bool CMonitor::readHeader(CMonitorHeader& header) const {
+bool CMonitor::readMonitorHeader(CMonitorHeader& header) const {
     string_q newFilename = getPathToMonitor(address, isStaging);
     if (fileExists(newFilename)) {
         if (header.lastScanned > 0) {

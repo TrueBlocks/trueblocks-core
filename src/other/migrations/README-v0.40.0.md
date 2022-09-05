@@ -1,3 +1,21 @@
+MIGRATION - Toml Files: block_chan_cnt and addr_chan_cnt are gone
+MIGRATION - Toml Files: pinGateway is gone
+MIGRATION - Toml Files: We need to tell them to add a section to trueBlocks for sepolia which is not included otherwise
+MIGRATION - Toml Files: Move etherscan_key from settings to the keys array
+MIGRATION - Command Lines: acctScrape: --flow was added, --staging was removed. --pin was hidden
+MIGRATION - Command Lines: grabAbi: --classes was removed
+MIGRATION - Command Lines: chunkMan: --reset renamed to --truncate, --repair added
+MIGRATION - Command Lines: chunkMan: added --sleep
+MIGRATION - Command Lines: chunkMan: removed addrs, --details, --repair, --clean
+MIGRATION - Command Lines: blockScrape: modes removed
+MIGRATION - Command Lines: blockScrape: --block_chan_cnt and --addr_chan_cnt removed, channel_count config item added
+MIGRATION - Command Lines: blockScrape: --ripe_block option removed
+MIGRATION - Command Lines: blockScrape: --blaze option removed
+MIGRATION - Multichain: Removed support for ropsten and rinkeby
+MIGRATION - Scraper - Total re-write in pure GoLang code - 2 times faster at least, more robust, auto pinning, better validity checking of the index data, insertion of hash in header
+MIGRATION - Export - Runs up against six minutes to the head -- when the Merge happens we will be up to Finalized block
+
+
 # v0.40.0 Unchained Index Version 2.0
 
 (September 4, 2022)

@@ -75,7 +75,7 @@ bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes, bool up
             cerr << "Updating prices...\r";
         CArchive priceCache(READING_ARCHIVE);
         if (priceCache.Lock(cacheFile, modeReadOnly, LOCK_NOWAIT)) {
-            priceCache.readHeader();  // we read the header even though it may not be the current version...
+            priceCache.readPriceHeader();  // we read the header even though it may not be the current version...
             priceCache >> lastRead.m_nSeconds;
             priceCache >> quotes;
             priceCache.Close();
