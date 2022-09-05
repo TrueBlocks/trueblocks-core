@@ -13,7 +13,6 @@ import (
 	"io"
 	"os"
 	"path/filepath"
-	"runtime"
 	"strings"
 	"sync"
 	"time"
@@ -28,7 +27,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	ants "github.com/panjf2000/ants/v2"
 )
 
@@ -173,9 +171,7 @@ func getWriteWorker(wwArgs writeWorkerArguments, chain string, chunkType cache.C
 
 // DownloadChunks downloads, unzips and saves the chunk of type indicated by chunkType
 // for each chunk in chunks. Progress is reported to progressChannel.
-func DownloadChunks(chain string, chunks []manifest.ChunkRecord, chunkType cache.CacheType, progressChannel progressChan) {
-	// If we make this too big, the pinning service chokes
-	poolSize := utils.Min(10, (runtime.NumCPU()*3)/2)
+func DownloadChunks(chain string, chunks []manifest.ChunkRecord, chunkType cache.CacheType, poolSize int, progressChannel progressChan) {
 	// Downloaded content will wait for saving in this channel
 	writeChannel := make(chan *jobResult, poolSize)
 	// Context lets us handle Ctrl-C easily

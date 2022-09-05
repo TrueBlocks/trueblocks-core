@@ -83,13 +83,13 @@ func NewChunkBloom(path string) (bl ChunkBloom, err error) {
 		return
 	}
 
-	var isVersioned bool
-	bl.File.Seek(0, io.SeekStart)                            // already true, but can't hurt
-	if isVersioned, err = bl.ReadBloomHeader(); err != nil { // Note that it may not find a header, but it leaves the file pointer pointing to the count
+	var versionOk bool
+	bl.File.Seek(0, io.SeekStart)                          // already true, but can't hurt
+	if versionOk, err = bl.ReadBloomHeader(); err != nil { // Note that it may not find a header, but it leaves the file pointer pointing to the count
 		return
 	}
 	bl.HeaderSize = 0 // already true, but just to make it explicit, if the file is not versioned, it has no header
-	if isVersioned {
+	if versionOk {
 		header := BloomHeader{}
 		header.Magic = file.SmallMagicNumber
 		bl.HeaderSize = int64(unsafe.Sizeof(header))
@@ -128,13 +128,13 @@ func (bl *ChunkBloom) ReadBloom(fileName string) (err error) {
 		bl.File = nil
 	}()
 
-	var isVersioned bool
-	bl.File.Seek(0, io.SeekStart)                            // already true, but can't hurt
-	if isVersioned, err = bl.ReadBloomHeader(); err != nil { // Note that it may not find a header, but it leaves the file pointer pointing to the count
+	var versionOk bool
+	bl.File.Seek(0, io.SeekStart)                          // already true, but can't hurt
+	if versionOk, err = bl.ReadBloomHeader(); err != nil { // Note that it may not find a header, but it leaves the file pointer pointing to the count
 		return err
 	}
 	bl.HeaderSize = 0 // already true, but it makes it explicit
-	if isVersioned {
+	if versionOk {
 		header := BloomHeader{}
 		header.Magic = file.SmallMagicNumber
 		bl.HeaderSize = int64(unsafe.Sizeof(header))
@@ -174,7 +174,7 @@ func (bl *ChunkBloom) ReadBloomHeader() (bool, error) {
 	return true, nil
 }
 
-// TODO: BOGUS - MIGRATION
+// TODO: BOGUSM - MIGRATION
 func HasValidBloomHeader(chain, fileName string) (bool, error) {
 	bl, err := NewChunkBloom(fileName)
 	if err != nil {
@@ -190,7 +190,8 @@ func HasValidBloomHeader(chain, fileName string) (bool, error) {
 	}()
 
 	bl.File.Seek(0, io.SeekStart) // already true, but can't hurt
-	return bl.ReadBloomHeader()
+	versionOk, err := bl.ReadBloomHeader()
+	return versionOk, err
 }
 
 // AddToSet adds an address to a bloom filter

@@ -6,6 +6,7 @@ package initPkg
 
 import (
 	"fmt"
+	"runtime"
 	"sort"
 	"strings"
 	"sync"
@@ -18,6 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // InitInternal initializes local copy of UnchainedIndex by downloading manifests and chunks
@@ -63,7 +65,7 @@ func (opts *InitOptions) HandleInit() error {
 	defer close(indexDoneChannel)
 
 	getChunks := func(chunkType cache.CacheType) {
-		failedChunks, cancelled := downloadAndReportProgress(chain, opts.Sleep, remoteManifest.Chunks, chunkType)
+		failedChunks, cancelled := opts.downloadAndReportProgress(remoteManifest.Chunks, chunkType)
 		if cancelled {
 			// The user hit the control+c, we don't want to continue...
 			return
@@ -74,7 +76,7 @@ func (opts *InitOptions) HandleInit() error {
 			// ...if there were failed downloads, try them again (3 times if necessary)...
 			retry(failedChunks, 3, func(items []manifest.ChunkRecord) ([]manifest.ChunkRecord, bool) {
 				logger.Log(logger.Info, "Retrying", len(items), "bloom(s)")
-				return downloadAndReportProgress(chain, opts.Sleep, items, chunkType)
+				return opts.downloadAndReportProgress(items, chunkType)
 			})
 		}
 	}
@@ -109,7 +111,9 @@ var nStarted int
 var nUpdated int
 
 // downloadAndReportProgress Downloads the chunks and reports progress to the progressChannel
-func downloadAndReportProgress(chain string, sleep float64, chunks []manifest.ChunkRecord, chunkType cache.CacheType) ([]manifest.ChunkRecord, bool) {
+func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord, chunkType cache.CacheType) ([]manifest.ChunkRecord, bool) {
+	chain := opts.Globals.Chain
+
 	failed := []manifest.ChunkRecord{}
 	cancelled := false
 
@@ -117,8 +121,11 @@ func downloadAndReportProgress(chain string, sleep float64, chunks []manifest.Ch
 	progressChannel := progress.MakeChan()
 	defer close(progressChannel)
 
+	// TODO: This should be configurable - If we make this too big, the pinning service chokes
+	poolSize := utils.Min(10, (runtime.NumCPU()*3)/2)
+
 	// Start the go routine that downloads the chunks. This sends messages through the progressChannel
-	go index.DownloadChunks(chain, chunks, chunkType, progressChannel)
+	go index.DownloadChunks(chain, chunks, chunkType, poolSize, progressChannel)
 
 	for event := range progressChannel {
 		chunk, ok := event.Payload.(*manifest.ChunkRecord)
@@ -175,10 +182,10 @@ func downloadAndReportProgress(chain string, sleep float64, chunks []manifest.Ch
 		}
 		m.Unlock()
 
-		// if sleep != 0.0 {
+		// if opts.Sleep != 0.0 {
 		// 	logger.Log(logger.Info, "")
-		// 	logger.Log(logger.Info, "Sleeping between downloads for", sleep, "seconds")
-		// 	time.Sleep(time.Duration(sleep*1000) * time.Millisecond)
+		// 	logger.Log(logger.Info, "Sleeping between downloads for", opts.Sleep, "seconds")
+		// 	time.Sleep(time.Duration(opts.Sleep*1000) * time.Millisecond)
 		// }
 	}
 

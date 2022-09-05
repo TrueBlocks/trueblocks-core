@@ -100,10 +100,6 @@ func GetDefault(chain string) ScrapeSettings {
 
 // GetSettings retrieves scrape config from (in order) default, config, environment, optionally provided cmdLine
 func GetSettings(chain, configFn string, cmdLine *ScrapeSettings) (ScrapeSettings, error) {
-	type TomlFile struct {
-		Settings ScrapeSettings
-	}
-
 	// Start with the defalt values...
 	base := GetDefault(chain)
 
@@ -117,9 +113,15 @@ func GetSettings(chain, configFn string, cmdLine *ScrapeSettings) (ScrapeSetting
 	}
 
 	if file.FileExists(configFn) {
+		type TomlFile struct {
+			Settings ScrapeSettings
+		}
 		var t TomlFile
+		t.Settings = Unset
 		// ...pick up values from toml file...
 		if _, err := toml.Decode(utils.AsciiFileToString(configFn), &t); err != nil {
+			logger.Log(logger.Error, "Could not load", configFn)
+			logger.Fatal("Error:", err)
 			return ScrapeSettings{}, err
 		}
 		base.overlay(chain, t.Settings)
