@@ -127,7 +127,7 @@ func ReadManifest(chain string, source Source) (*Manifest, error) {
 	return man, nil
 }
 
-// TODO: BOGUSW - WORK - Protect against failure while writing
+// TODO: Protect against overwriting files on disc
 func (m *Manifest) SaveManifest(chain string) error {
 	fileName := config.GetPathToChainConfig(chain) + "manifest.json"
 	w, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
@@ -143,7 +143,7 @@ func (m *Manifest) SaveManifest(chain string) error {
 	return output.OutputObject(&m, w, "json", false, false, true, nil)
 }
 
-// TODO: BOGUSW - WORK - Protect against failure while writing
+// TODO: Protect against overwriting files on disc
 func UpdateManifest(chain string, chunk ChunkRecord) error {
 	man, err := ReadManifest(chain, FromCache)
 	if err != nil {

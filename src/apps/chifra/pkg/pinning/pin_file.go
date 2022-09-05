@@ -4,6 +4,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -13,6 +14,35 @@ type PinResult struct {
 	Remote  types.SimpleChunkRecord `json:"remote,omitempty"`
 	Matches bool                    `json:"matches,omitempty"`
 	err     error
+}
+
+// var errNoPinningService = errors.New("no pinning service available")
+
+// TODO: BOGUS - WE HAVE TO HAVE A SOLUTION FOR THE TIMESTAMP FILE --PIN --REMOTE ON THE CHIFRA WHEN ROUTINES?
+func PinTimestamps(chain string, isRemote bool) error {
+	path := config.GetPathToIndex(chain) + "ts.bin"
+	var hash types.IpfsHash
+	var err error
+	if LocalDaemonRunning() {
+		localService, _ := NewPinningService(chain, Local)
+		if hash, err = localService.PinFile(path, true); err != nil {
+			logger.Fatal("Error in PinTimestamps", err)
+			return err
+		}
+	}
+
+	if isRemote {
+		remoteService, _ := NewPinningService(chain, Pinata)
+		if hash, err = remoteService.PinFile(path, true); err != nil {
+			logger.Fatal("Error in PinTimestamps", err)
+			return err
+		}
+	}
+
+	fn := config.GetPathToCache(chain) + "/tmp/ts.ipfs_hash.fil"
+	logger.Log(logger.Info, "Pinning timestamp file", fn, "to", hash)
+	file.StringToAsciiFile(fn, hash.String())
+	return nil
 }
 
 func PinChunk(chain, path string, isRemote bool) (PinResult, error) {

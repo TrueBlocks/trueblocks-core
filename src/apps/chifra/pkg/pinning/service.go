@@ -11,7 +11,7 @@ import (
 type ServiceType int
 
 const (
-	NoType ServiceType = iota
+	NoType ServiceType = 1 << iota
 	Pinata
 	Estuary
 	Local

@@ -197,6 +197,11 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord
 // Returns number of chunks that we were unable to fetch. This function is simple because:
 //  1. it will never get a new failing chunk (it only feeds in the list of known, failed chunks)
 //  2. The maximum number of failing chunks we can get equals the length of `failedChunks`.
+//
+// TODO: Instead of storing failed attempts in an array and retrying them after processing the entire list in the manifest,
+// TODO: we want to re-process failed downloads on the stop. In that way, we can do progressive backoff per chunk (as opposed
+// TODO: to globally). We want to back-off on single chunks instead of every chunk. The backoff routine carries an 'attempts'
+// TODO: value and we wait after each failure 2^nAttempts (double the wait each time it fails). Max 10 tries or something.
 func retry(failedChunks []manifest.ChunkRecord, nTimes int, downloadChunksFunc func(chunks []manifest.ChunkRecord) (failed []manifest.ChunkRecord, cancelled bool)) int {
 	count := 0
 

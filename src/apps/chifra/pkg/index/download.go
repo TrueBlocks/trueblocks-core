@@ -270,7 +270,6 @@ func writeBytesToDisc(wwArgs writeWorkerArguments, chain string, chunkType cache
 	_, err = io.Copy(outputFile, res.contents)
 	if err != nil {
 		if file.FileExists(outputFile.Name()) {
-			// TODO: BOGUS - CHIFRA INIT - PARTIAL FILES
 			outputFile.Close()
 			os.Remove(outputFile.Name())
 			logger.Log(logger.Warning, "Failed download", colors.Magenta, res.rng, colors.Off, "(will retry)", strings.Repeat(" ", 30))

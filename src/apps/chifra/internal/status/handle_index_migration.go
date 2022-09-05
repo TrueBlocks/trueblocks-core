@@ -1,6 +1,6 @@
 package statusPkg
 
-// Not needed, so comments, but might be needed later, so not removed
+// This code is not needed right now, but might be needed later, so not removed
 func (opts *StatusOptions) HandleIndexMigration() error {
 	return nil
 	// 	fileName := config.GetPathToIndex(opts.Globals.Chain) + "finalized/000000000-000000000.bin"

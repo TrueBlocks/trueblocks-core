@@ -156,7 +156,11 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 				return &report, err
 			}
 
-			rec := resultToRecord(&result)
+			if err = pinning.PinTimestamps(chain, remote); err != nil {
+				return &report, err
+			}
+
+			rec := ResultToRecord(&result)
 			report.PinRecord.IndexHash = rec.IndexHash
 			report.PinRecord.BloomHash = rec.BloomHash
 			report.PinRecord.IndexSize = rec.IndexSize
@@ -178,7 +182,7 @@ type Renderer interface {
 
 var spaces20 = strings.Repeat(" ", 20)
 
-func resultToRecord(result *pinning.PinResult) manifest.ChunkRecord {
+func ResultToRecord(result *pinning.PinResult) manifest.ChunkRecord {
 	if len(result.Local.BloomHash) > 0 {
 		return manifest.ChunkRecord{
 			Range:     result.Range.String(),

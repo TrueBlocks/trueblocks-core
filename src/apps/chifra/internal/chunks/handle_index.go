@@ -14,7 +14,6 @@ import (
 
 func (opts *ChunksOptions) showIndex(ctx *WalkContext, path string, first bool) (bool, error) {
 	path = config.ToIndexPath(path)
-	// TODO: BOGUS - THE CASE WHERE THERE'S A PARTIAL INDEX
 	if !file.FileExists(path) {
 		// Weird case when bloom files exist, but index files don't
 		return true, nil
