@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -126,7 +127,7 @@ func ReadManifest(chain string, source Source) (*Manifest, error) {
 	return man, nil
 }
 
-// TODO: BOGUS - Protect against overwriting files
+// TODO: BOGUSW - WORK - Protect against failure while writing
 func (m *Manifest) SaveManifest(chain string) error {
 	fileName := config.GetPathToChainConfig(chain) + "manifest.json"
 	w, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
@@ -142,7 +143,7 @@ func (m *Manifest) SaveManifest(chain string) error {
 	return output.OutputObject(&m, w, "json", false, false, true, nil)
 }
 
-// TODO: BOGUS - WORK - Protect against failure while writing
+// TODO: BOGUSW - WORK - Protect against failure while writing
 func UpdateManifest(chain string, chunk ChunkRecord) error {
 	man, err := ReadManifest(chain, FromCache)
 	if err != nil {
@@ -163,11 +164,18 @@ func UpdateManifest(chain string, chunk ChunkRecord) error {
 
 	// Make sure this chunk is only added once
 	_, ok := man.ChunkMap[chunk.Range]
-	if !ok {
-		n := &ChunkRecord{}
-		man.ChunkMap[chunk.Range] = n
+	if ok {
+		// logger.Log(logger.Info, "Replacing chunk at", chunk.Range)
+		*man.ChunkMap[chunk.Range] = chunk
+	} else {
+		// Create somewhere to put it if it's not already there
+		// logger.Log(logger.Info, "Adding chunk at", chunk.Range)
+		man.Chunks = append(man.Chunks, chunk)
+		man.ChunkMap[chunk.Range] = &chunk
+		sort.Slice(man.Chunks, func(i, j int) bool {
+			return man.Chunks[i].Range < man.Chunks[j].Range
+		})
 	}
-	*man.ChunkMap[chunk.Range] = chunk
 
 	fileName := config.GetPathToChainConfig(chain) + "manifest.json"
 	w, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)
