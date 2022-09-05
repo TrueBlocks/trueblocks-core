@@ -229,7 +229,6 @@ func DownloadChunks(chain string, chunks []manifest.ChunkRecord, chunkType cache
 		writeWg.Done()
 	}()
 
-	logger.Log(logger.Info, chain, len(chunks), chunkType)
 	itemsToDownload := filterDownloadedChunks(chain, chunks, chunkType, progressChannel)
 	progressChannel <- &progress.Progress{
 		Event:   progress.Statistics,
