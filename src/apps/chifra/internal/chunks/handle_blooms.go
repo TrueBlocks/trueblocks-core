@@ -38,6 +38,8 @@ func NewSimpleBloom(stats types.ReportChunks, bl bloom.ChunkBloom) types.SimpleB
 	}
 
 	var ret types.SimpleBloom
+	ret.Magic = bl.Header.Magic
+	ret.Hash = bl.Header.Hash
 	ret.Size = stats.BloomSz
 	ret.Range = cache.FileRange{First: stats.Start, Last: stats.End}
 	ret.Count = stats.NBlooms

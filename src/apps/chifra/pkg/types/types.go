@@ -68,6 +68,8 @@ type SimpleChunkRecord struct {
 
 type SimpleBloom struct {
 	Range     cache.FileRange `json:"range"`
+	Magic     uint16          `json:"magic"`
+	Hash      common.Hash     `json:"hash"`
 	Count     uint32          `json:"nBlooms"`
 	NInserted uint64          `json:"nInserted"`
 	Size      int64           `json:"size"`
