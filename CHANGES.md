@@ -1,4 +1,4 @@
-# Changes per Version
+# Changes
 
 This file details changes made to TrueBlocks per version (starting with version v0.40.0). See the [migration notes](./MIGRATIONS.md) for changes from previous versions.
 
