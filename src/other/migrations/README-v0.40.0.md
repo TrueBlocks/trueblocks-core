@@ -1,24 +1,6 @@
-MIGRATION - Toml Files: block_chan_cnt and addr_chan_cnt are gone
-MIGRATION - Toml Files: pinGateway is gone
-MIGRATION - Toml Files: We need to tell them to add a section to trueBlocks for sepolia which is not included otherwise
-MIGRATION - Toml Files: Move etherscan_key from settings to the keys array
-MIGRATION - Command Lines: acctScrape: --flow was added, --staging was removed. --pin was hidden
-MIGRATION - Command Lines: grabAbi: --classes was removed
-MIGRATION - Command Lines: chunkMan: --reset renamed to --truncate, --repair added
-MIGRATION - Command Lines: chunkMan: added --sleep
-MIGRATION - Command Lines: chunkMan: removed addrs, --details, --repair, --clean
-MIGRATION - Command Lines: blockScrape: modes removed
-MIGRATION - Command Lines: blockScrape: --block_chan_cnt and --addr_chan_cnt removed, channel_count config item added
-MIGRATION - Command Lines: blockScrape: --ripe_block option removed
-MIGRATION - Command Lines: blockScrape: --blaze option removed
-MIGRATION - Multichain: Removed support for ropsten and rinkeby
-MIGRATION - Scraper - Total re-write in pure GoLang code - 2 times faster at least, more robust, auto pinning, better validity checking of the index data, insertion of hash in header
-MIGRATION - Export - Runs up against six minutes to the head -- when the Merge happens we will be up to Finalized block
-
-
 # v0.40.0 Unchained Index Version 2.0
 
-(September 4, 2022)
+(September 8, 2022)
 
 ## Why the Change
 
@@ -30,21 +12,21 @@ This resulted in corrupted data somewhere between blocks 13,300,000 and 13,400,0
 reporting addresses accurately (and TrueBlocks didn't notice). This resulted in missing appearance records for
 some block ranges.
 
-This migration corrects those errors, but it does [a WHOLE LOT of other things as well](../../../CHANGES).
+This migration corrects those errors, but it does [a WHOLE LOT of other things as well](../../../CHANGES.md).
 
 ## What do I need to do?
 
-The following migration instructions apply only to Mainnet Ethereum. You may adjust for other chains by adding the `--chain` option. See the note
+The following migration instructions apply only to Ethereum Mainnet. You may adjust for other chains by adding the `--chain` option. See the note
 below if you're running against other chains.
 
 The migration consists of the following steps:
 
 - Stop long-running processes
-- Edit a configuration file
+- Edit configuration files
 - Run and test the migration commands
 - Restart long-running processes
 
-Depending on your internet connection, the migration may take anywhere between a few minutes and a few hours.
+Depending on your internet connection, the migration may take anywhere between a few minutes and a few hours. Be patient and allow the process to complete.
 
 ### Before you start
 
@@ -58,11 +40,15 @@ You will need the following folder locations to proceed. Get these values by run
 2. `$cachePath`
 3. `$indexPath`
 
-Backup these folders if you wish (but note that folders are caches, so they can be reproduced.)
+If you wish to backup these folders, you should do so now, however, please note that these are caches and can always be re-built, so this step is optional.
 
-### Instruction
+### Instructions
 
-Change directory into the `$configPath`: `cd <configPath>`
+Change directory into the `$configPath`:
+
+```
+cd <configPath>
+```
 
 ----
 ### Edit the trueBlocks.toml configuration file
@@ -70,33 +56,41 @@ Change directory into the `$configPath`: `cd <configPath>`
 Edit `$configPath/trueBlocks.toml`
 
 1. Remove all lines in this file that contain the word `pinGateway`
-2. Add the following three lines in the suggested chain configuration sections:
+2. Add the following values under the indicated configuration section:
 
 ```[toml]
+[settings]
+...
+defaultGateway = "https://[{CHAIN}].unchainedindex.io/ipfs"
+
 [chains.mainnet]
 ...
 ipfsGateway="https://ipfs.unchainedindex.io/ipfs/"
 ...
-
-[chains.gnosis]
-...
-ipfsGateway="https://gnosis.unchainedindex.io/ipfs/"
-...
-
-[chains.sepolia]
-...
-ipfsGateway="https://sepolia.unchainedindex.io/ipfs/"
-...
 ```
 
-3. Tell the system that you've made these changes by changing the version string in the TOML file. If the `[version]` section does not exist, add it.
+3. Move your Etherscan key to a new section.
+   - If a key called `[settings]etherscan_key` exists, remove it (copy its value first).
+   - Add three new configuration sections to the `trueBlocks.toml` file. Use the value you copied from `[settings]etherscan_key` for API key.
+   - Note: the [keys] section is intentially empty.
+
+```
+[keys]
+
+[keys.etherscan]
+apiKey = <copied or new value>
+
+[keys.pinata]
+apiKey = "<your Pinata api key>"       # optional
+secretKey = "<your Pinata secret key>" # optional
+jwt = "<your Pinata JWT key>"          # optional
+```
+1. Tell the system that you've made these changes by changing the version. If the `[version]` section does not exist, add it.
 
 ```[toml]
 [version]
 current = "0.40.0-beta"
 ```
-
-Ignore the note in **trueBlocks.toml** telling you not to edit this value, if it's present.
 
 **Note:** If you're running your own ipfs gateways and you're pinning the index yourself, adjust the `ipfsGateway` values as necessary.
 
@@ -105,100 +99,54 @@ Ignore the note in **trueBlocks.toml** telling you not to edit this value, if it
 ----
 ### Run the migration command
 
-# THE FOLLOWING IS INCOMPLETE
-# DO THIS PART
-
-After building the `feature/new-unchained-index-2.0` branch, run
+Make sure you have the latest `master` (or `develop` if you prefer) branch. Do a fresh re-build, then run:
 
 ```
-chifra chunks index --check 2>&1 | tee file.1
+chifra chunks index --check
 ```
 
-You should get a bunch of errors.
+If you have a previous index, this should report a number of "errors" or suggested upgrades.
 
-Then run
-
-```
-chifra index --all 2>&1 | tee file.2
-```
-
-This may take a very long time, let it run.
-
-Then do
+Then run:
 
 ```
-chifra chunks index --check 2>&1 | tee -a file.3
+chifra index --all     # or if you're working with the minimal index just `chifra init`.
 ```
 
-If this works without errors, we are ready. If this reports errors, repeat the `chifra init --all` until you get no more errors on the above command.
-----
+This may take a very long time, let it run to completion. Next, re-run:
 
-# YOU CAN STOP HERE
-# YOU CAN STOP HERE
-----
-
-# DO NOT DO THE BELOW PART
-Prior to completing the next part of the migration, you may wish to make a backup of `$cachePath/monitors` and `$indexPath`. However, these folders are caches, so they can be re-created if something goes wrong.
-
-In the section, you will
-
-1. Remove temporary folders in `$indexPath` (`staging`, `unripe`, `ripe`, and `maps`)
-2. Remove incorrect Index and Bloom files from `$indexPath/finalized/` and `$indexPath/blooms/`.
-3. Remove incorrect values from existing monitors (see the note below).
-
-First, confirm that you need to run the migration
-
-```[bash]
-chifra status index --migrate test
+```
+chifra chunks index --check
 ```
 
-If you need to migrate, this command will report a back-level index file was found. If command does not report a problem, please contact us in our discord.
+If this works without errors, you're finished. If this reports errors, repeatedly run `chifra init --all` and the above check until you get no more errors. Once or twice at most.
 
-Run the following command to complete the migration:
+If the above process does not work, you can revert to the nuecular option by removing the entire contents of the `$indexPath` and re-running `chifra init --all`.
 
-```[bash]
-chifra status index --migrate index
-```
-
-Let this command run to the end. This step may take as much as an hour or more. If, for some reason, the command stops before finishing, you should re-run it until it completes.
-
-You will know you're finished if the command `chifra status index --migrate index` returns without doing anything.
-
-**Note:** If you experience problems with a monitored addresses, you can always start fresh by removing it and re-running `chifra list` on that address. To remove a monitor, run `chifra monitors --delete --remove <address>`. 
-
-**Note:** If you experience problems with these steps, you can always just remove the entire `$indexPath` folder. It will be re-built with `chifra init --all`. If you do this, also remove the `$cachePath/monitors` folder. Your monitors can be re-built as well with `chifra list`.
-# DO NOT DO THE ABOVE PART
+If you have existing monitors, you should remove and regenerate them with `chifra monitors --delete --remove <address>` or simple delete the folder called `$cachePath/monitors`.
 
 ## You're finished!
 
 You're finished. Check to see that things worked correctly:
 
 ```[bash]
-chifra chunks manifest
+chifra chunks index --check
 ```
 
-You should get valid JSON. Please contact us in our Discord if you have problems.
+You should get valid JSON reporting no errors. Please contact us in our Discord if you have problems.
 
 You may now restart any long-running processes: `chifra scrape`, `chifra monitors --watch`, or `chifra serve`.
 
 ## What should I do if there's a problem
 
-In the worst case, you may always remove the entire contents of the `$indexPath` folder, then do `chifra init`, `chifra init --all`, or `chifra scrape` to replace the index from scratch as you would with a brand new install.
+In the worst case, you may always remove the entire contents of the `$indexPath` folder, then do `chifra init`, `chifra init --all`, or `chifra scrape` to replace the index from scratch as you would with a brand new installation.
 
 If you have any other problems, please contact us in our discord.
 
 ## An important note on other chains
 
-Prior to version 0.40.0-beta, we only supported Ethereum mainnet. With this update we add support for the Gnosis chain and Sepolia testnet. If you've indexed other chains, you must remove that entire index and re-build it from scratch. You may do this by removing the contents of `$indexPath` and re-running `chifra scrape run --chain <chain>`. Find `$indexPath` with `chifra status --terse`. We're truly sorry for the inconvienence. You will need to remove any monitor files as well.
+Prior to version 0.40.0-beta, we only supported Ethereum mainnet. With this update we add support for the Gnosis chain and Sepolia testnet. If you've indexed other chains, you must remove that entire index and re-build it from scratch. You may do this by removing the contents of `$indexPath/<chain>` and re-running `chifra scrape run --chain <chain>`. Find `$indexPath` with `chifra status --terse`. We're truly sorry for the inconvienence. You will need to remove any monitor files as well.
 
 ## Previous Migration
 
 [Click here](./README-v0.30.0.md) for the previous migration.
-
-
-
-## Breaking Changes
-
-Working
-chan_cnt and block_chan_cnt are not longer options as are not other things - they are env variables
-run and indexer are both invalid options on chifra scrape now
