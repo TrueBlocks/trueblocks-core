@@ -21,12 +21,12 @@ import (
 // TODO: We need a better way to handle configuration files
 // TODO: See issue #2259 and OLD_BLOCKSCRAPE_CONFIG_CODE below
 type ScrapeSettings struct {
-	Apps_per_chunk uint64 `json:"appsPerChunk"` // The number of appearances to build into a chunk before consolidating it
-	Snap_to_grid   uint64 `json:"snapToGrid"`   // An override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index
-	First_snap     uint64 `json:"firstSnap"`    // The first block at which snap_to_grid is enabled
-	Unripe_dist    uint64 `json:"unripeDist"`   // The distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe
-	Channel_count  uint64 `json:"blockChanCnt"` // Number of concurrent block processing channels
-	Allow_missing  bool   `json:"allowMissing"` // Do not report errors for blockchain that contain blocks with zero addresses
+	Apps_per_chunk uint64 `json:"appsPerChunk"`           // The number of appearances to build into a chunk before consolidating it
+	Snap_to_grid   uint64 `json:"snapToGrid"`             // An override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index
+	First_snap     uint64 `json:"firstSnap"`              // The first block at which snap_to_grid is enabled
+	Unripe_dist    uint64 `json:"unripeDist"`             // The distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe
+	Channel_count  uint64 `json:"-"`                      // Number of concurrent block processing channels
+	Allow_missing  bool   `json:"allowMissing,omitempty"` // Do not report errors for blockchain that contain blocks with zero addresses
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

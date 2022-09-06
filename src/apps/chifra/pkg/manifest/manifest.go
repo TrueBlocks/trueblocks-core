@@ -11,6 +11,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -32,6 +33,9 @@ type Manifest struct {
 
 	// An IPFS hash pointing to documentation describing the binary format of the files in the index
 	Schemas types.IpfsHash `json:"schemas"`
+
+	// An IPFS hash pointing to documentation describing the binary format of the files in the index
+	Config scrapeCfg.ScrapeSettings `json:"config"`
 
 	// A list of pinned chunks (see ChunkRecord) detailing the location of all chunks in the index and associated bloom filters
 	Chunks []ChunkRecord `json:"chunks"`
