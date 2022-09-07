@@ -2,10 +2,17 @@
   "version": "trueblocks-core@v0.40.0",
   "chain": "sepolia",
   "schemas": "QmUou7zX2g2tY58LP1A2GyP5RF9nbJsoxKTp299ah3svgb",
+  "config": {
+    "appsPerChunk": 200000,
+    "snapToGrid": 100000,
+    "firstSnap": 0,
+    "unripeDist": 28,
+    "allowMissing": true
+  },
   "chunks": [
     {
       "range": "000000000-000000000",
-      "bloomHash": "QmSdeTvMEaXvrP5hjQrnQS2SYXDYDwtNxW9AgsUFM21A9o",
+      "bloomHash": "QmPo7hSeeMNgr2nUjb5M1J4qhh3dPtbtWMTaVGPptyD3P5",
       "bloomSize": 131114,
       "indexHash": "QmYi9B2tZF78rDHRQv9epvqvUiBpQF7UbzefeMMaFsvfsJ",
       "indexSize": 584
