@@ -295,7 +295,9 @@ ostream& operator<<(ostream& os, const CPinnedChunk& it) {
 const char* STR_DISPLAY_PINNEDCHUNK =
     "[{RANGE}]\t"
     "[{BLOOMHASH}]\t"
-    "[{INDEXHASH}]";
+    "[{INDEXHASH}]\t"
+    "[{FIRSTAPP}]\t"
+    "[{LATESTAPP}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
