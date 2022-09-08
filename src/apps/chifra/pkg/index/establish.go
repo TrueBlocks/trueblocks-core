@@ -6,16 +6,19 @@ package index
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"path"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
 // EstablishIndexChunk a filename to an index portion, finds the correspoding CID (hash)
@@ -81,3 +84,60 @@ func CleanTemporaryFolders(indexPath string, incStaging bool) error {
 
 	return nil
 }
+
+func IndexIsInitialized(chain string) {
+	CheckBackLevelIndex(chain)
+
+	bloomZero := paths.NewCachePath(chain, paths.Index_Bloom)
+	path := bloomZero.GetFullPath("000000000-000000000")
+	if !file.FileExists(path) {
+		msg := strings.Replace(IndexNotInitialized, "{0}", "{v0.40.0-beta}", -1)
+		msg = strings.Replace(msg, "[{VERSION}]", version.LibraryVersion, -1)
+		// msg = strings.Replace(msg, "[{FILE}]", fileName, -1)
+		msg = strings.Replace(msg, "{", colors.Green, -1)
+		msg = strings.Replace(msg, "}", colors.Off, -1)
+		log.Fatalf(msg)
+	}
+}
+
+const IndexNotInitialized string = `
+
+	  The Unchained Index does not appear to be initialized. You must run 'chifra init'
+	  (and allow it to complete) or 'chifra scrape' before using this command.
+	  
+	  [{VERSION}]
+
+	`
+
+func CheckBackLevelIndex(chain string) {
+	fileName := config.GetPathToIndex(chain) + "finalized/000000000-000000000.bin"
+	if !file.FileExists(fileName) {
+		return
+	}
+	ok, err := HasValidIndexHeader(chain, fileName)
+	if ok && err == nil {
+		return
+	}
+
+	msg := strings.Replace(BackLevelVersion, "{0}", "{v0.40.0-beta}", -1)
+	msg = strings.Replace(msg, "[{VERSION}]", version.LibraryVersion, -1)
+	msg = strings.Replace(msg, "[{FILE}]", fileName, -1)
+	msg = strings.Replace(msg, "{", colors.Green, -1)
+	msg = strings.Replace(msg, "}", colors.Off, -1)
+	log.Fatalf(msg)
+}
+
+const BackLevelVersion string = `
+
+	  An older version of an index file was found at
+
+	    {[{FILE}]}
+
+	  Please carefully follow all migrations up to and including {0}
+	  before proceeding.
+
+	  See https://github.com/TrueBlocks/trueblocks-core/blob/develop/MIGRATIONS.md
+
+	  [{VERSION}]
+
+	`

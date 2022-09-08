@@ -7,8 +7,8 @@ package listPkg
 import (
 	"fmt"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/migrate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
@@ -44,10 +44,10 @@ func (opts *ListOptions) validateList() error {
 		if err != nil {
 			return err
 		}
-
-		// Note this does not return if a migration is needed
-		migrate.CheckBackLevelIndex(opts.Globals.Chain)
 	}
+
+	// Note that this does not return if the index is not initialized
+	index.IndexIsInitialized(opts.Globals.Chain)
 
 	return nil
 }

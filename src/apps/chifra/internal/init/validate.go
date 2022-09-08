@@ -4,8 +4,6 @@
 
 package initPkg
 
-import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/migrate"
-
 func (opts *InitOptions) validateInit() error {
 	opts.testLog()
 
@@ -13,8 +11,8 @@ func (opts *InitOptions) validateInit() error {
 		return opts.BadFlag
 	}
 
-	// Note this does not return if a migration is needed
-	migrate.CheckBackLevelIndex(opts.Globals.Chain)
+	// Note - we don't check the index for back level since this is how we upgrade the index
+	// index.CheckBackLevelIndex(opts.Globals.Chain)
 
 	return opts.Globals.Validate()
 }

@@ -7,9 +7,9 @@ package scrapePkg
 import (
 	"fmt"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/migrate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -61,7 +61,7 @@ func (opts *ScrapeOptions) validateScrape() error {
 	}
 
 	// Note this does not return if a migration is needed
-	migrate.CheckBackLevelIndex(opts.Globals.Chain)
+	index.CheckBackLevelIndex(opts.Globals.Chain)
 
 	return opts.Globals.Validate()
 }

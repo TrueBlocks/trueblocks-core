@@ -7,10 +7,8 @@ package exportPkg
 import (
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/migrate"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -88,16 +86,8 @@ func (opts *ExportOptions) validateExport() error {
 		return validate.Usage("The {0} option is only available with the {1} option.", "--fmt ofx", "--accounting")
 	}
 
-	bloomZero := paths.NewCachePath(opts.Globals.Chain, paths.Index_Bloom)
-	path := bloomZero.GetFullPath("000000000-000000000")
-	if !file.FileExists(path) {
-		msg := "The bloom filter for block zero (000000000-000000000.bloom) was not found. You must run "
-		msg += "'chifra init' (and allow it to complete) or 'chifra scrape' before using this command."
-		return validate.Usage(msg)
-	}
-
-	// Note this does not return if a migration is needed
-	migrate.CheckBackLevelIndex(opts.Globals.Chain)
+	// Note that this does not return if the index is not initialized
+	index.IndexIsInitialized(opts.Globals.Chain)
 
 	err := opts.Globals.Validate()
 	if err != nil && strings.Contains(err.Error(), "option (ofx) must be one of") {
