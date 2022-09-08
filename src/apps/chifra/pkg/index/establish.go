@@ -85,7 +85,7 @@ func CleanTemporaryFolders(indexPath string, incStaging bool) error {
 	return nil
 }
 
-func IndexIsInitialized(chain string) {
+func IndexIsInitialized(chain string) error {
 	CheckBackLevelIndex(chain)
 
 	bloomZero := paths.NewCachePath(chain, paths.Index_Bloom)
@@ -96,8 +96,10 @@ func IndexIsInitialized(chain string) {
 		// msg = strings.Replace(msg, "[{FILE}]", fileName, -1)
 		msg = strings.Replace(msg, "{", colors.Green, -1)
 		msg = strings.Replace(msg, "}", colors.Off, -1)
-		log.Fatalf(msg)
+		return fmt.Errorf(msg)
 	}
+
+	return nil
 }
 
 const IndexNotInitialized string = `

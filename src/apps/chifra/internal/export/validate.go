@@ -87,7 +87,13 @@ func (opts *ExportOptions) validateExport() error {
 	}
 
 	// Note that this does not return if the index is not initialized
-	index.IndexIsInitialized(opts.Globals.Chain)
+	if err := index.IndexIsInitialized(opts.Globals.Chain); err != nil {
+		if opts.Globals.ApiMode {
+			return err
+		} else {
+			logger.Fatal(err)
+		}
+	}
 
 	err := opts.Globals.Validate()
 	if err != nil && strings.Contains(err.Error(), "option (ofx) must be one of") {

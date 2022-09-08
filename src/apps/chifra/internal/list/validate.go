@@ -9,6 +9,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
@@ -47,7 +48,13 @@ func (opts *ListOptions) validateList() error {
 	}
 
 	// Note that this does not return if the index is not initialized
-	index.IndexIsInitialized(opts.Globals.Chain)
+	if err := index.IndexIsInitialized(opts.Globals.Chain); err != nil {
+		if opts.Globals.ApiMode {
+			return err
+		} else {
+			logger.Fatal(err)
+		}
+	}
 
 	return nil
 }
