@@ -9,11 +9,10 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -27,7 +26,7 @@ func (opts *ChunksOptions) showFinalizedStats(ctx *WalkContext, path string, fir
 func (opts *ChunksOptions) showStagingStats(ctx *WalkContext, path string, first bool) (bool, error) {
 	lines := file.AsciiFileToLines(path)
 	ret := types.ReportChunks{}
-	rng, err1 := cache.RangeFromFilename(path)
+	rng, err1 := paths.RangeFromFilenameE(path)
 	if err1 != nil {
 		return false, nil
 	}
@@ -87,8 +86,8 @@ func NewChunkStats(path string) types.ReportChunks {
 	ret.NAddrs = chunk.Data.Header.AddressCount
 	ret.NApps = chunk.Data.Header.AppearanceCount
 	ret.NBlooms = chunk.Bloom.Count
-	ret.BloomSz = file.FileSize(config.ToBloomPath(path))
-	ret.ChunkSz = file.FileSize(config.ToIndexPath(path))
+	ret.BloomSz = file.FileSize(paths.ToBloomPath(path))
+	ret.ChunkSz = file.FileSize(paths.ToIndexPath(path))
 
 	return finishStats(&ret)
 }
@@ -104,7 +103,7 @@ func (opts *ChunksOptions) HandleStats(blockNums []uint64) error {
 		VisitFunc: opts.showFinalizedStats,
 	}
 
-	if err = opts.WalkIndexFiles(&ctx, cache.Index_Bloom, blockNums); err != nil {
+	if err = opts.WalkIndexFiles(&ctx, paths.Index_Bloom, blockNums); err != nil {
 		return err
 	}
 
@@ -113,7 +112,7 @@ func (opts *ChunksOptions) HandleStats(blockNums []uint64) error {
 			VisitFunc: opts.showStagingStats,
 		}
 
-		err = opts.WalkIndexFiles(&ctx, cache.Index_Staging, blockNums)
+		err = opts.WalkIndexFiles(&ctx, paths.Index_Staging, blockNums)
 	}
 
 	return err

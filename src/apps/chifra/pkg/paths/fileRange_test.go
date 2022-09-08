@@ -2,7 +2,7 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package cache
+package paths
 
 import (
 	"fmt"
@@ -52,7 +52,7 @@ func TestFileRange(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		s, err := RangeFromFilename(tt.fileName)
+		s, err := RangeFromFilenameE(tt.fileName)
 		check(t, tt, s, err)
 		fmt.Println(s)
 	}

@@ -11,12 +11,12 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -64,7 +64,7 @@ func (opts *InitOptions) HandleInit() error {
 	indexDoneChannel := make(chan bool)
 	defer close(indexDoneChannel)
 
-	getChunks := func(chunkType cache.CacheType) {
+	getChunks := func(chunkType paths.CacheType) {
 		failedChunks, cancelled := opts.downloadAndReportProgress(remoteManifest.Chunks, chunkType)
 		if cancelled {
 			// The user hit the control+c, we don't want to continue...
@@ -83,14 +83,14 @@ func (opts *InitOptions) HandleInit() error {
 
 	// Set up a go routine to download the bloom filters...
 	go func() {
-		getChunks(cache.Index_Bloom)
+		getChunks(paths.Index_Bloom)
 		bloomsDoneChannel <- true
 	}()
 
 	if opts.All {
 		// Set up another go routine to download the index chunks if the user told us to...
 		go func() {
-			getChunks(cache.Index_Final)
+			getChunks(paths.Index_Final)
 			indexDoneChannel <- true
 		}()
 
@@ -111,7 +111,7 @@ var nStarted int
 var nUpdated int
 
 // downloadAndReportProgress Downloads the chunks and reports progress to the progressChannel
-func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord, chunkType cache.CacheType) ([]manifest.ChunkRecord, bool) {
+func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord, chunkType paths.CacheType) ([]manifest.ChunkRecord, bool) {
 	chain := opts.Globals.Chain
 
 	failed := []manifest.ChunkRecord{}

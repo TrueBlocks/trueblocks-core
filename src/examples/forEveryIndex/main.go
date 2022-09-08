@@ -9,6 +9,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 )
 
 func main() {
@@ -29,7 +30,7 @@ func main() {
 			fmt.Println("---------------------------------------------------------")
 			fmt.Println()
 
-			b, _ := bloom.NewChunkBloom(config.ToBloomPath(indexPath))
+			b, _ := bloom.NewChunkBloom(paths.ToBloomPath(indexPath))
 			fmt.Println(b)
 			fmt.Println("---------------------------------------------------------")
 			fmt.Println()

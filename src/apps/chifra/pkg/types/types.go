@@ -1,7 +1,7 @@
 package types
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/bykof/gostradamus"
 	"github.com/ethereum/go-ethereum/common"
 )
@@ -67,7 +67,7 @@ type SimpleChunkRecord struct {
 }
 
 type SimpleBloom struct {
-	Range     cache.FileRange `json:"range"`
+	Range     paths.FileRange `json:"range"`
 	Magic     uint16          `json:"magic"`
 	Hash      common.Hash     `json:"hash"`
 	Count     uint32          `json:"nBlooms"`
@@ -77,7 +77,7 @@ type SimpleBloom struct {
 }
 
 type SimpleIndex struct {
-	Range           cache.FileRange `json:"range"`
+	Range           paths.FileRange `json:"range"`
 	Magic           uint32          `json:"magic"`
 	Hash            common.Hash     `json:"hash"`
 	AddressCount    uint32          `json:"nAddresses"`

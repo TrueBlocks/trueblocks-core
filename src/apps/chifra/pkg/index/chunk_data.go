@@ -4,8 +4,7 @@ import (
 	"encoding/json"
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 )
 
 const (
@@ -32,7 +31,7 @@ const (
 type ChunkData struct {
 	File           *os.File
 	Header         IndexHeaderRecord
-	Range          cache.FileRange
+	Range          paths.FileRange
 	AddrTableStart int64
 	AppTableStart  int64
 }
@@ -40,9 +39,9 @@ type ChunkData struct {
 // NewChunkData returns an ChunkData with an opened file pointer to the given fileName. The HeaderRecord
 // for the chunk has been populated and the file position to the two tables are ready for use.
 func NewChunkData(path string) (chunk ChunkData, err error) {
-	indexPath := config.ToIndexPath(path)
+	indexPath := paths.ToIndexPath(path)
 
-	blkRange, err := cache.RangeFromFilename(indexPath)
+	blkRange, err := paths.RangeFromFilenameE(indexPath)
 	if err != nil {
 		return ChunkData{}, err
 	}

@@ -1,15 +1,15 @@
 package pinning
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 type PinResult struct {
-	Range   cache.FileRange         `json:"range,omitempty"`
+	Range   paths.FileRange         `json:"range,omitempty"`
 	Local   types.SimpleChunkRecord `json:"local,omitempty"`
 	Remote  types.SimpleChunkRecord `json:"remote,omitempty"`
 	Matches bool                    `json:"matches,omitempty"`
@@ -46,10 +46,10 @@ func PinTimestamps(chain string, isRemote bool) error {
 }
 
 func PinChunk(chain, path string, isRemote bool) (PinResult, error) {
-	bloomFile := config.ToBloomPath(path)
-	indexFile := config.ToIndexPath(path)
+	bloomFile := paths.ToBloomPath(path)
+	indexFile := paths.ToIndexPath(path)
 
-	rng, _ := cache.RangeFromFilename(path)
+	rng := paths.RangeFromFilename(path)
 	result := PinResult{
 		Range:  rng,
 		Local:  types.SimpleChunkRecord{Range: rng.String()},

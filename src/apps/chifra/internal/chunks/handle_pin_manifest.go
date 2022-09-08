@@ -5,8 +5,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
@@ -63,7 +63,7 @@ func (opts *ChunksOptions) HandlePinManifest(blockNums []uint64) error {
 		VisitFunc: opts.pinChunk,
 		Data:      &m,
 	}
-	if err := opts.WalkIndexFiles(&ctx, cache.Index_Bloom, blockNums); err != nil {
+	if err := opts.WalkIndexFiles(&ctx, paths.Index_Bloom, blockNums); err != nil {
 		return err
 	}
 

@@ -13,9 +13,8 @@ import (
 	"os"
 	"unsafe"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/ethereum/go-ethereum/common"
 )
 
@@ -47,7 +46,7 @@ type BloomHeader struct {
 type ChunkBloom struct {
 	File       *os.File
 	SizeOnDisc int64
-	Range      cache.FileRange
+	Range      paths.FileRange
 	HeaderSize int64
 	Header     BloomHeader
 	Count      uint32 // Do not change the size of this field, it's stored on disc
@@ -67,13 +66,13 @@ func (bl *ChunkBloom) String() string {
 // enough space for Count blooms but has not been read from disc. The file remains open for reading (if
 // there is no error) and is positioned at the start of the file.
 func NewChunkBloom(path string) (bl ChunkBloom, err error) {
-	path = config.ToBloomPath(path)
+	path = paths.ToBloomPath(path)
 	if !file.FileExists(path) {
 		return bl, errors.New("required bloom file (" + path + ") not found")
 	}
 
 	bl.SizeOnDisc = file.FileSize(path)
-	bl.Range, err = cache.RangeFromFilename(path)
+	bl.Range, err = paths.RangeFromFilenameE(path)
 	if err != nil {
 		return
 	}
@@ -83,16 +82,9 @@ func NewChunkBloom(path string) (bl ChunkBloom, err error) {
 		return
 	}
 
-	var versionOk bool
-	bl.File.Seek(0, io.SeekStart)                          // already true, but can't hurt
-	if versionOk, err = bl.ReadBloomHeader(); err != nil { // Note that it may not find a header, but it leaves the file pointer pointing to the count
+	bl.File.Seek(0, io.SeekStart)                  // already true, but can't hurt
+	if _, err = bl.ReadBloomHeader(); err != nil { // Note that it may not find a header, but it leaves the file pointer pointing to the count
 		return
-	}
-	bl.HeaderSize = 0 // already true, but just to make it explicit, if the file is not versioned, it has no header
-	if versionOk {
-		header := BloomHeader{}
-		header.Magic = file.SmallMagicNumber
-		bl.HeaderSize = int64(unsafe.Sizeof(header))
 	}
 
 	if err = binary.Read(bl.File, binary.LittleEndian, &bl.Count); err != nil {
@@ -114,7 +106,7 @@ func (bl *ChunkBloom) Close() {
 
 // ReadBloom reads the entire contents of the bloom filter
 func (bl *ChunkBloom) ReadBloom(fileName string) (err error) {
-	bl.Range, err = cache.RangeFromFilename(fileName)
+	bl.Range, err = paths.RangeFromFilenameE(fileName)
 	if err != nil {
 		return err
 	}
@@ -128,16 +120,9 @@ func (bl *ChunkBloom) ReadBloom(fileName string) (err error) {
 		bl.File = nil
 	}()
 
-	var versionOk bool
-	bl.File.Seek(0, io.SeekStart)                          // already true, but can't hurt
-	if versionOk, err = bl.ReadBloomHeader(); err != nil { // Note that it may not find a header, but it leaves the file pointer pointing to the count
+	bl.File.Seek(0, io.SeekStart)                  // already true, but can't hurt
+	if _, err = bl.ReadBloomHeader(); err != nil { // Note that it may not find a header, but it leaves the file pointer pointing to the count
 		return err
-	}
-	bl.HeaderSize = 0 // already true, but it makes it explicit
-	if versionOk {
-		header := BloomHeader{}
-		header.Magic = file.SmallMagicNumber
-		bl.HeaderSize = int64(unsafe.Sizeof(header))
 	}
 
 	if err = binary.Read(bl.File, binary.LittleEndian, &bl.Count); err != nil {
@@ -160,17 +145,21 @@ func (bl *ChunkBloom) ReadBloom(fileName string) (err error) {
 }
 
 func (bl *ChunkBloom) ReadBloomHeader() (bool, error) {
+	bl.HeaderSize = 0 // already true, but it makes it explicit
 	err := binary.Read(bl.File, binary.LittleEndian, &bl.Header)
 	if err != nil {
+		bl.Header = BloomHeader{}
 		bl.File.Seek(0, io.SeekStart)
 		return false, err
 	}
 	if bl.Header.Magic != file.SmallMagicNumber {
 		// This is an unversioned bloom filter, set back to start of file
+		bl.Header = BloomHeader{}
 		bl.File.Seek(0, io.SeekStart)
 		return false, nil
 	}
 
+	bl.HeaderSize = int64(unsafe.Sizeof(bl.Header))
 	return true, nil
 }
 

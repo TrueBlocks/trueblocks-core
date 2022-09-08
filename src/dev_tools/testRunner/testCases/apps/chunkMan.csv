@@ -13,7 +13,7 @@ on      ,both ,fast  ,chunks ,apps/chunkMan ,fail_detail_belong      ,y    ,mode
 local   ,both ,fast  ,chunks ,apps/chunkMan ,list_check              ,y    ,mode = monitors & check
 
 on      ,both ,fast  ,chunks ,apps/chunkMan ,stats_default           ,y    ,mode = stats
-on      ,both ,fast  ,chunks ,apps/chunkMan ,manifest_default        ,y    ,mode = manifest
+local   ,both ,fast  ,chunks ,apps/chunkMan ,manifest_default        ,y    ,mode = manifest
 on      ,both ,fast  ,chunks ,apps/chunkMan ,index_default           ,y    ,mode = index
 on      ,both ,fast  ,chunks ,apps/chunkMan ,blooms_default          ,y    ,mode = blooms
 on      ,both ,fast  ,chunks ,apps/chunkMan ,header_default          ,y    ,mode = header
@@ -21,7 +21,7 @@ on      ,both ,fast  ,chunks ,apps/chunkMan ,addresses_default       ,y    ,mode
 on      ,both ,fast  ,chunks ,apps/chunkMan ,appearances_default     ,y    ,mode = appearances
 
 on      ,both ,fast  ,chunks ,apps/chunkMan ,stats_txt               ,n    ,mode = stats & fmt = txt
-on      ,both ,fast  ,chunks ,apps/chunkMan ,manifest_csv            ,n    ,mode = manifest & fmt = csv
+local   ,both ,fast  ,chunks ,apps/chunkMan ,manifest_csv            ,n    ,mode = manifest & fmt = csv
 on      ,both ,fast  ,chunks ,apps/chunkMan ,index_json              ,y    ,mode = index & fmt = json
 on      ,both ,fast  ,chunks ,apps/chunkMan ,blooms_txt              ,n    ,mode = blooms & fmt = txt
 on      ,both ,fast  ,chunks ,apps/chunkMan ,header_csv              ,n    ,mode = header & fmt = csv

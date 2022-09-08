@@ -17,13 +17,13 @@ import (
 	"sync"
 	"time"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
@@ -64,7 +64,7 @@ type writeWorkerArguments struct {
 type workerFunction func(interface{})
 
 // getDownloadWorker returns a worker function that downloads a chunk
-func getDownloadWorker(dlwArgs downloadWorkerArguments, chain string, chunkType cache.CacheType) workerFunction {
+func getDownloadWorker(dlwArgs downloadWorkerArguments, chain string, chunkType paths.CacheType) workerFunction {
 	progressChannel := dlwArgs.progressChannel
 	ctx := dlwArgs.ctx
 
@@ -80,7 +80,7 @@ func getDownloadWorker(dlwArgs downloadWorkerArguments, chain string, chunkType 
 
 		default:
 			hash := chunk.BloomHash
-			if chunkType == cache.Index_Final {
+			if chunkType == paths.Index_Final {
 				hash = chunk.IndexHash
 			}
 
@@ -99,9 +99,9 @@ func getDownloadWorker(dlwArgs downloadWorkerArguments, chain string, chunkType 
 			}
 
 			if ctx.Err() != nil {
-				chunkPath := cache.NewCachePath(chain, cache.Index_Final)
-				removeLocalFile(config.ToIndexPath(chunkPath.GetFullPath(chunk.Range)), "failed download", progressChannel)
-				removeLocalFile(config.ToBloomPath(chunkPath.GetFullPath(chunk.Range)), "failed download", progressChannel)
+				chunkPath := paths.NewCachePath(chain, paths.Index_Final)
+				removeLocalFile(paths.ToIndexPath(chunkPath.GetFullPath(chunk.Range)), "failed download", progressChannel)
+				removeLocalFile(paths.ToBloomPath(chunkPath.GetFullPath(chunk.Range)), "failed download", progressChannel)
 				progressChannel <- &progress.Progress{
 					Payload: &chunk,
 					Event:   progress.Error,
@@ -129,7 +129,7 @@ func getDownloadWorker(dlwArgs downloadWorkerArguments, chain string, chunkType 
 }
 
 // getWriteWorker returns a worker function that writes chunk to disk
-func getWriteWorker(wwArgs writeWorkerArguments, chain string, chunkType cache.CacheType) workerFunction {
+func getWriteWorker(wwArgs writeWorkerArguments, chain string, chunkType paths.CacheType) workerFunction {
 	progressChannel := wwArgs.progressChannel
 	ctx := wwArgs.ctx
 
@@ -171,7 +171,7 @@ func getWriteWorker(wwArgs writeWorkerArguments, chain string, chunkType cache.C
 
 // DownloadChunks downloads, unzips and saves the chunk of type indicated by chunkType
 // for each chunk in chunks. Progress is reported to progressChannel.
-func DownloadChunks(chain string, chunks []manifest.ChunkRecord, chunkType cache.CacheType, poolSize int, progressChannel progressChan) {
+func DownloadChunks(chain string, chunks []manifest.ChunkRecord, chunkType paths.CacheType, poolSize int, progressChannel progressChan) {
 	// Downloaded content will wait for saving in this channel
 	writeChannel := make(chan *jobResult, poolSize)
 	// Context lets us handle Ctrl-C easily
@@ -257,8 +257,8 @@ func DownloadChunks(chain string, chunks []manifest.ChunkRecord, chunkType cache
 }
 
 // writeBytesToDisc save the downloaded bytes to disc
-func writeBytesToDisc(wwArgs writeWorkerArguments, chain string, chunkType cache.CacheType, res *jobResult) error {
-	chunkPath := cache.NewCachePath(chain, chunkType)
+func writeBytesToDisc(wwArgs writeWorkerArguments, chain string, chunkType paths.CacheType, res *jobResult) error {
+	chunkPath := paths.NewCachePath(chain, chunkType)
 	fullPath := chunkPath.GetFullPath(res.rng)
 	outputFile, err := os.OpenFile(fullPath, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
 	if err != nil {
@@ -284,8 +284,8 @@ func writeBytesToDisc(wwArgs writeWorkerArguments, chain string, chunkType cache
 }
 
 // filterDownloadedChunks returns new []manifest.ChunkRecord slice with all chunks from RootPath removed
-func filterDownloadedChunks(chain string, chunks []manifest.ChunkRecord, chunkType cache.CacheType, progressChannel progressChan) []manifest.ChunkRecord {
-	chunkPath := cache.NewCachePath(chain, chunkType)
+func filterDownloadedChunks(chain string, chunks []manifest.ChunkRecord, chunkType paths.CacheType, progressChannel progressChan) []manifest.ChunkRecord {
+	chunkPath := paths.NewCachePath(chain, chunkType)
 	onDiscMap := make(map[string]bool)
 
 	files, err := os.ReadDir(chunkPath.String())
@@ -302,29 +302,25 @@ func filterDownloadedChunks(chain string, chunks []manifest.ChunkRecord, chunkTy
 		onDiscMap[fullPath] = true
 	}
 
-	ct := manifest.Bloom
-	if chunkType == cache.Index_Final {
-		ct = manifest.Index
-	}
-	return listRequiredDownloads(chain, ct, onDiscMap, chunks, progressChannel)
+	return listRequiredDownloads(chain, chunkType, onDiscMap, chunks, progressChannel)
 }
 
 // listRequiredDownloads returns a copy of `from` slice with every item with a file name present in `what` map removed
-func listRequiredDownloads(chain string, ct manifest.ChunkType, onDiscMap map[string]bool, chunks []manifest.ChunkRecord, progressChannel progressChan) []manifest.ChunkRecord {
+func listRequiredDownloads(chain string, chunkType paths.CacheType, onDiscMap map[string]bool, chunks []manifest.ChunkRecord, progressChannel progressChan) []manifest.ChunkRecord {
 	chunksNeeded := make([]manifest.ChunkRecord, 0, len(chunks))
 	for _, item := range chunks {
-		fullPath := item.GetFullPath(chain, ct)
+		fullPath := item.GetFullPath(chain, chunkType)
 		if onDiscMap[fullPath] {
-			sizeOk := item.IsExpectedSize(fullPath, ct)
+			sizeOk := item.IsExpectedSize(fullPath, chunkType)
 
 			var hashOk bool
-			switch ct {
-			case manifest.Bloom:
+			switch chunkType {
+			case paths.Index_Bloom:
 				hashOk, _ = bloom.HasValidBloomHeader(chain, fullPath)
-			case manifest.Index:
+			case paths.Index_Final:
 				hashOk, _ = HasValidIndexHeader(chain, fullPath)
 			default:
-				logger.Fatal("Unknown chunk type in listRequiredDownloads", ct)
+				logger.Fatal("Unknown chunk type in listRequiredDownloads", chunkType)
 			}
 
 			if !hashOk {
@@ -352,7 +348,7 @@ func listRequiredDownloads(chain string, ct manifest.ChunkType, onDiscMap map[st
 
 	progressChannel <- &progress.Progress{
 		Event:   progress.Update,
-		Message: fmt.Sprintf("Number of %s files to download %d", ct, len(chunksNeeded)),
+		Message: fmt.Sprintf("Number of %s files to download %d", chunkType, len(chunksNeeded)),
 		// TODO: BOGUS - CHANGE THIS TO CHUNKTYPE WHEN CACHE.CHUNKTYPE IS GONE
 	}
 	return chunksNeeded

@@ -7,14 +7,13 @@ package chunksPkg
 import (
 	"io"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 func (opts *ChunksOptions) showAppearances(ctx *WalkContext, path string, first bool) (bool, error) {
-	path = config.ToIndexPath(path)
+	path = paths.ToIndexPath(path)
 
 	indexChunk, err := index.NewChunkData(path)
 	if err != nil {
@@ -57,5 +56,5 @@ func (opts *ChunksOptions) HandleAppearances(blockNums []uint64) error {
 		VisitFunc: opts.showAppearances,
 	}
 
-	return opts.WalkIndexFiles(&ctx, cache.Index_Bloom, blockNums)
+	return opts.WalkIndexFiles(&ctx, paths.Index_Bloom, blockNums)
 }

@@ -8,7 +8,7 @@ import (
 	"log"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 )
 
 // TODO: This should accept unresolved block ranges, not lists of block numbers
@@ -18,7 +18,7 @@ import (
 // there are 100 files in the range 100000-200000, we need to create block numbers that cover every
 // eventuallity. If on of the files has a two block range, we need to generate 50,000 block numbers. If we
 // used the range on the command line instead we'd only have to intersect one range.
-func shouldDisplay(result cache.IndexFileInfo, blockNums []uint64) bool {
+func shouldDisplay(result paths.IndexFileInfo, blockNums []uint64) bool {
 	if len(blockNums) == 0 {
 		return true
 	}
@@ -38,16 +38,16 @@ type WalkContext struct {
 	Data      interface{}
 }
 
-func (opts *ChunksOptions) WalkIndexFiles(ctx *WalkContext, cacheType cache.CacheType, blockNums []uint64) error {
-	filenameChan := make(chan cache.IndexFileInfo)
+func (opts *ChunksOptions) WalkIndexFiles(ctx *WalkContext, cacheType paths.CacheType, blockNums []uint64) error {
+	filenameChan := make(chan paths.IndexFileInfo)
 
 	var nRoutines int = 1
-	go cache.WalkCacheFolder(opts.Globals.Chain, cacheType, filenameChan)
+	go paths.WalkCacheFolder(opts.Globals.Chain, cacheType, filenameChan)
 
 	cnt := 0
 	for result := range filenameChan {
 		switch result.Type {
-		case cache.Index_Bloom:
+		case paths.Index_Bloom:
 			skip := (opts.Globals.TestMode && cnt > maxTestItems) || !strings.HasSuffix(result.Path, ".bloom")
 			if !skip && shouldDisplay(result, blockNums) {
 				ok, err := ctx.VisitFunc(ctx, result.Path, cnt == 0)
@@ -60,7 +60,7 @@ func (opts *ChunksOptions) WalkIndexFiles(ctx *WalkContext, cacheType cache.Cach
 					return nil
 				}
 			}
-		case cache.Index_Staging:
+		case paths.Index_Staging:
 			skip := (opts.Globals.TestMode)
 			if !skip && shouldDisplay(result, blockNums) {
 				ok, err := ctx.VisitFunc(ctx, result.Path, cnt == 0)
@@ -73,7 +73,7 @@ func (opts *ChunksOptions) WalkIndexFiles(ctx *WalkContext, cacheType cache.Cach
 					return nil
 				}
 			}
-		case cache.None:
+		case paths.None:
 			nRoutines--
 			if nRoutines == 0 {
 				close(filenameChan)

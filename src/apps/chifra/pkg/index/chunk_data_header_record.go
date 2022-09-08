@@ -10,9 +10,9 @@ import (
 	"path/filepath"
 	"unsafe"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
@@ -49,7 +49,7 @@ func readIndexHeader(fl *os.File) (header IndexHeaderRecord, err error) {
 }
 
 func ReadChunkHeader(chain, fileName string, checkHash bool) (header IndexHeaderRecord, err error) {
-	fileName = config.ToIndexPath(fileName)
+	fileName = paths.ToIndexPath(fileName)
 	ff, err := os.OpenFile(fileName, os.O_RDONLY, 0)
 	if err != nil {
 		return IndexHeaderRecord{}, err
@@ -77,7 +77,7 @@ func WriteChunkHeaderHash(chain, fileName string, headerHash common.Hash) ( /* c
 	var err error
 
 	tmpPath := filepath.Join(config.GetPathToCache(chain), "tmp")
-	indexFn := config.ToIndexPath(fileName)
+	indexFn := paths.ToIndexPath(fileName)
 	if !file.FileExists(indexFn) {
 		return false, nil
 	}
@@ -129,7 +129,7 @@ func HasValidIndexHeader(chain, fileName string) (bool, error) {
 		return false, err
 	}
 
-	rng, _ := cache.RangeFromFilename(fileName)
+	rng := paths.RangeFromFilename(fileName)
 	if header.Magic != file.MagicNumber {
 		msg := fmt.Sprintf("%s: Magic number expected (0x%x) got (0x%x)", rng, header.Magic, file.MagicNumber)
 		return false, errors.New(msg)

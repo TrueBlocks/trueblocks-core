@@ -6,10 +6,10 @@ import (
 	"os"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
@@ -19,14 +19,14 @@ func (opts *ChunksOptions) truncateIndex(ctx *WalkContext, path string, first bo
 		return true, nil
 	}
 
-	rng, err := cache.RangeFromFilename(path)
+	rng, err := paths.RangeFromFilenameE(path)
 	if err != nil {
 		return false, err
 	}
-	testRange := cache.FileRange{First: opts.Truncate, Last: utils.NOPOS}
+	testRange := paths.FileRange{First: opts.Truncate, Last: utils.NOPOS}
 	if rng.Intersects(testRange) {
-		os.Remove(config.ToIndexPath(path))
-		os.Remove(config.ToBloomPath(path))
+		os.Remove(paths.ToIndexPath(path))
+		os.Remove(paths.ToBloomPath(path))
 	}
 
 	return true, nil
@@ -53,7 +53,7 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 		VisitFunc: opts.truncateIndex,
 	}
 
-	if err := opts.WalkIndexFiles(&ctx, cache.Index_Bloom, blockNums); err != nil {
+	if err := opts.WalkIndexFiles(&ctx, paths.Index_Bloom, blockNums); err != nil {
 		return err
 	}
 

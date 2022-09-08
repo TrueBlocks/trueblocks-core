@@ -8,9 +8,9 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/migrate"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -88,7 +88,7 @@ func (opts *ExportOptions) validateExport() error {
 		return validate.Usage("The {0} option is only available with the {1} option.", "--fmt ofx", "--accounting")
 	}
 
-	bloomZero := cache.NewCachePath(opts.Globals.Chain, cache.Index_Bloom)
+	bloomZero := paths.NewCachePath(opts.Globals.Chain, paths.Index_Bloom)
 	path := bloomZero.GetFullPath("000000000-000000000")
 	if !file.FileExists(path) {
 		msg := "The bloom filter for block zero (000000000-000000000.bloom) was not found. You must run "

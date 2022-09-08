@@ -10,18 +10,18 @@ import (
 	"path"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 )
 
 // EstablishIndexChunk a filename to an index portion, finds the correspoding CID (hash)
 // entry in the manifest, and downloads the index chunk to the local drive
-func EstablishIndexChunk(chain string, fileRange cache.FileRange) (bool, error) {
-	exists, fileName := fileRange.RangeToFilename(chain, cache.Index_Final)
+func EstablishIndexChunk(chain string, fileRange paths.FileRange) (bool, error) {
+	exists, fileName := fileRange.RangeToFilename(chain, paths.Index_Final)
 
 	chunkManifest, err := manifest.ReadManifest(chain, manifest.FromCache)
 	if err != nil {
@@ -47,7 +47,7 @@ func EstablishIndexChunk(chain string, fileRange cache.FileRange) (bool, error) 
 	progressChannel := make(chan *progress.Progress)
 
 	go func() {
-		DownloadChunks(chain, chunks, cache.Index_Final, 4 /* poolSize */, progressChannel)
+		DownloadChunks(chain, chunks, paths.Index_Final, 4 /* poolSize */, progressChannel)
 		close(progressChannel)
 	}()
 

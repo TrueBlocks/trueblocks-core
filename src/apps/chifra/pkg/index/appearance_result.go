@@ -3,14 +3,14 @@ package index
 import (
 	"io"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/ethereum/go-ethereum/common"
 )
 
 // AppearanceResult carries the appearances found in a single ChunkData for the given address.
 type AppearanceResult struct {
 	Address    common.Address
-	Range      cache.FileRange
+	Range      paths.FileRange
 	AppRecords *[]AppearanceRecord
 	Err        error
 }

@@ -14,12 +14,12 @@ import (
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/ethereum/go-ethereum/common"
@@ -114,7 +114,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 			if !strings.HasSuffix(fileName, ".bloom") {
 				continue // sometimes there are .gz files in this folder, for example
 			}
-			fileRange, err := cache.RangeFromFilename(fileName)
+			fileRange, err := paths.RangeFromFilenameE(fileName)
 			if err != nil {
 				// don't respond further -- there may be foreign files in the folder
 				fmt.Println(err)
@@ -163,9 +163,9 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 
 	if !opts.Globals.TestMode {
 		// TODO: Note we could actually test this if we had the concept of a FAKE_HEAD block
-		stagePath := config.ToStagingPath(config.GetPathToIndex(opts.Globals.Chain) + "staging")
+		stagePath := paths.ToStagingPath(config.GetPathToIndex(opts.Globals.Chain) + "staging")
 		stageFn, _ := file.LatestFileInFolder(stagePath)
-		rng, _ := cache.RangeFromFilename(stageFn)
+		rng := paths.RangeFromFilename(stageFn)
 		lines := []string{}
 		for addr, mon := range updater.MonitorMap {
 			if !rng.LaterThanB(uint64(mon.LastScanned)) { // the range preceeds the block number
@@ -207,7 +207,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 		wg.Done()
 	}()
 
-	bloomFilename := config.ToBloomPath(fileName)
+	bloomFilename := paths.ToBloomPath(fileName)
 
 	// We open the bloom filter and read its header but we do not read any of the
 	// actual bits in the blooms. The IsMember function reads individual bytes to
@@ -243,7 +243,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 		return
 	}
 
-	indexFilename := config.ToIndexPath(fileName)
+	indexFilename := paths.ToIndexPath(fileName)
 	if !file.FileExists(indexFilename) {
 		_, err := index.EstablishIndexChunk(updater.Options.Globals.Chain, bl.Range)
 		if err != nil {

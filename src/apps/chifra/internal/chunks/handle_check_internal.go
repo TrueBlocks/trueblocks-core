@@ -7,11 +7,10 @@ package chunksPkg
 import (
 	"fmt"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 )
@@ -34,7 +33,7 @@ func (opts *ChunksOptions) checkIndexChunkInternal(testId int, fileName string, 
 		report.MsgStrings = append(report.MsgStrings, fmt.Sprint(err))
 
 	} else {
-		rng, _ := cache.RangeFromFilename(fileName)
+		rng := paths.RangeFromFilename(fileName)
 		if !opts.Globals.TestMode {
 			testId = 0
 		}
@@ -57,14 +56,14 @@ func (opts *ChunksOptions) checkBloomInternal(testId int, fileName string, repor
 	report.VisitedCnt++
 	report.CheckedCnt++
 	var bl bloom.ChunkBloom
-	bPath := config.ToBloomPath(fileName)
+	bPath := paths.ToBloomPath(fileName)
 	bl.ReadBloom(bPath)
 	versioned, err := bl.ReadBloomHeader()
 	if err != nil {
 		report.MsgStrings = append(report.MsgStrings, fmt.Sprint(err))
 	} else if !versioned {
 	} else {
-		rng, _ := cache.RangeFromFilename(fileName)
+		rng := paths.RangeFromFilename(fileName)
 		if !opts.Globals.TestMode {
 			testId = 0
 		}

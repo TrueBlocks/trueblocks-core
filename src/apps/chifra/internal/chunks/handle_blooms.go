@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -41,7 +41,7 @@ func NewSimpleBloom(stats types.ReportChunks, bl bloom.ChunkBloom) types.SimpleB
 	ret.Magic = bl.Header.Magic
 	ret.Hash = bl.Header.Hash
 	ret.Size = stats.BloomSz
-	ret.Range = cache.FileRange{First: stats.Start, Last: stats.End}
+	ret.Range = paths.FileRange{First: stats.Start, Last: stats.End}
 	ret.Count = stats.NBlooms
 	ret.Width = bloom.BLOOM_WIDTH_IN_BYTES
 	ret.NInserted = uint64(nInserted)
@@ -62,7 +62,7 @@ func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
 		VisitFunc: opts.showBloom,
 	}
 
-	return opts.WalkIndexFiles(&ctx, cache.Index_Bloom, blockNums)
+	return opts.WalkIndexFiles(&ctx, paths.Index_Bloom, blockNums)
 }
 
 func Display(bl *bloom.ChunkBloom, verbose int) {

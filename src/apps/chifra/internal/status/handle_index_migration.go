@@ -61,7 +61,7 @@ func (opts *StatusOptions) HandleIndexMigration() error {
 	// 		if err != nil {
 	// 			log.Panic(err)
 	// 		}
-	// 		ff = config.ToIndexPath(ff)
+	// 		ff = paths.ToIndexPath(ff)
 	// 		if file.FileExists(ff) {
 	// 			fmt.Println("===>", ff)
 	// 			err := os.Remove(ff)

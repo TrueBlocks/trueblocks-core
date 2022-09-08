@@ -2,7 +2,7 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package cache
+package paths
 
 import (
 	"io/fs"
@@ -30,8 +30,8 @@ func WalkCacheFolder(chain string, cacheType CacheType, filenameChan chan<- Inde
 			return err
 		}
 		if !info.IsDir() {
-			fR, _ := RangeFromFilename(path)
-			filenameChan <- IndexFileInfo{Type: cacheType, Path: path, Range: fR}
+			rng := RangeFromFilename(path)
+			filenameChan <- IndexFileInfo{Type: cacheType, Path: path, Range: rng}
 		}
 		return nil
 	})

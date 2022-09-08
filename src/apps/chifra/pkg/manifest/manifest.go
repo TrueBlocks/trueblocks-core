@@ -15,6 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -55,42 +56,22 @@ type ChunkRecord struct {
 	IndexSize int64          `json:"indexSize"`
 }
 
-type ChunkType int
-
-const (
-	None ChunkType = iota
-	Bloom
-	Index
-)
-
-func (ch ChunkType) String() string {
-	switch ch {
-	case Bloom:
-		return "bloom"
-	case Index:
-		return "index"
-	default:
-		logger.Fatal("Unknown type in ChunkType String")
-		return ""
-	}
-}
-
-func (ch *ChunkRecord) GetFullPath(chain string, cacheType ChunkType) string {
+func (ch *ChunkRecord) GetFullPath(chain string, cacheType paths.CacheType) string {
 	switch cacheType {
-	case Bloom:
+	case paths.Index_Bloom:
 		return fmt.Sprintf("%s.bloom", filepath.Join(config.GetPathToIndex(chain), "blooms", ch.Range))
-	case Index:
+	case paths.Index_Final:
 		return fmt.Sprintf("%s.bin", filepath.Join(config.GetPathToIndex(chain), "finalized", ch.Range))
 	}
 	logger.Fatal("unexpected chunkType in GetFullPath")
 	return ""
 }
 
-func (ch *ChunkRecord) IsExpectedSize(path string, chunkType ChunkType) bool {
+func (ch *ChunkRecord) IsExpectedSize(path string, chunkType paths.CacheType) bool {
 	switch chunkType {
-	case Bloom:
+	case paths.Index_Bloom:
 		return file.FileExists(path) && file.FileSize(path) == ch.BloomSize
-	case Index:
+	case paths.Index_Final:
 		return file.FileExists(path) && file.FileSize(path) == ch.IndexSize
 	}
 	logger.Fatal("unexpected chunkType in IsExpectedSize")
