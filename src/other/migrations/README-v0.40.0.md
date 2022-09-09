@@ -65,27 +65,27 @@ defaultGateway = "https://[{CHAIN}].unchainedindex.io/ipfs"
 
 [chains.mainnet]
 ...
-ipfsGateway="https://ipfs.unchainedindex.io/ipfs/"
+ipfsGateway = "https://ipfs.unchainedindex.io/ipfs/"
 ...
 ```
 
 3. Move your Etherscan key to a new section.
-   - If a key called `[settings]etherscan_key` exists, remove it (copy its value first).
-   - Add three new configuration sections to the `trueBlocks.toml` file. Use the value you copied from `[settings]etherscan_key` for API key.
-   - Note: the [keys] section is intentially empty.
+  - If a key called `[settings]etherscan_key` exists, remove it (copy its value first).
+  - Add three new configuration sections to the `trueBlocks.toml` file. Use the value you copied for Etherscan API key.
+  - Note: The first section, [keys], is intentially empty.
 
 ```
 [keys]
 
 [keys.etherscan]
-apiKey = <copied or new value>
+apiKey = "<copied or new Etherscan API key>"
 
 [keys.pinata]
 apiKey = "<your Pinata api key>"       # optional
 secretKey = "<your Pinata secret key>" # optional
 jwt = "<your Pinata JWT key>"          # optional
 ```
-1. Tell the system that you've made these changes by changing the version. If the `[version]` section does not exist, add it.
+4. At the top of the file, change the version. If the `[version]` section does not exist, add it.
 
 ```[toml]
 [version]
@@ -99,31 +99,39 @@ current = "0.40.0-beta"
 ----
 ### Run the migration command
 
-Make sure you have the latest `master` (or `develop` if you prefer) branch. Do a fresh re-build, then run:
+Make sure you're using the latest branch. Do a fresh re-build, and then run:
 
 ```
 chifra chunks index --check
 ```
 
-If you have a previous index, this should report a number of "errors" or suggested upgrades.
+If you have a previous version of the index, this will report various errors and issues.
 
-Then run:
+Next, run:
 
 ```
-chifra index --all     # or if you're working with the minimal index just `chifra init`.
+chifra index --all            *# or if you're working with the minimal index just `chifra init`.*
 ```
 
-This may take a very long time, let it run to completion. Next, re-run:
+This may take a long time, let it run to completion. If it stops, however, you can re-start it.
+
+When that completes, run:
 
 ```
 chifra chunks index --check
 ```
 
-If this works without errors, you're finished. If this reports errors, repeatedly run `chifra init --all` and the above check until you get no more errors. Once or twice at most.
+This should now work without errors. If it doesn, you're finished.
 
-If the above process does not work, you can revert to the nuecular option by removing the entire contents of the `$indexPath` and re-running `chifra init --all`.
+If this command reports errors, re-run `chifra init --all` and the check until no errors are reported.
 
-If you have existing monitors, you should remove and regenerate them with `chifra monitors --delete --remove <address>` or simple delete the folder called `$cachePath/monitors`.
+## What if it doesn't work
+
+If the above process does not work, you can use the nuclear option by deleting the entire contents of the `$indexPath`. Once you do that, running `chifra init --all` (omit the `--all` if you wish) will download the index.
+
+## Important note
+
+If you have existing monitors (check `$cachePath/monitors`), you should remove them with `chifra monitors --delete --remove <address>` or simple delete the folder called `$cachePath/monitors`. Otherwise, they may contain incorrect or missing transactions (see the original reason for this migration above).
 
 ## You're finished!
 
@@ -145,7 +153,7 @@ If you have any other problems, please contact us in our discord.
 
 ## An important note on other chains
 
-Prior to version 0.40.0-beta, we only supported Ethereum mainnet. With this update we add support for the Gnosis chain and Sepolia testnet. If you've indexed other chains, you must remove that entire index and re-build it from scratch. You may do this by removing the contents of `$indexPath/<chain>` and re-running `chifra init --all --chain <chain>`. Find `$indexPath` with `chifra status --terse`. We're truly sorry for the inconvienence. You will need to remove any monitor files as well.
+Prior to version 0.40.0-beta, we only supported Ethereum mainnet. With this update we add support for the Gnosis chain and Sepolia testnet. If you've indexed other chains, you must remove that entire index and re-build it from scratch. (Sorry!) You may do this by removing the contents of `$indexPath/<chain>` and re-running `chifra init --all --chain <chain>`. Find `$indexPath` with `chifra status --terse`. We're truly sorry for the inconvienence. You will need to remove any monitor files as well.
 
 ## Previous Migration
 
