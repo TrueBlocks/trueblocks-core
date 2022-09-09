@@ -11,6 +11,6 @@ FATAL[DATE|TIME]
 	  The Unchained Index does not appear to be initialized. You must run 'chifra init'
 	  (and allow it to complete) or 'chifra scrape' before using this command.
 	  
-	  GHC-TrueBlocks//0.38.1-beta
+	  GHC-TrueBlocks//0.40.1-beta
 
 	
