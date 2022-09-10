@@ -46,6 +46,7 @@ func EstablishIndexChunk(chain string, fileRange paths.FileRange) (bool, error) 
 	logger.Log(logger.Info, "Downloading", colors.Blue, fileRange, colors.Off, "from IPFS.")
 
 	// Start downloading the filter
+	matchedPin.BloomHash = "" // we want to download only the index chunk
 	chunks := []manifest.ChunkRecord{matchedPin}
 	progressChannel := make(chan *progress.Progress)
 

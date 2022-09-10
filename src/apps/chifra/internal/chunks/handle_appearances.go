@@ -5,6 +5,7 @@
 package chunksPkg
 
 import (
+	"fmt"
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -12,7 +13,11 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *ChunksOptions) showAppearances(ctx *WalkContext, path string, first bool) (bool, error) {
+func showAppearances(walker *index.IndexWalker, path string, first bool) (bool, error) {
+	opts, ok := walker.GetOpts().(*ChunksOptions)
+	if !ok {
+		return false, fmt.Errorf("cannot cast ChunksOptions in showAppearances")
+	}
 	path = paths.ToIndexPath(path)
 
 	indexChunk, err := index.NewChunkData(path)
@@ -27,7 +32,7 @@ func (opts *ChunksOptions) showAppearances(ctx *WalkContext, path string, first 
 	}
 
 	for i := 0; i < int(indexChunk.Header.AppearanceCount); i++ {
-		if opts.Globals.TestMode && i > maxTestItems {
+		if opts.Globals.TestMode && i > walker.MaxTests() {
 			continue
 		}
 		obj := index.AppearanceRecord{}
@@ -44,17 +49,19 @@ func (opts *ChunksOptions) showAppearances(ctx *WalkContext, path string, first 
 }
 
 func (opts *ChunksOptions) HandleAppearances(blockNums []uint64) error {
-	maxTestItems = 10
-
 	defer opts.Globals.RenderFooter()
 	err := opts.Globals.RenderHeader(types.SimpleIndexAppearance{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
 	if err != nil {
 		return err
 	}
 
-	ctx := WalkContext{
-		VisitFunc: opts.showAppearances,
-	}
-
-	return opts.WalkIndexFiles(&ctx, paths.Index_Bloom, blockNums)
+	walker := index.NewIndexWalker(
+		opts.Globals.Chain,
+		opts.Globals.TestMode,
+		10, /* maxTests */
+		opts,
+		showAppearances,
+		nil, /* data */
+	)
+	return walker.WalkIndexFiles(paths.Index_Bloom, blockNums)
 }

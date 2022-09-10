@@ -17,7 +17,11 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
-func (opts *ChunksOptions) showAddresses(ctx *WalkContext, path string, first bool) (bool, error) {
+func showAddresses(walker *index.IndexWalker, path string, first bool) (bool, error) {
+	opts, ok := walker.GetOpts().(*ChunksOptions)
+	if !ok {
+		return false, fmt.Errorf("cannot cast ChunksOptions in showAddresses")
+	}
 	path = paths.ToIndexPath(path)
 
 	indexChunk, err := index.NewChunkData(path)
@@ -33,7 +37,7 @@ func (opts *ChunksOptions) showAddresses(ctx *WalkContext, path string, first bo
 
 	cnt := 0
 	for i := 0; i < int(indexChunk.Header.AddressCount); i++ {
-		if opts.Globals.TestMode && i > maxTestItems {
+		if opts.Globals.TestMode && i > walker.MaxTests() {
 			continue
 		}
 
@@ -106,17 +110,19 @@ func (opts *ChunksOptions) HandleDetails(indexChunk *index.ChunkData, record *in
 }
 
 func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
-	maxTestItems = 10
-
 	defer opts.Globals.RenderFooter()
 	err := opts.Globals.RenderHeader(types.SimpleIndexAddress{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
 	if err != nil {
 		return err
 	}
 
-	ctx := WalkContext{
-		VisitFunc: opts.showAddresses,
-	}
-
-	return opts.WalkIndexFiles(&ctx, paths.Index_Bloom, blockNums)
+	walker := index.NewIndexWalker(
+		opts.Globals.Chain,
+		opts.Globals.TestMode,
+		10, /* maxTests */
+		opts,
+		showAddresses,
+		nil, /* data */
+	)
+	return walker.WalkIndexFiles(paths.Index_Bloom, blockNums)
 }

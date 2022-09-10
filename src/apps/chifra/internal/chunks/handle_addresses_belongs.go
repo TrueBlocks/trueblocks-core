@@ -5,6 +5,7 @@
 package chunksPkg
 
 import (
+	"fmt"
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -13,7 +14,12 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
-func (opts *ChunksOptions) showAddressesBelongs(ctx *WalkContext, path string, first bool) (bool, error) {
+func showAddressesBelongs(walker *index.IndexWalker, path string, first bool) (bool, error) {
+	opts, ok := walker.GetOpts().(*ChunksOptions)
+	if !ok {
+		return false, fmt.Errorf("cannot cast ChunksOptions in showAddressBelongs")
+	}
+
 	path = paths.ToIndexPath(path)
 
 	indexChunk, err := index.NewChunkData(path)
@@ -29,7 +35,7 @@ func (opts *ChunksOptions) showAddressesBelongs(ctx *WalkContext, path string, f
 
 	cnt := 0
 	for i := 0; i < int(indexChunk.Header.AddressCount); i++ {
-		if opts.Globals.TestMode && i > maxTestItems {
+		if opts.Globals.TestMode && i > walker.MaxTests() {
 			continue
 		}
 
@@ -71,17 +77,19 @@ func (opts *ChunksOptions) shouldShow(obj index.AddressRecord) bool {
 }
 
 func (opts *ChunksOptions) HandleIndexBelongs(blockNums []uint64) error {
-	maxTestItems = 10000
-
 	defer opts.Globals.RenderFooter()
 	err := opts.Globals.RenderHeader(types.SimpleIndexAddressBelongs{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
 	if err != nil {
 		return err
 	}
 
-	ctx := WalkContext{
-		VisitFunc: opts.showAddressesBelongs,
-	}
-
-	return opts.WalkIndexFiles(&ctx, paths.Index_Bloom, blockNums)
+	walker := index.NewIndexWalker(
+		opts.Globals.Chain,
+		opts.Globals.TestMode,
+		10000, /* maxTests */
+		opts,
+		showAddressesBelongs,
+		nil, /* data */
+	)
+	return walker.WalkIndexFiles(paths.Index_Bloom, blockNums)
 }

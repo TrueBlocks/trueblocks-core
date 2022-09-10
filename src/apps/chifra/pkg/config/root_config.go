@@ -62,7 +62,7 @@ func init() {
 	trueBlocksViper.SetDefault("Settings.CachePath", GetPathToRootConfig()+"cache/")
 	trueBlocksViper.SetDefault("Settings.IndexPath", GetPathToRootConfig()+"unchained/")
 	trueBlocksViper.SetDefault("Settings.DefaultChain", "mainnet")
-	trueBlocksViper.SetDefault("Settings.DefaultGateway", "https://[{CHAIN}].unchainedindex.io/ipfs")
+	trueBlocksViper.SetDefault("Settings.DefaultGateway", "https://ipfs.unchainedindex.io/ipfs")
 }
 
 // GetRootConfig reads and the configuration located in trueBlocks.toml file. Note

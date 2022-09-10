@@ -5,6 +5,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
@@ -13,22 +14,27 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
-func (opts *ChunksOptions) pinChunk(ctx *WalkContext, path string, first bool) (bool, error) {
+func pinChunk(walker *index.IndexWalker, path string, first bool) (bool, error) {
+	opts, ok := walker.GetOpts().(*ChunksOptions)
+	if !ok {
+		return false, fmt.Errorf("cannot cast ChunksOptions in pinChunk")
+	}
+
 	result, err := pinning.PinChunk(opts.Globals.Chain, path, opts.Remote)
 	if err != nil {
 		return false, err
 	}
 
-	if ctx.Data != nil {
-		m, castOk := ctx.Data.(*types.SimpleManifest)
+	if walker.Data() != nil {
+		man, castOk := walker.Data().(*types.SimpleManifest)
 		if !castOk {
 			return true, fmt.Errorf("could not cast manifest")
 		}
 		if pinning.LocalDaemonRunning() {
-			m.Chunks = append(m.Chunks, result.Local)
+			man.Chunks = append(man.Chunks, result.Local)
 			logger.Log(logger.Progress, "Pinning: ", result.Local, spaces)
 		} else {
-			m.Chunks = append(m.Chunks, result.Remote)
+			man.Chunks = append(man.Chunks, result.Remote)
 			logger.Log(logger.Progress, "Pinning: ", result.Remote, spaces)
 		}
 	}
@@ -59,11 +65,15 @@ func (opts *ChunksOptions) HandlePinManifest(blockNums []uint64) error {
 		return err
 	}
 
-	ctx := WalkContext{
-		VisitFunc: opts.pinChunk,
-		Data:      &m,
-	}
-	if err := opts.WalkIndexFiles(&ctx, paths.Index_Bloom, blockNums); err != nil {
+	walker := index.NewIndexWalker(
+		opts.Globals.Chain,
+		opts.Globals.TestMode,
+		100, /* maxTests */
+		opts,
+		pinChunk,
+		&m,
+	)
+	if err := walker.WalkIndexFiles(paths.Index_Bloom, blockNums); err != nil {
 		return err
 	}
 

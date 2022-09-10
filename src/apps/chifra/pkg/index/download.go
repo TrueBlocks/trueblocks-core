@@ -12,7 +12,6 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"path/filepath"
 	"strings"
 	"sync"
 	"time"
@@ -20,7 +19,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
@@ -39,14 +37,14 @@ type jobResult struct {
 	theChunk *manifest.ChunkRecord
 }
 
-type progressChan chan<- *progress.Progress
+type ProgressChan chan<- *progress.Progress
 
 // WorkerArguments are types meant to hold worker function arguments. We cannot
 // pass the arguments directly, because a worker function is expected to take one
 // parameter of type interface{}.
 type downloadWorkerArguments struct {
 	ctx             context.Context
-	progressChannel progressChan
+	progressChannel ProgressChan
 	gatewayUrl      string
 	downloadWg      *sync.WaitGroup
 	writeChannel    chan *jobResult
@@ -55,7 +53,7 @@ type downloadWorkerArguments struct {
 
 type writeWorkerArguments struct {
 	ctx             context.Context
-	progressChannel progressChan
+	progressChannel ProgressChan
 	cancel          context.CancelFunc
 	writeWg         *sync.WaitGroup
 }
@@ -64,17 +62,16 @@ type writeWorkerArguments struct {
 type workerFunction func(interface{})
 
 // getDownloadWorker returns a worker function that downloads a chunk
-func getDownloadWorker(dlwArgs downloadWorkerArguments, chain string, chunkType paths.CacheType) workerFunction {
-	progressChannel := dlwArgs.progressChannel
-	ctx := dlwArgs.ctx
+func getDownloadWorker(chain string, workerArgs downloadWorkerArguments, chunkType paths.CacheType) workerFunction {
+	progressChannel := workerArgs.progressChannel
 
 	return func(param interface{}) {
 		chunk := param.(manifest.ChunkRecord)
 
-		defer dlwArgs.downloadWg.Done()
+		defer workerArgs.downloadWg.Done()
 
 		select {
-		case <-ctx.Done():
+		case <-workerArgs.ctx.Done():
 			// Cancel
 			return
 
@@ -90,28 +87,29 @@ func getDownloadWorker(dlwArgs downloadWorkerArguments, chain string, chunkType 
 				Message: hash.String(),
 			}
 
-			download, err := pinning.FetchFromGateway(ctx, dlwArgs.gatewayUrl, hash.String())
+			download, err := pinning.FetchFromGateway(workerArgs.ctx, workerArgs.gatewayUrl, hash.String())
 			time.Sleep(250 * time.Millisecond) // we need to slow things down, otherwise the endpoint rate limits
-			if errors.Is(ctx.Err(), context.Canceled) {
+			if errors.Is(workerArgs.ctx.Err(), context.Canceled) {
 				// The request to fetch the chunk was cancelled, because user has
 				// pressed Ctrl-C
 				return
 			}
 
-			if ctx.Err() != nil {
+			if workerArgs.ctx.Err() != nil {
 				chunkPath := paths.NewCachePath(chain, paths.Index_Final)
-				removeLocalFile(paths.ToIndexPath(chunkPath.GetFullPath(chunk.Range)), "failed download", progressChannel)
-				removeLocalFile(paths.ToBloomPath(chunkPath.GetFullPath(chunk.Range)), "failed download", progressChannel)
+				// TODO: BOGUS - THIS IS PROBABLY WRONG
+				RemoveLocalFile(paths.ToIndexPath(chunkPath.GetFullPath(chunk.Range)), "failed download", progressChannel)
+				RemoveLocalFile(paths.ToBloomPath(chunkPath.GetFullPath(chunk.Range)), "failed download", progressChannel)
 				progressChannel <- &progress.Progress{
 					Payload: &chunk,
 					Event:   progress.Error,
-					Message: ctx.Err().Error(),
+					Message: workerArgs.ctx.Err().Error(),
 				}
 				time.Sleep(1 * time.Second)
 				return
 			}
 			if err == nil {
-				dlwArgs.writeChannel <- &jobResult{
+				workerArgs.writeChannel <- &jobResult{
 					rng:      chunk.Range,
 					fileSize: download.ContentLen,
 					contents: download.Body,
@@ -129,24 +127,23 @@ func getDownloadWorker(dlwArgs downloadWorkerArguments, chain string, chunkType 
 }
 
 // getWriteWorker returns a worker function that writes chunk to disk
-func getWriteWorker(wwArgs writeWorkerArguments, chain string, chunkType paths.CacheType) workerFunction {
-	progressChannel := wwArgs.progressChannel
-	ctx := wwArgs.ctx
+func getWriteWorker(chain string, workerArgs writeWorkerArguments, chunkType paths.CacheType) workerFunction {
+	progressChannel := workerArgs.progressChannel
 
 	return func(resParam interface{}) {
 		// Take download data from the channel and save it
 		res := resParam.(*jobResult)
 
-		defer wwArgs.writeWg.Done()
+		defer workerArgs.writeWg.Done()
 
 		select {
-		case <-ctx.Done():
+		case <-workerArgs.ctx.Done():
 			return
 		default:
-			trapChannel := sigintTrap.Enable(ctx, wwArgs.cancel)
-			err := writeBytesToDisc(wwArgs, chain, chunkType, res)
+			trapChannel := sigintTrap.Enable(workerArgs.ctx, workerArgs.cancel)
+			err := writeBytesToDisc(chain, chunkType, res)
 			sigintTrap.Disable(trapChannel)
-			if errors.Is(ctx.Err(), context.Canceled) {
+			if errors.Is(workerArgs.ctx.Err(), context.Canceled) {
 				// Ctrl-C was pressed, cancel
 				return
 			}
@@ -171,20 +168,16 @@ func getWriteWorker(wwArgs writeWorkerArguments, chain string, chunkType paths.C
 
 // DownloadChunks downloads, unzips and saves the chunk of type indicated by chunkType
 // for each chunk in chunks. Progress is reported to progressChannel.
-func DownloadChunks(chain string, chunks []manifest.ChunkRecord, chunkType paths.CacheType, poolSize int, progressChannel progressChan) {
-	// Downloaded content will wait for saving in this channel
-	writeChannel := make(chan *jobResult, poolSize)
+func DownloadChunks(chain string, chunksToDownload []manifest.ChunkRecord, chunkType paths.CacheType, poolSize int, progressChannel ProgressChan) {
 	// Context lets us handle Ctrl-C easily
 	ctx, cancel := context.WithCancel(context.Background())
-
-	var downloadWg sync.WaitGroup
-	var writeWg sync.WaitGroup
-
 	defer func() {
 		cancel()
 	}()
 
-	dlwArgs := downloadWorkerArguments{
+	var downloadWg sync.WaitGroup
+	writeChannel := make(chan *jobResult, poolSize)
+	downloadWorkerArgs := downloadWorkerArguments{
 		ctx:             ctx,
 		progressChannel: progressChannel,
 		downloadWg:      &downloadWg,
@@ -192,56 +185,51 @@ func DownloadChunks(chain string, chunks []manifest.ChunkRecord, chunkType paths
 		writeChannel:    writeChannel,
 		nRetries:        8,
 	}
-	downloadPool, err := ants.NewPoolWithFunc(poolSize, getDownloadWorker(dlwArgs, chain, chunkType))
+	downloadPool, err := ants.NewPoolWithFunc(poolSize, getDownloadWorker(chain, downloadWorkerArgs, chunkType))
 	defer downloadPool.Release()
 	if err != nil {
 		panic(err)
 	}
 
-	wwArgs := writeWorkerArguments{
+	var writeWg sync.WaitGroup
+	writeWorkerArgs := writeWorkerArguments{
 		ctx:             ctx,
 		progressChannel: progressChannel,
 		cancel:          cancel,
 		writeWg:         &writeWg,
 	}
-	writePool, err := ants.NewPoolWithFunc(poolSize, getWriteWorker(wwArgs, chain, chunkType))
+	writePool, err := ants.NewPoolWithFunc(poolSize, getWriteWorker(chain, writeWorkerArgs, chunkType))
 	defer writePool.Release()
 	if err != nil {
 		panic(err)
 	}
 
-	// Increasing wait group counter to make sure we finished saving all downloaded chunks
+	// Closed in the go routine after we're finished writing or the user cancels
 	writeWg.Add(1)
 	go func() {
 		for result := range writeChannel {
 			if ctx.Err() != nil {
-				// If the user has pressed Ctrl-C while it was disabled by sigintTrap,
-				// we have to drain the channel. Otherwise, we will find ourselves in a deadlock
+				// The user hit Ctrl-C. It may have been disabled by sigintTrap, so we
+				// must drain the channel. Otherwise, it will deadlock
 				continue
 			}
-			// It would be simpler to call Add where we start downloads, but we have no guarantee that
-			// we will be saving the same number of chunks (e.g. if download failed)
+
+			// Closed inside the invocation
 			writeWg.Add(1)
 			writePool.Invoke(result)
 		}
-		// Range over a channel is blocking, so the following line will be executed only
-		// when we finished saving chunks
+
+		// Close the opening wg when all writes are finished or the user canceled
 		writeWg.Done()
 	}()
 
-	itemsToDownload := filterDownloadedChunks(chain, chunks, chunkType, progressChannel)
-	progressChannel <- &progress.Progress{
-		Event:   progress.Statistics,
-		Payload: len(itemsToDownload),
-	}
-	for _, item := range itemsToDownload {
+	for _, chunk := range chunksToDownload {
 		downloadWg.Add(1)
-		downloadPool.Invoke(item)
+		downloadPool.Invoke(chunk)
 	}
-
 	downloadWg.Wait()
-	close(writeChannel)
 
+	close(writeChannel)
 	writeWg.Wait()
 
 	if errors.Is(ctx.Err(), context.Canceled) {
@@ -257,7 +245,7 @@ func DownloadChunks(chain string, chunks []manifest.ChunkRecord, chunkType paths
 }
 
 // writeBytesToDisc save the downloaded bytes to disc
-func writeBytesToDisc(wwArgs writeWorkerArguments, chain string, chunkType paths.CacheType, res *jobResult) error {
+func writeBytesToDisc(chain string, chunkType paths.CacheType, res *jobResult) error {
 	chunkPath := paths.NewCachePath(chain, chunkType)
 	fullPath := chunkPath.GetFullPath(res.rng)
 	outputFile, err := os.OpenFile(fullPath, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
@@ -283,78 +271,7 @@ func writeBytesToDisc(wwArgs writeWorkerArguments, chain string, chunkType paths
 	return nil
 }
 
-// filterDownloadedChunks returns new []manifest.ChunkRecord slice with all chunks from RootPath removed
-func filterDownloadedChunks(chain string, chunks []manifest.ChunkRecord, chunkType paths.CacheType, progressChannel progressChan) []manifest.ChunkRecord {
-	chunkPath := paths.NewCachePath(chain, chunkType)
-	onDiscMap := make(map[string]bool)
-
-	files, err := os.ReadDir(chunkPath.String())
-	if err != nil {
-		return chunks
-	}
-
-	for _, ff := range files {
-		name := ff.Name()
-		fullPath := chunkPath.GetFullPath(name)
-		if !strings.HasSuffix(name, ".bin") && !strings.HasSuffix(name, ".bloom") {
-			fullPath = filepath.Join(chunkPath.GetFullPath(""), name)
-		}
-		onDiscMap[fullPath] = true
-	}
-
-	return listRequiredDownloads(chain, chunkType, onDiscMap, chunks, progressChannel)
-}
-
-// listRequiredDownloads returns a copy of `from` slice with every item with a file name present in `what` map removed
-func listRequiredDownloads(chain string, chunkType paths.CacheType, onDiscMap map[string]bool, chunks []manifest.ChunkRecord, progressChannel progressChan) []manifest.ChunkRecord {
-	chunksNeeded := make([]manifest.ChunkRecord, 0, len(chunks))
-	for _, item := range chunks {
-		fullPath := item.GetFullPath(chain, chunkType)
-		if onDiscMap[fullPath] {
-			sizeOk := item.IsExpectedSize(fullPath, chunkType)
-
-			var hashOk bool
-			switch chunkType {
-			case paths.Index_Bloom:
-				hashOk, _ = bloom.HasValidBloomHeader(chain, fullPath)
-			case paths.Index_Final:
-				hashOk, _ = HasValidIndexHeader(chain, fullPath)
-			default:
-				logger.Fatal("Unknown chunk type in listRequiredDownloads", chunkType)
-			}
-
-			if !hashOk {
-				if removeLocalFile(fullPath, "invalid header", progressChannel) {
-					onDiscMap[fullPath] = false
-				}
-			} else if !sizeOk {
-				if removeLocalFile(fullPath, "unexpected size", progressChannel) {
-					onDiscMap[fullPath] = false
-				}
-			} else {
-				onDiscMap[fullPath] = false
-				continue
-			}
-		}
-		chunksNeeded = append(chunksNeeded, item)
-	}
-
-	// Any file still in this list is not in the manifest and should be removed
-	for fullPath, b := range onDiscMap {
-		if b {
-			removeLocalFile(fullPath, "unknown file", progressChannel)
-		}
-	}
-
-	progressChannel <- &progress.Progress{
-		Event:   progress.Update,
-		Message: fmt.Sprintf("Number of %s files to download %d", chunkType, len(chunksNeeded)),
-		// TODO: BOGUS - CHANGE THIS TO CHUNKTYPE WHEN CACHE.CHUNKTYPE IS GONE
-	}
-	return chunksNeeded
-}
-
-func removeLocalFile(fullPath, reason string, progressChannel progressChan) bool {
+func RemoveLocalFile(fullPath, reason string, progressChannel ProgressChan) bool {
 	if file.FileExists(fullPath) {
 		err := os.Remove(fullPath)
 		if err != nil {

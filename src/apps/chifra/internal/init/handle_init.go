@@ -6,6 +6,8 @@ package initPkg
 
 import (
 	"fmt"
+	"os"
+	"path/filepath"
 	"runtime"
 	"sort"
 	"strings"
@@ -14,6 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
@@ -33,6 +36,7 @@ func (opts *InitOptions) HandleInit() error {
 
 	// Make sure that the temporary scraper folders are empty, so that, when the
 	// scraper starts, it starts on the correct block.
+	// TODO: BOGUS - IF THE SCRAPER IS RUNNING, THIS WILL CAUSE PROBLEMS
 	index.CleanTemporaryFolders(config.GetPathToIndex(chain), true)
 
 	remoteManifest, err := manifest.ReadManifest(chain, manifest.FromContract)
@@ -44,9 +48,16 @@ func (opts *InitOptions) HandleInit() error {
 		return err
 	}
 
+	// Scan existing files on disc to determine which ones need to be updated. This routine
+	// returns an array of chunks that need to be downloaded. If a chunk is in this list,
+	// its bloomHash or indexHash (or both) are non-empty and contain the correct IPFS hash
+	// to download. Any chunks on disc that were either not in the manifest or had incorrect
+	// or missing headers or were of the wrong size have already been removed upon return.
+	chunksToDownload := opts.prepareDownloadList(chain, remoteManifest.Chunks, paths.Index_Bloom, []uint64{})
+
 	// We sort so the download happens from latest block to earliest
-	sort.Slice(remoteManifest.Chunks, func(i, j int) bool {
-		return remoteManifest.Chunks[i].Range > remoteManifest.Chunks[j].Range
+	sort.Slice(chunksToDownload, func(i, j int) bool {
+		return chunksToDownload[i].Range > chunksToDownload[j].Range
 	})
 
 	// Tell the user what we're doing
@@ -54,7 +65,8 @@ func (opts *InitOptions) HandleInit() error {
 	logger.Log(logger.InfoC, "Schemas:", unchained.Schemas)
 	logger.Log(logger.InfoC, "Config Folder:", config.GetPathToChainConfig(chain))
 	logger.Log(logger.InfoC, "Index Folder:", config.GetPathToIndex(chain))
-	logger.Log(logger.InfoC, "Number of Chunks:", fmt.Sprintf("%d", len(remoteManifest.Chunks)))
+	logger.Log(logger.InfoC, "Chunks in Manifest:", fmt.Sprintf("%d", len(remoteManifest.Chunks)))
+	logger.Log(logger.InfoC, "Corrections Needed:", fmt.Sprintf("%d", len(chunksToDownload)))
 
 	// Open a channel to receive a message when all the blooms have been downloaded...
 	bloomsDoneChannel := make(chan bool)
@@ -65,7 +77,7 @@ func (opts *InitOptions) HandleInit() error {
 	defer close(indexDoneChannel)
 
 	getChunks := func(chunkType paths.CacheType) {
-		failedChunks, cancelled := opts.downloadAndReportProgress(remoteManifest.Chunks, chunkType)
+		failedChunks, cancelled := opts.downloadAndReportProgress(chunksToDownload, chunkType)
 		if cancelled {
 			// The user hit the control+c, we don't want to continue...
 			return
@@ -112,8 +124,6 @@ var nUpdated int
 
 // downloadAndReportProgress Downloads the chunks and reports progress to the progressChannel
 func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord, chunkType paths.CacheType) ([]manifest.ChunkRecord, bool) {
-	chain := opts.Globals.Chain
-
 	failed := []manifest.ChunkRecord{}
 	cancelled := false
 
@@ -125,7 +135,7 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord
 	poolSize := utils.Min(10, (runtime.NumCPU()*3)/2)
 
 	// Start the go routine that downloads the chunks. This sends messages through the progressChannel
-	go index.DownloadChunks(chain, chunks, chunkType, poolSize, progressChannel)
+	go index.DownloadChunks(opts.Globals.Chain, chunks, chunkType, poolSize, progressChannel)
 
 	for event := range progressChannel {
 		chunk, ok := event.Payload.(*manifest.ChunkRecord)
@@ -145,7 +155,8 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord
 			break
 		}
 
-		m.Lock()
+		// TODO: is this a performance issue?
+		m.Lock() // To conflict progress printing
 		switch event.Event {
 		case progress.Error:
 			logger.Log(logger.Error, event.Message)
@@ -190,6 +201,93 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord
 	}
 
 	return failed, cancelled
+}
+
+func cleanIndex(walker *index.IndexWalker, path string, first bool) (bool, error) {
+	_, ok := walker.GetOpts().(*InitOptions)
+	if !ok {
+		return false, fmt.Errorf("cannot cast InitOptions in cleanIndex")
+	}
+	fmt.Println("visit:", path)
+	return true, nil
+}
+
+// prepareDownloadList returns new []manifest.ChunkRecord slice with all chunks from RootPath removed
+func (opts *InitOptions) prepareDownloadList(chain string, chunksInManifest []manifest.ChunkRecord, chunkType paths.CacheType, blockNums []uint64) []manifest.ChunkRecord {
+	walker := index.NewIndexWalker(
+		opts.Globals.Chain,
+		opts.Globals.TestMode,
+		10, /* maxTests */
+		opts,
+		cleanIndex,
+		nil,
+	)
+
+	if err := walker.WalkIndexFiles(paths.Index_Bloom, blockNums); err != nil {
+		return chunksInManifest
+	}
+
+	chunkPath := paths.NewCachePath(chain, chunkType)
+	files, err := os.ReadDir(chunkPath.GetFullPath(""))
+	if err != nil {
+		return chunksInManifest
+	}
+
+	filesOnDisc := make(map[string]bool)
+	for _, ff := range files {
+		name := ff.Name()
+		fullPath := chunkPath.GetFullPath(name)
+		if !strings.HasSuffix(name, ".bin") && !strings.HasSuffix(name, ".bloom") {
+			fullPath = filepath.Join(chunkPath.GetFullPath(""), name)
+		}
+		filesOnDisc[fullPath] = true
+	}
+
+	chunksNeeded := make([]manifest.ChunkRecord, 0, len(chunksInManifest))
+	for _, chunks := range chunksInManifest {
+		fullPath := chunks.GetFullPath(chain, chunkType)
+		if filesOnDisc[fullPath] {
+			sizeOk := chunks.IsExpectedSize(fullPath, chunkType)
+
+			var hashOk bool
+			switch chunkType {
+			case paths.Index_Bloom:
+				hashOk, _ = bloom.HasValidBloomHeader(chain, fullPath)
+			case paths.Index_Final:
+				hashOk, _ = index.HasValidIndexHeader(chain, fullPath)
+			default:
+				logger.Fatal("Unknown chunk type in listRequiredDownloads", chunkType)
+			}
+
+			if !hashOk {
+				err := os.Remove(fullPath)
+				if err == nil {
+					filesOnDisc[fullPath] = false
+				}
+
+			} else if !sizeOk {
+				err := os.Remove(fullPath)
+				if err == nil {
+					filesOnDisc[fullPath] = false
+				}
+
+			} else {
+				filesOnDisc[fullPath] = false
+				continue
+			}
+		}
+		chunksNeeded = append(chunksNeeded, chunks)
+	}
+
+	// Any file that is still in the list of files on disc but not in the manifest should be removed
+	for fullPath, b := range filesOnDisc {
+		if b {
+			// TODO: file removal here and above needs error handling
+			os.Remove(fullPath)
+		}
+	}
+
+	return chunksNeeded
 }
 
 // retry retries downloading any `failedChunks`. It repeats `nTimes` times by calling `downloadChunks` function.

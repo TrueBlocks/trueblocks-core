@@ -13,7 +13,11 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (opts *ChunksOptions) truncateIndex(ctx *WalkContext, path string, first bool) (bool, error) {
+func truncateIndex(walker *index.IndexWalker, path string, first bool) (bool, error) {
+	opts, ok := walker.GetOpts().(*ChunksOptions)
+	if !ok {
+		return false, fmt.Errorf("cannot cast ChunksOptions in truncateIndex")
+	}
 	if strings.HasSuffix(path, ".gz") {
 		os.Remove(path)
 		return true, nil
@@ -49,11 +53,15 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 	indexPath := config.GetPathToIndex(opts.Globals.Chain)
 	index.CleanTemporaryFolders(indexPath, true)
 
-	ctx := WalkContext{
-		VisitFunc: opts.truncateIndex,
-	}
-
-	if err := opts.WalkIndexFiles(&ctx, paths.Index_Bloom, blockNums); err != nil {
+	walker := index.NewIndexWalker(
+		opts.Globals.Chain,
+		opts.Globals.TestMode,
+		100, /* maxTests */
+		opts,
+		truncateIndex,
+		nil,
+	)
+	if err := walker.WalkIndexFiles(paths.Index_Bloom, blockNums); err != nil {
 		return err
 	}
 

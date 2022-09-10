@@ -16,14 +16,24 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *ChunksOptions) showFinalizedStats(ctx *WalkContext, path string, first bool) (bool, error) {
+func showFinalizedStats(walker *index.IndexWalker, path string, first bool) (bool, error) {
+	opts, ok := walker.GetOpts().(*ChunksOptions)
+	if !ok {
+		return false, fmt.Errorf("cannot cast ChunksOptions in showFinalizedStats")
+	}
+
 	// TODO: Fix export without arrays
 	obj := NewChunkStats(path)
 	err := opts.Globals.RenderObject(obj, first)
 	return err == nil, err
 }
 
-func (opts *ChunksOptions) showStagingStats(ctx *WalkContext, path string, first bool) (bool, error) {
+func showStagingStats(walker *index.IndexWalker, path string, first bool) (bool, error) {
+	opts, ok := walker.GetOpts().(*ChunksOptions)
+	if !ok {
+		return false, fmt.Errorf("cannot cast ChunksOptions in showStagingStats")
+	}
+
 	lines := file.AsciiFileToLines(path)
 	ret := types.ReportChunks{}
 	rng, err1 := paths.RangeFromFilenameE(path)
@@ -99,20 +109,29 @@ func (opts *ChunksOptions) HandleStats(blockNums []uint64) error {
 		return err
 	}
 
-	ctx := WalkContext{
-		VisitFunc: opts.showFinalizedStats,
-	}
+	walker := index.NewIndexWalker(
+		opts.Globals.Chain,
+		opts.Globals.TestMode,
+		100, /* maxTests */
+		opts,
+		showFinalizedStats,
+		nil,
+	)
 
-	if err = opts.WalkIndexFiles(&ctx, paths.Index_Bloom, blockNums); err != nil {
+	if err = walker.WalkIndexFiles(paths.Index_Bloom, blockNums); err != nil {
 		return err
 	}
 
 	if opts.Globals.Verbose {
-		ctx = WalkContext{
-			VisitFunc: opts.showStagingStats,
-		}
-
-		err = opts.WalkIndexFiles(&ctx, paths.Index_Staging, blockNums)
+		walker = index.NewIndexWalker(
+			opts.Globals.Chain,
+			opts.Globals.TestMode,
+			100, /* maxTests */
+			opts,
+			showStagingStats,
+			nil,
+		)
+		err = walker.WalkIndexFiles(paths.Index_Staging, blockNums)
 	}
 
 	return err

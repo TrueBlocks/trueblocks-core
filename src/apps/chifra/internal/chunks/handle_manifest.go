@@ -12,7 +12,7 @@ import (
 )
 
 func (opts *ChunksOptions) HandleManifest(blockNums []uint64) error {
-	maxTestItems = 10
+	maxTestItems := 10
 
 	source := manifest.FromCache
 	if opts.Remote {

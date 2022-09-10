@@ -25,7 +25,7 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 	// Checking only reports in JSON Mode
 	opts.Globals.Format = "json"
 
-	maxTestItems = 10
+	maxTestItems := 10
 	filenameChan := make(chan paths.IndexFileInfo)
 
 	var nRoutines int = 1

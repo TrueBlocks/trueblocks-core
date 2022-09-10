@@ -5,13 +5,20 @@
 package chunksPkg
 
 import (
+	"fmt"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *ChunksOptions) showIndex(ctx *WalkContext, path string, first bool) (bool, error) {
+func showIndex(walker *index.IndexWalker, path string, first bool) (bool, error) {
+	opts, ok := walker.GetOpts().(*ChunksOptions)
+	if !ok {
+		return false, fmt.Errorf("cannot cast ChunksOptions in showIndex")
+	}
+
 	path = paths.ToIndexPath(path)
 	if !file.FileExists(path) {
 		// Weird case when bloom files exist, but index files don't
@@ -56,9 +63,13 @@ func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
 		return err
 	}
 
-	ctx := WalkContext{
-		VisitFunc: opts.showIndex,
-	}
-
-	return opts.WalkIndexFiles(&ctx, paths.Index_Bloom, blockNums)
+	walker := index.NewIndexWalker(
+		opts.Globals.Chain,
+		opts.Globals.TestMode,
+		100, /* maxTests */
+		opts,
+		showIndex,
+		nil, /* data */
+	)
+	return walker.WalkIndexFiles(paths.Index_Bloom, blockNums)
 }

@@ -55,7 +55,6 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 		return
 	}
 
-	maxTestItems = 100
 	if opts.Pin {
 		err = opts.HandlePinManifest(blockNums)
 
@@ -105,8 +104,6 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 }
 
 // EXISTING_CODE
-var maxTestItems = 100
-
 func (opts *ChunksOptions) defaultFormat(def string) string {
 	if opts.Mode == "status" ||
 		(opts.Mode == "index" && opts.Check) ||

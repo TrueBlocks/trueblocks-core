@@ -56,23 +56,20 @@ cd <configPath>
 Edit `$configPath/trueBlocks.toml`
 
 1. Remove all lines in this file that contain the word `pinGateway`
-2. Add the following values under the indicated configuration section:
+2. Add the following values under the [settings] section:
 
 ```[toml]
 [settings]
 ...
-defaultGateway = "https://[{CHAIN}].unchainedindex.io/ipfs"
-
-[chains.mainnet]
-...
-ipfsGateway = "https://ipfs.unchainedindex.io/ipfs/"
+defaultGateway = "https://ipfs.unchainedindex.io/ipfs"
 ...
 ```
 
 3. Move your Etherscan key to a new section.
-  - If a key called `[settings]etherscan_key` exists, remove it (copy its value first).
+  - If a key called `[settings]etherscan_key` exists, copy its value and then remove it.
   - Add three new configuration sections to the `trueBlocks.toml` file. Use the value you copied for Etherscan API key.
   - Note: The first section, [keys], is intentially empty.
+  - Note: The etherscan key is suggested, but optional. The pinata keys are only needed if you intend to pin the index.
 
 ```
 [keys]
@@ -85,16 +82,17 @@ apiKey = "<your Pinata api key>"       # optional
 secretKey = "<your Pinata secret key>" # optional
 jwt = "<your Pinata JWT key>"          # optional
 ```
-4. At the top of the file, change the version. If the `[version]` section does not exist, add it.
+
+4. At the top of the file, specify the current version. (If the `[version]` section does not exist, add it.)
 
 ```[toml]
 [version]
 current = "0.40.0-beta"
 ```
 
-**Note:** If you're running your own ipfs gateways and you're pinning the index yourself, adjust the `ipfsGateway` values as necessary.
+**Note:** If you're running your own ipfs gateways and pinning the index yourself, add an item called `ipfsGateway` and the appropriate keys as necessary.
 
-**Note:** The careful reader will notice that TrueBlocks now indexes and publishes the index for three chains: `mainnet`, `gnosis`, and `sepolia`. You may add your own chains. See the documentation.
+**Note:** A careful reader will notice that we now index and publish indexes for three chains: `mainnet`, `gnosis`, and `sepolia`. You may add your own chains. See the documentation.
 
 ----
 ### Run the migration command
@@ -105,15 +103,15 @@ Make sure you're using the latest branch. Do a fresh re-build, and then run:
 chifra chunks index --check
 ```
 
-If you have a previous version of the index, this will report various errors and issues.
+If your version of the index needs migration, it should report numerous errors. If not, you're finished.
 
 Next, run:
 
 ```
-chifra index --all            *# or if you're working with the minimal index just `chifra init`.*
+chifra index --all            # or just `chifra init` if you're working with a minimal installation.
 ```
 
-This may take a long time, let it run to completion. If it stops, however, you can re-start it.
+This may take a long time to run. Allow it to run to completion. If it stops, re-start it.
 
 When that completes, run:
 
@@ -121,19 +119,19 @@ When that completes, run:
 chifra chunks index --check
 ```
 
-This should now work without errors. If it doesn, you're finished.
+This should now work without errors. If it does, you're finished.
 
-If this command reports errors, re-run `chifra init --all` and the check until no errors are reported.
+If this command reports errors, continue to re-run `chifra init --all` (or `chifra init`) until no errors are reported.
 
 ## What if it doesn't work
 
-Pinata may rate-limit the `chifra init` commands. If this happens, you may repeatedly run the command again. It should recover. Alternatively, you may add the `--sleep <n>` option to slow the process down.
+The above commands may not work for various reasons. For example, Pinata may rate-limit the `chifra init` commands. If this happens, you may run the command again. Or, add the `--sleep <n>` option to slow the process down.
 
-If the above process does not work, you can use the nuclear option by deleting the entire contents of the `$indexPath`. Once you do that, running `chifra init --all` (omit the `--all` if you wish) will download the index.
+If you can't get the above process to work, you can use the "nuclear option" by deleting the entire contents of `$indexPath/finalized/` and `$indexPath/blooms/`. Once you do that, running `chifra init --all` or `chifra init` (with or without `--sleep`) should work.
 
 ## Important note
 
-If you have existing monitors (check `$cachePath/monitors`), you should remove them with `chifra monitors --delete --remove <address>` or simple delete the folder called `$cachePath/monitors`. Otherwise, they may contain incorrect or missing transactions (see the original reason for this migration above).
+If you have existing monitors (check `$cachePath/monitors`), you should remove them with `chifra monitors --delete --remove <address>` or simple delete the folder called `$cachePath/monitors`. Otherwise, those monitors may contain incorrect or missing transactions (see the original reason for this migration above).
 
 ## You're finished!
 
@@ -155,7 +153,7 @@ If you have any other problems, please contact us in our discord.
 
 ## An important note on other chains
 
-Prior to version 0.40.0-beta, we only supported Ethereum mainnet. With this update we add support for the Gnosis chain and Sepolia testnet. If you've indexed other chains, you must remove that entire index and re-build it from scratch. (Sorry!) You may do this by removing the contents of `$indexPath/<chain>` and re-running `chifra init --all --chain <chain>`. Find `$indexPath` with `chifra status --terse`. We're truly sorry for the inconvienence. You will need to remove any monitor files as well.
+Prior to version 0.40.0-beta, we only supported Ethereum mainnet. With this update we add support for the Gnosis chain and Sepolia testnet. If you've indexed other chains, you must remove that entire index and re-build it from scratch. (Sorry!) You may do this by removing the contents of `$indexPath/<chain>` and re-running `chifra scrape --chain <chain>`. Find `$indexPath` with `chifra status --terse`. We're truly sorry for the inconvienence. You will need to remove any monitor files as well.
 
 ## Previous Migration
 

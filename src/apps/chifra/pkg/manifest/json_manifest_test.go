@@ -15,7 +15,6 @@ var manifestSource = `
   "version": "2",
   "chain": "mainnet",
   "schemas": "QmUou7zX2g2tY58LP1A2GyP5RF9nbJsoxKTp299ah3svgb",
-  "databases": "QmTGdjLhWzGpGtmxVu73mzKyzva9JM4mSsZ93NceVU6Y5T",
   "chunks": [
     {
       "fileName": "000000000-000000000",
