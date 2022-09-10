@@ -127,6 +127,8 @@ If this command reports errors, re-run `chifra init --all` and the check until n
 
 ## What if it doesn't work
 
+Pinata may rate-limit the `chifra init` commands. If this happens, you may repeatedly run the command again. It should recover. Alternatively, you may add the `--sleep <n>` option to slow the process down.
+
 If the above process does not work, you can use the nuclear option by deleting the entire contents of the `$indexPath`. Once you do that, running `chifra init --all` (omit the `--all` if you wish) will download the index.
 
 ## Important note
