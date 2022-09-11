@@ -1,7 +1,6 @@
 package chunksPkg
 
 import (
-	"fmt"
 	"strings"
 	"time"
 
@@ -15,9 +14,17 @@ import (
 )
 
 func pinChunk(walker *index.IndexWalker, path string, first bool) (bool, error) {
-	opts, ok := walker.GetOpts().(*ChunksOptions)
-	if !ok {
-		return false, fmt.Errorf("cannot cast ChunksOptions in pinChunk")
+	var castOk bool
+	var opts *ChunksOptions
+	if opts, castOk = walker.GetOpts().(*ChunksOptions); !castOk {
+		logger.Fatal("should not happen ==> cannot cast ChunksOptions in pinChunk")
+		return false, nil
+	}
+
+	var man *types.SimpleManifest
+	if man, castOk = walker.GetData().(*types.SimpleManifest); !castOk {
+		logger.Fatal("should not happen ==> cannot cast manifest.Manifest in cleanIndex")
+		return false, nil
 	}
 
 	result, err := pinning.PinChunk(opts.Globals.Chain, path, opts.Remote)
@@ -25,19 +32,14 @@ func pinChunk(walker *index.IndexWalker, path string, first bool) (bool, error) 
 		return false, err
 	}
 
-	if walker.Data() != nil {
-		man, castOk := walker.Data().(*types.SimpleManifest)
-		if !castOk {
-			return true, fmt.Errorf("could not cast manifest")
-		}
-		if pinning.LocalDaemonRunning() {
-			man.Chunks = append(man.Chunks, result.Local)
-			logger.Log(logger.Progress, "Pinning: ", result.Local, spaces)
-		} else {
-			man.Chunks = append(man.Chunks, result.Remote)
-			logger.Log(logger.Progress, "Pinning: ", result.Remote, spaces)
-		}
+	if pinning.LocalDaemonRunning() {
+		man.Chunks = append(man.Chunks, result.Local)
+		logger.Log(logger.Progress, "Pinning: ", result.Local, spaces)
+	} else {
+		man.Chunks = append(man.Chunks, result.Remote)
+		logger.Log(logger.Progress, "Pinning: ", result.Remote, spaces)
 	}
+
 	if opts.Globals.Verbose {
 		logger.Log(logger.Progress, "Pinning", path)
 	}

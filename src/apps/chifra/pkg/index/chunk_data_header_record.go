@@ -3,7 +3,6 @@ package index
 import (
 	"encoding/binary"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -48,7 +47,7 @@ func readIndexHeader(fl *os.File) (header IndexHeaderRecord, err error) {
 	return
 }
 
-func ReadChunkHeader(chain, fileName string, checkHash bool) (header IndexHeaderRecord, err error) {
+func ReadChunkHeader(fileName string, checkHash bool) (header IndexHeaderRecord, err error) {
 	fileName = paths.ToIndexPath(fileName)
 	ff, err := os.OpenFile(fileName, os.O_RDONLY, 0)
 	if err != nil {
@@ -121,23 +120,4 @@ func WriteChunkHeaderHash(chain, fileName string, headerHash common.Hash) ( /* c
 	}
 
 	return false, err
-}
-
-func HasValidIndexHeader(chain, fileName string) (bool, error) {
-	header, err := ReadChunkHeader(chain, fileName, true)
-	if err != nil {
-		return false, err
-	}
-
-	rng := paths.RangeFromFilename(fileName)
-	if header.Magic != file.MagicNumber {
-		msg := fmt.Sprintf("%s: Magic number expected (0x%x) got (0x%x)", rng, header.Magic, file.MagicNumber)
-		return false, errors.New(msg)
-
-	} else if header.Hash.Hex() != unchained.HeaderMagicHash {
-		msg := fmt.Sprintf("%s: Header hash expected (%s) got (%s)", rng, header.Hash.Hex(), unchained.HeaderMagicHash)
-		return false, errors.New(msg)
-	}
-
-	return true, nil
 }

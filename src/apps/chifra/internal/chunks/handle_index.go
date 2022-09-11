@@ -5,18 +5,19 @@
 package chunksPkg
 
 import (
-	"fmt"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 func showIndex(walker *index.IndexWalker, path string, first bool) (bool, error) {
-	opts, ok := walker.GetOpts().(*ChunksOptions)
-	if !ok {
-		return false, fmt.Errorf("cannot cast ChunksOptions in showIndex")
+	var castOk bool
+	var opts *ChunksOptions
+	if opts, castOk = walker.GetOpts().(*ChunksOptions); !castOk {
+		logger.Fatal("should not happen ==> cannot cast ChunksOptions in showIndex")
+		return false, nil
 	}
 
 	path = paths.ToIndexPath(path)
@@ -25,7 +26,7 @@ func showIndex(walker *index.IndexWalker, path string, first bool) (bool, error)
 		return true, nil
 	}
 
-	header, err := index.ReadChunkHeader(opts.Globals.Chain, path, true)
+	header, err := index.ReadChunkHeader(path, true)
 	if err != nil {
 		return false, err
 	}

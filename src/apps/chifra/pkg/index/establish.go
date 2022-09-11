@@ -5,6 +5,7 @@ package index
 // be found in the LICENSE file.
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -18,6 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
@@ -117,7 +119,7 @@ func CheckBackLevelIndex(chain string) {
 	if !file.FileExists(fileName) {
 		return
 	}
-	ok, err := HasValidIndexHeader(chain, fileName)
+	ok, err := HasValidIndexHeader(fileName)
 	if ok && err == nil {
 		return
 	}
@@ -144,3 +146,23 @@ const BackLevelVersion string = `
 	  [{VERSION}]
 
 	`
+
+// TODO: BOGUS - I CAN USE THE HEADER VALIDATOR IN VALIDATE INSTEAD
+func HasValidIndexHeader(fileName string) (bool, error) {
+	header, err := ReadChunkHeader(fileName, true)
+	if err != nil {
+		return false, err
+	}
+
+	rng := paths.RangeFromFilename(fileName)
+	if header.Magic != file.MagicNumber {
+		msg := fmt.Sprintf("%s: Magic number expected (0x%x) got (0x%x)", rng, header.Magic, file.MagicNumber)
+		return false, errors.New(msg)
+
+	} else if header.Hash.Hex() != unchained.HeaderMagicHash {
+		msg := fmt.Sprintf("%s: Header hash expected (%s) got (%s)", rng, header.Hash.Hex(), unchained.HeaderMagicHash)
+		return false, errors.New(msg)
+	}
+
+	return true, nil
+}

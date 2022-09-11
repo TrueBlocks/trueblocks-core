@@ -14,9 +14,11 @@ import (
 )
 
 func truncateIndex(walker *index.IndexWalker, path string, first bool) (bool, error) {
-	opts, ok := walker.GetOpts().(*ChunksOptions)
-	if !ok {
-		return false, fmt.Errorf("cannot cast ChunksOptions in truncateIndex")
+	var castOk bool
+	var opts *ChunksOptions
+	if opts, castOk = walker.GetOpts().(*ChunksOptions); !castOk {
+		logger.Fatal("should not happen ==> cannot cast ChunksOptions in truncateIndex")
+		return false, nil
 	}
 	if strings.HasSuffix(path, ".gz") {
 		os.Remove(path)

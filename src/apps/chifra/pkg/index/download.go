@@ -81,10 +81,13 @@ func getDownloadWorker(chain string, workerArgs downloadWorkerArguments, chunkTy
 				hash = chunk.IndexHash
 			}
 
+			// TODO: BOGUS - REMOVE THIS REPLACE WITH hash.String()
+			msg := fmt.Sprintf("%v", chunk)
+			msg = strings.Replace(msg, hash.String(), colors.BrightCyan+hash.String()+colors.Off, -1)
 			progressChannel <- &progress.Progress{
 				Payload: &chunk,
 				Event:   progress.Start,
-				Message: hash.String(),
+				Message: msg + "\n",
 			}
 
 			download, err := pinning.FetchFromGateway(workerArgs.ctx, workerArgs.gatewayUrl, hash.String())

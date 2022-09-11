@@ -37,7 +37,7 @@ func (walker *IndexWalker) MaxTests() int {
 	return walker.maxTests
 }
 
-func (walker *IndexWalker) Data() interface{} {
+func (walker *IndexWalker) GetData() interface{} {
 	return walker.data
 }
 

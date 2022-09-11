@@ -19,6 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
@@ -52,8 +53,8 @@ type ChunkRecord struct {
 	Range     string         `json:"range"`
 	BloomHash types.IpfsHash `json:"bloomHash"`
 	BloomSize int64          `json:"bloomSize"`
-	IndexHash types.IpfsHash `json:"indexHash"`
-	IndexSize int64          `json:"indexSize"`
+	IndexHash types.IpfsHash `json:"indexHash,omitempty"`
+	IndexSize int64          `json:"indexSize,omitempty"`
 }
 
 func (ch *ChunkRecord) GetFullPath(chain string, cacheType paths.CacheType) string {
@@ -67,15 +68,69 @@ func (ch *ChunkRecord) GetFullPath(chain string, cacheType paths.CacheType) stri
 	return ""
 }
 
-func (ch *ChunkRecord) IsExpectedSize(path string, chunkType paths.CacheType) bool {
-	switch chunkType {
-	case paths.Index_Bloom:
-		return file.FileExists(path) && file.FileSize(path) == ch.BloomSize
-	case paths.Index_Final:
-		return file.FileExists(path) && file.FileSize(path) == ch.IndexSize
+// TODO: BOGUS - CAN THIS BE MADE PART OF VALIDATE?
+var ErrBloomMissing = errors.New("the bloom file is missing")
+var ErrIndexMissing = errors.New("the index file is missing")
+var ErrBloomWrongSize = errors.New("the bloom file is wrong size")
+var ErrIndexWrongSize = errors.New("the index file is wrong size")
+
+func (ch *ChunkRecord) CheckExpectedSize(path string, checkIndex bool) (bool, error) {
+	if path != paths.ToBloomPath(path) {
+		logger.Fatal("should not happen ==> only process bloom folder paths in CheckExpectedSize")
 	}
-	logger.Fatal("unexpected chunkType in IsExpectedSize")
-	return false
+
+	// bloom not existing requires a download
+	if !file.FileExists(path) {
+		return false, ErrBloomMissing
+	}
+
+	// bloom the wrong size requires a download
+	if file.FileSize(path) != ch.BloomSize {
+		return false, ErrBloomWrongSize
+	}
+
+	// If we're done, return
+	if !checkIndex {
+		return true, nil
+	}
+
+	indexPath := paths.ToIndexPath(path)
+
+	// if not, then if the index does not exist it requires a download
+	if !file.FileExists(indexPath) {
+		return false, ErrIndexMissing
+	}
+
+	// or if it exists but is the wrong size
+	if file.FileSize(indexPath) != ch.IndexSize {
+		return false, ErrIndexWrongSize
+	}
+
+	return true, nil
+}
+
+func (ch *ChunkRecord) CheckValidHeader(path string, checkIndex bool) (bool, error) {
+	if path != paths.ToBloomPath(path) {
+		logger.Fatal("should not happen ==> only process bloom folder paths in CheckExpectedSize")
+	}
+
+	headerOk, err := validate.HasValidHeader(path)
+	if !headerOk {
+		return false, err
+	}
+
+	// If we're done, return
+	if !checkIndex {
+		return true, nil
+	}
+
+	indexPath := paths.ToIndexPath(path)
+	headerOk, err = validate.HasValidHeader(indexPath)
+	if !headerOk {
+		return false, err
+	}
+
+	return true, nil
 }
 
 type Source uint
@@ -90,7 +145,13 @@ var ErrManifestNotFound = errors.New("could not find manifest.json or it was emp
 // ReadManifest reads the manifest from either the local cache or the Unchained Index smart contract
 func ReadManifest(chain string, source Source) (*Manifest, error) {
 	if source == FromContract {
-		return fromRemote(chain)
+		man, err := fromRemote(chain)
+		if man != nil {
+			// TODO: BOGUS - REMOVE ME - SIZE
+			// man.Chunks = man.Chunks[:9]
+			man.LoadChunkMap()
+		}
+		return man, err
 	}
 
 	manifestPath := filepath.Join(config.GetPathToChainConfig(chain), "manifest.json")
@@ -99,17 +160,25 @@ func ReadManifest(chain string, source Source) (*Manifest, error) {
 		return nil, ErrManifestNotFound
 	}
 
-	reader := bytes.NewReader([]byte(contents))
 	man := &Manifest{}
+	reader := bytes.NewReader([]byte(contents))
 	if err := json.NewDecoder(reader).Decode(man); err != nil {
+		// TODO: BOGUS - REMOVE ME - SIZE
+		// man.Chunks = man.Chunks[:9]
 		return man, err
 	}
-	man.ChunkMap = make(map[string]*ChunkRecord)
-	for i := range man.Chunks {
-		man.ChunkMap[man.Chunks[i].Range] = &man.Chunks[i]
-	}
 
+	// TODO: BOGUS - REMOVE ME - SIZE
+	// man.Chunks = man.Chunks[:9]
+	man.LoadChunkMap()
 	return man, nil
+}
+
+func (m *Manifest) LoadChunkMap() {
+	m.ChunkMap = make(map[string]*ChunkRecord)
+	for i := range m.Chunks {
+		m.ChunkMap[m.Chunks[i].Range] = &m.Chunks[i]
+	}
 }
 
 // TODO: Protect against overwriting files on disc

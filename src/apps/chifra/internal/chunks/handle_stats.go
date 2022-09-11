@@ -6,20 +6,24 @@ package chunksPkg
 
 import (
 	"fmt"
+	"os"
 	"strconv"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 func showFinalizedStats(walker *index.IndexWalker, path string, first bool) (bool, error) {
-	opts, ok := walker.GetOpts().(*ChunksOptions)
-	if !ok {
-		return false, fmt.Errorf("cannot cast ChunksOptions in showFinalizedStats")
+	var castOk bool
+	var opts *ChunksOptions
+	if opts, castOk = walker.GetOpts().(*ChunksOptions); !castOk {
+		logger.Fatal("should not happen ==> cannot cast ChunksOptions in showFinalizedStats")
+		return false, nil
 	}
 
 	// TODO: Fix export without arrays
@@ -29,9 +33,11 @@ func showFinalizedStats(walker *index.IndexWalker, path string, first bool) (boo
 }
 
 func showStagingStats(walker *index.IndexWalker, path string, first bool) (bool, error) {
-	opts, ok := walker.GetOpts().(*ChunksOptions)
-	if !ok {
-		return false, fmt.Errorf("cannot cast ChunksOptions in showStagingStats")
+	var castOk bool
+	var opts *ChunksOptions
+	if opts, castOk = walker.GetOpts().(*ChunksOptions); !castOk {
+		logger.Fatal("should not happen ==> cannot cast ChunksOptions in showStagingStats")
+		return false, nil
 	}
 
 	lines := file.AsciiFileToLines(path)
@@ -85,7 +91,7 @@ func finishStats(stats *types.ReportChunks) types.ReportChunks {
 
 func NewChunkStats(path string) types.ReportChunks {
 	chunk, err := index.NewChunk(path)
-	if err != nil {
+	if err != nil && !os.IsNotExist(err) {
 		fmt.Println(err)
 	}
 	defer chunk.Close()

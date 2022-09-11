@@ -15,6 +15,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/ethereum/go-ethereum/common"
 )
 
@@ -82,8 +83,8 @@ func NewChunkBloom(path string) (bl ChunkBloom, err error) {
 		return
 	}
 
-	bl.File.Seek(0, io.SeekStart)                  // already true, but can't hurt
-	if _, err = bl.ReadBloomHeader(); err != nil { // Note that it may not find a header, but it leaves the file pointer pointing to the count
+	bl.File.Seek(0, io.SeekStart)               // already true, but can't hurt
+	if err = bl.ReadBloomHeader(); err != nil { // Note that it may not find a header, but it leaves the file pointer pointing to the count
 		return
 	}
 
@@ -120,8 +121,8 @@ func (bl *ChunkBloom) ReadBloom(fileName string) (err error) {
 		bl.File = nil
 	}()
 
-	bl.File.Seek(0, io.SeekStart)                  // already true, but can't hurt
-	if _, err = bl.ReadBloomHeader(); err != nil { // Note that it may not find a header, but it leaves the file pointer pointing to the count
+	bl.File.Seek(0, io.SeekStart)               // already true, but can't hurt
+	if err = bl.ReadBloomHeader(); err != nil { // Note that it may not find a header, but it leaves the file pointer pointing to the count
 		return err
 	}
 
@@ -144,42 +145,31 @@ func (bl *ChunkBloom) ReadBloom(fileName string) (err error) {
 	return nil
 }
 
-func (bl *ChunkBloom) ReadBloomHeader() (bool, error) {
+var ErrInvalidBloomMagic = errors.New("invalid magic number in bloom header")
+var ErrInvalidBloomHash = errors.New("invalid hash in bloom header")
+
+func (bl *ChunkBloom) ReadBloomHeader() error {
 	bl.HeaderSize = 0 // already true, but it makes it explicit
 	err := binary.Read(bl.File, binary.LittleEndian, &bl.Header)
 	if err != nil {
 		bl.Header = BloomHeader{}
 		bl.File.Seek(0, io.SeekStart)
-		return false, err
+		return err
 	}
+
 	if bl.Header.Magic != file.SmallMagicNumber {
 		// This is an unversioned bloom filter, set back to start of file
 		bl.Header = BloomHeader{}
 		bl.File.Seek(0, io.SeekStart)
-		return false, nil
+		return ErrInvalidBloomMagic
 	}
 
 	bl.HeaderSize = int64(unsafe.Sizeof(bl.Header))
-	return true, nil
-}
-
-func HasValidBloomHeader(chain, fileName string) (bool, error) {
-	bl, err := NewChunkBloom(fileName)
-	if err != nil {
-		return false, err
+	if bl.Header.Hash.Hex() != unchained.HeaderMagicHash {
+		return ErrInvalidBloomHash
 	}
 
-	bl.File, err = os.OpenFile(fileName, os.O_RDONLY, 0644)
-	if err != nil {
-		return false, err
-	}
-	defer func() {
-		bl.File.Close()
-	}()
-
-	bl.File.Seek(0, io.SeekStart) // already true, but can't hurt
-	versionOk, err := bl.ReadBloomHeader()
-	return versionOk, err
+	return nil
 }
 
 // AddToSet adds an address to a bloom filter

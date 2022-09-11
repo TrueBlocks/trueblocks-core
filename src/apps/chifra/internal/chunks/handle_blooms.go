@@ -10,14 +10,17 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 func showBloom(walker *index.IndexWalker, path string, first bool) (bool, error) {
-	opts, ok := walker.GetOpts().(*ChunksOptions)
-	if !ok {
-		return false, fmt.Errorf("cannot cast ChunksOptions in showAppearances")
+	var castOk bool
+	var opts *ChunksOptions
+	if opts, castOk = walker.GetOpts().(*ChunksOptions); !castOk {
+		logger.Fatal("should not happen ==> cannot cast ChunksOptions in showBloom")
+		return false, nil
 	}
 
 	var bl bloom.ChunkBloom

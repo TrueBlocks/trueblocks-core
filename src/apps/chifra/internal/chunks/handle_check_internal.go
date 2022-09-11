@@ -27,7 +27,7 @@ func (opts *ChunksOptions) CheckInternal(fileNames []string, blockNums []uint64,
 func (opts *ChunksOptions) checkIndexChunkInternal(testId int, fileName string, report *types.ReportCheck) {
 	report.VisitedCnt++
 	report.CheckedCnt++
-	header, err := index.ReadChunkHeader(opts.Globals.Chain, fileName, true)
+	header, err := index.ReadChunkHeader(fileName, true)
 	if err != nil {
 		report.MsgStrings = append(report.MsgStrings, fmt.Sprint(err))
 
@@ -51,13 +51,14 @@ func (opts *ChunksOptions) checkIndexChunkInternal(testId int, fileName string, 
 	}
 }
 
+// TODO: BOGUS - COMPLETE THIS
 // func (opts *ChunksOptions) checkBloomInternal(testId int, fileName string, report *types.ReportCheck) {
 // 	report.VisitedCnt++
 // 	report.CheckedCnt++
 // 	var bl bloom.ChunkBloom
 // 	bPath := paths.ToBloomPath(fileName)
 // 	bl.ReadBloom(bPath)
-// 	versioned, err := bl.ReadBloomHeader()
+// 	versioned, err := bl.ReadBloom Header()
 // 	if err != nil {
 // 		report.MsgStrings = append(report.MsgStrings, fmt.Sprint(err))
 // 	} else if !versioned {
@@ -66,7 +67,6 @@ func (opts *ChunksOptions) checkIndexChunkInternal(testId int, fileName string, 
 // 		if !opts.Globals.TestMode {
 // 			testId = 0
 // 		}
-
 // 		if bl.Header.Magic != file.SmallMagicNumber {
 // 			msg := fmt.Sprintf("%s: Magic number expected (0x%x) got (0x%x)", rng, bl.Header.Magic, file.SmallMagicNumber)
 // 			report.MsgStrings = append(report.MsgStrings, msg)
