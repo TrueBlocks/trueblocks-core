@@ -170,7 +170,7 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord
 		case progress.Start:
 			nStarted12++
 			if nProcessed12 < 20 { // we don't need too many of these
-				logger.Log(logger.Info, "Started download ", nStarted12, " of ", nTotal, " ", event.Message, " to ", rng, spaces)
+				logger.Log(logger.Info, "Started download ", nStarted12, " of ", nTotal, " ", event.Message)
 			}
 			if nStarted12 == poolSize*3 {
 				msg := fmt.Sprintf("%sPlease wait...%s", colors.BrightWhite, colors.Off)
