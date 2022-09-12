@@ -38,18 +38,18 @@ func (opts *ScrapeOptions) HandleScrapeBlaze(progress *rpcClient.MetaData, blaze
 		}
 	}
 
-	blazeOpts.WriteTimestamps(blazeOpts.Chain)
+	WriteTimestamps(blazeOpts.Chain, blazeOpts.TsArray, blazeOpts.StartBlock+blazeOpts.BlockCount)
 
 	return nil
 }
 
 // TODO: Protect against overwriting files on disc
-func (opts *BlazeOptions) WriteTimestamps(chain string) error {
-	sort.Slice(opts.TsArray, func(i, j int) bool {
-		return opts.TsArray[i].Bn < opts.TsArray[j].Bn
+func WriteTimestamps(chain string, tsArray []tslib.Timestamp, endPoint uint64) error {
+	sort.Slice(tsArray, func(i, j int) bool {
+		return tsArray[i].Bn < tsArray[j].Bn
 	})
 
-	// Assume that the existing timestamps file always contains valid timestamps
+	// Assume that the existing timestamps file always contains valid timestamps in a valid order so we can only append
 	tsPath := config.GetPathToIndex(chain) + "ts.bin"
 	fp, err := os.OpenFile(tsPath, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 	if err != nil {
@@ -66,19 +66,18 @@ func (opts *BlazeOptions) WriteTimestamps(chain string) error {
 	nTs, _ := tslib.NTimestamps(chain)
 
 	cnt := 0
-	for bn := nTs; bn < opts.StartBlock+opts.BlockCount; bn++ {
+	for bn := nTs; bn < endPoint; bn++ {
 		// Append to the timestamps file all the new timestamps but as we do that make sure we're
 		// not skipping anything at the front, in the middle, or at the end of the list
-
 		ts := tslib.Timestamp{}
-		if cnt >= len(opts.TsArray) {
+		if cnt >= len(tsArray) {
 			ts = tslib.Timestamp{
 				Bn: uint32(bn),
 				Ts: uint32(rpcClient.GetBlockTimestamp(config.GetRpcProvider(chain), bn)),
 			}
 		} else {
-			ts = opts.TsArray[cnt]
-			if opts.TsArray[cnt].Bn != uint32(bn) {
+			ts = tsArray[cnt]
+			if tsArray[cnt].Bn != uint32(bn) {
 				ts = tslib.Timestamp{
 					Bn: uint32(bn),
 					Ts: uint32(rpcClient.GetBlockTimestamp(config.GetRpcProvider(chain), bn)),
@@ -88,7 +87,7 @@ func (opts *BlazeOptions) WriteTimestamps(chain string) error {
 		}
 
 		if (bn % 13) == 0 {
-			msg := fmt.Sprintf("Checking or updating timestamps %-04d of %-04d (%d remaining)%s", bn, opts.StartBlock+opts.BlockCount, (opts.StartBlock+opts.BlockCount)-bn, spaces)
+			msg := fmt.Sprintf("Checking or updating timestamps %-04d of %-04d (%d remaining)%s", bn, endPoint, endPoint-bn, spaces)
 			logger.Log(logger.Progress, msg)
 		}
 

@@ -14,6 +14,11 @@ func (opts *WhenOptions) HandleTimestampsRepair() error {
 	if err := tslib.Freshen(opts.Globals.Chain, opts.Repair); err != nil {
 		return err
 	}
+	if opts.Repair == 1 { // weird special case because because I don't know how to get Cobra to handle non-zero defaults
+		if err := tslib.Freshen(opts.Globals.Chain, 0); err != nil {
+			return err
+		}
+	}
 
 	ts, _ := tslib.FromBnToTs(opts.Globals.Chain, opts.Repair)
 	logger.Log(logger.Info, "The timestamp at block", opts.Repair, "was reset to", ts, "from on chain.")

@@ -35,7 +35,7 @@ func (opts *ChunksOptions) CheckSizes(fileNames []string, blockNums []uint64, ca
 		indexFn := paths.ToIndexPath(fileName)
 		rng := paths.RangeFromFilename(indexFn)
 		indexSize := file.FileSize(indexFn)
-		if indexSize != indexSizeMap[rng] {
+		if file.FileExists(indexFn) && indexSize != indexSizeMap[rng] {
 			report.MsgStrings = append(report.MsgStrings, fmt.Sprintf("Size of index %s (%d) not as expected in manifest (%d)", rng, indexSize, indexSizeMap[rng]))
 		} else {
 			bloomFn := paths.ToBloomPath(fileName)

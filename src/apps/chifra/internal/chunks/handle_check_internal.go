@@ -6,6 +6,7 @@ package chunksPkg
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -29,7 +30,12 @@ func (opts *ChunksOptions) checkIndexChunkInternal(testId int, fileName string, 
 	report.CheckedCnt++
 	header, err := index.ReadChunkHeader(fileName, true)
 	if err != nil {
-		report.MsgStrings = append(report.MsgStrings, fmt.Sprint(err))
+		if !strings.Contains(err.Error(), "no such file or directory") {
+			report.MsgStrings = append(report.MsgStrings, fmt.Sprint(err))
+		} else {
+			// This is the case where the user did not download all the index chunks, only blooms
+			report.PassedCnt++
+		}
 
 	} else {
 		rng := paths.RangeFromFilename(fileName)

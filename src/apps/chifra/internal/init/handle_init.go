@@ -12,6 +12,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
@@ -46,6 +47,19 @@ func (opts *InitOptions) HandleInit() error {
 
 	// Get the list of things we need to download
 	chunksToDownload, nCorrections := opts.prepareDownloadList(chain, remoteManifest, paths.Index_Bloom, []uint64{})
+	if opts.Globals.Verbose {
+		// TODO: BOGUS - WHAT?
+		str := ""
+		for _, chunk := range chunksToDownload {
+			if chunk.BloomHash != "" {
+				str += fmt.Sprintln("Downloading bloom", chunk.Range)
+			}
+			if chunk.IndexHash != "" {
+				str += fmt.Sprintln("Downloading index", chunk.Range)
+			}
+		}
+		file.AppendToAsciiFile("./one/download", str)
+	}
 
 	// Tell the user what we're doing
 	logger.Log(logger.InfoC, "Unchained Index:", unchained.Address_V2)
@@ -64,7 +78,7 @@ func (opts *InitOptions) HandleInit() error {
 	defer close(indexDoneChannel)
 
 	getChunks := func(chunkType paths.CacheType) {
-		failedChunks, cancelled := opts.downloadAndReportProgress(chunksToDownload, chunkType)
+		failedChunks, cancelled := opts.downloadAndReportProgress(chunksToDownload, chunkType, nCorrections)
 		if cancelled {
 			// The user hit the control+c, we don't want to continue...
 			return
@@ -75,7 +89,7 @@ func (opts *InitOptions) HandleInit() error {
 			// ...if there were failed downloads, try them again (3 times if necessary)...
 			retry(failedChunks, 3, func(items []manifest.ChunkRecord) ([]manifest.ChunkRecord, bool) {
 				logger.Log(logger.Info, "Retrying", len(items), "bloom(s)")
-				return opts.downloadAndReportProgress(items, chunkType)
+				return opts.downloadAndReportProgress(items, chunkType, nCorrections)
 			})
 		}
 	}
@@ -86,16 +100,17 @@ func (opts *InitOptions) HandleInit() error {
 		bloomsDoneChannel <- true
 	}()
 
-	if opts.All {
-		// Set up another go routine to download the index chunks if the user told us to...
-		go func() {
-			getChunks(paths.Index_Final)
-			indexDoneChannel <- true
-		}()
+	// TODO: BOGUS - DOES THERE NEED TO BE TWO OF THESE?
+	// if opts.All {
+	// Set up another go routine to download the index chunks if the user told us to...
+	go func() {
+		getChunks(paths.Index_Final)
+		indexDoneChannel <- true
+	}()
 
-		// Wait for the index to download. This will block until getChunks for index chunks returns
-		<-indexDoneChannel
-	}
+	// Wait for the index to download. This will block until getChunks for index chunks returns
+	<-indexDoneChannel
+	// }
 
 	// Wait for the bloom filters to download. This will block until getChunks for blooms returns
 	<-bloomsDoneChannel
@@ -104,14 +119,14 @@ func (opts *InitOptions) HandleInit() error {
 }
 
 var m sync.Mutex
-var nTotal int
+
 // TODO: BOGUS - WE CAN PROBABLY REMOVE THESE AND MAKE THEM LOCAL
 var nProcessed12 int
 var nStarted12 int
 var nUpdated12 int
 
 // downloadAndReportProgress Downloads the chunks and reports progress to the progressChannel
-func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord, chunkType paths.CacheType) ([]manifest.ChunkRecord, bool) {
+func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord, chunkType paths.CacheType, nTotal int) ([]manifest.ChunkRecord, bool) {
 	failed := []manifest.ChunkRecord{}
 	cancelled := false
 
@@ -119,7 +134,7 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord
 	progressChannel := progress.MakeChan()
 	defer close(progressChannel)
 
-	// TODO: This should be configurable - If we make this too big, the pinning service chokes
+	// TODO: BOGUS This should be configurable - If we make this too big, the pinning service chokes
 	poolSize := utils.Min(10, (runtime.NumCPU()*3)/2)
 
 	// Start the go routine that downloads the chunks. This sends messages through the progressChannel
@@ -138,7 +153,7 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord
 		}
 
 		if event.Event == progress.AllDone {
-			msg := fmt.Sprintf("Completed downloading %s files.", chunkType)
+			msg := fmt.Sprintf("%sCompleted initializing %s files.%s", colors.BrightWhite, chunkType, colors.Off)
 			logger.Log(logger.Info, msg, strings.Repeat(" ", 60))
 			break
 		}
@@ -155,7 +170,11 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord
 		case progress.Start:
 			nStarted12++
 			if nProcessed12 < 20 { // we don't need too many of these
-				logger.Log(logger.Progress, "Started download ", nStarted12, " of ", nTotal, " ", event.Message, " to ", rng, spaces)
+				logger.Log(logger.Info, "Started download ", nStarted12, " of ", nTotal, " ", event.Message, " to ", rng, spaces)
+			}
+			if nStarted12 == poolSize*3 {
+				msg := fmt.Sprintf("%sPlease wait...%s", colors.BrightWhite, colors.Off)
+				logger.Log(logger.Info, msg)
 			}
 
 		case progress.Update:
@@ -171,10 +190,6 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord
 			}
 			msg := fmt.Sprintf("Unchained %s%s%s file for range %s%s%s (% 4d of %4d)", col, event.Message, colors.Off, col, rng, colors.Off, nProcessed12, nTotal)
 			logger.Log(logger.Info, msg, spaces)
-
-		case progress.Statistics:
-			n, _ := event.Payload.(int)
-			nTotal += n
 
 		default:
 			logger.Log(logger.Info, event.Message, rng, spaces)

@@ -8,6 +8,7 @@ import (
 	"os"
 	"path/filepath"
 	"sort"
+	"strconv"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -19,7 +20,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
@@ -68,71 +68,6 @@ func (ch *ChunkRecord) GetFullPath(chain string, cacheType paths.CacheType) stri
 	return ""
 }
 
-// TODO: BOGUS - CAN THIS BE MADE PART OF VALIDATE?
-var ErrBloomMissing = errors.New("the bloom file is missing")
-var ErrIndexMissing = errors.New("the index file is missing")
-var ErrBloomWrongSize = errors.New("the bloom file is wrong size")
-var ErrIndexWrongSize = errors.New("the index file is wrong size")
-
-func (ch *ChunkRecord) CheckExpectedSize(path string, checkIndex bool) (bool, error) {
-	if path != paths.ToBloomPath(path) {
-		logger.Fatal("should not happen ==> only process bloom folder paths in CheckExpectedSize")
-	}
-
-	// bloom not existing requires a download
-	if !file.FileExists(path) {
-		return false, ErrBloomMissing
-	}
-
-	// bloom the wrong size requires a download
-	if file.FileSize(path) != ch.BloomSize {
-		return false, ErrBloomWrongSize
-	}
-
-	// If we're done, return
-	if !checkIndex {
-		return true, nil
-	}
-
-	indexPath := paths.ToIndexPath(path)
-
-	// if not, then if the index does not exist it requires a download
-	if !file.FileExists(indexPath) {
-		return false, ErrIndexMissing
-	}
-
-	// or if it exists but is the wrong size
-	if file.FileSize(indexPath) != ch.IndexSize {
-		return false, ErrIndexWrongSize
-	}
-
-	return true, nil
-}
-
-func (ch *ChunkRecord) CheckValidHeader(path string, checkIndex bool) (bool, error) {
-	if path != paths.ToBloomPath(path) {
-		logger.Fatal("should not happen ==> only process bloom folder paths in CheckExpectedSize")
-	}
-
-	headerOk, err := validate.HasValidHeader(path)
-	if !headerOk {
-		return false, err
-	}
-
-	// If we're done, return
-	if !checkIndex {
-		return true, nil
-	}
-
-	indexPath := paths.ToIndexPath(path)
-	headerOk, err = validate.HasValidHeader(indexPath)
-	if !headerOk {
-		return false, err
-	}
-
-	return true, nil
-}
-
 type Source uint
 
 const (
@@ -142,13 +77,22 @@ const (
 
 var ErrManifestNotFound = errors.New("could not find manifest.json or it was empty")
 
+// TODO: BOGUS - REMOVE THIS
+func Clip(chunks []ChunkRecord) []ChunkRecord {
+	if os.Getenv("CLIP") == "" {
+		return chunks
+	}
+	cnt, _ := strconv.ParseInt(os.Getenv("CLIP"), 10, 64)
+	return chunks[:cnt]
+}
+
 // ReadManifest reads the manifest from either the local cache or the Unchained Index smart contract
 func ReadManifest(chain string, source Source) (*Manifest, error) {
 	if source == FromContract {
 		man, err := fromRemote(chain)
 		if man != nil {
 			// TODO: BOGUS - REMOVE ME - SIZE
-			// man.Chunks = man.Chunks[:9]
+			man.Chunks = Clip(man.Chunks)
 			man.LoadChunkMap()
 		}
 		return man, err
@@ -164,12 +108,12 @@ func ReadManifest(chain string, source Source) (*Manifest, error) {
 	reader := bytes.NewReader([]byte(contents))
 	if err := json.NewDecoder(reader).Decode(man); err != nil {
 		// TODO: BOGUS - REMOVE ME - SIZE
-		// man.Chunks = man.Chunks[:9]
+		man.Chunks = Clip(man.Chunks)
 		return man, err
 	}
 
 	// TODO: BOGUS - REMOVE ME - SIZE
-	// man.Chunks = man.Chunks[:9]
+	man.Chunks = Clip(man.Chunks)
 	man.LoadChunkMap()
 	return man, nil
 }

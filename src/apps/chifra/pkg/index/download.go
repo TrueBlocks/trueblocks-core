@@ -80,49 +80,51 @@ func getDownloadWorker(chain string, workerArgs downloadWorkerArguments, chunkTy
 			if chunkType == paths.Index_Final {
 				hash = chunk.IndexHash
 			}
+			if hash != "" {
 
-			// TODO: BOGUS - REMOVE THIS REPLACE WITH hash.String()
-			msg := fmt.Sprintf("%v", chunk)
-			msg = strings.Replace(msg, hash.String(), colors.BrightCyan+hash.String()+colors.Off, -1)
-			progressChannel <- &progress.Progress{
-				Payload: &chunk,
-				Event:   progress.Start,
-				Message: msg + "\n",
-			}
-
-			download, err := pinning.FetchFromGateway(workerArgs.ctx, workerArgs.gatewayUrl, hash.String())
-			time.Sleep(250 * time.Millisecond) // we need to slow things down, otherwise the endpoint rate limits
-			if errors.Is(workerArgs.ctx.Err(), context.Canceled) {
-				// The request to fetch the chunk was cancelled, because user has
-				// pressed Ctrl-C
-				return
-			}
-
-			if workerArgs.ctx.Err() != nil {
-				chunkPath := paths.NewCachePath(chain, paths.Index_Final)
-				// TODO: BOGUS - THIS IS PROBABLY WRONG
-				RemoveLocalFile(paths.ToIndexPath(chunkPath.GetFullPath(chunk.Range)), "failed download", progressChannel)
-				RemoveLocalFile(paths.ToBloomPath(chunkPath.GetFullPath(chunk.Range)), "failed download", progressChannel)
+				// TODO: BOGUS - REMOVE THIS REPLACE WITH hash.String()
+				msg := fmt.Sprintf("%v", chunk)
+				msg = strings.Replace(msg, hash.String(), colors.BrightCyan+hash.String()+colors.Off, -1)
 				progressChannel <- &progress.Progress{
 					Payload: &chunk,
-					Event:   progress.Error,
-					Message: workerArgs.ctx.Err().Error(),
+					Event:   progress.Start,
+					Message: msg,
 				}
-				time.Sleep(1 * time.Second)
-				return
-			}
-			if err == nil {
-				workerArgs.writeChannel <- &jobResult{
-					rng:      chunk.Range,
-					fileSize: download.ContentLen,
-					contents: download.Body,
-					theChunk: &chunk,
+
+				download, err := pinning.FetchFromGateway(workerArgs.ctx, workerArgs.gatewayUrl, hash.String())
+				time.Sleep(250 * time.Millisecond) // we need to slow things down, otherwise the endpoint rate limits
+				if errors.Is(workerArgs.ctx.Err(), context.Canceled) {
+					// The request to fetch the chunk was cancelled, because user has
+					// pressed Ctrl-C
+					return
 				}
-			} else {
-				progressChannel <- &progress.Progress{
-					Payload: &chunk,
-					Event:   progress.Error,
-					Message: err.Error(),
+
+				if workerArgs.ctx.Err() != nil {
+					chunkPath := paths.NewCachePath(chain, paths.Index_Final)
+					// TODO: BOGUS - THIS IS PROBABLY WRONG
+					RemoveLocalFile(paths.ToIndexPath(chunkPath.GetFullPath(chunk.Range)), "failed download", progressChannel)
+					RemoveLocalFile(paths.ToBloomPath(chunkPath.GetFullPath(chunk.Range)), "failed download", progressChannel)
+					progressChannel <- &progress.Progress{
+						Payload: &chunk,
+						Event:   progress.Error,
+						Message: workerArgs.ctx.Err().Error(),
+					}
+					time.Sleep(1 * time.Second)
+					return
+				}
+				if err == nil {
+					workerArgs.writeChannel <- &jobResult{
+						rng:      chunk.Range,
+						fileSize: download.ContentLen,
+						contents: download.Body,
+						theChunk: &chunk,
+					}
+				} else {
+					progressChannel <- &progress.Progress{
+						Payload: &chunk,
+						Event:   progress.Error,
+						Message: err.Error(),
+					}
 				}
 			}
 		}
@@ -262,7 +264,11 @@ func writeBytesToDisc(chain string, chunkType paths.CacheType, res *jobResult) e
 		if file.FileExists(outputFile.Name()) {
 			outputFile.Close()
 			os.Remove(outputFile.Name())
-			logger.Log(logger.Warning, "Failed download", colors.Magenta, res.rng, colors.Off, "(will retry)", strings.Repeat(" ", 30))
+			col := colors.Magenta
+			if fullPath == paths.ToIndexPath(fullPath) {
+				col = colors.Yellow
+			}
+			logger.Log(logger.Warning, "Failed download", col, res.rng, colors.Off, "(will retry)", strings.Repeat(" ", 30))
 			time.Sleep(1 * time.Second)
 		}
 		// Information about this error

@@ -14,7 +14,6 @@ const (
 	Error
 	AllDone
 	Cancelled
-	Statistics
 )
 
 type Progress struct {
