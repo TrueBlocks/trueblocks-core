@@ -7786,6 +7786,41 @@
       "bloomSize": 131114,
       "indexHash": "QmcCnf9huhVyZQAXwHH8bCyywLSuygGcKizAqPimSRBtx3",
       "indexSize": 6536596
+    },
+    {
+      "range": "024082292-024100000",
+      "bloomHash": "QmTwnmDVKuRbuiiiV5fVdm6TA4V8GZXWnrGGPeTA3FyHit",
+      "bloomSize": 131114,
+      "indexHash": "QmP7ea9z7yQuMxy2vigYisD4EJ4oPjdJeo1x4xgoEZnZVC",
+      "indexSize": 5756136
+    },
+    {
+      "range": "024100001-024119014",
+      "bloomHash": "QmPVx51ZoiLwwyX7CjtRSr8ARaXWu5snKrMAyzb9QJfmQ4",
+      "bloomSize": 131114,
+      "indexHash": "QmYkHDUm4XVQbWDz3Bjm5LTPfRtKh8ABifiRxFUn2pkiFB",
+      "indexSize": 6530868
+    },
+    {
+      "range": "024119015-024139438",
+      "bloomHash": "QmeGx5XkZBovuY5KerE3va73jQQwT5ZpByiLFUgsnht1wo",
+      "bloomSize": 131114,
+      "indexHash": "QmetGLv3KkM1FJR65XHvVnuCf2uGBHNEagReunatLUKGPD",
+      "indexSize": 6429872
+    },
+    {
+      "range": "024139439-024157990",
+      "bloomHash": "QmX6HP3mri6DnMVgFrrCYHhnkZWgH1AndqKkNGE33aHq2y",
+      "bloomSize": 131114,
+      "indexHash": "QmXjF5bmKPZyepbYL1TH8BSRkKmLPXFrjgNQ9gVZZUPMTS",
+      "indexSize": 6772588
+    },
+    {
+      "range": "024157991-024173614",
+      "bloomHash": "QmZvg12F6MhxkBTAU1LgxMCfKiiUQfHrM7ntskqDKF5pKp",
+      "bloomSize": 131114,
+      "indexHash": "Qmeyu2rHEpChYSKJWTM1vYbnuA7Y3LAfJukbmrbjqa7QZN",
+      "indexSize": 6591480
     }
   ]
 }
