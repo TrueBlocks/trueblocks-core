@@ -5,10 +5,10 @@ Please complete any applicable [Migrations](https://github.com/TrueBlocks/truebl
 # TrueBlocks Core
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/TrueBlocks/trueblocks-core)
-![GitHub contributors](https://img.shields.io/github/contributors/TrueBlocks/trueblocks-core)
-![GitHub stars](https://img.shields.io/github/stars/TrueBlocks/trueblocks-core?style%3Dsocial)
-![GitHub forks](https://img.shields.io/github/forks/TrueBlocks/trueblocks-core?style=social)
-![Twitter Follow](https://img.shields.io/twitter/follow/trueblocks?style=social)
+[![GitHub contributors](https://img.shields.io/github/contributors/TrueBlocks/trueblocks-core)](https://github.com/TrueBlocks/trueblocks-core/contributors)
+[![GitHub stars](https://img.shields.io/github/stars/TrueBlocks/trueblocks-core?style%3Dsocial)](https://github.com/TrueBlocks/trueblocks-core/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/TrueBlocks/trueblocks-core?style=social)](https://github.com/TrueBlocks/trueblocks-core/network/members)
+[![Twitter Follow](https://img.shields.io/twitter/follow/trueblocks?style=social)](https://twitter.com/trueblocks)
 
 ## Table of Contents
   - [Introduction](#introduction)
@@ -23,7 +23,7 @@ Please complete any applicable [Migrations](https://github.com/TrueBlocks/truebl
 
 ## Introduction
 
-TrueBlocks is a collection of libraries, tools, and applications that improve access to the Ethereum data while remaining fully local. The interface is similar to the Ethereum RPC, but offers a number of improvements:
+TrueBlocks is a collection of libraries, tools, and applications that improve access to Ethereum data while remaining entirely local. The interface is similar to the Ethereum RPC but offers several improvements:
 
 1) TrueBlocks allows you to scrape the chain to build an index of address appearances. This index enables lightning-fast access to transactional histories for a given address (something not available from the node itself),
 
