@@ -1,4 +1,4 @@
-scrape?chain=ropsten
+scrape?chain=non-tracing
 {
   "errors": [
     "Cannot test block scraper"

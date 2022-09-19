@@ -200,7 +200,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13372,tools,ChainState,tokens,getTokens,n5,,,false,false,false,false,--,note,,`Special` blocks are detailed under `chifra when --list`.
 
 12125,apps,Admin,scrape,blockScrape,block_cnt,n,2000,false,false,true,true,gocmd,flag,<uint64>,maximum number of blocks to process per pass
-12130,apps,Admin,scrape,blockScrape,pin,i,,false,false,true,false,gocmd,switch,<boolean>,pin new chunks (requires locally-running IPFS daemon or --remote)
+12130,apps,Admin,scrape,blockScrape,pin,i,,false,false,true,true,gocmd,switch,<boolean>,pin new chunks (requires locally-running IPFS daemon or --remote)
 12132,apps,Admin,scrape,blockScrape,remote,m,,false,false,true,true,gocmd,switch,<boolean>,pin new chunks to the gateway (requires pinning service keys)
 12115,apps,Admin,scrape,blockScrape,sleep,s,14,false,false,true,true,gocmd,flag,<double>,seconds to sleep between scraper passes
 12185,apps,Admin,scrape,blockScrape,start_block,l,0,false,false,false,false,gocmd,flag,<uint64>,first block to visit (available only for blaze scraper)

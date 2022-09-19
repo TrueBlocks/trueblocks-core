@@ -36,42 +36,9 @@ timestamp_t bn_2_Timestamp(blknum_t blk) {
 }
 
 //-----------------------------------------------------------------------
-bool establishTsFile(void) {
-    if (fileExists(indexFolderBin_ts))
-        return true;
-
-    establishFolder(indexFolder);
-
-    time_q zipDate = fileLastModifyDate(chainConfigsZip_ts);
-    time_q tsDate = fileLastModifyDate(indexFolderBin_ts);
-
-    if (zipDate > tsDate) {
-        ostringstream cmd;
-        cmd << "cd \"" << indexFolder << "\" ; ";
-        cmd << "cp \"" << chainConfigsZip_ts << "\" . ; ";
-        cmd << "gunzip ts.bin.gz";
-        string_q result = doCommand(cmd.str());
-        // The original zip file still exists
-        ASSERT(fileExists(chainConfigsZip_ts));
-        // The new timestamp file exists
-        ASSERT(fileExists(indexFolderBin_ts));
-        // The copy of the zip file does not exist
-        ASSERT(!fileExists(indexFolderBin_ts + ".gz"));
-        return fileExists(indexFolderBin_ts);
-    }
-
-    // starts at zero...
-    return true;
-}
-
-//-----------------------------------------------------------------------
 bool freshenTimestamps(blknum_t minBlock) {
     if (isTestMode())
         return true;
-
-    // LOG_INFO("Not test mode. minBlock: ", minBlock);
-    if (!establishTsFile())
-        return false;
 
     // LOG_INFO("Established ts file");
     size_t nRecords = ((fileSize(indexFolderBin_ts) / sizeof(uint32_t)) / 2);
@@ -135,9 +102,6 @@ bool loadTimestamps(uint32_t** theArray, size_t& cnt) {
     if (file.is_open())
         file.close();
     if (cnt == size_t(NOPOS))
-        return false;
-
-    if (!establishTsFile())
         return false;
 
     // Order matters.

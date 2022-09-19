@@ -221,10 +221,10 @@ func BlockHashFromNumber(provider string, blkNum uint64) (string, error) {
 	return block.Hash().Hex(), nil
 }
 
-// TODO: This is okay since Ropsten is dead as of the merge. We use it for testing
-// TODO: but we need this to actually work (for Geth for instance)
+// TODO: This needs to be implemented in a cross-chain, cross-client manner
 func IsTracingNode(testMode bool, chain string) bool {
-	if testMode && chain == "ropsten" {
+	// TODO: We can test this with a unit test
+	if testMode && chain == "non-tracing" {
 		return false
 	}
 	return true

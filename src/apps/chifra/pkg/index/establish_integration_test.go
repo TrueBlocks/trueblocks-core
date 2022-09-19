@@ -3,6 +3,7 @@
 
 package index
 
+// TODO: Turn these tests back on if possible
 // func Test_EstablishValidFilename(t *testing.T) {
 // 	// Such a range should not be listed in manifest, so the function will fail and we can investigate
 // 	r := paths.FileRange{First: 0, Last: 1}

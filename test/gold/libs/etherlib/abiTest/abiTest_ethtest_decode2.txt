@@ -1046,8 +1046,8 @@ dataArray.size: 16
   15 (0x1e0) 0000000000000000...00000000000000000000002e90edd000
 
 ==================================================
-TIME ~ CLOCK - <WARNG> : { "error9": "decodeAnObject: nItems(11213106450009108450) > dataArray.size(16)"},
-TIME ~ CLOCK - <WARNG> : { "error10": "decodeAnObject: decodeAnObect failed(0)  (0)"},
+TIME ~ CLOCK - <WARN> : { "error9": "decodeAnObject: nItems(11213106450009108450) > dataArray.size(16)"},
+TIME ~ CLOCK - <WARN> : { "error10": "decodeAnObject: decodeAnObect failed(0)  (0)"},
 params.size: 16
   0: (uint256 val_0 = 0
   1: address val_1 = 0x0000000000000000000000000000000000000061
@@ -2138,8 +2138,8 @@ dataArray.size: 51
   50 (0x640) 0000000000000000...0000000000000000000000005cdb5c15
 
 ==================================================
-TIME ~ CLOCK - <WARNG> : { "error9": "decodeAnObject: nItems(64) > dataArray.size(51)"},
-TIME ~ CLOCK - <WARNG> : { "error10": "decodeAnObject: decodeAnObect failed(0)  (0)"},
+TIME ~ CLOCK - <WARN> : { "error9": "decodeAnObject: nItems(64) > dataArray.size(51)"},
+TIME ~ CLOCK - <WARN> : { "error10": "decodeAnObject: decodeAnObect failed(0)  (0)"},
 params.size: 4
   0: tuple[] accounts = [{"val_1":"0x370e4d84b8e8bf093856d23cb4043b095214c334", "val_2":"5043588733683792621175946945497712124696440476173407745608908406314328985642"}, {"val_1":"0x370e4d84b8e8bf093856d23cb4043b095214c334", "val_2":"0"}]
   1: tuple<tuple>uint8+uint256 val_0 = 0
@@ -2178,7 +2178,7 @@ dataArray.size: 4
   3 (0x060) 0000000011e1a300...0000000011e1a300
 
 ==================================================
-TIME ~ CLOCK - <WARNG> : { "error8": "decodeAnObject: countLoc(418973819366999115) > dataArray.size(4)"},
+TIME ~ CLOCK - <WARN> : { "error8": "decodeAnObject: countLoc(418973819366999115) > dataArray.size(4)"},
 params.size: 2
   0: address[] val_0 = <>
   1: uint256[] val_1 = <>

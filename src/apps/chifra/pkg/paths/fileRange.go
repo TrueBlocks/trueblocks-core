@@ -64,21 +64,12 @@ func (fR FileRange) String() string {
 	return fmt.Sprintf("%09d-%09d", fR.First, fR.Last)
 }
 
-// FilenameFromRange builds file name in form of `range.First-range.Last`, with numbers padded. If `extension` is present,
-// then it will be added to the file name as well
-func FilenameFromRange(fileRange FileRange, extension string) string {
-	fileName := fileRange.String()
-	if extension != "" {
-		return fmt.Sprintf("%s.%s", fileName, extension)
-	}
-	return fileName
-}
-
 // RangeToFilename returns a fileName and and existance bool given a file range and a type
 func (r *FileRange) RangeToFilename(chain string, mode CacheType) (bool, string) {
-	rangeStr := FilenameFromRange(*r, "")
-	chunkPath := NewCachePath(chain, mode)
-	fileName := chunkPath.GetFullPath(rangeStr)
+	fileName := config.GetPathToIndex(chain) + "finalized/" + r.String() + ".bin"
+	if mode == Index_Bloom {
+		fileName = ToBloomPath(fileName)
+	}
 	return file.FileExists(fileName), fileName
 }
 

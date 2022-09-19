@@ -12,6 +12,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/spf13/cobra"
 )
 
@@ -198,12 +199,15 @@ func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOption
 		}
 	}
 
+	if len(opts.Format) == 0 || opts.Format == "none" {
+		opts.Format = "api"
+	}
+
 	if len(opts.Chain) == 0 {
 		opts.Chain = config.GetDefaultChain()
 	}
-
-	if len(opts.Format) == 0 || opts.Format == "none" {
-		opts.Format = "api"
+	if err := tslib.EstablishTsFile(opts.Chain); err != nil {
+		fmt.Println("Could not establish ts file:", err)
 	}
 
 	return opts
@@ -214,6 +218,9 @@ func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOption
 
 func (opts *GlobalOptions) FinishParse(args []string) {
 	opts.Writer = os.Stdout
+	if err := tslib.EstablishTsFile(opts.Chain); err != nil {
+		fmt.Println("Could not establish ts file:", err)
+	}
 }
 
 func IsGlobalOption(key string) bool {

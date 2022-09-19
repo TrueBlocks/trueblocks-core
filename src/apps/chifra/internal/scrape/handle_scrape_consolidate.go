@@ -104,8 +104,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 				}
 			}
 
-			filename := paths.NewCachePath(blazeOpts.Chain, paths.Index_Final)
-			indexPath := filename.GetFullPath(curRange.String())
+			indexPath := config.GetPathToIndex(blazeOpts.Chain) + "finalized/" + curRange.String() + ".bin"
 			if report, err := index.WriteChunk(blazeOpts.Chain, indexPath, appMap, len(appearances), opts.Pin, opts.Remote); err != nil {
 				return false, err
 			} else if report == nil {

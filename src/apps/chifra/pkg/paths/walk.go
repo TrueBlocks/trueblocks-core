@@ -7,6 +7,8 @@ package paths
 import (
 	"io/fs"
 	"path/filepath"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
 
 type IndexFileInfo struct {
@@ -20,8 +22,12 @@ func WalkCacheFolder(chain string, cacheType CacheType, filenameChan chan<- Inde
 		filenameChan <- IndexFileInfo{Type: None}
 	}()
 
-	cachePath := NewCachePath(chain, cacheType)
-	filepath.Walk(cachePath.GetFullPath(""), func(path string, info fs.FileInfo, err error) error {
+	path := config.GetPathToIndex(chain)
+	if cacheType == Index_Bloom {
+		path = ToBloomPath(path)
+	}
+
+	filepath.Walk(path, func(path string, info fs.FileInfo, err error) error {
 		if err != nil {
 			// If the scraper is running, this will sometimes send an error for a file, for example, that existed
 			// when it was first seen, but the scraper deletes before this call. We ignore any file system errors

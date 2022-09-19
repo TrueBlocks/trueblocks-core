@@ -1,5 +1,5 @@
 [version]
-current = "0.40.0-beta"
+current = "v0.40.0-beta"
 
 [settings]
 cachePath = ""

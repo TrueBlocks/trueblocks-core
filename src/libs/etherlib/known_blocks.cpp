@@ -38,24 +38,18 @@ blknum_t firstTransactionBlock(void) {
 blknum_t hardForkBlock(const string_q& hf) {
     if (hf == "byzantium") {
         map<string_q, blknum_t> theMap = {
-            make_pair("kovan", 5067000),
             make_pair("mainnet", 4370000),
-            make_pair("rinkeby", 1035301),
-            make_pair("ropsten", 1700000),
         };
         return theMap[getChain()];
     } else if (hf == "constantinople") {
         map<string_q, blknum_t> theMap = {
-            make_pair("kovan", 9200000),
             make_pair("mainnet", 7280000),
-            make_pair("rinkeby", 3660663),
-            make_pair("ropsten", 4230000),
         };
         return theMap[getChain()];
     } else if (hf == "london") {
         map<string_q, blknum_t> theMap = {
-            make_pair("goerli", 5062605),  make_pair("kovan", 26741100),   make_pair("mainnet", 12965000),
-            make_pair("rinkeby", 8897988), make_pair("ropsten", 10499401),
+            make_pair("goerli", 5062605),
+            make_pair("mainnet", 12965000),
         };
         return theMap[getChain()];
     }
@@ -78,10 +72,7 @@ make_pair("mainnet", 13773000),
 
 BerlinBlock
 make_pair("goerli",  4460644),
-make_pair("kovan",   24770900),
 make_pair("mainnet", 12244000),
-make_pair("rinkeby", 8290928),
-make_pair("ropsten", 9812189),
 
 DAOForkBlock
 make_pair("mainnet", 1920000),
@@ -91,18 +82,11 @@ make_pair("mainnet", 1150000),
 
 IstanbulBlock
 make_pair("goerli", 1561651),
-make_pair("kovan", 14111141),
 make_pair("mainnet", 9069000),
-make_pair("rinkeby", 5435345),
-make_pair("ropsten", 6485846),
 
 MuirGlacierBlock
 make_pair("mainnet", 9200000),
-make_pair("ropsten", 7117117),
 
 PetersburgBlock
-make_pair("kovan", 10255201),
 make_pair("mainnet", 7280000),
-make_pair("rinkeby", 4321234),
-make_pair("ropsten", 4939394),
 #endif

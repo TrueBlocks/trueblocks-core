@@ -78,7 +78,6 @@ extern string_q getDefaultChain(void);
 
 //---------------------------------------------------------------------------
 #define chainConfigsZip_prices (chainConfigs + "poloniex_USDT_ETH.bin.gz")
-#define chainConfigsZip_ts (chainConfigs + "ts.bin.gz")
 
 //---------------------------------------------------------------------------
 #define rootConfigToml_trueBlocks (rootConfigs + "trueBlocks.toml")

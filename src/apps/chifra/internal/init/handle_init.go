@@ -46,7 +46,7 @@ func (opts *InitOptions) HandleInit() error {
 	}
 
 	// Get the list of things we need to download
-	chunksToDownload, nCorrections := opts.prepareDownloadList(chain, remoteManifest, paths.Index_Bloom, []uint64{})
+	chunksToDownload, nCorrections := opts.prepareDownloadList(chain, remoteManifest, []uint64{})
 	if opts.Globals.Verbose {
 		// TODO: BOGUS - WHAT?
 		str := ""

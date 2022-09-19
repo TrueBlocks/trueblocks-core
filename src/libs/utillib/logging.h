@@ -174,13 +174,13 @@ class logger {
                 log_stream << bGreen << "<INFO>  " << cOff << ": ";
                 break;
             case sev_warning:
-                log_stream << bYellow << "<WARNG> " << cOff << ": ";
+                log_stream << bYellow << "<WARN> " << cOff << ": ";
                 break;
             case sev_error:
-                log_stream << bRed << "<ERROR> " << cOff << ": ";
+                log_stream << bRed << "<EROR> " << cOff << ": ";
                 break;
             case sev_fatal:
-                log_stream << bTeal << "<FATAL> " << cOff << ": ";
+                log_stream << bTeal << "<FATL> " << cOff << ": ";
                 break;
         }
         print_impl(args...);

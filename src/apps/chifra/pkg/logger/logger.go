@@ -29,9 +29,9 @@ var severityToLabel = map[severity]string{
 	Info:       "INFO",
 	InfoC:      "INFO",
 	Test:       "TEST",
-	Warning:    "WARNG",
-	Error:      "ERROR",
-	ErrorFatal: "FATAL",
+	Warning:    "WARN",
+	Error:      "EROR",
+	ErrorFatal: "FATL",
 }
 
 // TestLog is used to print command line options to the screen during testing only
@@ -60,7 +60,7 @@ func getLogTiming() bool {
 }
 
 // Log prints `a` to stderr with a label corresponding to the severity level
-// prepended (e.g. <INFO>, <ERROR>, etc.)
+// prepended (e.g. <INFO>, <EROR>, etc.)
 func Log(sev severity, a ...interface{}) {
 
 	timeDatePart := "DATE|TIME"

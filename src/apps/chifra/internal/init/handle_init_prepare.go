@@ -25,7 +25,7 @@ var verbose bool
 // its bloomHash, its indexHash, or both contains the IPFS hash that needst to be download. Any chunks (or portions thereof) that are
 // not in the list are valid and remain on disc. That means that the chunk is the manifest, has the right file size, has a valid header,
 // and is of the rigth version.
-func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifest, chunkType paths.CacheType, blockNums []uint64) ([]manifest.ChunkRecord, int) {
+func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifest, blockNums []uint64) ([]manifest.ChunkRecord, int) {
 	verbose = opts.Globals.Verbose
 	walker := index.NewIndexWalker(
 		opts.Globals.Chain,

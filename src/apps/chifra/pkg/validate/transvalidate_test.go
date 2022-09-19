@@ -6,6 +6,8 @@ package validate
 
 import (
 	"testing"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func TestIsTransHash(t *testing.T) {
@@ -156,7 +158,7 @@ func TestValidateTransIdentifiers(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if err := ValidateIdentifiers(
-				GetTestChain(),
+				utils.GetTestChain(),
 				tt.args.identifiers,
 				tt.args.validTypes,
 				tt.args.maxRanges,

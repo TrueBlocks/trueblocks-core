@@ -105,7 +105,6 @@ CopyNotPresent    (${INSTALL_SOURCE}/per-chain/sepolia "manifest.json"          
 CopyNotPresent    (${INSTALL_SOURCE}/                  "ethslurp.toml"            ${INSTALL_DEST}/config/mainnet/)
 CopyNotPresent    (${INSTALL_SOURCE}/names/            "names_custom.tab"         ${INSTALL_DEST}/config/mainnet/)
 CopyNotPresent    (${INSTALL_SOURCE}/names/            "collections.csv"          ${INSTALL_DEST}/config/mainnet/)
-CopyNotPresent    (${INSTALL_SOURCE}/prices/           "ts.bin.gz"                ${INSTALL_DEST}/config/mainnet/)
 CopyNotPresent    (${INSTALL_SOURCE}/prices/           "poloniex_USDT_ETH.bin.gz" ${INSTALL_DEST}/config/mainnet/)
 
 CopyFolder        (${INSTALL_SOURCE}/abis/known-000/                              ${INSTALL_DEST}/abis/known-000/)

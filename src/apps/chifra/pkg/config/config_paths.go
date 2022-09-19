@@ -24,6 +24,11 @@ const chainConfigMustExist string = `
 
 // GetPathToChainConfig returns the chain-specific config folder
 func GetPathToChainConfig(chain string) string {
+	// TODO: We can test this with a unit test
+	if chain == "non-tracing" { // Test mode only for testing non-tracing nodes
+		return GetPathToChainConfig("mainnet")
+	}
+
 	// We always need a chain
 	if len(chain) == 0 {
 		chain = GetDefaultChain()
@@ -90,11 +95,6 @@ func GetPathToCache(chain string) string {
 	newPath := path.Join(cachePath, chain) + "/"
 	EstablishCachePaths(newPath)
 	return newPath
-}
-
-func GetTestChain() string {
-	// This does not get customized per chain. We can only test against mainnet currently
-	return "mainnet"
 }
 
 // GetPathToCommands returns full path the the given tool

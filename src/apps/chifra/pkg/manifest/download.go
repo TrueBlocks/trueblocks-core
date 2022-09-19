@@ -27,16 +27,23 @@ import (
 // fromRemote gets the CID from the smart contract, calls
 // the gateway and returns the parsed manifest
 func fromRemote(chain string) (*Manifest, error) {
-	cid, err := getManifestCidFromContract(chain)
+	cid, err := ReadUnchainIndex(chain, "")
 	if err != nil {
 		return nil, err
 	}
-	return downloadManifest(chain, config.GetIpfsGateway(chain), cid)
+
+	gatewayUrl := config.GetIpfsGateway(chain)
+
+	logger.Log(logger.InfoC, "Chain:", chain)
+	logger.Log(logger.InfoC, "Gateway:", gatewayUrl)
+	logger.Log(logger.InfoC, "CID:", cid)
+
+	return downloadManifest(chain, gatewayUrl, cid)
 }
 
-// getManifestCidFromContract calls UnchainedIndex smart contract to get the current manifest IPFS CID
-func getManifestCidFromContract(chain string) (string, error) {
-	provider := config.GetRpcProvider("mainnet") // chain)
+// ReadUnchainIndex calls UnchainedIndex smart contract to get the current manifest IPFS CID
+func ReadUnchainIndex(ch, reason string) (string, error) {
+	provider := config.GetRpcProvider("mainnet") // we always read from the mainnet smart contract
 	rpcClient.CheckRpc(provider)
 	ethClient := rpcClient.GetClient(provider)
 	defer ethClient.Close()
@@ -56,7 +63,12 @@ func getManifestCidFromContract(chain string) (string, error) {
 		return "", fmt.Errorf("while parsing contract ABI: %w", err)
 	}
 
-	callData, err := contractAbi.Pack(signature, common.HexToAddress(unchained.PreferredPublisher), chain)
+	which := ch
+	if reason != "" {
+		which += ("-" + reason)
+	}
+
+	callData, err := contractAbi.Pack(signature, common.HexToAddress(unchained.PreferredPublisher), which)
 	if err != nil {
 		return "", fmt.Errorf("while building calldata: %w", err)
 	}
@@ -77,7 +89,7 @@ func getManifestCidFromContract(chain string) (string, error) {
 
 	if len(response) == 0 {
 		msg := fmt.Sprintf("empty response %sfrom provider %s on chain %s",
-			response, provider, chain)
+			response, provider, which)
 		// Node may be syncing
 		response, err := ethClient.SyncProgress(context.Background())
 		// If synced, return the empty response message.
@@ -89,7 +101,7 @@ func getManifestCidFromContract(chain string) (string, error) {
 			}
 			// Syncing
 			// TODO: This should be broadened to handle all queries to the node that end with no response
-			msg := fmt.Sprintf("chain %s on provider %s is syncing. Please wait until this is finished.", chain, provider)
+			msg := fmt.Sprintf("chain %s on provider %s is syncing. Please wait until this is finished.", which, provider)
 			return "", fmt.Errorf(msg)
 		}
 	}
@@ -105,7 +117,7 @@ func getManifestCidFromContract(chain string) (string, error) {
 
 	ret := unpacked[0].(string)
 	if len(ret) == 0 {
-		return "", errors.New("The Unchained Index returned empty CID for " + chain + ". Has the index for that chain been published?")
+		return "", errors.New("The Unchained Index returned empty CID for " + which + ". Has the index for that chain been published?")
 	}
 
 	return ret, nil
@@ -115,10 +127,6 @@ func getManifestCidFromContract(chain string) (string, error) {
 // Manifest struct. Both JSON and TSV formats are supported, but the server has
 // to set the correct Content-Type header.
 func downloadManifest(chain, gatewayUrl, cid string) (*Manifest, error) {
-	logger.Log(logger.InfoC, "Chain:", chain)
-	logger.Log(logger.InfoC, "Gateway:", gatewayUrl)
-	logger.Log(logger.InfoC, "CID:", cid)
-
 	url, err := url.Parse(gatewayUrl)
 	if err != nil {
 		return nil, err

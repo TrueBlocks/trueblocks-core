@@ -13,7 +13,7 @@ local   ,both ,fast  ,scrape ,apps/blockScrape ,pin                          ,n 
 on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_01_fail                 ,n    ,action = badmode
 local   ,both ,fast  ,scrape ,apps/blockScrape ,real_run                     ,n    ,sleep = .5 & pin & log_level = 8
 on      ,both ,fast  ,scrape ,apps/blockScrape ,real_run2                    ,n    ,sleep = .5
-on      ,api  ,fast  ,scrape ,apps/blockScrape ,no_tracing                   ,y    ,chain = ropsten
+on      ,api  ,fast  ,scrape ,apps/blockScrape ,no_tracing                   ,y    ,chain = non-tracing
 
 off     ,both ,fast  ,scrape ,apps/blockScrape ,nBlocks                      ,n    ,modes = both & block_cnt = 12
 off     ,both ,fast  ,scrape ,apps/blockScrape ,pin                          ,n    ,modes = both & pin

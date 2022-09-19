@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# SOME NOTES: I spent a very long time messing around with these test after I removed the entire
+# Unchained Index folder on the testing machine and then did `chifra init --all`. This was finally
+# fixes (after many hours) by changing folder and file permission on the Unchained Index folders.
+echo "CONFIG_FILE: " $CONFIG_FILE
+#cat $CONFIG_FILE
+#echo "---------------------------------------------"
+
 REPO=$1
 COMMIT_SHA=$2
 BRANCH=$3
@@ -18,11 +25,12 @@ echo "Building image..."
 IMAGE_ID=`docker build -q --build-arg repo=$REPO --build-arg commit_sha=$COMMIT_SHA --build-arg branch=$BRANCH --build-arg test_target=$TEST_TARGET .`
 
 echo "Done. Running Docker image and tests"
+
 # Note: we are using --rm flag, which will cause removal of the container after `docker run` exits
 docker run \
     --rm \
     --network=host \
-    --mount type=bind,source=/home/unchained,target=/root/unchained \
+    --mount type=bind,source=/home/unchained,target=/home/unchained \
     --mount type=bind,source=$CONFIG_FILE,target=/root/.local/share/trueblocks/trueBlocks.toml \
     --mount type=bind,source=$HOME/test_results/$COMMIT_SHA,target=/root/test_results \
     $IMAGE_ID

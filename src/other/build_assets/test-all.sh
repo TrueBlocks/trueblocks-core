@@ -18,9 +18,10 @@ make
 cd "$CHIFRA"
 echo "Running go tests..."
 go test --tags integration ./...
-if [ $? -ne 0 ]; then
+RESULT=$?
+if [ $RESULT -ne 0 ]; then
    cd $BUILD_FOLDER
-   exit $?
+   exit $RESULT
 fi
 cd $BUILD_FOLDER
 

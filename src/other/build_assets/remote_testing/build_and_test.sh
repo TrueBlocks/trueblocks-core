@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# This script accepts 1 optional argument, which is passed to `make`
-# and can be "tests" (default value) or "test-all".
+# This script, which is called from the Dockerfile, accepts 1 optional argument, which is
+# passed to `make` and can be "tests" (default value) or "test-all".
 
 # Set MAKE_TARGET to the first argument or "tests":
 MAKE_TARGET="${1:-tests}"
@@ -14,7 +14,7 @@ echo "Will perform $MAKE_TARGET"
 if [ "$MAKE_TARGET" == "test-all" ]
 then
     RUN_SERVER=true
-    echo "Serve required. Will use port $SRV_PORT"
+    echo "Server required. Will use port $SRV_PORT"
     echo "[settings]
     api_provider=\"http://localhost:$SRV_PORT\"
     " > $HOME/.local/share/trueblocks/testRunner.toml
@@ -44,7 +44,7 @@ then
     pgrep chifra
     if [ $? -gt 0 ]
     then
-        echo "Error: Waited 15 seconds, chifra serve is not running"
+        echo "Error: Waited 15 seconds, chifra serve is not running. Quitting..."
         exit 2
     fi
 

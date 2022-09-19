@@ -1493,6 +1493,14 @@ paths:
           explode: true
           schema:
             type: number
+        - name: pin
+          description: pin new chunks (requires locally-running IPFS daemon or --remote)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: remote
           description: pin new chunks to the gateway (requires pinning service keys)
           required: false

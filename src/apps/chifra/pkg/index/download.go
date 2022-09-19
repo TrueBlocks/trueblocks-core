@@ -14,7 +14,6 @@ import (
 	"os"
 	"strings"
 	"sync"
-	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -92,7 +91,6 @@ func getDownloadWorker(chain string, workerArgs downloadWorkerArguments, chunkTy
 				}
 
 				download, err := pinning.FetchFromGateway(workerArgs.ctx, workerArgs.gatewayUrl, hash.String())
-				time.Sleep(250 * time.Millisecond) // we need to slow things down, otherwise the endpoint rate limits
 				if errors.Is(workerArgs.ctx.Err(), context.Canceled) {
 					// The request to fetch the chunk was cancelled, because user has
 					// pressed Ctrl-C
@@ -100,16 +98,15 @@ func getDownloadWorker(chain string, workerArgs downloadWorkerArguments, chunkTy
 				}
 
 				if workerArgs.ctx.Err() != nil {
-					chunkPath := paths.NewCachePath(chain, paths.Index_Final)
+					chunkPath := config.GetPathToIndex(chain) + "finalized/" + chunk.Range + ".bin"
 					// TODO: BOGUS - THIS IS PROBABLY WRONG
-					RemoveLocalFile(paths.ToIndexPath(chunkPath.GetFullPath(chunk.Range)), "failed download", progressChannel)
-					RemoveLocalFile(paths.ToBloomPath(chunkPath.GetFullPath(chunk.Range)), "failed download", progressChannel)
+					RemoveLocalFile(paths.ToIndexPath(chunkPath), "failed download", progressChannel)
+					RemoveLocalFile(paths.ToBloomPath(chunkPath), "failed download", progressChannel)
 					progressChannel <- &progress.Progress{
 						Payload: &chunk,
 						Event:   progress.Error,
 						Message: workerArgs.ctx.Err().Error(),
 					}
-					time.Sleep(1 * time.Second)
 					return
 				}
 				if err == nil {
@@ -251,8 +248,10 @@ func DownloadChunks(chain string, chunksToDownload []manifest.ChunkRecord, chunk
 
 // writeBytesToDisc save the downloaded bytes to disc
 func writeBytesToDisc(chain string, chunkType paths.CacheType, res *jobResult) error {
-	chunkPath := paths.NewCachePath(chain, chunkType)
-	fullPath := chunkPath.GetFullPath(res.rng)
+	fullPath := config.GetPathToIndex(chain) + "finalized/" + res.rng + ".bin"
+	if chunkType == paths.Index_Bloom {
+		fullPath = paths.ToBloomPath(fullPath)
+	}
 	outputFile, err := os.OpenFile(fullPath, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
 	if err != nil {
 		return fmt.Errorf("error creating output file file %s in writeBytesToDisc: [%s]", res.rng, err)
@@ -269,7 +268,6 @@ func writeBytesToDisc(chain string, chunkType paths.CacheType, res *jobResult) e
 				col = colors.Yellow
 			}
 			logger.Log(logger.Warning, "Failed download", col, res.rng, colors.Off, "(will retry)", strings.Repeat(" ", 30))
-			time.Sleep(1 * time.Second)
 		}
 		// Information about this error
 		// https://community.k6.io/t/warn-0040-request-failed-error-stream-error-stream-id-3-internal-error/777/2

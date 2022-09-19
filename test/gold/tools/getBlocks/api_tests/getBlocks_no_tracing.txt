@@ -1,4 +1,4 @@
-blocks?blocks=12&trace&chain=ropsten
+blocks?blocks=12&trace&chain=non-tracing
 {
   "errors": [
     "Tracing is required for this program to work properly."
