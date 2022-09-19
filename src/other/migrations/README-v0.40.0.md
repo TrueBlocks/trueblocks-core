@@ -41,7 +41,8 @@ You will need the following folder locations to proceed. Run `chifra status --te
 2. `$cachePath`
 3. `$indexPath`
 
-If you wish to make a backup of these folders, you should do so now.
+Note that the following process will replace or remove parts of the index on your disc including deleting index portions built by
+your existing scraper that may be ahead of the manifest. If you wish to make a backup of these folders, you should do so now.
 
 ### Instructions
 
@@ -88,7 +89,7 @@ jwt = "<your_Pinata_JWT_key>"          # optional
 
 ```[toml]
 [version]
-current = "0.40.0-beta"
+current = "v0.40.0-beta"
 ```
 
 **Note:** If you're running your own IPFS gateways and pinning the index yourself, you may add the appropriate keys 
