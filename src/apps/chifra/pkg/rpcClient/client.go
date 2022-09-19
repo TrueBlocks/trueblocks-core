@@ -17,7 +17,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/ethclient"
@@ -126,80 +125,6 @@ func TxHashFromHashAndId(provider, hash string, txId uint64) (string, error) {
 	return tx.Hash().Hex(), nil
 }
 
-// TxFromNumberAndId returns a actual transaction
-// func TxFromNumberAndId(provider string, blkNum, txId uint64) (ethTypes.Transaction, error) {
-// 	ec := GetClient(provider)
-// 	defer ec.Close()
-
-// 	block, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(blkNum))
-// 	if err != nil {
-// 		return ethTypes.Transaction{}, err
-// 	}
-
-// 	tx, err := ec.TransactionInBlock(context.Background(), block.Hash(), uint(txId))
-// 	if err != nil {
-// 		return ethTypes.Transaction{}, err
-// 	}
-
-// 	return *tx, nil
-// }
-
-func GetTransactionReceipt(provider string, bn uint64, txid uint64) (types.SimpleReceipt, error) {
-	// TODO: BOGUS THIS WORK IS INCOMPLETE
-	// tx, err := TxFromNumberAndId(provider, bn, txid)
-	// if err != nil {
-	// 	return types.SimpleReceipt{}, err
-	// }
-
-	// var receipt Receipt
-	// var payload = RPCPayload{
-	// 	Jsonrpc:   "2.0",
-	// 	Method:    "eth_getTransactionReceipt",
-	// 	RPCParams: RPCParams{tx.Hash().Hex()},
-	// 	ID:        1005,
-	// }
-	// err = FromRpc(provider, &payload, &receipt)
-	// if err != nil {
-	// 	return types.SimpleReceipt{}, err
-	// }
-
-	// const Byzantium = 4370000
-	// var ret types.SimpleReceipt
-	// // ret.BlockNumber = uint32(receipt.BlockNumber.Uint64())
-	// // ret.TransactionIndex = uint32(receipt.TransactionIndex)
-	// // ret.Hash = receipt.TxHash.Hex()
-	// ret.GasUsed, err = strconv.ParseUint(receipt.Result.GasUsed, 10, 32)
-	// if err != nil {
-	// 	return ret, err
-	// }
-
-	// if receipt.Result.Status != nil {
-	// } else {
-	// }
-	// if err != nil {
-	// 	return ret, err
-	// }
-
-	// if receipt.BlockNumber.Uint64() > Byzantium {
-	// 	val := uint32(receipt.Status)
-	// 	ret.Status = &val
-	// 	ret.IsError = *ret.Status != 1
-	// }
-	// ret.ContractAddress = receipt.ContractAddress.Hex()
-	// ret.EffectiveGasPrice = tx.EffectiveGasPrice
-	// for _, l := range receipt.Logs {
-	// 	var log types.SimpleLog
-	// 	log.Address = l.Address.Hex()
-	// 	for _, t := range l.Topics {
-	// 		log.Topics = append(log.Topics, t.Hex())
-	// 	}
-	// 	log.Data = hex.EncodeToString(l.Data)
-	// 	ret.Logs = append(ret.Logs, log)
-	// }
-	// return ret, nil
-	return types.SimpleReceipt{GasUsed: 12}, nil
-}
-
 // TxHashFromNumberAndId returns a transaction's hash if it's a valid transaction
 func TxHashFromNumberAndId(provider string, blkNum, txId uint64) (string, error) {
 	ec := GetClient(provider)
@@ -296,10 +221,10 @@ func BlockHashFromNumber(provider string, blkNum uint64) (string, error) {
 	return block.Hash().Hex(), nil
 }
 
-// TODO: This is okay since Ropsten is dead as of the merge. We use it for testing
-// TODO: but we need this to actually work (for Geth for instance)
+// TODO: This needs to be implemented in a cross-chain, cross-client manner
 func IsTracingNode(testMode bool, chain string) bool {
-	if testMode && chain == "ropsten" {
+	// TODO: We can test this with a unit test
+	if testMode && chain == "non-tracing" {
 		return false
 	}
 	return true
@@ -384,20 +309,19 @@ func GetBlockByNumber(chain string, bn uint64) (types.SimpleNamedBlock, error) {
 
 // GetBlockZeroTs for some reason block zero does not return a timestamp, so we assign block one's ts minus 14 seconds
 func GetBlockZeroTs(chain string) (uint64, error) {
-	blockOne, err := GetBlockByNumber(chain, 1)
-	if err != nil {
-		return utils.EarliestEvmTs, err
+	ts := GetBlockTimestamp(config.GetRpcProvider(chain), 0)
+	if ts == 0 {
+		ts = GetBlockTimestamp(config.GetRpcProvider(chain), 1) - 13
 	}
-	// TODO: Multi-chain specific
-	return blockOne.TimeStamp - 14, nil
+	return ts, nil
 }
 
-// TODO: use block number by converting it
 func GetCodeAt(chain, addr string, bn uint64) ([]byte, error) {
 	// return IsValidAddress(addr)
 	provider := config.GetRpcProvider(chain)
 	ec := GetClient(provider)
 	address := common.HexToAddress(addr)
+	// TODO: we don't use block number, but we should - we need to convert it
 	return ec.CodeAt(context.Background(), address, nil) // nil is latest block
 }
 

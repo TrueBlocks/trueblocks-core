@@ -1,0 +1,6 @@
+chunks?mode=addresses&check
+{
+  "errors": [
+    "The --check option is not available in addresses mode."
+  ]
+}

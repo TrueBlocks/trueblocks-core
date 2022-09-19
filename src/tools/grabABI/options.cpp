@@ -23,8 +23,6 @@ static const COption params[] = {
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "a list of one or more smart contracts whose ABIs to display"),  // NOLINT
     COption("known", "k", "", OPT_SWITCH, "load common 'known' ABIs from cache"),
     COption("sol", "s", "", OPT_SWITCH, "extract the abi definition from the provided .sol file(s)"),
-    COption("find", "f", "list<string>", OPT_FLAG, "search for function or event declarations given a four- or 32-byte code(s)"),  // NOLINT
-    COption("classes", "c", "", OPT_HIDDEN | OPT_SWITCH, "generate classDefinitions folder and class definitions"),
     COption("", "", "", OPT_DESCRIPTION, "Fetches the ABI for a smart contract."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -39,8 +37,6 @@ bool COptions::parseArguments(string_q& command) {
     // BEG_CODE_LOCAL_INIT
     bool known = false;
     bool sol = false;
-    CStringArray find;
-    bool classes = false;
     // END_CODE_LOCAL_INIT
 
     Init();
@@ -59,15 +55,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-s" || arg == "--sol") {
             sol = true;
-
-        } else if (startsWith(arg, "-f:") || startsWith(arg, "--find:")) {
-            arg = substitute(substitute(arg, "-f:", ""), "--find:", "");
-            find.push_back(arg);
-        } else if (arg == "-f" || arg == "--find") {
-            return flag_required("find");
-
-        } else if (arg == "-c" || arg == "--classes") {
-            classes = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -104,10 +91,6 @@ bool COptions::parseArguments(string_q& command) {
             abi_spec.loadAbiFromEtherscan(addr);
             abi_spec.address = addr;
         }
-    }
-
-    if (classes) {
-        return handle_classes();
     }
 
     // Display formatting

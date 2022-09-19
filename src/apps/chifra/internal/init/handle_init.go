@@ -1,5 +1,3 @@
-// TODO: BOGUS - IF USER DOES SCAPE FROM SCRATCH, THEN INIT, THE TIMESTAMP FILE IS INCOMPLETE
-
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
@@ -7,131 +5,127 @@
 package initPkg
 
 import (
-	"net/url"
-	"path"
+	"fmt"
+	"runtime"
+	"strings"
+	"sync"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 )
 
 // InitInternal initializes local copy of UnchainedIndex by downloading manifests and chunks
 func (opts *InitOptions) HandleInit() error {
-	if opts.Globals.TestMode {
-		if opts.Globals.ApiMode {
-			opts.Globals.Writer.Write([]byte("{ \"msg\": \"chifra init is not processed in test mode.\" }"))
-		} else {
-			logger.Log(logger.Info, "chifra init is not processed in test mode.")
-		}
-		return nil
-	}
-
+	// Make the code below cleaner...
 	chain := opts.Globals.Chain
 
-	config.EstablishIndexPaths(config.GetPathToIndex(chain))
-	opts.PrintManifestHeader()
+	// TODO: BOGUS - IF THE SCRAPER IS RUNNING, THIS WILL CAUSE PROBLEMS
+	// Make sure that the temporary scraper folders are empty, so that, when the
+	// scraper starts, it starts on the correct block.
+	index.CleanTemporaryFolders(config.GetPathToIndex(chain), true)
 
-	cid, err := manifest.GetManifestCidFromContract(chain)
+	remoteManifest, err := manifest.ReadManifest(chain, manifest.FromContract)
 	if err != nil {
 		return err
 	}
-	logger.Log(logger.Info, "Unchained index returned CID", cid)
-
-	// Download the manifest
-	gatewayUrl := config.GetIpfsGateway(chain)
-	logger.Log(logger.Info, "IPFS gateway", gatewayUrl)
-
-	url, err := url.Parse(gatewayUrl)
-	if err != nil {
-		return err
-	}
-	url.Path = path.Join(url.Path, cid)
-	downloadedManifest, err := manifest.DownloadManifest(url.String())
-
+	err = remoteManifest.SaveManifest(chain)
 	if err != nil {
 		return err
 	}
 
-	// Save manifest
-	manifestPath := config.GetPathToChainConfig(chain) + "manifest.txt"
-	err = manifest.SaveManifest(manifestPath, downloadedManifest)
-	if err != nil {
-		return err
-	}
-	logger.Log(logger.Info, "Freshened manifest")
+	// Get the list of things we need to download
+	chunksToDownload, nCorrections := opts.prepareDownloadList(chain, remoteManifest, []uint64{})
 
-	// Fetch chunks
+	// Tell the user what we're doing
+	logger.Log(logger.InfoC, "Unchained Index:", unchained.Address_V2)
+	logger.Log(logger.InfoC, "Schemas:", unchained.Schemas)
+	logger.Log(logger.InfoC, "Config Folder:", config.GetPathToChainConfig(chain))
+	logger.Log(logger.InfoC, "Index Folder:", config.GetPathToIndex(chain))
+	logger.Log(logger.InfoC, "Chunks in Manifest:", fmt.Sprintf("%d", len(remoteManifest.Chunks)))
+	logger.Log(logger.InfoC, "Corrections Needed:", fmt.Sprintf("%d", nCorrections))
+
+	// Open a channel to receive a message when all the blooms have been downloaded...
 	bloomsDoneChannel := make(chan bool)
 	defer close(bloomsDoneChannel)
+
+	// Open a channel to receive a message when all the indexes have been downloaded (if we're downloading them)
 	indexDoneChannel := make(chan bool)
 	defer close(indexDoneChannel)
 
-	getChunks := func(chunkType cache.CacheType) {
-		chunkPath := cache.NewCachePath(chain, chunkType)
-		failedChunks, cancelled := downloadAndReportProgress(chain, downloadedManifest.Chunks, &chunkPath)
-
+	getChunks := func(chunkType paths.CacheType) {
+		failedChunks, cancelled := opts.downloadAndReportProgress(chunksToDownload, chunkType, nCorrections)
 		if cancelled {
-			// We don't want to retry if the user has cancelled
+			// The user hit the control+c, we don't want to continue...
 			return
 		}
 
+		// The download finished...
 		if len(failedChunks) > 0 {
-			retry(failedChunks, 3, func(pins []manifest.ChunkRecord) ([]manifest.ChunkRecord, bool) {
-				logger.Log(logger.Info, "Retrying", len(pins), "bloom(s)")
-				return downloadAndReportProgress(chain, pins, &chunkPath)
+			// ...if there were failed downloads, try them again (3 times if necessary)...
+			retry(failedChunks, 3, func(items []manifest.ChunkRecord) ([]manifest.ChunkRecord, bool) {
+				logger.Log(logger.Info, "Retrying", len(items), "bloom(s)")
+				return opts.downloadAndReportProgress(items, chunkType, nCorrections)
 			})
 		}
 	}
 
+	// Set up a go routine to download the bloom filters...
 	go func() {
-		getChunks(cache.Index_Bloom)
-
+		getChunks(paths.Index_Bloom)
 		bloomsDoneChannel <- true
 	}()
 
-	if opts.All {
-		go func() {
-			getChunks(cache.Index_Final)
+	// TODO: BOGUS - DOES THERE NEED TO BE TWO OF THESE?
+	// if opts.All {
+	// Set up another go routine to download the index chunks if the user told us to...
+	go func() {
+		getChunks(paths.Index_Final)
+		indexDoneChannel <- true
+	}()
 
-			indexDoneChannel <- true
-		}()
-		<-indexDoneChannel
-	}
+	// Wait for the index to download. This will block until getChunks for index chunks returns
+	<-indexDoneChannel
+	// }
 
+	// Wait for the bloom filters to download. This will block until getChunks for blooms returns
 	<-bloomsDoneChannel
+
 	return nil
 }
 
-type downloadFunc func(pins []manifest.ChunkRecord) (failed []manifest.ChunkRecord, cancelled bool)
+var m sync.Mutex
 
-// Downloads chunks and report progress
-func downloadAndReportProgress(chain string, pins []manifest.ChunkRecord, chunkPath *cache.CachePath) ([]manifest.ChunkRecord, bool) {
-	chunkTypeToDescription := map[cache.CacheType]string{
-		cache.Index_Bloom: "bloom",
-		cache.Index_Final: "index",
-	}
+// TODO: So we can capture both the blooms and the index portions in one summary. Once we move to single stream, this can go local
+var nProcessed12 int
+var nStarted12 int
+var nUpdated12 int
+
+// downloadAndReportProgress Downloads the chunks and reports progress to the progressChannel
+func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord, chunkType paths.CacheType, nTotal int) ([]manifest.ChunkRecord, bool) {
 	failed := []manifest.ChunkRecord{}
 	cancelled := false
+
+	// Establish a channel to listen for progress messages
 	progressChannel := progress.MakeChan()
 	defer close(progressChannel)
 
-	go index.DownloadChunks(chain, pins, chunkPath, progressChannel)
+	// TODO: BOGUS This should be configurable - If we make this too big, the pinning service chokes
+	poolSize := runtime.NumCPU() * 2
 
-	var pinsDone uint
+	// Start the go routine that downloads the chunks. This sends messages through the progressChannel
+	go index.DownloadChunks(opts.Globals.Chain, chunks, chunkType, poolSize, progressChannel)
 
 	for event := range progressChannel {
-		pin, ok := event.Payload.(*manifest.ChunkRecord)
-		var fileName string
+		chunk, ok := event.Payload.(*manifest.ChunkRecord)
+		var rng string
 		if ok {
-			fileName = pin.Range
-		}
-
-		if event.Event == progress.AllDone {
-			logger.Log(logger.Info, pinsDone, "pin(s) were (re)initialized")
-			break
+			rng = chunk.Range
 		}
 
 		if event.Event == progress.Cancelled {
@@ -139,70 +133,94 @@ func downloadAndReportProgress(chain string, pins []manifest.ChunkRecord, chunkP
 			break
 		}
 
+		if event.Event == progress.AllDone {
+			msg := fmt.Sprintf("%sCompleted initializing %s files.%s", colors.BrightWhite, chunkType, colors.Off)
+			logger.Log(logger.Info, msg, strings.Repeat(" ", 60))
+			break
+		}
+
+		// TODO: is this a performance issue?
+		m.Lock() // To conflict progress printing
 		switch event.Event {
 		case progress.Error:
 			logger.Log(logger.Error, event.Message)
 			if ok {
-				failed = append(failed, *pin)
+				failed = append(failed, *chunk)
 			}
+
 		case progress.Start:
-			logger.Log(logger.Info, "Unchaining", chunkTypeToDescription[chunkPath.Type], event.Message, "to", fileName)
+			nStarted12++
+			if nProcessed12 < 20 { // we don't need too many of these
+				logger.Log(logger.Info, "Started download ", nStarted12, " of ", nTotal, " ", event.Message)
+			}
+			if nStarted12 == poolSize*3 {
+				msg := fmt.Sprintf("%sPlease wait...%s", colors.BrightWhite, colors.Off)
+				logger.Log(logger.Info, msg)
+			}
+
 		case progress.Update:
-			logger.Log(logger.Info, event.Message, fileName)
-		case progress.Done:
-			pinsDone++
+			msg := fmt.Sprintf("%s%s%s", colors.Yellow, event.Message, colors.Off)
+			logger.Log(logger.Info, msg, spaces)
+			nUpdated12++
+
+		case progress.Finished:
+			nProcessed12++
+			col := colors.Yellow
+			if event.Message == "bloom" {
+				col = colors.Magenta
+			}
+			msg := fmt.Sprintf("Unchained %s%s%s file for range %s%s%s (% 4d of %4d)", col, event.Message, colors.Off, col, rng, colors.Off, nProcessed12, nTotal)
+			logger.Log(logger.Info, msg, spaces)
+
 		default:
-			logger.Log(logger.Info, event.Message, fileName)
+			logger.Log(logger.Info, event.Message, rng, spaces)
 		}
+		m.Unlock()
+
+		// if opts.Sleep != 0.0 {
+		// 	logger.Log(logger.Info, "")
+		// 	logger.Log(logger.Info, "Sleeping between downloads for", opts.Sleep, "seconds")
+		// 	time.Sleep(time.Duration(opts.Sleep*1000) * time.Millisecond)
+		// }
 	}
 
 	return failed, cancelled
 }
 
-// Retries downloading `failedPins` for `times` times by calling `downloadChunks` function.
-// Returns number of pins that we were unable to fetch.
-// This function is simple because: 1. it will never get a new failing pin (it only feeds in
-// the list of known, failed pins); 2. The maximum number of failing pins we can get equals
-// the length of `failedPins`.
-func retry(failedPins []manifest.ChunkRecord, times uint, downloadChunks downloadFunc) int {
-	retryCount := uint(0)
+// retry retries downloading any `failedChunks`. It repeats `nTimes` times by calling `downloadChunks` function.
+//
+// Returns number of chunks that we were unable to fetch. This function is simple because:
+//  1. it will never get a new failing chunk (it only feeds in the list of known, failed chunks)
+//  2. The maximum number of failing chunks we can get equals the length of `failedChunks`.
+//
+// TODO: Instead of storing failed attempts in an array and retrying them after processing the entire list in the manifest,
+// TODO: we want to re-process failed downloads on the stop. In that way, we can do progressive backoff per chunk (as opposed
+// TODO: to globally). We want to back-off on single chunks instead of every chunk. The backoff routine carries an 'attempts'
+// TODO: value and we wait after each failure 2^nAttempts (double the wait each time it fails). Max 10 tries or something.
+func retry(failedChunks []manifest.ChunkRecord, nTimes int, downloadChunksFunc func(chunks []manifest.ChunkRecord) (failed []manifest.ChunkRecord, cancelled bool)) int {
+	count := 0
 
-	pinsToRetry := failedPins
+	chunksToRetry := failedChunks
 	cancelled := false
 
 	for {
-		if len(pinsToRetry) == 0 {
+		if len(chunksToRetry) == 0 {
 			break
 		}
 
-		if retryCount >= times {
+		if count >= nTimes {
 			break
 		}
 
-		pinsToRetry, cancelled = downloadChunks(pinsToRetry)
-		if cancelled {
+		logger.Log(logger.Warning, colors.Yellow, "Retrying", len(chunksToRetry), "downloads", colors.Off)
+		if chunksToRetry, cancelled = downloadChunksFunc(chunksToRetry); cancelled {
 			break
 		}
 
-		retryCount++
+		count++
 	}
 
-	return len(pinsToRetry)
+	return len(chunksToRetry)
 }
 
-func (opts *InitOptions) PrintManifestHeader() {
-	// The following two values should be read the manifest, however right now only
-	// TSV format is available for download and it lacks this information
-	// TODO: These values should be in a config file
-	// TODO: We can add the "loaded" configuration file to Options
-	// TODO: This needs to be per chain data
-	chain := opts.Globals.Chain
-	logger.Log(logger.Info, "hashToIndexFormatFile:", "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2")
-	logger.Log(logger.Info, "hashToBloomFormatFile:", "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD")
-	logger.Log(logger.Info, "manifestHashEncoding:", "0x337f3f32")
-	logger.Log(logger.Info, "unchainedIndexAddr:", "0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd")
-	if !opts.Globals.TestMode {
-		logger.Log(logger.Info, "manifestLocation:", config.GetPathToChainConfig(chain)) // order matters
-		logger.Log(logger.Info, "unchainedIndexFolder:", config.GetPathToIndex(chain))   // order matters
-	}
-}
+var spaces = strings.Repeat(" ", 55)

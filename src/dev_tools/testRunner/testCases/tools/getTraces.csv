@@ -73,4 +73,4 @@ local   ,both ,fast  ,traces ,tools/getTraces ,multi_articulate    ,y    ,transa
 local   ,both ,fast  ,traces ,tools/getTraces ,by_filter5          ,y    ,fmt = json & filter = 4370000!4370002
 local   ,both ,fast  ,traces ,tools/getTraces ,by_filter9          ,y    ,fmt = json & filter = 4370000!4370002!!!1!
 
-on      ,both ,fast  ,traces ,tools/getTraces ,no_tracing          ,y    ,transactions = 3648669.24 & chain = ropsten
+on      ,both ,fast  ,traces ,tools/getTraces ,no_tracing          ,y    ,transactions = 3648669.24 & chain = non-tracing

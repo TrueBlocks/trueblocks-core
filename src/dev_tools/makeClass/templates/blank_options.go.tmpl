@@ -14,7 +14,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
+[{CONFIGPKG}]	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -35,7 +35,7 @@ func (opts *[{PROPER}]Options) testLog() {
 
 // String implements the Stringer interface
 func (opts *[{PROPER}]Options) String() string {
-	b, _ := json.MarshalIndent(opts, "", "\t")
+	b, _ := json.MarshalIndent(opts, "", "  ")
 	return string(b)
 }
 
@@ -65,7 +65,7 @@ func [{LOWER}]FinishParse(args []string) *[{PROPER}]Options {
 	defFmt := "txt"
 	// EXISTING_CODE
 	// EXISTING_CODE
-	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
+[{CONFIG_OVERRIDE}]	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}
 	return opts

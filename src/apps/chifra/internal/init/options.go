@@ -18,9 +18,11 @@ import (
 
 // InitOptions provides all command options for the chifra init command.
 type InitOptions struct {
-	All     bool                  `json:"all,omitempty"`     // In addition to Bloom filters, download full index chunks
-	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
-	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
+	All        bool                  `json:"all,omitempty"`        // In addition to Bloom filters, download full index chunks
+	FirstBlock uint64                `json:"firstBlock,omitempty"` // Do not download any chunks earlier than this block
+	Sleep      float64               `json:"sleep,omitempty"`      // Seconds to sleep between downloads
+	Globals    globals.GlobalOptions `json:"globals,omitempty"`    // The global options
+	BadFlag    error                 `json:"badFlag,omitempty"`    // An error flag if needed
 }
 
 var initCmdLineOptions InitOptions
@@ -28,22 +30,30 @@ var initCmdLineOptions InitOptions
 // testLog is used only during testing to export the options for this test case.
 func (opts *InitOptions) testLog() {
 	logger.TestLog(opts.All, "All: ", opts.All)
+	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
+	logger.TestLog(opts.Sleep != float64(0.0), "Sleep: ", opts.Sleep)
 	opts.Globals.TestLog()
 }
 
 // String implements the Stringer interface
 func (opts *InitOptions) String() string {
-	b, _ := json.MarshalIndent(opts, "", "\t")
+	b, _ := json.MarshalIndent(opts, "", "  ")
 	return string(b)
 }
 
 // initFinishParseApi finishes the parsing for server invocations. Returns a new InitOptions.
 func initFinishParseApi(w http.ResponseWriter, r *http.Request) *InitOptions {
 	opts := &InitOptions{}
-	for key, _ := range r.URL.Query() {
+	opts.FirstBlock = 0
+	opts.Sleep = 0.0
+	for key, value := range r.URL.Query() {
 		switch key {
 		case "all":
 			opts.All = true
+		case "firstBlock":
+			opts.FirstBlock = globals.ToUint64(value[0])
+		case "sleep":
+			opts.Sleep = globals.ToFloat64(value[0])
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "init")
@@ -64,6 +74,9 @@ func initFinishParse(args []string) *InitOptions {
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
 	// EXISTING_CODE
+	if len(args) > 0 {
+		opts.BadFlag = validate.Usage("Invalid argument ({0}).", args[0])
+	}
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt

@@ -31,9 +31,6 @@ struct NameOnDiscHeader {
 };
 
 //-----------------------------------------------------------------------
-// TODO: These singletons are used throughout - as long as this code
-// TODO: is not inside a server, it doesn't appear to have any downsides.
-// TODO: Assuming this is true, we can remove this comment.
 static CAddressNameMap namesMap;
 static map<address_t, NameOnDisc*> namePtrMap;
 static NameOnDisc* namesAllocated = nullptr;
@@ -429,13 +426,5 @@ bool updateName(const CAccountName& target, const string_q& crud) {
 
     return true;
 }
-
-// TODO: When writing out the data to the .csv file
-// TODO:    sort it
-// TODO:    do not export zero addresses or prefunds or customs
-// TODO:    turn off TEST_MODE while writing otherwise we lose the names
-// TODO:    for autoname, do not write records that assign address to name
-// TODO:    for autoname, do not write records that assign address to name
-// TODO:    string_q copyBack = getGlobalConfig("ethNames")->getConfigStr("settings", "source", "<not_set>");
 
 }  // namespace qblocks

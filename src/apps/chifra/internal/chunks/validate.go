@@ -8,6 +8,10 @@ import (
 	"errors"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -19,62 +23,82 @@ func (opts *ChunksOptions) validateChunks() error {
 	}
 
 	if len(opts.Mode) == 0 {
-		return validate.Usage("Please choose at least one of {0}.", "[stats|manifest|pins|blooms|index|addresses|appearances]")
+		return validate.Usage("Please choose at least one of {0}.", "[status|manifest|index|blooms|addresses|appearances|stats]")
 	}
 
-	err := validate.ValidateEnum("mode", opts.Mode, "[stats|manifest|pins|blooms|index|addresses|appearances]")
+	err := validate.ValidateEnum("mode", opts.Mode, "[status|manifest|index|blooms|addresses|appearances|stats]")
 	if err != nil {
 		return err
 	}
 
-	if opts.Globals.LogLevel > 0 && opts.Mode == "addresses" && opts.Globals.Format == "json" {
-		return validate.Usage("You may not use --format json and log_level > 0 in addresses mode")
-	}
-
-	if opts.Publish {
-		return validate.Usage("The {0} option is not yet enabled", "--publish")
-	}
-
-	if opts.Mode != "manifest" {
-		if opts.PinRemote || opts.Publish {
-			return validate.Usage("The {0} and {1} options are available only in {2} mode.", "--pin_remote", "--publish", "manifest")
+	isIndexOrManifest := opts.Mode == "index" || opts.Mode == "manifest"
+	if !isIndexOrManifest {
+		if err = opts.isDisallowed(!isIndexOrManifest /* i.e., true */, opts.Mode); err != nil {
+			return err
 		}
-		if opts.Clean {
-			return validate.Usage("The {0} option is available only in {1} mode.", "--clean", "manifest")
-		}
+
 		if opts.Check {
-			return validate.Usage("The {0} option is available only in {1} mode.", "--check", "manifest")
+			return validate.Usage("The {0} option is not available in {1} mode.", "--check", opts.Mode)
+		}
+	}
+
+	if opts.Mode == "manifest" {
+		if opts.Pin {
+			if opts.Remote {
+				pinataKey, pinataSecret, estuaryKey := config.GetPinningKeys(opts.Globals.Chain)
+				if (pinataKey == "" || pinataSecret == "") && estuaryKey == "" {
+					return validate.Usage("The {0} option requires {1}.", "--pin --remote", "an api key")
+				}
+
+			} else if !pinning.LocalDaemonRunning() {
+				return validate.Usage("The {0} option requires {1}.", "--pin", "a locally running IPFS daemon or --remote")
+
+			}
 		}
 	} else {
-		settings := config.GetBlockScrapeSettings(opts.Globals.Chain)
-		key, secret := settings.Pinata_api_key, settings.Pinata_secret_api_key
-		if opts.PinRemote {
-			if len(key) == 0 {
-				return validate.Usage("The {0} option requires {1}", "--pin_remote", "a pinata_api_key")
-			}
-			if len(secret) == 0 {
-				return validate.Usage("The {0} option requires {1}", "--pin_remote", "a pinata_secret_api_key")
-			}
-		}
 		if opts.Publish {
-			if len(key) == 0 {
-				return validate.Usage("The {0} option requires {1}", "--pin_remote", "a pinata_api_key")
+			return validate.Usage("The {0} option is available only in {1} mode.", "--publish", "index or manifest")
+		}
+	}
+
+	if opts.Mode != "index" {
+		if opts.Truncate != utils.NOPOS {
+			return validate.Usage("The {0} option is only available {1}.", "--truncate", "in index mode")
+		}
+		if len(opts.Belongs) > 0 {
+			return validate.Usage("The {0} option requires {1}.", "--belongs", "the index mode")
+		}
+
+	} else {
+		if len(opts.Belongs) > 0 {
+			err := validate.ValidateAtLeastOneAddr(opts.Belongs)
+			if err != nil {
+				return err
 			}
-			if len(secret) == 0 {
-				return validate.Usage("The {0} option requires {1}", "--pin_remote", "a pinata_secret_api_key")
+			if opts.Globals.Verbose {
+				return validate.Usage("Choose either {0} or {1}, not both.", "--verbose", "--belongs")
+			}
+			if len(opts.Blocks) == 0 {
+				return validate.Usage("You must specifiy at least one {0} with the {1} option", "block identifier", "--belongs")
 			}
 		}
 	}
 
-	if opts.Belongs {
-		if opts.Mode != "addresses" && opts.Mode != "blooms" {
-			return validate.Usage("The --belongs option is only available with either the addresses or blooms mode")
+	if err = opts.isDisallowed(opts.Globals.ApiMode, "API"); err != nil {
+		return err
+	}
+
+	if err = opts.isDisallowed(opts.Globals.TestMode, "test"); err != nil {
+		return err
+	}
+
+	if opts.Globals.Verbose || opts.Globals.LogLevel > 0 {
+		if opts.Mode == "addresses" && opts.Globals.Format == "json" {
+			return validate.Usage("Do not use {0} with {1}", "--format json", "--verbose in the addresses mode")
 		}
-		if len(opts.Addrs) == 0 {
-			return validate.Usage("You must specifiy at least one address with the --belongs option")
-		}
-		if len(opts.Blocks) == 0 {
-			return validate.Usage("You must specifiy at least one block identifier with the --belongs option")
+	} else {
+		if opts.Globals.ToFile {
+			return validate.Usage("You may not use the {0} option without {1}.", "--to_file", "--verbose")
 		}
 	}
 
@@ -95,45 +119,32 @@ func (opts *ChunksOptions) validateChunks() error {
 		return err
 	}
 
-	if opts.Repair {
-		if opts.Mode != "manifest" {
-			return validate.Usage("The --repair option is only available in index mode")
-		}
-
-		if len(opts.BlockIds) != 1 {
-			return validate.Usage("You must supply exactly one block number with the --repair option")
-		}
-
-		blockNums, err := opts.BlockIds[0].ResolveBlocks(opts.Globals.Chain)
-		if err != nil {
+	// Note that this does not return if the index is not initialized
+	if err := index.IndexIsInitialized(opts.Globals.Chain); err != nil {
+		if opts.Globals.ApiMode {
 			return err
-		}
-		if len(blockNums) != 1 {
-			return validate.Usage("You must supply exactly one block number with the --repair option")
-		}
-
-		if opts.Globals.TestMode {
-			return validate.Usage("The --repair option is not available in test mode")
-		}
-	}
-
-	if len(opts.Addrs) > 0 && !opts.Belongs {
-		return validate.Usage("You may only specify an address with the --belongs option")
-	}
-
-	if opts.Details && opts.Belongs {
-		return validate.Usage("Choose either {0} or {1}, not both.", "--details", "--belongs")
-	}
-
-	// Note this does not return if a migration is needed
-	// TODO: BOGUS - DO WE WANT TO DISALLOW INVESTIGATION OF OLDER INSTALLATIONS?
-	// migrate.CheckBackLevelIndex(opts.Globals.Chain)
-
-	if opts.Remote {
-		if opts.Mode != "pins" && opts.Mode != "manifest" {
-			return validate.Usage("The {0} option is only available {1}.", "--remote", "in pins or manifest mode")
+		} else {
+			logger.Fatal(err)
 		}
 	}
 
 	return opts.Globals.Validate()
+}
+
+func (opts *ChunksOptions) isDisallowed(test bool, mode string) error {
+	if test {
+		if opts.Pin {
+			return validate.Usage("The {0} option is not available in {1} mode.", "--pin", mode)
+		}
+		if opts.Publish {
+			return validate.Usage("The {0} option is not available in {1} mode.", "--publish", mode)
+		}
+		if opts.Remote {
+			return validate.Usage("The {0} option is not available in {1} mode.", "--remote", mode)
+		}
+		if opts.Truncate != utils.NOPOS {
+			return validate.Usage("The {0} option is not available in {1} mode.", "--truncate", mode)
+		}
+	}
+	return nil
 }

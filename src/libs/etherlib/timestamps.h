@@ -15,7 +15,6 @@
 
 namespace qblocks {
 
-extern blknum_t ts_2_blockNumber(blknum_t blk);
 extern timestamp_t bn_2_Timestamp(blknum_t bn);
 extern bool freshenTimestamps(blknum_t minBlock);
 extern bool correctTimestamp(blknum_t blk, timestamp_t ts);

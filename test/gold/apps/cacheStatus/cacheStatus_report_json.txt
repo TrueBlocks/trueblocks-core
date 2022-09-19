@@ -69,8 +69,7 @@ TEST[DATE|TIME] Format:  json
       "rpcProvider": "--provider-mainnet--",
       "apiProvider": "--provider-mainnet--",
       "remoteExplorer": "--explorer-mainnet--",
-      "localExplorer": "--explorer-mainnet--",
-      "pinGateway": "--gateway-mainnet--"
+      "localExplorer": "--explorer-mainnet--"
     },
     {
       "chain": "gnosis",
@@ -79,8 +78,7 @@ TEST[DATE|TIME] Format:  json
       "rpcProvider": "--provider-gnosis--",
       "apiProvider": "--provider-gnosis--",
       "remoteExplorer": "--explorer-gnosis--",
-      "localExplorer": "--explorer-gnosis--",
-      "pinGateway": "--gateway-gnosis--"
+      "localExplorer": "--explorer-gnosis--"
     }
   ],
   "date": "--date--"

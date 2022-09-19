@@ -18,10 +18,6 @@ func (opts *AbisOptions) validateAbis() error {
 		return opts.BadFlag
 	}
 
-	if opts.Classes {
-		return validate.Usage("The {0} option is not available{1}.", "--classes", " (not implemented)")
-	}
-
 	if len(opts.Find) == 0 && !opts.Known {
 		// If we're not find and not known we better have at least one address
 		err := validate.ValidateAtLeastOneAddr(opts.Addrs)

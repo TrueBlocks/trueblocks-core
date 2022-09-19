@@ -12,6 +12,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/spf13/cobra"
 )
 
@@ -108,9 +109,6 @@ func (opts *GlobalOptions) toCmdLine() string {
 	if opts.Raw {
 		options += " --raw"
 	}
-	// if opts.Noop {
-	// 	options += " --noop"
-	// }
 	if opts.Version {
 		options += " --version"
 	}
@@ -132,11 +130,6 @@ func (opts *GlobalOptions) toCmdLine() string {
 	}
 	if opts.NoHeader {
 		options += " --no_header"
-	}
-	if len(opts.Chain) > 0 {
-		// TODO: Do we need --chain in the c++ code?
-		// fmt.Fprintf(os.Stderr, "chain: %s\n", opts.Chain)
-		// options += " --chain" + opts.Chain
 	}
 	if opts.Wei {
 		options += " --wei"
@@ -206,12 +199,15 @@ func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOption
 		}
 	}
 
+	if len(opts.Format) == 0 || opts.Format == "none" {
+		opts.Format = "api"
+	}
+
 	if len(opts.Chain) == 0 {
 		opts.Chain = config.GetDefaultChain()
 	}
-
-	if len(opts.Format) == 0 || opts.Format == "none" {
-		opts.Format = "api"
+	if err := tslib.EstablishTsFile(opts.Chain); err != nil {
+		fmt.Println("Could not establish ts file:", err)
 	}
 
 	return opts
@@ -222,6 +218,9 @@ func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOption
 
 func (opts *GlobalOptions) FinishParse(args []string) {
 	opts.Writer = os.Stdout
+	if err := tslib.EstablishTsFile(opts.Chain); err != nil {
+		fmt.Println("Could not establish ts file:", err)
+	}
 }
 
 func IsGlobalOption(key string) bool {

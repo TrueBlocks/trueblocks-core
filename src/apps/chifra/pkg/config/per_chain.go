@@ -33,8 +33,13 @@ func GetRemoteExplorer(chain string) string {
 
 // GetIpfsGateway returns the ipfs gateway for a chain
 func GetIpfsGateway(chain string) string {
-	ch := GetRootConfig().Chains[chain]
-	return cleanUrl(ch.PinGateway)
+	def := GetRootConfig().Settings.DefaultGateway
+	gateway := GetRootConfig().Chains[chain].IpfsGateway
+	if len(gateway) == 0 {
+		gateway = def
+	}
+	gateway = strings.Replace(gateway, "[{CHAIN}]", chain, -1)
+	return cleanUrl(gateway)
 }
 
 // GetRpcProvider returns the RPC provider for a chain

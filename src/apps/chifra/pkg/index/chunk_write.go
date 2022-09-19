@@ -4,273 +4,199 @@ import (
 	"encoding/binary"
 	"fmt"
 	"io"
-	"log"
 	"os"
+	"path/filepath"
 	"sort"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/crypto"
 )
 
 type AddressAppearanceMap map[string][]AppearanceRecord
 
-func WriteChunk(chain, indexPath string, addAppMap AddressAppearanceMap, nApps int, pin bool) (uint64, error) {
-	addressTable := make([]AddressRecord, 0, len(addAppMap))
+type WriteChunkReport struct {
+	Range        paths.FileRange
+	nAddresses   int
+	nAppearances int
+	Snapped      bool
+	Pinned       bool
+	PinRecord    manifest.ChunkRecord
+}
+
+func (c *WriteChunkReport) Report() {
+	str := fmt.Sprintf("%sWrote %d address and %d appearance records to $INDEX/%s.bin%s%s", colors.BrightBlue, c.nAddresses, c.nAppearances, c.Range, colors.Off, spaces20)
+	if c.Snapped {
+		str = fmt.Sprintf("%sWrote %d address and %d appearance records to $INDEX/%s.bin %s%s%s", colors.BrightBlue, c.nAddresses, c.nAppearances, c.Range, colors.Yellow, "(snapped to grid)", colors.Off)
+	}
+	logger.Log(logger.Info, str)
+	if c.Pinned {
+		str := fmt.Sprintf("%sPinned chunk $INDEX/%s.bin (%s,%s)%s", colors.BrightBlue, c.Range, c.PinRecord.IndexHash, c.PinRecord.BloomHash, colors.Off)
+		logger.Log(logger.Info, str)
+	}
+}
+
+func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, nApps int, pin, remote bool) (*WriteChunkReport, error) {
+	// We're going to build two tables. An addressTable and an appearanceTable. We do this as we spin
+	// through the map
+
+	// Create space for the two tables...
+	addressTable := make([]AddressRecord, 0, len(addrAppearanceMap))
 	appearanceTable := make([]AppearanceRecord, 0, nApps)
 
+	// We want to sort the items in the map by address (maps in GoLang are not sorted)
 	sorted := []string{}
-	for address := range addAppMap {
+	for address := range addrAppearanceMap {
 		sorted = append(sorted, address)
 	}
 	sort.Slice(sorted, func(i, j int) bool {
 		return sorted[i] < sorted[j]
 	})
 
+	// We need somewhere to store our progress...
+	offset := uint32(0)
 	bl := bloom.ChunkBloom{}
 
-	offset := uint32(0)
+	// For each address in the sorted list...
 	for _, addrStr := range sorted {
-		apps := addAppMap[addrStr]
-		for _, app := range apps {
-			appearanceTable = append(appearanceTable, app)
-		}
+		// ...get its appeances and append them to the appearanceTable....
+		apps := addrAppearanceMap[addrStr]
+		appearanceTable = append(appearanceTable, apps...)
+
+		// ...add the address to the bloom filter...
 		address := common.HexToAddress(addrStr)
 		bl.AddToSet(address)
+
+		// ...and append the record to the addressTable.
 		addressTable = append(addressTable, AddressRecord{
 			Address: address,
 			Offset:  offset,
 			Count:   uint32(len(apps)),
 		})
+
+		// Finally, note the next offset
 		offset += uint32(len(apps))
 	}
 
-	rel := strings.Replace(indexPath, config.GetPathToIndex(chain), "$INDEX/", -1)
-	// TODO: BOGUS - TESTING SCRAPING
-	if utils.OnOff {
-		// We have everything we need here, properly sorted with all fields completed
-		fmt.Println("Writing", rel)
-		fmt.Printf("%x,%s,%d,%d\n", file.MagicNumber, hexutil.Encode(crypto.Keccak256([]byte(version.ManifestVersion))), len(addressTable), len(appearanceTable))
-		for _, addrRec := range addressTable {
-			fmt.Println(addrRec.Address, addrRec.Offset, addrRec.Count)
+	// At this point, the two tables and the bloom filter are fully populated. We're ready to write to disc...
+
+	// First, we backup the existing chunk if there is one...
+	indexFn := paths.ToIndexPath(fileName)
+	tmpPath := filepath.Join(config.GetPathToCache(chain), "tmp")
+	if backupFn, err := file.MakeBackup(tmpPath, indexFn); err == nil {
+		defer func() {
+			if file.FileExists(backupFn) {
+				// If the backup file exists, something failed, so we replace the original file.
+				os.Rename(backupFn, indexFn)
+				os.Remove(backupFn) // seems redundant, but may not be on some operating systems
+			}
+		}()
+
+		if fp, err := os.OpenFile(indexFn, os.O_WRONLY|os.O_CREATE, 0644); err == nil {
+			// defer fp.Close() // Note -- we don't defer because we want to close the file and possibly pin it below...
+
+			fp.Seek(0, io.SeekStart) // already true, but can't hurt
+			header := IndexHeaderRecord{
+				Magic:           file.MagicNumber,
+				Hash:            common.BytesToHash(crypto.Keccak256([]byte(version.ManifestVersion))),
+				AddressCount:    uint32(len(addressTable)),
+				AppearanceCount: uint32(len(appearanceTable)),
+			}
+			if err = binary.Write(fp, binary.LittleEndian, header); err != nil {
+				return nil, err
+			}
+
+			if binary.Write(fp, binary.LittleEndian, addressTable); err != nil {
+				return nil, err
+			}
+
+			if binary.Write(fp, binary.LittleEndian, appearanceTable); err != nil {
+				return nil, err
+			}
+
+			if _, err = bl.WriteBloom(chain, paths.ToBloomPath(indexFn)); err != nil {
+				return nil, err
+			}
+
+			if err := fp.Sync(); err != nil {
+				return nil, err
+			}
+
+			if err := fp.Close(); err != nil { // Close the file so we can pin it
+				return nil, err
+			}
+
+			// We're sucessfully written the chunk, so we don't need this any more. If the pin
+			// fails we don't want to have to re-do this chunk, so remove this here.
+			os.Remove(backupFn)
+
+			rng := paths.RangeFromFilename(indexFn)
+			report := WriteChunkReport{ // For use in reporting...
+				Range:        rng,
+				nAddresses:   len(addressTable),
+				nAppearances: len(appearanceTable),
+				Pinned:       pin,
+			}
+
+			if !pin {
+				return &report, nil
+			}
+
+			result, err := pinning.PinChunk(chain, indexFn, remote)
+			if err != nil {
+				return &report, err
+			}
+
+			if err = pinning.PinTimestamps(chain, remote); err != nil {
+				return &report, err
+			}
+
+			rec := ResultToRecord(&result)
+			report.PinRecord.IndexHash = rec.IndexHash
+			report.PinRecord.BloomHash = rec.BloomHash
+			report.PinRecord.IndexSize = rec.IndexSize
+			report.PinRecord.BloomSize = rec.BloomSize
+			return &report, manifest.UpdateManifest(chain, rec)
+
+		} else {
+			return nil, err
 		}
-		for _, appRec := range appearanceTable {
-			fmt.Println(appRec.BlockNumber, appRec.TransactionId)
-		}
-		fmt.Println("In WriteIndex", indexPath)
-	}
 
-	// TODO: BOGUS - YIKES!
-	tempPath := strings.Replace(indexPath, "unchained/sepolia/finalized/", "cache/sepolia/tmp/", -1)
-	tempPath = strings.Replace(tempPath, "unchained/gnosis/finalized/", "cache/gnosis/tmp/", -1)
-	tempPath = strings.Replace(tempPath, "unchained/polygon/finalized/", "cache/polygon/tmp/", -1)
-	if indexPath == tempPath {
-		log.Fatal("Paths should differ:", tempPath, indexPath)
+	} else {
+		return nil, err
 	}
-	fp, err := os.OpenFile(tempPath, os.O_WRONLY|os.O_CREATE, 0644)
-	defer func() {
-		os.Remove(tempPath)
-		// sigintTrap.Disable(trapCh)
-		// writeMutex.Lock()
-	}()
-	if err != nil {
-		return 0, err
-	}
-
-	fp.Seek(0, io.SeekStart)
-	header := HeaderRecord{
-		Magic:           file.MagicNumber,
-		Hash:            common.BytesToHash(crypto.Keccak256([]byte(version.ManifestVersion))),
-		AddressCount:    uint32(len(addressTable)),
-		AppearanceCount: uint32(len(appearanceTable)),
-	}
-	err = binary.Write(fp, binary.LittleEndian, header)
-	if err != nil {
-		fp.Close()
-		return 0, err
-	}
-	err = binary.Write(fp, binary.LittleEndian, addressTable)
-	if err != nil {
-		fp.Close()
-		return 0, err
-	}
-	err = binary.Write(fp, binary.LittleEndian, appearanceTable)
-	if err != nil {
-		fp.Close()
-		return 0, err
-	}
-	// Don't defer this because we want it to be closed before we copy it
-	fp.Close()
-
-	fmt.Println("Wrote", len(addAppMap), "records to", rel)
-	// TODO: BOGUS - TESTING SCRAPING
-	if utils.OnOff {
-		nBlooms, nInserted, nBitsLit, nBitsNotLit, sz, bitsLit := bl.GetStats()
-		fmt.Println("nBlooms:    ", nBlooms)
-		fmt.Println("nInserted:  ", nInserted)
-		fmt.Println("nBitsLit:   ", nBitsLit)
-		fmt.Println("nBitsNotLit:", nBitsNotLit)
-		fmt.Println("sz:         ", sz)
-		fmt.Println("bitsLit:    ", bitsLit)
-	}
-
-	os.Remove(indexPath)
-	_, err = file.Copy(tempPath, indexPath)
-	if err != nil {
-		return 0, err
-	}
-
-	err = bl.WriteBloom(chain, ToBloomPath(indexPath))
-	if err != nil {
-		return 0, err
-	}
-
-	if pin {
-		// TODO: BOGUS - PINNING WHEN WRITING IN GOLANG
-		rng := "000000000-000000000"
-		newPinsFn := config.GetPathToCache(chain) + "tmp/chunks_created.txt"
-		file.AppendToAsciiFile(newPinsFn, rng+"\n")
-	}
-
-	return 0, nil
 }
-
-/*
-	    ASSERT(!fileExists(outFn));
-	    string_q tmpFile2 = substitute(outFn, ".bin", ".tmp");
-
-	    address_t prev;
-	    uint32_t offset = 0, nAddrs = 0, cnt = 0;
-	    CIndexedAppearanceArray appTable;
-
-	    hashbytes_t hash = hash_2_Bytes(padLeft(keccak256(manifestVersion), 64, '0'));
-	    CArchive archive(WRITING_ARCHIVE);
-	    if (!archive.Lock(tmpFile2, modeWriteCreate, LOCK_NOWAIT)) {
-	        LOG_ERR("Could not lock index file: ", tmpFile2);
-	        return false;
-	    }
-
-	    archive.Seek(0, SEEK_SET);  // write the header even though it's not fully detailed to preserve the space
-	    archive.Write(MAGIC_NUMBER);
-	    archive.Write(hash.data(), hash.size(), sizeof(uint8_t));
-	    archive.Write(nAddrs);
-	    archive.Write((uint32_t)appTable.size());  // not accurate yet
-
-	    CBloomFilterWrit e bloomFilter;
-	    for (size_t l = 0; l < lines.size(); l++) {
-	        string_q line = lines[l];
-	        ASSERT(countOf(line, '\t') == 2);
-	        CStringArray parts;
-	        explode(parts, line, '\t');
-	        CIndexedAppearance rec(parts[1], parts[2]);
-	        appTable.push_back(rec);
-	        if (!prev.empty() && parts[0] != prev) {
-	            bloomFilter.addToSet(prev);
-	            addrbytes_t bytes = addr_2_Bytes(prev);
-	            archive.Write(bytes.data(), bytes.size(), sizeof(uint8_t));
-	            archive.Write(offset);
-	            archive.Write(cnt);
-	            offset += cnt;
-	            cnt = 0;
-	            nAddrs++;
-	        }
-	        cnt++;
-	        prev = parts[0];
-	    }
-
-	    bloomFilter.addToSet(prev);
-	    addrbytes_t bytes = addr_2_Bytes(prev);
-	    archive.Write(bytes.data(), bytes.size(), sizeof(uint8_t));
-	    archive.Write(offset);
-	    archive.Write(cnt);
-	    nAddrs++;
-
-	    for (auto record : appTable) {
-	        archive.Write(record.blk);
-	        archive.Write(record.txid);
-	    }
-
-	    archive.Seek(0, SEEK_SET);  // re-write the header now that we have full data
-	    archive.Write(MAGIC_NUMBER);
-	    archive.Write(hash.data(), hash.size(), sizeof(uint8_t));
-	    archive.Write(nAddrs);
-	    archive.Write((uint32_t)appTable.size());
-	    archive.Release();
-
-	    string_q bloomFile = substitute(substitute(outFn, "/finalized/", "/blooms/"), ".bin", ".bloom");
-	    lockSection();                            // disallow control+c
-	    bloomFilter.writeBloomFilter(bloomFile);  // write the bloom file
-	    copyFile(tmpFile2, outFn);                // move the index file
-	    ::remove(tmpFile2.c_str());               // remove the tmp file
-	    unlockSection();
-
-	    string_q range = substitute(substitute(outFn, indexFolder_finalized, ""), indexFolder_blooms, "");
-	    range = substitute(substitute(range, ".bin", ""), ".bloom", "");
-	    appendToAsciiFile(cacheFolder_tmp + "chunks_created.txt", range + "\n");
-
-	    return !shouldQuit();
-	bool CBloomFilterRead::writeBloomFilter(const string_q& fileName) {
-	    lockSection();
-	    CArchive output(WRITING_ARCHIVE);
-	    if (!output.Lock(fileName, modeWriteCreate, LOCK_NOWAIT)) {
-	        unlockSection();
-	        return false;
-	    }
-	    output.Write((uint32_t)array.size());
-	    for (auto bloom : array) {
-	        output.Write(bloom.nInserted);
-	        output.Write(bloom.bits, sizeof(uint8_t), BLOOM_WIDTH_IN_BYTES);
-	    }
-	    output.Release();
-	    unlockSection();
-	    return true;
-	}
-*/
 
 type Renderer interface {
 	RenderObject(data interface{}, first bool) error
 }
 
-// func TestWrite(chain, path string, rend Renderer) {
-// 	path = ToIndexPath(path)
+var spaces20 = strings.Repeat(" ", 20)
 
-// 	indexChunk, err := NewChunkData(path)
-// 	if err != nil {
-// 		fmt.Println(err.Error())
-// 		return
-// 	}
-// 	defer indexChunk.Close()
-
-// 	_, err = indexChunk.File.Seek(int64(HeaderWidth), io.SeekStart)
-// 	if err != nil {
-// 		fmt.Println(err.Error())
-// 		return
-// 	}
-
-// 	addrAppMap := make(AddressAppearanceMap, indexChunk.Header.AddressCount)
-// 	for i := 0; i < int(indexChunk.Header.AddressCount); i++ {
-// 		obj := AddressRecord{}
-// 		err := obj.ReadAddress(indexChunk.File)
-// 		if err != nil {
-// 			fmt.Println(err.Error())
-// 			return
-// 		}
-// 		apps, err := indexChunk.ReadAppearanceRecordsAndResetOffset(&obj)
-// 		if err != nil {
-// 			fmt.Println(err.Error())
-// 			return
-// 		}
-// 		addr := hexutil.Encode(obj.Address.Bytes()) // a lowercase string
-// 		for _, app := range apps {
-// 			addrAppMap[addr] = append(addrAppMap[addr], app)
-// 		}
-// 	}
-// 	WriteChunk(chain, path, addrAppMap, len(addrAppMap), false)
-// 	return
-// }
+func ResultToRecord(result *pinning.PinResult) manifest.ChunkRecord {
+	if len(result.Local.BloomHash) > 0 {
+		return manifest.ChunkRecord{
+			Range:     result.Range.String(),
+			IndexHash: result.Local.IndexHash,
+			IndexSize: result.Local.IndexSize,
+			BloomHash: result.Local.BloomHash,
+			BloomSize: result.Local.BloomSize,
+		}
+	}
+	return manifest.ChunkRecord{
+		Range:     result.Range.String(),
+		IndexHash: result.Remote.IndexHash,
+		IndexSize: result.Remote.IndexSize,
+		BloomHash: result.Remote.BloomHash,
+		BloomSize: result.Remote.BloomSize,
+	}
+}

@@ -4,16 +4,16 @@ on      ,cmd  ,fast  ,scrape ,apps/blockScrape ,help                         ,n 
 on      ,cmd  ,fast  ,scrape ,apps/blockScrape ,help_long                    ,n    ,help
 on      ,both ,fast  ,scrape ,apps/blockScrape ,invalid                      ,n    ,junk
 on      ,both ,fast  ,scrape ,apps/blockScrape ,nBlocks_invalid              ,n    ,block_cnt = -12
-on      ,both ,fast  ,scrape ,apps/blockScrape ,nBProcs_invalid              ,n    ,block_chan_cnt = -12
-on      ,both ,fast  ,scrape ,apps/blockScrape ,nAProcs_invalid              ,n    ,addr_chan_cnt = -12
+on      ,both ,fast  ,scrape ,apps/blockScrape ,nBProcs_invalid              ,n    ,channel_count = -12
+on      ,both ,fast  ,scrape ,apps/blockScrape ,nAProcs_invalid              ,n    ,channel_count = -12
 
 on      ,both ,fast  ,scrape ,apps/blockScrape ,nBlocks                      ,n    ,block_cnt = 12
 on      ,both ,fast  ,scrape ,apps/blockScrape ,listpins                     ,n    ,listpins
-on      ,both ,fast  ,scrape ,apps/blockScrape ,pin                          ,n    ,pin
+local   ,both ,fast  ,scrape ,apps/blockScrape ,pin                          ,n    ,pin
 on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_01_fail                 ,n    ,action = badmode
-on      ,both ,fast  ,scrape ,apps/blockScrape ,real_run                     ,n    ,sleep = .5 & pin & log_level = 8
+local   ,both ,fast  ,scrape ,apps/blockScrape ,real_run                     ,n    ,sleep = .5 & pin & log_level = 8
 on      ,both ,fast  ,scrape ,apps/blockScrape ,real_run2                    ,n    ,sleep = .5
-on      ,api  ,fast  ,scrape ,apps/blockScrape ,no_tracing                   ,y    ,chain = ropsten
+on      ,api  ,fast  ,scrape ,apps/blockScrape ,no_tracing                   ,y    ,chain = non-tracing
 
 off     ,both ,fast  ,scrape ,apps/blockScrape ,nBlocks                      ,n    ,modes = both & block_cnt = 12
 off     ,both ,fast  ,scrape ,apps/blockScrape ,pin                          ,n    ,modes = both & pin

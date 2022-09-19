@@ -6,7 +6,6 @@ package monitor
 
 import (
 	"encoding/binary"
-	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -35,7 +34,7 @@ func (mon *Monitor) ReadMonitorHeader() (err error) {
 func (mon *Monitor) ReadAppearanceAt(idx uint32, app *index.AppearanceRecord) (err error) {
 	if idx == 0 || idx > mon.Count() {
 		// the file contains a header one record wide, so a one-based index eases caller code
-		err = errors.New(fmt.Sprintf("index out of range in ReadAppearanceAt[%d]", idx))
+		err = fmt.Errorf("index out of range in ReadAppearanceAt[%d]", idx)
 		return
 	}
 

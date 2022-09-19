@@ -116,14 +116,6 @@ func (id IdentifierType) String() string {
 	}[id]
 }
 
-func (br Identifier) ToJSON() string {
-	str, err := json.Marshal(br)
-	if err != nil {
-		return ""
-	}
-	return string(str)
-}
-
 func (id *Identifier) UnmarshalJSON(data []byte) error {
 	str, err := strconv.Unquote(string(data))
 	if err != nil {
@@ -141,7 +133,8 @@ func (id *Identifier) UnmarshalJSON(data []byte) error {
 }
 
 func (id *Identifier) String() string {
-	return id.ToJSON()
+	str, _ := json.MarshalIndent(id, "", "  ")
+	return string(str)
 }
 
 func getPointType(p *Point) IdentifierType {

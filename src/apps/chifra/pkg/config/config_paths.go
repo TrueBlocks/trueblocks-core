@@ -24,6 +24,11 @@ const chainConfigMustExist string = `
 
 // GetPathToChainConfig returns the chain-specific config folder
 func GetPathToChainConfig(chain string) string {
+	// TODO: We can test this with a unit test
+	if chain == "non-tracing" { // Test mode only for testing non-tracing nodes
+		return GetPathToChainConfig("mainnet")
+	}
+
 	// We always need a chain
 	if len(chain) == 0 {
 		chain = GetDefaultChain()
@@ -92,11 +97,6 @@ func GetPathToCache(chain string) string {
 	return newPath
 }
 
-func GetTestChain() string {
-	// This does not get customized per chain. We can only test against mainnet currently
-	return "mainnet"
-}
-
 // GetPathToCommands returns full path the the given tool
 func GetPathToCommands(part string) string {
 	usr, _ := user.Current()
@@ -124,7 +124,7 @@ func EstablishCachePaths(cachePath string) {
 // EstablishIndexPaths sets up the index path and subfolders. It only returns if it succeeds.
 func EstablishIndexPaths(indexPath string) {
 	folders := []string{
-		"blooms", "finalized", "map", "ripe", "staging", "unripe",
+		"blooms", "finalized", "maps", "ripe", "staging", "unripe",
 	}
 	_, err := os.Stat(path.Join(indexPath, folders[len(folders)-1]))
 	if err == nil {
@@ -135,16 +135,4 @@ func EstablishIndexPaths(indexPath string) {
 	if err := file.EstablishFolders(indexPath, folders); err != nil {
 		log.Fatal(err)
 	}
-}
-
-// CleanIndexFolder removes any files that may be partial or incomplete
-func CleanIndexFolder(indexPath string) error {
-	for _, f := range []string{"ripe", "staging", "unripe", "maps"} {
-		folder := path.Join(indexPath, f)
-		err := os.RemoveAll(folder)
-		if err != nil {
-			return err
-		}
-	}
-	return nil
 }

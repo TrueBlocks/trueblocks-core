@@ -38,7 +38,7 @@ static const COption params[] = {
     COption("receipts", "r", "", OPT_SWITCH, "export receipts instead of transactional data"),
     COption("logs", "l", "", OPT_SWITCH, "export logs instead of transactional data"),
     COption("traces", "t", "", OPT_SWITCH, "export traces instead of transactional data"),
-    COption("statements", "A", "", OPT_SWITCH, "export reconciliations instead of transactional data (requires --accounting option)"),  // NOLINT
+    COption("statements", "A", "", OPT_SWITCH, "export reconciliations instead of transactional data (assumes --accounting option)"),  // NOLINT
     COption("neighbors", "n", "", OPT_SWITCH, "export the neighbors of the given address"),
     COption("accounting", "C", "", OPT_SWITCH, "attach accounting records to the exported data (applies to transactions export only)"),  // NOLINT
     COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
@@ -51,6 +51,7 @@ static const COption params[] = {
     COption("emitter", "", "list<addr>", OPT_FLAG, "for log export only, export only logs if emitted by one of these address(es)"),  // NOLINT
     COption("topic", "", "list<topic>", OPT_FLAG, "for log export only, export only logs with this topic(s)"),
     COption("asset", "", "list<addr>", OPT_FLAG, "for the statements option only, export only reconciliations for this asset"),  // NOLINT
+    COption("flow", "", "enum[in|out|zero]", OPT_FLAG, "for the statements option only, export only statements with incoming value or outgoing value"),  // NOLINT
     COption("factory", "y", "", OPT_SWITCH, "scan for contract creations from the given address(es) and report address of those contracts"),  // NOLINT
     COption("load", "", "<string>", OPT_HIDDEN | OPT_FLAG, "a comma separated list of dynamic traversers to load"),
     COption("reversed", "", "", OPT_HIDDEN | OPT_SWITCH, "produce results in reverse chronological order"),
@@ -171,6 +172,12 @@ bool COptions::parseArguments(string_q& command) {
                 return false;
         } else if (arg == "--asset") {
             return flag_required("asset");
+
+        } else if (startsWith(arg, "--flow:")) {
+            if (!confirmEnum("flow", flow, arg))
+                return false;
+        } else if (arg == "--flow") {
+            return flag_required("flow");
 
         } else if (arg == "-y" || arg == "--factory") {
             factory = true;
@@ -351,6 +358,7 @@ void COptions::Init(void) {
     first_record = 0;
     max_records = 250;
     relevant = false;
+    flow = "";
     factory = false;
     load = "";
     reversed = false;

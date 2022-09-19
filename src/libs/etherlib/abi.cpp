@@ -657,7 +657,7 @@ string_q getEtherscanKey(void) {
     if (!env_value.empty())
         return env_value;
 
-    string_q key = getGlobalConfig("")->getConfigStr("settings", "etherscan_key", "<not_set>");
+    string_q key = getGlobalConfig("")->getConfigStr("keys.etherscan", "apiKey", "<not_set>");
     if (!key.empty() && key != "<not_set>")
         return key;
 

@@ -2,75 +2,63 @@ package bloom
 
 import (
 	"encoding/binary"
-	"fmt"
 	"io"
 	"os"
-	"strings"
+	"path/filepath"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/crypto"
 )
 
-// var writeMutex sync.Mutex
+// WriteBloom writes a single bloom filter to file
+func (bl *ChunkBloom) WriteBloom(chain, fileName string) ( /* changed */ bool, error) {
+	bloomFn := paths.ToBloomPath(fileName)
+	tmpPath := filepath.Join(config.GetPathToCache(chain), "tmp")
 
-func (bl *ChunkBloom) WriteBloom(chain, bloomPath string) error {
-	// writeMutex.Lock()
-	// trapCh := sigintTrap.Enable(context.WithCancel(context.Background()))
+	// Make a backup copy of the file in case the write fails so we can replace it...
+	if backupFn, err := file.MakeBackup(tmpPath, bloomFn); err == nil {
+		defer func() {
+			if file.FileExists(backupFn) {
+				// If the backup file exists, something failed, so we replace the original file.
+				os.Rename(backupFn, bloomFn)
+				os.Remove(backupFn) // seems redundant, but may not be on some operating systems
+			}
+		}()
 
-	fmt.Println("In WriteBloom", bloomPath)
-	// TODO: BOGUS - YIKES
-	tempPath := strings.Replace(bloomPath, "unchained/sepolia/blooms/", "cache/sepolia/tmp/", -1)
-	tempPath = strings.Replace(tempPath, "unchained/gnosis/blooms/", "cache/gnosis/tmp/", -1)
-	tempPath = strings.Replace(tempPath, "unchained/polygon/blooms/", "cache/polygon/tmp/", -1)
+		if fp, err := os.OpenFile(bloomFn, os.O_RDWR|os.O_CREATE, 0644); err == nil {
+			defer fp.Close() // defers are last in, first out
 
-	fp, err := os.OpenFile(tempPath, os.O_WRONLY|os.O_CREATE, 0644)
-	defer func() {
-		os.Remove(tempPath)
-		// sigintTrap.Disable(trapCh)
-		// writeMutex.Lock()
-	}()
-	if err != nil {
-		return err
-	}
+			fp.Seek(0, io.SeekStart) // already true, but can't hurt
+			bl.Header.Magic = file.SmallMagicNumber
+			bl.Header.Hash = common.BytesToHash(crypto.Keccak256([]byte(version.ManifestVersion)))
+			if err = binary.Write(fp, binary.LittleEndian, bl.Header); err != nil {
+				return false, err
+			}
 
-	fp.Seek(0, io.SeekStart)
-	err = binary.Write(fp, binary.LittleEndian, bl.Count)
-	if err != nil {
-		fp.Close()
-		return err
-	}
+			if err = binary.Write(fp, binary.LittleEndian, bl.Count); err != nil {
+				return false, err
+			}
 
-	for _, bb := range bl.Blooms {
-		err = binary.Write(fp, binary.LittleEndian, bb.NInserted)
-		if err != nil {
-			fp.Close()
-			return err
+			for _, bb := range bl.Blooms {
+				if err = binary.Write(fp, binary.LittleEndian, bb.NInserted); err != nil {
+					return false, err
+				}
+				if err = binary.Write(fp, binary.LittleEndian, bb.Bytes); err != nil {
+					return false, err
+				}
+			}
+
+			// Success. Remove the backup so it doesn't replace the orignal
+			os.Remove(backupFn)
+			return true, nil
 		}
-		err = binary.Write(fp, binary.LittleEndian, bb.Bytes)
-		if err != nil {
-			fp.Close()
-			return err
-		}
+	} else {
+		return false, err
 	}
-	// Don't defer this because we want it to be closed before we copy it
-	fp.Close()
-	// *bl = ChunkBloom{}
-	// bl.ReadBloom(tempPath)
 
-	os.Remove(bloomPath)
-	_, err = file.Copy(tempPath, bloomPath)
-	if err != nil {
-		return err
-	}
-	return nil
+	return false, nil
 }
-
-// writeBloom
-//     output.Write((uint32_t)blooms.size());
-//     for (auto bl : blooms) {
-//         output.Write(bl.nInserted);
-//         output.Write(bl.bits, sizeof(uint8_t), BLOOM_WIDTH_IN_BYTES);
-//     }
-//     output.Release();
-//     unlockSection();
-//     return true;
-// }

@@ -745,7 +745,6 @@ string_q CParameter::getEventAssign(uint64_t which, uint64_t nIndexed) const {
 
 //-----------------------------------------------------------------------
 bool CParameter::isValid(void) const {
-    // TODO(tjayrush): not exhaustive
     if (!(startsWith(type, "address") || startsWith(type, "bool") || startsWith(type, "string") ||
           startsWith(type, "bytes") || startsWith(type, "fixed") || startsWith(type, "uint") ||
           startsWith(type, "int") || startsWith(type, "tuple")))

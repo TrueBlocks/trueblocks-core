@@ -10,6 +10,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func Test_TransactionIds(t *testing.T) {
@@ -44,7 +45,7 @@ func Test_TransactionIds(t *testing.T) {
 
 		for i, br := range results {
 			fmt.Println(br)
-			txIds, err := br.ResolveTxs(GetTestChain())
+			txIds, err := br.ResolveTxs(utils.GetTestChain())
 			if err != nil {
 				t.Error(colors.Red, br)
 				t.Error(err, colors.Off)

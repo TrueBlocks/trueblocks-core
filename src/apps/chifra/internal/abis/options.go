@@ -25,7 +25,7 @@ type AbisOptions struct {
 	Known   bool                  `json:"known,omitempty"`   // Load common 'known' ABIs from cache
 	Sol     bool                  `json:"sol,omitempty"`     // Extract the abi definition from the provided .sol file(s)
 	Find    []string              `json:"find,omitempty"`    // Search for function or event declarations given a four- or 32-byte code(s)
-	Classes bool                  `json:"classes,omitempty"` // Generate classDefinitions folder and class definitions
+	Hint    []string              `json:"hint,omitempty"`    // For the --find option only, provide hints to speed up the search
 	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
 	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
 }
@@ -38,13 +38,13 @@ func (opts *AbisOptions) testLog() {
 	logger.TestLog(opts.Known, "Known: ", opts.Known)
 	logger.TestLog(opts.Sol, "Sol: ", opts.Sol)
 	logger.TestLog(len(opts.Find) > 0, "Find: ", opts.Find)
-	logger.TestLog(opts.Classes, "Classes: ", opts.Classes)
+	logger.TestLog(len(opts.Hint) > 0, "Hint: ", opts.Hint)
 	opts.Globals.TestLog()
 }
 
 // String implements the Stringer interface
 func (opts *AbisOptions) String() string {
-	b, _ := json.MarshalIndent(opts, "", "\t")
+	b, _ := json.MarshalIndent(opts, "", "  ")
 	return string(b)
 }
 
@@ -65,16 +65,10 @@ func (opts *AbisOptions) toCmdLine() string {
 	if opts.Sol {
 		options += " --sol"
 	}
-	for _, find := range opts.Find {
-		options += " --find " + find
-	}
-	if opts.Classes {
-		options += " --classes"
-	}
 	options += " " + strings.Join(opts.Addrs, " ")
 	// EXISTING_CODE
 	// EXISTING_CODE
-	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
+	options += fmt.Sprintf("%s", "") // silence compiler warning for auto gen
 	return options
 }
 
@@ -97,8 +91,11 @@ func abisFinishParseApi(w http.ResponseWriter, r *http.Request) *AbisOptions {
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Find = append(opts.Find, s...)
 			}
-		case "classes":
-			opts.Classes = true
+		case "hint":
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Hint = append(opts.Hint, s...)
+			}
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "abis")

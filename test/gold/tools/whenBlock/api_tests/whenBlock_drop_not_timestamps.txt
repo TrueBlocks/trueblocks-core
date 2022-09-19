@@ -1,6 +1,6 @@
-when?blocks=1301000&reset
+when?blocks=1301000&repair
 {
   "errors": [
-    "The --drop option is only available with the --timestamps option."
+    "The --repair option is only available with the --timestamps option."
   ]
 }

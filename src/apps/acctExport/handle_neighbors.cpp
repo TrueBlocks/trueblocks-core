@@ -273,8 +273,18 @@ bool neighbors_Pre(CTraverser* trav, void* data) {
     CBlockRangeArray ranges;
     getChunkRanges(ranges);
 
+    blknum_t start = 0;
+    if (trav->traverserRange.first != 0) {
+        for (trav->index = 0; trav->index < opt->monApps.size() && !shouldQuit(); trav->index++) {
+            if (opt->monApps[trav->index].blk >= trav->traverserRange.first) {
+                break;
+            }
+            start = trav->index;
+        }
+    }
+
     uint64_t curRange = 0;
-    for (trav->index = 0; trav->index < opt->monApps.size() && !shouldQuit(); trav->index++) {
+    for (trav->index = start; trav->index < opt->monApps.size() && !shouldQuit(); trav->index++) {
         CAppearance_mon app = opt->monApps[trav->index];
         //     opt->neighborCount = 0;
         while (curRange < ranges.size() && !inRange(blknum_t(app.blk), ranges[curRange])) {

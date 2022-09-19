@@ -17,6 +17,8 @@ extern string_q get_notes2(const CCommandOption& cmd);
 extern string_q get_optfields(const CCommandOption& cmd);
 extern string_q get_requestopts(const CCommandOption& cmd);
 extern string_q get_defaults_apis(const CCommandOption& cmd);
+extern string_q get_config_override(const CCommandOption& cmd);
+extern string_q get_config_package(const CCommandOption& cmd);
 extern string_q get_setopts(const CCommandOption& cmd);
 extern string_q get_testlogs(const CCommandOption& cmd);
 extern string_q get_copyopts(const CCommandOption& cmd);
@@ -98,6 +100,9 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     replaceAll(source, "[{PROPER}]", toProper(p.api_route));
     replaceAll(source, "[{OPT_FIELDS}]", get_optfields(p));
     replaceAll(source, "[{DEFAULTS_API}]", get_defaults_apis(p));
+    replaceAll(source, "[{CONFIG_OVERRIDE}]", get_config_override(p));
+    replaceAll(source, "[{CONFIGPKG}]", get_config_package(p));
+
     string_q req = get_requestopts(p);
     replaceAll(source, "[{REQUEST_OPTS}]", req);
     if (!contains(substitute(req, "for key, value := range r.URL.Query() {", ""), "value")) {
@@ -242,6 +247,8 @@ string_q get_use(const CCommandOption& cmd) {
         }
     }
     string_q ret = "[{ROUTE}] [flags][{TYPES}][{POSITIONALS}]";
+    if (contains(toLower(cmd.tool), "scrape"))
+        ret = "[{ROUTE}] [flags]";
     replace(ret, "[{TYPES}]", clean_positionals(cmd.api_route, positionals.str()));
     replace(ret, "[{POSITIONALS}]", arguments.str());
     replace(ret, "[flags] <mode> [blocks...]", "<mode> [flags] [blocks...]");
@@ -270,11 +277,15 @@ string_q noUnderbars(const string_q& in) {
 }
 
 string_q get_testlogs(const CCommandOption& cmd) {
+    bool hasConfig = false;
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         replace(p.longName, "deleteMe", "delete");
         p.def_val = substitute(p.def_val, "NOPOS", "utils.NOPOS");
-
+        if (p.generate == "config") {
+            hasConfig = true;
+            continue;
+        }
         if (!p.isDeprecated) {
             if (p.data_type == "<boolean>") {
                 const char* STR_TESTLOG_BOOL =
@@ -287,10 +298,16 @@ string_q get_testlogs(const CCommandOption& cmd) {
                     "\tlogger.TestLog(len(opts.[{VARIABLE}]) > 0, \"[{VARIABLE}]: \", opts.[{VARIABLE}])";
                 os << p.Format(STR_TESTLOG_STRING) << endl;
 
-            } else if (p.data_type == "<blknum>" || p.data_type == "<uint64>" || p.data_type == "<double>") {
+            } else if (p.data_type == "<blknum>" || p.data_type == "<uint64>") {
                 const char* STR_TESTLOG_UINT =
                     "\tlogger.TestLog(opts.[{VARIABLE}] != [{DEF_VAL}], \"[{VARIABLE}]: \", opts.[{VARIABLE}])";
                 os << p.Format(STR_TESTLOG_UINT) << endl;
+
+            } else if (p.data_type == "<double>") {
+                const char* STR_TESTLOG_DOUBLE =
+                    "\tlogger.TestLog(opts.[{VARIABLE}] != float64([{DEF_VAL}]), \"[{VARIABLE}]: \", "
+                    "opts.[{VARIABLE}])";
+                os << p.Format(STR_TESTLOG_DOUBLE) << endl;
 
             } else {
                 cerr << "Unknown type: " << padRight(p.data_type, 30) << p.def_val << endl;
@@ -298,12 +315,26 @@ string_q get_testlogs(const CCommandOption& cmd) {
             }
         }
     }
+    if (hasConfig) {
+        os << cmd.Format("\topts.Settings.TestLog(opts.Globals.Chain, opts.Globals.TestMode)\n");
+    }
     return os.str();
 }
 
 string_q get_optfields(const CCommandOption& cmd) {
+    string_q configDocs = getDocsPathReadmes(substitute(toLower(cmd.group), " ", "") + "-" + cmd.api_route + ".config");
+    ::remove(configDocs.c_str());
+
+    bool hasConfig = 0;
     size_t varWidth = 0, typeWidth = 0;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
+        if (p.generate == "config") {
+            string_q var = p.Format("Settings");
+            varWidth = max(var.length(), varWidth);
+            string_q type = cmd.Format("[{API_ROUTE}]Cfg.[{PROPER}]Settings");
+            typeWidth = max(type.length(), typeWidth);
+            continue;
+        }
         replace(p.longName, "deleteMe", "delete");
         string_q var = p.Format("[{VARIABLE}]");
         varWidth = max(var.length(), varWidth);
@@ -334,6 +365,21 @@ string_q get_optfields(const CCommandOption& cmd) {
 
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
+        if (p.generate == "config") {
+            ostringstream dd;
+            if (!hasConfig) {
+                dd << "| " << padRight("Item", 18) << " | " << padRight("Type", 12) << " | " << padRight("Default", 12)
+                   << " | Description / Default |" << endl;
+                dd << "| " << string_q(18, '-') << " | " << string_q(12, '-') << " | " << string_q(12, '-')
+                   << " | --------- |" << endl;
+            }
+            string_q x = substitute(p.Format("[{LONGNAME}]"), "_", "&lowbar;");
+            dd << "| " << padRight(x, 18) << " | " << padRight(p.Format("[{GO_TYPE}]"), 12) << " | "
+               << padRight(p.Format("[{DEF_VAL}]"), 12) << " | " << p.Format("[{DESCRIPTION}]") << " |" << endl;
+            appendToAsciiFile(configDocs, dd.str());
+            hasConfig = true;
+            continue;
+        }
         replace(p.longName, "deleteMe", "delete");
         string_q var = p.Format("[{VARIABLE}]");
         string_q type = p.Format("[{GO_TYPE}]");
@@ -345,18 +391,58 @@ string_q get_optfields(const CCommandOption& cmd) {
             ONE(os, "TransactionIds", varWidth, "[]identifiers.Identifier", typeWidth, "transaction identifiers");
         }
     }
+
+    if (hasConfig) {
+        string type = cmd.Format("[{API_ROUTE}]Cfg.[{PROPER}]Settings");
+        ONE(os, "Settings", varWidth, type, typeWidth, "Configuration items for the " + cmd.api_route);
+    }
+
     ONE(os, "Globals", varWidth, "globals.GlobalOptions", typeWidth, "the global options");
     ONE(os, "BadFlag", varWidth, "error", typeWidth, "an error flag if needed");
 
     return os.str();
 }
 
+string_q get_config_override(const CCommandOption& cmd) {
+    for (auto p : *((CCommandOptionArray*)cmd.params))
+        if (p.generate == "config") {
+            ostringstream os;
+            os << "\t"
+               << "opts.Settings, _ = " << cmd.api_route
+               << "Cfg.GetSettings(opts.Globals.Chain, configFn, &" + cmd.api_route + "Cfg.Unset)\n";
+            return os.str();
+        }
+    return "";
+}
+
+string_q get_config_package(const CCommandOption& cmd) {
+    for (auto p : *((CCommandOptionArray*)cmd.params))
+        if (p.generate == "config")
+            return "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/" + cmd.api_route + "Cfg\"\n";
+    return "";
+}
+
 string_q get_defaults_apis(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
+        if (p.isDeprecated) {
+            continue;
+        }
+        if (p.def_val == "") {
+            continue;
+        }
+
         p.def_val = substitute(p.def_val, "NOPOS", "utils.NOPOS");
-        if (!p.isDeprecated && (p.data_type == "<blknum>" || p.data_type == "<uint64>" || p.data_type == "<double>")) {
-            os << p.Format("\topts.[{VARIABLE}] = [{DEF_VAL}]") << endl;
+        if (p.data_type == "<blknum>" || p.data_type == "<uint64>" || p.data_type == "<double>") {
+            string_q fmt = "\topts.[{VARIABLE}] = [{DEF_VAL}]";
+            if (p.generate == "config") {
+                if (p.go_type == "float64") {
+                    fmt = "\topts.Settings.[{VARIABLE}] = float64([{DEF_VAL}])";
+                } else {
+                    fmt = "\topts.Settings.[{VARIABLE}] = [{DEF_VAL}]";
+                }
+            }
+            os << p.Format(fmt) << endl;
         }
     }
     return os.str();
@@ -367,11 +453,16 @@ string_q get_requestopts(const CCommandOption& cmd) {
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         replace(p.longName, "deleteMe", "delete");
         string_q low = toCamelCase(p.Format("[{LOWER}]"));
+        string_q fmt;
         if (startsWith(p.data_type, "list<")) {
-            os << p.Format(substitute(STR_REQUEST_CASE2, "++LOWER++", low)) << endl;
+            fmt = substitute(STR_REQUEST_CASE2, "++LOWER++", low);
         } else {
-            os << p.Format(substitute(STR_REQUEST_CASE1, "++LOWER++", low)) << endl;
+            fmt = substitute(STR_REQUEST_CASE1, "++LOWER++", low);
         }
+        if (p.generate == "config") {
+            fmt = substitute(fmt, "opts.", "opts.Settings.");
+        }
+        os << p.Format(fmt) << endl;
     }
     return os.str();
 }
@@ -380,16 +471,19 @@ string_q get_goDefault(const CCommandOption& p) {
     if (p.go_type == "[]string") {
         return "nil";
     } else if (p.go_type == "float64") {
-        if (!p.def_val.empty())
+        if (contains(p.def_val, "NOPOS")) {
+            return "0.0";
+        } else if (!p.def_val.empty())
             return p.def_val;
         return "0.0";
     } else if (p.go_type == "string") {
         return p.def_val;
     } else if (p.go_type == "uint64") {
-        if (p.def_val == "NOPOS")
+        if (contains(p.def_val, "NOPOS")) {
             return "0";
-        else if (!p.def_val.empty() && !startsWith(p.def_val, "("))
+        } else if (!p.def_val.empty() && !startsWith(p.def_val, "(")) {
             return p.def_val;
+        }
         return "0";
     }
     return "false";
@@ -469,10 +563,9 @@ string_q get_setopts(const CCommandOption& cmd) {
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         if (p.option_type != "positional") {
             replace(p.longName, "deleteMe", "delete");
-
             os << "\t[{ROUTE}]Cmd.Flags().";
             os << p.go_flagtype;
-            os << "(&[{ROUTE}]Pkg.GetOptions().";
+            os << "(&[{ROUTE}]Pkg.GetOptions()." << (p.isConfig ? "Settings." : "");
             os << p.Format("[{VARIABLE}]") << ", ";
             os << p.Format("\"[{LONGNAME}]\", ");
             os << p.Format("\"[{HOTKEY}]\", ");
@@ -549,7 +642,7 @@ const char* STR_TO_CMD_LINE =
     "[{DASH_STR}][{POSITIONALS}]"
     "\t// EXISTING_CODE\n"
     "\t// EXISTING_CODE\n"
-    "\toptions += fmt.Sprintf(\"%s\", \"\") // silence go compiler for auto gen\n"
+    "\toptions += fmt.Sprintf(\"%s\", \"\") // silence compiler warning for auto gen\n"
     "\treturn options\n"
     "}\n\n";
 

@@ -13,7 +13,7 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
@@ -55,71 +55,47 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 		return
 	}
 
-	maxTestItems = 100
-	if opts.Check {
-		return opts.HandleChunksCheck(blockNums), true
+	if opts.Pin {
+		err = opts.HandlePinManifest(blockNums)
+
+	} else if opts.Publish {
+		err = opts.HandlePublish(blockNums)
+
+	} else if opts.Truncate != utils.NOPOS {
+		err = opts.HandleTruncate(blockNums)
+
+	} else if opts.Check {
+		err = opts.HandleChunksCheck(blockNums)
 
 	} else {
-		defer opts.Globals.RenderFooter()
+		switch opts.Mode {
+		case "status":
+			err = opts.HandleStatus(blockNums)
 
-		if opts.Mode == "pins" {
-			err := opts.Globals.RenderHeader(types.SimpleChunkRecord{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
-			if err != nil {
-				return err, true
-			}
-			return opts.HandleChunksExtractPins(), true
-
-		} else if opts.Mode == "stats" {
-			err := opts.Globals.RenderHeader(types.ReportChunks{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
-			if err != nil {
-				return err, true
-			}
-			return opts.HandleChunksExtract(opts.showStats, blockNums), true
-
-		} else if opts.Mode == "blooms" {
-			maxTestItems = 10
-			err := opts.Globals.RenderHeader(types.SimpleBloom{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
-			if err != nil {
-				return err, true
-			}
-			return opts.HandleChunksExtract(opts.showBloom, blockNums), true
-
-		} else if opts.Mode == "index" {
-			err := opts.Globals.RenderHeader(types.SimpleIndex{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
-			if err != nil {
-				return err, true
-			}
-			return opts.HandleChunksExtract(opts.showIndex, blockNums), true
-
-		} else if opts.Mode == "addresses" {
-			if opts.Belongs {
-				maxTestItems = 10000
-				err := opts.Globals.RenderHeader(types.SimpleIndexAddressBelongs{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
-				if err != nil {
-					return err, true
-				}
-				return opts.HandleChunksExtract(opts.showAddressesBelongs, blockNums), true
-
+		case "index":
+			if len(opts.Belongs) > 0 {
+				err = opts.HandleIndexBelongs(blockNums)
 			} else {
-				maxTestItems = 10
-				err := opts.Globals.RenderHeader(types.SimpleIndexAddress{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
-				if err != nil {
-					return err, true
-				}
-				return opts.HandleChunksExtract(opts.showAddresses, blockNums), true
+				err = opts.HandleIndex(blockNums)
 			}
 
-		} else if opts.Mode == "appearances" {
-			maxTestItems = 10
-			err := opts.Globals.RenderHeader(types.SimpleIndexAppearance{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
-			if err != nil {
-				return err, true
-			}
-			return opts.HandleChunksExtract(opts.showAppearances, blockNums), true
+		case "blooms":
+			err = opts.HandleBlooms(blockNums)
 
-		} else {
-			return validate.Usage("Extractor for {0} not yet implemented.", opts.Mode), true
+		case "manifest":
+			err = opts.HandleManifest(blockNums)
 
+		case "stats":
+			err = opts.HandleStats(blockNums)
+
+		case "addresses":
+			err = opts.HandleAddresses(blockNums)
+
+		case "appearances":
+			err = opts.HandleAppearances(blockNums)
+
+		default:
+			err = validate.Usage("Extractor for {0} not yet implemented.", opts.Mode)
 		}
 	}
 	// EXISTING_CODE
@@ -128,6 +104,13 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 }
 
 // EXISTING_CODE
-var maxTestItems = 100
+func (opts *ChunksOptions) defaultFormat(def string) string {
+	if opts.Mode == "status" ||
+		(opts.Mode == "index" && opts.Check) ||
+		opts.Truncate != utils.NOPOS {
+		return "json"
+	}
+	return def
+}
 
 // EXISTING_CODE

@@ -44,7 +44,7 @@ func (opts *MonitorsOptions) testLog() {
 	logger.TestLog(opts.Undelete, "Undelete: ", opts.Undelete)
 	logger.TestLog(opts.Remove, "Remove: ", opts.Remove)
 	logger.TestLog(opts.Watch, "Watch: ", opts.Watch)
-	logger.TestLog(opts.Sleep != 14, "Sleep: ", opts.Sleep)
+	logger.TestLog(opts.Sleep != float64(14), "Sleep: ", opts.Sleep)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
 	opts.Globals.TestLog()
@@ -52,7 +52,7 @@ func (opts *MonitorsOptions) testLog() {
 
 // String implements the Stringer interface
 func (opts *MonitorsOptions) String() string {
-	b, _ := json.MarshalIndent(opts, "", "\t")
+	b, _ := json.MarshalIndent(opts, "", "  ")
 	return string(b)
 }
 

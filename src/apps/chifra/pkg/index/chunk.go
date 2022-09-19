@@ -15,15 +15,19 @@ package index
 
 import (
 	"encoding/json"
+	"path/filepath"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 )
 
 // The Chunk data structure consists of three parts. A FileRange, a ChunkData structure, and a ChunkBloom that
 // carries set membership information for the ChunkData.
 type Chunk struct {
-	Range cache.FileRange
+	Range paths.FileRange
 	Data  ChunkData
 	Bloom bloom.ChunkBloom
 }
@@ -34,17 +38,17 @@ type Chunk struct {
 // later if the bloom indicates that its needed). If the index file does exist, however, it will be opened for reading
 // and its header will be read into memory, but the index data itself will not be.
 func NewChunk(path string) (chunk Chunk, err error) {
-	chunk.Range, err = cache.RangeFromFilename(path)
+	chunk.Range, err = paths.RangeFromFilenameE(path)
 	if err != nil {
 		return
 	}
 
-	chunk.Bloom, err = bloom.NewChunkBloom(ToBloomPath(path))
+	chunk.Bloom, err = bloom.NewChunkBloom(paths.ToBloomPath(path))
 	if err != nil {
 		return
 	}
 
-	chunk.Data, err = NewChunkData(ToIndexPath(path))
+	chunk.Data, err = NewChunkData(paths.ToIndexPath(path))
 	return
 }
 
@@ -65,4 +69,23 @@ func (chunk *Chunk) Close() {
 		chunk.Data.File.Close()
 		chunk.Data.File = nil
 	}
+}
+
+func GetStatus(chain string) rpcClient.MetaData {
+	meta := rpcClient.MetaData{}
+	indexPath := config.GetPathToIndex(chain)
+
+	fn, _ := file.LatestFileInFolder(filepath.Join(indexPath, "finalized"))
+	meta.Finalized = paths.RangeFromFilename(fn).Last
+
+	fn, _ = file.LatestFileInFolder(filepath.Join(indexPath, "staging"))
+	meta.Staging = paths.RangeFromFilename(fn).Last
+
+	fn, _ = file.LatestFileInFolder(filepath.Join(indexPath, "ripe"))
+	meta.Ripe = paths.RangeFromFilename(fn).Last
+
+	fn, _ = file.LatestFileInFolder(filepath.Join(indexPath, "unripe"))
+	meta.Unripe = paths.RangeFromFilename(fn).Last
+
+	return meta
 }

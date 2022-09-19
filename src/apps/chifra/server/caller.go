@@ -158,7 +158,6 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 		// Remove Cobra's "Error:\n" decorator
 		parsed := strings.Replace(outp, "Error:", "", 1)
 		parsed = strings.Trim(parsed, " \n")
-		// TODO: Need this to build. Probably not right
 		var unused globals.GlobalOptions
 		unused.Chain = chain
 		unused.TestMode = utils.IsTestModeServer(r)

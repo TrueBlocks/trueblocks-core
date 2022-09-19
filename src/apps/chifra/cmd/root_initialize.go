@@ -133,7 +133,7 @@ func VerifyMigrations() {
 
 	// If any of the following folders or files exist, the user has not
 	// completed migration 0.25.0. Tell them to do so and quit.
-	// TODO(tjayrush): This can be removed at some point
+	// TODO: This can be removed at some point
 	items := []string{
 		"manifest",
 		"mocked",
@@ -188,8 +188,7 @@ func VerifyMigrations() {
 
 	// We need at least this version...
 	requiredVersion := "v0.40.0-beta"
-	// TODO: BOGUS - NOT COMPLETED
-	if false && !config.IsAtLeastVersion(requiredVersion) {
+	if !config.IsAtLeastVersion(requiredVersion) {
 		msg := strings.Replace(backVersion, "{0}", "{"+requiredVersion+"}", -1)
 		msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
 		msg = strings.Replace(msg, "{", colors.Green, -1)

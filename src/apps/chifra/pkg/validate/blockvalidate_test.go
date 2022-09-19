@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func TestIsBlockHash(t *testing.T) {
@@ -106,27 +107,27 @@ func TestIsBlockNumberList(t *testing.T) {
 }
 
 func TestIsSpecialBlock(t *testing.T) {
-	if tslib.IsSpecialBlock(GetTestChain(), "london byzantium") {
+	if tslib.IsSpecialBlock(utils.GetTestChain(), "london byzantium") {
 		t.Error("Passes for invalid string (space)")
 	}
 
-	if tslib.IsSpecialBlock(GetTestChain(), "lądon") {
+	if tslib.IsSpecialBlock(utils.GetTestChain(), "lądon") {
 		t.Error("Passes for string with invalid characters")
 	}
 
-	if tslib.IsSpecialBlock(GetTestChain(), "123") {
+	if tslib.IsSpecialBlock(utils.GetTestChain(), "123") {
 		t.Error("Passes for number")
 	}
 
-	if tslib.IsSpecialBlock(GetTestChain(), "ab") {
+	if tslib.IsSpecialBlock(utils.GetTestChain(), "ab") {
 		t.Error("Passes for too short strings")
 	}
 
-	if !tslib.IsSpecialBlock(GetTestChain(), "london") {
+	if !tslib.IsSpecialBlock(utils.GetTestChain(), "london") {
 		t.Error("Fails for valid block name")
 	}
 
-	if !tslib.IsSpecialBlock(GetTestChain(), "devcon1") {
+	if !tslib.IsSpecialBlock(utils.GetTestChain(), "devcon1") {
 		t.Error("Fails for valid block name with a number")
 	}
 }
@@ -152,12 +153,12 @@ func TestIsDateTimeString(t *testing.T) {
 		t.Error("Fails for date with time and timezone")
 	}
 
-	if isBeforeFirstBlock(GetTestChain(), "2015-07-30T15:26:15") {
+	if isBeforeFirstBlock(utils.GetTestChain(), "2015-07-30T15:26:15") {
 		t.Error("Fails for exact first block date")
 	}
 
 	// TODO: Turn off go testing that requires ts.bin
-	// if !isBeforeFirstBlock(GetTestChain(), "2015-07-30T15:25:59") {
+	// if !isBeforeFirstBlock(utils.GetTestChain(), "2015-07-30T15:25:59") {
 	// 	t.Error("Passes for too early date (before first block)")
 	// }
 
@@ -171,42 +172,42 @@ func TestIsDateTimeString(t *testing.T) {
 }
 
 func TestIsRange(t *testing.T) {
-	if r, _ := IsRange(GetTestChain(), "100"); r {
+	if r, _ := IsRange(utils.GetTestChain(), "100"); r {
 		t.Error("Passes for non-range")
 	}
 
-	if r, _ := IsRange(GetTestChain(), "-0100"); r {
+	if r, _ := IsRange(utils.GetTestChain(), "-0100"); r {
 		t.Error("Passes for malformed string (1)")
 	}
 
-	if r, _ := IsRange(GetTestChain(), "100-"); r {
+	if r, _ := IsRange(utils.GetTestChain(), "100-"); r {
 		t.Error("Passes for malformed string (2)")
 	}
 
-	if r, _ := IsRange(GetTestChain(), "0-100:"); r {
+	if r, _ := IsRange(utils.GetTestChain(), "0-100:"); r {
 		t.Error("Passes for malformed string (3)")
 	}
 
-	if r, _ := IsRange(GetTestChain(), "0-100"); !r {
+	if r, _ := IsRange(utils.GetTestChain(), "0-100"); !r {
 		t.Error("Fails for range without step")
 	}
 
-	if r, _ := IsRange(GetTestChain(), "100-100000:20"); !r {
+	if r, _ := IsRange(utils.GetTestChain(), "100-100000:20"); !r {
 		t.Error("Fails for range with step")
 	}
 
-	if r, _ := IsRange(GetTestChain(), "london-100"); !r {
+	if r, _ := IsRange(utils.GetTestChain(), "london-100"); !r {
 		t.Error("Fails for special")
 	}
 
-	if r, _ := IsRange(GetTestChain(), "100-2021-04-20"); !r {
+	if r, _ := IsRange(utils.GetTestChain(), "100-2021-04-20"); !r {
 		t.Error("Fails for number and a date")
 	}
 }
 
 func TestIsRangeLatestAsStart(t *testing.T) {
 	expected := "cannot start range with 'latest'"
-	_, err := IsRange(GetTestChain(), "latest-10")
+	_, err := IsRange(utils.GetTestChain(), "latest-10")
 
 	if err.Error() != expected {
 		t.Errorf("Error mismatch: %s", err)
@@ -215,7 +216,7 @@ func TestIsRangeLatestAsStart(t *testing.T) {
 
 func TestIsRangeEndGreaterThanStart(t *testing.T) {
 	expected := "'stop' must be strictly larger than 'start'"
-	_, err := IsRange(GetTestChain(), "1000-10")
+	_, err := IsRange(utils.GetTestChain(), "1000-10")
 
 	if err == nil {
 		t.Error("No error")
@@ -228,7 +229,7 @@ func TestIsRangeEndGreaterThanStart(t *testing.T) {
 
 func TestIsRangeModifierError(t *testing.T) {
 	expected := "Input argument appears to be invalid. No such skip marker: biweekly"
-	_, err := IsRange(GetTestChain(), "0-1000:biweekly")
+	_, err := IsRange(utils.GetTestChain(), "0-1000:biweekly")
 
 	if err.Error() != expected {
 		t.Errorf("Error mismatch: %s", err)
@@ -236,7 +237,7 @@ func TestIsRangeModifierError(t *testing.T) {
 }
 
 func TestIsRangeInvalidSpecialStart(t *testing.T) {
-	valid, err := IsRange(GetTestChain(), "notexisting-1000:10")
+	valid, err := IsRange(utils.GetTestChain(), "notexisting-1000:10")
 
 	if valid {
 		t.Error("Invalid special passing")
@@ -248,7 +249,7 @@ func TestIsRangeInvalidSpecialStart(t *testing.T) {
 }
 
 func TestIsRangeInvalidSpecialStop(t *testing.T) {
-	valid, err := IsRange(GetTestChain(), "1000-notexisting:10")
+	valid, err := IsRange(utils.GetTestChain(), "1000-notexisting:10")
 
 	if valid {
 		t.Error("Invalid special passing")
@@ -393,7 +394,7 @@ func TestValidateBlockIdentifiers(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if err := ValidateIdentifiers(
-				GetTestChain(),
+				utils.GetTestChain(),
 				tt.args.identifiers,
 				tt.args.validTypes,
 				tt.args.maxRanges,
@@ -403,10 +404,4 @@ func TestValidateBlockIdentifiers(t *testing.T) {
 			}
 		})
 	}
-}
-
-// GetTestChain is duplicated in multiple packages to avoid dependancies. See
-// https://stackoverflow.com/questions/49789055/
-func GetTestChain() string {
-	return "mainnet"
 }

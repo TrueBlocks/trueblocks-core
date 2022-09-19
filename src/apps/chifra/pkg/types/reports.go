@@ -7,13 +7,6 @@ type ReportClean struct {
 	Dups     uint32 `json:"dupsRemoved"`
 }
 
-type ReportRepair struct {
-	Status    string `json:"status"`
-	Range     string `json:"range,omitempty"`
-	BloomHash string `json:"bloomHash,omitempty"`
-	IndexHash string `json:"indexHash,omitempty"`
-}
-
 type ReportCheck struct {
 	Reason     string   `json:"reason"`
 	VisitedCnt uint32   `json:"nVisits,omitempty"`

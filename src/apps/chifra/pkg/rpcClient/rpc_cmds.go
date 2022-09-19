@@ -7,7 +7,7 @@ package rpcClient
 import (
 	"bytes"
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"net/http"
 )
 
@@ -31,7 +31,7 @@ func FromRpc(rpcProvider string, payload *RPCPayload, ret interface{}) error {
 	}
 	defer resp.Body.Close()
 
-	theBytes, err := ioutil.ReadAll(resp.Body)
+	theBytes, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return err
 	}

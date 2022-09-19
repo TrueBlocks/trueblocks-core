@@ -79,10 +79,7 @@ type Point struct {
 }
 
 func (p Point) String() string {
-	str, err := json.Marshal(p)
-	if err != nil {
-		return ""
-	}
+	str, _ := json.MarshalIndent(p, "", "  ")
 	return string(str)
 }
 

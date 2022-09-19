@@ -30,6 +30,7 @@ This file details changes made to TrueBlocks per version (starting with version 
   - Removed all C++ code from the scraper allowing much better GoLang concurrency resulting in 2x speedup of scraper.
   - Now writes the Sha256 hash of the Unchained Index Spec into each index header as a versioning mechanism.
   - Adds versioning to the index files and blooms which allows for auto-correction and future migrations.
+  - Allows for downloading databases for timestamps and names from the smart contract.
   - Added `--first_block` option (enabled but not implemented).
   - Added `--sleep` option to better respond to slower node endpoints.
   - Added `--remote` option to `--pin` allowing for pinning locally as well as to an arbitrary pinning service.

@@ -21,7 +21,6 @@ func RenderSlice[
 	T types.SimpleNamedBlock |
 		types.ReportClean |
 		types.ReportCheck |
-		types.ReportRepair |
 		types.SimpleFunction |
 		types.SimpleMonitor |
 		types.SimpleChunkRecord |
@@ -128,7 +127,10 @@ func (opts *GlobalOptions) RenderFooter() error {
 				return err
 			}
 			opts.Writer.Write([]byte(",\n  \"meta\": "))
-			b, err := json.MarshalIndent(meta, "  ", "  ")
+			b, err := json.MarshalIndent(meta, "", "  ")
+			if err != nil {
+				return err
+			}
 			opts.Writer.Write(b)
 		}
 		opts.Writer.Write([]byte("\n}"))

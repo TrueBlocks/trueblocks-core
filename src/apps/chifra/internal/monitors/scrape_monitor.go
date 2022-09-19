@@ -16,6 +16,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
@@ -31,8 +32,10 @@ func (opts *MonitorsOptions) RunMonitorScraper(wg *sync.WaitGroup) {
 	chain := opts.Globals.Chain
 	establishExportPaths(chain)
 
+	tmpPath := config.GetPathToCache(opts.Globals.Chain) + "tmp/"
+
 	var s *Scraper = &MonitorScraper
-	s.ChangeState(true)
+	s.ChangeState(true, tmpPath)
 
 	for {
 		if !s.Running {
@@ -92,7 +95,7 @@ func (opts *MonitorsOptions) Refresh(monitors []monitor.Monitor) error {
 	for i := 0; i < len(batches); i++ {
 		addrs, countsBefore := preProcessBatch(batches[i], i, len(monitors))
 
-		err := opts.FreshenMonitorsScrape(addrs)
+		err := opts.FreshenMonitorsForWatch(addrs)
 		if err != nil {
 			return err
 		}
@@ -121,8 +124,7 @@ func (opts *MonitorsOptions) Refresh(monitors []monitor.Monitor) error {
 					if exists {
 						add += fmt.Sprintf(" --first_record %d", uint64(countBefore+1))
 						add += fmt.Sprintf(" --max_records %d", uint64(countAfter-countBefore+1)) // extra space won't hurt
-						add += fmt.Sprintf(" --append")
-						add += fmt.Sprintf(" --no_header")
+						add += " --append --no_header"
 					}
 					cmd += add + " " + mon.GetAddrStr()
 					cmd = strings.Replace(cmd, "  ", " ", -1)

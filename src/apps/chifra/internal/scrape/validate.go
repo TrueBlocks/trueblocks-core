@@ -6,9 +6,10 @@ package scrapePkg
 
 import (
 	"fmt"
-	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/migrate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -19,32 +20,17 @@ import (
 // TODO: https://github.com/storj/uplink/blob/v1.7.0/bucket.go#L19
 
 func (opts *ScrapeOptions) validateScrape() error {
+	// First, we need to pick up the settings TODO: Should be auto-generated code somehow
+	opts.Settings, _ = scrapeCfg.GetSettings(opts.Globals.Chain, "blockScrape.toml", &opts.Settings)
+
 	opts.testLog()
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag
 	}
 
-	if len(opts.Modes) == 0 {
-		return validate.Usage("Please choose at least one of {0}.", "[run|stop]")
-
-	} else {
-		for _, arg := range opts.Modes {
-			// TODO: BOGUS - FEATURE NOTE THIS AS DEPRECATED
-			arg = strings.Replace(arg, "indexer", "run", -1)
-			err := validate.ValidateEnum("mode", arg, "[run|stop]")
-			if err != nil {
-				return err
-			}
-		}
-	}
-
 	if opts.Sleep < .25 {
 		return validate.Usage("The {0} option ({1}) must {2}.", "--sleep", fmt.Sprintf("%f", opts.Sleep), "be at least .25")
-	}
-
-	if opts.Pin && !pinning.LocalDaemonRunning() {
-		return validate.Usage("The {0} option requires {1}", "--pin", "a locally running IPFS daemon")
 	}
 
 	// We can't really test this code, so we just report and quit
@@ -58,13 +44,24 @@ func (opts *ScrapeOptions) validateScrape() error {
 	}
 	m := utils.Max(meta.Ripe, utils.Max(meta.Staging, meta.Finalized)) + 1
 	if m > meta.Latest {
-		sb := fmt.Sprintf("%d", m)
-		c := fmt.Sprintf("%d", meta.Latest)
-		return validate.Usage("The index ({0}) is ahead of the chain ({1}).", sb, c)
+		fmt.Println(validate.Usage("The index ({0}) is ahead of the chain ({1}).", fmt.Sprintf("%d", m), fmt.Sprintf("%d", meta.Latest)))
+	}
+
+	if opts.Pin {
+		if opts.Remote {
+			pinataKey, pinataSecret, estuaryKey := config.GetPinningKeys(opts.Globals.Chain)
+			if (pinataKey == "" || pinataSecret == "") && estuaryKey == "" {
+				return validate.Usage("The {0} option requires {1}.", "--pin --remote", "an api key")
+			}
+
+		} else if !pinning.LocalDaemonRunning() {
+			return validate.Usage("The {0} option requires {1}.", "--pin", "a locally running IPFS daemon or --remote")
+
+		}
 	}
 
 	// Note this does not return if a migration is needed
-	migrate.CheckBackLevelIndex(opts.Globals.Chain)
+	index.CheckBackLevelIndex(opts.Globals.Chain)
 
 	return opts.Globals.Validate()
 }

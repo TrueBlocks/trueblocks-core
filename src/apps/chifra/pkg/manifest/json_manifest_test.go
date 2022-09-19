@@ -5,6 +5,7 @@
 package manifest
 
 import (
+	"encoding/json"
 	"strings"
 	"testing"
 )
@@ -13,13 +14,7 @@ var manifestSource = `
 {
   "version": "2",
   "chain": "mainnet",
-  "chainId": 1,
-  "indexFormat": "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2",
-  "bloomFormat": "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD",
-  "commitHash": "f29699d3281e41cb011ddfbe50b7f01bfe5e3c53",
-  "names": "QmP4i6ihnVrj8Tx7cTFw4aY6ungpaPYxDJEZ7Vg1RSNSdm",
-  "timestamps": "QmcvjroTiE95LWeiP8HHq1YA3ysRchLuVx8HLQui8WcSBV",
-  "blockRange": "000000000-000864336",
+  "schemas": "QmUou7zX2g2tY58LP1A2GyP5RF9nbJsoxKTp299ah3svgb",
   "chunks": [
     {
       "fileName": "000000000-000000000",
@@ -51,7 +46,8 @@ var manifestSource = `
 `
 
 func TestReadManifest(t *testing.T) {
-	m, err := ReadJSONManifest(strings.NewReader(manifestSource))
+	m := &Manifest{}
+	err := json.NewDecoder(strings.NewReader(manifestSource)).Decode(m)
 	if err != nil {
 		t.Error(err)
 	}
@@ -65,7 +61,7 @@ func TestReadManifest(t *testing.T) {
 	cases := []TestCases{
 		{
 			name:     "Version",
-			field:    m.Version.String(),
+			field:    m.Version,
 			expected: "2",
 		},
 		{
@@ -74,34 +70,9 @@ func TestReadManifest(t *testing.T) {
 			expected: "mainnet",
 		},
 		{
-			name:     "ChainId",
-			field:    m.ChainId.String(),
-			expected: "1",
-		},
-		{
-			name:     "IndexFormat",
-			field:    m.IndexFormat,
-			expected: "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2",
-		},
-		{
-			name:     "BloomFormat",
-			field:    m.BloomFormat,
-			expected: "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD",
-		},
-		{
-			name:     "CommitHash",
-			field:    m.CommitHash,
-			expected: "f29699d3281e41cb011ddfbe50b7f01bfe5e3c53",
-		},
-		{
-			name:     "Names",
-			field:    m.Names,
-			expected: "QmP4i6ihnVrj8Tx7cTFw4aY6ungpaPYxDJEZ7Vg1RSNSdm",
-		},
-		{
-			name:     "Timestamps",
-			field:    m.Timestamps,
-			expected: "QmcvjroTiE95LWeiP8HHq1YA3ysRchLuVx8HLQui8WcSBV",
+			name:     "Schemas",
+			field:    m.Schemas.String(),
+			expected: "QmUou7zX2g2tY58LP1A2GyP5RF9nbJsoxKTp299ah3svgb",
 		},
 	}
 
@@ -109,14 +80,6 @@ func TestReadManifest(t *testing.T) {
 		if tc.field != tc.expected {
 			t.Errorf("Wrong %s: %s", tc.name, tc.field)
 		}
-	}
-
-	if m.BlockRange[0] != 0 {
-		t.Errorf("Wrong NewBlockRange[0]: %d", m.BlockRange[0])
-	}
-
-	if m.BlockRange[1] != 864336 {
-		t.Errorf("Wrong NewBlockRange[1]: %d", m.BlockRange[1])
 	}
 
 	newPins := m.Chunks

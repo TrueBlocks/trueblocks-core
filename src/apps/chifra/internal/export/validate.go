@@ -7,9 +7,7 @@ package exportPkg
 import (
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/migrate"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -22,18 +20,22 @@ func (opts *ExportOptions) validateExport() error {
 	}
 
 	if len(opts.Globals.File) == 0 {
-		err := validate.ValidateAtLeastOneAddr(opts.Addrs)
-		if err != nil {
+		if err := validate.ValidateAtLeastOneAddr(opts.Addrs); err != nil {
 			return err
 		}
 	}
 
-	if opts.Unripe && opts.Staging {
-		return validate.Usage("Please choose only one of {0} or {1}", "--staging", "--unripe")
+	if len(opts.Flow) > 0 {
+		if err := validate.ValidateEnum("--flow", opts.Flow, "[in|out|zero]"); err != nil {
+			return err
+		}
+		if !opts.Statements {
+			return validate.Usage("The {0} option is only available with {1} option.", "--flow", "--statements")
+		}
 	}
 
-	if opts.Globals.TestMode && (opts.Staging || opts.Unripe) {
-		return validate.Usage("--staging and --unripe are disabled for testing.")
+	if opts.Globals.TestMode && opts.Unripe {
+		return validate.Usage("--unripe are disabled for testing.")
 	}
 
 	if opts.Count && (opts.Logs || opts.Receipts || opts.Traces || opts.Statements || opts.Neighbors) {
@@ -84,16 +86,14 @@ func (opts *ExportOptions) validateExport() error {
 		return validate.Usage("The {0} option is only available with the {1} option.", "--fmt ofx", "--accounting")
 	}
 
-	bloomZero := cache.NewCachePath(opts.Globals.Chain, cache.Index_Bloom)
-	path := bloomZero.GetFullPath("000000000-000000000")
-	if !file.FileExists(path) {
-		msg := "The bloom filter for block zero (000000000-000000000.bloom) was not found. You must run "
-		msg += "'chifra init' (and allow it to complete) or 'chifra scrape' before using this command."
-		return validate.Usage(msg)
+	// Note that this does not return if the index is not initialized
+	if err := index.IndexIsInitialized(opts.Globals.Chain); err != nil {
+		if opts.Globals.ApiMode {
+			return err
+		} else {
+			logger.Fatal(err)
+		}
 	}
-
-	// Note this does not return if a migration is needed
-	migrate.CheckBackLevelIndex(opts.Globals.Chain)
 
 	err := opts.Globals.Validate()
 	if err != nil && strings.Contains(err.Error(), "option (ofx) must be one of") {

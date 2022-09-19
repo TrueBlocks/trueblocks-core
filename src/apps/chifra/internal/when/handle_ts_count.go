@@ -6,7 +6,7 @@ package whenPkg
 
 import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 
-func (opts *WhenOptions) HandleWhenTimestampCount() error {
+func (opts *WhenOptions) HandleTimestampCount() error {
 	type TsCount struct {
 		Count uint64 `json:"count"`
 	}

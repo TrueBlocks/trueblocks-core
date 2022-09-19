@@ -160,7 +160,7 @@ func RouteStatus(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// RouteScrape Scan the chain and update (and optionally pin) the TrueBlocks index of appearances.
+// RouteScrape Scan the chain and update the TrueBlocks index of appearances.
 func RouteScrape(w http.ResponseWriter, r *http.Request) {
 	if err, handled := scrapePkg.ServeScrape(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
@@ -169,7 +169,7 @@ func RouteScrape(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// RouteChunks Manage and investigate chunks and bloom filters.
+// RouteChunks Manage, investigate, and display the Unchained Index.
 func RouteChunks(w http.ResponseWriter, r *http.Request) {
 	if err, _ := chunksPkg.ServeChunks(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
@@ -212,7 +212,7 @@ func RouteSlurp(w http.ResponseWriter, r *http.Request) {
 // END_ROUTE_CODE
 
 func Index(w http.ResponseWriter, r *http.Request) {
-	http.Redirect(w, r, "https://trueblocks.io/docs/", 301)
+	http.Redirect(w, r, "https://trueblocks.io/docs/", http.StatusMovedPermanently)
 }
 
 var routes = Routes{

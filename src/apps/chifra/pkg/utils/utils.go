@@ -8,16 +8,18 @@ import (
 	"bytes"
 	"fmt"
 	"log"
+	"math/big"
 	"net/http"
 	"os"
 	"os/exec"
 	"reflect"
 	"runtime"
+	"strconv"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"golang.org/x/crypto/ssh/terminal"
+	"golang.org/x/term"
 )
 
 // IsTestModeServer return true if we are running from the testing harness
@@ -30,7 +32,7 @@ func IsApiMode() bool {
 }
 
 func IsTerminal() bool {
-	return terminal.IsTerminal(int(os.Stdout.Fd()))
+	return term.IsTerminal(int(os.Stdout.Fd()))
 }
 
 func AsciiFileToString(fileName string) string {
@@ -58,15 +60,36 @@ func OpenBrowser(url string) {
 	}
 }
 
-func PadLeft(str string, totalLen int) string {
+func PadNum(n int, totalLen int) string {
+	return PadLeft(strconv.Itoa(n), totalLen, '0')
+}
+
+func PadLeft(str string, totalLen int, pad rune) string {
 	if len(str) >= totalLen {
 		return str
 	}
-	zeros := ""
-	for i := 0; i < totalLen-len(str); i++ {
-		zeros += "0"
+	if pad == 0 {
+		pad = ' '
 	}
-	return zeros + str
+	lead := ""
+	for i := 0; i < totalLen-len(str); i++ {
+		lead += string(pad)
+	}
+	return lead + str
+}
+
+func PadRight(str string, totalLen int, pad rune) string {
+	if len(str) >= totalLen {
+		return str
+	}
+	if pad == 0 {
+		pad = ' '
+	}
+	tail := ""
+	for i := 0; i < totalLen-len(str); i++ {
+		tail += string(pad)
+	}
+	return str + tail
 }
 
 func ToCamelCase(in string) string {
@@ -87,7 +110,7 @@ func ToCamelCase(in string) string {
 const NOPOS = ^uint64(0)
 
 // Min calculates the minimum between two unsigned integers (golang has no such function)
-func Min[T int | float64 | uint64](x, y T) T {
+func Min[T int | float64 | uint32 | uint64](x, y T) T {
 	if x < y {
 		return x
 	}
@@ -95,7 +118,7 @@ func Min[T int | float64 | uint64](x, y T) T {
 }
 
 // Max calculates the max between two unsigned integers (golang has no such function)
-func Max[T int | float64 | uint64](x, y T) T {
+func Max[T int | float64 | uint32 | uint64](x, y T) T {
 	if x > y {
 		return x
 	}
@@ -163,5 +186,12 @@ func GetFields(t *reflect.Type, format string, header bool) (fields []string, se
 	return fields, sep, quote
 }
 
-// TODO: BOGUS - TESTING SCRAPING
-const OnOff = false
+func ToBigInt(str string) big.Int {
+	ret := big.Int{}
+	if len(str) > 2 && str[:2] == "0x" {
+		ret.SetString(str[2:], 16)
+	} else {
+		ret.SetString(str, 10)
+	}
+	return ret
+}

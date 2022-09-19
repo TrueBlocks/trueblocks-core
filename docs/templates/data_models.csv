@@ -17,6 +17,6 @@ Chain Data ,DatedBlock     ,datedBlock     ,./libs/etherlib/classDefinitions/dat
 State      ,State          ,state          ,./libs/etherlib/classDefinitions/ethstate.txt
 State      ,Token          ,token          ,./tools/getTokens/classDefinitions/tokenbalancerecord.txt
 Admin      ,Status         ,status         ,./apps/cacheStatus/classDefinitions/status.txt
-Admin      ,Pin            ,pinnedChunk    ,./libs/pinlib/classes/classDefinitions/pinnedchunk.txt
-Admin      ,Chunk          ,pinnedChunk    ,./libs/pinlib/classes/classDefinitions/pinnedchunk.txt
+Admin      ,Pin            ,pinnedChunk    ,./apps/blockScrape/classes/classDefinitions/pinnedchunk.txt
+Admin      ,Chunk          ,pinnedChunk    ,./apps/blockScrape/classes/classDefinitions/pinnedchunk.txt
 Other      ,Quote          ,quote          ,./libs/etherlib/classDefinitions/pricequote.txt

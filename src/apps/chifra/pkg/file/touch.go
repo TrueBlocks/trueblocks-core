@@ -13,7 +13,7 @@ import (
 func Touch(filename string) bool {
 	_, err := os.Stat(filename)
 	if os.IsNotExist(err) {
-		file, err := os.Create(filename)
+		file, err := os.OpenFile(filename, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
 		if err != nil {
 			fmt.Println(err.Error())
 			return false

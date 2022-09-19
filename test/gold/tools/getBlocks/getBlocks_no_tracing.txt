@@ -1,7 +1,7 @@
-chifra blocks  12 --trace --chain ropsten
+chifra blocks  12 --trace --chain non-tracing
 TEST[DATE|TIME] Blocks:  [12]
 TEST[DATE|TIME] Trace:  true
-TEST[DATE|TIME] Chain:  ropsten
+TEST[DATE|TIME] Chain:  non-tracing
 TEST[DATE|TIME] Format:  json
 Error: Tracing is required for this program to work properly.
 Usage:

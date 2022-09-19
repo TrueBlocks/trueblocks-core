@@ -21,9 +21,9 @@ func (bl *ChunkBloom) isMemberBytes(addr common.Address) bool {
 
 func (bl *ChunkBloom) IsMember(addr common.Address) bool {
 	whichBits := bl.WhichBits(addr)
-	offset := uint32(4)
+	offset := uint32(bl.HeaderSize) + 4 // the end of Count
 	for j := 0; j < int(bl.Count); j++ {
-		offset += uint32(4)
+		offset += uint32(4) // Skip over NInserted
 		var tester = bitChecker{offset: offset, whichBits: whichBits}
 		if bl.isMember(&tester) {
 			return true

@@ -5,14 +5,10 @@ package monitorsPkg
 // be found in the LICENSE file.
 
 import (
-	"io/ioutil"
 	"log"
+	"os"
 	"time"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
-
-var statusPath string = "/tmp/"
 
 type Scraper struct {
 	Running   bool    `json:"Running"`
@@ -28,15 +24,12 @@ func NewScraper(color, name string, secs float64, logLev uint64) Scraper {
 	return *scraper
 }
 
-func (scraper *Scraper) ChangeState(onOff bool) bool {
+func (scraper *Scraper) ChangeState(onOff bool, tmpPath string) bool {
 	prev := scraper.Running
 	scraper.Running = onOff
 	str := "false"
-	if utils.OnOff {
-		str = "true"
-	}
-	fileName := statusPath + scraper.Name + ".txt"
-	err := ioutil.WriteFile(fileName, []byte(str), 0644)
+	fileName := tmpPath + scraper.Name + ".txt"
+	err := os.WriteFile(fileName, []byte(str), 0644) // Uses os.O_WRONLY|os.O_CREATE|os.O_TRUNC
 	if err != nil {
 		log.Fatal(err)
 	}

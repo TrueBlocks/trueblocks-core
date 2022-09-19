@@ -2,7 +2,7 @@
 title: "Chain data"
 description: ""
 lead: ""
-date: 2022-06-10T08:26:35
+date: 2022-08-14T13:37:56
 lastmod:
   - :git
   - lastmod
@@ -218,13 +218,14 @@ Arguments:
 
 Flags:
   -l, --list         export a list of the 'special' blocks
-  -t, --timestamps   ignore other options and generate timestamps only
+  -t, --timestamps   display or process timestamps
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
   -v, --verbose      enable verbose (increase detail with --log_level)
   -h, --help         display this help screen
 
 Notes:
   - The block list may contain any combination of number, hash, date, special named blocks.
+  - Block numbers, timestamps, or dates in the future are estimated with 13 second blocks.
   - Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].
 ```
 

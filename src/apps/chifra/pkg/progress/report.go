@@ -10,7 +10,7 @@ const (
 	BeforeStart Event = iota
 	Start
 	Update
-	Done
+	Finished
 	Error
 	AllDone
 	Cancelled

@@ -4,13 +4,10 @@ import (
 	"encoding/binary"
 	"errors"
 	"fmt"
-	"io"
 	"os"
 	"sort"
-	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
 
 type Timestamp struct {
@@ -59,7 +56,7 @@ func loadTimestamps(chain string) error {
 	}
 
 	tsPath := config.GetPathToIndex(chain) + "ts.bin"
-	tsFile, err := os.Open(tsPath)
+	tsFile, err := os.OpenFile(tsPath, os.O_RDONLY, 0)
 	if err != nil {
 		return err
 	}
@@ -80,8 +77,11 @@ func loadTimestamps(chain string) error {
 	return nil
 }
 
+var ErrInTheFuture = errors.New("timestamp in the future")
+
 // FromTs is a local function that returns a Timestamp record given a Unix timestamp. It
-// loads the timestamp file into memory if it isn't already
+// loads the timestamp file into memory if it isn't already. If the timestamp requested
+// is past the end of the timestamp file, it estimates the block number and returns and error
 func FromTs(chain string, ts uint64) (*Timestamp, error) {
 	cnt, err := NTimestamps(chain)
 	if err != nil {
@@ -96,11 +96,10 @@ func FromTs(chain string, ts uint64) (*Timestamp, error) {
 	if ts > uint64(perChainTimestamps[chain].memory[cnt-1].Ts) {
 		last := perChainTimestamps[chain].memory[cnt-1]
 		secs := ts - uint64(last.Ts)
-		// TODO: Multi-chain specific
 		blks := uint32(float64(secs) / 13.3)
 		last.Bn = last.Bn + blks
 		last.Ts = uint32(ts)
-		return &last, errors.New("timestamp in the future")
+		return &last, ErrInTheFuture
 	}
 
 	// Go docs: Search uses binary search to find and return the smallest index i in [0, n) at which f(i) is true,
@@ -121,6 +120,14 @@ func FromTs(chain string, ts uint64) (*Timestamp, error) {
 	return &perChainTimestamps[chain].memory[index], nil
 }
 
+func DeCache(chain string) {
+	perChainTimestamps[chain] = TimestampDatabase{
+		loaded: false,
+		count:  0,
+		memory: nil,
+	}
+}
+
 // FromBn is a local function that returns a Timestamp record given a blockNum. It
 // loads the timestamp file into memory if it isn't already
 func FromBn(chain string, bn uint64) (*Timestamp, error) {
@@ -139,68 +146,4 @@ func FromBn(chain string, bn uint64) (*Timestamp, error) {
 	}
 
 	return &perChainTimestamps[chain].memory[bn], nil
-}
-
-var writeMutex sync.Mutex
-
-func Reset(chain string, maxBn uint64) error {
-	cnt, err := NTimestamps(chain)
-	if err != nil {
-		return err
-	}
-
-	// It's already done
-	if maxBn >= cnt {
-		return nil
-	}
-
-	err = loadTimestamps(chain)
-	if err != nil {
-		return err
-	}
-
-	truncated := perChainTimestamps[chain].memory[0:maxBn]
-
-	// TODO: BOGUS - PROTECT WRITING AGAINST CONTROL+C AND DOUBLE ENTRY
-	// writeMutex.Lock()
-	// trapCh := sigintTrap.Enable(context.WithCancel(context.Background()))
-
-	tempPath := config.GetPathToCache(chain) + "tmp/truncated.bin"
-	fp, err := os.OpenFile(tempPath, os.O_WRONLY|os.O_CREATE, 0644)
-	defer func() {
-		// Clear the cache in even in case of failure, causes a reload at worst
-		perChainTimestamps[chain] = TimestampDatabase{
-			loaded: false,
-			count:  0,
-			memory: nil,
-		}
-		os.Remove(tempPath)
-		// sigintTrap.Disable(trapCh)
-		// writeMutex.Unlock()
-	}()
-	if err != nil {
-		return err
-	}
-
-	fp.Seek(0, io.SeekStart)
-	err = binary.Write(fp, binary.LittleEndian, truncated)
-	if err != nil {
-		fp.Close()
-		return err
-	}
-
-	// Don't defer this because we want it to be closed before we copy it
-	fp.Close()
-
-	// TODO: BOGUS - THIS IS NOT PROTECTIVE OF THE EXISTING FILE
-	// TODO: BOGUS - IT SHOULD BE UN-INTERUPTABLE
-	// TODO: BOGUS - IT MAY WANT TO MAKE A BACKUP AND RECOVER IF THE COPY OR REMOVAL FAILS
-	// TODO: BOGUS - IT SHOULD BE GENERALIZED INSIDE OF COPYFILE
-	tsPath := config.GetPathToIndex(chain) + "ts.bin"
-	os.Remove(tsPath)
-	_, err = file.Copy(tempPath, tsPath)
-	if err != nil {
-		return err
-	}
-	return nil
 }

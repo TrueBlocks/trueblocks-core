@@ -8,10 +8,19 @@ import (
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *ChunksOptions) showAppearances(path string, first bool) (bool, error) {
-	path = index.ToIndexPath(path)
+func showAppearances(walker *index.IndexWalker, path string, first bool) (bool, error) {
+	var castOk bool
+	var opts *ChunksOptions
+	if opts, castOk = walker.GetOpts().(*ChunksOptions); !castOk {
+		logger.Fatal("should not happen ==> cannot cast ChunksOptions in showAppearances")
+		return false, nil
+	}
+	path = paths.ToIndexPath(path)
 
 	indexChunk, err := index.NewChunkData(path)
 	if err != nil {
@@ -25,7 +34,7 @@ func (opts *ChunksOptions) showAppearances(path string, first bool) (bool, error
 	}
 
 	for i := 0; i < int(indexChunk.Header.AppearanceCount); i++ {
-		if opts.Globals.TestMode && i > maxTestItems {
+		if opts.Globals.TestMode && i > walker.MaxTests() {
 			continue
 		}
 		obj := index.AppearanceRecord{}
@@ -39,4 +48,22 @@ func (opts *ChunksOptions) showAppearances(path string, first bool) (bool, error
 		}
 	}
 	return true, nil
+}
+
+func (opts *ChunksOptions) HandleAppearances(blockNums []uint64) error {
+	defer opts.Globals.RenderFooter()
+	err := opts.Globals.RenderHeader(types.SimpleIndexAppearance{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+	if err != nil {
+		return err
+	}
+
+	walker := index.NewIndexWalker(
+		opts.Globals.Chain,
+		opts.Globals.TestMode,
+		10, /* maxTests */
+		opts,
+		showAppearances,
+		nil, /* data */
+	)
+	return walker.WalkIndexFiles(paths.Index_Bloom, blockNums)
 }

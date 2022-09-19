@@ -1,4 +1,4 @@
-list?addrs=rhyslindmark.eth&firstBlock=4037786&lastBlock=4589473
+list?addrs=rhyslindmark.eth&firstBlock=4037786&lastBlock=4081406
 {
   "data": [
     {
@@ -15,36 +15,6 @@ list?addrs=rhyslindmark.eth&firstBlock=4037786&lastBlock=4589473
       "address": "0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3",
       "blockNumber": 4081406,
       "transactionIndex": 20
-    },
-    {
-      "address": "0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3",
-      "blockNumber": 4081451,
-      "transactionIndex": 4
-    },
-    {
-      "address": "0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3",
-      "blockNumber": 4133841,
-      "transactionIndex": 10
-    },
-    {
-      "address": "0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3",
-      "blockNumber": 4133841,
-      "transactionIndex": 17
-    },
-    {
-      "address": "0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3",
-      "blockNumber": 4565174,
-      "transactionIndex": 30
-    },
-    {
-      "address": "0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3",
-      "blockNumber": 4565215,
-      "transactionIndex": 48
-    },
-    {
-      "address": "0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3",
-      "blockNumber": 4589473,
-      "transactionIndex": 37
     }
   ],
   "meta": {

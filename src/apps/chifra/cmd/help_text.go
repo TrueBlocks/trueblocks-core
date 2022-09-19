@@ -26,8 +26,8 @@ const helpText = `  Accounts:
   Admin:
     status        report on the status of the TrueBlocks system
     serve         serve the TrueBlocks API using the flame server
-    scrape        scan the chain and update (and optionally pin) the TrueBlocks index of appearances
-    chunks        manage and investigate chunks and bloom filters
+    scrape        scan the chain and update the TrueBlocks index of appearances
+    chunks        manage, investigate, and display the Unchained Index
     init          initialize the TrueBlocks system by downloading from IPFS
   Other:
     quotes        update or display Ethereum price data, this tool has been deprecated

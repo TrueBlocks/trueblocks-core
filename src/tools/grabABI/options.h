@@ -35,5 +35,4 @@ class COptions : public CAbiOptions {
     void Init(void) override;
 
     void handle_convertsol(const address_t& a);
-    bool handle_classes(void);
 };

@@ -29,7 +29,7 @@ type ExportOptions struct {
 	Receipts    bool                  `json:"receipts,omitempty"`    // Export receipts instead of transactional data
 	Logs        bool                  `json:"logs,omitempty"`        // Export logs instead of transactional data
 	Traces      bool                  `json:"traces,omitempty"`      // Export traces instead of transactional data
-	Statements  bool                  `json:"statements,omitempty"`  // Export reconciliations instead of transactional data (requires --accounting option)
+	Statements  bool                  `json:"statements,omitempty"`  // Export reconciliations instead of transactional data (assumes --accounting option)
 	Neighbors   bool                  `json:"neighbors,omitempty"`   // Export the neighbors of the given address
 	Accounting  bool                  `json:"accounting,omitempty"`  // Attach accounting records to the exported data (applies to transactions export only)
 	Articulate  bool                  `json:"articulate,omitempty"`  // Articulate transactions, traces, logs, and outputs
@@ -42,8 +42,8 @@ type ExportOptions struct {
 	Emitter     []string              `json:"emitter,omitempty"`     // For log export only, export only logs if emitted by one of these address(es)
 	Topic       []string              `json:"topic,omitempty"`       // For log export only, export only logs with this topic(s)
 	Asset       []string              `json:"asset,omitempty"`       // For the statements option only, export only reconciliations for this asset
+	Flow        string                `json:"flow,omitempty"`        // For the statements option only, export only statements with incoming value or outgoing value
 	Factory     bool                  `json:"factory,omitempty"`     // Scan for contract creations from the given address(es) and report address of those contracts
-	Staging     bool                  `json:"staging,omitempty"`     // Export transactions labeled staging (i.e. older than 28 blocks but not yet consolidated)
 	Unripe      bool                  `json:"unripe,omitempty"`      // Export transactions labeled upripe (i.e. less than 28 blocks old)
 	Load        string                `json:"load,omitempty"`        // A comma separated list of dynamic traversers to load
 	Reversed    bool                  `json:"reversed,omitempty"`    // Produce results in reverse chronological order
@@ -77,8 +77,8 @@ func (opts *ExportOptions) testLog() {
 	logger.TestLog(len(opts.Emitter) > 0, "Emitter: ", opts.Emitter)
 	logger.TestLog(len(opts.Topic) > 0, "Topic: ", opts.Topic)
 	logger.TestLog(len(opts.Asset) > 0, "Asset: ", opts.Asset)
+	logger.TestLog(len(opts.Flow) > 0, "Flow: ", opts.Flow)
 	logger.TestLog(opts.Factory, "Factory: ", opts.Factory)
-	logger.TestLog(opts.Staging, "Staging: ", opts.Staging)
 	logger.TestLog(opts.Unripe, "Unripe: ", opts.Unripe)
 	logger.TestLog(len(opts.Load) > 0, "Load: ", opts.Load)
 	logger.TestLog(opts.Reversed, "Reversed: ", opts.Reversed)
@@ -89,7 +89,7 @@ func (opts *ExportOptions) testLog() {
 
 // String implements the Stringer interface
 func (opts *ExportOptions) String() string {
-	b, _ := json.MarshalIndent(opts, "", "\t")
+	b, _ := json.MarshalIndent(opts, "", "  ")
 	return string(b)
 }
 
@@ -155,6 +155,9 @@ func (opts *ExportOptions) toCmdLine() string {
 	for _, asset := range opts.Asset {
 		options += " --asset " + asset
 	}
+	if len(opts.Flow) > 0 {
+		options += " --flow " + opts.Flow
+	}
 	if opts.Factory {
 		options += " --factory"
 	}
@@ -175,7 +178,7 @@ func (opts *ExportOptions) toCmdLine() string {
 	options += " " + strings.Join(opts.Fourbytes, " ")
 	// EXISTING_CODE
 	// EXISTING_CODE
-	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
+	options += fmt.Sprintf("%s", "") // silence compiler warning for auto gen
 	return options
 }
 
@@ -246,10 +249,10 @@ func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Asset = append(opts.Asset, s...)
 			}
+		case "flow":
+			opts.Flow = value[0]
 		case "factory":
 			opts.Factory = true
-		case "staging":
-			opts.Staging = true
 		case "unripe":
 			opts.Unripe = true
 		case "load":

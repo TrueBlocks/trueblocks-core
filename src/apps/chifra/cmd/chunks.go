@@ -30,41 +30,34 @@ var chunksCmd = &cobra.Command{
 const usageChunks = `chunks <mode> [flags] [blocks...] [address...]
 
 Arguments:
-  mode - the type of chunk info to retrieve (required)
-	One of [ stats | manifest | pins | blooms | index | addresses | appearances ]
-  blocks - optional list of blocks to intersect with chunk ranges
-  addrs - one or more addresses to use with --belongs option (see note)`
+  mode - the type of data to process (required)
+	One of [ status | manifest | index | blooms | addresses | appearances | stats ]
+  blocks - an optional list of blocks to intersect with chunk ranges`
 
-const shortChunks = "manage and investigate chunks and bloom filters"
+const shortChunks = "manage, investigate, and display the Unchained Index"
 
 const longChunks = `Purpose:
-  Manage and investigate chunks and bloom filters.`
+  Manage, investigate, and display the Unchained Index.`
 
 const notesChunks = `
 Notes:
+  - Mode determines which type of data to display or process.
+  - Certain options are only available in certain modes.
   - If blocks are provided, only chunks intersecting with those blocks are displayed.
-  - Only a single block in a given chunk needs to be supplied for a match.
-  - The --belongs option is only available with the addresses or blooms mode.
-  - The --belongs option requires both an address and a block identifier.
-  - You may only specifiy an address when using the --belongs option.
-  - The two --pin_ options, the --clean option, and the --check option are available only in manifest mode.`
+  - The --truncate option updates data, but does not --pin or --publish.
+  - You may combine the --pin and --publish options.
+  - The --belongs option is only available in the index mode.`
 
 func init() {
 	chunksCmd.Flags().SortFlags = false
 
-	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Details, "details", "d", false, "for manifest and addresses options only, display full details of the report")
-	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Check, "check", "c", false, "depends on mode, checks for internal consistency of the data type")
-	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Belongs, "belongs", "b", false, "checks if the given address appears in the given chunk")
-	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Repair, "repair", "e", false, "valid for manifest option only, repair the given chunk (requires block number) (hidden)")
-	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Clean, "clean", "n", false, "retrieve all pins on Pinata, compare to manifest, remove any extraneous remote pins")
-	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Remote, "remote", "m", false, "for some options, force processing from remote data")
-	chunksCmd.Flags().Uint64VarP(&chunksPkg.GetOptions().Reset, "reset", "r", 0, "available only in chunks mode, remove all chunks inclusive of or after this block (hidden)")
-	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().PinRemote, "pin_remote", "i", false, "pin any previously unpinned chunks and blooms to a remote pinning service")
-	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Publish, "publish", "p", false, "update the manifest and publish it to the Unchained Index smart contract")
-	if os.Getenv("TEST_MODE") != "true" {
-		chunksCmd.Flags().MarkHidden("repair")
-		chunksCmd.Flags().MarkHidden("reset")
-	}
+	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Check, "check", "c", false, "check the manifest, index, or blooms for internal consistency")
+	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Pin, "pin", "i", false, "pin the manifest or each index chunk and bloom")
+	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Publish, "publish", "p", false, "publish the manifest to the Unchained Index smart contract")
+	chunksCmd.Flags().Uint64VarP(&chunksPkg.GetOptions().Truncate, "truncate", "n", 0, "truncate the entire index at this block (requires a block identifier)")
+	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Remote, "remote", "m", false, "prior to processing, retreive the manifest from the Unchained Index smart contract")
+	chunksCmd.Flags().StringSliceVarP(&chunksPkg.GetOptions().Belongs, "belongs", "b", nil, "in index mode only, checks the address(es) for inclusion in the given index chunk")
+	chunksCmd.Flags().Float64VarP(&chunksPkg.GetOptions().Sleep, "sleep", "s", 0.0, "for --remote pinning only, seconds to sleep between API calls")
 	globals.InitGlobals(chunksCmd, &chunksPkg.GetOptions().Globals)
 
 	chunksCmd.SetUsageTemplate(UsageWithNotes(notesChunks))

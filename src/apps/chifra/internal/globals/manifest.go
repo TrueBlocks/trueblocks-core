@@ -7,7 +7,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// TODO: BOGUS - MANIFEST WRITING THE MANIFEST
+// TODO: Why does this have a separate render routine? Why not just a RenderObject?
 func (opts *GlobalOptions) RenderManifest(w io.Writer, man *manifest.Manifest) error {
 	var err error
 	tmp := opts
@@ -19,8 +19,10 @@ func (opts *GlobalOptions) RenderManifest(w io.Writer, man *manifest.Manifest) e
 		for _, c := range man.Chunks {
 			cc := types.SimpleChunkRecord{
 				Range:     c.Range,
-				BloomHash: string(c.BloomHash),
-				IndexHash: string(c.IndexHash),
+				BloomHash: c.BloomHash,
+				BloomSize: c.BloomSize,
+				IndexHash: c.IndexHash,
+				IndexSize: c.IndexSize,
 			}
 			sc = append(sc, cc)
 		}

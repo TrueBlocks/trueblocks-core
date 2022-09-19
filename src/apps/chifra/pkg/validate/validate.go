@@ -13,9 +13,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-// TODO: check if ParseUint has better performance
-// TODO: TJR - I did the test - ParseUint is slower and
-// TODO: TJR - does not handle hashes that are too long
 func IsHex(str string) bool {
 	return len(strings.Trim(str[2:], "0123456789abcdefABCDEF")) == 0
 }

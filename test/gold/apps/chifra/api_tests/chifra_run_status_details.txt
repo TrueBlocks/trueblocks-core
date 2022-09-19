@@ -118,7 +118,7 @@ status?details&firstBlock=1400000&lastBlock=2000000
           "apiProvider": "--provider-mainnet--",
           "remoteExplorer": "--explorer-mainnet--",
           "localExplorer": "--explorer-mainnet--",
-          "pinGateway": "--gateway-mainnet--"
+          "ipfsGateway": "--gateway-mainnet--"
         },
         {
           "chain": "gnosis",
@@ -128,7 +128,7 @@ status?details&firstBlock=1400000&lastBlock=2000000
           "apiProvider": "--provider-gnosis--",
           "remoteExplorer": "--explorer-gnosis--",
           "localExplorer": "--explorer-gnosis--",
-          "pinGateway": "--gateway-gnosis--"
+          "ipfsGateway": "--gateway-gnosis--"
         }
       ],
       "date": "--date--"

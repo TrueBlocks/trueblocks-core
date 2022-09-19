@@ -147,7 +147,16 @@ func (p *Point) resolvePoint(chain string) uint64 {
 	} else if p.Special != "" {
 		bn, _ = tslib.FromNameToBn(chain, p.Special)
 	} else if p.Number >= utils.EarliestEvmTs {
-		bn, _ = tslib.FromTsToBn(chain, uint64(p.Number))
+		var err error
+		bn, err = tslib.FromTsToBn(chain, uint64(p.Number))
+		if err == tslib.ErrInTheFuture {
+			provider := config.GetRpcProvider(chain)
+			latest := rpcClient.BlockNumber(provider)
+			tsFuture := rpcClient.GetBlockTimestamp(provider, latest)
+			secs := (tsFuture - uint64(p.Number))
+			blks := (secs / 13)
+			bn = latest + blks
+		}
 	} else {
 		bn = uint64(p.Number)
 	}
@@ -324,9 +333,7 @@ func GetBlockNumbers(chain string, ids []Identifier) ([]uint64, error) {
 		if err != nil {
 			return []uint64{}, err
 		}
-		for _, n := range blockNums {
-			nums = append(nums, n)
-		}
+		nums = append(nums, blockNums...)
 	}
 	return nums, nil
 }
@@ -338,9 +345,7 @@ func GetTransactionIds(chain string, ids []Identifier) ([]types.SimpleAppearance
 		if err != nil {
 			return []types.SimpleAppearance{}, err
 		}
-		for _, n := range blockNums {
-			txids = append(txids, n)
-		}
+		txids = append(txids, blockNums...)
 	}
 	return txids, nil
 }

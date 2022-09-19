@@ -13,7 +13,6 @@
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
 #include "appearance.h"
-#include "bloom.h"
 #include "indexheader.h"
 #include "indexedaddress.h"
 #include "indexedappearance.h"

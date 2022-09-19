@@ -29,7 +29,7 @@ package file
 
 // func addToArchive(tw *tar.Writer, filename, relativeTo string) error {
 // 	// Open the file which will be written into the archive
-// 	file, err := os.Open(filename)
+// 	file, err := os.OpenFile(filename, os.O_RDONLY, 0)
 // 	if err != nil {
 // 		return err
 // 	}

@@ -4,9 +4,9 @@ tokens?addrs2=0xd26114cd6ee289accf82350c8d8487fedb8a0c07%200xb9e7f8568e08d5659f5
     {
       "blockNumber": 4001001,
       "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
-      "decimals": 18,
+      "decimals": 0,
       "isContract": true,
-      "isErc20": true,
+      "isErc20": false,
       "isErc721": false
     },
     {

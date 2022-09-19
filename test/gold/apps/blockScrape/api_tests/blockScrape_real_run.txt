@@ -1,6 +1,6 @@
 scrape?sleep=.5&pin&logLevel=8
 {
   "errors": [
-    "Please choose at least one of [run|stop]."
+    "Cannot test block scraper"
   ]
 }

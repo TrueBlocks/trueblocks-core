@@ -172,8 +172,9 @@ bool CCommandOption::setValueByName(const string_q& fieldNameIn, const string_q&
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
-    if (fieldName % "description")
+    if (fieldName % "description") {
         fieldValue = substitute(fieldValue, "&#44;", ",");
+    }
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
@@ -521,6 +522,9 @@ string_q nextCommandoptionChunk_custom(const string_q& fieldIn, const void* data
                 }
             case 'v':
                 if (fieldIn % "variable") {
+                    if (com->isConfig) {
+                        return firstUpper(com->Format("[{LOWER}]"));
+                    }
                     return substitute(toProper(com->longName), "_", "");
                 }
             // EXISTING_CODE
@@ -921,7 +925,7 @@ string_q clean_positionals(const string_q& progName, const string_q& strIn) {
             os << (strIn == "list<addr> list<blknum>" ? "<address> <address> [address...] [block...]" : "");
 
         } else if (contains(toLower(progName), "chunks")) {
-            os << (strIn == "enum[stats|manifest|pins|blooms|index|addresses|appearances] list<blknum> list<addr>"
+            os << (strIn == "enum[status|manifest|index|blooms|addresses|appearances|stats] list<blknum>"
                        ? "<mode> [blocks...] [address...]"
                        : "");
 

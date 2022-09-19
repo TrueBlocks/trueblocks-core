@@ -4,7 +4,7 @@
 
 package initPkg
 
-import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/migrate"
+import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 
 func (opts *InitOptions) validateInit() error {
 	opts.testLog()
@@ -13,9 +13,12 @@ func (opts *InitOptions) validateInit() error {
 		return opts.BadFlag
 	}
 
-	// Note this does not return if a migration is needed
-	// TODO: BOGUS - SHOULD INIT BE ALLOWED NO MATTER WHAT?
-	migrate.CheckBackLevelIndex(opts.Globals.Chain)
+	if opts.Globals.TestMode {
+		return validate.Usage("integration testing was skipped for chifra init")
+	}
+
+	// Note - we don't check the index for back level since chifra init is how we upgrade the index
+	// index.CheckBackLevelIndex(opts.Globals.Chain)
 
 	return opts.Globals.Validate()
 }

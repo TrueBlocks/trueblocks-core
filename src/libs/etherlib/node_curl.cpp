@@ -75,7 +75,6 @@ CCurlContext* getCurlContext(void) {
     thread::id threadID = this_thread::get_id();
     if (g_threadMap[threadID])
         return g_threadMap[threadID];
-    // TODO(tjayrush): this memory is never released
     CCurlContext* cntx = new CCurlContext;
     g_threadMap[threadID] = cntx;
     if (verbose)

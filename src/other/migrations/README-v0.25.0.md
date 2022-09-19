@@ -105,8 +105,11 @@ Edit the `trueBlocks.toml` file you find there and replace the following values 
 [settings]
 cachePath = "<cache_path>"
 indexPath = "<index_path>"
-etherscan_key = "<etherscan_key>"
 defaultChain = "mainnet"
+
+[keys]
+[keys.etherscan]
+apiKey = "<etherscan_key>"
 ```
 
 Find the section called `[chains.mainnet]`. You should be able to find an item called `rpcProvider` in that section. Replace that value with the value from your previous installation.

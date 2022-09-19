@@ -1,6 +1,6 @@
 # Recent Migrations
 
-Complete any applicable [Migrations](https://github.com/TrueBlocks/trueblocks-core/blob/develop/MIGRATIONS.md) which contains important information.
+Please complete any applicable [Migrations](https://github.com/TrueBlocks/trueblocks-core/blob/develop/MIGRATIONS.md) which contains important information.
 
 # TrueBlocks Core
 
@@ -144,7 +144,7 @@ Our official docker version is in a [separate repo](https://github.com/TrueBlock
 
 ## Documentation
 
-See our [documentation repo](https://github.com/TrueBlocks/trueblocks-docker) for the TrueBlocks website.
+See our [documentation repo](https://github.com/TrueBlocks/trueblocks-docs) for the TrueBlocks website.
 
 ## Contributing to TrueBlocks
 

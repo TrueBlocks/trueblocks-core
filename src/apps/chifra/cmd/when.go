@@ -40,21 +40,24 @@ const longWhen = `Purpose:
 const notesWhen = `
 Notes:
   - The block list may contain any combination of number, hash, date, special named blocks.
+  - Block numbers, timestamps, or dates in the future are estimated with 13 second blocks.
   - Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].`
 
 func init() {
 	whenCmd.Flags().SortFlags = false
 
 	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().List, "list", "l", false, "export a list of the 'special' blocks")
-	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Timestamps, "timestamps", "t", false, "ignore other options and generate timestamps only")
-	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Check, "check", "c", false, "available only with --timestamps, checks the validity of the timestamp data (hidden)")
-	whenCmd.Flags().Uint64VarP(&whenPkg.GetOptions().Reset, "reset", "r", 0, "available only with --timestamps option, reset the timestamp file to this block (hidden)")
-	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Count, "count", "u", false, "available only with --timestamps, returns the number of timestamps in the cache (hidden)")
-	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Deep, "deep", "e", false, "available only with --timestamps --check option, queries every timestamp on chain (slow) (hidden)")
+	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Timestamps, "timestamps", "t", false, "display or process timestamps")
+	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Count, "count", "u", false, "with --timestamps only, returns the number of timestamps in the cache (hidden)")
+	whenCmd.Flags().Uint64VarP(&whenPkg.GetOptions().Truncate, "truncate", "n", 0, "with --timestamps only, truncates the timestamp file at this block (hidden)")
+	whenCmd.Flags().Uint64VarP(&whenPkg.GetOptions().Repair, "repair", "r", 0, "with --timestamps only, repair a single timestamp by querying the chain (hidden)")
+	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Check, "check", "c", false, "with --timestamps only, checks the validity of the timestamp data (hidden)")
+	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Deep, "deep", "e", false, "with --timestamps --check only, verifies timestamps from on chain (slow) (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {
-		whenCmd.Flags().MarkHidden("check")
-		whenCmd.Flags().MarkHidden("reset")
 		whenCmd.Flags().MarkHidden("count")
+		whenCmd.Flags().MarkHidden("truncate")
+		whenCmd.Flags().MarkHidden("repair")
+		whenCmd.Flags().MarkHidden("check")
 		whenCmd.Flags().MarkHidden("deep")
 	}
 	globals.InitGlobals(whenCmd, &whenPkg.GetOptions().Globals)

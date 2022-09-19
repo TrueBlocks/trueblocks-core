@@ -62,7 +62,7 @@ type NameOnDiscHeader struct {
 func LoadNamesMap(chain string) (NamesMap, error) {
 	binPath := config.GetPathToCache(chain) + "names/names.bin"
 	if false && file.FileExists(binPath) {
-		file, _ := os.Open(binPath)
+		file, _ := os.OpenFile(binPath, os.O_RDONLY, 0)
 		defer file.Close()
 
 		thing := NameOnDiscHeader{}
@@ -161,7 +161,7 @@ func (gr *NameReader) Read() (Name, error) {
 }
 
 func NewNameReader(path string) (NameReader, error) {
-	file, err := os.Open(path)
+	file, err := os.OpenFile(path, os.O_RDONLY, 0)
 	if err != nil {
 		return NameReader{}, err
 	}

@@ -18,6 +18,13 @@ string_q get_usage(const string_q& route) {
     return "```[plaintext]\n" + doCommand2("chifra " + route + " --help") + "\n```";
 }
 
+extern const char* STR_CONFIG;
+//------------------------------------------------------------------------------------------------------------
+string_q get_config_usage(const CCommandOption& ep) {
+    string_q docFn = getDocsPathReadmes(substitute(toLower(ep.group), " ", "") + "-" + ep.api_route + ".config");
+    return substitute(STR_CONFIG, "[{CONFIGS}]", asciiFileToString(docFn));
+}
+
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_readmes(void) {
     CToml config(rootConfigToml_makeClass);
@@ -40,6 +47,7 @@ bool COptions::handle_readmes(void) {
 
             replaceAll(contents, "[{NAME}]", "chifra " + ep.api_route);
             replaceAll(contents, "[{USAGE}]", get_usage(ep.api_route));
+            replaceAll(contents, "[{CONFIG}]", get_config_usage(ep));
 
             string_q dFooter;
             dFooter =
@@ -125,3 +133,22 @@ const char* STR_YAML_FRONTMATTER =
     "weight: [{WEIGHT}]\n"
     "toc: true\n"
     "---\n";
+
+const char* STR_CONFIG =
+    "\n"
+    "\n"
+    "### configuration\n"
+    "\n"
+    "Each of the following additional configurable command line options are available.\n"
+    "\n"
+    "**Configuration file:** `$CONFIG/$CHAIN/blockScrape.toml`  \n"
+    "**Configuration group:** `[settings]`  \n"
+    "\n"
+    "[{CONFIGS}]\n"
+    "\n"
+    "These items may be set in three ways, each overridding the preceeding method:\n"
+    "\n"
+    "-- in the above configuration file under the `[settings]` group,  \n"
+    "-- in the environment by exporting the configuration item as UPPER&lowbar;CASE, without "
+    "underbars, and prepended with TB_SETTINGS&lowbar;, or  \n"
+    "-- on the command line using the configuration item with leading dashes (i.e., `--name`).  ";

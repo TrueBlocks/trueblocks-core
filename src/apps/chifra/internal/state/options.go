@@ -50,7 +50,7 @@ func (opts *StateOptions) testLog() {
 
 // String implements the Stringer interface
 func (opts *StateOptions) String() string {
-	b, _ := json.MarshalIndent(opts, "", "\t")
+	b, _ := json.MarshalIndent(opts, "", "  ")
 	return string(b)
 }
 
@@ -84,7 +84,7 @@ func (opts *StateOptions) toCmdLine() string {
 	options += " " + strings.Join(opts.Blocks, " ")
 	// EXISTING_CODE
 	// EXISTING_CODE
-	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
+	options += fmt.Sprintf("%s", "") // silence compiler warning for auto gen
 	return options
 }
 

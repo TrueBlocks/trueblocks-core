@@ -6,6 +6,8 @@ bool header(CTraverser* trav, void* data) {
     return true;
 }
 
+CStringArray lines;
+string_q path = "/Users/jrush/Development/tokenomics.io/giveth/exports/mainnet/neighbors/";
 //-----------------------------------------------------------------------
 bool display(CTraverser* trav, void* data) {
     cout << "logging: " << trav->logging << endl;
@@ -22,11 +24,30 @@ bool display(CTraverser* trav, void* data) {
         cout << "  curMonitor::lastVisitedBlock: " << trav->curMonitor->lastVisitedBlock << endl;
         cout << "  curMonitor::sizeInBytes: " << trav->curMonitor->sizeInBytes << endl;
     }
-    // os << "monitorMap: " << trav->monitorMap << endl;
+    // string_q p = path + trav->curMonitor->address + ".csv";
+    // if (fileExists(p)) {
+    //     if (lines.size() == 0) {
+    //         asciiFileToLines(p, lines);
+    //     }
+    //     for (auto line : lines) {
+    //         ostringstream os;
+    //         os << "\"" << trav->trans.blockNumber << "\",\"" << trav->trans.transactionIndex << "\"";
+    //         // cerr << line << endl << os.str() << " " << contains(line, os.str()) << endl;
+    //         // getchar();
+    //         if (contains(line, os.str()) && contains(line, ",\"to\"")) {
+    //             cerr << "The Line: " << line << endl;
+    //         }
+    //     }
+    // } else {
+    //     cerr << p << " not found" << endl;
+    // }
+    for (auto item : trav->monitorMap) {
+        cout << "monitorMap: " << item.first << " " << item.second << endl;
+    }
     cout << "traverserRange: " << trav->traverserRange << endl;
-    // cout << trav->app->blk << ",";
-    // cout << trav->app->txid << ",";
-    // cout << trav->trans.hash << endl;
+    cout << trav->app->blk << ",";
+    cout << trav->app->txid << ",";
+    cout << trav->trans.hash << endl;
     return true;
 }
 
@@ -38,6 +59,7 @@ extern "C" CTraverser* makeTraverser(uint32_t wanted) {
         return nullptr;
     }
 
+    CMonitor::registerClass();
     CTraverser* trav = new CTraverser("testing");
 
     trav->preFunc = header;

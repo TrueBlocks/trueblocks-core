@@ -310,47 +310,6 @@ void CSharedResource::WriteLine(const string_q& str) {
     fprintf(m_fp, "%s", str.c_str());
 }
 
-//----------------------------------------------------------------------
-string_q excelFileToString(const string_q& excelFilename) {
-    // if (contains(excelFilename, ".xlsx"))
-    //     return "Only .xls Excel files are supported";
-    // return do Command("exportExcel " + excelFilename);
-    return "";
-}
-
-//----------------------------------------------------------------------
-string_q docxToString(const string_q& filename) {
-    // if (!contains(filename, ".docx"))
-    //     return "Only .docx files are supported";
-    // return do Command(getHomeFolder() + "source/docx2txt.pl " +
-    //                  substitute(substitute(filename, " ", "\\ "), "'", "\\'") + " -");
-    return "";
-}
-
-//----------------------------------------------------------------------
-size_t stringToDocxFile(const string_q& fileName, const string_q& contents) {
-    // string_q cmd =
-    //     getHomeFolder() + "source/createDocx \"" + fileName + "\" \"" + substitute(contents, "\"", "''") + "\"";
-    // do Command(cmd);
-    return true;
-}
-
-//----------------------------------------------------------------------
-size_t stringToPDF(const string_q& fileName, const string_q& contents) {
-    // string_q tmpName = "/tmp/toPDF.txt";
-    // string_q pdfName = "/tmp/toPDF.pdf";
-    // stringToAsciiFile(tmpName, contents);
-
-    // string_q cmd = getHomeFolder() + "source/toPDF \"" + tmpName + "\" \"" + pdfName + "\" 2>/dev/null";
-    // do Command(cmd);
-    // copyFile(pdfName, fileName);
-
-    // remove(tmpName.c_str());
-    // remove(pdfName.c_str());
-
-    return true;
-}
-
 //-----------------------------------------------------------------------
 // TODO(tjayrush): global data
 static uint32_t sectionLocks = 0;

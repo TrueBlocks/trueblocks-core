@@ -8,12 +8,21 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *ChunksOptions) showBloom(path string, first bool) (bool, error) {
+func showBloom(walker *index.IndexWalker, path string, first bool) (bool, error) {
+	var castOk bool
+	var opts *ChunksOptions
+	if opts, castOk = walker.GetOpts().(*ChunksOptions); !castOk {
+		logger.Fatal("should not happen ==> cannot cast ChunksOptions in showBloom")
+		return false, nil
+	}
+
 	var bl bloom.ChunkBloom
 	bl.ReadBloom(path)
 
@@ -38,13 +47,33 @@ func NewSimpleBloom(stats types.ReportChunks, bl bloom.ChunkBloom) types.SimpleB
 	}
 
 	var ret types.SimpleBloom
+	ret.Magic = bl.Header.Magic
+	ret.Hash = bl.Header.Hash
 	ret.Size = stats.BloomSz
-	ret.Range = cache.FileRange{First: stats.Start, Last: stats.End}
+	ret.Range = paths.FileRange{First: stats.Start, Last: stats.End}
 	ret.Count = stats.NBlooms
 	ret.Width = bloom.BLOOM_WIDTH_IN_BYTES
 	ret.NInserted = uint64(nInserted)
 
 	return ret
+}
+
+func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
+	defer opts.Globals.RenderFooter()
+	err := opts.Globals.RenderHeader(types.SimpleBloom{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+	if err != nil {
+		return err
+	}
+
+	walker := index.NewIndexWalker(
+		opts.Globals.Chain,
+		opts.Globals.TestMode,
+		10, /* maxTests */
+		opts,
+		showBloom,
+		nil,
+	)
+	return walker.WalkIndexFiles(paths.Index_Bloom, blockNums)
 }
 
 func Display(bl *bloom.ChunkBloom, verbose int) {

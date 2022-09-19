@@ -1,7 +1,7 @@
 package types
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/bykof/gostradamus"
 	"github.com/ethereum/go-ethereum/common"
 )
@@ -52,21 +52,24 @@ type SimpleMonitor struct {
 }
 
 type SimpleManifest struct {
-	Version   string              `json:"version"`
-	Chain     string              `json:"chain"`
-	Schemas   string              `json:"schemas"`
-	Databases string              `json:"databases"`
-	Chunks    []SimpleChunkRecord `json:"chunks"`
+	Version string              `json:"version"`
+	Chain   string              `json:"chain"`
+	Schemas IpfsHash            `json:"schemas"`
+	Chunks  []SimpleChunkRecord `json:"chunks"`
 }
 
 type SimpleChunkRecord struct {
-	Range     string `json:"range"`
-	BloomHash string `json:"bloomHash"`
-	IndexHash string `json:"indexHash"`
+	Range     string   `json:"range,omitempty"`
+	BloomHash IpfsHash `json:"bloomHash,omitempty"`
+	BloomSize int64    `json:"bloomSize,omitempty"`
+	IndexHash IpfsHash `json:"indexHash,omitempty"`
+	IndexSize int64    `json:"indexSize,omitempty"`
 }
 
 type SimpleBloom struct {
-	Range     cache.FileRange `json:"range"`
+	Range     paths.FileRange `json:"range"`
+	Magic     uint16          `json:"magic"`
+	Hash      common.Hash     `json:"hash"`
 	Count     uint32          `json:"nBlooms"`
 	NInserted uint64          `json:"nInserted"`
 	Size      int64           `json:"size"`
@@ -74,7 +77,7 @@ type SimpleBloom struct {
 }
 
 type SimpleIndex struct {
-	Range           cache.FileRange `json:"range"`
+	Range           paths.FileRange `json:"range"`
 	Magic           uint32          `json:"magic"`
 	Hash            common.Hash     `json:"hash"`
 	AddressCount    uint32          `json:"nAddresses"`

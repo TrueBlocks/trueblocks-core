@@ -4,7 +4,6 @@ TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] MaxRecords:  5
 TEST[DATE|TIME] LogLevel:  10
 TEST[DATE|TIME] Format:  api
-TIME ~ CLOCK - : 4-----0x001d14804b399c6ef80e64576f657660804fec0b freshened to 11854827
 TIME ~ CLOCK - : 4-----Loaded timestamp file
 {"data": [
 TIME ~ CLOCK - : 4-----Trial balance: genesis
@@ -70,7 +69,7 @@ params.size: 0
   "blockHash": "0x0",
   "blockNumber": 0,
   "transactionIndex": 2,
-  "timestamp": 1438269960,
+  "timestamp": 1438269975,
   "from": "0xPrefund",
   "to": "0x001d14804b399c6ef80e64576f657660804fec0b",
   "value": 4200000000000000000000,
@@ -84,7 +83,7 @@ params.size: 0
     {
       "blockNumber": 0,
       "transactionIndex": 2,
-      "timestamp": 1438269960,
+      "timestamp": 1438269975,
       "assetAddr": "0x001d14804b399c6ef80e64576f657660804fec0b",
       "assetSymbol": "WEI",
       "decimals": 18,
@@ -119,7 +118,7 @@ params.size: 0
   ],
   "gasCost": 0,
   "gasUsed": 0,
-  "date": "2015-07-30 15:26:00 UTC",
+  "date": "2015-07-30 15:26:15 UTC",
   "ether": 4200.000000000000000000
 }
 TIME ~ CLOCK - : 4-----Trial balance: regular
@@ -269,7 +268,7 @@ params.size: 0
     "effectiveGasPrice": 20000000000,
     "status": null
   },
-  "compressedTx": "0x ( )",
+  "compressedTx": "0x()",
   "statements": [
     {
       "blockNumber": 1501459,
