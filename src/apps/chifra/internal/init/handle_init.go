@@ -19,7 +19,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // InitInternal initializes local copy of UnchainedIndex by downloading manifests and chunks
@@ -135,7 +134,7 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord
 	defer close(progressChannel)
 
 	// TODO: BOGUS This should be configurable - If we make this too big, the pinning service chokes
-	poolSize := utils.Min(10, (runtime.NumCPU()*3)/2)
+	poolSize := runtime.NumCPU() * 2
 
 	// Start the go routine that downloads the chunks. This sends messages through the progressChannel
 	go index.DownloadChunks(opts.Globals.Chain, chunks, chunkType, poolSize, progressChannel)
