@@ -35,11 +35,7 @@ void CDatedBlock::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) con
 
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["datedblock_fmt"] : fmtIn);
     if (fmt.empty()) {
-        if (expContext().exportFmt == YAML1) {
-            toYaml(ctx);
-        } else {
-            toJson(ctx);
-        }
+        toJson(ctx);
         return;
     }
 

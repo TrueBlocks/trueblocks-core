@@ -74,9 +74,6 @@ extern string_q getDefaultChain(void);
 #define chainConfigsTxt_collections (chainConfigs + "collections.csv")
 
 //---------------------------------------------------------------------------
-#define chainConfigsJson_manifest (chainConfigs + "manifest.json")
-
-//---------------------------------------------------------------------------
 #define chainConfigsZip_prices (chainConfigs + "poloniex_USDT_ETH.bin.gz")
 
 //---------------------------------------------------------------------------

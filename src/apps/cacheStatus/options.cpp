@@ -15,7 +15,6 @@
  * the code outside of the BEG_CODE/END_CODE sections
  */
 #include "options.h"
-#include "manifest.h"
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
@@ -35,7 +34,6 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-extern void loadPinMaps(CIndexStringMap& filenameMap, CIndexHashMap& bloomMap, CIndexHashMap& indexMap);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
@@ -187,9 +185,6 @@ bool COptions::parseArguments(string_q& command) {
         HIDE_FIELD(CCollectionCache, "items");
         HIDE_FIELD(CAbiCache, "items");
         HIDE_FIELD(CChainCache, "items");
-    } else {
-        CIndexStringMap unused;
-        loadPinMaps(unused, bloomHashes, indexHashes);
     }
     if (isTestMode()) {
         HIDE_FIELD(CChain, "ipfsGateway");
@@ -299,36 +294,4 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-}
-
-//---------------------------------------------------------------------------
-bool readManifest(CManifest& manifest) {
-    if (!manifest.chunks.empty())
-        return true;
-
-    string_q fileName = chainConfigsJson_manifest;
-    if (!fileExists(fileName)) {
-        LOG_ERR("Chunks file (", fileName, ") is required, but not found.");
-        return false;
-    }
-
-    string_q contents = asciiFileToString(fileName);
-    manifest.parseJson3(contents);
-    sort(manifest.chunks.begin(), manifest.chunks.end());
-
-    return true;
-}
-
-//--------------------------------------------------------------------------------
-void loadPinMaps(CIndexStringMap& filenameMap, CIndexHashMap& bloomMap, CIndexHashMap& indexMap) {
-    CManifest manifest;
-    if (!readManifest(manifest))
-        return;
-
-    for (auto chunk : manifest.chunks) {
-        blknum_t num = str_2_Uint(chunk.range);
-        filenameMap[num] = chunk.range;
-        bloomMap[num] = chunk.bloomHash;
-        indexMap[num] = chunk.indexHash;
-    }
 }
