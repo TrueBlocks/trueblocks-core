@@ -11,7 +11,7 @@ This file details changes made to TrueBlocks per version (starting with version 
 - Completely re-wrote the `chifra scrape` tool (see below).
 - Added and greatly expanded `chifra chunks` to manage, update, pin, and clean the Unchained Index.
 - Enabled both local pinning (if IPFS daemon is running) and remote pinning to various pinning services (in addition to the already support Pinata).
-- Added support for (and committed to indexing) Gnosis and Sepolia testnet chains. Wrote detailed instructions for [Indexing Your Own Chain](xxx).
+- Added support for (and committed to indexing) Gnosis and Sepolia testnet chains. Wrote detailed instructions for [Indexing Your Own Chain](https://trueblocks.io/docs/prologue/multi-chain/#adding-your-own-chain).
 - Removes now-retired testnet chains including Kovan, Rinkeby, and Ropsten.
 - Preparation for publishing and better documenting GoLang packages for support of future application level code.
 - Preparation for eventual removal of all C++ code.
