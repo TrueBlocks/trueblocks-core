@@ -8,6 +8,7 @@
 package abisPkg
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
@@ -18,28 +19,45 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// AbisOptions provides all command options for the chifra abis command.
 type AbisOptions struct {
-	Addrs   []string
-	Known   bool
-	Sol     bool
-	Find    []string
-	Classes bool
-	Globals globals.GlobalOptions
-	BadFlag error
+	Addrs   []string              `json:"addrs,omitempty"`   // A list of one or more smart contracts whose ABIs to display
+	Known   bool                  `json:"known,omitempty"`   // Load common 'known' ABIs from cache
+	Sol     bool                  `json:"sol,omitempty"`     // Extract the abi definition from the provided .sol file(s)
+	Find    []string              `json:"find,omitempty"`    // Search for function or event declarations given a four- or 32-byte code(s)
+	Hint    []string              `json:"hint,omitempty"`    // For the --find option only, provide hints to speed up the search
+	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
+	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
 }
 
 var abisCmdLineOptions AbisOptions
 
-func (opts *AbisOptions) TestLog() {
+// testLog is used only during testing to export the options for this test case.
+func (opts *AbisOptions) testLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(opts.Known, "Known: ", opts.Known)
 	logger.TestLog(opts.Sol, "Sol: ", opts.Sol)
 	logger.TestLog(len(opts.Find) > 0, "Find: ", opts.Find)
-	logger.TestLog(opts.Classes, "Classes: ", opts.Classes)
+	logger.TestLog(len(opts.Hint) > 0, "Hint: ", opts.Hint)
 	opts.Globals.TestLog()
 }
 
-func (opts *AbisOptions) ToCmdLine() string {
+// String implements the Stringer interface
+func (opts *AbisOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "  ")
+	return string(b)
+}
+
+// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
+func (opts *AbisOptions) getEnvStr() []string {
+	envStr := []string{}
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return envStr
+}
+
+// toCmdLine converts the option to a command line for calling out to the system.
+func (opts *AbisOptions) toCmdLine() string {
 	options := ""
 	if opts.Known {
 		options += " --known"
@@ -47,18 +65,15 @@ func (opts *AbisOptions) ToCmdLine() string {
 	if opts.Sol {
 		options += " --sol"
 	}
-	for _, find := range opts.Find {
-		options += " --find " + find
-	}
-	if opts.Classes {
-		options += " --classes"
-	}
 	options += " " + strings.Join(opts.Addrs, " ")
-	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
+	// EXISTING_CODE
+	// EXISTING_CODE
+	options += fmt.Sprintf("%s", "") // silence compiler warning for auto gen
 	return options
 }
 
-func AbisFinishParseApi(w http.ResponseWriter, r *http.Request) *AbisOptions {
+// abisFinishParseApi finishes the parsing for server invocations. Returns a new AbisOptions.
+func abisFinishParseApi(w http.ResponseWriter, r *http.Request) *AbisOptions {
 	opts := &AbisOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -76,8 +91,11 @@ func AbisFinishParseApi(w http.ResponseWriter, r *http.Request) *AbisOptions {
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Find = append(opts.Find, s...)
 			}
-		case "classes":
-			opts.Classes = true
+		case "hint":
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Hint = append(opts.Hint, s...)
+			}
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "abis")
@@ -93,7 +111,8 @@ func AbisFinishParseApi(w http.ResponseWriter, r *http.Request) *AbisOptions {
 	return opts
 }
 
-func AbisFinishParse(args []string) *AbisOptions {
+// abisFinishParse finishes the parsing for command line invocations. Returns a new AbisOptions.
+func abisFinishParse(args []string) *AbisOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

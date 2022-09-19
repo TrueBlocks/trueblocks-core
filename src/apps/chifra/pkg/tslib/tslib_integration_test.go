@@ -5,10 +5,12 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package tslibPkg
+package tslib
 
 import (
 	"testing"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 type Expected struct {
@@ -24,22 +26,23 @@ func TestLoadTimestampsPass(t *testing.T) {
 		{name: "Block 1 Mil", bn: 1000000, ts: 1455404053, date: "2016-02-13 22:54:13"},
 	}
 
+	EstablishTsFile(utils.GetTestChain())
 	for _, e := range expected {
-		bn, err := FromTsToBn(GetTestChain(), e.ts)
+		bn, err := FromTsToBn(utils.GetTestChain(), e.ts)
 		if err != nil {
 			t.Error(err)
 		} else if bn != e.bn {
 			t.Error("Expected block number", e.bn, "got", bn)
 		}
 
-		bn, err = FromDateToBn(GetTestChain(), e.date)
+		bn, err = FromDateToBn(utils.GetTestChain(), e.date)
 		if err != nil {
 			t.Error(err)
 		} else if bn != e.bn {
 			t.Error("Expected block number", e.bn, "got", bn)
 		}
 
-		ts, err := FromBnToTs(GetTestChain(), e.bn)
+		ts, err := FromBnToTs(utils.GetTestChain(), e.bn)
 		if err != nil {
 			t.Error(err)
 		} else if bn != e.bn {
@@ -53,7 +56,7 @@ func TestLoadTimestampsPass(t *testing.T) {
 			t.Error("Expected timestamp", e.ts, "got", ts)
 		}
 
-		d, err := FromBnToDate(GetTestChain(), e.bn)
+		d, err := FromBnToDate(utils.GetTestChain(), e.bn)
 		s := d.Format("YYYY-MM-DD HH:mm:ss")
 		if err != nil {
 			t.Error(err)
@@ -77,17 +80,17 @@ func TestLoadTimestampsFail(t *testing.T) {
 	}
 
 	for _, e := range expected {
-		_, err := FromTsToBn(GetTestChain(), e.ts)
+		_, err := FromTsToBn(utils.GetTestChain(), e.ts)
 		if err == nil {
 			t.Error("Expected failure for FromTsToBn")
 		}
 
-		_, err = FromDateToBn(GetTestChain(), e.date)
+		_, err = FromDateToBn(utils.GetTestChain(), e.date)
 		if err == nil {
 			t.Error("Expected failure for FromDateToBn")
 		}
 
-		_, err = FromBnToTs(GetTestChain(), e.bn)
+		_, err = FromBnToTs(utils.GetTestChain(), e.bn)
 		if err == nil {
 			t.Error("Expected failure for FromBnToTs")
 		}
@@ -98,7 +101,7 @@ func TestLoadTimestampsFail(t *testing.T) {
 		// 	t.Error("Expected failure for FromDateToTs")
 		// }
 
-		_, err = FromBnToDate(GetTestChain(), e.bn)
+		_, err = FromBnToDate(utils.GetTestChain(), e.bn)
 		if err == nil {
 			t.Error("Expected failure for FromBnToDate")
 		}

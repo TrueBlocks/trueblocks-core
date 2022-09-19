@@ -19,7 +19,7 @@ import (
 
 // RunTokens handles the tokens command for the command line. Returns error only as per cobra.
 func RunTokens(cmd *cobra.Command, args []string) (err error) {
-	opts := TokensFinishParse(args)
+	opts := tokensFinishParse(args)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.TokensInternal()
@@ -28,7 +28,7 @@ func RunTokens(cmd *cobra.Command, args []string) (err error) {
 
 // ServeTokens handles the tokens command for the API. Returns error and a bool if handled
 func ServeTokens(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
-	opts := TokensFinishParseApi(w, r)
+	opts := tokensFinishParseApi(w, r)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return opts.TokensInternal()
@@ -36,7 +36,7 @@ func ServeTokens(w http.ResponseWriter, r *http.Request) (err error, handled boo
 
 // TokensInternal handles the internal workings of the tokens command.  Returns error and a bool if handled
 func (opts *TokensOptions) TokensInternal() (err error, handled bool) {
-	err = opts.ValidateTokens()
+	err = opts.validateTokens()
 	if err != nil {
 		return err, true
 	}
@@ -47,7 +47,7 @@ func (opts *TokensOptions) TokensInternal() (err error, handled bool) {
 	}
 
 	handled = true
-	err = opts.Globals.PassItOn("getTokens", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
+	err = opts.Globals.PassItOn("getTokens", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
 	// EXISTING_CODE
 
 	return

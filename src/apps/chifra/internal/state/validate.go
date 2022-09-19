@@ -11,18 +11,16 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-func (opts *StateOptions) ValidateState() error {
-	opts.TestLog()
+func (opts *StateOptions) validateState() error {
+	opts.testLog()
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag
 	}
 
-	for _, part := range opts.Parts {
-		err := validate.ValidateEnum("--parts", part, "[none|some|all|balance|nonce|code|storage|deployed|accttype]")
-		if err != nil {
-			return err
-		}
+	err := validate.ValidateEnumSlice("--parts", opts.Parts, "[none|some|all|balance|nonce|code|storage|deployed|accttype]")
+	if err != nil {
+		return err
 	}
 
 	if len(opts.Globals.File) > 0 {
@@ -115,5 +113,5 @@ func (opts *StateOptions) ValidateState() error {
 		}
 	}
 
-	return opts.Globals.ValidateGlobals()
+	return opts.Globals.Validate()
 }

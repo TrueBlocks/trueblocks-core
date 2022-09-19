@@ -106,9 +106,7 @@ class COptionsBase {
     void configureDisplay(const string_q& tool, const string_q& dataType, const string_q& defFormat,
                           const string_q& meta = "");
 
-  protected:
     vector<COption> parameters;
-
     virtual void Init(void) = 0;
     void registerOptions(size_t nP, const COption* pP, uint32_t on = NOOPT, uint32_t off = NOOPT);
 

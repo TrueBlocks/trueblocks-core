@@ -4,16 +4,14 @@
 
 package whenPkg
 
-import (
-	tslibPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
-)
+import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 
-func (opts *WhenOptions) HandleWhenTimestampCount() error {
+func (opts *WhenOptions) HandleTimestampCount() error {
 	type TsCount struct {
 		Count uint64 `json:"count"`
 	}
 
-	count, err := tslibPkg.NTimestamps(opts.Globals.Chain)
+	count, err := tslib.NTimestamps(opts.Globals.Chain)
 	if err != nil {
 		return err
 	}

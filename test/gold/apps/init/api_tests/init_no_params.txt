@@ -1,4 +1,6 @@
 init?
 {
-  "msg": "chifra init is not processed in test mode."
+  "errors": [
+    "integration testing was skipped for chifra init"
+  ]
 }

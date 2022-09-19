@@ -1,10 +1,10 @@
 package index
 
 import (
+	"encoding/json"
 	"os"
-	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 )
 
 const (
@@ -30,8 +30,8 @@ const (
 // and Count pairs found in the corresponding AddressTable records.
 type ChunkData struct {
 	File           *os.File
-	Header         HeaderRecord
-	Range          cache.FileRange
+	Header         IndexHeaderRecord
+	Range          paths.FileRange
 	AddrTableStart int64
 	AppTableStart  int64
 }
@@ -39,20 +39,20 @@ type ChunkData struct {
 // NewChunkData returns an ChunkData with an opened file pointer to the given fileName. The HeaderRecord
 // for the chunk has been populated and the file position to the two tables are ready for use.
 func NewChunkData(path string) (chunk ChunkData, err error) {
-	indexPath := ToIndexPath(path)
+	indexPath := paths.ToIndexPath(path)
 
-	blkRange, err := cache.RangeFromFilename(indexPath)
+	blkRange, err := paths.RangeFromFilenameE(indexPath)
 	if err != nil {
 		return ChunkData{}, err
 	}
 
-	file, err := os.Open(indexPath)
+	file, err := os.OpenFile(indexPath, os.O_RDONLY, 0)
 	if err != nil {
 		return ChunkData{}, err
 	}
 	// Note, we don't defer closing here since we want the file to stay opened. Caller must close it.
 
-	header, err := ReadHeader(file)
+	header, err := readIndexHeader(file)
 	if err != nil {
 		file.Close()
 		return ChunkData{}, err
@@ -69,6 +69,12 @@ func NewChunkData(path string) (chunk ChunkData, err error) {
 	return
 }
 
+// String returns a JSON representation of the Chunk
+func (cd ChunkData) String() string {
+	s, _ := json.MarshalIndent(cd, "", "  ")
+	return string(s)
+}
+
 // Close closes the ChunkData's associated File pointer (if opened)
 func (chunk *ChunkData) Close() error {
 	if chunk.File != nil {
@@ -76,15 +82,4 @@ func (chunk *ChunkData) Close() error {
 		chunk.File = nil
 	}
 	return nil
-}
-
-// ToIndexPath returns a path pointing to the bloom filter
-func ToIndexPath(pathIn string) string {
-	if strings.HasSuffix(pathIn, ".bin") {
-		return pathIn
-	}
-
-	ret := strings.Replace(pathIn, ".bloom", ".bin", -1)
-	ret = strings.Replace(ret, "/blooms/", "/finalized/", -1)
-	return ret
 }

@@ -571,7 +571,7 @@ bool COptionsBase::confirmBlockNum(const string_q& name, blknum_t& value, const 
         return false;
 
     if (value > latest)
-        return usage("Block number (" + argIn + ") is greater than the latest block.");
+        return usage("Block number (" + argIn + ") is greater than the latest block (" + uint_2_Str(latest) + ").");
 
     return true;
 }
@@ -593,7 +593,9 @@ bool COptionsBase::confirmEnum(const string_q& name, string_q& value, const stri
     replace(type, "]", "|");
 
     string_q arg = argIn;
-    replace(arg, option.hotKey + ":", "");
+    if (!option.hotKey.empty()) {
+        replace(arg, option.hotKey + ":", "");
+    }
     replace(arg, name + ":", "");
     replaceAll(arg, "-", "");
 

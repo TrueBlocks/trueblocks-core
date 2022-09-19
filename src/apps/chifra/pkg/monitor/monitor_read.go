@@ -6,7 +6,6 @@ package monitor
 
 import (
 	"encoding/binary"
-	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -15,8 +14,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 )
 
-// ReadHeader reads the monitor's header and returns without closing the file
-func (mon *Monitor) ReadHeader() (err error) {
+// ReadMonitorHeader reads the monitor's header and returns without closing the file
+func (mon *Monitor) ReadMonitorHeader() (err error) {
 	if mon.ReadFp == nil {
 		mon.ReadFp, err = os.OpenFile(mon.Path(), os.O_RDONLY, 0644)
 		if err != nil {
@@ -35,7 +34,7 @@ func (mon *Monitor) ReadHeader() (err error) {
 func (mon *Monitor) ReadAppearanceAt(idx uint32, app *index.AppearanceRecord) (err error) {
 	if idx == 0 || idx > mon.Count() {
 		// the file contains a header one record wide, so a one-based index eases caller code
-		err = errors.New(fmt.Sprintf("index out of range in ReadAppearanceAt[%d]", idx))
+		err = fmt.Errorf("index out of range in ReadAppearanceAt[%d]", idx)
 		return
 	}
 

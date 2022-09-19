@@ -9,7 +9,6 @@
                           "cachePath": "~/Library/Application Support/TrueBlocks/cache/",
                           "indexPath": "~/Library/Application Support/TrueBlocks/unchained/",
                           "isTesting": false,
-                          "isDocker": false,
                           "isArchive": true,
                           "isTracing": true,
                           "hasEskey": true,

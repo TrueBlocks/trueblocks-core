@@ -18,12 +18,14 @@ import (
 
 // TODO: Fix export without arrays
 func RenderSlice[
-	T types.NamedBlock |
-		types.Function |
-		types.CleanReport |
+	T types.SimpleNamedBlock |
+		types.ReportClean |
+		types.ReportCheck |
+		types.SimpleFunction |
 		types.SimpleMonitor |
-		types.SimplePinList |
-		types.SimpleAppearance](opts *GlobalOptions, arr []T) error {
+		types.SimpleChunkRecord |
+		types.SimpleAppearance |
+		types.VerboseAppearance](opts *GlobalOptions, arr []T) error {
 
 	data := make([]interface{}, len(arr))
 	for i := range arr {
@@ -125,7 +127,10 @@ func (opts *GlobalOptions) RenderFooter() error {
 				return err
 			}
 			opts.Writer.Write([]byte(",\n  \"meta\": "))
-			b, err := json.MarshalIndent(meta, "  ", "  ")
+			b, err := json.MarshalIndent(meta, "", "  ")
+			if err != nil {
+				return err
+			}
 			opts.Writer.Write(b)
 		}
 		opts.Writer.Write([]byte("\n}"))

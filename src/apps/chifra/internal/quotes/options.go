@@ -8,6 +8,7 @@
 package quotesPkg
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
@@ -17,18 +18,20 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// QuotesOptions provides all command options for the chifra quotes command.
 type QuotesOptions struct {
-	Update  bool
-	Period  string
-	Pair    string
-	Feed    string
-	Globals globals.GlobalOptions
-	BadFlag error
+	Update  bool                  `json:"update,omitempty"`  // Freshen price database
+	Period  string                `json:"period,omitempty"`  // Increment of display
+	Pair    string                `json:"pair,omitempty"`    // Which price pair to freshen or list (see Poloniex)
+	Feed    string                `json:"feed,omitempty"`    // The feed for the price data
+	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
+	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
 }
 
 var quotesCmdLineOptions QuotesOptions
 
-func (opts *QuotesOptions) TestLog() {
+// testLog is used only during testing to export the options for this test case.
+func (opts *QuotesOptions) testLog() {
 	logger.TestLog(opts.Update, "Update: ", opts.Update)
 	logger.TestLog(len(opts.Period) > 0, "Period: ", opts.Period)
 	logger.TestLog(len(opts.Pair) > 0, "Pair: ", opts.Pair)
@@ -36,7 +39,22 @@ func (opts *QuotesOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func (opts *QuotesOptions) ToCmdLine() string {
+// String implements the Stringer interface
+func (opts *QuotesOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "  ")
+	return string(b)
+}
+
+// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
+func (opts *QuotesOptions) getEnvStr() []string {
+	envStr := []string{}
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return envStr
+}
+
+// toCmdLine converts the option to a command line for calling out to the system.
+func (opts *QuotesOptions) toCmdLine() string {
 	options := ""
 	if opts.Update {
 		options += " --update"
@@ -51,11 +69,14 @@ func (opts *QuotesOptions) ToCmdLine() string {
 		options += " --feed " + opts.Feed
 	}
 	options += " " + strings.Join([]string{}, " ")
-	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
+	// EXISTING_CODE
+	// EXISTING_CODE
+	options += fmt.Sprintf("%s", "") // silence compiler warning for auto gen
 	return options
 }
 
-func QuotesFinishParseApi(w http.ResponseWriter, r *http.Request) *QuotesOptions {
+// quotesFinishParseApi finishes the parsing for server invocations. Returns a new QuotesOptions.
+func quotesFinishParseApi(w http.ResponseWriter, r *http.Request) *QuotesOptions {
 	opts := &QuotesOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -81,7 +102,8 @@ func QuotesFinishParseApi(w http.ResponseWriter, r *http.Request) *QuotesOptions
 	return opts
 }
 
-func QuotesFinishParse(args []string) *QuotesOptions {
+// quotesFinishParse finishes the parsing for command line invocations. Returns a new QuotesOptions.
+func quotesFinishParse(args []string) *QuotesOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

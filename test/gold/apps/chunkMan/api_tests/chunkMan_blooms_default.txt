@@ -6,39 +6,47 @@ chunks?mode=blooms
         "First": 0,
         "Last": 0
       },
+      "magic": 57005,
+      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
       "nBlooms": 1,
       "nInserted": 8893,
-      "size": 131080,
+      "size": 131114,
       "byteWidth": 131072
     },
     {
       "range": {
         "First": 1,
-        "Last": 590501
+        "Last": 590502
       },
+      "magic": 57005,
+      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
       "nBlooms": 1,
-      "nInserted": 29330,
-      "size": 131080,
+      "nInserted": 29322,
+      "size": 131114,
       "byteWidth": 131072
     },
     {
       "range": {
-        "First": 590502,
-        "Last": 864332
+        "First": 590503,
+        "Last": 864335
       },
+      "magic": 57005,
+      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
       "nBlooms": 4,
-      "nInserted": 164449,
-      "size": 524308,
+      "nInserted": 164448,
+      "size": 524342,
       "byteWidth": 131072
     },
     {
       "range": {
-        "First": 864333,
+        "First": 864336,
         "Last": 1076298
       },
+      "magic": 57005,
+      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
       "nBlooms": 2,
       "nInserted": 81007,
-      "size": 262156,
+      "size": 262190,
       "byteWidth": 131072
     },
     {
@@ -46,9 +54,11 @@ chunks?mode=blooms
         "First": 1076299,
         "Last": 1229769
       },
+      "magic": 57005,
+      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
       "nBlooms": 2,
       "nInserted": 84862,
-      "size": 262156,
+      "size": 262190,
       "byteWidth": 131072
     },
     {
@@ -56,9 +66,11 @@ chunks?mode=blooms
         "First": 1229770,
         "Last": 1371352
       },
+      "magic": 57005,
+      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
       "nBlooms": 2,
       "nInserted": 62049,
-      "size": 262156,
+      "size": 262190,
       "byteWidth": 131072
     },
     {
@@ -66,9 +78,11 @@ chunks?mode=blooms
         "First": 1371353,
         "Last": 1504328
       },
+      "magic": 57005,
+      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
       "nBlooms": 2,
       "nInserted": 78077,
-      "size": 262156,
+      "size": 262190,
       "byteWidth": 131072
     },
     {
@@ -76,9 +90,11 @@ chunks?mode=blooms
         "First": 1504329,
         "Last": 1613033
       },
+      "magic": 57005,
+      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
       "nBlooms": 3,
       "nInserted": 116909,
-      "size": 393232,
+      "size": 393266,
       "byteWidth": 131072
     },
     {
@@ -86,9 +102,11 @@ chunks?mode=blooms
         "First": 1613034,
         "Last": 1729008
       },
+      "magic": 57005,
+      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
       "nBlooms": 3,
       "nInserted": 133329,
-      "size": 393232,
+      "size": 393266,
       "byteWidth": 131072
     },
     {
@@ -96,9 +114,11 @@ chunks?mode=blooms
         "First": 1729009,
         "Last": 1848054
       },
+      "magic": 57005,
+      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
       "nBlooms": 3,
       "nInserted": 123164,
-      "size": 393232,
+      "size": 393266,
       "byteWidth": 131072
     },
     {
@@ -106,9 +126,11 @@ chunks?mode=blooms
         "First": 1848055,
         "Last": 1963090
       },
+      "magic": 57005,
+      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
       "nBlooms": 3,
       "nInserted": 138572,
-      "size": 393232,
+      "size": 393266,
       "byteWidth": 131072
     }
   ],

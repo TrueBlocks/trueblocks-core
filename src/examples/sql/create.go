@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func main() {
-    fmt.Println("Temporarily disabled")
+	fmt.Println("Temporarily disabled")
 }
 
 /*
@@ -12,7 +12,6 @@ import (
 	"encoding/binary"
 	"encoding/hex"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -47,7 +46,7 @@ func createEmptyDatabase(databasePath string) {
 	CREATE UNIQUE INDEX idx_addresses_address on addresses(address);
 	CREATE TABLE IF NOT EXISTS txs (
 		txAddressID INTEGER,
-		blockIndex INT, 
+		blockIndex INT,
 		transactionIndex INT,
 		FOREIGN KEY(txAddressID) REFERENCES addresses(addressID)
 	);
@@ -70,11 +69,11 @@ type Appearance struct {
 // Given a TrueBlocks index file in the format to be found at the
 // link below, this file returns all the appearances that are in that
 // specific chunk of the index
-// https://gateway.pinata.cloud/ipfs/Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2
+// https://gateway.pinata.cloud/ipfs/QmUou7zX2g2tY58LP1A2GyP5RF9nbJsoxKTp299ah3svgb
 func readFile(path string) ([]Appearance, error) {
 	var appearances []Appearance
 
-	f, err := os.Open(path)
+	f, err := os.OpenFile(path, os.O_RDONLY, 0)
 	if err != nil {
 		panic(err)
 	}
@@ -144,7 +143,7 @@ func fillDatabase(databasePath string, indexFolderPath string) {
 	}
 	defer txsInsertStmt.Close()
 
-	files, err := ioutil.ReadDir(indexFolderPath)
+	files, err := os.ReadDir(indexFolderPath)
 	if err != nil {
 		log.Fatal(err)
 	}

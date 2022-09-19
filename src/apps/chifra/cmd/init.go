@@ -42,6 +42,11 @@ func init() {
 	initCmd.Flags().SortFlags = false
 
 	initCmd.Flags().BoolVarP(&initPkg.GetOptions().All, "all", "a", false, "in addition to Bloom filters, download full index chunks")
+	initCmd.Flags().Uint64VarP(&initPkg.GetOptions().FirstBlock, "first_block", "F", 0, "do not download any chunks earlier than this block (hidden)")
+	initCmd.Flags().Float64VarP(&initPkg.GetOptions().Sleep, "sleep", "s", 0.0, "seconds to sleep between downloads")
+	if os.Getenv("TEST_MODE") != "true" {
+		initCmd.Flags().MarkHidden("first_block")
+	}
 	globals.InitGlobals(initCmd, &initPkg.GetOptions().Globals)
 
 	initCmd.SetUsageTemplate(UsageWithNotes(notesInit))

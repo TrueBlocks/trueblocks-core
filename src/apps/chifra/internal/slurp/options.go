@@ -8,30 +8,33 @@
 package slurpPkg
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// SlurpOptions provides all command options for the chifra slurp command.
 type SlurpOptions struct {
-	Addrs       []string
-	Blocks      []string
-	BlockIds    []blockRange.Identifier
-	Types       []string
-	Appearances bool
-	Globals     globals.GlobalOptions
-	BadFlag     error
+	Addrs       []string                 `json:"addrs,omitempty"`       // One or more addresses to slurp from Etherscan
+	Blocks      []string                 `json:"blocks,omitempty"`      // An optional range of blocks to slurp
+	BlockIds    []identifiers.Identifier `json:"blockIds,omitempty"`    // Block identifiers
+	Types       []string                 `json:"types,omitempty"`       // Which types of transactions to request
+	Appearances bool                     `json:"appearances,omitempty"` // Show only the blocknumber.tx_id appearances of the exported transactions
+	Globals     globals.GlobalOptions    `json:"globals,omitempty"`     // The global options
+	BadFlag     error                    `json:"badFlag,omitempty"`     // An error flag if needed
 }
 
 var slurpCmdLineOptions SlurpOptions
 
-func (opts *SlurpOptions) TestLog() {
+// testLog is used only during testing to export the options for this test case.
+func (opts *SlurpOptions) testLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
 	logger.TestLog(len(opts.Types) > 0, "Types: ", opts.Types)
@@ -39,7 +42,22 @@ func (opts *SlurpOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func (opts *SlurpOptions) ToCmdLine() string {
+// String implements the Stringer interface
+func (opts *SlurpOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "  ")
+	return string(b)
+}
+
+// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
+func (opts *SlurpOptions) getEnvStr() []string {
+	envStr := []string{}
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return envStr
+}
+
+// toCmdLine converts the option to a command line for calling out to the system.
+func (opts *SlurpOptions) toCmdLine() string {
 	options := ""
 	for _, types := range opts.Types {
 		options += " --types " + types
@@ -49,11 +67,14 @@ func (opts *SlurpOptions) ToCmdLine() string {
 	}
 	options += " " + strings.Join(opts.Addrs, " ")
 	options += " " + strings.Join(opts.Blocks, " ")
-	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
+	// EXISTING_CODE
+	// EXISTING_CODE
+	options += fmt.Sprintf("%s", "") // silence compiler warning for auto gen
 	return options
 }
 
-func SlurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
+// slurpFinishParseApi finishes the parsing for server invocations. Returns a new SlurpOptions.
+func slurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 	opts := &SlurpOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -89,7 +110,8 @@ func SlurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 	return opts
 }
 
-func SlurpFinishParse(args []string) *SlurpOptions {
+// slurpFinishParse finishes the parsing for command line invocations. Returns a new SlurpOptions.
+func slurpFinishParse(args []string) *SlurpOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

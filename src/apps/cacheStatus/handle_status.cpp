@@ -19,8 +19,13 @@ extern void replaceNames(const string_q& chain, string_q& key, string_q& value);
 bool COptions::handle_status(ostream& os) {
     if (terse) {
         string_q fmt = STR_TERSE_REPORT;
-        replaceAll(fmt, "[{TIME}]",
-                   isTestMode() ? "--TIME--" : substitute(substitute(Now().Format(FMT_EXPORT), "T", " "), "-", "/"));
+        if (getEnvStr("LOG_TIMING_OFF") == "true") {
+            // Do nothing
+        } else {
+            replaceAll(
+                fmt, "[{TIME}]",
+                isTestMode() ? "--TIME--" : substitute(substitute(Now().Format(FMT_EXPORT), "T", " "), "-", "/"));
+        }
 
         CStatusTerse st = status;
         bool isText = expContext().exportFmt != JSON1 && expContext().exportFmt != API1;
@@ -347,7 +352,7 @@ bool noteMonitor(const string_q& path, void* data) {
         CMonitor m;
         m.address = mdi.address;
         CMonitorHeader header;
-        m.readHeader(header);
+        m.readMonitorHeader(header);
         mdi.deleted = header.deleted;
 
         CItemCounter* counter = reinterpret_cast<CItemCounter*>(data);
@@ -415,8 +420,8 @@ bool noteIndex(const string_q& path, void* data) {
             aci.indexSizeBytes = (uint32_t)fileSize(path);
         }
 
-        aci.firstTs = getTimestampAt(aci.firstApp);
-        aci.latestTs = getTimestampAt(aci.latestApp);
+        aci.firstTs = bn_2_Timestamp(aci.firstApp);
+        aci.latestTs = bn_2_Timestamp(aci.latestApp);
 
         CIndexArchive index(READING_ARCHIVE);
         if (index.ReadIndexFromBinary(path, IP_HEADER)) {

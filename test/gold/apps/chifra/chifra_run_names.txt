@@ -26,7 +26,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0x009e864923b49263c7f10d19b7f8ab7a9a5aad33	Knoxstertoken	FKX	On chain	18	FortKnoxster offers end-to-end encrypted inbox, chat, decentralized storage, calling, video conferencing, voice messages and much more.	false	false	false	true	true	false
 50-Tokens:ERC721	0x00c396383400a1ef2eb401052dbf5d989b2da481	Cypher City	CYPHER	On chain	18		false	false	false	true	true	true
 50-Tokens:ERC20	0x00c4b398500645eb5da00a1a379a88b11683ba01	Eximchain Token	EXC	On chain	18	Eximchain‚Äö√Ñ√¥s public blockchain network enables privacy, scalability and security for the supply chain.	false	false	false	true	true	false
-50-Tokens:ERC20	0x00c83aecc790e8a4453e5dd3b0b4b3680501a7a7	Skale	18	Giveth Docs			false	false	false	true	false	false
+50-Tokens:ERC20	0x00c83aecc790e8a4453e5dd3b0b4b3680501a7a7	Skale		Giveth website			false	false	false	true	false	false
 50-Tokens:ERC20	0x00d0f137b51692d0ac708bde7b367a373865cffe	Zapper.Fi : Balancer Remove		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x010496d8f3269ee9b05060bdf40c2d66e83e61dd	Digg	DIGG	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x010589b7c33034b802f7dba2c88cc9cec0f46673	SoundMoneyCoin	SOV	On chain	8		false	false	false	true	true	false
@@ -83,9 +83,9 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0x036407f23d5e1c1486f7488332cf54bf06e5f09f	Alphabit	ABC	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x036ea7048a4c1f28b299b9dd9e3c9fe9022e2a2a	ShibAkita Inu	SHIBAKITA	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0371a82e4a9d0a4312f3ee2ac9c6958512891372	Student Coin	STU	On chain	18	Student jobs marketplace.	false	false	false	true	true	false
-50-Tokens:ERC20	0x0391d2021f89dc339f60fff84546ea23e337750f	BarnBridge Governance Token	18	Giveth Docs			false	false	false	true	false	false
-50-Tokens:ERC20	0x039b5649a59967e3e936d7471f9c3700100ee1ab	Kucoin Shares	KCS	On chain	6		false	false	false	true	true	false
-50-Tokens:ERC20	0x03ab458634910aad20ef5f1c8ee96f1d6ac54919	Rai Reflex Index	RAI	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC20	0x0391d2021f89dc339f60fff84546ea23e337750f	BarnBridge Governance Token		Giveth website			false	false	false	true	false	false
+50-Tokens:ERC20	0x039b5649a59967e3e936d7471f9c3700100ee1ab	KuCoin Shares		Giveth website			false	false	false	true	false	false
+50-Tokens:ERC20	0x03ab458634910aad20ef5f1c8ee96f1d6ac54919	Rai Reflex Index		Giveth website			false	false	false	true	false	false
 50-Tokens:ERC20	0x03b0ffc15a9a03d32a3a7c5839b3faf5174059cf	NZXT Protocol Governance Token (Shareholder only)	NZXT	On chain	6		false	false	false	true	true	false
 50-Tokens:ERC20	0x03c780cd554598592b97b7256ddaad759945b125	BTRN	BTRN	On chain	18	Biotron is a fully transparent personal data analytics platform on blockchain.	false	false	false	true	true	false
 50-Tokens:ERC20	0x03c9436d54db599018842387d9d6075d81580726	AirEthereumMax INU	aiReMax	On chain	18		false	false	false	true	true	false
@@ -109,12 +109,12 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0x04f135587e379253d19f77c5e6c90d2c280aa947	FINDEX	FIND	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x04f2694c8fcee23e8fd0dfea1d4f5bb8c352111f	Staked Olympus	sOHM	On chain	9		false	false	false	true	true	false
 50-Tokens:ERC20	0x04f2e7221fdb1b52a68169b25793e51478ff0329	Cappasity	CAPP	On chain	2	Cappasity brings an in-store browsing experience to online retail through interactive 3D images.	false	false	false	true	true	false
-50-Tokens:ERC20	0x04fa0d235c4abf4bcf4787af4cf447de572ef828	UMA Voting Token v1	UMA	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC20	0x04fa0d235c4abf4bcf4787af4cf447de572ef828	UMA Voting Token v1		Giveth website			false	false	false	true	false	false
 50-Tokens:ERC20	0x050cbff7bff0432b6096dd15cd9499913ddf8e23	FUTUREGOLDCOIN	FCI	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0521a3f8554f8c2338c85c64ffb718d4fc0d1785	TokenRunners of Cryptopia Challenge		https://kickback.events/event/[{ADDRESS}]	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x054c64741dbafdc19784505494029823d89c3b13	ETERNAL TOKEN	XET	On chain	8	The Eternal Project is an undertaking for the rapid spread of Eternal Wallet and Eternal Coin around the world, by utilizing the skills and infrastructures of global corporations and individuals.	false	false	false	true	true	false
 50-Tokens:ERC20	0x056f203d89360e78d9f0796e46ae070bd90def9c	Uniswap V2	UNI-V2	On chain	18		false	false	false	true	true	false
-50-Tokens:ERC20	0x056fd409e1d7a124bd7017459dfea2f387b6d5cd	Gemini dollar	GUSD	On chain	2	Gemini dollar combines the creditworthiness and price stability of the U.S. dollar with blockchain technology and the oversight of U.S. regulators.	false	false	false	true	true	false
+50-Tokens:ERC20	0x056fd409e1d7a124bd7017459dfea2f387b6d5cd	Gemini Dollar		Giveth website			false	false	false	true	false	false
 50-Tokens:ERC20	0x0574d99b61d34a41ad9dce1b5f56fdffac17f145	Dragonite.Finance	DRAG	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC721	0x05759c209466eeb5f1a2b3ea8d8650e4053d1047	RarePunks	RAREPUNK	On chain	18		false	false	false	true	true	true
 50-Tokens:ERC20	0x05767d9ef41dc40689678ffca0608878fb3de906	SushiSwap LP Token	SLP	On chain	18		false	false	false	true	true	false
@@ -199,7 +199,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0x0955a73d014f0693ac7b53cfe77706dab02b3ef9	Lady Luck	LUCK	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x09617f6fd6cf8a71278ec86e23bbab29c04353a7	Unblocked Ledger Token	ULT	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x099fabb0a5ad43732d8f636f856da15006431581	best ICO 2018-2019 https://jullar.io	JULLAR.io	On chain	18		false	false	false	true	true	false
-50-Tokens:ERC20	0x09a3ecafa817268f77be1283176b946c4ff2e608	Wrapped MIR Token	MIR	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC20	0x09a3ecafa817268f77be1283176b946c4ff2e608	Wrapped MIR Token		Giveth website			false	false	false	true	false	false
 50-Tokens:ERC20	0x09ade3ab80b9f885eca960e8001a430d8021b591	SHIBASWAP	SHIBASWAP	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC721	0x09c09baa9502a7b0c74c24e7ff72fd25c864c266	VENTURE DAO	MCV	On chain	18		false	false	false	true	true	true
 50-Tokens:ERC721	0x09caa2563c1cb6e8f18e643ad78f659604265406	LaserCats	LaserCats	On chain	18		false	false	false	true	true	true

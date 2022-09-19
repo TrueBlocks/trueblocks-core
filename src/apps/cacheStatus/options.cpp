@@ -15,6 +15,7 @@
  * the code outside of the BEG_CODE/END_CODE sections
  */
 #include "options.h"
+#include "manifest.h"
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
@@ -25,7 +26,7 @@ static const COption params[] = {
     COption("types", "t", "list<enum[blocks|txs|traces|slurps|prices|all*]>", OPT_FLAG, "for caches mode only, which type(s) of cache to report"),  // NOLINT
     COption("depth", "p", "<uint64>", OPT_HIDDEN | OPT_FLAG, "for cache mode only, number of levels deep to report"),
     COption("terse", "e", "", OPT_HIDDEN | OPT_SWITCH, "show a terse summary report"),
-    COption("migrate", "m", "enum[test|all]", OPT_HIDDEN | OPT_FLAG, "either effectuate or test to see if a migration is necessary"),  // NOLINT
+    COption("migrate", "m", "enum[test|cache|index]", OPT_HIDDEN | OPT_FLAG, "either effectuate or test to see if a migration is necessary"),  // NOLINT
     COption("first_block", "F", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive -- testing only)"),  // NOLINT
     COption("last_block", "L", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive -- testing only)"),
     COption("", "", "", OPT_DESCRIPTION, "Report on the status of the TrueBlocks system."),
@@ -129,10 +130,14 @@ bool COptions::parseArguments(string_q& command) {
         cacheFolder_txs,
     };
     if (migrate == "test") {
-        return handle_migrate_test(cachePaths);
-    } else if (migrate == "all") {
-        return handle_migrate(cachePaths);
+        handle_migrate_test(cachePaths);
+        return false;
+    } else if (migrate == "cache") {
+        handle_migrate(cachePaths);
+        return false;
     } else if (!migrate.empty()) {
+        // do nothing here for --migrate index. It's an error if
+        // it got this far. It should have been handled in the go code
         return usage("Invalid migration: " + migrate);
     }
 
@@ -186,6 +191,9 @@ bool COptions::parseArguments(string_q& command) {
         CIndexStringMap unused;
         loadPinMaps(unused, bloomHashes, indexHashes);
     }
+    if (isTestMode()) {
+        HIDE_FIELD(CChain, "ipfsGateway");
+    }
     HIDE_FIELD(CChainCache, "max_depth");
 
     return true;
@@ -217,7 +225,7 @@ void COptions::Init(void) {
     char hostname[HOST_NAME_MAX + 1] = {0};
     gethostname(hostname, HOST_NAME_MAX);
     char username[LOGIN_NAME_MAX + 1] = {0};
-    if (getlogin_r(username, LOGIN_NAME_MAX) != 0 || isDockerMode())
+    if (getlogin_r(username, LOGIN_NAME_MAX) != 0)
         strncpy(username, "nobody", 7);
 
     if (isTestMode()) {
@@ -242,12 +250,11 @@ void COptions::Init(void) {
     status.isScraping = isTestMode() ? false : (isRunning("chifra scrape") || isRunning("blockScrape"));
     status.isTesting = isTestMode();
     status.isApi = isApiMode();
-    status.isDocker = isDockerMode();
     status.isArchive = isArchiveNode();
     status.isTracing = isTracingNode();
-    status.hasEskey = getGlobalConfig("")->getConfigStr("settings", "etherscan_key", "<not_set>") != "<not_set>";
+    status.hasEskey = getGlobalConfig("")->getConfigStr("keys.etherscan", "apiKey", "<not_set>") != "<not_set>";
     status.hasPinkey =
-        getGlobalConfig("blockScrape")->getConfigStr("settings", "pinata_api_key", "<not_set>") != "<not_set>";
+        getGlobalConfig("blockScrape")->getConfigStr("keys.pinata", "apiKey", "<not_set>") != "<not_set>";
     if (isTestMode())
         status.hasPinkey = false;
 }
@@ -294,16 +301,34 @@ COptions::COptions(void) {
 COptions::~COptions(void) {
 }
 
+//---------------------------------------------------------------------------
+bool readManifest(CManifest& manifest) {
+    if (!manifest.chunks.empty())
+        return true;
+
+    string_q fileName = chainConfigsJson_manifest;
+    if (!fileExists(fileName)) {
+        LOG_ERR("Chunks file (", fileName, ") is required, but not found.");
+        return false;
+    }
+
+    string_q contents = asciiFileToString(fileName);
+    manifest.parseJson3(contents);
+    sort(manifest.chunks.begin(), manifest.chunks.end());
+
+    return true;
+}
+
 //--------------------------------------------------------------------------------
 void loadPinMaps(CIndexStringMap& filenameMap, CIndexHashMap& bloomMap, CIndexHashMap& indexMap) {
-    CPinnedChunkArray pinList;
-    if (!pinlib_readManifest(pinList))
+    CManifest manifest;
+    if (!readManifest(manifest))
         return;
 
-    for (auto pin : pinList) {
-        blknum_t num = str_2_Uint(pin.fileName);
-        filenameMap[num] = pin.fileName;
-        bloomMap[num] = pin.bloomHash;
-        indexMap[num] = pin.indexHash;
+    for (auto chunk : manifest.chunks) {
+        blknum_t num = str_2_Uint(chunk.range);
+        filenameMap[num] = chunk.range;
+        bloomMap[num] = chunk.bloomHash;
+        indexMap[num] = chunk.indexHash;
     }
 }

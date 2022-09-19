@@ -15,14 +15,10 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 	"github.com/spf13/viper"
 )
 
-// We keep a map of per-chain configs. Before reading the chain specific
-// config, we read the global (top-level) config at trueBlocks.toml. Chain
-// config files (if present) appear in ./configs/<chain>/<chain>.toml
-// and are merged into the defaults.
-// TODO: is the above comment still true?
 var trueBlocksViper = viper.New()
 var trueBlocksConfig ConfigFile
 
@@ -33,23 +29,30 @@ type versionGroup struct {
 type chainGroup struct {
 	ChainId        string `toml:"chainId"`
 	LocalExplorer  string `toml:"localExplorer"`
-	PinGateway     string `toml:"pinGateway"`
 	RemoteExplorer string `toml:"remoteExplorer"`
 	RpcProvider    string `toml:"rpcProvider"`
 	ApiProvider    string `toml:"apiProvider"`
+	IpfsGateway    string `toml:"ipfsGateway"`
 	Symbol         string `toml:"symbol"`
 }
 
+type keyGroup struct {
+	ApiKey string `toml:"apiKey"`
+	Secret string `toml:"secret"`
+	Jwt    string `toml:"jwt"`
+}
+
 type settingsGroup struct {
-	CachePath    string `toml:"cachePath"`
-	IndexPath    string `toml:"indexPath"`
-	DefaultChain string `toml:"defaultChain"`
-	EtherscanKey string `toml:"etherscanKey"`
+	CachePath      string `toml:"cachePath"`
+	IndexPath      string `toml:"indexPath"`
+	DefaultChain   string `toml:"defaultChain"`
+	DefaultGateway string `toml:"defaultGateway"`
 }
 
 type ConfigFile struct {
 	Version  versionGroup
 	Settings settingsGroup
+	Keys     map[string]keyGroup
 	Chains   map[string]chainGroup
 }
 
@@ -59,7 +62,7 @@ func init() {
 	trueBlocksViper.SetDefault("Settings.CachePath", GetPathToRootConfig()+"cache/")
 	trueBlocksViper.SetDefault("Settings.IndexPath", GetPathToRootConfig()+"unchained/")
 	trueBlocksViper.SetDefault("Settings.DefaultChain", "mainnet")
-	trueBlocksViper.SetDefault("Settings.EtherscanKey", "")
+	trueBlocksViper.SetDefault("Settings.DefaultGateway", "https://ipfs.unchainedindex.io/ipfs")
 }
 
 // GetRootConfig reads and the configuration located in trueBlocks.toml file. Note
@@ -102,6 +105,20 @@ func GetRootConfig() *ConfigFile {
 	}
 
 	return &trueBlocksConfig
+}
+
+func IsAtLeastVersion(needle string) bool {
+	var current, desired version.Version
+	var err error
+	if current, err = version.NewVersion(GetRootConfig().Version.Current); err != nil {
+		return true
+	}
+
+	if desired, err = version.NewVersion(needle); err != nil {
+		return true
+	}
+
+	return !current.IsEarlierThan(desired)
 }
 
 // GetPathToRootConfig returns the path where to find configuration files
@@ -171,4 +188,12 @@ func MustReadConfig(v *viper.Viper, targetStruct interface{}, path string) {
 	if err != nil {
 		logger.Fatal(err)
 	}
+}
+
+func GetPinningKeys(chain string) (string, string, string) {
+	keys := GetRootConfig().Keys
+	a := keys["pinata"].ApiKey
+	b := keys["pinata"].Secret
+	c := keys["estuary"].ApiKey
+	return a, b, c
 }

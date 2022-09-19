@@ -1,8 +1,7 @@
 chifra abis  truebit --classes --fmt json
-TEST[DATE|TIME] Addrs:  [truebit]
-TEST[DATE|TIME] Classes:  true
-TEST[DATE|TIME] Format:  json
-Error: The --classes option is not available (not implemented).
+Error: 
+  unknown flag: --classes
+
 Usage:
   chifra abis [flags] <address> [address...]
 
@@ -13,7 +12,7 @@ Flags:
   -k, --known          load common 'known' ABIs from cache
   -s, --sol            extract the abi definition from the provided .sol file(s)
   -f, --find strings   search for function or event declarations given a four- or 32-byte code(s)
-  -c, --classes        generate classDefinitions folder and class definitions (hidden)
+  -n, --hint strings   for the --find option only, provide hints to speed up the search
   -x, --fmt string     export format, one of [none|json*|txt|csv|api]
   -v, --verbose        enable verbose (increase detail with --log_level)
   -h, --help           display this help screen

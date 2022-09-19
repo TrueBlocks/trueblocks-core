@@ -77,14 +77,14 @@ If you're running against mutliple chains, you may place any of these files in t
 
 <div style="padding:2px;padding-left:10px;background-color:green;color:white">All tools (in each file)</div>
 
-| Item/Default | Description                                 |
-| ------------ | ------------------------------------------- |
-| [display]    |                                             |
-| format       | Customizes default output of tool<br/>empty |
+| Item      | Description / Default                       |
+| --------- | ------------------------------------------- |
+| [display] |                                             |
+| format    | Customizes default output of tool<br/>empty |
 
 <div style="padding:2px;padding-left:10px;background-color:green;color:white">acctExport.toml for chifra export</div>
 
-| Item/Default        | Description                                                                                                                         |
+| Item                | Description / Default                                                                                                               |
 | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
 |                     |                                                                                                                                     |
 | [settings]          |                                                                                                                                     |
@@ -112,34 +112,22 @@ If you're running against mutliple chains, you may place any of these files in t
 <a href="#C4"></a>
 <div style="padding:2px;padding-left:10px;background-color:green;color:white">blockScrape.toml for chifra scrape</div>
 
-| Item/Default          | Description                                                                                                                  |
-| --------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-|                       |                                                                                                                              |
-| [settings]            |                                                                                                                              |
-| block_cnt             | The number of blocks to process with each round of the scraper<br />2000                                                     |
-| block_chan_cnt        | The number of go routines to devote to block processors<br />10                                                              |
-| addr_chan_cnt         | The number of go routines to devote to address processors<br />20                                                            |
-| n_blocks_fallback     | The number of blocks to process during dDos or other busy block ranges<br />500                                              |
-| apps_per_chunk        | the number of appearances to build into a chunk before consolidating it                                                      |
-| unripe_dist           | The distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe                    |
-| snap_to_grid          | An override to apps_per_chunk to snap-to-grid at every modulo of this value&#44; this allows easier corrections to the index |
-| first_snap            | The first block at which snap_to_grid is enabled                                                                             |
-| allow_missing         | Do not report errors for blockchain that contain blocks with zero addresses                                                  |
-| n_test_runs           | In live testing mode&#44; the number of test runs to process before quitting                                                 |
-| pinata_api_key        | If --pin is on, the key to Pinata at which to pin                                                                            |
-| pinata_secret_api_key | If --pin is on, the secret key to Pinata at which to pin                                                                     |
-|                       |                                                                                                                              |
-| [requires]            | (this section will be removed when full multi-chain support is finished)                                                     |
-| tracing               | If true, require the node to be able to produce traces<br />true                                                             |
-| archive               | If true, require the node to be an archive node<br />true                                                                    |
-| parity                | If true, require the node to be parity (deprecated)<br />true                                                                |
-|                       |                                                                                                                              |
-| [dev]                 | (this section will be removed when full multi-chain support is finished)                                                     |
-| ipfs_gateway          | The default IPFS gateway endpoint for `chifra init`<br />https://ipfs.unchainedindex.io/ipfs/                                |
+**Configuration group:** `[settings]`  
+
+| Item           | Type   | Default | Description / Default                                                                                                    |
+| -------------- | ------ | ------- | ------------------------------------------------------------------------------------------------------------------------ |
+|                |        |
+| [settings]     |        |
+| apps_per_chunk | uint64 | 200000  | the number of appearances to build into a chunk before consolidating it                                                  |
+| snap_to_grid   | uint64 | 100000  | an override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index |
+| first_snap     | uint64 | 0       | the first block at which snap_to_grid is enabled                                                                         |
+| unripe_dist    | uint64 | 28      | the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe                |
+| channel_count  | uint64 | 20      | number of concurrent processing channels                                                                                 |
+| allow_missing  | bool   | false   | do not report errors for blockchains that contain blocks with zero addresses                                             |
 
 <div style="padding:2px;padding-left:10px;background-color:green;color:white">chunkMan.toml for chifra chunks</div>
 
-| Item/Default      | Description                                                        |
+| Item              | Description / Default                                              |
 | ----------------- | ------------------------------------------------------------------ |
 |                   |                                                                    |
 | [enabled]         |                                                                    |
@@ -147,12 +135,12 @@ If you're running against mutliple chains, you may place any of these files in t
 
 <div style="padding:2px;padding-left:10px;background-color:green;color:white">getTraces.toml for chifra traces</div>
 
-| Item/Default | Description                                                                           |
-| ------------ | ------------------------------------------------------------------------------------- |
-|              |                                                                                       |
-| [settings]   |                                                                                       |
-| skip_ddos    | If true, skip over September 2016 dDos transactions<br />true                         |
-| max          | If `skip_ddos` is `true`, this number of traces defines a 'dDos' transaction<br />250 |
+| Item       | Description / Default                                                                 |
+| ---------- | ------------------------------------------------------------------------------------- |
+|            |                                                                                       |
+| [settings] |                                                                                       |
+| skip_ddos  | If true, skip over September 2016 dDos transactions<br />true                         |
+| max        | If `skip_ddos` is `true`, this number of traces defines a 'dDos' transaction<br />250 |
 
 <div style="padding:2px;padding-left:10px;background-color:green;color:white">ethslurp.toml for chifra slurp</div>
 
@@ -164,7 +152,7 @@ The following tools are documented, but customizing them is not supported. If yo
 
 <div style="padding:2px;padding-left:10px;background-color:green;color:white">testRunner.toml for testRunner</div>
 
-| Item/Default      | Description                                                                                                 |
+| Item              | Description / Default                                                                                       |
 | ----------------- | ----------------------------------------------------------------------------------------------------------- |
 |                   |                                                                                                             |
 | [settings]        |                                                                                                             |
@@ -176,24 +164,24 @@ The following tools are documented, but customizing them is not supported. If yo
 
 <div style="padding:2px;padding-left:10px;background-color:green;color:white">makeClass.toml for makeClass</div>
 
-| Item/Default | Description                                                                                                          |
-| ------------ | -------------------------------------------------------------------------------------------------------------------- |
-|              |                                                                                                                      |
-| [settings]   |                                                                                                                      |
-| disabled     | If true, makeClass is enabled. Be warned -- this will overwrite source code file if improperly configured<br />false |
-| last_format  | The timestamp at date the makeClass formatter was run<br />0                                                         |
-| last_lint    | The timestamp at the date the makeClass linter was run<br />0                                                        |
-|              |                                                                                                                      |
-| [enabled]    |                                                                                                                      |
-| auto_format  | If true, run the auto-formatter<br />false                                                                           |
-| generate     | If true, run the auto-code generator<br />false                                                                      |
-| readmes      | If true, generate README files with `make generate`<br />false                                                       |
-| lint_all     | If true, run the linter when doing `make finish`<br />false                                                          |
-| tsx          | (deprecated)<br />false                                                                                              |
+| Item        | Description / Default                                                                                                |
+| ----------- | -------------------------------------------------------------------------------------------------------------------- |
+|             |                                                                                                                      |
+| [settings]  |                                                                                                                      |
+| disabled    | If true, makeClass is enabled. Be warned -- this will overwrite source code file if improperly configured<br />false |
+| last_format | The timestamp at date the makeClass formatter was run<br />0                                                         |
+| last_lint   | The timestamp at the date the makeClass linter was run<br />0                                                        |
+|             |                                                                                                                      |
+| [enabled]   |                                                                                                                      |
+| auto_format | If true, run the auto-formatter<br />false                                                                           |
+| generate    | If true, run the auto-code generator<br />false                                                                      |
+| readmes     | If true, generate README files with `make generate`<br />false                                                       |
+| lint_all    | If true, run the linter when doing `make finish`<br />false                                                          |
+| tsx         | (deprecated)<br />false                                                                                              |
 
 The follow values are defined for each classDefinition file
 
-| Item/Default | Description                                                        |
+| Item         | Description / Default                                              |
 | ------------ | ------------------------------------------------------------------ |
 |              |                                                                    |
 | [settings]   |                                                                    |

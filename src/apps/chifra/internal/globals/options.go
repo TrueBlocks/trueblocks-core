@@ -12,30 +12,31 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/spf13/cobra"
 )
 
 type GlobalOptions struct {
-	Verbose  bool
-	LogLevel uint64
-	NoHeader bool
-	Chain    string
-	Wei      bool
-	Ether    bool
-	Dollars  bool
-	Help     bool
-	Raw      bool
-	ToFile   bool
-	File     string
-	Version  bool
-	Noop     bool
-	NoColor  bool
-	OutputFn string
-	Append   bool
-	Format   string
-	TestMode bool
-	ApiMode  bool
-	Writer   io.Writer
+	Verbose  bool      `json:"verbose,omitempty"`
+	LogLevel uint64    `json:"logLevel,omitempty"`
+	NoHeader bool      `json:"noHeader,omitempty"`
+	Chain    string    `json:"chain,omitempty"`
+	Wei      bool      `json:"wei,omitempty"`
+	Ether    bool      `json:"ether,omitempty"`
+	Dollars  bool      `json:"dollars,omitempty"`
+	Help     bool      `json:"help,omitempty"`
+	Raw      bool      `json:"raw,omitempty"`
+	ToFile   bool      `json:"toFile,omitempty"`
+	File     string    `json:"file,omitempty"`
+	Version  bool      `json:"version,omitempty"`
+	Noop     bool      `json:"noop,omitempty"`
+	NoColor  bool      `json:"noColor,omitempty"`
+	OutputFn string    `json:"outputFn,omitempty"`
+	Append   bool      `json:"append,omitempty"`
+	Format   string    `json:"format,omitempty"`
+	TestMode bool      `json:"testMode,omitempty"`
+	ApiMode  bool      `json:"apiMode,omitempty"`
+	Writer   io.Writer `json:"writer,omitempty"`
 }
 
 func (opts *GlobalOptions) TestLog() {
@@ -103,14 +104,11 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions) {
 	}
 }
 
-func (opts *GlobalOptions) ToCmdLine() string {
+func (opts *GlobalOptions) toCmdLine() string {
 	options := ""
 	if opts.Raw {
 		options += " --raw"
 	}
-	// if opts.Noop {
-	// 	options += " --noop"
-	// }
 	if opts.Version {
 		options += " --version"
 	}
@@ -132,11 +130,6 @@ func (opts *GlobalOptions) ToCmdLine() string {
 	}
 	if opts.NoHeader {
 		options += " --no_header"
-	}
-	if len(opts.Chain) > 0 {
-		// TODO: Do we need --chain in the c++ code?
-		// fmt.Fprintf(os.Stderr, "chain: %s\n", opts.Chain)
-		// options += " --chain" + opts.Chain
 	}
 	if opts.Wei {
 		options += " --wei"
@@ -206,12 +199,15 @@ func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOption
 		}
 	}
 
+	if len(opts.Format) == 0 || opts.Format == "none" {
+		opts.Format = "api"
+	}
+
 	if len(opts.Chain) == 0 {
 		opts.Chain = config.GetDefaultChain()
 	}
-
-	if len(opts.Format) == 0 || opts.Format == "none" {
-		opts.Format = "api"
+	if err := tslib.EstablishTsFile(opts.Chain); err != nil {
+		fmt.Println("Could not establish ts file:", err)
 	}
 
 	return opts
@@ -222,6 +218,9 @@ func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOption
 
 func (opts *GlobalOptions) FinishParse(args []string) {
 	opts.Writer = os.Stdout
+	if err := tslib.EstablishTsFile(opts.Chain); err != nil {
+		fmt.Println("Could not establish ts file:", err)
+	}
 }
 
 func IsGlobalOption(key string) bool {

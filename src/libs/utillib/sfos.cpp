@@ -356,7 +356,7 @@ bool isRunning(const string_q& progName) {
 //----------------------------------------------------------------------------
 string_q getUserName(void) {
     char username[LOGIN_NAME_MAX + 1] = {0};
-    if (getlogin_r(username, LOGIN_NAME_MAX) != 0 || isDockerMode())
+    if (getlogin_r(username, LOGIN_NAME_MAX) != 0)
         strncpy(username, "nobody", 7);
     return username;
 }

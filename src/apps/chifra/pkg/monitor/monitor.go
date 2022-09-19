@@ -54,7 +54,10 @@ func NewMonitor(chain, addr string, create bool) Monitor {
 	mon.Header = Header{Magic: file.SmallMagicNumber}
 	mon.Address = common.HexToAddress(addr)
 	mon.Chain = chain
-	mon.Reload(create)
+	_, err := mon.Reload(create)
+	if err != nil {
+		logger.Log(logger.Error, err)
+	}
 	return *mon
 }
 
@@ -86,6 +89,7 @@ func NewStagedMonitor(chain, addr string) (Monitor, error) {
 	return mon, nil
 }
 
+// TODO: Most other Stringer interfaces produce JSON data. Can we switch the polarity of this...
 // String implements the Stringer interface
 func (mon Monitor) String() string {
 	if mon.Deleted {
@@ -94,22 +98,16 @@ func (mon Monitor) String() string {
 	return fmt.Sprintf("%s\t%d\t%d\t%d", hexutil.Encode(mon.Address.Bytes()), mon.Count(), file.FileSize(mon.Path()), mon.LastScanned)
 }
 
-func NewSimpleMonitor(mon Monitor) types.SimpleMonitor {
-	return types.SimpleMonitor{
+// TODO: ...and this - making this the String and the above ToTxt?
+// ToJSON returns a JSON object from a Monitor
+func (mon Monitor) ToJSON() string {
+	sm := types.SimpleMonitor{
 		Address:     mon.GetAddrStr(),
 		NRecords:    int(mon.Count()),
 		FileSize:    file.FileSize(mon.Path()),
 		LastScanned: mon.Header.LastScanned,
 	}
-}
-
-// ToJSON returns a JSON object from a Monitor
-func (mon Monitor) ToJSON() string {
-	sm := NewSimpleMonitor(mon)
-	bytes, err := json.Marshal(sm)
-	if err != nil {
-		return ""
-	}
+	bytes, _ := json.MarshalIndent(sm, "", "  ")
 	return string(bytes)
 }
 
@@ -147,7 +145,7 @@ func (mon *Monitor) Count() uint32 {
 
 // GetAddrStr returns the Monitor's address as a string
 func (mon *Monitor) GetAddrStr() string {
-	return strings.ToLower(mon.Address.Hex())
+	return hexutil.Encode(mon.Address.Bytes())
 }
 
 // Close closes an open Monitor if it's open, does nothing otherwise
@@ -160,7 +158,7 @@ func (mon *Monitor) Close() {
 
 // IsDeleted returns true if the monitor has been deleted but not removed
 func (mon *Monitor) IsDeleted() bool {
-	mon.ReadHeader()
+	mon.ReadMonitorHeader()
 	return mon.Header.Deleted
 }
 
@@ -247,6 +245,8 @@ func ListMonitors(chain, folder string, monitorChan chan<- Monitor) {
 	})
 }
 
+var monitorMutex sync.Mutex
+
 // MoveToProduction moves a previously staged monitor to the monitors folder.
 func (mon *Monitor) MoveToProduction() error {
 	if !mon.Staged {
@@ -265,10 +265,9 @@ func (mon *Monitor) MoveToProduction() error {
 
 	oldPath := mon.Path()
 	mon.Staged = false
-	mutex := sync.Mutex{}
-	mutex.Lock()
+	monitorMutex.Lock()
 	err = os.Rename(oldPath, mon.Path())
-	mutex.Unlock()
+	monitorMutex.Unlock()
 
 	return err
 }

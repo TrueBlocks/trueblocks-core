@@ -24,7 +24,7 @@ Flags:
       --undelete      undelete a previously deleted monitor
       --remove        remove a previously deleted monitor
       --watch         continually scan for new blocks and extract data for monitored addresses
-  -E, --sleep float   seconds to sleep between monitor passes (default 14)
+  -s, --sleep float   seconds to sleep between monitor passes (default 14)
   -x, --fmt string    export format, one of [none|json*|txt|csv|api]
   -v, --verbose       enable verbose (increase detail with --log_level)
   -h, --help          display this help screen

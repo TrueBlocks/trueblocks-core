@@ -9,7 +9,6 @@ status?terse&chain=gnosis
       "cachePath": "--paths--",
       "indexPath": "--paths--",
       "isTesting": true,
-      "isDocker": false,
       "isArchive": true,
       "isTracing": true,
       "hasEskey": true,

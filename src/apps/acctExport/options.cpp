@@ -38,19 +38,20 @@ static const COption params[] = {
     COption("receipts", "r", "", OPT_SWITCH, "export receipts instead of transactional data"),
     COption("logs", "l", "", OPT_SWITCH, "export logs instead of transactional data"),
     COption("traces", "t", "", OPT_SWITCH, "export traces instead of transactional data"),
-    COption("statements", "A", "", OPT_SWITCH, "export reconciliations instead of transactional data (requires --accounting option)"),  // NOLINT
+    COption("statements", "A", "", OPT_SWITCH, "export reconciliations instead of transactional data (assumes --accounting option)"),  // NOLINT
     COption("neighbors", "n", "", OPT_SWITCH, "export the neighbors of the given address"),
     COption("accounting", "C", "", OPT_SWITCH, "attach accounting records to the exported data (applies to transactions export only)"),  // NOLINT
     COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
     COption("cache", "i", "", OPT_SWITCH, "write transactions to the cache (see notes)"),
     COption("cache_traces", "R", "", OPT_SWITCH, "write traces to the cache (see notes)"),
     COption("count", "U", "", OPT_SWITCH, "only available for --appearances mode, if present, return only the number of records"),  // NOLINT
-    COption("first_record", "c", "<blknum>", OPT_FLAG, "the first record to process"),
-    COption("max_records", "e", "<blknum>", OPT_FLAG, "the maximum number of records to process before reporting"),
+    COption("first_record", "c", "<uint64>", OPT_FLAG, "the first record to process"),
+    COption("max_records", "e", "<uint64>", OPT_FLAG, "the maximum number of records to process before reporting"),
     COption("relevant", "", "", OPT_SWITCH, "for log and accounting export only, export only logs relevant to one of the given export addresses"),  // NOLINT
     COption("emitter", "", "list<addr>", OPT_FLAG, "for log export only, export only logs if emitted by one of these address(es)"),  // NOLINT
     COption("topic", "", "list<topic>", OPT_FLAG, "for log export only, export only logs with this topic(s)"),
     COption("asset", "", "list<addr>", OPT_FLAG, "for the statements option only, export only reconciliations for this asset"),  // NOLINT
+    COption("flow", "", "enum[in|out|zero]", OPT_FLAG, "for the statements option only, export only statements with incoming value or outgoing value"),  // NOLINT
     COption("factory", "y", "", OPT_SWITCH, "scan for contract creations from the given address(es) and report address of those contracts"),  // NOLINT
     COption("load", "", "<string>", OPT_HIDDEN | OPT_FLAG, "a comma separated list of dynamic traversers to load"),
     COption("reversed", "", "", OPT_HIDDEN | OPT_SWITCH, "produce results in reverse chronological order"),
@@ -137,13 +138,13 @@ bool COptions::parseArguments(string_q& command) {
             count = true;
 
         } else if (startsWith(arg, "-c:") || startsWith(arg, "--first_record:")) {
-            if (!confirmBlockNum("first_record", first_record, arg, latest))
+            if (!confirmUint("first_record", first_record, arg))
                 return false;
         } else if (arg == "-c" || arg == "--first_record") {
             return flag_required("first_record");
 
         } else if (startsWith(arg, "-e:") || startsWith(arg, "--max_records:")) {
-            if (!confirmBlockNum("max_records", max_records, arg, latest))
+            if (!confirmUint("max_records", max_records, arg))
                 return false;
         } else if (arg == "-e" || arg == "--max_records") {
             return flag_required("max_records");
@@ -171,6 +172,12 @@ bool COptions::parseArguments(string_q& command) {
                 return false;
         } else if (arg == "--asset") {
             return flag_required("asset");
+
+        } else if (startsWith(arg, "--flow:")) {
+            if (!confirmEnum("flow", flow, arg))
+                return false;
+        } else if (arg == "--flow") {
+            return flag_required("flow");
 
         } else if (arg == "-y" || arg == "--factory") {
             factory = true;
@@ -351,14 +358,16 @@ void COptions::Init(void) {
     first_record = 0;
     max_records = 250;
     relevant = false;
+    flow = "";
     factory = false;
     load = "";
     reversed = false;
+    // END_CODE_INIT
+
     // clang-format off
     skip_ddos = getGlobalConfig("acctExport")->getConfigBool("settings", "skip_ddos", true);
     max_traces = getGlobalConfig("acctExport")->getConfigInt("settings", "max_traces", 250);
     // clang-format on
-    // END_CODE_INIT
 
     if (!cache && getGlobalConfig("acctExport")->getConfigBool("settings", "cache_txs", false))
         cache = true;  // backwards compat

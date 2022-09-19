@@ -10,8 +10,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
-	tslibPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 
 	"github.com/bykof/gostradamus"
@@ -80,14 +80,13 @@ func IsDateTimeString(str string) bool {
 		return false
 	}
 
-	bRange, err := blockRange.NewBlockRange(str)
+	bRange, err := identifiers.NewBlockRange(str)
 	if err != nil {
 		return false
 	}
-	return bRange.StartType == blockRange.BlockDate
+	return bRange.StartType == identifiers.BlockDate
 }
 
-// TODO: BOGUS
 func ToIsoDateStr2(dateStr string) string {
 	// assumes an already validated date string
 	str := strings.Replace(dateStr, "T", " ", -1)
@@ -112,7 +111,7 @@ func isBeforeFirstBlock(chain, dateStr string) bool {
 
 	isoStr := ToIsoDateStr2(dateStr)
 	dt, _ := gostradamus.Parse(isoStr, gostradamus.Iso8601) // already validated as a date
-	firstDate, _ := tslibPkg.FromNameToDate(chain, "0")
+	firstDate, _ := tslib.FromNameToDate(chain, "0")
 	return dt.Time().Before(firstDate.Time())
 }
 
@@ -124,29 +123,29 @@ func IsRange(chain, str string) (bool, error) {
 		}
 	}
 
-	bRange, err := blockRange.NewBlockRange(str)
+	bRange, err := identifiers.NewBlockRange(str)
 
 	if err == nil {
 		if bRange.Start.Special == "latest" {
 			return false, errors.New("cannot start range with 'latest'")
 		}
 
-		if bRange.StartType == blockRange.BlockSpecial &&
-			!tslibPkg.IsSpecialBlock(chain, bRange.Start.Special) {
+		if bRange.StartType == identifiers.BlockSpecial &&
+			!tslib.IsSpecialBlock(chain, bRange.Start.Special) {
 			return false, &InvalidIdentifierLiteralError{
 				Value: bRange.Start.Special,
 			}
 		}
 
-		if bRange.EndType == blockRange.BlockSpecial &&
-			!tslibPkg.IsSpecialBlock(chain, bRange.End.Special) {
+		if bRange.EndType == identifiers.BlockSpecial &&
+			!tslib.IsSpecialBlock(chain, bRange.End.Special) {
 			return false, &InvalidIdentifierLiteralError{
 				Value: bRange.End.Special,
 			}
 		}
 
-		onlyNumbers := bRange.StartType == blockRange.BlockNumber &&
-			bRange.EndType == blockRange.BlockNumber
+		onlyNumbers := bRange.StartType == identifiers.BlockNumber &&
+			bRange.EndType == identifiers.BlockNumber
 
 		if onlyNumbers && bRange.Start.Number >= bRange.End.Number {
 			return false, errors.New("'stop' must be strictly larger than 'start'")
@@ -155,7 +154,7 @@ func IsRange(chain, str string) (bool, error) {
 		return true, nil
 	}
 
-	if modifierErr, ok := err.(*blockRange.WrongModifierError); ok {
+	if modifierErr, ok := err.(*identifiers.WrongModifierError); ok {
 		return false, errors.New("Input argument appears to be invalid. No such skip marker: " + modifierErr.Token)
 	}
 

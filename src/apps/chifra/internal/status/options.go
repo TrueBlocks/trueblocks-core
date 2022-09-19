@@ -8,6 +8,7 @@
 package statusPkg
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
@@ -18,23 +19,25 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// StatusOptions provides all command options for the chifra status command.
 type StatusOptions struct {
-	Modes      []string
-	Details    bool
-	Types      []string
-	Depth      uint64
-	Report     bool
-	Terse      bool
-	Migrate    string
-	FirstBlock uint64
-	LastBlock  uint64
-	Globals    globals.GlobalOptions
-	BadFlag    error
+	Modes      []string              `json:"modes,omitempty"`      // The type of status info to retrieve
+	Details    bool                  `json:"details,omitempty"`    // Include details about items found in monitors, slurps, abis, or price caches
+	Types      []string              `json:"types,omitempty"`      // For caches mode only, which type(s) of cache to report
+	Depth      uint64                `json:"depth,omitempty"`      // For cache mode only, number of levels deep to report
+	Report     bool                  `json:"report,omitempty"`     // Run the command with no options for the same result
+	Terse      bool                  `json:"terse,omitempty"`      // Show a terse summary report
+	Migrate    string                `json:"migrate,omitempty"`    // Either effectuate or test to see if a migration is necessary
+	FirstBlock uint64                `json:"firstBlock,omitempty"` // First block to process (inclusive -- testing only)
+	LastBlock  uint64                `json:"lastBlock,omitempty"`  // Last block to process (inclusive -- testing only)
+	Globals    globals.GlobalOptions `json:"globals,omitempty"`    // The global options
+	BadFlag    error                 `json:"badFlag,omitempty"`    // An error flag if needed
 }
 
 var statusCmdLineOptions StatusOptions
 
-func (opts *StatusOptions) TestLog() {
+// testLog is used only during testing to export the options for this test case.
+func (opts *StatusOptions) testLog() {
 	logger.TestLog(len(opts.Modes) > 0, "Modes: ", opts.Modes)
 	logger.TestLog(opts.Details, "Details: ", opts.Details)
 	logger.TestLog(len(opts.Types) > 0, "Types: ", opts.Types)
@@ -46,7 +49,22 @@ func (opts *StatusOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func (opts *StatusOptions) ToCmdLine() string {
+// String implements the Stringer interface
+func (opts *StatusOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "  ")
+	return string(b)
+}
+
+// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
+func (opts *StatusOptions) getEnvStr() []string {
+	envStr := []string{}
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return envStr
+}
+
+// toCmdLine converts the option to a command line for calling out to the system.
+func (opts *StatusOptions) toCmdLine() string {
 	options := ""
 	if opts.Details {
 		options += " --details"
@@ -70,11 +88,14 @@ func (opts *StatusOptions) ToCmdLine() string {
 		options += (" --last_block " + fmt.Sprintf("%d", opts.LastBlock))
 	}
 	options += " " + strings.Join(opts.Modes, " ")
-	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
+	// EXISTING_CODE
+	// EXISTING_CODE
+	options += fmt.Sprintf("%s", "") // silence compiler warning for auto gen
 	return options
 }
 
-func StatusFinishParseApi(w http.ResponseWriter, r *http.Request) *StatusOptions {
+// statusFinishParseApi finishes the parsing for server invocations. Returns a new StatusOptions.
+func statusFinishParseApi(w http.ResponseWriter, r *http.Request) *StatusOptions {
 	opts := &StatusOptions{}
 	opts.Depth = utils.NOPOS
 	opts.FirstBlock = 0
@@ -119,7 +140,8 @@ func StatusFinishParseApi(w http.ResponseWriter, r *http.Request) *StatusOptions
 	return opts
 }
 
-func StatusFinishParse(args []string) *StatusOptions {
+// statusFinishParse finishes the parsing for command line invocations. Returns a new StatusOptions.
+func statusFinishParse(args []string) *StatusOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

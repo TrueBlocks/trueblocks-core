@@ -5,33 +5,49 @@
 package chunksPkg
 
 import (
-	"os"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *ChunksOptions) showIndex(path string, first bool) (bool, error) {
-	path = index.ToIndexPath(path)
-	ff, err := os.Open(path)
-	if err != nil {
-		return false, err
+func showIndex(walker *index.IndexWalker, path string, first bool) (bool, error) {
+	var castOk bool
+	var opts *ChunksOptions
+	if opts, castOk = walker.GetOpts().(*ChunksOptions); !castOk {
+		logger.Fatal("should not happen ==> cannot cast ChunksOptions in showIndex")
+		return false, nil
 	}
-	defer ff.Close()
-	header, err := index.ReadHeader(ff)
-	var obj types.SimpleIndex
-	obj.Range, _ = cache.RangeFromFilename(path)
-	obj.Magic = header.Magic
-	obj.Hash = header.Hash
-	obj.AddressCount = header.AddressCount
-	obj.AppearanceCount = header.AppearanceCount
-	obj.Size = file.FileSize(path)
+
+	path = paths.ToIndexPath(path)
+	if !file.FileExists(path) {
+		// Weird case when bloom files exist, but index files don't
+		return true, nil
+	}
+
+	header, err := index.ReadChunkHeader(path, true)
 	if err != nil {
 		return false, err
 	}
 
+	rng, err := paths.RangeFromFilenameE(path)
+	if err != nil {
+		return false, err
+	}
+
+	obj := types.SimpleIndex{
+		Range:           rng,
+		Magic:           header.Magic,
+		Hash:            header.Hash,
+		AddressCount:    header.AddressCount,
+		AppearanceCount: header.AppearanceCount,
+		Size:            file.FileSize(path),
+	}
+
+	// TODO: Feature - customize display strings
+	// opts.Globals.Format = "Magic,Hash,Size,AppearanceCount,AddressCount,Range"
+	// opts.Globals.Format = "Range\tAppearanceCount\tAddressCount"
 	// TODO: Fix export without arrays
 	err = opts.Globals.RenderObject(obj, first)
 	if err != nil {
@@ -41,19 +57,20 @@ func (opts *ChunksOptions) showIndex(path string, first bool) (bool, error) {
 	return true, nil
 }
 
-// TODO: Don't forget about this option (pushing to IPFS)
-/*
-if (share) {
-	string_q res := doCommand("which ipfs");
-	if (res.empty()) {
-		return usa ge("Could not find ipfs in your $PATH. You must install ipfs for the --share command to work.");
+func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
+	defer opts.Globals.RenderFooter()
+	err := opts.Globals.RenderHeader(types.SimpleIndex{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+	if err != nil {
+		return err
 	}
+
+	walker := index.NewIndexWalker(
+		opts.Globals.Chain,
+		opts.Globals.TestMode,
+		100, /* maxTests */
+		opts,
+		showIndex,
+		nil, /* data */
+	)
+	return walker.WalkIndexFiles(paths.Index_Bloom, blockNums)
 }
-if (share) {
-	ostringstream os;
-	os << "ipfs add -Q --pin \"" << bloomFn + "\"";
-	string_q newHash = doCommand(os.str());
-	LOG_INFO(cGreen, "Re-pinning ", pin.fileName, cOff, " ==> ", newHash, " ",
-	(pin.bloomHash == newHash ? greenCheck : redX));
-}
-*/

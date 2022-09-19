@@ -7,23 +7,23 @@ package initPkg
 import (
 	"testing"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 )
 
 func Test_retry(t *testing.T) {
 	callCounter := 0
-	failingPins := []manifest.PinDescriptor{
+	failingPins := []manifest.ChunkRecord{
 		{
-			FileName: "first",
+			Range: "first",
 		},
 		{
-			FileName: "second",
+			Range: "second",
 		},
 		{
-			FileName: "third",
+			Range: "third",
 		},
 	}
-	fakeDownload := func(p []manifest.PinDescriptor) ([]manifest.PinDescriptor, bool) {
+	fakeDownload := func(p []manifest.ChunkRecord) ([]manifest.ChunkRecord, bool) {
 		defer func() { callCounter++ }()
 		switch callCounter {
 		case 0:
@@ -37,7 +37,7 @@ func Test_retry(t *testing.T) {
 			if len(p) != len(failingPins[2:]) {
 				t.Error("Wrong count for 3nd call", len(p))
 			}
-			return []manifest.PinDescriptor{}, false
+			return []manifest.ChunkRecord{}, false
 		}
 
 		t.Fatal("Too many calls")

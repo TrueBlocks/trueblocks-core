@@ -19,7 +19,7 @@ import (
 
 // RunState handles the state command for the command line. Returns error only as per cobra.
 func RunState(cmd *cobra.Command, args []string) (err error) {
-	opts := StateFinishParse(args)
+	opts := stateFinishParse(args)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.StateInternal()
@@ -28,7 +28,7 @@ func RunState(cmd *cobra.Command, args []string) (err error) {
 
 // ServeState handles the state command for the API. Returns error and a bool if handled
 func ServeState(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
-	opts := StateFinishParseApi(w, r)
+	opts := stateFinishParseApi(w, r)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return opts.StateInternal()
@@ -36,7 +36,7 @@ func ServeState(w http.ResponseWriter, r *http.Request) (err error, handled bool
 
 // StateInternal handles the internal workings of the state command.  Returns error and a bool if handled
 func (opts *StateOptions) StateInternal() (err error, handled bool) {
-	err = opts.ValidateState()
+	err = opts.validateState()
 	if err != nil {
 		return err, true
 	}
@@ -47,7 +47,7 @@ func (opts *StateOptions) StateInternal() (err error, handled bool) {
 	}
 
 	handled = true
-	err = opts.Globals.PassItOn("getState", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
+	err = opts.Globals.PassItOn("getState", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
 	// EXISTING_CODE
 
 	return

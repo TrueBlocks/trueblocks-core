@@ -16,7 +16,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -159,12 +158,11 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 		// Remove Cobra's "Error:\n" decorator
 		parsed := strings.Replace(outp, "Error:", "", 1)
 		parsed = strings.Trim(parsed, " \n")
-		// TODO: Need this to build. Probably not right
 		var unused globals.GlobalOptions
 		unused.Chain = chain
 		unused.TestMode = utils.IsTestModeServer(r)
 		unused.Writer = w
-		output.RespondWithError(w, http.StatusBadRequest, errors.New(parsed))
+		RespondWithError(w, http.StatusBadRequest, errors.New(parsed))
 		return
 	}
 	if strings.Contains(outp, "\"errors\":") {

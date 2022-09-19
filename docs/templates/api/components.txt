@@ -771,9 +771,6 @@ components:
         isApi:
           type: boolean
           description: "`true` if the server is running in API mode"
-        isDocker:
-          type: boolean
-          description: "`true` if running under a docker image"
         isScraping:
           type: boolean
           description: "`true` if the index scraper is running"
@@ -833,7 +830,7 @@ components:
       description: "the IPFS hashes of the index chunk and its associated Bloom filter for the given block range"
       type: object
       properties:
-        fileName:
+        range:
           type: string
           example: "013142464-013145212"
           description: "for each chunk, the range of blocks contained in that chunk"
@@ -859,25 +856,25 @@ components:
       description: "a manifest of the IPFS hashes created for the unchained index"
       type: object
       properties:
-        indexFormat:
+        version:
           type: string
-          description: "IPFS cid of file describing the file format of an index chunk"
-        bloomFormat:
+          description: "the version string hashed into the chunk data"
+        chain:
           type: string
-          description: "IPFS cid of file describing the associated bloom filter"
-        firstPin:
-          type: number
-          format: blknum
-          description: "the block number of the first pin in the manifest (always zero)"
-        lastPin:
-          type: number
-          format: blknum
-          description: "the most recent block included in this manifest"
-        pins:
+          description: "the chain to which this manifest belongs"
+        schemas:
+          type: string
+          format: ipfshash
+          description: "IPFS cid of file describing the schemas for the various databases"
+        databases:
+          type: string
+          format: ipfshash
+          description: "IPFS cid of file containing CIDs for the various databases"
+        chunks:
           type: array
           items:
             $ref: "#/components/schemas/pinnedChunk"
-          description: "a list of all the pins in the unchained index"
+          description: "a list of the IPFS hashes of all of the chunks in the unchained index"
     chain:
       description: "The chain data model carries information about configured chains"
       type: object
@@ -904,7 +901,7 @@ components:
         localExplorer:
           type: string
           description: "The local explorer for the chain (typically TrueBlocks Explorer)"
-        pinGateway:
+        ipfsGateway:
           type: string
           description: "An IPFS gateway for pinning the index if enabled"
     cacheEntry:

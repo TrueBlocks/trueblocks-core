@@ -105,7 +105,7 @@ Testing parseAddressList
 	-h  (--help)          display this help screen
 
   Powered by TrueBlocks
-TIME ~ CLOCK - <WARNG> : Duplicate address. Not adding 0xdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef
+TIME ~ CLOCK - <WARN> : Duplicate address. Not adding 0xdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef
 the list:
 	0xdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef
 Testing parseTransactionList

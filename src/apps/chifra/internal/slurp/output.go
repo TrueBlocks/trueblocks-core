@@ -19,7 +19,7 @@ import (
 
 // RunSlurp handles the slurp command for the command line. Returns error only as per cobra.
 func RunSlurp(cmd *cobra.Command, args []string) (err error) {
-	opts := SlurpFinishParse(args)
+	opts := slurpFinishParse(args)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.SlurpInternal()
@@ -28,7 +28,7 @@ func RunSlurp(cmd *cobra.Command, args []string) (err error) {
 
 // ServeSlurp handles the slurp command for the API. Returns error and a bool if handled
 func ServeSlurp(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
-	opts := SlurpFinishParseApi(w, r)
+	opts := slurpFinishParseApi(w, r)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return opts.SlurpInternal()
@@ -36,7 +36,7 @@ func ServeSlurp(w http.ResponseWriter, r *http.Request) (err error, handled bool
 
 // SlurpInternal handles the internal workings of the slurp command.  Returns error and a bool if handled
 func (opts *SlurpOptions) SlurpInternal() (err error, handled bool) {
-	err = opts.ValidateSlurp()
+	err = opts.validateSlurp()
 	if err != nil {
 		return err, true
 	}
@@ -47,7 +47,7 @@ func (opts *SlurpOptions) SlurpInternal() (err error, handled bool) {
 	}
 
 	handled = true
-	err = opts.Globals.PassItOn("ethslurp", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
+	err = opts.Globals.PassItOn("ethslurp", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
 	// EXISTING_CODE
 
 	return

@@ -6,21 +6,24 @@ package listPkg
 
 import (
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 	"sync"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 // AddressMonitorMap carries arrays of appearances that have not yet been written to the monitor file
@@ -65,7 +68,7 @@ func unlockForAddress(address string) {
 func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) error {
 	for _, address := range opts.Addrs {
 		lockForAddress(address)
-		defer unlockForAddress(address)
+		defer unlockForAddress(address) // reminder: this defers until the function returns, not this loop
 	}
 
 	var updater = MonitorUpdate{
@@ -75,8 +78,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 		FirstBlock: utils.NOPOS,
 	}
 
-	// This removes duplicates from the input array and keep a map from address to
-	// a pointer to the monitors
+	// This removes dups and keeps a map from address to a pointer to the monitors
 	for _, addr := range opts.Addrs {
 		err := needsMigration(addr)
 		if err != nil {
@@ -85,7 +87,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 
 		if updater.MonitorMap[common.HexToAddress(addr)] == nil {
 			mon, _ := monitor.NewStagedMonitor(opts.Globals.Chain, addr)
-			mon.ReadHeader()
+			mon.ReadMonitorHeader()
 			if uint64(mon.LastScanned) < updater.FirstBlock {
 				updater.FirstBlock = uint64(mon.LastScanned)
 			}
@@ -97,7 +99,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 
 	chain := opts.Globals.Chain
 	bloomPath := config.GetPathToIndex(chain) + "blooms/"
-	files, err := ioutil.ReadDir(bloomPath)
+	files, err := os.ReadDir(bloomPath)
 	if err != nil {
 		return err
 	}
@@ -112,7 +114,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 			if !strings.HasSuffix(fileName, ".bloom") {
 				continue // sometimes there are .gz files in this folder, for example
 			}
-			fileRange, err := cache.RangeFromFilename(fileName)
+			fileRange, err := paths.RangeFromFilenameE(fileName)
 			if err != nil {
 				// don't respond further -- there may be foreign files in the folder
 				fmt.Println(err)
@@ -131,7 +133,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 				continue
 			}
 
-			if fileRange.EarlierThan(updater.FirstBlock) {
+			if fileRange.EarlierThanB(updater.FirstBlock) {
 				continue
 			}
 
@@ -159,35 +161,68 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 		}
 	}
 
+	if !opts.Globals.TestMode {
+		// TODO: Note we could actually test this if we had the concept of a FAKE_HEAD block
+		stagePath := paths.ToStagingPath(config.GetPathToIndex(opts.Globals.Chain) + "staging")
+		stageFn, _ := file.LatestFileInFolder(stagePath)
+		rng := paths.RangeFromFilename(stageFn)
+		lines := []string{}
+		for addr, mon := range updater.MonitorMap {
+			if !rng.LaterThanB(uint64(mon.LastScanned)) { // the range preceeds the block number
+				if len(lines) == 0 {
+					lines = file.AsciiFileToLines(stageFn)
+					sort.Slice(lines, func(i, j int) bool {
+						return lines[i] < lines[j]
+					})
+				}
+
+				addrStr := hexutil.Encode(addr.Bytes())
+				found := sort.Search(len(lines), func(i int) bool {
+					return lines[i] >= addrStr
+				})
+				if found < len(lines) && strings.HasPrefix(lines[found], addrStr) {
+					apps := getAppearances(addrStr, lines, mon.LastScanned, found)
+					if apps != nil {
+						stageResult := index.AppearanceResult{
+							Address:    addr,
+							Range:      rng,
+							AppRecords: apps,
+						}
+						updater.updateMonitors(&stageResult)
+					}
+				}
+			}
+		}
+	}
+
 	return updater.moveAllToProduction()
 }
 
-// visitChunkToFreshenFinal opens one index file, searches for all the address(es) we're looking for and pushes the resultRecords
-// (even if empty) down the resultsChannel.
+// visitChunkToFreshenFinal opens an index file, searches for the address(es) we're looking for and pushes
+// the appearance records down the resultsChannel (even if there are none).
 func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultChannel chan<- []index.AppearanceResult, wg *sync.WaitGroup) {
 	var results []index.AppearanceResult
 	defer func() {
-		wg.Done()
 		resultChannel <- results
+		wg.Done()
 	}()
 
-	// TODO: BOGUS - Should only scan if we're not already seen the block
-	bloomFilename := index.ToBloomPath(fileName)
+	bloomFilename := paths.ToBloomPath(fileName)
 
 	// We open the bloom filter and read its header but we do not read any of the
 	// actual bits in the blooms. The IsMember function reads individual bytes to
 	// check individual bits.
-	bloom, err := index.NewChunkBloom(bloomFilename)
+	bl, err := bloom.NewChunkBloom(bloomFilename)
 	if err != nil {
-		results = append(results, index.AppearanceResult{Range: bloom.Range, Err: err})
-		bloom.Close()
+		results = append(results, index.AppearanceResult{Range: bl.Range, Err: err})
+		bl.Close()
 		return
 	}
 
 	// We check each address against the bloom to see if there are any hits...
 	var bloomHits = false
 	for _, mon := range updater.MonitorMap {
-		if bloom.IsMember(mon.Address) {
+		if bl.IsMember(mon.Address) {
 			bloomHits = true
 			break
 		}
@@ -197,29 +232,29 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 	// we don't defer this close, but close it right away -- otherwise too many files
 	// are open and we get an error).
 	// TODO: Must we always be closing these files?
-	bloom.Close()
+	bl.Close()
 
 	// If none of the addresses hit, we're finished with this index chunk. We want the
 	// caller to note this range even though there was no hit. In this way, we keep
 	// track of the last index portion we've seen. Because none of the addresses hit,
 	// we don't need to send a specific message.
 	if !bloomHits {
-		results = append(results, index.AppearanceResult{Range: bloom.Range})
+		results = append(results, index.AppearanceResult{Range: bl.Range})
 		return
 	}
 
-	indexFilename := index.ToIndexPath(fileName)
+	indexFilename := paths.ToIndexPath(fileName)
 	if !file.FileExists(indexFilename) {
-		_, err := index.EstablishIndexChunk(updater.Options.Globals.Chain, bloom.Range)
+		_, err := index.EstablishIndexChunk(updater.Options.Globals.Chain, bl.Range)
 		if err != nil {
-			results = append(results, index.AppearanceResult{Range: bloom.Range, Err: err})
+			results = append(results, index.AppearanceResult{Range: bl.Range, Err: err})
 			return
 		}
 	}
 
 	indexChunk, err := index.NewChunkData(indexFilename)
 	if err != nil {
-		results = append(results, index.AppearanceResult{Range: bloom.Range, Err: err})
+		results = append(results, index.AppearanceResult{Range: bl.Range, Err: err})
 		return
 	}
 	defer indexChunk.Close()
@@ -252,8 +287,8 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 		// given a nil appearance list simply updates the header. Note we update for the
 		// start of the next chunk (plus 1 to current range).
 		for _, mon := range updater.MonitorMap {
-			// TODO: BOGUS - can we manage these file pointers so they aren't copied and
-			// TODO: BOGUS - therefore don't need to be Closed so or else it crashes
+			// TODO: Can we manage these file pointers so they aren't copied and
+			// TODO: therefore don't need to be Closed so or else it crashes
 			mon.Close()
 			err := mon.WriteAppearancesAppend(lastScanned, nil)
 			if err != nil {
@@ -269,7 +304,7 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 		if result.AppRecords != nil {
 			nWritten := len(*result.AppRecords)
 			if nWritten > 0 {
-				_, err := mon.WriteAppearances(*result.AppRecords, os.O_WRONLY|os.O_APPEND)
+				_, err := mon.WriteAppearances(*result.AppRecords, true /* append */)
 				if err != nil {
 					log.Println(err)
 				} else if !updater.Options.Globals.TestMode {
@@ -285,7 +320,39 @@ func needsMigration(addr string) error {
 	path := strings.Replace(mon.Path(), ".mon.bin", ".acct.bin", -1)
 	if file.FileExists(path) {
 		path = strings.Replace(path, config.GetPathToCache(mon.Chain), "./", -1)
-		return validate.Usage("Old style monitor found at {0}. Please run '{1}'", path, "chifra status --migrate [test|all]")
+		return validate.Usage("Old style monitor found at {0}. Please run '{1}'", path, "chifra status --migrate cache")
 	}
 	return nil
+}
+
+// TODO: Somewhat iffy code here
+const (
+	asciiAddressSize    = 42
+	asciiBlockNumSize   = 9
+	asciiTxIdSize       = 5
+	asciiAppearanceSize = 59
+	startOfBlockNum     = 42 + 1
+	endOfBlockNum       = 42 + 1 + 9
+	startOfTxId         = 42 + 1 + 9 + 1
+	endOfTxId           = 42 + 1 + 9 + 1 + 5
+)
+
+func getAppearances(addrStr string, lines []string, lastVisited uint32, found int) *[]index.AppearanceRecord {
+	results := make([]index.AppearanceRecord, 0, 1000)
+	for idx := found; idx < len(lines); idx++ {
+		if !strings.HasPrefix(lines[idx], addrStr) {
+			break
+		}
+		r := index.AppearanceRecord{
+			BlockNumber:   uint32(globals.ToUint64(lines[idx][startOfBlockNum:endOfBlockNum])),
+			TransactionId: uint32(globals.ToUint64(lines[idx][startOfTxId:endOfTxId])),
+		}
+		if r.BlockNumber > lastVisited {
+			results = append(results, r)
+		}
+	}
+	if len(results) == 0 {
+		return nil
+	}
+	return &results
 }

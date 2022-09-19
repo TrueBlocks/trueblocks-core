@@ -15,8 +15,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-func (opts *MonitorsOptions) ValidateMonitors() error {
-	opts.TestLog()
+func (opts *MonitorsOptions) validateMonitors() error {
+	opts.testLog()
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag
@@ -27,7 +27,7 @@ func (opts *MonitorsOptions) ValidateMonitors() error {
 		var expOpts exportPkg.ExportOptions
 		expOpts.Addrs = append(expOpts.Addrs, "0x0000000000000000000000000000000000000001")
 		expOpts.Globals.Chain = opts.Globals.Chain
-		err := expOpts.ValidateExport()
+		err := expOpts.Validate()
 		if err != nil {
 			return validate.Usage(err.Error())
 		}
@@ -73,5 +73,5 @@ func (opts *MonitorsOptions) ValidateMonitors() error {
 		}
 	}
 
-	return opts.Globals.ValidateGlobals()
+	return opts.Globals.Validate()
 }

@@ -37,7 +37,6 @@
 #include "rpcresult.h"
 #include "logging.h"
 #include "keccak.h"
-#include "apikey.h"
 #include "markdown.h"
 #include "commandoption.h"
 #include "configenv.h"

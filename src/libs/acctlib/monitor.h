@@ -62,7 +62,7 @@ class CMonitor : public CAccountName {
     string_q getPathToMonitor(const address_t& addr, bool staging) const;
     size_t getRecordCnt(const string_q& path) const;
 
-    bool readHeader(CMonitorHeader& header) const;
+    bool readMonitorHeader(CMonitorHeader& header) const;
     bool readAppearances(MONAPPFUNC func, void* data);
 
     // EXISTING_CODE
@@ -186,7 +186,6 @@ extern const char* STR_DISPLAY_MONITOR;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-typedef map<address_t, CMonitor> CMonitorMap;  // NOLINT
 extern bool isMonitorFilePath(const string_q& path);
 // EXISTING_CODE
 }  // namespace qblocks

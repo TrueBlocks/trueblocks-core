@@ -42,6 +42,8 @@ bool COptions::parseArguments(string_q& command) {
     // END_CODE_LOCAL_INIT
     string_q path;
 
+    bool hasEsKey = getGlobalConfig("")->getConfigStr("keys.etherscan", "apiKey", "<not_set>") != "<not_set>";
+
     CToml config(rootConfigToml_makeClass);
     bool makeClassOn = config.getConfigBool("enabled", "generate", false);
 
@@ -89,7 +91,6 @@ bool COptions::parseArguments(string_q& command) {
                 tests.push_back("libs/utillib");
                 tests.push_back("libs/etherlib");
                 tests.push_back("libs/acctlib");
-                tests.push_back("libs/pinlib");
 
             } else if (arg == "dev_tools" || arg == "dev_tools/") {
                 static bool been_here = false;
@@ -104,8 +105,10 @@ bool COptions::parseArguments(string_q& command) {
                 if (been_here)
                     break;
                 been_here = true;
+                if (hasEsKey) {
+                    tests.push_back("tools/ethslurp");
+                }
                 tests.push_back("tools/ethNames");
-                tests.push_back("tools/ethslurp");
                 tests.push_back("tools/getBlocks");
                 tests.push_back("tools/getLogs");
                 tests.push_back("tools/getQuotes");
@@ -126,8 +129,8 @@ bool COptions::parseArguments(string_q& command) {
                 tests.push_back("apps/blockScrape");
                 tests.push_back("apps/cacheStatus");
                 tests.push_back("apps/chunkMan");
-                tests.push_back("apps/fireStorm");
                 tests.push_back("apps/chifra");
+                tests.push_back("apps/fireStorm");
                 tests.push_back("apps/init");
 
             } else {
@@ -153,11 +156,12 @@ bool COptions::parseArguments(string_q& command) {
         tests.push_back("libs/utillib");
         tests.push_back("libs/etherlib");
         tests.push_back("libs/acctlib");
-        tests.push_back("libs/pinlib");
         if (makeClassOn)
             tests.push_back("dev_tools/makeClass");
+        if (hasEsKey) {
+            tests.push_back("tools/ethslurp");
+        }
         tests.push_back("tools/ethNames");
-        tests.push_back("tools/ethslurp");
         tests.push_back("tools/getBlocks");
         tests.push_back("tools/getLogs");
         tests.push_back("tools/getQuotes");
@@ -172,8 +176,8 @@ bool COptions::parseArguments(string_q& command) {
         tests.push_back("apps/blockScrape");
         tests.push_back("apps/cacheStatus");
         tests.push_back("apps/chunkMan");
-        tests.push_back("apps/fireStorm");
         tests.push_back("apps/chifra");
+        tests.push_back("apps/fireStorm");
         tests.push_back("apps/init");
     }
 
@@ -259,9 +263,7 @@ void establishTestData(void) {
     doCommand("chifra abis 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11");
     doCommand("chifra abis 0x7d655c57f71464b6f83811c55d84009cd9f5221c");
 
-#if 1
-    // TODO(tjayrush): Not sure what this is about. Hard to explain,
-    // TODO(tjayrush): but this removes a few transactions from the cache
+    // Remove a few things from the cache
     ::remove(getBinaryCacheFilename(CT_TXS, 8854723, 61).c_str());
     ::remove(getBinaryCacheFilename(CT_TXS, 8855603, 121).c_str());
     ::remove(getBinaryCacheFilename(CT_TXS, 8856290, 62).c_str());
@@ -276,5 +278,4 @@ void establishTestData(void) {
     ::remove(getBinaryCacheFilename(CT_TXS, 8867898, 28).c_str());
     ::remove(getBinaryCacheFilename(CT_TXS, 8875684, 148).c_str());
     ::remove(getBinaryCacheFilename(CT_TXS, 8876232, 84).c_str());
-#endif
 }

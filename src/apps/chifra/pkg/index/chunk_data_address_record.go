@@ -5,6 +5,7 @@ import (
 	"encoding/binary"
 	"fmt"
 	"io"
+	"os"
 	"sort"
 
 	"github.com/ethereum/go-ethereum/common"
@@ -22,9 +23,8 @@ type AddressRecord struct {
 	Count   uint32
 }
 
-func (chunk *ChunkData) ReadAddressRecord() (addressRec AddressRecord, err error) {
-	err = binary.Read(chunk.File, binary.LittleEndian, &addressRec)
-	return
+func (addressRec *AddressRecord) ReadAddress(file *os.File) (err error) {
+	return binary.Read(file, binary.LittleEndian, addressRec)
 }
 
 func (chunk *ChunkData) searchForAddressRecord(address common.Address) int {
@@ -44,7 +44,8 @@ func (chunk *ChunkData) searchForAddressRecord(address common.Address) int {
 			return false
 		}
 
-		addressRec, err := chunk.ReadAddressRecord()
+		addressRec := AddressRecord{}
+		err = addressRec.ReadAddress(chunk.File)
 		if err != nil {
 			fmt.Println(err)
 			return false
@@ -57,12 +58,13 @@ func (chunk *ChunkData) searchForAddressRecord(address common.Address) int {
 
 	readLocation := int64(HeaderWidth + pos*AddrRecordWidth)
 	chunk.File.Seek(readLocation, io.SeekStart)
-	rec, err := chunk.ReadAddressRecord()
+	rec := AddressRecord{}
+	err := rec.ReadAddress(chunk.File)
 	if err != nil {
 		return -1
 	}
 
-	if bytes.Compare(rec.Address[:], address[:]) != 0 {
+	if !bytes.Equal(rec.Address[:], address[:]) {
 		return -1
 	}
 

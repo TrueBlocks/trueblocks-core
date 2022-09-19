@@ -7,16 +7,19 @@ package utils
 import (
 	"bytes"
 	"fmt"
-	"io/ioutil"
 	"log"
+	"math/big"
 	"net/http"
 	"os"
 	"os/exec"
+	"reflect"
 	"runtime"
+	"strconv"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"golang.org/x/crypto/ssh/terminal"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"golang.org/x/term"
 )
 
 // IsTestModeServer return true if we are running from the testing harness
@@ -29,25 +32,15 @@ func IsApiMode() bool {
 }
 
 func IsTerminal() bool {
-	return terminal.IsTerminal(int(os.Stdout.Fd()))
+	return term.IsTerminal(int(os.Stdout.Fd()))
 }
 
 func AsciiFileToString(fileName string) string {
-	if !file.FileExists(fileName) {
-		return ""
-	}
-
-	contents, err := ioutil.ReadFile(fileName)
-	if err != nil {
-		log.Println(err)
-		return ""
-	}
-	return string(contents)
+	return file.AsciiFileToString(fileName)
 }
 
 func AsciiFileToLines(fileName string) []string {
-	contents := AsciiFileToString(fileName)
-	return strings.Split(contents, "\n")
+	return file.AsciiFileToLines(fileName)
 }
 
 func OpenBrowser(url string) {
@@ -67,15 +60,36 @@ func OpenBrowser(url string) {
 	}
 }
 
-func PadLeft(str string, totalLen int) string {
+func PadNum(n int, totalLen int) string {
+	return PadLeft(strconv.Itoa(n), totalLen, '0')
+}
+
+func PadLeft(str string, totalLen int, pad rune) string {
 	if len(str) >= totalLen {
 		return str
 	}
-	zeros := ""
-	for i := 0; i < totalLen-len(str); i++ {
-		zeros += "0"
+	if pad == 0 {
+		pad = ' '
 	}
-	return zeros + str
+	lead := ""
+	for i := 0; i < totalLen-len(str); i++ {
+		lead += string(pad)
+	}
+	return lead + str
+}
+
+func PadRight(str string, totalLen int, pad rune) string {
+	if len(str) >= totalLen {
+		return str
+	}
+	if pad == 0 {
+		pad = ' '
+	}
+	tail := ""
+	for i := 0; i < totalLen-len(str); i++ {
+		tail += string(pad)
+	}
+	return str + tail
 }
 
 func ToCamelCase(in string) string {
@@ -96,7 +110,7 @@ func ToCamelCase(in string) string {
 const NOPOS = ^uint64(0)
 
 // Min calculates the minimum between two unsigned integers (golang has no such function)
-func Min(x, y uint64) uint64 {
+func Min[T int | float64 | uint32 | uint64](x, y T) T {
 	if x < y {
 		return x
 	}
@@ -104,7 +118,7 @@ func Min(x, y uint64) uint64 {
 }
 
 // Max calculates the max between two unsigned integers (golang has no such function)
-func Max(x, y uint64) uint64 {
+func Max[T int | float64 | uint32 | uint64](x, y T) T {
 	if x > y {
 		return x
 	}
@@ -137,3 +151,47 @@ func MakeFirstUpperCase(s string) string {
 // range smaller than this is a blockNumber, anything larger than this is a timestamp). This breaks when the
 // block number gets larger than 1,4 billion, which may happen when the chain shards, but not until then.
 const EarliestEvmTs = 1438269971
+
+// TODO: Fix export without arrays
+func GetFields(t *reflect.Type, format string, header bool) (fields []string, sep string, quote string) {
+	sep = "\t"
+	quote = ""
+	if format == "csv" || strings.Contains(format, ",") {
+		sep = ","
+	}
+
+	if format == "csv" || strings.Contains(format, "\"") {
+		quote = "\""
+	}
+
+	if strings.Contains(format, "\t") || strings.Contains(format, ",") {
+		custom := strings.Replace(format, "\t", ",", -1)
+		custom = strings.Replace(custom, "\"", ",", -1)
+		fields = strings.Split(custom, ",")
+
+	} else {
+		if (*t).Kind() != reflect.Struct {
+			logger.Fatal((*t).Name() + " is not a structure")
+		}
+		for i := 0; i < (*t).NumField(); i++ {
+			fn := (*t).Field(i).Name
+			if header {
+				fields = append(fields, MakeFirstLowerCase(fn))
+			} else {
+				fields = append(fields, fn)
+			}
+		}
+	}
+
+	return fields, sep, quote
+}
+
+func ToBigInt(str string) big.Int {
+	ret := big.Int{}
+	if len(str) > 2 && str[:2] == "0x" {
+		ret.SetString(str[2:], 16)
+	} else {
+		ret.SetString(str, 10)
+	}
+	return ret
+}

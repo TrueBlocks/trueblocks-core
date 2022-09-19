@@ -20,7 +20,7 @@ import (
 
 // RunList handles the list command for the command line. Returns error only as per cobra.
 func RunList(cmd *cobra.Command, args []string) (err error) {
-	opts := ListFinishParse(args)
+	opts := listFinishParse(args)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.ListInternal()
@@ -29,7 +29,7 @@ func RunList(cmd *cobra.Command, args []string) (err error) {
 
 // ServeList handles the list command for the API. Returns error and a bool if handled
 func ServeList(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
-	opts := ListFinishParseApi(w, r)
+	opts := listFinishParseApi(w, r)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return opts.ListInternal()
@@ -37,7 +37,7 @@ func ServeList(w http.ResponseWriter, r *http.Request) (err error, handled bool)
 
 // ListInternal handles the internal workings of the list command.  Returns error and a bool if handled
 func (opts *ListOptions) ListInternal() (err error, handled bool) {
-	err = opts.ValidateList()
+	err = opts.validateList()
 	if err != nil {
 		return err, true
 	}

@@ -24,6 +24,11 @@ const chainConfigMustExist string = `
 
 // GetPathToChainConfig returns the chain-specific config folder
 func GetPathToChainConfig(chain string) string {
+	// TODO: We can test this with a unit test
+	if chain == "non-tracing" { // Test mode only for testing non-tracing nodes
+		return GetPathToChainConfig("mainnet")
+	}
+
 	// We always need a chain
 	if len(chain) == 0 {
 		chain = GetDefaultChain()
@@ -38,7 +43,7 @@ func GetPathToChainConfig(chain string) string {
 	return cfgFolder
 }
 
-// GetPathToIndex returns the one and only cachePath
+// GetPathToIndex returns the one and only indexPath
 func GetPathToIndex(chain string) string {
 	// We need the index path from either XDG which dominates or the config file
 	indexPath, err := PathFromXDG("XDG_CACHE_HOME")
@@ -92,11 +97,6 @@ func GetPathToCache(chain string) string {
 	return newPath
 }
 
-func GetTestChain() string {
-	// This does not get customized per chain. We can only test against mainnet currently
-	return "mainnet"
-}
-
 // GetPathToCommands returns full path the the given tool
 func GetPathToCommands(part string) string {
 	usr, _ := user.Current()
@@ -107,10 +107,9 @@ func GetPathToCommands(part string) string {
 // EstablishCachePaths sets up the cache folders and subfolders. It only returns if it succeeds.
 func EstablishCachePaths(cachePath string) {
 	folders := []string{
-		"abis", "blocks", "monitors", "monitors/staging", "names", "objs", "prices",
-		"recons", "slurps", "tmp", "traces", "txs",
+		"abis", "blocks", "monitors", "monitors/staging", "objs", "prices",
+		"recons", "slurps", "tmp", "traces", "txs", "names",
 	}
-
 	_, err := os.Stat(path.Join(cachePath, folders[len(folders)-1]))
 	if err == nil {
 		// If the last path already exists, assume we've been here before
@@ -125,9 +124,8 @@ func EstablishCachePaths(cachePath string) {
 // EstablishIndexPaths sets up the index path and subfolders. It only returns if it succeeds.
 func EstablishIndexPaths(indexPath string) {
 	folders := []string{
-		"blooms", "finalized", "ripe", "staging", "unripe",
+		"blooms", "finalized", "maps", "ripe", "staging", "unripe",
 	}
-
 	_, err := os.Stat(path.Join(indexPath, folders[len(folders)-1]))
 	if err == nil {
 		// If the last path already exists, assume we've been here before
@@ -137,16 +135,4 @@ func EstablishIndexPaths(indexPath string) {
 	if err := file.EstablishFolders(indexPath, folders); err != nil {
 		log.Fatal(err)
 	}
-}
-
-// CleanIndexFolder removes any files that may be partial or incomplete
-func CleanIndexFolder(indexPath string) error {
-	for _, f := range []string{"ripe", "staging", "unripe"} {
-		folder := path.Join(indexPath, f)
-		err := os.RemoveAll(folder)
-		if err != nil {
-			return err
-		}
-	}
-	return nil
 }

@@ -1,6 +1,6 @@
-chifra traces  3648669.24 --chain ropsten
+chifra traces  3648669.24 --chain non-tracing
 TEST[DATE|TIME] Transactions:  [3648669.24]
-TEST[DATE|TIME] Chain:  ropsten
+TEST[DATE|TIME] Chain:  non-tracing
 TEST[DATE|TIME] Format:  txt
 Error: Tracing is required for this program to work properly.
 Usage:

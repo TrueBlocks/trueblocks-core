@@ -1,25 +1,17 @@
-chifra scrape  both --pin
-<INFO> : hasIndexFlag Action:  both
-{
-  "message": "Testing in scrape_run.go",
-  "action": run,
-  "block_cnt": 2000,
-  "block_chan_cnt": 10,
-  "addr_chan_cnt": 20,
-  "sleep": 14,
-  "pin": true,
-  "publish": false,
-}
-%s {0 true false 14 [33m IndexScraper 0} [0m
-<INFO> : [33m IndexScraper : [ paused  -->  running ] [0m
-<INFO> : [33m IndexScraper : [ sleep  -->  wake ] [0m
-TIME ~ CLOCK - <INFO>  : pin: true
-{
-  "message": "Testing in blockScrape/options.cpp",
-  "block_cnt": 2000,
-  "block_chan_cnt": 10,
-  "addr_chan_cnt": 20,
-  "pin": 1,
-  "publish": 0,
-}
-<INFO> : [33m IndexScraper : [ wake  -->  sleep ] [0m
+chifra scrape  --pin
+TEST[DATE|TIME] Pin:  true
+TEST[DATE|TIME] AppsPerChunk:  2000000
+TEST[DATE|TIME] FirstSnap:  2000000
+TEST[DATE|TIME] Format:  txt
+Error: Cannot test block scraper
+Usage:
+  chifra scrape [flags]
+
+Flags:
+  -p, --pin              pin chunks (and blooms) to IPFS as they are created (requires ipfs)
+  -n, --block_cnt uint   maximum number of blocks to process per pass (default 2000)
+  -s, --sleep float      seconds to sleep between scraper passes (default 14)
+  -x, --fmt string       export format, one of [none|json*|txt|csv|api]
+  -v, --verbose          enable verbose (increase detail with --log_level)
+  -h, --help             display this help screen
+

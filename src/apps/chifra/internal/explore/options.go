@@ -8,6 +8,7 @@
 package explorePkg
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
@@ -18,24 +19,41 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// ExploreOptions provides all command options for the chifra explore command.
 type ExploreOptions struct {
-	Terms   []string
-	Local   bool
-	Google  bool
-	Globals globals.GlobalOptions
-	BadFlag error
+	Terms   []string              `json:"terms,omitempty"`   // One or more address, name, block, or transaction identifier
+	Local   bool                  `json:"local,omitempty"`   // Open the local TrueBlocks explorer
+	Google  bool                  `json:"google,omitempty"`  // Search google excluding popular blockchain explorers
+	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
+	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
 }
 
 var exploreCmdLineOptions ExploreOptions
 
-func (opts *ExploreOptions) TestLog() {
+// testLog is used only during testing to export the options for this test case.
+func (opts *ExploreOptions) testLog() {
 	logger.TestLog(len(opts.Terms) > 0, "Terms: ", opts.Terms)
 	logger.TestLog(opts.Local, "Local: ", opts.Local)
 	logger.TestLog(opts.Google, "Google: ", opts.Google)
 	opts.Globals.TestLog()
 }
 
-func (opts *ExploreOptions) ToCmdLine() string {
+// String implements the Stringer interface
+func (opts *ExploreOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "  ")
+	return string(b)
+}
+
+// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
+func (opts *ExploreOptions) getEnvStr() []string {
+	envStr := []string{}
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return envStr
+}
+
+// toCmdLine converts the option to a command line for calling out to the system.
+func (opts *ExploreOptions) toCmdLine() string {
 	options := ""
 	if opts.Local {
 		options += " --local"
@@ -44,11 +62,14 @@ func (opts *ExploreOptions) ToCmdLine() string {
 		options += " --google"
 	}
 	options += " " + strings.Join(opts.Terms, " ")
-	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
+	// EXISTING_CODE
+	// EXISTING_CODE
+	options += fmt.Sprintf("%s", "") // silence compiler warning for auto gen
 	return options
 }
 
-func ExploreFinishParseApi(w http.ResponseWriter, r *http.Request) *ExploreOptions {
+// exploreFinishParseApi finishes the parsing for server invocations. Returns a new ExploreOptions.
+func exploreFinishParseApi(w http.ResponseWriter, r *http.Request) *ExploreOptions {
 	opts := &ExploreOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -76,7 +97,8 @@ func ExploreFinishParseApi(w http.ResponseWriter, r *http.Request) *ExploreOptio
 	return opts
 }
 
-func ExploreFinishParse(args []string) *ExploreOptions {
+// exploreFinishParse finishes the parsing for command line invocations. Returns a new ExploreOptions.
+func exploreFinishParse(args []string) *ExploreOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

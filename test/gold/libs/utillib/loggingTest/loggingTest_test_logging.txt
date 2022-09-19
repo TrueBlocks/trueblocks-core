@@ -74,6 +74,6 @@ TIME ~ CLOCK - [0m: [0;31m4[0m-----[0;31m----------seperator----------[0m
 TIME ~ CLOCK - [0m: [0;31m4[0m-----The value of 'i' is 9. 0 more iterations left 
 TIME ~ CLOCK - [0m: [0;36m8[0m------[0;36m----------seperator----------[0m
 TIME ~ CLOCK - [0m: [0;36m8[0m------The value of 'i' is 9. 0 more iterations left 
-TIME ~ CLOCK - [0m[0;33m[1m<WARNG> [0m: Loop over
-TIME ~ CLOCK - [0m[0;31m[1m<ERROR> [0m: All good things come to an end.. :(
-TIME ~ CLOCK - [0m[0;36m[1m<FATAL> [0m: Fatal error.. :(
+TIME ~ CLOCK - [0m[0;33m[1m<WARN> [0m: Loop over
+TIME ~ CLOCK - [0m[0;31m[1m<EROR> [0m: All good things come to an end.. :(
+TIME ~ CLOCK - [0m[0;36m[1m<FATL> [0m: Fatal error.. :(

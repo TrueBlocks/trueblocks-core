@@ -30,8 +30,8 @@ func Test_Monitor_Print(t *testing.T) {
 	}
 
 	// The monitor should report that it has two appearances
-	got := fmt.Sprintln(mon.ToJSON())
-	expected := "{\"address\":\"0x049029dd41661e58f99271a0112dfd34695f7000\",\"nRecords\":6,\"fileSize\":56,\"lastScanned\":2002003}\n"
+	got := testClean(fmt.Sprintln(mon.ToJSON()))
+	expected := "{\"address\":\"0x049029dd41661e58f99271a0112dfd34695f7000\",\"nRecords\":6,\"fileSize\":56,\"lastScanned\":2002003}"
 	if got != expected {
 		t.Error("Expected:", expected, "Got:", got)
 	}
@@ -89,7 +89,7 @@ func Test_Monitor_ReadApps(t *testing.T) {
 		t.Error("Number of records in monitor", mon.Count(), "is not as expected", nTests)
 	}
 
-	err := mon.ReadHeader()
+	err := mon.ReadMonitorHeader()
 	if err != nil {
 		t.Error(err)
 	}
@@ -120,8 +120,8 @@ func Test_Monitor_Delete(t *testing.T) {
 	}()
 
 	// The monitor should report that it has two appearances
-	got := fmt.Sprintln(mon.ToJSON())
-	expected := "{\"address\":\"0x049029dd41661e58f99271a0112dfd34695f7000\",\"nRecords\":3,\"fileSize\":32,\"lastScanned\":2002003}\n"
+	got := testClean(fmt.Sprintln(mon.ToJSON()))
+	expected := "{\"address\":\"0x049029dd41661e58f99271a0112dfd34695f7000\",\"nRecords\":3,\"fileSize\":32,\"lastScanned\":2002003}"
 	if got != expected {
 		t.Error("Expected:", expected, "Got:", got)
 	}
@@ -234,4 +234,8 @@ var testApps = []index.AppearanceRecord{
 	{BlockNumber: 1001001, TransactionId: 0},
 	{BlockNumber: 1001002, TransactionId: 1},
 	{BlockNumber: 1001003, TransactionId: 2},
+}
+
+func testClean(s string) string {
+	return strings.Replace(strings.Replace(s, "\n", "", -1), " ", "", -1)
 }

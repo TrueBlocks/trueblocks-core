@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-05-02T07:09:41
+date: 2022-09-08T17:58:49
 lastmod:
   - :git
   - lastmod
@@ -43,7 +43,6 @@ Status data is made of the following data fields:
 | host              | the host portion of the local API server                 | string         |
 | isTesting         | `true` if the server is running in test mode             | bool           |
 | isApi             | `true` if the server is running in API mode              | bool           |
-| isDocker          | `true` if running under a docker image                   | bool           |
 | isScraping        | `true` if the index scraper is running                   | bool           |
 | isArchive         | `true` if the rpcProvider is an archive node             | bool           |
 | isTracing         | `true` if the rpcProvider provides Parity traces         | bool           |
@@ -91,7 +90,7 @@ Pinnedchunk data is made of the following data fields:
 
 | Field     | Description                                                 | Type     |
 | --------- | ----------------------------------------------------------- | -------- |
-| fileName  | for each chunk, the range of blocks contained in that chunk | string   |
+| range     | for each chunk, the range of blocks contained in that chunk | string   |
 | bloomHash | the IPFS hash of the bloom filter at that range             | ipfshash |
 | indexHash | the IPFS hash of the index chunk at that range              | ipfshash |
 | firstApp  | the first appearance in the chunk                           | blknum   |
@@ -111,13 +110,13 @@ The following commands produce and manage manifests:
 
 Manifest data is made of the following data fields:
 
-| Field       | Description                                                     | Type              |
-| ----------- | --------------------------------------------------------------- | ----------------- |
-| indexFormat | IPFS cid of file describing the file format of an index chunk   | string            |
-| bloomFormat | IPFS cid of file describing the associated bloom filter         | string            |
-| firstPin    | the block number of the first pin in the manifest (always zero) | blknum            |
-| lastPin     | the most recent block included in this manifest                 | blknum            |
-| pins        | a list of all the pins in the unchained index                   | CPinnedChunkArray |
+| Field     | Description                                                           | Type              |
+| --------- | --------------------------------------------------------------------- | ----------------- |
+| version   | the version string hashed into the chunk data                         | string            |
+| chain     | the chain to which this manifest belongs                              | string            |
+| schemas   | IPFS cid of file describing the schemas for the various databases     | ipfshash          |
+| databases | IPFS cid of file containing CIDs for the various databases            | ipfshash          |
+| chunks    | a list of the IPFS hashes of all of the chunks in the unchained index | CPinnedChunkArray |
 
 
 ## Chain
@@ -132,7 +131,7 @@ Manifest data is made of the following data fields:
 | apiProvider    | A valid API provider for the explorer                            | string |
 | remoteExplorer | A remote explorer for the chain such as EtherScan                | string |
 | localExplorer  | The local explorer for the chain (typically TrueBlocks Explorer) | string |
-| pinGateway     | An IPFS gateway for pinning the index if enabled                 | string |
+| ipfsGateway    | An IPFS gateway for pinning the index if enabled                 | string |
 
 ## CacheEntry
 

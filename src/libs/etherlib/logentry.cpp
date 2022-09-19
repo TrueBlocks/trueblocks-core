@@ -275,7 +275,7 @@ bool CLogEntry::setValueByName(const string_q& fieldNameIn, const string_q& fiel
 //---------------------------------------------------------------------------------------------------
 void CLogEntry::finishParse() {
     // EXISTING_CODE
-    timestamp = getTimestampAt(blockNumber);
+    timestamp = bn_2_Timestamp(blockNumber);
     // EXISTING_CODE
 }
 

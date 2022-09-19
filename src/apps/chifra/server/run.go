@@ -5,18 +5,22 @@
 package servePkg
 
 import (
+	"fmt"
 	"log"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
 // Run runs serve command and sends any errors to log.Fatal
 func RunServe(cmd *cobra.Command, args []string) error {
-	opts := ServeFinishParse(args)
+	opts := serveFinishParse(args)
 
 	err := Validate(cmd, args)
 	if err != nil {
@@ -24,7 +28,7 @@ func RunServe(cmd *cobra.Command, args []string) error {
 	}
 
 	apiUrl := opts.Port
-	if !strings.Contains(apiUrl, "http") {
+	if !strings.HasPrefix(apiUrl, "http") {
 		apiUrl = "http://localhost" + apiUrl
 	}
 
@@ -36,19 +40,27 @@ func RunServe(cmd *cobra.Command, args []string) error {
 	rpcProvider := config.GetRpcProvider(chain)
 	meta, err := rpcClient.GetMetaData(chain, false)
 
-	log.Printf("%s%-18.18s%s%s\n", colors.Green, "Server URL:", colors.Off, apiUrl)
-	log.Printf("%s%-18.18s%s%s\n", colors.Green, "RootConfig Path:", colors.Off, configPath)
-	log.Printf("%s%-18.18s%s%s\n", colors.Green, "ChainConfig Path:", colors.Off, chainConfigPath)
-	log.Printf("%s%-18.18s%s%s\n", colors.Green, "Cache Path:", colors.Off, cachePath)
-	log.Printf("%s%-18.18s%s%s\n", colors.Green, "Index Path:", colors.Off, indexPath)
-	log.Printf("%s%-18.18s%s%s\n", colors.Green, "RPC Provider:", colors.Off, rpcProvider)
+	logger.Log(logger.InfoC, pad("Server URL:"), apiUrl)
+	logger.Log(logger.InfoC, pad("RPC Provider:"), rpcProvider)
+	logger.Log(logger.InfoC, pad("Root Config Path:"), configPath)
+	logger.Log(logger.InfoC, pad("Chain Config Path:"), chainConfigPath)
+	logger.Log(logger.InfoC, pad("Cache Path:"), cachePath)
+	logger.Log(logger.InfoC, pad("Index Path:"), indexPath)
 	if err != nil {
-		log.Printf("%s%-18.18s%sCould not load RPC provider%s\n", colors.Green, "Progress:", colors.Red, colors.Off)
+		msg := fmt.Sprintf("%sCould not load RPC provider: %s%s", colors.Red, err, colors.Off)
+		logger.Log(logger.InfoC, pad("Progress:"), msg)
+		log.Fatalf("")
 	} else {
-		log.Printf("%s%-18.18s%s%d, %d, %d, %d\n", colors.Green, "Progress:", colors.Off, meta.Latest, meta.Finalized, meta.Staging, meta.Unripe)
+		nTs, _ := tslib.NTimestamps(opts.Globals.Chain)
+		msg := fmt.Sprintf("%d, %d, %d,  %d, ts: %d", meta.Latest, meta.Finalized, meta.Staging, meta.Unripe, nTs)
+		logger.Log(logger.InfoC, pad("Progress:"), msg)
 	}
 
 	log.Fatal(RunInternal(opts.Port))
 
 	return nil
+}
+
+func pad(strIn string) string {
+	return utils.PadRight(strIn, 18, ' ')
 }

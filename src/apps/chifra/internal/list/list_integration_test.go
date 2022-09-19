@@ -14,9 +14,12 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func Test_HandleFreshenMonitors(t *testing.T) {
+	tslib.EstablishTsFile(utils.GetTestChain())
 	listOpts := ListOptions{
 		Addrs:   []string{"0x846a9cb5593483b59bb386f5a878fbb2a0d1d8dc"},
 		Silent:  true,

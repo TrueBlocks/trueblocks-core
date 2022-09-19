@@ -12,6 +12,7 @@ package statusPkg
 import (
 	"net/http"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/spf13/cobra"
 )
 
@@ -19,7 +20,7 @@ import (
 
 // RunStatus handles the status command for the command line. Returns error only as per cobra.
 func RunStatus(cmd *cobra.Command, args []string) (err error) {
-	opts := StatusFinishParse(args)
+	opts := statusFinishParse(args)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.StatusInternal()
@@ -28,7 +29,7 @@ func RunStatus(cmd *cobra.Command, args []string) (err error) {
 
 // ServeStatus handles the status command for the API. Returns error and a bool if handled
 func ServeStatus(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
-	opts := StatusFinishParseApi(w, r)
+	opts := statusFinishParseApi(w, r)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return opts.StatusInternal()
@@ -36,18 +37,29 @@ func ServeStatus(w http.ResponseWriter, r *http.Request) (err error, handled boo
 
 // StatusInternal handles the internal workings of the status command.  Returns error and a bool if handled
 func (opts *StatusOptions) StatusInternal() (err error, handled bool) {
-	err = opts.ValidateStatus()
+	err = opts.validateStatus()
 	if err != nil {
 		return err, true
 	}
 
 	// EXISTING_CODE
+	if len(opts.Migrate) > 0 {
+		for _, m := range opts.Modes {
+			if m == "index" {
+				if opts.Migrate == "test" {
+					// Note this does not return if a migration is needed
+					index.CheckBackLevelIndex(opts.Globals.Chain)
+				}
+			}
+		}
+	}
+
 	if opts.Globals.ApiMode {
 		return nil, false
 	}
 
 	handled = true
-	err = opts.Globals.PassItOn("cacheStatus", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
+	err = opts.Globals.PassItOn("cacheStatus", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
 	// EXISTING_CODE
 
 	return

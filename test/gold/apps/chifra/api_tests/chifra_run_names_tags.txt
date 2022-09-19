@@ -53,6 +53,9 @@ names?tags
       "tags": "30-Contracts:Set Protocol"
     },
     {
+      "tags": "30-Contracts:Uniswap"
+    },
+    {
       "tags": "30-Contracts:dAppNode"
     },
     {
@@ -105,6 +108,9 @@ names?tags
     },
     {
       "tags": "55-Defi"
+    },
+    {
+      "tags": "55-Sactioned:OFAC SDN List"
     },
     {
       "tags": "70-Vendors"

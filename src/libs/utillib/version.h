@@ -24,6 +24,9 @@ extern uint32_t getVersionNum(void);
 extern string_q GIT_COMMIT_BRANCH;
 extern string_q GIT_COMMIT_HASH;
 extern timestamp_t GIT_COMMIT_TS;
-extern string_q versionHash;
+extern string_q manifestVersion;
+
+//-----------------------------------------------------------------------
+#define MAGIC_NUMBER ((uint32_t)str_2_Uint("0xdeadbeef"))
 
 }  // namespace qblocks

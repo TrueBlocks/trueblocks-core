@@ -17,7 +17,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/ethclient"
@@ -146,7 +145,6 @@ func TxHashFromNumberAndId(provider string, blkNum, txId uint64) (string, error)
 
 // TxNumberAndIdFromHash returns a transaction's blockNum and tx_id given its hash
 func TxNumberAndIdFromHash(provider string, hash string) (uint64, uint64, error) {
-	// RPCPayload is used during to make calls to the RPC.
 	var trans Transaction
 	transPayload := RPCPayload{
 		Jsonrpc:   "2.0",
@@ -223,10 +221,10 @@ func BlockHashFromNumber(provider string, blkNum uint64) (string, error) {
 	return block.Hash().Hex(), nil
 }
 
-// TODO: This is okay since Ropsten is dead as of the merge. We use it for testing
-// TODO: but we need this to actually work (for Geth for instance)
+// TODO: This needs to be implemented in a cross-chain, cross-client manner
 func IsTracingNode(testMode bool, chain string) bool {
-	if testMode && chain == "ropsten" {
+	// TODO: We can test this with a unit test
+	if testMode && chain == "non-tracing" {
 		return false
 	}
 	return true
@@ -257,7 +255,6 @@ func (ec *Client) SuggestGasPrice(ctx context.Context) (*big.Int, error)
 func (ec *Client) SuggestGasTipCap(ctx context.Context) (*big.Int, error)
 func (ec *Client) SyncProgress(ctx context.Context) (*ethereum.SyncProgress, error)
 func (ec *Client) TransactionCount(ctx context.Context, blockHash common.Hash) (uint, error)
-func (ec *Client) TransactionReceipt(ctx context.Context, txHash common.Hash) (*types.Receipt, error)
 func (ec *Client) TransactionSender(ctx context.Context, tx *types.Transaction, block common.Hash, index uint) (common.Address, error)
 */
 
@@ -265,13 +262,13 @@ func GetBlockTimestamp(provider string, bn uint64) uint64 {
 	ec := GetClient(provider)
 	defer ec.Close()
 
-	r, err := ec.BlockByNumber(context.Background(), big.NewInt(int64(bn)))
+	r, err := ec.HeaderByNumber(context.Background(), big.NewInt(int64(bn)))
 	if err != nil {
-		logger.Log(logger.Error, "Could not connect to RPC client")
+		logger.Log(logger.Error, "Could not connect to RPC client", err)
 		return 0
 	}
 
-	return r.Time()
+	return r.Time
 }
 
 // DecodeHex decodes a string with hex into a slice of bytes
@@ -279,7 +276,7 @@ func DecodeHex(hex string) []byte {
 	return hexutil.MustDecode(hex)
 }
 
-func GetBlockByNumber(chain string, bn uint64) (types.NamedBlock, error) {
+func GetBlockByNumber(chain string, bn uint64) (types.SimpleNamedBlock, error) {
 	var block BlockHeader
 	var payload = RPCPayload{
 		Jsonrpc:   "2.0",
@@ -290,21 +287,21 @@ func GetBlockByNumber(chain string, bn uint64) (types.NamedBlock, error) {
 	rpcProvider := config.GetRpcProvider(chain)
 	err := FromRpc(rpcProvider, &payload, &block)
 	if err != nil {
-		return types.NamedBlock{}, err
+		return types.SimpleNamedBlock{}, err
 	}
 	if len(block.Result.Number) == 0 || len(block.Result.Timestamp) == 0 {
 		msg := fmt.Sprintf("block number or timestamp for %d not found", bn)
-		return types.NamedBlock{}, fmt.Errorf(msg)
+		return types.SimpleNamedBlock{}, fmt.Errorf(msg)
 	}
 	n, _ := strconv.ParseUint(block.Result.Number[2:], 16, 64)
 	ts, _ := strconv.ParseUint(block.Result.Timestamp[2:], 16, 64)
 	if n == 0 {
 		ts, err = GetBlockZeroTs(chain)
 		if err != nil {
-			return types.NamedBlock{}, err
+			return types.SimpleNamedBlock{}, err
 		}
 	}
-	return types.NamedBlock{
+	return types.SimpleNamedBlock{
 		BlockNumber: n,
 		TimeStamp:   ts,
 	}, nil
@@ -312,18 +309,71 @@ func GetBlockByNumber(chain string, bn uint64) (types.NamedBlock, error) {
 
 // GetBlockZeroTs for some reason block zero does not return a timestamp, so we assign block one's ts minus 14 seconds
 func GetBlockZeroTs(chain string) (uint64, error) {
-	blockOne, err := GetBlockByNumber(chain, 1)
-	if err != nil {
-		return utils.EarliestEvmTs, err
+	ts := GetBlockTimestamp(config.GetRpcProvider(chain), 0)
+	if ts == 0 {
+		ts = GetBlockTimestamp(config.GetRpcProvider(chain), 1) - 13
 	}
-	return blockOne.TimeStamp - 14, nil
+	return ts, nil
 }
 
-// TODO: use block number by converting it
 func GetCodeAt(chain, addr string, bn uint64) ([]byte, error) {
 	// return IsValidAddress(addr)
 	provider := config.GetRpcProvider(chain)
 	ec := GetClient(provider)
 	address := common.HexToAddress(addr)
+	// TODO: we don't use block number, but we should - we need to convert it
 	return ec.CodeAt(context.Background(), address, nil) // nil is latest block
+}
+
+// Id_2_TxHash takes a valid identifier (txHash/blockHash, blockHash.txId, blockNumber.txId)
+// and returns the transaction hash represented by that identifier. (If it's a valid transaction.
+// It may not be because transaction hashes and block hashes are both 32-byte hex)
+func Id_2_TxHash(chain, arg string, isBlockHash func(arg string) bool) (string, error) {
+	provider := config.GetRpcProvider(chain)
+	CheckRpc(provider)
+
+	// simple case first
+	if !strings.Contains(arg, ".") {
+		// We know it's a hash, but we want to know if it's a legitimate tx on chain
+		return TxHashFromHash(provider, arg)
+	}
+
+	parts := strings.Split(arg, ".")
+	if len(parts) != 2 {
+		panic("Programmer error - valid transaction identifiers with a `.` must have two and only two parts")
+	}
+
+	if isBlockHash(parts[0]) {
+		txId, err := strconv.ParseUint(parts[1], 10, 64)
+		if err != nil {
+			return "", nil
+		}
+		return TxHashFromHashAndId(provider, parts[0], txId)
+	}
+
+	blockNum, err := strconv.ParseUint(parts[0], 10, 64)
+	if err != nil {
+		return "", nil
+	}
+	txId, err := strconv.ParseUint(parts[1], 10, 64)
+	if err != nil {
+		return "", nil
+	}
+
+	return TxHashFromNumberAndId(provider, blockNum, txId)
+}
+
+func Id_2_BlockHash(chain, arg string, isBlockHash func(arg string) bool) (string, error) {
+	provider := config.GetRpcProvider(chain)
+	CheckRpc(provider)
+
+	if isBlockHash(arg) {
+		return BlockHashFromHash(provider, arg)
+	}
+
+	blockNum, err := strconv.ParseUint(arg, 10, 64)
+	if err != nil {
+		return "", nil
+	}
+	return BlockHashFromNumber(provider, blockNum)
 }

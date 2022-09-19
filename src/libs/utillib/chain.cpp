@@ -86,14 +86,14 @@ string_q CChain::getValueByName(const string_q& fieldName) const {
                 return uint_2_Str(chainId);
             }
             break;
+        case 'i':
+            if (fieldName % "ipfsGateway") {
+                return ipfsGateway;
+            }
+            break;
         case 'l':
             if (fieldName % "localExplorer") {
                 return localExplorer;
-            }
-            break;
-        case 'p':
-            if (fieldName % "pinGateway") {
-                return pinGateway;
             }
             break;
         case 'r':
@@ -145,15 +145,15 @@ bool CChain::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
                 return true;
             }
             break;
-        case 'l':
-            if (fieldName % "localExplorer") {
-                localExplorer = fieldValue;
+        case 'i':
+            if (fieldName % "ipfsGateway") {
+                ipfsGateway = fieldValue;
                 return true;
             }
             break;
-        case 'p':
-            if (fieldName % "pinGateway") {
-                pinGateway = fieldValue;
+        case 'l':
+            if (fieldName % "localExplorer") {
+                localExplorer = fieldValue;
                 return true;
             }
             break;
@@ -205,7 +205,7 @@ bool CChain::Serialize(CArchive& archive) {
     archive >> apiProvider;
     archive >> remoteExplorer;
     archive >> localExplorer;
-    archive >> pinGateway;
+    archive >> ipfsGateway;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -226,7 +226,7 @@ bool CChain::SerializeC(CArchive& archive) const {
     archive << apiProvider;
     archive << remoteExplorer;
     archive << localExplorer;
-    archive << pinGateway;
+    archive << ipfsGateway;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -283,7 +283,7 @@ void CChain::registerClass(void) {
     ADD_FIELD(CChain, "apiProvider", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CChain, "remoteExplorer", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CChain, "localExplorer", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CChain, "pinGateway", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CChain, "ipfsGateway", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CChain, "schema");
@@ -362,11 +362,11 @@ const char* STR_DISPLAY_CHAIN = "";
 static void replaceNames(const string_q& chain, string_q& key, string_q& value) {
     if (!isTestMode())
         return;
-    if (contains(key, "Explorer"))
+    if (containsI(key, "Explorer"))
         value = "--explorer-" + chain + "--";
-    else if (contains(key, "Provider"))
+    else if (containsI(key, "Provider"))
         value = "--provider-" + chain + "--";
-    else if (contains(key, "Gateway"))
+    else if (containsI(key, "Gateway"))
         value = "--gateway-" + chain + "--";
 }
 

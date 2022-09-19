@@ -1,3 +1,0 @@
-name      ,type     ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
-name      ,string   ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
-keyvalues ,keyValue ,           ,true   ,true  ,        ,          ,        ,      ,         ,    ,     ,        ,

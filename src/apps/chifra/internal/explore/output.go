@@ -24,7 +24,7 @@ import (
 
 // RunExplore handles the explore command for the command line. Returns error only as per cobra.
 func RunExplore(cmd *cobra.Command, args []string) (err error) {
-	opts := ExploreFinishParse(args)
+	opts := exploreFinishParse(args)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.ExploreInternal()
@@ -33,7 +33,7 @@ func RunExplore(cmd *cobra.Command, args []string) (err error) {
 
 // ServeExplore handles the explore command for the API. Returns error and a bool if handled
 func ServeExplore(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
-	opts := ExploreFinishParseApi(w, r)
+	opts := exploreFinishParseApi(w, r)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return opts.ExploreInternal()
@@ -41,7 +41,7 @@ func ServeExplore(w http.ResponseWriter, r *http.Request) (err error, handled bo
 
 // ExploreInternal handles the internal workings of the explore command.  Returns error and a bool if handled
 func (opts *ExploreOptions) ExploreInternal() (err error, handled bool) {
-	err = opts.ValidateExplore()
+	err = opts.validateExplore()
 	if err != nil {
 		return err, true
 	}
@@ -67,8 +67,6 @@ func (opts *ExploreOptions) ExploreInternal() (err error, handled bool) {
 func (u *ExploreUrl) getUrl(opts *ExploreOptions) string {
 
 	var chain = opts.Globals.Chain
-
-	// TODO: Multi-chain customize remote explorer strings per chain
 
 	if opts.Google {
 		var query = "https://www.google.com/search?q=[{TERM}]"

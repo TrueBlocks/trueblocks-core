@@ -6,74 +6,139 @@ package chunksPkg
 
 import (
 	"fmt"
+	"os"
+	"strconv"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *ChunksOptions) showStats(path string, first bool) (bool, error) {
+func showFinalizedStats(walker *index.IndexWalker, path string, first bool) (bool, error) {
+	var castOk bool
+	var opts *ChunksOptions
+	if opts, castOk = walker.GetOpts().(*ChunksOptions); !castOk {
+		logger.Fatal("should not happen ==> cannot cast ChunksOptions in showFinalizedStats")
+		return false, nil
+	}
+
 	// TODO: Fix export without arrays
 	obj := NewChunkStats(path)
 	err := opts.Globals.RenderObject(obj, first)
-	if err != nil {
-		return false, err
+	return err == nil, err
+}
+
+func showStagingStats(walker *index.IndexWalker, path string, first bool) (bool, error) {
+	var castOk bool
+	var opts *ChunksOptions
+	if opts, castOk = walker.GetOpts().(*ChunksOptions); !castOk {
+		logger.Fatal("should not happen ==> cannot cast ChunksOptions in showStagingStats")
+		return false, nil
 	}
-	return true, nil
+
+	lines := file.AsciiFileToLines(path)
+	ret := types.ReportChunks{}
+	rng, err1 := paths.RangeFromFilenameE(path)
+	if err1 != nil {
+		return false, nil
+	}
+	ret.End = rng.Last
+	ret.NApps = uint32(len(lines))
+	addrMap := make(map[string]uint32, ret.NApps)
+	for _, line := range lines {
+		parts := strings.Split(line, "\t")
+		if len(parts) > 1 && ret.Start == 0 {
+			v, _ := strconv.ParseUint(parts[1], 10, 32)
+			ret.Start = uint64(v)
+		}
+		if len(parts) > 0 {
+			addrMap[parts[0]]++
+		}
+	}
+	ret.NAddrs = uint32(len(addrMap))
+	ret.NBlocks = ret.End - ret.Start + 1
+	ret.NBlooms = 1
+	ret.BloomSz = 1
+	ret.ChunkSz = 1
+	ret = finishStats(&ret)
+	// TODO: Fix export without arrays
+	err := opts.Globals.RenderObject(ret, first)
+	return err == nil, err
 }
 
-type ChunkStats struct {
-	Start         uint64   `json:"start"`
-	End           uint64   `json:"end"`
-	NAddrs        uint32   `json:"nAddrs"`
-	NApps         uint32   `json:"nApps"`
-	NBlocks       uint64   `json:"nBlocks"`
-	NBlooms       uint32   `json:"nBlooms"`
-	RecWid        uint64   `json:"recWid"`
-	BloomSz       int64    `json:"bloomSz"`
-	ChunkSz       int64    `json:"chunkSz"`
-	AddrsPerBlock float_p3 `json:"addrsPerBlock"`
-	AppsPerBlock  float_p3 `json:"appsPerBlock"`
-	AppsPerAddr   float_p3 `json:"appsPerAddr"`
-	Ratio         float_p3 `json:"ratio"`
+func finishStats(stats *types.ReportChunks) types.ReportChunks {
+	stats.NBlocks = stats.End - stats.Start + 1
+	if stats.NBlocks > 0 {
+		stats.AddrsPerBlock = float64(stats.NAddrs) / float64(stats.NBlocks)
+		stats.AppsPerBlock = float64(stats.NApps) / float64(stats.NBlocks)
+	}
+
+	if stats.NAddrs > 0 {
+		stats.AppsPerAddr = float64(stats.NApps) / float64(stats.NAddrs)
+	}
+
+	stats.RecWid = 4 + bloom.BLOOM_WIDTH_IN_BYTES
+	if stats.BloomSz > 0 {
+		stats.Ratio = float64(stats.ChunkSz) / float64(stats.BloomSz)
+	}
+
+	return *stats
 }
 
-func NewChunkStats(path string) ChunkStats {
+func NewChunkStats(path string) types.ReportChunks {
 	chunk, err := index.NewChunk(path)
-	defer chunk.Close()
-
-	if err != nil {
+	if err != nil && !os.IsNotExist(err) {
 		fmt.Println(err)
 	}
-	var ret ChunkStats
+	defer chunk.Close()
+
+	var ret types.ReportChunks
 	ret.Start = chunk.Range.First
 	ret.End = chunk.Range.Last
 	ret.NAddrs = chunk.Data.Header.AddressCount
 	ret.NApps = chunk.Data.Header.AppearanceCount
-	ret.NBlocks = chunk.Range.Last - chunk.Range.First + 1
 	ret.NBlooms = chunk.Bloom.Count
+	ret.BloomSz = file.FileSize(paths.ToBloomPath(path))
+	ret.ChunkSz = file.FileSize(paths.ToIndexPath(path))
 
-	if ret.NBlocks > 0 {
-		ret.AddrsPerBlock = float_p3(ret.NAddrs) / float_p3(ret.NBlocks)
-		ret.AppsPerBlock = float_p3(ret.NApps) / float_p3(ret.NBlocks)
-	}
-
-	if ret.NAddrs > 0 {
-		ret.AppsPerAddr = float_p3(ret.NApps) / float_p3(ret.NAddrs)
-	}
-
-	ret.RecWid = 4 + index.BLOOM_WIDTH_IN_BYTES
-
-	p := strings.Replace(strings.Replace(path, ".bloom", ".bin", -1), "blooms", "finalized", -1)
-	ret.BloomSz = file.FileSize(path)
-	ret.ChunkSz = file.FileSize(p)
-	ret.Ratio = float_p3(ret.ChunkSz) / float_p3(ret.BloomSz)
-
-	return ret
+	return finishStats(&ret)
 }
 
-type float_p3 float64
+func (opts *ChunksOptions) HandleStats(blockNums []uint64) error {
+	defer opts.Globals.RenderFooter()
+	err := opts.Globals.RenderHeader(types.ReportChunks{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+	if err != nil {
+		return err
+	}
 
-func (f float_p3) String() string {
-	return fmt.Sprintf("%.3f", f)
+	walker := index.NewIndexWalker(
+		opts.Globals.Chain,
+		opts.Globals.TestMode,
+		100, /* maxTests */
+		opts,
+		showFinalizedStats,
+		nil,
+	)
+
+	if err = walker.WalkIndexFiles(paths.Index_Bloom, blockNums); err != nil {
+		return err
+	}
+
+	if opts.Globals.Verbose {
+		walker = index.NewIndexWalker(
+			opts.Globals.Chain,
+			opts.Globals.TestMode,
+			100, /* maxTests */
+			opts,
+			showStagingStats,
+			nil,
+		)
+		err = walker.WalkIndexFiles(paths.Index_Staging, blockNums)
+	}
+
+	return err
 }

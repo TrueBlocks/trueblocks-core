@@ -7,8 +7,8 @@ package rpcClient
 import (
 	"encoding/json"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
@@ -18,9 +18,9 @@ type MetaData struct {
 	Staging   uint64 `json:"staging"`
 	Ripe      uint64 `json:"ripe"`
 	Unripe    uint64 `json:"unripe"`
-	ChainId   uint64 `json:"chainId"`
-	NetworkId uint64 `json:"networkId"`
-	Chain     string `json:"chain"`
+	ChainId   uint64 `json:"chainId,omitempty"`
+	NetworkId uint64 `json:"networkId,omitempty"`
+	Chain     string `json:"chain,omitempty"`
 }
 
 func (m MetaData) String() string {
@@ -55,25 +55,25 @@ func GetMetaData(chain string, testmode bool) (*MetaData, error) {
 	meta.NetworkId = networkId
 	meta.Latest = BlockNumber(provider)
 
-	filenameChan := make(chan cache.IndexFileInfo)
+	filenameChan := make(chan paths.IndexFileInfo)
 
 	var nRoutines int = 4
-	go cache.WalkCacheFolder(chain, cache.Index_Final, filenameChan)
-	go cache.WalkCacheFolder(chain, cache.Index_Staging, filenameChan)
-	go cache.WalkCacheFolder(chain, cache.Index_Ripe, filenameChan)
-	go cache.WalkCacheFolder(chain, cache.Index_Unripe, filenameChan)
+	go paths.WalkCacheFolder(chain, paths.Index_Final, filenameChan)
+	go paths.WalkCacheFolder(chain, paths.Index_Staging, filenameChan)
+	go paths.WalkCacheFolder(chain, paths.Index_Ripe, filenameChan)
+	go paths.WalkCacheFolder(chain, paths.Index_Unripe, filenameChan)
 
 	for result := range filenameChan {
 		switch result.Type {
-		case cache.Index_Final:
+		case paths.Index_Final:
 			meta.Finalized = utils.Max(meta.Finalized, result.Range.Last)
-		case cache.Index_Staging:
+		case paths.Index_Staging:
 			meta.Staging = utils.Max(meta.Staging, result.Range.Last)
-		case cache.Index_Ripe:
+		case paths.Index_Ripe:
 			meta.Ripe = utils.Max(meta.Ripe, result.Range.Last)
-		case cache.Index_Unripe:
+		case paths.Index_Unripe:
 			meta.Unripe = utils.Max(meta.Unripe, result.Range.Last)
-		case cache.None:
+		case paths.None:
 			nRoutines--
 			if nRoutines == 0 {
 				close(filenameChan)

@@ -156,14 +156,6 @@ inline uint64_t getEnvUint(const string_q& name) {
 }
 
 //---------------------------------------------------------------------------
-inline bool isDockerMode(void) {
-    static uint64_t docker_mode = NOPOS;
-    if (docker_mode == NOPOS)
-        docker_mode = getEnvStr("DOCKER_MODE") == "true";
-    return docker_mode;
-}
-
-//---------------------------------------------------------------------------
 inline bool isTestMode(void) {
     static uint64_t test_mode = NOPOS;
     if (test_mode == NOPOS)

@@ -19,7 +19,7 @@ import (
 
 // RunExport handles the export command for the command line. Returns error only as per cobra.
 func RunExport(cmd *cobra.Command, args []string) (err error) {
-	opts := ExportFinishParse(args)
+	opts := exportFinishParse(args)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.ExportInternal()
@@ -28,7 +28,7 @@ func RunExport(cmd *cobra.Command, args []string) (err error) {
 
 // ServeExport handles the export command for the API. Returns error and a bool if handled
 func ServeExport(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
-	opts := ExportFinishParseApi(w, r)
+	opts := exportFinishParseApi(w, r)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return opts.ExportInternal()
@@ -36,7 +36,7 @@ func ServeExport(w http.ResponseWriter, r *http.Request) (err error, handled boo
 
 // ExportInternal handles the internal workings of the export command.  Returns error and a bool if handled
 func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
-	err = opts.ValidateExport()
+	err = opts.validateExport()
 	if err != nil {
 		return err, true
 	}
@@ -53,11 +53,15 @@ func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
 	}
 
 	handled = true
-	err = opts.Globals.PassItOn("acctExport", opts.Globals.Chain, opts.ToCmdLine(), opts.Globals.ToCmdLine())
+	err = opts.Globals.PassItOn("acctExport", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
 	// EXISTING_CODE
 
 	return
 }
 
 // EXISTING_CODE
+func (opts *ExportOptions) Validate() error {
+	return opts.validateExport()
+}
+
 // EXISTING_CODE

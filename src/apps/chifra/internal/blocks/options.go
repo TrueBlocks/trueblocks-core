@@ -8,40 +8,43 @@
 package blocksPkg
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// BlocksOptions provides all command options for the chifra blocks command.
 type BlocksOptions struct {
-	Blocks     []string
-	BlockIds   []blockRange.Identifier
-	Hashes     bool
-	Uncles     bool
-	Trace      bool
-	Apps       bool
-	Uniq       bool
-	Logs       bool
-	Emitter    []string
-	Topic      []string
-	Articulate bool
-	BigRange   uint64
-	Count      bool
-	Cache      bool
-	List       uint64
-	ListCount  uint64
-	Globals    globals.GlobalOptions
-	BadFlag    error
+	Blocks     []string                 `json:"blocks,omitempty"`     // A space-separated list of one or more block identifiers
+	BlockIds   []identifiers.Identifier `json:"blockIds,omitempty"`   // Block identifiers
+	Hashes     bool                     `json:"hashes,omitempty"`     // Display only transaction hashes, default is to display full transaction detail
+	Uncles     bool                     `json:"uncles,omitempty"`     // Display uncle blocks (if any) instead of the requested block
+	Trace      bool                     `json:"trace,omitempty"`      // Export the traces from the block as opposed to the block data
+	Apps       bool                     `json:"apps,omitempty"`       // Display a list of uniq address appearances in the block
+	Uniq       bool                     `json:"uniq,omitempty"`       // Display a list of uniq address appearances per transaction
+	Logs       bool                     `json:"logs,omitempty"`       // Display only the logs found in the block(s)
+	Emitter    []string                 `json:"emitter,omitempty"`    // For the --logs option only, filter logs to show only those logs emitted by the given address(es)
+	Topic      []string                 `json:"topic,omitempty"`      // For the --logs option only, filter logs to show only those with this topic(s)
+	Articulate bool                     `json:"articulate,omitempty"` // For the --logs option only, articulate the retrieved data if ABIs can be found
+	BigRange   uint64                   `json:"bigRange,omitempty"`   // For the --logs option only, allow for block ranges larger than 500
+	Count      bool                     `json:"count,omitempty"`      // Display the number of the lists of appearances for --addrs or --uniq
+	Cache      bool                     `json:"cache,omitempty"`      // Force a write of the block to the cache
+	List       uint64                   `json:"list,omitempty"`       // Summary list of blocks running backwards from latest block minus num
+	ListCount  uint64                   `json:"listCount,omitempty"`  // The number of blocks to report for --list option
+	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
+	BadFlag    error                    `json:"badFlag,omitempty"`    // An error flag if needed
 }
 
 var blocksCmdLineOptions BlocksOptions
 
-func (opts *BlocksOptions) TestLog() {
+// testLog is used only during testing to export the options for this test case.
+func (opts *BlocksOptions) testLog() {
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
 	logger.TestLog(opts.Hashes, "Hashes: ", opts.Hashes)
 	logger.TestLog(opts.Uncles, "Uncles: ", opts.Uncles)
@@ -60,7 +63,22 @@ func (opts *BlocksOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func (opts *BlocksOptions) ToCmdLine() string {
+// String implements the Stringer interface
+func (opts *BlocksOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "  ")
+	return string(b)
+}
+
+// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
+func (opts *BlocksOptions) getEnvStr() []string {
+	envStr := []string{}
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return envStr
+}
+
+// toCmdLine converts the option to a command line for calling out to the system.
+func (opts *BlocksOptions) toCmdLine() string {
 	options := ""
 	if opts.Hashes {
 		options += " --hashes"
@@ -105,11 +123,14 @@ func (opts *BlocksOptions) ToCmdLine() string {
 		options += (" --list_count " + fmt.Sprintf("%d", opts.ListCount))
 	}
 	options += " " + strings.Join(opts.Blocks, " ")
-	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
+	// EXISTING_CODE
+	// EXISTING_CODE
+	options += fmt.Sprintf("%s", "") // silence compiler warning for auto gen
 	return options
 }
 
-func BlocksFinishParseApi(w http.ResponseWriter, r *http.Request) *BlocksOptions {
+// blocksFinishParseApi finishes the parsing for server invocations. Returns a new BlocksOptions.
+func blocksFinishParseApi(w http.ResponseWriter, r *http.Request) *BlocksOptions {
 	opts := &BlocksOptions{}
 	opts.BigRange = 500
 	opts.List = 0
@@ -169,7 +190,8 @@ func BlocksFinishParseApi(w http.ResponseWriter, r *http.Request) *BlocksOptions
 	return opts
 }
 
-func BlocksFinishParse(args []string) *BlocksOptions {
+// blocksFinishParse finishes the parsing for command line invocations. Returns a new BlocksOptions.
+func blocksFinishParse(args []string) *BlocksOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

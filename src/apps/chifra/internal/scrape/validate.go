@@ -6,43 +6,62 @@ package scrapePkg
 
 import (
 	"fmt"
-	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 // TODO: this is a much more elegant way to do error strings:
 // TODO: https://github.com/storj/uplink/blob/v1.7.0/bucket.go#L19
 
-func (opts *ScrapeOptions) ValidateScrape() error {
-	opts.TestLog()
+func (opts *ScrapeOptions) validateScrape() error {
+	// First, we need to pick up the settings TODO: Should be auto-generated code somehow
+	opts.Settings, _ = scrapeCfg.GetSettings(opts.Globals.Chain, "blockScrape.toml", &opts.Settings)
+
+	opts.testLog()
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag
 	}
 
-	if len(opts.Modes) == 0 {
-		return validate.Usage("Please choose at least one of {0}.", "[run|stop]")
-
-	} else {
-		for _, arg := range opts.Modes {
-			arg = strings.Replace(arg, "indexer", "run", -1)
-			err := validate.ValidateEnum("mode", arg, "[run|stop]")
-			if err != nil {
-				return err
-			}
-		}
-	}
-
-	// if opts.Blaze {
-	// 	// TODO: StartBlock and RipeBlock must be sent with the --blaze option
-	// } else {
-	// 	// TODO: StartBlock and RipeBlock can only be sent with the --blaze option
-	// }
-
 	if opts.Sleep < .25 {
 		return validate.Usage("The {0} option ({1}) must {2}.", "--sleep", fmt.Sprintf("%f", opts.Sleep), "be at least .25")
 	}
 
-	return opts.Globals.ValidateGlobals()
+	// We can't really test this code, so we just report and quit
+	if opts.Globals.TestMode {
+		return validate.Usage("Cannot test block scraper")
+	}
+
+	meta, err := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
+	if err != nil {
+		return err
+	}
+	m := utils.Max(meta.Ripe, utils.Max(meta.Staging, meta.Finalized)) + 1
+	if m > meta.Latest {
+		fmt.Println(validate.Usage("The index ({0}) is ahead of the chain ({1}).", fmt.Sprintf("%d", m), fmt.Sprintf("%d", meta.Latest)))
+	}
+
+	if opts.Pin {
+		if opts.Remote {
+			pinataKey, pinataSecret, estuaryKey := config.GetPinningKeys(opts.Globals.Chain)
+			if (pinataKey == "" || pinataSecret == "") && estuaryKey == "" {
+				return validate.Usage("The {0} option requires {1}.", "--pin --remote", "an api key")
+			}
+
+		} else if !pinning.LocalDaemonRunning() {
+			return validate.Usage("The {0} option requires {1}.", "--pin", "a locally running IPFS daemon or --remote")
+
+		}
+	}
+
+	// Note this does not return if a migration is needed
+	index.CheckBackLevelIndex(opts.Globals.Chain)
+
+	return opts.Globals.Validate()
 }

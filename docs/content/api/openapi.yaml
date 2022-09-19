@@ -7,7 +7,7 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 0.37.0-beta
+  version: 0.40.1-beta
   description: >
 
     A REST layer over the TrueBlocks application. With `chifra serve`, you can
@@ -232,7 +232,7 @@ paths:
             type: boolean
         - name: statements
           description: >
-            export reconciliations instead of transactional data (requires --accounting option)
+            export reconciliations instead of transactional data (assumes --accounting option)
           required: false
           style: form
           in: query
@@ -348,15 +348,19 @@ paths:
             items:
               type: string
               format: address
-        - name: staging
+        - name: flow
           description: >
-            export transactions labeled staging (i.e. older than 28 blocks but not yet consolidated)
+            for the statements option only, export only statements with incoming value or outgoing value
           required: false
           style: form
           in: query
           explode: true
           schema:
-            type: boolean
+            type: string
+            enum:
+              - in
+              - out
+              - zero
         - name: unripe
           description: export transactions labeled upripe (i.e. less than 28 blocks old)
           required: false
@@ -696,6 +700,17 @@ paths:
             type: boolean
         - name: find
           description: search for function or event declarations given a four- or 32-byte code(s)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: string
+        - name: hint
+          description: for the --find option only, provide hints to speed up the search
           required: false
           style: form
           in: query
@@ -1150,7 +1165,7 @@ paths:
           schema:
             type: boolean
         - name: timestamps
-          description: ignore other options and generate timestamps only
+          description: display or process timestamps
           required: false
           style: form
           in: query
@@ -1452,7 +1467,6 @@ paths:
                           "cachePath": "~/Library/Application Support/TrueBlocks/cache/",
                           "indexPath": "~/Library/Application Support/TrueBlocks/unchained/",
                           "isTesting": false,
-                          "isDocker": false,
                           "isArchive": true,
                           "isTracing": true,
                           "hasEskey": true,
@@ -1468,24 +1482,11 @@ paths:
       tags:
         - Admin
       summary: Scrape index
-      description: Scan the chain and update (and optionally pin) the TrueBlocks index of appearances.
+      description: Scan the chain and update the TrueBlocks index of appearances.
       operationId: admin-scrape
       parameters:
-        - name: modes
-          description: which scraper(s) to control
-          required: true
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-              enum:
-                - run
-                - stop
-        - name: sleep
-          description: seconds to sleep between scraper passes
+        - name: blockCnt
+          description: maximum number of blocks to process per pass
           required: false
           style: form
           in: query
@@ -1493,16 +1494,23 @@ paths:
           schema:
             type: number
         - name: pin
-          description: >
-            pin chunks (and blooms) to IPFS as they are created (requires pinning service)
+          description: pin new chunks (requires locally-running IPFS daemon or --remote)
           required: false
           style: form
           in: query
           explode: true
           schema:
             type: boolean
-        - name: blockCnt
-          description: maximum number of blocks to process per pass
+        - name: remote
+          description: pin new chunks to the gateway (requires pinning service keys)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: sleep
+          description: seconds to sleep between scraper passes
           required: false
           style: form
           in: query
@@ -1530,11 +1538,11 @@ paths:
       tags:
         - Admin
       summary: Manage chunks
-      description: Manage and investigate chunks and bloom filters.
+      description: Manage, investigate, and display the Unchained Index.
       operationId: admin-chunks
       parameters:
         - name: mode
-          description: the type of chunk info to retrieve
+          description: the type of data to process
           required: true
           style: form
           in: query
@@ -1542,14 +1550,15 @@ paths:
           schema:
             type: string
             enum:
-              - stats
-              - pins
-              - blooms
+              - status
+              - manifest
               - index
+              - blooms
               - addresses
               - appearances
+              - stats
         - name: blocks
-          description: optional list of blocks to intersect with chunk ranges
+          description: an optional list of blocks to intersect with chunk ranges
           required: false
           style: form
           in: query
@@ -1559,8 +1568,42 @@ paths:
             items:
               type: string
               format: blknum
-        - name: addrs
-          description: one or more addresses to use with --belongs option (see note)
+        - name: check
+          description: check the manifest, index, or blooms for internal consistency
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: pin
+          description: pin the manifest or each index chunk and bloom
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: publish
+          description: publish the manifest to the Unchained Index smart contract
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: remote
+          description: >
+            prior to processing, retreive the manifest from the Unchained Index smart contract
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: belongs
+          description: >
+            in index mode only, checks the address(es) for inclusion in the given index chunk
           required: false
           style: form
           in: query
@@ -1570,31 +1613,14 @@ paths:
             items:
               type: string
               format: address
-        - name: check
-          description: depends on mode, checks for internal consistency of the data type
+        - name: sleep
+          description: for --remote pinning only, seconds to sleep between API calls
           required: false
           style: form
           in: query
           explode: true
           schema:
-            type: boolean
-        - name: belongs
-          description: checks if the given address appears in the given chunk
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: details
-          description: >
-            for the --addresses option only, display appearance records as well as address records
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
+            type: number
       responses:
         "200":
           description: returns the requested data
@@ -1627,6 +1653,14 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: sleep
+          description: seconds to sleep between downloads
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
       responses:
         "200":
           description: returns the requested data
@@ -2588,9 +2622,6 @@ components:
         isApi:
           type: boolean
           description: "`true` if the server is running in API mode"
-        isDocker:
-          type: boolean
-          description: "`true` if running under a docker image"
         isScraping:
           type: boolean
           description: "`true` if the index scraper is running"
@@ -2650,7 +2681,7 @@ components:
       description: "the IPFS hashes of the index chunk and its associated Bloom filter for the given block range"
       type: object
       properties:
-        fileName:
+        range:
           type: string
           example: "013142464-013145212"
           description: "for each chunk, the range of blocks contained in that chunk"
@@ -2676,25 +2707,25 @@ components:
       description: "a manifest of the IPFS hashes created for the unchained index"
       type: object
       properties:
-        indexFormat:
+        version:
           type: string
-          description: "IPFS cid of file describing the file format of an index chunk"
-        bloomFormat:
+          description: "the version string hashed into the chunk data"
+        chain:
           type: string
-          description: "IPFS cid of file describing the associated bloom filter"
-        firstPin:
-          type: number
-          format: blknum
-          description: "the block number of the first pin in the manifest (always zero)"
-        lastPin:
-          type: number
-          format: blknum
-          description: "the most recent block included in this manifest"
-        pins:
+          description: "the chain to which this manifest belongs"
+        schemas:
+          type: string
+          format: ipfshash
+          description: "IPFS cid of file describing the schemas for the various databases"
+        databases:
+          type: string
+          format: ipfshash
+          description: "IPFS cid of file containing CIDs for the various databases"
+        chunks:
           type: array
           items:
             $ref: "#/components/schemas/pinnedChunk"
-          description: "a list of all the pins in the unchained index"
+          description: "a list of the IPFS hashes of all of the chunks in the unchained index"
     chain:
       description: "The chain data model carries information about configured chains"
       type: object
@@ -2721,7 +2752,7 @@ components:
         localExplorer:
           type: string
           description: "The local explorer for the chain (typically TrueBlocks Explorer)"
-        pinGateway:
+        ipfsGateway:
           type: string
           description: "An IPFS gateway for pinning the index if enabled"
     cacheEntry:

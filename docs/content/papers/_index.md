@@ -2,17 +2,21 @@
 title: "TrueBlocks Papers"
 description: "Long form links to PDFs"
 lead: "The TrueBlocks whitepapers"
-date: 2021-09-06T13:06:08-03:00
+date: 2022-06-22T13:06:08-03:00
 draft: false
 ---
+
+2022
+
+* [Unchained Index File Format Spec](/papers/2022/file-format-spec-v0.40.0-beta.pdf)
 
 2021
 
 * [The Difference Between TrueBlocks and theGraph](/papers/2021/the-difference-between-trueBlocks-and-rotki-and-trueBlocks-and-thegraph.pdf)
 
 2020
-* [Index Chunk File Format](/papers/2020/index-chunk-file-format.pdf)
-* [Bloom Filter File Format](/papers/2020/bloom-filter-file-format.pdf)
+* [Index Chunk File Format (deprecated)](/papers/2020/index-chunk-file-format.pdf)
+* [Bloom Filter File Format (deprecated)](/papers/2020/bloom-filter-file-format.pdf)
 
 2018
 

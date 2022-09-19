@@ -9,13 +9,15 @@ import (
 	"sync"
 )
 
+var removeMutex = sync.Mutex{}
+
 func Remove(fileName string) bool {
 	if !FileExists(fileName) {
 		return true
 	}
-	mutex := sync.Mutex{}
-	mutex.Lock()
+
+	removeMutex.Lock()
 	os.Remove(fileName)
-	mutex.Unlock()
+	removeMutex.Unlock()
 	return !FileExists(fileName)
 }

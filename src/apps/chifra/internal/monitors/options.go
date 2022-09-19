@@ -8,6 +8,7 @@
 package monitorsPkg
 
 import (
+	"encoding/json"
 	"net/http"
 	"strings"
 
@@ -18,36 +19,45 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// MonitorsOptions provides all command options for the chifra monitors command.
 type MonitorsOptions struct {
-	Addrs      []string
-	Clean      bool
-	Delete     bool
-	Undelete   bool
-	Remove     bool
-	Watch      bool
-	Sleep      float64
-	FirstBlock uint64
-	LastBlock  uint64
-	Globals    globals.GlobalOptions
-	BadFlag    error
+	Addrs      []string              `json:"addrs,omitempty"`      // One or more addresses (0x...) to process
+	Clean      bool                  `json:"clean,omitempty"`      // Clean (i.e. remove duplicate appearances) from monitors
+	Delete     bool                  `json:"delete,omitempty"`     // Delete a monitor, but do not remove it
+	Undelete   bool                  `json:"undelete,omitempty"`   // Undelete a previously deleted monitor
+	Remove     bool                  `json:"remove,omitempty"`     // Remove a previously deleted monitor
+	Watch      bool                  `json:"watch,omitempty"`      // Continually scan for new blocks and extract data for monitored addresses
+	Sleep      float64               `json:"sleep,omitempty"`      // Seconds to sleep between monitor passes
+	FirstBlock uint64                `json:"firstBlock,omitempty"` // First block to process (inclusive)
+	LastBlock  uint64                `json:"lastBlock,omitempty"`  // Last block to process (inclusive)
+	Globals    globals.GlobalOptions `json:"globals,omitempty"`    // The global options
+	BadFlag    error                 `json:"badFlag,omitempty"`    // An error flag if needed
 }
 
 var monitorsCmdLineOptions MonitorsOptions
 
-func (opts *MonitorsOptions) TestLog() {
+// testLog is used only during testing to export the options for this test case.
+func (opts *MonitorsOptions) testLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(opts.Clean, "Clean: ", opts.Clean)
 	logger.TestLog(opts.Delete, "Delete: ", opts.Delete)
 	logger.TestLog(opts.Undelete, "Undelete: ", opts.Undelete)
 	logger.TestLog(opts.Remove, "Remove: ", opts.Remove)
 	logger.TestLog(opts.Watch, "Watch: ", opts.Watch)
-	logger.TestLog(opts.Sleep != 14, "Sleep: ", opts.Sleep)
+	logger.TestLog(opts.Sleep != float64(14), "Sleep: ", opts.Sleep)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
 	opts.Globals.TestLog()
 }
 
-func MonitorsFinishParseApi(w http.ResponseWriter, r *http.Request) *MonitorsOptions {
+// String implements the Stringer interface
+func (opts *MonitorsOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "  ")
+	return string(b)
+}
+
+// monitorsFinishParseApi finishes the parsing for server invocations. Returns a new MonitorsOptions.
+func monitorsFinishParseApi(w http.ResponseWriter, r *http.Request) *MonitorsOptions {
 	opts := &MonitorsOptions{}
 	opts.Sleep = 14
 	opts.FirstBlock = 0
@@ -90,7 +100,8 @@ func MonitorsFinishParseApi(w http.ResponseWriter, r *http.Request) *MonitorsOpt
 	return opts
 }
 
-func MonitorsFinishParse(args []string) *MonitorsOptions {
+// monitorsFinishParse finishes the parsing for command line invocations. Returns a new MonitorsOptions.
+func monitorsFinishParse(args []string) *MonitorsOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

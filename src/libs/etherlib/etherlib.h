@@ -26,12 +26,10 @@
 #include "blockoptions.h"
 #include "appearance.h"
 #include "appearancedisplay.h"
-#include "bloom.h"
 #include "cacheentry.h"
 #include "prices.h"
 #include "reconciliation.h"
 #include "timestamps.h"
-#include "classdefinition.h"
 #include "indexarchive.h"
 
 using namespace qblocks;  // NOLINT

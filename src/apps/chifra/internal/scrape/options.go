@@ -8,118 +8,101 @@
 package scrapePkg
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// ScrapeOptions provides all command options for the chifra scrape command.
 type ScrapeOptions struct {
-	Modes        []string
-	Sleep        float64
-	Pin          bool
-	BlockCnt     uint64
-	Blaze        bool
-	BlockChanCnt uint64
-	AddrChanCnt  uint64
-	AppsPerChunk uint64
-	UnripeDist   uint64
-	SnapToGrid   uint64
-	FirstSnap    uint64
-	AllowMissing bool
-	StartBlock   uint64
-	RipeBlock    uint64
-	Globals      globals.GlobalOptions
-	BadFlag      error
+	BlockCnt   uint64                   `json:"blockCnt,omitempty"`   // Maximum number of blocks to process per pass
+	Pin        bool                     `json:"pin,omitempty"`        // Pin new chunks (requires locally-running IPFS daemon or --remote)
+	Remote     bool                     `json:"remote,omitempty"`     // Pin new chunks to the gateway (requires pinning service keys)
+	Sleep      float64                  `json:"sleep,omitempty"`      // Seconds to sleep between scraper passes
+	StartBlock uint64                   `json:"startBlock,omitempty"` // First block to visit (available only for blaze scraper)
+	Settings   scrapeCfg.ScrapeSettings `json:"settings,omitempty"`   // Configuration items for the scrape
+	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
+	BadFlag    error                    `json:"badFlag,omitempty"`    // An error flag if needed
 }
 
 var scrapeCmdLineOptions ScrapeOptions
 
-func (opts *ScrapeOptions) TestLog() {
-	logger.TestLog(len(opts.Modes) > 0, "Modes: ", opts.Modes)
-	logger.TestLog(opts.Sleep != 14, "Sleep: ", opts.Sleep)
-	logger.TestLog(opts.Pin, "Pin: ", opts.Pin)
+// testLog is used only during testing to export the options for this test case.
+func (opts *ScrapeOptions) testLog() {
 	logger.TestLog(opts.BlockCnt != 2000, "BlockCnt: ", opts.BlockCnt)
-	logger.TestLog(opts.Blaze, "Blaze: ", opts.Blaze)
-	logger.TestLog(opts.BlockChanCnt != 10, "BlockChanCnt: ", opts.BlockChanCnt)
-	logger.TestLog(opts.AddrChanCnt != 20, "AddrChanCnt: ", opts.AddrChanCnt)
-	logger.TestLog(opts.AppsPerChunk != 200000, "AppsPerChunk: ", opts.AppsPerChunk)
-	logger.TestLog(opts.UnripeDist != 28, "UnripeDist: ", opts.UnripeDist)
-	logger.TestLog(opts.SnapToGrid != 100000, "SnapToGrid: ", opts.SnapToGrid)
-	logger.TestLog(opts.FirstSnap != 0, "FirstSnap: ", opts.FirstSnap)
-	logger.TestLog(opts.AllowMissing, "AllowMissing: ", opts.AllowMissing)
+	logger.TestLog(opts.Pin, "Pin: ", opts.Pin)
+	logger.TestLog(opts.Remote, "Remote: ", opts.Remote)
+	logger.TestLog(opts.Sleep != float64(14), "Sleep: ", opts.Sleep)
 	logger.TestLog(opts.StartBlock != 0, "StartBlock: ", opts.StartBlock)
-	logger.TestLog(opts.RipeBlock != 0, "RipeBlock: ", opts.RipeBlock)
+	opts.Settings.TestLog(opts.Globals.Chain, opts.Globals.TestMode)
 	opts.Globals.TestLog()
 }
 
-func (opts *ScrapeOptions) ToCmdLine() string {
+// String implements the Stringer interface
+func (opts *ScrapeOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "  ")
+	return string(b)
+}
+
+// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
+func (opts *ScrapeOptions) getEnvStr() []string {
+	envStr := []string{}
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return envStr
+}
+
+// toCmdLine converts the option to a command line for calling out to the system.
+func (opts *ScrapeOptions) toCmdLine() string {
 	options := ""
-	if opts.Pin {
-		options += " --pin"
-	}
-	if opts.BlockCnt != 2000 {
-		options += (" --block_cnt " + fmt.Sprintf("%d", opts.BlockCnt))
-	}
-	if opts.BlockChanCnt != 10 {
-		options += (" --block_chan_cnt " + fmt.Sprintf("%d", opts.BlockChanCnt))
-	}
-	if opts.AddrChanCnt != 20 {
-		options += (" --addr_chan_cnt " + fmt.Sprintf("%d", opts.AddrChanCnt))
-	}
-	options += " " + strings.Join(opts.Modes, " ")
-	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
+	options += " " + strings.Join([]string{}, " ")
+	// EXISTING_CODE
+	// EXISTING_CODE
+	options += fmt.Sprintf("%s", "") // silence compiler warning for auto gen
 	return options
 }
 
-func ScrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions {
+// scrapeFinishParseApi finishes the parsing for server invocations. Returns a new ScrapeOptions.
+func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions {
 	opts := &ScrapeOptions{}
-	opts.Sleep = 14
 	opts.BlockCnt = 2000
-	opts.BlockChanCnt = 10
-	opts.AddrChanCnt = 20
-	opts.AppsPerChunk = 200000
-	opts.UnripeDist = 28
-	opts.SnapToGrid = 100000
-	opts.FirstSnap = 0
+	opts.Sleep = 14
 	opts.StartBlock = 0
-	opts.RipeBlock = 0
+	opts.Settings.Apps_per_chunk = 200000
+	opts.Settings.Snap_to_grid = 100000
+	opts.Settings.First_snap = 0
+	opts.Settings.Unripe_dist = 28
+	opts.Settings.Channel_count = 20
 	for key, value := range r.URL.Query() {
 		switch key {
-		case "modes":
-			for _, val := range value {
-				s := strings.Split(val, " ") // may contain space separated items
-				opts.Modes = append(opts.Modes, s...)
-			}
-		case "sleep":
-			opts.Sleep = globals.ToFloat64(value[0])
-		case "pin":
-			opts.Pin = true
 		case "blockCnt":
 			opts.BlockCnt = globals.ToUint64(value[0])
-		case "blaze":
-			opts.Blaze = true
-		case "blockChanCnt":
-			opts.BlockChanCnt = globals.ToUint64(value[0])
-		case "addrChanCnt":
-			opts.AddrChanCnt = globals.ToUint64(value[0])
-		case "appsPerChunk":
-			opts.AppsPerChunk = globals.ToUint64(value[0])
-		case "unripeDist":
-			opts.UnripeDist = globals.ToUint64(value[0])
-		case "snapToGrid":
-			opts.SnapToGrid = globals.ToUint64(value[0])
-		case "firstSnap":
-			opts.FirstSnap = globals.ToUint64(value[0])
-		case "allowMissing":
-			opts.AllowMissing = true
+		case "pin":
+			opts.Pin = true
+		case "remote":
+			opts.Remote = true
+		case "sleep":
+			opts.Sleep = globals.ToFloat64(value[0])
 		case "startBlock":
 			opts.StartBlock = globals.ToUint64(value[0])
-		case "ripeBlock":
-			opts.RipeBlock = globals.ToUint64(value[0])
+		case "appsPerChunk":
+			opts.Settings.Apps_per_chunk = globals.ToUint64(value[0])
+		case "snapToGrid":
+			opts.Settings.Snap_to_grid = globals.ToUint64(value[0])
+		case "firstSnap":
+			opts.Settings.First_snap = globals.ToUint64(value[0])
+		case "unripeDist":
+			opts.Settings.Unripe_dist = globals.ToUint64(value[0])
+		case "channelCount":
+			opts.Settings.Channel_count = globals.ToUint64(value[0])
+		case "allowMissing":
+			opts.Settings.Allow_missing = true
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "scrape")
@@ -134,13 +117,20 @@ func ScrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 	return opts
 }
 
-func ScrapeFinishParse(args []string) *ScrapeOptions {
+// scrapeFinishParse finishes the parsing for command line invocations. Returns a new ScrapeOptions.
+func scrapeFinishParse(args []string) *ScrapeOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
 	// EXISTING_CODE
-	opts.Modes = args
+	if len(args) == 1 && (args[0] == "run" || args[0] == "indexer") {
+		// these options have been deprecated, so do nothing
+	} else if len(args) > 1 {
+		opts.BadFlag = validate.Usage("Invalid argument {0}", args[0])
+	}
+	configFn := "blockScrape.toml"
 	// EXISTING_CODE
+	opts.Settings, _ = scrapeCfg.GetSettings(opts.Globals.Chain, configFn, &scrapeCfg.Unset)
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}

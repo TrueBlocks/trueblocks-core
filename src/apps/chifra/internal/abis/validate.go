@@ -11,15 +11,11 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-func (opts *AbisOptions) ValidateAbis() error {
-	opts.TestLog()
+func (opts *AbisOptions) validateAbis() error {
+	opts.testLog()
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag
-	}
-
-	if opts.Classes {
-		return validate.Usage("The {0} option is not available{1}.", "--classes", " (not implemented)")
 	}
 
 	if len(opts.Find) == 0 && !opts.Known {
@@ -65,5 +61,5 @@ func (opts *AbisOptions) ValidateAbis() error {
 
 	}
 
-	return opts.Globals.ValidateGlobals()
+	return opts.Globals.Validate()
 }

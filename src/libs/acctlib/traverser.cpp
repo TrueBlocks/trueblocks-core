@@ -70,9 +70,22 @@ bool CTraverser::traverse(const CAppearanceArray_mon& apps, void* data) {
 
 //-----------------------------------------------------------------------
 bool filterByRange(CTraverser* trav, void* data) {
-    if (!getTimestampAt(trav->app->blk) || shouldQuit())
+    if (!bn_2_Timestamp(trav->app->blk) || shouldQuit())
         return false;
     return inRange(blknum_t(trav->app->blk), trav->traverserRange.first, trav->traverserRange.second);
+}
+
+//-------------------------------------------------------------------------
+ostream& operator<<(ostream& os, const CTraverser& it) {
+    os << "logging: " << it.logging << endl;
+    os << "index: " << it.index << endl;
+    os << "nProcessed: " << it.nProcessed << endl;
+    os << "searchType: " << it.searchType << endl;
+    os << "searchOp: " << it.searchOp << endl;
+    os << "curMonitor: " << it.curMonitor << endl;
+    // os << "monitorMap: " << it.monitorMap << endl;
+    os << "traverserRange: " << it.traverserRange << endl;
+    return os;
 }
 
 }  // namespace qblocks

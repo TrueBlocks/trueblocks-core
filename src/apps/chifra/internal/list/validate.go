@@ -8,13 +8,15 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-func (opts *ListOptions) ValidateList() error {
-	opts.TestLog()
+func (opts *ListOptions) validateList() error {
+	opts.testLog()
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag
@@ -42,6 +44,15 @@ func (opts *ListOptions) ValidateList() error {
 		err := validate.ValidateAtLeastOneAddr(opts.Addrs)
 		if err != nil {
 			return err
+		}
+	}
+
+	// Note that this does not return if the index is not initialized
+	if err := index.IndexIsInitialized(opts.Globals.Chain); err != nil {
+		if opts.Globals.ApiMode {
+			return err
+		} else {
+			logger.Fatal(err)
 		}
 	}
 

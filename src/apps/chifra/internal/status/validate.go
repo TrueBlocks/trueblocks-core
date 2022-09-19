@@ -10,8 +10,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-func (opts *StatusOptions) ValidateStatus() error {
-	opts.TestLog()
+func (opts *StatusOptions) validateStatus() error {
+	opts.testLog()
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag
@@ -26,15 +26,15 @@ func (opts *StatusOptions) ValidateStatus() error {
 		return err
 	}
 
-	err = validate.ValidateEnum("--migrate", opts.Migrate, "[test|all]")
-	if err != nil {
-		return err
-	}
-
 	err = validate.ValidateEnumSlice("modes", opts.Modes, "[index|monitors|collections|names|abis|caches|some|all]")
 	if err != nil {
 		return err
 	}
 
-	return opts.Globals.ValidateGlobals()
+	err = validate.ValidateEnum("--migrate", opts.Migrate, "[test|cache|index]")
+	if err != nil {
+		return err
+	}
+
+	return opts.Globals.Validate()
 }

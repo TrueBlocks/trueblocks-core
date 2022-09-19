@@ -23,8 +23,6 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-// TODO: These singletons are used throughout - it doesn't appear to have any downsides.
-// TODO: Assuming this is true, eventually we can remove this comment.
 static CAddressWeiMap prefundBalMap;
 
 //-----------------------------------------------------------------------

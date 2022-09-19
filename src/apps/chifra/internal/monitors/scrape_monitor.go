@@ -16,14 +16,14 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/scraper"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-var MonitorScraper scraper.Scraper
+var MonitorScraper Scraper
 
 // RunMonitorScraper runs continually, never stopping and freshens any existing monitors
 func (opts *MonitorsOptions) RunMonitorScraper(wg *sync.WaitGroup) {
@@ -32,8 +32,10 @@ func (opts *MonitorsOptions) RunMonitorScraper(wg *sync.WaitGroup) {
 	chain := opts.Globals.Chain
 	establishExportPaths(chain)
 
-	var s *scraper.Scraper = &MonitorScraper
-	s.ChangeState(true)
+	tmpPath := config.GetPathToCache(opts.Globals.Chain) + "tmp/"
+
+	var s *Scraper = &MonitorScraper
+	s.ChangeState(true, tmpPath)
 
 	for {
 		if !s.Running {
@@ -93,7 +95,7 @@ func (opts *MonitorsOptions) Refresh(monitors []monitor.Monitor) error {
 	for i := 0; i < len(batches); i++ {
 		addrs, countsBefore := preProcessBatch(batches[i], i, len(monitors))
 
-		err := opts.FreshenMonitorsScrape(addrs)
+		err := opts.FreshenMonitorsForWatch(addrs)
 		if err != nil {
 			return err
 		}
@@ -122,14 +124,13 @@ func (opts *MonitorsOptions) Refresh(monitors []monitor.Monitor) error {
 					if exists {
 						add += fmt.Sprintf(" --first_record %d", uint64(countBefore+1))
 						add += fmt.Sprintf(" --max_records %d", uint64(countAfter-countBefore+1)) // extra space won't hurt
-						add += fmt.Sprintf(" --append")
-						add += fmt.Sprintf(" --no_header")
+						add += " --append --no_header"
 					}
 					cmd += add + " " + mon.GetAddrStr()
 					cmd = strings.Replace(cmd, "  ", " ", -1)
 					o := opts
 					o.Globals.File = ""
-					o.Globals.PassItOn("acctExport", opts.Globals.Chain, cmd, opts.Globals.ToCmdLine())
+					o.Globals.PassItOn("acctExport", opts.Globals.Chain, cmd, []string{})
 					// fmt.Println("Processing:", colors.BrightYellow, outputFn, colors.BrightWhite, exists, countBefore, countAfter, colors.Off)
 					// } else {
 					// 	fmt.Println("Skipping:", colors.BrightYellow, outputFn, colors.BrightWhite, exists, countBefore, countAfter, colors.Off)
@@ -171,10 +172,15 @@ func getCommandsFromFile(globals globals.GlobalOptions) ([]SemiParse, error) {
 	ret := []SemiParse{}
 	cmdLines := []string{}
 
-	if !file.FileExists(globals.File) {
+	commandFile := globals.File
+	if commandFile == "" && file.FileExists("./commands.fil") {
+		commandFile = "./commands.fil"
+	}
+	if !file.FileExists(commandFile) {
+		logger.Log(logger.Warning, "No --file option supplied. Using default.")
 		cmdLines = append(cmdLines, "export --appearances")
 	} else {
-		cmdLines = utils.AsciiFileToLines(globals.File)
+		cmdLines = utils.AsciiFileToLines(commandFile)
 	}
 
 	for _, cmd := range cmdLines {

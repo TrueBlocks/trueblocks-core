@@ -8,33 +8,36 @@
 package statePkg
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// StateOptions provides all command options for the chifra state command.
 type StateOptions struct {
-	Addrs    []string
-	Blocks   []string
-	BlockIds []blockRange.Identifier
-	Parts    []string
-	Changes  bool
-	NoZero   bool
-	Call     string
-	ProxyFor string
-	Globals  globals.GlobalOptions
-	BadFlag  error
+	Addrs    []string                 `json:"addrs,omitempty"`    // One or more addresses (0x...) from which to retrieve balances
+	Blocks   []string                 `json:"blocks,omitempty"`   // An optional list of one or more blocks at which to report balances, defaults to 'latest'
+	BlockIds []identifiers.Identifier `json:"blockIds,omitempty"` // Block identifiers
+	Parts    []string                 `json:"parts,omitempty"`    // Control which state to export
+	Changes  bool                     `json:"changes,omitempty"`  // Only report a balance when it changes from one block to the next
+	NoZero   bool                     `json:"noZero,omitempty"`   // Suppress the display of zero balance accounts
+	Call     string                   `json:"call,omitempty"`     // A bang-separated string consisting of address!4-byte!bytes
+	ProxyFor string                   `json:"proxyFor,omitempty"` // For the --call option only, redirects calls to this implementation
+	Globals  globals.GlobalOptions    `json:"globals,omitempty"`  // The global options
+	BadFlag  error                    `json:"badFlag,omitempty"`  // An error flag if needed
 }
 
 var stateCmdLineOptions StateOptions
 
-func (opts *StateOptions) TestLog() {
+// testLog is used only during testing to export the options for this test case.
+func (opts *StateOptions) testLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
 	logger.TestLog(len(opts.Parts) > 0, "Parts: ", opts.Parts)
@@ -45,7 +48,22 @@ func (opts *StateOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func (opts *StateOptions) ToCmdLine() string {
+// String implements the Stringer interface
+func (opts *StateOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "  ")
+	return string(b)
+}
+
+// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
+func (opts *StateOptions) getEnvStr() []string {
+	envStr := []string{}
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return envStr
+}
+
+// toCmdLine converts the option to a command line for calling out to the system.
+func (opts *StateOptions) toCmdLine() string {
 	options := ""
 	for _, part := range opts.Parts {
 		options += " --parts " + part
@@ -64,11 +82,14 @@ func (opts *StateOptions) ToCmdLine() string {
 	}
 	options += " " + strings.Join(opts.Addrs, " ")
 	options += " " + strings.Join(opts.Blocks, " ")
-	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
+	// EXISTING_CODE
+	// EXISTING_CODE
+	options += fmt.Sprintf("%s", "") // silence compiler warning for auto gen
 	return options
 }
 
-func StateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
+// stateFinishParseApi finishes the parsing for server invocations. Returns a new StateOptions.
+func stateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
 	opts := &StateOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -111,7 +132,8 @@ func StateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
 	return opts
 }
 
-func StateFinishParse(args []string) *StateOptions {
+// stateFinishParse finishes the parsing for command line invocations. Returns a new StateOptions.
+func stateFinishParse(args []string) *StateOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

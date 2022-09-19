@@ -5,32 +5,37 @@
 package exportPkg
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"strings"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-func (opts *ExportOptions) ValidateExport() error {
-	opts.TestLog()
+func (opts *ExportOptions) validateExport() error {
+	opts.testLog()
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag
 	}
 
 	if len(opts.Globals.File) == 0 {
-		err := validate.ValidateAtLeastOneAddr(opts.Addrs)
-		if err != nil {
+		if err := validate.ValidateAtLeastOneAddr(opts.Addrs); err != nil {
 			return err
 		}
 	}
 
-	if opts.Unripe && opts.Staging {
-		return validate.Usage("Please choose only one of {0} or {1}", "--staging", "--unripe")
+	if len(opts.Flow) > 0 {
+		if err := validate.ValidateEnum("--flow", opts.Flow, "[in|out|zero]"); err != nil {
+			return err
+		}
+		if !opts.Statements {
+			return validate.Usage("The {0} option is only available with {1} option.", "--flow", "--statements")
+		}
 	}
 
-	if opts.Globals.TestMode && (opts.Staging || opts.Unripe) {
-		return validate.Usage("--staging and --unripe are disabled for testing.")
+	if opts.Globals.TestMode && opts.Unripe {
+		return validate.Usage("--unripe are disabled for testing.")
 	}
 
 	if opts.Count && (opts.Logs || opts.Receipts || opts.Traces || opts.Statements || opts.Neighbors) {
@@ -73,13 +78,27 @@ func (opts *ExportOptions) ValidateExport() error {
 		return validate.Usage("You must provide at least one Ethereum address for this command.")
 	}
 
-	bloomZero := cache.NewCachePath(opts.Globals.Chain, cache.Index_Bloom)
-	path := bloomZero.GetFullPath("000000000-000000000")
-	if !file.FileExists(path) {
-		msg := "The bloom filter for block zero (000000000-000000000.bloom) was not found. You must run "
-		msg += "'chifra init' (and allow it to complete) or 'chifra scrape' before using this command."
-		return validate.Usage(msg)
+	if !validate.CanArticulate(opts.Articulate) {
+		return validate.Usage("The {0} option requires an EtherScan API key.", "--articulate")
 	}
 
-	return opts.Globals.ValidateGlobals()
+	if opts.Globals.Format == "ofx" && !opts.Accounting {
+		return validate.Usage("The {0} option is only available with the {1} option.", "--fmt ofx", "--accounting")
+	}
+
+	// Note that this does not return if the index is not initialized
+	if err := index.IndexIsInitialized(opts.Globals.Chain); err != nil {
+		if opts.Globals.ApiMode {
+			return err
+		} else {
+			logger.Fatal(err)
+		}
+	}
+
+	err := opts.Globals.Validate()
+	if err != nil && strings.Contains(err.Error(), "option (ofx) must be one of") {
+		// not an error
+		err = nil
+	}
+	return err
 }

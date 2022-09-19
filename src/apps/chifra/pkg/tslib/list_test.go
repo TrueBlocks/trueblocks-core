@@ -2,19 +2,20 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package tslibPkg
+package tslib
 
 import (
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func TestLoadSpecials(t *testing.T) {
-	path := config.GetPathToChainConfig(GetTestChain())
+	path := config.GetPathToChainConfig(utils.GetTestChain())
 	t.Log("path: ", path)
 
-	specials, err := GetSpecials(GetTestChain())
+	specials, err := GetSpecials(utils.GetTestChain())
 	if len(specials) == 0 {
 		t.Error("Could not load special blocks")
 	}
@@ -24,19 +25,19 @@ func TestLoadSpecials(t *testing.T) {
 }
 
 func TestIsStringSpecialBlock(t *testing.T) {
-	result := IsSpecialBlock(GetTestChain(), "devcon1")
+	result := IsSpecialBlock(utils.GetTestChain(), "devcon1")
 	if !result {
 		t.Error("Fails for valid block name")
 	}
 
-	shouldBeFalse := IsSpecialBlock(GetTestChain(), "nosuchblock")
+	shouldBeFalse := IsSpecialBlock(utils.GetTestChain(), "nosuchblock")
 	if shouldBeFalse {
 		t.Error("Passes for invalid block name")
 	}
 }
 
 func TestGetNameByValue(t *testing.T) {
-	name, err := FromBnToName(GetTestChain(), 2463000)
+	name, err := FromBnToName(utils.GetTestChain(), 2463000)
 	if err != nil {
 		t.Error("Block name not found")
 	}
@@ -46,7 +47,7 @@ func TestGetNameByValue(t *testing.T) {
 }
 
 func TestGetValueByName(t *testing.T) {
-	value, err := FromNameToBn(GetTestChain(), "tangerine")
+	value, err := FromNameToBn(utils.GetTestChain(), "tangerine")
 	if err != nil {
 		t.Error("Block not found by name")
 	}
@@ -54,7 +55,7 @@ func TestGetValueByName(t *testing.T) {
 		t.Errorf("Wrong value: %d", value)
 	}
 
-	// _, found = FromNameToBn(GetTestChain(), "latest")
+	// _, found = FromNameToBn(utils.GetTestChain(), "latest")
 	// if !found {
 	// 	t.Error("Latest block not found")
 	// }
@@ -65,13 +66,13 @@ func TestGetValueByName(t *testing.T) {
 }
 
 func TestGetSpecials(t *testing.T) {
-	specials, err := GetSpecials(GetTestChain())
+	specials, err := GetSpecials(utils.GetTestChain())
 	if err != nil {
 		t.Error(err)
 	}
 
-	if len(specials) != 31 {
-		t.Error("Wrong number of special blocks ", len(specials), ". Should have 31.")
+	if len(specials) != 33 {
+		t.Error("Wrong number of special blocks ", len(specials), ". Should have 33.")
 	}
 
 	// TODO: Turn off go testing that requires connection to a node
@@ -83,10 +84,4 @@ func TestGetSpecials(t *testing.T) {
 	// 		t.Error("Special block ", item.Name, " with zero timestamp")
 	// 	}
 	// }
-}
-
-// GetTestChain is duplicated in multiple packages to avoid dependancies. See
-// https://stackoverflow.com/questions/49789055/
-func GetTestChain() string {
-	return "mainnet"
 }

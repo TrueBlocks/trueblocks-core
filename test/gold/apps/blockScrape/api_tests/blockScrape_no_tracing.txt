@@ -1,6 +1,6 @@
-scrape?chain=ropsten
+scrape?chain=non-tracing
 {
   "errors": [
-    "Please choose at least one of [run|stop]."
+    "Cannot test block scraper"
   ]
 }

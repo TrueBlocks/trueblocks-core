@@ -15,74 +15,30 @@
 namespace qblocks {
 
 //-------------------------------------------------------------------------
-bool freshenAndLoad(blknum_t minBlk) {
-    if (!isTestMode() && !isApiMode())
-        freshenTimestamps(minBlk);  // opens, freshens, and closes the file
-    if (!loadTimestamps(&expContext().tsMemMap, expContext().tsCnt)) {
-        LOG_WARN("Could not load timestamp file");
-        return false;
+timestamp_t bn_2_Timestamp(blknum_t blk) {
+    if (!expContext().tsMemMap) {
+        if (!isTestMode() && !isApiMode()) {
+            freshenTimestamps(blk);
+        }
+
+        if (!loadTimestamps(&expContext().tsMemMap, expContext().tsCnt)) {
+            LOG_WARN("Could not load timestamp file");
+            return 0;
+        }
+        LOG4("Loaded timestamp file");
     }
-    LOG4("Loaded timestamp file");
-    return true;
-}
 
-//-------------------------------------------------------------------------
-blknum_t getTimestampBlockAt(blknum_t blk) {
-    if (!expContext().tsMemMap)
-        if (!freshenAndLoad(blk))
-            return 0;
-    if (expContext().tsMemMap && blk < expContext().tsCnt)
-        return expContext().tsMemMap[(blk * 2)];
-    return 0;
-}
-
-//-------------------------------------------------------------------------
-timestamp_t getTimestampAt(blknum_t blk) {
-    if (!expContext().tsMemMap)
-        if (!freshenAndLoad(blk))
-            return 0;
-    if (expContext().tsMemMap && blk < expContext().tsCnt)
+    if (expContext().tsMemMap && blk < expContext().tsCnt) {
         return timestamp_t(expContext().tsMemMap[(blk * 2) + 1]);
-    return 0;
-}
-
-//-----------------------------------------------------------------------
-bool establishTsFile(void) {
-    if (fileExists(indexFolderBin_ts))
-        return true;
-
-    establishFolder(indexFolder);
-
-    time_q zipDate = fileLastModifyDate(chainConfigsZip_ts);
-    time_q tsDate = fileLastModifyDate(indexFolderBin_ts);
-
-    if (zipDate > tsDate) {
-        ostringstream cmd;
-        cmd << "cd \"" << indexFolder << "\" ; ";
-        cmd << "cp \"" << chainConfigsZip_ts << "\" . ; ";
-        cmd << "gunzip ts.bin.gz";
-        string_q result = doCommand(cmd.str());
-        // The original zip file still exists
-        ASSERT(fileExists(chainConfigsZip_ts));
-        // The new timestamp file exists
-        ASSERT(fileExists(indexFolderBin_ts));
-        // The copy of the zip file does not exist
-        ASSERT(!fileExists(indexFolderBin_ts + ".gz"));
-        return fileExists(indexFolderBin_ts);
     }
 
-    // starts at zero...
-    return true;
+    return 0;
 }
 
 //-----------------------------------------------------------------------
 bool freshenTimestamps(blknum_t minBlock) {
     if (isTestMode())
         return true;
-
-    // LOG_INFO("Not test mode. minBlock: ", minBlock);
-    if (!establishTsFile())
-        return false;
 
     // LOG_INFO("Established ts file");
     size_t nRecords = ((fileSize(indexFolderBin_ts) / sizeof(uint32_t)) / 2);
@@ -146,9 +102,6 @@ bool loadTimestamps(uint32_t** theArray, size_t& cnt) {
     if (file.is_open())
         file.close();
     if (cnt == size_t(NOPOS))
-        return false;
-
-    if (!establishTsFile())
         return false;
 
     // Order matters.

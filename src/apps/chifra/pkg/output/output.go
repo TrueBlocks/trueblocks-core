@@ -12,7 +12,6 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -57,6 +56,14 @@ func OutputSlice(data interface{}, w io.Writer, format string, hideHeader, apiMo
 		}
 		return rowTemplate.Execute(w, data)
 	default:
+		if strings.Contains(format, "\t") || strings.Contains(format, ",") {
+			tt := reflect.TypeOf(data)
+			rowTemplate, err := GetRowTemplate(&tt, format)
+			if err != nil {
+				return err
+			}
+			return rowTemplate.Execute(w, data)
+		}
 		return fmt.Errorf("unsupported format %s", format)
 	}
 
@@ -79,7 +86,7 @@ func OutputObject(data interface{}, w io.Writer, format string, hideHeader, apiM
 	case "api":
 		fallthrough
 	case "json":
-		outputBytes, err = json.MarshalIndent(data, "    ", "  ")
+		outputBytes, err = json.MarshalIndent(data, "", "  ")
 		if err != nil {
 			return err
 		}
@@ -96,6 +103,14 @@ func OutputObject(data interface{}, w io.Writer, format string, hideHeader, apiM
 		}
 		return rowTemplate.Execute(w, data)
 	default:
+		if strings.Contains(format, "\t") || strings.Contains(format, ",") {
+			tt := reflect.TypeOf(data)
+			rowTemplate, err := GetRowTemplate(&tt, format)
+			if err != nil {
+				return err
+			}
+			return rowTemplate.Execute(w, data)
+		}
 		return fmt.Errorf("unsupported format %s", format)
 	}
 
@@ -109,30 +124,8 @@ func OutputObject(data interface{}, w io.Writer, format string, hideHeader, apiM
 }
 
 // TODO: Fix export without arrays
-func getFields(t *reflect.Type, format string, header bool) (fields []string, sep string, quote string) {
-	if (*t).Kind() != reflect.Struct {
-		logger.Fatal((*t).Name() + " is not a structure")
-	}
-	for i := 0; i < (*t).NumField(); i++ {
-		fn := (*t).Field(i).Name
-		if header {
-			fields = append(fields, utils.MakeFirstLowerCase(fn))
-		} else {
-			fields = append(fields, fn)
-		}
-	}
-	sep = "\t"
-	quote = ""
-	if format == "csv" {
-		sep = ","
-		quote = "\""
-	}
-	return fields, sep, quote
-}
-
-// TODO: Fix export without arrays
 func GetHeader(t *reflect.Type, format string) string {
-	fields, sep, quote := getFields(t, format, true)
+	fields, sep, quote := utils.GetFields(t, format, true)
 	var sb strings.Builder
 	for i, field := range fields {
 		if i > 0 {
@@ -145,7 +138,7 @@ func GetHeader(t *reflect.Type, format string) string {
 
 // TODO: Fix export without arrays
 func GetRowTemplate(t *reflect.Type, format string) (*template.Template, error) {
-	fields, sep, quote := getFields(t, format, false)
+	fields, sep, quote := utils.GetFields(t, format, false)
 	var sb strings.Builder
 	for i, field := range fields {
 		if i > 0 {

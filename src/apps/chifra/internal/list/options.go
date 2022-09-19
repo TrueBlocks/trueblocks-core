@@ -8,6 +8,7 @@
 package listPkg
 
 import (
+	"encoding/json"
 	"net/http"
 	"strings"
 
@@ -18,20 +19,22 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// ListOptions provides all command options for the chifra list command.
 type ListOptions struct {
-	Addrs       []string
-	Count       bool
-	Appearances bool
-	Silent      bool
-	FirstBlock  uint64
-	LastBlock   uint64
-	Globals     globals.GlobalOptions
-	BadFlag     error
+	Addrs       []string              `json:"addrs,omitempty"`       // One or more addresses (0x...) to list
+	Count       bool                  `json:"count,omitempty"`       // Display only the count of records for each monitor
+	Appearances bool                  `json:"appearances,omitempty"` // Export each monitor's list of appearances (the default)
+	Silent      bool                  `json:"silent,omitempty"`      // Freshen the monitor only (no reporting)
+	FirstBlock  uint64                `json:"firstBlock,omitempty"`  // First block to export (inclusive, ignored when counting or freshening)
+	LastBlock   uint64                `json:"lastBlock,omitempty"`   // Last block to export (inclusive, ignored when counting or freshening)
+	Globals     globals.GlobalOptions `json:"globals,omitempty"`     // The global options
+	BadFlag     error                 `json:"badFlag,omitempty"`     // An error flag if needed
 }
 
 var listCmdLineOptions ListOptions
 
-func (opts *ListOptions) TestLog() {
+// testLog is used only during testing to export the options for this test case.
+func (opts *ListOptions) testLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	logger.TestLog(opts.Appearances, "Appearances: ", opts.Appearances)
@@ -41,7 +44,14 @@ func (opts *ListOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func ListFinishParseApi(w http.ResponseWriter, r *http.Request) *ListOptions {
+// String implements the Stringer interface
+func (opts *ListOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "  ")
+	return string(b)
+}
+
+// listFinishParseApi finishes the parsing for server invocations. Returns a new ListOptions.
+func listFinishParseApi(w http.ResponseWriter, r *http.Request) *ListOptions {
 	opts := &ListOptions{}
 	opts.FirstBlock = 0
 	opts.LastBlock = utils.NOPOS
@@ -77,7 +87,8 @@ func ListFinishParseApi(w http.ResponseWriter, r *http.Request) *ListOptions {
 	return opts
 }
 
-func ListFinishParse(args []string) *ListOptions {
+// listFinishParse finishes the parsing for command line invocations. Returns a new ListOptions.
+func listFinishParse(args []string) *ListOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

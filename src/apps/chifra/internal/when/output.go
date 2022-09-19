@@ -12,6 +12,7 @@ package whenPkg
 import (
 	"net/http"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -19,7 +20,7 @@ import (
 
 // RunWhen handles the when command for the command line. Returns error only as per cobra.
 func RunWhen(cmd *cobra.Command, args []string) (err error) {
-	opts := WhenFinishParse(args)
+	opts := whenFinishParse(args)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.WhenInternal()
@@ -28,7 +29,7 @@ func RunWhen(cmd *cobra.Command, args []string) (err error) {
 
 // ServeWhen handles the when command for the API. Returns error and a bool if handled
 func ServeWhen(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
-	opts := WhenFinishParseApi(w, r)
+	opts := whenFinishParseApi(w, r)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return opts.WhenInternal()
@@ -36,7 +37,7 @@ func ServeWhen(w http.ResponseWriter, r *http.Request) (err error, handled bool)
 
 // WhenInternal handles the internal workings of the when command.  Returns error and a bool if handled
 func (opts *WhenOptions) WhenInternal() (err error, handled bool) {
-	err = opts.ValidateWhen()
+	err = opts.validateWhen()
 	if err != nil {
 		return err, true
 	}
@@ -45,15 +46,30 @@ func (opts *WhenOptions) WhenInternal() (err error, handled bool) {
 	handled = true
 
 	if opts.List {
-		err = opts.HandleWhenList()
+		err = opts.HandleList()
+
 	} else if opts.Timestamps {
 		if opts.Count {
-			err = opts.HandleWhenTimestampCount()
+			err = opts.HandleTimestampCount()
+
+		} else if opts.Truncate != utils.NOPOS {
+			err = opts.HandleTimestampsTruncate()
+
 		} else {
-			err = opts.HandleWhenShowTimestamps()
+			if opts.Check {
+				err = opts.HandleTimestampsCheck()
+
+			} else if opts.Repair != utils.NOPOS {
+				err = opts.HandleTimestampsRepair()
+
+			} else {
+				err = opts.HandleTimestampsShow()
+
+			}
 		}
+
 	} else {
-		err = opts.HandleWhenShowBlocks()
+		err = opts.HandleShowBlocks()
 	}
 	// EXISTING_CODE
 

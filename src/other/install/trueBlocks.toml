@@ -1,92 +1,71 @@
 [version]
-# Do not edit this value
-current = "0.23.7-alpha"
+current = "v0.40.0-beta"
 
 [settings]
 cachePath = ""
-indexPath = ""
 defaultChain = "mainnet"
-etherscan_key = ""
+defaultGateway = "https://ipfs.unchainedindex.io/ipfs/"
+indexPath = ""
+
+[keys]
+
+[keys.etherscan]
+apiKey = ""
+
+[keys.pinata]
+apiKey = ""
+jwt = ""
+secret = ""
+
+#[dev]
+#debug_curl=true
 
 [chains]
 
 [chains.mainnet]
+apiProvider = "http://localhost:8080"
 chainId = "1"
 localExplorer = "http://localhost:1234"
-pinGateway = "https://ipfs.unchainedindex.io/ipfs/"
 remoteExplorer = "https://etherscan.io"
 rpcProvider = "http://localhost:8545"
-apiProvider = "http://localhost:8080"
 symbol = "ETH"
 
 [chains.gnosis]
+apiProvider = "http://localhost:8080"
 chainId = "100"
 localExplorer = "http://localhost:1234"
-pinGateway = "https://gnosis.unchainedindex.io/ipfs/"
 remoteExplorer = "https://blockscout.com/xdai/mainnet"
-rpcProvider = "https://rpc.gnosischain.com"
-apiProvider = "http://localhost:8080"
+rpcProvider = "https://gnosischain-rpc.gateway.pokt.network"
 symbol = "XDAI"
-
-[chains.goerli]
-chainId = "5"
-localExplorer = "http://localhost:1234"
-pinGateway = "https://goerli.unchainedindex.io/ipfs/"
-remoteExplorer = "https://goerli.etherscan.io"
-rpcProvider = "https://goerli-light.eth.linkpool.io"
-apiProvider = "http://localhost:8080"
-symbol = "ETH"
-
-[chains.kovan]
-chainId = "42"
-localExplorer = "http://localhost:1234"
-pinGateway = "https://kovan.unchainedindex.io/ipfs/"
-remoteExplorer = "https://kovan.etherscan.io"
-rpcProvider = "https://kovan.poa.network"
-apiProvider = "http://localhost:8080"
-symbol = "ETH"
-
-[chains.optimism]
-chainId = "10"
-localExplorer = "http://localhost:1234"
-pinGateway = "<not_set>"
-remoteExplorer = "https://optimistic.etherscan.io"
-rpcProvider = "https://mainnet.optimism.io"
-apiProvider = "http://localhost:8080"
-symbol = "OPT"
-
-[chains.polygon]
-chainId = "80001"
-localExplorer = "http://localhost:1234"
-pinGateway = "<not_set>"
-remoteExplorer = "https://mumbai.polygonscan.com"
-rpcProvider = "https://rpc-mumbai.maticvigil.com"
-apiProvider = "http://localhost:8080"
-symbol = "MATIC"
 
 [chains.sepolia]
 apiProvider = "http://localhost:8080"
 chainId = "11155111"
 localExplorer = "http://localhost:1234"
-pinGateway = "https://ropsten.unchainedindex.io/ipfs/"
-remoteExplorer = "http://localhost:1234"
+remoteExplorer = "https://sepolia.otterscan.io/"
 rpcProvider = "http://localhost:8548"
 symbol = "ETH"
 
-[chains.rinkeby]
-chainId = "4"
-localExplorer = "http://localhost:1234"
-pinGateway = "https://rinkeby.unchainedindex.io/ipfs/"
-remoteExplorer = "https://rinkeby.etherscan.io"
-rpcProvider = "https://rinkeby-light.eth.linkpool.io"
+[chains.goerli]
 apiProvider = "http://localhost:8080"
+chainId = "5"
+localExplorer = "http://localhost:1234"
+remoteExplorer = "https://goerli.etherscan.io"
+rpcProvider = "https://goerli-light.eth.linkpool.io"
 symbol = "ETH"
 
-[chains.ropsten]
-chainId = "3"
-localExplorer = "http://localhost:1234"
-pinGateway = "https://ropsten.unchainedindex.io/ipfs/"
-remoteExplorer = "https://ropsten.etherscan.io"
-rpcProvider = "https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161"
+[chains.optimism]
 apiProvider = "http://localhost:8080"
-symbol = "ETH"
+chainId = "10"
+localExplorer = "http://localhost:1234"
+remoteExplorer = "https://optimistic.etherscan.io"
+rpcProvider = "https://mainnet.optimism.io"
+symbol = "OPT"
+
+[chains.polygon]
+apiProvider = "http://localhost:8080"
+chainId = "80001"
+localExplorer = "http://localhost:1234"
+remoteExplorer = "https://mumbai.polygonscan.com"
+rpcProvider = "https://rpc-mumbai.maticvigil.com"
+symbol = "MATIC"

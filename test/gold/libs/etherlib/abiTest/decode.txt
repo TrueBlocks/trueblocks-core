@@ -28,7 +28,7 @@ decode|decoding (uint[3][], uint) two sets of three|function baz(uint[3][], uint
 0000000000000000000000000000000000000000000000000000000000000006\
 |[[1, 2, 3], [4, 5, 6]], 10
 
-decode|Purposefully bogus data used to core dump, now ignores bad data|function baz(address _from, address _to, uint256 _value, string _transferData)|\
+decode|Purposefully bad data used to core dump, now ignores bad data|function baz(address _from, address _to, uint256 _value, string _transferData)|\
 0x\
 000000000000000000000000f3c9c5719eb4f26a3ab45cb86771827629f9a999\
 00000000000000000000000071d402ac181de4a8739a15f5a56141f64fc522f8\
@@ -39,7 +39,7 @@ decode|Purposefully bogus data used to core dump, now ignores bad data|function 
 6b656e7321\
 |0xf3c9c5719eb4f26a3ab45cb86771827629f9a999, 0x71d402ac181de4a8739a15f5a56141f64fc522f8, 462000000000000000000,
 
-decode|Corrected data from above (fifth row was bogus above)|function baz(address _from, address _to, uint256 _value, string _transferData)|\
+decode|Corrected data from above (fifth row was bad above)|function baz(address _from, address _to, uint256 _value, string _transferData)|\
 0x\
 000000000000000000000000f3c9c5719eb4f26a3ab45cb86771827629f9a999\
 00000000000000000000000071d402ac181de4a8739a15f5a56141f64fc522f8\

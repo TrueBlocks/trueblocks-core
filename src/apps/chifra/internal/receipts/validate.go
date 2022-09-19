@@ -8,8 +8,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-func (opts *ReceiptsOptions) ValidateReceipts() error {
-	opts.TestLog()
+func (opts *ReceiptsOptions) validateReceipts() error {
+	opts.testLog()
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag
@@ -20,6 +20,9 @@ func (opts *ReceiptsOptions) ValidateReceipts() error {
 	} else {
 		if len(opts.Transactions) == 0 {
 			return validate.Usage("Please supply one or more transaction identifiers.")
+		}
+		if !validate.CanArticulate(opts.Articulate) {
+			return validate.Usage("The {0} option requires an EtherScan API key.", "--articulate")
 		}
 	}
 
@@ -44,5 +47,5 @@ func (opts *ReceiptsOptions) ValidateReceipts() error {
 	// 	}
 	// }
 
-	return opts.Globals.ValidateGlobals()
+	return opts.Globals.Validate()
 }

@@ -8,43 +8,64 @@
 package logsPkg
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
+// LogsOptions provides all command options for the chifra logs command.
 type LogsOptions struct {
-	Transactions   []string
-	TransactionIds []blockRange.Identifier
-	Articulate     bool
-	Globals        globals.GlobalOptions
-	BadFlag        error
+	Transactions   []string                 `json:"transactions,omitempty"`   // A space-separated list of one or more transaction identifiers
+	TransactionIds []identifiers.Identifier `json:"transactionIds,omitempty"` // Transaction identifiers
+	Articulate     bool                     `json:"articulate,omitempty"`     // Articulate the retrieved data if ABIs can be found
+	Globals        globals.GlobalOptions    `json:"globals,omitempty"`        // The global options
+	BadFlag        error                    `json:"badFlag,omitempty"`        // An error flag if needed
 }
 
 var logsCmdLineOptions LogsOptions
 
-func (opts *LogsOptions) TestLog() {
+// testLog is used only during testing to export the options for this test case.
+func (opts *LogsOptions) testLog() {
 	logger.TestLog(len(opts.Transactions) > 0, "Transactions: ", opts.Transactions)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	opts.Globals.TestLog()
 }
 
-func (opts *LogsOptions) ToCmdLine() string {
+// String implements the Stringer interface
+func (opts *LogsOptions) String() string {
+	b, _ := json.MarshalIndent(opts, "", "  ")
+	return string(b)
+}
+
+// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
+func (opts *LogsOptions) getEnvStr() []string {
+	envStr := []string{}
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return envStr
+}
+
+// toCmdLine converts the option to a command line for calling out to the system.
+func (opts *LogsOptions) toCmdLine() string {
 	options := ""
 	if opts.Articulate {
 		options += " --articulate"
 	}
 	options += " " + strings.Join(opts.Transactions, " ")
-	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
+	// EXISTING_CODE
+	// EXISTING_CODE
+	options += fmt.Sprintf("%s", "") // silence compiler warning for auto gen
 	return options
 }
 
-func LogsFinishParseApi(w http.ResponseWriter, r *http.Request) *LogsOptions {
+// logsFinishParseApi finishes the parsing for server invocations. Returns a new LogsOptions.
+func logsFinishParseApi(w http.ResponseWriter, r *http.Request) *LogsOptions {
 	opts := &LogsOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -69,7 +90,8 @@ func LogsFinishParseApi(w http.ResponseWriter, r *http.Request) *LogsOptions {
 	return opts
 }
 
-func LogsFinishParse(args []string) *LogsOptions {
+// logsFinishParse finishes the parsing for command line invocations. Returns a new LogsOptions.
+func logsFinishParse(args []string) *LogsOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"

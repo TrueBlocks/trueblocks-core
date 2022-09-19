@@ -6,13 +6,23 @@ package chunksPkg
 
 import (
 	"io"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/paths"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
-func (opts *ChunksOptions) showAddressesBelongs(path string, first bool) (bool, error) {
-	path = index.ToIndexPath(path)
+func showAddressesBelongs(walker *index.IndexWalker, path string, first bool) (bool, error) {
+	var castOk bool
+	var opts *ChunksOptions
+	if opts, castOk = walker.GetOpts().(*ChunksOptions); !castOk {
+		logger.Fatal("should not happen ==> cannot cast ChunksOptions in showAddressBelongs")
+		return false, nil
+	}
+
+	path = paths.ToIndexPath(path)
 
 	indexChunk, err := index.NewChunkData(path)
 	if err != nil {
@@ -27,11 +37,12 @@ func (opts *ChunksOptions) showAddressesBelongs(path string, first bool) (bool, 
 
 	cnt := 0
 	for i := 0; i < int(indexChunk.Header.AddressCount); i++ {
-		if opts.Globals.TestMode && i > maxTestItems {
+		if opts.Globals.TestMode && i > walker.MaxTests() {
 			continue
 		}
 
-		obj, err := indexChunk.ReadAddressRecord()
+		obj := index.AddressRecord{}
+		err := obj.ReadAddress(indexChunk.File)
 		if err != nil {
 			return false, err
 		}
@@ -59,10 +70,28 @@ func (opts *ChunksOptions) showAddressesBelongs(path string, first bool) (bool, 
 }
 
 func (opts *ChunksOptions) shouldShow(obj index.AddressRecord) bool {
-	for _, addr := range opts.Addrs {
-		if strings.ToLower(obj.Address.Hex()) == addr {
+	for _, addr := range opts.Belongs {
+		if hexutil.Encode(obj.Address.Bytes()) == addr {
 			return true
 		}
 	}
 	return false
+}
+
+func (opts *ChunksOptions) HandleIndexBelongs(blockNums []uint64) error {
+	defer opts.Globals.RenderFooter()
+	err := opts.Globals.RenderHeader(types.SimpleIndexAddressBelongs{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+	if err != nil {
+		return err
+	}
+
+	walker := index.NewIndexWalker(
+		opts.Globals.Chain,
+		opts.Globals.TestMode,
+		10000, /* maxTests */
+		opts,
+		showAddressesBelongs,
+		nil, /* data */
+	)
+	return walker.WalkIndexFiles(paths.Index_Bloom, blockNums)
 }
