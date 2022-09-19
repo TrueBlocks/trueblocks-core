@@ -14,6 +14,7 @@ import (
 	"os/exec"
 	"reflect"
 	"runtime"
+	"strconv"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -59,8 +60,8 @@ func OpenBrowser(url string) {
 	}
 }
 
-func PadNum(str string, totalLen int) string {
-	return PadLeft(str, totalLen, '0')
+func PadNum(n int, totalLen int) string {
+	return PadLeft(strconv.Itoa(n), totalLen, '0')
 }
 
 func PadLeft(str string, totalLen int, pad rune) string {

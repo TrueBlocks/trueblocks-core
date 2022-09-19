@@ -13,6 +13,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -46,9 +47,12 @@ func RunServe(cmd *cobra.Command, args []string) error {
 	logger.Log(logger.InfoC, pad("Cache Path:"), cachePath)
 	logger.Log(logger.InfoC, pad("Index Path:"), indexPath)
 	if err != nil {
-		log.Fatalf("%s%-18.18s%sCould not load RPC provider. %s %s\n", colors.Green, "Progress:", colors.Red, err, colors.Off)
+		msg := fmt.Sprintf("%sCould not load RPC provider: %s%s", colors.Red, err, colors.Off)
+		logger.Log(logger.InfoC, pad("Progress:"), msg)
+		log.Fatalf("")
 	} else {
-		msg := fmt.Sprintf("%d, %d, %d, %d", meta.Latest, meta.Finalized, meta.Staging, meta.Unripe)
+		nTs, _ := tslib.NTimestamps(opts.Globals.Chain)
+		msg := fmt.Sprintf("%d, %d, %d,  %d, ts: %d", meta.Latest, meta.Finalized, meta.Staging, meta.Unripe, nTs)
 		logger.Log(logger.InfoC, pad("Progress:"), msg)
 	}
 

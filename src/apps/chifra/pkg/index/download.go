@@ -100,8 +100,8 @@ func getDownloadWorker(chain string, workerArgs downloadWorkerArguments, chunkTy
 				if workerArgs.ctx.Err() != nil {
 					// User hit control + c - clean up both peices for the current chunk
 					chunkPath := config.GetPathToIndex(chain) + "finalized/" + chunk.Range + ".bin"
-					RemoveLocalFile(paths.ToIndexPath(chunkPath), "user cancled", progressChannel)
-					RemoveLocalFile(paths.ToBloomPath(chunkPath), "user cancled", progressChannel)
+					RemoveLocalFile(paths.ToIndexPath(chunkPath), "user canceled", progressChannel)
+					RemoveLocalFile(paths.ToBloomPath(chunkPath), "user canceled", progressChannel)
 					progressChannel <- &progress.Progress{
 						Payload: &chunk,
 						Event:   progress.Error,
