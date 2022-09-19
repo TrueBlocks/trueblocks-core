@@ -417,7 +417,7 @@ func (opts *BlazeOptions) WriteAppearancesBlaze(meta *rpcClient.MetaData, bn int
 		}
 		sort.Strings(appearanceArray)
 
-		blockNumStr := utils.PadLeft(strconv.Itoa(bn), 9)
+		blockNumStr := utils.PadNum(strconv.Itoa(bn), 9)
 		fileName := config.GetPathToIndex(opts.Chain) + "ripe/" + blockNumStr + ".txt"
 		if bn > int(opts.RipeBlock) {
 			fileName = config.GetPathToIndex(opts.Chain) + "unripe/" + blockNumStr + ".txt"

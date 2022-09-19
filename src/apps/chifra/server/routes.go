@@ -212,7 +212,7 @@ func RouteSlurp(w http.ResponseWriter, r *http.Request) {
 // END_ROUTE_CODE
 
 func Index(w http.ResponseWriter, r *http.Request) {
-	http.Redirect(w, r, "https://trueblocks.io/docs/", 301)
+	http.Redirect(w, r, "https://trueblocks.io/docs/", http.StatusMovedPermanently)
 }
 
 var routes = Routes{

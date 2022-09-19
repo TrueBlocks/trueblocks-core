@@ -18,7 +18,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"golang.org/x/crypto/ssh/terminal"
+	"golang.org/x/term"
 )
 
 // IsTestModeServer return true if we are running from the testing harness
@@ -31,7 +31,7 @@ func IsApiMode() bool {
 }
 
 func IsTerminal() bool {
-	return terminal.IsTerminal(int(os.Stdout.Fd()))
+	return term.IsTerminal(int(os.Stdout.Fd()))
 }
 
 func AsciiFileToString(fileName string) string {
@@ -59,15 +59,36 @@ func OpenBrowser(url string) {
 	}
 }
 
-func PadLeft(str string, totalLen int) string {
+func PadNum(str string, totalLen int) string {
+	return PadLeft(str, totalLen, '0')
+}
+
+func PadLeft(str string, totalLen int, pad rune) string {
 	if len(str) >= totalLen {
 		return str
 	}
-	zeros := ""
-	for i := 0; i < totalLen-len(str); i++ {
-		zeros += "0"
+	if pad == 0 {
+		pad = ' '
 	}
-	return zeros + str
+	lead := ""
+	for i := 0; i < totalLen-len(str); i++ {
+		lead += string(pad)
+	}
+	return lead + str
+}
+
+func PadRight(str string, totalLen int, pad rune) string {
+	if len(str) >= totalLen {
+		return str
+	}
+	if pad == 0 {
+		pad = ' '
+	}
+	tail := ""
+	for i := 0; i < totalLen-len(str); i++ {
+		tail += string(pad)
+	}
+	return str + tail
 }
 
 func ToCamelCase(in string) string {
