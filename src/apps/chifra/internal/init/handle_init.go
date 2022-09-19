@@ -101,7 +101,7 @@ func (opts *InitOptions) HandleInit() error {
 
 var m sync.Mutex
 
-// TODO: BOGUS - WE CAN PROBABLY REMOVE THESE AND MAKE THEM LOCAL
+// TODO: So we can capture both the blooms and the index portions in one summary. Once we move to single stream, this can go local
 var nProcessed12 int
 var nStarted12 int
 var nUpdated12 int

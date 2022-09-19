@@ -81,7 +81,7 @@ func getDownloadWorker(chain string, workerArgs downloadWorkerArguments, chunkTy
 			}
 			if hash != "" {
 
-				// TODO: BOGUS - REMOVE THIS REPLACE WITH hash.String()
+				// TODO: Do we really need the colored display?
 				msg := fmt.Sprintf("%v", chunk)
 				msg = strings.Replace(msg, hash.String(), colors.BrightCyan+hash.String()+colors.Off, -1)
 				progressChannel <- &progress.Progress{
