@@ -8,7 +8,6 @@ import (
 	"os"
 	"path/filepath"
 	"sort"
-	"strconv"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -77,22 +76,11 @@ const (
 
 var ErrManifestNotFound = errors.New("could not find manifest.json or it was empty")
 
-// TODO: BOGUS - REMOVE THIS
-func Clip(chunks []ChunkRecord) []ChunkRecord {
-	if os.Getenv("CLIP") == "" {
-		return chunks
-	}
-	cnt, _ := strconv.ParseInt(os.Getenv("CLIP"), 10, 64)
-	return chunks[:cnt]
-}
-
 // ReadManifest reads the manifest from either the local cache or the Unchained Index smart contract
 func ReadManifest(chain string, source Source) (*Manifest, error) {
 	if source == FromContract {
 		man, err := fromRemote(chain)
 		if man != nil {
-			// TODO: BOGUS - REMOVE ME - SIZE
-			man.Chunks = Clip(man.Chunks)
 			man.LoadChunkMap()
 		}
 		return man, err
@@ -107,13 +95,9 @@ func ReadManifest(chain string, source Source) (*Manifest, error) {
 	man := &Manifest{}
 	reader := bytes.NewReader([]byte(contents))
 	if err := json.NewDecoder(reader).Decode(man); err != nil {
-		// TODO: BOGUS - REMOVE ME - SIZE
-		man.Chunks = Clip(man.Chunks)
 		return man, err
 	}
 
-	// TODO: BOGUS - REMOVE ME - SIZE
-	man.Chunks = Clip(man.Chunks)
 	man.LoadChunkMap()
 	return man, nil
 }

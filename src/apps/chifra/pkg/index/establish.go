@@ -146,7 +146,7 @@ const BackLevelVersion string = `
 
 	`
 
-// TODO: BOGUS - I CAN USE THE HEADER VALIDATOR IN VALIDATE INSTEAD
+// TODO: There is a header validator in the validate package. Can we use that instead?
 func HasValidIndexHeader(fileName string) (bool, error) {
 	header, err := ReadChunkHeader(fileName, true)
 	if err != nil {

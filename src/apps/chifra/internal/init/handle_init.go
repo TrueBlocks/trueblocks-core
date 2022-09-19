@@ -12,7 +12,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
@@ -23,10 +22,6 @@ import (
 
 // InitInternal initializes local copy of UnchainedIndex by downloading manifests and chunks
 func (opts *InitOptions) HandleInit() error {
-	if opts.Globals.TestMode {
-		return fmt.Errorf("chifra init can not be tested in test mode")
-	}
-
 	// Make the code below cleaner...
 	chain := opts.Globals.Chain
 
@@ -46,19 +41,6 @@ func (opts *InitOptions) HandleInit() error {
 
 	// Get the list of things we need to download
 	chunksToDownload, nCorrections := opts.prepareDownloadList(chain, remoteManifest, []uint64{})
-	if opts.Globals.Verbose {
-		// TODO: BOGUS - WHAT?
-		str := ""
-		for _, chunk := range chunksToDownload {
-			if chunk.BloomHash != "" {
-				str += fmt.Sprintln("Downloading bloom", chunk.Range)
-			}
-			if chunk.IndexHash != "" {
-				str += fmt.Sprintln("Downloading index", chunk.Range)
-			}
-		}
-		file.AppendToAsciiFile("./one/download", str)
-	}
 
 	// Tell the user what we're doing
 	logger.Log(logger.InfoC, "Unchained Index:", unchained.Address_V2)

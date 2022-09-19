@@ -66,9 +66,8 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 
 			chunksNeeded = append(chunksNeeded, *chunk)
 			if opts.Globals.Verbose {
-				// TODO: BOGUS - REMOVE NEXT TWO LINES
-				file.AppendToAsciiFile("./one/notes", fmt.Sprintf("1--The chunk needs to be downloaded %v\n", chunk))
-				fmt.Println(colors.BrightBlack, "1--The chunk needs to be downloaded", colors.Off, chunk)
+				msg := fmt.Sprintf("%s%s%s%v", colors.BrightBlack, "The chunk needs to be downloaded", colors.Off, chunk)
+				logger.Log(logger.Info, msg)
 			}
 		}
 	}

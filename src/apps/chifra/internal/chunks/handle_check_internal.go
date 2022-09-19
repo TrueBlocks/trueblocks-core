@@ -57,7 +57,7 @@ func (opts *ChunksOptions) checkIndexChunkInternal(testId int, fileName string, 
 	}
 }
 
-// TODO: BOGUS - COMPLETE THIS
+// TODO: This work is incomplete
 // func (opts *ChunksOptions) checkBloomInternal(testId int, fileName string, report *types.ReportCheck) {
 // 	report.VisitedCnt++
 // 	report.CheckedCnt++
