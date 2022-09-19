@@ -1,6 +1,6 @@
 chifra init  --fmt txt
 TEST[DATE|TIME] Format:  txt
-Error: chifra init can not be tested in test mode
+Error: integration testing was skipped for chifra init
 Usage:
   chifra init [flags]
 

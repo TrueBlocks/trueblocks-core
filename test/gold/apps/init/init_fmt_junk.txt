@@ -1,6 +1,6 @@
 chifra init  --fmt junk
 TEST[DATE|TIME] Format:  junk
-Error: The --fmt option (junk) must be one of [ json | txt | csv | api ]
+Error: integration testing was skipped for chifra init
 Usage:
   chifra init [flags]
 

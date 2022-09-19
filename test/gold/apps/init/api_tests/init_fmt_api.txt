@@ -1,6 +1,6 @@
 init?fmt=api
 {
   "errors": [
-    "chifra init can not be tested in test mode"
+    "integration testing was skipped for chifra init"
   ]
 }

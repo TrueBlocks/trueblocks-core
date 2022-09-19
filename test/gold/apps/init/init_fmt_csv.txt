@@ -1,6 +1,6 @@
 chifra init  --fmt csv
 TEST[DATE|TIME] Format:  csv
-Error: chifra init can not be tested in test mode
+Error: integration testing was skipped for chifra init
 Usage:
   chifra init [flags]
 
