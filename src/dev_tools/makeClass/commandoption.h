@@ -281,7 +281,6 @@ extern const char* STR_DISPLAY_COMMANDOPTION;
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------------------------------
-extern string_q clean_positionals(const string& progName, const string_q& strIn);
 extern bool forEveryEnum(APPLYFUNC func, const string_q& enumStr, void* data);
 // TODO: search for go-port
 extern bool goPortNewCode(const string_q& a);

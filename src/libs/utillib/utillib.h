@@ -38,7 +38,6 @@
 #include "logging.h"
 #include "keccak.h"
 #include "markdown.h"
-#include "commandoption.h"
 #include "configenv.h"
 #include "chain.h"
 
