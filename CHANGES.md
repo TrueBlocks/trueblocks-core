@@ -2,7 +2,16 @@
 
 This file details changes made to TrueBlocks per version (starting with version v0.40.0). See the [migration notes](./MIGRATIONS.md) for changes from previous versions.
 
-## v0.40.0 - September 8, 2022
+## v.45.0
+
+### System-Wide Changes
+
+### Changes to Specific Tools
+
+- **chifra quotes:**
+  - This tool has been fully deprecated. It is no longer available.
+
+## v0.40.0
 
 ### System-Wide Changes
 
