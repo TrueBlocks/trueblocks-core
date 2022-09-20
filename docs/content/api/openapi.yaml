@@ -1677,84 +1677,6 @@ paths:
                         - $ref: "#/components/schemas/manifest"
         "400":
           description: bad input parameter
-  /quotes:
-    get:
-      tags:
-        - Other
-      summary: Price quotes
-      description: Update or display Ethereum price data, this tool has been deprecated.
-      operationId: other-quotes
-      parameters:
-        - name: period
-          description: increment of display
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: string
-            enum:
-              - "5"
-              - "15"
-              - "30"
-              - "60"
-              - "120"
-              - "240"
-              - "1440"
-              - "10080"
-              - hourly
-              - daily
-              - weekly
-        - name: pair
-          description: which price pair to freshen or list (see Poloniex)
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: string
-        - name: feed
-          description: the feed for the price data
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: string
-            enum:
-              - poloniex
-              - maker
-              - tellor
-      responses:
-        "200":
-          description: returns the requested data
-          content:
-            application/json:
-              schema:
-                properties:
-                  data:
-                    description: the closing price of Ether in USD at a particular moment
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/quote"
-                example:
-                  {
-                    "data":
-                      [
-                        {
-                          "timestamp": 1439078400,
-                          "close": 1.4,
-                          "date": "2015-08-09 00:00:00 UTC",
-                        },
-                        {
-                          "timestamp": 1439085600,
-                          "close": 1.4,
-                          "date": "2015-08-09 02:00:00 UTC",
-                        },
-                      ],
-                  }
-        "400":
-          description: bad input parameter
   /slurp:
     get:
       tags:
@@ -2814,29 +2736,6 @@ components:
           items:
             $ref: "#/components/schemas/parameter"
           description: "for composite types, the parameters making up the composite"
-    quote:
-      description: "the closing price of Ether in USD at a particular moment"
-      type: object
-      properties:
-        timestamp:
-          type: number
-          format: timestamp
-          example: 1438270144
-          description: "the timestamp of this quote"
-        close:
-          type: number
-          format: double
-          example: 1240.10
-          description: "price of the asset in US dollars"
-        date:
-          type: string
-          format: date
-          example: "2018-09-30 01:15:17 UTC"
-          description: "the date of the associated timestamp"
-        name:
-          type: string
-          example: "Byzantium"
-          description: "the name of the block for some named 'special' blocks"
     response:
       required:
         - result

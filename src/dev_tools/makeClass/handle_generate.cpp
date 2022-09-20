@@ -311,8 +311,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     string_q srcSource = asciiFileToString(getPathToTemplates("blank.cpp"));
     replace(srcSource, "// clang-format off\n", "");
     replace(srcSource, "// clang-format on\n", "");
-    if ((startsWith(classDef.class_name, "CNew") || classDef.class_name == "CPriceQuote") &&
-        !contains(getCWD(), "parse"))
+    if (startsWith(classDef.class_name, "CNew") && !contains(getCWD(), "parse"))
         replace(srcSource, "version of the data\n", STR_UPGRADE_CODE);
     replaceAll(srcSource, "[{GET_OBJ}]", fieldGetObj);
     replaceAll(srcSource, "[{GET_STR}]", fieldGetStr);

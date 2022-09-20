@@ -8,7 +8,6 @@ CBalHistory
 CBlock
 CReconciliation
 CLogEntry
-CPriceQuote
 CReceipt
 CRPCResult
 CTrace

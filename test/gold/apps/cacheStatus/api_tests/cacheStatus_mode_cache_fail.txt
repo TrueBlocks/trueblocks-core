@@ -1,6 +1,6 @@
 status?modes=caches&types=junk
 {
   "errors": [
-    "The --types option (junk) must be one of [ blocks | txs | traces | slurps | prices | all ]"
+    "The --types option (junk) must be one of [ blocks | txs | traces | slurps | all ]"
   ]
 }

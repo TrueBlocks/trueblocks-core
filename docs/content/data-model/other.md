@@ -2,7 +2,7 @@
 title: "Other"
 description: ""
 lead: ""
-date: 2021-11-26T12:07:43
+date: 2022-09-19T21:00:15
 lastmod:
   - :git
   - lastmod
@@ -18,7 +18,6 @@ toc: true
 ---
 
 These commands call some useful miscellaneous tools:
-* `chifra quotes`, a rudimentary pricing tool,
 * `chifra explore` a quick way to open a blockchain explorer,
 * `ethslurp` an older tool that lets you call data from EtherScan. (This has issues of centralization and data quality, see explanation in its section).
 
@@ -74,26 +73,6 @@ Parameter data is made of the following data fields:
 | components   | for composite types, the parameters making up the composite | CParameterArray |
 
 
-## Quote
-
-Prior to sources of on-chain prices such as UniSwap, TrueBlocks would pull US dollar to Ether prices from the Poloniex price API. This data structure reports on those queries. Note that this tool has been deprecated.
-
-The following commands produce and manage quotes:
-
-| Tools                                              |                                                                          |
-| -------------------------------------------------- | ------------------------------------------------------------------------ |
-| [chifra quotes](/docs/chifra/other/#chifra-quotes) | Update or display Ethereum price data.<br/>This tool has been deprecated |
-
-Quote data is made of the following data fields:
-
-| Field     | Description                                           | Type      |
-| --------- | ----------------------------------------------------- | --------- |
-| timestamp | the timestamp of this quote                           | timestamp |
-| close     | price of the asset in US dollars                      | double    |
-| date      | the date of the associated timestamp                  | date      |
-| name      | the name of the block for some named 'special' blocks | string    |
-
-
 ## Base types
 
 This documentation mentions the following basic data types.
@@ -101,7 +80,4 @@ This documentation mentions the following basic data types.
 | Type      | Description                                     | Notes          |
 | --------- | ----------------------------------------------- | -------------- |
 | bool      | a value either `true`, `false`, `1`, or `0`     |                |
-| date      | a JSON formatted date                           | as a string    |
-| double    | a floating point number of double precision     |                |
 | string    | a normal character string                       |                |
-| timestamp | a 64-bit unsigned integer                       | Unix timestamp |

@@ -57,7 +57,6 @@ void etherlib_init(QUITHANDLER qh) {
     CTransaction::registerClass();
     CReceipt::registerClass();
     CLogEntry::registerClass();
-    CPriceQuote::registerClass();
     CTrace::registerClass();
     CTraceAction::registerClass();
     CTraceResult::registerClass();
@@ -954,8 +953,6 @@ string_q exportPreamble(const string_q& format, const string_q& className) {
                 return "";
             os << headerRow(className, format, ",", "\"");
             break;
-        case YAML1:
-            break;
         case JSON1:
             os << "{ \"data\": [";
             break;
@@ -984,8 +981,6 @@ inline string_q dispNumOrHex(uint64_t num) {
 //-----------------------------------------------------------------------
 string_q exportPostamble(const CStringArray& errorsIn, const string_q& extra) {
     format_t fmt = expContext().exportFmt;
-    if (fmt == YAML1)
-        return "";
 
     const char* STR_ERROR_MSG_TXT = "\"{[MSG]}\"";
     const char* STR_ERROR_MSG_JSON = "\"[MSG]\"";

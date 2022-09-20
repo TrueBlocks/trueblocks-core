@@ -22,7 +22,7 @@ namespace qblocks {
 typedef map<address_t, CAccountName> CAddressNameMap;
 
 //----------------------------------------------------------------------------
-enum format_t { NONE1 = 0, JSON1 = (1 << 1), TXT1 = (1 << 2), CSV1 = (1 << 3), API1 = (1 << 4), YAML1 = (1 << 5) };
+enum format_t { NONE1 = 0, JSON1 = (1 << 1), TXT1 = (1 << 2), CSV1 = (1 << 3), API1 = (1 << 4) };
 
 //----------------------------------------------------------------------------
 class CExportContext {

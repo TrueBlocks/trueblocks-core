@@ -42,7 +42,6 @@ extern string_q getDefaultChain(void);
 #define cacheFolder_monitors_staging (cacheFolder + "monitors/staging/")
 #define cacheFolder_names (cacheFolder + "names/")
 #define cacheFolder_objs (cacheFolder + "objs/")
-#define cacheFolder_prices (cacheFolder + "prices/")
 #define cacheFolder_recons (cacheFolder + "recons/")
 #define cacheFolder_slurps (cacheFolder + "slurps/")
 #define cacheFolder_tmp (cacheFolder + "tmp/")
@@ -52,7 +51,6 @@ extern string_q getDefaultChain(void);
 //---------------------------------------------------------------------------
 #define cacheFolderBin_allocs (cacheFolder_names + "allocs.bin")
 #define cacheFolderBin_names (cacheFolder_names + "names.bin")
-#define cacheFolderBin_prices (cacheFolder_prices + "poloniex_USDT_ETH.bin")
 
 //-------------------------------------------------------------------------
 #define indexFolder (getPathToIndex(""))
@@ -72,12 +70,6 @@ extern string_q getDefaultChain(void);
 #define chainConfigsTxt_names (chainConfigs + "names.tab")
 #define chainConfigsTxt_namesCustom (chainConfigs + "names_custom.tab")
 #define chainConfigsTxt_collections (chainConfigs + "collections.csv")
-
-//---------------------------------------------------------------------------
-#define chainConfigsJson_manifest (chainConfigs + "manifest.json")
-
-//---------------------------------------------------------------------------
-#define chainConfigsZip_prices (chainConfigs + "poloniex_USDT_ETH.bin.gz")
 
 //---------------------------------------------------------------------------
 #define rootConfigToml_trueBlocks (rootConfigs + "trueBlocks.toml")

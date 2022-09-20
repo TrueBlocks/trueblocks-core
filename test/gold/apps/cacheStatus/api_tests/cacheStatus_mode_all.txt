@@ -88,14 +88,6 @@ status?modes=all
           "nFolders": 0,
           "sizeInBytes": 0,
           "isValid": true
-        },
-        {
-          "type": "CPriceCache",
-          "path": "pricesPath",
-          "nFiles": 0,
-          "nFolders": 0,
-          "sizeInBytes": 0,
-          "isValid": true
         }
       ],
       "chains": [

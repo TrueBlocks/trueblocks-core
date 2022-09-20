@@ -225,8 +225,6 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
                 expContext().exportFmt = TXT1;
             } else if (arg == "csv") {
                 expContext().exportFmt = CSV1;
-            } else if (arg == "yaml") {
-                expContext().exportFmt = YAML1;
             } else if (arg == "json") {
                 expContext().exportFmt = JSON1;
             } else if (arg == "api") {
@@ -308,10 +306,7 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
         ostringstream rep;
         rep << "--output:"
             << "/tmp/" + makeValidName(Now().Format(FMT_EXPORT));
-        rep << (expContext().exportFmt == CSV1    ? ".csv"
-                : expContext().exportFmt == TXT1  ? ".txt"
-                : expContext().exportFmt == YAML1 ? ".yaml"
-                                                  : ".json");
+        rep << (expContext().exportFmt == CSV1 ? ".csv" : expContext().exportFmt == TXT1 ? ".txt" : ".json");
         replaceAll(cmdLine, "--to_file", rep.str());
     }
 
@@ -471,7 +466,6 @@ void COptionsBase::configureDisplay(const string_q& tool, const string_q& dataTy
             format = getGlobalConfig(tool)->getConfigStr("display", "format", defFormat);
             manageFields(dataType + ":" + cleanFmt((format.empty() ? defFormat : format)));
             break;
-        case YAML1:
         case API1:
         case JSON1:
             format = "";
@@ -870,7 +864,6 @@ void COptionsBase::closeRedirect(void) {
         switch (expContext().exportFmt) {
             case TXT1:
             case CSV1:
-            case YAML1:
                 // only report if the user isn't in API mode
                 break;
             default:

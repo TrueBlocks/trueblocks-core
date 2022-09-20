@@ -154,7 +154,6 @@ bool COptions::parseArguments(string_q& command) {
             manageFields("CTraceAction:" + substitute(cleanFmt(format), "ACTION::", ""));
             manageFields("CTraceResult:" + substitute(cleanFmt(format), "RESULT::", ""));
             break;
-        case YAML1:
         case API1:
         case JSON1:
             format = "";

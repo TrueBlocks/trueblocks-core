@@ -278,7 +278,6 @@ bool establishCacheFolders(void) {
     establishFolder(cacheFolder_monitors_staging);
     establishFolder(cacheFolder_names);
     establishFolder(cacheFolder_objs);
-    establishFolder(cacheFolder_prices);
     establishFolder(cacheFolder_recons);
     establishFolder(cacheFolder_slurps);
     establishFolder(cacheFolder_tmp);

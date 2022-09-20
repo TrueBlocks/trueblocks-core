@@ -30,7 +30,6 @@ const helpText = `  Accounts:
     chunks        manage, investigate, and display the Unchained Index
     init          initialize the TrueBlocks system by downloading from IPFS
   Other:
-    quotes        update or display Ethereum price data, this tool has been deprecated
     explore       open a local or remote explorer for one or more addresses, blocks, or transactions
     slurp         fetch data from EtherScan for any address
   Flags:

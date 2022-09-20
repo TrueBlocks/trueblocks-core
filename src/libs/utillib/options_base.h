@@ -218,5 +218,6 @@ inline bool isReserved(const string_q& command) {
 
 extern string_q path_2_Cmd(const string_q& path);
 extern string_q cmd_2_Path(const string_q& cmd);
+extern string_q clean_positionals(const string& progName, const string_q& strIn);
 
 }  // namespace qblocks
