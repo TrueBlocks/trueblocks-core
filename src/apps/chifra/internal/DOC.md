@@ -120,6 +120,4 @@
     chifra serve [flags]
 
     chifra init [flags]
-
-    chifra quotes [flags]
 ```

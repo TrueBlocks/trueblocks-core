@@ -1,3 +1,0 @@
-displayStrsTest  CPriceQuote
-------------------------------CPriceQuote------------------------------
-Unknown node of type CPriceQuote not created.

@@ -61,14 +61,6 @@ class CArchive : public CSharedResource {
     }
 
     void writeHeader(void);
-    void readPriceHeader(void) {
-        Seek(0, SEEK_SET);
-        operator>>(m_header.m_version);
-        operator>>(m_header.m_lastWritten);
-        bool unused = false;
-        operator>>(unused);
-    }
-
     bool needsUpgrade(bool arrayFile);
 
     CArchive& operator<<(bool b);

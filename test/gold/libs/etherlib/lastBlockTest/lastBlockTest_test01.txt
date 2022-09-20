@@ -1,6 +1,6 @@
 lastBlockTest  recurse
 Recursive from ../
-Found 123 (123) files
+Found 121 (121) files
 ../abiTest/abiTest_01.txt
 ../abiTest/abiTest_02.txt
 ../abiTest/abiTest_03.txt
@@ -59,7 +59,6 @@ Found 123 (123) files
 ../dataUpgradeTest/dataUpgradeTest_CNewBlock.txt
 ../dataUpgradeTest/dataUpgradeTest_CNewReceipt.txt
 ../dataUpgradeTest/dataUpgradeTest_CParameter.txt
-../dataUpgradeTest/dataUpgradeTest_CPriceQuote.txt
 ../dataUpgradeTest/dataUpgradeTest_CRPCResult.txt
 ../dataUpgradeTest/dataUpgradeTest_CReceipt.txt
 ../dataUpgradeTest/dataUpgradeTest_CReconciliation.txt
@@ -82,7 +81,6 @@ Found 123 (123) files
 ../displayStrsTest/displayStrsTest_CInfix.txt
 ../displayStrsTest/displayStrsTest_CLeaf.txt
 ../displayStrsTest/displayStrsTest_CMonitor.txt
-../displayStrsTest/displayStrsTest_CPriceQuote.txt
 ../displayStrsTest/displayStrsTest_CRPCResult.txt
 ../displayStrsTest/displayStrsTest_CTreeNode.txt
 ../displayStrsTest/displayStrsTest_CTreeRoot.txt

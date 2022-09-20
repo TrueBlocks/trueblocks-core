@@ -57,7 +57,6 @@ void etherlib_init(QUITHANDLER qh) {
     CTransaction::registerClass();
     CReceipt::registerClass();
     CLogEntry::registerClass();
-    CPriceQuote::registerClass();
     CTrace::registerClass();
     CTraceAction::registerClass();
     CTraceResult::registerClass();

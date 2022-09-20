@@ -1192,5 +1192,57 @@ bool CReconciliation::readBackLevel_old(CArchive& archive) {
     finishParse();
     return true;
 }
+
+//-----------------------------------------------------------------------
+// uint64_t i ndexFromTimeStamp(const C PriceQuoteArray& q uotes, timestamp_t ts) {
+//     timestamp_t first = (timestamp_t)q uotes[0].timestamp;
+//     if (ts < first)
+//         return 0;
+//     timestamp_t since = ts - first;
+//     return min(q uotes.size() - 1, size_t(since / (5 * 60)));
+// }
+
+//-----------------------------------------------------------------------
+// static string_q getWeiQuote(const CPriceQuoteArray& quotes, const timestamp_t& ts, const wei_t& weiIn,
+//                             uint64_t decimals) {
+//     return wei_2_Ether(weiIn)
+//     // uint64_t index = indexFromTimeStamp(quotes, ts);
+//     // double price = q uotes[index].close * 100.0;
+//     // wei_t wei = weiIn;
+//     // wei *= ((uint64_t)price);
+//     // wei /= 100;
+//     // return wei_2_Ether(wei, decimals);
+// }
+
+// TODO: BOGUS - OPEN THE TEXT FILE AFTER DOWNLOADING IT FROM SMART CONTRACT, BUILD BINARY CACHE, READ IT IN
+string_q wei_2_Dollars(const timestamp_t& ts, const wei_t& weiIn, uint64_t decimals) {
+    return wei_2_Ether(weiIn, 18);  // getWeiQuote(quotes, ts, weiIn, decimals);
+}
+
+// //-----------------------------------------------------------------------
+// string_q wei_2_Dollars(const timestamp_t& ts, const wei_t& weiIn, uint64_t decimals) {
+//     if (weiIn == 0)
+//         return "";
+
+//     // TODO(tjayrush): global data
+//     static C PriceQuoteArray q uotes;
+//     if (q uotes.size())  // leave early if we can
+//         return getWeiQuote(q uotes, ts, weiIn, decimals);
+
+//     {  // give ourselves a frame to make the mutex
+//         mutex aMutex;
+//         lock_guard<mutex> lock(aMutex);
+//         if (q uotes.size())  // leave early if we can (another thread may have filled the array while we were waiting
+//             return getWeiQuote(q uotes, ts, weiIn, decimals);
+
+//         string_q message;
+//         C PriceSource source(S TR_PRICE_URL, "USDT_ETH", parsePoloniex);
+//         if (!l oadPriceData(source, q uotes, false, message)) {
+//             cerr << "Cannot load price data. Quitting..." << endl;
+//             quickQuitHandler(EXIT_FAILURE);
+//         }
+//     }
+//     return getWeiQuote(q uotes, ts, weiIn, decimals);
+// }
 // EXISTING_CODE
 }  // namespace qblocks

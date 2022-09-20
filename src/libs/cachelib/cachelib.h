@@ -25,8 +25,6 @@
 #include "classes/monitorcache.h"
 #include "classes/indexcacheitem.h"
 #include "classes/indexcache.h"
-#include "classes/pricecacheitem.h"
-#include "classes/pricecache.h"
 #include "classes/namecache.h"
 #include "classes/slurpcache.h"
 

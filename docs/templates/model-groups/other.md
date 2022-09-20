@@ -1,5 +1,4 @@
 These commands call some useful miscellaneous tools:
-* `chifra quotes`, a rudimentary pricing tool,
 * `chifra explore` a quick way to open a blockchain explorer,
 * `ethslurp` an older tool that lets you call data from EtherScan. (This has issues of centralization and data quality, see explanation in its section).
 

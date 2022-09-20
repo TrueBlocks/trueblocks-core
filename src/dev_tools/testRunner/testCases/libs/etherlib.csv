@@ -38,7 +38,6 @@ on      ,cmd  ,fast  ,null  ,etherlib/dataUpgradeTest ,CLogEntry        ,n    ,v
 on      ,cmd  ,fast  ,null  ,etherlib/dataUpgradeTest ,CNewBlock        ,n    ,val = CNewBlock
 on      ,cmd  ,fast  ,null  ,etherlib/dataUpgradeTest ,CNewReceipt      ,n    ,val = CNewReceipt
 on      ,cmd  ,fast  ,null  ,etherlib/dataUpgradeTest ,CParameter       ,n    ,val = CParameter
-on      ,cmd  ,fast  ,null  ,etherlib/dataUpgradeTest ,CPriceQuote      ,n    ,val = CPriceQuote
 on      ,cmd  ,fast  ,null  ,etherlib/dataUpgradeTest ,CRPCResult       ,n    ,val = CRPCResult
 on      ,cmd  ,fast  ,null  ,etherlib/dataUpgradeTest ,CReceipt         ,n    ,val = CReceipt
 on      ,cmd  ,fast  ,null  ,etherlib/dataUpgradeTest ,CTrace           ,n    ,val = CTrace
@@ -57,7 +56,6 @@ on      ,cmd  ,fast  ,null  ,etherlib/displayStrsTest ,CBlock           ,n    ,v
 on      ,cmd  ,fast  ,null  ,etherlib/displayStrsTest ,CBranch          ,n    ,val = CBranch
 on      ,cmd  ,fast  ,null  ,etherlib/displayStrsTest ,CInfix           ,n    ,val = CInfix
 on      ,cmd  ,fast  ,null  ,etherlib/displayStrsTest ,CLeaf            ,n    ,val = CLeaf
-on      ,cmd  ,fast  ,null  ,etherlib/displayStrsTest ,CPriceQuote      ,n    ,val = CPriceQuote
 on      ,cmd  ,fast  ,null  ,etherlib/displayStrsTest ,CRPCResult       ,n    ,val = CRPCResult
 on      ,cmd  ,fast  ,null  ,etherlib/displayStrsTest ,CTreeNode        ,n    ,val = CTreeNode
 on      ,cmd  ,fast  ,null  ,etherlib/displayStrsTest ,CTreeRoot        ,n    ,val = CTreeRoot

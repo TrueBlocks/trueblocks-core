@@ -45,7 +45,7 @@ func init() {
 
 	statusCmd.Flags().BoolVarP(&statusPkg.GetOptions().Details, "details", "d", false, "include details about items found in monitors, slurps, abis, or price caches")
 	statusCmd.Flags().StringSliceVarP(&statusPkg.GetOptions().Types, "types", "t", nil, `for caches mode only, which type(s) of cache to report
-One or more of [ blocks | txs | traces | slurps | prices | all ]`)
+One or more of [ blocks | txs | traces | slurps | all ]`)
 	statusCmd.Flags().Uint64VarP(&statusPkg.GetOptions().Depth, "depth", "p", 0, "for cache mode only, number of levels deep to report (hidden)")
 	statusCmd.Flags().BoolVarP(&statusPkg.GetOptions().Report, "report", "r", false, "run the command with no options for the same result (hidden)")
 	statusCmd.Flags().BoolVarP(&statusPkg.GetOptions().Terse, "terse", "e", false, "show a terse summary report (hidden)")

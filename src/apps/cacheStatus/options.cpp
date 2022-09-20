@@ -22,7 +22,7 @@ static const COption params[] = {
     // clang-format off
     COption("modes", "", "list<enum[index|monitors|collections|names|abis|caches|some*|all]>", OPT_POSITIONAL, "the type of status info to retrieve"),  // NOLINT
     COption("details", "d", "", OPT_SWITCH, "include details about items found in monitors, slurps, abis, or price caches"),  // NOLINT
-    COption("types", "t", "list<enum[blocks|txs|traces|slurps|prices|all*]>", OPT_FLAG, "for caches mode only, which type(s) of cache to report"),  // NOLINT
+    COption("types", "t", "list<enum[blocks|txs|traces|slurps|all*]>", OPT_FLAG, "for caches mode only, which type(s) of cache to report"),  // NOLINT
     COption("depth", "p", "<uint64>", OPT_HIDDEN | OPT_FLAG, "for cache mode only, number of levels deep to report"),
     COption("terse", "e", "", OPT_HIDDEN | OPT_SWITCH, "show a terse summary report"),
     COption("migrate", "m", "enum[test|cache|index]", OPT_HIDDEN | OPT_FLAG, "either effectuate or test to see if a migration is necessary"),  // NOLINT
@@ -120,7 +120,6 @@ bool COptions::parseArguments(string_q& command) {
         cacheFolder_monitors,
         cacheFolder_names,
         /* cacheFolder_objs, */
-        cacheFolder_prices,
         cacheFolder_recons,
         cacheFolder_slurps,
         /* cacheFolder_tmp, */
@@ -155,9 +154,9 @@ bool COptions::parseArguments(string_q& command) {
     scanRange = make_pair(first_block, last_block);
 
     if (mode.empty() || contains(mode, "some"))
-        mode = "index|monitors|collections|names|slurps|prices";
+        mode = "index|monitors|collections|names|slurps";
     if (contains(mode, "all")) {
-        mode = "index|monitors|collections|names|abis|prices|caches";
+        mode = "index|monitors|collections|names|abis|caches";
         types.push_back("all");
     }
     mode = "|" + trim(mode, '|') + "|";
@@ -175,13 +174,12 @@ bool COptions::parseArguments(string_q& command) {
             if (t != "all")
                 mode += (t + "|");
         }
-        mode += (hasAll ? "blocks|txs|traces|slurps|prices|" : "");
+        mode += (hasAll ? "blocks|txs|traces|slurps|" : "");
     }
 
     if (!details) {
         HIDE_FIELD(CMonitorCache, "items");
         HIDE_FIELD(CSlurpCache, "items");
-        HIDE_FIELD(CPriceCache, "items");
         HIDE_FIELD(CCollectionCache, "items");
         HIDE_FIELD(CAbiCache, "items");
         HIDE_FIELD(CChainCache, "items");
@@ -271,8 +269,6 @@ COptions::COptions(void) {
     CMonitorCacheItem::registerClass();
     CNameCache::registerClass();
     CSlurpCache::registerClass();
-    CPriceCache::registerClass();
-    CPriceCacheItem::registerClass();
     CAbiCacheItem::registerClass();
     CChain::registerClass();
 

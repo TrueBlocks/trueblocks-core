@@ -24,7 +24,6 @@ import (
 	logsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/logs"
 	monitorsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/monitors"
 	namesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/names"
-	quotesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/quotes"
 	receiptsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/receipts"
 	scrapePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/scrape"
 	slurpPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/slurp"
@@ -183,15 +182,6 @@ func RouteInit(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// RouteQuotes Update or display Ethereum price data, this tool has been deprecated.
-func RouteQuotes(w http.ResponseWriter, r *http.Request) {
-	if err, handled := quotesPkg.ServeQuotes(w, r); err != nil {
-		RespondWithError(w, http.StatusInternalServerError, err)
-	} else if !handled {
-		CallOne(w, r, config.GetPathToCommands("getQuotes"), "", "quotes")
-	}
-}
-
 // RouteExplore Open a local or remote explorer for one or more addresses, blocks, or transactions.
 func RouteExplore(w http.ResponseWriter, r *http.Request) {
 	if err, handled := explorePkg.ServeExplore(w, r); err != nil {
@@ -240,7 +230,6 @@ var routes = Routes{
 	Route{"RouteScrape", "GET", "/scrape", RouteScrape},
 	Route{"RouteChunks", "GET", "/chunks", RouteChunks},
 	Route{"RouteInit", "GET", "/init", RouteInit},
-	Route{"RouteQuotes", "GET", "/quotes", RouteQuotes},
 	Route{"RouteExplore", "GET", "/explore", RouteExplore},
 	Route{"RouteSlurp", "GET", "/slurp", RouteSlurp},
 	// END_ROUTE_ITEMS

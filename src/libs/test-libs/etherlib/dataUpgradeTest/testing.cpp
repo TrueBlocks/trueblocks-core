@@ -172,8 +172,6 @@ CBaseNode* getNode(const string_q& nodeType) {
         node = CReconciliation::createObject();
     else if (nodeType == "CLogEntry")
         node = CLogEntry::createObject();
-    else if (nodeType == "CPriceQuote")
-        node = CPriceQuote::createObject();
     else if (nodeType == "CReceipt")
         node = CReceipt::createObject();
     else if (nodeType == "CRPCResult")

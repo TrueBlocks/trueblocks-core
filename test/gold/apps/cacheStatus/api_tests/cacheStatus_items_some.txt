@@ -77,36 +77,6 @@ status?details&modes=some&firstBlock=3000000&lastBlock=3100000
           "nFolders": 0,
           "sizeInBytes": 0,
           "isValid": true
-        },
-        {
-          "items": [
-            {
-              "type": "CPriceCacheItem",
-              "pair": "---pair---",
-              "nApps": 2020101,
-              "firstApp": 0,
-              "latestApp": 0,
-              "sizeInBytes": 1010202,
-              "tags": "",
-              "address": "0x0",
-              "name": "",
-              "symbol": "",
-              "source": "",
-              "decimals": 0,
-              "description": "",
-              "isCustom": false,
-              "isPrefund": false,
-              "isContract": false,
-              "isErc20": false,
-              "isErc721": false
-            }
-          ],
-          "type": "CPriceCache",
-          "path": "pricesPath",
-          "nFiles": 0,
-          "nFolders": 0,
-          "sizeInBytes": 0,
-          "isValid": true
         }
       ],
       "chains": [

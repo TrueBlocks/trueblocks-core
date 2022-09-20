@@ -219,7 +219,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 
 10700,apps,Admin,status,cacheStatus,modes,,,false,false,true,true,local,positional,list<enum[index|monitors|collections|names|abis|caches|some*|all]>,the type of status info to retrieve
 10720,apps,Admin,status,cacheStatus,details,d,,false,false,true,true,header,switch,<boolean>,include details about items found in monitors&#44; slurps&#44; abis&#44; or price caches
-10730,apps,Admin,status,cacheStatus,types,t,,false,false,true,false,local,flag,list<enum[blocks|txs|traces|slurps|prices|all*]>,for caches mode only&#44; which type(s) of cache to report
+10730,apps,Admin,status,cacheStatus,types,t,,false,false,true,false,local,flag,list<enum[blocks|txs|traces|slurps|all*]>,for caches mode only&#44; which type(s) of cache to report
 10735,apps,Admin,status,cacheStatus,depth,p,NOPOS,false,false,false,false,header,flag,<uint64>,for cache mode only&#44; number of levels deep to report
 10760,apps,Admin,status,cacheStatus,report,r,,false,false,false,true,local,deprecated,<boolean>,run the command with no options for the same result
 10770,apps,Admin,status,cacheStatus,terse,e,,false,false,false,true,header,switch,<boolean>,show a terse summary report
@@ -250,13 +250,6 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 11908,apps,Admin,init,init,sleep,s,0.0,false,false,true,true,gocmd,flag,<double>,seconds to sleep between downloads
 11910,apps,Admin,init,init,,,,false,false,true,true,--,description,,Initialize the TrueBlocks system by downloading from IPFS.
 10974,apps,Admin,init,init,n1,,,false,false,false,false,--,note,,Re-run `chifra init` as often as you wish. It will repair or freshen the index.
-
-12020,tools,Other,quotes,getQuotes,update,u,,false,false,true,true,header,switch,<boolean>,freshen price database
-12040,tools,Other,quotes,getQuotes,period,p,,false,false,true,true,local,flag,enum[5|15|30|60|120*|240|1440|10080|hourly|daily|weekly],increment of display
-12060,tools,Other,quotes,getQuotes,pair,a,,false,false,true,true,local,flag,<string>,which price pair to freshen or list (see Poloniex)
-12060,tools,Other,quotes,getQuotes,feed,e,,false,false,true,true,header,flag,enum[poloniex*|maker|tellor],the feed for the price data
-12080,tools,Other,quotes,getQuotes,,,,false,false,true,true,--,description,,Update or display Ethereum price data&#44; this tool has been deprecated.
-12082,tools,Other,quotes,getQuotes,n1,,,false,false,false,false,--,note,,Due to restrictions from Poloniex&#44; this tool retrieves only 30 days of data at a time. You must repeatedly run this command until the data is up-to-date.
 
 12001,apps,Other,explore,fireStorm,terms,,,false,false,true,true,header,positional,list<string>,one or more address&#44; name&#44; block&#44; or transaction identifier
 12002,apps,Other,explore,fireStorm,local,l,,false,false,true,true,header,switch,<boolean>,open the local TrueBlocks explorer

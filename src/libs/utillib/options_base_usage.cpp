@@ -384,7 +384,6 @@ map<string_q, string_q> pathCmdChifraMap = {
     make_pair("flame", "chifra serve"),
     make_pair("blockScrape", "chifra scrape"),
     make_pair("init", "chifra init"),
-    make_pair("getQuotes", "chifra quotes"),
     make_pair("fireStorm", "chifra explore"),
     make_pair("ethslurp", "chifra slurp"),
     make_pair("makeClass", "makeClass"),
@@ -415,7 +414,6 @@ map<string, string> cmdPathChifraMap = {
     {"serve", "flame"},
     {"scrape", "blockScrape"},
     {"init", "init"},
-    {"quotes", "getQuotes"},
     {"explore", "fireStorm"},
     {"slurp", "ethslurp"},
 };

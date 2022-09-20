@@ -229,26 +229,6 @@ bool COptions::handle_status(ostream& os) {
         status.caches.push_back(&slurps);
     }
 
-    CPriceCache prices;
-    if (contains(mode, "|prices|")) {
-        LOG8("Reporting on prices");
-        if (!prices.readBinaryCache(cacheFolder_prices, "prices", details)) {
-            string_q thePath = cacheFolder_prices;
-            prices.type = prices.getRuntimeClass()->m_ClassName;
-            prices.path = pathName("prices", cacheFolder_prices);
-            forEveryFileInFolder(thePath, countFiles, &prices);
-            if (details) {
-                CItemCounter counter(this);
-                counter.cachePtr = &prices;
-                counter.priceArray = &prices.items;
-                forEveryFileInFolder(thePath, notePrice, &counter);
-            }
-            LOG8("\tre-writing prices cache");
-            prices.writeBinaryCache("prices", details);
-        }
-        status.caches.push_back(&prices);
-    }
-
     if (origMode.empty() || contains(origMode, "all") || contains(origMode, "some"))
         getChainList(status.chains);
     status.toJson(os);
@@ -298,7 +278,7 @@ bool noteCollection(const string_q& path, void* data) {
         } else {
             coi.name = path;
             coi.sizeInBytes = fileSize(path);
-            coi.nApps = fileSize(path) / sizeof(CPriceQuote);
+            coi.nApps = fileSize(path) / sizeof(CCollection);
         }
         counter->collectionArray->push_back(coi);
     }
@@ -468,33 +448,6 @@ bool noteABI(const string_q& path, void* data) {
         counter->abiArray->push_back(abii);
         if (isTestMode())
             return false;
-    }
-    return !shouldQuit();
-}
-
-//---------------------------------------------------------------------------
-bool notePrice(const string_q& path, void* data) {
-    if (endsWith(path, '/')) {
-        return forEveryFileInFolder(path + "*", notePrice, data);
-
-    } else if (endsWith(path, ".bin")) {
-        CItemCounter* counter = reinterpret_cast<CItemCounter*>(data);
-        ASSERT(counter->options);
-
-        CPriceCacheItem pri;
-        pri.type = pri.getRuntimeClass()->m_ClassName;
-        if (isTestMode()) {
-            pri.pair = "---pair---";
-            pri.sizeInBytes = 1010202;
-            pri.nApps = 2020101;
-        } else {
-            string_q pair = substitute(path, "/0x", "|");
-            nextTokenClear(pair, '|');
-            pri.pair = substitute(substitute(path, counter->cachePtr->path, ""), ".bin", "");
-            pri.sizeInBytes = fileSize(path);
-            pri.nApps = fileSize(path) / sizeof(CPriceQuote);
-        }
-        counter->priceArray->push_back(pri);
     }
     return !shouldQuit();
 }

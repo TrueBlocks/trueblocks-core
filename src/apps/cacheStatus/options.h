@@ -52,7 +52,6 @@ class COptions : public CAbiOptions {
 extern bool noteMonitor_light(const string_q& path, void* data);
 extern bool noteMonitor(const string_q& path, void* data);
 extern bool noteABI(const string_q& path, void* data);
-extern bool notePrice(const string_q& path, void* data);
 extern bool noteIndex(const string_q& path, void* data);
 
 //-------------------------------------------------------------------------
@@ -63,7 +62,6 @@ class CItemCounter : public CCache {
     CIndexCacheItemArray* indexArray;
     CMonitorCacheItemArray* monitorArray;
     CAbiCacheItemArray* abiArray;
-    CPriceCacheItemArray* priceArray;
     CCollectionCacheItemArray* collectionArray;
     blkrange_t fileRange;
     CItemCounter(COptions* opt) : CCache(), options(opt) {
@@ -71,7 +69,6 @@ class CItemCounter : public CCache {
         indexArray = NULL;
         monitorArray = NULL;
         abiArray = NULL;
-        priceArray = NULL;
     }
 
   public:

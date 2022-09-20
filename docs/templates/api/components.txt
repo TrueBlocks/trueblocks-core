@@ -963,29 +963,6 @@ components:
           items:
             $ref: "#/components/schemas/parameter"
           description: "for composite types, the parameters making up the composite"
-    quote:
-      description: "the closing price of Ether in USD at a particular moment"
-      type: object
-      properties:
-        timestamp:
-          type: number
-          format: timestamp
-          example: 1438270144
-          description: "the timestamp of this quote"
-        close:
-          type: number
-          format: double
-          example: 1240.10
-          description: "price of the asset in US dollars"
-        date:
-          type: string
-          format: date
-          example: "2018-09-30 01:15:17 UTC"
-          description: "the date of the associated timestamp"
-        name:
-          type: string
-          example: "Byzantium"
-          description: "the name of the block for some named 'special' blocks"
     response:
       required:
         - result

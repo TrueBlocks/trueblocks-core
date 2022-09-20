@@ -1,6 +1,0 @@
-quotes?junk
-{
-  "errors": [
-    "Invalid key (junk) in quotes route."
-  ]
-}
