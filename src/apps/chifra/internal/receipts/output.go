@@ -18,10 +18,12 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
 // EXISTING_CODE
+var byzantiumBlockNumber = 4370000
 
 // RunReceipts handles the receipts command for the command line. Returns error only as per cobra.
 func RunReceipts(cmd *cobra.Command, args []string) (err error) {
@@ -38,6 +40,18 @@ func ServeReceipts(w http.ResponseWriter, r *http.Request) (err error, handled b
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return opts.ReceiptsInternal()
+}
+
+// TODO: remove this function when rewrite to Go is completed. It is only used to send
+// pre-Byzantium transactions to C++ version
+func getReceiptsCmdLine(opts *ReceiptsOptions, txs []string) string {
+	options := ""
+	if opts.Articulate {
+		options += " --articulate"
+	}
+
+	options += " " + strings.Join(txs, " ")
+	return options
 }
 
 // ReceiptsInternal handles the internal workings of the receipts command.  Returns error and a bool if handled
@@ -62,6 +76,11 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 			fmt.Fprintln(os.Stderr, err)
 		}
 	}()
+	clientVersion, err := rpcClient.GetVersion(opts.Globals.Chain)
+	if err != nil {
+		return err, true
+	}
+	erigonUsed := utils.IsClientErigon(clientVersion)
 
 	getTransaction := func(models chan types.Modeler[types.RawReceipt], errors chan error) {
 		for idIndex, rng := range opts.TransactionIds {
@@ -76,6 +95,15 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 				return
 			}
 			for _, tx := range txList {
+				if tx.BlockNumber < uint32(byzantiumBlockNumber) && !erigonUsed {
+					err = opts.Globals.PassItOn("getReceipts", opts.Globals.Chain, getReceiptsCmdLine(opts, []string{rng.Orig}), opts.getEnvStr())
+					if err != nil {
+						errors <- err
+						return
+					}
+					continue
+				}
+
 				receipt, err := rpcClient.GetTransactionReceipt(opts.Globals.Chain, uint64(tx.BlockNumber), uint64(tx.TransactionIndex))
 				if err != nil && err.Error() == "not found" {
 					notFound = append(notFound, fmt.Errorf("transaction %s not found", opts.Transactions[idIndex]))

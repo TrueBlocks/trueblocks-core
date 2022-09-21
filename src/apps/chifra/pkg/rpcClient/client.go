@@ -100,6 +100,29 @@ func GetIDs(provider string) (uint64, uint64, error) {
 	return ch.Uint64(), n.Uint64(), nil
 }
 
+// TODO: C++ code used to cache version info
+func GetVersion(chain string) (version string, err error) {
+	provider := config.GetRpcProvider(chain)
+	var response struct {
+		Result string
+	}
+	err = FromRpc(
+		provider,
+		&RPCPayload{
+			Jsonrpc:   "2.0",
+			Method:    "web3_clientVersion",
+			RPCParams: RPCParams{},
+			ID:        1005,
+		},
+		&response,
+	)
+	if err != nil {
+		return
+	}
+	version = response.Result
+	return
+}
+
 // TxHashFromHash returns a transaction's hash if it's a valid transaction
 func TxHashFromHash(provider, hash string) (string, error) {
 	ec := GetClient(provider)
