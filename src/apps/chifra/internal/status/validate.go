@@ -31,10 +31,5 @@ func (opts *StatusOptions) validateStatus() error {
 		return err
 	}
 
-	err = validate.ValidateEnum("--migrate", opts.Migrate, "[test|cache|index]")
-	if err != nil {
-		return err
-	}
-
 	return opts.Globals.Validate()
 }

@@ -15,40 +15,16 @@
  * Parts of this file were generated with makeClass --options. Edit only those parts of
  * the code outside of the BEG_CODE/END_CODE sections
  */
-#include "acctlib.h"
-#include "cachebase.h"
-#include "cache.h"
-#include "chaincache.h"
-#include "abicacheitem.h"
-#include "abicache.h"
-#include "monitorcacheitem.h"
-#include "monitorcache.h"
-#include "indexcacheitem.h"
-#include "indexcache.h"
-#include "namecache.h"
-#include "slurpcache.h"
-#include "status.h"
-#include "statusterse.h"
+#include "etherlib.h"
 
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
 
-//-------------------------------------------------------------------------
-class COptions : public CAbiOptions {
+//-----------------------------------------------------------------------------
+class COptions : public COptionsBase {
   public:
     // BEG_CODE_DECLARE
-    bool details;
-    uint64_t depth;
-    bool terse;
     // END_CODE_DECLARE
-
-    CStatus status;
-    string_q mode;
-    string_q origMode;
-    CIndexHashMap bloomHashes;
-    CIndexHashMap indexHashes;
-    blkrange_t scanRange;
-    CMetaData meta;
 
     COptions(void);
     ~COptions(void);
@@ -56,37 +32,53 @@ class COptions : public CAbiOptions {
     bool parseArguments(string_q& command) override;
     void Init(void) override;
 
-    bool handle_status(ostream& os);
     bool handle_migrate(const CStringArray& cachePaths);
     bool handle_migrate_test(const CStringArray& cachePaths);
 };
 
 //-------------------------------------------------------------------------
-extern bool noteMonitor_light(const string_q& path, void* data);
-extern bool noteMonitor(const string_q& path, void* data);
-extern bool noteABI(const string_q& path, void* data);
-extern bool noteIndex(const string_q& path, void* data);
-
-//-------------------------------------------------------------------------
-class CItemCounter : public CCache {
+class CMigrationChecker {
   public:
-    COptions* options;
-    CCache* cachePtr;
-    CIndexCacheItemArray* indexArray;
-    CMonitorCacheItemArray* monitorArray;
-    CAbiCacheItemArray* abiArray;
-    blkrange_t fileRange;
-    CItemCounter(COptions* opt) : CCache(), options(opt) {
-        cachePtr = NULL;
-        indexArray = NULL;
-        monitorArray = NULL;
-        abiArray = NULL;
+    bool needs;
+    string_q path;
+    string_q msg;
+    size_t nSeen;
+    size_t nMigrated;
+    size_t nSkipped;
+    string_q which;
+
+    CMigrationChecker(const string_q& p, const string_q& w)
+        : needs(false), path(p), msg(""), nSeen(0), nMigrated(0), nSkipped(0), which(w) {
     }
 
-  public:
-    CItemCounter(void) : CCache() {
+    CMigrationChecker(const CMigrationChecker& mig) {
+        nSeen = mig.nSeen;
+        nMigrated = mig.nMigrated;
+        nSkipped = mig.nSkipped;
+        path = mig.path;
+        msg = mig.msg;
     }
+
+    CMigrationChecker& operator+=(const CMigrationChecker& mig) {
+        nSeen += mig.nSeen;
+        nMigrated += mig.nMigrated;
+        nSkipped += mig.nSkipped;
+        return *this;
+    }
+
+    string_q Report(void) const {
+        ostringstream os;
+        os << relativize(path) << ": ";
+        os << nSeen << " files seen. ";
+        os << nMigrated << " files migrated. ";
+        os << (nSeen - nMigrated) << " files up to date. ";
+        os << nSkipped << " files skipped.";
+        return os.str();
+    }
+
+  private:
+    CMigrationChecker(void) = delete;
+    CMigrationChecker& operator=(const CMigrationChecker&) = delete;
 };
 
-extern bool countFiles(const string_q& path, void* data);
-extern bool countFilesInCache(const string_q& path, void* data);
+extern bool needsMigration(const string_q& path, void* data);

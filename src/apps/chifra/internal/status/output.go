@@ -12,7 +12,6 @@ package statusPkg
 import (
 	"net/http"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/spf13/cobra"
 )
 
@@ -43,17 +42,6 @@ func (opts *StatusOptions) StatusInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	if len(opts.Migrate) > 0 {
-		for _, m := range opts.Modes {
-			if m == "index" {
-				if opts.Migrate == "test" {
-					// Note this does not return if a migration is needed
-					index.CheckBackLevelIndex(opts.Globals.Chain)
-				}
-			}
-		}
-	}
-
 	if opts.Globals.ApiMode {
 		return nil, false
 	}
