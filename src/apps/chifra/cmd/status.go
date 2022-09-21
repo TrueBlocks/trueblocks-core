@@ -31,7 +31,7 @@ const usageStatus = `status <mode> [mode...] [flags]
 
 Arguments:
   modes - the type of status info to retrieve
-	One or more of [ index | monitors | collections | names | abis | caches | some | all ]`
+	One or more of [ index | monitors | names | abis | caches | some | all ]`
 
 const shortStatus = "report on the status of the TrueBlocks system"
 

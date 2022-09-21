@@ -19,8 +19,6 @@
 #include "classes/chaincache.h"
 #include "classes/abicacheitem.h"
 #include "classes/abicache.h"
-#include "classes/collectioncacheitem.h"
-#include "classes/collectioncache.h"
 #include "classes/monitorcacheitem.h"
 #include "classes/monitorcache.h"
 #include "classes/indexcacheitem.h"

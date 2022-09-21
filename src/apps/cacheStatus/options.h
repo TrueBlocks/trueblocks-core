@@ -62,7 +62,6 @@ class CItemCounter : public CCache {
     CIndexCacheItemArray* indexArray;
     CMonitorCacheItemArray* monitorArray;
     CAbiCacheItemArray* abiArray;
-    CCollectionCacheItemArray* collectionArray;
     blkrange_t fileRange;
     CItemCounter(COptions* opt) : CCache(), options(opt) {
         cachePtr = NULL;

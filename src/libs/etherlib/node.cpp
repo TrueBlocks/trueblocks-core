@@ -72,7 +72,6 @@ void etherlib_init(QUITHANDLER qh) {
     CRPCResult::registerClass();
     CAccountName::registerClass();
     CConfigEnv::registerClass();
-    CCollection::registerClass();
     CCacheEntry::registerClass();
 
     establishFolder(rootConfigs);

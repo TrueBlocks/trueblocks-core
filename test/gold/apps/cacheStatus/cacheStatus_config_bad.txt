@@ -1,13 +1,13 @@
 chifra status  config
 TEST[DATE|TIME] Modes:  [config]
 TEST[DATE|TIME] Depth:  0
-Error: The modes option (config) must be one of [ index | monitors | collections | names | abis | caches | some | all ]
+Error: The modes option (config) must be one of [ index | monitors | names | abis | caches | some | all ]
 Usage:
   chifra status <mode> [mode...] [flags]
 
 Arguments:
   modes - the type of status info to retrieve
-	One or more of [ index | monitors | collections | names | abis | caches | some | all ]
+	One or more of [ index | monitors | names | abis | caches | some | all ]
 
 Flags:
   -d, --details            include details about items found in monitors, slurps, abis, or price caches

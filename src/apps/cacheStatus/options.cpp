@@ -20,7 +20,7 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("modes", "", "list<enum[index|monitors|collections|names|abis|caches|some*|all]>", OPT_POSITIONAL, "the type of status info to retrieve"),  // NOLINT
+    COption("modes", "", "list<enum[index|monitors|names|abis|caches|some*|all]>", OPT_POSITIONAL, "the type of status info to retrieve"),  // NOLINT
     COption("details", "d", "", OPT_SWITCH, "include details about items found in monitors, slurps, abis, or price caches"),  // NOLINT
     COption("types", "t", "list<enum[blocks|txs|traces|slurps|all*]>", OPT_FLAG, "for caches mode only, which type(s) of cache to report"),  // NOLINT
     COption("depth", "p", "<uint64>", OPT_HIDDEN | OPT_FLAG, "for cache mode only, number of levels deep to report"),
@@ -154,9 +154,9 @@ bool COptions::parseArguments(string_q& command) {
     scanRange = make_pair(first_block, last_block);
 
     if (mode.empty() || contains(mode, "some"))
-        mode = "index|monitors|collections|names|slurps";
+        mode = "index|monitors|names|slurps";
     if (contains(mode, "all")) {
-        mode = "index|monitors|collections|names|abis|caches";
+        mode = "index|monitors|names|abis|caches";
         types.push_back("all");
     }
     mode = "|" + trim(mode, '|') + "|";
@@ -180,7 +180,6 @@ bool COptions::parseArguments(string_q& command) {
     if (!details) {
         HIDE_FIELD(CMonitorCache, "items");
         HIDE_FIELD(CSlurpCache, "items");
-        HIDE_FIELD(CCollectionCache, "items");
         HIDE_FIELD(CAbiCache, "items");
         HIDE_FIELD(CChainCache, "items");
     }
@@ -259,8 +258,6 @@ COptions::COptions(void) {
     CStatus::registerClass();
     CStatusTerse::registerClass();
     CCache::registerClass();
-    CCollectionCache::registerClass();
-    CCollectionCacheItem::registerClass();
     CIndexCache::registerClass();
     CIndexCacheItem::registerClass();
     CAbiCache::registerClass();

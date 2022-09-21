@@ -25,7 +25,6 @@ on      ,cmd  ,fast  ,null    ,apps/chifra ,help_when             ,n    ,modes =
 local   ,both ,fast  ,export  ,apps/chifra ,run_rm                ,y    ,modes = monitors & addrs = 0x807640a13483f8ac783c557fcdf27be11ea4ac7a & remove
 on      ,both ,fast  ,names   ,apps/chifra ,run_names             ,y    ,modes = names & terms = 50-Tokens & expand
 on      ,both ,fast  ,names   ,apps/chifra ,run_names_tags        ,y    ,modes = names & tags
-on      ,both ,fast  ,names   ,apps/chifra ,run_names_collections ,y    ,modes = names & collections
 local   ,both ,fast  ,slurp   ,apps/chifra ,run_slurp             ,y    ,modes = slurp & addrs = 0x1234567812345678123456781234567812345678
 on      ,cmd  ,fast  ,explore ,apps/chifra ,run_explore           ,n    ,modes = explore & terms = 0x1234567812345678123456781234567812345678
 on      ,both ,fast  ,blocks  ,apps/chifra ,run_blocks            ,y    ,modes = blocks & blocks = 12

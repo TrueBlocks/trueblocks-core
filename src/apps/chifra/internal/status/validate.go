@@ -26,7 +26,7 @@ func (opts *StatusOptions) validateStatus() error {
 		return err
 	}
 
-	err = validate.ValidateEnumSlice("modes", opts.Modes, "[index|monitors|collections|names|abis|caches|some|all]")
+	err = validate.ValidateEnumSlice("modes", opts.Modes, "[index|monitors|names|abis|caches|some|all]")
 	if err != nil {
 		return err
 	}

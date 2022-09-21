@@ -597,14 +597,6 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: collections
-          description: display collections data
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: tags
           description: export the list of tags and subtags only
           required: false
@@ -1420,7 +1412,6 @@ paths:
               enum:
                 - index
                 - monitors
-                - collections
                 - names
                 - abis
                 - caches

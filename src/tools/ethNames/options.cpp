@@ -29,7 +29,6 @@ static const COption params[] = {
     COption("prefund", "p", "", OPT_SWITCH, "include prefund accounts"),
     COption("named", "n", "", OPT_SWITCH, "include well know token and airdrop addresses in the search"),
     COption("addr", "a", "", OPT_SWITCH, "display only addresses in the results (useful for scripting)"),
-    COption("collections", "s", "", OPT_SWITCH, "display collections data"),
     COption("tags", "g", "", OPT_SWITCH, "export the list of tags and subtags only"),
     COption("to_custom", "u", "", OPT_HIDDEN | OPT_SWITCH, "for editCmd only, is the edited name a custom name or not"),
     COption("clean", "C", "", OPT_HIDDEN | OPT_SWITCH, "clean the data (addrs to lower case, sort by addr)"),
@@ -99,9 +98,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-a" || arg == "--addr") {
             addr = true;
-
-        } else if (arg == "-s" || arg == "--collections") {
-            collections = true;
 
         } else if (arg == "-g" || arg == "--tags") {
             tags = true;
@@ -213,14 +209,6 @@ bool COptions::parseArguments(string_q& command) {
         searches.push_back(term);
 
 #define anyBase() (match_case || expand || all || prefund || named || addr || to_custom || clean)
-
-    if (collections) {
-        if (anyBase())
-            return usage("Do not use the --collections option with any other option.");
-        handle_collections(terms);
-        return false;
-    }
-
     if (expand) {
         searchFields = STR_DISPLAY_ACCOUNTNAME;
         format = searchFields;
@@ -322,7 +310,6 @@ void COptions::Init(void) {
     // BEG_CODE_INIT
     match_case = false;
     prefund = false;
-    collections = false;
     tags = false;
     to_custom = false;
     // END_CODE_INIT
