@@ -33,9 +33,8 @@ on      ,both ,fast  ,receipts ,tools/getReceipts ,fmt_api             ,y    ,tr
 on      ,both ,fast  ,receipts ,tools/getReceipts ,fmt_json            ,y    ,transactions = 2222222.0 2332332.0 & fmt = json
 on      ,cmd  ,fast  ,receipts ,tools/getReceipts ,fmt_junk            ,y    ,transactions = 2222222.0 2332332.0 & fmt = junk
 on      ,cmd  ,fast  ,receipts ,tools/getReceipts ,by_filebad          ,n    ,file = cmd_file & bad
-on      ,cmd  ,fast  ,receipts ,tools/getReceipts ,by_file             ,n    ,file = cmd_file
-on      ,cmd  ,fast  ,receipts ,tools/getReceipts ,by_file_v           ,n    ,file = cmd_file & fmt = api & verbose
-on      ,both ,fast  ,receipts ,tools/getReceipts ,to_file             ,y    ,transactions = 2222222.0 2332332.0 & fmt = json & to_file
+off      ,cmd  ,fast  ,receipts ,tools/getReceipts ,by_file             ,n    ,file = cmd_file
+off      ,cmd  ,fast  ,receipts ,tools/getReceipts ,by_file_v           ,n    ,file = cmd_file & fmt = api & verbose
+off      ,both ,fast  ,receipts ,tools/getReceipts ,to_file             ,y    ,transactions = 2222222.0 2332332.0 & fmt = json & to_file
 
 off     ,both ,fast  ,receipts ,tools/getReceipts ,multi_articulate    ,y    ,transactions = 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f & articulate & fmt = json
-
