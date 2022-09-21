@@ -143,7 +143,7 @@ func StreamMany[Raw types.RawData](
 		select {
 		case model, ok := <-models:
 			if !ok {
-				return nil
+				continue
 			}
 
 			// If the output is JSON and we are printing another item, put `,` in front of it

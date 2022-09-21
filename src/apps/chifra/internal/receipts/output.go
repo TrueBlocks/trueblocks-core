@@ -12,6 +12,8 @@ package receiptsPkg
 import (
 	"fmt"
 	"net/http"
+	"os"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
@@ -54,9 +56,21 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 		return err, true
 	}
 
+	notFound := make([]error, 0)
+	defer func() {
+		for _, err := range notFound {
+			fmt.Fprintln(os.Stderr, err)
+		}
+	}()
+
 	getTransaction := func(models chan types.Modeler[types.RawReceipt], errors chan error) {
 		for idIndex, rng := range opts.TransactionIds {
 			txList, err := rng.ResolveTxs(opts.Globals.Chain)
+			// TODO: rpcClient should return a custom type of error in this case
+			if err != nil && strings.Contains(err.Error(), "not found") {
+				notFound = append(notFound, err)
+				continue
+			}
 			if err != nil {
 				errors <- err
 				return
@@ -64,8 +78,8 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 			for _, tx := range txList {
 				receipt, err := rpcClient.GetTransactionReceipt(opts.Globals.Chain, uint64(tx.BlockNumber), uint64(tx.TransactionIndex))
 				if err != nil && err.Error() == "not found" {
-					errors <- fmt.Errorf("transaction %s not found", opts.Transactions[idIndex])
-					return
+					notFound = append(notFound, fmt.Errorf("transaction %s not found", opts.Transactions[idIndex]))
+					continue
 				}
 				if err != nil {
 					errors <- err

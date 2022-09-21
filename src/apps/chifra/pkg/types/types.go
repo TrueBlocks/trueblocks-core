@@ -195,6 +195,11 @@ func (r *SimpleReceipt) Model(showHidden bool, format string) Model {
 		}...)
 	}
 
+	if format == "api" {
+		model["logs"] = r.Logs
+		order = append(order, []string{"logs"}...)
+	}
+
 	return Model{
 		Data:  model,
 		Order: order,
