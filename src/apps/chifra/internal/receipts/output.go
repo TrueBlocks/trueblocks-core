@@ -76,11 +76,19 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 			}
 		}
 	}
+	var meta *rpcClient.MetaData
+	if opts.Globals.Format == "api" {
+		meta, err = rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
+		if err != nil {
+			return err, true
+		}
+	}
 	err = output.StreamMany(opts.Globals.Writer, getTransaction, output.OutputOptions{
 		ShowKeys:   !opts.Globals.NoHeader,
 		ShowRaw:    opts.Globals.Raw,
 		ShowHidden: opts.Globals.Verbose,
 		Format:     opts.Globals.Format,
+		Meta:       meta,
 	})
 	if err != nil {
 		return err, true

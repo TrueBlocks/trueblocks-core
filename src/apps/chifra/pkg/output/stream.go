@@ -147,7 +147,7 @@ func StreamMany[Raw types.RawData](
 			}
 
 			// If the output is JSON and we are printing another item, put `,` in front of it
-			if !first && options.Format == "json" {
+			if !first && (options.Format == "json" || options.Format == "api") {
 				w.Write([]byte(","))
 			}
 			var err error
