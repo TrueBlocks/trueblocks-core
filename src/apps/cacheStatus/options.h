@@ -15,7 +15,20 @@
  * Parts of this file were generated with makeClass --options. Edit only those parts of
  * the code outside of the BEG_CODE/END_CODE sections
  */
-#include "cachelib.h"
+#include "acctlib.h"
+#include "cachebase.h"
+#include "cache.h"
+#include "chaincache.h"
+#include "abicacheitem.h"
+#include "abicache.h"
+#include "monitorcacheitem.h"
+#include "monitorcache.h"
+#include "indexcacheitem.h"
+#include "indexcache.h"
+#include "namecache.h"
+#include "slurpcache.h"
+#include "status.h"
+#include "statusterse.h"
 
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
@@ -120,4 +133,6 @@ class CMigrationChecker {
     CMigrationChecker& operator=(const CMigrationChecker&) = delete;
 };
 
-bool needsMigration(const string_q& path, void* data);
+extern bool needsMigration(const string_q& path, void* data);
+extern bool countFiles(const string_q& path, void* data);
+extern bool countFilesInCache(const string_q& path, void* data);
