@@ -125,10 +125,8 @@ func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChan
 		// RPCPayload is used during to make calls to the RPC.
 		var traces rpcClient.Traces
 		tracePayload := rpcClient.RPCPayload{
-			Jsonrpc:   "2.0",
 			Method:    "trace_block",
 			RPCParams: rpcClient.RPCParams{fmt.Sprintf("0x%x", blockNum)},
-			ID:        1002,
 		}
 		err = rpcClient.FromRpc(opts.RpcProvider, &tracePayload, &traces)
 		if err != nil {
@@ -138,10 +136,8 @@ func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChan
 
 		var logs rpcClient.Logs
 		logsPayload := rpcClient.RPCPayload{
-			Jsonrpc:   "2.0",
 			Method:    "eth_getLogs",
 			RPCParams: rpcClient.RPCParams{rpcClient.LogFilter{Fromblock: fmt.Sprintf("0x%x", blockNum), Toblock: fmt.Sprintf("0x%x", blockNum)}},
-			ID:        1003,
 		}
 		err = rpcClient.FromRpc(opts.RpcProvider, &logsPayload, &logs)
 		if err != nil {
@@ -328,10 +324,8 @@ func (opts *BlazeOptions) BlazeExtractFromTraces(bn int, traces *rpcClient.Trace
 					if traces.Result[i].Error != "" {
 						var receipt rpcClient.Receipt
 						var txReceiptPl = rpcClient.RPCPayload{
-							Jsonrpc:   "2.0",
 							Method:    "eth_getTransactionReceipt",
 							RPCParams: rpcClient.RPCParams{traces.Result[i].TransactionHash},
-							ID:        1005,
 						}
 						err = rpcClient.FromRpc(opts.RpcProvider, &txReceiptPl, &receipt)
 						if err != nil {

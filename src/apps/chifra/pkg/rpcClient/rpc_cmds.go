@@ -9,11 +9,26 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"sync/atomic"
 )
+
+var rpcCounter uint32
 
 // FromRpc Returns all traces for a given block.
 func FromRpc(rpcProvider string, payload *RPCPayload, ret interface{}) error {
-	plBytes, err := json.Marshal(payload)
+	type rpcPayload struct {
+		Jsonrpc   string `json:"jsonrpc"`
+		Method    string `json:"method"`
+		RPCParams `json:"params"`
+		ID        int `json:"id"`
+	}
+	payloadToSend := rpcPayload{
+		Jsonrpc:   "2.0",
+		Method:    payload.Method,
+		RPCParams: payload.RPCParams,
+		ID:        int(atomic.AddUint32(&rpcCounter, 1)),
+	}
+	plBytes, err := json.Marshal(payloadToSend)
 	if err != nil {
 		return err
 	}
@@ -171,10 +186,8 @@ type RPCParams []interface{}
 
 // RPCPayload is used during to make calls to the RPC.
 type RPCPayload struct {
-	Jsonrpc   string `json:"jsonrpc"`
 	Method    string `json:"method"`
 	RPCParams `json:"params"`
-	ID        int `json:"id"`
 }
 
 // LogFilter is used the eth_getLogs RPC call to identify the block range to query

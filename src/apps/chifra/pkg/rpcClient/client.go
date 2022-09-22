@@ -109,10 +109,8 @@ func GetVersion(chain string) (version string, err error) {
 	err = FromRpc(
 		provider,
 		&RPCPayload{
-			Jsonrpc:   "2.0",
 			Method:    "web3_clientVersion",
 			RPCParams: RPCParams{},
-			ID:        1005,
 		},
 		&response,
 	)
@@ -180,10 +178,8 @@ func GetRawTransactionReceipt(chain string, bn uint64, txid uint64) (receipt *ty
 	err = FromRpc(
 		config.GetRpcProvider(chain),
 		&RPCPayload{
-			Jsonrpc:   "2.0",
 			Method:    "eth_getTransactionReceipt",
 			RPCParams: RPCParams{tx.Hash().Hex()},
-			ID:        1005,
 		},
 		&response,
 	)
@@ -304,10 +300,8 @@ func TxHashFromNumberAndId(provider string, blkNum, txId uint64) (string, error)
 func TxNumberAndIdFromHash(provider string, hash string) (uint64, uint64, error) {
 	var trans Transaction
 	transPayload := RPCPayload{
-		Jsonrpc:   "2.0",
 		Method:    "eth_getTransactionByHash",
 		RPCParams: RPCParams{hash},
-		ID:        1002,
 	}
 	err := FromRpc(provider, &transPayload, &trans)
 	if err != nil {
@@ -439,10 +433,8 @@ func DecodeHex(hex string) []byte {
 func GetBlockByNumber(chain string, bn uint64) (types.SimpleNamedBlock, error) {
 	var block BlockHeader
 	var payload = RPCPayload{
-		Jsonrpc:   "2.0",
 		Method:    "eth_getBlockByNumber",
 		RPCParams: RPCParams{fmt.Sprintf("0x%x", bn), false},
-		ID:        1005,
 	}
 	rpcProvider := config.GetRpcProvider(chain)
 	err := FromRpc(rpcProvider, &payload, &block)
