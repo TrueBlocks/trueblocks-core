@@ -23,7 +23,6 @@ import (
 )
 
 // EXISTING_CODE
-var byzantiumBlockNumber = 4370000
 
 // RunReceipts handles the receipts command for the command line. Returns error only as per cobra.
 func RunReceipts(cmd *cobra.Command, args []string) (err error) {
@@ -40,18 +39,6 @@ func ServeReceipts(w http.ResponseWriter, r *http.Request) (err error, handled b
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return opts.ReceiptsInternal()
-}
-
-// TODO: remove this function when rewrite to Go is completed. It is only used to send
-// pre-Byzantium transactions to C++ version
-func getReceiptsCmdLine(opts *ReceiptsOptions, txs []string) string {
-	options := ""
-	if opts.Articulate {
-		options += " --articulate"
-	}
-
-	options += " " + strings.Join(txs, " ")
-	return options
 }
 
 // ReceiptsInternal handles the internal workings of the receipts command.  Returns error and a bool if handled
@@ -83,6 +70,7 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 	erigonUsed := utils.IsClientErigon(clientVersion)
 
 	getTransaction := func(models chan types.Modeler[types.RawReceipt], errors chan error) {
+		// TODO: stream transaction identifiers
 		for idIndex, rng := range opts.TransactionIds {
 			txList, err := rng.ResolveTxs(opts.Globals.Chain)
 			// TODO: rpcClient should return a custom type of error in this case
@@ -132,11 +120,24 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 		Format:     opts.Globals.Format,
 		Meta:       meta,
 	})
-	if err != nil {
-		return err, true
-	}
-	return nil, true
+	handled = true
+	return
 }
 
 // EXISTING_CODE
+// TODO: create EXISTING CODE block at the beginning of this file to keep constants ther
+var byzantiumBlockNumber = 4370000
+
+// TODO: remove this function when rewrite to Go is completed. It is only used to send
+// pre-Byzantium transactions to C++ version
+func getReceiptsCmdLine(opts *ReceiptsOptions, txs []string) string {
+	options := ""
+	if opts.Articulate {
+		options += " --articulate"
+	}
+
+	options += " " + strings.Join(txs, " ")
+	return options
+}
+
 // EXISTING_CODE
