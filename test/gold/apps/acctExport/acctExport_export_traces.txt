@@ -6,8 +6,12 @@ TEST[DATE|TIME] LastBlock:  1506480
 TEST[DATE|TIME] Format:  api
 {"data": [
 {
+  "blockHash": "0x1816ff22f84af23df70df8e6ae5c40a8780c16a0860ca1a25a4c911eba76c65a",
+  "blockNumber": 202249,
   "subtraces": 0,
   "traceAddress": null,
+  "transactionHash": "0x6e443af86a84920cace198340020e4ca54321a2c515cd3ad1f274d3506b4aff8",
+  "transactionIndex": 0,
   "type": "call",
   "action": {
     "selfDestructed": "0x0",
@@ -27,8 +31,12 @@ TEST[DATE|TIME] Format:  api
   }
 }
 , {
+  "blockHash": "0x66b5597c4a991decb68f56b94245a93485e4a30a3d77f95e6c32a3d4f91e2051",
+  "blockNumber": 1501459,
   "subtraces": 0,
   "traceAddress": null,
+  "transactionHash": "0xe1822bdf66fb415883f85b61a4a5ab1c13c4c7ab4b102c5d00504347a69b84f5",
+  "transactionIndex": 2,
   "type": "call",
   "action": {
     "selfDestructed": "0x0",
