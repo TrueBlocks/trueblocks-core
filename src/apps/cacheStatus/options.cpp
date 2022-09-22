@@ -163,6 +163,13 @@ bool COptions::parseArguments(string_q& command) {
         HIDE_FIELD(CSlurpCache, "items");
         HIDE_FIELD(CAbiCache, "items");
         HIDE_FIELD(CChainCache, "items");
+        HIDE_FIELD(CAbiCache, "items");
+        HIDE_FIELD(CAbiCacheItem, "items");
+        HIDE_FIELD(CChainCache, "items");
+        HIDE_FIELD(CIndexCache, "items");
+        HIDE_FIELD(CMonitorCache, "items");
+        HIDE_FIELD(CNameCache, "items");
+        HIDE_FIELD(CSlurpCache, "items");
     }
     if (isTestMode()) {
         HIDE_FIELD(CChain, "ipfsGateway");
@@ -188,7 +195,6 @@ void COptions::Init(void) {
 
     scanRange = make_pair(0, NOPOS);
     mode = "";
-
 #ifndef HOST_NAME_MAX
 #define HOST_NAME_MAX 256
 #endif
