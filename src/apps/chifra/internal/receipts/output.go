@@ -24,6 +24,8 @@ import (
 
 // EXISTING_CODE
 
+// EXISTING_CODE
+
 // RunReceipts handles the receipts command for the command line. Returns error only as per cobra.
 func RunReceipts(cmd *cobra.Command, args []string) (err error) {
 	opts := receiptsFinishParse(args)
