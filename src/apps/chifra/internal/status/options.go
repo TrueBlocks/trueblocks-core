@@ -33,7 +33,10 @@ type StatusOptions struct {
 	BadFlag    error                 `json:"badFlag,omitempty"`    // An error flag if needed
 }
 
-var statusCmdLineOptions StatusOptions
+var defaultStatusOptions = StatusOptions{
+	Depth:     utils.NOPOS,
+	LastBlock: utils.NOPOS,
+}
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *StatusOptions) testLog() {
@@ -91,7 +94,8 @@ func (opts *StatusOptions) toCmdLine() string {
 
 // statusFinishParseApi finishes the parsing for server invocations. Returns a new StatusOptions.
 func statusFinishParseApi(w http.ResponseWriter, r *http.Request) *StatusOptions {
-	opts := &StatusOptions{}
+	copy := defaultStatusOptions
+	opts := &copy
 	opts.Depth = utils.NOPOS
 	opts.FirstBlock = 0
 	opts.LastBlock = utils.NOPOS
@@ -151,5 +155,5 @@ func statusFinishParse(args []string) *StatusOptions {
 func GetOptions() *StatusOptions {
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return &statusCmdLineOptions
+	return &defaultStatusOptions
 }

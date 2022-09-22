@@ -36,7 +36,9 @@ type ChunksOptions struct {
 	BadFlag  error                    `json:"badFlag,omitempty"`  // An error flag if needed
 }
 
-var chunksCmdLineOptions ChunksOptions
+var defaultChunksOptions = ChunksOptions{
+	Truncate: utils.NOPOS,
+}
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *ChunksOptions) testLog() {
@@ -60,7 +62,8 @@ func (opts *ChunksOptions) String() string {
 
 // chunksFinishParseApi finishes the parsing for server invocations. Returns a new ChunksOptions.
 func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions {
-	opts := &ChunksOptions{}
+	copy := defaultChunksOptions
+	opts := &copy
 	opts.Truncate = utils.NOPOS
 	opts.Sleep = 0.0
 	for key, value := range r.URL.Query() {
@@ -138,5 +141,5 @@ func chunksFinishParse(args []string) *ChunksOptions {
 func GetOptions() *ChunksOptions {
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return &chunksCmdLineOptions
+	return &defaultChunksOptions
 }

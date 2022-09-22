@@ -9,9 +9,7 @@ package scrapePkg
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
@@ -31,7 +29,9 @@ type ScrapeOptions struct {
 	BadFlag    error                    `json:"badFlag,omitempty"`    // An error flag if needed
 }
 
-var scrapeCmdLineOptions ScrapeOptions
+var defaultScrapeOptions = ScrapeOptions{
+	BlockCnt: 2000,
+}
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *ScrapeOptions) testLog() {
@@ -50,27 +50,10 @@ func (opts *ScrapeOptions) String() string {
 	return string(b)
 }
 
-// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
-func (opts *ScrapeOptions) getEnvStr() []string {
-	envStr := []string{}
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return envStr
-}
-
-// toCmdLine converts the option to a command line for calling out to the system.
-func (opts *ScrapeOptions) toCmdLine() string {
-	options := ""
-	options += " " + strings.Join([]string{}, " ")
-	// EXISTING_CODE
-	// EXISTING_CODE
-	options += fmt.Sprintf("%s", "") // silence compiler warning for auto gen
-	return options
-}
-
 // scrapeFinishParseApi finishes the parsing for server invocations. Returns a new ScrapeOptions.
 func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions {
-	opts := &ScrapeOptions{}
+	copy := defaultScrapeOptions
+	opts := &copy
 	opts.BlockCnt = 2000
 	opts.Sleep = 14
 	opts.StartBlock = 0
@@ -140,5 +123,5 @@ func scrapeFinishParse(args []string) *ScrapeOptions {
 func GetOptions() *ScrapeOptions {
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return &scrapeCmdLineOptions
+	return &defaultScrapeOptions
 }

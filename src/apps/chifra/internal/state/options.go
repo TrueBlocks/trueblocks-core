@@ -34,7 +34,7 @@ type StateOptions struct {
 	BadFlag  error                    `json:"badFlag,omitempty"`  // An error flag if needed
 }
 
-var stateCmdLineOptions StateOptions
+var defaultStateOptions = StateOptions{}
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *StateOptions) testLog() {
@@ -90,7 +90,8 @@ func (opts *StateOptions) toCmdLine() string {
 
 // stateFinishParseApi finishes the parsing for server invocations. Returns a new StateOptions.
 func stateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
-	opts := &StateOptions{}
+	copy := defaultStateOptions
+	opts := &copy
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "addrs":
@@ -164,5 +165,5 @@ func stateFinishParse(args []string) *StateOptions {
 func GetOptions() *StateOptions {
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return &stateCmdLineOptions
+	return &defaultStateOptions
 }

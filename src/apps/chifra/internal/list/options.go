@@ -31,7 +31,9 @@ type ListOptions struct {
 	BadFlag     error                 `json:"badFlag,omitempty"`     // An error flag if needed
 }
 
-var listCmdLineOptions ListOptions
+var defaultListOptions = ListOptions{
+	LastBlock: utils.NOPOS,
+}
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *ListOptions) testLog() {
@@ -52,7 +54,8 @@ func (opts *ListOptions) String() string {
 
 // listFinishParseApi finishes the parsing for server invocations. Returns a new ListOptions.
 func listFinishParseApi(w http.ResponseWriter, r *http.Request) *ListOptions {
-	opts := &ListOptions{}
+	copy := defaultListOptions
+	opts := &copy
 	opts.FirstBlock = 0
 	opts.LastBlock = utils.NOPOS
 	for key, value := range r.URL.Query() {
@@ -104,5 +107,5 @@ func listFinishParse(args []string) *ListOptions {
 func GetOptions() *ListOptions {
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return &listCmdLineOptions
+	return &defaultListOptions
 }

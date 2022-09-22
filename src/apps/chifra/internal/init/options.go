@@ -25,7 +25,7 @@ type InitOptions struct {
 	BadFlag    error                 `json:"badFlag,omitempty"`    // An error flag if needed
 }
 
-var initCmdLineOptions InitOptions
+var defaultInitOptions = InitOptions{}
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *InitOptions) testLog() {
@@ -43,7 +43,8 @@ func (opts *InitOptions) String() string {
 
 // initFinishParseApi finishes the parsing for server invocations. Returns a new InitOptions.
 func initFinishParseApi(w http.ResponseWriter, r *http.Request) *InitOptions {
-	opts := &InitOptions{}
+	copy := defaultInitOptions
+	opts := &copy
 	opts.FirstBlock = 0
 	opts.Sleep = 0.0
 	for key, value := range r.URL.Query() {
@@ -87,5 +88,5 @@ func initFinishParse(args []string) *InitOptions {
 func GetOptions() *InitOptions {
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return &initCmdLineOptions
+	return &defaultInitOptions
 }

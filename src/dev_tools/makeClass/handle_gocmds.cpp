@@ -21,6 +21,7 @@ extern string_q get_config_override(const CCommandOption& cmd);
 extern string_q get_config_package(const CCommandOption& cmd);
 extern string_q get_setopts(const CCommandOption& cmd);
 extern string_q get_testlogs(const CCommandOption& cmd);
+extern string_q get_godefaults(const CCommandOption& cmd);
 extern string_q get_copyopts(const CCommandOption& cmd);
 extern string_q get_positionals2(const CCommandOption& cmd);
 extern string_q get_use(const CCommandOption& cmd);
@@ -111,6 +112,7 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     replaceAll(source, "[{TEST_LOGS}]", get_testlogs(p));
     replaceAll(source, "[{DASH_STR}]", get_copyopts(p));
     replaceAll(source, "[{POSITIONALS}]", get_positionals2(p));
+    replaceAll(source, "[{GODEFS}]", get_godefaults(p));
     replaceAll(source, "opts.LastBlock != utils.NOPOS", "opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS");
     source = clean_go_positionals(source, hasEns);
     if (isFullyPorted(p.api_route)) {
@@ -274,6 +276,45 @@ string_q get_notes2(const CCommandOption& cmd) {
 
 string_q noUnderbars(const string_q& in) {
     return substitute(toProper(in), "_", "");
+}
+
+bool isDef(const CCommandOption& p) {
+    if (p.generate == "config")
+        return true;
+    if (p.def_val.empty())
+        return true;
+    if (p.def_val == "\"\"")
+        return true;
+    if (p.def_val == "0")
+        return true;
+    if (p.def_val == "0.0")
+        return true;
+    if (p.def_val == "false")
+        return true;
+    if (contains(p.go_type, "[]"))
+        return true;
+    if (p.longName == "sleep")
+        return true;
+    return false;
+}
+
+string_q get_godefaults(const CCommandOption& cmd) {
+    size_t wid = 0;
+    for (auto p : *((CCommandOptionArray*)cmd.params)) {
+        if (!isDef(p)) {
+            wid = max(wid, p.Format("[{VARIABLE}]").length());
+        }
+    }
+
+    ostringstream os;
+    for (auto p : *((CCommandOptionArray*)cmd.params)) {
+        if (!isDef(p)) {
+            string_q val = substitute(p.def_val, "NOPOS", "utils.NOPOS");
+            os << "\t" << padRight(p.Format("[{VARIABLE}]") + ": ", wid + 2, ' ') << val << "," << endl;
+        }
+    }
+
+    return os.str().length() == 0 ? "" : "\n" + os.str();
 }
 
 string_q get_testlogs(const CCommandOption& cmd) {

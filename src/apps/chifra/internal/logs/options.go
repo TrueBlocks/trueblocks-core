@@ -28,7 +28,7 @@ type LogsOptions struct {
 	BadFlag        error                    `json:"badFlag,omitempty"`        // An error flag if needed
 }
 
-var logsCmdLineOptions LogsOptions
+var defaultLogsOptions = LogsOptions{}
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *LogsOptions) testLog() {
@@ -66,7 +66,8 @@ func (opts *LogsOptions) toCmdLine() string {
 
 // logsFinishParseApi finishes the parsing for server invocations. Returns a new LogsOptions.
 func logsFinishParseApi(w http.ResponseWriter, r *http.Request) *LogsOptions {
-	opts := &LogsOptions{}
+	copy := defaultLogsOptions
+	opts := &copy
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "transactions":
@@ -107,5 +108,5 @@ func logsFinishParse(args []string) *LogsOptions {
 func GetOptions() *LogsOptions {
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return &logsCmdLineOptions
+	return &defaultLogsOptions
 }

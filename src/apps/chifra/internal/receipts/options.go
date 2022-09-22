@@ -28,7 +28,7 @@ type ReceiptsOptions struct {
 	BadFlag        error                    `json:"badFlag,omitempty"`        // An error flag if needed
 }
 
-var receiptsCmdLineOptions ReceiptsOptions
+var defaultReceiptsOptions = ReceiptsOptions{}
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *ReceiptsOptions) testLog() {
@@ -66,7 +66,8 @@ func (opts *ReceiptsOptions) toCmdLine() string {
 
 // receiptsFinishParseApi finishes the parsing for server invocations. Returns a new ReceiptsOptions.
 func receiptsFinishParseApi(w http.ResponseWriter, r *http.Request) *ReceiptsOptions {
-	opts := &ReceiptsOptions{}
+	copy := defaultReceiptsOptions
+	opts := &copy
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "transactions":
@@ -107,5 +108,5 @@ func receiptsFinishParse(args []string) *ReceiptsOptions {
 func GetOptions() *ReceiptsOptions {
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return &receiptsCmdLineOptions
+	return &defaultReceiptsOptions
 }

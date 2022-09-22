@@ -53,7 +53,10 @@ type ExportOptions struct {
 	BadFlag     error                 `json:"badFlag,omitempty"`     // An error flag if needed
 }
 
-var exportCmdLineOptions ExportOptions
+var defaultExportOptions = ExportOptions{
+	MaxRecords: 250,
+	LastBlock:  utils.NOPOS,
+}
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *ExportOptions) testLog() {
@@ -184,7 +187,8 @@ func (opts *ExportOptions) toCmdLine() string {
 
 // exportFinishParseApi finishes the parsing for server invocations. Returns a new ExportOptions.
 func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions {
-	opts := &ExportOptions{}
+	copy := defaultExportOptions
+	opts := &copy
 	opts.FirstRecord = 0
 	opts.MaxRecords = 250
 	opts.FirstBlock = 0
@@ -308,5 +312,5 @@ func exportFinishParse(args []string) *ExportOptions {
 func GetOptions() *ExportOptions {
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return &exportCmdLineOptions
+	return &defaultExportOptions
 }

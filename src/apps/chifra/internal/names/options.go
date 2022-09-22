@@ -42,7 +42,7 @@ type NamesOptions struct {
 	BadFlag   error                 `json:"badFlag,omitempty"`   // An error flag if needed
 }
 
-var namesCmdLineOptions NamesOptions
+var defaultNamesOptions = NamesOptions{}
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *NamesOptions) testLog() {
@@ -140,7 +140,8 @@ func (opts *NamesOptions) toCmdLine() string {
 
 // namesFinishParseApi finishes the parsing for server invocations. Returns a new NamesOptions.
 func namesFinishParseApi(w http.ResponseWriter, r *http.Request) *NamesOptions {
-	opts := &NamesOptions{}
+	copy := defaultNamesOptions
+	opts := &copy
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "terms":
@@ -212,5 +213,5 @@ func namesFinishParse(args []string) *NamesOptions {
 func GetOptions() *NamesOptions {
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return &namesCmdLineOptions
+	return &defaultNamesOptions
 }
