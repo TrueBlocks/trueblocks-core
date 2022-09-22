@@ -7870,6 +7870,20 @@
       "bloomSize": 131114,
       "indexHash": "QmUttxLK98yWueR4LzFUCB63YV6bLa4kcMemzjyYbC44Xe",
       "indexSize": 6529352
+    },
+    {
+      "range": "024260997-024273534",
+      "bloomHash": "Qmbg5gCXQFRJxv3w18Xkq2FCvoELgSnMqZpBmj5UcMZAt5",
+      "bloomSize": 131114,
+      "indexHash": "QmPYb4afSZnCuKK3ABjssmjh4jPR2GR6XZDzoQX1nSGo6n",
+      "indexSize": 6633876
+    },
+    {
+      "range": "024273535-024289968",
+      "bloomHash": "QmPMKqQxsm2LCZSetTNzaaVMSSDDWDcbbGLi8bdVsyEHSn",
+      "bloomSize": 131114,
+      "indexHash": "QmPouc1WxxdUAnG81qYMRxZFmuU62e3ZvaEW1rqcjnuNYm",
+      "indexSize": 6831788
     }
   ]
 }
