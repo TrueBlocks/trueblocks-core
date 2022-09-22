@@ -19,10 +19,6 @@ func (opts *NamesOptions) validateNames() error {
 		return validate.Usage("The {0} option is not available{1}.", "--tags", " with any other option")
 	}
 
-	if opts.Collections && opts.anyBase() {
-		return validate.Usage("The {0} option is not available{1}.", "--collection", " with any other option")
-	}
-
 	return opts.Globals.Validate()
 }
 

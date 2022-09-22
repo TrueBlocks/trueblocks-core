@@ -554,6 +554,13 @@ bool COptions::setDisplayFormatting(void) {
             SHOW_FIELD(CReceipt, "blockNumber");
             SHOW_FIELD(CReceipt, "transactionIndex");
         }
+
+        if (traces) {
+            SHOW_FIELD(CTrace, "blockNumber");
+            SHOW_FIELD(CTrace, "transactionIndex");
+            SHOW_FIELD(CTrace, "blockHash");
+            SHOW_FIELD(CTrace, "transactionHash");
+        }
     }
     articulate = (articulate && (!isTestMode() || getEnvStr("TEST_NO_ART") != "true"));
 

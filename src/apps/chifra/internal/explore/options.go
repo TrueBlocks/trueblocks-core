@@ -28,7 +28,7 @@ type ExploreOptions struct {
 	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
 }
 
-var exploreCmdLineOptions ExploreOptions
+var defaultExploreOptions = ExploreOptions{}
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *ExploreOptions) testLog() {
@@ -70,7 +70,8 @@ func (opts *ExploreOptions) toCmdLine() string {
 
 // exploreFinishParseApi finishes the parsing for server invocations. Returns a new ExploreOptions.
 func exploreFinishParseApi(w http.ResponseWriter, r *http.Request) *ExploreOptions {
-	opts := &ExploreOptions{}
+	copy := defaultExploreOptions
+	opts := &copy
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "terms":
@@ -114,5 +115,5 @@ func exploreFinishParse(args []string) *ExploreOptions {
 func GetOptions() *ExploreOptions {
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return &exploreCmdLineOptions
+	return &defaultExploreOptions
 }

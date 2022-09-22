@@ -19,7 +19,6 @@ status?modes=index&firstBlock=100
       "hasPinkey": false,
       "caches": [
         {
-          "items": [],
           "type": "CIndexCache",
           "path": "indexPath",
           "nFiles": 0,

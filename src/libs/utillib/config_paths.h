@@ -69,7 +69,6 @@ extern string_q getDefaultChain(void);
 #define chainConfigsTxt_specials (chainConfigs + "specials.csv")
 #define chainConfigsTxt_names (chainConfigs + "names.tab")
 #define chainConfigsTxt_namesCustom (chainConfigs + "names_custom.tab")
-#define chainConfigsTxt_collections (chainConfigs + "collections.csv")
 
 //---------------------------------------------------------------------------
 #define rootConfigToml_trueBlocks (rootConfigs + "trueBlocks.toml")

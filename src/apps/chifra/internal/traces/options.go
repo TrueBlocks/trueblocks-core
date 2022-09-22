@@ -33,7 +33,10 @@ type TracesOptions struct {
 	BadFlag        error                    `json:"badFlag,omitempty"`        // An error flag if needed
 }
 
-var tracesCmdLineOptions TracesOptions
+var defaultTracesOptions = TracesOptions{
+	SkipDdos: true,
+	Max:      250,
+}
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *TracesOptions) testLog() {
@@ -91,7 +94,8 @@ func (opts *TracesOptions) toCmdLine() string {
 
 // tracesFinishParseApi finishes the parsing for server invocations. Returns a new TracesOptions.
 func tracesFinishParseApi(w http.ResponseWriter, r *http.Request) *TracesOptions {
-	opts := &TracesOptions{}
+	copy := defaultTracesOptions
+	opts := &copy
 	opts.Max = 250
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -143,5 +147,5 @@ func tracesFinishParse(args []string) *TracesOptions {
 func GetOptions() *TracesOptions {
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return &tracesCmdLineOptions
+	return &defaultTracesOptions
 }

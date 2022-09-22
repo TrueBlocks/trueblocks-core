@@ -34,7 +34,10 @@ type WhenOptions struct {
 	BadFlag    error                    `json:"badFlag,omitempty"`    // An error flag if needed
 }
 
-var whenCmdLineOptions WhenOptions
+var defaultWhenOptions = WhenOptions{
+	Truncate: utils.NOPOS,
+	Repair:   utils.NOPOS,
+}
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *WhenOptions) testLog() {
@@ -57,7 +60,8 @@ func (opts *WhenOptions) String() string {
 
 // whenFinishParseApi finishes the parsing for server invocations. Returns a new WhenOptions.
 func whenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
-	opts := &WhenOptions{}
+	copy := defaultWhenOptions
+	opts := &copy
 	opts.Truncate = utils.NOPOS
 	opts.Repair = utils.NOPOS
 	for key, value := range r.URL.Query() {
@@ -118,5 +122,5 @@ func whenFinishParse(args []string) *WhenOptions {
 func GetOptions() *WhenOptions {
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return &whenCmdLineOptions
+	return &defaultWhenOptions
 }

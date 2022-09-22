@@ -27,14 +27,16 @@ type StatusOptions struct {
 	Depth      uint64                `json:"depth,omitempty"`      // For cache mode only, number of levels deep to report
 	Report     bool                  `json:"report,omitempty"`     // Run the command with no options for the same result
 	Terse      bool                  `json:"terse,omitempty"`      // Show a terse summary report
-	Migrate    string                `json:"migrate,omitempty"`    // Either effectuate or test to see if a migration is necessary
 	FirstBlock uint64                `json:"firstBlock,omitempty"` // First block to process (inclusive -- testing only)
 	LastBlock  uint64                `json:"lastBlock,omitempty"`  // Last block to process (inclusive -- testing only)
 	Globals    globals.GlobalOptions `json:"globals,omitempty"`    // The global options
 	BadFlag    error                 `json:"badFlag,omitempty"`    // An error flag if needed
 }
 
-var statusCmdLineOptions StatusOptions
+var defaultStatusOptions = StatusOptions{
+	Depth:     utils.NOPOS,
+	LastBlock: utils.NOPOS,
+}
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *StatusOptions) testLog() {
@@ -43,7 +45,6 @@ func (opts *StatusOptions) testLog() {
 	logger.TestLog(len(opts.Types) > 0, "Types: ", opts.Types)
 	logger.TestLog(opts.Depth != utils.NOPOS, "Depth: ", opts.Depth)
 	logger.TestLog(opts.Terse, "Terse: ", opts.Terse)
-	logger.TestLog(len(opts.Migrate) > 0, "Migrate: ", opts.Migrate)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
 	opts.Globals.TestLog()
@@ -78,9 +79,6 @@ func (opts *StatusOptions) toCmdLine() string {
 	if opts.Terse {
 		options += " --terse"
 	}
-	if len(opts.Migrate) > 0 {
-		options += " --migrate " + opts.Migrate
-	}
 	if opts.FirstBlock != 0 {
 		options += (" --first_block " + fmt.Sprintf("%d", opts.FirstBlock))
 	}
@@ -96,7 +94,8 @@ func (opts *StatusOptions) toCmdLine() string {
 
 // statusFinishParseApi finishes the parsing for server invocations. Returns a new StatusOptions.
 func statusFinishParseApi(w http.ResponseWriter, r *http.Request) *StatusOptions {
-	opts := &StatusOptions{}
+	copy := defaultStatusOptions
+	opts := &copy
 	opts.Depth = utils.NOPOS
 	opts.FirstBlock = 0
 	opts.LastBlock = utils.NOPOS
@@ -120,8 +119,6 @@ func statusFinishParseApi(w http.ResponseWriter, r *http.Request) *StatusOptions
 			opts.Report = true
 		case "terse":
 			opts.Terse = true
-		case "migrate":
-			opts.Migrate = value[0]
 		case "firstBlock":
 			opts.FirstBlock = globals.ToUint64(value[0])
 		case "lastBlock":
@@ -158,5 +155,5 @@ func statusFinishParse(args []string) *StatusOptions {
 func GetOptions() *StatusOptions {
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return &statusCmdLineOptions
+	return &defaultStatusOptions
 }

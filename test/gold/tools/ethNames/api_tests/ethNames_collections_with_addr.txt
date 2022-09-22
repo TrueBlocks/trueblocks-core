@@ -1,6 +1,0 @@
-names?collections&addr
-{
-  "errors": [
-    "The --collection option is not available with any other option."
-  ]
-}

@@ -866,7 +866,7 @@ const char* STR_ONEROUTE2 =
 
 //---------------------------------------------------------------------------------------------------
 bool isFullyPorted(const string_q& a) {
-    CStringArray tools = {"when", "list", "monitors", "chunks", "init"};
+    CStringArray tools = {"when", "list", "monitors", "chunks", "init", "scrape"};
     for (auto tool : tools) {
         if (contains(a, tool))
             return true;

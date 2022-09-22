@@ -1,3 +1,0 @@
-## cachelib
-
-Working with caches

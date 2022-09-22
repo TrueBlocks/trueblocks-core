@@ -30,7 +30,7 @@ type AbisOptions struct {
 	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
 }
 
-var abisCmdLineOptions AbisOptions
+var defaultAbisOptions = AbisOptions{}
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *AbisOptions) testLog() {
@@ -74,7 +74,8 @@ func (opts *AbisOptions) toCmdLine() string {
 
 // abisFinishParseApi finishes the parsing for server invocations. Returns a new AbisOptions.
 func abisFinishParseApi(w http.ResponseWriter, r *http.Request) *AbisOptions {
-	opts := &AbisOptions{}
+	copy := defaultAbisOptions
+	opts := &copy
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "addrs":
@@ -131,5 +132,5 @@ func abisFinishParse(args []string) *AbisOptions {
 func GetOptions() *AbisOptions {
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return &abisCmdLineOptions
+	return &defaultAbisOptions
 }

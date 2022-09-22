@@ -1,4 +1,3 @@
-#pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -11,29 +10,21 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "acctlib.h"
+#include "etherlib.h"
+#include "options.h"
 
-#include "classes/cachebase.h"
-#include "classes/cache.h"
+//-----------------------------------------------------------------------
+int main(int argc, const char* argv[]) {
+    // Parse command line, allowing for command files
+    COptions options;
+    if (!options.prepareArguments(argc, argv))
+        return EXIT_FAILURE;
 
-#include "classes/chaincache.h"
-#include "classes/abicacheitem.h"
-#include "classes/abicache.h"
-#include "classes/collectioncacheitem.h"
-#include "classes/collectioncache.h"
-#include "classes/monitorcacheitem.h"
-#include "classes/monitorcache.h"
-#include "classes/indexcacheitem.h"
-#include "classes/indexcache.h"
-#include "classes/namecache.h"
-#include "classes/slurpcache.h"
+    for (auto command : options.commandLines) {
+        if (!options.parseArguments(command))
+            return EXIT_FAILURE;
+        cout << command << endl;
+    }
 
-#include "classes/status.h"
-#include "classes/statusterse.h"
-
-namespace qblocks {
-extern bool countFiles(const string_q& path, void* data);
-extern bool countFilesInCache(const string_q& path, void* data);
-}  // namespace qblocks
-
-using namespace qblocks;  // NOLINT
+    return EXIT_SUCCESS;
+}
