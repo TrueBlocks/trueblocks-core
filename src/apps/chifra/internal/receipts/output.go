@@ -120,7 +120,10 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 		Format:     opts.Globals.Format,
 		Meta:       meta,
 	})
+
 	handled = true
+	// EXISTING_CODE
+
 	return
 }
 
