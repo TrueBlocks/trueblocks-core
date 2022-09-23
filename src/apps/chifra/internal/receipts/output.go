@@ -10,8 +10,15 @@ package receiptsPkg
 
 // EXISTING_CODE
 import (
+	"fmt"
 	"net/http"
+	"os"
+	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -45,13 +52,92 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 	if opts.Globals.ApiMode {
 		return nil, false
 	}
+	if opts.Articulate {
+		err = opts.Globals.PassItOn("getReceipts", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
+		return err, true
+	}
 
+	notFound := make([]error, 0)
+	defer func() {
+		for _, err := range notFound {
+			fmt.Fprintln(os.Stderr, err)
+		}
+	}()
+	clientVersion, err := rpcClient.GetVersion(opts.Globals.Chain)
+	if err != nil {
+		return err, true
+	}
+	erigonUsed := utils.IsClientErigon(clientVersion)
+
+	getTransaction := func(models chan types.Modeler[types.RawReceipt], errors chan error) {
+		// TODO: stream transaction identifiers
+		for idIndex, rng := range opts.TransactionIds {
+			txList, err := rng.ResolveTxs(opts.Globals.Chain)
+			// TODO: rpcClient should return a custom type of error in this case
+			if err != nil && strings.Contains(err.Error(), "not found") {
+				notFound = append(notFound, err)
+				continue
+			}
+			if err != nil {
+				errors <- err
+				return
+			}
+			for _, tx := range txList {
+				if tx.BlockNumber < uint32(byzantiumBlockNumber) && !erigonUsed {
+					err = opts.Globals.PassItOn("getReceipts", opts.Globals.Chain, getReceiptsCmdLine(opts, []string{rng.Orig}), opts.getEnvStr())
+					if err != nil {
+						errors <- err
+						return
+					}
+					continue
+				}
+
+				receipt, err := rpcClient.GetTransactionReceipt(opts.Globals.Chain, uint64(tx.BlockNumber), uint64(tx.TransactionIndex))
+				if err != nil && err.Error() == "not found" {
+					notFound = append(notFound, fmt.Errorf("transaction %s not found", opts.Transactions[idIndex]))
+					continue
+				}
+				if err != nil {
+					errors <- err
+					return
+				}
+
+				models <- &receipt
+			}
+		}
+	}
+	var meta *rpcClient.MetaData
+	if opts.Globals.Format == "api" {
+		meta, err = rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
+		if err != nil {
+			return err, true
+		}
+	}
+	err = output.StreamMany(opts.Globals.Writer, getTransaction, output.OutputOptions{
+		ShowKeys:   !opts.Globals.NoHeader,
+		ShowRaw:    opts.Globals.Raw,
+		ShowHidden: opts.Globals.Verbose,
+		Format:     opts.Globals.Format,
+		Meta:       meta,
+	})
 	handled = true
-	err = opts.Globals.PassItOn("getReceipts", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
-	// EXISTING_CODE
-
 	return
 }
 
 // EXISTING_CODE
+// TODO: create EXISTING CODE block at the beginning of this file to keep constants ther
+var byzantiumBlockNumber = 4370000
+
+// TODO: remove this function when rewrite to Go is completed. It is only used to send
+// pre-Byzantium transactions to C++ version
+func getReceiptsCmdLine(opts *ReceiptsOptions, txs []string) string {
+	options := ""
+	if opts.Articulate {
+		options += " --articulate"
+	}
+
+	options += " " + strings.Join(txs, " ")
+	return options
+}
+
 // EXISTING_CODE

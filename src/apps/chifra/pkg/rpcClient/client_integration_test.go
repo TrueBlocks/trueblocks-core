@@ -75,3 +75,11 @@ func Test_Client(t *testing.T) {
 		t.Error("couldn't get known block hash from block number")
 	}
 }
+
+func Test_TxFromNumberAndId(t *testing.T) {
+	txId := uint64(0)
+	_, err := TxFromNumberAndId("mainnet", uint64(1424623), txId)
+	if err != nil {
+		t.Fatal(err)
+	}
+}

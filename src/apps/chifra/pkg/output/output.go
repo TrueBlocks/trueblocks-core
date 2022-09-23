@@ -137,6 +137,7 @@ func GetHeader(t *reflect.Type, format string) string {
 }
 
 // TODO: Fix export without arrays
+// TODO: this should be cached so it doesn't need to use reflection
 func GetRowTemplate(t *reflect.Type, format string) (*template.Template, error) {
 	fields, sep, quote := utils.GetFields(t, format, false)
 	var sb strings.Builder
