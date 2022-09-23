@@ -199,7 +199,7 @@ TEST[DATE|TIME] Format:  api
       "blockNumber": 15537393,
       "timestamp": 1663224162,
       "date": "2022-09-15 06:42:42",
-      "name": "ttd-themerge"
+      "name": "themerge"
     }
   ],
   "meta": {
