@@ -10,11 +10,12 @@ package receiptsPkg
 
 // EXISTING_CODE
 import (
+	"errors"
 	"fmt"
 	"net/http"
-	"os"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -58,11 +59,6 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 	}
 
 	notFound := make([]error, 0)
-	defer func() {
-		for _, err := range notFound {
-			fmt.Fprintln(os.Stderr, err)
-		}
-	}()
 	clientVersion, err := rpcClient.GetVersion(opts.Globals.Chain)
 	if err != nil {
 		return err, true
@@ -120,6 +116,32 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 		Format:     opts.Globals.Format,
 		Meta:       meta,
 	})
+
+// If we didn't find some transactions, we want to report them to the user. In the
+	// future, we will stream both the data and errors, but meanwhile we can have the
+	// below workaround
+	if len(notFound) > 0 {
+		// Let's see if we're in server environment
+		_, ok := opts.Globals.Writer.(http.ResponseWriter)
+		var httpError string
+		// If there was any other error, put it on top
+		if err != nil {
+			httpError = err.Error() + "\n"
+		}
+		for _, err := range notFound {
+			if !ok {
+				// We are not in server environment, so just log the errors
+				logger.Log(logger.Error, err)
+			} else {
+				// For server, as a temporary solution, join all errors together.
+				// The client can still parse them (slicing the message by "\n")
+				httpError = httpError + err.Error() + "\n"
+			}
+		}
+		if ok {
+			err = errors.New(httpError)
+		}
+	}
 
 	handled = true
 	// EXISTING_CODE
