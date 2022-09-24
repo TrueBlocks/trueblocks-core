@@ -77,3 +77,6 @@ local   ,both ,fast  ,transactions ,tools/getTrans ,messages             ,y    ,
 on      ,both ,fast  ,transactions ,tools/getTrans ,no_tracing           ,y    ,transactions = 0x0f0171122023385b433a766e70c65928ea9f9e29e6a6c82a7330cb46b63334e7e9ba7a35c3 & trace & chain = non-tracing
 
 on      ,both ,fast  ,transactions ,tools/getTrans ,old_bug_2159         ,y    ,reconcile = 0x7cfb89d6df1b89a678dcaf42b9c262593e881e22 & transactions = 0x20e4a5279519859c3b8af108fa9b3238f23d5522ceb0f7245080ec79ad8f97fd & fmt = json
+
+on      ,both ,medi  ,transactions ,tools/getTrans ,by_bhash_and_txid    ,n    ,transactions = 0xe821b0f2752e49d421127f74b14d9a65dd8d5f48ad240b4b592043803f644372.5 & trace & fmt = txt
+on      ,both ,fast  ,transactions ,tools/getTrans ,by_three_dups        ,y    ,transactions = 0x9ba401a48e378440f90e8d50feac2331f38a39fd9f33e3c6c213302cef3e5887 4000002.5 0xe821b0f2752e49d421127f74b14d9a65dd8d5f48ad240b4b592043803f644372.5 & fmt = json
