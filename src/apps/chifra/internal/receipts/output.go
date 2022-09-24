@@ -55,7 +55,7 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 		return nil, false
 	}
 
-	if len(os.Getenv("OLD")) > 0 {
+	if true || len(os.Getenv("OLD")) > 0 {
 		err = opts.Globals.PassItOn("getReceipts", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
 		return err, true
 	}
