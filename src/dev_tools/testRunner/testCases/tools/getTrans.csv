@@ -12,8 +12,7 @@ on      ,both ,fast  ,transactions ,tools/getTrans ,bad_hash             ,y    ,
 on      ,both ,fast  ,transactions ,tools/getTrans ,by_txhash            ,n    ,transactions = 0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765 & fmt = txt
 on      ,both ,medi  ,transactions ,tools/getTrans ,by_bnun_and_txid     ,n    ,transactions = 4000002.5 & trace & fmt = txt
 on      ,both ,medi  ,transactions ,tools/getTrans ,keys_combination     ,y    ,transactions = 0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765 4000000.5 0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4 & fmt = json
-on      ,both ,fast  ,transactions ,tools/getTrans ,from_node            ,n    ,transactions = 4000000.5 & raw
-on      ,both ,fast  ,transactions ,tools/getTrans ,from_node_long       ,n    ,transactions = 4000000.5 & raw
+on      ,both ,fast  ,transactions ,tools/getTrans ,from_raw             ,y    ,transactions = 4000000.5 & raw
 on      ,both ,fast  ,transactions ,tools/getTrans ,should_be_error      ,y    ,transactions = 0xeec4ccd13fe05907f9d732a8ad245bcb7f918217157b89baaa23895c12eb329a & fmt = api
 on      ,both ,fast  ,transactions ,tools/getTrans ,verbose_blk_idx1     ,y    ,transactions = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3 & fmt = json
 on      ,both ,fast  ,transactions ,tools/getTrans ,verbose_blk_idx2     ,y    ,transactions = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.4 & fmt = api

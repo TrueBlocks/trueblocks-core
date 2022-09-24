@@ -13,6 +13,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"os"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -53,6 +54,12 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 	if opts.Globals.ApiMode {
 		return nil, false
 	}
+
+	if len(os.Getenv("OLD")) > 0 {
+		err = opts.Globals.PassItOn("getReceipts", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
+		return err, true
+	}
+
 	if opts.Articulate {
 		err = opts.Globals.PassItOn("getReceipts", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
 		return err, true
@@ -117,7 +124,7 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 		Meta:       meta,
 	})
 
-// If we didn't find some transactions, we want to report them to the user. In the
+	// If we didn't find some transactions, we want to report them to the user. In the
 	// future, we will stream both the data and errors, but meanwhile we can have the
 	// below workaround
 	if len(notFound) > 0 {
