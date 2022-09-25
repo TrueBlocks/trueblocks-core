@@ -42,7 +42,7 @@ func StreamWithTemplate(w io.Writer, model types.Model, tmpl *template.Template)
 // StreamModel streams a single `Model`
 func StreamModel(w io.Writer, model types.Model, options OutputOptions) error {
 	if options.Format == "json" || options.Format == "api" {
-		v, err := json.MarshalIndent(model.Data, "", options.JsonIndent)
+		v, err := json.MarshalIndent(model.Data, "    ", options.JsonIndent)
 		if err != nil {
 			return err
 		}
@@ -99,9 +99,11 @@ func StreamRaw[Raw types.RawData](w io.Writer, raw *Raw) (err error) {
 // StreamMany outputs models or raw data as they are acquired
 func StreamMany[Raw types.RawData](
 	w io.Writer,
-	getData func(models chan types.Modeler[Raw], errors chan error),
+	// TODO(dszlachta): I renamed this to renderData instead of getData. More accurate
+	renderData func(models chan types.Modeler[Raw], errors chan error),
 	options OutputOptions,
 ) error {
+	// TODO(dszlachta): let's make channels more obvious. Please rename these to modelChan and errorChan throughout (even into the called function)
 	models := make(chan types.Modeler[Raw])
 	errors := make(chan error)
 
@@ -110,7 +112,7 @@ func StreamMany[Raw types.RawData](
 	first := true
 	// Start getting the data
 	go func() {
-		getData(models, errors)
+		renderData(models, errors)
 		close(models)
 		close(errors)
 	}()
@@ -122,12 +124,19 @@ func StreamMany[Raw types.RawData](
 		defer w.Write([]byte("\n  ]\n}\n"))
 	}
 	// If printing API format, we want to add meta information
-	if options.Format == "api" {
+	if options.ShowRaw || options.Format == "api" {
 		w.Write([]byte("{\n  \"data\": [\n    "))
 		defer func() {
-			w.Write([]byte("\n  ], \n\"meta\": "))
-			b, _ := json.MarshalIndent(options.Meta, "", options.JsonIndent)
-			w.Write(b)
+			if options.ShowRaw {
+				w.Write([]byte("  ]"))
+			} else {
+				w.Write([]byte("\n  ]"))
+			}
+			if options.Meta != nil {
+				w.Write([]byte(",\n  \"meta\": "))
+				b, _ := json.MarshalIndent(options.Meta, "  ", options.JsonIndent)
+				w.Write(b)
+			}
 			w.Write([]byte("\n}\n"))
 		}()
 	}
@@ -161,7 +170,7 @@ func StreamMany[Raw types.RawData](
 					err = StreamModel(w, modelValue, OutputOptions{
 						ShowKeys:   first && options.ShowKeys,
 						Format:     options.Format,
-						JsonIndent: "      ",
+						JsonIndent: "  ",
 					})
 				}
 			}

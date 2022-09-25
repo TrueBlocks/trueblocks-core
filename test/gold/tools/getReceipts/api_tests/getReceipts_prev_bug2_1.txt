@@ -9,6 +9,8 @@ receipts?transactions=4279119.46
         {
           "address": "0xe3818504c1b32bf1557b16c238b2e01fd3149c17",
           "logIndex": 112,
+          "blockNumber": 4279119,
+          "transactionIndex": 46,
           "topics": [
             "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
             "0x0000000000000000000000008d12a197cb00d4747a1fe03395095ce2a5cc6819",
@@ -19,6 +21,8 @@ receipts?transactions=4279119.46
         {
           "address": "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819",
           "logIndex": 113,
+          "blockNumber": 4279119,
+          "transactionIndex": 46,
           "topics": [
             "0xf341246adaac6f497bc2a656f546ab9e182111d630394f0c57c710a59a2cb567"
           ],

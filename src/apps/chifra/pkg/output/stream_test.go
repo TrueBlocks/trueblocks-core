@@ -93,7 +93,7 @@ func TestStreamJson(t *testing.T) {
 	})
 	result := outputBuffer.String()
 
-	expected, err := json.MarshalIndent(input.Model(false, "json").Data, "", "  ")
+	expected, err := json.MarshalIndent(input.Model(false, "json").Data, "    ", "  ")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -128,7 +128,7 @@ func TestStreamTemplate(t *testing.T) {
 func TestStreamMany(t *testing.T) {
 	buffer := &bytes.Buffer{}
 
-	getData := func(models chan types.Modeler[types.RawReceipt], errors chan error) {
+	renderData := func(models chan types.Modeler[types.RawReceipt], errors chan error) {
 		models <- &types.SimpleReceipt{
 			BlockNumber:      uint64(123),
 			TransactionIndex: 1,
@@ -150,7 +150,7 @@ func TestStreamMany(t *testing.T) {
 
 	// Print the values and try to re-parse them to check if
 	// we get the same data
-	StreamMany(buffer, getData, OutputOptions{
+	StreamMany(buffer, renderData, OutputOptions{
 		Format: "json",
 	})
 
@@ -173,7 +173,7 @@ func TestStreamMany(t *testing.T) {
 
 func TestApiFormat(t *testing.T) {
 	outputBuffer := &bytes.Buffer{}
-	getData := func(models chan types.Modeler[types.RawReceipt], errors chan error) {
+	renderData := func(models chan types.Modeler[types.RawReceipt], errors chan error) {
 		models <- &types.SimpleReceipt{
 			BlockNumber:      uint64(123),
 			TransactionIndex: 1,
@@ -183,7 +183,7 @@ func TestApiFormat(t *testing.T) {
 			IsError:          false,
 		}
 	}
-	err := StreamMany(outputBuffer, getData, OutputOptions{
+	err := StreamMany(outputBuffer, renderData, OutputOptions{
 		Format: "api",
 		Meta: &rpcClient.MetaData{
 			Latest:    1000,

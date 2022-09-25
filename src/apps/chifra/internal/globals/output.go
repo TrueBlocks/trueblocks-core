@@ -92,6 +92,7 @@ func (opts *GlobalOptions) RenderObject(data interface{}, first bool) error {
 		log.Fatal("opts.Writer is nil")
 	}
 
+	// TODO(dszlachta): This can be done in the global's init code
 	format := opts.Format
 	if opts.Raw {
 		// If users wants raw output, we will most probably print JSON
@@ -102,10 +103,11 @@ func (opts *GlobalOptions) RenderObject(data interface{}, first bool) error {
 
 // TODO: Fix export without arrays
 func (opts *GlobalOptions) RenderHeader(data interface{}, w *io.Writer, format string, apiMode, hideHeader, first bool) error {
-	if opts.Raw {
-		// We don't render the header if user wants raw output.
-		return nil
-	}
+	// TODO(dszlachta): Don't do this. We want the "--raw" data to appear inside of a `"data" object in API mode -- everything we send must appear in a "data" blocks. Please remove this and following three lines of comments if you agree.
+	// if opts.Raw {
+	// 	// We don't render the header if user wants raw output.
+	// 	return nil
+	// }
 
 	if apiMode {
 		// We could check this, but if it's not empty, we know it's type
@@ -129,10 +131,11 @@ func (opts *GlobalOptions) RenderHeader(data interface{}, w *io.Writer, format s
 
 // TODO: Fix export without arrays
 func (opts *GlobalOptions) RenderFooter() error {
-	if opts.Raw {
-		// We don't render the footer if user wants raw output.
-		return nil
-	}
+	// TODO(dszlachta): Don't do this. We want the "--raw" data to appear inside of a `"data" object in API mode -- everything we send must appear in a "data" blocks. Please remove this and following three lines of comments if you agree.
+	// if opts.Raw {
+	// 	// We don't render the header if user wants raw output.
+	// 	return nil
+	// }
 
 	if opts.Format == "api" || opts.Format == "json" {
 		opts.Writer.Write([]byte("\n  ]"))
