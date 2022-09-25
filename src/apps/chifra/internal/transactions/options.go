@@ -33,7 +33,7 @@ type TransactionsOptions struct {
 	BadFlag        error                    `json:"badFlag,omitempty"`        // An error flag if needed
 }
 
-var transactionsCmdLineOptions TransactionsOptions
+var defaultTransactionsOptions = TransactionsOptions{}
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *TransactionsOptions) testLog() {
@@ -87,7 +87,8 @@ func (opts *TransactionsOptions) toCmdLine() string {
 
 // transactionsFinishParseApi finishes the parsing for server invocations. Returns a new TransactionsOptions.
 func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *TransactionsOptions {
-	opts := &TransactionsOptions{}
+	copy := defaultTransactionsOptions
+	opts := &copy
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "transactions":
@@ -138,5 +139,5 @@ func transactionsFinishParse(args []string) *TransactionsOptions {
 func GetOptions() *TransactionsOptions {
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return &transactionsCmdLineOptions
+	return &defaultTransactionsOptions
 }

@@ -21,17 +21,12 @@ func (opts *StatusOptions) validateStatus() error {
 		return validate.Usage("The {0} option ({1}) must {2}.", "--depth", strconv.FormatUint(opts.Depth, 10), "be less than four (4)")
 	}
 
-	err := validate.ValidateEnumSlice("--types", opts.Types, "[blocks|txs|traces|slurps|prices|all]")
+	err := validate.ValidateEnumSlice("--types", opts.Types, "[blocks|txs|traces|slurps|all]")
 	if err != nil {
 		return err
 	}
 
-	err = validate.ValidateEnumSlice("modes", opts.Modes, "[index|monitors|collections|names|abis|caches|some|all]")
-	if err != nil {
-		return err
-	}
-
-	err = validate.ValidateEnum("--migrate", opts.Migrate, "[test|cache|index]")
+	err = validate.ValidateEnumSlice("modes", opts.Modes, "[index|monitors|names|abis|caches|some|all]")
 	if err != nil {
 		return err
 	}

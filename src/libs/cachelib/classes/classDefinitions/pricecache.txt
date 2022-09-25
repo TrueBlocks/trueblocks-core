@@ -1,5 +1,0 @@
-[settings]
-class = CPriceCache
-base_class = CCache
-fields = pricecache.csv
-includes = cache.h|pricecacheitem.h

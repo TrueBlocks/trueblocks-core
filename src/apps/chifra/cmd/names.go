@@ -52,7 +52,6 @@ func init() {
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Prefund, "prefund", "p", false, "include prefund accounts")
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Named, "named", "n", false, "include well know token and airdrop addresses in the search")
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Addr, "addr", "a", false, "display only addresses in the results (useful for scripting)")
-	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Collections, "collections", "s", false, "display collections data")
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Tags, "tags", "g", false, "export the list of tags and subtags only")
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().ToCustom, "to_custom", "u", false, "for editCmd only, is the edited name a custom name or not (hidden)")
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Clean, "clean", "C", false, "clean the data (addrs to lower case, sort by addr) (hidden)")

@@ -64,7 +64,6 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12360,tools,Accounts,names,ethNames,prefund,p,,false,false,true,true,header,switch,<boolean>,include prefund accounts
 12380,tools,Accounts,names,ethNames,named,n,,false,false,true,true,local,switch,<boolean>,include well know token and airdrop addresses in the search
 12420,tools,Accounts,names,ethNames,addr,a,,false,false,true,true,local,switch,<boolean>,display only addresses in the results (useful for scripting)
-12430,tools,Accounts,names,ethNames,collections,s,,false,false,true,true,header,switch,<boolean>,display collections data
 12445,tools,Accounts,names,ethNames,tags,g,,false,false,true,true,header,switch,<boolean>,export the list of tags and subtags only
 12450,tools,Accounts,names,ethNames,to_custom,u,,false,false,false,false,header,switch,<boolean>,for editCmd only&#44; is the edited name a custom name or not
 12455,tools,Accounts,names,ethNames,clean,C,,false,false,false,false,local,switch,<boolean>,clean the data (addrs to lower case&#44; sort by addr)
@@ -209,7 +208,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12175,apps,Admin,scrape,blockScrape,first_snap,,0,false,false,false,false,config,flag,<uint64>,the first block at which snap_to_grid is enabled
 12165,apps,Admin,scrape,blockScrape,unripe_dist,,28,false,false,false,false,config,flag,<uint64>,the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe
 12150,apps,Admin,scrape,blockScrape,channel_count,,20,false,false,false,false,config,flag,<uint64>,number of concurrent processing channels
-12180,apps,Admin,scrape,blockScrape,allow_missing,,,false,false,false,false,config,flag,<boolean>,do not report errors for blockchains that contain blocks with zero addresses
+12180,apps,Admin,scrape,blockScrape,allow_missing,,true,false,false,false,false,config,flag,<boolean>,do not report errors for blockchains that contain blocks with zero addresses
 12195,apps,Admin,scrape,blockScrape,,,,false,false,true,true,--,description,,Scan the chain and update the TrueBlocks index of appearances.
 
 13111,apps,Admin,serve,flame,port,p,:8080,false,false,true,true,header,flag,<string>,specify the server's port
@@ -217,18 +216,16 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13113,apps,Admin,serve,flame,n1,,,false,false,false,false,--,note,,To start API open terminal window and run chifra serve.
 13114,apps,Admin,serve,flame,n2,,,false,false,false,false,--,note,,See the API documentation for more information.
 
-10700,apps,Admin,status,cacheStatus,modes,,,false,false,true,true,local,positional,list<enum[index|monitors|collections|names|abis|caches|some*|all]>,the type of status info to retrieve
+10700,apps,Admin,status,cacheStatus,modes,,,false,false,true,true,local,positional,list<enum[index|monitors|names|abis|caches|some*|all]>,the type of status info to retrieve
 10720,apps,Admin,status,cacheStatus,details,d,,false,false,true,true,header,switch,<boolean>,include details about items found in monitors&#44; slurps&#44; abis&#44; or price caches
-10730,apps,Admin,status,cacheStatus,types,t,,false,false,true,false,local,flag,list<enum[blocks|txs|traces|slurps|prices|all*]>,for caches mode only&#44; which type(s) of cache to report
+10730,apps,Admin,status,cacheStatus,types,t,,false,false,true,false,local,flag,list<enum[blocks|txs|traces|slurps|all*]>,for caches mode only&#44; which type(s) of cache to report
 10735,apps,Admin,status,cacheStatus,depth,p,NOPOS,false,false,false,false,header,flag,<uint64>,for cache mode only&#44; number of levels deep to report
 10760,apps,Admin,status,cacheStatus,report,r,,false,false,false,true,local,deprecated,<boolean>,run the command with no options for the same result
 10770,apps,Admin,status,cacheStatus,terse,e,,false,false,false,true,header,switch,<boolean>,show a terse summary report
-10782,apps,Admin,status,cacheStatus,migrate,m,,false,false,false,false,local,flag,enum[test|cache|index],either effectuate or test to see if a migration is necessary
 10820,apps,Admin,status,cacheStatus,first_block,F,0,false,false,false,false,local,flag,<blknum>,first block to process (inclusive -- testing only)
 10840,apps,Admin,status,cacheStatus,last_block,L,NOPOS,false,false,false,false,local,flag,<blknum>,last block to process (inclusive -- testing only)
 10860,apps,Admin,status,cacheStatus,,,,false,false,true,true,--,description,,Report on the status of the TrueBlocks system.
 
-num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizable,is_visible,is_visible_docs,generate,option_type,data_type,description
 31900,apps,Admin,chunks,chunkMan,mode,,,true,false,true,true,local,positional,enum[status|manifest|index|blooms|addresses|appearances|stats],the type of data to process
 31905,apps,Admin,chunks,chunkMan,blocks,,,false,false,true,true,header,positional,list<blknum>,an optional list of blocks to intersect with chunk ranges
 31920,apps,Admin,chunks,chunkMan,check,c,,false,false,true,true,gocmd,switch,<boolean>,check the manifest&#44; index&#44; or blooms for internal consistency
@@ -251,13 +248,6 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 11908,apps,Admin,init,init,sleep,s,0.0,false,false,true,true,gocmd,flag,<double>,seconds to sleep between downloads
 11910,apps,Admin,init,init,,,,false,false,true,true,--,description,,Initialize the TrueBlocks system by downloading from IPFS.
 10974,apps,Admin,init,init,n1,,,false,false,false,false,--,note,,Re-run `chifra init` as often as you wish. It will repair or freshen the index.
-
-12020,tools,Other,quotes,getQuotes,update,u,,false,false,true,true,header,switch,<boolean>,freshen price database
-12040,tools,Other,quotes,getQuotes,period,p,,false,false,true,true,local,flag,enum[5|15|30|60|120*|240|1440|10080|hourly|daily|weekly],increment of display
-12060,tools,Other,quotes,getQuotes,pair,a,,false,false,true,true,local,flag,<string>,which price pair to freshen or list (see Poloniex)
-12060,tools,Other,quotes,getQuotes,feed,e,,false,false,true,true,header,flag,enum[poloniex*|maker|tellor],the feed for the price data
-12080,tools,Other,quotes,getQuotes,,,,false,false,true,true,--,description,,Update or display Ethereum price data&#44; this tool has been deprecated.
-12082,tools,Other,quotes,getQuotes,n1,,,false,false,false,false,--,note,,Due to restrictions from Poloniex&#44; this tool retrieves only 30 days of data at a time. You must repeatedly run this command until the data is up-to-date.
 
 12001,apps,Other,explore,fireStorm,terms,,,false,false,true,true,header,positional,list<string>,one or more address&#44; name&#44; block&#44; or transaction identifier
 12002,apps,Other,explore,fireStorm,local,l,,false,false,true,true,header,switch,<boolean>,open the local TrueBlocks explorer
@@ -293,3 +283,6 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 11930,dev_tools,,,testRunner,skip,s,1,false,false,false,false,header,flag,<uint64>,run only every 'skip' test (faster)
 11960,dev_tools,,,testRunner,report,r,,false,false,true,false,header,switch,<boolean>,display performance report to screen
 11980,dev_tools,,,testRunner,,,,false,false,true,false,--,description,,Run TrueBlocks' test cases with options.
+
+11880,dev_tools,,,migrate,mode,m,,false,false,true,false,local,flag,enum[test|cache|index],either effectuate or test to see if a migration is necessary
+11980,dev_tools,,,migrate,,,,false,false,true,false,--,description,,Run migrations.

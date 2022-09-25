@@ -1,6 +1,0 @@
-quotes?period
-{
-  "errors": [
-    "chifra quotes - The --period option requires a value."
-  ]
-}

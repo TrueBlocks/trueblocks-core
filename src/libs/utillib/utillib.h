@@ -32,13 +32,11 @@
 #include "options_base.h"
 #include "filenames.h"
 #include "accountname.h"
-#include "collection.h"
 #include "memmap.h"
 #include "rpcresult.h"
 #include "logging.h"
 #include "keccak.h"
 #include "markdown.h"
-#include "commandoption.h"
 #include "configenv.h"
 #include "chain.h"
 

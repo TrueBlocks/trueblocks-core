@@ -1,10 +1,10 @@
 ## How to contribute to TrueBlocks
 
-#### **Commit and Branching Guildlines**
+#### **Commit and Branching Guidelines**
 
 [Commit Message Guidelines](https://gist.github.com/robertpainsi/b632364184e70900af4ab688decf6f53)
 
-[Branching Conventions](docs/BRANCHING.md)
+[Branching Conventions](https://github.com/TrueBlocks/trueblocks-core/blob/master/docs/BRANCHING.md)
 
 #### **Did you find a bug?**
 
@@ -24,7 +24,7 @@
 
 #### **Did you make a formatting or cosmetic change?**
 
-* We use an automatic formatter called `clang-format`, therefor formatting-only changes will generally be closed without merging.
+* We use an automated formatters, therefor formatting-only changes will generally be closed without merging.
 
 #### **Would do have a feature request?**
 

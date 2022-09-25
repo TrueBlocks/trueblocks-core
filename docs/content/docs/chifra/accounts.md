@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2022-08-31T06:48:48
+date: 2022-09-20T22:34:05
 lastmod:
   - :git
   - lastmod
@@ -154,7 +154,7 @@ Notes:
 
 Like `chifra abis`, this tool is useful from the command line but is primarily used in support of other tools, especially `chifra export` where naming addresses becomes the single best way to turn unintelligible blockchain data into understandable information.
 
-The various options allow you to search and filter the results. The `collections` and `tags` options are used primarily by the TrueBlocks explorer.
+The various options allow you to search and filter the results. The `tags` option is used primarily by the TrueBlocks explorer.
 
 You may use the TrueBlocks explorer to manage (add, edit, delete) address-name associations.
 
@@ -169,18 +169,17 @@ Arguments:
   terms - a space separated list of one or more search terms (required)
 
 Flags:
-  -e, --expand        expand search to include all fields (search name, address, and symbol otherwise)
-  -m, --match_case    do case-sensitive search
-  -l, --all           include all accounts in the search
-  -c, --custom        include your custom named accounts
-  -p, --prefund       include prefund accounts
-  -n, --named         include well know token and airdrop addresses in the search
-  -a, --addr          display only addresses in the results (useful for scripting)
-  -s, --collections   display collections data
-  -g, --tags          export the list of tags and subtags only
-  -x, --fmt string    export format, one of [none|json*|txt|csv|api]
-  -v, --verbose       enable verbose (increase detail with --log_level)
-  -h, --help          display this help screen
+  -e, --expand       expand search to include all fields (search name, address, and symbol otherwise)
+  -m, --match_case   do case-sensitive search
+  -l, --all          include all accounts in the search
+  -c, --custom       include your custom named accounts
+  -p, --prefund      include prefund accounts
+  -n, --named        include well know token and airdrop addresses in the search
+  -a, --addr         display only addresses in the results (useful for scripting)
+  -g, --tags         export the list of tags and subtags only
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -v, --verbose      enable verbose (increase detail with --log_level)
+  -h, --help         display this help screen
 
 Notes:
   - The tool will accept up to three terms, each of which must match against any field in the database.

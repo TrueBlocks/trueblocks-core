@@ -28,5 +28,5 @@ TEST[DATE|TIME] Format:  json
     "addr": "0x3015f4d666bb80ec28b22f7c1e5dc7a077a57453",
     "reason": "to"
   }], "errors": [
-"Transaction 1301324.0 not found."
+"transaction 1301324.0 not found"
 ] }

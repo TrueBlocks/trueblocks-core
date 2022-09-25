@@ -1,2 +1,0 @@
-chifra quotes  --fmt json --to_file
-{ "outputFilename": "--output_filename--" }

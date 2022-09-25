@@ -6,7 +6,6 @@ CMonitor
 CBlock
 CReconcilationOutput
 CLogEntry
-CPriceQuote
 CReceipt
 CRPCResult
 CTrace

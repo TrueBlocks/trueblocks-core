@@ -32,7 +32,7 @@ type TokensOptions struct {
 	BadFlag  error                    `json:"badFlag,omitempty"`  // An error flag if needed
 }
 
-var tokensCmdLineOptions TokensOptions
+var defaultTokensOptions = TokensOptions{}
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *TokensOptions) testLog() {
@@ -80,7 +80,8 @@ func (opts *TokensOptions) toCmdLine() string {
 
 // tokensFinishParseApi finishes the parsing for server invocations. Returns a new TokensOptions.
 func tokensFinishParseApi(w http.ResponseWriter, r *http.Request) *TokensOptions {
-	opts := &TokensOptions{}
+	copy := defaultTokensOptions
+	opts := &copy
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "addrs2":
@@ -141,5 +142,5 @@ func tokensFinishParse(args []string) *TokensOptions {
 func GetOptions() *TokensOptions {
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return &tokensCmdLineOptions
+	return &defaultTokensOptions
 }

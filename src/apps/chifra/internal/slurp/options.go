@@ -31,7 +31,7 @@ type SlurpOptions struct {
 	BadFlag     error                    `json:"badFlag,omitempty"`     // An error flag if needed
 }
 
-var slurpCmdLineOptions SlurpOptions
+var defaultSlurpOptions = SlurpOptions{}
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *SlurpOptions) testLog() {
@@ -75,7 +75,8 @@ func (opts *SlurpOptions) toCmdLine() string {
 
 // slurpFinishParseApi finishes the parsing for server invocations. Returns a new SlurpOptions.
 func slurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
-	opts := &SlurpOptions{}
+	copy := defaultSlurpOptions
+	opts := &copy
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "addrs":
@@ -134,5 +135,5 @@ func slurpFinishParse(args []string) *SlurpOptions {
 func GetOptions() *SlurpOptions {
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return &slurpCmdLineOptions
+	return &defaultSlurpOptions
 }

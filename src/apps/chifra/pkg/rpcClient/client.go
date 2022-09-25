@@ -19,6 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
+	ethTypes "github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
 )
 
@@ -99,6 +100,27 @@ func GetIDs(provider string) (uint64, uint64, error) {
 	return ch.Uint64(), n.Uint64(), nil
 }
 
+// TODO: C++ code used to cache version info
+func GetVersion(chain string) (version string, err error) {
+	provider := config.GetRpcProvider(chain)
+	var response struct {
+		Result string
+	}
+	err = FromRpc(
+		provider,
+		&RPCPayload{
+			Method:    "web3_clientVersion",
+			RPCParams: RPCParams{},
+		},
+		&response,
+	)
+	if err != nil {
+		return
+	}
+	version = response.Result
+	return
+}
+
 // TxHashFromHash returns a transaction's hash if it's a valid transaction
 func TxHashFromHash(provider, hash string) (string, error) {
 	ec := GetClient(provider)
@@ -125,6 +147,137 @@ func TxHashFromHashAndId(provider, hash string, txId uint64) (string, error) {
 	return tx.Hash().Hex(), nil
 }
 
+// TxFromNumberAndId returns an actual transaction
+func TxFromNumberAndId(chain string, blkNum, txId uint64) (ethTypes.Transaction, error) {
+	provider := config.GetRpcProvider(chain)
+	ec := GetClient(provider)
+	defer ec.Close()
+
+	block, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(blkNum))
+	if err != nil {
+		return ethTypes.Transaction{}, err
+	}
+
+	tx, err := ec.TransactionInBlock(context.Background(), block.Hash(), uint(txId))
+	if err != nil {
+		return ethTypes.Transaction{}, err
+	}
+
+	return *tx, nil
+}
+
+func GetRawTransactionReceipt(chain string, bn uint64, txid uint64) (receipt *types.RawReceipt, err error) {
+	tx, err := TxFromNumberAndId(chain, bn, txid)
+	if err != nil {
+		return
+	}
+
+	var response struct {
+		Result types.RawReceipt `json:"result"`
+	}
+	err = FromRpc(
+		config.GetRpcProvider(chain),
+		&RPCPayload{
+			Method:    "eth_getTransactionReceipt",
+			RPCParams: RPCParams{tx.Hash().Hex()},
+		},
+		&response,
+	)
+	if err != nil {
+		return
+	}
+	receipt = &response.Result
+
+	return
+}
+
+func GetTransactionReceipt(chain string, bn uint64, txid uint64) (receipt types.SimpleReceipt, err error) {
+	// First, get raw receipt directly from RPC
+	ethReceipt, err := GetRawTransactionReceipt(chain, bn, txid)
+	if err != nil {
+		return
+	}
+
+	// Prepare logs of type []SimpleLog
+	logs := []types.SimpleLog{}
+	for _, log := range ethReceipt.Logs {
+		logAddress := common.HexToAddress(log.Address)
+		logIndex, parseErr := hexutil.DecodeUint64(log.LogIndex)
+		if parseErr != nil {
+			err = parseErr
+			return
+		}
+
+		logBlockNumber, parseErr := hexutil.DecodeUint64(log.BlockNumber)
+		if parseErr != nil {
+			err = parseErr
+			return
+		}
+
+		logTxIndex, parseErr := hexutil.DecodeUint64(log.TransactionIndex)
+		if parseErr != nil {
+			err = parseErr
+			return
+		}
+
+		logTopics := make([]common.Hash, 0, len(log.Topics))
+		for _, topic := range log.Topics {
+			logTopics = append(logTopics, common.HexToHash(topic))
+		}
+
+		logs = append(logs, types.SimpleLog{
+			Address:          logAddress,
+			LogIndex:         uint32(logIndex),
+			BlockNumber:      logBlockNumber,
+			TransactionIndex: uint32(logTxIndex),
+			Timestamp:        0, // FIXME
+			Topics:           logTopics,
+			Data:             string(log.Data),
+			CompressedLog:    "", // FIXME
+		})
+	}
+
+	// Type-cast values that are not strings
+	blockNumber, err := hexutil.DecodeUint64(ethReceipt.BlockNumber)
+	if err != nil {
+		return
+	}
+	cumulativeGasUsed, err := hexutil.DecodeUint64(ethReceipt.CumulativeGasUsed)
+	if err != nil {
+		return
+	}
+	gasUsed, err := hexutil.DecodeUint64(ethReceipt.GasUsed)
+	if err != nil {
+		return
+	}
+	status, err := hexutil.DecodeUint64(ethReceipt.Status)
+	if err != nil {
+		return
+	}
+	transactionIndex, err := hexutil.DecodeUint64(ethReceipt.TransactionIndex)
+	if err != nil {
+		return
+	}
+	receipt = types.SimpleReceipt{
+		BlockHash:         common.HexToHash(ethReceipt.BlockHash),
+		BlockNumber:       blockNumber,
+		ContractAddress:   common.HexToAddress(ethReceipt.ContractAddress),
+		CumulativeGasUsed: fmt.Sprint(cumulativeGasUsed),
+		GasUsed:           gasUsed,
+		Logs:              logs,
+		Status:            status,
+		IsError:           status == 0,
+		TransactionHash:   common.HexToHash(ethReceipt.TransactionHash),
+		TransactionIndex:  transactionIndex,
+		// From:
+		// To:
+		// EffectiveGasPrice
+	}
+	receipt.SetRaw(*ethReceipt)
+
+	return
+}
+
 // TxHashFromNumberAndId returns a transaction's hash if it's a valid transaction
 func TxHashFromNumberAndId(provider string, blkNum, txId uint64) (string, error) {
 	ec := GetClient(provider)
@@ -147,15 +300,16 @@ func TxHashFromNumberAndId(provider string, blkNum, txId uint64) (string, error)
 func TxNumberAndIdFromHash(provider string, hash string) (uint64, uint64, error) {
 	var trans Transaction
 	transPayload := RPCPayload{
-		Jsonrpc:   "2.0",
 		Method:    "eth_getTransactionByHash",
-		RPCParams: RPCParams{fmt.Sprintf("%s", hash)},
-		ID:        1002,
+		RPCParams: RPCParams{hash},
 	}
 	err := FromRpc(provider, &transPayload, &trans)
 	if err != nil {
 		fmt.Println("FromRpc(traces) returned error")
 		log.Fatal(err)
+	}
+	if trans.Result.BlockNumber == "" {
+		return 0, 0, fmt.Errorf("transaction %s not found", hash)
 	}
 	bn, err := strconv.ParseUint(trans.Result.BlockNumber[2:], 16, 32)
 	if err != nil {
@@ -279,10 +433,8 @@ func DecodeHex(hex string) []byte {
 func GetBlockByNumber(chain string, bn uint64) (types.SimpleNamedBlock, error) {
 	var block BlockHeader
 	var payload = RPCPayload{
-		Jsonrpc:   "2.0",
 		Method:    "eth_getBlockByNumber",
 		RPCParams: RPCParams{fmt.Sprintf("0x%x", bn), false},
-		ID:        1005,
 	}
 	rpcProvider := config.GetRpcProvider(chain)
 	err := FromRpc(rpcProvider, &payload, &block)

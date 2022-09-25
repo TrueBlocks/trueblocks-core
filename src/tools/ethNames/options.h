@@ -30,7 +30,6 @@ class COptions : public CAbiOptions {
     CStringArray terms;
     bool match_case;
     bool prefund;
-    bool collections;
     bool tags;
     bool to_custom;
     // END_CODE_DECLARE
@@ -51,8 +50,6 @@ class COptions : public CAbiOptions {
 
     void filterNames(void);
     bool addIfUnique(const CAccountName& item);
-
-    void handle_collections(const CStringArray& terms);
     bool handle_clean(void);
 
     bool finishClean(CAccountName& name);

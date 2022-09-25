@@ -10,7 +10,7 @@ $(dyno).cpp
 
 #-------------------------------------------------
 incs=/usr/local/include/tb
-cflags=-std=c++11 -Werror -Wall -O2 -I. -I$(incs)/cachelib -I$(incs)/acctlib -I$(incs)/etherlib -I$(incs)/utillib
+cflags=-std=c++11 -Werror -Wall -O2 -I. -I$(incs)/acctlib -I$(incs)/etherlib -I$(incs)/utillib
 
 #-------------------------------------------------
 cacheDest=cache/mainnet/objs/

@@ -1,7 +1,0 @@
-[settings]
-class = CCollection
-fields = collection.csv
-includes = basetypes.h|basenode.h|conversions.h
-cpp_includes = options_base.h
-sort = v1.name < v2.name
-equals = addressList % it.addressList

@@ -36,11 +36,7 @@ void CAppearance::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) con
 
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["appearance_fmt"] : fmtIn);
     if (fmt.empty()) {
-        if (expContext().exportFmt == YAML1) {
-            toYaml(ctx);
-        } else {
-            toJson(ctx);
-        }
+        toJson(ctx);
         return;
     }
 
@@ -72,9 +68,7 @@ string_q CAppearance::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
     if (fieldName % "tc") {
         if (tc < 10)
-            return (expContext().exportFmt == YAML1 || expContext().exportFmt == JSON1 || expContext().exportFmt == API1
-                        ? "\"\""
-                        : "");
+            return (expContext().exportFmt == JSON1 || expContext().exportFmt == API1 ? "\"\"" : "");
         return uint_2_Str(tc - 10);
     }
     // EXISTING_CODE

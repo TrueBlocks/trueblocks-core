@@ -31,6 +31,6 @@ transactions?transactions=1301011.0%201301672.0%201301324.0&uniq&fmt=json
     }
   ],
   "errors": [
-    "Transaction 1301324.0 not found."
+    "transaction 1301324.0 not found"
   ]
 }

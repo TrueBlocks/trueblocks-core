@@ -25,7 +25,9 @@ type ServeOptions struct {
 	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
 }
 
-var serveCmdLineOptions ServeOptions
+var defaultServeOptions = ServeOptions{
+	Port: ":8080",
+}
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *ServeOptions) testLog() {
@@ -62,7 +64,8 @@ func (opts *ServeOptions) toCmdLine() string {
 
 // serveFinishParseApi finishes the parsing for server invocations. Returns a new ServeOptions.
 func serveFinishParseApi(w http.ResponseWriter, r *http.Request) *ServeOptions {
-	opts := &ServeOptions{}
+	copy := defaultServeOptions
+	opts := &copy
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "port":
@@ -97,5 +100,5 @@ func serveFinishParse(args []string) *ServeOptions {
 func GetOptions() *ServeOptions {
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return &serveCmdLineOptions
+	return &defaultServeOptions
 }

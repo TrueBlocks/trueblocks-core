@@ -170,11 +170,23 @@ func GetFields(t *reflect.Type, format string, header bool) (fields []string, se
 		fields = strings.Split(custom, ",")
 
 	} else {
-		if (*t).Kind() != reflect.Struct {
-			logger.Fatal((*t).Name() + " is not a structure")
+		realType := *t
+
+		if realType.Kind() == reflect.Pointer {
+			realType = realType.Elem()
 		}
-		for i := 0; i < (*t).NumField(); i++ {
-			fn := (*t).Field(i).Name
+
+		if realType.Kind() != reflect.Struct {
+			logger.Fatal(realType.Name() + " is not a structure")
+		}
+		for i := 0; i < realType.NumField(); i++ {
+			field := realType.Field(i)
+			// We don't want to return private fields
+			if !field.IsExported() {
+				continue
+			}
+
+			fn := field.Name
 			if header {
 				fields = append(fields, MakeFirstLowerCase(fn))
 			} else {

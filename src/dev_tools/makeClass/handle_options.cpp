@@ -185,7 +185,7 @@ bool COptions::handle_options(void) {
             clearStreams();
             return false;
 
-        } else if (!contains(tool.first, "acctScrape2")) {
+        } else {
             string_q fn = getPathToSource(tool.first + "/options.cpp");
             if (tool.first == "/./")
                 fn = "./options.cpp";

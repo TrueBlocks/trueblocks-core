@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2022-09-08T17:58:49
+date: 2022-09-19T21:00:15
 lastmod:
   - :git
   - lastmod
@@ -21,7 +21,7 @@ Tools in the Admin category produce data related to scraping the chain, producin
 
 ## Status
 
-The [chifra status](/docs/chifra/admin/#chifra-status) tool reports on the state (and size) of the various TrueBlocks local binary caches. TrueBlocks produces nine difference caches: `abis`, `blocks`, `monitors`, `names`, `objs`, `prices`, `recons`, `slurps`, `traces`, `txs`. In general practice, these caches may take up a few GB of hard drive space, however, for very popular smart contract the size of the caches may grow rather large. Keep an eye on it.
+The [chifra status](/docs/chifra/admin/#chifra-status) tool reports on the state (and size) of the various TrueBlocks local binary caches. TrueBlocks produces nine difference caches: `abis`, `blocks`, `monitors`, `names`, `objs`, `recons`, `slurps`, `traces`, `txs`. In general practice, these caches may take up a few GB of hard drive space, however, for very popular smart contract the size of the caches may grow rather large. Keep an eye on it.
 
 The following commands produce and manage status:
 

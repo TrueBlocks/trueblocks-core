@@ -41,7 +41,9 @@ type BlocksOptions struct {
 	BadFlag    error                    `json:"badFlag,omitempty"`    // An error flag if needed
 }
 
-var blocksCmdLineOptions BlocksOptions
+var defaultBlocksOptions = BlocksOptions{
+	BigRange: 500,
+}
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *BlocksOptions) testLog() {
@@ -131,7 +133,8 @@ func (opts *BlocksOptions) toCmdLine() string {
 
 // blocksFinishParseApi finishes the parsing for server invocations. Returns a new BlocksOptions.
 func blocksFinishParseApi(w http.ResponseWriter, r *http.Request) *BlocksOptions {
-	opts := &BlocksOptions{}
+	copy := defaultBlocksOptions
+	opts := &copy
 	opts.BigRange = 500
 	opts.List = 0
 	opts.ListCount = 0
@@ -210,5 +213,5 @@ func blocksFinishParse(args []string) *BlocksOptions {
 func GetOptions() *BlocksOptions {
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return &blocksCmdLineOptions
+	return &defaultBlocksOptions
 }

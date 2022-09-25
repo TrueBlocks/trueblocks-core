@@ -293,8 +293,7 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
             if (folderExists(customized))
                 forEveryFileInFolder(customized + "/*", saveAndCopy, NULL);
             if (test.mode == "both" || contains(test.tool, "lib"))
-                if (test.tool != "getQuotes")
-                    measure.nTests++;
+                measure.nTests++;
             // clang-format off
             if (system(theCmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
             // clang-format on
@@ -311,8 +310,7 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
 
             if (test.builtin) {
                 if (test.mode == "both" || contains(test.tool, "lib"))
-                    if (test.tool != "getQuotes")
-                        measure.nPassed++;
+                    measure.nPassed++;
                 continue;
             }
 
@@ -339,7 +337,13 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
             bool isTools = contains(oldFn, "/tools/");
             bool isClasses = contains(oldFn, "classes");
             bool isBlocksLogs = contains(oldFn, "getBlocks") && contains(oldFn, "logs");
-            if (hasId && isTools && !isClasses && !isBlocksLogs) {
+            bool isReceipt = contains(oldFn, "getReceipts");
+            bool isBlocks = contains(oldFn, "getBlocks");
+            bool isTrans = contains(oldFn, "getTrans");
+            bool isLogs = contains(oldFn, "getLogs");
+            bool isTraces = contains(oldFn, "getTraces");
+            if (!isReceipt && !isBlocks && !isTrans && !isLogs && !isTraces && hasId && isTools && !isClasses &&
+                !isBlocksLogs) {
                 // This crazy shit is because we want to pass tests when running against different nodes (Parity,
                 // Erigon, etc.) so we have to remove some stuff and then sort the data (after deliniating it)
                 // so it matches more easily.
@@ -393,10 +397,9 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
             string_q result = greenCheck;
             if (!newText.empty() && newText == oldText) {
                 if (test.mode == "both" || contains(test.tool, "lib"))
-                    if (test.tool != "getQuotes")
-                        measure.nPassed++;
+                    measure.nPassed++;
 
-            } else if (test.tool != "getQuotes") {
+            } else {
                 ostringstream os;
                 os << cRed << "\tFailed: " << cTeal << (endsWith(test.path, "lib") ? test.tool : measure.cmd) << " ";
                 os << test.name << ".txt " << cOff << "(" << (test.builtin ? "" : measure.cmd) << " "

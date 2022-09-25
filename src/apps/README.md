@@ -4,11 +4,9 @@ This document is out of date. Please see our [website](http://trueblocks.io).
 
 ## Apps
 
-The `apps` folder contains the primary applications built on the TrueBlocks libraries. This includes the decentralized blockchain scrapers `blockScrape`; `chifra`, an automated way to create smart contract monitors; `getQuotes` which pulls US dollar price data from remote sources; `ethslurp` which is a down-and-dirty centralized command line scraper utilizing http://etherscan.io.
+The `apps` folder contains the primary applications built on the TrueBlocks libraries. This includes the decentralized blockchain scrapers `blockScrape`; `chifra`, an automated way to create smart contract monitors; `ethslurp` which is a down-and-dirty centralized command line scraper utilizing http://etherscan.io.
 
 The following applications are open source and available at our git hub:
-
-- [**getQuotes**](getQuotes/README.md): A simple utility that pulls price data local from various sources. It is configurable to retrieve its data from any of a number of price feeds and collate or average the feeds. US Dollar prices can be used in tax reporting and current balance reporting tools.
 
 - [**ethslurp**](ethslurp/README.md): This program pulls data from the http://etherscan.io APIs. It may be used to verify results from TrueBlocks, checking that they are consistent with EtherScan. Ultimately, this tool is incomplete in two ways: (1) it pulls data from a centralized source as opposed to a locally-running node, and (2) it ignores internal smart contract message calls.
 

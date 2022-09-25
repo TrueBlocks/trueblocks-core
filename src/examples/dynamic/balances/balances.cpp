@@ -26,22 +26,17 @@ class CTestTraverser : public CTraverser {
 //-----------------------------------------------------------------------
 bool header(CTraverser* trav, void* data) {
     cout << "date,";
-    cout << "balanceEth,";
-    cout << "balanceUSD,";
-    cout << "priceUSD" << endl;
+    cout << "balanceEth," << endl;
     return true;
 }
 
-const wei_t oneEther = str_2_Wei("1000000000000000000");
 //-----------------------------------------------------------------------
 bool display(CTraverser* trav, void* data) {
     CTestTraverser* tt = (CTestTraverser*)trav;
 
     wei_t balance = getBalanceAt(tt->curMonitor->address, tt->app->blk);
     cout << trav->trans.Format("[{DATE}]") << ",";
-    cout << wei_2_Ether(balance, 18) << ",";
-    cout << wei_2_Dollars(trav->trans.timestamp, balance, 18) << ",";
-    cout << wei_2_Dollars(trav->trans.timestamp, oneEther, 18) << endl;
+    cout << wei_2_Ether(balance, 18) << endl;
 
     return true;
 }

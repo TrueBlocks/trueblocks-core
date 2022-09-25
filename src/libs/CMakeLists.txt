@@ -11,14 +11,10 @@ project(libs)
 add_subdirectory(utillib)
 add_subdirectory(etherlib)
 add_subdirectory(acctlib)
-add_subdirectory(cachelib)
 add_subdirectory(test-libs)
 
 file(GLOB A_HEADER_FILES "acctlib/*.h")
 install(FILES ${A_HEADER_FILES} DESTINATION include/tb/acctlib)
-
-file(GLOB C_HEADER_FILES "cachelib/*.h")
-install(FILES ${C_HEADER_FILES} DESTINATION include/tb/cachelib)
 
 file(GLOB E_HEADER_FILES "etherlib/*.h")
 install(FILES ${E_HEADER_FILES} DESTINATION include/tb/etherlib)

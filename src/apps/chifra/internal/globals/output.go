@@ -91,11 +91,22 @@ func (opts *GlobalOptions) RenderObject(data interface{}, first bool) error {
 	if opts.Writer == nil {
 		log.Fatal("opts.Writer is nil")
 	}
-	return output.OutputObject(data, opts.Writer, opts.Format, opts.NoHeader, opts.ApiMode, first, nil)
+
+	format := opts.Format
+	if opts.Raw {
+		// If users wants raw output, we will most probably print JSON
+		format = "json"
+	}
+	return output.OutputObject(data, opts.Writer, format, opts.NoHeader, opts.ApiMode, first, nil)
 }
 
 // TODO: Fix export without arrays
 func (opts *GlobalOptions) RenderHeader(data interface{}, w *io.Writer, format string, apiMode, hideHeader, first bool) error {
+	if opts.Raw {
+		// We don't render the header if user wants raw output.
+		return nil
+	}
+
 	if apiMode {
 		// We could check this, but if it's not empty, we know it's type
 		hw, _ := (*w).(http.ResponseWriter)
@@ -118,6 +129,11 @@ func (opts *GlobalOptions) RenderHeader(data interface{}, w *io.Writer, format s
 
 // TODO: Fix export without arrays
 func (opts *GlobalOptions) RenderFooter() error {
+	if opts.Raw {
+		// We don't render the footer if user wants raw output.
+		return nil
+	}
+
 	if opts.Format == "api" || opts.Format == "json" {
 		opts.Writer.Write([]byte("\n  ]"))
 		showMeta := opts.ApiMode || opts.Format == "api"
@@ -133,7 +149,7 @@ func (opts *GlobalOptions) RenderFooter() error {
 			}
 			opts.Writer.Write(b)
 		}
-		opts.Writer.Write([]byte("\n}"))
+		opts.Writer.Write([]byte("\n}\n"))
 	}
 	return nil
 }

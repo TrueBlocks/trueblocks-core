@@ -29,12 +29,8 @@ int main(int argc, const char* argv[]) {
         // Test 'zero' is an old bug that originally motivated this code. We used to print 10.2147483648 when we know
         // the value was 1.400001000001. Weird, but true
         if (options.testNum == 1) {
-            HIDE_FIELD(CPriceQuote, "timestamp");
-            HIDE_FIELD(CPriceQuote, "date");
-
-            CPriceQuote bug;
-            bug.close = 1.40000010000001;
-            cerr << bug.Format() << "\n";
+            cerr << "1.40000010000001"
+                 << "\n";
 
         } else if (options.testNum == 2) {
             cout << "Test " << options.testNum << "\n";

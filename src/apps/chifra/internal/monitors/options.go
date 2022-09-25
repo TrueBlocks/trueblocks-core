@@ -34,7 +34,9 @@ type MonitorsOptions struct {
 	BadFlag    error                 `json:"badFlag,omitempty"`    // An error flag if needed
 }
 
-var monitorsCmdLineOptions MonitorsOptions
+var defaultMonitorsOptions = MonitorsOptions{
+	LastBlock: utils.NOPOS,
+}
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *MonitorsOptions) testLog() {
@@ -58,7 +60,8 @@ func (opts *MonitorsOptions) String() string {
 
 // monitorsFinishParseApi finishes the parsing for server invocations. Returns a new MonitorsOptions.
 func monitorsFinishParseApi(w http.ResponseWriter, r *http.Request) *MonitorsOptions {
-	opts := &MonitorsOptions{}
+	copy := defaultMonitorsOptions
+	opts := &copy
 	opts.Sleep = 14
 	opts.FirstBlock = 0
 	opts.LastBlock = utils.NOPOS
@@ -117,5 +120,5 @@ func monitorsFinishParse(args []string) *MonitorsOptions {
 func GetOptions() *MonitorsOptions {
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return &monitorsCmdLineOptions
+	return &defaultMonitorsOptions
 }
