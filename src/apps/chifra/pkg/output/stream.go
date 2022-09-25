@@ -1,7 +1,6 @@
 package output
 
 import (
-	"encoding/csv"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -29,9 +28,9 @@ type OutputOptions = struct {
 	Meta *rpcClient.MetaData
 }
 
-var formatToSeparator = map[string]rune{
-	"csv": ',',
-	"txt": '\t',
+var formatToSeparator = map[string]string{
+	"csv": ",",
+	"txt": "\t",
 }
 
 // StreamWithTemplate executes a template `tmpl` over Model `model`
@@ -50,35 +49,33 @@ func StreamModel(w io.Writer, model types.Model, options OutputOptions) error {
 		return nil
 	}
 
-	// Store map items as strings. All formats other than JSON need string data
-	strs := make([]string, 0, len(model.Order))
-	for _, key := range model.Order {
-		strs = append(strs, fmt.Sprint(model.Data[key]))
-	}
-
-	var separator rune
+	var separator string
 	if len(options.Format) == 1 {
-		separator = rune(options.Format[0])
+		separator = options.Format[0:1]
 	} else {
 		separator = formatToSeparator[options.Format]
 	}
-	if separator == 0 {
+	if separator == "" {
 		return fmt.Errorf("unknown format %s", options.Format)
 	}
-	outputWriter := csv.NewWriter(w)
-	outputWriter.Comma = rune(separator)
-	if options.ShowKeys {
-		outputWriter.Write(model.Order)
-	}
-	outputWriter.Write(strs)
-	// This Flushes for each printed item, but in the exchange the user gets
-	// the data printed as it comes
-	outputWriter.Flush()
 
-	err := outputWriter.Error()
-	if err != nil {
-		return err
+	if options.ShowKeys {
+		for i, key := range model.Order {
+			if i != 0 {
+				w.Write([]byte(separator))
+			}
+			w.Write([]byte(key))
+		}
+		w.Write([]byte("\n"))
 	}
+
+	for i, key := range model.Order {
+		if i != 0 {
+			w.Write([]byte(separator))
+		}
+		w.Write([]byte(fmt.Sprint(model.Data[key])))
+	}
+	w.Write([]byte("\n"))
 
 	return nil
 }
