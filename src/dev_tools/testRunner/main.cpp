@@ -337,10 +337,13 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
             bool isTools = contains(oldFn, "/tools/");
             bool isClasses = contains(oldFn, "classes");
             bool isBlocksLogs = contains(oldFn, "getBlocks") && contains(oldFn, "logs");
-            // bool isReceipt = contains(oldFn, "getReceipts");
+            bool isReceipt = contains(oldFn, "getReceipts");
+            bool isBlocks = contains(oldFn, "getBlocks");
+            bool isTrans = contains(oldFn, "getTrans");
             bool isLogs = contains(oldFn, "getLogs");
             bool isTraces = contains(oldFn, "getTraces");
-            if (!isLogs && !isTraces && hasId && isTools && !isClasses && !isBlocksLogs) {
+            if (!isReceipt && !isBlocks && !isTrans && !isLogs && !isTraces && hasId && isTools && !isClasses &&
+                !isBlocksLogs) {
                 // This crazy shit is because we want to pass tests when running against different nodes (Parity,
                 // Erigon, etc.) so we have to remove some stuff and then sort the data (after deliniating it)
                 // so it matches more easily.
