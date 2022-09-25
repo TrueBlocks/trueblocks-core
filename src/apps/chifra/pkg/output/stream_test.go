@@ -62,27 +62,27 @@ func helperStreamFormats(w csv.Writer, outputBuffer *bytes.Buffer, format string
 }
 
 func TestStreamFormats(t *testing.T) {
-	// outputBuffer := &bytes.Buffer{}
-	// csvWriter := csv.NewWriter(outputBuffer)
+	outputBuffer := &bytes.Buffer{}
+	csvWriter := csv.NewWriter(outputBuffer)
 
-	// err := helperStreamFormats(*csvWriter, outputBuffer, "csv", false)
-	// if err != nil {
-	// 	t.Fatal(err)
-	// }
+	err := helperStreamFormats(*csvWriter, outputBuffer, "csv", false)
+	if err != nil {
+		t.Fatal(err)
+	}
 
-	// csvWriter.Comma = '\t'
-	// outputBuffer.Reset()
-	// err = helperStreamFormats(*csvWriter, outputBuffer, "txt", false)
-	// if err != nil {
-	// 	t.Fatal(err)
-	// }
+	csvWriter.Comma = '\t'
+	outputBuffer.Reset()
+	err = helperStreamFormats(*csvWriter, outputBuffer, "txt", false)
+	if err != nil {
+		t.Fatal(err)
+	}
 
-	// csvWriter.Comma = ':'
-	// outputBuffer.Reset()
-	// err = helperStreamFormats(*csvWriter, outputBuffer, ":", false)
-	// if err != nil {
-	// 	t.Fatal(err)
-	// }
+	csvWriter.Comma = ':'
+	outputBuffer.Reset()
+	err = helperStreamFormats(*csvWriter, outputBuffer, ":", false)
+	if err != nil {
+		t.Fatal(err)
+	}
 }
 
 func TestStreamJson(t *testing.T) {
@@ -103,13 +103,13 @@ func TestStreamJson(t *testing.T) {
 }
 
 func TestStreamPrintKeys(t *testing.T) {
-	// outputBuffer := &bytes.Buffer{}
-	// csvWriter := csv.NewWriter(outputBuffer)
+	outputBuffer := &bytes.Buffer{}
+	csvWriter := csv.NewWriter(outputBuffer)
 
-	// err := helperStreamFormats(*csvWriter, outputBuffer, "csv", true)
-	// if err != nil {
-	// 	t.Fatal(err)
-	// }
+	err := helperStreamFormats(*csvWriter, outputBuffer, "csv", true)
+	if err != nil {
+		t.Fatal(err)
+	}
 }
 
 func TestStreamTemplate(t *testing.T) {
