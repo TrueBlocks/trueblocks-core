@@ -11,9 +11,9 @@ on      ,both ,fast  ,abis  ,tools/grabABI ,verbose1            ,y    ,addrs = 0
 on      ,both ,fast  ,abis  ,tools/grabABI ,underbar_functions  ,y    ,addrs = 0xdac17f958d2ee523a2206206994597c13d831ec7
 on      ,both ,fast  ,abis  ,tools/grabABI ,output_test         ,n    ,addrs = 0xdac17f958d2ee523a2206206994597c13d831ec7 & output = testing_file
 on      ,both ,fast  ,abis  ,tools/grabABI ,known_bug1          ,y    ,addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = json
-on      ,both ,fast  ,abis  ,tools/grabABI ,known_bug1_raw      ,y    ,addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = json
+on      ,both ,fast  ,abis  ,tools/grabABI ,known_bug1_again    ,y    ,addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = json
 on      ,both ,fast  ,abis  ,tools/grabABI ,known_bug2          ,y    ,addrs = 0xef638b4305b8a1620f4e0e562e127f1181ae16d2 & fmt = json
-on      ,both ,fast  ,abis  ,tools/grabABI ,known_bug2_raw      ,y    ,addrs = 0xef638b4305b8a1620f4e0e562e127f1181ae16d2 & fmt = json
+on      ,both ,fast  ,abis  ,tools/grabABI ,known_bug2_again    ,y    ,addrs = 0xef638b4305b8a1620f4e0e562e127f1181ae16d2 & fmt = json
 on      ,both ,fast  ,abis  ,tools/grabABI ,fmt_newfields       ,y    ,addrs = 0xffa93aacf49297d51e211817452839052fdfb961
 on      ,both ,fast  ,abis  ,tools/grabABI ,fmt_default         ,y    ,addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6
 local   ,both ,fast  ,abis  ,tools/grabABI ,fmt_txt             ,n    ,addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = txt
@@ -34,8 +34,8 @@ on      ,both ,fast  ,abis  ,tools/grabABI ,findSig_txt         ,n    ,find = 0x
 on      ,both ,fast  ,abis  ,tools/grabABI ,findSig_junk        ,y    ,find = 0x1aa3a008 & fmt = junk
 local   ,both ,fast  ,abis  ,tools/grabABI ,findSig_a_lot       ,n    ,find = 0xea8a1af0 & find = 0x9a82a09a & find = 0x52efea6e & find = 0xd0e30db0 & find = 0x83197ef0 & find = 0x12fa6feb & find = 0x3d6a71e4 & find = 0x31ae450b & find = 0x06fdde03 & find = 0x8da5cb5b & find = 0x1aa3a008 & find = 0x2de40ce3 & find = 0x9d76ea58 & find = 0xad7a672f & find = 0x3ccfd60b & find = 0xf5074f41 & find = 0x24d7806c & find = 0xc3c5a547 & find = 0x09e69ede & find = 0xf2fde38b & find = 0xc2a2ce06 & find = 0xfdacd576 & fmt = csv
 
-local      ,both ,fast  ,abis  ,tools/grabABI ,known_alone         ,y    ,known
-local      ,both ,fast  ,abis  ,tools/grabABI ,known_with          ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & known
+local   ,both ,fast  ,abis  ,tools/grabABI ,known_alone         ,y    ,known
+local   ,both ,fast  ,abis  ,tools/grabABI ,known_with          ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & known
 on      ,both ,fast  ,abis  ,tools/grabABI ,fromSolidity        ,y    ,sol & addrs = 0x2234567812345678123456781234567812345678
 on      ,both ,fast  ,abis  ,tools/grabABI ,fromSolidity2       ,y    ,sol & addrs = 0x7d655c57f71464b6f83811c55d84009cd9f5221c & fmt = json
 on      ,both ,fast  ,abis  ,tools/grabABI ,fromSolidity3_fail  ,y    ,sol & find = 0x1aa3a008 & addrs = 0x7d655c57f71464b6f83811c55d84009cd9f5221c & fmt = json

@@ -10,7 +10,7 @@ receipts?transactions=0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b686
     }
   ],
   "errors": [
-    "Transaction 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5 not found."
+    "transaction 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5 not found"
   ],
   "meta": {
     "unripe": "0xdeadbeef",

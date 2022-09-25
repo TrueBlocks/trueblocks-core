@@ -13,7 +13,6 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"os"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -55,7 +54,7 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 		return nil, false
 	}
 
-	if len(os.Getenv("OLD")) > 0 {
+	if true {
 		err = opts.Globals.PassItOn("getReceipts", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
 		return err, true
 	}
