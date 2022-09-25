@@ -111,6 +111,7 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 		ShowRaw:    opts.Globals.Raw,
 		ShowHidden: opts.Globals.Verbose,
 		Format:     opts.Globals.Format,
+		JsonIndent: "  ",
 		Meta:       meta,
 	})
 
