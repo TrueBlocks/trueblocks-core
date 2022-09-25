@@ -5,7 +5,6 @@ receipts?transactions=0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef97986552
       "blockNumber": 3657480,
       "gasUsed": 21000,
       "hash": "0xc62d9410b73b18d767fe32df91e6336c5d563eceee49c55c56df65bfeb4b966d",
-      "logs": [],
       "status": 1,
       "transactionIndex": 3
     }
