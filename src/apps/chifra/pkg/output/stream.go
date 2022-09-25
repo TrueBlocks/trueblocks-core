@@ -99,9 +99,11 @@ func StreamRaw[Raw types.RawData](w io.Writer, raw *Raw) (err error) {
 // StreamMany outputs models or raw data as they are acquired
 func StreamMany[Raw types.RawData](
 	w io.Writer,
-	getData func(models chan types.Modeler[Raw], errors chan error),
+	// TODO(dszlachta): I renamed this to renderData instead of getData. More accurate
+	renderData func(models chan types.Modeler[Raw], errors chan error),
 	options OutputOptions,
 ) error {
+	// TODO(dszlachta): let's make channels more obvious. Please rename these to modelChan and errorChan throughout (even into the called function)
 	models := make(chan types.Modeler[Raw])
 	errors := make(chan error)
 
@@ -110,7 +112,7 @@ func StreamMany[Raw types.RawData](
 	first := true
 	// Start getting the data
 	go func() {
-		getData(models, errors)
+		renderData(models, errors)
 		close(models)
 		close(errors)
 	}()

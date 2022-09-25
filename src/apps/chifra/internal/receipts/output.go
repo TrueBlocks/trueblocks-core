@@ -55,6 +55,7 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 		return err, true
 	}
 
+	// TODO(dszlachta): This can be calculated at the top of the StreamMany function and sent to each invocation of the rendering function. Makes this calling code cleaner.
 	notFound := make([]error, 0)
 	clientVersion, err := rpcClient.GetVersion(opts.Globals.Chain)
 	if err != nil {
@@ -62,7 +63,8 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 	}
 	erigonUsed := utils.IsClientErigon(clientVersion)
 
-	getTransaction := func(models chan types.Modeler[types.RawReceipt], errors chan error) {
+	// TODO(dszlachta): I renamed this function to `renderTransaction`. Render meaning "send out". We're not really getting as nothing is returned
+	renderTransaction := func(models chan types.Modeler[types.RawReceipt], errors chan error) {
 		// TODO: stream transaction identifiers
 		for idIndex, rng := range opts.TransactionIds {
 			txList, err := rng.ResolveTxs(opts.Globals.Chain)
@@ -99,6 +101,8 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 			}
 		}
 	}
+
+	// TODO(dszlachta): There's no reason for this processing to be in the calling code. Put this inside of StreamMany and remove it from the OutputOptions. It makes this code much cleaner.
 	var meta *rpcClient.MetaData
 	if opts.Globals.Format == "api" {
 		meta, err = rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
@@ -106,7 +110,7 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 			return err, true
 		}
 	}
-	err = output.StreamMany(opts.Globals.Writer, getTransaction, output.OutputOptions{
+	err = output.StreamMany(opts.Globals.Writer, renderTransaction, output.OutputOptions{
 		ShowKeys:   !opts.Globals.NoHeader,
 		ShowRaw:    opts.Globals.Raw,
 		ShowHidden: opts.Globals.Verbose,
@@ -115,6 +119,8 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 		Meta:       meta,
 	})
 
+	// TODO(dszlachta): This error processes should not be in the calling function.
+	// TODO(dszlachta): Error reporting in API mode is not putting the error object in the right place. See issue: https://github.com/TrueBlocks/trueblocks-core/issues/2354
 	// If we didn't find some transactions, we want to report them to the user. In the
 	// future, we will stream both the data and errors, but meanwhile we can have the
 	// below workaround
