@@ -34,6 +34,12 @@ var formatToSeparator = map[string]rune{
 	"txt": '\t',
 }
 
+// TODO(perf): Remove these or conclude that they are faster
+// perf var formatToSeparator = map[string]string{
+// perf 	"csv": ",",
+// perf 	"txt": "\t",
+// perf }
+
 // StreamWithTemplate executes a template `tmpl` over Model `model`
 func StreamWithTemplate(w io.Writer, model types.Model, tmpl *template.Template) error {
 	return tmpl.Execute(w, model.Data)
@@ -79,6 +85,34 @@ func StreamModel(w io.Writer, model types.Model, options OutputOptions) error {
 	if err != nil {
 		return err
 	}
+	// TODO(perf): Remove these or conclude that they are faster
+	// perf var separator string
+	// perf if len(options.Format) == 1 {
+	// perf 	separator = options.Format[0:1]
+	// perf } else {
+	// perf 	separator = formatToSeparator[options.Format]
+	// perf }
+	// perf if separator == "" {
+	// perf 	return fmt.Errorf("unknown format %s", options.Format)
+	// perf }
+	// perf 
+	// perf if options.ShowKeys {
+	// perf 	for i, key := range model.Order {
+	// perf 		if i != 0 {
+	// perf 			w.Write([]byte(separator))
+	// perf 		}
+	// perf 		w.Write([]byte(key))
+	// perf 	}
+	// perf 	w.Write([]byte("\n"))
+	// perf }
+	// perf 
+	// perf for i, key := range model.Order {
+	// perf 	if i != 0 {
+	// perf 		w.Write([]byte(separator))
+	// perf 	}
+	// perf 	w.Write([]byte(fmt.Sprint(model.Data[key])))
+	// perf }
+	// perf w.Write([]byte("\n"))
 
 	return nil
 }

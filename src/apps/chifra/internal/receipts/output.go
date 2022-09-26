@@ -15,6 +15,7 @@ import (
 	"net/http"
 	"strings"
 
+	// TODO(tjayrush): "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
@@ -29,6 +30,11 @@ import (
 func RunReceipts(cmd *cobra.Command, args []string) (err error) {
 	opts := receiptsFinishParse(args)
 	// EXISTING_CODE
+	// TODO(tjayrush): if len(opts.Globals.File) > 0 && file.FileExists(opts.Globals.File) {
+	// TODO(tjayrush): 	cmds := file.AsciiFileToLines(opts.Globals.File)
+	// TODO(tjayrush): 	opts.Transactions = make([]string, 0, len(cmds))
+	// TODO(tjayrush): 	opts.Transactions = append(opts.Transactions, cmds...)
+	// TODO(tjayrush): }
 	// EXISTING_CODE
 	err, _ = opts.ReceiptsInternal()
 	return
