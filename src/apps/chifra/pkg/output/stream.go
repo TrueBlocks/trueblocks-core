@@ -1,13 +1,16 @@
 package output
 
 import (
+	"context"
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
 	"io"
 	"strings"
+	"sync"
 	"text/template"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -47,6 +50,7 @@ func StreamModel(w io.Writer, model types.Model, options OutputOptions) error {
 			return err
 		}
 		w.Write(v)
+		// Add a newline so that the command prompt is not being printed at
 		return nil
 	}
 
@@ -96,13 +100,26 @@ func StreamRaw[Raw types.RawData](w io.Writer, raw *Raw) (err error) {
 	return
 }
 
+func writeJsonErrors(w io.Writer, errs []string, options OutputOptions) error {
+	marshalled, err := json.MarshalIndent(errs, "  ", options.JsonIndent)
+	if err != nil {
+		return err
+	}
+	w.Write(marshalled)
+	return nil
+}
+
 // StreamMany outputs models or raw data as they are acquired
 func StreamMany[Raw types.RawData](
+	ctx context.Context,
 	w io.Writer,
 	// TODO(dszlachta): I renamed this to renderData instead of getData. More accurate
 	renderData func(models chan types.Modeler[Raw], errors chan error),
 	options OutputOptions,
 ) error {
+	errsToReport := make([]string, 0)
+	errsMutex := sync.Mutex{}
+
 	// TODO(dszlachta): let's make channels more obvious. Please rename these to modelChan and errorChan throughout (even into the called function)
 	models := make(chan types.Modeler[Raw])
 	errors := make(chan error)
@@ -121,7 +138,12 @@ func StreamMany[Raw types.RawData](
 	// brackets are printed
 	if options.Format == "json" {
 		w.Write([]byte("{\n  \"data\": [\n    "))
-		defer w.Write([]byte("\n  ]\n}\n"))
+		defer func() {
+			w.Write([]byte("\n  ]\n}\n"))
+			for _, errMessage := range errsToReport {
+				logger.Log(logger.Error, errMessage)
+			}
+		}()
 	}
 	// If printing API format, we want to add meta information
 	if options.ShowRaw || options.Format == "api" {
@@ -137,9 +159,30 @@ func StreamMany[Raw types.RawData](
 				b, _ := json.MarshalIndent(options.Meta, "  ", options.JsonIndent)
 				w.Write(b)
 			}
+			if options.Format == "api" && len(errsToReport) > 0 {
+				w.Write([]byte(",\n  \"errors\": "))
+				err := writeJsonErrors(w, errsToReport, options)
+				if err != nil {
+					panic(err)
+				}
+			}
 			w.Write([]byte("\n}\n"))
+			if options.ShowRaw && options.Format != "api" {
+				for _, errMessage := range errsToReport {
+					logger.Log(logger.Error, errMessage)
+				}
+			}
 		}()
 	}
+
+	defer func() {
+		if options.Format == "json" || options.Format == "api" || options.ShowRaw {
+			return
+		}
+		for _, errMessage := range errsToReport {
+			logger.Log(logger.Error, errMessage)
+		}
+	}()
 
 	// If user wants custom format, we have to prepare the template
 	customFormat := strings.Contains(options.Format, "{")
@@ -152,7 +195,7 @@ func StreamMany[Raw types.RawData](
 		select {
 		case model, ok := <-models:
 			if !ok {
-				continue
+				return nil
 			}
 
 			// If the output is JSON and we are printing another item, put `,` in front of it
@@ -179,8 +222,16 @@ func StreamMany[Raw types.RawData](
 			}
 			first = false
 
-		case err := <-errors:
-			return err
+		case err, ok := <-errors:
+			if !ok {
+				continue
+			}
+			errsMutex.Lock()
+			errsToReport = append(errsToReport, err.Error())
+			errsMutex.Unlock()
+
+		case <-ctx.Done():
+			return ctx.Err()
 		}
 	}
 }
