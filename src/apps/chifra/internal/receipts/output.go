@@ -10,6 +10,7 @@ package receiptsPkg
 
 // EXISTING_CODE
 import (
+	"context"
 	"fmt"
 	"net/http"
 	"strings"
@@ -19,7 +20,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
-	"golang.org/x/net/context"
 )
 
 // EXISTING_CODE

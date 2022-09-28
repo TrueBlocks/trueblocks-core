@@ -50,7 +50,6 @@ func StreamModel(w io.Writer, model types.Model, options OutputOptions) error {
 			return err
 		}
 		w.Write(v)
-		// Add a newline so that the command prompt is not being printed at
 		return nil
 	}
 
@@ -100,13 +99,47 @@ func StreamRaw[Raw types.RawData](w io.Writer, raw *Raw) (err error) {
 	return
 }
 
-func writeJsonErrors(w io.Writer, errs []string, options OutputOptions) error {
+func writeJsonErrors(w io.Writer, errs []string, options *OutputOptions) error {
 	marshalled, err := json.MarshalIndent(errs, "  ", options.JsonIndent)
 	if err != nil {
 		return err
 	}
 	w.Write(marshalled)
 	return nil
+}
+
+func closeApiOrRawResponse(w io.Writer, errsToReport []string, options *OutputOptions) {
+	if options.ShowRaw {
+		// Raw data already includes a newline
+		w.Write([]byte("  ]"))
+	} else {
+		w.Write([]byte("\n  ]"))
+	}
+	if options.Meta != nil {
+		w.Write([]byte(",\n  \"meta\": "))
+		b, _ := json.MarshalIndent(options.Meta, "  ", options.JsonIndent)
+		w.Write(b)
+	}
+	if options.Format == "api" && len(errsToReport) > 0 {
+		// For API, we want to report errors under `errors` key in the response,
+		// but only for "api" format...
+		w.Write([]byte(",\n  \"errors\": "))
+		err := writeJsonErrors(w, errsToReport, options)
+		if err != nil {
+			panic(err)
+		}
+	}
+	w.Write([]byte("\n}\n"))
+	if options.ShowRaw && options.Format != "api" {
+		// ...if streaming other format, we want to print the errors to stderr
+		printErrors(errsToReport)
+	}
+}
+
+func printErrors(errsToReport []string) {
+	for _, errMessage := range errsToReport {
+		logger.Log(logger.Error, errMessage)
+	}
 }
 
 // StreamMany outputs models or raw data as they are acquired
@@ -140,48 +173,25 @@ func StreamMany[Raw types.RawData](
 		w.Write([]byte("{\n  \"data\": [\n    "))
 		defer func() {
 			w.Write([]byte("\n  ]\n}\n"))
-			for _, errMessage := range errsToReport {
-				logger.Log(logger.Error, errMessage)
-			}
+			printErrors(errsToReport)
 		}()
 	}
-	// If printing API format, we want to add meta information
+	// If printing API format, we want to add meta information and errors
 	if options.ShowRaw || options.Format == "api" {
 		w.Write([]byte("{\n  \"data\": [\n    "))
 		defer func() {
-			if options.ShowRaw {
-				w.Write([]byte("  ]"))
-			} else {
-				w.Write([]byte("\n  ]"))
-			}
-			if options.Meta != nil {
-				w.Write([]byte(",\n  \"meta\": "))
-				b, _ := json.MarshalIndent(options.Meta, "  ", options.JsonIndent)
-				w.Write(b)
-			}
-			if options.Format == "api" && len(errsToReport) > 0 {
-				w.Write([]byte(",\n  \"errors\": "))
-				err := writeJsonErrors(w, errsToReport, options)
-				if err != nil {
-					panic(err)
-				}
-			}
-			w.Write([]byte("\n}\n"))
-			if options.ShowRaw && options.Format != "api" {
-				for _, errMessage := range errsToReport {
-					logger.Log(logger.Error, errMessage)
-				}
-			}
+			closeApiOrRawResponse(w, errsToReport, &options)
 		}()
 	}
 
 	defer func() {
+		// We generally print errors for non-api formats, unless we are printing raw.
+		// But printing errors for JSON has to be handled in`closeApiOrRawResponse`,
+		// as we don't want to print errors before the closing `}`
 		if options.Format == "json" || options.Format == "api" || options.ShowRaw {
 			return
 		}
-		for _, errMessage := range errsToReport {
-			logger.Log(logger.Error, errMessage)
-		}
+		printErrors(errsToReport)
 	}()
 
 	// If user wants custom format, we have to prepare the template
