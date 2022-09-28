@@ -1,13 +1,16 @@
 package output
 
 import (
+	"context"
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
 	"io"
 	"strings"
+	"sync"
 	"text/template"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -96,13 +99,60 @@ func StreamRaw[Raw types.RawData](w io.Writer, raw *Raw) (err error) {
 	return
 }
 
+func writeJsonErrors(w io.Writer, errs []string, options *OutputOptions) error {
+	marshalled, err := json.MarshalIndent(errs, "  ", options.JsonIndent)
+	if err != nil {
+		return err
+	}
+	w.Write(marshalled)
+	return nil
+}
+
+func closeApiOrRawResponse(w io.Writer, errsToReport []string, options *OutputOptions) {
+	if options.ShowRaw {
+		// Raw data already includes a newline
+		w.Write([]byte("  ]"))
+	} else {
+		w.Write([]byte("\n  ]"))
+	}
+	if options.Meta != nil {
+		w.Write([]byte(",\n  \"meta\": "))
+		b, _ := json.MarshalIndent(options.Meta, "  ", options.JsonIndent)
+		w.Write(b)
+	}
+	if options.Format == "api" && len(errsToReport) > 0 {
+		// For API, we want to report errors under `errors` key in the response,
+		// but only for "api" format...
+		w.Write([]byte(",\n  \"errors\": "))
+		err := writeJsonErrors(w, errsToReport, options)
+		if err != nil {
+			panic(err)
+		}
+	}
+	w.Write([]byte("\n}\n"))
+	if options.ShowRaw && options.Format != "api" {
+		// ...if streaming other format, we want to print the errors to stderr
+		printErrors(errsToReport)
+	}
+}
+
+func printErrors(errsToReport []string) {
+	for _, errMessage := range errsToReport {
+		logger.Log(logger.Error, errMessage)
+	}
+}
+
 // StreamMany outputs models or raw data as they are acquired
 func StreamMany[Raw types.RawData](
+	ctx context.Context,
 	w io.Writer,
 	// TODO(dszlachta): I renamed this to renderData instead of getData. More accurate
 	renderData func(models chan types.Modeler[Raw], errors chan error),
 	options OutputOptions,
 ) error {
+	errsToReport := make([]string, 0)
+	errsMutex := sync.Mutex{}
+
 	// TODO(dszlachta): let's make channels more obvious. Please rename these to modelChan and errorChan throughout (even into the called function)
 	models := make(chan types.Modeler[Raw])
 	errors := make(chan error)
@@ -121,25 +171,28 @@ func StreamMany[Raw types.RawData](
 	// brackets are printed
 	if options.Format == "json" {
 		w.Write([]byte("{\n  \"data\": [\n    "))
-		defer w.Write([]byte("\n  ]\n}\n"))
+		defer func() {
+			w.Write([]byte("\n  ]\n}\n"))
+			printErrors(errsToReport)
+		}()
 	}
-	// If printing API format, we want to add meta information
+	// If printing API format, we want to add meta information and errors
 	if options.ShowRaw || options.Format == "api" {
 		w.Write([]byte("{\n  \"data\": [\n    "))
 		defer func() {
-			if options.ShowRaw {
-				w.Write([]byte("  ]"))
-			} else {
-				w.Write([]byte("\n  ]"))
-			}
-			if options.Meta != nil {
-				w.Write([]byte(",\n  \"meta\": "))
-				b, _ := json.MarshalIndent(options.Meta, "  ", options.JsonIndent)
-				w.Write(b)
-			}
-			w.Write([]byte("\n}\n"))
+			closeApiOrRawResponse(w, errsToReport, &options)
 		}()
 	}
+
+	defer func() {
+		// We generally print errors for non-api formats, unless we are printing raw.
+		// But printing errors for JSON has to be handled in`closeApiOrRawResponse`,
+		// as we don't want to print errors before the closing `}`
+		if options.Format == "json" || options.Format == "api" || options.ShowRaw {
+			return
+		}
+		printErrors(errsToReport)
+	}()
 
 	// If user wants custom format, we have to prepare the template
 	customFormat := strings.Contains(options.Format, "{")
@@ -152,7 +205,7 @@ func StreamMany[Raw types.RawData](
 		select {
 		case model, ok := <-models:
 			if !ok {
-				continue
+				return nil
 			}
 
 			// If the output is JSON and we are printing another item, put `,` in front of it
@@ -179,8 +232,16 @@ func StreamMany[Raw types.RawData](
 			}
 			first = false
 
-		case err := <-errors:
-			return err
+		case err, ok := <-errors:
+			if !ok {
+				continue
+			}
+			errsMutex.Lock()
+			errsToReport = append(errsToReport, err.Error())
+			errsMutex.Unlock()
+
+		case <-ctx.Done():
+			return ctx.Err()
 		}
 	}
 }

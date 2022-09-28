@@ -10,12 +10,11 @@ package receiptsPkg
 
 // EXISTING_CODE
 import (
-	"errors"
+	"context"
 	"fmt"
 	"net/http"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -55,13 +54,13 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 		return err, true
 	}
 
-	// TODO(dszlachta): This can be calculated at the top of the StreamMany function and sent to each invocation of the rendering function. Makes this calling code cleaner.
-	notFound := make([]error, 0)
 	clientVersion, err := rpcClient.GetVersion(opts.Globals.Chain)
 	if err != nil {
 		return err, true
 	}
 	erigonUsed := utils.IsClientErigon(clientVersion)
+
+	ctx, cancel := context.WithCancel(context.Background())
 
 	// TODO(dszlachta): I renamed this function to `renderTransaction`. Render meaning "send out". We're not really getting as nothing is returned
 	renderTransaction := func(models chan types.Modeler[types.RawReceipt], errors chan error) {
@@ -70,11 +69,12 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 			txList, err := rng.ResolveTxs(opts.Globals.Chain)
 			// TODO: rpcClient should return a custom type of error in this case
 			if err != nil && strings.Contains(err.Error(), "not found") {
-				notFound = append(notFound, err)
+				errors <- err
 				continue
 			}
 			if err != nil {
 				errors <- err
+				cancel()
 				return
 			}
 			for _, tx := range txList {
@@ -82,6 +82,7 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 					err = opts.Globals.PassItOn("getReceipts", opts.Globals.Chain, getReceiptsCmdLine(opts, []string{rng.Orig}), opts.getEnvStr())
 					if err != nil {
 						errors <- err
+						cancel()
 						return
 					}
 					continue
@@ -89,11 +90,12 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 
 				receipt, err := rpcClient.GetTransactionReceipt(opts.Globals.Chain, uint64(tx.BlockNumber), uint64(tx.TransactionIndex))
 				if err != nil && err.Error() == "not found" {
-					notFound = append(notFound, fmt.Errorf("transaction %s not found", opts.Transactions[idIndex]))
+					errors <- fmt.Errorf("transaction %s not found", opts.Transactions[idIndex])
 					continue
 				}
 				if err != nil {
 					errors <- err
+					cancel()
 					return
 				}
 
@@ -110,7 +112,7 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 			return err, true
 		}
 	}
-	err = output.StreamMany(opts.Globals.Writer, renderTransaction, output.OutputOptions{
+	err = output.StreamMany(ctx, opts.Globals.Writer, renderTransaction, output.OutputOptions{
 		ShowKeys:   !opts.Globals.NoHeader,
 		ShowRaw:    opts.Globals.Raw,
 		ShowHidden: opts.Globals.Verbose,
@@ -118,34 +120,6 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 		JsonIndent: "  ",
 		Meta:       meta,
 	})
-
-	// TODO(dszlachta): This error processes should not be in the calling function.
-	// TODO(dszlachta): Error reporting in API mode is not putting the error object in the right place. See issue: https://github.com/TrueBlocks/trueblocks-core/issues/2354
-	// If we didn't find some transactions, we want to report them to the user. In the
-	// future, we will stream both the data and errors, but meanwhile we can have the
-	// below workaround
-	if len(notFound) > 0 {
-		// Let's see if we're in server environment
-		_, ok := opts.Globals.Writer.(http.ResponseWriter)
-		var httpError string
-		// If there was any other error, put it on top
-		if err != nil {
-			httpError = err.Error() + "\n"
-		}
-		for _, err := range notFound {
-			if !ok {
-				// We are not in server environment, so just log the errors
-				logger.Log(logger.Error, err)
-			} else {
-				// For server, as a temporary solution, join all errors together.
-				// The client can still parse them (slicing the message by "\n")
-				httpError = httpError + err.Error() + "\n"
-			}
-		}
-		if ok {
-			err = errors.New(httpError)
-		}
-	}
 
 	handled = true
 	// EXISTING_CODE
