@@ -95,7 +95,7 @@ func IndexIsInitialized(chain string) error {
 	if !file.FileExists(path) {
 		msg := strings.Replace(IndexNotInitialized, "{0}", "{v0.40.0-beta}", -1)
 		msg = strings.Replace(msg, "[{VERSION}]", version.LibraryVersion, -1)
-		msg = strings.Replace(msg, "[{PATH}]", fileName, -1)
+		msg = strings.Replace(msg, "[{PATH}]", path, -1)
 		msg = strings.Replace(msg, "{", colors.Green, -1)
 		msg = strings.Replace(msg, "}", colors.Off, -1)
 		return fmt.Errorf(msg)
