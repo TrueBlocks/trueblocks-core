@@ -92,7 +92,7 @@ func (opts *GlobalOptions) RenderObject(data interface{}, first bool) error {
 		log.Fatal("opts.Writer is nil")
 	}
 
-	// We may move this line to InitGlobals when we merge json and api formats
+	// TODO: We may move this line to InitGlobals when we merge json and api formats
 	format := opts.Format
 	if opts.Raw {
 		// If users wants raw output, we will most probably print JSON
