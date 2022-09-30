@@ -97,11 +97,11 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions) {
 	cmd.Flags().MarkHidden("output")
 	cmd.Flags().MarkHidden("append")
 
+	opts.ShowKeys = !opts.noHeader
+
 	if len(opts.Chain) == 0 {
 		opts.Chain = config.GetDefaultChain()
 	}
-
-	opts.ShowKeys = !opts.noHeader
 }
 
 func (opts *GlobalOptions) toCmdLine() string {
@@ -199,6 +199,8 @@ func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOption
 		}
 	}
 
+	opts.ShowKeys = !opts.noHeader
+
 	if len(opts.Format) == 0 || opts.Format == "none" {
 		opts.Format = "api"
 	}
@@ -210,8 +212,6 @@ func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOption
 		fmt.Println("Could not establish ts file:", err)
 	}
 
-	opts.ShowKeys = !opts.noHeader
-
 	return opts
 
 	// The 'help' command is a special case for cobra, so doesn't need to be handled here
@@ -220,6 +220,7 @@ func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOption
 
 func (opts *GlobalOptions) FinishParse(args []string) {
 	opts.Writer = os.Stdout
+	opts.ShowKeys = !opts.noHeader
 	if err := tslib.EstablishTsFile(opts.Chain); err != nil {
 		fmt.Println("Could not establish ts file:", err)
 	}
