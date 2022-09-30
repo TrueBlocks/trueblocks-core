@@ -1,6 +1,6 @@
 chifra receipts  4000000.5 --raw
 TEST[DATE|TIME] Transactions:  [4000000.5]
-TEST[DATE|TIME] Raw:  true
+TEST[DATE|TIME] ShowRaw:  true
 TEST[DATE|TIME] Format:  txt
 {
   "data": [

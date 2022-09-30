@@ -6,49 +6,47 @@ package globals
 
 import (
 	"fmt"
-	"io"
 	"net/http"
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/spf13/cobra"
 )
 
+// ShowHidden bool
+
 type GlobalOptions struct {
-	Verbose  bool      `json:"verbose,omitempty"`
-	LogLevel uint64    `json:"logLevel,omitempty"`
-	NoHeader bool      `json:"noHeader,omitempty"`
-	Chain    string    `json:"chain,omitempty"`
-	Wei      bool      `json:"wei,omitempty"`
-	Ether    bool      `json:"ether,omitempty"`
-	Dollars  bool      `json:"dollars,omitempty"`
-	Help     bool      `json:"help,omitempty"`
-	Raw      bool      `json:"raw,omitempty"`
-	ToFile   bool      `json:"toFile,omitempty"`
-	File     string    `json:"file,omitempty"`
-	Version  bool      `json:"version,omitempty"`
-	Noop     bool      `json:"noop,omitempty"`
-	NoColor  bool      `json:"noColor,omitempty"`
-	OutputFn string    `json:"outputFn,omitempty"`
-	Append   bool      `json:"append,omitempty"`
-	Format   string    `json:"format,omitempty"`
-	TestMode bool      `json:"testMode,omitempty"`
-	ApiMode  bool      `json:"apiMode,omitempty"`
-	Writer   io.Writer `json:"writer,omitempty"`
+	Verbose  bool   `json:"verbose,omitempty"`
+	LogLevel uint64 `json:"logLevel,omitempty"`
+	Wei      bool   `json:"wei,omitempty"`
+	Ether    bool   `json:"ether,omitempty"`
+	Dollars  bool   `json:"dollars,omitempty"`
+	Help     bool   `json:"help,omitempty"`
+	ToFile   bool   `json:"toFile,omitempty"`
+	File     string `json:"file,omitempty"`
+	Version  bool   `json:"version,omitempty"`
+	Noop     bool   `json:"noop,omitempty"`
+	NoColor  bool   `json:"noColor,omitempty"`
+	OutputFn string `json:"outputFn,omitempty"`
+	Append   bool   `json:"append,omitempty"`
+	ApiMode  bool   `json:"apiMode,omitempty"`
+	output.OutputOptions
+	noHeader bool // since changed to its opposite ShowKeys
 }
 
 func (opts *GlobalOptions) TestLog() {
 	logger.TestLog(opts.Verbose, "Verbose: ", opts.Verbose)
 	logger.TestLog(opts.LogLevel > 0, "LogLevel: ", opts.LogLevel)
-	logger.TestLog(opts.NoHeader, "NoHeader: ", opts.NoHeader)
+	logger.TestLog(opts.noHeader, "NoHeader: ", opts.noHeader)
 	logger.TestLog(len(opts.Chain) > 0 && opts.Chain != config.GetDefaultChain(), "Chain: ", opts.Chain)
 	logger.TestLog(opts.Wei, "Wei: ", opts.Wei)
 	logger.TestLog(opts.Ether, "Ether: ", opts.Ether)
 	logger.TestLog(opts.Dollars, "Dollars: ", opts.Dollars)
 	logger.TestLog(opts.Help, "Help: ", opts.Help)
-	logger.TestLog(opts.Raw, "Raw: ", opts.Raw)
+	logger.TestLog(opts.ShowRaw, "ShowRaw: ", opts.ShowRaw)
 	logger.TestLog(opts.ToFile, "ToFile: ", opts.ToFile)
 	logger.TestLog(len(opts.File) > 0, "File: ", opts.File)
 	logger.TestLog(opts.Version, "Version: ", opts.Version)
@@ -70,12 +68,12 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions) {
 	cmd.Flags().BoolVarP(&opts.Help, "help", "h", false, "display this help screen")
 
 	cmd.Flags().StringVarP(&opts.Chain, "chain", "", "", "EVM compatible chain you're running against")
-	cmd.Flags().BoolVarP(&opts.Raw, "raw", "", false, "report JSON data from the node with minimal processing")
+	cmd.Flags().BoolVarP(&opts.ShowRaw, "raw", "", false, "report JSON data from the node with minimal processing")
 	cmd.Flags().BoolVarP(&opts.Version, "version", "", false, "display the current version of the tool")
 	cmd.Flags().BoolVarP(&opts.Noop, "noop", "", false, "")
 	cmd.Flags().BoolVarP(&opts.NoColor, "nocolor", "", false, "")
 	cmd.Flags().Uint64VarP(&opts.LogLevel, "log_level", "", 0, "")
-	cmd.Flags().BoolVarP(&opts.NoHeader, "no_header", "", false, "supress export of header row for csv and txt exports")
+	cmd.Flags().BoolVarP(&opts.noHeader, "no_header", "", false, "supress export of header row for csv and txt exports")
 	cmd.Flags().BoolVarP(&opts.Wei, "wei", "", false, "specify value in wei (the default)")
 	cmd.Flags().BoolVarP(&opts.Ether, "ether", "", false, "specify value in ether")
 	cmd.Flags().BoolVarP(&opts.Dollars, "dollars", "", false, "specify value in US dollars")
@@ -102,11 +100,13 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions) {
 	if len(opts.Chain) == 0 {
 		opts.Chain = config.GetDefaultChain()
 	}
+
+	opts.ShowKeys = !opts.noHeader
 }
 
 func (opts *GlobalOptions) toCmdLine() string {
 	options := ""
-	if opts.Raw {
+	if opts.ShowRaw {
 		options += " --raw"
 	}
 	if opts.Version {
@@ -128,7 +128,7 @@ func (opts *GlobalOptions) toCmdLine() string {
 	if opts.Append {
 		options += " --append"
 	}
-	if opts.NoHeader {
+	if opts.noHeader {
 		options += " --no_header"
 	}
 	if opts.Wei {
@@ -169,7 +169,7 @@ func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOption
 		case "verbose":
 			opts.Verbose = true
 		case "raw":
-			opts.Raw = true
+			opts.ShowRaw = true
 		case "version":
 			opts.Version = true
 		case "noop":
@@ -179,7 +179,7 @@ func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOption
 		case "logLevel":
 			opts.LogLevel = ToUint64(value[0])
 		case "noHeader":
-			opts.NoHeader = true
+			opts.noHeader = true
 		case "chain":
 			opts.Chain = value[0]
 		case "wei":
@@ -209,6 +209,8 @@ func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOption
 	if err := tslib.EstablishTsFile(opts.Chain); err != nil {
 		fmt.Println("Could not establish ts file:", err)
 	}
+
+	opts.ShowKeys = !opts.noHeader
 
 	return opts
 

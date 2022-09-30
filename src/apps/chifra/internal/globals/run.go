@@ -36,9 +36,7 @@ func (opts *GlobalOptions) PassItOn(path, chain, cmdLine string, envIn []string)
 	cmd := exec.Command(config.GetPathToCommands(path), options)
 	cmd.Env = append(os.Environ(), "FROM_CHIFRA=true")
 	cmd.Env = append(cmd.Env, "TB_CONFIG_ENV="+envStr)
-	for _, e := range envIn {
-		cmd.Env = append(cmd.Env, e)
-	}
+	cmd.Env = append(cmd.Env, envIn...)
 	if os.Getenv("TEST_MODE") == "true" {
 		cmd.Env = append(cmd.Env, "TEST_MODE=true")
 	}
