@@ -9,7 +9,6 @@ import (
 	"testing"
 	"text/template"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/common"
 )
@@ -186,10 +185,6 @@ func TestApiFormat(t *testing.T) {
 	}
 	err := StreamMany(context.Background(), outputBuffer, renderData, OutputOptions{
 		Format: "api",
-		Meta: &rpcClient.MetaData{
-			Latest:    1000,
-			Finalized: 1000,
-		},
 	})
 	if err != nil {
 		t.Fatal(err)
