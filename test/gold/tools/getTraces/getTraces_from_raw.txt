@@ -1,6 +1,6 @@
 chifra traces  4000000.5 --raw
 TEST[DATE|TIME] Transactions:  [4000000.5]
-TEST[DATE|TIME] Raw:  true
+TEST[DATE|TIME] ShowRaw:  true
 TEST[DATE|TIME] Format:  txt
 { "data": [
 [{"jsonrpc":"2.0","id":"1","result":[{"action":{"from":"0x40584168524a928ae43b4e83893f963e467e9d73","callType":"call","gas":"0xee828","input":"0xa9059cbb00000000000000000000000043a4210390998945dc7658a20b43c6c4189ac7d4000000000000000000000000000000000000000000000000000000000a21fe80","to":"0x1a95b271b0535d15fa49932daba31ba612b52946","value":"0x0"},"blockHash":"0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853","blockNumber":4000000,"result":{"gasUsed":"0x7370","output":"0x"},"subtraces":0,"traceAddress":[],"transactionHash":"0xfe52da8afe135e14a0855240e1ef4b44a0b4ebe374bd39de307cf0f3fabf0ff1","transactionPosition":5,"type":"call"}]}

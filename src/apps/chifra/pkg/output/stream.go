@@ -32,6 +32,8 @@ type OutputOptions = struct {
 	Chain string
 	// Flag to check if we are in test mode
 	TestMode bool
+	// The writer
+	Writer io.Writer
 }
 
 var formatToSeparator = map[string]rune{
