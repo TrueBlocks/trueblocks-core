@@ -10,9 +10,11 @@ import (
 	"sync"
 	"text/template"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // OutputOptions allow more granular configuration of output details
@@ -32,6 +34,8 @@ type OutputOptions = struct {
 	Chain string
 	// Flag to check if we are in test mode
 	TestMode bool
+	// Output file name. If present, we will write output to this file
+	OutputFileName string
 }
 
 var formatToSeparator = map[string]rune{
@@ -161,6 +165,11 @@ func StreamMany[Raw types.RawData](
 	fetchData func(modelChan chan types.Modeler[Raw], errorChan chan error),
 	options OutputOptions,
 ) error {
+	outputWriter := w
+	// We do not want to allow --output in server environment
+	if !utils.IsServerWriter(w) {
+		outputWriter = file.GetOutputFileWriter(options.OutputFileName, w)
+	}
 	errsToReport := make([]string, 0)
 	errsMutex := sync.Mutex{}
 
@@ -180,17 +189,17 @@ func StreamMany[Raw types.RawData](
 	// If we are printing JSON, we want to make sure that opening and closing
 	// brackets are printed
 	if options.Format == "json" {
-		w.Write([]byte("{\n  \"data\": [\n    "))
+		outputWriter.Write([]byte("{\n  \"data\": [\n    "))
 		defer func() {
-			w.Write([]byte("\n  ]\n}\n"))
+			outputWriter.Write([]byte("\n  ]\n}\n"))
 			printErrors(errsToReport)
 		}()
 	}
 	// If printing API format, we want to add meta information and errors
 	if options.ShowRaw || options.Format == "api" {
-		w.Write([]byte("{\n  \"data\": [\n    "))
+		outputWriter.Write([]byte("{\n  \"data\": [\n    "))
 		defer func() {
-			closeApiOrRawResponse(w, errsToReport, &options)
+			closeApiOrRawResponse(outputWriter, errsToReport, &options)
 		}()
 	}
 
@@ -220,17 +229,17 @@ func StreamMany[Raw types.RawData](
 
 			// If the output is JSON and we are printing another item, put `,` in front of it
 			if !first && (options.Format == "json" || options.Format == "api") {
-				w.Write([]byte(","))
+				outputWriter.Write([]byte(","))
 			}
 			var err error
 			if options.ShowRaw {
-				err = StreamRaw(w, model.Raw())
+				err = StreamRaw(outputWriter, model.Raw())
 			} else {
 				modelValue := model.Model(options.ShowHidden, options.Format)
 				if customFormat {
-					err = StreamWithTemplate(w, modelValue, tmpl)
+					err = StreamWithTemplate(outputWriter, modelValue, tmpl)
 				} else {
-					err = StreamModel(w, modelValue, OutputOptions{
+					err = StreamModel(outputWriter, modelValue, OutputOptions{
 						ShowKeys:   first && options.ShowKeys,
 						Format:     options.Format,
 						JsonIndent: "  ",

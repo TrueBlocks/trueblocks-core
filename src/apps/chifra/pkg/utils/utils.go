@@ -7,6 +7,7 @@ package utils
 import (
 	"bytes"
 	"fmt"
+	"io"
 	"log"
 	"math/big"
 	"net/http"
@@ -25,6 +26,13 @@ import (
 // IsTestModeServer return true if we are running from the testing harness
 func IsTestModeServer(r *http.Request) bool {
 	return r.Header.Get("User-Agent") == "testRunner"
+}
+
+// IsServerWriter tries to cast `w` into `http.ResponseWriter`
+// and returns true if the cast was successful
+func IsServerWriter(w io.Writer) bool {
+	_, ok := w.(http.ResponseWriter)
+	return ok
 }
 
 func IsApiMode() bool {
