@@ -71,10 +71,12 @@ on      ,both ,fast  ,blocks ,tools/getBlocks ,list_count_block_fail,y    ,list_
 on      ,both ,fast  ,blocks ,tools/getBlocks ,list_block_fail      ,y    ,list = 1000 & blocks = 1000
 on      ,both ,fast  ,blocks ,tools/getBlocks ,list_all             ,y    ,list_count = 2 & list = 1030000 & blocks = 10010
 
-local   ,both ,fast  ,blocks ,tools/getBlocks ,to_file              ,y    ,blocks = 2222222 2332332 & fmt = json & to_file
-
 on      ,both ,fast  ,blocks ,tools/getBlocks ,no_tracing           ,y    ,blocks = 12 & trace & chain = non-tracing
 
 on      ,both ,fast  ,blocks ,tools/getBlocks ,raw_01               ,y    ,blocks = 2768801 1995314 1958017 & raw
 on      ,both ,slow  ,blocks ,tools/getBlocks ,terse_no_raw         ,y    ,blocks = 4001001-4001003 & hashes
 on      ,both ,fast  ,blocks ,tools/getBlocks ,terse_yes_raw        ,y    ,blocks = 4001001 & hashes & raw
+
+local   ,both ,fast  ,blocks ,tools/getBlocks ,to_file              ,y    ,blocks = 2222222 2332332 & fmt = json & to_file
+local   ,both ,fast  ,blocks ,tools/getBlocks ,redir_output         ,y    ,blocks = 2222222 2332332 & output = output_test_file
+local   ,both ,fast  ,blocks ,tools/getBlocks ,redir_output_append  ,n    ,blocks = 2222222 2332332 & output = append_test_file & append

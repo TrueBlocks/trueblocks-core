@@ -1,0 +1,6 @@
+receipts?transactions=2222222.0%202332332.0&output=append_test_file&append
+{
+  "errors": [
+    "The --output option is not available in Api Mode. Use --to_file instead"
+  ]
+}

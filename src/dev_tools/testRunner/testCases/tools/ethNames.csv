@@ -40,7 +40,6 @@ on      ,both ,medi  ,names ,tools/ethNames ,duplicated_option_1    ,n    ,terms
 on      ,both ,medi  ,names ,tools/ethNames ,name_match             ,n    ,noop & terms = torj & fmt = csv
 on      ,cmd  ,fast  ,names ,tools/ethNames ,show_version           ,n    ,version
 on      ,cmd  ,slow  ,names ,tools/ethNames ,fromFile               ,n    ,file = names.txt
-local   ,cmd  ,fast  ,names ,tools/ethNames ,prefund_output         ,n    ,output = test_file & prefund
 on      ,both ,fast  ,names ,tools/ethNames ,edit_invalid           ,y    ,invalid & log_level = 10 & fmt = api & expand
 on      ,both ,fast  ,names ,tools/ethNames ,edit_add               ,y    ,create & log_level = 10 & fmt = api & expand
 on      ,both ,fast  ,names ,tools/ethNames ,show_add               ,y    ,terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = api & expand
@@ -68,6 +67,9 @@ off     ,both ,medi  ,names ,tools/ethNames ,upgrade_to_067         ,y    ,fmt =
 off     ,cmd  ,fast  ,null  ,tools/ethNames ,nosave_remove          ,n    ,RMFILE -f $CACHE/names/names.bin
 off     ,cmd  ,fast  ,null  ,tools/ethNames ,nosave_restore         ,n    ,MOVEFILE -f ./testing_data/backup/names.bin $CACHE/names/
 
-local   ,both ,medi  ,names ,tools/ethNames ,to_file                ,n    ,named & custom & fmt = json & to_file
 local   ,both ,fast  ,names ,tools/ethNames ,edit_custom_delete     ,y    ,delete & terms = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & log_level = 10 & to_custom & all & expand
 local   ,both ,fast  ,names ,tools/ethNames ,edit_custom_undelete   ,y    ,undelete & terms = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & log_level = 10 & to_custom & all & expand
+
+local   ,both ,medi  ,names ,tools/ethNames ,to_file                ,n    ,named & custom & fmt = json & to_file
+local   ,both ,fast  ,names ,tools/ethNames ,redir_output           ,y    ,prefund & output = output_test_file
+local   ,both ,fast  ,names ,tools/ethNames ,redir_output_append    ,n    ,prefund & output = append_test_file & append
