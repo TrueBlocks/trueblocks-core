@@ -36,6 +36,8 @@ type OutputOptions = struct {
 	TestMode bool
 	// Output file name. If present, we will write output to this file
 	OutputFileName string
+	// The writer
+	Writer io.Writer
 }
 
 var formatToSeparator = map[string]rune{
