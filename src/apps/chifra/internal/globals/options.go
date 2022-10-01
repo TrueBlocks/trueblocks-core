@@ -26,7 +26,6 @@ type GlobalOptions struct {
 	Version bool   `json:"version,omitempty"`
 	Noop    bool   `json:"noop,omitempty"`
 	NoColor bool   `json:"noColor,omitempty"`
-	ApiMode bool   `json:"apiMode,omitempty"`
 	output.OutputOptions
 }
 
@@ -49,12 +48,10 @@ func (opts *GlobalOptions) TestLog() {
 	logger.TestLog(opts.Append, "Append: ", opts.Append)
 	logger.TestLog(len(opts.Format) > 0, "Format: ", opts.Format)
 	// logger.TestLog(opts.TestMode, "TestMode: ", opts.TestMode)
-	logger.TestLog(opts.ApiMode, "ApiMode: ", opts.ApiMode)
 }
 
 func InitGlobals(cmd *cobra.Command, opts *GlobalOptions) {
 	opts.TestMode = os.Getenv("TEST_MODE") == "true"
-	opts.ApiMode = opts.IsApiMode()
 
 	cmd.Flags().StringVarP(&opts.Format, "fmt", "x", "", "export format, one of [none|json*|txt|csv|api]")
 	cmd.Flags().BoolVarP(&opts.Verbose, "verbose", "v", false, "enable verbose (increase detail with --log_level)")
@@ -151,7 +148,6 @@ func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOption
 
 	opts.Writer = w
 	opts.TestMode = r.Header.Get("User-Agent") == "testRunner"
-	opts.ApiMode = true
 
 	for key, value := range r.URL.Query() {
 		switch key {

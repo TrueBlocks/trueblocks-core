@@ -64,7 +64,7 @@ func (opts *StateOptions) validateState() error {
 				// TODO: Remove this and present ABI in non-test mode
 				// non-test mode on the terminal does something we want to preserve in the C++ code -- it
 				// presents the abi for this contract. We can do that in Go, so we only fail during testing
-				if opts.Globals.TestMode || opts.Globals.ApiMode {
+				if opts.Globals.TestMode || opts.Globals.IsApiMode() {
 					return validate.Usage("You must provide either a four-byte code or a function signature for the smart contract.")
 				}
 			} else {

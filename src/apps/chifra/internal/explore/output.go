@@ -47,7 +47,7 @@ func (opts *ExploreOptions) ExploreInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	if opts.Globals.ApiMode {
+	if opts.Globals.IsApiMode() {
 		return validate.Usage("Cannot use explore route in API mode."), true
 	}
 

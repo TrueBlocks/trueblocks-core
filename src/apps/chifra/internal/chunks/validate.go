@@ -84,7 +84,7 @@ func (opts *ChunksOptions) validateChunks() error {
 		}
 	}
 
-	if err = opts.isDisallowed(opts.Globals.ApiMode, "API"); err != nil {
+	if err = opts.isDisallowed(opts.Globals.IsApiMode(), "API"); err != nil {
 		return err
 	}
 
@@ -121,7 +121,7 @@ func (opts *ChunksOptions) validateChunks() error {
 
 	// Note that this does not return if the index is not initialized
 	if err := index.IndexIsInitialized(opts.Globals.Chain); err != nil {
-		if opts.Globals.ApiMode {
+		if opts.Globals.IsApiMode() {
 			return err
 		} else {
 			logger.Fatal(err)

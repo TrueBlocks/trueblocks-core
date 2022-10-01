@@ -46,7 +46,7 @@ func (opts *AbisOptions) AbisInternal() (err error, handled bool) {
 		return opts.HandleAbiFind(), true
 	}
 
-	if opts.Globals.ApiMode {
+	if opts.Globals.IsApiMode() {
 		return nil, false
 	}
 

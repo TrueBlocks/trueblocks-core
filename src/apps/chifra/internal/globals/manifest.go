@@ -13,7 +13,6 @@ func (opts *GlobalOptions) RenderManifest(w io.Writer, man *manifest.Manifest) e
 	tmp := opts
 	tmp.Writer = w
 	tmp.NoHeader = false
-	tmp.ApiMode = false
 	if opts.Format == "txt" {
 		var sc []types.SimpleChunkRecord
 		for _, c := range man.Chunks {

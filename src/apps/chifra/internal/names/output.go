@@ -48,7 +48,7 @@ func (opts *NamesOptions) NamesInternal() (err error, handled bool) {
 		return
 	}
 
-	if opts.Globals.ApiMode {
+	if opts.Globals.IsApiMode() {
 		return nil, false
 	}
 
