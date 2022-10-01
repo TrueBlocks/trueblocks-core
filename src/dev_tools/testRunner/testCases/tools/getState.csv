@@ -85,8 +85,6 @@ on      ,both ,fast  ,state ,tools/getState ,no_addrs                       ,y  
 on      ,both ,fast  ,state ,tools/getState ,bad_addrs                      ,y    ,addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb9
 on      ,both ,fast  ,state ,tools/getState ,bad_block_range                ,y    ,addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & 1000-orange:10
 
-local   ,both ,fast  ,state ,tools/getState ,to_file                        ,y    ,addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & fmt = json & blocks = 2000000 & dollars & to_file
-
 off     ,both ,fast  ,state ,tools/getState ,balance_10                     ,y    ,addrs = 0xa1e4380a3b1f749673e270229993ee55f35663b4 0x5df9b87991262f6ba471f09758cde1c0fc1de734 & blocks = 46100-46300:10
 off     ,both ,fast  ,state ,tools/getState ,balance_annually               ,y    ,addrs = 0xa1e4380a3b1f749673e270229993ee55f35663b4 0x5df9b87991262f6ba471f09758cde1c0fc1de734 & blocks = 0-4900000:annually
 off     ,both ,fast  ,state ,tools/getState ,balance_quarterly              ,y    ,addrs = 0xa1e4380a3b1f749673e270229993ee55f35663b4 0x5df9b87991262f6ba471f09758cde1c0fc1de734 & blocks = 0-2900000:quarterly
@@ -94,3 +92,7 @@ off     ,both ,fast  ,state ,tools/getState ,balance_monthly                ,y  
 off     ,both ,fast  ,state ,tools/getState ,balance_weekly                 ,y    ,addrs = 0xa1e4380a3b1f749673e270229993ee55f35663b4 0x5df9b87991262f6ba471f09758cde1c0fc1de734 & blocks = 0-260000:weekly
 off     ,both ,fast  ,state ,tools/getState ,balance_daily                  ,y    ,addrs = 0xa1e4380a3b1f749673e270229993ee55f35663b4 0x5df9b87991262f6ba471f09758cde1c0fc1de734 & blocks = 25000-60000:daily
 off     ,both ,fast  ,state ,tools/getState ,balance_hourly                 ,y    ,addrs = 0xa1e4380a3b1f749673e270229993ee55f35663b4 0x5df9b87991262f6ba471f09758cde1c0fc1de734 & blocks = 46000-48000:hourly
+
+local   ,both ,fast  ,state ,tools/getState ,to_file                        ,y    ,addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & fmt = json & blocks = 2000000 & dollars & to_file
+local   ,both ,fast  ,state ,tools/getState ,redir_output                   ,y    ,addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & blocks = 2000000 & dollars & output = output_test_file
+local   ,both ,fast  ,state ,tools/getState ,redir_output_append            ,y    ,addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & blocks = 2000000 & dollars & output = append_test_file & append

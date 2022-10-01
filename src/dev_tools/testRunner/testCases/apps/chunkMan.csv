@@ -22,10 +22,10 @@ on      ,both ,fast  ,chunks ,apps/chunkMan ,appearances_default     ,y    ,mode
 
 on      ,both ,fast  ,chunks ,apps/chunkMan ,stats_txt               ,n    ,mode = stats & fmt = txt
 local   ,both ,fast  ,chunks ,apps/chunkMan ,manifest_csv            ,n    ,mode = manifest & fmt = csv
-local      ,both ,fast  ,chunks ,apps/chunkMan ,index_json              ,y    ,mode = index & fmt = json
+local   ,both ,fast  ,chunks ,apps/chunkMan ,index_json              ,y    ,mode = index & fmt = json
 on      ,both ,fast  ,chunks ,apps/chunkMan ,blooms_txt              ,n    ,mode = blooms & fmt = txt
 on      ,both ,fast  ,chunks ,apps/chunkMan ,header_csv              ,n    ,mode = header & fmt = csv
-local      ,both ,fast  ,chunks ,apps/chunkMan ,addresses_json          ,y    ,mode = addresses & fmt = json
+local   ,both ,fast  ,chunks ,apps/chunkMan ,addresses_json          ,y    ,mode = addresses & fmt = json
 on      ,both ,fast  ,chunks ,apps/chunkMan ,appearances_txt         ,n    ,mode = appearances & fmt = txt
 
 on      ,both ,fast  ,chunks ,apps/chunkMan ,fail_belongs_wrong_mode ,y    ,mode = addresses & belongs = 0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9
@@ -44,3 +44,7 @@ on      ,both ,fast  ,chunks ,apps/chunkMan ,pin_chunks_bad2         ,y    ,mode
 on      ,both ,fast  ,chunks ,apps/chunkMan ,pin_data_bad2           ,y    ,mode = addresses & publish
 
 local   ,both ,fast  ,chunks ,apps/chunkMan ,check_okay              ,y    ,mode = manifest & check
+
+local   ,both ,fast  ,chunks ,apps/chunkMan ,to_file                 ,y    ,mode = index & to_file
+local   ,both ,fast  ,chunks ,apps/chunkMan ,redir_output            ,y    ,mode = index & output = output_test_file
+local   ,both ,fast  ,chunks ,apps/chunkMan ,redir_output_append     ,n    ,mode = index & output = append_test_file & append

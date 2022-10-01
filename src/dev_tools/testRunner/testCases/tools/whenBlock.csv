@@ -74,7 +74,6 @@ on      ,both ,fast  ,when  ,tools/whenBlock ,deep_not_check              ,y    
 on      ,both ,fast  ,when  ,tools/whenBlock ,drop_not_timestamps         ,y    ,blocks = 1301000 & repair
 on      ,both ,fast  ,when  ,tools/whenBlock ,fix_and_check_bad           ,y    ,timestamps & fix & check
 
-local   ,both ,fast  ,when  ,tools/whenBlock ,to_file                     ,y    ,blocks = 1001001 & fmt = json & to_file
 local   ,cmd  ,medi  ,when  ,tools/whenBlock ,skip_hourly                 ,n    ,fmt = txt & blocks = 1125561-1130516:hourly
 local   ,cmd  ,medi  ,when  ,tools/whenBlock ,skip_daily                  ,n    ,fmt = txt & blocks = 1065497-1125561:daily
 local   ,cmd  ,medi  ,when  ,tools/whenBlock ,skip_weekly                 ,n    ,fmt = txt & blocks = 1065497-1856235:weekly
@@ -86,3 +85,7 @@ local   ,cmd  ,medi  ,when  ,tools/whenBlock ,skip_annually               ,n    
 local   ,both ,fast  ,when  ,tools/whenBlock ,customized_1                ,y    ,blocks = myblock
 local   ,both ,fast  ,when  ,tools/whenBlock ,homestead_customized        ,y    ,blocks = homestead & verbose & fmt = json
 local   ,cmd  ,fast  ,when  ,tools/whenBlock ,upgrade_test                ,y    ,help
+
+local   ,both ,fast  ,when  ,tools/whenBlock ,to_file                     ,y    ,blocks = 1001001 & fmt = json & to_file
+local   ,both ,fast  ,when  ,tools/whenBlock ,redir_output                ,y    ,blocks = 1001001 & output = output_test_file
+local   ,both ,fast  ,when  ,tools/whenBlock ,redir_output_append         ,n    ,blocks = 1001001 & output = append_test_file & append

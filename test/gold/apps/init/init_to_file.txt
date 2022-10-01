@@ -1,7 +1,0 @@
-chifra pins  --list --fmt json --to_file
-INFO[DATE|TIME] list: true
-INFO[DATE|TIME] hashToIndexFormatFile: QmUou7zX2g2tY58LP1A2GyP5RF9nbJsoxKTp299ah3svgb
-INFO[DATE|TIME] hashToBloomFormatFile: QmTGdjLhWzGpGtmxVu73mzKyzva9JM4mSsZ93NceVU6Y5T
-INFO[DATE|TIME] unchainedIndexAddr: 0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd
-INFO[DATE|TIME] manifestHashEncoding: 0x337f3f32
-{ "outputFilename": "--output_filename--" }

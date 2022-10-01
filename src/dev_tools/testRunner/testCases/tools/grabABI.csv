@@ -9,7 +9,6 @@ on      ,both ,fast  ,abis  ,tools/grabABI ,no_abi2             ,y    ,addrs = 0
 on      ,both ,fast  ,abis  ,tools/grabABI ,const               ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 on      ,both ,fast  ,abis  ,tools/grabABI ,verbose1            ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & verbose
 on      ,both ,fast  ,abis  ,tools/grabABI ,underbar_functions  ,y    ,addrs = 0xdac17f958d2ee523a2206206994597c13d831ec7
-on      ,both ,fast  ,abis  ,tools/grabABI ,output_test         ,n    ,addrs = 0xdac17f958d2ee523a2206206994597c13d831ec7 & output = testing_file
 on      ,both ,fast  ,abis  ,tools/grabABI ,known_bug1          ,y    ,addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = json
 on      ,both ,fast  ,abis  ,tools/grabABI ,known_bug1_again    ,y    ,addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = json
 on      ,both ,fast  ,abis  ,tools/grabABI ,known_bug2          ,y    ,addrs = 0xef638b4305b8a1620f4e0e562e127f1181ae16d2 & fmt = json
@@ -44,12 +43,13 @@ on      ,both ,fast  ,abis  ,tools/grabABI ,known_trueclasses   ,y    ,addrs = t
 #       ,     ,      ,      ,              ,                    ,     ,This fails under the API because cobra doesn't give us a chance to report invalid flags
 local   ,both ,fast  ,abis  ,tools/grabABI ,known_trueara       ,y    ,addrs = truebit aragon & fmt = json
 
-#       ,     ,      ,      ,              ,                    ,     ,This fails because the GoLang code does not yet support the --output flag
-local   ,both ,fast  ,abis  ,tools/grabABI ,to_file             ,y    ,addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = json & to_file
-
 #       ,     ,      ,      ,              ,                    ,     ,This fails because we never supported searching for event signatures
 local   ,both ,fast  ,abis  ,tools/grabABI ,findSig_event       ,y    ,find = 0x1aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a008
 
 #       ,     ,      ,      ,              ,                    ,     ,These tests fail because Meta does IsApiMode does not work inside of Meta
 local   ,both ,fast  ,abis  ,tools/grabABI ,findSig             ,y    ,find = 0x1aa3a008
 local   ,both ,fast  ,abis  ,tools/grabABI ,findSig1            ,y    ,find = 0x1aa3a008 & find = 0x3ccfd60b & find = 0xad7a672f
+
+local   ,both ,fast  ,abis  ,tools/grabABI ,to_file             ,y    ,addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = json & to_file
+local   ,both ,fast  ,abis  ,tools/grabABI ,redir_output        ,y    ,addrs = 0xdac17f958d2ee523a2206206994597c13d831ec7 & output = output_test_file
+local   ,both ,fast  ,abis  ,tools/grabABI ,redir_output_append ,n    ,addrs = 0xdac17f958d2ee523a2206206994597c13d831ec7 & output = append_test_file & append

@@ -1,0 +1,6 @@
+logs?transactions=3657480.79&output=append_test_file&append
+{
+  "errors": [
+    "The --output option is not available in Api Mode. Use --to_file instead"
+  ]
+}
