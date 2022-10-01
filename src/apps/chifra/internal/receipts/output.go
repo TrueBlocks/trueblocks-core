@@ -109,6 +109,7 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 		NoHeader:       opts.Globals.NoHeader,
 		ShowRaw:        opts.Globals.ShowRaw,
 		Verbose:        opts.Globals.Verbose,
+		LogLevel:       opts.Globals.LogLevel,
 		Format:         opts.Globals.Format,
 		JsonIndent:     "  ",
 		OutputFileName: opts.Globals.OutputFn,
