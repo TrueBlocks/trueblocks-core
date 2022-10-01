@@ -10,7 +10,6 @@ package file
 // 		// If there's no file path, we can just return the default writer
 // 		return defaultWriter
 // 	}
-
 // 	// Otherwise, let's try to create the file
 // 	var file *os.File
 // 	var err error

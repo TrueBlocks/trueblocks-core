@@ -27,7 +27,6 @@ type GlobalOptions struct {
 	Version bool   `json:"version,omitempty"`
 	Help    bool   `json:"help,omitempty"`
 	ToFile  bool   `json:"toFile,omitempty"`
-	Append  bool   `json:"append,omitempty"`
 	output.OutputOptions
 }
 

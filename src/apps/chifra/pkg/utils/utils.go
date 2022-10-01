@@ -27,16 +27,12 @@ func IsTestModeServer(r *http.Request) bool {
 	return r.Header.Get("User-Agent") == "testRunner"
 }
 
-// TODO: Can we collapse this with the IsApiMode function?
-// TODO: Moved into output package
+// TODO: Remove this comment -- this was moved into output package as IsApiMode
 // // IsServerWriter tries to cast `w` into `http.ResponseWriter`
 // // and returns true if the cast was successful
 // func IsServerWriter(w io.Writer) bool {
 // 	_, ok := w.(http.ResponseWriter)
 // 	return ok
-// }
-// func IsApiMode() bool {
-// 	return os.Getenv("API_MODE") == "true"
 // }
 
 func IsTerminal() bool {
