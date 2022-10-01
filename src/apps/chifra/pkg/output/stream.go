@@ -37,6 +37,8 @@ type OutputOptions = struct {
 	TestMode bool
 	// Output file name. If present, we will write output to this file
 	OutputFn string
+	// If true and OutputFn is non-empty, open OutputFn for appending (create if not present)
+	Append bool
 	// The writer
 	Writer io.Writer
 }

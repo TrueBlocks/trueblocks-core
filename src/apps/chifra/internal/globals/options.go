@@ -17,18 +17,16 @@ import (
 )
 
 type GlobalOptions struct {
-	Wei      bool   `json:"wei,omitempty"`
-	Ether    bool   `json:"ether,omitempty"`
-	Dollars  bool   `json:"dollars,omitempty"`
-	Help     bool   `json:"help,omitempty"`
-	ToFile   bool   `json:"toFile,omitempty"`
-	File     string `json:"file,omitempty"`
-	Version  bool   `json:"version,omitempty"`
-	Noop     bool   `json:"noop,omitempty"`
-	NoColor  bool   `json:"noColor,omitempty"`
-	OutputFn string `json:"outputFn,omitempty"`
-	Append   bool   `json:"append,omitempty"`
-	ApiMode  bool   `json:"apiMode,omitempty"`
+	Wei     bool   `json:"wei,omitempty"`
+	Ether   bool   `json:"ether,omitempty"`
+	Dollars bool   `json:"dollars,omitempty"`
+	Help    bool   `json:"help,omitempty"`
+	ToFile  bool   `json:"toFile,omitempty"`
+	File    string `json:"file,omitempty"`
+	Version bool   `json:"version,omitempty"`
+	Noop    bool   `json:"noop,omitempty"`
+	NoColor bool   `json:"noColor,omitempty"`
+	ApiMode bool   `json:"apiMode,omitempty"`
 	output.OutputOptions
 }
 
@@ -72,10 +70,10 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions) {
 	cmd.Flags().BoolVarP(&opts.Wei, "wei", "", false, "specify value in wei (the default)")
 	cmd.Flags().BoolVarP(&opts.Ether, "ether", "", false, "specify value in ether")
 	cmd.Flags().BoolVarP(&opts.Dollars, "dollars", "", false, "specify value in US dollars")
+	cmd.Flags().StringVarP(&opts.File, "file", "", "", "specify multiple command line options in a file")
 	cmd.Flags().BoolVarP(&opts.ToFile, "to_file", "", false, "write the results to a temporary file and return the filename")
-	cmd.Flags().StringVarP(&opts.File, "file", "", "", "specify multiple sets of command line options in a file")
-	cmd.Flags().StringVarP(&opts.OutputFn, "output", "", "", "write the results to file 'fn' and return the filename")
-	cmd.Flags().BoolVarP(&opts.Append, "append", "", false, "enable verbose (increase detail with --log_level)")
+	cmd.Flags().StringVarP(&opts.OutputFn, "output", "", "", "redirect results from stdout to the given file, create if not present")
+	cmd.Flags().BoolVarP(&opts.Append, "append", "", false, "if true, open OutputFn for append (truncate otherwise)")
 
 	cmd.Flags().MarkHidden("chain")
 	cmd.Flags().MarkHidden("raw")
