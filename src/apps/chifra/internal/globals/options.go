@@ -16,7 +16,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// ShowHidden bool
+// TODO: In OutputOptions, ShowHidden could be changed Verbose
+// TODO: In OutputOptions, ShowKeys should be NoHeader
 
 type GlobalOptions struct {
 	Verbose  bool   `json:"verbose,omitempty"`
@@ -41,6 +42,7 @@ func (opts *GlobalOptions) TestLog() {
 	logger.TestLog(opts.Verbose, "Verbose: ", opts.Verbose)
 	logger.TestLog(opts.LogLevel > 0, "LogLevel: ", opts.LogLevel)
 	logger.TestLog(opts.noHeader, "NoHeader: ", opts.noHeader)
+	logger.TestLog(!opts.ShowKeys, "ShowKeys: ", opts.ShowKeys)
 	logger.TestLog(len(opts.Chain) > 0 && opts.Chain != config.GetDefaultChain(), "Chain: ", opts.Chain)
 	logger.TestLog(opts.Wei, "Wei: ", opts.Wei)
 	logger.TestLog(opts.Ether, "Ether: ", opts.Ether)
