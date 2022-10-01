@@ -54,7 +54,7 @@ func (opts *GlobalOptions) TestLog() {
 
 func InitGlobals(cmd *cobra.Command, opts *GlobalOptions) {
 	opts.TestMode = os.Getenv("TEST_MODE") == "true"
-	opts.ApiMode = os.Getenv("API_MODE") == "true"
+	opts.ApiMode = opts.IsApiMode()
 
 	cmd.Flags().StringVarP(&opts.Format, "fmt", "x", "", "export format, one of [none|json*|txt|csv|api]")
 	cmd.Flags().BoolVarP(&opts.Verbose, "verbose", "v", false, "enable verbose (increase detail with --log_level)")
