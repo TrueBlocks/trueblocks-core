@@ -27,7 +27,7 @@ func IsTestModeServer(r *http.Request) bool {
 	return r.Header.Get("User-Agent") == "testRunner"
 }
 
-// TODO: Remove this comment -- this was moved into output package as IsApiMode
+// TODO: Remove this commented out code -- this code was moved into output package as IsApiMode
 // // IsServerWriter tries to cast `w` into `http.ResponseWriter`
 // // and returns true if the cast was successful
 // func IsServerWriter(w io.Writer) bool {
