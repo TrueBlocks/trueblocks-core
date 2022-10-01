@@ -62,7 +62,7 @@ func RenderSlice[
 	case "api":
 		fallthrough
 	case "json":
-		return output.OutputSlice(data, opts.Writer, opts.Format, opts.NoHeader, opts.ApiMode, true, meta)
+		return output.OutputSlice(data, opts.Writer, opts.Format, opts.NoHeader, true, meta)
 	case "csv":
 		fallthrough
 	case "txt":
@@ -75,7 +75,7 @@ func RenderSlice[
 					}
 				}
 			}
-			err := output.OutputObject(item, opts.Writer, opts.Format, opts.NoHeader, opts.ApiMode, false, meta)
+			err := output.OutputObject(item, opts.Writer, opts.Format, opts.NoHeader, false, meta)
 			if err != nil {
 				return err
 			}
@@ -98,11 +98,12 @@ func (opts *GlobalOptions) RenderObject(data interface{}, first bool) error {
 		// If users wants raw output, we will most probably print JSON
 		format = "json"
 	}
-	return output.OutputObject(data, opts.Writer, format, opts.NoHeader, opts.ApiMode, first, nil)
+	return output.OutputObject(data, opts.Writer, format, opts.NoHeader, first, nil)
 }
 
 // TODO: Fix export without arrays
-func (opts *GlobalOptions) RenderHeader(data interface{}, w *io.Writer, format string, apiMode, hideHeader, first bool) error {
+func (opts *GlobalOptions) RenderHeader(data interface{}, w *io.Writer, format string, hideHeader, first bool) error {
+	apiMode := opts.IsApiMode()
 	if apiMode {
 		// We could check this, but if it's not empty, we know it's type
 		hw, _ := (*w).(http.ResponseWriter)
