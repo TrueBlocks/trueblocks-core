@@ -5,31 +5,26 @@
 <table>
   <thead>
     <tr>
-      <th>Instance</th>
       <th>Branch</th>
-      <th>Description, Instructions, Notes</th>
+      <th>Description</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>Master</td>
       <td>master</td>
-      <td>Accepts merges from Working and Hotfixes</td>
+      <td>Accepts merges from `develop` and `hotfix` branches only</td>
     </tr>
     <tr>
-      <td>Working</td>
       <td>develop</td>
-      <td>Accepts merges from Features/Issues and Hotfixes</td>
+      <td>Accepts merges from `feature`, `issue` and `hotfix` branches</td>
     </tr>
     <tr>
-      <td>Features/Issues</td>
       <td>feature-*</td>
-      <td>Always branch off HEAD of Working</td>
+      <td>Always branches off of `develop` and back into `develop`</td>
     </tr>
     <tr>
-      <td>Hotfix</td>
       <td>hotfix-*</td>
-      <td>Always branch off Master</td>
+      <td>Always branches off of `master` and back into `master`</td>
     </tr>
   </tbody>
 </table>
