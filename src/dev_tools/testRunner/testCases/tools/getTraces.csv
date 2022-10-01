@@ -74,5 +74,5 @@ on      ,both ,medi  ,traces ,tools/getTraces ,prev_bug2_2         ,y    ,transa
 on      ,both ,fast  ,traces ,tools/getTraces ,from_raw            ,y    ,transactions = 4000000.5 & raw
 
 on      ,both ,fast  ,traces ,tools/getTraces ,to_file             ,y    ,transactions = 2222222.0 2332332.0 & fmt = json & to_file
-on      ,both ,fast  ,traces ,tools/getTraces ,redir_output        ,y    ,transactions = 3657480.79 & verbose & output = test_file
-on      ,both ,fast  ,traces ,tools/getTraces ,redir_output_append ,n    ,transactions = 3657480.79 & verbose & output = test_file & append
+on      ,both ,fast  ,traces ,tools/getTraces ,redir_output        ,y    ,transactions = 3657480.79 & verbose & output = output_test_file
+on      ,both ,fast  ,traces ,tools/getTraces ,redir_output_append ,n    ,transactions = 3657480.79 & verbose & output = append_test_file & append

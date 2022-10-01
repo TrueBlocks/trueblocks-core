@@ -42,5 +42,5 @@ on      ,both ,fast  ,receipts ,tools/getReceipts ,from_raw            ,y    ,tr
 on      ,both ,medi  ,receipts ,tools/getReceipts ,prev_bug2_2         ,y    ,transactions = 4279119.46 & raw
 
 on      ,both ,fast  ,receipts ,tools/getReceipts ,to_file             ,y    ,transactions = 2222222.0 2332332.0 & fmt = json & to_file                                                                                                                                                                           
-on      ,both ,fast  ,receipts ,tools/getReceipts ,redir_output        ,y    ,transactions = 2222222.0 2332332.0 & output = test_file
-on      ,both ,fast  ,receipts ,tools/getReceipts ,redir_output_append ,n    ,transactions = 2222222.0 2332332.0 & output = test_file & append
+on      ,both ,fast  ,receipts ,tools/getReceipts ,redir_output        ,y    ,transactions = 2222222.0 2332332.0 & output = output_test_file
+on      ,both ,fast  ,receipts ,tools/getReceipts ,redir_output_append ,n    ,transactions = 2222222.0 2332332.0 & output = append_test_file & append

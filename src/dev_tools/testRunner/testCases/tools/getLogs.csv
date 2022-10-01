@@ -40,5 +40,5 @@ on      ,both ,fast  ,logs  ,tools/getLogs ,from_raw            ,y    ,transacti
 on      ,both ,medi  ,logs  ,tools/getLogs ,prev_bug2_2         ,y    ,transactions = 4279119.46 & raw
 
 on      ,both ,fast  ,logs  ,tools/getLogs ,to_file             ,y    ,transactions = 2222222.0 2332332.0 & fmt = json & to_file
-on      ,both ,fast  ,logs  ,tools/getLogs ,redir_output        ,y    ,transactions = 3657480.79 & output = test_file
-on      ,both ,fast  ,logs  ,tools/getLogs ,redir_output_append ,y    ,transactions = 3657480.79 & output = test_file & append
+on      ,both ,fast  ,logs  ,tools/getLogs ,redir_output        ,y    ,transactions = 3657480.79 & output = output_test_file
+on      ,both ,fast  ,logs  ,tools/getLogs ,redir_output_append ,y    ,transactions = 3657480.79 & output = append_test_file & append

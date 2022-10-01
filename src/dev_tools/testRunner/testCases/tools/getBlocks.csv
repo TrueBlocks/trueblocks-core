@@ -78,5 +78,5 @@ on      ,both ,slow  ,blocks ,tools/getBlocks ,terse_no_raw         ,y    ,block
 on      ,both ,fast  ,blocks ,tools/getBlocks ,terse_yes_raw        ,y    ,blocks = 4001001 & hashes & raw
 
 on      ,both ,fast  ,blocks ,tools/getBlocks ,to_file              ,y    ,blocks = 2222222 2332332 & fmt = json & to_file
-on      ,both ,fast  ,blocks ,tools/getBlocks ,redir_output         ,y    ,blocks = 2222222 2332332 & output = test_file
-on      ,both ,fast  ,blocks ,tools/getBlocks ,redir_output_append  ,n    ,blocks = 2222222 2332332 & output = test_file & append
+on      ,both ,fast  ,blocks ,tools/getBlocks ,redir_output         ,y    ,blocks = 2222222 2332332 & output = output_test_file
+on      ,both ,fast  ,blocks ,tools/getBlocks ,redir_output_append  ,n    ,blocks = 2222222 2332332 & output = append_test_file & append
