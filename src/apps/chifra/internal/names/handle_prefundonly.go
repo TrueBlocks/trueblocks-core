@@ -10,7 +10,7 @@ import (
 
 // HandlePrefundOnly handles chifra names --prefund
 func (opts *NamesOptions) HandlePrefundOnly() error {
-	err := opts.Globals.RenderHeader(types.SimpleName{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, !opts.Globals.ShowKeys, true)
+	err := opts.Globals.RenderHeader(types.SimpleName{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
 	defer opts.Globals.RenderFooter()
 	if err != nil {
 		return err

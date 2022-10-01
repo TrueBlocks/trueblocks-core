@@ -25,7 +25,7 @@ type OutputOptions = struct {
 	ShowHidden bool
 	// If set, the first printed line will be names of the keys in the model
 	// (ignored when format is "json")
-	ShowKeys bool
+	NoHeader bool
 	// The format in which to print the output
 	Format string
 	// How to indent JSON output
@@ -78,7 +78,7 @@ func StreamModel(w io.Writer, model types.Model, options OutputOptions) error {
 	}
 	outputWriter := csv.NewWriter(w)
 	outputWriter.Comma = rune(separator)
-	if options.ShowKeys {
+	if !options.NoHeader { // notice double negative
 		outputWriter.Write(model.Order)
 	}
 	outputWriter.Write(strs)
@@ -242,7 +242,7 @@ func StreamMany[Raw types.RawData](
 					err = StreamWithTemplate(outputWriter, modelValue, tmpl)
 				} else {
 					err = StreamModel(outputWriter, modelValue, OutputOptions{
-						ShowKeys:   first && options.ShowKeys,
+						NoHeader:   !first || options.NoHeader,
 						Format:     options.Format,
 						JsonIndent: "  ",
 					})

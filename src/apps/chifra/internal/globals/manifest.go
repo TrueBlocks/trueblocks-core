@@ -12,7 +12,7 @@ func (opts *GlobalOptions) RenderManifest(w io.Writer, man *manifest.Manifest) e
 	var err error
 	tmp := opts
 	tmp.Writer = w
-	tmp.ShowKeys = true
+	tmp.NoHeader = false
 	tmp.ApiMode = false
 	if opts.Format == "txt" {
 		var sc []types.SimpleChunkRecord

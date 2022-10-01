@@ -34,13 +34,12 @@ type GlobalOptions struct {
 	Append   bool   `json:"append,omitempty"`
 	ApiMode  bool   `json:"apiMode,omitempty"`
 	output.OutputOptions
-	noHeader bool // since changed to its opposite ShowKeys
 }
 
 func (opts *GlobalOptions) TestLog() {
 	logger.TestLog(opts.Verbose, "Verbose: ", opts.Verbose)
 	logger.TestLog(opts.LogLevel > 0, "LogLevel: ", opts.LogLevel)
-	logger.TestLog(opts.noHeader, "NoHeader: ", opts.noHeader)
+	logger.TestLog(opts.NoHeader, "NoHeader: ", opts.NoHeader)
 	logger.TestLog(len(opts.Chain) > 0 && opts.Chain != config.GetDefaultChain(), "Chain: ", opts.Chain)
 	logger.TestLog(opts.Wei, "Wei: ", opts.Wei)
 	logger.TestLog(opts.Ether, "Ether: ", opts.Ether)
@@ -73,7 +72,7 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions) {
 	cmd.Flags().BoolVarP(&opts.Noop, "noop", "", false, "")
 	cmd.Flags().BoolVarP(&opts.NoColor, "nocolor", "", false, "")
 	cmd.Flags().Uint64VarP(&opts.LogLevel, "log_level", "", 0, "")
-	cmd.Flags().BoolVarP(&opts.noHeader, "no_header", "", false, "supress export of header row for csv and txt exports")
+	cmd.Flags().BoolVarP(&opts.NoHeader, "no_header", "", false, "supress export of header row for csv and txt exports")
 	cmd.Flags().BoolVarP(&opts.Wei, "wei", "", false, "specify value in wei (the default)")
 	cmd.Flags().BoolVarP(&opts.Ether, "ether", "", false, "specify value in ether")
 	cmd.Flags().BoolVarP(&opts.Dollars, "dollars", "", false, "specify value in US dollars")
@@ -96,8 +95,6 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions) {
 	cmd.Flags().MarkHidden("file")
 	cmd.Flags().MarkHidden("output")
 	cmd.Flags().MarkHidden("append")
-
-	opts.ShowKeys = !opts.noHeader
 
 	if len(opts.Chain) == 0 {
 		opts.Chain = config.GetDefaultChain()
@@ -128,7 +125,7 @@ func (opts *GlobalOptions) toCmdLine() string {
 	if opts.Append {
 		options += " --append"
 	}
-	if opts.noHeader {
+	if opts.NoHeader {
 		options += " --no_header"
 	}
 	if opts.Wei {
@@ -179,7 +176,7 @@ func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOption
 		case "logLevel":
 			opts.LogLevel = ToUint64(value[0])
 		case "noHeader":
-			opts.noHeader = true
+			opts.NoHeader = true
 		case "chain":
 			opts.Chain = value[0]
 		case "wei":
@@ -198,8 +195,6 @@ func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOption
 			opts.Append = true
 		}
 	}
-
-	opts.ShowKeys = !opts.noHeader
 
 	if len(opts.Format) == 0 || opts.Format == "none" {
 		opts.Format = "api"
@@ -220,7 +215,6 @@ func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOption
 
 func (opts *GlobalOptions) FinishParse(args []string) {
 	opts.Writer = os.Stdout
-	opts.ShowKeys = !opts.noHeader
 	if err := tslib.EstablishTsFile(opts.Chain); err != nil {
 		fmt.Println("Could not establish ts file:", err)
 	}
