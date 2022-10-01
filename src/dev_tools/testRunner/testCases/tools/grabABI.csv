@@ -44,7 +44,7 @@ on      ,both ,fast  ,abis  ,tools/grabABI ,known_trueclasses   ,y    ,addrs = t
 #       ,     ,      ,      ,              ,                    ,     ,This fails under the API because cobra doesn't give us a chance to report invalid flags
 local   ,both ,fast  ,abis  ,tools/grabABI ,known_trueara       ,y    ,addrs = truebit aragon & fmt = json
 
-#       ,     ,      ,      ,              ,                    ,     ,This fails because the GoLang code does not yet support the --output flag
+#       ,     ,      ,      ,              ,                    ,     ,This fails because the GoLang code does not yet support the --to_file flag
 local   ,both ,fast  ,abis  ,tools/grabABI ,to_file             ,y    ,addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = json & to_file
 
 #       ,     ,      ,      ,              ,                    ,     ,This fails because we never supported searching for event signatures
