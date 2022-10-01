@@ -17,18 +17,18 @@ import (
 )
 
 type GlobalOptions struct {
-	Wei      bool   `json:"wei,omitempty"`
-	Ether    bool   `json:"ether,omitempty"`
-	Dollars  bool   `json:"dollars,omitempty"`
-	Help     bool   `json:"help,omitempty"`
-	ToFile   bool   `json:"toFile,omitempty"`
-	File     string `json:"file,omitempty"`
-	Version  bool   `json:"version,omitempty"`
-	Noop     bool   `json:"noop,omitempty"`
-	NoColor  bool   `json:"noColor,omitempty"`
-	OutputFn string `json:"outputFn,omitempty"`
-	Append   bool   `json:"append,omitempty"`
-	ApiMode  bool   `json:"apiMode,omitempty"`
+	ApiMode bool   `json:"apiMode,omitempty"`
+	Wei     bool   `json:"wei,omitempty"`
+	Ether   bool   `json:"ether,omitempty"`
+	Dollars bool   `json:"dollars,omitempty"`
+	File    string `json:"file,omitempty"`
+	NoColor bool   `json:"noColor,omitempty"`
+	Noop    bool   `json:"noop,omitempty"`
+	Version bool   `json:"version,omitempty"`
+	Help    bool   `json:"help,omitempty"`
+	ToFile  bool   `json:"toFile,omitempty"`
+	// OutputFn string `json:"outputFn,omitempty"`
+	// Append   bool   `json:"append,omitempty"`
 	output.OutputOptions
 }
 
