@@ -40,7 +40,7 @@ func helperStreamFormats(w csv.Writer, outputBuffer *bytes.Buffer, format string
 	buffer := new(bytes.Buffer)
 	StreamModel(buffer, input.Model(false, format), OutputOptions{
 		Format:   format,
-		ShowKeys: expectKeys,
+		NoHeader: !expectKeys,
 	})
 	result := buffer.String()
 
