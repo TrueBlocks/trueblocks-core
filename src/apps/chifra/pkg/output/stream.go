@@ -36,7 +36,7 @@ type OutputOptions = struct {
 	// Flag to check if we are in test mode
 	TestMode bool
 	// Output file name. If present, we will write output to this file
-	OutputFileName string
+	OutputFn string
 	// The writer
 	Writer io.Writer
 }
@@ -171,7 +171,7 @@ func StreamMany[Raw types.RawData](
 	outputWriter := w
 	// We do not want to allow --output in server environment
 	if !utils.IsServerWriter(w) {
-		outputWriter = file.GetOutputFileWriter(options.OutputFileName, w)
+		outputWriter = file.GetOutputFileWriter(options.OutputFn, w)
 	}
 	errsToReport := make([]string, 0)
 	errsMutex := sync.Mutex{}
