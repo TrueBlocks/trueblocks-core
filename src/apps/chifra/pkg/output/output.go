@@ -29,7 +29,7 @@ func OutputHeader(data interface{}, w io.Writer, format string) error {
 }
 
 // TODO: Fix export without arrays
-func OutputSlice(data interface{}, w io.Writer, format string, hideHeader, apiMode, first bool, meta *rpcClient.MetaData) error {
+func OutputSlice(data interface{}, w io.Writer, format string, hideHeader, first bool, meta *rpcClient.MetaData) error {
 	var outputBytes []byte
 	var err error
 
@@ -77,7 +77,7 @@ func OutputSlice(data interface{}, w io.Writer, format string, hideHeader, apiMo
 }
 
 // TODO: Fix export without arrays
-func OutputObject(data interface{}, w io.Writer, format string, hideHeader, apiMode, first bool, meta *rpcClient.MetaData) error {
+func OutputObject(data interface{}, w io.Writer, format string, hideHeader, first bool, meta *rpcClient.MetaData) error {
 	var outputBytes []byte
 	var err error
 

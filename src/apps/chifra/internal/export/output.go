@@ -47,7 +47,7 @@ func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
 		return err, true
 	}
 
-	if opts.Globals.ApiMode {
+	if opts.Globals.IsApiMode() {
 		// The caller has to handle this when in API mode
 		return nil, false
 	}

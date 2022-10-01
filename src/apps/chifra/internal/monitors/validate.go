@@ -61,7 +61,7 @@ func (opts *MonitorsOptions) validateMonitors() error {
 			return validate.Usage("Please provide either --clean or one of the CRUD commands.")
 		}
 
-		if !opts.Globals.ApiMode && !opts.Clean {
+		if !opts.Globals.IsApiMode() && !opts.Clean {
 			if len(opts.Globals.File) > 0 {
 				// Do nothing
 			} else {

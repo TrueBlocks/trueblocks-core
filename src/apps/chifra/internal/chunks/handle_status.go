@@ -25,7 +25,7 @@ func (opts *ChunksOptions) HandleStatus(blockNums []uint64) error {
 	}
 
 	defer opts.Globals.RenderFooter()
-	err := opts.Globals.RenderHeader(rpcClient.MetaData{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+	err := opts.Globals.RenderHeader(rpcClient.MetaData{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.NoHeader, true)
 	if err != nil {
 		return err
 	}

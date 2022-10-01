@@ -114,7 +114,7 @@ func (opts *ChunksOptions) HandleDetails(indexChunk *index.ChunkData, record *in
 
 func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
 	defer opts.Globals.RenderFooter()
-	err := opts.Globals.RenderHeader(types.SimpleIndexAddress{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+	err := opts.Globals.RenderHeader(types.SimpleIndexAddress{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.NoHeader, true)
 	if err != nil {
 		return err
 	}

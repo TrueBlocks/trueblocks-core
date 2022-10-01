@@ -59,7 +59,7 @@ func showIndex(walker *index.IndexWalker, path string, first bool) (bool, error)
 
 func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
 	defer opts.Globals.RenderFooter()
-	err := opts.Globals.RenderHeader(types.SimpleIndex{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+	err := opts.Globals.RenderHeader(types.SimpleIndex{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.NoHeader, true)
 	if err != nil {
 		return err
 	}

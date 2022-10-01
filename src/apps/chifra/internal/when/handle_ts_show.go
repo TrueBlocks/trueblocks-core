@@ -17,7 +17,7 @@ func (opts *WhenOptions) HandleTimestampsShow() error {
 		return err
 	}
 
-	err = opts.Globals.RenderHeader(types.SimpleTimestamp{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+	err = opts.Globals.RenderHeader(types.SimpleTimestamp{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.NoHeader, true)
 	defer opts.Globals.RenderFooter()
 	if err != nil {
 		return err

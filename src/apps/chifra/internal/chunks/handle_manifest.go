@@ -32,7 +32,7 @@ func (opts *ChunksOptions) HandleManifest(blockNums []uint64) error {
 
 	if opts.Globals.Format == "txt" || opts.Globals.Format == "csv" {
 		defer opts.Globals.RenderFooter()
-		err := opts.Globals.RenderHeader(types.SimpleChunkRecord{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+		err := opts.Globals.RenderHeader(types.SimpleChunkRecord{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.NoHeader, true)
 		if err != nil {
 			return err
 		}
@@ -60,7 +60,7 @@ func (opts *ChunksOptions) HandleManifest(blockNums []uint64) error {
 
 	} else {
 		defer opts.Globals.RenderFooter()
-		err = opts.Globals.RenderHeader(types.SimpleManifest{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+		err = opts.Globals.RenderHeader(types.SimpleManifest{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.NoHeader, true)
 		if err != nil {
 			return err
 		}

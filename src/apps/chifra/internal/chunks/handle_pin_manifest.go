@@ -52,7 +52,7 @@ func pinChunk(walker *index.IndexWalker, path string, first bool) (bool, error) 
 
 func (opts *ChunksOptions) HandlePinManifest(blockNums []uint64) error {
 	defer opts.Globals.RenderFooter()
-	err := opts.Globals.RenderHeader(types.SimpleManifest{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+	err := opts.Globals.RenderHeader(types.SimpleManifest{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.NoHeader, true)
 	if err != nil {
 		return err
 	}

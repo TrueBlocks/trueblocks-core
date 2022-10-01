@@ -22,7 +22,7 @@ func (opts *WhenOptions) HandleTimestampCount() error {
 	obj := TsCount{Count: count}
 
 	// TODO: Fix export without arrays
-	err = opts.Globals.RenderHeader(obj, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+	err = opts.Globals.RenderHeader(obj, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.NoHeader, true)
 	defer opts.Globals.RenderFooter()
 	if err != nil {
 		return err

@@ -16,7 +16,7 @@ func (opts *GlobalOptions) Validate() error {
 		return validate.Usage("The {0} option ({1}) must {2}", "file", opts.File, "exist")
 	}
 
-	if len(opts.OutputFn) > 0 && opts.ApiMode {
+	if len(opts.OutputFn) > 0 && opts.IsApiMode() {
 		return validate.Usage("The {0} option is not available in Api Mode. Use {1} instead", "--output", "--to_file")
 	}
 

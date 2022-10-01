@@ -122,7 +122,7 @@ func (m *Manifest) SaveManifest(chain string) error {
 		return fmt.Errorf("locking file: %s", err)
 	}
 
-	return output.OutputObject(&m, w, "json", false, false, true, nil)
+	return output.OutputObject(&m, w, "json", false, true, nil)
 }
 
 // TODO: Protect against overwriting files on disc
@@ -173,7 +173,7 @@ func UpdateManifest(chain string, chunk ChunkRecord) error {
 	defer file.Unlock(w)
 
 	logger.Log(logger.Info, "Updating manifest with", len(man.Chunks), "chunks", spaces)
-	return output.OutputObject(man, w, "json", false, false, true, nil)
+	return output.OutputObject(man, w, "json", false, true, nil)
 }
 
 // TODO: There's got to be a better way
