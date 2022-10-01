@@ -110,8 +110,8 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 		ShowRaw:    opts.Globals.ShowRaw,
 		Verbose:    opts.Globals.Verbose,
 		Format:     opts.Globals.Format,
-		OutputFn:   opts.Globals.OutputFn,
 		JsonIndent: "  ",
+		OutputFn:   opts.Globals.OutputFn,
 	})
 
 	handled = true
