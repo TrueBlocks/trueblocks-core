@@ -2,3 +2,4 @@ chifra names  --output test_file --prefund
 TEST[DATE|TIME] Prefund:  true
 TEST[DATE|TIME] OutputFn:  test_file
 TEST[DATE|TIME] Format:  txt
+The name of the file and hte contents woul dbe useful

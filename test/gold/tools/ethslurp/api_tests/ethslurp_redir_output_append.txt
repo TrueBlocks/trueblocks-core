@@ -1,0 +1,3 @@
+slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-7000000&output=test_file&append
+{ "outputFilename": "--$testPath/test_file--" }
+The actual contents of the file would be good
