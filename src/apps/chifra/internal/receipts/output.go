@@ -104,14 +104,14 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 	}
 
 	err = output.StreamMany(ctx, opts.Globals.Writer, fetchTransactionData, output.OutputOptions{
-		Chain:          opts.Globals.Chain,
-		TestMode:       opts.Globals.TestMode,
-		NoHeader:       opts.Globals.NoHeader,
-		ShowRaw:        opts.Globals.ShowRaw,
-		Verbose:        opts.Globals.Verbose,
-		Format:         opts.Globals.Format,
-		JsonIndent:     "  ",
-		OutputFileName: opts.Globals.OutputFn,
+		Chain:      opts.Globals.Chain,
+		TestMode:   opts.Globals.TestMode,
+		NoHeader:   opts.Globals.NoHeader,
+		ShowRaw:    opts.Globals.ShowRaw,
+		Verbose:    opts.Globals.Verbose,
+		Format:     opts.Globals.Format,
+		OutputFn:   opts.Globals.OutputFn,
+		JsonIndent: "  ",
 	})
 
 	handled = true

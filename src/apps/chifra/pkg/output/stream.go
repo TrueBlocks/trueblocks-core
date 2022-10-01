@@ -10,21 +10,20 @@ import (
 	"sync"
 	"text/template"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // OutputOptions allow more granular configuration of output details
-type OutputOptions = struct {
+type OutputOptions struct {
 	// If set, raw data from the RPC will be printed instead of the model
 	ShowRaw bool
 	// If set, hidden fields will be printed as well (depends on the format)
 	Verbose bool
-	// If set, the first printed line will NOT be names of the keys in the model
-	// (ignored when format is "json")
+	// If Verbose is true, this is the level of detail (verbose alone implies LogLevel=1)
+	LogLevel uint64
+	// If set, the first line of "txt" and "csv" output will NOT (the keys) will squelched
 	NoHeader bool
 	// The format in which to print the output
 	Format string
@@ -35,7 +34,9 @@ type OutputOptions = struct {
 	// Flag to check if we are in test mode
 	TestMode bool
 	// Output file name. If present, we will write output to this file
-	OutputFileName string
+	OutputFn string
+	// Append instructs the output to be appended to OutputFn
+	Append bool
 	// The writer
 	Writer io.Writer
 }
@@ -163,15 +164,10 @@ func getMetaData(chain string, testMode bool) (meta *rpcClient.MetaData) {
 // StreamMany outputs models or raw data as they are acquired
 func StreamMany[Raw types.RawData](
 	ctx context.Context,
-	w io.Writer,
 	fetchData func(modelChan chan types.Modeler[Raw], errorChan chan error),
 	options OutputOptions,
 ) error {
-	outputWriter := w
-	// We do not want to allow --output in server environment
-	if !utils.IsServerWriter(w) {
-		outputWriter = file.GetOutputFileWriter(options.OutputFileName, w)
-	}
+	outputWriter := options.GetOutputFileWriter()
 	errsToReport := make([]string, 0)
 	errsMutex := sync.Mutex{}
 

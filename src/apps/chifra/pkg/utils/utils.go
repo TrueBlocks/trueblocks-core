@@ -7,7 +7,6 @@ package utils
 import (
 	"bytes"
 	"fmt"
-	"io"
 	"log"
 	"math/big"
 	"net/http"
@@ -29,16 +28,16 @@ func IsTestModeServer(r *http.Request) bool {
 }
 
 // TODO: Can we collapse this with the IsApiMode function?
-// IsServerWriter tries to cast `w` into `http.ResponseWriter`
-// and returns true if the cast was successful
-func IsServerWriter(w io.Writer) bool {
-	_, ok := w.(http.ResponseWriter)
-	return ok
-}
-
-func IsApiMode() bool {
-	return os.Getenv("API_MODE") == "true"
-}
+// TODO: Moved into output package
+// // IsServerWriter tries to cast `w` into `http.ResponseWriter`
+// // and returns true if the cast was successful
+// func IsServerWriter(w io.Writer) bool {
+// 	_, ok := w.(http.ResponseWriter)
+// 	return ok
+// }
+// func IsApiMode() bool {
+// 	return os.Getenv("API_MODE") == "true"
+// }
 
 func IsTerminal() bool {
 	return term.IsTerminal(int(os.Stdout.Fd()))
