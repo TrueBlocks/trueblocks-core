@@ -113,6 +113,7 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 		Format:     opts.Globals.Format,
 		JsonIndent: "  ",
 		OutputFn:   opts.Globals.OutputFn,
+		Append:     opts.Globals.Append,
 	})
 
 	handled = true
