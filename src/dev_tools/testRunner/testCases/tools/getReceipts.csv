@@ -28,7 +28,6 @@ on      ,both ,fast  ,receipts ,tools/getReceipts ,fmt_api             ,y    ,tr
 on      ,both ,fast  ,receipts ,tools/getReceipts ,fmt_json            ,y    ,transactions = 2222222.0 2332332.0 & fmt = json                                                                                                                                                                                     
 
 off     ,both ,fast  ,receipts ,tools/getReceipts ,multi_articulate    ,y    ,transactions = 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f & articulate & fmt = json                                                                                                                         
-off     ,both ,fast  ,receipts ,tools/getReceipts ,to_file             ,y    ,transactions = 2222222.0 2332332.0 & fmt = json & to_file                                                                                                                                                                           
 
 off     ,cmd  ,fast  ,receipts ,tools/getReceipts ,by_file             ,n    ,file = cmd_file                                                                                                                                                                                                                     
 off     ,cmd  ,fast  ,receipts ,tools/getReceipts ,by_file_v           ,n    ,file = cmd_file & fmt = api & verbose                                                                                                                                                                                               
@@ -41,3 +40,7 @@ on      ,both ,fast  ,receipts ,tools/getReceipts ,bad_blkhash_msg_raw ,y    ,tr
 
 on      ,both ,fast  ,receipts ,tools/getReceipts ,from_raw            ,y    ,transactions = 4000000.5 & raw                                                                                                                                                                                                      
 on      ,both ,medi  ,receipts ,tools/getReceipts ,prev_bug2_2         ,y    ,transactions = 4279119.46 & raw
+
+on      ,both ,fast  ,receipts ,tools/getReceipts ,to_file             ,y    ,transactions = 2222222.0 2332332.0 & fmt = json & to_file                                                                                                                                                                           
+on      ,both ,fast  ,receipts ,tools/getReceipts ,redir_output        ,y    ,transactions = 2222222.0 2332332.0 & output = test_file
+on      ,both ,fast  ,receipts ,tools/getReceipts ,redir_output_append ,n    ,transactions = 2222222.0 2332332.0 & output = test_file & append
