@@ -62,20 +62,20 @@ func RenderSlice[
 	case "api":
 		fallthrough
 	case "json":
-		return output.OutputSlice(data, opts.Writer, opts.Format, !opts.ShowKeys, opts.ApiMode, true, meta)
+		return output.OutputSlice(data, opts.Writer, opts.Format, opts.NoHeader, opts.ApiMode, true, meta)
 	case "csv":
 		fallthrough
 	case "txt":
 		for i, item := range data {
 			if i == 0 {
-				if opts.ShowKeys {
+				if !opts.NoHeader {
 					err := output.OutputHeader(item, opts.Writer, opts.Format)
 					if err != nil {
 						return err
 					}
 				}
 			}
-			err := output.OutputObject(item, opts.Writer, opts.Format, !opts.ShowKeys, opts.ApiMode, false, meta)
+			err := output.OutputObject(item, opts.Writer, opts.Format, opts.NoHeader, opts.ApiMode, false, meta)
 			if err != nil {
 				return err
 			}
@@ -98,7 +98,7 @@ func (opts *GlobalOptions) RenderObject(data interface{}, first bool) error {
 		// If users wants raw output, we will most probably print JSON
 		format = "json"
 	}
-	return output.OutputObject(data, opts.Writer, format, !opts.ShowKeys, opts.ApiMode, first, nil)
+	return output.OutputObject(data, opts.Writer, format, opts.NoHeader, opts.ApiMode, first, nil)
 }
 
 // TODO: Fix export without arrays
