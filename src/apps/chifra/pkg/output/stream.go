@@ -10,11 +10,9 @@ import (
 	"sync"
 	"text/template"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // OutputOptions allow more granular configuration of output details
@@ -166,15 +164,10 @@ func getMetaData(chain string, testMode bool) (meta *rpcClient.MetaData) {
 // StreamMany outputs models or raw data as they are acquired
 func StreamMany[Raw types.RawData](
 	ctx context.Context,
-	w io.Writer,
 	fetchData func(modelChan chan types.Modeler[Raw], errorChan chan error),
 	options OutputOptions,
 ) error {
-	outputWriter := w
-	// We do not want to allow --output in server environment
-	if !utils.IsServerWriter(w) {
-		outputWriter = file.GetOutputFileWriter(options.OutputFn, w)
-	}
+	outputWriter := options.GetOutputFileWriter()
 	errsToReport := make([]string, 0)
 	errsMutex := sync.Mutex{}
 

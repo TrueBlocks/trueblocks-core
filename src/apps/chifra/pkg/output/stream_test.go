@@ -150,7 +150,8 @@ func TestStreamMany(t *testing.T) {
 
 	// Print the values and try to re-parse them to check if
 	// we get the same data
-	StreamMany(context.Background(), buffer, renderData, OutputOptions{
+	StreamMany(context.Background(), renderData, OutputOptions{
+		Writer: buffer,
 		Format: "json",
 	})
 
@@ -183,7 +184,8 @@ func TestApiFormat(t *testing.T) {
 			IsError:          false,
 		}
 	}
-	err := StreamMany(context.Background(), outputBuffer, renderData, OutputOptions{
+	err := StreamMany(context.Background(), renderData, OutputOptions{
+		Writer: outputBuffer,
 		Format: "api",
 	})
 	if err != nil {
