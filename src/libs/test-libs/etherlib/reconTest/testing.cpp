@@ -94,7 +94,7 @@ TEST_F(CThisTest, TestTest_1) {
 
 //------------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
-    setenv("API_MODE", "true", true);
+    setenv("CPP_API_MODE", "true", true);
     etherlib_init(quickQuitHandler);
     verbose = 5;
     LOAD_TEST(TestTest_1);

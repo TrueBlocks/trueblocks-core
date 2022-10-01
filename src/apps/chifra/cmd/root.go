@@ -32,12 +32,7 @@ func Execute() {
 }
 
 func init() {
-	if os.Getenv("API_MODE") == "true" {
-		chifraCmd.SetOut(os.Stderr)
-		chifraCmd.SetErr(os.Stdout)
-	} else {
-		chifraCmd.SetOut(os.Stderr)
-	}
+	chifraCmd.SetOut(os.Stderr)
 	chifraCmd.SetFlagErrorFunc(ErrFunc)
 	chifraCmd.Flags().SortFlags = false
 

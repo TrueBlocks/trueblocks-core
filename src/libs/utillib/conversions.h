@@ -167,7 +167,7 @@ inline bool isTestMode(void) {
 inline bool isApiMode(void) {
     static uint64_t api_mode = NOPOS;
     if (api_mode == NOPOS)
-        api_mode = getEnvStr("API_MODE") == "true";
+        api_mode = getEnvStr("CPP_API_MODE") == "true";
     return api_mode;
 }
 

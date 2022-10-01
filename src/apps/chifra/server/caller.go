@@ -107,15 +107,15 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 	envStr := env.ToCSV()
 
 	if utils.IsTestModeServer(r) {
-		// In regular operation, we set an environment variable API_MODE=true. When
+		// In regular operation, we set an environment variable CPP_API_MODE=true. When
 		// testing (the test harness sends a special header) we also set the
 		// TEST_MODE=true environment variable and any other vars for this
 		// particular test
-		cmd.Env = append(append(os.Environ(), "TEST_MODE=true"), "API_MODE=true")
+		cmd.Env = append(append(os.Environ(), "TEST_MODE=true"), "CPP_API_MODE=true")
 		vars := strings.Split(r.Header.Get("X-TestRunner-Env"), "|")
 		cmd.Env = append(cmd.Env, vars...)
 	} else {
-		cmd.Env = append(os.Environ(), "API_MODE=true")
+		cmd.Env = append(os.Environ(), "CPP_API_MODE=true")
 	}
 	cmd.Env = append(cmd.Env, "TB_CONFIG_ENV="+envStr)
 	cmd.Env = append(cmd.Env, "PROG_NAME=chifra "+apiCmd)

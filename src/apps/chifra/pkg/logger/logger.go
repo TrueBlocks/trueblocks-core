@@ -37,9 +37,8 @@ var severityToLabel = map[severity]string{
 // TestLog is used to print command line options to the screen during testing only
 func TestLog(notDefault bool, a ...interface{}) {
 	testMode := os.Getenv("TEST_MODE") == "true"
-	apiMode := os.Getenv("API_MODE") == "true"
-	if !testMode || apiMode {
-		// If we're not testing or in apiMode
+	if !testMode {
+		// If we're not testing...don't report
 		return
 	}
 
