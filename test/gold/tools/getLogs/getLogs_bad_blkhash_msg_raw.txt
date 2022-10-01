@@ -1,6 +1,6 @@
 chifra logs  0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5 --raw
 TEST[DATE|TIME] Transactions:  [0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5]
-TEST[DATE|TIME] Raw:  true
+TEST[DATE|TIME] ShowRaw:  true
 TEST[DATE|TIME] Format:  txt
 { "data": [
 {"jsonrpc":"2.0","id":"1","result":[]}
