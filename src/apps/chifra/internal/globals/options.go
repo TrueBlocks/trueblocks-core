@@ -16,8 +16,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// TODO: In OutputOptions, ShowHidden could be changed Verbose
-
 type GlobalOptions struct {
 	Verbose  bool   `json:"verbose,omitempty"`
 	LogLevel uint64 `json:"logLevel,omitempty"`

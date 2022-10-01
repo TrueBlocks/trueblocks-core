@@ -22,7 +22,7 @@ type OutputOptions = struct {
 	// If set, raw data from the RPC will be printed instead of the model
 	ShowRaw bool
 	// If set, hidden fields will be printed as well (depends on the format)
-	ShowHidden bool
+	Verbose bool
 	// If set, the first printed line will NOT be names of the keys in the model
 	// (ignored when format is "json")
 	NoHeader bool
@@ -237,7 +237,7 @@ func StreamMany[Raw types.RawData](
 			if options.ShowRaw {
 				err = StreamRaw(outputWriter, model.Raw())
 			} else {
-				modelValue := model.Model(options.ShowHidden, options.Format)
+				modelValue := model.Model(options.Verbose, options.Format)
 				if customFormat {
 					err = StreamWithTemplate(outputWriter, modelValue, tmpl)
 				} else {
