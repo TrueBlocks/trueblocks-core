@@ -1,3 +1,0 @@
-names?output=test_file&prefund&append
-{ "outputFilename": "--$testPath/test_bin--" }
-The the contents would be useful

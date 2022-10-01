@@ -1,3 +1,1 @@
-names?named&custom&fmt=json&toFile
 { "outputFilename": "--output_filename--" }
-The actual contents of the file would be good
