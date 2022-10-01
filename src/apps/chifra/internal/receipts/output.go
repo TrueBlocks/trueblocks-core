@@ -108,7 +108,7 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 		TestMode:       opts.Globals.TestMode,
 		NoHeader:       opts.Globals.NoHeader,
 		ShowRaw:        opts.Globals.ShowRaw,
-		ShowHidden:     opts.Globals.Verbose,
+		Verbose:        opts.Globals.Verbose,
 		Format:         opts.Globals.Format,
 		JsonIndent:     "  ",
 		OutputFileName: opts.Globals.OutputFn,

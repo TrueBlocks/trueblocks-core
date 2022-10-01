@@ -16,11 +16,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// ShowHidden bool
-
 type GlobalOptions struct {
-	Verbose  bool   `json:"verbose,omitempty"`
-	LogLevel uint64 `json:"logLevel,omitempty"`
 	Wei      bool   `json:"wei,omitempty"`
 	Ether    bool   `json:"ether,omitempty"`
 	Dollars  bool   `json:"dollars,omitempty"`
