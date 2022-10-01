@@ -35,10 +35,6 @@ func IsServerWriter(w io.Writer) bool {
 	return ok
 }
 
-func IsApiMode() bool {
-	return os.Getenv("API_MODE") == "true"
-}
-
 func IsTerminal() bool {
 	return term.IsTerminal(int(os.Stdout.Fd()))
 }

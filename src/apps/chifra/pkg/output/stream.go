@@ -10,15 +10,14 @@ import (
 	"sync"
 	"text/template"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // OutputOptions allow more granular configuration of output details
-type OutputOptions = struct {
+// TODO (dawid): This used to be "type OutputOptions = struct" (the '=' sign). Was that a typo or purposful? I couldn't embed it in the GlobalOptions data structure, so I removed the '='
+type OutputOptions struct {
 	// If set, raw data from the RPC will be printed instead of the model
 	ShowRaw bool
 	// If set, hidden fields will be printed as well (depends on the format)
@@ -166,15 +165,10 @@ func getMetaData(chain string, testMode bool) (meta *rpcClient.MetaData) {
 // StreamMany outputs models or raw data as they are acquired
 func StreamMany[Raw types.RawData](
 	ctx context.Context,
-	w io.Writer,
 	fetchData func(modelChan chan types.Modeler[Raw], errorChan chan error),
 	options OutputOptions,
 ) error {
-	outputWriter := w
-	// We do not want to allow --output in server environment
-	if !utils.IsServerWriter(w) {
-		outputWriter = file.GetOutputFileWriter(options.OutputFn, w)
-	}
+	outputWriter := options.GetOutputFileWriter()
 	errsToReport := make([]string, 0)
 	errsMutex := sync.Mutex{}
 
