@@ -1,0 +1,13 @@
+chifra receipts  --file cmd_file.6 5644782.0
+TEST[DATE|TIME] Transactions:  [5644782.0]
+TEST[DATE|TIME] File:  cmd_file.6
+TEST[DATE|TIME] Format:  txt
+Cmd: --verbose --fmt:json 5644782.0 
+Cmd: --fmt:csv 5644782.0 
+Cmd: --verbose --fmt:tsv 5644782.0 
+Cmd: 5644882.0 5644782.0 
+Cmd: 5644883.0 5644782.0 
+Cmd: 5644886.0 5644782.0 
+
+blockNumber	transactionIndex	hash	gasUsed	status	isError
+5644782	0	0x785b88bfb800c34f0972bd2a1b02fb4bd03abc72dce675d00c2e4ae99f7aff96	21000	1	false

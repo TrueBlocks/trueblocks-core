@@ -12,6 +12,15 @@ import (
 )
 
 func (opts *GlobalOptions) Validate() error {
+	if len(opts.File) > 0 {
+		if opts.IsApiMode() {
+			return validate.Usage("The {0} option is not available in {1} mode", "--file", "Api")
+		}
+		if !file.FileExists(opts.File) {
+			return validate.Usage("The {0} option ({1}) must {2}", "file", opts.File, "exist")
+		}
+	}
+
 	if len(opts.File) > 0 && !file.FileExists(opts.File) {
 		return validate.Usage("The {0} option ({1}) must {2}", "file", opts.File, "exist")
 	}

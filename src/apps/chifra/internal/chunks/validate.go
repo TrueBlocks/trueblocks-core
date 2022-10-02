@@ -128,6 +128,10 @@ func (opts *ChunksOptions) validateChunks() error {
 		}
 	}
 
+	if len(opts.Globals.OutputFn) > 0 {
+		return validate.Usage("The {0} option is not available with the {1}.", "--output", "chifra chunks -- yet...")
+	}
+
 	return opts.Globals.Validate()
 }
 

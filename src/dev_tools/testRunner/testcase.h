@@ -52,6 +52,7 @@ class CTestCase : public CBaseNode {
     DECLARE_NODE(CTestCase);
 
     // EXISTING_CODE
+    string_q getOutputFile(bool isApi, const string_q& goldApiPath) const;
     explicit CTestCase(const string_q& line, uint32_t id);
     void prepareTest(bool cmdLine, bool removeWorking);
     // EXISTING_CODE

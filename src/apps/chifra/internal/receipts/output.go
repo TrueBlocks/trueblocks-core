@@ -49,9 +49,11 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	if opts.Articulate || opts.Globals.ToFile {
-		err = opts.Globals.PassItOn("getReceipts", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
-		return err, true
+	if opts.Articulate || opts.Globals.ToFile || len(opts.Globals.File) > 0 {
+		if opts.Globals.IsApiMode() {
+			return nil, false
+		}
+		return opts.Globals.PassItOn("getReceipts", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr()), true
 	}
 
 	clientVersion, err := rpcClient.GetVersion(opts.Globals.Chain)

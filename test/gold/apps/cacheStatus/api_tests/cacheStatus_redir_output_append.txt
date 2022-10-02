@@ -1,0 +1,6 @@
+status?modes=index&output=output_test_file&noHeader&append
+{
+  "errors": [
+    "The --output option is not available in Api Mode. Use --to_file instead"
+  ]
+}
