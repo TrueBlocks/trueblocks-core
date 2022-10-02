@@ -87,5 +87,5 @@ local   ,both ,fast  ,when  ,tools/whenBlock ,homestead_customized        ,y    
 local   ,cmd  ,fast  ,when  ,tools/whenBlock ,upgrade_test                ,y    ,help
 
 local   ,both ,fast  ,when  ,tools/whenBlock ,to_file                     ,y    ,blocks = 1001001 & fmt = json & to_file
-local   ,both ,fast  ,when  ,tools/whenBlock ,redir_output                ,y    ,blocks = 1001001 & output = output_test_file
-local   ,both ,fast  ,when  ,tools/whenBlock ,redir_output_append         ,n    ,blocks = 1001001 & output = append_test_file & append
+local   ,both ,fast  ,when  ,tools/whenBlock ,redir_output                ,y    ,blocks = 1001001-1001005 & output = output_test_file
+local   ,both ,fast  ,when  ,tools/whenBlock ,redir_output_append         ,n    ,blocks = 1001005 1001100 1010101 & output = output_test_file & no_header & append

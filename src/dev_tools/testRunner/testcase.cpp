@@ -611,5 +611,29 @@ void CTestCase::prepareTest(bool cmdLine, bool removeWorking) {
             extra = "blocks";
     }
 }
+
+string CTestCase::getOutputFile(bool isApi, const string& goldApiPath) const {
+    if (isApi) {
+        return "";
+    }
+
+    string_q outputFile;
+    if (contains(origLine, "output")) {
+        string_q line = substitute(substitute(origLine, "&", "|"), "=", "|");
+        CStringArray parts;
+        explode(parts, line, '|');
+        bool next = false;
+        for (auto part : parts) {
+            part = trim(part);
+            if (next && outputFile.empty()) {
+                outputFile = goldApiPath + part;
+            }
+            if (part == "output") {
+                next = true;
+            }
+        }
+    }
+    return outputFile;
+}
 // EXISTING_CODE
 }  // namespace qblocks

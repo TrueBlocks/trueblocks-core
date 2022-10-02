@@ -1,4 +1,4 @@
-logs?transactions=3657480.79&output=output_test_file
+logs?transactions=3657480.12%203657480.09&output=output_test_file
 {
   "errors": [
     "The --output option is not available in Api Mode. Use --to_file instead"

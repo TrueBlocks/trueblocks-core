@@ -1,4 +1,10 @@
-chifra logs  3657480.79 --output testing_file
-TEST[DATE|TIME] Transactions:  [3657480.79]
-TEST[DATE|TIME] OutputFn:  testing_file
+chifra logs  3657480.12 3657480.09 --output output_test_file
+TEST[DATE|TIME] Transactions:  [3657480.12 3657480.09]
+TEST[DATE|TIME] OutputFn:  output_test_file
 TEST[DATE|TIME] Format:  txt
+----
+Results in ./output_test_file
+blockNumber	transactionIndex	logIndex	timestamp	address	topic0	topic1	topic2	topic3	data	compressedLog
+3657480	12	7	1494031419	0xaf30d2a7e90d7dc361c8c4585e9bb7d2f6f15bc7	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	0x000000000000000000000000d9bd20efca7b0e6606b969548b1516c08d37374b	0x000000000000000000000000733c82c24e0b00219cd3f448e1ca8ae08d381694		0x00000000000000000000000000000000000000000000002b10d76857b3e61000
+3657480	9	2	1494031419	0x209c4784ab1e8183cf58ca33cb740efbf3fc18ef	0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff				0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88
+
