@@ -1,6 +1,6 @@
-receipts?file=cmd_file.1&verbose&fmt=txt
+receipts?file=cmd_file.1&verbose&fmt=txt&transactions=5644782.0
 {
   "errors": [
-    "The file option (cmd_file.1) must exist"
+    "The --file option is not available in Api mode"
   ]
 }

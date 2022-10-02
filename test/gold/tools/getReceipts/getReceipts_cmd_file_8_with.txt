@@ -1,12 +1,13 @@
-chifra receipts  --file cmd_file.8 --no_header --fmt csv
+chifra receipts  --file cmd_file.8 --no_header --fmt csv 5644782.0
+TEST[DATE|TIME] Transactions:  [5644782.0]
 TEST[DATE|TIME] NoHeader:  true
 TEST[DATE|TIME] File:  cmd_file.8
 TEST[DATE|TIME] Format:  csv
-Cmd: --verbose --fmt:json --output out.json 15644883 --no_header 
-Cmd: --fmt:csv --output out.csv --no_header 
-Cmd: --verbose --fmt:tsv --output out.tsv --no_header 
-Cmd: 15644882 --no_header 
-Cmd: 15644881 --no_header 
+Cmd: --verbose --fmt:json 5644882.0 5644782.0 --no_header 
+Cmd: --fmt:csv 5644782.0 --no_header 
+Cmd: --verbose --fmt:tsv 5644782.0 --no_header 
+Cmd: 5644882.0 5644782.0 --no_header 
+Cmd: 5644884.0 5644782.0 --no_header 
 
   Invalid option: --verbose
 
@@ -32,3 +33,4 @@ Notes:
   - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
   - If the queried node does not store historical state, the results for most older transactions are undefined.
 
+5644782,0,0x785b88bfb800c34f0972bd2a1b02fb4bd03abc72dce675d00c2e4ae99f7aff96,21000,1,false

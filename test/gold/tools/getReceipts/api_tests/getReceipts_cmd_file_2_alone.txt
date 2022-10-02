@@ -1,6 +1,6 @@
-receipts?file=cmd_file.2
+receipts?file=cmd_file.2&transactions=5644782.0
 {
   "errors": [
-    "The file option (cmd_file.2) must exist"
+    "The --file option is not available in Api mode"
   ]
 }

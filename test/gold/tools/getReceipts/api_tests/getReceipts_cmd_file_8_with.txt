@@ -1,6 +1,0 @@
-receipts?file=cmd_file.8&noHeader&fmt=csv
-{
-  "errors": [
-    "The file option (cmd_file.8) must exist"
-  ]
-}

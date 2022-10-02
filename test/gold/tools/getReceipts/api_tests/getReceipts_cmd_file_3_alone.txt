@@ -1,6 +1,0 @@
-receipts?file=cmd_file.3
-{
-  "errors": [
-    "The file option (cmd_file.3) must exist"
-  ]
-}

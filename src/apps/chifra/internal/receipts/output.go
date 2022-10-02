@@ -49,7 +49,7 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	if opts.Articulate || opts.Globals.ToFile {
+	if opts.Articulate || opts.Globals.ToFile || len(opts.Globals.File) > 0 {
 		err = opts.Globals.PassItOn("getReceipts", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
 		return err, true
 	}

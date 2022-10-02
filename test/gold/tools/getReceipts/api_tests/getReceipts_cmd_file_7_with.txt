@@ -1,6 +1,0 @@
-receipts?file=cmd_file.7&noHeader&fmt=txt
-{
-  "errors": [
-    "The file option (cmd_file.7) must exist"
-  ]
-}
