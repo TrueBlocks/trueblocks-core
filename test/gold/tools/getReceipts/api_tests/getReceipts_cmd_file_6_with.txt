@@ -1,0 +1,6 @@
+receipts?file=cmd_file.6&noHeader&fmt=json
+{
+  "errors": [
+    "The file option (cmd_file.6) must exist"
+  ]
+}

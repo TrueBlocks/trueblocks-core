@@ -1,0 +1,6 @@
+receipts?file=cmd_file.7
+{
+  "errors": [
+    "The file option (cmd_file.7) must exist"
+  ]
+}
