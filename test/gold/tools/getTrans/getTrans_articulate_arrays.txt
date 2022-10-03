@@ -712,7 +712,8 @@ params.size: 0
             "_tokenAmounts": "[25000000000000000000, 25000000000000000000]"
           }
         },
-        "compressedTrace": "{name:acceptTheseAskRequestsAndBUY|inputs:{_dollarPrices:[2000000000000000000|2000000000000000000]|_keys:[6|5]|_tokenAmounts:[25000000000000000000|25000000000000000000]}}"
+        "compressedTrace": "{name:acceptTheseAskRequestsAndBUY|inputs:{_dollarPrices:[2000000000000000000|2000000000000000000]|_keys:[6|5]|_tokenAmounts:[25000000000000000000|25000000000000000000]}}",
+        "timestamp": 1542327008
       },
       {
         "subtraces": 0,
@@ -744,7 +745,8 @@ params.size: 0
             "ret_0": "47231959280000"
           }
         },
-        "compressedTrace": "{name:USD|inputs:{_id:0}|outputs:{ret_0:47231959280000}}"
+        "compressedTrace": "{name:USD|inputs:{_id:0}|outputs:{ret_0:47231959280000}}",
+        "timestamp": 1542327008
       },
       {
         "subtraces": 0,
@@ -776,7 +778,8 @@ params.size: 0
             "ret_0": "47231959280000"
           }
         },
-        "compressedTrace": "{name:USD|inputs:{_id:0}|outputs:{ret_0:47231959280000}}"
+        "compressedTrace": "{name:USD|inputs:{_id:0}|outputs:{ret_0:47231959280000}}",
+        "timestamp": 1542327008
       }
     ],
     "articulatedTx": {

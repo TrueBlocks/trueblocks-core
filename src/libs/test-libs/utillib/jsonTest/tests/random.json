@@ -18,7 +18,8 @@
     "traceAddress": [],
     "transactionHash": "0xae4af59f1e8c7775f5573a7eea2888e4c87e25a86a76975189216607bd68fb14",
     "transactionPosition": 0,
-    "type": "call"
+    "type": "call",
+    "timestamp": 6543210987
   },
   {
     "action": {
@@ -41,7 +42,8 @@
     ],
     "transactionHash": "0xae4af59f1e8c7775f5573a7eea2888e4c87e25a86a76975189216607bd68fb14",
     "transactionPosition": 0,
-    "type": "call"
+    "type": "call",
+    "timestamp": 6543210987
   },
   {
     "action": {
@@ -65,7 +67,8 @@
     ],
     "transactionHash": "0xae4af59f1e8c7775f5573a7eea2888e4c87e25a86a76975189216607bd68fb14",
     "transactionPosition": 0,
-    "type": "call"
+    "type": "call",
+    "timestamp": 6543210987
   },
   {
     "action": {
@@ -90,6 +93,7 @@
     ],
     "transactionHash": "0xae4af59f1e8c7775f5573a7eea2888e4c87e25a86a76975189216607bd68fb14",
     "transactionPosition": 0,
-    "type": "call"
+    "type": "call",
+    "timestamp": 6543210987
   }
 ]

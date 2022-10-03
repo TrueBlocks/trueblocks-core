@@ -27,7 +27,8 @@ traces?transactions=0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860e
         "code": "",
         "gasUsed": 0,
         "output": "0x"
-      }
+      },
+      "timestamp": 1455421883
     },
     {
       "blockHash": "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53",
@@ -55,7 +56,8 @@ traces?transactions=0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860e
         "code": "",
         "gasUsed": 0,
         "output": "0x"
-      }
+      },
+      "timestamp": 1455421883
     }
   ],
   "errors": [

@@ -25,5 +25,6 @@ TEST[DATE|TIME] Format:  api
       "newContract": "0x0",
       "gasUsed": 0,
       "output": "0x"
-    }
+    },
+    "timestamp": 1494031419
   }], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

@@ -73,6 +73,7 @@ bool visitTransaction(CTransaction& trans, void* data) {
 
     COptions* opt = reinterpret_cast<COptions*>(data);
     bool isText = (expContext().exportFmt & (TXT1 | CSV1));
+    CBlock block;
 
     if (contains(trans.hash, "invalid")) {
         string_q hash = nextTokenClear(trans.hash, ' ');
@@ -99,8 +100,14 @@ bool visitTransaction(CTransaction& trans, void* data) {
     }
 
     //////////////////////////////////////////////////////
-    if (opt->trace)
-        getTraces(trans.traces, trans.getValueByName("hash"));
+    if (opt->trace) {
+        if (!trans.pBlock) {
+            getBlockLight(block, trans.blockNumber);
+            trans.timestamp = block.timestamp;
+            trans.pBlock = &block;
+        }
+        getTraces(trans.traces, trans.getValueByName("hash"), &trans);
+    }
     //////////////////////////////////////////////////////
 
     if (opt->articulate) {
@@ -128,7 +135,6 @@ bool visitTransaction(CTransaction& trans, void* data) {
     if (opt->cache) {
         string_q txFilename = getBinaryCacheFilename(CT_TXS, trans.blockNumber, trans.transactionIndex);
         if (!fileExists(txFilename)) {
-            CBlock block;
             getBlockLight(block, trans.blockNumber);
             trans.timestamp = block.timestamp;
             trans.receipt.status = NO_STATUS;

@@ -248,7 +248,7 @@ bool getReceipt(CReceipt& receipt, const hash_t& txHash) {
 }
 
 //--------------------------------------------------------------
-void getTraces(CTraceArray& traces, const hash_t& hash) {
+void getTraces(CTraceArray& traces, const hash_t& hash, const CTransaction* pTrans) {
     string_q str;
     queryRawTrace(str, hash);
 
@@ -259,6 +259,7 @@ void getTraces(CTraceArray& traces, const hash_t& hash) {
     CTrace trace;
     traces.clear();
     while (trace.parseJson4(generic.result)) {
+        trace.pTransaction = pTrans;
         traces.push_back(trace);
         trace = CTrace();  // reset
     }
@@ -287,6 +288,7 @@ bool loadTraces(CTransaction& trans, blknum_t bn, blknum_t txid, bool useCache, 
         CArchive traceCache(READING_ARCHIVE);
         if (traceCache.Lock(trcFilename, modeReadOnly, LOCK_NOWAIT)) {
             traceCache >> trans.traces;
+            trans.finishParse();
             traceCache.Release();
         }
 
@@ -320,7 +322,7 @@ bool loadTraces(CTransaction& trans, blknum_t bn, blknum_t txid, bool useCache, 
             }
 
         } else {
-            getTraces(trans.traces, trans.getValueByName("hash"));
+            getTraces(trans.traces, trans.getValueByName("hash"), &trans);
         }
 
         // Write traces if we're told to and there are traces. Remember: every transaction has at
@@ -334,6 +336,8 @@ bool loadTraces(CTransaction& trans, blknum_t bn, blknum_t txid, bool useCache, 
                 traceCache.Release();
             }
         }
+
+        trans.finishParse();
     }
     return true;
 }

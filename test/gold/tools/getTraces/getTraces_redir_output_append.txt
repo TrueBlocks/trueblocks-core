@@ -31,7 +31,8 @@ Results in ./output_test_file
       "newContract": "0x0",
       "gasUsed": 14456,
       "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
-    }
+    },
+    "timestamp": 1494031419
   }] }{ "data": [
   {
     "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",
@@ -56,7 +57,8 @@ Results in ./output_test_file
       "newContract": "0x0",
       "gasUsed": 9416,
       "output": "0x"
-    }
+    },
+    "timestamp": 1494031419
   },  {
     "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",
     "blockNumber": 3657480,
@@ -80,5 +82,6 @@ Results in ./output_test_file
       "newContract": "0x0",
       "gasUsed": 0,
       "output": "0x"
-    }
+    },
+    "timestamp": 1494031419
   }] }
