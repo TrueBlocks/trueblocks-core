@@ -39,7 +39,7 @@ extern bool getTransaction(CTransaction& trans, const hash_t& txHash);
 extern bool getTransaction(CTransaction& trans, const hash_t& blockHash, txnum_t txID);
 extern bool getReceipt(CReceipt& receipt, const hash_t& txHash);
 extern bool getLogEntry(CLogEntry& log, const hash_t& txHash);
-extern void getTraces(CTraceArray& traces, const hash_t& txHash);
+extern void getTraces(CTraceArray& traces, const hash_t& txHash, const CTransaction* pTrans);
 extern void getStateDiffAddrs(CAddressArray& addrs, const hash_t& txHash);
 extern void getTracesByFilter(CTraceArray& traces, const CTraceFilter& filter);
 extern size_t getTraceCount(const hash_t& hashIn);

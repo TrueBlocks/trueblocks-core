@@ -30,5 +30,6 @@ Results in ./output_test_file
       "newContract": "0x0",
       "gasUsed": 14456,
       "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
-    }
+    },
+    "timestamp": 1494031419
   }] }

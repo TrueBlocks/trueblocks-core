@@ -27,7 +27,8 @@ traces?transactions=2222222.0%202332332.0&fmt=json
         "code": "",
         "gasUsed": 0,
         "output": ""
-      }
+      },
+      "timestamp": 1473348165
     },
     {
       "blockHash": "0x6881c5043f6f6beed5ca31023e3a3518bede50a13be5c521fa6e21577314fa04",
@@ -55,7 +56,8 @@ traces?transactions=2222222.0%202332332.0&fmt=json
         "code": "",
         "gasUsed": 13042,
         "output": "0x"
-      }
+      },
+      "timestamp": 1474924022
     }
   ]
 }

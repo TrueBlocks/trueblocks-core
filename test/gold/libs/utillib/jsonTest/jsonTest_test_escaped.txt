@@ -23,6 +23,7 @@ tests/escaped.json
     "newContract": "0x0",
     "gasUsed": 29323,
     "output": "0x0000000  000000  00000  00000  0000000000000000001"
-  }
+  },
+  "timestamp": 0
 }
 

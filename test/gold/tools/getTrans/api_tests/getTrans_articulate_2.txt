@@ -129,7 +129,8 @@ transactions?transactions=3648669.24&articulate&verbose&trace&fmt=json
               "sealedBid": "0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811"
             }
           },
-          "compressedTrace": "{name:startAuctionsAndBid|stateMutability:payable|inputs:{hashes:[0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c|0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc|0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573]|sealedBid:0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811}}"
+          "compressedTrace": "{name:startAuctionsAndBid|stateMutability:payable|inputs:{hashes:[0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c|0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc|0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573]|sealedBid:0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811}}",
+          "timestamp": 1493897242
         },
         {
           "subtraces": 0,
@@ -162,7 +163,8 @@ transactions?transactions=3648669.24&articulate&verbose&trace&fmt=json
               "ret_0": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef"
             }
           },
-          "compressedTrace": "{name:owner|inputs:{_node:0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae}|outputs:{ret_0:0x6090a6e47849629b7245dfa1ca21d94cd15878ef}}"
+          "compressedTrace": "{name:owner|inputs:{_node:0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae}|outputs:{ret_0:0x6090a6e47849629b7245dfa1ca21d94cd15878ef}}",
+          "timestamp": 1493897242
         },
         {
           "subtraces": 0,
@@ -195,7 +197,8 @@ transactions?transactions=3648669.24&articulate&verbose&trace&fmt=json
               "ret_0": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef"
             }
           },
-          "compressedTrace": "{name:owner|inputs:{_node:0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae}|outputs:{ret_0:0x6090a6e47849629b7245dfa1ca21d94cd15878ef}}"
+          "compressedTrace": "{name:owner|inputs:{_node:0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae}|outputs:{ret_0:0x6090a6e47849629b7245dfa1ca21d94cd15878ef}}",
+          "timestamp": 1493897242
         },
         {
           "subtraces": 0,
@@ -228,7 +231,8 @@ transactions?transactions=3648669.24&articulate&verbose&trace&fmt=json
               "ret_0": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef"
             }
           },
-          "compressedTrace": "{name:owner|inputs:{_node:0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae}|outputs:{ret_0:0x6090a6e47849629b7245dfa1ca21d94cd15878ef}}"
+          "compressedTrace": "{name:owner|inputs:{_node:0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae}|outputs:{ret_0:0x6090a6e47849629b7245dfa1ca21d94cd15878ef}}",
+          "timestamp": 1493897242
         },
         {
           "subtraces": 0,
@@ -251,7 +255,8 @@ transactions?transactions=3648669.24&articulate&verbose&trace&fmt=json
             "gasUsed": 339168,
             "output": ""
           },
-          "compressedTrace": ""
+          "compressedTrace": "",
+          "timestamp": 1493897242
         }
       ],
       "articulatedTx": {

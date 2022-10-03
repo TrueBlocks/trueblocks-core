@@ -440,6 +440,9 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
 void CTransaction::finishParse() {
     // EXISTING_CODE
     receipt.pTransaction = this;
+    for (size_t i = 0; i < traces.size(); i++) {
+        traces[i].pTransaction = this;
+    }
     // EXISTING_CODE
 }
 
@@ -1082,7 +1085,7 @@ bool CTransaction::forEveryTrace(TRACEVISITFUNC func, void* data) const {
         return false;
 
     CTraceArray traceArray;
-    getTraces(traceArray, hash);
+    getTraces(traceArray, hash, this);
     for (auto trace : traceArray) {
         if (!(*func)(trace, data))
             return false;

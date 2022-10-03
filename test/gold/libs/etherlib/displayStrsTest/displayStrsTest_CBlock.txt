@@ -17,6 +17,7 @@ Empty trace: {
   "subtraces": 0,
   "traceAddress": null,
   "transactionHash": "0x0",
-  "transactionIndex": 0
+  "transactionIndex": 0,
+  "timestamp": 0
 }
 

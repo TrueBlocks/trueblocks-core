@@ -2,7 +2,7 @@
 title: "Chain data"
 description: ""
 lead: ""
-date: 2022-05-02T07:09:41
+date: 2022-10-02T22:26:49
 lastmod:
   - :git
   - lastmod
@@ -156,6 +156,7 @@ Trace data is made of the following data fields:
 | ---------------- | --------------------------------------------------------- | ------------ |
 | blockHash        | The hash of the block containing this trace               | hash         |
 | blockNumber      | the number of the block                                   | blknum       |
+| timestamp        | the timestamp of the block                                | timestamp    |
 | transactionHash  | the transaction's hash containing this trace              | hash         |
 | transactionIndex | the zero-indexed position of the transaction in the block | blknum       |
 | traceAddress     | a particular trace's address in the trace tree            | CStringArray |

@@ -27,7 +27,8 @@ traces?transactions=0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234
         "code": "",
         "gasUsed": 0,
         "output": "0x"
-      }
+      },
+      "timestamp": 1494031419
     }
   ],
   "meta": {

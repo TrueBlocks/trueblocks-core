@@ -31,6 +31,11 @@ int main(int argc, const char* argv[]) {
                 CTraceArray traces;
                 getTracesByFilter(traces, f);
                 for (auto trace : traces) {
+                    CBlock block;
+                    getBlock(block, trace.blockNumber);
+                    CTransaction trans;
+                    trans.timestamp = block.timestamp;
+                    trace.pTransaction = &trans;
                     cout << (!options.firstOut ? ", " : "");
                     cout << trace << endl;
                     options.firstOut = false;
