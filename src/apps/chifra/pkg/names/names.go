@@ -8,6 +8,7 @@ import (
 	"io"
 	"log"
 	"os"
+	"sort"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -37,6 +38,8 @@ func (n Name) String() string {
 	return string(ret)
 }
 
+type NamesArray []Name
+
 // NameOnDisc is a record in the names database when stored in the binary backing file
 type NameOnDisc struct {
 	Tags        [30 + 1]byte  `json:"-"`
@@ -59,8 +62,26 @@ type NameOnDiscHeader struct {
 	Padding [644]byte
 }
 
+func LoadNamesArray(chain string) (NamesArray, error) {
+	names := NamesArray{}
+	if namesMap, err := LoadNamesMap(chain); err != nil {
+		return nil, err
+	} else {
+		for _, name := range namesMap {
+			names = append(names, name)
+		}
+	}
+
+	sort.Slice(names, func(i, j int) bool {
+		return names[i].Address < names[j].Address
+	})
+
+	return names, nil
+}
+
 func LoadNamesMap(chain string) (NamesMap, error) {
 	binPath := config.GetPathToCache(chain) + "names/names.bin"
+	// TODO: Use the names cache if it's present
 	if false && file.FileExists(binPath) {
 		file, _ := os.OpenFile(binPath, os.O_RDONLY, 0)
 		defer file.Close()
@@ -108,6 +129,7 @@ func LoadNamesMap(chain string) (NamesMap, error) {
 		}
 		ret[common.HexToAddress(grant.Address)] = grant
 	}
+
 	return ret, nil
 }
 

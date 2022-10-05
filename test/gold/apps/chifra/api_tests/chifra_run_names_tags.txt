@@ -29,15 +29,6 @@ names?tags
       "tags": "30-Contracts:DAO Related"
     },
     {
-      "tags": "30-Contracts:Giveth"
-    },
-    {
-      "tags": "30-Contracts:Giveth LP Token"
-    },
-    {
-      "tags": "30-Contracts:Giveth Staking"
-    },
-    {
       "tags": "30-Contracts:Kyber Network"
     },
     {
@@ -62,9 +53,6 @@ names?tags
       "tags": "30-Contracts:theGraph"
     },
     {
-      "tags": "31-Contracts:Giveth Project"
-    },
-    {
       "tags": "31-Gitcoin:Admin"
     },
     {
@@ -87,6 +75,9 @@ names?tags
     },
     {
       "tags": "31-Giveth:Project"
+    },
+    {
+      "tags": "31-PublicNouns:Core"
     },
     {
       "tags": "34-ENS"

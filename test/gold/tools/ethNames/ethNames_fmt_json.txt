@@ -9,7 +9,7 @@ TEST[DATE|TIME] Format:  json
     "source": "https://gitcoin.co/grants/160/antiprosynth-antiprosynthesiseth-twitter-account-"
   },
   {
-    "tags": "30-Contracts:Giveth",
+    "tags": "31-Giveth:Core",
     "address": "0x1a88c052fc7a8401e00b2f76f96ac62a19427731",
     "name": "EtherIDTipJar",
     "source": "Giveth Website"
