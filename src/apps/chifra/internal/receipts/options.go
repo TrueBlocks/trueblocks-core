@@ -110,3 +110,8 @@ func GetOptions() *ReceiptsOptions {
 	// EXISTING_CODE
 	return &defaultReceiptsOptions
 }
+
+// TODO: this should be added to the template
+func ResetOptions() {
+	defaultReceiptsOptions = ReceiptsOptions{}
+}
