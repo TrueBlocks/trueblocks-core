@@ -76,7 +76,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // Not sure why this is here to be honest, perhaps only to make test cases pass. The test cases could be fixed...
-    if (isApiMode() || expContext().exportFmt == API1) {
+    if (isApiMode() || expContext().exportFmt == JSON1) {
         manageFields("CLogEntry:all", FLD_HIDE);
         manageFields("CLogEntry:address,logIndex,type,compressedLog,topics,data", FLD_SHOW);
     }
