@@ -53,9 +53,6 @@ func RenderSlice[
 		default:
 			hw.Header().Set("Content-Type", "application/json")
 		}
-		if opts.Format == "api" {
-			opts.Format = "json"
-		}
 	}
 
 	switch opts.Format {
@@ -123,10 +120,9 @@ func (opts *GlobalOptions) RenderHeader(data interface{}, w *io.Writer, format s
 
 // TODO: Fix export without arrays
 func (opts *GlobalOptions) RenderFooter() error {
-	if opts.Format == "api" || opts.IsApiMode() || opts.Format == "json" {
+	if opts.Format == "json" {
 		opts.Writer.Write([]byte("\n  ]"))
-		showMeta := opts.IsApiMode() || opts.Format == "api"
-		if showMeta {
+		if opts.IsApiMode() {
 			meta, err := rpcClient.GetMetaData(opts.Chain, opts.TestMode)
 			if err != nil {
 				return err

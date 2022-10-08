@@ -117,7 +117,7 @@ bool COptions::parseArguments(string_q& command) {
                 tests.push_back("tools/getTraces");
                 tests.push_back("tools/getTrans");
                 tests.push_back("tools/grabABI");
-                //                tests.push_back("tools/whenBlock");
+                tests.push_back("tools/whenBlock");
 
             } else if (arg == "apps" || arg == "apps/") {
                 static bool been_here = false;
@@ -127,7 +127,7 @@ bool COptions::parseArguments(string_q& command) {
                 tests.push_back("apps/acctExport");
                 tests.push_back("apps/blockScrape");
                 tests.push_back("apps/cacheStatus");
-                //                tests.push_back("apps/chunkMan");
+                tests.push_back("apps/chunkMan");
                 tests.push_back("apps/chifra");
                 tests.push_back("apps/fireStorm");
                 tests.push_back("apps/init");
@@ -169,11 +169,11 @@ bool COptions::parseArguments(string_q& command) {
         tests.push_back("tools/getTraces");
         tests.push_back("tools/getTrans");
         tests.push_back("tools/grabABI");
-        //        tests.push_back("tools/whenBlock");
+        tests.push_back("tools/whenBlock");
         tests.push_back("apps/acctExport");
         tests.push_back("apps/blockScrape");
         tests.push_back("apps/cacheStatus");
-        //        tests.push_back("apps/chunkMan");
+        tests.push_back("apps/chunkMan");
         tests.push_back("apps/chifra");
         tests.push_back("apps/fireStorm");
         tests.push_back("apps/init");

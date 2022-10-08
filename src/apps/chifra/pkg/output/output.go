@@ -33,13 +33,8 @@ func OutputSlice(data interface{}, w io.Writer, format string, hideHeader, first
 	var outputBytes []byte
 	var err error
 
-	if format == "api" {
-		format = "json"
-	}
 	preceeds := ""
 	switch format {
-	case "api":
-		fallthrough
 	case "json":
 		result := struct {
 			Data interface{}         `json:"data,omitempty"`
@@ -85,12 +80,7 @@ func OutputObject(data interface{}, w io.Writer, format string, hideHeader, firs
 	var err error
 
 	preceeds := ""
-	if format == "api" {
-		format = "json"
-	}
 	switch format {
-	case "api":
-		fallthrough
 	case "json":
 		outputBytes, err = json.MarshalIndent(data, "", "  ")
 		if err != nil {

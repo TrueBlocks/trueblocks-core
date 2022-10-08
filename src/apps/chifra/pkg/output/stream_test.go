@@ -186,7 +186,7 @@ func TestApiFormat(t *testing.T) {
 	// }
 	// err := StreamMany(context.Background(), renderData, OutputOptions{
 	// 	Writer: outputBuffer,
-	// 	Format: "api",
+	// 	Format: " api ",
 	// })
 	// if err != nil {
 	// 	t.Fatal(err)
