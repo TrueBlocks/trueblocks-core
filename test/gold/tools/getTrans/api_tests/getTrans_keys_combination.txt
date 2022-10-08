@@ -131,5 +131,12 @@ transactions?transactions=0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a07
       "age": "100",
       "ether": 0.9981745
     }
-  ]
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
+  }
 }

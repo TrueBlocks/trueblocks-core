@@ -276,5 +276,12 @@ transactions?transactions=3648669.24&articulate&verbose&trace&fmt=json
       "age": "100",
       "ether": 0.01
     }
-  ]
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
+  }
 }
