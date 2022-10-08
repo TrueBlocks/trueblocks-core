@@ -3,7 +3,7 @@ TEST[DATE|TIME] Addrs:  [0x1324e7b922b30b49ab8ea81086341cc41c249346]
 TEST[DATE|TIME] Blocks:  [0-7000000]
 TEST[DATE|TIME] Types:  [int]
 TEST[DATE|TIME] Format:  junk
-Error: The --fmt option (junk) must be one of [ json | txt | csv | api ]
+Error: The --fmt option (junk) must be one of [ json | txt | csv ]
 Usage:
   chifra slurp [flags] <address> [address...] [block...]
 
