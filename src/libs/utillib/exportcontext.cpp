@@ -63,7 +63,7 @@ string_q indentStr(void) {
 
 //---------------------------------------------------------------------------
 bool isJson(void) {
-    return (expC.exportFmt == JSON1 || expC.exportFmt == API1 || expC.exportFmt == NONE1);
+    return (expC.exportFmt == JSON1 || expC.exportFmt == NONE1);
 }
 
 }  // namespace qblocks

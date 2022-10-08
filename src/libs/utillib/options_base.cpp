@@ -464,7 +464,6 @@ void COptionsBase::configureDisplay(const string_q& tool, const string_q& dataTy
             format = getGlobalConfig(tool)->getConfigStr("display", "format", defFormat);
             manageFields(dataType + ":" + cleanFmt((format.empty() ? defFormat : format)));
             break;
-        case API1:
         case JSON1:
             format = "";
             break;

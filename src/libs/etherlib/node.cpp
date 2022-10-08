@@ -959,9 +959,6 @@ string_q exportPreamble(const string_q& format, const string_q& className) {
         case JSON1:
             os << "{ \"data\": [";
             break;
-        case API1:
-            os << "{\"data\": [";
-            break;
         default:
             ASSERT(0);  // shouldn't happen
             break;

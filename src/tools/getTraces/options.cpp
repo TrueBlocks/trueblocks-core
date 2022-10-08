@@ -157,8 +157,6 @@ bool COptions::parseArguments(string_q& command) {
         case JSON1:
             format = "";
             break;
-        case API1:
-            return usage("Invalid format: api");
     }
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format);
     if (noHeader)
