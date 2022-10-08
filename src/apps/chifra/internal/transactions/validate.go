@@ -16,6 +16,16 @@ func (opts *TransactionsOptions) validateTransactions() error {
 		return opts.BadFlag
 	}
 
+	if len(opts.Flow) > 0 {
+		if !opts.Uniq {
+			return validate.Usage("The {0} option is only available with the {1} option", "--flow", "--uniq")
+		}
+		err := validate.ValidateEnum("flow", opts.Flow, "[from|to]")
+		if err != nil {
+			return err
+		}
+	}
+
 	if len(opts.Globals.File) > 0 {
 		// Do nothing
 	} else {
