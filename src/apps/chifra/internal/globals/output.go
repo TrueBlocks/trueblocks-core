@@ -37,7 +37,7 @@ func RenderSlice[
 	}
 
 	var meta *rpcClient.MetaData = nil
-	if opts.Format == "api" || opts.IsApiMode() {
+	if (opts.Format != "txt" && opts.Format != "csv") && opts.IsApiMode() {
 		var err error
 		meta, err = rpcClient.GetMetaData(opts.Chain, opts.TestMode)
 		if err != nil {
