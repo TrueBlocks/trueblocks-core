@@ -47,13 +47,13 @@ Env: TB_NAME_SOURCE   = SOURCE
 Env: TB_NAME_SYMBOL   = SYMBOL
 Env: TB_NAME_DECIMALS = 11
 Env: TB_NAME_DESCR    = DESCRIPTION
-chifra names  --create --log_level 10 --fmt api --expand
+chifra names  --create --log_level 10 --fmt json --expand
 TEST[DATE|TIME] Expand:  true
 TEST[DATE|TIME] Create:  true
 TEST[DATE|TIME] LogLevel:  10
-TEST[DATE|TIME] Format:  api
+TEST[DATE|TIME] Format:  json
 TIME ~ CLOCK - : 4-----Adding 0x0000000000000000000000000000000010101010
-{"data": [
+{ "data": [
   {
     "deleted": false,
     "tags": "TAGS",
@@ -63,4 +63,4 @@ TIME ~ CLOCK - : 4-----Adding 0x0000000000000000000000000000000010101010
     "source": "SOURCE",
     "decimals": 11,
     "description": "DESCRIPTION"
-  }], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namePath": "--" } }
+  }] }

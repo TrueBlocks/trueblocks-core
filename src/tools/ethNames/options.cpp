@@ -268,7 +268,7 @@ bool COptions::parseArguments(string_q& command) {
 
     // Display formatting
     configureDisplay("ethNames", "CAccountName", str, meta);
-    if (!tags && (expContext().exportFmt == API1 || expContext().exportFmt == JSON1))
+    if (!tags && expContext().exportFmt == JSON1)
         manageFields("CAccountName:" + cleanFmt(STR_DISPLAY_ACCOUNTNAME));
     if (!expand) {
         HIDE_FIELD(CAccountName, "deleted");
