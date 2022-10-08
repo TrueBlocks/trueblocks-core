@@ -23,5 +23,12 @@ traces?fmt=json&filter=0x42ae50!4370002!!0xc42209accc14029c1012fb5680d95fbd6036e
       "transactionIndex": 0,
       "type": "call"
     }
-  ]
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
+  }
 }

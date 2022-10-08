@@ -117,5 +117,12 @@ traces?transactions=2222221.*&fmt=json
       },
       "timestamp": 1473348164
     }
-  ]
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
+  }
 }

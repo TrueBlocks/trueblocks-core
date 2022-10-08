@@ -187,7 +187,7 @@ func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOption
 	}
 
 	if len(opts.Format) == 0 || opts.Format == "none" {
-		opts.Format = "api"
+		opts.Format = "json"
 	}
 
 	if len(opts.Chain) == 0 {

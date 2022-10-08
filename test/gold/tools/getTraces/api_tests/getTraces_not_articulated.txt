@@ -523,5 +523,12 @@ traces?transactions=0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47
       },
       "timestamp": 1623981210
     }
-  ]
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
+  }
 }

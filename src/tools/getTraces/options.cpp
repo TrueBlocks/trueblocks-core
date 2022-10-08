@@ -154,10 +154,11 @@ bool COptions::parseArguments(string_q& command) {
             manageFields("CTraceAction:" + substitute(cleanFmt(format), "ACTION::", ""));
             manageFields("CTraceResult:" + substitute(cleanFmt(format), "RESULT::", ""));
             break;
-        case API1:
         case JSON1:
             format = "";
             break;
+        case API1:
+            return usage("Invalid format: api");
     }
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format);
     if (noHeader)

@@ -37,15 +37,12 @@ func RenderSlice[
 	}
 
 	var meta *rpcClient.MetaData = nil
-	if opts.Format == "api" {
+	if opts.Format == "api" || opts.IsApiMode() {
 		var err error
 		meta, err = rpcClient.GetMetaData(opts.Chain, opts.TestMode)
 		if err != nil {
 			return err
 		}
-	}
-
-	if opts.IsApiMode() {
 		// We could check this, but if it's not empty, we know it's type
 		hw, _ := opts.Writer.(http.ResponseWriter)
 		switch opts.Format {
@@ -56,11 +53,12 @@ func RenderSlice[
 		default:
 			hw.Header().Set("Content-Type", "application/json")
 		}
+		if opts.Format == "api" {
+			opts.Format = "json"
+		}
 	}
 
 	switch opts.Format {
-	case "api":
-		fallthrough
 	case "json":
 		return output.OutputSlice(data, opts.Writer, opts.Format, opts.NoHeader, true, meta)
 	case "csv":
@@ -125,7 +123,7 @@ func (opts *GlobalOptions) RenderHeader(data interface{}, w *io.Writer, format s
 
 // TODO: Fix export without arrays
 func (opts *GlobalOptions) RenderFooter() error {
-	if opts.Format == "api" || opts.Format == "json" {
+	if opts.Format == "api" || opts.IsApiMode() || opts.Format == "json" {
 		opts.Writer.Write([]byte("\n  ]"))
 		showMeta := opts.IsApiMode() || opts.Format == "api"
 		if showMeta {

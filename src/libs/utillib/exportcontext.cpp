@@ -43,7 +43,7 @@ CExportContext::CExportContext(void) {
     asWei = true;
     tsMemMap = nullptr;
     tsCnt = 0;
-    exportFmt = (isApiMode() ? API1 : TXT1);
+    exportFmt = (isApiMode() ? JSON1 : TXT1);
 }
 
 //---------------------------------------------------------------------------

@@ -33,6 +33,9 @@ func OutputSlice(data interface{}, w io.Writer, format string, hideHeader, first
 	var outputBytes []byte
 	var err error
 
+	if format == "api" {
+		format = "json"
+	}
 	preceeds := ""
 	switch format {
 	case "api":
@@ -82,6 +85,9 @@ func OutputObject(data interface{}, w io.Writer, format string, hideHeader, firs
 	var err error
 
 	preceeds := ""
+	if format == "api" {
+		format = "json"
+	}
 	switch format {
 	case "api":
 		fallthrough

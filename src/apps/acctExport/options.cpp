@@ -1,6 +1,5 @@
 // TODO(tjayrush): If an abi file is newer than the monitor file - clear the cache
 // TODO(tjayrush): accounting disallows freshen, apps, logs, receipts, statements, traces, but requires articulate
-// TODO(tjayrush): accounting must be exportFmt API1 - why?
 // TODO(tjayrush): accounting must be for one monitor address - why?
 // TODO(tjayrush): accounting requires node balances - why?
 // TODO(tjayrush): Used to do this: if any ABI files was newer, re-read abi and re-articulate in cache
