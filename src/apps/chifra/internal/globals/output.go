@@ -88,12 +88,7 @@ func (opts *GlobalOptions) RenderObject(data interface{}, first bool) error {
 	}
 
 	// TODO: We may move this line to InitGlobals when we merge json and api formats
-	format := opts.Format
-	if opts.ShowRaw {
-		// If users wants raw output, we will most probably print JSON
-		format = "json"
-	}
-	return output.OutputObject(data, opts.Writer, format, opts.NoHeader, first, nil)
+	return output.OutputObject(data, opts.Writer, opts.Format, opts.NoHeader, first, nil)
 }
 
 // TODO: Fix export without arrays

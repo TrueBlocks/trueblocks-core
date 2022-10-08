@@ -90,6 +90,10 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions) {
 	if len(opts.Chain) == 0 {
 		opts.Chain = config.GetDefaultChain()
 	}
+
+	if opts.ShowRaw {
+		opts.Format = "json"
+	}
 }
 
 func (opts *GlobalOptions) toCmdLine() string {
@@ -186,7 +190,7 @@ func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOption
 		}
 	}
 
-	if len(opts.Format) == 0 || opts.Format == "none" {
+	if len(opts.Format) == 0 || opts.Format == "none" || opts.ShowRaw {
 		opts.Format = "json"
 	}
 

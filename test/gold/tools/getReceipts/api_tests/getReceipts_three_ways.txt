@@ -22,5 +22,15 @@ receipts?transactions=0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef97986552
       "status": 1,
       "transactionIndex": 79
     }
-  ]
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
 }
