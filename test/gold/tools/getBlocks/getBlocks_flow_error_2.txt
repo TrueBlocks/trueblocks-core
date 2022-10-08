@@ -1,9 +1,9 @@
-chifra blocks  4012000-4012001 --cache --apps
-TEST[DATE|TIME] Blocks:  [4012000-4012001]
+chifra blocks  4102000 --fmt txt --apps --flow not-a-choice
+TEST[DATE|TIME] Blocks:  [4102000]
 TEST[DATE|TIME] Apps:  true
-TEST[DATE|TIME] Cache:  true
-TEST[DATE|TIME] Format:  json
-Error: The --cache option is not available with the --apps option.
+TEST[DATE|TIME] Flow:  not-a-choice
+TEST[DATE|TIME] Format:  txt
+Error: The flow option (not-a-choice) must be one of [ from | to | reward ]
 Usage:
   chifra blocks [flags] <block> [block...]
 

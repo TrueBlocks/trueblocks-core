@@ -28,6 +28,7 @@ type BlocksOptions struct {
 	Trace      bool                     `json:"trace,omitempty"`      // Export the traces from the block as opposed to the block data
 	Apps       bool                     `json:"apps,omitempty"`       // Display a list of uniq address appearances in the block
 	Uniq       bool                     `json:"uniq,omitempty"`       // Display a list of uniq address appearances per transaction
+	Flow       string                   `json:"flow,omitempty"`       // For the uniq and apps options only, export only from or to (including trace from or to)
 	Logs       bool                     `json:"logs,omitempty"`       // Display only the logs found in the block(s)
 	Emitter    []string                 `json:"emitter,omitempty"`    // For the --logs option only, filter logs to show only those logs emitted by the given address(es)
 	Topic      []string                 `json:"topic,omitempty"`      // For the --logs option only, filter logs to show only those with this topic(s)
@@ -53,6 +54,7 @@ func (opts *BlocksOptions) testLog() {
 	logger.TestLog(opts.Trace, "Trace: ", opts.Trace)
 	logger.TestLog(opts.Apps, "Apps: ", opts.Apps)
 	logger.TestLog(opts.Uniq, "Uniq: ", opts.Uniq)
+	logger.TestLog(len(opts.Flow) > 0, "Flow: ", opts.Flow)
 	logger.TestLog(opts.Logs, "Logs: ", opts.Logs)
 	logger.TestLog(len(opts.Emitter) > 0, "Emitter: ", opts.Emitter)
 	logger.TestLog(len(opts.Topic) > 0, "Topic: ", opts.Topic)
@@ -96,6 +98,9 @@ func (opts *BlocksOptions) toCmdLine() string {
 	}
 	if opts.Uniq {
 		options += " --uniq"
+	}
+	if len(opts.Flow) > 0 {
+		options += " --flow " + opts.Flow
 	}
 	if opts.Logs {
 		options += " --logs"
@@ -155,6 +160,8 @@ func blocksFinishParseApi(w http.ResponseWriter, r *http.Request) *BlocksOptions
 			opts.Apps = true
 		case "uniq":
 			opts.Uniq = true
+		case "flow":
+			opts.Flow = value[0]
 		case "logs":
 			opts.Logs = true
 		case "emitter":

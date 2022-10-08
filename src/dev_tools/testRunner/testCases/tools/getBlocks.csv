@@ -65,6 +65,12 @@ on      ,both ,fast  ,blocks ,tools/getBlocks ,no_trace_uniq        ,y    ,block
 on      ,both ,fast  ,blocks ,tools/getBlocks ,artic_not_logs       ,y    ,blocks = 4012000-4012001 & articulate
 on      ,both ,fast  ,blocks ,tools/getBlocks ,bigrange_not_logs    ,y    ,blocks = 4012000-4012001 & big_range = 100
 
+on      ,both ,fast  ,blocks ,tools/getBlocks ,flow_error_1         ,n    ,blocks = 4102000 & fmt = txt & flow = to
+on      ,both ,fast  ,blocks ,tools/getBlocks ,flow_error_2         ,n    ,blocks = 4102000 & fmt = txt & apps & flow = not-a-choice
+on      ,both ,fast  ,blocks ,tools/getBlocks ,flow_apps_to         ,n    ,blocks = 4102000 & fmt = txt & apps & flow = to
+on      ,both ,fast  ,blocks ,tools/getBlocks ,flow_uniq_from       ,n    ,blocks = 4102000 & fmt = txt & uniq & flow = from
+on      ,both ,fast  ,blocks ,tools/getBlocks ,flow_uniq_reward     ,n    ,blocks = 4102000 & fmt = txt & uniq & flow = reward
+
 on      ,both ,fast  ,blocks ,tools/getBlocks ,list_fail            ,y    ,list = 0 & list_count = 12
 on      ,both ,fast  ,blocks ,tools/getBlocks ,list_list_count      ,y    ,list = 1000 & list_count = 10
 on      ,both ,fast  ,blocks ,tools/getBlocks ,list_count_block_fail,y    ,list_count = 10 & blocks = 1000

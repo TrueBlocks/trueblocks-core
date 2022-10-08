@@ -1,9 +1,8 @@
-chifra blocks  4012000-4012001 --cache --apps
-TEST[DATE|TIME] Blocks:  [4012000-4012001]
-TEST[DATE|TIME] Apps:  true
-TEST[DATE|TIME] Cache:  true
-TEST[DATE|TIME] Format:  json
-Error: The --cache option is not available with the --apps option.
+chifra blocks  4102000 --fmt txt --flow to
+TEST[DATE|TIME] Blocks:  [4102000]
+TEST[DATE|TIME] Flow:  to
+TEST[DATE|TIME] Format:  txt
+Error: The --flow option is only available with the --apps or --uniq option
 Usage:
   chifra blocks [flags] <block> [block...]
 

@@ -822,6 +822,19 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: flow
+          description: >
+            for the uniq and apps options only, export only from or to (including trace from or to)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+            enum:
+              - from
+              - to
+              - reward
         - name: logs
           description: display only the logs found in the block(s)
           required: false
