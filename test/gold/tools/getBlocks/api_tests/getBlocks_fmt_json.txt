@@ -962,5 +962,12 @@ blocks?blocks=2222222%202332332&fmt=json
         }
       ]
     }
-  ]
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
+  }
 }

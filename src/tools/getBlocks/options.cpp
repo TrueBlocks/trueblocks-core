@@ -178,7 +178,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (expContext().exportFmt == NONE1)
-        expContext().exportFmt = (isApiMode() ? API1 : (filterType.empty() ? JSON1 : TXT1));
+        expContext().exportFmt = (isApiMode() ? JSON1 : (filterType.empty() ? JSON1 : TXT1));
 
     // Display formatting
     if (count) {
@@ -218,7 +218,7 @@ bool COptions::parseArguments(string_q& command) {
         configureDisplay("getBlocks", "CBlock", STR_DISPLAY_BLOCK);
     }
 
-    if (expContext().exportFmt == API1 || expContext().exportFmt == JSON1) {
+    if (expContext().exportFmt == JSON1) {
         if (count) {
             string_q ff = STR_FORMAT_COUNT_JSON;
             if (filterType.empty()) {
