@@ -253,5 +253,12 @@ abis?addrs=0xef638b4305b8a1620f4e0e562e127f1181ae16d2&fmt=json
       "input_names": "",
       "output_names": "val_0,"
     }
-  ]
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
+  }
 }
