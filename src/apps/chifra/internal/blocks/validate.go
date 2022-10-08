@@ -53,6 +53,16 @@ func (opts *BlocksOptions) validateBlocks() error {
 		}
 	}
 
+	if len(opts.Flow) > 0 {
+		if !opts.Apps && !opts.Uniq {
+			return validate.Usage("The {0} option is only available with the {1} option", "--flow", "--apps or --uniq")
+		}
+		err := validate.ValidateEnum("flow", opts.Flow, "[from|to|reward]")
+		if err != nil {
+			return err
+		}
+	}
+
 	if len(opts.Globals.File) > 0 {
 		// Do nothing
 	} else {
