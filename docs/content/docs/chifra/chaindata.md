@@ -2,7 +2,7 @@
 title: "Chain data"
 description: ""
 lead: ""
-date: 2022-08-14T13:37:56
+date: 2022-10-08T08:10:18
 lastmod:
   - :git
   - lastmod
@@ -84,6 +84,8 @@ Flags:
   -a, --articulate         articulate the retrieved data if ABIs can be found
   -t, --trace              include the transaction's traces in the results
   -u, --uniq               display a list of uniq addresses found in the transaction
+  -f, --flow string        for the uniq option only, export only from or to (including trace from or to)
+                           One of [ from | to ]
   -r, --reconcile string   reconcile the transaction as per the provided address
   -o, --cache              force the results of the query into the tx cache (and the trace cache if applicable)
   -x, --fmt string         export format, one of [none|json*|txt|csv|api]

@@ -27,6 +27,7 @@ type TransactionsOptions struct {
 	Articulate     bool                     `json:"articulate,omitempty"`     // Articulate the retrieved data if ABIs can be found
 	Trace          bool                     `json:"trace,omitempty"`          // Include the transaction's traces in the results
 	Uniq           bool                     `json:"uniq,omitempty"`           // Display a list of uniq addresses found in the transaction
+	Flow           string                   `json:"flow,omitempty"`           // For the uniq option only, export only from or to (including trace from or to)
 	Reconcile      string                   `json:"reconcile,omitempty"`      // Reconcile the transaction as per the provided address
 	Cache          bool                     `json:"cache,omitempty"`          // Force the results of the query into the tx cache (and the trace cache if applicable)
 	Globals        globals.GlobalOptions    `json:"globals,omitempty"`        // The global options
@@ -41,6 +42,7 @@ func (opts *TransactionsOptions) testLog() {
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	logger.TestLog(opts.Trace, "Trace: ", opts.Trace)
 	logger.TestLog(opts.Uniq, "Uniq: ", opts.Uniq)
+	logger.TestLog(len(opts.Flow) > 0, "Flow: ", opts.Flow)
 	logger.TestLog(len(opts.Reconcile) > 0, "Reconcile: ", opts.Reconcile)
 	logger.TestLog(opts.Cache, "Cache: ", opts.Cache)
 	opts.Globals.TestLog()
@@ -72,6 +74,9 @@ func (opts *TransactionsOptions) toCmdLine() string {
 	if opts.Uniq {
 		options += " --uniq"
 	}
+	if len(opts.Flow) > 0 {
+		options += " --flow " + opts.Flow
+	}
 	if len(opts.Reconcile) > 0 {
 		options += " --reconcile " + opts.Reconcile
 	}
@@ -102,6 +107,8 @@ func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *Transac
 			opts.Trace = true
 		case "uniq":
 			opts.Uniq = true
+		case "flow":
+			opts.Flow = value[0]
 		case "reconcile":
 			opts.Reconcile = value[0]
 		case "cache":

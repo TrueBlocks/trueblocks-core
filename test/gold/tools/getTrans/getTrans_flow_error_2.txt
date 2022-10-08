@@ -1,9 +1,9 @@
-chifra transactions  0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63 --reconcile 0xf503017d7baf7fbc0fff7492b751025c6a78179b --fmt json --cache
-TEST[DATE|TIME] Transactions:  [0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63]
-TEST[DATE|TIME] Reconcile:  0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TEST[DATE|TIME] Cache:  true
-TEST[DATE|TIME] Format:  json
-Error: Do not use other options with the --reconcile option.
+chifra transactions  4102000.0 --fmt txt --uniq --flow not-a-choice
+TEST[DATE|TIME] Transactions:  [4102000.0]
+TEST[DATE|TIME] Uniq:  true
+TEST[DATE|TIME] Flow:  not-a-choice
+TEST[DATE|TIME] Format:  txt
+Error: The flow option (not-a-choice) must be one of [ from | to ]
 Usage:
   chifra transactions [flags] <tx_id> [tx_id...]
 

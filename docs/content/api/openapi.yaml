@@ -950,6 +950,18 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: flow
+          description: >
+            for the uniq option only, export only from or to (including trace from or to)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+            enum:
+              - from
+              - to
         - name: reconcile
           description: reconcile the transaction as per the provided address
           required: false

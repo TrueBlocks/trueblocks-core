@@ -1,0 +1,6 @@
+transactions?transactions=4102000.0&fmt=txt&flow=to
+{
+  "errors": [
+    "The --flow option is only available with the --uniq option"
+  ]
+}
