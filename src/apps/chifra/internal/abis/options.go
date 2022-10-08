@@ -119,7 +119,7 @@ func abisFinishParse(args []string) *AbisOptions {
 	defFmt := "txt"
 	// EXISTING_CODE
 	if opts.Globals.IsApiMode() {
-		defFmt = "api"
+		defFmt = "json"
 	}
 	opts.Addrs = ens.ConvertEns(opts.Globals.Chain, args)
 	// EXISTING_CODE
