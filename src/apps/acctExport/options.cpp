@@ -432,8 +432,8 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 bool COptions::setDisplayFormatting(void) {
+    bool isText = expContext().exportFmt != JSON1;
     if (count) {
-        bool isText = expContext().exportFmt != JSON1 && expContext().exportFmt != API1;
         string_q format =
             getGlobalConfig("acctExport")->getConfigStr("display", "format", isText ? STR_DISPLAY_MONITORCOUNT : "");
         expContext().fmtMap["monitorcount_fmt"] = cleanFmt(format);
@@ -446,7 +446,7 @@ bool COptions::setDisplayFormatting(void) {
         show += (isApiMode() ? "|CTransaction:encoding,function,input,etherGasCost|CTrace:traceAddress" : "");
         manageFields(show, true);
         manageFields("CTrace: blockHash, blockNumber, transactionHash, transactionIndex", false);  // hide
-        if (expContext().exportFmt != JSON1 && expContext().exportFmt != API1) {
+        if (isText) {
             string_q format;
 
             format = getGlobalConfig("acctExport")->getConfigStr("display", "format", STR_DISPLAY_TRANSACTION);

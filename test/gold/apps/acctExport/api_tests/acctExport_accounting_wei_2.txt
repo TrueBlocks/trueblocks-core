@@ -1,5 +1,5 @@
 Env: FORCE_LOGGING=true
-export?addrs=0x05a56e2d52c817161883f50c441c3228cfe54d9f&maxRecords=15&accounting&fmt=api&logLevel=10
+export?addrs=0x05a56e2d52c817161883f50c441c3228cfe54d9f&maxRecords=15&accounting&fmt=json&logLevel=10
 {
   "data": [
     {
