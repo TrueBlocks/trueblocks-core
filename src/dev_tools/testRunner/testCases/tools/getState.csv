@@ -9,7 +9,7 @@ on      ,both ,fast  ,state ,tools/getState ,no_address                     ,y  
 on      ,both ,fast  ,state ,tools/getState ,invalid_address_1              ,y    ,addrs = 0x12
 on      ,both ,fast  ,state ,tools/getState ,invalid_address_2              ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d3592
 on      ,both ,fast  ,state ,tools/getState ,invalid_block_1                ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 fdfsdf
-erigon  ,both ,fast  ,state ,tools/getState ,two_accts                      ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & blocks = 1500000 & fmt = api
+erigon  ,both ,fast  ,state ,tools/getState ,two_accts                      ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & blocks = 1500000 & fmt = json
 on      ,both ,fast  ,state ,tools/getState ,tip_4                          ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & blocks = 1500000 2000000 2500000 3000000
 on      ,both ,fast  ,state ,tools/getState ,multiple_accounts              ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 0x6f46cf5569aefa1acc1009290c8e043747172d89 & blocks = 4000000
 on      ,both ,fast  ,state ,tools/getState ,multiple_accounts_and_blocks_1 ,n    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 0x6f46cf5569aefa1acc1009290c8e043747172d89 & blocks = 3500000 4000000 & fmt = txt

@@ -1,8 +1,8 @@
-chifra state  0xbb9bc244d798123fde783fcc1c72d3bb8c189413 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 1500000 --fmt api
+chifra state  0xbb9bc244d798123fde783fcc1c72d3bb8c189413 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 1500000 --fmt json
 TEST[DATE|TIME] Addrs:  [0xbb9bc244d798123fde783fcc1c72d3bb8c189413 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359]
 TEST[DATE|TIME] Blocks:  [1500000]
-TEST[DATE|TIME] Format:  api
-{"data": [
+TEST[DATE|TIME] Format:  json
+{"data": [z
   {
     "blockNumber": 1500000,
     "balance": 4420466920675732108465682,

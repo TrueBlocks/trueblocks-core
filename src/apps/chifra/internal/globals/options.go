@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -53,7 +54,7 @@ func (opts *GlobalOptions) TestLog() {
 func InitGlobals(cmd *cobra.Command, opts *GlobalOptions) {
 	opts.TestMode = os.Getenv("TEST_MODE") == "true"
 
-	cmd.Flags().StringVarP(&opts.Format, "fmt", "x", "", "export format, one of [none|json*|txt|csv|api]")
+	cmd.Flags().StringVarP(&opts.Format, "fmt", "x", "", "export format, one of [none|json*|txt|csv]")
 	cmd.Flags().BoolVarP(&opts.Verbose, "verbose", "v", false, "enable verbose (increase detail with --log_level)")
 	cmd.Flags().BoolVarP(&opts.Help, "help", "h", false, "display this help screen")
 
@@ -89,6 +90,10 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions) {
 
 	if len(opts.Chain) == 0 {
 		opts.Chain = config.GetDefaultChain()
+	}
+
+	if opts.ShowRaw {
+		opts.Format = "json"
 	}
 }
 
@@ -186,8 +191,17 @@ func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOption
 		}
 	}
 
-	if len(opts.Format) == 0 || opts.Format == "none" {
-		opts.Format = "api"
+	if len(opts.Format) == 0 || opts.Format == "none" || opts.ShowRaw {
+		opts.Format = "json"
+		if !opts.ShowRaw && len(opts.OutputFn) > 0 {
+			parts := strings.Split(opts.OutputFn, ".")
+			if len(parts) > 0 {
+				last := parts[len(parts)-1]
+				if last == "txt" || last == "csv" || last == "json" {
+					opts.Format = last
+				}
+			}
+		}
 	}
 
 	if len(opts.Chain) == 0 {

@@ -1,9 +1,9 @@
-chifra transactions  0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --trace --articulate --fmt api
+chifra transactions  0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --trace --articulate --fmt json
 TEST[DATE|TIME] Transactions:  [0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f]
 TEST[DATE|TIME] Articulate:  true
 TEST[DATE|TIME] Trace:  true
-TEST[DATE|TIME] Format:  api
-{"data": [
+TEST[DATE|TIME] Format:  json
+{ "data": [
 
 level: 1
 readOffset: 0
@@ -796,4 +796,4 @@ params.size: 0
     "gasUsed": 209407,
     "date": "2018-11-16 00:10:08 UTC",
     "ether": 0.607298625296748300
-  }], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }
+  }] }

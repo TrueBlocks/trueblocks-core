@@ -29,7 +29,7 @@ func (opts *GlobalOptions) Validate() error {
 		return validate.Usage("The {0} option is not available in Api Mode. Use {1} instead", "--output", "--to_file")
 	}
 
-	err := validate.ValidateEnum("--fmt", opts.Format, "[json|txt|csv|api]")
+	err := validate.ValidateEnum("--fmt", opts.Format, "[json|txt|csv]")
 	if err != nil {
 		return err
 	}

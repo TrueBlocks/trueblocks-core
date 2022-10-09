@@ -959,9 +959,6 @@ string_q exportPreamble(const string_q& format, const string_q& className) {
         case JSON1:
             os << "{ \"data\": [";
             break;
-        case API1:
-            os << "{\"data\": [";
-            break;
         default:
             ASSERT(0);  // shouldn't happen
             break;
@@ -1010,7 +1007,7 @@ string_q exportPostamble(const CStringArray& errorsIn, const string_q& extra) {
 
     if (isText)
         return errStream.str();  // only errors are reported for text or csv
-    ASSERT(fmt == JSON1 || fmt == API1);
+    ASSERT(fmt == JSON1);
 
     ostringstream os;
     os << "]";  // finish the data array (or the error array)...
@@ -1018,9 +1015,8 @@ string_q exportPostamble(const CStringArray& errorsIn, const string_q& extra) {
     if (!errStream.str().empty())
         os << ", \"errors\": [\n" << errStream.str() << "\n]";
 
-    if (fmt == JSON1)
+    if ((fmt == JSON1 && !isApiMode()))
         return os.str() + " }";
-    ASSERT(fmt == API1);
 
     CMetaData meta = getMetaData();
     if (isTestMode()) {

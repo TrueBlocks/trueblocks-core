@@ -28,7 +28,7 @@ bool COptions::handle_status(ostream& os) {
         }
 
         CStatusTerse st = status;
-        bool isText = expContext().exportFmt != JSON1 && expContext().exportFmt != API1;
+        bool isText = expContext().exportFmt != JSON1;
         if (!isText) {
             fmt = "";
             manageFields("CStatusTerse:modes1,modes2", FLD_HIDE);

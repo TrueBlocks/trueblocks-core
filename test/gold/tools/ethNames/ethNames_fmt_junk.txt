@@ -1,7 +1,7 @@
 chifra names  tip --fmt junk
 TEST[DATE|TIME] Terms:  [tip]
 TEST[DATE|TIME] Format:  junk
-Error: The --fmt option (junk) must be one of [ json | txt | csv | api ]
+Error: The --fmt option (junk) must be one of [ json | txt | csv ]
 Usage:
   chifra names [flags] <term> [term...]
 
@@ -25,7 +25,7 @@ Flags:
       --update            edit an existing name (hidden)
       --remove            remove a previously deleted name (hidden)
       --undelete          undelete a previously deleted name (hidden)
-  -x, --fmt string        export format, one of [none|json*|txt|csv|api]
+  -x, --fmt string        export format, one of [none|json*|txt|csv]
   -v, --verbose           enable verbose (increase detail with --log_level)
   -h, --help              display this help screen
 

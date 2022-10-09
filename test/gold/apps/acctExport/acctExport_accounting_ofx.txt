@@ -4,7 +4,7 @@ TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] MaxRecords:  5
 TEST[DATE|TIME] Format:  ofx
 
-  The --fmt option (ofx) must be one of [ json | txt | csv | api ]. Quitting...
+  The --fmt option (ofx) must be one of [ json | txt | csv ]. Quitting...
 
 Purpose:
   Export full detail of transactions for one or more addresses.
@@ -43,7 +43,7 @@ Flags:
   -L, --last_block <num>     last block to process (inclusive)
 
 Global Flags:
-  -x, --fmt string     export format, one of [none|json*|txt|csv|api]
+  -x, --fmt string     export format, one of [none|json*|txt|csv]
   -v, --verbose uint   set verbose level (optional level defaults to 1)
   -h, --help           display this help screen
 

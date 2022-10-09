@@ -1,11 +1,11 @@
-chifra traces  --verbose --file cmd_file --fmt api
+chifra traces  --verbose --file cmd_file --fmt json
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] File:  cmd_file
-TEST[DATE|TIME] Format:  api
+TEST[DATE|TIME] Format:  json
 Cmd: 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.78 -v:1 -v:1 
 Cmd: 3657480.78 -v:1 
 Cmd: 0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad -v:1 
-{"data": [
+{ "data": [
   {
     "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",
     "blockNumber": 3657480,
@@ -81,4 +81,4 @@ Cmd: 0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad -v:1
       "output": "0x"
     },
     "timestamp": 1494031419
-  }], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }
+  }] }

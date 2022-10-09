@@ -1,10 +1,10 @@
-chifra export  0x001d14804b399c6ef80e64576f657660804fec0b --last_block 1506480 --max_records 5 --traces --fmt api
+chifra export  0x001d14804b399c6ef80e64576f657660804fec0b --last_block 1506480 --max_records 5 --traces --fmt json
 TEST[DATE|TIME] Addrs:  [0x001d14804b399c6ef80e64576f657660804fec0b]
 TEST[DATE|TIME] Traces:  true
 TEST[DATE|TIME] MaxRecords:  5
 TEST[DATE|TIME] LastBlock:  1506480
-TEST[DATE|TIME] Format:  api
-{"data": [
+TEST[DATE|TIME] Format:  json
+{ "data": [
 {
   "blockHash": "0x1816ff22f84af23df70df8e6ae5c40a8780c16a0860ca1a25a4c911eba76c65a",
   "blockNumber": 202249,
@@ -57,18 +57,4 @@ TEST[DATE|TIME] Format:  api
   },
   "timestamp": 1463025233
 }
-], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namedFrom": {}
-, "unNamedFrom": {"0xPrefund": 1}, "namedTo": {"0x2910543af39aba0cd09dbb2d50200b3e800a63d2": { "tags": "40-Exchanges", "name": "Kraken Exchange", "count": 1 }}
-, "unNamedTo": {"0xcfab9ac2bb2e1dcfc2d50f01f4e61f2f72fb5902": 1}, "namedTraceFrom": {"0x001d14804b399c6ef80e64576f657660804fec0b": { "tags": "80-Prefund", "name": "Prefund_0002", "count": 2 }}
-, "unNamedTraceFrom": {}, "namedTraceTo": {"0x2910543af39aba0cd09dbb2d50200b3e800a63d2": { "tags": "40-Exchanges", "name": "Kraken Exchange", "count": 1 }}
-, "unNamedTraceTo": {"0xcfab9ac2bb2e1dcfc2d50f01f4e61f2f72fb5902": 1}, "first_block": "0xdeadbeef"
-, "last_block": "0xdeadbeef"
-, "accountedFor": {
-  "tags": "80-Prefund",
-  "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
-  "name": "Prefund_0002",
-  "source": "Genesis",
-  "isPrefund": true
-}
-
- } }
+] }

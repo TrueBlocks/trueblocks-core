@@ -1,6 +1,6 @@
-chifra receipts  0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765 --fmt api
+chifra receipts  0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765 --fmt json
 TEST[DATE|TIME] Transactions:  [0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765]
-TEST[DATE|TIME] Format:  api
+TEST[DATE|TIME] Format:  json
 {
   "data": [
     {
@@ -32,15 +32,5 @@ TEST[DATE|TIME] Format:  api
       "status": 1,
       "transactionIndex": 68
     }
-  ],
-  "meta": {
-    "client": "0xdeadbeef",
-    "finalized": "0xdeadbeef",
-    "staging": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "unripe": "0xdeadbeef",
-    "chainId": 1,
-    "networkId": 1,
-    "chain": "mainnet"
-  }
+  ]
 }

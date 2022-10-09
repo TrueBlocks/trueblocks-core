@@ -104,7 +104,7 @@ bool COptions::parseArguments(string_q& command) {
     replace(format, "[{ABI_SOURCE}]\t", "");
     replace(funcFields, "abi_source,", "");
 
-    if (verbose && (expContext().exportFmt == JSON1 || expContext().exportFmt == API1)) {
+    if (verbose && (expContext().exportFmt == JSON1 || isApiMode())) {
         replaceAll(funcFields, "_name", "");
         replaceAll(format, "_NAME", "");
     }

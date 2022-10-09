@@ -1,7 +1,7 @@
 chifra transactions  2222222.0 2332332.0 --fmt junk
 TEST[DATE|TIME] Transactions:  [2222222.0 2332332.0]
 TEST[DATE|TIME] Format:  junk
-Error: The --fmt option (junk) must be one of [ json | txt | csv | api ]
+Error: The --fmt option (junk) must be one of [ json | txt | csv ]
 Usage:
   chifra transactions [flags] <tx_id> [tx_id...]
 
@@ -16,7 +16,7 @@ Flags:
                            One of [ from | to ]
   -r, --reconcile string   reconcile the transaction as per the provided address
   -o, --cache              force the results of the query into the tx cache (and the trace cache if applicable)
-  -x, --fmt string         export format, one of [none|json*|txt|csv|api]
+  -x, --fmt string         export format, one of [none|json*|txt|csv]
   -v, --verbose            enable verbose (increase detail with --log_level)
   -h, --help               display this help screen
 

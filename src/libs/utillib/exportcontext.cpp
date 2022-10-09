@@ -43,7 +43,7 @@ CExportContext::CExportContext(void) {
     asWei = true;
     tsMemMap = nullptr;
     tsCnt = 0;
-    exportFmt = (isApiMode() ? API1 : TXT1);
+    exportFmt = (isApiMode() ? JSON1 : TXT1);
 }
 
 //---------------------------------------------------------------------------
@@ -63,7 +63,7 @@ string_q indentStr(void) {
 
 //---------------------------------------------------------------------------
 bool isJson(void) {
-    return (expC.exportFmt == JSON1 || expC.exportFmt == API1 || expC.exportFmt == NONE1);
+    return (expC.exportFmt == JSON1 || expC.exportFmt == NONE1);
 }
 
 }  // namespace qblocks

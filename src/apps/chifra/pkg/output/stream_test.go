@@ -188,16 +188,7 @@ func TestApiFormat(t *testing.T) {
 		Writer: outputBuffer,
 		Format: "api",
 	})
-	if err != nil {
-		t.Fatal(err)
-	}
-	var result = map[string]interface{}{}
-	err = json.Unmarshal(outputBuffer.Bytes(), &result)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	if _, ok := result["meta"]; !ok {
-		t.Fatal("meta is missing")
+	if err == nil {
+		t.Fatal("Api format is no longer allow. Should error here.")
 	}
 }

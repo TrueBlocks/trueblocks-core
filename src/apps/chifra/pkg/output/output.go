@@ -35,8 +35,6 @@ func OutputSlice(data interface{}, w io.Writer, format string, hideHeader, first
 
 	preceeds := ""
 	switch format {
-	case "api":
-		fallthrough
 	case "json":
 		result := struct {
 			Data interface{}         `json:"data,omitempty"`
@@ -83,8 +81,6 @@ func OutputObject(data interface{}, w io.Writer, format string, hideHeader, firs
 
 	preceeds := ""
 	switch format {
-	case "api":
-		fallthrough
 	case "json":
 		outputBytes, err = json.MarshalIndent(data, "", "  ")
 		if err != nil {

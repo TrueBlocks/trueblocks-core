@@ -1,10 +1,10 @@
 Env: DICT_MODE=false
-chifra traces  0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --articulate --fmt api --verbose
+chifra traces  0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --articulate --fmt json --verbose
 TEST[DATE|TIME] Transactions:  [0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f]
 TEST[DATE|TIME] Articulate:  true
 TEST[DATE|TIME] Verbose:  true
-TEST[DATE|TIME] Format:  api
-{"data": [
+TEST[DATE|TIME] Format:  json
+{ "data": [
 
 level: 1
 readOffset: 0
@@ -446,4 +446,4 @@ params.size: 0
     },
     "compressedTrace": "{name:USD|inputs:[{name:_id|value:0|internalType:uint256}]|outputs:[{name:ret_0|value:47231959280000|internalType:uint256}]}",
     "timestamp": 1542327008
-  }], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }
+  }] }

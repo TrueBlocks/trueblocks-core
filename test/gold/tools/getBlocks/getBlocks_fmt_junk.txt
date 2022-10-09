@@ -1,7 +1,7 @@
 chifra blocks  2222222 2332332 --fmt junk
 TEST[DATE|TIME] Blocks:  [2222222 2332332]
 TEST[DATE|TIME] Format:  junk
-Error: The --fmt option (junk) must be one of [ json | txt | csv | api ]
+Error: The --fmt option (junk) must be one of [ json | txt | csv ]
 Usage:
   chifra blocks [flags] <block> [block...]
 
@@ -25,7 +25,7 @@ Flags:
   -o, --cache             force a write of the block to the cache
   -l, --list uint         summary list of blocks running backwards from latest block minus num (hidden)
   -C, --list_count uint   the number of blocks to report for --list option (hidden)
-  -x, --fmt string        export format, one of [none|json*|txt|csv|api]
+  -x, --fmt string        export format, one of [none|json*|txt|csv]
   -v, --verbose           enable verbose (increase detail with --log_level)
   -h, --help              display this help screen
 

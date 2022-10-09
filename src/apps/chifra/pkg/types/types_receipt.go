@@ -64,21 +64,28 @@ func (r *SimpleReceipt) Model(showHidden bool, format string) Model {
 		"gasUsed",
 		"status",
 	}
-	if r.IsError || (format != "json" && format != "api") {
+	if r.IsError || format != "json" {
 		model["isError"] = r.IsError
 		order = append(order, "isError")
 	}
 
 	if showHidden && format == "json" {
+		// TODO: The tests in this section of code are basically implementing `omitempty`
 		model["blockHash"] = r.BlockHash
-		model["contractAddress"] = r.ContractAddress
+		if r.ContractAddress != common.HexToAddress("0x0") {
+			model["contractAddress"] = r.ContractAddress
+		}
 		model["cumulativeGasUsed"] = r.CumulativeGasUsed
-		// TODO: This is commented out becuase r.From is empty, so incorrect
-		// model["from"] = r.From
+		if r.From != common.HexToAddress("0x0") {
+			model["from"] = r.From
+		}
 		model["effectiveGasPrice"] = r.EffectiveGasPrice
-		model["logs"] = r.Logs
-		// TODO: This is commented out becuase r.From is empty, so incorrect
-		// model["to"] = r.To
+		if len(r.Logs) > 0 {
+			model["logs"] = r.Logs
+		}
+		if r.To != common.HexToAddress("0x0") {
+			model["to"] = r.To
+		}
 
 		order = append(order, []string{
 			"blockHash",
@@ -91,7 +98,7 @@ func (r *SimpleReceipt) Model(showHidden bool, format string) Model {
 		}...)
 	}
 
-	if len(r.Logs) > 0 && (format == "json" || format == "api") {
+	if len(r.Logs) > 0 && format == "json" {
 		model["logs"] = r.Logs
 		order = append(order, []string{"logs"}...)
 	}

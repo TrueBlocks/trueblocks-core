@@ -2,7 +2,7 @@
 title: "Chain data"
 description: ""
 lead: ""
-date: 2022-10-08T08:37:59
+date: 2022-10-08T19:54:08
 lastmod:
   - :git
   - lastmod
@@ -48,7 +48,7 @@ Flags:
                       One of [ from | to | reward ]
   -U, --count         display the number of the lists of appearances for --addrs or --uniq
   -o, --cache         force a write of the block to the cache
-  -x, --fmt string    export format, one of [none|json*|txt|csv|api]
+  -x, --fmt string    export format, one of [none|json*|txt|csv]
   -v, --verbose       enable verbose (increase detail with --log_level)
   -h, --help          display this help screen
 
@@ -90,7 +90,7 @@ Flags:
                            One of [ from | to ]
   -r, --reconcile string   reconcile the transaction as per the provided address
   -o, --cache              force the results of the query into the tx cache (and the trace cache if applicable)
-  -x, --fmt string         export format, one of [none|json*|txt|csv|api]
+  -x, --fmt string         export format, one of [none|json*|txt|csv]
   -v, --verbose            enable verbose (increase detail with --log_level)
   -h, --help               display this help screen
 
@@ -122,7 +122,7 @@ Arguments:
 
 Flags:
   -a, --articulate   articulate the retrieved data if ABIs can be found
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -x, --fmt string   export format, one of [none|json*|txt|csv]
   -v, --verbose      enable verbose (increase detail with --log_level)
   -h, --help         display this help screen
 
@@ -152,7 +152,7 @@ Arguments:
 
 Flags:
   -a, --articulate   articulate the retrieved data if ABIs can be found
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -x, --fmt string   export format, one of [none|json*|txt|csv]
   -v, --verbose      enable verbose (increase detail with --log_level)
   -h, --help         display this help screen
 
@@ -188,7 +188,7 @@ Flags:
   -f, --filter string   call the node's trace_filter routine with bang-separated filter
   -d, --statediff       export state diff traces (not implemented)
   -c, --count           show the number of traces for the transaction only (fast)
-  -x, --fmt string      export format, one of [none|json*|txt|csv|api]
+  -x, --fmt string      export format, one of [none|json*|txt|csv]
   -v, --verbose         enable verbose (increase detail with --log_level)
   -h, --help            display this help screen
 
@@ -223,7 +223,7 @@ Arguments:
 Flags:
   -l, --list         export a list of the 'special' blocks
   -t, --timestamps   display or process timestamps
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -x, --fmt string   export format, one of [none|json*|txt|csv]
   -v, --verbose      enable verbose (increase detail with --log_level)
   -h, --help         display this help screen
 

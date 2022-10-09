@@ -25,7 +25,7 @@ Usage:
 Flags:
   -a, --all           in addition to Bloom filters, download full index chunks
   -s, --sleep float   seconds to sleep between downloads
-  -x, --fmt string    export format, one of [none|json*|txt|csv|api]
+  -x, --fmt string    export format, one of [none|json*|txt|csv]
   -v, --verbose       enable verbose (increase detail with --log_level)
   -h, --help          display this help screen
 

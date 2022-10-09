@@ -20,6 +20,8 @@ TEST[DATE|TIME] Format:  txt
   "transactionIndex": "0x1",
   "type": "0x0"
 }
+  ],
+  "errors": [
+    "transaction 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5 not found"
   ]
 }
-EROR[DATE|TIME] transaction 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5 not found

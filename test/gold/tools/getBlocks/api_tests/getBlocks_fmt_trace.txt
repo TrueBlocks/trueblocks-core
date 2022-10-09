@@ -436,5 +436,12 @@ blocks?blocks=2222222&trace&fmt=json
       },
       "timestamp": 1473348165
     }
-  ]
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
+  }
 }
