@@ -123,31 +123,25 @@ func logErrors(errsToReport []string) {
 	}
 }
 
+type fetchDataFunc[Raw types.RawData] func(modelChan chan types.Modeler[Raw], errorChan chan error)
+
 // StreamMany outputs models or raw data as they are acquired
-func StreamMany[Raw types.RawData](
-	ctx context.Context,
-	fetchData func(modelChan chan types.Modeler[Raw], errorChan chan error),
-	options OutputOptions,
-) error {
+func StreamMany[Raw types.RawData](ctx context.Context, fetchData fetchDataFunc[Raw], options OutputOptions) error {
 	outputWriter := options.GetOutputFileWriter()
 	errsToReport := make([]string, 0)
-	errsMutex := sync.Mutex{}
 
 	modelChan := make(chan types.Modeler[Raw])
 	errorChan := make(chan error)
 
-	// Check if the current item is the first that we print. If so, we may want to
-	// print keys or postpone adding JSON comma between the elements
 	first := true
-	// Start getting the data
 	go func() {
 		fetchData(modelChan, errorChan)
 		close(modelChan)
 		close(errorChan)
 	}()
 
-	// TODO: BOGUS - ShowRaw is json
-	if options.Format == "json" || options.ShowRaw {
+	isJson := options.Format == "json" || options.ShowRaw
+	if isJson {
 		outputWriter.Write([]byte("{\n  \"data\": [\n    "))
 		defer func() {
 			outputWriter.Write([]byte("\n  ]"))
@@ -168,13 +162,11 @@ func StreamMany[Raw types.RawData](
 			}
 			outputWriter.Write([]byte("\n}\n"))
 		}()
-	}
-
-	defer func() {
-		if !options.ShowRaw && options.Format != "json" {
+	} else {
+		defer func() {
 			logErrors(errsToReport)
-		}
-	}()
+		}()
+	}
 
 	// If user wants custom format, we have to prepare the template
 	customFormat := strings.Contains(options.Format, "{")
@@ -183,6 +175,7 @@ func StreamMany[Raw types.RawData](
 		return err
 	}
 
+	errsMutex := sync.Mutex{}
 	for {
 		select {
 		case model, ok := <-modelChan:
@@ -192,7 +185,7 @@ func StreamMany[Raw types.RawData](
 
 			// If the output is JSON and we are printing another item, put `,` in front of it
 			// TODO: BOGUS - ShowRaw is json
-			if !first && (options.Format == "json" || options.ShowRaw) {
+			if !first && isJson {
 				outputWriter.Write([]byte(","))
 			}
 			var err error
