@@ -26,7 +26,7 @@ Flags:
                       One of [ from | to | reward ]
   -U, --count         display the number of the lists of appearances for --addrs or --uniq
   -o, --cache         force a write of the block to the cache
-  -x, --fmt string    export format, one of [none|json*|txt|csv|api]
+  -x, --fmt string    export format, one of [none|json*|txt|csv]
   -v, --verbose       enable verbose (increase detail with --log_level)
   -h, --help          display this help screen
 

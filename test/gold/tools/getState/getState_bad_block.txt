@@ -16,7 +16,7 @@ Flags:
   -n, --no_zero            suppress the display of zero balance accounts
   -a, --call string        a bang-separated string consisting of address!4-byte!bytes (hidden)
   -r, --proxy_for string   for the --call option only, redirects calls to this implementation (hidden)
-  -x, --fmt string         export format, one of [none|json*|txt|csv|api]
+  -x, --fmt string         export format, one of [none|json*|txt|csv]
   -v, --verbose            enable verbose (increase detail with --log_level)
   -h, --help               display this help screen
 

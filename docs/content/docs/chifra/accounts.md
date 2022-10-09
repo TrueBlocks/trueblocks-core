@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2022-10-08T07:38:23
+date: 2022-10-08T19:54:08
 lastmod:
   - :git
   - lastmod
@@ -40,7 +40,7 @@ Arguments:
 
 Flags:
   -U, --count        display only the count of records for each monitor
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -x, --fmt string   export format, one of [none|json*|txt|csv]
   -v, --verbose      enable verbose (increase detail with --log_level)
   -h, --help         display this help screen
 
@@ -96,7 +96,7 @@ Flags:
   -u, --unripe              export transactions labeled upripe (i.e. less than 28 blocks old)
   -F, --first_block uint    first block to process (inclusive)
   -L, --last_block uint     last block to process (inclusive)
-  -x, --fmt string          export format, one of [none|json*|txt|csv|api]
+  -x, --fmt string          export format, one of [none|json*|txt|csv]
   -v, --verbose             enable verbose (increase detail with --log_level)
   -h, --help                display this help screen
 
@@ -137,7 +137,7 @@ Flags:
       --remove        remove a previously deleted monitor
       --watch         continually scan for new blocks and extract data for monitored addresses
   -s, --sleep float   seconds to sleep between monitor passes (default 14)
-  -x, --fmt string    export format, one of [none|json*|txt|csv|api]
+  -x, --fmt string    export format, one of [none|json*|txt|csv]
   -v, --verbose       enable verbose (increase detail with --log_level)
   -h, --help          display this help screen
 
@@ -177,7 +177,7 @@ Flags:
   -n, --named        include well know token and airdrop addresses in the search
   -a, --addr         display only addresses in the results (useful for scripting)
   -g, --tags         export the list of tags and subtags only
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -x, --fmt string   export format, one of [none|json*|txt|csv]
   -v, --verbose      enable verbose (increase detail with --log_level)
   -h, --help         display this help screen
 
@@ -215,7 +215,7 @@ Flags:
   -s, --sol            extract the abi definition from the provided .sol file(s)
   -f, --find strings   search for function or event declarations given a four- or 32-byte code(s)
   -n, --hint strings   for the --find option only, provide hints to speed up the search
-  -x, --fmt string     export format, one of [none|json*|txt|csv|api]
+  -x, --fmt string     export format, one of [none|json*|txt|csv]
   -v, --verbose        enable verbose (increase detail with --log_level)
   -h, --help           display this help screen
 

@@ -25,7 +25,7 @@ Flags:
   -o, --cache             force a write of the block to the cache
   -l, --list uint         summary list of blocks running backwards from latest block minus num (hidden)
   -C, --list_count uint   the number of blocks to report for --list option (hidden)
-  -x, --fmt string        export format, one of [none|json*|txt|csv|api]
+  -x, --fmt string        export format, one of [none|json*|txt|csv]
   -v, --verbose           enable verbose (increase detail with --log_level)
   -h, --help              display this help screen
 

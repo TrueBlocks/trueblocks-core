@@ -159,8 +159,7 @@ func StreamMany[Raw types.RawData](
 				} // silently fails
 			}
 			if len(errsToReport) > 0 {
-				// For API, we want to report errors under `errors` key in the response,
-				// but only for "api" format...
+				// For ApiMode, we want to report errors under `errors` key in the response
 				outputWriter.Write([]byte(",\n  \"errors\": "))
 				err := writeJsonErrors(outputWriter, errsToReport, &options)
 				if err != nil {

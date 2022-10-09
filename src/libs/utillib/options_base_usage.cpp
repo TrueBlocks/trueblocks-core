@@ -98,7 +98,7 @@ string_q COptionsBase::get_description(void) const {
 
     //---------------------------------------------------------------------------------------------------
     static COption opts[] = {
-        COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_FLAG, "export format"),
+        COption("fmt", "x", "enum[none|json*|txt|csv]", OPT_FLAG, "export format"),
         COption("verbose", "v", "<uint>", OPT_VERBOSE, "set verbose level (optional level defaults to 1)"),
         COption("help", "h", "<boolean>", OPT_HELP, "display this help screen"),
     };
@@ -152,7 +152,7 @@ string_q COptionsBase::get_description(void) const {
     os << endl;
     if (isEnabled(OPT_FMT) || isEnabled(OPT_VERBOSE) || isEnabled(OPT_HELP))
         os << "Global Flags:\n";
-    os << (isEnabled(OPT_FMT) ? "  -x, --fmt string     export format, one of [none|json*|txt|csv|api]\n" : "");
+    os << (isEnabled(OPT_FMT) ? "  -x, --fmt string     export format, one of [none|json*|txt|csv]\n" : "");
     os << (isEnabled(OPT_VERBOSE) ? "  -v, --verbose uint   set verbose level (optional level defaults to 1)\n" : "");
     os << (isEnabled(OPT_HELP) ? "  -h, --help           display this help screen\n" : "");
 

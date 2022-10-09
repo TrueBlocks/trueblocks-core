@@ -53,7 +53,7 @@ func (opts *GlobalOptions) TestLog() {
 func InitGlobals(cmd *cobra.Command, opts *GlobalOptions) {
 	opts.TestMode = os.Getenv("TEST_MODE") == "true"
 
-	cmd.Flags().StringVarP(&opts.Format, "fmt", "x", "", "export format, one of [none|json*|txt|csv|api]")
+	cmd.Flags().StringVarP(&opts.Format, "fmt", "x", "", "export format, one of [none|json*|txt|csv]")
 	cmd.Flags().BoolVarP(&opts.Verbose, "verbose", "v", false, "enable verbose (increase detail with --log_level)")
 	cmd.Flags().BoolVarP(&opts.Help, "help", "h", false, "display this help screen")
 

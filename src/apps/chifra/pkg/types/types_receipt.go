@@ -64,7 +64,7 @@ func (r *SimpleReceipt) Model(showHidden bool, format string) Model {
 		"gasUsed",
 		"status",
 	}
-	if r.IsError || (format != "json" && format != "api") {
+	if r.IsError || format != "json" {
 		model["isError"] = r.IsError
 		order = append(order, "isError")
 	}
@@ -98,7 +98,7 @@ func (r *SimpleReceipt) Model(showHidden bool, format string) Model {
 		}...)
 	}
 
-	if len(r.Logs) > 0 && (format == "json" || format == "api") {
+	if len(r.Logs) > 0 && format == "json" {
 		model["logs"] = r.Logs
 		order = append(order, []string{"logs"}...)
 	}
