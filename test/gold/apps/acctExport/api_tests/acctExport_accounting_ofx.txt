@@ -1,6 +1,6 @@
 export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&maxRecords=5&accounting&fmt=ofx
 {
   "errors": [
-    "chifra export - The --fmt option (ofx) must be one of [ json | txt | csv | api ]."
+    "chifra export - The --fmt option (ofx) must be one of [ json | txt | csv ]."
   ]
 }
