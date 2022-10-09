@@ -73,3 +73,6 @@ local   ,both ,fast  ,names ,tools/ethNames ,edit_custom_undelete   ,y    ,undel
 local   ,both ,medi  ,names ,tools/ethNames ,to_file                ,n    ,named & custom & fmt = json & to_file
 on      ,both ,fast  ,names ,tools/ethNames ,redir_output           ,y    ,prefund & output = output_test_file
 on      ,both ,fast  ,names ,tools/ethNames ,redir_output_append    ,n    ,terms = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & output = output_test_file & no_header & append
+on      ,both ,fast  ,names ,tools/ethNames ,redir_output_json      ,y    ,terms = 0x1234 & output = output_file.json
+on      ,both ,fast  ,names ,tools/ethNames ,redir_output_txt       ,y    ,terms = 0x1234 & output = output_file.txt
+on      ,both ,fast  ,names ,tools/ethNames ,redir_output_csv       ,y    ,terms = 0x1234 & output = output_file.csv

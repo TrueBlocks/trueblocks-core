@@ -390,6 +390,18 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
         } else {
             return usage("Could not open output stream at '" + rd_outputFilename + ".");
         }
+        CStringArray parts;
+        explode(parts, temp, '.');
+        if (parts.size() > 0) {
+            string_q last = parts[parts.size() - 1];
+            if (last == "txt") {
+                expContext().exportFmt = TXT1;
+            } else if (last == "csv") {
+                expContext().exportFmt = CSV1;
+            } else if (last == "json") {
+                expContext().exportFmt = JSON1;
+            }
+        }
     }
 
     if (isEnabled(OPT_WEI) && contains(cmdLine, "--wei ")) {

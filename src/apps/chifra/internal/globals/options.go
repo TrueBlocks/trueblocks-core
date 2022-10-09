@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -192,6 +193,15 @@ func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOption
 
 	if len(opts.Format) == 0 || opts.Format == "none" || opts.ShowRaw {
 		opts.Format = "json"
+		if !opts.ShowRaw && len(opts.OutputFn) > 0 {
+			parts := strings.Split(opts.OutputFn, ".")
+			if len(parts) > 0 {
+				last := parts[len(parts)-1]
+				if last == "txt" || last == "csv" || last == "json" {
+					opts.Format = last
+				}
+			}
+		}
 	}
 
 	if len(opts.Chain) == 0 {
