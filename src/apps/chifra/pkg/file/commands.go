@@ -2,6 +2,7 @@ package file
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"os"
 	"strings"
@@ -45,6 +46,11 @@ func ParseCommandsFile(cmd *cobra.Command, filePath string) (cf CommandsFile, er
 		rawLine := scanner.Text()
 		lineNumber++
 
+		// --file inside file is forbidden
+		if strings.Contains(rawLine, "--file") {
+			err = reportErrWithLineNumber(errors.New("file uses --file flag recursively"), lineNumber)
+			return
+		}
 		// both cobra and pflags packages expect their parameters to be slices of strings
 		tokens := strings.Split(rawLine, " ")
 		// validate flags (we assume that `Flags()` returns `FlagSet` with both local and
