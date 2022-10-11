@@ -114,4 +114,7 @@ func GetOptions() *ReceiptsOptions {
 // TODO: this should be added to the template
 func ResetOptions() {
 	defaultReceiptsOptions = ReceiptsOptions{}
+	// Fill newly created object with the defaults
+	defaultReceiptsOptions.Globals.TestMode = globals.IsTestMode()
+	globals.SetDefaultChain(&defaultReceiptsOptions.Globals)
 }

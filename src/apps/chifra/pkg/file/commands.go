@@ -43,7 +43,7 @@ func ParseCommandsFile(cmd *cobra.Command, filePath string) (cf CommandsFile, er
 		return fmt.Errorf("on line %d: %s", lineNumber, err)
 	}
 	for scanner.Scan() {
-		rawLine := scanner.Text()
+		rawLine := strings.TrimSpace(scanner.Text())
 		lineNumber++
 
 		// --file inside file is forbidden
@@ -73,4 +73,48 @@ func ParseCommandsFile(cmd *cobra.Command, filePath string) (cf CommandsFile, er
 	}
 
 	return
+}
+
+// `RunWithFileSupport` returns a function to run Cobra command. The command runs in the usual
+// way unless `--file` is specified. If it is specified, this function will parse the file
+// and then run the command in series of independent calls (just like calling `chifra`
+// N times on the command line, but without wasting time and resources for the startup)
+func RunWithFileSupport(
+	run func(cmd *cobra.Command, args []string) error,
+	resetOptions func(),
+) func(cmd *cobra.Command, args []string) error {
+
+	return func(cmd *cobra.Command, args []string) error {
+		// try to open the file
+		filePath, err := cmd.Flags().GetString("file")
+		if err != nil {
+			return err
+		}
+		if filePath == "" {
+			// `--file` has not been provided, run the command as usual
+			return run(cmd, args)
+		}
+
+		// parse commands file
+		commandsFile, err := ParseCommandsFile(cmd, filePath)
+		if err != nil {
+			return err
+		}
+
+		for _, line := range commandsFile.Lines {
+			resetOptions()
+			// first, parse flags from the command line
+			_ = cmd.ParseFlags(os.Args[1:])
+			// next, parse flags from the file
+			err = cmd.ParseFlags(line.Flags)
+			if err != nil {
+				return fmt.Errorf("while parsing cmd flags: %s", err)
+			}
+			err = run(cmd, line.Args)
+			if err != nil {
+				return fmt.Errorf("while running: %s", err)
+			}
+		}
+		return nil
+	}
 }

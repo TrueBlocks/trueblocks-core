@@ -51,8 +51,18 @@ func (opts *GlobalOptions) TestLog() {
 	// logger.TestLog(opts.TestMode, "TestMode: ", opts.TestMode)
 }
 
+func IsTestMode() bool {
+	return os.Getenv("TEST_MODE") == "true"
+}
+
+func SetDefaultChain(opts *GlobalOptions) {
+	if len(opts.Chain) == 0 {
+		opts.Chain = config.GetDefaultChain()
+	}
+}
+
 func InitGlobals(cmd *cobra.Command, opts *GlobalOptions) {
-	opts.TestMode = os.Getenv("TEST_MODE") == "true"
+	opts.TestMode = IsTestMode()
 
 	cmd.Flags().StringVarP(&opts.Format, "fmt", "x", "", "export format, one of [none|json*|txt|csv]")
 	cmd.Flags().BoolVarP(&opts.Verbose, "verbose", "v", false, "enable verbose (increase detail with --log_level)")
@@ -88,10 +98,7 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions) {
 	cmd.Flags().MarkHidden("output")
 	cmd.Flags().MarkHidden("append")
 
-	if len(opts.Chain) == 0 {
-		opts.Chain = config.GetDefaultChain()
-	}
-
+	SetDefaultChain(opts)
 	if opts.ShowRaw {
 		opts.Format = "json"
 	}
