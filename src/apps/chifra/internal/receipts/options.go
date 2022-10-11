@@ -111,7 +111,6 @@ func GetOptions() *ReceiptsOptions {
 	return &defaultReceiptsOptions
 }
 
-// TODO: this should be added to the template
 func ResetOptions() {
 	defaultReceiptsOptions = ReceiptsOptions{}
 	// Fill newly created object with the defaults
