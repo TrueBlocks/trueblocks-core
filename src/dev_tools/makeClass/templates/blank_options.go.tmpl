@@ -82,5 +82,5 @@ func ResetOptions() {
 	default[{PROPER}]Options = ReceiptsOptions{}
 	// Fill newly created object with the defaults
 	default[{PROPER}]Options.Globals.TestMode = globals.IsTestMode()
-	globals.SetDefaultChain(&default[{PROPER}]Options.Globals)
+	globals.SetDefaults(&default[{PROPER}]Options.Globals)
 }

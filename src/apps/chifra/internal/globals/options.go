@@ -55,9 +55,13 @@ func IsTestMode() bool {
 	return os.Getenv("TEST_MODE") == "true"
 }
 
-func SetDefaultChain(opts *GlobalOptions) {
+func SetDefaults(opts *GlobalOptions) {
 	if len(opts.Chain) == 0 {
 		opts.Chain = config.GetDefaultChain()
+	}
+
+	if opts.ShowRaw {
+		opts.Format = "json"
 	}
 }
 
@@ -98,10 +102,7 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions) {
 	cmd.Flags().MarkHidden("output")
 	cmd.Flags().MarkHidden("append")
 
-	SetDefaultChain(opts)
-	if opts.ShowRaw {
-		opts.Format = "json"
-	}
+	SetDefaults(opts)
 }
 
 func (opts *GlobalOptions) toCmdLine() string {
