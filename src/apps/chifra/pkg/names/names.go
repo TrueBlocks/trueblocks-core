@@ -102,6 +102,7 @@ func LoadNamesMap(chain string) (NamesMap, error) {
 				Address:     justChars(v.Address[:]),
 				Name:        justChars(v.Name[:]),
 				Symbol:      justChars(v.Symbol[:]),
+				Decimals:    justChars([]byte(fmt.Sprintf("%d", v.Decimals))),
 				Source:      justChars(v.Source[:]),
 				Description: justChars(v.Description[:]),
 			}
@@ -173,9 +174,11 @@ func (gr *NameReader) Read() (Name, error) {
 	// isCore := record[gr.header["core"]] == "true"
 	// isValid := validate.IsValidAddress(record[gr.header["address"]]) && !validate.IsZeroAddress(record[gr.header["address"]])
 	return Name{
-		Tags:    record[gr.header["tags"]],
-		Address: strings.ToLower(record[gr.header["address"]]),
-		Name:    record[gr.header["name"]],
+		Tags:     record[gr.header["tags"]],
+		Address:  strings.ToLower(record[gr.header["address"]]),
+		Name:     record[gr.header["name"]],
+		Decimals: record[gr.header["decimals"]],
+		Symbol:   record[gr.header["symbol"]],
 		// IsActive: isActive,
 		// IsCore:   isCore,
 		// IsValid:  isValid,
