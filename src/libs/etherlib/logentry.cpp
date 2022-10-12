@@ -543,6 +543,7 @@ const char* STR_DISPLAY_LOGENTRY =
     "[{BLOCKNUMBER}]\t"
     "[{TRANSACTIONINDEX}]\t"
     "[{LOGINDEX}]\t"
+    "[{TRANSACTIONHASH}]\t"
     "[{TIMESTAMP}]\t"
     "[{ADDRESS}]\t"
     "[{TOPIC0}]\t"

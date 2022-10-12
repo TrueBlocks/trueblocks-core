@@ -43,6 +43,11 @@ func IsValidHex(typ string, val string, nBytes int) (bool, error) {
 	return true, nil
 }
 
+func IsValidHash(hash string) bool {
+	ok, err := IsValidHex("hash", hash, 32)
+	return ok && err == nil
+}
+
 func IsValidFourByteE(val string) (bool, error) {
 	return IsValidHex("fourbyte", val, 4)
 }
