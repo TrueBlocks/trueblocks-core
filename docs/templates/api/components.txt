@@ -467,6 +467,10 @@ components:
           format: blknum
           example: 354
           description: "the zero-indexed position of this log relative to the block"
+        transactionHash:
+          type: string
+          format: hash
+          description: "the hash of the transction"
         timestamp:
           type: number
           format: timestamp
