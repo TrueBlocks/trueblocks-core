@@ -46,6 +46,11 @@ func ParseCommandsFile(cmd *cobra.Command, filePath string) (cf CommandsFile, er
 		rawLine := strings.TrimSpace(scanner.Text())
 		lineNumber++
 
+		// ignore comments
+		if rawLine[0] == '#' {
+			continue
+		}
+
 		// --file inside file is forbidden
 		if strings.Contains(rawLine, "--file") {
 			err = reportErrWithLineNumber(errors.New("file uses --file flag recursively"), lineNumber)
@@ -108,11 +113,15 @@ func RunWithFileSupport(
 			// next, parse flags from the file
 			err = cmd.ParseFlags(line.Flags)
 			if err != nil {
-				return fmt.Errorf("while parsing cmd flags: %s", err)
+				return err
 			}
-			err = run(cmd, line.Args)
+			// build arguments using both ones from command line and the file
+			var callArgs []string
+			callArgs = append(callArgs, args...)
+			callArgs = append(callArgs, line.Args...)
+			err = run(cmd, callArgs)
 			if err != nil {
-				return fmt.Errorf("while running: %s", err)
+				return err
 			}
 		}
 		return nil
