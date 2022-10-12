@@ -8469,7 +8469,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 31-Giveth:Project	0xa105f825f9f5c14e88a330447b982b541dc72ae5	Alex&#39;s Lemonade Stand Foundation		Tokenomics			false	false	false	false	false	false
 50-Tokens:ERC20	0xa106739de31fa7a9df4a93c9bea3e1bade0924e2	FreeToken	FREE	On chain	18		false	false	false	true	true	false
 90-Individuals:Kickback	0xa10cc09a0a44f78af717e70ff4bbb86d58df678e	lebed2045		https://kickback.events/			false	false	false	false	false	false
-50-Tokens:ERC20	0xa117000000f279d81a1d3cc75430faa017fa5a2e	Aragon		Giveth website			false	false	false	true	false	false
+50-Tokens:ERC20	0xa117000000f279d81a1d3cc75430faa017fa5a2e	Aragon	ANT	Giveth website	18		false	false	false	true	false	false
 50-Tokens:ERC20	0xa11f2dec4bab2e07de7708dd640004ef80ccabce	OFF BLUE	BLUE	On chain	18		false	false	false	true	true	false
 31-Gitcoin:Grants	0xa129c859ded70b3c28bd1a8266e7ad28060acf4f	Grant 4007 - CarbonLand Trust		https://gitcoin.co/grants/4007/carbonland-trust			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0xa12a35ede4b30c6f2dd9464a581523f542fa0c3d	Applyingforhumanity...evenwhenacomefromMARS...@BlockchainSol		https://www.humanitydao.org/humans			false	false	false	false	false	false
@@ -13399,7 +13399,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0xff18dbc487b4c2e3222d115952babfda8ba52f5f	PureLifeCoin	LIFE	On chain	18	LIFElabs' mission is to demystify the world of cryptocurrency, giving you the opportunity to embrace the benefits of Blockchain technology.	false	false	false	true	true	false
 50-Tokens:ERC20	0xff19138b039d938db46bdda0067dc4ba132ec71c	Snetwork	SNET	On chain	8		false	false	false	true	true	false
 31-Gitcoin:Grants	0xff1a55180f24800fdc6392cdd4fe20d50f32d10e	Grant 1609 Eth Colombia Community Growth 🇨🇴		https://gitcoin.co/grants/1609/eth-colombia-community-growth			false	false	false	true	false	false
-50-Tokens:ERC20	0xff20817765cb7f73d4bde2e66e067e58d11095c2	Amp		Giveth website			false	false	false	true	false	false
+50-Tokens:ERC20	0xff20817765cb7f73d4bde2e66e067e58d11095c2	Amp	AMP	Giveth website	18		false	false	false	true	false	false
 34-ENS	0xff252725f6122a92551a5fa9a6b6bf10eb0be035	ENS Renewal Contract		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0xff2b3353c3015e9f1fbf95b9bda23f58aa7ce007	BitScreenerToken	BITX	On chain	18	BitScreener is a trusted real-time crypto-tracking platform, available on Android, iOS and Web. It is now integrating crowdsourcing financial data ecosystem on blockchain.	false	false	false	true	true	false
 50-Tokens:ERC20	0xff2f509668048d4fde4f40fedab3334ce104a39b	Ethereum: The Infinite Garden	INFINITE	On chain	18		false	false	false	true	true	false
