@@ -78,7 +78,9 @@ bool COptions::parseArguments(string_q& command) {
     // Not sure why this is here to be honest, perhaps only to make test cases pass. The test cases could be fixed...
     if (isApiMode() || expContext().exportFmt == JSON1) {
         manageFields("CLogEntry:all", FLD_HIDE);
-        manageFields("CLogEntry:address,logIndex,type,compressedLog,topics,data", FLD_SHOW);
+        manageFields(
+            "CLogEntry:address,blockNumber,transactionIndex,logIndex,transactionHash,type,compressedLog,topics,data",
+            FLD_SHOW);
     }
     // Not sure why this is here to be honest, perhaps only to make test cases pass. The test cases could be fixed...
     if (expContext().exportFmt == JSON1) {
