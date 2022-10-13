@@ -550,6 +550,7 @@ bool COptions::setDisplayFormatting(void) {
         if (logs) {
             SHOW_FIELD(CLogEntry, "blockNumber");
             SHOW_FIELD(CLogEntry, "transactionIndex");
+            SHOW_FIELD(CLogEntry, "transactionHash");
             SHOW_FIELD(CReceipt, "blockNumber");
             SHOW_FIELD(CReceipt, "transactionIndex");
         }
