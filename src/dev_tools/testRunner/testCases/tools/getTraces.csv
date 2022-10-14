@@ -2,7 +2,7 @@ enabled ,mode ,speed ,route  ,path/tool       ,filename            ,post ,option
 on      ,cmd  ,fast  ,blocks ,tools/getTraces ,preload             ,n    ,transactions = 3657480 & cache                                                                                                                                                                                                      ,getBlocks
 on      ,cmd  ,fast  ,traces ,tools/getTraces ,help                ,n    ,@h
 on      ,cmd  ,fast  ,traces ,tools/getTraces ,help_long           ,n    ,help
-on      ,cmd  ,fast  ,traces ,tools/getTraces ,by_file_v           ,y    ,verbose & file = cmd_file & fmt = json
+local      ,cmd  ,fast  ,traces ,tools/getTraces ,by_file_v           ,y    ,verbose & file = cmd_file & fmt = json
 on      ,both ,fast  ,traces ,tools/getTraces ,default             ,y    ,address = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 on      ,both ,fast  ,traces ,tools/getTraces ,no_input            ,y    ,
 on      ,both ,fast  ,traces ,tools/getTraces ,invalid_option_1    ,y    ,pink
@@ -60,7 +60,7 @@ local   ,both ,fast  ,traces ,tools/getTraces ,by_filter5          ,y    ,fmt = 
 local   ,both ,fast  ,traces ,tools/getTraces ,by_filter9          ,y    ,fmt = json & filter = 4370000!4370002!!!1!
 
 on      ,cmd  ,fast  ,traces ,tools/getTraces ,by_filebad          ,n    ,bad & file = cmd_file
-on      ,cmd  ,fast  ,traces ,tools/getTraces ,by_file             ,n    ,file = cmd_file
+local      ,cmd  ,fast  ,traces ,tools/getTraces ,by_file             ,n    ,file = cmd_file
 
 on      ,both ,fast  ,traces ,tools/getTraces ,no_tracing          ,y    ,transactions = 3648669.24 & chain = non-tracing
 on      ,both ,medi  ,traces ,tools/getTraces ,00                  ,y    ,transactions = 0x0cc945824def6a5c81d86ca56848f92163838bbd480a3bd2ff85f6d5b13d72ab & raw
