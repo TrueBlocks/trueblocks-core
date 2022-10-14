@@ -34,11 +34,13 @@ bool COptions::handle_status(ostream& os) {
             manageFields("CStatusTerse:modes1,modes2", FLD_HIDE);
             manageFields("CStatus:clientIds,host,isApi,isScraping,caches,chains", FLD_HIDE);
         }
+        size_t nRecords = ((fileSize(indexFolderBin_ts) / sizeof(uint32_t)) / 2);
         ostringstream m;
         if (isTestMode())
-            m << "--client--, --final--, --staging--, --unripe";
+            m << "--client--, --final--, --staging--, --unripe-- ts: --ts--";
         else
-            m << meta.client << ", " << meta.finalized << ", " << meta.staging << ", " << meta.unripe;
+            m << meta.client << ", " << meta.finalized << ", " << meta.staging << ", " << meta.unripe << ", "
+              << "ts: " << nRecords;
         replace(fmt, "[{PROGRESS}]", m.str());
         ostringstream n;
         n << meta.chain << " (" << meta.chainId << "," << meta.networkId << ")";
