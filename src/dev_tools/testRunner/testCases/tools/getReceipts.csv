@@ -60,6 +60,6 @@ local,cmd,fast,receipts,tools/getReceipts,cmd_file_7_with,n,file = cmd_file.7 & 
 local,cmd,fast,receipts,tools/getReceipts,cmd_file_8_alone,y,file = cmd_file.8 & transactions = 5644782.0
 local,cmd,fast,receipts,tools/getReceipts,cmd_file_8_with,n,file = cmd_file.8 & no_header & fmt = csv & transactions = 5644782.0
 
-on,both,fast,receipts,tools/getReceipts,to_file,y,transactions = 2222222.0 2332332.0 & fmt = json & to_file
+local,both,fast,receipts,tools/getReceipts,to_file,y,transactions = 2222222.0 2332332.0 & fmt = json & to_file
 on,both,fast,receipts,tools/getReceipts,redir_output,y,transactions = 2222222.0 2332332.0 & output = output_test_file
 on,both,fast,receipts,tools/getReceipts,redir_output_append,n,transactions = 5123123.0 & no_header & output = output_test_file & append

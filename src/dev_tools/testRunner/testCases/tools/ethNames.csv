@@ -39,7 +39,7 @@ on      ,both ,medi  ,names ,tools/ethNames ,upgrade_fail           ,y    ,fmt =
 on      ,both ,medi  ,names ,tools/ethNames ,duplicated_option_1    ,n    ,terms = 0xb6 & terms = torj & addr & addr & addr & addr
 on      ,both ,medi  ,names ,tools/ethNames ,name_match             ,n    ,noop & terms = torj & fmt = csv
 on      ,cmd  ,fast  ,names ,tools/ethNames ,show_version           ,n    ,version
-on      ,cmd  ,slow  ,names ,tools/ethNames ,fromFile               ,n    ,file = names.txt
+local      ,cmd  ,slow  ,names ,tools/ethNames ,fromFile               ,n    ,file = names.txt
 on      ,both ,fast  ,names ,tools/ethNames ,edit_invalid           ,y    ,invalid & log_level = 10 & fmt = json & expand
 on      ,both ,fast  ,names ,tools/ethNames ,edit_add               ,y    ,create & log_level = 10 & fmt = json & expand
 on      ,both ,fast  ,names ,tools/ethNames ,show_add               ,y    ,terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = json & expand

@@ -13,6 +13,7 @@ import (
 
 	explorePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/explore"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/spf13/cobra"
 )
 
@@ -24,7 +25,7 @@ var exploreCmd = &cobra.Command{
 	Short:   shortExplore,
 	Long:    longExplore,
 	Version: versionText,
-	RunE:    explorePkg.RunExplore,
+	RunE:    file.RunWithFileSupport(explorePkg.RunExplore, explorePkg.ResetOptions),
 }
 
 const usageExplore = `explore [flags] <term> [term...]

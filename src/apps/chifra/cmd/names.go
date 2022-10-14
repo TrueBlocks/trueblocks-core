@@ -13,6 +13,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	namesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/names"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/spf13/cobra"
 )
 
@@ -24,7 +25,7 @@ var namesCmd = &cobra.Command{
 	Short:   shortNames,
 	Long:    longNames,
 	Version: versionText,
-	RunE:    namesPkg.RunNames,
+	RunE:    file.RunWithFileSupport(namesPkg.RunNames, namesPkg.ResetOptions),
 }
 
 const usageNames = `names [flags] <term> [term...]

@@ -222,3 +222,10 @@ func GetOptions() *BlocksOptions {
 	// EXISTING_CODE
 	return &defaultBlocksOptions
 }
+
+func ResetOptions() {
+	defaultBlocksOptions = BlocksOptions{}
+	// Fill newly created object with the defaults
+	defaultBlocksOptions.Globals.TestMode = globals.IsTestMode()
+	globals.SetDefaults(&defaultBlocksOptions.Globals)
+}

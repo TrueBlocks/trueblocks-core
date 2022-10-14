@@ -13,6 +13,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	tracesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/traces"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/spf13/cobra"
 )
 
@@ -24,7 +25,7 @@ var tracesCmd = &cobra.Command{
 	Short:   shortTraces,
 	Long:    longTraces,
 	Version: versionText,
-	RunE:    tracesPkg.RunTraces,
+	RunE:    file.RunWithFileSupport(tracesPkg.RunTraces, tracesPkg.ResetOptions),
 }
 
 const usageTraces = `traces [flags] <tx_id> [tx_id...]

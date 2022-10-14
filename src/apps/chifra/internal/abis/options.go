@@ -134,3 +134,10 @@ func GetOptions() *AbisOptions {
 	// EXISTING_CODE
 	return &defaultAbisOptions
 }
+
+func ResetOptions() {
+	defaultAbisOptions = AbisOptions{}
+	// Fill newly created object with the defaults
+	defaultAbisOptions.Globals.TestMode = globals.IsTestMode()
+	globals.SetDefaults(&defaultAbisOptions.Globals)
+}

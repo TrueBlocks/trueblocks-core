@@ -13,6 +13,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	logsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/logs"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/spf13/cobra"
 )
 
@@ -24,7 +25,7 @@ var logsCmd = &cobra.Command{
 	Short:   shortLogs,
 	Long:    longLogs,
 	Version: versionText,
-	RunE:    logsPkg.RunLogs,
+	RunE:    file.RunWithFileSupport(logsPkg.RunLogs, logsPkg.ResetOptions),
 }
 
 const usageLogs = `logs [flags] <tx_id> [tx_id...]

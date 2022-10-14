@@ -90,3 +90,10 @@ func GetOptions() *InitOptions {
 	// EXISTING_CODE
 	return &defaultInitOptions
 }
+
+func ResetOptions() {
+	defaultInitOptions = InitOptions{}
+	// Fill newly created object with the defaults
+	defaultInitOptions.Globals.TestMode = globals.IsTestMode()
+	globals.SetDefaults(&defaultInitOptions.Globals)
+}

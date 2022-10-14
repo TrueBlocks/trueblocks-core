@@ -314,3 +314,10 @@ func GetOptions() *ExportOptions {
 	// EXISTING_CODE
 	return &defaultExportOptions
 }
+
+func ResetOptions() {
+	defaultExportOptions = ExportOptions{}
+	// Fill newly created object with the defaults
+	defaultExportOptions.Globals.TestMode = globals.IsTestMode()
+	globals.SetDefaults(&defaultExportOptions.Globals)
+}

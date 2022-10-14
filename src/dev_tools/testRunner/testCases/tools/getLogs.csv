@@ -29,8 +29,8 @@ on      ,both ,fast  ,logs  ,tools/getLogs ,fmt_json            ,y    ,transacti
 on      ,both ,fast  ,logs  ,tools/getLogs ,fmt_api             ,y    ,transactions = 2222222.0 2332332.0 & fmt = api
 on      ,cmd  ,fast  ,logs  ,tools/getLogs ,fmt_junk            ,y    ,transactions = 2222222.0 2332332.0 & fmt = junk
 on      ,cmd  ,fast  ,logs  ,tools/getLogs ,by_filebad          ,y    ,file = cmd_file & bad
-on      ,cmd  ,fast  ,logs  ,tools/getLogs ,by_file_v           ,y    ,file = cmd_file & verbose & fmt = json
-on      ,cmd  ,slow  ,logs  ,tools/getLogs ,by_file             ,y    ,file = cmd_file
+local      ,cmd  ,fast  ,logs  ,tools/getLogs ,by_file_v           ,y    ,file = cmd_file & verbose & fmt = json
+local      ,cmd  ,slow  ,logs  ,tools/getLogs ,by_file             ,y    ,file = cmd_file
 
 off     ,both ,fast  ,logs  ,tools/getLogs ,multi_articulate    ,y    ,transactions = 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f & articulate & fmt = json
 

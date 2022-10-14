@@ -144,3 +144,10 @@ func GetOptions() *TokensOptions {
 	// EXISTING_CODE
 	return &defaultTokensOptions
 }
+
+func ResetOptions() {
+	defaultTokensOptions = TokensOptions{}
+	// Fill newly created object with the defaults
+	defaultTokensOptions.Globals.TestMode = globals.IsTestMode()
+	globals.SetDefaults(&defaultTokensOptions.Globals)
+}

@@ -13,6 +13,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	receiptsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/receipts"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/spf13/cobra"
 )
 
@@ -24,7 +25,7 @@ var receiptsCmd = &cobra.Command{
 	Short:   shortReceipts,
 	Long:    longReceipts,
 	Version: versionText,
-	RunE:    receiptsPkg.RunReceipts,
+	RunE:    file.RunWithFileSupport(receiptsPkg.RunReceipts, receiptsPkg.ResetOptions),
 }
 
 const usageReceipts = `receipts [flags] <tx_id> [tx_id...]

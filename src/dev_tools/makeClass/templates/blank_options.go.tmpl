@@ -77,3 +77,10 @@ func GetOptions() *[{PROPER}]Options {
 	// EXISTING_CODE
 	return &default[{PROPER}]Options
 }
+
+func ResetOptions() {
+	default[{PROPER}]Options = [{PROPER}]Options{}
+	// Fill newly created object with the defaults
+	default[{PROPER}]Options.Globals.TestMode = globals.IsTestMode()
+	globals.SetDefaults(&default[{PROPER}]Options.Globals)
+}
