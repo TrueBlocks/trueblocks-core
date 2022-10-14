@@ -28,7 +28,7 @@ type CommandFileLine struct {
 // ParseCommandFile parses a text file into `CommandsFile` struct. While parsing, the function validates flags
 // present on the current line.
 func ParseCommandsFile(cmd *cobra.Command, filePath string) (cf CommandsFile, err error) {
-	// TODO: parallelize
+	// TODO(dawid): parallelize
 	inputFile, err := os.Open(filePath)
 	if err != nil {
 		return
@@ -47,6 +47,7 @@ func ParseCommandsFile(cmd *cobra.Command, filePath string) (cf CommandsFile, er
 		lineNumber++
 
 		// ignore comments
+		// TODO: BOGUS Test case with an empty line
 		if rawLine[0] == '#' {
 			continue
 		}
@@ -117,6 +118,7 @@ func RunWithFileSupport(
 			}
 			// build arguments using both ones from command line and the file
 			var callArgs []string
+			// TODO: BOGUS Does command line or file predominate?
 			callArgs = append(callArgs, args...)
 			callArgs = append(callArgs, line.Args...)
 			err = run(cmd, callArgs)
