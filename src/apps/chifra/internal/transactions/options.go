@@ -148,3 +148,10 @@ func GetOptions() *TransactionsOptions {
 	// EXISTING_CODE
 	return &defaultTransactionsOptions
 }
+
+func ResetOptions() {
+	defaultTransactionsOptions = TransactionsOptions{}
+	// Fill newly created object with the defaults
+	defaultTransactionsOptions.Globals.TestMode = globals.IsTestMode()
+	globals.SetDefaults(&defaultTransactionsOptions.Globals)
+}

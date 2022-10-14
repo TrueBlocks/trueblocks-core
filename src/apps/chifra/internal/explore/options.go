@@ -117,3 +117,10 @@ func GetOptions() *ExploreOptions {
 	// EXISTING_CODE
 	return &defaultExploreOptions
 }
+
+func ResetOptions() {
+	defaultExploreOptions = ExploreOptions{}
+	// Fill newly created object with the defaults
+	defaultExploreOptions.Globals.TestMode = globals.IsTestMode()
+	globals.SetDefaults(&defaultExploreOptions.Globals)
+}

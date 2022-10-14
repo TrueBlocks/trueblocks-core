@@ -13,6 +13,7 @@ import (
 
 	blocksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/blocks"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/spf13/cobra"
 )
 
@@ -24,7 +25,7 @@ var blocksCmd = &cobra.Command{
 	Short:   shortBlocks,
 	Long:    longBlocks,
 	Version: versionText,
-	RunE:    blocksPkg.RunBlocks,
+	RunE:    file.RunWithFileSupport(blocksPkg.RunBlocks, blocksPkg.ResetOptions),
 }
 
 const usageBlocks = `blocks [flags] <block> [block...]

@@ -149,3 +149,10 @@ func GetOptions() *TracesOptions {
 	// EXISTING_CODE
 	return &defaultTracesOptions
 }
+
+func ResetOptions() {
+	defaultTracesOptions = TracesOptions{}
+	// Fill newly created object with the defaults
+	defaultTracesOptions.Globals.TestMode = globals.IsTestMode()
+	globals.SetDefaults(&defaultTracesOptions.Globals)
+}

@@ -167,3 +167,10 @@ func GetOptions() *StateOptions {
 	// EXISTING_CODE
 	return &defaultStateOptions
 }
+
+func ResetOptions() {
+	defaultStateOptions = StateOptions{}
+	// Fill newly created object with the defaults
+	defaultStateOptions.Globals.TestMode = globals.IsTestMode()
+	globals.SetDefaults(&defaultStateOptions.Globals)
+}

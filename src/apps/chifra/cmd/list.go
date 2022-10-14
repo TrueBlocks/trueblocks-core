@@ -13,6 +13,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	listPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/list"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/spf13/cobra"
 )
 
@@ -24,7 +25,7 @@ var listCmd = &cobra.Command{
 	Short:   shortList,
 	Long:    longList,
 	Version: versionText,
-	RunE:    listPkg.RunList,
+	RunE:    file.RunWithFileSupport(listPkg.RunList, listPkg.ResetOptions),
 }
 
 const usageList = `list [flags] <address> [address...]

@@ -13,6 +13,7 @@ import (
 
 	chunksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/chunks"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/spf13/cobra"
 )
 
@@ -24,7 +25,7 @@ var chunksCmd = &cobra.Command{
 	Short:   shortChunks,
 	Long:    longChunks,
 	Version: versionText,
-	RunE:    chunksPkg.RunChunks,
+	RunE:    file.RunWithFileSupport(chunksPkg.RunChunks, chunksPkg.ResetOptions),
 }
 
 const usageChunks = `chunks <mode> [flags] [blocks...] [address...]
