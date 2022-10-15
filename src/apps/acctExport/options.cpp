@@ -223,7 +223,7 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (!isApiMode() && max_records == 250)
+    if (!isApiMode() && (max_records == 250 || max_records == 0))
         max_records = (((size_t)-100000000));  // this is a very large number that won't wrap
 
     if (accounting && !isArchiveNode())

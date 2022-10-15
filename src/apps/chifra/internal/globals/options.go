@@ -11,6 +11,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
@@ -62,7 +63,7 @@ func SetDefaults(opts *GlobalOptions) {
 }
 
 func InitGlobals(cmd *cobra.Command, opts *GlobalOptions) {
-	opts.TestMode = os.Getenv("TEST_MODE") == "true"
+	opts.TestMode = file.IsTestMode()
 
 	cmd.Flags().StringVarP(&opts.Format, "fmt", "x", "", "export format, one of [none|json*|txt|csv]")
 	cmd.Flags().BoolVarP(&opts.Verbose, "verbose", "v", false, "enable verbose (increase detail with --log_level)")
@@ -140,15 +141,12 @@ func (opts *GlobalOptions) toCmdLine() string {
 	if opts.ToFile {
 		options += " --to_file"
 	}
-	if len(opts.File) > 0 {
-		// TODO: one of the problems with this is that if the file contains invalid commands,
-		// TODO: because we don't see those commands until we're doing into the tool, we
-		// TODO: can't report on the 'bad command' in Cobra format. This will require us to
-		// TODO: keep validation code down in the tools which we want to avoid. To fix this
-		// TODO: the code below should open the file, read each command, and recursively call
-		// TODO: into chifra here.
-		options += " --file:" + opts.File
-	}
+
+	// Handled in GoLang code
+	// if len(opts.File) > 0 {
+	// 	options += " -- file:" + opts.File
+	// }
+
 	return options
 }
 

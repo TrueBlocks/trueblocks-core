@@ -39,7 +39,6 @@ on      ,both ,medi  ,names ,tools/ethNames ,upgrade_fail           ,y    ,fmt =
 on      ,both ,medi  ,names ,tools/ethNames ,duplicated_option_1    ,n    ,terms = 0xb6 & terms = torj & addr & addr & addr & addr                                                   
 on      ,both ,medi  ,names ,tools/ethNames ,name_match             ,n    ,noop & terms = torj & fmt = csv                                                                           
 on      ,cmd  ,fast  ,names ,tools/ethNames ,show_version           ,n    ,version                                                                                                   
-on      ,cmd  ,slow  ,names ,tools/ethNames ,fromFile               ,n    ,file = names.txt                                                                                          
 on      ,both ,fast  ,names ,tools/ethNames ,edit_invalid           ,y    ,invalid & log_level = 10 & fmt = json & expand                                                            
 on      ,both ,fast  ,names ,tools/ethNames ,edit_add               ,y    ,create & log_level = 10 & fmt = json & expand                                                             
 on      ,both ,fast  ,names ,tools/ethNames ,show_add               ,y    ,terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = json & expand                 
@@ -70,6 +69,8 @@ off     ,cmd  ,fast  ,null  ,tools/ethNames ,nosave_restore         ,n    ,MOVEF
 local   ,both ,fast  ,names ,tools/ethNames ,edit_custom_delete     ,y    ,delete & terms = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & log_level = 10 & to_custom & all & expand   
 local   ,both ,fast  ,names ,tools/ethNames ,edit_custom_undelete   ,y    ,undelete & terms = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & log_level = 10 & to_custom & all & expand 
         
+on      ,cmd  ,slow  ,names ,tools/ethNames ,fromFile               ,n    ,file = names.txt                                                                                          
+
 local   ,both ,medi  ,names ,tools/ethNames ,to_file                ,n    ,named & custom & fmt = json & to_file                                                                     
 on      ,both ,fast  ,names ,tools/ethNames ,redir_output           ,y    ,prefund & output = output_test_file                                                                       
 on      ,both ,fast  ,names ,tools/ethNames ,redir_output_append    ,n    ,terms = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & output = output_test_file & no_header & append       

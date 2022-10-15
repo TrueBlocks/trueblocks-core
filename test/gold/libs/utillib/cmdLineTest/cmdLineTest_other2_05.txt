@@ -1,0 +1,10 @@
+cmdLineTest  5 --int:12
+--------------------------------------------------------------------------------
+boolOption: 0
+boolSet: 0
+numOption: 12
+stringOption: 
+testNum: 5
+0. Running Test1
+	000.000 5. int  == 12                    ==> passed '(opts.numOption == 12)' is true
+ret: 0

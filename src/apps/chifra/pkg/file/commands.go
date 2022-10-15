@@ -46,9 +46,8 @@ func ParseCommandsFile(cmd *cobra.Command, filePath string) (cf CommandsFile, er
 		rawLine := strings.TrimSpace(scanner.Text())
 		lineNumber++
 
-		// ignore comments
-		// TODO: BOGUS Test case with an empty line
-		if rawLine[0] == '#' {
+		// ignore comments and empty lines
+		if len(rawLine) == 0 || rawLine[0] == '#' || rawLine[0] == ';' {
 			continue
 		}
 
@@ -122,7 +121,6 @@ func RunWithFileSupport(
 			}
 			// build arguments using both ones from command line and the file
 			var callArgs []string
-			// TODO: BOGUS Does command line or file predominate?
 			callArgs = append(callArgs, args...)
 			callArgs = append(callArgs, line.Args...)
 			err = run(cmd, callArgs)
@@ -132,4 +130,8 @@ func RunWithFileSupport(
 		}
 		return nil
 	}
+}
+
+func IsTestMode() bool {
+	return os.Getenv("TEST_MODE") == "true"
 }

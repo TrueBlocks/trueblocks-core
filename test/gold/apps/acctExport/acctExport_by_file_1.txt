@@ -1,0 +1,156 @@
+chifra export  --file cmd_file --fmt csv
+TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+TEST[DATE|TIME] Logs:  true
+TEST[DATE|TIME] Articulate:  true
+TEST[DATE|TIME] MaxRecords:  0
+TEST[DATE|TIME] Emitter:  [0x7d655c57f71464b6f83811c55d84009cd9f5221c]
+TEST[DATE|TIME] FirstBlock:  10277780
+TEST[DATE|TIME] LastBlock:  10279650
+TEST[DATE|TIME] File:  cmd_file
+TEST[DATE|TIME] Format:  json
+{ "data": [
+{
+  "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+  "blockNumber": 10277780,
+  "logIndex": 118,
+  "topics": [
+    "0x3bb7428b25f9bdad9bd2faa4c6a7a9e5d5882657e96c1d24cc41c1d6c1910a98",
+    "0x0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f",
+    "0x000000000000000000000000000000000000000000000000869d529b714a0000",
+    "0x000000000000000000000000054993ab0f2b1acc0fdc65405ee203b4271bebe6"
+  ],
+  "data": "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b",
+  "articulatedLog": {
+    "name": "DonationSent",
+    "inputs": {
+      "amount": "9700000000000000000",
+      "dest": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "donor": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
+      "token": "0x6b175474e89094c44da98b954eedeac495271d0f"
+    }
+  },
+  "compressedLog": "{name:DonationSent|inputs:{amount:9700000000000000000|dest:0xf503017d7baf7fbc0fff7492b751025c6a78179b|donor:0x054993ab0f2b1acc0fdc65405ee203b4271bebe6|token:0x6b175474e89094c44da98b954eedeac495271d0f}}",
+  "transactionHash": "0xdfa263cb6a202c9f301944cbd8be76f8cdd97e1abb42f1ca1347bb3e31fafd00",
+  "transactionIndex": 102
+}
+, {
+  "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+  "blockNumber": 10277780,
+  "logIndex": 120,
+  "topics": [
+    "0x3bb7428b25f9bdad9bd2faa4c6a7a9e5d5882657e96c1d24cc41c1d6c1910a98",
+    "0x0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f",
+    "0x00000000000000000000000000000000000000000000000003782dace9d90000",
+    "0x000000000000000000000000054993ab0f2b1acc0fdc65405ee203b4271bebe6"
+  ],
+  "data": "0x00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3",
+  "articulatedLog": {
+    "name": "DonationSent",
+    "inputs": {
+      "amount": "250000000000000000",
+      "dest": "0x00de4b13153673bcae2616b67bf822500d325fc3",
+      "donor": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
+      "token": "0x6b175474e89094c44da98b954eedeac495271d0f"
+    }
+  },
+  "compressedLog": "{name:DonationSent|inputs:{amount:250000000000000000|dest:0x00de4b13153673bcae2616b67bf822500d325fc3|donor:0x054993ab0f2b1acc0fdc65405ee203b4271bebe6|token:0x6b175474e89094c44da98b954eedeac495271d0f}}",
+  "transactionHash": "0xdfa263cb6a202c9f301944cbd8be76f8cdd97e1abb42f1ca1347bb3e31fafd00",
+  "transactionIndex": 102
+}
+, {
+  "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+  "blockNumber": 10279310,
+  "logIndex": 100,
+  "topics": [
+    "0x3bb7428b25f9bdad9bd2faa4c6a7a9e5d5882657e96c1d24cc41c1d6c1910a98",
+    "0x0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f",
+    "0x00000000000000000000000000000000000000000000000041eb63d55b1b0000",
+    "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
+  ],
+  "data": "0x000000000000000000000000a735cf11ed1228feb7c7bb18673a868455ffb16f",
+  "articulatedLog": {
+    "name": "DonationSent",
+    "inputs": {
+      "amount": "4750000000000000000",
+      "dest": "0xa735cf11ed1228feb7c7bb18673a868455ffb16f",
+      "donor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "token": "0x6b175474e89094c44da98b954eedeac495271d0f"
+    }
+  },
+  "compressedLog": "{name:DonationSent|inputs:{amount:4750000000000000000|dest:0xa735cf11ed1228feb7c7bb18673a868455ffb16f|donor:0xf503017d7baf7fbc0fff7492b751025c6a78179b|token:0x6b175474e89094c44da98b954eedeac495271d0f}}",
+  "transactionHash": "0x2f83088fa87f6054779a5511ec4f6b64f1e773e9bd7ec97956d6e04910d59303",
+  "transactionIndex": 59
+}
+, {
+  "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+  "blockNumber": 10279310,
+  "logIndex": 102,
+  "topics": [
+    "0x3bb7428b25f9bdad9bd2faa4c6a7a9e5d5882657e96c1d24cc41c1d6c1910a98",
+    "0x0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f",
+    "0x00000000000000000000000000000000000000000000000003782dace9d90000",
+    "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
+  ],
+  "data": "0x00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3",
+  "articulatedLog": {
+    "name": "DonationSent",
+    "inputs": {
+      "amount": "250000000000000000",
+      "dest": "0x00de4b13153673bcae2616b67bf822500d325fc3",
+      "donor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "token": "0x6b175474e89094c44da98b954eedeac495271d0f"
+    }
+  },
+  "compressedLog": "{name:DonationSent|inputs:{amount:250000000000000000|dest:0x00de4b13153673bcae2616b67bf822500d325fc3|donor:0xf503017d7baf7fbc0fff7492b751025c6a78179b|token:0x6b175474e89094c44da98b954eedeac495271d0f}}",
+  "transactionHash": "0x2f83088fa87f6054779a5511ec4f6b64f1e773e9bd7ec97956d6e04910d59303",
+  "transactionIndex": 59
+}
+, {
+  "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+  "blockNumber": 10279650,
+  "logIndex": 227,
+  "topics": [
+    "0x3bb7428b25f9bdad9bd2faa4c6a7a9e5d5882657e96c1d24cc41c1d6c1910a98",
+    "0x0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f",
+    "0x00000000000000000000000000000000000000000000000041eb63d55b1b0000",
+    "0x00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3"
+  ],
+  "data": "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b",
+  "articulatedLog": {
+    "name": "DonationSent",
+    "inputs": {
+      "amount": "4750000000000000000",
+      "dest": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "donor": "0x00de4b13153673bcae2616b67bf822500d325fc3",
+      "token": "0x6b175474e89094c44da98b954eedeac495271d0f"
+    }
+  },
+  "compressedLog": "{name:DonationSent|inputs:{amount:4750000000000000000|dest:0xf503017d7baf7fbc0fff7492b751025c6a78179b|donor:0x00de4b13153673bcae2616b67bf822500d325fc3|token:0x6b175474e89094c44da98b954eedeac495271d0f}}",
+  "transactionHash": "0xc670a40b06e179b459f8bb7ae8e3d9cf985abb325b355ea2ea8b4822e66c1f55",
+  "transactionIndex": 35
+}
+, {
+  "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+  "blockNumber": 10279650,
+  "logIndex": 229,
+  "topics": [
+    "0x3bb7428b25f9bdad9bd2faa4c6a7a9e5d5882657e96c1d24cc41c1d6c1910a98",
+    "0x0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f",
+    "0x00000000000000000000000000000000000000000000000003782dace9d90000",
+    "0x00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3"
+  ],
+  "data": "0x00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3",
+  "articulatedLog": {
+    "name": "DonationSent",
+    "inputs": {
+      "amount": "250000000000000000",
+      "dest": "0x00de4b13153673bcae2616b67bf822500d325fc3",
+      "donor": "0x00de4b13153673bcae2616b67bf822500d325fc3",
+      "token": "0x6b175474e89094c44da98b954eedeac495271d0f"
+    }
+  },
+  "compressedLog": "{name:DonationSent|inputs:{amount:250000000000000000|dest:0x00de4b13153673bcae2616b67bf822500d325fc3|donor:0x00de4b13153673bcae2616b67bf822500d325fc3|token:0x6b175474e89094c44da98b954eedeac495271d0f}}",
+  "transactionHash": "0xc670a40b06e179b459f8bb7ae8e3d9cf985abb325b355ea2ea8b4822e66c1f55",
+  "transactionIndex": 35
+}
+] }

@@ -81,7 +81,7 @@ local   ,cmd  ,medi  ,when  ,tools/whenBlock ,skip_monthly                ,n    
 local   ,cmd  ,medi  ,when  ,tools/whenBlock ,skip_quaterly               ,n    ,fmt = txt & blocks = 768414-1856235:quarterly                                               
 local   ,cmd  ,medi  ,when  ,tools/whenBlock ,skip_annually               ,n    ,fmt = txt & blocks = 768414-4838611:annually                                                
         
-#       ,     ,      ,      ,                ,                            ,     ,these three cause the test to create a file in the root config - problem with testRunner    
+#       ,     ,      ,      ,                ,                            ,     ,these three file because a f i l e is created in the root config - a problem with testRunner
 local   ,both ,fast  ,when  ,tools/whenBlock ,customized_1                ,y    ,blocks = myblock                                                                            
 local   ,both ,fast  ,when  ,tools/whenBlock ,homestead_customized        ,y    ,blocks = homestead & verbose & fmt = json                                                   
 local   ,cmd  ,fast  ,when  ,tools/whenBlock ,upgrade_test                ,y    ,help                                                                                        
