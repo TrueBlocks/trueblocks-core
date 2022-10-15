@@ -250,24 +250,39 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
 
     if (!cmdFileName.empty()) {
         string_q toAll;
-        if (!commandList.empty())
-            toAll = (" " + substitute(commandList, "\n", ""));
+        if (!commandList.empty()) {
+            toAll = (" " + trim(substitute(commandList, "\n", "")));
+        }
         commandList = "";
+        while (contains(toAll, "  ")) {
+            replace(toAll, "  ", " ");
+        }
+
         // The command line also has a --file in it, so add these commands as well
         string_q contents = substitute(asciiFileToString(cmdFileName), "\t", " ");
         cleanString(contents, false);
-        if (contents.empty())
+        if (contents.empty()) {
             return usage("Command file '" + cmdFileName + "' is empty.");
+        }
+
         if (startsWith(contents, "NOPARSE\n")) {
             commandList = contents;
             nextTokenClear(commandList, '\n');
             commandList += toAll;
+
         } else {
             CStringArray lines;
             explode(lines, contents, '\n');
             for (auto command : lines) {
-                while (contains(command, "--fmt  "))
+                while (contains(command, "  ")) {
+                    replace(command, "  ", " ");
+                }
+                command = trim(command, ' ');
+                cerr << "[" << command << "][" << toAll << "]" << endl;
+
+                while (contains(command, "--fmt  ")) {
                     replace(command, "--fmt  ", "--fmt ");
+                }
                 replace(command, "--fmt ", "--fmt:");
                 if (!command.empty() && !startsWith(command, ";") && !startsWith(command, "#")) {  // ignore comments
                     commandList += (command + toAll + "\n");

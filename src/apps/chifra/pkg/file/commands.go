@@ -57,6 +57,10 @@ func ParseCommandsFile(cmd *cobra.Command, filePath string) (cf CommandsFile, er
 			err = reportErrWithLineNumber(errors.New("file uses --file flag recursively"), lineNumber)
 			return
 		}
+
+		// remove unwanted whitespace including duplicate spaces, etc.
+		rawLine = strings.Join(strings.Fields(rawLine), " ")
+
 		// both cobra and pflags packages expect their parameters to be slices of strings
 		tokens := strings.Split(rawLine, " ")
 		// validate flags (we assume that `Flags()` returns `FlagSet` with both local and

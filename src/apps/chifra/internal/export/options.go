@@ -317,7 +317,5 @@ func GetOptions() *ExportOptions {
 
 func ResetOptions() {
 	defaultExportOptions = ExportOptions{}
-	// Fill newly created object with the defaults
-	defaultExportOptions.Globals.TestMode = globals.IsTestMode()
 	globals.SetDefaults(&defaultExportOptions.Globals)
 }

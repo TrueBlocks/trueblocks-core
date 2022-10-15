@@ -112,7 +112,5 @@ func GetOptions() *ListOptions {
 
 func ResetOptions() {
 	defaultListOptions = ListOptions{}
-	// Fill newly created object with the defaults
-	defaultListOptions.Globals.TestMode = globals.IsTestMode()
 	globals.SetDefaults(&defaultListOptions.Globals)
 }

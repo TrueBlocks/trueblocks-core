@@ -113,8 +113,5 @@ func GetOptions() *ReceiptsOptions {
 
 func ResetOptions() {
 	defaultReceiptsOptions = ReceiptsOptions{}
-	// Fill newly created object with the defaults
-	// TODO: BOGUS Can this be removed?
-	defaultReceiptsOptions.Globals.TestMode = globals.IsTestMode()
 	globals.SetDefaults(&defaultReceiptsOptions.Globals)
 }

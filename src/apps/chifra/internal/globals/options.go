@@ -51,10 +51,6 @@ func (opts *GlobalOptions) TestLog() {
 	// logger.TestLog(opts.TestMode, "TestMode: ", opts.TestMode)
 }
 
-func IsTestMode() bool {
-	return os.Getenv("TEST_MODE") == "true"
-}
-
 func SetDefaults(opts *GlobalOptions) {
 	if len(opts.Chain) == 0 {
 		opts.Chain = config.GetDefaultChain()
@@ -66,7 +62,7 @@ func SetDefaults(opts *GlobalOptions) {
 }
 
 func InitGlobals(cmd *cobra.Command, opts *GlobalOptions) {
-	opts.TestMode = IsTestMode()
+	opts.TestMode = os.Getenv("TEST_MODE") == "true"
 
 	cmd.Flags().StringVarP(&opts.Format, "fmt", "x", "", "export format, one of [none|json*|txt|csv]")
 	cmd.Flags().BoolVarP(&opts.Verbose, "verbose", "v", false, "enable verbose (increase detail with --log_level)")
