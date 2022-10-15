@@ -25,7 +25,7 @@ var blocksCmd = &cobra.Command{
 	Short:   shortBlocks,
 	Long:    longBlocks,
 	Version: versionText,
-	RunE:    file.RunWithFileSupport(blocksPkg.RunBlocks, blocksPkg.ResetOptions),
+	RunE:    file.RunWithFileSupport("blocks", blocksPkg.RunBlocks, blocksPkg.ResetOptions),
 }
 
 const usageBlocks = `blocks [flags] <block> [block...]

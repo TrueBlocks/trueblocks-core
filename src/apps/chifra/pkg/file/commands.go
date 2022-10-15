@@ -89,6 +89,7 @@ func ParseCommandsFile(cmd *cobra.Command, filePath string) (cf CommandsFile, er
 // and then run the command in series of independent calls (just like calling `chifra`
 // N times on the command line, but without wasting time and resources for the startup)
 func RunWithFileSupport(
+	mode string,
 	run func(cmd *cobra.Command, args []string) error,
 	resetOptions func(),
 ) func(cmd *cobra.Command, args []string) error {
@@ -99,9 +100,25 @@ func RunWithFileSupport(
 		if err != nil {
 			return err
 		}
-		if filePath == "" {
+
+		// TODO: see issue #2444 - probably better ways to do this
+		forced := map[string]bool{
+			"monitors": true,
+		}
+		if filePath == "" || forced[mode] {
 			// `--file` has not been provided, run the command as usual
 			return run(cmd, args)
+		}
+
+		// TODO: see issue #2444 - probably better ways to do this
+		disallowed := map[string]bool{
+			"serve":  true,
+			"scrape": true,
+			"init":   true,
+		}
+		if disallowed[mode] {
+			msg := fmt.Sprintf("The --file option is not allowed in %s mode.", mode)
+			return errors.New(msg)
 		}
 
 		// parse commands file

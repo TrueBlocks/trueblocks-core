@@ -25,7 +25,7 @@ var whenCmd = &cobra.Command{
 	Short:   shortWhen,
 	Long:    longWhen,
 	Version: versionText,
-	RunE:    file.RunWithFileSupport(whenPkg.RunWhen, whenPkg.ResetOptions),
+	RunE:    file.RunWithFileSupport("when", whenPkg.RunWhen, whenPkg.ResetOptions),
 }
 
 const usageWhen = `when [flags] < block | date > [ block... | date... ]

@@ -25,7 +25,7 @@ var exportCmd = &cobra.Command{
 	Short:   shortExport,
 	Long:    longExport,
 	Version: versionText,
-	RunE:    file.RunWithFileSupport(exportPkg.RunExport, exportPkg.ResetOptions),
+	RunE:    file.RunWithFileSupport("export", exportPkg.RunExport, exportPkg.ResetOptions),
 }
 
 const usageExport = `export [flags] <address> [address...] [topics...] [fourbytes...]

@@ -25,7 +25,7 @@ var namesCmd = &cobra.Command{
 	Short:   shortNames,
 	Long:    longNames,
 	Version: versionText,
-	RunE:    file.RunWithFileSupport(namesPkg.RunNames, namesPkg.ResetOptions),
+	RunE:    file.RunWithFileSupport("names", namesPkg.RunNames, namesPkg.ResetOptions),
 }
 
 const usageNames = `names [flags] <term> [term...]

@@ -25,7 +25,7 @@ var logsCmd = &cobra.Command{
 	Short:   shortLogs,
 	Long:    longLogs,
 	Version: versionText,
-	RunE:    file.RunWithFileSupport(logsPkg.RunLogs, logsPkg.ResetOptions),
+	RunE:    file.RunWithFileSupport("logs", logsPkg.RunLogs, logsPkg.ResetOptions),
 }
 
 const usageLogs = `logs [flags] <tx_id> [tx_id...]

@@ -25,7 +25,7 @@ var chunksCmd = &cobra.Command{
 	Short:   shortChunks,
 	Long:    longChunks,
 	Version: versionText,
-	RunE:    file.RunWithFileSupport(chunksPkg.RunChunks, chunksPkg.ResetOptions),
+	RunE:    file.RunWithFileSupport("chunks", chunksPkg.RunChunks, chunksPkg.ResetOptions),
 }
 
 const usageChunks = `chunks <mode> [flags] [blocks...] [address...]

@@ -25,7 +25,7 @@ var tracesCmd = &cobra.Command{
 	Short:   shortTraces,
 	Long:    longTraces,
 	Version: versionText,
-	RunE:    file.RunWithFileSupport(tracesPkg.RunTraces, tracesPkg.ResetOptions),
+	RunE:    file.RunWithFileSupport("traces", tracesPkg.RunTraces, tracesPkg.ResetOptions),
 }
 
 const usageTraces = `traces [flags] <tx_id> [tx_id...]

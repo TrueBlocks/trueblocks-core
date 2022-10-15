@@ -25,7 +25,7 @@ var slurpCmd = &cobra.Command{
 	Short:   shortSlurp,
 	Long:    longSlurp,
 	Version: versionText,
-	RunE:    file.RunWithFileSupport(slurpPkg.RunSlurp, slurpPkg.ResetOptions),
+	RunE:    file.RunWithFileSupport("slurp", slurpPkg.RunSlurp, slurpPkg.ResetOptions),
 }
 
 const usageSlurp = `slurp [flags] <address> [address...] [block...]

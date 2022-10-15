@@ -25,7 +25,7 @@ var abisCmd = &cobra.Command{
 	Short:   shortAbis,
 	Long:    longAbis,
 	Version: versionText,
-	RunE:    file.RunWithFileSupport(abisPkg.RunAbis, abisPkg.ResetOptions),
+	RunE:    file.RunWithFileSupport("abis", abisPkg.RunAbis, abisPkg.ResetOptions),
 }
 
 const usageAbis = `abis [flags] <address> [address...]

@@ -25,7 +25,7 @@ var tokensCmd = &cobra.Command{
 	Short:   shortTokens,
 	Long:    longTokens,
 	Version: versionText,
-	RunE:    file.RunWithFileSupport(tokensPkg.RunTokens, tokensPkg.ResetOptions),
+	RunE:    file.RunWithFileSupport("tokens", tokensPkg.RunTokens, tokensPkg.ResetOptions),
 }
 
 const usageTokens = `tokens [flags] <address> <address> [address...] [block...]

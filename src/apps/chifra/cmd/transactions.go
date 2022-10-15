@@ -25,7 +25,7 @@ var transactionsCmd = &cobra.Command{
 	Short:   shortTransactions,
 	Long:    longTransactions,
 	Version: versionText,
-	RunE:    file.RunWithFileSupport(transactionsPkg.RunTransactions, transactionsPkg.ResetOptions),
+	RunE:    file.RunWithFileSupport("transactions", transactionsPkg.RunTransactions, transactionsPkg.ResetOptions),
 }
 
 const usageTransactions = `transactions [flags] <tx_id> [tx_id...]
