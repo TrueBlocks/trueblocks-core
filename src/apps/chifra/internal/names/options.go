@@ -218,7 +218,5 @@ func GetOptions() *NamesOptions {
 
 func ResetOptions() {
 	defaultNamesOptions = NamesOptions{}
-	// Fill newly created object with the defaults
-	defaultNamesOptions.Globals.TestMode = globals.IsTestMode()
 	globals.SetDefaults(&defaultNamesOptions.Globals)
 }

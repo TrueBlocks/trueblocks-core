@@ -2,10 +2,41 @@ chifra receipts  --file cmd_file.4 --no_header --fmt txt 5644782.0
 TEST[DATE|TIME] Transactions:  [5644782.0]
 TEST[DATE|TIME] NoHeader:  true
 TEST[DATE|TIME] File:  cmd_file.4
-TEST[DATE|TIME] Format:  txt
-Cmd: --fmt:json 5644782.0 --no_header 
-Cmd: --fmt:csv 5644782.0 --no_header 
-Cmd: --fmt:tsv 5644782.0 --no_header 
-5644782	0	0x785b88bfb800c34f0972bd2a1b02fb4bd03abc72dce675d00c2e4ae99f7aff96	21000	1	0
-5644782	0	0x785b88bfb800c34f0972bd2a1b02fb4bd03abc72dce675d00c2e4ae99f7aff96	21000	1	0
-5644782	0	0x785b88bfb800c34f0972bd2a1b02fb4bd03abc72dce675d00c2e4ae99f7aff96	21000	1	0
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "blockNumber": 5644782,
+      "gasUsed": 21000,
+      "hash": "0x785b88bfb800c34f0972bd2a1b02fb4bd03abc72dce675d00c2e4ae99f7aff96",
+      "status": 1,
+      "transactionIndex": 0
+    }
+  ]
+}
+TEST[DATE|TIME] Transactions:  [5644782.0]
+TEST[DATE|TIME] NoHeader:  true
+TEST[DATE|TIME] File:  cmd_file.4
+TEST[DATE|TIME] Format:  csv
+5644782,0,0x785b88bfb800c34f0972bd2a1b02fb4bd03abc72dce675d00c2e4ae99f7aff96,21000,1,false
+TEST[DATE|TIME] Transactions:  [5644782.0]
+TEST[DATE|TIME] NoHeader:  true
+TEST[DATE|TIME] File:  cmd_file.4
+TEST[DATE|TIME] Format:  tsv
+Error: The --fmt option (tsv) must be one of [ json | txt | csv ]
+Usage:
+  chifra receipts [flags] <tx_id> [tx_id...]
+
+Arguments:
+  transactions - a space-separated list of one or more transaction identifiers (required)
+
+Flags:
+  -a, --articulate   articulate the retrieved data if ABIs can be found
+  -x, --fmt string   export format, one of [none|json*|txt|csv]
+  -v, --verbose      enable verbose (increase detail with --log_level)
+  -h, --help         display this help screen
+
+Notes:
+  - The transactions list may be one or more transaction hashes, blockNumber.transactionID pairs, or a blockHash.transactionID pairs.
+  - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
+  - If the queried node does not store historical state, the results for most older transactions are undefined.

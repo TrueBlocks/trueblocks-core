@@ -125,7 +125,5 @@ func GetOptions() *MonitorsOptions {
 
 func ResetOptions() {
 	defaultMonitorsOptions = MonitorsOptions{}
-	// Fill newly created object with the defaults
-	defaultMonitorsOptions.Globals.TestMode = globals.IsTestMode()
 	globals.SetDefaults(&defaultMonitorsOptions.Globals)
 }

@@ -93,7 +93,9 @@ int main(int argc, const char* argv[]) {
 
                 if (line.empty() || ignore1 || ignore2 || ignore3 || ignore4) {
                     if (ignore2 && !options.ignoreOff) {
-                        cerr << iBlue << "   # " << line.substr(0, 120) << cOff << endl;
+                        if (trim(line).substr(0, 120).length() > 0) {
+                            cerr << iBlue << "   # " << line.substr(0, 120) << cOff << endl;
+                        }
                         CTestCase test(line, 0);
                         test.goldPath = substitute(getCWD(), "/test/gold/dev_tools/testRunner/",
                                                    "/test/gold/" + test.path + "/" + test.tool + "/" + test.fileName);

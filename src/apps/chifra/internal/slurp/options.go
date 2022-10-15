@@ -140,7 +140,5 @@ func GetOptions() *SlurpOptions {
 
 func ResetOptions() {
 	defaultSlurpOptions = SlurpOptions{}
-	// Fill newly created object with the defaults
-	defaultSlurpOptions.Globals.TestMode = globals.IsTestMode()
 	globals.SetDefaults(&defaultSlurpOptions.Globals)
 }

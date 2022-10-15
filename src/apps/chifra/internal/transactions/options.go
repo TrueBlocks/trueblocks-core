@@ -151,7 +151,5 @@ func GetOptions() *TransactionsOptions {
 
 func ResetOptions() {
 	defaultTransactionsOptions = TransactionsOptions{}
-	// Fill newly created object with the defaults
-	defaultTransactionsOptions.Globals.TestMode = globals.IsTestMode()
 	globals.SetDefaults(&defaultTransactionsOptions.Globals)
 }

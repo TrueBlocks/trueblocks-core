@@ -127,7 +127,5 @@ func GetOptions() *WhenOptions {
 
 func ResetOptions() {
 	defaultWhenOptions = WhenOptions{}
-	// Fill newly created object with the defaults
-	defaultWhenOptions.Globals.TestMode = globals.IsTestMode()
 	globals.SetDefaults(&defaultWhenOptions.Globals)
 }

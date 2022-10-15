@@ -160,7 +160,5 @@ func GetOptions() *StatusOptions {
 
 func ResetOptions() {
 	defaultStatusOptions = StatusOptions{}
-	// Fill newly created object with the defaults
-	defaultStatusOptions.Globals.TestMode = globals.IsTestMode()
 	globals.SetDefaults(&defaultStatusOptions.Globals)
 }

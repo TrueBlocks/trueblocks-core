@@ -113,7 +113,5 @@ func GetOptions() *LogsOptions {
 
 func ResetOptions() {
 	defaultLogsOptions = LogsOptions{}
-	// Fill newly created object with the defaults
-	defaultLogsOptions.Globals.TestMode = globals.IsTestMode()
 	globals.SetDefaults(&defaultLogsOptions.Globals)
 }

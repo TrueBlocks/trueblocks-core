@@ -28,7 +28,7 @@ type CommandFileLine struct {
 // ParseCommandFile parses a text file into `CommandsFile` struct. While parsing, the function validates flags
 // present on the current line.
 func ParseCommandsFile(cmd *cobra.Command, filePath string) (cf CommandsFile, err error) {
-	// TODO: parallelize
+	// TODO(dawid): parallelize
 	inputFile, err := os.Open(filePath)
 	if err != nil {
 		return
@@ -46,8 +46,8 @@ func ParseCommandsFile(cmd *cobra.Command, filePath string) (cf CommandsFile, er
 		rawLine := strings.TrimSpace(scanner.Text())
 		lineNumber++
 
-		// ignore comments
-		if rawLine[0] == '#' {
+		// ignore comments and empty lines
+		if len(rawLine) == 0 || rawLine[0] == '#' || rawLine[0] == ';' {
 			continue
 		}
 
@@ -56,6 +56,10 @@ func ParseCommandsFile(cmd *cobra.Command, filePath string) (cf CommandsFile, er
 			err = reportErrWithLineNumber(errors.New("file uses --file flag recursively"), lineNumber)
 			return
 		}
+
+		// remove unwanted whitespace including duplicate spaces, etc.
+		rawLine = strings.Join(strings.Fields(rawLine), " ")
+
 		// both cobra and pflags packages expect their parameters to be slices of strings
 		tokens := strings.Split(rawLine, " ")
 		// validate flags (we assume that `Flags()` returns `FlagSet` with both local and
@@ -126,4 +130,8 @@ func RunWithFileSupport(
 		}
 		return nil
 	}
+}
+
+func IsTestMode() bool {
+	return os.Getenv("TEST_MODE") == "true"
 }

@@ -53,6 +53,11 @@ bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
     replaceAll(source, "[{SHORT}]", descr);
 
     string_q fn = getPathToSource("apps/chifra/cmd/" + p.api_route + ".go");
+    // issue #2440
+    if (contains(p.api_route, "monitors")) {
+        source = substitute(source, "file.RunWithFileSupport(monitorsPkg.RunMonitors, monitorsPkg.ResetOptions)",
+                            "monitorsPkg.RunMonitors");
+    }
     codewrite_t cw(fn, source);
     cw.nSpaces = 0;
     cw.stripEOFNL = false;

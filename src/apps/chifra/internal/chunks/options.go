@@ -146,7 +146,5 @@ func GetOptions() *ChunksOptions {
 
 func ResetOptions() {
 	defaultChunksOptions = ChunksOptions{}
-	// Fill newly created object with the defaults
-	defaultChunksOptions.Globals.TestMode = globals.IsTestMode()
 	globals.SetDefaults(&defaultChunksOptions.Globals)
 }

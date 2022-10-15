@@ -1,6 +1,6 @@
 lastBlockTest  recurse
 Recursive from ../
-Found 121 (121) files
+Found 117 (117) files
 ../abiTest/abiTest_01.txt
 ../abiTest/abiTest_02.txt
 ../abiTest/abiTest_03.txt
@@ -39,16 +39,12 @@ Found 121 (121) files
 ../blockTest/blockTest_03.txt
 ../blockTest/blockTest_04.txt
 ../blockTest/blockTest_README.txt
-../dataUpgradeTest/cmd_file1
-../dataUpgradeTest/cmd_file2
 ../dataUpgradeTest/dataUpgradeTest_00.txt
 ../dataUpgradeTest/dataUpgradeTest_01.txt
 ../dataUpgradeTest/dataUpgradeTest_02.txt
 ../dataUpgradeTest/dataUpgradeTest_03.txt
 ../dataUpgradeTest/dataUpgradeTest_04.txt
 ../dataUpgradeTest/dataUpgradeTest_05.txt
-../dataUpgradeTest/dataUpgradeTest_06.txt
-../dataUpgradeTest/dataUpgradeTest_AllClasses.txt
 ../dataUpgradeTest/dataUpgradeTest_CAbi.txt
 ../dataUpgradeTest/dataUpgradeTest_CApiSpec.txt
 ../dataUpgradeTest/dataUpgradeTest_CBlock.txt

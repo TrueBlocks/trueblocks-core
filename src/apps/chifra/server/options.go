@@ -105,7 +105,5 @@ func GetOptions() *ServeOptions {
 
 func ResetOptions() {
 	defaultServeOptions = ServeOptions{}
-	// Fill newly created object with the defaults
-	defaultServeOptions.Globals.TestMode = globals.IsTestMode()
 	globals.SetDefaults(&defaultServeOptions.Globals)
 }
