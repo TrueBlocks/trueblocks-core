@@ -25,7 +25,7 @@ var exploreCmd = &cobra.Command{
 	Short:   shortExplore,
 	Long:    longExplore,
 	Version: versionText,
-	RunE:    file.RunWithFileSupport(explorePkg.RunExplore, explorePkg.ResetOptions),
+	RunE:    file.RunWithFileSupport("explore", explorePkg.RunExplore, explorePkg.ResetOptions),
 }
 
 const usageExplore = `explore [flags] <term> [term...]

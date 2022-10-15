@@ -25,7 +25,7 @@ var receiptsCmd = &cobra.Command{
 	Short:   shortReceipts,
 	Long:    longReceipts,
 	Version: versionText,
-	RunE:    file.RunWithFileSupport(receiptsPkg.RunReceipts, receiptsPkg.ResetOptions),
+	RunE:    file.RunWithFileSupport("receipts", receiptsPkg.RunReceipts, receiptsPkg.ResetOptions),
 }
 
 const usageReceipts = `receipts [flags] <tx_id> [tx_id...]

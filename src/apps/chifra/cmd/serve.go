@@ -25,7 +25,7 @@ var serveCmd = &cobra.Command{
 	Short:   shortServe,
 	Long:    longServe,
 	Version: versionText,
-	RunE:    file.RunWithFileSupport(servePkg.RunServe, servePkg.ResetOptions),
+	RunE:    file.RunWithFileSupport("serve", servePkg.RunServe, servePkg.ResetOptions),
 }
 
 const usageServe = `serve [flags]`

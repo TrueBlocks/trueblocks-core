@@ -38,3 +38,5 @@ off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_35_paused_quit_okay     ,n 
 off     ,both ,fast  ,export ,apps/blockScrape ,RESET2                       ,n    ,RESET                                           
 off     ,both ,fast  ,scrape ,apps/blockScrape ,real_run                     ,n    ,modes = both & sleep = .5 & pin & log_level = 8 
 off     ,both ,fast  ,scrape ,apps/blockScrape ,real_run2                    ,n    ,modes = both & sleep = .5                       
+        
+on      ,both ,fast  ,scrape ,apps/blockScrape ,by_file_bad                  ,n    ,file = cmd_file_2                               

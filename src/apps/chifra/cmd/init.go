@@ -25,7 +25,7 @@ var initCmd = &cobra.Command{
 	Short:   shortInit,
 	Long:    longInit,
 	Version: versionText,
-	RunE:    file.RunWithFileSupport(initPkg.RunInit, initPkg.ResetOptions),
+	RunE:    file.RunWithFileSupport("init", initPkg.RunInit, initPkg.ResetOptions),
 }
 
 const usageInit = `init [flags]`

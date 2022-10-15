@@ -25,7 +25,7 @@ var scrapeCmd = &cobra.Command{
 	Short:   shortScrape,
 	Long:    longScrape,
 	Version: versionText,
-	RunE:    file.RunWithFileSupport(scrapePkg.RunScrape, scrapePkg.ResetOptions),
+	RunE:    file.RunWithFileSupport("scrape", scrapePkg.RunScrape, scrapePkg.ResetOptions),
 }
 
 const usageScrape = `scrape [flags]`

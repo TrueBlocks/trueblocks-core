@@ -25,7 +25,7 @@ var listCmd = &cobra.Command{
 	Short:   shortList,
 	Long:    longList,
 	Version: versionText,
-	RunE:    file.RunWithFileSupport(listPkg.RunList, listPkg.ResetOptions),
+	RunE:    file.RunWithFileSupport("list", listPkg.RunList, listPkg.ResetOptions),
 }
 
 const usageList = `list [flags] <address> [address...]

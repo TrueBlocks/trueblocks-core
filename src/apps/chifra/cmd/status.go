@@ -25,7 +25,7 @@ var statusCmd = &cobra.Command{
 	Short:   shortStatus,
 	Long:    longStatus,
 	Version: versionText,
-	RunE:    file.RunWithFileSupport(statusPkg.RunStatus, statusPkg.ResetOptions),
+	RunE:    file.RunWithFileSupport("status", statusPkg.RunStatus, statusPkg.ResetOptions),
 }
 
 const usageStatus = `status <mode> [mode...] [flags]

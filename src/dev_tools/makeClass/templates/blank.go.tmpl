@@ -16,7 +16,7 @@ var [{ROUTE}]Cmd = &cobra.Command{
 	Short:   short[{PROPER}],
 	Long:    long[{PROPER}],
 	Version: versionText,
-	RunE:    file.RunWithFileSupport([{ROUTE}]Pkg.Run[{PROPER}], [{ROUTE}]Pkg.ResetOptions),
+	RunE:    file.RunWithFileSupport("[{ROUTE}]", [{ROUTE}]Pkg.Run[{PROPER}], [{ROUTE}]Pkg.ResetOptions),
 }
 
 const usage[{PROPER}] = `[{USE}]`

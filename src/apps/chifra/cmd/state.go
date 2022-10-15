@@ -25,7 +25,7 @@ var stateCmd = &cobra.Command{
 	Short:   shortState,
 	Long:    longState,
 	Version: versionText,
-	RunE:    file.RunWithFileSupport(statePkg.RunState, statePkg.ResetOptions),
+	RunE:    file.RunWithFileSupport("state", statePkg.RunState, statePkg.ResetOptions),
 }
 
 const usageState = `state [flags] <address> [address...] [block...]
