@@ -240,7 +240,7 @@ names?fmt=json
       "address": "0x0001fb050fe7312791bf6475b96569d83f695c9f",
       "name": "Ygov.finance: yearn",
       "symbol": "",
-      "source": "EtherScan.io",
+      "source": "",
       "decimals": 0,
       "petname": "endlessly-apparent-dodo"
     },

@@ -207,7 +207,6 @@ TEST[DATE|TIME] Format:  json
     "tags": "55-Defi",
     "address": "0x0001fb050fe7312791bf6475b96569d83f695c9f",
     "name": "Ygov.finance: yearn",
-    "source": "EtherScan.io",
     "petname": "endlessly-apparent-dodo"
   },
   {
