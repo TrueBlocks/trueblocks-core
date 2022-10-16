@@ -132,7 +132,7 @@ func logErrors(errsToReport []string) {
 type fetchDataFunc[Raw types.RawData] func(modelChan chan types.Modeler[Raw], errorChan chan error)
 
 type OutputFile struct {
-	Filename string `json:"outputFilename"`
+	OutputFilename string `json:"outputFilename"`
 }
 
 // StreamMany outputs models or raw data as they are acquired
@@ -148,14 +148,16 @@ func StreamMany[Raw types.RawData](ctx context.Context, fetchData fetchDataFunc[
 		fetchData(modelChan, errorChan)
 		close(modelChan)
 		close(errorChan)
+		// Sorry. We need to tell the user where the file is
 		if len(options.OutputFn) > 0 {
+			fn := options.OutputFn
+			if file.IsTestMode() {
+				fn = "--output-filename--"
+			}
+			msg := fmt.Sprintf("Output file written to %s", fn)
 			if utils.IsServerWriter(options.OrigWriter) {
-				OutputObject(OutputFile{Filename: options.OutputFn}, options.Writer, options.Format, options.NoHeader, true, nil)
+				OutputObject(OutputFile{OutputFilename: fn}, options.OrigWriter, options.Format, options.NoHeader, true, nil)
 			} else {
-				msg := fmt.Sprintf("Output file written to %s", options.OutputFn)
-				if file.IsTestMode() {
-					msg = "Output file written to --output-filename--"
-				}
 				logger.Log(logger.Info, msg)
 			}
 		}

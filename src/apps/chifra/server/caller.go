@@ -162,6 +162,7 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 		unused.Chain = chain
 		unused.TestMode = utils.IsTestModeServer(r)
 		unused.Writer = w
+		unused.OrigWriter = w
 		RespondWithError(w, http.StatusBadRequest, errors.New(parsed))
 		return
 	}
