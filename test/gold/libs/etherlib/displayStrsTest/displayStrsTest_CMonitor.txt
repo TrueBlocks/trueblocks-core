@@ -1,7 +1,7 @@
 displayStrsTest  CMonitor
 ------------------------------CMonitor------------------------------
 {
-  "schema": 40002,
+  "schema": 40003,
   "deleted": false,
   "showing": true,
   "cname": "Monitor",

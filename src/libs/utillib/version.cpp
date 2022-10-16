@@ -20,7 +20,7 @@ string_q manifestVersion = "trueblocks-core@v0.40.0";
 // Run make generate in order for this to take effect
 #define MAJOR 0
 #define MINOR 40
-#define BUILD 2
+#define BUILD 3
 // Run make generate in order for this to take effect
 
 #define SUBVERS "beta"
