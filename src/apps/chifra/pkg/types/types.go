@@ -130,11 +130,11 @@ type SimpleLog struct {
 }
 
 type SimpleName struct {
-	Tags        string `json:"tags"`
-	Address     string `json:"address"`
-	Name        string `json:"name"`
-	Symbol      string `json:"symbol,omitempty"`
-	Source      string `json:"source,omitempty"`
-	Decimals    string `json:"decimals,omitempty"`
-	Description string `json:"description,omitempty"`
+	Tags     string `json:"tags"`
+	Address  string `json:"address"`
+	Name     string `json:"name"`
+	Symbol   string `json:"symbol,omitempty"`
+	Source   string `json:"source,omitempty"`
+	Decimals string `json:"decimals,omitempty"`
+	Petname  string `json:"petname,omitempty"`
 }

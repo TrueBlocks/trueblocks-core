@@ -33,7 +33,7 @@ class CAccountName : public CBaseNode {
     string_q symbol;
     string_q source;
     uint64_t decimals;
-    string_q description;
+    string_q petname;
     bool isCustom;
     bool isPrefund;
     bool isContract;
@@ -107,7 +107,7 @@ inline void CAccountName::initialize(void) {
     symbol = "";
     source = "";
     decimals = 0;
-    description = "";
+    petname = "";
     isCustom = false;
     isPrefund = false;
     isContract = false;
@@ -129,7 +129,7 @@ inline void CAccountName::duplicate(const CAccountName& ac) {
     symbol = ac.symbol;
     source = ac.source;
     decimals = ac.decimals;
-    description = ac.description;
+    petname = ac.petname;
     isCustom = ac.isCustom;
     isPrefund = ac.isPrefund;
     isContract = ac.isContract;

@@ -47,6 +47,7 @@ TEST_F(CThisTest, TestTest_1) {
     rec = CReconciliation(trans.blockNumber, trans.transactionIndex, trans.timestamp);
     CAccountName acct;
     acct.address = "0xf503017d7baf7fbc0fff7492b751025c6a78179b";
+    acct.petname = addr_2_Petname(acct.address, '-');
     rec.reconcileEth(prev, 8856295, &trans, acct);
     cout << rec << endl;
 

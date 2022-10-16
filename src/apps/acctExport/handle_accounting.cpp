@@ -199,8 +199,10 @@ bool COptions::token_list_from_logs(CAccountNameMap& tokenList, const CTraverser
     for (auto log : trav->trans.receipt.logs) {
         CAccountName tokenName;
         bool isToken = findToken(log.address, tokenName);
-        if (tokenName.address.empty())
+        if (tokenName.address.empty()) {
             tokenName.address = log.address;
+            tokenName.petname = addr_2_Petname(tokenName.address, '-');
+        }
         if (isToken || (log.topics.size() > 0 && isTokenRelated(log.topics[0])))
             tokenList[log.address] = tokenName;
     }
