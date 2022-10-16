@@ -6,6 +6,6 @@
                       "symbol": "LBA",
                       "source": "On chain",
                       "decimals": 18,
-                      "description": "Decentralized lending infrastructure facilitating open access to credit networks on Ethereum.",
+                      "petname": "actively-happy-mite",
                     },
                   ]
