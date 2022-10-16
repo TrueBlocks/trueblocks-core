@@ -172,7 +172,7 @@ bool prog_Log(CTraverser* trav, void* data) {
     }
     LOG_PROGRESS(trav->searchOp, blknum_t(opt->first_record + trav->index), nApps, post.str() + "\r");
 
-    return (opt->slowQueries <= opt->maxSlowQueries && !shouldQuit());
+    return !shouldQuit();
 }
 
 //-----------------------------------------------------------------------
@@ -217,7 +217,6 @@ bool loadTx_Func(CTraverser* trav, void* data) {
 
     } else {
         trav->searchOp = EXTRACT;
-        opt->slowQueries++;
         opt->reportFreq = 1;
         dirty = true;
         if (trav->app->blk == 0) {

@@ -389,9 +389,6 @@ void COptions::Init(void) {
     fileRange = make_pair(NOPOS, NOPOS);
     allMonitors.clear();
     reportFreq = reportDef = 7;
-    slowQueries = 0;
-    maxSlowQueries =
-        isApiMode() ? getGlobalConfig("acctExport")->getConfigInt("settings", "max_slow_queries", 50) : NOPOS;
 
     // Establish folders. This may be redundant, but it's cheap.
     establishCacheFolders();
