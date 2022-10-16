@@ -62,5 +62,5 @@ TIME ~ CLOCK - : 4-----Adding 0x0000000000000000000000000000000010101010
     "symbol": "SYMBOL",
     "source": "SOURCE",
     "decimals": 11,
-    "description": "DESCRIPTION"
+    "petname": "abnormally-able-quetzal"
   }] }

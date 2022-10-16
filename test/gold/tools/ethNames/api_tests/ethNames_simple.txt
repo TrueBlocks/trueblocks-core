@@ -8,7 +8,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/491/tokamak-network-decentralized-scalable-turing-com",
       "decimals": 0,
-      "description": ""
+      "petname": "brightly-ultimate-bengal"
     },
     {
       "tags": "31-Giveth:Project",
@@ -17,7 +17,7 @@ names?terms=etwork
       "symbol": "",
       "source": "Tokenomics",
       "decimals": 0,
-      "description": ""
+      "petname": "plainly-climbing-coral"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -26,7 +26,7 @@ names?terms=etwork
       "symbol": "",
       "source": "EtherScan.io",
       "decimals": 0,
-      "description": ""
+      "petname": "yearly-willing-hagfish"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -35,7 +35,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/1753/resetdao-web-30-programmable-social-network",
       "decimals": 0,
-      "description": ""
+      "petname": "rarely-true-sheep"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -44,7 +44,7 @@ names?terms=etwork
       "symbol": "JRTBNT",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
+      "petname": "seriously-quiet-dory"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -53,7 +53,7 @@ names?terms=etwork
       "symbol": "SMN1",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
+      "petname": "safely-dominant-hagfish"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -62,7 +62,7 @@ names?terms=etwork
       "symbol": "TNT",
       "source": "On chain",
       "decimals": 8,
-      "description": "Tierion creates software to reduce the cost and complexity of trust. Anchoring data to the blockchain and generating a timestamp proof."
+      "petname": "positively-ace-jackal"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -71,7 +71,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/1706/zvm-from-tokamak-network",
       "decimals": 0,
-      "description": ""
+      "petname": "properly-rested-griffon"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -80,7 +80,7 @@ names?terms=etwork
       "symbol": "DOS",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
+      "petname": "carefully-shining-maggot"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -89,7 +89,7 @@ names?terms=etwork
       "symbol": "DNT",
       "source": "On chain",
       "decimals": 18,
-      "description": "A network of decentralized markets and communities. Create, operate, and govern. Powered by Ethereum, Aragon, and IPFS."
+      "petname": "closely-special-skink"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -98,7 +98,7 @@ names?terms=etwork
       "symbol": "XIO",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
+      "petname": "formerly-nice-unicorn"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -107,7 +107,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/83/poa-network-community-management-grant-for-adj",
       "decimals": 0,
-      "description": ""
+      "petname": "mainly-set-ladybird"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -116,7 +116,7 @@ names?terms=etwork
       "symbol": "PYRO",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
+      "petname": "singularly-cunning-louse"
     },
     {
       "tags": "31-Giveth:Project",
@@ -125,7 +125,7 @@ names?terms=etwork
       "symbol": "",
       "source": "Tokenomics",
       "decimals": 0,
-      "description": ""
+      "petname": "frequently-innocent-mollusk"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -134,7 +134,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/2250/cura-network-the-decentralized-healthcare-system-",
       "decimals": 0,
-      "description": ""
+      "petname": "frankly-touched-cow"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -143,7 +143,7 @@ names?terms=etwork
       "symbol": "SPN",
       "source": "On chain",
       "decimals": 6,
-      "description": "Sapien is a decentralized social news platform."
+      "petname": "allegedly-charming-wahoo"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -152,7 +152,7 @@ names?terms=etwork
       "symbol": "BVN",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
+      "petname": "likely-glorious-dolphin"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -161,7 +161,7 @@ names?terms=etwork
       "symbol": "NTWK",
       "source": "On chain",
       "decimals": 18,
-      "description": "Network Learning is an e-learning platform where users who are new to cryptocurrency can come visit to learn the basics."
+      "petname": "properly-just-starfish"
     },
     {
       "tags": "30-Contracts",
@@ -170,7 +170,7 @@ names?terms=etwork
       "symbol": "",
       "source": "EtherScan.io",
       "decimals": 0,
-      "description": ""
+      "petname": "largely-first-badger"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -179,7 +179,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/1875/garuda-network-dmrd",
       "decimals": 0,
-      "description": ""
+      "petname": "frankly-genuine-gnu"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -188,7 +188,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/1353/synapsis-network",
       "decimals": 0,
-      "description": ""
+      "petname": "directly-sharing-bison"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -197,7 +197,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/26/peepeth-social-network-for-a-better-world",
       "decimals": 0,
-      "description": ""
+      "petname": "overly-rich-teal"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -206,7 +206,7 @@ names?terms=etwork
       "symbol": "UUU",
       "source": "On chain",
       "decimals": 18,
-      "description": "A Decentralized Protocol for Publishing and Valuing Online Content"
+      "petname": "eminently-more-gobbler"
     },
     {
       "tags": "30-Contracts:Set Protocol",
@@ -215,7 +215,7 @@ names?terms=etwork
       "symbol": "",
       "source": "TrueBlocks.io",
       "decimals": 0,
-      "description": ""
+      "petname": "poorly-fine-giraffe"
     },
     {
       "tags": "31-Giveth:Project",
@@ -224,7 +224,7 @@ names?terms=etwork
       "symbol": "",
       "source": "Tokenomics",
       "decimals": 0,
-      "description": ""
+      "petname": "oddly-true-bedbug"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -233,7 +233,7 @@ names?terms=etwork
       "symbol": "OPTC",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
+      "petname": "reasonably-beloved-dog"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -242,7 +242,7 @@ names?terms=etwork
       "symbol": "CLN",
       "source": "On chain",
       "decimals": 18,
-      "description": "A Decentralized Payment Network Powered by Communities"
+      "petname": "specially-dear-wombat"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -251,7 +251,7 @@ names?terms=etwork
       "symbol": "DOG",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
+      "petname": "blindly-funky-wildcat"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -260,7 +260,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/1949/network-state-genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "remarkably-well-adder"
     },
     {
       "tags": "30-Contracts",
@@ -269,7 +269,7 @@ names?terms=etwork
       "symbol": "",
       "source": "EtherScan.io",
       "decimals": 0,
-      "description": ""
+      "petname": "solely-loving-hound"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -278,7 +278,7 @@ names?terms=etwork
       "symbol": "WAB",
       "source": "On chain",
       "decimals": 18,
-      "description": "WAB network is a 5.0 Blockchain with outstanding features, a completed decentralization blockchain with remarkable transaction speed of millions per second."
+      "petname": "admittedly-quality-unicorn"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -287,7 +287,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/653/gas-stations-network",
       "decimals": 0,
-      "description": "https://gitcoin.co/grants/121/gas-stations-network,https://github.com/opengsn/gsn"
+      "petname": "initially-enjoyed-sawfly"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -296,7 +296,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/2103/open-source-climate-offsets-network",
       "decimals": 0,
-      "description": ""
+      "petname": "painfully-exotic-aardvark"
     },
     {
       "tags": "30-Contracts:Kyber Network",
@@ -305,7 +305,7 @@ names?terms=etwork
       "symbol": "",
       "source": "TrueBlocks.io",
       "decimals": 0,
-      "description": ""
+      "petname": "badly-singular-duck"
     },
     {
       "tags": "31-Giveth:Project",
@@ -314,7 +314,7 @@ names?terms=etwork
       "symbol": "",
       "source": "Tokenomics",
       "decimals": 0,
-      "description": ""
+      "petname": "probably-talented-gelding"
     },
     {
       "tags": "30-Contracts",
@@ -323,7 +323,7 @@ names?terms=etwork
       "symbol": "",
       "source": "EtherScan.io",
       "decimals": 0,
-      "description": ""
+      "petname": "blindly-powerful-cougar"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -332,7 +332,7 @@ names?terms=etwork
       "symbol": "PNT",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
+      "petname": "admittedly-sterling-goat"
     },
     {
       "tags": "30-Contracts",
@@ -341,7 +341,7 @@ names?terms=etwork
       "symbol": "",
       "source": "EtherScan.io",
       "decimals": 0,
-      "description": ""
+      "petname": "widely-poetic-rabbit"
     },
     {
       "tags": "31-Giveth:Project",
@@ -350,7 +350,7 @@ names?terms=etwork
       "symbol": "",
       "source": "Tokenomics",
       "decimals": 0,
-      "description": ""
+      "petname": "vaguely-complete-bengal"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -359,7 +359,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/4201/spect-network",
       "decimals": 0,
-      "description": ""
+      "petname": "firmly-loving-oarfish"
     },
     {
       "tags": "30-Contracts:Kyber Network",
@@ -368,7 +368,7 @@ names?terms=etwork
       "symbol": "",
       "source": "TrueBlocks.io",
       "decimals": 0,
-      "description": ""
+      "petname": "arguably-more-lark"
     },
     {
       "tags": "31-Giveth:Project",
@@ -377,7 +377,7 @@ names?terms=etwork
       "symbol": "",
       "source": "Tokenomics",
       "decimals": 0,
-      "description": ""
+      "petname": "constantly-accurate-boa"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -386,7 +386,7 @@ names?terms=etwork
       "symbol": "CAN",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
+      "petname": "nationally-powerful-shepherd"
     },
     {
       "tags": "31-Giveth:Project",
@@ -395,7 +395,7 @@ names?terms=etwork
       "symbol": "",
       "source": "Tokenomics",
       "decimals": 0,
-      "description": ""
+      "petname": "evenly-suited-mackerel"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -404,7 +404,7 @@ names?terms=etwork
       "symbol": "COVIDFREE",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
+      "petname": "equally-true-bee"
     },
     {
       "tags": "30-Contracts:Kyber Network",
@@ -413,7 +413,7 @@ names?terms=etwork
       "symbol": "",
       "source": "0xTracker",
       "decimals": 0,
-      "description": ""
+      "petname": "ultimately-viable-ghost"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -422,7 +422,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/2108/skyfeed-decentralized-social-network",
       "decimals": 0,
-      "description": ""
+      "petname": "extremely-allowing-raccoon"
     },
     {
       "tags": "40-Exchanges",
@@ -431,7 +431,7 @@ names?terms=etwork
       "symbol": "ANJ",
       "source": "EtherScan.io",
       "decimals": 0,
-      "description": ""
+      "petname": "randomly-apt-crane"
     },
     {
       "tags": "55-Defi",
@@ -440,7 +440,7 @@ names?terms=etwork
       "symbol": "",
       "source": "EtherScan.io",
       "decimals": 0,
-      "description": ""
+      "petname": "roughly-credible-pup"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -449,7 +449,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/49/blockchain-education-network-ben",
       "decimals": 0,
-      "description": ""
+      "petname": "previously-apparent-sturgeon"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -458,7 +458,7 @@ names?terms=etwork
       "symbol": "TLN",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
+      "petname": "internally-equipped-sunbeam"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -467,7 +467,7 @@ names?terms=etwork
       "symbol": "KYL",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
+      "petname": "separately-upward-giraffe"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -476,7 +476,7 @@ names?terms=etwork
       "symbol": "",
       "source": "Giveth website",
       "decimals": 0,
-      "description": ""
+      "petname": "surely-ruling-moray"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -485,7 +485,7 @@ names?terms=etwork
       "symbol": "IOTX",
       "source": "On chain",
       "decimals": 18,
-      "description": "IoTeX is the next generation of the IoT-oriented blockchain platform with vast scalability, privacy, isolatability, and developability. IoTeX connects the physical world, block by block."
+      "petname": "oddly-composed-griffon"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -494,7 +494,7 @@ names?terms=etwork
       "symbol": "",
       "source": "On chain",
       "decimals": 18,
-      "description": "Aims to be a disruptive ad network of creative minds who speak out against the powers that be."
+      "petname": "blindly-moral-kangaroo"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -503,7 +503,7 @@ names?terms=etwork
       "symbol": "DOS",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
+      "petname": "endlessly-simple-pigeon"
     },
     {
       "tags": "31-Giveth:Project",
@@ -512,7 +512,7 @@ names?terms=etwork
       "symbol": "",
       "source": "Tokenomics",
       "decimals": 0,
-      "description": ""
+      "petname": "infinitely-hardy-hyena"
     },
     {
       "tags": "30-Contracts:Kyber Network",
@@ -521,7 +521,7 @@ names?terms=etwork
       "symbol": "",
       "source": "TrueBlocks.io",
       "decimals": 0,
-      "description": ""
+      "petname": "commonly-knowing-cub"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -530,7 +530,7 @@ names?terms=etwork
       "symbol": "MRPH",
       "source": "On chain",
       "decimals": 4,
-      "description": "Morpheus.Network was designed with some of the world's largest shipping, customs banking firms to create a full-service, global, automated, supply chain platform with an integrated cryptocurrency payment system"
+      "petname": "distinctly-sound-elf"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -539,7 +539,7 @@ names?terms=etwork
       "symbol": "ACTP",
       "source": "On chain",
       "decimals": 8,
-      "description": "Archetypal Network is an Ethereum based cloudmining smart contract miner to support real-time mining and high transaction throughput."
+      "petname": "thankfully-organic-bat"
     },
     {
       "tags": "31-Giveth:Project",
@@ -548,7 +548,7 @@ names?terms=etwork
       "symbol": "",
       "source": "Tokenomics",
       "decimals": 0,
-      "description": ""
+      "petname": "evidently-active-loon"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -557,7 +557,7 @@ names?terms=etwork
       "symbol": "SAN",
       "source": "On chain",
       "decimals": 18,
-      "description": "A Better Way to Trade Crypto-Markets - Market Datafeeds, Newswires, and Crowd Sentiment Insights for the Blockchain World"
+      "petname": "A Better Way to Trade Crypto-Markets - M"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -566,7 +566,7 @@ names?terms=etwork
       "symbol": "LOON",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
+      "petname": "legally-frank-macaque"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -575,7 +575,7 @@ names?terms=etwork
       "symbol": "UNDT",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
+      "petname": "certainly-sterling-insect"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -584,7 +584,7 @@ names?terms=etwork
       "symbol": "",
       "source": "Giveth website",
       "decimals": 0,
-      "description": ""
+      "petname": "sensibly-equipped-warthog"
     },
     {
       "tags": "30-Contracts:Set Protocol",
@@ -593,7 +593,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://github.com/SetProtocol/set-protocol-contracts",
       "decimals": 0,
-      "description": ""
+      "petname": "especially-accurate-goldfish"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -602,7 +602,7 @@ names?terms=etwork
       "symbol": "",
       "source": "Giveth website",
       "decimals": 0,
-      "description": ""
+      "petname": "positively-superb-malamute"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -611,7 +611,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/2728/using-social-networks-for-fun-affordable-and-lucr",
       "decimals": 0,
-      "description": ""
+      "petname": "mistakenly-shining-hound"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -620,7 +620,7 @@ names?terms=etwork
       "symbol": "OTN",
       "source": "On chain",
       "decimals": 18,
-      "description": "Open Trading Network OTN ‚Äö√Ñ√¨ a platform that offers cross-chain technology to unite all blockchain networks and market participants, and ensure their best interests."
+      "petname": "internally-skilled-tortoise"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -629,7 +629,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/2776/pulp-network",
       "decimals": 0,
-      "description": ""
+      "petname": "strangely-valid-guinea"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -638,7 +638,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/101/geon-app-augmented-reality-app-leveraging-poa-cor",
       "decimals": 0,
-      "description": ""
+      "petname": "frequently-living-coyote"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -647,7 +647,7 @@ names?terms=etwork
       "symbol": "NOTANLC",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
+      "petname": "wrongly-honest-terrier"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -656,7 +656,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/681/flowstake-activity-staking-blockchain-network",
       "decimals": 0,
-      "description": "https://flowstake.webflow.io"
+      "petname": "exactly-glowing-shrimp"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -665,7 +665,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/159/mask-network-the-portal-to-the-new-open-internet",
       "decimals": 0,
-      "description": ""
+      "petname": "manually-sweet-whippet"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -674,7 +674,7 @@ names?terms=etwork
       "symbol": "RING",
       "source": "defipulse.com",
       "decimals": 18,
-      "description": ""
+      "petname": "definitely-ace-squirrel"
     },
     {
       "tags": "31-Giveth:Project",
@@ -683,7 +683,7 @@ names?terms=etwork
       "symbol": "",
       "source": "Tokenomics",
       "decimals": 0,
-      "description": ""
+      "petname": "willingly-driving-tuna"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -692,7 +692,7 @@ names?terms=etwork
       "symbol": "Vegeta",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
+      "petname": "usually-sure-gator"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -701,7 +701,7 @@ names?terms=etwork
       "symbol": "ANT",
       "source": "On chain",
       "decimals": 18,
-      "description": "Create and manage unstoppable organizations. Aragon lets you manage entire organizations using the blockchain. This makes Aragon organizations more efficient than their traditional counterparties."
+      "petname": "poorly-ample-sunfish"
     },
     {
       "tags": "30-Contracts:Kyber Network",
@@ -710,7 +710,7 @@ names?terms=etwork
       "symbol": "",
       "source": "0xTracker",
       "decimals": 0,
-      "description": ""
+      "petname": "commonly-right-dory"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -719,7 +719,7 @@ names?terms=etwork
       "symbol": "KP2R",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
+      "petname": "intensely-noble-rodent"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -728,7 +728,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/565/our-network-community-driven-analytics",
       "decimals": 0,
-      "description": ""
+      "petname": "hideously-sound-unicorn"
     },
     {
       "tags": "50-Tokens:ERC721",
@@ -737,7 +737,7 @@ names?terms=etwork
       "symbol": "ONP",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
+      "petname": "firstly-upright-mite"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -746,7 +746,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/334/interstate-network-evm-generic-optimistic-rollups",
       "decimals": 0,
-      "description": "https://www.interstate.network"
+      "petname": "lightly-ruling-sawfly"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -755,7 +755,7 @@ names?terms=etwork
       "symbol": "IVY",
       "source": "On chain",
       "decimals": 18,
-      "description": "Ivy is a blockchain-based technology for FIAT cryptocurrency business transactions. the Ivy network utilizes IVY tokens which carry KYC KYT data points critical for Financial Institution validation."
+      "petname": "strongly-handy-joey"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -764,7 +764,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/4174/dao-stewards-network",
       "decimals": 0,
-      "description": ""
+      "petname": "actually-internal-barnacle"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -773,7 +773,7 @@ names?terms=etwork
       "symbol": "JNT",
       "source": "On chain",
       "decimals": 18,
-      "description": "The Jibrel Network provides currencies, equities, commodities and other financial assets and instruments as standard ERC-20 tokens on the Ethereum blockchain."
+      "petname": "randomly-vital-seasnail"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -782,7 +782,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/1995/ralie-network-connecting-through-blockchain",
       "decimals": 0,
-      "description": ""
+      "petname": "conversely-humorous-wolf"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -791,7 +791,7 @@ names?terms=etwork
       "symbol": "ADX",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
+      "petname": "promptly-helpful-pangolin"
     },
     {
       "tags": "30-Contracts:Kyber Network",
@@ -800,7 +800,7 @@ names?terms=etwork
       "symbol": "",
       "source": "TrueBlocks.io",
       "decimals": 0,
-      "description": ""
+      "petname": "informally-helping-crappie"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -809,7 +809,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/1096/pareto-network-financial-content-marketplace",
       "decimals": 0,
-      "description": ""
+      "petname": "daily-epic-panther"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -818,7 +818,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/73/poa-network-community-management-grant-for-aly",
       "decimals": 0,
-      "description": ""
+      "petname": "duly-internal-glider"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -827,7 +827,7 @@ names?terms=etwork
       "symbol": "SGN",
       "source": "On chain",
       "decimals": 9,
-      "description": "Marketplace of data science powered signals for trading cryptocurrencies"
+      "petname": "openly-magical-jackal"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -836,7 +836,7 @@ names?terms=etwork
       "symbol": "CDN",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
+      "petname": "mildly-beloved-longhorn"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -845,7 +845,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/338/2key-network-labs",
       "decimals": 0,
-      "description": "https://2key.network"
+      "petname": "fully-sincere-grackle"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -854,7 +854,7 @@ names?terms=etwork
       "symbol": "ANGC",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
+      "petname": "thankfully-active-satyr"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -863,7 +863,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/72/poa-network-community-management-grant-for-khizer",
       "decimals": 0,
-      "description": ""
+      "petname": "finally-internal-chamois"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -872,7 +872,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/742/crypto-community-ventures-network",
       "decimals": 0,
-      "description": "https://www.bitfwd.com"
+      "petname": "only-thorough-jaybird"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -881,7 +881,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/4294/frontpage-ping-decentralized-real-time-collaborat",
       "decimals": 0,
-      "description": ""
+      "petname": "needlessly-desired-terrapin"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -890,7 +890,7 @@ names?terms=etwork
       "symbol": "SNX",
       "source": "EtherScan.io",
       "decimals": 0,
-      "description": "Synthetix is a cryptoasset-backed network that enables the creation of on-chain synthetic assets."
+      "petname": "genuinely-bursting-husky"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -899,7 +899,7 @@ names?terms=etwork
       "symbol": "",
       "source": "Giveth website",
       "decimals": 0,
-      "description": ""
+      "petname": "greatly-quality-maggot"
     },
     {
       "tags": "30-Contracts:Kyber Network",
@@ -908,7 +908,7 @@ names?terms=etwork
       "symbol": "",
       "source": "TrueBlocks.io",
       "decimals": 0,
-      "description": ""
+      "petname": "vigorously-brief-ringtail"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -917,7 +917,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/2694/matrix2-an-aggregated-layer-2-network",
       "decimals": 0,
-      "description": ""
+      "petname": "firstly-trusty-boar"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -926,7 +926,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/3090/atelio-creating-open-blockchain-based-digital-sup",
       "decimals": 0,
-      "description": ""
+      "petname": "locally-apparent-dane"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -935,7 +935,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/37/connext-network",
       "decimals": 0,
-      "description": ""
+      "petname": "simply-moving-redbird"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -944,7 +944,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/2190/layer-2-faucet-in-ethereum-network",
       "decimals": 0,
-      "description": ""
+      "petname": "remarkably-apparent-eagle"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -953,7 +953,7 @@ names?terms=etwork
       "symbol": "INSTAR",
       "source": "On chain",
       "decimals": 18,
-      "description": "The Insights Network‚Äö√Ñ√¥s unique combination of blockchain technology, smart contracts, and secure multiparty computation enables the individual to securely own, manage, and monetize their data."
+      "petname": "early-comic-tahr"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -962,7 +962,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/4017/swell-network-maintaining-a-decentralised-open-an",
       "decimals": 0,
-      "description": ""
+      "petname": "only-excited-raptor"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -971,7 +971,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/1796/crypton-network",
       "decimals": 0,
-      "description": ""
+      "petname": "adversely-splendid-bluejay"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -980,7 +980,7 @@ names?terms=etwork
       "symbol": "NARUTO",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
+      "petname": "mistakenly-deep-stud"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -989,7 +989,7 @@ names?terms=etwork
       "symbol": "ANJ",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
+      "petname": "frankly-growing-sawfly"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -998,7 +998,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/1323/resource-network",
       "decimals": 0,
-      "description": ""
+      "petname": "barely-blessed-crane"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -1007,7 +1007,7 @@ names?terms=etwork
       "symbol": "NET",
       "source": "On chain",
       "decimals": 18,
-      "description": "A Browser-based Blockchain Ecosystem"
+      "petname": "mentally-excited-piranha"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -1016,7 +1016,7 @@ names?terms=etwork
       "symbol": "",
       "source": "Giveth website",
       "decimals": 0,
-      "description": ""
+      "petname": "purely-wise-perch"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -1025,7 +1025,7 @@ names?terms=etwork
       "symbol": "LQD",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
+      "petname": "terribly-dashing-crow"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -1034,7 +1034,7 @@ names?terms=etwork
       "symbol": "ORI",
       "source": "On chain",
       "decimals": 18,
-      "description": "A protocol for building decentralized marketplaces using the Ethereum blockchain"
+      "petname": "usefully-sweeping-alien"
     },
     {
       "tags": "31-Giveth:Project",
@@ -1043,7 +1043,7 @@ names?terms=etwork
       "symbol": "",
       "source": "Tokenomics",
       "decimals": 0,
-      "description": ""
+      "petname": "slightly-discrete-tadpole"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -1052,7 +1052,7 @@ names?terms=etwork
       "symbol": "DEC",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
+      "petname": "sincerely-powerful-scorpion"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -1061,7 +1061,7 @@ names?terms=etwork
       "symbol": "FTX",
       "source": "On chain",
       "decimals": 18,
-      "description": "The Global P2P Lending Ecosystem Powered by Ethereum and No-Code Development."
+      "petname": "randomly-causal-collie"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -1070,7 +1070,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/1971/elixio-decentralized-social-network-with-social-c",
       "decimals": 0,
-      "description": ""
+      "petname": "morally-ace-hamster"
     },
     {
       "tags": "31-Giveth:Project",
@@ -1079,7 +1079,7 @@ names?terms=etwork
       "symbol": "",
       "source": "Tokenomics",
       "decimals": 0,
-      "description": ""
+      "petname": "highly-light-trout"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -1088,7 +1088,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/1229/pulp-network",
       "decimals": 0,
-      "description": ""
+      "petname": "secretly-touched-man"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -1097,7 +1097,7 @@ names?terms=etwork
       "symbol": "BNN",
       "source": "On chain",
       "decimals": 8,
-      "description": "BrokerNeko Network provides rational, quick and easy solutions for individual and institutional transactions with its own unique system."
+      "petname": "freely-perfect-chimp"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -1106,7 +1106,7 @@ names?terms=etwork
       "symbol": "",
       "source": "Giveth website",
       "decimals": 0,
-      "description": ""
+      "petname": "primarily-big-lemming"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -1115,7 +1115,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/1505/moip-network-send-ethereum-or-erc20-tokens-throug",
       "decimals": 0,
-      "description": ""
+      "petname": "supposedly-funny-polecat"
     },
     {
       "tags": "30-Contracts:Kyber Network",
@@ -1124,7 +1124,7 @@ names?terms=etwork
       "symbol": "",
       "source": "TrueBlocks.io",
       "decimals": 0,
-      "description": ""
+      "petname": "painfully-singular-heron"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -1133,7 +1133,7 @@ names?terms=etwork
       "symbol": "MTC",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
+      "petname": "routinely-flexible-urchin"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -1142,7 +1142,7 @@ names?terms=etwork
       "symbol": "MAN",
       "source": "On chain",
       "decimals": 18,
-      "description": "Aims to be an open source public intelligent blockchain platform"
+      "petname": "constantly-devoted-katydid"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -1151,7 +1151,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/1827/fission-network",
       "decimals": 0,
-      "description": ""
+      "petname": "hugely-informed-heron"
     },
     {
       "tags": "31-Giveth:Project",
@@ -1160,7 +1160,7 @@ names?terms=etwork
       "symbol": "",
       "source": "Tokenomics",
       "decimals": 0,
-      "description": ""
+      "petname": "blindly-patient-ape"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -1169,7 +1169,7 @@ names?terms=etwork
       "symbol": "EXRN",
       "source": "On chain",
       "decimals": 18,
-      "description": "Connecting the blockchains using crosschain gateway built with smart contracts."
+      "petname": "distinctly-fluent-lizard"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -1178,7 +1178,7 @@ names?terms=etwork
       "symbol": "GSE",
       "source": "On chain",
       "decimals": 4,
-      "description": ""
+      "petname": "probably-up-sheepdog"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -1187,7 +1187,7 @@ names?terms=etwork
       "symbol": "ZEUS",
       "source": "On chain",
       "decimals": 18,
-      "description": "Cryptocurrency that allows people to raise crypto for events to challenging circumstances like accidents and illnesses or real world emergencies. 'The GoFundMe of Crypto'"
+      "petname": "duly-wired-shad"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -1196,7 +1196,7 @@ names?terms=etwork
       "symbol": "ZNT",
       "source": "On chain",
       "decimals": 18,
-      "description": "Zenswap Network offers a new and practical cryptosphere for cryptocurrency and token swap, integrated with user-friendly value-added services to deliver the best crypto experience."
+      "petname": "possibly-classic-oryx"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -1205,7 +1205,7 @@ names?terms=etwork
       "symbol": "PARETO",
       "source": "On chain",
       "decimals": 18,
-      "description": "The Pareto Network is a peer to peer financial content marketplace."
+      "petname": "shortly-communal-redfish"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -1214,7 +1214,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/1487/memorialnetwork",
       "decimals": 0,
-      "description": ""
+      "petname": "notably-ethical-rhino"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -1223,7 +1223,7 @@ names?terms=etwork
       "symbol": "HEZ",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
+      "petname": "truly-warm-chamois"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -1232,7 +1232,7 @@ names?terms=etwork
       "symbol": "IBA",
       "source": "On chain",
       "decimals": 4,
-      "description": ""
+      "petname": "lately-touched-weasel"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -1241,7 +1241,7 @@ names?terms=etwork
       "symbol": "FUNE",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
+      "petname": "nearly-striking-koi"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -1250,7 +1250,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/2039/decentralized-anonymous-messaging-network-damn",
       "decimals": 0,
-      "description": ""
+      "petname": "rationally-neat-chimp"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -1259,7 +1259,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/1595/bloom-network-panvala-league",
       "decimals": 0,
-      "description": ""
+      "petname": "noticeably-fast-mongoose"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -1268,7 +1268,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/3058/open-social-network",
       "decimals": 0,
-      "description": ""
+      "petname": "currently-alert-airedale"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -1277,7 +1277,7 @@ names?terms=etwork
       "symbol": "",
       "source": "Giveth website",
       "decimals": 0,
-      "description": ""
+      "petname": "loudly-touched-ladybug"
     },
     {
       "tags": "30-Contracts:Kyber Network",
@@ -1286,7 +1286,7 @@ names?terms=etwork
       "symbol": "",
       "source": "EtherScan.io",
       "decimals": 0,
-      "description": ""
+      "petname": "widely-keen-collie"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -1295,7 +1295,7 @@ names?terms=etwork
       "symbol": "",
       "source": "https://gitcoin.co/grants/44/chainid-network",
       "decimals": 0,
-      "description": ""
+      "petname": "inherently-sunny-whale"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -1304,7 +1304,7 @@ names?terms=etwork
       "symbol": "PAL",
       "source": "On chain",
       "decimals": 18,
-      "description": "Dual-Layered Protocol for Financial Assets"
+      "petname": "repeatedly-evolved-yeti"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -1313,7 +1313,7 @@ names?terms=etwork
       "symbol": "SNET",
       "source": "On chain",
       "decimals": 8,
-      "description": ""
+      "petname": "loosely-crucial-lamb"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -1322,7 +1322,7 @@ names?terms=etwork
       "symbol": "KNT",
       "source": "On chain",
       "decimals": 16,
-      "description": "Kora is a digital banking solution powered by the Kora Network"
+      "petname": "newly-ideal-firefly"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -1331,7 +1331,7 @@ names?terms=etwork
       "symbol": "RNT",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
+      "petname": "primarily-true-rooster"
     }
   ],
   "meta": {

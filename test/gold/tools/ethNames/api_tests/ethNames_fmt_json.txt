@@ -8,7 +8,7 @@ names?terms=tip&fmt=json
       "symbol": "",
       "source": "https://gitcoin.co/grants/160/antiprosynth-antiprosynthesiseth-twitter-account-",
       "decimals": 0,
-      "description": ""
+      "petname": "frequently-mature-mite"
     },
     {
       "tags": "31-Giveth:Core",
@@ -17,7 +17,7 @@ names?terms=tip&fmt=json
       "symbol": "",
       "source": "Giveth Website",
       "decimals": 0,
-      "description": ""
+      "petname": "notably-intent-elk"
     },
     {
       "tags": "31-Giveth:Project",
@@ -26,7 +26,7 @@ names?terms=tip&fmt=json
       "symbol": "",
       "source": "Tokenomics",
       "decimals": 0,
-      "description": ""
+      "petname": "namely-decent-mammoth"
     },
     {
       "tags": "31-Giveth:Project",
@@ -35,7 +35,7 @@ names?terms=tip&fmt=json
       "symbol": "",
       "source": "Tokenomics",
       "decimals": 0,
-      "description": ""
+      "petname": "possibly-moral-vulture"
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -44,7 +44,7 @@ names?terms=tip&fmt=json
       "symbol": "",
       "source": "https://gitcoin.co/grants/3504/web3-kotlin-multiplatform",
       "decimals": 0,
-      "description": ""
+      "petname": "severely-darling-marmot"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -53,7 +53,7 @@ names?terms=tip&fmt=json
       "symbol": "CRTS",
       "source": "On chain",
       "decimals": 9,
-      "description": ""
+      "petname": "positively-composed-termite"
     },
     {
       "tags": "91-Early:Addresses",
@@ -62,7 +62,7 @@ names?terms=tip&fmt=json
       "symbol": "",
       "source": "EtherScan.io",
       "decimals": 0,
-      "description": ""
+      "petname": "widely-alive-donkey"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -71,7 +71,7 @@ names?terms=tip&fmt=json
       "symbol": "TIP",
       "source": "TrueBlocks.io",
       "decimals": 0,
-      "description": "The ethereum tip jar"
+      "petname": "positively-sweet-mammal"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -80,7 +80,7 @@ names?terms=tip&fmt=json
       "symbol": "TIP",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
+      "petname": "steadily-sweet-wallaby"
     }
   ],
   "meta": {

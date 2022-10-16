@@ -6,31 +6,36 @@ TEST[DATE|TIME] Format:  json
     "tags": "31-Gitcoin:Grants",
     "address": "0x133d705a9696882228f6bb7fe008745aef7cdc93",
     "name": "Grant 0160 @antiprosynth | Antiprosynthesis.eth ⟠ Twitter Account Activity",
-    "source": "https://gitcoin.co/grants/160/antiprosynth-antiprosynthesiseth-twitter-account-"
+    "source": "https://gitcoin.co/grants/160/antiprosynth-antiprosynthesiseth-twitter-account-",
+    "petname": "frequently-mature-mite"
   },
   {
     "tags": "31-Giveth:Core",
     "address": "0x1a88c052fc7a8401e00b2f76f96ac62a19427731",
     "name": "EtherIDTipJar",
-    "source": "Giveth Website"
+    "source": "Giveth Website",
+    "petname": "notably-intent-elk"
   },
   {
     "tags": "31-Giveth:Project",
     "address": "0x1e1dee1a47b6d4dd5122c6cd7483ddbb1f42bdce",
     "name": "Sammy Tippit Ministries",
-    "source": "Tokenomics"
+    "source": "Tokenomics",
+    "petname": "namely-decent-mammoth"
   },
   {
     "tags": "31-Giveth:Project",
     "address": "0x4091d8790a37a21c71e3d00b7ede2a801396816d",
     "name": "TipBot",
-    "source": "Tokenomics"
+    "source": "Tokenomics",
+    "petname": "possibly-moral-vulture"
   },
   {
     "tags": "31-Gitcoin:Grants",
     "address": "0x893d80144d0a439bbe29bc74024a29f361560c64",
     "name": "Grant 3504 - Web3 Kotlin Multiplatform",
-    "source": "https://gitcoin.co/grants/3504/web3-kotlin-multiplatform"
+    "source": "https://gitcoin.co/grants/3504/web3-kotlin-multiplatform",
+    "petname": "severely-darling-marmot"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -38,13 +43,15 @@ TEST[DATE|TIME] Format:  json
     "name": "Cryptotipsfr Token V2",
     "symbol": "CRTS",
     "source": "On chain",
-    "decimals": 9
+    "decimals": 9,
+    "petname": "positively-composed-termite"
   },
   {
     "tags": "91-Early:Addresses",
     "address": "0xe7f06e64e0d04c6cfedf7e9079d56d0fb7200a2e",
     "name": "Multiplyx10",
-    "source": "EtherScan.io"
+    "source": "EtherScan.io",
+    "petname": "widely-alive-donkey"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -52,7 +59,7 @@ TEST[DATE|TIME] Format:  json
     "name": "Ethereum Tip Jar",
     "symbol": "TIP",
     "source": "TrueBlocks.io",
-    "description": "The ethereum tip jar"
+    "petname": "positively-sweet-mammal"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -60,5 +67,6 @@ TEST[DATE|TIME] Format:  json
     "name": "Tip",
     "symbol": "TIP",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "steadily-sweet-wallaby"
   }] }

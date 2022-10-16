@@ -8,7 +8,7 @@ names?terms=etwork&terms=one
       "symbol": "SMN1",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
+      "petname": "safely-dominant-hagfish"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -17,7 +17,7 @@ names?terms=etwork&terms=one
       "symbol": "NARUTO",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
+      "petname": "mistakenly-deep-stud"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -26,7 +26,7 @@ names?terms=etwork&terms=one
       "symbol": "BNN",
       "source": "On chain",
       "decimals": 8,
-      "description": "BrokerNeko Network provides rational, quick and easy solutions for individual and institutional transactions with its own unique system."
+      "petname": "freely-perfect-chimp"
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -35,7 +35,7 @@ names?terms=etwork&terms=one
       "symbol": "RNT",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
+      "petname": "primarily-true-rooster"
     }
   ],
   "meta": {

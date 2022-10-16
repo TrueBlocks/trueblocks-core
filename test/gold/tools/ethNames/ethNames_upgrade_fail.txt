@@ -5,7 +5,8 @@ TEST[DATE|TIME] Format:  json
     "tags": "55-Defi",
     "address": "0x000000000000000000000000000000000000dead",
     "name": "ENS: Burn Address",
-    "source": "EtherScan.io"
+    "source": "EtherScan.io",
+    "petname": "abnormally-able-bee"
   },
   {
     "tags": "50-Tokens:ERC721",
@@ -13,7 +14,8 @@ TEST[DATE|TIME] Format:  json
     "name": "HomeWork 🏠🛠️",
     "symbol": "HWK",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "absolutely-normal-hawk"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -21,7 +23,8 @@ TEST[DATE|TIME] Format:  json
     "name": "Chi Gastoken by 1inch",
     "symbol": "CHI",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "actually-suitable-finch"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -30,18 +33,20 @@ TEST[DATE|TIME] Format:  json
     "symbol": "TUSD",
     "source": "On chain",
     "decimals": 18,
-    "description": "The only regulated, exchange-independent stablecoin backed 1-for-1 with US Dollars"
+    "petname": "mostly-whole-gecko"
   },
   {
     "tags": "34-ENS",
     "address": "0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e",
     "name": "ENS: Registry with Fallback",
-    "source": "EtherScan.io"
+    "source": "EtherScan.io",
+    "petname": "rightly-fast-impala"
   },
   {
     "tags": "30-Contracts",
     "address": "0x0000000000a84fe7f5d858c8a22121c975ff0b42",
-    "name": "Poster"
+    "name": "Poster",
+    "petname": "hardly-singular-cowbird"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -49,25 +54,29 @@ TEST[DATE|TIME] Format:  json
     "name": "Gastoken.io",
     "symbol": "GST2",
     "source": "On chain",
-    "decimals": 2
+    "decimals": 2,
+    "petname": "allegedly-sound-haddock"
   },
   {
     "tags": "30-Contracts",
     "address": "0x0000000000c90bc353314b6911180ed7e06019a9",
     "name": "Arbitrage Bot",
-    "source": "0xTracker"
+    "source": "0xTracker",
+    "petname": "heavily-keen-flamingo"
   },
   {
     "tags": "30-Contracts",
     "address": "0x0000000006adbd7c01bc0738cdbfc3932600ad63",
     "name": "1inch Exchange",
-    "source": "0xTracker"
+    "source": "0xTracker",
+    "petname": "sincerely-closing-blowfish"
   },
   {
     "tags": "30-Contracts",
     "address": "0x00000000219ab540356cbb839cbe05303d7705fa",
     "name": "Eth2 Deposit Contract",
-    "source": "EtherScan.io"
+    "source": "EtherScan.io",
+    "petname": "implicitly-definite-terrapin"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -75,7 +84,8 @@ TEST[DATE|TIME] Format:  json
     "name": "Dai Backstop Syndicate v3-100",
     "symbol": "DBSv3-100",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "absolutely-suited-killdeer"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -83,37 +93,43 @@ TEST[DATE|TIME] Format:  json
     "name": "TrueGBP",
     "symbol": "TGBP",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "hugely-robust-gull"
   },
   {
     "tags": "30-Contracts",
     "address": "0x0000000053d411becdb4a82d8603edc6d8b8b3bc",
     "name": "1inch Exchange",
-    "source": "0xTracker"
+    "source": "0xTracker",
+    "petname": "notably-pleasant-parakeet"
   },
   {
     "tags": "30-Contracts",
     "address": "0x00000000af5a61acaf76190794e3fdf1289288a1",
     "name": "Arbitrage Bot",
-    "source": "0xTracker"
+    "source": "0xTracker",
+    "petname": "truly-electric-koala"
   },
   {
     "tags": "30-Contracts",
     "address": "0x00000000b1786c9698c160d78232c78d6f6474fe",
     "name": "Arbitrage Bot",
-    "source": "0xTracker"
+    "source": "0xTracker",
+    "petname": "correctly-profound-tiger"
   },
   {
     "tags": "30-Contracts",
     "address": "0x0000000f8ef4be2b7aed6724e893c1b674b9682d",
     "name": "1inch Exchange",
-    "source": "0xTracker"
+    "source": "0xTracker",
+    "petname": "luckily-divine-bream"
   },
   {
     "tags": "31-Gitcoin:Grants",
     "address": "0x0000000fcdf5ba49794f4151d6daff4505bc47d1",
     "name": "Grant 3596 - The Uniswap v3 Options Education Fund",
-    "source": "https://gitcoin.co/grants/3596/the-uniswap-v3-options-education-fund"
+    "source": "https://gitcoin.co/grants/3596/the-uniswap-v3-options-education-fund",
+    "petname": "externally-amused-monkey"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -121,25 +137,29 @@ TEST[DATE|TIME] Format:  json
     "name": "TrueCAD",
     "symbol": "TCAD",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "currently-above-hagfish"
   },
   {
     "tags": "90-Individuals:DevCon2",
     "address": "0x000001f568875f378bf6d170b790967fe429c81a",
     "name": "Name 0x000001f5",
-    "source": "DevCon2 Token Contract"
+    "source": "DevCon2 Token Contract",
+    "petname": "firmly-teaching-gazelle"
   },
   {
     "tags": "30-Contracts",
     "address": "0x000005edbbc1f258302add96b5e20d3442e5dd89",
     "name": "1inch Exchange",
-    "source": "0xTracker"
+    "source": "0xTracker",
+    "petname": "marginally-welcomed-orca"
   },
   {
     "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x00000b46508882a135b4933b82a07df8f24a0068",
     "name": "Name 0x00000b46",
-    "source": "Gitcoin Website"
+    "source": "Gitcoin Website",
+    "petname": "specially-noble-urchin"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -147,13 +167,15 @@ TEST[DATE|TIME] Format:  json
     "name": "TrueAUD",
     "symbol": "TAUD",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "nicely-noble-akita"
   },
   {
     "tags": "31-Gitcoin:Grants",
     "address": "0x000061a8f22a1e60ba0b3caadfa958e954fc2b6a",
     "name": "Grant 2195 - Best Practicers",
-    "source": "https://gitcoin.co/grants/2195/best-practicers"
+    "source": "https://gitcoin.co/grants/2195/best-practicers",
+    "petname": "only-optimal-oryx"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -161,7 +183,8 @@ TEST[DATE|TIME] Format:  json
     "name": "TrueHKD",
     "symbol": "THKD",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "routinely-dynamic-feline"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -169,56 +192,65 @@ TEST[DATE|TIME] Format:  json
     "name": "Alchemy",
     "symbol": "ALCH",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "correctly-composed-skink"
   },
   {
     "tags": "50-Tokens:ERC20",
     "address": "0x000100bb517e0c003200502a822083000a3b005d",
     "name": "Archer DAO: Voting Power Prism Proxy",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "similarly-eager-ram"
   },
   {
     "tags": "55-Defi",
     "address": "0x0001fb050fe7312791bf6475b96569d83f695c9f",
     "name": "Ygov.finance: yearn",
-    "source": "EtherScan.io"
+    "source": "EtherScan.io",
+    "petname": "endlessly-apparent-dodo"
   },
   {
     "tags": "30-Contracts",
     "address": "0x000983ba1a675327f0940b56c2d49cd9c042dfbf",
     "name": "GU: Shiny Legendary Pack",
-    "source": "EtherScan.io"
+    "source": "EtherScan.io",
+    "petname": "largely-star-rabbit"
   },
   {
     "tags": "90-Individuals:Other",
     "address": "0x000ee67d5bec37ad37292da18516cc96d81e0242",
     "name": "Name 0x000ee67d",
-    "source": "TrueBlocks.io"
+    "source": "TrueBlocks.io",
+    "petname": "clearly-pleasing-wahoo"
   },
   {
     "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x00158a74921620b39e5c3afe4dca79feb2c2c143",
     "name": "Name 0x00158a74",
-    "source": "Gitcoin Website"
+    "source": "Gitcoin Website",
+    "petname": "mostly-engaged-kangaroo"
   },
   {
     "tags": "90-Individuals:Other",
     "address": "0x0015f3c39221b20016cebdbf8b19eb5acedca901",
     "name": "Name 0x0015f3c3",
-    "source": "TrueBlocks.io"
+    "source": "TrueBlocks.io",
+    "petname": "randomly-great-monkey"
   },
   {
     "tags": "91-Early:Addresses",
     "address": "0x001a589dda0d6be37632925eaf1256986b2c6ad0",
     "name": "Oraclize_id304",
-    "source": "EtherScan.io"
+    "source": "EtherScan.io",
+    "petname": "loosely-brief-grackle"
   },
   {
     "tags": "31-Giveth:Project",
     "address": "0x001bae3291db1f401771a1eaa8f0078534177bcc",
     "name": "Sansum Diabetes Research Institute",
-    "source": "Tokenomics"
+    "source": "Tokenomics",
+    "petname": "scarcely-complete-fly"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -227,38 +259,43 @@ TEST[DATE|TIME] Format:  json
     "symbol": "IPSX",
     "source": "On chain",
     "decimals": 18,
-    "description": "Blockchain based system fully automated, with full clearing of utility tokens associating the price and distribution based on offer and demand for IPs"
+    "petname": "manually-enjoyed-seasnail"
   },
   {
     "tags": "50-Tokens:ERC20",
     "address": "0x001f751cdfee02e2f0714831be2f8384db0f71a2",
     "name": "GenericLevCompFarm",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "hopefully-blessed-wildcat"
   },
   {
     "tags": "31-Gitcoin:Grants",
     "address": "0x00216505799d9e3117b40b94a24dc0fa286a57a4",
     "name": "Grant 1168 Flowerpatch Emojis & Artwork Fund",
-    "source": "https://gitcoin.co/grants/1168/flowerpatch-emojis-artwork-fund"
+    "source": "https://gitcoin.co/grants/1168/flowerpatch-emojis-artwork-fund",
+    "petname": "primarily-many-killdeer"
   },
   {
     "tags": "90-Individuals:DAO Curators",
     "address": "0x0029218e1dab069656bfb8a75947825e7989b987",
     "name": "Name 0x0029218e",
-    "source": "DAO_Curator"
+    "source": "DAO_Curator",
+    "petname": "fairly-major-troll"
   },
   {
     "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x0029dc8d8ef8c287ad395732dbe5d5bf951da820",
     "name": "Name 0x0029dc8d",
-    "source": "Gitcoin Website"
+    "source": "Gitcoin Website",
+    "petname": "terminally-accepted-slug"
   },
   {
     "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x002c83ebc32d18ff4f74852565402cf7bde35ccc",
     "name": "Name 0x002c83eb",
-    "source": "Gitcoin Website"
+    "source": "Gitcoin Website",
+    "petname": "daily-sweet-tortoise"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -266,61 +303,71 @@ TEST[DATE|TIME] Format:  json
     "name": "Democracy Earth",
     "symbol": "HOUR",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "personally-normal-caribou"
   },
   {
     "tags": "30-Contracts:Pool Together",
     "address": "0x0034ea9808e620a0ef79261c51af20614b742b24",
     "name": "Pool Usdc MCDAwarePool v0.2.12",
-    "source": "EtherScan.io"
+    "source": "EtherScan.io",
+    "petname": "steadily-cool-bengal"
   },
   {
     "tags": "31-Gitcoin:Grants",
     "address": "0x0035cc37599241d007d0aba1fb931c5fa757f7a1",
     "name": "Grant 2388 - The Commons Swarm: An Augmented Bonding Curve model for DAOs",
-    "source": "https://gitcoin.co/grants/2388/the-commons-swarm-an-augmented-bonding-curve-mode"
+    "source": "https://gitcoin.co/grants/2388/the-commons-swarm-an-augmented-bonding-curve-mode",
+    "petname": "jolly-still-raccoon"
   },
   {
     "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x0035fc5208ef989c28d47e552e92b0c507d2b318",
     "name": "Name 0x0035fc52",
-    "source": "Gitcoin Website"
+    "source": "Gitcoin Website",
+    "petname": "namely-pure-sheep"
   },
   {
     "tags": "90-Individuals:DAO Curators",
     "address": "0x0037a6b811ffeb6e072da21179d11b1406371c63",
     "name": "Name 0x0037a6b8",
-    "source": "DAO_Curator"
+    "source": "DAO_Curator",
+    "petname": "reasonably-cosmic-stud"
   },
   {
     "tags": "91-Early:Miners",
     "address": "0x0037ce3d4b7f8729c8607d8d0248252be68202c0",
     "name": "Miner_0027_260",
-    "source": "OnChain"
+    "source": "OnChain",
+    "petname": "awfully-legal-prawn"
   },
   {
     "tags": "31-Giveth:Project",
     "address": "0x0038eb9084ea8aa63dcb8fbdd63d8862f5bbb3a0",
     "name": "The Turing Trust",
-    "source": "Tokenomics"
+    "source": "Tokenomics",
+    "petname": "likely-massive-raptor"
   },
   {
     "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x003f6b20bfa4b5cab701960ecf73859cb3c095fc",
     "name": "Name 0x003f6b20",
-    "source": "Gitcoin Website"
+    "source": "Gitcoin Website",
+    "petname": "luckily-steady-fawn"
   },
   {
     "tags": "90-Individuals:Other",
     "address": "0x00476aecb24edfed50aaf2e2361badbd8d3efdc2",
     "name": "Name 0x00476aec",
-    "source": "EtherScan.io"
+    "source": "EtherScan.io",
+    "petname": "absolutely-on-mink"
   },
   {
     "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x004efb233c8d26ccc063061bee54f0be9302e6ed",
     "name": "Name 0x004efb23",
-    "source": "Gitcoin Website"
+    "source": "Gitcoin Website",
+    "petname": "amazingly-factual-liger"
   },
   {
     "tags": "50-Tokens:ERC721",
@@ -328,31 +375,36 @@ TEST[DATE|TIME] Format:  json
     "name": "Hall Of Fame Goat Lodge",
     "symbol": "HOFG",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "quickly-selected-piglet"
   },
   {
     "tags": "31-Gitcoin:Grants",
     "address": "0x005241438caf3eacb05bb6543151f7af894c5b58",
     "name": "Grant 2763 - rugpullindex.com - Improving stake safety",
-    "source": "https://gitcoin.co/grants/2763/rugpullindexcom-improving-stake-safety"
+    "source": "https://gitcoin.co/grants/2763/rugpullindexcom-improving-stake-safety",
+    "petname": "entirely-neat-fowl"
   },
   {
     "tags": "30-Contracts",
     "address": "0x005ca4f1493f451c1588186c570a434ec38e718d",
     "name": "BrightID Agent",
-    "source": "EtherScan.io"
+    "source": "EtherScan.io",
+    "petname": "awfully-real-scorpion"
   },
   {
     "tags": "80-Malicious:DaoDrain",
     "address": "0x005f5cee7a43331d5a3d3eec71305925a62f34b6",
     "name": "DAO Drain 086",
-    "source": "GethSource"
+    "source": "GethSource",
+    "petname": "hopelessly-in-snake"
   },
   {
     "tags": "31-Gitcoin:Grants",
     "address": "0x006087d6ac20840c23ba298512db454a05c19b10",
     "name": "Grant 0743 #fittogetherdao (like Pooltogether for Fitness and Wellbeing)",
-    "source": "https://gitcoin.co/grants/743/fittogetherdao-like-pooltogether-for-fitness-and-"
+    "source": "https://gitcoin.co/grants/743/fittogetherdao-like-pooltogether-for-fitness-and-",
+    "petname": "uniquely-healthy-sheepdog"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -361,25 +413,28 @@ TEST[DATE|TIME] Format:  json
     "symbol": "STX",
     "source": "On chain",
     "decimals": 18,
-    "description": "Blockchain Prediction Markets Platform."
+    "petname": "firmly-improved-toucan"
   },
   {
     "tags": "31-Giveth:Project",
     "address": "0x006cfc89e7f521ce3290b200df9530dce911b896",
     "name": "St. Ignatius Martyr Catholic Church",
-    "source": "Tokenomics"
+    "source": "Tokenomics",
+    "petname": "broadly-bursting-mule"
   },
   {
     "tags": "80-Malicious:Shanghai",
     "address": "0x006e61aa7e7ce25b8dad331d5181f2fbe5c23a54",
     "name": "Shanghai Cleaner Contract",
-    "source": "TrueBlocks.io"
+    "source": "TrueBlocks.io",
+    "petname": "specially-immune-fly"
   },
   {
     "tags": "31-Giveth:Project",
     "address": "0x0072d5887bc9979168835d8ac37ca1c2f6a4dac9",
     "name": "Ultimate Unicorns",
-    "source": "Tokenomics"
+    "source": "Tokenomics",
+    "petname": "reasonably-accurate-mako"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -387,20 +442,22 @@ TEST[DATE|TIME] Format:  json
     "name": "BrightID_Main_DAO",
     "symbol": "BMAIN",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "severely-massive-oriole"
   },
   {
     "tags": "31-Gitcoin:Grants",
     "address": "0x007b003c4d0145b512286494d5ae123aeef29d9e",
     "name": "Grant 0845 Remote Developer Bootcamp",
     "source": "https://gitcoin.co/grants/845/remote-developer-bootcamp",
-    "description": "https://gitcoin.co/grants/845/remote-developer-bootcamp, https://github.com/blockvigil/bootcamp"
+    "petname": "briefly-new-glider"
   },
   {
     "tags": "91-Early:Addresses",
     "address": "0x007d42b9192b8c087b0d3e6ef73aae48e74b41c1",
     "name": "Ethventures4",
-    "source": "EtherScan.io"
+    "source": "EtherScan.io",
+    "petname": "badly-capable-koala"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -408,7 +465,8 @@ TEST[DATE|TIME] Format:  json
     "name": "Zō Baby 象の赤ちゃん",
     "symbol": "ZOBABY",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "preferably-saved-elf"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -416,49 +474,56 @@ TEST[DATE|TIME] Format:  json
     "name": "AINU TOKEN",
     "symbol": "AINU",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "plainly-immune-ladybird"
   },
   {
     "tags": "31-Gitcoin:Grants",
     "address": "0x0087a081a9b430fd8f688c6ac5dd24421bfb060d",
     "name": "Grant 0779 DeFi Latam",
     "source": "https://gitcoin.co/grants/779/defi-latam",
-    "description": "http://defilatam.com/"
+    "petname": "grossly-upright-iguana"
   },
   {
     "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x008b1ffe244bf31896c833bff4ad9009e7a0f4eb",
     "name": "Name 0x008b1ffe",
-    "source": "Gitcoin Website"
+    "source": "Gitcoin Website",
+    "petname": "actually-peaceful-swine"
   },
   {
     "tags": "90-Individuals:TheCyber",
     "address": "0x008f82676a606a6783716037c256a7df23746145",
     "name": "Name 0x008f8267",
-    "source": "Solidity Code"
+    "source": "Solidity Code",
+    "petname": "allegedly-choice-gobbler"
   },
   {
     "tags": "80-Malicious",
     "address": "0x0093e5f2a850268c0ca3093c7ea53731296487eb",
-    "name": "Polygon Exploiter First Sender"
+    "name": "Polygon Exploiter First Sender",
+    "petname": "randomly-evolved-thrush"
   },
   {
     "tags": "91-Early:Addresses",
     "address": "0x0096800019bf4eca0bed5a714a553ecf844884c5",
     "name": "Etheropt_id107_cnt215_5mo",
-    "source": "Ether Camp"
+    "source": "Ether Camp",
+    "petname": "horribly-fun-bee"
   },
   {
     "tags": "90-Individuals:DAO Whales",
     "address": "0x00995ae79d60365b2a0c52a5ad19140dfb8d45f2",
     "name": "Name 0x00995ae7",
-    "source": "WhaleWatch.io"
+    "source": "WhaleWatch.io",
+    "petname": "explicitly-superb-civet"
   },
   {
     "tags": "31-Giveth:Project",
     "address": "0x009a82e5762189384bf2880a2d21f75e209eee12",
     "name": "UNRWA USA",
-    "source": "Tokenomics"
+    "source": "Tokenomics",
+    "petname": "barely-sweet-egret"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -466,13 +531,15 @@ TEST[DATE|TIME] Format:  json
     "name": "Writing Hedge Contracts DAI",
     "symbol": "writeDAI",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "secretly-saving-anteater"
   },
   {
     "tags": "91-Early:Addresses",
     "address": "0x009e06646ac4dece817f3e859850acd9b239bc48",
     "name": "@firepower",
-    "source": "Steem"
+    "source": "Steem",
+    "petname": "mistakenly-allowing-yak"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -481,25 +548,28 @@ TEST[DATE|TIME] Format:  json
     "symbol": "FKX",
     "source": "On chain",
     "decimals": 18,
-    "description": "FortKnoxster offers end-to-end encrypted inbox, chat, decentralized storage, calling, video conferencing, voice messages and much more."
+    "petname": "FortKnoxster offers end-to-end encrypted"
   },
   {
     "tags": "31-Gitcoin:Grants",
     "address": "0x00a33c8379b03085ad0c0b4f6fb38c63deba8475",
     "name": "Grant 4103 - Supplements Death Match",
-    "source": "https://gitcoin.co/grants/4103/supplements-death-match"
+    "source": "https://gitcoin.co/grants/4103/supplements-death-match",
+    "petname": "uniquely-prime-fish"
   },
   {
     "tags": "90-Individuals:TheCyber",
     "address": "0x00aa972319ddf819140ffe2a991c49a1bff54bad",
     "name": "Name 0x00aa9723",
-    "source": "Solidity Code"
+    "source": "Solidity Code",
+    "petname": "typically-useful-gator"
   },
   {
     "tags": "31-Gitcoin:Grants",
     "address": "0x00b491d250b9bcce482b6e70321b0a5339d183a6",
     "name": "Grant 0976 Magical Machine Money",
-    "source": "https://gitcoin.co/grants/976/magical-machine-money"
+    "source": "https://gitcoin.co/grants/976/magical-machine-money",
+    "petname": "deadly-square-gecko"
   },
   {
     "tags": "50-Tokens:ERC721",
@@ -507,13 +577,15 @@ TEST[DATE|TIME] Format:  json
     "name": "Cypher City",
     "symbol": "CYPHER",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "scarcely-handy-meerkat"
   },
   {
     "tags": "90-Individuals:DevCon2",
     "address": "0x00c4734f88e8da8e24bf9085d60bb34690957ee1",
     "name": "Name 0x00c4734f",
-    "source": "DevCon2 Token Contract"
+    "source": "DevCon2 Token Contract",
+    "petname": "actively-concise-seagull"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -522,99 +594,112 @@ TEST[DATE|TIME] Format:  json
     "symbol": "EXC",
     "source": "On chain",
     "decimals": 18,
-    "description": "Eximchain‚Äö√Ñ√¥s public blockchain network enables privacy, scalability and security for the supply chain."
+    "petname": "rightly-fitting-stork"
   },
   {
     "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x00c50c2f356130b1f65ac3e60afe40a6c348f1c9",
     "name": "Name 0x00c50c2f",
-    "source": "Gitcoin Website"
+    "source": "Gitcoin Website",
+    "petname": "quickly-learning-elk"
   },
   {
     "tags": "50-Tokens:ERC20",
     "address": "0x00c83aecc790e8a4453e5dd3b0b4b3680501a7a7",
     "name": "Skale",
-    "source": "Giveth website"
+    "source": "Giveth website",
+    "petname": "violently-fun-shark"
   },
   {
     "tags": "31-Giveth:Project",
     "address": "0x00ca33970150dff4fdd16f4992810117296768dd",
     "name": "Creative Development Collective",
-    "source": "Tokenomics"
+    "source": "Tokenomics",
+    "petname": "regularly-massive-doberman"
   },
   {
     "tags": "31-Gitcoin:Grants",
     "address": "0x00cf36853aa4024fb5bf5cc377dfd85844b411a0",
     "name": "Grant 0143 Dappnode - Panvala League",
-    "source": "https://gitcoin.co/grants/143/dappnode-panvala-league"
+    "source": "https://gitcoin.co/grants/143/dappnode-panvala-league",
+    "petname": "hugely-topical-trout"
   },
   {
     "tags": "90-Individuals:Other",
     "address": "0x00cfbbaf7ddb3a1476767101c12a0162e241fbad",
     "name": "Name 0x00cfbbaf",
-    "source": "TrueBlocks.io"
+    "source": "TrueBlocks.io",
+    "petname": "jointly-fit-moth"
   },
   {
     "tags": "50-Tokens:ERC20",
     "address": "0x00d0f137b51692d0ac708bde7b367a373865cffe",
     "name": "Zapper.Fi : Balancer Remove",
-    "source": "EtherScan.io"
+    "source": "EtherScan.io",
+    "petname": "similarly-unbiased-ostrich"
   },
   {
     "tags": "31-Giveth:Project",
     "address": "0x00d7e52cb140df6ab91291e289318ad62a18f80c",
     "name": "ReFi In The Classroom",
-    "source": "Tokenomics"
+    "source": "Tokenomics",
+    "petname": "unduly-quality-sloth"
   },
   {
     "tags": "90-Individuals:Twitter",
     "address": "0x00dc74ce5d346b14b913071a032b7e2d29b0f2a6",
     "name": "Name 0x00dc74ce",
     "source": "Twitter",
-    "description": "@Aezakmi_Steemit"
+    "petname": "presently-sensible-rat"
   },
   {
     "tags": "31-Gitcoin:Admin",
     "address": "0x00de4b13153673bcae2616b67bf822500d325fc3",
-    "name": "Gitcoin Maintainer"
+    "name": "Gitcoin Maintainer",
+    "petname": "badly-capital-redbird"
   },
   {
     "tags": "31-Gitcoin:Grants",
     "address": "0x00e4f5f746242e4d115bd65aac7c08fe5d38fb21",
     "name": "Grant 1839 the Etherchest Ecosystem",
-    "source": "https://gitcoin.co/grants/1839/the-etherchest-ecosystem"
+    "source": "https://gitcoin.co/grants/1839/the-etherchest-ecosystem",
+    "petname": "needlessly-sure-vervet"
   },
   {
     "tags": "90-Individuals:DAO Whales",
     "address": "0x00eb925836b163a4e5608e3bbd891a7cfab6bde9",
     "name": "Name 0x00eb9258",
-    "source": "WhaleWatch.io"
+    "source": "WhaleWatch.io",
+    "petname": "formally-direct-beagle"
   },
   {
     "tags": "90-Individuals:Other",
     "address": "0x00ee337d1aa5229d92889ac27fc3841573590289",
     "name": "Name 0x00ee337d",
-    "source": "TrueBlocks.io"
+    "source": "TrueBlocks.io",
+    "petname": "randomly-amused-koala"
   },
   {
     "tags": "90-Individuals:Other",
     "address": "0x00f78d023dd008c6e8bd3e16327466d58fb6b576",
     "name": "Name 0x00f78d02",
-    "source": "TrueBlocks.io"
+    "source": "TrueBlocks.io",
+    "petname": "frequently-patient-donkey"
   },
   {
     "tags": "31-Gitcoin:Grants",
     "address": "0x00fe460a15b49d09f39b057d0f1a7b9444f4f2be",
     "name": "Grant 0624 Nescience Software Portfolio Rebalancing Direct Indexing",
     "source": "https://gitcoin.co/grants/624/nescience-software-portfolio-rebalancing-direct-in",
-    "description": "https://nescience.io"
+    "petname": "illegally-humane-sunbeam"
   },
   {
     "tags": "80-Malicious:DaoDrain",
     "address": "0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9",
     "name": "DAO Drain 075",
     "source": "GethSource Ether Camp",
-    "decimals": 1
+    "decimals": 1,
+    "petname": "slightly-key-meerkat"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -622,7 +707,8 @@ TEST[DATE|TIME] Format:  json
     "name": "Digg",
     "symbol": "DIGG",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "eminently-sharp-horse"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -630,31 +716,36 @@ TEST[DATE|TIME] Format:  json
     "name": "SoundMoneyCoin",
     "symbol": "SOV",
     "source": "On chain",
-    "decimals": 8
+    "decimals": 8,
+    "petname": "specially-adapting-crab"
   },
   {
     "tags": "31-Giveth:Project",
     "address": "0x0109295ece0afa326f651d455c7aed0cb31c9685",
     "name": "Bring a stop to global poverty and alleviate hunger",
-    "source": "Tokenomics"
+    "source": "Tokenomics",
+    "petname": "properly-moral-buck"
   },
   {
     "tags": "31-Giveth:Project",
     "address": "0x0109c0faae3f358bce232dff482e2d6eca1f4dab",
     "name": "FARE - Food Allergy Research &amp; Education",
-    "source": "Tokenomics"
+    "source": "Tokenomics",
+    "petname": "publicly-sharing-heron"
   },
   {
     "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x010afb8548a5d1a3a3d62f58ca0a5a1329974206",
     "name": "Name 0x010afb85",
-    "source": "Gitcoin Website"
+    "source": "Gitcoin Website",
+    "petname": "correctly-decent-rat"
   },
   {
     "tags": "31-Giveth:Project",
     "address": "0x010f0c8b31ba0cefe2764c373fa23e8635becb60",
     "name": "Lutheran World Relief",
-    "source": "Tokenomics"
+    "source": "Tokenomics",
+    "petname": "partially-elegant-slug"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -662,50 +753,57 @@ TEST[DATE|TIME] Format:  json
     "name": "FARM_UNI-V2",
     "symbol": "fUNI-V2",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "promptly-tight-lobster"
   },
   {
     "tags": "31-Gitcoin:Grants",
     "address": "0x0115f5ce3f986a35b1edb6f2c3815cebb2461e70",
     "name": "Grant 0790 Loft Radio",
     "source": "https://gitcoin.co/grants/790/loft-radio",
-    "description": "https://loft.radio/"
+    "petname": "incredibly-good-honeybee"
   },
   {
     "tags": "31-Gitcoin:Grants",
     "address": "0x011c2c1433b36a524b548444ae2f20c015427d04",
     "name": "Grant 0491 - Tokamak Network: Decentralized, Scalable, Turing Complete Layer 2 Plasma",
-    "source": "https://gitcoin.co/grants/491/tokamak-network-decentralized-scalable-turing-com"
+    "source": "https://gitcoin.co/grants/491/tokamak-network-decentralized-scalable-turing-com",
+    "petname": "brightly-ultimate-bengal"
   },
   {
     "tags": "34-ENS",
     "address": "0x012233b3c8177f0778d910ed88170b82de3bfe57",
     "name": "Old ENS Registrar",
-    "source": "TrueBlocks.io"
+    "source": "TrueBlocks.io",
+    "petname": "secretly-optimum-adder"
   },
   {
     "tags": "30-Contracts",
     "address": "0x0122676358aee287246b2a84377c8ab664d013cb",
     "name": "dYdX 0x Wrapper",
-    "source": "0xTracker"
+    "source": "0xTracker",
+    "petname": "happily-darling-gelding"
   },
   {
     "tags": "31-Giveth:Project",
     "address": "0x012546d756867d4a88cd3322bbb72d787e49ebf3",
     "name": "MetaGame",
-    "source": "Tokenomics"
+    "source": "Tokenomics",
+    "petname": "annually-direct-weasel"
   },
   {
     "tags": "37-SelfDestructed",
     "address": "0x0133aa47b6197d0ba090bf2cd96626eb71ffd13c",
     "name": "Chainlink BTC-ETH Aggregator",
-    "source": "EtherScan.io"
+    "source": "EtherScan.io",
+    "petname": "ideally-proud-spaniel"
   },
   {
     "tags": "31-Giveth:Project",
     "address": "0x013e247651a601535eda98528b2961813406d96e",
     "name": "Free Arts NYC",
-    "source": "Tokenomics"
+    "source": "Tokenomics",
+    "petname": "firstly-comic-hound"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -714,57 +812,64 @@ TEST[DATE|TIME] Format:  json
     "symbol": "PYN",
     "source": "On chain",
     "decimals": 18,
-    "description": "Paycent is a hybrid mobile app that lets users convert digital assets to fiat and vice versa in real time."
+    "petname": "luckily-wise-chimp"
   },
   {
     "tags": "31-Giveth:Project",
     "address": "0x014797cc3d15f6ea6bb220a32a465ac8f7a5e3b8",
     "name": "FUTURO NATIVO",
-    "source": "Tokenomics"
+    "source": "Tokenomics",
+    "petname": "utterly-cuddly-yak"
   },
   {
     "tags": "50-Tokens:ERC20",
     "address": "0x014b50466590340d41307cc54dcee990c8d58aa8",
     "name": "ICOS",
     "source": "On chain",
-    "decimals": 6
+    "decimals": 6,
+    "petname": "correctly-fresh-spider"
   },
   {
     "tags": "31-Gitcoin:Grants",
     "address": "0x014ffcf34d8515535b99d6aef654258c237168b6",
     "name": "Grant 1850 Fireth",
-    "source": "https://gitcoin.co/grants/1850/fireth"
+    "source": "https://gitcoin.co/grants/1850/fireth",
+    "petname": "enormously-fine-starling"
   },
   {
     "tags": "30-Contracts",
     "address": "0x015531a044bae03bf4dab1ceabfc232a969b7175",
     "name": "GU: Rare Pack",
-    "source": "EtherScan.io"
+    "source": "EtherScan.io",
+    "petname": "mentally-noted-buck"
   },
   {
     "tags": "31-Gitcoin:Grants",
     "address": "0x015bf68ef11bd55e43a119b5752c4b3becae7f24",
     "name": "Grant 0627 Veridex",
     "source": "https://gitcoin.co/grants/627/veridex",
-    "description": "https://dex.verisafe.io/"
+    "petname": "lately-desired-sloth"
   },
   {
     "tags": "30-Contracts",
     "address": "0x015c7c7a7d65bbdb117c573007219107bd7486f9",
     "name": "Infura Transactions Contract",
-    "source": "Infura.io"
+    "source": "Infura.io",
+    "petname": "amazingly-premium-pegasus"
   },
   {
     "tags": "31-Giveth:Project",
     "address": "0x015f2ec49adc333cd4e0f348c39c506eb3b1837f",
     "name": "NFT Artist Funding",
-    "source": "Tokenomics"
+    "source": "Tokenomics",
+    "petname": "luckily-quiet-anemone"
   },
   {
     "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x015f9e50dc7b2a41ab8cc0b2b58763287dd3dd81",
     "name": "Name 0x015f9e50",
-    "source": "Gitcoin Website"
+    "source": "Gitcoin Website",
+    "petname": "fully-grateful-shepherd"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -772,7 +877,8 @@ TEST[DATE|TIME] Format:  json
     "name": "KingXChain",
     "symbol": "KXC",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "broadly-uncommon-slug"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -780,7 +886,8 @@ TEST[DATE|TIME] Format:  json
     "name": "MIRO Token",
     "symbol": "MIRO",
     "source": "On chain",
-    "decimals": 8
+    "decimals": 8,
+    "petname": "briefly-evident-elf"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -788,19 +895,22 @@ TEST[DATE|TIME] Format:  json
     "name": "Rari Stable Pool Token",
     "symbol": "RSPT",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "tightly-central-muskrat"
   },
   {
     "tags": "31-Gitcoin:Grants",
     "address": "0x017946fc126d57e7823e68c647c24f28e5dc9988",
     "name": "Grant 0190 Groundhog",
-    "source": "https://gitcoin.co/grants/190/groundhog"
+    "source": "https://gitcoin.co/grants/190/groundhog",
+    "petname": "literally-devoted-fowl"
   },
   {
     "tags": "31-Gitcoin:Grants",
     "address": "0x018047343e8105fed2c5000912d03815d99f3e48",
     "name": "Grant 1920 Kevin",
-    "source": "https://gitcoin.co/grants/1920/kevin"
+    "source": "https://gitcoin.co/grants/1920/kevin",
+    "petname": "endlessly-main-chicken"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -808,19 +918,22 @@ TEST[DATE|TIME] Format:  json
     "name": "AIRSHIB",
     "symbol": "AIRSHIB",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "vertically-engaged-tapir"
   },
   {
     "tags": "91-Early:Addresses",
     "address": "0x01914e9c0594a087f508aceabfca45f57e471388",
     "name": "Wallet_id66_cnt1_5mo",
-    "source": "Ether Camp"
+    "source": "Ether Camp",
+    "petname": "vaguely-enabled-trout"
   },
   {
     "tags": "91-Early:Miners",
     "address": "0x0193d941b50d91be6567c7ee1c0fe7af498b4137",
     "name": "Miner_0015_427",
-    "source": "OnChain"
+    "source": "OnChain",
+    "petname": "roughly-handy-troll"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -828,7 +941,8 @@ TEST[DATE|TIME] Format:  json
     "name": "PlayChip",
     "symbol": "PLA",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "immensely-apt-fish"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -836,24 +950,28 @@ TEST[DATE|TIME] Format:  json
     "name": "Saturday Elon",
     "symbol": "SatElon",
     "source": "On chain",
-    "decimals": 9
+    "decimals": 9,
+    "petname": "vastly-guiding-monkfish"
   },
   {
     "tags": "90-Individuals",
     "address": "0x01a23fd30aabf5ad53bab3093dcd4948e15cec80",
-    "name": "Name 0x01a23fd3"
+    "name": "Name 0x01a23fd3",
+    "petname": "kindly-magical-cicada"
   },
   {
     "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x01a24c6a87ee7a19d54c98ffae76755f24fdf637",
     "name": "Name 0x01a24c6a",
-    "source": "Gitcoin Website"
+    "source": "Gitcoin Website",
+    "petname": "preferably-sensible-cheetah"
   },
   {
     "tags": "50-Tokens:ERC20",
     "address": "0x01afc37f4f85babc47c0e2d0eababc7fb49793c8",
     "name": "W-GNT",
-    "symbol": "W-GNT"
+    "symbol": "W-GNT",
+    "petname": "seemingly-epic-camel"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -861,7 +979,8 @@ TEST[DATE|TIME] Format:  json
     "name": "Shiba Inu Bone",
     "symbol": "BONE",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "scarcely-workable-troll"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -869,7 +988,8 @@ TEST[DATE|TIME] Format:  json
     "name": "DogeRocket",
     "symbol": "DGRO",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "shortly-proper-warthog"
   },
   {
     "tags": "91-Early:Addresses",
@@ -877,20 +997,23 @@ TEST[DATE|TIME] Format:  json
     "name": "kissBTC",
     "symbol": "kissBTC",
     "source": "On chain",
-    "decimals": 8
+    "decimals": 8,
+    "petname": "quickly-giving-cardinal"
   },
   {
     "tags": "31-Giveth:Project",
     "address": "0x01ca185fdcf1c2001c24e7e2362d3fc1b570ead3",
     "name": "National Association of Free and Charitable Clinics",
-    "source": "Tokenomics"
+    "source": "Tokenomics",
+    "petname": "virtually-joint-grouper"
   },
   {
     "tags": "50-Tokens:ERC20",
     "address": "0x01cc47d73e69d00b7d8f54f2ae6ddbfa3c2e82e3",
     "name": "Ethereum Developers Night",
     "source": "https://kickback.events/event/[{ADDRESS}]",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "locally-pleasant-stud"
   },
   {
     "tags": "91-Early:Addresses",
@@ -898,7 +1021,8 @@ TEST[DATE|TIME] Format:  json
     "name": "XYZ",
     "symbol": "XYZ",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "actively-capable-primate"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -906,25 +1030,29 @@ TEST[DATE|TIME] Format:  json
     "name": "Ethereum Cherry",
     "symbol": "ECHERRY 🍒",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "absolutely-ready-pony"
   },
   {
     "tags": "31-Giveth:Project",
     "address": "0x01d6c3db752551baf985f5fc7d47db6f5c9b3a7b",
     "name": "The Jerusalem Hills Therapeutic Centers",
-    "source": "Tokenomics"
+    "source": "Tokenomics",
+    "petname": "mainly-relieved-foxhound"
   },
   {
     "tags": "31-Giveth:Project",
     "address": "0x01da64059bc5a81ec78362505faf7bb459c575e4",
     "name": "CARITAS Aotearoa New Zealand",
-    "source": "Tokenomics"
+    "source": "Tokenomics",
+    "petname": "typically-becoming-tortoise"
   },
   {
     "tags": "30-Contracts",
     "address": "0x01da73c4ec1355f953ad0aaca3ef20e342aea92a",
     "name": "Arbitrage Bot",
-    "source": "0xTracker"
+    "source": "0xTracker",
+    "petname": "unlikely-harmless-swift"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -932,7 +1060,8 @@ TEST[DATE|TIME] Format:  json
     "name": "Cream yETH",
     "symbol": "crYETH",
     "source": "On chain",
-    "decimals": 8
+    "decimals": 8,
+    "petname": "plainly-eager-bream"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -940,26 +1069,29 @@ TEST[DATE|TIME] Format:  json
     "name": "🎇Floki Fireworks🎆",
     "symbol": "FLOKIFIRE",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "utterly-native-bee"
   },
   {
     "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x01e6fd0ae73d9194b19f9b376065577927a0d5f5",
     "name": "Name 0x01e6fd0a",
-    "source": "Gitcoin Website"
+    "source": "Gitcoin Website",
+    "petname": "gladly-hip-gibbon"
   },
   {
     "tags": "31-Gitcoin:Grants",
     "address": "0x01f1e9319982ab828203c0276727cf48065434d3",
     "name": "Grant 0602 Realitylearn: Teaching the World About Blockchain",
     "source": "https://gitcoin.co/grants/602/realitylearn",
-    "description": "https://www.tks.life/profile/rishab.chakraborty"
+    "petname": "unduly-sweeping-cougar"
   },
   {
     "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x01f7700c13707eee8349f9800e70a940168812e3",
     "name": "Name 0x01f7700c",
-    "source": "Gitcoin Website"
+    "source": "Gitcoin Website",
+    "petname": "frankly-great-titmouse"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -967,13 +1099,15 @@ TEST[DATE|TIME] Format:  json
     "name": "FCC TRUMPBOND",
     "symbol": "TRUMP",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "gratefully-fancy-calf"
   },
   {
     "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x01feb5003fbbd3cae8da33de679cf2e2d07102b3",
     "name": "Name 0x01feb500",
-    "source": "Gitcoin Website"
+    "source": "Gitcoin Website",
+    "petname": "lovely-intimate-foxhound"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -981,7 +1115,8 @@ TEST[DATE|TIME] Format:  json
     "name": "BF Token",
     "symbol": "BFT",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "privately-legal-shark"
   },
   {
     "tags": "50-Tokens:ERC721",
@@ -989,13 +1124,15 @@ TEST[DATE|TIME] Format:  json
     "name": "yearn Gift NFT",
     "symbol": "yGIFT",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "factually-moved-feline"
   },
   {
     "tags": "91-Early:Miners",
     "address": "0x02020d22dcf88f5edd66b382d7da019f161fb7e3",
     "name": "Miner_0022_294",
-    "source": "OnChain"
+    "source": "OnChain",
+    "petname": "sensibly-unbiased-grouper"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1003,12 +1140,14 @@ TEST[DATE|TIME] Format:  json
     "name": "Ethereum Hot",
     "symbol": "EHOT",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "conversely-superb-salmon"
   },
   {
     "tags": "90-Individuals:Other",
     "address": "0x020ca66c30bec2c4fe3861a94e4db4a498a35872",
-    "name": "Name 0x020ca66c"
+    "name": "Name 0x020ca66c",
+    "petname": "cheaply-helped-javelin"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1017,19 +1156,21 @@ TEST[DATE|TIME] Format:  json
     "symbol": "CZR",
     "source": "On chain",
     "decimals": 18,
-    "description": "CanonChain will be triggered from the protocol layer and the chip layer of the communication to provide a robust foundation for the entire blockchain industry."
+    "petname": "strongly-grown-starling"
   },
   {
     "tags": "31-Giveth:Project",
     "address": "0x0225d43b588e69154ec98f710249d9ff2aed4527",
     "name": "DeHealth",
-    "source": "Tokenomics"
+    "source": "Tokenomics",
+    "petname": "daily-neutral-cheetah"
   },
   {
     "tags": "91-Early:Addresses",
     "address": "0x02268047f5c77a6a533619773474d1a6e510443f",
     "name": "Creator",
-    "source": "EtherScan.io"
+    "source": "EtherScan.io",
+    "petname": "trivially-deep-anemone"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1037,7 +1178,8 @@ TEST[DATE|TIME] Format:  json
     "name": "Narutocoin",
     "symbol": "NARUTO",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "trivially-driving-jawfish"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1045,26 +1187,30 @@ TEST[DATE|TIME] Format:  json
     "name": "Uniswap V2",
     "symbol": "UNI-V2",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "sadly-lenient-owl"
   },
   {
     "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x0230c6dd5db1d3f871386a3ce1a5a836b2590044",
     "name": "Name 0x0230c6dd",
-    "source": "Gitcoin Website"
+    "source": "Gitcoin Website",
+    "petname": "severely-keen-rhino"
   },
   {
     "tags": "50-Tokens:ERC20",
     "address": "0x02330084a717e4c4a0f08feb1e0bf1ed865b5940",
     "name": "Kickback DeFi Meetup 1",
     "source": "https://kickback.events/event/[{ADDRESS}]",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "loudly-uncommon-ox"
   },
   {
     "tags": "31-Giveth:Project",
     "address": "0x0240626490620f3b80bd7cfb1687309704fbbdd3",
     "name": "LGBTQ Freedom Fund",
-    "source": "Tokenomics"
+    "source": "Tokenomics",
+    "petname": "currently-coherent-swine"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1072,19 +1218,22 @@ TEST[DATE|TIME] Format:  json
     "name": "Nashu Inu",
     "symbol": "NASHU",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "centrally-immune-stinkbug"
   },
   {
     "tags": "31-Giveth:Project",
     "address": "0x0249317d94b3b85ac198cfd1232c351c551a8d41",
     "name": "Autism Alliance of Michigan (AAoM)",
-    "source": "Tokenomics"
+    "source": "Tokenomics",
+    "petname": "neatly-capable-hog"
   },
   {
     "tags": "31-Giveth:Project",
     "address": "0x024bd890b037adbbfe1545d595490f65361c4a66",
     "name": "Clearway Clinic",
-    "source": "Tokenomics"
+    "source": "Tokenomics",
+    "petname": "internally-loved-dogfish"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1092,7 +1241,8 @@ TEST[DATE|TIME] Format:  json
     "name": "Hero Origen Token",
     "symbol": "HERO",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "strongly-gentle-ghoul"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1100,7 +1250,8 @@ TEST[DATE|TIME] Format:  json
     "name": "Uniswap V2",
     "symbol": "UNI-V2",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "hideously-romantic-redbird"
   },
   {
     "tags": "50-Tokens:ERC721",
@@ -1108,7 +1259,8 @@ TEST[DATE|TIME] Format:  json
     "name": "lobsterdao",
     "symbol": "LOBS",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "lightly-master-drum"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1117,7 +1269,7 @@ TEST[DATE|TIME] Format:  json
     "symbol": "BTCA",
     "source": "On chain",
     "decimals": 8,
-    "description": "Payments solutions for the travel industry."
+    "petname": "admittedly-rational-chow"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1125,7 +1277,8 @@ TEST[DATE|TIME] Format:  json
     "name": "Oiler",
     "symbol": "OIL",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "sincerely-evolved-gobbler"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1133,7 +1286,8 @@ TEST[DATE|TIME] Format:  json
     "name": "Aave interest bearing DAI",
     "symbol": "aDAI",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "nicely-tops-pika"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1141,12 +1295,14 @@ TEST[DATE|TIME] Format:  json
     "name": "Andre KP9R",
     "symbol": "aKP9R",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "heavily-hot-mackerel"
   },
   {
     "tags": "31-Gitcoin:Grants",
     "address": "0x02a522d98ec2d2c3bbe91acc29ee7fd32ab880ab",
-    "name": "Mintable: Deployer"
+    "name": "Mintable: Deployer",
+    "petname": "deeply-magnetic-ringtail"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1154,13 +1310,15 @@ TEST[DATE|TIME] Format:  json
     "name": "Salt Shaker",
     "symbol": "SALT 🧂",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "apparently-peaceful-mongrel"
   },
   {
     "tags": "91-Early:Addresses",
     "address": "0x02ad1b2f88d37825a311045663a0bf97d0dcd845",
     "name": "YoutubeViews_id13",
-    "source": "Ether Camp"
+    "source": "Ether Camp",
+    "petname": "pleasantly-generous-gull"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1168,38 +1326,43 @@ TEST[DATE|TIME] Format:  json
     "name": "MuskMarsDog",
     "symbol": "MDOGE",
     "source": "On chain",
-    "decimals": 4
+    "decimals": 4,
+    "petname": "remarkably-tidy-feline"
   },
   {
     "tags": "31-Giveth:Project",
     "address": "0x02b1cb4de1af0d10a53d0efc243e56f6baa39c1a",
     "name": "basinDAO",
-    "source": "Tokenomics"
+    "source": "Tokenomics",
+    "petname": "quickly-awake-gazelle"
   },
   {
     "tags": "91-Early:Addresses",
     "address": "0x02b2101903eb6a51518e63e84b785180859fda9d",
     "name": "Thewhalegame",
-    "source": "EtherScan.io"
+    "source": "EtherScan.io",
+    "petname": "abnormally-thankful-marten"
   },
   {
     "tags": "90-Individuals:Twitter",
     "address": "0x02bbea9326048fb2bd96664adc3ef47bbe3e02b6",
     "name": "Name 0x02bbea93",
     "source": "Twitter",
-    "description": "Sodunke"
+    "petname": "lately-renewing-chamois"
   },
   {
     "tags": "30-Contracts",
     "address": "0x02bcb9675727ade60243c3d467a3bf152142698b",
     "name": "Credmark Community Treasury",
-    "source": "EtherScan.io"
+    "source": "EtherScan.io",
+    "petname": "uniformly-eternal-monarch"
   },
   {
     "tags": "31-Giveth:Project",
     "address": "0x02c2ec416601daf7eb2c69c8ed3000457945fa20",
     "name": "Merijaan — for a plastic free world",
-    "source": "Tokenomics"
+    "source": "Tokenomics",
+    "petname": "strangely-touching-prawn"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1207,26 +1370,29 @@ TEST[DATE|TIME] Format:  json
     "name": "InvestDigital Token",
     "symbol": "IDT",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "mainly-one-monarch"
   },
   {
     "tags": "31-Gitcoin:Grants",
     "address": "0x02cb3c150bedca124d0ae8cccb72fefbe705c953",
     "name": "Grant 0782 Ethereum Cat Herders Community Fund",
     "source": "https://gitcoin.co/grants/782/ethereum-cat-herders-community-fund",
-    "description": "https://twitter.com/EthCatHerders"
+    "petname": "frankly-poetic-moose"
   },
   {
     "tags": "31-Giveth:Project",
     "address": "0x02d17f0e3c1cadfa4e480a3e6bdb8ed6d3203614",
     "name": "Swarm City Reboot",
-    "source": "Tokenomics"
+    "source": "Tokenomics",
+    "petname": "duly-finer-crow"
   },
   {
     "tags": "37-SelfDestructed",
     "address": "0x02d5c618dbc591544b19d0bf13543c0728a3c4ec",
     "name": "Chainlink CHF-USD Aggregator",
-    "source": "EtherScan.io"
+    "source": "EtherScan.io",
+    "petname": "greatly-loved-possum"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1234,19 +1400,22 @@ TEST[DATE|TIME] Format:  json
     "name": "Uniswap V2",
     "symbol": "UNI-V2",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "singularly-eminent-buffalo"
   },
   {
     "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x02d9cc72bc796d2128e58c04b6e50a4e101c0be1",
     "name": "Name 0x02d9cc72",
-    "source": "Gitcoin Website"
+    "source": "Gitcoin Website",
+    "petname": "horribly-accepted-lionfish"
   },
   {
     "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x02dbd1aa375c7d00ecf1de198158ffa332110d47",
     "name": "Name 0x02dbd1aa",
-    "source": "Gitcoin Website"
+    "source": "Gitcoin Website",
+    "petname": "marginally-relieved-goshawk"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1254,19 +1423,22 @@ TEST[DATE|TIME] Format:  json
     "name": "Seppuku.me",
     "symbol": "SEPPUKU",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "primarily-curious-krill"
   },
   {
     "tags": "91-Early:Addresses",
     "address": "0x02e01e9a73ed2cb24b32628c935256e455b0a078",
     "name": "Raceftw",
-    "source": "EtherScan.io"
+    "source": "EtherScan.io",
+    "petname": "previously-generous-newt"
   },
   {
     "tags": "31-Giveth:Project",
     "address": "0x02e0ea1bd6bbd1f5a30b51903b5987f187a2dfcc",
     "name": "Childrens Cancer Association",
-    "source": "Tokenomics"
+    "source": "Tokenomics",
+    "petname": "lightly-proper-sloth"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1274,7 +1446,8 @@ TEST[DATE|TIME] Format:  json
     "name": "YFISwap",
     "symbol": "YFIS",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "widely-eternal-wombat"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1282,7 +1455,8 @@ TEST[DATE|TIME] Format:  json
     "name": "EplusCoin",
     "symbol": "EPLUS",
     "source": "On chain",
-    "decimals": 8
+    "decimals": 8,
+    "petname": "endlessly-frank-pig"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1290,19 +1464,22 @@ TEST[DATE|TIME] Format:  json
     "name": "Kawaii Iun Moon Moon",
     "symbol": "KAWAINU",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "steadily-grateful-sole"
   },
   {
     "tags": "31-Gitcoin:Grants",
     "address": "0x02eb002d88051c03ef312f63bbf3e38aada0b902",
     "name": "Grant 0031 Grantops",
-    "source": "https://gitcoin.co/grants/31/grantops"
+    "source": "https://gitcoin.co/grants/31/grantops",
+    "petname": "genuinely-thankful-aphid"
   },
   {
     "tags": "31-Gitcoin:Grants",
     "address": "0x02ee97a13e434717e3ffa12758a235d1a1680775",
     "name": "Grant 1551 Niftycrates",
-    "source": "https://gitcoin.co/grants/1551/niftycrates"
+    "source": "https://gitcoin.co/grants/1551/niftycrates",
+    "petname": "jointly-perfect-pheasant"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1311,7 +1488,7 @@ TEST[DATE|TIME] Format:  json
     "symbol": "PKG",
     "source": "On chain",
     "decimals": 18,
-    "description": "Decentralized game platform operating on Blockchain, using the VR/AR technologies and machine learning tool to enhance the experience of playing games and purchasing digital goods in games."
+    "petname": "kindly-discrete-hamster"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1320,7 +1497,7 @@ TEST[DATE|TIME] Format:  json
     "symbol": "LIKE",
     "source": "On chain",
     "decimals": 18,
-    "description": "LikeCoin aims to reinvent the Like by realigning creativity and reward. We enable attribution and cross-application collaboration on creative contents"
+    "petname": "notably-cosmic-escargot"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1328,7 +1505,8 @@ TEST[DATE|TIME] Format:  json
     "name": "Akita Doge",
     "symbol": "ADOGE",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "surely-flowing-dolphin"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1336,19 +1514,22 @@ TEST[DATE|TIME] Format:  json
     "name": "Aave interest bearing WETH",
     "symbol": "aWETH",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "specially-strong-polecat"
   },
   {
     "tags": "91-Early:Addresses",
     "address": "0x0312855bb6e548578a36fa8de63b8f0d3d7d7dc2",
     "name": "Betonhashv84",
-    "source": "EtherScan.io"
+    "source": "EtherScan.io",
+    "petname": "mutually-true-gnat"
   },
   {
     "tags": "91-Early:Addresses",
     "address": "0x0318179601a70085aeb488f178b081295b65ecc9",
     "name": "Self_Store",
-    "source": "EtherScan.io"
+    "source": "EtherScan.io",
+    "petname": "intensely-organic-lionfish"
   },
   {
     "tags": "50-Tokens:ERC721",
@@ -1356,5 +1537,6 @@ TEST[DATE|TIME] Format:  json
     "name": "CryptoZunks",
     "symbol": "ZUNK",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "nicely-integral-grizzly"
   }] }

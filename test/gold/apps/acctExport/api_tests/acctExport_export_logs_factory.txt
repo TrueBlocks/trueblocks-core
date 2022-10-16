@@ -593,7 +593,7 @@ export?addrs=0x8b3b3b624c3c0397d3da8fd861512393d51dcbac&factory&traces&lastBlock
       "symbol": "",
       "source": "The DAO",
       "decimals": 0,
-      "description": "",
+      "petname": "previously-usable-tomcat",
       "isCustom": false,
       "isPrefund": false,
       "isContract": false,

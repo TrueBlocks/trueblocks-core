@@ -58,7 +58,7 @@ names?create&logLevel=10&fmt=json&expand
       "symbol": "SYMBOL",
       "source": "SOURCE",
       "decimals": 11,
-      "description": "DESCRIPTION",
+      "petname": "abnormally-able-quetzal",
       "isCustom": false,
       "isPrefund": false,
       "isContract": false,
