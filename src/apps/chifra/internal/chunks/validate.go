@@ -96,10 +96,6 @@ func (opts *ChunksOptions) validateChunks() error {
 		if opts.Mode == "addresses" && opts.Globals.Format == "json" {
 			return validate.Usage("Do not use {0} with {1}", "--format json", "--verbose in the addresses mode")
 		}
-	} else {
-		if opts.Globals.ToFile {
-			return validate.Usage("You may not use the {0} option without {1}.", "--to_file", "--verbose")
-		}
 	}
 
 	err = validate.ValidateIdentifiers(

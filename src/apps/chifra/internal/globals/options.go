@@ -23,7 +23,6 @@ type GlobalOptions struct {
 	Ether   bool   `json:"ether,omitempty"`
 	Dollars bool   `json:"dollars,omitempty"`
 	Help    bool   `json:"help,omitempty"`
-	ToFile  bool   `json:"toFile,omitempty"`
 	File    string `json:"file,omitempty"`
 	Version bool   `json:"version,omitempty"`
 	Noop    bool   `json:"noop,omitempty"`
@@ -155,6 +154,7 @@ func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOption
 	opts := &GlobalOptions{}
 
 	opts.Writer = w
+	opts.OrigWriter = w
 	opts.TestMode = r.Header.Get("User-Agent") == "testRunner"
 
 	for key, value := range r.URL.Query() {
@@ -222,6 +222,7 @@ func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOption
 
 func (opts *GlobalOptions) FinishParse(args []string) {
 	opts.Writer = os.Stdout
+	opts.OrigWriter = os.Stdout
 	if err := tslib.EstablishTsFile(opts.Chain); err != nil {
 		fmt.Println("Could not establish ts file:", err)
 	}

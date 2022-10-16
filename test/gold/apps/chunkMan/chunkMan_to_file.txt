@@ -1,0 +1,5 @@
+chifra chunks  index --to_file
+TEST[DATE|TIME] Mode:  index
+TEST[DATE|TIME] ToFile:  true
+TEST[DATE|TIME] Format:  txt
+filename

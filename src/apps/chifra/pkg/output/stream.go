@@ -10,9 +10,11 @@ import (
 	"sync"
 	"text/template"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // OutputOptions allow more granular configuration of output details
@@ -34,12 +36,16 @@ type OutputOptions struct {
 	Chain string
 	// Flag to check if we are in test mode
 	TestMode bool
+	// Instead of specifying an OutputFn, one may allow chifra to create a file name (based on time)
+	ToFile bool
 	// Output file name. If present, we will write output to this file
 	OutputFn string
 	// If true and OutputFn is non-empty, open OutputFn for appending (create if not present)
 	Append bool
 	// The writer
 	Writer io.Writer
+	// The original writer (that may have been replaced due to the --output options)
+	OrigWriter io.Writer
 }
 
 var formatToSeparator = map[string]rune{
@@ -125,6 +131,10 @@ func logErrors(errsToReport []string) {
 
 type fetchDataFunc[Raw types.RawData] func(modelChan chan types.Modeler[Raw], errorChan chan error)
 
+type OutputFile struct {
+	Filename string `json:"outputFilename"`
+}
+
 // StreamMany outputs models or raw data as they are acquired
 func StreamMany[Raw types.RawData](ctx context.Context, fetchData fetchDataFunc[Raw], options OutputOptions) error {
 	outputWriter := options.GetOutputFileWriter()
@@ -138,6 +148,17 @@ func StreamMany[Raw types.RawData](ctx context.Context, fetchData fetchDataFunc[
 		fetchData(modelChan, errorChan)
 		close(modelChan)
 		close(errorChan)
+		if len(options.OutputFn) > 0 {
+			if utils.IsServerWriter(options.OrigWriter) {
+				OutputObject(OutputFile{Filename: options.OutputFn}, options.Writer, options.Format, options.NoHeader, true, nil)
+			} else {
+				msg := fmt.Sprintf("Output file written to %s", options.OutputFn)
+				if file.IsTestMode() {
+					msg = "Output file written to --output-filename--"
+				}
+				logger.Log(logger.Info, msg)
+			}
+		}
 	}()
 
 	isJson := options.Format == "json" || options.ShowRaw
