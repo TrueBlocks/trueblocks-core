@@ -1,6 +1,6 @@
 chifra tokens  
 TEST[DATE|TIME] Format:  txt
-Error: You must specifiy at least one address
+Error: You must specify at least two address
 Usage:
   chifra tokens [flags] <address> <address> [address...] [block...]
 
