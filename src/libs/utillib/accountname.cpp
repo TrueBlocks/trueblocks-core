@@ -391,15 +391,16 @@ string_q nextAccountnameChunk_custom(const string_q& fieldIn, const void* dataPt
 bool CAccountName::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
+    string_q unused_decsr;
     if (m_schema < getVersionNum(0, 6, 6)) {
-        string_q subtags, unused5, unused6;
+        string_q subtags, unused5;
         bool unused2, unused3, unused4;
         archive >> tags;
         archive >> subtags;  // subtags has been removed and added to tags with ':' separator
         archive >> name;
         archive >> address;
         archive >> symbol;
-        archive >> unused6;
+        archive >> unused_decsr;  // used to be description
         archive >> source;
         archive >> unused5;  // used to be logo
         // archive >> path;
@@ -418,14 +419,13 @@ bool CAccountName::readBackLevel(CArchive& archive) {
         finishParse();
         done = true;
     } else if (m_schema < getVersionNum(0, 40, 3)) {
-        string_q unused6;
         archive >> tags;
         archive >> address;
         archive >> name;
         archive >> symbol;
         archive >> source;
         archive >> decimals;
-        archive >> unused6;
+        archive >> unused_decsr;  // used to be description
         archive >> isCustom;
         archive >> isPrefund;
         archive >> isContract;
