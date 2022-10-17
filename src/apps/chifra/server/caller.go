@@ -46,8 +46,7 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 					key != "mode" &&
 					key != "topics" &&
 					key != "fourbytes" &&
-					key != "names" &&
-					key != "addrs2" {
+					key != "names" {
 					key = convertToCommandLine(key)
 					allDogs = append(allDogs, "--"+key)
 				}
