@@ -228,6 +228,15 @@ names?terms=etwork
     },
     {
       "tags": "50-Tokens:ERC20",
+      "address": "0x3883f5e181fccaf8410fa61e12b59bad963fb645",
+      "name": "Theta Token",
+      "symbol": "THETA",
+      "source": "On chain",
+      "decimals": 18,
+      "petname": "A decentralized peer-to-peer network tha"
+    },
+    {
+      "tags": "50-Tokens:ERC20",
       "address": "0x3cc83c2400e00a54fa1e588d62bc28bf15d5def5",
       "name": "OPTICAL NETWORK",
       "symbol": "OPTC",

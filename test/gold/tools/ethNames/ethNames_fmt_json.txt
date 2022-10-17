@@ -3,11 +3,59 @@ TEST[DATE|TIME] Terms:  [tip]
 TEST[DATE|TIME] Format:  json
 { "data": [
   {
+    "tags": "50-Tokens:ERC721",
+    "address": "0x0b08af3b5a4877ae471342342743f7cb86db604b",
+    "name": "3901 PunkBabies",
+    "symbol": "3901PB",
+    "source": "On chain",
+    "decimals": 18,
+    "petname": "multiply-liked-crappie"
+  },
+  {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852",
+    "name": "Uniswap V2",
+    "symbol": "UNI-V2",
+    "source": "On chain",
+    "decimals": 18,
+    "petname": "multiply-singular-imp"
+  },
+  {
+    "tags": "30-Contract:Optimism Kovan",
+    "address": "0x100dd3b414df5bba2b542864ff94af8024afdf3a",
+    "name": "Lib_AddressManager",
+    "source": "Optimism Website",
+    "petname": "multiply-unified-termite"
+  },
+  {
+    "tags": "31-Gitcoin:Grants",
+    "address": "0x10a35cbce6d0b2b01d6dd944c6889f98b036205d",
+    "name": "Grant 1830 the Augmented Reality Game Cryptolandy.",
+    "source": "https://gitcoin.co/grants/1830/the-augmented-reality-game-cryptolandy",
+    "petname": "multiply-gorgeous-wren"
+  },
+  {
+    "tags": "31-Giveth:Project",
+    "address": "0x1100d5647582a89614204dc790e3ee000770220f",
+    "name": "Chef Ann Foundation",
+    "source": "Tokenomics",
+    "petname": "multiply-good-eft"
+  },
+  {
     "tags": "31-Gitcoin:Grants",
     "address": "0x133d705a9696882228f6bb7fe008745aef7cdc93",
     "name": "Grant 0160 @antiprosynth | Antiprosynthesis.eth ⟠ Twitter Account Activity",
     "source": "https://gitcoin.co/grants/160/antiprosynth-antiprosynthesiseth-twitter-account-",
     "petname": "frequently-mature-mite"
+  },
+  {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x1494ca1f11d487c2bbe4543e90080aeba4ba3c2b",
+    "name": "DefiPulse Index",
+    "symbol": "DPI",
+    "source": "On chain",
+    "decimals": 18,
+    "petname": "multiply-charmed-heron"
   },
   {
     "tags": "31-Giveth:Core",
@@ -17,11 +65,77 @@ TEST[DATE|TIME] Format:  json
     "petname": "notably-intent-elk"
   },
   {
+    "tags": "90-Individuals:Other",
+    "address": "0x1db7332d24ebbdc5f49c34aa6830cb7f46a3647c",
+    "name": "Name 0x1db7332d",
+    "source": "TrueBlocks.io",
+    "petname": "multiply-dear-bluebird"
+  },
+  {
     "tags": "31-Giveth:Project",
     "address": "0x1e1dee1a47b6d4dd5122c6cd7483ddbb1f42bdce",
     "name": "Sammy Tippit Ministries",
     "source": "Tokenomics",
     "petname": "namely-decent-mammoth"
+  },
+  {
+    "tags": "50-Tokens:ERC721",
+    "address": "0x1e9385ee28c5c7d33f3472f732fb08ce3cebce1f",
+    "name": "MoonCatLootprint",
+    "symbol": "📜",
+    "source": "On chain",
+    "decimals": 18,
+    "petname": "multiply-golden-turtle"
+  },
+  {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x25b6325f5bb1c1e03cfbc3e53f470e1f1ca022e3",
+    "name": "LML",
+    "symbol": "LML",
+    "source": "On chain",
+    "decimals": 18,
+    "petname": "multiply-sunny-grouper"
+  },
+  {
+    "tags": "90-Individuals:Gitcoin Grants",
+    "address": "0x2a6a282bb6acbd0c277d822aa0346c9bf0026847",
+    "name": "Name 0x2a6a282b",
+    "source": "Gitcoin Website",
+    "petname": "multiply-exact-goshawk"
+  },
+  {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x30b90d985104b803a038465c95b6ac226a355b13",
+    "name": "KB24",
+    "symbol": "KB24",
+    "source": "On chain",
+    "decimals": 18,
+    "petname": "multiply-able-thrush"
+  },
+  {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x319dd3826bcd41d6dd741fdcef3d5301b20965e9",
+    "name": "Goola token Airdrop",
+    "symbol": "GOOLA",
+    "source": "On chain",
+    "decimals": 18,
+    "petname": "multiply-arriving-collie"
+  },
+  {
+    "tags": "37-SelfDestructed",
+    "address": "0x32dbd3214ac75223e27e575c53944307914f7a90",
+    "name": "Chainlink LINK-USD Aggregator",
+    "source": "EtherScan.io",
+    "petname": "multiply-pumped-akita"
+  },
+  {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x378903a03fb2c3ac76bb52773e3ce11340377a32",
+    "name": "Clipper Coin Capital",
+    "symbol": "CCCX",
+    "source": "On chain",
+    "decimals": 18,
+    "petname": "multiply-gorgeous-gazelle"
   },
   {
     "tags": "31-Giveth:Project",
@@ -31,11 +145,122 @@ TEST[DATE|TIME] Format:  json
     "petname": "possibly-moral-vulture"
   },
   {
+    "tags": "91-Early:Miners",
+    "address": "0x4947190fcc30d3fb3a16233b259bfe6b3492339a",
+    "name": "Miner_0037_193",
+    "source": "OnChain",
+    "petname": "multiply-select-silkworm"
+  },
+  {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x49ffa76a918ee132a02c7611e63bcda37a3917c0",
+    "name": "Agent Coin",
+    "symbol": "AGNT",
+    "source": "On chain",
+    "decimals": 6,
+    "petname": "multiply-topical-lynx"
+  },
+  {
+    "tags": "90-Individuals:Other",
+    "address": "0x4d953115678b15ce0b0396bcf95db68003f86fb5",
+    "name": "Name 0x4d953115",
+    "source": "EtherScan.io",
+    "petname": "multiply-heroic-gator"
+  },
+  {
+    "tags": "31-Giveth:Project",
+    "address": "0x51fae8b814a53fe22614e0373f324efa36abf736",
+    "name": "DAO51",
+    "source": "Tokenomics",
+    "petname": "multiply-useful-halibut"
+  },
+  {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x5807ca447851c98569c567963b25b1c83d41bebc",
+    "name": "RealToken 10024-10028 Appoline Street Detroit MI",
+    "symbol": "REALTOKEN-10024-10028-APPOLINE",
+    "source": "On chain",
+    "decimals": 18,
+    "petname": "multiply-secure-malamute"
+  },
+  {
+    "tags": "91-Early:Miners",
+    "address": "0x5b3e850e39e6f2c7dd38707b649e2b3536f14c0b",
+    "name": "Miner_0018_348",
+    "source": "OnChain",
+    "petname": "multiply-active-crappie"
+  },
+  {
+    "tags": "80-Malicious",
+    "address": "0x5e4f7ce2607c39f4ec08355e2ea48e50f6f77bff",
+    "name": "HammerBot18",
+    "source": "https://blog.blocknative.com/blog/mempool-forensics",
+    "petname": "multiply-central-ghost"
+  },
+  {
+    "tags": "31-Gitcoin:Grants",
+    "address": "0x62e4851e88bec4f5c5ee3dd347f2c601a18af1af",
+    "name": "Grant 1499 - taoDAO",
+    "source": "https://gitcoin.co/grants/1499/taodao",
+    "petname": "multiply-peaceful-loon"
+  },
+  {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x6d72941510af425fd814775aacbe640fc934ac77",
+    "name": "Quadrillion",
+    "symbol": "QQ",
+    "source": "On chain",
+    "decimals": 18,
+    "petname": "multiply-viable-rabbit"
+  },
+  {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x7e3fe5001d46a3b75ade4cc33fbef61e30718dfb",
+    "name": "Token Engineering Tokyo 3",
+    "source": "https://kickback.events/event/[{ADDRESS}]",
+    "decimals": 18,
+    "petname": "multiply-natural-mackerel"
+  },
+  {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x814e0908b12a99fecf5bc101bb5d0b8b5cdf7d26",
+    "name": "Measurable Data Token",
+    "symbol": "MDT",
+    "source": "On chain",
+    "decimals": 18,
+    "petname": "multiply-fun-shiner"
+  },
+  {
     "tags": "31-Gitcoin:Grants",
     "address": "0x893d80144d0a439bbe29bc74024a29f361560c64",
     "name": "Grant 3504 - Web3 Kotlin Multiplatform",
     "source": "https://gitcoin.co/grants/3504/web3-kotlin-multiplatform",
     "petname": "severely-darling-marmot"
+  },
+  {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x8a9c4dfe8b9d8962b31e4e16f8321c44d48e246e",
+    "name": "NameChangeToken",
+    "symbol": "NCT",
+    "source": "On chain",
+    "decimals": 18,
+    "petname": "multiply-upward-halibut"
+  },
+  {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x8ab7404063ec4dbcfd4598215992dc3f8ec853d7",
+    "name": "Akropolis",
+    "symbol": "AKRO",
+    "source": "On chain",
+    "decimals": 18,
+    "petname": "multiply-square-turtle"
+  },
+  {
+    "tags": "31-Giveth:Project",
+    "address": "0x8b86f8a7dcde9ca325c45047d57ab68e2078b400",
+    "name": "Poly Prep Country Day School",
+    "source": "Tokenomics",
+    "petname": "multiply-close-fowl"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -47,11 +272,128 @@ TEST[DATE|TIME] Format:  json
     "petname": "positively-composed-termite"
   },
   {
+    "tags": "30-Contracts",
+    "address": "0x9ae98746eb8a0aeee5ff2b6b15875313a986f103",
+    "name": "Parity ProofOfSMS",
+    "source": "From Tomasz Drwiega via Gitter",
+    "petname": "multiply-lucky-buzzard"
+  },
+  {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x9cb2f26a23b8d89973f08c957c4d7cdf75cd341c",
+    "name": "Digital Rand",
+    "symbol": "DZAR",
+    "source": "On chain",
+    "decimals": 6,
+    "petname": "multiply-gorgeous-hornet"
+  },
+  {
+    "tags": "30-Contracts",
+    "address": "0xa540fb50288cc31639305b1675c70763c334953b",
+    "name": "DEX.AG",
+    "source": "0xTracker",
+    "petname": "multiply-saving-raven"
+  },
+  {
+    "tags": "50-Tokens:ERC20",
+    "address": "0xb3319f5d18bc0d84dd1b4825dcde5d5f7266d407",
+    "name": "Compound 0x",
+    "symbol": "cZRX",
+    "source": "On chain",
+    "decimals": 8,
+    "petname": "multiply-picked-calf"
+  },
+  {
+    "tags": "50-Tokens:ERC20",
+    "address": "0xba7435a4b4c747e0101780073eeda872a69bdcd4",
+    "name": "AirdropToken",
+    "symbol": "AIRDROP",
+    "source": "On chain",
+    "decimals": 18,
+    "petname": "multiply-definite-kodiak"
+  },
+  {
+    "tags": "31-Gitcoin:Grants",
+    "address": "0xbc58fd3becf189232edf3f7bf10f486c8ebb060d",
+    "name": "Grant 0857 Community Currencies NOW",
+    "petname": "multiply-grown-marten"
+  },
+  {
+    "tags": "50-Tokens:ERC20",
+    "address": "0xbc647aad10114b89564c0a7aabe542bd0cf2c5af",
+    "name": "IONChain Token",
+    "symbol": "IONC",
+    "source": "On chain",
+    "decimals": 18,
+    "petname": "multiply-sound-primate"
+  },
+  {
+    "tags": "50-Tokens:ERC20",
+    "address": "0xc89569c9bafbe2bd490606bfe6598ea20df01362",
+    "name": "ElonX",
+    "symbol": "ElonX",
+    "source": "On chain",
+    "decimals": 18,
+    "petname": "multiply-funny-swift"
+  },
+  {
+    "tags": "31-Giveth:Project",
+    "address": "0xca2f199eb0177241c6dd32a66d9ea98320933212",
+    "name": "Cure Rare Disease",
+    "source": "Tokenomics",
+    "petname": "multiply-cunning-guppy"
+  },
+  {
+    "tags": "31-Giveth:Project",
+    "address": "0xda4fab111ebdc94e34e7ca6879045619c0f05a23",
+    "name": "Florence Immigrant &amp; Refugee Rights Project",
+    "source": "Tokenomics",
+    "petname": "multiply-game-skunk"
+  },
+  {
+    "tags": "50-Tokens:ERC20",
+    "address": "0xe0a6700be7ba52786d82272c31eb81119a3fe8ac",
+    "name": "AIRSHIB Token",
+    "symbol": "AIRSHIB",
+    "source": "On chain",
+    "decimals": 18,
+    "petname": "multiply-singular-phoenix"
+  },
+  {
     "tags": "91-Early:Addresses",
     "address": "0xe7f06e64e0d04c6cfedf7e9079d56d0fb7200a2e",
     "name": "Multiplyx10",
     "source": "EtherScan.io",
     "petname": "widely-alive-donkey"
+  },
+  {
+    "tags": "91-Early:Addresses",
+    "address": "0xec2335f9a79218e23ea4d782f8d9eb98d1ab2013",
+    "name": "@michaellamden68",
+    "source": "Steem",
+    "petname": "multiply-sweeping-crab"
+  },
+  {
+    "tags": "50-Tokens:ERC20",
+    "address": "0xf13b189e53af9b8009557165a0edfa9dac3b5696",
+    "name": "DSProxy #162143",
+    "source": "On chain",
+    "petname": "multiply-daring-rooster"
+  },
+  {
+    "tags": "31-Giveth:Project",
+    "address": "0xf215939d32243bb1bbfdcb59c39a7dc54288fc44",
+    "name": "The Community Foundation of Frederick County Maryland",
+    "source": "Tokenomics",
+    "petname": "multiply-tough-sawfly"
+  },
+  {
+    "tags": "50-Tokens:ERC721",
+    "address": "0xf835a0247b0063c04ef22006ebe57c5f11977cc4",
+    "name": "DarkDAO Voting Proxy Contract 1",
+    "source": "On chain",
+    "decimals": 1,
+    "petname": "multiply-outgoing-macaque"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -69,4 +411,13 @@ TEST[DATE|TIME] Format:  json
     "source": "On chain",
     "decimals": 18,
     "petname": "steadily-sweet-wallaby"
+  },
+  {
+    "tags": "50-Tokens:ERC20",
+    "address": "0xffc63b9146967a1ba33066fb057ee3722221acf0",
+    "name": "Alpha",
+    "symbol": "A",
+    "source": "On chain",
+    "decimals": 18,
+    "petname": "multiply-supreme-prawn"
   }] }

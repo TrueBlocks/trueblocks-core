@@ -468,7 +468,6 @@ void COptions::filterNames() {
 string_q shortenFormat(const string_q& fmtIn) {
     string_q ret = toUpper(fmtIn);
     replace(ret, "[{SOURCE}]", "");
-    replace(ret, "[{PETNAME}]", "");
     replace(ret, "[{DECIMAL}]", "");
     replace(ret, "[{DELETED}]", "");
     replace(ret, "[{ISCUSTOM}]", "");
@@ -483,7 +482,6 @@ string_q shortenFormat(const string_q& fmtIn) {
 string_q getSearchFields(const string_q& fmtIn) {
     string_q ret = toUpper(fmtIn);
     replace(ret, "[{SOURCE}]", "");
-    replace(ret, "[{PETNAME}]", "");
     replace(ret, "[{DECIMAL}]", "");
     replace(ret, "[{DELETED}]", "");
     replace(ret, "[{ISCUSTOM}]", "");

@@ -12,6 +12,15 @@ names?terms=etwork&terms=one
     },
     {
       "tags": "50-Tokens:ERC20",
+      "address": "0x8ea197328f3d72e148af942d9ea93f9cfb40626b",
+      "name": "Not Aragon Network DAO launch council",
+      "symbol": "NOTANLC",
+      "source": "On chain",
+      "decimals": 18,
+      "petname": "wrongly-honest-terrier"
+    },
+    {
+      "tags": "50-Tokens:ERC20",
       "address": "0xcc1230436557f1250812fabbee5b8524b43250f3",
       "name": "NarutoNetwork",
       "symbol": "NARUTO",
