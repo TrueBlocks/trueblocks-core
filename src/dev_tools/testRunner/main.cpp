@@ -307,12 +307,16 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
             if (!prepender.str().empty()) {
                 contents = prepender.str() + contents;
             }
-            if (outputFile.length()) {
+
+            if (!outputFile.empty() && fileExists(outputFile)) {
                 ostringstream os;
                 os << "----" << endl;
                 os << "Results in " << substitute(outputFile, goldApiPath, "./") << endl;
                 os << asciiFileToString(outputFile) << endl;
                 contents += os.str();
+                // } else if (!outputFile.empty()) {
+                //     cerr << "Output file not seen: " << outputFile << endl;
+                //     exit(1);
             }
 
             replaceAll(contents, "3735928559", "\"0xdeadbeef\"");

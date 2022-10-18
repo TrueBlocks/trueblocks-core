@@ -1,3 +1,4 @@
+status?modes=names&toFile
 {
   "outputFilename": "--output_filename--"
 }

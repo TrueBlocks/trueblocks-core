@@ -34,6 +34,8 @@ type OutputOptions struct {
 	Chain string
 	// Flag to check if we are in test mode
 	TestMode bool
+	// Instead of specifying an OutputFn, one may allow chifra to create a file name (based on time)
+	ToFile bool
 	// Output file name. If present, we will write output to this file
 	OutputFn string
 	// If true and OutputFn is non-empty, open OutputFn for appending (create if not present)
