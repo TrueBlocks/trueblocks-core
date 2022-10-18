@@ -8,7 +8,7 @@ names?custom&terms=Account_1&matchCase
       "symbol": "",
       "source": "Testing",
       "decimals": 0,
-      "description": ""
+      "petname": "abnormally-able-ant"
     }
   ],
   "meta": {

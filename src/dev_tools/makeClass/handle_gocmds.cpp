@@ -227,7 +227,7 @@ string_q get_use(const CCommandOption& cmd) {
                 arguments << endl << "Arguments:" << endl;
             else
                 arguments << endl;
-            arguments << substitute(p.Format("  [{LONGNAME}] - [{DESCRIPTION}]"), "addrs2", "addrs");
+            arguments << p.Format("  [{LONGNAME}] - [{DESCRIPTION}]");
             if (p.is_required)
                 arguments << " (required)";
             if (contains(p.data_type, "enum")) {

@@ -72,7 +72,6 @@ bool visitBlock(uint64_t blockNum, void* data) {
             art.input = opt->theCall.encoding + opt->theCall.bytes;
             opt->abi_spec.articulateTransaction(&art);
             opt->theCall.callResult.inputs = art.articulatedTx.inputs;
-            //            opt->theCall.address = opt->opt->callVariables[0];
             if (isText) {
                 cout << opt->theCall.Format(expContext().fmtMap["format"]) << endl;
 

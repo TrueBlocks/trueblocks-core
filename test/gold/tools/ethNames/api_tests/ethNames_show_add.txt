@@ -9,7 +9,7 @@ names?terms=0x0000000000000000000000000000000010101010&logLevel=10&fmt=json&expa
       "symbol": "SYMBOL",
       "source": "SOURCE",
       "decimals": 11,
-      "description": "DESCRIPTION",
+      "petname": "abnormally-able-quetzal",
       "isCustom": false,
       "isPrefund": false,
       "isContract": false,

@@ -22,11 +22,13 @@ func (opts *NamesOptions) HandlePrefundOnly() error {
 	}
 
 	for i, alloc := range allocs {
+		addr := hexutil.Encode(alloc.Address.Bytes())
 		a := types.SimpleName{
 			Tags:    "80-Prefund",
-			Address: hexutil.Encode(alloc.Address.Bytes()),
+			Address: addr,
 			Name:    "Prefund_" + fmt.Sprintf("%04d", i),
 			Source:  "Genesis",
+			Petname: alloc.Petname,
 		}
 		err = opts.Globals.RenderObject(a, i == 0)
 		if err != nil {

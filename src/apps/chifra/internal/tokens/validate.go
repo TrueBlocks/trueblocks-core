@@ -46,16 +46,17 @@ func (opts *TokensOptions) validateTokens() error {
 		return err
 	}
 
-	if len(opts.Addrs2) == 0 {
-		return validate.Usage("You must specifiy at least one address")
+	if len(opts.Addrs) == 0 {
+		return validate.Usage("You must specify at least two address")
+
 	} else {
 		if opts.ByAcct {
-			if len(opts.Addrs2) < 2 {
-				return validate.Usage("You must specifiy at least two addresses")
+			if len(opts.Addrs) < 2 {
+				return validate.Usage("You must specify at least two addresses")
 			}
 
 			// all but the last is assumed to be a token
-			for _, addr := range opts.Addrs2[:len(opts.Addrs2)-1] {
+			for _, addr := range opts.Addrs[:len(opts.Addrs)-1] {
 				ok, err := validate.IsSmartContract(opts.Globals.Chain, addr)
 				if err != nil {
 					return err
@@ -66,7 +67,7 @@ func (opts *TokensOptions) validateTokens() error {
 			}
 		} else {
 			// the first is assumed to be a smart contract, the rest can be either token or no
-			addr := opts.Addrs2[0]
+			addr := opts.Addrs[0]
 			ok, err := validate.IsSmartContract(opts.Globals.Chain, addr)
 			if err != nil {
 				return err
@@ -77,7 +78,7 @@ func (opts *TokensOptions) validateTokens() error {
 		}
 	}
 
-	err = validate.ValidateAddresses(opts.Addrs2)
+	err = validate.ValidateAddresses(opts.Addrs)
 	if err != nil {
 		return err
 	}

@@ -36,10 +36,8 @@ bool COptions::finishClean(CAccountName& account) {
         account.source = "TrueBlocks.io";
     account.source = trim(substitute(account.source, "  ", " "));
 
-    // Clean up and time the description
-    if (account.description == "false")
-        account.description = "";
-    account.description = trim(substitute(account.description.substr(0, 255), "  ", " "));
+    // Clean up and time the petname
+    account.petname = addr_2_Petname(account.address, '-');
 
     // Are we a pre-fund?
     account.isPrefund = prefundAt(account.address) > 0;

@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2022-05-02T07:09:41
+date: 2022-10-16T07:34:11
 lastmod:
   - :git
   - lastmod
@@ -156,21 +156,21 @@ The following commands produce and manage names:
 
 Name data is made of the following data fields:
 
-| Field       | Description                                                                         | Type    |
-| ----------- | ----------------------------------------------------------------------------------- | ------- |
-| tags        | colon separated list of tags                                                        | string  |
-| address     | the address associated with this name                                               | address |
-| name        | the name associated with this address (retrieved from on-chain data if available)   | string  |
-| symbol      | the symbol for this address (retrieved from on-chain data if available)             | string  |
-| source      | user supplied source of where this name was found (or on-chain if name is on-chain) | string  |
-| decimals    | number of decimals retrieved from an ERC20 smart contract, defaults to 18           | uint64  |
-| description | user supplied description for the address                                           | string  |
-| deleted     | `true` if deleted, `false` otherwise                                                | bool    |
-| isCustom    | `true` if the address is a custom address, `false` otherwise                        | bool    |
-| isPrefund   | `true` if the address was one of the prefund addresses, `false` otherwise           | bool    |
-| isContract  | `true` if the address is a smart contract, `false` otherwise                        | bool    |
-| isErc20     | `true` if the address is an ERC20, `false` otherwise                                | bool    |
-| isErc721    | `true` if the address is an ERC720, `false` otherwise                               | bool    |
+| Field      | Description                                                                         | Type    |
+| ---------- | ----------------------------------------------------------------------------------- | ------- |
+| tags       | colon separated list of tags                                                        | string  |
+| address    | the address associated with this name                                               | address |
+| name       | the name associated with this address (retrieved from on-chain data if available)   | string  |
+| symbol     | the symbol for this address (retrieved from on-chain data if available)             | string  |
+| source     | user supplied source of where this name was found (or on-chain if name is on-chain) | string  |
+| decimals   | number of decimals retrieved from an ERC20 smart contract, defaults to 18           | uint64  |
+| petname    | the petname such as described here http://www.erights.org/elib/capability/pnml.html | string  |
+| deleted    | `true` if deleted, `false` otherwise                                                | bool    |
+| isCustom   | `true` if the address is a custom address, `false` otherwise                        | bool    |
+| isPrefund  | `true` if the address was one of the prefund addresses, `false` otherwise           | bool    |
+| isContract | `true` if the address is a smart contract, `false` otherwise                        | bool    |
+| isErc20    | `true` if the address is an ERC20, `false` otherwise                                | bool    |
+| isErc721   | `true` if the address is an ERC720, `false` otherwise                               | bool    |
 
 
 ## ListStats

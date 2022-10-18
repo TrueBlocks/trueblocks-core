@@ -11,7 +11,7 @@ latestApp        ,blknum  ,           ,       ,      ,        ,          ,true  
 path             ,string  ,           ,       ,      ,        ,          ,        ,true  ,         ,    ,     ,        ,
 address          ,address ,           ,       ,      ,        ,          ,true    ,      ,true     ,6   ,6    ,        ,the address being monitored
 decimals         ,uint64  ,           ,       ,      ,        ,          ,true    ,      ,true     ,12  ,     ,        ,
-description      ,string  ,           ,       ,      ,        ,          ,        ,true  ,         ,    ,     ,        ,
+petname          ,string  ,           ,       ,      ,        ,          ,        ,true  ,         ,    ,     ,        ,
 isContract       ,bool    ,           ,       ,      ,        ,          ,true    ,      ,true     ,13  ,     ,        ,
 isCustom         ,bool    ,           ,       ,      ,        ,          ,true    ,      ,true     ,8   ,8    ,        ,`true` if this address is customized
 isErc20          ,bool    ,           ,       ,      ,        ,          ,        ,true  ,         ,    ,     ,        ,

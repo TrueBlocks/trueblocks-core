@@ -2,7 +2,7 @@
 class = CAccountName
 fields = accountname.csv
 includes = basetypes.h|basenode.h|sfarchive.h
-cpp_includes = options_base.h
+cpp_includes = options_base.h|petname.h
 sort = v1.address < v2.address
 equals = address % it.address
 tsx = true

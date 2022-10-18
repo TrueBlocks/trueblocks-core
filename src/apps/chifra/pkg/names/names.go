@@ -18,19 +18,19 @@ import (
 
 // Name is a record in the names database
 type Name struct {
-	Tags        string `json:"tags"`
-	Address     string `json:"address"`
-	Name        string `json:"name"`
-	Symbol      string `json:"symbol"`
-	Source      string `json:"source"`
-	Decimals    string `json:"decimals"`
-	Description string `json:"description"`
-	Deleted     bool   `json:"deleted"`
-	IsCustom    bool   `json:"isCustom"`
-	IsPrefund   bool   `json:"isPrefund"`
-	IsContract  bool   `json:"isContract"`
-	IsErc20     bool   `json:"isErc20"`
-	IsErc721    bool   `json:"isErc721"`
+	Tags       string `json:"tags"`
+	Address    string `json:"address"`
+	Name       string `json:"name"`
+	Symbol     string `json:"symbol"`
+	Source     string `json:"source"`
+	Decimals   string `json:"decimals"`
+	Petname    string `json:"petname"`
+	Deleted    bool   `json:"deleted"`
+	IsCustom   bool   `json:"isCustom"`
+	IsPrefund  bool   `json:"isPrefund"`
+	IsContract bool   `json:"isContract"`
+	IsErc20    bool   `json:"isErc20"`
+	IsErc721   bool   `json:"isErc721"`
 }
 
 func (n Name) String() string {
@@ -42,15 +42,15 @@ type NamesArray []Name
 
 // NameOnDisc is a record in the names database when stored in the binary backing file
 type NameOnDisc struct {
-	Tags        [30 + 1]byte  `json:"-"`
-	Address     [42 + 1]byte  `json:"-"`
-	Name        [120 + 1]byte `json:"-"`
-	Symbol      [30 + 1]byte  `json:"-"`
-	Source      [180 + 1]byte `json:"-"`
-	Description [255 + 1]byte `json:"-"`
-	Decimals    uint16        `json:"-"`
-	Flags       uint16        `json:"-"`
-	Padding     byte          `json:"-"`
+	Tags     [30 + 1]byte  `json:"-"`
+	Address  [42 + 1]byte  `json:"-"`
+	Name     [120 + 1]byte `json:"-"`
+	Symbol   [30 + 1]byte  `json:"-"`
+	Source   [180 + 1]byte `json:"-"`
+	Petname  [40 + 1]byte  `json:"-"`
+	Decimals uint16        `json:"-"`
+	Flags    uint16        `json:"-"`
+	Padding  byte          `json:"-"`
 }
 
 type NamesMap map[common.Address]Name
@@ -98,13 +98,13 @@ func LoadNamesMap(chain string) (NamesMap, error) {
 			v := NameOnDisc{}
 			binary.Read(file, binary.LittleEndian, &v)
 			n := Name{
-				Tags:        justChars(v.Tags[:]),
-				Address:     justChars(v.Address[:]),
-				Name:        justChars(v.Name[:]),
-				Symbol:      justChars(v.Symbol[:]),
-				Decimals:    justChars([]byte(fmt.Sprintf("%d", v.Decimals))),
-				Source:      justChars(v.Source[:]),
-				Description: justChars(v.Description[:]),
+				Tags:     justChars(v.Tags[:]),
+				Address:  justChars(v.Address[:]),
+				Name:     justChars(v.Name[:]),
+				Symbol:   justChars(v.Symbol[:]),
+				Decimals: justChars([]byte(fmt.Sprintf("%d", v.Decimals))),
+				Source:   justChars(v.Source[:]),
+				Petname:  justChars(v.Petname[:]),
 			}
 			ret[common.HexToAddress(justChars(v.Address[:]))] = n
 			// fmt.Println(n)
@@ -152,7 +152,7 @@ var requiredColumns = []string{
 	"name",
 	"symbol",
 	"source",
-	"description",
+	"petname",
 }
 
 type NameReader struct {

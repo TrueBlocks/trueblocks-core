@@ -1,6 +1,6 @@
 tokens?
 {
   "errors": [
-    "You must specifiy at least one address"
+    "You must specify at least two address"
   ]
 }

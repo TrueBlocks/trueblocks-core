@@ -257,6 +257,7 @@ bool COptions::parseArguments(string_q& command) {
         if (accountedFor.address.empty()) {
             accountedFor.address = monitor.address;
             findName(monitor.address, accountedFor);
+            accountedFor.petname = addr_2_Petname(accountedFor.address, '-');  // order matters
             accountedFor.isContract = !getCodeAt(monitor.address, latest).empty();
         }
 
@@ -290,6 +291,8 @@ bool COptions::parseArguments(string_q& command) {
         for (auto monitor : allMonitors) {
             CMonitorCount monCount;
             monCount.address = monitor.address;
+            // CMonitorCount doesn't have a petname
+            // monCount.petname = addr_2_Petname(monCount.address, '-');
             monCount.fileSize = fileSize(monitor.getPathToMonitor(monitor.address, false));
             monCount.nRecords = monitor.getRecordCnt(monitor.getPathToMonitor(monitor.address, false));
             cout << ((isJson() && !firstOut) ? ", " : "");
@@ -377,6 +380,7 @@ void COptions::Init(void) {
     monApps.clear();
 
     accountedFor.address = "";
+    accountedFor.petname = "";
 
     // We don't clear these because they are part of meta data
     // prefundAddrMap.clear();
@@ -488,7 +492,7 @@ bool COptions::setDisplayFormatting(void) {
             HIDE_FIELD(CAppearanceDisplay, "symbol");
             HIDE_FIELD(CAppearanceDisplay, "source");
             HIDE_FIELD(CAppearanceDisplay, "decimals");
-            HIDE_FIELD(CAppearanceDisplay, "description");
+            HIDE_FIELD(CAppearanceDisplay, "petname");
             HIDE_FIELD(CAppearanceDisplay, "isCustom");
             HIDE_FIELD(CAppearanceDisplay, "isPrefund");
             HIDE_FIELD(CAppearanceDisplay, "isContract");

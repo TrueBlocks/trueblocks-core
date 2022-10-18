@@ -79,7 +79,7 @@ func (opts *ChunksOptions) validateChunks() error {
 				return validate.Usage("Choose either {0} or {1}, not both.", "--verbose", "--belongs")
 			}
 			if len(opts.Blocks) == 0 {
-				return validate.Usage("You must specifiy at least one {0} with the {1} option", "block identifier", "--belongs")
+				return validate.Usage("You must specify at least one {0} with the {1} option", "block identifier", "--belongs")
 			}
 		}
 	}

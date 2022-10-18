@@ -565,8 +565,8 @@ void CTestCase::prepareTest(bool cmdLine, bool removeWorking) {
 
     if (!builtin) {  // order matters
         if (cmdLine) {
-            CStringArray opts = {"val",   "addrs",     "addrs2", "blocks", "files",  "dates",    "transactions",
-                                 "terms", "functions", "modes",  "mode",   "topics", "fourbytes"};
+            CStringArray opts = {"val",   "addrs",     "blocks", "files", "dates",  "transactions",
+                                 "terms", "functions", "modes",  "mode",  "topics", "fourbytes"};
             options = "&" + options;
             for (auto opt : opts)
                 replaceAll(options, "&" + opt + "=", " ");

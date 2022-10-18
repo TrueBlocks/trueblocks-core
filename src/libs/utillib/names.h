@@ -35,7 +35,7 @@ class NameOnDisc {
     char name[120 + 1];
     char symbol[30 + 1];
     char source[180 + 1];
-    char description[255 + 1];
+    char petname[40 + 1];
     uint16_t decimals;
     uint16_t flags;
     bool disc_2_Name(CAccountName& nm) const;

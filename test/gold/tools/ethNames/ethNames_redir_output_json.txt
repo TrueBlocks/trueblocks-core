@@ -12,5 +12,6 @@ Results in ./output_file.json
     "name": "BitClave Airdrop",
     "symbol": "CAT",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 18,
+    "petname": "cheaply-dashing-pug"
   }] }
