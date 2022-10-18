@@ -142,12 +142,6 @@ func (opts *GlobalOptions) toCmdLine() string {
 		options += " --to_file"
 	}
 
-	// TODO: Remove this
-	// Handled in GoLang code
-	// if len(opts.File) > 0 {
-	// 	options += " -- file:" + opts.File
-	// }
-
 	return options
 }
 
