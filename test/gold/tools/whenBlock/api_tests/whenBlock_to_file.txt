@@ -1,2 +1,3 @@
-when?blocks=1001001&fmt=json&toFile
-xxx
+{
+  "outputFilename": "--output_filename--"
+}

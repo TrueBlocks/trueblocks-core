@@ -6,6 +6,84 @@ TEST[DATE|TIME] NoHeader:  true
 TEST[DATE|TIME] OutputFn:  output_test_file
 TEST[DATE|TIME] Append:  true
 TEST[DATE|TIME] Format:  txt
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 2
+  0: uint256 coinType = <>
+  1: bytes newAddress = <>
+dataArray.size: 4
+  0 (0x000) 0000000000000000...0000000000000000000000000000003c <=o <-r
+  1 (0x020) 0000000000000000...00000000000000000000000000000040
+  2 (0x040) 0000000000000000...00000000000000000000000000000014
+  3 (0x060) f503017d7baf7fbc...6a78179b000000000000000000000000
+
+==================================================
+params.size: 2
+  0: uint256 coinType = 60
+  1: bytes newAddress = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 2
+  0: uint256 coinType = 60
+  1: bytes newAddress = <>
+dataArray.size: 4
+  0 (0x000) 0000000000000000...0000000000000000000000000000003c <=o
+  1 (0x020) 0000000000000000...00000000000000000000000000000040 <-r
+  2 (0x040) 0000000000000000...00000000000000000000000000000014
+  3 (0x060) f503017d7baf7fbc...6a78179b000000000000000000000000
+
+==================================================
+params.size: 2
+  0: uint256 coinType = 60
+  1: bytes newAddress = 0xf503017d7baf7fbc0fff7492b751025c6a78179b
+params.size: 2
+  0: uint256 coinType = 60
+  1: bytes newAddress = 0xf503017d7baf7fbc0fff7492b751025c6a78179b
+==================================================
+
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 2
+  0: uint256 coinType = <>
+  1: bytes newAddress = <>
+dataArray.size: 4
+  0 (0x000) 0000000000000000...0000000000000000000000000000003c <=o <-r
+  1 (0x020) 0000000000000000...00000000000000000000000000000040
+  2 (0x040) 0000000000000000...00000000000000000000000000000014
+  3 (0x060) f503017d7baf7fbc...6a78179b000000000000000000000000
+
+==================================================
+params.size: 2
+  0: uint256 coinType = 60
+  1: bytes newAddress = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 2
+  0: uint256 coinType = 60
+  1: bytes newAddress = <>
+dataArray.size: 4
+  0 (0x000) 0000000000000000...0000000000000000000000000000003c <=o
+  1 (0x020) 0000000000000000...00000000000000000000000000000040 <-r
+  2 (0x040) 0000000000000000...00000000000000000000000000000014
+  3 (0x060) f503017d7baf7fbc...6a78179b000000000000000000000000
+
+==================================================
+params.size: 2
+  0: uint256 coinType = 60
+  1: bytes newAddress = 0xf503017d7baf7fbc0fff7492b751025c6a78179b
+params.size: 2
+  0: uint256 coinType = 60
+  1: bytes newAddress = 0xf503017d7baf7fbc0fff7492b751025c6a78179b
+==================================================
+
 ----
 Results in ./output_test_file
 blockNumber	transactionIndex	date	timestamp	from	to	ether	ethGasPrice	gasUsed	hash	isError	encoding	compressedTx

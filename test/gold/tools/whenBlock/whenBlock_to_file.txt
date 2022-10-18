@@ -1,5 +1,2 @@
 chifra when  1001001 --fmt json --to_file
-TEST[DATE|TIME] Blocks:  [1001001]
-TEST[DATE|TIME] ToFile:  true
-TEST[DATE|TIME] Format:  json
-xxx
+{ "outputFilename": "--output_filename--" }

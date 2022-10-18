@@ -1,6 +1,4 @@
 chifra status  names --to_file
-TEST[DATE|TIME] Modes:  [names]
 TEST[DATE|TIME] Depth:  0
-TEST[DATE|TIME] ToFile:  true
-TEST[DATE|TIME] Output written to --output-filename--
-Contents of file
+TEST[DATE|TIME] TestEnd:  0
+--output_filename--

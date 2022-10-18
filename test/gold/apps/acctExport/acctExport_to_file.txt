@@ -1,13 +1,5 @@
 chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --last_block 10296792 --accounting --ether --fmt json --to_file --articulate --log_level 10
-TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
-TEST[DATE|TIME] Accounting:  true
-TEST[DATE|TIME] Articulate:  true
-TEST[DATE|TIME] FirstBlock:  10277780
-TEST[DATE|TIME] LastBlock:  10296792
-TEST[DATE|TIME] LogLevel:  10
-TEST[DATE|TIME] Ether:  true
-TEST[DATE|TIME] ToFile:  true
-TEST[DATE|TIME] Format:  json
+TIME ~ CLOCK - : 4-----0xf503017d7baf7fbc0fff7492b751025c6a78179b freshened to 11854827
 TIME ~ CLOCK - : 4-----Loaded timestamp file
 
 level: 1
