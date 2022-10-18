@@ -91,9 +91,5 @@ func (opts *WhenOptions) validateWhen() error {
 		return err
 	}
 
-	if len(opts.Globals.OutputFn) > 0 {
-		return validate.Usage("The {0} option is not available with the {1}.", "--output", "chifra when -- yet...")
-	}
-
 	return opts.Globals.Validate()
 }
