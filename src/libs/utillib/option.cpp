@@ -412,7 +412,7 @@ string_q COption::readmeDash(const string_q& str) const {
 
 //--------------------------------------------------------------------------------
 string_q COption::getLongKey(void) const {
-    string_q lName = substitute(longName, "addrs2", "addrs");
+    string_q lName = longName;
     lName = (is_positional ? substitute(lName, "-", "") : lName);
     return readmeDash(lName);
 }

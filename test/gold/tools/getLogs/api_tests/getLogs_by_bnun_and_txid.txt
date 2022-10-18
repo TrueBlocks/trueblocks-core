@@ -1,8 +1,9 @@
-logs?transactions=4000000.5&fmt=api
+logs?transactions=4000000.5&fmt=json
 {
   "data": [
     {
       "address": "0x1a95b271b0535d15fa49932daba31ba612b52946",
+      "blockNumber": 4000000,
       "logIndex": 4,
       "topics": [
         "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
@@ -11,6 +12,8 @@ logs?transactions=4000000.5&fmt=api
       ],
       "data": "0x000000000000000000000000000000000000000000000000000000000a21fe80",
       "compressedLog": "",
+      "transactionHash": "0xfe52da8afe135e14a0855240e1ef4b44a0b4ebe374bd39de307cf0f3fabf0ff1",
+      "transactionIndex": 5,
       "type": ""
     }
   ],

@@ -7,4 +7,4 @@ TEST[DATE|TIME] Terse:  true
 --TIME-- Config Path:  --paths--
 --TIME-- Cache Path:   --paths--
 --TIME-- Index Path:   --paths--
---TIME-- Progress:     --client--, --final--, --staging--, --unripe
+--TIME-- Progress:     --client--, --final--, --staging--, --unripe-- ts: --ts--

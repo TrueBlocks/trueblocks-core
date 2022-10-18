@@ -7,7 +7,7 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 0.40.2-beta
+  version: 0.41.0-beta
   description: >
 
     A REST layer over the TrueBlocks application. With `chifra serve`, you can
@@ -650,7 +650,7 @@ paths:
                       "symbol": "LBA",
                       "source": "On chain",
                       "decimals": 18,
-                      "description": "Decentralized lending infrastructure facilitating open access to credit networks on Ethereum.",
+                      "petname": "actively-happy-mite",
                     },
                   ]
         "400":
@@ -822,6 +822,19 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: flow
+          description: >
+            for the uniq and apps options only, export only from or to (including trace from or to)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+            enum:
+              - from
+              - to
+              - reward
         - name: logs
           description: display only the logs found in the block(s)
           required: false
@@ -950,6 +963,18 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: flow
+          description: >
+            for the uniq option only, export only from or to (including trace from or to)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+            enum:
+              - from
+              - to
         - name: reconcile
           description: reconcile the transaction as per the provided address
           required: false
@@ -2003,10 +2028,10 @@ components:
           format: uint64
           example: 18
           description: "number of decimals retrieved from an ERC20 smart contract, defaults to 18"
-        description:
+        petname:
           type: string
-          example: "any test"
-          description: "user supplied description for the address"
+          example: "ideally-known-locust"
+          description: "the petname such as described here http://www.erights.org/elib/capability/pnml.html"
         deleted:
           type: boolean
           description: "`true` if deleted, `false` otherwise"
@@ -2231,6 +2256,10 @@ components:
           format: blknum
           example: 354
           description: "the zero-indexed position of this log relative to the block"
+        transactionHash:
+          type: string
+          format: hash
+          description: "the hash of the transction"
         timestamp:
           type: number
           format: timestamp
@@ -2273,6 +2302,10 @@ components:
           format: blknum
           example: 10021
           description: "the number of the block"
+        timestamp:
+          type: number
+          format: timestamp
+          description: "the timestamp of the block"
         transactionHash:
           type: string
           format: hash
@@ -2478,7 +2511,7 @@ components:
           type: string
           format: address
           example: "0xa1e4...63b4"
-          description: "description: the address of the token contract being queried"
+          description: "the address of the token contract being queried"
         name:
           type: string
           example: "The DAO Original"

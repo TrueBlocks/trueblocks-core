@@ -1,6 +1,6 @@
 # Recent Migrations
 
-Please complete any applicable [Migrations](https://github.com/TrueBlocks/trueblocks-core/blob/develop/MIGRATIONS.md) which contains important information.
+Please complete any applicable [Migrations](https://github.com/TrueBlocks/trueblocks-core/blob/develop/MIGRATIONS.md).
 
 # TrueBlocks Core
 
@@ -13,12 +13,12 @@ Please complete any applicable [Migrations](https://github.com/TrueBlocks/truebl
 ## Table of Contents
   - [Introduction](#introduction)
   - [Quick Install](#quick-install)
-  - [Introducing chifra](#introducing-chifra)
-  - [Using chifra](#using-chifra)
+  - [Introducing Chifra](#introducing-chifra)
+  - [Using Chifra](#using-chifra)
   - [Building the Index](#building-the-index)
   - [Docker](#docker)
-  - [Contributing](#contributing-to-trueblocks)
-  - [List of Contributors](#contributors)
+  - [Contributing](#contributing)
+  - [List of Contributors](#list-of-contributors)
   - [Contact](#contact)
 
 ## Introduction
@@ -31,7 +31,7 @@ TrueBlocks is a collection of libraries, tools, and applications that improve ac
 
 3) TrueBlocks enhances the Ethereum RPC interfaces. For example, you may query blocks and transactions by date, by block range, by hashes, or any combination. Furthermore, two additional endpoints are provided to extract (`export`) and list (`list`) historical transactions per address.
 
-## Quick Install
+## Quick install
 
 TrueBlocks runs on Linux and Mac. There is no official Windows support.
 Some users have had success using WSL─you're on your own!
@@ -118,7 +118,7 @@ If you get this error, edit the configuration file mentioned. The file is well d
 When the `chifra status` command returns a valid response, you may move to the next section. If
 you continue to have trouble, join our [discord discussion](https://discord.gg/kAFcZH2x7K).
 
-## Using chifra
+## Using Chifra
 
 If you've gotten this far, you're ready to use TrueBlocks. Run this command which shows every 10th block between the first and the 100,000th.
 
@@ -128,7 +128,7 @@ chifra blocks 0-100000:10
 
 Hit `Control+C` to stop the processing.
 
-## Building the Index
+## Building the index
 
 ---
 
@@ -146,10 +146,9 @@ Our official docker version is in a [separate repo](https://github.com/TrueBlock
 
 See our [documentation repo](https://github.com/TrueBlocks/trueblocks-docs) for the TrueBlocks website.
 
-## Contributing to TrueBlocks
+## Contributing
 
----
-We love contributors. Please see information about our [work flow](./docs/BRANCHING.md) before proceeding.
+We love contributors. Please see information about our [work flow](https://github.com/TrueBlocks/trueblocks-core/blob/develop/docs/BRANCHING.md) before proceeding.
 
 1. Fork this repository into your own repo.
 2. Create a branch: `git checkout -b <branch_name>`.
@@ -157,19 +156,17 @@ We love contributors. Please see information about our [work flow](./docs/BRANCH
 4. Push back to the original branch: `git push origin TrueBlocks/trueblocks-core`
 5. Create the pull request.
 
-## Contributors
+## List of Contributors
 
----
 Thanks to the following people who have contributed to this project:
 
 * [@tjayrush](https://github.com/tjayrush)
 * [@dszlachta](https://github.com/dszlachta)
-* [@MattDodsonEnglish](https://github.com/MattDodsonEnglish)
 * [@wildmolasses](https://github.com/wildmolasses)
-* [@crodnun](https://github.com/crodnun)
 * [@MysticRyuujin](https://github.com/MysticRyuujin)
+* [@MattDodsonEnglish](https://github.com/MattDodsonEnglish)
+* [@crodnun](https://github.com/crodnun)
 
 ## Contact
 
----
-If you have specific requests, contact us here <info@quickblocks.io>.
+If you have questions, comments, or complaints, please join the discussion on our discord server which is [linked from our website](https://trueblocks.io).

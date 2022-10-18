@@ -110,3 +110,8 @@ func GetOptions() *ReceiptsOptions {
 	// EXISTING_CODE
 	return &defaultReceiptsOptions
 }
+
+func ResetOptions() {
+	defaultReceiptsOptions = ReceiptsOptions{}
+	globals.SetDefaults(&defaultReceiptsOptions.Globals)
+}

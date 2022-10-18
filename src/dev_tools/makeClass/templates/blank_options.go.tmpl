@@ -77,3 +77,8 @@ func GetOptions() *[{PROPER}]Options {
 	// EXISTING_CODE
 	return &default[{PROPER}]Options
 }
+
+func ResetOptions() {
+	default[{PROPER}]Options = [{PROPER}]Options{}
+	globals.SetDefaults(&default[{PROPER}]Options.Globals)
+}

@@ -215,3 +215,8 @@ func GetOptions() *NamesOptions {
 	// EXISTING_CODE
 	return &defaultNamesOptions
 }
+
+func ResetOptions() {
+	defaultNamesOptions = NamesOptions{}
+	globals.SetDefaults(&defaultNamesOptions.Globals)
+}

@@ -13,6 +13,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	slurpPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/slurp"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/spf13/cobra"
 )
 
@@ -24,7 +25,7 @@ var slurpCmd = &cobra.Command{
 	Short:   shortSlurp,
 	Long:    longSlurp,
 	Version: versionText,
-	RunE:    slurpPkg.RunSlurp,
+	RunE:    file.RunWithFileSupport("slurp", slurpPkg.RunSlurp, slurpPkg.ResetOptions),
 }
 
 const usageSlurp = `slurp [flags] <address> [address...] [block...]

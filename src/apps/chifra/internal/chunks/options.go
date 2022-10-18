@@ -143,3 +143,8 @@ func GetOptions() *ChunksOptions {
 	// EXISTING_CODE
 	return &defaultChunksOptions
 }
+
+func ResetOptions() {
+	defaultChunksOptions = ChunksOptions{}
+	globals.SetDefaults(&defaultChunksOptions.Globals)
+}

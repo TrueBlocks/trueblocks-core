@@ -1,26 +1,10 @@
 chifra blocks  --file cmd_file2 --cache
+TEST[DATE|TIME] Blocks:  [92590]
+TEST[DATE|TIME] BigRange:  0
 TEST[DATE|TIME] Cache:  true
+TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] File:  cmd_file2
 TEST[DATE|TIME] Format:  json
-Cmd: 0092590 -v:1 --cache 
-Cmd: 0141245 -v:1 --cache 
-Cmd: 0158858 -v:1 --cache 
-Cmd: 0289897 -v:1 --cache 
-Cmd: 0381094 -v:1 --cache 
-Cmd: 0394557 -v:1 --cache 
-Cmd: 0442738 -v:1 --cache 
-Cmd: 0477644 -v:1 --cache 
-Cmd: 0599852 -v:1 --cache 
-Cmd: 0635557 -v:1 --cache 
-Cmd: 0640798 -v:1 --cache 
-Cmd: 0723006 -v:1 --cache 
-Cmd: 0798397 -v:1 --cache 
-Cmd: 0851731 -v:1 --cache 
-Cmd: 1025677 -v:1 --cache 
-Cmd: 1026962 -v:1 --cache 
-Cmd: 1078767 -v:1 --cache 
-Cmd: 1152642 -v:1 --cache 
-Cmd: 1000000-1001000:100 --cache 
 { "data": [
 {
   "gasLimit": 3141592,
@@ -34,6 +18,12 @@ Cmd: 1000000-1001000:100 --cache
   "timestamp": 1439674369,
   "baseFeePerGas": 0
 },
+TEST[DATE|TIME] Blocks:  [141245]
+TEST[DATE|TIME] BigRange:  0
+TEST[DATE|TIME] Cache:  true
+TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] File:  cmd_file2
+TEST[DATE|TIME] Format:  json
 {
   "gasLimit": 3141592,
   "gasUsed": 0,
@@ -46,6 +36,12 @@ Cmd: 1000000-1001000:100 --cache
   "timestamp": 1440511996,
   "baseFeePerGas": 0
 },
+TEST[DATE|TIME] Blocks:  [158858]
+TEST[DATE|TIME] BigRange:  0
+TEST[DATE|TIME] Cache:  true
+TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] File:  cmd_file2
+TEST[DATE|TIME] Format:  json
 {
   "gasLimit": 3141592,
   "gasUsed": 0,
@@ -58,6 +54,12 @@ Cmd: 1000000-1001000:100 --cache
   "timestamp": 1440826383,
   "baseFeePerGas": 0
 },
+TEST[DATE|TIME] Blocks:  [289897]
+TEST[DATE|TIME] BigRange:  0
+TEST[DATE|TIME] Cache:  true
+TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] File:  cmd_file2
+TEST[DATE|TIME] Format:  json
 {
   "gasLimit": 3141592,
   "gasUsed": 0,
@@ -70,6 +72,12 @@ Cmd: 1000000-1001000:100 --cache
   "timestamp": 1443211927,
   "baseFeePerGas": 0
 },
+TEST[DATE|TIME] Blocks:  [381094]
+TEST[DATE|TIME] BigRange:  0
+TEST[DATE|TIME] Cache:  true
+TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] File:  cmd_file2
+TEST[DATE|TIME] Format:  json
 {
   "gasLimit": 3141592,
   "gasUsed": 0,
@@ -82,18 +90,25 @@ Cmd: 1000000-1001000:100 --cache
   "timestamp": 1444799304,
   "baseFeePerGas": 0
 },
+TEST[DATE|TIME] Blocks:  [394557]
+TEST[DATE|TIME] Hashes:  true
+TEST[DATE|TIME] BigRange:  0
+TEST[DATE|TIME] Cache:  true
+TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] File:  cmd_file2
+TEST[DATE|TIME] Format:  json
 {
-  "gasLimit": 3141592,
-  "gasUsed": 0,
   "hash": "0x0dc3238e4314369676ba901bf53c8c7284347360bcc5b66fc519546f9c88bd1f",
   "blockNumber": 394557,
   "parentHash": "0x5db7a06b7cd96e5d93769fbdfa515017887c5d1badd3c75412c98fcab6c89fd5",
-  "miner": "0xf927a40c8b7f6e07c5af7fa2155b4864a4112b13",
-  "difficulty": 5792849968684,
-  "finalized": true,
-  "timestamp": 1445036868,
-  "baseFeePerGas": 0
+  "timestamp": 1445036868
 },
+TEST[DATE|TIME] Blocks:  [442738]
+TEST[DATE|TIME] BigRange:  0
+TEST[DATE|TIME] Cache:  true
+TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] File:  cmd_file2
+TEST[DATE|TIME] Format:  json
 {
   "gasLimit": 3141592,
   "gasUsed": 0,
@@ -106,6 +121,12 @@ Cmd: 1000000-1001000:100 --cache
   "timestamp": 1445864379,
   "baseFeePerGas": 0
 },
+TEST[DATE|TIME] Blocks:  [477644]
+TEST[DATE|TIME] BigRange:  0
+TEST[DATE|TIME] Cache:  true
+TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] File:  cmd_file2
+TEST[DATE|TIME] Format:  json
 {
   "gasLimit": 3141592,
   "gasUsed": 0,
@@ -118,45 +139,27 @@ Cmd: 1000000-1001000:100 --cache
   "timestamp": 1446452690,
   "baseFeePerGas": 0
 },
+TEST[DATE|TIME] Blocks:  [599852]
+TEST[DATE|TIME] Hashes:  true
+TEST[DATE|TIME] BigRange:  0
+TEST[DATE|TIME] Cache:  true
+TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] File:  cmd_file2
+TEST[DATE|TIME] Format:  json
 {
-  "gasLimit": 3141592,
-  "gasUsed": 21000,
   "hash": "0x85bc0d134ec1a4b4b3700519b60bac5f8ff34a7a368b129d907b4cbe764c9743",
   "blockNumber": 599852,
   "parentHash": "0xe68c10d9a9e99e40a9a2407f3f0e4ea5af8e278cbc579dcdaa255e2d5b8a6ee1",
-  "miner": "0xf8b483dba2c3b7176a3da549ad41a48bb3121069",
-  "difficulty": 7588129354316,
-  "finalized": true,
   "timestamp": 1448545183,
-  "baseFeePerGas": 0,
-  "transactions": [
-    {
-      "hash": "0x4adcf842547ea26cdeec8f2cb3aefdedb9969426af315d8b26a3b55b3a9cd8d3",
-      "blockHash": "0x85bc0d134ec1a4b4b3700519b60bac5f8ff34a7a368b129d907b4cbe764c9743",
-      "blockNumber": 599852,
-      "transactionIndex": 0,
-      "nonce": 40520,
-      "timestamp": 1448545183,
-      "from": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
-      "to": "0x1abf4691de073851dd4f0dd7f998681b15622a6c",
-      "value": 1151132200000000000,
-      "gas": 90000,
-      "gasPrice": 50000000000,
-      "maxFeePerGas": 0,
-      "maxPriorityFeePerGas": 0,
-      "input": "0x",
-      "isError": 0,
-      "hasToken": 0,
-      "receipt": {
-        "contractAddress": "0x0",
-        "gasUsed": 21000,
-        "effectiveGasPrice": 50000000000,
-        "status": null
-      },
-      "gasUsed": 21000
-    }
+  "tx_hashes": [
+    "0x4adcf842547ea26cdeec8f2cb3aefdedb9969426af315d8b26a3b55b3a9cd8d3"
   ]
 },
+TEST[DATE|TIME] Blocks:  [635557]
+TEST[DATE|TIME] BigRange:  0
+TEST[DATE|TIME] Cache:  true
+TEST[DATE|TIME] File:  cmd_file2
+TEST[DATE|TIME] Format:  json
 {
   "gasLimit": 3141592,
   "gasUsed": 21000,
@@ -196,6 +199,11 @@ Cmd: 1000000-1001000:100 --cache
     }
   ]
 },
+TEST[DATE|TIME] Blocks:  [640798]
+TEST[DATE|TIME] BigRange:  0
+TEST[DATE|TIME] Cache:  true
+TEST[DATE|TIME] File:  cmd_file2
+TEST[DATE|TIME] Format:  json
 {
   "gasLimit": 3141592,
   "gasUsed": 0,
@@ -208,6 +216,11 @@ Cmd: 1000000-1001000:100 --cache
   "timestamp": 1449247432,
   "baseFeePerGas": 0
 },
+TEST[DATE|TIME] Blocks:  [723006]
+TEST[DATE|TIME] BigRange:  0
+TEST[DATE|TIME] Cache:  true
+TEST[DATE|TIME] File:  cmd_file2
+TEST[DATE|TIME] Format:  json
 {
   "gasLimit": 3141592,
   "gasUsed": 0,
@@ -220,6 +233,12 @@ Cmd: 1000000-1001000:100 --cache
   "timestamp": 1450655797,
   "baseFeePerGas": 0
 },
+TEST[DATE|TIME] Blocks:  [798397]
+TEST[DATE|TIME] BigRange:  0
+TEST[DATE|TIME] Cache:  true
+TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] File:  cmd_file2
+TEST[DATE|TIME] Format:  json
 {
   "gasLimit": 3141592,
   "gasUsed": 21000,
@@ -259,6 +278,12 @@ Cmd: 1000000-1001000:100 --cache
     }
   ]
 },
+TEST[DATE|TIME] Blocks:  [851731]
+TEST[DATE|TIME] BigRange:  0
+TEST[DATE|TIME] Cache:  true
+TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] File:  cmd_file2
+TEST[DATE|TIME] Format:  json
 {
   "gasLimit": 3141592,
   "gasUsed": 21000,
@@ -298,6 +323,11 @@ Cmd: 1000000-1001000:100 --cache
     }
   ]
 },
+TEST[DATE|TIME] Blocks:  [1025677]
+TEST[DATE|TIME] BigRange:  0
+TEST[DATE|TIME] Cache:  true
+TEST[DATE|TIME] File:  cmd_file2
+TEST[DATE|TIME] Format:  json
 {
   "gasLimit": 3141592,
   "gasUsed": 42000,
@@ -362,6 +392,12 @@ Cmd: 1000000-1001000:100 --cache
     }
   ]
 },
+TEST[DATE|TIME] Blocks:  [1026962]
+TEST[DATE|TIME] BigRange:  0
+TEST[DATE|TIME] Cache:  true
+TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] File:  cmd_file2
+TEST[DATE|TIME] Format:  json
 {
   "gasLimit": 3141592,
   "gasUsed": 333222,
@@ -644,155 +680,32 @@ Cmd: 1000000-1001000:100 --cache
     }
   ]
 },
+TEST[DATE|TIME] Blocks:  [1078767]
+TEST[DATE|TIME] Hashes:  true
+TEST[DATE|TIME] BigRange:  0
+TEST[DATE|TIME] Cache:  true
+TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] File:  cmd_file2
+TEST[DATE|TIME] Format:  json
 {
-  "gasLimit": 3141592,
-  "gasUsed": 113244,
   "hash": "0xd62bbd86a8e93d18a74561fd1404cdfc3725ee49e2268f8915979e9de85e04b3",
   "blockNumber": 1078767,
   "parentHash": "0x334f6a841735572f7b683837cd7e3eade9147b3eae88a088eadaf7c13c37a06d",
-  "miner": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
-  "difficulty": 15032592181868,
-  "finalized": true,
   "timestamp": 1456761851,
-  "baseFeePerGas": 0,
-  "transactions": [
-    {
-      "hash": "0xdd1acdd9d0d868b2ddb9952f1319279939a72df06633521a4a39b90d12636fe4",
-      "blockHash": "0xd62bbd86a8e93d18a74561fd1404cdfc3725ee49e2268f8915979e9de85e04b3",
-      "blockNumber": 1078767,
-      "transactionIndex": 0,
-      "nonce": 231995,
-      "timestamp": 1456761851,
-      "from": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
-      "to": "0x02f0249d0f5321b651a88b9d2177517d53c97789",
-      "value": 3235588700000000000,
-      "gas": 90000,
-      "gasPrice": 50000000000,
-      "maxFeePerGas": 0,
-      "maxPriorityFeePerGas": 0,
-      "input": "0x",
-      "isError": 0,
-      "hasToken": 0,
-      "receipt": {
-        "contractAddress": "0x0",
-        "gasUsed": 21000,
-        "effectiveGasPrice": 50000000000,
-        "status": null
-      },
-      "gasUsed": 21000
-    },
-    {
-      "hash": "0xc0cf5297d58a7e83f3bc410dcdaf3efa8618d7218006dd4b85ee274cc43c59ac",
-      "blockHash": "0xd62bbd86a8e93d18a74561fd1404cdfc3725ee49e2268f8915979e9de85e04b3",
-      "blockNumber": 1078767,
-      "transactionIndex": 1,
-      "nonce": 95578,
-      "timestamp": 1456761851,
-      "from": "0x63a9975ba31b0b9626b34300f7f627147df1f526",
-      "to": "0x7aed1a77b54df8b7f6b39eff62e426ae014b5050",
-      "value": 163187560000000000,
-      "gas": 90000,
-      "gasPrice": 50000000000,
-      "maxFeePerGas": 0,
-      "maxPriorityFeePerGas": 0,
-      "input": "0x",
-      "isError": 0,
-      "hasToken": 0,
-      "receipt": {
-        "contractAddress": "0x0",
-        "gasUsed": 29244,
-        "effectiveGasPrice": 50000000000,
-        "logs": [
-          {
-            "address": "0x7aed1a77b54df8b7f6b39eff62e426ae014b5050",
-            "logIndex": 0,
-            "topics": [
-              "0xe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c"
-            ],
-            "data": "0x00000000000000000000000063a9975ba31b0b9626b34300f7f627147df1f5260000000000000000000000000000000000000000000000000243c238a1901000"
-          }
-        ],
-        "status": null
-      },
-      "gasUsed": 29244
-    },
-    {
-      "hash": "0x2608f4d7d0e4214bb3b2c9a7c62fa62b65e6a06c630ccd010c59ae6e6842dfdd",
-      "blockHash": "0xd62bbd86a8e93d18a74561fd1404cdfc3725ee49e2268f8915979e9de85e04b3",
-      "blockNumber": 1078767,
-      "transactionIndex": 2,
-      "nonce": 95579,
-      "timestamp": 1456761851,
-      "from": "0x63a9975ba31b0b9626b34300f7f627147df1f526",
-      "to": "0x26415257e7ee5962617210576325b7ac9c49f1bd",
-      "value": 106019380000000000,
-      "gas": 90000,
-      "gasPrice": 50000000000,
-      "maxFeePerGas": 0,
-      "maxPriorityFeePerGas": 0,
-      "input": "0x",
-      "isError": 0,
-      "hasToken": 0,
-      "receipt": {
-        "contractAddress": "0x0",
-        "gasUsed": 21000,
-        "effectiveGasPrice": 50000000000,
-        "status": null
-      },
-      "gasUsed": 21000
-    },
-    {
-      "hash": "0xeeecb93dec0f800da1cd4ae06c7b6a5853cb86409cab6831a283d74dd03ff78d",
-      "blockHash": "0xd62bbd86a8e93d18a74561fd1404cdfc3725ee49e2268f8915979e9de85e04b3",
-      "blockNumber": 1078767,
-      "transactionIndex": 3,
-      "nonce": 95580,
-      "timestamp": 1456761851,
-      "from": "0x63a9975ba31b0b9626b34300f7f627147df1f526",
-      "to": "0x053bc97eb6e8be0757d3eea3a9240d6302669a62",
-      "value": 21602970000000000,
-      "gas": 90000,
-      "gasPrice": 50000000000,
-      "maxFeePerGas": 0,
-      "maxPriorityFeePerGas": 0,
-      "input": "0x",
-      "isError": 0,
-      "hasToken": 0,
-      "receipt": {
-        "contractAddress": "0x0",
-        "gasUsed": 21000,
-        "effectiveGasPrice": 50000000000,
-        "status": null
-      },
-      "gasUsed": 21000
-    },
-    {
-      "hash": "0x2b69b3be5121fc8e87d675813e3694c209d86e2529e50c15c1865537768ee11e",
-      "blockHash": "0xd62bbd86a8e93d18a74561fd1404cdfc3725ee49e2268f8915979e9de85e04b3",
-      "blockNumber": 1078767,
-      "transactionIndex": 4,
-      "nonce": 95581,
-      "timestamp": 1456761851,
-      "from": "0x63a9975ba31b0b9626b34300f7f627147df1f526",
-      "to": "0xe8589b2962bc439d79ecd41936ad3130e5a1c6ad",
-      "value": 99464970000000000,
-      "gas": 90000,
-      "gasPrice": 50000000000,
-      "maxFeePerGas": 0,
-      "maxPriorityFeePerGas": 0,
-      "input": "0x",
-      "isError": 0,
-      "hasToken": 0,
-      "receipt": {
-        "contractAddress": "0x0",
-        "gasUsed": 21000,
-        "effectiveGasPrice": 50000000000,
-        "status": null
-      },
-      "gasUsed": 21000
-    }
+  "tx_hashes": [
+    "0xdd1acdd9d0d868b2ddb9952f1319279939a72df06633521a4a39b90d12636fe4",
+    "0xc0cf5297d58a7e83f3bc410dcdaf3efa8618d7218006dd4b85ee274cc43c59ac",
+    "0x2608f4d7d0e4214bb3b2c9a7c62fa62b65e6a06c630ccd010c59ae6e6842dfdd",
+    "0xeeecb93dec0f800da1cd4ae06c7b6a5853cb86409cab6831a283d74dd03ff78d",
+    "0x2b69b3be5121fc8e87d675813e3694c209d86e2529e50c15c1865537768ee11e"
   ]
 },
+TEST[DATE|TIME] Blocks:  [1152642]
+TEST[DATE|TIME] BigRange:  0
+TEST[DATE|TIME] Cache:  true
+TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] File:  cmd_file2
+TEST[DATE|TIME] Format:  json
 {
   "gasLimit": 4712388,
   "gasUsed": 42000,
@@ -857,6 +770,11 @@ Cmd: 1000000-1001000:100 --cache
     }
   ]
 },
+TEST[DATE|TIME] Blocks:  [1000000-1001000:100]
+TEST[DATE|TIME] BigRange:  0
+TEST[DATE|TIME] Cache:  true
+TEST[DATE|TIME] File:  cmd_file2
+TEST[DATE|TIME] Format:  json
 {
   "gasLimit": 3141592,
   "gasUsed": 50244,

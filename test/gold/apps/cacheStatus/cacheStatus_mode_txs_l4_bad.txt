@@ -20,7 +20,7 @@ Flags:
   -e, --terse              show a terse summary report (hidden)
   -F, --first_block uint   first block to process (inclusive -- testing only) (hidden)
   -L, --last_block uint    last block to process (inclusive -- testing only) (hidden)
-  -x, --fmt string         export format, one of [none|json*|txt|csv|api]
+  -x, --fmt string         export format, one of [none|json*|txt|csv]
   -v, --verbose            enable verbose (increase detail with --log_level)
   -h, --help               display this help screen
 

@@ -13,6 +13,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	whenPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/when"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/spf13/cobra"
 )
 
@@ -24,7 +25,7 @@ var whenCmd = &cobra.Command{
 	Short:   shortWhen,
 	Long:    longWhen,
 	Version: versionText,
-	RunE:    whenPkg.RunWhen,
+	RunE:    file.RunWithFileSupport("when", whenPkg.RunWhen, whenPkg.ResetOptions),
 }
 
 const usageWhen = `when [flags] < block | date > [ block... | date... ]

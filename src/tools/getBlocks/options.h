@@ -35,6 +35,7 @@ class COptions : public CBlockOptions {
     bool hashes;
     bool uncles;
     bool trace;
+    string_q flow;
     bool logs;
     bool articulate;
     uint64_t big_range;

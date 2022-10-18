@@ -105,7 +105,7 @@ bool COptions::parseArguments(string_q& command) {
                 if (been_here)
                     break;
                 been_here = true;
-                if (hasEsKey) {
+                if (hasEsKey && getEnvStr("NO_ES") != "true") {
                     tests.push_back("tools/ethslurp");
                 }
                 tests.push_back("tools/ethNames");
@@ -157,7 +157,7 @@ bool COptions::parseArguments(string_q& command) {
         tests.push_back("libs/acctlib");
         if (makeClassOn)
             tests.push_back("dev_tools/makeClass");
-        if (hasEsKey) {
+        if (hasEsKey && getEnvStr("NO_ES") != "true") {
             tests.push_back("tools/ethslurp");
         }
         tests.push_back("tools/ethNames");

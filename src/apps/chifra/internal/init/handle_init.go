@@ -5,6 +5,7 @@
 package initPkg
 
 import (
+	"errors"
 	"fmt"
 	"runtime"
 	"strings"
@@ -34,6 +35,12 @@ func (opts *InitOptions) HandleInit() error {
 	if err != nil {
 		return err
 	}
+
+	if remoteManifest.Chain != opts.Globals.Chain {
+		msg := fmt.Sprintf("The chain value found in the downloaded manifest (%s) does not match the manifest on the command line (%s).", remoteManifest.Chain, opts.Globals.Chain)
+		return errors.New(msg)
+	}
+
 	err = remoteManifest.SaveManifest(chain)
 	if err != nil {
 		return err

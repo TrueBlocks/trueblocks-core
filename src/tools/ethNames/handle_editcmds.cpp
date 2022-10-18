@@ -21,18 +21,19 @@ bool COptions::handle_editcmds(bool autoname) {
         return usage("Invalid edit command '" + crud + "'.");
 
     target.address = toLower(trim(getEnvStr("TB_NAME_ADDRESS"), '\"'));
+    target.petname = addr_2_Petname(target.address, '-');
     target.name = trim(getEnvStr("TB_NAME_NAME"), '\"');
     target.tags = trim(getEnvStr("TB_NAME_TAG"), '\"');
     target.source = trim(getEnvStr("TB_NAME_SOURCE"), '\"');
     target.symbol = trim(getEnvStr("TB_NAME_SYMBOL"), '\"');
     target.decimals = str_2_Uint(trim(getEnvStr("TB_NAME_DECIMALS"), '\"'));
-    target.description = trim(getEnvStr("TB_NAME_DESCR"), '\"');
     target.isCustom = str_2_Bool(trim(getEnvStr("TB_NAME_CUSTOM"), '\"')) || to_custom;
     // for delete and remove, we pick it up from the command line
     if (target.address.empty()) {
         if (terms.size() == 0)
             return false;
         target.address = terms[0];
+        target.petname = addr_2_Petname(target.address, '-');
     }
     finishClean(target);
     terms.clear();

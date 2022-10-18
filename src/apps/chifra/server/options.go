@@ -102,3 +102,8 @@ func GetOptions() *ServeOptions {
 	// EXISTING_CODE
 	return &defaultServeOptions
 }
+
+func ResetOptions() {
+	defaultServeOptions = ServeOptions{}
+	globals.SetDefaults(&defaultServeOptions.Globals)
+}

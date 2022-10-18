@@ -248,7 +248,7 @@ bool getReceipt(CReceipt& receipt, const hash_t& txHash) {
 }
 
 //--------------------------------------------------------------
-void getTraces(CTraceArray& traces, const hash_t& hash) {
+void getTraces(CTraceArray& traces, const hash_t& hash, const CTransaction* pTrans) {
     string_q str;
     queryRawTrace(str, hash);
 
@@ -259,6 +259,7 @@ void getTraces(CTraceArray& traces, const hash_t& hash) {
     CTrace trace;
     traces.clear();
     while (trace.parseJson4(generic.result)) {
+        trace.pTransaction = pTrans;
         traces.push_back(trace);
         trace = CTrace();  // reset
     }
@@ -287,6 +288,7 @@ bool loadTraces(CTransaction& trans, blknum_t bn, blknum_t txid, bool useCache, 
         CArchive traceCache(READING_ARCHIVE);
         if (traceCache.Lock(trcFilename, modeReadOnly, LOCK_NOWAIT)) {
             traceCache >> trans.traces;
+            trans.finishParse();
             traceCache.Release();
         }
 
@@ -320,7 +322,7 @@ bool loadTraces(CTransaction& trans, blknum_t bn, blknum_t txid, bool useCache, 
             }
 
         } else {
-            getTraces(trans.traces, trans.getValueByName("hash"));
+            getTraces(trans.traces, trans.getValueByName("hash"), &trans);
         }
 
         // Write traces if we're told to and there are traces. Remember: every transaction has at
@@ -334,6 +336,8 @@ bool loadTraces(CTransaction& trans, blknum_t bn, blknum_t txid, bool useCache, 
                 traceCache.Release();
             }
         }
+
+        trans.finishParse();
     }
     return true;
 }
@@ -955,9 +959,6 @@ string_q exportPreamble(const string_q& format, const string_q& className) {
         case JSON1:
             os << "{ \"data\": [";
             break;
-        case API1:
-            os << "{\"data\": [";
-            break;
         default:
             ASSERT(0);  // shouldn't happen
             break;
@@ -1006,7 +1007,7 @@ string_q exportPostamble(const CStringArray& errorsIn, const string_q& extra) {
 
     if (isText)
         return errStream.str();  // only errors are reported for text or csv
-    ASSERT(fmt == JSON1 || fmt == API1);
+    ASSERT(fmt == JSON1);
 
     ostringstream os;
     os << "]";  // finish the data array (or the error array)...
@@ -1014,9 +1015,8 @@ string_q exportPostamble(const CStringArray& errorsIn, const string_q& extra) {
     if (!errStream.str().empty())
         os << ", \"errors\": [\n" << errStream.str() << "\n]";
 
-    if (fmt == JSON1)
+    if ((fmt == JSON1 && !isApiMode()))
         return os.str() + " }";
-    ASSERT(fmt == API1);
 
     CMetaData meta = getMetaData();
     if (isTestMode()) {

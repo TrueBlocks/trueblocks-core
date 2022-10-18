@@ -24,6 +24,7 @@ static const COption params[] = {
     COption("articulate", "a", "", OPT_SWITCH, "articulate the retrieved data if ABIs can be found"),
     COption("trace", "t", "", OPT_SWITCH, "include the transaction's traces in the results"),
     COption("uniq", "u", "", OPT_SWITCH, "display a list of uniq addresses found in the transaction"),
+    COption("flow", "f", "enum[from|to]", OPT_FLAG, "for the uniq option only, export only from or to (including trace from or to)"),  // NOLINT
     COption("reconcile", "r", "<address>", OPT_FLAG, "reconcile the transaction as per the provided address"),
     COption("cache", "o", "", OPT_SWITCH, "force the results of the query into the tx cache (and the trace cache if applicable)"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Retrieve one or more transactions from the chain or local cache."),
@@ -54,6 +55,12 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-u" || arg == "--uniq") {
             uniq = true;
+
+        } else if (startsWith(arg, "-f:") || startsWith(arg, "--flow:")) {
+            if (!confirmEnum("flow", flow, arg))
+                return false;
+        } else if (arg == "-f" || arg == "--flow") {
+            return flag_required("flow");
 
         } else if (startsWith(arg, "-r:") || startsWith(arg, "--reconcile:")) {
             reconcile = substitute(substitute(arg, "-r:", ""), "--reconcile:", "");
@@ -130,6 +137,7 @@ void COptions::Init(void) {
     articulate = false;
     trace = false;
     uniq = false;
+    flow = "";
     reconcile = "";
     cache = false;
     // END_CODE_INIT

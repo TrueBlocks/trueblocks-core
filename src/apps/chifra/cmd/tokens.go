@@ -13,6 +13,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	tokensPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/tokens"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/spf13/cobra"
 )
 
@@ -24,7 +25,7 @@ var tokensCmd = &cobra.Command{
 	Short:   shortTokens,
 	Long:    longTokens,
 	Version: versionText,
-	RunE:    tokensPkg.RunTokens,
+	RunE:    file.RunWithFileSupport("tokens", tokensPkg.RunTokens, tokensPkg.ResetOptions),
 }
 
 const usageTokens = `tokens [flags] <address> <address> [address...] [block...]

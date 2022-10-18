@@ -57,19 +57,44 @@ bool COptions::handle_appearances(blknum_t num) {
 }
 
 //----------------------------------------------------------------
+bool shouldShow(const COptions* opt, const string_q& val) {
+    if (opt->flow.empty()) {
+        return true;
+    }
+
+    switch (opt->flow[0]) {
+        case 't':  // to
+            return contains(substitute(substitute(val, "_topic", ""), "generator", ""), "to");
+        case 'f':  // from
+            return contains(val, "from");
+        case 'r':  // reward
+            return contains(val, "miner") || contains(val, "uncle");
+    }
+
+    return true;
+}
+
+//----------------------------------------------------------------
 void oneAppearance(const CAppearance& item, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
     bool isText = (expContext().exportFmt & (TXT1 | CSV1));
     if (isText) {
-        cout << trim(item.Format(expContext().fmtMap["format"]), '\t') << endl;
+        string_q val = trim(item.Format(expContext().fmtMap["format"]), '\t');
+        if (shouldShow(opt, val)) {
+            cout << val << endl;
+        }
     } else {
-        if (!opt->firstOut)
-            cout << ",";
-        cout << "  ";
+        ostringstream os;
         indent();
-        item.toJson(cout);
+        item.toJson(os);
         unindent();
-        opt->firstOut = false;
+        if (shouldShow(opt, os.str())) {
+            if (!opt->firstOut)
+                cout << ",";
+            cout << "  ";
+            cout << os.str();
+            opt->firstOut = false;
+        }
     }
 }
 

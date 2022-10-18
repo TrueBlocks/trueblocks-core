@@ -72,7 +72,8 @@ transactions?transactions=0x557c3e14a8e86cd0b947d5c7790d332bbe52bb6ec8cba0aa532d
               "ret_0": "1"
             }
           },
-          "compressedTrace": "{name:deposit|outputs:{ret_0:1}}"
+          "compressedTrace": "{name:deposit|outputs:{ret_0:1}}",
+          "timestamp": 1463653193
         }
       ],
       "articulatedTx": {
@@ -91,5 +92,12 @@ transactions?transactions=0x557c3e14a8e86cd0b947d5c7790d332bbe52bb6ec8cba0aa532d
       "age": "100",
       "ether": 1
     }
-  ]
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
+  }
 }

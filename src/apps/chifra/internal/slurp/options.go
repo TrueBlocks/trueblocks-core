@@ -137,3 +137,8 @@ func GetOptions() *SlurpOptions {
 	// EXISTING_CODE
 	return &defaultSlurpOptions
 }
+
+func ResetOptions() {
+	defaultSlurpOptions = SlurpOptions{}
+	globals.SetDefaults(&defaultSlurpOptions.Globals)
+}

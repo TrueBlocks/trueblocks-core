@@ -8,6 +8,7 @@ import (
 	"io"
 	"log"
 	"os"
+	"sort"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -17,19 +18,19 @@ import (
 
 // Name is a record in the names database
 type Name struct {
-	Tags        string `json:"tags"`
-	Address     string `json:"address"`
-	Name        string `json:"name"`
-	Symbol      string `json:"symbol"`
-	Source      string `json:"source"`
-	Decimals    string `json:"decimals"`
-	Description string `json:"description"`
-	Deleted     bool   `json:"deleted"`
-	IsCustom    bool   `json:"isCustom"`
-	IsPrefund   bool   `json:"isPrefund"`
-	IsContract  bool   `json:"isContract"`
-	IsErc20     bool   `json:"isErc20"`
-	IsErc721    bool   `json:"isErc721"`
+	Tags       string `json:"tags"`
+	Address    string `json:"address"`
+	Name       string `json:"name"`
+	Symbol     string `json:"symbol"`
+	Source     string `json:"source"`
+	Decimals   string `json:"decimals"`
+	Petname    string `json:"petname"`
+	Deleted    bool   `json:"deleted"`
+	IsCustom   bool   `json:"isCustom"`
+	IsPrefund  bool   `json:"isPrefund"`
+	IsContract bool   `json:"isContract"`
+	IsErc20    bool   `json:"isErc20"`
+	IsErc721   bool   `json:"isErc721"`
 }
 
 func (n Name) String() string {
@@ -37,17 +38,19 @@ func (n Name) String() string {
 	return string(ret)
 }
 
+type NamesArray []Name
+
 // NameOnDisc is a record in the names database when stored in the binary backing file
 type NameOnDisc struct {
-	Tags        [30 + 1]byte  `json:"-"`
-	Address     [42 + 1]byte  `json:"-"`
-	Name        [120 + 1]byte `json:"-"`
-	Symbol      [30 + 1]byte  `json:"-"`
-	Source      [180 + 1]byte `json:"-"`
-	Description [255 + 1]byte `json:"-"`
-	Decimals    uint16        `json:"-"`
-	Flags       uint16        `json:"-"`
-	Padding     byte          `json:"-"`
+	Tags     [30 + 1]byte  `json:"-"`
+	Address  [42 + 1]byte  `json:"-"`
+	Name     [120 + 1]byte `json:"-"`
+	Symbol   [30 + 1]byte  `json:"-"`
+	Source   [180 + 1]byte `json:"-"`
+	Petname  [40 + 1]byte  `json:"-"`
+	Decimals uint16        `json:"-"`
+	Flags    uint16        `json:"-"`
+	Padding  byte          `json:"-"`
 }
 
 type NamesMap map[common.Address]Name
@@ -59,8 +62,26 @@ type NameOnDiscHeader struct {
 	Padding [644]byte
 }
 
+func LoadNamesArray(chain string) (NamesArray, error) {
+	names := NamesArray{}
+	if namesMap, err := LoadNamesMap(chain); err != nil {
+		return nil, err
+	} else {
+		for _, name := range namesMap {
+			names = append(names, name)
+		}
+	}
+
+	sort.Slice(names, func(i, j int) bool {
+		return names[i].Address < names[j].Address
+	})
+
+	return names, nil
+}
+
 func LoadNamesMap(chain string) (NamesMap, error) {
 	binPath := config.GetPathToCache(chain) + "names/names.bin"
+	// TODO: Use the names cache if it's present
 	if false && file.FileExists(binPath) {
 		file, _ := os.OpenFile(binPath, os.O_RDONLY, 0)
 		defer file.Close()
@@ -77,12 +98,13 @@ func LoadNamesMap(chain string) (NamesMap, error) {
 			v := NameOnDisc{}
 			binary.Read(file, binary.LittleEndian, &v)
 			n := Name{
-				Tags:        justChars(v.Tags[:]),
-				Address:     justChars(v.Address[:]),
-				Name:        justChars(v.Name[:]),
-				Symbol:      justChars(v.Symbol[:]),
-				Source:      justChars(v.Source[:]),
-				Description: justChars(v.Description[:]),
+				Tags:     justChars(v.Tags[:]),
+				Address:  justChars(v.Address[:]),
+				Name:     justChars(v.Name[:]),
+				Symbol:   justChars(v.Symbol[:]),
+				Decimals: justChars([]byte(fmt.Sprintf("%d", v.Decimals))),
+				Source:   justChars(v.Source[:]),
+				Petname:  justChars(v.Petname[:]),
 			}
 			ret[common.HexToAddress(justChars(v.Address[:]))] = n
 			// fmt.Println(n)
@@ -108,6 +130,7 @@ func LoadNamesMap(chain string) (NamesMap, error) {
 		}
 		ret[common.HexToAddress(grant.Address)] = grant
 	}
+
 	return ret, nil
 }
 
@@ -129,7 +152,7 @@ var requiredColumns = []string{
 	"name",
 	"symbol",
 	"source",
-	"description",
+	"petname",
 }
 
 type NameReader struct {
@@ -151,9 +174,11 @@ func (gr *NameReader) Read() (Name, error) {
 	// isCore := record[gr.header["core"]] == "true"
 	// isValid := validate.IsValidAddress(record[gr.header["address"]]) && !validate.IsZeroAddress(record[gr.header["address"]])
 	return Name{
-		Tags:    record[gr.header["tags"]],
-		Address: strings.ToLower(record[gr.header["address"]]),
-		Name:    record[gr.header["name"]],
+		Tags:     record[gr.header["tags"]],
+		Address:  strings.ToLower(record[gr.header["address"]]),
+		Name:     record[gr.header["name"]],
+		Decimals: record[gr.header["decimals"]],
+		Symbol:   record[gr.header["symbol"]],
 		// IsActive: isActive,
 		// IsCore:   isCore,
 		// IsValid:  isValid,

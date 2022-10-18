@@ -1,6 +1,5 @@
 // TODO(tjayrush): If an abi file is newer than the monitor file - clear the cache
 // TODO(tjayrush): accounting disallows freshen, apps, logs, receipts, statements, traces, but requires articulate
-// TODO(tjayrush): accounting must be exportFmt API1 - why?
 // TODO(tjayrush): accounting must be for one monitor address - why?
 // TODO(tjayrush): accounting requires node balances - why?
 // TODO(tjayrush): Used to do this: if any ABI files was newer, re-read abi and re-articulate in cache
@@ -51,7 +50,7 @@ static const COption params[] = {
     COption("emitter", "", "list<addr>", OPT_FLAG, "for log export only, export only logs if emitted by one of these address(es)"),  // NOLINT
     COption("topic", "", "list<topic>", OPT_FLAG, "for log export only, export only logs with this topic(s)"),
     COption("asset", "", "list<addr>", OPT_FLAG, "for the statements option only, export only reconciliations for this asset"),  // NOLINT
-    COption("flow", "", "enum[in|out|zero]", OPT_FLAG, "for the statements option only, export only statements with incoming value or outgoing value"),  // NOLINT
+    COption("flow", "f", "enum[in|out|zero]", OPT_FLAG, "for the statements option only, export only statements with incoming value or outgoing value"),  // NOLINT
     COption("factory", "y", "", OPT_SWITCH, "scan for contract creations from the given address(es) and report address of those contracts"),  // NOLINT
     COption("load", "", "<string>", OPT_HIDDEN | OPT_FLAG, "a comma separated list of dynamic traversers to load"),
     COption("reversed", "", "", OPT_HIDDEN | OPT_SWITCH, "produce results in reverse chronological order"),
@@ -173,10 +172,10 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "--asset") {
             return flag_required("asset");
 
-        } else if (startsWith(arg, "--flow:")) {
+        } else if (startsWith(arg, "-f:") || startsWith(arg, "--flow:")) {
             if (!confirmEnum("flow", flow, arg))
                 return false;
-        } else if (arg == "--flow") {
+        } else if (arg == "-f" || arg == "--flow") {
             return flag_required("flow");
 
         } else if (arg == "-y" || arg == "--factory") {
@@ -224,7 +223,7 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (!isApiMode() && max_records == 250)
+    if (!isApiMode() && (max_records == 250 || max_records == 0))
         max_records = (((size_t)-100000000));  // this is a very large number that won't wrap
 
     if (accounting && !isArchiveNode())
@@ -258,6 +257,7 @@ bool COptions::parseArguments(string_q& command) {
         if (accountedFor.address.empty()) {
             accountedFor.address = monitor.address;
             findName(monitor.address, accountedFor);
+            accountedFor.petname = addr_2_Petname(accountedFor.address, '-');  // order matters
             accountedFor.isContract = !getCodeAt(monitor.address, latest).empty();
         }
 
@@ -291,6 +291,8 @@ bool COptions::parseArguments(string_q& command) {
         for (auto monitor : allMonitors) {
             CMonitorCount monCount;
             monCount.address = monitor.address;
+            // CMonitorCount doesn't have a petname
+            // monCount.petname = addr_2_Petname(monCount.address, '-');
             monCount.fileSize = fileSize(monitor.getPathToMonitor(monitor.address, false));
             monCount.nRecords = monitor.getRecordCnt(monitor.getPathToMonitor(monitor.address, false));
             cout << ((isJson() && !firstOut) ? ", " : "");
@@ -378,6 +380,7 @@ void COptions::Init(void) {
     monApps.clear();
 
     accountedFor.address = "";
+    accountedFor.petname = "";
 
     // We don't clear these because they are part of meta data
     // prefundAddrMap.clear();
@@ -390,9 +393,6 @@ void COptions::Init(void) {
     fileRange = make_pair(NOPOS, NOPOS);
     allMonitors.clear();
     reportFreq = reportDef = 7;
-    slowQueries = 0;
-    maxSlowQueries =
-        isApiMode() ? getGlobalConfig("acctExport")->getConfigInt("settings", "max_slow_queries", 50) : NOPOS;
 
     // Establish folders. This may be redundant, but it's cheap.
     establishCacheFolders();
@@ -433,8 +433,8 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 bool COptions::setDisplayFormatting(void) {
+    bool isText = expContext().exportFmt != JSON1;
     if (count) {
-        bool isText = expContext().exportFmt != JSON1 && expContext().exportFmt != API1;
         string_q format =
             getGlobalConfig("acctExport")->getConfigStr("display", "format", isText ? STR_DISPLAY_MONITORCOUNT : "");
         expContext().fmtMap["monitorcount_fmt"] = cleanFmt(format);
@@ -447,7 +447,7 @@ bool COptions::setDisplayFormatting(void) {
         show += (isApiMode() ? "|CTransaction:encoding,function,input,etherGasCost|CTrace:traceAddress" : "");
         manageFields(show, true);
         manageFields("CTrace: blockHash, blockNumber, transactionHash, transactionIndex", false);  // hide
-        if (expContext().exportFmt != JSON1 && expContext().exportFmt != API1) {
+        if (isText) {
             string_q format;
 
             format = getGlobalConfig("acctExport")->getConfigStr("display", "format", STR_DISPLAY_TRANSACTION);
@@ -492,7 +492,7 @@ bool COptions::setDisplayFormatting(void) {
             HIDE_FIELD(CAppearanceDisplay, "symbol");
             HIDE_FIELD(CAppearanceDisplay, "source");
             HIDE_FIELD(CAppearanceDisplay, "decimals");
-            HIDE_FIELD(CAppearanceDisplay, "description");
+            HIDE_FIELD(CAppearanceDisplay, "petname");
             HIDE_FIELD(CAppearanceDisplay, "isCustom");
             HIDE_FIELD(CAppearanceDisplay, "isPrefund");
             HIDE_FIELD(CAppearanceDisplay, "isContract");
@@ -551,6 +551,7 @@ bool COptions::setDisplayFormatting(void) {
         if (logs) {
             SHOW_FIELD(CLogEntry, "blockNumber");
             SHOW_FIELD(CLogEntry, "transactionIndex");
+            SHOW_FIELD(CLogEntry, "transactionHash");
             SHOW_FIELD(CReceipt, "blockNumber");
             SHOW_FIELD(CReceipt, "transactionIndex");
         }

@@ -112,11 +112,12 @@ CopyFolder        (${INSTALL_SOURCE}/abis/known-015/                            
 
 # ---------------------------------------------------------------
 PrintLine("Removing files...")
-PrintLine("   ${CColor}${INSTALL_DEST}/cache/names/names.bin${COff}")
-PrintLine("   ${CColor}${INSTALL_DEST}/cache/abis/known.bin${COff}")
+PrintLine("   ${CColor}${INSTALL_DEST}/cache/names/*.bin${COff}")
+file(REMOVE "${INSTALL_DEST}/cache/names/allocs.bin")
 file(REMOVE "${INSTALL_DEST}/cache/names/names.bin")
 file(REMOVE "${INSTALL_DEST}/cache/names/names_prefunds_bals.bin")
-file(REMOVE "${INSTALL_DEST}/cache/allocs.bin")
+file(REMOVE "${INSTALL_DEST}/cache/allocs.bin") # weird
+PrintLine("   ${CColor}${INSTALL_DEST}/cache/abis/known.bin${COff}")
 file(REMOVE "${INSTALL_DEST}/cache/abis/known.bin")
 
 PrintLine("Cleaning old files...")

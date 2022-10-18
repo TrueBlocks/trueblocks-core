@@ -38,6 +38,24 @@ int main(int argc, const char* argv[]) {
 }
 
 //----------------------------------------------------------------
+bool shouldShow(const COptions* opt, const string_q& val) {
+    if (opt->flow.empty()) {
+        return true;
+    }
+
+    switch (opt->flow[0]) {
+        case 't':  // to
+            return contains(substitute(substitute(val, "_topic", ""), "generator", ""), "to");
+        case 'f':  // from
+            return contains(val, "from");
+        case 'r':  // reward
+            return contains(val, "miner") || contains(val, "uncle");
+    }
+
+    return true;
+}
+
+//----------------------------------------------------------------
 bool visitAddrs(const CAppearance& item, void* data) {
     // We do not account for zero addresses or the addresses found in the zeroth trace since
     // it's identical to the transaction itself
@@ -46,15 +64,22 @@ bool visitAddrs(const CAppearance& item, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
     bool isText = (expContext().exportFmt & (TXT1 | CSV1));
     if (isText) {
-        cout << trim(item.Format(expContext().fmtMap["format"]), '\t') << endl;
+        string_q val = trim(item.Format(expContext().fmtMap["format"]), '\t');
+        if (shouldShow(opt, val)) {
+            cout << val << endl;
+        }
     } else {
-        if (!opt->firstOut)
-            cout << ",";
-        cout << "  ";
+        ostringstream os;
         indent();
-        item.toJson(cout);
+        item.toJson(os);
         unindent();
-        opt->firstOut = false;
+        if (shouldShow(opt, os.str())) {
+            if (!opt->firstOut)
+                cout << ",";
+            cout << "  ";
+            cout << os.str();
+            opt->firstOut = false;
+        }
     }
     return !shouldQuit();
 }
@@ -73,6 +98,7 @@ bool visitTransaction(CTransaction& trans, void* data) {
 
     COptions* opt = reinterpret_cast<COptions*>(data);
     bool isText = (expContext().exportFmt & (TXT1 | CSV1));
+    CBlock block;
 
     if (contains(trans.hash, "invalid")) {
         string_q hash = nextTokenClear(trans.hash, ' ');
@@ -99,8 +125,14 @@ bool visitTransaction(CTransaction& trans, void* data) {
     }
 
     //////////////////////////////////////////////////////
-    if (opt->trace)
-        getTraces(trans.traces, trans.getValueByName("hash"));
+    if (opt->trace) {
+        if (!trans.pBlock) {
+            getBlockLight(block, trans.blockNumber);
+            trans.timestamp = block.timestamp;
+            trans.pBlock = &block;
+        }
+        getTraces(trans.traces, trans.getValueByName("hash"), &trans);
+    }
     //////////////////////////////////////////////////////
 
     if (opt->articulate) {
@@ -128,7 +160,6 @@ bool visitTransaction(CTransaction& trans, void* data) {
     if (opt->cache) {
         string_q txFilename = getBinaryCacheFilename(CT_TXS, trans.blockNumber, trans.transactionIndex);
         if (!fileExists(txFilename)) {
-            CBlock block;
             getBlockLight(block, trans.blockNumber);
             trans.timestamp = block.timestamp;
             trans.receipt.status = NO_STATUS;

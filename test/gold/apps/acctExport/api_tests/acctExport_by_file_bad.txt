@@ -1,0 +1,6 @@
+export?file=cmd_file_2&bad
+{
+  "errors": [
+    "Invalid key (bad) in export route."
+  ]
+}

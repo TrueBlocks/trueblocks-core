@@ -44,7 +44,7 @@ func (opts *ScrapeOptions) ScrapeInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	if opts.Globals.ApiMode {
+	if opts.Globals.IsApiMode() {
 		return validate.Usage("chifra scrape is not available in API mode"), true
 	}
 

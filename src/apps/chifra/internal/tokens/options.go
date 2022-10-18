@@ -22,7 +22,7 @@ import (
 
 // TokensOptions provides all command options for the chifra tokens command.
 type TokensOptions struct {
-	Addrs2   []string                 `json:"addrs2,omitempty"`   // Two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported
+	Addrs    []string                 `json:"addrs,omitempty"`    // Two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported
 	Blocks   []string                 `json:"blocks,omitempty"`   // An optional list of one or more blocks at which to report balances, defaults to 'latest'
 	BlockIds []identifiers.Identifier `json:"blockIds,omitempty"` // Block identifiers
 	Parts    []string                 `json:"parts,omitempty"`    // Which parts of the token information to retrieve
@@ -36,7 +36,7 @@ var defaultTokensOptions = TokensOptions{}
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *TokensOptions) testLog() {
-	logger.TestLog(len(opts.Addrs2) > 0, "Addrs2: ", opts.Addrs2)
+	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
 	logger.TestLog(len(opts.Parts) > 0, "Parts: ", opts.Parts)
 	logger.TestLog(opts.ByAcct, "ByAcct: ", opts.ByAcct)
@@ -70,7 +70,7 @@ func (opts *TokensOptions) toCmdLine() string {
 	if opts.NoZero {
 		options += " --no_zero"
 	}
-	options += " " + strings.Join(opts.Addrs2, " ")
+	options += " " + strings.Join(opts.Addrs, " ")
 	options += " " + strings.Join(opts.Blocks, " ")
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -84,10 +84,10 @@ func tokensFinishParseApi(w http.ResponseWriter, r *http.Request) *TokensOptions
 	opts := &copy
 	for key, value := range r.URL.Query() {
 		switch key {
-		case "addrs2":
+		case "addrs":
 			for _, val := range value {
 				s := strings.Split(val, " ") // may contain space separated items
-				opts.Addrs2 = append(opts.Addrs2, s...)
+				opts.Addrs = append(opts.Addrs, s...)
 			}
 		case "blocks":
 			for _, val := range value {
@@ -112,7 +112,7 @@ func tokensFinishParseApi(w http.ResponseWriter, r *http.Request) *TokensOptions
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
-	opts.Addrs2 = ens.ConvertEns(opts.Globals.Chain, opts.Addrs2)
+	opts.Addrs = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
 	// EXISTING_CODE
 
 	return opts
@@ -126,12 +126,12 @@ func tokensFinishParse(args []string) *TokensOptions {
 	// EXISTING_CODE
 	for _, arg := range args {
 		if validate.IsValidAddress(arg) {
-			opts.Addrs2 = append(opts.Addrs2, arg)
+			opts.Addrs = append(opts.Addrs, arg)
 		} else {
 			opts.Blocks = append(opts.Blocks, arg)
 		}
 	}
-	opts.Addrs2 = ens.ConvertEns(opts.Globals.Chain, opts.Addrs2)
+	opts.Addrs = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
@@ -143,4 +143,9 @@ func GetOptions() *TokensOptions {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return &defaultTokensOptions
+}
+
+func ResetOptions() {
+	defaultTokensOptions = TokensOptions{}
+	globals.SetDefaults(&defaultTokensOptions.Globals)
 }

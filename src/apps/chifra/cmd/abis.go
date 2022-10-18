@@ -13,6 +13,7 @@ import (
 
 	abisPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/abis"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/spf13/cobra"
 )
 
@@ -24,7 +25,7 @@ var abisCmd = &cobra.Command{
 	Short:   shortAbis,
 	Long:    longAbis,
 	Version: versionText,
-	RunE:    abisPkg.RunAbis,
+	RunE:    file.RunWithFileSupport("abis", abisPkg.RunAbis, abisPkg.ResetOptions),
 }
 
 const usageAbis = `abis [flags] <address> [address...]

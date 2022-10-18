@@ -10,7 +10,7 @@ import (
 
 // HandlePrefundOnly handles chifra names --prefund
 func (opts *NamesOptions) HandlePrefundOnly() error {
-	err := opts.Globals.RenderHeader(types.SimpleName{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.ApiMode, opts.Globals.NoHeader, true)
+	err := opts.Globals.RenderHeader(types.SimpleName{}, &opts.Globals.Writer, opts.Globals.Format, opts.Globals.NoHeader, true)
 	defer opts.Globals.RenderFooter()
 	if err != nil {
 		return err
@@ -22,11 +22,13 @@ func (opts *NamesOptions) HandlePrefundOnly() error {
 	}
 
 	for i, alloc := range allocs {
+		addr := hexutil.Encode(alloc.Address.Bytes())
 		a := types.SimpleName{
 			Tags:    "80-Prefund",
-			Address: hexutil.Encode(alloc.Address.Bytes()),
+			Address: addr,
 			Name:    "Prefund_" + fmt.Sprintf("%04d", i),
 			Source:  "Genesis",
+			Petname: alloc.Petname,
 		}
 		err = opts.Globals.RenderObject(a, i == 0)
 		if err != nil {

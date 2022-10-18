@@ -13,6 +13,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	scrapePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/scrape"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/spf13/cobra"
 )
 
@@ -24,7 +25,7 @@ var scrapeCmd = &cobra.Command{
 	Short:   shortScrape,
 	Long:    longScrape,
 	Version: versionText,
-	RunE:    scrapePkg.RunScrape,
+	RunE:    file.RunWithFileSupport("scrape", scrapePkg.RunScrape, scrapePkg.ResetOptions),
 }
 
 const usageScrape = `scrape [flags]`

@@ -26,6 +26,7 @@ static const COption params[] = {
     COption("trace", "t", "", OPT_SWITCH, "export the traces from the block as opposed to the block data"),
     COption("apps", "s", "", OPT_SWITCH, "display a list of uniq address appearances in the block"),
     COption("uniq", "u", "", OPT_SWITCH, "display a list of uniq address appearances per transaction"),
+    COption("flow", "f", "enum[from|to|reward]", OPT_FLAG, "for the uniq and apps options only, export only from or to (including trace from or to)"),  // NOLINT
     COption("logs", "g", "", OPT_HIDDEN | OPT_SWITCH, "display only the logs found in the block(s)"),
     COption("emitter", "m", "list<addr>", OPT_HIDDEN | OPT_FLAG, "for the --logs option only, filter logs to show only those logs emitted by the given address(es)"),  // NOLINT
     COption("topic", "p", "list<topic>", OPT_HIDDEN | OPT_FLAG, "for the --logs option only, filter logs to show only those with this topic(s)"),  // NOLINT
@@ -86,6 +87,12 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-u" || arg == "--uniq") {
             uniq = true;
+
+        } else if (startsWith(arg, "-f:") || startsWith(arg, "--flow:")) {
+            if (!confirmEnum("flow", flow, arg))
+                return false;
+        } else if (arg == "-f" || arg == "--flow") {
+            return flag_required("flow");
 
         } else if (arg == "-g" || arg == "--logs") {
             logs = true;
@@ -171,7 +178,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (expContext().exportFmt == NONE1)
-        expContext().exportFmt = (isApiMode() ? API1 : (filterType.empty() ? JSON1 : TXT1));
+        expContext().exportFmt = (isApiMode() ? JSON1 : (filterType.empty() ? JSON1 : TXT1));
 
     // Display formatting
     if (count) {
@@ -211,7 +218,7 @@ bool COptions::parseArguments(string_q& command) {
         configureDisplay("getBlocks", "CBlock", STR_DISPLAY_BLOCK);
     }
 
-    if (expContext().exportFmt == API1 || expContext().exportFmt == JSON1) {
+    if (expContext().exportFmt == JSON1) {
         if (count) {
             string_q ff = STR_FORMAT_COUNT_JSON;
             if (filterType.empty()) {
@@ -243,6 +250,7 @@ void COptions::Init(void) {
     hashes = false;
     uncles = false;
     trace = false;
+    flow = "";
     logs = false;
     articulate = false;
     big_range = 500;

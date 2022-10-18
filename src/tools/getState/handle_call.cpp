@@ -93,7 +93,7 @@ bool COptions::handle_call(void) {
 
     manageFields("CEthCall:abi_spec,deployed", FLD_HIDE);
     manageFields("CEthCall:blockNumber,address,signature,compressedResult", FLD_SHOW);
-    if (expContext().exportFmt == JSON1 || expContext().exportFmt == API1) {
+    if (expContext().exportFmt == JSON1 || expContext().exportFmt == JSON1) {
         manageFields("CEthCall:signature", FLD_HIDE);
         manageFields("CEthCall:callResult", FLD_SHOW);
     }

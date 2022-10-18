@@ -30,5 +30,12 @@ traces?transactions=0x0cc945824def6a5c81d86ca56848f92163838bbd480a3bd2ff85f6d5b1
         ]
       }
     ]
-  ]
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
+  }
 }

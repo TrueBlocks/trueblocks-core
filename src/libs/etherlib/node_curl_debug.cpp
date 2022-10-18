@@ -33,7 +33,7 @@ string_q showResult(const string_q& result, const string_q& msg, const string_q&
     if (!result.empty()) {
         os << result << endl;
         // string_q res = result;
-        // cleanString(res, false);
+        // clean String(res, false);
         // replaceAny(res, "{}[]", "");
         // replaceAll(res, ",", "\n");
         // replaceAll(res, "\"result\":", "");

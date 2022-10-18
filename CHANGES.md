@@ -2,14 +2,50 @@
 
 This file details changes made to TrueBlocks per version (starting with version v0.40.0). See the [migration notes](./MIGRATIONS.md) for changes from previous versions.
 
-## v.45.0
+## v0.41.0
 
 ### System-Wide Changes
 
+- *Breaking change:* removes `--fmt api` option from all tools. (Users must change to `--fmt json` instead.)
+- Better support for `--file`, `--to_file`, and `--output` options for all tools.
+- Improvements to `--fmt` options to better support customized display strings in the near future.
+- Better support for overriding command line options with environment variables.
+
 ### Changes to Specific Tools
 
+- **chifra export:**
+  - Adds `-f` hotkey to `--flow` option.
+
+- **chifra serve:**
+  - Fixes issues related to using the `export` route through the Api and the `maxRecords` and `cache` options.
+
+- **chifra blocks:**
+  - Adds `--flow [from|to|reward]` option to show only blocks with the given address in the given location.
+
+- **chifra transactions:**
+  - Adds `--flow [from|to]` option to show only transactions with the given address in the given location.
+
+- **chifra explore:**
+  - Switched default explorer for gnosis chain to [https://gnosisscan.io/](https://gnosisscan.io/).
+
 - **chifra quotes:**
-  - This tool has been fully deprecated. It is no longer available.
+  - *Breaking change:* This tool has been fully deprecated. It is no longer available.
+
+### Changes to Data Models
+
+- **Logs:**
+  - Added `blockNumber`, `transactionIndex`, and `transactionHash` to the Log data structure when exported by `chifra logs`, `chifra transactions`, and `chifra export --logs`
+
+- **Trace:**
+  - Added `timestamp` to the Trace data structure as exported by `chifra traces`, `chifra transactions --traces`, and `chifra export --traces`
+
+- **Name:**
+  - Removed `description` field and replaced with an auto-generated `petname` field. (Petnames are described [here](http://www.erights.org/elib/capability/pnml.html).)
+
+### Changes to Config Files
+
+- **acctExport.toml:**
+  - Removes `max_slow_queries` option as it was not working anyway.
 
 ## v0.40.0
 

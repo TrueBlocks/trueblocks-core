@@ -27,7 +27,7 @@ Flags:
   -n, --named        include well know token and airdrop addresses in the search
   -a, --addr         display only addresses in the results (useful for scripting)
   -g, --tags         export the list of tags and subtags only
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -x, --fmt string   export format, one of [none|json*|txt|csv]
   -v, --verbose      enable verbose (increase detail with --log_level)
   -h, --help         display this help screen
 

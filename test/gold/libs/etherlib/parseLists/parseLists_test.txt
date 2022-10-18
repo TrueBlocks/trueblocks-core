@@ -9,7 +9,7 @@ Testing parseFourbyteList
   Purpose:  
 
   Where:  
-	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv]
 	-v  (--verbose)       set verbose level (optional level defaults to 1)
 	-h  (--help)          display this help screen
 
@@ -21,7 +21,7 @@ Testing parseFourbyteList
   Purpose:  
 
   Where:  
-	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv]
 	-v  (--verbose)       set verbose level (optional level defaults to 1)
 	-h  (--help)          display this help screen
 
@@ -33,7 +33,7 @@ Testing parseFourbyteList
   Purpose:  
 
   Where:  
-	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv]
 	-v  (--verbose)       set verbose level (optional level defaults to 1)
 	-h  (--help)          display this help screen
 
@@ -48,7 +48,7 @@ Testing parseTopicList
   Purpose:  
 
   Where:  
-	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv]
 	-v  (--verbose)       set verbose level (optional level defaults to 1)
 	-h  (--help)          display this help screen
 
@@ -60,7 +60,7 @@ Testing parseTopicList
   Purpose:  
 
   Where:  
-	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv]
 	-v  (--verbose)       set verbose level (optional level defaults to 1)
 	-h  (--help)          display this help screen
 
@@ -76,7 +76,7 @@ Testing parseAddressList
   Purpose:  
 
   Where:  
-	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv]
 	-v  (--verbose)       set verbose level (optional level defaults to 1)
 	-h  (--help)          display this help screen
 
@@ -88,7 +88,7 @@ Testing parseAddressList
   Purpose:  
 
   Where:  
-	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv]
 	-v  (--verbose)       set verbose level (optional level defaults to 1)
 	-h  (--help)          display this help screen
 
@@ -100,7 +100,7 @@ Testing parseAddressList
   Purpose:  
 
   Where:  
-	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv]
 	-v  (--verbose)       set verbose level (optional level defaults to 1)
 	-h  (--help)          display this help screen
 
@@ -116,7 +116,7 @@ Testing parseTransactionList
   Purpose:  
 
   Where:  
-	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv]
 	-v  (--verbose)       set verbose level (optional level defaults to 1)
 	-h  (--help)          display this help screen
 
@@ -128,7 +128,7 @@ Testing parseTransactionList
   Purpose:  
 
   Where:  
-	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv]
 	-v  (--verbose)       set verbose level (optional level defaults to 1)
 	-h  (--help)          display this help screen
 
@@ -140,7 +140,7 @@ Testing parseTransactionList
   Purpose:  
 
   Where:  
-	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv]
 	-v  (--verbose)       set verbose level (optional level defaults to 1)
 	-h  (--help)          display this help screen
 
@@ -152,7 +152,7 @@ Testing parseTransactionList
   Purpose:  
 
   Where:  
-	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv]
 	-v  (--verbose)       set verbose level (optional level defaults to 1)
 	-h  (--help)          display this help screen
 
@@ -164,7 +164,7 @@ Testing parseTransactionList
   Purpose:  
 
   Where:  
-	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv]
 	-v  (--verbose)       set verbose level (optional level defaults to 1)
 	-h  (--help)          display this help screen
 
@@ -199,7 +199,7 @@ Testing parseBlockList
   Purpose:  
 
   Where:  
-	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv]
 	-v  (--verbose)       set verbose level (optional level defaults to 1)
 	-h  (--help)          display this help screen
 
@@ -281,7 +281,7 @@ TIME ~ CLOCK - <INFO>  : skip_type: hourly
   Purpose:  
 
   Where:  
-	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv]
 	-v  (--verbose)       set verbose level (optional level defaults to 1)
 	-h  (--help)          display this help screen
 

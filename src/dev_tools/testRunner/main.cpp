@@ -93,7 +93,9 @@ int main(int argc, const char* argv[]) {
 
                 if (line.empty() || ignore1 || ignore2 || ignore3 || ignore4) {
                     if (ignore2 && !options.ignoreOff) {
-                        cerr << iBlue << "   # " << line.substr(0, 120) << cOff << endl;
+                        if (trim(line).substr(0, 120).length() > 0) {
+                            cerr << iBlue << "   # " << line.substr(0, 120) << cOff << endl;
+                        }
                         CTestCase test(line, 0);
                         test.goldPath = substitute(getCWD(), "/test/gold/dev_tools/testRunner/",
                                                    "/test/gold/" + test.path + "/" + test.tool + "/" + test.fileName);
@@ -282,6 +284,7 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
             // To run the test, we cd into the gold path (so we find the test files), but we send results to working
             // folder
             string_q goldApiPath = substitute(test.goldPath, "/api_tests", "");
+            string_q outputFile = test.getOutputFile(whichTest == API, goldApiPath);
             string_q theCmd = "cd \"" + goldApiPath + "\" ; " + cmd.str();
             if (test.builtin)
                 theCmd = "cd \"" + goldApiPath + "\" ; " + test.options;
@@ -303,6 +306,13 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
             string_q contents = asciiFileToString(test.workPath + test.fileName);
             if (!prepender.str().empty()) {
                 contents = prepender.str() + contents;
+            }
+            if (outputFile.length()) {
+                ostringstream os;
+                os << "----" << endl;
+                os << "Results in " << substitute(outputFile, goldApiPath, "./") << endl;
+                os << asciiFileToString(outputFile) << endl;
+                contents += os.str();
             }
 
             replaceAll(contents, "3735928559", "\"0xdeadbeef\"");

@@ -925,9 +925,8 @@ string_q CCommandOption::toApiPath(const string_q& inStr, const string_q& exampl
     bool hasDelete = false;
     ostringstream paramStream;
     for (auto param : *(CCommandOptionArray*)params) {
-        bool hasAddrs2 = contains(param.longName, "addrs2");
+        bool needsTwoAddrs = containsI(param.description, "two or more addresses");
         hasDelete |= contains(param.longName, "deleteMe");
-        replace(param.longName, "addrs2", "addrs");
         replace(param.longName, "deleteMe", "delete");
         if (param.longName.empty() || !param.is_visible_docs)
             continue;
@@ -937,7 +936,7 @@ string_q CCommandOption::toApiPath(const string_q& inStr, const string_q& exampl
             replace(yp, "[{DESCR}]", prepareDescr(param.swagger_descr));
             replace(yp, "[{REQ}]", param.is_required ? "true" : "false");
             replace(yp, "[{SCHEMA}]", param.getSchema());
-            if (hasAddrs2) {
+            if (needsTwoAddrs) {
                 replace(yp, "            type: array\n", "            type: array\n            minItems: 2\n");
             }
             if (paramStream.str().empty())

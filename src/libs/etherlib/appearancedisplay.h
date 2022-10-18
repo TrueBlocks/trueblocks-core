@@ -41,6 +41,7 @@ class CAppearanceDisplay : public CAccountName {
         : blockNumber(b), transactionIndex(t) {
         name = n;
         address = a;
+        petname = addr_2_Petname(address, '-');
     }
     // EXISTING_CODE
     bool operator==(const CAppearanceDisplay& it) const;

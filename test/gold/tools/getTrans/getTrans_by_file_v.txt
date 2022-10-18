@@ -1,10 +1,13 @@
-chifra transactions  --file cmd_file --fmt json
-TEST[DATE|TIME] File:  cmd_file
+chifra transactions  --file cmd_file_2 --fmt json
+TEST[DATE|TIME] Transactions:  [0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.78]
+TEST[DATE|TIME] File:  cmd_file_2
+TEST[DATE|TIME] Format:  txt
+blockNumber	transactionIndex	date	timestamp	from	to	ether	ethGasPrice	gasUsed	hash	isError	encoding	compressedTx
+3657480	78	2017-05-06 00:43:39 UTC	1494031419	0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5	0x8c222fb428f9f44715cf85349f79a18761c8e53c	0.233602441535478432	0.000000020000000000	21000	0x1e4e4d62951733dea1cce59eca0ffaf89a7881f13c9bb8558d61f6a9e0928c4b	0	0x	0x()
+TEST[DATE|TIME] Transactions:  [3657480.78]
+TEST[DATE|TIME] Trace:  true
+TEST[DATE|TIME] File:  cmd_file_2
 TEST[DATE|TIME] Format:  json
-Cmd: 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.78 --fmt:txt 
-Cmd: 3657480.78 
-Cmd: 0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad 
-Cmd: -fmt 
 { "data": [
   {
     "hash": "0x1e4e4d62951733dea1cce59eca0ffaf89a7881f13c9bb8558d61f6a9e0928c4b",
@@ -29,32 +32,40 @@ Cmd: -fmt
       "effectiveGasPrice": 20000000000,
       "status": null
     },
+    "traces": [
+      {
+        "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",
+        "blockNumber": 3657480,
+        "subtraces": 0,
+        "traceAddress": null,
+        "transactionHash": "0x1e4e4d62951733dea1cce59eca0ffaf89a7881f13c9bb8558d61f6a9e0928c4b",
+        "transactionIndex": 78,
+        "type": "call",
+        "action": {
+          "selfDestructed": "0x0",
+          "balance": 0,
+          "callType": "call",
+          "from": "0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5",
+          "gas": 29000,
+          "input": "0x",
+          "refundAddress": "0x0",
+          "to": "0x8c222fb428f9f44715cf85349f79a18761c8e53c",
+          "value": 233602441535478432
+        },
+        "result": {
+          "newContract": "0x0",
+          "gasUsed": 0,
+          "output": "0x"
+        },
+        "timestamp": 1494031419
+      }
+    ],
     "gasUsed": 21000
-  },  {
-    "hash": "0x1e4e4d62951733dea1cce59eca0ffaf89a7881f13c9bb8558d61f6a9e0928c4b",
-    "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",
-    "blockNumber": 3657480,
-    "transactionIndex": 78,
-    "nonce": 1748109,
-    "timestamp": 1494031419,
-    "from": "0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5",
-    "to": "0x8c222fb428f9f44715cf85349f79a18761c8e53c",
-    "value": 233602441535478432,
-    "gas": 50000,
-    "gasPrice": 20000000000,
-    "maxFeePerGas": 0,
-    "maxPriorityFeePerGas": 0,
-    "input": "0x",
-    "isError": 0,
-    "hasToken": 0,
-    "receipt": {
-      "contractAddress": "0x0",
-      "gasUsed": 21000,
-      "effectiveGasPrice": 20000000000,
-      "status": null
-    },
-    "gasUsed": 21000
-  },  {
+  },
+TEST[DATE|TIME] Transactions:  [0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad]
+TEST[DATE|TIME] File:  cmd_file_2
+TEST[DATE|TIME] Format:  json
+  {
     "hash": "0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad",
     "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",
     "blockNumber": 3657480,
@@ -79,31 +90,30 @@ Cmd: -fmt
     },
     "gasUsed": 21000
   }
-  Invalid option: -fmt. Did you mean --fmt?
-
-Purpose:
-  Retrieve one or more transactions from the chain or local cache.
-
+TEST[DATE|TIME] Flow:  mt
+TEST[DATE|TIME] File:  cmd_file_2
+TEST[DATE|TIME] Format:  json
+Error: The --flow option is only available with the --uniq option
 Usage:
-  getTrans [flags] <tx_id> [tx_id...]
+  chifra transactions [flags] <tx_id> [tx_id...]
 
 Arguments:
   transactions - a space-separated list of one or more transaction identifiers (required)
 
 Flags:
-  -a, --articulate            articulate the retrieved data if ABIs can be found
-  -t, --trace                 include the transaction's traces in the results
-  -u, --uniq                  display a list of uniq addresses found in the transaction
-  -r, --reconcile <address>   reconcile the transaction as per the provided address
-  -o, --cache                 force the results of the query into the tx cache (and the trace cache if applicable)
-
-Global Flags:
-  -x, --fmt string     export format, one of [none|json*|txt|csv|api]
-  -v, --verbose uint   set verbose level (optional level defaults to 1)
-  -h, --help           display this help screen
+  -a, --articulate         articulate the retrieved data if ABIs can be found
+  -t, --trace              include the transaction's traces in the results
+  -u, --uniq               display a list of uniq addresses found in the transaction
+  -f, --flow string        for the uniq option only, export only from or to (including trace from or to)
+                           One of [ from | to ]
+  -r, --reconcile string   reconcile the transaction as per the provided address
+  -o, --cache              force the results of the query into the tx cache (and the trace cache if applicable)
+  -x, --fmt string         export format, one of [none|json*|txt|csv]
+  -v, --verbose            enable verbose (increase detail with --log_level)
+  -h, --help               display this help screen
 
 Notes:
   - The transactions list may be one or more transaction hashes, blockNumber.transactionID pairs, or a blockHash.transactionID pairs.
   - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
   - If the queried node does not store historical state, the results for most older transactions are undefined.
-
+] }

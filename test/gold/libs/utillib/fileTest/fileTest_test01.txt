@@ -1,21 +1,28 @@
 fileTest  recurse
 Recursive from ../
-Found 122 (122) files
+Found 129 (129) files
 ../arrayTest/arrayTest_Insertion.txt
 ../arrayTest/arrayTest_README.txt
 ../bigIntTest/bigIntTest_00.txt
 ../builtInTest/builtInTest_minimal.txt
 ../builtInTest/builtInTest_verbose.txt
-../cmdLineTest/cmdLineTest_README.txt
-../cmdLineTest/cmdLineTest_bool1.txt
-../cmdLineTest/cmdLineTest_bool2.txt
-../cmdLineTest/cmdLineTest_other1.txt
-../cmdLineTest/cmdLineTest_other2.txt
+../cmdLineTest/cmdLineTest_bool1_01.txt
+../cmdLineTest/cmdLineTest_bool1_02.txt
+../cmdLineTest/cmdLineTest_bool1_03.txt
+../cmdLineTest/cmdLineTest_bool1_04.txt
+../cmdLineTest/cmdLineTest_bool2_01.txt
+../cmdLineTest/cmdLineTest_bool2_02.txt
+../cmdLineTest/cmdLineTest_bool2_03.txt
+../cmdLineTest/cmdLineTest_bool2_04.txt
+../cmdLineTest/cmdLineTest_other1_05.txt
+../cmdLineTest/cmdLineTest_other1_06.txt
+../cmdLineTest/cmdLineTest_other1_07.txt
+../cmdLineTest/cmdLineTest_other1_08.txt
+../cmdLineTest/cmdLineTest_other2_05.txt
+../cmdLineTest/cmdLineTest_other2_06.txt
+../cmdLineTest/cmdLineTest_other2_07.txt
+../cmdLineTest/cmdLineTest_other2_08.txt
 ../cmdLineTest/cmdLineTest_other3.txt
-../cmdLineTest/cmd_file_bool1
-../cmdLineTest/cmd_file_bool2
-../cmdLineTest/cmd_file_other1
-../cmdLineTest/cmd_file_other2
 ../colorTest/colorTest_01.txt
 ../convertTest/convertTest_00.txt
 ../convertTest/convertTest_01.txt

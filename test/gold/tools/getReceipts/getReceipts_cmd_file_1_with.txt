@@ -1,0 +1,19 @@
+chifra receipts  --file cmd_file.1 --verbose --fmt txt 5644782.0
+TEST[DATE|TIME] Transactions:  [5644782.0]
+TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] File:  cmd_file.1
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "blockHash": "0x37e9e5ad5ff7aaf10d4ba0ab9eaa5ebe76e6d5bf29602ca67aec6675e2b51135",
+      "blockNumber": 5644782,
+      "cumulativeGasUsed": "21000",
+      "effectiveGasPrice": 0,
+      "gasUsed": 21000,
+      "hash": "0x785b88bfb800c34f0972bd2a1b02fb4bd03abc72dce675d00c2e4ae99f7aff96",
+      "status": 1,
+      "transactionIndex": 0
+    }
+  ]
+}

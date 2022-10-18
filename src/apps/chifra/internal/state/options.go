@@ -167,3 +167,8 @@ func GetOptions() *StateOptions {
 	// EXISTING_CODE
 	return &defaultStateOptions
 }
+
+func ResetOptions() {
+	defaultStateOptions = StateOptions{}
+	globals.SetDefaults(&defaultStateOptions.Globals)
+}

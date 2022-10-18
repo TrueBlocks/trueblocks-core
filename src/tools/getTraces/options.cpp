@@ -154,16 +154,17 @@ bool COptions::parseArguments(string_q& command) {
             manageFields("CTraceAction:" + substitute(cleanFmt(format), "ACTION::", ""));
             manageFields("CTraceResult:" + substitute(cleanFmt(format), "RESULT::", ""));
             break;
-        case API1:
         case JSON1:
             format = "";
             break;
     }
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format);
+    if (count) {
+        expContext().fmtMap["format"] = expContext().fmtMap["header"] = "[{HASH}]\t[{TRACESCNT}]";
+    }
+
     if (noHeader)
         expContext().fmtMap["header"] = "";
-    if (count)
-        expContext().fmtMap["format"] = expContext().fmtMap["header"] = "[{HASH}]\t[{TRACESCNT}]";
 
     return true;
 }

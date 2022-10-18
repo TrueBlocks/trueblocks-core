@@ -1,4 +1,4 @@
-when?list&fmt=api
+when?list&fmt=json
 {
   "data": [
     {

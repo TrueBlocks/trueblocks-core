@@ -1,4 +1,4 @@
-export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&lastBlock=1506480&maxRecords=5&traces&fmt=api
+export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&lastBlock=1506480&maxRecords=5&traces&fmt=json
 {
   "data": [
     {
@@ -26,7 +26,8 @@ export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&lastBlock=1506480&maxRec
         "gasUsed": 0,
         "output": "0x"
       },
-      "compressedTrace": ""
+      "compressedTrace": "",
+      "timestamp": 1441703356
     },
     {
       "blockHash": "0x66b5597c4a991decb68f56b94245a93485e4a30a3d77f95e6c32a3d4f91e2051",
@@ -53,7 +54,8 @@ export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&lastBlock=1506480&maxRec
         "gasUsed": 0,
         "output": "0x"
       },
-      "compressedTrace": ""
+      "compressedTrace": "",
+      "timestamp": 1463025233
     }
   ],
   "meta": {
@@ -103,7 +105,7 @@ export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&lastBlock=1506480&maxRec
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": "",
+      "petname": "noticeably-noble-pangolin",
       "isCustom": false,
       "isPrefund": true,
       "isContract": false,

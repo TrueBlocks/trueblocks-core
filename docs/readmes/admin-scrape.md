@@ -18,7 +18,7 @@ Flags:
   -i, --pin              pin new chunks (requires locally-running IPFS daemon or --remote)
   -m, --remote           pin new chunks to the gateway (requires pinning service keys)
   -s, --sleep float      seconds to sleep between scraper passes (default 14)
-  -x, --fmt string       export format, one of [none|json*|txt|csv|api]
+  -x, --fmt string       export format, one of [none|json*|txt|csv]
   -v, --verbose          enable verbose (increase detail with --log_level)
   -h, --help             display this help screen
 ```

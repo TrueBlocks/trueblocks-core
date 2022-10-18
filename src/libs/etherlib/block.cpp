@@ -816,6 +816,9 @@ bool CBlock::forEveryTrace(TRACEVISITFUNC func, void* data) const {
         return false;
 
     for (auto trans : transactions) {
+        if (trans.timestamp == 0) {
+            trans.timestamp = timestamp;
+        }
         if (!trans.forEveryTrace(func, data))
             return false;
     }

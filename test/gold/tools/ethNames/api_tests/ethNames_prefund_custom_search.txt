@@ -8,7 +8,7 @@ names?prefund&custom&terms=0001&verbose
       "symbol": "",
       "source": "Testing",
       "decimals": 0,
-      "description": ""
+      "petname": "abnormally-able-ant"
     },
     {
       "tags": "80-Prefund",
@@ -17,7 +17,7 @@ names?prefund&custom&terms=0001&verbose
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "blatantly-distinct-crow"
     },
     {
       "tags": "80-Prefund",
@@ -26,7 +26,7 @@ names?prefund&custom&terms=0001&verbose
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "nicely-famous-liger"
     },
     {
       "tags": "80-Prefund",
@@ -35,7 +35,7 @@ names?prefund&custom&terms=0001&verbose
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "explicitly-true-fawn"
     },
     {
       "tags": "80-Prefund",
@@ -44,7 +44,7 @@ names?prefund&custom&terms=0001&verbose
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "utterly-magical-jackal"
     },
     {
       "tags": "80-Prefund",
@@ -53,7 +53,7 @@ names?prefund&custom&terms=0001&verbose
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "basically-cool-treefrog"
     }
   ],
   "meta": {

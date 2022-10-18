@@ -194,23 +194,12 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
     }
 
     //-----------------------------------------------------------------------------------
-    // We now have 'nArgs' command line arguments stored in the array 'args.'  We spin
-    // through them doing one of two things
-    //
-    // (1) handle any arguments common to all programs and remove them from the array
-    // (2) identify any --file arguments and store them for later use
+    // We now have 'nArgs' command line arguments stored in the array 'args.'  We spin through
+    // them in order to handle any arguments common to all programs and remove them from the array
     //-----------------------------------------------------------------------------------
-    string_q cmdFileName = "";
     for (uint64_t i = 0; i < argumentsOut.size(); i++) {
         string_q arg = argumentsOut[i];
-        if (startsWith(arg, "--file:")) {
-            cmdFileName = substitute(arg, "--file:", "");
-            replace(cmdFileName, "~/", getHomeFolder());
-            if (!fileExists(cmdFileName)) {
-                return usage("--file: '" + cmdFileName + "' not found.");
-            }
-
-        } else if (startsWith(arg, "-v:") || startsWith(arg, "--verbose:")) {
+        if (startsWith(arg, "-v:") || startsWith(arg, "--verbose:")) {
             verbose = true;
             arg = substitute(substitute(arg, "-v:", ""), "--verbose:", "");
             if (!arg.empty()) {
@@ -227,10 +216,8 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
                 expContext().exportFmt = CSV1;
             } else if (arg == "json") {
                 expContext().exportFmt = JSON1;
-            } else if (arg == "api") {
-                expContext().exportFmt = API1;
             } else {
-                return usage("The --fmt option (" + arg + ") must be one of [ json | txt | csv | api ].");
+                return usage("The --fmt option (" + arg + ") must be one of [ json | txt | csv ].");
             }
             argumentsOut[i] = "";
         }
@@ -245,41 +232,10 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
     // If we have a command file, we will use it, if not we will creat one and pretend we have one.
     string_q commandList = "";
     for (auto arg : argumentsOut3) {
-        if (!contains(arg, "--file:"))
-            commandList += (arg + " ");
+        commandList += (arg + " ");
     }
     commandList += '\n';
 
-    if (!cmdFileName.empty()) {
-        string_q toAll;
-        if (!commandList.empty())
-            toAll = (" " + substitute(commandList, "\n", ""));
-        commandList = "";
-        // The command line also has a --file in it, so add these commands as well
-        string_q contents = substitute(asciiFileToString(cmdFileName), "\t", " ");
-        cleanString(contents, false);
-        if (contents.empty())
-            return usage("Command file '" + cmdFileName + "' is empty.");
-        if (startsWith(contents, "NOPARSE\n")) {
-            commandList = contents;
-            nextTokenClear(commandList, '\n');
-            commandList += toAll;
-        } else {
-            CStringArray lines;
-            explode(lines, contents, '\n');
-            for (auto command : lines) {
-                while (contains(command, "--fmt  "))
-                    replace(command, "--fmt  ", "--fmt ");
-                replace(command, "--fmt ", "--fmt:");
-                if (!command.empty() && !startsWith(command, ";") && !startsWith(command, "#")) {  // ignore comments
-                    commandList += (command + toAll + "\n");
-                    if (isTestMode())
-                        cerr << "Cmd: " << command << toAll << endl;
-                }
-            }
-        }
-    }
-    //        commandList += stdInCmds;
     explode(commandLines, commandList, '\n');
     for (auto& item : commandLines)
         item = trim(item);
@@ -370,7 +326,7 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
     }
 
     if (isEnabled(OPT_OUTPUT) && contains(cmdLine, "--output:")) {
-        closeRedirect();  // close the current one in case it's open (--file for example)
+        closeRedirect();  // close the current one in case it's open
         string_q temp = substitute(cmdLine, "--output:", "|");
         nextTokenClear(temp, '|');
         temp = nextTokenClear(temp, ' ');
@@ -391,6 +347,18 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
             cout.rdbuf(outputStream.rdbuf());  // assign streambuf to cout
         } else {
             return usage("Could not open output stream at '" + rd_outputFilename + ".");
+        }
+        CStringArray parts;
+        explode(parts, temp, '.');
+        if (parts.size() > 0) {
+            string_q last = parts[parts.size() - 1];
+            if (last == "txt") {
+                expContext().exportFmt = TXT1;
+            } else if (last == "csv") {
+                expContext().exportFmt = CSV1;
+            } else if (last == "json") {
+                expContext().exportFmt = JSON1;
+            }
         }
     }
 
@@ -466,7 +434,6 @@ void COptionsBase::configureDisplay(const string_q& tool, const string_q& dataTy
             format = getGlobalConfig(tool)->getConfigStr("display", "format", defFormat);
             manageFields(dataType + ":" + cleanFmt((format.empty() ? defFormat : format)));
             break;
-        case API1:
         case JSON1:
             format = "";
             break;
@@ -881,9 +848,6 @@ void COptionsBase::closeRedirect(void) {
         }
 
         rd_zipOnClose = false;
-        if (isTestMode()) {
-            ::remove(rd_outputFilename.c_str());
-        }
         rd_outputFilename = "";
     }
 }

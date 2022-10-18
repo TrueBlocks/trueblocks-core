@@ -22,5 +22,12 @@ transactions?transactions=4000000.5&raw
         "s": "0x504f5ec5c8bae3862f9032fdae24cb836516bdcf84ffb559d61c28249d52470b"
       }
     }
-  ]
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
+  }
 }

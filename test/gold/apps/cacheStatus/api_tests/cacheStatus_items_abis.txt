@@ -35,7 +35,7 @@ status?details&modes=abis
               "symbol": "",
               "source": "",
               "decimals": 0,
-              "description": "",
+              "petname": "--petname--",
               "isCustom": false,
               "isPrefund": false,
               "isContract": false,

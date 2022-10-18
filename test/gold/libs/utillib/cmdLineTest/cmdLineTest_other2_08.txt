@@ -1,0 +1,10 @@
+cmdLineTest  8 --uint:-100
+--------------------------------------------------------------------------------
+boolOption: 0
+boolSet: 0
+numOption: -1
+stringOption: 
+testNum: 8
+0. Running Test1
+	000.000 8. uint == -100 (false)          ==> passed '(opts.numOption == (int64_t)NOPOS)' is true
+ret: 0

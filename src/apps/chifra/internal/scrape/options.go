@@ -125,3 +125,8 @@ func GetOptions() *ScrapeOptions {
 	// EXISTING_CODE
 	return &defaultScrapeOptions
 }
+
+func ResetOptions() {
+	defaultScrapeOptions = ScrapeOptions{}
+	globals.SetDefaults(&defaultScrapeOptions.Globals)
+}

@@ -30,6 +30,7 @@ TIME ~ CLOCK - <INFO>  : {
     "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
   },
   "subtraces": 0,
+  "timestamp": 1508131362,
   "traceAddress": null,
   "transactionHash": "0xed0457a347c8b69d9acf18511ccc90008b68685704d9fe1f1047a97302e7d07c",
   "transactionIndex": 0,

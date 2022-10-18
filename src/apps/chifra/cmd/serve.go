@@ -12,6 +12,7 @@ import (
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	servePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/server"
 	"github.com/spf13/cobra"
 )
@@ -24,7 +25,7 @@ var serveCmd = &cobra.Command{
 	Short:   shortServe,
 	Long:    longServe,
 	Version: versionText,
-	RunE:    servePkg.RunServe,
+	RunE:    file.RunWithFileSupport("serve", servePkg.RunServe, servePkg.ResetOptions),
 }
 
 const usageServe = `serve [flags]`

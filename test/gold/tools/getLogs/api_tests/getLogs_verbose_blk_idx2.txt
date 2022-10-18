@@ -3,6 +3,7 @@ logs?transactions=0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234af
   "data": [
     {
       "address": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
+      "blockNumber": 3657480,
       "logIndex": 21,
       "topics": [
         "0xb556ff269c1b6714f432c36431e2041d28436a73b6c3f19c021827bbdc6bfc29",
@@ -11,6 +12,8 @@ logs?transactions=0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234af
       ],
       "data": "0x000000000000000000000000000000000000000000000000002aa1efb94e0000",
       "compressedLog": "",
+      "transactionHash": "0xbed082f2f6fb5f91924df74eb79ac37ea9490e49dda0b29a01db27d171efb422",
+      "transactionIndex": 36,
       "type": ""
     }
   ],

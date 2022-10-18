@@ -21,6 +21,7 @@ bool visitReconciliation(CTransaction& trans, void* data) {
 
     CAccountName name;
     name.address = opt->reconcile;
+    name.petname = addr_2_Petname(name.address, '-');
     findName(opt->reconcile, name);
     CReconciliation prev;
     prev.assetAddr = opt->reconcile;

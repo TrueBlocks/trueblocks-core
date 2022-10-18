@@ -109,3 +109,8 @@ func GetOptions() *ListOptions {
 	// EXISTING_CODE
 	return &defaultListOptions
 }
+
+func ResetOptions() {
+	defaultListOptions = ListOptions{}
+	globals.SetDefaults(&defaultListOptions.Globals)
+}

@@ -107,6 +107,7 @@ int main(int argc, const char* argv[]) {
     os << ", \"last_block\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.exportRange.second)) << endl;
     if (!options.count && options.allMonitors.size() == 1) {
         findName(options.accountedFor.address, options.allMonitors[0]);
+        options.allMonitors[0].petname = addr_2_Petname(options.allMonitors[0].address, '-');
         if (options.abi_spec.nInterfaces() == 0) {
             HIDE_FIELD(CMonitor, "abi_spec");
         }
@@ -172,7 +173,7 @@ bool prog_Log(CTraverser* trav, void* data) {
     }
     LOG_PROGRESS(trav->searchOp, blknum_t(opt->first_record + trav->index), nApps, post.str() + "\r");
 
-    return (opt->slowQueries <= opt->maxSlowQueries && !shouldQuit());
+    return !shouldQuit();
 }
 
 //-----------------------------------------------------------------------
@@ -217,7 +218,6 @@ bool loadTx_Func(CTraverser* trav, void* data) {
 
     } else {
         trav->searchOp = EXTRACT;
-        opt->slowQueries++;
         opt->reportFreq = 1;
         dirty = true;
         if (trav->app->blk == 0) {

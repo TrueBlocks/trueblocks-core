@@ -79,12 +79,12 @@ func (opts *ChunksOptions) validateChunks() error {
 				return validate.Usage("Choose either {0} or {1}, not both.", "--verbose", "--belongs")
 			}
 			if len(opts.Blocks) == 0 {
-				return validate.Usage("You must specifiy at least one {0} with the {1} option", "block identifier", "--belongs")
+				return validate.Usage("You must specify at least one {0} with the {1} option", "block identifier", "--belongs")
 			}
 		}
 	}
 
-	if err = opts.isDisallowed(opts.Globals.ApiMode, "API"); err != nil {
+	if err = opts.isDisallowed(opts.Globals.IsApiMode(), "API"); err != nil {
 		return err
 	}
 
@@ -121,11 +121,15 @@ func (opts *ChunksOptions) validateChunks() error {
 
 	// Note that this does not return if the index is not initialized
 	if err := index.IndexIsInitialized(opts.Globals.Chain); err != nil {
-		if opts.Globals.ApiMode {
+		if opts.Globals.IsApiMode() {
 			return err
 		} else {
 			logger.Fatal(err)
 		}
+	}
+
+	if len(opts.Globals.OutputFn) > 0 {
+		return validate.Usage("The {0} option is not available with the {1}.", "--output", "chifra chunks -- yet...")
 	}
 
 	return opts.Globals.Validate()

@@ -2,13 +2,13 @@ package output
 
 import (
 	"bytes"
+	"context"
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
 	"testing"
 	"text/template"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/common"
 )
@@ -40,7 +40,7 @@ func helperStreamFormats(w csv.Writer, outputBuffer *bytes.Buffer, format string
 	buffer := new(bytes.Buffer)
 	StreamModel(buffer, input.Model(false, format), OutputOptions{
 		Format:   format,
-		ShowKeys: expectKeys,
+		NoHeader: !expectKeys,
 	})
 	result := buffer.String()
 
@@ -93,7 +93,7 @@ func TestStreamJson(t *testing.T) {
 	})
 	result := outputBuffer.String()
 
-	expected, err := json.MarshalIndent(input.Model(false, "json").Data, "", "  ")
+	expected, err := json.MarshalIndent(input.Model(false, "json").Data, "    ", "  ")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -128,7 +128,7 @@ func TestStreamTemplate(t *testing.T) {
 func TestStreamMany(t *testing.T) {
 	buffer := &bytes.Buffer{}
 
-	getData := func(models chan types.Modeler[types.RawReceipt], errors chan error) {
+	renderData := func(models chan types.Modeler[types.RawReceipt], errors chan error) {
 		models <- &types.SimpleReceipt{
 			BlockNumber:      uint64(123),
 			TransactionIndex: 1,
@@ -150,7 +150,8 @@ func TestStreamMany(t *testing.T) {
 
 	// Print the values and try to re-parse them to check if
 	// we get the same data
-	StreamMany(buffer, getData, OutputOptions{
+	StreamMany(context.Background(), renderData, OutputOptions{
+		Writer: buffer,
 		Format: "json",
 	})
 
@@ -173,7 +174,7 @@ func TestStreamMany(t *testing.T) {
 
 func TestApiFormat(t *testing.T) {
 	outputBuffer := &bytes.Buffer{}
-	getData := func(models chan types.Modeler[types.RawReceipt], errors chan error) {
+	renderData := func(models chan types.Modeler[types.RawReceipt], errors chan error) {
 		models <- &types.SimpleReceipt{
 			BlockNumber:      uint64(123),
 			TransactionIndex: 1,
@@ -183,23 +184,11 @@ func TestApiFormat(t *testing.T) {
 			IsError:          false,
 		}
 	}
-	err := StreamMany(outputBuffer, getData, OutputOptions{
+	err := StreamMany(context.Background(), renderData, OutputOptions{
+		Writer: outputBuffer,
 		Format: "api",
-		Meta: &rpcClient.MetaData{
-			Latest:    1000,
-			Finalized: 1000,
-		},
 	})
-	if err != nil {
-		t.Fatal(err)
-	}
-	var result = map[string]interface{}{}
-	err = json.Unmarshal(outputBuffer.Bytes(), &result)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	if _, ok := result["meta"]; !ok {
-		t.Fatal("meta is missing")
+	if err == nil {
+		t.Fatal("Api format is no longer allow. Should error here.")
 	}
 }

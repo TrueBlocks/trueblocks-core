@@ -37,15 +37,12 @@ func RenderSlice[
 	}
 
 	var meta *rpcClient.MetaData = nil
-	if opts.Format == "api" {
+	if (opts.Format != "txt" && opts.Format != "csv") && opts.IsApiMode() {
 		var err error
 		meta, err = rpcClient.GetMetaData(opts.Chain, opts.TestMode)
 		if err != nil {
 			return err
 		}
-	}
-
-	if opts.ApiMode {
 		// We could check this, but if it's not empty, we know it's type
 		hw, _ := opts.Writer.(http.ResponseWriter)
 		switch opts.Format {
@@ -59,10 +56,8 @@ func RenderSlice[
 	}
 
 	switch opts.Format {
-	case "api":
-		fallthrough
 	case "json":
-		return output.OutputSlice(data, opts.Writer, opts.Format, opts.NoHeader, opts.ApiMode, true, meta)
+		return output.OutputSlice(data, opts.Writer, opts.Format, opts.NoHeader, true, meta)
 	case "csv":
 		fallthrough
 	case "txt":
@@ -75,7 +70,7 @@ func RenderSlice[
 					}
 				}
 			}
-			err := output.OutputObject(item, opts.Writer, opts.Format, opts.NoHeader, opts.ApiMode, false, meta)
+			err := output.OutputObject(item, opts.Writer, opts.Format, opts.NoHeader, false, meta)
 			if err != nil {
 				return err
 			}
@@ -92,22 +87,13 @@ func (opts *GlobalOptions) RenderObject(data interface{}, first bool) error {
 		log.Fatal("opts.Writer is nil")
 	}
 
-	format := opts.Format
-	if opts.Raw {
-		// If users wants raw output, we will most probably print JSON
-		format = "json"
-	}
-	return output.OutputObject(data, opts.Writer, format, opts.NoHeader, opts.ApiMode, first, nil)
+	// TODO: We may move this line to InitGlobals when we merge json and api formats
+	return output.OutputObject(data, opts.Writer, opts.Format, opts.NoHeader, first, nil)
 }
 
 // TODO: Fix export without arrays
-func (opts *GlobalOptions) RenderHeader(data interface{}, w *io.Writer, format string, apiMode, hideHeader, first bool) error {
-	if opts.Raw {
-		// We don't render the header if user wants raw output.
-		return nil
-	}
-
-	if apiMode {
+func (opts *GlobalOptions) RenderHeader(data interface{}, w *io.Writer, format string, hideHeader, first bool) error {
+	if opts.IsApiMode() {
 		// We could check this, but if it's not empty, we know it's type
 		hw, _ := (*w).(http.ResponseWriter)
 		switch opts.Format {
@@ -129,15 +115,9 @@ func (opts *GlobalOptions) RenderHeader(data interface{}, w *io.Writer, format s
 
 // TODO: Fix export without arrays
 func (opts *GlobalOptions) RenderFooter() error {
-	if opts.Raw {
-		// We don't render the footer if user wants raw output.
-		return nil
-	}
-
-	if opts.Format == "api" || opts.Format == "json" {
+	if opts.Format == "json" {
 		opts.Writer.Write([]byte("\n  ]"))
-		showMeta := opts.ApiMode || opts.Format == "api"
-		if showMeta {
+		if opts.IsApiMode() {
 			meta, err := rpcClient.GetMetaData(opts.Chain, opts.TestMode)
 			if err != nil {
 				return err

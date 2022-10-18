@@ -8,7 +8,7 @@ names?prefund&terms=_004
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "miserably-refined-gazelle"
     },
     {
       "tags": "80-Prefund",
@@ -17,7 +17,7 @@ names?prefund&terms=_004
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "wrongly-refined-jackass"
     },
     {
       "tags": "80-Prefund",
@@ -26,7 +26,7 @@ names?prefund&terms=_004
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "factually-pure-filly"
     },
     {
       "tags": "80-Prefund",
@@ -35,7 +35,7 @@ names?prefund&terms=_004
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "adversely-gorgeous-mastiff"
     },
     {
       "tags": "80-Prefund",
@@ -44,7 +44,7 @@ names?prefund&terms=_004
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "arguably-up-antelope"
     },
     {
       "tags": "80-Prefund",
@@ -53,7 +53,7 @@ names?prefund&terms=_004
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "gently-trusted-pheasant"
     },
     {
       "tags": "80-Prefund",
@@ -62,7 +62,7 @@ names?prefund&terms=_004
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "positively-pet-sponge"
     },
     {
       "tags": "80-Prefund",
@@ -71,7 +71,7 @@ names?prefund&terms=_004
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "probably-humble-goblin"
     },
     {
       "tags": "80-Prefund",
@@ -80,7 +80,7 @@ names?prefund&terms=_004
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "gradually-mutual-boar"
     },
     {
       "tags": "80-Prefund",
@@ -89,7 +89,7 @@ names?prefund&terms=_004
       "symbol": "",
       "source": "Genesis",
       "decimals": 0,
-      "description": ""
+      "petname": "greatly-accepted-moray"
     }
   ],
   "meta": {

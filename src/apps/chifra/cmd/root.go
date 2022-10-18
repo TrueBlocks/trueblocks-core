@@ -12,8 +12,6 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // chifraCmd represents the base command when called without any subcommands
@@ -34,12 +32,7 @@ func Execute() {
 }
 
 func init() {
-	if utils.IsApiMode() {
-		chifraCmd.SetOut(os.Stderr)
-		chifraCmd.SetErr(os.Stdout)
-	} else {
-		chifraCmd.SetOut(os.Stderr)
-	}
+	chifraCmd.SetOut(os.Stderr)
 	chifraCmd.SetFlagErrorFunc(ErrFunc)
 	chifraCmd.Flags().SortFlags = false
 

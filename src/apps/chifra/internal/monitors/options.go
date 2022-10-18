@@ -122,3 +122,8 @@ func GetOptions() *MonitorsOptions {
 	// EXISTING_CODE
 	return &defaultMonitorsOptions
 }
+
+func ResetOptions() {
+	defaultMonitorsOptions = MonitorsOptions{}
+	globals.SetDefaults(&defaultMonitorsOptions.Globals)
+}

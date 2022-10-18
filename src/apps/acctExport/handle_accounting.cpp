@@ -76,7 +76,6 @@ bool COptions::process_reconciliation(CTraverser* trav) {
                     // LOG_WARN(cYellow, "Updating statements", cOff);
                     trav->searchOp = UPDATE;
                     cacheIfReconciled(trav, true /* isNew */);
-                    slowQueries++;
                     reportFreq = 1;
                 }
                 return !shouldQuit();
@@ -87,7 +86,6 @@ bool COptions::process_reconciliation(CTraverser* trav) {
     }
 
     trav->searchOp = RECONCILE;
-    slowQueries++;
     reportFreq = 1;
 
     blknum_t nextAppBlk = trav->index < monApps.size() - 1 ? monApps[trav->index + 1].blk : NOPOS;
@@ -201,8 +199,10 @@ bool COptions::token_list_from_logs(CAccountNameMap& tokenList, const CTraverser
     for (auto log : trav->trans.receipt.logs) {
         CAccountName tokenName;
         bool isToken = findToken(log.address, tokenName);
-        if (tokenName.address.empty())
+        if (tokenName.address.empty()) {
             tokenName.address = log.address;
+            tokenName.petname = addr_2_Petname(tokenName.address, '-');
+        }
         if (isToken || (log.topics.size() > 0 && isTokenRelated(log.topics[0])))
             tokenList[log.address] = tokenName;
     }

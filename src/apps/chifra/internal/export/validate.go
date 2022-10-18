@@ -88,7 +88,7 @@ func (opts *ExportOptions) validateExport() error {
 
 	// Note that this does not return if the index is not initialized
 	if err := index.IndexIsInitialized(opts.Globals.Chain); err != nil {
-		if opts.Globals.ApiMode {
+		if opts.Globals.IsApiMode() {
 			return err
 		} else {
 			logger.Fatal(err)

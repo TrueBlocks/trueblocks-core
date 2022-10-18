@@ -134,7 +134,7 @@ Here's a table showing which endpoints changed. Previously the API endpoints wer
 |              |              | --call         |             |
 |              |              | --proxy_for    | proxyFor    |
 |              |              |                |             |
-| tokens       | addrs2       |                |             |
+| tokens       | addrs        |                |             |
 |              | blocks       |                |             |
 |              |              | --parts        |             |
 |              |              | --by_acct      | byAcct      |

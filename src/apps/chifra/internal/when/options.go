@@ -124,3 +124,8 @@ func GetOptions() *WhenOptions {
 	// EXISTING_CODE
 	return &defaultWhenOptions
 }
+
+func ResetOptions() {
+	defaultWhenOptions = WhenOptions{}
+	globals.SetDefaults(&defaultWhenOptions.Globals)
+}

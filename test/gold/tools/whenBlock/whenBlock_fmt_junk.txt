@@ -1,7 +1,7 @@
 chifra when  1001001 --fmt junk
 TEST[DATE|TIME] Blocks:  [1001001]
 TEST[DATE|TIME] Format:  junk
-Error: The --fmt option (junk) must be one of [ json | txt | csv | api ]
+Error: The --fmt option (junk) must be one of [ json | txt | csv ]
 Usage:
   chifra when [flags] < block | date > [ block... | date... ]
 
@@ -16,7 +16,7 @@ Flags:
   -r, --repair uint     with --timestamps only, repair a single timestamp by querying the chain (hidden)
   -c, --check           with --timestamps only, checks the validity of the timestamp data (hidden)
   -e, --deep            with --timestamps --check only, verifies timestamps from on chain (slow) (hidden)
-  -x, --fmt string      export format, one of [none|json*|txt|csv|api]
+  -x, --fmt string      export format, one of [none|json*|txt|csv]
   -v, --verbose         enable verbose (increase detail with --log_level)
   -h, --help            display this help screen
 

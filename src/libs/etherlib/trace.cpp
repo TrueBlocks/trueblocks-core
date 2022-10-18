@@ -363,6 +363,7 @@ void CTrace::registerClass(void) {
     ADD_OBJECT(CTrace, "articulatedTrace", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CFunction));
     ADD_FIELD(CTrace, "compressedTrace", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CTrace, "compressedTrace");
+    ADD_FIELD(CTrace, "timestamp", T_TIMESTAMP, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTrace, "schema");
@@ -433,6 +434,11 @@ string_q nextTraceChunk_custom(const string_q& fieldIn, const void* dataPtr) {
                     if (retS.empty())
                         retS = "null";
                     return retS;
+                }
+                if (fieldIn % "timestamp") {
+                    if (tra->pTransaction) {
+                        return ts_2_Str(tra->pTransaction->timestamp);
+                    }
                 }
                 break;
             // EXISTING_CODE
@@ -523,7 +529,8 @@ const char* STR_DISPLAY_TRACE =
     "[{RESULT::GASUSED}]\t"
     "[{ACTION::INPUT}]\t"
     "[{COMPRESSEDTRACE}]\t"
-    "[{RESULT::OUTPUT}]";
+    "[{RESULT::OUTPUT}]\t"
+    "[{TIMESTAMP}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

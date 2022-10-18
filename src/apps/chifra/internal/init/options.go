@@ -90,3 +90,8 @@ func GetOptions() *InitOptions {
 	// EXISTING_CODE
 	return &defaultInitOptions
 }
+
+func ResetOptions() {
+	defaultInitOptions = InitOptions{}
+	globals.SetDefaults(&defaultInitOptions.Globals)
+}

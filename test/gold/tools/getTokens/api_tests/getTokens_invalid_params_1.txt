@@ -1,4 +1,4 @@
-tokens?addrs2=a%20b%20c
+tokens?addrs=a%20b%20c
 {
   "errors": [
     "The value a is not a token contract."

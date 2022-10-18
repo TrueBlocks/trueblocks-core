@@ -110,3 +110,8 @@ func GetOptions() *LogsOptions {
 	// EXISTING_CODE
 	return &defaultLogsOptions
 }
+
+func ResetOptions() {
+	defaultLogsOptions = LogsOptions{}
+	globals.SetDefaults(&defaultLogsOptions.Globals)
+}

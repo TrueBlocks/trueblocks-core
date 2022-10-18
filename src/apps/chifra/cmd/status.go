@@ -13,6 +13,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	statusPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/status"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/spf13/cobra"
 )
 
@@ -24,7 +25,7 @@ var statusCmd = &cobra.Command{
 	Short:   shortStatus,
 	Long:    longStatus,
 	Version: versionText,
-	RunE:    statusPkg.RunStatus,
+	RunE:    file.RunWithFileSupport("status", statusPkg.RunStatus, statusPkg.ResetOptions),
 }
 
 const usageStatus = `status <mode> [mode...] [flags]
