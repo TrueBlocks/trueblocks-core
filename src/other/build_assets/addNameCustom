@@ -50,7 +50,6 @@ fi
 # These will be set by querying the chain
 SYMBOL=$5
 DECIMALS=${6:-$defDecimals}
-DESCR=$7
 
 echo "---------------------- Adding -----------------------"
 echo "Address: " $ADDRESS
@@ -59,7 +58,6 @@ echo "TAG: " $TAG
 echo "SOURCE: " $SOURCE
 echo "DECIMALS: " $DECIMALS
 echo "SYMBOL: " $SYMBOL
-echo "DESCR: " $DESCR
 
 export TB_NAME_ADDRESS=$ADDRESS
 export TB_NAME_NAME=$NAME
@@ -67,7 +65,6 @@ export TB_NAME_TAG=$TAG
 export TB_NAME_SOURCE=$SOURCE
 export TB_NAME_SYMBOL=$SYMBOL
 export TB_NAME_DECIMALS=$DECIMALS
-export TB_NAME_DESCR=$DESCR
 export TB_NAME_CUSTOM=true
 chifra names --create
 cp -pf "$HOME/Library/Application Support/TrueBlocks/names/names_custom.tab" "$HOME/Desktop/names_custom.tab"

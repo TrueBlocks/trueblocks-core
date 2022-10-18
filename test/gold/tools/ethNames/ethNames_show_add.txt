@@ -12,5 +12,5 @@ TEST[DATE|TIME] Format:  json
     "symbol": "SYMBOL",
     "source": "SOURCE",
     "decimals": 11,
-    "description": "DESCRIPTION"
+    "petname": "abnormally-able-quetzal"
   }] }

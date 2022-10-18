@@ -107,6 +107,7 @@ int main(int argc, const char* argv[]) {
     os << ", \"last_block\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.exportRange.second)) << endl;
     if (!options.count && options.allMonitors.size() == 1) {
         findName(options.accountedFor.address, options.allMonitors[0]);
+        options.allMonitors[0].petname = addr_2_Petname(options.allMonitors[0].address, '-');
         if (options.abi_spec.nInterfaces() == 0) {
             HIDE_FIELD(CMonitor, "abi_spec");
         }

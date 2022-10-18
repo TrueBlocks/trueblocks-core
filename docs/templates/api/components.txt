@@ -239,10 +239,10 @@ components:
           format: uint64
           example: 18
           description: "number of decimals retrieved from an ERC20 smart contract, defaults to 18"
-        description:
+        petname:
           type: string
-          example: "any test"
-          description: "user supplied description for the address"
+          example: "ideally-known-locust"
+          description: "the petname such as described here http://www.erights.org/elib/capability/pnml.html"
         deleted:
           type: boolean
           description: "`true` if deleted, `false` otherwise"
@@ -722,7 +722,7 @@ components:
           type: string
           format: address
           example: "0xa1e4...63b4"
-          description: "description: the address of the token contract being queried"
+          description: "the address of the token contract being queried"
         name:
           type: string
           example: "The DAO Original"

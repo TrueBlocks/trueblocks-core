@@ -8,7 +8,7 @@ names?terms=wildmolasses.eth
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": 0,
-      "description": ""
+      "petname": "partly-national-monitor"
     }
   ],
   "meta": {

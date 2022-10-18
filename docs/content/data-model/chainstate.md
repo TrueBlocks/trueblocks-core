@@ -2,7 +2,7 @@
 title: "Chain state"
 description: ""
 lead: ""
-date: 2022-02-10T20:02:12
+date: 2022-10-16T07:55:33
 lastmod:
   - :git
   - lastmod
@@ -77,7 +77,7 @@ Token data is made of the following data fields:
 | ---------- | ------------------------------------------------------------ | ------- |
 | holder     | the address for which we are reporting the token balance     | address |
 | balance    | the balance at the address at the given block height         | wei     |
-| address    | description: the address of the token contract being queried | address |
+| address    | the address of the token contract being queried              | address |
 | name       | the name of the token contract, if available                 | string  |
 | symbol     | the symbol for this token contract                           | string  |
 | decimals   | the number of decimals for the token contract                | uint64  |

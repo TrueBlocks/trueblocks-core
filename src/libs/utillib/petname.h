@@ -13,32 +13,11 @@
  *-------------------------------------------------------------------------------------------*/
 #include "basetypes.h"
 #include "sfstring.h"
-#include "basenode.h"
-#include "biglib.h"
-#include "jsonlib.h"
 #include "conversions.h"
-#include "sftime.h"
-#include "sfos.h"
-#include "database.h"
-#include "toml.h"
-#include "exportcontext.h"
-#include "prefunds.h"
-#include "names.h"
-#include "sfarchive.h"
-#include "fielddata.h"
-#include "curl_code.h"
-#include "colors.h"
-#include "performance.h"
-#include "options_base.h"
-#include "filenames.h"
-#include "accountname.h"
-#include "memmap.h"
-#include "rpcresult.h"
-#include "logging.h"
-#include "keccak.h"
-#include "markdown.h"
-#include "configenv.h"
-#include "chain.h"
-#include "petname.h"
 
-using namespace qblocks;  // NOLINT
+namespace qblocks {
+
+extern string_q addr_2_Petname(const string_q& address, char sep);
+extern bool isPetname(const string_q& petname, char sep);
+
+}  // namespace qblocks

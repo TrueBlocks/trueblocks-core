@@ -1,3 +1,4 @@
+addrs3
 configs
 bloomTest*
 golang
@@ -7,7 +8,6 @@ thing
 go-test*
 names/*
 addresses
-addrs2
 callsPerDay
 color-pallets
 daemon

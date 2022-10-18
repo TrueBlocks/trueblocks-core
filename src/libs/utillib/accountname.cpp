@@ -16,6 +16,7 @@
  */
 #include "accountname.h"
 #include "options_base.h"
+#include "petname.h"
 
 namespace qblocks {
 
@@ -81,9 +82,6 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
             if (fieldName % "decimals") {
                 return decimals == 0 ? "" : uint_2_Str(decimals);
             }
-            if (fieldName % "description") {
-                return description.substr(0, 255);
-            }
             break;
         case 'i':
             if (fieldName % "isCustom") {
@@ -105,6 +103,11 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
         case 'n':
             if (fieldName % "name") {
                 return name.substr(0, 120);
+            }
+            break;
+        case 'p':
+            if (fieldName % "petname") {
+                return petname.substr(0, 40);
             }
             break;
         case 's':
@@ -155,10 +158,6 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
                 decimals = str_2_Uint(fieldValue);
                 return true;
             }
-            if (fieldName % "description") {
-                description = fieldValue.substr(0, 255);
-                return true;
-            }
             break;
         case 'i':
             if (fieldName % "isCustom") {
@@ -188,6 +187,12 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
                 return true;
             }
             break;
+        case 'p':
+            if (fieldName % "petname") {
+                petname = fieldValue.substr(0, 40);
+                return true;
+            }
+            break;
         case 's':
             if (fieldName % "symbol") {
                 symbol = fieldValue.substr(0, 30);
@@ -213,6 +218,9 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
 //---------------------------------------------------------------------------------------------------
 void CAccountName::finishParse() {
     // EXISTING_CODE
+    if (petname.empty() || !isPetname(petname, '-')) {
+        petname = addr_2_Petname(address, '-');
+    }
     // EXISTING_CODE
 }
 
@@ -235,7 +243,7 @@ bool CAccountName::Serialize(CArchive& archive) {
     archive >> symbol;
     archive >> source;
     archive >> decimals;
-    archive >> description;
+    archive >> petname;
     archive >> isCustom;
     archive >> isPrefund;
     archive >> isContract;
@@ -260,7 +268,7 @@ bool CAccountName::SerializeC(CArchive& archive) const {
     archive << symbol;
     archive << source;
     archive << decimals;
-    archive << description;
+    archive << petname;
     archive << isCustom;
     archive << isPrefund;
     archive << isContract;
@@ -321,7 +329,7 @@ void CAccountName::registerClass(void) {
     ADD_FIELD(CAccountName, "symbol", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CAccountName, "source", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CAccountName, "decimals", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CAccountName, "description", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CAccountName, "petname", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CAccountName, "isCustom", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CAccountName, "isPrefund", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CAccountName, "isContract", T_BOOL | TS_OMITEMPTY, ++fieldNum);
@@ -383,6 +391,7 @@ string_q nextAccountnameChunk_custom(const string_q& fieldIn, const void* dataPt
 bool CAccountName::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
+    string_q unused_decsr;
     if (m_schema < getVersionNum(0, 6, 6)) {
         string_q subtags, unused5;
         bool unused2, unused3, unused4;
@@ -391,7 +400,7 @@ bool CAccountName::readBackLevel(CArchive& archive) {
         archive >> name;
         archive >> address;
         archive >> symbol;
-        archive >> description;
+        archive >> unused_decsr;  // used to be description
         archive >> source;
         archive >> unused5;  // used to be logo
         // archive >> path;
@@ -406,6 +415,23 @@ bool CAccountName::readBackLevel(CArchive& archive) {
         // archive >> sizeInBytes;
         if (!subtags.empty())
             tags += (":" + subtags);
+        petname = addr_2_Petname(address, '-');
+        finishParse();
+        done = true;
+    } else if (m_schema < getVersionNum(0, 40, 3)) {
+        archive >> tags;
+        archive >> address;
+        archive >> name;
+        archive >> symbol;
+        archive >> source;
+        archive >> decimals;
+        archive >> unused_decsr;  // used to be description
+        archive >> isCustom;
+        archive >> isPrefund;
+        archive >> isContract;
+        archive >> isErc20;
+        archive >> isErc721;
+        petname = addr_2_Petname(address, '-');
         finishParse();
         done = true;
     }
@@ -443,7 +469,7 @@ const char* STR_DISPLAY_ACCOUNTNAME =
     "[{SYMBOL}]\t"
     "[{SOURCE}]\t"
     "[{DECIMALS}]\t"
-    "[{DESCRIPTION}]\t"
+    "[{PETNAME}]\t"
     "[{DELETED}]\t"
     "[{ISCUSTOM}]\t"
     "[{ISPREFUND}]\t"

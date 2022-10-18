@@ -19,6 +19,7 @@
 #include "prefunds.h"
 #include "logging.h"
 #include "options_base.h"
+#include "petname.h"
 
 namespace qblocks {
 
@@ -194,6 +195,7 @@ static bool addPrefund(const Allocation& prefund, void* data) {
 
     CAccountName account;
     account.address = prefund.address;
+    account.petname = addr_2_Petname(account.address, '-');
     account.tags = "80-Prefund";
     account.source = "Genesis";
     account.isPrefund = true;
@@ -316,7 +318,7 @@ bool NameOnDisc::name_2_Disc(const CAccountName& nm) {
     strncpy(name, nm.name.c_str(), nm.name.length());
     strncpy(symbol, nm.symbol.c_str(), nm.symbol.length());
     strncpy(source, nm.source.c_str(), nm.source.length());
-    strncpy(description, nm.description.c_str(), nm.description.length());
+    strncpy(petname, nm.petname.c_str(), nm.petname.length());
     decimals = uint16_t(nm.decimals);
     flags |= (nm.isCustom ? IS_CUSTOM : IS_NONE);
     flags |= (nm.isPrefund ? IS_PREFUND : IS_NONE);
@@ -331,10 +333,10 @@ bool NameOnDisc::name_2_Disc(const CAccountName& nm) {
 bool NameOnDisc::disc_2_Name(CAccountName& nm) const {
     nm.tags = tags;
     nm.address = address;
+    nm.petname = strlen(petname) == 0 ? addr_2_Petname(address, '-') : petname;
     nm.name = name;
     nm.symbol = symbol;
     nm.source = source;
-    nm.description = description;
     nm.decimals = decimals;
     nm.isCustom = (flags & IS_CUSTOM);
     nm.isPrefund = (flags & IS_PREFUND);
@@ -349,7 +351,7 @@ bool NameOnDisc::disc_2_Name(CAccountName& nm) const {
 string_q NameOnDisc::Format(void) const {
     ostringstream os;
     os << tags << "\t" << address << "\t" << name << "\t" << symbol << "\t" << source << "\t";
-    os << (decimals == 0 ? "" : uint_2_Str(decimals)) << "\t" << description << "\t";
+    os << (decimals == 0 ? "" : uint_2_Str(decimals)) << "\t" << petname << "\t";
     os << (flags & IS_PREFUND ? "true" : "false") << "\t";
     os << (flags & IS_CUSTOM ? "true" : "false") << "\t";
     os << (flags & IS_DELETED ? "true" : "false") << "\t";

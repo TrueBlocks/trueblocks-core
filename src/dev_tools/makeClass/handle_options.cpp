@@ -344,7 +344,7 @@ void COptions::generate_positional(const CCommandOption& option) {
     ostringstream posStream;
     if (option.codeLoc() == LOCAL) {
         if (option.data_type == "list<addr>") {
-            localStream << substitute(option.Format("    CAddressArray [{LONGNAME}];"), "addrs2", "addrs") << endl;
+            localStream << option.Format("    CAddressArray [{LONGNAME}];") << endl;
             posStream << option.Format(STR_ADDRLIST_PROCESSOR) << endl;
 
         } else if (option.data_type == "list<topic>") {
@@ -385,7 +385,7 @@ void COptions::generate_positional(const CCommandOption& option) {
 
     } else if (option.codeLoc() == HEADER || option.isConfig) {
         if (option.data_type == "list<addr>") {
-            headerStream << substitute(option.Format("    CAddressArray [{LONGNAME}];"), "addrs2", "addrs") << endl;
+            headerStream << option.Format("    CAddressArray [{LONGNAME}];") << endl;
             posStream << option.Format(STR_ADDRLIST_PROCESSOR) << endl;
 
         } else if (option.data_type == "list<topic>") {

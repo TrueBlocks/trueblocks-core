@@ -9,7 +9,7 @@ names?undelete&terms=0x0000000000000000000000000000000010101010&logLevel=10&fmt=
       "symbol": "SYMBOL_CHANGED",
       "source": "SOURCE_CHANGED",
       "decimals": 13,
-      "description": "DESCRIPTION_CHANGED",
+      "petname": "abnormally-able-quetzal",
       "isCustom": false,
       "isPrefund": false,
       "isContract": false,

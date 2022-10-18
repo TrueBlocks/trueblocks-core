@@ -199,7 +199,6 @@ bool COptions::parseArguments(string_q& command) {
         ::setenv("TB_NAME_SOURCE", "TrueBlocks.io", true);
         ::setenv("TB_NAME_SYMBOL", "", true);
         ::setenv("TB_NAME_DECIMALS", "18", true);
-        ::setenv("TB_NAME_DESCR", "", true);
         ::setenv("TB_NAME_CUSTOM", "false", true);
         if (!handle_editcmds(true))  // returns true on success
             return false;
@@ -288,7 +287,7 @@ bool COptions::parseArguments(string_q& command) {
         HIDE_FIELD(CAccountName, "tags");
         HIDE_FIELD(CAccountName, "name");
         HIDE_FIELD(CAccountName, "symbol");
-        HIDE_FIELD(CAccountName, "description");
+        HIDE_FIELD(CAccountName, "petname");
         HIDE_FIELD(CAccountName, "source");
         HIDE_FIELD(CAccountName, "decimal");
         HIDE_FIELD(CAccountName, "isCustom");
@@ -442,6 +441,7 @@ void COptions::filterNames() {
                 CAccountName item;
                 item.tags = "81-Custom";
                 item.address = "0x000000000000000000000000000000000000000" + uint_2_Str(i);
+                item.petname = addr_2_Petname(item.address, '-');
                 item.name = "Account_" + uint_2_Str(i);
                 if (!(i % 2)) {
                     item.symbol = "AC_" + uint_2_Str(i);
@@ -468,7 +468,6 @@ void COptions::filterNames() {
 string_q shortenFormat(const string_q& fmtIn) {
     string_q ret = toUpper(fmtIn);
     replace(ret, "[{SOURCE}]", "");
-    replace(ret, "[{DESCRIPTION}]", "");
     replace(ret, "[{DECIMAL}]", "");
     replace(ret, "[{DELETED}]", "");
     replace(ret, "[{ISCUSTOM}]", "");
@@ -483,7 +482,6 @@ string_q shortenFormat(const string_q& fmtIn) {
 string_q getSearchFields(const string_q& fmtIn) {
     string_q ret = toUpper(fmtIn);
     replace(ret, "[{SOURCE}]", "");
-    replace(ret, "[{DESCRIPTION}]", "");
     replace(ret, "[{DECIMAL}]", "");
     replace(ret, "[{DELETED}]", "");
     replace(ret, "[{ISCUSTOM}]", "");

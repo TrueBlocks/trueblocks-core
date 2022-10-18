@@ -14,5 +14,5 @@ TIME ~ CLOCK - : 4-----Deleting 0x0000000000000000000000000000000010101010
     "symbol": "SYMBOL_CHANGED",
     "source": "SOURCE_CHANGED",
     "decimals": 13,
-    "description": "DESCRIPTION_CHANGED"
+    "petname": "abnormally-able-quetzal"
   }] }

@@ -277,6 +277,7 @@ bool noteMonitor(const string_q& path, void* data) {
         string_q addr = substitute(path, "/0x", "|");
         nextTokenClear(addr, '|');
         mdi.address = "0x" + nextTokenClear(addr, '.');
+        mdi.petname = addr_2_Petname(mdi.address, '-');
         findName(mdi.address, mdi);
         if (!isTestMode()) {
             CArchive archive(READING_ARCHIVE);
@@ -300,6 +301,7 @@ bool noteMonitor(const string_q& path, void* data) {
         } else {
             mdi = CMonitorCacheItem();
             mdi.address = "---address---";
+            mdi.petname = "--petname--";
             mdi.name = "--name--";
             mdi.tags = "--tags--";
             mdi.source = "--source--";
@@ -308,6 +310,7 @@ bool noteMonitor(const string_q& path, void* data) {
 
         CMonitor m;
         m.address = mdi.address;
+        m.petname = mdi.petname;
         CMonitorHeader header;
         m.readMonitorHeader(header);
         mdi.deleted = header.deleted;
@@ -407,10 +410,12 @@ bool noteABI(const string_q& path, void* data) {
         string_q addr = substitute(path, "/0x", "|");
         nextTokenClear(addr, '|');
         abii.address = "0x" + nextTokenClear(addr, '.');
+        abii.petname = addr_2_Petname(abii.address, '-');
         CAccountName n;
         findName(abii.address, n);
         if (isTestMode()) {
             abii.address = "---address---";
+            abii.petname = "--petname--";
             abii.name = "--name--";
             abii.nFunctions = abii.nEvents = abii.nOther = abii.sizeInBytes = 36963;
         } else {
