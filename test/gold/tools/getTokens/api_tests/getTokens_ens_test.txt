@@ -1,4 +1,4 @@
-tokens?addrs=0xde30da39c46104798bb5aa3fe8b9e0e1f348163f&?addrs==trueblocks.eth&blocks=12506399-12507199:100
+tokens?addrs=0xde30da39c46104798bb5aa3fe8b9e0e1f348163f&addrs=trueblocks.eth&blocks=12506399-12507199:100
 {
   "data": [
     {
