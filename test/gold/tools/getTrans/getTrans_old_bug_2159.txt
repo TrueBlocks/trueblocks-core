@@ -96,5 +96,7 @@ params.size: 3
     "totalOut": "",
     "totalOutLessGas": "",
     "amountNet": "53712605193010669297",
-    "reconciled": true
+    "reconciled": true,
+    "transactionHash": "0x20e4a5279519859c3b8af108fa9b3238f23d5522ceb0f7245080ec79ad8f97fd",
+    "date": "2021-08-15 10:50:23 UTC"
   }] }

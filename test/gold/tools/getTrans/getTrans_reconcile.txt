@@ -131,5 +131,7 @@ TIME ~ CLOCK - : 4-----reserve1: 4.10678e+07 reserve2: 20930.2 priceOut: 1962.13
     "totalOut": "",
     "totalOutLessGas": "",
     "amountNet": "",
-    "reconciled": true
+    "reconciled": true,
+    "transactionHash": "0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63",
+    "date": "2021-06-24 14:14:25 UTC"
   }] }

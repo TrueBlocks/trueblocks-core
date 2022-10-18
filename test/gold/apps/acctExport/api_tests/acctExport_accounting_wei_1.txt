@@ -60,7 +60,9 @@ export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&maxRecords=5&accounting&
           "totalOut": "",
           "totalOutLessGas": "",
           "amountNet": "4200000000000000000000",
-          "reconciled": true
+          "reconciled": true,
+          "transactionHash": "",
+          "date": "2015-07-30 15:26:15 UTC"
         }
       ],
       "gasCost": 0,
@@ -133,7 +135,9 @@ export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&maxRecords=5&accounting&
           "totalOut": "4199925320679510922664",
           "totalOutLessGas": "4199900000000000000000",
           "amountNet": "-4199925320679510922664",
-          "reconciled": true
+          "reconciled": true,
+          "transactionHash": "0x6e443af86a84920cace198340020e4ca54321a2c515cd3ad1f274d3506b4aff8",
+          "date": "2015-09-08 09:09:16 UTC"
         }
       ],
       "gasCost": 25320679510922664,
@@ -203,7 +207,9 @@ export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&maxRecords=5&accounting&
           "totalOut": "74679320489077336",
           "totalOutLessGas": "74259320489077336",
           "amountNet": "-74679320489077336",
-          "reconciled": true
+          "reconciled": true,
+          "transactionHash": "0xe1822bdf66fb415883f85b61a4a5ab1c13c4c7ab4b102c5d00504347a69b84f5",
+          "date": "2016-05-12 03:53:53 UTC"
         }
       ],
       "gasCost": 420000000000000,

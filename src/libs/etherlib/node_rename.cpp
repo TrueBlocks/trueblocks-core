@@ -18,28 +18,7 @@
 namespace qblocks {
 
 //--------------------------------------------------------------------------------
-// map<string_q, string_q> fieldRenameMap = {
-//     make_pair("blocknumber", "blockNumber"),
-//     make_pair("blockhash", "blockHash"),
-//     make_pair("transactionhash", "transactionHash"),
-//     make_pair("transactionindex", "transactionIndex"),
-//     make_pair("logindex", "logIndex"),
-//     make_pair("ethergasprice", "ethGasPrice"),
-//     make_pair("gasused", "gasUsed"),
-//     make_pair("gaslimit", "gasLimit"),
-//     make_pair("basefeepergas", "baseFeePerGas"),
-//     make_pair("parenthash", "parentHash"),
-//     make_pair("transactionscnt", "transactionsCnt"),
-//     make_pair("addr_count", "addrCount"),
-//     make_pair("iserror", "isError"),
-//     make_pair("compressedlog", "compressedLog"),
-//     make_pair("compressedtx", "compressedTx"),
-//     make_pair("compressedtrace", "compressedTrace"),
-//     make_pair("compressedresult", "compressedResult"),
-//     make_pair("traceaddress", "traceAddress"),
-// };
-
-//--------------------------------------------------------------------------------
+// TODO: What exactly is this mess? I think it's C++ specific and will disappear in GoLang code
 string_q renameExportFields(const string_q& className, const string_q& inStr) {
     string_q ret = inStr;
     replace(ret, "blocknumber", "blockNumber");
@@ -152,6 +131,7 @@ string_q renameExportFields(const string_q& className, const string_q& inStr) {
             make_pair("spotprice", "spotPrice"),
             make_pair("pricesource", "priceSource"),
             make_pair("reconciliationtype", "reconciliationType"),
+            make_pair("transactionhash", "transactionHash"),
         };
         for (auto item : renames)
             replace(ret, item.first, item.second);

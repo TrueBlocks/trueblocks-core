@@ -248,7 +248,7 @@ bool getReceipt(CReceipt& receipt, const hash_t& txHash) {
 }
 
 //--------------------------------------------------------------
-void getTraces(CTraceArray& traces, const hash_t& hash, const CTransaction* pTrans) {
+void getTraces(CTraceArray& traces, const hash_t& hash, const CTransaction* pT) {
     string_q str;
     queryRawTrace(str, hash);
 
@@ -259,7 +259,7 @@ void getTraces(CTraceArray& traces, const hash_t& hash, const CTransaction* pTra
     CTrace trace;
     traces.clear();
     while (trace.parseJson4(generic.result)) {
-        trace.pTransaction = pTrans;
+        trace.pTransaction = pT;
         traces.push_back(trace);
         trace = CTrace();  // reset
     }

@@ -39,6 +39,8 @@ totalOut            	1034	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 totalOutLessGas     	1035	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 amountNet           	1036	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 reconciled          	1037	0	8388628	T_BOOL TS_NUMERAL
+transactionHash     	1038	0	16777266	T_TEXT TS_STRING
+date                	1039	0	33554437	T_DATE TS_DATE
 {
   "blockNumber": 0,
   "transactionIndex": 0,
@@ -70,7 +72,9 @@ reconciled          	1037	0	8388628	T_BOOL TS_NUMERAL
   "totalOut": "",
   "totalOutLessGas": "",
   "amountNet": "",
-  "reconciled": true
+  "reconciled": true,
+  "transactionHash": "",
+  "date": "1970-01-01 00:00:00 UTC"
 }
 
 --------------------------------------------------------------------------------
@@ -113,6 +117,8 @@ totalOut            	1034	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 totalOutLessGas     	1035	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 amountNet           	1036	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 reconciled          	1037	1	8388628	T_BOOL TS_NUMERAL
+transactionHash     	1038	1	16777266	T_TEXT TS_STRING
+date                	1039	1	33554437	T_DATE TS_DATE
 {
 }
 
@@ -156,6 +162,8 @@ totalOut            	1034	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 totalOutLessGas     	1035	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 amountNet           	1036	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 reconciled          	1037	0	8388628	T_BOOL TS_NUMERAL
+transactionHash     	1038	0	16777266	T_TEXT TS_STRING
+date                	1039	0	33554437	T_DATE TS_DATE
 {
   "schema": 41000,
   "deleted": false,
@@ -191,6 +199,8 @@ reconciled          	1037	0	8388628	T_BOOL TS_NUMERAL
   "totalOut": "",
   "totalOutLessGas": "",
   "amountNet": "",
-  "reconciled": true
+  "reconciled": true,
+  "transactionHash": "",
+  "date": "1970-01-01 00:00:00 UTC"
 }
 

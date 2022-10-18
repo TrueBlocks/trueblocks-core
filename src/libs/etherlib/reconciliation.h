@@ -61,12 +61,14 @@ class CReconciliation : public CBaseNode {
     DECLARE_NODE(CReconciliation);
 
     // EXISTING_CODE
-    CReconciliation(blknum_t bn, blknum_t txid, timestamp_t ts) {
+    CReconciliation(blknum_t bn, blknum_t txid, timestamp_t ts, const CTransaction* pT) {
         initialize();
         blockNumber = bn;
         transactionIndex = txid;
         timestamp = ts;
+        pTransaction = pT;
     }
+    const CTransaction* pTransaction = NULL;
     void initForToken(CAccountName& tokenName);
     bool reconcileEth(const CReconciliation& prevRecon, blknum_t nextBlock, const CTransaction* trans,
                       const CAccountName& accountedFor);
@@ -160,6 +162,7 @@ inline void CReconciliation::initialize(void) {
     priceSource = "";
 
     // EXISTING_CODE
+    pTransaction = NULL;
     // EXISTING_CODE
 }
 
@@ -195,6 +198,7 @@ inline void CReconciliation::duplicate(const CReconciliation& re) {
     priceSource = re.priceSource;
 
     // EXISTING_CODE
+    pTransaction = re.pTransaction;
     // EXISTING_CODE
 }
 

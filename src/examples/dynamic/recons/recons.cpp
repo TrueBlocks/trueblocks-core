@@ -118,6 +118,7 @@ bool display(CTraverser* trav, void* data) {
             if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
                 archive >> trav->trans.statements;
                 for (CReconciliation& statement : trav->trans.statements) {
+                    statement.pTransaction = &trav->trans;
                     if (statement.assetSymbol == "ETH") {
                         double begBal = str_2_Double(substitute(statement.Format("[{BEGBAL}]"), "\"", ""));
                         double totIn = str_2_Double(substitute(statement.Format("[{TOTALIN}]"), "\"", ""));

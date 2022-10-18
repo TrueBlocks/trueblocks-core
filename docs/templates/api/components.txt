@@ -157,6 +157,10 @@ components:
           type: string
           format: int256
           description: "the transaction fee reward if the miner is the accountedFor address"
+        spotPrice:
+          type: number
+          format: double
+          description: "The on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction"
         minerUncleRewardIn:
           type: string
           format: int256
@@ -165,10 +169,6 @@ components:
           type: string
           format: int256
           description: "at block zero (0) only, the amount of genesis income for the accountedFor address"
-        spotPrice:
-          type: number
-          format: double
-          description: "The on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction"
         priceSource:
           type: string
           description: "The on-chain source from which the spot price was taken"
@@ -195,13 +195,13 @@ components:
           type: string
           format: int256
           description: "a calculated field -- totalIn - totalOut"
+        reconciliationType:
+          type: string
+          description: "One of regular, traces, prevdiff-partial, partial-nextdiff, or `partial-partial`"
         endBalCalc:
           type: string
           format: int256
           description: "a calculated field -- begBal + amountNet"
-        reconciliationType:
-          type: string
-          description: "One of regular, traces, prevdiff-partial, partial-nextdiff, or `partial-partial`"
         endBalDiff:
           type: string
           format: int256
@@ -209,6 +209,14 @@ components:
         reconciled:
           type: boolean
           description: "a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBlkBal`. `false` otherwise."
+        transactionHash:
+          type: string
+          format: hash
+          description: "the hash of the transaction that triggered this reconciliation"
+        date:
+          type: string
+          format: date
+          description: "the date of this transaction"
     name:
       description: "an association between a name and address for use throughout TrueBlocks"
       type: object

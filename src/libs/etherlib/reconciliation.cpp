@@ -489,6 +489,8 @@ void CReconciliation::registerClass(void) {
     ADD_FIELD(CReconciliation, "totalOutLessGas", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "amountNet", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "reconciled", T_BOOL, ++fieldNum);
+    ADD_FIELD(CReconciliation, "transactionHash", T_TEXT, ++fieldNum);
+    ADD_FIELD(CReconciliation, "date", T_DATE, ++fieldNum);
     // EXISTING_CODE
 }
 
@@ -530,6 +532,9 @@ string_q nextReconciliationChunk_custom(const string_q& fieldIn, const void* dat
             case 'd':
                 if (fieldIn % "day") {
                     return ts_2_Date(rec->timestamp).Format(FMT_JSON).substr(0, 10);
+                }
+                if (fieldIn % "date") {
+                    return ts_2_Date(rec->timestamp).Format(FMT_JSON);
                 }
                 break;
             case 'e':
@@ -609,6 +614,9 @@ string_q nextReconciliationChunk_custom(const string_q& fieldIn, const void* dat
                 }
                 if (fieldIn % "totalOutLessGas") {
                     return bni_2_Export(rec->timestamp, (rec->totalOutLessGas()), rec->decimals);
+                }
+                if (fieldIn % "transactionHash" && rec->pTransaction) {
+                    return rec->pTransaction->hash;
                 }
                 break;
             case 'w':
@@ -715,7 +723,8 @@ const char* STR_DISPLAY_RECONCILIATION =
     "[{RECONCILED}]\t"
     "[{SPOTPRICE}]\t"
     "[{PRICESOURCE}]\t"
-    "[{RECONCILIATIONTYPE}]";
+    "[{TRANSACTIONHASH}]\t"
+    "[{DATE}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
