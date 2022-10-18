@@ -3,35 +3,5 @@ TEST[DATE|TIME] Mode:  index
 TEST[DATE|TIME] Blocks:  [2000000]
 TEST[DATE|TIME] OutputFn:  output_test_file
 TEST[DATE|TIME] Format:  txt
-Error: The --output option is not available with the chifra chunks -- yet....
-Usage:
-  chifra chunks <mode> [flags] [blocks...] [address...]
-
-Arguments:
-  mode - the type of data to process (required)
-	One of [ status | manifest | index | blooms | addresses | appearances | stats ]
-  blocks - an optional list of blocks to intersect with chunk ranges
-
-Flags:
-  -c, --check             check the manifest, index, or blooms for internal consistency
-  -i, --pin               pin the manifest or each index chunk and bloom
-  -p, --publish           publish the manifest to the Unchained Index smart contract
-  -n, --truncate uint     truncate the entire index at this block (requires a block identifier)
-  -m, --remote            prior to processing, retreive the manifest from the Unchained Index smart contract
-  -b, --belongs strings   in index mode only, checks the address(es) for inclusion in the given index chunk
-  -s, --sleep float       for --remote pinning only, seconds to sleep between API calls
-  -x, --fmt string        export format, one of [none|json*|txt|csv]
-  -v, --verbose           enable verbose (increase detail with --log_level)
-  -h, --help              display this help screen
-
-Notes:
-  - Mode determines which type of data to display or process.
-  - Certain options are only available in certain modes.
-  - If blocks are provided, only chunks intersecting with those blocks are displayed.
-  - The --truncate option updates data, but does not --pin or --publish.
-  - You may combine the --pin and --publish options.
-  - The --belongs option is only available in the index mode.
-----
-Results in ./output_test_file
 range	magic	hash	addressCount	appearanceCount	size
-001963091-002067748	"0xdeadbeef"	0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1	104763	2000021	18933576
+001963091-002067748	3735928559	0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1	104763	2000021	18933576

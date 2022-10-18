@@ -23,7 +23,6 @@ type GlobalOptions struct {
 	Ether   bool   `json:"ether,omitempty"`
 	Dollars bool   `json:"dollars,omitempty"`
 	Help    bool   `json:"help,omitempty"`
-	ToFile  bool   `json:"toFile,omitempty"`
 	File    string `json:"file,omitempty"`
 	Version bool   `json:"version,omitempty"`
 	Noop    bool   `json:"noop,omitempty"`
