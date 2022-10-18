@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2022-10-16T07:34:11
+date: 2022-10-18T13:35:54
 lastmod:
   - :git
   - lastmod
@@ -118,9 +118,9 @@ Reconciliation data is made of the following data fields:
 | minerBaseRewardIn   | the base fee reward if the miner is the accountedFor address                                                    | int256    |
 | minerNephewRewardIn | the nephew reward if the miner is the accountedFor address                                                      | int256    |
 | minerTxFeeIn        | the transaction fee reward if the miner is the accountedFor address                                             | int256    |
+| spotPrice           | The on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction                        | double    |
 | minerUncleRewardIn  | the uncle reward if the miner who won the uncle block is the accountedFor address                               | int256    |
 | prefundIn           | at block zero (0) only, the amount of genesis income for the accountedFor address                               | int256    |
-| spotPrice           | The on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction                        | double    |
 | priceSource         | The on-chain source from which the spot price was taken                                                         | string    |
 | gasCostOut          | if the transactions original sender is the accountedFor address, the amount of gas expended denominated in WEI. | int256    |
 | endBal              | the on-chain balance of the asset (see notes above about intra-block reconciliations)                           | int256    |
@@ -128,10 +128,12 @@ Reconciliation data is made of the following data fields:
 | totalOut            | a calculated field -- the sum of all Out fields                                                                 | int256    |
 | totalOutLessGas     |                                                                                                                 | int256    |
 | amountNet           | a calculated field -- totalIn - totalOut                                                                        | int256    |
-| endBalCalc          | a calculated field -- begBal + amountNet                                                                        | int256    |
 | reconciliationType  | One of regular, traces, prevdiff-partial, partial-nextdiff, or `partial-partial`                                | string    |
+| endBalCalc          | a calculated field -- begBal + amountNet                                                                        | int256    |
 | endBalDiff          | a calculated field -- endBal - endBalCalc, if non-zero, the reconciliation failed                               | int256    |
 | reconciled          | a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBlkBal`. `false` otherwise.           | bool      |
+| transactionHash     | the hash of the transaction that triggered this reconciliation                                                  | hash      |
+| date                | the date of this transaction                                                                                    | date      |
 
 **Notes**
 
@@ -191,7 +193,9 @@ This documentation mentions the following basic data types.
 | address   | a 20-byte hexadecimal string starting with '0x' | lowercase      |
 | blknum    | an alias for a uint64                           |                |
 | bool      | a value either `true`, `false`, `1`, or `0`     |                |
+| date      | a JSON formatted date                           | as a string    |
 | double    | a floating point number of double precision     |                |
+| hash      | a 32-byte hexadecimal string starting with '0x' | lowercase      |
 | int256    | a signed big number                             | as a string    |
 | string    | a normal character string                       |                |
 | timestamp | a 64-bit unsigned integer                       | Unix timestamp |
