@@ -45,6 +45,11 @@ func (opts *MonitorsOptions) validateMonitors() error {
 				return validate.Usage("The command file you specified ({0}) was found but contained no commands.", cmdFile)
 			}
 		}
+
+		if opts.Globals.IsApiMode() {
+			return validate.Usage("The {0} options is not available from the API", "--watch")
+		}
+
 	} else {
 		// We validate some of the simpler curd commands here and the rest in HandleCrudCommands
 		if opts.Undelete {
