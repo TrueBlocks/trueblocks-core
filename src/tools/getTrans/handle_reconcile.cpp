@@ -24,9 +24,10 @@ bool visitReconciliation(CTransaction& trans, void* data) {
     name.petname = addr_2_Petname(name.address, '-');
     findName(opt->reconcile, name);
     CReconciliation prev;
+    prev.pTransaction = &trans;
     prev.assetAddr = opt->reconcile;
     prev.endBal = trans.blockNumber == 0 ? 0 : getBalanceAt(opt->reconcile, trans.blockNumber - 1);
-    CReconciliation eth(trans.blockNumber, trans.transactionIndex, trans.timestamp);
+    CReconciliation eth(trans.blockNumber, trans.transactionIndex, trans.timestamp, &trans);
     eth.reconcileEth(prev, trans.blockNumber + 1, &trans, name);
     eth.spotPrice = getPriceInUsd(trans.blockNumber, eth.priceSource);
 

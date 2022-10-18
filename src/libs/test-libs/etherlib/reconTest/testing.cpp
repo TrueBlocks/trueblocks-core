@@ -39,12 +39,14 @@ TEST_F(CThisTest, TestTest_1) {
     cout << trans << endl;
 
     CReconciliation prev;
+    prev.pTransaction = &trans;
     prev.endBal = str_2_BigInt("5000000000000000000");
     prev.blockNumber = 8856285;
 
     CReconciliation rec;
+    rec.pTransaction = &trans;
     cout << rec << endl;
-    rec = CReconciliation(trans.blockNumber, trans.transactionIndex, trans.timestamp);
+    rec = CReconciliation(trans.blockNumber, trans.transactionIndex, trans.timestamp, &trans);
     CAccountName acct;
     acct.address = "0xf503017d7baf7fbc0fff7492b751025c6a78179b";
     acct.petname = addr_2_Petname(acct.address, '-');
