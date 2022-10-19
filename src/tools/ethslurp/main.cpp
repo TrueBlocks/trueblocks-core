@@ -23,12 +23,11 @@ int main(int argc, const char* argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
+    bool first = true;
     CCachedAccount theAccount;
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
-
-        cerr << "Processing: " << substitute(command, options.getOutputFn(), "--output_filename--") << "\n";
 
         if (!Slurp(theAccount, options)) {
             for (auto err : options.errors) {
@@ -49,10 +48,15 @@ int main(int argc, const char* argv[]) {
             theAccount.displayString = options.displayString;
             ostringstream os;
             theAccount.Format(os, options.formatString);
-            if (expContext().exportFmt == TXT1 || expContext().exportFmt == CSV1)
+            if (expContext().exportFmt == TXT1 || expContext().exportFmt == CSV1) {
+                if (first && !options.noHeader) {
+                    cout << options.header << endl;
+                }
+                first = false;
                 cout << trim(trim(os.str(), '\n'), ',') << endl;
-            else
+            } else {
                 cout << "[" << trim(trim(substitute(os.str(), "\n", " "), ' '), ',') << "]" << endl;
+            }
         }
     }
 
@@ -64,8 +68,6 @@ bool Slurp(CCachedAccount& theAccount, COptions& options) {
     theAccount.transactions.clear();
     theAccount = CCachedAccount();
     theAccount.addr = options.addrs[0];
-    cerr << "\t"
-         << "Slurping " << theAccount.addr << "\n";
 
     bool first = true;
     for (auto type : options.typesList) {
