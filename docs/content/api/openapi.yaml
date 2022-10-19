@@ -975,7 +975,7 @@ paths:
             enum:
               - from
               - to
-        - name: reconcile
+        - name: statements
           description: reconcile the transaction as per the provided address
           required: false
           style: form

@@ -29,8 +29,8 @@ totalIn             ,int256    ,           ,       ,      ,        ,          ,t
 totalOut            ,int256    ,           ,       ,      ,        ,          ,true    ,      ,true     , 27 ,  23 ,              ,a calculated field -- the sum of all Out fields
 totalOutLessGas     ,int256    ,           ,       ,      ,        ,          ,true    ,      ,true     , 28 ,  24 ,              ,
 amountNet           ,int256    ,           ,       ,      ,        ,          ,true    ,      ,true     , 29 ,  25 ,              ,a calculated field -- totalIn - totalOut
-endBalCalc          ,int256    ,           ,       ,      ,        ,          ,true    ,      ,true     , 30 ,  28 ,              ,a calculated field -- begBal + amountNet
-endBalDiff          ,int256    ,           ,       ,      ,        ,          ,true    ,      ,true     , 31 ,  29 ,              ,a calculated field -- endBal - endBalCalc&#44; if non-zero&#44; the reconciliation failed
+endBalCalc          ,int256    ,           ,       ,      ,        ,true      ,true    ,      ,true     , 30 ,  28 ,              ,a calculated field -- begBal + amountNet
+endBalDiff          ,int256    ,           ,       ,      ,        ,true      ,true    ,      ,true     , 31 ,  29 ,              ,a calculated field -- endBal - endBalCalc&#44; if non-zero&#44; the reconciliation failed
 reconciled          ,bool      ,           ,       ,      ,        ,          ,true    ,      ,true     , 32 ,  30 ,              ,a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBlkBal`. `false` otherwise.
 transactionHash     ,hash      ,           ,       ,      ,        ,          ,true    ,      ,true     , 33 ,  33 ,              ,the hash of the transaction that triggered this reconciliation
 date                ,date      ,           ,       ,      ,        ,          ,true    ,      ,true     , 34 ,  34 ,              ,the date of this transaction
