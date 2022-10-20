@@ -146,43 +146,26 @@ void start_Log(CTraverser* trav, void* data) {
     return;
 }
 
-#ifdef LOGGING_LEVEL
-extern void logProgress(searchOpType op, uint64_t progress, uint64_t goal, uint64_t block,
-                        const qblocks::string_q& post);
-#define LOG_PROGRESS(op, progress, goal, block, post) logProgress((op), (progress), (goal), (block), (post))
-#else
-#define LOG_PROGRESS(op, progress, goal, block, post)
-#endif
+extern const CStringArray searchOps;
 
 //-----------------------------------------------------------------------
 // Returns false if the loop shouldQuit
 bool prog_Log(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)data;
-    if (!trav->logging)
+    if (!trav->logging || isTestMode())
         return !shouldQuit();
 
-    blknum_t prog = opt->first_record + trav->nProcessed;
-    blknum_t nApps = opt->stats.nFileRecords;
-
-    size_t freq = size_t(((float)nApps) / (nApps / 7.0));
-    // cerr << "freq: " << freq << " nApps: " << nApps << " prog: " << prog << " nProcessed: " << trav->nProcessed
-    //      << " first_record: " << opt->first_record << " mod: " << (trav->nProcessed % freq) << "             " <<
-    //      endl;
+    size_t freq = 7;
     if (trav->nProcessed % freq)
         return !shouldQuit();
 
-    ostringstream post;
-    if (trav->searchType == "appearances" || trav->searchType == "receipts" || trav->searchType == "txs") {
-        // We report differently if there are the same number of items as appearances...
-        // Reports as "searchType index of total operation for address A"
-        post << " " << trav->searchType << " for address " << opt->accountedFor.address;
-    } else {
-        // ...or if there are more than such as statements, logs, traces, or neighbors
-        // Reports as "searchType index of total txs (found X operation) for address A"
-        post << " txs (" << prog << " " << trav->searchType << ") for address " << opt->accountedFor.address;
+    ostringstream found;
+    if (trav->searchType != "appearances" && trav->searchType != "txs" && trav->searchType != "receipts") {
+        found << " (found " << trav->nProcessed << " " << trav->searchType << ")";
     }
-    LOG_PROGRESS(trav->searchOp, blknum_t(opt->first_record + trav->index), nApps, trav->trans.blockNumber,
-                 post.str() + "\r");
+
+    LOG_PROG(searchOps[trav->searchOp], " ", opt->first_record + trav->index, " of ", opt->stats.nFileRecords,
+             " txs at block ", trav->trans.blockNumber, found.str(), " for address ", opt->accountedFor.address, "\r");
 
     return !shouldQuit();
 }
@@ -190,23 +173,17 @@ bool prog_Log(CTraverser* trav, void* data) {
 //-----------------------------------------------------------------------
 void end_Log(CTraverser* trav, void* data) {
     const COptions* opt = (const COptions*)data;
-    if (!trav->logging)
+    if (!trav->logging || isTestMode())
         return;
 
-    blknum_t prog = opt->first_record + trav->nProcessed;
-    blknum_t nApps = opt->stats.nFileRecords;
-
-    ostringstream post;
-    if (trav->searchType == "appearances" || trav->searchType == "receipts" || trav->searchType == "txs") {
-        // We report differently if there are the same number of items as appearances...
-        // Reports as "searchType index of total operation for address A"
-        post << " " << trav->searchType << " for address " << opt->accountedFor.address;
-    } else {
-        // ...or if there are more than such as statements, logs, traces, or neighbors
-        // Reports as "searchType index of total txs (found X operation) for address A"
-        post << " txs (" << prog << " " << trav->searchType << ") for address " << opt->accountedFor.address;
+    ostringstream found;
+    if (trav->searchType != "appearances" && trav->searchType != "txs" && trav->searchType != "receipts") {
+        found << " (found " << trav->nProcessed << " " << trav->searchType << ")";
     }
-    LOG_PROGRESS(COMPLETE, blknum_t(opt->first_record + trav->index), nApps, trav->trans.blockNumber, post.str());
+
+    LOG_PROG(searchOps[trav->searchOp], " ", opt->first_record + trav->index, " of ", opt->stats.nFileRecords,
+             " txs at block ", trav->trans.blockNumber, found.str(), " for address ", opt->accountedFor.address, "\r");
+
     return;
 }
 
@@ -290,9 +267,3 @@ const CStringArray searchOps = {
     "Completed",
 };
 // clang-format on
-
-void logProgress(searchOpType op, uint64_t progress, uint64_t goal, uint64_t block, const string_q& post) {
-    if (isTestMode())
-        return;
-    LOG_PROG(padRight(searchOps[op], 11), " ", padNum8T(uint64_t(progress)), " of ", padNum8T(uint64_t(goal)), (post));
-}

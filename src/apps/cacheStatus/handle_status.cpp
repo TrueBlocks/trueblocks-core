@@ -80,8 +80,9 @@ bool COptions::handle_status(ostream& os) {
         } else {
             LOG8("Read from cache");
         }
-        if (!origMode.empty())
-            LOG_PROG("Complete", index.nFiles, index.nFiles, "");
+        if (!isTestMode() && !origMode.empty()) {
+            LOG_PROG("Complete ", index.nFiles, " of ", index.nFiles);
+        }
         status.caches.push_back(&index);
     }
 
@@ -342,7 +343,9 @@ bool noteIndex(const string_q& path, void* data) {
         timestamp_t unused;
         blknum_t last = NOPOS;
         blknum_t first = path_2_Bn(path, last, unused);
-        LOG_PROG("Scanning", ++counter->fileRange.first, counter->fileRange.second, "\r");
+        if (!isTestMode()) {
+            LOG_PROG("Scanning ", ++counter->fileRange.first, " of ", counter->fileRange.second, "\r");
+        }
 
         if (last < counter->options->scanRange.first)
             return true;
