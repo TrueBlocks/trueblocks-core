@@ -93,7 +93,7 @@ func TestCacheLayout(t *testing.T) {
 	// 			t.Error("Wrong subdir", cachePath.Subdir)
 	// 		}
 	// 		p := cachePath.GetFullPath(tt.param)
-	// 		if p != path.Join(tt.expected.RootPath, tt.path) {
+	// 		if p != filepath.Join(tt.expected.RootPath, tt.path) {
 	// 			t.Error("Wrong full path", p)
 	// 		}
 	// 	})

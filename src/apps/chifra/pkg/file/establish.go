@@ -6,7 +6,7 @@ package file
 
 import (
 	"os"
-	"path"
+	"path/filepath"
 )
 
 // EstablishFolders creates the rootPath and any subfolders
@@ -16,12 +16,10 @@ func EstablishFolders(rootPath string, folders []string) error {
 		return err
 	}
 
-	if folders != nil {
-		for _, folder := range folders {
-			err := EstablishFolder(path.Join(rootPath, folder))
-			if err != nil {
-				return err
-			}
+	for _, folder := range folders {
+		err := EstablishFolder(filepath.Join(rootPath, folder))
+		if err != nil {
+			return err
 		}
 	}
 

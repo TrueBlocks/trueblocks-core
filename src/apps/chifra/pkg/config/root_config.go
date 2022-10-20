@@ -8,7 +8,7 @@ import (
 	"log"
 	"os"
 	"os/user"
-	"path"
+	"path/filepath"
 	"runtime"
 	"strings"
 
@@ -76,7 +76,7 @@ func GetRootConfig() *ConfigFile {
 
 		cachePath := trueBlocksConfig.Settings.CachePath
 		if len(cachePath) == 0 || cachePath == "<not_set>" {
-			cachePath = path.Join(configPath, "cache") + "/"
+			cachePath = filepath.Join(configPath, "cache") + "/"
 		}
 		cachePath = strings.Replace(cachePath, "$HOME", user.HomeDir, -1)
 		cachePath = strings.Replace(cachePath, "~", user.HomeDir, -1)
@@ -84,7 +84,7 @@ func GetRootConfig() *ConfigFile {
 
 		indexPath := trueBlocksConfig.Settings.IndexPath
 		if len(indexPath) == 0 || indexPath == "<not_set>" {
-			indexPath = path.Join(configPath, "unchained") + "/"
+			indexPath = filepath.Join(configPath, "unchained") + "/"
 		}
 		indexPath = strings.Replace(indexPath, "$HOME", user.HomeDir, -1)
 		indexPath = strings.Replace(indexPath, "~", user.HomeDir, -1)
@@ -142,7 +142,7 @@ func GetPathToRootConfig() string {
 		osPath = "Library/Application Support/TrueBlocks"
 	}
 
-	return path.Join(user.HomeDir, osPath) + "/"
+	return filepath.Join(user.HomeDir, osPath) + "/"
 }
 
 func GetDefaultChain() string {
@@ -164,7 +164,7 @@ func PathFromXDG(envVar string) (string, error) {
 		return "", usage.Usage("The {0} folder ({1}) must exist.", envVar, xdg)
 	}
 
-	return path.Join(xdg, "") + "/", nil
+	return filepath.Join(xdg, "") + "/", nil
 }
 
 // MustReadConfig calls Viper's ReadInConfig and fills values in the

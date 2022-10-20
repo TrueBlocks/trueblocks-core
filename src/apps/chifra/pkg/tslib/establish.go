@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
-	"path"
+	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -41,7 +41,7 @@ func downloadCidToBinary(chain, cid, fileName string) error {
 	if err != nil {
 		return err
 	}
-	url.Path = path.Join(url.Path, cid)
+	url.Path = filepath.Join(url.Path, cid)
 
 	logger.Log(logger.InfoC, "Chain:", chain)
 	logger.Log(logger.InfoC, "Gateway:", gatewayUrl)
