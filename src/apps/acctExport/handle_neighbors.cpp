@@ -186,7 +186,6 @@ bool CIndexArchiveWithNeighborMaps::LoadReverseMaps(const blkrange_t& range) {
     archive.Write(reverseAppMap, sizeof(char), nAppsHere * sizeof(CReverseAppMapEntry));
     archive.Release();
 
-    // LOG_PROG("Processed: " + getFilename());
     return true;
 }
 
@@ -266,7 +265,6 @@ bool COptions::showAddrsInTx(CTraverser* trav, const blkrange_t& range, const CA
 // because what we actually want to do is scan across the index chunks
 bool neighbors_Pre(CTraverser* trav, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
-    opt->reportDef = 43;  // random prime
 
     // LOG_INFO("Processing address ", opt->accountedFor.address);
 

@@ -146,6 +146,14 @@ void start_Log(CTraverser* trav, void* data) {
     return;
 }
 
+#ifdef LOGGING_LEVEL
+extern void logProgress(searchOpType op, uint64_t progress, uint64_t goal, uint64_t block,
+                        const qblocks::string_q& post);
+#define LOG_PROGRESS(op, progress, goal, block, post) logProgress((op), (progress), (goal), (block), (post))
+#else
+#define LOG_PROGRESS(op, progress, goal, block, post)
+#endif
+
 //-----------------------------------------------------------------------
 // Returns false if the loop shouldQuit
 bool prog_Log(CTraverser* trav, void* data) {
@@ -153,13 +161,15 @@ bool prog_Log(CTraverser* trav, void* data) {
     if (!trav->logging)
         return !shouldQuit();
 
-    size_t freq = opt->reportFreq;
-    opt->reportFreq = opt->reportDef;  // reset
-    if (trav->nProcessed % freq)
-        return !shouldQuit();
-
     blknum_t prog = opt->first_record + trav->nProcessed;
     blknum_t nApps = opt->stats.nFileRecords;
+
+    size_t freq = size_t(((float)nApps) / (nApps / 7.0));
+    // cerr << "freq: " << freq << " nApps: " << nApps << " prog: " << prog << " nProcessed: " << trav->nProcessed
+    //      << " first_record: " << opt->first_record << " mod: " << (trav->nProcessed % freq) << "             " <<
+    //      endl;
+    if (trav->nProcessed % freq)
+        return !shouldQuit();
 
     ostringstream post;
     if (trav->searchType == "appearances" || trav->searchType == "receipts" || trav->searchType == "txs") {
@@ -171,7 +181,8 @@ bool prog_Log(CTraverser* trav, void* data) {
         // Reports as "searchType index of total txs (found X operation) for address A"
         post << " txs (" << prog << " " << trav->searchType << ") for address " << opt->accountedFor.address;
     }
-    LOG_PROGRESS(trav->searchOp, blknum_t(opt->first_record + trav->index), nApps, post.str() + "\r");
+    LOG_PROGRESS(trav->searchOp, blknum_t(opt->first_record + trav->index), nApps, trav->trans.blockNumber,
+                 post.str() + "\r");
 
     return !shouldQuit();
 }
@@ -195,7 +206,7 @@ void end_Log(CTraverser* trav, void* data) {
         // Reports as "searchType index of total txs (found X operation) for address A"
         post << " txs (" << prog << " " << trav->searchType << ") for address " << opt->accountedFor.address;
     }
-    LOG_PROGRESS(COMPLETE, blknum_t(opt->first_record + trav->index), nApps, post.str());
+    LOG_PROGRESS(COMPLETE, blknum_t(opt->first_record + trav->index), nApps, trav->trans.blockNumber, post.str());
     return;
 }
 
@@ -218,7 +229,6 @@ bool loadTx_Func(CTraverser* trav, void* data) {
 
     } else {
         trav->searchOp = EXTRACT;
-        opt->reportFreq = 1;
         dirty = true;
         if (trav->app->blk == 0) {
             address_t addr = opt->prefundAddrMap[trav->app->txid];
@@ -267,4 +277,22 @@ bool loadTx_Func(CTraverser* trav, void* data) {
     opt->markNeighbors(trav->trans);
 
     return true;
+}
+
+// clang-format off
+const CStringArray searchOps = {
+    "Extracting",
+    "Reading",
+    "Updating",
+    "Reconciling",
+    "Scanning",
+    "Skipping",
+    "Completed",
+};
+// clang-format on
+
+void logProgress(searchOpType op, uint64_t progress, uint64_t goal, uint64_t block, const string_q& post) {
+    if (isTestMode())
+        return;
+    LOG_PROG(padRight(searchOps[op], 11), " ", padNum8T(uint64_t(progress)), " of ", padNum8T(uint64_t(goal)), (post));
 }

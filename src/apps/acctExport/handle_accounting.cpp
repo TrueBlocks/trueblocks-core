@@ -77,7 +77,6 @@ bool COptions::process_reconciliation(CTraverser* trav) {
                     // LOG_WARN(cYellow, "Updating statements", cOff);
                     trav->searchOp = UPDATE;
                     cacheIfReconciled(trav, true /* isNew */);
-                    reportFreq = 1;
                 }
                 return !shouldQuit();
                 //             } else {
@@ -87,7 +86,6 @@ bool COptions::process_reconciliation(CTraverser* trav) {
     }
 
     trav->searchOp = RECONCILE;
-    reportFreq = 1;
 
     blknum_t nextAppBlk = trav->index < monApps.size() - 1 ? monApps[trav->index + 1].blk : NOPOS;
     blknum_t prevAppBlk = trav->index > 0 ? monApps[trav->index - 1].blk : 0;

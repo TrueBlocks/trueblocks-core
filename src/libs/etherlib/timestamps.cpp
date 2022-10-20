@@ -85,10 +85,10 @@ bool freshenTimestamps(blknum_t minBlock) {
             post << " (" << ((minBlock + 1) - block.blockNumber);
             post << " " << block.timestamp << " - " << ts_2_Date(block.timestamp).Format(FMT_EXPORT) << ")";
             post << "             \r";
-            LOG_PROGRESS(UPDATE, block.blockNumber, minBlock, post.str());
+            LOG_PROG(padRight("Update", 11), " ", padNum8T(block.blockNumber), " of ", padNum8T(minBlock), post.str());
         }
     }
-    // LOG_PROGRESS(COMPLETE, block.blockNumber, minBlock, string_q(80, ' '));
+    // LO G_PROGRESS(COMPLETE, block.blockNumber, minBlock, IGNORE_BLOCK, string_q(80, ' '));
 
     file.Release();
     unlockSection();
