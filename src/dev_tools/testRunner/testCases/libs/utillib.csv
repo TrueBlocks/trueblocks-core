@@ -43,7 +43,6 @@ local   ,cmd  ,fast  ,null  ,utillib/jsonTest    ,test_blocks  ,n    ,val = bloc
 on      ,cmd  ,fast  ,null  ,utillib/jsonTest    ,test_escaped ,n    ,val = escaped                                                                               
 on      ,cmd  ,fast  ,null  ,utillib/jsonTest    ,test_spaces  ,n    ,val = spaces                                                                                
 on      ,cmd  ,fast  ,null  ,utillib/jsonTest    ,test_traces  ,n    ,val = traces                                                                                
-on      ,cmd  ,fast  ,null  ,utillib/loggingTest ,test_logging ,n    ,                                                                                            
         
 on      ,cmd  ,fast  ,null  ,utillib/parsingTest ,00           ,n    ,val = 0                                                                                     
 on      ,cmd  ,fast  ,null  ,utillib/parsingTest ,01           ,n    ,val = 1                                                                                     
