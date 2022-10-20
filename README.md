@@ -146,6 +146,13 @@ Our official docker version is in a [separate repo](https://github.com/TrueBlock
 
 See our [documentation repo](https://github.com/TrueBlocks/trueblocks-docs) for the TrueBlocks website.
 
+
+## Stargazers over time
+
+A chart showing the number of stars on our repo over time.
+
+[![Stargazers over time](https://starchart.cc/TrueBlocks/trueblocks-core.svg)](https://starchart.cc/TrueBlocks/trueblocks-core)
+
 ## Contributing
 
 We love contributors. Please see information about our [work flow](https://github.com/TrueBlocks/trueblocks-core/blob/develop/docs/BRANCHING.md) before proceeding.
