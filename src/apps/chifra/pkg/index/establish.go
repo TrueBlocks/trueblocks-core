@@ -9,7 +9,7 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"path"
+	"path/filepath"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
@@ -78,7 +78,7 @@ func CleanTemporaryFolders(indexPath string, incStaging bool) error {
 	}
 
 	for _, f := range folders {
-		folder := path.Join(indexPath, f)
+		folder := filepath.Join(indexPath, f)
 		err := os.RemoveAll(folder)
 		if err != nil {
 			return err

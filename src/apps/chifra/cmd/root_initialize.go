@@ -8,7 +8,7 @@ import (
 	"log"
 	"os"
 	"os/user"
-	"path"
+	"path/filepath"
 	"runtime"
 	"strings"
 
@@ -92,7 +92,7 @@ func VerifyMigrations() {
 	user, _ := user.Current()
 
 	// The old $HOME/.quickBlocks folder should not exist...
-	if _, err := os.Stat(path.Join(user.HomeDir, ".quickBlocks")); err == nil {
+	if _, err := os.Stat(filepath.Join(user.HomeDir, ".quickBlocks")); err == nil {
 		msg := strings.Replace(shouldNotExist, "{0}", "{~/.quickBlocks}", -1)
 		msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
 		msg = strings.Replace(msg, "{1}", "{v0.09.0}", -1)
@@ -112,7 +112,7 @@ func VerifyMigrations() {
 	}
 
 	// ...and the config file better exist.
-	configFile := path.Join(configFolder + "trueBlocks.toml")
+	configFile := filepath.Join(configFolder + "trueBlocks.toml")
 	if _, err := os.Stat(configFile); err != nil {
 		msg := strings.Replace(notExist, "{0}", "{"+configFile+"}", -1)
 		msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
@@ -163,7 +163,7 @@ func VerifyMigrations() {
 		"unchained/ts.bin",
 	}
 	for _, item := range items {
-		itemPath := path.Join(configFolder + item)
+		itemPath := filepath.Join(configFolder + item)
 		if _, err := os.Stat(itemPath); err == nil {
 			msg := strings.Replace(shouldNotExist, "{0}", "{./"+item+"}", -1)
 			msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
