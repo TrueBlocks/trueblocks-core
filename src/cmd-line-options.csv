@@ -124,7 +124,8 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13580,tools,ChainData,transactions,getTrans,trace,t,,false,false,true,true,header,switch,<boolean>,include the transaction's traces in the results
 13605,tools,ChainData,transactions,getTrans,uniq,u,,false,false,true,true,header,switch,<boolean>,display a list of uniq addresses found in the transaction
 13610,tools,ChainData,transactions,getTrans,flow,f,,false,false,true,true,header,flag,enum[from|to],for the uniq option only&#44; export only from or to (including trace from or to)
-13615,tools,ChainData,transactions,getTrans,reconcile,r,,false,false,true,true,header,flag,<address>,reconcile the transaction as per the provided address
+13615,tools,ChainData,transactions,getTrans,reconcile,r,,false,false,true,true,header,deprecated,<address>,please use statements option instead
+13617,tools,ChainData,transactions,getTrans,statements,A,,false,false,true,true,header,flag,<address>,reconcile the transaction as per the provided address
 13620,tools,ChainData,transactions,getTrans,cache,o,,false,false,true,true,header,switch,<boolean>,force the results of the query into the tx cache (and the trace cache if applicable)
 13622,tools,ChainData,transactions,getTrans,,,,false,false,true,true,--,description,,Retrieve one or more transactions from the chain or local cache.
 13624,tools,ChainData,transactions,getTrans,n1,,,false,false,false,false,--,note,,The `transactions` list may be one or more transaction hashes&#44; blockNumber.transactionID pairs&#44; or a blockHash.transactionID pairs.

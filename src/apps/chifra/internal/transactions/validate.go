@@ -34,11 +34,15 @@ func (opts *TransactionsOptions) validateTransactions() error {
 		}
 
 		if len(opts.Reconcile) > 0 {
+			return validate.Usage("The --reconcile option has been deprecated. Use --statements instead.")
+		}
+
+		if len(opts.Statements) > 0 {
 			if opts.Cache || opts.Trace || opts.Articulate || opts.Uniq {
 				return validate.Usage("Do not use other options with the --reconcile option.")
 			}
-			if !validate.IsValidAddress(opts.Reconcile) {
-				return validate.Usage("Invalid reconcilation address {0}.", opts.Reconcile)
+			if !validate.IsValidAddress(opts.Statements) {
+				return validate.Usage("Invalid reconcilation address {0}.", opts.Statements)
 			}
 		}
 

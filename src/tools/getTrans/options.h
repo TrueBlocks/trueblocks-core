@@ -28,7 +28,7 @@ class COptions : public CAbiOptions {
     bool trace;
     bool uniq;
     string_q flow;
-    address_t reconcile;
+    address_t statements;
     bool cache;
     // END_CODE_DECLARE
 
