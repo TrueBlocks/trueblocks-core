@@ -61,7 +61,7 @@ One of [ from | to ]`)
 	transactionsCmd.SetOut(os.Stderr)
 
 	// EXISTING_CODE
-	transactionsCmd.Flags().MarkDeprecated("reconcile", "please use statements instead")
+	transactionsCmd.Flags().MarkDeprecated("reconcile", "please use --statements instead")
 	// EXISTING_CODE
 
 	chifraCmd.AddCommand(transactionsCmd)
