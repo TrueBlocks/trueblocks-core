@@ -25,6 +25,7 @@ tags	address	name	symbol	decimals	petname	source
 31-Gitcoin:Grants	0x2fefe22dbb33670a13039039982cd3d12b1a4b6f	Grant 1875 Garuda Network (dmrd)				frankly-genuine-gnu	https://gitcoin.co/grants/1875/garuda-network-dmrd
 31-Gitcoin:Grants	0x301605c95acbed7a1fd9c2c0deee964e2afbd0c3	Grant 1353 - Synapsis. Network 🌌🌱				directly-sharing-bison	https://gitcoin.co/grants/1353/synapsis-network
 31-Gitcoin:Grants	0x30755d3e65c0cf46c35b72d11e52d941c5fc3a3e	Grant 0026 Peepeth: Social Network for a Better World				overly-rich-teal	https://gitcoin.co/grants/26/peepeth-social-network-for-a-better-world
+30-Contracts	0x32a3256a4b15badd4a6e072a03d23404d925a5cf	Celsius Network: Contract				usually-quick-bug	EtherScan.io
 50-Tokens:ERC20	0x3543638ed4a9006e4840b105944271bcea15605d	UNetworkToken	UUU		18	eminently-more-gobbler	On chain
 30-Contracts:Set Protocol	0x3700414bb6716fcd8b14344fb10ddd91fdea59ec	Kyber Network Wrapper				poorly-fine-giraffe	TrueBlocks.io
 31-Giveth:Project	0x373483a546e5212b0d009db1dbf0d14daff80f9a	Luminus Network for New Americans				oddly-true-bedbug	Tokenomics
@@ -43,6 +44,7 @@ tags	address	name	symbol	decimals	petname	source
 50-Tokens:ERC20	0x53066cddbc0099eb6c96785d9b3df2aaeede5da3	Penta Network Token	PNT		18	admittedly-sterling-goat	On chain
 30-Contracts	0x5346d0f80e2816fad329f2c140c870ffc3c3e2ef	EtherRouter: Colony Network				widely-poetic-rabbit	EtherScan.io
 31-Giveth:Project	0x538f022f50038994f7a04a58f5004c1b98ed41a4	Alexander Youth Network				vaguely-complete-bengal	Tokenomics
+30-Contracts	0x54431918cec22932fcf97e54769f4e00f646690f	1inch Network: Deployer Related				blatantly-clean-sunbird	EtherScan.io
 31-Gitcoin:Grants	0x55b23ed53fe13060183b92979c737a8ef9a73b73	Grant 4201 - Spect Network				firmly-loving-oarfish	https://gitcoin.co/grants/4201/spect-network
 30-Contracts:Kyber Network	0x57f8160e1c59d16c01bbe181fd94db4e56b60495	Kyber Weth Reserve				arguably-more-lark	TrueBlocks.io
 31-Giveth:Project	0x5bb21dbb7b2876b0524530c8666969ac9eaf9ede	Cryptolink Network				constantly-accurate-boa	Tokenomics
@@ -61,6 +63,7 @@ tags	address	name	symbol	decimals	petname	source
 50-Tokens:ERC20	0x6fff3806bbac52a20e0d79bc538d527f6a22c96b	Network			18	blindly-moral-kangaroo	On chain
 50-Tokens:ERC20	0x70861e862e1ac0c96f853c8231826e469ead37b1	DOS Network Token	DOS		18	endlessly-simple-pigeon	On chain
 31-Giveth:Project	0x70a68a29bac0b3c85bed4b47bb3a639f0f245e70	Allergy &amp; Asthma Network				infinitely-hardy-hyena	Tokenomics
+30-Contracts	0x75db8b92937f8f86213e523788ab9f066efde3fe	Celsius Network: Wallet 2				initially-valid-shiner	EtherScan.io
 30-Contracts:Kyber Network	0x798abda6cc246d0edba912092a2a3dbd3d11191b	Kyber Conversion Rates				commonly-knowing-cub	TrueBlocks.io
 50-Tokens:ERC20	0x7b0c06043468469967dba22d1af33d77d44056c8	Morpheus.Network	MRPH		4	distinctly-sound-elf	On chain
 50-Tokens:ERC20	0x7b2df125567815ac9b57da04b620f50bc93b320c	Archetypal Network	ACTP		8	thankfully-organic-bat	On chain
@@ -109,6 +112,7 @@ tags	address	name	symbol	decimals	petname	source
 31-Gitcoin:Grants	0xc22e8d32d3146efc54088f39ec9c29eaf3905b1d	Grant 3090 - Atelio : creating open , blockchain based digital supply network.				locally-apparent-dane	https://gitcoin.co/grants/3090/atelio-creating-open-blockchain-based-digital-sup
 31-Gitcoin:Grants	0xc37e165fcfa2cb5cca7329dd9daa8cd72907b983	Grant 0037 Connext Network				simply-moving-redbird	https://gitcoin.co/grants/37/connext-network
 31-Gitcoin:Grants	0xc41bc99044fd4836dba4104bcf53b6f2b62716b1	Grant 2190 - Layer 2 faucet in ethereum network				remarkably-apparent-eagle	https://gitcoin.co/grants/2190/layer-2-faucet-in-ethereum-network
+30-Contracts	0xc4a8b7e29e3c8ec560cd4945c1cf3461a85a148d	1inch Network: Deployer Related				finally-faithful-wren	EtherScan.io
 50-Tokens:ERC20	0xc72fe8e3dd5bef0f9f31f259399f301272ef2a2d	Insights Network	INSTAR		18	early-comic-tahr	On chain
 31-Gitcoin:Grants	0xc80e9ffcc3774f1fe5a925bda8f846fa4301eae8	Grant 4017 - Swell Network | Maintaining a decentralised, open, and liquid Ethereum ecosystem				only-excited-raptor	https://gitcoin.co/grants/4017/swell-network-maintaining-a-decentralised-open-an
 31-Gitcoin:Grants	0xcb8f9c706f9f5683d1bd6261f52f5f2b2182d780	Grant 1796 Crypton Network				adversely-splendid-bluejay	https://gitcoin.co/grants/1796/crypton-network

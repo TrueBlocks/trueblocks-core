@@ -200,6 +200,15 @@ names?terms=etwork
       "petname": "overly-rich-teal"
     },
     {
+      "tags": "30-Contracts",
+      "address": "0x32a3256a4b15badd4a6e072a03d23404d925a5cf",
+      "name": "Celsius Network: Contract",
+      "symbol": "",
+      "source": "EtherScan.io",
+      "decimals": 0,
+      "petname": "usually-quick-bug"
+    },
+    {
       "tags": "50-Tokens:ERC20",
       "address": "0x3543638ed4a9006e4840b105944271bcea15605d",
       "name": "UNetworkToken",
@@ -362,6 +371,15 @@ names?terms=etwork
       "petname": "vaguely-complete-bengal"
     },
     {
+      "tags": "30-Contracts",
+      "address": "0x54431918cec22932fcf97e54769f4e00f646690f",
+      "name": "1inch Network: Deployer Related",
+      "symbol": "",
+      "source": "EtherScan.io",
+      "decimals": 0,
+      "petname": "blatantly-clean-sunbird"
+    },
+    {
       "tags": "31-Gitcoin:Grants",
       "address": "0x55b23ed53fe13060183b92979c737a8ef9a73b73",
       "name": "Grant 4201 - Spect Network",
@@ -522,6 +540,15 @@ names?terms=etwork
       "source": "Tokenomics",
       "decimals": 0,
       "petname": "infinitely-hardy-hyena"
+    },
+    {
+      "tags": "30-Contracts",
+      "address": "0x75db8b92937f8f86213e523788ab9f066efde3fe",
+      "name": "Celsius Network: Wallet 2",
+      "symbol": "",
+      "source": "EtherScan.io",
+      "decimals": 0,
+      "petname": "initially-valid-shiner"
     },
     {
       "tags": "30-Contracts:Kyber Network",
@@ -954,6 +981,15 @@ names?terms=etwork
       "source": "https://gitcoin.co/grants/2190/layer-2-faucet-in-ethereum-network",
       "decimals": 0,
       "petname": "remarkably-apparent-eagle"
+    },
+    {
+      "tags": "30-Contracts",
+      "address": "0xc4a8b7e29e3c8ec560cd4945c1cf3461a85a148d",
+      "name": "1inch Network: Deployer Related",
+      "symbol": "",
+      "source": "EtherScan.io",
+      "decimals": 0,
+      "petname": "finally-faithful-wren"
     },
     {
       "tags": "50-Tokens:ERC20",
