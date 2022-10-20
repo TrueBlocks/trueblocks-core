@@ -136,9 +136,6 @@ class COptions : public CAbiOptions {
     void cacheIfReconciled(CTraverser* trav, bool isNew) const;
     bool token_list_from_logs(CAccountNameMap& tokenList, const CTraverser* trav);
 
-    size_t reportFreq{7};
-    size_t reportDef{7};
-
     // Used as temporary data to count neighbor traversals
     size_t neighborCount{0};
     CIndexArchiveWithNeighborMaps* theIndex{nullptr};

@@ -29,6 +29,7 @@ inline bool noopFunc(CTraverser* trav, void* data) {
 extern bool filterByRange(CTraverser* trav, void* data);
 
 typedef map<address_t, CMonitor> monitor_map_t;
+typedef enum { EXTRACT = 0, READ, UPDATE, RECONCILE, SCANNING, SKIPPING, COMPLETE } searchOpType;
 //-----------------------------------------------------------------------
 class CTraverser {
   public:

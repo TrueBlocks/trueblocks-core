@@ -202,8 +202,6 @@ extern logger<log_policy_i>* eLogger;
 
 #define LOGGING_LEVEL
 #ifdef LOGGING_LEVEL
-typedef enum { EXTRACT = 0, READ, UPDATE, RECONCILE, SCANNING, SKIPPING, COMPLETE } searchOpType;
-extern void logProgress(searchOpType op, uint64_t progress, uint64_t goal, const qblocks::string_q& post);
 #define LOG0 dLogger->print<sev_debug0>
 #define LOG1 dLogger->print<sev_debug1>
 #define LOG2 dLogger->print<sev_debug2>
@@ -220,7 +218,6 @@ extern void logProgress(searchOpType op, uint64_t progress, uint64_t goal, const
 #define SEP3(a) LOG3(cYellow + string_q(10, '-') + (a) + string_q(10, '-') + cOff)
 #define SEP4(a) LOG4(cRed + string_q(10, '-') + (a) + string_q(10, '-') + cOff)
 #define SEP8(a) LOG8(cTeal + string_q(10, '-') + (a) + string_q(10, '-') + cOff)
-#define LOG_PROGRESS(op, progress, goal, post) logProgress((op), (progress), (goal), (post))
 #else
 #define LOG0(...)
 #define LOG1(...)
@@ -238,7 +235,6 @@ extern void logProgress(searchOpType op, uint64_t progress, uint64_t goal, const
 #define SEP3(...)
 #define SEP4(...)
 #define SEP5(...)
-#define LOG_PROGRESS(...)
 #endif
 
 // #ifdef LOGGING_LEVEL_TEST Turn the on before include in individual files if needed

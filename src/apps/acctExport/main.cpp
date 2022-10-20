@@ -146,32 +146,26 @@ void start_Log(CTraverser* trav, void* data) {
     return;
 }
 
+extern const CStringArray searchOps;
+
 //-----------------------------------------------------------------------
 // Returns false if the loop shouldQuit
 bool prog_Log(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)data;
-    if (!trav->logging)
+    if (!trav->logging || isTestMode())
         return !shouldQuit();
 
-    size_t freq = opt->reportFreq;
-    opt->reportFreq = opt->reportDef;  // reset
+    size_t freq = 7;
     if (trav->nProcessed % freq)
         return !shouldQuit();
 
-    blknum_t prog = opt->first_record + trav->nProcessed;
-    blknum_t nApps = opt->stats.nFileRecords;
-
-    ostringstream post;
-    if (trav->searchType == "appearances" || trav->searchType == "receipts" || trav->searchType == "txs") {
-        // We report differently if there are the same number of items as appearances...
-        // Reports as "searchType index of total operation for address A"
-        post << " " << trav->searchType << " for address " << opt->accountedFor.address;
-    } else {
-        // ...or if there are more than such as statements, logs, traces, or neighbors
-        // Reports as "searchType index of total txs (found X operation) for address A"
-        post << " txs (" << prog << " " << trav->searchType << ") for address " << opt->accountedFor.address;
+    ostringstream found;
+    if (trav->searchType != "appearances" && trav->searchType != "txs" && trav->searchType != "receipts") {
+        found << " (found " << trav->nProcessed << " " << trav->searchType << ")";
     }
-    LOG_PROGRESS(trav->searchOp, blknum_t(opt->first_record + trav->index), nApps, post.str() + "\r");
+
+    LOG_PROG(searchOps[trav->searchOp], " ", opt->first_record + trav->index, " of ", opt->stats.nFileRecords,
+             " txs at block ", trav->trans.blockNumber, found.str(), " for address ", opt->accountedFor.address, "\r");
 
     return !shouldQuit();
 }
@@ -179,23 +173,17 @@ bool prog_Log(CTraverser* trav, void* data) {
 //-----------------------------------------------------------------------
 void end_Log(CTraverser* trav, void* data) {
     const COptions* opt = (const COptions*)data;
-    if (!trav->logging)
+    if (!trav->logging || isTestMode())
         return;
 
-    blknum_t prog = opt->first_record + trav->nProcessed;
-    blknum_t nApps = opt->stats.nFileRecords;
-
-    ostringstream post;
-    if (trav->searchType == "appearances" || trav->searchType == "receipts" || trav->searchType == "txs") {
-        // We report differently if there are the same number of items as appearances...
-        // Reports as "searchType index of total operation for address A"
-        post << " " << trav->searchType << " for address " << opt->accountedFor.address;
-    } else {
-        // ...or if there are more than such as statements, logs, traces, or neighbors
-        // Reports as "searchType index of total txs (found X operation) for address A"
-        post << " txs (" << prog << " " << trav->searchType << ") for address " << opt->accountedFor.address;
+    ostringstream found;
+    if (trav->searchType != "appearances" && trav->searchType != "txs" && trav->searchType != "receipts") {
+        found << " (found " << trav->nProcessed << " " << trav->searchType << ")";
     }
-    LOG_PROGRESS(COMPLETE, blknum_t(opt->first_record + trav->index), nApps, post.str());
+
+    LOG_PROG(searchOps[trav->searchOp], " ", opt->first_record + trav->index, " of ", opt->stats.nFileRecords,
+             " txs at block ", trav->trans.blockNumber, found.str(), " for address ", opt->accountedFor.address, "\r");
+
     return;
 }
 
@@ -218,7 +206,6 @@ bool loadTx_Func(CTraverser* trav, void* data) {
 
     } else {
         trav->searchOp = EXTRACT;
-        opt->reportFreq = 1;
         dirty = true;
         if (trav->app->blk == 0) {
             address_t addr = opt->prefundAddrMap[trav->app->txid];
@@ -268,3 +255,15 @@ bool loadTx_Func(CTraverser* trav, void* data) {
 
     return true;
 }
+
+// clang-format off
+const CStringArray searchOps = {
+    "Extracting",
+    "Reading",
+    "Updating",
+    "Reconciling",
+    "Scanning",
+    "Skipping",
+    "Completed",
+};
+// clang-format on

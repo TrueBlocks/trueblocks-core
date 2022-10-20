@@ -392,7 +392,6 @@ void COptions::Init(void) {
     minArgs = 0;
     fileRange = make_pair(NOPOS, NOPOS);
     allMonitors.clear();
-    reportFreq = reportDef = 7;
 
     // Establish folders. This may be redundant, but it's cheap.
     establishCacheFolders();
