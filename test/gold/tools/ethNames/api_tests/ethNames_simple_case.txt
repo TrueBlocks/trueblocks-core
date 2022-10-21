@@ -21,15 +21,6 @@ names?terms=network&matchCase
     },
     {
       "tags": "50-Tokens:ERC20",
-      "address": "0x3883f5e181fccaf8410fa61e12b59bad963fb645",
-      "name": "Theta Token",
-      "symbol": "THETA",
-      "source": "On chain",
-      "decimals": 18,
-      "petname": "A decentralized peer-to-peer network tha"
-    },
-    {
-      "tags": "50-Tokens:ERC20",
       "address": "0x4bbbc57af270138ef2ff2c50dbfad684e9e0e604",
       "name": "WABnetwork",
       "symbol": "WAB",
@@ -44,7 +35,7 @@ names?terms=network&matchCase
       "symbol": "SAN",
       "source": "On chain",
       "decimals": 18,
-      "petname": "A Better Way to Trade Crypto-Markets - M"
+      "petname": "roughly-solid-bluejay"
     },
     {
       "tags": "31-Gitcoin:Grants",

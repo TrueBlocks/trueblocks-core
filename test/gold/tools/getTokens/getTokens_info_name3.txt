@@ -7,8 +7,9 @@ TEST[DATE|TIME] Format:  json
   {
     "blockNumber": 4001001,
     "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
-    "name": "OMG Network",
-    "isContract": true
+    "name": "OMGToken",
+    "isContract": true,
+    "isErc20": true
   },
   {
     "blockNumber": 4001001,

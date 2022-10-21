@@ -10,7 +10,7 @@ tokens?addrs=0xde30da39c46104798bb5aa3fe8b9e0e1f348163f&addrs=trueblocks.eth&blo
       "symbol": "GTC",
       "decimals": 18,
       "isContract": true,
-      "isErc20": false,
+      "isErc20": true,
       "isErc721": false
     },
     {
@@ -22,7 +22,7 @@ tokens?addrs=0xde30da39c46104798bb5aa3fe8b9e0e1f348163f&addrs=trueblocks.eth&blo
       "symbol": "GTC",
       "decimals": 18,
       "isContract": true,
-      "isErc20": false,
+      "isErc20": true,
       "isErc721": false
     },
     {
@@ -34,7 +34,7 @@ tokens?addrs=0xde30da39c46104798bb5aa3fe8b9e0e1f348163f&addrs=trueblocks.eth&blo
       "symbol": "GTC",
       "decimals": 18,
       "isContract": true,
-      "isErc20": false,
+      "isErc20": true,
       "isErc721": false
     },
     {
@@ -46,7 +46,7 @@ tokens?addrs=0xde30da39c46104798bb5aa3fe8b9e0e1f348163f&addrs=trueblocks.eth&blo
       "symbol": "GTC",
       "decimals": 18,
       "isContract": true,
-      "isErc20": false,
+      "isErc20": true,
       "isErc721": false
     },
     {
@@ -58,7 +58,7 @@ tokens?addrs=0xde30da39c46104798bb5aa3fe8b9e0e1f348163f&addrs=trueblocks.eth&blo
       "symbol": "GTC",
       "decimals": 18,
       "isContract": true,
-      "isErc20": false,
+      "isErc20": true,
       "isErc721": false
     },
     {
@@ -70,7 +70,7 @@ tokens?addrs=0xde30da39c46104798bb5aa3fe8b9e0e1f348163f&addrs=trueblocks.eth&blo
       "symbol": "GTC",
       "decimals": 18,
       "isContract": true,
-      "isErc20": false,
+      "isErc20": true,
       "isErc721": false
     },
     {
@@ -82,7 +82,7 @@ tokens?addrs=0xde30da39c46104798bb5aa3fe8b9e0e1f348163f&addrs=trueblocks.eth&blo
       "symbol": "GTC",
       "decimals": 18,
       "isContract": true,
-      "isErc20": false,
+      "isErc20": true,
       "isErc721": false
     },
     {
@@ -94,7 +94,7 @@ tokens?addrs=0xde30da39c46104798bb5aa3fe8b9e0e1f348163f&addrs=trueblocks.eth&blo
       "symbol": "GTC",
       "decimals": 18,
       "isContract": true,
-      "isErc20": false,
+      "isErc20": true,
       "isErc721": false
     }
   ],

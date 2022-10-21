@@ -7,7 +7,6 @@ tags
 30-Contract:Optimism Mainnet
 30-Contracts
 30-Contracts:Balancer
-30-Contracts:Chainlink
 30-Contracts:Compound
 30-Contracts:Consensys
 30-Contracts:DAO Related
