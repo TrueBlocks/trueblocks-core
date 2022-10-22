@@ -2,7 +2,7 @@
 title: "Chain data"
 description: ""
 lead: ""
-date: 2022-10-12T06:16:36
+date: 2022-10-22T08:04:46
 lastmod:
   - :git
   - lastmod
@@ -68,7 +68,6 @@ Transaction data is made of the following data fields:
 
 | Field            | Description                                                                                           | Type                 |
 | ---------------- | ----------------------------------------------------------------------------------------------------- | -------------------- |
-| gasPrice         | the number of wei per unit of gas the sender is willing to spend                                      | gas                  |
 | hash             | The hash of the transaction                                                                           | hash                 |
 | blockHash        | The hash of the block containing this transaction                                                     | hash                 |
 | blockNumber      | the number of the block                                                                               | blknum               |
@@ -79,6 +78,7 @@ Transaction data is made of the following data fields:
 | to               | address to which the transaction was sent                                                             | address              |
 | value            | the amount of wei sent with this transactions                                                         | wei                  |
 | gas              | the maximum number of gas allowed for this transaction                                                | gas                  |
+| gasPrice         | the number of wei per unit of gas the sender is willing to spend                                      | gas                  |
 | input            | byte data either containing a message or funcational data for a smart contracts. See the --articulate | bytes                |
 | receipt          |                                                                                                       | CReceipt             |
 | statements       | array of reconciliations                                                                              | CReconciliationArray |
