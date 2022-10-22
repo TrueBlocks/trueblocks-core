@@ -2135,11 +2135,6 @@ components:
       description: "the transaction data for a given transaction directly from the blockchain"
       type: object
       properties:
-        gasPrice:
-          type: string
-          format: gas
-          example: "63525836552"
-          description: "the number of wei per unit of gas the sender is willing to spend"
         hash:
           type: string
           format: hash
@@ -2188,6 +2183,11 @@ components:
           format: gas
           example: "158660"
           description: "the maximum number of gas allowed for this transaction"
+        gasPrice:
+          type: string
+          format: gas
+          example: "63525836552"
+          description: "the number of wei per unit of gas the sender is willing to spend"
         input:
           type: string
           format: bytes
