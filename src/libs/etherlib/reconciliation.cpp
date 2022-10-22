@@ -144,11 +144,17 @@ string_q CReconciliation::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'r':
+            if (fieldName % "recipient") {
+                return addr_2_Str(recipient);
+            }
             if (fieldName % "reconciliationType") {
                 return reconciliationType;
             }
             break;
         case 's':
+            if (fieldName % "sender") {
+                return addr_2_Str(sender);
+            }
             if (fieldName % "selfDestructIn") {
                 return bni_2_Str(selfDestructIn);
             }
@@ -280,12 +286,20 @@ bool CReconciliation::setValueByName(const string_q& fieldNameIn, const string_q
             }
             break;
         case 'r':
+            if (fieldName % "recipient") {
+                recipient = str_2_Addr(fieldValue);
+                return true;
+            }
             if (fieldName % "reconciliationType") {
                 reconciliationType = fieldValue;
                 return true;
             }
             break;
         case 's':
+            if (fieldName % "sender") {
+                sender = str_2_Addr(fieldValue);
+                return true;
+            }
             if (fieldName % "selfDestructIn") {
                 selfDestructIn = str_2_BigInt(fieldValue);
                 return true;
@@ -337,6 +351,8 @@ bool CReconciliation::Serialize(CArchive& archive) {
     archive >> blockNumber;
     archive >> transactionIndex;
     archive >> timestamp;
+    archive >> sender;
+    archive >> recipient;
     archive >> assetAddr;
     archive >> assetSymbol;
     archive >> decimals;
@@ -356,9 +372,9 @@ bool CReconciliation::Serialize(CArchive& archive) {
     archive >> internalOut;
     archive >> selfDestructOut;
     archive >> gasCostOut;
-    archive >> reconciliationType;
     archive >> spotPrice;
     archive >> priceSource;
+    archive >> reconciliationType;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -375,6 +391,8 @@ bool CReconciliation::SerializeC(CArchive& archive) const {
     archive << blockNumber;
     archive << transactionIndex;
     archive << timestamp;
+    archive << sender;
+    archive << recipient;
     archive << assetAddr;
     archive << assetSymbol;
     archive << decimals;
@@ -394,9 +412,9 @@ bool CReconciliation::SerializeC(CArchive& archive) const {
     archive << internalOut;
     archive << selfDestructOut;
     archive << gasCostOut;
-    archive << reconciliationType;
     archive << spotPrice;
     archive << priceSource;
+    archive << reconciliationType;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -449,6 +467,8 @@ void CReconciliation::registerClass(void) {
     ADD_FIELD(CReconciliation, "blockNumber", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CReconciliation, "transactionIndex", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CReconciliation, "timestamp", T_TIMESTAMP, ++fieldNum);
+    ADD_FIELD(CReconciliation, "sender", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CReconciliation, "recipient", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "assetAddr", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "assetSymbol", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "decimals", T_UNUMBER, ++fieldNum);
@@ -468,9 +488,9 @@ void CReconciliation::registerClass(void) {
     ADD_FIELD(CReconciliation, "internalOut", T_INT256 | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "selfDestructOut", T_INT256 | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "gasCostOut", T_INT256 | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CReconciliation, "reconciliationType", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "spotPrice", T_DOUBLE, ++fieldNum);
     ADD_FIELD(CReconciliation, "priceSource", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CReconciliation, "reconciliationType", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CReconciliation, "schema");
@@ -659,9 +679,13 @@ string_q nextReconciliationChunk_custom(const string_q& fieldIn, const void* dat
 bool CReconciliation::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
-    if (m_schema < getVersionNum(0, 11, 8)) {
-        // This class has a complicated history, so we hide back level gunk in a single function below
-        return readBackLevel_old(archive);
+    if (m_schema < getVersionNum(0, 42, 5)) {
+        cout.flush();
+        LOG_WARN(bYellow, "A back-level reconciliation file (version ", m_schema, ") was found. Please follow all",
+                 cOff);
+        LOG_WARN(bYellow, "migrations up to and including v0.42.5 as described in the following document: ", cOff);
+        LOG_WARN(bYellow, "https://github.com/TrueBlocks/trueblocks-core/blob/develop/MIGRATIONS.md.\n", cOff);
+        quickQuitHandler(0);
     }
     // EXISTING_CODE
     return done;
@@ -696,35 +720,37 @@ const char* STR_DISPLAY_RECONCILIATION =
     "[{TRANSACTIONHASH}]\t"
     "[{TIMESTAMP}]\t"
     "[{DATE}]\t"
+    "[{SENDER}]\t"
+    "[{RECIPIENT}]\t"
     "[{ASSETADDR}]\t"
     "[{ASSETSYMBOL}]\t"
     "[{DECIMALS}]\t"
     "[{PREVBLK}]\t"
     "[{PREVBLKBAL}]\t"
     "[{BEGBAL}]\t"
+    "[{AMOUNTNET}]\t"
+    "[{ENDBAL}]\t"
+    "[{ENDBALCALC}]\t"
     "[{BEGBALDIFF}]\t"
+    "[{ENDBALDIFF}]\t"
     "[{AMOUNTIN}]\t"
-    "[{AMOUNTOUT}]\t"
     "[{INTERNALIN}]\t"
-    "[{INTERNALOUT}]\t"
     "[{SELFDESTRUCTIN}]\t"
-    "[{SELFDESTRUCTOUT}]\t"
     "[{MINERBASEREWARDIN}]\t"
     "[{MINERNEPHEWREWARDIN}]\t"
     "[{MINERTXFEEIN}]\t"
-    "[{SPOTPRICE}]\t"
     "[{MINERUNCLEREWARDIN}]\t"
     "[{PREFUNDIN}]\t"
-    "[{PRICESOURCE}]\t"
-    "[{GASCOSTOUT}]\t"
-    "[{ENDBAL}]\t"
     "[{TOTALIN}]\t"
+    "[{AMOUNTOUT}]\t"
+    "[{INTERNALOUT}]\t"
+    "[{SELFDESTRUCTOUT}]\t"
+    "[{GASCOSTOUT}]\t"
     "[{TOTALOUT}]\t"
     "[{TOTALOUTLESSGAS}]\t"
-    "[{AMOUNTNET}]\t"
-    "[{ENDBALCALC}]\t"
+    "[{SPOTPRICE}]\t"
+    "[{PRICESOURCE}]\t"
     "[{RECONCILIATIONTYPE}]\t"
-    "[{ENDBALDIFF}]\t"
     "[{RECONCILED}]";
 
 //---------------------------------------------------------------------------
@@ -913,7 +939,7 @@ bool CReconciliation::reconcileEth(const CReconciliation& prevRecon, blknum_t ne
     prevBlkBal = prevRecon.endBal;
     prevBlk = prevRecon.blockNumber;
     assetSymbol = "ETH";
-    assetAddr = acctFor;
+    assetAddr = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
 
     bigint_t balEOLB = getBalanceAt(acctFor, blockNumber == 0 ? 0 : blockNumber - 1);
     bigint_t balEOB = getBalanceAt(acctFor, blockNumber);
@@ -922,11 +948,15 @@ bool CReconciliation::reconcileEth(const CReconciliation& prevRecon, blknum_t ne
     endBal = balEOB;
 
     if (trans->from == acctFor) {
+        sender = trans->from;
+        recipient = trans->to;
         amountOut = trans->isError ? 0 : trans->value;
         gasCostOut = str_2_BigInt(trans->getValueByName("gasCost"));
     }
 
     if (trans->to == acctFor) {
+        sender = trans->from;
+        recipient = trans->to;
         if (trans->from == "0xPrefund") {
             prefundIn = trans->value;
         } else if (trans->from == "0xBlockReward") {
@@ -1007,6 +1037,8 @@ bool CReconciliation::reconcileUsingTraces(bigint_t prevEndBal, const CTransacti
     prefundIn = minerBaseRewardIn = minerNephewRewardIn = minerTxFeeIn + minerUncleRewardIn = 0;
 
     if (trans->blockNumber == 0) {
+        sender = trans->from;
+        recipient = trans->to;
         begBal = 0;
         prefundIn = trans->value;
     } else {
@@ -1018,11 +1050,17 @@ bool CReconciliation::reconcileUsingTraces(bigint_t prevEndBal, const CTransacti
         for (auto trace : trans->traces) {
             if (!trace.action.selfDestructed.empty()) {
                 // do not collapse
-                if (trace.action.refundAddress == acctFor)
+                if (trace.action.refundAddress == acctFor) {
+                    sender = trans->from;
+                    recipient = trans->to;
                     selfDestructIn += trace.action.balance;
-                // do not collapse
-                if (trace.action.selfDestructed == acctFor)
+                }
+                // do not collapse, both may happen
+                if (trace.action.selfDestructed == acctFor) {
+                    sender = trans->from;
+                    recipient = trans->to;
                     selfDestructOut += trace.action.balance;
+                }
             } else {
                 if (trace.action.from == acctFor && !trace.isDelegateCall()) {
                     // Sometimes, EOAs appear here, but there is no way
@@ -1031,11 +1069,15 @@ bool CReconciliation::reconcileUsingTraces(bigint_t prevEndBal, const CTransacti
                     // unless the EOA initiated the top level tx. I think
                     // this might be a bug in a smart contract or something.
                     if (accountedFor.isContract || trans->from == acctFor) {
+                        sender = trans->from;
+                        recipient = trans->to;
                         internalOut += trans->isError ? 0 : trace.action.value;
                     }
                 }
 
                 if (trace.action.to == acctFor && !trace.isDelegateCall()) {
+                    sender = trans->from;
+                    recipient = trans->to;
                     if (trans->from == "0xPrefund") {
                         prefundIn = trans->value;
                     } else if (trans->from == "0xBlockReward") {
@@ -1101,107 +1143,107 @@ bigint_t CReconciliation::amountNet(void) const {
 }
 
 //---------------------------------------------------------------------------
-bool CReconciliation::readBackLevel_old(CArchive& archive) {
-    bigint_t unusedBi;
-    bool unusedBool;
-    if (m_schema < getVersionNum(0, 10, 1)) {
-        archive >> blockNumber;
-        archive >> transactionIndex;
-        archive >> timestamp;
-        archive >> assetAddr;
-        archive >> assetSymbol;
-        archive >> decimals;
-        // archive >> prevBlk;
-        // archive >> prevBlkBal;
-        archive >> begBal;
-        archive >> unusedBi;  // begBalDiff
-        archive >> amountIn;
-        archive >> amountOut;
-        archive >> internalIn;
-        archive >> internalOut;
-        archive >> selfDestructIn;
-        archive >> selfDestructOut;
-        archive >> minerBaseRewardIn;
-        archive >> minerNephewRewardIn;
-        archive >> minerTxFeeIn;
-        archive >> minerUncleRewardIn;
-        archive >> prefundIn;
-        archive >> gasCostOut;
-        archive >> endBal;
-        archive >> unusedBi;  // endBalCalc
-        archive >> unusedBi;  // endBalDiff
-        archive >> unusedBi;  // amountNet
-        // archive >> spotPrice;  // not present before
-        archive >> reconciliationType;
-        archive >> unusedBool;  // reconciled;
-    } else if (m_schema < getVersionNum(0, 10, 2)) {
-        archive >> blockNumber;
-        archive >> transactionIndex;
-        archive >> timestamp;
-        archive >> assetAddr;
-        archive >> assetSymbol;
-        archive >> decimals;
-        // archive >> prevBlk;
-        // archive >> prevBlkBal;
-        archive >> begBal;
-        archive >> unusedBi;  // begBalDiff
-        archive >> amountIn;
-        archive >> amountOut;
-        archive >> internalIn;
-        archive >> internalOut;
-        archive >> selfDestructIn;
-        archive >> selfDestructOut;
-        archive >> minerBaseRewardIn;
-        archive >> minerNephewRewardIn;
-        archive >> minerTxFeeIn;
-        archive >> minerUncleRewardIn;
-        archive >> prefundIn;
-        archive >> gasCostOut;
-        archive >> endBal;
-        archive >> unusedBi;  // endBalCalc
-        archive >> unusedBi;  // endBalDiff
-        archive >> unusedBi;  // amountNet
-        archive >> spotPrice;
-        archive >> reconciliationType;
-        // archive >> reconTrail;
-        archive >> unusedBool;  // reconciled;
-    } else if (m_schema < getVersionNum(0, 11, 8)) {
-        archive >> blockNumber;
-        archive >> transactionIndex;
-        archive >> timestamp;
-        archive >> assetAddr;
-        archive >> assetSymbol;
-        archive >> decimals;
-        archive >> prevBlk;
-        archive >> prevBlkBal;
-        archive >> begBal;
-        archive >> endBal;
-        archive >> amountIn;
-        archive >> internalIn;
-        archive >> selfDestructIn;
-        archive >> minerBaseRewardIn;
-        archive >> minerNephewRewardIn;
-        archive >> minerTxFeeIn;
-        archive >> minerUncleRewardIn;
-        archive >> prefundIn;
-        archive >> amountOut;
-        archive >> internalOut;
-        archive >> selfDestructOut;
-        archive >> gasCostOut;
-        archive >> reconciliationType;
-        if (m_schema >= getVersionNum(0, 11, 4)) {
-            archive >> spotPrice;  // spotPrice was double, but always set to 1.0. We will reset it below
-        } else {
-            archive >> unusedBi;  // spotPrice was an unset (i.e. undefined value) bigInt
-        }
-    }
+// bool CReconciliation::readBackLevel_old(CArchive& archive) {
+//     bigint_t unusedBi;
+//     bool unusedBool;
+//     if (m_schema < getVersionNum(0, 10, 1)) {
+//         archive >> blockNumber;
+//         archive >> transactionIndex;
+//         archive >> timestamp;
+//         archive >> assetAddr;
+//         archive >> assetSymbol;
+//         archive >> decimals;
+//         // archive >> prevBlk;
+//         // archive >> prevBlkBal;
+//         archive >> begBal;
+//         archive >> unusedBi;  // begBalDiff
+//         archive >> amountIn;
+//         archive >> amountOut;
+//         archive >> internalIn;
+//         archive >> internalOut;
+//         archive >> selfDestructIn;
+//         archive >> selfDestructOut;
+//         archive >> minerBaseRewardIn;
+//         archive >> minerNephewRewardIn;
+//         archive >> minerTxFeeIn;
+//         archive >> minerUncleRewardIn;
+//         archive >> prefundIn;
+//         archive >> gasCostOut;
+//         archive >> endBal;
+//         archive >> unusedBi;  // endBalCalc
+//         archive >> unusedBi;  // endBalDiff
+//         archive >> unusedBi;  // amountNet
+//         // archive >> spotPrice;  // not present before
+//         archive >> reconciliationType;
+//         archive >> unusedBool;  // reconciled;
+//     } else if (m_schema < getVersionNum(0, 10, 2)) {
+//         archive >> blockNumber;
+//         archive >> transactionIndex;
+//         archive >> timestamp;
+//         archive >> assetAddr;
+//         archive >> assetSymbol;
+//         archive >> decimals;
+//         // archive >> prevBlk;
+//         // archive >> prevBlkBal;
+//         archive >> begBal;
+//         archive >> unusedBi;  // begBalDiff
+//         archive >> amountIn;
+//         archive >> amountOut;
+//         archive >> internalIn;
+//         archive >> internalOut;
+//         archive >> selfDestructIn;
+//         archive >> selfDestructOut;
+//         archive >> minerBaseRewardIn;
+//         archive >> minerNephewRewardIn;
+//         archive >> minerTxFeeIn;
+//         archive >> minerUncleRewardIn;
+//         archive >> prefundIn;
+//         archive >> gasCostOut;
+//         archive >> endBal;
+//         archive >> unusedBi;  // endBalCalc
+//         archive >> unusedBi;  // endBalDiff
+//         archive >> unusedBi;  // amountNet
+//         archive >> spotPrice;
+//         archive >> reconciliationType;
+//         // archive >> reconTrail;
+//         archive >> unusedBool;  // reconciled;
+//     } else if (m_schema < getVersionNum(0, 11, 8)) {
+//         archive >> blockNumber;
+//         archive >> transactionIndex;
+//         archive >> timestamp;
+//         archive >> assetAddr;
+//         archive >> assetSymbol;
+//         archive >> decimals;
+//         archive >> prevBlk;
+//         archive >> prevBlkBal;
+//         archive >> begBal;
+//         archive >> endBal;
+//         archive >> amountIn;
+//         archive >> internalIn;
+//         archive >> selfDestructIn;
+//         archive >> minerBaseRewardIn;
+//         archive >> minerNephewRewardIn;
+//         archive >> minerTxFeeIn;
+//         archive >> minerUncleRewardIn;
+//         archive >> prefundIn;
+//         archive >> amountOut;
+//         archive >> internalOut;
+//         archive >> selfDestructOut;
+//         archive >> gasCostOut;
+//         archive >> reconciliationType;
+//         if (m_schema >= getVersionNum(0, 11, 4)) {
+//             archive >> spotPrice;  // spotPrice was double, but always set to 1.0. We will reset it below
+//         } else {
+//             archive >> unusedBi;  // spotPrice was an unset (i.e. undefined value) bigInt
+//         }
+//     }
 
-    bool isEth = assetSymbol == "ETH" || assetSymbol == "WEI" || assetSymbol.empty();
-    address_t addr = isEth ? "" : assetAddr;
-    spotPrice = getPriceInUsd(blockNumber, priceSource, addr);
-    finishParse();
-    return true;
-}
+//     bool isEth = assetSymbol == "ETH" || assetSymbol == "WEI" || assetSymbol.empty();
+//     address_t addr = isEth ? "" : assetAddr;
+//     spotPrice = getPriceInUsd(blockNumber, priceSource, addr);
+//     finishParse();
+//     return true;
+// }
 
 //-----------------------------------------------------------------------
 // uint64_t i ndexFromTimeStamp(const C PriceQuoteArray& q uotes, timestamp_t ts) {

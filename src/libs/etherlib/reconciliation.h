@@ -29,6 +29,8 @@ class CReconciliation : public CBaseNode {
     blknum_t blockNumber;
     blknum_t transactionIndex;
     timestamp_t timestamp;
+    address_t sender;
+    address_t recipient;
     address_t assetAddr;
     string_q assetSymbol;
     uint64_t decimals;
@@ -48,9 +50,9 @@ class CReconciliation : public CBaseNode {
     bigint_t internalOut;
     bigint_t selfDestructOut;
     bigint_t gasCostOut;
-    string_q reconciliationType;
     double spotPrice;
     string_q priceSource;
+    string_q reconciliationType;
 
   public:
     CReconciliation(void);
@@ -82,7 +84,6 @@ class CReconciliation : public CBaseNode {
     bigint_t amountNet(void) const;
     bool reconciled(void) const;
     CReconciliation& operator+=(const CReconciliation& r);
-    bool readBackLevel_old(CArchive& archive);
     // EXISTING_CODE
     bool operator==(const CReconciliation& it) const;
     bool operator!=(const CReconciliation& it) const {
@@ -138,6 +139,8 @@ inline void CReconciliation::initialize(void) {
     blockNumber = 0;
     transactionIndex = 0;
     timestamp = 0;
+    sender = "";
+    recipient = "";
     assetAddr = "";
     assetSymbol = "";
     decimals = 18;
@@ -157,9 +160,9 @@ inline void CReconciliation::initialize(void) {
     internalOut = 0;
     selfDestructOut = 0;
     gasCostOut = 0;
-    reconciliationType = "";
     spotPrice = 1.0;
     priceSource = "";
+    reconciliationType = "";
 
     // EXISTING_CODE
     pTransaction = NULL;
@@ -174,6 +177,8 @@ inline void CReconciliation::duplicate(const CReconciliation& re) {
     blockNumber = re.blockNumber;
     transactionIndex = re.transactionIndex;
     timestamp = re.timestamp;
+    sender = re.sender;
+    recipient = re.recipient;
     assetAddr = re.assetAddr;
     assetSymbol = re.assetSymbol;
     decimals = re.decimals;
@@ -193,9 +198,9 @@ inline void CReconciliation::duplicate(const CReconciliation& re) {
     internalOut = re.internalOut;
     selfDestructOut = re.selfDestructOut;
     gasCostOut = re.gasCostOut;
-    reconciliationType = re.reconciliationType;
     spotPrice = re.spotPrice;
     priceSource = re.priceSource;
+    reconciliationType = re.reconciliationType;
 
     // EXISTING_CODE
     pTransaction = re.pTransaction;

@@ -5,7 +5,9 @@ transactions?statements=0x7cfb89d6df1b89a678dcaf42b9c262593e881e22&transactions=
       "blockNumber": 13029304,
       "transactionIndex": 63,
       "timestamp": 1629024623,
-      "assetAddr": "0x7cfb89d6df1b89a678dcaf42b9c262593e881e22",
+      "sender": "0x881690382102106b00a99e3db86056d0fc71eee6",
+      "recipient": "0x7cfb89d6df1b89a678dcaf42b9c262593e881e22",
+      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "decimals": 18,
       "prevBlk": 0,
@@ -24,9 +26,9 @@ transactions?statements=0x7cfb89d6df1b89a678dcaf42b9c262593e881e22&transactions=
       "internalOut": "",
       "selfDestructOut": "",
       "gasCostOut": "",
-      "reconciliationType": "by-trace",
       "spotPrice": 3159.22552,
       "priceSource": "uniswap",
+      "reconciliationType": "by-trace",
       "begBalDiff": "",
       "endBalCalc": "53712605193010669297",
       "endBalDiff": "",
@@ -37,6 +39,10 @@ transactions?statements=0x7cfb89d6df1b89a678dcaf42b9c262593e881e22&transactions=
       "reconciled": true,
       "transactionHash": "0x20e4a5279519859c3b8af108fa9b3238f23d5522ceb0f7245080ec79ad8f97fd",
       "date": "2021-08-15 10:50:23 UTC"
+    }, {
+        Uni out
+    }, {
+        Dai in
     }
   ],
   "meta": {

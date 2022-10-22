@@ -7,7 +7,7 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 0.41.0-beta
+  version: 0.42.5-beta
   description: >
 
     A REST layer over the TrueBlocks application. With `chifra serve`, you can
@@ -1888,24 +1888,34 @@ components:
         date:
           type: string
           format: date
-          description: "the date of this transaction"
+          description: "a calculated field -- the date of this transaction"
+        sender:
+          type: string
+          format: address
+          example: "0x1bd0...9ce9"
+          description: "the initiator of the transfer (the sender)"
+        recipient:
+          type: string
+          format: address
+          example: "0x38d1...1310"
+          description: "the receiver of the transfer (the recipient)"
         assetAddr:
           type: string
           format: address
           example: "0xf503...179b"
-          description: "the accountedFor address for ETH recons, the token address itself otherwise"
+          description: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee for ETH reconcilations, the token address otherwise"
         assetSymbol:
           type: string
-          description: "either ETH, WEI or the symbol of the asset being reconciled as extracted from the chain"
+          description: "either ETH, WEI or the symbol of the asset being reconciled as queried from the chain"
         decimals:
           type: number
           format: uint64
-          description: "Equivalent to the extracted value of getSymbol from ERC20 or, if ETH or WEI then 18"
+          description: "Equivalent to the queried value of `decimals` from an ERC20 contract or, if ETH or WEI then 18"
         prevBlk:
           type: number
           format: blknum
           example: 10021
-          description: "the block number of the previous reconciliation"
+          description: "the block number of the previous reconciliation, or 0 if this is the first reconciliation"
         prevBlkBal:
           type: string
           format: int256
@@ -1929,7 +1939,7 @@ components:
         begBalDiff:
           type: string
           format: int256
-          description: "the difference between the expected beginning balance (prevBlkBal) and the queried balance from the chain"
+          description: "a calculated field -- difference between expected beginning balance and balance at last reconciliation, the reconciliation failed"
         endBalDiff:
           type: string
           format: int256
