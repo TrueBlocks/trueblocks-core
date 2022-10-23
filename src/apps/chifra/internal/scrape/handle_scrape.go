@@ -5,6 +5,7 @@ package scrapePkg
 // be found in the LICENSE file.
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -24,6 +25,7 @@ import (
 func (opts *ScrapeOptions) HandleScrape() error {
 	progress, err := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
 	if err != nil {
+		logger.Log(logger.Error, err)
 		return err
 	}
 
@@ -41,6 +43,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 	}
 
 	if ok, err := opts.HandlePrepare(progress, &blazeOpts); !ok || err != nil {
+		logger.Log(logger.Error, err)
 		return err
 	}
 
@@ -48,8 +51,11 @@ func (opts *ScrapeOptions) HandleScrape() error {
 	for {
 		progress, err = rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
 		if err != nil {
-			return err
+			logger.Log(logger.Error, err)
+			break
 		}
+
+		<-opts.Pause(progress)
 
 		// We start the current round one block past the end of the previous round
 		opts.StartBlock = utils.Max(progress.Ripe, utils.Max(progress.Staging, progress.Finalized)) + 1
@@ -88,7 +94,8 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		unripePath := filepath.Join(config.GetPathToIndex(opts.Globals.Chain), "unripe")
 		err = os.RemoveAll(unripePath)
 		if err != nil {
-			return err
+			logger.Log(logger.Error, err)
+			break
 		}
 
 		// In some cases, the index may be already ahead of the chain tip. (For example,
@@ -98,7 +105,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		m := utils.Max(progress.Ripe, utils.Max(progress.Staging, progress.Finalized)) + 1
 		if m > progress.Latest {
 			fmt.Println(validate.Usage("The index ({0}) is ahead of the chain ({1}).", fmt.Sprintf("%d", m), fmt.Sprintf("%d", progress.Latest)))
-			goto PAUSE
+			continue
 		}
 
 		// Here we do the actual scrape for this round. If anything goes wrong, the
@@ -106,7 +113,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		// that we don't quit, instead we sleep and we retry continually.
 		if err := opts.HandleScrapeBlaze(progress, &blazeOpts); err != nil {
 			logger.Log(logger.Error, colors.BrightRed, err, colors.Off)
-			goto PAUSE
+			continue
 		}
 		blazeOpts.syncedReporting(int(blazeOpts.StartBlock+blazeOpts.BlockCount), true /* force */)
 
@@ -115,12 +122,10 @@ func (opts *ScrapeOptions) HandleScrape() error {
 			if !ok {
 				break
 			}
-			goto PAUSE
+			continue
 		}
-
-	PAUSE:
-		opts.Pause(progress)
 	}
 
-	return nil
+	// should never append (see caller)
+	return errors.New("unexpected loop exit")
 }
