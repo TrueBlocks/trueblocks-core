@@ -78,8 +78,8 @@ func (opts *ScrapeOptions) HandleScrape() error {
 			UnripeDist:    opts.Settings.Unripe_dist,
 			RpcProvider:   config.GetRpcProvider(opts.Globals.Chain),
 			AppearanceMap: make(index.AddressAppearanceMap, opts.Settings.Apps_per_chunk),
-			TsArray:       make([]tslib.Timestamp, 0, opts.BlockCnt),
-			ProcessedMap:  make(map[int]bool, opts.BlockCnt),
+			TsArray:       make([]tslib.Timestamp, 0, origBlockCnt),
+			ProcessedMap:  make(map[int]bool, origBlockCnt),
 		}
 
 		// Remove whatever's in the unripePath before running each round. We do this
