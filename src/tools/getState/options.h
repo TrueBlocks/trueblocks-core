@@ -47,4 +47,5 @@ class COptions : public CHistoryOptions {
 };
 
 //-----------------------------------------------------------------------------
-extern bool visitBlock(uint64_t num, void* data);
+extern bool visitForState(uint64_t num, void* data);
+extern bool visitForCall(uint64_t num, void* data);
