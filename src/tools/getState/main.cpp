@@ -60,10 +60,6 @@ bool visitForCall(uint64_t blockNum, void* data) {
     if (blockNum < opt->oldestBlock)
         opt->oldestBlock = blockNum;
 
-    if (opt->needsHistory() && !isArchiveNode())
-        opt->errors.push_back("The request for historical state at block " + uint_2_Str(blockNum) +
-                              " is not available.");
-
     // TODO: Is opt->theCall.address a smart contract at this block?
     opt->theCall.blockNumber = blockNum;
     if (doEthCall(opt->theCall, true /* proxy */)) {
@@ -107,10 +103,6 @@ bool visitForState(uint64_t blockNum, void* data) {
     if (blockNum < opt->oldestBlock)
         opt->oldestBlock = blockNum;
 
-    if (opt->needsHistory() && !isArchiveNode())
-        opt->errors.push_back("The request for historical state at block " + uint_2_Str(blockNum) +
-                              " is not available.");
-
     CEthState state;
     state.address = opt->current;
     wei_t balance = getBalanceAt(state.address, blockNum);
@@ -134,12 +126,23 @@ bool visitForState(uint64_t blockNum, void* data) {
         if (code.length() > 250 && !verbose)
             state.code = code.substr(0, 20) + "..." + code.substr(code.length() - 20, 100);
     }
-    if (opt->modeBits & ST_DEPLOYED) {
+
+    if (opt->modeBits & ST_DEPLOYED || opt->modeBits & ST_PROXY) {
         blknum_t dep = getDeployBlock(state.address);
         state.deployed = dep == NOPOS ? 0 : dep;
     }
-    if (opt->modeBits & ST_ACCTTYPE)
-        state.accttype = (isContractAt(state.address, opt->latestBlock) ? "Contract" : "EOA");
+
+    if (opt->modeBits & ST_PROXY) {
+        getProxyContract(state.address, blockNum, state.proxy);
+    }
+
+    if (opt->modeBits & ST_ACCTTYPE) {
+        if (!state.proxy.empty()) {
+            state.accttype = "Proxy";
+        } else {
+            state.accttype = (isContractAt(state.address, opt->latestBlock) ? "Contract" : "EOA");
+        }
+    }
 
     if (true) {
         if (isText) {
