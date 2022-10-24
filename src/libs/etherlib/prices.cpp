@@ -104,7 +104,7 @@ bool CUniPair::findPair(void) {
         uniFactory.deployed = getDeployBlock(uniswapFactory);
     }
     uniFactory.bytes = hex_2_Pad64(r1) + hex_2_Pad64(r2);
-    if (!doEthCall(uniFactory)) {
+    if (!doEthCall(uniFactory, true /* proxy */)) {
         notPairs[key] = true;
         return false;
     }
@@ -129,7 +129,7 @@ bool CUniPair::getPrice(blknum_t bn, string_q& priceSource, double& priceOut) {
     priceOut = 1.;
 
     blockNumber = bn;
-    if (!doEthCall(*this))
+    if (!doEthCall(*this, true /* proxy */))
         return false;
 
     CStringArray results;
@@ -220,7 +220,7 @@ double getPriceMaker_UsdPerEth(blknum_t bn, string_q& priceSource) {
     theCall.address = makerMedianizer;
     theCall.encoding = peek;
     theCall.abi_spec = spec;
-    if (doEthCall(theCall)) {
+    if (doEthCall(theCall, true /* proxy */)) {
         CStringArray results;
         theCall.getCallResult(results);
         if (results.size() > 1 && results[1] == "true") {

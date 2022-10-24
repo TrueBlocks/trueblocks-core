@@ -442,7 +442,7 @@ bool CEthCall::getCallResult(CStringArray& out) const {
 }
 
 //-------------------------------------------------------------------------
-bool doEthCall(CEthCall& theCall) {
+bool doEthCall(CEthCall& theCall, bool checkProxy) {
     if (theCall.deployed != NOPOS && theCall.deployed > theCall.blockNumber) {
         LOG4(theCall.Format(
             "Calling a contract ([{ADDRESS}]) at block [{BLOCKNUMBER}] prior to its deployment [{DEPLOYED}]"));
@@ -466,17 +466,17 @@ bool doEthCall(CEthCall& theCall) {
         return true;
     }
 
-    if (theCall.checkProxy) {
-        theCall.checkProxy = false;       // avoid infinite regress
+    if (checkProxy) {
+        checkProxy = false;
         theCall.encoding = "0x5c60da1b";  // implementation()
-        if (doEthCall(theCall)) {
+        if (doEthCall(theCall, checkProxy /* proxy */)) {
             // This is a proxy with an implementation...let's
             // try again against the proxied-to address.
             theCall.encoding = orig;
             theCall.address = theCall.getCallResult();
             if (isZeroAddr(theCall.address))
                 return false;
-            return doEthCall(theCall);
+            return doEthCall(theCall, checkProxy /* proxy */);
         }
     }
     theCall.encoding = orig;

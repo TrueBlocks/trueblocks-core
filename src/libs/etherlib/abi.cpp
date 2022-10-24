@@ -468,8 +468,7 @@ bool CAbi::loadAbiFromAddress(const address_t& addr, bool recurse) {
     //     theCall.encoding = "0x59679b0f";  // implementation()
     //     theCall.bytes = "";
     //     theCall.blockNumber = getLatestBlock_client();
-    //     theCall.checkProxy = false;
-    //     if (doEthCall(theCall))
+    //     if (doEthCall(theCall, false /* proxy */))
     //         loadAbiFromAddress(theCall.getResult(), false);
     // }
 

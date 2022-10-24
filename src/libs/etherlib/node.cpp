@@ -543,7 +543,7 @@ string_q getTokenState(const address_t& token, const string_q& what, const CAbi&
     theCall.bytes = bytes;
     theCall.blockNumber = blockNum;
     theCall.abi_spec = abi_spec;
-    if (doEthCall(theCall))
+    if (doEthCall(theCall, true /* proxy */))
         return theCall.getCallResult();
     return "";
 }

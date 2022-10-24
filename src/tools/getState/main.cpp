@@ -66,7 +66,7 @@ bool visitForCall(uint64_t blockNum, void* data) {
 
     // TODO: Is opt->theCall.address a smart contract at this block?
     opt->theCall.blockNumber = blockNum;
-    if (doEthCall(opt->theCall)) {
+    if (doEthCall(opt->theCall, true /* proxy */)) {
         CTransaction art;
         art.input = opt->theCall.encoding + opt->theCall.bytes;
         opt->abi_spec.articulateTransaction(&art);
