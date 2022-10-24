@@ -41,8 +41,9 @@ class CUniPair : public CEthCall {
     address_t r2;
     bool reversed;
     bool selfie;
-    CUniPair(const address_t& r1In, const address_t& r2In)
+    CUniPair(blknum_t bn, const address_t& r1In, const address_t& r2In)
         : CEthCall(), r1(r1In), r2(r2In), reversed(false), selfie(false) {
+        blockNumber = bn;
         if (r1In > r2In) {
             r1 = r2In;
             r2 = r1In;
@@ -103,11 +104,14 @@ bool CUniPair::findPair(void) {
         uniFactory.address = uniswapFactory;
         uniFactory.encoding = getPair;
         uniFactory.abi_spec.loadAbisKnown("uniswap");
-        uniFactory.blockNumber = getLatestBlock_client();
+        uniFactory.blockNumber = blockNumber;
         uniFactory.deployed = getDeployBlock(uniswapFactory);
     }
     uniFactory.bytes = hex_2_Pad64(r1) + hex_2_Pad64(r2);
     if (!doEthCall(uniFactory, true /* proxy */)) {
+        if (isTestMode()) {
+            LOG_INFO("doEthCall in CUniPrice::findPair returned false");
+        }
         notPairs[key] = true;
         return false;
     }
@@ -133,6 +137,9 @@ bool CUniPair::getPrice(blknum_t bn, string_q& priceSource, double& priceOut) {
 
     blockNumber = bn;
     if (!doEthCall(*this, true /* proxy */)) {
+        if (isTestMode()) {
+            LOG_INFO("doEthCall in CUniPrice::getPrice returned false");
+        }
         return false;
     }
 
@@ -163,7 +170,7 @@ bool CUniPair::getPrice(blknum_t bn, string_q& priceSource, double& priceOut) {
 
 //---------------------------------------------------------------------------
 double getPrice_UsdPerEth(blknum_t bn, string_q& priceSource) {
-    CUniPair usdEth(dai, wEth);
+    CUniPair usdEth(bn, dai, wEth);
     if (usdEth.findPair()) {
         double price;
         if (usdEth.getPrice(bn, priceSource, price))
@@ -201,7 +208,7 @@ double getPrice_UsdPerTok(blknum_t bn, string_q& priceSource, const address_t& t
 
 //---------------------------------------------------------------------------
 double getPrice_EthPerTok(blknum_t bn, string_q& priceSource, const address_t& tok) {
-    CUniPair thePair(wEth, tok);
+    CUniPair thePair(bn, wEth, tok);
     if (thePair.findPair()) {
         double price;
         if (thePair.getPrice(bn, priceSource, price))
@@ -233,6 +240,10 @@ double getPriceMaker_UsdPerEth(blknum_t bn, string_q& priceSource) {
             wei_t ether = wei / weiPerEther();
             priceSource = "maker";
             return str_2_Uint(wei_2_Str(ether)) / 100.;
+        }
+    } else {
+        if (isTestMode()) {
+            LOG_INFO("doEthCall in getPriceMaker_UsdPerEth returned false");
         }
     }
 
