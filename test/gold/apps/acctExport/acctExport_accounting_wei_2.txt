@@ -7,7 +7,10 @@ TEST[DATE|TIME] LogLevel:  10
 TEST[DATE|TIME] Format:  json
 TIME ~ CLOCK - : 4-----Loaded timestamp file
 { "data": [
-TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 0 prior to its deployment 10042267
+TIME ~ CLOCK - <INFO>  : Calling a contract (0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f) at block 0 prior to its deployment 10000835
+TIME ~ CLOCK - <INFO>  : doEthCall in CUniPrice::findPair returned false
+TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 0...: 
+TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 0 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
 ==================================================
 
@@ -38,7 +41,8 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5000000000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 1 prior to its deployment 10042267
+TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1...: 
+TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
 ==================================================
 
@@ -128,7 +132,8 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    10000000000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 5 prior to its deployment 10042267
+TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 5...: 
+TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 5 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
 ==================================================
 
@@ -218,7 +223,8 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    13750000000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 56 prior to its deployment 10042267
+TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 56...: 
+TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 56 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
 ==================================================
 
@@ -308,7 +314,8 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    18750000000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 235 prior to its deployment 10042267
+TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 235...: 
+TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 235 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
 ==================================================
 
@@ -398,7 +405,8 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    21875000000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 247 prior to its deployment 10042267
+TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 247...: 
+TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 247 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
 ==================================================
 
@@ -488,7 +496,8 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    26875000000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 348 prior to its deployment 10042267
+TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 348...: 
+TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 348 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
 ==================================================
 
@@ -578,7 +587,8 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    30625000000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 500 prior to its deployment 10042267
+TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 500...: 
+TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 500 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
 ==================================================
 
@@ -668,7 +678,8 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    34375000000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 563 prior to its deployment 10042267
+TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 563...: 
+TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 563 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
 ==================================================
 
@@ -758,7 +769,8 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    36875000000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 987 prior to its deployment 10042267
+TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 987...: 
+TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 987 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
 ==================================================
 
@@ -848,7 +860,8 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    42031250000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 1450 prior to its deployment 10042267
+TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1450...: 
+TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1450 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
 ==================================================
 
@@ -938,7 +951,8 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    45781250000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 1580 prior to its deployment 10042267
+TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1580...: 
+TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1580 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
 ==================================================
 
@@ -1028,7 +1042,8 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    49531250000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 1586 prior to its deployment 10042267
+TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1586...: 
+TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1586 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
 ==================================================
 
@@ -1118,7 +1133,8 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    54531250000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 1861 prior to its deployment 10042267
+TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1861...: 
+TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1861 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
 ==================================================
 
@@ -1208,7 +1224,8 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    58281250000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 1912 prior to its deployment 10042267
+TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1912...: 
+TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1912 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
 ==================================================
 
@@ -1298,7 +1315,8 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    63281250000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 2057 prior to its deployment 10042267
+TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 2057...: 
+TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 2057 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
 ==================================================
 
