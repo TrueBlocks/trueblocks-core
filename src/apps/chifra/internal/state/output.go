@@ -12,6 +12,9 @@ package statePkg
 import (
 	"net/http"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
 
@@ -23,6 +26,9 @@ func RunState(cmd *cobra.Command, args []string) (err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.StateInternal()
+	outputHelpers.CloseJsonWriterIfNeeded(func() *globals.GlobalOptions {
+		return &opts.Globals
+	})
 	return
 }
 
@@ -31,7 +37,11 @@ func ServeState(w http.ResponseWriter, r *http.Request) (err error, handled bool
 	opts := stateFinishParseApi(w, r)
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return opts.StateInternal()
+	err, handled = opts.StateInternal()
+	if opts.Globals.Format == "json" && err == nil {
+		opts.Globals.Writer.(*output.JsonWriter).Close()
+	}
+	return
 }
 
 // StateInternal handles the internal workings of the state command.  Returns error and a bool if handled

@@ -12,6 +12,9 @@ package scrapePkg
 import (
 	"net/http"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 
 	"github.com/spf13/cobra"
@@ -25,6 +28,9 @@ func RunScrape(cmd *cobra.Command, args []string) (err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.ScrapeInternal()
+	outputHelpers.CloseJsonWriterIfNeeded(func() *globals.GlobalOptions {
+		return &opts.Globals
+	})
 	return
 }
 
@@ -33,7 +39,11 @@ func ServeScrape(w http.ResponseWriter, r *http.Request) (err error, handled boo
 	opts := scrapeFinishParseApi(w, r)
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return opts.ScrapeInternal()
+	err, handled = opts.ScrapeInternal()
+	if opts.Globals.Format == "json" && err == nil {
+		opts.Globals.Writer.(*output.JsonWriter).Close()
+	}
+	return
 }
 
 // ScrapeInternal handles the internal workings of the scrape command.  Returns error and a bool if handled

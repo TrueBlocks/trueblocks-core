@@ -11,6 +11,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
@@ -139,6 +140,16 @@ func GetOptions() *SlurpOptions {
 }
 
 func ResetOptions() {
+	// We want to keep writer between command file calls if
+	// the global format is JSON
+	w := GetOptions().Globals.Writer
 	defaultSlurpOptions = SlurpOptions{}
 	globals.SetDefaults(&defaultSlurpOptions.Globals)
+	if GetOptions().Globals.Format == "json" || GetOptions().Globals.ShowRaw {
+		// Preserve writer
+		defaultSlurpOptions.Globals.Writer = w
+	} else {
+		// Reset writer to the default one
+		defaultSlurpOptions.Globals.Writer = os.Stdout
+	}
 }

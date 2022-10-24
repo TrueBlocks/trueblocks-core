@@ -14,6 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	monitorsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/monitors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
 
@@ -25,7 +26,13 @@ var monitorsCmd = &cobra.Command{
 	Short:   shortMonitors,
 	Long:    longMonitors,
 	Version: versionText,
+	PreRun: outputHelpers.PreRunWithJsonWriter(func() *globals.GlobalOptions {
+		return &monitorsPkg.GetOptions().Globals
+	}),
 	RunE:    file.RunWithFileSupport("monitors", monitorsPkg.RunMonitors, monitorsPkg.ResetOptions),
+	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
+		return &monitorsPkg.GetOptions().Globals
+	}),
 }
 
 const usageMonitors = `monitors [flags] <address> [address...]

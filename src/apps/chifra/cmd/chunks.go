@@ -14,6 +14,7 @@ import (
 	chunksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/chunks"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
 
@@ -25,7 +26,13 @@ var chunksCmd = &cobra.Command{
 	Short:   shortChunks,
 	Long:    longChunks,
 	Version: versionText,
+	PreRun: outputHelpers.PreRunWithJsonWriter(func() *globals.GlobalOptions {
+		return &chunksPkg.GetOptions().Globals
+	}),
 	RunE:    file.RunWithFileSupport("chunks", chunksPkg.RunChunks, chunksPkg.ResetOptions),
+	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
+		return &chunksPkg.GetOptions().Globals
+	}),
 }
 
 const usageChunks = `chunks <mode> [flags] [blocks...] [address...]

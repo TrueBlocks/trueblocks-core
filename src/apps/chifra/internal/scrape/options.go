@@ -10,6 +10,7 @@ package scrapePkg
 import (
 	"encoding/json"
 	"net/http"
+	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
@@ -127,6 +128,16 @@ func GetOptions() *ScrapeOptions {
 }
 
 func ResetOptions() {
+	// We want to keep writer between command file calls if
+	// the global format is JSON
+	w := GetOptions().Globals.Writer
 	defaultScrapeOptions = ScrapeOptions{}
 	globals.SetDefaults(&defaultScrapeOptions.Globals)
+	if GetOptions().Globals.Format == "json" || GetOptions().Globals.ShowRaw {
+		// Preserve writer
+		defaultScrapeOptions.Globals.Writer = w
+	} else {
+		// Reset writer to the default one
+		defaultScrapeOptions.Globals.Writer = os.Stdout
+	}
 }

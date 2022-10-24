@@ -12,6 +12,9 @@ package tokensPkg
 import (
 	"net/http"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
 
@@ -23,6 +26,9 @@ func RunTokens(cmd *cobra.Command, args []string) (err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.TokensInternal()
+	outputHelpers.CloseJsonWriterIfNeeded(func() *globals.GlobalOptions {
+		return &opts.Globals
+	})
 	return
 }
 
@@ -31,7 +37,11 @@ func ServeTokens(w http.ResponseWriter, r *http.Request) (err error, handled boo
 	opts := tokensFinishParseApi(w, r)
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return opts.TokensInternal()
+	err, handled = opts.TokensInternal()
+	if opts.Globals.Format == "json" && err == nil {
+		opts.Globals.Writer.(*output.JsonWriter).Close()
+	}
+	return
 }
 
 // TokensInternal handles the internal workings of the tokens command.  Returns error and a bool if handled

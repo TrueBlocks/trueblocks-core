@@ -12,6 +12,9 @@ package slurpPkg
 import (
 	"net/http"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
 
@@ -23,6 +26,9 @@ func RunSlurp(cmd *cobra.Command, args []string) (err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.SlurpInternal()
+	outputHelpers.CloseJsonWriterIfNeeded(func() *globals.GlobalOptions {
+		return &opts.Globals
+	})
 	return
 }
 
@@ -31,7 +37,11 @@ func ServeSlurp(w http.ResponseWriter, r *http.Request) (err error, handled bool
 	opts := slurpFinishParseApi(w, r)
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return opts.SlurpInternal()
+	err, handled = opts.SlurpInternal()
+	if opts.Globals.Format == "json" && err == nil {
+		opts.Globals.Writer.(*output.JsonWriter).Close()
+	}
+	return
 }
 
 // SlurpInternal handles the internal workings of the slurp command.  Returns error and a bool if handled

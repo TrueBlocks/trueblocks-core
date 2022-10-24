@@ -14,7 +14,10 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
@@ -27,6 +30,9 @@ func RunMonitors(cmd *cobra.Command, args []string) (err error) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.MonitorsInternal()
+	outputHelpers.CloseJsonWriterIfNeeded(func() *globals.GlobalOptions {
+		return &opts.Globals
+	})
 	return
 }
 
@@ -51,7 +57,11 @@ func ServeMonitors(w http.ResponseWriter, r *http.Request) (err error, handled b
 		}
 	}
 	// EXISTING_CODE
-	return opts.MonitorsInternal()
+	err, handled = opts.MonitorsInternal()
+	if opts.Globals.Format == "json" && err == nil {
+		opts.Globals.Writer.(*output.JsonWriter).Close()
+	}
+	return
 }
 
 // MonitorsInternal handles the internal workings of the monitors command.  Returns error and a bool if handled

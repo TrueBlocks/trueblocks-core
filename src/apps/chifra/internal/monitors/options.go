@@ -10,6 +10,7 @@ package monitorsPkg
 import (
 	"encoding/json"
 	"net/http"
+	"os"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
@@ -124,6 +125,16 @@ func GetOptions() *MonitorsOptions {
 }
 
 func ResetOptions() {
+	// We want to keep writer between command file calls if
+	// the global format is JSON
+	w := GetOptions().Globals.Writer
 	defaultMonitorsOptions = MonitorsOptions{}
 	globals.SetDefaults(&defaultMonitorsOptions.Globals)
+	if GetOptions().Globals.Format == "json" || GetOptions().Globals.ShowRaw {
+		// Preserve writer
+		defaultMonitorsOptions.Globals.Writer = w
+	} else {
+		// Reset writer to the default one
+		defaultMonitorsOptions.Globals.Writer = os.Stdout
+	}
 }

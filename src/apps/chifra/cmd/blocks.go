@@ -14,6 +14,7 @@ import (
 	blocksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/blocks"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
 
@@ -25,7 +26,13 @@ var blocksCmd = &cobra.Command{
 	Short:   shortBlocks,
 	Long:    longBlocks,
 	Version: versionText,
+	PreRun: outputHelpers.PreRunWithJsonWriter(func() *globals.GlobalOptions {
+		return &blocksPkg.GetOptions().Globals
+	}),
 	RunE:    file.RunWithFileSupport("blocks", blocksPkg.RunBlocks, blocksPkg.ResetOptions),
+	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
+		return &blocksPkg.GetOptions().Globals
+	}),
 }
 
 const usageBlocks = `blocks [flags] <block> [block...]

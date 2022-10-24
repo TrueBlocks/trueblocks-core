@@ -29,7 +29,7 @@ var receiptsCmd = &cobra.Command{
 	PreRun: outputHelpers.PreRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &receiptsPkg.GetOptions().Globals
 	}),
-	RunE: file.RunWithFileSupport("receipts", receiptsPkg.RunReceipts, receiptsPkg.ResetOptions),
+	RunE:    file.RunWithFileSupport("receipts", receiptsPkg.RunReceipts, receiptsPkg.ResetOptions),
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &receiptsPkg.GetOptions().Globals
 	}),
