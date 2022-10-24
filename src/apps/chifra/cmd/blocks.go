@@ -26,7 +26,7 @@ var blocksCmd = &cobra.Command{
 	Short:   shortBlocks,
 	Long:    longBlocks,
 	Version: versionText,
-	PreRun: outputHelpers.PreRunWithJsonWriter(func() *globals.GlobalOptions {
+	PreRun: outputHelpers.PreRunWithJsonWriter("blocks", func() *globals.GlobalOptions {
 		return &blocksPkg.GetOptions().Globals
 	}),
 	RunE:    file.RunWithFileSupport("blocks", blocksPkg.RunBlocks, blocksPkg.ResetOptions),

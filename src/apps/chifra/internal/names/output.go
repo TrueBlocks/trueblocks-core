@@ -12,8 +12,6 @@ package namesPkg
 import (
 	"net/http"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -23,24 +21,22 @@ import (
 // RunNames handles the names command for the command line. Returns error only as per cobra.
 func RunNames(cmd *cobra.Command, args []string) (err error) {
 	opts := namesFinishParse(args)
+	outputHelpers.InitJsonWriter("names", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.NamesInternal()
-	outputHelpers.CloseJsonWriterIfNeeded(func() *globals.GlobalOptions {
-		return &opts.Globals
-	})
+	outputHelpers.CloseJsonWriterIfNeeded("names", &opts.Globals)
 	return
 }
 
 // ServeNames handles the names command for the API. Returns error and a bool if handled
 func ServeNames(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := namesFinishParseApi(w, r)
+	outputHelpers.InitJsonWriterApi("names", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, handled = opts.NamesInternal()
-	if opts.Globals.Format == "json" && err == nil {
-		opts.Globals.Writer.(*output.JsonWriter).Close()
-	}
+	outputHelpers.CloseJsonWriterIfNeededApi("names", err, &opts.Globals)
 	return
 }
 

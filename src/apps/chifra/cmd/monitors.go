@@ -26,7 +26,7 @@ var monitorsCmd = &cobra.Command{
 	Short:   shortMonitors,
 	Long:    longMonitors,
 	Version: versionText,
-	PreRun: outputHelpers.PreRunWithJsonWriter(func() *globals.GlobalOptions {
+	PreRun: outputHelpers.PreRunWithJsonWriter("monitors", func() *globals.GlobalOptions {
 		return &monitorsPkg.GetOptions().Globals
 	}),
 	RunE:    file.RunWithFileSupport("monitors", monitorsPkg.RunMonitors, monitorsPkg.ResetOptions),

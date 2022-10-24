@@ -26,7 +26,7 @@ var chunksCmd = &cobra.Command{
 	Short:   shortChunks,
 	Long:    longChunks,
 	Version: versionText,
-	PreRun: outputHelpers.PreRunWithJsonWriter(func() *globals.GlobalOptions {
+	PreRun: outputHelpers.PreRunWithJsonWriter("chunks", func() *globals.GlobalOptions {
 		return &chunksPkg.GetOptions().Globals
 	}),
 	RunE:    file.RunWithFileSupport("chunks", chunksPkg.RunChunks, chunksPkg.ResetOptions),

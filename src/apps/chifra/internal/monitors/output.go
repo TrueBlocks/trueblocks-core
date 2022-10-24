@@ -14,9 +14,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
@@ -27,18 +25,18 @@ import (
 // RunMonitors handles the monitors command for the command line. Returns error only as per cobra.
 func RunMonitors(cmd *cobra.Command, args []string) (err error) {
 	opts := monitorsFinishParse(args)
+	outputHelpers.InitJsonWriter("monitors", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.MonitorsInternal()
-	outputHelpers.CloseJsonWriterIfNeeded(func() *globals.GlobalOptions {
-		return &opts.Globals
-	})
+	outputHelpers.CloseJsonWriterIfNeeded("monitors", &opts.Globals)
 	return
 }
 
 // ServeMonitors handles the monitors command for the API. Returns error and a bool if handled
 func ServeMonitors(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := monitorsFinishParseApi(w, r)
+	outputHelpers.InitJsonWriterApi("monitors", w, &opts.Globals)
 	// EXISTING_CODE
 	if !opts.Globals.TestMode { // our test harness does not use DELETE
 		delOptions := "--delete, --undelete, or --remove"
@@ -58,9 +56,7 @@ func ServeMonitors(w http.ResponseWriter, r *http.Request) (err error, handled b
 	}
 	// EXISTING_CODE
 	err, handled = opts.MonitorsInternal()
-	if opts.Globals.Format == "json" && err == nil {
-		opts.Globals.Writer.(*output.JsonWriter).Close()
-	}
+	outputHelpers.CloseJsonWriterIfNeededApi("monitors", err, &opts.Globals)
 	return
 }
 

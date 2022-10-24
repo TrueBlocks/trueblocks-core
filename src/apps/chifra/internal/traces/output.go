@@ -12,8 +12,6 @@ package tracesPkg
 import (
 	"net/http"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -23,24 +21,22 @@ import (
 // RunTraces handles the traces command for the command line. Returns error only as per cobra.
 func RunTraces(cmd *cobra.Command, args []string) (err error) {
 	opts := tracesFinishParse(args)
+	outputHelpers.InitJsonWriter("traces", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.TracesInternal()
-	outputHelpers.CloseJsonWriterIfNeeded(func() *globals.GlobalOptions {
-		return &opts.Globals
-	})
+	outputHelpers.CloseJsonWriterIfNeeded("traces", &opts.Globals)
 	return
 }
 
 // ServeTraces handles the traces command for the API. Returns error and a bool if handled
 func ServeTraces(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := tracesFinishParseApi(w, r)
+	outputHelpers.InitJsonWriterApi("traces", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, handled = opts.TracesInternal()
-	if opts.Globals.Format == "json" && err == nil {
-		opts.Globals.Writer.(*output.JsonWriter).Close()
-	}
+	outputHelpers.CloseJsonWriterIfNeededApi("traces", err, &opts.Globals)
 	return
 }
 

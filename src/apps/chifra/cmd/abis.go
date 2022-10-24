@@ -26,7 +26,7 @@ var abisCmd = &cobra.Command{
 	Short:   shortAbis,
 	Long:    longAbis,
 	Version: versionText,
-	PreRun: outputHelpers.PreRunWithJsonWriter(func() *globals.GlobalOptions {
+	PreRun: outputHelpers.PreRunWithJsonWriter("abis", func() *globals.GlobalOptions {
 		return &abisPkg.GetOptions().Globals
 	}),
 	RunE:    file.RunWithFileSupport("abis", abisPkg.RunAbis, abisPkg.ResetOptions),

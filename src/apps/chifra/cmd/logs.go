@@ -26,7 +26,7 @@ var logsCmd = &cobra.Command{
 	Short:   shortLogs,
 	Long:    longLogs,
 	Version: versionText,
-	PreRun: outputHelpers.PreRunWithJsonWriter(func() *globals.GlobalOptions {
+	PreRun: outputHelpers.PreRunWithJsonWriter("logs", func() *globals.GlobalOptions {
 		return &logsPkg.GetOptions().Globals
 	}),
 	RunE:    file.RunWithFileSupport("logs", logsPkg.RunLogs, logsPkg.ResetOptions),

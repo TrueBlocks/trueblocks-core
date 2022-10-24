@@ -14,24 +14,22 @@ package [{API_ROUTE}]Pkg
 // Run[{PROPER}] handles the [{ROUTE}] command for the command line. Returns error only as per cobra.
 func Run[{PROPER}](cmd *cobra.Command, args []string) (err error) {
 	opts := [{LOWER}]FinishParse(args)
+	outputHelpers.InitJsonWriter("[{ROUTE}]", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.[{PROPER}]Internal()
-	outputHelpers.CloseJsonWriterIfNeeded(func() *globals.GlobalOptions {
-		return &opts.Globals
-	})
+	outputHelpers.CloseJsonWriterIfNeeded("[{ROUTE}]", &opts.Globals)
 	return
 }
 
 // Serve[{PROPER}] handles the [{ROUTE}] command for the API. Returns error and a bool if handled
 func Serve[{PROPER}](w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := [{LOWER}]FinishParseApi(w, r)
+	outputHelpers.InitJsonWriterApi("[{ROUTE}]", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, handled = opts.[{PROPER}]Internal()
-	if opts.Globals.Format == "json" && err == nil {
-		opts.Globals.Writer.(*output.JsonWriter).Close()
-	}
+	outputHelpers.CloseJsonWriterIfNeededApi("[{ROUTE}]", err, &opts.Globals)
 	return
 }
 

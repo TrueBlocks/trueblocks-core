@@ -15,7 +15,6 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
@@ -29,24 +28,22 @@ import (
 // RunReceipts handles the receipts command for the command line. Returns error only as per cobra.
 func RunReceipts(cmd *cobra.Command, args []string) (err error) {
 	opts := receiptsFinishParse(args)
+	outputHelpers.InitJsonWriter("receipts", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.ReceiptsInternal()
-	outputHelpers.CloseJsonWriterIfNeeded(func() *globals.GlobalOptions {
-		return &opts.Globals
-	})
+	outputHelpers.CloseJsonWriterIfNeeded("receipts", &opts.Globals)
 	return
 }
 
 // ServeReceipts handles the receipts command for the API. Returns error and a bool if handled
 func ServeReceipts(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := receiptsFinishParseApi(w, r)
+	outputHelpers.InitJsonWriterApi("receipts", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, handled = opts.ReceiptsInternal()
-	if opts.Globals.Format == "json" && err == nil {
-		opts.Globals.Writer.(*output.JsonWriter).Close()
-	}
+	outputHelpers.CloseJsonWriterIfNeededApi("receipts", err, &opts.Globals)
 	return
 }
 

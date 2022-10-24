@@ -12,8 +12,6 @@ package statusPkg
 import (
 	"net/http"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -23,24 +21,22 @@ import (
 // RunStatus handles the status command for the command line. Returns error only as per cobra.
 func RunStatus(cmd *cobra.Command, args []string) (err error) {
 	opts := statusFinishParse(args)
+	outputHelpers.InitJsonWriter("status", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.StatusInternal()
-	outputHelpers.CloseJsonWriterIfNeeded(func() *globals.GlobalOptions {
-		return &opts.Globals
-	})
+	outputHelpers.CloseJsonWriterIfNeeded("status", &opts.Globals)
 	return
 }
 
 // ServeStatus handles the status command for the API. Returns error and a bool if handled
 func ServeStatus(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := statusFinishParseApi(w, r)
+	outputHelpers.InitJsonWriterApi("status", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, handled = opts.StatusInternal()
-	if opts.Globals.Format == "json" && err == nil {
-		opts.Globals.Writer.(*output.JsonWriter).Close()
-	}
+	outputHelpers.CloseJsonWriterIfNeededApi("status", err, &opts.Globals)
 	return
 }
 

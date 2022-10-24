@@ -26,7 +26,7 @@ var tokensCmd = &cobra.Command{
 	Short:   shortTokens,
 	Long:    longTokens,
 	Version: versionText,
-	PreRun: outputHelpers.PreRunWithJsonWriter(func() *globals.GlobalOptions {
+	PreRun: outputHelpers.PreRunWithJsonWriter("tokens", func() *globals.GlobalOptions {
 		return &tokensPkg.GetOptions().Globals
 	}),
 	RunE:    file.RunWithFileSupport("tokens", tokensPkg.RunTokens, tokensPkg.ResetOptions),

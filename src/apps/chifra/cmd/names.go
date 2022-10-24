@@ -26,7 +26,7 @@ var namesCmd = &cobra.Command{
 	Short:   shortNames,
 	Long:    longNames,
 	Version: versionText,
-	PreRun: outputHelpers.PreRunWithJsonWriter(func() *globals.GlobalOptions {
+	PreRun: outputHelpers.PreRunWithJsonWriter("names", func() *globals.GlobalOptions {
 		return &namesPkg.GetOptions().Globals
 	}),
 	RunE:    file.RunWithFileSupport("names", namesPkg.RunNames, namesPkg.ResetOptions),

@@ -12,8 +12,6 @@ package abisPkg
 import (
 	"net/http"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -23,24 +21,22 @@ import (
 // RunAbis handles the abis command for the command line. Returns error only as per cobra.
 func RunAbis(cmd *cobra.Command, args []string) (err error) {
 	opts := abisFinishParse(args)
+	outputHelpers.InitJsonWriter("abis", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.AbisInternal()
-	outputHelpers.CloseJsonWriterIfNeeded(func() *globals.GlobalOptions {
-		return &opts.Globals
-	})
+	outputHelpers.CloseJsonWriterIfNeeded("abis", &opts.Globals)
 	return
 }
 
 // ServeAbis handles the abis command for the API. Returns error and a bool if handled
 func ServeAbis(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := abisFinishParseApi(w, r)
+	outputHelpers.InitJsonWriterApi("abis", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, handled = opts.AbisInternal()
-	if opts.Globals.Format == "json" && err == nil {
-		opts.Globals.Writer.(*output.JsonWriter).Close()
-	}
+	outputHelpers.CloseJsonWriterIfNeededApi("abis", err, &opts.Globals)
 	return
 }
 

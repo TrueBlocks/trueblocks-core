@@ -26,7 +26,7 @@ var stateCmd = &cobra.Command{
 	Short:   shortState,
 	Long:    longState,
 	Version: versionText,
-	PreRun: outputHelpers.PreRunWithJsonWriter(func() *globals.GlobalOptions {
+	PreRun: outputHelpers.PreRunWithJsonWriter("state", func() *globals.GlobalOptions {
 		return &statePkg.GetOptions().Globals
 	}),
 	RunE:    file.RunWithFileSupport("state", statePkg.RunState, statePkg.ResetOptions),

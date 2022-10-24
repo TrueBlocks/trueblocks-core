@@ -12,8 +12,6 @@ package tokensPkg
 import (
 	"net/http"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -23,24 +21,22 @@ import (
 // RunTokens handles the tokens command for the command line. Returns error only as per cobra.
 func RunTokens(cmd *cobra.Command, args []string) (err error) {
 	opts := tokensFinishParse(args)
+	outputHelpers.InitJsonWriter("tokens", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.TokensInternal()
-	outputHelpers.CloseJsonWriterIfNeeded(func() *globals.GlobalOptions {
-		return &opts.Globals
-	})
+	outputHelpers.CloseJsonWriterIfNeeded("tokens", &opts.Globals)
 	return
 }
 
 // ServeTokens handles the tokens command for the API. Returns error and a bool if handled
 func ServeTokens(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := tokensFinishParseApi(w, r)
+	outputHelpers.InitJsonWriterApi("tokens", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, handled = opts.TokensInternal()
-	if opts.Globals.Format == "json" && err == nil {
-		opts.Globals.Writer.(*output.JsonWriter).Close()
-	}
+	outputHelpers.CloseJsonWriterIfNeededApi("tokens", err, &opts.Globals)
 	return
 }
 

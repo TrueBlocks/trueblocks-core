@@ -26,7 +26,7 @@ var serveCmd = &cobra.Command{
 	Short:   shortServe,
 	Long:    longServe,
 	Version: versionText,
-	PreRun: outputHelpers.PreRunWithJsonWriter(func() *globals.GlobalOptions {
+	PreRun: outputHelpers.PreRunWithJsonWriter("serve", func() *globals.GlobalOptions {
 		return &servePkg.GetOptions().Globals
 	}),
 	RunE:    file.RunWithFileSupport("serve", servePkg.RunServe, servePkg.ResetOptions),

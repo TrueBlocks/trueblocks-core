@@ -26,7 +26,7 @@ var whenCmd = &cobra.Command{
 	Short:   shortWhen,
 	Long:    longWhen,
 	Version: versionText,
-	PreRun: outputHelpers.PreRunWithJsonWriter(func() *globals.GlobalOptions {
+	PreRun: outputHelpers.PreRunWithJsonWriter("when", func() *globals.GlobalOptions {
 		return &whenPkg.GetOptions().Globals
 	}),
 	RunE:    file.RunWithFileSupport("when", whenPkg.RunWhen, whenPkg.ResetOptions),

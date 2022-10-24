@@ -26,7 +26,7 @@ var transactionsCmd = &cobra.Command{
 	Short:   shortTransactions,
 	Long:    longTransactions,
 	Version: versionText,
-	PreRun: outputHelpers.PreRunWithJsonWriter(func() *globals.GlobalOptions {
+	PreRun: outputHelpers.PreRunWithJsonWriter("transactions", func() *globals.GlobalOptions {
 		return &transactionsPkg.GetOptions().Globals
 	}),
 	RunE:    file.RunWithFileSupport("transactions", transactionsPkg.RunTransactions, transactionsPkg.ResetOptions),

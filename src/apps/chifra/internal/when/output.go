@@ -12,8 +12,6 @@ package whenPkg
 import (
 	"net/http"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
@@ -24,24 +22,22 @@ import (
 // RunWhen handles the when command for the command line. Returns error only as per cobra.
 func RunWhen(cmd *cobra.Command, args []string) (err error) {
 	opts := whenFinishParse(args)
+	outputHelpers.InitJsonWriter("when", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.WhenInternal()
-	outputHelpers.CloseJsonWriterIfNeeded(func() *globals.GlobalOptions {
-		return &opts.Globals
-	})
+	outputHelpers.CloseJsonWriterIfNeeded("when", &opts.Globals)
 	return
 }
 
 // ServeWhen handles the when command for the API. Returns error and a bool if handled
 func ServeWhen(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := whenFinishParseApi(w, r)
+	outputHelpers.InitJsonWriterApi("when", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, handled = opts.WhenInternal()
-	if opts.Globals.Format == "json" && err == nil {
-		opts.Globals.Writer.(*output.JsonWriter).Close()
-	}
+	outputHelpers.CloseJsonWriterIfNeededApi("when", err, &opts.Globals)
 	return
 }
 

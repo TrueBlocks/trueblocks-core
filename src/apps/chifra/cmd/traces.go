@@ -26,7 +26,7 @@ var tracesCmd = &cobra.Command{
 	Short:   shortTraces,
 	Long:    longTraces,
 	Version: versionText,
-	PreRun: outputHelpers.PreRunWithJsonWriter(func() *globals.GlobalOptions {
+	PreRun: outputHelpers.PreRunWithJsonWriter("traces", func() *globals.GlobalOptions {
 		return &tracesPkg.GetOptions().Globals
 	}),
 	RunE:    file.RunWithFileSupport("traces", tracesPkg.RunTraces, tracesPkg.ResetOptions),

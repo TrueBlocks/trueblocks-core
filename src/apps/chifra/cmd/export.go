@@ -26,7 +26,7 @@ var exportCmd = &cobra.Command{
 	Short:   shortExport,
 	Long:    longExport,
 	Version: versionText,
-	PreRun: outputHelpers.PreRunWithJsonWriter(func() *globals.GlobalOptions {
+	PreRun: outputHelpers.PreRunWithJsonWriter("export", func() *globals.GlobalOptions {
 		return &exportPkg.GetOptions().Globals
 	}),
 	RunE:    file.RunWithFileSupport("export", exportPkg.RunExport, exportPkg.ResetOptions),

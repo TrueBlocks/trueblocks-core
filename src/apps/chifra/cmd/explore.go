@@ -26,7 +26,7 @@ var exploreCmd = &cobra.Command{
 	Short:   shortExplore,
 	Long:    longExplore,
 	Version: versionText,
-	PreRun: outputHelpers.PreRunWithJsonWriter(func() *globals.GlobalOptions {
+	PreRun: outputHelpers.PreRunWithJsonWriter("explore", func() *globals.GlobalOptions {
 		return &explorePkg.GetOptions().Globals
 	}),
 	RunE:    file.RunWithFileSupport("explore", explorePkg.RunExplore, explorePkg.ResetOptions),

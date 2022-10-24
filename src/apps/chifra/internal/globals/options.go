@@ -7,13 +7,13 @@ package globals
 import (
 	"fmt"
 	"net/http"
+	"os"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/spf13/cobra"
 )
@@ -151,6 +151,7 @@ func (opts *GlobalOptions) toCmdLine() string {
 func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOptions {
 	opts := &GlobalOptions{}
 	opts.TestMode = r.Header.Get("User-Agent") == "testRunner"
+	opts.Writer = w
 
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -202,17 +203,6 @@ func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOption
 		}
 	}
 
-	if opts.Format == "json" {
-		jw := output.NewDefaultJsonWriter(w, false)
-		jw.ShouldWriteMeta = true
-		jw.GetMeta = func() (*rpcClient.MetaData, error) {
-			return rpcClient.GetMetaData(opts.Chain, opts.OutputOptions.TestMode)
-		}
-		opts.Writer = jw
-	} else {
-		opts.Writer = w
-	}
-
 	if len(opts.Chain) == 0 {
 		opts.Chain = config.GetDefaultChain()
 	}
@@ -227,23 +217,7 @@ func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOption
 }
 
 func (opts *GlobalOptions) FinishParse(args []string) {
-	// When running with --file, it may happen that the default writer
-	// is not JsonWriter, but the user wants JSON output for the given
-	// line of command file. In such a case, we need to create JsonWriter.
-	// We also want to hook it into whatever `GetOutputFileWriter` returns
-	// for --output support.
-	_, ok := opts.Writer.(*output.JsonWriter)
-	if !ok && (opts.Format == "json" || opts.ShowRaw) {
-		w := opts.GetOutputFileWriter()
-		jw := output.NewDefaultJsonWriter(w, !opts.ShowRaw)
-		opts.Writer = jw
-		// We need to set a flag, so that this JsonWriter is not forwarded
-		// to the next command (next line of --file)
-		opts.MixedFormats = true
-	}
-	if !ok && !(opts.Format == "json" || opts.ShowRaw) {
-		opts.Writer = opts.GetOutputFileWriter()
-	}
+	opts.Writer = os.Stdout
 	if err := tslib.EstablishTsFile(opts.Chain); err != nil {
 		fmt.Println("Could not establish ts file:", err)
 	}

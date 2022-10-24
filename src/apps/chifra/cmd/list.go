@@ -26,7 +26,7 @@ var listCmd = &cobra.Command{
 	Short:   shortList,
 	Long:    longList,
 	Version: versionText,
-	PreRun: outputHelpers.PreRunWithJsonWriter(func() *globals.GlobalOptions {
+	PreRun: outputHelpers.PreRunWithJsonWriter("list", func() *globals.GlobalOptions {
 		return &listPkg.GetOptions().Globals
 	}),
 	RunE:    file.RunWithFileSupport("list", listPkg.RunList, listPkg.ResetOptions),

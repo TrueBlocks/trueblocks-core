@@ -12,9 +12,7 @@ package chunksPkg
 import (
 	"net/http"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
@@ -26,24 +24,22 @@ import (
 // RunChunks handles the chunks command for the command line. Returns error only as per cobra.
 func RunChunks(cmd *cobra.Command, args []string) (err error) {
 	opts := chunksFinishParse(args)
+	outputHelpers.InitJsonWriter("chunks", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.ChunksInternal()
-	outputHelpers.CloseJsonWriterIfNeeded(func() *globals.GlobalOptions {
-		return &opts.Globals
-	})
+	outputHelpers.CloseJsonWriterIfNeeded("chunks", &opts.Globals)
 	return
 }
 
 // ServeChunks handles the chunks command for the API. Returns error and a bool if handled
 func ServeChunks(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := chunksFinishParseApi(w, r)
+	outputHelpers.InitJsonWriterApi("chunks", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, handled = opts.ChunksInternal()
-	if opts.Globals.Format == "json" && err == nil {
-		opts.Globals.Writer.(*output.JsonWriter).Close()
-	}
+	outputHelpers.CloseJsonWriterIfNeededApi("chunks", err, &opts.Globals)
 	return
 }
 

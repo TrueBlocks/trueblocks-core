@@ -12,8 +12,6 @@ package slurpPkg
 import (
 	"net/http"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -23,24 +21,22 @@ import (
 // RunSlurp handles the slurp command for the command line. Returns error only as per cobra.
 func RunSlurp(cmd *cobra.Command, args []string) (err error) {
 	opts := slurpFinishParse(args)
+	outputHelpers.InitJsonWriter("slurp", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.SlurpInternal()
-	outputHelpers.CloseJsonWriterIfNeeded(func() *globals.GlobalOptions {
-		return &opts.Globals
-	})
+	outputHelpers.CloseJsonWriterIfNeeded("slurp", &opts.Globals)
 	return
 }
 
 // ServeSlurp handles the slurp command for the API. Returns error and a bool if handled
 func ServeSlurp(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := slurpFinishParseApi(w, r)
+	outputHelpers.InitJsonWriterApi("slurp", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, handled = opts.SlurpInternal()
-	if opts.Globals.Format == "json" && err == nil {
-		opts.Globals.Writer.(*output.JsonWriter).Close()
-	}
+	outputHelpers.CloseJsonWriterIfNeededApi("slurp", err, &opts.Globals)
 	return
 }
 

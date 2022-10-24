@@ -14,9 +14,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
@@ -28,24 +26,22 @@ import (
 // RunExplore handles the explore command for the command line. Returns error only as per cobra.
 func RunExplore(cmd *cobra.Command, args []string) (err error) {
 	opts := exploreFinishParse(args)
+	outputHelpers.InitJsonWriter("explore", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.ExploreInternal()
-	outputHelpers.CloseJsonWriterIfNeeded(func() *globals.GlobalOptions {
-		return &opts.Globals
-	})
+	outputHelpers.CloseJsonWriterIfNeeded("explore", &opts.Globals)
 	return
 }
 
 // ServeExplore handles the explore command for the API. Returns error and a bool if handled
 func ServeExplore(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := exploreFinishParseApi(w, r)
+	outputHelpers.InitJsonWriterApi("explore", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, handled = opts.ExploreInternal()
-	if opts.Globals.Format == "json" && err == nil {
-		opts.Globals.Writer.(*output.JsonWriter).Close()
-	}
+	outputHelpers.CloseJsonWriterIfNeededApi("explore", err, &opts.Globals)
 	return
 }
 

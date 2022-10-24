@@ -26,7 +26,7 @@ var slurpCmd = &cobra.Command{
 	Short:   shortSlurp,
 	Long:    longSlurp,
 	Version: versionText,
-	PreRun: outputHelpers.PreRunWithJsonWriter(func() *globals.GlobalOptions {
+	PreRun: outputHelpers.PreRunWithJsonWriter("slurp", func() *globals.GlobalOptions {
 		return &slurpPkg.GetOptions().Globals
 	}),
 	RunE:    file.RunWithFileSupport("slurp", slurpPkg.RunSlurp, slurpPkg.ResetOptions),

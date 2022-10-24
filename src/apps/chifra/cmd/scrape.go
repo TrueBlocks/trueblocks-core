@@ -26,7 +26,7 @@ var scrapeCmd = &cobra.Command{
 	Short:   shortScrape,
 	Long:    longScrape,
 	Version: versionText,
-	PreRun: outputHelpers.PreRunWithJsonWriter(func() *globals.GlobalOptions {
+	PreRun: outputHelpers.PreRunWithJsonWriter("scrape", func() *globals.GlobalOptions {
 		return &scrapePkg.GetOptions().Globals
 	}),
 	RunE:    file.RunWithFileSupport("scrape", scrapePkg.RunScrape, scrapePkg.ResetOptions),

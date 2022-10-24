@@ -26,7 +26,7 @@ var initCmd = &cobra.Command{
 	Short:   shortInit,
 	Long:    longInit,
 	Version: versionText,
-	PreRun: outputHelpers.PreRunWithJsonWriter(func() *globals.GlobalOptions {
+	PreRun: outputHelpers.PreRunWithJsonWriter("init", func() *globals.GlobalOptions {
 		return &initPkg.GetOptions().Globals
 	}),
 	RunE:    file.RunWithFileSupport("init", initPkg.RunInit, initPkg.ResetOptions),

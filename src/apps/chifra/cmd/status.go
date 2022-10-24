@@ -26,7 +26,7 @@ var statusCmd = &cobra.Command{
 	Short:   shortStatus,
 	Long:    longStatus,
 	Version: versionText,
-	PreRun: outputHelpers.PreRunWithJsonWriter(func() *globals.GlobalOptions {
+	PreRun: outputHelpers.PreRunWithJsonWriter("status", func() *globals.GlobalOptions {
 		return &statusPkg.GetOptions().Globals
 	}),
 	RunE:    file.RunWithFileSupport("status", statusPkg.RunStatus, statusPkg.ResetOptions),

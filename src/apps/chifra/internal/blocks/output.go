@@ -12,8 +12,6 @@ package blocksPkg
 import (
 	"net/http"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -23,24 +21,22 @@ import (
 // RunBlocks handles the blocks command for the command line. Returns error only as per cobra.
 func RunBlocks(cmd *cobra.Command, args []string) (err error) {
 	opts := blocksFinishParse(args)
+	outputHelpers.InitJsonWriter("blocks", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.BlocksInternal()
-	outputHelpers.CloseJsonWriterIfNeeded(func() *globals.GlobalOptions {
-		return &opts.Globals
-	})
+	outputHelpers.CloseJsonWriterIfNeeded("blocks", &opts.Globals)
 	return
 }
 
 // ServeBlocks handles the blocks command for the API. Returns error and a bool if handled
 func ServeBlocks(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := blocksFinishParseApi(w, r)
+	outputHelpers.InitJsonWriterApi("blocks", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, handled = opts.BlocksInternal()
-	if opts.Globals.Format == "json" && err == nil {
-		opts.Globals.Writer.(*output.JsonWriter).Close()
-	}
+	outputHelpers.CloseJsonWriterIfNeededApi("blocks", err, &opts.Globals)
 	return
 }
 

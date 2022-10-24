@@ -12,8 +12,6 @@ package scrapePkg
 import (
 	"net/http"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 
@@ -25,24 +23,22 @@ import (
 // RunScrape handles the scrape command for the command line. Returns error only as per cobra.
 func RunScrape(cmd *cobra.Command, args []string) (err error) {
 	opts := scrapeFinishParse(args)
+	outputHelpers.InitJsonWriter("scrape", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.ScrapeInternal()
-	outputHelpers.CloseJsonWriterIfNeeded(func() *globals.GlobalOptions {
-		return &opts.Globals
-	})
+	outputHelpers.CloseJsonWriterIfNeeded("scrape", &opts.Globals)
 	return
 }
 
 // ServeScrape handles the scrape command for the API. Returns error and a bool if handled
 func ServeScrape(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := scrapeFinishParseApi(w, r)
+	outputHelpers.InitJsonWriterApi("scrape", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, handled = opts.ScrapeInternal()
-	if opts.Globals.Format == "json" && err == nil {
-		opts.Globals.Writer.(*output.JsonWriter).Close()
-	}
+	outputHelpers.CloseJsonWriterIfNeededApi("scrape", err, &opts.Globals)
 	return
 }
 

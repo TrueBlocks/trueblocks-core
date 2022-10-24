@@ -12,8 +12,6 @@ package initPkg
 import (
 	"net/http"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -23,24 +21,22 @@ import (
 // RunInit handles the init command for the command line. Returns error only as per cobra.
 func RunInit(cmd *cobra.Command, args []string) (err error) {
 	opts := initFinishParse(args)
+	outputHelpers.InitJsonWriter("init", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.InitInternal()
-	outputHelpers.CloseJsonWriterIfNeeded(func() *globals.GlobalOptions {
-		return &opts.Globals
-	})
+	outputHelpers.CloseJsonWriterIfNeeded("init", &opts.Globals)
 	return
 }
 
 // ServeInit handles the init command for the API. Returns error and a bool if handled
 func ServeInit(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := initFinishParseApi(w, r)
+	outputHelpers.InitJsonWriterApi("init", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, handled = opts.InitInternal()
-	if opts.Globals.Format == "json" && err == nil {
-		opts.Globals.Writer.(*output.JsonWriter).Close()
-	}
+	outputHelpers.CloseJsonWriterIfNeededApi("init", err, &opts.Globals)
 	return
 }
 
