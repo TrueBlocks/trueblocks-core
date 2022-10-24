@@ -101,11 +101,6 @@ string_q CEthState::getValueByName(const string_q& fieldName) const {
                 return uint_2_Str(nonce);
             }
             break;
-        case 's':
-            if (fieldName % "storage") {
-                return storage;
-            }
-            break;
         default:
             break;
     }
@@ -168,12 +163,6 @@ bool CEthState::setValueByName(const string_q& fieldNameIn, const string_q& fiel
                 return true;
             }
             break;
-        case 's':
-            if (fieldName % "storage") {
-                storage = toLower(fieldValue);
-                return true;
-            }
-            break;
         default:
             break;
     }
@@ -200,11 +189,10 @@ bool CEthState::Serialize(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     archive >> blockNumber;
+    // archive >> address;
     archive >> balance;
     // archive >> nonce;
     // archive >> code;
-    // archive >> storage;
-    // archive >> address;
     // archive >> deployed;
     // archive >> accttype;
     // EXISTING_CODE
@@ -221,11 +209,10 @@ bool CEthState::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     // EXISTING_CODE
     archive << blockNumber;
+    // archive << address;
     archive << balance;
     // archive << nonce;
     // archive << code;
-    // archive << storage;
-    // archive << address;
     // archive << deployed;
     // archive << accttype;
     // EXISTING_CODE
@@ -278,15 +265,13 @@ void CEthState::registerClass(void) {
     ADD_FIELD(CEthState, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CEthState, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CEthState, "blockNumber", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CEthState, "address", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CEthState, "address");
     ADD_FIELD(CEthState, "balance", T_WEI, ++fieldNum);
     ADD_FIELD(CEthState, "nonce", T_UNUMBER, ++fieldNum);
     HIDE_FIELD(CEthState, "nonce");
     ADD_FIELD(CEthState, "code", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CEthState, "code");
-    ADD_FIELD(CEthState, "storage", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CEthState, "storage");
-    ADD_FIELD(CEthState, "address", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CEthState, "address");
     ADD_FIELD(CEthState, "deployed", T_BLOCKNUM, ++fieldNum);
     HIDE_FIELD(CEthState, "deployed");
     ADD_FIELD(CEthState, "accttype", T_TEXT | TS_OMITEMPTY, ++fieldNum);
@@ -377,7 +362,6 @@ const char* STR_DISPLAY_ETHSTATE =
     "[{BALANCE}]\t"
     "[{NONCE}]\t"
     "[{CODE}]\t"
-    "[{STORAGE}]\t"
     "[{DEPLOYED}]\t"
     "[{ACCTTYPE}]";
 
