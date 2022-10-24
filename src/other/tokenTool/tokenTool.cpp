@@ -152,9 +152,6 @@ bool build_cap_table(COptions& options, int argc, const char* argv[]) {
 // event OwnerUpdate(address _prevOwner,address _newOwner)
 //-------------------------------------------------------------------------
 string_q COptions::getTotalSupply(blknum_t blockNum) {
-#ifdef DEBUGGING
-    return "1000000000000";
-#else
     string_q encoding = "0x18160ddd";
     string_q cmd = "[{\"to\": \"[TOKEN]\", \"data\": \"[CMD]\"}, \"[BLOCK]\"]";
     replace(cmd, "[CMD]", encoding);
@@ -173,11 +170,6 @@ string_q COptions::getTotalSupply(blknum_t blockNum) {
 
 //-------------------------------------------------------------------------
 wei_t COptions::getTokenBalance(const address_t& holder, blknum_t blockNum) {
-#ifdef DEBUGGING
-    wei_t w = str_2_Wei(holder);
-    w = (w >> 22);
-    return w;
-#else
     string_q encoding = "0x70a08231";
     string_q cmd = "[{\"to\": \"[TOKEN]\", \"data\": \"[CMD][HOLDER]\"}, \"[BLOCK]\"]";
     replace(cmd, "[CMD]", encoding);
@@ -189,7 +181,6 @@ wei_t COptions::getTokenBalance(const address_t& holder, blknum_t blockNum) {
     if (!abi_spec.articulateOutputs(encoding, callRPC("eth_call", cmd, false), ret))
         return 0;
     return str_2_Wei(ret.outputs[0].value);
-#endif
 }
 
 //-------------------------------------------------------------------------

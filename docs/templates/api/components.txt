@@ -647,6 +647,11 @@ components:
           format: address
           example: "0xa1e4...63b4"
           description: "the address of the state being queried"
+        proxy:
+          type: string
+          format: address
+          example: "0xa1e4...63b4"
+          description: "if this is a proxy, this is the proxied-to address"
         balance:
           type: string
           format: wei

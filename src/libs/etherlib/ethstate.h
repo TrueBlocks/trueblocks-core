@@ -26,10 +26,11 @@ typedef enum {
     ST_BALANCE = (1 << 1),
     ST_NONCE = (1 << 2),
     ST_CODE = (1 << 3),
-    ST_DEPLOYED = (1 << 5),
-    ST_ACCTTYPE = (1 << 6),
+    ST_DEPLOYED = (1 << 4),
+    ST_ACCTTYPE = (1 << 5),
+    ST_PROXY = (1 << 6),
     ST_SOME = (ST_BALANCE | ST_NONCE | ST_CODE | ST_ACCTTYPE),
-    ST_ALL = (ST_BALANCE | ST_NONCE | ST_CODE | ST_DEPLOYED | ST_ACCTTYPE)
+    ST_ALL = (ST_BALANCE | ST_NONCE | ST_CODE | ST_DEPLOYED | ST_ACCTTYPE | ST_PROXY),
 } ethstate_t;
 // EXISTING_CODE
 
@@ -38,6 +39,7 @@ class CEthState : public CBaseNode {
   public:
     blknum_t blockNumber;
     address_t address;
+    address_t proxy;
     wei_t balance;
     uint64_t nonce;
     string_q code;
@@ -107,6 +109,7 @@ inline void CEthState::initialize(void) {
 
     blockNumber = 0;
     address = "";
+    proxy = "";
     balance = 0;
     nonce = 0;
     code = "";
@@ -124,6 +127,7 @@ inline void CEthState::duplicate(const CEthState& et) {
 
     blockNumber = et.blockNumber;
     address = et.address;
+    proxy = et.proxy;
     balance = et.balance;
     nonce = et.nonce;
     code = et.code;
@@ -177,10 +181,9 @@ typedef map<address_t, CEthState> CEthStateMap;  // NOLINT
 extern wei_t getBalanceAt(const address_t& addr, blknum_t blockNum);
 extern bool isContractAt(const address_t& addr, blknum_t blockNum);
 extern string_q getCodeAt(const address_t& addr, blknum_t blockNum);
-extern string_q getStorageAt(const address_t& addr, uint64_t pos, blknum_t blockNum);
+extern string_q getStorageAt(const address_t& addr, const hash_t& hash, blknum_t blockNum);
 extern uint64_t getNonceAt(const address_t& addr, blknum_t num);
 extern blknum_t getDeployBlock(const address_t& addr);
 extern bool isArchiveNode(void);
-extern const char* STR_DISPLAY_ETHSTATE;
 // EXISTING_CODE
 }  // namespace qblocks

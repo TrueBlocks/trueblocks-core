@@ -2,7 +2,7 @@
 title: "Chain state"
 description: ""
 lead: ""
-date: 2022-10-23T21:00:32
+date: 2022-10-23T21:18:08
 lastmod:
   - :git
   - lastmod
@@ -39,6 +39,7 @@ State data is made of the following data fields:
 | ----------- | ------------------------------------------------------------------------------- | ------- |
 | blockNumber | the block number at which this state was taken                                  | blknum  |
 | address     | the address of the state being queried                                          | address |
+| proxy       | if this is a proxy, this is the proxied-to address                              | address |
 | balance     | the balance at the address at the given block height                            | wei     |
 | nonce       | the nonce of the address at the given block height                              | uint64  |
 | code        | the byte code at the address (if this is a smart contract)                      | bytes   |

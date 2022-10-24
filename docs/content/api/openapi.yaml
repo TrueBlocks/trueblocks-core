@@ -1251,6 +1251,7 @@ paths:
                 - balance
                 - nonce
                 - code
+                - proxy
                 - deployed
                 - accttype
         - name: changes
@@ -1308,6 +1309,7 @@ paths:
                           "balance": 258843698360318500,
                           "nonce": 115,
                           "code": "0x",
+                          "proxy": "0xd9db270c1b5e3bd161e8c8503c55ceabee709552",
                           "address": "0xa1e4380a3b1f749673e270229993ee55f35663b4",
                           "deployed": 0,
                           "accttype": "EOA",
@@ -2434,6 +2436,11 @@ components:
           format: address
           example: "0xa1e4...63b4"
           description: "the address of the state being queried"
+        proxy:
+          type: string
+          format: address
+          example: "0xa1e4...63b4"
+          description: "if this is a proxy, this is the proxied-to address"
         balance:
           type: string
           format: wei

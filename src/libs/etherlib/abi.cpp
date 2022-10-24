@@ -349,8 +349,7 @@ const char* STR_DISPLAY_ABI =
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //-----------------------------------------------------------------------
-#undef LOG_TEST
-#define LOG_TEST(a, b)
+#define LOG_TEST_ABI(a, b)
 
 //---------------------------------------------------------------------------
 bool loadAbiFile(const string_q& path, void* data) {
@@ -391,7 +390,7 @@ bool CAbi::hasInterface(const string_q& enc) const {
 
 //---------------------------------------------------------------------------
 void CAbi::addInterfaceToMap(const CFunction& func) {
-    LOG_TEST("Inserting", func.type + "-" + func.signature);
+    LOG_TEST_ABI("Inserting", func.type + "-" + func.signature);
     interfaceMap[toLower(func.encoding)] = func;
 }
 
@@ -422,7 +421,7 @@ bool CAbi::loadAbisFromKnown(bool tokensOnly) {
             if (archive.Lock(binPath, modeReadOnly, LOCK_NOWAIT)) {
                 archive >> *this;
                 archive.Release();
-                LOG_TEST("Loaded " + uint_2_Str(nInterfaces()) + " interfaces from", relativize(binPath));
+                LOG_TEST_ABI("Loaded " + uint_2_Str(nInterfaces()) + " interfaces from", relativize(binPath));
                 abiSourcesMap[srcPath] = true;
                 return true;
             }
@@ -439,7 +438,7 @@ bool CAbi::loadAbisFromKnown(bool tokensOnly) {
     if (archive.Lock(binPath, modeWriteCreate, LOCK_NOWAIT)) {
         archive << *this;
         archive.Release();
-        LOG_TEST("Saved " + uint_2_Str(nInterfaces()) + " interfaces in", relativize(binPath));
+        LOG_TEST_ABI("Saved " + uint_2_Str(nInterfaces()) + " interfaces in", relativize(binPath));
         return true;
     }
 
@@ -453,7 +452,7 @@ bool CAbi::loadAbiFromAddress(const address_t& addr, bool recurse) {
     string_q fileName = cacheFolder_abis + addr + ".json";
     string_q localFile = (getCWD() + addr + ".json");
     if (fileExists(localFile) && localFile != fileName) {
-        LOG_TEST("Local file copied to cache", "./" + addr + ".json");
+        LOG_TEST_ABI("Local file copied to cache", "./" + addr + ".json");
         copyFile(localFile, fileName);
     }
 
@@ -483,10 +482,10 @@ bool CAbi::loadAbiFromFile(const string_q& fileName) {
         return true;
 
     if (!fileExists(fileName)) {
-        LOG_TEST("loadAbiFromFile", "Could not load file " + dispName(fileName));
+        LOG_TEST_ABI("loadAbiFromFile", "Could not load file " + dispName(fileName));
         return false;
     }
-    LOG_TEST("loadAbiFromFile", dispName(fileName));
+    LOG_TEST_ABI("loadAbiFromFile", dispName(fileName));
 
     if (loadAbiFromJson(asciiFileToString(fileName))) {
         for (auto& item : interfaceMap)
@@ -550,7 +549,7 @@ bool CAbi::loadAbiFromEtherscan(const address_t& addr) {
 
     string_q results = substitute(fromES, "\\", "");
     if (!contains(results, "NOTOK")) {
-        LOG_TEST("loadAbiFromEtherscan", "for address " + addr);
+        LOG_TEST_ABI("loadAbiFromEtherscan", "for address " + addr);
 
         replace(results, "\"result\":\"", "<extract>");
         replaceReverse(results, "\"}", "</extract>");
@@ -574,11 +573,11 @@ void CAbi::loadAbiAddInterface(const CFunction& func) {
 
     // first in wins
     if (hasInterface(func.encoding)) {
-        LOG_TEST("Skipping", func.type + "-" + func.signature);
+        LOG_TEST_ABI("Skipping", func.type + "-" + func.signature);
         return;
     }
 
-    LOG_TEST("Inserting", func.type + "-" + func.signature);
+    LOG_TEST_ABI("Inserting", func.type + "-" + func.signature);
     if (func.type != "constructor")
         addInterfaceToMap(func);
 }
