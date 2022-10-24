@@ -82,7 +82,7 @@ class CAbi : public CBaseNode {
     // EXISTING_CODE
   private:
     bool loadAbiFromFile(const string_q& fileName);
-    bool loadAbiFromAddress(const address_t& addr, bool recurse);
+    bool loadAbiFromAddress(const address_t& addr);
     bool loadAbiFromJson(const string_q& str);
     friend bool loadAbiFile(const string_q& path, void* data);
     friend bool loadAbiJsonString(const string_q& path, CAbi& abi);
