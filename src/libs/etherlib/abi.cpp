@@ -446,7 +446,7 @@ bool CAbi::loadAbisFromKnown(bool tokensOnly) {
 }
 
 //---------------------------------------------------------------------------
-bool CAbi::loadAbiFromAddress(const address_t& addr, bool recurse) {
+bool CAbi::loadAbiFromAddress(const address_t& addr) {
     ASSERT(!isZeroAddr(addr));
 
     string_q fileName = cacheFolder_abis + addr + ".json";
@@ -469,7 +469,7 @@ bool CAbi::loadAbiFromAddress(const address_t& addr, bool recurse) {
     //     theCall.bytes = "";
     //     theCall.blockNumber = getLatestBlock_client();
     //     if (doEthCall(theCall, false /* proxy */))
-    //         loadAbiFromAddress(theCall.getResult(), false);
+    //         loadAbiFromAddress(theCall.getResult());
     // }
 
     return true;
@@ -518,7 +518,7 @@ bool CAbi::loadAbiFromEtherscan(const address_t& addr) {
     if (abiSourcesMap[addr])
         return true;
 
-    if (loadAbiFromAddress(addr, true))
+    if (loadAbiFromAddress(addr))
         return true;
 
     // If this isn't a smart contract, don't bother
@@ -555,7 +555,7 @@ bool CAbi::loadAbiFromEtherscan(const address_t& addr) {
         results = snagFieldClear(results, "extract", "");
 
         stringToAsciiFile(fileName, results);
-        return loadAbiFromAddress(addr, true);
+        return loadAbiFromAddress(addr);
     }
 
     // We write an empty file to the abi cache even though at some point in the future
