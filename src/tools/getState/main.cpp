@@ -116,8 +116,6 @@ bool visitBlock(uint64_t blockNum, void* data) {
             if (code.length() > 250 && !verbose)
                 state.code = code.substr(0, 20) + "..." + code.substr(code.length() - 20, 100);
         }
-        if (opt->modeBits & ST_STORAGE)
-            state.storage = getStorageAt(state.address, 0, opt->latestBlock);
         if (opt->modeBits & ST_DEPLOYED) {
             blknum_t dep = getDeployBlock(state.address);
             state.deployed = dep == NOPOS ? 0 : dep;

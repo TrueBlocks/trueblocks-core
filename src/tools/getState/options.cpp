@@ -22,7 +22,7 @@ static const COption params[] = {
     // clang-format off
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) from which to retrieve balances"),  // NOLINT
     COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),  // NOLINT
-    COption("parts", "p", "list<enum[none|some*|all|balance|nonce|code|storage|deployed|accttype]>", OPT_FLAG, "control which state to export"),  // NOLINT
+    COption("parts", "p", "list<enum[none|some*|all|balance|nonce|code|deployed|accttype]>", OPT_FLAG, "control which state to export"),  // NOLINT
     COption("changes", "c", "", OPT_SWITCH, "only report a balance when it changes from one block to the next"),
     COption("no_zero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
     COption("call", "a", "<string>", OPT_HIDDEN | OPT_FLAG, "a bang-separated string consisting of address!4-byte!bytes"),  // NOLINT
@@ -112,8 +112,6 @@ bool COptions::parseArguments(string_q& command) {
             modeBits = ethstate_t(modeBits | ST_NONCE);
         if (part == "code")
             modeBits = ethstate_t(modeBits | ST_CODE);
-        if (part == "storage")
-            modeBits = ethstate_t(modeBits | ST_STORAGE);
         if (part == "deployed")
             modeBits = ethstate_t(modeBits | ST_DEPLOYED);
         if (part == "accttype")
@@ -141,11 +139,6 @@ bool COptions::parseArguments(string_q& command) {
         replace(format, "\t[{CODE}]", "");
     } else {
         UNHIDE_FIELD(CEthState, "code");
-    }
-    if (!(modeBits & ST_STORAGE)) {
-        replace(format, "\t[{STORAGE}]", "");
-    } else {
-        UNHIDE_FIELD(CEthState, "storage");
     }
     if (!(modeBits & ST_DEPLOYED)) {
         replace(format, "\t[{DEPLOYED}]", "");

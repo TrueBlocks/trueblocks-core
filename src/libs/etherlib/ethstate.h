@@ -26,11 +26,10 @@ typedef enum {
     ST_BALANCE = (1 << 1),
     ST_NONCE = (1 << 2),
     ST_CODE = (1 << 3),
-    ST_STORAGE = (1 << 4),
     ST_DEPLOYED = (1 << 5),
     ST_ACCTTYPE = (1 << 6),
     ST_SOME = (ST_BALANCE | ST_NONCE | ST_CODE | ST_ACCTTYPE),
-    ST_ALL = (ST_BALANCE | ST_NONCE | ST_CODE | ST_STORAGE | ST_DEPLOYED | ST_ACCTTYPE)
+    ST_ALL = (ST_BALANCE | ST_NONCE | ST_CODE | ST_DEPLOYED | ST_ACCTTYPE)
 } ethstate_t;
 // EXISTING_CODE
 
@@ -38,11 +37,10 @@ typedef enum {
 class CEthState : public CBaseNode {
   public:
     blknum_t blockNumber;
+    address_t address;
     wei_t balance;
     uint64_t nonce;
     string_q code;
-    string_q storage;
-    address_t address;
     blknum_t deployed;
     string_q accttype;
 
@@ -108,11 +106,10 @@ inline void CEthState::initialize(void) {
     CBaseNode::initialize();
 
     blockNumber = 0;
+    address = "";
     balance = 0;
     nonce = 0;
     code = "";
-    storage = "";
-    address = "";
     deployed = 0;
     accttype = "";
 
@@ -126,11 +123,10 @@ inline void CEthState::duplicate(const CEthState& et) {
     CBaseNode::duplicate(et);
 
     blockNumber = et.blockNumber;
+    address = et.address;
     balance = et.balance;
     nonce = et.nonce;
     code = et.code;
-    storage = et.storage;
-    address = et.address;
     deployed = et.deployed;
     accttype = et.accttype;
 
