@@ -471,7 +471,7 @@ bool doEthCall(CEthCall& theCall, bool checkProxy) {
 
     string_q ret = callRPC("eth_call", cmd.str(), false);
     if (startsWith(ret, "0x")) {
-        if (isTestMode())
+        if (isTestMode()) {
             LOG_INFO("call to ", theCall.address, " at block ", theCall.blockNumber, " at four-byte ", theCall.encoding,
                      " returned ", ret);
         }
@@ -524,14 +524,13 @@ string_q getPC_internal(const address_t& contract, blknum_t blockNum) {
         if (isPotentialAddr(test, proxy)) {
             if (proxy != contract && isAddress(proxy) && !isZeroAddr(proxy)) {
                 if (isTestMode()) {
-                    LOG_INFO("getPC_internal: query for slot ", loc, " contract ", contract, " block ", blockNum,
+                    LOG_INFO("getPC_internal: query implemenation() on contract ", contract, " block ", blockNum,
                              " returned: ", proxy);
                 }
                 return proxy;
             }
         }
     }
-
 
     // We check a bunch of different locations for the proxy
     CStringArray locations = {
