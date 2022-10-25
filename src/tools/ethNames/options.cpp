@@ -255,9 +255,14 @@ bool COptions::parseArguments(string_q& command) {
         manageFields("CAccountName:tags", true);
         format = "[{TAGS}]";
         addr_only = false;
-        types |= NAMED;
-        types |= PREFUND;
-        types |= CUSTOM;
+        if (custom) {
+            types = 0;
+            types |= CUSTOM;
+        } else {
+            types |= NAMED;
+            types |= PREFUND;
+            types |= CUSTOM;
+        }
     }
 
     // Prepare formatting
