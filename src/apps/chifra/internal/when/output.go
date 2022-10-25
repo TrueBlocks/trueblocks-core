@@ -43,6 +43,7 @@ func (opts *WhenOptions) WhenInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
+    // TODO: This should use StreamMany for all cases
 	handled = true
 
 	if opts.List {

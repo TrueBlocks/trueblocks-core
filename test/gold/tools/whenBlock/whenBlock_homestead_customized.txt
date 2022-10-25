@@ -2,10 +2,13 @@ chifra when  homestead --verbose --fmt json
 TEST[DATE|TIME] Blocks:  [homestead]
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] Format:  json
-{ "data": [
-  {
-    "blockNumber": 1150000,
-    "timestamp": 1457981393,
-    "name": "homestead",
-    "date": "2016-03-14 18:49:53 UTC"
-  }] }
+{
+  "data": [
+    {
+  "blockNumber": 1150000,
+  "timestamp": 1457981393,
+  "date": "2016-03-14 18:49:53 UTC",
+  "name": "homestead"
+}
+  ]
+}
