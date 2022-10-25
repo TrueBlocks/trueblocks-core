@@ -12,7 +12,7 @@ type Modeler[Raw RawData] interface {
 }
 
 type RawData interface {
-	RawReceipt
+	RawReceipt | RawTimestampCount
 }
 
 type Model struct {
