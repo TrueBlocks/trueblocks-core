@@ -346,6 +346,21 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
 
             string_q oldFn = test.workPath + test.fileName;
             string_q oldText = asciiFileToString(oldFn);
+            if (contains(oldText, "The XDG_")) {
+                // Weird case where we can't turn off timestamp from logs, so we blow away the timing here
+                CStringArray lines;
+                explode(lines, oldText, '\n');
+                ostringstream os;
+                for (auto line : lines) {
+                    if (contains(line, "The XDG_")) {
+                        line = substitute(line, "The XDG_", "|The XDG_");
+                        nextTokenClear(line, '|');
+                    }
+                    os << line << endl;
+                }
+                oldText = os.str();
+                stringToAsciiFile(oldFn, oldText);
+            }
 
             bool hasId = contains(oldText, "\"id\":");
             bool isTools = contains(oldFn, "/tools/");
@@ -368,6 +383,7 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
                     nextTokenClear(oldText, ']');
                     oldText = pre + oldText;
                 }
+
                 replaceAny(oldText, ",{}[]", "\n");
                 CStringArray lines;
                 explode(lines, oldText, '\n');
