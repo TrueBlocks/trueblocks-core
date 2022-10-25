@@ -21,11 +21,11 @@ import (
 // RunExport handles the export command for the command line. Returns error only as per cobra.
 func RunExport(cmd *cobra.Command, args []string) (err error) {
 	opts := exportFinishParse(args)
+	outputHelpers.CloseFileJsonWriterIfNeeded("export", &opts.Globals)
 	outputHelpers.InitJsonWriter("export", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.ExportInternal()
-	outputHelpers.CloseJsonWriterIfNeeded("export", &opts.Globals)
 	return
 }
 

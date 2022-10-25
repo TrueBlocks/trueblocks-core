@@ -21,11 +21,11 @@ import (
 // RunAbis handles the abis command for the command line. Returns error only as per cobra.
 func RunAbis(cmd *cobra.Command, args []string) (err error) {
 	opts := abisFinishParse(args)
+	outputHelpers.CloseFileJsonWriterIfNeeded("abis", &opts.Globals)
 	outputHelpers.InitJsonWriter("abis", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.AbisInternal()
-	outputHelpers.CloseJsonWriterIfNeeded("abis", &opts.Globals)
 	return
 }
 

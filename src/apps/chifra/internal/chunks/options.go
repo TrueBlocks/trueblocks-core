@@ -10,7 +10,6 @@ package chunksPkg
 import (
 	"encoding/json"
 	"net/http"
-	"os"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
@@ -146,16 +145,9 @@ func GetOptions() *ChunksOptions {
 }
 
 func ResetOptions() {
-	// We want to keep writer between command file calls if
-	// the global format is JSON
+	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
 	defaultChunksOptions = ChunksOptions{}
 	globals.SetDefaults(&defaultChunksOptions.Globals)
-	if GetOptions().Globals.Format == "json" || GetOptions().Globals.ShowRaw {
-		// Preserve writer
-		defaultChunksOptions.Globals.Writer = w
-	} else {
-		// Reset writer to the default one
-		defaultChunksOptions.Globals.Writer = os.Stdout
-	}
+	defaultChunksOptions.Globals.Writer = w
 }

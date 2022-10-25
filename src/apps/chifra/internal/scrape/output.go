@@ -23,11 +23,11 @@ import (
 // RunScrape handles the scrape command for the command line. Returns error only as per cobra.
 func RunScrape(cmd *cobra.Command, args []string) (err error) {
 	opts := scrapeFinishParse(args)
+	outputHelpers.CloseFileJsonWriterIfNeeded("scrape", &opts.Globals)
 	outputHelpers.InitJsonWriter("scrape", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.ScrapeInternal()
-	outputHelpers.CloseJsonWriterIfNeeded("scrape", &opts.Globals)
 	return
 }
 

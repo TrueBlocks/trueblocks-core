@@ -11,7 +11,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"os"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
@@ -137,16 +136,9 @@ func GetOptions() *AbisOptions {
 }
 
 func ResetOptions() {
-	// We want to keep writer between command file calls if
-	// the global format is JSON
+	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
 	defaultAbisOptions = AbisOptions{}
 	globals.SetDefaults(&defaultAbisOptions.Globals)
-	if GetOptions().Globals.Format == "json" || GetOptions().Globals.ShowRaw {
-		// Preserve writer
-		defaultAbisOptions.Globals.Writer = w
-	} else {
-		// Reset writer to the default one
-		defaultAbisOptions.Globals.Writer = os.Stdout
-	}
+	defaultAbisOptions.Globals.Writer = w
 }

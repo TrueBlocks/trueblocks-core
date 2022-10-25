@@ -21,11 +21,11 @@ import (
 // RunState handles the state command for the command line. Returns error only as per cobra.
 func RunState(cmd *cobra.Command, args []string) (err error) {
 	opts := stateFinishParse(args)
+	outputHelpers.CloseFileJsonWriterIfNeeded("state", &opts.Globals)
 	outputHelpers.InitJsonWriter("state", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.StateInternal()
-	outputHelpers.CloseJsonWriterIfNeeded("state", &opts.Globals)
 	return
 }
 

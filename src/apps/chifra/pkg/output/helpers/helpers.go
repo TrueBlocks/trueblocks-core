@@ -55,9 +55,14 @@ func InitJsonWriterApi(cmdName string, w io.Writer, opts *globals.GlobalOptions)
 	}
 }
 
+// InitJsonWriter inits JsonWriter if neccessary
 func InitJsonWriter(cmdName string, opts *globals.GlobalOptions) {
 	if !enabledForCmds[cmdName] {
 		return
+	}
+
+	if opts.Writer == nil {
+		opts.Writer = os.Stdout
 	}
 
 	// When running with --file, it may happen that the default writer
@@ -70,11 +75,21 @@ func InitJsonWriter(cmdName string, opts *globals.GlobalOptions) {
 		w := opts.GetOutputFileWriter()
 		jw := output.NewDefaultJsonWriter(w, !opts.ShowRaw)
 		opts.Writer = jw
-		// We need to set a flag, so that this JsonWriter is not forwarded
-		// to the next command (next line of --file)
-		opts.MixedFormats = true
 	}
 	if !ok && !(opts.Format == "json" || opts.ShowRaw) {
+		opts.Writer = opts.GetOutputFileWriter()
+	}
+}
+
+// CloseFileJsonWriterIfNeeded closes JsonWriter before a command executes. This way,
+// if we are switching formats, we will still close JSON result object
+func CloseFileJsonWriterIfNeeded(cmdName string, opts *globals.GlobalOptions) {
+	jw, ok := opts.Writer.(*output.JsonWriter)
+
+	if enabledForCmds[cmdName] && opts.File != "" && !(opts.Format == "json" || opts.ShowRaw) && ok {
+		jw.Close()
+		// Set global writer to default
+		opts.Writer = os.Stdout
 		opts.Writer = opts.GetOutputFileWriter()
 	}
 }

@@ -22,11 +22,11 @@ import (
 // RunWhen handles the when command for the command line. Returns error only as per cobra.
 func RunWhen(cmd *cobra.Command, args []string) (err error) {
 	opts := whenFinishParse(args)
+	outputHelpers.CloseFileJsonWriterIfNeeded("when", &opts.Globals)
 	outputHelpers.InitJsonWriter("when", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.WhenInternal()
-	outputHelpers.CloseJsonWriterIfNeeded("when", &opts.Globals)
 	return
 }
 

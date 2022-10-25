@@ -21,11 +21,11 @@ import (
 // RunSlurp handles the slurp command for the command line. Returns error only as per cobra.
 func RunSlurp(cmd *cobra.Command, args []string) (err error) {
 	opts := slurpFinishParse(args)
+	outputHelpers.CloseFileJsonWriterIfNeeded("slurp", &opts.Globals)
 	outputHelpers.InitJsonWriter("slurp", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.SlurpInternal()
-	outputHelpers.CloseJsonWriterIfNeeded("slurp", &opts.Globals)
 	return
 }
 
