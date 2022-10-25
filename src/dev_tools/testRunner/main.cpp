@@ -489,7 +489,7 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
 bool saveAndCopy(const string_q& customFile, void* data) {
     CStringArray parts;
     explode(parts, customFile, '/');
-    string_q destFile = rootConfigs + parts[parts.size() - 1];
+    string_q destFile = rootConfigs + "configs/mainnet/" + parts[parts.size() - 1];
     string_q saveFile = cacheFolder_tmp + parts[parts.size() - 1] + ".save";
     copyFile(destFile, saveFile);
     copyFile(customFile, destFile);
@@ -500,7 +500,7 @@ bool saveAndCopy(const string_q& customFile, void* data) {
 bool replaceFile(const string_q& customFile, void* data) {
     CStringArray parts;
     explode(parts, customFile, '/');
-    string_q destFile = rootConfigs + parts[parts.size() - 1];
+    string_q destFile = rootConfigs + "configs/mainnet/" + parts[parts.size() - 1];
     string_q saveFile = cacheFolder_tmp + parts[parts.size() - 1] + ".save";
     copyFile(saveFile, destFile);
     ::remove(saveFile.c_str());
