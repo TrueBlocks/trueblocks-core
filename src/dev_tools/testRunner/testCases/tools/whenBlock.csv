@@ -81,10 +81,9 @@ local   ,cmd  ,medi  ,when  ,tools/whenBlock ,skip_monthly                ,n    
 local   ,cmd  ,medi  ,when  ,tools/whenBlock ,skip_quaterly               ,n    ,fmt = txt & blocks = 768414-1856235:quarterly                                               
 local   ,cmd  ,medi  ,when  ,tools/whenBlock ,skip_annually               ,n    ,fmt = txt & blocks = 768414-4838611:annually                                                
         
-#       ,     ,      ,      ,                ,                            ,     ,these three file because a f i l e is created in the root config - a problem with testRunner
-local   ,both ,fast  ,when  ,tools/whenBlock ,customized_1                ,y    ,blocks = myblock                                                                            
-local   ,both ,fast  ,when  ,tools/whenBlock ,homestead_customized        ,y    ,blocks = homestead & verbose & fmt = json                                                   
-local   ,cmd  ,fast  ,when  ,tools/whenBlock ,upgrade_test                ,y    ,help                                                                                        
+on      ,both ,fast  ,when  ,tools/whenBlock ,customized_1                ,y    ,blocks = myblock                                                                            
+on      ,both ,fast  ,when  ,tools/whenBlock ,homestead_customized        ,y    ,blocks = homestead & verbose & fmt = json                                                   
+on      ,cmd  ,fast  ,when  ,tools/whenBlock ,upgrade_test                ,y    ,help                                                                                        
         
 local   ,both ,fast  ,when  ,tools/whenBlock ,to_file                     ,y    ,blocks = 1001001 & fmt = json & to_file                                                     
 local   ,both ,fast  ,when  ,tools/whenBlock ,redir_output                ,y    ,blocks = 1001001-1001005 & output = output_test_file                                        
