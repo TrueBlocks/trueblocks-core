@@ -49,7 +49,7 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-	if opts.Articulate {
+	if true { //opts.Articulate {
 		if opts.Globals.IsApiMode() {
 			return nil, false
 		}

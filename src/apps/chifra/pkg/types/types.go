@@ -12,7 +12,7 @@ type Modeler[Raw RawData] interface {
 }
 
 type RawData interface {
-	RawReceipt | RawTimestampCount
+	RawReceipt | RawWhenCount | RawNamedBlock
 }
 
 type Model struct {
@@ -30,13 +30,6 @@ type SimpleTimestamp struct {
 	BlockNumber uint64 `json:"blockNumber"`
 	TimeStamp   uint64 `json:"timestamp"`
 	Diff        uint64 `json:"diff"`
-}
-
-type SimpleNamedBlock struct {
-	BlockNumber uint64 `json:"blockNumber"`
-	TimeStamp   uint64 `json:"timestamp"`
-	Date        string `json:"date"`
-	Name        string `json:"name,omitempty"`
 }
 
 type SimpleAppearance struct {

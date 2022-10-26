@@ -111,7 +111,7 @@ func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.Si
 		}
 
 		if status == "Okay" {
-			scanBar.Report(opts.Globals.Writer, status, fmt.Sprintf(" %d.%d", expected.BlockNumber, expected.TimeStamp))
+			scanBar.Report(opts.Globals.Writer, status, fmt.Sprintf(" bn: %d ts: %d", expected.BlockNumber, expected.TimeStamp))
 		}
 	}
 
