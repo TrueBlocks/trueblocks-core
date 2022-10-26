@@ -31,8 +31,10 @@ func (opts *WhenOptions) HandleTimestampsShow() error {
 
 	if len(blockNums) > 0 {
 		for i, bn := range blockNums {
-			if err = opts.showOneBlock(&prev, bn, i == 0); err != nil {
-				return err
+			if bn < cnt {
+				if err = opts.showOneBlock(&prev, bn, i == 0); err != nil {
+					return err
+				}
 			}
 		}
 	} else {

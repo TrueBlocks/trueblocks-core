@@ -41,6 +41,10 @@ func (opts *WhenOptions) validateWhen() error {
 			return validate.Usage("The {0} option is only available with the {1} option.", "--count", "--timestamps")
 		}
 
+		if opts.Update {
+			return validate.Usage("The {0} option is only available with the {1} option.", "--update", "--timestamps")
+		}
+
 		if opts.Truncate != utils.NOPOS {
 			return validate.Usage("The {0} option is only available with the {1} option.", "--truncate", "--timestamps")
 		}

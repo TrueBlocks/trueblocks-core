@@ -43,14 +43,17 @@ func (opts *WhenOptions) WhenInternal() (err error, handled bool) {
 	}
 
 	// EXISTING_CODE
-    // TODO: This should use StreamMany for all cases
+	// TODO: This should use StreamMany for all cases
 	handled = true
 
 	if opts.List {
 		err = opts.HandleList()
 
 	} else if opts.Timestamps {
-		if opts.Count {
+		if opts.Update {
+			err = opts.HandleTimestampUpdate()
+
+		} else if opts.Count {
 			err = opts.HandleTimestampCount()
 
 		} else if opts.Truncate != utils.NOPOS {

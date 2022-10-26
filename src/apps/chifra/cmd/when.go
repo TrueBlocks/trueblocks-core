@@ -53,7 +53,7 @@ func init() {
 	whenCmd.Flags().Uint64VarP(&whenPkg.GetOptions().Truncate, "truncate", "n", 0, "with --timestamps only, truncates the timestamp file at this block (hidden)")
 	whenCmd.Flags().Uint64VarP(&whenPkg.GetOptions().Repair, "repair", "r", 0, "with --timestamps only, repair a single timestamp by querying the chain")
 	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Check, "check", "c", false, "with --timestamps only, checks the validity of the timestamp data")
-	whenCmd.Flags().Uint64VarP(&whenPkg.GetOptions().Update, "update", "", 0, "with --timestamps only, bring the timestamp database forward to the latest block")
+	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Update, "update", "", false, "with --timestamps only, bring the timestamp database forward to the latest block")
 	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Deep, "deep", "e", false, "with --timestamps --check only, verifies timestamps from on chain (slow) (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {
 		whenCmd.Flags().MarkHidden("truncate")
