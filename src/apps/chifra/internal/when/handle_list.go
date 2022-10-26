@@ -5,6 +5,23 @@
 package whenPkg
 
 import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+)
+
+func (opts *WhenOptions) HandleList() error {
+	results, err := tslib.GetSpecials(opts.Globals.Chain)
+	if err != nil {
+		return err
+	}
+	// TODO: Fix export without arrays
+	return globals.RenderSlice(&opts.Globals, results)
+}
+
+/*
+package whenPkg
+
+import (
 	"context"
 	"fmt"
 
@@ -44,3 +61,4 @@ func (opts *WhenOptions) HandleList() error {
 		JsonIndent: "  ",
 	})
 }
+*/
