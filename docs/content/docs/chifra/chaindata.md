@@ -2,7 +2,7 @@
 title: "Chain data"
 description: ""
 lead: ""
-date: 2022-10-25T15:32:40
+date: 2022-10-26T07:13:35
 lastmod:
   - :git
   - lastmod
@@ -226,6 +226,7 @@ Flags:
   -u, --count         with --timestamps only, returns the number of timestamps in the cache
   -r, --repair uint   with --timestamps only, repair a single timestamp by querying the chain
   -c, --check         with --timestamps only, checks the validity of the timestamp data
+      --update uint   with --timestamps only, bring the timestamp database forward to the latest block
   -x, --fmt string    export format, one of [none|json*|txt|csv]
   -v, --verbose       enable verbose (increase detail with --log_level)
   -h, --help          display this help screen

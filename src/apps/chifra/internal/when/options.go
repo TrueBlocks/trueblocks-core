@@ -29,6 +29,7 @@ type WhenOptions struct {
 	Truncate   uint64                   `json:"truncate,omitempty"`   // With --timestamps only, truncates the timestamp file at this block
 	Repair     uint64                   `json:"repair,omitempty"`     // With --timestamps only, repair a single timestamp by querying the chain
 	Check      bool                     `json:"check,omitempty"`      // With --timestamps only, checks the validity of the timestamp data
+	Update     uint64                   `json:"update,omitempty"`     // With --timestamps only, bring the timestamp database forward to the latest block
 	Deep       bool                     `json:"deep,omitempty"`       // With --timestamps --check only, verifies timestamps from on chain (slow)
 	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
 	BadFlag    error                    `json:"badFlag,omitempty"`    // An error flag if needed
@@ -37,6 +38,7 @@ type WhenOptions struct {
 var defaultWhenOptions = WhenOptions{
 	Truncate: utils.NOPOS,
 	Repair:   utils.NOPOS,
+	Update:   utils.NOPOS,
 }
 
 // testLog is used only during testing to export the options for this test case.
@@ -48,6 +50,7 @@ func (opts *WhenOptions) testLog() {
 	logger.TestLog(opts.Truncate != utils.NOPOS, "Truncate: ", opts.Truncate)
 	logger.TestLog(opts.Repair != utils.NOPOS, "Repair: ", opts.Repair)
 	logger.TestLog(opts.Check, "Check: ", opts.Check)
+	logger.TestLog(opts.Update != utils.NOPOS, "Update: ", opts.Update)
 	logger.TestLog(opts.Deep, "Deep: ", opts.Deep)
 	opts.Globals.TestLog()
 }
@@ -64,6 +67,7 @@ func whenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
 	opts := &copy
 	opts.Truncate = utils.NOPOS
 	opts.Repair = utils.NOPOS
+	opts.Update = utils.NOPOS
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "blocks":
@@ -83,6 +87,8 @@ func whenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
 			opts.Repair = globals.ToUint64(value[0])
 		case "check":
 			opts.Check = true
+		case "update":
+			opts.Update = globals.ToUint64(value[0])
 		case "deep":
 			opts.Deep = true
 		default:
