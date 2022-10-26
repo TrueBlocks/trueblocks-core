@@ -72,7 +72,12 @@ func (opts *BlazeOptions) HandleBlaze(meta *rpcClient.MetaData) (ok bool, err er
 // TODO: We could, if we wished, use getLogs with a block range to retrieve all of the logs in the range
 // TODO: with a single query. See closed issue #1829
 func (opts *BlazeOptions) HandleBlaze1(meta *rpcClient.MetaData, blocks []int) (ok bool, err error) {
-	// Prepare three channels to process first blocks, then appearances and timestamps
+	//
+	// We build a pipeline that takes block numbers in through the blockChannel which queries the chain
+	// and sends the results through the appearanceChannel and the timestampChannel. The appearanceChannel
+	// processes appearances and writes them to the ripe folder. The timestampChannel processes timestamps
+	// and writes them to the timestamp database.
+	//
 	blockChannel := make(chan int)
 	appearanceChannel := make(chan ScrapedData)
 	tsChannel := make(chan tslib.Timestamp)

@@ -1,0 +1,12 @@
+chifra when  --count --fmt txt --timestamps --raw
+TEST[DATE|TIME] Timestamps:  true
+TEST[DATE|TIME] Count:  true
+TEST[DATE|TIME] ShowRaw:  true
+TEST[DATE|TIME] Format:  txt
+{
+  "data": [
+    {
+  "count": 5000000
+}
+  ]
+}

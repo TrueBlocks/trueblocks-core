@@ -26,7 +26,8 @@ import (
 )
 
 func (opts *AbisOptions) HandleAbiFind() error {
-	scanBar := progress.NewScanBar(uint64(len(opts.Find)) /* wanted */, 13919 /* freq */, 50000000 /* max */, .5)
+	/* wanted */ /* freq */ /* max */
+	scanBar := progress.NewScanBar(uint64(len(opts.Find)), 13919, 50000000, .5)
 
 	var results []types.SimpleFunction
 

@@ -1189,6 +1189,30 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: count
+          description: with --timestamps only, returns the number of timestamps in the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: repair
+          description: with --timestamps only, repair a single timestamp by querying the chain
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+        - name: check
+          description: with --timestamps only, checks the validity of the timestamp data
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
           description: returns the requested data
