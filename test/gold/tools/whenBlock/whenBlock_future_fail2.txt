@@ -17,6 +17,7 @@ Flags:
   -n, --truncate uint   with --timestamps only, truncates the timestamp file at this block (hidden)
   -r, --repair uint     with --timestamps only, repair a single timestamp by querying the chain
   -c, --check           with --timestamps only, checks the validity of the timestamp data
+      --update          with --timestamps only, bring the timestamp database forward to the latest block
   -e, --deep            with --timestamps --check only, verifies timestamps from on chain (slow) (hidden)
   -x, --fmt string      export format, one of [none|json*|txt|csv]
   -v, --verbose         enable verbose (increase detail with --log_level)
