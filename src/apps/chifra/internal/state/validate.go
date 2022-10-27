@@ -18,7 +18,7 @@ func (opts *StateOptions) validateState() error {
 		return opts.BadFlag
 	}
 
-	err := validate.ValidateEnumSlice("--parts", opts.Parts, "[none|some|all|balance|nonce|code|storage|deployed|accttype]")
+	err := validate.ValidateEnumSlice("--parts", opts.Parts, "[none|some|all|balance|nonce|code|proxy|deployed|accttype]")
 	if err != nil {
 		return err
 	}

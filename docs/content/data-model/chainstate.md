@@ -2,7 +2,7 @@
 title: "Chain state"
 description: ""
 lead: ""
-date: 2022-10-16T07:55:33
+date: 2022-10-23T21:18:08
 lastmod:
   - :git
   - lastmod
@@ -35,16 +35,16 @@ The balance of an address at a given block.
 
 State data is made of the following data fields:
 
-| Field       | Description                                                                                     | Type    |
-| ----------- | ----------------------------------------------------------------------------------------------- | ------- |
-| blockNumber | the block number at which this state was taken                                                  | blknum  |
-| balance     | the balance at the address at the given block height                                            | wei     |
-| nonce       | the nonce of the address at the given block height                                              | uint64  |
-| code        | the byte code at the address (if this is a smart contract)                                      | bytes   |
-| storage     | this field is un-implemented and current returns the first storage location in a smart contract | bytes   |
-| address     | the address of the state being queried                                                          | address |
-| deployed    | the block number at which this smart contract was deployed (if a smart contact)                 | blknum  |
-| accttype    | the type of the address at the given block                                                      | string  |
+| Field       | Description                                                                     | Type    |
+| ----------- | ------------------------------------------------------------------------------- | ------- |
+| blockNumber | the block number at which this state was taken                                  | blknum  |
+| address     | the address of the state being queried                                          | address |
+| proxy       | if this is a proxy, this is the proxied-to address                              | address |
+| balance     | the balance at the address at the given block height                            | wei     |
+| nonce       | the nonce of the address at the given block height                              | uint64  |
+| code        | the byte code at the address (if this is a smart contract)                      | bytes   |
+| deployed    | the block number at which this smart contract was deployed (if a smart contact) | blknum  |
+| accttype    | the type of the address at the given block                                      | string  |
 
 
 ## Result

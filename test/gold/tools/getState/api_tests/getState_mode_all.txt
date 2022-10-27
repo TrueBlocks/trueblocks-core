@@ -3,13 +3,13 @@ state?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&parts=all&blocks=2500000
   "data": [
     {
       "blockNumber": 2500000,
+      "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
+      "proxy": "0xd1220a0cf47c7b9be7a2e6ba89f429762e7b9adb",
       "balance": 3905662906205094300000,
       "nonce": 0,
       "code": "0x606060405236156100...65c6b64bfe7fe36bd19b",
-      "storage": "0x000000000000000000000000d176b08cfcb3872208f44b86f87b32faf32c531b",
-      "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
       "deployed": 988725,
-      "accttype": "Contract",
+      "accttype": "Proxy",
       "ether": 3905.6629062050943
     }
   ],

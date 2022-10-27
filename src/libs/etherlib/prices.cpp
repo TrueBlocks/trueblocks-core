@@ -41,7 +41,9 @@ class CUniPair : public CEthCall {
     address_t r2;
     bool reversed;
     bool selfie;
-    CUniPair(const address_t& r1In, const address_t& r2In) : r1(r1In), r2(r2In), reversed(false), selfie(false) {
+    CUniPair(blknum_t bn, const address_t& r1In, const address_t& r2In)
+        : CEthCall(), r1(r1In), r2(r2In), reversed(false), selfie(false) {
+        blockNumber = bn;
         if (r1In > r2In) {
             r1 = r2In;
             r2 = r1In;
@@ -50,15 +52,17 @@ class CUniPair : public CEthCall {
             selfie = true;
         }
     }
-    CUniPair(void) : reversed(false), selfie(false) {
+    CUniPair(void) : CEthCall(), reversed(false), selfie(false) {
     }
     CUniPair(const CUniPair& p) {
+        CEthCall::initialize();
         r1 = p.r1;
         r2 = p.r2;
         reversed = p.reversed;
         selfie = p.selfie;
     }
     CUniPair& operator=(const CUniPair& p) {
+        CEthCall::operator=(p);
         r1 = p.r1;
         r2 = p.r2;
         reversed = p.reversed;
@@ -100,11 +104,14 @@ bool CUniPair::findPair(void) {
         uniFactory.address = uniswapFactory;
         uniFactory.encoding = getPair;
         uniFactory.abi_spec.loadAbisKnown("uniswap");
-        uniFactory.blockNumber = getLatestBlock_client();  // doesn't really matter
+        uniFactory.blockNumber = blockNumber;
         uniFactory.deployed = getDeployBlock(uniswapFactory);
     }
     uniFactory.bytes = hex_2_Pad64(r1) + hex_2_Pad64(r2);
-    if (!doEthCall(uniFactory)) {
+    if (!doEthCall(uniFactory, true /* proxy */)) {
+        if (isTestMode()) {
+            LOG_INFO("doEthCall in CUniPrice::findPair returned false");
+        }
         notPairs[key] = true;
         return false;
     }
@@ -129,8 +136,12 @@ bool CUniPair::getPrice(blknum_t bn, string_q& priceSource, double& priceOut) {
     priceOut = 1.;
 
     blockNumber = bn;
-    if (!doEthCall(*this))
+    if (!doEthCall(*this, true /* proxy */)) {
+        if (isTestMode()) {
+            LOG_INFO("doEthCall in CUniPrice::getPrice returned false");
+        }
         return false;
+    }
 
     CStringArray results;
     if (!getCallResult(results) || results.size() < 2) {
@@ -159,7 +170,7 @@ bool CUniPair::getPrice(blknum_t bn, string_q& priceSource, double& priceOut) {
 
 //---------------------------------------------------------------------------
 double getPrice_UsdPerEth(blknum_t bn, string_q& priceSource) {
-    CUniPair usdEth(dai, wEth);
+    CUniPair usdEth(bn, dai, wEth);
     if (usdEth.findPair()) {
         double price;
         if (usdEth.getPrice(bn, priceSource, price))
@@ -197,7 +208,7 @@ double getPrice_UsdPerTok(blknum_t bn, string_q& priceSource, const address_t& t
 
 //---------------------------------------------------------------------------
 double getPrice_EthPerTok(blknum_t bn, string_q& priceSource, const address_t& tok) {
-    CUniPair thePair(wEth, tok);
+    CUniPair thePair(bn, wEth, tok);
     if (thePair.findPair()) {
         double price;
         if (thePair.getPrice(bn, priceSource, price))
@@ -220,7 +231,7 @@ double getPriceMaker_UsdPerEth(blknum_t bn, string_q& priceSource) {
     theCall.address = makerMedianizer;
     theCall.encoding = peek;
     theCall.abi_spec = spec;
-    if (doEthCall(theCall)) {
+    if (doEthCall(theCall, true /* proxy */)) {
         CStringArray results;
         theCall.getCallResult(results);
         if (results.size() > 1 && results[1] == "true") {
@@ -229,6 +240,10 @@ double getPriceMaker_UsdPerEth(blknum_t bn, string_q& priceSource) {
             wei_t ether = wei / weiPerEther();
             priceSource = "maker";
             return str_2_Uint(wei_2_Str(ether)) / 100.;
+        }
+    } else {
+        if (isTestMode()) {
+            LOG_INFO("doEthCall in getPriceMaker_UsdPerEth returned false");
         }
     }
 

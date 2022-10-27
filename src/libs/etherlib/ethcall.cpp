@@ -442,14 +442,24 @@ bool CEthCall::getCallResult(CStringArray& out) const {
 }
 
 //-------------------------------------------------------------------------
-bool doEthCall(CEthCall& theCall) {
+bool doEthCall(CEthCall& theCall, bool checkProxy) {
     if (theCall.deployed != NOPOS && theCall.deployed > theCall.blockNumber) {
-        LOG4(theCall.Format(
-            "Calling a contract ([{ADDRESS}]) at block [{BLOCKNUMBER}] prior to its deployment [{DEPLOYED}]"));
+        if (isTestMode()) {
+            LOG_INFO(theCall.Format(
+                "Calling a contract ([{ADDRESS}]) at block [{BLOCKNUMBER}] prior to its deployment [{DEPLOYED}]"));
+        }
         return false;
     }
 
     string_q orig = theCall.encoding;
+    blknum_t o = theCall.blockNumber;
+    if (isTestMode() && theCall.blockNumber > 15000000) {
+        theCall.blockNumber = 15000000;
+    }
+
+    if (isTestMode()) {
+        LOG_INFO("Calling ", theCall.address, " at block ", theCall.blockNumber, "...: ", getEnvStr("SHIT"));
+    }
 
     ostringstream cmd;
     cmd << "[";
@@ -460,27 +470,98 @@ bool doEthCall(CEthCall& theCall) {
     cmd << "]";
 
     string_q ret = callRPC("eth_call", cmd.str(), false);
-    // Did we get an answer? If so, return it
     if (startsWith(ret, "0x")) {
+        if (isTestMode()) {
+            LOG_INFO("call to ", theCall.address, " at block ", theCall.blockNumber, " at four-byte ", theCall.encoding,
+                     " returned ", ret);
+        }
+        theCall.encoding = orig;
+        theCall.blockNumber = o;
         theCall.abi_spec.articulateOutputs(theCall.encoding.substr(0, 10), ret, theCall.callResult);
         return true;
     }
 
-    if (theCall.checkProxy) {
-        theCall.checkProxy = false;       // avoid infinite regress
-        theCall.encoding = "0x5c60da1b";  // implementation()
-        if (doEthCall(theCall)) {
-            // This is a proxy with an implementation...let's
-            // try again against the proxied-to address.
-            theCall.encoding = orig;
-            theCall.address = theCall.getCallResult();
-            if (isZeroAddr(theCall.address))
-                return false;
-            return doEthCall(theCall);
+    if (checkProxy) {
+        address_t proxy;
+        if (getProxyContract(theCall.address, theCall.blockNumber, proxy)) {
+            if (isTestMode()) {
+                LOG_INFO("proxy for ", theCall.address, " found at ", proxy, ". Calling into proxy.");
+                theCall.address = proxy;
+                return doEthCall(theCall, checkProxy);
+            }
         }
     }
+
+    if (isTestMode()) {
+        LOG_INFO("call to ", theCall.address, " at block ", theCall.blockNumber, " at four-byte ", theCall.encoding,
+                 " returned ", ret);
+    }
+
     theCall.encoding = orig;
+    theCall.blockNumber = o;
     return false;
+}
+
+extern string_q getPC_internal(const address_t& contract, blknum_t blockNum);
+//-------------------------------------------------------------------------------------
+bool getProxyContract(const address_t& contract, blknum_t blockNum, address_t& proxy) {
+    proxy = getPC_internal(contract, blockNum);
+    return !proxy.empty();
+}
+
+//-----------------------------------------------------------------------
+string_q getPC_internal(const address_t& contract, blknum_t blockNum) {
+    // We try the following two not-so-useful methods of calling the implementation function directly
+    CEthCall theCall;
+    theCall.address = contract;
+    theCall.encoding = "0x59679b0f";  // implementation()
+    theCall.bytes = "";
+    theCall.blockNumber = blockNum;
+    if (doEthCall(theCall, false /* proxy */)) {
+        string_q result = theCall.getCallResult();
+        biguint_t test = str_2_Wei(result);
+        address_t proxy;
+        if (isPotentialAddr(test, proxy)) {
+            if (proxy != contract && isAddress(proxy) && !isZeroAddr(proxy)) {
+                if (isTestMode()) {
+                    LOG_INFO("getPC_internal: query implemenation() on contract ", contract, " block ", blockNum,
+                             " returned: ", proxy);
+                }
+                return proxy;
+            }
+        }
+    }
+
+    // We check a bunch of different locations for the proxy
+    CStringArray locations = {
+        "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc",  // EIP1967
+        "0x7050c9e0f4ca769c69bd3a8ef740bc37934f8e2c036e5a723fd8ee048ed3f8c3",  // EIP1967ZOS
+        "0xc5f16f0fcc639fa48a6947836d9850f504798523bf8c9a3a87d5876cf622bcf7",  // EIP1822
+        "0x5f3b5dfeb7b28cdbd7faba78963ee202a494e2a2cc8c9978d5e30d2aebb8c197",  // EIP1822ZOS};
+        "0x",
+    };
+
+    for (auto loc : locations) {
+        string_q result = getStorageAt(contract, loc, blockNum);
+        biguint_t test = str_2_Wei(result);
+        address_t proxy;
+        if (isPotentialAddr(test, proxy)) {
+            if (proxy != contract && isAddress(proxy) && !isZeroAddr(proxy)) {
+                if (isTestMode()) {
+                    LOG_INFO("getPC_internal: query for slot ", loc, " contract ", contract, " block ", blockNum,
+                             " returned: ", proxy);
+                }
+                return proxy;
+            }
+        }
+    }
+
+    if (isTestMode()) {
+        LOG_INFO("getPC_internal: eth_call using four-byte ", theCall.encoding, " contract ", contract, " block ",
+                 blockNum, " returned: false");
+    }
+
+    return "";
 }
 // EXISTING_CODE
 }  // namespace qblocks

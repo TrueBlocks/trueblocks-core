@@ -3,62 +3,62 @@ state?addrs=trueblocks.eth&blocks=8854700-8854900:20
   "data": [
     {
       "blockNumber": 8854700,
-      "balance": 0,
       "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "balance": 0,
       "ether": 0
     },
     {
       "blockNumber": 8854720,
-      "balance": 0,
       "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "balance": 0,
       "ether": 0
     },
     {
       "blockNumber": 8854740,
-      "balance": 5e+18,
       "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "balance": 5e+18,
       "ether": 5
     },
     {
       "blockNumber": 8854760,
-      "balance": 5e+18,
       "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "balance": 5e+18,
       "ether": 5
     },
     {
       "blockNumber": 8854780,
-      "balance": 5e+18,
       "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "balance": 5e+18,
       "ether": 5
     },
     {
       "blockNumber": 8854800,
-      "balance": 5e+18,
       "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "balance": 5e+18,
       "ether": 5
     },
     {
       "blockNumber": 8854820,
-      "balance": 5e+18,
       "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "balance": 5e+18,
       "ether": 5
     },
     {
       "blockNumber": 8854840,
-      "balance": 5e+18,
       "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "balance": 5e+18,
       "ether": 5
     },
     {
       "blockNumber": 8854860,
-      "balance": 5e+18,
       "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "balance": 5e+18,
       "ether": 5
     },
     {
       "blockNumber": 8854880,
-      "balance": 5e+18,
       "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "balance": 5e+18,
       "ether": 5
     }
   ],

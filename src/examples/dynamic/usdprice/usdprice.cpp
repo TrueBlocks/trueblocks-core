@@ -30,7 +30,7 @@ class CTestTraverser : public CTraverser {
         theCall.abi_spec.loadAbiFromEtherscan(uniswapFactory);
         theCall.blockNumber = getLatestBlock_client();
         LOG4("Calling ", substitute(theCall.Format(), "\n", " "));
-        if (doEthCall(theCall)) {
+        if (doEthCall(theCall, true /* proxy */)) {
             perTxCall.address = theCall.getCallResult();
             perTxCall.abi_spec.loadAbiFromEtherscan(perTxCall.address);
             LOG_INFO(bGreen, "Found USD Pair: ", perTxCall.address, " with ", perTxCall.abi_spec.nInterfaces(),
@@ -64,7 +64,7 @@ bool display(CTraverser* trav, void* data) {
     tt->block.timestamp = bn_2_Timestamp(tt->app->blk);
 
     cerr << tt->searchType << " ";
-    if (doEthCall(tt->perTxCall) && !tt->perTxCall.callResult.outputs.empty()) {
+    if (doEthCall(tt->perTxCall, true /* proxy */) && !tt->perTxCall.callResult.outputs.empty()) {
         CStringArray results;
         if (tt->perTxCall.getCallResult(results) && results.size() > 1) {
             wei_t balance = getBalanceAt(tt->curMonitor->address, tt->app->blk);

@@ -2,7 +2,7 @@
 title: "Chain state"
 description: ""
 lead: ""
-date: 2022-10-08T19:54:08
+date: 2022-10-23T21:19:18
 lastmod:
   - :git
   - lastmod
@@ -47,7 +47,7 @@ Arguments:
 
 Flags:
   -p, --parts strings   control which state to export
-                        One or more of [ none | some | all | balance | nonce | code | storage | deployed | accttype ]
+                        One or more of [ none | some | all | balance | nonce | code | proxy | deployed | accttype ]
   -c, --changes         only report a balance when it changes from one block to the next
   -n, --no_zero         suppress the display of zero balance accounts
   -x, --fmt string      export format, one of [none|json*|txt|csv]

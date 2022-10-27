@@ -28,7 +28,7 @@ int main(int argc, const char* argv[]) {
         if (!options.call.empty()) {
             if (once)
                 cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CEthCall));
-            options.blocks.forEveryBlockNumber(visitBlock, &options);
+            options.blocks.forEveryBlockNumber(visitForCall, &options);
             once = false;
 
         } else {
@@ -36,7 +36,7 @@ int main(int argc, const char* argv[]) {
                 if (once)
                     cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CEthState));
                 options.current = addr;
-                options.blocks.forEveryBlockNumber(visitBlock, &options);
+                options.blocks.forEveryBlockNumber(visitForState, &options);
                 once = false;
             }
         }
@@ -48,7 +48,7 @@ int main(int argc, const char* argv[]) {
 }
 
 //--------------------------------------------------------------
-bool visitBlock(uint64_t blockNum, void* data) {
+bool visitForCall(uint64_t blockNum, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
     bool isText = expContext().exportFmt & (TXT1 | CSV1);
 
@@ -60,85 +60,104 @@ bool visitBlock(uint64_t blockNum, void* data) {
     if (blockNum < opt->oldestBlock)
         opt->oldestBlock = blockNum;
 
-    if (opt->needsHistory() && !isArchiveNode())
-        opt->errors.push_back("The request for historical state at block " + uint_2_Str(blockNum) +
-                              " is not available.");
-
-    if (!opt->theCall.address.empty()) {
-        // TODO: Is opt->theCall.address a smart contract at this block?
-        opt->theCall.blockNumber = blockNum;
-        if (doEthCall(opt->theCall)) {
-            CTransaction art;
-            art.input = opt->theCall.encoding + opt->theCall.bytes;
-            opt->abi_spec.articulateTransaction(&art);
-            opt->theCall.callResult.inputs = art.articulatedTx.inputs;
-            if (isText) {
-                cout << opt->theCall.Format(expContext().fmtMap["format"]) << endl;
-
-            } else {
-                if (!opt->firstOut)
-                    cout << "," << endl;
-                cout << "  ";
-                indent();
-                opt->theCall.toJson(cout);
-                unindent();
-                opt->firstOut = false;
-            }
+    // TODO: Is opt->theCall.address a smart contract at this block?
+    opt->theCall.blockNumber = blockNum;
+    if (doEthCall(opt->theCall, true /* proxy */)) {
+        CTransaction art;
+        art.input = opt->theCall.encoding + opt->theCall.bytes;
+        opt->abi_spec.articulateTransaction(&art);
+        opt->theCall.callResult.inputs = art.articulatedTx.inputs;
+        if (isText) {
+            cout << opt->theCall.Format(expContext().fmtMap["format"]) << endl;
 
         } else {
-            ostringstream os;
-            os << "No result from call to " << opt->theCall.address << " with fourbyte " << opt->theCall.encoding
-               << " at block " << blockNum;
-            opt->errors.push_back(os.str());
+            if (!opt->firstOut)
+                cout << "," << endl;
+            cout << "  ";
+            indent();
+            opt->theCall.toJson(cout);
+            unindent();
+            opt->firstOut = false;
         }
 
     } else {
-        CEthState state;
-        state.address = opt->current;
-        wei_t balance = getBalanceAt(state.address, blockNum);
-        if (opt->changes) {
-            if (balance == opt->prevBal)
-                return !shouldQuit();
-            opt->prevBal = balance;
-        }
+        ostringstream os;
+        os << "No result from call to " << opt->theCall.address << " with fourbyte " << opt->theCall.encoding
+           << " at block " << blockNum;
+        opt->errors.push_back(os.str());
+    }
 
-        if (opt->no_zero && balance == 0)
+    return !shouldQuit();
+}
+
+//--------------------------------------------------------------
+bool visitForState(uint64_t blockNum, void* data) {
+    COptions* opt = reinterpret_cast<COptions*>(data);
+    bool isText = expContext().exportFmt & (TXT1 | CSV1);
+
+    if (!isTestMode() && opt->blocks.nItems() > 10) {
+        cerr << blockNum << "\r";
+        cerr.flush();
+    }
+
+    if (blockNum < opt->oldestBlock)
+        opt->oldestBlock = blockNum;
+
+    CEthState state;
+    state.address = opt->current;
+    wei_t balance = getBalanceAt(state.address, blockNum);
+    if (opt->changes) {
+        if (balance == opt->prevBal)
             return !shouldQuit();
+        opt->prevBal = balance;
+    }
 
-        state.blockNumber = blockNum;
-        if (opt->modeBits & ST_BALANCE)
-            state.balance = balance;
-        if (opt->modeBits & ST_NONCE)
-            state.nonce = getNonceAt(state.address, blockNum);
-        if (opt->modeBits & ST_CODE) {
-            string_q code = getCodeAt(state.address, opt->latestBlock);
-            state.code = code;
-            if (code.length() > 250 && !verbose)
-                state.code = code.substr(0, 20) + "..." + code.substr(code.length() - 20, 100);
-        }
-        if (opt->modeBits & ST_STORAGE)
-            state.storage = getStorageAt(state.address, 0, opt->latestBlock);
-        if (opt->modeBits & ST_DEPLOYED) {
-            blknum_t dep = getDeployBlock(state.address);
-            state.deployed = dep == NOPOS ? 0 : dep;
-        }
-        if (opt->modeBits & ST_ACCTTYPE)
+    if (opt->no_zero && balance == 0)
+        return !shouldQuit();
+
+    state.blockNumber = blockNum;
+    if (opt->modeBits & ST_BALANCE)
+        state.balance = balance;
+    if (opt->modeBits & ST_NONCE)
+        state.nonce = getNonceAt(state.address, blockNum);
+    if (opt->modeBits & ST_CODE) {
+        string_q code = getCodeAt(state.address, opt->latestBlock);
+        state.code = code;
+        if (code.length() > 250 && !verbose)
+            state.code = code.substr(0, 20) + "..." + code.substr(code.length() - 20, 100);
+    }
+
+    if (opt->modeBits & ST_DEPLOYED || opt->modeBits & ST_PROXY) {
+        blknum_t dep = getDeployBlock(state.address);
+        state.deployed = dep == NOPOS ? 0 : dep;
+    }
+
+    if (opt->modeBits & ST_PROXY) {
+        getProxyContract(state.address, blockNum, state.proxy);
+    }
+
+    if (opt->modeBits & ST_ACCTTYPE) {
+        if (!state.proxy.empty()) {
+            state.accttype = "Proxy";
+        } else {
             state.accttype = (isContractAt(state.address, opt->latestBlock) ? "Contract" : "EOA");
-
-        if (true) {
-            if (isText) {
-                cout << state.Format(expContext().fmtMap["format"]) << endl;
-
-            } else {
-                if (!opt->firstOut)
-                    cout << "," << endl;
-                cout << "  ";
-                indent();
-                state.toJson(cout);
-                unindent();
-                opt->firstOut = false;
-            }
         }
     }
+
+    if (true) {
+        if (isText) {
+            cout << state.Format(expContext().fmtMap["format"]) << endl;
+
+        } else {
+            if (!opt->firstOut)
+                cout << "," << endl;
+            cout << "  ";
+            indent();
+            state.toJson(cout);
+            unindent();
+            opt->firstOut = false;
+        }
+    }
+
     return !shouldQuit();
 }

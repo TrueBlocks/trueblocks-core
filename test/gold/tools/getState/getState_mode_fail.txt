@@ -3,7 +3,7 @@ TEST[DATE|TIME] Addrs:  [0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359]
 TEST[DATE|TIME] Blocks:  [2500000]
 TEST[DATE|TIME] Parts:  [junk]
 TEST[DATE|TIME] Format:  txt
-Error: The --parts option (junk) must be one of [ none | some | all | balance | nonce | code | storage | deployed | accttype ]
+Error: The --parts option (junk) must be one of [ none | some | all | balance | nonce | code | proxy | deployed | accttype ]
 Usage:
   chifra state [flags] <address> [address...] [block...]
 
@@ -13,7 +13,7 @@ Arguments:
 
 Flags:
   -p, --parts strings      control which state to export
-                           One or more of [ none | some | all | balance | nonce | code | storage | deployed | accttype ]
+                           One or more of [ none | some | all | balance | nonce | code | proxy | deployed | accttype ]
   -c, --changes            only report a balance when it changes from one block to the next
   -n, --no_zero            suppress the display of zero balance accounts
   -a, --call string        a bang-separated string consisting of address!4-byte!bytes (hidden)

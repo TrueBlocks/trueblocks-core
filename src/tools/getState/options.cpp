@@ -22,7 +22,7 @@ static const COption params[] = {
     // clang-format off
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) from which to retrieve balances"),  // NOLINT
     COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),  // NOLINT
-    COption("parts", "p", "list<enum[none|some*|all|balance|nonce|code|storage|deployed|accttype]>", OPT_FLAG, "control which state to export"),  // NOLINT
+    COption("parts", "p", "list<enum[none|some*|all|balance|nonce|code|proxy|deployed|accttype]>", OPT_FLAG, "control which state to export"),  // NOLINT
     COption("changes", "c", "", OPT_SWITCH, "only report a balance when it changes from one block to the next"),
     COption("no_zero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
     COption("call", "a", "<string>", OPT_HIDDEN | OPT_FLAG, "a bang-separated string consisting of address!4-byte!bytes"),  // NOLINT
@@ -33,11 +33,8 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-string_q cleanInput(const string_q& cmd);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-    if (contains(command, "-a:") || contains(command, "--call:"))
-        command = cleanInput(command);
     if (!standardOptions(command))
         return false;
 
@@ -100,66 +97,67 @@ bool COptions::parseArguments(string_q& command) {
     if (blocks.empty())
         blocks.numList.push_back(isTestMode() ? byzantiumBlock() : newestBlock);  // use 'latest'
 
-    if (!call.empty())
-        return handle_call();
+    if (!call.empty()) {
+        handle_call();
+    } else {
+        for (auto part : parts) {
+            if (part == "none")
+                modeBits = ST_NONE;
+            if (part == "balance")
+                modeBits = ethstate_t(modeBits | ST_BALANCE);
+            if (part == "nonce")
+                modeBits = ethstate_t(modeBits | ST_NONCE);
+            if (part == "code")
+                modeBits = ethstate_t(modeBits | ST_CODE);
+            if (part == "proxy")
+                modeBits = ethstate_t(modeBits | ST_PROXY);
+            if (part == "deployed")
+                modeBits = ethstate_t(modeBits | ST_DEPLOYED);
+            if (part == "accttype")
+                modeBits = ethstate_t(modeBits | ST_ACCTTYPE);
+            if (part == "some")
+                modeBits = ethstate_t(modeBits | ST_SOME);
+            if (part == "all")
+                modeBits = ethstate_t(modeBits | ST_ALL);
+        }
 
-    for (auto part : parts) {
-        if (part == "none")
-            modeBits = ST_NONE;
-        if (part == "balance")
-            modeBits = ethstate_t(modeBits | ST_BALANCE);
-        if (part == "nonce")
-            modeBits = ethstate_t(modeBits | ST_NONCE);
-        if (part == "code")
-            modeBits = ethstate_t(modeBits | ST_CODE);
-        if (part == "storage")
-            modeBits = ethstate_t(modeBits | ST_STORAGE);
-        if (part == "deployed")
-            modeBits = ethstate_t(modeBits | ST_DEPLOYED);
-        if (part == "accttype")
-            modeBits = ethstate_t(modeBits | ST_ACCTTYPE);
-        if (part == "some")
-            modeBits = ethstate_t(modeBits | ST_SOME);
-        if (part == "all")
-            modeBits = ethstate_t(modeBits | ST_ALL);
-    }
+        UNHIDE_FIELD(CEthState, "address");
+        string_q format = STR_DISPLAY_ETHSTATE;
+        if (!(modeBits & ST_BALANCE)) {
+            replace(format, "\t[{BALANCE}]", "");
+        } else {
+            UNHIDE_FIELD(CEthState, "balance");
+            UNHIDE_FIELD(CEthState, "ether");
+        }
+        if (!(modeBits & ST_NONCE)) {
+            replace(format, "\t[{NONCE}]", "");
+        } else {
+            UNHIDE_FIELD(CEthState, "nonce");
+        }
+        if (!(modeBits & ST_CODE)) {
+            replace(format, "\t[{CODE}]", "");
+        } else {
+            UNHIDE_FIELD(CEthState, "code");
+        }
+        if (!(modeBits & ST_PROXY)) {
+            replace(format, "\t[{PROXY}]", "");
+        } else {
+            UNHIDE_FIELD(CEthState, "proxy");
+        }
+        if (!(modeBits & ST_DEPLOYED)) {
+            replace(format, "\t[{DEPLOYED}]", "");
+        } else {
+            UNHIDE_FIELD(CEthState, "deployed");
+        }
+        if (!(modeBits & ST_ACCTTYPE)) {
+            replace(format, "\t[{ACCTTYPE}]", "");
+        } else {
+            UNHIDE_FIELD(CEthState, "accttype");
+        }
 
-    UNHIDE_FIELD(CEthState, "address");
-    string_q format = STR_DISPLAY_ETHSTATE;
-    if (!(modeBits & ST_BALANCE)) {
-        replace(format, "\t[{BALANCE}]", "");
-    } else {
-        UNHIDE_FIELD(CEthState, "balance");
-        UNHIDE_FIELD(CEthState, "ether");
+        // Display formatting
+        configureDisplay("getState", "CEthState", format.empty() ? STR_DISPLAY_ETHSTATE : format);
     }
-    if (!(modeBits & ST_NONCE)) {
-        replace(format, "\t[{NONCE}]", "");
-    } else {
-        UNHIDE_FIELD(CEthState, "nonce");
-    }
-    if (!(modeBits & ST_CODE)) {
-        replace(format, "\t[{CODE}]", "");
-    } else {
-        UNHIDE_FIELD(CEthState, "code");
-    }
-    if (!(modeBits & ST_STORAGE)) {
-        replace(format, "\t[{STORAGE}]", "");
-    } else {
-        UNHIDE_FIELD(CEthState, "storage");
-    }
-    if (!(modeBits & ST_DEPLOYED)) {
-        replace(format, "\t[{DEPLOYED}]", "");
-    } else {
-        UNHIDE_FIELD(CEthState, "deployed");
-    }
-    if (!(modeBits & ST_ACCTTYPE)) {
-        replace(format, "\t[{ACCTTYPE}]", "");
-    } else {
-        UNHIDE_FIELD(CEthState, "accttype");
-    }
-
-    // Display formatting
-    configureDisplay("getState", "CEthState", format.empty() ? STR_DISPLAY_ETHSTATE : format);
 
     if (needsHistory() && !isArchiveNode())
         return usage("This request requires historical balances which your RPC server does not provide.");

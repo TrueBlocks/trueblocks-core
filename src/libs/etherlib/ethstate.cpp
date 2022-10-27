@@ -101,9 +101,9 @@ string_q CEthState::getValueByName(const string_q& fieldName) const {
                 return uint_2_Str(nonce);
             }
             break;
-        case 's':
-            if (fieldName % "storage") {
-                return storage;
+        case 'p':
+            if (fieldName % "proxy") {
+                return addr_2_Str(proxy);
             }
             break;
         default:
@@ -168,9 +168,9 @@ bool CEthState::setValueByName(const string_q& fieldNameIn, const string_q& fiel
                 return true;
             }
             break;
-        case 's':
-            if (fieldName % "storage") {
-                storage = toLower(fieldValue);
+        case 'p':
+            if (fieldName % "proxy") {
+                proxy = str_2_Addr(fieldValue);
                 return true;
             }
             break;
@@ -200,11 +200,11 @@ bool CEthState::Serialize(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     archive >> blockNumber;
+    // archive >> address;
+    // archive >> proxy;
     archive >> balance;
     // archive >> nonce;
     // archive >> code;
-    // archive >> storage;
-    // archive >> address;
     // archive >> deployed;
     // archive >> accttype;
     // EXISTING_CODE
@@ -221,11 +221,11 @@ bool CEthState::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     // EXISTING_CODE
     archive << blockNumber;
+    // archive << address;
+    // archive << proxy;
     archive << balance;
     // archive << nonce;
     // archive << code;
-    // archive << storage;
-    // archive << address;
     // archive << deployed;
     // archive << accttype;
     // EXISTING_CODE
@@ -278,15 +278,15 @@ void CEthState::registerClass(void) {
     ADD_FIELD(CEthState, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CEthState, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CEthState, "blockNumber", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CEthState, "address", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CEthState, "address");
+    ADD_FIELD(CEthState, "proxy", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CEthState, "proxy");
     ADD_FIELD(CEthState, "balance", T_WEI, ++fieldNum);
     ADD_FIELD(CEthState, "nonce", T_UNUMBER, ++fieldNum);
     HIDE_FIELD(CEthState, "nonce");
     ADD_FIELD(CEthState, "code", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CEthState, "code");
-    ADD_FIELD(CEthState, "storage", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CEthState, "storage");
-    ADD_FIELD(CEthState, "address", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CEthState, "address");
     ADD_FIELD(CEthState, "deployed", T_BLOCKNUM, ++fieldNum);
     HIDE_FIELD(CEthState, "deployed");
     ADD_FIELD(CEthState, "accttype", T_TEXT | TS_OMITEMPTY, ++fieldNum);
@@ -374,10 +374,10 @@ ostream& operator<<(ostream& os, const CEthState& it) {
 const char* STR_DISPLAY_ETHSTATE =
     "[{BLOCKNUMBER}]\t"
     "[{ADDRESS}]\t"
+    "[{PROXY}]\t"
     "[{BALANCE}]\t"
     "[{NONCE}]\t"
     "[{CODE}]\t"
-    "[{STORAGE}]\t"
     "[{DEPLOYED}]\t"
     "[{ACCTTYPE}]";
 
@@ -439,14 +439,14 @@ uint64_t getNonceAt(const address_t& addr, blknum_t num) {
 }
 
 //-------------------------------------------------------------------------
-string_q getStorageAt(const string_q& addr, uint64_t pos, blknum_t num) {
+string_q getStorageAt(const string_q& addr, const hash_t& hash, blknum_t num) {
     if (!isContractAt(addr, num))
         return "0x";
     if (num == NOPOS)
         num = getLatestBlock_client();
     string_q params = "[\"[{ADDRESS}]\",\"[{POS}]\",\"[{NUM}]\"]";
     replace(params, "[{ADDRESS}]", str_2_Addr(addr));
-    replace(params, "[{POS}]", uint_2_Hex(pos));
+    replace(params, "[{POS}]", hash);
     replace(params, "[{NUM}]", uint_2_Hex(num));
     return callRPC("eth_getStorageAt", params, false);
 
@@ -538,5 +538,6 @@ blknum_t getDeployBlock(const address_t& addr) {
     }
     return (num ? num + 1 : NOPOS);
 }
+
 // EXISTING_CODE
 }  // namespace qblocks
