@@ -143,6 +143,7 @@ func StreamMany[Raw types.RawData](ctx context.Context, fetchData fetchDataFunc[
 			logErrors(errsToReport)
 		}()
 	} else {
+		// If this hits, perhaps you've not added an entry to enabledForCmds
 		jw = options.Writer.(*JsonWriter)
 	}
 
