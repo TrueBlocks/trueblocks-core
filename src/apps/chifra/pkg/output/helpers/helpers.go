@@ -12,6 +12,7 @@ import (
 
 var enabledForCmds = map[string]bool{
 	"receipts": true,
+	"when":     true,
 }
 
 func PreRunWithJsonWriter(cmdName string, getOptions func() *globals.GlobalOptions) func(cmd *cobra.Command, args []string) {
