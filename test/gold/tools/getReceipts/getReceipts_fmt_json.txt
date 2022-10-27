@@ -10,7 +10,8 @@ TEST[DATE|TIME] Format:  json
       "isError": true,
       "status": 0,
       "transactionIndex": 0
-    },{
+    },
+    {
       "blockNumber": 2332332,
       "gasUsed": 21298,
       "hash": "0xa023f79cc26b321111cf051cab92b3a325e00ecfa9d377845a41654f6b2f0ebe",

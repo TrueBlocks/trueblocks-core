@@ -12,6 +12,7 @@ package abisPkg
 import (
 	"net/http"
 
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
 
@@ -20,6 +21,7 @@ import (
 // RunAbis handles the abis command for the command line. Returns error only as per cobra.
 func RunAbis(cmd *cobra.Command, args []string) (err error) {
 	opts := abisFinishParse(args)
+	outputHelpers.SetWriterForCommand("abis", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.AbisInternal()
@@ -29,9 +31,12 @@ func RunAbis(cmd *cobra.Command, args []string) (err error) {
 // ServeAbis handles the abis command for the API. Returns error and a bool if handled
 func ServeAbis(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := abisFinishParseApi(w, r)
+	outputHelpers.InitJsonWriterApi("abis", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return opts.AbisInternal()
+	err, handled = opts.AbisInternal()
+	outputHelpers.CloseJsonWriterIfNeededApi("abis", err, &opts.Globals)
+	return
 }
 
 // AbisInternal handles the internal workings of the abis command.  Returns error and a bool if handled

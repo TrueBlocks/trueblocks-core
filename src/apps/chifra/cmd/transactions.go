@@ -14,6 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	transactionsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/transactions"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
 
@@ -25,7 +26,13 @@ var transactionsCmd = &cobra.Command{
 	Short:   shortTransactions,
 	Long:    longTransactions,
 	Version: versionText,
+	PreRun: outputHelpers.PreRunWithJsonWriter("transactions", func() *globals.GlobalOptions {
+		return &transactionsPkg.GetOptions().Globals
+	}),
 	RunE:    file.RunWithFileSupport("transactions", transactionsPkg.RunTransactions, transactionsPkg.ResetOptions),
+	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
+		return &transactionsPkg.GetOptions().Globals
+	}),
 }
 
 const usageTransactions = `transactions [flags] <tx_id> [tx_id...]

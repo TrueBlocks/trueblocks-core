@@ -6,6 +6,7 @@ import (
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
+	"log"
 	"testing"
 	"text/template"
 
@@ -87,13 +88,20 @@ func TestStreamFormats(t *testing.T) {
 
 func TestStreamJson(t *testing.T) {
 	outputBuffer := &bytes.Buffer{}
-	StreamModel(outputBuffer, input.Model(false, "json"), OutputOptions{
+	w := NewJsonWriter(outputBuffer)
+	w.DefaultField = DefaultField{Key: "Data", FieldType: FieldArray}
+	StreamModel(w, input.Model(false, "json"), OutputOptions{
 		Format:     "json",
 		JsonIndent: "  ",
 	})
+	w.Close()
 	result := outputBuffer.String()
+	expected, err := json.MarshalIndent(struct {
+		Data []interface{}
+	}{
+		Data: []interface{}{input.Model(false, "json").Data},
+	}, "", "  ")
 
-	expected, err := json.MarshalIndent(input.Model(false, "json").Data, "    ", "  ")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -127,6 +135,11 @@ func TestStreamTemplate(t *testing.T) {
 
 func TestStreamMany(t *testing.T) {
 	buffer := &bytes.Buffer{}
+	jw := NewJsonWriter(buffer)
+	jw.DefaultField = DefaultField{
+		Key:       "data",
+		FieldType: FieldArray,
+	}
 
 	renderData := func(models chan types.Modeler[types.RawReceipt], errors chan error) {
 		models <- &types.SimpleReceipt{
@@ -151,9 +164,10 @@ func TestStreamMany(t *testing.T) {
 	// Print the values and try to re-parse them to check if
 	// we get the same data
 	StreamMany(context.Background(), renderData, OutputOptions{
-		Writer: buffer,
+		Writer: jw,
 		Format: "json",
 	})
+	jw.Close()
 
 	type R = struct {
 		Data []types.SimpleReceipt `json:"data"`
@@ -161,6 +175,7 @@ func TestStreamMany(t *testing.T) {
 	var result R
 	err := json.Unmarshal(buffer.Bytes(), &result)
 	if err != nil {
+		log.Println(buffer.String())
 		t.Fatal(err)
 	}
 

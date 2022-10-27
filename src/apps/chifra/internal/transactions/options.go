@@ -153,6 +153,9 @@ func GetOptions() *TransactionsOptions {
 }
 
 func ResetOptions() {
+	// We want to keep writer between command file calls
+	w := GetOptions().Globals.Writer
 	defaultTransactionsOptions = TransactionsOptions{}
 	globals.SetDefaults(&defaultTransactionsOptions.Globals)
+	defaultTransactionsOptions.Globals.Writer = w
 }

@@ -316,6 +316,9 @@ func GetOptions() *ExportOptions {
 }
 
 func ResetOptions() {
+	// We want to keep writer between command file calls
+	w := GetOptions().Globals.Writer
 	defaultExportOptions = ExportOptions{}
 	globals.SetDefaults(&defaultExportOptions.Globals)
+	defaultExportOptions.Globals.Writer = w
 }

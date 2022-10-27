@@ -130,6 +130,9 @@ func GetOptions() *WhenOptions {
 }
 
 func ResetOptions() {
+	// We want to keep writer between command file calls
+	w := GetOptions().Globals.Writer
 	defaultWhenOptions = WhenOptions{}
 	globals.SetDefaults(&defaultWhenOptions.Globals)
+	defaultWhenOptions.Globals.Writer = w
 }

@@ -16,6 +16,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -27,6 +28,7 @@ import (
 // RunReceipts handles the receipts command for the command line. Returns error only as per cobra.
 func RunReceipts(cmd *cobra.Command, args []string) (err error) {
 	opts := receiptsFinishParse(args)
+	outputHelpers.SetWriterForCommand("receipts", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.ReceiptsInternal()
@@ -36,9 +38,12 @@ func RunReceipts(cmd *cobra.Command, args []string) (err error) {
 // ServeReceipts handles the receipts command for the API. Returns error and a bool if handled
 func ServeReceipts(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := receiptsFinishParseApi(w, r)
+	outputHelpers.InitJsonWriterApi("receipts", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return opts.ReceiptsInternal()
+	err, handled = opts.ReceiptsInternal()
+	outputHelpers.CloseJsonWriterIfNeededApi("receipts", err, &opts.Globals)
+	return
 }
 
 // ReceiptsInternal handles the internal workings of the receipts command.  Returns error and a bool if handled
