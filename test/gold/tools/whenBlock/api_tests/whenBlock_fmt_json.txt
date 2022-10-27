@@ -3,8 +3,8 @@ when?blocks=1001001&fmt=json
   "data": [
     {
       "blockNumber": 1001001,
-      "timestamp": 1455421883,
-      "date": "2016-02-14 03:51:23 UTC"
+      "date": "2016-02-14 03:51:23 UTC",
+      "timestamp": 1455421883
     }
   ],
   "meta": {

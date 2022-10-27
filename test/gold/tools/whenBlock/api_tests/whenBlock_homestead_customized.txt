@@ -3,9 +3,9 @@ when?blocks=homestead&verbose&fmt=json
   "data": [
     {
       "blockNumber": 1150000,
-      "timestamp": 1457981393,
       "date": "2016-03-14 18:49:53 UTC",
-      "name": "homestead"
+      "name": "homestead",
+      "timestamp": 1457981393
     }
   ],
   "meta": {

@@ -3,9 +3,9 @@ when?blocks=spurious
   "data": [
     {
       "blockNumber": 2675000,
-      "timestamp": 1479831344,
       "date": "2016-11-22 16:15:44 UTC",
-      "name": "spurious"
+      "name": "spurious",
+      "timestamp": 1479831344
     }
   ],
   "meta": {
