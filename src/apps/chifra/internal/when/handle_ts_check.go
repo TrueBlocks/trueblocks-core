@@ -33,16 +33,6 @@ func (opts *WhenOptions) HandleTimestampsCheck() error {
 		return err
 	}
 
-	start := uint64(0)
-	end := uint64(cnt)
-	if len(blockNums) > 0 {
-		start = blockNums[0]
-		end = start
-		if len(blockNums) > 1 {
-			end = blockNums[len(blockNums)-1]
-		}
-	}
-
 	prev := types.SimpleTimestamp{
 		BlockNumber: utils.NOPOS,
 		TimeStamp:   utils.NOPOS,
@@ -62,9 +52,6 @@ func (opts *WhenOptions) HandleTimestampsCheck() error {
 				return err
 			}
 		}
-	}
-
-	for bn := start; bn < end; bn++ {
 	}
 
 	return nil
@@ -124,7 +111,7 @@ func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.Si
 		}
 
 		if status == "Okay" {
-			scanBar.Report(opts.Globals.Writer, status, fmt.Sprintf(" %d.%d", expected.BlockNumber, expected.TimeStamp))
+			scanBar.Report(opts.Globals.Writer, status, fmt.Sprintf(" bn: %d ts: %d", expected.BlockNumber, expected.TimeStamp))
 		}
 	}
 

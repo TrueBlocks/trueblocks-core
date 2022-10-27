@@ -17,11 +17,15 @@ Arguments:
   blocks - one or more dates, block numbers, hashes, or special named blocks (see notes)
 
 Flags:
-  -l, --list         export a list of the 'special' blocks
-  -t, --timestamps   display or process timestamps
-  -x, --fmt string   export format, one of [none|json*|txt|csv]
-  -v, --verbose      enable verbose (increase detail with --log_level)
-  -h, --help         display this help screen
+  -l, --list          export a list of the 'special' blocks
+  -t, --timestamps    display or process timestamps
+  -u, --count         with --timestamps only, returns the number of timestamps in the cache
+  -r, --repair uint   with --timestamps only, repair a single timestamp by querying the chain
+  -c, --check         with --timestamps only, checks the validity of the timestamp data
+      --update        with --timestamps only, bring the timestamp database forward to the latest block
+  -x, --fmt string    export format, one of [none|json*|txt|csv]
+  -v, --verbose       enable verbose (increase detail with --log_level)
+  -h, --help          display this help screen
 
 Notes:
   - The block list may contain any combination of number, hash, date, special named blocks.

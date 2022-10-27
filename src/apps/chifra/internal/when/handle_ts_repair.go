@@ -11,11 +11,11 @@ import (
 
 // HandleTimestampsRepair handles chifra when --timestamps --reset <bn> to reset a single block's timestamps (call repeatedly if needed)
 func (opts *WhenOptions) HandleTimestampsRepair() error {
-	if err := tslib.Freshen(opts.Globals.Chain, opts.Repair); err != nil {
+	if err := tslib.Repair(opts.Globals.Chain, opts.Repair); err != nil {
 		return err
 	}
 	if opts.Repair == 1 { // weird special case because because I don't know how to get Cobra to handle non-zero defaults
-		if err := tslib.Freshen(opts.Globals.Chain, 0); err != nil {
+		if err := tslib.Repair(opts.Globals.Chain, 0); err != nil {
 			return err
 		}
 	}
