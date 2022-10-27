@@ -14,8 +14,7 @@ package [{API_ROUTE}]Pkg
 // Run[{PROPER}] handles the [{ROUTE}] command for the command line. Returns error only as per cobra.
 func Run[{PROPER}](cmd *cobra.Command, args []string) (err error) {
 	opts := [{LOWER}]FinishParse(args)
-	outputHelpers.CloseFileJsonWriterIfNeeded("[{ROUTE}]", &opts.Globals)
-	outputHelpers.InitJsonWriter("[{ROUTE}]", &opts.Globals)
+	outputHelpers.SetWriterForCommand("[{ROUTE}]", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.[{PROPER}]Internal()

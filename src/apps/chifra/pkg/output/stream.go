@@ -162,10 +162,6 @@ func StreamMany[Raw types.RawData](ctx context.Context, fetchData fetchDataFunc[
 			}
 
 			// If the output is JSON and we are printing another item, put `,` in front of it
-			// TODO: BOGUS - ShowRaw is json
-			// if !first && isJson {
-			// 	outputWriter.Write([]byte(","))
-			// }
 			var err error
 			if options.ShowRaw {
 				err = StreamRaw(options.Writer, model.Raw())

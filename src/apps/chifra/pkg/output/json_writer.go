@@ -180,9 +180,6 @@ func (w *JsonWriter) Write(p []byte) (n int, err error) {
 	if w.state.position == positionInArray || w.state.position == positionInObject || w.state.position == positionInRoot {
 		w.state.children++
 	}
-	if err != nil {
-		return
-	}
 	return w.writeRaw(p)
 }
 
@@ -199,7 +196,7 @@ func (w *JsonWriter) WriteError(err error) {
 	w.errs = append(w.errs, err.Error())
 }
 
-// WriteCompoundItem makes it easier to writer an object or array.
+// WriteCompoundItem makes it easier to write an object or array.
 func (w *JsonWriter) WriteCompoundItem(key string, obj any) (n int, err error) {
 	if w.state.position == positionEmpty {
 		w.openRoot()
