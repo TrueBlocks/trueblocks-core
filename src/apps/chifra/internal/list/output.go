@@ -22,8 +22,7 @@ import (
 // RunList handles the list command for the command line. Returns error only as per cobra.
 func RunList(cmd *cobra.Command, args []string) (err error) {
 	opts := listFinishParse(args)
-	outputHelpers.CloseFileJsonWriterIfNeeded("list", &opts.Globals)
-	outputHelpers.InitJsonWriter("list", &opts.Globals)
+	outputHelpers.SetWriterForCommand("list", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.ListInternal()

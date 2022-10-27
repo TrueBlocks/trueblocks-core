@@ -21,8 +21,7 @@ import (
 // RunBlocks handles the blocks command for the command line. Returns error only as per cobra.
 func RunBlocks(cmd *cobra.Command, args []string) (err error) {
 	opts := blocksFinishParse(args)
-	outputHelpers.CloseFileJsonWriterIfNeeded("blocks", &opts.Globals)
-	outputHelpers.InitJsonWriter("blocks", &opts.Globals)
+	outputHelpers.SetWriterForCommand("blocks", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.BlocksInternal()

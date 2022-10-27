@@ -21,8 +21,7 @@ import (
 // RunStatus handles the status command for the command line. Returns error only as per cobra.
 func RunStatus(cmd *cobra.Command, args []string) (err error) {
 	opts := statusFinishParse(args)
-	outputHelpers.CloseFileJsonWriterIfNeeded("status", &opts.Globals)
-	outputHelpers.InitJsonWriter("status", &opts.Globals)
+	outputHelpers.SetWriterForCommand("status", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.StatusInternal()

@@ -26,10 +26,6 @@ type GlobalOptions struct {
 	Version bool   `json:"version,omitempty"`
 	Noop    bool   `json:"noop,omitempty"`
 	NoColor bool   `json:"noColor,omitempty"`
-	// This flag is used in combination with --file. It informs,
-	// that we created JsonWriter that should not be passed to
-	// the next command from the file.
-	MixedFormats bool `json:"mixedFormats,omitempty"`
 	output.OutputOptions
 }
 

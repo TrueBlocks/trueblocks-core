@@ -21,8 +21,7 @@ import (
 // RunInit handles the init command for the command line. Returns error only as per cobra.
 func RunInit(cmd *cobra.Command, args []string) (err error) {
 	opts := initFinishParse(args)
-	outputHelpers.CloseFileJsonWriterIfNeeded("init", &opts.Globals)
-	outputHelpers.InitJsonWriter("init", &opts.Globals)
+	outputHelpers.SetWriterForCommand("init", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.InitInternal()

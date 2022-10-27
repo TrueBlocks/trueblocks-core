@@ -21,8 +21,7 @@ import (
 // RunNames handles the names command for the command line. Returns error only as per cobra.
 func RunNames(cmd *cobra.Command, args []string) (err error) {
 	opts := namesFinishParse(args)
-	outputHelpers.CloseFileJsonWriterIfNeeded("names", &opts.Globals)
-	outputHelpers.InitJsonWriter("names", &opts.Globals)
+	outputHelpers.SetWriterForCommand("names", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.NamesInternal()

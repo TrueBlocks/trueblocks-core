@@ -25,8 +25,7 @@ import (
 // RunMonitors handles the monitors command for the command line. Returns error only as per cobra.
 func RunMonitors(cmd *cobra.Command, args []string) (err error) {
 	opts := monitorsFinishParse(args)
-	outputHelpers.CloseFileJsonWriterIfNeeded("monitors", &opts.Globals)
-	outputHelpers.InitJsonWriter("monitors", &opts.Globals)
+	outputHelpers.SetWriterForCommand("monitors", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.MonitorsInternal()

@@ -24,8 +24,7 @@ import (
 // RunChunks handles the chunks command for the command line. Returns error only as per cobra.
 func RunChunks(cmd *cobra.Command, args []string) (err error) {
 	opts := chunksFinishParse(args)
-	outputHelpers.CloseFileJsonWriterIfNeeded("chunks", &opts.Globals)
-	outputHelpers.InitJsonWriter("chunks", &opts.Globals)
+	outputHelpers.SetWriterForCommand("chunks", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.ChunksInternal()

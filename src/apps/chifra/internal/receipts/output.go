@@ -28,8 +28,7 @@ import (
 // RunReceipts handles the receipts command for the command line. Returns error only as per cobra.
 func RunReceipts(cmd *cobra.Command, args []string) (err error) {
 	opts := receiptsFinishParse(args)
-	outputHelpers.CloseFileJsonWriterIfNeeded("receipts", &opts.Globals)
-	outputHelpers.InitJsonWriter("receipts", &opts.Globals)
+	outputHelpers.SetWriterForCommand("receipts", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.ReceiptsInternal()

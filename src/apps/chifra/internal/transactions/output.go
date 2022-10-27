@@ -21,8 +21,7 @@ import (
 // RunTransactions handles the transactions command for the command line. Returns error only as per cobra.
 func RunTransactions(cmd *cobra.Command, args []string) (err error) {
 	opts := transactionsFinishParse(args)
-	outputHelpers.CloseFileJsonWriterIfNeeded("transactions", &opts.Globals)
-	outputHelpers.InitJsonWriter("transactions", &opts.Globals)
+	outputHelpers.SetWriterForCommand("transactions", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.TransactionsInternal()

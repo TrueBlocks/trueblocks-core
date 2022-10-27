@@ -26,8 +26,7 @@ import (
 // RunExplore handles the explore command for the command line. Returns error only as per cobra.
 func RunExplore(cmd *cobra.Command, args []string) (err error) {
 	opts := exploreFinishParse(args)
-	outputHelpers.CloseFileJsonWriterIfNeeded("explore", &opts.Globals)
-	outputHelpers.InitJsonWriter("explore", &opts.Globals)
+	outputHelpers.SetWriterForCommand("explore", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.ExploreInternal()

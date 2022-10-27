@@ -21,8 +21,7 @@ import (
 // RunLogs handles the logs command for the command line. Returns error only as per cobra.
 func RunLogs(cmd *cobra.Command, args []string) (err error) {
 	opts := logsFinishParse(args)
-	outputHelpers.CloseFileJsonWriterIfNeeded("logs", &opts.Globals)
-	outputHelpers.InitJsonWriter("logs", &opts.Globals)
+	outputHelpers.SetWriterForCommand("logs", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.LogsInternal()

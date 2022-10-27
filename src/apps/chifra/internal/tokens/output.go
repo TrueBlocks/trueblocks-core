@@ -21,8 +21,7 @@ import (
 // RunTokens handles the tokens command for the command line. Returns error only as per cobra.
 func RunTokens(cmd *cobra.Command, args []string) (err error) {
 	opts := tokensFinishParse(args)
-	outputHelpers.CloseFileJsonWriterIfNeeded("tokens", &opts.Globals)
-	outputHelpers.InitJsonWriter("tokens", &opts.Globals)
+	outputHelpers.SetWriterForCommand("tokens", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.TokensInternal()

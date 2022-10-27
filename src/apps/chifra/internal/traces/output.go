@@ -21,8 +21,7 @@ import (
 // RunTraces handles the traces command for the command line. Returns error only as per cobra.
 func RunTraces(cmd *cobra.Command, args []string) (err error) {
 	opts := tracesFinishParse(args)
-	outputHelpers.CloseFileJsonWriterIfNeeded("traces", &opts.Globals)
-	outputHelpers.InitJsonWriter("traces", &opts.Globals)
+	outputHelpers.SetWriterForCommand("traces", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.TracesInternal()
