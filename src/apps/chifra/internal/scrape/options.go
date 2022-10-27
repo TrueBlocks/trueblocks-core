@@ -127,6 +127,9 @@ func GetOptions() *ScrapeOptions {
 }
 
 func ResetOptions() {
+	// We want to keep writer between command file calls
+	w := GetOptions().Globals.Writer
 	defaultScrapeOptions = ScrapeOptions{}
 	globals.SetDefaults(&defaultScrapeOptions.Globals)
+	defaultScrapeOptions.Globals.Writer = w
 }

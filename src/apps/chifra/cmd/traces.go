@@ -14,6 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	tracesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/traces"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
 
@@ -25,7 +26,13 @@ var tracesCmd = &cobra.Command{
 	Short:   shortTraces,
 	Long:    longTraces,
 	Version: versionText,
+	PreRun: outputHelpers.PreRunWithJsonWriter("traces", func() *globals.GlobalOptions {
+		return &tracesPkg.GetOptions().Globals
+	}),
 	RunE:    file.RunWithFileSupport("traces", tracesPkg.RunTraces, tracesPkg.ResetOptions),
+	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
+		return &tracesPkg.GetOptions().Globals
+	}),
 }
 
 const usageTraces = `traces [flags] <tx_id> [tx_id...]

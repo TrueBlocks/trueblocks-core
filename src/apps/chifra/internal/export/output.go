@@ -12,6 +12,7 @@ package exportPkg
 import (
 	"net/http"
 
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
 
@@ -20,6 +21,7 @@ import (
 // RunExport handles the export command for the command line. Returns error only as per cobra.
 func RunExport(cmd *cobra.Command, args []string) (err error) {
 	opts := exportFinishParse(args)
+	outputHelpers.SetWriterForCommand("export", &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	err, _ = opts.ExportInternal()
@@ -29,9 +31,12 @@ func RunExport(cmd *cobra.Command, args []string) (err error) {
 // ServeExport handles the export command for the API. Returns error and a bool if handled
 func ServeExport(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
 	opts := exportFinishParseApi(w, r)
+	outputHelpers.InitJsonWriterApi("export", w, &opts.Globals)
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return opts.ExportInternal()
+	err, handled = opts.ExportInternal()
+	outputHelpers.CloseJsonWriterIfNeededApi("export", err, &opts.Globals)
+	return
 }
 
 // ExportInternal handles the internal workings of the export command.  Returns error and a bool if handled

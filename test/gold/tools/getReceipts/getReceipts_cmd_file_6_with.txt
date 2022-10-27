@@ -4,34 +4,11 @@ TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] NoHeader:  true
 TEST[DATE|TIME] File:  cmd_file.6
 TEST[DATE|TIME] Format:  json
-NOTE: THIS TEST FAILS IS CORRECT, BUT I HAVE A QUESTION
-NOTE: 
-NOTE: QUESTION - THIS TEST HAS AN INVALID TRANSACTION ON THE COMMAND LINE.
-NOTE:            BECAUSE OF THIS, EVERY ROW IN THE FILE FAILS.
-NOTE:            I THINK, IF WE FIND AN ERROR ON THE COMMAND LINE, WE CAN QUIT RIGHT AWAY.
-NOTE:            THIS IS TO BE DISTINGUISHED FROM ERRORS IN THE FILE. FOR THOSE TYPES OF ERRORS, WE SHOULD CONTINUE.
-NOTE:            FOR ERRORS FOUND ON THE COMMAND LINE, WE SHOULD STOP PROCESSING BEFORE RUNNING THROUGH THE FILE
-{
-  "data": [
-    
-  ],
-  "errors": [
-    "transaction 1.0 not found"
-  ]
-}
 TEST[DATE|TIME] Transactions:  [1.0]
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] NoHeader:  true
 TEST[DATE|TIME] File:  cmd_file.6
 TEST[DATE|TIME] Format:  json
-{
-  "data": [
-    
-  ],
-  "errors": [
-    "transaction 1.0 not found"
-  ]
-}
 TEST[DATE|TIME] Transactions:  [1.0 5644882.0]
 TEST[DATE|TIME] NoHeader:  true
 TEST[DATE|TIME] File:  cmd_file.6
@@ -58,36 +35,22 @@ TEST[DATE|TIME] Format:  json
       ],
       "status": 1,
       "transactionIndex": 0
-    }
-  ],
-  "errors": [
-    "transaction 1.0 not found"
-  ]
-}
-TEST[DATE|TIME] Transactions:  [1.0 5644883.0]
+    }TEST[DATE|TIME] Transactions:  [1.0 5644883.0]
 TEST[DATE|TIME] NoHeader:  true
 TEST[DATE|TIME] File:  cmd_file.6
 TEST[DATE|TIME] Format:  json
-{
-  "data": [
+,
     {
       "blockNumber": 5644883,
       "gasUsed": 21000,
       "hash": "0xf3497316e89d3d1346a171213b94e179a49d43f0338621ece2e6a78045a76eea",
       "status": 1,
       "transactionIndex": 0
-    }
-  ],
-  "errors": [
-    "transaction 1.0 not found"
-  ]
-}
-TEST[DATE|TIME] Transactions:  [1.0 5644886.0]
+    }TEST[DATE|TIME] Transactions:  [1.0 5644886.0]
 TEST[DATE|TIME] NoHeader:  true
 TEST[DATE|TIME] File:  cmd_file.6
 TEST[DATE|TIME] Format:  json
-{
-  "data": [
+,
     {
       "blockNumber": 5644886,
       "gasUsed": 21051,
@@ -97,6 +60,10 @@ TEST[DATE|TIME] Format:  json
     }
   ],
   "errors": [
+    "transaction 1.0 not found",
+    "transaction 1.0 not found",
+    "transaction 1.0 not found",
+    "transaction 1.0 not found",
     "transaction 1.0 not found"
   ]
 }

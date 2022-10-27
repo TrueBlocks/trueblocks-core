@@ -136,6 +136,9 @@ func GetOptions() *AbisOptions {
 }
 
 func ResetOptions() {
+	// We want to keep writer between command file calls
+	w := GetOptions().Globals.Writer
 	defaultAbisOptions = AbisOptions{}
 	globals.SetDefaults(&defaultAbisOptions.Globals)
+	defaultAbisOptions.Globals.Writer = w
 }

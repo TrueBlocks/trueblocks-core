@@ -11,7 +11,8 @@ TEST[DATE|TIME] Format:  json
       "hash": "0x785b88bfb800c34f0972bd2a1b02fb4bd03abc72dce675d00c2e4ae99f7aff96",
       "status": 1,
       "transactionIndex": 0
-    },{
+    },
+    {
       "blockNumber": 5644882,
       "gasUsed": 52053,
       "hash": "0xb440bb9522672cdee57b447f406a22feec453764be784c6bd1b1f3188fa677be",

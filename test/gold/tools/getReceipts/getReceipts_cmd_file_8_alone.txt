@@ -14,7 +14,8 @@ TEST[DATE|TIME] Format:  json
       "hash": "0x785b88bfb800c34f0972bd2a1b02fb4bd03abc72dce675d00c2e4ae99f7aff96",
       "status": 1,
       "transactionIndex": 0
-    },{
+    },
+    {
       "blockHash": "0xccff406c95943cebea30307dd06824423f91240bd6aab7029d8003655ae7f23e",
       "blockNumber": 5644882,
       "cumulativeGasUsed": "52053",

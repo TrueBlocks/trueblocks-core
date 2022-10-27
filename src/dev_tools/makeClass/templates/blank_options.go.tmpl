@@ -79,6 +79,9 @@ func GetOptions() *[{PROPER}]Options {
 }
 
 func ResetOptions() {
+	// We want to keep writer between command file calls
+	w := GetOptions().Globals.Writer
 	default[{PROPER}]Options = [{PROPER}]Options{}
 	globals.SetDefaults(&default[{PROPER}]Options.Globals)
+	default[{PROPER}]Options.Globals.Writer = w
 }

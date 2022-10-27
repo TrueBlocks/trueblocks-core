@@ -14,6 +14,7 @@ import (
 	exportPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
 
@@ -25,7 +26,13 @@ var exportCmd = &cobra.Command{
 	Short:   shortExport,
 	Long:    longExport,
 	Version: versionText,
+	PreRun: outputHelpers.PreRunWithJsonWriter("export", func() *globals.GlobalOptions {
+		return &exportPkg.GetOptions().Globals
+	}),
 	RunE:    file.RunWithFileSupport("export", exportPkg.RunExport, exportPkg.ResetOptions),
+	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
+		return &exportPkg.GetOptions().Globals
+	}),
 }
 
 const usageExport = `export [flags] <address> [address...] [topics...] [fourbytes...]

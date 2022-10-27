@@ -7,7 +7,6 @@ package globals
 import (
 	"fmt"
 	"net/http"
-	"os"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -146,9 +145,8 @@ func (opts *GlobalOptions) toCmdLine() string {
 
 func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOptions {
 	opts := &GlobalOptions{}
-
-	opts.Writer = w
 	opts.TestMode = r.Header.Get("User-Agent") == "testRunner"
+	opts.Writer = w
 
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -214,7 +212,6 @@ func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOption
 }
 
 func (opts *GlobalOptions) FinishParse(args []string) {
-	opts.Writer = os.Stdout
 	if err := tslib.EstablishTsFile(opts.Chain); err != nil {
 		fmt.Println("Could not establish ts file:", err)
 	}

@@ -39,7 +39,12 @@ func (opts *OutputOptions) GetOutputFileWriter() io.Writer {
 	return file
 }
 
-// IsApiMode return true if `w` is successfully case into a `http.ResponseWriter`
+// IsApiMode return true if `w` is successfully cast into a `http.ResponseWriter`
 func (opts *OutputOptions) IsApiMode() bool {
-	return utils.IsServerWriter(opts.Writer)
+	w, ok := opts.Writer.(*JsonWriter)
+	if !ok {
+		return utils.IsServerWriter(opts.Writer)
+	}
+
+	return utils.IsServerWriter(*w.GetOutputWriter())
 }

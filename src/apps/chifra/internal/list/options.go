@@ -111,6 +111,9 @@ func GetOptions() *ListOptions {
 }
 
 func ResetOptions() {
+	// We want to keep writer between command file calls
+	w := GetOptions().Globals.Writer
 	defaultListOptions = ListOptions{}
 	globals.SetDefaults(&defaultListOptions.Globals)
+	defaultListOptions.Globals.Writer = w
 }

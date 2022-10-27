@@ -16,7 +16,13 @@ var [{ROUTE}]Cmd = &cobra.Command{
 	Short:   short[{PROPER}],
 	Long:    long[{PROPER}],
 	Version: versionText,
+	PreRun: outputHelpers.PreRunWithJsonWriter("[{ROUTE}]", func() *globals.GlobalOptions {
+		return &[{ROUTE}]Pkg.GetOptions().Globals
+	}),
 	RunE:    file.RunWithFileSupport("[{ROUTE}]", [{ROUTE}]Pkg.Run[{PROPER}], [{ROUTE}]Pkg.ResetOptions),
+	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
+		return &[{ROUTE}]Pkg.GetOptions().Globals
+	}),
 }
 
 const usage[{PROPER}] = `[{USE}]`
