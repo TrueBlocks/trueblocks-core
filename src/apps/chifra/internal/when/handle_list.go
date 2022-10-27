@@ -9,19 +9,23 @@ import (
 )
 
 func (opts *WhenOptions) HandleList() error {
-	results, err := tslib.GetSpecials(opts.Globals.Chain)
-	if err != nil {
-		return err
-	}
 
+	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawNamedBlock], errorChan chan error) {
+		results, err := tslib.GetSpecials(opts.Globals.Chain)
+		if err != nil {
+			errorChan <- err
+			cancel()
+			return
+		}
+
 		for _, result := range results {
-			result := result // this is not redundant - it's a golang bug
+			// Note: This is needed because of a GoLang bug when taking the pointer of a loop variable
+			result := result
 			modelChan <- &result
 		}
 	}
 
-	ctx := context.Context(context.Background())
 	return output.StreamMany(ctx, fetchData, output.OutputOptions{
 		Writer:     opts.Globals.Writer,
 		Chain:      opts.Globals.Chain,

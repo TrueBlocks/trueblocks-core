@@ -3,13 +3,13 @@ when?blocks=2017-03-02&blocks=123123
   "data": [
     {
       "blockNumber": 3275145,
-      "timestamp": 1488412793,
-      "date": "2017-03-01 23:59:53 UTC"
+      "date": "2017-03-01 23:59:53 UTC",
+      "timestamp": 1488412793
     },
     {
       "blockNumber": 123123,
-      "timestamp": 1440206412,
-      "date": "2015-08-22 01:20:12 UTC"
+      "date": "2015-08-22 01:20:12 UTC",
+      "timestamp": 1440206412
     }
   ],
   "meta": {

@@ -18,14 +18,18 @@ func (s *SimpleNamedBlock) Model(showHidden bool, format string) Model {
 		"blockNumber": s.BlockNumber,
 		"timestamp":   s.TimeStamp,
 		"date":        s.Date,
-		"name":        s.Name,
 	}
 
 	order := []string{
 		"blockNumber",
 		"timestamp",
 		"date",
-		"name",
+	}
+
+	// implements omitempty
+	if format != "json" || len(s.Name) > 0 {
+		model["name"] = s.Name
+		order = append(order, "name")
 	}
 
 	return Model{

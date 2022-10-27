@@ -3,9 +3,9 @@ when?blocks=stateclear&verbose
   "data": [
     {
       "blockNumber": 2717576,
-      "timestamp": 1480448309,
       "date": "2016-11-29 19:38:29 UTC",
-      "name": "stateclear"
+      "name": "stateclear",
+      "timestamp": 1480448309
     }
   ],
   "meta": {
