@@ -1,21 +1,13 @@
 package types
 
-type RawWhenCount struct {
-	Count uint64 `json:"count"`
-}
+type RawWhenCount interface{}
 
 type SimpleWhenCount struct {
 	Count uint64 `json:"count"`
-	raw   *RawWhenCount
 }
 
 func (s *SimpleWhenCount) Raw() *RawWhenCount {
-	r := RawWhenCount{Count: s.Count}
-	return &r
-}
-
-func (s *SimpleWhenCount) SetRaw(r RawWhenCount) {
-	s.raw = &r
+	return nil
 }
 
 func (s *SimpleWhenCount) Model(showHidden bool, format string) Model {

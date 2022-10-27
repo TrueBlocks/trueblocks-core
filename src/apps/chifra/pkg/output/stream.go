@@ -3,7 +3,6 @@ package output
 import (
 	"context"
 	"encoding/csv"
-	"encoding/json"
 	"fmt"
 	"io"
 	"strings"
@@ -11,7 +10,6 @@ import (
 	"text/template"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -57,11 +55,15 @@ func StreamWithTemplate(w io.Writer, model types.Model, tmpl *template.Template)
 // StreamModel streams a single `Model`
 func StreamModel(w io.Writer, model types.Model, options OutputOptions) error {
 	if options.Format == "json" {
-		v, err := json.MarshalIndent(model.Data, "    ", options.JsonIndent)
+		jw, ok := w.(*JsonWriter)
+		if !ok {
+			// This should never happen
+			panic("streaming JSON requires JsonWriter")
+		}
+		_, err := jw.WriteCompoundItem("", model.Data)
 		if err != nil {
 			return err
 		}
-		w.Write(v)
 		return nil
 	}
 
@@ -100,23 +102,13 @@ func StreamModel(w io.Writer, model types.Model, options OutputOptions) error {
 
 // StreamRaw outputs raw `Raw` to `w`
 func StreamRaw[Raw types.RawData](w io.Writer, raw *Raw) (err error) {
-	bytes, err := json.MarshalIndent(raw, "", "  ")
-	if err != nil {
-		return
+	jw, ok := w.(*JsonWriter)
+	if !ok {
+		// This should never happen
+		panic("streaming raw data requires JsonWriter")
 	}
-	w.Write(bytes)
-	// Add a newline so that the command prompt is not being printed at
-	// the same line as the output
+	_, err = jw.WriteCompoundItem("", raw)
 	return
-}
-
-func writeJsonErrors(w io.Writer, errs []string, options *OutputOptions) error {
-	marshalled, err := json.MarshalIndent(errs, "  ", options.JsonIndent)
-	if err != nil {
-		return err
-	}
-	w.Write(marshalled)
-	return nil
 }
 
 func logErrors(errsToReport []string) {
@@ -129,7 +121,6 @@ type fetchDataFunc[Raw types.RawData] func(modelChan chan types.Modeler[Raw], er
 
 // StreamMany outputs models or raw data as they are acquired
 func StreamMany[Raw types.RawData](ctx context.Context, fetchData fetchDataFunc[Raw], options OutputOptions) error {
-	outputWriter := options.GetOutputFileWriter()
 	errsToReport := make([]string, 0)
 
 	modelChan := make(chan types.Modeler[Raw])
@@ -143,31 +134,17 @@ func StreamMany[Raw types.RawData](ctx context.Context, fetchData fetchDataFunc[
 	}()
 
 	isJson := options.Format == "json" || options.ShowRaw
-	if isJson {
-		outputWriter.Write([]byte("{\n  \"data\": [\n    "))
+	var jw *JsonWriter
+	if !isJson {
 		defer func() {
-			outputWriter.Write([]byte("\n  ]"))
-			if options.IsApiMode() {
-				outputWriter.Write([]byte(",\n  \"meta\": "))
-				if meta, err := rpcClient.GetMetaData(options.Chain, options.TestMode); err == nil {
-					b, _ := json.MarshalIndent(meta, "  ", options.JsonIndent)
-					outputWriter.Write(b)
-				} // silently fails
+			if len(errsToReport) == 0 {
+				return
 			}
-			if len(errsToReport) > 0 {
-				// For ApiMode, we want to report errors under `errors` key in the response
-				outputWriter.Write([]byte(",\n  \"errors\": "))
-				err := writeJsonErrors(outputWriter, errsToReport, &options)
-				if err != nil {
-					logger.Log(logger.Error, err)
-				}
-			}
-			outputWriter.Write([]byte("\n}\n"))
-		}()
-	} else {
-		defer func() {
 			logErrors(errsToReport)
 		}()
+	} else {
+		// If this hits, perhaps you've not added an entry to enabledForCmds
+		jw = options.Writer.(*JsonWriter)
 	}
 
 	// If user wants custom format, we have to prepare the template
@@ -186,19 +163,15 @@ func StreamMany[Raw types.RawData](ctx context.Context, fetchData fetchDataFunc[
 			}
 
 			// If the output is JSON and we are printing another item, put `,` in front of it
-			// TODO: BOGUS - ShowRaw is json
-			if !first && isJson {
-				outputWriter.Write([]byte(","))
-			}
 			var err error
 			if options.ShowRaw {
-				err = StreamRaw(outputWriter, model.Raw())
+				err = StreamRaw(options.Writer, model.Raw())
 			} else {
 				modelValue := model.Model(options.Verbose, options.Format)
 				if customFormat {
-					err = StreamWithTemplate(outputWriter, modelValue, tmpl)
+					err = StreamWithTemplate(options.Writer, modelValue, tmpl)
 				} else {
-					err = StreamModel(outputWriter, modelValue, OutputOptions{
+					err = StreamModel(options.Writer, modelValue, OutputOptions{
 						NoHeader:   !first || options.NoHeader,
 						Format:     options.Format,
 						JsonIndent: "  ",
@@ -215,7 +188,11 @@ func StreamMany[Raw types.RawData](ctx context.Context, fetchData fetchDataFunc[
 				continue
 			}
 			errsMutex.Lock()
-			errsToReport = append(errsToReport, err.Error())
+			if isJson {
+				jw.WriteError(err)
+			} else {
+				errsToReport = append(errsToReport, err.Error())
+			}
 			errsMutex.Unlock()
 
 		case <-ctx.Done():

@@ -112,6 +112,9 @@ func GetOptions() *ReceiptsOptions {
 }
 
 func ResetOptions() {
+	// We want to keep writer between command file calls
+	w := GetOptions().Globals.Writer
 	defaultReceiptsOptions = ReceiptsOptions{}
 	globals.SetDefaults(&defaultReceiptsOptions.Globals)
+	defaultReceiptsOptions.Globals.Writer = w
 }

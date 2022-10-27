@@ -139,6 +139,9 @@ func GetOptions() *SlurpOptions {
 }
 
 func ResetOptions() {
+	// We want to keep writer between command file calls
+	w := GetOptions().Globals.Writer
 	defaultSlurpOptions = SlurpOptions{}
 	globals.SetDefaults(&defaultSlurpOptions.Globals)
+	defaultSlurpOptions.Globals.Writer = w
 }

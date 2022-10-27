@@ -124,6 +124,9 @@ func GetOptions() *MonitorsOptions {
 }
 
 func ResetOptions() {
+	// We want to keep writer between command file calls
+	w := GetOptions().Globals.Writer
 	defaultMonitorsOptions = MonitorsOptions{}
 	globals.SetDefaults(&defaultMonitorsOptions.Globals)
+	defaultMonitorsOptions.Globals.Writer = w
 }

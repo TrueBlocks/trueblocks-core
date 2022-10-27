@@ -33,8 +33,10 @@ func (opts *WhenOptions) HandleTimestampUpdate() error {
 		logger.Log(logger.Info, "Timestamp file is up to date.")
 		return nil
 	}
-	logger.Log(logger.Info, "Updating timestamps file from", cnt, "to", meta.Latest, fmt.Sprintf("(%d blocks)", (meta.Latest-cnt)))
+
 	timestamps := make([]tslib.Timestamp, 0, meta.Latest-cnt+2)
+
+	logger.Log(logger.Info, "Updating timestamps file from", cnt, "to", meta.Latest, fmt.Sprintf("(%d blocks)", (meta.Latest-cnt)))
 	for bn := cnt; bn < meta.Latest; bn++ {
 		block, _ := rpcClient.GetBlockByNumber(opts.Globals.Chain, bn)
 		record := tslib.Timestamp{Bn: uint32(block.BlockNumber), Ts: uint32(block.TimeStamp)}
@@ -46,6 +48,7 @@ func (opts *WhenOptions) HandleTimestampUpdate() error {
 			timestamps = []tslib.Timestamp{}
 		}
 	}
+
 	if len(timestamps) > 0 {
 		logger.Log(logger.Info, "Writing...", len(timestamps), "timestamps at block", meta.Latest)
 		tslib.Append(opts.Globals.Chain, timestamps)

@@ -13,8 +13,8 @@ import (
 )
 
 func (opts *WhenOptions) HandleTimestampCount() error {
-	ctx, cancel := context.WithCancel(context.Background())
 
+	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawWhenCount], errorChan chan error) {
 		if count, err := tslib.NTimestamps(opts.Globals.Chain); err != nil {
 			errorChan <- err

@@ -9,7 +9,8 @@ TEST[DATE|TIME] Format:  json
       "hash": "0xa76f763db3e6569c980bc9ac884b64ef7f7b7c80ceba7892c0d0c2decff284d9",
       "status": 1,
       "transactionIndex": 0
-    },{
+    },
+    {
       "blockNumber": 1428993,
       "gasUsed": 29244,
       "hash": "0x6a165ab71938c5f1c34337de84ae08fe85b5611ee6bbab3944b9f89538d97a69",
@@ -27,13 +28,15 @@ TEST[DATE|TIME] Format:  json
       ],
       "status": 1,
       "transactionIndex": 1
-    },{
+    },
+    {
       "blockNumber": 1428993,
       "gasUsed": 76035,
       "hash": "0x1657cde4a4c1d9c070fab8a0c215dd99d3e965e545c5bd538738d67204967fc7",
       "status": 1,
       "transactionIndex": 2
-    },{
+    },
+    {
       "blockNumber": 1428993,
       "gasUsed": 22900,
       "hash": "0x4a40fb5dd32321053e992d72de78f85de0ef70fa68018301787bdd733647ac57",

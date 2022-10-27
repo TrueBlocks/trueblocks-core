@@ -224,6 +224,9 @@ func GetOptions() *BlocksOptions {
 }
 
 func ResetOptions() {
+	// We want to keep writer between command file calls
+	w := GetOptions().Globals.Writer
 	defaultBlocksOptions = BlocksOptions{}
 	globals.SetDefaults(&defaultBlocksOptions.Globals)
+	defaultBlocksOptions.Globals.Writer = w
 }
