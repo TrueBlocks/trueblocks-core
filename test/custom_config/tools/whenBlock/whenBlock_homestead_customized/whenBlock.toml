@@ -1,5 +1,0 @@
-[version]
-current = "0.3.0"
-
-[display]
-format "[bn: {BLOCKNUMBER}\t][date: {DATE}\t][ts: {TIMESTAMP}\t][gasLimit: {GASLIMIT}]"
