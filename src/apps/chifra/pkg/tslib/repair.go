@@ -14,7 +14,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 )
 
-func Freshen(chain string, bn uint64) error {
+// Repair repairs a single timestamp
+func Repair(chain string, bn uint64) error {
 	cnt, err := NTimestamps(chain)
 	if err != nil {
 		return err
