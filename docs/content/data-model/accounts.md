@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2022-10-22T16:08:00
+date: 2022-10-27T22:26:12
 lastmod:
   - :git
   - lastmod
@@ -103,7 +103,7 @@ Reconciliation data is made of the following data fields:
 | transactionIndex    | the zero-indexed position of the transaction in the block                                                                         | blknum    |
 | transactionHash     | the hash of the transaction that triggered this reconciliation                                                                    | hash      |
 | timestamp           | the Unix timestamp of the object                                                                                                  | timestamp |
-| date                | a calculated field -- the date of this transaction                                                                                | date      |
+| date                | a calculated field -- the date of this transaction                                                                                | datetime  |
 | sender              | the initiator of the transfer (the sender)                                                                                        | address   |
 | recipient           | the receiver of the transfer (the recipient)                                                                                      | address   |
 | assetAddr           | 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee for ETH reconcilations, the token address otherwise                                    | address   |
@@ -112,11 +112,12 @@ Reconciliation data is made of the following data fields:
 | prevBlk             | the block number of the previous reconciliation, or 0 if this is the first reconciliation                                         | blknum    |
 | prevBlkBal          | the account balance for the given asset for the previous reconciliation                                                           | int256    |
 | begBal              | the beginning balance of the asset at the blockNumber                                                                             | int256    |
+| begBalDiff          | a calculated field -- difference between expected beginning balance and balance at last reconciliation, the reconciliation failed | int256    |
 | amountNet           | a calculated field -- totalIn - totalOut                                                                                          | int256    |
 | endBal              | the on-chain balance of the asset (see notes above about intra-block reconciliations)                                             | int256    |
 | endBalCalc          | a calculated field -- begBal + amountNet                                                                                          | int256    |
-| begBalDiff          | a calculated field -- difference between expected beginning balance and balance at last reconciliation, the reconciliation failed | int256    |
 | endBalDiff          | a calculated field -- endBal - endBalCalc, if non-zero, the reconciliation failed                                                 | int256    |
+| totalIn             | a calculated field -- the sum of all In fields                                                                                    | int256    |
 | amountIn            | the top-level value of the incoming transfer for the accountedFor address                                                         | int256    |
 | internalIn          | the internal value of the incoming transfer for the accountedFor address                                                          | int256    |
 | selfDestructIn      | the incoming value of a self-destruct if recipient is the accountedFor address                                                    | int256    |
@@ -125,13 +126,12 @@ Reconciliation data is made of the following data fields:
 | minerTxFeeIn        | the transaction fee reward if the miner is the accountedFor address                                                               | int256    |
 | minerUncleRewardIn  | the uncle reward if the miner who won the uncle block is the accountedFor address                                                 | int256    |
 | prefundIn           | at block zero (0) only, the amount of genesis income for the accountedFor address                                                 | int256    |
-| totalIn             | a calculated field -- the sum of all In fields                                                                                    | int256    |
+| totalOut            | a calculated field -- the sum of all Out fields                                                                                   | int256    |
+| totalOutLessGas     | a calculated field -- totalOut - gasCostOut                                                                                       | int256    |
 | amountOut           | the amount (in terms of the asset) of regular outflow during this bigint                                                          | int256    |
 | internalOut         | the value of any internal value transfers out of the accountedFor account                                                         | int256    |
 | selfDestructOut     | the value of the self-destructed value out if the accountedFor address was self-destructed                                        | int256    |
 | gasCostOut          | if the transactions original sender is the accountedFor address, the amount of gas expended denominated in WEI.                   | int256    |
-| totalOut            | a calculated field -- the sum of all Out fields                                                                                   | int256    |
-| totalOutLessGas     | a calculated field -- totalOut - gasCostOut                                                                                       | int256    |
 | spotPrice           | The on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction                                          | double    |
 | priceSource         | The on-chain source from which the spot price was taken                                                                           | string    |
 | reconciliationType  | One of `regular`, `traces`, `prevdiff-partial`, `partial-nextdiff`, or `partial-partial`                                          | string    |
@@ -195,7 +195,7 @@ This documentation mentions the following basic data types.
 | address   | a 20-byte hexadecimal string starting with '0x' | lowercase      |
 | blknum    | an alias for a uint64                           |                |
 | bool      | a value either `true`, `false`, `1`, or `0`     |                |
-| date      | a JSON formatted date                           | as a string    |
+| datetime  |                                                 |                |
 | double    | a floating point number of double precision     |                |
 | hash      | a 32-byte hexadecimal string starting with '0x' | lowercase      |
 | int256    | a signed big number                             | as a string    |

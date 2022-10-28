@@ -1,0 +1,75 @@
+export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&statements&firstBlock=15828830&lastBlock=15828831&fmt=json&maxRecords=5000&asset=0xdac17f958d2ee523a2206206994597c13d831ec7
+{
+  "data": [
+    {
+      "blockNumber": 15828830,
+      "transactionIndex": 112,
+      "transactionHash": "0x332df8459d5357d05d59c4e186eeb7b0b9380343962ac978d2e539c8f23d0508",
+      "timestamp": 1666746131,
+      "date": "2022-10-26 01:02:11 UTC",
+      "sender": "0x0x",
+      "recipient": "0x0x",
+      "assetAddr": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+      "assetSymbol": "USDT",
+      "decimals": 6,
+      "prevBlk": 15828829,
+      "prevBlkBal": "376561000",
+      "begBal": "376561000",
+      "begBalDiff": "",
+      "amountNet": "25720000",
+      "endBal": "402281000",
+      "endBalCalc": "402281000",
+      "endBalDiff": "",
+      "totalIn": "25720000",
+      "amountIn": "25720000",
+      "internalIn": "",
+      "selfDestructIn": "",
+      "minerBaseRewardIn": "",
+      "minerNephewRewardIn": "",
+      "minerTxFeeIn": "",
+      "minerUncleRewardIn": "",
+      "prefundIn": "",
+      "totalOut": "",
+      "totalOutLessGas": "",
+      "amountOut": "",
+      "internalOut": "",
+      "selfDestructOut": "",
+      "gasCostOut": "",
+      "spotPrice": 1,
+      "priceSource": "stable-coin",
+      "reconciliationType": "",
+      "reconciled": true
+    }
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef",
+    "namedFrom": {},
+    "unNamedFrom": {
+      "0xb19feccea1cf597255719a6b8d4e0691ae29e118": 1
+    },
+    "namedTo": {},
+    "unNamedTo": {
+      "0xc497058d572d188bfce1b9813e7d346c54a20812": 1
+    },
+    "first_block": "0xdeadbeef",
+    "last_block": "0xdeadbeef",
+    "accountedFor": {
+      "tags": "00-Active",
+      "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "name": "Name 0xf503017d",
+      "symbol": "",
+      "source": "",
+      "decimals": 0,
+      "petname": "annually-famous-crappie",
+      "isCustom": true,
+      "isPrefund": false,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
+    }
+  }
+}

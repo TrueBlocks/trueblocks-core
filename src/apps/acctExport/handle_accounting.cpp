@@ -148,7 +148,7 @@ bool COptions::process_reconciliation(CTraverser* trav) {
                 tokStatement.amountIn = (tokStatement.endBal - tokStatement.begBal);
             }
             tokStatement.reconciliationType = "";
-            if (tokStatement.amountNet() != 0) {
+            if (tokStatement.amountNet_internal() != 0) {
                 tokStatement.spotPrice =
                     getPriceInUsd(trav->trans.blockNumber, tokStatement.priceSource, tokenName.address);
                 trav->trans.statements.push_back(tokStatement);
@@ -164,7 +164,7 @@ bool COptions::process_reconciliation(CTraverser* trav) {
 //-----------------------------------------------------------------------
 bool COptions::isReconciled(CTraverser* trav) const {
     for (auto recon : trav->trans.statements) {
-        if (!recon.reconciled())
+        if (!recon.reconciled_internal())
             return false;
     }
     return true;

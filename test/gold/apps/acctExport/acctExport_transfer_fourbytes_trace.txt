@@ -6,8 +6,12 @@ TEST[DATE|TIME] MaxRecords:  10
 TEST[DATE|TIME] Format:  json
 { "data": [
 {
+  "blockHash": "0x7b6c8640eb6e951e4f27370b8ddce33416df0c88a36133ed530d89bf70851f7a",
+  "blockNumber": 8856476,
   "subtraces": 0,
   "traceAddress": null,
+  "transactionHash": "0x118f8d42e6b858427f6b54c1636a6ec1f72e0cf8941da03deffa55a3c2357204",
+  "transactionIndex": 55,
   "type": "call",
   "action": {
     "selfDestructed": "0x0",
@@ -24,11 +28,16 @@ TEST[DATE|TIME] Format:  json
     "newContract": "0x0",
     "gasUsed": 29106,
     "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
-  }
+  },
+  "timestamp": 1572663370
 }
 , {
+  "blockHash": "0xb9c1d175649dd505870fa571d691ad41c9c8b4b24fe69f99cf312823c5964fdb",
+  "blockNumber": 8856511,
   "subtraces": 0,
   "traceAddress": null,
+  "transactionHash": "0x973699ddd12186570c957369788e0128b1acc66c994685c5d3f52ef6b3b84fed",
+  "transactionIndex": 161,
   "type": "call",
   "action": {
     "selfDestructed": "0x0",
@@ -45,11 +54,16 @@ TEST[DATE|TIME] Format:  json
     "newContract": "0x0",
     "gasUsed": 14106,
     "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
-  }
+  },
+  "timestamp": 1572663859
 }
 , {
+  "blockHash": "0xb85f58b16f710a1b26b5715311e7785ec1fc78b8447941b3fe6471a8cc498290",
+  "blockNumber": 8860434,
   "subtraces": 0,
   "traceAddress": null,
+  "transactionHash": "0xf411e204daf3b005c251d506bbbf421de482ea468b1c3b76289e76d33459a083",
+  "transactionIndex": 21,
   "type": "call",
   "action": {
     "selfDestructed": "0x0",
@@ -66,6 +80,7 @@ TEST[DATE|TIME] Format:  json
     "newContract": "0x0",
     "gasUsed": 14106,
     "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
-  }
+  },
+  "timestamp": 1572719011
 }
 ] }
