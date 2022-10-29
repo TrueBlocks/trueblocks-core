@@ -404,6 +404,7 @@ paths:
                         - $ref: "#/components/schemas/receipt"
                         - $ref: "#/components/schemas/log"
                         - $ref: "#/components/schemas/trace"
+                        - $ref: "#/components/schemas/transfer"
                 example:
                   {
                     "data":
@@ -725,41 +726,43 @@ paths:
                     items:
                       $ref: "#/components/schemas/function"
                 example:
-                 {
-                   "data": [
-                     {
-                       "name": "PairCreated",
-                       "type": "event",
-                       "stateMutability": "nonpayable",
-                       "signature": "PairCreated(address,address,address,uint256)",
-                       "encoding": "0x0d3648bd0f6ba80134a33ba9275ac585d9d315f0ad8355cddefde31afa28d0e9",
-                       "inputs": [
-                         {
-                           "type": "address",
-                           "name": "token0",
-                           "indexed": true,
-                           "internalType": "address"
-                         },
-                         {
-                           "type": "address",
-                           "name": "token1",
-                           "indexed": true,
-                           "internalType": "address"
-                         },
-                         {
-                           "type": "address",
-                           "name": "pair",
-                           "internalType": "address"
-                         },
-                         {
-                           "type": "uint256",
-                           "name": "val_0",
-                           "internalType": "uint256"
-                         }
-                       ]
-                     }
-                   ]
-                 }
+                  {
+                    "data":
+                      [
+                        {
+                          "name": "PairCreated",
+                          "type": "event",
+                          "stateMutability": "nonpayable",
+                          "signature": "PairCreated(address,address,address,uint256)",
+                          "encoding": "0x0d3648bd0f6ba80134a33ba9275ac585d9d315f0ad8355cddefde31afa28d0e9",
+                          "inputs":
+                            [
+                              {
+                                "type": "address",
+                                "name": "token0",
+                                "indexed": true,
+                                "internalType": "address",
+                              },
+                              {
+                                "type": "address",
+                                "name": "token1",
+                                "indexed": true,
+                                "internalType": "address",
+                              },
+                              {
+                                "type": "address",
+                                "name": "pair",
+                                "internalType": "address",
+                              },
+                              {
+                                "type": "uint256",
+                                "name": "val_0",
+                                "internalType": "uint256",
+                              },
+                            ],
+                        },
+                      ],
+                  }
         "400":
           description: bad input parameter
   /blocks:
@@ -1003,7 +1006,9 @@ paths:
                     description: the transaction data for a given transaction directly from the blockchain
                     type: array
                     items:
-                      $ref: "#/components/schemas/transaction"
+                      oneOf:
+                        - $ref: "#/components/schemas/transaction"
+                        - $ref: "#/components/schemas/transfer"
         "400":
           description: bad input parameter
   /receipts:
@@ -1424,20 +1429,21 @@ paths:
                     items:
                       $ref: "#/components/schemas/token"
                 example:
-                 {
-                   "data": [
-                     {
-                       "holder": "0x2910543af39aba0cd09dbb2d50200b3e800a63d2",
-                       "balance": "624980000000000000",
-                       "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
-                       "name": "The DAO Original",
-                       "decimals": 1,
-                       "isContract": true,
-                       "isErc20": true,
-                       "isErc721": true
-                     }
-                   ]
-                 }
+                  {
+                    "data":
+                      [
+                        {
+                          "holder": "0x2910543af39aba0cd09dbb2d50200b3e800a63d2",
+                          "balance": "624980000000000000",
+                          "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+                          "name": "The DAO Original",
+                          "decimals": 1,
+                          "isContract": true,
+                          "isErc20": true,
+                          "isErc721": true,
+                        },
+                      ],
+                  }
         "400":
           description: bad input parameter
   /status:
@@ -2535,6 +2541,88 @@ components:
           format: blknum
           example: 8901011
           description: "the block number at which this smart contract was deployed (if a smart contact)"
+    transfer:
+      description: "a representation of an ERC-20 token transfer"
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: blknum
+          example: 10021
+          description: "the number of the block"
+        transactionIndex:
+          type: number
+          format: blknum
+          example: 305
+          description: "the zero-indexed position of the transaction in the block"
+        logIndex:
+          type: number
+          format: blknum
+          example: 305
+          description: "the zero-indexed position of the log in the transaction"
+        transactionHash:
+          type: string
+          format: hash
+          description: "the hash of the transaction that triggered this reconciliation"
+        timestamp:
+          type: number
+          format: timestamp
+          example: 1438335038
+          description: "the Unix timestamp of the object"
+        date:
+          type: datetime
+          description: "a calculated field -- the date of this transaction"
+        sender:
+          type: string
+          format: address
+          example: "0x1bd0...9ce9"
+          description: "the initiator of the transfer (the sender)"
+        recipient:
+          type: string
+          format: address
+          example: "0x38d1...1310"
+          description: "the receiver of the transfer (the recipient)"
+        assetAddr:
+          type: string
+          format: address
+          example: "0xf503...179b"
+          description: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee for ETH reconcilations, the token address otherwise"
+        assetSymbol:
+          type: string
+          description: "either ETH, WEI or the symbol of the asset being reconciled as queried from the chain"
+        decimals:
+          type: number
+          format: uint64
+          description: "Equivalent to the queried value of `decimals` from an ERC20 contract or, if ETH or WEI then 18"
+        amount:
+          type: string
+          format: uint256
+          description: "the amount of the transfer in the units of the asset"
+        spotPrice:
+          type: number
+          format: double
+          description: "The on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction"
+        priceSource:
+          type: string
+          description: "The on-chain source from which the spot price was taken"
+        topic0:
+          type: string
+          description: "The on-chain source from which the spot price was taken"
+        topic1:
+          type: string
+          description: "The on-chain source from which the spot price was taken"
+        topic2:
+          type: string
+          description: "The on-chain source from which the spot price was taken"
+        topic3:
+          type: string
+          description: "The on-chain source from which the spot price was taken"
+        data:
+          type: string
+          description: "The on-chain source from which the spot price was taken"
+        encoding:
+          type: string
+          description: "The on-chain source from which the spot price was taken"
     token:
       description: "on-chain token related data for a give address at a given block height"
       type: object

@@ -7,7 +7,7 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&statements&asset=0x89d24
       "transactionHash": "0xd5a49ef68f77357a5202ca09499b343b27cd02c1172c4ace3050a494dc218d8a",
       "timestamp": 1572720150,
       "date": "2019-11-02 18:42:30 UTC",
-      "sender": "0x0",
+      "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "recipient": "0x0",
       "assetAddr": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
       "assetSymbol": "SAI",
@@ -37,7 +37,7 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&statements&asset=0x89d24
       "gasCostOut": "",
       "spotPrice": 1,
       "priceSource": "stable-coin",
-      "reconciliationType": "",
+      "reconciliationType": "token",
       "reconciled": true
     },
     {
@@ -46,7 +46,7 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&statements&asset=0x89d24
       "transactionHash": "0x1cdbe0fcca2ee3f9e4504f25e6f2a485835caa920496d20b10fa6241cbfdb124",
       "timestamp": 1572720361,
       "date": "2019-11-02 18:46:01 UTC",
-      "sender": "0x0",
+      "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "recipient": "0x0",
       "assetAddr": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
       "assetSymbol": "SAI",
@@ -76,7 +76,7 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&statements&asset=0x89d24
       "gasCostOut": "",
       "spotPrice": 1,
       "priceSource": "stable-coin",
-      "reconciliationType": "",
+      "reconciliationType": "token",
       "reconciled": true
     }
   ],

@@ -601,14 +601,7 @@ void CReconciliation::registerClass(void) {
     builtIns.push_back(_biCReconciliation);
 
     // EXISTING_CODE
-    // ADD_FIELD(CReconciliation, "begBalDiff", T_INT256, ++fieldNum);
-    // ADD_FIELD(CReconciliation, "endBalCalc", T_INT256, ++fieldNum);
-    // ADD_FIELD(CReconciliation, "endBalDiff", T_INT256, ++fieldNum);
-    // ADD_FIELD(CReconciliation, "totalIn", T_INT256, ++fieldNum);
-    // ADD_FIELD(CReconciliation, "totalOut", T_INT256, ++fieldNum);
-    // ADD_FIELD(CReconciliation, "totalOutLessGas", T_INT256, ++fieldNum);
-    // ADD_FIELD(CReconciliation, "amountNet", T_INT256, ++fieldNum);
-    // ADD_FIELD(CReconciliation, "reconciled", T_BOOL, ++fieldNum);
+    SET_TYPE(CReconciliation, "reconciled", T_BOOL);  // remove TS_OMITEMPTY
     // EXISTING_CODE
 }
 
@@ -961,21 +954,6 @@ CReconciliation& CReconciliation::operator+=(const CReconciliation& r) {
     return *this;
 }
 
-//---------------------------------------------------------------------------
-void CReconciliation::initForToken(CAccountName& tokenName) {
-    assetAddr = tokenName.address;
-    ASSERT(!assetAddr.empty());
-    assetSymbol = tokenName.symbol;
-    if (assetSymbol.empty()) {
-        assetSymbol = getTokenSymbol(tokenName.address, blockNumber);
-        if (contains(assetSymbol, "reverted"))
-            assetSymbol = "";
-    }
-    if (assetSymbol.empty())
-        assetSymbol = tokenName.address.substr(0, 4);
-    decimals = tokenName.decimals != 0 ? tokenName.decimals : 18;
-}
-
 #define LOG_TRIAL_BALANCE()                                                                                            \
     LOG4("Trial balance: ", reconciliationType);                                                                       \
     LOG4("  hash: ", trans->hash);                                                                                     \
@@ -1031,7 +1009,7 @@ bool CReconciliation::reconcileEth(const CReconciliation& prevRecon, blknum_t ne
     prevBlkBal = prevRecon.endBal;
     prevBlk = prevRecon.blockNumber;
     assetSymbol = "ETH";
-    assetAddr = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
+    assetAddr = FAKE_ETH_ADDRESS;
 
     bigint_t balEOLB = getBalanceAt(acctFor, blockNumber == 0 ? 0 : blockNumber - 1);
     bigint_t balEOB = getBalanceAt(acctFor, blockNumber);

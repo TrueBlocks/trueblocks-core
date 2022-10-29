@@ -134,6 +134,111 @@ params.size: 3
   2: uint32 _blockTimestampLast = 1655778471
 ==================================================
 
+{
+  "blockNumber": 15828830,
+  "transactionIndex": 112,
+  "logIndex": 314,
+  "transactionHash": "0x332df8459d5357d05d59c4e186eeb7b0b9380343962ac978d2e539c8f23d0508",
+  "timestamp": 1666746131,
+  "date": "2022-10-26 01:02:11 UTC",
+  "sender": "0x000000000000000000000000abea9132b05a70803a4e85094fd0e1800777fbef",
+  "recipient": "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b",
+  "assetAddr": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+  "assetSymbol": "USDC",
+  "decimals": 18,
+  "amount": 296893000,
+  "spotPrice": 1.00000,
+  "topic0": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+  "topic1": "0x000000000000000000000000abea9132b05a70803a4e85094fd0e1800777fbef",
+  "topic2": "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b",
+  "data": "0x0000000000000000000000000000000000000000000000000000000011b23a48",
+  "encoding": "0x7dfdb178"
+}
+
+{
+  "blockNumber": 15828830,
+  "transactionIndex": 112,
+  "logIndex": 316,
+  "transactionHash": "0x332df8459d5357d05d59c4e186eeb7b0b9380343962ac978d2e539c8f23d0508",
+  "timestamp": 1666746131,
+  "date": "2022-10-26 01:02:11 UTC",
+  "sender": "0x000000000000000000000000abea9132b05a70803a4e85094fd0e1800777fbef",
+  "recipient": "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b",
+  "assetAddr": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+  "assetSymbol": "USDT",
+  "decimals": 18,
+  "amount": 25720000,
+  "spotPrice": 1.00000,
+  "topic0": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+  "topic1": "0x000000000000000000000000abea9132b05a70803a4e85094fd0e1800777fbef",
+  "topic2": "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b",
+  "data": "0x00000000000000000000000000000000000000000000000000000000018874c0",
+  "encoding": "0x7dfdb178"
+}
+
+{
+  "blockNumber": 15828830,
+  "transactionIndex": 112,
+  "logIndex": 318,
+  "transactionHash": "0x332df8459d5357d05d59c4e186eeb7b0b9380343962ac978d2e539c8f23d0508",
+  "timestamp": 1666746131,
+  "date": "2022-10-26 01:02:11 UTC",
+  "sender": "0x000000000000000000000000abea9132b05a70803a4e85094fd0e1800777fbef",
+  "recipient": "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b",
+  "assetAddr": "0xd56dac73a4d6766464b38ec6d91eb45ce7457c44",
+  "assetSymbol": "PAN",
+  "decimals": 18,
+  "amount": 1886600000000000000000,
+  "spotPrice": 1.00000,
+  "topic0": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+  "topic1": "0x000000000000000000000000abea9132b05a70803a4e85094fd0e1800777fbef",
+  "topic2": "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b",
+  "data": "0x00000000000000000000000000000000000000000000006645d5a05d63f40000",
+  "encoding": "0x7dfdb178"
+}
+
+{
+  "blockNumber": 15828830,
+  "transactionIndex": 112,
+  "logIndex": 320,
+  "transactionHash": "0x332df8459d5357d05d59c4e186eeb7b0b9380343962ac978d2e539c8f23d0508",
+  "timestamp": 1666746131,
+  "date": "2022-10-26 01:02:11 UTC",
+  "sender": "0x000000000000000000000000abea9132b05a70803a4e85094fd0e1800777fbef",
+  "recipient": "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b",
+  "assetAddr": "0x6b175474e89094c44da98b954eedeac495271d0f",
+  "assetSymbol": "DAI",
+  "decimals": 18,
+  "amount": 148935900000000000000,
+  "spotPrice": 1.00000,
+  "topic0": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+  "topic1": "0x000000000000000000000000abea9132b05a70803a4e85094fd0e1800777fbef",
+  "topic2": "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b",
+  "data": "0x00000000000000000000000000000000000000000000000812e69bf42b19c000",
+  "encoding": "0x7dfdb178"
+}
+
+{
+  "blockNumber": 15828830,
+  "transactionIndex": 112,
+  "logIndex": 329,
+  "transactionHash": "0x332df8459d5357d05d59c4e186eeb7b0b9380343962ac978d2e539c8f23d0508",
+  "timestamp": 1666746131,
+  "date": "2022-10-26 01:02:11 UTC",
+  "sender": "0x0000000000000000000000000000000000000000000000000000000000000000",
+  "recipient": "0x0000000000000000000000006b323ee3b37add34fe9dd57020f342446f451074",
+  "assetAddr": "0x7c770595a2be9a87cf49b35ea9bc534f1a59552d",
+  "decimals": 18,
+  "amount": 0,
+  "spotPrice": 1.00000,
+  "topic0": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+  "topic1": "0x0000000000000000000000000000000000000000000000000000000000000000",
+  "topic2": "0x0000000000000000000000006b323ee3b37add34fe9dd57020f342446f451074",
+  "topic3": "0x000000000000000000000000000000000000000000000000000000000004a77f",
+  "data": "0x",
+  "encoding": "0x7dfdb178"
+}
+
 TIME ~ CLOCK - <INFO>  : Calling 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 15000000...: 
 TIME ~ CLOCK - <INFO>  : call to 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 15000000 at four-byte 0xe6a43905 returned 0x0000000000000000000000000000000000000000000000000000000000000000
 TIME ~ CLOCK - <INFO>  : Calling 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 15000000...: 
@@ -437,8 +542,8 @@ params.size: 3
   "transactionHash": "0x332df8459d5357d05d59c4e186eeb7b0b9380343962ac978d2e539c8f23d0508",
   "timestamp": 1666746131,
   "date": "2022-10-26 01:02:11 UTC",
-  "sender": "0x0x",
-  "recipient": "0x0x",
+  "sender": "0xb19feccea1cf597255719a6b8d4e0691ae29e118",
+  "recipient": "0x0",
   "assetAddr": "0x6b175474e89094c44da98b954eedeac495271d0f",
   "assetSymbol": "DAI",
   "decimals": 18,
@@ -467,6 +572,7 @@ params.size: 3
   "gasCostOut": "",
   "spotPrice": 1.00000,
   "priceSource": "stable-coin",
+  "reconciliationType": "token",
   "reconciled": true
 }
 , {
@@ -475,7 +581,7 @@ params.size: 3
   "transactionHash": "0x332df8459d5357d05d59c4e186eeb7b0b9380343962ac978d2e539c8f23d0508",
   "timestamp": 1666746131,
   "date": "2022-10-26 01:02:11 UTC",
-  "sender": "0x0",
+  "sender": "0xb19feccea1cf597255719a6b8d4e0691ae29e118",
   "recipient": "0x0",
   "assetAddr": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
   "assetSymbol": "USDC",
@@ -505,6 +611,7 @@ params.size: 3
   "gasCostOut": "",
   "spotPrice": 1.00000,
   "priceSource": "stable-coin",
+  "reconciliationType": "token",
   "reconciled": true
 }
 , {
@@ -513,7 +620,7 @@ params.size: 3
   "transactionHash": "0x332df8459d5357d05d59c4e186eeb7b0b9380343962ac978d2e539c8f23d0508",
   "timestamp": 1666746131,
   "date": "2022-10-26 01:02:11 UTC",
-  "sender": "0x0",
+  "sender": "0xb19feccea1cf597255719a6b8d4e0691ae29e118",
   "recipient": "0x0",
   "assetAddr": "0xd56dac73a4d6766464b38ec6d91eb45ce7457c44",
   "assetSymbol": "PAN",
@@ -543,6 +650,7 @@ params.size: 3
   "gasCostOut": "",
   "spotPrice": 0.01912,
   "priceSource": "uniswap",
+  "reconciliationType": "token",
   "reconciled": true
 }
 , {
@@ -551,7 +659,7 @@ params.size: 3
   "transactionHash": "0x332df8459d5357d05d59c4e186eeb7b0b9380343962ac978d2e539c8f23d0508",
   "timestamp": 1666746131,
   "date": "2022-10-26 01:02:11 UTC",
-  "sender": "0x0",
+  "sender": "0xb19feccea1cf597255719a6b8d4e0691ae29e118",
   "recipient": "0x0",
   "assetAddr": "0xdac17f958d2ee523a2206206994597c13d831ec7",
   "assetSymbol": "USDT",
@@ -581,6 +689,7 @@ params.size: 3
   "gasCostOut": "",
   "spotPrice": 1.00000,
   "priceSource": "stable-coin",
+  "reconciliationType": "token",
   "reconciled": true
 }
 ] }

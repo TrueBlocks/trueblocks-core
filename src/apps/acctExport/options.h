@@ -133,8 +133,9 @@ class COptions : public CAbiOptions {
 
     bool process_reconciliation(CTraverser* trav);
     bool isReconciled(CTraverser* trav) const;
-    void cacheIfReconciled(CTraverser* trav, bool isNew) const;
-    bool token_list_from_logs(CAccountNameMap& tokenList, const CTraverser* trav);
+    void cacheIfReconciled(CTraverser* trav) const;
+    bool getListOfTransfers(CTransferArray& transfers, CAccountNameMap& tokenList, const CTraverser* trav);
+    bool readReconsFromCache(CTraverser* trav);
 
     // Used as temporary data to count neighbor traversals
     size_t neighborCount{0};

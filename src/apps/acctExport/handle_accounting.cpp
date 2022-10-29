@@ -1,3 +1,4 @@
+// TODO: Reverse mode
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -11,6 +12,248 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
+
+extern string_q getReconcilationPath(const address_t& address, const CTransaction* pT);
+extern string_q statementKey(const address_t& accountedFor, const address_t& assetAddr);
+//-----------------------------------------------------------------------
+bool COptions::process_reconciliation(CTraverser* trav) {
+    trav->trans.statements.clear();
+
+    // If we can get the reconciliations from the cache, do so...
+    // if (readReconsFromCache(trav)) {
+    //     return !shouldQuit();
+    // }
+
+    trav->searchOp = RECONCILE;
+
+    string_q ethKey = statementKey(accountedFor.address, "");
+
+    // The block of the next appearance, unless we're at the end of the list, then infinity
+    blknum_t nextAppBlk = trav->index < monApps.size() - 1 ? monApps[trav->index + 1].blk : NOPOS;
+
+    // The block of the previous appearance, unless we're at the start of the list, in which case
+    // it's one less than the current block, unless we're at the zero block, then zero
+    blknum_t prevAppBlk = 0;
+    if (trav->index > 0) {
+        prevAppBlk = monApps[trav->index - 1].blk;
+    } else {
+        if (trav->trans.blockNumber > 0) {
+            prevAppBlk = trav->trans.blockNumber - 1;
+        }
+    }
+    // prevAppBlk = trav->index > 0 ? monApps[trav->index - 1].blk : 0;
+
+    if (prevStatements[ethKey].assetAddr.empty()) {
+        // TODO(tjayrush): Incorrect code follows
+        // This code is wrong. We ask for the balance at the current block minus one, but we should ask
+        // at the previous block in this address's appearance list. When we're called with first_record
+        // or start_block not zero we don't have this (since we only load those appearances we're asked
+        // for) To fix this, we need to be able to get the previous appearance's block. Note, we
+        // only need the balance for the previous reconcilation, so using NOPOS for transactionIndex is okay.
+        CReconciliation pEth(prevAppBlk, NOPOS, trav->trans.timestamp, &trav->trans);
+        pEth.endBal = getBalanceAt(accountedFor.address, prevAppBlk);
+        pEth.spotPrice = getPriceInUsd(prevAppBlk, pEth.priceSource);
+        prevStatements[ethKey] = pEth;
+    }
+
+    CReconciliation eth(trav->trans.blockNumber, trav->trans.transactionIndex, trav->trans.timestamp, &trav->trans);
+    eth.reconcileEth(prevStatements[ethKey], nextAppBlk, &trav->trans, accountedFor);
+    eth.spotPrice = getPriceInUsd(trav->trans.blockNumber, eth.priceSource);
+    trav->trans.statements.push_back(eth);
+    prevStatements[ethKey] = eth;
+
+    CTransferArray transfers;
+    CAccountNameMap tokenList;
+    if (getListOfTransfers(transfers, tokenList, trav)) {
+        for (auto transfer : transfers) {
+            cerr << transfer << endl;
+        }
+
+        for (auto item : tokenList) {
+            CReconciliation tokStatement(trav->trans.blockNumber, trav->trans.transactionIndex, trav->trans.timestamp,
+                                         &trav->trans);
+
+            CAccountName tokenName = item.second;
+            tokStatement.assetAddr = tokenName.address;
+            tokStatement.decimals = tokenName.decimals != 0 ? tokenName.decimals : 18;
+            tokStatement.assetSymbol = tokenName.symbol;
+            if (tokStatement.assetSymbol.empty()) {
+                tokStatement.assetSymbol = getTokenSymbol(tokenName.address, tokStatement.blockNumber);
+                if (contains(tokStatement.assetSymbol, "reverted"))
+                    tokStatement.assetSymbol = "";
+            }
+            if (tokStatement.assetSymbol.empty())
+                tokStatement.assetSymbol = tokenName.address.substr(0, 4);
+
+            string tokenKey = accountedFor.address + "_" + tokenName.address;
+            if (prevStatements[tokenKey].assetAddr.empty()) {
+                CReconciliation pBal = tokStatement;
+                pBal.sender = trav->trans.from;
+                pBal.pTransaction = &trav->trans;
+                pBal.blockNumber = trav->trans.blockNumber == 0 ? 0 : trav->trans.blockNumber - 1;
+                pBal.endBal = getTokenBalanceOf2(tokenName.address, accountedFor.address, pBal.blockNumber);
+                pBal.spotPrice = getPriceInUsd(pBal.blockNumber, pBal.priceSource, tokenName.address);
+                prevStatements[tokenKey] = pBal;
+            }
+
+            tokStatement.prevBlk = prevStatements[tokenKey].blockNumber;
+            tokStatement.prevBlkBal = prevStatements[tokenKey].endBal;
+            tokStatement.begBal =
+                trav->trans.blockNumber == 0
+                    ? 0
+                    : getTokenBalanceOf2(tokenName.address, accountedFor.address, trav->trans.blockNumber - 1);
+            tokStatement.endBal = getTokenBalanceOf2(tokenName.address, accountedFor.address, trav->trans.blockNumber);
+            if (tokStatement.begBal > tokStatement.endBal) {
+                tokStatement.amountOut = (tokStatement.begBal - tokStatement.endBal);
+            } else {
+                tokStatement.amountIn = (tokStatement.endBal - tokStatement.begBal);
+            }
+            tokStatement.reconciliationType = "token";
+            if (tokStatement.amountNet_internal() != 0) {
+                tokStatement.sender = trav->trans.from;
+                tokStatement.spotPrice =
+                    getPriceInUsd(trav->trans.blockNumber, tokStatement.priceSource, tokenName.address);
+                trav->trans.statements.push_back(tokStatement);
+                prevStatements[tokenKey] = tokStatement;
+            }
+        }
+    }
+
+    cacheIfReconciled(trav);
+
+    return !shouldQuit();
+}
+
+//-----------------------------------------------------------------------
+string_q getReconcilationPath(const address_t& address, const CTransaction* pT) {
+    string_q path = getPathToBinaryCache(CT_RECONS, address, pT->blockNumber, pT->transactionIndex);
+    establishFolder(path);
+    return path;
+}
+
+//-----------------------------------------------------------------------
+bool COptions::getListOfTransfers(CTransferArray& transfers, CAccountNameMap& tokenList, const CTraverser* trav) {
+    for (auto log : trav->trans.receipt.logs) {
+        CAccountName tokenName;
+        bool isToken = findToken(log.address, tokenName);
+        if (tokenName.address.empty()) {
+            tokenName.address = log.address;
+            tokenName.petname = addr_2_Petname(tokenName.address, '-');
+        }
+        if (isToken || (log.topics.size() > 0 && isTokenRelated(log.topics[0]))) {
+            tokenList[log.address] = tokenName;
+            bool passes = assetFilter.size() == 0 || assetFilter[tokenName.address];
+            if (!passes)
+                continue;
+            CTransfer transfer;
+            transfer.blockNumber = trav->trans.blockNumber;
+            transfer.transactionIndex = trav->trans.transactionIndex;
+            transfer.logIndex = log.logIndex;
+            transfer.timestamp = trav->trans.pBlock ? trav->trans.pBlock->timestamp : trav->trans.timestamp;
+            transfer.date = ts_2_Date(transfer.timestamp);
+            transfer.transactionHash = trav->trans.hash;
+            transfer.sender = log.topics.size() > 1 ? log.topics[1] : "";
+            transfer.recipient = log.topics.size() > 2 ? log.topics[2] : "";
+            transfer.amount = str_2_Wei(log.data);
+            transfer.topic0 = log.topics.size() > 0 ? log.topics[0] : "";
+            transfer.topic1 = log.topics.size() > 1 ? log.topics[1] : "";
+            transfer.topic2 = log.topics.size() > 2 ? log.topics[2] : "";
+            transfer.topic3 = log.topics.size() > 3 ? log.topics[3] : "";
+            transfer.data = log.data;
+            transfer.encoding = trav->trans.input.substr(0, 10);
+            transfer.assetAddr = log.address;
+            transfer.assetSymbol = tokenName.symbol;
+            transfers.push_back(transfer);
+        }
+    }
+    return tokenList.size() > 0;
+}
+
+//-----------------------------------------------------------------------
+bool isEtherAddr(const address_t& addr) {
+    return toLower(addr) == FAKE_ETH_ADDRESS;
+}
+
+//-----------------------------------------------------------------------
+// For each assset, we keep the last available balances in a map. When reconciling an
+// asset for the current transaction, we need the asset's previous balance. We index
+// into the previous balances using the accountedFor address and the asset's address.
+string_q statementKey(const address_t& accountedFor, const address_t& assetAddr) {
+    if (isZeroAddr(assetAddr) || isEtherAddr(assetAddr)) {
+        return toLower(accountedFor + "-" + "_eth");
+    }
+    return toLower(accountedFor + "-" + assetAddr);
+}
+
+//-----------------------------------------------------------------------
+bool COptions::readReconsFromCache(CTraverser* trav) {
+    if (isTestMode()) {
+        return false;
+    }
+
+    string_q path = getReconcilationPath(accountedFor.address, &trav->trans);
+    if (!fileExists(path)) {
+        return false;
+    }
+
+    CArchive archive(READING_ARCHIVE);
+    if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
+        archive >> trav->trans.statements;
+        archive.Release();
+        for (auto& statement : trav->trans.statements) {
+            // Migrations will have made sure any reconciliation statements are at least this version
+            ASSERT(statement.m_scheme >= getVersionNum(0, 42, 5));
+
+            // Freshen in case user has changed the names database since putting the statement in the cache
+            CAccountName tokenName;
+            if (findToken(statement.assetAddr, tokenName)) {
+                statement.assetSymbol = tokenName.symbol;
+                statement.decimals = tokenName.decimals;
+            }
+
+            statement.pTransaction = &trav->trans;
+
+            string_q key = statementKey(accountedFor.address, statement.assetAddr);
+            prevStatements[key] = statement;
+        }
+        return true;
+    }
+
+    return false;
+}
+
+//-----------------------------------------------------------------------
+bool COptions::isReconciled(CTraverser* trav) const {
+    for (auto recon : trav->trans.statements) {
+        if (!recon.reconciled_internal())
+            return false;
+    }
+    return true;
+}
+
+//-----------------------------------------------------------------------
+void COptions::cacheIfReconciled(CTraverser* trav) const {
+    if (isTestMode())
+        return;
+
+    if (!isReconciled(trav)) {
+        LOG_WARN("Transaction ", trav->trans.hash, " did not reconcile for account ", accountedFor.address, ".");
+        return;
+    }
+
+    string_q path = getReconcilationPath(accountedFor.address, &trav->trans);
+
+    lockSection();
+
+    CArchive archive(WRITING_ARCHIVE);
+    if (archive.Lock(path, modeWriteCreate, LOCK_WAIT)) {
+        LOG4("Writing to cache for ", path);
+        archive << trav->trans.statements;
+        archive.Release();
+    }
+
+    unlockSection();
+}
 
 //-----------------------------------------------------------------------
 bool acct_Display(CTraverser* trav, void* data) {
@@ -43,169 +286,6 @@ bool acct_Display(CTraverser* trav, void* data) {
 }
 
 //-----------------------------------------------------------------------
-bool COptions::process_reconciliation(CTraverser* trav) {
-    string_q path =
-        getPathToBinaryCache(CT_RECONS, accountedFor.address, trav->trans.blockNumber, trav->trans.transactionIndex);
-    establishFolder(path);
-
-    trav->trans.statements.clear();
-    if (!isTestMode() && fileExists(path)) {
-        CArchive archive(READING_ARCHIVE);
-        if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
-            archive >> trav->trans.statements;
-            archive.Release();
-            if (true) {
-                bool backLevel = false;
-                for (auto& statement : trav->trans.statements) {
-                    statement.pTransaction = &trav->trans;
-                    // At version 0.11.8, we finally got pricing of reconcilations correct. We didn't
-                    // want to add an upgrade of reconcilations to the migration, so we do it here
-                    // but only when the user reads an older file
-                    backLevel = backLevel || (statement.m_schema < getVersionNum(0, 11, 8));
-                    CAccountName tokenName;
-                    if (contains(statement.assetSymbol, "reverted"))
-                        statement.assetSymbol = "";
-                    if (statement.assetSymbol != "ETH" && statement.assetSymbol != "WEI" &&
-                        findToken(statement.assetAddr, tokenName)) {
-                        // We always freshen these in case user has changed names database
-                        statement.assetSymbol = tokenName.symbol;
-                        statement.decimals = tokenName.decimals;
-                    }
-                    prevStatements[accountedFor.address + "_" + toLower(statement.assetAddr)] = statement;
-                }
-                if (backLevel) {
-                    // LOG_WARN(cYellow, "Updating statements", cOff);
-                    trav->searchOp = UPDATE;
-                    cacheIfReconciled(trav, true /* isNew */);
-                }
-                return !shouldQuit();
-                //             } else {
-                //               trav->trans.statements.clear();
-            }
-        }
-    }
-
-    trav->searchOp = RECONCILE;
-
-    blknum_t nextAppBlk = trav->index < monApps.size() - 1 ? monApps[trav->index + 1].blk : NOPOS;
-    blknum_t prevAppBlk = trav->index > 0 ? monApps[trav->index - 1].blk : 0;
-    blknum_t prevAppTxid = trav->index > 0 ? monApps[trav->index - 1].txid : 0;
-
-    // We need to check to see if the export is starting after the
-    // the first record so we can pick up the previous balance
-    // We must do this for both ETH and any tokens
-    if (prevStatements[accountedFor.address + "_eth"].assetAddr.empty()) {
-        CReconciliation pEth(prevAppBlk, prevAppTxid, trav->trans.timestamp, &trav->trans);
-        // TODO(tjayrush): Incorrect code follows
-        // This code is wrong. We ask for the balance at the current block minus one, but we should ask
-        // at the previous block in this address's appearance list. When we're called with first_record
-        // or start_block not zero we don't have this (since we only load those appearances we're asked
-        // for) To fix this, we need to be able to get the previous appearance's block. Also, we used to
-        // handle reversed mode here, that code was removed
-        pEth.endBal =
-            trav->trans.blockNumber == 0 ? 0 : getBalanceAt(accountedFor.address, trav->trans.blockNumber - 1);
-        pEth.spotPrice = getPriceInUsd(trav->trans.blockNumber - 1, pEth.priceSource);
-        prevStatements[accountedFor.address + "_eth"] = pEth;
-    }
-
-    CReconciliation eth(trav->trans.blockNumber, trav->trans.transactionIndex, trav->trans.timestamp, &trav->trans);
-    eth.reconcileEth(prevStatements[accountedFor.address + "_eth"], nextAppBlk, &trav->trans, accountedFor);
-    eth.spotPrice = getPriceInUsd(trav->trans.blockNumber, eth.priceSource);
-    trav->trans.statements.push_back(eth);
-    prevStatements[accountedFor.address + "_eth"] = eth;
-
-    CAccountNameMap tokenList;
-    if (token_list_from_logs(tokenList, trav)) {
-        for (auto item : tokenList) {
-            CAccountName tokenName = item.second;
-
-            CReconciliation tokStatement(trav->trans.blockNumber, trav->trans.transactionIndex, trav->trans.timestamp,
-                                         &trav->trans);
-            tokStatement.initForToken(tokenName);
-
-            string psKey = accountedFor.address + "_" + tokenName.address;
-            if (prevStatements[psKey].assetAddr.empty()) {
-                // first time we've seen this asset, so we need previous balance
-                // which is frequently zero but may be non-zero if the command
-                // started after the addresses's first transaction
-                CReconciliation pBal = tokStatement;
-                pBal.pTransaction = &trav->trans;
-                pBal.blockNumber = 0;
-                if (trav->trans.blockNumber > 0)
-                    pBal.blockNumber = trav->trans.blockNumber - 1;
-                pBal.endBal = getTokenBalanceOf2(tokenName.address, accountedFor.address, pBal.blockNumber);
-                pBal.spotPrice = getPriceInUsd(pBal.blockNumber, pBal.priceSource, tokenName.address);
-                prevStatements[psKey] = pBal;
-            }
-
-            tokStatement.prevBlk = prevStatements[psKey].blockNumber;
-            tokStatement.prevBlkBal = prevStatements[psKey].endBal;
-            tokStatement.begBal = prevStatements[psKey].endBal;
-            tokStatement.endBal = getTokenBalanceOf2(tokenName.address, accountedFor.address, trav->trans.blockNumber);
-            if (tokStatement.begBal > tokStatement.endBal) {
-                tokStatement.amountOut = (tokStatement.begBal - tokStatement.endBal);
-            } else {
-                tokStatement.amountIn = (tokStatement.endBal - tokStatement.begBal);
-            }
-            tokStatement.reconciliationType = "";
-            if (tokStatement.amountNet_internal() != 0) {
-                tokStatement.spotPrice =
-                    getPriceInUsd(trav->trans.blockNumber, tokStatement.priceSource, tokenName.address);
-                trav->trans.statements.push_back(tokStatement);
-                prevStatements[psKey] = tokStatement;
-            }
-        }
-    }
-
-    cacheIfReconciled(trav, true /* isNew */);
-    return !shouldQuit();
-}
-
-//-----------------------------------------------------------------------
-bool COptions::isReconciled(CTraverser* trav) const {
-    for (auto recon : trav->trans.statements) {
-        if (!recon.reconciled_internal())
-            return false;
-    }
-    return true;
-}
-
-//-----------------------------------------------------------------------
-void COptions::cacheIfReconciled(CTraverser* trav, bool isNew) const {
-    if (isTestMode())
-        return;
-    if (!isReconciled(trav)) {
-        LOG_WARN("Transaction ", trav->trans.hash, " did not reconcile.");
-    }
-
-    lockSection();
-    CArchive archive(WRITING_ARCHIVE);
-    string_q path =
-        getPathToBinaryCache(CT_RECONS, accountedFor.address, trav->trans.blockNumber, trav->trans.transactionIndex);
-    if (archive.Lock(path, modeWriteCreate, LOCK_WAIT)) {
-        LOG4("Writing to cache for ", path);
-        archive << trav->trans.statements;
-        archive.Release();
-    }
-    unlockSection();
-}
-
-//-----------------------------------------------------------------------
 bool acct_PreFunc(CTraverser* trav, void* data) {
     return true;
-}
-
-//-----------------------------------------------------------------------
-bool COptions::token_list_from_logs(CAccountNameMap& tokenList, const CTraverser* trav) {
-    for (auto log : trav->trans.receipt.logs) {
-        CAccountName tokenName;
-        bool isToken = findToken(log.address, tokenName);
-        if (tokenName.address.empty()) {
-            tokenName.address = log.address;
-            tokenName.petname = addr_2_Petname(tokenName.address, '-');
-        }
-        if (isToken || (log.topics.size() > 0 && isTokenRelated(log.topics[0])))
-            tokenList[log.address] = tokenName;
-    }
-    return tokenList.size() > 0;
 }

@@ -1097,7 +1097,8 @@ bool CTransaction::forEveryTrace(TRACEVISITFUNC func, void* data) const {
 //------------------------------------------------------------------------
 bool CTransaction::doReconciliation(CReconciliation& recon, const address_t& accountedFor) {
     recon = CReconciliation(blockNumber, transactionIndex, timestamp, this);
-    return recon.reconcileEth2(blockNumber + 1, this, accountedFor);
+    blknum_t nextBlock = blockNumber + 1;
+    return recon.reconcileEth2(nextBlock, this, accountedFor);
 }
 
 // EXISTING_CODE

@@ -39,7 +39,7 @@ export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&maxRecords=5&accounting&
           "assetSymbol": "WEI",
           "decimals": 18,
           "prevBlk": 0,
-          "prevBlkBal": "",
+          "prevBlkBal": "4200000000000000000000",
           "begBal": "",
           "begBalDiff": "",
           "amountNet": "4200000000000000000000",

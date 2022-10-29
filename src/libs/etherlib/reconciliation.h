@@ -81,7 +81,6 @@ class CReconciliation : public CBaseNode {
         pTransaction = pT;
     }
     const CTransaction* pTransaction = NULL;
-    void initForToken(CAccountName& tokenName);
     bool reconcileEth(const CReconciliation& prevRecon, blknum_t nextBlock, const CTransaction* trans,
                       const CAccountName& accountedFor);
     bool reconcileEth2(blknum_t nextBlock, const CTransaction* trans, const address_t& accountedFor);

@@ -7,8 +7,8 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&statements&firstBlock=15
       "transactionHash": "0x332df8459d5357d05d59c4e186eeb7b0b9380343962ac978d2e539c8f23d0508",
       "timestamp": 1666746131,
       "date": "2022-10-26 01:02:11 UTC",
-      "sender": "0x0x",
-      "recipient": "0x0x",
+      "sender": "0xb19feccea1cf597255719a6b8d4e0691ae29e118",
+      "recipient": "0x0",
       "assetAddr": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
       "assetSymbol": "USDC",
       "decimals": 6,
@@ -37,7 +37,7 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&statements&firstBlock=15
       "gasCostOut": "",
       "spotPrice": 1,
       "priceSource": "stable-coin",
-      "reconciliationType": "",
+      "reconciliationType": "token",
       "reconciled": true
     }
   ],
