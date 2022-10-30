@@ -2,7 +2,7 @@
 title: "Chain state"
 description: ""
 lead: ""
-date: 2022-10-30T13:53:56
+date: 2022-10-30T14:58:53
 lastmod:
   - :git
   - lastmod
@@ -80,12 +80,12 @@ State data is made of the following data fields:
 | amount           | the amount of the transfer in the units of the asset                                           | uint256   |
 | spotPrice        | The on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction       | double    |
 | priceSource      | The on-chain source from which the spot price was taken                                        | string    |
-| topic0           | The on-chain source from which the spot price was taken                                        | string    |
-| topic1           | The on-chain source from which the spot price was taken                                        | string    |
-| topic2           | The on-chain source from which the spot price was taken                                        | string    |
-| topic3           | The on-chain source from which the spot price was taken                                        | string    |
-| data             | The on-chain source from which the spot price was taken                                        | string    |
-| encoding         | The on-chain source from which the spot price was taken                                        | string    |
+| topic0           | The 32-byte encoding of the event signature                                                    | string    |
+| topic1           | Topic 1 for the event                                                                          | string    |
+| topic2           | Topic 2 for the event                                                                          | string    |
+| topic3           | Topic 3 for the event                                                                          | string    |
+| data             | The event's data field                                                                         | string    |
+| encoding         | The four-byte encoding of the transaction's function call                                      | string    |
 
 ## Token
 

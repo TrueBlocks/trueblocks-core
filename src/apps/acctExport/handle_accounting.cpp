@@ -41,7 +41,6 @@ bool COptions::process_reconciliation(CTraverser* trav) {
             prevAppBlk = trav->trans.blockNumber - 1;
         }
     }
-    // prevAppBlk = trav->index > 0 ? monApps[trav->index - 1].blk : 0;
 
     if (prevStatements[ethKey].assetAddr.empty()) {
         // TODO(tjayrush): Incorrect code follows
@@ -50,17 +49,18 @@ bool COptions::process_reconciliation(CTraverser* trav) {
         // or start_block not zero we don't have this (since we only load those appearances we're asked
         // for) To fix this, we need to be able to get the previous appearance's block. Note, we
         // only need the balance for the previous reconcilation, so using NOPOS for transactionIndex is okay.
-        CReconciliation pEth(prevAppBlk, NOPOS, trav->trans.timestamp, &trav->trans);
-        pEth.endBal = getBalanceAt(accountedFor.address, prevAppBlk);
-        pEth.spotPrice = getPriceInUsd(prevAppBlk, pEth.priceSource);
-        prevStatements[ethKey] = pEth;
+        CReconciliation prevStatement(prevAppBlk, NOPOS, trav->trans.timestamp, &trav->trans);
+        prevStatement.endBal = getBalanceAt(accountedFor.address, prevAppBlk);
+        prevStatement.spotPrice = getPriceInUsd(prevAppBlk, prevStatement.priceSource);
+        prevStatements[ethKey] = prevStatement;
     }
 
-    CReconciliation eth(trav->trans.blockNumber, trav->trans.transactionIndex, trav->trans.timestamp, &trav->trans);
-    eth.reconcileEth(prevStatements[ethKey], nextAppBlk, &trav->trans, accountedFor);
-    eth.spotPrice = getPriceInUsd(trav->trans.blockNumber, eth.priceSource);
-    trav->trans.statements.push_back(eth);
-    prevStatements[ethKey] = eth;
+    CReconciliation ethStatement(trav->trans.blockNumber, trav->trans.transactionIndex, trav->trans.timestamp,
+                                 &trav->trans);
+    ethStatement.reconcileEth(prevStatements[ethKey], nextAppBlk, &trav->trans, accountedFor);
+    ethStatement.spotPrice = getPriceInUsd(trav->trans.blockNumber, ethStatement.priceSource);
+    trav->trans.statements.push_back(ethStatement);
+    prevStatements[ethKey] = ethStatement;
 
     CTransferArray transfers;
     CAccountNameMap tokenList;
@@ -96,8 +96,8 @@ bool COptions::process_reconciliation(CTraverser* trav) {
                 prevStatements[tokenKey] = pBal;
             }
 
-            tokStatement.prevBlk = prevStatements[tokenKey].blockNumber;
-            tokStatement.prevBlkBal = prevStatements[tokenKey].endBal;
+            tokStatement.prevAppBlk = prevStatements[tokenKey].blockNumber;
+            tokStatement.prevBal = prevStatements[tokenKey].endBal;
             tokStatement.begBal =
                 trav->trans.blockNumber == 0
                     ? 0
@@ -202,7 +202,7 @@ bool COptions::readReconsFromCache(CTraverser* trav) {
         archive.Release();
         for (auto& statement : trav->trans.statements) {
             // Migrations will have made sure any reconciliation statements are at least this version
-            ASSERT(statement.m_scheme >= getVersionNum(0, 42, 5));
+            ASSERT(statement.m_scheme >= getVersionNum(0, 42, 6));
 
             // Freshen in case user has changed the names database since putting the statement in the cache
             CAccountName tokenName;
@@ -223,10 +223,12 @@ bool COptions::readReconsFromCache(CTraverser* trav) {
 }
 
 //-----------------------------------------------------------------------
-bool COptions::isReconciled(CTraverser* trav) const {
+bool COptions::isReconciled(CTraverser* trav, CReconciliation& which) const {
     for (auto recon : trav->trans.statements) {
-        if (!recon.reconciled_internal())
+        if (!recon.reconciled_internal()) {
+            which = recon;
             return false;
+        }
     }
     return true;
 }
@@ -236,8 +238,15 @@ void COptions::cacheIfReconciled(CTraverser* trav) const {
     if (isTestMode())
         return;
 
-    if (!isReconciled(trav)) {
-        LOG_WARN("Transaction ", trav->trans.hash, " did not reconcile for account ", accountedFor.address, ".");
+    CReconciliation whichFailed;
+    if (!isReconciled(trav, whichFailed)) {
+        if (whichFailed.assetSymbol == "ETH") {
+            LOG_WARN("Transaction at ", trav->trans.blockNumber, ".", padNum4(trav->trans.transactionIndex), " (",
+                     trav->trans.hash, ") did not reconcile for account ", accountedFor.address);
+        } else {
+            LOG_WARN("Token transfer at ", trav->trans.blockNumber, ".", padNum4(trav->trans.transactionIndex), " (",
+                     trav->trans.hash, ") did not reconcile for account ", accountedFor.address);
+        }
         return;
     }
 

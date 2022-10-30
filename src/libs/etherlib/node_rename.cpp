@@ -108,6 +108,8 @@ string_q renameExportFields(const string_q& className, const string_q& inStr) {
             make_pair("prevblk", "prevBlock"),
             make_pair("prevblkbal", "prevBlockBal"),
             make_pair("begbal", "begBal"),
+            make_pair("begbalunits", "begBalUnits"),
+            make_pair("begbalusd", "begBalUsd"),
             make_pair("amountin", "amountIn"),
             make_pair("internalin", "internalIn"),
             make_pair("selfdestructin", "selfDestructIn"),
@@ -124,7 +126,11 @@ string_q renameExportFields(const string_q& className, const string_q& inStr) {
             make_pair("totalout", "totalOut"),
             make_pair("totaloutlessgas", "totalOutLessGas"),
             make_pair("amountnet", "amountNet"),
+            make_pair("amtnetunits", "amtNetUnits"),
+            make_pair("amtnetusd", "amtNetUsd"),
             make_pair("endbal", "endBal"),
+            make_pair("endbalunits", "endBalUnits"),
+            make_pair("endbalusd", "endBalUsd"),
             make_pair("begbaldiff", "begBalDiff"),
             make_pair("endbalcalc", "endBalCalc"),
             make_pair("endbaldiff", "endBalDiff"),
@@ -132,6 +138,10 @@ string_q renameExportFields(const string_q& className, const string_q& inStr) {
             make_pair("pricesource", "priceSource"),
             make_pair("reconciliationtype", "reconciliationType"),
             make_pair("transactionhash", "transactionHash"),
+            make_pair("accountedfor", "accountedFor"),
+            make_pair("nextappblk","nextAppBlk"),
+            make_pair("prevappblk","prevAppBlk"),
+            make_pair("prevbal", "prevBal"),
         };
         for (auto item : renames)
             replace(ret, item.first, item.second);

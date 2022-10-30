@@ -109,8 +109,8 @@ Reconciliation data is made of the following data fields:
 | assetAddr           | 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee for ETH reconcilations, the token address otherwise                                    | address   |
 | assetSymbol         | either ETH, WEI or the symbol of the asset being reconciled as queried from the chain                                             | string    |
 | decimals            | Equivalent to the queried value of `decimals` from an ERC20 contract or, if ETH or WEI then 18                                    | uint64    |
-| prevBlk             | the block number of the previous reconciliation, or 0 if this is the first reconciliation                                         | blknum    |
-| prevBlkBal          | the account balance for the given asset for the previous reconciliation                                                           | int256    |
+| prevAppBlk          | the block number of the previous reconciliation, or 0 if this is the first reconciliation                                         | blknum    |
+| prevBal             | the account balance for the given asset for the previous reconciliation                                                           | int256    |
 | begBal              | the beginning balance of the asset at the blockNumber                                                                             | int256    |
 | begBalDiff          | a calculated field -- difference between expected beginning balance and balance at last reconciliation, the reconciliation failed | int256    |
 | amountNet           | a calculated field -- totalIn - totalOut                                                                                          | int256    |
@@ -135,7 +135,7 @@ Reconciliation data is made of the following data fields:
 | spotPrice           | The on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction                                          | double    |
 | priceSource         | The on-chain source from which the spot price was taken                                                                           | string    |
 | reconciliationType  | One of `regular`, `traces`, `prevdiff-partial`, `partial-nextdiff`, or `partial-partial`                                          | string    |
-| reconciled          | a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBlkBal`. `false` otherwise.                             | bool      |
+| reconciled          | a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBal`. `false` otherwise.                                | bool      |
 
 **Notes**
 

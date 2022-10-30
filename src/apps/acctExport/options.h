@@ -132,7 +132,7 @@ class COptions : public CAbiOptions {
     void writePerformanceData(void);
 
     bool process_reconciliation(CTraverser* trav);
-    bool isReconciled(CTraverser* trav) const;
+    bool isReconciled(CTraverser* trav, CReconciliation& which) const;
     void cacheIfReconciled(CTraverser* trav) const;
     bool getListOfTransfers(CTransferArray& transfers, CAccountNameMap& tokenList, const CTraverser* trav);
     bool readReconsFromCache(CTraverser* trav);

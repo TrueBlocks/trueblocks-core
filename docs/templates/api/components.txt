@@ -121,12 +121,12 @@ components:
           type: number
           format: uint64
           description: "Equivalent to the queried value of `decimals` from an ERC20 contract or, if ETH or WEI then 18"
-        prevBlk:
+        prevAppBlk:
           type: number
           format: blknum
           example: 10021
           description: "the block number of the previous reconciliation, or 0 if this is the first reconciliation"
-        prevBlkBal:
+        prevBal:
           type: string
           format: int256
           description: "the account balance for the given asset for the previous reconciliation"
@@ -226,7 +226,7 @@ components:
           description: "One of `regular`, `traces`, `prevdiff-partial`, `partial-nextdiff`, or `partial-partial`"
         reconciled:
           type: boolean
-          description: "a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBlkBal`. `false` otherwise."
+          description: "a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBal`. `false` otherwise."
     name:
       description: "an association between a name and address for use throughout TrueBlocks"
       type: object
@@ -788,22 +788,22 @@ components:
           description: "The on-chain source from which the spot price was taken"
         topic0:
           type: string
-          description: "The on-chain source from which the spot price was taken"
+          description: "The 32-byte encoding of the event signature"
         topic1:
           type: string
-          description: "The on-chain source from which the spot price was taken"
+          description: "Topic 1 for the event"
         topic2:
           type: string
-          description: "The on-chain source from which the spot price was taken"
+          description: "Topic 2 for the event"
         topic3:
           type: string
-          description: "The on-chain source from which the spot price was taken"
+          description: "Topic 3 for the event"
         data:
           type: string
-          description: "The on-chain source from which the spot price was taken"
+          description: "The event's data field"
         encoding:
           type: string
-          description: "The on-chain source from which the spot price was taken"
+          description: "The four-byte encoding of the transaction's function call"
     token:
       description: "on-chain token related data for a give address at a given block height"
       type: object
