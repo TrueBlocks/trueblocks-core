@@ -155,28 +155,28 @@ bool COptions::parseArguments(string_q& command) {
         tests.push_back("libs/utillib");
         tests.push_back("libs/etherlib");
         tests.push_back("libs/acctlib");
-        if (makeClassOn)
-            tests.push_back("dev_tools/makeClass");
-        if (hasEsKey && getEnvStr("NO_ES") != "true") {
-            tests.push_back("tools/ethslurp");
-        }
-        tests.push_back("tools/ethNames");
-        tests.push_back("tools/getBlocks");
-        tests.push_back("tools/getLogs");
-        tests.push_back("tools/getReceipts");
-        tests.push_back("tools/getState");
-        tests.push_back("tools/getTokens");
-        tests.push_back("tools/getTraces");
-        tests.push_back("tools/getTrans");
-        tests.push_back("tools/grabABI");
-        tests.push_back("tools/whenBlock");
+        //if (makeClassOn)
+        //    tests.push_back("dev_tools/makeClass");
+        //if (hasEsKey && getEnvStr("NO_ES") != "true") {
+        //    tests.push_back("tools/ethslurp");
+        //}
+        //tests.push_back("tools/ethNames");
+        //tests.push_back("tools/getBlocks");
+        //tests.push_back("tools/getLogs");
+        //tests.push_back("tools/getReceipts");
+        //tests.push_back("tools/getState");
+        //tests.push_back("tools/getTokens");
+        //tests.push_back("tools/getTraces");
+        //tests.push_back("tools/getTrans");
+        //tests.push_back("tools/grabABI");
+        //tests.push_back("tools/whenBlock");
         tests.push_back("apps/acctExport");
-        tests.push_back("apps/blockScrape");
-        tests.push_back("apps/cacheStatus");
-        tests.push_back("apps/chunkMan");
-        tests.push_back("apps/chifra");
-        tests.push_back("apps/fireStorm");
-        tests.push_back("apps/init");
+        //tests.push_back("apps/blockScrape");
+        //tests.push_back("apps/cacheStatus");
+        //tests.push_back("apps/chunkMan");
+        //tests.push_back("apps/chifra");
+        //tests.push_back("apps/fireStorm");
+        //tests.push_back("apps/init");
     }
 
     SHOW_FIELD(CTestCase, "test_id");
