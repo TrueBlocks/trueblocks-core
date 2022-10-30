@@ -28,9 +28,6 @@ bool COptions::process_reconciliation(CTraverser* trav) {
 
     string_q ethKey = statementKey(accountedFor.address, "");
 
-    // The block of the next appearance, unless we're at the end of the list, then infinity
-    blknum_t nextAppBlk = trav->index < monApps.size() - 1 ? monApps[trav->index + 1].blk : NOPOS;
-
     // The block of the previous appearance, unless we're at the start of the list, in which case
     // it's one less than the current block, unless we're at the zero block, then zero
     blknum_t prevAppBlk = 0;
@@ -49,14 +46,14 @@ bool COptions::process_reconciliation(CTraverser* trav) {
         // or start_block not zero we don't have this (since we only load those appearances we're asked
         // for) To fix this, we need to be able to get the previous appearance's block. Note, we
         // only need the balance for the previous reconcilation, so using NOPOS for transactionIndex is okay.
-        CReconciliation prevStatement(prevAppBlk, NOPOS, trav->trans.timestamp, &trav->trans);
+        CReconciliation prevStatement(accountedFor.address, prevAppBlk, NOPOS, trav->trans.timestamp, &trav->trans);
         prevStatement.endBal = getBalanceAt(accountedFor.address, prevAppBlk);
         prevStatement.spotPrice = getPriceInUsd(prevAppBlk, prevStatement.priceSource);
         prevStatements[ethKey] = prevStatement;
     }
 
-    CReconciliation ethStatement(trav->trans.blockNumber, trav->trans.transactionIndex, trav->trans.timestamp,
-                                 &trav->trans);
+    CReconciliation ethStatement(accountedFor.address, &trav->trans);
+    blknum_t nextAppBlk = trav->index < monApps.size() - 1 ? monApps[trav->index + 1].blk : NOPOS;
     ethStatement.reconcileEth(prevStatements[ethKey], nextAppBlk, &trav->trans, accountedFor);
     ethStatement.spotPrice = getPriceInUsd(trav->trans.blockNumber, ethStatement.priceSource);
     trav->trans.statements.push_back(ethStatement);
@@ -70,8 +67,8 @@ bool COptions::process_reconciliation(CTraverser* trav) {
         }
 
         for (auto item : tokenList) {
-            CReconciliation tokStatement(trav->trans.blockNumber, trav->trans.transactionIndex, trav->trans.timestamp,
-                                         &trav->trans);
+            CReconciliation tokStatement(accountedFor.address, trav->trans.blockNumber, trav->trans.transactionIndex,
+                                         trav->trans.timestamp, &trav->trans);
 
             CAccountName tokenName = item.second;
             tokStatement.assetAddr = tokenName.address;

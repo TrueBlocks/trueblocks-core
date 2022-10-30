@@ -19,7 +19,7 @@ bool visitReconciliation(CTransaction& trans, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
     bool isText = (expContext().exportFmt & (TXT1 | CSV1));
 
-    CReconciliation recon = CReconciliation(trans.blockNumber, trans.transactionIndex, trans.timestamp, &trans);
+    CReconciliation recon = CReconciliation(opt->account_for, &trans);
     blknum_t nextBlock = trans.blockNumber + 1;
     recon.reconcileEth2(nextBlock, &trans, opt->account_for);
 

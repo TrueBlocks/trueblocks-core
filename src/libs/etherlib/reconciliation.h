@@ -73,13 +73,16 @@ class CReconciliation : public CBaseNode {
     DECLARE_NODE(CReconciliation);
 
     // EXISTING_CODE
-    CReconciliation(blknum_t bn, blknum_t txid, timestamp_t ts, const CTransaction* pT) {
+    CReconciliation(const address_t& aF, blknum_t bn, blknum_t txid, timestamp_t ts, const CTransaction* pT) {
         initialize();
         blockNumber = bn;
         transactionIndex = txid;
         timestamp = ts;
         pTransaction = pT;
+        // accountedFor = aF;
+        // nextAppBlk = NOPOS;
     }
+    CReconciliation(const address_t& aF, const CTransaction* pT);
     const CTransaction* pTransaction = NULL;
     bool reconcileEth(const CReconciliation& prevRecon, blknum_t nextBlock, const CTransaction* trans,
                       const CAccountName& accountedFor);
