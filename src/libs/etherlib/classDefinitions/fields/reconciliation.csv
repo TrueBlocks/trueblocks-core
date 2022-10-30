@@ -11,9 +11,9 @@ pos ,name                ,type      ,strDefault ,object ,array ,nowrite ,omitemp
  09 ,assetSymbol         ,string    ,           ,       ,      ,        ,          ,        ,      ,         ,  9 ,   9 ,              ,either ETH&#44; WEI or the symbol of the asset being reconciled as queried from the chain
  10 ,decimals            ,uint64    ,      18   ,       ,      ,        ,          ,        ,      ,         , 10 ,  10 ,              ,Equivalent to the queried value of `decimals` from an ERC20 contract or&#44; if ETH or WEI then 18
     
- 11 ,prevBlk             ,blknum    ,           ,       ,      ,        ,          ,        ,      ,         , 11 ,  11 ,10021         ,the block number of the previous reconciliation&#44; or 0 if this is the first reconciliation
+ 11 ,prevAppBlk          ,blknum    ,           ,       ,      ,        ,          ,        ,      ,         , 11 ,  11 ,10021         ,the block number of the previous reconciliation&#44; or 0 if this is the first reconciliation
 
- 12 ,prevBlkBal          ,int256    ,           ,       ,      ,        ,          ,        ,      ,         , 12 ,  12 ,              ,the account balance for the given asset for the previous reconciliation
+ 12 ,prevBal             ,int256    ,           ,       ,      ,        ,          ,        ,      ,         , 12 ,  12 ,              ,the account balance for the given asset for the previous reconciliation
  13 ,begBal              ,int256    ,           ,       ,      ,        ,          ,        ,      ,         , 13 ,  13 ,              ,the beginning balance of the asset at the blockNumber
  14 ,begBalDiff          ,int256    ,           ,       ,      ,        ,          ,        ,      ,         , 14 ,  14 ,              ,a calculated field -- difference between expected beginning balance and balance at last reconciliation&#44; the reconciliation failed
 
@@ -44,4 +44,4 @@ pos ,name                ,type      ,strDefault ,object ,array ,nowrite ,omitemp
  35 ,priceSource         ,string    ,           ,       ,      ,        ,          ,        ,      ,         , 35 ,  35 ,              ,The on-chain source from which the spot price was taken
 
  36 ,reconciliationType  ,string    ,           ,       ,      ,        ,          ,        ,      ,         , 36 ,  36 ,              ,One of `regular`&#44; `traces`&#44; `prevdiff-partial`&#44; `partial-nextdiff`&#44; or `partial-partial`
- 37 ,reconciled          ,bool      ,           ,       ,      ,        ,          ,        ,      ,         , 37 ,  37 ,              ,a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBlkBal`. `false` otherwise.
+ 37 ,reconciled          ,bool      ,           ,       ,      ,        ,          ,        ,      ,         , 37 ,  37 ,              ,a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBal`. `false` otherwise.

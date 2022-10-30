@@ -59,8 +59,8 @@ TEST_F(CThisTest, TestTest_1) {
     rec.assetAddr = "address";
     rec.assetSymbol = "symbol";
     rec.decimals = 1;
-    rec.prevBlk = 1;
-    rec.prevBlkBal = 1;
+    rec.prevAppBlk = 1;
+    rec.prevBal = 1;
     rec.begBal = 1;
     rec.amountIn = 1;
     rec.amountOut = 1;
@@ -85,8 +85,8 @@ TEST_F(CThisTest, TestTest_1) {
     rec.assetAddr = "new";
     rec.assetSymbol = "what";
     rec.decimals = 100;
-    rec.prevBlk = 100;
-    rec.prevBlkBal = 100;
+    rec.prevAppBlk = 100;
+    rec.prevBal = 100;
     rec.spotPrice = 100;
     rec += rec;
     cout << rec << endl;

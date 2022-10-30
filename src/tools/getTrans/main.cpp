@@ -25,7 +25,7 @@ int main(int argc, const char* argv[]) {
         if (!options.parseArguments(command))
             return 0;
         CRuntimeClass* pClass =
-            !options.statements.empty() ? GETRUNTIME_CLASS(CReconciliation) : GETRUNTIME_CLASS(CTransaction);
+            !options.account_for.empty() ? GETRUNTIME_CLASS(CReconciliation) : GETRUNTIME_CLASS(CTransaction);
         if (once)
             cout << exportPreamble(expContext().fmtMap["header"], pClass);
         forEveryTransaction(visitTransaction, &options, options.transList.queries);
@@ -106,7 +106,7 @@ bool visitTransaction(CTransaction& trans, void* data) {
         return true;  // continue even with an invalid item
     }
 
-    if (!opt->statements.empty())
+    if (!opt->account_for.empty())
         return visitReconciliation(trans, opt);
 
     if (opt->uniq) {
