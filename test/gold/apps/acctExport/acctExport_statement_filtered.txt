@@ -7,6 +7,188 @@ TEST[DATE|TIME] FirstBlock:  8860513
 TEST[DATE|TIME] LastBlock:  8860531
 TEST[DATE|TIME] Format:  json
 { "data": [
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 4
+  0: uint64 giverId = <>
+  1: uint64 receiverId = <>
+  2: address token = <>
+  3: uint256 amount = <>
+dataArray.size: 4
+  0 (0x000) 0000000000000000...00000000000000000000000000000799 <=o <-r
+  1 (0x020) 0000000000000000...0000000000000000000000000000057a
+  2 (0x040) 0000000000000000...4ccb1b6faa2625fe562bdd9a23260359
+  3 (0x060) 0000000000000000...000000000000001b1ae4d6e2ef500000
+
+==================================================
+params.size: 4
+  0: uint64 giverId = 1945
+  1: uint64 receiverId = <>
+  2: address token = <>
+  3: uint256 amount = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 4
+  0: uint64 giverId = 1945
+  1: uint64 receiverId = <>
+  2: address token = <>
+  3: uint256 amount = <>
+dataArray.size: 4
+  0 (0x000) 0000000000000000...00000000000000000000000000000799 <=o
+  1 (0x020) 0000000000000000...0000000000000000000000000000057a <-r
+  2 (0x040) 0000000000000000...4ccb1b6faa2625fe562bdd9a23260359
+  3 (0x060) 0000000000000000...000000000000001b1ae4d6e2ef500000
+
+==================================================
+params.size: 4
+  0: uint64 giverId = 1945
+  1: uint64 receiverId = 1402
+  2: address token = <>
+  3: uint256 amount = <>
+
+level: 1
+readOffset: 2
+objectStart: 0
+params.size: 4
+  0: uint64 giverId = 1945
+  1: uint64 receiverId = 1402
+  2: address token = <>
+  3: uint256 amount = <>
+dataArray.size: 4
+  0 (0x000) 0000000000000000...00000000000000000000000000000799 <=o
+  1 (0x020) 0000000000000000...0000000000000000000000000000057a
+  2 (0x040) 0000000000000000...4ccb1b6faa2625fe562bdd9a23260359 <-r
+  3 (0x060) 0000000000000000...000000000000001b1ae4d6e2ef500000
+
+==================================================
+params.size: 4
+  0: uint64 giverId = 1945
+  1: uint64 receiverId = 1402
+  2: address token = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+  3: uint256 amount = <>
+
+level: 1
+readOffset: 3
+objectStart: 0
+params.size: 4
+  0: uint64 giverId = 1945
+  1: uint64 receiverId = 1402
+  2: address token = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+  3: uint256 amount = <>
+dataArray.size: 4
+  0 (0x000) 0000000000000000...00000000000000000000000000000799 <=o
+  1 (0x020) 0000000000000000...0000000000000000000000000000057a
+  2 (0x040) 0000000000000000...4ccb1b6faa2625fe562bdd9a23260359
+  3 (0x060) 0000000000000000...000000000000001b1ae4d6e2ef500000 <-r
+
+==================================================
+params.size: 4
+  0: uint64 giverId = 1945
+  1: uint64 receiverId = 1402
+  2: address token = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+  3: uint256 amount = 500000000000000000000
+params.size: 4
+  0: uint64 giverId = 1945
+  1: uint64 receiverId = 1402
+  2: address token = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+  3: uint256 amount = 500000000000000000000
+==================================================
+
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 4
+  0: uint64 giverId = <>
+  1: uint64 receiverId = <>
+  2: address token = <>
+  3: uint256 _amount = <>
+dataArray.size: 4
+  0 (0x000) 0000000000000000...00000000000000000000000000000799 <=o <-r
+  1 (0x020) 0000000000000000...0000000000000000000000000000057a
+  2 (0x040) 0000000000000000...4ccb1b6faa2625fe562bdd9a23260359
+  3 (0x060) 0000000000000000...000000000000001b1ae4d6e2ef500000
+
+==================================================
+params.size: 4
+  0: uint64 giverId = 1945
+  1: uint64 receiverId = <>
+  2: address token = <>
+  3: uint256 _amount = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 4
+  0: uint64 giverId = 1945
+  1: uint64 receiverId = <>
+  2: address token = <>
+  3: uint256 _amount = <>
+dataArray.size: 4
+  0 (0x000) 0000000000000000...00000000000000000000000000000799 <=o
+  1 (0x020) 0000000000000000...0000000000000000000000000000057a <-r
+  2 (0x040) 0000000000000000...4ccb1b6faa2625fe562bdd9a23260359
+  3 (0x060) 0000000000000000...000000000000001b1ae4d6e2ef500000
+
+==================================================
+params.size: 4
+  0: uint64 giverId = 1945
+  1: uint64 receiverId = 1402
+  2: address token = <>
+  3: uint256 _amount = <>
+
+level: 1
+readOffset: 2
+objectStart: 0
+params.size: 4
+  0: uint64 giverId = 1945
+  1: uint64 receiverId = 1402
+  2: address token = <>
+  3: uint256 _amount = <>
+dataArray.size: 4
+  0 (0x000) 0000000000000000...00000000000000000000000000000799 <=o
+  1 (0x020) 0000000000000000...0000000000000000000000000000057a
+  2 (0x040) 0000000000000000...4ccb1b6faa2625fe562bdd9a23260359 <-r
+  3 (0x060) 0000000000000000...000000000000001b1ae4d6e2ef500000
+
+==================================================
+params.size: 4
+  0: uint64 giverId = 1945
+  1: uint64 receiverId = 1402
+  2: address token = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+  3: uint256 _amount = <>
+
+level: 1
+readOffset: 3
+objectStart: 0
+params.size: 4
+  0: uint64 giverId = 1945
+  1: uint64 receiverId = 1402
+  2: address token = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+  3: uint256 _amount = <>
+dataArray.size: 4
+  0 (0x000) 0000000000000000...00000000000000000000000000000799 <=o
+  1 (0x020) 0000000000000000...0000000000000000000000000000057a
+  2 (0x040) 0000000000000000...4ccb1b6faa2625fe562bdd9a23260359
+  3 (0x060) 0000000000000000...000000000000001b1ae4d6e2ef500000 <-r
+
+==================================================
+params.size: 4
+  0: uint64 giverId = 1945
+  1: uint64 receiverId = 1402
+  2: address token = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+  3: uint256 _amount = 500000000000000000000
+params.size: 4
+  0: uint64 giverId = 1945
+  1: uint64 receiverId = 1402
+  2: address token = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+  3: uint256 _amount = 500000000000000000000
+==================================================
+
 TIME ~ CLOCK - <INFO>  : Calling a contract (0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f) at block 8860511 prior to its deployment 10000835
 TIME ~ CLOCK - <INFO>  : doEthCall in CUniPrice::findPair returned false
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 8860511...: 
@@ -201,6 +383,188 @@ params.size: 2
   "encoding": "0x095ea7b3"
 }
 
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 4
+  0: uint64 giverId = <>
+  1: uint64 receiverId = <>
+  2: address token = <>
+  3: uint256 amount = <>
+dataArray.size: 4
+  0 (0x000) 0000000000000000...0000000000000000000000000000079a <=o <-r
+  1 (0x020) 0000000000000000...0000000000000000000000000000057a
+  2 (0x040) 0000000000000000...4ccb1b6faa2625fe562bdd9a23260359
+  3 (0x060) 0000000000000000...000000000000017b7883c06916600000
+
+==================================================
+params.size: 4
+  0: uint64 giverId = 1946
+  1: uint64 receiverId = <>
+  2: address token = <>
+  3: uint256 amount = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 4
+  0: uint64 giverId = 1946
+  1: uint64 receiverId = <>
+  2: address token = <>
+  3: uint256 amount = <>
+dataArray.size: 4
+  0 (0x000) 0000000000000000...0000000000000000000000000000079a <=o
+  1 (0x020) 0000000000000000...0000000000000000000000000000057a <-r
+  2 (0x040) 0000000000000000...4ccb1b6faa2625fe562bdd9a23260359
+  3 (0x060) 0000000000000000...000000000000017b7883c06916600000
+
+==================================================
+params.size: 4
+  0: uint64 giverId = 1946
+  1: uint64 receiverId = 1402
+  2: address token = <>
+  3: uint256 amount = <>
+
+level: 1
+readOffset: 2
+objectStart: 0
+params.size: 4
+  0: uint64 giverId = 1946
+  1: uint64 receiverId = 1402
+  2: address token = <>
+  3: uint256 amount = <>
+dataArray.size: 4
+  0 (0x000) 0000000000000000...0000000000000000000000000000079a <=o
+  1 (0x020) 0000000000000000...0000000000000000000000000000057a
+  2 (0x040) 0000000000000000...4ccb1b6faa2625fe562bdd9a23260359 <-r
+  3 (0x060) 0000000000000000...000000000000017b7883c06916600000
+
+==================================================
+params.size: 4
+  0: uint64 giverId = 1946
+  1: uint64 receiverId = 1402
+  2: address token = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+  3: uint256 amount = <>
+
+level: 1
+readOffset: 3
+objectStart: 0
+params.size: 4
+  0: uint64 giverId = 1946
+  1: uint64 receiverId = 1402
+  2: address token = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+  3: uint256 amount = <>
+dataArray.size: 4
+  0 (0x000) 0000000000000000...0000000000000000000000000000079a <=o
+  1 (0x020) 0000000000000000...0000000000000000000000000000057a
+  2 (0x040) 0000000000000000...4ccb1b6faa2625fe562bdd9a23260359
+  3 (0x060) 0000000000000000...000000000000017b7883c06916600000 <-r
+
+==================================================
+params.size: 4
+  0: uint64 giverId = 1946
+  1: uint64 receiverId = 1402
+  2: address token = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+  3: uint256 amount = 7000000000000000000000
+params.size: 4
+  0: uint64 giverId = 1946
+  1: uint64 receiverId = 1402
+  2: address token = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+  3: uint256 amount = 7000000000000000000000
+==================================================
+
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 4
+  0: uint64 giverId = <>
+  1: uint64 receiverId = <>
+  2: address token = <>
+  3: uint256 _amount = <>
+dataArray.size: 4
+  0 (0x000) 0000000000000000...0000000000000000000000000000079a <=o <-r
+  1 (0x020) 0000000000000000...0000000000000000000000000000057a
+  2 (0x040) 0000000000000000...4ccb1b6faa2625fe562bdd9a23260359
+  3 (0x060) 0000000000000000...000000000000017b7883c06916600000
+
+==================================================
+params.size: 4
+  0: uint64 giverId = 1946
+  1: uint64 receiverId = <>
+  2: address token = <>
+  3: uint256 _amount = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 4
+  0: uint64 giverId = 1946
+  1: uint64 receiverId = <>
+  2: address token = <>
+  3: uint256 _amount = <>
+dataArray.size: 4
+  0 (0x000) 0000000000000000...0000000000000000000000000000079a <=o
+  1 (0x020) 0000000000000000...0000000000000000000000000000057a <-r
+  2 (0x040) 0000000000000000...4ccb1b6faa2625fe562bdd9a23260359
+  3 (0x060) 0000000000000000...000000000000017b7883c06916600000
+
+==================================================
+params.size: 4
+  0: uint64 giverId = 1946
+  1: uint64 receiverId = 1402
+  2: address token = <>
+  3: uint256 _amount = <>
+
+level: 1
+readOffset: 2
+objectStart: 0
+params.size: 4
+  0: uint64 giverId = 1946
+  1: uint64 receiverId = 1402
+  2: address token = <>
+  3: uint256 _amount = <>
+dataArray.size: 4
+  0 (0x000) 0000000000000000...0000000000000000000000000000079a <=o
+  1 (0x020) 0000000000000000...0000000000000000000000000000057a
+  2 (0x040) 0000000000000000...4ccb1b6faa2625fe562bdd9a23260359 <-r
+  3 (0x060) 0000000000000000...000000000000017b7883c06916600000
+
+==================================================
+params.size: 4
+  0: uint64 giverId = 1946
+  1: uint64 receiverId = 1402
+  2: address token = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+  3: uint256 _amount = <>
+
+level: 1
+readOffset: 3
+objectStart: 0
+params.size: 4
+  0: uint64 giverId = 1946
+  1: uint64 receiverId = 1402
+  2: address token = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+  3: uint256 _amount = <>
+dataArray.size: 4
+  0 (0x000) 0000000000000000...0000000000000000000000000000079a <=o
+  1 (0x020) 0000000000000000...0000000000000000000000000000057a
+  2 (0x040) 0000000000000000...4ccb1b6faa2625fe562bdd9a23260359
+  3 (0x060) 0000000000000000...000000000000017b7883c06916600000 <-r
+
+==================================================
+params.size: 4
+  0: uint64 giverId = 1946
+  1: uint64 receiverId = 1402
+  2: address token = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+  3: uint256 _amount = 7000000000000000000000
+params.size: 4
+  0: uint64 giverId = 1946
+  1: uint64 receiverId = 1402
+  2: address token = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+  3: uint256 _amount = 7000000000000000000000
+==================================================
+
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 8860531...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 8860531 at four-byte 0x59e02dd7 returned 0x000000000000000000000000000000000000000000000009ece258f2964500000000000000000000000000000000000000000000000000000000000000000001
 
@@ -245,8 +609,8 @@ params.size: 2
   "transactionHash": "0x1cdbe0fcca2ee3f9e4504f25e6f2a485835caa920496d20b10fa6241cbfdb124",
   "timestamp": 1572720361,
   "date": "2019-11-02 18:46:01 UTC",
-  "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-  "recipient": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7",
+  "sender": "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b",
+  "recipient": "0x00000000000000000000000030f938fed5de6e06a9a7cd2ac3517131c317b1e7",
   "assetAddr": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
   "assetSymbol": "SAI",
   "decimals": 18,
@@ -266,7 +630,7 @@ params.size: 2
   "timestamp": 1572720361,
   "date": "2019-11-02 18:46:01 UTC",
   "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-  "recipient": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7",
+  "recipient": "0x0",
   "assetAddr": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
   "assetSymbol": "SAI",
   "decimals": 18,

@@ -2,7 +2,7 @@
 title: "Chain state"
 description: ""
 lead: ""
-date: 2022-10-28T20:30:31
+date: 2022-10-30T13:53:56
 lastmod:
   - :git
   - lastmod
@@ -80,7 +80,7 @@ State data is made of the following data fields:
 | amount           | the amount of the transfer in the units of the asset                                           | uint256   |
 | spotPrice        | The on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction       | double    |
 | priceSource      | The on-chain source from which the spot price was taken                                        | string    |
-| topic0           | Thex on-chain source from which the spot price was taken                                       | string    |
+| topic0           | The on-chain source from which the spot price was taken                                        | string    |
 | topic1           | The on-chain source from which the spot price was taken                                        | string    |
 | topic2           | The on-chain source from which the spot price was taken                                        | string    |
 | topic3           | The on-chain source from which the spot price was taken                                        | string    |

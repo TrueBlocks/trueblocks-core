@@ -421,7 +421,7 @@ params.size: 3
   "timestamp": 1666746131,
   "date": "2022-10-26 01:02:11 UTC",
   "sender": "0xb19feccea1cf597255719a6b8d4e0691ae29e118",
-  "recipient": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+  "recipient": "0x0",
   "assetAddr": "0x6b175474e89094c44da98b954eedeac495271d0f",
   "assetSymbol": "DAI",
   "decimals": 18,
