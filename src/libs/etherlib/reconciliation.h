@@ -73,14 +73,16 @@ class CReconciliation : public CBaseNode {
     bool reconcileEth(const CReconciliation& prevRecon, blknum_t nextBlock, const CTransaction* trans,
                       const CAccountName& accountedFor);
     bool reconcileUsingTraces(bigint_t prevEndBal, const CTransaction* trans, const CAccountName& accountedFor);
-    bigint_t begBalDiff(void) const;
-    bigint_t endBalCalc(void) const;
-    bigint_t endBalDiff(void) const;
-    bigint_t totalIn(void) const;
-    bigint_t totalOut(void) const;
-    bigint_t totalOutLessGas(void) const;
-    bigint_t amountNet(void) const;
-    bool reconciled(void) const;
+
+    bigint_t begBalDiff_internal(void) const;
+    bigint_t endBalCalc_internal(void) const;
+    bigint_t endBalDiff_internal(void) const;
+    bigint_t totalIn_internal(void) const;
+    bigint_t totalOut_internal(void) const;
+    bigint_t totalOutLessGas_internal(void) const;
+    bigint_t amountNet_internal(void) const;
+    bool reconciled_internal(void) const;
+
     CReconciliation& operator+=(const CReconciliation& r);
     bool readBackLevel_old(CArchive& archive);
     // EXISTING_CODE

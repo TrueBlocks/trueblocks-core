@@ -27,18 +27,19 @@ bool visitReconciliation(CTransaction& trans, void* data) {
     prev.pTransaction = &trans;
     prev.assetAddr = opt->account_for;
     prev.endBal = trans.blockNumber == 0 ? 0 : getBalanceAt(opt->account_for, trans.blockNumber - 1);
-    CReconciliation eth(trans.blockNumber, trans.transactionIndex, trans.timestamp, &trans);
-    eth.reconcileEth(prev, trans.blockNumber + 1, &trans, name);
-    eth.spotPrice = getPriceInUsd(trans.blockNumber, eth.priceSource);
+
+    CReconciliation recon(trans.blockNumber, trans.transactionIndex, trans.timestamp, &trans);
+    recon.reconcileEth(prev, trans.blockNumber + 1, &trans, name);
+    recon.spotPrice = getPriceInUsd(trans.blockNumber, recon.priceSource);
 
     if (isText) {
-        cout << trim(eth.Format(expContext().fmtMap["format"]), '\t') << endl;
+        cout << trim(recon.Format(expContext().fmtMap["format"]), '\t') << endl;
     } else {
         if (!opt->firstOut)
             cout << ",";
         cout << "  ";
         indent();
-        eth.toJson(cout);
+        recon.toJson(cout);
         unindent();
         opt->firstOut = false;
     }
