@@ -11,25 +11,10 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "known_blocks.h"
-#include "known_addresses.h"
-#include "block.h"
-#include "transaction.h"
-#include "receipt.h"
-#include "logentry.h"
-#include "trace.h"
-#include "traceaction.h"
-#include "traceresult.h"
-#include "tracefilter.h"
-#include "node.h"
-#include "blockoptions.h"
-#include "appearance.h"
-#include "appearancedisplay.h"
-#include "cacheentry.h"
-#include "prices.h"
-#include "reconciliation.h"
-#include "timestamps.h"
-#include "indexarchive.h"
-#include "transfer.h"
+#include "utillib.h"
 
-using namespace qblocks;  // NOLINT
+namespace qblocks {
+
+#define FAKE_ETH_ADDRESS "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+
+}  // namespace qblocks

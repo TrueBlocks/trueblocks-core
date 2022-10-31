@@ -316,7 +316,6 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
     if (isEnabled(OPT_ETHER) && contains(cmdLine, "--ether ")) {
         replaceAll(cmdLine, "--ether ", "");
         expContext().asEther = true;
-        expContext().asDollars = false;
         expContext().asWei = false;
     }
 
@@ -365,7 +364,6 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
     if (isEnabled(OPT_WEI) && contains(cmdLine, "--wei ")) {
         replaceAll(cmdLine, "--wei ", "");
         expContext().asEther = false;
-        expContext().asDollars = false;
         expContext().asWei = true;
     }
 
@@ -431,8 +429,6 @@ void COptionsBase::configureDisplay(const string_q& tool, const string_q& dataTy
     }
     if (expContext().asEther)
         format = substitute(format, "{BALANCE}", "{ETHER}");
-    if (expContext().asDollars)
-        format = substitute(format, "{BALANCE}", "{DOLLARS}");
     expContext().fmtMap["meta"] = meta;
     expContext().fmtMap["format"] = cleanFmt(format);
     expContext().fmtMap["header"] = cleanFmt(format);

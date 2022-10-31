@@ -39,7 +39,6 @@ CExportContext::CExportContext(void) {
     hexNums = false;
     hashesOnly = false;
     asEther = false;
-    asDollars = false;
     asWei = true;
     tsMemMap = nullptr;
     tsCnt = 0;
