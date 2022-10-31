@@ -95,7 +95,7 @@ bool COptions::process_reconciliation(CTraverser* trav) {
     // the first record so we can pick up the previous balance
     // We must do this for both ETH and any tokens
     if (prevStatements[accountedFor.address + "_eth"].assetAddr.empty()) {
-        CReconciliation pEth(prevAppBlk, prevAppTxid, trav->trans.timestamp, &trav->trans);
+        CReconciliation pEth(accountedFor.address, prevAppBlk, prevAppTxid, trav->trans.timestamp, &trav->trans);
         // TODO(tjayrush): Incorrect code follows
         // This code is wrong. We ask for the balance at the current block minus one, but we should ask
         // at the previous block in this address's appearance list. When we're called with first_record
@@ -108,7 +108,8 @@ bool COptions::process_reconciliation(CTraverser* trav) {
         prevStatements[accountedFor.address + "_eth"] = pEth;
     }
 
-    CReconciliation eth(trav->trans.blockNumber, trav->trans.transactionIndex, trav->trans.timestamp, &trav->trans);
+    CReconciliation eth(accountedFor.address, trav->trans.blockNumber, trav->trans.transactionIndex,
+                        trav->trans.timestamp, &trav->trans);
     eth.reconcileEth(prevStatements[accountedFor.address + "_eth"], nextAppBlk, &trav->trans, accountedFor);
     eth.spotPrice = getPriceInUsd(trav->trans.blockNumber, eth.priceSource);
     trav->trans.statements.push_back(eth);
@@ -119,8 +120,8 @@ bool COptions::process_reconciliation(CTraverser* trav) {
         for (auto item : tokenList) {
             CAccountName tokenName = item.second;
 
-            CReconciliation tokStatement(trav->trans.blockNumber, trav->trans.transactionIndex, trav->trans.timestamp,
-                                         &trav->trans);
+            CReconciliation tokStatement(accountedFor.address, trav->trans.blockNumber, trav->trans.transactionIndex,
+                                         trav->trans.timestamp, &trav->trans);
             tokStatement.initForToken(tokenName);
 
             string psKey = accountedFor.address + "_" + tokenName.address;

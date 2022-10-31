@@ -28,7 +28,7 @@ bool visitReconciliation(CTransaction& trans, void* data) {
     prev.assetAddr = opt->account_for;
     prev.endBal = trans.blockNumber == 0 ? 0 : getBalanceAt(opt->account_for, trans.blockNumber - 1);
 
-    CReconciliation recon(trans.blockNumber, trans.transactionIndex, trans.timestamp, &trans);
+    CReconciliation recon(name.address, trans.blockNumber, trans.transactionIndex, trans.timestamp, &trans);
     recon.reconcileEth(prev, trans.blockNumber + 1, &trans, name);
     recon.spotPrice = getPriceInUsd(trans.blockNumber, recon.priceSource);
 
