@@ -59,10 +59,34 @@ void CReconciliation::initForToken(CAccountName& tokenName) {
     LOG4("  endBalDiff:    ", endBalDiff_internal());                                                                  \
     LOG4("  regular-recon: ", reconciled_internal() ? "true" : "false");
 
+// CAccountName name;
+// name.address = opt->account_for;
+// name.petname = addr_2_Petname(name.address, '-');
+// findName(opt->account_for, name);
+// CReconciliation prev;
+// prev.pTransaction = &trans;
+// prev.assetAddr = opt->account_for;
+// prev.endBal = trans.blockNumber == 0 ? 0 : getBalanceAt(opt->account_for, trans.blockNumber - 1);
+// recon.reconcileEth2(prev, trans.blockNumber + 1, &trans, name);
+// recon.spotPrice = getPriceInUsd(trans.blockNumber, recon.priceSource);
+
+//-----------------------------------------------------------------------
+bool CReconciliation::reconcileEth2(void) {
+    CReconciliation prev;
+    prev.blockNumber = blockNumber;
+    prev.pTransaction = pTransaction;
+    // prev.assetAddr = accountedFor;
+    prev.endBal = pTransaction->blockNumber == 0 ? 0 : getBalanceAt(accountedFor, pTransaction->blockNumber - 1);
+
+    nextAppBlk = pTransaction->blockNumber + 1;
+    bool ret = reconcileEth(prev, nextAppBlk, pTransaction, accountedFor);
+    spotPrice = getPriceInUsd(pTransaction->blockNumber, priceSource);
+    return ret;
+}
+
 //-----------------------------------------------------------------------
 bool CReconciliation::reconcileEth(const CReconciliation& prevRecon, blknum_t nextBlock, const CTransaction* trans,
-                                   const CAccountName& aF) {
-    address_t accountedFor = aF.address;
+                                   const address_t& accountedFor) {
     const CTransaction* pTransaction = trans;
 
     prevBal = prevRecon.endBal;
@@ -120,7 +144,7 @@ bool CReconciliation::reconcileEth(const CReconciliation& prevRecon, blknum_t ne
         return true;
 
     // Reconciliation failed, let's try to reconcile by traces
-    if (reconcileUsingTraces(prevRecon.endBal, trans, aF))
+    if (reconcileUsingTraces(prevRecon.endBal, trans, accountedFor))
         return true;
 
     // Reconciliation by traces failed, we want to correct for that and try
@@ -155,8 +179,8 @@ bool CReconciliation::reconcileEth(const CReconciliation& prevRecon, blknum_t ne
 }
 
 //---------------------------------------------------------------------------
-bool CReconciliation::reconcileUsingTraces(bigint_t prevEndBal, const CTransaction* trans, const CAccountName& aF) {
-    address_t accountedFor = aF.address;
+bool CReconciliation::reconcileUsingTraces(bigint_t prevEndBal, const CTransaction* trans,
+                                           const address_t& accountedFor) {
     const CTransaction* pTransaction = trans;
 
     amountOut = amountIn = 0;
@@ -190,7 +214,7 @@ bool CReconciliation::reconcileUsingTraces(bigint_t prevEndBal, const CTransacti
                     // TODO(tjayrush): unless it's the first trace?
                     // unless the EOA initiated the top level tx. I think
                     // this might be a bug in a smart contract or something.
-                    if (aF.isContract || pTransaction->from == accountedFor) {
+                    if (isContractAt(accountedFor, blockNumber) || pTransaction->from == accountedFor) {
                         internalOut += pTransaction->isError ? 0 : trace.action.value;
                     }
                 }

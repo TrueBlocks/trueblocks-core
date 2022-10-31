@@ -51,7 +51,7 @@ TEST_F(CThisTest, TestTest_1) {
     CAccountName acct;
     acct.address = "0xf503017d7baf7fbc0fff7492b751025c6a78179b";
     acct.petname = addr_2_Petname(acct.address, '-');
-    rec.reconcileEth(prev, 8856295, &trans, acct);
+    rec.reconcileEth(prev, 8856295, &trans, acct.address);
     cout << rec << endl;
 
     rec.blockNumber = 1;

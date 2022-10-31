@@ -19,18 +19,8 @@ bool visitReconciliation(CTransaction& trans, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
     bool isText = (expContext().exportFmt & (TXT1 | CSV1));
 
-    CAccountName name;
-    name.address = opt->account_for;
-    name.petname = addr_2_Petname(name.address, '-');
-    findName(opt->account_for, name);
-    CReconciliation prev;
-    prev.pTransaction = &trans;
-    prev.assetAddr = opt->account_for;
-    prev.endBal = trans.blockNumber == 0 ? 0 : getBalanceAt(opt->account_for, trans.blockNumber - 1);
-
-    CReconciliation recon(name.address, trans.blockNumber, trans.transactionIndex, trans.timestamp, &trans);
-    recon.reconcileEth(prev, trans.blockNumber + 1, &trans, name);
-    recon.spotPrice = getPriceInUsd(trans.blockNumber, recon.priceSource);
+    CReconciliation recon(opt->account_for, &trans);
+    recon.reconcileEth2();
 
     if (isText) {
         cout << trim(recon.Format(expContext().fmtMap["format"]), '\t') << endl;

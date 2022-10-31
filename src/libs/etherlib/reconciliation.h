@@ -88,8 +88,9 @@ class CReconciliation : public CBaseNode {
     const CTransaction* pTransaction = NULL;
     void initForToken(CAccountName& tokenName);
     bool reconcileEth(const CReconciliation& prevRecon, blknum_t nextBlock, const CTransaction* trans,
-                      const CAccountName& accountedFor);
-    bool reconcileUsingTraces(bigint_t prevEndBal, const CTransaction* trans, const CAccountName& accountedFor);
+                      const address_t& accountedFor);
+    bool reconcileEth2(void);
+    bool reconcileUsingTraces(bigint_t prevEndBal, const CTransaction* trans, const address_t& accountedFor);
 
     bigint_t begBalDiff_internal(void) const;
     bigint_t endBalCalc_internal(void) const;

@@ -110,7 +110,7 @@ bool COptions::process_reconciliation(CTraverser* trav) {
 
     CReconciliation eth(accountedFor.address, trav->trans.blockNumber, trav->trans.transactionIndex,
                         trav->trans.timestamp, &trav->trans);
-    eth.reconcileEth(prevStatements[accountedFor.address + "_eth"], nextAppBlk, &trav->trans, accountedFor);
+    eth.reconcileEth(prevStatements[accountedFor.address + "_eth"], nextAppBlk, &trav->trans, accountedFor.address);
     eth.spotPrice = getPriceInUsd(trav->trans.blockNumber, eth.priceSource);
     trav->trans.statements.push_back(eth);
     prevStatements[accountedFor.address + "_eth"] = eth;
