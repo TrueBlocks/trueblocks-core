@@ -45,7 +45,7 @@ bool COptions::parseArguments(string_q& command) {
     bool hasEsKey = getGlobalConfig("")->getConfigStr("keys.etherscan", "apiKey", "<not_set>") != "<not_set>";
 
     CToml config(rootConfigToml_makeClass);
-    // bool makeClassOn = config.getConfigBool("enabled", "generate", false);
+    bool makeClassOn = config.getConfigBool("enabled", "generate", false);
 
     Init();
     explode(arguments, command, ' ');
@@ -84,21 +84,21 @@ bool COptions::parseArguments(string_q& command) {
         } else {
             arg = trim(arg, '/');
             if (arg == "libs" || arg == "libs/") {
-                // static bool been_here = false;
-                // if (been_here)
-                //     break;
-                // been_here = true;
-                // tests.push_back("libs/utillib");
-                // tests.push_back("libs/etherlib");
-                // tests.push_back("libs/acctlib");
+                static bool been_here = false;
+                if (been_here)
+                    break;
+                been_here = true;
+                tests.push_back("libs/utillib");
+                tests.push_back("libs/etherlib");
+                tests.push_back("libs/acctlib");
 
             } else if (arg == "dev_tools" || arg == "dev_tools/") {
-                // static bool been_here = false;
-                // if (been_here)
-                //     break;
-                // been_here = true;
-                // if (makeClassOn)
-                //     tests.push_back("dev_tools/makeClass");
+                static bool been_here = false;
+                if (been_here)
+                    break;
+                been_here = true;
+                if (makeClassOn)
+                    tests.push_back("dev_tools/makeClass");
 
             } else if (arg == "tools" || arg == "tools/") {
                 static bool been_here = false;
@@ -108,16 +108,16 @@ bool COptions::parseArguments(string_q& command) {
                 if (hasEsKey && getEnvStr("NO_ES") != "true") {
                     tests.push_back("tools/ethslurp");
                 }
-                // tests.push_back("tools/ethNames");
-                // tests.push_back("tools/getBlocks");
-                // tests.push_back("tools/getLogs");
-                // tests.push_back("tools/getReceipts");
-                // tests.push_back("tools/getState");
-                // tests.push_back("tools/getTokens");
-                // tests.push_back("tools/getTraces");
+                tests.push_back("tools/ethNames");
+                tests.push_back("tools/getBlocks");
+                tests.push_back("tools/getLogs");
+                tests.push_back("tools/getReceipts");
+                tests.push_back("tools/getState");
+                tests.push_back("tools/getTokens");
+                tests.push_back("tools/getTraces");
                 tests.push_back("tools/getTrans");
-                // tests.push_back("tools/grabABI");
-                // tests.push_back("tools/whenBlock");
+                tests.push_back("tools/grabABI");
+                tests.push_back("tools/whenBlock");
 
             } else if (arg == "apps" || arg == "apps/") {
                 static bool been_here = false;
@@ -125,12 +125,12 @@ bool COptions::parseArguments(string_q& command) {
                     break;
                 been_here = true;
                 tests.push_back("apps/acctExport");
-                // tests.push_back("apps/blockScrape");
-                // tests.push_back("apps/cacheStatus");
-                // tests.push_back("apps/chunkMan");
-                // tests.push_back("apps/chifra");
-                // tests.push_back("apps/fireStorm");
-                // tests.push_back("apps/init");
+                tests.push_back("apps/blockScrape");
+                tests.push_back("apps/cacheStatus");
+                tests.push_back("apps/chunkMan");
+                tests.push_back("apps/chifra");
+                tests.push_back("apps/fireStorm");
+                tests.push_back("apps/init");
 
             } else {
                 tests.push_back(arg);
@@ -152,31 +152,31 @@ bool COptions::parseArguments(string_q& command) {
 
     if (tests.empty()) {
         full_test = true;
-        // tests.push_back("libs/utillib");
-        // tests.push_back("libs/etherlib");
-        // tests.push_back("libs/acctlib");
-        // if (makeClassOn)
-        //     tests.push_back("dev_tools/makeClass");
-        // if (hasEsKey && getEnvStr("NO_ES") != "true") {
-        //     tests.push_back("tools/ethslurp");
-        // }
-        // tests.push_back("tools/ethNames");
-        // tests.push_back("tools/getBlocks");
-        // tests.push_back("tools/getLogs");
-        // tests.push_back("tools/getReceipts");
-        // tests.push_back("tools/getState");
-        // tests.push_back("tools/getTokens");
-        // tests.push_back("tools/getTraces");
+        tests.push_back("libs/utillib");
+        tests.push_back("libs/etherlib");
+        tests.push_back("libs/acctlib");
+        if (makeClassOn)
+            tests.push_back("dev_tools/makeClass");
+        if (hasEsKey && getEnvStr("NO_ES") != "true") {
+            tests.push_back("tools/ethslurp");
+        }
+        tests.push_back("tools/ethNames");
+        tests.push_back("tools/getBlocks");
+        tests.push_back("tools/getLogs");
+        tests.push_back("tools/getReceipts");
+        tests.push_back("tools/getState");
+        tests.push_back("tools/getTokens");
+        tests.push_back("tools/getTraces");
         tests.push_back("tools/getTrans");
-        // tests.push_back("tools/grabABI");
-        // tests.push_back("tools/whenBlock");
+        tests.push_back("tools/grabABI");
+        tests.push_back("tools/whenBlock");
         tests.push_back("apps/acctExport");
-        // tests.push_back("apps/blockScrape");
-        // tests.push_back("apps/cacheStatus");
-        // tests.push_back("apps/chunkMan");
-        // tests.push_back("apps/chifra");
-        // tests.push_back("apps/fireStorm");
-        // tests.push_back("apps/init");
+        tests.push_back("apps/blockScrape");
+        tests.push_back("apps/cacheStatus");
+        tests.push_back("apps/chunkMan");
+        tests.push_back("apps/chifra");
+        tests.push_back("apps/fireStorm");
+        tests.push_back("apps/init");
     }
 
     SHOW_FIELD(CTestCase, "test_id");
