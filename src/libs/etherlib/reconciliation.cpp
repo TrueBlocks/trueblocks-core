@@ -130,11 +130,11 @@ string_q CReconciliation::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'p':
-            if (fieldName % "prevBlk") {
-                return uint_2_Str(prevBlk);
+            if (fieldName % "prevAppBlk") {
+                return uint_2_Str(prevAppBlk);
             }
-            if (fieldName % "prevBlkBal") {
-                return bni_2_Str(prevBlkBal);
+            if (fieldName % "prevBal") {
+                return bni_2_Str(prevBal);
             }
             if (fieldName % "prefundIn") {
                 return bni_2_Str(prefundIn);
@@ -262,12 +262,12 @@ bool CReconciliation::setValueByName(const string_q& fieldNameIn, const string_q
             }
             break;
         case 'p':
-            if (fieldName % "prevBlk") {
-                prevBlk = str_2_Uint(fieldValue);
+            if (fieldName % "prevAppBlk") {
+                prevAppBlk = str_2_Uint(fieldValue);
                 return true;
             }
-            if (fieldName % "prevBlkBal") {
-                prevBlkBal = str_2_BigInt(fieldValue);
+            if (fieldName % "prevBal") {
+                prevBal = str_2_BigInt(fieldValue);
                 return true;
             }
             if (fieldName % "prefundIn") {
@@ -340,8 +340,8 @@ bool CReconciliation::Serialize(CArchive& archive) {
     archive >> assetAddr;
     archive >> assetSymbol;
     archive >> decimals;
-    archive >> prevBlk;
-    archive >> prevBlkBal;
+    archive >> prevAppBlk;
+    archive >> prevBal;
     archive >> begBal;
     archive >> endBal;
     archive >> amountIn;
@@ -378,8 +378,8 @@ bool CReconciliation::SerializeC(CArchive& archive) const {
     archive << assetAddr;
     archive << assetSymbol;
     archive << decimals;
-    archive << prevBlk;
-    archive << prevBlkBal;
+    archive << prevAppBlk;
+    archive << prevBal;
     archive << begBal;
     archive << endBal;
     archive << amountIn;
@@ -452,8 +452,8 @@ void CReconciliation::registerClass(void) {
     ADD_FIELD(CReconciliation, "assetAddr", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "assetSymbol", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "decimals", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CReconciliation, "prevBlk", T_BLOCKNUM, ++fieldNum);
-    ADD_FIELD(CReconciliation, "prevBlkBal", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "prevAppBlk", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CReconciliation, "prevBal", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "begBal", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "endBal", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "amountIn", T_INT256, ++fieldNum);
@@ -638,8 +638,8 @@ string_q nextReconciliationChunk_custom(const string_q& fieldIn, const void* dat
                 if (fieldIn % "prefundIn") {
                     return bni_2_Export(rec->timestamp, rec->prefundIn, rec->decimals);
                 }
-                if (fieldIn % "prevBlkBal") {
-                    return bni_2_Export(rec->timestamp, rec->prevBlkBal, rec->decimals);
+                if (fieldIn % "prevBal") {
+                    return bni_2_Export(rec->timestamp, rec->prevBal, rec->decimals);
                 }
                 // EXISTING_CODE
                 break;
@@ -697,8 +697,8 @@ const char* STR_DISPLAY_RECONCILIATION =
     "[{BLOCKNUMBER}]\t"
     "[{TRANSACTIONINDEX}]\t"
     "[{TIMESTAMP}]\t"
-    "[{PREVBLK}]\t"
-    "[{PREVBLKBAL}]\t"
+    "[{PREVAPPBLK}]\t"
+    "[{PREVBAL}]\t"
     "[{BEGBAL}]\t"
     "[{AMOUNTIN}]\t"
     "[{INTERNALIN}]\t"
@@ -856,8 +856,8 @@ CReconciliation& CReconciliation::operator+=(const CReconciliation& r) {
     CReconciliation prev = *this;
     *this = *this + r;
     reconciliationType = "summary";
-    prevBlk = prev.prevBlk;
-    prevBlkBal = prev.prevBlkBal;
+    prevAppBlk = prev.prevAppBlk;
+    prevBal = prev.prevBal;
     begBal = prev.begBal;
     return *this;
 }
@@ -881,7 +881,7 @@ void CReconciliation::initForToken(CAccountName& tokenName) {
     LOG4("Trial balance: ", reconciliationType);                                                                       \
     LOG4("  hash: ", trans->hash);                                                                                     \
     LOG4("  ------------------------------");                                                                          \
-    LOG4("  prevBal:       ", prevBlkBal);                                                                             \
+    LOG4("  prevBal:       ", prevBal);                                                                                \
     LOG4("  begBal:        ", begBal);                                                                                 \
     LOG4("  begBalDiff:    ", begBalDiff());                                                                           \
     LOG4("  ------------------------------");                                                                          \
@@ -910,8 +910,8 @@ void CReconciliation::initForToken(CAccountName& tokenName) {
 bool CReconciliation::reconcileEth(const CReconciliation& prevRecon, blknum_t nextBlock, const CTransaction* trans,
                                    const CAccountName& accountedFor) {
     address_t acctFor = accountedFor.address;
-    prevBlkBal = prevRecon.endBal;
-    prevBlk = prevRecon.blockNumber;
+    prevBal = prevRecon.endBal;
+    prevAppBlk = prevRecon.blockNumber;
     assetSymbol = "ETH";
     assetAddr = acctFor;
 
@@ -1077,7 +1077,7 @@ bigint_t CReconciliation::totalOutLessGas(void) const {
 
 //---------------------------------------------------------------------------
 bigint_t CReconciliation::begBalDiff(void) const {
-    return blockNumber == 0 ? 0 : begBal - prevBlkBal;
+    return blockNumber == 0 ? 0 : begBal - prevBal;
 }
 
 //---------------------------------------------------------------------------
@@ -1111,8 +1111,8 @@ bool CReconciliation::readBackLevel_old(CArchive& archive) {
         archive >> assetAddr;
         archive >> assetSymbol;
         archive >> decimals;
-        // archive >> prevBlk;
-        // archive >> prevBlkBal;
+        // archive >> prevAppBlk;
+        // archive >> prevBal;
         archive >> begBal;
         archive >> unusedBi;  // begBalDiff
         archive >> amountIn;
@@ -1141,8 +1141,8 @@ bool CReconciliation::readBackLevel_old(CArchive& archive) {
         archive >> assetAddr;
         archive >> assetSymbol;
         archive >> decimals;
-        // archive >> prevBlk;
-        // archive >> prevBlkBal;
+        // archive >> prevAppBlk;
+        // archive >> prevBal;
         archive >> begBal;
         archive >> unusedBi;  // begBalDiff
         archive >> amountIn;
@@ -1172,8 +1172,8 @@ bool CReconciliation::readBackLevel_old(CArchive& archive) {
         archive >> assetAddr;
         archive >> assetSymbol;
         archive >> decimals;
-        archive >> prevBlk;
-        archive >> prevBlkBal;
+        archive >> prevAppBlk;
+        archive >> prevBal;
         archive >> begBal;
         archive >> endBal;
         archive >> amountIn;

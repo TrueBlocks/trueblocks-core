@@ -105,8 +105,8 @@ string_q renameExportFields(const string_q& className, const string_q& inStr) {
         map<string_q, string_q> renames = {
             make_pair("assetaddr", "assetAddress"),
             make_pair("assetsymbol", "assetSymbol"),
-            make_pair("prevblk", "prevBlock"),
-            make_pair("prevblkbal", "prevBlockBal"),
+            make_pair("prevappblk", "prevAppBlk"),
+            make_pair("prevbal", "prevBal"),
             make_pair("begbal", "begBal"),
             make_pair("amountin", "amountIn"),
             make_pair("internalin", "internalIn"),

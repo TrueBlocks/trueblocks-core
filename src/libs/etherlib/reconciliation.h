@@ -32,8 +32,8 @@ class CReconciliation : public CBaseNode {
     address_t assetAddr;
     string_q assetSymbol;
     uint64_t decimals;
-    blknum_t prevBlk;
-    bigint_t prevBlkBal;
+    blknum_t prevAppBlk;
+    bigint_t prevBal;
     bigint_t begBal;
     bigint_t endBal;
     bigint_t amountIn;
@@ -141,8 +141,8 @@ inline void CReconciliation::initialize(void) {
     assetAddr = "";
     assetSymbol = "";
     decimals = 18;
-    prevBlk = 0;
-    prevBlkBal = 0;
+    prevAppBlk = 0;
+    prevBal = 0;
     begBal = 0;
     endBal = 0;
     amountIn = 0;
@@ -177,8 +177,8 @@ inline void CReconciliation::duplicate(const CReconciliation& re) {
     assetAddr = re.assetAddr;
     assetSymbol = re.assetSymbol;
     decimals = re.decimals;
-    prevBlk = re.prevBlk;
-    prevBlkBal = re.prevBlkBal;
+    prevAppBlk = re.prevAppBlk;
+    prevBal = re.prevBal;
     begBal = re.begBal;
     endBal = re.endBal;
     amountIn = re.amountIn;

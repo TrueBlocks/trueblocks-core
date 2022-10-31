@@ -104,12 +104,12 @@ components:
           type: number
           format: uint64
           description: "Equivalent to the extracted value of getSymbol from ERC20 or, if ETH or WEI then 18"
-        prevBlk:
+        prevAppBlk:
           type: number
           format: blknum
           example: 10021
           description: "the block number of the previous reconciliation"
-        prevBlkBal:
+        prevBal:
           type: string
           format: int256
           description: "the account balance for the given asset for the previous reconciliation"
@@ -120,7 +120,7 @@ components:
         begBalDiff:
           type: string
           format: int256
-          description: "the difference between the expected beginning balance (prevBlkBal) and the queried balance from the chain"
+          description: "the difference between the expected beginning balance (prevBal) and the queried balance from the chain"
         amountIn:
           type: string
           format: int256
@@ -208,7 +208,7 @@ components:
           description: "a calculated field -- endBal - endBalCalc, if non-zero, the reconciliation failed"
         reconciled:
           type: boolean
-          description: "a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBlkBal`. `false` otherwise."
+          description: "a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBal`. `false` otherwise."
         transactionHash:
           type: string
           format: hash

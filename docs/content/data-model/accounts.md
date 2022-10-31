@@ -105,10 +105,10 @@ Reconciliation data is made of the following data fields:
 | assetAddr           | the accountedFor address for ETH recons, the token address itself otherwise                                     | address   |
 | assetSymbol         | either ETH, WEI or the symbol of the asset being reconciled as extracted from the chain                         | string    |
 | decimals            | Equivalent to the extracted value of getSymbol from ERC20 or, if ETH or WEI then 18                             | uint64    |
-| prevBlk             | the block number of the previous reconciliation                                                                 | blknum    |
-| prevBlkBal          | the account balance for the given asset for the previous reconciliation                                         | int256    |
+| prevAppBlk          | the block number of the previous reconciliation                                                                 | blknum    |
+| prevBal             | the account balance for the given asset for the previous reconciliation                                         | int256    |
 | begBal              | the beginning balance of the asset at the blockNumber                                                           | int256    |
-| begBalDiff          | the difference between the expected beginning balance (prevBlkBal) and the queried balance from the chain       | int256    |
+| begBalDiff          | the difference between the expected beginning balance (prevBal) and the queried balance from the chain          | int256    |
 | amountIn            | the top-level value of the incoming transfer for the accountedFor address                                       | int256    |
 | amountOut           | the amount (in terms of the asset) of regular outflow during this bigint                                        | int256    |
 | internalIn          | the internal value of the incoming transfer for the accountedFor address                                        | int256    |
@@ -131,7 +131,7 @@ Reconciliation data is made of the following data fields:
 | endBalCalc          | a calculated field -- begBal + amountNet                                                                        | int256    |
 | reconciliationType  | One of regular, traces, prevdiff-partial, partial-nextdiff, or `partial-partial`                                | string    |
 | endBalDiff          | a calculated field -- endBal - endBalCalc, if non-zero, the reconciliation failed                               | int256    |
-| reconciled          | a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBlkBal`. `false` otherwise.           | bool      |
+| reconciled          | a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBal`. `false` otherwise.              | bool      |
 | transactionHash     | the hash of the transaction that triggered this reconciliation                                                  | hash      |
 | date                | the date of this transaction                                                                                    | date      |
 
