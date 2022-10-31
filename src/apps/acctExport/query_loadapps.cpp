@@ -30,6 +30,8 @@ bool COptions::loadMonitors(void) {
         return true;
 
     for (CMonitor& monitor : allMonitors) {
+        LOG_INFO("I am here");
+
         curMonitor = &monitor;
         if (!monitor.readAppearances(visitOnLoad, this)) {
             LOG_ERR("Could not load appearances for address " + monitor.address);
@@ -44,6 +46,7 @@ bool COptions::loadMonitors(void) {
         }
     }
 
+    LOG_INFO("I am here2");
     bool reloaded = false;
     CAppearanceArray_mon monTmp;
     for (CMonitor& mon : allMonitors) {
@@ -63,12 +66,14 @@ bool COptions::loadMonitors(void) {
     }
 
     // Sort the file as it may or may not be sorted already
+    LOG_INFO("I am here3");
     if (reversed)  // TODO(tjayrush): remove this comment once account works backwardly
         sort(monTmp.begin(), monTmp.end(), sortMonitoredAppearanceReverse);
 
     // This limits the records to only those in the user's specified range, note we may bail early
     // if the blockchain itself isn't caught up to the most recent block in the monitor which may
     // happen if we re-sync the index (and optionally the node) from scratch
+    LOG_INFO("I am here4");
     for (size_t i = first_record; i < min(blknum_t(monTmp.size()), (first_record + max_records)); i++) {
         CAppearance_mon* app = &monTmp[i];
         if (app->blk > meta.client) {
@@ -82,10 +87,12 @@ bool COptions::loadMonitors(void) {
             monApps.push_back(*app);
         }
     }
+    LOG_INFO("I am here5");
 
     // Make sure the timestamps column is at least as up to date as this monitor
     if (monApps.size()) {
         // it's okay to not be able to freshen this. We'll just report less txs
+        LOG_INFO("I am here6: ", monApps.size());
         return bn_2_Timestamp(1);  // loads the timestamp file and returns non-zero
     }
 
