@@ -31,34 +31,16 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&maxRecords=10&fourbytes=
               "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
             ],
             "data": "0x0000000000000000000000000000000000000000000000000de0b6b3a7640000",
-            "articulatedLog": {
-              "name": "Transfer",
-              "inputs": {
-                "_amount": "1000000000000000000",
-                "_from": "0xeba60d324c2546459e1e9dd4c7e740ca80134588",
-                "_to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
-              }
-            },
-            "compressedLog": "Transfer(0xeba60d324c2546459e1e9dd4c7e740ca80134588 /*_from*/, 0xf503017d7baf7fbc0fff7492b751025c6a78179b /*_to*/, 1000000000000000000 /*_amount*/); "
+            "compressedLog": ""
           }
         ],
         "status": 1
       },
       "traces": [],
-      "articulatedTx": {
-        "name": "transfer",
-        "inputs": {
-          "_to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-          "_value": "1000000000000000000"
-        },
-        "outputs": {
-          "_success": ""
-        }
-      },
-      "compressedTx": "transfer(0xf503017d7baf7fbc0fff7492b751025c6a78179b /*_to*/, 1000000000000000000 /*_value*/); ",
+      "compressedTx": "0xa9059cbb(stub:000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b0000000000000000000000000000000000000000000000000de0b6b3a7640000)",
       "gasCost": 149192000000000,
       "etherGasCost": 0.000149192,
-      "function": "transfer",
+      "function": "",
       "gasUsed": 37298,
       "date": "2019-11-02 02:56:10 UTC",
       "ether": 0,
@@ -94,34 +76,16 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&maxRecords=10&fourbytes=
               "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
             ],
             "data": "0x00000000000000000000000000000000000000000000010eff0fae29b1bc0000",
-            "articulatedLog": {
-              "name": "Transfer",
-              "inputs": {
-                "_amount": "4999000000000000000000",
-                "_from": "0x8c492d5f763841767362d716e3e69511f0527791",
-                "_to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
-              }
-            },
-            "compressedLog": "Transfer(0x8c492d5f763841767362d716e3e69511f0527791 /*_from*/, 0xf503017d7baf7fbc0fff7492b751025c6a78179b /*_to*/, 4999000000000000000000 /*_amount*/); "
+            "compressedLog": ""
           }
         ],
         "status": 1
       },
       "traces": [],
-      "articulatedTx": {
-        "name": "transfer",
-        "inputs": {
-          "_to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-          "_value": "4999000000000000000000"
-        },
-        "outputs": {
-          "_success": ""
-        }
-      },
-      "compressedTx": "transfer(0xf503017d7baf7fbc0fff7492b751025c6a78179b /*_to*/, 4999000000000000000000 /*_value*/); ",
+      "compressedTx": "0xa9059cbb(stub:000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b00000000000000000000000000000000000000000000010eff0fae29b1bc0000)",
       "gasCost": 112130000000000,
       "etherGasCost": 0.00011213,
-      "function": "transfer",
+      "function": "",
       "gasUsed": 22426,
       "date": "2019-11-02 03:04:19 UTC",
       "ether": 0,
@@ -157,38 +121,103 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&maxRecords=10&fourbytes=
               "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
             ],
             "data": "0x0000000000000000000000000000000000000000000000878678326eac900000",
-            "articulatedLog": {
-              "name": "Transfer",
-              "inputs": {
-                "_amount": "2500000000000000000000",
-                "_from": "0x3f1c1e14fd919415010c03f9de29cbafd5866e81",
-                "_to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
-              }
-            },
-            "compressedLog": "Transfer(0x3f1c1e14fd919415010c03f9de29cbafd5866e81 /*_from*/, 0xf503017d7baf7fbc0fff7492b751025c6a78179b /*_to*/, 2500000000000000000000 /*_amount*/); "
+            "compressedLog": ""
           }
         ],
         "status": 1
       },
       "traces": [],
-      "articulatedTx": {
-        "name": "transfer",
-        "inputs": {
-          "_to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-          "_value": "2500000000000000000000"
-        },
-        "outputs": {
-          "_success": ""
-        }
-      },
-      "compressedTx": "transfer(0xf503017d7baf7fbc0fff7492b751025c6a78179b /*_to*/, 2500000000000000000000 /*_value*/); ",
+      "compressedTx": "0xa9059cbb(stub:000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b0000000000000000000000000000000000000000000000878678326eac900000)",
       "gasCost": 223620000000000,
       "etherGasCost": 0.00022362,
-      "function": "transfer",
+      "function": "",
       "gasUsed": 22362,
       "date": "2019-11-02 18:23:31 UTC",
       "ether": 0,
       "encoding": "0xa9059cbb"
     }
-  ]
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef",
+    "namedFrom": {
+      "0x3b161d57f482cd2dfbb626f0307ef92b3b094fce": {
+        "tags": "00-Active",
+        "name": "Name 0x3b161d57",
+        "count": 1
+      },
+      "0x3f1c1e14fd919415010c03f9de29cbafd5866e81": {
+        "tags": "25-Exchanges",
+        "name": "Name 0x3f1c1e14",
+        "count": 1
+      },
+      "0x8c492d5f763841767362d716e3e69511f0527791": {
+        "tags": "25-Exchanges",
+        "name": "Name 0x8c492d5f",
+        "count": 1
+      },
+      "0xb97073b754660bb356dfe12f78ae366d77dbc80f": {
+        "tags": "00-Active",
+        "name": "Name 0xb97073b7",
+        "count": 1
+      },
+      "0xbb984f85bd52d78eb2fbf2c5598bae7abb98c5bc": {
+        "tags": "25-Exchanges",
+        "name": "Name 0xbb984f85",
+        "count": 1
+      },
+      "0xeba60d324c2546459e1e9dd4c7e740ca80134588": {
+        "tags": "25-Exchanges",
+        "name": "Name 0xeba60d32",
+        "count": 1
+      }
+    },
+    "unNamedFrom": {},
+    "namedTo": {
+      "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359": {
+        "tags": "50-Tokens:ERC20",
+        "name": "Sai Stablecoin v1.0",
+        "isContract": true,
+        "isErc20": true,
+        "count": 5
+      },
+      "0x226159d592e2b063810a10ebf6dcbada94ed68b8": {
+        "tags": "34-ENS",
+        "name": "ENS: Old Public Resolver 2",
+        "isContract": true,
+        "count": 1
+      },
+      "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7": {
+        "tags": "31-Giveth:Core",
+        "name": "Giveth Bridge",
+        "isContract": true,
+        "count": 1
+      },
+      "0xb97073b754660bb356dfe12f78ae366d77dbc80f": {
+        "tags": "00-Active",
+        "name": "Name 0xb97073b7",
+        "count": 1
+      }
+    },
+    "unNamedTo": {},
+    "first_block": "0xdeadbeef",
+    "last_block": "0xdeadbeef",
+    "accountedFor": {
+      "tags": "00-Active",
+      "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "name": "Name 0xf503017d",
+      "symbol": "",
+      "source": "",
+      "decimals": 0,
+      "petname": "annually-famous-crappie",
+      "isCustom": true,
+      "isPrefund": false,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
+    }
+  }
 }
