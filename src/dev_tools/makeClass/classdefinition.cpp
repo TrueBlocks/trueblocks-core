@@ -618,10 +618,6 @@ const char* STR_DISPLAY_CLASSDEFINITION = "";
 // EXISTING_CODE
 void checkSorts(const string_q& className, const CStringArray& fields, const CStringArray& lines,
                 const string_q& field) {
-    if (className == "CReconciliation") {
-        return;
-    }
-
     size_t which = 0;
     for (size_t i = 0; i < fields.size(); i++) {
         if (contains(fields[i], field)) {

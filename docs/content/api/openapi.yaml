@@ -975,7 +975,7 @@ paths:
             enum:
               - from
               - to
-        - name: statements
+        - name: accountFor
           description: reconcile the transaction as per the provided address
           required: false
           style: form
@@ -2008,13 +2008,13 @@ components:
           type: string
           format: int256
           description: "a calculated field -- totalIn - totalOut"
-        reconciliationType:
-          type: string
-          description: "One of regular, traces, prevdiff-partial, partial-nextdiff, or `partial-partial`"
         endBalCalc:
           type: string
           format: int256
           description: "a calculated field -- begBal + amountNet"
+        reconciliationType:
+          type: string
+          description: "One of regular, traces, prevdiff-partial, partial-nextdiff, or `partial-partial`"
         endBalDiff:
           type: string
           format: int256

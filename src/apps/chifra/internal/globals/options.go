@@ -20,7 +20,6 @@ import (
 type GlobalOptions struct {
 	Wei     bool   `json:"wei,omitempty"`
 	Ether   bool   `json:"ether,omitempty"`
-	Dollars bool   `json:"dollars,omitempty"`
 	Help    bool   `json:"help,omitempty"`
 	File    string `json:"file,omitempty"`
 	Version bool   `json:"version,omitempty"`
@@ -36,7 +35,6 @@ func (opts *GlobalOptions) TestLog() {
 	logger.TestLog(len(opts.Chain) > 0 && opts.Chain != config.GetDefaultChain(), "Chain: ", opts.Chain)
 	logger.TestLog(opts.Wei, "Wei: ", opts.Wei)
 	logger.TestLog(opts.Ether, "Ether: ", opts.Ether)
-	logger.TestLog(opts.Dollars, "Dollars: ", opts.Dollars)
 	logger.TestLog(opts.Help, "Help: ", opts.Help)
 	logger.TestLog(opts.ShowRaw, "ShowRaw: ", opts.ShowRaw)
 	logger.TestLog(opts.ToFile, "ToFile: ", opts.ToFile)
@@ -76,7 +74,6 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions) {
 	cmd.Flags().BoolVarP(&opts.NoHeader, "no_header", "", false, "supress export of header row for csv and txt exports")
 	cmd.Flags().BoolVarP(&opts.Wei, "wei", "", false, "specify value in wei (the default)")
 	cmd.Flags().BoolVarP(&opts.Ether, "ether", "", false, "specify value in ether")
-	cmd.Flags().BoolVarP(&opts.Dollars, "dollars", "", false, "specify value in US dollars")
 	cmd.Flags().StringVarP(&opts.File, "file", "", "", "specify multiple command line options in a file")
 	cmd.Flags().BoolVarP(&opts.ToFile, "to_file", "", false, "write the results to a temporary file and return the filename")
 	cmd.Flags().StringVarP(&opts.OutputFn, "output", "", "", "redirect results from stdout to the given file, create if not present")
@@ -91,7 +88,6 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions) {
 	cmd.Flags().MarkHidden("no_header")
 	cmd.Flags().MarkHidden("wei")
 	cmd.Flags().MarkHidden("ether")
-	cmd.Flags().MarkHidden("dollars")
 	cmd.Flags().MarkHidden("to_file")
 	cmd.Flags().MarkHidden("file")
 	cmd.Flags().MarkHidden("output")
@@ -133,9 +129,6 @@ func (opts *GlobalOptions) toCmdLine() string {
 	if opts.Ether {
 		options += " --ether"
 	}
-	if opts.Dollars {
-		options += " --dollars"
-	}
 	if opts.ToFile {
 		options += " --to_file"
 	}
@@ -172,8 +165,6 @@ func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOption
 			opts.Wei = true
 		case "ether":
 			opts.Ether = true
-		case "dollars":
-			opts.Dollars = true
 		case "toFile":
 			opts.ToFile = true
 		case "file":
@@ -230,7 +221,6 @@ func IsGlobalOption(key string) bool {
 		"chain",
 		"wei",
 		"ether",
-		"dollars",
 		"toFile",
 		"file",
 		"output",
