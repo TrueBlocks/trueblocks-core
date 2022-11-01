@@ -31,7 +31,6 @@ bool COptions::process_reconciliation(CTraverser* trav) {
 
     string_q ethKey = statementKey(accountedFor.address, "");
 
-#ifdef NEW_CODE
     blknum_t prevAppBlk = 0;
     if (trav->index > 0) {
         prevAppBlk = monApps[trav->index - 1].blk;
@@ -43,11 +42,15 @@ bool COptions::process_reconciliation(CTraverser* trav) {
 
     if (prevStatements[ethKey].assetAddr.empty()) {
         // TODO(tjayrush): Incorrect code follows
-        // This code is wrong. We ask for the balance at the current block minus one, but we should ask
-        // at the previous block in this address's appearance list. When we're called with first_record
-        // or start_block not zero we don't have this (since we only load those appearances we're asked
-        // for) To fix this, we need to be able to get the previous appearance's block. Note, we
-        // only need the balance for the previous reconcilation, so using NOPOS for transactionIndex is okay.
+        CReconciliation pEth(accountedFor.address, prevAppBlk, NOPOS, trav->trans.timestamp, &trav->trans);
+        pEth.endBal =
+            trav->trans.blockNumber == 0 ? 0 : getBalanceAt(accountedFor.address, trav->trans.blockNumber - 1);
+        pEth.spotPrice = getPriceInUsd(trav->trans.blockNumber - 1, pEth.priceSource);
+        prevStatements[ethKey] = pEth;
+    }
+
+#ifdef NEW_CODE0
+    if (prevStatements[ethKey].assetAddr.empty()) {
         CReconciliation prevStatement(accountedFor.address, prevAppBlk, NOPOS, trav->trans.timestamp, &trav->trans);
         prevStatement.endBal = getBalanceAt(accountedFor.address, prevAppBlk);
         prevStatement.spotPrice = getPriceInUsd(prevAppBlk, prevStatement.priceSource);
@@ -112,30 +115,6 @@ bool COptions::process_reconciliation(CTraverser* trav) {
         }
     }
 #else
-    blknum_t prevAppBlk = 0;
-    if (trav->index > 0) {
-        prevAppBlk = monApps[trav->index - 1].blk;
-    } else {
-        if (trav->trans.blockNumber > 0) {
-            prevAppBlk = trav->trans.blockNumber - 1;
-        }
-    }
-    blknum_t prevAppTxid = trav->index > 0 ? monApps[trav->index - 1].txid : 0;
-
-    if (prevStatements[ethKey].assetAddr.empty()) {
-        CReconciliation pEth(accountedFor.address, prevAppBlk, prevAppTxid, trav->trans.timestamp, &trav->trans);
-        // TODO(tjayrush): Incorrect code follows
-        // This code is wrong. We ask for the balance at the current block minus one, but we should ask
-        // at the previous block in this address's appearance list. When we're called with first_record
-        // or start_block not zero we don't have this (since we only load those appearances we're asked
-        // for) To fix this, we need to be able to get the previous appearance's block. Note, we
-        // only need the balance for the previous reconcilation, so using NOPOS for transactionIndex is okay.
-        pEth.endBal =
-            trav->trans.blockNumber == 0 ? 0 : getBalanceAt(accountedFor.address, trav->trans.blockNumber - 1);
-        pEth.spotPrice = getPriceInUsd(trav->trans.blockNumber - 1, pEth.priceSource);
-        prevStatements[ethKey] = pEth;
-    }
-
     CReconciliation eth(accountedFor.address, trav->trans.blockNumber, trav->trans.transactionIndex,
                         trav->trans.timestamp, &trav->trans);
     eth.reconcileEth(prevStatements[ethKey]);
@@ -215,23 +194,8 @@ address_t topic_2_Addr(const string_q& topic) {
     return "0x" + padLeft(topic.substr(26, 66), 40, '0');
 }
 
-// //-----------------------------------------------------------------------
-// bool COptions::token_list_from_logs(CAccountNameMap& tokenList, const CTraverser* trav) {
-//     for (auto log : trav->trans.receipt.logs) {
-//         CAccountName tokenName;
-//         bool isToken = findToken(log.address, tokenName);
-//         if (tokenName.address.empty()) {
-//             tokenName.address = log.address;
-//             tokenName.petname = addr_2_Petname(tokenName.address, '-');
-//         }
-//         if (isToken || (log.topics.size() > 0 && isTokenRelated(log.topics[0])))
-//             tokenList[log.address] = tokenName;
-//     }
-//     return tokenList.size() > 0;
-// }
-
 //-----------------------------------------------------------------------
-bool getTokenTransfers(CTransferArray& transfers, CAccountNameMap& tokenList, const address_t& aF,
+bool getTokenTransfers(CTransferArray& transfers, CAccountNameMap& tokenList, const address_t& accountedFor,
                        const CTraverser* trav) {
     // if (trav->trans.value != 0 || trav->trans.from == accountedFor) {
     //     CTransfer transfer;
@@ -263,8 +227,9 @@ bool getTokenTransfers(CTransferArray& transfers, CAccountNameMap& tokenList, co
             tokenName.petname = addr_2_Petname(tokenName.address, '-');
         }
 
-#ifdef NEW_CODE
         if (isToken || (log.topics.size() > 2 && isTokenRelated(log.topics[0]))) {
+            tokenList[log.address] = tokenName;
+
             CTransfer transfer;
 
             transfer.assetAddr = log.address;
@@ -313,13 +278,7 @@ bool getTokenTransfers(CTransferArray& transfers, CAccountNameMap& tokenList, co
         }
     }
 
-    return transfers.size() > 0;
-#else
-        if (isToken || (log.topics.size() > 0 && isTokenRelated(log.topics[0])))
-            tokenList[log.address] = tokenName;
-    }
     return tokenList.size() > 0;
-#endif
 }
 
 //-----------------------------------------------------------------------
@@ -353,7 +312,6 @@ bool COptions::readReconsFromCache(CTraverser* trav) {
     if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
         archive >> trav->trans.statements;
         archive.Release();
-        bool backLevel = false;
         for (auto& statement : trav->trans.statements) {
             // If this is an older versioned file, act as if it doesn't exist so it gets upgraded
             if (statement.accountedFor.empty()) {
@@ -361,16 +319,9 @@ bool COptions::readReconsFromCache(CTraverser* trav) {
                 return false;
             }
 
-            // At version 0.11.8, we finally got pricing of reconcilations correct. We didn't
-            // want to add an upgrade of reconcilations to the migration, so we do it here
-            // but only when the user reads an older file
-            backLevel = backLevel || (statement.m_schema < getVersionNum(0, 11, 8));
+            // Freshen in case user has changed the names database since putting the statement in the cache
             CAccountName tokenName;
-            if (contains(statement.assetSymbol, "reverted"))
-                statement.assetSymbol = "";
-            if (statement.assetSymbol != "ETH" && statement.assetSymbol != "WEI" &&
-                findToken(statement.assetAddr, tokenName)) {
-                // We always freshen these in case user has changed names database
+            if (findToken(statement.assetAddr, tokenName)) {
                 statement.assetSymbol = tokenName.symbol;
                 statement.decimals = tokenName.decimals;
             }
@@ -379,10 +330,6 @@ bool COptions::readReconsFromCache(CTraverser* trav) {
 
             string_q key = statementKey(accountedFor.address, statement.assetAddr);
             prevStatements[key] = statement;
-        }
-        if (backLevel) {
-            trav->searchOp = UPDATE;
-            cacheIfReconciled(trav);
         }
         return !shouldQuit();
     }
