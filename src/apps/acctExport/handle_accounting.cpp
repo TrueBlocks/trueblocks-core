@@ -85,17 +85,12 @@ bool COptions::process_reconciliation(CTraverser* trav) {
             }
             tokStatement.prevAppBlk = prevStatements[tokenKey].blockNumber;
             tokStatement.prevBal = prevStatements[tokenKey].endBal;
+            tokStatement.sender = transfer.sender;
+            tokStatement.recipient = transfer.recipient;
             tokStatement.begBal =
                 trav->trans.blockNumber == 0
                     ? 0
                     : getTokenBalanceOf2(tokStatement.assetAddr, accountedFor.address, trav->trans.blockNumber - 1);
-            tokStatement.endBal =
-                getTokenBalanceOf2(tokStatement.assetAddr, accountedFor.address, trav->trans.blockNumber);
-            if (tokStatement.begBal > tokStatement.endBal) {
-                tokStatement.amountOut = (tokStatement.begBal - tokStatement.endBal);
-            } else {
-                tokStatement.amountIn = (tokStatement.endBal - tokStatement.begBal);
-            }
 #else
         for (auto item : tokenList) {
             CAccountName tokenName = item.second;
@@ -130,20 +125,17 @@ bool COptions::process_reconciliation(CTraverser* trav) {
             tokStatement.prevAppBlk = prevStatements[tokenKey].blockNumber;
             tokStatement.prevBal = prevStatements[tokenKey].endBal;
             tokStatement.begBal = prevStatements[tokenKey].endBal;
-            tokStatement.endBal = getTokenBalanceOf2(tokenName.address, accountedFor.address, trav->trans.blockNumber);
+#endif
+            tokStatement.endBal =
+                getTokenBalanceOf2(tokStatement.assetAddr, accountedFor.address, trav->trans.blockNumber);
             if (tokStatement.begBal > tokStatement.endBal) {
                 tokStatement.amountOut = (tokStatement.begBal - tokStatement.endBal);
             } else {
                 tokStatement.amountIn = (tokStatement.endBal - tokStatement.begBal);
             }
-#endif
-            tokStatement.reconciliationType = "token";
+
             if (tokStatement.amountNet_internal() != 0) {
-#ifdef NEW_CODE
-                tokStatement.sender = transfer.sender;
-                tokStatement.recipient = transfer.recipient;
-#else
-#endif
+                tokStatement.reconciliationType = "token";
                 tokStatement.spotPrice =
                     getPriceInUsd(trav->trans.blockNumber, tokStatement.priceSource, tokStatement.assetAddr);
                 trav->trans.statements.push_back(tokStatement);
