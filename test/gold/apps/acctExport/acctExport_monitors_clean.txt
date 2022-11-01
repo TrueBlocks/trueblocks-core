@@ -1,4 +1,0 @@
-chifra monitors  --clean
-[{ "path": "$CACHE/0x001d14804b399c6ef80e64576f657660804fec0b.acct.bin", "sizeThen": 3, "sizeNow": 3 }
-,{ "path": "$CACHE/0x0029218e1dab069656bfb8a75947825e7989b987.acct.bin", "sizeThen": 19, "sizeNow": 19 }
-]
