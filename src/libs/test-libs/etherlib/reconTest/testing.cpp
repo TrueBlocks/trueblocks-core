@@ -45,13 +45,10 @@ TEST_F(CThisTest, TestTest_1) {
 
     CReconciliation rec;
     rec.pTransaction = &trans;
+    rec.nextAppBlk = 8856295;
     cout << rec << endl;
-    rec = CReconciliation("0xf503017d7baf7fbc0fff7492b751025c6a78179b", trans.blockNumber, trans.transactionIndex,
-                          trans.timestamp, &trans);
-    CAccountName acct;
-    acct.address = "0xf503017d7baf7fbc0fff7492b751025c6a78179b";
-    acct.petname = addr_2_Petname(acct.address, '-');
-    rec.reconcileEth(prev, 8856295, &trans, acct.address);
+    rec = CReconciliation("0xf503017d7baf7fbc0fff7492b751025c6a78179b", &trans);
+    rec.reconcileEth(prev, rec.nextAppBlk, &trans, "0xf503017d7baf7fbc0fff7492b751025c6a78179b");
     cout << rec << endl;
 
     rec.blockNumber = 1;

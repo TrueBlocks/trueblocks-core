@@ -15,21 +15,6 @@
 
 namespace qblocks {
 
-//---------------------------------------------------------------------------
-void CReconciliation::initForToken(CAccountName& tokenName) {
-    assetAddr = tokenName.address;
-    ASSERT(!assetAddr.empty());
-    assetSymbol = tokenName.symbol;
-    if (assetSymbol.empty()) {
-        assetSymbol = getTokenSymbol(tokenName.address, blockNumber);
-        if (contains(assetSymbol, "reverted"))
-            assetSymbol = "";
-    }
-    if (assetSymbol.empty())
-        assetSymbol = tokenName.address.substr(0, 4);
-    decimals = tokenName.decimals != 0 ? tokenName.decimals : 18;
-}
-
 #define LOG_TRIAL_BALANCE()                                                                                            \
     LOG4("Trial balance: ", reconciliationType);                                                                       \
     LOG4("  hash: ", pTransaction->hash);                                                                              \

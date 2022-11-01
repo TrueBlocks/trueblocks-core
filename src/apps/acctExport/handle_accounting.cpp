@@ -92,7 +92,16 @@ bool COptions::process_reconciliation(CTraverser* trav) {
 
             CReconciliation tokStatement(accountedFor.address, trav->trans.blockNumber, trav->trans.transactionIndex,
                                          trav->trans.timestamp, &trav->trans);
-            tokStatement.initForToken(tokenName);
+            tokStatement.assetAddr = tokenName.address;
+            tokStatement.assetSymbol = tokenName.symbol;
+            if (tokStatement.assetSymbol.empty()) {
+                tokStatement.assetSymbol = getTokenSymbol(tokenName.address, tokStatement.blockNumber);
+                if (contains(tokStatement.assetSymbol, "reverted"))
+                    tokStatement.assetSymbol = "";
+            }
+            if (tokStatement.assetSymbol.empty())
+                tokStatement.assetSymbol = tokenName.address.substr(0, 4);
+            tokStatement.decimals = tokenName.decimals != 0 ? tokenName.decimals : 18;
 
             string psKey = accountedFor.address + "_" + tokenName.address;
             if (prevStatements[psKey].assetAddr.empty()) {
