@@ -59,23 +59,11 @@ void CReconciliation::initForToken(CAccountName& tokenName) {
     LOG4("  endBalDiff:    ", endBalDiff_internal());                                                                  \
     LOG4("  regular-recon: ", reconciled_internal() ? "true" : "false");
 
-// CAccountName name;
-// name.address = opt->account_for;
-// name.petname = addr_2_Petname(name.address, '-');
-// findName(opt->account_for, name);
-// CReconciliation prev;
-// prev.pTransaction = &trans;
-// prev.assetAddr = opt->account_for;
-// prev.endBal = trans.blockNumber == 0 ? 0 : getBalanceAt(opt->account_for, trans.blockNumber - 1);
-// recon.reconcileEth2(prev, trans.blockNumber + 1, &trans, name);
-// recon.spotPrice = getPriceInUsd(trans.blockNumber, recon.priceSource);
-
 //-----------------------------------------------------------------------
 bool CReconciliation::reconcileEth2(void) {
     CReconciliation prev;
     prev.blockNumber = blockNumber;
     prev.pTransaction = pTransaction;
-    // prev.assetAddr = accountedFor;
     prev.endBal = pTransaction->blockNumber == 0 ? 0 : getBalanceAt(accountedFor, pTransaction->blockNumber - 1);
 
     nextAppBlk = pTransaction->blockNumber + 1;

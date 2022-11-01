@@ -13,36 +13,6 @@
 #include "options.h"
 
 //-----------------------------------------------------------------------
-bool acct_Display(CTraverser* trav, void* data) {
-    COptions* opt = (COptions*)data;
-
-    if (fourByteFilter(trav->trans.input, opt)) {
-        if (opt->accounting)
-            opt->process_reconciliation(trav);
-
-        if (opt->relevant) {
-            for (auto& log : trav->trans.receipt.logs) {
-                log.m_showing = opt->isRelevant(log);
-            }
-        }
-
-        if (opt->statements) {
-            for (auto recon : trav->trans.statements) {
-                cout << ((isJson() && !opt->firstOut) ? ", " : "");
-                cout << recon.Format() << endl;
-                opt->firstOut = false;
-            }
-        } else {
-            cout << ((isJson() && !opt->firstOut) ? ", " : "");
-            cout << trav->trans;
-            opt->firstOut = false;
-        }
-    }
-
-    return prog_Log(trav, data);
-}
-
-//-----------------------------------------------------------------------
 bool COptions::process_reconciliation(CTraverser* trav) {
     string_q path =
         getPathToBinaryCache(CT_RECONS, accountedFor.address, trav->trans.blockNumber, trav->trans.transactionIndex);
@@ -158,37 +128,80 @@ bool COptions::process_reconciliation(CTraverser* trav) {
         }
     }
 
-    cacheIfReconciled(trav, true /* isNew */);
+    cacheIfReconciled(trav);
     return !shouldQuit();
 }
 
 //-----------------------------------------------------------------------
-bool COptions::isReconciled(CTraverser* trav) const {
+bool COptions::isReconciled(CTraverser* trav, CReconciliation& which) const {
     for (auto recon : trav->trans.statements) {
-        if (!recon.reconciled_internal())
+        if (!recon.reconciled_internal()) {
+            which = recon;
             return false;
+        }
     }
     return true;
 }
 
 //-----------------------------------------------------------------------
-void COptions::cacheIfReconciled(CTraverser* trav, bool isNew) const {
+void COptions::cacheIfReconciled(CTraverser* trav) const {
     if (isTestMode())
         return;
-    if (!isReconciled(trav)) {
-        LOG_WARN("Transaction ", trav->trans.hash, " did not reconcile.");
+
+    CReconciliation whichFailed;
+    if (!isReconciled(trav, whichFailed)) {
+        if (whichFailed.assetSymbol == "ETH") {
+            LOG_WARN("Transaction at ", trav->trans.blockNumber, ".", padNum4(trav->trans.transactionIndex), " (",
+                     trav->trans.hash, ") did not reconcile for account ", accountedFor.address);
+        } else {
+            LOG_WARN("Token transfer at ", trav->trans.blockNumber, ".", padNum4(trav->trans.transactionIndex), " (",
+                     trav->trans.hash, ") did not reconcile for account ", accountedFor.address);
+        }
+        return;
     }
 
-    lockSection();
-    CArchive archive(WRITING_ARCHIVE);
     string_q path =
         getPathToBinaryCache(CT_RECONS, accountedFor.address, trav->trans.blockNumber, trav->trans.transactionIndex);
+    lockSection();
+
+    CArchive archive(WRITING_ARCHIVE);
     if (archive.Lock(path, modeWriteCreate, LOCK_WAIT)) {
         LOG4("Writing to cache for ", path);
         archive << trav->trans.statements;
         archive.Release();
     }
+
     unlockSection();
+}
+
+//-----------------------------------------------------------------------
+bool acct_Display(CTraverser* trav, void* data) {
+    COptions* opt = (COptions*)data;
+
+    if (fourByteFilter(trav->trans.input, opt)) {
+        if (opt->accounting)
+            opt->process_reconciliation(trav);
+
+        if (opt->relevant) {
+            for (auto& log : trav->trans.receipt.logs) {
+                log.m_showing = opt->isRelevant(log);
+            }
+        }
+
+        if (opt->statements) {
+            for (auto recon : trav->trans.statements) {
+                cout << ((isJson() && !opt->firstOut) ? ", " : "");
+                cout << recon.Format() << endl;
+                opt->firstOut = false;
+            }
+        } else {
+            cout << ((isJson() && !opt->firstOut) ? ", " : "");
+            cout << trav->trans;
+            opt->firstOut = false;
+        }
+    }
+
+    return prog_Log(trav, data);
 }
 
 //-----------------------------------------------------------------------
