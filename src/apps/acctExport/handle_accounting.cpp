@@ -46,7 +46,7 @@ bool COptions::process_reconciliation(CTraverser* trav) {
                 if (backLevel) {
                     // LOG_WARN(cYellow, "Updating statements", cOff);
                     trav->searchOp = UPDATE;
-                    cacheIfReconciled(trav, true /* isNew */);
+                    cacheIfReconciled(trav);
                 }
                 return !shouldQuit();
                 //             } else {
