@@ -42,21 +42,18 @@ bool COptions::process_reconciliation(CTraverser* trav) {
 
     if (prevStatements[ethKey].assetAddr.empty()) {
         // TODO(tjayrush): Incorrect code follows
-        CReconciliation pEth(accountedFor.address, prevAppBlk, NOPOS, trav->trans.timestamp, &trav->trans);
-        pEth.endBal =
-            trav->trans.blockNumber == 0 ? 0 : getBalanceAt(accountedFor.address, trav->trans.blockNumber - 1);
-        pEth.spotPrice = getPriceInUsd(trav->trans.blockNumber - 1, pEth.priceSource);
-        prevStatements[ethKey] = pEth;
-    }
-
-#ifdef NEW_CODE0
-    if (prevStatements[ethKey].assetAddr.empty()) {
         CReconciliation prevStatement(accountedFor.address, prevAppBlk, NOPOS, trav->trans.timestamp, &trav->trans);
-        prevStatement.endBal = getBalanceAt(accountedFor.address, prevAppBlk);
-        prevStatement.spotPrice = getPriceInUsd(prevAppBlk, prevStatement.priceSource);
+        // Balance and price before genesis block is always zero
+        if (prevAppBlk > 0) {
+            prevStatement.endBal = getBalanceAt(accountedFor.address, prevAppBlk);
+            prevStatement.spotPrice = getPriceInUsd(prevAppBlk, prevStatement.priceSource);
+        }
         prevStatements[ethKey] = prevStatement;
     }
 
+    CTransferArray transfers;
+    CAccountNameMap tokenList;
+#ifdef NEW_CODE0
     CReconciliation ethStatement(accountedFor.address, &trav->trans);
     ethStatement.nextAppBlk = trav->index < monApps.size() - 1 ? monApps[trav->index + 1].blk : NOPOS;
     ethStatement.reconcileEth(prevStatements[ethKey]);
@@ -66,8 +63,6 @@ bool COptions::process_reconciliation(CTraverser* trav) {
     }
     prevStatements[ethKey] = ethStatement;
 
-    CTransferArray transfers;
-    CAccountNameMap tokenList;
     if (getTokenTransfers(transfers, tokenList, accountedFor.address, trav)) {
         for (auto transfer : transfers) {
             if (assetFilter.size() > 0 && !assetFilter[transfer.assetAddr]) {
@@ -122,8 +117,6 @@ bool COptions::process_reconciliation(CTraverser* trav) {
     trav->trans.statements.push_back(eth);
     prevStatements[ethKey] = eth;
 
-    CTransferArray transfers;
-    CAccountNameMap tokenList;
     if (getTokenTransfers(transfers, tokenList, accountedFor.address, trav)) {
         for (auto item : tokenList) {
             CAccountName tokenName = item.second;
