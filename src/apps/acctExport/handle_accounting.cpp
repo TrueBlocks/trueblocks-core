@@ -59,9 +59,7 @@ bool COptions::process_reconciliation(CTraverser* trav) {
     prevStatements[ethKey] = ethStatement;
 
     CTransferArray transfers;
-    CAccountNameMap tokenList;
-    if (getTokenTransfers(transfers, tokenList, accountedFor.address, trav)) {
-#if 1  // def NEW_CODE
+    if (getTokenTransfers(transfers, accountedFor.address, trav)) {
         for (auto transfer : transfers) {
             if (assetFilter.size() > 0 && !assetFilter[transfer.assetAddr]) {
                 continue;
@@ -72,21 +70,6 @@ bool COptions::process_reconciliation(CTraverser* trav) {
             tokStatement.assetSymbol = transfer.assetSymbol;
             tokStatement.sender = transfer.sender;
             tokStatement.recipient = transfer.recipient;
-#else
-        for (auto item : tokenList) {
-            CAccountName tokenName = item.second;
-            CReconciliation tokStatement(accountedFor.address, &trav->trans);
-            tokStatement.assetAddr = tokenName.address;
-            tokStatement.assetSymbol = tokenName.symbol;
-            if (tokStatement.assetSymbol.empty()) {
-                tokStatement.assetSymbol = getTokenSymbol(tokenName.address, tokStatement.blockNumber);
-                if (contains(tokStatement.assetSymbol, "reverted"))
-                    tokStatement.assetSymbol = "";
-            }
-            if (tokStatement.assetSymbol.empty())
-                tokStatement.assetSymbol = tokenName.address.substr(0, 4);
-            tokStatement.decimals = tokenName.decimals != 0 ? tokenName.decimals : 18;
-#endif
 
             string tokenKey = statementKey(accountedFor.address, tokStatement.assetAddr);
             if (prevStatements[tokenKey].assetAddr.empty()) {
@@ -102,10 +85,16 @@ bool COptions::process_reconciliation(CTraverser* trav) {
 
             tokStatement.prevAppBlk = prevStatements[tokenKey].blockNumber;
             tokStatement.prevBal = prevStatements[tokenKey].endBal;
+#ifdef NEW_CODE
+            tokStatement.begBal =
+                trav->trans.blockNumber == 0
+                    ? 0
+                    : getTokenBalanceOf2(tokStatement.assetAddr, accountedFor.address, trav->trans.blockNumber - 1);
+#else
             // TODO: Note that this doesn't really query this token's balance at its last appearance, it just picks up
             // TODO: the previous balance
             tokStatement.begBal = prevStatements[tokenKey].endBal;
-
+#endif
             tokStatement.endBal =
                 getTokenBalanceOf2(tokStatement.assetAddr, accountedFor.address, trav->trans.blockNumber);
 
@@ -143,8 +132,7 @@ address_t topic_2_Addr(const string_q& topic) {
 }
 
 //-----------------------------------------------------------------------
-bool getTokenTransfers(CTransferArray& transfers, CAccountNameMap& tokenList, const address_t& accountedFor,
-                       const CTraverser* trav) {
+bool getTokenTransfers(CTransferArray& transfers, const address_t& accountedFor, const CTraverser* trav) {
     // if (trav->trans.value != 0 || trav->trans.from == accountedFor) {
     //     CTransfer transfer;
     //     transfer.blockNumber = trav->trans.blockNumber;
@@ -176,8 +164,6 @@ bool getTokenTransfers(CTransferArray& transfers, CAccountNameMap& tokenList, co
         }
 
         if (isToken || (log.topics.size() > 2 && isTokenRelated(log.topics[0]))) {
-            tokenList[log.address] = tokenName;
-
             CTransfer transfer;
 
             transfer.assetAddr = log.address;
@@ -226,7 +212,7 @@ bool getTokenTransfers(CTransferArray& transfers, CAccountNameMap& tokenList, co
         }
     }
 
-    return tokenList.size() > 0;
+    return transfers.size() > 0;
 }
 
 //-----------------------------------------------------------------------
