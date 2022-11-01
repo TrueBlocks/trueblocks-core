@@ -79,8 +79,8 @@ on       ,both ,fast  ,export   ,apps/acctExport ,statement_3_accounting   ,y   
          
 on       ,both ,fast  ,export   ,apps/acctExport ,ens_test_export          ,y    ,addrs = rhyslindmark.eth & first_block = 4037786 & last_block = 4081450                                                                                                                               
 
-on       ,both ,fast  ,export   ,apps/acctExport ,statement_unfiltered     ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & statements & first_block = 8860513 & last_block = 8860531 & ether & fmt = json
-on       ,both ,fast  ,export   ,apps/acctExport ,statement_filtered       ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & statements & first_block = 8860513 & last_block = 8860531 & ether & asset = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 & fmt = json
+local    ,both ,fast  ,export   ,apps/acctExport ,statement_unfiltered     ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & statements & first_block = 8860513 & last_block = 8860531 & ether & fmt = json
+local    ,both ,fast  ,export   ,apps/acctExport ,statement_filtered       ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & statements & first_block = 8860513 & last_block = 8860531 & ether & asset = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 & fmt = json
 
 local    ,both ,fast  ,export   ,apps/acctExport ,accounting_tokens_1      ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & first_block = 10277780 & last_block = 10296792 & articulate & ether & fmt = json
 local    ,both ,fast  ,export   ,apps/acctExport ,accounting_tokens_2      ,y    ,addrs = 0x9531c059098e3d194ff87febb587ab07b30b1306 & accounting & first_block = 10277780 & last_block = 10296792 & articulate & ether & fmt = json
