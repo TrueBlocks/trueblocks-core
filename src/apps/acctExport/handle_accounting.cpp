@@ -23,9 +23,9 @@ bool COptions::process_reconciliation(CTraverser* trav) {
     trav->trans.statements.clear();
 
     // If we can get the reconciliations from the cache, do so...
-    // if (readReconsFromCache(trav)) {
-    //     return !shouldQuit();
-    // }
+    if (readReconsFromCache(trav)) {
+        return !shouldQuit();
+    }
 
     trav->searchOp = RECONCILE;
 
@@ -112,45 +112,6 @@ bool COptions::process_reconciliation(CTraverser* trav) {
         }
     }
 #else
-    string_q path =
-        getPathToBinaryCache(CT_RECONS, accountedFor.address, trav->trans.blockNumber, trav->trans.transactionIndex);
-    establishFolder(path);
-    if (!isTestMode() && fileExists(path)) {
-        CArchive archive(READING_ARCHIVE);
-        if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
-            archive >> trav->trans.statements;
-            archive.Release();
-            if (true) {
-                bool backLevel = false;
-                for (auto& statement : trav->trans.statements) {
-                    statement.pTransaction = &trav->trans;
-                    // At version 0.11.8, we finally got pricing of reconcilations correct. We didn't
-                    // want to add an upgrade of reconcilations to the migration, so we do it here
-                    // but only when the user reads an older file
-                    backLevel = backLevel || (statement.m_schema < getVersionNum(0, 11, 8));
-                    CAccountName tokenName;
-                    if (contains(statement.assetSymbol, "reverted"))
-                        statement.assetSymbol = "";
-                    if (statement.assetSymbol != "ETH" && statement.assetSymbol != "WEI" &&
-                        findToken(statement.assetAddr, tokenName)) {
-                        // We always freshen these in case user has changed names database
-                        statement.assetSymbol = tokenName.symbol;
-                        statement.decimals = tokenName.decimals;
-                    }
-                    prevStatements[accountedFor.address + "_" + toLower(statement.assetAddr)] = statement;
-                }
-                if (backLevel) {
-                    // LOG_WARN(cYellow, "Updating statements", cOff);
-                    trav->searchOp = UPDATE;
-                    cacheIfReconciled(trav);
-                }
-                return !shouldQuit();
-                //             } else {
-                //               trav->trans.statements.clear();
-            }
-        }
-    }
-
     blknum_t prevAppBlk = 0;
     if (trav->index > 0) {
         prevAppBlk = monApps[trav->index - 1].blk;
@@ -392,15 +353,24 @@ bool COptions::readReconsFromCache(CTraverser* trav) {
     if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
         archive >> trav->trans.statements;
         archive.Release();
+        bool backLevel = false;
         for (auto& statement : trav->trans.statements) {
             // If this is an older versioned file, act as if it doesn't exist so it gets upgraded
             if (statement.accountedFor.empty()) {
+                LOG_WARN("Cache for reconciliation is back level. Updating....");
                 return false;
             }
 
-            // Freshen in case user has changed the names database since putting the statement in the cache
+            // At version 0.11.8, we finally got pricing of reconcilations correct. We didn't
+            // want to add an upgrade of reconcilations to the migration, so we do it here
+            // but only when the user reads an older file
+            backLevel = backLevel || (statement.m_schema < getVersionNum(0, 11, 8));
             CAccountName tokenName;
-            if (findToken(statement.assetAddr, tokenName)) {
+            if (contains(statement.assetSymbol, "reverted"))
+                statement.assetSymbol = "";
+            if (statement.assetSymbol != "ETH" && statement.assetSymbol != "WEI" &&
+                findToken(statement.assetAddr, tokenName)) {
+                // We always freshen these in case user has changed names database
                 statement.assetSymbol = tokenName.symbol;
                 statement.decimals = tokenName.decimals;
             }
@@ -409,6 +379,10 @@ bool COptions::readReconsFromCache(CTraverser* trav) {
 
             string_q key = statementKey(accountedFor.address, statement.assetAddr);
             prevStatements[key] = statement;
+        }
+        if (backLevel) {
+            trav->searchOp = UPDATE;
+            cacheIfReconciled(trav);
         }
         return !shouldQuit();
     }
