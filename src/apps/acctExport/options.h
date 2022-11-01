@@ -135,7 +135,6 @@ class COptions : public CAbiOptions {
     bool isReconciled(CTraverser* trav, CReconciliation& which) const;
     void cacheIfReconciled(CTraverser* trav) const;
     bool readReconsFromCache(CTraverser* trav);
-    bool token_list_from_logs(CAccountNameMap& tokenList, const CTraverser* trav);
 
     // Used as temporary data to count neighbor traversals
     size_t neighborCount{0};
@@ -143,6 +142,7 @@ class COptions : public CAbiOptions {
     bool showAddrsInTx(CTraverser* trav, const blkrange_t& range, const CAppearance_mon& app);
 };
 
+bool getTokenTransfers(CTransferArray& transfers, CAccountNameMap& tokenList, const CTraverser* trav);
 //--------------------------------------------------------------------------------
 extern bool visitOnLoad(CAppearance_mon& app, void* data);
 extern bool fourByteFilter(const string_q& input, const COptions* opt);

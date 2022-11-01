@@ -19,6 +19,100 @@ extern string_q statementKey(const address_t& accountedFor, const address_t& ass
 bool COptions::process_reconciliation(CTraverser* trav) {
     trav->trans.statements.clear();
 
+    // If we can get the reconciliations from the cache, do so...
+    // if (readReconsFromCache(trav)) {
+    //     return !shouldQuit();
+    // }
+
+    trav->searchOp = RECONCILE;
+
+// #define NEW_CODE
+#ifdef NEW_CODE
+
+    string_q ethKey = statementKey(accountedFor.address, "");
+
+    // The block of the previous appearance, unless we're at the start of the list, in which case
+    // it's one less than the current block, unless we're at the zero block, then zero
+    blknum_t prevAppBlk = 0;
+    if (trav->index > 0) {
+        prevAppBlk = monApps[trav->index - 1].blk;
+    } else {
+        if (trav->trans.blockNumber > 0) {
+            prevAppBlk = trav->trans.blockNumber - 1;
+        }
+    }
+
+    if (prevStatements[ethKey].assetAddr.empty()) {
+        // TODO(tjayrush): Incorrect code follows
+        // This code is wrong. We ask for the balance at the current block minus one, but we should ask
+        // at the previous block in this address's appearance list. When we're called with first_record
+        // or start_block not zero we don't have this (since we only load those appearances we're asked
+        // for) To fix this, we need to be able to get the previous appearance's block. Note, we
+        // only need the balance for the previous reconcilation, so using NOPOS for transactionIndex is okay.
+        CReconciliation prevStatement(accountedFor.address, prevAppBlk, NOPOS, trav->trans.timestamp, &trav->trans);
+        prevStatement.endBal = getBalanceAt(accountedFor.address, prevAppBlk);
+        prevStatement.spotPrice = getPriceInUsd(prevAppBlk, prevStatement.priceSource);
+        prevStatements[ethKey] = prevStatement;
+    }
+
+    CReconciliation ethStatement(accountedFor.address, &trav->trans);
+    ethStatement.nextAppBlk = trav->index < monApps.size() - 1 ? monApps[trav->index + 1].blk : NOPOS;
+    ethStatement.reconcileEth(prevStatements[ethKey]);
+    ethStatement.spotPrice = getPriceInUsd(trav->trans.blockNumber, ethStatement.priceSource);
+    if (ethStatement.amountNet_internal() != 0) {
+        trav->trans.statements.push_back(ethStatement);
+    }
+    prevStatements[ethKey] = ethStatement;
+
+    CTransferArray transfers;
+
+    if (getTokenTransfers(transfers, accountedFor.address, trav)) {
+        for (auto transfer : transfers) {
+            if (assetFilter.size() > 0 && !assetFilter[transfer.assetAddr]) {
+                continue;
+            }
+
+            CReconciliation tokStatement(accountedFor.address, &trav->trans);
+            tokStatement.assetAddr = transfer.assetAddr;
+            tokStatement.decimals = transfer.decimals;
+            tokStatement.assetSymbol = transfer.assetSymbol;
+            string tokenKey = statementKey(accountedFor.address, tokStatement.assetAddr);
+
+            if (prevStatements[tokenKey].assetAddr.empty()) {
+                CReconciliation pBal = tokStatement;
+                // pBal.sender = transfer.sender;
+                // pBal.recipient = transfer.recipient;
+                // pBal.pTransaction = &trav->trans;
+                pBal.blockNumber = trav->trans.blockNumber == 0 ? 0 : trav->trans.blockNumber - 1;
+                pBal.endBal = getTokenBalanceOf2(tokStatement.assetAddr, accountedFor.address, pBal.blockNumber);
+                pBal.spotPrice = getPriceInUsd(pBal.blockNumber, pBal.priceSource, tokStatement.assetAddr);
+                prevStatements[tokenKey] = pBal;
+            }
+            tokStatement.prevAppBlk = prevStatements[tokenKey].blockNumber;
+            tokStatement.prevBal = prevStatements[tokenKey].endBal;
+            tokStatement.begBal =
+                trav->trans.blockNumber == 0
+                    ? 0
+                    : getTokenBalanceOf2(tokStatement.assetAddr, accountedFor.address, trav->trans.blockNumber - 1);
+            tokStatement.endBal =
+                getTokenBalanceOf2(tokStatement.assetAddr, accountedFor.address, trav->trans.blockNumber);
+            if (tokStatement.begBal > tokStatement.endBal) {
+                tokStatement.amountOut = (tokStatement.begBal - tokStatement.endBal);
+            } else {
+                tokStatement.amountIn = (tokStatement.endBal - tokStatement.begBal);
+            }
+            tokStatement.reconciliationType = "token";
+            if (tokStatement.amountNet_internal() != 0) {
+                tokStatement.sender = transfer.sender;
+                tokStatement.recipient = transfer.recipient;
+                tokStatement.spotPrice =
+                    getPriceInUsd(trav->trans.blockNumber, tokStatement.priceSource, tokStatement.assetAddr);
+                trav->trans.statements.push_back(tokStatement);
+                prevStatements[tokenKey] = tokStatement;
+            }
+        }
+    }
+#else
     string_q path =
         getPathToBinaryCache(CT_RECONS, accountedFor.address, trav->trans.blockNumber, trav->trans.transactionIndex);
     establishFolder(path);
@@ -58,8 +152,6 @@ bool COptions::process_reconciliation(CTraverser* trav) {
         }
     }
 
-    trav->searchOp = RECONCILE;
-
     blknum_t prevAppBlk = trav->index > 0 ? monApps[trav->index - 1].blk : 0;
     blknum_t prevAppTxid = trav->index > 0 ? monApps[trav->index - 1].txid : 0;
 
@@ -84,8 +176,9 @@ bool COptions::process_reconciliation(CTraverser* trav) {
     trav->trans.statements.push_back(eth);
     prevStatements[accountedFor.address + "_eth"] = eth;
 
+    CTransferArray transfers;
     CAccountNameMap tokenList;
-    if (token_list_from_logs(tokenList, trav)) {
+    if (getTokenTransfers(transfers, tokenList, trav)) {
         for (auto item : tokenList) {
             CAccountName tokenName = item.second;
 
@@ -135,6 +228,7 @@ bool COptions::process_reconciliation(CTraverser* trav) {
             }
         }
     }
+#endif
 
     cacheIfReconciled(trav);
     return !shouldQuit();
@@ -170,7 +264,7 @@ address_t topic_2_Addr(const string_q& topic) {
 // }
 
 //-----------------------------------------------------------------------
-bool COptions::token_list_from_logs(CAccountNameMap& tokenList, const CTraverser* trav) {
+bool getTokenTransfers(CTransferArray& transfers, CAccountNameMap& tokenList, const CTraverser* trav) {
     // if (trav->trans.value != 0 || trav->trans.from == accountedFor) {
     //     CTransfer transfer;
     //     transfer.blockNumber = trav->trans.blockNumber;
@@ -220,6 +314,45 @@ string_q statementKey(const address_t& accountedFor, const address_t& assetAddr)
         return toLower(accountedFor + "-" + "_eth");
     }
     return toLower(accountedFor + "-" + assetAddr);
+}
+
+//-----------------------------------------------------------------------
+bool COptions::readReconsFromCache(CTraverser* trav) {
+    if (isTestMode()) {
+        return false;
+    }
+
+    string_q path = getReconcilationPath(accountedFor.address, &trav->trans);
+    if (!fileExists(path)) {
+        return false;
+    }
+
+    CArchive archive(READING_ARCHIVE);
+    if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
+        archive >> trav->trans.statements;
+        archive.Release();
+        for (auto& statement : trav->trans.statements) {
+            // If this is an older versioned file, act as if it doesn't exist so it gets upgraded
+            if (statement.accountedFor.empty()) {
+                return false;
+            }
+
+            // Freshen in case user has changed the names database since putting the statement in the cache
+            CAccountName tokenName;
+            if (findToken(statement.assetAddr, tokenName)) {
+                statement.assetSymbol = tokenName.symbol;
+                statement.decimals = tokenName.decimals;
+            }
+
+            statement.pTransaction = &trav->trans;
+
+            string_q key = statementKey(accountedFor.address, statement.assetAddr);
+            prevStatements[key] = statement;
+        }
+        return !shouldQuit();
+    }
+
+    return false;
 }
 
 //-----------------------------------------------------------------------
