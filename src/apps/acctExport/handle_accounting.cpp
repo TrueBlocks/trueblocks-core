@@ -53,7 +53,6 @@ bool COptions::process_reconciliation(CTraverser* trav) {
 
     CTransferArray transfers;
     CAccountNameMap tokenList;
-#ifdef NEW_CODE0
     CReconciliation ethStatement(accountedFor.address, &trav->trans);
     ethStatement.nextAppBlk = trav->index < monApps.size() - 1 ? monApps[trav->index + 1].blk : NOPOS;
     ethStatement.reconcileEth(prevStatements[ethKey]);
@@ -64,6 +63,7 @@ bool COptions::process_reconciliation(CTraverser* trav) {
     prevStatements[ethKey] = ethStatement;
 
     if (getTokenTransfers(transfers, tokenList, accountedFor.address, trav)) {
+#ifdef NEW_CODE
         for (auto transfer : transfers) {
             if (assetFilter.size() > 0 && !assetFilter[transfer.assetAddr]) {
                 continue;
@@ -108,16 +108,7 @@ bool COptions::process_reconciliation(CTraverser* trav) {
                 prevStatements[tokenKey] = tokStatement;
             }
         }
-    }
 #else
-    CReconciliation eth(accountedFor.address, trav->trans.blockNumber, trav->trans.transactionIndex,
-                        trav->trans.timestamp, &trav->trans);
-    eth.reconcileEth(prevStatements[ethKey]);
-    eth.spotPrice = getPriceInUsd(trav->trans.blockNumber, eth.priceSource);
-    trav->trans.statements.push_back(eth);
-    prevStatements[ethKey] = eth;
-
-    if (getTokenTransfers(transfers, tokenList, accountedFor.address, trav)) {
         for (auto item : tokenList) {
             CAccountName tokenName = item.second;
 
@@ -166,8 +157,8 @@ bool COptions::process_reconciliation(CTraverser* trav) {
                 prevStatements[psKey] = tokStatement;
             }
         }
-    }
 #endif
+    }
 
     cacheIfReconciled(trav);
     return !shouldQuit();
