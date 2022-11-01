@@ -86,10 +86,9 @@ class CReconciliation : public CBaseNode {
     }
     CReconciliation(const address_t& aF, const CTransaction* pT);
     const CTransaction* pTransaction = NULL;
-    bool reconcileEth(const CReconciliation& prevRecon, blknum_t nextBlock, const CTransaction* trans,
-                      const address_t& accountedFor);
+    bool reconcileEth(const CReconciliation& prevRecon);
     bool reconcileEth2(void);
-    bool reconcileUsingTraces(bigint_t prevEndBal, const CTransaction* trans, const address_t& accountedFor);
+    bool reconcileUsingTraces(bigint_t prevEndBal);
 
     bigint_t begBalDiff_internal(void) const;
     bigint_t endBalCalc_internal(void) const;

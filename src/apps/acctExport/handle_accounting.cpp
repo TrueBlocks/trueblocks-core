@@ -57,13 +57,10 @@ bool COptions::process_reconciliation(CTraverser* trav) {
 
     trav->searchOp = RECONCILE;
 
-    blknum_t nextAppBlk = trav->index < monApps.size() - 1 ? monApps[trav->index + 1].blk : NOPOS;
+    // blknum_t nextAppBlk = trav->index < monApps.size() - 1 ? monApps[trav->index + 1].blk : NOPOS;
     blknum_t prevAppBlk = trav->index > 0 ? monApps[trav->index - 1].blk : 0;
     blknum_t prevAppTxid = trav->index > 0 ? monApps[trav->index - 1].txid : 0;
 
-    // We need to check to see if the export is starting after the
-    // the first record so we can pick up the previous balance
-    // We must do this for both ETH and any tokens
     if (prevStatements[accountedFor.address + "_eth"].assetAddr.empty()) {
         CReconciliation pEth(accountedFor.address, prevAppBlk, prevAppTxid, trav->trans.timestamp, &trav->trans);
         // TODO(tjayrush): Incorrect code follows
@@ -80,7 +77,7 @@ bool COptions::process_reconciliation(CTraverser* trav) {
 
     CReconciliation eth(accountedFor.address, trav->trans.blockNumber, trav->trans.transactionIndex,
                         trav->trans.timestamp, &trav->trans);
-    eth.reconcileEth(prevStatements[accountedFor.address + "_eth"], nextAppBlk, &trav->trans, accountedFor.address);
+    eth.reconcileEth(prevStatements[accountedFor.address + "_eth"]);
     eth.spotPrice = getPriceInUsd(trav->trans.blockNumber, eth.priceSource);
     trav->trans.statements.push_back(eth);
     prevStatements[accountedFor.address + "_eth"] = eth;

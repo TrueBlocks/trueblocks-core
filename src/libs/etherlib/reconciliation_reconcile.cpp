@@ -15,6 +15,7 @@
 
 namespace qblocks {
 
+//---------------------------------------------------------------------------
 #define LOG_TRIAL_BALANCE()                                                                                            \
     LOG4("Trial balance: ", reconciliationType);                                                                       \
     LOG4("  hash: ", pTransaction->hash);                                                                              \
@@ -52,20 +53,17 @@ bool CReconciliation::reconcileEth2(void) {
     prev.endBal = pTransaction->blockNumber == 0 ? 0 : getBalanceAt(accountedFor, pTransaction->blockNumber - 1);
 
     nextAppBlk = pTransaction->blockNumber + 1;
-    bool ret = reconcileEth(prev, nextAppBlk, pTransaction, accountedFor);
+    bool ret = reconcileEth(prev);
     spotPrice = getPriceInUsd(pTransaction->blockNumber, priceSource);
     return ret;
 }
 
 //-----------------------------------------------------------------------
-bool CReconciliation::reconcileEth(const CReconciliation& prevRecon, blknum_t nextBlock, const CTransaction* trans,
-                                   const address_t& accountedFor) {
-    const CTransaction* pTransaction = trans;
-
+bool CReconciliation::reconcileEth(const CReconciliation& prevRecon) {
     prevBal = prevRecon.endBal;
     prevAppBlk = prevRecon.blockNumber;
     assetSymbol = "ETH";
-    assetAddr = accountedFor;
+    assetAddr = FAKE_ETH_ADDRESS;
 
     bigint_t balEOLB = getBalanceAt(accountedFor, blockNumber == 0 ? 0 : blockNumber - 1);
     bigint_t balEOB = getBalanceAt(accountedFor, blockNumber);
@@ -93,7 +91,7 @@ bool CReconciliation::reconcileEth(const CReconciliation& prevRecon, blknum_t ne
     }
 
     bool prevDifferent = prevRecon.blockNumber != blockNumber;
-    bool nextDifferent = blockNumber != nextBlock;
+    bool nextDifferent = blockNumber != nextAppBlk || nextAppBlk == NOPOS;
     if (pTransaction->blockNumber == 0) {
         reconciliationType = "genesis";
 
@@ -117,7 +115,7 @@ bool CReconciliation::reconcileEth(const CReconciliation& prevRecon, blknum_t ne
         return true;
 
     // Reconciliation failed, let's try to reconcile by traces
-    if (reconcileUsingTraces(prevRecon.endBal, trans, accountedFor))
+    if (reconcileUsingTraces(prevRecon.endBal))
         return true;
 
     // Reconciliation by traces failed, we want to correct for that and try
@@ -152,10 +150,7 @@ bool CReconciliation::reconcileEth(const CReconciliation& prevRecon, blknum_t ne
 }
 
 //---------------------------------------------------------------------------
-bool CReconciliation::reconcileUsingTraces(bigint_t prevEndBal, const CTransaction* trans,
-                                           const address_t& accountedFor) {
-    const CTransaction* pTransaction = trans;
-
+bool CReconciliation::reconcileUsingTraces(bigint_t prevEndBal) {
     amountOut = amountIn = 0;
     prefundIn = minerBaseRewardIn = minerNephewRewardIn = minerTxFeeIn + minerUncleRewardIn = 0;
 

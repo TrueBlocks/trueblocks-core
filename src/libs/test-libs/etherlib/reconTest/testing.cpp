@@ -48,7 +48,7 @@ TEST_F(CThisTest, TestTest_1) {
     rec.nextAppBlk = 8856295;
     cout << rec << endl;
     rec = CReconciliation("0xf503017d7baf7fbc0fff7492b751025c6a78179b", &trans);
-    rec.reconcileEth(prev, rec.nextAppBlk, &trans, "0xf503017d7baf7fbc0fff7492b751025c6a78179b");
+    rec.reconcileEth(prev);
     cout << rec << endl;
 
     rec.blockNumber = 1;
