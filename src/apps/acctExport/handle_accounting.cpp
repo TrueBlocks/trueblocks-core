@@ -14,8 +14,6 @@
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
 
-// #define NEW_CODE
-
 extern string_q getReconcilationPath(const address_t& address, const CTransaction* pT);
 extern string_q statementKey(const address_t& accountedFor, const address_t& assetAddr);
 //-----------------------------------------------------------------------
@@ -98,22 +96,11 @@ bool COptions::process_reconciliation(CTraverser* trav) {
             } else {
                 tokStatement.amountIn = (tokStatement.endBal - tokStatement.begBal);
             }
-            tokStatement.reconciliationType = "token";
-            if (tokStatement.amountNet_internal() != 0) {
-                tokStatement.sender = transfer.sender;
-                tokStatement.recipient = transfer.recipient;
-                tokStatement.spotPrice =
-                    getPriceInUsd(trav->trans.blockNumber, tokStatement.priceSource, tokStatement.assetAddr);
-                trav->trans.statements.push_back(tokStatement);
-                prevStatements[tokenKey] = tokStatement;
-            }
-        }
 #else
         for (auto item : tokenList) {
             CAccountName tokenName = item.second;
 
-            CReconciliation tokStatement(accountedFor.address, trav->trans.blockNumber, trav->trans.transactionIndex,
-                                         trav->trans.timestamp, &trav->trans);
+            CReconciliation tokStatement(accountedFor.address, &trav->trans);
             tokStatement.assetAddr = tokenName.address;
             tokStatement.assetSymbol = tokenName.symbol;
             if (tokStatement.assetSymbol.empty()) {
@@ -125,8 +112,8 @@ bool COptions::process_reconciliation(CTraverser* trav) {
                 tokStatement.assetSymbol = tokenName.address.substr(0, 4);
             tokStatement.decimals = tokenName.decimals != 0 ? tokenName.decimals : 18;
 
-            string psKey = accountedFor.address + "_" + tokenName.address;
-            if (prevStatements[psKey].assetAddr.empty()) {
+            string tokenKey = accountedFor.address + "_" + tokenName.address;
+            if (prevStatements[tokenKey].assetAddr.empty()) {
                 // first time we've seen this asset, so we need previous balance
                 // which is frequently zero but may be non-zero if the command
                 // started after the addresses's first transaction
@@ -137,27 +124,32 @@ bool COptions::process_reconciliation(CTraverser* trav) {
                     pBal.blockNumber = trav->trans.blockNumber - 1;
                 pBal.endBal = getTokenBalanceOf2(tokenName.address, accountedFor.address, pBal.blockNumber);
                 pBal.spotPrice = getPriceInUsd(pBal.blockNumber, pBal.priceSource, tokenName.address);
-                prevStatements[psKey] = pBal;
+                prevStatements[tokenKey] = pBal;
             }
 
-            tokStatement.prevAppBlk = prevStatements[psKey].blockNumber;
-            tokStatement.prevBal = prevStatements[psKey].endBal;
-            tokStatement.begBal = prevStatements[psKey].endBal;
+            tokStatement.prevAppBlk = prevStatements[tokenKey].blockNumber;
+            tokStatement.prevBal = prevStatements[tokenKey].endBal;
+            tokStatement.begBal = prevStatements[tokenKey].endBal;
             tokStatement.endBal = getTokenBalanceOf2(tokenName.address, accountedFor.address, trav->trans.blockNumber);
             if (tokStatement.begBal > tokStatement.endBal) {
                 tokStatement.amountOut = (tokStatement.begBal - tokStatement.endBal);
             } else {
                 tokStatement.amountIn = (tokStatement.endBal - tokStatement.begBal);
             }
-            tokStatement.reconciliationType = "";
+#endif
+            tokStatement.reconciliationType = "token";
             if (tokStatement.amountNet_internal() != 0) {
+#ifdef NEW_CODE
+                tokStatement.sender = transfer.sender;
+                tokStatement.recipient = transfer.recipient;
+#else
+#endif
                 tokStatement.spotPrice =
-                    getPriceInUsd(trav->trans.blockNumber, tokStatement.priceSource, tokenName.address);
+                    getPriceInUsd(trav->trans.blockNumber, tokStatement.priceSource, tokStatement.assetAddr);
                 trav->trans.statements.push_back(tokStatement);
-                prevStatements[psKey] = tokStatement;
+                prevStatements[tokenKey] = tokStatement;
             }
         }
-#endif
     }
 
     cacheIfReconciled(trav);
