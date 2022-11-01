@@ -66,35 +66,13 @@ bool COptions::process_reconciliation(CTraverser* trav) {
             if (assetFilter.size() > 0 && !assetFilter[transfer.assetAddr]) {
                 continue;
             }
-
             CReconciliation tokStatement(accountedFor.address, &trav->trans);
             tokStatement.assetAddr = transfer.assetAddr;
             tokStatement.decimals = transfer.decimals;
             tokStatement.assetSymbol = transfer.assetSymbol;
-            string tokenKey = statementKey(accountedFor.address, tokStatement.assetAddr);
-
-            if (prevStatements[tokenKey].assetAddr.empty()) {
-                CReconciliation pBal = tokStatement;
-                // pBal.sender = transfer.sender;
-                // pBal.recipient = transfer.recipient;
-                // pBal.pTransaction = &trav->trans;
-                pBal.blockNumber = trav->trans.blockNumber == 0 ? 0 : trav->trans.blockNumber - 1;
-                pBal.endBal = getTokenBalanceOf2(tokStatement.assetAddr, accountedFor.address, pBal.blockNumber);
-                pBal.spotPrice = getPriceInUsd(pBal.blockNumber, pBal.priceSource, tokStatement.assetAddr);
-                prevStatements[tokenKey] = pBal;
-            }
-            tokStatement.prevAppBlk = prevStatements[tokenKey].blockNumber;
-            tokStatement.prevBal = prevStatements[tokenKey].endBal;
-            tokStatement.sender = transfer.sender;
-            tokStatement.recipient = transfer.recipient;
-            tokStatement.begBal =
-                trav->trans.blockNumber == 0
-                    ? 0
-                    : getTokenBalanceOf2(tokStatement.assetAddr, accountedFor.address, trav->trans.blockNumber - 1);
 #else
         for (auto item : tokenList) {
             CAccountName tokenName = item.second;
-
             CReconciliation tokStatement(accountedFor.address, &trav->trans);
             tokStatement.assetAddr = tokenName.address;
             tokStatement.assetSymbol = tokenName.symbol;
@@ -106,35 +84,40 @@ bool COptions::process_reconciliation(CTraverser* trav) {
             if (tokStatement.assetSymbol.empty())
                 tokStatement.assetSymbol = tokenName.address.substr(0, 4);
             tokStatement.decimals = tokenName.decimals != 0 ? tokenName.decimals : 18;
+#endif
 
-            string tokenKey = accountedFor.address + "_" + tokenName.address;
+            string tokenKey = statementKey(accountedFor.address, tokStatement.assetAddr);
             if (prevStatements[tokenKey].assetAddr.empty()) {
-                // first time we've seen this asset, so we need previous balance
-                // which is frequently zero but may be non-zero if the command
-                // started after the addresses's first transaction
                 CReconciliation pBal = tokStatement;
+                // pBal.sender = transfer.sender;
+                // pBal.recipient = transfer.recipient;
                 pBal.pTransaction = &trav->trans;
-                pBal.blockNumber = 0;
-                if (trav->trans.blockNumber > 0)
-                    pBal.blockNumber = trav->trans.blockNumber - 1;
-                pBal.endBal = getTokenBalanceOf2(tokenName.address, accountedFor.address, pBal.blockNumber);
-                pBal.spotPrice = getPriceInUsd(pBal.blockNumber, pBal.priceSource, tokenName.address);
+                pBal.blockNumber = trav->trans.blockNumber == 0 ? 0 : trav->trans.blockNumber - 1;
+                pBal.endBal = getTokenBalanceOf2(tokStatement.assetAddr, accountedFor.address, pBal.blockNumber);
+                pBal.spotPrice = getPriceInUsd(pBal.blockNumber, pBal.priceSource, tokStatement.assetAddr);
                 prevStatements[tokenKey] = pBal;
             }
 
+#ifdef NEW_CODE
+            tokStatement.sender = transfer.sender;
+            tokStatement.recipient = transfer.recipient;
+#else
+#endif
+
             tokStatement.prevAppBlk = prevStatements[tokenKey].blockNumber;
             tokStatement.prevBal = prevStatements[tokenKey].endBal;
+            // TODO: Note that this doesn't really query this token's balance at its last appearance
             tokStatement.begBal = prevStatements[tokenKey].endBal;
-#endif
+
             tokStatement.endBal =
                 getTokenBalanceOf2(tokStatement.assetAddr, accountedFor.address, trav->trans.blockNumber);
-            if (tokStatement.begBal > tokStatement.endBal) {
-                tokStatement.amountOut = (tokStatement.begBal - tokStatement.endBal);
-            } else {
-                tokStatement.amountIn = (tokStatement.endBal - tokStatement.begBal);
-            }
 
-            if (tokStatement.amountNet_internal() != 0) {
+            if (tokStatement.begBal != tokStatement.endBal) {
+                if (tokStatement.begBal > tokStatement.endBal) {
+                    tokStatement.amountOut = (tokStatement.begBal - tokStatement.endBal);
+                } else {
+                    tokStatement.amountIn = (tokStatement.endBal - tokStatement.begBal);
+                }
                 tokStatement.reconciliationType = "token";
                 tokStatement.spotPrice =
                     getPriceInUsd(trav->trans.blockNumber, tokStatement.priceSource, tokStatement.assetAddr);
