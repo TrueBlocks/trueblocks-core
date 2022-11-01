@@ -1,4 +1,5 @@
 // TODO: Reverse mode
+// TODO: collapse eth reconciliation into token reconconcilation by adding a CTransfer
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -13,6 +14,8 @@
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
 
+// #define NEW_CODE
+
 extern string_q getReconcilationPath(const address_t& address, const CTransaction* pT);
 extern string_q statementKey(const address_t& accountedFor, const address_t& assetAddr);
 //-----------------------------------------------------------------------
@@ -26,13 +29,9 @@ bool COptions::process_reconciliation(CTraverser* trav) {
 
     trav->searchOp = RECONCILE;
 
-// #define NEW_CODE
-#ifdef NEW_CODE
-
     string_q ethKey = statementKey(accountedFor.address, "");
 
-    // The block of the previous appearance, unless we're at the start of the list, in which case
-    // it's one less than the current block, unless we're at the zero block, then zero
+#ifdef NEW_CODE
     blknum_t prevAppBlk = 0;
     if (trav->index > 0) {
         prevAppBlk = monApps[trav->index - 1].blk;
@@ -65,8 +64,8 @@ bool COptions::process_reconciliation(CTraverser* trav) {
     prevStatements[ethKey] = ethStatement;
 
     CTransferArray transfers;
-
-    if (getTokenTransfers(transfers, accountedFor.address, trav)) {
+    CAccountNameMap tokenList;
+    if (getTokenTransfers(transfers, tokenList, accountedFor.address, trav)) {
         for (auto transfer : transfers) {
             if (assetFilter.size() > 0 && !assetFilter[transfer.assetAddr]) {
                 continue;
@@ -152,33 +151,40 @@ bool COptions::process_reconciliation(CTraverser* trav) {
         }
     }
 
-    blknum_t prevAppBlk = trav->index > 0 ? monApps[trav->index - 1].blk : 0;
+    blknum_t prevAppBlk = 0;
+    if (trav->index > 0) {
+        prevAppBlk = monApps[trav->index - 1].blk;
+    } else {
+        if (trav->trans.blockNumber > 0) {
+            prevAppBlk = trav->trans.blockNumber - 1;
+        }
+    }
     blknum_t prevAppTxid = trav->index > 0 ? monApps[trav->index - 1].txid : 0;
 
-    if (prevStatements[accountedFor.address + "_eth"].assetAddr.empty()) {
+    if (prevStatements[ethKey].assetAddr.empty()) {
         CReconciliation pEth(accountedFor.address, prevAppBlk, prevAppTxid, trav->trans.timestamp, &trav->trans);
         // TODO(tjayrush): Incorrect code follows
         // This code is wrong. We ask for the balance at the current block minus one, but we should ask
         // at the previous block in this address's appearance list. When we're called with first_record
         // or start_block not zero we don't have this (since we only load those appearances we're asked
-        // for) To fix this, we need to be able to get the previous appearance's block. Also, we used to
-        // handle reversed mode here, that code was removed
+        // for) To fix this, we need to be able to get the previous appearance's block. Note, we
+        // only need the balance for the previous reconcilation, so using NOPOS for transactionIndex is okay.
         pEth.endBal =
             trav->trans.blockNumber == 0 ? 0 : getBalanceAt(accountedFor.address, trav->trans.blockNumber - 1);
         pEth.spotPrice = getPriceInUsd(trav->trans.blockNumber - 1, pEth.priceSource);
-        prevStatements[accountedFor.address + "_eth"] = pEth;
+        prevStatements[ethKey] = pEth;
     }
 
     CReconciliation eth(accountedFor.address, trav->trans.blockNumber, trav->trans.transactionIndex,
                         trav->trans.timestamp, &trav->trans);
-    eth.reconcileEth(prevStatements[accountedFor.address + "_eth"]);
+    eth.reconcileEth(prevStatements[ethKey]);
     eth.spotPrice = getPriceInUsd(trav->trans.blockNumber, eth.priceSource);
     trav->trans.statements.push_back(eth);
-    prevStatements[accountedFor.address + "_eth"] = eth;
+    prevStatements[ethKey] = eth;
 
     CTransferArray transfers;
     CAccountNameMap tokenList;
-    if (getTokenTransfers(transfers, tokenList, trav)) {
+    if (getTokenTransfers(transfers, tokenList, accountedFor.address, trav)) {
         for (auto item : tokenList) {
             CAccountName tokenName = item.second;
 
@@ -264,7 +270,8 @@ address_t topic_2_Addr(const string_q& topic) {
 // }
 
 //-----------------------------------------------------------------------
-bool getTokenTransfers(CTransferArray& transfers, CAccountNameMap& tokenList, const CTraverser* trav) {
+bool getTokenTransfers(CTransferArray& transfers, CAccountNameMap& tokenList, const address_t& aF,
+                       const CTraverser* trav) {
     // if (trav->trans.value != 0 || trav->trans.from == accountedFor) {
     //     CTransfer transfer;
     //     transfer.blockNumber = trav->trans.blockNumber;
@@ -294,10 +301,64 @@ bool getTokenTransfers(CTransferArray& transfers, CAccountNameMap& tokenList, co
             tokenName.address = log.address;
             tokenName.petname = addr_2_Petname(tokenName.address, '-');
         }
+
+#ifdef NEW_CODE
+        if (isToken || (log.topics.size() > 2 && isTokenRelated(log.topics[0]))) {
+            CTransfer transfer;
+
+            transfer.assetAddr = log.address;
+
+            transfer.sender = topic_2_Addr(log.topics[1]);
+            transfer.recipient = topic_2_Addr(log.topics[2]);
+            if (transfer.sender != accountedFor && transfer.recipient != accountedFor)
+                continue;
+
+            transfer.amount = str_2_Wei(log.data);
+            if (transfer.amount == 0) {
+                continue;
+            }
+
+            transfer.assetSymbol = tokenName.symbol;
+            if (transfer.assetSymbol.empty()) {
+                transfer.assetSymbol = getTokenSymbol(transfer.assetAddr, trav->trans.blockNumber);
+                if (transfer.assetSymbol.empty()) {
+                    transfer.assetSymbol = transfer.assetAddr.substr(0, 4);
+                }
+            }
+
+            transfer.decimals = tokenName.decimals;
+            if (transfer.decimals == 0) {
+                transfer.decimals = getTokenDecimals(transfer.assetAddr, trav->trans.blockNumber);
+                if (transfer.decimals == 0) {
+                    transfer.decimals = 18;
+                }
+            }
+
+            transfer.blockNumber = trav->trans.blockNumber;
+            transfer.transactionIndex = trav->trans.transactionIndex;
+            transfer.logIndex = log.logIndex;
+            transfer.timestamp = str_2_Ts(trav->trans.Format("[{TIMESTAMP}]"));
+            transfer.date = ts_2_Date(transfer.timestamp);
+            transfer.transactionHash = trav->trans.hash;
+            transfer.encoding = trav->trans.input.substr(0, 10);
+
+            transfer.topic0 = log.topics[0];
+            transfer.topic1 = log.topics[1];
+            transfer.topic2 = log.topics[2];
+            transfer.topic3 = log.topics.size() > 3 ? log.topics[3] : "";
+            transfer.data = log.data;
+
+            transfers.push_back(transfer);
+        }
+    }
+
+    return transfers.size() > 0;
+#else
         if (isToken || (log.topics.size() > 0 && isTokenRelated(log.topics[0])))
             tokenList[log.address] = tokenName;
     }
     return tokenList.size() > 0;
+#endif
 }
 
 //-----------------------------------------------------------------------

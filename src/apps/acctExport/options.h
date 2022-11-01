@@ -142,7 +142,8 @@ class COptions : public CAbiOptions {
     bool showAddrsInTx(CTraverser* trav, const blkrange_t& range, const CAppearance_mon& app);
 };
 
-bool getTokenTransfers(CTransferArray& transfers, CAccountNameMap& tokenList, const CTraverser* trav);
+bool getTokenTransfers(CTransferArray& transfers, CAccountNameMap& tokenList, const address_t& accountedFor,
+                       const CTraverser* trav);
 //--------------------------------------------------------------------------------
 extern bool visitOnLoad(CAppearance_mon& app, void* data);
 extern bool fourByteFilter(const string_q& input, const COptions* opt);
