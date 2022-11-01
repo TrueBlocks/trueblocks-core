@@ -49,8 +49,6 @@ bool COptions::process_reconciliation(CTraverser* trav) {
         prevStatements[ethKey] = prevStatement;
     }
 
-    CTransferArray transfers;
-    CAccountNameMap tokenList;
     CReconciliation ethStatement(accountedFor.address, &trav->trans);
     ethStatement.nextAppBlk = trav->index < monApps.size() - 1 ? monApps[trav->index + 1].blk : NOPOS;
     ethStatement.reconcileEth(prevStatements[ethKey]);
@@ -60,8 +58,10 @@ bool COptions::process_reconciliation(CTraverser* trav) {
     }
     prevStatements[ethKey] = ethStatement;
 
+    CTransferArray transfers;
+    CAccountNameMap tokenList;
     if (getTokenTransfers(transfers, tokenList, accountedFor.address, trav)) {
-#ifdef NEW_CODE
+#if 1  // def NEW_CODE
         for (auto transfer : transfers) {
             if (assetFilter.size() > 0 && !assetFilter[transfer.assetAddr]) {
                 continue;
@@ -70,6 +70,8 @@ bool COptions::process_reconciliation(CTraverser* trav) {
             tokStatement.assetAddr = transfer.assetAddr;
             tokStatement.decimals = transfer.decimals;
             tokStatement.assetSymbol = transfer.assetSymbol;
+            tokStatement.sender = transfer.sender;
+            tokStatement.recipient = transfer.recipient;
 #else
         for (auto item : tokenList) {
             CAccountName tokenName = item.second;
@@ -98,15 +100,10 @@ bool COptions::process_reconciliation(CTraverser* trav) {
                 prevStatements[tokenKey] = pBal;
             }
 
-#ifdef NEW_CODE
-            tokStatement.sender = transfer.sender;
-            tokStatement.recipient = transfer.recipient;
-#else
-#endif
-
             tokStatement.prevAppBlk = prevStatements[tokenKey].blockNumber;
             tokStatement.prevBal = prevStatements[tokenKey].endBal;
-            // TODO: Note that this doesn't really query this token's balance at its last appearance
+            // TODO: Note that this doesn't really query this token's balance at its last appearance, it just picks up
+            // TODO: the previous balance
             tokStatement.begBal = prevStatements[tokenKey].endBal;
 
             tokStatement.endBal =
