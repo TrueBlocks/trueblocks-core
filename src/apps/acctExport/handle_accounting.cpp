@@ -1,3 +1,4 @@
+// TODO: Reverse mode
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -12,13 +13,15 @@
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
 
+extern string_q getReconcilationPath(const address_t& address, const CTransaction* pT);
+extern string_q statementKey(const address_t& accountedFor, const address_t& assetAddr);
 //-----------------------------------------------------------------------
 bool COptions::process_reconciliation(CTraverser* trav) {
+    trav->trans.statements.clear();
+
     string_q path =
         getPathToBinaryCache(CT_RECONS, accountedFor.address, trav->trans.blockNumber, trav->trans.transactionIndex);
     establishFolder(path);
-
-    trav->trans.statements.clear();
     if (!isTestMode() && fileExists(path)) {
         CArchive archive(READING_ARCHIVE);
         if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
@@ -57,7 +60,6 @@ bool COptions::process_reconciliation(CTraverser* trav) {
 
     trav->searchOp = RECONCILE;
 
-    // blknum_t nextAppBlk = trav->index < monApps.size() - 1 ? monApps[trav->index + 1].blk : NOPOS;
     blknum_t prevAppBlk = trav->index > 0 ? monApps[trav->index - 1].blk : 0;
     blknum_t prevAppTxid = trav->index > 0 ? monApps[trav->index - 1].txid : 0;
 
@@ -139,6 +141,88 @@ bool COptions::process_reconciliation(CTraverser* trav) {
 }
 
 //-----------------------------------------------------------------------
+string_q getReconcilationPath(const address_t& address, const CTransaction* pT) {
+    string_q path = getPathToBinaryCache(CT_RECONS, address, pT->blockNumber, pT->transactionIndex);
+    establishFolder(path);
+    return path;
+}
+
+//-----------------------------------------------------------------------
+address_t topic_2_Addr(const string_q& topic) {
+    if (topic.length() != 66)
+        return "";
+    return "0x" + padLeft(topic.substr(26, 66), 40, '0');
+}
+
+// //-----------------------------------------------------------------------
+// bool COptions::token_list_from_logs(CAccountNameMap& tokenList, const CTraverser* trav) {
+//     for (auto log : trav->trans.receipt.logs) {
+//         CAccountName tokenName;
+//         bool isToken = findToken(log.address, tokenName);
+//         if (tokenName.address.empty()) {
+//             tokenName.address = log.address;
+//             tokenName.petname = addr_2_Petname(tokenName.address, '-');
+//         }
+//         if (isToken || (log.topics.size() > 0 && isTokenRelated(log.topics[0])))
+//             tokenList[log.address] = tokenName;
+//     }
+//     return tokenList.size() > 0;
+// }
+
+//-----------------------------------------------------------------------
+bool COptions::token_list_from_logs(CAccountNameMap& tokenList, const CTraverser* trav) {
+    // if (trav->trans.value != 0 || trav->trans.from == accountedFor) {
+    //     CTransfer transfer;
+    //     transfer.blockNumber = trav->trans.blockNumber;
+    //     transfer.transactionIndex = trav->trans.transactionIndex;
+    //     transfer.logIndex = NOPOS;
+    //     transfer.timestamp = trav->trans.pBlock ? trav->trans.pBlock->timestamp : trav->trans.timestamp;
+    //     transfer.date = ts_2_Date(transfer.timestamp);
+    //     transfer.transactionHash = trav->trans.hash;
+    //     transfer.sender = trav->trans.from;
+    //     transfer.recipient = trav->trans.to;
+    //     transfer.amount = trav->trans.value;
+    //     // transfer.topic0 = log.topics.size() > 0 ? log.topics[0] : "";
+    //     // transfer.topic1 = log.topics.size() > 1 ? log.topics[1] : "";
+    //     // transfer.topic2 = log.topics.size() > 2 ? log.topics[2] : "";
+    //     // transfer.topic3 = log.topics.size() > 3 ? log.topics[3] : "";
+    //     // transfer.data = log.data;
+    //     transfer.encoding = trav->trans.input.substr(0, 10);
+    //     transfer.assetAddr = FAKE_ETH_ADDRESS;
+    //     transfer.assetSymbol = "ETH";
+    //     transfers.push_back(transfer);
+    // }
+
+    for (auto log : trav->trans.receipt.logs) {
+        CAccountName tokenName;
+        bool isToken = findToken(log.address, tokenName);
+        if (tokenName.address.empty()) {
+            tokenName.address = log.address;
+            tokenName.petname = addr_2_Petname(tokenName.address, '-');
+        }
+        if (isToken || (log.topics.size() > 0 && isTokenRelated(log.topics[0])))
+            tokenList[log.address] = tokenName;
+    }
+    return tokenList.size() > 0;
+}
+
+//-----------------------------------------------------------------------
+bool isEtherAddr(const address_t& addr) {
+    return toLower(addr) == FAKE_ETH_ADDRESS;
+}
+
+//-----------------------------------------------------------------------
+// For each assset, we keep the last available balances in a map. When reconciling an
+// asset for the current transaction, we need the asset's previous balance. We index
+// into the previous balances using the accountedFor address and the asset's address.
+string_q statementKey(const address_t& accountedFor, const address_t& assetAddr) {
+    if (isZeroAddr(assetAddr) || isEtherAddr(assetAddr)) {
+        return toLower(accountedFor + "-" + "_eth");
+    }
+    return toLower(accountedFor + "-" + assetAddr);
+}
+
+//-----------------------------------------------------------------------
 bool COptions::isReconciled(CTraverser* trav, CReconciliation& which) const {
     for (auto recon : trav->trans.statements) {
         if (!recon.reconciled_internal()) {
@@ -166,8 +250,8 @@ void COptions::cacheIfReconciled(CTraverser* trav) const {
         return;
     }
 
-    string_q path =
-        getPathToBinaryCache(CT_RECONS, accountedFor.address, trav->trans.blockNumber, trav->trans.transactionIndex);
+    string_q path = getReconcilationPath(accountedFor.address, &trav->trans);
+
     lockSection();
 
     CArchive archive(WRITING_ARCHIVE);
@@ -213,19 +297,4 @@ bool acct_Display(CTraverser* trav, void* data) {
 //-----------------------------------------------------------------------
 bool acct_PreFunc(CTraverser* trav, void* data) {
     return true;
-}
-
-//-----------------------------------------------------------------------
-bool COptions::token_list_from_logs(CAccountNameMap& tokenList, const CTraverser* trav) {
-    for (auto log : trav->trans.receipt.logs) {
-        CAccountName tokenName;
-        bool isToken = findToken(log.address, tokenName);
-        if (tokenName.address.empty()) {
-            tokenName.address = log.address;
-            tokenName.petname = addr_2_Petname(tokenName.address, '-');
-        }
-        if (isToken || (log.topics.size() > 0 && isTokenRelated(log.topics[0])))
-            tokenList[log.address] = tokenName;
-    }
-    return tokenList.size() > 0;
 }

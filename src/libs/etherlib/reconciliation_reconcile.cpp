@@ -72,11 +72,15 @@ bool CReconciliation::reconcileEth(const CReconciliation& prevRecon) {
     endBal = balEOB;
 
     if (pTransaction->from == accountedFor) {
+        sender = pTransaction->from;
+        recipient = pTransaction->to;
         amountOut = pTransaction->isError ? 0 : pTransaction->value;
         gasCostOut = str_2_BigInt(pTransaction->getValueByName("gasCost"));
     }
 
     if (pTransaction->to == accountedFor) {
+        sender = pTransaction->from;
+        recipient = pTransaction->to;
         if (pTransaction->from == "0xPrefund") {
             prefundIn = pTransaction->value;
         } else if (pTransaction->from == "0xBlockReward") {
@@ -155,6 +159,8 @@ bool CReconciliation::reconcileUsingTraces(bigint_t prevEndBal) {
     prefundIn = minerBaseRewardIn = minerNephewRewardIn = minerTxFeeIn + minerUncleRewardIn = 0;
 
     if (pTransaction->blockNumber == 0) {
+        sender = pTransaction->from;
+        recipient = pTransaction->to;
         begBal = 0;
         prefundIn = pTransaction->value;
 
@@ -169,10 +175,14 @@ bool CReconciliation::reconcileUsingTraces(bigint_t prevEndBal) {
             if (!trace.action.selfDestructed.empty()) {
                 // do not collapse, both may happen
                 if (trace.action.refundAddress == accountedFor) {
+                    sender = pTransaction->from;
+                    recipient = pTransaction->to;
                     selfDestructIn += trace.action.balance;
                 }
                 // do not collapse, both may happen
                 if (trace.action.selfDestructed == accountedFor) {
+                    sender = pTransaction->from;
+                    recipient = pTransaction->to;
                     selfDestructOut += trace.action.balance;
                 }
             } else {
@@ -183,11 +193,15 @@ bool CReconciliation::reconcileUsingTraces(bigint_t prevEndBal) {
                     // unless the EOA initiated the top level tx. I think
                     // this might be a bug in a smart contract or something.
                     if (isContractAt(accountedFor, blockNumber) || pTransaction->from == accountedFor) {
+                        sender = pTransaction->from;
+                        recipient = pTransaction->to;
                         internalOut += pTransaction->isError ? 0 : trace.action.value;
                     }
                 }
 
                 if (trace.action.to == accountedFor && !trace.isDelegateCall()) {
+                    sender = pTransaction->from;
+                    recipient = pTransaction->to;
                     if (pTransaction->from == "0xPrefund") {
                         prefundIn = pTransaction->value;
                     } else if (pTransaction->from == "0xBlockReward") {
