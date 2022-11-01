@@ -198,7 +198,7 @@ export?addrs=rhyslindmark.eth&firstBlock=4037786&lastBlock=4081406&articulate
       "symbol": "",
       "source": "https://kickback.events/",
       "decimals": 0,
-      "description": "",
+      "petname": "terminally-userprompt-grouper",
       "isCustom": false,
       "isPrefund": false,
       "isContract": false,
