@@ -85,24 +85,19 @@ bool COptions::process_reconciliation(CTraverser* trav) {
 
             tokStatement.prevAppBlk = prevStatements[tokenKey].blockNumber;
             tokStatement.prevBal = prevStatements[tokenKey].endBal;
-#ifdef NEW_CODE
-            tokStatement.begBal =
-                trav->trans.blockNumber == 0
-                    ? 0
-                    : getTokenBalanceOf2(tokStatement.assetAddr, accountedFor.address, trav->trans.blockNumber - 1);
-#else
             // TODO: Note that this doesn't really query this token's balance at its last appearance, it just picks up
             // TODO: the previous balance
             tokStatement.begBal = prevStatements[tokenKey].endBal;
-#endif
             tokStatement.endBal =
                 getTokenBalanceOf2(tokStatement.assetAddr, accountedFor.address, trav->trans.blockNumber);
 
             if (tokStatement.begBal != tokStatement.endBal) {
                 if (tokStatement.begBal > tokStatement.endBal) {
                     tokStatement.amountOut = (tokStatement.begBal - tokStatement.endBal);
+                    tokStatement.reconciled = transfer.amount == str_2_BigUint(bni_2_Str(tokStatement.amountOut));
                 } else {
                     tokStatement.amountIn = (tokStatement.endBal - tokStatement.begBal);
+                    tokStatement.reconciled = transfer.amount == str_2_BigUint(bni_2_Str(tokStatement.amountIn));
                 }
                 tokStatement.reconciliationType = "token";
                 tokStatement.spotPrice =
@@ -163,7 +158,7 @@ bool getTokenTransfers(CTransferArray& transfers, const address_t& accountedFor,
             tokenName.petname = addr_2_Petname(tokenName.address, '-');
         }
 
-        if (isToken || (log.topics.size() > 2 && isTokenRelated(log.topics[0]))) {
+        if (isToken || (log.topics.size() > 2 && isTokenTransfer(log.topics[0]))) {
             CTransfer transfer;
 
             transfer.assetAddr = log.address;
@@ -212,6 +207,7 @@ bool getTokenTransfers(CTransferArray& transfers, const address_t& accountedFor,
         }
     }
 
+    sort(transfers.begin(), transfers.end());
     return transfers.size() > 0;
 }
 

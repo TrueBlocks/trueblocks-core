@@ -175,16 +175,16 @@ inline CTransfer& CTransfer::operator=(const CTransfer& tr) {
 inline bool CTransfer::operator==(const CTransfer& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default equal operator in class definition, assume none are equal (so find fails)
-    return false;
+    // Equality operator as defined in class definition
+    return blockNumber == it.blockNumber && assetAddr == it.assetAddr;
 }
 
 //-------------------------------------------------------------------------
 inline bool operator<(const CTransfer& v1, const CTransfer& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted, preserve ordering
-    return true;
+    // Default sort as defined in class definition
+    return v1.assetAddr < v2.assetAddr;
 }
 
 //---------------------------------------------------------------------------
