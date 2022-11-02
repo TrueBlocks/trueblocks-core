@@ -197,9 +197,9 @@ bool getTokenTransfers(CTransferArray& transfers, const address_t& accountedFor,
             transfer.transactionHash = trav->trans.hash;
             transfer.encoding = trav->trans.input.substr(0, 10);
 
-            transfer.topic0 = log.topics[0];
-            transfer.topic1 = log.topics[1];
-            transfer.topic2 = log.topics[2];
+            transfer.topic0 = log.topics.size() > 0 ? log.topics[0] : "";
+            transfer.topic1 = log.topics.size() > 1 ? log.topics[1] : "";
+            transfer.topic2 = log.topics.size() > 2 ? log.topics[2] : "";
             transfer.topic3 = log.topics.size() > 3 ? log.topics[3] : "";
             transfer.data = log.data;
 
