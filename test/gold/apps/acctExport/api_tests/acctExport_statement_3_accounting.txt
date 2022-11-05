@@ -233,14 +233,6 @@ export?addrs=0x08166f02313feae18bb044e7877c808b55b5bf58&accounting&lastBlock=400
     "staging": "0xdeadbeef",
     "finalized": "0xdeadbeef",
     "client": "0xdeadbeef",
-    "namedFrom": {},
-    "unNamedFrom": {
-      "0xPrefund": 1
-    },
-    "namedTo": {},
-    "unNamedTo": {
-      "0xad00b7a324f31351d397408c8c3952ea198317eb": 2
-    },
     "first_block": "0xdeadbeef",
     "last_block": "0xdeadbeef",
     "accountedFor": {

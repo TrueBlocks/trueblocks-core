@@ -2,6 +2,8 @@
 class = CTransfer
 fields = transfer.csv
 includes = utillib.h|transaction.h
+sort = v1.assetAddr < v2.assetAddr
+equals = blockNumber == it.blockNumber && assetAddr == it.assetAddr
 cpp_includes = etherlib.h
 doc_group = 03-Chain State
 doc_descr = a representation of an ERC-20 token transfer

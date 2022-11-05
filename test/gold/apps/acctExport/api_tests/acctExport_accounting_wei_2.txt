@@ -1134,11 +1134,6 @@ export?addrs=0x05a56e2d52c817161883f50c441c3228cfe54d9f&maxRecords=15&accounting
     "staging": "0xdeadbeef",
     "finalized": "0xdeadbeef",
     "client": "0xdeadbeef",
-    "namedFrom": {},
-    "unNamedFrom": {
-      "0xUncleReward": 8,
-      "0xBlockReward": 7
-    },
     "first_block": "0xdeadbeef",
     "last_block": "0xdeadbeef",
     "accountedFor": {
