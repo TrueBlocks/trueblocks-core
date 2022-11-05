@@ -49,12 +49,11 @@ namespace qblocks {
 bool CReconciliation::reconcileEth2(void) {
     CReconciliation prev;
     prev.blockNumber = blockNumber;
-    prev.pTransaction = pTransaction;
-    prev.endBal = pTransaction->blockNumber == 0 ? 0 : getBalanceAt(accountedFor, pTransaction->blockNumber - 1);
+    prev.endBal = blockNumber == 0 ? 0 : getBalanceAt(accountedFor, blockNumber - 1);
 
-    nextAppBlk = pTransaction->blockNumber + 1;
+    nextAppBlk = blockNumber + 1;
     bool ret = reconcileEth(prev);
-    spotPrice = getPriceInUsd(pTransaction->blockNumber, priceSource);
+    spotPrice = getPriceInUsd(FAKE_ETH_ADDRESS, priceSource, pTransaction->blockNumber);
     return ret;
 }
 

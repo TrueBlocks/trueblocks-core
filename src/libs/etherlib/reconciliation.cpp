@@ -993,12 +993,11 @@ bool CReconciliation::readBackLevel_old(CArchive& archive) {
         archive >> reconciliationType;
         archive >> spotPrice;
         archive >> priceSource;
-    }
 
-    bool isEth = assetSymbol == "ETH" || assetSymbol == "WEI" || assetSymbol.empty();
-    address_t addr = isEth ? "" : assetAddr;
-    spotPrice = getPriceInUsd(blockNumber, priceSource, addr);
-    finishParse();
+        bool isEth = assetSymbol == "ETH" || assetSymbol == "WEI" || assetSymbol.empty();
+        spotPrice = getPriceInUsd(isEth ? FAKE_ETH_ADDRESS : assetAddr, priceSource, blockNumber);
+        finishParse();
+    }
 
     return true;
 }

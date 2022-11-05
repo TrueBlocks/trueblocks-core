@@ -12,13 +12,14 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "utillib.h"
+#include "known_addresses.h"
 
 namespace qblocks {
 
-extern double getPriceInUsd(blknum_t bn, string_q& priceSource, const address_t& address = "");
+extern double getPriceInUsd(const address_t& assetAddr, string_q& priceSource, blknum_t bn);
 inline double getPriceInUsd(blknum_t bn) {
-    string_q unused;
-    return getPriceInUsd(bn, unused);
+    string_q sourceUnused;
+    return getPriceInUsd(FAKE_ETH_ADDRESS, sourceUnused, bn);
 };
 
 }  // namespace qblocks
