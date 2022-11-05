@@ -60,7 +60,7 @@ on,both,fast,export,apps/acctExport,export_unripe_fail,y,addrs = 0x001d14804b399
 
 on,both,fast,export,apps/acctExport,accounting_wei_1,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & max_records = 5 & accounting & fmt = json & log_level = 10
 on,both,fast,export,apps/acctExport,accounting_wei_2,y,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & max_records = 15 & accounting & fmt = json & log_level = 10
-on,both,fast,export,apps/acctExport,statements_wei_2,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & max_records = 15 & statements & fmt = csv
+on,both,fast,export,apps/acctExport,statement_wei_2,y,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & max_records = 15 & statements & fmt = csv
 on,both,fast,export,apps/acctExport,accounting_ofx_bad,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & max_records = 5 & fmt = ofx
 on,both,fast,export,apps/acctExport,accounting_ofx,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & max_records = 5 & accounting & fmt = ofx
 
@@ -77,7 +77,6 @@ on,both,fast,export,apps/acctExport,statement_3_accounting,y,addrs = 0x08166f023
 on,both,fast,export,apps/acctExport,ens_test_export,y,addrs = rhyslindmark.eth & first_block = 4037786 & last_block = 4081450
 on,both,fast,export,apps/acctExport,monitors_data2,n,addrs = 0x1234567890123456789012345678901234567890 & addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 3000000 & last_block = 3375498 & fmt = csv & no_header
 
-#,,,,,,,the infamous 'no records' issue
 on,both,fast,monitors,apps/acctExport,accounting_cleanup_1,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & delete & remove & fmt = json
 on,both,fast,list,apps/acctExport,accounting_list_1,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & fmt = json
 on,both,fast,export,apps/acctExport,accounting_tokens_1,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & accounting & last_block = 8860511 & articulate & ether & fmt = json
@@ -87,6 +86,9 @@ on,both,fast,list,apps/acctExport,accounting_list_2,y,addrs = 0x001d14804b399c6e
 on,both,fast,export,apps/acctExport,accounting_tokens_2,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & accounting & last_block = 9231343 & articulate & ether & fmt = json
 
 on,both,slow,export,apps/acctExport,monitors_seed_1,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & last_block = 9000000 & fmt = json
+
+test,api,fast,export,apps/acctExport,statement_forward,y,addrs = 0x868b8fd259abfcfdf9634c343593b34ef359641d & last_block = 8769141 & statements & ether & fmt = json
+local,api,fast,export,apps/acctExport,statement_reverse,y,addrs = 0x868b8fd259abfcfdf9634c343593b34ef359641d & last_block = 8769141 & statements & ether & reversed & fmt = json
 
 #,,,,,,,not sure why this fails
 local,both,slow,monitors,apps/acctExport,monitors_speed_test,n,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & last_block = 7000000 & fmt = txt
