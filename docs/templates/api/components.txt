@@ -87,6 +87,11 @@ components:
           format: blknum
           example: 305
           description: "the zero-indexed position of the transaction in the block"
+        logIndex:
+          type: number
+          format: blknum
+          example: 2
+          description: "the zero-indexed position the log in the block"
         transactionHash:
           type: string
           format: hash
@@ -99,6 +104,25 @@ components:
         date:
           type: datetime
           description: "a calculated field -- the date of this transaction"
+        assetAddr:
+          type: string
+          format: address
+          example: "0xf503...179b"
+          description: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee for ETH reconciliations, the token address otherwise"
+        assetSymbol:
+          type: string
+          description: "either ETH, WEI or the symbol of the asset being reconciled as extracted from the chain"
+        decimals:
+          type: number
+          format: uint64
+          description: "Equivalent to the extracted value of `decimals` from an ERC20 contract or, if ETH or WEI then 18"
+        spotPrice:
+          type: number
+          format: double
+          description: "The on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction"
+        priceSource:
+          type: string
+          description: "The on-chain source from which the spot price was taken"
         accountedFor:
           type: string
           format: address
@@ -114,35 +138,10 @@ components:
           format: address
           example: "0x38d1...1310"
           description: "the receiver of the transfer (the recipient)"
-        assetAddr:
-          type: string
-          format: address
-          example: "0xf503...179b"
-          description: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee for ETH reconciliations, the token address otherwise"
-        assetSymbol:
-          type: string
-          description: "either ETH, WEI or the symbol of the asset being reconciled as extracted from the chain"
-        decimals:
-          type: number
-          format: uint64
-          description: "Equivalent to the extracted value of `decimals` from an ERC20 contract or, if ETH or WEI then 18"
-        prevAppBlk:
-          type: number
-          format: blknum
-          example: 10021
-          description: "the block number of the previous appearance, or 0 if this is the first appearance"
-        prevBal:
-          type: string
-          format: int256
-          description: "the account balance for the given asset for the previous reconciliation"
         begBal:
           type: string
           format: int256
           description: "the beginning balance of the asset at the blockNumber"
-        begBalDiff:
-          type: string
-          format: int256
-          description: "a calculated field -- difference between expected beginning balance and balance at last reconciliation, the reconciliation failed"
         amountNet:
           type: string
           format: int256
@@ -151,14 +150,18 @@ components:
           type: string
           format: int256
           description: "the on-chain balance of the asset (see notes above about intra-block reconciliations)"
-        endBalCalc:
+        encoding:
           type: string
-          format: int256
-          description: "a calculated field -- begBal + amountNet"
-        endBalDiff:
+          description: "One of `regular`, `traces`, `prevdiff-partial`, `partial-nextdiff`, or `partial-partial`"
+        signature:
           type: string
-          format: int256
-          description: "a calculated field -- endBal - endBalCalc, if non-zero, the reconciliation failed"
+          description: "One of `regular`, `traces`, `prevdiff-partial`, `partial-nextdiff`, or `partial-partial`"
+        reconciliationType:
+          type: string
+          description: "One of `regular`, `traces`, `prevdiff-partial`, `partial-nextdiff`, or `partial-partial`"
+        reconciled:
+          type: boolean
+          description: "a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBal`. `false` otherwise."
         totalIn:
           type: string
           format: int256
@@ -199,10 +202,6 @@ components:
           type: string
           format: int256
           description: "a calculated field -- the sum of all Out fields"
-        totalOutLessGas:
-          type: string
-          format: int256
-          description: "a calculated field -- totalOut - gasCostOut"
         amountOut:
           type: string
           format: int256
@@ -219,19 +218,31 @@ components:
           type: string
           format: int256
           description: "if the transactions original sender is the accountedFor address, the amount of gas expended denominated in WEI."
-        spotPrice:
+        totalOutLessGas:
+          type: string
+          format: int256
+          description: "a calculated field -- totalOut - gasCostOut"
+        prevAppBlk:
           type: number
-          format: double
-          description: "The on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction"
-        priceSource:
+          format: blknum
+          example: 10021
+          description: "the block number of the previous appearance, or 0 if this is the first appearance"
+        prevBal:
           type: string
-          description: "The on-chain source from which the spot price was taken"
-        reconciliationType:
+          format: int256
+          description: "the account balance for the given asset for the previous reconciliation"
+        begBalDiff:
           type: string
-          description: "One of `regular`, `traces`, `prevdiff-partial`, `partial-nextdiff`, or `partial-partial`"
-        reconciled:
-          type: boolean
-          description: "a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBal`. `false` otherwise."
+          format: int256
+          description: "a calculated field -- difference between expected beginning balance and balance at last reconciliation, the reconciliation failed"
+        endBalDiff:
+          type: string
+          format: int256
+          description: "a calculated field -- endBal - endBalCalc, if non-zero, the reconciliation failed"
+        endBalCalc:
+          type: string
+          format: int256
+          description: "a calculated field -- begBal + amountNet"
     name:
       description: "an association between a name and address for use throughout TrueBlocks"
       type: object
