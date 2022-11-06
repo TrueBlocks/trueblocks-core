@@ -616,7 +616,7 @@ void CReconciliation::registerClass(void) {
     ADD_FIELD(CReconciliation, "reconciliationType", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "reconciled", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "totalIn", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliation, "amountIn", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "amountIn", T_INT256 | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "internalIn", T_INT256 | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "selfDestructIn", T_INT256 | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "minerBaseRewardIn", T_INT256 | TS_OMITEMPTY, ++fieldNum);
@@ -625,14 +625,14 @@ void CReconciliation::registerClass(void) {
     ADD_FIELD(CReconciliation, "minerUncleRewardIn", T_INT256 | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "prefundIn", T_INT256 | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "totalOut", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliation, "amountOut", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "amountOut", T_INT256 | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "internalOut", T_INT256 | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "selfDestructOut", T_INT256 | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "gasOut", T_INT256 | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "totalOutLessGas", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "prevAppBlk", T_BLOCKNUM | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CReconciliation, "prevBal", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliation, "begBalDiff", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "prevBal", T_INT256 | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CReconciliation, "begBalDiff", T_INT256 | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "endBalDiff", T_INT256 | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "endBalCalc", T_INT256 | TS_OMITEMPTY, ++fieldNum);
 

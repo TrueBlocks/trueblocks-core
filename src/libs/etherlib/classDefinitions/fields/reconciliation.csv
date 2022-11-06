@@ -5,7 +5,7 @@ pos ,name                ,type      ,strDefault ,object ,array ,nowrite ,omitemp
  04 ,transactionHash     ,hash      ,           ,       ,      ,        ,          ,        ,      ,         ,  4 ,   4 ,              ,the hash of the transaction that triggered this reconciliation
  05 ,timestamp           ,timestamp ,           ,       ,      ,        ,          ,        ,      ,         ,  5 ,   5 ,1438335038    ,the Unix timestamp of the object
  06 ,date                ,datetime  ,           ,       ,      ,        ,          ,        ,      ,         ,  6 ,   6 ,              ,a calculated field -- the date of this transaction
-    
+
  07 ,assetAddr           ,address   ,           ,       ,      ,        ,          ,        ,      ,         ,  7 ,   7 ,0xf503...179b ,0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee for ETH reconciliations&#44; the token address otherwise
  08 ,assetSymbol         ,string    ,           ,       ,      ,        ,          ,        ,      ,         ,  8 ,   8 ,              ,either ETH&#44; WEI&#44; or the symbol of the asset being reconciled as extracted from the chain
  09 ,decimals            ,uint64    ,      18   ,       ,      ,        ,          ,        ,      ,         ,  9 ,   9 ,              ,The value of `decimals` from an ERC20 contract or&#44; if ETH or WEI&#44; then 18
@@ -22,9 +22,9 @@ pos ,name                ,type      ,strDefault ,object ,array ,nowrite ,omitemp
  19 ,signature           ,string    ,           ,       ,      ,        ,          ,        ,      ,         , 19 ,  19 ,              ,If possible&#44; the articulated name of the function or event signature
  20 ,reconciliationType  ,string    ,           ,       ,      ,        ,          ,        ,      ,         , 20 ,  20 ,              ,One of `regular`&#44; `traces`&#44; `prevdiff-partial`&#44; `partial-nextdiff`&#44; or `partial-partial`
  21 ,reconciled          ,bool      ,           ,       ,      ,        ,          ,        ,      ,         , 21 ,  21 ,              ,a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBal`. `false` otherwise.
-    
+
  22 ,totalIn             ,int256    ,           ,       ,      ,        ,          ,        ,      ,         , 22 ,  22 ,              ,a calculated field -- the sum of the following `In` fields
- 23 ,amountIn            ,int256    ,           ,       ,      ,        ,          ,        ,      ,         , 23 ,  23 ,              ,the top-level value of the incoming transfer for the accountedFor address
+ 23 ,amountIn            ,int256    ,           ,       ,      ,        ,true      ,        ,      ,         , 23 ,  23 ,              ,the top-level value of the incoming transfer for the accountedFor address
  24 ,internalIn          ,int256    ,           ,       ,      ,        ,true      ,        ,      ,         , 24 ,  24 ,              ,the internal value of the incoming transfer for the accountedFor address
  25 ,selfDestructIn      ,int256    ,           ,       ,      ,        ,true      ,        ,      ,         , 25 ,  25 ,              ,the incoming value of a self-destruct if recipient is the accountedFor address
  26 ,minerBaseRewardIn   ,int256    ,           ,       ,      ,        ,true      ,        ,      ,         , 26 ,  26 ,              ,the base fee reward if the miner is the accountedFor address
@@ -32,18 +32,18 @@ pos ,name                ,type      ,strDefault ,object ,array ,nowrite ,omitemp
  28 ,minerTxFeeIn        ,int256    ,           ,       ,      ,        ,true      ,        ,      ,         , 28 ,  28 ,              ,the transaction fee reward if the miner is the accountedFor address
  29 ,minerUncleRewardIn  ,int256    ,           ,       ,      ,        ,true      ,        ,      ,         , 29 ,  29 ,              ,the uncle reward if the miner who won the uncle block is the accountedFor address
  30 ,prefundIn           ,int256    ,           ,       ,      ,        ,true      ,        ,      ,         , 30 ,  30 ,              ,at block zero (0) only&#44; the amount of genesis income for the accountedFor address
-    
+
  31 ,totalOut            ,int256    ,           ,       ,      ,        ,          ,        ,      ,         , 31 ,  31 ,              ,a calculated field -- the sum of the following `Out` fields
- 32 ,amountOut           ,int256    ,           ,       ,      ,        ,          ,        ,      ,         , 32 ,  32 ,              ,the amount (in units of the asset) of regular outflow during this transaction
+ 32 ,amountOut           ,int256    ,           ,       ,      ,        ,true      ,        ,      ,         , 32 ,  32 ,              ,the amount (in units of the asset) of regular outflow during this transaction
  33 ,internalOut         ,int256    ,           ,       ,      ,        ,true      ,        ,      ,         , 33 ,  33 ,              ,the value of any internal value transfers out of the accountedFor account
  34 ,selfDestructOut     ,int256    ,           ,       ,      ,        ,true      ,        ,      ,         , 34 ,  34 ,              ,the value of the self-destructed value out if the accountedFor address was self-destructed
  35 ,gasOut              ,int256    ,           ,       ,      ,        ,true      ,        ,      ,         , 35 ,  35 ,              ,if the transaction's original sender is the accountedFor address&#44; the amount of gas expended
-        
+
  36 ,totalOutLessGas     ,int256    ,           ,       ,      ,        ,          ,        ,      ,         , 36 ,  36 ,              ,a calculated field -- totalOut - gasOut
 
  37 ,prevAppBlk          ,blknum    ,           ,       ,      ,        ,true      ,        ,      ,         , 37 ,  37 ,10021         ,the block number of the previous appearance&#44; or 0 if this is the first appearance
- 38 ,prevBal             ,int256    ,           ,       ,      ,        ,          ,        ,      ,         , 38 ,  38 ,              ,the account balance for the given asset for the previous reconciliation
+ 38 ,prevBal             ,int256    ,           ,       ,      ,        ,true      ,        ,      ,         , 38 ,  38 ,              ,the account balance for the given asset for the previous reconciliation
 
- 39 ,begBalDiff          ,int256    ,           ,       ,      ,        ,          ,        ,      ,         , 39 ,  39 ,              ,a calculated field -- difference between expected beginning balance and balance at last reconciliation&#44; if non-zero&#44; the reconciliation failed
+ 39 ,begBalDiff          ,int256    ,           ,       ,      ,        ,true      ,        ,      ,         , 39 ,  39 ,              ,a calculated field -- difference between expected beginning balance and balance at last reconciliation&#44; if non-zero&#44; the reconciliation failed
  40 ,endBalDiff          ,int256    ,           ,       ,      ,        ,true      ,        ,      ,         , 40 ,  40 ,              ,a calculated field -- endBal - endBalCalc&#44; if non-zero&#44; the reconciliation failed
  41 ,endBalCalc          ,int256    ,           ,       ,      ,        ,true      ,        ,      ,         , 41 ,  41 ,              ,a calculated field -- begBal + amountNet
