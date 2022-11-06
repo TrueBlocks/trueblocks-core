@@ -23,7 +23,7 @@ bigint_t CReconciliation::totalIn_internal(void) const {
 
 //-----------------------------------------------------------------------
 bigint_t CReconciliation::totalOut_internal(void) const {
-    return amountOut + internalOut + selfDestructOut + gasCostOut;
+    return amountOut + internalOut + selfDestructOut + gasOut;
 }
 
 //-----------------------------------------------------------------------

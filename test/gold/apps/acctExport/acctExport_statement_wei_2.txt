@@ -3,7 +3,7 @@ TEST[DATE|TIME] Addrs:  [0x05a56e2d52c817161883f50c441c3228cfe54d9f]
 TEST[DATE|TIME] Statements:  true
 TEST[DATE|TIME] MaxRecords:  15
 TEST[DATE|TIME] Format:  csv
-"blockNumber","transactionIndex","transactionHash","timestamp","date","accountedFor","sender","recipient","assetAddress","assetSymbol","decimals","prevAppBlk","prevBal","begBal","begBalDiff","amountNet","endBal","endBalCalc","endBalDiff","totalIn","amountIn","internalIn","selfDestructIn","minerBaseRewardIn","minerNephewRewardIn","minerTxFeeIn","minerUncleRewardIn","prefundIn","totalOut","totalOutLessGas","amountOut","internalOut","selfDestructOut","gasCostOut","spotPrice","priceSource","reconciliationType","reconciled"
+"blockNumber","transactionIndex","transactionHash","timestamp","date","accountedFor","sender","recipient","assetAddress","assetSymbol","decimals","prevAppBlk","prevBal","begBal","begBalDiff","amountNet","endBal","endBalCalc","endBalDiff","totalIn","amountIn","internalIn","selfDestructIn","minerBaseRewardIn","minerNephewRewardIn","minerTxFeeIn","minerUncleRewardIn","prefundIn","totalOut","totalOutLessGas","amountOut","internalOut","selfDestructOut","gasCost","spotPrice","priceSource","reconciliationType","reconciled"
 TIME ~ CLOCK - <INFO>  : Calling a contract (0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f) at block 1 prior to its deployment 10000835
 TIME ~ CLOCK - <INFO>  : doEthCall in CUniPrice::findPair returned false
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1...: 

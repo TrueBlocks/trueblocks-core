@@ -124,8 +124,8 @@ string_q CReconciliation::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'g':
-            if (fieldName % "gasCostOut") {
-                return bni_2_Str(gasCostOut);
+            if (fieldName % "gasOut") {
+                return bni_2_Str(gasOut);
             }
             break;
         case 'i':
@@ -306,8 +306,8 @@ bool CReconciliation::setValueByName(const string_q& fieldNameIn, const string_q
             }
             break;
         case 'g':
-            if (fieldName % "gasCostOut") {
-                gasCostOut = str_2_BigInt(fieldValue);
+            if (fieldName % "gasOut") {
+                gasOut = str_2_BigInt(fieldValue);
                 return true;
             }
             break;
@@ -484,7 +484,7 @@ bool CReconciliation::Serialize(CArchive& archive) {
     archive >> amountOut;
     archive >> internalOut;
     archive >> selfDestructOut;
-    archive >> gasCostOut;
+    archive >> gasOut;
     archive >> totalOutLessGas;
     archive >> prevAppBlk;
     archive >> prevBal;
@@ -538,7 +538,7 @@ bool CReconciliation::SerializeC(CArchive& archive) const {
     archive << amountOut;
     archive << internalOut;
     archive << selfDestructOut;
-    archive << gasCostOut;
+    archive << gasOut;
     archive << totalOutLessGas;
     archive << prevAppBlk;
     archive << prevBal;
@@ -628,7 +628,7 @@ void CReconciliation::registerClass(void) {
     ADD_FIELD(CReconciliation, "amountOut", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "internalOut", T_INT256 | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "selfDestructOut", T_INT256 | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CReconciliation, "gasCostOut", T_INT256 | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CReconciliation, "gasOut", T_INT256 | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "totalOutLessGas", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "prevAppBlk", T_BLOCKNUM | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "prevBal", T_INT256, ++fieldNum);
@@ -702,8 +702,8 @@ string_q nextReconciliationChunk_custom(const string_q& fieldIn, const void* dat
                 }
                 break;
             case 'g':
-                if (fieldIn % "gasCostOut") {
-                    return bni_2_Export(rec->timestamp, rec->gasCostOut, rec->decimals);
+                if (fieldIn % "gasOut") {
+                    return bni_2_Export(rec->timestamp, rec->gasOut, rec->decimals);
                 }
                 break;
             case 'h':
@@ -878,7 +878,7 @@ const char* STR_DISPLAY_RECONCILIATION =
     "[{AMOUNTOUT}]\t"
     "[{INTERNALOUT}]\t"
     "[{SELFDESTRUCTOUT}]\t"
-    "[{GASCOSTOUT}]\t"
+    "[{GASOUT}]\t"
     "[{TOTALOUTLESSGAS}]\t"
     "[{PREVAPPBLK}]\t"
     "[{PREVBAL}]\t"
@@ -983,7 +983,7 @@ CReconciliation operator+(const CReconciliation& a, const CReconciliation& b) {
     rec.amountOut += b.amountOut;
     rec.internalOut += b.internalOut;
     rec.selfDestructOut += b.selfDestructOut;
-    rec.gasCostOut += b.gasCostOut;
+    rec.gasOut += b.gasOut;
     return rec;
 }
 
@@ -1026,7 +1026,7 @@ bool CReconciliation::readBackLevel_old(CArchive& archive) {
         archive >> amountOut;
         archive >> internalOut;
         archive >> selfDestructOut;
-        archive >> gasCostOut;
+        archive >> gasOut;
         archive >> reconciliationType;
         archive >> spotPrice;
         archive >> priceSource;

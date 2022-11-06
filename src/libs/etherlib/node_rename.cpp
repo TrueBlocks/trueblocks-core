@@ -120,7 +120,7 @@ string_q renameExportFields(const string_q& className, const string_q& inStr) {
             make_pair("amountout", "amountOut"),
             make_pair("internalout", "internalOut"),
             make_pair("selfdestructout", "selfDestructOut"),
-            make_pair("gascostout", "gasCostOut"),
+            make_pair("gasout", "gasOut"),
             make_pair("totalout", "totalOut"),
             make_pair("totaloutlessgas", "totalOutLessGas"),
             make_pair("amountnet", "amountNet"),

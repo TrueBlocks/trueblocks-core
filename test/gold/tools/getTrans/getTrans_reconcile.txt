@@ -28,7 +28,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasCost:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     0
 TIME ~ CLOCK - : 4-----  endBal:        31419034761192445316
@@ -136,7 +136,7 @@ TIME ~ CLOCK - : 4-----reserve1: 4.10678e+07 reserve2: 20930.2 priceOut: 1962.13
     "amountOut": "",
     "internalOut": "",
     "selfDestructOut": "",
-    "gasCostOut": "",
+    "gasCost": "",
     "spotPrice": 1962.12646,
     "priceSource": "uniswap",
     "reconciliationType": "partial-nextdiff",

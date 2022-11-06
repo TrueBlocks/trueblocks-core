@@ -25,7 +25,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     10000000000000000000
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    2032579840000000
+TIME ~ CLOCK - : 8------  gasCost:    2032579840000000
 TIME ~ CLOCK - : 4-----  totalOut:      10002032579840000000
 TIME ~ CLOCK - : 4-----  amountNet:     -10002032579840000000
 TIME ~ CLOCK - : 4-----  endBal:        166106035924744464
@@ -100,7 +100,7 @@ params.size: 0
       "amountOut": "10000000000000000000",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "2032579840000000",
+      "gasCost": "2032579840000000",
       "reconciliationType": "regular",
       "spotPrice": 1.00000,
       "priceSource": "not-priced",
@@ -138,7 +138,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasCost:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     0
 TIME ~ CLOCK - : 4-----  endBal:        166106035924744464
@@ -228,7 +228,7 @@ TIME ~ CLOCK - : 4-----Calling a contract (0x5d27df1a6e03254e4f1218607d8e073667f
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasCost": "",
       "reconciliationType": "regular",
       "spotPrice": 1.00000,
       "priceSource": "not-priced",
@@ -263,7 +263,7 @@ TIME ~ CLOCK - : 4-----Calling a contract (0x5d27df1a6e03254e4f1218607d8e073667f
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasCost": "",
       "spotPrice": 0.00000,
       "priceSource": "not-priced",
       "begBalDiff": "",
@@ -300,7 +300,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasCost:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     0
 TIME ~ CLOCK - : 4-----  endBal:        166106035924744464
@@ -388,7 +388,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasCost": "",
       "reconciliationType": "regular",
       "spotPrice": 1.00000,
       "priceSource": "not-priced",
@@ -423,7 +423,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasCost": "",
       "spotPrice": 0.00000,
       "priceSource": "not-priced",
       "begBalDiff": "",
@@ -460,7 +460,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasCost:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     0
 TIME ~ CLOCK - : 4-----  endBal:        166106035924744464
@@ -549,7 +549,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasCost": "",
       "reconciliationType": "regular",
       "spotPrice": 1.00000,
       "priceSource": "not-priced",
@@ -584,7 +584,7 @@ params.size: 0
       "amountOut": "1999999",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasCost": "",
       "spotPrice": 0.00000,
       "priceSource": "not-priced",
       "begBalDiff": "",
@@ -621,7 +621,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasCost:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     0
 TIME ~ CLOCK - : 4-----  endBal:        166106035924744464
@@ -709,7 +709,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasCost": "",
       "reconciliationType": "regular",
       "spotPrice": 1.00000,
       "priceSource": "not-priced",
@@ -744,7 +744,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasCost": "",
       "spotPrice": 0.00000,
       "priceSource": "not-priced",
       "begBalDiff": "",
@@ -781,7 +781,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasCost:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     0
 TIME ~ CLOCK - : 4-----  endBal:        166106035924744464
@@ -869,7 +869,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasCost": "",
       "reconciliationType": "regular",
       "spotPrice": 1.00000,
       "priceSource": "not-priced",
@@ -904,7 +904,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasCost": "",
       "spotPrice": 0.00000,
       "priceSource": "not-priced",
       "begBalDiff": "",
@@ -941,7 +941,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasCost:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     0
 TIME ~ CLOCK - : 4-----  endBal:        166106035924744464
@@ -1029,7 +1029,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasCost": "",
       "reconciliationType": "regular",
       "spotPrice": 1.00000,
       "priceSource": "not-priced",
@@ -1064,7 +1064,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasCost": "",
       "spotPrice": 0.00000,
       "priceSource": "not-priced",
       "begBalDiff": "",
@@ -1101,7 +1101,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    1584260000000000
+TIME ~ CLOCK - : 8------  gasCost:    1584260000000000
 TIME ~ CLOCK - : 4-----  totalOut:      1584260000000000
 TIME ~ CLOCK - : 4-----  amountNet:     -1584260000000000
 TIME ~ CLOCK - : 4-----  endBal:        164521775924744464
@@ -1183,7 +1183,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "1584260000000000",
+      "gasCost": "1584260000000000",
       "reconciliationType": "regular",
       "spotPrice": 1.00000,
       "priceSource": "not-priced",
@@ -1221,7 +1221,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    1027040000000000
+TIME ~ CLOCK - : 8------  gasCost:    1027040000000000
 TIME ~ CLOCK - : 4-----  totalOut:      1027040000000000
 TIME ~ CLOCK - : 4-----  amountNet:     -1027040000000000
 TIME ~ CLOCK - : 4-----  endBal:        163494735924744464
@@ -1341,7 +1341,7 @@ params.size: 2
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "1027040000000000",
+      "gasCost": "1027040000000000",
       "reconciliationType": "regular",
       "spotPrice": 90.50000,
       "priceSource": "maker",
@@ -1376,7 +1376,7 @@ params.size: 2
       "amountOut": "1000",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasCost": "",
       "spotPrice": 0.00000,
       "priceSource": "not-priced",
       "begBalDiff": "",
@@ -1413,7 +1413,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasCost:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     0
 TIME ~ CLOCK - : 4-----  endBal:        163494735924744464
@@ -2460,7 +2460,7 @@ params.size: 2
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasCost": "",
       "reconciliationType": "regular",
       "spotPrice": 90.50000,
       "priceSource": "maker",
@@ -2495,7 +2495,7 @@ params.size: 2
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasCost": "",
       "spotPrice": 0.00000,
       "priceSource": "not-priced",
       "begBalDiff": "",

@@ -26,7 +26,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       5000000000000000000
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:        0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     5000000000000000000
 TIME ~ CLOCK - : 4-----  endBal:        5000000000000000000
@@ -90,7 +90,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "totalOutLessGas": "",
       "prevAppBlk": 0,
       "prevBal": "",
@@ -123,7 +123,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       5000000000000000000
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:        0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     5000000000000000000
 TIME ~ CLOCK - : 4-----  endBal:        10000000000000000000
@@ -185,7 +185,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "totalOutLessGas": "",
       "prevAppBlk": 1,
       "prevBal": "5000000000000000000",
@@ -218,7 +218,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       3750000000000000000
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:        0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     3750000000000000000
 TIME ~ CLOCK - : 4-----  endBal:        13750000000000000000
@@ -280,7 +280,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "totalOutLessGas": "",
       "prevAppBlk": 5,
       "prevBal": "10000000000000000000",
@@ -313,7 +313,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       5000000000000000000
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:        0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     5000000000000000000
 TIME ~ CLOCK - : 4-----  endBal:        18750000000000000000
@@ -375,7 +375,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "totalOutLessGas": "",
       "prevAppBlk": 56,
       "prevBal": "13750000000000000000",
@@ -408,7 +408,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       3125000000000000000
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:        0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     3125000000000000000
 TIME ~ CLOCK - : 4-----  endBal:        21875000000000000000
@@ -470,7 +470,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "totalOutLessGas": "",
       "prevAppBlk": 235,
       "prevBal": "18750000000000000000",
@@ -503,7 +503,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       5000000000000000000
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:        0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     5000000000000000000
 TIME ~ CLOCK - : 4-----  endBal:        26875000000000000000
@@ -565,7 +565,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "totalOutLessGas": "",
       "prevAppBlk": 247,
       "prevBal": "21875000000000000000",
@@ -598,7 +598,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       3750000000000000000
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:        0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     3750000000000000000
 TIME ~ CLOCK - : 4-----  endBal:        30625000000000000000
@@ -660,7 +660,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "totalOutLessGas": "",
       "prevAppBlk": 348,
       "prevBal": "26875000000000000000",
@@ -693,7 +693,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       3750000000000000000
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:        0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     3750000000000000000
 TIME ~ CLOCK - : 4-----  endBal:        34375000000000000000
@@ -755,7 +755,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "totalOutLessGas": "",
       "prevAppBlk": 500,
       "prevBal": "30625000000000000000",
@@ -788,7 +788,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       2500000000000000000
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:        0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     2500000000000000000
 TIME ~ CLOCK - : 4-----  endBal:        36875000000000000000
@@ -850,7 +850,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "totalOutLessGas": "",
       "prevAppBlk": 563,
       "prevBal": "34375000000000000000",
@@ -883,7 +883,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       5156250000000000000
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:        0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     5156250000000000000
 TIME ~ CLOCK - : 4-----  endBal:        42031250000000000000
@@ -945,7 +945,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "totalOutLessGas": "",
       "prevAppBlk": 987,
       "prevBal": "36875000000000000000",
@@ -978,7 +978,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       3750000000000000000
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:        0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     3750000000000000000
 TIME ~ CLOCK - : 4-----  endBal:        45781250000000000000
@@ -1040,7 +1040,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "totalOutLessGas": "",
       "prevAppBlk": 1450,
       "prevBal": "42031250000000000000",
@@ -1073,7 +1073,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       3750000000000000000
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:        0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     3750000000000000000
 TIME ~ CLOCK - : 4-----  endBal:        49531250000000000000
@@ -1135,7 +1135,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "totalOutLessGas": "",
       "prevAppBlk": 1580,
       "prevBal": "45781250000000000000",
@@ -1168,7 +1168,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       5000000000000000000
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:        0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     5000000000000000000
 TIME ~ CLOCK - : 4-----  endBal:        54531250000000000000
@@ -1230,7 +1230,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "totalOutLessGas": "",
       "prevAppBlk": 1586,
       "prevBal": "49531250000000000000",
@@ -1263,7 +1263,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       3750000000000000000
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:        0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     3750000000000000000
 TIME ~ CLOCK - : 4-----  endBal:        58281250000000000000
@@ -1325,7 +1325,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "totalOutLessGas": "",
       "prevAppBlk": 1861,
       "prevBal": "54531250000000000000",
@@ -1358,7 +1358,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       5000000000000000000
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:        0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     5000000000000000000
 TIME ~ CLOCK - : 4-----  endBal:        63281250000000000000
@@ -1420,7 +1420,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "totalOutLessGas": "",
       "prevAppBlk": 1912,
       "prevBal": "58281250000000000000",

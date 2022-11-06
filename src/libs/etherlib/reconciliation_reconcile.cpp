@@ -36,7 +36,7 @@ namespace qblocks {
     LOG8("  amountOut:     ", amountOut);                                                                              \
     LOG8("  internalOut:   ", internalOut);                                                                            \
     LOG8("  slfDstrctOt:   ", selfDestructOut);                                                                        \
-    LOG8("  gasCostOut:    ", gasCostOut);                                                                             \
+    LOG8("  gasOut:        ", gasOut);                                                                                 \
     LOG4("  totalOut:      ", totalOut_internal());                                                                    \
     LOG4("  amountNet:     ", amountNet_internal());                                                                   \
     LOG4("  endBal:        ", endBal);                                                                                 \
@@ -74,7 +74,7 @@ bool CReconciliation::reconcileEth(const CReconciliation& prevRecon) {
         sender = pTransaction->from;
         recipient = pTransaction->to;
         amountOut = pTransaction->isError ? 0 : pTransaction->value;
-        gasCostOut = str_2_BigInt(pTransaction->getValueByName("gasCost"));
+        gasOut = str_2_BigInt(pTransaction->getValueByName("gasCost"));
     }
 
     if (pTransaction->to == accountedFor) {

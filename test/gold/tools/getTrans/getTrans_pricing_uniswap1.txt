@@ -28,7 +28,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasCost:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     0
 TIME ~ CLOCK - : 4-----  endBal:        167500000000000000
@@ -55,7 +55,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       3750000000000000
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasCost:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     3750000000000000
 TIME ~ CLOCK - : 4-----  endBal:        167500000000000000
@@ -147,7 +147,7 @@ TIME ~ CLOCK - : 4-----reserve1: 5.82602e+06 reserve2: 13533.8 priceOut: 430.478
     "amountOut": "",
     "internalOut": "",
     "selfDestructOut": "",
-    "gasCostOut": "",
+    "gasCost": "",
     "reconciliationType": "by-trace",
     "spotPrice": 430.47848,
     "priceSource": "uniswap",
@@ -182,7 +182,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     2068649590800000000
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    1680000000000000
+TIME ~ CLOCK - : 8------  gasCost:    1680000000000000
 TIME ~ CLOCK - : 4-----  totalOut:      2070329590800000000
 TIME ~ CLOCK - : 4-----  amountNet:     -2070329590800000000
 TIME ~ CLOCK - : 4-----  endBal:        63000000000000
@@ -274,7 +274,7 @@ TIME ~ CLOCK - : 4-----reserve1: 6.02951e+06 reserve2: 15218 priceOut: 396.208 r
     "amountOut": "2068649590800000000",
     "internalOut": "",
     "selfDestructOut": "",
-    "gasCostOut": "1680000000000000",
+    "gasCost": "1680000000000000",
     "reconciliationType": "regular",
     "spotPrice": 396.20840,
     "priceSource": "uniswap",

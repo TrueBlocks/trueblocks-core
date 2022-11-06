@@ -28,7 +28,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     1006010412136166100
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    420000000000000
+TIME ~ CLOCK - : 8------  gasCost:    420000000000000
 TIME ~ CLOCK - : 4-----  totalOut:      1006430412136166100
 TIME ~ CLOCK - : 4-----  amountNet:     -1006430412136166100
 TIME ~ CLOCK - : 4-----  endBal:        358693424617370130430
@@ -62,7 +62,7 @@ params.size: 0
     "amountOut": "1006010412136166100",
     "internalOut": "",
     "selfDestructOut": "",
-    "gasCostOut": "420000000000000",
+    "gasCost": "420000000000000",
     "reconciliationType": "regular",
     "spotPrice": 1.00000,
     "priceSource": "not-priced",

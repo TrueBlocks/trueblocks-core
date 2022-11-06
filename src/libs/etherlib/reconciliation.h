@@ -60,7 +60,7 @@ class CReconciliation : public CBaseNode {
     bigint_t amountOut;
     bigint_t internalOut;
     bigint_t selfDestructOut;
-    bigint_t gasCostOut;
+    bigint_t gasOut;
     bigint_t totalOutLessGas;
     blknum_t prevAppBlk;
     bigint_t prevBal;
@@ -190,7 +190,7 @@ inline void CReconciliation::initialize(void) {
     amountOut = 0;
     internalOut = 0;
     selfDestructOut = 0;
-    gasCostOut = 0;
+    gasOut = 0;
     totalOutLessGas = 0;
     prevAppBlk = 0;
     prevBal = 0;
@@ -243,7 +243,7 @@ inline void CReconciliation::duplicate(const CReconciliation& re) {
     amountOut = re.amountOut;
     internalOut = re.internalOut;
     selfDestructOut = re.selfDestructOut;
-    gasCostOut = re.gasCostOut;
+    gasOut = re.gasOut;
     totalOutLessGas = re.totalOutLessGas;
     prevAppBlk = re.prevAppBlk;
     prevBal = re.prevBal;

@@ -43,7 +43,7 @@ export?addrs=0x868b8fd259abfcfdf9634c343593b34ef359641d&lastBlock=8769141&statem
         "amountOut": "",
         "internalOut": "",
         "selfDestructOut": "",
-        "gasCostOut": ""
+        "gasCost": ""
       },
       "totalOutLessGas": "",
       "previous": {
@@ -98,7 +98,7 @@ export?addrs=0x868b8fd259abfcfdf9634c343593b34ef359641d&lastBlock=8769141&statem
         "amountOut": "",
         "internalOut": "",
         "selfDestructOut": "",
-        "gasCostOut": ""
+        "gasCost": ""
       },
       "totalOutLessGas": "",
       "previous": {
@@ -146,7 +146,7 @@ export?addrs=0x868b8fd259abfcfdf9634c343593b34ef359641d&lastBlock=8769141&statem
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "0.000247180000000000",
+      "gasCost": "0.000247180000000000",
       "totalOutLessGas": "",
       "prevAppBlk": 8769029,
       "prevBal": "0.025000000000000000",
@@ -189,7 +189,7 @@ export?addrs=0x868b8fd259abfcfdf9634c343593b34ef359641d&lastBlock=8769141&statem
       "amountOut": "85.0000000",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasCost": "",
       "totalOutLessGas": "85.0000000",
       "prevAppBlk": 8769029,
       "prevBal": "85.0000000",
@@ -232,7 +232,7 @@ export?addrs=0x868b8fd259abfcfdf9634c343593b34ef359641d&lastBlock=8769141&statem
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "0.000702230000000000",
+      "gasCost": "0.000702230000000000",
       "totalOutLessGas": "",
       "prevAppBlk": 8769052,
       "prevBal": "0.024752820000000000",
@@ -275,7 +275,7 @@ export?addrs=0x868b8fd259abfcfdf9634c343593b34ef359641d&lastBlock=8769141&statem
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasCost": "",
       "totalOutLessGas": "",
       "prevAppBlk": 8769064,
       "prevBal": "0.024050590000000000",
@@ -318,7 +318,7 @@ export?addrs=0x868b8fd259abfcfdf9634c343593b34ef359641d&lastBlock=8769141&statem
       "amountOut": "0.100000000000000000",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "0.000021000000000000",
+      "gasCost": "0.000021000000000000",
       "totalOutLessGas": "0.100000000000000000",
       "prevAppBlk": 8769064,
       "prevBal": "0.474612790000000000",
@@ -361,7 +361,7 @@ export?addrs=0x868b8fd259abfcfdf9634c343593b34ef359641d&lastBlock=8769141&statem
       "amountOut": "0.374570790000000000",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "0.000021000000000000",
+      "gasCost": "0.000021000000000000",
       "totalOutLessGas": "0.374570790000000000",
       "prevAppBlk": 8769130,
       "prevBal": "0.374591790000000000",

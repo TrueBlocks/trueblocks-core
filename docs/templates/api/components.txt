@@ -91,7 +91,7 @@ components:
           type: number
           format: blknum
           example: 2
-          description: "the zero-indexed position the log in the block"
+          description: "the zero-indexed position the log in the block, if applicable"
         transactionHash:
           type: string
           format: hash
@@ -111,11 +111,11 @@ components:
           description: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee for ETH reconciliations, the token address otherwise"
         assetSymbol:
           type: string
-          description: "either ETH, WEI or the symbol of the asset being reconciled as extracted from the chain"
+          description: "either ETH, WEI, or the symbol of the asset being reconciled as extracted from the chain"
         decimals:
           type: number
           format: uint64
-          description: "Equivalent to the extracted value of `decimals` from an ERC20 contract or, if ETH or WEI then 18"
+          description: "The value of `decimals` from an ERC20 contract or, if ETH or WEI, then 18"
         spotPrice:
           type: number
           format: double
@@ -141,7 +141,7 @@ components:
         begBal:
           type: string
           format: int256
-          description: "the beginning balance of the asset at the blockNumber"
+          description: "the beginning balance of the asset prior to the transaction"
         amountNet:
           type: string
           format: int256
@@ -149,13 +149,13 @@ components:
         endBal:
           type: string
           format: int256
-          description: "the on-chain balance of the asset (see notes above about intra-block reconciliations)"
+          description: "the on-chain balance of the asset (see notes about intra-block reconciliations)"
         encoding:
           type: string
-          description: "One of `regular`, `traces`, `prevdiff-partial`, `partial-nextdiff`, or `partial-partial`"
+          description: "The topic of the event (if this is an ERC20 reconcilation), the four-byte signature of the transaction otherwise"
         signature:
           type: string
-          description: "One of `regular`, `traces`, `prevdiff-partial`, `partial-nextdiff`, or `partial-partial`"
+          description: "If possible, the articulated name of the function or event signature"
         reconciliationType:
           type: string
           description: "One of `regular`, `traces`, `prevdiff-partial`, `partial-nextdiff`, or `partial-partial`"
@@ -165,7 +165,7 @@ components:
         totalIn:
           type: string
           format: int256
-          description: "a calculated field -- the sum of all In fields"
+          description: "a calculated field -- the sum of the following `In` fields"
         amountIn:
           type: string
           format: int256
@@ -201,11 +201,11 @@ components:
         totalOut:
           type: string
           format: int256
-          description: "a calculated field -- the sum of all Out fields"
+          description: "a calculated field -- the sum of the following `Out` fields"
         amountOut:
           type: string
           format: int256
-          description: "the amount (in terms of the asset) of regular outflow during this bigint"
+          description: "the amount (in units of the asset) of regular outflow during this transaction"
         internalOut:
           type: string
           format: int256
@@ -214,14 +214,14 @@ components:
           type: string
           format: int256
           description: "the value of the self-destructed value out if the accountedFor address was self-destructed"
-        gasCostOut:
+        gasOut:
           type: string
           format: int256
-          description: "if the transactions original sender is the accountedFor address, the amount of gas expended denominated in WEI."
+          description: "if the transaction's original sender is the accountedFor address, the amount of gas expended"
         totalOutLessGas:
           type: string
           format: int256
-          description: "a calculated field -- totalOut - gasCostOut"
+          description: "a calculated field -- totalOut - gasOut"
         prevAppBlk:
           type: number
           format: blknum
@@ -234,7 +234,7 @@ components:
         begBalDiff:
           type: string
           format: int256
-          description: "a calculated field -- difference between expected beginning balance and balance at last reconciliation, the reconciliation failed"
+          description: "a calculated field -- difference between expected beginning balance and balance at last reconciliation, if non-zero, the reconciliation failed"
         endBalDiff:
           type: string
           format: int256
