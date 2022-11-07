@@ -35,7 +35,7 @@ TIME ~ CLOCK - : 4-----  endBal:        1259710448741022040
 TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    1259710448741022040
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
-TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----  reconciled:    true
 TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 5218355 prior to its deployment 10042267
 
 level: 1

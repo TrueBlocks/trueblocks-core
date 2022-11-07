@@ -35,7 +35,7 @@ TIME ~ CLOCK - : 4-----  endBal:        167500000000000000
 TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    163750000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    -3750000000000000
-TIME ~ CLOCK - : 4-----  regular-recon: false
+TIME ~ CLOCK - : 4-----  reconciled:    false
 TIME ~ CLOCK - : 4-----Trial balance: by-trace
 TIME ~ CLOCK - : 4-----  hash: 0x39a7c959c11489f7c0a84ed67f960e441ae5be106a1a42afb75ee9f0119d16bb
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -62,7 +62,7 @@ TIME ~ CLOCK - : 4-----  endBal:        167500000000000000
 TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    167500000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
-TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----  reconciled:    true
 
 level: 1
 readOffset: 0
@@ -189,7 +189,7 @@ TIME ~ CLOCK - : 4-----  endBal:        63000000000000
 TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    63000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
-TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----  reconciled:    true
 
 level: 1
 readOffset: 0

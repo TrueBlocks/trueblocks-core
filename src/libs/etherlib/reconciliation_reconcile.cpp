@@ -43,7 +43,7 @@ namespace qblocks {
     LOG4("  ------------------------------");                                                                          \
     LOG4("  endBalCalc:    ", endBalCalc());                                                                           \
     LOG4("  endBalDiff:    ", endBalDiff());                                                                           \
-    LOG4("  regular-recon: ", reconciled() ? "true" : "false");
+    LOG4("  reconciled:    ", reconciled() ? "true" : "false");
 
 //-----------------------------------------------------------------------
 bool CReconciliation::reconcileEth2(void) {

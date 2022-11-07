@@ -1,5 +1,3 @@
-// TODO: Reverse mode
-// TODO: collapse eth reconciliation into token reconconcilation by adding a CTransfer
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -240,7 +238,7 @@ bool COptions::readReconsFromCache(CTraverser* trav) {
         for (auto& statement : trav->trans.statements) {
             // If this is an older versioned file, act as if it doesn't exist so it gets upgraded
             if (statement.accountedFor.empty()) {
-                LOG_WARN("Cache for reconciliation is back level. Updating....");
+                LOG_WARN("Cache for statements is back level. Updating....");
                 return false;
             }
 
@@ -264,9 +262,9 @@ bool COptions::readReconsFromCache(CTraverser* trav) {
 
 //-----------------------------------------------------------------------
 bool COptions::isReconciled(CTraverser* trav, CReconciliation& which) const {
-    for (auto recon : trav->trans.statements) {
-        if (!recon.reconciled()) {
-            which = recon;
+    for (auto statement : trav->trans.statements) {
+        if (!statement.reconciled()) {
+            which = statement;
             return false;
         }
     }

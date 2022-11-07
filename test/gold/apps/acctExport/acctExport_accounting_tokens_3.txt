@@ -25,14 +25,14 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     10000000000000000000
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCost:    2032579840000000
+TIME ~ CLOCK - : 8------  gasCost:       2032579840000000
 TIME ~ CLOCK - : 4-----  totalOut:      10002032579840000000
 TIME ~ CLOCK - : 4-----  amountNet:     -10002032579840000000
 TIME ~ CLOCK - : 4-----  endBal:        166106035924744464
 TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    166106035924744464
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
-TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----  reconciled:    true
 TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 2501554 prior to its deployment 10042267
 params.size: 0
 ==================================================
@@ -145,7 +145,7 @@ TIME ~ CLOCK - : 4-----  endBal:        166106035924744464
 TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    166106035924744464
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
-TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----  reconciled:    true
 TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 2570952 prior to its deployment 10042267
 params.size: 0
 ==================================================
@@ -307,7 +307,7 @@ TIME ~ CLOCK - : 4-----  endBal:        166106035924744464
 TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    166106035924744464
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
-TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----  reconciled:    true
 TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 2607559 prior to its deployment 10042267
 params.size: 0
 ==================================================
@@ -467,7 +467,7 @@ TIME ~ CLOCK - : 4-----  endBal:        166106035924744464
 TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    166106035924744464
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
-TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----  reconciled:    true
 TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 2941572 prior to its deployment 10042267
 params.size: 0
 ==================================================
@@ -628,7 +628,7 @@ TIME ~ CLOCK - : 4-----  endBal:        166106035924744464
 TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    166106035924744464
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
-TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----  reconciled:    true
 TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 2957898 prior to its deployment 10042267
 params.size: 0
 ==================================================
@@ -788,7 +788,7 @@ TIME ~ CLOCK - : 4-----  endBal:        166106035924744464
 TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    166106035924744464
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
-TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----  reconciled:    true
 TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 2959714 prior to its deployment 10042267
 params.size: 0
 ==================================================
@@ -948,7 +948,7 @@ TIME ~ CLOCK - : 4-----  endBal:        166106035924744464
 TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    166106035924744464
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
-TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----  reconciled:    true
 TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 2964866 prior to its deployment 10042267
 params.size: 0
 ==================================================
@@ -1108,7 +1108,7 @@ TIME ~ CLOCK - : 4-----  endBal:        164521775924744464
 TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    164521775924744464
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
-TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----  reconciled:    true
 TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 3242878 prior to its deployment 10042267
 params.size: 0
 ==================================================
@@ -1228,7 +1228,7 @@ TIME ~ CLOCK - : 4-----  endBal:        163494735924744464
 TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    163494735924744464
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
-TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----  reconciled:    true
 TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 3722502 prior to its deployment 10042267
 
 level: 1
@@ -1420,7 +1420,7 @@ TIME ~ CLOCK - : 4-----  endBal:        163494735924744464
 TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    163494735924744464
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
-TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----  reconciled:    true
 TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 3727466 prior to its deployment 10042267
 
 level: 1
