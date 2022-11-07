@@ -16,7 +16,6 @@
  * the code inside of 'EXISTING_CODE' tags.
  */
 #include "utillib.h"
-#include "transaction.h"
 
 namespace qblocks {
 

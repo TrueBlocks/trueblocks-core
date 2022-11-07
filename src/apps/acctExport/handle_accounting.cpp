@@ -56,7 +56,7 @@ bool COptions::process_statements(CTraverser* trav) {
     prevStatements[ethKey] = ethStatement;
 
     CTransferArray transfers;
-    if (getTokenTransfers(transfers, accountedFor.address, trav)) {
+    if (trav->trans.getTransfers(transfers, accountedFor.address)) {
         for (auto transfer : transfers) {
             if (assetFilter.size() > 0 && !assetFilter[transfer.assetAddr]) {
                 continue;
@@ -110,98 +110,6 @@ string_q getReconcilationPath(const address_t& address, const CTransaction* pT) 
     string_q path = getPathToBinaryCache(CT_RECONS, address, pT->blockNumber, pT->transactionIndex);
     establishFolder(path);
     return path;
-}
-
-//-----------------------------------------------------------------------
-address_t topic_2_Addr(const string_q& topic) {
-    if (topic.length() != 66)
-        return "";
-    return "0x" + padLeft(topic.substr(26, 66), 40, '0');
-}
-
-//-----------------------------------------------------------------------
-bool getTokenTransfers(CTransferArray& transfers, const address_t& accountedFor, const CTraverser* trav) {
-    // if (trav->trans.value != 0 || trav->trans.from == accountedFor) {
-    //     CTransfer transfer;
-    //     transfer.blockNumber = trav->trans.blockNumber;
-    //     transfer.transactionIndex = trav->trans.transactionIndex;
-    //     transfer.logIndex = NOPOS;
-    //     transfer.timestamp = trav->trans.pBlock ? trav->trans.pBlock->timestamp : trav->trans.timestamp;
-    //     transfer.date = ts_2_Date(transfer.timestamp);
-    //     transfer.transactionHash = trav->trans.hash;
-    //     transfer.sender = trav->trans.from;
-    //     transfer.recipient = trav->trans.to;
-    //     transfer.amount = trav->trans.value;
-    //     // transfer.topic0 = log.topics.size() > 0 ? log.topics[0] : "";
-    //     // transfer.topic1 = log.topics.size() > 1 ? log.topics[1] : "";
-    //     // transfer.topic2 = log.topics.size() > 2 ? log.topics[2] : "";
-    //     // transfer.topic3 = log.topics.size() > 3 ? log.topics[3] : "";
-    //     // transfer.data = log.data;
-    //     transfer.encoding = trav->trans.input.substr(0, 10);
-    //     transfer.assetAddr = FAKE_ETH_ADDRESS;
-    //     transfer.assetSymbol = "ETH";
-    //     transfers.push_back(transfer);
-    // }
-
-    for (auto log : trav->trans.receipt.logs) {
-        CAccountName tokenName;
-        bool isToken = findToken(log.address, tokenName);
-        if (tokenName.address.empty()) {
-            tokenName.address = log.address;
-            tokenName.petname = addr_2_Petname(tokenName.address, '-');
-        }
-
-        if (isToken || (log.topics.size() > 2 && isTokenTransfer(log.topics[0]))) {
-            CTransfer transfer;
-
-            transfer.assetAddr = log.address;
-
-            transfer.sender = topic_2_Addr(log.topics[1]);
-            transfer.recipient = topic_2_Addr(log.topics[2]);
-            if (transfer.sender != accountedFor && transfer.recipient != accountedFor)
-                continue;
-
-            transfer.amount = str_2_Wei(log.data);
-            if (transfer.amount == 0) {
-                continue;
-            }
-
-            transfer.assetSymbol = tokenName.symbol;
-            if (transfer.assetSymbol.empty()) {
-                transfer.assetSymbol = getTokenSymbol(transfer.assetAddr, trav->trans.blockNumber);
-                if (transfer.assetSymbol.empty()) {
-                    transfer.assetSymbol = transfer.assetAddr.substr(0, 4);
-                }
-            }
-
-            transfer.decimals = tokenName.decimals;
-            if (transfer.decimals == 0) {
-                transfer.decimals = getTokenDecimals(transfer.assetAddr, trav->trans.blockNumber);
-                if (transfer.decimals == 0) {
-                    transfer.decimals = 18;
-                }
-            }
-
-            transfer.blockNumber = trav->trans.blockNumber;
-            transfer.transactionIndex = trav->trans.transactionIndex;
-            transfer.logIndex = log.logIndex;
-            transfer.timestamp = str_2_Ts(trav->trans.Format("[{TIMESTAMP}]"));
-            transfer.date = ts_2_Date(transfer.timestamp);
-            transfer.transactionHash = trav->trans.hash;
-            transfer.encoding = trav->trans.input.substr(0, 10);
-
-            transfer.topic0 = log.topics.size() > 0 ? log.topics[0] : "";
-            transfer.topic1 = log.topics.size() > 1 ? log.topics[1] : "";
-            transfer.topic2 = log.topics.size() > 2 ? log.topics[2] : "";
-            transfer.topic3 = log.topics.size() > 3 ? log.topics[3] : "";
-            transfer.data = log.data;
-
-            transfers.push_back(transfer);
-        }
-    }
-
-    sort(transfers.begin(), transfers.end());
-    return transfers.size() > 0;
 }
 
 //-----------------------------------------------------------------------

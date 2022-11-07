@@ -1,7 +1,7 @@
 [settings]
 class = CTransfer
 fields = transfer.csv
-includes = utillib.h|transaction.h
+includes = utillib.h
 sort = v1.assetAddr < v2.assetAddr
 equals = blockNumber == it.blockNumber && assetAddr == it.assetAddr
 cpp_includes = etherlib.h

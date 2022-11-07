@@ -21,6 +21,7 @@
 #include "trace.h"
 #include "reconciliation.h"
 #include "ethstate.h"
+#include "transfer.h"
 
 namespace qblocks {
 
@@ -90,6 +91,7 @@ class CTransaction : public CBaseNode {
     bool loadTransAsPrefund(blknum_t bn, blknum_t txid, const address_t& addr, const wei_t& amount);
     bool loadTransAsBlockReward(blknum_t bn, blknum_t txid, const address_t& addr);
     bool loadTransAsUncleReward(blknum_t bn, blknum_t uncleBn, const address_t& addr);
+    bool getTransfers(CTransferArray& transfers, const address_t& accountedFor) const;
     // EXISTING_CODE
     bool operator==(const CTransaction& it) const;
     bool operator!=(const CTransaction& it) const {
