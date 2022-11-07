@@ -17,7 +17,7 @@
 extern string_q getReconcilationPath(const address_t& address, const CTransaction* pT);
 extern string_q statementKey(const address_t& accountedFor, const address_t& assetAddr);
 //-----------------------------------------------------------------------
-bool COptions::process_reconciliation(CTraverser* trav) {
+bool COptions::process_statements(CTraverser* trav) {
     trav->trans.statements.clear();
 
     // If we can get the reconciliations from the cache, do so...
@@ -309,26 +309,18 @@ bool acct_Display(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)data;
 
     if (fourByteFilter(trav->trans.input, opt)) {
-        if (opt->accounting)
-            opt->process_reconciliation(trav);
-
         if (opt->relevant) {
             for (auto& log : trav->trans.receipt.logs) {
                 log.m_showing = opt->isRelevant(log);
             }
         }
 
-        if (opt->statements) {
-            for (auto recon : trav->trans.statements) {
-                cout << ((isJson() && !opt->firstOut) ? ", " : "");
-                cout << recon.Format() << endl;
-                opt->firstOut = false;
-            }
-        } else {
-            cout << ((isJson() && !opt->firstOut) ? ", " : "");
-            cout << trav->trans;
-            opt->firstOut = false;
-        }
+        if (opt->accounting)
+            opt->process_statements(trav);
+
+        cout << ((isJson() && !opt->firstOut) ? ", " : "");
+        cout << trav->trans;
+        opt->firstOut = false;
     }
 
     return prog_Log(trav, data);
