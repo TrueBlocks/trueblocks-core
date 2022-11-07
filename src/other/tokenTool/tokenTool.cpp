@@ -17,6 +17,16 @@
 extern bool build_cap_table(COptions& options, int argc, const char* argv[]);
 //--------------------------------------------------------------
 int main(int argc, const char* argv[]) {
+    ostringstream os;
+    os << "mainnet,";
+    os << "/Users/jrush/Library/Application Support/TrueBlocks/,";
+    os << "/Users/jrush/Library/Application Support/TrueBlocks/config/mainnet/,";
+    os << "/Users/jrush/Data/trueblocks/v0.40.0/cache/,";
+    os << "/Users/jrush/Data/trueblocks/v0.40.0/unchained/,";
+    os << "mainnet,";
+    os << "http://localhost:8545";
+    setenv("TB_CONFIG_ENV", os.str().c_str(), true);
+
     etherlib_init(quickQuitHandler);
 
     COptions options;
@@ -165,7 +175,6 @@ string_q COptions::getTotalSupply(blknum_t blockNum) {
     if (!abi_spec.articulateOutputs(encoding, output, ret))
         return "";
     return ret.outputs[0].value;
-#endif
 }
 
 //-------------------------------------------------------------------------
