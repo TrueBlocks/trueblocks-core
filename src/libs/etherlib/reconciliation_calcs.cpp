@@ -16,44 +16,44 @@
 namespace qblocks {
 
 //-----------------------------------------------------------------------
-bigint_t CReconciliation::totalIn_internal(void) const {
+bigint_t CReconciliation::totalIn(void) const {
     return amountIn + internalIn + selfDestructIn + prefundIn + minerBaseRewardIn + minerNephewRewardIn + minerTxFeeIn +
            minerUncleRewardIn;
 }
 
 //-----------------------------------------------------------------------
-bigint_t CReconciliation::totalOut_internal(void) const {
+bigint_t CReconciliation::totalOut(void) const {
     return amountOut + internalOut + selfDestructOut + gasOut;
 }
 
 //-----------------------------------------------------------------------
-bigint_t CReconciliation::totalOutLessGas_internal(void) const {
+bigint_t CReconciliation::totalOutLessGas(void) const {
     return amountOut + internalOut + selfDestructOut;
 }
 
 //---------------------------------------------------------------------------
-bigint_t CReconciliation::begBalDiff_internal(void) const {
+bigint_t CReconciliation::begBalDiff(void) const {
     return blockNumber == 0 ? 0 : begBal - prevBal;
 }
 
 //---------------------------------------------------------------------------
-bigint_t CReconciliation::endBalCalc_internal(void) const {
-    return begBal + amountNet_internal();
+bigint_t CReconciliation::endBalCalc(void) const {
+    return begBal + amountNet();
 }
 
 //---------------------------------------------------------------------------
-bigint_t CReconciliation::endBalDiff_internal(void) const {
-    return endBalCalc_internal() - endBal;
+bigint_t CReconciliation::endBalDiff(void) const {
+    return endBalCalc() - endBal;
 }
 
 //---------------------------------------------------------------------------
-bool CReconciliation::reconciled_internal(void) const {
-    return (endBalDiff_internal() == 0 && begBalDiff_internal() == 0);
+bool CReconciliation::reconciled(void) const {
+    return (endBalDiff() == 0 && begBalDiff() == 0);
 }
 
 //---------------------------------------------------------------------------
-bigint_t CReconciliation::amountNet_internal(void) const {
-    return totalIn_internal() - totalOut_internal();
+bigint_t CReconciliation::amountNet(void) const {
+    return totalIn() - totalOut();
 }
 
 }  // namespace qblocks

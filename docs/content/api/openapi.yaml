@@ -1923,7 +1923,7 @@ components:
         assetAddr:
           type: string
           format: address
-          example: "0xf503...179b"
+          example: "0x6b17...1d0f"
           description: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee for ETH reconciliations, the token address otherwise"
         assetSymbol:
           type: string
@@ -1947,7 +1947,7 @@ components:
         sender:
           type: string
           format: address
-          example: "0x1bd0...9ce9"
+          example: "0xf503...179b"
           description: "the initiator of the transfer (the sender)"
         recipient:
           type: string
@@ -1968,15 +1968,18 @@ components:
           description: "the on-chain balance of the asset (see notes about intra-block reconciliations)"
         encoding:
           type: string
+          example: "0xa9059cbb"
           description: "The topic of the event (if this is an ERC20 reconcilation), the four-byte signature of the transaction otherwise"
         signature:
           type: string
+          example: "Transfer(...)"
           description: "If possible, the articulated name of the function or event signature"
         reconciliationType:
           type: string
           description: "One of `regular`, `traces`, `prevdiff-partial`, `partial-nextdiff`, or `partial-partial`"
         reconciled:
           type: boolean
+          example: [true|false]
           description: "a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBal`. `false` otherwise."
         totalIn:
           type: string

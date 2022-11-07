@@ -31,7 +31,6 @@ class CReconciliation : public CBaseNode {
     blknum_t logIndex;
     hash_t transactionHash;
     timestamp_t timestamp;
-    time_q date;
     address_t assetAddr;
     string_q assetSymbol;
     uint64_t decimals;
@@ -41,13 +40,10 @@ class CReconciliation : public CBaseNode {
     address_t sender;
     address_t recipient;
     bigint_t begBal;
-    bigint_t amountNet;
     bigint_t endBal;
     string_q encoding;
     string_q signature;
     string_q reconciliationType;
-    bool reconciled;
-    bigint_t totalIn;
     bigint_t amountIn;
     bigint_t internalIn;
     bigint_t selfDestructIn;
@@ -56,17 +52,12 @@ class CReconciliation : public CBaseNode {
     bigint_t minerTxFeeIn;
     bigint_t minerUncleRewardIn;
     bigint_t prefundIn;
-    bigint_t totalOut;
     bigint_t amountOut;
     bigint_t internalOut;
     bigint_t selfDestructOut;
     bigint_t gasOut;
-    bigint_t totalOutLessGas;
     blknum_t prevAppBlk;
     bigint_t prevBal;
-    bigint_t begBalDiff;
-    bigint_t endBalDiff;
-    bigint_t endBalCalc;
 
   public:
     CReconciliation(void);
@@ -93,17 +84,16 @@ class CReconciliation : public CBaseNode {
     bool reconcileEth2(void);
     bool reconcileUsingTraces(bigint_t prevEndBal);
 
-    bigint_t begBalDiff_internal(void) const;
-    bigint_t endBalCalc_internal(void) const;
-    bigint_t endBalDiff_internal(void) const;
-    bigint_t totalIn_internal(void) const;
-    bigint_t totalOut_internal(void) const;
-    bigint_t totalOutLessGas_internal(void) const;
-    bigint_t amountNet_internal(void) const;
-    bool reconciled_internal(void) const;
+    bigint_t begBalDiff(void) const;
+    bigint_t endBalCalc(void) const;
+    bigint_t endBalDiff(void) const;
+    bigint_t totalIn(void) const;
+    bigint_t totalOut(void) const;
+    bigint_t totalOutLessGas(void) const;
+    bigint_t amountNet(void) const;
+    bool reconciled(void) const;
 
     CReconciliation& operator+=(const CReconciliation& r);
-    bool readBackLevel_old(CArchive& archive);
     // EXISTING_CODE
     bool operator==(const CReconciliation& it) const;
     bool operator!=(const CReconciliation& it) const {
@@ -161,7 +151,6 @@ inline void CReconciliation::initialize(void) {
     logIndex = 0;
     transactionHash = "";
     timestamp = 0;
-    date = earliestDate;
     assetAddr = "";
     assetSymbol = "";
     decimals = 18;
@@ -171,13 +160,10 @@ inline void CReconciliation::initialize(void) {
     sender = "";
     recipient = "";
     begBal = 0;
-    amountNet = 0;
     endBal = 0;
     encoding = "";
     signature = "";
     reconciliationType = "";
-    reconciled = false;
-    totalIn = 0;
     amountIn = 0;
     internalIn = 0;
     selfDestructIn = 0;
@@ -186,17 +172,12 @@ inline void CReconciliation::initialize(void) {
     minerTxFeeIn = 0;
     minerUncleRewardIn = 0;
     prefundIn = 0;
-    totalOut = 0;
     amountOut = 0;
     internalOut = 0;
     selfDestructOut = 0;
     gasOut = 0;
-    totalOutLessGas = 0;
     prevAppBlk = 0;
     prevBal = 0;
-    begBalDiff = 0;
-    endBalDiff = 0;
-    endBalCalc = 0;
 
     // EXISTING_CODE
     nextAppBlk = 0;
@@ -214,7 +195,6 @@ inline void CReconciliation::duplicate(const CReconciliation& re) {
     logIndex = re.logIndex;
     transactionHash = re.transactionHash;
     timestamp = re.timestamp;
-    date = re.date;
     assetAddr = re.assetAddr;
     assetSymbol = re.assetSymbol;
     decimals = re.decimals;
@@ -224,13 +204,10 @@ inline void CReconciliation::duplicate(const CReconciliation& re) {
     sender = re.sender;
     recipient = re.recipient;
     begBal = re.begBal;
-    amountNet = re.amountNet;
     endBal = re.endBal;
     encoding = re.encoding;
     signature = re.signature;
     reconciliationType = re.reconciliationType;
-    reconciled = re.reconciled;
-    totalIn = re.totalIn;
     amountIn = re.amountIn;
     internalIn = re.internalIn;
     selfDestructIn = re.selfDestructIn;
@@ -239,17 +216,12 @@ inline void CReconciliation::duplicate(const CReconciliation& re) {
     minerTxFeeIn = re.minerTxFeeIn;
     minerUncleRewardIn = re.minerUncleRewardIn;
     prefundIn = re.prefundIn;
-    totalOut = re.totalOut;
     amountOut = re.amountOut;
     internalOut = re.internalOut;
     selfDestructOut = re.selfDestructOut;
     gasOut = re.gasOut;
-    totalOutLessGas = re.totalOutLessGas;
     prevAppBlk = re.prevAppBlk;
     prevBal = re.prevBal;
-    begBalDiff = re.begBalDiff;
-    endBalDiff = re.endBalDiff;
-    endBalCalc = re.endBalCalc;
 
     // EXISTING_CODE
     nextAppBlk = re.nextAppBlk;

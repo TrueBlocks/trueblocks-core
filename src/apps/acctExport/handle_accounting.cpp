@@ -52,7 +52,7 @@ bool COptions::process_reconciliation(CTraverser* trav) {
     ethStatement.nextAppBlk = trav->index < monApps.size() - 1 ? monApps[trav->index + 1].blk : NOPOS;
     ethStatement.reconcileEth(prevStatements[ethKey]);
     ethStatement.spotPrice = getPriceInUsd(FAKE_ETH_ADDRESS, ethStatement.priceSource, trav->trans.blockNumber);
-    if (ethStatement.amountNet_internal() != 0) {
+    if (ethStatement.amountNet() != 0) {
         trav->trans.statements.push_back(ethStatement);
     }
     prevStatements[ethKey] = ethStatement;
@@ -91,10 +91,8 @@ bool COptions::process_reconciliation(CTraverser* trav) {
             if (tokStatement.begBal != tokStatement.endBal) {
                 if (tokStatement.begBal > tokStatement.endBal) {
                     tokStatement.amountOut = (tokStatement.begBal - tokStatement.endBal);
-                    tokStatement.reconciled = transfer.amount == str_2_BigUint(bni_2_Str(tokStatement.amountOut));
                 } else {
                     tokStatement.amountIn = (tokStatement.endBal - tokStatement.begBal);
-                    tokStatement.reconciled = transfer.amount == str_2_BigUint(bni_2_Str(tokStatement.amountIn));
                 }
                 tokStatement.reconciliationType = "token";
                 tokStatement.spotPrice =
@@ -267,7 +265,7 @@ bool COptions::readReconsFromCache(CTraverser* trav) {
 //-----------------------------------------------------------------------
 bool COptions::isReconciled(CTraverser* trav, CReconciliation& which) const {
     for (auto recon : trav->trans.statements) {
-        if (!recon.reconciled_internal()) {
+        if (!recon.reconciled()) {
             which = recon;
             return false;
         }
