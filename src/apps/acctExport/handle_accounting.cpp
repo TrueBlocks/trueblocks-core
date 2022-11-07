@@ -71,6 +71,10 @@ bool COptions::process_statements(CTraverser* trav) {
             string tokenKey = statementKey(accountedFor.address, tokStatement.assetAddr);
             if (prevStatements[tokenKey].assetAddr.empty()) {
                 CReconciliation pBal = tokStatement;
+                pBal.pTransaction = &trav->trans;
+                pBal.blockNumber = trav->trans.blockNumber == 0 ? 0 : trav->trans.blockNumber - 1;
+                pBal.endBal = getTokenBalanceAt(tokStatement.assetAddr, accountedFor.address, pBal.blockNumber);
+                pBal.spotPrice = getPriceInUsd(tokStatement.assetAddr, pBal.priceSource, pBal.blockNumber);
                 prevStatements[tokenKey] = pBal;
             }
 
