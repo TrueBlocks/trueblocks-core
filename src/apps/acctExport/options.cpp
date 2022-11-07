@@ -229,9 +229,6 @@ bool COptions::parseArguments(string_q& command) {
     if (accounting && !isArchiveNode())
         return usage("The --accounting option requires historical balances which your RPC server does not provide.");
 
-    if ((appearances + logs + receipts + traces + statements + neighbors + accounting) > 1)
-        return usage("Please export only one of list, receipts, statements, logs, or traces.");
-
     for (auto e : emitter)
         logFilter.emitters.push_back(e);
 
@@ -538,7 +535,7 @@ bool COptions::setDisplayFormatting(void) {
         if (accounting) {
             articulate = true;
             manageFields("CTransaction:statements", true);
-            if (statements) {
+            if (statements && isText) {
                 string_q format =
                     getGlobalConfig("acctExport")->getConfigStr("display", "statement", STR_DISPLAY_RECONCILIATION);
                 expContext().fmtMap["header"] = noHeader ? "" : cleanFmt(format);
