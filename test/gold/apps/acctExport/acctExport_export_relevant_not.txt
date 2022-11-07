@@ -1,8 +1,6 @@
-chifra export  0x9531c059098e3d194ff87febb587ab07b30b1306 --logs --last_block 10272064 --articulate --cache --fmt csv
+chifra export  0x9531c059098e3d194ff87febb587ab07b30b1306 --logs --last_block 10272064 --fmt csv
 TEST[DATE|TIME] Addrs:  [0x9531c059098e3d194ff87febb587ab07b30b1306]
 TEST[DATE|TIME] Logs:  true
-TEST[DATE|TIME] Articulate:  true
-TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] LastBlock:  10272064
 TEST[DATE|TIME] Format:  csv
 "blockNumber","transactionIndex","logIndex","transactionHash","timestamp","address","topic0","topic1","topic2","topic3","data","compressedLog"

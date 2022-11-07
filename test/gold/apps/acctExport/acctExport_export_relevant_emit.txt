@@ -1,8 +1,6 @@
-chifra export  0x9531c059098e3d194ff87febb587ab07b30b1306 --logs --last_block 10272064 --emitter 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 --articulate --cache --fmt csv --relevant
+chifra export  0x9531c059098e3d194ff87febb587ab07b30b1306 --logs --last_block 10272064 --emitter 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 --fmt csv --relevant
 TEST[DATE|TIME] Addrs:  [0x9531c059098e3d194ff87febb587ab07b30b1306]
 TEST[DATE|TIME] Logs:  true
-TEST[DATE|TIME] Articulate:  true
-TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Relevant:  true
 TEST[DATE|TIME] Emitter:  [0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359]
 TEST[DATE|TIME] LastBlock:  10272064
