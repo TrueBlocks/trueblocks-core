@@ -37,9 +37,9 @@ static const COption params[] = {
     COption("receipts", "r", "", OPT_SWITCH, "export receipts instead of transactional data"),
     COption("logs", "l", "", OPT_SWITCH, "export logs instead of transactional data"),
     COption("traces", "t", "", OPT_SWITCH, "export traces instead of transactional data"),
-    COption("statements", "A", "", OPT_SWITCH, "export reconciliations instead of transactional data (assumes --accounting option)"),  // NOLINT
     COption("neighbors", "n", "", OPT_SWITCH, "export the neighbors of the given address"),
     COption("accounting", "C", "", OPT_SWITCH, "attach accounting records to the exported data (applies to transactions export only)"),  // NOLINT
+    COption("statements", "A", "", OPT_SWITCH, "for the accounting options only, export only statements"),
     COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
     COption("cache", "i", "", OPT_SWITCH, "write transactions to the cache (see notes)"),
     COption("cache_traces", "R", "", OPT_SWITCH, "write traces to the cache (see notes)"),
@@ -49,8 +49,8 @@ static const COption params[] = {
     COption("relevant", "", "", OPT_SWITCH, "for log and accounting export only, export only logs relevant to one of the given export addresses"),  // NOLINT
     COption("emitter", "", "list<addr>", OPT_FLAG, "for log export only, export only logs if emitted by one of these address(es)"),  // NOLINT
     COption("topic", "", "list<topic>", OPT_FLAG, "for log export only, export only logs with this topic(s)"),
-    COption("asset", "", "list<addr>", OPT_FLAG, "for the statements option only, export only reconciliations for this asset"),  // NOLINT
-    COption("flow", "f", "enum[in|out|zero]", OPT_FLAG, "for the statements option only, export only statements with incoming value or outgoing value"),  // NOLINT
+    COption("asset", "", "list<addr>", OPT_FLAG, "for the accounting options only, export statements only for this asset"),  // NOLINT
+    COption("flow", "f", "enum[in|out|zero]", OPT_FLAG, "for the accounting options only, export statements with incoming, outgoing, or zero value"),  // NOLINT
     COption("factory", "y", "", OPT_SWITCH, "scan for contract creations from the given address(es) and report address of those contracts"),  // NOLINT
     COption("load", "", "<string>", OPT_HIDDEN | OPT_FLAG, "a comma separated list of dynamic traversers to load"),
     COption("reversed", "", "", OPT_HIDDEN | OPT_SWITCH, "produce results in reverse chronological order"),
@@ -115,14 +115,14 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-t" || arg == "--traces") {
             traces = true;
 
-        } else if (arg == "-A" || arg == "--statements") {
-            statements = true;
-
         } else if (arg == "-n" || arg == "--neighbors") {
             neighbors = true;
 
         } else if (arg == "-C" || arg == "--accounting") {
             accounting = true;
+
+        } else if (arg == "-A" || arg == "--statements") {
+            statements = true;
 
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
@@ -345,9 +345,9 @@ void COptions::Init(void) {
     receipts = false;
     logs = false;
     traces = false;
-    statements = false;
     neighbors = false;
     accounting = false;
+    statements = false;
     articulate = false;
     // clang-format off
     cache = getGlobalConfig("acctExport")->getConfigBool("settings", "cache", false);

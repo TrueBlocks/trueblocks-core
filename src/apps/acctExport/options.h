@@ -59,9 +59,9 @@ class COptions : public CAbiOptions {
     bool receipts;
     bool logs;
     bool traces;
-    bool statements;
     bool neighbors;
     bool accounting;
+    bool statements;
     bool articulate;
     bool cache;
     bool cache_traces;
