@@ -455,7 +455,7 @@ bool CReconciliation::Serialize(CArchive& archive) {
     archive >> logIndex;
     archive >> transactionHash;
     archive >> timestamp;
-    archive >> date;
+    // archive >> date;
     archive >> assetAddr;
     archive >> assetSymbol;
     archive >> decimals;
@@ -465,13 +465,13 @@ bool CReconciliation::Serialize(CArchive& archive) {
     archive >> sender;
     archive >> recipient;
     archive >> begBal;
-    archive >> amountNet;
+    // archive >> amountNet;
     archive >> endBal;
     archive >> encoding;
     archive >> signature;
     archive >> reconciliationType;
-    archive >> reconciled;
-    archive >> totalIn;
+    // archive >> reconciled;
+    // archive >> totalIn;
     archive >> amountIn;
     archive >> internalIn;
     archive >> selfDestructIn;
@@ -480,17 +480,17 @@ bool CReconciliation::Serialize(CArchive& archive) {
     archive >> minerTxFeeIn;
     archive >> minerUncleRewardIn;
     archive >> prefundIn;
-    archive >> totalOut;
+    // archive >> totalOut;
     archive >> amountOut;
     archive >> internalOut;
     archive >> selfDestructOut;
     archive >> gasOut;
-    archive >> totalOutLessGas;
+    // archive >> totalOutLessGas;
     archive >> prevAppBlk;
     archive >> prevBal;
-    archive >> begBalDiff;
-    archive >> endBalDiff;
-    archive >> endBalCalc;
+    // archive >> begBalDiff;
+    // archive >> endBalDiff;
+    // archive >> endBalCalc;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -509,7 +509,7 @@ bool CReconciliation::SerializeC(CArchive& archive) const {
     archive << logIndex;
     archive << transactionHash;
     archive << timestamp;
-    archive << date;
+    // archive << date;
     archive << assetAddr;
     archive << assetSymbol;
     archive << decimals;
@@ -519,13 +519,13 @@ bool CReconciliation::SerializeC(CArchive& archive) const {
     archive << sender;
     archive << recipient;
     archive << begBal;
-    archive << amountNet;
+    // archive << amountNet;
     archive << endBal;
     archive << encoding;
     archive << signature;
     archive << reconciliationType;
-    archive << reconciled;
-    archive << totalIn;
+    // archive << reconciled;
+    // archive << totalIn;
     archive << amountIn;
     archive << internalIn;
     archive << selfDestructIn;
@@ -534,17 +534,17 @@ bool CReconciliation::SerializeC(CArchive& archive) const {
     archive << minerTxFeeIn;
     archive << minerUncleRewardIn;
     archive << prefundIn;
-    archive << totalOut;
+    // archive << totalOut;
     archive << amountOut;
     archive << internalOut;
     archive << selfDestructOut;
     archive << gasOut;
-    archive << totalOutLessGas;
+    // archive << totalOutLessGas;
     archive << prevAppBlk;
     archive << prevBal;
-    archive << begBalDiff;
-    archive << endBalDiff;
-    archive << endBalCalc;
+    // archive << begBalDiff;
+    // archive << endBalDiff;
+    // archive << endBalCalc;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -600,6 +600,7 @@ void CReconciliation::registerClass(void) {
     ADD_FIELD(CReconciliation, "transactionHash", T_HASH | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "timestamp", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CReconciliation, "date", T_DATE, ++fieldNum);
+    HIDE_FIELD(CReconciliation, "date");
     ADD_FIELD(CReconciliation, "assetAddr", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "assetSymbol", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "decimals", T_UNUMBER, ++fieldNum);
@@ -610,12 +611,15 @@ void CReconciliation::registerClass(void) {
     ADD_FIELD(CReconciliation, "recipient", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "begBal", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "amountNet", T_INT256, ++fieldNum);
+    HIDE_FIELD(CReconciliation, "amountNet");
     ADD_FIELD(CReconciliation, "endBal", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "encoding", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "signature", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "reconciliationType", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "reconciled", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CReconciliation, "reconciled");
     ADD_FIELD(CReconciliation, "totalIn", T_INT256, ++fieldNum);
+    HIDE_FIELD(CReconciliation, "totalIn");
     ADD_FIELD(CReconciliation, "amountIn", T_INT256 | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "internalIn", T_INT256 | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "selfDestructIn", T_INT256 | TS_OMITEMPTY, ++fieldNum);
@@ -625,16 +629,21 @@ void CReconciliation::registerClass(void) {
     ADD_FIELD(CReconciliation, "minerUncleRewardIn", T_INT256 | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "prefundIn", T_INT256 | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "totalOut", T_INT256, ++fieldNum);
+    HIDE_FIELD(CReconciliation, "totalOut");
     ADD_FIELD(CReconciliation, "amountOut", T_INT256 | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "internalOut", T_INT256 | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "selfDestructOut", T_INT256 | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "gasOut", T_INT256 | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "totalOutLessGas", T_INT256, ++fieldNum);
+    HIDE_FIELD(CReconciliation, "totalOutLessGas");
     ADD_FIELD(CReconciliation, "prevAppBlk", T_BLOCKNUM | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "prevBal", T_INT256 | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "begBalDiff", T_INT256 | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CReconciliation, "begBalDiff");
     ADD_FIELD(CReconciliation, "endBalDiff", T_INT256 | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CReconciliation, "endBalDiff");
     ADD_FIELD(CReconciliation, "endBalCalc", T_INT256 | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CReconciliation, "endBalCalc");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CReconciliation, "schema");
@@ -646,6 +655,15 @@ void CReconciliation::registerClass(void) {
 
     // EXISTING_CODE
     SET_TYPE(CReconciliation, "reconciled", T_BOOL);  // remove TS_OMITEMPTY
+    UNHIDE_FIELD(CReconciliation, "date");
+    UNHIDE_FIELD(CReconciliation, "amountNet");
+    UNHIDE_FIELD(CReconciliation, "reconciled");
+    UNHIDE_FIELD(CReconciliation, "totalIn");
+    UNHIDE_FIELD(CReconciliation, "totalOut");
+    UNHIDE_FIELD(CReconciliation, "totalOutLessGas");
+    UNHIDE_FIELD(CReconciliation, "begBalDiff");
+    UNHIDE_FIELD(CReconciliation, "endBalDiff");
+    UNHIDE_FIELD(CReconciliation, "endBalCalc");
     // EXISTING_CODE
 }
 
