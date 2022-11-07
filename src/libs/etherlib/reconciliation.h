@@ -28,24 +28,22 @@ class CReconciliation : public CBaseNode {
   public:
     blknum_t blockNumber;
     blknum_t transactionIndex;
+    blknum_t logIndex;
     hash_t transactionHash;
     timestamp_t timestamp;
-    time_q date;
-    address_t accountedFor;
-    address_t sender;
-    address_t recipient;
     address_t assetAddr;
     string_q assetSymbol;
     uint64_t decimals;
-    blknum_t prevAppBlk;
-    bigint_t prevBal;
+    double spotPrice;
+    string_q priceSource;
+    address_t accountedFor;
+    address_t sender;
+    address_t recipient;
     bigint_t begBal;
-    bigint_t begBalDiff;
-    bigint_t amountNet;
     bigint_t endBal;
-    bigint_t endBalCalc;
-    bigint_t endBalDiff;
-    bigint_t totalIn;
+    string_q encoding;
+    string_q signature;
+    string_q reconciliationType;
     bigint_t amountIn;
     bigint_t internalIn;
     bigint_t selfDestructIn;
@@ -54,16 +52,12 @@ class CReconciliation : public CBaseNode {
     bigint_t minerTxFeeIn;
     bigint_t minerUncleRewardIn;
     bigint_t prefundIn;
-    bigint_t totalOut;
-    bigint_t totalOutLessGas;
     bigint_t amountOut;
     bigint_t internalOut;
     bigint_t selfDestructOut;
-    bigint_t gasCostOut;
-    double spotPrice;
-    string_q priceSource;
-    string_q reconciliationType;
-    bool reconciled;
+    bigint_t gasOut;
+    blknum_t prevAppBlk;
+    bigint_t prevBal;
 
   public:
     CReconciliation(void);
@@ -90,17 +84,16 @@ class CReconciliation : public CBaseNode {
     bool reconcileEth2(void);
     bool reconcileUsingTraces(bigint_t prevEndBal);
 
-    bigint_t begBalDiff_internal(void) const;
-    bigint_t endBalCalc_internal(void) const;
-    bigint_t endBalDiff_internal(void) const;
-    bigint_t totalIn_internal(void) const;
-    bigint_t totalOut_internal(void) const;
-    bigint_t totalOutLessGas_internal(void) const;
-    bigint_t amountNet_internal(void) const;
-    bool reconciled_internal(void) const;
+    bigint_t begBalDiff(void) const;
+    bigint_t endBalCalc(void) const;
+    bigint_t endBalDiff(void) const;
+    bigint_t totalIn(void) const;
+    bigint_t totalOut(void) const;
+    bigint_t totalOutLessGas(void) const;
+    bigint_t amountNet(void) const;
+    bool reconciled(void) const;
 
     CReconciliation& operator+=(const CReconciliation& r);
-    bool readBackLevel_old(CArchive& archive);
     // EXISTING_CODE
     bool operator==(const CReconciliation& it) const;
     bool operator!=(const CReconciliation& it) const {
@@ -155,24 +148,22 @@ inline void CReconciliation::initialize(void) {
 
     blockNumber = 0;
     transactionIndex = 0;
+    logIndex = 0;
     transactionHash = "";
     timestamp = 0;
-    date = earliestDate;
-    accountedFor = "";
-    sender = "";
-    recipient = "";
     assetAddr = "";
     assetSymbol = "";
     decimals = 18;
-    prevAppBlk = 0;
-    prevBal = 0;
+    spotPrice = 1.0;
+    priceSource = "";
+    accountedFor = "";
+    sender = "";
+    recipient = "";
     begBal = 0;
-    begBalDiff = 0;
-    amountNet = 0;
     endBal = 0;
-    endBalCalc = 0;
-    endBalDiff = 0;
-    totalIn = 0;
+    encoding = "";
+    signature = "";
+    reconciliationType = "";
     amountIn = 0;
     internalIn = 0;
     selfDestructIn = 0;
@@ -181,16 +172,12 @@ inline void CReconciliation::initialize(void) {
     minerTxFeeIn = 0;
     minerUncleRewardIn = 0;
     prefundIn = 0;
-    totalOut = 0;
-    totalOutLessGas = 0;
     amountOut = 0;
     internalOut = 0;
     selfDestructOut = 0;
-    gasCostOut = 0;
-    spotPrice = 1.0;
-    priceSource = "";
-    reconciliationType = "";
-    reconciled = false;
+    gasOut = 0;
+    prevAppBlk = 0;
+    prevBal = 0;
 
     // EXISTING_CODE
     nextAppBlk = 0;
@@ -205,24 +192,22 @@ inline void CReconciliation::duplicate(const CReconciliation& re) {
 
     blockNumber = re.blockNumber;
     transactionIndex = re.transactionIndex;
+    logIndex = re.logIndex;
     transactionHash = re.transactionHash;
     timestamp = re.timestamp;
-    date = re.date;
-    accountedFor = re.accountedFor;
-    sender = re.sender;
-    recipient = re.recipient;
     assetAddr = re.assetAddr;
     assetSymbol = re.assetSymbol;
     decimals = re.decimals;
-    prevAppBlk = re.prevAppBlk;
-    prevBal = re.prevBal;
+    spotPrice = re.spotPrice;
+    priceSource = re.priceSource;
+    accountedFor = re.accountedFor;
+    sender = re.sender;
+    recipient = re.recipient;
     begBal = re.begBal;
-    begBalDiff = re.begBalDiff;
-    amountNet = re.amountNet;
     endBal = re.endBal;
-    endBalCalc = re.endBalCalc;
-    endBalDiff = re.endBalDiff;
-    totalIn = re.totalIn;
+    encoding = re.encoding;
+    signature = re.signature;
+    reconciliationType = re.reconciliationType;
     amountIn = re.amountIn;
     internalIn = re.internalIn;
     selfDestructIn = re.selfDestructIn;
@@ -231,16 +216,12 @@ inline void CReconciliation::duplicate(const CReconciliation& re) {
     minerTxFeeIn = re.minerTxFeeIn;
     minerUncleRewardIn = re.minerUncleRewardIn;
     prefundIn = re.prefundIn;
-    totalOut = re.totalOut;
-    totalOutLessGas = re.totalOutLessGas;
     amountOut = re.amountOut;
     internalOut = re.internalOut;
     selfDestructOut = re.selfDestructOut;
-    gasCostOut = re.gasCostOut;
-    spotPrice = re.spotPrice;
-    priceSource = re.priceSource;
-    reconciliationType = re.reconciliationType;
-    reconciled = re.reconciled;
+    gasOut = re.gasOut;
+    prevAppBlk = re.prevAppBlk;
+    prevBal = re.prevBal;
 
     // EXISTING_CODE
     nextAppBlk = re.nextAppBlk;

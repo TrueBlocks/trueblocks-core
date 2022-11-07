@@ -151,7 +151,7 @@ bool display(CTraverser* trav, void* data) {
                     }
                 }
             } else {
-                LOG_WARN("Cannot find recon: ", path);
+                LOG_WARN("Cannot find statement: ", path);
             }
         } else {
             cerr << "Invalid results from uni at block " << tt->app->blk << "\r";

@@ -23,7 +23,7 @@ transactions?transactions=5218355.232&reconcile=0x7fd5c846121bed2e2e46a55f992e35
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "214832000000000",
+      "gasCost": "214832000000000",
       "reconciliationType": "regular",
       "spotPrice": 766.95,
       "priceSource": "maker",

@@ -117,7 +117,7 @@ params.size: 2
   "amountOut": "500.0000000",
   "internalOut": "",
   "selfDestructOut": "",
-  "gasCostOut": "",
+  "gasCost": "",
   "spotPrice": 1.00000,
   "priceSource": "stable-coin",
   "reconciled": true
@@ -230,7 +230,7 @@ params.size: 2
   "amountOut": "7000.0000000",
   "internalOut": "",
   "selfDestructOut": "",
-  "gasCostOut": "",
+  "gasCost": "",
   "spotPrice": 1.00000,
   "priceSource": "stable-coin",
   "reconciled": true

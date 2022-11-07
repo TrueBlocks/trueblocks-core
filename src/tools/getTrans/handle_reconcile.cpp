@@ -19,17 +19,17 @@ bool visitReconciliation(CTransaction& trans, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
     bool isText = (expContext().exportFmt & (TXT1 | CSV1));
 
-    CReconciliation recon(opt->account_for, &trans);
-    recon.reconcileEth2();
+    CReconciliation statement(opt->account_for, &trans);
+    statement.reconcileEth2();
 
     if (isText) {
-        cout << trim(recon.Format(expContext().fmtMap["format"]), '\t') << endl;
+        cout << trim(statement.Format(expContext().fmtMap["format"]), '\t') << endl;
     } else {
         if (!opt->firstOut)
             cout << ",";
         cout << "  ";
         indent();
-        recon.toJson(cout);
+        statement.toJson(cout);
         unindent();
         opt->firstOut = false;
     }

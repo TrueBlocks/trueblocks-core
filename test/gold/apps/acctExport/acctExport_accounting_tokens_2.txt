@@ -1,11 +1,17 @@
+<<<<<<< HEAD
 chifra export  0x9531c059098e3d194ff87febb587ab07b30b1306 --accounting --last_block 9231343 --articulate --ether --fmt json
 TEST[DATE|TIME] Addrs:  [0x9531c059098e3d194ff87febb587ab07b30b1306]
+=======
+chifra export  0x001d14804b399c6ef80e64576f657660804fec0b --accounting --last_block 9231343 --articulate --ether --fmt json
+TEST[DATE|TIME] Addrs:  [0x001d14804b399c6ef80e64576f657660804fec0b]
+>>>>>>> 5d5ce1692be78416ae59fd0e5bdbdad2f6ff23df
 TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] Articulate:  true
 TEST[DATE|TIME] LastBlock:  9231343
 TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] Format:  json
 { "data": [
+<<<<<<< HEAD
 TIME ~ CLOCK - <INFO>  : Calling a contract (0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f) at block 8588354 prior to its deployment 10000835
 TIME ~ CLOCK - <INFO>  : doEthCall in CUniPrice::findPair returned false
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 8588354...: 
@@ -93,12 +99,101 @@ params.size: 2
   "value": 4206913370000000,
   "gas": 21000,
   "gasPrice": 18000000000,
+=======
+TIME ~ CLOCK - <INFO>  : Calling a contract (0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f) at block 0 prior to its deployment 10000835
+TIME ~ CLOCK - <INFO>  : doEthCall in CUniPrice::findPair returned false
+TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 0...: 
+TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 0 at four-byte 0x59e02dd7 returned 0x
+params.size: 0
+==================================================
+
+{
+  "hash": "0x0",
+  "blockHash": "0x0",
+  "blockNumber": 0,
+  "transactionIndex": 2,
+  "timestamp": 1438269975,
+  "from": "0xPrefund",
+  "to": "0x001d14804b399c6ef80e64576f657660804fec0b",
+  "value": 4200000000000000000000,
+  "gas": 0,
+  "gasPrice": 0,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
+  "isError": 0,
+  "hasToken": 0,
+  "statements": [
+    {
+      "blockNumber": 0,
+      "transactionIndex": 2,
+      "logIndex": 0,
+      "transactionHash": "0x0",
+      "timestamp": 1438269975,
+      "date": "2015-07-30 15:26:15 UTC",
+      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetSymbol": "ETH",
+      "decimals": 18,
+      "spotPrice": 1.00000,
+      "priceSource": "not-priced",
+      "accountedFor": "0x001d14804b399c6ef80e64576f657660804fec0b",
+      "sender": "0xPrefund",
+      "recipient": "0x001d14804b399c6ef80e64576f657660804fec0b",
+      "begBal": "",
+      "amountNet": "4200.0000000",
+      "endBal": "4200.0000000",
+      "reconciliationType": "by-trace",
+      "reconciled": true,
+      "totalIn": "4200.0000000",
+      "amountIn": "",
+      "internalIn": "",
+      "selfDestructIn": "",
+      "minerBaseRewardIn": "",
+      "minerNephewRewardIn": "",
+      "minerTxFeeIn": "",
+      "minerUncleRewardIn": "",
+      "prefundIn": "4200.0000000",
+      "totalOut": "",
+      "amountOut": "",
+      "internalOut": "",
+      "selfDestructOut": "",
+      "gasOut": "",
+      "totalOutLessGas": "",
+      "prevAppBlk": 0,
+      "prevBal": "",
+      "begBalDiff": "",
+      "endBalDiff": "",
+      "endBalCalc": "4200.0000000"
+    }
+  ],
+  "gasCost": 0,
+  "gasUsed": 0,
+  "date": "2015-07-30 15:26:15 UTC",
+  "ether": 4200.000000000000000000
+}
+TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 202249...: 
+TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 202249 at four-byte 0x59e02dd7 returned 0x
+params.size: 0
+==================================================
+
+, {
+  "hash": "0x6e443af86a84920cace198340020e4ca54321a2c515cd3ad1f274d3506b4aff8",
+  "blockHash": "0x1816ff22f84af23df70df8e6ae5c40a8780c16a0860ca1a25a4c911eba76c65a",
+  "blockNumber": 202249,
+  "transactionIndex": 0,
+  "timestamp": 1441703356,
+  "from": "0x001d14804b399c6ef80e64576f657660804fec0b",
+  "to": "0x2910543af39aba0cd09dbb2d50200b3e800a63d2",
+  "value": 4199900000000000000000,
+  "gas": 50000,
+  "gasPrice": 1171602790622,
+>>>>>>> 5d5ce1692be78416ae59fd0e5bdbdad2f6ff23df
   "maxFeePerGas": 0,
   "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
   "receipt": {
     "contractAddress": "0x0",
+<<<<<<< HEAD
     "gasUsed": 21000,
     "effectiveGasPrice": 18000000000,
     "status": 1
@@ -349,6 +444,34 @@ params.size: 2
       "endBal": "0.004159802370000000",
       "endBalCalc": "0.004159802370000000",
       "endBalDiff": "",
+=======
+    "gasUsed": 21612,
+    "effectiveGasPrice": 1171602790622,
+    "status": null
+  },
+  "compressedTx": "message:EN4V1GTB8",
+  "statements": [
+    {
+      "blockNumber": 202249,
+      "transactionIndex": 0,
+      "logIndex": 0,
+      "transactionHash": "0x6e443af86a84920cace198340020e4ca54321a2c515cd3ad1f274d3506b4aff8",
+      "timestamp": 1441703356,
+      "date": "2015-09-08 09:09:16 UTC",
+      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetSymbol": "ETH",
+      "decimals": 18,
+      "spotPrice": 1.00000,
+      "priceSource": "not-priced",
+      "accountedFor": "0x001d14804b399c6ef80e64576f657660804fec0b",
+      "sender": "0x001d14804b399c6ef80e64576f657660804fec0b",
+      "recipient": "0x2910543af39aba0cd09dbb2d50200b3e800a63d2",
+      "begBal": "4200.0000000",
+      "amountNet": "-4199.925320679510922664",
+      "endBal": "0.074679320489077336",
+      "reconciliationType": "regular",
+      "reconciled": true,
+>>>>>>> 5d5ce1692be78416ae59fd0e5bdbdad2f6ff23df
       "totalIn": "",
       "amountIn": "",
       "internalIn": "",
@@ -358,6 +481,7 @@ params.size: 2
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
+<<<<<<< HEAD
       "totalOut": "0.000047111000000000",
       "totalOutLessGas": "",
       "amountOut": "",
@@ -835,6 +959,42 @@ params.size: 2
   "value": 13370000000,
   "gas": 21000,
   "gasPrice": 1000000000,
+=======
+      "totalOut": "4199.925320679510922664",
+      "amountOut": "4199.900000000000000000",
+      "internalOut": "",
+      "selfDestructOut": "",
+      "gasOut": "0.025320679510922664",
+      "totalOutLessGas": "4199.900000000000000000",
+      "prevAppBlk": 0,
+      "prevBal": "4200.0000000",
+      "begBalDiff": "",
+      "endBalDiff": "",
+      "endBalCalc": "0.074679320489077336"
+    }
+  ],
+  "gasCost": 25320679510922664,
+  "gasUsed": 21612,
+  "date": "2015-09-08 09:09:16 UTC",
+  "ether": 4199.900000000000000000
+}
+TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1501459...: 
+TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1501459 at four-byte 0x59e02dd7 returned 0x
+params.size: 0
+==================================================
+
+, {
+  "hash": "0xe1822bdf66fb415883f85b61a4a5ab1c13c4c7ab4b102c5d00504347a69b84f5",
+  "blockHash": "0x66b5597c4a991decb68f56b94245a93485e4a30a3d77f95e6c32a3d4f91e2051",
+  "blockNumber": 1501459,
+  "transactionIndex": 2,
+  "timestamp": 1463025233,
+  "from": "0x001d14804b399c6ef80e64576f657660804fec0b",
+  "to": "0xcfab9ac2bb2e1dcfc2d50f01f4e61f2f72fb5902",
+  "value": 74259320489077336,
+  "gas": 21000,
+  "gasPrice": 20000000000,
+>>>>>>> 5d5ce1692be78416ae59fd0e5bdbdad2f6ff23df
   "maxFeePerGas": 0,
   "maxPriorityFeePerGas": 0,
   "isError": 0,
@@ -842,12 +1002,18 @@ params.size: 2
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 21000,
+<<<<<<< HEAD
     "effectiveGasPrice": 1000000000,
     "status": 1
+=======
+    "effectiveGasPrice": 20000000000,
+    "status": null
+>>>>>>> 5d5ce1692be78416ae59fd0e5bdbdad2f6ff23df
   },
   "compressedTx": "0x()",
   "statements": [
     {
+<<<<<<< HEAD
       "blockNumber": 9220917,
       "transactionIndex": 133,
       "transactionHash": "0x7e65a0f9e7b551c16536f1ca9969ff38494a1ba6f93b6d833836a6bde07b0535",
@@ -1378,5 +1544,52 @@ params.size: 2
   "gasUsed": 25980,
   "date": "2020-01-07 04:38:16 UTC",
   "ether": 0.000000000000000000
+=======
+      "blockNumber": 1501459,
+      "transactionIndex": 2,
+      "logIndex": 0,
+      "transactionHash": "0xe1822bdf66fb415883f85b61a4a5ab1c13c4c7ab4b102c5d00504347a69b84f5",
+      "timestamp": 1463025233,
+      "date": "2016-05-12 03:53:53 UTC",
+      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetSymbol": "ETH",
+      "decimals": 18,
+      "spotPrice": 1.00000,
+      "priceSource": "not-priced",
+      "accountedFor": "0x001d14804b399c6ef80e64576f657660804fec0b",
+      "sender": "0x001d14804b399c6ef80e64576f657660804fec0b",
+      "recipient": "0xcfab9ac2bb2e1dcfc2d50f01f4e61f2f72fb5902",
+      "begBal": "0.074679320489077336",
+      "amountNet": "-0.074679320489077336",
+      "endBal": "",
+      "reconciliationType": "regular",
+      "reconciled": true,
+      "totalIn": "",
+      "amountIn": "",
+      "internalIn": "",
+      "selfDestructIn": "",
+      "minerBaseRewardIn": "",
+      "minerNephewRewardIn": "",
+      "minerTxFeeIn": "",
+      "minerUncleRewardIn": "",
+      "prefundIn": "",
+      "totalOut": "0.074679320489077336",
+      "amountOut": "0.074259320489077336",
+      "internalOut": "",
+      "selfDestructOut": "",
+      "gasOut": "0.000420000000000000",
+      "totalOutLessGas": "0.074259320489077336",
+      "prevAppBlk": 202249,
+      "prevBal": "0.074679320489077336",
+      "begBalDiff": "",
+      "endBalDiff": "",
+      "endBalCalc": ""
+    }
+  ],
+  "gasCost": 420000000000000,
+  "gasUsed": 21000,
+  "date": "2016-05-12 03:53:53 UTC",
+  "ether": 0.074259320489077336
+>>>>>>> 5d5ce1692be78416ae59fd0e5bdbdad2f6ff23df
 }
 ] }

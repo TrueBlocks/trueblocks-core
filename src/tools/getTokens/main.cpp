@@ -73,12 +73,12 @@ bool processPair(uint64_t blockNum, void* data) {
 
     static bool first = true;
     if (opt->modeBits & TOK_BALANCE) {
-        string_q val = getTokenBalanceOf(opt->curToken.address, opt->curToken.holder, blockNum);
-        if (val == "0" && opt->no_zero) {
+        bigint_t val = getTokenBalanceAt(opt->curToken.address, opt->curToken.holder, blockNum);
+        if (val == 0 && opt->no_zero) {
             LOG_INFO("Skipping: ", opt->curToken.holder, " at ", blockNum, "\r");
             return !shouldQuit();
         }
-        opt->curToken.setValueByName("balance", val);
+        opt->curToken.setValueByName("balance", bni_2_Str(val));
     }
     bool isText = expContext().exportFmt == TXT1 || expContext().exportFmt == CSV1;
     if (isText) {

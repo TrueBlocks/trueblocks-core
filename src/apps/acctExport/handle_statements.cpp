@@ -15,14 +15,21 @@
 //-----------------------------------------------------------------------
 bool statements_Display(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)data;
-    opt->process_reconciliation(trav);
 
-    for (auto statement : trav->trans.statements) {
-        if (opt->assetFilter.size() == 0 || opt->assetFilter[statement.assetAddr]) {
+    if (fourByteFilter(trav->trans.input, opt)) {
+        if (opt->relevant) {
+            for (auto& log : trav->trans.receipt.logs) {
+                log.m_showing = opt->isRelevant(log);
+            }
+        }
+
+        opt->process_statements(trav);
+
+        for (auto statement : trav->trans.statements) {
             bool checkFlow = !opt->flow.empty();
-            bool in = opt->flow == "in" && statement.amountNet_internal() > 0;
-            bool out = opt->flow == "out" && statement.amountNet_internal() < 0;
-            bool zero = opt->flow == "zero" && statement.amountNet_internal() == 0;
+            bool in = opt->flow == "in" && statement.amountNet() > 0;
+            bool out = opt->flow == "out" && statement.amountNet() < 0;
+            bool zero = opt->flow == "zero" && statement.amountNet() == 0;
             if (!checkFlow || in || out || zero) {
                 cout << ((isJson() && !opt->firstOut) ? ", " : "");
                 cout << statement;

@@ -22,7 +22,7 @@ namespace qblocks {
     LOG4("  ------------------------------");                                                                          \
     LOG4("  prevBal:       ", prevBal);                                                                                \
     LOG4("  begBal:        ", begBal);                                                                                 \
-    LOG4("  begBalDiff:    ", begBalDiff_internal());                                                                  \
+    LOG4("  begBalDiff:    ", begBalDiff());                                                                           \
     LOG4("  ------------------------------");                                                                          \
     LOG8("  amountIn:      ", amountIn);                                                                               \
     LOG8("  internalIn:    ", internalIn);                                                                             \
@@ -32,29 +32,28 @@ namespace qblocks {
     LOG8("  minTxFeeIn:    ", minerTxFeeIn);                                                                           \
     LOG8("  minURwdIn:     ", minerUncleRewardIn);                                                                     \
     LOG8("  prefundIn:     ", prefundIn);                                                                              \
-    LOG4("  totalIn:       ", totalIn_internal());                                                                     \
+    LOG4("  totalIn:       ", totalIn());                                                                              \
     LOG8("  amountOut:     ", amountOut);                                                                              \
     LOG8("  internalOut:   ", internalOut);                                                                            \
     LOG8("  slfDstrctOt:   ", selfDestructOut);                                                                        \
-    LOG8("  gasCostOut:    ", gasCostOut);                                                                             \
-    LOG4("  totalOut:      ", totalOut_internal());                                                                    \
-    LOG4("  amountNet:     ", amountNet_internal());                                                                   \
+    LOG8("  gasOut:        ", gasOut);                                                                                 \
+    LOG4("  totalOut:      ", totalOut());                                                                             \
+    LOG4("  amountNet:     ", amountNet());                                                                            \
     LOG4("  endBal:        ", endBal);                                                                                 \
     LOG4("  ------------------------------");                                                                          \
-    LOG4("  endBalCalc:    ", endBalCalc_internal());                                                                  \
-    LOG4("  endBalDiff:    ", endBalDiff_internal());                                                                  \
-    LOG4("  regular-recon: ", reconciled_internal() ? "true" : "false");
+    LOG4("  endBalCalc:    ", endBalCalc());                                                                           \
+    LOG4("  endBalDiff:    ", endBalDiff());                                                                           \
+    LOG4("  reconciled:    ", reconciled() ? "true" : "false");
 
 //-----------------------------------------------------------------------
 bool CReconciliation::reconcileEth2(void) {
     CReconciliation prev;
     prev.blockNumber = blockNumber;
-    prev.pTransaction = pTransaction;
-    prev.endBal = pTransaction->blockNumber == 0 ? 0 : getBalanceAt(accountedFor, pTransaction->blockNumber - 1);
+    prev.endBal = blockNumber == 0 ? 0 : getBalanceAt(accountedFor, blockNumber - 1);
 
-    nextAppBlk = pTransaction->blockNumber + 1;
+    nextAppBlk = blockNumber + 1;
     bool ret = reconcileEth(prev);
-    spotPrice = getPriceInUsd(pTransaction->blockNumber, priceSource);
+    spotPrice = getPriceInUsd(FAKE_ETH_ADDRESS, priceSource, pTransaction->blockNumber);
     return ret;
 }
 
@@ -75,7 +74,7 @@ bool CReconciliation::reconcileEth(const CReconciliation& prevRecon) {
         sender = pTransaction->from;
         recipient = pTransaction->to;
         amountOut = pTransaction->isError ? 0 : pTransaction->value;
-        gasCostOut = str_2_BigInt(pTransaction->getValueByName("gasCost"));
+        gasOut = str_2_BigInt(pTransaction->getValueByName("gasCost"));
     }
 
     if (pTransaction->to == accountedFor) {
@@ -115,7 +114,7 @@ bool CReconciliation::reconcileEth(const CReconciliation& prevRecon) {
     }
 
     LOG_TRIAL_BALANCE();
-    if (reconciled_internal())
+    if (reconciled())
         return true;
 
     // Reconciliation failed, let's try to reconcile by traces
@@ -133,7 +132,7 @@ bool CReconciliation::reconcileEth(const CReconciliation& prevRecon) {
     } else if (prevDifferent) {
         // This tx has a tx after it in the same block but none before it
         begBal = balEOLB;
-        endBal = endBalCalc_internal();
+        endBal = endBalCalc();
         reconciliationType = "prevdiff-partial";
 
     } else if (nextDifferent) {
@@ -145,12 +144,12 @@ bool CReconciliation::reconcileEth(const CReconciliation& prevRecon) {
     } else {
         // this tx has both a tx before it and one after it in the same block
         begBal = prevRecon.endBal;
-        endBal = endBalCalc_internal();
+        endBal = endBalCalc();
         reconciliationType = "partial-partial";
     }
 
     LOG_TRIAL_BALANCE();
-    return reconciled_internal();
+    return reconciled();
 }
 
 //---------------------------------------------------------------------------
@@ -220,9 +219,9 @@ bool CReconciliation::reconcileUsingTraces(bigint_t prevEndBal) {
 
     reconciliationType = "by-trace";
     LOG_TRIAL_BALANCE();
-    if (!reconciled_internal())
+    if (!reconciled())
         ((CTransaction*)pTransaction)->traces.clear();  // NOLINT
-    return reconciled_internal();
+    return reconciled();
 }
 
 }  // namespace qblocks

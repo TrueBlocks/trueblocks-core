@@ -71,6 +71,13 @@ int main(int argc, const char* argv[]) {
 
             map<string_q, CTestCase> testMap;
             for (auto line : lines) {
+                if (getEnvStr("TEST_TEST_ONLY") == "true") {
+                    if (!startsWith(line, "test")) {
+                        replace(line, "on", "local");
+                    } else {
+                        replace(line, "test", "on");
+                    }
+                }
                 if (startsWith(line, "erigon"))
                     replace(line, "erigon", "local");
                 if (runLocal && startsWith(line, "local"))

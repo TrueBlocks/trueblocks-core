@@ -1,5 +1,3 @@
-// TODO: Reverse mode
-// TODO: collapse eth reconciliation into token reconconcilation by adding a CTransfer
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -17,7 +15,7 @@
 extern string_q getReconcilationPath(const address_t& address, const CTransaction* pT);
 extern string_q statementKey(const address_t& accountedFor, const address_t& assetAddr);
 //-----------------------------------------------------------------------
-bool COptions::process_reconciliation(CTraverser* trav) {
+bool COptions::process_statements(CTraverser* trav) {
     trav->trans.statements.clear();
 
     // If we can get the reconciliations from the cache, do so...
@@ -39,12 +37,11 @@ bool COptions::process_reconciliation(CTraverser* trav) {
     }
 
     if (prevStatements[ethKey].assetAddr.empty()) {
-        // TODO(tjayrush): Incorrect code follows
         CReconciliation prevStatement(accountedFor.address, prevAppBlk, NOPOS, trav->trans.timestamp, &trav->trans);
         // Balance and price before genesis block is always zero
         if (prevAppBlk > 0) {
             prevStatement.endBal = getBalanceAt(accountedFor.address, prevAppBlk);
-            prevStatement.spotPrice = getPriceInUsd(prevAppBlk, prevStatement.priceSource);
+            prevStatement.spotPrice = getPriceInUsd(FAKE_ETH_ADDRESS, prevStatement.priceSource, prevAppBlk);
         }
         prevStatements[ethKey] = prevStatement;
     }
@@ -52,8 +49,8 @@ bool COptions::process_reconciliation(CTraverser* trav) {
     CReconciliation ethStatement(accountedFor.address, &trav->trans);
     ethStatement.nextAppBlk = trav->index < monApps.size() - 1 ? monApps[trav->index + 1].blk : NOPOS;
     ethStatement.reconcileEth(prevStatements[ethKey]);
-    ethStatement.spotPrice = getPriceInUsd(trav->trans.blockNumber, ethStatement.priceSource);
-    if (ethStatement.amountNet_internal() != 0) {
+    ethStatement.spotPrice = getPriceInUsd(FAKE_ETH_ADDRESS, ethStatement.priceSource, trav->trans.blockNumber);
+    if (ethStatement.amountNet() != 0) {
         trav->trans.statements.push_back(ethStatement);
     }
     prevStatements[ethKey] = ethStatement;
@@ -74,34 +71,26 @@ bool COptions::process_reconciliation(CTraverser* trav) {
             string tokenKey = statementKey(accountedFor.address, tokStatement.assetAddr);
             if (prevStatements[tokenKey].assetAddr.empty()) {
                 CReconciliation pBal = tokStatement;
-                // pBal.sender = transfer.sender;
-                // pBal.recipient = transfer.recipient;
-                pBal.pTransaction = &trav->trans;
-                pBal.blockNumber = trav->trans.blockNumber == 0 ? 0 : trav->trans.blockNumber - 1;
-                pBal.endBal = getTokenBalanceOf2(tokStatement.assetAddr, accountedFor.address, pBal.blockNumber);
-                pBal.spotPrice = getPriceInUsd(pBal.blockNumber, pBal.priceSource, tokStatement.assetAddr);
                 prevStatements[tokenKey] = pBal;
             }
 
             tokStatement.prevAppBlk = prevStatements[tokenKey].blockNumber;
             tokStatement.prevBal = prevStatements[tokenKey].endBal;
-            // TODO: Note that this doesn't really query this token's balance at its last appearance, it just picks up
-            // TODO: the previous balance
+            // TODO: Note that this doesn't really query this token's balance at its last appearance,
+            // TODO: it just picks up the previous balance
             tokStatement.begBal = prevStatements[tokenKey].endBal;
             tokStatement.endBal =
-                getTokenBalanceOf2(tokStatement.assetAddr, accountedFor.address, trav->trans.blockNumber);
+                getTokenBalanceAt(tokStatement.assetAddr, accountedFor.address, trav->trans.blockNumber);
 
             if (tokStatement.begBal != tokStatement.endBal) {
                 if (tokStatement.begBal > tokStatement.endBal) {
                     tokStatement.amountOut = (tokStatement.begBal - tokStatement.endBal);
-                    tokStatement.reconciled = transfer.amount == str_2_BigUint(bni_2_Str(tokStatement.amountOut));
                 } else {
                     tokStatement.amountIn = (tokStatement.endBal - tokStatement.begBal);
-                    tokStatement.reconciled = transfer.amount == str_2_BigUint(bni_2_Str(tokStatement.amountIn));
                 }
                 tokStatement.reconciliationType = "token";
                 tokStatement.spotPrice =
-                    getPriceInUsd(trav->trans.blockNumber, tokStatement.priceSource, tokStatement.assetAddr);
+                    getPriceInUsd(tokStatement.assetAddr, tokStatement.priceSource, trav->trans.blockNumber);
                 trav->trans.statements.push_back(tokStatement);
                 prevStatements[tokenKey] = tokStatement;
             }
@@ -245,7 +234,7 @@ bool COptions::readReconsFromCache(CTraverser* trav) {
         for (auto& statement : trav->trans.statements) {
             // If this is an older versioned file, act as if it doesn't exist so it gets upgraded
             if (statement.accountedFor.empty()) {
-                LOG_WARN("Cache for reconciliation is back level. Updating....");
+                LOG_WARN("Cache for statements is back level. Updating....");
                 return false;
             }
 
@@ -269,9 +258,9 @@ bool COptions::readReconsFromCache(CTraverser* trav) {
 
 //-----------------------------------------------------------------------
 bool COptions::isReconciled(CTraverser* trav, CReconciliation& which) const {
-    for (auto recon : trav->trans.statements) {
-        if (!recon.reconciled_internal()) {
-            which = recon;
+    for (auto statement : trav->trans.statements) {
+        if (!statement.reconciled()) {
+            which = statement;
             return false;
         }
     }
@@ -314,26 +303,18 @@ bool acct_Display(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)data;
 
     if (fourByteFilter(trav->trans.input, opt)) {
-        if (opt->accounting)
-            opt->process_reconciliation(trav);
-
         if (opt->relevant) {
             for (auto& log : trav->trans.receipt.logs) {
                 log.m_showing = opt->isRelevant(log);
             }
         }
 
-        if (opt->statements) {
-            for (auto recon : trav->trans.statements) {
-                cout << ((isJson() && !opt->firstOut) ? ", " : "");
-                cout << recon.Format() << endl;
-                opt->firstOut = false;
-            }
-        } else {
-            cout << ((isJson() && !opt->firstOut) ? ", " : "");
-            cout << trav->trans;
-            opt->firstOut = false;
-        }
+        if (opt->accounting)
+            opt->process_statements(trav);
+
+        cout << ((isJson() && !opt->firstOut) ? ", " : "");
+        cout << trav->trans;
+        opt->firstOut = false;
     }
 
     return prog_Log(trav, data);

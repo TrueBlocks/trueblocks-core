@@ -25,7 +25,7 @@ transactions?statements=0x7cfb89d6df1b89a678dcaf42b9c262593e881e22&transactions=
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasCost": "",
       "spotPrice": 3159.22552,
       "priceSource": "uniswap",
       "reconciliationType": "by-trace",

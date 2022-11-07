@@ -59,9 +59,9 @@ class COptions : public CAbiOptions {
     bool receipts;
     bool logs;
     bool traces;
-    bool statements;
     bool neighbors;
     bool accounting;
+    bool statements;
     bool articulate;
     bool cache;
     bool cache_traces;
@@ -131,7 +131,7 @@ class COptions : public CAbiOptions {
 
     void writePerformanceData(void);
 
-    bool process_reconciliation(CTraverser* trav);
+    bool process_statements(CTraverser* trav);
     bool isReconciled(CTraverser* trav, CReconciliation& which) const;
     void cacheIfReconciled(CTraverser* trav) const;
     bool readReconsFromCache(CTraverser* trav);
