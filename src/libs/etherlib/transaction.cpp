@@ -1156,5 +1156,96 @@ bool CTransaction::getTransfers(CTransferArray& transfers, const address_t& acco
     sort(transfers.begin(), transfers.end());
     return transfers.size() > 0;
 }
+
+//-----------------------------------------------------------------------
+string_q CTransaction::getReconcilationPath(const address_t& address) const {
+    string_q path = getPathToBinaryCache(CT_RECONS, address, blockNumber, transactionIndex);
+    establishFolder(path);
+    return path;
+}
+
+//-----------------------------------------------------------------------
+bool CTransaction::readReconsFromCache(const address_t& accountedFor, CReconciliationMap& prevStatements) {
+    statements.clear();
+    if (isTestMode()) {
+        return false;
+    }
+
+    string_q path = getReconcilationPath(accountedFor);
+    if (!fileExists(path)) {
+        return false;
+    }
+
+    CArchive archive(READING_ARCHIVE);
+    if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
+        archive >> statements;
+        archive.Release();
+        for (auto& statement : statements) {
+            // If this is an older versioned file, act as if it doesn't exist so it gets upgraded
+            if (statement.accountedFor.empty()) {
+                LOG_WARN("Cache for statements is back level. Updating....");
+                return false;
+            }
+
+            // Freshen in case user has changed the names database since putting the statement in the cache
+            CAccountName tokenName;
+            if (findToken(statement.assetAddr, tokenName)) {
+                statement.assetSymbol = tokenName.symbol;
+                statement.decimals = tokenName.decimals;
+            }
+
+            statement.pTransaction = this;
+
+            string_q key = statementKey(accountedFor, statement.assetAddr);
+            prevStatements[key] = statement;
+        }
+        return !shouldQuit();
+    }
+
+    return false;
+}
+
+//-----------------------------------------------------------------------
+void CTransaction::cacheIfReconciled(const address_t& accountedFor) const {
+    if (isTestMode())
+        return;
+
+    CReconciliation whichFailed;
+    if (!isReconciled(whichFailed)) {
+        if (whichFailed.assetSymbol == "ETH") {
+            LOG_WARN("Transaction at ", blockNumber, ".", padNum4(transactionIndex), " (", hash,
+                     ") did not reconcile for account ", accountedFor);
+        } else {
+            LOG_WARN("Token transfer at ", blockNumber, ".", padNum4(transactionIndex), " (", hash,
+                     ") did not reconcile for account ", accountedFor);
+        }
+        return;
+    }
+
+    string_q path = getReconcilationPath(accountedFor);
+
+    lockSection();
+
+    CArchive archive(WRITING_ARCHIVE);
+    if (archive.Lock(path, modeWriteCreate, LOCK_WAIT)) {
+        LOG4("Writing to cache for ", path);
+        archive << statements;
+        archive.Release();
+    }
+
+    unlockSection();
+}
+
+//-----------------------------------------------------------------------
+bool CTransaction::isReconciled(CReconciliation& which) const {
+    for (auto statement : statements) {
+        if (!statement.reconciled()) {
+            which = statement;
+            return false;
+        }
+    }
+    return true;
+}
+
 // EXISTING_CODE
 }  // namespace qblocks

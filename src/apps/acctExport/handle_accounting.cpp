@@ -12,14 +12,10 @@
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
 
-extern string_q getReconcilationPath(const address_t& address, const CTransaction* pT);
-extern string_q statementKey(const address_t& accountedFor, const address_t& assetAddr);
 //-----------------------------------------------------------------------
 bool COptions::process_statements(CTraverser* trav) {
-    trav->trans.statements.clear();
-
     // If we can get the reconciliations from the cache, do so...
-    if (readReconsFromCache(trav)) {
+    if (trav->trans.readReconsFromCache(accountedFor.address, prevStatements)) {
         return !shouldQuit();
     }
 
@@ -101,113 +97,9 @@ bool COptions::process_statements(CTraverser* trav) {
         }
     }
 
-    cacheIfReconciled(trav);
+    trav->trans.cacheIfReconciled(accountedFor.address);
+
     return !shouldQuit();
-}
-
-//-----------------------------------------------------------------------
-string_q getReconcilationPath(const address_t& address, const CTransaction* pT) {
-    string_q path = getPathToBinaryCache(CT_RECONS, address, pT->blockNumber, pT->transactionIndex);
-    establishFolder(path);
-    return path;
-}
-
-//-----------------------------------------------------------------------
-bool isEtherAddr(const address_t& addr) {
-    return toLower(addr) == FAKE_ETH_ADDRESS;
-}
-
-//-----------------------------------------------------------------------
-// For each assset, we keep the last available balances in a map. When reconciling an
-// asset for the current transaction, we need the asset's previous balance. We index
-// into the previous balances using the accountedFor address and the asset's address.
-string_q statementKey(const address_t& accountedFor, const address_t& assetAddr) {
-    if (isZeroAddr(assetAddr) || isEtherAddr(assetAddr)) {
-        return toLower(accountedFor + "-" + "_eth");
-    }
-    return toLower(accountedFor + "-" + assetAddr);
-}
-
-//-----------------------------------------------------------------------
-bool COptions::readReconsFromCache(CTraverser* trav) {
-    if (isTestMode()) {
-        return false;
-    }
-
-    string_q path = getReconcilationPath(accountedFor.address, &trav->trans);
-    if (!fileExists(path)) {
-        return false;
-    }
-
-    CArchive archive(READING_ARCHIVE);
-    if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
-        archive >> trav->trans.statements;
-        archive.Release();
-        for (auto& statement : trav->trans.statements) {
-            // If this is an older versioned file, act as if it doesn't exist so it gets upgraded
-            if (statement.accountedFor.empty()) {
-                LOG_WARN("Cache for statements is back level. Updating....");
-                return false;
-            }
-
-            // Freshen in case user has changed the names database since putting the statement in the cache
-            CAccountName tokenName;
-            if (findToken(statement.assetAddr, tokenName)) {
-                statement.assetSymbol = tokenName.symbol;
-                statement.decimals = tokenName.decimals;
-            }
-
-            statement.pTransaction = &trav->trans;
-
-            string_q key = statementKey(accountedFor.address, statement.assetAddr);
-            prevStatements[key] = statement;
-        }
-        return !shouldQuit();
-    }
-
-    return false;
-}
-
-//-----------------------------------------------------------------------
-bool COptions::isReconciled(CTraverser* trav, CReconciliation& which) const {
-    for (auto statement : trav->trans.statements) {
-        if (!statement.reconciled()) {
-            which = statement;
-            return false;
-        }
-    }
-    return true;
-}
-
-//-----------------------------------------------------------------------
-void COptions::cacheIfReconciled(CTraverser* trav) const {
-    if (isTestMode())
-        return;
-
-    CReconciliation whichFailed;
-    if (!isReconciled(trav, whichFailed)) {
-        if (whichFailed.assetSymbol == "ETH") {
-            LOG_WARN("Transaction at ", trav->trans.blockNumber, ".", padNum4(trav->trans.transactionIndex), " (",
-                     trav->trans.hash, ") did not reconcile for account ", accountedFor.address);
-        } else {
-            LOG_WARN("Token transfer at ", trav->trans.blockNumber, ".", padNum4(trav->trans.transactionIndex), " (",
-                     trav->trans.hash, ") did not reconcile for account ", accountedFor.address);
-        }
-        return;
-    }
-
-    string_q path = getReconcilationPath(accountedFor.address, &trav->trans);
-
-    lockSection();
-
-    CArchive archive(WRITING_ARCHIVE);
-    if (archive.Lock(path, modeWriteCreate, LOCK_WAIT)) {
-        LOG4("Writing to cache for ", path);
-        archive << trav->trans.statements;
-        archive.Release();
-    }
-
-    unlockSection();
 }
 
 //-----------------------------------------------------------------------

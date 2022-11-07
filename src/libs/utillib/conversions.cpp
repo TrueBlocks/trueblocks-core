@@ -14,8 +14,6 @@
 #include "conversions.h"
 #include "logging.h"
 
-// TODO(tjayrush): inline these conversions
-
 namespace qblocks {
 
 extern uint64_t verbose;
@@ -352,6 +350,11 @@ bool isZeroHash(const hash_t& hash) {
     if (!isNumeral(hash) && !isHexStr(hash))
         return false;
     return (str_2_Wei(hash) == 0);
+}
+
+//-----------------------------------------------------------------------
+bool isEtherAddr(const address_t& addr) {
+    return toLower(addr) == FAKE_ETH_ADDRESS;
 }
 
 //--------------------------------------------------------------------------------

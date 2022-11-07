@@ -12,7 +12,6 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "known_blocks.h"
-#include "known_addresses.h"
 #include "block.h"
 #include "transaction.h"
 #include "receipt.h"

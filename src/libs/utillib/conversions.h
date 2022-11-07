@@ -127,6 +127,7 @@ extern timestamp_t date_2_Ts(const string_q& str);
 //--------------------------------------------------------------------
 extern bool isZeroHash(const hash_t& hash);
 extern bool isZeroAddr(const address_t& addr);
+extern bool isEtherAddr(const address_t& addr);
 extern bool isNumeral(const string_q& test);
 extern bool isDouble(const string_q& test);
 extern bool isHexStr(const string_q& str);
@@ -134,9 +135,16 @@ extern bool isAddress(const string_q& addr);
 extern bool isHash(const hash_t& hashIn);
 extern bool isFourByte(const fourbyte_t& encodingIn);
 extern bool isUnsigned(const string_q& in);
+
+//-----------------------------------------------------------------------
+#define FAKE_ETH_ADDRESS "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+
+//-----------------------------------------------------------------------
 inline bool isTopic(const string_q& topic) {
     return isHash(topic);
 };
+
+//-----------------------------------------------------------------------
 inline bool isFourbyte(const string_q& fourbyte) {
     return (fourbyte.length() == 10 && isHexStr(fourbyte));
 };
@@ -150,6 +158,7 @@ inline string_q getEnvStr(const string_q& name) {
     char* sss = getenv(name.c_str());
     return (sss ? string_q(sss) : string_q(""));
 }
+
 //---------------------------------------------------------------------------------------
 inline uint64_t getEnvUint(const string_q& name) {
     char* sss = getenv(name.c_str());
@@ -186,6 +195,7 @@ inline string_q insertCommas(const string_q& dIn) {
     return ret;
 }
 
+//-----------------------------------------------------------------------
 inline ostream& operator<<(ostream& os, const blkrange_t& range) {
     os << range.first << "-" << range.second;
     return os;

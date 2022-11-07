@@ -12,7 +12,6 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "utillib.h"
-#include "known_addresses.h"
 
 namespace qblocks {
 

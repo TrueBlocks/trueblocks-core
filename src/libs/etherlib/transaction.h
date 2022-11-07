@@ -92,6 +92,11 @@ class CTransaction : public CBaseNode {
     bool loadTransAsBlockReward(blknum_t bn, blknum_t txid, const address_t& addr);
     bool loadTransAsUncleReward(blknum_t bn, blknum_t uncleBn, const address_t& addr);
     bool getTransfers(CTransferArray& transfers, const address_t& accountedFor) const;
+    bool isReconciled(CReconciliation& which) const;
+    bool readReconsFromCache(const address_t& accountedFor, CReconciliationMap& prevStatements);
+    void cacheIfReconciled(const address_t& accountedFor) const;
+    string_q getReconcilationPath(const address_t& address) const;
+
     // EXISTING_CODE
     bool operator==(const CTransaction& it) const;
     bool operator!=(const CTransaction& it) const {

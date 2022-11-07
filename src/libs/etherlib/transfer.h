@@ -200,5 +200,6 @@ extern const char* STR_DISPLAY_TRANSFER;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+extern string_q statementKey(const address_t& accountedFor, const address_t& assetAddr);
 // EXISTING_CODE
 }  // namespace qblocks

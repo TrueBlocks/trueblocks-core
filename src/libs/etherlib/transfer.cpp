@@ -507,5 +507,14 @@ const char* STR_DISPLAY_TRANSFER =
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+// For each assset, we keep the last available balances in a map. When reconciling an
+// asset for the current transaction, we need the asset's previous balance. We index
+// into the previous balances using the accountedFor address and the asset's address.
+string_q statementKey(const address_t& accountedFor, const address_t& assetAddr) {
+    if (isZeroAddr(assetAddr) || isEtherAddr(assetAddr)) {
+        return toLower(accountedFor + "-" + "_eth");
+    }
+    return toLower(accountedFor + "-" + assetAddr);
+}
 // EXISTING_CODE
 }  // namespace qblocks
