@@ -276,4 +276,6 @@ void establishTestData(void) {
     ::remove(getBinaryCacheFilename(CT_TXS, 8867898, 28).c_str());
     ::remove(getBinaryCacheFilename(CT_TXS, 8875684, 148).c_str());
     ::remove(getBinaryCacheFilename(CT_TXS, 8876232, 84).c_str());
+    ::remove(getBinaryCacheFilename(CT_TXS, 9958151, 75).c_str());
+    ::remove(getBinaryCacheFilename(CT_TXS, 10272064, 50).c_str());
 }
