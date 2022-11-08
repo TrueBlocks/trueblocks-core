@@ -83,7 +83,7 @@ class COptions : public CAbiOptions {
     const CMonitor* curMonitor;
     CAccountName accountedFor;
 
-    CReconciliationMap prevStatements;
+    CPreviousBalanceMap previousBalances;
 
     CBlockAddressMap prefundAddrMap;
     CBlockAddressMap blkRewardMap;

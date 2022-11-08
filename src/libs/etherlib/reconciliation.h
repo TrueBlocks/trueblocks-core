@@ -262,7 +262,24 @@ extern const char* STR_DISPLAY_RECONCILIATION;
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 extern CReconciliation operator+(const CReconciliation& a, const CReconciliation& b);
-typedef map<string, CReconciliation> CReconciliationMap;
+struct CPreviousBalance {
+  public:
+    // address_t assetAddr;
+    blknum_t blockNumber;
+    bigint_t balance;
+    CPreviousBalance& operator=(const CReconciliation& ab) {
+        blockNumber = ab.blockNumber;
+        balance = ab.endBal;
+        return *this;
+    }
+    bool operator==(const CPreviousBalance& it) const {
+        return ((blockNumber == it.blockNumber) && (balance == it.balance));
+    }
+    bool operator!=(const CPreviousBalance& it) const {
+        return !operator==(it);
+    }
+};
+typedef map<string, CPreviousBalance> CPreviousBalanceMap;
 
 extern string_q wei_2_Str(const wei_t& weiIn);
 extern string_q bni_2_Str(const bigint_t& numIn);

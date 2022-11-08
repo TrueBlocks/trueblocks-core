@@ -1165,7 +1165,7 @@ string_q CTransaction::getReconcilationPath(const address_t& address) const {
 }
 
 //-----------------------------------------------------------------------
-bool CTransaction::readReconsFromCache(const address_t& accountedFor, CReconciliationMap& prevStatements) {
+bool CTransaction::readReconsFromCache(const address_t& accountedFor) {
     statements.clear();
     if (isTestMode()) {
         return false;
@@ -1181,9 +1181,10 @@ bool CTransaction::readReconsFromCache(const address_t& accountedFor, CReconcili
         archive >> statements;
         archive.Release();
         for (auto& statement : statements) {
-            // If this is an older versioned file, act as if it doesn't exist so it gets upgraded
             if (statement.accountedFor.empty()) {
-                LOG_WARN("Cache for statements is back level. Updating....");
+                // This is an old version of the reconciliation, delete it and return false
+                LOG_WARN("Back-level cache for statements found. Removing....");
+                ::remove(path.c_str());
                 return false;
             }
 
@@ -1195,9 +1196,6 @@ bool CTransaction::readReconsFromCache(const address_t& accountedFor, CReconcili
             }
 
             statement.pTransaction = this;
-
-            string_q key = statementKey(accountedFor, statement.assetAddr);
-            prevStatements[key] = statement;
         }
         return !shouldQuit();
     }

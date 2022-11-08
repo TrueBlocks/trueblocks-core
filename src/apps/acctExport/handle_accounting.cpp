@@ -14,11 +14,18 @@
 
 //-----------------------------------------------------------------------
 bool COptions::process_statements(CTraverser* trav) {
-    if (trav->trans.readReconsFromCache(accountedFor.address, prevStatements)) {
+    if (trav->trans.readReconsFromCache(accountedFor.address)) {
+        for (auto& statement : trav->trans.statements) {
+            string_q key = statementKey(statement.accountedFor, statement.assetAddr);
+            previousBalances[key] = statement;
+        }
         return !shouldQuit();
     }
 
     trav->searchOp = RECONCILE;
+
+    CReconciliation ethStatement(accountedFor.address, &trav->trans);
+    ethStatement.reconcileInside();
 
     string_q ethKey = statementKey(accountedFor.address, "");
     blknum_t prevAppBlk = 0;
@@ -30,23 +37,22 @@ bool COptions::process_statements(CTraverser* trav) {
         }
     }
 
-    if (prevStatements[ethKey].assetAddr.empty()) {
+    if (previousBalances[ethKey] == CPreviousBalance()) {
         CReconciliation prevStatement(accountedFor.address, &trav->trans);
         prevStatement.blockNumber = prevAppBlk;
         if (prevAppBlk > 0) {
             prevStatement.endBal = getBalanceAt(accountedFor.address, prevAppBlk);
         }
-        prevStatements[ethKey] = prevStatement;
+        previousBalances[ethKey] = prevStatement;
     }
 
-    CReconciliation ethStatement(accountedFor.address, &trav->trans);
-    ethStatement.reconcileInside();
     ethStatement.nextAppBlk = trav->index < monApps.size() - 1 ? monApps[trav->index + 1].blk : NOPOS;
-    ethStatement.reconcileAcross(prevStatements[ethKey].endBal, prevStatements[ethKey].blockNumber);
+    ethStatement.reconcileAcross(previousBalances[ethKey].balance, previousBalances[ethKey].blockNumber);
+    previousBalances[ethKey] = ethStatement;
+
     if (ethStatement.amountNet() != 0) {
         trav->trans.statements.push_back(ethStatement);
     }
-    prevStatements[ethKey] = ethStatement;
 
     CTransferArray transfers;
     if (trav->trans.getTransfers(transfers, accountedFor.address)) {
@@ -63,17 +69,17 @@ bool COptions::process_statements(CTraverser* trav) {
             tokStatement.recipient = transfer.recipient;
 
             string tokenKey = statementKey(accountedFor.address, tokStatement.assetAddr);
-            if (prevStatements[tokenKey].assetAddr.empty()) {
+            if (previousBalances[ethKey] == CPreviousBalance()) {
                 CReconciliation pBal;
                 pBal.pTransaction = &trav->trans;
                 pBal.blockNumber = trav->trans.blockNumber == 0 ? 0 : trav->trans.blockNumber - 1;
                 pBal.endBal = getTokenBalanceAt(tokStatement.assetAddr, accountedFor.address, pBal.blockNumber);
-                prevStatements[tokenKey] = pBal;
+                previousBalances[tokenKey] = pBal;
             }
 
-            tokStatement.prevAppBlk = prevStatements[tokenKey].blockNumber;
-            tokStatement.prevBal = prevStatements[tokenKey].endBal;
-            tokStatement.begBal = prevStatements[tokenKey].endBal;
+            tokStatement.prevAppBlk = previousBalances[tokenKey].blockNumber;
+            tokStatement.prevBal = previousBalances[tokenKey].balance;
+            tokStatement.begBal = previousBalances[tokenKey].balance;
             tokStatement.endBal =
                 getTokenBalanceAt(tokStatement.assetAddr, tokStatement.accountedFor, tokStatement.blockNumber);
 
@@ -85,7 +91,7 @@ bool COptions::process_statements(CTraverser* trav) {
                 }
                 tokStatement.reconciliationType = "token";
                 trav->trans.statements.push_back(tokStatement);
-                prevStatements[tokenKey] = tokStatement;
+                previousBalances[tokenKey] = tokStatement;
             }
         }
     }
