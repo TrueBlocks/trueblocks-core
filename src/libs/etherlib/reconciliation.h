@@ -68,13 +68,12 @@ class CReconciliation : public CBaseNode {
     DECLARE_NODE(CReconciliation);
 
     // EXISTING_CODE
-    blknum_t nextAppBlk;
     CReconciliation(const address_t& aF, const CTransaction* pT);
     const CTransaction* pTransaction = NULL;
 
     bool reconcileInside(void);
-    bool reconcileAcross(bigint_t eB, blknum_t bn);
-    bool reconcileLabel(blknum_t bn);
+    bool reconcileAcross(blknum_t pBn, blknum_t nBn, bigint_t eBal);
+    bool reconcileLabel(blknum_t pBn, blknum_t nBn);
     bool reconcileUsingTraces(void);
 
     bigint_t begBalDiff(void) const;
@@ -175,7 +174,6 @@ inline void CReconciliation::initialize(void) {
     prevBal = 0;
 
     // EXISTING_CODE
-    nextAppBlk = 0;
     pTransaction = NULL;
     // EXISTING_CODE
 }
@@ -219,7 +217,6 @@ inline void CReconciliation::duplicate(const CReconciliation& re) {
     prevBal = re.prevBal;
 
     // EXISTING_CODE
-    nextAppBlk = re.nextAppBlk;
     pTransaction = re.pTransaction;
     // EXISTING_CODE
 }

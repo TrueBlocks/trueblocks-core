@@ -51,9 +51,6 @@ namespace qblocks {
 
 //-----------------------------------------------------------------------
 bool CReconciliation::reconcileInside(void) {
-    assetSymbol = "ETH";
-    assetAddr = FAKE_ETH_ADDRESS;
-
     begBal = 0;
     if (blockNumber > 0) {
         begBal = getBalanceAt(accountedFor, blockNumber - 1);
@@ -177,12 +174,12 @@ bool CReconciliation::reconcileUsingTraces(void) {
 }
 
 //-----------------------------------------------------------------------
-bool CReconciliation::reconcileAcross(bigint_t pBal, blknum_t pBn) {
+bool CReconciliation::reconcileAcross(blknum_t pBn, blknum_t nBn, bigint_t pBal) {
     prevBal = pBal;
     prevAppBlk = pBn;
 
     bool prevDifferent = prevAppBlk != blockNumber;
-    bool nextDifferent = blockNumber != nextAppBlk || nextAppBlk == NOPOS;
+    bool nextDifferent = blockNumber != nBn || nBn == NOPOS;
 
     bigint_t balEOLB = getBalanceAt(accountedFor, blockNumber == 0 ? 0 : blockNumber - 1);
     bigint_t balEOB = getBalanceAt(accountedFor, blockNumber);
@@ -213,9 +210,9 @@ bool CReconciliation::reconcileAcross(bigint_t pBal, blknum_t pBn) {
 }
 
 //-----------------------------------------------------------------------
-bool CReconciliation::reconcileLabel(blknum_t pBn) {
+bool CReconciliation::reconcileLabel(blknum_t pBn, blknum_t nBn) {
     bool prevDifferent = prevAppBlk != blockNumber;
-    bool nextDifferent = blockNumber != nextAppBlk || nextAppBlk == NOPOS;
+    bool nextDifferent = blockNumber != nBn || nBn == NOPOS;
     if (pTransaction->blockNumber == 0) {
         reconciliationType = "genesis";
 

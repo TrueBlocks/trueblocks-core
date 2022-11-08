@@ -19,16 +19,17 @@ bool visitReconciliation(CTransaction& trans, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
     bool isText = (expContext().exportFmt & (TXT1 | CSV1));
 
+    blknum_t prevBlock = trans.blockNumber == 0 ? 0 : trans.blockNumber - 1;
+    blknum_t nextBlock = trans.blockNumber + 1;
     bigint_t prevBal = 0;
     if (trans.blockNumber > 0) {
-        prevBal = getBalanceAt(opt->account_for, trans.blockNumber - 1);
+        prevBal = getBalanceAt(opt->account_for, prevBlock);
     }
 
     CReconciliation statement(opt->account_for, &trans);
-    statement.nextAppBlk = trans.blockNumber + 1;
     statement.reconcileInside();
-    statement.reconcileAcross(prevBal, trans.blockNumber);
-    statement.reconcileLabel(trans.blockNumber);
+    statement.reconcileAcross(prevBlock, nextBlock, prevBal);
+    statement.reconcileLabel(prevBlock, nextBlock);
     statement.spotPrice = getPriceInUsd(FAKE_ETH_ADDRESS, statement.priceSource, trans.blockNumber);
 
     if (isText) {

@@ -499,6 +499,9 @@ bool queryRawLogs(string_q& results, const CLogFilter& query) {
 
 //-------------------------------------------------------------------------
 bigint_t getTokenBalanceAt(const address_t& token, const address_t& holder, blknum_t blockNum) {
+    if (isZeroAddr(token) || isEtherAddr(token))
+        return getBalanceAt(holder, blockNum);
+
     ostringstream cmd;
     cmd << "[{";
     cmd << "\"to\": \"" << token << "\", ";

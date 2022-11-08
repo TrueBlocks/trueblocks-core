@@ -133,7 +133,6 @@ string_q renameExportFields(const string_q& className, const string_q& inStr) {
             make_pair("reconciliationtype", "reconciliationType"),
             make_pair("transactionhash", "transactionHash"),
             make_pair("accountedfor", "accountedFor"),
-            make_pair("nextappblk","nextAppBlk"),
         };
         for (auto item : renames)
             replace(ret, item.first, item.second);

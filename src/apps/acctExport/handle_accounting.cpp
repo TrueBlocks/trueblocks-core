@@ -24,33 +24,35 @@ bool COptions::process_statements(CTraverser* trav) {
 
     trav->searchOp = RECONCILE;
 
-    CReconciliation ethStatement(accountedFor.address, &trav->trans);
-    ethStatement.reconcileInside();
+    CTransfer transfer;
+    transfer.assetAddr = FAKE_ETH_ADDRESS;
+    transfer.assetSymbol = "ETH";
+    transfer.decimals = 18;
 
-    string_q ethKey = statementKey(accountedFor.address, "");
-    blknum_t prevAppBlk = 0;
-    if (trav->index > 0) {
-        prevAppBlk = monApps[trav->index - 1].blk;
-    } else {
-        if (trav->trans.blockNumber > 0) {
-            prevAppBlk = trav->trans.blockNumber - 1;
-        }
-    }
+    blknum_t prevBlock = trav->index == 0 ? trav->trans.blockNumber == 0 ? 0 : trav->trans.blockNumber - 1
+                                          : monApps[trav->index - 1].blk;
+    blknum_t nextBlock = trav->index < monApps.size() - 1 ? monApps[trav->index + 1].blk : NOPOS;
 
-    if (previousBalances[ethKey] == CPreviousBalance()) {
+    string tokenKey = statementKey(accountedFor.address, transfer.assetAddr);
+    if (previousBalances[tokenKey] == CPreviousBalance()) {
         CReconciliation prevStatement(accountedFor.address, &trav->trans);
-        prevStatement.blockNumber = prevAppBlk;
-        prevStatement.endBal = prevAppBlk > 0 ? getBalanceAt(accountedFor.address, prevAppBlk) : 0;
-        previousBalances[ethKey] = prevStatement;
+        prevStatement.blockNumber = prevBlock;
+        prevStatement.endBal =
+            prevBlock == 0 ? 0 : getTokenBalanceAt(transfer.assetAddr, accountedFor.address, prevBlock);
+        previousBalances[tokenKey] = prevStatement;
     }
 
-    ethStatement.nextAppBlk = trav->index < monApps.size() - 1 ? monApps[trav->index + 1].blk : NOPOS;
-    ethStatement.reconcileAcross(previousBalances[ethKey].balance, previousBalances[ethKey].blockNumber);
-    ethStatement.reconcileLabel(previousBalances[ethKey].blockNumber);
-    previousBalances[ethKey] = ethStatement;
+    CReconciliation aStatement(accountedFor.address, &trav->trans);
+    aStatement.assetAddr = transfer.assetAddr;
+    aStatement.assetSymbol = transfer.assetSymbol;
+    aStatement.decimals = transfer.decimals;
+    aStatement.reconcileInside();
+    aStatement.reconcileAcross(prevBlock, nextBlock, previousBalances[tokenKey].balance);
+    aStatement.reconcileLabel(prevBlock, nextBlock);
+    previousBalances[tokenKey] = aStatement;
 
-    if (ethStatement.amountNet() != 0) {
-        trav->trans.statements.push_back(ethStatement);
+    if (aStatement.amountNet() != 0) {
+        trav->trans.statements.push_back(aStatement);
     }
 
     CTransferArray transfers;
@@ -60,39 +62,38 @@ bool COptions::process_statements(CTraverser* trav) {
                 continue;
             }
 
-            CReconciliation tokStatement(accountedFor.address, &trav->trans);
-            tokStatement.assetAddr = transfer.assetAddr;
-            tokStatement.decimals = transfer.decimals;
-            tokStatement.assetSymbol = transfer.assetSymbol;
-            tokStatement.sender = transfer.sender;
-            tokStatement.recipient = transfer.recipient;
-
-            string tokenKey = statementKey(accountedFor.address, tokStatement.assetAddr);
-            if (previousBalances[ethKey] == CPreviousBalance()) {
-                CReconciliation pBal;
+            string tokenKey = statementKey(accountedFor.address, transfer.assetAddr);
+            if (previousBalances[tokenKey] == CPreviousBalance()) {
+                CReconciliation prevStatement(accountedFor.address, &trav->trans);
                 if (trav->trans.blockNumber > 0) {
-                    pBal.blockNumber = trav->trans.blockNumber - 1;
-                    pBal.endBal = getTokenBalanceAt(tokStatement.assetAddr, accountedFor.address, pBal.blockNumber);
+                    prevStatement.blockNumber = prevBlock;
+                    prevStatement.endBal =
+                        prevBlock == 0 ? 0 : getTokenBalanceAt(transfer.assetAddr, accountedFor.address, prevBlock);
                 }
-                previousBalances[tokenKey] = pBal;
+                previousBalances[tokenKey] = prevStatement;
             }
 
-            tokStatement.prevAppBlk = previousBalances[tokenKey].blockNumber;
-            tokStatement.prevBal = previousBalances[tokenKey].balance;
-            tokStatement.begBal =
-                getTokenBalanceAt(tokStatement.assetAddr, tokStatement.accountedFor, tokStatement.blockNumber);
-            tokStatement.endBal =
-                getTokenBalanceAt(tokStatement.assetAddr, tokStatement.accountedFor, tokStatement.blockNumber);
+            CReconciliation aStatement(accountedFor.address, &trav->trans);
+            aStatement.assetAddr = transfer.assetAddr;
+            aStatement.assetSymbol = transfer.assetSymbol;
+            aStatement.decimals = transfer.decimals;
+            aStatement.sender = transfer.sender;
+            aStatement.recipient = transfer.recipient;
+            aStatement.prevAppBlk = previousBalances[tokenKey].blockNumber;
+            aStatement.prevBal = previousBalances[tokenKey].balance;
+            aStatement.begBal = previousBalances[tokenKey].balance;
+            aStatement.endBal =
+                getTokenBalanceAt(aStatement.assetAddr, aStatement.accountedFor, aStatement.blockNumber);
 
-            if (tokStatement.begBal != tokStatement.endBal) {
-                if (tokStatement.begBal > tokStatement.endBal) {
-                    tokStatement.amountOut = (tokStatement.begBal - tokStatement.endBal);
+            if (aStatement.begBal != aStatement.endBal) {
+                if (aStatement.begBal > aStatement.endBal) {
+                    aStatement.amountOut = (aStatement.begBal - aStatement.endBal);
                 } else {
-                    tokStatement.amountIn = (tokStatement.endBal - tokStatement.begBal);
+                    aStatement.amountIn = (aStatement.endBal - aStatement.begBal);
                 }
-                tokStatement.reconciliationType = "token";
-                trav->trans.statements.push_back(tokStatement);
-                previousBalances[tokenKey] = tokStatement;
+                aStatement.reconciliationType = "token";
+                trav->trans.statements.push_back(aStatement);
+                previousBalances[tokenKey] = aStatement;
             }
         }
     }
