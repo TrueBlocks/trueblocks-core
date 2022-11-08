@@ -103,7 +103,7 @@ bool COptions::process_statements(CTraverser* trav) {
             st->spotPrice = getPriceInUsd(st->assetAddr, st->priceSource, st->blockNumber);
         }
     } else {
-        for (int s = 0; s < trav->trans.statements.size(); s++) {
+        for (size_t s = 0; s < trav->trans.statements.size(); s++) {
             CReconciliation* st = &trav->trans.statements[size_t(s)];
             st->spotPrice = getPriceInUsd(st->assetAddr, st->priceSource, st->blockNumber);
         }

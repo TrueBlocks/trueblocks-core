@@ -1,0 +1,34 @@
+chifra export  0x000001f568875f378bf6d170b790967fe429c81a --max_records 1 --first_record 5 --fmt json
+TEST[DATE|TIME] Addrs:  [0x000001f568875f378bf6d170b790967fe429c81a]
+TEST[DATE|TIME] FirstRecord:  5
+TEST[DATE|TIME] MaxRecords:  1
+TEST[DATE|TIME] Format:  json
+{ "data": [
+{
+  "hash": "0xefd07cb7281ef20dbd68df4df5164f3d04c3848bf83e1db70be7903d5da908cb",
+  "blockHash": "0x6bd7db2bda8a567560489c475d9db62e12ed813e88c800184879a2c7da82252a",
+  "blockNumber": 2671834,
+  "transactionIndex": 0,
+  "timestamp": 1479785719,
+  "from": "0x0020dba1d308339182239056a00fcc146d2e26e0",
+  "to": "0x000001f568875f378bf6d170b790967fe429c81a",
+  "value": 2500000000000000000,
+  "gas": 21000,
+  "gasPrice": 43435929286,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
+  "isError": 0,
+  "hasToken": 0,
+  "receipt": {
+    "contractAddress": "0x0",
+    "gasUsed": 21000,
+    "effectiveGasPrice": 43435929286,
+    "status": null
+  },
+  "compressedTx": "0x()",
+  "gasCost": 912154515006000,
+  "gasUsed": 21000,
+  "date": "2016-11-22 03:35:19 UTC",
+  "ether": 2.500000000000000000
+}
+] }
