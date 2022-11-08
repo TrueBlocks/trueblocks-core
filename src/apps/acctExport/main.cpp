@@ -206,6 +206,11 @@ bool loadTx_Func(CTraverser* trav, void* data) {
 
     bool dirty = false;
     string_q txFilename = getBinaryCacheFilename(CT_TXS, trav->app->blk, trav->app->txid);
+    if (opt->ignore_cache && isTestMode()) {
+        LOG_INFO("Removing cache file: ", txFilename);
+        ::remove(txFilename.c_str());
+    }
+
     bool inCache = trav->app->blk != 0 && fileExists(txFilename);
     if (inCache) {
         readTransFromBinary(trav->trans, txFilename);

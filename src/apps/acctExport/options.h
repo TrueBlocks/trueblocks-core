@@ -77,6 +77,7 @@ class COptions : public CAbiOptions {
 
     bool skip_ddos{true};
     uint64_t max_traces{250};
+    bool ignore_cache{false};
     CAppearanceArray_mon monApps;
     CMonitorArray allMonitors;
     const CMonitor* curMonitor;

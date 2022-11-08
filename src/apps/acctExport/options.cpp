@@ -368,6 +368,11 @@ void COptions::Init(void) {
     max_traces = getGlobalConfig("acctExport")->getConfigInt("settings", "max_traces", 250);
     // clang-format on
 
+    ignore_cache = getEnvStr("IGNORE_TX_CACHE") == "true";
+    if (isTestMode() && ignore_cache) {
+        LOG_INFO("Ignoring cache");
+    }
+
     if (!cache && getGlobalConfig("acctExport")->getConfigBool("settings", "cache_txs", false))
         cache = true;  // backwards compat
 
