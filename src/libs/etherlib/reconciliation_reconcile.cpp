@@ -49,36 +49,6 @@ namespace qblocks {
         LOG_INFO("--------------------------------------------------------");                                          \
     }
 
-//---------------------------------------------------------------------------
-#define LOG_TRIAL_BALANCE()                                                                                            \
-    LOG4("Trial balance: ", reconciliationType);                                                                       \
-    LOG4("  hash: ", pTransaction->hash);                                                                              \
-    LOG4("  ------------------------------");                                                                          \
-    LOG4("  prevBal:             ", prevBal);                                                                          \
-    LOG4("  begBal:              ", begBal);                                                                           \
-    LOG4("  begBalDiff:          ", begBalDiff());                                                                     \
-    LOG4("  ------------------------------");                                                                          \
-    LOG4("  amountIn:            ", amountIn);                                                                         \
-    LOG4("  internalIn:          ", internalIn);                                                                       \
-    LOG4("  selfDestructIn:      ", selfDestructIn);                                                                   \
-    LOG4("  minerBaseRewardIn:   ", minerBaseRewardIn);                                                                \
-    LOG4("  minerNephewRewardIn: ", minerNephewRewardIn);                                                              \
-    LOG4("  minerTxFeeIn:        ", minerTxFeeIn);                                                                     \
-    LOG4("  minerUncleRewardIn:  ", minerUncleRewardIn);                                                               \
-    LOG4("  prefundIn:           ", prefundIn);                                                                        \
-    LOG4("  totalIn:             ", totalIn());                                                                        \
-    LOG4("  amountOut:           ", amountOut);                                                                        \
-    LOG4("  internalOut:         ", internalOut);                                                                      \
-    LOG4("  selfDestructOut:     ", selfDestructOut);                                                                  \
-    LOG4("  gasOut:              ", gasOut);                                                                           \
-    LOG4("  totalOut:            ", totalOut());                                                                       \
-    LOG4("  amountNet:           ", amountNet());                                                                      \
-    LOG4("  endBal:              ", endBal);                                                                           \
-    LOG4("  ------------------------------");                                                                          \
-    LOG4("  endBalCalc:          ", endBalCalc());                                                                     \
-    LOG4("  endBalDiff:          ", endBalDiff());                                                                     \
-    LOG4("  reconciled:          ", reconciled() ? "true" : "false");
-
 //-----------------------------------------------------------------------
 bool CReconciliation::reconcileInside(void) {
     assetSymbol = "ETH";
@@ -114,78 +84,19 @@ bool CReconciliation::reconcileInside(void) {
     }
 
     LOG_TRIAL_BALANCE_INSIDE();
+    if (begBal + totalIn() - totalOut() == endBal) {
+        return true;
+    }
+
+    if (reconcileUsingTraces()) {
+        return true;
+    }
+
     return true;
 }
 
-//-----------------------------------------------------------------------
-bool CReconciliation::reconcileAcross(bigint_t pBal, blknum_t pBn) {
-    prevBal = pBal;
-    prevAppBlk = pBn;
-
-    bigint_t balEOLB = getBalanceAt(accountedFor, blockNumber == 0 ? 0 : blockNumber - 1);
-    bigint_t balEOB = getBalanceAt(accountedFor, blockNumber);
-
-    bool prevDifferent = prevAppBlk != blockNumber;
-    bool nextDifferent = blockNumber != nextAppBlk || nextAppBlk == NOPOS;
-    if (pTransaction->blockNumber == 0) {
-        reconciliationType = "genesis";
-
-    } else {
-        if (prevDifferent && nextDifferent) {
-            reconciliationType = "regular";
-
-        } else if (prevDifferent) {
-            reconciliationType = "prevdiff-partial";
-
-        } else if (nextDifferent) {
-            reconciliationType = "partial-nextdiff";
-
-        } else {
-            reconciliationType = "partial-partial";
-        }
-    }
-
-    LOG_TRIAL_BALANCE();
-    if (reconciled())
-        return true;
-
-    // Reconciliation failed, let's try to reconcile by traces
-    if (reconcileUsingTraces(pBal))
-        return true;
-
-    // Reconciliation by traces failed, we want to correct for that and try
-    // one more method - intra block.
-    if (prevDifferent && nextDifferent) {
-        // The trace reconcile may have changed values
-        begBal = balEOLB;
-        endBal = balEOB;
-        reconciliationType = "regular";
-
-    } else if (prevDifferent) {
-        // This tx has a tx after it in the same block but none before it
-        begBal = balEOLB;
-        endBal = endBalCalc();
-        reconciliationType = "prevdiff-partial";
-
-    } else if (nextDifferent) {
-        // This tx has a tx before it in the block but none after it
-        begBal = pBal;
-        endBal = balEOB;
-        reconciliationType = "partial-nextdiff";
-
-    } else {
-        // this tx has both a tx before it and one after it in the same block
-        begBal = pBal;
-        endBal = endBalCalc();
-        reconciliationType = "partial-partial";
-    }
-
-    LOG_TRIAL_BALANCE();
-    return reconciled();
-}
-
 //---------------------------------------------------------------------------
-bool CReconciliation::reconcileUsingTraces(bigint_t prevEndBal) {
+bool CReconciliation::reconcileUsingTraces(void) {
     amountOut = amountIn = 0;
     prefundIn = minerBaseRewardIn = minerNephewRewardIn = minerTxFeeIn + minerUncleRewardIn = 0;
 
@@ -196,10 +107,12 @@ bool CReconciliation::reconcileUsingTraces(bigint_t prevEndBal) {
         prefundIn = pTransaction->value;
 
     } else {
+        bool allocated = false;
         if (pTransaction->traces.size() == 0) {
             blknum_t bn = pTransaction->blockNumber;
             blknum_t txid = pTransaction->transactionIndex;
             loadTraces(*((CTransaction*)pTransaction), bn, txid, false, false);  // NOLINT
+            allocated = true;
         }
 
         for (auto trace : pTransaction->traces) {
@@ -216,6 +129,7 @@ bool CReconciliation::reconcileUsingTraces(bigint_t prevEndBal) {
                     recipient = pTransaction->to;
                     selfDestructOut += trace.action.balance;
                 }
+
             } else {
                 if (trace.action.from == accountedFor && !trace.isDelegateCall()) {
                     // Sometimes, EOAs appear here, but there is no way
@@ -235,24 +149,83 @@ bool CReconciliation::reconcileUsingTraces(bigint_t prevEndBal) {
                     recipient = pTransaction->to;
                     if (pTransaction->from == "0xPrefund") {
                         prefundIn = pTransaction->value;
+
                     } else if (pTransaction->from == "0xBlockReward") {
                         minerBaseRewardIn = pTransaction->value;
                         minerNephewRewardIn = pTransaction->extraValue1;
                         minerTxFeeIn = pTransaction->extraValue2;
+
                     } else if (pTransaction->from == "0xUncleReward") {
                         minerUncleRewardIn = pTransaction->value;
+
                     } else {
                         internalIn += pTransaction->isError ? 0 : trace.action.value;
                     }
                 }
             }
         }
+
+        if (allocated) {
+            ((CTransaction*)pTransaction)->traces.clear();
+        }
     }
 
     reconciliationType = "by-trace";
-    LOG_TRIAL_BALANCE();
-    if (!reconciled())
-        ((CTransaction*)pTransaction)->traces.clear();  // NOLINT
+    LOG_TRIAL_BALANCE_INSIDE();
+
+    return (begBal + totalIn() - totalOut() == endBal);
+}
+
+//-----------------------------------------------------------------------
+bool CReconciliation::reconcileAcross(bigint_t pBal, blknum_t pBn) {
+    prevBal = pBal;
+    prevAppBlk = pBn;
+
+    bool prevDifferent = prevAppBlk != blockNumber;
+    bool nextDifferent = blockNumber != nextAppBlk || nextAppBlk == NOPOS;
+
+    bigint_t balEOLB = getBalanceAt(accountedFor, blockNumber == 0 ? 0 : blockNumber - 1);
+    bigint_t balEOB = getBalanceAt(accountedFor, blockNumber);
+
+    if (pTransaction->blockNumber == 0) {
+    } else if (prevDifferent && nextDifferent) {
+        // The trace reconcile may have changed values
+        begBal = balEOLB;
+        endBal = balEOB;
+
+    } else if (prevDifferent) {
+        // This tx has a tx after it in the same block but none before it
+        begBal = balEOLB;
+        endBal = endBalCalc();
+
+    } else if (nextDifferent) {
+        // This tx has a tx before it in the block but none after it
+        begBal = pBal;
+        endBal = balEOB;
+
+    } else {
+        // this tx has both a tx before it and one after it in the same block
+        begBal = pBal;
+        endBal = endBalCalc();
+    }
+
+    if (pTransaction->blockNumber == 0) {
+        reconciliationType = "genesis";
+
+    } else if (prevDifferent && nextDifferent) {
+        reconciliationType = "regular";
+
+    } else if (prevDifferent) {
+        reconciliationType = "prevdiff-partial";
+
+    } else if (nextDifferent) {
+        reconciliationType = "partial-nextdiff";
+
+    } else {
+        reconciliationType = "partial-partial";
+    }
+
+    LOG_TRIAL_BALANCE_INSIDE();
     return reconciled();
 }
 

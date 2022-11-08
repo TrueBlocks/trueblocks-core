@@ -15,6 +15,15 @@ TIME ~ CLOCK - <INFO>  :    totalIn:             4200000000000000000000
 TIME ~ CLOCK - <INFO>  :    amountNet:           4200000000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              4200000000000000000000
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: genesis
+TIME ~ CLOCK - <INFO>  :    blockNumber:         0
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    2
+TIME ~ CLOCK - <INFO>  :    prefundIn:           4200000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalIn:             4200000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           4200000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              4200000000000000000000
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : Calling a contract (0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f) at block 0 prior to its deployment 10000835
 TIME ~ CLOCK - <INFO>  : doEthCall in CUniPrice::findPair returned false
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 0...: 
@@ -87,6 +96,18 @@ params.size: 0
 }
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    hash:                0x6e443af86a84920cace198340020e4ca54321a2c515cd3ad1f274d3506b4aff8
+TIME ~ CLOCK - <INFO>  :    blockNumber:         202249
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    0
+TIME ~ CLOCK - <INFO>  :    begBal:              4200000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountOut:           4199900000000000000000
+TIME ~ CLOCK - <INFO>  :    gasOut:              25320679510922664
+TIME ~ CLOCK - <INFO>  :    totalOut:            4199925320679510922664
+TIME ~ CLOCK - <INFO>  :    amountNet:           -4199925320679510922664
+TIME ~ CLOCK - <INFO>  :    endBal:              74679320489077336
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular
 TIME ~ CLOCK - <INFO>  :    hash:                0x6e443af86a84920cace198340020e4ca54321a2c515cd3ad1f274d3506b4aff8
 TIME ~ CLOCK - <INFO>  :    blockNumber:         202249
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    0
@@ -174,6 +195,17 @@ params.size: 0
 }
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    hash:                0xe1822bdf66fb415883f85b61a4a5ab1c13c4c7ab4b102c5d00504347a69b84f5
+TIME ~ CLOCK - <INFO>  :    blockNumber:         1501459
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    2
+TIME ~ CLOCK - <INFO>  :    begBal:              74679320489077336
+TIME ~ CLOCK - <INFO>  :    amountOut:           74259320489077336
+TIME ~ CLOCK - <INFO>  :    gasOut:              420000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            74679320489077336
+TIME ~ CLOCK - <INFO>  :    amountNet:           -74679320489077336
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular
 TIME ~ CLOCK - <INFO>  :    hash:                0xe1822bdf66fb415883f85b61a4a5ab1c13c4c7ab4b102c5d00504347a69b84f5
 TIME ~ CLOCK - <INFO>  :    blockNumber:         1501459
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    2

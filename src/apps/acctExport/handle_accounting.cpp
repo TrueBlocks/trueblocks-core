@@ -40,9 +40,7 @@ bool COptions::process_statements(CTraverser* trav) {
     if (previousBalances[ethKey] == CPreviousBalance()) {
         CReconciliation prevStatement(accountedFor.address, &trav->trans);
         prevStatement.blockNumber = prevAppBlk;
-        if (prevAppBlk > 0) {
-            prevStatement.endBal = getBalanceAt(accountedFor.address, prevAppBlk);
-        }
+        prevStatement.endBal = prevAppBlk > 0 ? getBalanceAt(accountedFor.address, prevAppBlk) : 0;
         previousBalances[ethKey] = prevStatement;
     }
 
