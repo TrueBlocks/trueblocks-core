@@ -80,8 +80,9 @@ class CReconciliation : public CBaseNode {
     }
     CReconciliation(const address_t& aF, const CTransaction* pT);
     const CTransaction* pTransaction = NULL;
-    bool reconcileEth(const CReconciliation& prevRecon);
-    bool reconcileEth2(void);
+
+    bool reconcileInside(void);
+    bool reconcileAcross(bigint_t eB, blknum_t bn);
     bool reconcileUsingTraces(bigint_t prevEndBal);
 
     bigint_t begBalDiff(void) const;
@@ -94,6 +95,8 @@ class CReconciliation : public CBaseNode {
     bool reconciled(void) const;
 
     CReconciliation& operator+=(const CReconciliation& r);
+
+  public:
     // EXISTING_CODE
     bool operator==(const CReconciliation& it) const;
     bool operator!=(const CReconciliation& it) const {

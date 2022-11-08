@@ -7,33 +7,42 @@ TEST[DATE|TIME] LogLevel:  10
 TEST[DATE|TIME] Format:  json
 TIME ~ CLOCK - : 4-----Loaded timestamp file
 { "data": [
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    blockNumber:         1
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    99999
+TIME ~ CLOCK - <INFO>  :    minerBaseRewardIn:   5000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalIn:             5000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           5000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              5000000000000000000
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  prevBal:       0
-TIME ~ CLOCK - : 4-----  begBal:        0
-TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  prevBal:             0
+TIME ~ CLOCK - : 4-----  begBal:              0
+TIME ~ CLOCK - : 4-----  begBalDiff:          0
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 8------  amountIn:      0
-TIME ~ CLOCK - : 8------  internalIn:    0
-TIME ~ CLOCK - : 8------  slfDstrctIn:   0
-TIME ~ CLOCK - : 8------  minBRwdIn:     5000000000000000000
-TIME ~ CLOCK - : 8------  minNRwdIn:     0
-TIME ~ CLOCK - : 8------  minTxFeeIn:    0
-TIME ~ CLOCK - : 8------  minURwdIn:     0
-TIME ~ CLOCK - : 8------  prefundIn:     0
-TIME ~ CLOCK - : 4-----  totalIn:       5000000000000000000
-TIME ~ CLOCK - : 8------  amountOut:     0
-TIME ~ CLOCK - : 8------  internalOut:   0
-TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasOut:        0
-TIME ~ CLOCK - : 4-----  totalOut:      0
-TIME ~ CLOCK - : 4-----  amountNet:     5000000000000000000
-TIME ~ CLOCK - : 4-----  endBal:        5000000000000000000
+TIME ~ CLOCK - : 4-----  amountIn:            0
+TIME ~ CLOCK - : 4-----  internalIn:          0
+TIME ~ CLOCK - : 4-----  selfDestructIn:      0
+TIME ~ CLOCK - : 4-----  minerBaseRewardIn:   5000000000000000000
+TIME ~ CLOCK - : 4-----  minerNephewRewardIn: 0
+TIME ~ CLOCK - : 4-----  minerTxFeeIn:        0
+TIME ~ CLOCK - : 4-----  minerUncleRewardIn:  0
+TIME ~ CLOCK - : 4-----  prefundIn:           0
+TIME ~ CLOCK - : 4-----  totalIn:             5000000000000000000
+TIME ~ CLOCK - : 4-----  amountOut:           0
+TIME ~ CLOCK - : 4-----  internalOut:         0
+TIME ~ CLOCK - : 4-----  selfDestructOut:     0
+TIME ~ CLOCK - : 4-----  gasOut:              0
+TIME ~ CLOCK - : 4-----  totalOut:            0
+TIME ~ CLOCK - : 4-----  amountNet:           5000000000000000000
+TIME ~ CLOCK - : 4-----  endBal:              5000000000000000000
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  endBalCalc:    5000000000000000000
-TIME ~ CLOCK - : 4-----  endBalDiff:    0
-TIME ~ CLOCK - : 4-----  reconciled:    true
+TIME ~ CLOCK - : 4-----  endBalCalc:          5000000000000000000
+TIME ~ CLOCK - : 4-----  endBalDiff:          0
+TIME ~ CLOCK - : 4-----  reconciled:          true
 TIME ~ CLOCK - <INFO>  : Calling a contract (0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f) at block 1 prior to its deployment 10000835
 TIME ~ CLOCK - <INFO>  : doEthCall in CUniPrice::findPair returned false
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1...: 
@@ -104,33 +113,43 @@ params.size: 0
   "date": "2015-07-30 15:26:28 UTC",
   "ether": 5.000000000000000000
 }
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    blockNumber:         5
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    99999
+TIME ~ CLOCK - <INFO>  :    begBal:              5000000000000000000
+TIME ~ CLOCK - <INFO>  :    minerBaseRewardIn:   5000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalIn:             5000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           5000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              10000000000000000000
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  prevBal:       5000000000000000000
-TIME ~ CLOCK - : 4-----  begBal:        5000000000000000000
-TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  prevBal:             5000000000000000000
+TIME ~ CLOCK - : 4-----  begBal:              5000000000000000000
+TIME ~ CLOCK - : 4-----  begBalDiff:          0
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 8------  amountIn:      0
-TIME ~ CLOCK - : 8------  internalIn:    0
-TIME ~ CLOCK - : 8------  slfDstrctIn:   0
-TIME ~ CLOCK - : 8------  minBRwdIn:     5000000000000000000
-TIME ~ CLOCK - : 8------  minNRwdIn:     0
-TIME ~ CLOCK - : 8------  minTxFeeIn:    0
-TIME ~ CLOCK - : 8------  minURwdIn:     0
-TIME ~ CLOCK - : 8------  prefundIn:     0
-TIME ~ CLOCK - : 4-----  totalIn:       5000000000000000000
-TIME ~ CLOCK - : 8------  amountOut:     0
-TIME ~ CLOCK - : 8------  internalOut:   0
-TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasOut:        0
-TIME ~ CLOCK - : 4-----  totalOut:      0
-TIME ~ CLOCK - : 4-----  amountNet:     5000000000000000000
-TIME ~ CLOCK - : 4-----  endBal:        10000000000000000000
+TIME ~ CLOCK - : 4-----  amountIn:            0
+TIME ~ CLOCK - : 4-----  internalIn:          0
+TIME ~ CLOCK - : 4-----  selfDestructIn:      0
+TIME ~ CLOCK - : 4-----  minerBaseRewardIn:   5000000000000000000
+TIME ~ CLOCK - : 4-----  minerNephewRewardIn: 0
+TIME ~ CLOCK - : 4-----  minerTxFeeIn:        0
+TIME ~ CLOCK - : 4-----  minerUncleRewardIn:  0
+TIME ~ CLOCK - : 4-----  prefundIn:           0
+TIME ~ CLOCK - : 4-----  totalIn:             5000000000000000000
+TIME ~ CLOCK - : 4-----  amountOut:           0
+TIME ~ CLOCK - : 4-----  internalOut:         0
+TIME ~ CLOCK - : 4-----  selfDestructOut:     0
+TIME ~ CLOCK - : 4-----  gasOut:              0
+TIME ~ CLOCK - : 4-----  totalOut:            0
+TIME ~ CLOCK - : 4-----  amountNet:           5000000000000000000
+TIME ~ CLOCK - : 4-----  endBal:              10000000000000000000
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  endBalCalc:    10000000000000000000
-TIME ~ CLOCK - : 4-----  endBalDiff:    0
-TIME ~ CLOCK - : 4-----  reconciled:    true
+TIME ~ CLOCK - : 4-----  endBalCalc:          10000000000000000000
+TIME ~ CLOCK - : 4-----  endBalDiff:          0
+TIME ~ CLOCK - : 4-----  reconciled:          true
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 5...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 5 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
@@ -199,33 +218,43 @@ params.size: 0
   "date": "2015-07-30 15:28:03 UTC",
   "ether": 5.000000000000000000
 }
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    blockNumber:         56
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
+TIME ~ CLOCK - <INFO>  :    begBal:              10000000000000000000
+TIME ~ CLOCK - <INFO>  :    minerUncleRewardIn:  3750000000000000000
+TIME ~ CLOCK - <INFO>  :    totalIn:             3750000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           3750000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              13750000000000000000
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  prevBal:       10000000000000000000
-TIME ~ CLOCK - : 4-----  begBal:        10000000000000000000
-TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  prevBal:             10000000000000000000
+TIME ~ CLOCK - : 4-----  begBal:              10000000000000000000
+TIME ~ CLOCK - : 4-----  begBalDiff:          0
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 8------  amountIn:      0
-TIME ~ CLOCK - : 8------  internalIn:    0
-TIME ~ CLOCK - : 8------  slfDstrctIn:   0
-TIME ~ CLOCK - : 8------  minBRwdIn:     0
-TIME ~ CLOCK - : 8------  minNRwdIn:     0
-TIME ~ CLOCK - : 8------  minTxFeeIn:    0
-TIME ~ CLOCK - : 8------  minURwdIn:     3750000000000000000
-TIME ~ CLOCK - : 8------  prefundIn:     0
-TIME ~ CLOCK - : 4-----  totalIn:       3750000000000000000
-TIME ~ CLOCK - : 8------  amountOut:     0
-TIME ~ CLOCK - : 8------  internalOut:   0
-TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasOut:        0
-TIME ~ CLOCK - : 4-----  totalOut:      0
-TIME ~ CLOCK - : 4-----  amountNet:     3750000000000000000
-TIME ~ CLOCK - : 4-----  endBal:        13750000000000000000
+TIME ~ CLOCK - : 4-----  amountIn:            0
+TIME ~ CLOCK - : 4-----  internalIn:          0
+TIME ~ CLOCK - : 4-----  selfDestructIn:      0
+TIME ~ CLOCK - : 4-----  minerBaseRewardIn:   0
+TIME ~ CLOCK - : 4-----  minerNephewRewardIn: 0
+TIME ~ CLOCK - : 4-----  minerTxFeeIn:        0
+TIME ~ CLOCK - : 4-----  minerUncleRewardIn:  3750000000000000000
+TIME ~ CLOCK - : 4-----  prefundIn:           0
+TIME ~ CLOCK - : 4-----  totalIn:             3750000000000000000
+TIME ~ CLOCK - : 4-----  amountOut:           0
+TIME ~ CLOCK - : 4-----  internalOut:         0
+TIME ~ CLOCK - : 4-----  selfDestructOut:     0
+TIME ~ CLOCK - : 4-----  gasOut:              0
+TIME ~ CLOCK - : 4-----  totalOut:            0
+TIME ~ CLOCK - : 4-----  amountNet:           3750000000000000000
+TIME ~ CLOCK - : 4-----  endBal:              13750000000000000000
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  endBalCalc:    13750000000000000000
-TIME ~ CLOCK - : 4-----  endBalDiff:    0
-TIME ~ CLOCK - : 4-----  reconciled:    true
+TIME ~ CLOCK - : 4-----  endBalCalc:          13750000000000000000
+TIME ~ CLOCK - : 4-----  endBalDiff:          0
+TIME ~ CLOCK - : 4-----  reconciled:          true
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 56...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 56 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
@@ -294,33 +323,43 @@ params.size: 0
   "date": "2015-07-30 15:32:02 UTC",
   "ether": 3.750000000000000000
 }
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    blockNumber:         235
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    99999
+TIME ~ CLOCK - <INFO>  :    begBal:              13750000000000000000
+TIME ~ CLOCK - <INFO>  :    minerBaseRewardIn:   5000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalIn:             5000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           5000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              18750000000000000000
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  prevBal:       13750000000000000000
-TIME ~ CLOCK - : 4-----  begBal:        13750000000000000000
-TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  prevBal:             13750000000000000000
+TIME ~ CLOCK - : 4-----  begBal:              13750000000000000000
+TIME ~ CLOCK - : 4-----  begBalDiff:          0
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 8------  amountIn:      0
-TIME ~ CLOCK - : 8------  internalIn:    0
-TIME ~ CLOCK - : 8------  slfDstrctIn:   0
-TIME ~ CLOCK - : 8------  minBRwdIn:     5000000000000000000
-TIME ~ CLOCK - : 8------  minNRwdIn:     0
-TIME ~ CLOCK - : 8------  minTxFeeIn:    0
-TIME ~ CLOCK - : 8------  minURwdIn:     0
-TIME ~ CLOCK - : 8------  prefundIn:     0
-TIME ~ CLOCK - : 4-----  totalIn:       5000000000000000000
-TIME ~ CLOCK - : 8------  amountOut:     0
-TIME ~ CLOCK - : 8------  internalOut:   0
-TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasOut:        0
-TIME ~ CLOCK - : 4-----  totalOut:      0
-TIME ~ CLOCK - : 4-----  amountNet:     5000000000000000000
-TIME ~ CLOCK - : 4-----  endBal:        18750000000000000000
+TIME ~ CLOCK - : 4-----  amountIn:            0
+TIME ~ CLOCK - : 4-----  internalIn:          0
+TIME ~ CLOCK - : 4-----  selfDestructIn:      0
+TIME ~ CLOCK - : 4-----  minerBaseRewardIn:   5000000000000000000
+TIME ~ CLOCK - : 4-----  minerNephewRewardIn: 0
+TIME ~ CLOCK - : 4-----  minerTxFeeIn:        0
+TIME ~ CLOCK - : 4-----  minerUncleRewardIn:  0
+TIME ~ CLOCK - : 4-----  prefundIn:           0
+TIME ~ CLOCK - : 4-----  totalIn:             5000000000000000000
+TIME ~ CLOCK - : 4-----  amountOut:           0
+TIME ~ CLOCK - : 4-----  internalOut:         0
+TIME ~ CLOCK - : 4-----  selfDestructOut:     0
+TIME ~ CLOCK - : 4-----  gasOut:              0
+TIME ~ CLOCK - : 4-----  totalOut:            0
+TIME ~ CLOCK - : 4-----  amountNet:           5000000000000000000
+TIME ~ CLOCK - : 4-----  endBal:              18750000000000000000
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  endBalCalc:    18750000000000000000
-TIME ~ CLOCK - : 4-----  endBalDiff:    0
-TIME ~ CLOCK - : 4-----  reconciled:    true
+TIME ~ CLOCK - : 4-----  endBalCalc:          18750000000000000000
+TIME ~ CLOCK - : 4-----  endBalDiff:          0
+TIME ~ CLOCK - : 4-----  reconciled:          true
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 235...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 235 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
@@ -389,33 +428,43 @@ params.size: 0
   "date": "2015-07-30 15:38:33 UTC",
   "ether": 5.000000000000000000
 }
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    blockNumber:         247
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
+TIME ~ CLOCK - <INFO>  :    begBal:              18750000000000000000
+TIME ~ CLOCK - <INFO>  :    minerUncleRewardIn:  3125000000000000000
+TIME ~ CLOCK - <INFO>  :    totalIn:             3125000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           3125000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              21875000000000000000
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  prevBal:       18750000000000000000
-TIME ~ CLOCK - : 4-----  begBal:        18750000000000000000
-TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  prevBal:             18750000000000000000
+TIME ~ CLOCK - : 4-----  begBal:              18750000000000000000
+TIME ~ CLOCK - : 4-----  begBalDiff:          0
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 8------  amountIn:      0
-TIME ~ CLOCK - : 8------  internalIn:    0
-TIME ~ CLOCK - : 8------  slfDstrctIn:   0
-TIME ~ CLOCK - : 8------  minBRwdIn:     0
-TIME ~ CLOCK - : 8------  minNRwdIn:     0
-TIME ~ CLOCK - : 8------  minTxFeeIn:    0
-TIME ~ CLOCK - : 8------  minURwdIn:     3125000000000000000
-TIME ~ CLOCK - : 8------  prefundIn:     0
-TIME ~ CLOCK - : 4-----  totalIn:       3125000000000000000
-TIME ~ CLOCK - : 8------  amountOut:     0
-TIME ~ CLOCK - : 8------  internalOut:   0
-TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasOut:        0
-TIME ~ CLOCK - : 4-----  totalOut:      0
-TIME ~ CLOCK - : 4-----  amountNet:     3125000000000000000
-TIME ~ CLOCK - : 4-----  endBal:        21875000000000000000
+TIME ~ CLOCK - : 4-----  amountIn:            0
+TIME ~ CLOCK - : 4-----  internalIn:          0
+TIME ~ CLOCK - : 4-----  selfDestructIn:      0
+TIME ~ CLOCK - : 4-----  minerBaseRewardIn:   0
+TIME ~ CLOCK - : 4-----  minerNephewRewardIn: 0
+TIME ~ CLOCK - : 4-----  minerTxFeeIn:        0
+TIME ~ CLOCK - : 4-----  minerUncleRewardIn:  3125000000000000000
+TIME ~ CLOCK - : 4-----  prefundIn:           0
+TIME ~ CLOCK - : 4-----  totalIn:             3125000000000000000
+TIME ~ CLOCK - : 4-----  amountOut:           0
+TIME ~ CLOCK - : 4-----  internalOut:         0
+TIME ~ CLOCK - : 4-----  selfDestructOut:     0
+TIME ~ CLOCK - : 4-----  gasOut:              0
+TIME ~ CLOCK - : 4-----  totalOut:            0
+TIME ~ CLOCK - : 4-----  amountNet:           3125000000000000000
+TIME ~ CLOCK - : 4-----  endBal:              21875000000000000000
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  endBalCalc:    21875000000000000000
-TIME ~ CLOCK - : 4-----  endBalDiff:    0
-TIME ~ CLOCK - : 4-----  reconciled:    true
+TIME ~ CLOCK - : 4-----  endBalCalc:          21875000000000000000
+TIME ~ CLOCK - : 4-----  endBalDiff:          0
+TIME ~ CLOCK - : 4-----  reconciled:          true
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 247...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 247 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
@@ -484,33 +533,43 @@ params.size: 0
   "date": "2015-07-30 15:38:59 UTC",
   "ether": 3.125000000000000000
 }
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    blockNumber:         348
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    99999
+TIME ~ CLOCK - <INFO>  :    begBal:              21875000000000000000
+TIME ~ CLOCK - <INFO>  :    minerBaseRewardIn:   5000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalIn:             5000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           5000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              26875000000000000000
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  prevBal:       21875000000000000000
-TIME ~ CLOCK - : 4-----  begBal:        21875000000000000000
-TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  prevBal:             21875000000000000000
+TIME ~ CLOCK - : 4-----  begBal:              21875000000000000000
+TIME ~ CLOCK - : 4-----  begBalDiff:          0
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 8------  amountIn:      0
-TIME ~ CLOCK - : 8------  internalIn:    0
-TIME ~ CLOCK - : 8------  slfDstrctIn:   0
-TIME ~ CLOCK - : 8------  minBRwdIn:     5000000000000000000
-TIME ~ CLOCK - : 8------  minNRwdIn:     0
-TIME ~ CLOCK - : 8------  minTxFeeIn:    0
-TIME ~ CLOCK - : 8------  minURwdIn:     0
-TIME ~ CLOCK - : 8------  prefundIn:     0
-TIME ~ CLOCK - : 4-----  totalIn:       5000000000000000000
-TIME ~ CLOCK - : 8------  amountOut:     0
-TIME ~ CLOCK - : 8------  internalOut:   0
-TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasOut:        0
-TIME ~ CLOCK - : 4-----  totalOut:      0
-TIME ~ CLOCK - : 4-----  amountNet:     5000000000000000000
-TIME ~ CLOCK - : 4-----  endBal:        26875000000000000000
+TIME ~ CLOCK - : 4-----  amountIn:            0
+TIME ~ CLOCK - : 4-----  internalIn:          0
+TIME ~ CLOCK - : 4-----  selfDestructIn:      0
+TIME ~ CLOCK - : 4-----  minerBaseRewardIn:   5000000000000000000
+TIME ~ CLOCK - : 4-----  minerNephewRewardIn: 0
+TIME ~ CLOCK - : 4-----  minerTxFeeIn:        0
+TIME ~ CLOCK - : 4-----  minerUncleRewardIn:  0
+TIME ~ CLOCK - : 4-----  prefundIn:           0
+TIME ~ CLOCK - : 4-----  totalIn:             5000000000000000000
+TIME ~ CLOCK - : 4-----  amountOut:           0
+TIME ~ CLOCK - : 4-----  internalOut:         0
+TIME ~ CLOCK - : 4-----  selfDestructOut:     0
+TIME ~ CLOCK - : 4-----  gasOut:              0
+TIME ~ CLOCK - : 4-----  totalOut:            0
+TIME ~ CLOCK - : 4-----  amountNet:           5000000000000000000
+TIME ~ CLOCK - : 4-----  endBal:              26875000000000000000
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  endBalCalc:    26875000000000000000
-TIME ~ CLOCK - : 4-----  endBalDiff:    0
-TIME ~ CLOCK - : 4-----  reconciled:    true
+TIME ~ CLOCK - : 4-----  endBalCalc:          26875000000000000000
+TIME ~ CLOCK - : 4-----  endBalDiff:          0
+TIME ~ CLOCK - : 4-----  reconciled:          true
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 348...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 348 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
@@ -579,33 +638,43 @@ params.size: 0
   "date": "2015-07-30 15:42:23 UTC",
   "ether": 5.000000000000000000
 }
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    blockNumber:         500
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
+TIME ~ CLOCK - <INFO>  :    begBal:              26875000000000000000
+TIME ~ CLOCK - <INFO>  :    minerUncleRewardIn:  3750000000000000000
+TIME ~ CLOCK - <INFO>  :    totalIn:             3750000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           3750000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              30625000000000000000
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  prevBal:       26875000000000000000
-TIME ~ CLOCK - : 4-----  begBal:        26875000000000000000
-TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  prevBal:             26875000000000000000
+TIME ~ CLOCK - : 4-----  begBal:              26875000000000000000
+TIME ~ CLOCK - : 4-----  begBalDiff:          0
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 8------  amountIn:      0
-TIME ~ CLOCK - : 8------  internalIn:    0
-TIME ~ CLOCK - : 8------  slfDstrctIn:   0
-TIME ~ CLOCK - : 8------  minBRwdIn:     0
-TIME ~ CLOCK - : 8------  minNRwdIn:     0
-TIME ~ CLOCK - : 8------  minTxFeeIn:    0
-TIME ~ CLOCK - : 8------  minURwdIn:     3750000000000000000
-TIME ~ CLOCK - : 8------  prefundIn:     0
-TIME ~ CLOCK - : 4-----  totalIn:       3750000000000000000
-TIME ~ CLOCK - : 8------  amountOut:     0
-TIME ~ CLOCK - : 8------  internalOut:   0
-TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasOut:        0
-TIME ~ CLOCK - : 4-----  totalOut:      0
-TIME ~ CLOCK - : 4-----  amountNet:     3750000000000000000
-TIME ~ CLOCK - : 4-----  endBal:        30625000000000000000
+TIME ~ CLOCK - : 4-----  amountIn:            0
+TIME ~ CLOCK - : 4-----  internalIn:          0
+TIME ~ CLOCK - : 4-----  selfDestructIn:      0
+TIME ~ CLOCK - : 4-----  minerBaseRewardIn:   0
+TIME ~ CLOCK - : 4-----  minerNephewRewardIn: 0
+TIME ~ CLOCK - : 4-----  minerTxFeeIn:        0
+TIME ~ CLOCK - : 4-----  minerUncleRewardIn:  3750000000000000000
+TIME ~ CLOCK - : 4-----  prefundIn:           0
+TIME ~ CLOCK - : 4-----  totalIn:             3750000000000000000
+TIME ~ CLOCK - : 4-----  amountOut:           0
+TIME ~ CLOCK - : 4-----  internalOut:         0
+TIME ~ CLOCK - : 4-----  selfDestructOut:     0
+TIME ~ CLOCK - : 4-----  gasOut:              0
+TIME ~ CLOCK - : 4-----  totalOut:            0
+TIME ~ CLOCK - : 4-----  amountNet:           3750000000000000000
+TIME ~ CLOCK - : 4-----  endBal:              30625000000000000000
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  endBalCalc:    30625000000000000000
-TIME ~ CLOCK - : 4-----  endBalDiff:    0
-TIME ~ CLOCK - : 4-----  reconciled:    true
+TIME ~ CLOCK - : 4-----  endBalCalc:          30625000000000000000
+TIME ~ CLOCK - : 4-----  endBalDiff:          0
+TIME ~ CLOCK - : 4-----  reconciled:          true
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 500...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 500 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
@@ -674,33 +743,43 @@ params.size: 0
   "date": "2015-07-30 15:46:52 UTC",
   "ether": 3.750000000000000000
 }
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    blockNumber:         563
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
+TIME ~ CLOCK - <INFO>  :    begBal:              30625000000000000000
+TIME ~ CLOCK - <INFO>  :    minerUncleRewardIn:  3750000000000000000
+TIME ~ CLOCK - <INFO>  :    totalIn:             3750000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           3750000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              34375000000000000000
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  prevBal:       30625000000000000000
-TIME ~ CLOCK - : 4-----  begBal:        30625000000000000000
-TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  prevBal:             30625000000000000000
+TIME ~ CLOCK - : 4-----  begBal:              30625000000000000000
+TIME ~ CLOCK - : 4-----  begBalDiff:          0
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 8------  amountIn:      0
-TIME ~ CLOCK - : 8------  internalIn:    0
-TIME ~ CLOCK - : 8------  slfDstrctIn:   0
-TIME ~ CLOCK - : 8------  minBRwdIn:     0
-TIME ~ CLOCK - : 8------  minNRwdIn:     0
-TIME ~ CLOCK - : 8------  minTxFeeIn:    0
-TIME ~ CLOCK - : 8------  minURwdIn:     3750000000000000000
-TIME ~ CLOCK - : 8------  prefundIn:     0
-TIME ~ CLOCK - : 4-----  totalIn:       3750000000000000000
-TIME ~ CLOCK - : 8------  amountOut:     0
-TIME ~ CLOCK - : 8------  internalOut:   0
-TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasOut:        0
-TIME ~ CLOCK - : 4-----  totalOut:      0
-TIME ~ CLOCK - : 4-----  amountNet:     3750000000000000000
-TIME ~ CLOCK - : 4-----  endBal:        34375000000000000000
+TIME ~ CLOCK - : 4-----  amountIn:            0
+TIME ~ CLOCK - : 4-----  internalIn:          0
+TIME ~ CLOCK - : 4-----  selfDestructIn:      0
+TIME ~ CLOCK - : 4-----  minerBaseRewardIn:   0
+TIME ~ CLOCK - : 4-----  minerNephewRewardIn: 0
+TIME ~ CLOCK - : 4-----  minerTxFeeIn:        0
+TIME ~ CLOCK - : 4-----  minerUncleRewardIn:  3750000000000000000
+TIME ~ CLOCK - : 4-----  prefundIn:           0
+TIME ~ CLOCK - : 4-----  totalIn:             3750000000000000000
+TIME ~ CLOCK - : 4-----  amountOut:           0
+TIME ~ CLOCK - : 4-----  internalOut:         0
+TIME ~ CLOCK - : 4-----  selfDestructOut:     0
+TIME ~ CLOCK - : 4-----  gasOut:              0
+TIME ~ CLOCK - : 4-----  totalOut:            0
+TIME ~ CLOCK - : 4-----  amountNet:           3750000000000000000
+TIME ~ CLOCK - : 4-----  endBal:              34375000000000000000
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  endBalCalc:    34375000000000000000
-TIME ~ CLOCK - : 4-----  endBalDiff:    0
-TIME ~ CLOCK - : 4-----  reconciled:    true
+TIME ~ CLOCK - : 4-----  endBalCalc:          34375000000000000000
+TIME ~ CLOCK - : 4-----  endBalDiff:          0
+TIME ~ CLOCK - : 4-----  reconciled:          true
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 563...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 563 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
@@ -769,33 +848,43 @@ params.size: 0
   "date": "2015-07-30 15:48:57 UTC",
   "ether": 3.750000000000000000
 }
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    blockNumber:         987
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
+TIME ~ CLOCK - <INFO>  :    begBal:              34375000000000000000
+TIME ~ CLOCK - <INFO>  :    minerUncleRewardIn:  2500000000000000000
+TIME ~ CLOCK - <INFO>  :    totalIn:             2500000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           2500000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              36875000000000000000
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  prevBal:       34375000000000000000
-TIME ~ CLOCK - : 4-----  begBal:        34375000000000000000
-TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  prevBal:             34375000000000000000
+TIME ~ CLOCK - : 4-----  begBal:              34375000000000000000
+TIME ~ CLOCK - : 4-----  begBalDiff:          0
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 8------  amountIn:      0
-TIME ~ CLOCK - : 8------  internalIn:    0
-TIME ~ CLOCK - : 8------  slfDstrctIn:   0
-TIME ~ CLOCK - : 8------  minBRwdIn:     0
-TIME ~ CLOCK - : 8------  minNRwdIn:     0
-TIME ~ CLOCK - : 8------  minTxFeeIn:    0
-TIME ~ CLOCK - : 8------  minURwdIn:     2500000000000000000
-TIME ~ CLOCK - : 8------  prefundIn:     0
-TIME ~ CLOCK - : 4-----  totalIn:       2500000000000000000
-TIME ~ CLOCK - : 8------  amountOut:     0
-TIME ~ CLOCK - : 8------  internalOut:   0
-TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasOut:        0
-TIME ~ CLOCK - : 4-----  totalOut:      0
-TIME ~ CLOCK - : 4-----  amountNet:     2500000000000000000
-TIME ~ CLOCK - : 4-----  endBal:        36875000000000000000
+TIME ~ CLOCK - : 4-----  amountIn:            0
+TIME ~ CLOCK - : 4-----  internalIn:          0
+TIME ~ CLOCK - : 4-----  selfDestructIn:      0
+TIME ~ CLOCK - : 4-----  minerBaseRewardIn:   0
+TIME ~ CLOCK - : 4-----  minerNephewRewardIn: 0
+TIME ~ CLOCK - : 4-----  minerTxFeeIn:        0
+TIME ~ CLOCK - : 4-----  minerUncleRewardIn:  2500000000000000000
+TIME ~ CLOCK - : 4-----  prefundIn:           0
+TIME ~ CLOCK - : 4-----  totalIn:             2500000000000000000
+TIME ~ CLOCK - : 4-----  amountOut:           0
+TIME ~ CLOCK - : 4-----  internalOut:         0
+TIME ~ CLOCK - : 4-----  selfDestructOut:     0
+TIME ~ CLOCK - : 4-----  gasOut:              0
+TIME ~ CLOCK - : 4-----  totalOut:            0
+TIME ~ CLOCK - : 4-----  amountNet:           2500000000000000000
+TIME ~ CLOCK - : 4-----  endBal:              36875000000000000000
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  endBalCalc:    36875000000000000000
-TIME ~ CLOCK - : 4-----  endBalDiff:    0
-TIME ~ CLOCK - : 4-----  reconciled:    true
+TIME ~ CLOCK - : 4-----  endBalCalc:          36875000000000000000
+TIME ~ CLOCK - : 4-----  endBalDiff:          0
+TIME ~ CLOCK - : 4-----  reconciled:          true
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 987...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 987 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
@@ -864,33 +953,44 @@ params.size: 0
   "date": "2015-07-30 16:01:54 UTC",
   "ether": 2.500000000000000000
 }
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    blockNumber:         1450
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    99999
+TIME ~ CLOCK - <INFO>  :    begBal:              36875000000000000000
+TIME ~ CLOCK - <INFO>  :    minerBaseRewardIn:   5000000000000000000
+TIME ~ CLOCK - <INFO>  :    minerNephewRewardIn: 156250000000000000
+TIME ~ CLOCK - <INFO>  :    totalIn:             5156250000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           5156250000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              42031250000000000000
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  prevBal:       36875000000000000000
-TIME ~ CLOCK - : 4-----  begBal:        36875000000000000000
-TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  prevBal:             36875000000000000000
+TIME ~ CLOCK - : 4-----  begBal:              36875000000000000000
+TIME ~ CLOCK - : 4-----  begBalDiff:          0
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 8------  amountIn:      0
-TIME ~ CLOCK - : 8------  internalIn:    0
-TIME ~ CLOCK - : 8------  slfDstrctIn:   0
-TIME ~ CLOCK - : 8------  minBRwdIn:     5000000000000000000
-TIME ~ CLOCK - : 8------  minNRwdIn:     156250000000000000
-TIME ~ CLOCK - : 8------  minTxFeeIn:    0
-TIME ~ CLOCK - : 8------  minURwdIn:     0
-TIME ~ CLOCK - : 8------  prefundIn:     0
-TIME ~ CLOCK - : 4-----  totalIn:       5156250000000000000
-TIME ~ CLOCK - : 8------  amountOut:     0
-TIME ~ CLOCK - : 8------  internalOut:   0
-TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasOut:        0
-TIME ~ CLOCK - : 4-----  totalOut:      0
-TIME ~ CLOCK - : 4-----  amountNet:     5156250000000000000
-TIME ~ CLOCK - : 4-----  endBal:        42031250000000000000
+TIME ~ CLOCK - : 4-----  amountIn:            0
+TIME ~ CLOCK - : 4-----  internalIn:          0
+TIME ~ CLOCK - : 4-----  selfDestructIn:      0
+TIME ~ CLOCK - : 4-----  minerBaseRewardIn:   5000000000000000000
+TIME ~ CLOCK - : 4-----  minerNephewRewardIn: 156250000000000000
+TIME ~ CLOCK - : 4-----  minerTxFeeIn:        0
+TIME ~ CLOCK - : 4-----  minerUncleRewardIn:  0
+TIME ~ CLOCK - : 4-----  prefundIn:           0
+TIME ~ CLOCK - : 4-----  totalIn:             5156250000000000000
+TIME ~ CLOCK - : 4-----  amountOut:           0
+TIME ~ CLOCK - : 4-----  internalOut:         0
+TIME ~ CLOCK - : 4-----  selfDestructOut:     0
+TIME ~ CLOCK - : 4-----  gasOut:              0
+TIME ~ CLOCK - : 4-----  totalOut:            0
+TIME ~ CLOCK - : 4-----  amountNet:           5156250000000000000
+TIME ~ CLOCK - : 4-----  endBal:              42031250000000000000
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  endBalCalc:    42031250000000000000
-TIME ~ CLOCK - : 4-----  endBalDiff:    0
-TIME ~ CLOCK - : 4-----  reconciled:    true
+TIME ~ CLOCK - : 4-----  endBalCalc:          42031250000000000000
+TIME ~ CLOCK - : 4-----  endBalDiff:          0
+TIME ~ CLOCK - : 4-----  reconciled:          true
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1450...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1450 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
@@ -959,33 +1059,43 @@ params.size: 0
   "date": "2015-07-30 16:18:50 UTC",
   "ether": 5.000000000000000000
 }
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    blockNumber:         1580
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
+TIME ~ CLOCK - <INFO>  :    begBal:              42031250000000000000
+TIME ~ CLOCK - <INFO>  :    minerUncleRewardIn:  3750000000000000000
+TIME ~ CLOCK - <INFO>  :    totalIn:             3750000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           3750000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              45781250000000000000
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  prevBal:       42031250000000000000
-TIME ~ CLOCK - : 4-----  begBal:        42031250000000000000
-TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  prevBal:             42031250000000000000
+TIME ~ CLOCK - : 4-----  begBal:              42031250000000000000
+TIME ~ CLOCK - : 4-----  begBalDiff:          0
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 8------  amountIn:      0
-TIME ~ CLOCK - : 8------  internalIn:    0
-TIME ~ CLOCK - : 8------  slfDstrctIn:   0
-TIME ~ CLOCK - : 8------  minBRwdIn:     0
-TIME ~ CLOCK - : 8------  minNRwdIn:     0
-TIME ~ CLOCK - : 8------  minTxFeeIn:    0
-TIME ~ CLOCK - : 8------  minURwdIn:     3750000000000000000
-TIME ~ CLOCK - : 8------  prefundIn:     0
-TIME ~ CLOCK - : 4-----  totalIn:       3750000000000000000
-TIME ~ CLOCK - : 8------  amountOut:     0
-TIME ~ CLOCK - : 8------  internalOut:   0
-TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasOut:        0
-TIME ~ CLOCK - : 4-----  totalOut:      0
-TIME ~ CLOCK - : 4-----  amountNet:     3750000000000000000
-TIME ~ CLOCK - : 4-----  endBal:        45781250000000000000
+TIME ~ CLOCK - : 4-----  amountIn:            0
+TIME ~ CLOCK - : 4-----  internalIn:          0
+TIME ~ CLOCK - : 4-----  selfDestructIn:      0
+TIME ~ CLOCK - : 4-----  minerBaseRewardIn:   0
+TIME ~ CLOCK - : 4-----  minerNephewRewardIn: 0
+TIME ~ CLOCK - : 4-----  minerTxFeeIn:        0
+TIME ~ CLOCK - : 4-----  minerUncleRewardIn:  3750000000000000000
+TIME ~ CLOCK - : 4-----  prefundIn:           0
+TIME ~ CLOCK - : 4-----  totalIn:             3750000000000000000
+TIME ~ CLOCK - : 4-----  amountOut:           0
+TIME ~ CLOCK - : 4-----  internalOut:         0
+TIME ~ CLOCK - : 4-----  selfDestructOut:     0
+TIME ~ CLOCK - : 4-----  gasOut:              0
+TIME ~ CLOCK - : 4-----  totalOut:            0
+TIME ~ CLOCK - : 4-----  amountNet:           3750000000000000000
+TIME ~ CLOCK - : 4-----  endBal:              45781250000000000000
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  endBalCalc:    45781250000000000000
-TIME ~ CLOCK - : 4-----  endBalDiff:    0
-TIME ~ CLOCK - : 4-----  reconciled:    true
+TIME ~ CLOCK - : 4-----  endBalCalc:          45781250000000000000
+TIME ~ CLOCK - : 4-----  endBalDiff:          0
+TIME ~ CLOCK - : 4-----  reconciled:          true
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1580...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1580 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
@@ -1054,33 +1164,43 @@ params.size: 0
   "date": "2015-07-30 16:24:38 UTC",
   "ether": 3.750000000000000000
 }
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    blockNumber:         1586
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
+TIME ~ CLOCK - <INFO>  :    begBal:              45781250000000000000
+TIME ~ CLOCK - <INFO>  :    minerUncleRewardIn:  3750000000000000000
+TIME ~ CLOCK - <INFO>  :    totalIn:             3750000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           3750000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              49531250000000000000
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  prevBal:       45781250000000000000
-TIME ~ CLOCK - : 4-----  begBal:        45781250000000000000
-TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  prevBal:             45781250000000000000
+TIME ~ CLOCK - : 4-----  begBal:              45781250000000000000
+TIME ~ CLOCK - : 4-----  begBalDiff:          0
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 8------  amountIn:      0
-TIME ~ CLOCK - : 8------  internalIn:    0
-TIME ~ CLOCK - : 8------  slfDstrctIn:   0
-TIME ~ CLOCK - : 8------  minBRwdIn:     0
-TIME ~ CLOCK - : 8------  minNRwdIn:     0
-TIME ~ CLOCK - : 8------  minTxFeeIn:    0
-TIME ~ CLOCK - : 8------  minURwdIn:     3750000000000000000
-TIME ~ CLOCK - : 8------  prefundIn:     0
-TIME ~ CLOCK - : 4-----  totalIn:       3750000000000000000
-TIME ~ CLOCK - : 8------  amountOut:     0
-TIME ~ CLOCK - : 8------  internalOut:   0
-TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasOut:        0
-TIME ~ CLOCK - : 4-----  totalOut:      0
-TIME ~ CLOCK - : 4-----  amountNet:     3750000000000000000
-TIME ~ CLOCK - : 4-----  endBal:        49531250000000000000
+TIME ~ CLOCK - : 4-----  amountIn:            0
+TIME ~ CLOCK - : 4-----  internalIn:          0
+TIME ~ CLOCK - : 4-----  selfDestructIn:      0
+TIME ~ CLOCK - : 4-----  minerBaseRewardIn:   0
+TIME ~ CLOCK - : 4-----  minerNephewRewardIn: 0
+TIME ~ CLOCK - : 4-----  minerTxFeeIn:        0
+TIME ~ CLOCK - : 4-----  minerUncleRewardIn:  3750000000000000000
+TIME ~ CLOCK - : 4-----  prefundIn:           0
+TIME ~ CLOCK - : 4-----  totalIn:             3750000000000000000
+TIME ~ CLOCK - : 4-----  amountOut:           0
+TIME ~ CLOCK - : 4-----  internalOut:         0
+TIME ~ CLOCK - : 4-----  selfDestructOut:     0
+TIME ~ CLOCK - : 4-----  gasOut:              0
+TIME ~ CLOCK - : 4-----  totalOut:            0
+TIME ~ CLOCK - : 4-----  amountNet:           3750000000000000000
+TIME ~ CLOCK - : 4-----  endBal:              49531250000000000000
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  endBalCalc:    49531250000000000000
-TIME ~ CLOCK - : 4-----  endBalDiff:    0
-TIME ~ CLOCK - : 4-----  reconciled:    true
+TIME ~ CLOCK - : 4-----  endBalCalc:          49531250000000000000
+TIME ~ CLOCK - : 4-----  endBalDiff:          0
+TIME ~ CLOCK - : 4-----  reconciled:          true
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1586...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1586 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
@@ -1149,33 +1269,43 @@ params.size: 0
   "date": "2015-07-30 16:24:52 UTC",
   "ether": 3.750000000000000000
 }
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    blockNumber:         1861
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    99999
+TIME ~ CLOCK - <INFO>  :    begBal:              49531250000000000000
+TIME ~ CLOCK - <INFO>  :    minerBaseRewardIn:   5000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalIn:             5000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           5000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              54531250000000000000
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  prevBal:       49531250000000000000
-TIME ~ CLOCK - : 4-----  begBal:        49531250000000000000
-TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  prevBal:             49531250000000000000
+TIME ~ CLOCK - : 4-----  begBal:              49531250000000000000
+TIME ~ CLOCK - : 4-----  begBalDiff:          0
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 8------  amountIn:      0
-TIME ~ CLOCK - : 8------  internalIn:    0
-TIME ~ CLOCK - : 8------  slfDstrctIn:   0
-TIME ~ CLOCK - : 8------  minBRwdIn:     5000000000000000000
-TIME ~ CLOCK - : 8------  minNRwdIn:     0
-TIME ~ CLOCK - : 8------  minTxFeeIn:    0
-TIME ~ CLOCK - : 8------  minURwdIn:     0
-TIME ~ CLOCK - : 8------  prefundIn:     0
-TIME ~ CLOCK - : 4-----  totalIn:       5000000000000000000
-TIME ~ CLOCK - : 8------  amountOut:     0
-TIME ~ CLOCK - : 8------  internalOut:   0
-TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasOut:        0
-TIME ~ CLOCK - : 4-----  totalOut:      0
-TIME ~ CLOCK - : 4-----  amountNet:     5000000000000000000
-TIME ~ CLOCK - : 4-----  endBal:        54531250000000000000
+TIME ~ CLOCK - : 4-----  amountIn:            0
+TIME ~ CLOCK - : 4-----  internalIn:          0
+TIME ~ CLOCK - : 4-----  selfDestructIn:      0
+TIME ~ CLOCK - : 4-----  minerBaseRewardIn:   5000000000000000000
+TIME ~ CLOCK - : 4-----  minerNephewRewardIn: 0
+TIME ~ CLOCK - : 4-----  minerTxFeeIn:        0
+TIME ~ CLOCK - : 4-----  minerUncleRewardIn:  0
+TIME ~ CLOCK - : 4-----  prefundIn:           0
+TIME ~ CLOCK - : 4-----  totalIn:             5000000000000000000
+TIME ~ CLOCK - : 4-----  amountOut:           0
+TIME ~ CLOCK - : 4-----  internalOut:         0
+TIME ~ CLOCK - : 4-----  selfDestructOut:     0
+TIME ~ CLOCK - : 4-----  gasOut:              0
+TIME ~ CLOCK - : 4-----  totalOut:            0
+TIME ~ CLOCK - : 4-----  amountNet:           5000000000000000000
+TIME ~ CLOCK - : 4-----  endBal:              54531250000000000000
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  endBalCalc:    54531250000000000000
-TIME ~ CLOCK - : 4-----  endBalDiff:    0
-TIME ~ CLOCK - : 4-----  reconciled:    true
+TIME ~ CLOCK - : 4-----  endBalCalc:          54531250000000000000
+TIME ~ CLOCK - : 4-----  endBalDiff:          0
+TIME ~ CLOCK - : 4-----  reconciled:          true
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1861...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1861 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
@@ -1244,33 +1374,43 @@ params.size: 0
   "date": "2015-07-30 16:37:21 UTC",
   "ether": 5.000000000000000000
 }
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    blockNumber:         1912
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
+TIME ~ CLOCK - <INFO>  :    begBal:              54531250000000000000
+TIME ~ CLOCK - <INFO>  :    minerUncleRewardIn:  3750000000000000000
+TIME ~ CLOCK - <INFO>  :    totalIn:             3750000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           3750000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              58281250000000000000
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  prevBal:       54531250000000000000
-TIME ~ CLOCK - : 4-----  begBal:        54531250000000000000
-TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  prevBal:             54531250000000000000
+TIME ~ CLOCK - : 4-----  begBal:              54531250000000000000
+TIME ~ CLOCK - : 4-----  begBalDiff:          0
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 8------  amountIn:      0
-TIME ~ CLOCK - : 8------  internalIn:    0
-TIME ~ CLOCK - : 8------  slfDstrctIn:   0
-TIME ~ CLOCK - : 8------  minBRwdIn:     0
-TIME ~ CLOCK - : 8------  minNRwdIn:     0
-TIME ~ CLOCK - : 8------  minTxFeeIn:    0
-TIME ~ CLOCK - : 8------  minURwdIn:     3750000000000000000
-TIME ~ CLOCK - : 8------  prefundIn:     0
-TIME ~ CLOCK - : 4-----  totalIn:       3750000000000000000
-TIME ~ CLOCK - : 8------  amountOut:     0
-TIME ~ CLOCK - : 8------  internalOut:   0
-TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasOut:        0
-TIME ~ CLOCK - : 4-----  totalOut:      0
-TIME ~ CLOCK - : 4-----  amountNet:     3750000000000000000
-TIME ~ CLOCK - : 4-----  endBal:        58281250000000000000
+TIME ~ CLOCK - : 4-----  amountIn:            0
+TIME ~ CLOCK - : 4-----  internalIn:          0
+TIME ~ CLOCK - : 4-----  selfDestructIn:      0
+TIME ~ CLOCK - : 4-----  minerBaseRewardIn:   0
+TIME ~ CLOCK - : 4-----  minerNephewRewardIn: 0
+TIME ~ CLOCK - : 4-----  minerTxFeeIn:        0
+TIME ~ CLOCK - : 4-----  minerUncleRewardIn:  3750000000000000000
+TIME ~ CLOCK - : 4-----  prefundIn:           0
+TIME ~ CLOCK - : 4-----  totalIn:             3750000000000000000
+TIME ~ CLOCK - : 4-----  amountOut:           0
+TIME ~ CLOCK - : 4-----  internalOut:         0
+TIME ~ CLOCK - : 4-----  selfDestructOut:     0
+TIME ~ CLOCK - : 4-----  gasOut:              0
+TIME ~ CLOCK - : 4-----  totalOut:            0
+TIME ~ CLOCK - : 4-----  amountNet:           3750000000000000000
+TIME ~ CLOCK - : 4-----  endBal:              58281250000000000000
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  endBalCalc:    58281250000000000000
-TIME ~ CLOCK - : 4-----  endBalDiff:    0
-TIME ~ CLOCK - : 4-----  reconciled:    true
+TIME ~ CLOCK - : 4-----  endBalCalc:          58281250000000000000
+TIME ~ CLOCK - : 4-----  endBalDiff:          0
+TIME ~ CLOCK - : 4-----  reconciled:          true
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1912...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1912 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
@@ -1339,33 +1479,43 @@ params.size: 0
   "date": "2015-07-30 16:39:38 UTC",
   "ether": 3.750000000000000000
 }
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    blockNumber:         2057
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    99999
+TIME ~ CLOCK - <INFO>  :    begBal:              58281250000000000000
+TIME ~ CLOCK - <INFO>  :    minerBaseRewardIn:   5000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalIn:             5000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           5000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              63281250000000000000
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  prevBal:       58281250000000000000
-TIME ~ CLOCK - : 4-----  begBal:        58281250000000000000
-TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  prevBal:             58281250000000000000
+TIME ~ CLOCK - : 4-----  begBal:              58281250000000000000
+TIME ~ CLOCK - : 4-----  begBalDiff:          0
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 8------  amountIn:      0
-TIME ~ CLOCK - : 8------  internalIn:    0
-TIME ~ CLOCK - : 8------  slfDstrctIn:   0
-TIME ~ CLOCK - : 8------  minBRwdIn:     5000000000000000000
-TIME ~ CLOCK - : 8------  minNRwdIn:     0
-TIME ~ CLOCK - : 8------  minTxFeeIn:    0
-TIME ~ CLOCK - : 8------  minURwdIn:     0
-TIME ~ CLOCK - : 8------  prefundIn:     0
-TIME ~ CLOCK - : 4-----  totalIn:       5000000000000000000
-TIME ~ CLOCK - : 8------  amountOut:     0
-TIME ~ CLOCK - : 8------  internalOut:   0
-TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasOut:        0
-TIME ~ CLOCK - : 4-----  totalOut:      0
-TIME ~ CLOCK - : 4-----  amountNet:     5000000000000000000
-TIME ~ CLOCK - : 4-----  endBal:        63281250000000000000
+TIME ~ CLOCK - : 4-----  amountIn:            0
+TIME ~ CLOCK - : 4-----  internalIn:          0
+TIME ~ CLOCK - : 4-----  selfDestructIn:      0
+TIME ~ CLOCK - : 4-----  minerBaseRewardIn:   5000000000000000000
+TIME ~ CLOCK - : 4-----  minerNephewRewardIn: 0
+TIME ~ CLOCK - : 4-----  minerTxFeeIn:        0
+TIME ~ CLOCK - : 4-----  minerUncleRewardIn:  0
+TIME ~ CLOCK - : 4-----  prefundIn:           0
+TIME ~ CLOCK - : 4-----  totalIn:             5000000000000000000
+TIME ~ CLOCK - : 4-----  amountOut:           0
+TIME ~ CLOCK - : 4-----  internalOut:         0
+TIME ~ CLOCK - : 4-----  selfDestructOut:     0
+TIME ~ CLOCK - : 4-----  gasOut:              0
+TIME ~ CLOCK - : 4-----  totalOut:            0
+TIME ~ CLOCK - : 4-----  amountNet:           5000000000000000000
+TIME ~ CLOCK - : 4-----  endBal:              63281250000000000000
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  endBalCalc:    63281250000000000000
-TIME ~ CLOCK - : 4-----  endBalDiff:    0
-TIME ~ CLOCK - : 4-----  reconciled:    true
+TIME ~ CLOCK - : 4-----  endBalCalc:          63281250000000000000
+TIME ~ CLOCK - : 4-----  endBalDiff:          0
+TIME ~ CLOCK - : 4-----  reconciled:          true
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 2057...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 2057 at four-byte 0x59e02dd7 returned 0x
 params.size: 0

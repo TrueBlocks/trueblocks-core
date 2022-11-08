@@ -44,7 +44,8 @@ bool COptions::process_statements(CTraverser* trav) {
 
     CReconciliation ethStatement(accountedFor.address, &trav->trans);
     ethStatement.nextAppBlk = trav->index < monApps.size() - 1 ? monApps[trav->index + 1].blk : NOPOS;
-    ethStatement.reconcileEth(prevStatements[ethKey]);
+    ethStatement.reconcileInside();
+    ethStatement.reconcileAcross(prevStatements[ethKey].endBal, prevStatements[ethKey].blockNumber);
     ethStatement.spotPrice = getPriceInUsd(FAKE_ETH_ADDRESS, ethStatement.priceSource, trav->trans.blockNumber);
     if (ethStatement.amountNet() != 0) {
         trav->trans.statements.push_back(ethStatement);

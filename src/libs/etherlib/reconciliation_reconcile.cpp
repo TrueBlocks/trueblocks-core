@@ -16,59 +16,79 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
+#define LOG_ONE(a, b, d)                                                                                               \
+    if (b != d) {                                                                                                      \
+        LOG_INFO("   ", a, b);                                                                                         \
+    }
+
+//---------------------------------------------------------------------------
+#define LOG_TRIAL_BALANCE_INSIDE()                                                                                     \
+    if (isTestMode()) {                                                                                                \
+        LOG_INFO("--------------------------------------------------------");                                          \
+        LOG_INFO("Trial balance: ", reconciliationType);                                                               \
+        LOG_ONE("hash:                ", pTransaction->hash, "");                                                      \
+        LOG_ONE("blockNumber:         ", pTransaction->blockNumber, NOPOS);                                            \
+        LOG_ONE("transactionIndex:    ", pTransaction->transactionIndex, NOPOS);                                       \
+        LOG_ONE("begBal:              ", begBal, 0);                                                                   \
+        LOG_ONE("amountIn:            ", amountIn, 0);                                                                 \
+        LOG_ONE("internalIn:          ", internalIn, 0);                                                               \
+        LOG_ONE("selfDestructIn:      ", selfDestructIn, 0);                                                           \
+        LOG_ONE("minerBaseRewardIn:   ", minerBaseRewardIn, 0);                                                        \
+        LOG_ONE("minerNephewRewardIn: ", minerNephewRewardIn, 0);                                                      \
+        LOG_ONE("minerTxFeeIn:        ", minerTxFeeIn, 0);                                                             \
+        LOG_ONE("minerUncleRewardIn:  ", minerUncleRewardIn, 0);                                                       \
+        LOG_ONE("prefundIn:           ", prefundIn, 0);                                                                \
+        LOG_ONE("totalIn:             ", totalIn(), 0);                                                                \
+        LOG_ONE("amountOut:           ", amountOut, 0);                                                                \
+        LOG_ONE("internalOut:         ", internalOut, 0);                                                              \
+        LOG_ONE("selfDestructOut:     ", selfDestructOut, 0);                                                          \
+        LOG_ONE("gasOut:              ", gasOut, 0);                                                                   \
+        LOG_ONE("totalOut:            ", totalOut(), 0);                                                               \
+        LOG_ONE("amountNet:           ", amountNet(), 0);                                                              \
+        LOG_ONE("endBal:              ", endBal, 0);                                                                   \
+        LOG_INFO("--------------------------------------------------------");                                          \
+    }
+
+//---------------------------------------------------------------------------
 #define LOG_TRIAL_BALANCE()                                                                                            \
     LOG4("Trial balance: ", reconciliationType);                                                                       \
     LOG4("  hash: ", pTransaction->hash);                                                                              \
     LOG4("  ------------------------------");                                                                          \
-    LOG4("  prevBal:       ", prevBal);                                                                                \
-    LOG4("  begBal:        ", begBal);                                                                                 \
-    LOG4("  begBalDiff:    ", begBalDiff());                                                                           \
+    LOG4("  prevBal:             ", prevBal);                                                                          \
+    LOG4("  begBal:              ", begBal);                                                                           \
+    LOG4("  begBalDiff:          ", begBalDiff());                                                                     \
     LOG4("  ------------------------------");                                                                          \
-    LOG8("  amountIn:      ", amountIn);                                                                               \
-    LOG8("  internalIn:    ", internalIn);                                                                             \
-    LOG8("  slfDstrctIn:   ", selfDestructIn);                                                                         \
-    LOG8("  minBRwdIn:     ", minerBaseRewardIn);                                                                      \
-    LOG8("  minNRwdIn:     ", minerNephewRewardIn);                                                                    \
-    LOG8("  minTxFeeIn:    ", minerTxFeeIn);                                                                           \
-    LOG8("  minURwdIn:     ", minerUncleRewardIn);                                                                     \
-    LOG8("  prefundIn:     ", prefundIn);                                                                              \
-    LOG4("  totalIn:       ", totalIn());                                                                              \
-    LOG8("  amountOut:     ", amountOut);                                                                              \
-    LOG8("  internalOut:   ", internalOut);                                                                            \
-    LOG8("  slfDstrctOt:   ", selfDestructOut);                                                                        \
-    LOG8("  gasOut:        ", gasOut);                                                                                 \
-    LOG4("  totalOut:      ", totalOut());                                                                             \
-    LOG4("  amountNet:     ", amountNet());                                                                            \
-    LOG4("  endBal:        ", endBal);                                                                                 \
+    LOG4("  amountIn:            ", amountIn);                                                                         \
+    LOG4("  internalIn:          ", internalIn);                                                                       \
+    LOG4("  selfDestructIn:      ", selfDestructIn);                                                                   \
+    LOG4("  minerBaseRewardIn:   ", minerBaseRewardIn);                                                                \
+    LOG4("  minerNephewRewardIn: ", minerNephewRewardIn);                                                              \
+    LOG4("  minerTxFeeIn:        ", minerTxFeeIn);                                                                     \
+    LOG4("  minerUncleRewardIn:  ", minerUncleRewardIn);                                                               \
+    LOG4("  prefundIn:           ", prefundIn);                                                                        \
+    LOG4("  totalIn:             ", totalIn());                                                                        \
+    LOG4("  amountOut:           ", amountOut);                                                                        \
+    LOG4("  internalOut:         ", internalOut);                                                                      \
+    LOG4("  selfDestructOut:     ", selfDestructOut);                                                                  \
+    LOG4("  gasOut:              ", gasOut);                                                                           \
+    LOG4("  totalOut:            ", totalOut());                                                                       \
+    LOG4("  amountNet:           ", amountNet());                                                                      \
+    LOG4("  endBal:              ", endBal);                                                                           \
     LOG4("  ------------------------------");                                                                          \
-    LOG4("  endBalCalc:    ", endBalCalc());                                                                           \
-    LOG4("  endBalDiff:    ", endBalDiff());                                                                           \
-    LOG4("  reconciled:    ", reconciled() ? "true" : "false");
+    LOG4("  endBalCalc:          ", endBalCalc());                                                                     \
+    LOG4("  endBalDiff:          ", endBalDiff());                                                                     \
+    LOG4("  reconciled:          ", reconciled() ? "true" : "false");
 
 //-----------------------------------------------------------------------
-bool CReconciliation::reconcileEth2(void) {
-    CReconciliation prev;
-    prev.blockNumber = blockNumber;
-    prev.endBal = blockNumber == 0 ? 0 : getBalanceAt(accountedFor, blockNumber - 1);
-
-    nextAppBlk = blockNumber + 1;
-    bool ret = reconcileEth(prev);
-    spotPrice = getPriceInUsd(FAKE_ETH_ADDRESS, priceSource, pTransaction->blockNumber);
-    return ret;
-}
-
-//-----------------------------------------------------------------------
-bool CReconciliation::reconcileEth(const CReconciliation& prevRecon) {
-    prevBal = prevRecon.endBal;
-    prevAppBlk = prevRecon.blockNumber;
+bool CReconciliation::reconcileInside(void) {
     assetSymbol = "ETH";
     assetAddr = FAKE_ETH_ADDRESS;
 
-    bigint_t balEOLB = getBalanceAt(accountedFor, blockNumber == 0 ? 0 : blockNumber - 1);
-    bigint_t balEOB = getBalanceAt(accountedFor, blockNumber);
-
-    begBal = balEOLB;
-    endBal = balEOB;
+    begBal = 0;
+    if (blockNumber > 0) {
+        begBal = getBalanceAt(accountedFor, blockNumber - 1);
+    }
+    endBal = getBalanceAt(accountedFor, blockNumber);
 
     if (pTransaction->from == accountedFor) {
         sender = pTransaction->from;
@@ -93,7 +113,19 @@ bool CReconciliation::reconcileEth(const CReconciliation& prevRecon) {
         }
     }
 
-    bool prevDifferent = prevRecon.blockNumber != blockNumber;
+    LOG_TRIAL_BALANCE_INSIDE();
+    return true;
+}
+
+//-----------------------------------------------------------------------
+bool CReconciliation::reconcileAcross(bigint_t pBal, blknum_t pBn) {
+    prevBal = pBal;
+    prevAppBlk = pBn;
+
+    bigint_t balEOLB = getBalanceAt(accountedFor, blockNumber == 0 ? 0 : blockNumber - 1);
+    bigint_t balEOB = getBalanceAt(accountedFor, blockNumber);
+
+    bool prevDifferent = prevAppBlk != blockNumber;
     bool nextDifferent = blockNumber != nextAppBlk || nextAppBlk == NOPOS;
     if (pTransaction->blockNumber == 0) {
         reconciliationType = "genesis";
@@ -118,7 +150,7 @@ bool CReconciliation::reconcileEth(const CReconciliation& prevRecon) {
         return true;
 
     // Reconciliation failed, let's try to reconcile by traces
-    if (reconcileUsingTraces(prevRecon.endBal))
+    if (reconcileUsingTraces(pBal))
         return true;
 
     // Reconciliation by traces failed, we want to correct for that and try
@@ -137,13 +169,13 @@ bool CReconciliation::reconcileEth(const CReconciliation& prevRecon) {
 
     } else if (nextDifferent) {
         // This tx has a tx before it in the block but none after it
-        begBal = prevRecon.endBal;
+        begBal = pBal;
         endBal = balEOB;
         reconciliationType = "partial-nextdiff";
 
     } else {
         // this tx has both a tx before it and one after it in the same block
-        begBal = prevRecon.endBal;
+        begBal = pBal;
         endBal = endBalCalc();
         reconciliationType = "partial-partial";
     }

@@ -47,7 +47,7 @@ export?addrs=0x08166f02313feae18bb044e7877c808b55b5bf58&accounting&lastBlock=400
           "endBal": "1970000000000000000000",
           "encoding": "",
           "signature": "",
-          "reconciliationType": "by-trace",
+          "reconciliationType": "genesis",
           "reconciled": true,
           "totalIn": "1970000000000000000000",
           "amountIn": "",
