@@ -46,6 +46,7 @@ bool COptions::process_statements(CTraverser* trav) {
 
     ethStatement.nextAppBlk = trav->index < monApps.size() - 1 ? monApps[trav->index + 1].blk : NOPOS;
     ethStatement.reconcileAcross(previousBalances[ethKey].balance, previousBalances[ethKey].blockNumber);
+    ethStatement.reconcileLabel(previousBalances[ethKey].blockNumber);
     previousBalances[ethKey] = ethStatement;
 
     if (ethStatement.amountNet() != 0) {
@@ -69,15 +70,17 @@ bool COptions::process_statements(CTraverser* trav) {
             string tokenKey = statementKey(accountedFor.address, tokStatement.assetAddr);
             if (previousBalances[ethKey] == CPreviousBalance()) {
                 CReconciliation pBal;
-                pBal.pTransaction = &trav->trans;
-                pBal.blockNumber = trav->trans.blockNumber == 0 ? 0 : trav->trans.blockNumber - 1;
-                pBal.endBal = getTokenBalanceAt(tokStatement.assetAddr, accountedFor.address, pBal.blockNumber);
+                if (trav->trans.blockNumber > 0) {
+                    pBal.blockNumber = trav->trans.blockNumber - 1;
+                    pBal.endBal = getTokenBalanceAt(tokStatement.assetAddr, accountedFor.address, pBal.blockNumber);
+                }
                 previousBalances[tokenKey] = pBal;
             }
 
             tokStatement.prevAppBlk = previousBalances[tokenKey].blockNumber;
             tokStatement.prevBal = previousBalances[tokenKey].balance;
-            tokStatement.begBal = previousBalances[tokenKey].balance;
+            tokStatement.begBal =
+                getTokenBalanceAt(tokStatement.assetAddr, tokStatement.accountedFor, tokStatement.blockNumber);
             tokStatement.endBal =
                 getTokenBalanceAt(tokStatement.assetAddr, tokStatement.accountedFor, tokStatement.blockNumber);
 

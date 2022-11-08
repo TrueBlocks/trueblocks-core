@@ -209,6 +209,13 @@ bool CReconciliation::reconcileAcross(bigint_t pBal, blknum_t pBn) {
         endBal = endBalCalc();
     }
 
+    return reconciled();
+}
+
+//-----------------------------------------------------------------------
+bool CReconciliation::reconcileLabel(blknum_t pBn) {
+    bool prevDifferent = prevAppBlk != blockNumber;
+    bool nextDifferent = blockNumber != nextAppBlk || nextAppBlk == NOPOS;
     if (pTransaction->blockNumber == 0) {
         reconciliationType = "genesis";
 

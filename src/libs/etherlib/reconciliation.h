@@ -74,6 +74,7 @@ class CReconciliation : public CBaseNode {
 
     bool reconcileInside(void);
     bool reconcileAcross(bigint_t eB, blknum_t bn);
+    bool reconcileLabel(blknum_t bn);
     bool reconcileUsingTraces(void);
 
     bigint_t begBalDiff(void) const;

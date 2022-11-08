@@ -28,6 +28,7 @@ bool visitReconciliation(CTransaction& trans, void* data) {
     statement.nextAppBlk = trans.blockNumber + 1;
     statement.reconcileInside();
     statement.reconcileAcross(prevBal, trans.blockNumber);
+    statement.reconcileLabel(trans.blockNumber);
     statement.spotPrice = getPriceInUsd(FAKE_ETH_ADDRESS, statement.priceSource, trans.blockNumber);
 
     if (isText) {
