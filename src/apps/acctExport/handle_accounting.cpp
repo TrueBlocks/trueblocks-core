@@ -14,7 +14,6 @@
 
 //-----------------------------------------------------------------------
 bool COptions::process_statements(CTraverser* trav) {
-    // If we can get the reconciliations from the cache, do so...
     if (trav->trans.readReconsFromCache(accountedFor.address, prevStatements)) {
         return !shouldQuit();
     }
@@ -22,7 +21,6 @@ bool COptions::process_statements(CTraverser* trav) {
     trav->searchOp = RECONCILE;
 
     string_q ethKey = statementKey(accountedFor.address, "");
-
     blknum_t prevAppBlk = 0;
     if (trav->index > 0) {
         prevAppBlk = monApps[trav->index - 1].blk;
@@ -33,20 +31,18 @@ bool COptions::process_statements(CTraverser* trav) {
     }
 
     if (prevStatements[ethKey].assetAddr.empty()) {
-        CReconciliation prevStatement(accountedFor.address, prevAppBlk, NOPOS, trav->trans.timestamp, &trav->trans);
-        // Balance and price before genesis block is always zero
+        CReconciliation prevStatement(accountedFor.address, &trav->trans);
+        prevStatement.blockNumber = prevAppBlk;
         if (prevAppBlk > 0) {
             prevStatement.endBal = getBalanceAt(accountedFor.address, prevAppBlk);
-            prevStatement.spotPrice = getPriceInUsd(FAKE_ETH_ADDRESS, prevStatement.priceSource, prevAppBlk);
         }
         prevStatements[ethKey] = prevStatement;
     }
 
     CReconciliation ethStatement(accountedFor.address, &trav->trans);
-    ethStatement.nextAppBlk = trav->index < monApps.size() - 1 ? monApps[trav->index + 1].blk : NOPOS;
     ethStatement.reconcileInside();
+    ethStatement.nextAppBlk = trav->index < monApps.size() - 1 ? monApps[trav->index + 1].blk : NOPOS;
     ethStatement.reconcileAcross(prevStatements[ethKey].endBal, prevStatements[ethKey].blockNumber);
-    ethStatement.spotPrice = getPriceInUsd(FAKE_ETH_ADDRESS, ethStatement.priceSource, trav->trans.blockNumber);
     if (ethStatement.amountNet() != 0) {
         trav->trans.statements.push_back(ethStatement);
     }
@@ -58,6 +54,7 @@ bool COptions::process_statements(CTraverser* trav) {
             if (assetFilter.size() > 0 && !assetFilter[transfer.assetAddr]) {
                 continue;
             }
+
             CReconciliation tokStatement(accountedFor.address, &trav->trans);
             tokStatement.assetAddr = transfer.assetAddr;
             tokStatement.decimals = transfer.decimals;
@@ -67,21 +64,18 @@ bool COptions::process_statements(CTraverser* trav) {
 
             string tokenKey = statementKey(accountedFor.address, tokStatement.assetAddr);
             if (prevStatements[tokenKey].assetAddr.empty()) {
-                CReconciliation pBal = tokStatement;
+                CReconciliation pBal;
                 pBal.pTransaction = &trav->trans;
                 pBal.blockNumber = trav->trans.blockNumber == 0 ? 0 : trav->trans.blockNumber - 1;
                 pBal.endBal = getTokenBalanceAt(tokStatement.assetAddr, accountedFor.address, pBal.blockNumber);
-                pBal.spotPrice = getPriceInUsd(tokStatement.assetAddr, pBal.priceSource, pBal.blockNumber);
                 prevStatements[tokenKey] = pBal;
             }
 
             tokStatement.prevAppBlk = prevStatements[tokenKey].blockNumber;
             tokStatement.prevBal = prevStatements[tokenKey].endBal;
-            // TODO: Note that this doesn't really query this token's balance at its last appearance,
-            // TODO: it just picks up the previous balance
             tokStatement.begBal = prevStatements[tokenKey].endBal;
             tokStatement.endBal =
-                getTokenBalanceAt(tokStatement.assetAddr, accountedFor.address, trav->trans.blockNumber);
+                getTokenBalanceAt(tokStatement.assetAddr, tokStatement.accountedFor, tokStatement.blockNumber);
 
             if (tokStatement.begBal != tokStatement.endBal) {
                 if (tokStatement.begBal > tokStatement.endBal) {
@@ -90,11 +84,21 @@ bool COptions::process_statements(CTraverser* trav) {
                     tokStatement.amountIn = (tokStatement.endBal - tokStatement.begBal);
                 }
                 tokStatement.reconciliationType = "token";
-                tokStatement.spotPrice =
-                    getPriceInUsd(tokStatement.assetAddr, tokStatement.priceSource, trav->trans.blockNumber);
                 trav->trans.statements.push_back(tokStatement);
                 prevStatements[tokenKey] = tokStatement;
             }
+        }
+    }
+
+    if (reversed) {
+        for (size_t s = trav->trans.statements.size() - 1; s >= 0; s--) {
+            CReconciliation* st = &trav->trans.statements[s];
+            st->spotPrice = getPriceInUsd(st->assetAddr, st->priceSource, st->blockNumber);
+        }
+    } else {
+        for (int s = 0; s < trav->trans.statements.size(); s++) {
+            CReconciliation* st = &trav->trans.statements[size_t(s)];
+            st->spotPrice = getPriceInUsd(st->assetAddr, st->priceSource, st->blockNumber);
         }
     }
 
