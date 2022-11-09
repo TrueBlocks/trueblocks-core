@@ -14,95 +14,11 @@
 
 //-----------------------------------------------------------------------
 bool COptions::process_statements(CTraverser* trav) {
-    if (trav->trans.readReconsFromCache(accountedFor.address)) {
-        for (auto& statement : trav->trans.statements) {
-            string_q key = statementKey(statement.accountedFor, statement.assetAddr);
-            previousBalances[key] = statement;
-        }
-        return !shouldQuit();
-    }
-
-    trav->searchOp = RECONCILE;
-
-    CTransfer transfer;
-    transfer.assetAddr = FAKE_ETH_ADDRESS;
-    transfer.assetSymbol = expContext().asEther ? "ETH" : "WEI";
-    transfer.decimals = 18;
-
     blknum_t prevBlock = trav->index == 0 ? trav->trans.blockNumber == 0 ? 0 : trav->trans.blockNumber - 1
                                           : monApps[trav->index - 1].blk;
     blknum_t nextBlock = trav->index < monApps.size() - 1 ? monApps[trav->index + 1].blk : NOPOS;
-
-    string tokenKey = statementKey(accountedFor.address, transfer.assetAddr);
-    if (previousBalances[tokenKey] == CPreviousBalance()) {
-        CReconciliation prevStatement(accountedFor.address, transfer.assetAddr, &trav->trans);
-        prevStatement.blockNumber = prevBlock;
-        prevStatement.endBal =
-            prevBlock == 0 ? 0 : getTokenBalanceAt(transfer.assetAddr, accountedFor.address, prevBlock);
-        previousBalances[tokenKey] = prevStatement;
-    }
-
-    CReconciliation aStatement(accountedFor.address, transfer.assetAddr, &trav->trans);
-    aStatement.assetSymbol = transfer.assetSymbol;
-    aStatement.decimals = transfer.decimals;
-    aStatement.reconcileFlows();
-    aStatement.reconcileBalances(prevBlock, nextBlock, previousBalances[tokenKey].balance);
-    aStatement.reconcileLabel(prevBlock, nextBlock);
-    if (aStatement.amountNet() != 0) {
-        trav->trans.statements.push_back(aStatement);
-    }
-    previousBalances[tokenKey] = aStatement;
-
-    CTransferArray transfers;
-    if (trav->trans.getTransfers(transfers, accountedFor.address)) {
-        for (auto transfer : transfers) {
-            if (assetFilter.size() > 0 && !assetFilter[transfer.assetAddr]) {
-                continue;
-            }
-
-            string tokenKey = statementKey(accountedFor.address, transfer.assetAddr);
-            if (previousBalances[tokenKey] == CPreviousBalance()) {
-                CReconciliation prevStatement(accountedFor.address, transfer.assetAddr, &trav->trans);
-                if (trav->trans.blockNumber > 0) {
-                    prevStatement.blockNumber = prevBlock;
-                    prevStatement.endBal =
-                        prevBlock == 0 ? 0 : getTokenBalanceAt(transfer.assetAddr, accountedFor.address, prevBlock);
-                }
-                previousBalances[tokenKey] = prevStatement;
-            }
-
-            CReconciliation aStatement(accountedFor.address, transfer.assetAddr, &trav->trans);
-            aStatement.assetSymbol = transfer.assetSymbol;
-            aStatement.decimals = transfer.decimals;
-            aStatement.sender = transfer.sender;
-            aStatement.recipient = transfer.recipient;
-            aStatement.prevAppBlk = previousBalances[tokenKey].blockNumber;
-            aStatement.prevBal = previousBalances[tokenKey].balance;
-            aStatement.begBal = previousBalances[tokenKey].balance;
-            aStatement.endBal =
-                getTokenBalanceAt(aStatement.assetAddr, aStatement.accountedFor, aStatement.blockNumber);
-
-            if (aStatement.begBal != aStatement.endBal) {
-                if (aStatement.begBal > aStatement.endBal) {
-                    aStatement.amountOut = (aStatement.begBal - aStatement.endBal);
-                } else {
-                    aStatement.amountIn = (aStatement.endBal - aStatement.begBal);
-                }
-                aStatement.reconciliationType = "token";
-                trav->trans.statements.push_back(aStatement);
-                previousBalances[tokenKey] = aStatement;
-            }
-        }
-    }
-
-    for (size_t s = 0; s < trav->trans.statements.size(); s++) {
-        CReconciliation* st = &trav->trans.statements[s];
-        st->spotPrice = getPriceInUsd(st->assetAddr, st->priceSource, st->blockNumber);
-    }
-
-    trav->trans.cacheIfReconciled(accountedFor.address);
-
-    return !shouldQuit();
+    return trav->trans.getStatements(accountedFor.address, traces ? REC_ALL : REC_SOME, assetFilter, previousBalances,
+                                     prevBlock, nextBlock, 0, true);
 }
 
 //-----------------------------------------------------------------------

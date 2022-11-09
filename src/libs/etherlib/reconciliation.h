@@ -261,6 +261,14 @@ extern const char* STR_DISPLAY_RECONCILIATION;
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 extern CReconciliation operator+(const CReconciliation& a, const CReconciliation& b);
+extern string_q wei_2_Str(const wei_t& weiIn);
+extern string_q bni_2_Str(const bigint_t& numIn);
+
+extern string_q wei_2_Ether(const wei_t& weiIn, uint64_t decimals);
+extern string_q bni_2_Ether(const bigint_t& numIn, uint64_t decimals);
+
+extern string_q wei_2_Export(const blknum_t& bn, const wei_t& weiIn, uint64_t decimals);
+extern string_q bni_2_Export(const timestamp_t& ts, const bigint_t& numIn, uint64_t decimals);
 struct CPreviousBalance {
   public:
     // address_t assetAddr;
@@ -279,14 +287,5 @@ struct CPreviousBalance {
     }
 };
 typedef map<string, CPreviousBalance> CPreviousBalanceMap;
-
-extern string_q wei_2_Str(const wei_t& weiIn);
-extern string_q bni_2_Str(const bigint_t& numIn);
-
-extern string_q wei_2_Ether(const wei_t& weiIn, uint64_t decimals);
-extern string_q bni_2_Ether(const bigint_t& numIn, uint64_t decimals);
-
-extern string_q wei_2_Export(const blknum_t& bn, const wei_t& weiIn, uint64_t decimals);
-extern string_q bni_2_Export(const timestamp_t& ts, const bigint_t& numIn, uint64_t decimals);
 // EXISTING_CODE
 }  // namespace qblocks

@@ -101,7 +101,9 @@ class CTransaction : public CBaseNode {
     bool loadTransAsBlockReward(blknum_t bn, blknum_t txid, const address_t& addr);
     bool loadTransAsUncleReward(blknum_t bn, blknum_t uncleBn, const address_t& addr);
     bool getTransfers(CTransferArray& transfers, const address_t& accountedFor) const;
-    bool getStatements(const address_t& accountedFor, recon_t which);
+    bool getStatements(const address_t& accountedFor, recon_t which, CAddressBoolMap& assetFilter,
+                       CPreviousBalanceMap& previousBalances, blknum_t prevBlock, blknum_t nextBlock, bigint_t prevBal,
+                       bool forExport);
     bool isReconciled(CReconciliation& which) const;
     bool readReconsFromCache(const address_t& accountedFor);
     void cacheIfReconciled(const address_t& accountedFor) const;

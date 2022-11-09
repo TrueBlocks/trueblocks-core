@@ -16,60 +16,50 @@
 namespace qblocks {
 
 //--------------------------------------------------------------
-bool CTransaction::getStatements(const address_t& accountedFor, recon_t which) {
-    blknum_t prevBlock = blockNumber == 0 ? 0 : blockNumber - 1;
-    blknum_t nextBlock = blockNumber + 1;
-    bigint_t prevBal = 0;
-    if (blockNumber > 0) {
-        prevBal = getBalanceAt(accountedFor, prevBlock);
-    }
-
-    if (which & REC_TOP) {
-        CReconciliation statement(accountedFor, FAKE_ETH_ADDRESS, this);
-        if (!statement.reconcileFlows()) {
-            statement.reconcileFlows_traces();
-        }
-        statement.reconcileBalances(prevBlock, nextBlock, prevBal);
-        statement.reconcileLabel(prevBlock, nextBlock);
-        statement.assetSymbol = expContext().asEther ? "ETH" : "WEI";
-        statement.encoding = input.size() >= 10 ? input.substr(0, 10) : "";
-        statement.signature = Format("[{COMPRESSEDTX}]");
-        if (statement.reconciliationType == "regular") {
-            statement.reconciliationType = "by-tx";
-        }
-        if (statement.amountNet() != 0) {
-            statements.push_back(statement);
-        }
-    }
-
-    if (which & REC_TRACES) {
-        CTraceArray traceArray;
-        getTraces(traceArray, hash, this);
-        for (auto trace : traceArray) {
-            CReconciliation statement(accountedFor, FAKE_ETH_ADDRESS, this);
-            statement.reconcileFlows_traces();
-            statement.reconcileBalances(prevBlock, nextBlock, prevBal);
-            statement.reconcileLabel(prevBlock, nextBlock);
-            statement.assetSymbol = expContext().asEther ? "ETH" : "WEI";
-            statement.encoding = trace.action.input.size() >= 10 ? trace.action.input.substr(0, 10) : "";
-            statement.signature = Format("[{COMPRESSEDTRACE}]");
-            if (statement.reconciliationType == "regular") {
-                statement.reconciliationType = "by-trace";
+bool CTransaction::getStatements(const address_t& accountedFor, recon_t which, CAddressBoolMap& assetFilter,
+                                 CPreviousBalanceMap& previousBalances, blknum_t prevBlock, blknum_t nextBlock,
+                                 bigint_t prevBal, bool forExport) {
+    if (forExport) {
+        if (readReconsFromCache(accountedFor)) {
+            for (auto& statement : statements) {
+                string_q key = statementKey(statement.accountedFor, statement.assetAddr);
+                previousBalances[key] = statement;
             }
-            if (statement.amountNet() != 0) {
-                statements.push_back(statement);
-            }
+            return !shouldQuit();
         }
-    }
 
-    if (which & REC_TOKENS) {
-        CPreviousBalanceMap previousBalances;
+        // trav->searchOp = RECONCILE;
+
+        CTransfer transfer;
+        transfer.assetAddr = FAKE_ETH_ADDRESS;
+        transfer.assetSymbol = expContext().asEther ? "ETH" : "WEI";
+        transfer.decimals = 18;
+
+        string tokenKey = statementKey(accountedFor, transfer.assetAddr);
+        if (previousBalances[tokenKey] == CPreviousBalance()) {
+            CReconciliation prevStatement(accountedFor, transfer.assetAddr, this);
+            prevStatement.blockNumber = prevBlock;
+            prevStatement.endBal = prevBlock == 0 ? 0 : getTokenBalanceAt(transfer.assetAddr, accountedFor, prevBlock);
+            previousBalances[tokenKey] = prevStatement;
+        }
+
+        CReconciliation aStatement(accountedFor, transfer.assetAddr, this);
+        aStatement.assetSymbol = transfer.assetSymbol;
+        aStatement.decimals = transfer.decimals;
+        aStatement.reconcileFlows();
+        aStatement.reconcileBalances(prevBlock, nextBlock, previousBalances[tokenKey].balance);
+        aStatement.reconcileLabel(prevBlock, nextBlock);
+        if (aStatement.amountNet() != 0) {
+            statements.push_back(aStatement);
+        }
+        previousBalances[tokenKey] = aStatement;
+
         CTransferArray transfers;
         if (getTransfers(transfers, accountedFor)) {
             for (auto transfer : transfers) {
-                // if (assetFilter.size() > 0 && !assetFilter[transfer.assetAddr]) {
-                //     continue;
-                // }
+                if (assetFilter.size() > 0 && !assetFilter[transfer.assetAddr]) {
+                    continue;
+                }
 
                 string tokenKey = statementKey(accountedFor, transfer.assetAddr);
                 if (previousBalances[tokenKey] == CPreviousBalance()) {
@@ -105,6 +95,89 @@ bool CTransaction::getStatements(const address_t& accountedFor, recon_t which) {
                 }
             }
         }
+
+    } else {
+        if (which & REC_TOP) {
+            CReconciliation statement(accountedFor, FAKE_ETH_ADDRESS, this);
+            if (!statement.reconcileFlows()) {
+                statement.reconcileFlows_traces();
+            }
+            statement.reconcileBalances(prevBlock, nextBlock, prevBal);
+            statement.reconcileLabel(prevBlock, nextBlock);
+            statement.assetSymbol = expContext().asEther ? "ETH" : "WEI";
+            statement.encoding = input.size() >= 10 ? input.substr(0, 10) : "";
+            statement.signature = Format("[{COMPRESSEDTX}]");
+            if (statement.reconciliationType == "regular") {
+                statement.reconciliationType = "by-tx";
+            }
+            if (statement.amountNet() != 0) {
+                statements.push_back(statement);
+            }
+        }
+
+        if (which & REC_TRACES) {
+            CTraceArray traceArray;
+            getTraces(traceArray, hash, this);
+            for (auto trace : traceArray) {
+                CReconciliation statement(accountedFor, FAKE_ETH_ADDRESS, this);
+                statement.reconcileFlows_traces();
+                statement.reconcileBalances(prevBlock, nextBlock, prevBal);
+                statement.reconcileLabel(prevBlock, nextBlock);
+                statement.assetSymbol = expContext().asEther ? "ETH" : "WEI";
+                statement.encoding = trace.action.input.size() >= 10 ? trace.action.input.substr(0, 10) : "";
+                statement.signature = Format("[{COMPRESSEDTRACE}]");
+                if (statement.reconciliationType == "regular") {
+                    statement.reconciliationType = "by-trace";
+                }
+                if (statement.amountNet() != 0) {
+                    statements.push_back(statement);
+                }
+            }
+        }
+
+        if (which & REC_TOKENS) {
+            CTransferArray transfers;
+            if (getTransfers(transfers, accountedFor)) {
+                for (auto transfer : transfers) {
+                    if (assetFilter.size() > 0 && !assetFilter[transfer.assetAddr]) {
+                        continue;
+                    }
+
+                    string tokenKey = statementKey(accountedFor, transfer.assetAddr);
+                    if (previousBalances[tokenKey] == CPreviousBalance()) {
+                        CReconciliation prevStatement(accountedFor, transfer.assetAddr, this);
+                        if (blockNumber > 0) {
+                            prevStatement.blockNumber = prevBlock;
+                            prevStatement.endBal =
+                                prevBlock == 0 ? 0 : getTokenBalanceAt(transfer.assetAddr, accountedFor, prevBlock);
+                        }
+                        previousBalances[tokenKey] = prevStatement;
+                    }
+
+                    CReconciliation aStatement(accountedFor, transfer.assetAddr, this);
+                    aStatement.assetSymbol = transfer.assetSymbol;
+                    aStatement.decimals = transfer.decimals;
+                    aStatement.sender = transfer.sender;
+                    aStatement.recipient = transfer.recipient;
+                    aStatement.prevAppBlk = previousBalances[tokenKey].blockNumber;
+                    aStatement.prevBal = previousBalances[tokenKey].balance;
+                    aStatement.begBal = previousBalances[tokenKey].balance;
+                    aStatement.endBal =
+                        getTokenBalanceAt(aStatement.assetAddr, aStatement.accountedFor, aStatement.blockNumber);
+
+                    if (aStatement.begBal != aStatement.endBal) {
+                        if (aStatement.begBal > aStatement.endBal) {
+                            aStatement.amountOut = (aStatement.begBal - aStatement.endBal);
+                        } else {
+                            aStatement.amountIn = (aStatement.endBal - aStatement.begBal);
+                        }
+                        aStatement.reconciliationType = "token";
+                        statements.push_back(aStatement);
+                        previousBalances[tokenKey] = aStatement;
+                    }
+                }
+            }
+        }
     }
 
     for (size_t s = 0; s < statements.size(); s++) {
@@ -112,7 +185,12 @@ bool CTransaction::getStatements(const address_t& accountedFor, recon_t which) {
         st->spotPrice = getPriceInUsd(st->assetAddr, st->priceSource, st->blockNumber);
     }
 
-    return statements.size() > 0;
+    if (forExport) {
+        cacheIfReconciled(accountedFor);
+        return !shouldQuit();
+    }
+
+    return statements.size() > 0 && !shouldQuit();
 }
 
 //-------------------------------------------------------------------------
