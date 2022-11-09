@@ -19,9 +19,8 @@
 #include "abi.h"
 #include "receipt.h"
 #include "trace.h"
-#include "reconciliation.h"
 #include "ethstate.h"
-#include "transfer.h"
+#include "statementmanager.h"
 
 namespace qblocks {
 
@@ -39,54 +38,6 @@ typedef enum {
     CB_TOK_ACCOUNTING = (1 << 2),
     CB_TRACES = (1 << 3),
 } cachebits_t;
-typedef enum {
-    REC_NONE = 0,
-    REC_TOP = (1 << 0),
-    REC_TOKENS = (1 << 1),
-    REC_TRACES = (1 << 2),
-    REC_SOME = (REC_TOP | REC_TOKENS),
-    REC_ALL = (REC_SOME | REC_TRACES),
-} recon_t;
-struct CPreviousBalance {
-  public:
-    // address_t assetAddr;
-    blknum_t blockNumber;
-    bigint_t balance;
-    CPreviousBalance& operator=(const CReconciliation& ab) {
-        blockNumber = ab.blockNumber;
-        balance = ab.endBal;
-        return *this;
-    }
-    bool operator==(const CPreviousBalance& it) const {
-        return ((blockNumber == it.blockNumber) && (balance == it.balance));
-    }
-    bool operator!=(const CPreviousBalance& it) const {
-        return !operator==(it);
-    }
-};
-typedef map<string, CPreviousBalance> CPreviousBalanceMap;
-class CStatementManager {
-  public:
-    CAccountName name;
-    address_t accountedFor;
-    blknum_t prevBlock{0};
-    blknum_t nextBlock{NOPOS};
-    bigint_t prevBal{0};
-    recon_t which{REC_NONE};
-    bool forExport{false};
-    CAddressBoolMap assetFilter;
-    bool getTransfers(const CTransaction& trans, bool isTop);
-    bool getStatements(CTransaction& trans);
-
-    CStatementManager(const address_t& aF) {
-        accountedFor = aF;
-    };
-
-  private:
-    CStatementManager(){};
-    CPreviousBalanceMap previousBalances;
-    CTransferArray transfers;
-};
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------

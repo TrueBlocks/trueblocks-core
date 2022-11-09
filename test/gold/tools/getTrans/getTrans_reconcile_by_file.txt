@@ -117,7 +117,6 @@ TIME ~ CLOCK - <INFO>  :    blockNumber:         12655579
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    76
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <EROR> : No material transactions found
 TEST[DATE|TIME] Transactions:  [0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33]
 TEST[DATE|TIME] AccountFor:  0x7a250d5630b4cf539739df2c5dacb4c659f2488d
 TEST[DATE|TIME] NoHeader:  true
@@ -138,7 +137,6 @@ TIME ~ CLOCK - <INFO>  :    blockNumber:         12655579
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    76
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <EROR> : No material transactions found
 TEST[DATE|TIME] Transactions:  [0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33]
 TEST[DATE|TIME] AccountFor:  0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 TEST[DATE|TIME] NoHeader:  true

@@ -166,5 +166,4 @@ TIME ~ CLOCK - <INFO>  :    begBal:              31419034761192445316
 TIME ~ CLOCK - <INFO>  :    endBal:              31419034761192445316
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <EROR> : No material transactions found
 ] }
