@@ -138,7 +138,7 @@ transactions?transactions=0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98
       "priceSource": "not-priced",
       "accountedFor": "0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7",
       "sender": "0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7",
-      "recipient": "0x7d3f06914655adb8793e28ff7f018d4c76d505d5",
+      "recipient": "0x0",
       "begBal": "4054835016831281379389",
       "amountNet": "-4054835016831281379389",
       "endBal": "",
