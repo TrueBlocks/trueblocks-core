@@ -70,7 +70,7 @@ class CStatementManager {
     CAccountName name;
     address_t accountedFor;
     blknum_t prevBlock{0};
-    blknum_t nextBlock{0};
+    blknum_t nextBlock{NOPOS};
     bigint_t prevBal{0};
     recon_t which{REC_NONE};
     bool forExport{false};

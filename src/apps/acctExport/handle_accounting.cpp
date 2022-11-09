@@ -14,13 +14,18 @@
 
 //-----------------------------------------------------------------------
 bool COptions::process_statements(CTraverser* trav) {
-    statementManager.prevBlock = trav->index == 0 ? trav->trans.blockNumber == 0 ? 0 : trav->trans.blockNumber - 1
-                                                  : monApps[trav->index - 1].blk;
-    statementManager.nextBlock = trav->index < monApps.size() - 1 ? monApps[trav->index + 1].blk : NOPOS;
-    statementManager.prevBal = 0;
-    if (statementManager.prevBlock > 0) {
-        statementManager.prevBal = getBalanceAt(statementManager.accountedFor, statementManager.prevBlock);
+    statementManager.prevBlock = 0;
+    if (trav->index == 0) {
+        statementManager.prevBlock = max(trav->trans.blockNumber, blknum_t(1)) - 1;
+    } else {
+        statementManager.prevBlock = monApps[trav->index - 1].blk;
     }
+
+    statementManager.nextBlock = NOPOS;
+    if (trav->index < monApps.size() - 1) {
+        statementManager.nextBlock = monApps[trav->index + 1].blk;
+    }
+
     return statementManager.getStatements(trav->trans);
 }
 

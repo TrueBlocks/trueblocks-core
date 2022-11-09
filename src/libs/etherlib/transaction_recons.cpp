@@ -32,6 +32,11 @@ bool CStatementManager::getTransfers(const CTransaction& trans, bool isTop) {
 
 //--------------------------------------------------------------
 bool CStatementManager::getStatements(CTransaction& trans) {
+    prevBal = 0;
+    if (prevBlock > 0) {
+        prevBal = getBalanceAt(accountedFor, prevBlock);
+    }
+
     if (trans.readReconsFromCache(accountedFor)) {
         for (auto& statement : trans.statements) {
             string_q key = statementKey(statement.accountedFor, statement.assetAddr);
