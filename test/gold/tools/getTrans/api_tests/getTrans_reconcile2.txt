@@ -19,7 +19,7 @@ transactions?transactions=0x3f095a4b4e1b85e148b8b97aa91841f28280692b6045de8e690d
       "begBal": "20757259456276694166",
       "amountNet": "14935571680000000000",
       "endBal": "35692831136276694166",
-      "reconciliationType": "by-tx",
+      "reconciliationType": "regular",
       "reconciled": true,
       "totalIn": "14935571680000000000",
       "amountIn": "14935571680000000000",

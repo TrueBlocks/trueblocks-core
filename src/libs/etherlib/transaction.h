@@ -47,16 +47,38 @@ typedef enum {
     REC_SOME = (REC_TOP | REC_TOKENS),
     REC_ALL = (REC_SOME | REC_TRACES),
 } recon_t;
+struct CPreviousBalance {
+  public:
+    // address_t assetAddr;
+    blknum_t blockNumber;
+    bigint_t balance;
+    CPreviousBalance& operator=(const CReconciliation& ab) {
+        blockNumber = ab.blockNumber;
+        balance = ab.endBal;
+        return *this;
+    }
+    bool operator==(const CPreviousBalance& it) const {
+        return ((blockNumber == it.blockNumber) && (balance == it.balance));
+    }
+    bool operator!=(const CPreviousBalance& it) const {
+        return !operator==(it);
+    }
+};
+typedef map<string, CPreviousBalance> CPreviousBalanceMap;
 class CStatementManager {
   public:
     blknum_t prevBlock{0};
     blknum_t nextBlock{0};
     bigint_t prevBal{0};
-    CAddressBoolMap assetFilter;
-    CPreviousBalanceMap previousBalances;
     recon_t which{REC_NONE};
     bool forExport{false};
+    CAddressBoolMap assetFilter;
+    bool getTransfers(const CTransaction& trans, const address_t& accountedFor, bool forTopLevel);
     bool getStatements(CTransaction& trans, const address_t& accountedFor);
+
+  private:
+    CPreviousBalanceMap previousBalances;
+    CTransferArray transfers;
 };
 // EXISTING_CODE
 

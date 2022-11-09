@@ -16,6 +16,21 @@
 namespace qblocks {
 
 //--------------------------------------------------------------
+bool CStatementManager::getTransfers(const CTransaction& trans, const address_t& accountedFor, bool forTopLevel) {
+    transfers.clear();
+    if (forTopLevel) {
+        CTransfer transfer;
+        transfer.assetAddr = FAKE_ETH_ADDRESS;
+        transfer.assetSymbol = expContext().asEther ? "ETH" : "WEI";
+        transfer.decimals = 18;
+        transfers.push_back(transfer);
+        return true;
+    } else {
+        return trans.getTransfers(transfers, accountedFor);
+    }
+}
+
+//--------------------------------------------------------------
 bool CStatementManager::getStatements(CTransaction& trans, const address_t& accountedFor) {
     if (trans.readReconsFromCache(accountedFor)) {
         for (auto& statement : trans.statements) {
@@ -26,98 +41,80 @@ bool CStatementManager::getStatements(CTransaction& trans, const address_t& acco
     }
 
     if (which & REC_TOP) {
-        CTransfer transfer;
-        transfer.assetAddr = FAKE_ETH_ADDRESS;
-        transfer.assetSymbol = expContext().asEther ? "ETH" : "WEI";
-        transfer.decimals = 18;
+        bool isTop = true;
+        if (getTransfers(trans, accountedFor, isTop)) {
+            for (auto transfer : transfers) {
+                if (assetFilter.size() == 0 || assetFilter[transfer.assetAddr]) {
+                    string tokenKey = statementKey(accountedFor, transfer.assetAddr);
+                    if (previousBalances[tokenKey] == CPreviousBalance()) {
+                        CReconciliation prevStatement(accountedFor, transfer.assetAddr, &trans);
+                        if (trans.blockNumber > 0) {
+                            prevStatement.blockNumber = prevBlock;
+                            prevStatement.endBal =
+                                prevBlock == 0 ? 0 : getTokenBalanceAt(transfer.assetAddr, accountedFor, prevBlock);
+                        }
+                        previousBalances[tokenKey] = prevStatement;
+                    }
 
-        string tokenKey = statementKey(accountedFor, transfer.assetAddr);
-        if (previousBalances[tokenKey] == CPreviousBalance()) {
-            CReconciliation prevStatement(accountedFor, transfer.assetAddr, &trans);
-            if (trans.blockNumber > 0) {
-                prevStatement.blockNumber = prevBlock;
-                prevStatement.endBal =
-                    prevBlock == 0 ? 0 : getTokenBalanceAt(transfer.assetAddr, accountedFor, prevBlock);
-            }
-            previousBalances[tokenKey] = prevStatement;
-        }
-
-        CReconciliation statement(accountedFor, transfer.assetAddr, &trans);
-        statement.assetSymbol = transfer.assetSymbol;
-        statement.decimals = transfer.decimals;
-        if (!statement.reconcileFlows()) {
-            statement.reconcileFlows_traces();
-        }
-        statement.reconcileBalances(prevBlock, nextBlock, previousBalances[tokenKey].balance);
-        statement.reconcileLabel(prevBlock, nextBlock);
-        // statement.encoding = trans.input.size() >= 10 ? trans.input.substr(0, 10) : "";
-        // statement.signature = trans.Format("[{COMPRESSEDTX}]");
-
-        if (!forExport) {
-            if (statement.reconciliationType == "regular") {
-                statement.reconciliationType = "by-tx";
+                    CReconciliation statement(accountedFor, transfer.assetAddr, &trans);
+                    statement.assetSymbol = transfer.assetSymbol;
+                    statement.decimals = transfer.decimals;
+                    if (!statement.reconcileFlows(isTop, transfer)) {
+                        statement.reconcileFlows_traces(isTop);
+                    }
+                    statement.reconcileBalances(isTop, prevBlock, nextBlock, previousBalances[tokenKey].balance);
+                    statement.reconcileLabel(isTop, prevBlock, nextBlock);
+                    if (statement.amountNet() != 0) {
+                        trans.statements.push_back(statement);
+                        previousBalances[tokenKey] = statement;
+                    }
+                }
             }
         }
-
-        if (statement.amountNet() != 0) {
-            trans.statements.push_back(statement);
-        }
-
-        previousBalances[tokenKey] = statement;
     }
 
     if (which & REC_TOKENS) {
-        CTransferArray transfers;
-        if (trans.getTransfers(transfers, accountedFor)) {
+        bool isTop = false;
+        if (getTransfers(trans, accountedFor, isTop)) {
             for (auto transfer : transfers) {
-                if (assetFilter.size() > 0 && !assetFilter[transfer.assetAddr]) {
-                    continue;
-                }
-
-                string tokenKey = statementKey(accountedFor, transfer.assetAddr);
-                if (previousBalances[tokenKey] == CPreviousBalance()) {
-                    CReconciliation prevStatement(accountedFor, transfer.assetAddr, &trans);
-                    if (trans.blockNumber > 0) {
-                        prevStatement.blockNumber = prevBlock;
-                        prevStatement.endBal =
-                            prevBlock == 0 ? 0 : getTokenBalanceAt(transfer.assetAddr, accountedFor, prevBlock);
+                if (assetFilter.size() == 0 || assetFilter[transfer.assetAddr]) {
+                    string tokenKey = statementKey(accountedFor, transfer.assetAddr);
+                    if (previousBalances[tokenKey] == CPreviousBalance()) {
+                        CReconciliation prevStatement(accountedFor, transfer.assetAddr, &trans);
+                        if (trans.blockNumber > 0) {
+                            prevStatement.blockNumber = prevBlock;
+                            prevStatement.endBal =
+                                prevBlock == 0 ? 0 : getTokenBalanceAt(transfer.assetAddr, accountedFor, prevBlock);
+                        }
+                        previousBalances[tokenKey] = prevStatement;
                     }
-                    previousBalances[tokenKey] = prevStatement;
-                }
 
-                CReconciliation statement(accountedFor, transfer.assetAddr, &trans);
-                statement.assetSymbol = transfer.assetSymbol;
-                statement.decimals = transfer.decimals;
-                statement.prevAppBlk = previousBalances[tokenKey].blockNumber;
-                statement.prevBal = previousBalances[tokenKey].balance;
-                statement.begBal = previousBalances[tokenKey].balance;
-                statement.endBal =
-                    getTokenBalanceAt(statement.assetAddr, statement.accountedFor, statement.blockNumber);
-                statement.sender = transfer.sender;
-                statement.recipient = transfer.recipient;
-
-                if (statement.begBal != statement.endBal) {
-                    if (statement.begBal > statement.endBal) {
-                        statement.amountOut = (statement.begBal - statement.endBal);
-                    } else {
-                        statement.amountIn = (statement.endBal - statement.begBal);
+                    CReconciliation statement(accountedFor, transfer.assetAddr, &trans);
+                    statement.assetSymbol = transfer.assetSymbol;
+                    statement.decimals = transfer.decimals;
+                    if (!statement.reconcileFlows(isTop, transfer)) {
+                        statement.reconcileFlows_traces(isTop);
                     }
-                    statement.reconciliationType = "token";
-                    trans.statements.push_back(statement);
-                    previousBalances[tokenKey] = statement;
+                    statement.reconcileBalances(isTop, prevBlock, nextBlock, previousBalances[tokenKey].balance);
+                    statement.reconcileLabel(isTop, prevBlock, nextBlock);
+                    if (statement.amountNet() != 0) {
+                        trans.statements.push_back(statement);
+                        previousBalances[tokenKey] = statement;
+                    }
                 }
             }
         }
     }
 
     if (which & REC_TRACES) {
+        bool isTop = true;
         CTraceArray traceArray;
         getTraces(traceArray, trans.hash, &trans);
         for (auto trace : traceArray) {
             CReconciliation statement(accountedFor, FAKE_ETH_ADDRESS, &trans);
-            statement.reconcileFlows_traces();
-            statement.reconcileBalances(prevBlock, nextBlock, prevBal);
-            statement.reconcileLabel(prevBlock, nextBlock);
+            statement.reconcileFlows_traces(isTop);
+            statement.reconcileBalances(isTop, prevBlock, nextBlock, prevBal);
+            statement.reconcileLabel(isTop, prevBlock, nextBlock);
             statement.assetSymbol = expContext().asEther ? "ETH" : "WEI";
             statement.encoding = trace.action.input.size() >= 10 ? trace.action.input.substr(0, 10) : "";
             statement.signature = trans.Format("[{COMPRESSEDTRACE}]");

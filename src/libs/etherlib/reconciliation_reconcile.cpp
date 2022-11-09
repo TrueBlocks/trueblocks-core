@@ -54,7 +54,13 @@ namespace qblocks {
     }
 
 //-----------------------------------------------------------------------
-bool CReconciliation::reconcileFlows(void) {
+bool CReconciliation::reconcileFlows(bool isTop, const CTransfer& transfer) {
+    if (!isTop) {
+        sender = transfer.sender;
+        recipient = transfer.recipient;
+        return true;
+    }
+
     begBal = 0;
     if (blockNumber > 0) {
         begBal = getBalanceAt(accountedFor, blockNumber - 1);
@@ -89,11 +95,15 @@ bool CReconciliation::reconcileFlows(void) {
         return true;
     }
 
-    return reconcileFlows_traces();
+    return reconcileFlows_traces(isTop);
 }
 
 //-----------------------------------------------------------------------
-bool CReconciliation::reconcileFlows_traces(void) {
+bool CReconciliation::reconcileFlows_traces(bool isTop) {
+    if (!isTop) {
+        return true;
+    }
+
     amountIn = 0;
     internalIn = selfDestructIn = prefundIn = 0;
     minerBaseRewardIn = minerNephewRewardIn = minerTxFeeIn + minerUncleRewardIn = 0;
@@ -186,7 +196,21 @@ bool CReconciliation::reconcileFlows_traces(void) {
 }
 
 //-----------------------------------------------------------------------
-bool CReconciliation::reconcileBalances(blknum_t pBn, blknum_t nBn, bigint_t pBal) {
+bool CReconciliation::reconcileBalances(bool isTop, blknum_t pBn, blknum_t nBn, bigint_t pBal) {
+    if (!isTop) {
+        reconciliationType = "token";
+        prevAppBlk = pBn;
+        prevBal = pBal;
+        begBal = pBal;
+        endBal = getTokenBalanceAt(assetAddr, accountedFor, blockNumber);
+        if (begBal > endBal) {
+            amountOut = (begBal - endBal);
+        } else {
+            amountIn = (endBal - begBal);
+        }
+        return true;
+    }
+
     prevBal = pBal;
     prevAppBlk = pBn;
 
@@ -223,7 +247,11 @@ bool CReconciliation::reconcileBalances(blknum_t pBn, blknum_t nBn, bigint_t pBa
 }
 
 //-----------------------------------------------------------------------
-bool CReconciliation::reconcileLabel(blknum_t pBn, blknum_t nBn) {
+bool CReconciliation::reconcileLabel(bool isTop, blknum_t pBn, blknum_t nBn) {
+    if (!isTop) {
+        return true;
+    }
+
     bool prevDifferent = prevAppBlk != blockNumber;
     bool nextDifferent = blockNumber != nBn;
     if (pTransaction->blockNumber == 0) {

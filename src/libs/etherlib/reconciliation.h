@@ -21,6 +21,7 @@ namespace qblocks {
 
 // EXISTING_CODE
 class CTransaction;
+class CTransfer;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -71,10 +72,10 @@ class CReconciliation : public CBaseNode {
     CReconciliation(const address_t& aF, const address_t& asset, const CTransaction* pT);
     const CTransaction* pTransaction = NULL;
 
-    bool reconcileFlows(void);
-    bool reconcileFlows_traces(void);
-    bool reconcileBalances(blknum_t pBn, blknum_t nBn, bigint_t eBal);
-    bool reconcileLabel(blknum_t pBn, blknum_t nBn);
+    bool reconcileFlows(bool isTop, const CTransfer& transfer);
+    bool reconcileFlows_traces(bool isTop);
+    bool reconcileBalances(bool isTop, blknum_t pBn, blknum_t nBn, bigint_t eBal);
+    bool reconcileLabel(bool isTop, blknum_t pBn, blknum_t nBn);
 
     bigint_t begBalDiff(void) const;
     bigint_t endBalCalc(void) const;
@@ -269,23 +270,5 @@ extern string_q bni_2_Ether(const bigint_t& numIn, uint64_t decimals);
 
 extern string_q wei_2_Export(const blknum_t& bn, const wei_t& weiIn, uint64_t decimals);
 extern string_q bni_2_Export(const timestamp_t& ts, const bigint_t& numIn, uint64_t decimals);
-struct CPreviousBalance {
-  public:
-    // address_t assetAddr;
-    blknum_t blockNumber;
-    bigint_t balance;
-    CPreviousBalance& operator=(const CReconciliation& ab) {
-        blockNumber = ab.blockNumber;
-        balance = ab.endBal;
-        return *this;
-    }
-    bool operator==(const CPreviousBalance& it) const {
-        return ((blockNumber == it.blockNumber) && (balance == it.balance));
-    }
-    bool operator!=(const CPreviousBalance& it) const {
-        return !operator==(it);
-    }
-};
-typedef map<string, CPreviousBalance> CPreviousBalanceMap;
 // EXISTING_CODE
 }  // namespace qblocks

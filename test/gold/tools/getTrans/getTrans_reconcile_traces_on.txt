@@ -458,7 +458,7 @@ TIME ~ CLOCK - <INFO>  : call to 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at b
     "begBal": "480320203379861210",
     "amountNet": "-16792272000000000",
     "endBal": "463527931379861210",
-    "reconciliationType": "by-tx",
+    "reconciliationType": "regular",
     "reconciled": true,
     "totalIn": "",
     "amountIn": "",
