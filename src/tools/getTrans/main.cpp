@@ -106,24 +106,6 @@ bool visitTransaction(CTransaction& trans, void* data) {
         return true;  // continue even with an invalid item
     }
 
-    if (!opt->account_for.empty())
-        return visitReconciliation(trans, opt);
-
-    if (opt->uniq) {
-        trans.forEveryUniqueAppearanceInTxPerTx(visitAddrs, transFilter, opt);
-        return true;
-    }
-
-    if (opt->isRaw || opt->isVeryRaw) {
-        string_q result;
-        queryRawTransaction(result, trans.getValueByName("hash"));
-        if (!isText && !opt->firstOut)
-            cout << ",";
-        cout << result;
-        opt->firstOut = false;
-        return true;
-    }
-
     //////////////////////////////////////////////////////
     if (opt->trace) {
         if (!trans.pBlock) {
@@ -140,6 +122,25 @@ bool visitTransaction(CTransaction& trans, void* data) {
         for (auto log : trans.receipt.logs)
             opt->abi_spec.loadAbiFromEtherscan(log.address);
         opt->abi_spec.articulateTransaction(&trans);
+    }
+
+    if (!opt->account_for.empty()) {
+        return visitReconciliation(trans, opt);
+    }
+
+    if (opt->uniq) {
+        trans.forEveryUniqueAppearanceInTxPerTx(visitAddrs, transFilter, opt);
+        return true;
+    }
+
+    if (opt->isRaw || opt->isVeryRaw) {
+        string_q result;
+        queryRawTransaction(result, trans.getValueByName("hash"));
+        if (!isText && !opt->firstOut)
+            cout << ",";
+        cout << result;
+        opt->firstOut = false;
+        return true;
     }
 
     manageFields("CFunction:message", !trans.articulatedTx.message.empty());

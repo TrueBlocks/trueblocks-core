@@ -71,10 +71,10 @@ class CReconciliation : public CBaseNode {
     CReconciliation(const address_t& aF, const CTransaction* pT);
     const CTransaction* pTransaction = NULL;
 
-    bool reconcileInside(void);
-    bool reconcileAcross(blknum_t pBn, blknum_t nBn, bigint_t eBal);
+    bool reconcileFlows(void);
+    bool reconcileFlows_traces(void);
+    bool reconcileBalances(blknum_t pBn, blknum_t nBn, bigint_t eBal);
     bool reconcileLabel(blknum_t pBn, blknum_t nBn);
-    bool reconcileUsingTraces(void);
 
     bigint_t begBalDiff(void) const;
     bigint_t endBalCalc(void) const;
@@ -83,6 +83,7 @@ class CReconciliation : public CBaseNode {
     bigint_t totalOut(void) const;
     bigint_t totalOutLessGas(void) const;
     bigint_t amountNet(void) const;
+    bool trailBalance(void) const;
     bool reconciled(void) const;
 
     CReconciliation& operator+=(const CReconciliation& r);

@@ -56,4 +56,9 @@ bigint_t CReconciliation::amountNet(void) const {
     return totalIn() - totalOut();
 }
 
+//-----------------------------------------------------------------------
+bool CReconciliation::trailBalance(void) const {
+    return begBal + totalIn() - totalOut() == endBal;
+}
+
 }  // namespace qblocks

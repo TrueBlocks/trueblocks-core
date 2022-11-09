@@ -26,7 +26,7 @@ bool COptions::process_statements(CTraverser* trav) {
 
     CTransfer transfer;
     transfer.assetAddr = FAKE_ETH_ADDRESS;
-    transfer.assetSymbol = "ETH";
+    transfer.assetSymbol = expContext().asEther ? "ETH" : "WEI";
     transfer.decimals = 18;
 
     blknum_t prevBlock = trav->index == 0 ? trav->trans.blockNumber == 0 ? 0 : trav->trans.blockNumber - 1
@@ -46,14 +46,13 @@ bool COptions::process_statements(CTraverser* trav) {
     aStatement.assetAddr = transfer.assetAddr;
     aStatement.assetSymbol = transfer.assetSymbol;
     aStatement.decimals = transfer.decimals;
-    aStatement.reconcileInside();
-    aStatement.reconcileAcross(prevBlock, nextBlock, previousBalances[tokenKey].balance);
+    aStatement.reconcileFlows();
+    aStatement.reconcileBalances(prevBlock, nextBlock, previousBalances[tokenKey].balance);
     aStatement.reconcileLabel(prevBlock, nextBlock);
-    previousBalances[tokenKey] = aStatement;
-
     if (aStatement.amountNet() != 0) {
         trav->trans.statements.push_back(aStatement);
     }
+    previousBalances[tokenKey] = aStatement;
 
     CTransferArray transfers;
     if (trav->trans.getTransfers(transfers, accountedFor.address)) {
@@ -98,16 +97,9 @@ bool COptions::process_statements(CTraverser* trav) {
         }
     }
 
-    if (reversed) {
-        for (size_t s = trav->trans.statements.size() - 1; s >= 0; s--) {
-            CReconciliation* st = &trav->trans.statements[s];
-            st->spotPrice = getPriceInUsd(st->assetAddr, st->priceSource, st->blockNumber);
-        }
-    } else {
-        for (size_t s = 0; s < trav->trans.statements.size(); s++) {
-            CReconciliation* st = &trav->trans.statements[size_t(s)];
-            st->spotPrice = getPriceInUsd(st->assetAddr, st->priceSource, st->blockNumber);
-        }
+    for (size_t s = 0; s < trav->trans.statements.size(); s++) {
+        CReconciliation* st = &trav->trans.statements[s];
+        st->spotPrice = getPriceInUsd(st->assetAddr, st->priceSource, st->blockNumber);
     }
 
     trav->trans.cacheIfReconciled(accountedFor.address);

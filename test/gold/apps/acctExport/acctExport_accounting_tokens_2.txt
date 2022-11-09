@@ -6,7 +6,7 @@ TEST[DATE|TIME] LastBlock:  9231343
 TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] Format:  json
 { "data": [
-TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------flows-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    blockNumber:         0
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    2
@@ -14,15 +14,17 @@ TIME ~ CLOCK - <INFO>  :    prefundIn:           4200000000000000000000
 TIME ~ CLOCK - <INFO>  :    totalIn:             4200000000000000000000
 TIME ~ CLOCK - <INFO>  :    amountNet:           4200000000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              4200000000000000000000
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : Trial balance: genesis
+TIME ~ CLOCK - <INFO>  : -------------balances-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    blockNumber:         0
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    2
 TIME ~ CLOCK - <INFO>  :    prefundIn:           4200000000000000000000
 TIME ~ CLOCK - <INFO>  :    totalIn:             4200000000000000000000
 TIME ~ CLOCK - <INFO>  :    amountNet:           4200000000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              4200000000000000000000
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : Calling a contract (0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f) at block 0 prior to its deployment 10000835
 TIME ~ CLOCK - <INFO>  : doEthCall in CUniPrice::findPair returned false
@@ -94,7 +96,7 @@ params.size: 0
   "date": "2015-07-30 15:26:15 UTC",
   "ether": 4200.000000000000000000
 }
-TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------flows-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    hash:                0x6e443af86a84920cace198340020e4ca54321a2c515cd3ad1f274d3506b4aff8
 TIME ~ CLOCK - <INFO>  :    blockNumber:         202249
@@ -105,9 +107,10 @@ TIME ~ CLOCK - <INFO>  :    gasOut:              25320679510922664
 TIME ~ CLOCK - <INFO>  :    totalOut:            4199925320679510922664
 TIME ~ CLOCK - <INFO>  :    amountNet:           -4199925320679510922664
 TIME ~ CLOCK - <INFO>  :    endBal:              74679320489077336
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : Trial balance: regular
+TIME ~ CLOCK - <INFO>  : -------------balances-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    hash:                0x6e443af86a84920cace198340020e4ca54321a2c515cd3ad1f274d3506b4aff8
 TIME ~ CLOCK - <INFO>  :    blockNumber:         202249
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    0
@@ -117,6 +120,7 @@ TIME ~ CLOCK - <INFO>  :    gasOut:              25320679510922664
 TIME ~ CLOCK - <INFO>  :    totalOut:            4199925320679510922664
 TIME ~ CLOCK - <INFO>  :    amountNet:           -4199925320679510922664
 TIME ~ CLOCK - <INFO>  :    endBal:              74679320489077336
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 202249...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 202249 at four-byte 0x59e02dd7 returned 0x
@@ -193,7 +197,7 @@ params.size: 0
   "date": "2015-09-08 09:09:16 UTC",
   "ether": 4199.900000000000000000
 }
-TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------flows-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    hash:                0xe1822bdf66fb415883f85b61a4a5ab1c13c4c7ab4b102c5d00504347a69b84f5
 TIME ~ CLOCK - <INFO>  :    blockNumber:         1501459
@@ -203,9 +207,10 @@ TIME ~ CLOCK - <INFO>  :    amountOut:           74259320489077336
 TIME ~ CLOCK - <INFO>  :    gasOut:              420000000000000
 TIME ~ CLOCK - <INFO>  :    totalOut:            74679320489077336
 TIME ~ CLOCK - <INFO>  :    amountNet:           -74679320489077336
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : Trial balance: regular
+TIME ~ CLOCK - <INFO>  : -------------balances-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    hash:                0xe1822bdf66fb415883f85b61a4a5ab1c13c4c7ab4b102c5d00504347a69b84f5
 TIME ~ CLOCK - <INFO>  :    blockNumber:         1501459
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    2
@@ -214,6 +219,7 @@ TIME ~ CLOCK - <INFO>  :    amountOut:           74259320489077336
 TIME ~ CLOCK - <INFO>  :    gasOut:              420000000000000
 TIME ~ CLOCK - <INFO>  :    totalOut:            74679320489077336
 TIME ~ CLOCK - <INFO>  :    amountNet:           -74679320489077336
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1501459...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1501459 at four-byte 0x59e02dd7 returned 0x

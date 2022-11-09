@@ -17,14 +17,14 @@ namespace qblocks {
 
 //---------------------------------------------------------------------------
 #define LOG_ONE(a, b, d)                                                                                               \
-    if (b != d) {                                                                                                      \
-        LOG_INFO("   ", a, b);                                                                                         \
+    if ((b) != (d)) {                                                                                                  \
+        LOG_INFO("   ", (a), (b));                                                                                     \
     }
 
 //---------------------------------------------------------------------------
-#define LOG_TRIAL_BALANCE_INSIDE()                                                                                     \
+#define LOG_TRIAL_BALANCE(msg)                                                                                         \
     if (isTestMode()) {                                                                                                \
-        LOG_INFO("--------------------------------------------------------");                                          \
+        LOG_INFO("-------------", msg, "-----------------------------");                                               \
         LOG_INFO("Trial balance: ", reconciliationType);                                                               \
         LOG_ONE("hash:                ", pTransaction->hash, "");                                                      \
         LOG_ONE("blockNumber:         ", pTransaction->blockNumber, NOPOS);                                            \
@@ -46,11 +46,15 @@ namespace qblocks {
         LOG_ONE("totalOut:            ", totalOut(), 0);                                                               \
         LOG_ONE("amountNet:           ", amountNet(), 0);                                                              \
         LOG_ONE("endBal:              ", endBal, 0);                                                                   \
+        LOG_ONE("begBalDiff:          ", trailBalance() ? 0 : begBalDiff(), 0);                                        \
+        LOG_ONE("endBalDiff:          ", trailBalance() ? 0 : endBalDiff(), 0);                                        \
+        LOG_ONE("endBalCalc:          ", trailBalance() ? 0 : endBalCalc(), 0);                                        \
+        LOG_INFO("   trialBalance:        ", (trailBalance() ? "balanced" : "not balanced"));                          \
         LOG_INFO("--------------------------------------------------------");                                          \
     }
 
 //-----------------------------------------------------------------------
-bool CReconciliation::reconcileInside(void) {
+bool CReconciliation::reconcileFlows(void) {
     begBal = 0;
     if (blockNumber > 0) {
         begBal = getBalanceAt(accountedFor, blockNumber - 1);
@@ -80,23 +84,21 @@ bool CReconciliation::reconcileInside(void) {
         }
     }
 
-    LOG_TRIAL_BALANCE_INSIDE();
-    if (begBal + totalIn() - totalOut() == endBal) {
+    LOG_TRIAL_BALANCE("flows");
+    if (trailBalance()) {
         return true;
     }
 
-    if (reconcileUsingTraces()) {
-        return true;
-    }
-
-    return true;
+    return reconcileFlows_traces();
 }
 
-//---------------------------------------------------------------------------
-bool CReconciliation::reconcileUsingTraces(void) {
-    amountOut = amountIn = 0;
-    prefundIn = minerBaseRewardIn = minerNephewRewardIn = minerTxFeeIn + minerUncleRewardIn = 0;
-
+//-----------------------------------------------------------------------
+bool CReconciliation::reconcileFlows_traces(void) {
+    amountIn = 0;
+    internalIn = selfDestructIn = prefundIn = 0;
+    minerBaseRewardIn = minerNephewRewardIn = minerTxFeeIn + minerUncleRewardIn = 0;
+    amountOut = 0;
+    internalOut = selfDestructOut = gasOut = 0;
     if (pTransaction->blockNumber == 0) {
         sender = pTransaction->from;
         recipient = pTransaction->to;
@@ -104,26 +106,29 @@ bool CReconciliation::reconcileUsingTraces(void) {
         prefundIn = pTransaction->value;
 
     } else {
-        bool allocated = false;
+        reconciliationType = "by-trace";
+        bool tracesAllocated = false;
         if (pTransaction->traces.size() == 0) {
             blknum_t bn = pTransaction->blockNumber;
             blknum_t txid = pTransaction->transactionIndex;
             loadTraces(*((CTransaction*)pTransaction), bn, txid, false, false);  // NOLINT
-            allocated = true;
+            tracesAllocated = true;
         }
 
+        size_t index = 0;
         for (auto trace : pTransaction->traces) {
             if (!trace.action.selfDestructed.empty()) {
                 // do not collapse, both may happen
                 if (trace.action.refundAddress == accountedFor) {
-                    sender = pTransaction->from;
-                    recipient = pTransaction->to;
+                    sender = trace.action.from;
+                    recipient = trace.action.to;
                     selfDestructIn += trace.action.balance;
                 }
+
                 // do not collapse, both may happen
                 if (trace.action.selfDestructed == accountedFor) {
-                    sender = pTransaction->from;
-                    recipient = pTransaction->to;
+                    sender = trace.action.from;
+                    recipient = trace.action.to;
                     selfDestructOut += trace.action.balance;
                 }
 
@@ -135,15 +140,19 @@ bool CReconciliation::reconcileUsingTraces(void) {
                     // unless the EOA initiated the top level tx. I think
                     // this might be a bug in a smart contract or something.
                     if (isContractAt(accountedFor, blockNumber) || pTransaction->from == accountedFor) {
-                        sender = pTransaction->from;
-                        recipient = pTransaction->to;
-                        internalOut += pTransaction->isError ? 0 : trace.action.value;
+                        sender = trace.action.from;
+                        recipient = trace.action.to;
+                        if (index == 0) {
+                            amountOut += pTransaction->isError ? 0 : trace.action.value;
+                        } else {
+                            internalOut += pTransaction->isError ? 0 : trace.action.value;
+                        }
                     }
                 }
 
                 if (trace.action.to == accountedFor && !trace.isDelegateCall()) {
-                    sender = pTransaction->from;
-                    recipient = pTransaction->to;
+                    sender = trace.action.from;
+                    recipient = trace.action.to;
                     if (pTransaction->from == "0xPrefund") {
                         prefundIn = pTransaction->value;
 
@@ -156,25 +165,28 @@ bool CReconciliation::reconcileUsingTraces(void) {
                         minerUncleRewardIn = pTransaction->value;
 
                     } else {
-                        internalIn += pTransaction->isError ? 0 : trace.action.value;
+                        if (index == 0) {
+                            amountIn += pTransaction->isError ? 0 : trace.action.value;
+                        } else {
+                            internalIn += pTransaction->isError ? 0 : trace.action.value;
+                        }
                     }
                 }
             }
+            index++;
         }
 
-        if (allocated) {
+        if (tracesAllocated) {
             ((CTransaction*)pTransaction)->traces.clear();
         }
     }
 
-    reconciliationType = "by-trace";
-    LOG_TRIAL_BALANCE_INSIDE();
-
-    return (begBal + totalIn() - totalOut() == endBal);
+    LOG_TRIAL_BALANCE("traces");
+    return trailBalance();
 }
 
 //-----------------------------------------------------------------------
-bool CReconciliation::reconcileAcross(blknum_t pBn, blknum_t nBn, bigint_t pBal) {
+bool CReconciliation::reconcileBalances(blknum_t pBn, blknum_t nBn, bigint_t pBal) {
     prevBal = pBal;
     prevAppBlk = pBn;
 
@@ -206,13 +218,14 @@ bool CReconciliation::reconcileAcross(blknum_t pBn, blknum_t nBn, bigint_t pBal)
         endBal = endBalCalc();
     }
 
-    return reconciled();
+    LOG_TRIAL_BALANCE("balances");
+    return trailBalance();
 }
 
 //-----------------------------------------------------------------------
 bool CReconciliation::reconcileLabel(blknum_t pBn, blknum_t nBn) {
     bool prevDifferent = prevAppBlk != blockNumber;
-    bool nextDifferent = blockNumber != nBn || nBn == NOPOS;
+    bool nextDifferent = blockNumber != nBn;
     if (pTransaction->blockNumber == 0) {
         reconciliationType = "genesis";
 
@@ -229,8 +242,7 @@ bool CReconciliation::reconcileLabel(blknum_t pBn, blknum_t nBn) {
         reconciliationType = "partial-partial";
     }
 
-    LOG_TRIAL_BALANCE_INSIDE();
-    return reconciled();
+    return trailBalance();
 }
 
 }  // namespace qblocks
