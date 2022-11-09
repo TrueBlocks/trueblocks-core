@@ -240,7 +240,7 @@ bool COptions::showAddrsInTx(CTraverser* trav, const blkrange_t& range, const CA
                     appHere.bn = found->blk;
                     appHere.tx = found->tx;
                     appHere.addr = bytes_2_Addr(theIndex->getAddressAt(i)->bytes);
-                    if (assignReason(accountedFor, appHere, trav->trans)) {
+                    if (assignReason(statementManager.name, appHere, trav->trans)) {
                         trav->nProcessed++;
                         if (!prog_Log(trav, this))
                             return false;
@@ -253,8 +253,8 @@ bool COptions::showAddrsInTx(CTraverser* trav, const blkrange_t& range, const CA
             found++;
         }
     } else {
-        LOG_ERR("Appearance (", app.blk, ".", app.txid, ") for address \"", accountedFor.address, "\" not found in ",
-                chunkPath);
+        LOG_ERR("Appearance (", app.blk, ".", app.txid, ") for address \"", statementManager.accountedFor,
+                "\" not found in ", chunkPath);
     }
 
     return prog_Log(trav, this);

@@ -55,8 +55,8 @@ bool COptions::loadMonitors(void) {
                     loadNamesWithPrefunds();
                     reloaded = true;
                 }
-                findName(mon.address, accountedFor);
-                accountedFor.isContract = !getCodeAt(mon.address, meta.client).empty();
+                findName(mon.address, statementManager.name);
+                statementManager.name.isContract = !getCodeAt(mon.address, meta.client).empty();
             }
             monTmp.push_back(app);
         }
@@ -89,6 +89,6 @@ bool COptions::loadMonitors(void) {
         return bn_2_Timestamp(1);  // loads the timestamp file and returns non-zero
     }
 
-    LOG_INFO("Nothing to export" + (allMonitors.size() ? (" from " + accountedFor.address) : "") + ".");
+    LOG_INFO("Nothing to export" + (allMonitors.size() ? (" from " + statementManager.accountedFor) : "") + ".");
     return allMonitors.size() > 0;
 }

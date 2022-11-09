@@ -107,9 +107,9 @@ int main(int argc, const char* argv[]) {
     os << ", \"last_block\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.exportRange.second)) << endl;
     if (!options.count && options.allMonitors.size() == 1) {
         HIDE_FIELD(CMonitor, "abi_spec");
-        if (!findName(options.accountedFor.address, options.allMonitors[0])) {
+        if (!findName(options.statementManager.accountedFor, options.allMonitors[0])) {
             blknum_t blk = min(options.exportRange.second, options.meta.client);
-            options.accountedFor.isContract = isContractAt(options.allMonitors[0].address, blk);
+            options.statementManager.name.isContract = isContractAt(options.allMonitors[0].address, blk);
             options.allMonitors[0].petname = addr_2_Petname(options.allMonitors[0].address, '-');
             HIDE_FIELD(CAccountName, "isCustom");
             HIDE_FIELD(CAccountName, "isPrefund");
@@ -172,7 +172,8 @@ bool prog_Log(CTraverser* trav, void* data) {
     }
 
     LOG_PROG(searchOps[trav->searchOp], " ", opt->first_record + trav->index, " of ", opt->stats.nFileRecords,
-             " txs at block ", trav->trans.blockNumber, found.str(), " for address ", opt->accountedFor.address, "\r");
+             " txs at block ", trav->trans.blockNumber, found.str(), " for address ",
+             opt->statementManager.accountedFor, "\r");
 
     return !shouldQuit();
 }
@@ -189,7 +190,8 @@ void end_Log(CTraverser* trav, void* data) {
     }
 
     LOG_PROG(searchOps[trav->searchOp], " ", opt->first_record + trav->index, " of ", opt->stats.nFileRecords,
-             " txs at block ", trav->trans.blockNumber, found.str(), " for address ", opt->accountedFor.address, "\r");
+             " txs at block ", trav->trans.blockNumber, found.str(), " for address ",
+             opt->statementManager.accountedFor, "\r");
 
     return;
 }

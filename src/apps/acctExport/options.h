@@ -81,9 +81,8 @@ class COptions : public CAbiOptions {
     CAppearanceArray_mon monApps;
     CMonitorArray allMonitors;
     const CMonitor* curMonitor;
-    CAccountName accountedFor;
 
-    CStatementManager statementManager;
+    CStatementManager statementManager{""};
 
     CBlockAddressMap prefundAddrMap;
     CBlockAddressMap blkRewardMap;

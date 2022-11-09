@@ -17,7 +17,11 @@ bool COptions::process_statements(CTraverser* trav) {
     statementManager.prevBlock = trav->index == 0 ? trav->trans.blockNumber == 0 ? 0 : trav->trans.blockNumber - 1
                                                   : monApps[trav->index - 1].blk;
     statementManager.nextBlock = trav->index < monApps.size() - 1 ? monApps[trav->index + 1].blk : NOPOS;
-    return statementManager.getStatements(trav->trans, accountedFor.address);
+    statementManager.prevBal = 0;
+    if (statementManager.prevBlock > 0) {
+        statementManager.prevBal = getBalanceAt(statementManager.accountedFor, statementManager.prevBlock);
+    }
+    return statementManager.getStatements(trav->trans);
 }
 
 //-----------------------------------------------------------------------
