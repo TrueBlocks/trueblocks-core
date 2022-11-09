@@ -47,7 +47,17 @@ typedef enum {
     REC_SOME = (REC_TOP | REC_TOKENS),
     REC_ALL = (REC_SOME | REC_TRACES),
 } recon_t;
-
+class CStatementManager {
+  public:
+    blknum_t prevBlock{0};
+    blknum_t nextBlock{0};
+    bigint_t prevBal{0};
+    CAddressBoolMap assetFilter;
+    CPreviousBalanceMap previousBalances;
+    recon_t which{REC_NONE};
+    bool forExport{false};
+    bool getStatements(CTransaction& trans, const address_t& accountedFor);
+};
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -101,9 +111,7 @@ class CTransaction : public CBaseNode {
     bool loadTransAsBlockReward(blknum_t bn, blknum_t txid, const address_t& addr);
     bool loadTransAsUncleReward(blknum_t bn, blknum_t uncleBn, const address_t& addr);
     bool getTransfers(CTransferArray& transfers, const address_t& accountedFor) const;
-    bool getStatements(const address_t& accountedFor, recon_t which, CAddressBoolMap& assetFilter,
-                       CPreviousBalanceMap& previousBalances, blknum_t prevBlock, blknum_t nextBlock, bigint_t prevBal,
-                       bool forExport);
+    bool getStatements(const address_t& accountedFor, CStatementManager& statementManger);
     bool isReconciled(CReconciliation& which) const;
     bool readReconsFromCache(const address_t& accountedFor);
     void cacheIfReconciled(const address_t& accountedFor) const;

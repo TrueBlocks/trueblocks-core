@@ -33,6 +33,7 @@ class COptions : public CAbiOptions {
     // END_CODE_DECLARE
 
     COptionsTransList transList;
+    CStatementManager statementManager;
 
     COptions(void);
     ~COptions(void);

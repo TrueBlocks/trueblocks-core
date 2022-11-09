@@ -83,7 +83,7 @@ class COptions : public CAbiOptions {
     const CMonitor* curMonitor;
     CAccountName accountedFor;
 
-    CPreviousBalanceMap previousBalances;
+    CStatementManager statementManager;
 
     CBlockAddressMap prefundAddrMap;
     CBlockAddressMap blkRewardMap;
@@ -100,7 +100,6 @@ class COptions : public CAbiOptions {
     CAddressUintMap abiMap;
 
     CLogFilter logFilter;
-    CAddressBoolMap assetFilter;
 
     CScrapeStatistics stats;
 

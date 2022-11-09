@@ -14,11 +14,10 @@
 
 //-----------------------------------------------------------------------
 bool COptions::process_statements(CTraverser* trav) {
-    blknum_t prevBlock = trav->index == 0 ? trav->trans.blockNumber == 0 ? 0 : trav->trans.blockNumber - 1
-                                          : monApps[trav->index - 1].blk;
-    blknum_t nextBlock = trav->index < monApps.size() - 1 ? monApps[trav->index + 1].blk : NOPOS;
-    return trav->trans.getStatements(accountedFor.address, traces ? REC_ALL : REC_SOME, assetFilter, previousBalances,
-                                     prevBlock, nextBlock, 0, true);
+    statementManager.prevBlock = trav->index == 0 ? trav->trans.blockNumber == 0 ? 0 : trav->trans.blockNumber - 1
+                                                  : monApps[trav->index - 1].blk;
+    statementManager.nextBlock = trav->index < monApps.size() - 1 ? monApps[trav->index + 1].blk : NOPOS;
+    return statementManager.getStatements(trav->trans, accountedFor.address);
 }
 
 //-----------------------------------------------------------------------

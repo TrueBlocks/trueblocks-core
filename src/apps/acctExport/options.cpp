@@ -238,8 +238,11 @@ bool COptions::parseArguments(string_q& command) {
     for (auto t : topic)
         logFilter.topics.push_back(t);
 
-    for (auto addr : asset)
-        assetFilter[addr] = true;
+    statementManager.which = traces ? REC_ALL : REC_SOME;
+    statementManager.forExport = true;
+    for (auto addr : asset) {
+        statementManager.assetFilter[addr] = true;
+    }
 
     if (!loadNames())
         return usage("Could not load names database.");

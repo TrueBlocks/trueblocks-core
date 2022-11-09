@@ -124,6 +124,8 @@ bool COptions::parseArguments(string_q& command) {
     if (!account_for.empty()) {
         if (!loadNames())
             return usage("Could not load names database.");
+        statementManager.which = trace ? REC_ALL : REC_SOME;
+        statementManager.forExport = false;
     }
 
     // Display formatting

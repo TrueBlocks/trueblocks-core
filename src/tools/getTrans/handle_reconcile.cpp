@@ -16,17 +16,14 @@
 bool visitReconciliation(CTransaction& trans, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
 
-    blknum_t prevBlock = trans.blockNumber == 0 ? 0 : trans.blockNumber - 1;
-    blknum_t nextBlock = trans.blockNumber + 1;
-    bigint_t prevBal = 0;
+    opt->statementManager.prevBlock = trans.blockNumber == 0 ? 0 : trans.blockNumber - 1;
+    opt->statementManager.nextBlock = trans.blockNumber + 1;
+    opt->statementManager.prevBal = 0;
     if (trans.blockNumber > 0) {
-        prevBal = getBalanceAt(opt->account_for, prevBlock);
+        opt->statementManager.prevBal = getBalanceAt(opt->account_for, opt->statementManager.prevBlock);
     }
 
-    CAddressBoolMap assetFilter;
-    CPreviousBalanceMap prevBalances;
-    if (!trans.getStatements(opt->account_for, opt->trace ? REC_ALL : REC_SOME, assetFilter, prevBalances, prevBlock,
-                             nextBlock, prevBal, false)) {
+    if (!opt->statementManager.getStatements(trans, opt->account_for)) {
         LOG_ERR("No material transactions found");
         return true;
     }
