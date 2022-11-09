@@ -23,7 +23,8 @@ bool statements_Display(CTraverser* trav, void* data) {
             }
         }
 
-        opt->process_statements(trav);
+        opt->getPrevNext(trav->index, trav->trans);
+        opt->statementManager.getStatements(trav->trans);
 
         for (auto statement : trav->trans.statements) {
             bool checkFlow = !opt->flow.empty();

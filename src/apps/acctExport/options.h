@@ -129,8 +129,6 @@ class COptions : public CStatementOptions {
 
     void writePerformanceData(void);
 
-    bool process_statements(CTraverser* trav);
-
     // Used as temporary data to count neighbor traversals
     size_t neighborCount{0};
     CIndexArchiveWithNeighborMaps* theIndex{nullptr};

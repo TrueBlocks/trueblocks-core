@@ -12,6 +12,35 @@
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
 
+//-----------------------------------------------------------------------
+bool acct_Display(CTraverser* trav, void* data) {
+    COptions* opt = (COptions*)data;
+
+    if (fourByteFilter(trav->trans.input, opt)) {
+        if (opt->relevant) {
+            for (auto& log : trav->trans.receipt.logs) {
+                log.m_showing = opt->isRelevant(log);
+            }
+        }
+
+        if (opt->accounting) {
+            opt->getPrevNext(trav->index, trav->trans);
+            opt->statementManager.getStatements(trav->trans);
+        }
+
+        cout << ((isJson() && !opt->firstOut) ? ", " : "");
+        cout << trav->trans;
+        opt->firstOut = false;
+    }
+
+    return prog_Log(trav, data);
+}
+
+//-----------------------------------------------------------------------
+bool acct_PreFunc(CTraverser* trav, void* data) {
+    return true;
+}
+
 //--------------------------------------------------------------
 void COptions::getPrevNext(size_t index, const CTransaction& trans) {
     if (index == 0) {
@@ -25,37 +54,4 @@ void COptions::getPrevNext(size_t index, const CTransaction& trans) {
     } else {
         statementManager.nextBlock = NOPOS;
     }
-}
-
-//-----------------------------------------------------------------------
-bool COptions::process_statements(CTraverser* trav) {
-    getPrevNext(trav->index, trav->trans);
-    return statementManager.getStatements(trav->trans);
-}
-
-//-----------------------------------------------------------------------
-bool acct_Display(CTraverser* trav, void* data) {
-    COptions* opt = (COptions*)data;
-
-    if (fourByteFilter(trav->trans.input, opt)) {
-        if (opt->relevant) {
-            for (auto& log : trav->trans.receipt.logs) {
-                log.m_showing = opt->isRelevant(log);
-            }
-        }
-
-        if (opt->accounting)
-            opt->process_statements(trav);
-
-        cout << ((isJson() && !opt->firstOut) ? ", " : "");
-        cout << trav->trans;
-        opt->firstOut = false;
-    }
-
-    return prog_Log(trav, data);
-}
-
-//-----------------------------------------------------------------------
-bool acct_PreFunc(CTraverser* trav, void* data) {
-    return true;
 }

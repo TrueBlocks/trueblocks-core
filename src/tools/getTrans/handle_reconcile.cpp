@@ -13,35 +13,35 @@
 #include "options.h"
 
 //--------------------------------------------------------------
-void COptions::getPrevNext(size_t index, const CTransaction& trans) {
-    statementManager.prevBlock = trans.blockNumber == 0 ? 0 : trans.blockNumber - 1;
-    statementManager.nextBlock = trans.blockNumber + 1;
-}
-
-//--------------------------------------------------------------
 bool visitReconciliation(CTransaction& trans, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
 
     opt->getPrevNext(NOPOS, trans);
-    if (!opt->statementManager.getStatements(trans)) {
+    if (opt->statementManager.getStatements(trans)) {
+        bool isText = (expContext().exportFmt & (TXT1 | CSV1));
+        for (auto statement : trans.statements) {
+            if (isText) {
+                cout << trim(statement.Format(expContext().fmtMap["format"]), '\t') << endl;
+            } else {
+                if (!opt->firstOut)
+                    cout << ",";
+                cout << "  ";
+                indent();
+                statement.toJson(cout);
+                unindent();
+                opt->firstOut = false;
+            }
+        }
+    } else {
         LOG_ERR("No material transactions found");
         return true;
     }
 
-    bool isText = (expContext().exportFmt & (TXT1 | CSV1));
-    for (auto statement : trans.statements) {
-        if (isText) {
-            cout << trim(statement.Format(expContext().fmtMap["format"]), '\t') << endl;
-        } else {
-            if (!opt->firstOut)
-                cout << ",";
-            cout << "  ";
-            indent();
-            statement.toJson(cout);
-            unindent();
-            opt->firstOut = false;
-        }
-    }
-
     return true;
+}
+
+//--------------------------------------------------------------
+void COptions::getPrevNext(size_t index, const CTransaction& trans) {
+    statementManager.prevBlock = trans.blockNumber == 0 ? 0 : trans.blockNumber - 1;
+    statementManager.nextBlock = trans.blockNumber + 1;
 }
