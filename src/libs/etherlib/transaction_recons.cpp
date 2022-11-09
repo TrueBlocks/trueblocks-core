@@ -34,8 +34,11 @@ bool CStatementManager::getStatements(CTransaction& trans, const address_t& acco
         string tokenKey = statementKey(accountedFor, transfer.assetAddr);
         if (previousBalances[tokenKey] == CPreviousBalance()) {
             CReconciliation prevStatement(accountedFor, transfer.assetAddr, &trans);
-            prevStatement.blockNumber = prevBlock;
-            prevStatement.endBal = prevBlock == 0 ? 0 : getTokenBalanceAt(transfer.assetAddr, accountedFor, prevBlock);
+            if (trans.blockNumber > 0) {
+                prevStatement.blockNumber = prevBlock;
+                prevStatement.endBal =
+                    prevBlock == 0 ? 0 : getTokenBalanceAt(transfer.assetAddr, accountedFor, prevBlock);
+            }
             previousBalances[tokenKey] = prevStatement;
         }
 
@@ -47,13 +50,13 @@ bool CStatementManager::getStatements(CTransaction& trans, const address_t& acco
         }
         statement.reconcileBalances(prevBlock, nextBlock, previousBalances[tokenKey].balance);
         statement.reconcileLabel(prevBlock, nextBlock);
+        // statement.encoding = trans.input.size() >= 10 ? trans.input.substr(0, 10) : "";
+        // statement.signature = trans.Format("[{COMPRESSEDTX}]");
 
         if (!forExport) {
             if (statement.reconciliationType == "regular") {
                 statement.reconciliationType = "by-tx";
             }
-            statement.encoding = trans.input.size() >= 10 ? trans.input.substr(0, 10) : "";
-            statement.signature = trans.Format("[{COMPRESSEDTX}]");
         }
 
         if (statement.amountNet() != 0) {
@@ -63,8 +66,8 @@ bool CStatementManager::getStatements(CTransaction& trans, const address_t& acco
         previousBalances[tokenKey] = statement;
     }
 
-    CTransferArray transfers;
     if (which & REC_TOKENS) {
+        CTransferArray transfers;
         if (trans.getTransfers(transfers, accountedFor)) {
             for (auto transfer : transfers) {
                 if (assetFilter.size() > 0 && !assetFilter[transfer.assetAddr]) {
@@ -82,26 +85,26 @@ bool CStatementManager::getStatements(CTransaction& trans, const address_t& acco
                     previousBalances[tokenKey] = prevStatement;
                 }
 
-                CReconciliation aStatement(accountedFor, transfer.assetAddr, &trans);
-                aStatement.assetSymbol = transfer.assetSymbol;
-                aStatement.decimals = transfer.decimals;
-                aStatement.sender = transfer.sender;
-                aStatement.recipient = transfer.recipient;
-                aStatement.prevAppBlk = previousBalances[tokenKey].blockNumber;
-                aStatement.prevBal = previousBalances[tokenKey].balance;
-                aStatement.begBal = previousBalances[tokenKey].balance;
-                aStatement.endBal =
-                    getTokenBalanceAt(aStatement.assetAddr, aStatement.accountedFor, aStatement.blockNumber);
+                CReconciliation statement(accountedFor, transfer.assetAddr, &trans);
+                statement.assetSymbol = transfer.assetSymbol;
+                statement.decimals = transfer.decimals;
+                statement.prevAppBlk = previousBalances[tokenKey].blockNumber;
+                statement.prevBal = previousBalances[tokenKey].balance;
+                statement.begBal = previousBalances[tokenKey].balance;
+                statement.endBal =
+                    getTokenBalanceAt(statement.assetAddr, statement.accountedFor, statement.blockNumber);
+                statement.sender = transfer.sender;
+                statement.recipient = transfer.recipient;
 
-                if (aStatement.begBal != aStatement.endBal) {
-                    if (aStatement.begBal > aStatement.endBal) {
-                        aStatement.amountOut = (aStatement.begBal - aStatement.endBal);
+                if (statement.begBal != statement.endBal) {
+                    if (statement.begBal > statement.endBal) {
+                        statement.amountOut = (statement.begBal - statement.endBal);
                     } else {
-                        aStatement.amountIn = (aStatement.endBal - aStatement.begBal);
+                        statement.amountIn = (statement.endBal - statement.begBal);
                     }
-                    aStatement.reconciliationType = "token";
-                    trans.statements.push_back(aStatement);
-                    previousBalances[tokenKey] = aStatement;
+                    statement.reconciliationType = "token";
+                    trans.statements.push_back(statement);
+                    previousBalances[tokenKey] = statement;
                 }
             }
         }

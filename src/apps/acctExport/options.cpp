@@ -244,8 +244,9 @@ bool COptions::parseArguments(string_q& command) {
         statementManager.assetFilter[addr] = true;
     }
 
-    if (!loadNames())
+    if (!loadNames()) {
         return usage("Could not load names database.");
+    }
 
     for (auto addr : addrs) {
         CMonitor monitor;
@@ -264,8 +265,9 @@ bool COptions::parseArguments(string_q& command) {
         allMonitors.push_back(monitor);
     }
 
-    if (appearances || count)
+    if (appearances || count) {
         articulate = false;
+    }
 
     if (articulate) {
         abi_spec.loadAbisFromKnown();
@@ -275,15 +277,17 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (!setDisplayFormatting())
+    if (!setDisplayFormatting()) {
         return false;
+    }
 
     // TODO: This can be removed
     CMonitor m;
     cleanFolder(m.getPathToMonitor("", true));
 
-    if (first_block > last_block)
+    if (first_block > last_block) {
         return usage("--first_block must be less than or equal to --last_block.");
+    }
     exportRange = make_pair(first_block, last_block);
 
     if (count) {
