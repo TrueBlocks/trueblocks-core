@@ -16,9 +16,9 @@
 namespace qblocks {
 
 //--------------------------------------------------------------
-bool CStatementManager::getTransfers(const CTransaction& trans, const address_t& accountedFor, bool forTopLevel) {
+bool CStatementManager::getTransfers(const CTransaction& trans, bool isTop) {
     transfers.clear();
-    if (forTopLevel) {
+    if (isTop) {
         CTransfer transfer;
         transfer.assetAddr = FAKE_ETH_ADDRESS;
         transfer.assetSymbol = expContext().asEther ? "ETH" : "WEI";
@@ -31,7 +31,7 @@ bool CStatementManager::getTransfers(const CTransaction& trans, const address_t&
 }
 
 //--------------------------------------------------------------
-bool CStatementManager::getStatements(CTransaction& trans, const address_t& accountedFor) {
+bool CStatementManager::getStatements(CTransaction& trans) {
     if (trans.readReconsFromCache(accountedFor)) {
         for (auto& statement : trans.statements) {
             string_q key = statementKey(statement.accountedFor, statement.assetAddr);
@@ -42,7 +42,7 @@ bool CStatementManager::getStatements(CTransaction& trans, const address_t& acco
 
     if (which & REC_TOP) {
         bool isTop = true;
-        if (getTransfers(trans, accountedFor, isTop)) {
+        if (getTransfers(trans, isTop)) {
             for (auto transfer : transfers) {
                 if (assetFilter.size() == 0 || assetFilter[transfer.assetAddr]) {
                     string tokenKey = statementKey(accountedFor, transfer.assetAddr);
@@ -75,7 +75,7 @@ bool CStatementManager::getStatements(CTransaction& trans, const address_t& acco
 
     if (which & REC_TOKENS) {
         bool isTop = false;
-        if (getTransfers(trans, accountedFor, isTop)) {
+        if (getTransfers(trans, isTop)) {
             for (auto transfer : transfers) {
                 if (assetFilter.size() == 0 || assetFilter[transfer.assetAddr]) {
                     string tokenKey = statementKey(accountedFor, transfer.assetAddr);

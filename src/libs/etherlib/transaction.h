@@ -67,16 +67,23 @@ struct CPreviousBalance {
 typedef map<string, CPreviousBalance> CPreviousBalanceMap;
 class CStatementManager {
   public:
+    CAccountName name;
+    address_t accountedFor;
     blknum_t prevBlock{0};
     blknum_t nextBlock{0};
     bigint_t prevBal{0};
     recon_t which{REC_NONE};
     bool forExport{false};
     CAddressBoolMap assetFilter;
-    bool getTransfers(const CTransaction& trans, const address_t& accountedFor, bool forTopLevel);
-    bool getStatements(CTransaction& trans, const address_t& accountedFor);
+    bool getTransfers(const CTransaction& trans, bool isTop);
+    bool getStatements(CTransaction& trans);
+
+    CStatementManager(const address_t& aF) {
+        accountedFor = aF;
+    };
 
   private:
+    CStatementManager(){};
     CPreviousBalanceMap previousBalances;
     CTransferArray transfers;
 };

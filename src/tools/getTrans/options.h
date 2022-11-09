@@ -28,12 +28,11 @@ class COptions : public CAbiOptions {
     bool trace;
     bool uniq;
     string_q flow;
-    address_t account_for;
     bool cache;
     // END_CODE_DECLARE
 
     COptionsTransList transList;
-    CStatementManager statementManager;
+    CStatementManager statementManager{""};
 
     COptions(void);
     ~COptions(void);

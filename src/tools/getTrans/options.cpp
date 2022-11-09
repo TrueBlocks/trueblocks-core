@@ -39,6 +39,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     // BEG_CODE_LOCAL_INIT
+    address_t account_for = "";
     // END_CODE_LOCAL_INIT
 
     Init();
@@ -126,12 +127,13 @@ bool COptions::parseArguments(string_q& command) {
             return usage("Could not load names database.");
         statementManager.which = trace ? REC_ALL : REC_SOME;
         statementManager.forExport = false;
+        statementManager.accountedFor = account_for;
     }
 
     // Display formatting
     if (uniq) {
         configureDisplay("getTrans", "CAppearance", STR_DISPLAY_APPEARANCE);
-    } else if (!account_for.empty()) {
+    } else if (!statementManager.accountedFor.empty()) {
         string_q fmt = STR_DISPLAY_RECONCILIATION;
         if (!articulate) {
             fmt = substitute(fmt, "[{ENCODING}]\t[{SIGNATURE}]\t", "");
@@ -156,7 +158,6 @@ void COptions::Init(void) {
     trace = false;
     uniq = false;
     flow = "";
-    account_for = "";
     cache = false;
     // END_CODE_INIT
 

@@ -19,11 +19,12 @@ bool visitReconciliation(CTransaction& trans, void* data) {
     opt->statementManager.prevBlock = trans.blockNumber == 0 ? 0 : trans.blockNumber - 1;
     opt->statementManager.nextBlock = trans.blockNumber + 1;
     opt->statementManager.prevBal = 0;
-    if (trans.blockNumber > 0) {
-        opt->statementManager.prevBal = getBalanceAt(opt->account_for, opt->statementManager.prevBlock);
+    if (opt->statementManager.prevBlock > 0) {
+        opt->statementManager.prevBal =
+            getBalanceAt(opt->statementManager.accountedFor, opt->statementManager.prevBlock);
     }
 
-    if (!opt->statementManager.getStatements(trans, opt->account_for)) {
+    if (!opt->statementManager.getStatements(trans)) {
         LOG_ERR("No material transactions found");
         return true;
     }
