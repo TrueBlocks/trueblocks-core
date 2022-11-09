@@ -89,6 +89,9 @@ on,both,fast,transactions,tools/getTrans,reconcile2_ether,y,transactions = 0x3f0
 local,both,fast,transactions,tools/getTrans,reconcile_tokens,y,transactions = 0x332df8459d5357d05d59c4e186eeb7b0b9380343962ac978d2e539c8f23d0508 & account_for = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json
 on,cmd,fast,transactions,tools/getTrans,reconcile_by_file,y,transactions = 0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33 & ether & file = cmd_file_3
 
+on,both,fast,transactions,tools/getTrans,reconcile_traces_off,y,transactions = 0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524 & account_for = 0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7 & fmt = json
+on,both,fast,transactions,tools/getTrans,reconcile_traces_on,y,transactions = 0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524 & account_for = 0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7 & fmt = json & trace
+
 on,cmd,fast,transactions,tools/getTrans,by_file,n,file = cmd_file_2 & bad
 on,cmd,fast,transactions,tools/getTrans,by_file_1,n,file = cmd_file & fmt = csv
 file_cmd,cmd,fast,transactions,tools/getTrans,mulit_line_mulit_txs,n,file = cmd_file_1 & fmt = json

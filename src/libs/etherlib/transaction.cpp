@@ -1096,14 +1096,14 @@ bool CTransaction::forEveryTrace(TRACEVISITFUNC func, void* data) const {
 
 //--------------------------------------------------------------
 bool CTransaction::getStatements(const address_t& accountedFor, recon_t which) {
-    if (which & REC_TOP) {
-        blknum_t prevBlock = blockNumber == 0 ? 0 : blockNumber - 1;
-        blknum_t nextBlock = blockNumber + 1;
-        bigint_t prevBal = 0;
-        if (blockNumber > 0) {
-            prevBal = getBalanceAt(accountedFor, prevBlock);
-        }
+    blknum_t prevBlock = blockNumber == 0 ? 0 : blockNumber - 1;
+    blknum_t nextBlock = blockNumber + 1;
+    bigint_t prevBal = 0;
+    if (blockNumber > 0) {
+        prevBal = getBalanceAt(accountedFor, prevBlock);
+    }
 
+    if (which & REC_TOP) {
         CReconciliation statement(accountedFor, FAKE_ETH_ADDRESS, this);
         if (!statement.reconcileFlows()) {
             statement.reconcileFlows_traces();
@@ -1124,21 +1124,21 @@ bool CTransaction::getStatements(const address_t& accountedFor, recon_t which) {
     if (which & REC_TRACES) {
         CTraceArray traceArray;
         getTraces(traceArray, hash, this);
+        // size_t cnt = 0;
         for (auto trace : traceArray) {
-            if (trace.action.from == accountedFor || trace.action.to == accountedFor) {
-                CReconciliation statement(accountedFor, FAKE_ETH_ADDRESS, this);
-                statement.reconcileFlows_traces();
-                statement.reconcileBalances(blockNumber, blockNumber + 1, 0);
-                statement.reconcileLabel(blockNumber, blockNumber + 1);
-                statement.assetSymbol = expContext().asEther ? "ETH" : "WEI";
-                statement.encoding = input.size() >= 10 ? input.substr(0, 10) : "";
-                statement.signature = Format("[{COMPRESSEDTRACE}]");
-                if (statement.reconciliationType == "regular") {
-                    statement.reconciliationType = "by-trace";
-                }
-                if (statement.amountNet() != 0) {
-                    statements.push_back(statement);
-                }
+            // cerr << cnt++ << trace << endl;
+            CReconciliation statement(accountedFor, FAKE_ETH_ADDRESS, this);
+            statement.reconcileFlows_traces();
+            statement.reconcileBalances(prevBlock, nextBlock, prevBal);
+            statement.reconcileLabel(prevBlock, nextBlock);
+            statement.assetSymbol = expContext().asEther ? "ETH" : "WEI";
+            statement.encoding = trace.action.input.size() >= 10 ? trace.action.input.substr(0, 10) : "";
+            statement.signature = Format("[{COMPRESSEDTRACE}]");
+            if (statement.reconciliationType == "regular") {
+                statement.reconciliationType = "by-trace";
+            }
+            if (statement.amountNet() != 0) {
+                statements.push_back(statement);
             }
         }
     }

@@ -41,9 +41,6 @@ func (opts *TransactionsOptions) validateTransactions() error {
 			if opts.Cache {
 				return validate.Usage("The {0} option is not available with the {1} option", "--cache", "--account_for")
 			}
-			if opts.Trace {
-				return validate.Usage("The {0} option is not available with the {1} option", "--trace", "--account_for")
-			}
 			if opts.Uniq {
 				return validate.Usage("The {0} option is not available with the {1} option", "--uniq", "--account_for")
 			}
