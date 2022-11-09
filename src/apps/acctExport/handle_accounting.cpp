@@ -12,20 +12,24 @@
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
 
-//-----------------------------------------------------------------------
-bool COptions::process_statements(CTraverser* trav) {
-    if (trav->index == 0) {
-        statementManager.prevBlock = max(trav->trans.blockNumber, blknum_t(1)) - 1;
+//--------------------------------------------------------------
+void COptions::getPrevNext(size_t index, const CTransaction& trans) {
+    if (index == 0) {
+        statementManager.prevBlock = max(trans.blockNumber, blknum_t(1)) - 1;
     } else {
-        statementManager.prevBlock = monApps[trav->index - 1].blk;
+        statementManager.prevBlock = monApps[index - 1].blk;
     }
 
-    if (trav->index < monApps.size() - 1) {
-        statementManager.nextBlock = monApps[trav->index + 1].blk;
+    if (index < monApps.size() - 1) {
+        statementManager.nextBlock = monApps[index + 1].blk;
     } else {
         statementManager.nextBlock = NOPOS;
     }
+}
 
+//-----------------------------------------------------------------------
+bool COptions::process_statements(CTraverser* trav) {
+    getPrevNext(trav->index, trav->trans);
     return statementManager.getStatements(trav->trans);
 }
 

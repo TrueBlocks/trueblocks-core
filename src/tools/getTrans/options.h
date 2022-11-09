@@ -21,7 +21,7 @@
 // END_ERROR_DEFINES
 
 //-----------------------------------------------------------------------------
-class COptions : public CAbiOptions {
+class COptions : public CStatementOptions {
   public:
     // BEG_CODE_DECLARE
     bool articulate;
@@ -32,13 +32,13 @@ class COptions : public CAbiOptions {
     // END_CODE_DECLARE
 
     COptionsTransList transList;
-    CStatementManager statementManager{""};
 
     COptions(void);
     ~COptions(void);
 
     bool parseArguments(string_q& command) override;
     void Init(void) override;
+    void getPrevNext(size_t index, const CTransaction& trans) override;
 };
 
 //-----------------------------------------------------------------------------

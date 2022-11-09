@@ -51,7 +51,7 @@ class CIndexArchiveWithNeighborMaps : public CIndexArchive {
 };
 
 //-----------------------------------------------------------------------
-class COptions : public CAbiOptions {
+class COptions : public CStatementOptions {
   public:
     // BEG_CODE_DECLARE
     CFourbyteArray fourbytes;
@@ -82,8 +82,6 @@ class COptions : public CAbiOptions {
     CMonitorArray allMonitors;
     const CMonitor* curMonitor;
 
-    CStatementManager statementManager{""};
-
     CBlockAddressMap prefundAddrMap;
     CBlockAddressMap blkRewardMap;
 
@@ -113,6 +111,7 @@ class COptions : public CAbiOptions {
 
     bool parseArguments(string_q& command);
     void Init(void);
+    void getPrevNext(size_t index, const CTransaction& trans);
 
     bool setDisplayFormatting(void);
     bool loadMonitors(void);

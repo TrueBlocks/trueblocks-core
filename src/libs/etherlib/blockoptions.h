@@ -19,6 +19,13 @@ class CAbiOptions : public COptionsBase {
     CAbi abi_spec;
 };
 
+//--------------------------------------------------------------------------
+class CStatementOptions : public CAbiOptions {
+  public:
+    CStatementManager statementManager{""};
+    virtual void getPrevNext(size_t index, const CTransaction& trans) = 0;
+};
+
 //-----------------------------------------------------------------------------
 class CBlockOptions : public CAbiOptions {
   public:

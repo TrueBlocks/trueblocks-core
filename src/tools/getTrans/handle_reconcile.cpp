@@ -13,11 +13,16 @@
 #include "options.h"
 
 //--------------------------------------------------------------
+void COptions::getPrevNext(size_t index, const CTransaction& trans) {
+    statementManager.prevBlock = trans.blockNumber == 0 ? 0 : trans.blockNumber - 1;
+    statementManager.nextBlock = trans.blockNumber + 1;
+}
+
+//--------------------------------------------------------------
 bool visitReconciliation(CTransaction& trans, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
 
-    opt->statementManager.prevBlock = trans.blockNumber == 0 ? 0 : trans.blockNumber - 1;
-    opt->statementManager.nextBlock = trans.blockNumber + 1;
+    opt->getPrevNext(NOPOS, trans);
     if (!opt->statementManager.getStatements(trans)) {
         LOG_ERR("No material transactions found");
         return true;
