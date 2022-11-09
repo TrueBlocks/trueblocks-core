@@ -39,6 +39,15 @@ typedef enum {
     CB_TOK_ACCOUNTING = (1 << 2),
     CB_TRACES = (1 << 3),
 } cachebits_t;
+typedef enum {
+    REC_NONE = 0,
+    REC_TOP = (1 << 0),
+    REC_TOKENS = (1 << 1),
+    REC_TRACES = (1 << 2),
+    REC_SOME = (REC_TOP | REC_TOKENS),
+    REC_ALL = (REC_SOME | REC_TRACES),
+} recon_t;
+
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -92,6 +101,7 @@ class CTransaction : public CBaseNode {
     bool loadTransAsBlockReward(blknum_t bn, blknum_t txid, const address_t& addr);
     bool loadTransAsUncleReward(blknum_t bn, blknum_t uncleBn, const address_t& addr);
     bool getTransfers(CTransferArray& transfers, const address_t& accountedFor) const;
+    bool getStatements(const address_t& accountedFor, recon_t which);
     bool isReconciled(CReconciliation& which) const;
     bool readReconsFromCache(const address_t& accountedFor);
     void cacheIfReconciled(const address_t& accountedFor) const;

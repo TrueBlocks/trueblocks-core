@@ -35,15 +35,14 @@ bool COptions::process_statements(CTraverser* trav) {
 
     string tokenKey = statementKey(accountedFor.address, transfer.assetAddr);
     if (previousBalances[tokenKey] == CPreviousBalance()) {
-        CReconciliation prevStatement(accountedFor.address, &trav->trans);
+        CReconciliation prevStatement(accountedFor.address, transfer.assetAddr, &trav->trans);
         prevStatement.blockNumber = prevBlock;
         prevStatement.endBal =
             prevBlock == 0 ? 0 : getTokenBalanceAt(transfer.assetAddr, accountedFor.address, prevBlock);
         previousBalances[tokenKey] = prevStatement;
     }
 
-    CReconciliation aStatement(accountedFor.address, &trav->trans);
-    aStatement.assetAddr = transfer.assetAddr;
+    CReconciliation aStatement(accountedFor.address, transfer.assetAddr, &trav->trans);
     aStatement.assetSymbol = transfer.assetSymbol;
     aStatement.decimals = transfer.decimals;
     aStatement.reconcileFlows();
@@ -63,7 +62,7 @@ bool COptions::process_statements(CTraverser* trav) {
 
             string tokenKey = statementKey(accountedFor.address, transfer.assetAddr);
             if (previousBalances[tokenKey] == CPreviousBalance()) {
-                CReconciliation prevStatement(accountedFor.address, &trav->trans);
+                CReconciliation prevStatement(accountedFor.address, transfer.assetAddr, &trav->trans);
                 if (trav->trans.blockNumber > 0) {
                     prevStatement.blockNumber = prevBlock;
                     prevStatement.endBal =
@@ -72,8 +71,7 @@ bool COptions::process_statements(CTraverser* trav) {
                 previousBalances[tokenKey] = prevStatement;
             }
 
-            CReconciliation aStatement(accountedFor.address, &trav->trans);
-            aStatement.assetAddr = transfer.assetAddr;
+            CReconciliation aStatement(accountedFor.address, transfer.assetAddr, &trav->trans);
             aStatement.assetSymbol = transfer.assetSymbol;
             aStatement.decimals = transfer.decimals;
             aStatement.sender = transfer.sender;

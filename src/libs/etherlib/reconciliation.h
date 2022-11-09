@@ -68,7 +68,7 @@ class CReconciliation : public CBaseNode {
     DECLARE_NODE(CReconciliation);
 
     // EXISTING_CODE
-    CReconciliation(const address_t& aF, const CTransaction* pT);
+    CReconciliation(const address_t& aF, const address_t& asset, const CTransaction* pT);
     const CTransaction* pTransaction = NULL;
 
     bool reconcileFlows(void);

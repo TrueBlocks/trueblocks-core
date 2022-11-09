@@ -2620,21 +2620,6 @@ components:
         priceSource:
           type: string
           description: "The on-chain source from which the spot price was taken"
-        topic0:
-          type: string
-          description: "The 32-byte encoding of the event signature"
-        topic1:
-          type: string
-          description: "Topic 1 for the event"
-        topic2:
-          type: string
-          description: "Topic 2 for the event"
-        topic3:
-          type: string
-          description: "Topic 3 for the event"
-        data:
-          type: string
-          description: "The event's data field"
         encoding:
           type: string
           description: "The four-byte encoding of the transaction's function call"

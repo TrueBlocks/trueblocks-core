@@ -93,9 +93,6 @@ string_q CTransfer::getValueByName(const string_q& fieldName) const {
             if (fieldName % "decimals") {
                 return uint_2_Str(decimals);
             }
-            if (fieldName % "data") {
-                return data;
-            }
             break;
         case 'e':
             if (fieldName % "encoding") {
@@ -134,18 +131,6 @@ string_q CTransfer::getValueByName(const string_q& fieldName) const {
             }
             if (fieldName % "timestamp") {
                 return ts_2_Str(timestamp);
-            }
-            if (fieldName % "topic0") {
-                return topic0;
-            }
-            if (fieldName % "topic1") {
-                return topic1;
-            }
-            if (fieldName % "topic2") {
-                return topic2;
-            }
-            if (fieldName % "topic3") {
-                return topic3;
             }
             break;
         default:
@@ -197,10 +182,6 @@ bool CTransfer::setValueByName(const string_q& fieldNameIn, const string_q& fiel
                 decimals = str_2_Uint(fieldValue);
                 return true;
             }
-            if (fieldName % "data") {
-                data = fieldValue;
-                return true;
-            }
             break;
         case 'e':
             if (fieldName % "encoding") {
@@ -249,22 +230,6 @@ bool CTransfer::setValueByName(const string_q& fieldNameIn, const string_q& fiel
                 timestamp = str_2_Ts(fieldValue);
                 return true;
             }
-            if (fieldName % "topic0") {
-                topic0 = fieldValue;
-                return true;
-            }
-            if (fieldName % "topic1") {
-                topic1 = fieldValue;
-                return true;
-            }
-            if (fieldName % "topic2") {
-                topic2 = fieldValue;
-                return true;
-            }
-            if (fieldName % "topic3") {
-                topic3 = fieldValue;
-                return true;
-            }
             break;
         default:
             break;
@@ -305,11 +270,6 @@ bool CTransfer::Serialize(CArchive& archive) {
     archive >> amount;
     archive >> spotPrice;
     archive >> priceSource;
-    archive >> topic0;
-    archive >> topic1;
-    archive >> topic2;
-    archive >> topic3;
-    archive >> data;
     archive >> encoding;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -338,11 +298,6 @@ bool CTransfer::SerializeC(CArchive& archive) const {
     archive << amount;
     archive << spotPrice;
     archive << priceSource;
-    archive << topic0;
-    archive << topic1;
-    archive << topic2;
-    archive << topic3;
-    archive << data;
     archive << encoding;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -407,11 +362,6 @@ void CTransfer::registerClass(void) {
     ADD_FIELD(CTransfer, "amount", T_UINT256, ++fieldNum);
     ADD_FIELD(CTransfer, "spotPrice", T_DOUBLE, ++fieldNum);
     ADD_FIELD(CTransfer, "priceSource", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CTransfer, "topic0", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CTransfer, "topic1", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CTransfer, "topic2", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CTransfer, "topic3", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CTransfer, "data", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTransfer, "encoding", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
@@ -498,11 +448,6 @@ const char* STR_DISPLAY_TRANSFER =
     "[{AMOUNT}]\t"
     "[{SPOTPRICE}]\t"
     "[{PRICESOURCE}]\t"
-    "[{TOPIC0}]\t"
-    "[{TOPIC1}]\t"
-    "[{TOPIC2}]\t"
-    "[{TOPIC3}]\t"
-    "[{DATA}]\t"
     "[{ENCODING}]";
 
 //---------------------------------------------------------------------------

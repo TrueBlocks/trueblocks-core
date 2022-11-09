@@ -2,7 +2,7 @@
 title: "Chain state"
 description: ""
 lead: ""
-date: 2022-10-30T22:59:54
+date: 2022-11-08T21:25:20
 lastmod:
   - :git
   - lastmod
@@ -80,11 +80,6 @@ State data is made of the following data fields:
 | amount           | the amount of the transfer in the units of the asset                                           | uint256   |
 | spotPrice        | The on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction       | double    |
 | priceSource      | The on-chain source from which the spot price was taken                                        | string    |
-| topic0           | The 32-byte encoding of the event signature                                                    | string    |
-| topic1           | Topic 1 for the event                                                                          | string    |
-| topic2           | Topic 2 for the event                                                                          | string    |
-| topic3           | Topic 3 for the event                                                                          | string    |
-| data             | The event's data field                                                                         | string    |
 | encoding         | The four-byte encoding of the transaction's function call                                      | string    |
 
 ## Token

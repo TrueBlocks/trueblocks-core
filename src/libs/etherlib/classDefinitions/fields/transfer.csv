@@ -15,10 +15,5 @@ pos ,name             ,type      ,strDefault ,object ,array ,nowrite ,omitempty 
     
  13 ,spotPrice        ,double    ,       1.0 ,       ,      ,        ,          ,        ,      ,         , 13 ,  13 ,              ,The on-chain price in USD (or if a token in ETH&#44; or zero) at the time of the transaction
  14 ,priceSource      ,string    ,           ,       ,      ,        ,          ,        ,      ,         , 14 ,  14 ,              ,The on-chain source from which the spot price was taken
-    
- 15 ,topic0           ,string    ,           ,       ,      ,        ,          ,        ,      ,         , 15 ,  15 ,              ,The 32-byte encoding of the event signature
- 16 ,topic1           ,string    ,           ,       ,      ,        ,          ,        ,      ,         , 16 ,  16 ,              ,Topic 1 for the event
- 17 ,topic2           ,string    ,           ,       ,      ,        ,          ,        ,      ,         , 17 ,  17 ,              ,Topic 2 for the event
- 18 ,topic3           ,string    ,           ,       ,      ,        ,          ,        ,      ,         , 18 ,  18 ,              ,Topic 3 for the event
- 19 ,data             ,string    ,           ,       ,      ,        ,          ,        ,      ,         , 19 ,  19 ,              ,The event's data field
- 20 ,encoding         ,string    ,           ,       ,      ,        ,          ,        ,      ,         , 20 ,  20 ,              ,The four-byte encoding of the transaction's function call
+
+ 15 ,encoding         ,string    ,           ,       ,      ,        ,          ,        ,      ,         , 15 ,  15 ,              ,The four-byte encoding of the transaction's function call

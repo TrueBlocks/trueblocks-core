@@ -1094,6 +1094,85 @@ bool CTransaction::forEveryTrace(TRACEVISITFUNC func, void* data) const {
     return true;
 }
 
+//--------------------------------------------------------------
+bool CTransaction::getStatements(const address_t& accountedFor, recon_t which) {
+    if (which & REC_TOP) {
+        blknum_t prevBlock = blockNumber == 0 ? 0 : blockNumber - 1;
+        blknum_t nextBlock = blockNumber + 1;
+        bigint_t prevBal = 0;
+        if (blockNumber > 0) {
+            prevBal = getBalanceAt(accountedFor, prevBlock);
+        }
+
+        CReconciliation statement(accountedFor, FAKE_ETH_ADDRESS, this);
+        if (!statement.reconcileFlows()) {
+            statement.reconcileFlows_traces();
+        }
+        statement.reconcileBalances(prevBlock, nextBlock, prevBal);
+        statement.reconcileLabel(prevBlock, nextBlock);
+        statement.assetSymbol = expContext().asEther ? "ETH" : "WEI";
+        statement.encoding = input.size() >= 10 ? input.substr(0, 10) : "";
+        statement.signature = Format("[{COMPRESSEDTX}]");
+        if (statement.reconciliationType == "regular") {
+            statement.reconciliationType = "by-tx";
+        }
+        if (statement.amountNet() != 0) {
+            statements.push_back(statement);
+        }
+    }
+
+    if (which & REC_TRACES) {
+        CTraceArray traceArray;
+        getTraces(traceArray, hash, this);
+        for (auto trace : traceArray) {
+            if (trace.action.from == accountedFor || trace.action.to == accountedFor) {
+                CReconciliation statement(accountedFor, FAKE_ETH_ADDRESS, this);
+                statement.reconcileFlows_traces();
+                statement.reconcileBalances(blockNumber, blockNumber + 1, 0);
+                statement.reconcileLabel(blockNumber, blockNumber + 1);
+                statement.assetSymbol = expContext().asEther ? "ETH" : "WEI";
+                statement.encoding = input.size() >= 10 ? input.substr(0, 10) : "";
+                statement.signature = Format("[{COMPRESSEDTRACE}]");
+                if (statement.reconciliationType == "regular") {
+                    statement.reconciliationType = "by-trace";
+                }
+                if (statement.amountNet() != 0) {
+                    statements.push_back(statement);
+                }
+            }
+        }
+    }
+
+    // if (which & REC_TOKENS) {
+    //     CTraceArray traceArray;
+    //     getTraces(traceArray, hash, this);
+    //     for (auto trace : traceArray) {
+    //         if (trace.action.from == accountedFor || trace.action.to == accountedFor) {
+    //             CReconciliation statement(accountedFor, FAKE_ETH_ADDRESS, &trans);
+    //             statement.reconcileFlows_traces();
+    //             statement.reconcileBalances(blockNumber, blockNumber + 1, 0);
+    //             statement.reconcileLabel(blockNumber, blockNumber + 1);
+    //             statement.assetSymbol = expContext().asEther ? "ETH" : "WEI";
+    //             statement.encoding = input.size() >= 10 ? input.substr(0, 10) : "";
+    //             statement.signature = Format("[{COMPRESSEDTX}]");
+    //             if (statement.reconciliationType == "regular") {
+    //                 statement.reconciliationType = "by-trace";
+    //             }
+    //             if (statement.amountNet() != 0) {
+    //                 statements.push_back(statement);
+    //             }
+    //         }
+    //     }
+    // }
+
+    for (size_t s = 0; s < statements.size(); s++) {
+        CReconciliation* st = &statements[s];
+        st->spotPrice = getPriceInUsd(st->assetAddr, st->priceSource, st->blockNumber);
+    }
+
+    return statements.size() > 0;
+}
+
 //-------------------------------------------------------------------------
 bool CTransaction::getTransfers(CTransferArray& transfers, const address_t& accountedFor) const {
     for (auto log : receipt.logs) {
@@ -1108,16 +1187,6 @@ bool CTransaction::getTransfers(CTransferArray& transfers, const address_t& acco
             CTransfer transfer;
 
             transfer.assetAddr = log.address;
-
-            transfer.sender = topic_2_Addr(log.topics[1]);
-            transfer.recipient = topic_2_Addr(log.topics[2]);
-            if (transfer.sender != accountedFor && transfer.recipient != accountedFor)
-                continue;
-
-            transfer.amount = str_2_Wei(log.data);
-            if (transfer.amount == 0) {
-                continue;
-            }
 
             transfer.assetSymbol = tokenName.symbol;
             if (transfer.assetSymbol.empty()) {
@@ -1135,6 +1204,16 @@ bool CTransaction::getTransfers(CTransferArray& transfers, const address_t& acco
                 }
             }
 
+            transfer.sender = topic_2_Addr(log.topics[1]);
+            transfer.recipient = topic_2_Addr(log.topics[2]);
+            if (transfer.sender != accountedFor && transfer.recipient != accountedFor)
+                continue;
+
+            transfer.amount = str_2_Wei(log.data);
+            if (transfer.amount == 0) {
+                continue;
+            }
+
             transfer.blockNumber = blockNumber;
             transfer.transactionIndex = transactionIndex;
             transfer.logIndex = log.logIndex;
@@ -1142,12 +1221,6 @@ bool CTransaction::getTransfers(CTransferArray& transfers, const address_t& acco
             transfer.date = ts_2_Date(transfer.timestamp);
             transfer.transactionHash = hash;
             transfer.encoding = input.substr(0, 10);
-
-            transfer.topic0 = log.topics.size() > 0 ? log.topics[0] : "";
-            transfer.topic1 = log.topics.size() > 1 ? log.topics[1] : "";
-            transfer.topic2 = log.topics.size() > 2 ? log.topics[2] : "";
-            transfer.topic3 = log.topics.size() > 3 ? log.topics[3] : "";
-            transfer.data = log.data;
 
             transfers.push_back(transfer);
         }

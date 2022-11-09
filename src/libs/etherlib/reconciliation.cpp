@@ -968,13 +968,14 @@ CReconciliation& CReconciliation::operator+=(const CReconciliation& r) {
 }
 
 //---------------------------------------------------------------------------
-CReconciliation::CReconciliation(const address_t& aF, const CTransaction* pT) {
+CReconciliation::CReconciliation(const address_t& aF, const address_t& asset, const CTransaction* pT) {
     initialize();
     blockNumber = pT->blockNumber;
     transactionIndex = pT->transactionIndex;
     timestamp = pT->timestamp;
     pTransaction = pT;
     accountedFor = aF;
+    assetAddr = asset;
 }
 // EXISTING_CODE
 }  // namespace qblocks

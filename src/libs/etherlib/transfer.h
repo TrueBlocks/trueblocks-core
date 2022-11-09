@@ -39,11 +39,6 @@ class CTransfer : public CBaseNode {
     biguint_t amount;
     double spotPrice;
     string_q priceSource;
-    string_q topic0;
-    string_q topic1;
-    string_q topic2;
-    string_q topic3;
-    string_q data;
     string_q encoding;
 
   public:
@@ -121,11 +116,6 @@ inline void CTransfer::initialize(void) {
     amount = 0;
     spotPrice = 1.0;
     priceSource = "";
-    topic0 = "";
-    topic1 = "";
-    topic2 = "";
-    topic3 = "";
-    data = "";
     encoding = "";
 
     // EXISTING_CODE
@@ -151,11 +141,6 @@ inline void CTransfer::duplicate(const CTransfer& tr) {
     amount = tr.amount;
     spotPrice = tr.spotPrice;
     priceSource = tr.priceSource;
-    topic0 = tr.topic0;
-    topic1 = tr.topic1;
-    topic2 = tr.topic2;
-    topic3 = tr.topic3;
-    data = tr.data;
     encoding = tr.encoding;
 
     // EXISTING_CODE
