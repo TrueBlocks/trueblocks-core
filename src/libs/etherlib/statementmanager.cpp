@@ -17,11 +17,6 @@ namespace qblocks {
 
 //--------------------------------------------------------------
 bool CStatementManager::getStatements(CTransaction& trans) {
-    prevBal = 0;
-    if (prevBlock > 0) {
-        prevBal = getBalanceAt(accountedFor, prevBlock);
-    }
-
     if (trans.readReconsFromCache(accountedFor)) {
         for (auto& statement : trans.statements) {
             string_q key = statementKey(statement.accountedFor, statement.assetAddr);
@@ -30,68 +25,37 @@ bool CStatementManager::getStatements(CTransaction& trans) {
         return !shouldQuit();
     }
 
-    if (which & REC_TOP) {
-        bool isTop = true;
-        if (getTransfers(trans, isTop)) {
-            for (auto transfer : transfers) {
-                if (assetFilter.size() == 0 || assetFilter[transfer.assetAddr]) {
-                    string tokenKey = statementKey(accountedFor, transfer.assetAddr);
-                    if (previousBalances[tokenKey] == CPreviousBalance()) {
-                        CReconciliation prevStatement(accountedFor, transfer.assetAddr, &trans);
-                        if (trans.blockNumber > 0) {
-                            prevStatement.blockNumber = prevBlock;
-                            prevStatement.endBal =
-                                prevBlock == 0 ? 0 : getTokenBalanceAt(transfer.assetAddr, accountedFor, prevBlock);
-                        }
-                        previousBalances[tokenKey] = prevStatement;
-                    }
-
-                    CReconciliation statement(accountedFor, transfer.assetAddr, &trans);
-                    statement.assetSymbol = transfer.assetSymbol;
-                    statement.decimals = transfer.decimals;
-                    if (!statement.reconcileFlows(isTop, transfer)) {
-                        statement.reconcileFlows_traces(isTop);
-                    }
-                    statement.reconcileBalances(isTop, prevBlock, nextBlock, previousBalances[tokenKey].balance);
-                    statement.reconcileLabel(isTop, prevBlock, nextBlock);
-                    if (statement.amountNet() != 0) {
-                        trans.statements.push_back(statement);
-                        previousBalances[tokenKey] = statement;
-                    }
-                }
-            }
-        }
+    prevBal = 0;
+    if (prevBlock > 0) {
+        prevBal = getBalanceAt(accountedFor, prevBlock);
     }
 
-    if (which & REC_TOKENS) {
-        bool isTop = false;
-        if (getTransfers(trans, isTop)) {
-            for (auto transfer : transfers) {
-                if (assetFilter.size() == 0 || assetFilter[transfer.assetAddr]) {
-                    string tokenKey = statementKey(accountedFor, transfer.assetAddr);
-                    if (previousBalances[tokenKey] == CPreviousBalance()) {
-                        CReconciliation prevStatement(accountedFor, transfer.assetAddr, &trans);
-                        if (trans.blockNumber > 0) {
-                            prevStatement.blockNumber = prevBlock;
-                            prevStatement.endBal =
-                                prevBlock == 0 ? 0 : getTokenBalanceAt(transfer.assetAddr, accountedFor, prevBlock);
-                        }
-                        previousBalances[tokenKey] = prevStatement;
-                    }
-
-                    CReconciliation statement(accountedFor, transfer.assetAddr, &trans);
-                    statement.assetSymbol = transfer.assetSymbol;
-                    statement.decimals = transfer.decimals;
-                    if (!statement.reconcileFlows(isTop, transfer)) {
-                        statement.reconcileFlows_traces(isTop);
-                    }
-                    statement.reconcileBalances(isTop, prevBlock, nextBlock, previousBalances[tokenKey].balance);
-                    statement.reconcileLabel(isTop, prevBlock, nextBlock);
-                    if (statement.amountNet() != 0) {
-                        trans.statements.push_back(statement);
-                        previousBalances[tokenKey] = statement;
-                    }
+    getTransfers(trans);
+    for (auto transfer : transfers) {
+        if (assetFilter.size() == 0 || assetFilter[transfer.assetAddr]) {
+            string tokenKey = statementKey(accountedFor, transfer.assetAddr);
+            if (previousBalances[tokenKey] == CPreviousBalance()) {
+                CReconciliation prevStatement(accountedFor, transfer.assetAddr, &trans);
+                if (trans.blockNumber > 0) {
+                    prevStatement.blockNumber = prevBlock;
+                    prevStatement.endBal =
+                        prevBlock == 0 ? 0 : getTokenBalanceAt(transfer.assetAddr, accountedFor, prevBlock);
                 }
+                previousBalances[tokenKey] = prevStatement;
+            }
+
+            bool isTop = transfer.type == TT_TOP;
+            CReconciliation statement(accountedFor, transfer.assetAddr, &trans);
+            statement.assetSymbol = transfer.assetSymbol;
+            statement.decimals = transfer.decimals;
+            if (!statement.reconcileFlows(isTop, transfer)) {
+                statement.reconcileFlows_traces(isTop);
+            }
+            statement.reconcileBalances(isTop, prevBlock, nextBlock, previousBalances[tokenKey].balance);
+            statement.reconcileLabel(isTop, prevBlock, nextBlock);
+            if (statement.amountNet() != 0) {
+                trans.statements.push_back(statement);
+                previousBalances[tokenKey] = statement;
             }
         }
     }
@@ -131,18 +95,74 @@ bool CStatementManager::getStatements(CTransaction& trans) {
 }
 
 //--------------------------------------------------------------
-bool CStatementManager::getTransfers(const CTransaction& trans, bool isTop) {
+bool CStatementManager::getTransfers(const CTransaction& trans) {
     transfers.clear();
-    if (isTop) {
-        CTransfer transfer;
-        transfer.assetAddr = FAKE_ETH_ADDRESS;
-        transfer.assetSymbol = expContext().asEther ? "ETH" : "WEI";
-        transfer.decimals = 18;
-        transfers.push_back(transfer);
-        return true;
-    } else {
-        return trans.getTransfers(transfers, accountedFor);
+
+    CTransfer transfer;
+    transfer.assetAddr = "";  // so it sorts right
+    transfer.assetSymbol = expContext().asEther ? "ETH" : "WEI";
+    transfer.decimals = 18;
+    transfer.blockNumber = trans.blockNumber;
+    transfer.transactionIndex = trans.transactionIndex;
+    transfer.logIndex = 0;
+    transfer.type = TT_TOP;
+    transfers.push_back(transfer);
+
+    for (auto log : trans.receipt.logs) {
+        CAccountName tokenName;
+        bool isToken = findToken(log.address, tokenName);
+        if (tokenName.address.empty()) {
+            tokenName.address = log.address;
+            tokenName.petname = addr_2_Petname(tokenName.address, '-');
+        }
+
+        if (isToken || (log.topics.size() > 2 && isTokenTransfer(log.topics[0]))) {
+            CTransfer transfer;
+
+            transfer.assetAddr = log.address;
+
+            transfer.assetSymbol = tokenName.symbol;
+            if (transfer.assetSymbol.empty()) {
+                transfer.assetSymbol = getTokenSymbol(transfer.assetAddr, trans.blockNumber);
+                if (transfer.assetSymbol.empty()) {
+                    transfer.assetSymbol = transfer.assetAddr.substr(0, 4);
+                }
+            }
+
+            transfer.decimals = tokenName.decimals;
+            if (transfer.decimals == 0) {
+                transfer.decimals = getTokenDecimals(transfer.assetAddr, trans.blockNumber);
+                if (transfer.decimals == 0) {
+                    transfer.decimals = 18;
+                }
+            }
+
+            transfer.sender = topic_2_Addr(log.topics[1]);
+            transfer.recipient = topic_2_Addr(log.topics[2]);
+            if (transfer.sender != accountedFor && transfer.recipient != accountedFor)
+                continue;
+
+            transfer.amount = str_2_Wei(log.data);
+            if (transfer.amount == 0) {
+                continue;
+            }
+
+            transfer.blockNumber = trans.blockNumber;
+            transfer.transactionIndex = trans.transactionIndex;
+            transfer.logIndex = log.logIndex;
+            transfer.type = TT_LOG;
+            transfer.timestamp = str_2_Ts(trans.Format("[{TIMESTAMP}]"));
+            transfer.date = ts_2_Date(transfer.timestamp);
+            transfer.transactionHash = trans.hash;
+            transfer.encoding = trans.input.substr(0, 10);
+
+            transfers.push_back(transfer);
+        }
     }
+
+    sort(transfers.begin(), transfers.end());
+    transfers[0].assetAddr = FAKE_ETH_ADDRESS;  // so it sorts right
+    return transfers.size() > 0;
 }
 
 }  // namespace qblocks

@@ -2,7 +2,7 @@
 title: "Chain state"
 description: ""
 lead: ""
-date: 2022-11-08T21:25:20
+date: 2022-11-09T17:06:14
 lastmod:
   - :git
   - lastmod
@@ -72,6 +72,7 @@ State data is made of the following data fields:
 | transactionHash  | the hash of the transaction that triggered this reconciliation                                 | hash      |
 | timestamp        | the Unix timestamp of the object                                                               | timestamp |
 | date             | a calculated field -- the date of this transaction                                             | datetime  |
+| type             | one of [ top | log | trace ]                                                                   | string    |
 | sender           | the initiator of the transfer (the sender)                                                     | address   |
 | recipient        | the receiver of the transfer (the recipient)                                                   | address   |
 | assetAddr        | 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee for ETH reconcilations, the token address otherwise | address   |

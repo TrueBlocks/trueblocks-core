@@ -54,7 +54,7 @@ class CStatementManager {
     recon_t which{REC_NONE};
     bool forExport{false};
     CAddressBoolMap assetFilter;
-    bool getTransfers(const CTransaction& trans, bool isTop);
+    bool getTransfers(const CTransaction& trans);
     bool getStatements(CTransaction& trans);
 
     CStatementManager(const address_t& aF) {

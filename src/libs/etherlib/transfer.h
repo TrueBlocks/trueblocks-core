@@ -20,6 +20,10 @@
 namespace qblocks {
 
 // EXISTING_CODE
+const string_q TT_UNKNOWN = "unknown";
+const string_q TT_TOP = "top";
+const string_q TT_LOG = "log";
+const string_q TT_TRACE = "trace";
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -31,6 +35,7 @@ class CTransfer : public CBaseNode {
     hash_t transactionHash;
     timestamp_t timestamp;
     time_q date;
+    string_q type;
     address_t sender;
     address_t recipient;
     address_t assetAddr;
@@ -108,6 +113,7 @@ inline void CTransfer::initialize(void) {
     transactionHash = "";
     timestamp = 0;
     date = earliestDate;
+    type = "unknown";
     sender = "";
     recipient = "";
     assetAddr = "";
@@ -133,6 +139,7 @@ inline void CTransfer::duplicate(const CTransfer& tr) {
     transactionHash = tr.transactionHash;
     timestamp = tr.timestamp;
     date = tr.date;
+    type = tr.type;
     sender = tr.sender;
     recipient = tr.recipient;
     assetAddr = tr.assetAddr;

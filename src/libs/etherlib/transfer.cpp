@@ -132,6 +132,9 @@ string_q CTransfer::getValueByName(const string_q& fieldName) const {
             if (fieldName % "timestamp") {
                 return ts_2_Str(timestamp);
             }
+            if (fieldName % "type") {
+                return type;
+            }
             break;
         default:
             break;
@@ -230,6 +233,10 @@ bool CTransfer::setValueByName(const string_q& fieldNameIn, const string_q& fiel
                 timestamp = str_2_Ts(fieldValue);
                 return true;
             }
+            if (fieldName % "type") {
+                type = fieldValue;
+                return true;
+            }
             break;
         default:
             break;
@@ -262,6 +269,7 @@ bool CTransfer::Serialize(CArchive& archive) {
     archive >> transactionHash;
     archive >> timestamp;
     archive >> date;
+    archive >> type;
     archive >> sender;
     archive >> recipient;
     archive >> assetAddr;
@@ -290,6 +298,7 @@ bool CTransfer::SerializeC(CArchive& archive) const {
     archive << transactionHash;
     archive << timestamp;
     archive << date;
+    archive << type;
     archive << sender;
     archive << recipient;
     archive << assetAddr;
@@ -354,6 +363,7 @@ void CTransfer::registerClass(void) {
     ADD_FIELD(CTransfer, "transactionHash", T_HASH | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTransfer, "timestamp", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CTransfer, "date", T_DATE, ++fieldNum);
+    ADD_FIELD(CTransfer, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTransfer, "sender", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTransfer, "recipient", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTransfer, "assetAddr", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
@@ -440,6 +450,7 @@ const char* STR_DISPLAY_TRANSFER =
     "[{TRANSACTIONHASH}]\t"
     "[{TIMESTAMP}]\t"
     "[{DATE}]\t"
+    "[{TYPE}]\t"
     "[{SENDER}]\t"
     "[{RECIPIENT}]\t"
     "[{ASSETADDR}]\t"

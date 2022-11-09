@@ -772,6 +772,9 @@ components:
         date:
           type: datetime
           description: "a calculated field -- the date of this transaction"
+        type:
+          type: string
+          description: "one of [ top | log | trace ]"
         sender:
           type: string
           format: address
