@@ -121,6 +121,11 @@ bool COptions::parseArguments(string_q& command) {
         HIDE_FIELD(CTransaction, "traces");
     }
 
+    if (!account_for.empty()) {
+        if (!loadNames())
+            return usage("Could not load names database.");
+    }
+
     // Display formatting
     if (uniq) {
         configureDisplay("getTrans", "CAppearance", STR_DISPLAY_APPEARANCE);
