@@ -51,7 +51,7 @@ bool CStatementManager::getStatements(CTransaction& trans) {
             if (!statement.reconcileFlows(isTop, transfer)) {
                 statement.reconcileFlows_traces(isTop);
             }
-            statement.reconcileBalances(isTop, prevBlock, nextBlock, previousBalances[tokenKey].balance);
+            statement.reconcileBalances(isTop, transfer, prevBlock, nextBlock, previousBalances[tokenKey].balance);
             statement.reconcileLabel(prevBlock, nextBlock);
             if (statement.amountNet() != 0) {
                 trans.statements.push_back(statement);
@@ -67,7 +67,8 @@ bool CStatementManager::getStatements(CTransaction& trans) {
         for (auto trace : traceArray) {
             CReconciliation statement(accountedFor, FAKE_ETH_ADDRESS, &trans);
             statement.reconcileFlows_traces(isTop);
-            statement.reconcileBalances(isTop, prevBlock, nextBlock, prevBal);
+            CTransfer transfer;
+            statement.reconcileBalances(isTop, transfer, prevBlock, nextBlock, prevBal);
             statement.reconcileLabel(prevBlock, nextBlock);
             statement.assetSymbol = expContext().asEther ? "ETH" : "WEI";
             statement.encoding = trace.action.input.size() >= 10 ? trace.action.input.substr(0, 10) : "";
@@ -103,7 +104,7 @@ bool CStatementManager::getTransfers(const CTransaction& trans) {
     transfer.type = TT_TOP;
     transfers.push_back(transfer);
 
-    for (auto log : trans.receipt.logs) {
+    for (auto& log : trans.receipt.logs) {
         CAccountName tokenName;
         bool isToken = findToken(log.address, tokenName);
         if (tokenName.address.empty()) {
@@ -113,6 +114,7 @@ bool CStatementManager::getTransfers(const CTransaction& trans) {
 
         if (isToken || (log.topics.size() > 2 && isTokenTransfer(log.topics[0]))) {
             CTransfer transfer;
+            transfer.log = (CLogEntry*)&log;  // TODO: for debugging only, can be removed
 
             transfer.assetAddr = log.address;
 

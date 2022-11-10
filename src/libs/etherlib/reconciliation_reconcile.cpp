@@ -64,6 +64,7 @@ bool CReconciliation::reconcileFlows(bool isTop, const CTransfer& transfer) {
     if (!isTop) {
         sender = transfer.sender;
         recipient = transfer.recipient;
+        LOG_TRIAL_BALANCE("flows-token");
         return true;
     }
 
@@ -90,7 +91,7 @@ bool CReconciliation::reconcileFlows(bool isTop, const CTransfer& transfer) {
         }
     }
 
-    LOG_TRIAL_BALANCE("flows");
+    LOG_TRIAL_BALANCE("flows-top");
     if (trialBalance()) {
         return true;
     }
@@ -196,7 +197,8 @@ bool CReconciliation::reconcileFlows_traces(bool isTop) {
 }
 
 //-----------------------------------------------------------------------
-bool CReconciliation::reconcileBalances(bool isTop, blknum_t pBn, blknum_t nBn, bigint_t pBal) {
+bool CReconciliation::reconcileBalances(bool isTop, const CTransfer& transfer, blknum_t pBn, blknum_t nBn,
+                                        bigint_t pBal) {
     if (!isTop) {
         reconciliationType = "token";
         prevAppBlk = pBn;
@@ -205,10 +207,21 @@ bool CReconciliation::reconcileBalances(bool isTop, blknum_t pBn, blknum_t nBn, 
         endBal = getTokenBalanceAt(assetAddr, accountedFor, blockNumber);
         if (begBal > endBal) {
             amountOut = (begBal - endBal);
+            if (isTestMode() && amountOut != transfer.amount) {
+                cerr << string_q(120, '-') << endl;
+                if (transfer.log) {
+                    cerr << *(transfer.log) << endl;
+                }
+                cerr << string_q(120, '-') << endl;
+                cerr << "Imbalance amountOut: [" << amountOut << "] [" << transfer.amount << "]" << endl;
+            }
         } else {
             amountIn = (endBal - begBal);
+            // if (isTestMode() && amountIn != transfer.amount) {
+            //     cerr << "Imbalance amountIn: [" << amountIn << "] [" << transfer.amount << "]" << endl;
+            // }
         }
-        LOG_TRIAL_BALANCE("balances");
+        LOG_TRIAL_BALANCE("balances-token");
         return trialBalance();
     }
 
@@ -243,7 +256,7 @@ bool CReconciliation::reconcileBalances(bool isTop, blknum_t pBn, blknum_t nBn, 
         endBal = endBalCalc();
     }
 
-    LOG_TRIAL_BALANCE("balances");
+    LOG_TRIAL_BALANCE("balances-top");
     return trialBalance();
 }
 
