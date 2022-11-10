@@ -57,62 +57,69 @@ namespace qblocks {
     }
 
 //-----------------------------------------------------------------------
-bool CReconciliation::reconcileFlows(bool isTop, const CTransfer& transfer) {
-    begBal = 0;
-    if (blockNumber > 0) {
-        begBal = getBalanceAt(accountedFor, blockNumber - 1);
-    }
-    endBal = getBalanceAt(accountedFor, blockNumber);
+bool CReconciliation::reconcileFlows(bool isEthTx, const CTransfer& transfer) {
+    if (isEthTx) {
+        sender = pTransaction->from;
+        recipient = pTransaction->to;
 
-    if (!isTop) {
+        // Do not collapse. Both may be true.
+        if (pTransaction->from == accountedFor) {
+            amountOut = pTransaction->isError ? 0 : pTransaction->value;
+            gasOut = str_2_BigInt(pTransaction->getValueByName("gasCost"));
+        }
+
+        // Do not collapse. Both may be true.
+        if (pTransaction->to == accountedFor) {
+            if (pTransaction->from == "0xPrefund") {
+                prefundIn = pTransaction->value;
+
+            } else if (pTransaction->from == "0xBlockReward") {
+                minerBaseRewardIn = pTransaction->value;
+                minerNephewRewardIn = pTransaction->extraValue1;
+                minerTxFeeIn = pTransaction->extraValue2;
+
+            } else if (pTransaction->from == "0xUncleReward") {
+                minerUncleRewardIn = pTransaction->value;
+
+            } else {
+                amountIn = pTransaction->isError ? 0 : pTransaction->value;
+            }
+        }
+    } else {
         sender = transfer.sender;
         recipient = transfer.recipient;
-        if (transfer.sender == accountedFor) {
+
+        // Do not collapse. Both may be true.
+        if (sender == accountedFor) {
             amountOut = transfer.amount;
-        } else if (transfer.recipient == accountedFor) {
+        }
+
+        // Do not collapse. Both may be true.
+        if (recipient == accountedFor) {
             amountIn = transfer.amount;
-        } else {
-            cerr << "Something is wrong. This should never happen." << endl;
+        }
+
+        if (sender != accountedFor && recipient != accountedFor) {
+            LOG_ERR("Invalid state in reconcileFlows. Quitting...");
             exit(0);
         }
-        LOG_TRIAL_BALANCE("flows-token");
-        return true;
     }
 
-    if (pTransaction->from == accountedFor) {
-        sender = pTransaction->from;
-        recipient = pTransaction->to;
-        amountOut = pTransaction->isError ? 0 : pTransaction->value;
-        gasOut = str_2_BigInt(pTransaction->getValueByName("gasCost"));
-    }
+    // For trialBalance only
+    begBal = blockNumber > 0 ? getBalanceAt(accountedFor, blockNumber - 1) : 0;
+    endBal = getBalanceAt(accountedFor, blockNumber);
 
-    if (pTransaction->to == accountedFor) {
-        sender = pTransaction->from;
-        recipient = pTransaction->to;
-        if (pTransaction->from == "0xPrefund") {
-            prefundIn = pTransaction->value;
-        } else if (pTransaction->from == "0xBlockReward") {
-            minerBaseRewardIn = pTransaction->value;
-            minerNephewRewardIn = pTransaction->extraValue1;
-            minerTxFeeIn = pTransaction->extraValue2;
-        } else if (pTransaction->from == "0xUncleReward") {
-            minerUncleRewardIn = pTransaction->value;
-        } else {
-            amountIn = pTransaction->isError ? 0 : pTransaction->value;
-        }
-    }
-
-    LOG_TRIAL_BALANCE("flows-top");
+    LOG_TRIAL_BALANCE(isEthTx ? "flows-top" : "flows-token");
     if (trialBalance()) {
         return true;
     }
 
-    return reconcileFlows_traces(isTop);
+    return reconcileFlows_traces(isEthTx);
 }
 
 //-----------------------------------------------------------------------
-bool CReconciliation::reconcileFlows_traces(bool isTop) {
-    if (!isTop) {
+bool CReconciliation::reconcileFlows_traces(bool isEthTx) {
+    if (!isEthTx) {
         return true;
     }
 
@@ -208,77 +215,45 @@ bool CReconciliation::reconcileFlows_traces(bool isTop) {
 }
 
 //-----------------------------------------------------------------------
-bool CReconciliation::reconcileBalances(bool isTop, const CTransfer& transfer, blknum_t pBn, blknum_t nBn,
-                                        bigint_t pBal) {
-    if (!isTop) {
-        reconciliationType = "token";
-        prevAppBlk = pBn;
-        prevBal = pBal;
-        begBal = pBal;
-        endBal = getTokenBalanceAt(assetAddr, accountedFor, blockNumber);
-
-        if (isTestMode()) {
-            cerr << string_q(120, '-') << endl;
-            cerr << "id: " << blockNumber << "." << transactionIndex << "." << logIndex << endl;
-            cerr << "accountedFor: " << accountedFor << endl;
-            if (begBal > endBal) {
-                cerr << "AMOUNT-OUT" << endl;
-                if (amountOut != transfer.amount) {
-                    cerr << "\tDOES NOT BALANCE (amountOut): [diff:" << (amountOut - transfer.amount)
-                         << "] [out:" << amountOut << "] [amt:" << transfer.amount << "]" << endl;
-                } else {
-                    cerr << "\ttransfer balances --> [diff:" << (amountOut - transfer.amount) << "] [out:" << amountOut
-                         << "] [amt:" << transfer.amount << "]" << endl;
-                }
-            } else {
-                cerr << "AMOUNT-IN" << endl;
-                if (amountIn != transfer.amount) {
-                    cerr << "\tDOES NOT BALANCE (amountIn): [diff:" << (amountIn - transfer.amount)
-                         << "] [in:" << amountIn << "] [amt:" << transfer.amount << "]" << endl;
-                } else {
-                    cerr << "\ttransfer balances --> [diff:" << (amountIn - transfer.amount) << "] [in:" << amountIn
-                         << "] [amt:" << transfer.amount << "]" << endl;
-                }
-            }
-            cerr << string_q(120, '-') << endl;
-        }
-
-        LOG_TRIAL_BALANCE("balances-token");
-        return trialBalance();
-    }
-
+bool CReconciliation::reconcileBalances(bool isEthTx, blknum_t pBn, blknum_t nBn, bigint_t pBal) {
     prevBal = pBal;
     prevAppBlk = pBn;
-
     bool prevDifferent = prevAppBlk != blockNumber;
-    bool nextDifferent = blockNumber != nBn || nBn == NOPOS;
+    bool nextDifferent = blockNumber != nBn;
 
     bigint_t balEOLB = getBalanceAt(accountedFor, blockNumber == 0 ? 0 : blockNumber - 1);
     bigint_t balEOB = getBalanceAt(accountedFor, blockNumber);
 
-    if (pTransaction->blockNumber == 0) {
-    } else if (prevDifferent && nextDifferent) {
-        // The trace reconcile may have changed values
-        begBal = balEOLB;
-        endBal = balEOB;
+    if (isEthTx) {
+        if (pTransaction->blockNumber == 0) {
+        } else if (prevDifferent && nextDifferent) {
+            // The trace reconcile may have changed values
+            begBal = balEOLB;
+            endBal = balEOB;
 
-    } else if (prevDifferent) {
-        // This tx has a tx after it in the same block but none before it
-        begBal = balEOLB;
-        endBal = endBalCalc();
+        } else if (prevDifferent) {
+            // This tx has a tx after it in the same block but none before it
+            begBal = balEOLB;
+            endBal = endBalCalc();
 
-    } else if (nextDifferent) {
-        // This tx has a tx before it in the block but none after it
-        begBal = pBal;
-        endBal = balEOB;
+        } else if (nextDifferent) {
+            // This tx has a tx before it in the block but none after it
+            begBal = pBal;
+            endBal = balEOB;
+
+        } else {
+            // this tx has both a tx before it and one after it in the same block
+            begBal = pBal;
+            endBal = endBalCalc();
+        }
 
     } else {
-        // this tx has both a tx before it and one after it in the same block
+        reconciliationType = "token";
         begBal = pBal;
-        endBal = endBalCalc();
+        endBal = getTokenBalanceAt(assetAddr, accountedFor, blockNumber);
     }
 
-    LOG_TRIAL_BALANCE("balances-top");
+    LOG_TRIAL_BALANCE(isEthTx ? "balances-top" : "balances-token");
     return trialBalance();
 }
 

@@ -72,9 +72,9 @@ class CReconciliation : public CBaseNode {
     CReconciliation(const address_t& aF, const address_t& asset, const CTransaction* pT);
     const CTransaction* pTransaction = NULL;
 
-    bool reconcileFlows(bool isTop, const CTransfer& transfer);
-    bool reconcileFlows_traces(bool isTop);
-    bool reconcileBalances(bool isTop, const CTransfer& transfer, blknum_t pBn, blknum_t nBn, bigint_t eBal);
+    bool reconcileFlows(bool isEthTx, const CTransfer& transfer);
+    bool reconcileFlows_traces(bool isEthTx);
+    bool reconcileBalances(bool isEthTx, blknum_t pBn, blknum_t nBn, bigint_t eBal);
     bool reconcileLabel(blknum_t pBn, blknum_t nBn);
 
     bigint_t begBalDiff(void) const;

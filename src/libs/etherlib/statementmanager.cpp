@@ -31,7 +31,9 @@ bool CStatementManager::getStatements(CTransaction& trans) {
     }
 
     getTransfers(trans);
-    for (auto transfer : transfers) {
+
+    for (size_t i = 0; i < transfers.size(); i++) {
+        CTransfer& transfer = transfers[i];
         if (assetFilter.size() == 0 || assetFilter[transfer.assetAddr]) {
             string tokenKey = statementKey(accountedFor, transfer.assetAddr);
             if (previousBalances[tokenKey] == CPreviousBalance()) {
@@ -44,15 +46,15 @@ bool CStatementManager::getStatements(CTransaction& trans) {
                 previousBalances[tokenKey] = prevStatement;
             }
 
-            bool isTop = transfer.type == TT_TOP;
+            bool isEthTx = transfer.type == TT_TOP;
             CReconciliation statement(accountedFor, transfer.assetAddr, &trans);
             statement.logIndex = transfer.logIndex;
             statement.assetSymbol = transfer.assetSymbol;
             statement.decimals = transfer.decimals;
-            if (!statement.reconcileFlows(isTop, transfer)) {
-                statement.reconcileFlows_traces(isTop);
+            if (!statement.reconcileFlows(isEthTx, transfer)) {
+                statement.reconcileFlows_traces(isEthTx);
             }
-            statement.reconcileBalances(isTop, transfer, prevBlock, nextBlock, previousBalances[tokenKey].balance);
+            statement.reconcileBalances(isEthTx, prevBlock, nextBlock, previousBalances[tokenKey].balance);
             statement.reconcileLabel(prevBlock, nextBlock);
             if (statement.amountNet() != 0) {
                 trans.statements.push_back(statement);
@@ -62,14 +64,13 @@ bool CStatementManager::getStatements(CTransaction& trans) {
     }
 
     if (which & REC_TRACES) {
-        bool isTop = true;
+        bool isEthTx = true;
         CTraceArray traceArray;
         getTraces(traceArray, trans.hash, &trans);
         for (auto trace : traceArray) {
-            CTransfer transfer;
             CReconciliation statement(accountedFor, FAKE_ETH_ADDRESS, &trans);
-            statement.reconcileFlows_traces(isTop);
-            statement.reconcileBalances(isTop, transfer, prevBlock, nextBlock, prevBal);
+            statement.reconcileFlows_traces(isEthTx);
+            statement.reconcileBalances(isEthTx, prevBlock, nextBlock, prevBal);
             statement.reconcileLabel(prevBlock, nextBlock);
             statement.assetSymbol = expContext().asEther ? "ETH" : "WEI";
             statement.encoding = trace.action.input.size() >= 10 ? trace.action.input.substr(0, 10) : "";

@@ -55,12 +55,6 @@ TIME ~ CLOCK - <INFO>  :    endBalDiff:          148352293171913257974
 TIME ~ CLOCK - <INFO>  :    endBalCalc:          148529923425913257974
 TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-------------------------------------------------------------------------------------------------------------------------
-id: 12655579.76.122
-accountedFor: 0x37da92c11a2d5c05077ce41ac2243aa38032d4af
-AMOUNT-IN
-	transfer balances --> [diff:0] [in:148323969741913257974] [amt:148323969741913257974]
-------------------------------------------------------------------------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: token
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0xea0be20914783d6b538539795069ca333f820bc5
@@ -216,12 +210,6 @@ TIME ~ CLOCK - <INFO>  :    endBalDiff:          -2750000000000000000
 TIME ~ CLOCK - <INFO>  :    endBalCalc:          -2750000000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-------------------------------------------------------------------------------------------------------------------------
-id: 12655579.76.120
-accountedFor: 0x7a250d5630b4cf539739df2c5dacb4c659f2488d
-AMOUNT-IN
-	DOES NOT BALANCE (amountIn): [diff:-2750000000000000000] [in:0] [amt:2750000000000000000]
-------------------------------------------------------------------------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: token
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
@@ -488,12 +476,6 @@ TIME ~ CLOCK - <INFO>  :    endBalDiff:          8000000000000000000000
 TIME ~ CLOCK - <INFO>  :    endBalCalc:          8000000000000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-------------------------------------------------------------------------------------------------------------------------
-id: 12655579.76.117
-accountedFor: 0xea0be20914783d6b538539795069ca333f820bc5
-AMOUNT-IN
-	transfer balances --> [diff:0] [in:8000000000000000000000] [amt:8000000000000000000000]
-------------------------------------------------------------------------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: token
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0xfa247066958637af6b4cc04bccecad2b6b107200
@@ -525,12 +507,6 @@ TIME ~ CLOCK - <INFO>  :    endBalDiff:          2750000000000000000
 TIME ~ CLOCK - <INFO>  :    endBalCalc:          2750000000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-------------------------------------------------------------------------------------------------------------------------
-id: 12655579.76.120
-accountedFor: 0xea0be20914783d6b538539795069ca333f820bc5
-AMOUNT-IN
-	transfer balances --> [diff:0] [in:2750000000000000000] [amt:2750000000000000000]
-------------------------------------------------------------------------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: token
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
@@ -808,12 +784,6 @@ TIME ~ CLOCK - <INFO>  :    endBalDiff:          -7997250000000000000000
 TIME ~ CLOCK - <INFO>  :    endBalCalc:          -7997250000000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-------------------------------------------------------------------------------------------------------------------------
-id: 12655579.76.117
-accountedFor: 0xfa247066958637af6b4cc04bccecad2b6b107200
-AMOUNT-OUT
-	transfer balances --> [diff:0] [out:8000000000000000000000] [amt:8000000000000000000000]
-------------------------------------------------------------------------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: token
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0xfa247066958637af6b4cc04bccecad2b6b107200
