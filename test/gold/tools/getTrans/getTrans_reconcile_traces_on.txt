@@ -6,6 +6,8 @@ TEST[DATE|TIME] Format:  json
 { "data": [
 TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
@@ -19,6 +21,8 @@ TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
@@ -30,17 +34,24 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           -16792272000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              463527931379861210
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x2c6264619d2f598a003d1c857e46edb95b22c75c
+TIME ~ CLOCK - <INFO>  :    assetSymbol          1LP-1INCH-DAI
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
 TIME ~ CLOCK - <INFO>  :    logIndex:            210
 TIME ~ CLOCK - <INFO>  :    begBal:              480320203379861210
+TIME ~ CLOCK - <INFO>  :    amountIn:            4054835016831281379389
+TIME ~ CLOCK - <INFO>  :    totalIn:             4054835016831281379389
+TIME ~ CLOCK - <INFO>  :    amountNet:           4054835016831281379389
 TIME ~ CLOCK - <INFO>  :    endBal:              463527931379861210
 TIME ~ CLOCK - <INFO>  :    begBalDiff:          480320203379861210
-TIME ~ CLOCK - <INFO>  :    endBalDiff:          16792272000000000
-TIME ~ CLOCK - <INFO>  :    endBalCalc:          480320203379861210
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          4054851809103281379389
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          4055315337034661240599
 TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
@@ -51,6 +62,8 @@ AMOUNT-IN
 ------------------------------------------------------------------------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x2c6264619d2f598a003d1c857e46edb95b22c75c
+TIME ~ CLOCK - <INFO>  :    assetSymbol          1LP-1INCH-DAI
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
@@ -61,17 +74,24 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           4054835016831281379389
 TIME ~ CLOCK - <INFO>  :    endBal:              4054835016831281379389
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x94bc2a1c732bcad7343b25af48385fe76e08734f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          farm-1LP-1INCH-DAI
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
 TIME ~ CLOCK - <INFO>  :    logIndex:            212
 TIME ~ CLOCK - <INFO>  :    begBal:              480320203379861210
+TIME ~ CLOCK - <INFO>  :    amountOut:           4054835016831281379389
+TIME ~ CLOCK - <INFO>  :    totalOut:            4054835016831281379389
+TIME ~ CLOCK - <INFO>  :    amountNet:           -4054835016831281379389
 TIME ~ CLOCK - <INFO>  :    endBal:              463527931379861210
 TIME ~ CLOCK - <INFO>  :    begBalDiff:          480320203379861210
-TIME ~ CLOCK - <INFO>  :    endBalDiff:          16792272000000000
-TIME ~ CLOCK - <INFO>  :    endBalCalc:          480320203379861210
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          -4054818224559281379389
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          -4054354696627901518179
 TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
@@ -82,6 +102,8 @@ AMOUNT-OUT
 ------------------------------------------------------------------------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x94bc2a1c732bcad7343b25af48385fe76e08734f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          farm-1LP-1INCH-DAI
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
@@ -92,17 +114,24 @@ TIME ~ CLOCK - <INFO>  :    totalOut:            4054835016831281379389
 TIME ~ CLOCK - <INFO>  :    amountNet:           -4054835016831281379389
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x111111111117dc0aa78b770fa6a738034120c302
+TIME ~ CLOCK - <INFO>  :    assetSymbol          1INCH
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
 TIME ~ CLOCK - <INFO>  :    logIndex:            213
 TIME ~ CLOCK - <INFO>  :    begBal:              480320203379861210
+TIME ~ CLOCK - <INFO>  :    amountIn:            59550453791219126172
+TIME ~ CLOCK - <INFO>  :    totalIn:             59550453791219126172
+TIME ~ CLOCK - <INFO>  :    amountNet:           59550453791219126172
 TIME ~ CLOCK - <INFO>  :    endBal:              463527931379861210
 TIME ~ CLOCK - <INFO>  :    begBalDiff:          480320203379861210
-TIME ~ CLOCK - <INFO>  :    endBalDiff:          16792272000000000
-TIME ~ CLOCK - <INFO>  :    endBalCalc:          480320203379861210
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          59567246063219126172
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          60030773994598987382
 TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
@@ -113,6 +142,8 @@ AMOUNT-IN
 ------------------------------------------------------------------------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x111111111117dc0aa78b770fa6a738034120c302
+TIME ~ CLOCK - <INFO>  :    assetSymbol          1INCH
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
@@ -124,8 +155,11 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           59550453791219126172
 TIME ~ CLOCK - <INFO>  :    endBal:              327322386993506057718
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : -------------traces-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
@@ -134,6 +168,7 @@ TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
@@ -144,8 +179,11 @@ TIME ~ CLOCK - <INFO>  :    endBalDiff:          16792272000000000
 TIME ~ CLOCK - <INFO>  :    endBalCalc:          480320203379861210
 TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : -------------traces-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
@@ -154,6 +192,7 @@ TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
@@ -164,8 +203,11 @@ TIME ~ CLOCK - <INFO>  :    endBalDiff:          16792272000000000
 TIME ~ CLOCK - <INFO>  :    endBalCalc:          480320203379861210
 TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : -------------traces-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
@@ -174,6 +216,7 @@ TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
@@ -184,8 +227,11 @@ TIME ~ CLOCK - <INFO>  :    endBalDiff:          16792272000000000
 TIME ~ CLOCK - <INFO>  :    endBalCalc:          480320203379861210
 TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : -------------traces-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
@@ -194,6 +240,7 @@ TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
@@ -204,8 +251,11 @@ TIME ~ CLOCK - <INFO>  :    endBalDiff:          16792272000000000
 TIME ~ CLOCK - <INFO>  :    endBalCalc:          480320203379861210
 TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : -------------traces-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
@@ -214,6 +264,7 @@ TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
@@ -224,8 +275,11 @@ TIME ~ CLOCK - <INFO>  :    endBalDiff:          16792272000000000
 TIME ~ CLOCK - <INFO>  :    endBalCalc:          480320203379861210
 TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : -------------traces-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
@@ -234,6 +288,7 @@ TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
@@ -244,8 +299,11 @@ TIME ~ CLOCK - <INFO>  :    endBalDiff:          16792272000000000
 TIME ~ CLOCK - <INFO>  :    endBalCalc:          480320203379861210
 TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : -------------traces-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
@@ -254,6 +312,7 @@ TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
@@ -264,8 +323,11 @@ TIME ~ CLOCK - <INFO>  :    endBalDiff:          16792272000000000
 TIME ~ CLOCK - <INFO>  :    endBalCalc:          480320203379861210
 TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : -------------traces-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
@@ -274,6 +336,7 @@ TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
@@ -284,8 +347,11 @@ TIME ~ CLOCK - <INFO>  :    endBalDiff:          16792272000000000
 TIME ~ CLOCK - <INFO>  :    endBalCalc:          480320203379861210
 TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : -------------traces-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
@@ -294,6 +360,7 @@ TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
@@ -304,8 +371,11 @@ TIME ~ CLOCK - <INFO>  :    endBalDiff:          16792272000000000
 TIME ~ CLOCK - <INFO>  :    endBalCalc:          480320203379861210
 TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : -------------traces-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
@@ -314,6 +384,7 @@ TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
@@ -324,8 +395,11 @@ TIME ~ CLOCK - <INFO>  :    endBalDiff:          16792272000000000
 TIME ~ CLOCK - <INFO>  :    endBalCalc:          480320203379861210
 TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : -------------traces-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
@@ -334,6 +408,7 @@ TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
@@ -344,8 +419,11 @@ TIME ~ CLOCK - <INFO>  :    endBalDiff:          16792272000000000
 TIME ~ CLOCK - <INFO>  :    endBalCalc:          480320203379861210
 TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : -------------traces-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
@@ -354,6 +432,7 @@ TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
@@ -364,6 +443,8 @@ TIME ~ CLOCK - <INFO>  :    endBalDiff:          16792272000000000
 TIME ~ CLOCK - <INFO>  :    endBalCalc:          480320203379861210
 TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : Calling 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 11532210...: 
 TIME ~ CLOCK - <INFO>  : call to 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 11532210 at four-byte 0xe6a43905 returned 0x000000000000000000000000a478c2975ab1ea89e8196811f51a7b7ade33eb11
 TIME ~ CLOCK - <INFO>  : Calling 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11 at block 11532210...: 

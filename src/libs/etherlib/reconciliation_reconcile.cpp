@@ -26,6 +26,8 @@ namespace qblocks {
     if (isTestMode()) {                                                                                                \
         LOG_INFO("-------------", msg, "-----------------------------");                                               \
         LOG_INFO("Trial balance: ", reconciliationType);                                                               \
+        LOG_ONE("assetAddr:           ", assetAddr, "");                                                               \
+        LOG_ONE("assetSymbol          ", assetSymbol, "");                                                             \
         LOG_ONE("hash:                ", transactionHash, "");                                                         \
         LOG_ONE("blockNumber:         ", blockNumber, NOPOS);                                                          \
         LOG_ONE("transactionIndex:    ", transactionIndex, NOPOS);                                                     \
@@ -65,14 +67,14 @@ bool CReconciliation::reconcileFlows(bool isTop, const CTransfer& transfer) {
     if (!isTop) {
         sender = transfer.sender;
         recipient = transfer.recipient;
-        // if (transfer.sender == accountedFor) {
-        //     amountOut = transfer.amount;
-        // } else if (transfer.recipient == accountedFor) {
-        //     amountIn = transfer.amount;
-        // } else {
-        //     cerr << "Something is wrong. This should never happen." << endl;
-        //     exit(0);
-        // }
+        if (transfer.sender == accountedFor) {
+            amountOut = transfer.amount;
+        } else if (transfer.recipient == accountedFor) {
+            amountIn = transfer.amount;
+        } else {
+            cerr << "Something is wrong. This should never happen." << endl;
+            exit(0);
+        }
         LOG_TRIAL_BALANCE("flows-token");
         return true;
     }
@@ -214,19 +216,11 @@ bool CReconciliation::reconcileBalances(bool isTop, const CTransfer& transfer, b
         prevBal = pBal;
         begBal = pBal;
         endBal = getTokenBalanceAt(assetAddr, accountedFor, blockNumber);
-        if (begBal > endBal) {
-            amountOut = (begBal - endBal);
-        } else {
-            amountIn = (endBal - begBal);
-        }
 
         if (isTestMode()) {
             cerr << string_q(120, '-') << endl;
             cerr << "id: " << blockNumber << "." << transactionIndex << "." << logIndex << endl;
             cerr << "accountedFor: " << accountedFor << endl;
-            // if (transfer.log) {
-            //     cerr << *(transfer.log) << endl;
-            // }
             if (begBal > endBal) {
                 cerr << "AMOUNT-OUT" << endl;
                 if (amountOut != transfer.amount) {
@@ -306,6 +300,11 @@ bool CReconciliation::reconcileLabel(blknum_t pBn, blknum_t nBn) {
 
     } else {
         reconciliationType = "partial-partial";
+    }
+
+    if (isTestMode()) {
+        LOG_INFO("");
+        LOG_INFO("");
     }
 
     return trialBalance();

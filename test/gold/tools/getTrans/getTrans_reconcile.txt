@@ -150,6 +150,8 @@ params.size: 1
 
 TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
 TIME ~ CLOCK - <INFO>  :    hash:                0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63
 TIME ~ CLOCK - <INFO>  :    blockNumber:         12697303
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99
@@ -160,6 +162,8 @@ TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
 TIME ~ CLOCK - <INFO>  :    hash:                0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63
 TIME ~ CLOCK - <INFO>  :    blockNumber:         12697303
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99
@@ -168,4 +172,6 @@ TIME ~ CLOCK - <INFO>  :    begBal:              31419034761192445316
 TIME ~ CLOCK - <INFO>  :    endBal:              31419034761192445316
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
 ] }

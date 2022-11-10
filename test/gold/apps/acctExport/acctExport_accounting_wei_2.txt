@@ -9,6 +9,8 @@ TIME ~ CLOCK - : 4-----Loaded timestamp file
 { "data": [
 TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
 TIME ~ CLOCK - <INFO>  :    blockNumber:         1
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99999
 TIME ~ CLOCK - <INFO>  :    logIndex:            0
@@ -20,6 +22,8 @@ TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
 TIME ~ CLOCK - <INFO>  :    blockNumber:         1
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99999
 TIME ~ CLOCK - <INFO>  :    logIndex:            0
@@ -29,6 +33,8 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           5000000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              5000000000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : Calling a contract (0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f) at block 1 prior to its deployment 10000835
 TIME ~ CLOCK - <INFO>  : doEthCall in CUniPrice::findPair returned false
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1...: 
@@ -101,6 +107,8 @@ params.size: 0
 }
 TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
 TIME ~ CLOCK - <INFO>  :    blockNumber:         5
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99999
 TIME ~ CLOCK - <INFO>  :    logIndex:            0
@@ -113,6 +121,8 @@ TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
 TIME ~ CLOCK - <INFO>  :    blockNumber:         5
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99999
 TIME ~ CLOCK - <INFO>  :    logIndex:            0
@@ -123,6 +133,8 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           5000000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              10000000000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 5...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 5 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
@@ -193,6 +205,8 @@ params.size: 0
 }
 TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
 TIME ~ CLOCK - <INFO>  :    blockNumber:         56
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
 TIME ~ CLOCK - <INFO>  :    logIndex:            0
@@ -205,6 +219,8 @@ TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
 TIME ~ CLOCK - <INFO>  :    blockNumber:         56
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
 TIME ~ CLOCK - <INFO>  :    logIndex:            0
@@ -215,6 +231,8 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           3750000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              13750000000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 56...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 56 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
@@ -285,6 +303,8 @@ params.size: 0
 }
 TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
 TIME ~ CLOCK - <INFO>  :    blockNumber:         235
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99999
 TIME ~ CLOCK - <INFO>  :    logIndex:            0
@@ -297,6 +317,8 @@ TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
 TIME ~ CLOCK - <INFO>  :    blockNumber:         235
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99999
 TIME ~ CLOCK - <INFO>  :    logIndex:            0
@@ -307,6 +329,8 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           5000000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              18750000000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 235...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 235 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
@@ -377,6 +401,8 @@ params.size: 0
 }
 TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
 TIME ~ CLOCK - <INFO>  :    blockNumber:         247
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
 TIME ~ CLOCK - <INFO>  :    logIndex:            0
@@ -389,6 +415,8 @@ TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
 TIME ~ CLOCK - <INFO>  :    blockNumber:         247
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
 TIME ~ CLOCK - <INFO>  :    logIndex:            0
@@ -399,6 +427,8 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           3125000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              21875000000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 247...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 247 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
@@ -469,6 +499,8 @@ params.size: 0
 }
 TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
 TIME ~ CLOCK - <INFO>  :    blockNumber:         348
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99999
 TIME ~ CLOCK - <INFO>  :    logIndex:            0
@@ -481,6 +513,8 @@ TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
 TIME ~ CLOCK - <INFO>  :    blockNumber:         348
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99999
 TIME ~ CLOCK - <INFO>  :    logIndex:            0
@@ -491,6 +525,8 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           5000000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              26875000000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 348...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 348 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
@@ -561,6 +597,8 @@ params.size: 0
 }
 TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
 TIME ~ CLOCK - <INFO>  :    blockNumber:         500
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
 TIME ~ CLOCK - <INFO>  :    logIndex:            0
@@ -573,6 +611,8 @@ TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
 TIME ~ CLOCK - <INFO>  :    blockNumber:         500
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
 TIME ~ CLOCK - <INFO>  :    logIndex:            0
@@ -583,6 +623,8 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           3750000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              30625000000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 500...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 500 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
@@ -653,6 +695,8 @@ params.size: 0
 }
 TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
 TIME ~ CLOCK - <INFO>  :    blockNumber:         563
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
 TIME ~ CLOCK - <INFO>  :    logIndex:            0
@@ -665,6 +709,8 @@ TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
 TIME ~ CLOCK - <INFO>  :    blockNumber:         563
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
 TIME ~ CLOCK - <INFO>  :    logIndex:            0
@@ -675,6 +721,8 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           3750000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              34375000000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 563...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 563 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
@@ -745,6 +793,8 @@ params.size: 0
 }
 TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
 TIME ~ CLOCK - <INFO>  :    blockNumber:         987
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
 TIME ~ CLOCK - <INFO>  :    logIndex:            0
@@ -757,6 +807,8 @@ TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
 TIME ~ CLOCK - <INFO>  :    blockNumber:         987
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
 TIME ~ CLOCK - <INFO>  :    logIndex:            0
@@ -767,6 +819,8 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           2500000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              36875000000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 987...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 987 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
@@ -837,6 +891,8 @@ params.size: 0
 }
 TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
 TIME ~ CLOCK - <INFO>  :    blockNumber:         1450
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99999
 TIME ~ CLOCK - <INFO>  :    logIndex:            0
@@ -850,6 +906,8 @@ TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
 TIME ~ CLOCK - <INFO>  :    blockNumber:         1450
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99999
 TIME ~ CLOCK - <INFO>  :    logIndex:            0
@@ -861,6 +919,8 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           5156250000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              42031250000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1450...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1450 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
@@ -931,6 +991,8 @@ params.size: 0
 }
 TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
 TIME ~ CLOCK - <INFO>  :    blockNumber:         1580
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
 TIME ~ CLOCK - <INFO>  :    logIndex:            0
@@ -943,6 +1005,8 @@ TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
 TIME ~ CLOCK - <INFO>  :    blockNumber:         1580
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
 TIME ~ CLOCK - <INFO>  :    logIndex:            0
@@ -953,6 +1017,8 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           3750000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              45781250000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1580...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1580 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
@@ -1023,6 +1089,8 @@ params.size: 0
 }
 TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
 TIME ~ CLOCK - <INFO>  :    blockNumber:         1586
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
 TIME ~ CLOCK - <INFO>  :    logIndex:            0
@@ -1035,6 +1103,8 @@ TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
 TIME ~ CLOCK - <INFO>  :    blockNumber:         1586
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
 TIME ~ CLOCK - <INFO>  :    logIndex:            0
@@ -1045,6 +1115,8 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           3750000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              49531250000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1586...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1586 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
@@ -1115,6 +1187,8 @@ params.size: 0
 }
 TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
 TIME ~ CLOCK - <INFO>  :    blockNumber:         1861
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99999
 TIME ~ CLOCK - <INFO>  :    logIndex:            0
@@ -1127,6 +1201,8 @@ TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
 TIME ~ CLOCK - <INFO>  :    blockNumber:         1861
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99999
 TIME ~ CLOCK - <INFO>  :    logIndex:            0
@@ -1137,6 +1213,8 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           5000000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              54531250000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1861...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1861 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
@@ -1207,6 +1285,8 @@ params.size: 0
 }
 TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
 TIME ~ CLOCK - <INFO>  :    blockNumber:         1912
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
 TIME ~ CLOCK - <INFO>  :    logIndex:            0
@@ -1219,6 +1299,8 @@ TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
 TIME ~ CLOCK - <INFO>  :    blockNumber:         1912
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
 TIME ~ CLOCK - <INFO>  :    logIndex:            0
@@ -1229,6 +1311,8 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           3750000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              58281250000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1912...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1912 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
@@ -1299,6 +1383,8 @@ params.size: 0
 }
 TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
 TIME ~ CLOCK - <INFO>  :    blockNumber:         2057
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99999
 TIME ~ CLOCK - <INFO>  :    logIndex:            0
@@ -1311,6 +1397,8 @@ TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
 TIME ~ CLOCK - <INFO>  :    blockNumber:         2057
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99999
 TIME ~ CLOCK - <INFO>  :    logIndex:            0
@@ -1321,6 +1409,8 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           5000000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              63281250000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 2057...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 2057 at four-byte 0x59e02dd7 returned 0x
 params.size: 0

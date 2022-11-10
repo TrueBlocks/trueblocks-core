@@ -66,9 +66,9 @@ bool CStatementManager::getStatements(CTransaction& trans) {
         CTraceArray traceArray;
         getTraces(traceArray, trans.hash, &trans);
         for (auto trace : traceArray) {
+            CTransfer transfer;
             CReconciliation statement(accountedFor, FAKE_ETH_ADDRESS, &trans);
             statement.reconcileFlows_traces(isTop);
-            CTransfer transfer;
             statement.reconcileBalances(isTop, transfer, prevBlock, nextBlock, prevBal);
             statement.reconcileLabel(prevBlock, nextBlock);
             statement.assetSymbol = expContext().asEther ? "ETH" : "WEI";
@@ -163,8 +163,6 @@ bool CStatementManager::getTransfers(const CTransaction& trans) {
         }
     }
 
-    // sort(transfers.begin(), transfers.end());
-    // transfers[0].assetAddr = FAKE_ETH_ADDRESS;  // so it sorts right
     return transfers.size() > 0;
 }
 
