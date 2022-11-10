@@ -207,20 +207,39 @@ bool CReconciliation::reconcileBalances(bool isTop, const CTransfer& transfer, b
         endBal = getTokenBalanceAt(assetAddr, accountedFor, blockNumber);
         if (begBal > endBal) {
             amountOut = (begBal - endBal);
-            if (isTestMode() && amountOut != transfer.amount) {
-                cerr << string_q(120, '-') << endl;
-                if (transfer.log) {
-                    cerr << *(transfer.log) << endl;
-                }
-                cerr << string_q(120, '-') << endl;
-                cerr << "Imbalance amountOut: [" << amountOut << "] [" << transfer.amount << "]" << endl;
-            }
         } else {
             amountIn = (endBal - begBal);
-            // if (isTestMode() && amountIn != transfer.amount) {
-            //     cerr << "Imbalance amountIn: [" << amountIn << "] [" << transfer.amount << "]" << endl;
-            // }
         }
+
+        if (isTestMode()) {
+            cerr << string_q(120, '-') << endl;
+            cerr << "id: " << blockNumber << "." << transactionIndex << "." << logIndex << endl;
+            cerr << "accountedFor: " << accountedFor << endl;
+            if (transfer.log) {
+                cerr << *(transfer.log) << endl;
+            }
+            if (begBal > endBal) {
+                cerr << "AMOUNT-OUT" << endl;
+                if (amountOut != transfer.amount) {
+                    cerr << "\tDOES NOT BALANCE (amountOut): [diff:" << (amountOut - transfer.amount)
+                         << "] [out:" << amountOut << "] [amt:" << transfer.amount << "]" << endl;
+                } else {
+                    cerr << "\ttransfer balances --> [diff:" << (amountOut - transfer.amount) << "] [out:" << amountOut
+                         << "] [amt:" << transfer.amount << "]" << endl;
+                }
+            } else {
+                cerr << "AMOUNT-IN" << endl;
+                if (amountIn != transfer.amount) {
+                    cerr << "\tDOES NOT BALANCE (amountIn): [diff:" << (amountIn - transfer.amount)
+                         << "] [in:" << amountIn << "] [amt:" << transfer.amount << "]" << endl;
+                } else {
+                    cerr << "\ttransfer balances --> [diff:" << (amountIn - transfer.amount) << "] [in:" << amountIn
+                         << "] [amt:" << transfer.amount << "]" << endl;
+                }
+            }
+            cerr << string_q(120, '-') << endl;
+        }
+
         LOG_TRIAL_BALANCE("balances-token");
         return trialBalance();
     }

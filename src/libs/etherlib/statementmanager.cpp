@@ -106,14 +106,20 @@ bool CStatementManager::getTransfers(const CTransaction& trans) {
 
     for (auto& log : trans.receipt.logs) {
         CAccountName tokenName;
-        bool isToken = findToken(log.address, tokenName);
+        findToken(log.address, tokenName);
         if (tokenName.address.empty()) {
             tokenName.address = log.address;
             tokenName.petname = addr_2_Petname(tokenName.address, '-');
         }
 
-        if (isToken || (log.topics.size() > 2 && isTokenTransfer(log.topics[0]))) {
+        if (isTokenTransfer(log.topics[0]) && log.topics.size() > 2) {
             CTransfer transfer;
+            transfer.sender = topic_2_Addr(log.topics[1]);
+            transfer.recipient = topic_2_Addr(log.topics[2]);
+            if (transfer.sender != accountedFor && transfer.recipient != accountedFor) {
+                continue;
+            }
+
             transfer.log = (CLogEntry*)&log;  // TODO: for debugging only, can be removed
 
             transfer.assetAddr = log.address;
@@ -134,8 +140,6 @@ bool CStatementManager::getTransfers(const CTransaction& trans) {
                 }
             }
 
-            transfer.sender = topic_2_Addr(log.topics[1]);
-            transfer.recipient = topic_2_Addr(log.topics[2]);
             if (transfer.sender != accountedFor && transfer.recipient != accountedFor)
                 continue;
 

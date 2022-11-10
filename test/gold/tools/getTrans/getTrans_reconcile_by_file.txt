@@ -5,7 +5,7 @@ TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] File:  cmd_file_3
 TEST[DATE|TIME] Format:  txt
 blockNumber	transactionIndex	logindex	transactionHash	timestamp	date	assetAddress	assetSymbol	decimals	spotPrice	priceSource	accountedFor	sender	recipient	begBal	amountNet	endBal	reconciliationType	reconciled	totalIn	amountIn	internalIn	selfDestructIn	minerBaseRewardIn	minerNephewRewardIn	minerTxFeeIn	minerUncleRewardIn	prefundIn	totalOut	amountOut	internalOut	selfDestructOut	gasOut	totalOutLessGas	prevAppBlk	prevBal	begBalDiff	endBalDiff	endBalCalc
-TIME ~ CLOCK - <INFO>  : -------------flows-----------------------------
+TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    hash:                0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33
 TIME ~ CLOCK - <INFO>  :    blockNumber:         12655579
@@ -17,7 +17,7 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           -28323430000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              177630254000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : -------------balances-----------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    hash:                0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33
 TIME ~ CLOCK - <INFO>  :    blockNumber:         12655579
@@ -29,7 +29,36 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           -28323430000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              177630254000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : -------------balances-----------------------------
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    hash:                0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12655579
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    76
+TIME ~ CLOCK - <INFO>  :    begBal:              205953684000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              177630254000000000
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          205953684000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          28323430000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          205953684000000000
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+id: 12655579.76.0
+accountedFor: 0x37da92c11a2d5c05077ce41ac2243aa38032d4af
+{
+  "address": "0xea0be20914783d6b538539795069ca333f820bc5",
+  "logIndex": 122,
+  "topics": [
+    "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+    "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "0x00000000000000000000000037da92c11a2d5c05077ce41ac2243aa38032d4af"
+  ],
+  "data": "0x0000000000000000000000000000000000000000000000080a6898a04e86f7f6"
+}
+
+AMOUNT-IN
+	transfer balances --> [diff:0] [in:148323969741913257974] [amt:148323969741913257974]
+------------------------------------------------------------------------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: token
 TIME ~ CLOCK - <INFO>  :    hash:                0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33
 TIME ~ CLOCK - <INFO>  :    blockNumber:         12655579
@@ -114,14 +143,14 @@ TEST[DATE|TIME] NoHeader:  true
 TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] File:  cmd_file_3
 TEST[DATE|TIME] Format:  txt
-TIME ~ CLOCK - <INFO>  : -------------flows-----------------------------
+TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    hash:                0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33
 TIME ~ CLOCK - <INFO>  :    blockNumber:         12655579
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    76
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : -------------balances-----------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    hash:                0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33
 TIME ~ CLOCK - <INFO>  :    blockNumber:         12655579
@@ -134,42 +163,45 @@ TEST[DATE|TIME] NoHeader:  true
 TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] File:  cmd_file_3
 TEST[DATE|TIME] Format:  txt
-TIME ~ CLOCK - <INFO>  : -------------flows-----------------------------
+TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    hash:                0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33
 TIME ~ CLOCK - <INFO>  :    blockNumber:         12655579
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    76
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : -------------balances-----------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    hash:                0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33
 TIME ~ CLOCK - <INFO>  :    blockNumber:         12655579
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    76
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : -------------balances-----------------------------
-TIME ~ CLOCK - <INFO>  : Trial balance: token
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    hash:                0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33
 TIME ~ CLOCK - <INFO>  :    blockNumber:         12655579
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    76
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : -------------balances-----------------------------
-TIME ~ CLOCK - <INFO>  : Trial balance: token
-TIME ~ CLOCK - <INFO>  :    hash:                0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33
-TIME ~ CLOCK - <INFO>  :    blockNumber:         12655579
-TIME ~ CLOCK - <INFO>  :    transactionIndex:    76
-TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
-TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : -------------balances-----------------------------
-TIME ~ CLOCK - <INFO>  : Trial balance: token
-TIME ~ CLOCK - <INFO>  :    hash:                0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33
-TIME ~ CLOCK - <INFO>  :    blockNumber:         12655579
-TIME ~ CLOCK - <INFO>  :    transactionIndex:    76
-TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
-TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : -------------balances-----------------------------
+------------------------------------------------------------------------------------------------------------------------
+id: 12655579.76.0
+accountedFor: 0x7a250d5630b4cf539739df2c5dacb4c659f2488d
+{
+  "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+  "logIndex": 120,
+  "topics": [
+    "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+    "0x0000000000000000000000007a250d5630b4cf539739df2c5dacb4c659f2488d",
+    "0x000000000000000000000000ea0be20914783d6b538539795069ca333f820bc5"
+  ],
+  "data": "0x0000000000000000000000000000000000000000000000002629f66e0c530000"
+}
+
+AMOUNT-IN
+	DOES NOT BALANCE (amountIn): [diff:-2750000000000000000] [in:0] [amt:2750000000000000000]
+------------------------------------------------------------------------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: token
 TIME ~ CLOCK - <INFO>  :    hash:                0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33
 TIME ~ CLOCK - <INFO>  :    blockNumber:         12655579
@@ -182,7 +214,7 @@ TEST[DATE|TIME] NoHeader:  true
 TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] File:  cmd_file_3
 TEST[DATE|TIME] Format:  txt
-TIME ~ CLOCK - <INFO>  : -------------flows-----------------------------
+TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    hash:                0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33
 TIME ~ CLOCK - <INFO>  :    blockNumber:         12655579
@@ -224,7 +256,7 @@ TIME ~ CLOCK - <INFO>  :    endBalDiff:          58470599195213476293
 TIME ~ CLOCK - <INFO>  :    endBalCalc:          6209556992344378131786565
 TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : -------------balances-----------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
 TIME ~ CLOCK - <INFO>  :    hash:                0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33
 TIME ~ CLOCK - <INFO>  :    blockNumber:         12655579
@@ -309,21 +341,45 @@ TEST[DATE|TIME] NoHeader:  true
 TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] File:  cmd_file_3
 TEST[DATE|TIME] Format:  txt
-TIME ~ CLOCK - <INFO>  : -------------flows-----------------------------
+TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    hash:                0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33
 TIME ~ CLOCK - <INFO>  :    blockNumber:         12655579
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    76
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : -------------balances-----------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    hash:                0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33
 TIME ~ CLOCK - <INFO>  :    blockNumber:         12655579
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    76
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : -------------balances-----------------------------
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    hash:                0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12655579
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    76
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+id: 12655579.76.0
+accountedFor: 0xea0be20914783d6b538539795069ca333f820bc5
+{
+  "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+  "logIndex": 120,
+  "topics": [
+    "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+    "0x0000000000000000000000007a250d5630b4cf539739df2c5dacb4c659f2488d",
+    "0x000000000000000000000000ea0be20914783d6b538539795069ca333f820bc5"
+  ],
+  "data": "0x0000000000000000000000000000000000000000000000002629f66e0c530000"
+}
+
+AMOUNT-IN
+	transfer balances --> [diff:0] [in:2750000000000000000] [amt:2750000000000000000]
+------------------------------------------------------------------------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: token
 TIME ~ CLOCK - <INFO>  :    hash:                0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33
 TIME ~ CLOCK - <INFO>  :    blockNumber:         12655579
@@ -334,7 +390,31 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           2750000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              2750000000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : -------------balances-----------------------------
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    hash:                0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12655579
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    76
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+id: 12655579.76.0
+accountedFor: 0xea0be20914783d6b538539795069ca333f820bc5
+{
+  "address": "0xfa247066958637af6b4cc04bccecad2b6b107200",
+  "logIndex": 117,
+  "topics": [
+    "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+    "0x000000000000000000000000fa247066958637af6b4cc04bccecad2b6b107200",
+    "0x000000000000000000000000ea0be20914783d6b538539795069ca333f820bc5"
+  ],
+  "data": "0x0000000000000000000000000000000000000000000001b1ae4d6e2ef5000000"
+}
+
+AMOUNT-IN
+	transfer balances --> [diff:0] [in:8000000000000000000000] [amt:8000000000000000000000]
+------------------------------------------------------------------------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: token
 TIME ~ CLOCK - <INFO>  :    hash:                0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33
 TIME ~ CLOCK - <INFO>  :    blockNumber:         12655579
@@ -545,7 +625,7 @@ TEST[DATE|TIME] NoHeader:  true
 TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] File:  cmd_file_3
 TEST[DATE|TIME] Format:  txt
-TIME ~ CLOCK - <INFO>  : -------------flows-----------------------------
+TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    hash:                0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33
 TIME ~ CLOCK - <INFO>  :    blockNumber:         12655579
@@ -567,7 +647,7 @@ TIME ~ CLOCK - <INFO>  :    totalOut:            2750000000000000000
 TIME ~ CLOCK - <INFO>  :    amountNet:           -2750000000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : -------------balances-----------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
 TIME ~ CLOCK - <INFO>  :    hash:                0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33
 TIME ~ CLOCK - <INFO>  :    blockNumber:         12655579
@@ -578,7 +658,35 @@ TIME ~ CLOCK - <INFO>  :    totalOut:            2750000000000000000
 TIME ~ CLOCK - <INFO>  :    amountNet:           -2750000000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : -------------balances-----------------------------
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    hash:                0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12655579
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    76
+TIME ~ CLOCK - <INFO>  :    begBal:              2750000000000000000
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          2750000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          2750000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          2750000000000000000
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+id: 12655579.76.0
+accountedFor: 0xfa247066958637af6b4cc04bccecad2b6b107200
+{
+  "address": "0xfa247066958637af6b4cc04bccecad2b6b107200",
+  "logIndex": 117,
+  "topics": [
+    "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+    "0x000000000000000000000000fa247066958637af6b4cc04bccecad2b6b107200",
+    "0x000000000000000000000000ea0be20914783d6b538539795069ca333f820bc5"
+  ],
+  "data": "0x0000000000000000000000000000000000000000000001b1ae4d6e2ef5000000"
+}
+
+AMOUNT-OUT
+	transfer balances --> [diff:0] [out:8000000000000000000000] [amt:8000000000000000000000]
+------------------------------------------------------------------------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: token
 TIME ~ CLOCK - <INFO>  :    hash:                0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33
 TIME ~ CLOCK - <INFO>  :    blockNumber:         12655579
@@ -587,20 +695,6 @@ TIME ~ CLOCK - <INFO>  :    begBal:              8000000000000000000000
 TIME ~ CLOCK - <INFO>  :    amountOut:           8000000000000000000000
 TIME ~ CLOCK - <INFO>  :    totalOut:            8000000000000000000000
 TIME ~ CLOCK - <INFO>  :    amountNet:           -8000000000000000000000
-TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
-TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : -------------balances-----------------------------
-TIME ~ CLOCK - <INFO>  : Trial balance: token
-TIME ~ CLOCK - <INFO>  :    hash:                0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33
-TIME ~ CLOCK - <INFO>  :    blockNumber:         12655579
-TIME ~ CLOCK - <INFO>  :    transactionIndex:    76
-TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
-TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : -------------balances-----------------------------
-TIME ~ CLOCK - <INFO>  : Trial balance: token
-TIME ~ CLOCK - <INFO>  :    hash:                0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33
-TIME ~ CLOCK - <INFO>  :    blockNumber:         12655579
-TIME ~ CLOCK - <INFO>  :    transactionIndex:    76
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : Calling 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 12655579...: 
@@ -796,4 +890,4 @@ params.size: 3
 ==================================================
 
 12655579	76	0	0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33	1623981210	2021-06-18 01:53:30 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	ETH	18	2331.50051	uniswap	0xfa247066958637af6b4cc04bccecad2b6b107200	0xfa247066958637af6b4cc04bccecad2b6b107200	0xea0be20914783d6b538539795069ca333f820bc5	"2.750000000000000000"	"-2.750000000000000000"	""	regular	true	""	""	""	""	""	""	""	""	""	"2.750000000000000000"	""	"2.750000000000000000"	""	""	"2.750000000000000000"	12655578	"2.750000000000000000"	""	""	""
-12655579	76	0	0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33	1623981210	2021-06-18 01:53:30 UTC	0xfa247066958637af6b4cc04bccecad2b6b107200	eBBC🧑🏿🍆	9	0.80145	uniswap	0xfa247066958637af6b4cc04bccecad2b6b107200	0xfa247066958637af6b4cc04bccecad2b6b107200	0x7a250d5630b4cf539739df2c5dacb4c659f2488d	"8000000000000.0000000"	"-8000000000000.0000000"	""	regular	true	""	""	""	""	""	""	""	""	""	"8000000000000.0000000"	"8000000000000.0000000"	""	""	""	"8000000000000.0000000"	12655578	"8000000000000.0000000"	""	""	""
+12655579	76	0	0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33	1623981210	2021-06-18 01:53:30 UTC	0xfa247066958637af6b4cc04bccecad2b6b107200	eBBC🧑🏿🍆	9	0.80145	uniswap	0xfa247066958637af6b4cc04bccecad2b6b107200	0xfa247066958637af6b4cc04bccecad2b6b107200	0xea0be20914783d6b538539795069ca333f820bc5	"8000000000000.0000000"	"-8000000000000.0000000"	""	regular	true	""	""	""	""	""	""	""	""	""	"8000000000000.0000000"	"8000000000000.0000000"	""	""	""	"8000000000000.0000000"	12655578	"8000000000000.0000000"	""	""	""
