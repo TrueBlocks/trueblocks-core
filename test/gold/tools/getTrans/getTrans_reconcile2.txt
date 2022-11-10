@@ -13,6 +13,7 @@ TIME ~ CLOCK - <INFO>  : Trial balance:
 TIME ~ CLOCK - <INFO>  :    hash:                0x3f095a4b4e1b85e148b8b97aa91841f28280692b6045de8e690db38c59ecc603
 TIME ~ CLOCK - <INFO>  :    blockNumber:         15157311
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    138
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              20757259456276694166
 TIME ~ CLOCK - <INFO>  :    amountIn:            14935571680000000000
 TIME ~ CLOCK - <INFO>  :    totalIn:             14935571680000000000
@@ -25,6 +26,7 @@ TIME ~ CLOCK - <INFO>  : Trial balance:
 TIME ~ CLOCK - <INFO>  :    hash:                0x3f095a4b4e1b85e148b8b97aa91841f28280692b6045de8e690db38c59ecc603
 TIME ~ CLOCK - <INFO>  :    blockNumber:         15157311
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    138
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              20757259456276694166
 TIME ~ CLOCK - <INFO>  :    amountIn:            14935571680000000000
 TIME ~ CLOCK - <INFO>  :    totalIn:             14935571680000000000

@@ -9,6 +9,7 @@ TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    blockNumber:         1
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99999
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    minerBaseRewardIn:   5000000000000000000
 TIME ~ CLOCK - <INFO>  :    totalIn:             5000000000000000000
 TIME ~ CLOCK - <INFO>  :    amountNet:           5000000000000000000
@@ -19,6 +20,7 @@ TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    blockNumber:         1
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99999
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    minerBaseRewardIn:   5000000000000000000
 TIME ~ CLOCK - <INFO>  :    totalIn:             5000000000000000000
 TIME ~ CLOCK - <INFO>  :    amountNet:           5000000000000000000
@@ -37,6 +39,7 @@ TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    blockNumber:         5
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99999
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              5000000000000000000
 TIME ~ CLOCK - <INFO>  :    minerBaseRewardIn:   5000000000000000000
 TIME ~ CLOCK - <INFO>  :    totalIn:             5000000000000000000
@@ -48,6 +51,7 @@ TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    blockNumber:         5
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99999
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              5000000000000000000
 TIME ~ CLOCK - <INFO>  :    minerBaseRewardIn:   5000000000000000000
 TIME ~ CLOCK - <INFO>  :    totalIn:             5000000000000000000
@@ -65,6 +69,7 @@ TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    blockNumber:         56
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              10000000000000000000
 TIME ~ CLOCK - <INFO>  :    minerUncleRewardIn:  3750000000000000000
 TIME ~ CLOCK - <INFO>  :    totalIn:             3750000000000000000
@@ -76,6 +81,7 @@ TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    blockNumber:         56
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              10000000000000000000
 TIME ~ CLOCK - <INFO>  :    minerUncleRewardIn:  3750000000000000000
 TIME ~ CLOCK - <INFO>  :    totalIn:             3750000000000000000
@@ -93,6 +99,7 @@ TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    blockNumber:         235
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99999
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              13750000000000000000
 TIME ~ CLOCK - <INFO>  :    minerBaseRewardIn:   5000000000000000000
 TIME ~ CLOCK - <INFO>  :    totalIn:             5000000000000000000
@@ -104,6 +111,7 @@ TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    blockNumber:         235
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99999
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              13750000000000000000
 TIME ~ CLOCK - <INFO>  :    minerBaseRewardIn:   5000000000000000000
 TIME ~ CLOCK - <INFO>  :    totalIn:             5000000000000000000
@@ -121,6 +129,7 @@ TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    blockNumber:         247
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              18750000000000000000
 TIME ~ CLOCK - <INFO>  :    minerUncleRewardIn:  3125000000000000000
 TIME ~ CLOCK - <INFO>  :    totalIn:             3125000000000000000
@@ -132,6 +141,7 @@ TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    blockNumber:         247
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              18750000000000000000
 TIME ~ CLOCK - <INFO>  :    minerUncleRewardIn:  3125000000000000000
 TIME ~ CLOCK - <INFO>  :    totalIn:             3125000000000000000
@@ -149,6 +159,7 @@ TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    blockNumber:         348
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99999
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              21875000000000000000
 TIME ~ CLOCK - <INFO>  :    minerBaseRewardIn:   5000000000000000000
 TIME ~ CLOCK - <INFO>  :    totalIn:             5000000000000000000
@@ -160,6 +171,7 @@ TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    blockNumber:         348
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99999
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              21875000000000000000
 TIME ~ CLOCK - <INFO>  :    minerBaseRewardIn:   5000000000000000000
 TIME ~ CLOCK - <INFO>  :    totalIn:             5000000000000000000
@@ -177,6 +189,7 @@ TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    blockNumber:         500
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              26875000000000000000
 TIME ~ CLOCK - <INFO>  :    minerUncleRewardIn:  3750000000000000000
 TIME ~ CLOCK - <INFO>  :    totalIn:             3750000000000000000
@@ -188,6 +201,7 @@ TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    blockNumber:         500
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              26875000000000000000
 TIME ~ CLOCK - <INFO>  :    minerUncleRewardIn:  3750000000000000000
 TIME ~ CLOCK - <INFO>  :    totalIn:             3750000000000000000
@@ -205,6 +219,7 @@ TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    blockNumber:         563
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              30625000000000000000
 TIME ~ CLOCK - <INFO>  :    minerUncleRewardIn:  3750000000000000000
 TIME ~ CLOCK - <INFO>  :    totalIn:             3750000000000000000
@@ -216,6 +231,7 @@ TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    blockNumber:         563
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              30625000000000000000
 TIME ~ CLOCK - <INFO>  :    minerUncleRewardIn:  3750000000000000000
 TIME ~ CLOCK - <INFO>  :    totalIn:             3750000000000000000
@@ -233,6 +249,7 @@ TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    blockNumber:         987
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              34375000000000000000
 TIME ~ CLOCK - <INFO>  :    minerUncleRewardIn:  2500000000000000000
 TIME ~ CLOCK - <INFO>  :    totalIn:             2500000000000000000
@@ -244,6 +261,7 @@ TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    blockNumber:         987
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              34375000000000000000
 TIME ~ CLOCK - <INFO>  :    minerUncleRewardIn:  2500000000000000000
 TIME ~ CLOCK - <INFO>  :    totalIn:             2500000000000000000
@@ -261,6 +279,7 @@ TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    blockNumber:         1450
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99999
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              36875000000000000000
 TIME ~ CLOCK - <INFO>  :    minerBaseRewardIn:   5000000000000000000
 TIME ~ CLOCK - <INFO>  :    minerNephewRewardIn: 156250000000000000
@@ -273,6 +292,7 @@ TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    blockNumber:         1450
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99999
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              36875000000000000000
 TIME ~ CLOCK - <INFO>  :    minerBaseRewardIn:   5000000000000000000
 TIME ~ CLOCK - <INFO>  :    minerNephewRewardIn: 156250000000000000
@@ -291,6 +311,7 @@ TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    blockNumber:         1580
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              42031250000000000000
 TIME ~ CLOCK - <INFO>  :    minerUncleRewardIn:  3750000000000000000
 TIME ~ CLOCK - <INFO>  :    totalIn:             3750000000000000000
@@ -302,6 +323,7 @@ TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    blockNumber:         1580
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              42031250000000000000
 TIME ~ CLOCK - <INFO>  :    minerUncleRewardIn:  3750000000000000000
 TIME ~ CLOCK - <INFO>  :    totalIn:             3750000000000000000
@@ -319,6 +341,7 @@ TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    blockNumber:         1586
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              45781250000000000000
 TIME ~ CLOCK - <INFO>  :    minerUncleRewardIn:  3750000000000000000
 TIME ~ CLOCK - <INFO>  :    totalIn:             3750000000000000000
@@ -330,6 +353,7 @@ TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    blockNumber:         1586
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              45781250000000000000
 TIME ~ CLOCK - <INFO>  :    minerUncleRewardIn:  3750000000000000000
 TIME ~ CLOCK - <INFO>  :    totalIn:             3750000000000000000
@@ -347,6 +371,7 @@ TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    blockNumber:         1861
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99999
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              49531250000000000000
 TIME ~ CLOCK - <INFO>  :    minerBaseRewardIn:   5000000000000000000
 TIME ~ CLOCK - <INFO>  :    totalIn:             5000000000000000000
@@ -358,6 +383,7 @@ TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    blockNumber:         1861
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99999
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              49531250000000000000
 TIME ~ CLOCK - <INFO>  :    minerBaseRewardIn:   5000000000000000000
 TIME ~ CLOCK - <INFO>  :    totalIn:             5000000000000000000
@@ -375,6 +401,7 @@ TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    blockNumber:         1912
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              54531250000000000000
 TIME ~ CLOCK - <INFO>  :    minerUncleRewardIn:  3750000000000000000
 TIME ~ CLOCK - <INFO>  :    totalIn:             3750000000000000000
@@ -386,6 +413,7 @@ TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    blockNumber:         1912
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99998
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              54531250000000000000
 TIME ~ CLOCK - <INFO>  :    minerUncleRewardIn:  3750000000000000000
 TIME ~ CLOCK - <INFO>  :    totalIn:             3750000000000000000
@@ -403,6 +431,7 @@ TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    blockNumber:         2057
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99999
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              58281250000000000000
 TIME ~ CLOCK - <INFO>  :    minerBaseRewardIn:   5000000000000000000
 TIME ~ CLOCK - <INFO>  :    totalIn:             5000000000000000000
@@ -414,6 +443,7 @@ TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    blockNumber:         2057
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    99999
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              58281250000000000000
 TIME ~ CLOCK - <INFO>  :    minerBaseRewardIn:   5000000000000000000
 TIME ~ CLOCK - <INFO>  :    totalIn:             5000000000000000000

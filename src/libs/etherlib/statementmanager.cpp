@@ -46,6 +46,7 @@ bool CStatementManager::getStatements(CTransaction& trans) {
 
             bool isTop = transfer.type == TT_TOP;
             CReconciliation statement(accountedFor, transfer.assetAddr, &trans);
+            statement.logIndex = transfer.logIndex;
             statement.assetSymbol = transfer.assetSymbol;
             statement.decimals = transfer.decimals;
             if (!statement.reconcileFlows(isTop, transfer)) {
@@ -95,7 +96,7 @@ bool CStatementManager::getTransfers(const CTransaction& trans) {
     transfers.clear();
 
     CTransfer transfer;
-    transfer.assetAddr = "";  // so it sorts right
+    transfer.assetAddr = FAKE_ETH_ADDRESS;
     transfer.assetSymbol = expContext().asEther ? "ETH" : "WEI";
     transfer.decimals = 18;
     transfer.blockNumber = trans.blockNumber;
@@ -151,6 +152,7 @@ bool CStatementManager::getTransfers(const CTransaction& trans) {
             transfer.blockNumber = trans.blockNumber;
             transfer.transactionIndex = trans.transactionIndex;
             transfer.logIndex = log.logIndex;
+            transfer.transactionHash = trans.hash;
             transfer.type = TT_LOG;
             transfer.timestamp = str_2_Ts(trans.Format("[{TIMESTAMP}]"));
             transfer.date = ts_2_Date(transfer.timestamp);
@@ -161,8 +163,8 @@ bool CStatementManager::getTransfers(const CTransaction& trans) {
         }
     }
 
-    sort(transfers.begin(), transfers.end());
-    transfers[0].assetAddr = FAKE_ETH_ADDRESS;  // so it sorts right
+    // sort(transfers.begin(), transfers.end());
+    // transfers[0].assetAddr = FAKE_ETH_ADDRESS;  // so it sorts right
     return transfers.size() > 0;
 }
 

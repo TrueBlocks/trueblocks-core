@@ -976,6 +976,7 @@ CReconciliation::CReconciliation(const address_t& aF, const address_t& asset, co
     pTransaction = pT;
     accountedFor = aF;
     assetAddr = asset;
+    transactionHash = pT->hash;
 }
 // EXISTING_CODE
 }  // namespace qblocks

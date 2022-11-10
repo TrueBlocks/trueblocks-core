@@ -26,9 +26,10 @@ namespace qblocks {
     if (isTestMode()) {                                                                                                \
         LOG_INFO("-------------", msg, "-----------------------------");                                               \
         LOG_INFO("Trial balance: ", reconciliationType);                                                               \
-        LOG_ONE("hash:                ", pTransaction->hash, "");                                                      \
-        LOG_ONE("blockNumber:         ", pTransaction->blockNumber, NOPOS);                                            \
-        LOG_ONE("transactionIndex:    ", pTransaction->transactionIndex, NOPOS);                                       \
+        LOG_ONE("hash:                ", transactionHash, "");                                                         \
+        LOG_ONE("blockNumber:         ", blockNumber, NOPOS);                                                          \
+        LOG_ONE("transactionIndex:    ", transactionIndex, NOPOS);                                                     \
+        LOG_ONE("logIndex:            ", logIndex, NOPOS);                                                             \
         LOG_ONE("begBal:              ", begBal, 0);                                                                   \
         LOG_ONE("amountIn:            ", amountIn, 0);                                                                 \
         LOG_ONE("internalIn:          ", internalIn, 0);                                                               \
@@ -64,6 +65,14 @@ bool CReconciliation::reconcileFlows(bool isTop, const CTransfer& transfer) {
     if (!isTop) {
         sender = transfer.sender;
         recipient = transfer.recipient;
+        // if (transfer.sender == accountedFor) {
+        //     amountOut = transfer.amount;
+        // } else if (transfer.recipient == accountedFor) {
+        //     amountIn = transfer.amount;
+        // } else {
+        //     cerr << "Something is wrong. This should never happen." << endl;
+        //     exit(0);
+        // }
         LOG_TRIAL_BALANCE("flows-token");
         return true;
     }
@@ -215,9 +224,9 @@ bool CReconciliation::reconcileBalances(bool isTop, const CTransfer& transfer, b
             cerr << string_q(120, '-') << endl;
             cerr << "id: " << blockNumber << "." << transactionIndex << "." << logIndex << endl;
             cerr << "accountedFor: " << accountedFor << endl;
-            if (transfer.log) {
-                cerr << *(transfer.log) << endl;
-            }
+            // if (transfer.log) {
+            //     cerr << *(transfer.log) << endl;
+            // }
             if (begBal > endBal) {
                 cerr << "AMOUNT-OUT" << endl;
                 if (amountOut != transfer.amount) {

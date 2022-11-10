@@ -9,6 +9,7 @@ TIME ~ CLOCK - <INFO>  : Trial balance:
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              480320203379861210
 TIME ~ CLOCK - <INFO>  :    gasOut:              16792272000000000
 TIME ~ CLOCK - <INFO>  :    totalOut:            16792272000000000
@@ -21,6 +22,7 @@ TIME ~ CLOCK - <INFO>  : Trial balance:
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              480320203379861210
 TIME ~ CLOCK - <INFO>  :    gasOut:              16792272000000000
 TIME ~ CLOCK - <INFO>  :    totalOut:            16792272000000000
@@ -33,6 +35,7 @@ TIME ~ CLOCK - <INFO>  : Trial balance:
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    logIndex:            210
 TIME ~ CLOCK - <INFO>  :    begBal:              480320203379861210
 TIME ~ CLOCK - <INFO>  :    endBal:              463527931379861210
 TIME ~ CLOCK - <INFO>  :    begBalDiff:          480320203379861210
@@ -41,60 +44,8 @@ TIME ~ CLOCK - <INFO>  :    endBalCalc:          480320203379861210
 TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
-id: 11532210.88.0
+id: 11532210.88.210
 accountedFor: 0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7
-{
-  "address": "0x111111111117dc0aa78b770fa6a738034120c302",
-  "logIndex": 213,
-  "topics": [
-    "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
-    "0x00000000000000000000000094bc2a1c732bcad7343b25af48385fe76e08734f",
-    "0x00000000000000000000000065b0d5e1dc0dee0704f53f660aa865c72e986fc7"
-  ],
-  "data": "0x0000000000000000000000000000000000000000000000033a6db63616ee0f9c"
-}
-
-AMOUNT-IN
-	transfer balances --> [diff:0] [in:59550453791219126172] [amt:59550453791219126172]
-------------------------------------------------------------------------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
-TIME ~ CLOCK - <INFO>  : Trial balance: token
-TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
-TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
-TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
-TIME ~ CLOCK - <INFO>  :    begBal:              267771933202286931546
-TIME ~ CLOCK - <INFO>  :    amountIn:            59550453791219126172
-TIME ~ CLOCK - <INFO>  :    totalIn:             59550453791219126172
-TIME ~ CLOCK - <INFO>  :    amountNet:           59550453791219126172
-TIME ~ CLOCK - <INFO>  :    endBal:              327322386993506057718
-TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
-TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
-TIME ~ CLOCK - <INFO>  : Trial balance: 
-TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
-TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
-TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
-TIME ~ CLOCK - <INFO>  :    begBal:              480320203379861210
-TIME ~ CLOCK - <INFO>  :    endBal:              463527931379861210
-TIME ~ CLOCK - <INFO>  :    begBalDiff:          480320203379861210
-TIME ~ CLOCK - <INFO>  :    endBalDiff:          16792272000000000
-TIME ~ CLOCK - <INFO>  :    endBalCalc:          480320203379861210
-TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
-TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-------------------------------------------------------------------------------------------------------------------------
-id: 11532210.88.0
-accountedFor: 0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7
-{
-  "address": "0x2c6264619d2f598a003d1c857e46edb95b22c75c",
-  "logIndex": 210,
-  "topics": [
-    "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
-    "0x00000000000000000000000094bc2a1c732bcad7343b25af48385fe76e08734f",
-    "0x00000000000000000000000065b0d5e1dc0dee0704f53f660aa865c72e986fc7"
-  ],
-  "data": "0x0000000000000000000000000000000000000000000000dbd023d45f1397b83d"
-}
-
 AMOUNT-IN
 	transfer balances --> [diff:0] [in:4054835016831281379389] [amt:4054835016831281379389]
 ------------------------------------------------------------------------------------------------------------------------
@@ -103,6 +54,7 @@ TIME ~ CLOCK - <INFO>  : Trial balance: token
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    logIndex:            210
 TIME ~ CLOCK - <INFO>  :    amountIn:            4054835016831281379389
 TIME ~ CLOCK - <INFO>  :    totalIn:             4054835016831281379389
 TIME ~ CLOCK - <INFO>  :    amountNet:           4054835016831281379389
@@ -114,6 +66,7 @@ TIME ~ CLOCK - <INFO>  : Trial balance:
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    logIndex:            212
 TIME ~ CLOCK - <INFO>  :    begBal:              480320203379861210
 TIME ~ CLOCK - <INFO>  :    endBal:              463527931379861210
 TIME ~ CLOCK - <INFO>  :    begBalDiff:          480320203379861210
@@ -122,19 +75,8 @@ TIME ~ CLOCK - <INFO>  :    endBalCalc:          480320203379861210
 TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
-id: 11532210.88.0
+id: 11532210.88.212
 accountedFor: 0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7
-{
-  "address": "0x94bc2a1c732bcad7343b25af48385fe76e08734f",
-  "logIndex": 212,
-  "topics": [
-    "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
-    "0x00000000000000000000000065b0d5e1dc0dee0704f53f660aa865c72e986fc7",
-    "0x0000000000000000000000000000000000000000000000000000000000000000"
-  ],
-  "data": "0x0000000000000000000000000000000000000000000000dbd023d45f1397b83d"
-}
-
 AMOUNT-OUT
 	transfer balances --> [diff:0] [out:4054835016831281379389] [amt:4054835016831281379389]
 ------------------------------------------------------------------------------------------------------------------------
@@ -143,17 +85,51 @@ TIME ~ CLOCK - <INFO>  : Trial balance: token
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    logIndex:            212
 TIME ~ CLOCK - <INFO>  :    begBal:              4054835016831281379389
 TIME ~ CLOCK - <INFO>  :    amountOut:           4054835016831281379389
 TIME ~ CLOCK - <INFO>  :    totalOut:            4054835016831281379389
 TIME ~ CLOCK - <INFO>  :    amountNet:           -4054835016831281379389
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
+TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    logIndex:            213
+TIME ~ CLOCK - <INFO>  :    begBal:              480320203379861210
+TIME ~ CLOCK - <INFO>  :    endBal:              463527931379861210
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          480320203379861210
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          16792272000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          480320203379861210
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+id: 11532210.88.213
+accountedFor: 0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7
+AMOUNT-IN
+	transfer balances --> [diff:0] [in:59550453791219126172] [amt:59550453791219126172]
+------------------------------------------------------------------------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: token
+TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
+TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    logIndex:            213
+TIME ~ CLOCK - <INFO>  :    begBal:              267771933202286931546
+TIME ~ CLOCK - <INFO>  :    amountIn:            59550453791219126172
+TIME ~ CLOCK - <INFO>  :    totalIn:             59550453791219126172
+TIME ~ CLOCK - <INFO>  :    amountNet:           59550453791219126172
+TIME ~ CLOCK - <INFO>  :    endBal:              327322386993506057718
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------traces-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
@@ -161,6 +137,7 @@ TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              480320203379861210
 TIME ~ CLOCK - <INFO>  :    endBal:              463527931379861210
 TIME ~ CLOCK - <INFO>  :    endBalDiff:          16792272000000000
@@ -172,6 +149,7 @@ TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
@@ -179,6 +157,7 @@ TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              480320203379861210
 TIME ~ CLOCK - <INFO>  :    endBal:              463527931379861210
 TIME ~ CLOCK - <INFO>  :    endBalDiff:          16792272000000000
@@ -190,6 +169,7 @@ TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
@@ -197,6 +177,7 @@ TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              480320203379861210
 TIME ~ CLOCK - <INFO>  :    endBal:              463527931379861210
 TIME ~ CLOCK - <INFO>  :    endBalDiff:          16792272000000000
@@ -208,6 +189,7 @@ TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
@@ -215,6 +197,7 @@ TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              480320203379861210
 TIME ~ CLOCK - <INFO>  :    endBal:              463527931379861210
 TIME ~ CLOCK - <INFO>  :    endBalDiff:          16792272000000000
@@ -226,6 +209,7 @@ TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
@@ -233,6 +217,7 @@ TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              480320203379861210
 TIME ~ CLOCK - <INFO>  :    endBal:              463527931379861210
 TIME ~ CLOCK - <INFO>  :    endBalDiff:          16792272000000000
@@ -244,6 +229,7 @@ TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
@@ -251,6 +237,7 @@ TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              480320203379861210
 TIME ~ CLOCK - <INFO>  :    endBal:              463527931379861210
 TIME ~ CLOCK - <INFO>  :    endBalDiff:          16792272000000000
@@ -262,6 +249,7 @@ TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
@@ -269,6 +257,7 @@ TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              480320203379861210
 TIME ~ CLOCK - <INFO>  :    endBal:              463527931379861210
 TIME ~ CLOCK - <INFO>  :    endBalDiff:          16792272000000000
@@ -280,6 +269,7 @@ TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
@@ -287,6 +277,7 @@ TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              480320203379861210
 TIME ~ CLOCK - <INFO>  :    endBal:              463527931379861210
 TIME ~ CLOCK - <INFO>  :    endBalDiff:          16792272000000000
@@ -298,6 +289,7 @@ TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
@@ -305,6 +297,7 @@ TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              480320203379861210
 TIME ~ CLOCK - <INFO>  :    endBal:              463527931379861210
 TIME ~ CLOCK - <INFO>  :    endBalDiff:          16792272000000000
@@ -316,6 +309,7 @@ TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
@@ -323,6 +317,7 @@ TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              480320203379861210
 TIME ~ CLOCK - <INFO>  :    endBal:              463527931379861210
 TIME ~ CLOCK - <INFO>  :    endBalDiff:          16792272000000000
@@ -334,6 +329,7 @@ TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
@@ -341,6 +337,7 @@ TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              480320203379861210
 TIME ~ CLOCK - <INFO>  :    endBal:              463527931379861210
 TIME ~ CLOCK - <INFO>  :    endBalDiff:          16792272000000000
@@ -352,6 +349,7 @@ TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
@@ -359,6 +357,7 @@ TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
 TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              480320203379861210
 TIME ~ CLOCK - <INFO>  :    endBal:              463527931379861210
 TIME ~ CLOCK - <INFO>  :    endBalDiff:          16792272000000000
@@ -429,6 +428,10 @@ params.size: 3
   2: uint32 _blockTimestampLast = 1609024055
 ==================================================
 
+TIME ~ CLOCK - <INFO>  : Calling 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 11532210...: 
+TIME ~ CLOCK - <INFO>  : call to 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 11532210 at four-byte 0xe6a43905 returned 0x0000000000000000000000000000000000000000000000000000000000000000
+TIME ~ CLOCK - <INFO>  : Calling 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 11532210...: 
+TIME ~ CLOCK - <INFO>  : call to 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 11532210 at four-byte 0xe6a43905 returned 0x0000000000000000000000000000000000000000000000000000000000000000
 TIME ~ CLOCK - <INFO>  : Calling 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 11532210...: 
 TIME ~ CLOCK - <INFO>  : call to 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 11532210 at four-byte 0xe6a43905 returned 0x00000000000000000000000026aad2da94c59524ac0d93f6d6cbf9071d7086f2
 TIME ~ CLOCK - <INFO>  : Calling 0x26aad2da94c59524ac0d93f6d6cbf9071d7086f2 at block 11532210...: 
@@ -557,10 +560,6 @@ params.size: 3
   2: uint32 _blockTimestampLast = 1609024055
 ==================================================
 
-TIME ~ CLOCK - <INFO>  : Calling 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 11532210...: 
-TIME ~ CLOCK - <INFO>  : call to 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 11532210 at four-byte 0xe6a43905 returned 0x0000000000000000000000000000000000000000000000000000000000000000
-TIME ~ CLOCK - <INFO>  : Calling 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 11532210...: 
-TIME ~ CLOCK - <INFO>  : call to 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 11532210 at four-byte 0xe6a43905 returned 0x0000000000000000000000000000000000000000000000000000000000000000
   {
     "blockNumber": 11532210,
     "transactionIndex": 88,
@@ -604,47 +603,7 @@ TIME ~ CLOCK - <INFO>  : call to 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at b
   },  {
     "blockNumber": 11532210,
     "transactionIndex": 88,
-    "logIndex": 0,
-    "transactionHash": "0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524",
-    "timestamp": 1609024088,
-    "date": "2020-12-26 23:08:08 UTC",
-    "assetAddr": "0x111111111117dc0aa78b770fa6a738034120c302",
-    "assetSymbol": "1INCH",
-    "decimals": 18,
-    "spotPrice": 1.64874,
-    "priceSource": "uniswap",
-    "accountedFor": "0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7",
-    "sender": "0x94bc2a1c732bcad7343b25af48385fe76e08734f",
-    "recipient": "0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7",
-    "begBal": "267771933202286931546",
-    "amountNet": "59550453791219126172",
-    "endBal": "327322386993506057718",
-    "reconciliationType": "regular",
-    "reconciled": true,
-    "totalIn": "59550453791219126172",
-    "amountIn": "59550453791219126172",
-    "internalIn": "",
-    "selfDestructIn": "",
-    "minerBaseRewardIn": "",
-    "minerNephewRewardIn": "",
-    "minerTxFeeIn": "",
-    "minerUncleRewardIn": "",
-    "prefundIn": "",
-    "totalOut": "",
-    "amountOut": "",
-    "internalOut": "",
-    "selfDestructOut": "",
-    "gasOut": "",
-    "totalOutLessGas": "",
-    "prevAppBlk": 11532209,
-    "prevBal": "267771933202286931546",
-    "begBalDiff": "",
-    "endBalDiff": "",
-    "endBalCalc": "327322386993506057718"
-  },  {
-    "blockNumber": 11532210,
-    "transactionIndex": 88,
-    "logIndex": 0,
+    "logIndex": 210,
     "transactionHash": "0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524",
     "timestamp": 1609024088,
     "date": "2020-12-26 23:08:08 UTC",
@@ -684,7 +643,7 @@ TIME ~ CLOCK - <INFO>  : call to 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at b
   },  {
     "blockNumber": 11532210,
     "transactionIndex": 88,
-    "logIndex": 0,
+    "logIndex": 212,
     "transactionHash": "0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524",
     "timestamp": 1609024088,
     "date": "2020-12-26 23:08:08 UTC",
@@ -721,4 +680,44 @@ TIME ~ CLOCK - <INFO>  : call to 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at b
     "begBalDiff": "",
     "endBalDiff": "",
     "endBalCalc": ""
+  },  {
+    "blockNumber": 11532210,
+    "transactionIndex": 88,
+    "logIndex": 213,
+    "transactionHash": "0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524",
+    "timestamp": 1609024088,
+    "date": "2020-12-26 23:08:08 UTC",
+    "assetAddr": "0x111111111117dc0aa78b770fa6a738034120c302",
+    "assetSymbol": "1INCH",
+    "decimals": 18,
+    "spotPrice": 1.64874,
+    "priceSource": "uniswap",
+    "accountedFor": "0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7",
+    "sender": "0x94bc2a1c732bcad7343b25af48385fe76e08734f",
+    "recipient": "0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7",
+    "begBal": "267771933202286931546",
+    "amountNet": "59550453791219126172",
+    "endBal": "327322386993506057718",
+    "reconciliationType": "regular",
+    "reconciled": true,
+    "totalIn": "59550453791219126172",
+    "amountIn": "59550453791219126172",
+    "internalIn": "",
+    "selfDestructIn": "",
+    "minerBaseRewardIn": "",
+    "minerNephewRewardIn": "",
+    "minerTxFeeIn": "",
+    "minerUncleRewardIn": "",
+    "prefundIn": "",
+    "totalOut": "",
+    "amountOut": "",
+    "internalOut": "",
+    "selfDestructOut": "",
+    "gasOut": "",
+    "totalOutLessGas": "",
+    "prevAppBlk": 11532209,
+    "prevBal": "267771933202286931546",
+    "begBalDiff": "",
+    "endBalDiff": "",
+    "endBalCalc": "327322386993506057718"
   }] }

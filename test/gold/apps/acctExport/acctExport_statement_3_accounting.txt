@@ -8,6 +8,7 @@ TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    blockNumber:         0
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    270
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    prefundIn:           1970000000000000000000
 TIME ~ CLOCK - <INFO>  :    totalIn:             1970000000000000000000
 TIME ~ CLOCK - <INFO>  :    amountNet:           1970000000000000000000
@@ -18,6 +19,7 @@ TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
 TIME ~ CLOCK - <INFO>  :    blockNumber:         0
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    270
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    prefundIn:           1970000000000000000000
 TIME ~ CLOCK - <INFO>  :    totalIn:             1970000000000000000000
 TIME ~ CLOCK - <INFO>  :    amountNet:           1970000000000000000000
@@ -99,6 +101,7 @@ TIME ~ CLOCK - <INFO>  : Trial balance:
 TIME ~ CLOCK - <INFO>  :    hash:                0x10893338fa5633ab747450b8698457fb047098f87f78e98b3dbee3134067b6b8
 TIME ~ CLOCK - <INFO>  :    blockNumber:         46685
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    0
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              1970000000000000000000
 TIME ~ CLOCK - <INFO>  :    amountOut:           5000000000000000000
 TIME ~ CLOCK - <INFO>  :    gasOut:              10500000000000000
@@ -112,6 +115,7 @@ TIME ~ CLOCK - <INFO>  : Trial balance:
 TIME ~ CLOCK - <INFO>  :    hash:                0x10893338fa5633ab747450b8698457fb047098f87f78e98b3dbee3134067b6b8
 TIME ~ CLOCK - <INFO>  :    blockNumber:         46685
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    0
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              1970000000000000000000
 TIME ~ CLOCK - <INFO>  :    amountOut:           5000000000000000000
 TIME ~ CLOCK - <INFO>  :    gasOut:              10500000000000000
@@ -200,6 +204,7 @@ TIME ~ CLOCK - <INFO>  : Trial balance:
 TIME ~ CLOCK - <INFO>  :    hash:                0x10d5c5f2386c6d6d93ca6b43fa25e8679971d07448db8d6c81d856ff3c3c001a
 TIME ~ CLOCK - <INFO>  :    blockNumber:         46709
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    0
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              1964989500000000000000
 TIME ~ CLOCK - <INFO>  :    amountOut:           1964889500000000000000
 TIME ~ CLOCK - <INFO>  :    gasOut:              10500000000000000
@@ -213,6 +218,7 @@ TIME ~ CLOCK - <INFO>  : Trial balance:
 TIME ~ CLOCK - <INFO>  :    hash:                0x10d5c5f2386c6d6d93ca6b43fa25e8679971d07448db8d6c81d856ff3c3c001a
 TIME ~ CLOCK - <INFO>  :    blockNumber:         46709
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    0
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
 TIME ~ CLOCK - <INFO>  :    begBal:              1964989500000000000000
 TIME ~ CLOCK - <INFO>  :    amountOut:           1964889500000000000000
 TIME ~ CLOCK - <INFO>  :    gasOut:              10500000000000000
