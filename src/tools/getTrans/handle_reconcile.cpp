@@ -17,7 +17,10 @@ bool visitReconciliation(CTransaction& trans, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
 
     opt->getPrevNext(NOPOS, trans);
-    opt->statementManager.getStatements(trans);
+    if (!opt->statementManager.getStatements(trans)) {
+        return false;  // user quit
+    }
+    // TODO: Note - we don't cache here since this reconciliation is incomplete
 
     bool isText = (expContext().exportFmt & (TXT1 | CSV1));
     for (auto statement : trans.statements) {

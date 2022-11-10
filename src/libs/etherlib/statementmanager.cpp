@@ -52,7 +52,7 @@ bool CStatementManager::getStatements(CTransaction& trans) {
                 statement.reconcileFlows_traces(isTop);
             }
             statement.reconcileBalances(isTop, prevBlock, nextBlock, previousBalances[tokenKey].balance);
-            statement.reconcileLabel(isTop, prevBlock, nextBlock);
+            statement.reconcileLabel(prevBlock, nextBlock);
             if (statement.amountNet() != 0) {
                 trans.statements.push_back(statement);
                 previousBalances[tokenKey] = statement;
@@ -68,7 +68,7 @@ bool CStatementManager::getStatements(CTransaction& trans) {
             CReconciliation statement(accountedFor, FAKE_ETH_ADDRESS, &trans);
             statement.reconcileFlows_traces(isTop);
             statement.reconcileBalances(isTop, prevBlock, nextBlock, prevBal);
-            statement.reconcileLabel(isTop, prevBlock, nextBlock);
+            statement.reconcileLabel(prevBlock, nextBlock);
             statement.assetSymbol = expContext().asEther ? "ETH" : "WEI";
             statement.encoding = trace.action.input.size() >= 10 ? trace.action.input.substr(0, 10) : "";
             statement.signature = trans.Format("[{COMPRESSEDTRACE}]");
@@ -86,12 +86,7 @@ bool CStatementManager::getStatements(CTransaction& trans) {
         st->spotPrice = getPriceInUsd(st->assetAddr, st->priceSource, st->blockNumber);
     }
 
-    if (forExport) {
-        trans.cacheIfReconciled(accountedFor);
-        return !shouldQuit();
-    }
-
-    return trans.statements.size() > 0 && !shouldQuit();
+    return !shouldQuit();
 }
 
 //--------------------------------------------------------------

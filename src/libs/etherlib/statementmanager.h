@@ -52,7 +52,6 @@ class CStatementManager {
     blknum_t nextBlock{NOPOS};
     bigint_t prevBal{0};
     recon_t which{REC_NONE};
-    bool forExport{false};
     CAddressBoolMap assetFilter;
     bool getTransfers(const CTransaction& trans);
     bool getStatements(CTransaction& trans);

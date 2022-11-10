@@ -57,7 +57,7 @@ bigint_t CReconciliation::amountNet(void) const {
 }
 
 //-----------------------------------------------------------------------
-bool CReconciliation::trailBalance(void) const {
+bool CReconciliation::trialBalance(void) const {
     return begBal + totalIn() - totalOut() == endBal;
 }
 

@@ -28,6 +28,102 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           -16792272000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              463527931379861210
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: token
+TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
+TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    begBal:              267771933202286931546
+TIME ~ CLOCK - <INFO>  :    amountIn:            59550453791219126172
+TIME ~ CLOCK - <INFO>  :    totalIn:             59550453791219126172
+TIME ~ CLOCK - <INFO>  :    amountNet:           59550453791219126172
+TIME ~ CLOCK - <INFO>  :    endBal:              327322386993506057718
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: token
+TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
+TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    amountIn:            4054835016831281379389
+TIME ~ CLOCK - <INFO>  :    totalIn:             4054835016831281379389
+TIME ~ CLOCK - <INFO>  :    amountNet:           4054835016831281379389
+TIME ~ CLOCK - <INFO>  :    endBal:              4054835016831281379389
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: token
+TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
+TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    begBal:              4054835016831281379389
+TIME ~ CLOCK - <INFO>  :    endBal:              4054835016831281379389
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: token
+TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
+TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    begBal:              4054835016831281379389
+TIME ~ CLOCK - <INFO>  :    endBal:              4054835016831281379389
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: token
+TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
+TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    begBal:              4054835016831281379389
+TIME ~ CLOCK - <INFO>  :    endBal:              4054835016831281379389
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: token
+TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
+TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    begBal:              4054835016831281379389
+TIME ~ CLOCK - <INFO>  :    amountOut:           4054835016831281379389
+TIME ~ CLOCK - <INFO>  :    totalOut:            4054835016831281379389
+TIME ~ CLOCK - <INFO>  :    amountNet:           -4054835016831281379389
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: token
+TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
+TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: token
+TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
+TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: token
+TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
+TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: token
+TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
+TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: token
+TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
+TIME ~ CLOCK - <INFO>  :    blockNumber:         11532210
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    88
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------traces-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: by-trace
 TIME ~ CLOCK - <INFO>  :    hash:                0x88af8073e7b1253ad09c9a46194fb2644a20e568e1420b303d98aa3bc5599524
@@ -498,7 +594,7 @@ TIME ~ CLOCK - <INFO>  : call to 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at b
     "begBal": "267771933202286931546",
     "amountNet": "59550453791219126172",
     "endBal": "327322386993506057718",
-    "reconciliationType": "token",
+    "reconciliationType": "regular",
     "reconciled": true,
     "totalIn": "59550453791219126172",
     "amountIn": "59550453791219126172",
@@ -538,7 +634,7 @@ TIME ~ CLOCK - <INFO>  : call to 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at b
     "begBal": "",
     "amountNet": "4054835016831281379389",
     "endBal": "4054835016831281379389",
-    "reconciliationType": "token",
+    "reconciliationType": "regular",
     "reconciled": true,
     "totalIn": "4054835016831281379389",
     "amountIn": "4054835016831281379389",
@@ -578,7 +674,7 @@ TIME ~ CLOCK - <INFO>  : call to 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at b
     "begBal": "4054835016831281379389",
     "amountNet": "-4054835016831281379389",
     "endBal": "",
-    "reconciliationType": "token",
+    "reconciliationType": "regular",
     "reconciled": true,
     "totalIn": "",
     "amountIn": "",

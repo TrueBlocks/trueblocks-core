@@ -248,7 +248,6 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     statementManager.which = traces ? REC_ALL : REC_SOME;
-    statementManager.forExport = true;
 
     for (auto addr : addrs) {
         CMonitor monitor;

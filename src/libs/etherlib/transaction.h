@@ -90,7 +90,6 @@ class CTransaction : public CBaseNode {
     bool loadTransAsPrefund(blknum_t bn, blknum_t txid, const address_t& addr, const wei_t& amount);
     bool loadTransAsBlockReward(blknum_t bn, blknum_t txid, const address_t& addr);
     bool loadTransAsUncleReward(blknum_t bn, blknum_t uncleBn, const address_t& addr);
-    bool getStatements(const address_t& accountedFor, CStatementManager& statementManger);
     bool isReconciled(CReconciliation& which) const;
     bool readReconsFromCache(const address_t& accountedFor);
     void cacheIfReconciled(const address_t& accountedFor) const;

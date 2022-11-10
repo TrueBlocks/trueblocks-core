@@ -24,7 +24,10 @@ bool statements_Display(CTraverser* trav, void* data) {
         }
 
         opt->getPrevNext(trav->index, trav->trans);
-        opt->statementManager.getStatements(trav->trans);
+        if (!opt->statementManager.getStatements(trav->trans)) {
+            return false;  // user quit
+        }
+        trav->trans.cacheIfReconciled(opt->statementManager.accountedFor);
 
         for (auto statement : trav->trans.statements) {
             bool checkFlow = !opt->flow.empty();

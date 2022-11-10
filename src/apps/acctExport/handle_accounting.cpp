@@ -25,7 +25,10 @@ bool acct_Display(CTraverser* trav, void* data) {
 
         if (opt->accounting) {
             opt->getPrevNext(trav->index, trav->trans);
-            opt->statementManager.getStatements(trav->trans);
+            if (!opt->statementManager.getStatements(trav->trans)) {
+                return false;  // user quit
+            }
+            trav->trans.cacheIfReconciled(opt->statementManager.accountedFor);
         }
 
         cout << ((isJson() && !opt->firstOut) ? ", " : "");

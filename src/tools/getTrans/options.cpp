@@ -126,7 +126,6 @@ bool COptions::parseArguments(string_q& command) {
         if (!loadNames())
             return usage("Could not load names database.");
         statementManager.which = trace ? REC_ALL : REC_SOME;
-        statementManager.forExport = false;
         statementManager.accountedFor = account_for;
     }
 

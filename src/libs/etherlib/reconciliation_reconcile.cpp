@@ -46,26 +46,26 @@ namespace qblocks {
         LOG_ONE("totalOut:            ", totalOut(), 0);                                                               \
         LOG_ONE("amountNet:           ", amountNet(), 0);                                                              \
         LOG_ONE("endBal:              ", endBal, 0);                                                                   \
-        LOG_ONE("begBalDiff:          ", trailBalance() ? 0 : begBalDiff(), 0);                                        \
-        LOG_ONE("endBalDiff:          ", trailBalance() ? 0 : endBalDiff(), 0);                                        \
-        LOG_ONE("endBalCalc:          ", trailBalance() ? 0 : endBalCalc(), 0);                                        \
-        LOG_INFO("   trialBalance:        ", (trailBalance() ? "balanced" : "not balanced"));                          \
+        LOG_ONE("begBalDiff:          ", trialBalance() ? 0 : begBalDiff(), 0);                                        \
+        LOG_ONE("endBalDiff:          ", trialBalance() ? 0 : endBalDiff(), 0);                                        \
+        LOG_ONE("endBalCalc:          ", trialBalance() ? 0 : endBalCalc(), 0);                                        \
+        LOG_INFO("   trialBalance:        ", (trialBalance() ? "balanced" : "not balanced"));                          \
         LOG_INFO("--------------------------------------------------------");                                          \
     }
 
 //-----------------------------------------------------------------------
 bool CReconciliation::reconcileFlows(bool isTop, const CTransfer& transfer) {
-    if (!isTop) {
-        sender = transfer.sender;
-        recipient = transfer.recipient;
-        return true;
-    }
-
     begBal = 0;
     if (blockNumber > 0) {
         begBal = getBalanceAt(accountedFor, blockNumber - 1);
     }
     endBal = getBalanceAt(accountedFor, blockNumber);
+
+    if (!isTop) {
+        sender = transfer.sender;
+        recipient = transfer.recipient;
+        return true;
+    }
 
     if (pTransaction->from == accountedFor) {
         sender = pTransaction->from;
@@ -91,7 +91,7 @@ bool CReconciliation::reconcileFlows(bool isTop, const CTransfer& transfer) {
     }
 
     LOG_TRIAL_BALANCE("flows");
-    if (trailBalance()) {
+    if (trialBalance()) {
         return true;
     }
 
@@ -192,7 +192,7 @@ bool CReconciliation::reconcileFlows_traces(bool isTop) {
     }
 
     LOG_TRIAL_BALANCE("traces");
-    return trailBalance();
+    return trialBalance();
 }
 
 //-----------------------------------------------------------------------
@@ -208,7 +208,8 @@ bool CReconciliation::reconcileBalances(bool isTop, blknum_t pBn, blknum_t nBn, 
         } else {
             amountIn = (endBal - begBal);
         }
-        return true;
+        LOG_TRIAL_BALANCE("balances");
+        return trialBalance();
     }
 
     prevBal = pBal;
@@ -243,15 +244,11 @@ bool CReconciliation::reconcileBalances(bool isTop, blknum_t pBn, blknum_t nBn, 
     }
 
     LOG_TRIAL_BALANCE("balances");
-    return trailBalance();
+    return trialBalance();
 }
 
 //-----------------------------------------------------------------------
-bool CReconciliation::reconcileLabel(bool isTop, blknum_t pBn, blknum_t nBn) {
-    if (!isTop) {
-        return true;
-    }
-
+bool CReconciliation::reconcileLabel(blknum_t pBn, blknum_t nBn) {
     bool prevDifferent = prevAppBlk != blockNumber;
     bool nextDifferent = blockNumber != nBn;
     if (pTransaction->blockNumber == 0) {
@@ -270,7 +267,7 @@ bool CReconciliation::reconcileLabel(bool isTop, blknum_t pBn, blknum_t nBn) {
         reconciliationType = "partial-partial";
     }
 
-    return trailBalance();
+    return trialBalance();
 }
 
 }  // namespace qblocks
