@@ -17,6 +17,7 @@ namespace qblocks {
 
 //--------------------------------------------------------------
 bool CStatementManager::getStatements(CTransaction& trans) {
+#if 0
     if (trans.readReconsFromCache(accountedFor)) {
         for (auto& statement : trans.statements) {
             string_q key = statementKey(statement.accountedFor, statement.assetAddr);
@@ -164,10 +165,13 @@ bool CStatementManager::getTransfers(const CTransaction& trans) {
     transfers.insert(transfers.end(), tmp.begin(), tmp.end());
 
     return transfers.size() > 0;
+#endif
+    return true;
 }
 
 //--------------------------------------------------------------------------------
 void CStatementManager::getPrevNext(bool simple, size_t index, const CTransaction& trans) {
+#if 0
     if (simple) {
         prevBlock = trans.blockNumber == 0 ? 0 : trans.blockNumber - 1;
         nextBlock = trans.blockNumber + 1;
@@ -188,6 +192,7 @@ void CStatementManager::getPrevNext(bool simple, size_t index, const CTransactio
             nextBlock = NOPOS;
         }
     }
+#endif
 }
 
 }  // namespace qblocks

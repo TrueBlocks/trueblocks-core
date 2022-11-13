@@ -29,7 +29,7 @@ bool visitReconciliation(CTransaction& trans, void* data) {
     prev.endBal = trans.blockNumber == 0 ? 0 : getBalanceAt(opt->account_for, trans.blockNumber - 1);
     CReconciliation eth(trans.blockNumber, trans.transactionIndex, trans.timestamp, &trans);
     eth.reconcileEth(prev, trans.blockNumber + 1, &trans, name);
-    eth.spotPrice = getPriceInUsd(trans.blockNumber, eth.priceSource);
+    eth.spotPrice = getPriceInUsd(FAKE_ETH_ADDRESS, eth.priceSource, trans.blockNumber);
 
     if (isText) {
         cout << trim(eth.Format(expContext().fmtMap["format"]), '\t') << endl;

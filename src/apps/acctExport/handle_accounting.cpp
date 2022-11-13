@@ -104,13 +104,13 @@ bool COptions::process_reconciliation(CTraverser* trav) {
         // handle reversed mode here, that code was removed
         pEth.endBal =
             trav->trans.blockNumber == 0 ? 0 : getBalanceAt(accountedFor.address, trav->trans.blockNumber - 1);
-        pEth.spotPrice = getPriceInUsd(trav->trans.blockNumber - 1, pEth.priceSource);
+        pEth.spotPrice = getPriceInUsd(FAKE_ETH_ADDRESS, pEth.priceSource, trav->trans.blockNumber - 1);
         prevStatements[accountedFor.address + "_eth"] = pEth;
     }
 
     CReconciliation eth(trav->trans.blockNumber, trav->trans.transactionIndex, trav->trans.timestamp, &trav->trans);
     eth.reconcileEth(prevStatements[accountedFor.address + "_eth"], nextAppBlk, &trav->trans, accountedFor);
-    eth.spotPrice = getPriceInUsd(trav->trans.blockNumber, eth.priceSource);
+    eth.spotPrice = getPriceInUsd(FAKE_ETH_ADDRESS, eth.priceSource, trav->trans.blockNumber);
     trav->trans.statements.push_back(eth);
     prevStatements[accountedFor.address + "_eth"] = eth;
 
@@ -134,7 +134,7 @@ bool COptions::process_reconciliation(CTraverser* trav) {
                 if (trav->trans.blockNumber > 0)
                     pBal.blockNumber = trav->trans.blockNumber - 1;
                 pBal.endBal = getTokenBalanceOf2(tokenName.address, accountedFor.address, pBal.blockNumber);
-                pBal.spotPrice = getPriceInUsd(pBal.blockNumber, pBal.priceSource, tokenName.address);
+                pBal.spotPrice = getPriceInUsd(tokenName.address, pBal.priceSource, pBal.blockNumber);
                 prevStatements[psKey] = pBal;
             }
 
@@ -150,7 +150,7 @@ bool COptions::process_reconciliation(CTraverser* trav) {
             tokStatement.reconciliationType = "";
             if (tokStatement.amountNet() != 0) {
                 tokStatement.spotPrice =
-                    getPriceInUsd(trav->trans.blockNumber, tokStatement.priceSource, tokenName.address);
+                    getPriceInUsd(tokenName.address, tokStatement.priceSource, trav->trans.blockNumber);
                 trav->trans.statements.push_back(tokStatement);
                 prevStatements[psKey] = tokStatement;
             }

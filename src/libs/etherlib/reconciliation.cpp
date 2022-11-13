@@ -1173,7 +1173,7 @@ bool CReconciliation::readBackLevel_old(CArchive& archive) {
 
     bool isEth = assetSymbol == "ETH" || assetSymbol == "WEI" || assetSymbol.empty();
     address_t addr = isEth ? "" : assetAddr;
-    spotPrice = getPriceInUsd(blockNumber, priceSource, addr);
+    spotPrice = getPriceInUsd(addr, priceSource, blockNumber);
     finishParse();
     return true;
 }
