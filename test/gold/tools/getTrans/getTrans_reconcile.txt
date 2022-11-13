@@ -28,7 +28,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     0
 TIME ~ CLOCK - : 4-----  endBal:        31419034761192445316
@@ -109,8 +109,8 @@ TIME ~ CLOCK - : 4-----reserve1: 4.10678e+07 reserve2: 20930.2 priceOut: 1962.13
     "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
     "assetSymbol": "WEI",
     "decimals": 18,
-    "prevBlk": 0,
-    "prevBlkBal": "31419034761192445316",
+    "prevAppBlk": 0,
+    "prevBal": "31419034761192445316",
     "begBal": "31419034761192445316",
     "endBal": "31419034761192445316",
     "amountIn": "",
@@ -124,7 +124,7 @@ TIME ~ CLOCK - : 4-----reserve1: 4.10678e+07 reserve2: 20930.2 priceOut: 1962.13
     "amountOut": "",
     "internalOut": "",
     "selfDestructOut": "",
-    "gasCostOut": "",
+    "gasOut": "",
     "reconciliationType": "regular",
     "spotPrice": 1962.12646,
     "priceSource": "uniswap",

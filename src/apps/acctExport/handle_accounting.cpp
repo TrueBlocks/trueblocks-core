@@ -138,8 +138,8 @@ bool COptions::process_reconciliation(CTraverser* trav) {
                 prevStatements[psKey] = pBal;
             }
 
-            tokStatement.prevBlk = prevStatements[psKey].blockNumber;
-            tokStatement.prevBlkBal = prevStatements[psKey].endBal;
+            tokStatement.prevAppBlk = prevStatements[psKey].blockNumber;
+            tokStatement.prevBal = prevStatements[psKey].endBal;
             tokStatement.begBal = prevStatements[psKey].endBal;
             tokStatement.endBal = getTokenBalanceAt(tokenName.address, accountedFor.address, trav->trans.blockNumber);
             if (tokStatement.begBal > tokStatement.endBal) {

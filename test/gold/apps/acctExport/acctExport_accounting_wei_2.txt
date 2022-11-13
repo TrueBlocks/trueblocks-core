@@ -33,7 +33,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       5000000000000000000
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     5000000000000000000
 TIME ~ CLOCK - : 4-----  endBal:        5000000000000000000
@@ -69,8 +69,8 @@ params.size: 0
       "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "assetSymbol": "WEI",
       "decimals": 18,
-      "prevBlk": 0,
-      "prevBlkBal": "",
+      "prevAppBlk": 0,
+      "prevBal": "",
       "begBal": "",
       "endBal": "5000000000000000000",
       "amountIn": "",
@@ -84,7 +84,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "reconciliationType": "regular",
       "spotPrice": 1.00000,
       "priceSource": "not-priced",
@@ -124,7 +124,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       5000000000000000000
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     5000000000000000000
 TIME ~ CLOCK - : 4-----  endBal:        10000000000000000000
@@ -160,8 +160,8 @@ params.size: 0
       "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "assetSymbol": "WEI",
       "decimals": 18,
-      "prevBlk": 1,
-      "prevBlkBal": "5000000000000000000",
+      "prevAppBlk": 1,
+      "prevBal": "5000000000000000000",
       "begBal": "5000000000000000000",
       "endBal": "10000000000000000000",
       "amountIn": "",
@@ -175,7 +175,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "reconciliationType": "regular",
       "spotPrice": 1.00000,
       "priceSource": "not-priced",
@@ -215,7 +215,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       3750000000000000000
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     3750000000000000000
 TIME ~ CLOCK - : 4-----  endBal:        13750000000000000000
@@ -251,8 +251,8 @@ params.size: 0
       "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "assetSymbol": "WEI",
       "decimals": 18,
-      "prevBlk": 5,
-      "prevBlkBal": "10000000000000000000",
+      "prevAppBlk": 5,
+      "prevBal": "10000000000000000000",
       "begBal": "10000000000000000000",
       "endBal": "13750000000000000000",
       "amountIn": "",
@@ -266,7 +266,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "reconciliationType": "regular",
       "spotPrice": 1.00000,
       "priceSource": "not-priced",
@@ -306,7 +306,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       5000000000000000000
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     5000000000000000000
 TIME ~ CLOCK - : 4-----  endBal:        18750000000000000000
@@ -342,8 +342,8 @@ params.size: 0
       "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "assetSymbol": "WEI",
       "decimals": 18,
-      "prevBlk": 56,
-      "prevBlkBal": "13750000000000000000",
+      "prevAppBlk": 56,
+      "prevBal": "13750000000000000000",
       "begBal": "13750000000000000000",
       "endBal": "18750000000000000000",
       "amountIn": "",
@@ -357,7 +357,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "reconciliationType": "regular",
       "spotPrice": 1.00000,
       "priceSource": "not-priced",
@@ -397,7 +397,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       3125000000000000000
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     3125000000000000000
 TIME ~ CLOCK - : 4-----  endBal:        21875000000000000000
@@ -433,8 +433,8 @@ params.size: 0
       "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "assetSymbol": "WEI",
       "decimals": 18,
-      "prevBlk": 235,
-      "prevBlkBal": "18750000000000000000",
+      "prevAppBlk": 235,
+      "prevBal": "18750000000000000000",
       "begBal": "18750000000000000000",
       "endBal": "21875000000000000000",
       "amountIn": "",
@@ -448,7 +448,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "reconciliationType": "regular",
       "spotPrice": 1.00000,
       "priceSource": "not-priced",
@@ -488,7 +488,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       5000000000000000000
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     5000000000000000000
 TIME ~ CLOCK - : 4-----  endBal:        26875000000000000000
@@ -524,8 +524,8 @@ params.size: 0
       "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "assetSymbol": "WEI",
       "decimals": 18,
-      "prevBlk": 247,
-      "prevBlkBal": "21875000000000000000",
+      "prevAppBlk": 247,
+      "prevBal": "21875000000000000000",
       "begBal": "21875000000000000000",
       "endBal": "26875000000000000000",
       "amountIn": "",
@@ -539,7 +539,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "reconciliationType": "regular",
       "spotPrice": 1.00000,
       "priceSource": "not-priced",
@@ -579,7 +579,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       3750000000000000000
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     3750000000000000000
 TIME ~ CLOCK - : 4-----  endBal:        30625000000000000000
@@ -615,8 +615,8 @@ params.size: 0
       "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "assetSymbol": "WEI",
       "decimals": 18,
-      "prevBlk": 348,
-      "prevBlkBal": "26875000000000000000",
+      "prevAppBlk": 348,
+      "prevBal": "26875000000000000000",
       "begBal": "26875000000000000000",
       "endBal": "30625000000000000000",
       "amountIn": "",
@@ -630,7 +630,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "reconciliationType": "regular",
       "spotPrice": 1.00000,
       "priceSource": "not-priced",
@@ -670,7 +670,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       3750000000000000000
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     3750000000000000000
 TIME ~ CLOCK - : 4-----  endBal:        34375000000000000000
@@ -706,8 +706,8 @@ params.size: 0
       "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "assetSymbol": "WEI",
       "decimals": 18,
-      "prevBlk": 500,
-      "prevBlkBal": "30625000000000000000",
+      "prevAppBlk": 500,
+      "prevBal": "30625000000000000000",
       "begBal": "30625000000000000000",
       "endBal": "34375000000000000000",
       "amountIn": "",
@@ -721,7 +721,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "reconciliationType": "regular",
       "spotPrice": 1.00000,
       "priceSource": "not-priced",
@@ -761,7 +761,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       2500000000000000000
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     2500000000000000000
 TIME ~ CLOCK - : 4-----  endBal:        36875000000000000000
@@ -797,8 +797,8 @@ params.size: 0
       "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "assetSymbol": "WEI",
       "decimals": 18,
-      "prevBlk": 563,
-      "prevBlkBal": "34375000000000000000",
+      "prevAppBlk": 563,
+      "prevBal": "34375000000000000000",
       "begBal": "34375000000000000000",
       "endBal": "36875000000000000000",
       "amountIn": "",
@@ -812,7 +812,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "reconciliationType": "regular",
       "spotPrice": 1.00000,
       "priceSource": "not-priced",
@@ -852,7 +852,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       5156250000000000000
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     5156250000000000000
 TIME ~ CLOCK - : 4-----  endBal:        42031250000000000000
@@ -888,8 +888,8 @@ params.size: 0
       "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "assetSymbol": "WEI",
       "decimals": 18,
-      "prevBlk": 987,
-      "prevBlkBal": "36875000000000000000",
+      "prevAppBlk": 987,
+      "prevBal": "36875000000000000000",
       "begBal": "36875000000000000000",
       "endBal": "42031250000000000000",
       "amountIn": "",
@@ -903,7 +903,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "reconciliationType": "regular",
       "spotPrice": 1.00000,
       "priceSource": "not-priced",
@@ -943,7 +943,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       3750000000000000000
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     3750000000000000000
 TIME ~ CLOCK - : 4-----  endBal:        45781250000000000000
@@ -979,8 +979,8 @@ params.size: 0
       "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "assetSymbol": "WEI",
       "decimals": 18,
-      "prevBlk": 1450,
-      "prevBlkBal": "42031250000000000000",
+      "prevAppBlk": 1450,
+      "prevBal": "42031250000000000000",
       "begBal": "42031250000000000000",
       "endBal": "45781250000000000000",
       "amountIn": "",
@@ -994,7 +994,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "reconciliationType": "regular",
       "spotPrice": 1.00000,
       "priceSource": "not-priced",
@@ -1034,7 +1034,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       3750000000000000000
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     3750000000000000000
 TIME ~ CLOCK - : 4-----  endBal:        49531250000000000000
@@ -1070,8 +1070,8 @@ params.size: 0
       "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "assetSymbol": "WEI",
       "decimals": 18,
-      "prevBlk": 1580,
-      "prevBlkBal": "45781250000000000000",
+      "prevAppBlk": 1580,
+      "prevBal": "45781250000000000000",
       "begBal": "45781250000000000000",
       "endBal": "49531250000000000000",
       "amountIn": "",
@@ -1085,7 +1085,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "reconciliationType": "regular",
       "spotPrice": 1.00000,
       "priceSource": "not-priced",
@@ -1125,7 +1125,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       5000000000000000000
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     5000000000000000000
 TIME ~ CLOCK - : 4-----  endBal:        54531250000000000000
@@ -1161,8 +1161,8 @@ params.size: 0
       "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "assetSymbol": "WEI",
       "decimals": 18,
-      "prevBlk": 1586,
-      "prevBlkBal": "49531250000000000000",
+      "prevAppBlk": 1586,
+      "prevBal": "49531250000000000000",
       "begBal": "49531250000000000000",
       "endBal": "54531250000000000000",
       "amountIn": "",
@@ -1176,7 +1176,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "reconciliationType": "regular",
       "spotPrice": 1.00000,
       "priceSource": "not-priced",
@@ -1216,7 +1216,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       3750000000000000000
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     3750000000000000000
 TIME ~ CLOCK - : 4-----  endBal:        58281250000000000000
@@ -1252,8 +1252,8 @@ params.size: 0
       "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "assetSymbol": "WEI",
       "decimals": 18,
-      "prevBlk": 1861,
-      "prevBlkBal": "54531250000000000000",
+      "prevAppBlk": 1861,
+      "prevBal": "54531250000000000000",
       "begBal": "54531250000000000000",
       "endBal": "58281250000000000000",
       "amountIn": "",
@@ -1267,7 +1267,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "reconciliationType": "regular",
       "spotPrice": 1.00000,
       "priceSource": "not-priced",
@@ -1307,7 +1307,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       5000000000000000000
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     5000000000000000000
 TIME ~ CLOCK - : 4-----  endBal:        63281250000000000000
@@ -1343,8 +1343,8 @@ params.size: 0
       "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "assetSymbol": "WEI",
       "decimals": 18,
-      "prevBlk": 1912,
-      "prevBlkBal": "58281250000000000000",
+      "prevAppBlk": 1912,
+      "prevBal": "58281250000000000000",
       "begBal": "58281250000000000000",
       "endBal": "63281250000000000000",
       "amountIn": "",
@@ -1358,7 +1358,7 @@ params.size: 0
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "reconciliationType": "regular",
       "spotPrice": 1.00000,
       "priceSource": "not-priced",

@@ -90,7 +90,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     0
 TIME ~ CLOCK - : 4-----  endBal:        5137097246179548557
@@ -179,7 +179,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    1188918000000000
+TIME ~ CLOCK - : 8------  gasOut:    1188918000000000
 TIME ~ CLOCK - : 4-----  totalOut:      1188918000000000
 TIME ~ CLOCK - : 4-----  amountNet:     -1188918000000000
 TIME ~ CLOCK - : 4-----  endBal:        5135908328179548557
@@ -268,7 +268,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    1922570000000000
+TIME ~ CLOCK - : 8------  gasOut:    1922570000000000
 TIME ~ CLOCK - : 4-----  totalOut:      1922570000000000
 TIME ~ CLOCK - : 4-----  amountNet:     -1922570000000000
 TIME ~ CLOCK - : 4-----  endBal:        5133985758179548557
@@ -357,7 +357,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     0
 TIME ~ CLOCK - : 4-----  endBal:        5133985758179548557
@@ -446,7 +446,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     0
 TIME ~ CLOCK - : 4-----  endBal:        5171985758179548557
@@ -473,7 +473,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       38000000000000000
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     38000000000000000
 TIME ~ CLOCK - : 4-----  endBal:        5171985758179548557
@@ -562,7 +562,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     0
 TIME ~ CLOCK - : 4-----  endBal:        5171985758179548557
@@ -651,7 +651,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     0
 TIME ~ CLOCK - : 4-----  endBal:        5171985758179548557
@@ -740,7 +740,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     0
 TIME ~ CLOCK - : 4-----  endBal:        5171985758179548557
@@ -829,7 +829,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     0
 TIME ~ CLOCK - : 4-----  endBal:        5171985758179548557
@@ -918,7 +918,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     0
 TIME ~ CLOCK - : 4-----  endBal:        5171985758179548557
@@ -1007,7 +1007,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     0
 TIME ~ CLOCK - : 4-----  endBal:        5171985758179548557
@@ -1096,7 +1096,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    1739343000000000
+TIME ~ CLOCK - : 8------  gasOut:    1739343000000000
 TIME ~ CLOCK - : 4-----  totalOut:      1739343000000000
 TIME ~ CLOCK - : 4-----  amountNet:     -1739343000000000
 TIME ~ CLOCK - : 4-----  endBal:        5168485149679548557
@@ -1123,7 +1123,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    1739343000000000
+TIME ~ CLOCK - : 8------  gasOut:    1739343000000000
 TIME ~ CLOCK - : 4-----  totalOut:      1739343000000000
 TIME ~ CLOCK - : 4-----  amountNet:     -1739343000000000
 TIME ~ CLOCK - : 4-----  endBal:        5168485149679548557
@@ -1150,7 +1150,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    1739343000000000
+TIME ~ CLOCK - : 8------  gasOut:    1739343000000000
 TIME ~ CLOCK - : 4-----  totalOut:      1739343000000000
 TIME ~ CLOCK - : 4-----  amountNet:     -1739343000000000
 TIME ~ CLOCK - : 4-----  endBal:        5170246415179548557
@@ -1239,7 +1239,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    1761265500000000
+TIME ~ CLOCK - : 8------  gasOut:    1761265500000000
 TIME ~ CLOCK - : 4-----  totalOut:      1761265500000000
 TIME ~ CLOCK - : 4-----  amountNet:     -1761265500000000
 TIME ~ CLOCK - : 4-----  endBal:        5168485149679548557
@@ -1266,7 +1266,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    1761265500000000
+TIME ~ CLOCK - : 8------  gasOut:    1761265500000000
 TIME ~ CLOCK - : 4-----  totalOut:      1761265500000000
 TIME ~ CLOCK - : 4-----  amountNet:     -1761265500000000
 TIME ~ CLOCK - : 4-----  endBal:        5168485149679548557
@@ -1293,7 +1293,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    1761265500000000
+TIME ~ CLOCK - : 8------  gasOut:    1761265500000000
 TIME ~ CLOCK - : 4-----  totalOut:      1761265500000000
 TIME ~ CLOCK - : 4-----  amountNet:     -1761265500000000
 TIME ~ CLOCK - : 4-----  endBal:        5168485149679548557
@@ -1382,7 +1382,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     0
 TIME ~ CLOCK - : 4-----  endBal:        5168485149679548557
@@ -1471,7 +1471,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    1232952000000000
+TIME ~ CLOCK - : 8------  gasOut:    1232952000000000
 TIME ~ CLOCK - : 4-----  totalOut:      1232952000000000
 TIME ~ CLOCK - : 4-----  amountNet:     -1232952000000000
 TIME ~ CLOCK - : 4-----  endBal:        5165331677679548557
@@ -1498,7 +1498,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    1232952000000000
+TIME ~ CLOCK - : 8------  gasOut:    1232952000000000
 TIME ~ CLOCK - : 4-----  totalOut:      1232952000000000
 TIME ~ CLOCK - : 4-----  amountNet:     -1232952000000000
 TIME ~ CLOCK - : 4-----  endBal:        5165331677679548557
@@ -1525,7 +1525,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    1232952000000000
+TIME ~ CLOCK - : 8------  gasOut:    1232952000000000
 TIME ~ CLOCK - : 4-----  totalOut:      1232952000000000
 TIME ~ CLOCK - : 4-----  amountNet:     -1232952000000000
 TIME ~ CLOCK - : 4-----  endBal:        5167252197679548557
@@ -1614,7 +1614,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    1920520000000000
+TIME ~ CLOCK - : 8------  gasOut:    1920520000000000
 TIME ~ CLOCK - : 4-----  totalOut:      1920520000000000
 TIME ~ CLOCK - : 4-----  amountNet:     -1920520000000000
 TIME ~ CLOCK - : 4-----  endBal:        5165331677679548557
@@ -1641,7 +1641,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    1920520000000000
+TIME ~ CLOCK - : 8------  gasOut:    1920520000000000
 TIME ~ CLOCK - : 4-----  totalOut:      1920520000000000
 TIME ~ CLOCK - : 4-----  amountNet:     -1920520000000000
 TIME ~ CLOCK - : 4-----  endBal:        5165331677679548557
@@ -1668,7 +1668,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    1920520000000000
+TIME ~ CLOCK - : 8------  gasOut:    1920520000000000
 TIME ~ CLOCK - : 4-----  totalOut:      1920520000000000
 TIME ~ CLOCK - : 4-----  amountNet:     -1920520000000000
 TIME ~ CLOCK - : 4-----  endBal:        5165331677679548557
@@ -1757,7 +1757,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     0
 TIME ~ CLOCK - : 4-----  endBal:        5355331677679548557
@@ -1784,7 +1784,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       190000000000000000
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     190000000000000000
 TIME ~ CLOCK - : 4-----  endBal:        5355331677679548557
@@ -1873,7 +1873,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     0
 TIME ~ CLOCK - : 4-----  endBal:        5355331677679548557
@@ -1962,7 +1962,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    1321460340000000
+TIME ~ CLOCK - : 8------  gasOut:    1321460340000000
 TIME ~ CLOCK - : 4-----  totalOut:      1321460340000000
 TIME ~ CLOCK - : 4-----  amountNet:     -1321460340000000
 TIME ~ CLOCK - : 4-----  endBal:        5351951831439548557
@@ -1989,7 +1989,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    1321460340000000
+TIME ~ CLOCK - : 8------  gasOut:    1321460340000000
 TIME ~ CLOCK - : 4-----  totalOut:      1321460340000000
 TIME ~ CLOCK - : 4-----  amountNet:     -1321460340000000
 TIME ~ CLOCK - : 4-----  endBal:        5351951831439548557
@@ -2016,7 +2016,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    1321460340000000
+TIME ~ CLOCK - : 8------  gasOut:    1321460340000000
 TIME ~ CLOCK - : 4-----  totalOut:      1321460340000000
 TIME ~ CLOCK - : 4-----  amountNet:     -1321460340000000
 TIME ~ CLOCK - : 4-----  endBal:        5354010217339548557
@@ -2105,7 +2105,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    2058385900000000
+TIME ~ CLOCK - : 8------  gasOut:    2058385900000000
 TIME ~ CLOCK - : 4-----  totalOut:      2058385900000000
 TIME ~ CLOCK - : 4-----  amountNet:     -2058385900000000
 TIME ~ CLOCK - : 4-----  endBal:        5351951831439548557
@@ -2132,7 +2132,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    2058385900000000
+TIME ~ CLOCK - : 8------  gasOut:    2058385900000000
 TIME ~ CLOCK - : 4-----  totalOut:      2058385900000000
 TIME ~ CLOCK - : 4-----  amountNet:     -2058385900000000
 TIME ~ CLOCK - : 4-----  endBal:        5351951831439548557
@@ -2159,7 +2159,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    2058385900000000
+TIME ~ CLOCK - : 8------  gasOut:    2058385900000000
 TIME ~ CLOCK - : 4-----  totalOut:      2058385900000000
 TIME ~ CLOCK - : 4-----  amountNet:     -2058385900000000
 TIME ~ CLOCK - : 4-----  endBal:        5351951831439548557
@@ -2248,7 +2248,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     0
 TIME ~ CLOCK - : 4-----  endBal:        5351951831439548557

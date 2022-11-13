@@ -83,7 +83,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     0
 TIME ~ CLOCK - : 4-----  endBal:        5137097246179548557
@@ -271,8 +271,8 @@ TIME ~ CLOCK - : 4-----reserve1: 3.85861e+06 reserve2: 16688.7 priceOut: 231.211
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
-      "prevBlk": 10277295,
-      "prevBlkBal": "5.137097246179548557",
+      "prevAppBlk": 10277295,
+      "prevBal": "5.137097246179548557",
       "begBal": "5.137097246179548557",
       "endBal": "5.137097246179548557",
       "amountIn": "",
@@ -286,7 +286,7 @@ TIME ~ CLOCK - : 4-----reserve1: 3.85861e+06 reserve2: 16688.7 priceOut: 231.211
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "reconciliationType": "regular",
       "spotPrice": 231.21081,
       "priceSource": "uniswap",
@@ -306,8 +306,8 @@ TIME ~ CLOCK - : 4-----reserve1: 3.85861e+06 reserve2: 16688.7 priceOut: 231.211
       "assetAddr": "0x6b175474e89094c44da98b954eedeac495271d0f",
       "assetSymbol": "DAI",
       "decimals": 18,
-      "prevBlk": 10277779,
-      "prevBlkBal": "1158.567776639199461740",
+      "prevAppBlk": 10277779,
+      "prevBal": "1158.567776639199461740",
       "begBal": "1158.567776639199461740",
       "endBal": "1168.267776639199461740",
       "amountIn": "9.700000000000000000",
@@ -321,7 +321,7 @@ TIME ~ CLOCK - : 4-----reserve1: 3.85861e+06 reserve2: 16688.7 priceOut: 231.211
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "spotPrice": 1.00000,
       "priceSource": "stable-coin",
       "begBalDiff": "",
@@ -358,7 +358,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    1188918000000000
+TIME ~ CLOCK - : 8------  gasOut:    1188918000000000
 TIME ~ CLOCK - : 4-----  totalOut:      1188918000000000
 TIME ~ CLOCK - : 4-----  amountNet:     -1188918000000000
 TIME ~ CLOCK - : 4-----  endBal:        5135908328179548557
@@ -489,8 +489,8 @@ TIME ~ CLOCK - : 4-----reserve1: 3.87445e+06 reserve2: 16581.1 priceOut: 233.666
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
-      "prevBlk": 10277780,
-      "prevBlkBal": "5.137097246179548557",
+      "prevAppBlk": 10277780,
+      "prevBal": "5.137097246179548557",
       "begBal": "5.137097246179548557",
       "endBal": "5.135908328179548557",
       "amountIn": "",
@@ -504,7 +504,7 @@ TIME ~ CLOCK - : 4-----reserve1: 3.87445e+06 reserve2: 16581.1 priceOut: 233.666
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "0.001188918000000000",
+      "gasOut": "0.001188918000000000",
       "reconciliationType": "regular",
       "spotPrice": 233.66638,
       "priceSource": "uniswap",
@@ -542,7 +542,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    1922570000000000
+TIME ~ CLOCK - : 8------  gasOut:    1922570000000000
 TIME ~ CLOCK - : 4-----  totalOut:      1922570000000000
 TIME ~ CLOCK - : 4-----  amountNet:     -1922570000000000
 TIME ~ CLOCK - : 4-----  endBal:        5133985758179548557
@@ -730,8 +730,8 @@ TIME ~ CLOCK - : 4-----reserve1: 3.87235e+06 reserve2: 16570.5 priceOut: 233.69 
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
-      "prevBlk": 10279295,
-      "prevBlkBal": "5.135908328179548557",
+      "prevAppBlk": 10279295,
+      "prevBal": "5.135908328179548557",
       "begBal": "5.135908328179548557",
       "endBal": "5.133985758179548557",
       "amountIn": "",
@@ -745,7 +745,7 @@ TIME ~ CLOCK - : 4-----reserve1: 3.87235e+06 reserve2: 16570.5 priceOut: 233.69 
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "0.001922570000000000",
+      "gasOut": "0.001922570000000000",
       "reconciliationType": "regular",
       "spotPrice": 233.68964,
       "priceSource": "uniswap",
@@ -765,8 +765,8 @@ TIME ~ CLOCK - : 4-----reserve1: 3.87235e+06 reserve2: 16570.5 priceOut: 233.69 
       "assetAddr": "0x6b175474e89094c44da98b954eedeac495271d0f",
       "assetSymbol": "DAI",
       "decimals": 18,
-      "prevBlk": 10277780,
-      "prevBlkBal": "1168.267776639199461740",
+      "prevAppBlk": 10277780,
+      "prevBal": "1168.267776639199461740",
       "begBal": "1168.267776639199461740",
       "endBal": "1163.267776639199461740",
       "amountIn": "",
@@ -780,7 +780,7 @@ TIME ~ CLOCK - : 4-----reserve1: 3.87235e+06 reserve2: 16570.5 priceOut: 233.69 
       "amountOut": "5.0000000",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "spotPrice": 1.00000,
       "priceSource": "stable-coin",
       "begBalDiff": "",
@@ -817,7 +817,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     0
 TIME ~ CLOCK - : 4-----  endBal:        5133985758179548557
@@ -1005,8 +1005,8 @@ TIME ~ CLOCK - : 4-----reserve1: 3.86856e+06 reserve2: 16588.1 priceOut: 233.213
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
-      "prevBlk": 10279310,
-      "prevBlkBal": "5.133985758179548557",
+      "prevAppBlk": 10279310,
+      "prevBal": "5.133985758179548557",
       "begBal": "5.133985758179548557",
       "endBal": "5.133985758179548557",
       "amountIn": "",
@@ -1020,7 +1020,7 @@ TIME ~ CLOCK - : 4-----reserve1: 3.86856e+06 reserve2: 16588.1 priceOut: 233.213
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "reconciliationType": "regular",
       "spotPrice": 233.21301,
       "priceSource": "uniswap",
@@ -1040,8 +1040,8 @@ TIME ~ CLOCK - : 4-----reserve1: 3.86856e+06 reserve2: 16588.1 priceOut: 233.213
       "assetAddr": "0x6b175474e89094c44da98b954eedeac495271d0f",
       "assetSymbol": "DAI",
       "decimals": 18,
-      "prevBlk": 10279310,
-      "prevBlkBal": "1163.267776639199461740",
+      "prevAppBlk": 10279310,
+      "prevBal": "1163.267776639199461740",
       "begBal": "1163.267776639199461740",
       "endBal": "1168.017776639199461740",
       "amountIn": "4.750000000000000000",
@@ -1055,7 +1055,7 @@ TIME ~ CLOCK - : 4-----reserve1: 3.86856e+06 reserve2: 16588.1 priceOut: 233.213
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "spotPrice": 1.00000,
       "priceSource": "stable-coin",
       "begBalDiff": "",
@@ -1092,7 +1092,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     0
 TIME ~ CLOCK - : 4-----  endBal:        5171985758179548557
@@ -1119,7 +1119,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       38000000000000000
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     38000000000000000
 TIME ~ CLOCK - : 4-----  endBal:        5171985758179548557
@@ -1334,8 +1334,8 @@ TIME ~ CLOCK - : 4-----reserve1: 3.87183e+06 reserve2: 16572.1 priceOut: 233.636
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
-      "prevBlk": 10279650,
-      "prevBlkBal": "5.133985758179548557",
+      "prevAppBlk": 10279650,
+      "prevBal": "5.133985758179548557",
       "begBal": "5.133985758179548557",
       "endBal": "5.171985758179548557",
       "amountIn": "",
@@ -1349,7 +1349,7 @@ TIME ~ CLOCK - : 4-----reserve1: 3.87183e+06 reserve2: 16572.1 priceOut: 233.636
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "reconciliationType": "by-trace",
       "spotPrice": 233.63623,
       "priceSource": "uniswap",
@@ -1387,7 +1387,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     0
 TIME ~ CLOCK - : 4-----  endBal:        5171985758179548557
@@ -2375,8 +2375,8 @@ TIME ~ CLOCK - : 4-----reserve1: 3.85647e+06 reserve2: 16638.6 priceOut: 231.778
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
-      "prevBlk": 10279931,
-      "prevBlkBal": "5.171985758179548557",
+      "prevAppBlk": 10279931,
+      "prevBal": "5.171985758179548557",
       "begBal": "5.171985758179548557",
       "endBal": "5.171985758179548557",
       "amountIn": "",
@@ -2390,7 +2390,7 @@ TIME ~ CLOCK - : 4-----reserve1: 3.85647e+06 reserve2: 16638.6 priceOut: 231.778
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "reconciliationType": "regular",
       "spotPrice": 231.77836,
       "priceSource": "uniswap",
@@ -2410,8 +2410,8 @@ TIME ~ CLOCK - : 4-----reserve1: 3.85647e+06 reserve2: 16638.6 priceOut: 231.778
       "assetAddr": "0x6b175474e89094c44da98b954eedeac495271d0f",
       "assetSymbol": "DAI",
       "decimals": 18,
-      "prevBlk": 10279650,
-      "prevBlkBal": "1168.017776639199461740",
+      "prevAppBlk": 10279650,
+      "prevBal": "1168.017776639199461740",
       "begBal": "1168.017776639199461740",
       "endBal": "1168.967776639199461740",
       "amountIn": "0.950000000000000000",
@@ -2425,7 +2425,7 @@ TIME ~ CLOCK - : 4-----reserve1: 3.85647e+06 reserve2: 16638.6 priceOut: 231.778
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "spotPrice": 1.00000,
       "priceSource": "stable-coin",
       "begBalDiff": "",
@@ -2462,7 +2462,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     0
 TIME ~ CLOCK - : 4-----  endBal:        5171985758179548557
@@ -3210,8 +3210,8 @@ TIME ~ CLOCK - : 4-----reserve1: 3.8512e+06 reserve2: 16660.9 priceOut: 231.152 
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
-      "prevBlk": 10280558,
-      "prevBlkBal": "5.171985758179548557",
+      "prevAppBlk": 10280558,
+      "prevBal": "5.171985758179548557",
       "begBal": "5.171985758179548557",
       "endBal": "5.171985758179548557",
       "amountIn": "",
@@ -3225,7 +3225,7 @@ TIME ~ CLOCK - : 4-----reserve1: 3.8512e+06 reserve2: 16660.9 priceOut: 231.152 
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "reconciliationType": "regular",
       "spotPrice": 231.15199,
       "priceSource": "uniswap",
@@ -3245,8 +3245,8 @@ TIME ~ CLOCK - : 4-----reserve1: 3.8512e+06 reserve2: 16660.9 priceOut: 231.152 
       "assetAddr": "0x6b175474e89094c44da98b954eedeac495271d0f",
       "assetSymbol": "DAI",
       "decimals": 18,
-      "prevBlk": 10280558,
-      "prevBlkBal": "1168.967776639199461740",
+      "prevAppBlk": 10280558,
+      "prevBal": "1168.967776639199461740",
       "begBal": "1168.967776639199461740",
       "endBal": "1197.467776639199461740",
       "amountIn": "28.500000000000000000",
@@ -3260,7 +3260,7 @@ TIME ~ CLOCK - : 4-----reserve1: 3.8512e+06 reserve2: 16660.9 priceOut: 231.152 
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "spotPrice": 1.00000,
       "priceSource": "stable-coin",
       "begBalDiff": "",
@@ -3297,7 +3297,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     0
 TIME ~ CLOCK - : 4-----  endBal:        5171985758179548557
@@ -3485,8 +3485,8 @@ TIME ~ CLOCK - : 4-----reserve1: 3.87391e+06 reserve2: 16667.9 priceOut: 232.418
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
-      "prevBlk": 10280872,
-      "prevBlkBal": "5.171985758179548557",
+      "prevAppBlk": 10280872,
+      "prevBal": "5.171985758179548557",
       "begBal": "5.171985758179548557",
       "endBal": "5.171985758179548557",
       "amountIn": "",
@@ -3500,7 +3500,7 @@ TIME ~ CLOCK - : 4-----reserve1: 3.87391e+06 reserve2: 16667.9 priceOut: 232.418
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "reconciliationType": "regular",
       "spotPrice": 232.41789,
       "priceSource": "uniswap",
@@ -3520,8 +3520,8 @@ TIME ~ CLOCK - : 4-----reserve1: 3.87391e+06 reserve2: 16667.9 priceOut: 232.418
       "assetAddr": "0x6b175474e89094c44da98b954eedeac495271d0f",
       "assetSymbol": "DAI",
       "decimals": 18,
-      "prevBlk": 10280872,
-      "prevBlkBal": "1197.467776639199461740",
+      "prevAppBlk": 10280872,
+      "prevBal": "1197.467776639199461740",
       "begBal": "1197.467776639199461740",
       "endBal": "1202.217776639199461740",
       "amountIn": "4.750000000000000000",
@@ -3535,7 +3535,7 @@ TIME ~ CLOCK - : 4-----reserve1: 3.87391e+06 reserve2: 16667.9 priceOut: 232.418
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "spotPrice": 1.00000,
       "priceSource": "stable-coin",
       "begBalDiff": "",
@@ -3572,7 +3572,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     0
 TIME ~ CLOCK - : 4-----  endBal:        5171985758179548557
@@ -4320,8 +4320,8 @@ TIME ~ CLOCK - : 4-----reserve1: 3.86035e+06 reserve2: 16726.6 priceOut: 230.791
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
-      "prevBlk": 10283648,
-      "prevBlkBal": "5.171985758179548557",
+      "prevAppBlk": 10283648,
+      "prevBal": "5.171985758179548557",
       "begBal": "5.171985758179548557",
       "endBal": "5.171985758179548557",
       "amountIn": "",
@@ -4335,7 +4335,7 @@ TIME ~ CLOCK - : 4-----reserve1: 3.86035e+06 reserve2: 16726.6 priceOut: 230.791
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "reconciliationType": "regular",
       "spotPrice": 230.79064,
       "priceSource": "uniswap",
@@ -4355,8 +4355,8 @@ TIME ~ CLOCK - : 4-----reserve1: 3.86035e+06 reserve2: 16726.6 priceOut: 230.791
       "assetAddr": "0x6b175474e89094c44da98b954eedeac495271d0f",
       "assetSymbol": "DAI",
       "decimals": 18,
-      "prevBlk": 10283648,
-      "prevBlkBal": "1202.217776639199461740",
+      "prevAppBlk": 10283648,
+      "prevBal": "1202.217776639199461740",
       "begBal": "1202.217776639199461740",
       "endBal": "1207.217776639199461740",
       "amountIn": "5.0000000",
@@ -4370,7 +4370,7 @@ TIME ~ CLOCK - : 4-----reserve1: 3.86035e+06 reserve2: 16726.6 priceOut: 230.791
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "spotPrice": 1.00000,
       "priceSource": "stable-coin",
       "begBalDiff": "",
@@ -4407,7 +4407,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     0
 TIME ~ CLOCK - : 4-----  endBal:        5171985758179548557
@@ -5435,8 +5435,8 @@ TIME ~ CLOCK - : 4-----reserve1: 3.85643e+06 reserve2: 16767.4 priceOut: 229.995
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
-      "prevBlk": 10283749,
-      "prevBlkBal": "5.171985758179548557",
+      "prevAppBlk": 10283749,
+      "prevBal": "5.171985758179548557",
       "begBal": "5.171985758179548557",
       "endBal": "5.171985758179548557",
       "amountIn": "",
@@ -5450,7 +5450,7 @@ TIME ~ CLOCK - : 4-----reserve1: 3.85643e+06 reserve2: 16767.4 priceOut: 229.995
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "reconciliationType": "regular",
       "spotPrice": 229.99536,
       "priceSource": "uniswap",
@@ -5470,8 +5470,8 @@ TIME ~ CLOCK - : 4-----reserve1: 3.85643e+06 reserve2: 16767.4 priceOut: 229.995
       "assetAddr": "0x6b175474e89094c44da98b954eedeac495271d0f",
       "assetSymbol": "DAI",
       "decimals": 18,
-      "prevBlk": 10283749,
-      "prevBlkBal": "1207.217776639199461740",
+      "prevAppBlk": 10283749,
+      "prevBal": "1207.217776639199461740",
       "begBal": "1207.217776639199461740",
       "endBal": "1209.117776639199461740",
       "amountIn": "1.900000000000000000",
@@ -5485,7 +5485,7 @@ TIME ~ CLOCK - : 4-----reserve1: 3.85643e+06 reserve2: 16767.4 priceOut: 229.995
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "spotPrice": 1.00000,
       "priceSource": "stable-coin",
       "begBalDiff": "",
@@ -5522,7 +5522,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     0
 TIME ~ CLOCK - : 4-----  endBal:        5171985758179548557
@@ -6190,8 +6190,8 @@ TIME ~ CLOCK - : 4-----reserve1: 3.85658e+06 reserve2: 16766.8 priceOut: 230.013
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
-      "prevBlk": 10289986,
-      "prevBlkBal": "5.171985758179548557",
+      "prevAppBlk": 10289986,
+      "prevBal": "5.171985758179548557",
       "begBal": "5.171985758179548557",
       "endBal": "5.171985758179548557",
       "amountIn": "",
@@ -6205,7 +6205,7 @@ TIME ~ CLOCK - : 4-----reserve1: 3.85658e+06 reserve2: 16766.8 priceOut: 230.013
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "reconciliationType": "regular",
       "spotPrice": 230.01253,
       "priceSource": "uniswap",
@@ -6225,8 +6225,8 @@ TIME ~ CLOCK - : 4-----reserve1: 3.85658e+06 reserve2: 16766.8 priceOut: 230.013
       "assetAddr": "0x6b175474e89094c44da98b954eedeac495271d0f",
       "assetSymbol": "DAI",
       "decimals": 18,
-      "prevBlk": 10289986,
-      "prevBlkBal": "1209.117776639199461740",
+      "prevAppBlk": 10289986,
+      "prevBal": "1209.117776639199461740",
       "begBal": "1209.117776639199461740",
       "endBal": "1211.097776639199461740",
       "amountIn": "1.980000000000000000",
@@ -6240,7 +6240,7 @@ TIME ~ CLOCK - : 4-----reserve1: 3.85658e+06 reserve2: 16766.8 priceOut: 230.013
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "spotPrice": 1.00000,
       "priceSource": "stable-coin",
       "begBalDiff": "",
@@ -6277,7 +6277,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    1739343000000000
+TIME ~ CLOCK - : 8------  gasOut:    1739343000000000
 TIME ~ CLOCK - : 4-----  totalOut:      1739343000000000
 TIME ~ CLOCK - : 4-----  amountNet:     -1739343000000000
 TIME ~ CLOCK - : 4-----  endBal:        5168485149679548557
@@ -6304,7 +6304,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    1739343000000000
+TIME ~ CLOCK - : 8------  gasOut:    1739343000000000
 TIME ~ CLOCK - : 4-----  totalOut:      1739343000000000
 TIME ~ CLOCK - : 4-----  amountNet:     -1739343000000000
 TIME ~ CLOCK - : 4-----  endBal:        5168485149679548557
@@ -6331,7 +6331,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    1739343000000000
+TIME ~ CLOCK - : 8------  gasOut:    1739343000000000
 TIME ~ CLOCK - : 4-----  totalOut:      1739343000000000
 TIME ~ CLOCK - : 4-----  amountNet:     -1739343000000000
 TIME ~ CLOCK - : 4-----  endBal:        5170246415179548557
@@ -6462,8 +6462,8 @@ TIME ~ CLOCK - : 4-----reserve1: 3.85437e+06 reserve2: 16777.6 priceOut: 229.733
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
-      "prevBlk": 10290103,
-      "prevBlkBal": "5.171985758179548557",
+      "prevAppBlk": 10290103,
+      "prevBal": "5.171985758179548557",
       "begBal": "5.171985758179548557",
       "endBal": "5.170246415179548557",
       "amountIn": "",
@@ -6477,7 +6477,7 @@ TIME ~ CLOCK - : 4-----reserve1: 3.85437e+06 reserve2: 16777.6 priceOut: 229.733
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "0.001739343000000000",
+      "gasOut": "0.001739343000000000",
       "reconciliationType": "prevdiff-partial",
       "spotPrice": 229.73334,
       "priceSource": "uniswap",
@@ -6497,8 +6497,8 @@ TIME ~ CLOCK - : 4-----reserve1: 3.85437e+06 reserve2: 16777.6 priceOut: 229.733
       "assetAddr": "0x6b175474e89094c44da98b954eedeac495271d0f",
       "assetSymbol": "DAI",
       "decimals": 18,
-      "prevBlk": 10290103,
-      "prevBlkBal": "1211.097776639199461740",
+      "prevAppBlk": 10290103,
+      "prevBal": "1211.097776639199461740",
       "begBal": "1211.097776639199461740",
       "endBal": "1206.097776639199461740",
       "amountIn": "",
@@ -6512,7 +6512,7 @@ TIME ~ CLOCK - : 4-----reserve1: 3.85437e+06 reserve2: 16777.6 priceOut: 229.733
       "amountOut": "5.0000000",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "spotPrice": 1.00000,
       "priceSource": "stable-coin",
       "begBalDiff": "",
@@ -6549,7 +6549,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    1761265500000000
+TIME ~ CLOCK - : 8------  gasOut:    1761265500000000
 TIME ~ CLOCK - : 4-----  totalOut:      1761265500000000
 TIME ~ CLOCK - : 4-----  amountNet:     -1761265500000000
 TIME ~ CLOCK - : 4-----  endBal:        5168485149679548557
@@ -6576,7 +6576,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    1761265500000000
+TIME ~ CLOCK - : 8------  gasOut:    1761265500000000
 TIME ~ CLOCK - : 4-----  totalOut:      1761265500000000
 TIME ~ CLOCK - : 4-----  amountNet:     -1761265500000000
 TIME ~ CLOCK - : 4-----  endBal:        5168485149679548557
@@ -6603,7 +6603,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    1761265500000000
+TIME ~ CLOCK - : 8------  gasOut:    1761265500000000
 TIME ~ CLOCK - : 4-----  totalOut:      1761265500000000
 TIME ~ CLOCK - : 4-----  amountNet:     -1761265500000000
 TIME ~ CLOCK - : 4-----  endBal:        5168485149679548557
@@ -6751,8 +6751,8 @@ TIME ~ CLOCK - : 4-----reserve1: 3.85437e+06 reserve2: 16777.6 priceOut: 229.733
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
-      "prevBlk": 10290317,
-      "prevBlkBal": "5.170246415179548557",
+      "prevAppBlk": 10290317,
+      "prevBal": "5.170246415179548557",
       "begBal": "5.170246415179548557",
       "endBal": "5.168485149679548557",
       "amountIn": "",
@@ -6766,7 +6766,7 @@ TIME ~ CLOCK - : 4-----reserve1: 3.85437e+06 reserve2: 16777.6 priceOut: 229.733
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "0.001761265500000000",
+      "gasOut": "0.001761265500000000",
       "reconciliationType": "partial-nextdiff",
       "spotPrice": 229.73334,
       "priceSource": "uniswap",
@@ -6804,7 +6804,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     0
 TIME ~ CLOCK - : 4-----  endBal:        5168485149679548557
@@ -7112,8 +7112,8 @@ TIME ~ CLOCK - : 4-----reserve1: 3.84404e+06 reserve2: 16869.7 priceOut: 227.867
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
-      "prevBlk": 10290317,
-      "prevBlkBal": "5.168485149679548557",
+      "prevAppBlk": 10290317,
+      "prevBal": "5.168485149679548557",
       "begBal": "5.168485149679548557",
       "endBal": "5.168485149679548557",
       "amountIn": "",
@@ -7127,7 +7127,7 @@ TIME ~ CLOCK - : 4-----reserve1: 3.84404e+06 reserve2: 16869.7 priceOut: 227.867
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "reconciliationType": "regular",
       "spotPrice": 227.86682,
       "priceSource": "uniswap",
@@ -7147,8 +7147,8 @@ TIME ~ CLOCK - : 4-----reserve1: 3.84404e+06 reserve2: 16869.7 priceOut: 227.867
       "assetAddr": "0x6b175474e89094c44da98b954eedeac495271d0f",
       "assetSymbol": "DAI",
       "decimals": 18,
-      "prevBlk": 10290317,
-      "prevBlkBal": "1206.097776639199461740",
+      "prevAppBlk": 10290317,
+      "prevBal": "1206.097776639199461740",
       "begBal": "1206.097776639199461740",
       "endBal": "1207.047776639199461740",
       "amountIn": "0.950000000000000000",
@@ -7162,7 +7162,7 @@ TIME ~ CLOCK - : 4-----reserve1: 3.84404e+06 reserve2: 16869.7 priceOut: 227.867
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "spotPrice": 1.00000,
       "priceSource": "stable-coin",
       "begBalDiff": "",
@@ -7199,7 +7199,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    1232952000000000
+TIME ~ CLOCK - : 8------  gasOut:    1232952000000000
 TIME ~ CLOCK - : 4-----  totalOut:      1232952000000000
 TIME ~ CLOCK - : 4-----  amountNet:     -1232952000000000
 TIME ~ CLOCK - : 4-----  endBal:        5165331677679548557
@@ -7226,7 +7226,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    1232952000000000
+TIME ~ CLOCK - : 8------  gasOut:    1232952000000000
 TIME ~ CLOCK - : 4-----  totalOut:      1232952000000000
 TIME ~ CLOCK - : 4-----  amountNet:     -1232952000000000
 TIME ~ CLOCK - : 4-----  endBal:        5165331677679548557
@@ -7253,7 +7253,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    1232952000000000
+TIME ~ CLOCK - : 8------  gasOut:    1232952000000000
 TIME ~ CLOCK - : 4-----  totalOut:      1232952000000000
 TIME ~ CLOCK - : 4-----  amountNet:     -1232952000000000
 TIME ~ CLOCK - : 4-----  endBal:        5167252197679548557
@@ -7384,8 +7384,8 @@ TIME ~ CLOCK - : 4-----reserve1: 3.82606e+06 reserve2: 16950.2 priceOut: 225.723
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
-      "prevBlk": 10291739,
-      "prevBlkBal": "5.168485149679548557",
+      "prevAppBlk": 10291739,
+      "prevBal": "5.168485149679548557",
       "begBal": "5.168485149679548557",
       "endBal": "5.167252197679548557",
       "amountIn": "",
@@ -7399,7 +7399,7 @@ TIME ~ CLOCK - : 4-----reserve1: 3.82606e+06 reserve2: 16950.2 priceOut: 225.723
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "0.001232952000000000",
+      "gasOut": "0.001232952000000000",
       "reconciliationType": "prevdiff-partial",
       "spotPrice": 225.72295,
       "priceSource": "uniswap",
@@ -7419,8 +7419,8 @@ TIME ~ CLOCK - : 4-----reserve1: 3.82606e+06 reserve2: 16950.2 priceOut: 225.723
       "assetAddr": "0x6b175474e89094c44da98b954eedeac495271d0f",
       "assetSymbol": "DAI",
       "decimals": 18,
-      "prevBlk": 10291739,
-      "prevBlkBal": "1207.047776639199461740",
+      "prevAppBlk": 10291739,
+      "prevBal": "1207.047776639199461740",
       "begBal": "1207.047776639199461740",
       "endBal": "1202.047776639199461740",
       "amountIn": "",
@@ -7434,7 +7434,7 @@ TIME ~ CLOCK - : 4-----reserve1: 3.82606e+06 reserve2: 16950.2 priceOut: 225.723
       "amountOut": "5.0000000",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "spotPrice": 1.00000,
       "priceSource": "stable-coin",
       "begBalDiff": "",
@@ -7471,7 +7471,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    1920520000000000
+TIME ~ CLOCK - : 8------  gasOut:    1920520000000000
 TIME ~ CLOCK - : 4-----  totalOut:      1920520000000000
 TIME ~ CLOCK - : 4-----  amountNet:     -1920520000000000
 TIME ~ CLOCK - : 4-----  endBal:        5165331677679548557
@@ -7498,7 +7498,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    1920520000000000
+TIME ~ CLOCK - : 8------  gasOut:    1920520000000000
 TIME ~ CLOCK - : 4-----  totalOut:      1920520000000000
 TIME ~ CLOCK - : 4-----  amountNet:     -1920520000000000
 TIME ~ CLOCK - : 4-----  endBal:        5165331677679548557
@@ -7525,7 +7525,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    1920520000000000
+TIME ~ CLOCK - : 8------  gasOut:    1920520000000000
 TIME ~ CLOCK - : 4-----  totalOut:      1920520000000000
 TIME ~ CLOCK - : 4-----  amountNet:     -1920520000000000
 TIME ~ CLOCK - : 4-----  endBal:        5165331677679548557
@@ -7713,8 +7713,8 @@ TIME ~ CLOCK - : 4-----reserve1: 3.82606e+06 reserve2: 16950.2 priceOut: 225.723
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
-      "prevBlk": 10292014,
-      "prevBlkBal": "5.167252197679548557",
+      "prevAppBlk": 10292014,
+      "prevBal": "5.167252197679548557",
       "begBal": "5.167252197679548557",
       "endBal": "5.165331677679548557",
       "amountIn": "",
@@ -7728,7 +7728,7 @@ TIME ~ CLOCK - : 4-----reserve1: 3.82606e+06 reserve2: 16950.2 priceOut: 225.723
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "0.001920520000000000",
+      "gasOut": "0.001920520000000000",
       "reconciliationType": "partial-nextdiff",
       "spotPrice": 225.72295,
       "priceSource": "uniswap",
@@ -7766,7 +7766,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     0
 TIME ~ CLOCK - : 4-----  endBal:        5355331677679548557
@@ -7793,7 +7793,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       190000000000000000
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     190000000000000000
 TIME ~ CLOCK - : 4-----  endBal:        5355331677679548557
@@ -8008,8 +8008,8 @@ TIME ~ CLOCK - : 4-----reserve1: 3.82541e+06 reserve2: 16952.3 priceOut: 225.657
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
-      "prevBlk": 10292014,
-      "prevBlkBal": "5.165331677679548557",
+      "prevAppBlk": 10292014,
+      "prevBal": "5.165331677679548557",
       "begBal": "5.165331677679548557",
       "endBal": "5.355331677679548557",
       "amountIn": "",
@@ -8023,7 +8023,7 @@ TIME ~ CLOCK - : 4-----reserve1: 3.82541e+06 reserve2: 16952.3 priceOut: 225.657
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "reconciliationType": "by-trace",
       "spotPrice": 225.65750,
       "priceSource": "uniswap",
@@ -8061,7 +8061,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     0
 TIME ~ CLOCK - : 4-----  endBal:        5355331677679548557
@@ -8249,8 +8249,8 @@ TIME ~ CLOCK - : 4-----reserve1: 3.82602e+06 reserve2: 16949.6 priceOut: 225.729
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
-      "prevBlk": 10292070,
-      "prevBlkBal": "5.355331677679548557",
+      "prevAppBlk": 10292070,
+      "prevBal": "5.355331677679548557",
       "begBal": "5.355331677679548557",
       "endBal": "5.355331677679548557",
       "amountIn": "",
@@ -8264,7 +8264,7 @@ TIME ~ CLOCK - : 4-----reserve1: 3.82602e+06 reserve2: 16949.6 priceOut: 225.729
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "reconciliationType": "regular",
       "spotPrice": 225.72893,
       "priceSource": "uniswap",
@@ -8284,8 +8284,8 @@ TIME ~ CLOCK - : 4-----reserve1: 3.82602e+06 reserve2: 16949.6 priceOut: 225.729
       "assetAddr": "0x6b175474e89094c44da98b954eedeac495271d0f",
       "assetSymbol": "DAI",
       "decimals": 18,
-      "prevBlk": 10292014,
-      "prevBlkBal": "1202.047776639199461740",
+      "prevAppBlk": 10292014,
+      "prevBal": "1202.047776639199461740",
       "begBal": "1202.047776639199461740",
       "endBal": "1249.547776639199461740",
       "amountIn": "47.500000000000000000",
@@ -8299,7 +8299,7 @@ TIME ~ CLOCK - : 4-----reserve1: 3.82602e+06 reserve2: 16949.6 priceOut: 225.729
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "spotPrice": 1.00000,
       "priceSource": "stable-coin",
       "begBalDiff": "",
@@ -8336,7 +8336,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    1321460340000000
+TIME ~ CLOCK - : 8------  gasOut:    1321460340000000
 TIME ~ CLOCK - : 4-----  totalOut:      1321460340000000
 TIME ~ CLOCK - : 4-----  amountNet:     -1321460340000000
 TIME ~ CLOCK - : 4-----  endBal:        5351951831439548557
@@ -8363,7 +8363,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    1321460340000000
+TIME ~ CLOCK - : 8------  gasOut:    1321460340000000
 TIME ~ CLOCK - : 4-----  totalOut:      1321460340000000
 TIME ~ CLOCK - : 4-----  amountNet:     -1321460340000000
 TIME ~ CLOCK - : 4-----  endBal:        5351951831439548557
@@ -8390,7 +8390,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    1321460340000000
+TIME ~ CLOCK - : 8------  gasOut:    1321460340000000
 TIME ~ CLOCK - : 4-----  totalOut:      1321460340000000
 TIME ~ CLOCK - : 4-----  amountNet:     -1321460340000000
 TIME ~ CLOCK - : 4-----  endBal:        5354010217339548557
@@ -8521,8 +8521,8 @@ TIME ~ CLOCK - : 4-----reserve1: 3.78407e+06 reserve2: 16694.9 priceOut: 226.66 
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
-      "prevBlk": 10292120,
-      "prevBlkBal": "5.355331677679548557",
+      "prevAppBlk": 10292120,
+      "prevBal": "5.355331677679548557",
       "begBal": "5.355331677679548557",
       "endBal": "5.354010217339548557",
       "amountIn": "",
@@ -8536,7 +8536,7 @@ TIME ~ CLOCK - : 4-----reserve1: 3.78407e+06 reserve2: 16694.9 priceOut: 226.66 
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "0.001321460340000000",
+      "gasOut": "0.001321460340000000",
       "reconciliationType": "prevdiff-partial",
       "spotPrice": 226.66017,
       "priceSource": "uniswap",
@@ -8556,8 +8556,8 @@ TIME ~ CLOCK - : 4-----reserve1: 3.78407e+06 reserve2: 16694.9 priceOut: 226.66 
       "assetAddr": "0x6b175474e89094c44da98b954eedeac495271d0f",
       "assetSymbol": "DAI",
       "decimals": 18,
-      "prevBlk": 10292120,
-      "prevBlkBal": "1249.547776639199461740",
+      "prevAppBlk": 10292120,
+      "prevBal": "1249.547776639199461740",
       "begBal": "1249.547776639199461740",
       "endBal": "1244.547776639199461740",
       "amountIn": "",
@@ -8571,7 +8571,7 @@ TIME ~ CLOCK - : 4-----reserve1: 3.78407e+06 reserve2: 16694.9 priceOut: 226.66 
       "amountOut": "5.0000000",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "spotPrice": 1.00000,
       "priceSource": "stable-coin",
       "begBalDiff": "",
@@ -8608,7 +8608,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    2058385900000000
+TIME ~ CLOCK - : 8------  gasOut:    2058385900000000
 TIME ~ CLOCK - : 4-----  totalOut:      2058385900000000
 TIME ~ CLOCK - : 4-----  amountNet:     -2058385900000000
 TIME ~ CLOCK - : 4-----  endBal:        5351951831439548557
@@ -8635,7 +8635,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    2058385900000000
+TIME ~ CLOCK - : 8------  gasOut:    2058385900000000
 TIME ~ CLOCK - : 4-----  totalOut:      2058385900000000
 TIME ~ CLOCK - : 4-----  amountNet:     -2058385900000000
 TIME ~ CLOCK - : 4-----  endBal:        5351951831439548557
@@ -8662,7 +8662,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    2058385900000000
+TIME ~ CLOCK - : 8------  gasOut:    2058385900000000
 TIME ~ CLOCK - : 4-----  totalOut:      2058385900000000
 TIME ~ CLOCK - : 4-----  amountNet:     -2058385900000000
 TIME ~ CLOCK - : 4-----  endBal:        5351951831439548557
@@ -8850,8 +8850,8 @@ TIME ~ CLOCK - : 4-----reserve1: 3.78407e+06 reserve2: 16694.9 priceOut: 226.66 
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
-      "prevBlk": 10293554,
-      "prevBlkBal": "5.354010217339548557",
+      "prevAppBlk": 10293554,
+      "prevBal": "5.354010217339548557",
       "begBal": "5.354010217339548557",
       "endBal": "5.351951831439548557",
       "amountIn": "",
@@ -8865,7 +8865,7 @@ TIME ~ CLOCK - : 4-----reserve1: 3.78407e+06 reserve2: 16694.9 priceOut: 226.66 
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "0.002058385900000000",
+      "gasOut": "0.002058385900000000",
       "reconciliationType": "partial-nextdiff",
       "spotPrice": 226.66017,
       "priceSource": "uniswap",
@@ -8903,7 +8903,7 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 8------  gasOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     0
 TIME ~ CLOCK - : 4-----  endBal:        5351951831439548557
@@ -10373,8 +10373,8 @@ TIME ~ CLOCK - : 4-----reserve1: 3.81137e+06 reserve2: 16604.2 priceOut: 229.543
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
-      "prevBlk": 10293554,
-      "prevBlkBal": "5.351951831439548557",
+      "prevAppBlk": 10293554,
+      "prevBal": "5.351951831439548557",
       "begBal": "5.351951831439548557",
       "endBal": "5.351951831439548557",
       "amountIn": "",
@@ -10388,7 +10388,7 @@ TIME ~ CLOCK - : 4-----reserve1: 3.81137e+06 reserve2: 16604.2 priceOut: 229.543
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "reconciliationType": "regular",
       "spotPrice": 229.54308,
       "priceSource": "uniswap",
@@ -10408,8 +10408,8 @@ TIME ~ CLOCK - : 4-----reserve1: 3.81137e+06 reserve2: 16604.2 priceOut: 229.543
       "assetAddr": "0x6b175474e89094c44da98b954eedeac495271d0f",
       "assetSymbol": "DAI",
       "decimals": 18,
-      "prevBlk": 10293554,
-      "prevBlkBal": "1244.547776639199461740",
+      "prevAppBlk": 10293554,
+      "prevBal": "1244.547776639199461740",
       "begBal": "1244.547776639199461740",
       "endBal": "1254.047776639199461740",
       "amountIn": "9.500000000000000000",
@@ -10423,7 +10423,7 @@ TIME ~ CLOCK - : 4-----reserve1: 3.81137e+06 reserve2: 16604.2 priceOut: 229.543
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
-      "gasCostOut": "",
+      "gasOut": "",
       "spotPrice": 1.00000,
       "priceSource": "stable-coin",
       "begBalDiff": "",
