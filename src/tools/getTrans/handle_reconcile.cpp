@@ -20,13 +20,13 @@ bool visitReconciliation(CTransaction& trans, void* data) {
     bool isText = (expContext().exportFmt & (TXT1 | CSV1));
 
     CAccountName name;
-    name.address = opt->statements;
+    name.address = opt->account_for;
     name.petname = addr_2_Petname(name.address, '-');
-    findName(opt->statements, name);
+    findName(opt->account_for, name);
     CReconciliation prev;
     prev.pTransaction = &trans;
-    prev.assetAddr = opt->statements;
-    prev.endBal = trans.blockNumber == 0 ? 0 : getBalanceAt(opt->statements, trans.blockNumber - 1);
+    prev.assetAddr = opt->account_for;
+    prev.endBal = trans.blockNumber == 0 ? 0 : getBalanceAt(opt->account_for, trans.blockNumber - 1);
     CReconciliation eth(trans.blockNumber, trans.transactionIndex, trans.timestamp, &trans);
     eth.reconcileEth(prev, trans.blockNumber + 1, &trans, name);
     eth.spotPrice = getPriceInUsd(trans.blockNumber, eth.priceSource);

@@ -25,7 +25,7 @@ static const COption params[] = {
     COption("trace", "t", "", OPT_SWITCH, "include the transaction's traces in the results"),
     COption("uniq", "u", "", OPT_SWITCH, "display a list of uniq addresses found in the transaction"),
     COption("flow", "f", "enum[from|to]", OPT_FLAG, "for the uniq option only, export only from or to (including trace from or to)"),  // NOLINT
-    COption("statements", "A", "<address>", OPT_FLAG, "reconcile the transaction as per the provided address"),
+    COption("account_for", "A", "<address>", OPT_FLAG, "reconcile the transaction as per the provided address"),
     COption("cache", "o", "", OPT_SWITCH, "force the results of the query into the tx cache (and the trace cache if applicable)"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Retrieve one or more transactions from the chain or local cache."),
     // clang-format on
@@ -67,12 +67,12 @@ bool COptions::parseArguments(string_q& command) {
             return usage("the --reconcile option is deprecated, please use statements option instead");  // NOLINT
             // clang-format on
 
-        } else if (startsWith(arg, "-A:") || startsWith(arg, "--statements:")) {
-            statements = substitute(substitute(arg, "-A:", ""), "--statements:", "");
-            if (!isAddress(statements))
-                return usage("The provided value (" + statements + ") is not a properly formatted address.");
-        } else if (arg == "-A" || arg == "--statements") {
-            return flag_required("statements");
+        } else if (startsWith(arg, "-A:") || startsWith(arg, "--account_for:")) {
+            account_for = substitute(substitute(arg, "-A:", ""), "--account_for:", "");
+            if (!isAddress(account_for))
+                return usage("The provided value (" + account_for + ") is not a properly formatted address.");
+        } else if (arg == "-A" || arg == "--account_for") {
+            return flag_required("account_for");
 
         } else if (arg == "-o" || arg == "--cache") {
             cache = true;
@@ -121,7 +121,7 @@ bool COptions::parseArguments(string_q& command) {
     // Display formatting
     if (uniq) {
         configureDisplay("getTrans", "CAppearance", STR_DISPLAY_APPEARANCE);
-    } else if (!statements.empty()) {
+    } else if (!account_for.empty()) {
         string_q fmt = STR_DISPLAY_RECONCILIATION;
         configureDisplay("getTrans", "CReconciliation", fmt);
     } else {
@@ -143,7 +143,7 @@ void COptions::Init(void) {
     trace = false;
     uniq = false;
     flow = "";
-    statements = "";
+    account_for = "";
     cache = false;
     // END_CODE_INIT
 
