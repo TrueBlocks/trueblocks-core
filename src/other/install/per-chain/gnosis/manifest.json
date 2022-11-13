@@ -8101,6 +8101,83 @@
       "bloomSize": 131114,
       "indexHash": "QmRtKzDzuXMTBDgMLK4xAycnN98rNAB7rSL9R8YQotnRGS",
       "indexSize": 6994956
+    },
+    {
+      "range": "024741558-024759556",
+      "bloomHash": "QmZpzxT6BZWWSTt3mbfKHwwiMppPHY1nZRNoMCnNod1Kwk",
+      "bloomSize": 131114,
+      "indexHash": "QmewPdtv1zXiCgknkAfsS5c7SSAwcUN9vzphZwi9RJxP4W",
+      "indexSize": 6990732
+    },
+    {
+      "range": "024759557-024778931",
+      "bloomHash": "QmQDhYnPYhoPKpbDhGmZQS4RJTZcMpBDrFZLGQUdM7peAJ",
+      "bloomSize": 131114,
+      "indexHash": "QmSEaVMjVjzjHtM51uFLhZftf4cDD1zK2zkvm8kAzAkGwi",
+      "indexSize": 6928236
+    },
+    {
+      "range": "024778932-024798865",
+      "bloomHash": "QmccQq8edbaHeRXbHr2eD7fXk5WFz3HGt24kS4Js2Q2wGM",
+      "bloomSize": 131114,
+      "indexHash": "QmZM9eVnudeLJB3toov4YoNRMkwGzHe5yRujq8BLFatsGb",
+      "indexSize": 6683136
+    },
+    {
+      "range": "024798866-024819518",
+      "bloomHash": "QmXirqHnfMAFMtvWsUeGPuhmrosPp4B9TZnzaDL1GVtRQX",
+      "bloomSize": 131114,
+      "indexHash": "QmWXTReSvi1wYEutAizUhFbiP1gghAFCJYSt3Zmya6J9wF",
+      "indexSize": 7199368
+    },
+    {
+      "range": "024819519-024840300",
+      "bloomHash": "QmZit8NWuQtkM2fx3Jp4GmEmAGoSQ3G3yAf8p1odBVXXU2",
+      "bloomSize": 131114,
+      "indexHash": "Qmdsnj1QBNwp3b9negALKit4cxKVfXkgbsFNoS91ba5mtJ",
+      "indexSize": 6832392
+    },
+    {
+      "range": "024840301-024860395",
+      "bloomHash": "QmfKeNEW4H1k32uMwe18cnPDBxowQ3rFqWRK5ELffijCoS",
+      "bloomSize": 131114,
+      "indexHash": "Qmaczs4fZWEo44Sb9wWSr2WpGE5VcJLeRN8qXp1968JQMz",
+      "indexSize": 6904180
+    },
+    {
+      "range": "024860396-024881921",
+      "bloomHash": "QmWRbrUQSRuEK1sBjMfDUeB2mZ3cRdnfbmUVDqvz8p2Z7r",
+      "bloomSize": 131114,
+      "indexHash": "QmQYsAZbPEb8BztuSsP91ziUkrg9wvqxSYc5TeipKAnEMN",
+      "indexSize": 6772624
+    },
+    {
+      "range": "024881922-024899970",
+      "bloomHash": "QmQPbJxCUQ7w9kcQPsf8azk5gdKay6kE2nEGbiezuUFKn4",
+      "bloomSize": 131114,
+      "indexHash": "QmYkyJkr6QKv1R3gfdX7FwYi2zNPzX4sEvVEc7TKG4NTqd",
+      "indexSize": 7061352
+    },
+    {
+      "range": "024899971-024900000",
+      "bloomHash": "QmYxCmqXJYaQRxZwDTfP2s1tSGZJL4kbJ5LaLrtyYaf4HA",
+      "bloomSize": 131114,
+      "indexHash": "QmSUwvQ5WT2GMDLfvtQUJPcFzsPF6U9gfjtZdABCzEwW2U",
+      "indexSize": 13548
+    },
+    {
+      "range": "024900001-024911143",
+      "bloomHash": "Qmaj5KtdMMmcXMfUxFU9rf7BRtTLJGPCq48b8oVA3gM5gx",
+      "bloomSize": 131114,
+      "indexHash": "QmTUiLeWURANGnrhwo1Gv9ZmKyLwXdCDraZBWvkSN36WCJ",
+      "indexSize": 6902412
+    },
+    {
+      "range": "024911144-024920168",
+      "bloomHash": "QmZp3cB8VR2p6sE7Eppe11owhyWQdWJfsP3M8tkDg17f46",
+      "bloomSize": 131114,
+      "indexHash": "QmToSxaArqSKKxzo6AJ1FqnxrJrYvhVcd9D8iQPkuiaPpM",
+      "indexSize": 6916424
     }
   ]
 }
