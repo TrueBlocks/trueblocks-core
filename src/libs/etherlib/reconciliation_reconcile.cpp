@@ -63,10 +63,13 @@ bool CReconciliation::reconcileFlows(const CTransfer& transfer) {
 
     bool isEth = isEtherAddr(assetAddr);
     if (isEth) {
+        if (pTransaction->from == accountedFor) {
+            gasOut = str_2_BigInt(pTransaction->getValueByName("gasCost"));
+        }
+
         // Do not collapse. Both may be true.
         if (sender == accountedFor) {
             amountOut = pTransaction->isError ? 0 : pTransaction->value;
-            gasOut = str_2_BigInt(pTransaction->getValueByName("gasCost"));
         }
 
         // Do not collapse. Both may be true.
@@ -86,6 +89,7 @@ bool CReconciliation::reconcileFlows(const CTransfer& transfer) {
                 amountIn = pTransaction->isError ? 0 : pTransaction->value;
             }
         }
+
     } else {
         // Do not collapse. Both may be true.
         if (sender == accountedFor) {
@@ -126,7 +130,8 @@ bool CReconciliation::reconcileFlows_traces(void) {
     internalIn = selfDestructIn = prefundIn = 0;
     minerBaseRewardIn = minerNephewRewardIn = minerTxFeeIn + minerUncleRewardIn = 0;
     amountOut = 0;
-    internalOut = selfDestructOut = gasOut = 0;
+    internalOut = selfDestructOut = 0;  // don't reset gasOut as it's always top level
+
     if (pTransaction->blockNumber == 0) {
         sender = pTransaction->from;
         recipient = pTransaction->to;
