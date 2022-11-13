@@ -19,10 +19,6 @@ then
     exit 1
 fi
 
-echo "----- We need ssh connections (should see at least two, maybe three -----"
-ps -ef | grep ssh
-echo "----- If ssh is not running, tests will fail -----"
-
 echo "Building image..."
 
 # Build image and save its ID

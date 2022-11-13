@@ -517,7 +517,7 @@ string_q getTokenSymbol(const address_t& token, blknum_t blockNum) {
     cmd << "\"data\": \"0x95d89b41\"";
     cmd << "}, \"" << uint_2_Hex(blockNum) << "\"]";
     string_q ret = callRPC("eth_call", cmd.str(), false);
-    if (!contains(ret, "error") && !startsWith(ret, "0x"))
+    if (!contains(ret, "error") && !contains(ret, "reverted") && !startsWith(ret, "0x"))
         return ret;
     return "";
 }
