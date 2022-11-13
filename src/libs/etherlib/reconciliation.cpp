@@ -721,6 +721,7 @@ const char* STR_DISPLAY_RECONCILIATION =
     "[{RECONCILED}]\t"
     "[{SPOTPRICE}]\t"
     "[{PRICESOURCE}]\t"
+    "[{RECONCILIATIONTYPE}]\t"
     "[{TRANSACTIONHASH}]\t"
     "[{DATE}]";
 

@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2022-10-18T13:35:54
+date: 2022-11-12T22:17:28
 lastmod:
   - :git
   - lastmod
@@ -128,8 +128,8 @@ Reconciliation data is made of the following data fields:
 | totalOut            | a calculated field -- the sum of all Out fields                                                                 | int256    |
 | totalOutLessGas     |                                                                                                                 | int256    |
 | amountNet           | a calculated field -- totalIn - totalOut                                                                        | int256    |
-| reconciliationType  | One of regular, traces, prevdiff-partial, partial-nextdiff, or `partial-partial`                                | string    |
 | endBalCalc          | a calculated field -- begBal + amountNet                                                                        | int256    |
+| reconciliationType  | One of regular, traces, prevdiff-partial, partial-nextdiff, or `partial-partial`                                | string    |
 | endBalDiff          | a calculated field -- endBal - endBalCalc, if non-zero, the reconciliation failed                               | int256    |
 | reconciled          | a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBlkBal`. `false` otherwise.           | bool      |
 | transactionHash     | the hash of the transaction that triggered this reconciliation                                                  | hash      |
