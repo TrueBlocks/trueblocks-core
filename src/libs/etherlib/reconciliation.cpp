@@ -506,8 +506,6 @@ string_q nextReconciliationChunk_custom(const string_q& fieldIn, const void* dat
                         return rec->assetSymbol;
                     if (expContext().asEther) {
                         return "ETH";
-                    } else if (expContext().asDollars) {
-                        return "USD";
                     }
                     return "WEI";
                 }
@@ -778,33 +776,12 @@ string_q bni_2_Ether(const bigint_t& num, uint64_t decimals) {
     return (negative ? "-" : "") + ret + parts[1] + string_q(round - parts[1].length(), '0');
 }
 
-//---------------------------------------------------------------------------
-string_q bni_2_Dollars(const timestamp_t& ts, const bigint_t& numIn, uint64_t decimals) {
-    if (numIn == 0)
-        return "";
-    bigint_t n = numIn;
-    bool negative = false;
-    if (n < 0) {
-        negative = true;
-        n = n * -1;
-    }
-    return (negative ? "-" : "") + wei_2_Dollars(ts, str_2_Wei(bni_2_Str(n)), decimals);
-}
-
 //--------------------------------------------------------------------------------
 string_q wei_2_Export(const blknum_t& bn, const wei_t& weiIn, uint64_t decimals) {
     string_q ret;
     if (weiIn != 0) {
         if (expContext().asEther) {
             ret = wei_2_Ether_local(weiIn, decimals);
-        } else if (expContext().asDollars) {
-            static map<blknum_t, timestamp_t> timestampMap;
-            if (timestampMap[bn] == (timestamp_t)0) {
-                CBlock blk;
-                getBlockHeader(blk, bn);
-                timestampMap[bn] = blk.timestamp;
-            }
-            ret = wei_2_Dollars(timestampMap[bn], weiIn, decimals);
         } else {
             ret = wei_2_Str(weiIn);
         }
@@ -822,8 +799,6 @@ string_q bni_2_Export(const timestamp_t& ts, const bigint_t& numIn, uint64_t dec
         return quote + quote;
     if (expContext().asEther) {
         return quote + bni_2_Ether(numIn, decimals) + quote;
-    } else if (expContext().asDollars) {
-        return quote + bni_2_Dollars(ts, numIn, decimals) + quote;
     } else {
         return quote + bni_2_Str(numIn) + quote;
     }
@@ -1212,7 +1187,7 @@ bool CReconciliation::readBackLevel_old(CArchive& archive) {
 // }
 
 //-----------------------------------------------------------------------
-// static string_q getWeiQuote(const CPriceQuoteArray& quotes, const timestamp_t& ts, const wei_t& weiIn,
+// static string_q get WeiQuote(const CPriceQuoteArray& quotes, const timestamp_t& ts, const wei_t& weiIn,
 //                             uint64_t decimals) {
 //     return wei_2_Ether(weiIn)
 //     // uint64_t index = indexFromTimeStamp(quotes, ts);
@@ -1223,26 +1198,20 @@ bool CReconciliation::readBackLevel_old(CArchive& archive) {
 //     // return wei_2_Ether(wei, decimals);
 // }
 
-// TODO: BOGUS - OPEN THE TEXT FILE AFTER DOWNLOADING IT FROM SMART CONTRACT, BUILD BINARY CACHE, READ IT IN
-string_q wei_2_Dollars(const timestamp_t& ts, const wei_t& weiIn, uint64_t decimals) {
-    return wei_2_Ether(weiIn, 18);  // getWeiQuote(quotes, ts, weiIn, decimals);
-}
-
-// //-----------------------------------------------------------------------
-// string_q wei_2_Dollars(const timestamp_t& ts, const wei_t& weiIn, uint64_t decimals) {
+// string_q wei_2_Dol lars(const timestamp_t& ts, const wei_t& weiIn, uint64_t decimals) {
 //     if (weiIn == 0)
 //         return "";
 
 //     // TODO(tjayrush): global data
 //     static C PriceQuoteArray q uotes;
 //     if (q uotes.size())  // leave early if we can
-//         return getWeiQuote(q uotes, ts, weiIn, decimals);
+//         return get WeiQuote(q uotes, ts, weiIn, decimals);
 
 //     {  // give ourselves a frame to make the mutex
 //         mutex aMutex;
 //         lock_guard<mutex> lock(aMutex);
 //         if (q uotes.size())  // leave early if we can (another thread may have filled the array while we were waiting
-//             return getWeiQuote(q uotes, ts, weiIn, decimals);
+//             return get WeiQuote(q uotes, ts, weiIn, decimals);
 
 //         string_q message;
 //         C PriceSource source(S TR_PRICE_URL, "USDT_ETH", parsePoloniex);
@@ -1251,7 +1220,7 @@ string_q wei_2_Dollars(const timestamp_t& ts, const wei_t& weiIn, uint64_t decim
 //             quickQuitHandler(EXIT_FAILURE);
 //         }
 //     }
-//     return getWeiQuote(q uotes, ts, weiIn, decimals);
+//     return get WeiQuote(q uotes, ts, weiIn, decimals);
 // }
 // EXISTING_CODE
 }  // namespace qblocks
