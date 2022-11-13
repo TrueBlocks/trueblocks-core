@@ -19,6 +19,12 @@ class CAbiOptions : public COptionsBase {
     CAbi abi_spec;
 };
 
+//--------------------------------------------------------------------------
+class CStatementOptions : public CAbiOptions {
+  public:
+    CStatementManager statementManager{""};
+};
+
 //-----------------------------------------------------------------------------
 class CBlockOptions : public CAbiOptions {
   public:

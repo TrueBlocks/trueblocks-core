@@ -117,7 +117,7 @@ This documentation mentions the following basic data types.
 | blknum    | an alias for a uint64                           |                |
 | bool      | a value either `true`, `false`, `1`, or `0`     |                |
 | bytes     | an arbitrarily long string of bytes             |                |
-| datetime  |                                                 |                |
+| datetime  | a JSON formatted date                           | as a string    |
 | double    | a floating point number of double precision     |                |
 | hash      | a 32-byte hexadecimal string starting with '0x' | lowercase      |
 | string    | a normal character string                       |                |
