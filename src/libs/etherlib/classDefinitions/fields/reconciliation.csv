@@ -21,7 +21,7 @@ amountOut           ,int256    ,           ,       ,      ,        ,          , 
 internalOut         ,int256    ,           ,       ,      ,        ,true      ,        ,      ,         , 14 ,  20 ,              ,the value of any internal value transfers out of the accountedFor account
 selfDestructOut     ,int256    ,           ,       ,      ,        ,true      ,        ,      ,         , 16 ,  21 ,              ,the value of the self-destructed value out if the accountedFor address was self-destructed
 gasCostOut          ,int256    ,           ,       ,      ,        ,true      ,        ,      ,         , 24 ,  22 ,              ,if the transactions original sender is the accountedFor address&#44; the amount of gas expended denominated in WEI.
-reconciliationType  ,string    ,           ,       ,      ,        ,          ,        ,      ,         , 30 ,  33 ,              ,One of regular&#44; traces&#44; prevdiff-partial&#44; partial-nextdiff&#44; or `partial-partial`
+reconciliationType  ,string    ,           ,       ,      ,        ,          ,        ,      ,         , 31 ,  33 ,              ,One of regular&#44; traces&#44; prevdiff-partial&#44; partial-nextdiff&#44; or `partial-partial`
 spotPrice           ,double    ,       1.0 ,       ,      ,        ,          ,        ,      ,         , 20 ,  31 ,              ,The on-chain price in USD (or if a token in ETH&#44; or zero) at the time of the transaction
 priceSource         ,string    ,           ,       ,      ,        ,          ,        ,      ,         , 23 ,  32 ,              ,The on-chain source from which the spot price was taken
 begBalDiff          ,int256    ,           ,       ,      ,        ,          ,true    ,      ,true     , 10 ,  27 ,              ,the difference between the expected beginning balance (prevBlkBal) and the queried balance from the chain
@@ -30,7 +30,7 @@ totalOut            ,int256    ,           ,       ,      ,        ,          ,t
 totalOutLessGas     ,int256    ,           ,       ,      ,        ,          ,true    ,      ,true     , 28 ,  24 ,              ,
 amountNet           ,int256    ,           ,       ,      ,        ,          ,true    ,      ,true     , 29 ,  25 ,              ,a calculated field -- totalIn - totalOut
 endBalCalc          ,int256    ,           ,       ,      ,        ,true      ,true    ,      ,true     , 30 ,  28 ,              ,a calculated field -- begBal + amountNet
-endBalDiff          ,int256    ,           ,       ,      ,        ,true      ,true    ,      ,true     , 31 ,  29 ,              ,a calculated field -- endBal - endBalCalc&#44; if non-zero&#44; the reconciliation failed
-reconciled          ,bool      ,           ,       ,      ,        ,          ,true    ,      ,true     , 32 ,  30 ,              ,a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBlkBal`. `false` otherwise.
-transactionHash     ,hash      ,           ,       ,      ,        ,          ,true    ,      ,true     , 33 ,  33 ,              ,the hash of the transaction that triggered this reconciliation
-date                ,date      ,           ,       ,      ,        ,          ,true    ,      ,true     , 34 ,  34 ,              ,the date of this transaction
+endBalDiff          ,int256    ,           ,       ,      ,        ,true      ,true    ,      ,true     , 32 ,  29 ,              ,a calculated field -- endBal - endBalCalc&#44; if non-zero&#44; the reconciliation failed
+reconciled          ,bool      ,           ,       ,      ,        ,          ,true    ,      ,true     , 33 ,  30 ,              ,a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBlkBal`. `false` otherwise.
+transactionHash     ,hash      ,           ,       ,      ,        ,          ,true    ,      ,true     , 34 ,  34 ,              ,the hash of the transaction that triggered this reconciliation
+date                ,date      ,           ,       ,      ,        ,          ,true    ,      ,true     , 35 ,  35 ,              ,the date of this transaction
