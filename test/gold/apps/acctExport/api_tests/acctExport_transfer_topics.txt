@@ -638,17 +638,6 @@ export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&maxRecords=5&topics=0xdd
     "staging": "0xdeadbeef",
     "finalized": "0xdeadbeef",
     "client": "0xdeadbeef",
-    "namedFrom": {},
-    "unNamedFrom": {
-      "0x374bd185ee19fd9f8682eb875e5d0546a8d58cdd": 2,
-      "0x29205869522cc9d1f84b0ad5279a8e74a7c66c15": 1
-    },
-    "namedTo": {},
-    "unNamedTo": {
-      "0x5deda52dc2b3a565d77e10f0f8d4bd738401d7d3": 2,
-      "0x6b466f2e9750044a262e54415150b9bafbaf7a62": 1,
-      "0xcb04fbb44bb2aa0e3d402d0bde2de60b2de028af": 1
-    },
     "first_block": "0xdeadbeef",
     "last_block": "0xdeadbeef",
     "accountedFor": {

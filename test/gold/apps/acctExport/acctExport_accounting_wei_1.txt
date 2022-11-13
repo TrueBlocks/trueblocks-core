@@ -6,130 +6,36 @@ TEST[DATE|TIME] LogLevel:  10
 TEST[DATE|TIME] Format:  json
 TIME ~ CLOCK - : 4-----Loaded timestamp file
 { "data": [
-TIME ~ CLOCK - <INFO>  : Calling 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 15000000...: 
-TIME ~ CLOCK - <INFO>  : call to 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 15000000 at four-byte 0xe6a43905 returned 0x000000000000000000000000a478c2975ab1ea89e8196811f51a7b7ade33eb11
-TIME ~ CLOCK - <INFO>  : Calling 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11 at block 15000000...: 
-TIME ~ CLOCK - <INFO>  : call to 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11 at block 15000000 at four-byte 0x0902f1ac returned 0x0000000000000000000000000000000000000000000559810c412d7963889f2600000000000000000000000000000000000000000000013953bc193865743ba70000000000000000000000000000000000000000000000000000000062b12ca7
-
-level: 1
-readOffset: 0
-objectStart: 0
-params.size: 3
-  0: uint112 _reserve0 = <>
-  1: uint112 _reserve1 = <>
-  2: uint32 _blockTimestampLast = <>
-dataArray.size: 3
-  0 (0x000) 0000000000000000...00000000000559810c412d7963889f26 <=o <-r
-  1 (0x020) 0000000000000000...000000000000013953bc193865743ba7
-  2 (0x040) 0000000000000000...00000000000000000000000062b12ca7
-
-==================================================
-params.size: 3
-  0: uint112 _reserve0 = 6467300228071054155226918
-  1: uint112 _reserve1 = <>
-  2: uint32 _blockTimestampLast = <>
-
-level: 1
-readOffset: 1
-objectStart: 0
-params.size: 3
-  0: uint112 _reserve0 = 6467300228071054155226918
-  1: uint112 _reserve1 = <>
-  2: uint32 _blockTimestampLast = <>
-dataArray.size: 3
-  0 (0x000) 0000000000000000...00000000000559810c412d7963889f26 <=o
-  1 (0x020) 0000000000000000...000000000000013953bc193865743ba7 <-r
-  2 (0x040) 0000000000000000...00000000000000000000000062b12ca7
-
-==================================================
-params.size: 3
-  0: uint112 _reserve0 = 6467300228071054155226918
-  1: uint112 _reserve1 = 5779864620401870257063
-  2: uint32 _blockTimestampLast = <>
-
-level: 1
-readOffset: 2
-objectStart: 0
-params.size: 3
-  0: uint112 _reserve0 = 6467300228071054155226918
-  1: uint112 _reserve1 = 5779864620401870257063
-  2: uint32 _blockTimestampLast = <>
-dataArray.size: 3
-  0 (0x000) 0000000000000000...00000000000559810c412d7963889f26 <=o
-  1 (0x020) 0000000000000000...000000000000013953bc193865743ba7
-  2 (0x040) 0000000000000000...00000000000000000000000062b12ca7 <-r
-
-==================================================
-params.size: 3
-  0: uint112 _reserve0 = 6467300228071054155226918
-  1: uint112 _reserve1 = 5779864620401870257063
-  2: uint32 _blockTimestampLast = 1655778471
-params.size: 3
-  0: uint112 _reserve0 = 6467300228071054155226918
-  1: uint112 _reserve1 = 5779864620401870257063
-  2: uint32 _blockTimestampLast = 1655778471
-==================================================
-
-TIME ~ CLOCK - : 4-----r1: 0x6b175474e89094c44da98b954eedeac495271d0f r2: 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
-TIME ~ CLOCK - : 4-----reserve1: 6.4673e+06 reserve2: 5779.86 priceOut: 1118.94 reversed: 0
-TIME ~ CLOCK - : 4-----Trial balance: genesis
-TIME ~ CLOCK - : 4-----  hash: 
-TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  prevBal:       0
-TIME ~ CLOCK - : 4-----  begBal:        4200000000000000000000
-TIME ~ CLOCK - : 4-----  begBalDiff:    0
-TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 8------  amountIn:      0
-TIME ~ CLOCK - : 8------  internalIn:    0
-TIME ~ CLOCK - : 8------  slfDstrctIn:   0
-TIME ~ CLOCK - : 8------  minBRwdIn:     0
-TIME ~ CLOCK - : 8------  minNRwdIn:     0
-TIME ~ CLOCK - : 8------  minTxFeeIn:    0
-TIME ~ CLOCK - : 8------  minURwdIn:     0
-TIME ~ CLOCK - : 8------  prefundIn:     4200000000000000000000
-TIME ~ CLOCK - : 4-----  totalIn:       4200000000000000000000
-TIME ~ CLOCK - : 8------  amountOut:     0
-TIME ~ CLOCK - : 8------  internalOut:   0
-TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasOut:    0
-TIME ~ CLOCK - : 4-----  totalOut:      0
-TIME ~ CLOCK - : 4-----  amountNet:     4200000000000000000000
-TIME ~ CLOCK - : 4-----  endBal:        4200000000000000000000
-TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  endBalCalc:    8400000000000000000000
-TIME ~ CLOCK - : 4-----  endBalDiff:    4200000000000000000000
-TIME ~ CLOCK - : 4-----  regular-recon: false
-TIME ~ CLOCK - : 4-----Trial balance: by-trace
-TIME ~ CLOCK - : 4-----  hash: 
-TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  prevBal:       0
-TIME ~ CLOCK - : 4-----  begBal:        0
-TIME ~ CLOCK - : 4-----  begBalDiff:    0
-TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 8------  amountIn:      0
-TIME ~ CLOCK - : 8------  internalIn:    0
-TIME ~ CLOCK - : 8------  slfDstrctIn:   0
-TIME ~ CLOCK - : 8------  minBRwdIn:     0
-TIME ~ CLOCK - : 8------  minNRwdIn:     0
-TIME ~ CLOCK - : 8------  minTxFeeIn:    0
-TIME ~ CLOCK - : 8------  minURwdIn:     0
-TIME ~ CLOCK - : 8------  prefundIn:     4200000000000000000000
-TIME ~ CLOCK - : 4-----  totalIn:       4200000000000000000000
-TIME ~ CLOCK - : 8------  amountOut:     0
-TIME ~ CLOCK - : 8------  internalOut:   0
-TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasOut:    0
-TIME ~ CLOCK - : 4-----  totalOut:      0
-TIME ~ CLOCK - : 4-----  amountNet:     4200000000000000000000
-TIME ~ CLOCK - : 4-----  endBal:        4200000000000000000000
-TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  endBalCalc:    4200000000000000000000
-TIME ~ CLOCK - : 4-----  endBalDiff:    0
-TIME ~ CLOCK - : 4-----  regular-recon: true
-TIME ~ CLOCK - <INFO>  : Calling 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 15000000...: 
-TIME ~ CLOCK - <INFO>  : call to 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 15000000 at four-byte 0xe6a43905 returned 0x000000000000000000000000a478c2975ab1ea89e8196811f51a7b7ade33eb11
-TIME ~ CLOCK - <INFO>  : Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 0 prior to its deployment 10042267
-TIME ~ CLOCK - <INFO>  : doEthCall in CUniPrice::getPrice returned false
+TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
+TIME ~ CLOCK - <INFO>  :    blockNumber:         0
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    2
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
+TIME ~ CLOCK - <INFO>  :    prefundIn:           4200000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalIn:             4200000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           4200000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              4200000000000000000000
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: genesis-eth
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
+TIME ~ CLOCK - <INFO>  :    blockNumber:         0
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    2
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
+TIME ~ CLOCK - <INFO>  :    prefundIn:           4200000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalIn:             4200000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           4200000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              4200000000000000000000
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : Calling a contract (0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f) at block 0 prior to its deployment 10000835
+TIME ~ CLOCK - <INFO>  : doEthCall in CUniPrice::findPair returned false
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 0...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 0 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
@@ -154,14 +60,24 @@ params.size: 0
     {
       "blockNumber": 0,
       "transactionIndex": 2,
+      "logIndex": 0,
+      "transactionHash": "0x0",
       "timestamp": 1438269975,
-      "assetAddr": "0x001d14804b399c6ef80e64576f657660804fec0b",
+      "date": "2015-07-30 15:26:15 UTC",
+      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "decimals": 18,
-      "prevAppBlk": 0,
-      "prevBal": "",
+      "spotPrice": 1.00000,
+      "priceSource": "not-priced",
+      "accountedFor": "0x001d14804b399c6ef80e64576f657660804fec0b",
+      "sender": "0xPrefund",
+      "recipient": "0x001d14804b399c6ef80e64576f657660804fec0b",
       "begBal": "",
+      "amountNet": "4200000000000000000000",
       "endBal": "4200000000000000000000",
+      "reconciliationType": "genesis-eth",
+      "reconciled": true,
+      "totalIn": "4200000000000000000000",
       "amountIn": "",
       "internalIn": "",
       "selfDestructIn": "",
@@ -170,23 +86,17 @@ params.size: 0
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "4200000000000000000000",
+      "totalOut": "",
       "amountOut": "",
       "internalOut": "",
       "selfDestructOut": "",
       "gasOut": "",
-      "reconciliationType": "by-trace",
-      "spotPrice": 1.00000,
-      "priceSource": "not-priced",
-      "begBalDiff": "",
-      "endBalCalc": "4200000000000000000000",
-      "endBalDiff": "",
-      "totalIn": "4200000000000000000000",
-      "totalOut": "",
       "totalOutLessGas": "",
-      "amountNet": "4200000000000000000000",
-      "reconciled": true,
-      "transactionHash": "",
-      "date": "2015-07-30 15:26:15 UTC"
+      "prevAppBlk": 0,
+      "prevBal": "",
+      "begBalDiff": "",
+      "endBalDiff": "",
+      "endBalCalc": "4200000000000000000000"
     }
   ],
   "gasCost": 0,
@@ -194,37 +104,40 @@ params.size: 0
   "date": "2015-07-30 15:26:15 UTC",
   "ether": 4200.000000000000000000
 }
-TIME ~ CLOCK - : 4-----Trial balance: regular
-TIME ~ CLOCK - : 4-----  hash: 0x6e443af86a84920cace198340020e4ca54321a2c515cd3ad1f274d3506b4aff8
-TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  prevBal:       4200000000000000000000
-TIME ~ CLOCK - : 4-----  begBal:        4200000000000000000000
-TIME ~ CLOCK - : 4-----  begBalDiff:    0
-TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 8------  amountIn:      0
-TIME ~ CLOCK - : 8------  internalIn:    0
-TIME ~ CLOCK - : 8------  slfDstrctIn:   0
-TIME ~ CLOCK - : 8------  minBRwdIn:     0
-TIME ~ CLOCK - : 8------  minNRwdIn:     0
-TIME ~ CLOCK - : 8------  minTxFeeIn:    0
-TIME ~ CLOCK - : 8------  minURwdIn:     0
-TIME ~ CLOCK - : 8------  prefundIn:     0
-TIME ~ CLOCK - : 4-----  totalIn:       0
-TIME ~ CLOCK - : 8------  amountOut:     4199900000000000000000
-TIME ~ CLOCK - : 8------  internalOut:   0
-TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasOut:    25320679510922664
-TIME ~ CLOCK - : 4-----  totalOut:      4199925320679510922664
-TIME ~ CLOCK - : 4-----  amountNet:     -4199925320679510922664
-TIME ~ CLOCK - : 4-----  endBal:        74679320489077336
-TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  endBalCalc:    74679320489077336
-TIME ~ CLOCK - : 4-----  endBalDiff:    0
-TIME ~ CLOCK - : 4-----  regular-recon: true
-TIME ~ CLOCK - <INFO>  : Calling 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 15000000...: 
-TIME ~ CLOCK - <INFO>  : call to 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 15000000 at four-byte 0xe6a43905 returned 0x000000000000000000000000a478c2975ab1ea89e8196811f51a7b7ade33eb11
-TIME ~ CLOCK - <INFO>  : Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 202249 prior to its deployment 10042267
-TIME ~ CLOCK - <INFO>  : doEthCall in CUniPrice::getPrice returned false
+TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
+TIME ~ CLOCK - <INFO>  :    hash:                0x6e443af86a84920cace198340020e4ca54321a2c515cd3ad1f274d3506b4aff8
+TIME ~ CLOCK - <INFO>  :    blockNumber:         202249
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    0
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
+TIME ~ CLOCK - <INFO>  :    begBal:              4200000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountOut:           4199900000000000000000
+TIME ~ CLOCK - <INFO>  :    gasOut:              25320679510922664
+TIME ~ CLOCK - <INFO>  :    totalOut:            4199925320679510922664
+TIME ~ CLOCK - <INFO>  :    amountNet:           -4199925320679510922664
+TIME ~ CLOCK - <INFO>  :    endBal:              74679320489077336
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
+TIME ~ CLOCK - <INFO>  :    hash:                0x6e443af86a84920cace198340020e4ca54321a2c515cd3ad1f274d3506b4aff8
+TIME ~ CLOCK - <INFO>  :    blockNumber:         202249
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    0
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
+TIME ~ CLOCK - <INFO>  :    begBal:              4200000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountOut:           4199900000000000000000
+TIME ~ CLOCK - <INFO>  :    gasOut:              25320679510922664
+TIME ~ CLOCK - <INFO>  :    totalOut:            4199925320679510922664
+TIME ~ CLOCK - <INFO>  :    amountNet:           -4199925320679510922664
+TIME ~ CLOCK - <INFO>  :    endBal:              74679320489077336
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 202249...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 202249 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
@@ -256,14 +169,24 @@ params.size: 0
     {
       "blockNumber": 202249,
       "transactionIndex": 0,
+      "logIndex": 0,
+      "transactionHash": "0x6e443af86a84920cace198340020e4ca54321a2c515cd3ad1f274d3506b4aff8",
       "timestamp": 1441703356,
-      "assetAddr": "0x001d14804b399c6ef80e64576f657660804fec0b",
+      "date": "2015-09-08 09:09:16 UTC",
+      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "decimals": 18,
-      "prevAppBlk": 0,
-      "prevBal": "4200000000000000000000",
+      "spotPrice": 1.00000,
+      "priceSource": "not-priced",
+      "accountedFor": "0x001d14804b399c6ef80e64576f657660804fec0b",
+      "sender": "0x001d14804b399c6ef80e64576f657660804fec0b",
+      "recipient": "0x2910543af39aba0cd09dbb2d50200b3e800a63d2",
       "begBal": "4200000000000000000000",
+      "amountNet": "-4199925320679510922664",
       "endBal": "74679320489077336",
+      "reconciliationType": "regular-eth",
+      "reconciled": true,
+      "totalIn": "",
       "amountIn": "",
       "internalIn": "",
       "selfDestructIn": "",
@@ -272,23 +195,17 @@ params.size: 0
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
+      "totalOut": "4199925320679510922664",
       "amountOut": "4199900000000000000000",
       "internalOut": "",
       "selfDestructOut": "",
       "gasOut": "25320679510922664",
-      "reconciliationType": "regular",
-      "spotPrice": 1.00000,
-      "priceSource": "not-priced",
-      "begBalDiff": "",
-      "endBalCalc": "74679320489077336",
-      "endBalDiff": "",
-      "totalIn": "",
-      "totalOut": "4199925320679510922664",
       "totalOutLessGas": "4199900000000000000000",
-      "amountNet": "-4199925320679510922664",
-      "reconciled": true,
-      "transactionHash": "0x6e443af86a84920cace198340020e4ca54321a2c515cd3ad1f274d3506b4aff8",
-      "date": "2015-09-08 09:09:16 UTC"
+      "prevAppBlk": 0,
+      "prevBal": "4200000000000000000000",
+      "begBalDiff": "",
+      "endBalDiff": "",
+      "endBalCalc": "74679320489077336"
     }
   ],
   "gasCost": 25320679510922664,
@@ -296,37 +213,38 @@ params.size: 0
   "date": "2015-09-08 09:09:16 UTC",
   "ether": 4199.900000000000000000
 }
-TIME ~ CLOCK - : 4-----Trial balance: regular
-TIME ~ CLOCK - : 4-----  hash: 0xe1822bdf66fb415883f85b61a4a5ab1c13c4c7ab4b102c5d00504347a69b84f5
-TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  prevBal:       74679320489077336
-TIME ~ CLOCK - : 4-----  begBal:        74679320489077336
-TIME ~ CLOCK - : 4-----  begBalDiff:    0
-TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 8------  amountIn:      0
-TIME ~ CLOCK - : 8------  internalIn:    0
-TIME ~ CLOCK - : 8------  slfDstrctIn:   0
-TIME ~ CLOCK - : 8------  minBRwdIn:     0
-TIME ~ CLOCK - : 8------  minNRwdIn:     0
-TIME ~ CLOCK - : 8------  minTxFeeIn:    0
-TIME ~ CLOCK - : 8------  minURwdIn:     0
-TIME ~ CLOCK - : 8------  prefundIn:     0
-TIME ~ CLOCK - : 4-----  totalIn:       0
-TIME ~ CLOCK - : 8------  amountOut:     74259320489077336
-TIME ~ CLOCK - : 8------  internalOut:   0
-TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasOut:    420000000000000
-TIME ~ CLOCK - : 4-----  totalOut:      74679320489077336
-TIME ~ CLOCK - : 4-----  amountNet:     -74679320489077336
-TIME ~ CLOCK - : 4-----  endBal:        0
-TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  endBalCalc:    0
-TIME ~ CLOCK - : 4-----  endBalDiff:    0
-TIME ~ CLOCK - : 4-----  regular-recon: true
-TIME ~ CLOCK - <INFO>  : Calling 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 15000000...: 
-TIME ~ CLOCK - <INFO>  : call to 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 15000000 at four-byte 0xe6a43905 returned 0x000000000000000000000000a478c2975ab1ea89e8196811f51a7b7ade33eb11
-TIME ~ CLOCK - <INFO>  : Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 1501459 prior to its deployment 10042267
-TIME ~ CLOCK - <INFO>  : doEthCall in CUniPrice::getPrice returned false
+TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
+TIME ~ CLOCK - <INFO>  :    hash:                0xe1822bdf66fb415883f85b61a4a5ab1c13c4c7ab4b102c5d00504347a69b84f5
+TIME ~ CLOCK - <INFO>  :    blockNumber:         1501459
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    2
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
+TIME ~ CLOCK - <INFO>  :    begBal:              74679320489077336
+TIME ~ CLOCK - <INFO>  :    amountOut:           74259320489077336
+TIME ~ CLOCK - <INFO>  :    gasOut:              420000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            74679320489077336
+TIME ~ CLOCK - <INFO>  :    amountNet:           -74679320489077336
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
+TIME ~ CLOCK - <INFO>  :    hash:                0xe1822bdf66fb415883f85b61a4a5ab1c13c4c7ab4b102c5d00504347a69b84f5
+TIME ~ CLOCK - <INFO>  :    blockNumber:         1501459
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    2
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
+TIME ~ CLOCK - <INFO>  :    begBal:              74679320489077336
+TIME ~ CLOCK - <INFO>  :    amountOut:           74259320489077336
+TIME ~ CLOCK - <INFO>  :    gasOut:              420000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            74679320489077336
+TIME ~ CLOCK - <INFO>  :    amountNet:           -74679320489077336
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : Calling 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1501459...: 
 TIME ~ CLOCK - <INFO>  : call to 0x729d19f657bd0614b4985cf1d82531c67569197b at block 1501459 at four-byte 0x59e02dd7 returned 0x
 params.size: 0
@@ -358,14 +276,24 @@ params.size: 0
     {
       "blockNumber": 1501459,
       "transactionIndex": 2,
+      "logIndex": 0,
+      "transactionHash": "0xe1822bdf66fb415883f85b61a4a5ab1c13c4c7ab4b102c5d00504347a69b84f5",
       "timestamp": 1463025233,
-      "assetAddr": "0x001d14804b399c6ef80e64576f657660804fec0b",
+      "date": "2016-05-12 03:53:53 UTC",
+      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
       "decimals": 18,
-      "prevAppBlk": 202249,
-      "prevBal": "74679320489077336",
+      "spotPrice": 1.00000,
+      "priceSource": "not-priced",
+      "accountedFor": "0x001d14804b399c6ef80e64576f657660804fec0b",
+      "sender": "0x001d14804b399c6ef80e64576f657660804fec0b",
+      "recipient": "0xcfab9ac2bb2e1dcfc2d50f01f4e61f2f72fb5902",
       "begBal": "74679320489077336",
+      "amountNet": "-74679320489077336",
       "endBal": "",
+      "reconciliationType": "regular-eth",
+      "reconciled": true,
+      "totalIn": "",
       "amountIn": "",
       "internalIn": "",
       "selfDestructIn": "",
@@ -374,23 +302,17 @@ params.size: 0
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
+      "totalOut": "74679320489077336",
       "amountOut": "74259320489077336",
       "internalOut": "",
       "selfDestructOut": "",
       "gasOut": "420000000000000",
-      "reconciliationType": "regular",
-      "spotPrice": 1.00000,
-      "priceSource": "not-priced",
-      "begBalDiff": "",
-      "endBalCalc": "",
-      "endBalDiff": "",
-      "totalIn": "",
-      "totalOut": "74679320489077336",
       "totalOutLessGas": "74259320489077336",
-      "amountNet": "-74679320489077336",
-      "reconciled": true,
-      "transactionHash": "0xe1822bdf66fb415883f85b61a4a5ab1c13c4c7ab4b102c5d00504347a69b84f5",
-      "date": "2016-05-12 03:53:53 UTC"
+      "prevAppBlk": 202249,
+      "prevBal": "74679320489077336",
+      "begBalDiff": "",
+      "endBalDiff": "",
+      "endBalCalc": ""
     }
   ],
   "gasCost": 420000000000000,

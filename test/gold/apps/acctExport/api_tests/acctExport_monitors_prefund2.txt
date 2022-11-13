@@ -15,13 +15,8 @@ export?addrs=0x05a56e2d52c817161883f50c441c3228cfe54d9f&firstBlock=2&lastBlock=2
       "name": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "symbol": "",
       "source": "",
-      "decimals": 0,
-      "petname": "early-definite-sunbird",
-      "isCustom": false,
-      "isPrefund": false,
-      "isContract": false,
-      "isErc20": false,
-      "isErc721": false
+      "decimals": 18,
+      "petname": "early-definite-sunbird"
     }
   }
 }
