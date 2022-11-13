@@ -498,7 +498,10 @@ bool queryRawLogs(string_q& results, const CLogFilter& query) {
 }
 
 //-------------------------------------------------------------------------
-string_q getTokenBalanceOf(const address_t& token, const address_t& holder, blknum_t blockNum) {
+bigint_t getTokenBalanceAt(const address_t& token, const address_t& holder, blknum_t blockNum) {
+    if (isZeroAddr(token) || isEtherAddr(token))
+        return getBalanceAt(holder, blockNum);
+
     ostringstream cmd;
     cmd << "[{";
     cmd << "\"to\": \"" << token << "\", ";
@@ -506,8 +509,8 @@ string_q getTokenBalanceOf(const address_t& token, const address_t& holder, blkn
     cmd << "}, \"" << uint_2_Hex(blockNum) << "\"]";
     string_q ret = callRPC("eth_call", cmd.str(), false).substr(0, 66);  // take only the first 32 bytes
     if (startsWith(ret, "0x"))
-        return bnu_2_Str(str_2_BigUint(ret, 256));
-    return "0";
+        return str_2_BigInt(ret, 256);
+    return 0;
 }
 
 //-------------------------------------------------------------------------

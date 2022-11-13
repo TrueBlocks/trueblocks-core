@@ -133,7 +133,7 @@ bool COptions::process_reconciliation(CTraverser* trav) {
                 pBal.blockNumber = 0;
                 if (trav->trans.blockNumber > 0)
                     pBal.blockNumber = trav->trans.blockNumber - 1;
-                pBal.endBal = getTokenBalanceOf2(tokenName.address, accountedFor.address, pBal.blockNumber);
+                pBal.endBal = getTokenBalanceAt(tokenName.address, accountedFor.address, pBal.blockNumber);
                 pBal.spotPrice = getPriceInUsd(tokenName.address, pBal.priceSource, pBal.blockNumber);
                 prevStatements[psKey] = pBal;
             }
@@ -141,7 +141,7 @@ bool COptions::process_reconciliation(CTraverser* trav) {
             tokStatement.prevBlk = prevStatements[psKey].blockNumber;
             tokStatement.prevBlkBal = prevStatements[psKey].endBal;
             tokStatement.begBal = prevStatements[psKey].endBal;
-            tokStatement.endBal = getTokenBalanceOf2(tokenName.address, accountedFor.address, trav->trans.blockNumber);
+            tokStatement.endBal = getTokenBalanceAt(tokenName.address, accountedFor.address, trav->trans.blockNumber);
             if (tokStatement.begBal > tokStatement.endBal) {
                 tokStatement.amountOut = (tokStatement.begBal - tokStatement.endBal);
             } else {
