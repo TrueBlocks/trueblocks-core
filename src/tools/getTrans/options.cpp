@@ -39,6 +39,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     // BEG_CODE_LOCAL_INIT
+    address_t account_for = "";
     // END_CODE_LOCAL_INIT
 
     Init();
@@ -101,6 +102,7 @@ bool COptions::parseArguments(string_q& command) {
         // show certain fields and hide others
         manageFields(defHide, false);
         manageFields(defShow, true);
+        manageFields("CReconciliation:encoding,signature", true);
         manageFields("CParameter:strDefault", false);  // hide
         manageFields("CTransaction:price", false);     // hide
         if (!useDict())
@@ -109,6 +111,8 @@ bool COptions::parseArguments(string_q& command) {
         manageFields("CLogEntry:data,topics", true);                                               // show
         manageFields("CTrace: blockHash, blockNumber, transactionHash, transactionIndex", false);  // hide
         abi_spec.loadAbisFromKnown();
+    } else {
+        manageFields("CReconciliation:encoding,signature", false);
     }
 
     // order matters
@@ -118,11 +122,21 @@ bool COptions::parseArguments(string_q& command) {
         HIDE_FIELD(CTransaction, "traces");
     }
 
+    if (!account_for.empty()) {
+        if (!loadNames())
+            return usage("Could not load names database.");
+        statementManager.which = trace ? REC_ALL : REC_SOME;
+        statementManager.accountedFor = account_for;
+    }
+
     // Display formatting
     if (uniq) {
         configureDisplay("getTrans", "CAppearance", STR_DISPLAY_APPEARANCE);
-    } else if (!account_for.empty()) {
+    } else if (!statementManager.accountedFor.empty()) {
         string_q fmt = STR_DISPLAY_RECONCILIATION;
+        if (!articulate) {
+            fmt = substitute(fmt, "[{ENCODING}]\t[{SIGNATURE}]\t", "");
+        }
         configureDisplay("getTrans", "CReconciliation", fmt);
     } else {
         string_q fmt = STR_DISPLAY_TRANSACTION + string_q(trace ? "\t[{TRACESCNT}]" : "");
@@ -143,7 +157,6 @@ void COptions::Init(void) {
     trace = false;
     uniq = false;
     flow = "";
-    account_for = "";
     cache = false;
     // END_CODE_INIT
 

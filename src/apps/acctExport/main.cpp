@@ -90,7 +90,7 @@ int main(int argc, const char* argv[]) {
                 traversers.push_back(tt);
             }
 
-            forEveryAppearance(traversers, options.monApps, &options);
+            forEveryAppearance(traversers, options.statementManager.appArray, &options);
 
         } else {
             options.handle_traversers();
@@ -106,10 +106,17 @@ int main(int argc, const char* argv[]) {
     os << ", \"first_block\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.exportRange.first)) << endl;
     os << ", \"last_block\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.exportRange.second)) << endl;
     if (!options.count && options.allMonitors.size() == 1) {
-        findName(options.accountedFor.address, options.allMonitors[0]);
-        options.allMonitors[0].petname = addr_2_Petname(options.allMonitors[0].address, '-');
-        if (options.abi_spec.nInterfaces() == 0) {
-            HIDE_FIELD(CMonitor, "abi_spec");
+        HIDE_FIELD(CMonitor, "abi_spec");
+        if (!findName(options.statementManager.accountedFor, options.allMonitors[0])) {
+            blknum_t blk = min(options.exportRange.second, options.meta.client);
+            options.statementManager.name.isContract = isContractAt(options.allMonitors[0].address, blk);
+            options.allMonitors[0].petname = addr_2_Petname(options.allMonitors[0].address, '-');
+            HIDE_FIELD(CAccountName, "isCustom");
+            HIDE_FIELD(CAccountName, "isPrefund");
+            HIDE_FIELD(CAccountName, "isContract");
+            HIDE_FIELD(CAccountName, "isErc20");
+            HIDE_FIELD(CAccountName, "isErc721");
+            options.allMonitors[0].decimals = 18;
         }
         os << ", \"accountedFor\": " << options.allMonitors[0] << endl;
     }
@@ -165,7 +172,8 @@ bool prog_Log(CTraverser* trav, void* data) {
     }
 
     LOG_PROG(searchOps[trav->searchOp], " ", opt->first_record + trav->index, " of ", opt->stats.nFileRecords,
-             " txs at block ", trav->trans.blockNumber, found.str(), " for address ", opt->accountedFor.address, "\r");
+             " txs at block ", trav->trans.blockNumber, found.str(), " for address ",
+             opt->statementManager.accountedFor, "\r");
 
     return !shouldQuit();
 }
@@ -182,7 +190,8 @@ void end_Log(CTraverser* trav, void* data) {
     }
 
     LOG_PROG(searchOps[trav->searchOp], " ", opt->first_record + trav->index, " of ", opt->stats.nFileRecords,
-             " txs at block ", trav->trans.blockNumber, found.str(), " for address ", opt->accountedFor.address, "\r");
+             " txs at block ", trav->trans.blockNumber, found.str(), " for address ",
+             opt->statementManager.accountedFor, "\r");
 
     return;
 }

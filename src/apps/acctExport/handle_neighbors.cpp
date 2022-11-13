@@ -240,7 +240,7 @@ bool COptions::showAddrsInTx(CTraverser* trav, const blkrange_t& range, const CA
                     appHere.bn = found->blk;
                     appHere.tx = found->tx;
                     appHere.addr = bytes_2_Addr(theIndex->getAddressAt(i)->bytes);
-                    if (assignReason(accountedFor, appHere, trav->trans)) {
+                    if (assignReason(statementManager.name, appHere, trav->trans)) {
                         trav->nProcessed++;
                         if (!prog_Log(trav, this))
                             return false;
@@ -253,8 +253,8 @@ bool COptions::showAddrsInTx(CTraverser* trav, const blkrange_t& range, const CA
             found++;
         }
     } else {
-        LOG_ERR("Appearance (", app.blk, ".", app.txid, ") for address \"", accountedFor.address, "\" not found in ",
-                chunkPath);
+        LOG_ERR("Appearance (", app.blk, ".", app.txid, ") for address \"", statementManager.accountedFor,
+                "\" not found in ", chunkPath);
     }
 
     return prog_Log(trav, this);
@@ -273,17 +273,17 @@ bool neighbors_Pre(CTraverser* trav, void* data) {
 
     blknum_t start = 0;
     if (trav->traverserRange.first != 0) {
-        for (trav->index = 0; trav->index < opt->monApps.size() && !shouldQuit(); trav->index++) {
-            if (opt->monApps[trav->index].blk >= trav->traverserRange.first) {
+        for (size_t i = 0; i < opt->statementManager.appArray.size() && !shouldQuit(); i++) {
+            if (opt->statementManager.appArray[i].blk >= trav->traverserRange.first) {
                 break;
             }
-            start = trav->index;
+            start = i;
         }
     }
 
     uint64_t curRange = 0;
-    for (trav->index = start; trav->index < opt->monApps.size() && !shouldQuit(); trav->index++) {
-        CAppearance_mon app = opt->monApps[trav->index];
+    for (size_t i = start; i < opt->statementManager.appArray.size() && !shouldQuit(); i++) {
+        CAppearance_mon app = opt->statementManager.appArray[i];
         //     opt->neighborCount = 0;
         while (curRange < ranges.size() && !inRange(blknum_t(app.blk), ranges[curRange])) {
             curRange++;

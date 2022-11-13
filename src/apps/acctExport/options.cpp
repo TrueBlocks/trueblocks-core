@@ -226,11 +226,9 @@ bool COptions::parseArguments(string_q& command) {
     if (!isApiMode() && (max_records == 250 || max_records == 0))
         max_records = (((size_t)-100000000));  // this is a very large number that won't wrap
 
-    if (accounting && !isArchiveNode())
+    if (!isArchiveNode() && accounting) {
         return usage("The --accounting option requires historical balances which your RPC server does not provide.");
-
-    if ((appearances + logs + receipts + traces + statements + neighbors + accounting) > 1)
-        return usage("Please export only one of list, receipts, statements, logs, or traces.");
+    }
 
     for (auto e : emitter)
         logFilter.emitters.push_back(e);
@@ -241,11 +239,15 @@ bool COptions::parseArguments(string_q& command) {
     for (auto t : topic)
         logFilter.topics.push_back(t);
 
-    for (auto addr : asset)
-        assetFilter[addr] = true;
+    for (auto addr : asset) {
+        statementManager.assetFilter[addr] = true;
+    }
 
-    if (!loadNames())
+    if (!loadNames()) {
         return usage("Could not load names database.");
+    }
+
+    statementManager.which = traces ? REC_ALL : REC_SOME;
 
     for (auto addr : addrs) {
         CMonitor monitor;
@@ -254,18 +256,20 @@ bool COptions::parseArguments(string_q& command) {
         monitor.finishParse();
         monitor.isStaging = !fileExists(monitor.getPathToMonitor(monitor.address, false));
 
-        if (accountedFor.address.empty()) {
-            accountedFor.address = monitor.address;
-            findName(monitor.address, accountedFor);
-            accountedFor.petname = addr_2_Petname(accountedFor.address, '-');  // order matters
-            accountedFor.isContract = !getCodeAt(monitor.address, latest).empty();
+        if (statementManager.accountedFor.empty()) {
+            statementManager.accountedFor = monitor.address;
+            statementManager.name.address = monitor.address;
+            findName(monitor.address, statementManager.name);
+            statementManager.name.petname = addr_2_Petname(statementManager.accountedFor, '-');  // order matters
+            statementManager.name.isContract = !getCodeAt(monitor.address, latest).empty();
         }
 
         allMonitors.push_back(monitor);
     }
 
-    if (appearances || count)
+    if (appearances || count) {
         articulate = false;
+    }
 
     if (articulate) {
         abi_spec.loadAbisFromKnown();
@@ -275,15 +279,17 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (!setDisplayFormatting())
+    if (!setDisplayFormatting()) {
         return false;
+    }
 
     // TODO: This can be removed
     CMonitor m;
     cleanFolder(m.getPathToMonitor("", true));
 
-    if (first_block > last_block)
+    if (first_block > last_block) {
         return usage("--first_block must be less than or equal to --last_block.");
+    }
     exportRange = make_pair(first_block, last_block);
 
     if (count) {
@@ -377,10 +383,11 @@ void COptions::Init(void) {
     meta = getMetaData();
 
     allMonitors.clear();
-    monApps.clear();
 
-    accountedFor.address = "";
-    accountedFor.petname = "";
+    statementManager.appArray.clear();
+    statementManager.accountedFor = "";
+    statementManager.name.address = "";
+    statementManager.name.petname = "";
 
     // We don't clear these because they are part of meta data
     // prefundAddrMap.clear();
@@ -538,7 +545,7 @@ bool COptions::setDisplayFormatting(void) {
         if (accounting) {
             articulate = true;
             manageFields("CTransaction:statements", true);
-            if (statements) {
+            if (statements && isText) {
                 string_q format =
                     getGlobalConfig("acctExport")->getConfigStr("display", "statement", STR_DISPLAY_RECONCILIATION);
                 expContext().fmtMap["header"] = noHeader ? "" : cleanFmt(format);
