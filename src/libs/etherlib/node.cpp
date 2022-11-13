@@ -523,6 +523,19 @@ string_q getTokenSymbol(const address_t& token, blknum_t blockNum) {
 }
 
 //-------------------------------------------------------------------------
+uint64_t getTokenDecimals(const address_t& token, blknum_t blockNum) {
+    ostringstream cmd;
+    cmd << "[{";
+    cmd << "\"to\": \"" << token << "\", ";
+    cmd << "\"data\": \"0x313ce567\"";
+    cmd << "}, \"" << uint_2_Hex(blockNum) << "\"]";
+    string_q ret = callRPC("eth_call", cmd.str(), false);
+    if (!contains(ret, "error") && !contains(ret, "reverted") && !startsWith(ret, "0x"))
+        return str_2_Uint(ret);
+    return 0;
+}
+
+//-------------------------------------------------------------------------
 string_q getTokenState(const address_t& token, const string_q& what, const CAbi& abi_spec, blknum_t blockNum,
                        const string_q& bytes) {
     static map<string_q, string_q> sigMap;

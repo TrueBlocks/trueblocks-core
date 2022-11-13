@@ -29,5 +29,6 @@
 #include "reconciliation.h"
 #include "timestamps.h"
 #include "indexarchive.h"
+#include "monitordapp.h"
 
 using namespace qblocks;  // NOLINT

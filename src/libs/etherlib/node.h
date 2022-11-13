@@ -71,6 +71,7 @@ inline bigint_t getTokenBalanceOf2(const address_t& token, const address_t& hold
     return str_2_BigInt(getTokenBalanceOf(token, holder, blockNum));
 };
 extern string_q getTokenSymbol(const address_t& token, blknum_t blockNum);
+extern uint64_t getTokenDecimals(const address_t& token, blknum_t blockNum);
 extern string_q getTokenState(const address_t& token, const string_q& whichState, const CAbi& abi_spec,
                               blknum_t blockNum, const string_q& bytes = "");
 
