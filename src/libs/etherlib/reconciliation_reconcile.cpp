@@ -254,8 +254,6 @@ bool CReconciliation::reconcileBalances(blknum_t pBn, blknum_t nBn, bigint_t pBa
         reconciliationType = "genesis";
 
     } else {
-        bool prevDifferent = prevAppBlk != blockNumber;
-        bool nextDifferent = blockNumber != nBn;
         if (prevDifferent && nextDifferent) {
             reconciliationType += "regular";
 

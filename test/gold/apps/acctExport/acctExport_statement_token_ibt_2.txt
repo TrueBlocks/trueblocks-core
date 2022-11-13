@@ -1,0 +1,1865 @@
+chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --first_block 12705891 --last_block 12705893 --ether --fmt csv
+TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+TEST[DATE|TIME] Accounting:  true
+TEST[DATE|TIME] Statements:  true
+TEST[DATE|TIME] FirstBlock:  12705891
+TEST[DATE|TIME] LastBlock:  12705893
+TEST[DATE|TIME] Ether:  true
+TEST[DATE|TIME] Format:  csv
+"blockNumber","transactionIndex","logindex","transactionHash","timestamp","date","assetAddress","assetSymbol","decimals","spotPrice","priceSource","accountedFor","sender","recipient","begBal","amountNet","endBal","encoding","signature","reconciliationType","reconciled","totalIn","amountIn","internalIn","selfDestructIn","minerBaseRewardIn","minerNephewRewardIn","minerTxFeeIn","minerUncleRewardIn","prefundIn","totalOut","amountOut","internalOut","selfDestructOut","gasOut","totalOutLessGas","prevAppBlk","prevBal","begBalDiff","endBalDiff","endBalCalc"
+TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          ETH
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
+TIME ~ CLOCK - <INFO>  :    begBal:              36720534261192445316
+TIME ~ CLOCK - <INFO>  :    gasOut:              11780085000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            11780085000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -11780085000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              36708754176192445316
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TIME ~ CLOCK - <INFO>  :    assetSymbol          ETH
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            0
+TIME ~ CLOCK - <INFO>  :    begBal:              36720534261192445316
+TIME ~ CLOCK - <INFO>  :    gasOut:              11780085000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            11780085000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -11780085000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              36708754176192445316
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            286
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            286
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            288
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            288
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            290
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            290
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            292
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            292
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            294
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            294
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            296
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            296
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            298
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            298
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            300
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            300
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            302
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            302
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            304
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            304
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            306
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            306
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            308
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            308
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            310
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            310
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            312
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            312
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            314
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            314
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            316
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            316
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            318
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            318
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            320
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            320
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            322
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            322
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            324
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            324
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            326
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            326
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            328
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            328
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            330
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            330
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            332
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            332
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            334
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            334
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            336
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            336
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            338
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            338
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            340
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            340
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            342
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            342
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            344
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            344
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            346
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            346
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            348
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            348
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            350
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            350
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            352
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            352
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            354
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            354
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            356
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            356
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            358
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            358
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            360
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            360
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            362
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            362
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            364
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            364
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            366
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            366
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            368
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            368
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            370
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            370
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            372
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    assetAddr:           0x6b175474e89094c44da98b954eedeac495271d0f
+TIME ~ CLOCK - <INFO>  :    assetSymbol          DAI
+TIME ~ CLOCK - <INFO>  :    hash:                0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
+TIME ~ CLOCK - <INFO>  :    blockNumber:         12705892
+TIME ~ CLOCK - <INFO>  :    transactionIndex:    117
+TIME ~ CLOCK - <INFO>  :    logIndex:            372
+TIME ~ CLOCK - <INFO>  :    begBal:              1553721842513858802649
+TIME ~ CLOCK - <INFO>  :    amountOut:           2000000000000000000
+TIME ~ CLOCK - <INFO>  :    totalOut:            2000000000000000000
+TIME ~ CLOCK - <INFO>  :    amountNet:           -2000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBal:              1465721842513858802649
+TIME ~ CLOCK - <INFO>  :    begBalDiff:          88000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalDiff:          86000000000000000000
+TIME ~ CLOCK - <INFO>  :    endBalCalc:          1551721842513858802649
+TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : 
+TIME ~ CLOCK - <INFO>  : Calling 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 12705892...: 
+TIME ~ CLOCK - <INFO>  : call to 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 12705892 at four-byte 0xe6a43905 returned 0x000000000000000000000000a478c2975ab1ea89e8196811f51a7b7ade33eb11
+TIME ~ CLOCK - <INFO>  : Calling 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11 at block 12705892...: 
+TIME ~ CLOCK - <INFO>  : call to 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11 at block 12705892 at four-byte 0x0902f1ac returned 0x0000000000000000000000000000000000000000001ec14eb86d953b17c454320000000000000000000000000000000000000000000004426b8f40bb2286b1040000000000000000000000000000000000000000000000000000000060d65904
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = <>
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...00000000001ec14eb86d953b17c45432 <=o <-r
+  1 (0x020) 0000000000000000...00000000000004426b8f40bb2286b104
+  2 (0x040) 0000000000000000...00000000000000000000000060d65904
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 37180643455112622587008050
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 37180643455112622587008050
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...00000000001ec14eb86d953b17c45432 <=o
+  1 (0x020) 0000000000000000...00000000000004426b8f40bb2286b104 <-r
+  2 (0x040) 0000000000000000...00000000000000000000000060d65904
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 37180643455112622587008050
+  1: uint112 _reserve1 = 20114701524999621488900
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 2
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 37180643455112622587008050
+  1: uint112 _reserve1 = 20114701524999621488900
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...00000000001ec14eb86d953b17c45432 <=o
+  1 (0x020) 0000000000000000...00000000000004426b8f40bb2286b104
+  2 (0x040) 0000000000000000...00000000000000000000000060d65904 <-r
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 37180643455112622587008050
+  1: uint112 _reserve1 = 20114701524999621488900
+  2: uint32 _blockTimestampLast = 1624660228
+params.size: 3
+  0: uint112 _reserve0 = 37180643455112622587008050
+  1: uint112 _reserve1 = 20114701524999621488900
+  2: uint32 _blockTimestampLast = 1624660228
+==================================================
+
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+TIME ~ CLOCK - <WARN> : unreconciled tok-transfer: chifra export 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --ether --fmt json --first_block 12705891 --last_block 12705893
+"12705892","117","","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee","ETH","18","1848.43128","uniswap","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0x7d655c57f71464b6f83811c55d84009cd9f5221c","36.720534261192445316","-0.011780085000000000","36.708754176192445316","","","regular-eth","true","","0","0","0","0","0","0","0","0","0.011780085000000000","0","0","0","0.011780085000000000","","12705275","36.720534261192445316","","","36.708754176192445316"
+"12705892","117","286","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0x6bf1eba9740441d0a8822eda4e116a74f850d81b","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","prevDiff-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1553.721842513858802649","","","1551.721842513858802649"
+"12705892","117","288","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0x9b5aacbc71feaf52b8f73def00b56e0fd875f2a5","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1551.721842513858802649","","","1549.721842513858802649"
+"12705892","117","290","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf26d1bb347a59f6c283c53156519cc1b1abaca51","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1549.721842513858802649","","","1547.721842513858802649"
+"12705892","117","292","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0x97843608a00e2bbc75ab0c1911387e002565dede","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1547.721842513858802649","","","1545.721842513858802649"
+"12705892","117","294","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0x13ebd3443fa5575f0eb173e323d8419f7452cfb1","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1545.721842513858802649","","","1543.721842513858802649"
+"12705892","117","296","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0x5d99805ca2867f22a318c4e6b0dc5c0eac457386","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1543.721842513858802649","","","1541.721842513858802649"
+"12705892","117","298","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0x8917418abe36e6e788068e96ef5a47d7484c06b1","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1541.721842513858802649","","","1539.721842513858802649"
+"12705892","117","300","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xc3c51e27c228debc182e8c802dcb4ca919acbc77","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1539.721842513858802649","","","1537.721842513858802649"
+"12705892","117","302","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0x97843608a00e2bbc75ab0c1911387e002565dede","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1537.721842513858802649","","","1535.721842513858802649"
+"12705892","117","304","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0x3c5c2f4bcec51a36494682f91dbc6ca7c63b514c","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1535.721842513858802649","","","1533.721842513858802649"
+"12705892","117","306","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0x587fb98e404a18503a24cf19abb1887704beb407","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1533.721842513858802649","","","1531.721842513858802649"
+"12705892","117","308","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xfc756d8632a19cebd76560ce0a6967279e32131b","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1531.721842513858802649","","","1529.721842513858802649"
+"12705892","117","310","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0x4985ad3d7d81c9e9a4cb2cc080f0c6baa55d8f74","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1529.721842513858802649","","","1527.721842513858802649"
+"12705892","117","312","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xd6db4be0b1c33987dc01cbf113b5f07c0232a07a","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1527.721842513858802649","","","1525.721842513858802649"
+"12705892","117","314","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf0d7a8198d75e10517f035cf11b928e9e2ab20f4","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1525.721842513858802649","","","1523.721842513858802649"
+"12705892","117","316","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0x648aa14e4424e0825a5ce739c8c68610e143fb79","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1523.721842513858802649","","","1521.721842513858802649"
+"12705892","117","318","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0x7dac9fc15c1db4379d75a6e3f330ae849dffce18","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1521.721842513858802649","","","1519.721842513858802649"
+"12705892","117","320","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0x57ea12a3a8e441f5fe7b1f3af1121097b7d3b6a8","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1519.721842513858802649","","","1517.721842513858802649"
+"12705892","117","322","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0x0087a081a9b430fd8f688c6ac5dd24421bfb060d","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1517.721842513858802649","","","1515.721842513858802649"
+"12705892","117","324","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0x8df168a41c3a3c6be0e9208d5027ea80f2c5ba25","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1515.721842513858802649","","","1513.721842513858802649"
+"12705892","117","326","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0x9c159121ceebf937e9bad98fd0c895d7f6038bd4","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1513.721842513858802649","","","1511.721842513858802649"
+"12705892","117","328","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0x8110d1d04ac316fdcace8f24fd60c86b810ab15a","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1511.721842513858802649","","","1509.721842513858802649"
+"12705892","117","330","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xfcc41c4614bd464ba28ad96f93aadaa7ba6c8680","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1509.721842513858802649","","","1507.721842513858802649"
+"12705892","117","332","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0x2f71129b240080c638ac8d993bff52169e3551c3","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1507.721842513858802649","","","1505.721842513858802649"
+"12705892","117","334","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0x20d08e58952bb70ff0ec1271085ca969c14be2a3","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1505.721842513858802649","","","1503.721842513858802649"
+"12705892","117","336","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0x6a3738c6299f45c31697acea647d49edcc9c28a4","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1503.721842513858802649","","","1501.721842513858802649"
+"12705892","117","338","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xa0527ba80d811cd45d452481caf902dfd6f5b8c2","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1501.721842513858802649","","","1499.721842513858802649"
+"12705892","117","340","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xcbec15583a21c3ddad5fab658be5b4fe85df730b","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1499.721842513858802649","","","1497.721842513858802649"
+"12705892","117","342","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0x9d4e94db689bc471e45b0a18b7bda36fccec9c3b","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1497.721842513858802649","","","1495.721842513858802649"
+"12705892","117","344","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0x3c7bc69e09e387906ff6f60db5a49d3fa2c1ddb0","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1495.721842513858802649","","","1493.721842513858802649"
+"12705892","117","346","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xb35cd25e91b376eafba79abe71d78814dec3401a","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1493.721842513858802649","","","1491.721842513858802649"
+"12705892","117","348","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0x15ef9189a8282e4e1e985eb8ed767e7426b4bfd5","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1491.721842513858802649","","","1489.721842513858802649"
+"12705892","117","350","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0x70ccbe10f980d80b7ebaab7d2e3a73e87d67b775","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1489.721842513858802649","","","1487.721842513858802649"
+"12705892","117","352","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0x4b8810b079eb22ecf2d1f75e08e0abbd6fd87dbf","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1487.721842513858802649","","","1485.721842513858802649"
+"12705892","117","354","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0x9531c059098e3d194ff87febb587ab07b30b1306","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1485.721842513858802649","","","1483.721842513858802649"
+"12705892","117","356","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0x00cf36853aa4024fb5bf5cc377dfd85844b411a0","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1483.721842513858802649","","","1481.721842513858802649"
+"12705892","117","358","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xbc11295936aa79d594139de1b2e12629414f3bdb","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1481.721842513858802649","","","1479.721842513858802649"
+"12705892","117","360","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0x70e47c843e0f6ab0991a3189c28f2957eb6d3842","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1479.721842513858802649","","","1477.721842513858802649"
+"12705892","117","362","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0x66aa8bee5366b6b48811ae0dac9fe5e1eefe1621","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1477.721842513858802649","","","1475.721842513858802649"
+"12705892","117","364","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xa19fcdad77c1f0fd184689aca88babcf68010347","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1475.721842513858802649","","","1473.721842513858802649"
+"12705892","117","366","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xc9a872868afa68ba937f65a1c5b4b252dab15d85","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1473.721842513858802649","","","1471.721842513858802649"
+"12705892","117","368","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0x9b984d5a03980d8dc0a24506c968465424c81dbe","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1471.721842513858802649","","","1469.721842513858802649"
+"12705892","117","370","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0x8ba1f109551bd432803012645ac136ddd64dba72","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-same-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1469.721842513858802649","","","1467.721842513858802649"
+"12705892","117","372","0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73","1624660254","2021-06-25 22:30:54 UTC","0x6b175474e89094c44da98b954eedeac495271d0f","DAI","18","1.00000","stable-coin","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xf503017d7baf7fbc0fff7492b751025c6a78179b","0xde21f729137c5af1b01d73af1dc21effa2b8a0d6","1553.721842513858802649","-2.0000000","1465.721842513858802649","","","same-nextDiff-token","true","","0","0","0","0","0","0","0","0","2.0000000","2.0000000","0","0","0","2.0000000","12705892","1467.721842513858802649","","","1465.721842513858802649"
