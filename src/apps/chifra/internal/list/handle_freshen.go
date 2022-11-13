@@ -37,7 +37,7 @@ type MonitorUpdate struct {
 	FirstBlock uint64
 }
 
-const maxTestingBlock = 5000000
+const maxTestingBlock = 15000000
 
 // mutexesPerAddress map stores mutex for each address that is being/has been freshened
 var mutexesPerAddress = make(map[string]*sync.Mutex)
