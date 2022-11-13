@@ -28,9 +28,6 @@ echo $(pwd)
 # Set the correct PATH
 export PATH=$(pwd)/../bin:$(pwd)/../bin/test:$PATH
 
-echo "----- We need autossh connections (should see at least two, maybe three -----"
-ps -ef | grep autossh
-
 # Run server if needed
 if $RUN_SERVER
 then
