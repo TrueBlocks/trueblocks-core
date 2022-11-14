@@ -29,7 +29,6 @@ typedef enum {
 class CStatementManager {
     struct CPreviousBalance {
       public:
-        // address_t assetAddr;
         blknum_t blockNumber;
         bigint_t balance;
         CPreviousBalance& operator=(const CReconciliation& ab) {

@@ -69,13 +69,13 @@ on,both,fast,export,apps/acctExport,neighbor2,y,addrs = 0xbb9bc244d798123fde783f
 on,both,fast,export,apps/acctExport,neighbor1_csv,n,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors & fmt = csv
 on,both,fast,export,apps/acctExport,neighbor2_csv,n,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors & fmt = csv
 
-on,both,fast,export,apps/acctExport,statement_1,y,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & last_block = 4000000 & fmt = json
-on,both,fast,export,apps/acctExport,statement_2,y,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & accounting & statements & last_block = 4000000 & fmt = json
-on,both,fast,export,apps/acctExport,statement_3_bad,y,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & statements & last_block = 4000000 & fmt = json
-on,both,fast,export,apps/acctExport,statement_3,y,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & accounting & accounting & statements & last_block = 4000000 & fmt = json
-on,both,fast,export,apps/acctExport,statement_3_accounting,y,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & accounting & last_block = 4000000 & fmt = json
-test,both,fast,export,apps/acctExport,statement_token_ibt,y,addrs = 0xec3ef464bf821c3b10a18adf9ac7177a628e87cc & accounting & statements & first_block = 7005600 & last_block = 7005780 & ether & fmt = json
-test,both,fast,export,apps/acctExport,statement_token_ibt_2,n,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & statements & first_block = 12704456 & last_block = 12705893 & ether & fmt = csv
+test,both,fast,export,apps/acctExport,statement_1,y,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & last_block = 4000000 & fmt = json
+test,both,fast,export,apps/acctExport,statement_2,y,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & accounting & statements & last_block = 4000000 & fmt = json
+test,both,fast,export,apps/acctExport,statement_3_bad,y,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & statements & last_block = 4000000 & fmt = json
+test,both,fast,export,apps/acctExport,statement_3,y,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & accounting & accounting & statements & last_block = 4000000 & fmt = json
+test,both,fast,export,apps/acctExport,statement_3_accounting,y,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & accounting & last_block = 4000000 & fmt = json
+test,both,fast,export,apps/acctExport,statement_token_ibt,n,addrs = 0xec3ef464bf821c3b10a18adf9ac7177a628e87cc & accounting & statements & first_block = 7005600 & last_block = 7005780 & ether & fmt = json
+test,both,fast,export,apps/acctExport,statement_token_ibt_2,n,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & statements & first_block = 12704456 & last_block = 12705893 & ether & fmt = csv & max_records = 4000
 
 on,both,fast,export,apps/acctExport,ens_test_export,y,addrs = rhyslindmark.eth & first_block = 4037786 & last_block = 4081450
 on,both,fast,export,apps/acctExport,monitors_data2,n,addrs = 0x1234567890123456789012345678901234567890 & addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 3000000 & last_block = 3375498 & fmt = csv & no_header
