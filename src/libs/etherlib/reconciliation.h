@@ -74,7 +74,7 @@ class CReconciliation : public CBaseNode {
 
     bool reconcileFlows(const CTransfer& transfer);
     bool reconcileFlows_traces(void);
-    bool reconcileBalances(blknum_t pBn, blknum_t nBn, bigint_t pBal, bool prevDifferent, bool nextDifferent);
+    bool reconcileBalances(bool prevDifferent, bool nextDifferent);
 
     bigint_t begBalDiff(void) const;
     bigint_t endBalCalc(void) const;

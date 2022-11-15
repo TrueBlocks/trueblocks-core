@@ -223,13 +223,7 @@ bool CReconciliation::reconcileFlows_traces(void) {
 }
 
 //-----------------------------------------------------------------------
-bool CReconciliation::reconcileBalances(blknum_t pBn, blknum_t nBn, bigint_t pBal, bool prevDifferent1,
-                                        bool nextDifferent1) {
-    prevBal = pBal;
-    prevAppBlk = pBn;
-    bool prevDifferent = blockNumber == 0 || prevAppBlk != blockNumber;
-    bool nextDifferent = blockNumber != nBn;
-
+bool CReconciliation::reconcileBalances(bool prevDifferent, bool nextDifferent) {
     bigint_t balEOLB = blockNumber == 0 ? 0 : getTokenBalanceAt(assetAddr, accountedFor, blockNumber - 1);
     bigint_t balEOB = getTokenBalanceAt(assetAddr, accountedFor, blockNumber);
 
@@ -246,12 +240,12 @@ bool CReconciliation::reconcileBalances(blknum_t pBn, blknum_t nBn, bigint_t pBa
 
     } else if (nextDifferent) {
         // This tx has a tx before it in the block but none after it
-        begBal = pBal;
+        begBal = prevBal;
         endBal = balEOB;
 
     } else {
         // this tx has both a tx before it and one after it in the same block
-        begBal = pBal;
+        begBal = prevBal;
         endBal = endBalCalc();
     }
 
@@ -275,7 +269,7 @@ bool CReconciliation::reconcileBalances(blknum_t pBn, blknum_t nBn, bigint_t pBa
     reconciliationType += isEtherAddr(assetAddr) ? "-eth" : "-token";
 
     ostringstream os;
-    os << "[" << prevAppBlk << "] [" << blockNumber << "] [" << nBn << "] " << prevDifferent << " " << nextDifferent;
+    os << "[" << blockNumber << "] " << prevDifferent << " " << nextDifferent;
     LOG_TRIAL_BALANCE(isEtherAddr(assetAddr) ? "balances-top" : "balances-token");
     if (isTestMode()) {
         LOG_INFO("");

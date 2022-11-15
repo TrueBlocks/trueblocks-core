@@ -39,15 +39,12 @@ class CLedgerManager {
   public:
     CAccountName name;
     address_t accountedFor;
-    blknum_t prevBlock{NOPOS};
     blknum_t nextBlock{NOPOS};
-    bigint_t prevBal{0};
     CAddressBoolMap assetFilter;
     CAppearanceArray_mon appArray;
     void getPrevNext(size_t index, const CTransaction& trans);
     bool getTransfers(const CTransaction& trans);
     bool getStatements(CTransaction& trans);
-
     CLedgerManager(const address_t& aF) {
         accountedFor = aF;
     };

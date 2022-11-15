@@ -25,11 +25,9 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           14935571680000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              35692831136276694166
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
-TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 15157310 prevBlock1: 15157310 transfer.blockNumber: 15157311
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
-TIME ~ CLOCK - <INFO>  :    blks:                [15157310] [15157311] [18446744073709551615] 1 1
+TIME ~ CLOCK - <INFO>  :    blks:                [15157311] 1 1
 TIME ~ CLOCK - <INFO>  :    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    assetSymbol:         ETH

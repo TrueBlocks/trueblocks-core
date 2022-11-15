@@ -19,11 +19,9 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           5000000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              5000000000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
-TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 0 prevBlock1: 0 transfer.blockNumber: 1
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
-TIME ~ CLOCK - <INFO>  :    blks:                [0] [1] [5] 1 1
+TIME ~ CLOCK - <INFO>  :    blks:                [1] 1 1
 TIME ~ CLOCK - <INFO>  :    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    assetSymbol:         WEI
@@ -61,11 +59,9 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           5000000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              10000000000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
-TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 1 prevBlock1: 1 transfer.blockNumber: 5
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
-TIME ~ CLOCK - <INFO>  :    blks:                [1] [5] [56] 1 1
+TIME ~ CLOCK - <INFO>  :    blks:                [5] 1 1
 TIME ~ CLOCK - <INFO>  :    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    assetSymbol:         WEI
@@ -102,11 +98,9 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           3750000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              13750000000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
-TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 5 prevBlock1: 5 transfer.blockNumber: 56
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
-TIME ~ CLOCK - <INFO>  :    blks:                [5] [56] [235] 1 1
+TIME ~ CLOCK - <INFO>  :    blks:                [56] 1 1
 TIME ~ CLOCK - <INFO>  :    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    assetSymbol:         WEI
@@ -143,11 +137,9 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           5000000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              18750000000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
-TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 56 prevBlock1: 56 transfer.blockNumber: 235
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
-TIME ~ CLOCK - <INFO>  :    blks:                [56] [235] [247] 1 1
+TIME ~ CLOCK - <INFO>  :    blks:                [235] 1 1
 TIME ~ CLOCK - <INFO>  :    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    assetSymbol:         WEI
@@ -184,11 +176,9 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           3125000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              21875000000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
-TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 235 prevBlock1: 235 transfer.blockNumber: 247
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
-TIME ~ CLOCK - <INFO>  :    blks:                [235] [247] [348] 1 1
+TIME ~ CLOCK - <INFO>  :    blks:                [247] 1 1
 TIME ~ CLOCK - <INFO>  :    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    assetSymbol:         WEI
@@ -225,11 +215,9 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           5000000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              26875000000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
-TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 247 prevBlock1: 247 transfer.blockNumber: 348
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
-TIME ~ CLOCK - <INFO>  :    blks:                [247] [348] [500] 1 1
+TIME ~ CLOCK - <INFO>  :    blks:                [348] 1 1
 TIME ~ CLOCK - <INFO>  :    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    assetSymbol:         WEI
@@ -266,11 +254,9 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           3750000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              30625000000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
-TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 348 prevBlock1: 348 transfer.blockNumber: 500
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
-TIME ~ CLOCK - <INFO>  :    blks:                [348] [500] [563] 1 1
+TIME ~ CLOCK - <INFO>  :    blks:                [500] 1 1
 TIME ~ CLOCK - <INFO>  :    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    assetSymbol:         WEI
@@ -307,11 +293,9 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           3750000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              34375000000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
-TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 500 prevBlock1: 500 transfer.blockNumber: 563
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
-TIME ~ CLOCK - <INFO>  :    blks:                [500] [563] [987] 1 1
+TIME ~ CLOCK - <INFO>  :    blks:                [563] 1 1
 TIME ~ CLOCK - <INFO>  :    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    assetSymbol:         WEI
@@ -348,11 +332,9 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           2500000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              36875000000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
-TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 563 prevBlock1: 563 transfer.blockNumber: 987
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
-TIME ~ CLOCK - <INFO>  :    blks:                [563] [987] [1450] 1 1
+TIME ~ CLOCK - <INFO>  :    blks:                [987] 1 1
 TIME ~ CLOCK - <INFO>  :    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    assetSymbol:         WEI
@@ -390,11 +372,9 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           5156250000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              42031250000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
-TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 987 prevBlock1: 987 transfer.blockNumber: 1450
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
-TIME ~ CLOCK - <INFO>  :    blks:                [987] [1450] [1580] 1 1
+TIME ~ CLOCK - <INFO>  :    blks:                [1450] 1 1
 TIME ~ CLOCK - <INFO>  :    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    assetSymbol:         WEI
@@ -432,11 +412,9 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           3750000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              45781250000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
-TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 1450 prevBlock1: 1450 transfer.blockNumber: 1580
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
-TIME ~ CLOCK - <INFO>  :    blks:                [1450] [1580] [1586] 1 1
+TIME ~ CLOCK - <INFO>  :    blks:                [1580] 1 1
 TIME ~ CLOCK - <INFO>  :    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    assetSymbol:         WEI
@@ -473,11 +451,9 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           3750000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              49531250000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
-TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 1580 prevBlock1: 1580 transfer.blockNumber: 1586
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
-TIME ~ CLOCK - <INFO>  :    blks:                [1580] [1586] [1861] 1 1
+TIME ~ CLOCK - <INFO>  :    blks:                [1586] 1 1
 TIME ~ CLOCK - <INFO>  :    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    assetSymbol:         WEI
@@ -514,11 +490,9 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           5000000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              54531250000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
-TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 1586 prevBlock1: 1586 transfer.blockNumber: 1861
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
-TIME ~ CLOCK - <INFO>  :    blks:                [1586] [1861] [1912] 1 1
+TIME ~ CLOCK - <INFO>  :    blks:                [1861] 1 1
 TIME ~ CLOCK - <INFO>  :    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    assetSymbol:         WEI
@@ -555,11 +529,9 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           3750000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              58281250000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
-TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 1861 prevBlock1: 1861 transfer.blockNumber: 1912
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
-TIME ~ CLOCK - <INFO>  :    blks:                [1861] [1912] [2057] 1 1
+TIME ~ CLOCK - <INFO>  :    blks:                [1912] 1 1
 TIME ~ CLOCK - <INFO>  :    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    assetSymbol:         WEI
@@ -596,11 +568,9 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           5000000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              63281250000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
-TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 1912 prevBlock1: 1912 transfer.blockNumber: 2057
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
-TIME ~ CLOCK - <INFO>  :    blks:                [1912] [2057] [18446744073709551615] 1 1
+TIME ~ CLOCK - <INFO>  :    blks:                [2057] 1 1
 TIME ~ CLOCK - <INFO>  :    accountedFor:        0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    assetSymbol:         WEI

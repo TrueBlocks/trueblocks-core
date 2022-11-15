@@ -17,17 +17,12 @@ namespace qblocks {
 
 //--------------------------------------------------------------
 bool CLedgerManager::getStatements(CTransaction& trans) {
-    // if (trans.readReconsFromCache(accountedFor)) {
-    //     for (auto& statement : trans.statements) {
-    //         string_q key = statementKey(statement.accountedFor, statement.assetAddr);
-    //         ledgers[key] = statement;
-    //     }
-    //     return !shouldQuit();
-    // }
-
-    prevBal = 0;
-    if (prevBlock > 0) {
-        prevBal = getBalanceAt(accountedFor, prevBlock);
+    if (trans.readReconsFromCache(accountedFor)) {
+        for (auto& statement : trans.statements) {
+            string_q key = statementKey(statement.accountedFor, statement.assetAddr);
+            ledgers[key] = statement;
+        }
+        return !shouldQuit();
     }
 
     getTransfers(trans);
@@ -39,9 +34,10 @@ bool CLedgerManager::getStatements(CTransaction& trans) {
             if (ledgers[tokenKey] == CLedgerEntry()) {
                 CReconciliation prevStatement(accountedFor, transfer.assetAddr, &trans);
                 if (trans.blockNumber > 0) {
-                    prevStatement.blockNumber = prevBlock;
-                    prevStatement.endBal =
-                        prevBlock == 0 ? 0 : getTokenBalanceAt(transfer.assetAddr, accountedFor, prevBlock);
+                    prevStatement.blockNumber = max(trans.blockNumber, blknum_t(1)) - 1;
+                    prevStatement.endBal = trans.blockNumber == 0 ? 0
+                                                                  : getTokenBalanceAt(transfer.assetAddr, accountedFor,
+                                                                                      prevStatement.blockNumber);
                 }
                 ledgers[tokenKey] = prevStatement;
             }
@@ -54,15 +50,15 @@ bool CLedgerManager::getStatements(CTransaction& trans) {
                 statement.reconcileFlows_traces();
             }
 
-            // bool isFirst = i == 0;
-            // bool isLast = i == transfers.size() - 1;
-            bool isPrevDiff = transfer.blockNumber == 0 || (prevBlock != transfer.blockNumber);
-            bool isNextDiff = nextBlock != transfer.blockNumber;  //  || isLast;
-            LOG_INFO("isPrevDiff: ", isPrevDiff, " isNextDiff: ", isNextDiff);
-            LOG_INFO("ledger.blockNumber: ", ledgers[tokenKey].blockNumber, " prevBlock: ", prevBlock,
-                     " transfer.blockNumber: ", transfer.blockNumber);
+            bool isPrevDiff = transfer.blockNumber == 0 || (ledgers[tokenKey].balance != transfer.blockNumber);
+            bool isNextDiff = nextBlock != transfer.blockNumber;
+            // LOG_INFO("isPrevDiff: ", isPrevDiff, " isNextDiff: ", isNextDiff);
+            // LOG_INFO("ledger.blockNumber: ", ledgers[tokenKey].blockNumber, " prevBlock: ", prevBlock,
+            //          " transfer.blockNumber: ", transfer.blockNumber);
 
-            statement.reconcileBalances(prevBlock, nextBlock, ledgers[tokenKey].balance, isPrevDiff, isNextDiff);
+            statement.prevAppBlk = ledgers[tokenKey].blockNumber;
+            statement.prevBal = ledgers[tokenKey].balance;
+            statement.reconcileBalances(isPrevDiff, isNextDiff);
             if (statement.amountNet() != 0) {
                 trans.statements.push_back(statement);
                 ledgers[tokenKey] = statement;
@@ -161,11 +157,6 @@ bool CLedgerManager::getTransfers(const CTransaction& trans) {
 
 //--------------------------------------------------------------------------------
 void CLedgerManager::getPrevNext(size_t index, const CTransaction& trans) {
-    prevBlock = max(trans.blockNumber, blknum_t(1)) - 1;
-    if (index > 0 && index <= appArray.size()) {
-        prevBlock = appArray[index - 1].blk;
-    }
-
     nextBlock = NOPOS;
     if (index < appArray.size() - 1) {
         nextBlock = appArray[index + 1].blk;
