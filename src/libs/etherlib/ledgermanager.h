@@ -39,9 +39,9 @@ class CLedgerManager {
   public:
     CAccountName name;
     address_t accountedFor;
-    blknum_t prevBlock1{NOPOS};
-    blknum_t nextBlock1{NOPOS};
-    bigint_t prevBal1{0};
+    blknum_t prevBlock{NOPOS};
+    blknum_t nextBlock{NOPOS};
+    bigint_t prevBal{0};
     CAddressBoolMap assetFilter;
     CAppearanceArray_mon appArray;
     void getPrevNext(size_t index, const CTransaction& trans);

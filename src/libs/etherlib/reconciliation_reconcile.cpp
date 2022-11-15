@@ -223,10 +223,11 @@ bool CReconciliation::reconcileFlows_traces(void) {
 }
 
 //-----------------------------------------------------------------------
-bool CReconciliation::reconcileBalances(blknum_t pBn, blknum_t nBn, bigint_t pBal) {
+bool CReconciliation::reconcileBalances(blknum_t pBn, blknum_t nBn, bigint_t pBal, bool prevDifferent1,
+                                        bool nextDifferent1) {
     prevBal = pBal;
     prevAppBlk = pBn;
-    bool prevDifferent = prevAppBlk != blockNumber;
+    bool prevDifferent = blockNumber == 0 || prevAppBlk != blockNumber;
     bool nextDifferent = blockNumber != nBn;
 
     bigint_t balEOLB = blockNumber == 0 ? 0 : getTokenBalanceAt(assetAddr, accountedFor, blockNumber - 1);
