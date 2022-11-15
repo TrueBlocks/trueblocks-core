@@ -17,15 +17,6 @@
 
 namespace qblocks {
 
-typedef enum {
-    REC_NONE = 0,
-    REC_TOP = (1 << 0),
-    REC_TOKENS = (1 << 1),
-    REC_TRACES = (1 << 2),
-    REC_SOME = (REC_TOP | REC_TOKENS),
-    REC_ALL = (REC_SOME | REC_TRACES),
-} recon_t;
-
 struct CLedgerEntry {
   public:
     blknum_t blockNumber;
@@ -48,13 +39,12 @@ class CLedgerManager {
   public:
     CAccountName name;
     address_t accountedFor;
-    blknum_t prevBlock{0};
-    blknum_t nextBlock{NOPOS};
-    bigint_t prevBal{0};
-    recon_t which{REC_NONE};
+    blknum_t prevBlock1{NOPOS};
+    blknum_t nextBlock1{NOPOS};
+    bigint_t prevBal1{0};
     CAddressBoolMap assetFilter;
     CAppearanceArray_mon appArray;
-    void getPrevNext(bool simple, size_t index, const CTransaction& trans);
+    void getPrevNext(size_t index, const CTransaction& trans);
     bool getTransfers(const CTransaction& trans);
     bool getStatements(CTransaction& trans);
 

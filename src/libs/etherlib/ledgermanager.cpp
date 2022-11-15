@@ -17,17 +17,17 @@ namespace qblocks {
 
 //--------------------------------------------------------------
 bool CLedgerManager::getStatements(CTransaction& trans) {
-    if (trans.readReconsFromCache(accountedFor)) {
-        for (auto& statement : trans.statements) {
-            string_q key = statementKey(statement.accountedFor, statement.assetAddr);
-            ledgers[key] = statement;
-        }
-        return !shouldQuit();
-    }
+    // if (trans.readReconsFromCache(accountedFor)) {
+    //     for (auto& statement : trans.statements) {
+    //         string_q key = statementKey(statement.accountedFor, statement.assetAddr);
+    //         ledgers[key] = statement;
+    //     }
+    //     return !shouldQuit();
+    // }
 
-    prevBal = 0;
-    if (prevBlock > 0) {
-        prevBal = getBalanceAt(accountedFor, prevBlock);
+    prevBal1 = 0;
+    if (prevBlock1 > 0) {
+        prevBal1 = getBalanceAt(accountedFor, prevBlock1);
     }
 
     getTransfers(trans);
@@ -39,9 +39,9 @@ bool CLedgerManager::getStatements(CTransaction& trans) {
             if (ledgers[tokenKey] == CLedgerEntry()) {
                 CReconciliation prevStatement(accountedFor, transfer.assetAddr, &trans);
                 if (trans.blockNumber > 0) {
-                    prevStatement.blockNumber = prevBlock;
+                    prevStatement.blockNumber = prevBlock1;
                     prevStatement.endBal =
-                        prevBlock == 0 ? 0 : getTokenBalanceAt(transfer.assetAddr, accountedFor, prevBlock);
+                        prevBlock1 == 0 ? 0 : getTokenBalanceAt(transfer.assetAddr, accountedFor, prevBlock1);
                 }
                 ledgers[tokenKey] = prevStatement;
             }
@@ -53,26 +53,10 @@ bool CLedgerManager::getStatements(CTransaction& trans) {
             if (!statement.reconcileFlows(transfer)) {
                 statement.reconcileFlows_traces();
             }
-            statement.reconcileBalances(prevBlock, nextBlock, ledgers[tokenKey].balance);
+            statement.reconcileBalances(prevBlock1, nextBlock1, ledgers[tokenKey].balance);
             if (statement.amountNet() != 0) {
                 trans.statements.push_back(statement);
                 ledgers[tokenKey] = statement;
-            }
-        }
-    }
-
-    if (which & REC_TRACES) {
-        CTraceArray traceArray;
-        getTraces(traceArray, trans.hash, &trans);
-        for (auto trace : traceArray) {
-            CReconciliation statement(accountedFor, FAKE_ETH_ADDRESS, &trans);
-            statement.reconcileFlows_traces();
-            statement.reconcileBalances(prevBlock, nextBlock, prevBal);
-            statement.assetSymbol = expContext().asEther ? "ETH" : "WEI";
-            statement.encoding = trace.action.input.size() >= 10 ? trace.action.input.substr(0, 10) : "";
-            statement.signature = trans.Format("[{COMPRESSEDTRACE}]");
-            if (statement.amountNet() != 0) {
-                trans.statements.push_back(statement);
             }
         }
     }
@@ -104,9 +88,15 @@ bool CLedgerManager::getTransfers(const CTransaction& trans) {
                 continue;
             }
 
-            transfer.log = (CLogEntry*)&log;  // TODO: for debugging only, can be removed
-
+            transfer.blockNumber = trans.blockNumber;
+            transfer.transactionIndex = trans.transactionIndex;
+            transfer.logIndex = log.logIndex;
+            transfer.timestamp = str_2_Ts(trans.Format("[{TIMESTAMP}]"));
+            transfer.date = ts_2_Date(transfer.timestamp);
+            transfer.transactionHash = trans.hash;
+            transfer.encoding = trans.input.substr(0, 10);
             transfer.assetAddr = log.address;
+            transfer.log = (CLogEntry*)&log;  // TODO: for debugging only, can be removed
 
             transfer.assetSymbol = tokenName.symbol;
             if (transfer.assetSymbol.empty()) {
@@ -124,22 +114,10 @@ bool CLedgerManager::getTransfers(const CTransaction& trans) {
                 }
             }
 
-            if (transfer.sender != accountedFor && transfer.recipient != accountedFor)
-                continue;
-
             transfer.amount = str_2_Wei(log.data);
             if (transfer.amount == 0) {
                 continue;
             }
-
-            transfer.blockNumber = trans.blockNumber;
-            transfer.transactionIndex = trans.transactionIndex;
-            transfer.logIndex = log.logIndex;
-            transfer.transactionHash = trans.hash;
-            transfer.timestamp = str_2_Ts(trans.Format("[{TIMESTAMP}]"));
-            transfer.date = ts_2_Date(transfer.timestamp);
-            transfer.transactionHash = trans.hash;
-            transfer.encoding = trans.input.substr(0, 10);
 
             tmp.push_back(transfer);
         }
@@ -151,42 +129,37 @@ bool CLedgerManager::getTransfers(const CTransaction& trans) {
     transfers.reserve(tmp.size() + 2);
 
     CTransfer transfer;
-    transfer.assetAddr = FAKE_ETH_ADDRESS;
-    transfer.assetSymbol = expContext().asEther ? "ETH" : "WEI";
-    transfer.decimals = 18;
+    transfer.sender = trans.from;
+    transfer.recipient = trans.to;
     transfer.blockNumber = trans.blockNumber;
     transfer.transactionIndex = trans.transactionIndex;
     transfer.logIndex = 0;
-    transfer.sender = trans.from;
-    transfer.recipient = trans.to;
-    transfers.push_back(transfer);
+    transfer.timestamp = str_2_Ts(trans.Format("[{TIMESTAMP}]"));
+    transfer.date = ts_2_Date(transfer.timestamp);
+    transfer.transactionHash = trans.hash;
+    transfer.encoding = trans.input.substr(0, 10);
+    transfer.assetAddr = FAKE_ETH_ADDRESS;
+    transfer.log = nullptr;
+    transfer.assetSymbol = expContext().asEther ? "ETH" : "WEI";
+    transfer.decimals = 18;
+    transfer.amount = trans.value;
 
+    transfers.push_back(transfer);
     transfers.insert(transfers.end(), tmp.begin(), tmp.end());
 
     return transfers.size() > 0;
 }
 
 //--------------------------------------------------------------------------------
-void CLedgerManager::getPrevNext(bool simple, size_t index, const CTransaction& trans) {
-    if (simple) {
-        prevBlock = trans.blockNumber == 0 ? 0 : trans.blockNumber - 1;
-        nextBlock = trans.blockNumber + 1;
-    } else {
-        if (index == 0) {
-            prevBlock = max(trans.blockNumber, blknum_t(1)) - 1;
-        } else {
-            if (index < appArray.size()) {
-                prevBlock = appArray[index - 1].blk;
-            } else {
-                nextBlock = NOPOS;
-            }
-        }
+void CLedgerManager::getPrevNext(size_t index, const CTransaction& trans) {
+    prevBlock1 = max(trans.blockNumber, blknum_t(1)) - 1;
+    if (index > 0 && index <= appArray.size()) {
+        prevBlock1 = appArray[index - 1].blk;
+    }
 
-        if (index < appArray.size() - 1) {
-            nextBlock = appArray[index + 1].blk;
-        } else {
-            nextBlock = NOPOS;
-        }
+    nextBlock1 = NOPOS;
+    if (index < appArray.size() - 1) {
+        nextBlock1 = appArray[index + 1].blk;
     }
 }
 

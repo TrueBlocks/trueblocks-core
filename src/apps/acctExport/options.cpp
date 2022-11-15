@@ -247,8 +247,6 @@ bool COptions::parseArguments(string_q& command) {
         return usage("Could not load names database.");
     }
 
-    ledgerManager.which = traces ? REC_ALL : REC_SOME;
-
     for (auto addr : addrs) {
         CMonitor monitor;
         monitor.setValueByName("address", toLower(addr));

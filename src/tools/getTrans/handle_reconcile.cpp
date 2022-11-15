@@ -16,7 +16,7 @@
 bool visitReconciliation(CTransaction& trans, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
 
-    opt->ledgerManager.getPrevNext(true, NOPOS, trans);
+    opt->ledgerManager.getPrevNext(NOPOS, trans);
     if (!opt->ledgerManager.getStatements(trans)) {
         return false;  // user quit
     }

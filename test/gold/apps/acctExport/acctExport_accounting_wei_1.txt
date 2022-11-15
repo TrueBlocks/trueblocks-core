@@ -8,8 +8,9 @@ TIME ~ CLOCK - : 4-----Loaded timestamp file
 { "data": [
 TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    accountedFor:        0x001d14804b399c6ef80e64576f657660804fec0b
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         WEI
 TIME ~ CLOCK - <INFO>  :    blockNumber:         0
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    2
 TIME ~ CLOCK - <INFO>  :    logIndex:            0
@@ -21,8 +22,10 @@ TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: genesis-eth
+TIME ~ CLOCK - <INFO>  :    blks:                [0] [0] [202249] 0 1
+TIME ~ CLOCK - <INFO>  :    accountedFor:        0x001d14804b399c6ef80e64576f657660804fec0b
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         WEI
 TIME ~ CLOCK - <INFO>  :    blockNumber:         0
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    2
 TIME ~ CLOCK - <INFO>  :    logIndex:            0
@@ -106,8 +109,9 @@ params.size: 0
 }
 TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    accountedFor:        0x001d14804b399c6ef80e64576f657660804fec0b
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         WEI
 TIME ~ CLOCK - <INFO>  :    hash:                0x6e443af86a84920cace198340020e4ca54321a2c515cd3ad1f274d3506b4aff8
 TIME ~ CLOCK - <INFO>  :    blockNumber:         202249
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    0
@@ -122,8 +126,10 @@ TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
+TIME ~ CLOCK - <INFO>  :    blks:                [0] [202249] [1501459] 1 1
+TIME ~ CLOCK - <INFO>  :    accountedFor:        0x001d14804b399c6ef80e64576f657660804fec0b
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         WEI
 TIME ~ CLOCK - <INFO>  :    hash:                0x6e443af86a84920cace198340020e4ca54321a2c515cd3ad1f274d3506b4aff8
 TIME ~ CLOCK - <INFO>  :    blockNumber:         202249
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    0
@@ -215,8 +221,9 @@ params.size: 0
 }
 TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    accountedFor:        0x001d14804b399c6ef80e64576f657660804fec0b
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         WEI
 TIME ~ CLOCK - <INFO>  :    hash:                0xe1822bdf66fb415883f85b61a4a5ab1c13c4c7ab4b102c5d00504347a69b84f5
 TIME ~ CLOCK - <INFO>  :    blockNumber:         1501459
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    2
@@ -230,8 +237,10 @@ TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
+TIME ~ CLOCK - <INFO>  :    blks:                [202249] [1501459] [18446744073709551615] 1 1
+TIME ~ CLOCK - <INFO>  :    accountedFor:        0x001d14804b399c6ef80e64576f657660804fec0b
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TIME ~ CLOCK - <INFO>  :    assetSymbol          WEI
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         WEI
 TIME ~ CLOCK - <INFO>  :    hash:                0xe1822bdf66fb415883f85b61a4a5ab1c13c4c7ab4b102c5d00504347a69b84f5
 TIME ~ CLOCK - <INFO>  :    blockNumber:         1501459
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    2

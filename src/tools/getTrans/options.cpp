@@ -125,7 +125,6 @@ bool COptions::parseArguments(string_q& command) {
     if (!account_for.empty()) {
         if (!loadNames())
             return usage("Could not load names database.");
-        ledgerManager.which = trace ? REC_ALL : REC_SOME;
         ledgerManager.accountedFor = account_for;
     }
 

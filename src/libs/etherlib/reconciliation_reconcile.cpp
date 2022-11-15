@@ -26,8 +26,10 @@ namespace qblocks {
     if (isTestMode()) {                                                                                                \
         LOG_INFO("-------------", msg, "-----------------------------");                                               \
         LOG_INFO("Trial balance: ", reconciliationType);                                                               \
+        LOG_ONE("blks:                ", os.str(), "");                                                                \
+        LOG_ONE("accountedFor:        ", accountedFor, "");                                                            \
         LOG_ONE("assetAddr:           ", assetAddr, "");                                                               \
-        LOG_ONE("assetSymbol          ", assetSymbol, "");                                                             \
+        LOG_ONE("assetSymbol:         ", assetSymbol, "");                                                             \
         LOG_ONE("hash:                ", transactionHash, "");                                                         \
         LOG_ONE("blockNumber:         ", blockNumber, NOPOS);                                                          \
         LOG_ONE("transactionIndex:    ", transactionIndex, NOPOS);                                                     \
@@ -111,6 +113,7 @@ bool CReconciliation::reconcileFlows(const CTransfer& transfer) {
     begBal = blockNumber == 0 ? 0 : getTokenBalanceAt(assetAddr, accountedFor, blockNumber - 1);
     endBal = getTokenBalanceAt(assetAddr, accountedFor, blockNumber);
 
+    ostringstream os;
     LOG_TRIAL_BALANCE(isEth ? "flows-top" : "flows-token");
     if (trialBalance()) {
         return true;
@@ -214,6 +217,7 @@ bool CReconciliation::reconcileFlows_traces(void) {
         }
     }
 
+    ostringstream os;
     LOG_TRIAL_BALANCE("traces");
     return trialBalance();
 }
@@ -269,6 +273,8 @@ bool CReconciliation::reconcileBalances(blknum_t pBn, blknum_t nBn, bigint_t pBa
     }
     reconciliationType += isEtherAddr(assetAddr) ? "-eth" : "-token";
 
+    ostringstream os;
+    os << "[" << prevAppBlk << "] [" << blockNumber << "] [" << nBn << "] " << prevDifferent << " " << nextDifferent;
     LOG_TRIAL_BALANCE(isEtherAddr(assetAddr) ? "balances-top" : "balances-token");
     if (isTestMode()) {
         LOG_INFO("");

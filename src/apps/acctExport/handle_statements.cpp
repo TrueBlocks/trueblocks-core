@@ -23,7 +23,7 @@ bool statements_Display(CTraverser* trav, void* data) {
             }
         }
 
-        opt->ledgerManager.getPrevNext(false, trav->index, trav->trans);
+        opt->ledgerManager.getPrevNext(trav->index, trav->trans);
         if (!opt->ledgerManager.getStatements(trav->trans)) {
             return false;  // user quit
         }
