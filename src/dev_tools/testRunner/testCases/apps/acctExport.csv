@@ -69,11 +69,11 @@ on,both,fast,export,apps/acctExport,neighbor2,y,addrs = 0xbb9bc244d798123fde783f
 on,both,fast,export,apps/acctExport,neighbor1_csv,n,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors & fmt = csv
 on,both,fast,export,apps/acctExport,neighbor2_csv,n,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors & fmt = csv
 
-test,both,fast,export,apps/acctExport,statement_1,y,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & last_block = 4000000 & fmt = json
-test,both,fast,export,apps/acctExport,statement_2,y,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & accounting & statements & last_block = 4000000 & fmt = json
-test,both,fast,export,apps/acctExport,statement_3_bad,y,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & statements & last_block = 4000000 & fmt = json
-test,both,fast,export,apps/acctExport,statement_3,y,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & accounting & accounting & statements & last_block = 4000000 & fmt = json
-test,both,fast,export,apps/acctExport,statement_3_accounting,y,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & accounting & last_block = 4000000 & fmt = json
+on,both,fast,export,apps/acctExport,statement_1,y,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & last_block = 4000000 & fmt = json
+on,both,fast,export,apps/acctExport,statement_2,y,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & accounting & statements & last_block = 4000000 & fmt = json
+on,both,fast,export,apps/acctExport,statement_3_bad,y,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & statements & last_block = 4000000 & fmt = json
+on,both,fast,export,apps/acctExport,statement_3,y,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & accounting & accounting & statements & last_block = 4000000 & fmt = json
+on,both,fast,export,apps/acctExport,statement_3_accounting,y,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & accounting & last_block = 4000000 & fmt = json
 test,both,fast,export,apps/acctExport,statement_token_ibt,n,addrs = 0xec3ef464bf821c3b10a18adf9ac7177a628e87cc & accounting & statements & first_block = 7005600 & last_block = 7005780 & ether & fmt = json
 test,both,fast,export,apps/acctExport,statement_token_ibt_2,n,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & statements & first_block = 12704456 & last_block = 12705893 & ether & fmt = csv & max_records = 4000
 
@@ -105,7 +105,7 @@ on,both,fast,export,apps/acctExport,transfer_fourbytes,y,addrs = 0xf503017d7baf7
 on,both,fast,export,apps/acctExport,transfer_fourbytes_trace,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & max_records = 10 & fourbytes = 0xa9059cbb & traces & fmt = json
 on,both,fast,export,apps/acctExport,transfer_no_topics,y,addrs = 0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3 & max_records = 5 & logs
 on,both,fast,export,apps/acctExport,transfer_topics,y,addrs = 0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3 & max_records = 5 & topics = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef & logs
-test,both,fast,export,apps/acctExport,accounting_intra_tokens,y,addrs = 0x6aED588ca2052CCFC907Db8c24dF4B7B95A29A5E & max_records = 3 & first_record = 683 & accounting & fmt = json & log_level = 10
+local,both,fast,export,apps/acctExport,accounting_intra_tokens,y,addrs = 0x6aED588ca2052CCFC907Db8c24dF4B7B95A29A5E & max_records = 3 & first_record = 683 & accounting & fmt = json & log_level = 10
 
 #,,,,,,,reverse does not work
 local,both,fast,export,apps/acctExport,statement_forward,y,addrs = 0x868b8fd259abfcfdf9634c343593b34ef359641d & last_block = 8769141 & accounting & statements & ether & fmt = json

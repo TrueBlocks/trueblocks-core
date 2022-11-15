@@ -20,8 +20,6 @@ TIME ~ CLOCK - <INFO>  :    begBal:              29270157687500000
 TIME ~ CLOCK - <INFO>  :    endBal:              29270157687500000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
-TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 7005645 prevBlock: 7005645 transfer.blockNumber: 7005646
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
 TIME ~ CLOCK - <INFO>  :    blks:                [7005646] 1 1
@@ -54,8 +52,6 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           3016109787000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              67679392659000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
-TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 7005645 prevBlock: 7005645 transfer.blockNumber: 7005646
 TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
 TIME ~ CLOCK - <INFO>  :    blks:                [7005646] 1 1
@@ -131,8 +127,6 @@ TIME ~ CLOCK - <INFO>  :    begBal:              29270157687500000
 TIME ~ CLOCK - <INFO>  :    endBal:              29270157687500000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
-TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 7005645 prevBlock: 7005645 transfer.blockNumber: 7005654
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
 TIME ~ CLOCK - <INFO>  :    blks:                [7005654] 1 1
@@ -165,8 +159,6 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           1982984682000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              69662377341000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
-TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 7005646 prevBlock: 7005646 transfer.blockNumber: 7005654
 TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
 TIME ~ CLOCK - <INFO>  :    blks:                [7005654] 1 1
@@ -240,8 +232,6 @@ TIME ~ CLOCK - <INFO>  :    begBal:              29270157687500000
 TIME ~ CLOCK - <INFO>  :    endBal:              29270157687500000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
-TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 7005645 prevBlock: 7005645 transfer.blockNumber: 7005662
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
 TIME ~ CLOCK - <INFO>  :    blks:                [7005662] 1 1
@@ -274,8 +264,6 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           1377663523000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              71040040864000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
-TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 7005654 prevBlock: 7005654 transfer.blockNumber: 7005662
 TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
 TIME ~ CLOCK - <INFO>  :    blks:                [7005662] 1 1
@@ -349,8 +337,6 @@ TIME ~ CLOCK - <INFO>  :    begBal:              29270157687500000
 TIME ~ CLOCK - <INFO>  :    endBal:              29270157687500000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 0
-TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 7005645 prevBlock: 7005645 transfer.blockNumber: 7005737
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: prevDiff-same-eth
 TIME ~ CLOCK - <INFO>  :    blks:                [7005737] 1 0
@@ -386,8 +372,6 @@ TIME ~ CLOCK - <INFO>  :    endBalDiff:          -3016109787000000000000
 TIME ~ CLOCK - <INFO>  :    endBalCalc:          72827436845000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 0
-TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 7005662 prevBlock: 7005662 transfer.blockNumber: 7005737
 TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: prevDiff-same-token
 TIME ~ CLOCK - <INFO>  :    blks:                [7005737] 1 0
@@ -461,8 +445,6 @@ TIME ~ CLOCK - <INFO>  :    begBal:              29270157687500000
 TIME ~ CLOCK - <INFO>  :    endBal:              29270157687500000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
-TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 7005645 prevBlock: 7005645 transfer.blockNumber: 7005737
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
 TIME ~ CLOCK - <INFO>  :    blks:                [7005737] 1 1
@@ -498,8 +480,6 @@ TIME ~ CLOCK - <INFO>  :    endBalDiff:          -1787395981000000000000
 TIME ~ CLOCK - <INFO>  :    endBalCalc:          74056150651000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
-TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 7005737 prevBlock: 7005737 transfer.blockNumber: 7005737
 TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
 TIME ~ CLOCK - <INFO>  :    blks:                [7005737] 1 1
