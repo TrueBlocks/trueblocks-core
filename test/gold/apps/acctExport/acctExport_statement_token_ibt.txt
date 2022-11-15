@@ -9,8 +9,9 @@ TEST[DATE|TIME] Format:  json
 { "data": [
 TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TIME ~ CLOCK - <INFO>  :    assetSymbol          ETH
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         ETH
 TIME ~ CLOCK - <INFO>  :    hash:                0xea8b6bf39f8fe343ad1fbb95ad9a2dd695bee9de33d1ccfb79552fc0bf40b92f
 TIME ~ CLOCK - <INFO>  :    blockNumber:         7005646
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    182
@@ -19,10 +20,14 @@ TIME ~ CLOCK - <INFO>  :    begBal:              29270157687500000
 TIME ~ CLOCK - <INFO>  :    endBal:              29270157687500000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 7005645 prevBlock: 7005645 transfer.blockNumber: 7005646
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
+TIME ~ CLOCK - <INFO>  :    blks:                [7005646] 1 1
+TIME ~ CLOCK - <INFO>  :    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TIME ~ CLOCK - <INFO>  :    assetSymbol          ETH
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         ETH
 TIME ~ CLOCK - <INFO>  :    hash:                0xea8b6bf39f8fe343ad1fbb95ad9a2dd695bee9de33d1ccfb79552fc0bf40b92f
 TIME ~ CLOCK - <INFO>  :    blockNumber:         7005646
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    182
@@ -35,8 +40,9 @@ TIME ~ CLOCK - <INFO>  :
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0x5c2c629feefcc07b338e97e39c73d2db33a85548
-TIME ~ CLOCK - <INFO>  :    assetSymbol          0x5c
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         0x5c
 TIME ~ CLOCK - <INFO>  :    hash:                0xea8b6bf39f8fe343ad1fbb95ad9a2dd695bee9de33d1ccfb79552fc0bf40b92f
 TIME ~ CLOCK - <INFO>  :    blockNumber:         7005646
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    182
@@ -48,10 +54,14 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           3016109787000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              67679392659000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 7005645 prevBlock: 7005645 transfer.blockNumber: 7005646
 TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    blks:                [7005646] 1 1
+TIME ~ CLOCK - <INFO>  :    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0x5c2c629feefcc07b338e97e39c73d2db33a85548
-TIME ~ CLOCK - <INFO>  :    assetSymbol          0x5c
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         0x5c
 TIME ~ CLOCK - <INFO>  :    hash:                0xea8b6bf39f8fe343ad1fbb95ad9a2dd695bee9de33d1ccfb79552fc0bf40b92f
 TIME ~ CLOCK - <INFO>  :    blockNumber:         7005646
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    182
@@ -102,7 +112,7 @@ TIME ~ CLOCK - <INFO>  : doEthCall in CUniPrice::findPair returned false
   "selfDestructOut": "",
   "gasOut": "",
   "totalOutLessGas": "",
-  "prevAppBlk": 7004856,
+  "prevAppBlk": 7005645,
   "prevBal": "64663.282872000000000000",
   "begBalDiff": "",
   "endBalDiff": "",
@@ -110,8 +120,9 @@ TIME ~ CLOCK - <INFO>  : doEthCall in CUniPrice::findPair returned false
 }
 TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TIME ~ CLOCK - <INFO>  :    assetSymbol          ETH
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         ETH
 TIME ~ CLOCK - <INFO>  :    hash:                0x234186f8fab2fb4ca1222031ad6d0b41d5a55b3d0e934fb2b47059f7a394433f
 TIME ~ CLOCK - <INFO>  :    blockNumber:         7005654
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    54
@@ -120,10 +131,14 @@ TIME ~ CLOCK - <INFO>  :    begBal:              29270157687500000
 TIME ~ CLOCK - <INFO>  :    endBal:              29270157687500000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 7005645 prevBlock: 7005645 transfer.blockNumber: 7005654
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
+TIME ~ CLOCK - <INFO>  :    blks:                [7005654] 1 1
+TIME ~ CLOCK - <INFO>  :    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TIME ~ CLOCK - <INFO>  :    assetSymbol          ETH
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         ETH
 TIME ~ CLOCK - <INFO>  :    hash:                0x234186f8fab2fb4ca1222031ad6d0b41d5a55b3d0e934fb2b47059f7a394433f
 TIME ~ CLOCK - <INFO>  :    blockNumber:         7005654
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    54
@@ -136,8 +151,9 @@ TIME ~ CLOCK - <INFO>  :
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0x5c2c629feefcc07b338e97e39c73d2db33a85548
-TIME ~ CLOCK - <INFO>  :    assetSymbol          0x5c
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         0x5c
 TIME ~ CLOCK - <INFO>  :    hash:                0x234186f8fab2fb4ca1222031ad6d0b41d5a55b3d0e934fb2b47059f7a394433f
 TIME ~ CLOCK - <INFO>  :    blockNumber:         7005654
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    54
@@ -149,10 +165,14 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           1982984682000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              69662377341000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 7005646 prevBlock: 7005646 transfer.blockNumber: 7005654
 TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    blks:                [7005654] 1 1
+TIME ~ CLOCK - <INFO>  :    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0x5c2c629feefcc07b338e97e39c73d2db33a85548
-TIME ~ CLOCK - <INFO>  :    assetSymbol          0x5c
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         0x5c
 TIME ~ CLOCK - <INFO>  :    hash:                0x234186f8fab2fb4ca1222031ad6d0b41d5a55b3d0e934fb2b47059f7a394433f
 TIME ~ CLOCK - <INFO>  :    blockNumber:         7005654
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    54
@@ -209,8 +229,9 @@ TIME ~ CLOCK - <INFO>  :
 }
 TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TIME ~ CLOCK - <INFO>  :    assetSymbol          ETH
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         ETH
 TIME ~ CLOCK - <INFO>  :    hash:                0xfa8eef26c445913833a6ace11e27df3821598b9aeb4896eb41213999e89ece7a
 TIME ~ CLOCK - <INFO>  :    blockNumber:         7005662
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    5
@@ -219,10 +240,14 @@ TIME ~ CLOCK - <INFO>  :    begBal:              29270157687500000
 TIME ~ CLOCK - <INFO>  :    endBal:              29270157687500000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 7005645 prevBlock: 7005645 transfer.blockNumber: 7005662
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
+TIME ~ CLOCK - <INFO>  :    blks:                [7005662] 1 1
+TIME ~ CLOCK - <INFO>  :    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TIME ~ CLOCK - <INFO>  :    assetSymbol          ETH
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         ETH
 TIME ~ CLOCK - <INFO>  :    hash:                0xfa8eef26c445913833a6ace11e27df3821598b9aeb4896eb41213999e89ece7a
 TIME ~ CLOCK - <INFO>  :    blockNumber:         7005662
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    5
@@ -235,8 +260,9 @@ TIME ~ CLOCK - <INFO>  :
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0x5c2c629feefcc07b338e97e39c73d2db33a85548
-TIME ~ CLOCK - <INFO>  :    assetSymbol          0x5c
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         0x5c
 TIME ~ CLOCK - <INFO>  :    hash:                0xfa8eef26c445913833a6ace11e27df3821598b9aeb4896eb41213999e89ece7a
 TIME ~ CLOCK - <INFO>  :    blockNumber:         7005662
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    5
@@ -248,10 +274,14 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           1377663523000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              71040040864000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 7005654 prevBlock: 7005654 transfer.blockNumber: 7005662
 TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    blks:                [7005662] 1 1
+TIME ~ CLOCK - <INFO>  :    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0x5c2c629feefcc07b338e97e39c73d2db33a85548
-TIME ~ CLOCK - <INFO>  :    assetSymbol          0x5c
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         0x5c
 TIME ~ CLOCK - <INFO>  :    hash:                0xfa8eef26c445913833a6ace11e27df3821598b9aeb4896eb41213999e89ece7a
 TIME ~ CLOCK - <INFO>  :    blockNumber:         7005662
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    5
@@ -308,8 +338,9 @@ TIME ~ CLOCK - <INFO>  :
 }
 TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TIME ~ CLOCK - <INFO>  :    assetSymbol          ETH
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         ETH
 TIME ~ CLOCK - <INFO>  :    hash:                0x968d9ef3eee9d9526784622726cef4f23712dff17a7dc639f0a1ef79c8f89002
 TIME ~ CLOCK - <INFO>  :    blockNumber:         7005737
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    27
@@ -318,10 +349,14 @@ TIME ~ CLOCK - <INFO>  :    begBal:              29270157687500000
 TIME ~ CLOCK - <INFO>  :    endBal:              29270157687500000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 0
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 7005645 prevBlock: 7005645 transfer.blockNumber: 7005737
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: prevDiff-same-eth
+TIME ~ CLOCK - <INFO>  :    blks:                [7005737] 1 0
+TIME ~ CLOCK - <INFO>  :    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TIME ~ CLOCK - <INFO>  :    assetSymbol          ETH
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         ETH
 TIME ~ CLOCK - <INFO>  :    hash:                0x968d9ef3eee9d9526784622726cef4f23712dff17a7dc639f0a1ef79c8f89002
 TIME ~ CLOCK - <INFO>  :    blockNumber:         7005737
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    27
@@ -334,8 +369,9 @@ TIME ~ CLOCK - <INFO>  :
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0x5c2c629feefcc07b338e97e39c73d2db33a85548
-TIME ~ CLOCK - <INFO>  :    assetSymbol          0x5c
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         0x5c
 TIME ~ CLOCK - <INFO>  :    hash:                0x968d9ef3eee9d9526784622726cef4f23712dff17a7dc639f0a1ef79c8f89002
 TIME ~ CLOCK - <INFO>  :    blockNumber:         7005737
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    27
@@ -350,10 +386,14 @@ TIME ~ CLOCK - <INFO>  :    endBalDiff:          -3016109787000000000000
 TIME ~ CLOCK - <INFO>  :    endBalCalc:          72827436845000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 0
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 7005662 prevBlock: 7005662 transfer.blockNumber: 7005737
 TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: prevDiff-same-token
+TIME ~ CLOCK - <INFO>  :    blks:                [7005737] 1 0
+TIME ~ CLOCK - <INFO>  :    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0x5c2c629feefcc07b338e97e39c73d2db33a85548
-TIME ~ CLOCK - <INFO>  :    assetSymbol          0x5c
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         0x5c
 TIME ~ CLOCK - <INFO>  :    hash:                0x968d9ef3eee9d9526784622726cef4f23712dff17a7dc639f0a1ef79c8f89002
 TIME ~ CLOCK - <INFO>  :    blockNumber:         7005737
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    27
@@ -410,8 +450,9 @@ TIME ~ CLOCK - <INFO>  :
 }
 TIME ~ CLOCK - <INFO>  : -------------flows-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TIME ~ CLOCK - <INFO>  :    assetSymbol          ETH
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         ETH
 TIME ~ CLOCK - <INFO>  :    hash:                0xff5bdd0900bdbcf80948e102c349a494ad5f409a1d27e4ea6199334cf3399cdf
 TIME ~ CLOCK - <INFO>  :    blockNumber:         7005737
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    30
@@ -420,10 +461,14 @@ TIME ~ CLOCK - <INFO>  :    begBal:              29270157687500000
 TIME ~ CLOCK - <INFO>  :    endBal:              29270157687500000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 7005645 prevBlock: 7005645 transfer.blockNumber: 7005737
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
-TIME ~ CLOCK - <INFO>  : Trial balance: same-nextDiff-eth
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
+TIME ~ CLOCK - <INFO>  :    blks:                [7005737] 1 1
+TIME ~ CLOCK - <INFO>  :    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TIME ~ CLOCK - <INFO>  :    assetSymbol          ETH
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         ETH
 TIME ~ CLOCK - <INFO>  :    hash:                0xff5bdd0900bdbcf80948e102c349a494ad5f409a1d27e4ea6199334cf3399cdf
 TIME ~ CLOCK - <INFO>  :    blockNumber:         7005737
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    30
@@ -436,8 +481,9 @@ TIME ~ CLOCK - <INFO>  :
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: 
+TIME ~ CLOCK - <INFO>  :    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0x5c2c629feefcc07b338e97e39c73d2db33a85548
-TIME ~ CLOCK - <INFO>  :    assetSymbol          0x5c
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         0x5c
 TIME ~ CLOCK - <INFO>  :    hash:                0xff5bdd0900bdbcf80948e102c349a494ad5f409a1d27e4ea6199334cf3399cdf
 TIME ~ CLOCK - <INFO>  :    blockNumber:         7005737
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    30
@@ -452,10 +498,14 @@ TIME ~ CLOCK - <INFO>  :    endBalDiff:          -1787395981000000000000
 TIME ~ CLOCK - <INFO>  :    endBalCalc:          74056150651000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 7005737 prevBlock: 7005737 transfer.blockNumber: 7005737
 TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
-TIME ~ CLOCK - <INFO>  : Trial balance: same-nextDiff-token
+TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
+TIME ~ CLOCK - <INFO>  :    blks:                [7005737] 1 1
+TIME ~ CLOCK - <INFO>  :    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0x5c2c629feefcc07b338e97e39c73d2db33a85548
-TIME ~ CLOCK - <INFO>  :    assetSymbol          0x5c
+TIME ~ CLOCK - <INFO>  :    assetSymbol:         0x5c
 TIME ~ CLOCK - <INFO>  :    hash:                0xff5bdd0900bdbcf80948e102c349a494ad5f409a1d27e4ea6199334cf3399cdf
 TIME ~ CLOCK - <INFO>  :    blockNumber:         7005737
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    30
