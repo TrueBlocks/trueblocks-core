@@ -24,8 +24,8 @@ int main(int argc, const char* argv[]) {
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
-        CRuntimeClass* pClass = !options.statementManager.accountedFor.empty() ? GETRUNTIME_CLASS(CReconciliation)
-                                                                               : GETRUNTIME_CLASS(CTransaction);
+        CRuntimeClass* pClass = !options.ledgerManager.accountedFor.empty() ? GETRUNTIME_CLASS(CReconciliation)
+                                                                            : GETRUNTIME_CLASS(CTransaction);
         if (once)
             cout << exportPreamble(expContext().fmtMap["header"], pClass);
         forEveryTransaction(visitTransaction, &options, options.transList.queries);
@@ -130,7 +130,7 @@ bool visitTransaction(CTransaction& trans, void* data) {
         opt->abi_spec.articulateTransaction(&trans);
     }
 
-    if (!opt->statementManager.accountedFor.empty()) {
+    if (!opt->ledgerManager.accountedFor.empty()) {
         return visitReconciliation(trans, opt);
     }
 

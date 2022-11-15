@@ -16,8 +16,8 @@
 bool visitReconciliation(CTransaction& trans, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
 
-    opt->statementManager.getPrevNext(true, NOPOS, trans);
-    if (!opt->statementManager.getStatements(trans)) {
+    opt->ledgerManager.getPrevNext(true, NOPOS, trans);
+    if (!opt->ledgerManager.getStatements(trans)) {
         return false;  // user quit
     }
     // TODO: Note - we don't cache here since this reconciliation is incomplete

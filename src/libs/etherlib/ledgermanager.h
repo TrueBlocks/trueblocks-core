@@ -26,25 +26,25 @@ typedef enum {
     REC_ALL = (REC_SOME | REC_TRACES),
 } recon_t;
 
-class CStatementManager {
-    struct CPreviousBalance {
-      public:
-        blknum_t blockNumber;
-        bigint_t balance;
-        CPreviousBalance& operator=(const CReconciliation& ab) {
-            blockNumber = ab.blockNumber;
-            balance = ab.endBal;
-            return *this;
-        }
-        bool operator==(const CPreviousBalance& it) const {
-            return ((blockNumber == it.blockNumber) && (balance == it.balance));
-        }
-        bool operator!=(const CPreviousBalance& it) const {
-            return !operator==(it);
-        }
-    };
-    typedef map<string, CPreviousBalance> CPreviousBalanceMap;
+struct CLedgerEntry {
+  public:
+    blknum_t blockNumber;
+    bigint_t balance;
+    CLedgerEntry& operator=(const CReconciliation& ab) {
+        blockNumber = ab.blockNumber;
+        balance = ab.endBal;
+        return *this;
+    }
+    bool operator==(const CLedgerEntry& it) const {
+        return ((blockNumber == it.blockNumber) && (balance == it.balance));
+    }
+    bool operator!=(const CLedgerEntry& it) const {
+        return !operator==(it);
+    }
+};
+typedef map<string, CLedgerEntry> CLedgerEntryMap;
 
+class CLedgerManager {
   public:
     CAccountName name;
     address_t accountedFor;
@@ -58,13 +58,13 @@ class CStatementManager {
     bool getTransfers(const CTransaction& trans);
     bool getStatements(CTransaction& trans);
 
-    CStatementManager(const address_t& aF) {
+    CLedgerManager(const address_t& aF) {
         accountedFor = aF;
     };
 
   private:
-    CStatementManager(){};
-    CPreviousBalanceMap previousBalances;
+    CLedgerManager(){};
+    CLedgerEntryMap ledgers;
     CTransferArray transfers;
 };
 

@@ -14,7 +14,7 @@
 
 //-----------------------------------------------------------------------
 void COptions::addNeighbor(CAddressUintMap& map, const address_t& addr) {
-    if ((addr == statementManager.accountedFor || isZeroAddr(addr)))
+    if ((addr == ledgerManager.accountedFor || isZeroAddr(addr)))
         return;
     map[addr]++;
 }

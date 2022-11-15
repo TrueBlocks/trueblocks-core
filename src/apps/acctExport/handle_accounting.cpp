@@ -25,15 +25,15 @@ bool acct_Display(CTraverser* trav, void* data) {
 
         if (opt->accounting) {
             trav->searchOp = READ;
-            string_q path = trav->trans.getReconcilationPath(opt->statementManager.accountedFor);
+            string_q path = trav->trans.getReconcilationPath(opt->ledgerManager.accountedFor);
             if (!fileExists(path)) {
                 trav->searchOp = RECONCILE;
             }
-            opt->statementManager.getPrevNext(false, trav->index, trav->trans);
-            if (!opt->statementManager.getStatements(trav->trans)) {
+            opt->ledgerManager.getPrevNext(false, trav->index, trav->trans);
+            if (!opt->ledgerManager.getStatements(trav->trans)) {
                 return false;  // user quit
             }
-            trav->trans.cacheIfReconciled(opt->statementManager.accountedFor);
+            trav->trans.cacheIfReconciled(opt->ledgerManager.accountedFor);
         }
 
         cout << ((isJson() && !opt->firstOut) ? ", " : "");

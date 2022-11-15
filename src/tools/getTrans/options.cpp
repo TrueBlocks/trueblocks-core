@@ -125,14 +125,14 @@ bool COptions::parseArguments(string_q& command) {
     if (!account_for.empty()) {
         if (!loadNames())
             return usage("Could not load names database.");
-        statementManager.which = trace ? REC_ALL : REC_SOME;
-        statementManager.accountedFor = account_for;
+        ledgerManager.which = trace ? REC_ALL : REC_SOME;
+        ledgerManager.accountedFor = account_for;
     }
 
     // Display formatting
     if (uniq) {
         configureDisplay("getTrans", "CAppearance", STR_DISPLAY_APPEARANCE);
-    } else if (!statementManager.accountedFor.empty()) {
+    } else if (!ledgerManager.accountedFor.empty()) {
         string_q fmt = STR_DISPLAY_RECONCILIATION;
         if (!articulate) {
             fmt = substitute(fmt, "[{ENCODING}]\t[{SIGNATURE}]\t", "");

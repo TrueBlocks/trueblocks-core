@@ -31,7 +31,7 @@ bool COptions::articulateAll(CTransaction& trans) {
         // we want to know if we're a token
         trans.hasToken |= isTokenRelated(trans.input.substr(0, 10));
 
-        string_q bytesOnly = substitute(statementManager.accountedFor, "0x", "");
+        string_q bytesOnly = substitute(ledgerManager.accountedFor, "0x", "");
 
         // Do the same for the logs...
         for (size_t j = 0; j < trans.receipt.logs.size(); j++) {

@@ -23,11 +23,11 @@ bool statements_Display(CTraverser* trav, void* data) {
             }
         }
 
-        opt->statementManager.getPrevNext(false, trav->index, trav->trans);
-        if (!opt->statementManager.getStatements(trav->trans)) {
+        opt->ledgerManager.getPrevNext(false, trav->index, trav->trans);
+        if (!opt->ledgerManager.getStatements(trav->trans)) {
             return false;  // user quit
         }
-        trav->trans.cacheIfReconciled(opt->statementManager.accountedFor);
+        trav->trans.cacheIfReconciled(opt->ledgerManager.accountedFor);
 
         for (auto statement : trav->trans.statements) {
             bool checkFlow = !opt->flow.empty();

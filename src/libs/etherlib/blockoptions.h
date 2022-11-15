@@ -22,7 +22,7 @@ class CAbiOptions : public COptionsBase {
 //--------------------------------------------------------------------------
 class CStatementOptions : public CAbiOptions {
   public:
-    CStatementManager statementManager{""};
+    CLedgerManager ledgerManager{""};
 };
 
 //-----------------------------------------------------------------------------

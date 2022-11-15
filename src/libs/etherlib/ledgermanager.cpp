@@ -11,16 +11,16 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
-#include "statementmanager.h"
+#include "ledgermanager.h"
 
 namespace qblocks {
 
 //--------------------------------------------------------------
-bool CStatementManager::getStatements(CTransaction& trans) {
+bool CLedgerManager::getStatements(CTransaction& trans) {
     if (trans.readReconsFromCache(accountedFor)) {
         for (auto& statement : trans.statements) {
             string_q key = statementKey(statement.accountedFor, statement.assetAddr);
-            previousBalances[key] = statement;
+            ledgers[key] = statement;
         }
         return !shouldQuit();
     }
@@ -36,14 +36,14 @@ bool CStatementManager::getStatements(CTransaction& trans) {
         CTransfer& transfer = transfers[i];
         if (assetFilter.size() == 0 || assetFilter[transfer.assetAddr]) {
             string tokenKey = statementKey(accountedFor, transfer.assetAddr);
-            if (previousBalances[tokenKey] == CPreviousBalance()) {
+            if (ledgers[tokenKey] == CLedgerEntry()) {
                 CReconciliation prevStatement(accountedFor, transfer.assetAddr, &trans);
                 if (trans.blockNumber > 0) {
                     prevStatement.blockNumber = prevBlock;
                     prevStatement.endBal =
                         prevBlock == 0 ? 0 : getTokenBalanceAt(transfer.assetAddr, accountedFor, prevBlock);
                 }
-                previousBalances[tokenKey] = prevStatement;
+                ledgers[tokenKey] = prevStatement;
             }
 
             CReconciliation statement(accountedFor, transfer.assetAddr, &trans);
@@ -53,10 +53,10 @@ bool CStatementManager::getStatements(CTransaction& trans) {
             if (!statement.reconcileFlows(transfer)) {
                 statement.reconcileFlows_traces();
             }
-            statement.reconcileBalances(prevBlock, nextBlock, previousBalances[tokenKey].balance);
+            statement.reconcileBalances(prevBlock, nextBlock, ledgers[tokenKey].balance);
             if (statement.amountNet() != 0) {
                 trans.statements.push_back(statement);
-                previousBalances[tokenKey] = statement;
+                ledgers[tokenKey] = statement;
             }
         }
     }
@@ -86,7 +86,7 @@ bool CStatementManager::getStatements(CTransaction& trans) {
 }
 
 //--------------------------------------------------------------
-bool CStatementManager::getTransfers(const CTransaction& trans) {
+bool CLedgerManager::getTransfers(const CTransaction& trans) {
     CTransferArray tmp;
     for (auto& log : trans.receipt.logs) {
         CAccountName tokenName;
@@ -167,7 +167,7 @@ bool CStatementManager::getTransfers(const CTransaction& trans) {
 }
 
 //--------------------------------------------------------------------------------
-void CStatementManager::getPrevNext(bool simple, size_t index, const CTransaction& trans) {
+void CLedgerManager::getPrevNext(bool simple, size_t index, const CTransaction& trans) {
     if (simple) {
         prevBlock = trans.blockNumber == 0 ? 0 : trans.blockNumber - 1;
         nextBlock = trans.blockNumber + 1;

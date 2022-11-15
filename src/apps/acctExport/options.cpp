@@ -240,14 +240,14 @@ bool COptions::parseArguments(string_q& command) {
         logFilter.topics.push_back(t);
 
     for (auto addr : asset) {
-        statementManager.assetFilter[addr] = true;
+        ledgerManager.assetFilter[addr] = true;
     }
 
     if (!loadNames()) {
         return usage("Could not load names database.");
     }
 
-    statementManager.which = traces ? REC_ALL : REC_SOME;
+    ledgerManager.which = traces ? REC_ALL : REC_SOME;
 
     for (auto addr : addrs) {
         CMonitor monitor;
@@ -256,12 +256,12 @@ bool COptions::parseArguments(string_q& command) {
         monitor.finishParse();
         monitor.isStaging = !fileExists(monitor.getPathToMonitor(monitor.address, false));
 
-        if (statementManager.accountedFor.empty()) {
-            statementManager.accountedFor = monitor.address;
-            statementManager.name.address = monitor.address;
-            findName(monitor.address, statementManager.name);
-            statementManager.name.petname = addr_2_Petname(statementManager.accountedFor, '-');  // order matters
-            statementManager.name.isContract = !getCodeAt(monitor.address, latest).empty();
+        if (ledgerManager.accountedFor.empty()) {
+            ledgerManager.accountedFor = monitor.address;
+            ledgerManager.name.address = monitor.address;
+            findName(monitor.address, ledgerManager.name);
+            ledgerManager.name.petname = addr_2_Petname(ledgerManager.accountedFor, '-');  // order matters
+            ledgerManager.name.isContract = !getCodeAt(monitor.address, latest).empty();
         }
 
         allMonitors.push_back(monitor);
@@ -384,10 +384,10 @@ void COptions::Init(void) {
 
     allMonitors.clear();
 
-    statementManager.appArray.clear();
-    statementManager.accountedFor = "";
-    statementManager.name.address = "";
-    statementManager.name.petname = "";
+    ledgerManager.appArray.clear();
+    ledgerManager.accountedFor = "";
+    ledgerManager.name.address = "";
+    ledgerManager.name.petname = "";
 
     // We don't clear these because they are part of meta data
     // prefundAddrMap.clear();
