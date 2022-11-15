@@ -50,11 +50,14 @@ bool CLedgerManager::getStatements(CTransaction& trans) {
                 statement.reconcileFlows_traces();
             }
 
-            bool isPrevDiff = transfer.blockNumber == 0 || (ledgers[tokenKey].balance != transfer.blockNumber);
-            bool isNextDiff = nextBlock != transfer.blockNumber;
-            // LOG_INFO("isPrevDiff: ", isPrevDiff, " isNextDiff: ", isNextDiff);
-            // LOG_INFO("ledger.blockNumber: ", ledgers[tokenKey].blockNumber, " prevBlock: ", prevBlock,
-            //          " transfer.blockNumber: ", transfer.blockNumber);
+            bool isPrevDiff = transfer.blockNumber == 0 || (ledgers[tokenKey].blockNumber != transfer.blockNumber);
+            bool isNextDiff = nextBlock != transfer.blockNumber && i == transfers.size() - 1;
+            if (isTestMode()) {
+                LOG_INFO("isPrevDiff: ", isPrevDiff, " isNextDiff: ", isNextDiff);
+                LOG_INFO("ledger.blockNumber: ", ledgers[tokenKey].blockNumber,
+                         " prevBlock: ", ledgers[tokenKey].blockNumber, " transfer.blockNumber: ", transfer.blockNumber,
+                         " nextBlock: ", nextBlock);
+            }
 
             statement.prevAppBlk = ledgers[tokenKey].blockNumber;
             statement.prevBal = ledgers[tokenKey].balance;

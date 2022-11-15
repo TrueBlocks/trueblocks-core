@@ -18,6 +18,8 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           1970000000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              1970000000000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 0 prevBlock: 0 transfer.blockNumber: 0 nextBlock: 46685
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: genesis-eth
 TIME ~ CLOCK - <INFO>  :    blks:                [0] 1 1
@@ -122,6 +124,8 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           -5010500000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              1964989500000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 0 prevBlock: 0 transfer.blockNumber: 46685 nextBlock: 46709
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
 TIME ~ CLOCK - <INFO>  :    blks:                [46685] 1 1
@@ -234,6 +238,8 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           -1964900000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              89500000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 46685 prevBlock: 46685 transfer.blockNumber: 46709 nextBlock: 18446744073709551615
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
 TIME ~ CLOCK - <INFO>  :    blks:                [46709] 1 1

@@ -19,6 +19,8 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           5000000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              5000000000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 0 prevBlock: 0 transfer.blockNumber: 1 nextBlock: 5
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
 TIME ~ CLOCK - <INFO>  :    blks:                [1] 1 1
@@ -59,6 +61,8 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           5000000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              10000000000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 1 prevBlock: 1 transfer.blockNumber: 5 nextBlock: 56
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
 TIME ~ CLOCK - <INFO>  :    blks:                [5] 1 1
@@ -98,6 +102,8 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           3750000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              13750000000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 5 prevBlock: 5 transfer.blockNumber: 56 nextBlock: 235
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
 TIME ~ CLOCK - <INFO>  :    blks:                [56] 1 1
@@ -137,6 +143,8 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           5000000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              18750000000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 56 prevBlock: 56 transfer.blockNumber: 235 nextBlock: 247
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
 TIME ~ CLOCK - <INFO>  :    blks:                [235] 1 1
@@ -176,6 +184,8 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           3125000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              21875000000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 235 prevBlock: 235 transfer.blockNumber: 247 nextBlock: 348
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
 TIME ~ CLOCK - <INFO>  :    blks:                [247] 1 1
@@ -215,6 +225,8 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           5000000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              26875000000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 247 prevBlock: 247 transfer.blockNumber: 348 nextBlock: 500
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
 TIME ~ CLOCK - <INFO>  :    blks:                [348] 1 1
@@ -254,6 +266,8 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           3750000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              30625000000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 348 prevBlock: 348 transfer.blockNumber: 500 nextBlock: 563
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
 TIME ~ CLOCK - <INFO>  :    blks:                [500] 1 1
@@ -293,6 +307,8 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           3750000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              34375000000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 500 prevBlock: 500 transfer.blockNumber: 563 nextBlock: 987
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
 TIME ~ CLOCK - <INFO>  :    blks:                [563] 1 1
@@ -332,6 +348,8 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           2500000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              36875000000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 563 prevBlock: 563 transfer.blockNumber: 987 nextBlock: 1450
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
 TIME ~ CLOCK - <INFO>  :    blks:                [987] 1 1
@@ -372,6 +390,8 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           5156250000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              42031250000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 987 prevBlock: 987 transfer.blockNumber: 1450 nextBlock: 1580
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
 TIME ~ CLOCK - <INFO>  :    blks:                [1450] 1 1
@@ -412,6 +432,8 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           3750000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              45781250000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 1450 prevBlock: 1450 transfer.blockNumber: 1580 nextBlock: 1586
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
 TIME ~ CLOCK - <INFO>  :    blks:                [1580] 1 1
@@ -451,6 +473,8 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           3750000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              49531250000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 1580 prevBlock: 1580 transfer.blockNumber: 1586 nextBlock: 1861
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
 TIME ~ CLOCK - <INFO>  :    blks:                [1586] 1 1
@@ -490,6 +514,8 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           5000000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              54531250000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 1586 prevBlock: 1586 transfer.blockNumber: 1861 nextBlock: 1912
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
 TIME ~ CLOCK - <INFO>  :    blks:                [1861] 1 1
@@ -529,6 +555,8 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           3750000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              58281250000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 1861 prevBlock: 1861 transfer.blockNumber: 1912 nextBlock: 2057
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
 TIME ~ CLOCK - <INFO>  :    blks:                [1912] 1 1
@@ -568,6 +596,8 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           5000000000000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              63281250000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 1912 prevBlock: 1912 transfer.blockNumber: 2057 nextBlock: 18446744073709551615
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
 TIME ~ CLOCK - <INFO>  :    blks:                [2057] 1 1

@@ -64,6 +64,8 @@ TIME ~ CLOCK - <INFO>  :    endBalDiff:          22309461070293783
 TIME ~ CLOCK - <INFO>  :    endBalCalc:          568293581338250642905
 TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 0
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 14933656 prevBlock: 14933656 transfer.blockNumber: 14933657 nextBlock: 14933657
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: trace-prevDiff-same-eth
 TIME ~ CLOCK - <INFO>  :    blks:                [14933657] 1 0
@@ -99,6 +101,8 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           -73541760990000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              11248288842000000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 0
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 14933656 prevBlock: 14933656 transfer.blockNumber: 14933657 nextBlock: 14933657
 TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: prevDiff-same-token
 TIME ~ CLOCK - <INFO>  :    blks:                [14933657] 1 0
@@ -516,9 +520,11 @@ TIME ~ CLOCK - <INFO>  :    endBalDiff:          27822557249852274
 TIME ~ CLOCK - <INFO>  :    endBalCalc:          568299094434430201396
 TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 0 isNextDiff: 0
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 14933657 prevBlock: 14933657 transfer.blockNumber: 14933657 nextBlock: 14933657
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
-TIME ~ CLOCK - <INFO>  : Trial balance: trace-prevDiff-same-eth
-TIME ~ CLOCK - <INFO>  :    blks:                [14933657] 1 0
+TIME ~ CLOCK - <INFO>  : Trial balance: trace-same-same-eth
+TIME ~ CLOCK - <INFO>  :    blks:                [14933657] 0 0
 TIME ~ CLOCK - <INFO>  :    accountedFor:        0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    assetSymbol:         WEI
@@ -526,11 +532,11 @@ TIME ~ CLOCK - <INFO>  :    hash:                0x458ae31579274588f04850853ec71
 TIME ~ CLOCK - <INFO>  :    blockNumber:         14933657
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    303
 TIME ~ CLOCK - <INFO>  :    logIndex:            0
-TIME ~ CLOCK - <INFO>  :    begBal:              568302725253886882348
+TIME ~ CLOCK - <INFO>  :    begBal:              568293581338250642905
 TIME ~ CLOCK - <INFO>  :    gasOut:              3630819456680952
 TIME ~ CLOCK - <INFO>  :    totalOut:            3630819456680952
 TIME ~ CLOCK - <INFO>  :    amountNet:           -3630819456680952
-TIME ~ CLOCK - <INFO>  :    endBal:              568299094434430201396
+TIME ~ CLOCK - <INFO>  :    endBal:              568289950518793961953
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
@@ -554,6 +560,8 @@ TIME ~ CLOCK - <INFO>  :    endBalDiff:          961090000000000
 TIME ~ CLOCK - <INFO>  :    endBalCalc:          17951033980000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 0
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 14933656 prevBlock: 14933656 transfer.blockNumber: 14933657 nextBlock: 14933657
 TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: prevDiff-same-token
 TIME ~ CLOCK - <INFO>  :    blks:                [14933657] 1 0
@@ -841,10 +849,10 @@ TIME ~ CLOCK - : 4-----ethPerTok: 4.22694 usdPerEth: 1801.81 price: 7616.14
       "accountedFor": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
       "sender": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
       "recipient": "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
-      "begBal": "568302725253886882348",
+      "begBal": "568293581338250642905",
       "amountNet": "-3630819456680952",
-      "endBal": "568299094434430201396",
-      "reconciliationType": "trace-prevDiff-same-eth",
+      "endBal": "568289950518793961953",
+      "reconciliationType": "trace-same-same-eth",
       "reconciled": true,
       "totalIn": "",
       "amountIn": "",
@@ -863,9 +871,9 @@ TIME ~ CLOCK - : 4-----ethPerTok: 4.22694 usdPerEth: 1801.81 price: 7616.14
       "totalOutLessGas": "",
       "prevAppBlk": 14933657,
       "prevBal": "568293581338250642905",
-      "begBalDiff": "9143915636239443",
+      "begBalDiff": "",
       "endBalDiff": "",
-      "endBalCalc": "568299094434430201396"
+      "endBalCalc": "568289950518793961953"
     },
     {
       "blockNumber": 14933657,
@@ -971,9 +979,11 @@ TIME ~ CLOCK - <INFO>  :    endBalDiff:          25765961420767341
 TIME ~ CLOCK - <INFO>  :    endBalCalc:          568297037838601116463
 TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 0 isNextDiff: 0
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 14933657 prevBlock: 14933657 transfer.blockNumber: 14933657 nextBlock: 18446744073709551615
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
-TIME ~ CLOCK - <INFO>  : Trial balance: trace-regular-eth
-TIME ~ CLOCK - <INFO>  :    blks:                [14933657] 1 1
+TIME ~ CLOCK - <INFO>  : Trial balance: trace-same-same-eth
+TIME ~ CLOCK - <INFO>  :    blks:                [14933657] 0 0
 TIME ~ CLOCK - <INFO>  :    accountedFor:        0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TIME ~ CLOCK - <INFO>  :    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TIME ~ CLOCK - <INFO>  :    assetSymbol:         WEI
@@ -981,15 +991,12 @@ TIME ~ CLOCK - <INFO>  :    hash:                0x9c07595dec64bb699ef24c1c5e557
 TIME ~ CLOCK - <INFO>  :    blockNumber:         14933657
 TIME ~ CLOCK - <INFO>  :    transactionIndex:    304
 TIME ~ CLOCK - <INFO>  :    logIndex:            0
-TIME ~ CLOCK - <INFO>  :    begBal:              568302725253886882348
+TIME ~ CLOCK - <INFO>  :    begBal:              568289950518793961953
 TIME ~ CLOCK - <INFO>  :    gasOut:              5687415285765885
 TIME ~ CLOCK - <INFO>  :    totalOut:            5687415285765885
 TIME ~ CLOCK - <INFO>  :    amountNet:           -5687415285765885
-TIME ~ CLOCK - <INFO>  :    endBal:              568271271877180349122
-TIME ~ CLOCK - <INFO>  :    begBalDiff:          3630819456680952
-TIME ~ CLOCK - <INFO>  :    endBalDiff:          25765961420767341
-TIME ~ CLOCK - <INFO>  :    endBalCalc:          568297037838601116463
-TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
+TIME ~ CLOCK - <INFO>  :    endBal:              568284263103508196068
+TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
 TIME ~ CLOCK - <INFO>  : 
 TIME ~ CLOCK - <INFO>  : 
@@ -1009,6 +1016,8 @@ TIME ~ CLOCK - <INFO>  :    amountNet:           -312679827610000000000
 TIME ~ CLOCK - <INFO>  :    endBal:              791184699027030000000000
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 14933656 prevBlock: 14933656 transfer.blockNumber: 14933657 nextBlock: 18446744073709551615
 TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
 TIME ~ CLOCK - <INFO>  :    blks:                [14933657] 1 1
@@ -1227,7 +1236,6 @@ params.size: 3
 TIME ~ CLOCK - : 4-----r1: 0x6b175474e89094c44da98b954eedeac495271d0f r2: 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 TIME ~ CLOCK - : 4-----reserve1: 8.56453e+06 reserve2: 4753.29 priceOut: 1801.81 reversed: 0
 TIME ~ CLOCK - : 4-----ethPerTok: 6.63077e-05 usdPerEth: 1801.81 price: 0.119474
-TIME ~ CLOCK - <WARN> : unreconciled eth-transfer: chifra export 0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e --accounting --statements --ether --fmt json --first_block 14933656 --last_block 14933658
 , {
   "hash": "0x9c07595dec64bb699ef24c1c5e5579edba940fb9596e38bd4465f5c840393aae",
   "blockHash": "0xe83164313d56dd57fd718123c311cd65d58f22761899bfb1710c77e2d7f67878",
@@ -1297,10 +1305,10 @@ TIME ~ CLOCK - <WARN> : unreconciled eth-transfer: chifra export 0x6aed588ca2052
       "accountedFor": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
       "sender": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
       "recipient": "0x3506424f91fd33084466f402d5d97f05f8e3b4af",
-      "begBal": "568302725253886882348",
+      "begBal": "568289950518793961953",
       "amountNet": "-5687415285765885",
-      "endBal": "568271271877180349122",
-      "reconciliationType": "trace-regular-eth",
+      "endBal": "568284263103508196068",
+      "reconciliationType": "trace-same-same-eth",
       "reconciled": true,
       "totalIn": "",
       "amountIn": "",
@@ -1318,10 +1326,10 @@ TIME ~ CLOCK - <WARN> : unreconciled eth-transfer: chifra export 0x6aed588ca2052
       "gasOut": "5687415285765885",
       "totalOutLessGas": "",
       "prevAppBlk": 14933657,
-      "prevBal": "568299094434430201396",
-      "begBalDiff": "3630819456680952",
-      "endBalDiff": "25765961420767341",
-      "endBalCalc": "568297037838601116463"
+      "prevBal": "568289950518793961953",
+      "begBalDiff": "",
+      "endBalDiff": "",
+      "endBalCalc": "568284263103508196068"
     },
     {
       "blockNumber": 14933657,
