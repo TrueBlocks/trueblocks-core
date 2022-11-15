@@ -161,6 +161,8 @@ TIME ~ CLOCK - <INFO>  :    begBal:              31419034761192445316
 TIME ~ CLOCK - <INFO>  :    endBal:              31419034761192445316
 TIME ~ CLOCK - <INFO>  :    trialBalance:        balanced
 TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
+TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
+TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 12697302 prevBlock: 12697302 transfer.blockNumber: 12697303 nextBlock: 18446744073709551615
 TIME ~ CLOCK - <INFO>  : -------------balances-top-----------------------------
 TIME ~ CLOCK - <INFO>  : Trial balance: regular-eth
 TIME ~ CLOCK - <INFO>  :    blks:                [12697303] 1 1
