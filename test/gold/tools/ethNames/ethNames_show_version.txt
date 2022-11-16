@@ -1,2 +1,2 @@
 chifra names  --version
-names version GHC-TrueBlocks//0.42.6-beta
+names version GHC-TrueBlocks//0.43.0-beta
