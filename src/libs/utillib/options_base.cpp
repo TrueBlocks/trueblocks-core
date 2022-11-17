@@ -115,8 +115,8 @@ bool COptionsBase::isBadSingleDash(const string_q& arg) const {
             return true;
     }
 
-    CStringArray builtInCmds = {"verbose", "log_level", "fmt",     "ether",   "output",  "append",
-                                "raw",     "wei",       "dollars", "version", "nocolor", "noop"};
+    CStringArray builtInCmds = {"verbose", "log_level", "fmt",     "ether",   "output", "append",
+                                "raw",     "wei",       "version", "nocolor", "noop"};
 
     for (auto bi : builtInCmds) {
         if (arg == ("-" + bi))
@@ -316,7 +316,6 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
     if (isEnabled(OPT_ETHER) && contains(cmdLine, "--ether ")) {
         replaceAll(cmdLine, "--ether ", "");
         expContext().asEther = true;
-        expContext().asDollars = false;
         expContext().asWei = false;
     }
 
@@ -365,15 +364,7 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
     if (isEnabled(OPT_WEI) && contains(cmdLine, "--wei ")) {
         replaceAll(cmdLine, "--wei ", "");
         expContext().asEther = false;
-        expContext().asDollars = false;
         expContext().asWei = true;
-    }
-
-    if (isEnabled(OPT_DOLLARS) && contains(cmdLine, "--dollars ")) {
-        replaceAll(cmdLine, "--dollars ", "");
-        expContext().asEther = false;
-        expContext().asDollars = true;
-        expContext().asWei = false;
     }
 
     cmdLine = substitute(trim(cmdLine), "  ", " ");
@@ -402,8 +393,6 @@ bool COptionsBase::builtInCmd(const string_q& arg) {
     if (isEnabled(OPT_RAW) && arg == "--raw")
         return true;
     if (isEnabled(OPT_WEI) && arg == "--wei")
-        return true;
-    if (isEnabled(OPT_DOLLARS) && arg == "--dollars")
         return true;
     if (arg == "--version")
         return true;
@@ -440,8 +429,6 @@ void COptionsBase::configureDisplay(const string_q& tool, const string_q& dataTy
     }
     if (expContext().asEther)
         format = substitute(format, "{BALANCE}", "{ETHER}");
-    if (expContext().asDollars)
-        format = substitute(format, "{BALANCE}", "{DOLLARS}");
     expContext().fmtMap["meta"] = meta;
     expContext().fmtMap["format"] = cleanFmt(format);
     expContext().fmtMap["header"] = cleanFmt(format);

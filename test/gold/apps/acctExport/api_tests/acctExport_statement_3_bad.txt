@@ -1,0 +1,6 @@
+export?addrs=0x08166f02313feae18bb044e7877c808b55b5bf58&statements&lastBlock=4000000&fmt=json
+{
+  "errors": [
+    "The --statements option is only available with the --accounting option."
+  ]
+}

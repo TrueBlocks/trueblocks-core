@@ -16,7 +16,8 @@
 bool app_Display(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)data;
 
-    CAppearanceDisplay dapp(opt->accountedFor.address, opt->accountedFor.name, trav->app->blk, trav->app->txid);
+    CAppearanceDisplay dapp(opt->ledgerManager.accountedFor, opt->ledgerManager.name.name, trav->app->blk,
+                            trav->app->txid);
     cout << ((isJson() && !opt->firstOut) ? ", " : "");
     cout << dapp;
     opt->firstOut = false;

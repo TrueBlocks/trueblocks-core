@@ -7,7 +7,7 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 0.41.0-beta
+  version: 0.43.0-beta
   description: >
 
     A REST layer over the TrueBlocks application. With `chifra serve`, you can
@@ -230,15 +230,6 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: statements
-          description: >
-            export reconciliations instead of transactional data (assumes --accounting option)
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: neighbors
           description: export the neighbors of the given address
           required: false
@@ -250,6 +241,14 @@ paths:
         - name: accounting
           description: >
             attach accounting records to the exported data (applies to transactions export only)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: statements
+          description: for the accounting options only, export only statements
           required: false
           style: form
           in: query
@@ -338,7 +337,7 @@ paths:
               type: string
               format: topic
         - name: asset
-          description: for the statements option only, export only reconciliations for this asset
+          description: for the accounting options only, export statements only for this asset
           required: false
           style: form
           in: query
@@ -350,7 +349,7 @@ paths:
               format: address
         - name: flow
           description: >
-            for the statements option only, export only statements with incoming value or outgoing value
+            for the accounting options only, export statements with incoming, outgoing, or zero value
           required: false
           style: form
           in: query
@@ -404,6 +403,7 @@ paths:
                         - $ref: "#/components/schemas/receipt"
                         - $ref: "#/components/schemas/log"
                         - $ref: "#/components/schemas/trace"
+                        - $ref: "#/components/schemas/transfer"
                 example:
                   {
                     "data":
@@ -975,7 +975,7 @@ paths:
             enum:
               - from
               - to
-        - name: statements
+        - name: accountFor
           description: reconcile the transaction as per the provided address
           required: false
           style: form
@@ -1003,7 +1003,9 @@ paths:
                     description: the transaction data for a given transaction directly from the blockchain
                     type: array
                     items:
-                      $ref: "#/components/schemas/transaction"
+                      oneOf:
+                        - $ref: "#/components/schemas/transaction"
+                        - $ref: "#/components/schemas/transfer"
         "400":
           description: bad input parameter
   /receipts:
@@ -1900,64 +1902,100 @@ components:
           format: blknum
           example: 305
           description: "the zero-indexed position of the transaction in the block"
+        logIndex:
+          type: number
+          format: blknum
+          example: 2
+          description: "the zero-indexed position the log in the block, if applicable"
+        transactionHash:
+          type: string
+          format: hash
+          description: "the hash of the transaction that triggered this reconciliation"
         timestamp:
           type: number
           format: timestamp
           example: 1438335038
           description: "the Unix timestamp of the object"
+        date:
+          type: datetime
+          description: "a calculated field -- the date of this transaction"
         assetAddr:
           type: string
           format: address
-          example: "0xf503...179b"
-          description: "the accountedFor address for ETH recons, the token address itself otherwise"
+          example: "0x6b17...1d0f"
+          description: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee for ETH reconciliations, the token address otherwise"
         assetSymbol:
           type: string
-          description: "either ETH, WEI or the symbol of the asset being reconciled as extracted from the chain"
+          description: "either ETH, WEI, or the symbol of the asset being reconciled as extracted from the chain"
         decimals:
           type: number
           format: uint64
-          description: "Equivalent to the extracted value of getSymbol from ERC20 or, if ETH or WEI then 18"
-        prevBlk:
+          description: "The value of `decimals` from an ERC20 contract or, if ETH or WEI, then 18"
+        spotPrice:
           type: number
-          format: blknum
-          example: 10021
-          description: "the block number of the previous reconciliation"
-        prevBlkBal:
+          format: double
+          description: "The on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction"
+        priceSource:
           type: string
-          format: int256
-          description: "the account balance for the given asset for the previous reconciliation"
+          description: "The on-chain source from which the spot price was taken"
+        accountedFor:
+          type: string
+          format: address
+          example: "0x1bd0...9ce9"
+          description: "the address being accounted for in this reconciliation"
+        sender:
+          type: string
+          format: address
+          example: "0xf503...179b"
+          description: "the initiator of the transfer (the sender)"
+        recipient:
+          type: string
+          format: address
+          example: "0x38d1...1310"
+          description: "the receiver of the transfer (the recipient)"
         begBal:
           type: string
           format: int256
-          description: "the beginning balance of the asset at the blockNumber"
-        begBalDiff:
+          description: "the beginning balance of the asset prior to the transaction"
+        amountNet:
           type: string
           format: int256
-          description: "the difference between the expected beginning balance (prevBlkBal) and the queried balance from the chain"
+          description: "a calculated field -- totalIn - totalOut"
+        endBal:
+          type: string
+          format: int256
+          description: "the on-chain balance of the asset (see notes about intra-block reconciliations)"
+        encoding:
+          type: string
+          example: "0xa9059cbb"
+          description: "The topic of the event (if this is an ERC20 reconcilation), the four-byte signature of the transaction otherwise"
+        signature:
+          type: string
+          example: "Transfer(...)"
+          description: "If possible, the articulated name of the function or event signature"
+        reconciliationType:
+          type: string
+          description: "One of `regular`, `prevDiff-same`, `same-nextDiff`, or `same-same`. Appended with `eth` or `token`"
+        reconciled:
+          type: boolean
+          example: [true|false]
+          description: "a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBal`. `false` otherwise."
+        totalIn:
+          type: string
+          format: int256
+          description: "a calculated field -- the sum of the following `In` fields"
         amountIn:
           type: string
           format: int256
           description: "the top-level value of the incoming transfer for the accountedFor address"
-        amountOut:
-          type: string
-          format: int256
-          description: "the amount (in terms of the asset) of regular outflow during this bigint"
         internalIn:
           type: string
           format: int256
           description: "the internal value of the incoming transfer for the accountedFor address"
-        internalOut:
-          type: string
-          format: int256
-          description: "the value of any internal value transfers out of the accountedFor account"
         selfDestructIn:
           type: string
           format: int256
           description: "the incoming value of a self-destruct if recipient is the accountedFor address"
-        selfDestructOut:
-          type: string
-          format: int256
-          description: "the value of the self-destructed value out if the accountedFor address was self-destructed"
         minerBaseRewardIn:
           type: string
           format: int256
@@ -1970,10 +2008,6 @@ components:
           type: string
           format: int256
           description: "the transaction fee reward if the miner is the accountedFor address"
-        spotPrice:
-          type: number
-          format: double
-          description: "The on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction"
         minerUncleRewardIn:
           type: string
           format: int256
@@ -1982,54 +2016,51 @@ components:
           type: string
           format: int256
           description: "at block zero (0) only, the amount of genesis income for the accountedFor address"
-        priceSource:
-          type: string
-          description: "The on-chain source from which the spot price was taken"
-        gasCostOut:
-          type: string
-          format: int256
-          description: "if the transactions original sender is the accountedFor address, the amount of gas expended denominated in WEI."
-        endBal:
-          type: string
-          format: int256
-          description: "the on-chain balance of the asset (see notes above about intra-block reconciliations)"
-        totalIn:
-          type: string
-          format: int256
-          description: "a calculated field -- the sum of all In fields"
         totalOut:
           type: string
           format: int256
-          description: "a calculated field -- the sum of all Out fields"
+          description: "a calculated field -- the sum of the following `Out` fields"
+        amountOut:
+          type: string
+          format: int256
+          description: "the amount (in units of the asset) of regular outflow during this transaction"
+        internalOut:
+          type: string
+          format: int256
+          description: "the value of any internal value transfers out of the accountedFor account"
+        selfDestructOut:
+          type: string
+          format: int256
+          description: "the value of the self-destructed value out if the accountedFor address was self-destructed"
+        gasOut:
+          type: string
+          format: int256
+          description: "if the transaction's original sender is the accountedFor address, the amount of gas expended"
         totalOutLessGas:
           type: string
           format: int256
-        amountNet:
+          description: "a calculated field -- totalOut - gasOut"
+        prevAppBlk:
+          type: number
+          format: blknum
+          example: 10021
+          description: "the block number of the previous appearance, or 0 if this is the first appearance"
+        prevBal:
           type: string
           format: int256
-          description: "a calculated field -- totalIn - totalOut"
-        reconciliationType:
-          type: string
-          description: "One of regular, traces, prevdiff-partial, partial-nextdiff, or `partial-partial`"
-        endBalCalc:
+          description: "the account balance for the given asset for the previous reconciliation"
+        begBalDiff:
           type: string
           format: int256
-          description: "a calculated field -- begBal + amountNet"
+          description: "a calculated field -- difference between expected beginning balance and balance at last reconciliation, if non-zero, the reconciliation failed"
         endBalDiff:
           type: string
           format: int256
           description: "a calculated field -- endBal - endBalCalc, if non-zero, the reconciliation failed"
-        reconciled:
-          type: boolean
-          description: "a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBlkBal`. `false` otherwise."
-        transactionHash:
+        endBalCalc:
           type: string
-          format: hash
-          description: "the hash of the transaction that triggered this reconciliation"
-        date:
-          type: string
-          format: date
-          description: "the date of this transaction"
+          format: int256
+          description: "a calculated field -- begBal + amountNet"
     name:
       description: "an association between a name and address for use throughout TrueBlocks"
       type: object
@@ -2525,6 +2556,73 @@ components:
           format: blknum
           example: 8901011
           description: "the block number at which this smart contract was deployed (if a smart contact)"
+    transfer:
+      description: "a representation of an ERC-20 token transfer"
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: blknum
+          example: 10021
+          description: "the number of the block"
+        transactionIndex:
+          type: number
+          format: blknum
+          example: 305
+          description: "the zero-indexed position of the transaction in the block"
+        logIndex:
+          type: number
+          format: blknum
+          example: 305
+          description: "the zero-indexed position of the log in the transaction"
+        transactionHash:
+          type: string
+          format: hash
+          description: "the hash of the transaction that triggered this reconciliation"
+        timestamp:
+          type: number
+          format: timestamp
+          example: 1438335038
+          description: "the Unix timestamp of the object"
+        date:
+          type: datetime
+          description: "a calculated field -- the date of this transaction"
+        sender:
+          type: string
+          format: address
+          example: "0x1bd0...9ce9"
+          description: "the initiator of the transfer (the sender)"
+        recipient:
+          type: string
+          format: address
+          example: "0x38d1...1310"
+          description: "the receiver of the transfer (the recipient)"
+        assetAddr:
+          type: string
+          format: address
+          example: "0xf503...179b"
+          description: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee for ETH reconcilations, the token address otherwise"
+        assetSymbol:
+          type: string
+          description: "either ETH, WEI or the symbol of the asset being reconciled as queried from the chain"
+        decimals:
+          type: number
+          format: uint64
+          description: "Equivalent to the queried value of `decimals` from an ERC20 contract or, if ETH or WEI then 18"
+        amount:
+          type: string
+          format: uint256
+          description: "the amount of the transfer in the units of the asset"
+        spotPrice:
+          type: number
+          format: double
+          description: "The on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction"
+        priceSource:
+          type: string
+          description: "The on-chain source from which the spot price was taken"
+        encoding:
+          type: string
+          description: "The four-byte encoding of the transaction's function call"
     token:
       description: "on-chain token related data for a give address at a given block height"
       type: object

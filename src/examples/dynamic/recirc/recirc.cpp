@@ -11,7 +11,6 @@ string_q path = "/Users/jrush/Development/tokenomics.io/giveth/exports/mainnet/n
 //-----------------------------------------------------------------------
 bool display(CTraverser* trav, void* data) {
     cout << "logging: " << trav->logging << endl;
-    cout << "index: " << trav->index << endl;
     cout << "nProcessed: " << trav->nProcessed << endl;
     cout << "searchType: " << trav->searchType << endl;
     cout << "searchOp: " << trav->searchOp << endl;

@@ -21,6 +21,8 @@ func (opts *ListOptions) HandleListCount(monitorArray []monitor.Monitor) error {
 			LastScanned: mon.Header.LastScanned,
 		}
 		if opts.Globals.TestMode {
+			simp.NRecords = 1001001
+			simp.FileSize = 1001001
 			simp.LastScanned = maxTestingBlock
 		}
 		results = append(results, simp)
