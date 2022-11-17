@@ -25,9 +25,9 @@ Flags:
   -r, --receipts            export receipts instead of transactional data
   -l, --logs                export logs instead of transactional data
   -t, --traces              export traces instead of transactional data
+  -A, --statements          export reconciliations instead of transactional data (assumes --accounting option)
   -n, --neighbors           export the neighbors of the given address
   -C, --accounting          attach accounting records to the exported data (applies to transactions export only)
-  -A, --statements          for the accounting options only, export only statements
   -a, --articulate          articulate transactions, traces, logs, and outputs
   -i, --cache               write transactions to the cache (see notes)
   -R, --cache_traces        write traces to the cache (see notes)
@@ -37,8 +37,8 @@ Flags:
       --relevant            for log and accounting export only, export only logs relevant to one of the given export addresses
       --emitter strings     for log export only, export only logs if emitted by one of these address(es)
       --topic strings       for log export only, export only logs with this topic(s)
-      --asset strings       for the accounting options only, export statements only for this asset
-  -f, --flow string         for the accounting options only, export statements with incoming, outgoing, or zero value
+      --asset strings       for the statements option only, export only reconciliations for this asset
+  -f, --flow string         for the statements option only, export only statements with incoming value or outgoing value
                             One of [ in | out | zero ]
   -y, --factory             scan for contract creations from the given address(es) and report address of those contracts
   -u, --unripe              export transactions labeled upripe (i.e. less than 28 blocks old)
@@ -64,6 +64,7 @@ All tools accept the following additional flags, although in some cases, they ha
   -v, --version         display the current version of the tool
       --wei             export values in wei (the default)
       --ether           export values in ether
+      --dollars         export values in US dollars
       --raw             pass raw RPC data directly from the node with no processing
       --to_file         write the results to a temporary file and return the filename
       --output string   write the results to file 'fn' and return the filename

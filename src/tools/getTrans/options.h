@@ -21,13 +21,14 @@
 // END_ERROR_DEFINES
 
 //-----------------------------------------------------------------------------
-class COptions : public CStatementOptions {
+class COptions : public CAbiOptions {
   public:
     // BEG_CODE_DECLARE
     bool articulate;
     bool trace;
     bool uniq;
     string_q flow;
+    address_t statements;
     bool cache;
     // END_CODE_DECLARE
 

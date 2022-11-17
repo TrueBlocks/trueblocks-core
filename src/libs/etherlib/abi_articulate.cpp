@@ -102,11 +102,6 @@ bool isTokenRelated(const string_q& needle) {
 }
 
 //-----------------------------------------------------------------------
-bool isTokenTransfer(const string_q& logNeedle) {
-    return logNeedle == transferTopic;
-}
-
-//-----------------------------------------------------------------------
 bool parseTransferEvent(CLogEntry* p) {
     if (p->topics[0] != transferTopic)
         return false;

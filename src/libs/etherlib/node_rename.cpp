@@ -105,8 +105,8 @@ string_q renameExportFields(const string_q& className, const string_q& inStr) {
         map<string_q, string_q> renames = {
             make_pair("assetaddr", "assetAddress"),
             make_pair("assetsymbol", "assetSymbol"),
-            make_pair("prevappblk", "prevAppBlk"),
-            make_pair("prevbal", "prevBal"),
+            make_pair("prevblk", "prevBlock"),
+            make_pair("prevblkbal", "prevBlockBal"),
             make_pair("begbal", "begBal"),
             make_pair("amountin", "amountIn"),
             make_pair("internalin", "internalIn"),
@@ -120,7 +120,7 @@ string_q renameExportFields(const string_q& className, const string_q& inStr) {
             make_pair("amountout", "amountOut"),
             make_pair("internalout", "internalOut"),
             make_pair("selfdestructout", "selfDestructOut"),
-            make_pair("gasout", "gasOut"),
+            make_pair("gascostout", "gasCostOut"),
             make_pair("totalout", "totalOut"),
             make_pair("totaloutlessgas", "totalOutLessGas"),
             make_pair("amountnet", "amountNet"),
@@ -132,7 +132,6 @@ string_q renameExportFields(const string_q& className, const string_q& inStr) {
             make_pair("pricesource", "priceSource"),
             make_pair("reconciliationtype", "reconciliationType"),
             make_pair("transactionhash", "transactionHash"),
-            make_pair("accountedfor", "accountedFor"),
         };
         for (auto item : renames)
             replace(ret, item.first, item.second);

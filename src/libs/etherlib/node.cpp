@@ -66,7 +66,6 @@ void etherlib_init(QUITHANDLER qh) {
     CParameter::registerClass();
 
     CReconciliation::registerClass();
-    CTransfer::registerClass();
     CEthState::registerClass();
     CEthCall::registerClass();
     CAppearance::registerClass();
@@ -498,10 +497,7 @@ bool queryRawLogs(string_q& results, const CLogFilter& query) {
 }
 
 //-------------------------------------------------------------------------
-bigint_t getTokenBalanceAt(const address_t& token, const address_t& holder, blknum_t blockNum) {
-    if (isZeroAddr(token) || isEtherAddr(token))
-        return getBalanceAt(holder, blockNum);
-
+string_q getTokenBalanceOf(const address_t& token, const address_t& holder, blknum_t blockNum) {
     ostringstream cmd;
     cmd << "[{";
     cmd << "\"to\": \"" << token << "\", ";
@@ -509,8 +505,8 @@ bigint_t getTokenBalanceAt(const address_t& token, const address_t& holder, blkn
     cmd << "}, \"" << uint_2_Hex(blockNum) << "\"]";
     string_q ret = callRPC("eth_call", cmd.str(), false).substr(0, 66);  // take only the first 32 bytes
     if (startsWith(ret, "0x"))
-        return str_2_BigInt(ret, 256);
-    return 0;
+        return bnu_2_Str(str_2_BigUint(ret, 256));
+    return "0";
 }
 
 //-------------------------------------------------------------------------
@@ -521,22 +517,9 @@ string_q getTokenSymbol(const address_t& token, blknum_t blockNum) {
     cmd << "\"data\": \"0x95d89b41\"";
     cmd << "}, \"" << uint_2_Hex(blockNum) << "\"]";
     string_q ret = callRPC("eth_call", cmd.str(), false);
-    if (!contains(ret, "error") && !contains(ret, "reverted") && !startsWith(ret, "0x"))
+    if (!contains(ret, "error") && !startsWith(ret, "0x"))
         return ret;
     return "";
-}
-
-//-------------------------------------------------------------------------
-uint64_t getTokenDecimals(const address_t& token, blknum_t blockNum) {
-    ostringstream cmd;
-    cmd << "[{";
-    cmd << "\"to\": \"" << token << "\", ";
-    cmd << "\"data\": \"0x313ce567\"";
-    cmd << "}, \"" << uint_2_Hex(blockNum) << "\"]";
-    string_q ret = callRPC("eth_call", cmd.str(), false);
-    if (!contains(ret, "error") && !contains(ret, "reverted") && !startsWith(ret, "0x"))
-        return str_2_Uint(ret);
-    return 0;
 }
 
 //-------------------------------------------------------------------------

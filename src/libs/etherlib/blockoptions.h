@@ -19,12 +19,6 @@ class CAbiOptions : public COptionsBase {
     CAbi abi_spec;
 };
 
-//--------------------------------------------------------------------------
-class CStatementOptions : public CAbiOptions {
-  public:
-    CLedgerManager ledgerManager{""};
-};
-
 //-----------------------------------------------------------------------------
 class CBlockOptions : public CAbiOptions {
   public:

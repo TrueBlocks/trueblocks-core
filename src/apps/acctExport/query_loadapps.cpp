@@ -55,8 +55,8 @@ bool COptions::loadMonitors(void) {
                     loadNamesWithPrefunds();
                     reloaded = true;
                 }
-                findName(mon.address, ledgerManager.name);
-                ledgerManager.name.isContract = !getCodeAt(mon.address, meta.client).empty();
+                findName(mon.address, accountedFor);
+                accountedFor.isContract = !getCodeAt(mon.address, meta.client).empty();
             }
             monTmp.push_back(app);
         }
@@ -79,16 +79,16 @@ bool COptions::loadMonitors(void) {
                 hasFuture = true;
             }
         } else {
-            ledgerManager.appArray.push_back(*app);
+            monApps.push_back(*app);
         }
     }
 
     // Make sure the timestamps column is at least as up to date as this monitor
-    if (ledgerManager.appArray.size()) {
+    if (monApps.size()) {
         // it's okay to not be able to freshen this. We'll just report less txs
         return bn_2_Timestamp(1);  // loads the timestamp file and returns non-zero
     }
 
-    LOG_INFO("Nothing to export" + (allMonitors.size() ? (" from " + ledgerManager.accountedFor) : "") + ".");
+    LOG_INFO("Nothing to export" + (allMonitors.size() ? (" from " + accountedFor.address) : "") + ".");
     return allMonitors.size() > 0;
 }

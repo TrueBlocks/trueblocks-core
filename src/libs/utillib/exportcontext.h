@@ -35,6 +35,7 @@ class CExportContext {
     bool hexNums;
     bool hashesOnly;
     bool asEther;
+    bool asDollars;
     bool asWei;
     uint32_t* tsMemMap;
     size_t tsCnt;

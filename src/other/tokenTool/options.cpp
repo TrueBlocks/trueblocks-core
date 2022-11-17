@@ -98,24 +98,25 @@ bool COptions::parseArguments(string_q& command) {
     if (!isNodeRunning())
         return usage("This command needs a running Ethereum node.");
 
-    // #ifndef DEBUGGING
-    //     // We need a locally running >> archive << node
-    //     if (!nodeHasBalances(false))
-    //         return usage("This command only runs if the node has balances.");
-    // #endif
+#ifndef DEBUGGING
+    // We need a locally running >> archive << node
+    if (!nodeHasBalances(false))
+        return usage("This command only runs if the node has balances.");
+#endif
 
     // We need to find the cache
     CMonitor m;
-    // if (!fileExists(cacheFile))
-    //     return usage("Could not find cache file: " + cacheFile);
+    cacheFile = m.get PathToMonitor(tokens[0]);
+    if (!fileExists(cacheFile))
+        return usage("Could not find cache file: " + cacheFile);
 
-    // // We need to know the cache is not locked
-    // if (fileExists(cacheFile + ".lck"))
-    //     return usage(
-    //         "The cache lock file is present. The program is either already running or it did not end "
-    //         "cleanly the\n\tlast time it ran. Quit the already running program or, if it is not running, "
-    //         "remove the lock\n\tfile: " +
-    //         cacheFile + ".lck'.");
+    // We need to know the cache is not locked
+    if (fileExists(cacheFile + ".lck"))
+        return usage(
+            "The cache lock file is present. The program is either already running or it did not end "
+            "cleanly the\n\tlast time it ran. Quit the already running program or, if it is not running, "
+            "remove the lock\n\tfile: " +
+            cacheFile + ".lck'.");
 
     // We need an ABI (although we could run without it)
     if (!abi_spec.loadAbiFromEtherscan(tokens[0]))

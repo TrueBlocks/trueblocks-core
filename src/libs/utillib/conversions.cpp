@@ -14,6 +14,8 @@
 #include "conversions.h"
 #include "logging.h"
 
+// TODO(tjayrush): inline these conversions
+
 namespace qblocks {
 
 extern uint64_t verbose;
@@ -231,13 +233,6 @@ biguint_t str_2_BigUint(const string_q& str, size_t bits) {
 #endif
 }
 
-//-----------------------------------------------------------------------
-address_t topic_2_Addr(const topic_t& topic) {
-    if (topic.length() != 66)
-        return "";
-    return "0x" + padLeft(topic.substr(26, 66), 40, '0');
-}
-
 //--------------------------------------------------------------------------------
 address_t str_2_Addr(const string_q& str) {
     if (isZeroAddr(str))
@@ -350,11 +345,6 @@ bool isZeroHash(const hash_t& hash) {
     if (!isNumeral(hash) && !isHexStr(hash))
         return false;
     return (str_2_Wei(hash) == 0);
-}
-
-//-----------------------------------------------------------------------
-bool isEtherAddr(const address_t& addr) {
-    return toLower(addr) == FAKE_ETH_ADDRESS;
 }
 
 //--------------------------------------------------------------------------------

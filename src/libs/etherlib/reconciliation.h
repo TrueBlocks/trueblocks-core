@@ -21,7 +21,6 @@ namespace qblocks {
 
 // EXISTING_CODE
 class CTransaction;
-class CTransfer;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -29,22 +28,14 @@ class CReconciliation : public CBaseNode {
   public:
     blknum_t blockNumber;
     blknum_t transactionIndex;
-    blknum_t logIndex;
-    hash_t transactionHash;
     timestamp_t timestamp;
     address_t assetAddr;
     string_q assetSymbol;
     uint64_t decimals;
-    double spotPrice;
-    string_q priceSource;
-    address_t accountedFor;
-    address_t sender;
-    address_t recipient;
+    blknum_t prevBlk;
+    bigint_t prevBlkBal;
     bigint_t begBal;
     bigint_t endBal;
-    string_q encoding;
-    string_q signature;
-    string_q reconciliationType;
     bigint_t amountIn;
     bigint_t internalIn;
     bigint_t selfDestructIn;
@@ -56,9 +47,10 @@ class CReconciliation : public CBaseNode {
     bigint_t amountOut;
     bigint_t internalOut;
     bigint_t selfDestructOut;
-    bigint_t gasOut;
-    blknum_t prevAppBlk;
-    bigint_t prevBal;
+    bigint_t gasCostOut;
+    string_q reconciliationType;
+    double spotPrice;
+    string_q priceSource;
 
   public:
     CReconciliation(void);
@@ -69,13 +61,18 @@ class CReconciliation : public CBaseNode {
     DECLARE_NODE(CReconciliation);
 
     // EXISTING_CODE
-    CReconciliation(const address_t& aF, const address_t& asset, const CTransaction* pT);
+    CReconciliation(blknum_t bn, blknum_t txid, timestamp_t ts, const CTransaction* pT) {
+        initialize();
+        blockNumber = bn;
+        transactionIndex = txid;
+        timestamp = ts;
+        pTransaction = pT;
+    }
     const CTransaction* pTransaction = NULL;
-
-    bool reconcileFlows(const CTransfer& transfer);
-    bool reconcileFlows_traces(void);
-    bool reconcileBalances(bool prevDifferent, bool nextDifferent);
-
+    void initForToken(CAccountName& tokenName);
+    bool reconcileEth(const CReconciliation& prevRecon, blknum_t nextBlock, const CTransaction* trans,
+                      const CAccountName& accountedFor);
+    bool reconcileUsingTraces(bigint_t prevEndBal, const CTransaction* trans, const CAccountName& accountedFor);
     bigint_t begBalDiff(void) const;
     bigint_t endBalCalc(void) const;
     bigint_t endBalDiff(void) const;
@@ -83,12 +80,9 @@ class CReconciliation : public CBaseNode {
     bigint_t totalOut(void) const;
     bigint_t totalOutLessGas(void) const;
     bigint_t amountNet(void) const;
-    bool trialBalance(void) const;
     bool reconciled(void) const;
-
     CReconciliation& operator+=(const CReconciliation& r);
-
-  public:
+    bool readBackLevel_old(CArchive& archive);
     // EXISTING_CODE
     bool operator==(const CReconciliation& it) const;
     bool operator!=(const CReconciliation& it) const {
@@ -143,22 +137,14 @@ inline void CReconciliation::initialize(void) {
 
     blockNumber = 0;
     transactionIndex = 0;
-    logIndex = 0;
-    transactionHash = "";
     timestamp = 0;
     assetAddr = "";
     assetSymbol = "";
     decimals = 18;
-    spotPrice = 1.0;
-    priceSource = "";
-    accountedFor = "";
-    sender = "";
-    recipient = "";
+    prevBlk = 0;
+    prevBlkBal = 0;
     begBal = 0;
     endBal = 0;
-    encoding = "";
-    signature = "";
-    reconciliationType = "";
     amountIn = 0;
     internalIn = 0;
     selfDestructIn = 0;
@@ -170,9 +156,10 @@ inline void CReconciliation::initialize(void) {
     amountOut = 0;
     internalOut = 0;
     selfDestructOut = 0;
-    gasOut = 0;
-    prevAppBlk = 0;
-    prevBal = 0;
+    gasCostOut = 0;
+    reconciliationType = "";
+    spotPrice = 1.0;
+    priceSource = "";
 
     // EXISTING_CODE
     pTransaction = NULL;
@@ -186,22 +173,14 @@ inline void CReconciliation::duplicate(const CReconciliation& re) {
 
     blockNumber = re.blockNumber;
     transactionIndex = re.transactionIndex;
-    logIndex = re.logIndex;
-    transactionHash = re.transactionHash;
     timestamp = re.timestamp;
     assetAddr = re.assetAddr;
     assetSymbol = re.assetSymbol;
     decimals = re.decimals;
-    spotPrice = re.spotPrice;
-    priceSource = re.priceSource;
-    accountedFor = re.accountedFor;
-    sender = re.sender;
-    recipient = re.recipient;
+    prevBlk = re.prevBlk;
+    prevBlkBal = re.prevBlkBal;
     begBal = re.begBal;
     endBal = re.endBal;
-    encoding = re.encoding;
-    signature = re.signature;
-    reconciliationType = re.reconciliationType;
     amountIn = re.amountIn;
     internalIn = re.internalIn;
     selfDestructIn = re.selfDestructIn;
@@ -213,9 +192,10 @@ inline void CReconciliation::duplicate(const CReconciliation& re) {
     amountOut = re.amountOut;
     internalOut = re.internalOut;
     selfDestructOut = re.selfDestructOut;
-    gasOut = re.gasOut;
-    prevAppBlk = re.prevAppBlk;
-    prevBal = re.prevBal;
+    gasCostOut = re.gasCostOut;
+    reconciliationType = re.reconciliationType;
+    spotPrice = re.spotPrice;
+    priceSource = re.priceSource;
 
     // EXISTING_CODE
     pTransaction = re.pTransaction;
@@ -261,11 +241,16 @@ extern const char* STR_DISPLAY_RECONCILIATION;
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 extern CReconciliation operator+(const CReconciliation& a, const CReconciliation& b);
+typedef map<string, CReconciliation> CReconciliationMap;
+
 extern string_q wei_2_Str(const wei_t& weiIn);
 extern string_q bni_2_Str(const bigint_t& numIn);
 
 extern string_q wei_2_Ether(const wei_t& weiIn, uint64_t decimals);
 extern string_q bni_2_Ether(const bigint_t& numIn, uint64_t decimals);
+
+extern string_q wei_2_Dollars(const timestamp_t& ts, const wei_t& weiIn, uint64_t decimals);
+extern string_q bni_2_Dollars(const timestamp_t& ts, const bigint_t& numIn, uint64_t decimals);
 
 extern string_q wei_2_Export(const blknum_t& bn, const wei_t& weiIn, uint64_t decimals);
 extern string_q bni_2_Export(const timestamp_t& ts, const bigint_t& numIn, uint64_t decimals);

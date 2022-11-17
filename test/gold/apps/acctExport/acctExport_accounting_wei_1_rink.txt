@@ -1,0 +1,9 @@
+chifra export  0x001d14804b399c6ef80e64576f657660804fec0b --max_records 5 --accounting --fmt json --log_level 10 --chain sepolia
+TEST[DATE|TIME] Addrs:  [0x001d14804b399c6ef80e64576f657660804fec0b]
+TEST[DATE|TIME] Accounting:  true
+TEST[DATE|TIME] MaxRecords:  5
+TEST[DATE|TIME] LogLevel:  10
+TEST[DATE|TIME] Chain:  sepolia
+TEST[DATE|TIME] Format:  api
+WARN[DATE|TIME] The --accounting option reports a spotPrice of one for all assets on non-mainnet chains.
+TIME ~ CLOCK - <WARN> : No records found for address 0x001d14804b399c6ef80e64576f657660804fec0b

@@ -37,9 +37,9 @@ static const COption params[] = {
     COption("receipts", "r", "", OPT_SWITCH, "export receipts instead of transactional data"),
     COption("logs", "l", "", OPT_SWITCH, "export logs instead of transactional data"),
     COption("traces", "t", "", OPT_SWITCH, "export traces instead of transactional data"),
+    COption("statements", "A", "", OPT_SWITCH, "export reconciliations instead of transactional data (assumes --accounting option)"),  // NOLINT
     COption("neighbors", "n", "", OPT_SWITCH, "export the neighbors of the given address"),
     COption("accounting", "C", "", OPT_SWITCH, "attach accounting records to the exported data (applies to transactions export only)"),  // NOLINT
-    COption("statements", "A", "", OPT_SWITCH, "for the accounting options only, export only statements"),
     COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
     COption("cache", "i", "", OPT_SWITCH, "write transactions to the cache (see notes)"),
     COption("cache_traces", "R", "", OPT_SWITCH, "write traces to the cache (see notes)"),
@@ -49,8 +49,8 @@ static const COption params[] = {
     COption("relevant", "", "", OPT_SWITCH, "for log and accounting export only, export only logs relevant to one of the given export addresses"),  // NOLINT
     COption("emitter", "", "list<addr>", OPT_FLAG, "for log export only, export only logs if emitted by one of these address(es)"),  // NOLINT
     COption("topic", "", "list<topic>", OPT_FLAG, "for log export only, export only logs with this topic(s)"),
-    COption("asset", "", "list<addr>", OPT_FLAG, "for the accounting options only, export statements only for this asset"),  // NOLINT
-    COption("flow", "f", "enum[in|out|zero]", OPT_FLAG, "for the accounting options only, export statements with incoming, outgoing, or zero value"),  // NOLINT
+    COption("asset", "", "list<addr>", OPT_FLAG, "for the statements option only, export only reconciliations for this asset"),  // NOLINT
+    COption("flow", "f", "enum[in|out|zero]", OPT_FLAG, "for the statements option only, export only statements with incoming value or outgoing value"),  // NOLINT
     COption("factory", "y", "", OPT_SWITCH, "scan for contract creations from the given address(es) and report address of those contracts"),  // NOLINT
     COption("load", "", "<string>", OPT_HIDDEN | OPT_FLAG, "a comma separated list of dynamic traversers to load"),
     COption("reversed", "", "", OPT_HIDDEN | OPT_SWITCH, "produce results in reverse chronological order"),
@@ -115,14 +115,14 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-t" || arg == "--traces") {
             traces = true;
 
+        } else if (arg == "-A" || arg == "--statements") {
+            statements = true;
+
         } else if (arg == "-n" || arg == "--neighbors") {
             neighbors = true;
 
         } else if (arg == "-C" || arg == "--accounting") {
             accounting = true;
-
-        } else if (arg == "-A" || arg == "--statements") {
-            statements = true;
 
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
@@ -226,9 +226,11 @@ bool COptions::parseArguments(string_q& command) {
     if (!isApiMode() && (max_records == 250 || max_records == 0))
         max_records = (((size_t)-100000000));  // this is a very large number that won't wrap
 
-    if (!isArchiveNode() && accounting) {
+    if (accounting && !isArchiveNode())
         return usage("The --accounting option requires historical balances which your RPC server does not provide.");
-    }
+
+    if ((appearances + logs + receipts + traces + statements + neighbors + accounting) > 1)
+        return usage("Please export only one of list, receipts, statements, logs, or traces.");
 
     for (auto e : emitter)
         logFilter.emitters.push_back(e);
@@ -239,13 +241,11 @@ bool COptions::parseArguments(string_q& command) {
     for (auto t : topic)
         logFilter.topics.push_back(t);
 
-    for (auto addr : asset) {
-        ledgerManager.assetFilter[addr] = true;
-    }
+    for (auto addr : asset)
+        assetFilter[addr] = true;
 
-    if (!loadNames()) {
+    if (!loadNames())
         return usage("Could not load names database.");
-    }
 
     for (auto addr : addrs) {
         CMonitor monitor;
@@ -254,20 +254,18 @@ bool COptions::parseArguments(string_q& command) {
         monitor.finishParse();
         monitor.isStaging = !fileExists(monitor.getPathToMonitor(monitor.address, false));
 
-        if (ledgerManager.accountedFor.empty()) {
-            ledgerManager.accountedFor = monitor.address;
-            ledgerManager.name.address = monitor.address;
-            findName(monitor.address, ledgerManager.name);
-            ledgerManager.name.petname = addr_2_Petname(ledgerManager.accountedFor, '-');  // order matters
-            ledgerManager.name.isContract = !getCodeAt(monitor.address, latest).empty();
+        if (accountedFor.address.empty()) {
+            accountedFor.address = monitor.address;
+            findName(monitor.address, accountedFor);
+            accountedFor.petname = addr_2_Petname(accountedFor.address, '-');  // order matters
+            accountedFor.isContract = !getCodeAt(monitor.address, latest).empty();
         }
 
         allMonitors.push_back(monitor);
     }
 
-    if (appearances || count) {
+    if (appearances || count)
         articulate = false;
-    }
 
     if (articulate) {
         abi_spec.loadAbisFromKnown();
@@ -277,17 +275,15 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (!setDisplayFormatting()) {
+    if (!setDisplayFormatting())
         return false;
-    }
 
     // TODO: This can be removed
     CMonitor m;
     cleanFolder(m.getPathToMonitor("", true));
 
-    if (first_block > last_block) {
+    if (first_block > last_block)
         return usage("--first_block must be less than or equal to --last_block.");
-    }
     exportRange = make_pair(first_block, last_block);
 
     if (count) {
@@ -352,9 +348,9 @@ void COptions::Init(void) {
     receipts = false;
     logs = false;
     traces = false;
+    statements = false;
     neighbors = false;
     accounting = false;
-    statements = false;
     articulate = false;
     // clang-format off
     cache = getGlobalConfig("acctExport")->getConfigBool("settings", "cache", false);
@@ -381,11 +377,10 @@ void COptions::Init(void) {
     meta = getMetaData();
 
     allMonitors.clear();
+    monApps.clear();
 
-    ledgerManager.appArray.clear();
-    ledgerManager.accountedFor = "";
-    ledgerManager.name.address = "";
-    ledgerManager.name.petname = "";
+    accountedFor.address = "";
+    accountedFor.petname = "";
 
     // We don't clear these because they are part of meta data
     // prefundAddrMap.clear();
@@ -543,7 +538,7 @@ bool COptions::setDisplayFormatting(void) {
         if (accounting) {
             articulate = true;
             manageFields("CTransaction:statements", true);
-            if (statements && isText) {
+            if (statements) {
                 string_q format =
                     getGlobalConfig("acctExport")->getConfigStr("display", "statement", STR_DISPLAY_RECONCILIATION);
                 expContext().fmtMap["header"] = noHeader ? "" : cleanFmt(format);

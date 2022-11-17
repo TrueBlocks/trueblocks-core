@@ -66,9 +66,11 @@ extern bool queryRawStateDiff(string_q& results, const hash_t& hashIn);
 extern bool queryRawLogs(string_q& results, const CLogFilter& query);
 
 //-----------------------------------------------------------------------
-extern bigint_t getTokenBalanceAt(const address_t& token, const address_t& holder, blknum_t blockNum);
+extern string_q getTokenBalanceOf(const address_t& token, const address_t& holder, blknum_t blockNum);
+inline bigint_t getTokenBalanceOf2(const address_t& token, const address_t& holder, blknum_t blockNum) {
+    return str_2_BigInt(getTokenBalanceOf(token, holder, blockNum));
+};
 extern string_q getTokenSymbol(const address_t& token, blknum_t blockNum);
-extern uint64_t getTokenDecimals(const address_t& token, blknum_t blockNum);
 extern string_q getTokenState(const address_t& token, const string_q& whichState, const CAbi& abi_spec,
                               blknum_t blockNum, const string_q& bytes = "");
 
