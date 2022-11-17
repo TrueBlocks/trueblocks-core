@@ -60,7 +60,7 @@ func init() {
 	transactionsCmd.Flags().StringVarP(&transactionsPkg.GetOptions().Flow, "flow", "f", "", `for the uniq option only, export only from or to (including trace from or to)
 One of [ from | to ]`)
 	transactionsCmd.Flags().StringVarP(&transactionsPkg.GetOptions().Reconcile, "reconcile", "r", "", "please use statements option instead")
-	transactionsCmd.Flags().StringVarP(&transactionsPkg.GetOptions().AccountFor, "account_for", "A", "", "reconcile the transaction as per the provided address")
+	transactionsCmd.Flags().StringVarP(&transactionsPkg.GetOptions().Statements, "statements", "A", "", "reconcile the transaction as per the provided address")
 	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().Cache, "cache", "o", false, "force the results of the query into the tx cache (and the trace cache if applicable)")
 	globals.InitGlobals(transactionsCmd, &transactionsPkg.GetOptions().Globals)
 

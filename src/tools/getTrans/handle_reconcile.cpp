@@ -14,27 +14,33 @@
 
 //--------------------------------------------------------------
 bool visitReconciliation(CTransaction& trans, void* data) {
+    LOG4("blockNumber.txid: ", trans.blockNumber, "\t", trans.transactionIndex);
+
     COptions* opt = reinterpret_cast<COptions*>(data);
-
-    opt->ledgerManager.getPrevNext(NOPOS, trans);
-    if (!opt->ledgerManager.getStatements(trans)) {
-        return false;  // user quit
-    }
-    // TODO: Note - we don't cache here since this reconciliation is incomplete
-
     bool isText = (expContext().exportFmt & (TXT1 | CSV1));
-    for (auto statement : trans.statements) {
-        if (isText) {
-            cout << trim(statement.Format(expContext().fmtMap["format"]), '\t') << endl;
-        } else {
-            if (!opt->firstOut)
-                cout << ",";
-            cout << "  ";
-            indent();
-            statement.toJson(cout);
-            unindent();
-            opt->firstOut = false;
-        }
+
+    CAccountName name;
+    name.address = opt->statements;
+    name.petname = addr_2_Petname(name.address, '-');
+    findName(opt->statements, name);
+    CReconciliation prev;
+    prev.pTransaction = &trans;
+    prev.assetAddr = opt->statements;
+    prev.endBal = trans.blockNumber == 0 ? 0 : getBalanceAt(opt->statements, trans.blockNumber - 1);
+    CReconciliation eth(trans.blockNumber, trans.transactionIndex, trans.timestamp, &trans);
+    eth.reconcileEth(prev, trans.blockNumber + 1, &trans, name);
+    eth.spotPrice = getPriceInUsd(trans.blockNumber, eth.priceSource);
+
+    if (isText) {
+        cout << trim(eth.Format(expContext().fmtMap["format"]), '\t') << endl;
+    } else {
+        if (!opt->firstOut)
+            cout << ",";
+        cout << "  ";
+        indent();
+        eth.toJson(cout);
+        unindent();
+        opt->firstOut = false;
     }
 
     return true;

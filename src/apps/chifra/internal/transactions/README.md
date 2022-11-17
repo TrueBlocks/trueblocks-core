@@ -17,16 +17,16 @@ Arguments:
   transactions - a space-separated list of one or more transaction identifiers (required)
 
 Flags:
-  -a, --articulate           articulate the retrieved data if ABIs can be found
-  -t, --trace                include the transaction's traces in the results
-  -u, --uniq                 display a list of uniq addresses found in the transaction
-  -f, --flow string          for the uniq option only, export only from or to (including trace from or to)
-                             One of [ from | to ]
-  -A, --account_for string   reconcile the transaction as per the provided address
-  -o, --cache                force the results of the query into the tx cache (and the trace cache if applicable)
-  -x, --fmt string           export format, one of [none|json*|txt|csv]
-  -v, --verbose              enable verbose (increase detail with --log_level)
-  -h, --help                 display this help screen
+  -a, --articulate          articulate the retrieved data if ABIs can be found
+  -t, --trace               include the transaction's traces in the results
+  -u, --uniq                display a list of uniq addresses found in the transaction
+  -f, --flow string         for the uniq option only, export only from or to (including trace from or to)
+                            One of [ from | to ]
+  -A, --statements string   reconcile the transaction as per the provided address
+  -o, --cache               force the results of the query into the tx cache (and the trace cache if applicable)
+  -x, --fmt string          export format, one of [none|json*|txt|csv]
+  -v, --verbose             enable verbose (increase detail with --log_level)
+  -h, --help                display this help screen
 
 Notes:
   - The transactions list may be one or more transaction hashes, blockNumber.transactionID pairs, or a blockHash.transactionID pairs.
@@ -42,6 +42,7 @@ All tools accept the following additional flags, although in some cases, they ha
   -v, --version         display the current version of the tool
       --wei             export values in wei (the default)
       --ether           export values in ether
+      --dollars         export values in US dollars
       --raw             pass raw RPC data directly from the node with no processing
       --to_file         write the results to a temporary file and return the filename
       --output string   write the results to file 'fn' and return the filename

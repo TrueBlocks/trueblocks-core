@@ -15,21 +15,10 @@
 //-----------------------------------------------------------------------
 bool statements_Display(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)data;
+    opt->process_reconciliation(trav);
 
-    if (fourByteFilter(trav->trans.input, opt)) {
-        if (opt->relevant) {
-            for (auto& log : trav->trans.receipt.logs) {
-                log.m_showing = opt->isRelevant(log);
-            }
-        }
-
-        opt->ledgerManager.getPrevNext(trav->index, trav->trans);
-        if (!opt->ledgerManager.getStatements(trav->trans)) {
-            return false;  // user quit
-        }
-        trav->trans.cacheIfReconciled(opt->ledgerManager.accountedFor);
-
-        for (auto statement : trav->trans.statements) {
+    for (auto statement : trav->trans.statements) {
+        if (opt->assetFilter.size() == 0 || opt->assetFilter[statement.assetAddr]) {
             bool checkFlow = !opt->flow.empty();
             bool in = opt->flow == "in" && statement.amountNet() > 0;
             bool out = opt->flow == "out" && statement.amountNet() < 0;

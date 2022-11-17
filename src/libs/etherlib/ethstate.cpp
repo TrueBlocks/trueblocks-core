@@ -312,6 +312,10 @@ string_q nextEthstateChunk_custom(const string_q& fieldIn, const void* dataPtr) 
     if (eth) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'd':
+                if (fieldIn % "dollars")
+                    return wei_2_Export(eth->blockNumber, eth->balance, 18);
+                break;
             case 'e':
                 if (fieldIn % "ether")
                     return wei_2_Ether(eth->balance, 18);

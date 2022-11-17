@@ -28,14 +28,14 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCost:    0
+TIME ~ CLOCK - : 8------  gasCostOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     0
 TIME ~ CLOCK - : 4-----  endBal:        167500000000000000
 TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    163750000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    -3750000000000000
-TIME ~ CLOCK - : 4-----  reconciled:    false
+TIME ~ CLOCK - : 4-----  regular-recon: false
 TIME ~ CLOCK - : 4-----Trial balance: by-trace
 TIME ~ CLOCK - : 4-----  hash: 0x39a7c959c11489f7c0a84ed67f960e441ae5be106a1a42afb75ee9f0119d16bb
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -55,14 +55,14 @@ TIME ~ CLOCK - : 4-----  totalIn:       3750000000000000
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCost:    0
+TIME ~ CLOCK - : 8------  gasCostOut:    0
 TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     3750000000000000
 TIME ~ CLOCK - : 4-----  endBal:        167500000000000000
 TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    167500000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
-TIME ~ CLOCK - : 4-----  reconciled:    true
+TIME ~ CLOCK - : 4-----  regular-recon: true
 
 level: 1
 readOffset: 0
@@ -132,8 +132,8 @@ TIME ~ CLOCK - : 4-----reserve1: 5.82602e+06 reserve2: 13533.8 priceOut: 430.478
     "assetAddr": "0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3",
     "assetSymbol": "WEI",
     "decimals": 18,
-    "prevAppBlk": 0,
-    "prevBal": "163750000000000000",
+    "prevBlk": 0,
+    "prevBlkBal": "163750000000000000",
     "begBal": "163750000000000000",
     "endBal": "167500000000000000",
     "amountIn": "",
@@ -147,7 +147,7 @@ TIME ~ CLOCK - : 4-----reserve1: 5.82602e+06 reserve2: 13533.8 priceOut: 430.478
     "amountOut": "",
     "internalOut": "",
     "selfDestructOut": "",
-    "gasCost": "",
+    "gasCostOut": "",
     "reconciliationType": "by-trace",
     "spotPrice": 430.47848,
     "priceSource": "uniswap",
@@ -182,14 +182,14 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     2068649590800000000
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCost:    1680000000000000
+TIME ~ CLOCK - : 8------  gasCostOut:    1680000000000000
 TIME ~ CLOCK - : 4-----  totalOut:      2070329590800000000
 TIME ~ CLOCK - : 4-----  amountNet:     -2070329590800000000
 TIME ~ CLOCK - : 4-----  endBal:        63000000000000
 TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    63000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
-TIME ~ CLOCK - : 4-----  reconciled:    true
+TIME ~ CLOCK - : 4-----  regular-recon: true
 
 level: 1
 readOffset: 0
@@ -259,8 +259,8 @@ TIME ~ CLOCK - : 4-----reserve1: 6.02951e+06 reserve2: 15218 priceOut: 396.208 r
     "assetAddr": "0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3",
     "assetSymbol": "WEI",
     "decimals": 18,
-    "prevAppBlk": 0,
-    "prevBal": "2070392590800000000",
+    "prevBlk": 0,
+    "prevBlkBal": "2070392590800000000",
     "begBal": "2070392590800000000",
     "endBal": "63000000000000",
     "amountIn": "",
@@ -274,7 +274,7 @@ TIME ~ CLOCK - : 4-----reserve1: 6.02951e+06 reserve2: 15218 priceOut: 396.208 r
     "amountOut": "2068649590800000000",
     "internalOut": "",
     "selfDestructOut": "",
-    "gasCost": "1680000000000000",
+    "gasCostOut": "1680000000000000",
     "reconciliationType": "regular",
     "spotPrice": 396.20840,
     "priceSource": "uniswap",

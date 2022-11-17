@@ -55,7 +55,7 @@ class COptions : public CAbiOptions {
     void Init(void) override;
 
     void updateHolder(const CTransaction& trans, const address_t& addr, const wei_t& stake);
-    wei_t getTokenBalanceOld(const address_t& holder, blknum_t blockNum);
+    wei_t getTokenBalance(const address_t& holder, blknum_t blockNum);
     string_q getTotalSupply(blknum_t blockNum);
 };
 

@@ -1,11 +1,11 @@
 #-------------------------------------------------
-libraries=/Users/jrush/Development/trueblocks-core/src/libs/
+libraries=../../libs
 bin=bin
-cflags=-std=c++17 -Werror -Wall -O2 -I. -I$(libraries)/utillib -I$(libraries)/etherlib -I$(libraries)/acctlib
+cflags=-std=c++11 -Werror -Wall -O2 -I. -I$(libraries)/utillib -I$(libraries)/etherlib
 
 #-------------------------------------------------
 # for mac builds
-libs=$(libraries)/*.a /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib/libcurl.4.tbd
+libs=$(libraries)/*.a /usr/lib/libcurl.dylib
 
 #-------------------------------------------------
 exec=tokenTool
@@ -14,7 +14,6 @@ dest=$(bin)/$(exec)
 
 #-------------------------------------------------
 src= \
-options.cpp \
 stake.cpp \
 $(exec).cpp
 

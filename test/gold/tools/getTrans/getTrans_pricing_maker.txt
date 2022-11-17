@@ -28,14 +28,14 @@ TIME ~ CLOCK - : 4-----  totalIn:       0
 TIME ~ CLOCK - : 8------  amountOut:     0
 TIME ~ CLOCK - : 8------  internalOut:   0
 TIME ~ CLOCK - : 8------  slfDstrctOt:   0
-TIME ~ CLOCK - : 8------  gasCost:    214832000000000
+TIME ~ CLOCK - : 8------  gasCostOut:    214832000000000
 TIME ~ CLOCK - : 4-----  totalOut:      214832000000000
 TIME ~ CLOCK - : 4-----  amountNet:     -214832000000000
 TIME ~ CLOCK - : 4-----  endBal:        1259710448741022040
 TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    1259710448741022040
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
-TIME ~ CLOCK - : 4-----  reconciled:    true
+TIME ~ CLOCK - : 4-----  regular-recon: true
 TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 5218355 prior to its deployment 10042267
 
 level: 1
@@ -79,8 +79,8 @@ params.size: 2
     "assetAddr": "0x7fd5c846121bed2e2e46a55f992e35d85da7ffad",
     "assetSymbol": "WEI",
     "decimals": 18,
-    "prevAppBlk": 0,
-    "prevBal": "1259925280741022040",
+    "prevBlk": 0,
+    "prevBlkBal": "1259925280741022040",
     "begBal": "1259925280741022040",
     "endBal": "1259710448741022040",
     "amountIn": "",
@@ -94,7 +94,7 @@ params.size: 2
     "amountOut": "",
     "internalOut": "",
     "selfDestructOut": "",
-    "gasCost": "214832000000000",
+    "gasCostOut": "214832000000000",
     "reconciliationType": "regular",
     "spotPrice": 766.95000,
     "priceSource": "maker",

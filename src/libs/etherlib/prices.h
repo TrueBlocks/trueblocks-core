@@ -15,10 +15,10 @@
 
 namespace qblocks {
 
-extern double getPriceInUsd(const address_t& assetAddr, string_q& priceSource, blknum_t bn);
+extern double getPriceInUsd(blknum_t bn, string_q& priceSource, const address_t& address = "");
 inline double getPriceInUsd(blknum_t bn) {
-    string_q sourceUnused;
-    return getPriceInUsd(FAKE_ETH_ADDRESS, sourceUnused, bn);
+    string_q unused;
+    return getPriceInUsd(bn, unused);
 };
 
 }  // namespace qblocks

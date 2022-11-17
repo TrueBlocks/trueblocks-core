@@ -22,6 +22,11 @@ func (opts *TokensOptions) validateTokens() error {
 		return err
 	}
 
+	// special case for tokens which don't allow --dollars display
+	if opts.Globals.Dollars {
+		return validate.Usage("The {0} option is not available{1}.", "--dollars", " with this tool")
+	}
+
 	err = validate.ValidateIdentifiers(
 		opts.Globals.Chain,
 		opts.Blocks,

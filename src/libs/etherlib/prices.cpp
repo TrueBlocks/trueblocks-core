@@ -16,10 +16,10 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-extern double getPrice_UsdPerEth(string_q& priceSource, blknum_t bn);
-extern double getPrice_UsdPerTok(const address_t& assetAddr, string_q& priceSource, blknum_t bn);
-extern double getPrice_EthPerTok(const address_t& assetAddr, string_q& priceSource, blknum_t bn);
-extern double getPriceMaker_UsdPerEth(string_q& priceSource, blknum_t bn);
+extern double getPrice_UsdPerEth(blknum_t bn, string_q& priceSource);
+extern double getPrice_UsdPerTok(blknum_t bn, string_q& priceSource, const address_t& address);
+extern double getPrice_EthPerTok(blknum_t bn, string_q& priceSource, const address_t& address);
+extern double getPriceMaker_UsdPerEth(blknum_t bn, string_q& priceSource);
 
 //---------------------------------------------------------------------------
 static const address_t sai = "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359";
@@ -74,13 +74,12 @@ class CUniPair : public CEthCall {
 };
 
 //---------------------------------------------------------------------------
-double getPriceInUsd(const address_t& assetAddr, string& priceSource, blknum_t bn) {
+double getPriceInUsd(blknum_t bn, string& priceSource, const address_t& addr) {
     // TODO: Multi-chain missing feature on other chains
     if (getChain() != "mainnet") {
         return 1.0;
     }
-    return assetAddr.empty() || assetAddr == FAKE_ETH_ADDRESS ? getPrice_UsdPerEth(priceSource, bn)
-                                                              : getPrice_UsdPerTok(assetAddr, priceSource, bn);
+    return addr.empty() ? getPrice_UsdPerEth(bn, priceSource) : getPrice_UsdPerTok(bn, priceSource, addr);
 }
 
 //---------------------------------------------------------------------------
@@ -170,18 +169,18 @@ bool CUniPair::getPrice(blknum_t bn, string_q& priceSource, double& priceOut) {
 }
 
 //---------------------------------------------------------------------------
-double getPrice_UsdPerEth(string_q& priceSource, blknum_t bn) {
+double getPrice_UsdPerEth(blknum_t bn, string_q& priceSource) {
     CUniPair usdEth(bn, dai, wEth);
     if (usdEth.findPair()) {
         double price;
         if (usdEth.getPrice(bn, priceSource, price))
             return price;
     }
-    return getPriceMaker_UsdPerEth(priceSource, bn);
+    return getPriceMaker_UsdPerEth(bn, priceSource);
 }
 
 //---------------------------------------------------------------------------
-double getPrice_UsdPerTok(const address_t& assetAddr, string_q& priceSource, blknum_t bn) {
+double getPrice_UsdPerTok(blknum_t bn, string_q& priceSource, const address_t& tok) {
     static const CStringArray stableCoins = {
         dai,
         "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",  // USDC
@@ -190,26 +189,26 @@ double getPrice_UsdPerTok(const address_t& assetAddr, string_q& priceSource, blk
         sai,
     };
     for (auto coin : stableCoins) {
-        if (coin % assetAddr) {
+        if (coin % tok) {
             priceSource = "stable-coin";
             return 1.;  // Short curcuit...not accuate, but fast
         }
     }
 
-    if (assetAddr % wEth)
-        return getPrice_UsdPerEth(priceSource, bn);
+    if (tok % wEth)
+        return getPrice_UsdPerEth(bn, priceSource);
 
-    double ethPerTok = getPrice_EthPerTok(assetAddr, priceSource, bn);
+    double ethPerTok = getPrice_EthPerTok(bn, priceSource, tok);
     if (ethPerTok == 0.)
         return 0.;
-    double usdPerEth = getPrice_UsdPerEth(priceSource, bn);
+    double usdPerEth = getPrice_UsdPerEth(bn, priceSource);
     LOG4("ethPerTok: ", ethPerTok, " usdPerEth: ", usdPerEth, " price: ", (usdPerEth * ethPerTok));
     return usdPerEth * ethPerTok;
 }
 
 //---------------------------------------------------------------------------
-double getPrice_EthPerTok(const address_t& tokenAddr, string_q& priceSource, blknum_t bn) {
-    CUniPair thePair(bn, wEth, tokenAddr);
+double getPrice_EthPerTok(blknum_t bn, string_q& priceSource, const address_t& tok) {
+    CUniPair thePair(bn, wEth, tok);
     if (thePair.findPair()) {
         double price;
         if (thePair.getPrice(bn, priceSource, price))
@@ -221,7 +220,7 @@ double getPrice_EthPerTok(const address_t& tokenAddr, string_q& priceSource, blk
 }
 
 //---------------------------------------------------------------------------
-double getPriceMaker_UsdPerEth(string_q& priceSource, blknum_t bn) {
+double getPriceMaker_UsdPerEth(blknum_t bn, string_q& priceSource) {
     static const char* makerMedianizer = "0x729d19f657bd0614b4985cf1d82531c67569197b";
     static const char* peek = "0x59e02dd7";
     static CAbi spec;

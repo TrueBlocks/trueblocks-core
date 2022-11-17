@@ -3,7 +3,7 @@ TEST[DATE|TIME] Transactions:  [6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12c
 TEST[DATE|TIME] Articulate:  true
 TEST[DATE|TIME] Trace:  true
 TEST[DATE|TIME] Format:  json
-{ "data": [
+{"data": [
 params.size: 0
 ==================================================
 
@@ -58,8 +58,7 @@ params.size: 0
             "_value": "8263636363636363636"
           }
         },
-        "compressedTrace": "{name:transferFrom|inputs:{_from:0xbb9bc244d798123fde783fcc1c72d3bb8c189413|_to:0x713fa27cb26b5902ea398b04d21e6018bba3a2f1|_value:8263636363636363636}}",
-        "timestamp": 1539524970
+        "compressedTrace": "transferFrom(0xbb9bc244d798123fde783fcc1c72d3bb8c189413 /*_from*/, 0x713fa27cb26b5902ea398b04d21e6018bba3a2f1 /*_to*/, 8263636363636363636 /*_value*/); "
       }
     ],
     "articulatedTx": {
@@ -71,7 +70,7 @@ params.size: 0
         "_value": "8263636363636363636"
       }
     },
-    "compressedTx": "{name:transferFrom|inputs:{_from:0xbb9bc244d798123fde783fcc1c72d3bb8c189413|_to:0x713fa27cb26b5902ea398b04d21e6018bba3a2f1|_value:8263636363636363636}}",
+    "compressedTx": "transferFrom(0xbb9bc244d798123fde783fcc1c72d3bb8c189413 /*_from*/, 0x713fa27cb26b5902ea398b04d21e6018bba3a2f1 /*_to*/, 8263636363636363636 /*_value*/); ",
     "gasCost": 6000000000000000,
     "gasUsed": 3000000,
     "date": "2018-10-14 13:49:30 UTC",
@@ -121,7 +120,7 @@ params.size: 0
               "_sender": "0x752c71a68e4e0ea308c6e4209b7802d135c49292"
             }
           },
-          "compressedLog": "{name:CancelRequest|inputs:{_amount:25000000000000000000|_deposit:307140400019656960|_key:1|_sender:0x752c71a68e4e0ea308c6e4209b7802d135c49292}}"
+          "compressedLog": "CancelRequest(1 /*_key*/, 0x752c71a68e4e0ea308c6e4209b7802d135c49292 /*_sender*/, 307140400019656960 /*_deposit*/, 25000000000000000000 /*_amount*/); "
         }
       ],
       "status": 1
@@ -154,8 +153,7 @@ params.size: 0
             "_key": "1"
           }
         },
-        "compressedTrace": "{name:cancelExistingRequest|inputs:{_key:1}}",
-        "timestamp": 1541987121
+        "compressedTrace": "cancelExistingRequest(1 /*_key*/); "
       }
     ],
     "articulatedTx": {
@@ -165,7 +163,7 @@ params.size: 0
         "_key": "1"
       }
     },
-    "compressedTx": "{name:cancelExistingRequest|inputs:{_key:1}}",
+    "compressedTx": "cancelExistingRequest(1 /*_key*/); ",
     "gasCost": 3925900000000000,
     "gasUsed": 78518,
     "date": "2018-11-12 01:45:21 UTC",
@@ -227,8 +225,7 @@ params.size: 0
             "ret_0": "true"
           }
         },
-        "compressedTrace": "{name:split|inputs:{targetFork:0x167a9333bf582556f35bd4d16a7e80e191aa6476|targetNoFork:0x571b7b69829ce2568b9bc3d32eaf7405dab76b21}|outputs:{ret_0:true}}",
-        "timestamp": 1470188068
+        "compressedTrace": "split(0x167a9333bf582556f35bd4d16a7e80e191aa6476 /*targetFork*/, 0x571b7b69829ce2568b9bc3d32eaf7405dab76b21 /*targetNoFork*/); "
       },
       {
         "subtraces": 0,
@@ -257,8 +254,7 @@ params.size: 0
             "val_0": "true"
           }
         },
-        "compressedTrace": "{name:forked|outputs:{val_0:true}}",
-        "timestamp": 1470188068
+        "compressedTrace": "forked(); "
       },
       {
         "subtraces": 0,
@@ -279,8 +275,7 @@ params.size: 0
           "newContract": "0x0",
           "gasUsed": 0,
           "output": "0x"
-        },
-        "timestamp": 1470188068
+        }
       }
     ],
     "articulatedTx": {
@@ -294,9 +289,9 @@ params.size: 0
         "ret_0": "true"
       }
     },
-    "compressedTx": "{name:split|inputs:{targetFork:0x167a9333bf582556f35bd4d16a7e80e191aa6476|targetNoFork:0x571b7b69829ce2568b9bc3d32eaf7405dab76b21}|outputs:{ret_0:true}}",
+    "compressedTx": "split(0x167a9333bf582556f35bd4d16a7e80e191aa6476 /*targetFork*/, 0x571b7b69829ce2568b9bc3d32eaf7405dab76b21 /*targetNoFork*/); ",
     "gasCost": 3156100000000000,
     "gasUsed": 31561,
     "date": "2016-08-03 01:34:28 UTC",
     "ether": 4.569662960000000000
-  }] }
+  }], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }
