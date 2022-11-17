@@ -453,11 +453,8 @@ bool doEthCall(CEthCall& theCall, bool checkProxy) {
 
     string_q orig = theCall.encoding;
     blknum_t o = theCall.blockNumber;
-    if (isTestMode() && theCall.blockNumber > 15000000) {
-        theCall.blockNumber = 15000000;
-    }
-
     if (isTestMode()) {
+        theCall.blockNumber = min(blknum_t(15000000), theCall.blockNumber);
         LOG_INFO("Calling ", theCall.address, " at block ", theCall.blockNumber, "...: ", getEnvStr("SHIT"));
     }
 
