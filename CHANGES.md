@@ -18,6 +18,8 @@ This file details changes made to TrueBlocks per version (starting with version 
 - **chifra export:**
   - Improvements to accounting module. Much better support for token accounting including multiple token transfers in a single transaction and/or block.
   - *Breaking change:* change to `--statements` option which is now only available under the `--accounting` as per user suggestion.
+  - *Breaking change:* `--accounting` no longer turns `--articulate` on by default (users must explicitly add `--articulate` to get same behaviour).
+  - CStatement class renamed to CLedgerEntry to improve clarity of code.
   - Adds `-f` hotkey to `--flow` option.
 
 - **chifra state:**

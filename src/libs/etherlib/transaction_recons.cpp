@@ -39,9 +39,10 @@ bool CTransaction::readReconsFromCache(const address_t& accountedFor) {
         archive >> statements;
         archive.Release();
         for (auto& statement : statements) {
-            if (statement.accountedFor.empty()) {
+            if (statement.m_schema < getVersionNum(0, 43, 0)) {
                 // This is an old version of the reconciliation, delete it and return false
                 LOG_WARN("Back-level cache for statements found. Removing....");
+                statements.clear();
                 ::remove(path.c_str());
                 return false;
             }
@@ -63,12 +64,9 @@ bool CTransaction::readReconsFromCache(const address_t& accountedFor) {
 
 //-----------------------------------------------------------------------
 void CTransaction::cacheIfReconciled(const address_t& accountedFor) const {
-    if (!isReconciled(accountedFor)) {
+    if (isTestMode() || !isReconciled(accountedFor)) {
         return;
     }
-
-    if (isTestMode())
-        return;
 
     string_q path = getReconcilationPath(accountedFor);
 

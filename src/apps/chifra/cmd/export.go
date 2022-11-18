@@ -77,7 +77,7 @@ func init() {
 	exportCmd.Flags().StringSliceVarP(&exportPkg.GetOptions().Asset, "asset", "", nil, "for the accounting options only, export statements only for this asset")
 	exportCmd.Flags().StringVarP(&exportPkg.GetOptions().Flow, "flow", "f", "", `for the accounting options only, export statements with incoming, outgoing, or zero value
 One of [ in | out | zero ]`)
-	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Factory, "factory", "y", false, "scan for contract creations from the given address(es) and report address of those contracts")
+	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Factory, "factory", "y", false, "for --traces only, report addresses created by (or self-destructed by) the given address(es)")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Unripe, "unripe", "u", false, "export transactions labeled upripe (i.e. less than 28 blocks old)")
 	exportCmd.Flags().StringVarP(&exportPkg.GetOptions().Load, "load", "", "", "a comma separated list of dynamic traversers to load (hidden)")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Reversed, "reversed", "", false, "produce results in reverse chronological order (hidden)")

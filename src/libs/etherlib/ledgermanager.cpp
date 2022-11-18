@@ -29,7 +29,7 @@ bool CLedgerManager::getStatements(CTransaction& trans) {
 
     for (size_t i = 0; i < transfers.size(); i++) {
         CTransfer& transfer = transfers[i];
-        if (assetFilter.size() == 0 || assetFilter[transfer.assetAddr]) {
+        if (filterByAsset(transfer.assetAddr)) {
             string tokenKey = statementKey(accountedFor, transfer.assetAddr);
             if (ledgers[tokenKey] == CLedgerEntry()) {
                 CReconciliation prevStatement(accountedFor, transfer.assetAddr, &trans);

@@ -40,7 +40,7 @@ Flags:
       --asset strings       for the accounting options only, export statements only for this asset
   -f, --flow string         for the accounting options only, export statements with incoming, outgoing, or zero value
                             One of [ in | out | zero ]
-  -y, --factory             scan for contract creations from the given address(es) and report address of those contracts
+  -y, --factory             for --traces only, report addresses created by (or self-destructed by) the given address(es)
   -u, --unripe              export transactions labeled upripe (i.e. less than 28 blocks old)
   -F, --first_block uint    first block to process (inclusive)
   -L, --last_block uint     last block to process (inclusive)

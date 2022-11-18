@@ -43,7 +43,7 @@ type ExportOptions struct {
 	Topic       []string              `json:"topic,omitempty"`       // For log export only, export only logs with this topic(s)
 	Asset       []string              `json:"asset,omitempty"`       // For the accounting options only, export statements only for this asset
 	Flow        string                `json:"flow,omitempty"`        // For the accounting options only, export statements with incoming, outgoing, or zero value
-	Factory     bool                  `json:"factory,omitempty"`     // Scan for contract creations from the given address(es) and report address of those contracts
+	Factory     bool                  `json:"factory,omitempty"`     // For --traces only, report addresses created by (or self-destructed by) the given address(es)
 	Unripe      bool                  `json:"unripe,omitempty"`      // Export transactions labeled upripe (i.e. less than 28 blocks old)
 	Load        string                `json:"load,omitempty"`        // A comma separated list of dynamic traversers to load
 	Reversed    bool                  `json:"reversed,omitempty"`    // Produce results in reverse chronological order

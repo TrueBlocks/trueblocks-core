@@ -36,7 +36,7 @@ Flags:
       --topic string         for log export only, export only logs with this topic(s)
       --asset string         for the accounting options only, export statements only for this asset
   -f, --flow <val>           for the accounting options only, export statements with incoming, outgoing, or zero value, one of [in|out|zero]
-  -y, --factory              scan for contract creations from the given address(es) and report address of those contracts
+  -y, --factory              for --traces only, report addresses created by (or self-destructed by) the given address(es)
       --load string          a comma separated list of dynamic traversers to load (hidden)
       --reversed             produce results in reverse chronological order (hidden)
   -F, --first_block <num>    first block to process (inclusive)

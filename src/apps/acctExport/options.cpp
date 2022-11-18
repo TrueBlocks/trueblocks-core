@@ -51,7 +51,7 @@ static const COption params[] = {
     COption("topic", "", "list<topic>", OPT_FLAG, "for log export only, export only logs with this topic(s)"),
     COption("asset", "", "list<addr>", OPT_FLAG, "for the accounting options only, export statements only for this asset"),  // NOLINT
     COption("flow", "f", "enum[in|out|zero]", OPT_FLAG, "for the accounting options only, export statements with incoming, outgoing, or zero value"),  // NOLINT
-    COption("factory", "y", "", OPT_SWITCH, "scan for contract creations from the given address(es) and report address of those contracts"),  // NOLINT
+    COption("factory", "y", "", OPT_SWITCH, "for --traces only, report addresses created by (or self-destructed by) the given address(es)"),  // NOLINT
     COption("load", "", "<string>", OPT_HIDDEN | OPT_FLAG, "a comma separated list of dynamic traversers to load"),
     COption("reversed", "", "", OPT_HIDDEN | OPT_SWITCH, "produce results in reverse chronological order"),
     COption("first_block", "F", "<blknum>", OPT_FLAG, "first block to process (inclusive)"),
@@ -230,17 +230,20 @@ bool COptions::parseArguments(string_q& command) {
         return usage("The --accounting option requires historical balances which your RPC server does not provide.");
     }
 
-    for (auto e : emitter)
+    for (auto e : emitter) {
         logFilter.emitters.push_back(e);
+    }
 
-    for (auto t : topics)
+    for (auto t : topics) {
         logFilter.topics.push_back(t);
+    }
 
-    for (auto t : topic)
+    for (auto t : topic) {
         logFilter.topics.push_back(t);
+    }
 
-    for (auto addr : asset) {
-        ledgerManager.assetFilter[addr] = true;
+    for (auto addr : asset) {  // asset is an array even though it's singular
+        ledgerManager.setAssetFilter(addr);
     }
 
     if (!loadNames()) {
@@ -586,30 +589,37 @@ bool COptions::setDisplayFormatting(void) {
 
 //-----------------------------------------------------------------------
 bool COptions::isEmitter(const address_t& test) const {
-    for (auto monitor : allMonitors)
-        if (monitor.address == test)
+    for (auto monitor : allMonitors) {
+        if (monitor.address == test) {
             return true;
+        }
+    }
     return false;
 }
 
 //-----------------------------------------------------------------------
 bool COptions::isRelevant(const CLogEntry& log) const {
     string_q str = toLower(log.Format(STR_DISPLAY_LOGENTRY));
-    for (auto monitor : allMonitors)
-        if (contains(str, monitor.address.substr(2)))
+    for (auto monitor : allMonitors) {
+        if (contains(str, monitor.address.substr(2))) {
             return true;
+        }
+    }
     return false;
 }
 
 //-----------------------------------------------------------------------
-bool fourByteFilter(const string_q& input, const COptions* opt) {
+bool COptions::fourByteFilter(const string_q& input) const {
     ASSERT(!opt->watch);
-    if (opt->fourbytes.empty())
+    if (fourbytes.empty()) {
         return true;
+    }
 
-    for (auto four : opt->fourbytes)
-        if (startsWith(input, four))
+    for (auto four : fourbytes) {
+        if (startsWith(input, four)) {
             return true;
+        }
+    }
 
     return false;
 }

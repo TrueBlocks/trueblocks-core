@@ -60,12 +60,6 @@ int main(int argc, const char* argv[]) {
                 traversers.push_back(rt);
             }
 
-            if (options.statements) {
-                CStatementTraverser st;
-                st.traverserRange = options.exportRange;
-                traversers.push_back(st);
-            }
-
             if (options.neighbors) {
                 CNeighborTraverser nt;
                 nt.traverserRange = options.exportRange;

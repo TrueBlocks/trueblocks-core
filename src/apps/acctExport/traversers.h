@@ -34,12 +34,6 @@ class CReceiptTraverser : public CTraverser {
     CReceiptTraverser(void);
 };
 
-extern bool statements_Display(CTraverser* trav, void* data);
-class CStatementTraverser : public CTraverser {
-  public:
-    CStatementTraverser(void);
-};
-
 extern bool logs_Display(CTraverser* trav, void* data);
 extern size_t logs_Count(CTraverser* trav, void* data);
 class CLogTraverser : public CTraverser {

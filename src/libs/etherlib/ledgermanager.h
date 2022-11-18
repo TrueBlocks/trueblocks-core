@@ -40,7 +40,6 @@ class CLedgerManager {
     CAccountName name;
     address_t accountedFor;
     blknum_t nextBlock{NOPOS};
-    CAddressBoolMap assetFilter;
     CAppearanceArray_mon appArray;
     void getPrevNext(size_t index, const CTransaction& trans);
     bool getTransfers(const CTransaction& trans);
@@ -48,8 +47,18 @@ class CLedgerManager {
     CLedgerManager(const address_t& aF) {
         accountedFor = aF;
     };
+    bool isFilterOn(void) const {
+        return assetFilter.size() != 0;
+    }
+    bool filterByAsset(const address_t& asset) {
+        return (!isFilterOn() || assetFilter[asset]);
+    }
+    void setAssetFilter(const address_t& asset) {
+        assetFilter[asset] = true;
+    }
 
   private:
+    CAddressBoolMap assetFilter;
     CLedgerManager(){};
     CLedgerEntryMap ledgers;
     CTransferArray transfers;

@@ -123,6 +123,7 @@ class COptions : public CStatementOptions {
     bool isEmitter(const address_t& test) const;
     bool wasEmittedBy(const address_t& test) const;
     bool isRelevant(const CLogEntry& log) const;
+    bool fourByteFilter(const string_q& input) const;
 
     void writePerformanceData(void);
 
@@ -134,4 +135,3 @@ class COptions : public CStatementOptions {
 
 //--------------------------------------------------------------------------------
 extern bool visitOnLoad(CAppearance_mon& app, void* data);
-extern bool fourByteFilter(const string_q& input, const COptions* opt);

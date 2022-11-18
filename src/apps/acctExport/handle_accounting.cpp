@@ -16,26 +16,44 @@
 bool acct_Display(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)data;
 
-    if (fourByteFilter(trav->trans.input, opt)) {
+    if (!opt->fourByteFilter(trav->trans.input)) {
+        return true;
+    }
+
+    if (opt->accounting) {
+        string_q path = trav->trans.getReconcilationPath(opt->ledgerManager.accountedFor);
+        trav->searchOp = fileExists(path) ? READ : RECONCILE;
+        opt->ledgerManager.getPrevNext(trav->index, trav->trans);
+        if (!opt->ledgerManager.getStatements(trav->trans)) {
+            return false;  // user quit
+        }
+        if (!opt->relevant && !opt->ledgerManager.isFilterOn()) {
+            // only cache the reconciliation if it's a full set
+            trav->trans.cacheIfReconciled(opt->ledgerManager.accountedFor);
+        }
+    }
+
+    if (opt->statements) {
+        // only show the statments...
+        for (auto statement : trav->trans.statements) {
+            // ... only if they're of the right type
+            bool checkFlow = !opt->flow.empty();
+            bool in = opt->flow == "in" && statement.amountNet() > 0;
+            bool out = opt->flow == "out" && statement.amountNet() < 0;
+            bool zero = opt->flow == "zero" && statement.amountNet() == 0;
+            if (!checkFlow || in || out || zero) {
+                cout << ((isJson() && !opt->firstOut) ? ", " : "");
+                cout << statement;
+                opt->firstOut = false;
+            }
+        }
+
+    } else {
         if (opt->relevant) {
             for (auto& log : trav->trans.receipt.logs) {
                 log.m_showing = opt->isRelevant(log);
             }
         }
-
-        if (opt->accounting) {
-            trav->searchOp = READ;
-            string_q path = trav->trans.getReconcilationPath(opt->ledgerManager.accountedFor);
-            if (!fileExists(path)) {
-                trav->searchOp = RECONCILE;
-            }
-            opt->ledgerManager.getPrevNext(trav->index, trav->trans);
-            if (!opt->ledgerManager.getStatements(trav->trans)) {
-                return false;  // user quit
-            }
-            trav->trans.cacheIfReconciled(opt->ledgerManager.accountedFor);
-        }
-
         cout << ((isJson() && !opt->firstOut) ? ", " : "");
         cout << trav->trans;
         opt->firstOut = false;
