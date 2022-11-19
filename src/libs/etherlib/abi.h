@@ -190,7 +190,6 @@ extern bool decodeRLP(CParameterArray& ifaces, const string_q& desc, const strin
 extern bool sortByFuncName(const CFunction& f1, const CFunction& f2);
 extern bool isKnownAbi(const string_q& addr, string_q& path);
 extern bool isTokenRelated(const string_q& needle);
-extern bool isTokenTransfer(const string_q& needle);
 extern string_q getEtherscanKey(void);
 // EXISTING_CODE
 }  // namespace qblocks

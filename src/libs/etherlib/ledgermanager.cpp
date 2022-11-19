@@ -77,8 +77,27 @@ bool CLedgerManager::getStatements(CTransaction& trans) {
     return !shouldQuit();
 }
 
+//-----------------------------------------------------------------------
+static bool isTokenTransfer(const string_q& logNeedle) {
+    return logNeedle == str_2_Topic("0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef");
+}
+
+//-----------------------------------------------------------------------
+static bool isDepositTransfer(const string_q& logNeedle) {
+    return logNeedle == str_2_Topic("0xe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c");
+}
+
+//-----------------------------------------------------------------------
+static bool isWithdrawalTransfer(const string_q& logNeedle) {
+    return logNeedle == str_2_Topic("0x7fcf532c15f0a6db0bd6d0e038bea71d30d808c7d98cb3bf7268a95bf5081b65");
+}
+
 //--------------------------------------------------------------
 bool CLedgerManager::getTransfers(const CTransaction& trans) {
+    timestamp_t ts = str_2_Ts(trans.Format("[{TIMESTAMP}]"));
+    string_q encoding = trans.input.substr(0, 10);
+    time_q dt = ts_2_Date(ts);
+
     CTransferArray tmp;
     for (auto& log : trans.receipt.logs) {
         CAccountName tokenName;
@@ -88,21 +107,29 @@ bool CLedgerManager::getTransfers(const CTransaction& trans) {
             tokenName.petname = addr_2_Petname(tokenName.address, '-');
         }
 
+        CTransfer transfer;
         if (isTokenTransfer(log.topics[0]) && log.topics.size() > 2) {
-            CTransfer transfer;
             transfer.sender = topic_2_Addr(log.topics[1]);
             transfer.recipient = topic_2_Addr(log.topics[2]);
-            if (transfer.sender != accountedFor && transfer.recipient != accountedFor) {
-                continue;
-            }
+            transfer.amount = str_2_Wei(log.data);
+        } else if (isDepositTransfer(log.topics[0]) && log.topics.size() > 1) {
+            transfer.sender = topic_2_Addr(trans.from);
+            transfer.recipient = topic_2_Addr(log.topics[1]);
+            transfer.amount = str_2_Wei(log.data);
+        } else if (isWithdrawalTransfer(log.topics[0]) && log.topics.size() > 1) {
+            transfer.sender = topic_2_Addr(log.topics[1]);
+            transfer.recipient = topic_2_Addr(trans.from);
+            transfer.amount = str_2_Wei(log.data);
+        }
 
+        if (transfer.amount != 0 && (transfer.sender == accountedFor || transfer.recipient == accountedFor)) {
             transfer.blockNumber = trans.blockNumber;
             transfer.transactionIndex = trans.transactionIndex;
             transfer.logIndex = log.logIndex;
-            transfer.timestamp = str_2_Ts(trans.Format("[{TIMESTAMP}]"));
-            transfer.date = ts_2_Date(transfer.timestamp);
+            transfer.timestamp = ts;
+            transfer.date = dt;
             transfer.transactionHash = trans.hash;
-            transfer.encoding = trans.input.substr(0, 10);
+            transfer.encoding = encoding;
             transfer.assetAddr = log.address;
             transfer.log = (CLogEntry*)&log;  // TODO: for debugging only, can be removed
 
@@ -120,11 +147,6 @@ bool CLedgerManager::getTransfers(const CTransaction& trans) {
                 if (transfer.decimals == 0) {
                     transfer.decimals = 18;
                 }
-            }
-
-            transfer.amount = str_2_Wei(log.data);
-            if (transfer.amount == 0) {
-                continue;
             }
 
             tmp.push_back(transfer);
