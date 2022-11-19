@@ -72,6 +72,9 @@ func (opts *MonitorsOptions) MonitorsInternal() (err error, handled bool) {
 	if opts.Clean {
 		err = opts.HandleClean()
 
+	} else if opts.List {
+		err = opts.HandleList()
+
 	} else if opts.Watch {
 		var wg sync.WaitGroup
 
