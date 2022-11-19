@@ -467,6 +467,14 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: list
+          description: list monitors in the cache (--verbose for more detail)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: watch
           description: continually scan for new blocks and extract data for monitored addresses
           required: false
