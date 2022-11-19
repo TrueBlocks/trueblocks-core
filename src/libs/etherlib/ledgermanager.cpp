@@ -82,15 +82,30 @@ static bool isTokenTransfer(const string_q& logNeedle) {
     return logNeedle == str_2_Topic("0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef");
 }
 
-//-----------------------------------------------------------------------
-static bool isDepositTransfer(const string_q& logNeedle) {
-    return logNeedle == str_2_Topic("0xe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c");
-}
+// //-----------------------------------------------------------------------
+// static bool isDepositTransfer(const string_q& logNeedle) {
+//     return logNeedle == str_2_Topic("0xe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c");
+// }
 
-//-----------------------------------------------------------------------
-static bool isWithdrawalTransfer(const string_q& logNeedle) {
-    return logNeedle == str_2_Topic("0x7fcf532c15f0a6db0bd6d0e038bea71d30d808c7d98cb3bf7268a95bf5081b65");
-}
+// //-----------------------------------------------------------------------
+// static bool isWithdrawalTransfer(const string_q& logNeedle) {
+//     return logNeedle == str_2_Topic("0x7fcf532c15f0a6db0bd6d0e038bea71d30d808c7d98cb3bf7268a95bf5081b65");
+// }
+
+// //--------------------------------------------------------------
+// static bool isMintTransfer(const string_q& logNeedle) {
+//     return logNeedle == str_2_Topic("0x0f6798a560793a54c3bcfe86a93cde1e73087d944c0ea20544137d4121396885");
+// }
+
+// //--------------------------------------------------------------
+// static bool isBurnTransfer(const string_q& logNeedle) {
+//     return logNeedle == str_2_Topic("0xcc16f5dbb4873280815c1ee09dbd06736cffcc184412cf7a71a0fdb75d397ca5");
+// }
+
+// //--------------------------------------------------------------
+// static bool isStakedTransfer(const string_q& logNeedle) {
+//     return logNeedle == str_2_Topic("0x9e71bc8eea02a63969f509818f2dafb9254532904319f9dbda79b67bd34a5f3d");
+// }
 
 //--------------------------------------------------------------
 bool CLedgerManager::getTransfers(const CTransaction& trans) {
@@ -112,14 +127,17 @@ bool CLedgerManager::getTransfers(const CTransaction& trans) {
             transfer.sender = topic_2_Addr(log.topics[1]);
             transfer.recipient = topic_2_Addr(log.topics[2]);
             transfer.amount = str_2_Wei(log.data);
-        } else if (isDepositTransfer(log.topics[0]) && log.topics.size() > 1) {
-            transfer.sender = topic_2_Addr(trans.from);
-            transfer.recipient = topic_2_Addr(log.topics[1]);
-            transfer.amount = str_2_Wei(log.data);
-        } else if (isWithdrawalTransfer(log.topics[0]) && log.topics.size() > 1) {
-            transfer.sender = topic_2_Addr(log.topics[1]);
-            transfer.recipient = topic_2_Addr(trans.from);
-            transfer.amount = str_2_Wei(log.data);
+            // } else if (log.topics.size() > 1) {
+            //     if (isWithdrawalTransfer(log.topics[0])) {
+            //         transfer.sender = topic_2_Addr(log.topics[1]);
+            //         transfer.recipient = topic_2_Addr(trans.from);
+            //         transfer.amount = str_2_Wei(log.data);
+            //     } else if (isDepositTransfer(log.topics[0]) || isMintTransfer(log.topics[0]) ||
+            //                isBurnTransfer(log.topics[0]) || isStakedTransfer(log.topics[0])) {
+            //         transfer.sender = topic_2_Addr(trans.from);
+            //         transfer.recipient = topic_2_Addr(log.topics[1]);
+            //         transfer.amount = str_2_Wei(log.data);
+            //     }
         }
 
         if (transfer.amount != 0 && (transfer.sender == accountedFor || transfer.recipient == accountedFor)) {
