@@ -18,6 +18,7 @@ namespace qblocks {
 //--------------------------------------------------------------
 bool CLedgerManager::getStatements(CTransaction& trans) {
     if (trans.readReconsFromCache(accountedFor)) {
+        searchOp = READ;
         for (auto& statement : trans.statements) {
             string_q key = statementKey(statement.accountedFor, statement.assetAddr);
             ledgers[key] = statement;
@@ -25,6 +26,7 @@ bool CLedgerManager::getStatements(CTransaction& trans) {
         return !shouldQuit();
     }
 
+    searchOp = RECONCILE;
     getTransfers(trans);
 
     for (size_t i = 0; i < transfers.size(); i++) {

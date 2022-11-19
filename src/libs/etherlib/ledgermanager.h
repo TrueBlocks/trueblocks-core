@@ -35,8 +35,11 @@ struct CLedgerEntry {
 };
 typedef map<string, CLedgerEntry> CLedgerEntryMap;
 
+typedef enum { EXTRACT = 0, READ, UPDATE, RECONCILE, SCANNING, SKIPPING, COMPLETE } searchOpType;
+
 class CLedgerManager {
   public:
+    searchOpType searchOp;
     CAccountName name;
     address_t accountedFor;
     blknum_t nextBlock{NOPOS};
@@ -46,6 +49,7 @@ class CLedgerManager {
     bool getStatements(CTransaction& trans);
     CLedgerManager(const address_t& aF) {
         accountedFor = aF;
+        searchOp = EXTRACT;
     };
     bool isFilterOn(void) const {
         return assetFilter.size() != 0;

@@ -21,8 +21,6 @@ bool acct_Display(CTraverser* trav, void* data) {
     }
 
     if (opt->accounting) {
-        string_q path = trav->trans.getReconcilationPath(opt->ledgerManager.accountedFor);
-        trav->searchOp = fileExists(path) ? READ : RECONCILE;
         opt->ledgerManager.getPrevNext(trav->index, trav->trans);
         if (!opt->ledgerManager.getStatements(trav->trans)) {
             return false;  // user quit

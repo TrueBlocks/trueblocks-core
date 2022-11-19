@@ -13,7 +13,6 @@ bool display(CTraverser* trav, void* data) {
     cout << "logging: " << trav->logging << endl;
     cout << "nProcessed: " << trav->nProcessed << endl;
     cout << "searchType: " << trav->searchType << endl;
-    cout << "searchOp: " << trav->searchOp << endl;
     cout << "curMonitor: " << trav->curMonitor << endl;
     if (trav->curMonitor) {
         cout << "  curMonitor::nAppearances: " << trav->curMonitor->nAppearances << endl;

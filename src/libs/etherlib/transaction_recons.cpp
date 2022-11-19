@@ -68,10 +68,9 @@ void CTransaction::cacheIfReconciled(const address_t& accountedFor) const {
         return;
     }
 
-    string_q path = getReconcilationPath(accountedFor);
-
     lockSection();
 
+    string_q path = getReconcilationPath(accountedFor);
     CArchive archive(WRITING_ARCHIVE);
     if (archive.Lock(path, modeWriteCreate, LOCK_WAIT)) {
         LOG4("Writing to cache for ", path);
