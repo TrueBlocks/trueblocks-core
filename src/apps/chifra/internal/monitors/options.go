@@ -26,6 +26,8 @@ type MonitorsOptions struct {
 	Delete     bool                  `json:"delete,omitempty"`     // Delete a monitor, but do not remove it
 	Undelete   bool                  `json:"undelete,omitempty"`   // Undelete a previously deleted monitor
 	Remove     bool                  `json:"remove,omitempty"`     // Remove a previously deleted monitor
+	Decache    bool                  `json:"decache,omitempty"`    // Removes a monitor and all associated data from the cache
+	List       bool                  `json:"list,omitempty"`       // List monitors in the cache (--verbose for more detail)
 	Watch      bool                  `json:"watch,omitempty"`      // Continually scan for new blocks and extract data for monitored addresses
 	Sleep      float64               `json:"sleep,omitempty"`      // Seconds to sleep between monitor passes
 	FirstBlock uint64                `json:"firstBlock,omitempty"` // First block to process (inclusive)
@@ -45,6 +47,8 @@ func (opts *MonitorsOptions) testLog() {
 	logger.TestLog(opts.Delete, "Delete: ", opts.Delete)
 	logger.TestLog(opts.Undelete, "Undelete: ", opts.Undelete)
 	logger.TestLog(opts.Remove, "Remove: ", opts.Remove)
+	logger.TestLog(opts.Decache, "Decache: ", opts.Decache)
+	logger.TestLog(opts.List, "List: ", opts.List)
 	logger.TestLog(opts.Watch, "Watch: ", opts.Watch)
 	logger.TestLog(opts.Sleep != float64(14), "Sleep: ", opts.Sleep)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
@@ -80,6 +84,10 @@ func monitorsFinishParseApi(w http.ResponseWriter, r *http.Request) *MonitorsOpt
 			opts.Undelete = true
 		case "remove":
 			opts.Remove = true
+		case "decache":
+			opts.Decache = true
+		case "list":
+			opts.List = true
 		case "watch":
 			opts.Watch = true
 		case "sleep":

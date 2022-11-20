@@ -1,0 +1,14 @@
+chifra monitors  0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 --list --fmt json
+TEST[DATE|TIME] Addrs:  [0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533]
+TEST[DATE|TIME] List:  true
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "address": "0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533",
+      "nRecords": 5,
+      "fileSize": 48,
+      "lastScanned": 0
+    }
+  ]
+}

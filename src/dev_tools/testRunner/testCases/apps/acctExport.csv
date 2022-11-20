@@ -64,6 +64,13 @@ on      ,both ,fast  ,export   ,apps/acctExport ,export_stage             ,y    
 on      ,both ,fast  ,export   ,apps/acctExport ,export_unripe            ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000 & staging & unripe                                                                                   
 on      ,both ,fast  ,export   ,apps/acctExport ,export_unripe_fail       ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000 & unripe                                                                                             
         
+local   ,both ,fast  ,monitors ,apps/acctExport ,monitors_list1           ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & list & fmt = json
+on      ,both ,fast  ,export   ,apps/acctExport ,monitors_predecache      ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & traces & cache & cache_traces & fmt = json
+on      ,both ,fast  ,export   ,apps/acctExport ,monitors_statements      ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & statements & fmt = json
+on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_decache         ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & decache
+on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_decache_again   ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & decache
+on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_list2           ,n    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 0x001d14804b399c6ef80e64576f657660804fec0b & list & fmt = csv
+
 local   ,both ,fast  ,export   ,apps/acctExport ,old_bug                  ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & max_records = 1 & first_record = 212                                                                                                
 local   ,both ,fast  ,export   ,apps/acctExport ,old_bug2                 ,n    ,addrs = 0x000001f568875f378bf6d170b790967fe429c81a & fmt = json & first_record = 2909 & max_records = 1                                                                                               
         

@@ -75,7 +75,11 @@ bool doOne(COptions* options, const CAddressUintMap& theMap, const string_q& typ
     if (theMap.size() == 0)
         return false;
 
-    bool testMode = isTestMode() || getEnvStr("HIDE_NAMES") == "true";
+    if (getEnvStr("HIDE_NAMES") == "true") {
+        return false;
+    }
+
+    bool testMode = isTestMode();
 
     CNameStatsArray unnamed;
     CNameStatsArray named;
