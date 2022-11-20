@@ -108,11 +108,11 @@ on,both,fast,export,apps/acctExport,transfer_topics,y,addrs = 0xff9387a9aae1f5da
 on,both,fast,export,apps/acctExport,accounting_intra_tokens,y,addrs = 0x6aED588ca2052CCFC907Db8c24dF4B7B95A29A5E & max_records = 3 & first_record = 683 & accounting & fmt = json & log_level = 10
 
 local,both,fast,monitors,apps/acctExport,monitors_list1,y,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & list & fmt = json
-on,both,fast,export,apps/acctExport,monitors_predecache,y,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & traces & cache & cache_traces & fmt = json
-on,both,fast,export,apps/acctExport,monitors_statements,y,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & statements & fmt = json
-on,both,fast,monitors,apps/acctExport,monitors_decache,y,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & decache
-on,both,fast,monitors,apps/acctExport,monitors_decache_again,y,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & decache
-on,both,fast,monitors,apps/acctExport,monitors_list2,n,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 0x001d14804b399c6ef80e64576f657660804fec0b & list & fmt = csv
+local,both,fast,export,apps/acctExport,monitors_predecache,y,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & traces & cache & cache_traces & fmt = json
+local,both,fast,export,apps/acctExport,monitors_statements,y,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & statements & fmt = json
+local,both,fast,monitors,apps/acctExport,monitors_decache,y,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & decache
+local,both,fast,monitors,apps/acctExport,monitors_decache_again,y,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & decache
+local,both,fast,monitors,apps/acctExport,monitors_list2,n,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 0x001d14804b399c6ef80e64576f657660804fec0b & list & fmt = csv
 
 #,,,,,,,reverse does not work
 local,both,fast,export,apps/acctExport,statement_forward,y,addrs = 0x868b8fd259abfcfdf9634c343593b34ef359641d & last_block = 8769141 & accounting & statements & ether & fmt = json
