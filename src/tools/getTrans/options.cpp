@@ -103,10 +103,8 @@ bool COptions::parseArguments(string_q& command) {
         manageFields(defHide, false);
         manageFields(defShow, true);
         manageFields("CReconciliation:encoding,signature", true);
-        manageFields("CParameter:strDefault", false);  // hide
-        manageFields("CTransaction:price", false);     // hide
-        if (!useDict())
-            manageFields("CFunction:outputs", true);                                               // show
+        manageFields("CParameter:strDefault", false);                                              // hide
+        manageFields("CTransaction:price", false);                                                 // hide
         manageFields("CTransaction:input", true);                                                  // show
         manageFields("CLogEntry:data,topics", true);                                               // show
         manageFields("CTrace: blockHash, blockNumber, transactionHash, transactionIndex", false);  // hide
