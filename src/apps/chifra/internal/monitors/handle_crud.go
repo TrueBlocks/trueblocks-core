@@ -31,6 +31,11 @@ func (opts *MonitorsOptions) HandleCrudCommands() error {
 
 		} else {
 			if opts.Decache {
+				if opts.Globals.TestMode {
+					logger.Log(logger.Info, "Decaching monitor for address ", addr, "not tested.")
+					return nil
+				}
+
 				itemsRemoved := int64(0)
 				bytesRemoved := int64(0)
 				processorFunc := func(fileName string) bool {

@@ -1,3 +1,4 @@
+Env: HIDE_META=true
 export?addrs=0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533&traces&cache&cacheTraces&fmt=json
 {
   "data": [
@@ -141,92 +142,5 @@ export?addrs=0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533&traces&cache&cacheTraces
       "compressedTrace": "",
       "timestamp": 1482675660
     }
-  ],
-  "meta": {
-    "unripe": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "staging": "0xdeadbeef",
-    "finalized": "0xdeadbeef",
-    "client": "0xdeadbeef",
-    "namedFrom": {
-      "0x7baf96ee63017cc63d7da8df51fb04d4c3a7ef7b": {
-        "tags": "90-Individuals:Other",
-        "name": "Name 0x7baf96ee",
-        "count": 2
-      },
-      "0xa92e6abc1156b6ed4948cc962cb60f250d422c68": {
-        "tags": "00-Active",
-        "name": "Name 0xa92e6abc",
-        "count": 1
-      }
-    },
-    "unNamedFrom": {},
-    "namedTo": {
-      "0x5e569e1ecd56fe30dd97ee233ec1675b60fb6680": {
-        "tags": "30-Contracts",
-        "name": "HackerGold Kudos Contract",
-        "isContract": true,
-        "count": 3
-      },
-      "0xa92e6abc1156b6ed4948cc962cb60f250d422c68": {
-        "tags": "00-Active",
-        "name": "Name 0xa92e6abc",
-        "count": 1
-      }
-    },
-    "unNamedTo": {},
-    "namedTraceFrom": {
-      "0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533": {
-        "tags": "12-Empty",
-        "name": "Name 0x00ad1a7b",
-        "count": 2
-      },
-      "0x7baf96ee63017cc63d7da8df51fb04d4c3a7ef7b": {
-        "tags": "90-Individuals:Other",
-        "name": "Name 0x7baf96ee",
-        "count": 2
-      },
-      "0xa92e6abc1156b6ed4948cc962cb60f250d422c68": {
-        "tags": "00-Active",
-        "name": "Name 0xa92e6abc",
-        "count": 1
-      }
-    },
-    "unNamedTraceFrom": {},
-    "namedTraceTo": {
-      "0x5e569e1ecd56fe30dd97ee233ec1675b60fb6680": {
-        "tags": "30-Contracts",
-        "name": "HackerGold Kudos Contract",
-        "isContract": true,
-        "count": 3
-      },
-      "0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533": {
-        "tags": "12-Empty",
-        "name": "Name 0x00ad1a7b",
-        "count": 1
-      },
-      "0xa92e6abc1156b6ed4948cc962cb60f250d422c68": {
-        "tags": "00-Active",
-        "name": "Name 0xa92e6abc",
-        "count": 1
-      }
-    },
-    "unNamedTraceTo": {},
-    "first_block": "0xdeadbeef",
-    "last_block": "0xdeadbeef",
-    "accountedFor": {
-      "tags": "12-Empty",
-      "address": "0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533",
-      "name": "Name 0x00ad1a7b",
-      "symbol": "",
-      "source": "",
-      "decimals": 0,
-      "petname": "hopelessly-natural-kiwi",
-      "isCustom": true,
-      "isPrefund": false,
-      "isContract": false,
-      "isErc20": false,
-      "isErc721": false
-    }
-  }
+  ]
 }
