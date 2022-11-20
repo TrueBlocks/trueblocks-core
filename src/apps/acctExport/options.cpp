@@ -570,7 +570,7 @@ bool COptions::setDisplayFormatting(void) {
             SHOW_FIELD(CTrace, "transactionHash");
         }
     }
-    articulate = (articulate && (!isTestMode() || getEnvStr("TEST_NO_ART") != "true"));
+    articulate = (articulate && (!isTestMode() || getEnvStr("TEST_NO_ARTICULATION") != "true"));
 
     // TODO(tjayrush): This doesn't work for some reason (see test case acctExport_export_logs.txt)
     if (!articulate)

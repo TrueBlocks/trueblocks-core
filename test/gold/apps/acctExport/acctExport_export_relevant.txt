@@ -1,3 +1,4 @@
+Env: TEST_NO_ARTICULATION=true
 chifra export  0x9531c059098e3d194ff87febb587ab07b30b1306 --logs --last_block 10272064 --fmt csv --relevant
 TEST[DATE|TIME] Addrs:  [0x9531c059098e3d194ff87febb587ab07b30b1306]
 TEST[DATE|TIME] Logs:  true

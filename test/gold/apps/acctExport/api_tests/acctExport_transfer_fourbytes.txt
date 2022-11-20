@@ -1,3 +1,4 @@
+Env: TEST_NO_ARTICULATION=true
 export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&maxRecords=10&fourbytes=0xa9059cbb&fmt=json
 {
   "data": [

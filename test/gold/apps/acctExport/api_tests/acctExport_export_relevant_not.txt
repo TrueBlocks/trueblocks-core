@@ -1,3 +1,4 @@
+Env: TEST_NO_ARTICULATION=true
 export?addrs=0x9531c059098e3d194ff87febb587ab07b30b1306&logs&lastBlock=10272064&fmt=csv
 "blockNumber","transactionIndex","logIndex","transactionHash","timestamp","address","topic0","topic1","topic2","topic3","data","compressedLog"
 "8915123","148","101","0xf90ac0ba0cbab418308b63094422b692497c9cb4b1af8cd63915a1e81f9a1e37","1573485341","0x314159265dd8dbb310642f98f50c066173c1259b","0xce0457fe73731f824cc272376169235128c118b49d344817417c6d108d155e82","0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae","0x004a4c0777bceb963725be8a2b7e6d7e76a1bdc418aa20670bcb51f1c44657d6","","0x0000000000000000000000009531c059098e3d194ff87febb587ab07b30b1306",""
