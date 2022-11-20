@@ -79,8 +79,6 @@ bool doOne(COptions* options, const CAddressUintMap& theMap, const string_q& typ
         return false;
     }
 
-    bool testMode = isTestMode();
-
     CNameStatsArray unnamed;
     CNameStatsArray named;
     for (auto addr : theMap) {

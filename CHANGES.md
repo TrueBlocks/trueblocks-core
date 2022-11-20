@@ -22,6 +22,9 @@ This file details changes made to TrueBlocks per version (starting with version 
   - CStatement class renamed to CLedgerEntry to improve clarity of code.
   - Adds `-f` hotkey to `--flow` option.
 
+- **chifra monitors:**
+  - Adds `--decache` and `--list` options to help clean up caches.
+
 - **chifra state:**
   - *Breaking change:* Remove `--storage` option (this option was never fully implemented anyway).
   - Add `--proxy` option which allows user to specify the address of a proxied-to address. Useful with the `--call` option.
