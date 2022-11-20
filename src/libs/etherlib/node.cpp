@@ -1032,7 +1032,8 @@ string_q exportPostamble(const CStringArray& errorsIn, const string_q& extra) {
     if (!errStream.str().empty())
         os << ", \"errors\": [\n" << errStream.str() << "\n]";
 
-    if ((fmt == JSON1 && !isApiMode()))
+    bool noMeta = getEnvStr("HIDE_META") == "true";
+    if (noMeta || (fmt == JSON1 && !isApiMode()))
         return os.str() + " }";
 
     CMetaData meta = getMetaData();
