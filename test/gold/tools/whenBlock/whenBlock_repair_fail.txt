@@ -1,7 +1,7 @@
-chifra when   -h
-Purpose:
-  Find block(s) based on date, blockNum, timestamp, or 'special'.
-
+chifra when  --repair
+TEST[DATE|TIME] Repair:  true
+TEST[DATE|TIME] Format:  txt
+Error: The --repair option is only available with the --timestamps option.
 Usage:
   chifra when [flags] < block | date > [ block... | date... ]
 
