@@ -7,11 +7,16 @@ package servePkg
 import (
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
 func Validate(cmd *cobra.Command, args []string) error {
+	if len(GetOptions().Globals.Chain) > 0 && GetOptions().Globals.Chain != config.GetDefaultChain() {
+		return validate.Usage("The {0} option is not supported by the {1} command.", "--chain", "serve")
+	}
+
 	if len(GetOptions().Port) > 0 && !strings.Contains(GetOptions().Port, ":") {
 		return validate.Usage("The {0} option ({1}) must {2}.", "--port", GetOptions().Port, "start with ':'")
 	}
